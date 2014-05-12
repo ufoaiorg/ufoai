@@ -603,7 +603,7 @@ static bool G_ReactionFireCanBeEnabled (const Edict* ent)
 	if (!ent->inuse || !G_IsLivingActor(ent))
 		return false;
 
-	if (G_MatchIsRunning() && ent->team != level.activeTeam)
+	if (G_MatchIsRunning() && ent->getTeam() != level.activeTeam)
 		return false;
 
 	/* actor may not carry weapons at all - so no further checking is needed */
@@ -664,7 +664,7 @@ bool ReactionFire::isEnemy (const Edict* shooter, const Edict* target) const
 		return false;
 
 	/* Don't react in your own turn */
-	if (shooter->team == level.activeTeam)
+	if (shooter->getTeam() == level.activeTeam)
 		return false;
 
 	if (G_IsDead(target))
@@ -713,7 +713,7 @@ bool ReactionFire::canReact (Edict* shooter, const Edict* target) const
  */
 bool ReactionFire::canSee (const Edict* shooter, const Edict* target) const
 {
-	if (!G_IsVisibleForTeam(target, shooter->team))
+	if (!G_IsVisibleForTeam(target, shooter->getTeam()))
 		return false;
 
 	/* check in range and visible */

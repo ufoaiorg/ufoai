@@ -219,7 +219,7 @@ Actor* G_EdictsGetNextLivingActorOfTeam (Actor* lastEnt, const int team)
 	Actor* actor = lastEnt;
 
 	while ((actor = G_EdictsGetNextLivingActor(actor))) {
-		if (actor->team == team)
+		if (actor->getTeam() == team)
 			break;
 	}
 	return actor;
@@ -257,7 +257,7 @@ Actor* G_EdictsGetActorByUCN (const int ucn, const int team)
 	Actor* actor = nullptr;
 
 	while ((actor = G_EdictsGetNextActor(actor)))
-		if (team == actor->team && actor->chr.ucn == ucn)
+		if (team == actor->getTeam() && actor->chr.ucn == ucn)
 			return actor;
 
 	return nullptr;

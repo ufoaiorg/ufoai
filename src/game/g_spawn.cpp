@@ -426,7 +426,7 @@ Edict* G_Spawn (const char* classname)
 static void Think_SmokeAndFire (Edict* self)
 {
 	const int endRound = self->time + self->count;
-	const int spawnIndex = (self->team + level.teamOfs) % MAX_TEAMS;
+	const int spawnIndex = (self->getTeam() + level.teamOfs) % MAX_TEAMS;
 	const int currentIndex = (level.activeTeam + level.teamOfs) % MAX_TEAMS;
 	if (endRound < level.actualRound || (endRound == level.actualRound && spawnIndex <= currentIndex)) {
 		const bool checkVis = self->type == ET_SMOKE;
@@ -581,7 +581,7 @@ Edict* G_SpawnParticle (const vec3_t origin, int spawnflags, const char* particl
 static void G_ActorSpawn (Edict* ent)
 {
 	/* set properties */
-	level.num_spawnpoints[ent->team]++;
+	level.num_spawnpoints[ent->getTeam()]++;
 	ent->classname = "actor";
 	ent->type = ET_ACTORSPAWN;
 	ent->fieldSize = ACTOR_SIZE_NORMAL;
@@ -614,7 +614,7 @@ static void G_ActorSpawn (Edict* ent)
 static void G_Actor2x2Spawn (Edict* ent)
 {
 	/* set properties */
-	level.num_2x2spawnpoints[ent->team]++;
+	level.num_2x2spawnpoints[ent->getTeam()]++;
 	ent->classname = "ugv";
 	ent->type = ET_ACTOR2x2SPAWN;
 	ent->fieldSize = ACTOR_SIZE_2x2;
@@ -672,7 +672,7 @@ static void SP_player_start (Edict* ent)
 
 	/** @todo Wrong place here */
 	/* maybe there are already the max soldiers allowed per team connected */
-	if (sv_maxsoldiersperteam->integer > level.num_spawnpoints[ent->team]) {
+	if (sv_maxsoldiersperteam->integer > level.num_spawnpoints[ent->getTeam()]) {
 		ent->setStun(0);
 		ent->HP = INITIAL_HP;
 		G_ActorSpawn(ent);
@@ -713,7 +713,7 @@ static void SP_2x2_start (Edict* ent)
 	ent->setStun(0);
 	ent->HP = INITIAL_HP;
 
-	if (!ent->team)
+	if (!ent->getTeam())
 		ent->team = TEAM_PHALANX;
 
 	/* these units are bigger */
@@ -799,7 +799,7 @@ static void SP_misc_mission (Edict* ent)
 	ent->type = ET_MISSION;
 
 	/* maybe this was set to something else for multiplayer */
-	if (!ent->team)
+	if (!ent->getTeam())
 		ent->team = TEAM_PHALANX;
 
 	ent->solid = SOLID_BBOX;

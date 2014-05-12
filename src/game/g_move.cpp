@@ -170,7 +170,7 @@ static bool G_ActorShouldStopInMidMove (const Edict* ent, int visState, dvec_t* 
 			const Actor* blockEdict = G_EdictsGetLivingActorFromPos(pos);
 
 			if (blockEdict && G_IsBlockingMovementActor(blockEdict)) {
-				const bool visible = G_IsVisibleForTeam(blockEdict, ent->team);
+				const bool visible = G_IsVisibleForTeam(blockEdict, ent->getTeam());
 				if (visible)
 					return true;
 			}
@@ -366,7 +366,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 		const int movingModifier = G_ActorGetInjuryPenalty(actor, MODIFIER_MOVEMENT);
 
 		if (!G_IsCivilian(actor))
-			G_EventMoveCameraTo(G_VisToPM(actor->visflags & ~G_TeamToVisMask(actor->team)), actor->pos);
+			G_EventMoveCameraTo(G_VisToPM(actor->visflags & ~G_TeamToVisMask(actor->getTeam())), actor->pos);
 
 		actor->moveinfo.steps = 0;
 		G_ReactionFireNofityClientStartMove(actor);
@@ -464,7 +464,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 				G_CheckVis(actor);
 
 				/* check for anything appearing, seen by "the moving one" */
-				status |= G_CheckVisTeamAll(actor->team, 0, actor);
+				status |= G_CheckVisTeamAll(actor->getTeam(), 0, actor);
 
 				G_TouchSolids(actor, 10.0f);
 

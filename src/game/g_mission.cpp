@@ -52,7 +52,7 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 	if (!self->owner())
 		return false;
 
-	switch (self->owner()->team) {
+	switch (self->owner()->getTeam()) {
 	case TEAM_ALIEN:
 		if (G_IsAlien(activator)) {
 			if (!self->count) {
@@ -186,7 +186,7 @@ void G_MissionThink (Edict* self)
 			}
 			if (chain->time) {
 				const int endTime = level.actualRound - chain->count;
-				const int spawnIndex = (self->team + level.teamOfs) % MAX_TEAMS;
+				const int spawnIndex = (self->getTeam() + level.teamOfs) % MAX_TEAMS;
 				const int currentIndex = (level.activeTeam + level.teamOfs) % MAX_TEAMS;
 				/* not every edict in the group chain has
 				 * been occupied long enough */
@@ -205,7 +205,7 @@ void G_MissionThink (Edict* self)
 		self->use(self, nullptr);
 
 	/* store team before the edict is released */
-	team = self->team;
+	team = self->getTeam();
 
 	chain = self->groupMaster;
 	if (!chain)
@@ -244,7 +244,7 @@ void G_MissionThink (Edict* self)
 	/* still active mission edicts left */
 	ent = nullptr;
 	while ((ent = G_EdictsGetNextInUse(ent)))
-		if (ent->type == ET_MISSION && ent->team == team)
+		if (ent->type == ET_MISSION && ent->getTeam() == team)
 			return;
 
 	G_MatchEndTrigger(team, 10);

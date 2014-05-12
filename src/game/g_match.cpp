@@ -129,7 +129,7 @@ void G_MatchEndTrigger (int team, int timeGap)
 	Edict* ent = nullptr;
 
 	while ((ent = G_EdictsGetTriggerNextMaps(ent)) != nullptr) {
-		if (ent->team == team) {
+		if (ent->getTeam() == team) {
 			ent->think = Think_NextMapTrigger;
 			ent->nextthink = 1;
 			foundNextMap = true;
@@ -195,7 +195,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 	while ((actor = G_EdictsGetNextLivingActor(actor))) {
 		if (!G_IsAI(actor))
 			G_UpdateCharacterExperience(actor);
-		else if (actor->team == team)
+		else if (actor->getTeam() == team)
 			attacker = actor;
 	}
 
@@ -203,7 +203,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 	if (team == TEAM_ALIEN) {
 		actor = nullptr;
 		while ((actor = G_EdictsGetNextLivingActor(actor)))
-			if (actor->team != team && !actor->isInRescueZone()) {
+			if (actor->getTeam() != team && !actor->isInRescueZone()) {
 				actor->HP = 0;
 				G_ActorDieOrStun(actor, attacker);
 			}
