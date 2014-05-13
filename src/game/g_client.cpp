@@ -1023,8 +1023,10 @@ static inline bool G_ActorSpawnIsAllowed (const int num, const int team)
  */
 static void G_ThinkActorDieAfterSpawn (Edict* ent)
 {
-	G_ActorDieOrStun(ent, nullptr);
-	ent->think = nullptr;
+	/* We can safely assume that this is an Actor */
+	Actor* actor = makeActor(ent);
+	G_ActorDieOrStun(actor, nullptr);
+	actor->think = nullptr;
 }
 
 /**

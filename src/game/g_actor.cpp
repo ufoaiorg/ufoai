@@ -418,19 +418,19 @@ static bool G_ActorDie (Edict* ent, const Edict* attacker)
 /**
  * @brief Reports and handles death or stun of an actor. If the HP of an actor is zero the actor
  * will die, otherwise the actor will get stunned.
- * @param[in] ent Pointer to an entity being killed or stunned actor.
+ * @param[in] actor Pointer to an entity being killed or stunned actor.
  * @param[in] attacker Pointer to attacker - it must be notified about state of victim.
  * @todo Discuss whether stunned actor should really drop everything to floor. Maybe
  * it should drop only what he has in hands? Stunned actor can wake later during mission.
  */
-bool G_ActorDieOrStun (Edict* ent, Edict* attacker)
+bool G_ActorDieOrStun (Actor* actor, Edict* attacker)
 {
 	bool state;
 
-	if (ent->HP == 0)
-		state = G_ActorDie(ent, attacker);
+	if (actor->HP == 0)
+		state = G_ActorDie(actor, attacker);
 	else
-		state = G_ActorStun(ent, attacker);
+		state = G_ActorStun(actor, attacker);
 
 	/* no state change performed? */
 	if (!state) {
@@ -438,31 +438,31 @@ bool G_ActorDieOrStun (Edict* ent, Edict* attacker)
 		return false;
 	}
 
-	if (!G_IsStunned(ent))
-		ent->solid = SOLID_NOT;
+	if (!G_IsStunned(actor))
+		actor->solid = SOLID_NOT;
 
 	/* send death */
-	G_EventActorDie(*ent, attacker != nullptr);
-	G_EventActorStateChange(~G_VisToPM(ent->visflags), *ent);
+	G_EventActorDie(*actor, attacker != nullptr);
+	G_EventActorStateChange(~G_VisToPM(actor->visflags), *actor);
 
 	/* handle inventory - drop everything but the armour to the floor */
-	G_InventoryToFloor(ent);
-	G_ClientStateChange(ent->getPlayer(), ent, ~STATE_REACTION, false);
+	G_InventoryToFloor(actor);
+	G_ClientStateChange(actor->getPlayer(), actor, ~STATE_REACTION, false);
 
 	/* check if the player appears/perishes, seen from other teams */
-	G_CheckVis(ent);
+	G_CheckVis(actor);
 
 	/* check if the attacker appears/perishes, seen from other teams */
 	if (attacker)
 		G_CheckVis(attacker);
 
 	/* calc new vis for this player */
-	G_CheckVisTeamAll(ent->getTeam(), 0, attacker);
+	G_CheckVisTeamAll(actor->getTeam(), 0, attacker);
 
 	/* unlink the floor container */
-	ent->resetFloor();
+	actor->resetFloor();
 
-	G_ReactionFireOnDead(ent);
+	G_ReactionFireOnDead(actor);
 
 	return true;
 }
