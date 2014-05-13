@@ -92,8 +92,8 @@ public:
 
 	int state;					/**< the player state - dead, shaken.... */
 
-	int team;					/**< player of which team? */
 protected:
+	int team;					/**< player of which team? */
 	int pnum;					/**< the actual player slot */
 	/** the model indices */
 	unsigned int body;

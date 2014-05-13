@@ -294,7 +294,7 @@ playermask_t G_GetClosePlayerMask (const vec3_t origin, float radius)
 	while ((closeActor = G_FindRadius(closeActor, origin, radius))) {
 		if (!G_IsLivingActor(closeActor))
 			continue;
-		pm |= G_TeamToPM(closeActor->team);
+		pm |= G_TeamToPM(closeActor->getTeam());
 	}
 	return pm;
 }
@@ -345,7 +345,7 @@ void G_PrintActorStats (const Edict* victim, const Edict* attacker, const fireDe
 			const char* victimName = G_GetPlayerName(victim->getPlayerNum());
 			const char* attackerName = G_GetPlayerName(attacker->getPlayerNum());
 			if (victimName[0] == '\0') { /* empty string */
-				switch (victim->team) {
+				switch (victim->getTeam()) {
 				case TEAM_CIVILIAN:
 					victimName = "civilian";
 					break;
@@ -358,7 +358,7 @@ void G_PrintActorStats (const Edict* victim, const Edict* attacker, const fireDe
 				}
 			}
 			if (attackerName[0] == '\0') { /* empty string */
-				switch (attacker->team) {
+				switch (attacker->getTeam()) {
 				case TEAM_CIVILIAN:
 					attackerName = "civilian";
 					break;
@@ -370,7 +370,7 @@ void G_PrintActorStats (const Edict* victim, const Edict* attacker, const fireDe
 					break;
 				}
 			}
-			if (victim->team != attacker->team) {
+			if (!victim->isSameTeamAs(attacker)) {
 				Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) with %s of %s (entnum: %i)",
 					attackerName, attacker->chr.name,
 					(victim->HP == 0 ? "kills" : "stuns"),

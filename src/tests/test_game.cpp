@@ -222,11 +222,11 @@ static void testVisFlags (void)
 		num = 0;
 		Actor* actor = nullptr;
 		while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, TEAM_ALIEN))) {
-			const teammask_t teamMask = G_TeamToVisMask(actor->team);
+			const teammask_t teamMask = G_TeamToVisMask(actor->getTeam());
 			const bool visible = actor->visflags & teamMask;
 			char* visFlagsBuf = Mem_StrDup(Com_UnsignedIntToBinary(actor->visflags));
 			char* teamMaskBuf = Mem_StrDup(Com_UnsignedIntToBinary(teamMask));
-			CU_ASSERT_EQUAL(actor->team, TEAM_ALIEN);
+			CU_ASSERT_EQUAL(actor->getTeam(), TEAM_ALIEN);
 			UFO_CU_ASSERT_TRUE_MSG(visible, va("visflags: %s, teamMask: %s", visFlagsBuf, teamMaskBuf));
 			Mem_Free(visFlagsBuf);
 			Mem_Free(teamMaskBuf);

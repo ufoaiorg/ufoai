@@ -132,7 +132,7 @@ Edict* G_TriggerSpawn (Edict* owner)
  */
 static bool Touch_NextMapTrigger (Edict* self, Edict* activator)
 {
-	if (activator != nullptr && activator->team == self->team) {
+	if (activator != nullptr && activator->isSameTeamAs(self)) {
 		char command[MAX_VAR];
 		self->inuse = false;
 		G_ClientPrintf(activator->getPlayer(), PRINT_HUD, _("Switching map!"));
@@ -142,7 +142,7 @@ static bool Touch_NextMapTrigger (Edict* self, Edict* activator)
 		Q_strncpyz(level.mapEndCommand, command, strlen(command));
 
 		level.nextMapSwitch = true;
-		G_MatchEndTrigger(self->team, 0);
+		G_MatchEndTrigger(self->getTeam(), 0);
 	}
 	return true;
 }
@@ -337,7 +337,7 @@ static bool Touch_RescueTrigger (Edict* self, Edict* activator)
 
 	if (G_IsActor(activator)) {
 		Actor* actor = makeActor(activator);
-		if (self->team == actor->team)
+		if (self->isSameTeamAs(actor))
 			actor->setInRescueZone(true);
 	}
 
@@ -348,7 +348,7 @@ static void Reset_RescueTrigger (Edict* self, Edict* activator)
 {
 	if (G_IsActor(activator)) {
 		Actor* actor = makeActor(activator);
-		if (self->team == actor->team)
+		if (self->isSameTeamAs(actor))
 			actor->setInRescueZone(false);
 	}
 }

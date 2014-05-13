@@ -183,15 +183,15 @@ bool G_Vis (const int team, const Edict* from, const Edict* check, const vischec
 		return false;
 
 	/* living team members are always visible */
-	if (team >= 0 && check->team == team && !G_IsDead(check))
+	if (team >= 0 && check->getTeam() == team && !G_IsDead(check))
 		return true;
 
 	/* standard team rules */
-	if (team >= 0 && from->team != team)
+	if (team >= 0 && from->getTeam() != team)
 		return false;
 
 	/* inverse team rules */
-	if (team < 0 && check->team == -team)
+	if (team < 0 && check->getTeam() == -team)
 		return false;
 
 	/* check for same pos */
@@ -385,7 +385,7 @@ void G_VisMakeEverythingVisible (void)
 		const int playerMask = G_VisToPM(ent->visflags);
 		G_AppearPerishEvent(~playerMask, true, *ent, nullptr);
 		if (G_IsActor(ent))
-			G_SendInventory(~G_TeamToPM(ent->team), *ent);
+			G_SendInventory(~G_TeamToPM(ent->getTeam()), *ent);
 	}
 }
 
