@@ -588,10 +588,10 @@ void G_EventActorAppear (playermask_t playerMask, const Actor& check, const Edic
 		gi.WriteShort(NONE);
 	}
 
-	if (check.body == 0 || check.head == 0) {
+	if (check.getBody() == 0 || check.head == 0) {
 		gi.Error("invalid body and/or head model indices");
 	}
-	gi.WriteShort(check.body);
+	gi.WriteShort(check.getBody());
 	gi.WriteShort(check.head);
 	gi.WriteByte(check.chr.bodySkin);
 	gi.WriteByte(check.chr.headSkin);

@@ -95,9 +95,9 @@ public:
 	int team;					/**< player of which team? */
 protected:
 	int pnum;					/**< the actual player slot */
-public:
 	/** the model indices */
 	unsigned int body;
+public:
 	unsigned int head;
 	int frame;					/**< frame of the model to show */
 
