@@ -92,7 +92,7 @@ static int AIL_toTeamInt (const char* team)
  * @brief Wrapper around edict.
  */
 typedef struct aiActor_s {
-	Actor* ent; /**< Actual actor. */
+	Actor* actor; /**< Actual actor. */
 } aiActor_t;
 
 
@@ -275,7 +275,7 @@ static int actorL_tostring (lua_State* L)
 	assert(lua_isactor(L, 1));
 
 	const aiActor_t* target = lua_toactor(L, 1);
-	Com_sprintf(buf, sizeof(buf), "Actor( %s )", target->ent->chr.name);
+	Com_sprintf(buf, sizeof(buf), "Actor( %s )", target->actor->chr.name);
 
 	lua_pushstring(L, buf);
 	return 1;
@@ -289,7 +289,7 @@ static int actorL_pos (lua_State* L)
 	assert(lua_isactor(L, 1));
 
 	const aiActor_t* target = lua_toactor(L, 1);
-	lua_pushpos3(L, &target->ent->pos);
+	lua_pushpos3(L, &target->actor->pos);
 	return 1;
 }
 
@@ -337,7 +337,7 @@ static int actorL_shoot (lua_State* L)
 	while (shots > 0) {
 		shots--;
 		/** @todo actually handle fire modes */
-		G_ClientShoot(*AIL_player, AIL_ent, target->ent->pos,
+		G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos,
 				shootType, 0, nullptr, true, 0);
 	}
 
@@ -356,7 +356,7 @@ static int actorL_face (lua_State* L)
 	/* Target */
 	const aiActor_t* target = lua_toactor(L, 1);
 
-	AI_TurnIntoDirection(AIL_ent, target->ent->pos);
+	AI_TurnIntoDirection(AIL_ent, target->actor->pos);
 
 	/* Success. */
 	lua_pushboolean(L, 1);
@@ -372,7 +372,7 @@ static int actorL_team (lua_State* L)
 
 	const aiActor_t* target = lua_toactor(L, 1);
 	assert(target != nullptr);
-	const char* team = AIL_toTeamString(target->ent->getTeam());
+	const char* team = AIL_toTeamString(target->actor->getTeam());
 	lua_pushstring(L, team);
 	return 1;
 }
@@ -625,7 +625,7 @@ static int AIL_see (lua_State* L)
 	for (int i = 0; i < n; i++) {
 		lua_pushnumber(L, i + 1); /* index, starts with 1 */
 		aiActor_t target;
-		target.ent = sorted[i];
+		target.actor = sorted[i];
 		lua_pushactor(L, &target); /* value */
 		lua_rawset(L, -3); /* store the value in the table */
 	}
@@ -781,24 +781,24 @@ static int AIL_positionshoot (lua_State* L)
 	aiActor_t* target = lua_toactor(L, 1);
 
 	/* Make things more simple. */
-	Actor* ent = AIL_ent;
-	const int dist = ent->getUsableTUs();
+	Actor* actor = AIL_ent;
+	const int dist = actor->getUsableTUs();
 
 	/* Calculate move table. */
-	G_MoveCalc(0, ent, ent->pos, ent->getUsableTUs());
+	G_MoveCalc(0, actor, actor->pos, actor->getUsableTUs());
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
-	int xl = (int) ent->pos[0] - dist;
+	int xl = (int) actor->pos[0] - dist;
 	if (xl < 0)
 		xl = 0;
-	int yl = (int) ent->pos[1] - dist;
+	int yl = (int) actor->pos[1] - dist;
 	if (yl < 0)
 		yl = 0;
-	int xh = (int) ent->pos[0] + dist;
+	int xh = (int) actor->pos[0] + dist;
 	if (xh > PATHFINDING_WIDTH)
 		xl = PATHFINDING_WIDTH;
-	int yh = (int) ent->pos[1] + dist;
+	int yh = (int) actor->pos[1] + dist;
 	if (yh > PATHFINDING_WIDTH)
 		yh = PATHFINDING_WIDTH;
 
@@ -811,13 +811,13 @@ static int AIL_positionshoot (lua_State* L)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
 				/* Can we see the target? */
 				vec3_t check;
-				gi.GridPosToVec(ent->fieldSize, to, check);
-				const pos_t tu = G_ActorMoveLength(ent, level.pathingMap, to, true);
-				if (tu > ent->getUsableTUs() || tu == ROUTING_NOT_REACHABLE)
+				gi.GridPosToVec(actor->fieldSize, to, check);
+				const pos_t tu = G_ActorMoveLength(actor, level.pathingMap, to, true);
+				if (tu > actor->getUsableTUs() || tu == ROUTING_NOT_REACHABLE)
 					continue;
 				/* Better spot (easier to get to). */
 				if (tu < min_tu) {
-					if (G_ActorVis(check, ent, target->ent, true) > 0.3) {
+					if (G_ActorVis(check, actor, target->actor, true) > 0.3) {
 						VectorCopy(to, bestPos);
 						min_tu = tu;
 					}
@@ -825,7 +825,7 @@ static int AIL_positionshoot (lua_State* L)
 			}
 
 	/* No position found in range. */
-	if (min_tu > ent->getUsableTUs()) {
+	if (min_tu > actor->getUsableTUs()) {
 		lua_pushboolean(L, 0);
 		return 1;
 	}
@@ -888,7 +888,7 @@ static int AIL_positionherd (lua_State* L)
 	pos3_t save;
 	VectorCopy(AIL_ent->pos, save);
 	const aiActor_t* target = lua_toactor(L, 1);
-	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->ent->origin, AIL_ent->getUsableTUs())) {
+	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->actor->origin, AIL_ent->getUsableTUs())) {
 		lua_pushpos3(L, &AIL_ent->pos);
 	} else {
 		lua_pushboolean(L, 0);
@@ -909,7 +909,7 @@ static int AIL_distance (lua_State* L)
 
 	/* calculate distance */
 	const aiActor_t* target = lua_toactor(L, 1);
-	const vec_t dist = VectorDist(AIL_ent->origin, target->ent->origin);
+	const vec_t dist = VectorDist(AIL_ent->origin, target->actor->origin);
 	lua_pushnumber(L, dist);
 	return 1;
 }
@@ -1024,8 +1024,8 @@ void AIL_Shutdown (void)
  */
 void AIL_Cleanup (void)
 {
-	Actor* ent = nullptr;
+	Actor* actor = nullptr;
 
-	while ((ent = G_EdictsGetNextActor(ent)))
-		AIL_CleanupActor(ent);
+	while ((actor = G_EdictsGetNextActor(actor)))
+		AIL_CleanupActor(actor);
 }

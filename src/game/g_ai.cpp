@@ -1558,48 +1558,48 @@ void AI_Run (void)
 
 /**
  * @brief Initializes the actor's stats like morals, strength and so on.
- * @param ent Actor to set the stats for.
+ * @param actor Actor to set the stats for.
  * @param team Phalanx, civilian or alien ?
  */
-static void AI_SetStats (Actor* ent, int team)
+static void AI_SetStats (Actor* actor, int team)
 {
 	const char* templateId = "";
 	if (team != TEAM_CIVILIAN && gi.csi->numAlienTeams) {
 		for (int i = 0; i < gi.csi->numAlienTeams; ++i) {
-			if (gi.csi->alienTeams[i] == ent->chr.teamDef && gi.csi->alienChrTemplates[i]) {
+			if (gi.csi->alienTeams[i] == actor->chr.teamDef && gi.csi->alienChrTemplates[i]) {
 				templateId = gi.csi->alienChrTemplates[i]->id;
 				break;
 			}
 		}
 	}
 
-	CHRSH_CharGenAbilitySkills(&ent->chr, G_IsMultiPlayer(), templateId);
+	CHRSH_CharGenAbilitySkills(&actor->chr, G_IsMultiPlayer(), templateId);
 
-	ent->HP = ent->chr.HP;
-	ent->setMorale(ent->chr.morale);
-	ent->setStun(0);
+	actor->HP = actor->chr.HP;
+	actor->setMorale(actor->chr.morale);
+	actor->setStun(0);
 
 	/* hurt aliens in ufo crash missions (5%: almost dead, 10%: wounded, 15%: stunned)  */
-	if (level.hurtAliens && CHRSH_IsTeamDefAlien(ent->chr.teamDef)) {
+	if (level.hurtAliens && CHRSH_IsTeamDefAlien(actor->chr.teamDef)) {
 		const float random = frand();
 		int damage = 0, stun = 0;
 		if (random <= 0.05f) {
-			damage = ent->HP * 0.95f;
+			damage = actor->HP * 0.95f;
 		} else if (random <= 0.15f) {
-			stun = ent->HP * 0.3f;
-			damage = ent->HP * 0.5f;
+			stun = actor->HP * 0.3f;
+			damage = actor->HP * 0.5f;
 		} else if (random <= 0.3f) {
-			stun = ent->HP * 0.75f;
+			stun = actor->HP * 0.75f;
 		}
-		ent->HP -= damage;
-		if (!CHRSH_IsTeamDefRobot(ent->chr.teamDef))
-			ent->setStun(stun);
+		actor->HP -= damage;
+		if (!CHRSH_IsTeamDefRobot(actor->chr.teamDef))
+			actor->setStun(stun);
 
-		for (int i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i)
-			ent->chr.wounds.treatmentLevel[ent->chr.teamDef->bodyTemplate->getRandomBodyPart()] += damage / BODYPART_MAXTYPE;
+		for (int i = 0; i < actor->chr.teamDef->bodyTemplate->numBodyParts(); ++i)
+			actor->chr.wounds.treatmentLevel[actor->chr.teamDef->bodyTemplate->getRandomBodyPart()] += damage / BODYPART_MAXTYPE;
 	}
 
-	G_ActorGiveTimeUnits(ent);
+	G_ActorGiveTimeUnits(actor);
 }
 
 /**

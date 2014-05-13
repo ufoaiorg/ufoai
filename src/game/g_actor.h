@@ -71,7 +71,7 @@ void G_ActorReserveTUs(Edict* ent, int resReaction, int resShot, int resCrouch);
 int G_ActorDoTurn(Edict* ent, byte dir);
 void G_ActorSetMaxs(Edict* ent);
 int G_ActorCalculateMaxTU(const Edict* ent);
-void G_ActorGiveTimeUnits(Actor* ent);
+void G_ActorGiveTimeUnits(Actor* actor);
 void G_ActorSetTU(Edict* ent, int tus);
 void G_ActorUseTU(Edict* ent, int tus);
 void G_ActorModifyCounters(const Edict* attacker, const Edict* victim, int deltaAlive, int deltaKills, int deltaStuns);

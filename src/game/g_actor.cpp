@@ -248,11 +248,11 @@ int G_ActorCalculateMaxTU (const Edict* ent)
  * @brief Set time units for the given edict. Based on speed skills
  * @param ent The actor edict
  */
-void G_ActorGiveTimeUnits (Actor* ent)
+void G_ActorGiveTimeUnits (Actor* actor)
 {
-	const int tus = G_IsDazed(ent) ? 0 : G_ActorCalculateMaxTU(ent);
-	G_ActorSetTU(ent, tus);
-	G_RemoveDazed(ent);
+	const int tus = G_IsDazed(actor) ? 0 : G_ActorCalculateMaxTU(actor);
+	G_ActorSetTU(actor, tus);
+	G_RemoveDazed(actor);
 }
 
 void G_ActorSetTU (Edict* ent, int tus)
