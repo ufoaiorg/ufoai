@@ -222,15 +222,16 @@ bool Touch_HurtTrigger (Edict* self, Edict* activator)
 	/* these actors should really not be able to trigger this - they don't move anymore */
 	if (!G_IsLivingActor(activator))
 		return false;
+	Actor* actor = makeActor(activator);
 
 	if (stunEl || (stunGas && !isRobot)) {
-		activator->addStun(damage);
+		actor->addStun(damage);
 	} else if (shock) {
 		/** @todo Handle dazed via trigger_hurt */
 	} else {
-		G_TakeDamage(activator, damage);
+		G_TakeDamage(actor, damage);
 	}
-	G_CheckDeathOrKnockout(activator, nullptr, nullptr, damage);
+	G_CheckDeathOrKnockout(actor, nullptr, nullptr, damage);
 
 	return true;
 }

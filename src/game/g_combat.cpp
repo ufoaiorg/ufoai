@@ -442,7 +442,7 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* att
 	G_CheckDeathOrKnockout(victim, attacker, fd, damage);
 }
 
-void G_CheckDeathOrKnockout (Edict* target, Edict* attacker, const fireDef_t* fd, int damage)
+void G_CheckDeathOrKnockout (Actor* target, Edict* attacker, const fireDef_t* fd, int damage)
 {
 	/* Sanity check */
 	target->HP = std::min(std::max(target->HP, 0), target->chr.maxHP);
