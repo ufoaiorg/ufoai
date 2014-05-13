@@ -424,18 +424,18 @@ void G_ReactionFireTargetsCreate (const Edict* shooter)
 class ReactionFire
 {
 private:
-	bool isEnemy(const Edict* shooter, const Edict* target) const;
-	bool canReact(Edict* shooter, const Edict* target) const;
-	bool canSee(const Edict* shooter, const Edict* target) const;
+	bool isEnemy(const Actor* shooter, const Edict* target) const;
+	bool canReact(Actor* shooter, const Edict* target) const;
+	bool canSee(const Actor* shooter, const Edict* target) const;
 	bool shoot(Actor* shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode);
-	bool isPossible(Edict* shooter, const Edict* target) const;
+	bool isPossible(Actor* shooter, const Edict* target) const;
 public:
 	void notifyClientOnStep(const Edict* target, int step);
 	bool checkExecution(const Edict* target, int step);
 	void updateAllTargets(const Edict* target);
 	bool tryToShoot(Actor* shooter, const Edict* target);
-	bool isInWeaponRange(const Edict* shooter, const Edict* target, const fireDef_t* fd) const;
-	const fireDef_t* getFireDef(const Edict* shooter) const;
+	bool isInWeaponRange(const Actor* shooter, const Edict* target, const fireDef_t* fd) const;
+	const fireDef_t* getFireDef(const Actor* shooter) const;
 	void resetTargets(const Edict* shooter);
 	void notifyClientOnShot(const Edict* target, int tusTarget);
 };
@@ -446,7 +446,7 @@ static ReactionFire rf;
  * @param[in] shooter The reaction firing actor
  * @return nullptr if something is wrong
  */
-const fireDef_t* ReactionFire::getFireDef (const Edict* shooter) const
+const fireDef_t* ReactionFire::getFireDef (const Actor* shooter) const
 {
 	const FiremodeSettings* fmSetting = &shooter->chr.RFmode;
 	if (!fmSetting->isSaneFiremode())
@@ -465,7 +465,7 @@ const fireDef_t* ReactionFire::getFireDef (const Edict* shooter) const
 	return nullptr;
 }
 
-bool ReactionFire::isInWeaponRange (const Edict* shooter, const Edict* target, const fireDef_t* fd) const
+bool ReactionFire::isInWeaponRange (const Actor* shooter, const Edict* target, const fireDef_t* fd) const
 {
 	assert(fd);
 	return fd->range >= VectorDist(shooter->origin, target->origin);
@@ -478,7 +478,7 @@ bool ReactionFire::isInWeaponRange (const Edict* shooter, const Edict* target, c
  * @param[in] target The target to check reaction fire for (e.g. check whether the weapon that was marked for
  * using in reaction fire situations can handle the distance between the shooter and the target)
  */
-static int G_ReactionFireGetTUsForItem (const Edict* shooter, const Edict* target)
+static int G_ReactionFireGetTUsForItem (const Actor* shooter, const Edict* target)
 {
 	const fireDef_t* fd = rf.getFireDef(shooter);
 	if (!fd)
@@ -647,7 +647,7 @@ bool G_ReactionFireSettingsReserveTUs (Edict* ent)
 	return false;
 }
 
-inline bool ReactionFire::isPossible (Edict* shooter, const Edict* target) const
+inline bool ReactionFire::isPossible (Actor* shooter, const Edict* target) const
 {
 	return isEnemy(shooter, target) && canReact(shooter, target) && canSee(shooter, target);
 }
@@ -657,7 +657,7 @@ inline bool ReactionFire::isPossible (Edict* shooter, const Edict* target) const
  * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
  */
-bool ReactionFire::isEnemy (const Edict* shooter, const Edict* target) const
+bool ReactionFire::isEnemy (const Actor* shooter, const Edict* target) const
 {
 	/* an entity can't reaction fire at itself */
 	if (shooter == target)
@@ -685,7 +685,7 @@ bool ReactionFire::isEnemy (const Edict* shooter, const Edict* target) const
  * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
  */
-bool ReactionFire::canReact (Edict* shooter, const Edict* target) const
+bool ReactionFire::canReact (Actor* shooter, const Edict* target) const
 {
 	/* shooter can't use RF if is in STATE_DAZED (flashbang impact) */
 	if (G_IsDazed(shooter))
@@ -711,7 +711,7 @@ bool ReactionFire::canReact (Edict* shooter, const Edict* target) const
  * @param[in] shooter The entity that might be firing
  * @param[in] target The entity that might be fired at
  */
-bool ReactionFire::canSee (const Edict* shooter, const Edict* target) const
+bool ReactionFire::canSee (const Actor* shooter, const Edict* target) const
 {
 	if (!G_IsVisibleForTeam(target, shooter->getTeam()))
 		return false;
