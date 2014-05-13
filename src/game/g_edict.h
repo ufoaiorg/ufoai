@@ -353,6 +353,12 @@ public:
 	inline int getMorale() const {
 		return morale;
 	}
+	inline unsigned int getBody() const {
+		return body;
+	}
+	inline void setBody(unsigned int body_) {
+		body = body_;
+	}
 /**
  * @brief Calculates the amount of usable TUs. This is without the reserved TUs.
  * @return The amount of usable TUs for the given actor edict

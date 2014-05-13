@@ -1213,7 +1213,7 @@ static void G_ClientAssignDefaultActorValues (Actor* actor)
 	actor->setMorale(GET_MORALE(actor->chr.score.skills[ABILITY_MIND]));
 
 	/* set models */
-	actor->body = gi.ModelIndex(CHRSH_CharGetBody(&actor->chr));
+	actor->setBody(gi.ModelIndex(CHRSH_CharGetBody(&actor->chr)));
 	actor->head = gi.ModelIndex(CHRSH_CharGetHead(&actor->chr));
 
 	actor->chr.scoreMission->carriedWeight = actor->chr.inv.getWeight();
