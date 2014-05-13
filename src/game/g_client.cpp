@@ -1069,8 +1069,7 @@ Actor* G_ClientGetFreeSpawnPointForActorSize (const Player& player, const actorS
 			ent = copy;
 		}
 	} else {
-		gi.Error("G_ClientGetFreeSpawnPointForActorSize: unknown fieldSize for actor edict (actorSize: %i)\n",
-				actorSize);
+		gi.Error("G_ClientGetFreeSpawnPointForActorSize: unknown fieldSize for actor edict (actorSize: %i)\n", actorSize);
 	}
 
 	if (!ent)
