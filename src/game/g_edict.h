@@ -369,7 +369,7 @@ public:
 	}
 /**
  * @brief Set the rescue zone flag
- * @param[in] inRescueZone @c true if the actor is in the rescue zone, @c false otherwise
+ * @param[in] inRescueZone_ @c true if the actor is in the rescue zone, @c false otherwise
  */
 	inline void setInRescueZone (bool inRescueZone_) {
 		if (inRescueZone_ == isInRescueZone())
