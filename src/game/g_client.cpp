@@ -258,9 +258,11 @@ void G_AppearPerishEvent (playermask_t playerMask, bool appear, Edict& check, co
 		/* appear */
 		switch (check.type) {
 		case ET_ACTOR:
-		case ET_ACTOR2x2:
-			G_EventActorAppear(playerMask, check, ent);
+		case ET_ACTOR2x2: {
+			Actor* actor = makeActor(&check);
+			G_EventActorAppear(playerMask, *actor, ent);
 			break;
+		}
 
 		case ET_CAMERA:
 			G_EventCameraAppear(playerMask, check);

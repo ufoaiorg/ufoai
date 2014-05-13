@@ -562,7 +562,7 @@ void G_EventEdictAppear (playermask_t playerMask, const Edict& ent)
 	G_EventEnd();
 }
 
-void G_EventActorAppear (playermask_t playerMask, const Edict& check, const Edict* ent)
+void G_EventActorAppear (playermask_t playerMask, const Actor& check, const Edict* ent)
 {
 	const int mask = G_TeamToPM(check.getTeam()) & playerMask;
 
