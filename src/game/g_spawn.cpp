@@ -197,7 +197,7 @@ static void ED_ParseField (const char* key, const char* value, Edict* ent)
 	else if (kvp.isKey("frame"))
 		ent->frame = kvp.asInt();
 	else if (kvp.isKey("team"))
-		ent->team = kvp.asInt();
+		ent->setTeam(kvp.asInt());
 	else if (kvp.isKey("group"))
 		ent->group = ED_NewString(value);
 	else if (kvp.isKey("size"))
@@ -691,7 +691,7 @@ static void SP_human_start (Edict* ent)
 		G_FreeEdict(ent);
 		return;
 	}
-	ent->team = TEAM_PHALANX;
+	ent->setTeam(TEAM_PHALANX);
 	ent->setStun(0);
 	ent->HP = INITIAL_HP;
 	G_ActorSpawn(ent);
@@ -714,7 +714,7 @@ static void SP_2x2_start (Edict* ent)
 	ent->HP = INITIAL_HP;
 
 	if (!ent->getTeam())
-		ent->team = TEAM_PHALANX;
+		ent->setTeam(TEAM_PHALANX);
 
 	/* these units are bigger */
 	ent->entBox.setMaxs(PLAYER_WIDTH * 2, PLAYER_WIDTH * 2, PLAYER_STAND);
@@ -735,7 +735,7 @@ static void SP_alien_start (Edict* ent)
 		G_FreeEdict(ent);
 		return;
 	}
-	ent->team = TEAM_ALIEN;
+	ent->setTeam(TEAM_ALIEN);
 	/* set stats */
 	ent->setStun(0);
 	ent->HP = INITIAL_HP;
@@ -755,7 +755,7 @@ static void SP_civilian_start (Edict* ent)
 		G_FreeEdict(ent);
 		return;
 	}
-	ent->team = TEAM_CIVILIAN;
+	ent->setTeam(TEAM_CIVILIAN);
 	/* set stats */
 	ent->setStun(99);	/** @todo Does anybody know _why_ this is set to 99? */
 	ent->HP = INITIAL_HP;
@@ -773,7 +773,7 @@ static void SP_civilian_start (Edict* ent)
 static void SP_civilian_target (Edict* ent)
 {
 	/* target point for which team */
-	ent->team = TEAM_CIVILIAN;
+	ent->setTeam(TEAM_CIVILIAN);
 	ent->classname = "civtarget";
 	ent->type = ET_CIVILIANTARGET;
 	ent->fieldSize = ACTOR_SIZE_NORMAL; /* to let the grid fall function work */
@@ -800,7 +800,7 @@ static void SP_misc_mission (Edict* ent)
 
 	/* maybe this was set to something else for multiplayer */
 	if (!ent->getTeam())
-		ent->team = TEAM_PHALANX;
+		ent->setTeam(TEAM_PHALANX);
 
 	ent->solid = SOLID_BBOX;
 
@@ -847,7 +847,7 @@ static void SP_misc_mission_aliens (Edict* ent)
 
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
-	ent->team = TEAM_ALIEN;
+	ent->setTeam(TEAM_ALIEN);
 	ent->solid = SOLID_BBOX;
 
 	/* think function values */
@@ -983,7 +983,7 @@ static void G_SpawnField (Edict* ent, const char* classname, entity_type_t type,
 	ent->think = Think_SmokeAndFire;
 	ent->nextthink = 1;
 	ent->time = level.actualRound;
-	ent->team = level.activeTeam;
+	ent->setTeam(level.activeTeam);
 
 	gi.LinkEdict(ent);
 
