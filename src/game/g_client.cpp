@@ -1196,27 +1196,27 @@ static void G_ClientSkipActorInfo (void)
 /**
  * @brief Used after spawning an actor to set some default values that are not read from the
  * network event.
- * @param ent The actor edict to set the values for.
+ * @param actor The actor edict to set the values for.
  */
-static void G_ClientAssignDefaultActorValues (Edict* ent)
+static void G_ClientAssignDefaultActorValues (Actor* actor)
 {
 	/* Mission Scores */
 	scoreMission[scoreMissionNum].init();
-	ent->chr.scoreMission = &scoreMission[scoreMissionNum];
+	actor->chr.scoreMission = &scoreMission[scoreMissionNum];
 	scoreMissionNum++;
 
 	/* set initial vital statistics */
-	ent->HP = ent->chr.HP;
-	ent->setMorale(ent->chr.morale);
+	actor->HP = actor->chr.HP;
+	actor->setMorale(actor->chr.morale);
 
 	/** @todo for now, heal fully upon entering mission */
-	ent->setMorale(GET_MORALE(ent->chr.score.skills[ABILITY_MIND]));
+	actor->setMorale(GET_MORALE(actor->chr.score.skills[ABILITY_MIND]));
 
 	/* set models */
-	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
-	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
+	actor->body = gi.ModelIndex(CHRSH_CharGetBody(&actor->chr));
+	actor->head = gi.ModelIndex(CHRSH_CharGetHead(&actor->chr));
 
-	ent->chr.scoreMission->carriedWeight = ent->chr.inv.getWeight();
+	actor->chr.scoreMission->carriedWeight = actor->chr.inv.getWeight();
 }
 
 /**

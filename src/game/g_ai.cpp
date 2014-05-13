@@ -1655,37 +1655,37 @@ static void AI_SetEquipment (Edict* ent, const equipDef_t* ed)
 /**
  * @brief Initializes the actor.
  * @param[in] player Player to which this actor belongs.
- * @param[in,out] ent Pointer to Edict representing actor.
+ * @param[in,out] actor Pointer to Edict representing actor.
  * @param[in] ed Equipment definition for the new actor. Might be @c nullptr.
  */
-static void AI_InitPlayer (const Player& player, Actor* ent, const equipDef_t* ed)
+static void AI_InitPlayer (const Player& player, Actor* actor, const equipDef_t* ed)
 {
 	const int team = player.getTeam();
 
 	/* Set the model and chose alien race. */
-	AI_SetCharacterValues(ent, team);
+	AI_SetCharacterValues(actor, team);
 
 	/* Calculate stats. */
-	AI_SetStats(ent, team);
+	AI_SetStats(actor, team);
 
 	/* Give equipment. */
 	if (ed != nullptr)
-		AI_SetEquipment(ent, ed);
+		AI_SetEquipment(actor, ed);
 
 	/* after equipping the actor we can also get the model indices */
-	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
-	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
+	actor->body = gi.ModelIndex(CHRSH_CharGetBody(&actor->chr));
+	actor->head = gi.ModelIndex(CHRSH_CharGetHead(&actor->chr));
 
 	/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
 	if (frand() < 0.75f) {
-		G_ClientStateChange(player, ent, STATE_REACTION, false);
+		G_ClientStateChange(player, actor, STATE_REACTION, false);
 	}
 
 	/* initialize the LUA AI now */
 	if (team == TEAM_CIVILIAN)
-		AIL_InitActor(ent, "civilian", "default");
+		AIL_InitActor(actor, "civilian", "default");
 	else if (team == TEAM_ALIEN)
-		AIL_InitActor(ent, "alien", "default");
+		AIL_InitActor(actor, "alien", "default");
 	else
 		gi.DPrintf("AI_InitPlayer: unknown team AI\n");
 }
