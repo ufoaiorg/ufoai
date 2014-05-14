@@ -474,7 +474,7 @@ static void G_ClientStateChangeUpdate (Edict& ent)
  * don't even use the G_ActionCheckForCurrentTeam function
  * @note Use checkaction true only for e.g. spawning values
  */
-void G_ClientStateChange (const Player& player, Edict* ent, int reqState, bool checkaction)
+void G_ClientStateChange (const Player& player, Actor* ent, int reqState, bool checkaction)
 {
 	/* Check if any action is possible. */
 	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 0))
@@ -675,7 +675,7 @@ int G_ClientAction (Player& player)
 
 	case PA_STATE:
 		gi.ReadFormat(format, &i);
-		G_ClientStateChange(player, ent, i, true);
+		G_ClientStateChange(player, actor, i, true);
 		break;
 
 	case PA_SHOOT:
