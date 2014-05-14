@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 #define G_IsState(ent, s)		((ent)->state & (s))
-#define G_IsShaken(ent)			G_IsState(ent, STATE_SHAKEN)
 #define G_IsStunned(ent)		(G_IsState(ent, STATE_STUN) & ~STATE_DEAD)
 #define G_IsPanicked(ent)		G_IsState(ent, STATE_PANIC)
 #define G_IsReaction(ent)		G_IsState(ent, STATE_REACTION)

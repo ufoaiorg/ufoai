@@ -498,7 +498,7 @@ void G_ClientStateChange (const Player& player, Actor* ent, int reqState, bool c
 		break;
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
 		if (G_IsReaction(ent)) {
-			if (G_IsShaken(ent) && G_ReactionFireSettingsReserveTUs(ent)) {
+			if (ent->isShaken() && G_ReactionFireSettingsReserveTUs(ent)) {
 				G_ClientPrintf(player, PRINT_HUD, _("Currently shaken, won't let their guard down."));
 			} else {
 				/* Turn off reaction fire. */
