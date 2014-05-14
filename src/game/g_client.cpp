@@ -1035,8 +1035,9 @@ static void G_ThinkActorDieAfterSpawn (Edict* ent)
  */
 static void G_ThinkActorGoCrouch (Edict* ent)
 {
-	G_ClientStateChange(ent->getPlayer(), ent, STATE_CROUCHED, true);
-	ent->think = nullptr;
+	Actor* actor = makeActor(ent);
+	G_ClientStateChange(actor->getPlayer(), actor, STATE_CROUCHED, true);
+	actor->think = nullptr;
 }
 
 /**
