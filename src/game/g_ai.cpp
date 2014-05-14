@@ -971,7 +971,7 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 	/* check whether this civilian can use weapons */
 	if (actor->chr.teamDef) {
 		const teamDef_t* teamDef = actor->chr.teamDef;
-		if (!G_IsPanicked(actor) && teamDef->weapons)
+		if (!actor->isPanicked() && teamDef->weapons)
 			return AI_FighterCalcActionScore(actor, to, aia);
 	} else
 		gi.DPrintf("AI_CivilianCalcActionScore: Error - civilian team with no teamdef\n");
@@ -1316,7 +1316,7 @@ static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 
 				if (G_IsCivilian(actor))
 					bestActionScore = AI_CivilianCalcActionScore(actor, to, &aia);
-				else if (G_IsPanicked(actor))
+				else if (actor->isPanicked())
 					bestActionScore = AI_PanicCalcActionScore(actor, to, &aia);
 				else
 					bestActionScore = AI_FighterCalcActionScore(actor, to, &aia);
@@ -1431,7 +1431,7 @@ void AI_ActorThink (Player& player, Actor* actor)
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	Item* rightH = actor->getRightHandItem();
 	Item* leftH = actor->getLeftHandItem();
-	if (!G_IsPanicked(actor)) {
+	if (!actor->isPanicked()) {
 		if (rightH && rightH->mustReload())
 			AI_TryToReloadWeapon(actor, CID_RIGHT);
 		if (leftH && leftH->mustReload())
