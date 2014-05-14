@@ -240,7 +240,7 @@ bool AI_CheckUsingDoor (const Edict* ent, const Edict* door)
  * @param[in] ent The AI controlled actor to chech the state change for
  * @returns true if the actor should go into STATE_CROUCHED, false otherwise
  */
-static bool AI_CheckCrouch (const Edict* ent)
+static bool AI_CheckCrouch (const Actor* ent)
 {
 	Actor* check = nullptr;
 
@@ -519,7 +519,7 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
  * from shooting at the breakable parts of their own ship.
  * So I disabled it for now. Duke, 23.10.09
  */
-static Edict* AI_SearchDestroyableObject (const Edict* ent, const fireDef_t* fd)
+static Edict* AI_SearchDestroyableObject (const Actor* ent, const fireDef_t* fd)
 {
 #if 0
 	/* search best none human target */
@@ -591,7 +591,7 @@ static bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const
 /**
  * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
  */
-static void AI_SearchBestTarget (AiAction* aia, const Edict* ent, Actor* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
+static void AI_SearchBestTarget (AiAction* aia, const Actor* ent, Actor* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */
@@ -714,7 +714,7 @@ static void AI_SearchBestTarget (AiAction* aia, const Edict* ent, Actor* check, 
  * @todo Should we really know if the other actor is controlled by the other team (STATE_XVI)?
  * aliens would of course know if an actor is infected (becomes part of the hive mind), but humans?
  */
-static inline bool AI_IsOpponent (const Edict* ent, const Edict* check)
+static inline bool AI_IsOpponent (const Actor* ent, const Edict* check)
 {
 	const bool entControlled = G_IsState(ent, STATE_XVI);
 	const bool checkControlled = G_IsState(check, STATE_XVI);
@@ -748,7 +748,7 @@ static inline bool AI_IsOpponent (const Edict* ent, const Edict* check)
  * @param[in] target The possible hostile actor.
  * @returns @c true if ent perceives target as hostile
  */
-static inline bool AI_IsHostile (const Edict* ent, const Edict* target)
+static inline bool AI_IsHostile (const Actor* ent, const Edict* target)
 {
 	if (ent == target)
 		return false;
