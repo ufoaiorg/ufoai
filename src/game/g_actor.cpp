@@ -246,7 +246,7 @@ int G_ActorCalculateMaxTU (const Edict* ent)
 
 /**
  * @brief Set time units for the given edict. Based on speed skills
- * @param ent The actor edict
+ * @param actor The actor edict
  */
 void G_ActorGiveTimeUnits (Actor* actor)
 {
