@@ -674,7 +674,7 @@ bool ReactionFire::isEnemy (const Actor* shooter, const Edict* target) const
 	 * and the shooter is still sane, don't shoot;
 	 * well, if the shooter isn't sane anymore... */
 	if (G_IsCivilian(target) || target->isSameTeamAs(shooter))
-		if (!G_IsShaken(shooter) || (float) shooter->morale / mor_shaken->value > frand())
+		if (!shooter->isShaken() || (float) shooter->morale / mor_shaken->value > frand())
 			return false;
 
 	return true;
@@ -779,7 +779,7 @@ bool ReactionFire::shoot (Actor* shooter, const pos3_t at, shoot_types_t type, f
 		maxff = 60;
 	else if (G_IsPanicked(shooter))
 		maxff = 30;
-	else if (G_IsShaken(shooter))
+	else if (shooter->isShaken())
 		maxff = 15;
 	else
 		maxff = 5;

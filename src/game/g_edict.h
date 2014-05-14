@@ -353,6 +353,9 @@ public:
 	inline int getMorale() const {
 		return morale;
 	}
+	inline bool isState(int flag) const	{return state & flag;}
+	inline bool isShaken() const		{return isState(STATE_SHAKEN);}
+
 	inline unsigned int getBody() const {
 		return body;
 	}
