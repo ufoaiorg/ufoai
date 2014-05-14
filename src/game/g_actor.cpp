@@ -354,24 +354,24 @@ void G_ActorGetEyeVector (const Edict* actor, vec3_t eye)
 		eye[2] += EYE_STAND;
 }
 
-static void G_ActorRevitalise (Actor* ent)
+static void G_ActorRevitalise (Actor* actor)
 {
-	if (G_IsStunned(ent)) {
-		G_RemoveStunned(ent);
+	if (G_IsStunned(actor)) {
+		G_RemoveStunned(actor);
 		/** @todo have a look at the morale value of
-		 * the ent and maybe get into rage or panic? */
-		G_ActorModifyCounters(ent->link, ent, 1, 0, -1);
-		G_GetFloorItems(ent);
+		 * the actor and maybe get into rage or panic? */
+		G_ActorModifyCounters(actor->link, actor, 1, 0, -1);
+		G_GetFloorItems(actor);
 	}
-	G_ActorSetMaxs(ent);
+	G_ActorSetMaxs(actor);
 
 	/* check if the player appears/perishes, seen from other teams */
-	G_CheckVis(ent);
+	G_CheckVis(actor);
 
 	/* calc new vis for this player */
-	G_CheckVisTeamAll(ent->getTeam(), 0, ent);
+	G_CheckVisTeamAll(actor->getTeam(), 0, actor);
 
-	G_PrintStats("%s is revitalized.", ent->chr.name);
+	G_PrintStats("%s is revitalized.", actor->chr.name);
 }
 
 void G_ActorCheckRevitalise (Actor* actor)
@@ -393,23 +393,23 @@ void G_ActorCheckRevitalise (Actor* actor)
 	}
 }
 
-static bool G_ActorDie (Actor* ent, const Edict* attacker)
+static bool G_ActorDie (Actor* actor, const Edict* attacker)
 {
-	const bool stunned = G_IsStunned(ent);
+	const bool stunned = G_IsStunned(actor);
 
-	G_RemoveStunned(ent);
+	G_RemoveStunned(actor);
 
-	if (G_IsDead(ent))
+	if (G_IsDead(actor))
 		return false;
 
-	G_SetState(ent, 1 + rand() % MAX_DEATH);
-	G_ActorSetMaxs(ent);
+	G_SetState(actor, 1 + rand() % MAX_DEATH);
+	G_ActorSetMaxs(actor);
 
 	if (stunned) {
-		G_ActorModifyCounters(attacker, ent, 0, 1, 0);
-		G_ActorModifyCounters(ent->link, ent, 0, 0, -1);
+		G_ActorModifyCounters(attacker, actor, 0, 1, 0);
+		G_ActorModifyCounters(actor->link, actor, 0, 0, -1);
 	} else {
-		G_ActorModifyCounters(attacker, ent, -1, 1, 0);
+		G_ActorModifyCounters(attacker, actor, -1, 1, 0);
 	}
 
 	return true;

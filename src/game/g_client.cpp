@@ -403,13 +403,13 @@ bool G_ActionCheckForCurrentTeam (const Player& player, Edict* ent, int TU)
  * the action with
  * @sa G_ActionCheck
  */
-bool G_ActionCheckForReaction (const Player& player, Actor* ent, int TU)
+bool G_ActionCheckForReaction (const Player& player, Actor* actor, int TU)
 {
-	if (TU > ent->getTus()) {
+	if (TU > actor->getTus()) {
 		return false;
 	}
 
-	return G_ActionCheck(player, ent);
+	return G_ActionCheck(player, actor);
 }
 
 /**
@@ -468,16 +468,16 @@ static void G_ClientStateChangeUpdate (Edict& ent)
 /**
  * @brief Changes the state of a player/soldier.
  * @param[in,out] player The player who controlls the actor
- * @param[in] ent the edict to perform the state change for
+ * @param[in] actor the edict to perform the state change for
  * @param[in] reqState The bit-map of the requested state change
  * @param[in] checkaction only activate the events - network stuff is handled in the calling function
  * don't even use the G_ActionCheckForCurrentTeam function
  * @note Use checkaction true only for e.g. spawning values
  */
-void G_ClientStateChange (const Player& player, Actor* ent, int reqState, bool checkaction)
+void G_ClientStateChange (const Player& player, Actor* actor, int reqState, bool checkaction)
 {
 	/* Check if any action is possible. */
-	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 0))
+	if (checkaction && !G_ActionCheckForCurrentTeam(player, actor, 0))
 		return;
 
 	if (!reqState)
@@ -486,40 +486,40 @@ void G_ClientStateChange (const Player& player, Actor* ent, int reqState, bool c
 	switch (reqState) {
 	case STATE_CROUCHED: /* Toggle between crouch/stand. */
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
-		if (!checkaction || G_ActionCheckForCurrentTeam(player, ent, TU_CROUCH)) {
-			if (G_IsCrouched(ent)) {
-				if (!gi.CanActorStandHere(ent->fieldSize, ent->pos))
+		if (!checkaction || G_ActionCheckForCurrentTeam(player, actor, TU_CROUCH)) {
+			if (G_IsCrouched(actor)) {
+				if (!gi.CanActorStandHere(actor->fieldSize, actor->pos))
 					break;
 			}
-			G_ToggleCrouched(ent);
-			G_ActorUseTU(ent, TU_CROUCH);
-			G_ActorSetMaxs(ent);
+			G_ToggleCrouched(actor);
+			G_ActorUseTU(actor, TU_CROUCH);
+			G_ActorSetMaxs(actor);
 		}
 		break;
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
-		if (G_IsReaction(ent)) {
-			if (ent->isShaken() && G_ReactionFireSettingsReserveTUs(ent)) {
+		if (G_IsReaction(actor)) {
+			if (actor->isShaken() && G_ReactionFireSettingsReserveTUs(actor)) {
 				G_ClientPrintf(player, PRINT_HUD, _("Currently shaken, won't let their guard down."));
 			} else {
 				/* Turn off reaction fire. */
-				G_RemoveReaction(ent);
-				G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
-				if (!G_IsAI(ent))
-					G_EventReactionFireChange(*ent);
+				G_RemoveReaction(actor);
+				G_ActorReserveTUs(actor, 0, actor->chr.reservedTus.shot, actor->chr.reservedTus.crouch);
+				if (!G_IsAI(actor))
+					G_EventReactionFireChange(*actor);
 			}
 		}
 		break;
 	/* Request to turn on multi- or single-reaction fire mode. */
 	case STATE_REACTION:
 		/* Disable reaction fire. */
-		G_RemoveReaction(ent);
+		G_RemoveReaction(actor);
 
-		if (G_ReactionFireSettingsReserveTUs(ent)) {
+		if (G_ReactionFireSettingsReserveTUs(actor)) {
 			/* Enable requested reaction fire. */
-			G_SetState(ent, reqState);
+			G_SetState(actor, reqState);
 		}
-		if (!G_IsAI(ent))
-			G_EventReactionFireChange(*ent);
+		if (!G_IsAI(actor))
+			G_EventReactionFireChange(*actor);
 		break;
 	default:
 		gi.DPrintf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
@@ -530,7 +530,7 @@ void G_ClientStateChange (const Player& player, Actor* ent, int reqState, bool c
 	if (!checkaction)
 		return;
 
-	G_ClientStateChangeUpdate(*ent);
+	G_ClientStateChangeUpdate(*actor);
 }
 
 /**
