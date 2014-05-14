@@ -33,7 +33,7 @@ void G_ReactionFirePostShot(Edict* target);
 void G_ReactionFireReset(int team);
 void G_ReactionFireNofityClientStartMove(const Edict* target);
 void G_ReactionFireNofityClientEndMove(const Edict* target);
-void G_ReactionFireSettingsUpdate(Edict* ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t* od);
+void G_ReactionFireSettingsUpdate(Actor* ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t* od);
 void G_ReactionFireNofityClientRFAborted(const Edict* shooter, const Edict* target, int step);
 bool G_ReactionFireSettingsReserveTUs(Edict* ent);
 bool G_ReactionFireOnMovement(Edict* target, int step);

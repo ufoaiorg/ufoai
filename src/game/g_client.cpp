@@ -720,7 +720,7 @@ int G_ClientAction (Player& player)
 		actorHands_t hand;
 		int fmIdx, objIdx;
 		gi.ReadFormat(format, &hand, &fmIdx, &objIdx);
-		G_ReactionFireSettingsUpdate(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
+		G_ReactionFireSettingsUpdate(actor, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		break;
 
 	case PA_RESERVE_STATE:
