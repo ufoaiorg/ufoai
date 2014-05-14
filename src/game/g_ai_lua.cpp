@@ -709,7 +709,7 @@ static int AIL_reactionfire (lua_State* L)
 		}
 	}
 
-	lua_pushboolean(L, G_IsReaction(AIL_ent));
+	lua_pushboolean(L, AIL_ent->isReaction());
 	return 1;
 }
 

@@ -650,7 +650,7 @@ static void AI_SearchBestTarget (AiAction* aia, const Edict* ent, Actor* check, 
 			/* It is said that there is no kill like overkill but... */
 			dmg = std::min(dmg, check->HP * SCORE_DAMAGE_FACTOR) * SCORE_DAMAGE / check->HP;
 
-			if (dmg > check->HP && G_IsReaction(check))
+			if (dmg > check->HP && check->isReaction())
 				/* reaction shooters eradication bonus */
 				dmg = check->HP + SCORE_KILL + SCORE_REACTION_ERADICATION;
 			else if (dmg > check->HP)

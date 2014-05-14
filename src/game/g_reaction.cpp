@@ -539,7 +539,7 @@ void G_ReactionFireSettingsUpdate (Actor* ent, fireDefIndex_t fmIdx, actorHands_
 	G_EventReactionFireChange(*ent);
 
 	/* If reaction fire is active, update the reserved TUs */
-	if (G_IsReaction(ent)) {
+	if (ent->isReaction()) {
 		G_ReactionFireSettingsReserveTUs(ent);
 	}
 }
@@ -692,7 +692,7 @@ bool ReactionFire::canReact (Actor* shooter, const Edict* target) const
 		return false;
 
 	/* check shooter has reaction fire enabled */
-	if (!G_IsReaction(shooter))
+	if (!shooter->isReaction())
 		return false;
 
 	/* check shooter has weapon in RF hand */
