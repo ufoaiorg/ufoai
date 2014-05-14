@@ -1674,7 +1674,7 @@ static void AI_InitPlayer (const Player& player, Actor* actor, const equipDef_t*
 
 	/* after equipping the actor we can also get the model indices */
 	actor->setBody(gi.ModelIndex(CHRSH_CharGetBody(&actor->chr)));
-	actor->head = gi.ModelIndex(CHRSH_CharGetHead(&actor->chr));
+	actor->setHead(gi.ModelIndex(CHRSH_CharGetHead(&actor->chr)));
 
 	/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
 	if (frand() < 0.75f) {

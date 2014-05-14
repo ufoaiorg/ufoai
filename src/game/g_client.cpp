@@ -1217,7 +1217,7 @@ static void G_ClientAssignDefaultActorValues (Actor* actor)
 
 	/* set models */
 	actor->setBody(gi.ModelIndex(CHRSH_CharGetBody(&actor->chr)));
-	actor->head = gi.ModelIndex(CHRSH_CharGetHead(&actor->chr));
+	actor->setHead(gi.ModelIndex(CHRSH_CharGetHead(&actor->chr)));
 
 	actor->chr.scoreMission->carriedWeight = actor->chr.inv.getWeight();
 }

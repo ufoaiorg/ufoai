@@ -97,8 +97,8 @@ protected:
 	int pnum;					/**< the actual player slot */
 	/** the model indices */
 	unsigned int body;
-public:
 	unsigned int head;
+public:
 	int frame;					/**< frame of the model to show */
 
 	char* group;				/**< this can be used to trigger a group of entities
@@ -358,6 +358,12 @@ public:
 	}
 	inline void setBody(unsigned int body_) {
 		body = body_;
+	}
+	inline unsigned int getHead() const {
+		return head;
+	}
+	inline void setHead(unsigned int head_) {
+		head = head_;
 	}
 /**
  * @brief Calculates the amount of usable TUs. This is without the reserved TUs.
