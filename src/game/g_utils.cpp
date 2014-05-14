@@ -567,7 +567,7 @@ int G_TouchTriggers (Edict* ent)
 			continue;
 		if (!hit->hasTouch())
 			continue;
-		if (hit->dmg == 0 && G_IsStunned(actor))
+		if (hit->dmg == 0 && actor->isStunned())
 			continue;
 		if (hit->callTouch(actor))
 			usedNum++;

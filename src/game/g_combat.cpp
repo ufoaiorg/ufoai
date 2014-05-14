@@ -1282,7 +1282,7 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 				return false;
 		}
 		/* Check we aren't trying to heal a dead actor */
-		if (targetEnt != nullptr && (G_IsDead(targetEnt) && !G_IsStunned(targetEnt)))
+		if (targetEnt != nullptr && (G_IsDead(targetEnt) && !targetEnt->isStunned()))
 			return false;
 
 		/* start shoot */

@@ -376,7 +376,7 @@ static void G_ActorRevitalise (Edict* ent)
 
 void G_ActorCheckRevitalise (Actor* actor)
 {
-	if (G_IsStunned(actor) && actor->getStun() < actor->HP) {
+	if (actor->isStunned() && actor->getStun() < actor->HP) {
 		/* check that we could move after we stood up */
 		Edict* otherActor = nullptr;
 		while ((otherActor = G_EdictsGetNextInUse(otherActor))) {
@@ -438,7 +438,7 @@ bool G_ActorDieOrStun (Actor* actor, Edict* attacker)
 		return false;
 	}
 
-	if (!G_IsStunned(actor))
+	if (!actor->isStunned())
 		actor->solid = SOLID_NOT;
 
 	/* send death */

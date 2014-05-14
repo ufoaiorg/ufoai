@@ -355,6 +355,7 @@ public:
 	}
 	inline bool isState(int flag) const	{return state & flag;}
 	inline bool isShaken() const		{return isState(STATE_SHAKEN);}
+	inline bool isStunned() const		{return (isState(STATE_STUN) & ~STATE_DEAD);}	/* ??? */
 
 	inline unsigned int getBody() const {
 		return body;

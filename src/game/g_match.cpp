@@ -302,7 +302,7 @@ void G_MatchEndCheck (void)
 		/* search for living but not stunned actors - there must at least be one actor
 		 * that is still able to attack or defend himself */
 		while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, i)) != nullptr) {
-			if (!G_IsStunned(actor)) {
+			if (!actor->isStunned()) {
 				last = i;
 				activeTeams++;
 				break;
