@@ -403,7 +403,7 @@ bool G_ActionCheckForCurrentTeam (const Player& player, Edict* ent, int TU)
  * the action with
  * @sa G_ActionCheck
  */
-bool G_ActionCheckForReaction (const Player& player, Edict* ent, int TU)
+bool G_ActionCheckForReaction (const Player& player, Actor* ent, int TU)
 {
 	if (TU > ent->getTus()) {
 		return false;

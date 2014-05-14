@@ -200,7 +200,7 @@ static void G_UpdateShotMock (shot_mock_t* mock, const Edict* shooter, const Edi
  * @param[in] target Pointer to target.
  * @sa G_UpdateCharacterSkills
  */
-static void G_UpdateCharacterBodycount (Edict* attacker, const fireDef_t* fd, const Edict* target)
+static void G_UpdateCharacterBodycount (Edict* attacker, const fireDef_t* fd, const Actor* target)
 {
 	chrScoreMission_t* scoreMission;
 	chrScoreGlobal_t* scoreGlobal;

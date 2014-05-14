@@ -41,7 +41,7 @@ void G_AppearPerishEvent(playermask_t player_mask, bool appear, Edict& check, co
 void G_SendInvisible(const Player& player);
 int G_GetActiveTeam(void);
 bool G_ActionCheckForCurrentTeam(const Player& player, Edict* ent, int TU);
-bool G_ActionCheckForReaction(const Player& player, Edict* ent, int TU);
+bool G_ActionCheckForReaction(const Player& player, Actor* ent, int TU);
 void G_ClientStateChange(const Player& player, Actor* ent, int reqState, bool checkaction);
 bool G_ClientCanReload(Actor* actor, containerIndex_t containerID);
 bool G_ClientGetWeaponFromInventory(Actor* actor);

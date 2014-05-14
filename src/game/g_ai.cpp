@@ -591,7 +591,7 @@ static bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const
 /**
  * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
  */
-static void AI_SearchBestTarget (AiAction* aia, const Edict* ent, Edict* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
+static void AI_SearchBestTarget (AiAction* aia, const Edict* ent, Actor* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */

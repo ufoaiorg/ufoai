@@ -354,7 +354,7 @@ void G_ActorGetEyeVector (const Edict* actor, vec3_t eye)
 		eye[2] += EYE_STAND;
 }
 
-static void G_ActorRevitalise (Edict* ent)
+static void G_ActorRevitalise (Actor* ent)
 {
 	if (G_IsStunned(ent)) {
 		G_RemoveStunned(ent);
@@ -393,7 +393,7 @@ void G_ActorCheckRevitalise (Actor* actor)
 	}
 }
 
-static bool G_ActorDie (Edict* ent, const Edict* attacker)
+static bool G_ActorDie (Actor* ent, const Edict* attacker)
 {
 	const bool stunned = G_IsStunned(ent);
 
