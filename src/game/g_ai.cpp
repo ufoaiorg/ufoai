@@ -609,7 +609,7 @@ static void AI_SearchBestTarget (AiAction* aia, const Edict* ent, Actor* check, 
 		if (shots) {
 			float dist;
 			const bool stunWeapon = (item->def()->dmgtype == gi.csi->damStunElectro || item->def()->dmgtype == gi.csi->damStunGas);
-			if (stunWeapon && !G_IsInsane(ent) && (G_IsStunned(check) || CHRSH_IsTeamDefRobot(check->chr.teamDef)))
+			if (stunWeapon && !G_IsInsane(ent) && (check->isStunned() || CHRSH_IsTeamDefRobot(check->chr.teamDef)))
 				return;
 			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 				continue;
@@ -668,7 +668,7 @@ static void AI_SearchBestTarget (AiAction* aia, const Edict* ent, Actor* check, 
 				dmg *= SCORE_CIV_FACTOR;
 
 			/* Stunned malus */
-			if (G_IsStunned(check) && !G_IsRaged(ent))
+			if (check->isStunned() && !G_IsRaged(ent))
 				dmg *= SCORE_DISABLED_FACTOR;
 
 			/* add random effects */
@@ -683,7 +683,7 @@ static void AI_SearchBestTarget (AiAction* aia, const Edict* ent, Actor* check, 
 				aia->shots = shots;
 				aia->target = check;
 				aia->fd = fd;
-				if (!fd->gravity && (fd->splrad > 0.0f || G_IsStunned(check)))
+				if (!fd->gravity && (fd->splrad > 0.0f || check->isStunned()))
 					aia->z_align = GROUND_DELTA;
 				else
 					aia->z_align = 0;

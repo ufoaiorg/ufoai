@@ -356,7 +356,7 @@ void G_ActorGetEyeVector (const Edict* actor, vec3_t eye)
 
 static void G_ActorRevitalise (Actor* actor)
 {
-	if (G_IsStunned(actor)) {
+	if (actor->isStunned()) {
 		G_RemoveStunned(actor);
 		/** @todo have a look at the morale value of
 		 * the actor and maybe get into rage or panic? */
@@ -395,7 +395,7 @@ void G_ActorCheckRevitalise (Actor* actor)
 
 static bool G_ActorDie (Actor* actor, const Edict* attacker)
 {
-	const bool stunned = G_IsStunned(actor);
+	const bool stunned = actor->isStunned();
 
 	G_RemoveStunned(actor);
 

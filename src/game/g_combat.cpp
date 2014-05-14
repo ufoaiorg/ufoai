@@ -234,7 +234,7 @@ static void G_UpdateCharacterBodycount (Edict* attacker, const fireDef_t* fd, co
 		return;
 	}
 
-	if (G_IsStunned(target)) {
+	if (target->isStunned()) {
 		scoreMission->stuns[type]++;
 		scoreGlobal->stuns[type]++;
 	} else if (G_IsDead(target)) {
