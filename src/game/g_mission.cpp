@@ -92,7 +92,7 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 					continue;
 
 				/* drop the weapon - even if out of TUs */
-				G_ActorInvMove(activator, cont->def(), item, INVDEF(CID_FLOOR), NONE, NONE, false);
+				G_ActorInvMove(makeActor(activator), cont->def(), item, INVDEF(CID_FLOOR), NONE, NONE, false);
 				gi.BroadcastPrintf(PRINT_HUD, _("Item was placed."));
 				self->owner()->count = level.actualRound;
 				return true;

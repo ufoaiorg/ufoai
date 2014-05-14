@@ -695,7 +695,7 @@ int G_ClientAction (Player& player)
 			const invDef_t* toPtr = INVDEF(to);
 			Item* fromItem = ent->chr.inv.getItemAtPos(fromPtr, fx, fy);
 			if (fromItem)
-				G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, true);
+				G_ActorInvMove(actor, fromPtr, fromItem, toPtr, tx, ty, true);
 		}
 		break;
 

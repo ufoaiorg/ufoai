@@ -79,6 +79,6 @@ void G_ActorGetEyeVector(const Edict* actor, vec3_t eye);
 void G_ActorCheckRevitalise(Actor* actor);
 bool G_ActorDieOrStun(Actor* ent, Edict* attacker);
 int G_ActorGetContentFlags(const vec3_t origin);
-bool G_ActorInvMove(Edict* ent, const invDef_t* from, Item* fItem, const invDef_t* to, int tx, int ty, bool checkaction);
+bool G_ActorInvMove(Actor* ent, const invDef_t* from, Item* fItem, const invDef_t* to, int tx, int ty, bool checkaction);
 bool G_ActorReload(Actor* actor, const invDef_t* invDef);
 int G_ActorGetModifiedTimeForFiredef(const Edict* ent, const fireDef_t* const fd, bool reaction);

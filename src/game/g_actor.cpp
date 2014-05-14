@@ -492,7 +492,7 @@ int G_ActorGetContentFlags (const vec3_t origin)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-bool G_ActorInvMove (Edict* actor, const invDef_t* fromContType, Item* fItem, const invDef_t* toContType, int tx, int ty, bool checkaction)
+bool G_ActorInvMove (Actor* actor, const invDef_t* fromContType, Item* fItem, const invDef_t* toContType, int tx, int ty, bool checkaction)
 {
 	assert(fItem);
 	assert(fItem->def());
