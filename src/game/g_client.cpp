@@ -398,8 +398,8 @@ bool G_ActionCheckForCurrentTeam (const Player& player, Edict* ent, int TU)
 /**
  * @brief Checks whether the requested action is possible
  * @param[in] player Which player (human player) is trying to do the action
- * @param[in] ent Which of his units is trying to do the action.
- * @param[in] TU The time units to check against the ones ent has.
+ * @param[in] actor Which of his units is trying to do the action.
+ * @param[in] TU The time units to check against the ones actor has.
  * the action with
  * @sa G_ActionCheck
  */
