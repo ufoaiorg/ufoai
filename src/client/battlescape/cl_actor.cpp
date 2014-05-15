@@ -213,21 +213,18 @@ bool CL_ActorIsReactionFireOutOfRange (const le_t* shooter, const le_t* target)
  */
 int CL_ActorReservedTUs (const le_t* le, const reservation_types_t type)
 {
-	character_t* chr;
-	int reservedReaction, reservedCrouch, reservedShot;
-
 	if (!le)
 		return -1;
 
-	chr = CL_ActorGetChr(le);
+	const character_t* chr = CL_ActorGetChr(le);
 	if (!chr) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ActorReservedTUs: No character found for le.\n");
 		return -1;
 	}
 
-	reservedReaction = std::max(0, chr->reservedTus.reaction);
-	reservedCrouch = std::max(0, chr->reservedTus.crouch);
-	reservedShot = std::max(0, chr->reservedTus.shot);
+	const int reservedReaction = std::max(0, chr->reservedTus.reaction);
+	const int reservedCrouch = std::max(0, chr->reservedTus.crouch);
+	const int reservedShot = std::max(0, chr->reservedTus.shot);
 
 	switch (type) {
 	case RES_ALL:
@@ -275,14 +272,12 @@ int CL_ActorUsableTUs (const le_t* le)
  */
 void CL_ActorReserveTUs (const le_t* le, const reservation_types_t type, const int tus)
 {
-	character_t* chr;
-
 	assert(type != RES_REACTION);
 
 	if (!le || tus < 0)
 		return;
 
-	chr = CL_ActorGetChr(le);
+	character_t* chr = CL_ActorGetChr(le);
 	if (chr) {
 		chrReservations_t res = chr->reservedTus;
 
@@ -366,19 +361,17 @@ ACTOR SELECTION AND TEAM LIST
  */
 void CL_ActorAddToTeamList (le_t* le)
 {
-	int actorIdx;
-	const size_t size = lengthof(cl.teamList);
-
 	/* test team */
 	if (!le || le->team != cls.team || le->pnum != cl.pnum || LE_IsDead(le))
 		return;
 
 	/* check list for that actor */
-	actorIdx = CL_ActorGetNumber(le);
+	int actorIdx = CL_ActorGetNumber(le);
 
 	/* add it */
 	if (actorIdx == -1) {
 		/* check list length */
+		const size_t size = lengthof(cl.teamList);
 		if (cl.numTeamList >= size) {
 			Com_Printf("Too many actors on the teamlist!\n");
 			return;
@@ -406,12 +399,10 @@ void CL_ActorCleanup (le_t* le)
  */
 void CL_ActorRemoveFromTeamList (le_t* le)
 {
-	int i;
-
 	if (!le)
 		return;
 
-	for (i = 0; i < cl.numTeamList; i++) {
+	for (int i = 0; i < cl.numTeamList; i++) {
 		if (cl.teamList[i] == le) {
 			if (!LE_IsStunned(le)) {
 				CL_ActorCleanup(le);
@@ -432,6 +423,7 @@ void CL_ActorRemoveFromTeamList (le_t* le)
 
 	/* check selection */
 	if (LE_IsSelected(le)) {
+		int i;
 		for (i = 0; i < cl.numTeamList; i++) {
 			le_t* tl = cl.teamList[i];
 			if (tl && CL_ActorSelect(tl))
@@ -451,9 +443,6 @@ void CL_ActorRemoveFromTeamList (le_t* le)
  */
 bool CL_ActorSelect (le_t* le)
 {
-	int actorIdx;
-	character_t* chr;
-
 	/* test team */
 	if (!le) {
 		if (selActor)
@@ -489,14 +478,14 @@ bool CL_ActorSelect (le_t* le)
 	else
 		UI_ExecuteConfunc("disable_clientaction");
 
-	actorIdx = CL_ActorGetNumber(le);
+	const int actorIdx = CL_ActorGetNumber(le);
 	if (actorIdx == -1)
 		return false;
 
 	/* console commands, update cvars */
 	Cvar_ForceSet("cl_selected", va("%i", actorIdx));
 
-	chr = CL_ActorGetChr(le);
+	const character_t* chr = CL_ActorGetChr(le);
 	if (!chr)
 		Com_Error(ERR_DROP, "No character given for local entity!");
 
@@ -520,14 +509,12 @@ bool CL_ActorSelect (le_t* le)
  */
 bool CL_ActorSelectList (int num)
 {
-	le_t* le;
-
 	/* check if actor exists */
 	if (num >= cl.numTeamList || num < 0)
 		return false;
 
 	/* select actor */
-	le = cl.teamList[num];
+	le_t* le = cl.teamList[num];
 	if (!le || !CL_ActorSelect(le))
 		return false;
 
@@ -545,10 +532,9 @@ bool CL_ActorSelectNext (void)
 {
 	int selIndex = -1;
 	const int num = cl.numTeamList;
-	int i;
 
 	/* find index of currently selected actor */
-	for (i = 0; i < num; i++) {
+	for (int i = 0; i < num; i++) {
 		const le_t* le = cl.teamList[i];
 		if (le && le->inuse && LE_IsSelected(le) && !LE_IsDead(le)) {
 			selIndex = i;
@@ -559,7 +545,7 @@ bool CL_ActorSelectNext (void)
 		return false;			/* no one selected? */
 
 	/* cycle round */
-	i = selIndex;
+	int i = selIndex;
 	while (true) {
 		i = (i + 1) % num;
 		if (i == selIndex)
@@ -577,10 +563,9 @@ bool CL_ActorSelectPrev (void)
 {
 	int selIndex = -1;
 	const int num = cl.numTeamList;
-	int i;
 
 	/* find index of currently selected actor */
-	for (i = 0; i < num; i++) {
+	for (int i = 0; i < num; i++) {
 		const le_t* le = cl.teamList[i];
 		if (le && le->inuse && LE_IsSelected(le) && !LE_IsDead(le)) {
 			selIndex = i;
@@ -591,10 +576,13 @@ bool CL_ActorSelectPrev (void)
 		return false;			/* no one selected? */
 
 	/* cycle round */
-	i = selIndex;
+	int i = selIndex;
 	while (true) {
 	/*	i = (i - 1) % num; */
-		i--; if (i < 0) i = num - 1;
+		i--;
+		if (i < 0)
+			i = num - 1;
+
 		if (i == selIndex)
 			break;
 		if (CL_ActorSelectList(i))
@@ -651,10 +639,9 @@ static void CL_BuildForbiddenList (void)
 static void CL_DisplayBlockedPaths_f (void)
 {
 	le_t* le = nullptr;
-	ptl_t* ptl;
-	vec3_t s;
 
 	while ((le = LE_GetNextInUse(le))) {
+		vec3_t s;
 		switch (le->type) {
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
@@ -671,7 +658,7 @@ static void CL_DisplayBlockedPaths_f (void)
 			continue;
 		}
 
-		ptl = CL_ParticleSpawn("blocked_field", 0, s, nullptr, nullptr);
+		ptl_t* ptl = CL_ParticleSpawn("blocked_field", 0, s, nullptr, nullptr);
 		ptl->rounds = 2;
 		ptl->roundsCnt = 2;
 		ptl->life = 10000;
@@ -758,13 +745,13 @@ static byte CL_ActorMoveLength (const le_t* le, const pos3_t to)
 	const int autostandTU = useAutostand ? 2 * TU_CROUCH : 0;
 	byte crouchingState = LE_IsCrouched(le) && !useAutostand ? 1 : 0;
 	const int length = Grid_MoveLength(&cl.pathMap, to, crouchingState, false);
-	int dvec, numSteps = 0;
-	pos3_t pos;
 
 	if (!length || length == ROUTING_NOT_REACHABLE)
 		return length;
 
+	pos3_t pos;
 	VectorCopy(to, pos);
+	int dvec, numSteps = 0;
 	while ((dvec = Grid_MoveNext(&cl.pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		++numSteps;
 		PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
@@ -792,27 +779,25 @@ void CL_ActorResetMoveLength (le_t* le)
  */
 static bool CL_ActorTraceMove (const pos3_t to)
 {
-	byte length;
-	vec3_t vec, oldVec;
-	pos3_t pos;
-	int dvec;
-	byte crouchingState;
-
 	if (!selActor)
 		return false;
 
-	length = CL_ActorMoveLength(selActor, to);
+	byte length = CL_ActorMoveLength(selActor, to);
 	if (!length || length >= ROUTING_NOT_REACHABLE)
 		return false;
 
-	crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 
+	vec3_t oldVec;
 	Grid_PosToVec(cl.mapData->routing, selActor->fieldSize, to, oldVec);
+	pos3_t pos;
 	VectorCopy(to, pos);
 
+	int dvec;
+	byte crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 	while ((dvec = Grid_MoveNext(&cl.pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		length = CL_ActorMoveLength(selActor, pos);
 		PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
+		vec3_t vec;
 		Grid_PosToVec(cl.mapData->routing, selActor->fieldSize, pos, vec);
 		if (length > CL_ActorUsableTUs(selActor))
 			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec);
@@ -834,15 +819,15 @@ static bool CL_ActorTraceMove (const pos3_t to)
  */
 static void CL_ActorMaximumMove (const pos3_t to, const le_t* le, pos3_t pos)
 {
-	int dvec;
-	byte crouchingState = le && LE_IsCrouched(le) ? 1 : 0;
-	const int tus = CL_ActorUsableTUs(le);
 	const byte length = CL_ActorMoveLength(le, to);
 	if (!length || length >= ROUTING_NOT_REACHABLE)
 		return;
 
 	VectorCopy(to, pos);
 
+	int dvec;
+	byte crouchingState = le && LE_IsCrouched(le) ? 1 : 0;
+	const int tus = CL_ActorUsableTUs(le);
 	while ((dvec = Grid_MoveNext(&cl.pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		const byte length2 = CL_ActorMoveLength(le, pos);
 		if (length2 <= tus)
@@ -865,16 +850,13 @@ void CL_ActorSetMode (le_t* actor, actorModes_t actorMode)
  */
 void CL_ActorStartMove (le_t* le, const pos3_t to)
 {
-	byte length;
-	pos3_t toReal;
-
 	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 
 	if (!CL_ActorCheckAction(le))
 		return;
 
-	length = CL_ActorMoveLength(le, to);
+	byte length = CL_ActorMoveLength(le, to);
 
 	if (!length || length >= ROUTING_NOT_REACHABLE) {
 		/* move not valid, don't even care to send */
@@ -882,6 +864,7 @@ void CL_ActorStartMove (le_t* le, const pos3_t to)
 	}
 
 	/* Get the last position we can walk to with the usable TUs. */
+	pos3_t toReal;
 	CL_ActorMaximumMove(to, le, toReal);
 
 	/* Get the cost of the new position just in case. */
@@ -908,14 +891,13 @@ void CL_ActorStartMove (le_t* le, const pos3_t to)
  */
 void CL_ActorShoot (const le_t* le, const pos3_t at)
 {
-	int type;
-
 	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 
 	if (!CL_ActorCheckAction(le))
 		return;
 
+	int type;
 	if (IS_MODE_FIRE_RIGHT(le->actorMode)) {
 		type = ST_RIGHT;
 	} else if (IS_MODE_FIRE_LEFT(le->actorMode)) {
@@ -937,12 +919,11 @@ void CL_ActorShoot (const le_t* le, const pos3_t at)
  */
 int CL_ActorGetContainerForReload (Item** ammoItem, const Inventory* inv, const objDef_t* weapon)
 {
-	containerIndex_t container;
 	int tu = 100;
 	containerIndex_t bestContainer = NONE;
 
 	/* also search the linked ground floor tile (temp container) */
-	for (container = 0; container < CID_MAX; container++) {
+	for (containerIndex_t container = 0; container < CID_MAX; container++) {
 		if (INVDEF(container)->out >= tu)
 			continue;
 		/* Once we've found at least one clip, there's no point
@@ -1001,7 +982,7 @@ void CL_ActorReload (le_t* le, containerIndex_t containerID)
 	}
 
 	Item* ic;
-	containerIndex_t bestContainer = CL_ActorGetContainerForReload(&ic, inv, weapon);
+	const containerIndex_t bestContainer = CL_ActorGetContainerForReload(&ic, inv, weapon);
 	/* send request */
 	if (bestContainer != NONE) {
 		int x, y;
@@ -1026,12 +1007,11 @@ void CL_ActorReload (le_t* le, containerIndex_t containerID)
  */
 void CL_ActorInvMove (const le_t* le, containerIndex_t fromContainer, int fromX, int fromY, containerIndex_t toContainer, int toX, int toY)
 {
-	const invDef_t* fromPtr = INVDEF(fromContainer);
-
 	assert(CL_BattlescapeRunning());
 	assert(le);
 	assert(LE_IsActor(le));
 
+	const invDef_t* fromPtr = INVDEF(fromContainer);
 	const Item* item = le->inv.getItemAtPos(fromPtr, fromX, fromY);
 
 	if (item != nullptr) {
@@ -1097,9 +1077,6 @@ bool CL_ActorFireModeActivated (const actorModes_t mode)
  */
 void CL_ActorTurnMouse (void)
 {
-	vec3_t directionVector;
-	dvec_t dvec;
-
 	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 
@@ -1118,8 +1095,9 @@ void CL_ActorTurnMouse (void)
 	}
 
 	/* calculate dvec */
+	vec3_t directionVector;
 	VectorSubtract(mousePos, selActor->pos, directionVector);
-	dvec = AngleToDV((int) (atan2(directionVector[1], directionVector[0]) * todeg));
+	const dvec_t dvec = AngleToDV((int) (atan2(directionVector[1], directionVector[0]) * todeg));
 
 	/* send message to server */
 	MSG_Write_PA(PA_TURN, selActor->entnum, dvec);
@@ -1315,24 +1293,22 @@ MOUSE SCANNING
  */
 void CL_GetWorldCoordsUnderMouse (vec3_t groundIntersection, vec3_t upperTracePoint, vec3_t lowerTracePoint)
 {
-	/* TODO: Move this to cl_battlescape.cpp? This functino is not directly related to actors. */
-	float cur[2], frustumSlope[2];
-	const float projectionDistance = 2048.0f;
-	float nDotP2minusP1;
-	vec3_t forward, right, up, stop;
-	vec3_t from, end;
-	vec3_t mapNormal, P3, P2minusP1;
+	/* TODO: Move this to cl_battlescape.cpp? This function is not directly related to actors. */
 
 	/* get cursor position as a -1 to +1 range for projection */
+	float cur[2];
 	cur[0] = (mousePosX * viddef.rx - viddef.viewWidth * 0.5 - viddef.x) / (viddef.viewWidth * 0.5);
 	cur[1] = (mousePosY * viddef.ry - viddef.viewHeight * 0.5 - viddef.y) / (viddef.viewHeight * 0.5);
 
 	/* get trace vectors */
+	vec3_t from, forward, right, up;
 	VectorCopy(cl.cam.camorg, from);
 	VectorCopy(cl.cam.axis[0], forward);
 	VectorCopy(cl.cam.axis[1], right);
 	VectorCopy(cl.cam.axis[2], up);
 
+	float frustumSlope[2];
+	const float projectionDistance = 2048.0f;
 	if (cl_isometric->integer)
 		frustumSlope[0] = 10.0 * refdef.fieldOfViewX;
 	else
@@ -1340,6 +1316,7 @@ void CL_GetWorldCoordsUnderMouse (vec3_t groundIntersection, vec3_t upperTracePo
 	frustumSlope[1] = frustumSlope[0] * ((float)viddef.viewHeight / (float)viddef.viewWidth);
 
 	/* transform cursor position into perspective space */
+	vec3_t stop;
 	VectorMA(from, projectionDistance, forward, stop);
 	VectorMA(stop, cur[0] * frustumSlope[0], right, stop);
 	VectorMA(stop, cur[1] * -frustumSlope[1], up, stop);
@@ -1365,18 +1342,19 @@ void CL_GetWorldCoordsUnderMouse (vec3_t groundIntersection, vec3_t upperTracePo
 	 *     u = (mapNormal dot (P3 - P1))/(mapNormal dot (P2 - P1))
 	 * Note: in the code below from & stop represent P1 and P2 respectively
 	 */
+	vec3_t mapNormal, P3, P2minusP1;
 	VectorSet(P3, 0., 0., cl_worldlevel->integer * UNIT_HEIGHT + CURSOR_OFFSET);
 	VectorSet(mapNormal, 0., 0., 1.);
 	VectorSubtract(stop, from, P2minusP1);
-	nDotP2minusP1 = DotProduct(mapNormal, P2minusP1);
+	const float nDotP2minusP1 = DotProduct(mapNormal, P2minusP1);
 
 	/* calculate intersection directly if angle is not parallel to the map plane */
+	vec3_t end;
 	if (nDotP2minusP1 > 0.01 || nDotP2minusP1 < -0.01) {
-		float u;
 		vec3_t dir, P3minusP1;
 
 		VectorSubtract(P3, from, P3minusP1);
-		u = DotProduct(mapNormal, P3minusP1) / nDotP2minusP1;
+		const float u = DotProduct(mapNormal, P3minusP1) / nDotP2minusP1;
 		VectorScale(P2minusP1, (vec_t)u, dir);
 		VectorAdd(from, dir, end);
 	} else { /* otherwise do a full trace */
@@ -1399,14 +1377,12 @@ void CL_GetWorldCoordsUnderMouse (vec3_t groundIntersection, vec3_t upperTracePo
 bool CL_ActorMouseTrace (void)
 {
 	vec3_t from, stop, end;
-	vec3_t pA, pB, pC;
-	pos3_t testPos;
-	le_t* interactLe;
-
 	CL_GetWorldCoordsUnderMouse(end, from, stop);
+	pos3_t testPos;
 	VecToPos(end, testPos);
 	/* hack to prevent cursor from getting stuck on the top of an invisible
 	 * playerclip surface (in most cases anyway) */
+	vec3_t pA;
 	PosToVec(testPos, pA);
 	/* ensure that the cursor is in the world, if this is not done, the tracer box is
 	 * drawn in the void on the first level and the menu key bindings might get executed
@@ -1415,6 +1391,7 @@ bool CL_ActorMouseTrace (void)
 	if (CL_OutsideMap(pA, MAP_SIZE_OFFSET))
 		return false;
 
+	vec3_t pB;
 	VectorCopy(pA, pB);
 	pA[2] += UNIT_HEIGHT;
 	pB[2] -= UNIT_HEIGHT;
@@ -1422,6 +1399,7 @@ bool CL_ActorMouseTrace (void)
 	 * we don't have to do the second Grid_Fall call at all and can save a lot
 	 * of traces */
 	pos_t restingLevel = Grid_Fall(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), testPos);
+	vec3_t pC;
 	CM_EntTestLineDM(cl.mapTiles, Line(pA, pB), pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	VecToPos(pC, testPos);
 	/* VecToPos strictly rounds the values down, while routing will round floors up to the next QUANT.
@@ -1452,7 +1430,7 @@ bool CL_ActorMouseTrace (void)
 	testPos[2] = restingLevel;
 	VectorCopy(testPos, mousePos);
 
-	interactLe = CL_BattlescapeSearchAtGridPos(mousePos, false, selActor);
+	le_t* interactLe = CL_BattlescapeSearchAtGridPos(mousePos, false, selActor);
 	if (interactLe != nullptr && LE_IsActor(interactLe)) {
 		mouseActor = interactLe;
 		interactEntity = nullptr;
@@ -1494,11 +1472,13 @@ void CL_BattlescapeMouseDragging (void)
 {
 	/* TODO: the movement is snapping to the cell center, and is clunky - make it smooth */
 	/* Difference between last and currently selected cell, we'll move camera by that difference */
-	vec3_t currentMousePos, mousePosDiff;
+	vec3_t currentMousePos;
 
 	CL_GetWorldCoordsUnderMouse(currentMousePos, nullptr, nullptr);
 	if (fabs(currentMousePos[0] - mouseDraggingPos[0]) + fabs(currentMousePos[1] - mouseDraggingPos[1]) < 0.5f)
 		return;
+
+	vec3_t mousePosDiff;
 	VectorSubtract(mouseDraggingPos, currentMousePos, mousePosDiff);
 	VectorMA(cl.cam.origin, 0.2f, mousePosDiff, cl.cam.origin); /* Move camera slowly to the dest point, to prevent shaking */
 	Cvar_SetValue("cl_worldlevel", truePos[2]); /* Do not change world level */
@@ -1542,7 +1522,6 @@ bool CL_AddActor (le_t* le, entity_t* ent)
 		return false;
 
 	const bool hasTagHead = R_GetTagIndexByName(le->model1, "tag_head") != -1;
-	const int delta = hasTagHead ? 2 : 1;
 
 	if (LE_IsStunned(le)) {
 		if (!le->ptl)
@@ -1551,6 +1530,7 @@ bool CL_AddActor (le_t* le, entity_t* ent)
 		/* add the weapons to the actor's hands */
 		const bool addLeftHandWeapon = CL_AddActorWeapon(le->left);
 		const bool addRightHandWeapon = CL_AddActorWeapon(le->right);
+		const int delta = hasTagHead ? 2 : 1;
 		/* add left hand weapon */
 		if (addLeftHandWeapon) {
 			entity_t leftHand(RF_NONE);
@@ -1673,33 +1653,31 @@ static void CL_TargetingRadius (const vec3_t center, const float radius)
  */
 static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActorSize, const pos3_t toPos)
 {
-	vec3_t start, end;
-	vec3_t dir, mid, temp;
-	bool crossNo;
-	le_t* target = nullptr;
-	actorSizeEnum_t toActorSize;
-
 	if (!selActor || !selActor->fd)
 		return;
 
 	/* search for an actor at target */
-	target = CL_BattlescapeSearchAtGridPos(toPos, true, nullptr);
+	le_t* target = CL_BattlescapeSearchAtGridPos(toPos, true, nullptr);
 
 	/* Determine the target's size. */
-	toActorSize = target
+	const actorSizeEnum_t toActorSize = target
 		? target->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
+	vec3_t start, end;
 	Grid_PosToVec(cl.mapData->routing, fromActorSize, fromPos, start);
 	Grid_PosToVec(cl.mapData->routing, toActorSize, toPos, end);
 	if (mousePosTargettingAlign)
 		end[2] -= mousePosTargettingAlign;
 
 	/* calculate direction */
+	vec3_t dir;
 	VectorSubtract(end, start, dir);
 	VectorNormalize(dir);
 
 	/* calculate 'out of range point' if there is one */
+	bool crossNo;
+	vec3_t mid;
 	if (VectorDistSqr(start, end) > selActor->fd->range * selActor->fd->range) {
 		VectorMA(start, selActor->fd->range, dir, mid);
 		crossNo = true;
@@ -1708,6 +1686,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 		crossNo = false;
 	}
 
+	vec3_t temp;
 	VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
 	/* switch up to top level, this is needed to make sure our trace doesn't go through ceilings ... */
 	/** @todo is this really needed for straight targetting? - for grenades, yes, but not for straight no?
@@ -1778,9 +1757,8 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	VectorCopy(at, cross);
 
 	/* calculate parabola */
-	float vz, dt;
 	vec3_t v0, ds;
-	dt = Com_GrenadeTarget(from, at, selActor->fd->range, selActor->fd->launched, selActor->fd->rolled, v0);
+	float dt = Com_GrenadeTarget(from, at, selActor->fd->range, selActor->fd->launched, selActor->fd->rolled, v0);
 	if (!dt) {
 		CL_ParticleSpawn("cross_no", 0, cross);
 		return;
@@ -1792,7 +1770,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	ds[2] = 0;
 
 	/* paint */
-	vz = v0[2];
+	float vz = v0[2];
 
 	bool obstructed = false;
 	for (int i = 0; i < GRENADE_PARTITIONS; i++) {
@@ -1937,8 +1915,6 @@ static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
  */
 void CL_ActorTargetAlign_f (void)
 {
-	int align = GROUND_DELTA;
-
 	/* no firedef selected */
 	if (!selActor || !selActor->fd)
 		return;
@@ -1946,6 +1922,7 @@ void CL_ActorTargetAlign_f (void)
 		return;
 
 	/* user defined height align */
+	int align = GROUND_DELTA;
 	if (Cmd_Argc() == 2) {
 		align = atoi(Cmd_Argv(1));
 	} else {
@@ -2067,8 +2044,8 @@ static bool CL_AddPathingBox (pos3_t pos, bool addUnreachableCells)
 	Grid_PosToVec(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
 	VectorSubtract(ent.origin, boxShift, ent.origin);
 
-	int base; /* The floor relative to this cell */
-	base = Grid_Floor(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), pos);
+	/* The floor relative to this cell */
+	const int base = Grid_Floor(cl.mapData->routing, ACTOR_GET_FIELDSIZE(selActor), pos);
 
 	/* Paint the box green if it is reachable,
 	 * yellow if it can be entered but is too far,
@@ -2083,8 +2060,8 @@ static bool CL_AddPathingBox (pos3_t pos, bool addUnreachableCells)
 	}
 
 	/* Set the box height to the ceiling value of the cell. */
-	int height; /* The total opening size */
-	height = 2 + std::min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
+	/* The total opening size */
+	const int height = 2 + std::min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
 	ent.oldorigin[2] = height;
 	ent.oldorigin[0] = TUneed;
 	ent.oldorigin[1] = TUhave;
@@ -2228,14 +2205,15 @@ static void CL_DumpTUs_f (void)
 	if (!selActor)
 		return;
 
-	int crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
-	pos3_t pos, loc;
+	const int crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
+	pos3_t pos;
 	VectorCopy(selActor->pos, pos);
 
 	Com_Printf("TUs around (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
 	for (int y = std::max(0, pos[1] - 8); y <= std::min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
 		for (int x = std::max(0, pos[0] - 8); x <= std::min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
+			pos3_t loc;
 			VectorSet(loc, x, y, pos[2]);
 			Com_Printf("%3i ", Grid_MoveLength(&cl.pathMap, loc, crouchingState, false));
 		}
@@ -2246,13 +2224,13 @@ static void CL_DumpTUs_f (void)
 
 static void CL_DebugPath_f (void)
 {
+	if (IN_GetMouseSpace() != MS_WORLD)
+		return;
+
 	const actorSizeEnum_t actorSize = ACTOR_SIZE_NORMAL;
 	const pos_t x = mousePos[0];
 	const pos_t y = mousePos[1];
 	const pos_t z = mousePos[2];
-
-	if (IN_GetMouseSpace() != MS_WORLD)
-		return;
 
 #if 0
 	int dir = 3;
@@ -2279,9 +2257,9 @@ static void CL_DebugPath_f (void)
 
 	GridBox mbox;
 	mbox.setFromMapBounds(cl.mapData->mapBox.mins, cl.mapData->mapBox.maxs);
-	int xW = mbox.getMaxX() - mbox.getMinX();
-	int yW = mbox.getMaxY() - mbox.getMinY();
-	int zW = mbox.getMaxZ() - mbox.getMinZ();
+	const int xW = mbox.getMaxX() - mbox.getMinX();
+	const int yW = mbox.getMaxY() - mbox.getMinY();
+	const int zW = mbox.getMaxZ() - mbox.getMinZ();
 	Com_Printf("Statistics:\nWorldsize(x/y/z) %i/%i/%i\n", xW, yW, zW);
 	int numCells = xW * yW * zW;
 	Com_Printf("number of Cells: %i\n", numCells);
@@ -2352,14 +2330,14 @@ static void CL_ActorUpdate_f (void)
  */
 static bool CL_ActorVis (const le_t* le, const le_t* check)
 {
-	vec3_t test, dir;
-	float delta;
 	vec3_t from;
 
 	VectorCopy(le->origin, from);
 
 	/* start on eye height */
+	vec3_t test;
 	VectorCopy(check->origin, test);
+	float delta;
 	if (LE_IsDead(check)) {
 		test[2] += PLAYER_DEAD;
 		delta = 0;
@@ -2372,6 +2350,7 @@ static bool CL_ActorVis (const le_t* le, const le_t* check)
 	}
 
 	/* side shifting -> better checks */
+	vec3_t dir;
 	dir[0] = from[1] - check->origin[1];
 	dir[1] = check->origin[0] - from[0];
 	dir[2] = 0;
@@ -2442,10 +2421,9 @@ static void CL_NextAlien_f (void)
 
 	int i = lastAlien;
 	do {
-		const le_t* le;
 		if (++i >= cl.numLEs)
 			i = 0;
-		le = &cl.LEs[i];
+		const le_t* le = &cl.LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
@@ -2470,10 +2448,9 @@ static void CL_PrevAlien_f (void)
 
 	int i = lastAlien;
 	do {
-		const le_t* le;
 		if (--i < 0)
 			i = cl.numLEs - 1;
-		le = &cl.LEs[i];
+		const le_t* le = &cl.LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
