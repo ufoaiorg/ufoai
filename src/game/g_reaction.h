@@ -28,16 +28,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-void G_ReactionFirePreShot(const Edict* target, const int fdTime);
-void G_ReactionFirePostShot(Edict* target);
+void G_ReactionFirePreShot(const Actor* target, const int fdTime);
+void G_ReactionFirePostShot(Actor* target);
 void G_ReactionFireReset(int team);
-void G_ReactionFireNofityClientStartMove(const Edict* target);
-void G_ReactionFireNofityClientEndMove(const Edict* target);
+void G_ReactionFireNofityClientStartMove(const Actor* target);
+void G_ReactionFireNofityClientEndMove(const Actor* target);
 void G_ReactionFireSettingsUpdate(Actor* actor, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t* od);
-void G_ReactionFireNofityClientRFAborted(const Edict* shooter, const Edict* target, int step);
-bool G_ReactionFireSettingsReserveTUs(Edict* ent);
-bool G_ReactionFireOnMovement(Edict* target, int step);
+void G_ReactionFireNofityClientRFAborted(const Actor* shooter, const Edict* target, int step);
+bool G_ReactionFireSettingsReserveTUs(Actor* ent);
+bool G_ReactionFireOnMovement(Actor* target, int step);
 void G_ReactionFireOnEndTurn(void);
-void G_ReactionFireOnDead(const Edict* target);
+void G_ReactionFireOnDead(const Actor* target);
 void G_ReactionFireTargetsInit(void);
 void G_ReactionFireTargetsCreate(const Edict* shooter);

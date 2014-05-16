@@ -634,7 +634,7 @@ static bool G_ReactionFireCanBeEnabled (const Edict* ent)
  * @return @c true if TUs for reaction fire were reserved, @c false if the reservation was set
  * back to @c 0
  */
-bool G_ReactionFireSettingsReserveTUs (Edict* ent)
+bool G_ReactionFireSettingsReserveTUs (Actor* ent)
 {
 	if (G_ReactionFireSettingsSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
 		const int TUs = G_ActorGetTUForReactionFire(ent);
@@ -909,7 +909,7 @@ static void G_ReactionFirePrintSituation (Edict* target)
  * @return true If any shots were (or would be) taken
  * @sa G_ClientMove
  */
-bool G_ReactionFireOnMovement (Edict* target, int step)
+bool G_ReactionFireOnMovement (Actor* target, int step)
 {
 #if DEBUG_RF
 	G_ReactionFirePrintSituation(target);
@@ -941,7 +941,7 @@ static void G_ReactionFireNofityClientEndShot (const Edict* target)
  * @param[in] fdTime The TU of the shot
  * @sa G_ClientShoot
  */
-void G_ReactionFirePreShot (const Edict* target, const int fdTime)
+void G_ReactionFirePreShot (const Actor* target, const int fdTime)
 {
 	bool repeat = true;
 
@@ -977,7 +977,7 @@ void G_ReactionFirePreShot (const Edict* target, const int fdTime)
  * @brief Removes the given target from the reaction fire lists
  * @param[in] target The target to remove from the lists
  */
-void G_ReactionFireOnDead (const Edict* target)
+void G_ReactionFireOnDead (const Actor* target)
 {
 	assert(G_IsDead(target));
 	rf.updateAllTargets(target);
@@ -989,7 +989,7 @@ void G_ReactionFireOnDead (const Edict* target)
  * @param[in] target The entity that has just fired
  * @sa G_ClientShoot
  */
-void G_ReactionFirePostShot (Edict* target)
+void G_ReactionFirePostShot (Actor* target)
 {
 	/* Check to see whether this resolves any reaction fire */
 	rf.notifyClientOnShot(target, 0);
@@ -1022,18 +1022,18 @@ void G_ReactionFireReset (int team)
 	}
 }
 
-void G_ReactionFireNofityClientStartMove (const Edict* target)
+void G_ReactionFireNofityClientStartMove (const Actor* target)
 {
 	/* note that this is sent _before_ the actual move event, so we can't use the step number */
 	rft.notifyClientMove(target, MAX_ROUTE, true);
 }
 
-void G_ReactionFireNofityClientEndMove (const Edict* target)
+void G_ReactionFireNofityClientEndMove (const Actor* target)
 {
 	rft.notifyClientMove(target, target->moveinfo.steps - 1, false);
 }
 
-void G_ReactionFireNofityClientRFAborted (const Edict* shooter, const Edict* target, int step)
+void G_ReactionFireNofityClientRFAborted (const Actor* shooter, const Edict* target, int step)
 {
 	rft.notifyClientRFAborted(shooter, target, step);
 }
