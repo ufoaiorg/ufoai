@@ -1346,7 +1346,7 @@ static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 
 	/* do the move */
 	for (;;) {
-		if (G_IsDead(actor))
+		if (actor->isDead())
 			break;
 		G_ClientMove(player, 0, actor, bestAia.to);
 		if (actor->isSamePosAs(bestAia.to))
@@ -1356,7 +1356,7 @@ static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 			break;
 	}
 	/* test for possible death during move. reset bestAia due to dead status */
-	if (G_IsDead(actor))
+	if (actor->isDead())
 		bestAia.reset();
 
 	/* if we are throwing a grenade from the inventory grab it now */
@@ -1454,7 +1454,7 @@ void AI_ActorThink (Player& player, Actor* actor)
 			G_ClientShoot(player, actor, bestAia.target->pos, bestAia.shootType, fdIdx, nullptr, true, bestAia.z_align);
 			bestAia.shots--;
 			/* died by our own shot? */
-			if (G_IsDead(actor))
+			if (actor->isDead())
 				return;
 			/* check for target's death */
 			if (G_IsDead(bestAia.target)) {

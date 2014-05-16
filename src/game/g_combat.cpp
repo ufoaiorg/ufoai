@@ -237,7 +237,7 @@ static void G_UpdateCharacterBodycount (Edict* attacker, const fireDef_t* fd, co
 	if (target->isStunned()) {
 		scoreMission->stuns[type]++;
 		scoreGlobal->stuns[type]++;
-	} else if (G_IsDead(target)) {
+	} else if (target->isDead()) {
 		scoreMission->kills[type]++;
 		scoreGlobal->kills[type]++;
 	}
@@ -649,7 +649,7 @@ static void G_ShootGrenade (const Player& player, Actor* shooter, const fireDef_
 	const vec3_t from, const pos3_t at, int mask, const Item* weapon, shot_mock_t* mock, int z_align, vec3_t impact)
 {
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
-	if (G_IsDead(shooter))
+	if (shooter->isDead())
 		return;
 
 	/* get positional data */
@@ -871,7 +871,7 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
 	int mask, const Item* weapon, shot_mock_t* mock, int z_align, int i, shoot_types_t shootType, vec3_t impact)
 {
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
-	if (G_IsDead(ent)) {
+	if (ent->isDead()) {
 		Com_DPrintf(DEBUG_GAME, "G_ShootSingle: Shooter is dead, shot not possible.\n");
 		return;
 	}
@@ -1277,12 +1277,12 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
 			G_ReactionFirePreShot(actor, tusNeeded);  /* if commented out,  this disables the 'draw' situation */
-			if (G_IsDead(actor))
+			if (actor->isDead())
 				/* dead men can't shoot */
 				return false;
 		}
 		/* Check we aren't trying to heal a dead actor */
-		if (targetEnt != nullptr && (G_IsDead(targetEnt) && !targetEnt->isStunned()))
+		if (targetEnt != nullptr && (targetEnt->isDead() && !targetEnt->isStunned()))
 			return false;
 
 		/* start shoot */
@@ -1361,7 +1361,7 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 		}
 
 		/* send TUs if actor still alive */
-		if (actor->inuse && !G_IsDead(actor)) {
+		if (actor->inuse && !actor->isDead()) {
 			G_ActorSetTU(actor, actor->getTus() - tusNeeded);
 			G_SendStats(*actor);
 		}

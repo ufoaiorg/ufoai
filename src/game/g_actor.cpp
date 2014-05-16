@@ -228,7 +228,7 @@ void G_ActorSetMaxs (Actor* actor)
 	actor->entBox.setMaxs(PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
 	if (actor->isCrouched())
 		actor->entBox.setMaxZ(PLAYER_CROUCH);
-	else if (G_IsDead(actor) && !CHRSH_IsTeamDefRobot(actor->chr.teamDef))
+	else if (actor->isDead() && !CHRSH_IsTeamDefRobot(actor->chr.teamDef))
 		actor->entBox.setMaxZ(PLAYER_DEAD);
 
 	/* Link it. */
@@ -274,7 +274,7 @@ void G_ActorUseTU (Edict* ent, int tus)
 static bool G_ActorStun (Actor* actor, const Edict* attacker)
 {
 	/* already dead or stunned? */
-	if (G_IsDead(actor))
+	if (actor->isDead())
 		return false;
 
 	/* no other state should be set here */
@@ -399,7 +399,7 @@ static bool G_ActorDie (Actor* actor, const Edict* attacker)
 
 	G_RemoveStunned(actor);
 
-	if (G_IsDead(actor))
+	if (actor->isDead())
 		return false;
 
 	G_SetState(actor, 1 + rand() % MAX_DEATH);

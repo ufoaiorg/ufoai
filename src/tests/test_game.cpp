@@ -258,7 +258,7 @@ static void testInventoryForDiedAlien (void)
 		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt);
 		diedEnt->HP = 0;
 		CU_ASSERT_TRUE(G_ActorDieOrStun(diedEnt, nullptr));
-		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt));
+		CU_ASSERT_TRUE_FATAL(diedEnt->isDead());
 
 		/* now try to collect the inventory with a second alien */
 		actor = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
@@ -323,7 +323,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt);
 		diedEnt->HP = 0;
 		G_ActorDieOrStun(diedEnt, nullptr);
-		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt));
+		CU_ASSERT_TRUE_FATAL(diedEnt->isDead());
 
 		/* second alien that should die and drop its inventory */
 		diedEnt2 = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
@@ -337,7 +337,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 
 		diedEnt2->HP = 0;
 		G_ActorDieOrStun(diedEnt2, nullptr);
-		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt2));
+		CU_ASSERT_TRUE_FATAL(diedEnt2->isDead());
 
 		/* now try to collect the inventory with a third alien */
 		actor = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
