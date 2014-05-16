@@ -66,7 +66,7 @@ int G_ActorUsableTUs(const Edict* ent);
 int G_ActorGetTUForReactionFire(const Edict* ent);
 void G_ActorReserveTUs(Edict* ent, int resReaction, int resShot, int resCrouch);
 int G_ActorDoTurn(Edict* ent, byte dir);
-void G_ActorSetMaxs(Edict* ent);
+void G_ActorSetMaxs(Actor* ent);
 int G_ActorCalculateMaxTU(const Edict* ent);
 void G_ActorGiveTimeUnits(Actor* actor);
 void G_ActorSetTU(Edict* ent, int tus);

@@ -223,7 +223,7 @@ int G_ActorDoTurn (Edict* ent, byte dir)
  * @note Also re-links the actor edict - because the server must know about the
  * changed bounding box for tracing to work.
  */
-void G_ActorSetMaxs (Edict* ent)
+void G_ActorSetMaxs (Actor* ent)
 {
 	ent->entBox.setMaxs(PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
 	if (G_IsCrouched(ent))
@@ -271,7 +271,7 @@ void G_ActorUseTU (Edict* ent, int tus)
 	G_ActorSetTU(ent, ent->getTus() - tus);
 }
 
-static bool G_ActorStun (Edict* ent, const Edict* attacker)
+static bool G_ActorStun (Actor* ent, const Edict* attacker)
 {
 	/* already dead or stunned? */
 	if (G_IsDead(ent))
