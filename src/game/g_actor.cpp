@@ -250,7 +250,7 @@ int G_ActorCalculateMaxTU (const Edict* ent)
  */
 void G_ActorGiveTimeUnits (Actor* actor)
 {
-	const int tus = G_IsDazed(actor) ? 0 : G_ActorCalculateMaxTU(actor);
+	const int tus = actor->isDazed() ? 0 : G_ActorCalculateMaxTU(actor);
 	G_ActorSetTU(actor, tus);
 	G_RemoveDazed(actor);
 }

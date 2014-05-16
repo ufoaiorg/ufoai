@@ -360,6 +360,7 @@ public:
 	inline bool isReaction() const		{return isState(STATE_REACTION);}
 	inline bool isRaged() const			{return isState(STATE_RAGE);}
 	inline bool isInsane() const		{return isState(STATE_INSANE);}
+	inline bool isDazed() const			{return isState(STATE_DAZED);}
 
 	inline unsigned int getBody() const {
 		return body;

@@ -688,7 +688,7 @@ bool ReactionFire::isEnemy (const Actor* shooter, const Edict* target) const
 bool ReactionFire::canReact (Actor* shooter, const Edict* target) const
 {
 	/* shooter can't use RF if is in STATE_DAZED (flashbang impact) */
-	if (G_IsDazed(shooter))
+	if (shooter->isDazed())
 		return false;
 
 	/* check shooter has reaction fire enabled */

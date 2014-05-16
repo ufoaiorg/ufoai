@@ -487,7 +487,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 			}
 
 			/* check for death */
-			if (((oldHP != 0 && (oldHP != actor->HP || oldSTUN != actor->getStun())) || (oldState != actor->state)) && !G_IsDazed(actor)) {
+			if (((oldHP != 0 && (oldHP != actor->HP || oldSTUN != actor->getStun())) || (oldState != actor->state)) && !actor->isDazed()) {
 				/** @todo Handle dazed via trigger_hurt */
 				/* maybe this was due to rf - then the G_ActorDie was already called */
 				if (!G_IsDead(actor)) {
