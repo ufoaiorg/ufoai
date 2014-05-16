@@ -622,7 +622,7 @@ void G_CalcEffectiveSpread (const Actor* shooter, const fireDef_t* fd, vec2_t ef
 	effSpread[YAW] = fd->spread[1] * commonfactor;
 
 	/* If the attacker is crouched this modifier is included as well. */
-	if (G_IsCrouched(shooter) && fd->crouch > 0.0f) {
+	if (shooter->isCrouched() && fd->crouch > 0.0f) {
 		effSpread[PITCH] *= fd->crouch;
 		effSpread[YAW] *= fd->crouch;
 	}

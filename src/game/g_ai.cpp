@@ -1279,7 +1279,7 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 {
 	/* check if the actor is in crouched state and try to stand up before doing the move */
-	if (G_IsCrouched(actor))
+	if (actor->isCrouched())
 		G_ClientStateChange(player, actor, STATE_CROUCHED, true);
 
 	/* calculate move table */
@@ -1393,7 +1393,7 @@ void G_AddToWayPointList (Edict* ent)
  */
 void AI_TurnIntoDirection (Actor* actor, const pos3_t pos)
 {
-	const byte crouchingState = G_IsCrouched(actor) ? 1 : 0;
+	const byte crouchingState = actor->isCrouched() ? 1 : 0;
 	G_MoveCalc(actor->getTeam(), actor, pos, actor->getUsableTUs());
 
 	const int dvec = gi.MoveNext(level.pathingMap, pos, crouchingState);

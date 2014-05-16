@@ -361,6 +361,7 @@ public:
 	inline bool isRaged() const			{return isState(STATE_RAGE);}
 	inline bool isInsane() const		{return isState(STATE_INSANE);}
 	inline bool isDazed() const			{return isState(STATE_DAZED);}
+	inline bool isCrouched() const		{return isState(STATE_CROUCHED);}
 
 	inline unsigned int getBody() const {
 		return body;

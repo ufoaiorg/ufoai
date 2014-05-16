@@ -237,7 +237,7 @@ static void G_WriteStep (Actor* ent, byte** stepAmount, const int dvec, const in
 	gi.WriteShort(contentFlags);
 
 	/* Send the sound effect to everyone who's not seeing the actor */
-	if (!G_IsCrouched(ent)) {
+	if (!ent->isCrouched()) {
 		G_SendFootstepSound(ent, contentFlags);
 	}
 
@@ -274,7 +274,7 @@ int G_FillDirectionTable (dvec_t* dvtab, size_t dvtabSize, byte crouchingState, 
 */
 pos_t G_ActorMoveLength (const Actor* actor, const pathing_t* path, const pos3_t to, bool stored)
 {
-	byte crouchingState = G_IsCrouched(actor) ? 1 : 0;
+	byte crouchingState = actor->isCrouched() ? 1 : 0;
 	const pos_t length = gi.MoveLength(path, to, crouchingState, stored);
 
 	if (!length || length == ROUTING_NOT_REACHABLE)
@@ -317,7 +317,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 	if (!G_ActionCheckForCurrentTeam(player, actor, TU_MOVE_STRAIGHT))
 		return;
 
-	byte crouchingState = G_IsCrouched(actor) ? 1 : 0;
+	byte crouchingState = actor->isCrouched() ? 1 : 0;
 
 	/* calculate move table */
 	G_MoveCalc(visTeam, actor, actor->pos, actor->TU);
@@ -332,7 +332,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 			 * Uses the threshold at which standing, moving and crouching again takes
 			 * fewer TU than just crawling while crouched. */
 			G_ClientStateChange(player, actor, STATE_CROUCHED, true); /* change to stand state */
-			crouchingState = G_IsCrouched(actor) ? 1 : 0;
+			crouchingState = actor->isCrouched() ? 1 : 0;
 			if (!crouchingState)
 				autoCrouchRequired = true;
 		}
@@ -405,7 +405,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 			}
 
 			/* decrease TUs */
-			const float div = gi.GetTUsForDirection(dir, G_IsCrouched(actor));
+			const float div = gi.GetTUsForDirection(dir, actor->isCrouched());
 			const int stepTUs = div + movingModifier;
 			if (usedTUs + stepTUs > actor->TU)
 				break;
@@ -419,7 +419,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 			PosAddDV(actor->pos, crouchFlag, dvec);
 
 			/* slower if crouched */
-			if (G_IsCrouched(actor))
+			if (actor->isCrouched())
 				actor->speed = ACTOR_SPEED_CROUCHED;
 			else
 				actor->speed = ACTOR_SPEED_NORMAL;
@@ -437,7 +437,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 				/* Only the PHALANX team has these stats right now. */
 				if (actor->chr.scoreMission) {
 					float truediv = gi.GetTUsForDirection(dir, 0);		/* regardless of crouching ! */
-					if (G_IsCrouched(actor))
+					if (actor->isCrouched())
 						actor->chr.scoreMission->movedCrouched += truediv;
 					else
 						actor->chr.scoreMission->movedNormal += truediv;

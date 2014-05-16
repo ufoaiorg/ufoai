@@ -646,7 +646,7 @@ static int AIL_crouch (lua_State* L)
 			AIL_invalidparameter(1);
 	}
 
-	lua_pushboolean(L, G_IsCrouched(AIL_ent));
+	lua_pushboolean(L, AIL_ent->isCrouched());
 	return 1;
 }
 

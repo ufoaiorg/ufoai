@@ -226,7 +226,7 @@ int G_ActorDoTurn (Edict* ent, byte dir)
 void G_ActorSetMaxs (Actor* actor)
 {
 	actor->entBox.setMaxs(PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
-	if (G_IsCrouched(actor))
+	if (actor->isCrouched())
 		actor->entBox.setMaxZ(PLAYER_CROUCH);
 	else if (G_IsDead(actor) && !CHRSH_IsTeamDefRobot(actor->chr.teamDef))
 		actor->entBox.setMaxZ(PLAYER_DEAD);
