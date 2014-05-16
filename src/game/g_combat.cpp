@@ -610,7 +610,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item* item)
  * @param[in] fd The firedefinition the actor is shooting with
  * @param[out] effSpread The adjusted spread
  */
-void G_CalcEffectiveSpread (const Edict* shooter, const fireDef_t* fd, vec2_t effSpread)
+void G_CalcEffectiveSpread (const Actor* shooter, const fireDef_t* fd, vec2_t effSpread)
 {
 	/* Get accuracy value for this attacker. */
 	const float acc = GET_ACC(shooter->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? shooter->chr.score.skills[fd->weaponSkill] : 0);
@@ -645,7 +645,7 @@ void G_CalcEffectiveSpread (const Edict* shooter, const fireDef_t* fd, vec2_t ef
  * @param[in] z_align This value may change the target z height
  * @param[out] impact The location of the target (-center?)
  */
-static void G_ShootGrenade (const Player& player, Edict* shooter, const fireDef_t* fd,
+static void G_ShootGrenade (const Player& player, Actor* shooter, const fireDef_t* fd,
 	const vec3_t from, const pos3_t at, int mask, const Item* weapon, shot_mock_t* mock, int z_align, vec3_t impact)
 {
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
@@ -867,7 +867,7 @@ static void DumpAllEntities (void)
  * @param[out] impact The location of the target (-center?)
  * @sa CL_TargetingStraight
  */
-static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, const pos3_t at,
+static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, const pos3_t at,
 	int mask, const Item* weapon, shot_mock_t* mock, int z_align, int i, shoot_types_t shootType, vec3_t impact)
 {
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */

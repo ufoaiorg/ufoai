@@ -218,7 +218,7 @@ static void G_SendFootstepSound (Edict* ent, const int contentFlags)
  * @param[in] dvec The direction vector for the step to be added
  * @param[in] contentFlags The material we are walking over
  */
-static void G_WriteStep (Edict* ent, byte** stepAmount, const int dvec, const int contentFlags)
+static void G_WriteStep (Actor* ent, byte** stepAmount, const int dvec, const int contentFlags)
 {
 	/* write move header if not yet done */
 	if (gi.GetEvent() != EV_ACTOR_MOVE) {
