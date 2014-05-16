@@ -40,7 +40,7 @@ static void G_MoralePanic (Actor* actor)
 	G_ClientPrintf(actor->getPlayer(), PRINT_HUD, _("%s panics!"), actor->chr.name);
 	G_PrintStats("%s panics (entnum %i).", actor->chr.name, actor->getIdNum());
 	/* drop items in hands */
-	if (G_IsInsane(actor) && actor->chr.teamDef->weapons) {
+	if (actor->isInsane() && actor->chr.teamDef->weapons) {
 		if (actor->getRightHandItem())
 			G_ActorInvMove(actor, INVDEF(CID_RIGHT), actor->getRightHandItem(),
 					INVDEF(CID_FLOOR), NONE, NONE, true);
@@ -97,7 +97,7 @@ static void G_MoraleStopPanic (Actor* actor)
 static void G_MoraleRage (Actor* actor)
 {
 	G_SetRage(actor);
-	if (!G_IsInsane(actor)) {
+	if (!actor->isInsane()) {
 		gi.BroadcastPrintf(PRINT_HUD, _("%s is on a rampage!"), actor->chr.name);
 		G_PrintStats("%s is on a rampage (entnum %i).", actor->chr.name, actor->getIdNum());
 	} else {

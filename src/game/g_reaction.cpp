@@ -773,7 +773,7 @@ bool ReactionFire::shoot (Actor* shooter, const pos3_t at, shoot_types_t type, f
 	/* this is the max amount of friendly units that were hit during the mock calculation */
 	int maxff;
 
-	if (G_IsInsane(shooter))
+	if (shooter->isInsane())
 		maxff = 100;
 	else if (shooter->isRaged())
 		maxff = 60;

@@ -359,6 +359,7 @@ public:
 	inline bool isPanicked() const		{return isState(STATE_PANIC);}
 	inline bool isReaction() const		{return isState(STATE_REACTION);}
 	inline bool isRaged() const			{return isState(STATE_RAGE);}
+	inline bool isInsane() const		{return isState(STATE_INSANE);}
 
 	inline unsigned int getBody() const {
 		return body;

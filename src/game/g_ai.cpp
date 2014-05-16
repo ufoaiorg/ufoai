@@ -159,7 +159,7 @@ static bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const 
 		return false;
 
 	/* if insane, we don't check more */
-	if (G_IsInsane(actor))
+	if (actor->isInsane())
 		return true;
 
 	/* don't shoot - we are to close */
@@ -373,7 +373,7 @@ int AI_GetHidingTeam (const Edict* ent)
  */
 static bool AI_CheckPosition (const Actor* const ent)
 {
-	if (G_IsInsane(ent))
+	if (ent->isInsane())
 		return true;
 
 	/* Don't stand on hurt triggers or fire/stun gas */
@@ -609,7 +609,7 @@ static void AI_SearchBestTarget (AiAction* aia, const Actor* actor, Actor* check
 		if (shots) {
 			float dist;
 			const bool stunWeapon = (item->def()->dmgtype == gi.csi->damStunElectro || item->def()->dmgtype == gi.csi->damStunGas);
-			if (stunWeapon && !G_IsInsane(actor) && (check->isStunned() || CHRSH_IsTeamDefRobot(check->chr.teamDef)))
+			if (stunWeapon && !actor->isInsane() && (check->isStunned() || CHRSH_IsTeamDefRobot(check->chr.teamDef)))
 				return;
 			if (!AI_FighterCheckShoot(actor, check, fd, &dist))
 				continue;
@@ -753,7 +753,7 @@ static inline bool AI_IsHostile (const Actor* actor, const Edict* target)
 	if (actor == target)
 		return false;
 
-	if (G_IsInsane(actor))
+	if (actor->isInsane())
 		return true;
 
 	if (!AI_IsOpponent(actor, target))
@@ -1038,7 +1038,7 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (actor == check)
 			continue;
-		if (!(G_IsAlien(check) || G_IsInsane(actor)))
+		if (!(G_IsAlien(check) || actor->isInsane()))
 			continue;
 
 		if (G_ActorVis(check->origin, check, actor, true) > 0.25)
@@ -1116,7 +1116,7 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (actor == check)
 			continue;
-		if (G_IsInsane(actor))
+		if (actor->isInsane())
 			continue;
 
 		if (G_ActorVis(check->origin, check, actor, true) > 0.25)
