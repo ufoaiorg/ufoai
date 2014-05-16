@@ -664,11 +664,11 @@ static void AI_SearchBestTarget (AiAction* aia, const Actor* ent, Actor* check, 
 				continue;
 
 			/* civilian malus */
-			if (G_IsCivilian(check) && !G_IsInsane(ent))
+			if (G_IsCivilian(check) && !ent->isRaged())
 				dmg *= SCORE_CIV_FACTOR;
 
 			/* Stunned malus */
-			if (check->isStunned() && !G_IsRaged(ent))
+			if (check->isStunned() && !ent->isRaged())
 				dmg *= SCORE_DISABLED_FACTOR;
 
 			/* add random effects */
@@ -880,7 +880,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	if (!AI_CheckPosition(actor))
 		bestActionScore -= SCORE_NOSAFE_POSITION_PENALTY;
 
-	if (!G_IsRaged(actor)) {
+	if (!actor->isRaged()) {
 		const int hidingTeam = AI_GetHidingTeam(actor);
 		/* hide */
 		if (!(G_TestVis(hidingTeam, actor, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES) && !AI_HideNeeded(actor)) {
@@ -918,7 +918,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	if (aia->target) {
 		const float dist = VectorDist(actor->origin, aia->target->origin);
 		bestActionScore += SCORE_CLOSE_IN * (1.0 - dist / CLOSE_IN_DIST);
-	} else if (G_IsRaged(actor)) {
+	} else if (actor->isRaged()) {
 		/* reward closing in */
 		float minDist = CLOSE_IN_DIST;
 		check = nullptr;

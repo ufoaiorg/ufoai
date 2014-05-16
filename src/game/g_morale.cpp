@@ -169,7 +169,7 @@ void G_MoraleBehaviour (int team)
 			continue;
 
 		/* if panic, determine what kind of panic happens: */
-		if (!actor->isPanicked() && !G_IsRaged(actor)) {
+		if (!actor->isPanicked() && !actor->isRaged()) {
 			if (actor->morale <= mor_panic->integer) {
 				const float ratio = (float) actor->morale / mor_panic->value;
 				const bool sanity = ratio > (m_sanity->value * frand());
@@ -192,7 +192,7 @@ void G_MoraleBehaviour (int team)
 		} else {
 			if (actor->isPanicked())
 				G_MoraleStopPanic(actor);
-			else if (G_IsRaged(actor))
+			else if (actor->isRaged())
 				G_MoraleStopRage(actor);
 		}
 

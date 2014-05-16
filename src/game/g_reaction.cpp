@@ -775,7 +775,7 @@ bool ReactionFire::shoot (Actor* shooter, const pos3_t at, shoot_types_t type, f
 
 	if (G_IsInsane(shooter))
 		maxff = 100;
-	else if (G_IsRaged(shooter))
+	else if (shooter->isRaged())
 		maxff = 60;
 	else if (shooter->isPanicked())
 		maxff = 30;
