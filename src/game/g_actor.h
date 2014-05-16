@@ -34,13 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define G_IsDead(ent)			G_IsState(ent, STATE_DEAD)
 
 #define G_SetState(ent, s)		(ent)->state |= (s)
-#define G_SetShaken(ent)		G_SetState((ent), STATE_SHAKEN)
-#define G_SetDazed(ent)			G_SetState((ent), STATE_DAZED)
 #define G_SetStunned(ent)		G_SetState((ent), STATE_STUN)
 #define G_SetDead(ent)			G_SetState((ent), STATE_DEAD)
-#define G_SetInsane(ent)		G_SetState((ent), STATE_INSANE)
-#define G_SetRage(ent)			G_SetState((ent), STATE_RAGE)
-#define G_SetPanic(ent)			G_SetState((ent), STATE_PANIC)
 #define G_SetCrouched(ent)		G_SetState((ent), STATE_CROUCHED)
 
 #define G_RemoveState(ent, s)	(ent)->state &= ~(s)

@@ -364,6 +364,16 @@ public:
 	inline bool isCrouched() const		{return isState(STATE_CROUCHED);}
 	inline bool isDead() const			{return isState(STATE_DEAD);}
 
+	inline void setState(int flag)		{state |= flag;}
+	inline void setShaken()				{setState(STATE_SHAKEN);}
+	inline void setStunned()			{setState(STATE_STUN);}
+	inline void setPanicked()			{setState(STATE_PANIC);}
+	inline void setReaction()			{setState(STATE_REACTION);}
+	inline void setRaged()				{setState(STATE_RAGE);}
+	inline void setInsane()				{setState(STATE_INSANE);}
+	inline void setDazed()				{setState(STATE_DAZED);}
+	inline void setCrouched()			{setState(STATE_CROUCHED);}
+
 	inline unsigned int getBody() const {
 		return body;
 	}

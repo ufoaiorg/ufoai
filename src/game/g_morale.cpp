@@ -55,7 +55,7 @@ static void G_MoralePanic (Actor* actor)
 	G_ActorSetMaxs(actor);
 
 	/* send panic */
-	G_SetPanic(actor);
+	actor->setPanicked();
 	G_EventSendState(G_VisToPM(actor->visflags), *actor);
 
 	/* center view */
@@ -96,7 +96,7 @@ static void G_MoraleStopPanic (Actor* actor)
  */
 static void G_MoraleRage (Actor* actor)
 {
-	G_SetRage(actor);
+	actor->setRaged();
 	if (!actor->isInsane()) {
 		gi.BroadcastPrintf(PRINT_HUD, _("%s is on a rampage!"), actor->chr.name);
 		G_PrintStats("%s is on a rampage (entnum %i).", actor->chr.name, actor->getIdNum());
@@ -174,7 +174,7 @@ void G_MoraleBehaviour (int team)
 				const float ratio = (float) actor->morale / mor_panic->value;
 				const bool sanity = ratio > (m_sanity->value * frand());
 				if (!sanity)
-					G_SetInsane(actor);
+					actor->setInsane();
 				if (ratio > (m_rage->value * frand()))
 					G_MoralePanic(actor);
 				else
@@ -182,7 +182,7 @@ void G_MoraleBehaviour (int team)
 				/* if shaken, well .. be shaken; */
 			} else if (actor->morale <= mor_shaken->integer) {
 				/* shaken is later reset along with reaction fire */
-				G_SetShaken(actor);
+				actor->setShaken();
 				G_ClientStateChange(actor->getPlayer(), actor, STATE_REACTION, false);
 				G_EventSendState(G_VisToPM(actor->visflags), *actor);
 				G_ClientPrintf(actor->getPlayer(), PRINT_HUD, _("%s is currently shaken."),
