@@ -344,7 +344,7 @@ static bool G_ActionCheck (const Player& player, Edict* ent)
 		return false;
 	}
 
-	if (ent->type != ET_ACTOR && ent->type != ET_ACTOR2x2) {
+	if (!G_IsActor(ent)) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not an actor!"));
 		return false;
 	}
