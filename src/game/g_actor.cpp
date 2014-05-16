@@ -219,20 +219,20 @@ int G_ActorDoTurn (Edict* ent, byte dir)
 
 /**
  * @brief Sets correct bounding box for actor (state dependent).
- * @param[in] ent Pointer to entity for which bounding box is being set.
+ * @param[in] actor Pointer to entity for which bounding box is being set.
  * @note Also re-links the actor edict - because the server must know about the
  * changed bounding box for tracing to work.
  */
-void G_ActorSetMaxs (Actor* ent)
+void G_ActorSetMaxs (Actor* actor)
 {
-	ent->entBox.setMaxs(PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
-	if (G_IsCrouched(ent))
-		ent->entBox.setMaxZ(PLAYER_CROUCH);
-	else if (G_IsDead(ent) && !CHRSH_IsTeamDefRobot(ent->chr.teamDef))
-		ent->entBox.setMaxZ(PLAYER_DEAD);
+	actor->entBox.setMaxs(PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
+	if (G_IsCrouched(actor))
+		actor->entBox.setMaxZ(PLAYER_CROUCH);
+	else if (G_IsDead(actor) && !CHRSH_IsTeamDefRobot(actor->chr.teamDef))
+		actor->entBox.setMaxZ(PLAYER_DEAD);
 
 	/* Link it. */
-	gi.LinkEdict(ent);
+	gi.LinkEdict(actor);
 }
 
 int G_ActorCalculateMaxTU (const Edict* ent)
@@ -271,18 +271,18 @@ void G_ActorUseTU (Edict* ent, int tus)
 	G_ActorSetTU(ent, ent->getTus() - tus);
 }
 
-static bool G_ActorStun (Actor* ent, const Edict* attacker)
+static bool G_ActorStun (Actor* actor, const Edict* attacker)
 {
 	/* already dead or stunned? */
-	if (G_IsDead(ent))
+	if (G_IsDead(actor))
 		return false;
 
 	/* no other state should be set here */
-	ent->state = STATE_STUN;
-	G_ActorSetMaxs(ent);
-	ent->link = attacker;
+	actor->state = STATE_STUN;
+	G_ActorSetMaxs(actor);
+	actor->link = attacker;
 
-	G_ActorModifyCounters(attacker, ent, -1, 0, 1);
+	G_ActorModifyCounters(attacker, actor, -1, 0, 1);
 
 	return true;
 }

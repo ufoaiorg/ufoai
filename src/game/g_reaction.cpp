@@ -521,26 +521,26 @@ static bool G_ActorHasWorkingFireModeSet (const Edict* actor)
 /**
  * @brief Updates the reaction fire settings in case something was moved into a hand or from a hand
  * that would make the current settings invalid
- * @param[in,out] ent The actor edict to check the settings for
+ * @param[in,out] actor The actor edict to check the settings for
  * @param[in] fmIdx The fire mode index that should be used for reaction fire
  * @param[in] hand The hand that should be used for reaction fire
  * @param[in] od The object/weapon for the reaction fire
  */
-void G_ReactionFireSettingsUpdate (Actor* ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t* od)
+void G_ReactionFireSettingsUpdate (Actor* actor, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t* od)
 {
-	ent->chr.RFmode.set(hand, fmIdx, od);	/* FiremodeSettings */
+	actor->chr.RFmode.set(hand, fmIdx, od);	/* FiremodeSettings */
 
-	if (!G_ActorHasWorkingFireModeSet(ent)) {
+	if (!G_ActorHasWorkingFireModeSet(actor)) {
 		/* Disable reaction fire if no valid firemode was found. */
-		G_ClientStateChange(ent->getPlayer(), makeActor(ent), ~STATE_REACTION, true);
+		G_ClientStateChange(actor->getPlayer(), makeActor(actor), ~STATE_REACTION, true);
 		return;
 	}
 
-	G_EventReactionFireChange(*ent);
+	G_EventReactionFireChange(*actor);
 
 	/* If reaction fire is active, update the reserved TUs */
-	if (ent->isReaction()) {
-		G_ReactionFireSettingsReserveTUs(ent);
+	if (actor->isReaction()) {
+		G_ReactionFireSettingsReserveTUs(actor);
 	}
 }
 

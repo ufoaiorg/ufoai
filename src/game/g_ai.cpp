@@ -151,15 +151,15 @@ static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, flo
  * @todo Check whether radius and power of fd are to to big for dist
  * @todo Check whether the alien will die when shooting
  */
-static bool AI_FighterCheckShoot (const Actor* ent, const Edict* check, const fireDef_t* fd, float* dist)
+static bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef_t* fd, float* dist)
 {
 	/* check range */
-	*dist = VectorDist(ent->origin, check->origin);
+	*dist = VectorDist(actor->origin, check->origin);
 	if (*dist > fd->range)
 		return false;
 
 	/* if insane, we don't check more */
-	if (G_IsInsane(ent))
+	if (G_IsInsane(actor))
 		return true;
 
 	/* don't shoot - we are to close */
@@ -168,8 +168,8 @@ static bool AI_FighterCheckShoot (const Actor* ent, const Edict* check, const fi
 
 	/* check FF */
 	vec2_t effSpread;
-	G_CalcEffectiveSpread(ent, fd, effSpread);
-	if (AI_CheckFF(ent, check->origin, effSpread[0], fd->splrad))
+	G_CalcEffectiveSpread(actor, fd, effSpread);
+	if (AI_CheckFF(actor, check->origin, effSpread[0], fd->splrad))
 		return false;
 
 	return true;
@@ -237,26 +237,26 @@ bool AI_CheckUsingDoor (const Edict* ent, const Edict* door)
 
 /**
  * @brief Checks whether it would be smart to change the state to STATE_CROUCHED
- * @param[in] ent The AI controlled actor to chech the state change for
+ * @param[in] actor The AI controlled actor to chech the state change for
  * @returns true if the actor should go into STATE_CROUCHED, false otherwise
  */
-static bool AI_CheckCrouch (const Actor* ent)
+static bool AI_CheckCrouch (const Actor* actor)
 {
 	Actor* check = nullptr;
 
 	/* see if we are very well visible by an enemy */
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		/* don't check for civilians or aliens */
-		if (check->isSameTeamAs(ent) || G_IsCivilian(check))
+		if (check->isSameTeamAs(actor) || G_IsCivilian(check))
 			continue;
 		/* check whether the origin of the enemy is inside the
 		 * AI actors view frustum */
-		if (!G_FrustumVis(check, ent->origin))
+		if (!G_FrustumVis(check, actor->origin))
 			continue;
 		/* check whether the enemy is close enough to change the state */
-		if (VectorDist(check->origin, ent->origin) > G_VisCheckDist(ent))
+		if (VectorDist(check->origin, actor->origin) > G_VisCheckDist(actor))
 			continue;
-		const float actorVis = G_ActorVis(check->origin, check, ent, true);
+		const float actorVis = G_ActorVis(check->origin, check, actor, true);
 		if (actorVis >= ACTOR_VIS_50)
 			return true;
 	}
@@ -519,7 +519,7 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
  * from shooting at the breakable parts of their own ship.
  * So I disabled it for now. Duke, 23.10.09
  */
-static Edict* AI_SearchDestroyableObject (const Actor* ent, const fireDef_t* fd)
+static Edict* AI_SearchDestroyableObject (const Actor* actor, const fireDef_t* fd)
 {
 #if 0
 	/* search best none human target */
@@ -528,11 +528,11 @@ static Edict* AI_SearchDestroyableObject (const Actor* ent, const fireDef_t* fd)
 
 	while ((check = G_EdictsGetNextInUse(check))) {
 		if (G_IsBreakable(check)) {
-			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
+			if (!AI_FighterCheckShoot(actor, check, fd, &dist))
 				continue;
 
 			/* check whether target is visible enough */
-			const float vis = G_ActorVis(ent->origin, check, true);
+			const float vis = G_ActorVis(actor->origin, check, true);
 			if (vis < ACTOR_VIS_0)
 				continue;
 
@@ -591,7 +591,7 @@ static bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const
 /**
  * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
  */
-static void AI_SearchBestTarget (AiAction* aia, const Actor* ent, Actor* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
+static void AI_SearchBestTarget (AiAction* aia, const Actor* actor, Actor* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */
@@ -600,23 +600,23 @@ static void AI_SearchBestTarget (AiAction* aia, const Actor* ent, Actor* check, 
 
 	for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 		const fireDef_t* fd = &fdArray[fdIdx];
-		const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill) *
-				G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
+		const float acc = GET_ACC(actor->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill) *
+				G_ActorGetInjuryPenalty(actor, MODIFIER_ACCURACY);
 		const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 + acc);
-		const int time = G_ActorGetModifiedTimeForFiredef(ent, fd, false);
+		const int time = G_ActorGetModifiedTimeForFiredef(actor, fd, false);
 		/* how many shoots can this actor do */
 		const int shots = tu / time;
 		if (shots) {
 			float dist;
 			const bool stunWeapon = (item->def()->dmgtype == gi.csi->damStunElectro || item->def()->dmgtype == gi.csi->damStunGas);
-			if (stunWeapon && !G_IsInsane(ent) && (check->isStunned() || CHRSH_IsTeamDefRobot(check->chr.teamDef)))
+			if (stunWeapon && !G_IsInsane(actor) && (check->isStunned() || CHRSH_IsTeamDefRobot(check->chr.teamDef)))
 				return;
-			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
+			if (!AI_FighterCheckShoot(actor, check, fd, &dist))
 				continue;
 
 			/* check how good the target is visible */
 			if (!visChecked) {	/* only do this once per actor ! */
-				vis = G_ActorVis(ent->origin, ent, check, true);
+				vis = G_ActorVis(actor->origin, actor, check, true);
 				visChecked = true;
 			}
 
@@ -630,7 +630,7 @@ static void AI_SearchBestTarget (AiAction* aia, const Actor* ent, Actor* check, 
 			const int shotFlags = fd->gravity | (fd->launched << 1) | (fd->rolled << 2);
 			if (shotChecked != shotFlags) {
 				shotChecked = shotFlags;
-				hasLineOfFire = AI_CheckLineOfFire(ent, check, fd, shots);
+				hasLineOfFire = AI_CheckLineOfFire(actor, check, fd, shots);
 			}
 			if (!hasLineOfFire)
 				continue;
@@ -664,11 +664,11 @@ static void AI_SearchBestTarget (AiAction* aia, const Actor* ent, Actor* check, 
 				continue;
 
 			/* civilian malus */
-			if (G_IsCivilian(check) && !ent->isRaged())
+			if (G_IsCivilian(check) && !actor->isRaged())
 				dmg *= SCORE_CIV_FACTOR;
 
 			/* Stunned malus */
-			if (check->isStunned() && !ent->isRaged())
+			if (check->isStunned() && !actor->isRaged())
 				dmg *= SCORE_DISABLED_FACTOR;
 
 			/* add random effects */
@@ -690,7 +690,7 @@ static void AI_SearchBestTarget (AiAction* aia, const Actor* ent, Actor* check, 
 			}
 
 			if (!aia->target) {
-				aia->target = AI_SearchDestroyableObject(ent, fd);
+				aia->target = AI_SearchDestroyableObject(actor, fd);
 				if (aia->target) {
 					/* don't take vis into account, don't multiply with amount of shots
 					 * others (human victims) should be preferred, that's why we don't
@@ -708,21 +708,21 @@ static void AI_SearchBestTarget (AiAction* aia, const Actor* ent, Actor* check, 
 
 /**
  * @brief Check if given actors are enemies.
- * @param[in] ent The actor that makes the check.
+ * @param[in] actor The actor that makes the check.
  * @param[in] check The actor which is a possible opponent.
  * @returns @c true if enemies. @c false otherwise
  * @todo Should we really know if the other actor is controlled by the other team (STATE_XVI)?
  * aliens would of course know if an actor is infected (becomes part of the hive mind), but humans?
  */
-static inline bool AI_IsOpponent (const Actor* ent, const Edict* check)
+static inline bool AI_IsOpponent (const Actor* actor, const Edict* check)
 {
-	const bool entControlled = G_IsState(ent, STATE_XVI);
+	const bool entControlled = G_IsState(actor, STATE_XVI);
 	const bool checkControlled = G_IsState(check, STATE_XVI);
-	if (check->isSameTeamAs(ent))
+	if (check->isSameTeamAs(actor))
 		return entControlled ? !checkControlled : checkControlled;
 
 	bool opponent = true;
-	switch (ent->getTeam()) {
+	switch (actor->getTeam()) {
 	/* Aliens: hostile to everyone */
 	case TEAM_ALIEN:
 		opponent = !checkControlled;
@@ -742,21 +742,21 @@ static inline bool AI_IsOpponent (const Actor* ent, const Edict* check)
 }
 
 /**
- * @brief Check if @c ent perceives @c target as hostile.
+ * @brief Check if @c actor perceives @c target as hostile.
  * @note Takes lose of sanity in consideration.
- * @param[in] ent The actor that checks for hostiles.
+ * @param[in] actor The actor that checks for hostiles.
  * @param[in] target The possible hostile actor.
- * @returns @c true if ent perceives target as hostile
+ * @returns @c true if actor perceives target as hostile
  */
-static inline bool AI_IsHostile (const Actor* ent, const Edict* target)
+static inline bool AI_IsHostile (const Actor* actor, const Edict* target)
 {
-	if (ent == target)
+	if (actor == target)
 		return false;
 
-	if (G_IsInsane(ent))
+	if (G_IsInsane(actor))
 		return true;
 
-	if (!AI_IsOpponent(ent, target))
+	if (!AI_IsOpponent(actor, target))
 		return false;
 
 	/* don't shoot civs in multiplayer */
