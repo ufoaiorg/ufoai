@@ -288,8 +288,12 @@ pos_t G_ActorMoveLength (const Actor* actor, const pathing_t* path, const pos3_t
 		PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
 	}
 
+	const bool useAutostand = crouchingState && (G_IsAI(actor) || actor->getPlayer().autostand)
+				&& gi.GridShouldUseAutostand(path, to);
+	const int autostandTU = useAutostand ? 2 * TU_CROUCH : 0;
+
 	return std::min(ROUTING_NOT_REACHABLE, length + static_cast<int>(numSteps *
-			G_ActorGetInjuryPenalty(actor, MODIFIER_MOVEMENT)));
+			G_ActorGetInjuryPenalty(actor, MODIFIER_MOVEMENT)) + autostandTU);
 }
 
 /**
@@ -323,7 +327,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 	G_MoveCalc(visTeam, actor, actor->pos, actor->TU);
 
 	/* Autostand: check if the actor is crouched and player wants autostanding...*/
-	if (crouchingState && player.autostand) {
+	if (crouchingState && (G_IsAI(actor) || player.autostand)) {
 		/* ...and if this is a long walk... */
 		if (gi.CanActorStandHere(actor->fieldSize, actor->pos)
 			&& gi.GridShouldUseAutostand(level.pathingMap, to)) {

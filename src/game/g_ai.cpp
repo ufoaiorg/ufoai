@@ -242,6 +242,9 @@ bool AI_CheckUsingDoor (const Edict* ent, const Edict* door)
  */
 static bool AI_CheckCrouch (const Actor* actor)
 {
+	if (G_IsCrouched(actor))
+		return false;
+
 	Actor* check = nullptr;
 
 	/* see if we are very well visible by an enemy */
@@ -1278,10 +1281,6 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
  */
 static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 {
-	/* check if the actor is in crouched state and try to stand up before doing the move */
-	if (actor->isCrouched())
-		G_ClientStateChange(player, actor, STATE_CROUCHED, true);
-
 	/* calculate move table */
 	G_MoveCalc(0, actor, actor->pos, actor->getUsableTUs());
 	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
