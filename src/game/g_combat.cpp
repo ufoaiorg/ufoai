@@ -334,7 +334,7 @@ int G_ApplyProtection (const Edict* target, const byte dmgWeight, int damage)
  * @sa G_TakeDamage
  * @sa G_PrintActorStats
  */
-static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* attacker, shot_mock_t* mock, const vec3_t impact)
+static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* attacker, shot_mock_t* mock, const vec3_t impact)
 {
 	const bool stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
 	const bool stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
@@ -442,7 +442,7 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Edict* att
 	G_CheckDeathOrKnockout(victim, attacker, fd, damage);
 }
 
-void G_CheckDeathOrKnockout (Actor* target, Edict* attacker, const fireDef_t* fd, int damage)
+void G_CheckDeathOrKnockout (Actor* target, Actor* attacker, const fireDef_t* fd, int damage)
 {
 	/* Sanity check */
 	target->HP = std::min(std::max(target->HP, 0), target->chr.maxHP);
@@ -501,7 +501,7 @@ static inline bool G_FireAffectedSurface (const cBspSurface_t* surface, const fi
  * @param[in,out] mock pseudo shooting - only for calculating mock values - nullptr for real shots
  * @param[in] tr The trace where the grenade hits something (or not)
  */
-static void G_SplashDamage (Edict* ent, const fireDef_t* fd, vec3_t impact, shot_mock_t* mock, const trace_t* tr)
+static void G_SplashDamage (Actor* ent, const fireDef_t* fd, vec3_t impact, shot_mock_t* mock, const trace_t* tr)
 {
 	Edict* check = nullptr;
 	vec3_t center;
