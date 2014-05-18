@@ -382,10 +382,6 @@ static bool G_ActionCheck (const Player& player, Edict* ent)
  */
 bool G_ActionCheckForCurrentTeam (const Player& player, Actor* ent, int TU)
 {
-	return G_ActionCheckForCurrentTeam2(player, ent, TU);
-}
-bool G_ActionCheckForCurrentTeam2 (const Player& player, Edict* ent, int TU)
-{
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player.getTeam()) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - it is not your turn!"));
@@ -622,7 +618,7 @@ bool G_ClientGetWeaponFromInventory (Actor* actor)
 bool G_ClientUseEdict (const Player& player, Actor* actor, Edict* edict)
 {
 	/* check whether the actor has sufficient TUs to 'use' this edicts */
-	if (!G_ActionCheckForCurrentTeam2(player, actor, edict->TU))
+	if (!G_ActionCheckForCurrentTeam(player, actor, edict->TU))
 		return false;
 
 	if (!G_UseEdict(edict, actor))
