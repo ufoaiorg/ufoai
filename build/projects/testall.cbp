@@ -428,6 +428,7 @@
 		<Unit filename="../../src/game/g_ai_lua.cpp" />
 		<Unit filename="../../src/game/g_camera.cpp" />
 		<Unit filename="../../src/game/g_client.cpp" />
+		<Unit filename="../../src/game/g_client.h" />
 		<Unit filename="../../src/game/g_cmds.cpp" />
 		<Unit filename="../../src/game/g_combat.cpp" />
 		<Unit filename="../../src/game/g_edict.h" />
