@@ -502,13 +502,15 @@ static ufoType_t Com_GetUfoIdNum (const char* idString)
 	return UFO_MAX;
 }
 
-static const char* Com_GetUfoIdStr (ufoType_t idNum)
+static void Com_GetUfoIdStr (ufoType_t idNum, char* outStr)
 {
 	for (int i = 0; i < UFO_MAX; i++)
-		if (idNum == ufoIdsTable[i].idNum)
-			return ufoIdsTable[i].idStr;
+		if (idNum == ufoIdsTable[i].idNum) {
+			sprintf(outStr, "%s", ufoIdsTable[i].idStr);
+			return;
+		}
 
-	return nullptr;
+	outStr[0] = 0;;
 }
 
 static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
@@ -1167,9 +1169,9 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 		}
 
 	case V_UFO:
-		ufoIdStr = Com_GetUfoIdStr(*(const ufoType_t*) b);
-		if (ufoIdStr)
-			return ufoIdStr;
+		Com_GetUfoIdStr(*(const ufoType_t*) b, valuestr);
+		if (valuestr[0])
+			return valuestr;
 		else
 			Sys_Error("Unknown ufo type: '%i'", *(const ufoType_t*) b);
 
