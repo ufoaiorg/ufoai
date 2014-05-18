@@ -38,17 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define G_SetDead(ent)			G_SetState((ent), STATE_DEAD)
 #define G_SetCrouched(ent)		G_SetState((ent), STATE_CROUCHED)
 
-#define G_RemoveState(ent, s)	(ent)->state &= ~(s)
-#define G_RemoveShaken(ent)		G_RemoveState((ent), STATE_SHAKEN)
-#define G_RemoveDazed(ent)		G_RemoveState((ent), STATE_DAZED)
-#define G_RemoveStunned(ent)	G_RemoveState((ent), STATE_STUN)
-#define G_RemoveDead(ent)		G_RemoveState((ent), STATE_DEAD)
-#define G_RemoveInsane(ent)		G_RemoveState((ent), STATE_INSANE)
-#define G_RemoveRage(ent)		G_RemoveState((ent), STATE_RAGE)
-#define G_RemovePanic(ent)		G_RemoveState((ent), STATE_PANIC)
-#define G_RemoveCrouched(ent)	G_RemoveState((ent), STATE_CROUCHED)
-#define G_RemoveReaction(ent)	G_RemoveState((ent), STATE_REACTION)
-
 #define G_ToggleState(ent, s)	(ent)->state ^= (s)
 #define G_ToggleCrouched(ent)	G_ToggleState(ent, STATE_CROUCHED)
 

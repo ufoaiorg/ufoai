@@ -412,7 +412,7 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* att
 			if (!isRobot && !victim->isSameTeamAs(attacker)) {
 				/** @todo there should be a possible protection, too */
 				/* dazed entity wont reaction fire */
-				G_RemoveReaction(victim);
+				victim->removeReaction();
 				G_ActorReserveTUs(victim, 0, victim->chr.reservedTus.shot, victim->chr.reservedTus.crouch);
 				/* flashbangs kill TUs */
 				G_ActorSetTU(victim, 0);

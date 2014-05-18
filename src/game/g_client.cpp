@@ -506,7 +506,7 @@ void G_ClientStateChange (const Player& player, Actor* actor, int reqState, bool
 				G_ClientPrintf(player, PRINT_HUD, _("Currently shaken, won't let their guard down."));
 			} else {
 				/* Turn off reaction fire. */
-				G_RemoveReaction(actor);
+				actor->removeReaction();
 				G_ActorReserveTUs(actor, 0, actor->chr.reservedTus.shot, actor->chr.reservedTus.crouch);
 				if (!G_IsAI(actor))
 					G_EventReactionFireChange(*actor);
@@ -516,7 +516,7 @@ void G_ClientStateChange (const Player& player, Actor* actor, int reqState, bool
 	/* Request to turn on multi- or single-reaction fire mode. */
 	case STATE_REACTION:
 		/* Disable reaction fire. */
-		G_RemoveReaction(actor);
+		actor->removeReaction();
 
 		if (G_ReactionFireSettingsReserveTUs(actor)) {
 			/* Enable requested reaction fire. */

@@ -374,6 +374,16 @@ public:
 	inline void setDazed()				{setState(STATE_DAZED);}
 	inline void setCrouched()			{setState(STATE_CROUCHED);}
 
+	inline void unsetState(int flag)	{state &= ~flag;}
+	inline void removeShaken()			{unsetState(STATE_SHAKEN);}
+	inline void removeStunned()			{unsetState(STATE_STUN);}
+	inline void removePanicked()		{unsetState(STATE_PANIC);}
+	inline void removeReaction()		{unsetState(STATE_REACTION);}
+	inline void removeRaged()			{unsetState(STATE_RAGE);}
+	inline void removeInsane()			{unsetState(STATE_INSANE);}
+	inline void removeDazed()			{unsetState(STATE_DAZED);}
+	inline void removeCrouched()		{unsetState(STATE_CROUCHED);}
+
 	inline unsigned int getBody() const {
 		return body;
 	}

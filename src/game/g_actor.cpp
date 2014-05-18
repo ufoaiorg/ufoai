@@ -252,7 +252,7 @@ void G_ActorGiveTimeUnits (Actor* actor)
 {
 	const int tus = actor->isDazed() ? 0 : G_ActorCalculateMaxTU(actor);
 	G_ActorSetTU(actor, tus);
-	G_RemoveDazed(actor);
+	actor->removeDazed();
 }
 
 void G_ActorSetTU (Edict* ent, int tus)
@@ -357,7 +357,7 @@ void G_ActorGetEyeVector (const Edict* actor, vec3_t eye)
 static void G_ActorRevitalise (Actor* actor)
 {
 	if (actor->isStunned()) {
-		G_RemoveStunned(actor);
+		actor->removeStunned();
 		/** @todo have a look at the morale value of
 		 * the actor and maybe get into rage or panic? */
 		G_ActorModifyCounters(actor->link, actor, 1, 0, -1);
@@ -397,7 +397,7 @@ static bool G_ActorDie (Actor* actor, const Edict* attacker)
 {
 	const bool stunned = actor->isStunned();
 
-	G_RemoveStunned(actor);
+	actor->removeStunned();
 
 	if (actor->isDead())
 		return false;

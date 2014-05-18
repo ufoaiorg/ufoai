@@ -51,7 +51,7 @@ static void G_MoralePanic (Actor* actor)
 	}
 
 	/* get up */
-	G_RemoveCrouched(actor);
+	actor->removeCrouched();
 	G_ActorSetMaxs(actor);
 
 	/* send panic */
@@ -78,9 +78,9 @@ static void G_MoralePanic (Actor* actor)
  */
 static void G_MoraleStopPanic (Actor* actor)
 {
-	G_RemoveInsane(actor);
+	actor->removeInsane();
 	if (actor->morale / mor_panic->value > m_panic_stop->value * frand()) {
-		G_RemovePanic(actor);
+		actor->removePanicked();
 		G_PrintStats("%s is no longer panicked (entnum %i).", actor->chr.name, actor->getIdNum());
 		G_EventSendState(G_VisToPM(actor->visflags), *actor);
 	} else {
@@ -121,9 +121,9 @@ static void G_MoraleRage (Actor* actor)
 static void G_MoraleStopRage (Actor* actor)
 {
 	 /* regains sanity */
-	G_RemoveInsane(actor);
+	actor->removeInsane();
 	if (actor->morale / mor_panic->value > m_rage_stop->value * frand()) {
-		G_RemoveRage(actor);
+		actor->removeRaged();
 		G_EventSendState(G_VisToPM(actor->visflags), *actor);
 		G_PrintStats("%s is no longer insane (entnum %i).", actor->chr.name, actor->getIdNum());
 	} else {

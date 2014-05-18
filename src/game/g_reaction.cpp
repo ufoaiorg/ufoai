@@ -700,7 +700,7 @@ bool ReactionFire::canReact (Actor* shooter, const Edict* target) const
 		/* print character info if this happens, for now */
 		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,entnum=%i,hand=%i,fmIdx=%i)\n",
 				shooter->chr.name, shooter->getIdNum(), shooter->chr.RFmode.getHand(), shooter->chr.RFmode.getFmIdx());
-		G_RemoveReaction(shooter);
+		shooter->removeReaction();
 		return false;
 	}
 	return true;
@@ -823,7 +823,7 @@ bool ReactionFire::tryToShoot (Actor* shooter, const Edict* target)
 
 	if (tookShot) {
 		/* clear any shakenness */
-		G_RemoveShaken(shooter);
+		shooter->removeShaken();
 	}
 
 	return tookShot;
@@ -1018,7 +1018,7 @@ void G_ReactionFireReset (int team)
 	Actor* actor = nullptr;
 
 	while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, team))) {
-		G_RemoveShaken(actor);
+		actor->removeShaken();
 	}
 }
 
