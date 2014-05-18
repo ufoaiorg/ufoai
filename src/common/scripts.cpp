@@ -515,9 +515,11 @@ static void Com_GetUfoIdStr (ufoType_t idNum, char* outStr)
 
 static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
 {
-	for (int i = 0; i < UFO_MAX; i++)
-		if (Q_streq(idString, ufoCrashedIdsTable[i].idStr))
-			return ufoCrashedIdsTable[i].idNum;
+	if (!strncmp(idString, "craft_crash_", 12)) {
+		for (int i = 0; i < UFO_MAX; i++)
+			if (Q_streq(idString + 12, ufoIdsTable[i].idStr + 10))
+				return ufoIdsTable[i].idNum;
+	}
 
 	return UFO_MAX;
 }
