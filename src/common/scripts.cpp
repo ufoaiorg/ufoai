@@ -479,20 +479,6 @@ const ufoIds_t ufoIdsTable[] = {
 };
 CASSERT(lengthof(ufoIdsTable) == UFO_MAX);
 
-const ufoIds_t ufoCrashedIdsTable[] = {
-	{UFO_BOMBER,	"craft_crash_bomber"},
-	{UFO_CARRIER,	"craft_crash_carrier"},
-	{UFO_CORRUPTER,	"craft_crash_corrupter"},
-	{UFO_FIGHTER,	"craft_crash_fighter"},
-	{UFO_HARVESTER,	"craft_crash_harvester"},
-	{UFO_SCOUT,		"craft_crash_scout"},
-	{UFO_SUPPLY,	"craft_crash_supply"},
-	{UFO_GUNBOAT,	"craft_crash_gunboat"},
-	{UFO_RIPPER,	"craft_crash_ripper"},
-	{UFO_MOTHERSHIP,"craft_crash_mothership"}
-};
-CASSERT(lengthof(ufoCrashedIdsTable) == UFO_MAX);
-
 static ufoType_t Com_GetUfoIdNum (const char* idString)
 {
 	for (int i = 0; i < UFO_MAX; i++)
@@ -510,7 +496,7 @@ static void Com_GetUfoIdStr (ufoType_t idNum, char* outStr)
 			return;
 		}
 
-	outStr[0] = 0;;
+	outStr[0] = 0;
 }
 
 static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
@@ -524,13 +510,15 @@ static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
 	return UFO_MAX;
 }
 
-static const char* Com_GetCrashedUfoIdStr (ufoType_t idNum)
+static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
 {
 	for (int i = 0; i < UFO_MAX; i++)
-		if (idNum == ufoCrashedIdsTable[i].idNum)
-			return ufoCrashedIdsTable[i].idStr;
+		if (idNum == ufoIdsTable[i].idNum) {
+			sprintf(outStr, "craft_crash_%s", ufoIdsTable[i].idStr + 10);
+			return;
+		}
 
-	return nullptr;
+	outStr[0] = 0;
 }
 
 /**
@@ -1104,7 +1092,6 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int ofs)
 {
 	static char valuestr[MAX_VAR];
-	const char* ufoIdStr = nullptr;
 	const byte* b;
 
 	b = (const byte*) base + ofs;
@@ -1178,9 +1165,9 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 			Sys_Error("Unknown ufo type: '%i'", *(const ufoType_t*) b);
 
 	case V_UFOCRASHED:
-		ufoIdStr = Com_GetCrashedUfoIdStr(*(const ufoType_t*) b);
-		if (ufoIdStr)
-			return ufoIdStr;
+		Com_GetCrashedUfoIdStr(*(const ufoType_t*) b, valuestr);
+		if (valuestr[0])
+			return valuestr;
 		else
 			Sys_Error("Unknown crashed ufo type: '%i'", *(const ufoType_t*) b);
 
