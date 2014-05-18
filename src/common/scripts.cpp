@@ -466,24 +466,26 @@ typedef struct ufoIds_s {
 } ufoIds_t;
 
 const ufoIds_t ufoIdsTable[] = {
-	{UFO_BOMBER,	"craft_ufo_bomber"},
-	{UFO_CARRIER,	"craft_ufo_carrier"},
-	{UFO_CORRUPTER,	"craft_ufo_corrupter"},
-	{UFO_FIGHTER,	"craft_ufo_fighter"},
-	{UFO_HARVESTER,	"craft_ufo_harvester"},
-	{UFO_SCOUT,		"craft_ufo_scout"},
-	{UFO_SUPPLY,	"craft_ufo_supply"},
-	{UFO_GUNBOAT,	"craft_ufo_gunboat"},
-	{UFO_RIPPER,	"craft_ufo_ripper"},
-	{UFO_MOTHERSHIP,"craft_ufo_mothership"}
+	{UFO_BOMBER,	"bomber"},
+	{UFO_CARRIER,	"carrier"},
+	{UFO_CORRUPTER,	"corrupter"},
+	{UFO_FIGHTER,	"fighter"},
+	{UFO_HARVESTER,	"harvester"},
+	{UFO_SCOUT,		"scout"},
+	{UFO_SUPPLY,	"supply"},
+	{UFO_GUNBOAT,	"gunboat"},
+	{UFO_RIPPER,	"ripper"},
+	{UFO_MOTHERSHIP,"mothership"}
 };
 CASSERT(lengthof(ufoIdsTable) == UFO_MAX);
 
 static ufoType_t Com_GetUfoIdNum (const char* idString)
 {
-	for (int i = 0; i < UFO_MAX; i++)
-		if (Q_streq(idString, ufoIdsTable[i].idStr))
-			return ufoIdsTable[i].idNum;
+	if (!strncmp(idString, "craft_ufo_", 10)) {
+		for (int i = 0; i < UFO_MAX; i++)
+			if (Q_streq(idString + 10, ufoIdsTable[i].idStr))
+				return ufoIdsTable[i].idNum;
+	}
 
 	return UFO_MAX;
 }
@@ -492,7 +494,7 @@ static void Com_GetUfoIdStr (ufoType_t idNum, char* outStr)
 {
 	for (int i = 0; i < UFO_MAX; i++)
 		if (idNum == ufoIdsTable[i].idNum) {
-			sprintf(outStr, "%s", ufoIdsTable[i].idStr);
+			sprintf(outStr, "craft_ufo_%s", ufoIdsTable[i].idStr);
 			return;
 		}
 
@@ -503,7 +505,7 @@ static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
 {
 	if (!strncmp(idString, "craft_crash_", 12)) {
 		for (int i = 0; i < UFO_MAX; i++)
-			if (Q_streq(idString + 12, ufoIdsTable[i].idStr + 10))
+			if (Q_streq(idString + 12, ufoIdsTable[i].idStr))
 				return ufoIdsTable[i].idNum;
 	}
 
@@ -514,7 +516,7 @@ static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
 {
 	for (int i = 0; i < UFO_MAX; i++)
 		if (idNum == ufoIdsTable[i].idNum) {
-			sprintf(outStr, "craft_crash_%s", ufoIdsTable[i].idStr + 10);
+			sprintf(outStr, "craft_crash_%s", ufoIdsTable[i].idStr);
 			return;
 		}
 
