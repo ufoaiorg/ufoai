@@ -619,7 +619,7 @@ bool G_ClientGetWeaponFromInventory (Actor* actor)
  * @sa CL_ActorUse
  * @sa G_UseEdict
  */
-bool G_ClientUseEdict (const Player& player, Edict* actor, Edict* edict)
+bool G_ClientUseEdict (const Player& player, Actor* actor, Edict* edict)
 {
 	/* check whether the actor has sufficient TUs to 'use' this edicts */
 	if (!G_ActionCheckForCurrentTeam2(player, actor, edict->TU))
