@@ -704,7 +704,7 @@ int G_ClientAction (Player& player)
 		break;
 
 	case PA_USE:
-		if (ent->clientAction) {
+		if (actor->clientAction) {
 			/* read the door the client wants to open */
 			gi.ReadFormat(format, &i);
 
@@ -712,9 +712,9 @@ int G_ClientAction (Player& player)
 			Edict* actionEnt = G_EdictsGetByNum(i);
 
 			/* maybe the door is no longer 'alive' because it was destroyed */
-			if (actionEnt && ent->clientAction == actionEnt) {
+			if (actionEnt && actor->clientAction == actionEnt) {
 				if (G_IsDoor(actionEnt)) {
-					G_ActorUseDoor(ent, actionEnt);
+					G_ActorUseDoor(actor, actionEnt);
 				}
 			}
 		}

@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define G_ToggleCrouched(ent)	G_ToggleState(ent, STATE_CROUCHED)
 
 bool G_IsLivingActor(const Edict* ent) __attribute__((nonnull));
-void G_ActorUseDoor(Edict* actor, Edict* door);
+void G_ActorUseDoor(Actor* actor, Edict* door);
 void G_ActorSetClientAction(Edict* actor, Edict* ent);
 int G_ActorUsableTUs(const Edict* ent);
 int G_ActorGetTUForReactionFire(const Edict* ent);

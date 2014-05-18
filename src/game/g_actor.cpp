@@ -52,7 +52,7 @@ bool G_IsLivingActor (const Edict* ent)
  * @param actor The actor that is using the door
  * @param door The door that should be opened/closed
  */
-void G_ActorUseDoor (Edict* actor, Edict* door)
+void G_ActorUseDoor (Actor* actor, Edict* door)
 {
 	/* check whether it's part of an edict group but not the master */
 	if (door->flags & FL_GROUPSLAVE)
