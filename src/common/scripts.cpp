@@ -368,28 +368,28 @@ CASSERT(lengthof(fade_names) == FADE_LAST);
 
 /** @brief target sizes for buffer */
 static const size_t vt_sizes[] = {
-	0,	/* V_NULL */
-	sizeof(bool),	/* V_BOOL */
-	sizeof(char),	/* V_CHAR */
-	sizeof(int),	/* V_INT */
+	0,					/* V_NULL */
+	sizeof(bool),		/* V_BOOL */
+	sizeof(char),		/* V_CHAR */
+	sizeof(int),		/* V_INT */
 	2 * sizeof(int),	/* V_INT2 */
-	sizeof(float),	/* V_FLOAT */
-	sizeof(vec2_t),	/* V_POS */
-	sizeof(vec3_t),	/* V_VECTOR */
-	sizeof(vec4_t),	/* V_COLOR */
-	0,	/* V_STRING */
-	0,	/* V_TRANSLATION_STRING */
-	0,	/* V_LONGSTRING */
+	sizeof(float),		/* V_FLOAT */
+	sizeof(vec2_t),		/* V_POS */
+	sizeof(vec3_t),		/* V_VECTOR */
+	sizeof(vec4_t),		/* V_COLOR */
+	0,					/* V_STRING */
+	0,					/* V_TRANSLATION_STRING */
+	0,					/* V_LONGSTRING */
 	sizeof(align_t),	/* V_ALIGN */
 	sizeof(blend_t),	/* V_BLEND */
 	sizeof(style_t),	/* V_STYLE */
-	sizeof(fade_t),	/* V_FADE */
-	sizeof(int),	/* V_SHAPE_SMALL */
-	0,	/* V_SHAPE_BIG */
-	sizeof(byte),	/* V_DAMAGE */
-	0,	/* V_DATE */
-	sizeof(float),	/* V_RELABS */
-	0,	/* V_HUNK_STRING */
+	sizeof(fade_t),		/* V_FADE */
+	sizeof(int),		/* V_SHAPE_SMALL */
+	0,					/* V_SHAPE_BIG */
+	sizeof(byte),		/* V_DAMAGE */
+	0,					/* V_DATE */
+	sizeof(float),		/* V_RELABS */
+	0,					/* V_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
 	sizeof(ufoType_t),	/* V_UFO */
 	sizeof(ufoType_t),	/* V_UFOCRASHED */
@@ -400,32 +400,32 @@ CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
 /** @brief natural align for each targets */
 static const size_t vt_aligns[] = {
-	0,	/* V_NULL */
-	sizeof(bool),	/* V_BOOL */
-	sizeof(char),	/* V_CHAR */
-	sizeof(int),	/* V_INT */
-	sizeof(int),	/* V_INT2 */
-	sizeof(float),	/* V_FLOAT */
-	sizeof(vec_t),	/* V_POS */
-	sizeof(vec_t),	/* V_VECTOR */
-	sizeof(vec_t),	/* V_COLOR */
-	sizeof(char),	/* V_STRING */
-	sizeof(char),	/* V_TRANSLATION_STRING */
-	sizeof(char),	/* V_LONGSTRING */
-	sizeof(align_t),/* V_ALIGN */
-	sizeof(blend_t),/* V_BLEND */
-	sizeof(style_t),/* V_STYLE */
-	sizeof(fade_t),	/* V_FADE */
-	sizeof(int),	/* V_SHAPE_SMALL */
+	0,					/* V_NULL */
+	sizeof(bool),		/* V_BOOL */
+	sizeof(char),		/* V_CHAR */
+	sizeof(int),		/* V_INT */
+	sizeof(int),		/* V_INT2 */
+	sizeof(float),		/* V_FLOAT */
+	sizeof(vec_t),		/* V_POS */
+	sizeof(vec_t),		/* V_VECTOR */
+	sizeof(vec_t),		/* V_COLOR */
+	sizeof(char),		/* V_STRING */
+	sizeof(char),		/* V_TRANSLATION_STRING */
+	sizeof(char),		/* V_LONGSTRING */
+	sizeof(align_t),	/* V_ALIGN */
+	sizeof(blend_t),	/* V_BLEND */
+	sizeof(style_t),	/* V_STYLE */
+	sizeof(fade_t),		/* V_FADE */
+	sizeof(int),		/* V_SHAPE_SMALL */
 	sizeof(uint32_t),	/* V_SHAPE_BIG */
-	sizeof(byte),	/* V_DAMAGE */
-	sizeof(date_t),	/* V_DATE */
-	sizeof(float),	/* V_RELABS */
-	sizeof(char),	/* V_HUNK_STRING */
+	sizeof(byte),		/* V_DAMAGE */
+	sizeof(date_t),		/* V_DATE */
+	sizeof(float),		/* V_RELABS */
+	sizeof(char),		/* V_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
 	sizeof(ufoType_t),	/* V_UFO */
 	sizeof(ufoType_t),	/* V_UFOCRASHED */
-	sizeof(humanAircraftType_t),		/* V_AIRCRAFTTYPE */
+	sizeof(humanAircraftType_t),	/* V_AIRCRAFTTYPE */
 	sizeof(void*)
 };
 CASSERT(lengthof(vt_aligns) == V_NUM_TYPES);
