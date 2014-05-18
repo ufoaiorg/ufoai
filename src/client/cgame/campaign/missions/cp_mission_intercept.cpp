@@ -230,7 +230,7 @@ int CP_InterceptMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTy
 	if (UFO_ShouldAppearOnGeoscape(UFO_GUNBOAT))
 		ufoTypes[num++] = UFO_GUNBOAT;
 
-	/* don't make attack on installation happens too often */
+	/* don't make attack on installation happen too often */
 	if (frand() < TARGET_INS_PROBABILITY) {
 		if (UFO_ShouldAppearOnGeoscape(UFO_HARVESTER))
 			ufoTypes[num++] = UFO_HARVESTER;
