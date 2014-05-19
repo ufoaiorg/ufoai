@@ -321,17 +321,7 @@ static void CP_BaseAttackGoToBase (mission_t* mission)
  */
 int CP_BaseAttackMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
 {
-	int num = 0;
-	if (UFO_ShouldAppearOnGeoscape(UFO_HARVESTER))
-		ufoTypes[num++] = UFO_HARVESTER;
-	if (UFO_ShouldAppearOnGeoscape(UFO_CORRUPTER))
-		ufoTypes[num++] = UFO_CORRUPTER;
-	if (UFO_ShouldAppearOnGeoscape(UFO_GUNBOAT))
-		ufoTypes[num++] = UFO_GUNBOAT;
-	if (UFO_ShouldAppearOnGeoscape(UFO_BOMBER))
-		ufoTypes[num++] = UFO_BOMBER;
-
-	return num;
+	return UFO_GetAvailableUFOsForMission (mission->category, ufoTypes);
 }
 
 /**

@@ -140,6 +140,52 @@ bool UFO_CanDoReconMission (const ufoType_t type)
 }
 
 /**
+ * @brief Check if the UFO type is available for recon missions
+ * @param type The UFO type to check
+ */
+bool UFO_CanDoBaseAttackMission (const ufoType_t type)
+{
+	switch (type) {
+	case UFO_HARVESTER:
+	case UFO_CORRUPTER:
+	case UFO_GUNBOAT:
+	case UFO_BOMBER:
+		return true;
+	default:
+		return false;
+	}
+}
+
+/**
+ * @brief Fill an array with available UFOs for the mission type.
+ * @param[in] missionType The kind ofmission we are currently creating.
+ * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
+ * @return number of elements written in @c ufoTypes
+ */
+int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoType_t* ufoTypes)
+{
+	int num = 0;
+
+	for (int i = 0; i < UFO_MAX; i++) {
+		ufoType_t uType = (ufoType_t)i;
+		switch (missionType) {
+			case INTERESTCATEGORY_RECON:
+				if (UFO_CanDoReconMission(uType))
+					break;
+			case INTERESTCATEGORY_BASE_ATTACK:
+				if (UFO_CanDoBaseAttackMission(uType))
+					break;
+			default:
+				continue;
+		}
+		if (UFO_ShouldAppearOnGeoscape(uType))
+			ufoTypes[num++] = uType;
+	}
+
+	return num;
+}
+
+/**
  * @brief Translate UFO type to name.
  * @param[in] type UFO type in ufoType_t.
  * @return Translated UFO name.
