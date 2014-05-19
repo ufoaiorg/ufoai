@@ -131,7 +131,7 @@ bool UFO_ShouldAppearOnGeoscape (const ufoType_t type)
  * @brief Check if the UFO type is available for recon missions
  * @param type The UFO type to check
  */
-bool UFO_CanDoReconMission (const ufoType_t type)
+static bool UFO_CanDoReconMission (const ufoType_t type)
 {
 	if (type == UFO_SCOUT || type == UFO_FIGHTER)
 		return true;
@@ -143,7 +143,7 @@ bool UFO_CanDoReconMission (const ufoType_t type)
  * @brief Check if the UFO type is available for recon missions
  * @param type The UFO type to check
  */
-bool UFO_CanDoBaseAttackMission (const ufoType_t type)
+static bool UFO_CanDoBaseAttackMission (const ufoType_t type)
 {
 	switch (type) {
 	case UFO_HARVESTER:
@@ -160,7 +160,7 @@ bool UFO_CanDoBaseAttackMission (const ufoType_t type)
  * @brief Check if the UFO type is available for recon missions
  * @param type The UFO type to check
  */
-bool UFO_CanDoSupplyMission (const ufoType_t type)
+static bool UFO_CanDoSupplyMission (const ufoType_t type)
 {
 	if (type == UFO_SUPPLY)
 		return true;
