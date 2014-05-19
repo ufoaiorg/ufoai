@@ -330,30 +330,23 @@ window equipment extends objectinfo
 	confunc update_item_list {
 		if ( *cvar:mn_equiptype == 0 ) {
 			*node:root.equip@filter = FILTER_S_PRIMARY
-			*node:root.equip_ammo@filter = FILTER_S_PRIMARY
 		}
 		elif ( *cvar:mn_equiptype == 1 ) {
 			*node:root.equip@filter = FILTER_S_SECONDARY
-			*node:root.equip_ammo@filter = FILTER_S_SECONDARY
 		}
 		elif ( *cvar:mn_equiptype == 2 ) {
 			*node:root.equip@filter = FILTER_S_HEAVY
-			*node:root.equip_ammo@filter = FILTER_S_HEAVY
 		}
 		elif ( *cvar:mn_equiptype == 3 ) {
 			*node:root.equip@filter = FILTER_S_MISC
-			*node:root.equip_ammo@filter = FILTER_S_MISC
 		}
 		elif ( *cvar:mn_equiptype == 4 ) {
 			*node:root.equip@filter = FILTER_S_ARMOUR
-			*node:root.equip_ammo@filter = FILTER_S_ARMOUR
 		}
 		elif ( *cvar:mn_equiptype == 5 ) {
 			*node:root.equip@filter = FILTER_S_IMPLANT
-			*node:root.equip_ammo@filter = FILTER_S_IMPLANT
 		}
 		*node:root.equip@viewpos = 0
-		*node:root.equip_ammo@viewpos = 0
 	}
 
 	// The tooltips defined with the options below do not show up. The reason is:
