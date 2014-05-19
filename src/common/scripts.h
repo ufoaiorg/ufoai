@@ -239,6 +239,7 @@ typedef struct terrainType_s {
 const terrainType_t* Com_GetTerrainType(const char* textureName);
 
 bool Com_CanUfoDoSupplyMission(ufoType_t idNum);
+bool Com_CanUfoDoTerrorMission(ufoType_t idNum);
 
 /**
  * @brief list of script aliases to register
