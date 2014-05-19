@@ -508,8 +508,8 @@ static void Com_GetUfoIdStr (ufoType_t idNum, char* outStr)
 	const ufoIds_t* uDef = Com_GetUfoDef(idNum);
 	if (uDef)
 		sprintf(outStr, "craft_ufo_%s", uDef->idStr);
-
-	outStr[0] = 0;
+	else
+		outStr[0] = 0;
 }
 
 static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
@@ -528,8 +528,8 @@ static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
 	const ufoIds_t* uDef = Com_GetUfoDef(idNum);
 	if (uDef)
 		sprintf(outStr, "craft_crash_%s", uDef->idStr);
-
-	outStr[0] = 0;
+	else
+		outStr[0] = 0;
 }
 
 bool Com_CanUfoDoSupplyMission (ufoType_t idNum)
