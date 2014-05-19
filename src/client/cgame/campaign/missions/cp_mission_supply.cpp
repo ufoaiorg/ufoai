@@ -171,23 +171,6 @@ static void CP_SupplyMissionCreate (mission_t* mission)
 }
 
 /**
- * @brief Fill an array with available UFOs for supply mission type.
- * @param[in] mission Pointer to the mission we are currently creating.
- * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
- * @note Supply mission -- Stage 0
- * @return number of elements written in @c ufoTypes
- */
-int CP_SupplyMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
-{
-	int num = 0;
-
-	if (UFO_ShouldAppearOnGeoscape(UFO_SUPPLY))
-		ufoTypes[num++] = UFO_SUPPLY;
-
-	return num;
-}
-
-/**
  * @brief Determine what action should be performed when a Supply mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
