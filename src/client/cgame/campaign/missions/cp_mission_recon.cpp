@@ -217,28 +217,6 @@ static void CP_ReconMissionSelect (mission_t* mission)
 }
 
 /**
- * @brief Fill an array with available UFOs for recon mission type (aerial or ground).
- * @param[in] mission Pointer to the mission we are currently creating.
- * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
- * @note Recon mission -- Stage 0
- * @return number of elements written in @c ufoTypes
- */
-int CP_ReconMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
-{
-	int num = 0;
-
-	for (int i = 0; i < UFO_MAX; i++) {
-		ufoType_t uType = (ufoType_t)i;
-		if (UFO_CanDoReconMission(uType)) {
-			if (UFO_ShouldAppearOnGeoscape(uType))
-				ufoTypes[num++] = uType;
-		}
-	}
-
-	return num;
-}
-
-/**
  * @brief Determine what action should be performed when a Recon mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */

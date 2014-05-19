@@ -1414,7 +1414,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t* mission)
 
 	switch (mission->category) {
 	case INTERESTCATEGORY_RECON:
-		numTypes = CP_ReconMissionAvailableUFOs(mission, ufoTypes);
+		numTypes = UFO_GetAvailableUFOsForMission(mission->category, ufoTypes);
 		break;
 	case INTERESTCATEGORY_TERROR_ATTACK:
 		numTypes = CP_TerrorMissionAvailableUFOs(mission, ufoTypes);
