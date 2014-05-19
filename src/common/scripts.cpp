@@ -479,6 +479,15 @@ const ufoIds_t ufoIdsTable[] = {
 };
 CASSERT(lengthof(ufoIdsTable) == UFO_MAX);
 
+static const ufoIds_t* Com_GetUfoDef (ufoType_t idNum)
+{
+	for (int i = 0; i < UFO_MAX; i++)
+		if (idNum == ufoIdsTable[i].idNum) {
+			return &ufoIdsTable[i];
+		}
+	return nullptr;
+}
+
 static ufoType_t Com_GetUfoIdNum (const char* idString)
 {
 	if (!strncmp(idString, "craft_ufo_", 10)) {
@@ -492,11 +501,9 @@ static ufoType_t Com_GetUfoIdNum (const char* idString)
 
 static void Com_GetUfoIdStr (ufoType_t idNum, char* outStr)
 {
-	for (int i = 0; i < UFO_MAX; i++)
-		if (idNum == ufoIdsTable[i].idNum) {
-			sprintf(outStr, "craft_ufo_%s", ufoIdsTable[i].idStr);
-			return;
-		}
+	const ufoIds_t* uDef = Com_GetUfoDef(idNum);
+	if (uDef)
+		sprintf(outStr, "craft_ufo_%s", uDef->idStr);
 
 	outStr[0] = 0;
 }
@@ -514,11 +521,9 @@ static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
 
 static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
 {
-	for (int i = 0; i < UFO_MAX; i++)
-		if (idNum == ufoIdsTable[i].idNum) {
-			sprintf(outStr, "craft_crash_%s", ufoIdsTable[i].idStr);
-			return;
-		}
+	const ufoIds_t* uDef = Com_GetUfoDef(idNum);
+	if (uDef)
+		sprintf(outStr, "craft_crash_%s", uDef->idStr);
 
 	outStr[0] = 0;
 }
