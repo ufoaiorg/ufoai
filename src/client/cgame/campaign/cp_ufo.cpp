@@ -128,6 +128,18 @@ bool UFO_ShouldAppearOnGeoscape (const ufoType_t type)
 }
 
 /**
+ * @brief Check if the UFO type is available for recon missions
+ * @param type The UFO type to check
+ */
+bool UFO_CanDoReconMission (const ufoType_t type)
+{
+	if (type == UFO_SCOUT || type == UFO_FIGHTER)
+		return true;
+
+	return false;
+}
+
+/**
  * @brief Translate UFO type to name.
  * @param[in] type UFO type in ufoType_t.
  * @return Translated UFO name.
