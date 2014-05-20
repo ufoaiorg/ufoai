@@ -548,7 +548,7 @@ static Edict* AI_SearchDestroyableObject (const Actor* actor, const fireDef_t* f
 	return nullptr;
 }
 
-#define GRENADE_CHECK_PARTITIONS	4
+#define LOF_CHECK_PARTITIONS	4
 static bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const fireDef_t* fd, int shots) {
 	vec3_t dir, origin;
 	VectorSubtract(target->origin, shooter->origin, dir);
@@ -567,15 +567,15 @@ static bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const
 		VectorCopy(target->origin, at);
 		/* Grenades are targeted at the ground in G_ShootGrenade */
 		at[2] -= GROUND_DELTA;
-		const float dt = gi.GrenadeTarget(origin, at, fd->range, fd->launched, fd->rolled, v) / GRENADE_CHECK_PARTITIONS;
+		const float dt = gi.GrenadeTarget(origin, at, fd->range, fd->launched, fd->rolled, v) / LOF_CHECK_PARTITIONS;
 		if (!dt)
 			return false;
 		VectorSubtract(at, origin, dir);
-		VectorScale(dir, 1.0 / GRENADE_CHECK_PARTITIONS, dir);
+		VectorScale(dir, 1.0 / LOF_CHECK_PARTITIONS, dir);
 		dir[2] = 0;
 		float vz = v[2];
 		int i;
-		for (i = 0; i < GRENADE_CHECK_PARTITIONS; i++) {
+		for (i = 0; i < LOF_CHECK_PARTITIONS; i++) {
 			VectorAdd(origin, dir, at);
 			at[2] += dt * (vz - 0.5 * GRAVITY * dt);
 			vz -= GRAVITY * dt;
@@ -586,7 +586,7 @@ static bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const
 			}
 			VectorCopy(at, origin);
 		}
-		if (i < GRENADE_CHECK_PARTITIONS)
+		if (i < LOF_CHECK_PARTITIONS)
 			return false;
 	}
 	return true;
