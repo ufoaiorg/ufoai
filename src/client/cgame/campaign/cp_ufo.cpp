@@ -178,9 +178,6 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 			case INTERESTCATEGORY_SUPPLY:
 				if (Com_CanUfoDoSupplyMission(uType))
 					break;
-			case INTERESTCATEGORY_TERROR_ATTACK:
-				if (Com_CanUfoDoTerrorMission(uType))
-					break;
 			default:
 				continue;
 		}

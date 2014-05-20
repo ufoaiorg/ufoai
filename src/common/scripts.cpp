@@ -464,20 +464,19 @@ typedef struct ufoIds_s {
 	ufoType_t idNum;
 	const char* idStr;
 	bool supply;
-	bool terror;
 } ufoIds_t;
 
 const ufoIds_t ufoIdsTable[] = {
-	{UFO_BOMBER,	"bomber",		0,	1},
-	{UFO_CARRIER,	"carrier",		0,	0},
-	{UFO_CORRUPTER,	"corrupter",	0,	1},
-	{UFO_FIGHTER,	"fighter",		0,	0},
-	{UFO_HARVESTER,	"harvester",	0,	1},
-	{UFO_SCOUT,		"scout",		0,	0},
-	{UFO_SUPPLY,	"supply",		1,	0},
-	{UFO_GUNBOAT,	"gunboat",		0,	1},
-	{UFO_RIPPER,	"ripper",		0,	0},
-	{UFO_MOTHERSHIP,"mothership",	0,	0}
+	{UFO_BOMBER,	"bomber",		0},
+	{UFO_CARRIER,	"carrier",		0},
+	{UFO_CORRUPTER,	"corrupter",	0},
+	{UFO_FIGHTER,	"fighter",		0},
+	{UFO_HARVESTER,	"harvester",	0},
+	{UFO_SCOUT,		"scout",		0},
+	{UFO_SUPPLY,	"supply",		1},
+	{UFO_GUNBOAT,	"gunboat",		0},
+	{UFO_RIPPER,	"ripper",		0},
+	{UFO_MOTHERSHIP,"mothership",	0}
 };
 CASSERT(lengthof(ufoIdsTable) == UFO_MAX);
 
@@ -534,12 +533,6 @@ bool Com_CanUfoDoSupplyMission (ufoType_t idNum)
 {
 	const ufoIds_t* uDef = Com_GetUfoDef(idNum);
 	return uDef ? uDef->supply : false;
-}
-
-bool Com_CanUfoDoTerrorMission (ufoType_t idNum)
-{
-	const ufoIds_t* uDef = Com_GetUfoDef(idNum);
-	return uDef ? uDef->terror : false;
 }
 
 /**
