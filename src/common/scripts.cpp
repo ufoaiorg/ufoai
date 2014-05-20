@@ -463,20 +463,19 @@ void* Com_AlignPtr (const void* memory, valueTypes_t type)
 typedef struct ufoIds_s {
 	ufoType_t idNum;
 	const char* idStr;
-	bool supply;
 } ufoIds_t;
 
 const ufoIds_t ufoIdsTable[] = {
-	{UFO_BOMBER,	"bomber",		0},
-	{UFO_CARRIER,	"carrier",		0},
-	{UFO_CORRUPTER,	"corrupter",	0},
-	{UFO_FIGHTER,	"fighter",		0},
-	{UFO_HARVESTER,	"harvester",	0},
-	{UFO_SCOUT,		"scout",		0},
-	{UFO_SUPPLY,	"supply",		1},
-	{UFO_GUNBOAT,	"gunboat",		0},
-	{UFO_RIPPER,	"ripper",		0},
-	{UFO_MOTHERSHIP,"mothership",	0}
+	{UFO_BOMBER,	"bomber"},
+	{UFO_CARRIER,	"carrier"},
+	{UFO_CORRUPTER,	"corrupter"},
+	{UFO_FIGHTER,	"fighter"},
+	{UFO_HARVESTER,	"harvester"},
+	{UFO_SCOUT,		"scout"},
+	{UFO_SUPPLY,	"supply"},
+	{UFO_GUNBOAT,	"gunboat"},
+	{UFO_RIPPER,	"ripper"},
+	{UFO_MOTHERSHIP,"mothership"}
 };
 CASSERT(lengthof(ufoIdsTable) == UFO_MAX);
 
@@ -527,12 +526,6 @@ static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
 		sprintf(outStr, "craft_crash_%s", uDef->idStr);
 	else
 		outStr[0] = 0;
-}
-
-bool Com_CanUfoDoSupplyMission (ufoType_t idNum)
-{
-	const ufoIds_t* uDef = Com_GetUfoDef(idNum);
-	return uDef ? uDef->supply : false;
 }
 
 /**
