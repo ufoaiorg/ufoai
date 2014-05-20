@@ -615,7 +615,7 @@ static float AI_CalcShotDamage (Actor* actor, Actor* target, const fireDef_t* fd
 /**
  * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
  */
-static void AI_SearchBestTarget (AiAction* aia, Actor* actor, Actor* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
+static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */
@@ -877,7 +877,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 
 			const invDef_t* toCont = INVDEF_FOR_SHOOTTYPE(shootType);
 			const int invMoveCost = freeHand && grenade ? fromCont->out + toCont->in : 0;
-			AI_SearchBestTarget(aia, actor, check, item, shootType, tu - invMoveCost, &maxDmg, &bestTime, fdArray);
+			AI_FindBestFiredef(aia, actor, check, item, shootType, tu - invMoveCost, &maxDmg, &bestTime, fdArray);
 			if (aia->shootType == shootType)
 				bestTime += invMoveCost;
 		}
