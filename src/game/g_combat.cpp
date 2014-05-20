@@ -177,7 +177,7 @@ static void G_UpdateShotMock (shot_mock_t* mock, const Edict* shooter, const Edi
 	if (!struck->inuse || G_IsDead(struck))
 		return;
 
-	if (!G_IsVisibleForTeam(struck, shooter->getTeam()))
+	if (!G_IsAI(shooter) && !G_IsVisibleForTeam(struck, shooter->getTeam()))
 		return;
 
 	if (G_IsCivilian(struck))

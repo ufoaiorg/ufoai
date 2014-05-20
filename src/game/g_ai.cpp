@@ -91,6 +91,7 @@ public:
 #define HERD_DIST			25
 #define HOLD_DIST			3
 
+#define CALC_DAMAGE_SAMPLES	10.0
 #define INVDEF_FOR_SHOOTTYPE(st) (IS_SHOT_RIGHT(st)?INVDEF(CID_RIGHT):IS_SHOT_LEFT(st)?INVDEF(CID_LEFT):IS_SHOT_HEADGEAR(st)?INVDEF(CID_HEADGEAR):nullptr)
 
 static pathing_t* hidePathingTable;
@@ -592,9 +593,28 @@ static bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const
 }
 
 /**
+ * @brief Calculate estimated damage per single shoot
+ */
+static float AI_CalcShotDamage (Actor* actor, Actor* target, const fireDef_t* fd, shoot_types_t shotType)
+{
+	const int shots = ceil(CALC_DAMAGE_SAMPLES / fd->shots);
+	const int zAlign = !fd->gravity && (fd->splrad > 0.0f || target->isStunned()) ? GROUND_DELTA : 0;
+	shot_mock_t mock;
+	for (int i = 0; i < shots; ++i)
+		G_ClientShoot(actor->getPlayer(), actor, target->pos, shotType, fd->fdIdx, &mock, false, zAlign);
+
+	if (mock.damage == 0)
+		return 0.0f;
+
+	const int totalCount = mock.enemyCount + mock.friendCount + mock.civilian;
+	const int eCount = totalCount - (mock.friendCount + (G_IsAlien(actor) ? 0 : mock.civilian));
+	return mock.damage * (eCount / totalCount) / shots;
+}
+
+/**
  * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
  */
-static void AI_SearchBestTarget (AiAction* aia, const Actor* actor, Actor* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
+static void AI_SearchBestTarget (AiAction* aia, Actor* actor, Actor* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
 {
 	float vis = ACTOR_VIS_0;
 	bool visChecked = false;	/* only check visibility once for an actor */
@@ -603,17 +623,15 @@ static void AI_SearchBestTarget (AiAction* aia, const Actor* actor, Actor* check
 
 	for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 		const fireDef_t* fd = &fdArray[fdIdx];
-		const float acc = GET_ACC(actor->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill) *
-				G_ActorGetInjuryPenalty(actor, MODIFIER_ACCURACY);
-		const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 + acc);
 		const int time = G_ActorGetModifiedTimeForFiredef(actor, fd, false);
 		/* how many shoots can this actor do */
 		const int shots = tu / time;
 		if (shots) {
-			float dist;
 			const bool stunWeapon = (item->def()->dmgtype == gi.csi->damStunElectro || item->def()->dmgtype == gi.csi->damStunGas);
 			if (stunWeapon && !actor->isInsane() && (check->isStunned() || CHRSH_IsTeamDefRobot(check->chr.teamDef)))
 				return;
+
+			float dist;
 			if (!AI_FighterCheckShoot(actor, check, fd, &dist))
 				continue;
 
@@ -639,16 +657,7 @@ static void AI_SearchBestTarget (AiAction* aia, const Actor* actor, Actor* check
 				continue;
 
 			/* calculate expected damage */
-			float dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
-			if (nspread && dist > nspread)
-				dmg *= nspread / dist;
-
-			/* take into account armour */
-			if (check->getArmour()) {
-				const objDef_t* ad = check->getArmour()->def();
-				dmg -= ad->protection[fd->dmgweight] * fd->shots * shots;
-				dmg = std::max(0.0f, dmg);
-			}
+			float dmg = AI_CalcShotDamage(actor, check, fd, shootType) * shots;
 
 			/* It is said that there is no kill like overkill but... */
 			dmg = std::min(dmg, check->HP * SCORE_DAMAGE_FACTOR) * SCORE_DAMAGE / check->HP;
