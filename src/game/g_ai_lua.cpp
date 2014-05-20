@@ -782,25 +782,35 @@ static int AIL_positionshoot (lua_State* L)
 
 	/* Make things more simple. */
 	Actor* actor = AIL_ent;
-	const int dist = actor->getUsableTUs();
+
+	shoot_types_t shootType = ST_RIGHT;
+	const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
+	if (item == nullptr) {
+		shootType = ST_LEFT;
+		item = AI_GetItemForShootType(shootType, AIL_ent);
+	}
+
+	/* Check for weapon. */
+	if (item == nullptr) {
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	const fireDef_t* fdArray = item->getFiredefs();
+	if (fdArray == nullptr) {
+		lua_pushboolean(L, 0);
+		return 1;
+	}
 
 	/* Calculate move table. */
 	G_MoveCalc(0, actor, actor->pos, actor->getUsableTUs());
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
-	int xl = (int) actor->pos[0] - dist;
-	if (xl < 0)
-		xl = 0;
-	int yl = (int) actor->pos[1] - dist;
-	if (yl < 0)
-		yl = 0;
-	int xh = (int) actor->pos[0] + dist;
-	if (xh > PATHFINDING_WIDTH)
-		xl = PATHFINDING_WIDTH;
-	int yh = (int) actor->pos[1] + dist;
-	if (yh > PATHFINDING_WIDTH)
-		yh = PATHFINDING_WIDTH;
+	const int dist = (actor->getUsableTUs() + 1) / TU_MOVE_STRAIGHT;
+	const int xl = std::max(actor->pos[0] - dist, 0);
+	const int yl = std::max(actor->pos[1] - dist, 0);
+	const int xh = std::min(actor->pos[0] + dist, PATHFINDING_WIDTH);
+	const int yh = std::min(actor->pos[1] + dist, PATHFINDING_WIDTH);
 
 	/* evaluate moving to every possible location in the search area,
 	 * including combat considerations */
@@ -818,6 +828,12 @@ static int AIL_positionshoot (lua_State* L)
 				/* Better spot (easier to get to). */
 				if (tu < min_tu) {
 					if (G_ActorVis(check, actor, target->actor, true) > 0.3) {
+						float dist;
+						if (!AI_FighterCheckShoot(actor, target->actor, fdArray, &dist))
+							continue;
+						/* gun-to-target line free? */
+						if (!AI_CheckLineOfFire(actor, target->actor, fdArray, 1))
+							continue;
 						VectorCopy(to, bestPos);
 						min_tu = tu;
 					}
