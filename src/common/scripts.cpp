@@ -468,8 +468,6 @@ typedef struct ufoIds_s {
 } ufoIds_t;
 
 const ufoIds_t ufoIdsTable[] = {
-	/*								supply
-										terror */
 	{UFO_BOMBER,	"bomber",		0,	1},
 	{UFO_CARRIER,	"carrier",		0,	0},
 	{UFO_CORRUPTER,	"corrupter",	0,	1},
