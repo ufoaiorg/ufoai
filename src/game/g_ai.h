@@ -47,6 +47,8 @@ bool AI_FindHidingLocation(int team, Actor* actor, const pos3_t from, int tuLeft
 bool AI_FindHerdLocation(Actor* actor, const pos3_t from, const vec3_t target, int tu);
 int AI_GetHidingTeam(const Edict* ent);
 const Item* AI_GetItemForShootType(shoot_types_t shootType, const Edict* ent);
+bool AI_FighterCheckShoot(const Actor* actor, const Edict* check, const fireDef_t* fd, float* dist);
+bool AI_CheckLineOfFire(const Edict* shooter, const Edict* target, const fireDef_t* fd, int shots);
 
 /*
  * LUA functions

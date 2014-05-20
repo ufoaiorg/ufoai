@@ -152,7 +152,7 @@ static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, flo
  * @todo Check whether radius and power of fd are to to big for dist
  * @todo Check whether the alien will die when shooting
  */
-static bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef_t* fd, float* dist)
+bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef_t* fd, float* dist)
 {
 	/* check range */
 	*dist = VectorDist(actor->origin, check->origin);
@@ -549,7 +549,8 @@ static Edict* AI_SearchDestroyableObject (const Actor* actor, const fireDef_t* f
 }
 
 #define LOF_CHECK_PARTITIONS	4
-static bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const fireDef_t* fd, int shots) {
+bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const fireDef_t* fd, int shots)
+{
 	vec3_t dir, origin;
 	VectorSubtract(target->origin, shooter->origin, dir);
 	G_GetShotOrigin(shooter, fd, dir, origin);
