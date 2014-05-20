@@ -398,16 +398,16 @@ typedef struct ccs_s {
 
 	battleParam_t battleParameters;			/**< Structure used to remember every parameter used during last battle */
 
-	int lastInterestIncreaseDelay;				/**< How many hours since last increase of alien overall interest */
-	int overallInterest;						/**< overall interest of aliens: how far is the player in the campaign */
-	int interest[INTERESTCATEGORY_MAX];			/**< interest of aliens: determine which actions aliens will undertake */
-	int lastMissionSpawnedDelay;				/**< How many days since last mission has been spawned */
+	int lastInterestIncreaseDelay;			/**< How many hours since last increase of alien overall interest */
+	int overallInterest;					/**< overall interest of aliens: how far is the player in the campaign */
+	int interest[INTERESTCATEGORY_MAX];		/**< interest of aliens: determine which actions aliens will undertake */
+	int lastMissionSpawnedDelay;			/**< How many days since last mission has been spawned */
 
-	int credits;			/**< actual credits amount */
-	int civiliansKilled;	/**< how many civilians were killed already */
-	int aliensKilled;		/**< how many aliens were killed already */
-	date_t date;			/**< current date */
-	bool startXVI;			/**< the aliens are starting to spread XVI */
+	int credits;							/**< actual credits amount */
+	int civiliansKilled;					/**< how many civilians were killed already */
+	int aliensKilled;						/**< how many aliens were killed already */
+	date_t date;							/**< current date */
+	bool startXVI;							/**< the aliens are starting to spread XVI */
 	float timer;
 	float frametime;
 
@@ -487,7 +487,7 @@ typedef struct ccs_s {
 
 	/* Alien Team Package used during battle */
 	alienTeamCategory_t alienCategories[ALIENCATEGORY_MAX];	/**< different alien team available
-														 * that will be used in mission */
+															* that will be used in mission */
 	int numAlienCategories;		/** number of alien team categories defined */
 
 	/* == ufopedia == */
