@@ -1517,7 +1517,9 @@ static void AI_PlayerRun (Player& player)
 		while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, player.getTeam()))) {
 			const int beforeTUs = actor->getTus();
 			if (beforeTUs > 0) {
-				if (g_ailua->integer)
+				/* Human players' actors don't have a LUA state,
+				 * so don't try to run them with the LUA AI */
+				if (g_ailua->integer && actor->AI.L)
 					AIL_ActorThink(player, actor);
 				else
 					AI_ActorThink(player, actor);
