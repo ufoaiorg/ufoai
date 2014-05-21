@@ -805,14 +805,16 @@ static const invDef_t* AI_SearchGrenade (const Actor* actor, Item** ip)
  */
 static bool AI_IsHandForForShootTypeFree (shoot_types_t shootType, Actor* actor)
 {
-	if (IS_SHOT_RIGHT(shootType)) {
-		const Item* item = actor->getRightHandItem();
-		return item == nullptr;
-	}
-	if (IS_SHOT_LEFT(shootType)) {
-		const Item* left = actor->getLeftHandItem();
-		const Item* right = actor->getRightHandItem();
-		return left == nullptr && (right == nullptr || !right->isHeldTwoHanded());
+	if (!IS_SHOT_REACTION(shootType)) {
+		if (IS_SHOT_RIGHT(shootType)) {
+			const Item* item = actor->getRightHandItem();
+			return item == nullptr;
+		}
+		if (IS_SHOT_LEFT(shootType)) {
+			const Item* left = actor->getLeftHandItem();
+			const Item* right = actor->getRightHandItem();
+			return left == nullptr && (right == nullptr || !right->isHeldTwoHanded());
+		}
 	}
 
 	return false;
@@ -843,8 +845,8 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	const invDef_t* fromCont = AI_SearchGrenade(actor, &grenade);
 
 	/* search best target */
-	float maxDmg = 0.0;
-	float bestActionScore = 0.0;
+	float maxDmg = 0.0f;
+	float bestActionScore = 0.0f;
 	int bestTime = -1;
 	Actor* check = nullptr;
 
