@@ -597,7 +597,7 @@ bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const fireDe
 /**
  * @brief Calculate estimated damage per single shoot
  */
-static float AI_CalcShotDamage (Actor* actor, Actor* target, const fireDef_t* fd, shoot_types_t shotType)
+float AI_CalcShotDamage (Actor* actor, Actor* target, const fireDef_t* fd, shoot_types_t shotType)
 {
 	const int shots = ceil(CALC_DAMAGE_SAMPLES / fd->shots);
 	const int zAlign = !fd->gravity && (fd->splrad > 0.0f || target->isStunned()) ? GROUND_DELTA : 0;

@@ -49,6 +49,7 @@ int AI_GetHidingTeam(const Edict* ent);
 const Item* AI_GetItemForShootType(shoot_types_t shootType, const Edict* ent);
 bool AI_FighterCheckShoot(const Actor* actor, const Edict* check, const fireDef_t* fd, float* dist);
 bool AI_CheckLineOfFire(const Edict* shooter, const Edict* target, const fireDef_t* fd, int shots);
+float AI_CalcShotDamage(Actor* actor, Actor* target, const fireDef_t* fd, shoot_types_t shotType);
 
 /*
  * LUA functions
