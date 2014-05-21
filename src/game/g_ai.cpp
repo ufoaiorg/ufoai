@@ -62,6 +62,7 @@ public:
 #define SCORE_DAMAGE_FACTOR	1.25f
 #define SCORE_CIV_FACTOR	0.25f
 #define SCORE_DISABLED_FACTOR 0.25f
+#define SCORE_DAMAGE_WORHT_FACTOR	0.1f
 
 #define SCORE_CIV_RANDOM	10
 #define SCORE_RUN_AWAY		50
@@ -660,7 +661,7 @@ static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const
 				dmg = check->HP + SCORE_KILL;
 
 			/* ammo is limited and shooting gives away your position */
-			if (dmg < check->HP * 0.1f)
+			if (dmg < check->HP * SCORE_DAMAGE_WORHT_FACTOR)
 				continue;
 
 			/* civilian malus */
