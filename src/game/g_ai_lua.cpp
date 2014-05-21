@@ -311,34 +311,50 @@ static int actorL_shoot (lua_State* L)
 		tu = (int) lua_tonumber(L, 2);
 	}
 
-	shoot_types_t shootType = ST_RIGHT;
-	const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
-	if (item == nullptr) {
-		shootType = ST_LEFT;
-		item = AI_GetItemForShootType(shootType, AIL_ent);
+	shoot_types_t bestType = NONE;
+	fireDefIndex_t bestFd = NONE;
+	int bestShots = 0;
+	float bestDmg = 0.0f;
+	for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
+		const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
+		if (item == nullptr)
+			continue;
+
+		const fireDef_t* fdArray = item->getFiredefs();
+		if (fdArray == nullptr)
+			continue;
+
+		for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+			const fireDef_t* fd = &fdArray[fdIdx];
+			const int time = G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
+			/* how many shoots can this actor do */
+			const int shots = tu / time;
+
+			if (!shots)
+				continue;
+
+			/* Check if we can do the most damage here */
+			float dmg = AI_CalcShotDamage(AIL_ent, target->actor, fd, shootType) * shots;
+			if (dmg > bestDmg) {
+				bestDmg = dmg;
+				bestShots = shots;
+				bestFd = fdIdx;
+				bestType = shootType;
+			}
+		}
 	}
 
 	/* Failure - no weapon. */
-	if (item == nullptr) {
+	if (bestType == NONE) {
 		lua_pushboolean(L, 0);
 		return 1;
 	}
 
-	/** @todo Choose fire mode based on TU available - currently the first one is used. */
-	const fireDef_t* fdArray = item->getFiredefs();
-	if (fdArray == nullptr) {
-		/* Failure - no weapon. */
-		lua_pushboolean(L, 0);
-		return 1;
-	}
-
-	int shots = tu / G_ActorGetModifiedTimeForFiredef(AIL_ent, fdArray, false);
-
-	while (shots > 0) {
-		shots--;
-		/** @todo actually handle fire modes */
-		G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos,
-				shootType, 0, nullptr, true, 0);
+	while (bestShots > 0) {
+		bestShots--;
+		G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos, bestType, bestFd, nullptr, true, 0);
+		if (G_IsDead(target->actor))
+			break;
 	}
 
 	/* Success. */
