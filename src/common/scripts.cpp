@@ -3327,7 +3327,7 @@ const char* Com_DropShipTypeToShortName (humanAircraftType_t type)
 }
 
 /**
- * @brief Translate UFO type to short name.
+ * @brief Translate short name to UFO type.
  * @sa UFO_TypeToName
  * @sa Com_UFOTypeToShortName
  */
