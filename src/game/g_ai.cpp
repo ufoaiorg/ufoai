@@ -617,8 +617,6 @@ static float AI_CalcShotDamage (Actor* actor, Actor* target, const fireDef_t* fd
  */
 static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const Item* item, shoot_types_t shootType, int tu, float* maxDmg, int* bestTime, const fireDef_t* fdArray)
 {
-	float vis = ACTOR_VIS_0;
-	bool visChecked = false;	/* only check visibility once for an actor */
 	bool hasLineOfFire = false;
 	int shotChecked = NONE;
 
@@ -635,15 +633,6 @@ static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const
 			float dist;
 			if (!AI_FighterCheckShoot(actor, check, fd, &dist))
 				continue;
-
-			/* check how good the target is visible */
-			if (!visChecked) {	/* only do this once per actor ! */
-				vis = G_ActorVis(actor->origin, actor, check, true);
-				visChecked = true;
-			}
-
-			if (vis == ACTOR_VIS_0)
-				return;
 
 			/*
 			 * check weapon can hit, we only want to do this once unless the LoF actually changes
@@ -671,9 +660,7 @@ static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const
 				dmg = check->HP + SCORE_KILL;
 
 			/* ammo is limited and shooting gives away your position */
-			if ((dmg < 25.0 && vis < 0.2) /* too hard to hit */
-				|| (dmg < 10.0 && vis < 0.6) /* uber-armour */
-				|| dmg < 0.1) /* at point blank hit even with a stick */
+			if (dmg < check->HP * 0.1f)
 				continue;
 
 			/* civilian malus */
@@ -862,6 +849,9 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (check->isSamePosAs(to) || !AI_IsHostile(actor, check))
+			continue;
+
+		if (!G_IsVisibleForTeam(check, actor->getTeam()) && G_ActorVis(actor->origin, actor, check, true) < ACTOR_VIS_10)
 			continue;
 
 		/* shooting */
