@@ -216,7 +216,7 @@ const char* UFO_TypeToName (const ufoType_t type)
 }
 
 /**
- * @brief Returns names of the UFO is UFO has been researched.
+ * @brief Returns name of the UFO if UFO has been researched.
  * @param[in] ufocraft Pointer to the UFO.
  */
 const char* UFO_GetName (const aircraft_t* ufocraft)
