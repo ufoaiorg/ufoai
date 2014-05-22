@@ -799,6 +799,14 @@ static int AIL_positionshoot (lua_State* L)
 	/* Make things more simple. */
 	Actor* actor = AIL_ent;
 
+	/* Number of TU to spend shooting, to make sure we have enough tus to actually fire. */
+	int tus = actor->getUsableTUs();
+	if (lua_gettop(L) > 1) {
+		assert(lua_isnumber(L, 2)); /* Must be a number. */
+
+		tus = static_cast<int>(lua_tonumber(L, 2));
+	}
+
 	shoot_types_t shootType = ST_RIGHT;
 	const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
 	if (item == nullptr) {
@@ -811,53 +819,68 @@ static int AIL_positionshoot (lua_State* L)
 		lua_pushboolean(L, 0);
 		return 1;
 	}
-	const fireDef_t* fdArray = item->getFiredefs();
-	if (fdArray == nullptr) {
+	const fireDef_t* fd = item->getFastestFireDef();
+	if (fd == nullptr) {
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	tus -= fd->time;
+	if (tus <= 0) {
 		lua_pushboolean(L, 0);
 		return 1;
 	}
 
 	/* Calculate move table. */
-	G_MoveCalc(0, actor, actor->pos, actor->getUsableTUs());
+	G_MoveCalc(0, actor, actor->pos, tus);
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
-	const int dist = (actor->getUsableTUs() + 1) / TU_MOVE_STRAIGHT;
+	const int dist = (tus + 1) / TU_MOVE_STRAIGHT;
 	const int xl = std::max(actor->pos[0] - dist, 0);
 	const int yl = std::max(actor->pos[1] - dist, 0);
 	const int xh = std::min(actor->pos[0] + dist, PATHFINDING_WIDTH);
 	const int yh = std::min(actor->pos[1] + dist, PATHFINDING_WIDTH);
 
+	pos3_t oldPos;
+	vec3_t oldOrigin;
+	VectorCopy(actor->pos, oldPos);
+	VectorCopy(actor->origin, oldOrigin);
+
 	/* evaluate moving to every possible location in the search area,
 	 * including combat considerations */
 	int min_tu = INT_MAX;
 	pos3_t to, bestPos;
-	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
-		for (to[1] = yl; to[1] < yh; to[1]++)
+	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++) {
+		for (to[1] = yl; to[1] < yh; to[1]++) {
 			for (to[0] = xl; to[0] < xh; to[0]++) {
 				/* Can we see the target? */
-				vec3_t check;
-				gi.GridPosToVec(actor->fieldSize, to, check);
+				actor->setOrigin(to);
 				const pos_t tu = G_ActorMoveLength(actor, level.pathingMap, to, true);
-				if (tu > actor->getUsableTUs() || tu == ROUTING_NOT_REACHABLE)
+				if (tu > tus || tu == ROUTING_NOT_REACHABLE)
 					continue;
 				/* Better spot (easier to get to). */
 				if (tu < min_tu) {
-					if (G_ActorVis(check, actor, target->actor, true) > 0.3) {
+					if (G_ActorVis(actor->origin, actor, target->actor, true) > 0.3f) {
 						float dist;
-						if (!AI_FighterCheckShoot(actor, target->actor, fdArray, &dist))
+						if (!AI_FighterCheckShoot(actor, target->actor, fd, &dist))
 							continue;
 						/* gun-to-target line free? */
-						if (!AI_CheckLineOfFire(actor, target->actor, fdArray, 1))
+						if (!AI_CheckLineOfFire(actor, target->actor, fd, 1))
 							continue;
 						VectorCopy(to, bestPos);
 						min_tu = tu;
 					}
 				}
 			}
+		}
+	}
+
+	VectorCopy(oldPos, actor->pos);
+	VectorCopy(oldOrigin, actor->origin);
 
 	/* No position found in range. */
-	if (min_tu > actor->getUsableTUs()) {
+	if (min_tu > tus) {
 		lua_pushboolean(L, 0);
 		return 1;
 	}
