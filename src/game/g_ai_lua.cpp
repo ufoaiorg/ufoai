@@ -568,20 +568,21 @@ static int AIL_see (lua_State* L)
 	/* Defaults. */
 	int team = TEAM_ALL;
 	int vision = 0;
+	int sortCrit = 0;
 
 	/* Handle parameters. */
 	if ((lua_gettop(L) > 0)) {
 		/* Get what to "see" with. */
 		if (lua_isstring(L, 1)) {
 			const char* s = lua_tostring(L, 1);
-			/** @todo Properly implement at edict level, get rid of magic numbers.
-			 * These are only "placeholders". */
+			/** @todo Get rid of magic numbers. */
 			if (Q_streq(s, "all"))
 				vision = 0;
 			else if (Q_streq(s, "sight"))
 				vision = 1;
-			else if (Q_streq(s, "psionic"))
+			else if (Q_streq(s, "team"))
 				vision = 2;
+			/** @todo Properly implement at edict level */
 			else if (Q_streq(s, "infrared"))
 				vision = 3;
 			else
@@ -597,6 +598,23 @@ static int AIL_see (lua_State* L)
 			} else
 				AIL_invalidparameter(2);
 		}
+
+		/* Sorting criteria */
+		if ((lua_gettop(L) > 2)) {
+			if (lua_isstring(L, 3)) {
+				const char* s = lua_tostring(L, 3);
+				/** @todo Get rid of magic numbers. */
+				if (Q_streq(s, "dist"))
+					sortCrit = 0;
+				else if (Q_streq(s, "path"))
+					sortCrit = 1;
+				else if (Q_streq(s, "HP"))
+					sortCrit = 2;
+				else
+					AIL_invalidparameter(1);
+			} else
+				AIL_invalidparameter(3);
+		}
 	}
 
 	int n = 0;
@@ -604,21 +622,40 @@ static int AIL_see (lua_State* L)
 	Actor* unsorted[MAX_EDICTS];
 	float distLookup[MAX_EDICTS];
 	/* Get visible things. */
+	const int visDist = G_VisCheckDist(AIL_ent);
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (AIL_ent == check)
 			continue;
-		if (vision == 0 && (team == TEAM_ALL || check->getTeam() == team) /* Check for team match if needed. */
-		 && G_Vis(AIL_ent->getTeam(), AIL_ent, check, VT_NOFRUSTUM)) {
-			distLookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
+		const float distance = VectorDistSqr(AIL_ent->pos, check->pos);
+		if ((team == TEAM_ALL || check->getTeam() == team) && (vision == 0 /* Check for team match if needed. */
+				|| (vision == 1 && G_Vis(AIL_ent->getTeam(), AIL_ent, check, VT_NOFRUSTUM))
+				|| (vision == 2 && G_IsVisibleForTeam(check, AIL_ent->getTeam()))
+				|| (vision == 3 && distance <= visDist * visDist))) {
+			switch (sortCrit) {
+			case 1:
+			{
+				pos_t move = ROUTING_NOT_REACHABLE;
+				if (G_FindPath(0, AIL_ent, AIL_ent->pos, check->pos, false, 0xFE))
+					move = gi.MoveLength(level.pathingMap, check->pos, 0, false);
+				distLookup[n] = move;
+			}
+				break;
+			case 2:
+				distLookup[n] = check->HP;
+				break;
+			default:
+				distLookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
+				break;
+			}
 			unsorted[n++] = check;
 		}
 	}
 
 	Actor* sorted[MAX_EDICTS];
-	/* Sort by distance - nearest first. */
+	/* Sort by given criterion - lesser first. */
 	for (int i = 0; i < n; i++) { /* Until we fill sorted */
 		int cur = -1;
-		for (int j = 0; j < n; j++) { /* Check for closest */
+		for (int j = 0; j < n; j++) { /* Check for minimum */
 			/* Is shorter then current minimum? */
 			if (cur < 0 || distLookup[j] < distLookup[cur]) {
 				int k;
