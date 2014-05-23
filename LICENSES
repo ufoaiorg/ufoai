@@ -3794,7 +3794,6 @@ base/sound/ambience/water02.ogg | Creative Commons Attribution-Share Alike 3.0 |
 base/sound/ambience/water03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
 base/sound/ambience/waterfontain.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ambience/wind_turbine.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/sound/ambience/windloop.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/civilians/civfemdeath01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/civilians/civfemdeath02a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/civilians/civfemscream01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
@@ -3825,10 +3824,6 @@ base/sound/footsteps/dirt1.ogg | Creative Commons Attribution-Share Alike 3.0 | 
 base/sound/footsteps/dirt2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/dirt3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/dirt4.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/sound/footsteps/flesh1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/flesh2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/flesh3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/flesh4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/grass1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/grass2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/grass3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -3841,14 +3836,8 @@ base/sound/footsteps/hitground2.ogg | GNU General Public License 2.0 |  | Nexuiz
 base/sound/footsteps/hitground3.ogg | GNU General Public License 2.0 |  | Nexuiz GPLed Data
 base/sound/footsteps/hitground4.ogg | GNU General Public License 2.0 |  | Nexuiz GPLed Data
 base/sound/footsteps/linoleum.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | footsteps_linoleum1.ogg by David Reeves
-base/sound/footsteps/mech1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/mech2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/mech3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/mech4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/metal1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/metal2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/metal3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/metal4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/sand.ogg | GNU General Public License 2.0 | Al Riddoch | Worldforge media repository
 base/sound/footsteps/sand1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/sand2.ogg | GNU General Public License 2.0 |  | sand.wav by Al Riddoch (Worldforge media repository)
@@ -3857,9 +3846,6 @@ base/sound/footsteps/snow2.ogg | Creative Commons Attribution-Share Alike 3.0 | 
 base/sound/footsteps/snow3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/snow4.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/softrug1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/softrug2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/softrug3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/softrug4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/splash1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/splash2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/splash3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
