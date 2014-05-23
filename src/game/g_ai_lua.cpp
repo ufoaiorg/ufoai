@@ -1045,7 +1045,7 @@ int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
 	/* Prepare the AI */
 	AI_t* AI = &ent->AI;
 	Q_strncpyz(AI->type, type, sizeof(AI->type));
-	Q_strncpyz(AI->subtype, subtype, sizeof(AI->type));
+	Q_strncpyz(AI->subtype, subtype, sizeof(AI->subtype));
 
 	/* Create the new Lua state */
 	AI->L = luaL_newstate();
