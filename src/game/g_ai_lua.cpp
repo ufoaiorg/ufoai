@@ -171,6 +171,7 @@ static int AIL_positionshoot(lua_State* L);
 static int AIL_positionhide(lua_State* L);
 static int AIL_positionherd(lua_State* L);
 static int AIL_distance(lua_State* L);
+static int AIL_positionapproach(lua_State* L);
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -190,6 +191,7 @@ static const luaL_reg AIL_methods[] = {
 	{"positionhide", AIL_positionhide},
 	{"positionherd", AIL_positionherd},
 	{"distance", AIL_distance},
+	{"positionapproach", AIL_positionapproach},
 	{nullptr, nullptr}
 };
 
@@ -1003,6 +1005,48 @@ static int AIL_distance (lua_State* L)
 	const aiActor_t* target = lua_toactor(L, 1);
 	const vec_t dist = VectorDist(AIL_ent->origin, target->actor->origin);
 	lua_pushnumber(L, dist);
+	return 1;
+}
+
+/**
+ * @brief Gets the actor's team.
+ */
+static int AIL_positionapproach (lua_State* L)
+{
+	/* check parameter */
+	if (!(lua_gettop(L) && lua_isactor(L, 1))) {
+		AIL_invalidparameter(1);
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	const aiActor_t* target = lua_toactor(L, 1);
+	assert(target != nullptr);
+
+	/* Find a path to the target actor */
+	const int maxTUs = ROUTING_NOT_REACHABLE - 1;
+	pos3_t to;
+	VectorCopy(target->actor->pos, to);
+	byte crouchingState = AIL_ent->isCrouched() ? 1 : 0;
+	if (!G_FindPath(0, AIL_ent, AIL_ent->pos, to, crouchingState, maxTUs)) {
+		/* Not found */
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	/* Find the farthest we can go with current TUs */
+	const int tus = AIL_ent->getUsableTUs();
+	int dvec;
+	while ((dvec = gi.MoveNext(level.pathingMap, to, crouchingState)) != ROUTING_UNREACHABLE) {
+		/* Note: here we skip the first position so we don't try to walk into the target */
+		PosSubDV(to, crouchingState, dvec);
+		const byte length2 =  G_ActorMoveLength(target->actor, level.pathingMap, to, false);
+		if (length2 <= tus)
+			break;
+		/* We are going backwards to the origin. */
+	}
+
+	lua_pushpos3(L, &to);
 	return 1;
 }
 
