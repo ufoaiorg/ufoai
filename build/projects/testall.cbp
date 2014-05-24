@@ -186,6 +186,7 @@
 		<Unit filename="../../src/client/cgame/campaign/aliencontainment.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cl_game_campaign.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_aircraft.cpp" />
+		<Unit filename="../../src/client/cgame/campaign/cp_aircraft.h" />
 		<Unit filename="../../src/client/cgame/campaign/cp_aircraft_callbacks.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_airfight.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_alien_interest.cpp" />
