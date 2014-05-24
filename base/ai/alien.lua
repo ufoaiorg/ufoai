@@ -28,6 +28,7 @@ end
 	Try to find a suitable target by wandering around.
 --]]
 function search ()
+	ai.pprint("Cant find a target")
 end
 
 
@@ -35,7 +36,12 @@ end
 	Attempts to approach the target.
 --]]
 function approach( target )
-	ai.print("Can't get to shoot position.")
+	near_position = ai.positionapproach(target)
+	if not near_position then
+		ai.print("Can't approach target")
+	else
+		near_position:goto()
+	end
 end
 
 
