@@ -1368,7 +1368,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 		aircraftTemplate->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 		aircraftTemplate->status = AIR_HOME;
 		/* default is no ufo */
-		aircraftTemplate->ufotype = UFO_MAX;
+		aircraftTemplate->setUfoType(UFO_MAX);
 		aircraftTemplate->maxWeapons = 0;
 		aircraftTemplate->maxElectronics = 0;
 		AII_InitialiseAircraftSlots(aircraftTemplate);
@@ -1573,7 +1573,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 					aircraftTemplate->type = AIRCRAFT_INTERCEPTOR;
 				else if (Q_streq(token, "ufo")) {
 					aircraftTemplate->type = AIRCRAFT_UFO;
-					aircraftTemplate->ufotype = cgi->Com_UFOShortNameToID(aircraftTemplate->id);
+					aircraftTemplate->setUfoType(cgi->Com_UFOShortNameToID(aircraftTemplate->id));
 				}
 			} else if (Q_streq(token, "slot")) {
 				token = cgi->Com_EParse(text, errhead, name);

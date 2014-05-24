@@ -236,7 +236,7 @@ static bool CP_MapIsSelectable (const mission_t* mission, const mapDef_t* md, co
 	} else if (!cgi->LIST_IsEmpty(md->ufos)) {
 		/* A mission with UFO should use a map with UFO
 		 * first check that list is not empty */
-		const ufoType_t type = mission->ufo->ufotype;
+		const ufoType_t type = mission->ufo->getUfoType();
 		const char* ufoID;
 
 		if (mission->crashed)
@@ -303,7 +303,7 @@ bool CP_ChooseMap (mission_t* mission, const vec2_t pos)
 		}
 
 		Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
-		Com_Printf("  ufo: %s -- pos: ", mission->ufo ? cgi->Com_UFOTypeToShortName(mission->ufo->ufotype) : "none");
+		Com_Printf("  ufo: %s -- pos: ", mission->ufo ? cgi->Com_UFOTypeToShortName(mission->ufo->getUfoType()) : "none");
 		if (pos)
 			Com_Printf("%s", MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)) ? " (in water) " : "");
 		if (pos)

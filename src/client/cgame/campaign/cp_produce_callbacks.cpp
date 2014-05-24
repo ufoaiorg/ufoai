@@ -104,7 +104,7 @@ static void PR_UpdateProductionList (const base_t* base)
 		} else if (PR_IsDisassembly(prod)) {
 			const storedUFO_t* ufo = prod->data.data.ufo;
 
-			cgi->LIST_AddString(&productionList, va("%s (%.0f%%)", UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->condition * 100));
+			cgi->LIST_AddString(&productionList, va("%s (%.0f%%)", UFO_TypeToName(ufo->ufoTemplate->getUfoType()), ufo->condition * 100));
 			cgi->LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
 			cgi->LIST_AddString(&productionQueued, "1");
 		}
@@ -134,7 +134,7 @@ static void PR_UpdateProductionList (const base_t* base)
 				continue;
 
 			cgi->LIST_AddPointer(&productionItemList, ufo);
-			cgi->LIST_AddString(&productionList, va("%s (%.0f%%)", UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->condition * 100));
+			cgi->LIST_AddString(&productionList, va("%s (%.0f%%)", UFO_TypeToName(ufo->ufoTemplate->getUfoType()), ufo->condition * 100));
 			cgi->LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
 			cgi->LIST_AddString(&productionQueued, "");
 		}
@@ -150,7 +150,7 @@ static void PR_UpdateProductionList (const base_t* base)
 			}
 
 			Com_DPrintf(DEBUG_CLIENT, "air: %s ufotype: %i tech: %s time: %i\n", aircraftTemplate->id,
-					aircraftTemplate->ufotype, aircraftTemplate->tech->id, aircraftTemplate->tech->produceTime);
+					aircraftTemplate->getUfoType(), aircraftTemplate->tech->id, aircraftTemplate->tech->produceTime);
 
 			if (aircraftTemplate->tech->produceTime > 0 && RS_IsResearched_ptr(aircraftTemplate->tech)) {
 				cgi->LIST_AddPointer(&productionItemList, aircraftTemplate);
@@ -290,7 +290,7 @@ static void PR_DisassemblyInfo (const storedUFO_t* ufo, int remainingHours)
 	assert(ufo);
 	assert(ufo->ufoTemplate);
 
-	Com_sprintf(productionInfo, sizeof(productionInfo), "%s (%.0f%%) - %s\n", _(UFO_TypeToName(ufo->ufoTemplate->ufotype)), ufo->condition * 100, _("Disassembly"));
+	Com_sprintf(productionInfo, sizeof(productionInfo), "%s (%.0f%%) - %s\n", _(UFO_TypeToName(ufo->ufoTemplate->getUfoType())), ufo->condition * 100, _("Disassembly"));
 	Q_strcat(productionInfo, sizeof(productionInfo), _("Stored at: %s\n"), ufo->installation->name);
 	Q_strcat(productionInfo, sizeof(productionInfo), _("Disassembly time: %ih\n"), remainingHours);
 	Q_strcat(productionInfo, sizeof(productionInfo), _("Components:\n"));

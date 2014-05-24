@@ -341,7 +341,7 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 		float ufoCondition;
 
 		if (mission->crashed) {
-			shortUFOType = cgi->Com_UFOCrashedTypeToShortName(ufo->ufotype);
+			shortUFOType = cgi->Com_UFOCrashedTypeToShortName(ufo->getUfoType());
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->mapTheme[0] == '+') {
 				/* set battleParameters.param to the ufo type: used for ufocrash random map */
@@ -350,7 +350,7 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 			}
 			ufoCondition = frand() * (MAX_CRASHEDUFO_CONDITION - MIN_CRASHEDUFO_CONDITION) + MIN_CRASHEDUFO_CONDITION;
 		} else {
-			shortUFOType = cgi->Com_UFOTypeToShortName(ufo->ufotype);
+			shortUFOType = cgi->Com_UFOTypeToShortName(ufo->getUfoType());
 			ufoCondition = 1.0f;
 		}
 
@@ -1716,7 +1716,7 @@ static void MIS_SpawnNewMissions_f (void)
 			if (!CP_MissionBegin(mission))
 				return;
 			if (type == 1) {
-				mission->ufo->ufotype = UFO_HARVESTER;
+				mission->ufo->setUfoType(UFO_HARVESTER);
 				CP_InterceptGoToInstallation(mission);
 			} else {
 				CP_InterceptAircraftMissionSet(mission);

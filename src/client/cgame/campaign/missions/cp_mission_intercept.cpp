@@ -197,7 +197,7 @@ static void CP_InterceptMissionSet (mission_t* mission)
 	assert(mission->ufo);
 
 	/* Only large UFOs can attack installations -- if there are installations to attack */
-	switch (mission->ufo->ufotype) {
+	switch (mission->ufo->getUfoType()) {
 	case UFO_HARVESTER:
 	case UFO_CORRUPTER:
 		if (INS_HasAny())

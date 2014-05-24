@@ -53,7 +53,7 @@ void UR_ProcessActive (void)
 		if (Date_LaterThan(&ufo->arrive, &ccs.date))
 			continue;
 
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s was transferred to %s."), UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->installation->name);
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s was transferred to %s."), UFO_TypeToName(ufo->ufoTemplate->getUfoType()), ufo->installation->name);
 		switch (ufo->status) {
 		case SUFO_RECOVERED:
 			MSO_CheckAddNewMessage(NT_TRANSFER_UFORECOVERY_FINISHED, _("UFO Recovered"), cp_messageBuffer, MSG_TRANSFERFINISHED);

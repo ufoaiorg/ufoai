@@ -185,7 +185,7 @@ const char* PR_GetName (const productionData_t* data)
 	case PRODUCTION_TYPE_AIRCRAFT:
 		return _(data->data.aircraft->tpl->name);
 	case PRODUCTION_TYPE_DISASSEMBLY:
-		return UFO_TypeToName(data->data.ufo->ufoTemplate->ufotype);
+		return UFO_TypeToName(data->data.ufo->ufoTemplate->getUfoType());
 	default:
 		cgi->Com_Error(ERR_DROP, "Invalid production type given: %i", data->type);
 	}
@@ -472,7 +472,7 @@ static void PR_FinishDisassembly (base_t* base, production_t* prod)
 	}
 
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."),
-			UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
+			UFO_TypeToName(ufo->ufoTemplate->getUfoType()), base->name);
 	MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, MSG_PRODUCTION, ufo->ufoTemplate->tech);
 
 	/* Removing UFO will remove the production too */

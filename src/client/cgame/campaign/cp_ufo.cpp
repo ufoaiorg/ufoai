@@ -108,7 +108,7 @@ const aircraft_t* UFO_GetByType (const ufoType_t type)
 {
 	for (int i = 0; i < ccs.numAircraftTemplates; i++) {
 		aircraft_t* ufo = &ccs.aircraftTemplates[i];
-		if (ufo->ufotype == type)
+		if (ufo->getUfoType() == type)
 			return ufo;
 	}
 
@@ -677,7 +677,7 @@ const aircraft_t* UFO_GetTemplate (ufoType_t ufoType)
 
 	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++) {
 		const aircraft_t* tpl = &ccs.aircraftTemplates[newUFONum];
-		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->ufotype)
+		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->getUfoType())
 			break;
 	}
 
@@ -700,7 +700,7 @@ static const aircraft_t* UFO_GetTemplateForGeoscape (ufoType_t ufoType)
 
 	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++) {
 		const aircraft_t* tpl = &ccs.aircraftTemplates[newUFONum];
-		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->ufotype && !tpl->notOnGeoscape)
+		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->getUfoType() && !tpl->notOnGeoscape)
 			break;
 	}
 
@@ -834,7 +834,7 @@ void UFO_DetectNewUFO (aircraft_t* ufocraft)
 	if (!GEO_IsRadarOverlayActivated())
 		GEO_SetOverlay("radar", 1);
 
-	CP_TriggerEvent(UFO_DETECTION, cgi->Com_UFOTypeToShortName(ufocraft->ufotype));
+	CP_TriggerEvent(UFO_DETECTION, cgi->Com_UFOTypeToShortName(ufocraft->getUfoType()));
 
 	GEO_UpdateGeoscapeDock();
 }

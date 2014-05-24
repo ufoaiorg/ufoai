@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** factor to speed up refuelling */
 #define AIRCRAFT_REFUEL_FACTOR 16
 
-#define AIR_IsUFO(aircraft) ((aircraft)->ufotype != UFO_MAX)
+#define AIR_IsUFO(aircraft) ((aircraft)->getUfoType() != UFO_MAX)
 
 /** @brief A path on the map described by 2D points */
 typedef struct mapline_s {
@@ -211,6 +211,13 @@ typedef struct aircraft_s {
 	date_t lastSpotted;		/**< date the UFO was detected last time */
 
 	class AlienCargo* alienCargo;	/**< Cargo of aliens. */
+
+	inline ufoType_t getUfoType() const {
+		return ufotype;
+	}
+	inline void setUfoType(ufoType_t ufoT) {
+		ufotype = ufoT;
+	}
 } aircraft_t;
 
 /* script functions */
