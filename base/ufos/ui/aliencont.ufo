@@ -369,7 +369,6 @@ window aliencont
 	{
 		*node:root.base_container.mainBody.selected@string = ""
 		cmd "ui_aliencont_init;"
-		*cvar:mn_lastsubmenu = "aliencont"
 	}
 
 	// Back to geoscape

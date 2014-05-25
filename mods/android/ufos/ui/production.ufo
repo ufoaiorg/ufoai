@@ -613,7 +613,6 @@ window production
 		cmd "prod_init; prod_type *cvar:mn_itemtype;"
 		call *node:root.prod_stores
 		*cvar:ui_prreq = ""
-		*cvar:mn_lastsubmenu = "production"
 	}
 	func onWindowClosed
 	{

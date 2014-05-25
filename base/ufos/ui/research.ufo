@@ -645,7 +645,6 @@ window research extends BaseMgmtWindow
 	func onWindowOpened {
 		*node:root.base_container.mainBody.techlist_border.selected@string = ""
 		cmd "ui_research_fill;"
-		*cvar:mn_lastsubmenu = "research"
 	}
 
 	func onWindowClosed {

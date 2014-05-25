@@ -490,7 +490,6 @@ window research
 		delete *cvar:i
 
 		cmd "research_init 11;"
-		*cvar:mn_lastsubmenu = "research"
 	}
 
 	func onWindowClosed

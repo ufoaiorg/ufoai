@@ -504,7 +504,6 @@ window transfer
 	{
 		cmd "trans_init;"
 		if ( *cvar:mn_itemtype_name eq "" ) { *cvar:mn_itemtype_name = "_Equipment" }
-		*cvar:mn_lastsubmenu = "transfer"
 	}
 
 	func onWindowClosed

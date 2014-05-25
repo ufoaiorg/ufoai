@@ -240,7 +240,6 @@ window hospital
 	{
 		call *node:root.base_container.mainBody.patients@removeAllchild
 		cmd "hosp_init;"
-		*cvar:mn_lastsubmenu = "hospital"
 	}
 }
 
@@ -475,14 +474,5 @@ window hospital_employee
 
 	confunc hospital_employee_clear_implants {
 		call *node:root.implants.list@removeAllchild
-	}
-
-	// ==================
-	// init function
-	// ==================
-
-	func onWindowOpened
-	{
-		*cvar:mn_lastsubmenu = "hospital_employee"
 	}
 }
