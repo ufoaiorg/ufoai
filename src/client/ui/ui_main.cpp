@@ -27,8 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_draw.h"
 #include "ui_timer.h"
 #include "ui_font.h"
+#include "ui_parse.h"
 #include "ui_sound.h"
 #include "node/ui_node_abstractnode.h"
+#include <vector>
+#include <string>
 
 uiGlobal_t ui_global;
 
@@ -130,6 +133,55 @@ void* UI_AllocHunkMemory (size_t size, int align, bool reset)
 }
 
 /**
+ * @brief Reloads the ui scripts and reinitializes the ui
+ */
+static void UI_Restart_f (void)
+{
+	typedef std::vector<std::string> Names;
+	Names names;
+	for (int i = 0; i < ui_global.windowStackPos; i++) {
+		names.push_back(std::string(ui_global.windowStack[i]->name));
+	}
+
+	/* TODO: restore the ui stack */
+	UI_Shutdown();
+	R_FontShutdown();
+	UI_Init();
+	R_FontInit();
+	Com_Printf("%i ui script files\n", FS_BuildFileList("ufos/ui/*.ufo"));
+	FS_NextScriptHeader(nullptr, nullptr, nullptr);
+	const char* type, *name, *text;
+	text = nullptr;
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != nullptr) {
+		if (Q_streq(type, "font"))
+			UI_ParseFont(name, &text);
+		else if (Q_streq(type, "menu_model"))
+			UI_ParseUIModel(name, &text);
+		else if (Q_streq(type, "sprite"))
+			UI_ParseSprite(name, &text);
+	}
+	UI_Reinit();
+	FS_NextScriptHeader(nullptr, nullptr, nullptr);
+	text = nullptr;
+	while ((type = FS_NextScriptHeader("ufos/ui/*.ufo", &name, &text)) != nullptr) {
+		if (Q_streq(type, "window"))
+			UI_ParseWindow(type, name, &text);
+		else if (Q_streq(type, "component"))
+			UI_ParseComponent(type, name, &text);
+		else if (Q_streq(type, "menu_model"))
+			UI_ParseUIModel(name, &text);
+		else if (Q_streq(type, "sprite"))
+			UI_ParseSprite(name, &text);
+	}
+
+	/*GAME_InitUIData();*/
+
+	for (Names::iterator i = names.begin(); i != names.end(); ++i) {
+		UI_PushWindow(i->c_str());
+	}
+}
+
+/**
  * Reinit input and font
  */
 void UI_Reinit (void)
@@ -158,7 +210,6 @@ void UI_Shutdown (void)
 	for (int i = 0; i < ui_global.numWindows; i++) {
 		uiNode_t* node = ui_global.windows[i];
 		while (node) {
-
 			/* remove the command */
 			if (node->behaviour == confunc) {
 				/* many nodes to one command is allowed */
@@ -167,16 +218,16 @@ void UI_Shutdown (void)
 			}
 
 			/* recursive next */
-			if (node->firstChild != nullptr)
+			if (node->firstChild != nullptr) {
 				node = node->firstChild;
-			else {
-				while (node) {
-					if (node->next != nullptr) {
-						node = node->next;
-						break;
-					}
-					node = node->parent;
+				continue;
+			}
+			while (node) {
+				if (node->next != nullptr) {
+					node = node->next;
+					break;
 				}
+				node = node->parent;
 			}
 		}
 	}
@@ -184,6 +235,11 @@ void UI_Shutdown (void)
 	UI_FontShutdown();
 	UI_ResetInput();
 	UI_ResetTimers();
+
+#ifdef DEBUG
+	Cmd_RemoveCommand("debug_uimemory");
+#endif
+	Cmd_RemoveCommand("ui_restart");
 
 	Mem_Free(ui_global.adata);
 	OBJZERO(ui_global);
@@ -227,6 +283,8 @@ void UI_Init (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_uimemory", UI_Memory_f, "Display info about UI memory allocation");
 #endif
+
+	Cmd_AddCommand("ui_restart", UI_Restart_f, "Reload the whole ui");
 
 	ui_sysPool = Mem_CreatePool("Client: UI");
 	ui_dynStringPool = Mem_CreatePool("Client: Dynamic string for UI");
