@@ -380,6 +380,8 @@ bool UI_IsWindowOnStack (const char* name)
  */
 static void UI_CloseWindowByRef (uiNode_t* window)
 {
+	uiNode_t* oldfirst = ui_global.windowStack[0];
+
 	/** @todo If the focus is not on the window we close, we don't need to remove it */
 	UI_ReleaseInput();
 
@@ -408,6 +410,26 @@ static void UI_CloseWindowByRef (uiNode_t* window)
 	UI_RemoveWindowAtPositionFromStack(i);
 
 	UI_InvalidateMouse();
+
+	if (ui_global.windowStackPos == 0) {
+		/* ui_sys_main contains the window that is the very first window and should be
+		 * pushed back onto the stack (otherwise there would be no window at all
+		 * right now) */
+		if (Q_streq(oldfirst->name, ui_sys_main->string)) {
+			if (ui_sys_active->string[0] != '\0')
+				UI_PushWindow(ui_sys_active->string);
+			if (!ui_global.windowStackPos)
+				UI_PushWindow(ui_sys_main->string);
+		} else {
+			if (ui_sys_main->string[0] != '\0')
+				UI_PushWindow(ui_sys_main->string);
+			if (!ui_global.windowStackPos)
+				UI_PushWindow(ui_sys_active->string);
+		}
+	}
+
+	uiNode_t* activeWindow = UI_GetActiveWindow();
+	UI_Node_WindowActivate(activeWindow);
 }
 
 void UI_CloseWindow (const char* name)
@@ -429,8 +451,6 @@ void UI_CloseWindow (const char* name)
  */
 void UI_PopWindow (bool all)
 {
-	uiNode_t* oldfirst = ui_global.windowStack[0];
-
 	if (all) {
 		UI_CloseAllWindow();
 	} else {
@@ -440,26 +460,6 @@ void UI_PopWindow (bool all)
 		if (WINDOWEXTRADATA(mainWindow).parent)
 			mainWindow = WINDOWEXTRADATA(mainWindow).parent;
 		UI_CloseWindowByRef(mainWindow);
-
-		if (ui_global.windowStackPos == 0) {
-			/* ui_sys_main contains the window that is the very first window and should be
-			 * pushed back onto the stack (otherwise there would be no window at all
-			 * right now) */
-			if (Q_streq(oldfirst->name, ui_sys_main->string)) {
-				if (ui_sys_active->string[0] != '\0')
-					UI_PushWindow(ui_sys_active->string);
-				if (!ui_global.windowStackPos)
-					UI_PushWindow(ui_sys_main->string);
-			} else {
-				if (ui_sys_main->string[0] != '\0')
-					UI_PushWindow(ui_sys_main->string);
-				if (!ui_global.windowStackPos)
-					UI_PushWindow(ui_sys_active->string);
-			}
-		}
-
-		uiNode_t* activeWindow = UI_GetActiveWindow();
-		UI_Node_WindowActivate(activeWindow);
 	}
 
 	/* change from e.g. console mode to game input mode (fetch input) */
