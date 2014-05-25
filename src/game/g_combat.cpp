@@ -710,7 +710,7 @@ static void G_ShootGrenade (const Player& player, Actor* shooter, const fireDef_
 	newPos[2] -= 0.5f * GRAVITY * GRENADE_DT * GRENADE_DT;
 	trace_t tr = G_Trace(Line(oldPos, newPos), shooter, MASK_SHOT);
 	if (tr.fraction < 1.0f) {
-	const Edict* trEnt = G_EdictsGetByNum(tr.entNum);
+		const Edict* trEnt = G_EdictsGetByNum(tr.entNum);
 		if (trEnt && (trEnt->isSameTeamAs(shooter) || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt)) {
 			dt += GRENADE_DT;
 			VectorCopy(newPos, oldPos);
