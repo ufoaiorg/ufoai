@@ -1009,7 +1009,7 @@ static int AIL_distance (lua_State* L)
 }
 
 /**
- * @brief Gets the actor's team.
+ * @brief Approach to a target actor
  */
 static int AIL_positionapproach (lua_State* L)
 {
