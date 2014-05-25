@@ -131,10 +131,9 @@ const char *Sys_GetLocale (void)
 {
 	/* Calling with nullptr param should return current system settings. */
 	const char *currentLocale = setlocale(LC_MESSAGES, nullptr);
-	if (currentLocale != nullptr && currentLocale[0] != '\0')
+	if (Q_strvalid(currentLocale))
 		return currentLocale;
-	else
-		return "C";
+	return "C";
 }
 #endif
 
@@ -197,7 +196,7 @@ void Sys_InitSignals (void)
 void Sys_OpenURL (const char *url)
 {
 	char buf[512];
-# ifdef __APPLE__
+#ifdef __APPLE__
 	Com_sprintf(buf, sizeof(buf), "open \"%s\"", url);
 #else
 	Com_sprintf(buf, sizeof(buf), "xdg-open \"%s\"", url);
