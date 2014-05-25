@@ -322,7 +322,7 @@ window aircraft_equip extends iaircraft
 		{
 			pos			"730 255"
 			size		"292 219"
-			border		2"
+			border		"2"
 			bordercolor	"0.527 0.6 0.21 1"
 		}
 
