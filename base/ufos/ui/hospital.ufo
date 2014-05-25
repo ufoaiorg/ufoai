@@ -49,7 +49,7 @@ component cmpHospitalPanel extends panel {
 		size "300 85"
 	}
 	image button {
-		src "ui/hosp_button_green"
+		src "ui/hosp_button"
 		pos "0 0"
 	}
 

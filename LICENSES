@@ -3837,9 +3837,7 @@ base/pics/ui/geo_miniglobe_n.png | GNU General Public License 2.0 or later | MCR
 base/pics/ui/geo_miniglobe_out.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
 base/pics/ui/geo_miniglobe_s.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
 base/pics/ui/geo_miniglobe_w.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
-base/pics/ui/hosp_button_blue.png | GNU General Public License 2.0 or later
-base/pics/ui/hosp_button_green.png | GNU General Public License 2.0 or later
-base/pics/ui/hosp_button_light.png | GNU General Public License 2.0 or later
+base/pics/ui/hosp_button.png | GNU General Public License 2.0 or later
 base/pics/ui/inv_bg.png | Public Domain | Nate Wright | mods/ui2/pics/ui/inv_bg.png by Nate Wright
 base/pics/ui/inv_bg_nofloor.png | GNU General Public License 2.0 or later | cooler_sk
 base/pics/ui/main_bg.png | Public Domain | Nate Wright | mods/ui2/pics/ui/main_bg.png by Nate Wright
