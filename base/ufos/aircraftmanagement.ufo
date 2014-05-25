@@ -80,6 +80,22 @@
 // Also read the notes about ufos.
 //=========================================================================
 
+// If you want to add a new craft, everythings starts here.
+// This list of ufo suffixes is used all over the place.
+aircraftnames ufoids
+{
+	"bomber"
+	"carrier"
+	"corrupter"
+	"fighter"
+	"harvester"
+	"scout"
+	"supply"
+	"gunboat"
+	"ripper"
+	"mothership"
+}
+
 //
 // AIRCRAFT
 //
