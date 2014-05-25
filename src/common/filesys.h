@@ -126,10 +126,10 @@ extern int fs_numInstalledMaps;
 #define SFF_SUBDIR  0x08
 #define SFF_SYSTEM  0x10
 
-int FS_FileLength(qFILE*  f);
-int FS_Seek(qFILE*  f, long offset, int origin);
+int FS_FileLength(qFILE* f);
+int FS_Seek(qFILE* f, long offset, int origin);
 int FS_WriteFile(const void* buffer, size_t len, const char* filename);
-int FS_Write(const void* buffer, int len, qFILE*  f);
+int FS_Write(const void* buffer, int len, qFILE* f);
 int FS_Printf(qFILE* f, const char* msg, ...) __attribute__((format(__printf__, 2, 3)));
 void FS_InitFilesystem(bool writeToHomeDir);
 void FS_AddGameDirectory(const char* dir, bool write);
@@ -146,8 +146,8 @@ bool FS_FileExists(const char* filename, ...) __attribute__((format(__printf__, 
 
 void FS_GetMaps(bool reset);
 
-int FS_OpenFile(const char* filename, qFILE*  file, filemode_t mode);
-void FS_CloseFile(qFILE*  f);
+int FS_OpenFile(const char* filename, qFILE* file, filemode_t mode);
+void FS_CloseFile(qFILE* f);
 
 bool FS_RenameFile(const char* from, const char* to, bool relative);
 void FS_RemoveFile(const char* osPath);
@@ -161,7 +161,7 @@ int FS_LoadFile(const char* path, byte** buffer);
 /* a -1 length is not present */
 
 int FS_Read2(void* buffer, int len, qFILE* f, bool failOnEmptyRead);
-int FS_Read(void* buffer, int len, qFILE*  f);
+int FS_Read(void* buffer, int len, qFILE* f);
 /* properly handles partial reads */
 
 void FS_FreeFile(void* buffer);
