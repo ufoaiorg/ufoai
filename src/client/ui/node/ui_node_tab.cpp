@@ -67,10 +67,10 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t* node, int x, int y)
 {
 	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
-	/** @todo this dont work when an option is hidden */
+	/** @todo this doesn't work when an option is hidden */
 	int allowedWidth = node->box.size[0] - TILE_WIDTH * (EXTRADATACONST(node).count + 1);
 
-	/* Bounded box test (shound not need, but there are problem) */
+	/* Bounded box test (should not be need, but there are problems without it) */
 	if (x < 0 || y < 0 || x >= node->box.size[0] || y >= node->box.size[1])
 		return nullptr;
 
@@ -156,7 +156,7 @@ void uiTabNode::draw (uiNode_t* node)
 	int currentX = pos[0];
 	uiNode_t* option = node->firstChild;
 	assert(option->behaviour == ui_optionBehaviour);
-	/** @todo this dont work when an option is hidden */
+	/** @todo this doesn't work when an option is hidden */
 	int allowedWidth = node->box.size[0] - TILE_WIDTH * (EXTRADATA(node).count + 1);
 
 	while (option) {
@@ -262,7 +262,7 @@ void uiTabNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 		return;
 	}
 
-	/* cvar do not exists? */
+	/* cvar does not exist? */
 	if (Cvar_FindVar(cvarName) == nullptr) {
 		/* search default value, if possible */
 		uiNode_t* option = node->firstChild;
