@@ -54,7 +54,6 @@ typedef enum {
 
 static const int TILE_WIDTH = 33;
 static const int TILE_HEIGHT = 36;
-static const int TILE_SIZE = 40;
 
 /**
  * @brief Return a tab located at a screen position
@@ -139,64 +138,26 @@ void uiTabNode::onLeftClick (uiNode_t* node, int x, int y)
 	UI_PlaySound("click1");
 }
 
-/**
- * @brief Normalized access to the texture structure of tab to display the plain part of a tab
- * @param[in] image The normalized tab texture to use
- * @param[in] x,y The upper-left position of the screen to draw the texture
- * @param[in] width The width size of the screen to use (stretch)
- * @param[in] type The status of the tab we display
- */
-static inline void UI_TabNodeDrawPlain (const char* image, int x, int y, int width, ui_tabStatus_t type)
-{
-	/* Hack sl=1 to not use the pixel on the left border on the texture (create graphic bug) */
-	UI_DrawNormImageByName(false, x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
-		1 + TILE_SIZE * 0, 0 + TILE_SIZE * type, image);
-}
-
-/**
- * @brief Normalized access to the texture structure of tab to display a junction between each tabs
- * @param[in] image The normalized tab texture to use
- * @param[in] x,y The upper-left position of the screen to draw the texture
- * @param[in] leftType The status of the left tab of the junction we display
- * @param[in] rightType The status of the right tab of the junction we display
- */
-static inline void UI_TabNodeDrawJunction (const char* image, int x, int y, ui_tabStatus_t leftType, ui_tabStatus_t rightType)
-{
-	UI_DrawNormImageByName(false, x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
-		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, image);
-}
-
 void uiTabNode::draw (uiNode_t* node)
 {
-	ui_tabStatus_t lastStatus = UI_TAB_NOTHING;
-	uiNode_t* option;
-	uiNode_t* overMouseOption = nullptr;
-	const char* ref;
-	const char* font;
-	int currentX;
-	int allowedWidth;
-	vec2_t pos;
-
-	const char* image = UI_GetReferenceString(node, node->image);
-	if (!image)
-		image = "ui/tab";
-
-	ref = UI_AbstractOptionGetCurrentValue(node);
+	const char* ref = UI_AbstractOptionGetCurrentValue(node);
 	if (ref == nullptr)
 		return;
 
-	font = UI_GetFontFromNode(node);
+	const char* font = UI_GetFontFromNode(node);
 
+	uiNode_t* overMouseOption = nullptr;
 	if (node->state) {
 		overMouseOption = UI_TabNodeTabAtPosition(node, mousePosX, mousePosY);
 	}
 
+	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
-	currentX = pos[0];
-	option = node->firstChild;
+	int currentX = pos[0];
+	uiNode_t* option = node->firstChild;
 	assert(option->behaviour == ui_optionBehaviour);
 	/** @todo this dont work when an option is hidden */
-	allowedWidth = node->box.size[0] - TILE_WIDTH * (EXTRADATA(node).count + 1);
+	int allowedWidth = node->box.size[0] - TILE_WIDTH * (EXTRADATA(node).count + 1);
 
 	while (option) {
 		int fontHeight;
@@ -222,8 +183,6 @@ void uiTabNode::draw (uiNode_t* node)
 			status = UI_TAB_HIGHLIGHTED;
 		}
 
-		/* Display */
-		UI_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
 		const char* label = CL_Translate(OPTIONEXTRADATA(option).label);
@@ -239,10 +198,6 @@ void uiTabNode::draw (uiNode_t* node)
 				tabWidth = allowedWidth;
 			else
 				tabWidth = 0;
-		}
-
-		if (tabWidth > 0) {
-			UI_TabNodeDrawPlain(image, currentX, pos[1], tabWidth, status);
 		}
 
 		textPos = currentX;
@@ -263,15 +218,8 @@ void uiTabNode::draw (uiNode_t* node)
 		allowedWidth -= tabWidth;
 
 		/* Next */
-		lastStatus = status;
 		option = option->next;
 	}
-
-	/* Display last junction and end of header */
-	UI_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, UI_TAB_NOTHING);
-	currentX += TILE_WIDTH;
-	if (currentX < pos[0] + node->box.size[0])
-		UI_TabNodeDrawPlain(image, currentX, pos[1], pos[0] + node->box.size[0] - currentX, UI_TAB_NOTHING);
 }
 
 /**
