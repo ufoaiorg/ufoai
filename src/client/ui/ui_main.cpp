@@ -143,7 +143,6 @@ static void UI_Restart_f (void)
 		names.push_back(std::string(ui_global.windowStack[i]->name));
 	}
 
-	/* TODO: restore the ui stack */
 	UI_Shutdown();
 	R_FontShutdown();
 	UI_Init();
