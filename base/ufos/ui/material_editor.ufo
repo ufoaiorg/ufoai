@@ -75,7 +75,7 @@ window material_editor {
 		}
 		image hardness_rahmen
 		{
-			src		"ui/bar_rahmen"
+			src		"ui/bar_border"
 			pos			"90 5"
 			size		"108 16"
 		}
@@ -98,7 +98,7 @@ window material_editor {
 		}
 		image bump_rahmen
 		{
-			src		"ui/bar_rahmen"
+			src		"ui/bar_border"
 			pos			"90 25"
 			size		"108 16"
 		}
@@ -121,7 +121,7 @@ window material_editor {
 		}
 		image specular_rahmen
 		{
-			src		"ui/bar_rahmen"
+			src		"ui/bar_border"
 			pos			"90 45"
 			size		"108 16"
 		}
@@ -144,7 +144,7 @@ window material_editor {
 		}
 		image parallax_rahmen
 		{
-			src		"ui/bar_rahmen"
+			src		"ui/bar_border"
 			pos			"90 65"
 			size		"108 16"
 		}

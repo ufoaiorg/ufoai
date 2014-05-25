@@ -179,7 +179,7 @@ void uiTabNode::draw (uiNode_t* node)
 
 	const char* image = UI_GetReferenceString(node, node->image);
 	if (!image)
-		image = "ui/tab_UI2";
+		image = "ui/tab";
 
 	ref = UI_AbstractOptionGetCurrentValue(node);
 	if (ref == nullptr)

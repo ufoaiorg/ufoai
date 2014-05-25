@@ -3824,28 +3824,12 @@ base/pics/tutorial/gameplay8b.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/skirmish1.png | GNU General Public License 2.0 or later
 base/pics/tutorial/tactical1.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/ufoai.png | GNU General Public License 2.0
-base/pics/ui/airequip_element.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/airequip_no_shield.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/airequip_no_weapon.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/airequip_selected_element.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/bar_attribute.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr);MCR | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
 base/pics/ui/bar_attribute_disabled.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr);MCR | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
 base/pics/ui/bar_bg.png | Public Domain | Nate Wright | mods/ui2/pics/ui/bar_bg.png by Nate Wright
 base/pics/ui/bar_border.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
 base/pics/ui/bar_health.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr);MCR | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
-base/pics/ui/bar_rahmen.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/bar_skill.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr);MCR | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
-base/pics/ui/bar_skill_disabled.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr);MCR | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
-base/pics/ui/base_lr.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/base_ul.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/base_ur.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_big_menu.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/button_square.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/geo_menu.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/ui/geo_menu_deco.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork
-base/pics/ui/geo_menu_inside.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork
-base/pics/ui/geo_menu_inside_hovered.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork
-base/pics/ui/geo_menu_mini.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/geo_miniglobe.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
 base/pics/ui/geo_miniglobe_e.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
 base/pics/ui/geo_miniglobe_in.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
@@ -3858,26 +3842,12 @@ base/pics/ui/hosp_button_green.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_light.png | GNU General Public License 2.0 or later
 base/pics/ui/inv_bg.png | Public Domain | Nate Wright | mods/ui2/pics/ui/inv_bg.png by Nate Wright
 base/pics/ui/inv_bg_nofloor.png | GNU General Public License 2.0 or later | cooler_sk
-base/pics/ui/mail_button.png | GNU General Public License 2.0 or later
 base/pics/ui/main_bg.png | Public Domain | Nate Wright | mods/ui2/pics/ui/main_bg.png by Nate Wright
-base/pics/ui/map_ll.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/map_lr.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/map_ul.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/map_ur.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/popup_button_hl.png | GNU General Public License 2.0 or later
 base/pics/ui/radar.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/screen.png | Public Domain | Nate Wright | mods/ui2/pics/ui/screen.png by Nate Wright
 base/pics/ui/scrollbar_v_green.png | GNU General Public License 2.0 or later | bayo;MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/ui/selectbox.png | GNU General Public License 2.0 or later | MCR | Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
-base/pics/ui/selectbox_blue.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/selectbox_clicked.png | GNU General Public License 2.0 or later | MCR | Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
-base/pics/ui/selectbox_disabled.png | GNU General Public License 2.0 or later | MCR | Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
-base/pics/ui/selectbox_hovered.png | GNU General Public License 2.0 or later | MCR | Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
-base/pics/ui/selectbox_red.png | GNU General Public License 2.0 or later | SparX;Rasta;MCR | Based on original menu artwork by SparX and Rasta
-base/pics/ui/tab.png | GNU General Public License 2.0 or later | bayo
-base/pics/ui/tab_UI2.png | GNU General Public License 2.0 or later | cooler_sk
-base/pics/ui/transtypebox.png | GNU General Public License 2.0 or later
-base/pics/ui/vertical_bar.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/tab.png | GNU General Public License 2.0 or later | cooler_sk
 base/save/multiplayer/team00.mpt | GNU General Public License 2.0 or later | Martin Gerhardy | base/save/team0.mpt by Martin Gerhardy
 base/shaders/atmosphere_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/atmosphere_vs.glsl | GNU General Public License 2.0 or later
