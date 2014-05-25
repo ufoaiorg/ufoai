@@ -531,7 +531,7 @@ window geoscape
 			tooltip		"_Organisation statistics"
 			pos			"21 610"
 			size		"175 34"
-					color		"0.56 0.81 0.76 1"
+			color		"0.56 0.81 0.76 1"
 			font		"f_small"
 			selectcolor	"1 1 1 1"
 			background	"ui/button_geoscape"

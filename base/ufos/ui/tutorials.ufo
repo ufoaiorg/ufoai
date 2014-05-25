@@ -38,7 +38,6 @@ window tutorials
 						*node:parent.tutorials_scroll@current = <viewpos>
 						*node:parent.tutorials_scroll@viewsize = <viewsize>
 				}
-
 			}
 		}
 
