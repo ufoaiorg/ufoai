@@ -663,7 +663,7 @@ window aircraft_equip extends iaircraft
 		*cvar:mn_itemname = ""
 		*cvar:mn_upmodel_top = ""
 		*cvar:mn_aircraft_item_selected = -1
-		*node:root.base_container.mainBody.pedia@onClick = {cmd "ui_push ufopedia rs_craft_<cvar:mn_aircraft_model>"}
+		*node:root.base_container.mainBody.pedia@onClick = {cmd "ui_push ufopedia rs_craft_<cvar:mn_aircraft_model>;"}
 
 	}
 	func onWindowClosed
