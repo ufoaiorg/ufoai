@@ -241,7 +241,7 @@ window mailclient
 	}
 	// Back to geoscape
 	Geoscape geoscape_button {
-		onClick { cmd "ui_pop"}
+		onClick { cmd "ui_pop;" }
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
@@ -278,7 +278,6 @@ window mailclient
 		call *node:root.maillist.mainBody.mails@removeAllChild
 	}
 
-
 	func onWindowOpened
 	{
 		cmd "ufopedia_openmail;"
@@ -288,5 +287,4 @@ window mailclient
 	{
 		cmd "ufopedia_openmail;"
 	}
-
 }
