@@ -97,7 +97,7 @@ window popup_newinstallation_type extends popupUI2
 		}
 	}
 	vscrollbar list_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"445 75"
 		height		"100"
 		current		0
@@ -380,7 +380,7 @@ window popup_ufoyards extends popupUI2 {
 		}
 	}
 	vscrollbar list_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"270 50"
 		height		"295"
 		current		0
@@ -701,7 +701,7 @@ window popup_ufoyards extends popupUI2 {
 		}
 	}
 	vscrollbar ufotransfer_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"730 85"
 		height		270
 		current		0
@@ -735,7 +735,7 @@ window popup_ufoyards extends popupUI2 {
 		}
 	}
 	vscrollbar ufosell_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"730 85"
 		height		270
 		current		0

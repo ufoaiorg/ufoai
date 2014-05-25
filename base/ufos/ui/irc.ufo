@@ -92,7 +92,7 @@ window irc
 			}
 
 			vscrollbar irc_data_scroll {
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				pos			"697 75"
 				height		"610"
 				current		0
@@ -166,7 +166,7 @@ window irc
 		}
 
 		vscrollbar irc_userlist_scroll {
-			image		"ui/scrollbar_v_green"
+			image		"ui/scrollbar_v"
 			pos			"241 40"
 			height		"619"
 			current		0
@@ -422,7 +422,7 @@ window hud_chat extends popupUI2
 				}
 
 				vscrollbar scroll {
-					image		"ui/scrollbar_v_green"
+					image		"ui/scrollbar_v"
 					align		LAYOUTALIGN_RIGHT
 					onChange 	{
 						*node:parent.list@viewpos = <current>
@@ -446,7 +446,7 @@ window hud_chat extends popupUI2
 			}
 
 			vscrollbar irc_scroll {
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				align		LAYOUTALIGN_RIGHT
 				onChange 	{
 					*node:parent.irc@viewpos = <current>
@@ -504,7 +504,7 @@ window hud_chat extends popupUI2
 			}
 
 			vscrollbar chat_scroll {
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				align		LAYOUTALIGN_RIGHT
 				onChange 	{
 					*node:parent.chat@viewpos = <current>

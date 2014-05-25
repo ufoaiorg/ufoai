@@ -62,7 +62,7 @@ window team extends iaircraft
 					}
 				}
 				vscrollbar soldierlist_scroll {
-					image			"ui/scrollbar_v_green"
+					image			"ui/scrollbar_v"
 					pos				"325 5"
 					height			"298"
 					hidewhenunused	true
@@ -108,7 +108,7 @@ window team extends iaircraft
 					}
 				}
 				vscrollbar soldierlist_scroll {
-					image			"ui/scrollbar_v_green"
+					image			"ui/scrollbar_v"
 					pos				"325 5"
 					height			"298"
 					hidewhenunused	true

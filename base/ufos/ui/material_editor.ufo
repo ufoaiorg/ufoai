@@ -30,7 +30,7 @@ window material_editor {
 	}
 
 	vscrollbar editor_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"250 55"
 		height		210
 		hidewhenunused true
@@ -228,7 +228,7 @@ window material_editor {
 		}
 
 		vscrollbar stage_scroll {
-			image		"ui/scrollbar_v_green"
+			image		"ui/scrollbar_v"
 			pos			"165 0"
 			height		90
 			hidewhenunused true

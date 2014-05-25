@@ -211,7 +211,7 @@ window production
 				}
 
 				vscrollbar prodlist_scroll {
-					image		"ui/scrollbar_v_green"
+					image		"ui/scrollbar_v"
 					pos			"678 30"
 					height		"586"
 					current		0
@@ -429,7 +429,7 @@ window production
 			}
 
 			vscrollbar prodreq_scroll {
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				pos			"286 26"
 				height		"92"
 				current		0
@@ -468,7 +468,7 @@ window production
 			}
 
 			vscrollbar description_scroll {
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				align		LAYOUTALIGN_RIGHT
 				current		0
 				viewsize	4

@@ -796,7 +796,7 @@ window lostgame
 	}
 
 	vscrollbar reason_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"992 600"
 		height		"140"
 		current		0
@@ -874,7 +874,7 @@ window endgame
 	}
 
 	vscrollbar reason_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"992 500"
 		height		"240"
 		current		0

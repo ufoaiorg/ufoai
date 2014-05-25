@@ -198,7 +198,7 @@ window iaircraft
 					}
 				}
 				vscrollbar aircraftlistNew_scroll {
-					image			"ui/scrollbar_v_green"
+					image			"ui/scrollbar_v"
 					pos				"681 51"
 					height			"95"
 					current			0

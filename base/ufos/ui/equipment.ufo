@@ -67,7 +67,7 @@ window equipment extends objectinfo
 					}
 				}
 				vscrollbar soldierlist_scroll {
-					image		"ui/scrollbar_v_green"
+					image		"ui/scrollbar_v"
 					pos			"287 0"
 					height		"490"
 					hidewhenunused true
@@ -439,7 +439,7 @@ window equipment extends objectinfo
 	}
 
 	vscrollbar equip_scroll {
-		image	"ui/scrollbar_v_green"
+		image	"ui/scrollbar_v"
 		pos "990 50"	height	"400"
 		hidewhenunused true
 		onChange {

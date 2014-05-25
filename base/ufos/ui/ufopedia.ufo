@@ -60,7 +60,7 @@ window ufopedia extends objectinfo
 
 			vscrollbar list_scroll
 			{
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				align		LAYOUTALIGN_RIGHT
 				current		0
 				viewsize	16
@@ -244,7 +244,7 @@ window ufopedia extends objectinfo
 
 			vscrollbar ufopedia_scroll
 			{
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				pos			"639 42"
 				height		"575"
 				current		0
@@ -270,7 +270,7 @@ window ufopedia extends objectinfo
 
 			vscrollbar description_scroll
 			{
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				pos			"406 42"
 				height		"575"
 				current		0
@@ -311,7 +311,7 @@ window ufopedia extends objectinfo
 				}
 
 				vscrollbar techtree_scroll {
-					image		"ui/scrollbar_v_green"
+					image		"ui/scrollbar_v"
 					invis		true
 					pos			"142 7"
 					height		"117"

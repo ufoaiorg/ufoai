@@ -404,7 +404,7 @@ window aircraft_equip extends iaircraft
 		}
 
 		vscrollbar airequip_list_scroll {
-			image		"ui/scrollbar_v_green"
+			image		"ui/scrollbar_v"
 			pos			"259 87"
 			height		"115"
 			hidewhenunused	true

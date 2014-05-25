@@ -214,7 +214,7 @@ window hospital
 				}
 			}
 			vscrollbar hos_scroll {
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				pos			"670 50"
 				height		"480"
 				current		0
@@ -383,7 +383,7 @@ window hospital_employee
 		}
 
 		vscrollbar equip_scroll {
-			image	"ui/scrollbar_v_green"
+			image	"ui/scrollbar_v"
 			pos 	"242 20"
 			height	"200"
 			hidewhenunused true

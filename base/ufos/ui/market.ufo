@@ -263,7 +263,7 @@ window market  {
 					}
 				}
 				vscrollbar list_scroll {
-					image			"ui/scrollbar_v_green"
+					image			"ui/scrollbar_v"
 					pos				"697 32"
 					height			"459"
 					current			0

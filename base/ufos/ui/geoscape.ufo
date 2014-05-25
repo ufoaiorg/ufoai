@@ -334,7 +334,7 @@ window geoscape
 		}
 
 		vscrollbar description_scroll {
-			image		"ui/scrollbar_v_green"
+			image		"ui/scrollbar_v"
 			pos			"185 131"
 			height		"144"
 			current		0
@@ -696,7 +696,7 @@ window geoscape
 			vscrollbar scroll {
 				align		LAYOUTALIGN_RIGHT
 				invis		true
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				bgcolor		"0 0 0 .5"
 				pos			"749 0"
 				height		"768"
@@ -942,7 +942,7 @@ window popup_newinstallation extends popupUI2
 	}
 	vscrollbar description_scroll
 	{
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"470 140"
 		height		"110"
 		current		0
@@ -1155,7 +1155,7 @@ window popup_intercept extends popupUI2
 		}
 
 		vscrollbar ships_scroll {
-			image		"ui/scrollbar_v_green"
+			image		"ui/scrollbar_v"
 			pos			"470 29"
 			height		"260"
 			current		0
@@ -1200,7 +1200,7 @@ window popup_intercept extends popupUI2
 		}
 
 		vscrollbar bases_scroll {
-			image		"ui/scrollbar_v_green"
+			image		"ui/scrollbar_v"
 			pos			"470 29"
 			height		"260"
 			current		0
@@ -1360,7 +1360,7 @@ window popup_multi_selection extends popupUI2
 		}
 	}
 	vscrollbar multi_select_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"446 78"
 		height		"100"
 		current		0
@@ -1431,7 +1431,7 @@ window popup_aircraft extends popupUI2
 		}
 	}
 	vscrollbar popup_aircraft_action_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"446 78"
 		height		"100"
 		current		0

@@ -227,7 +227,7 @@ window aliencont
 					}
 				}
 				vscrollbar species_scroll {
-					image			"ui/scrollbar_v_green"
+					image			"ui/scrollbar_v"
 					pos				"680 2"
 					hidewhenunused	true
 					height			"620"

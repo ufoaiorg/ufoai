@@ -145,7 +145,7 @@ window basedefence extends popupUI2
 			}
 			vscrollbar slotlist_scroll
 			{
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				pos			"410 30"
 				height		"80"
 				current		0
@@ -220,7 +220,7 @@ window basedefence extends popupUI2
 			}
 			vscrollbar storelist_scroll
 			{
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				pos			"410 30"
 				height		"80"
 				current		0
@@ -280,7 +280,7 @@ window basedefence extends popupUI2
 			}
 			vscrollbar description_scroll
 			{
-				image		"ui/scrollbar_v_green"
+				image		"ui/scrollbar_v"
 				pos			"304 195"
 				height		"80"
 				current		0

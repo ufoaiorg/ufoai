@@ -45,7 +45,7 @@ window tutorials
 		vscrollbar tutorials_scroll
 		{
 			{
-				image			"ui/scrollbar_v_green"
+				image			"ui/scrollbar_v"
 				pos				"402 0"
 				height			"300"
 				current			0

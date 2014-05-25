@@ -228,7 +228,7 @@ window transfer
 					}
 				}
 				vscrollbar translist_scroll {
-					image		"ui/scrollbar_v_green"
+					image		"ui/scrollbar_v"
 					pos			"510 30"
 					height		"416"
 					hidewhenunused	true
@@ -320,7 +320,7 @@ window transfer
 			}
 		}
 		vscrollbar cargolist_scroll {
-			image			"ui/scrollbar_v_green"
+			image			"ui/scrollbar_v"
 			pos				"384 36"
 			height			"135"
 			hidewhenunused	true
@@ -699,7 +699,7 @@ window popup_transferlist extends popupUI2
 		}
 	}
 	vscrollbar tr_list_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"494 58"
 		height		"414"
 		hidewhenunused	true

@@ -37,7 +37,7 @@ window popup extends popupUI2
 	}
 
 	vscrollbar popup_text_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"457 58"
 		height		"128"
 		current		0
@@ -99,7 +99,7 @@ window popup_list extends popupUI2
 		}
 	}
 	vscrollbar popup_list_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"457 96"
 		height		"96"
 		current		0
@@ -153,7 +153,7 @@ window popup_button extends popupUI2
 	}
 
 	vscrollbar popup_text_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"456 58"
 		height		"128"
 		current		0

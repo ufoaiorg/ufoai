@@ -312,7 +312,7 @@ component ObjectInfo extends panel
 		}
 		vscrollbar description_scroll
 		{
-			image		"ui/scrollbar_v_green"
+			image		"ui/scrollbar_v"
 			pos			"430 10"
 			height		"135"
 			current		0

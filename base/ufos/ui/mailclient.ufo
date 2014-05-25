@@ -40,7 +40,7 @@ window mail extends popupUI2
 	}
 
 	vscrollbar mail_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"960 208"
 		height		"470"
 		hidewhenunused true
@@ -226,7 +226,7 @@ window mailclient
 			}
 
 			vscrollbar mail_scroll {
-				image			"ui/scrollbar_v_green"
+				image			"ui/scrollbar_v"
 				pos				"697 50"
 				height			"660"
 				current			0

@@ -281,7 +281,7 @@ window employees
 
 				vscrollbar scroll
 				{
-					image		"ui/scrollbar_v_green"
+					image		"ui/scrollbar_v"
 					pos			"368 5"
 					height		"448"
 					current		0

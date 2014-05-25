@@ -246,7 +246,7 @@ window checkcvars extends popupUI2
 	}
 
 	vscrollbar select_language_scroll {
-		image			"ui/scrollbar_v_green"
+		image			"ui/scrollbar_v"
 		pos				"692 78"
 		height			"226"
 		current			0

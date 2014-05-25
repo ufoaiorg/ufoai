@@ -115,7 +115,7 @@ window popup_assembleteam extends popupUI2
 		}
 	}
 	vscrollbar soldierlist_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"350 60"
 		height		"312"
 		hidewhenunused	true

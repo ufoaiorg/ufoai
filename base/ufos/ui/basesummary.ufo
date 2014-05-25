@@ -96,7 +96,7 @@ window basesummary
 			}
 		}
 		vscrollbar bsum_mainarea_scroll {
-			image		"ui/scrollbar_v_green"
+			image		"ui/scrollbar_v"
 			pos			"513 21"
 			height		"613"
 			current		0
@@ -160,7 +160,7 @@ window basesummary
 	}
 
 	vscrollbar info_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"950 362"
 		height		"370"
 		current		0

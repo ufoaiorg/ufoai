@@ -303,7 +303,7 @@ window uforecovery extends popupUI2
 			}
 		}
 		vscrollbar ur_ufoyards_scroll {
-			image		"ui/scrollbar_v_green"
+			image		"ui/scrollbar_v"
 			pos			"620 50"
 			height		"128"
 			current		0
@@ -395,7 +395,7 @@ window uforecovery extends popupUI2
 			}
 		}
 		vscrollbar cp_ur_nationlist_scroll {
-			image		"ui/scrollbar_v_green"
+			image		"ui/scrollbar_v"
 			pos			"620 50"
 			height		"128"
 			current		0

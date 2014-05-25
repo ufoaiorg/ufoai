@@ -128,7 +128,7 @@ window skirmish extends cgame_download
 		}
 
 		vscrollbar maplist_scroll {
-			image		"ui/scrollbar_v_green"
+			image		"ui/scrollbar_v"
 			pos			"484 0"
 			height		"435"
 			onChange	{ *node:root.sk_map_sel.maplist@viewpos = <current> }

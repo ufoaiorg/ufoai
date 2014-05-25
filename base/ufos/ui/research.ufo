@@ -510,7 +510,7 @@ window research extends BaseMgmtWindow
 					}
 				}
 				vscrollbar techs_scroll {
-					image		"ui/scrollbar_v_green"
+					image		"ui/scrollbar_v"
 					pos			"670 50"
 					height		"480"
 					current		0

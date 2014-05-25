@@ -133,7 +133,7 @@ window messageoptions extends popupUI2
 	}
 
 	vscrollbar messagetypes_scroll {
-		image		"ui/scrollbar_v_green"
+		image		"ui/scrollbar_v"
 		pos			"438 90"
 		height		"325"
 		current		0
