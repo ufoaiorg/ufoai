@@ -68,39 +68,6 @@ window aircraft_equip extends iaircraft
 			}
 
 			// ==================
-			// aircraft model
-			// ==================
-			panel airview {
-				{
-				pos		"50 230"
-				size	"664 308"
-				}
-				model aircraft
-				{
-					src			*cvar:mn_aircraft_model_display
-					pos			"23 16"
-					size		"529 261"
-					angles		"0 0 90"
-					autoscale	true
-					rotatewithmouse	true
-					omega		"0 10 0"
-				}
-				MainMenu3Btn button_equip
-				{
-					string		"_Equip Aircraft"
-					pos			"438 283"
-					size		"225 25"
-					font 		"f_small_bold"
-					onClick		{
-						*node:parent.parent.airequipslot@invis = false
-						*node:parent@invis = true
-					}
-					color		"0 0 0 0.9"
-				}
-
-			}
-
-			// ==================
 			// slots
 			// ==================
 			panel airequipslot {
@@ -116,19 +83,6 @@ window aircraft_equip extends iaircraft
 					size	"529 261"
 					angles	"0 0 180"
 					autoscale	true
-				}
-
-				MainMenu3Btn button_view
-				{
-					string		"_View Aircraft"
-					pos			"438 283"
-					size		"225 25"
-					font 		"f_small_bold"
-					color		"0 0 0 0.9"
-					onClick		{
-						*node:parent@invis = true
-						*node:parent.parent.airview@invis = false
-					}
 				}
 
 				image airequip_slot0
@@ -656,8 +610,6 @@ window aircraft_equip extends iaircraft
 		*cvar:mn_aircrafttab = "aircraft_equip"
 		cmd "ui_aircraft_fill;"
 		cmd "ui_aircraft_select <1>"
-		*node:root.base_container.mainBody.airequipslot@invis = true
-		*node:root.base_container.mainBody.airview@invis = false
 		cmd "airequip_updatemenu 2;"
 		cmd "airequip_select zone1;"
 		*cvar:mn_itemname = ""
