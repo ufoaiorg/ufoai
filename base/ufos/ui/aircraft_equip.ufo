@@ -310,6 +310,7 @@ window aircraft_equip extends iaircraft
 			size		"285 140"
 			lineheight	20
 			tabwidth	190
+			font		"f_verysmall"
 			dataid		TEXT_AIRCRAFT_INFO
 			rows		7
 		}
