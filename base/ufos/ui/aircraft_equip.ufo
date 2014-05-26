@@ -546,7 +546,6 @@ window aircraft_equip extends iaircraft
 		*node:itemlist.airequip_list_amount@lineselected = -1
 	}
 
-
 	// ==================
 	// functions
 	// ==================
@@ -664,8 +663,13 @@ window aircraft_equip extends iaircraft
 		*cvar:mn_upmodel_top = ""
 		*cvar:mn_aircraft_item_selected = -1
 		*node:root.base_container.mainBody.pedia@onClick = {cmd "ui_push ufopedia rs_craft_<cvar:mn_aircraft_model>;"}
-
 	}
+
+	func onWindowActivate
+	{
+		cmd "airequip_select item <cvar:mn_aircraft_item_selected>;"
+	}
+
 	func onWindowClosed
 	{
 		delete *cvar:mn_aircraft_item_model_slot0
