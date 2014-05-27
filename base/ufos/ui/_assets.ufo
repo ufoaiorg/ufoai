@@ -7,7 +7,7 @@
  */
 component fuzzyScreen extends texture
 {
-	pos 		"0 0"
+	pos		"0 0"
 	// TODO: this should be always the full screen
 	size		"2048 1536"
 	src			"ui/screen"
@@ -17,7 +17,7 @@ component fuzzyScreen extends texture
 /**
  * Toolbar for main menus
  * @TODO: Currently, the player can jump from battlescape to
- * 			options, then use this to jump to the main menu
+ *			options, then use this to jump to the main menu
  *			and launch another mission. Before implementing
  *			this idea, need to prevent this from happening.
  */

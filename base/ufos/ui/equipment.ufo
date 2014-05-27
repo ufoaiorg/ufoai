@@ -226,8 +226,6 @@ window equipment extends objectinfo
 					onClick { cmd "mn_updateactorload equip_actorload;" }
 				}
 
-
-
 				// ==================
 				// Containers (see inventory.ufo for the definition)
 				// ==================
@@ -313,9 +311,7 @@ window equipment extends objectinfo
 			}
 		}
 
-	} // end base_container		}
-
-
+	} // end base_container
 
 	// ==================
 	// names list

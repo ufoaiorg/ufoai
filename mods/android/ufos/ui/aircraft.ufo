@@ -143,7 +143,7 @@ window iaircraft
 			*node:root.aircraft_list_scroll@current = <viewpos>
 		}
 		onClick {
-			cmd "mn_select_aircraft <lineselected>"	// @note the node autocomplet the command with the selected line
+			cmd "mn_select_aircraft <lineselected>;"	// @note the node autocomplet the command with the selected line
 		}
 	}
 
@@ -224,9 +224,9 @@ window iaircraft
 		}
 	}
 
-/**
- * @brief Reset the cvars for a character.
- */
+	/**
+	 * @brief Reset the cvars for a character.
+	 */
 	confunc reset_character_cvars {
 		/** @todo gui should not manage it -> it should not be here */
 		*cvar:mn_name = ""
