@@ -51,20 +51,20 @@ end
 	Currently attempts to see target, shoot then hide.
 --]]
 function engage( target )
+	hide_tu = 4 -- Crouch + face
 
 	-- Move until target in sight
-	shoot_pos = ai.positionshoot(target) -- Get a shoot position
+	shoot_pos = ai.positionshoot(target, ai.TU() - hide_tu) -- Get a shoot position
 	if not shoot_pos then -- No position available
 		approach(target)
 	else
 		-- Go shoot
 		shoot_pos:goto()
-	end
-
-	hide_tu = 4 -- Crouch + face
 
 	-- Shoot
 	target:shoot(ai.TU() - hide_tu)
+	end
+
 
 	-- Hide
 	hide_pos = ai.positionhide()
