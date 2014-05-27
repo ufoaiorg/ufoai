@@ -266,7 +266,7 @@ bool G_TestLine (const vec3_t start, const vec3_t end)
  */
 trace_t G_Trace (const Line& trLine, const Edict* passent, int contentmask)
 {
-	const AABB box(vec3_origin, vec3_origin);
+	static const AABB box;
 	G_TraceDraw(trLine);
 	return gi.Trace(trLine, box, passent, contentmask);
 }
