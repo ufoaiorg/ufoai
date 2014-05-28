@@ -465,19 +465,36 @@ typedef struct ufoIds_s {
 	const char* idStr;
 } ufoIds_t;
 
-const ufoIds_t ufoIdsTable[] = {
-	{UFO_BOMBER,	"bomber"},
-	{UFO_CARRIER,	"carrier"},
-	{UFO_CORRUPTER,	"corrupter"},
-	{UFO_FIGHTER,	"fighter"},
-	{UFO_HARVESTER,	"harvester"},
-	{UFO_SCOUT,		"scout"},
-	{UFO_SUPPLY,	"supply"},
-	{UFO_GUNBOAT,	"gunboat"},
-	{UFO_RIPPER,	"ripper"},
-	{UFO_MOTHERSHIP,"mothership"}
+static ufoIds_t ufoIdsTable[] = {
+	{UFO_BOMBER,	""},
+	{UFO_CARRIER,	""},
+	{UFO_CORRUPTER,	""},
+	{UFO_FIGHTER,	""},
+	{UFO_HARVESTER,	""},
+	{UFO_SCOUT,		""},
+	{UFO_SUPPLY,	""},
+	{UFO_GUNBOAT,	""},
+	{UFO_RIPPER,	""},
+	{UFO_MOTHERSHIP,""}
 };
 CASSERT(lengthof(ufoIdsTable) == UFO_MAX);
+
+/**
+ * @brief Pretend to parse the aircraft names from the scripts until we have gotten rid of the enum ufoType_t
+ */
+static void Com_ParseAircraftNames (const char* name, const char** text)
+{
+	ufoIdsTable[UFO_BOMBER].idStr		= "bomber";
+	ufoIdsTable[UFO_CARRIER].idStr		= "carrier";
+	ufoIdsTable[UFO_CORRUPTER].idStr	= "corrupter";
+	ufoIdsTable[UFO_FIGHTER].idStr		= "fighter";
+	ufoIdsTable[UFO_HARVESTER].idStr	= "harvester";
+	ufoIdsTable[UFO_SCOUT].idStr		= "scout";
+	ufoIdsTable[UFO_SUPPLY].idStr		= "supply";
+	ufoIdsTable[UFO_GUNBOAT].idStr		= "gunboat";
+	ufoIdsTable[UFO_RIPPER].idStr		= "ripper";
+	ufoIdsTable[UFO_MOTHERSHIP].idStr	= "mothership";
+}
 
 static const ufoIds_t* Com_GetUfoDef (ufoType_t idNum)
 {
@@ -3671,6 +3688,8 @@ void Com_ParseScripts (bool onlyServer)
 			Com_ParseBodyTemplate(name, &text);
 		else if (Q_streq(type, "names"))
 			Com_ParseActorNames(name, &text);
+		else if (Q_streq(type, "aircraftnames"))
+			Com_ParseAircraftNames(name, &text);
 		else if (!onlyServer)
 			CL_ParseClientData(type, name, &text);
 	}
