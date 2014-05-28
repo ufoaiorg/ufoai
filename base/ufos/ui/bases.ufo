@@ -57,7 +57,7 @@ window bases
 			{
 				{
 					pos		"0 0"
-					onClick { cmd "show_facility false; ui_push employees 1;" }
+					onClick { cmd "ui_push employees 1;" }
 				}
 				string label { string "_Scientists" }
 				button icon { icon "icons/head_scientist" }
@@ -66,7 +66,7 @@ window bases
 			{
 				{
 					pos		"110 0"
-					onClick { cmd "show_facility false; ui_push employees 2;" }
+					onClick { cmd "ui_push employees 2;" }
 				}
 				string label { string "_Engineers" }
 				button icon { icon "icons/head_worker" }
@@ -75,7 +75,7 @@ window bases
 			{
 				{
 					pos		"220 0"
-					onClick { cmd "show_facility false;ui_push employees 0;" }
+					onClick { cmd "ui_push employees 0;" }
 				}
 				string label { string "_Soldiers" }
 				button icon { icon "icons/head_soldier" }
@@ -84,7 +84,7 @@ window bases
 			{
 				{
 					pos		"330 0"
-					onClick		{ cmd "show_facility false; ui_push employees 3;" }
+					onClick		{ cmd "ui_push employees 3;" }
 				}
 				string label { string "_Pilots" }
 				button icon { icon "icons/head_pilot" }
@@ -308,7 +308,7 @@ window bases
 		BaseSection aircraft
 		{
 			{
-				onClick		{ cmd "show_facility false; ui_push aircraft_equip;" }
+				onClick		{ cmd "ui_push aircraft_equip;" }
 			}
 			string label { string "_Aircraft" }
 			button icon { icon "icons/aircraft" }
@@ -329,7 +329,7 @@ window bases
 		BaseSection soldiers
 		{
 			{
-				onClick		{ cmd "show_facility false; ui_push equipment -1;" }
+				onClick		{ cmd "ui_push equipment -1;" }
 			}
 			string label { string "_Soldiers" }
 			button icon { icon "icons/crouch" }
@@ -337,7 +337,7 @@ window bases
 		BaseSection buysell
 		{
 			{
-				onClick		{ cmd "show_facility false; ui_push market;" }
+				onClick		{ cmd "ui_push market;" }
 			}
 			string label { string "_Market" }
 			button icon { icon "icons/market" }
@@ -345,7 +345,7 @@ window bases
 		BaseSection research
 		{
 			{
-				onClick		{ cmd "show_facility false; ui_push research;" }
+				onClick		{ cmd "ui_push research;" }
 			}
 			string label { string "_Research" }
 			button icon { icon "icons/research" }
@@ -365,7 +365,7 @@ window bases
 		BaseSection production
 		{
 			{
-				onClick		{ cmd "show_facility false; ui_push production;" }
+				onClick		{ cmd "ui_push production;" }
 			}
 			string label { string "_Production" }
 			button icon { icon "icons/wrench" }
@@ -385,7 +385,7 @@ window bases
 		BaseSection containment
 		{
 			{
-				onClick		{ cmd "show_facility false; ui_push aliencont;" }
+				onClick		{ cmd "ui_push aliencont;" }
 			}
 			string label { string "_Alien Containment" }
 			button icon { icon "icons/aliens" }
@@ -441,7 +441,7 @@ window bases
 				*node:parent.sections.soldiers.bg@bgcolor = "0.527 0.6 0.21 0.2"
 				*node:parent.sections.soldiers@onMouseEnter = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.4" *node:this.icon@background = "icons/circle" }
 				*node:parent.sections.soldiers@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
-				*node:parent.sections.soldiers@onClick = { cmd "show_facility false; ui_push equipment -1;" }
+				*node:parent.sections.soldiers@onClick = { cmd "ui_push equipment -1;" }
 				*node:parent.sections.soldiers@tooltip = ""
 			} elif (param1 eq "hospital") {
 			} elif (param1 eq "transfer") {
@@ -451,15 +451,15 @@ window bases
 				*node:parent.sections.<1>@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
 				*node:parent.sections.<1>@tooltip = ""
 				if (param1 eq "aircraft") {
-					*node:parent.sections.<1>@onClick = { cmd "show_facility false; ui_push aircraft_equip;" }
+					*node:parent.sections.<1>@onClick = { cmd "ui_push aircraft_equip;" }
 				} elif (param1 eq "buysell") {
-					*node:parent.sections.<1>@onClick = { cmd "show_facility false; ui_push market;" }
+					*node:parent.sections.<1>@onClick = { cmd "ui_push market;" }
 				} elif (param1 eq "research") {
-					*node:parent.sections.<1>@onClick = { cmd "show_facility false; ui_push research;" }
+					*node:parent.sections.<1>@onClick = { cmd "ui_push research;" }
 				} elif (param1 eq "production") {
-					*node:parent.sections.<1>@onClick = { cmd "show_facility false; ui_push production;" }
+					*node:parent.sections.<1>@onClick = { cmd "ui_push production;" }
 				} elif (param1 eq "containment") {
-					*node:parent.sections.<1>@onClick = { cmd "show_facility false;  ui_push aliencont;" }
+					*node:parent.sections.<1>@onClick = { cmd "ui_push aliencont;" }
 				}
 			}
 		}
@@ -597,8 +597,7 @@ window bases
 
 	func onWindowActivate
 	{
-		cmd "base_init;"
-		cmd "reset_base;"
+		cmd "base_init;reset_base;"
 	}
 	func onWindowOpened
 	{
