@@ -460,33 +460,29 @@ void* Com_AlignPtr (const void* memory, valueTypes_t type)
  * @brief Ufoai uses two types of ids for ufos: the string is used for references in the scripts,
  * the numeric/enum type in the code. This table and the following functions convert these ids
  */
-typedef struct ufoIds_s {
-	const char* idStr;
-} ufoIds_t;
-
-static ufoIds_t ufoIdsTable[UFO_MAX];
+static const char* ufoIdsTable[UFO_MAX];
 
 /**
  * @brief Pretend to parse the aircraft names from the scripts until we have gotten rid of the enum ufoType_t
  */
 static void Com_ParseAircraftNames (const char* name, const char** text)
 {
-	ufoIdsTable[UFO_BOMBER].idStr		= "bomber";
-	ufoIdsTable[UFO_CARRIER].idStr		= "carrier";
-	ufoIdsTable[UFO_CORRUPTER].idStr	= "corrupter";
-	ufoIdsTable[UFO_FIGHTER].idStr		= "fighter";
-	ufoIdsTable[UFO_HARVESTER].idStr	= "harvester";
-	ufoIdsTable[UFO_SCOUT].idStr		= "scout";
-	ufoIdsTable[UFO_SUPPLY].idStr		= "supply";
-	ufoIdsTable[UFO_GUNBOAT].idStr		= "gunboat";
-	ufoIdsTable[UFO_RIPPER].idStr		= "ripper";
-	ufoIdsTable[UFO_MOTHERSHIP].idStr	= "mothership";
+	ufoIdsTable[UFO_BOMBER]		= "bomber";
+	ufoIdsTable[UFO_CARRIER]	= "carrier";
+	ufoIdsTable[UFO_CORRUPTER]	= "corrupter";
+	ufoIdsTable[UFO_FIGHTER]	= "fighter";
+	ufoIdsTable[UFO_HARVESTER]	= "harvester";
+	ufoIdsTable[UFO_SCOUT]		= "scout";
+	ufoIdsTable[UFO_SUPPLY]		= "supply";
+	ufoIdsTable[UFO_GUNBOAT]	= "gunboat";
+	ufoIdsTable[UFO_RIPPER]		= "ripper";
+	ufoIdsTable[UFO_MOTHERSHIP]	= "mothership";
 }
 
-static const ufoIds_t* Com_GetUfoDef (ufoType_t idNum)
+static const char* Com_GetUfoDef (ufoType_t idNum)
 {
 	if (idNum >= 0 && idNum < UFO_MAX) {
-		return &ufoIdsTable[idNum];
+		return ufoIdsTable[idNum];
 	}
 	return nullptr;
 }
@@ -495,7 +491,7 @@ static ufoType_t Com_GetUfoIdNum (const char* idString)
 {
 	if (!strncmp(idString, "craft_ufo_", 10)) {
 		for (int i = 0; i < UFO_MAX; i++)
-			if (Q_streq(idString + 10, ufoIdsTable[i].idStr))
+			if (Q_streq(idString + 10, ufoIdsTable[i]))
 				return (ufoType_t)i;
 	}
 
@@ -504,9 +500,9 @@ static ufoType_t Com_GetUfoIdNum (const char* idString)
 
 static void Com_GetUfoIdStr (ufoType_t idNum, char* outStr)
 {
-	const ufoIds_t* uDef = Com_GetUfoDef(idNum);
+	const char* uDef = Com_GetUfoDef(idNum);
 	if (uDef)
-		sprintf(outStr, "craft_ufo_%s", uDef->idStr);
+		sprintf(outStr, "craft_ufo_%s", uDef);
 	else
 		outStr[0] = 0;
 }
@@ -515,7 +511,7 @@ static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
 {
 	if (!strncmp(idString, "craft_crash_", 12)) {
 		for (int i = 0; i < UFO_MAX; i++)
-			if (Q_streq(idString + 12, ufoIdsTable[i].idStr))
+			if (Q_streq(idString + 12, ufoIdsTable[i]))
 				return (ufoType_t)i;
 	}
 
@@ -524,9 +520,9 @@ static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
 
 static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
 {
-	const ufoIds_t* uDef = Com_GetUfoDef(idNum);
+	const char* uDef = Com_GetUfoDef(idNum);
 	if (uDef)
-		sprintf(outStr, "craft_crash_%s", uDef->idStr);
+		sprintf(outStr, "craft_crash_%s", uDef);
 	else
 		outStr[0] = 0;
 }
