@@ -78,7 +78,6 @@ static void AIM_SelectAircraft_f (void)
  */
 static void AIM_AircraftStart_f (void)
 {
-	aircraft_t* aircraft;
 	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -95,7 +94,7 @@ static void AIM_AircraftStart_f (void)
 		return;
 	}
 
-	aircraft = base->aircraftCurrent;
+	aircraft_t* aircraft = base->aircraftCurrent;
 
 	/* Aircraft cannot start without a pilot. */
 	if (!AIR_GetPilot(aircraft)) {
@@ -133,9 +132,7 @@ static int AIR_GetSlotItems (aircraftItemType_t type, const aircraft_t* aircraft
 	case AC_ITEM_SHIELD:
 		if (aircraft->shield.item)
 			return 1;
-		else
-			return 0;
-		break;
+		return 0;
 	case AC_ITEM_WEAPON:
 		slot = aircraft->weapons;
 		max = MAX_AIRCRAFTSLOT;
@@ -165,7 +162,6 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 {
 	static char aircraftInfo[256];
 	base_t* base;
-	int id;
 
 	if (aircraft != nullptr)
 		base = aircraft->homebase;
@@ -202,7 +198,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	/** @todo This shouldn't exist. UI should use the global idx as reference */
 	/* compute the ID and... */
-	id = 0;
+	int id = 0;
 	AIR_ForeachFromBase(aircraftInBase, base) {
 		if (aircraft == aircraftInBase)
 			break;
@@ -247,16 +243,15 @@ static void AIR_AircraftFillList_f (void)
 static void AIR_ChangeAircraftName_f (void)
 {
 	const base_t* base = B_GetCurrentSelectedBase();
-	const char* newName = cgi->Cvar_GetString("mn_aircraftname");
-	aircraft_t* aircraft;
-
 	if (!base)
 		return;
-	aircraft = base->aircraftCurrent;
+
+	aircraft_t* aircraft = base->aircraftCurrent;
 	if (!aircraft)
 		return;
 
 	/* set default name on empty new name*/
+	const char* newName = cgi->Cvar_GetString("mn_aircraftname");
 	if (Q_strnull(newName)) {
 		Q_strncpyz(aircraft->name, _(aircraft->defaultName), sizeof(aircraft->name));
 		return;
