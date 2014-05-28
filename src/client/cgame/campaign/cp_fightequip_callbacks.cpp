@@ -64,13 +64,11 @@ static void AIM_CheckAirequipSelectedSlot (const aircraft_t* aircraft)
 	case AC_ITEM_WEAPON:
 		if (airequipSelectedSlot >= aircraft->maxWeapons) {
 			airequipSelectedSlot = 0;
-			return;
 		}
 		break;
 	case AC_ITEM_ELECTRONICS:
 		if (airequipSelectedSlot >= aircraft->maxElectronics) {
 			airequipSelectedSlot = 0;
-			return;
 		}
 		break;
 	default:
