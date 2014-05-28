@@ -461,23 +461,10 @@ void* Com_AlignPtr (const void* memory, valueTypes_t type)
  * the numeric/enum type in the code. This table and the following functions convert these ids
  */
 typedef struct ufoIds_s {
-	ufoType_t idNum;
 	const char* idStr;
 } ufoIds_t;
 
-static ufoIds_t ufoIdsTable[] = {
-	{UFO_BOMBER,	""},
-	{UFO_CARRIER,	""},
-	{UFO_CORRUPTER,	""},
-	{UFO_FIGHTER,	""},
-	{UFO_HARVESTER,	""},
-	{UFO_SCOUT,		""},
-	{UFO_SUPPLY,	""},
-	{UFO_GUNBOAT,	""},
-	{UFO_RIPPER,	""},
-	{UFO_MOTHERSHIP,""}
-};
-CASSERT(lengthof(ufoIdsTable) == UFO_MAX);
+static ufoIds_t ufoIdsTable[UFO_MAX];
 
 /**
  * @brief Pretend to parse the aircraft names from the scripts until we have gotten rid of the enum ufoType_t
@@ -498,10 +485,9 @@ static void Com_ParseAircraftNames (const char* name, const char** text)
 
 static const ufoIds_t* Com_GetUfoDef (ufoType_t idNum)
 {
-	for (int i = 0; i < UFO_MAX; i++)
-		if (idNum == ufoIdsTable[i].idNum) {
-			return &ufoIdsTable[i];
-		}
+	if (idNum >= 0 && idNum < UFO_MAX) {
+		return &ufoIdsTable[idNum];
+	}
 	return nullptr;
 }
 
@@ -510,7 +496,7 @@ static ufoType_t Com_GetUfoIdNum (const char* idString)
 	if (!strncmp(idString, "craft_ufo_", 10)) {
 		for (int i = 0; i < UFO_MAX; i++)
 			if (Q_streq(idString + 10, ufoIdsTable[i].idStr))
-				return ufoIdsTable[i].idNum;
+				return (ufoType_t)i;
 	}
 
 	return UFO_MAX;
@@ -530,7 +516,7 @@ static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
 	if (!strncmp(idString, "craft_crash_", 12)) {
 		for (int i = 0; i < UFO_MAX; i++)
 			if (Q_streq(idString + 12, ufoIdsTable[i].idStr))
-				return ufoIdsTable[i].idNum;
+				return (ufoType_t)i;
 	}
 
 	return UFO_MAX;
