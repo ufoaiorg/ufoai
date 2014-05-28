@@ -213,12 +213,11 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t* slot)
 	currentTech = techList;
 	while (*currentTech) {
 		if (AIM_CrafttypeFilter(base, airequipID, *currentTech)) {
-			uiNode_t* option;
 			const objDef_t* item = INVSH_GetItemByID((*currentTech)->provides);
 			const int amount = B_ItemInBase(item, base);
 
 			cgi->LIST_AddString(&amountList, va("%d", amount));
-			option = cgi->UI_AddOption(&AIM_items, (*currentTech)->name, _((*currentTech)->name), va("%d", (*currentTech)->idx));
+			uiNode_t* option = cgi->UI_AddOption(&AIM_items, (*currentTech)->name, _((*currentTech)->name), va("%d", (*currentTech)->idx));
 			if (!AIM_SelectableCraftItem(slot, *currentTech))
 				option->disabled = true;
 		}
