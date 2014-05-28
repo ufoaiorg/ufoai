@@ -235,13 +235,11 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t* slot)
  */
 static void AIM_DrawAircraftSlots (const aircraft_t* aircraft)
 {
-	int i;
-
 	/* initialise model cvars */
-	for (i = 0; i < AIR_POSITIONS_MAX; i++)
+	for (int i = 0; i < AIR_POSITIONS_MAX; i++)
 		cgi->Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 
-	for (i = 0; i < AIR_POSITIONS_MAX; i++) {
+	for (int i = 0; i < AIR_POSITIONS_MAX; i++) {
 		const aircraftSlot_t* slot;
 		int max;
 
