@@ -12,6 +12,10 @@ component cmpSelect extends checkbox_ui2
 
 window employees
 {
+	{
+		fill		true
+	}
+
 	// Base name and container panel
 	BaseContainerPanelV2 base_container
 	{

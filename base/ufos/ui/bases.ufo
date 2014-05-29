@@ -16,7 +16,7 @@
 window bases
 {
 	{
-		size	"1024 768"
+		fill		true
 		onWindowClosed { cmd "trans_emptyairstorage;" }
 	}
 

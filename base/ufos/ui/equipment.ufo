@@ -28,8 +28,10 @@ component equipSoldier extends panel {
 
 window equipment extends objectinfo
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+	{
+		fill		true
+	}
+
 	// Base name and container panel
 	BaseContainerPanelV2 base_container
 	{

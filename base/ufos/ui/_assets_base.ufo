@@ -342,9 +342,6 @@ component ResearchItem extends panel
 			size	"18 18"
 			onClick			{
 				cmd "ui_research_select <node:parent.parent.id@string>; ui_research_change <node:parent.parent.id@string> -1;"
-	//			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
-	//			call *node:root.base_container.research_ext.techs_ext@removeAllChild
-				cmd "get_lab_space_string;"
 			}
 		}
 		button add_scientist
@@ -355,14 +352,11 @@ component ResearchItem extends panel
 			size	"18 18"
 			onClick			{
 				cmd "ui_research_select <node:parent.parent.id@string>; ui_research_change <node:parent.parent.id@string> 1;"
-	//			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
-	//			call *node:root.base_container.research_ext.techs_ext@removeAllChild
-				cmd "get_lab_space_string;"
 			}
 		}
 	}
 
-// External research item (items researched in other bases)
+	// External research item (items researched in other bases)
 	panel rsrc_baselink {
 		{
 			pos 	"480 0"

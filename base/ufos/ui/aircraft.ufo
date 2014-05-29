@@ -119,8 +119,9 @@ component aircraft_teammember extends panel {
  */
 window iaircraft
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+	{
+		fill		true
+	}
 
 	BaseContainerPanelV2 base_container
 	{

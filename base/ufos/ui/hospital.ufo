@@ -130,6 +130,10 @@ component cmpHospitalImplant extends panel {
 
 window hospital
 {
+	{
+		fill		true
+	}
+
 	// Base name and container panel
 	BaseContainerPanelV2 base_container
 	{
