@@ -649,7 +649,7 @@ component BaseContainerPanelV2 extends BaseContainerPanel
 			}
 			button back
 			{
-				icon			"icons/windownext"
+				icon			"icons/system_close"
 				tooltip			"_Back to base"
 				pos				"683 7"
 				size			"18	18"
