@@ -152,7 +152,7 @@ window bases
 	{
 		{
 			pos			"726 5"
-			size		"298 672"
+			size		"298 758"
 			layout		LAYOUT_TOP_DOWN_FLOW
 			layoutMargin	2
 		}
