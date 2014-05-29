@@ -162,7 +162,7 @@ static void testSeedlists (void)
 			time = Sys_Milliseconds() - time;
 			timeSum += time;
 			UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
-					va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", assNames[n][0], i, time));
+					va("%s fails to assemble in a reasonable time with seed %i (time: %i ms)", assNames[n][0], i, time));
 			if (time > 10000)
 				Com_Printf("Seed %i: tiles: %i ms: %li\n", i, numPlaced, time);
 		}
