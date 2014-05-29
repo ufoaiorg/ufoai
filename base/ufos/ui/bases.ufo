@@ -601,7 +601,7 @@ window bases
 	 * @brief Reset base status/display info when the player switches to a new base
 	 * or comes back from another window
 	 */
-	confunc reset_base
+	func reset_base
 	{
 		cmd "show_facility false;"
 	}
@@ -611,14 +611,15 @@ window bases
 
 	func onWindowActivate
 	{
-		cmd "base_init;reset_base;"
+		call *node:root.onWindowOpened
 	}
+
 	func onWindowOpened
 	{
 		// Get the parameters needed for this window
 		cmd "base_init;"
 
 		// Close all panels and reset base to default position
-		cmd "reset_base;"
+		call *node:root.reset_base
 	}
 }
