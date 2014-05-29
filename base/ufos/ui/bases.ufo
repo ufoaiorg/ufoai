@@ -564,8 +564,6 @@ window bases
 	 * @param <2> name
 	 * @param <3> number of scientists working on it
 	 * @param <4> percent complete
-	 * @TODO: to work properly, research window must call base_init when it
-	 *		closes. Currently, it will not update after research changed
 	 */
 	confunc clear_research
 	{
