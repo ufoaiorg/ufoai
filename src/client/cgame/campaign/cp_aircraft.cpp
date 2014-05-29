@@ -1308,6 +1308,7 @@ static const value_t aircraft_vals[] = {
 	/* to place the aircraft in */
 	{"productioncost", V_INT, offsetof(aircraft_t, productionCost), MEMBER_SIZEOF(aircraft_t, productionCost)},
 	{"building", V_HUNK_STRING, offsetof(aircraft_t, building), 0},
+	{"missiontypes", V_LIST, offsetof(aircraft_t, missionTypes), 0},
 
 	{nullptr, V_NULL, 0, 0}
 };

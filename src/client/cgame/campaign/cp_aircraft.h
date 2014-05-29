@@ -207,6 +207,7 @@ typedef struct aircraft_s {
 							 * @c detected and @c visible set to true to be actually seen on geoscape) */
 	bool notOnGeoscape;		/**< don't let this aircraft appear ever on geoscape (e.g. ufo_carrier) */
 	int ufoInterestOnGeoscape;	/**< interest level at which this ufo should be available on geoscape first */
+	linkedList_t* missionTypes;	/**< missiontype strings this aircraft is useable for */
 	int detectionIdx;		/**< detected UFO number (for descriptions "UFO #4")*/
 	date_t lastSpotted;		/**< date the UFO was detected last time */
 
