@@ -47,7 +47,7 @@ window aircraft_equip extends iaircraft
 		}
 	}
 
-	BaseContainerPanelV2 base_container
+	BaseContainerPanel base_container
 	{
 		panel mainBody
 		{

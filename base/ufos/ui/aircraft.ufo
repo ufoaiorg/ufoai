@@ -123,7 +123,7 @@ window iaircraft
 		fill		true
 	}
 
-	BaseContainerPanelV2 base_container
+	BaseContainerPanel base_container
 	{
 		// Aircraft panel
 		panel mainBody

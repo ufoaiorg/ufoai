@@ -612,11 +612,6 @@ component BaseContainerPanel extends panel
 		color			"0.56 0.81 0.76 1"
 		contentalign	ALIGN_CR
 	}
-}
-
-// Base name and container panel with body and title
-component BaseContainerPanelV2 extends BaseContainerPanel
-{
 	panel mainBody
 	{
 		{
@@ -657,7 +652,7 @@ window BaseMgmtWindow
 {
 	{ size	"1024 768" }
 
-	BaseContainerPanelV2 base_container {}
+	BaseContainerPanel base_container {}
 
 	// Back to geoscape
 	Geoscape geoscape_button { }

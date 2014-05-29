@@ -112,7 +112,7 @@ window transfer
 
 
 	// Base name and container panel
-	BaseContainerPanelV2 base_container
+	BaseContainerPanel base_container
 	{
 		// Transfer panel
 		panel mainBody

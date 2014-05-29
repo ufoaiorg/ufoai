@@ -6,7 +6,7 @@ window production
 /*	cmpBaseHeader baseHeader {
 	}
 */
-	BaseContainerPanelV2 base_container
+	BaseContainerPanel base_container
 	{
 		// Production panel
 		panel mainBody

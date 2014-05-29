@@ -141,7 +141,7 @@ component cmpAlienContainment extends panel {
 
 window aliencont
 {
-	BaseContainerPanelV2 base_container
+	BaseContainerPanel base_container
 	{
 		// Alien Containment panel
 		panel mainBody

@@ -21,7 +21,7 @@ window bases
 	}
 
 	// Left base panel
-	BaseContainerPanelV2 base_container
+	BaseContainerPanel base_container
 	{
 		// no mainBody here
 		panel mainBody

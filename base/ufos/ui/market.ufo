@@ -14,7 +14,7 @@ window market  {
 	{ size	"1024 768" }
 
 	// Base name and container panel
-	BaseContainerPanelV2 base_container
+	BaseContainerPanel base_container
 	{
 		// Market panel
 		panel mainBody

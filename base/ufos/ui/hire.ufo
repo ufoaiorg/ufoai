@@ -17,7 +17,7 @@ window employees
 	}
 
 	// Base name and container panel
-	BaseContainerPanelV2 base_container
+	BaseContainerPanel base_container
 	{
 		// hireand fire panel
 		panel mainBody

@@ -135,7 +135,7 @@ window hospital
 	}
 
 	// Base name and container panel
-	BaseContainerPanelV2 base_container
+	BaseContainerPanel base_container
 	{
 		// Hospital panel
 		panel mainBody

@@ -33,7 +33,7 @@ window equipment extends objectinfo
 	}
 
 	// Base name and container panel
-	BaseContainerPanelV2 base_container
+	BaseContainerPanel base_container
 	{
 		// Equipment panel
 		panel mainBody

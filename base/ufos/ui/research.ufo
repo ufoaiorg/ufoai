@@ -16,7 +16,7 @@ window research extends BaseMgmtWindow
 		fill		true
 	}
 	// Base name and container panel
-	BaseContainerPanelV2 base_container
+	BaseContainerPanel base_container
 	{
 		panel mainBody
 		{
