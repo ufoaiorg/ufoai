@@ -201,15 +201,15 @@ typedef struct aircraft_s {
 
 	bool notifySent[MAX_AIR_NOTIFICATIONS];	/* stores if a notification was already sent */
 
-	bool detected;			/**< Is the ufo detected by a radar? (note that a detected landed ufo has @c detected set to true
-							 * and @c visible set to false: we can't see it on geoscape) */
-	bool landed;			/**< Is ufo landed for a mission? This is used when a UFO lands (a UFO must have both
-							 * @c detected and @c visible set to true to be actually seen on geoscape) */
-	bool notOnGeoscape;		/**< don't let this aircraft appear ever on geoscape (e.g. ufo_carrier) */
+	bool detected;				/**< Is the ufo detected by a radar? (note that a detected landed ufo has @c detected set to true
+								 * and @c visible set to false: we can't see it on geoscape) */
+	bool landed;				/**< Is ufo landed for a mission? This is used when a UFO lands (a UFO must have both
+								 * @c detected and @c visible set to true to be actually seen on geoscape) */
+	bool notOnGeoscape;			/**< don't let this aircraft appear ever on geoscape (e.g. ufo_carrier) */
 	int ufoInterestOnGeoscape;	/**< interest level at which this ufo should be available on geoscape first */
 	linkedList_t* missionTypes;	/**< missiontype strings this aircraft is useable for */
-	int detectionIdx;		/**< detected UFO number (for descriptions "UFO #4")*/
-	date_t lastSpotted;		/**< date the UFO was detected last time */
+	int detectionIdx;			/**< detected UFO number (for descriptions "UFO #4")*/
+	date_t lastSpotted;			/**< date the UFO was detected last time */
 
 	class AlienCargo* alienCargo;	/**< Cargo of aliens. */
 
