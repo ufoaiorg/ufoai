@@ -516,30 +516,43 @@ window bases
 	 * @param <5> aircraft in base?
 	 */
 	confunc clear_aircraft {
+		*node:root.aircraft_count@integer = 0
 		*node:parent.sections.aircraft@size	= "298 48"
 		*node:parent.sections.aircraft.aircraft_list@invis = true
 		call *node:parent.sections.aircraft.aircraft_list@removeAllChild
 	}
+
+	data aircraft_count
+	{
+		integer 0
+	}
+
+	/**
+	 * @brief Adds a new aircraft icon to the base view
+	 */
 	confunc show_aircraft
 	{
-		*node:parent.sections.aircraft@size	= "298 96"
-		call *node:parent.sections.aircraft.aircraft_list@createChild("<1>", "AircraftIcon")
-		*node:parent.sections.aircraft.aircraft_list.<1>.icon@tooltip = "<2> (<4>)"
-		if (param5 eq 1) {
-			*node:parent.sections.aircraft.aircraft_list.<1>.icon@icon = "icons/<3>"
-		} else {
-			*node:parent.sections.aircraft.aircraft_list.<1>.icon@icon = "icons/<3>_off"
-		}
-		*node:parent.sections.aircraft.aircraft_list.<1>.aircraft_id@string = <1>
-		*node:parent.sections.aircraft.aircraft_list.<1>.icon@onClick = { cmd "ui_push aircraft_equip <node:parent.aircraft_id@string>;" }
-		*node:parent.sections.aircraft.aircraft_list@invis = false
-		 /*
+		*node:root.aircraft_count@integer = ( *node:root.aircraft_count@integer + 1 )
+		if ( *node:root.aircraft_count@integer <= 5 ) {
+			*node:parent.sections.aircraft@size	= "298 96"
+			call *node:parent.sections.aircraft.aircraft_list@createChild("<1>", "AircraftIcon")
+			*node:parent.sections.aircraft.aircraft_list.<1>.icon@tooltip = "<2> (<4>)"
+			if (param5 eq 1) {
+				*node:parent.sections.aircraft.aircraft_list.<1>.icon@icon = "icons/<3>"
+			} else {
+				*node:parent.sections.aircraft.aircraft_list.<1>.icon@icon = "icons/<3>_off"
+			}
+			*node:parent.sections.aircraft.aircraft_list.<1>.aircraft_id@string = <1>
+			*node:parent.sections.aircraft.aircraft_list.<1>.icon@onClick = { cmd "ui_push aircraft_equip <node:parent.aircraft_id@string>;" }
+			*node:parent.sections.aircraft.aircraft_list@invis = false
+			/*
 			THEN ADD THIS TO AIRCRAFT onWindowOpened
 			if (<1> ne "") {
 				*cvar:mn_aircraft_id = <1>
 				cmd "ui_aircraft_select \"<1>\";"
 			}
-		 */
+			*/
+		}
 	}
 
 	/**

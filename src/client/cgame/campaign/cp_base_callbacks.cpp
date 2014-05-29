@@ -290,7 +290,6 @@ static void B_ResetBuildingCurrent_f (void)
  */
 static void B_BaseInit_f (void)
 {
-	int i;
 	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -351,10 +350,9 @@ static void B_BaseInit_f (void)
 	 * clear_bld_space ensures 0/0 data for facilities which may not exist in base
 	 */
 	cgi->UI_ExecuteConfunc("clear_bld_space");
-	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t* b = &ccs.buildingTemplates[i];
 		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
-		capacities_t cap;
 
 		if (capType == MAX_CAP)
 			continue;
@@ -364,7 +362,7 @@ static void B_BaseInit_f (void)
 		/* only show already researched buildings */
 		if (!RS_IsResearched_ptr(b->tech))
 			continue;
-		cap = *CAP_Get(base, capType);
+		const capacities_t& cap = *CAP_Get(base, capType);
 
 		assert(b->tpl);
 		const int count = B_GetNumberOfBuildingsInBaseByTemplate(base, b->tpl);
@@ -385,18 +383,8 @@ static void B_BaseInit_f (void)
 	 */
 	cgi->UI_ExecuteConfunc("clear_aircraft");
 	if (AIR_AircraftAllowed(base)) {
-		if (AIR_BaseHasAircraft(base)) {
-			i = 0;
-			AIR_ForeachFromBase(aircraft, base) {
-				if (i > 5)
-					break;
-				/*
-				 * UI node should use global IDX to identify aircraft but it uses order of aircraft in base (i)
-				 * See @todo in cp_aircraft_callbacks.c in AIR_AircraftSelect()
-				 */
-				cgi->UI_ExecuteConfunc("show_aircraft %i \"%s\" \"%s\" \"%s\" %i", i, aircraft->name, aircraft->id, AIR_AircraftStatusToName(aircraft), AIR_IsAircraftInBase(aircraft));
-				i++;
-			}
+		AIR_ForeachFromBase(aircraft, base) {
+			cgi->UI_ExecuteConfunc("show_aircraft %i \"%s\" \"%s\" \"%s\" %i", aircraft->idx, aircraft->name, aircraft->id, AIR_AircraftStatusToName(aircraft), AIR_IsAircraftInBase(aircraft));
 		}
 	}
 
@@ -405,18 +393,18 @@ static void B_BaseInit_f (void)
 	if (RS_ResearchAllowed(base)) {
 		const technology_t* closestTech = nullptr;
 		double finished = -1;
-		for (i = 0; i < ccs.numTechnologies; i++) {
+		for (int i = 0; i < ccs.numTechnologies; i++) {
 			const technology_t* tech = RS_GetTechByIDX(i);
 			if (!tech)
 				continue;
 			if (tech->base != base)
 				continue;
-			if (tech->statusResearch == RS_RUNNING) {
-				const double percent = (1 - tech->time / tech->overallTime) * 100;
-				if (percent > finished) {
-					finished = percent;
-					closestTech = tech;
-				}
+			if (tech->statusResearch != RS_RUNNING)
+				continue;
+			const double percent = (1 - tech->time / tech->overallTime) * 100;
+			if (percent > finished) {
+				finished = percent;
+				closestTech = tech;
 			}
 		}
 		if (closestTech != nullptr)
@@ -449,8 +437,6 @@ static void B_BuildingSpace_f (void)
 	cgi->UI_ExecuteConfunc("clear_bld_space");
 	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t* b = &ccs.buildingTemplates[i];
-		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
-		capacities_t cap;
 
 		/* skip mandatory buildings (like Entrance) which are built automatically */
 		if (b->mandatory)
@@ -459,6 +445,8 @@ static void B_BuildingSpace_f (void)
 		if (!RS_IsResearched_ptr(b->tech))
 			continue;
 
+		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
+		capacities_t cap;
 		if (capType != MAX_CAP)
 			cap = *CAP_Get(base, capType);
 		else
@@ -477,35 +465,31 @@ static void B_BuildingSpace_f (void)
  */
 static void B_BuildingInit (base_t* base)
 {
-	int i;
-	linkedList_t* buildingList = nullptr;
-
 	/* maybe someone call this command before the bases are parsed?? */
 	if (!base)
 		return;
 
-	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+	linkedList_t* buildingList = nullptr;
+	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 		building_t* tpl = &ccs.buildingTemplates[i];
-		/* make an entry in list for this building */
 
-		if (tpl->mapPart) {
-			const int numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, tpl);
+		if (!tpl->mapPart)
+			continue;
 
-			if (tpl->maxCount >= 0 && tpl->maxCount <= numSameBuildings)
-				continue;
-			/* skip if limit of BASE_SIZE*BASE_SIZE exceeded */
-			if (numSameBuildings >= BASE_SIZE * BASE_SIZE)
-				continue;
+		const int numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, tpl);
+		if (tpl->maxCount >= 0 && tpl->maxCount <= numSameBuildings)
+			continue;
 
-			/* if the building is researched add it to the list */
-			if (RS_IsResearched_ptr(tpl->tech))
-				B_BuildingAddToList(&buildingList, tpl);
-		}
+		/* skip if limit of BASE_SIZE*BASE_SIZE exceeded */
+		if (numSameBuildings >= BASE_SIZE * BASE_SIZE)
+			continue;
+
+		/* if the building is researched add it to the list */
+		if (RS_IsResearched_ptr(tpl->tech))
+			B_BuildingAddToList(&buildingList, tpl);
 	}
 	if (base->buildingCurrent)
 		B_DrawBuilding(base->buildingCurrent);
-	else
-		cgi->UI_ExecuteConfunc("mn_buildings_reset");
 
 	buildingNumber = cgi->LIST_Count(buildingList);
 	cgi->UI_RegisterLinkedListText(TEXT_BUILDINGS, buildingList);
