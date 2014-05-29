@@ -406,7 +406,7 @@ window bases
 
 	// Back to geoscape
 	Geoscape geoscape_button {
-		onClick { cmd "ui_pop"}
+		onClick { cmd "ui_pop;" }
 	}
 
 	/**
