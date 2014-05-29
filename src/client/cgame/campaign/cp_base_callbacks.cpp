@@ -419,6 +419,8 @@ static void B_BaseInit_f (void)
 			cgi->UI_ExecuteConfunc("show_production %i \"%s\" %3.0f", production->idx, PR_GetName(&production->data), PR_GetProgress(production) * 100);
 		}
 	}
+
+	cgi->UI_ExecuteConfunc("restore_base_state");
 }
 
 /**

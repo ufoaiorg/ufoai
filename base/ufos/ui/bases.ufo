@@ -507,6 +507,12 @@ window bases
 		*node:parent.base_container.cur_employees.workers.data@string = "<4>"
 	}
 
+	confunc restore_base_state {
+		if ( *node:parent.sections.facilities.state@string eq "false" ) {
+			cmd "base_building_space;"
+		}
+	}
+
 	/**
 	 * @brief Clears the list of aircraft in the base view that was filled by @c show_aircraft
 	 */
