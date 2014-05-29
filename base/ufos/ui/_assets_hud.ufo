@@ -167,8 +167,8 @@ component WorldLevel extends panel
 	}
 }
 
-component cmpWound extends panel {
-
+component cmpWound extends panel
+{
 	{
 		size		"180 16"
 	}

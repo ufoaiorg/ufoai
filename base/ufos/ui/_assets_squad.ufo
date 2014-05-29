@@ -356,7 +356,6 @@ component PlayerSquad extends panel
 	// Default squad options
 	panel squad_default_options
 	{
-
 		{
 			pos				"0 40"
 			size			"505 230"
@@ -579,7 +578,6 @@ component PlayerSquad extends panel
 			}
 		}
 	}
-
 
 	// Switch player squad selection from default to custom
 	// * param <0>	(0 = default, 1 = custom)

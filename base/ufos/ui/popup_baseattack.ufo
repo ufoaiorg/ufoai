@@ -303,7 +303,7 @@ window popup_assembleteam extends popupUI2
 					current *cvar:mn_vhp
 					max *cvar:mn_vhpmax
 					image "ui/bar_health"
-					}
+				}
 				string lbl { string "_Health:" }
 				string val { string *cvar:mn_thp }
 			}
