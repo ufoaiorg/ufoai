@@ -123,8 +123,8 @@ window geoscape
 
 	panel control {
 		{
-			pos			"788 20"
 			size		"216 728"
+			align		LAYOUTALIGN_RIGHT
 			border		"2"
 			bordercolor	"0.56 0.81 0.76 1"
 			bgcolor		"0 0 0 0.6"
