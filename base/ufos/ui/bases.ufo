@@ -507,13 +507,8 @@ window bases
 		*node:parent.base_container.cur_employees.workers.data@string = "<4>"
 	}
 
-	/*
-	 * @brief Show the base's aircraft (not currently used in default UI)
-	 * @param <1> id (in list of aircraft in base -- not global idx)
-	 * @param <2> name
-	 * @param <3> aircraft type
-	 * @param <4> status
-	 * @param <5> aircraft in base?
+	/**
+	 * @brief Clears the list of aircraft in the base view that was filled by @c show_aircraft
 	 */
 	confunc clear_aircraft {
 		*node:root.aircraft_count@integer = 0
@@ -522,13 +517,21 @@ window bases
 		call *node:parent.sections.aircraft.aircraft_list@removeAllChild
 	}
 
+	/**
+	 * @brief The amount of aircraft that are currently visibile in the base view
+	 */
 	data aircraft_count
 	{
 		integer 0
 	}
 
-	/**
-	 * @brief Adds a new aircraft icon to the base view
+	/*
+	 * @brief Show the base's aircraft
+	 * @param <1> id global aircraft idx
+	 * @param <2> name
+	 * @param <3> aircraft type
+	 * @param <4> status
+	 * @param <5> aircraft in base?
 	 */
 	confunc show_aircraft
 	{
