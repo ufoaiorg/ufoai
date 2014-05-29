@@ -540,7 +540,7 @@ window bases
 			*node:parent.sections.aircraft@size	= "298 96"
 			call *node:parent.sections.aircraft.aircraft_list@createChild("<1>", "AircraftIcon")
 			*node:parent.sections.aircraft.aircraft_list.<1>.icon@tooltip = "<2> (<4>)"
-			if (param5 eq 1) {
+			if (<5> eq 1) {
 				*node:parent.sections.aircraft.aircraft_list.<1>.icon@icon = "icons/<3>"
 			} else {
 				*node:parent.sections.aircraft.aircraft_list.<1>.icon@icon = "icons/<3>_off"
