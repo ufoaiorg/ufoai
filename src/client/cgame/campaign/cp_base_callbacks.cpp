@@ -298,8 +298,6 @@ static void B_BaseInit_f (void)
 	/* make sure the credits cvar is up-to-date */
 	CP_UpdateCredits(ccs.credits);
 
-	cgi->Cvar_SetValue("mn_base_num_aircraft", AIR_BaseCountAircraft(base));
-
 	/* activate or deactivate the aircraft button */
 	if (AIR_AircraftAllowed(base)) {
 		if (AIR_BaseHasAircraft(base))
