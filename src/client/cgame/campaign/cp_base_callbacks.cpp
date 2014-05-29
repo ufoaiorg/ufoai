@@ -350,23 +350,24 @@ static void B_BaseInit_f (void)
 	cgi->UI_ExecuteConfunc("clear_bld_space");
 	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t* b = &ccs.buildingTemplates[i];
-		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
 
-		if (capType == MAX_CAP)
-			continue;
 		/* Check if building matches one of our four types */
 		if (b->buildingType != B_QUARTERS && b->buildingType != B_STORAGE && b->buildingType != B_WORKSHOP && b->buildingType != B_LAB && b->buildingType != B_ANTIMATTER)
 			continue;
+
 		/* only show already researched buildings */
 		if (!RS_IsResearched_ptr(b->tech))
 			continue;
-		const capacities_t& cap = *CAP_Get(base, capType);
 
-		assert(b->tpl);
+		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
+		if (capType == MAX_CAP)
+			continue;
+
 		const int count = B_GetNumberOfBuildingsInBaseByTemplate(base, b->tpl);
 		if (count < 1)
 			continue;
 
+		const capacities_t& cap = *CAP_Get(base, capType);
 		cgi->UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i %i %i", _(b->name), b->id, cap.cur, cap.max, count, b->tpl->maxCount);
 	}
 
