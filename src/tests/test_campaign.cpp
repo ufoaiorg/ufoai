@@ -1276,7 +1276,7 @@ static void testTerrorMissions (void)
 	ResetCampaignData();
 
 	/* Set overall interest level so every UFO can be used for missions */
-	for (i = UFO_SCOUT; i < UFO_MAX; i++) {
+	for (i = 0; i < UFO_MAX; i++) {
 		ufoType_t ufoType = (ufoType_t)i;
 		const aircraft_t* ufo = UFO_GetByType(ufoType);
 
