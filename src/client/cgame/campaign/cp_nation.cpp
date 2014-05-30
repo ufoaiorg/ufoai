@@ -411,7 +411,7 @@ bool NAT_ScriptSanityCheck (void)
 			Com_Printf("...... city '%s' has a position in the water\n", city->id);
 		}
 
-		numTypes = CP_TerrorMissionAvailableUFOs(nullptr, ufoTypes);
+		numTypes = UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_TERROR_ATTACK, ufoTypes);
 
 		MapDef_ForeachSingleplayerCampaign(md) {
 			if (md->storyRelated)
