@@ -554,6 +554,7 @@ aircraft craft_ufo_fighter
 	interestlevel 50
 	missiontypes (
 		"recon"
+		"intercept"
 	)
 
 	radar {
@@ -593,6 +594,8 @@ aircraft craft_ufo_harvester
 		"harvest"
 		"baseattack"
 		"terror"
+		"intercept"
+		"interceptbombing"
 	)
 
 	radar {
@@ -644,6 +647,8 @@ aircraft craft_ufo_corrupter
 		"baseattack"
 		"xvi"
 		"terror"
+		"intercept"
+		"interceptbombing"
 	)
 
 	radar {
@@ -718,6 +723,7 @@ aircraft craft_ufo_gunboat
 	missiontypes (
 		"baseattack"
 		"terror"
+		"intercept"
 	)
 
 	radar {
