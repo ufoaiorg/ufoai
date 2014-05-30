@@ -128,12 +128,14 @@ bool UFO_ShouldAppearOnGeoscape (const ufoType_t type)
 }
 
 /**
- * @brief Check if the UFO type is available for recon missions
- * @param type The UFO type to check
+ * @brief Check if the UFO type is available for the given mission type
+ * @param uType The UFO type to check
+ * @param mType The mission type to check
  */
-static bool UFO_CanDoReconMission (const ufoType_t type)
+static bool UFO_CanDoMission (const ufoType_t uType, const char* mType)
 {
-	if (type == UFO_SCOUT || type == UFO_FIGHTER)
+	const aircraft_t* ufo = UFO_GetByType(uType);
+	if (LIST_ContainsString(ufo->missionTypes, mType))
 		return true;
 
 	return false;
@@ -182,7 +184,7 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 		ufoType_t uType = (ufoType_t)i;
 		switch (missionType) {
 			case INTERESTCATEGORY_RECON:
-				if (UFO_CanDoReconMission(uType))
+				if (UFO_CanDoMission(uType, "recon"))
 					break;
 			case INTERESTCATEGORY_BASE_ATTACK:
 				if (UFO_CanDoBaseAttackMission(uType))
