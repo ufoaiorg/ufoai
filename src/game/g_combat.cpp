@@ -875,38 +875,42 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
 		Com_DPrintf(DEBUG_GAME, "G_ShootSingle: Shooter is dead, shot not possible.\n");
 		return;
 	}
-
 	/* Calc direction of the shot. */
 	gi.GridPosToVec(ent->fieldSize, at, impact);	/* Get the position of the targeted grid-cell. ('impact' is used only temporary here)*/
-	impact[2] -= z_align;
+	const bool pointTrace = VectorCompare(impact, from);
+	if (!pointTrace)
+		impact[2] -= z_align;
 	vec3_t cur_loc;
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	vec3_t dir;
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
-	VectorNormalizeFast(dir);			/* Normalize the vector i.e. make length 1.0 */
 
-	/* places the starting-location a bit away from the attacker-model/grid. */
-	/** @todo need some change to reflect 2x2 units.
-	 * Also might need a check if the distance is bigger than the one to the impact location. */
-	/** @todo can't we use the fd->shotOrg here and get rid of the sv_shot_origin cvar? */
-	VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);
-	vec3_t angles;
-	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
+	if (!pointTrace) {
+		VectorNormalizeFast(dir);			/* Normalize the vector i.e. make length 1.0 */
 
-	/* Get 2 gaussian distributed random values */
-	float gauss1;
-	float gauss2;
-	gaussrand(&gauss1, &gauss2);
+		/* places the starting-location a bit away from the attacker-model/grid. */
+		/** @todo need some change to reflect 2x2 units.
+		 * Also might need a check if the distance is bigger than the one to the impact location. */
+		/** @todo can't we use the fd->shotOrg here and get rid of the sv_shot_origin cvar? */
+		VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);
+		vec3_t angles;
+		VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
-	vec2_t effSpread;
-	G_CalcEffectiveSpread(ent, fd, effSpread);
+		/* Get 2 gaussian distributed random values */
+		float gauss1;
+		float gauss2;
+		gaussrand(&gauss1, &gauss2);
 
-	/* Modify the angles with the accuracy modifier as a randomizer-range. */
-	angles[PITCH] += gauss1 * effSpread[0];
-	angles[YAW] += gauss2 * effSpread[1];
+		vec2_t effSpread;
+		G_CalcEffectiveSpread(ent, fd, effSpread);
 
-	/* Convert changed angles into new direction. */
-	AngleVectors(angles, dir, nullptr, nullptr);
+		/* Modify the angles with the accuracy modifier as a randomizer-range. */
+		angles[PITCH] += gauss1 * effSpread[0];
+		angles[YAW] += gauss2 * effSpread[1];
+
+		/* Convert changed angles into new direction. */
+		AngleVectors(angles, dir, nullptr, nullptr);
+	}
 
 	/* shoot and bounce */
 	int throughWall = fd->throughWall;
@@ -1036,6 +1040,12 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
 					/* Count this as a hit of this firemode. */
 					G_UpdateHitScore(ent, trEnt, fd, 0);
 				}
+			}
+
+			/* do splash damage if we haven't yet */
+			if (tr.fraction >= 1.0f && fd->splrad > 0.0f) {
+				VectorMA(impact, sv_shot_origin->value, tr.plane.normal, impact);
+				G_SplashDamage(ent, fd, impact, mock, &tr);
 			}
 			break;
 		}
