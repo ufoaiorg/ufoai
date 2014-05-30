@@ -1420,7 +1420,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t* mission)
 		numTypes = UFO_GetAvailableUFOsForMission(mission->category, ufoTypes);
 		break;
 	case INTERESTCATEGORY_BASE_ATTACK:
-		numTypes = CP_BaseAttackMissionAvailableUFOs(mission, ufoTypes);
+		numTypes = UFO_GetAvailableUFOsForMission(mission->category, ufoTypes);
 		break;
 	case INTERESTCATEGORY_BUILDING:
 		numTypes = CP_BuildBaseMissionAvailableUFOs(mission, ufoTypes);

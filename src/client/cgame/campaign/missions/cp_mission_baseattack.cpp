@@ -313,18 +313,6 @@ static void CP_BaseAttackGoToBase (mission_t* mission)
 }
 
 /**
- * @brief Fill an array with available UFOs for Base Attack mission type.
- * @param[in] mission Pointer to the mission we are currently creating.
- * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
- * @note Base Attack mission -- Stage 0
- * @return number of elements written in @c ufoTypes
- */
-int CP_BaseAttackMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
-{
-	return UFO_GetAvailableUFOsForMission (mission->category, ufoTypes);
-}
-
-/**
  * @brief Determine what action should be performed when a Base Attack mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
