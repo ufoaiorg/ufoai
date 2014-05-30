@@ -1435,7 +1435,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t* mission)
 		numTypes = CP_InterceptMissionAvailableUFOs(mission, ufoTypes);
 		break;
 	case INTERESTCATEGORY_HARVEST:
-		numTypes = CP_HarvestMissionAvailableUFOs(mission, ufoTypes);
+		numTypes = UFO_GetAvailableUFOsForMission(mission->category, ufoTypes);
 		break;
 	case INTERESTCATEGORY_ALIENBASE:
 		/* can't be spawned: alien base is the result of base building mission */

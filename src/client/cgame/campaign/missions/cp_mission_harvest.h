@@ -26,6 +26,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 void CP_HarvestMissionNextStage(mission_t* mission);
-int CP_HarvestMissionAvailableUFOs(const mission_t* mission, ufoType_t* ufoTypes);
 void CP_HarvestMissionIsFailure(mission_t* mission);
 void CP_HarvestMissionGo(mission_t* mission);

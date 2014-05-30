@@ -590,6 +590,7 @@ aircraft craft_ufo_harvester
 	image		"geoscape/air_ufo"
 	interestlevel 80
 	missiontypes (
+		"harvest"
 		"baseattack"
 	)
 
