@@ -522,6 +522,9 @@ aircraft craft_ufo_scout
 	price		8000
 	image		"geoscape/air_ufo"
 	interestlevel 0
+	missiontypes (
+		"recon"
+	)
 
 	radar {
 		range	10
@@ -549,6 +552,9 @@ aircraft craft_ufo_fighter
 	price		12000
 	image		"geoscape/air_ufo"
 	interestlevel 50
+	missiontypes (
+		"recon"
+	)
 
 	radar {
 		range	10
