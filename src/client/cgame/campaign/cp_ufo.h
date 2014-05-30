@@ -36,7 +36,7 @@ const char* UFO_TypeToName(const ufoType_t type);
 const technology_t* UFO_GetTechnologyFromType(const ufoType_t type);
 const aircraft_t* UFO_GetByType(const ufoType_t type);
 bool UFO_ShouldAppearOnGeoscape(const ufoType_t type);
-int UFO_GetAvailableUFOsForMission(const interestCategory_t missionType, ufoType_t* ufoTypes);
+int UFO_GetAvailableUFOsForMission(const interestCategory_t missionType, ufoType_t* ufoTypes, bool checkInterest = true);
 const char* UFO_GetName(const aircraft_t* ufocraft);
 void UFO_SetRandomDest(aircraft_t* ufo);
 void UFO_SetRandomDestAround(aircraft_t* ufocraft, const vec2_t pos);

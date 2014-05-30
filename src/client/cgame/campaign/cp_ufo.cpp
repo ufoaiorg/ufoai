@@ -145,9 +145,10 @@ static bool UFO_CanDoMission (const ufoType_t uType, const char* mType)
  * @brief Fill an array with available UFOs for the mission type.
  * @param[in] missionType The kind ofmission we are currently creating.
  * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
+ * @param[in] checkInterest Do a UFO_ShouldAppearOnGeoscape check if true
  * @return number of elements written in @c ufoTypes
  */
-int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoType_t* ufoTypes)
+int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoType_t* ufoTypes, bool checkInterest)
 {
 	int num = 0;
 
@@ -175,7 +176,7 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 			default:
 				continue;
 		}
-		if (UFO_ShouldAppearOnGeoscape(uType))
+		if (!checkInterest || UFO_ShouldAppearOnGeoscape(uType))
 			ufoTypes[num++] = uType;
 	}
 

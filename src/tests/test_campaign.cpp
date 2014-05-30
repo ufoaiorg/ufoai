@@ -1294,7 +1294,7 @@ static void testTerrorMissions (void)
 	}
 
 	/* Search with UFOs available for Terror missions */
-	numUfoTypes = UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_TERROR_ATTACK, ufoTypes);
+	numUfoTypes = UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_TERROR_ATTACK, ufoTypes, false);
 	for (i = 0; i < numUfoTypes; i++) {
 		ufoType_t ufoType = (ufoType_t)i;
 		mission_t mission;
