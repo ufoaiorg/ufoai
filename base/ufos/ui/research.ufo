@@ -2,10 +2,7 @@
  * @TODO:
  * - The back to Geoscape button actually takes you back to base. When putting an extra ui_pop in, it
  *   takes you to campaign options (load, save, etc) instead of geoscape.
- * - After clicking on a UFOpaedia link for an item, the base names for external research disappear.
- * - Scientists hired are not correct values, just place-holder text
- * --- Need new code in the callbacks to get hired/unhired scientists and to hire/fire them.
- * - Make research scrollable and find a way to test it.
+ * - Scientists: Need new code in the callbacks to get hired/unhired scientists and to hire/fire them.
  * - Clicking on another base name should take the player to that base (see research_changebase).
  * -- Maybe we need an icon that suggests clicking will switch bases.
  */
@@ -95,121 +92,6 @@ window research extends BaseMgmtWindow
 				}
 			}
 
-			// Base scientists/lab stats
-			panel base_stats
-			{
-				{
-					pos		"1 505"
-					size	"713 84"
-				}
-				panel scientists
-				{
-					{
-						pos		"5 0"
-						size	"350 84"
-					}
-					button scientist
-					{
-						icon	"icons/head_scientist"
-						pos		"0 0"
-						size	"48 48"
-					}
-					string scientists_count
-					{
-						string	"_Scientists hired"
-						pos		"40 9"
-						size	"300 25"
-						font	"f_small_bold"
-						color	"0.56 0.81 0.76 1"
-						contentalign	ALIGN_CL
-					}
-					texture data_bg
-					{
-						pos			"43 29"
-						size		"282 8"
-						src			"ui/bar_bg"
-						ghost		true
-					}
-					bar data_bar
-					{
-						pos			"43 29"
-						size		"282 8"
-						color		"0.56 0.81 0.76 1"
-						current		0
-						max			1
-						ghost		true
-					}
-					MainMenu3Btn hire
-					{
-						string			"_HIRE"
-						pos				"250 42"
-						size			"75 26"
-						font			"f_small_bold"
-						color			"0 0 0 0.9"
-						selectcolor		"0 0 0 1"
-						onClick			{ cmd "ui_push employees;" }
-					}
-					MainMenuExitBtn fire
-					{
-						string			"_FIRE"
-						pos				"165 42"
-						size			"75 26"
-						font			"f_small_bold"
-						color			"0 0 0 0.9"
-						selectcolor		"0 0 0 1"
-						onClick			{ cmd "ui_push employees;" }
-					}
-				}
-				panel lab_space
-				{
-					{
-						pos		"365 0"
-						size	"350 84"
-					}
-					button labs
-					{
-						icon	"icons/research"
-						pos		"0 0"
-						size	"48 48"
-					}
-					string labs_space_current
-					{
-						string	"_Laboratory space"
-						pos		"40 9"
-						size	"200 25"
-						font	"f_small_bold"
-						color	"0.56 0.81 0.76 1"
-						contentalign	ALIGN_CL
-					}
-					texture data_bg
-					{
-						pos			"43 29"
-						size		"282 8"
-						src			"ui/bar_bg"
-						ghost		true
-					}
-					bar data_bar
-					{
-						pos			"43 29"
-						size		"282 8"
-						color		"0.56 0.81 0.76 1"
-						current		0
-						max			1
-						ghost		true
-					}
-					MainMenu3Btn build_lab
-					{
-						string			"_BUILD LAB"
-						pos				"175 42"
-						size			"150 26"
-						font			"f_small_bold"
-						color			"0 0 0 0.9"
-						selectcolor		"0 0 0 1"
-						onClick			{ cmd "ui_pop; build_facility true;" }
-					}
-				}
-			}
-
 			confunc ui_techlist_clear {
 				call *node:parent.techs@removeAllchild
 			}
@@ -263,8 +145,8 @@ window research extends BaseMgmtWindow
 			}
 		}
 
-		// Research in other bases panel
-		panel research_ext
+		// Base scientists/lab stats
+		panel base_stats
 		{
 			{
 				pos				"4 629"
@@ -272,32 +154,110 @@ window research extends BaseMgmtWindow
 				border			"2"
 				bordercolor		"0.527 0.6 0.21 1"
 			}
-			// Title bar
-			panel header
+			panel scientists
 			{
 				{
-					pos			"1 1"
-					size		"713 32"
-					bgcolor		"0.527 0.6 0.21 0.2"
+					pos		"5 0"
+					size	"350 84"
 				}
-				string title
+				button scientist
 				{
-					string			"_Other Bases"
-					pos				"30 1"
-					size			"593 32"
+					icon	"icons/head_scientist"
+					pos		"0 0"
+					size	"48 48"
+				}
+				string scientists_count
+				{
+					string	"_Scientists hired"
+					pos		"40 9"
+					size	"300 25"
+					font	"f_small_bold"
+					color	"0.56 0.81 0.76 1"
 					contentalign	ALIGN_CL
-					color			"0.56 0.81 0.76 1"
+				}
+				texture data_bg
+				{
+					pos			"43 29"
+					size		"282 8"
+					src			"ui/bar_bg"
+					ghost		true
+				}
+				bar data_bar
+				{
+					pos			"43 29"
+					size		"282 8"
+					color		"0.56 0.81 0.76 1"
+					current		0
+					max			1
+					ghost		true
+				}
+				MainMenu3Btn hire
+				{
+					string			"_HIRE"
+					pos				"250 42"
+					size			"75 26"
+					font			"f_small_bold"
+					color			"0 0 0 0.9"
+					selectcolor		"0 0 0 1"
+					onClick			{ cmd "ui_push employees;" }
+				}
+				MainMenuExitBtn fire
+				{
+					string			"_FIRE"
+					pos				"165 42"
+					size			"75 26"
+					font			"f_small_bold"
+					color			"0 0 0 0.9"
+					selectcolor		"0 0 0 1"
+					onClick			{ cmd "ui_push employees;" }
 				}
 			}
-
-			// Research on other bases
-			panel techs_ext
+			panel lab_space
 			{
 				{
-					pos				"1 34"
-					size			"713 90"
-					layout			LAYOUT_TOP_DOWN_FLOW
-					layoutMargin	2
+					pos		"365 0"
+					size	"350 84"
+				}
+				button labs
+				{
+					icon	"icons/research"
+					pos		"0 0"
+					size	"48 48"
+				}
+				string labs_space_current
+				{
+					string	"_Laboratory space"
+					pos		"40 9"
+					size	"200 25"
+					font	"f_small_bold"
+					color	"0.56 0.81 0.76 1"
+					contentalign	ALIGN_CL
+				}
+				texture data_bg
+				{
+					pos			"43 29"
+					size		"282 8"
+					src			"ui/bar_bg"
+					ghost		true
+				}
+				bar data_bar
+				{
+					pos			"43 29"
+					size		"282 8"
+					color		"0.56 0.81 0.76 1"
+					current		0
+					max			1
+					ghost		true
+				}
+				MainMenu3Btn build_lab
+				{
+					string			"_BUILD LAB"
+					pos				"175 42"
+					size			"150 26"
+					font			"f_small_bold"
+					color			"0 0 0 0.9"
+					selectcolor		"0 0 0 1"
+					onClick			{ cmd "ui_pop; build_facility true;" }
 				}
 			}
 		}
@@ -399,18 +359,16 @@ window research extends BaseMgmtWindow
 	 */
 	confunc ui_research_update_caps {
 		*node:root.base_container.mainBody.idle_scientists_count@string = "<1>"
-		*node:root.base_container.mainBody.base_stats.scientists.data_bar@current = (<2> - <1>)
-		*node:root.base_container.mainBody.base_stats.scientists.data_bar@max = <2>
-		*node:root.base_container.mainBody.base_stats.lab_space.data_bar@current = (<4> - <3>)
-		*node:root.base_container.mainBody.base_stats.lab_space.data_bar@max = <4>
+		*node:root.base_container.base_stats.scientists.data_bar@current = (<2> - <1>)
+		*node:root.base_container.base_stats.scientists.data_bar@max = <2>
+		*node:root.base_container.base_stats.lab_space.data_bar@current = (<4> - <3>)
+		*node:root.base_container.base_stats.lab_space.data_bar@max = <4>
 	}
 
-	// Clear all research items and cvars
+	// Clear all research items
 	func clear_all
 	{
-		// Clear all research items in this base and others
 		call *node:root.base_container.mainBody.techs@removeAllChild
-		call *node:root.base_container.research_ext.techs_ext@removeAllChild
 	}
 
 	func onWindowOpened
@@ -421,7 +379,6 @@ window research extends BaseMgmtWindow
 
 	func onWindowClosed
 	{
-		// Clear all research items and cvars
 		call *node:root.clear_all
 	}
 }
