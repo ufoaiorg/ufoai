@@ -638,6 +638,11 @@ aircraft craft_ufo_corrupter
 	numteam		10
 	price		27000
 	image		"geoscape/air_ufo"
+	interestlevel	200
+	missiontypes (
+		"baseattack"
+		"xvi"
+	)
 
 	radar {
 		range	10
@@ -656,11 +661,6 @@ aircraft craft_ufo_corrupter
 		contains	rs_craft_weapon_alien_launcher
 		ammo		rs_craft_ammo_am_missile
 	}
-	interestlevel	200
-	missiontypes (
-		"baseattack"
-		"xvi"
-	)
 }
 
 aircraft craft_ufo_supply
@@ -774,6 +774,10 @@ aircraft craft_ufo_bomber
 	leader		true
 	price		45000
 	image		"geoscape/air_ufo"
+	interestlevel	310
+	missiontypes (
+		"baseattack"
+	)
 
 	radar {
 		range	10
@@ -816,10 +820,6 @@ aircraft craft_ufo_bomber
 		contains	rs_craft_weapon_alien_launcher
 		ammo		rs_craft_ammo_am_missile
 	}
-	interestlevel	310
-	missiontypes (
-		"baseattack"
-	)
 }
 
 aircraft craft_ufo_ripper
