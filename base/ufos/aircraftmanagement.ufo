@@ -589,6 +589,9 @@ aircraft craft_ufo_harvester
 	price		18000
 	image		"geoscape/air_ufo"
 	interestlevel 80
+	missiontypes (
+		"baseattack"
+	)
 
 	radar {
 		range	10
@@ -653,6 +656,9 @@ aircraft craft_ufo_corrupter
 		ammo		rs_craft_ammo_am_missile
 	}
 	interestlevel	200
+	missiontypes (
+		"baseattack"
+	)
 }
 
 aircraft craft_ufo_supply
@@ -705,6 +711,9 @@ aircraft craft_ufo_gunboat
 	price		23000
 	image		"geoscape/air_ufo"
 	interestlevel 310
+	missiontypes (
+		"baseattack"
+	)
 
 	radar {
 		range	10
@@ -806,6 +815,9 @@ aircraft craft_ufo_bomber
 		ammo		rs_craft_ammo_am_missile
 	}
 	interestlevel	310
+	missiontypes (
+		"baseattack"
+	)
 }
 
 aircraft craft_ufo_ripper

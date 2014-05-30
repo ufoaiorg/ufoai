@@ -142,23 +142,6 @@ static bool UFO_CanDoMission (const ufoType_t uType, const char* mType)
 }
 
 /**
- * @brief Check if the UFO type is available for recon missions
- * @param type The UFO type to check
- */
-static bool UFO_CanDoBaseAttackMission (const ufoType_t type)
-{
-	switch (type) {
-	case UFO_HARVESTER:
-	case UFO_CORRUPTER:
-	case UFO_GUNBOAT:
-	case UFO_BOMBER:
-		return true;
-	default:
-		return false;
-	}
-}
-
-/**
  * @brief Fill an array with available UFOs for the mission type.
  * @param[in] missionType The kind ofmission we are currently creating.
  * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
@@ -175,7 +158,7 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 				if (UFO_CanDoMission(uType, "recon"))
 					break;
 			case INTERESTCATEGORY_BASE_ATTACK:
-				if (UFO_CanDoBaseAttackMission(uType))
+				if (UFO_CanDoMission(uType, "baseattack"))
 					break;
 			case INTERESTCATEGORY_SUPPLY:
 				if (UFO_CanDoMission(uType, "supply"))
