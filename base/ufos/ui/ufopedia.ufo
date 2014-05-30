@@ -505,6 +505,7 @@ window ufopedia extends objectinfo
 
 			if ( *cvar:ufopedia_content eq "description" ) {
 				*node:parent.content.ufopedia@invis = false
+				*node:parent.content.mdl_top@invis = false
 				*node:parent.content.ufopedia_scroll@invis = false
 				*node:parent.content.description@invis = true
 				*node:parent.content.description_scroll@invis = true
@@ -542,6 +543,7 @@ window ufopedia extends objectinfo
 				*node:parent.content.image_top@invis = false
 				*node:parent.content.image_top2@invis = true
 				*node:parent.content.image_bigpicture@invis = true
+				*node:parent.content.mdl_top@invis = false
 				*node:parent.content.mdl_bigpicture@invis = true
 				if ( *cvar:mn_rightpanel == 1 ) {
 					*node:parent.content.ufopedia@width = 400
@@ -566,6 +568,7 @@ window ufopedia extends objectinfo
 				*node:parent.content.main_panel_large@invis = true
 				*node:parent.content.image_top@invis = false
 				*node:parent.content.image_top2@invis = true
+				*node:parent.content.mdl_top@invis = false
 				*node:parent.content.image_bigpicture@invis = true
 				*node:parent.content.mdl_bigpicture@invis = true
 			} elif ( *cvar:ufopedia_content eq "bigpicture" ) {
@@ -575,6 +578,7 @@ window ufopedia extends objectinfo
 				*node:parent.content.description_scroll@invis = true
 				*node:parent.content.requirement@invis = true
 				*node:parent.itemdescription@invis = true
+				*node:parent.content.mdl_top@invis = true
 				*node:parent.content.main_panel_small@invis = true
 				*node:parent.content.main_panel_large@invis = false
 				*node:parent.content.decoration_panel@invis = true
