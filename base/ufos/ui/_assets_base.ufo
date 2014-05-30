@@ -241,8 +241,6 @@ component ResearchItem extends panel
 		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
 		onClick			{
 			cmd "ui_research_select <node:this.id@string>;"
-//			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
-//			call *node:root.base_container.research_ext.techs_ext@removeAllChild
 		}
 	}
 	data id {
@@ -264,24 +262,9 @@ component ResearchItem extends panel
 		tooltip	"_View UFOPaedia entry"
 		pos		"5 5"
 		size	"18 18"
-		/*
-		 * This onClick is an ugly workaround because research_select calls research_init,
-		 * which would produce duplicates of the tech entries if the existing entries
-		 * weren't removed. The code destroying the nodes must be called AFTER
-		 * research_select so that the integer can be retrieved, but research_select
-		 * does not actually process until AFTER the nodes because (I believe) it
-		 * doesn't get called until the next frame. Because of how the timing works,
-		 * this onClick code can not be placed into a confunc because all commands
-		 * would be processed in the order they are called. This means we couldn't
-		 * slip the @removeAllChild commands in between the time when research_select
-		 * is called and when it is executed.
-		 * @sa ExtResearchItem.ufopaedia@onClick
-		 */
 		onClick {
 			cmd "ui_research_select <node:parent.id@string>;"
 			cmd "ui_push ufopedia <node:parent.id@string>;"
-//			call *node:root.base_container.mainBody.techlist_border.techs@removeAllChild
-//			call *node:root.base_container.research_ext.techs_ext@removeAllChild
 		}
 	}
 	string progress_label {

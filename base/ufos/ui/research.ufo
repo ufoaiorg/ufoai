@@ -409,7 +409,7 @@ window research extends BaseMgmtWindow
 	func clear_all
 	{
 		// Clear all research items in this base and others
-		call *node:root.base_container.techs@removeAllChild
+		call *node:root.base_container.mainBody.techs@removeAllChild
 		call *node:root.base_container.research_ext.techs_ext@removeAllChild
 	}
 
