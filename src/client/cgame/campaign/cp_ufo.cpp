@@ -166,6 +166,9 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 			case INTERESTCATEGORY_HARVEST:
 				if (UFO_CanDoMission(uType, "harvest"))
 					break;
+			case INTERESTCATEGORY_XVI:
+				if (UFO_CanDoMission(uType, "xvi"))
+					break;
 			default:
 				continue;
 		}

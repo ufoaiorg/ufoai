@@ -659,6 +659,7 @@ aircraft craft_ufo_corrupter
 	interestlevel	200
 	missiontypes (
 		"baseattack"
+		"xvi"
 	)
 }
 

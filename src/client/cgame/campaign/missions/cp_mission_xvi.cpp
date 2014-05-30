@@ -81,23 +81,6 @@ static void CP_XVIMissionStart (mission_t* mission)
 }
 
 /**
- * @brief Fill an array with available UFOs for XVI Spreading mission type.
- * @param[in] mission Pointer to the mission we are currently creating.
- * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
- * @note XVI Spreading mission -- Stage 0
- * @return number of elements written in @c ufoTypes
- */
-int CP_XVIMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
-{
-	int num = 0;
-
-	if (UFO_ShouldAppearOnGeoscape(UFO_CORRUPTER))
-		ufoTypes[num++] = UFO_CORRUPTER;
-
-	return num;
-}
-
-/**
  * @brief Determine what action should be performed when a XVI Spreading mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */

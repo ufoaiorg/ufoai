@@ -1429,7 +1429,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t* mission)
 		numTypes = UFO_GetAvailableUFOsForMission(mission->category, ufoTypes);
 		break;
 	case INTERESTCATEGORY_XVI:
-		numTypes = CP_XVIMissionAvailableUFOs(mission, ufoTypes);
+		numTypes = UFO_GetAvailableUFOsForMission(mission->category, ufoTypes);
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
 		numTypes = CP_InterceptMissionAvailableUFOs(mission, ufoTypes);
