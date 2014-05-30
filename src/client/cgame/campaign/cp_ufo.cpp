@@ -169,6 +169,9 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 			case INTERESTCATEGORY_XVI:
 				if (UFO_CanDoMission(uType, "xvi"))
 					break;
+			case INTERESTCATEGORY_TERROR_ATTACK:
+				if (UFO_CanDoMission(uType, "terror"))
+					break;
 			default:
 				continue;
 		}

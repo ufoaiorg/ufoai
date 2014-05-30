@@ -164,30 +164,6 @@ static void CP_TerrorMissionGo (mission_t* mission)
 }
 
 /**
- * @brief Fill an array with available UFOs for Terror attack mission type.
- * @param[in] mission Pointer to the mission we are currently creating (may be nullptr if we want to know what UFO
- * types will be needed during the whole game).
- * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
- * @note Terror attack mission -- Stage 0
- * @return number of elements written in @c ufoTypes
- */
-int CP_TerrorMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
-{
-	int num = 0;
-
-	if (UFO_ShouldAppearOnGeoscape(UFO_HARVESTER))
-		ufoTypes[num++] = UFO_HARVESTER;
-	if (UFO_ShouldAppearOnGeoscape(UFO_CORRUPTER))
-		ufoTypes[num++] = UFO_CORRUPTER;
-	if (UFO_ShouldAppearOnGeoscape(UFO_GUNBOAT))
-		ufoTypes[num++] = UFO_GUNBOAT;
-	if (UFO_ShouldAppearOnGeoscape(UFO_BOMBER))
-		ufoTypes[num++] = UFO_BOMBER;
-
-	return num;
-}
-
-/**
  * @brief Determine what action should be performed when a Terror attack mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */

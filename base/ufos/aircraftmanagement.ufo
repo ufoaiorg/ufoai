@@ -592,6 +592,7 @@ aircraft craft_ufo_harvester
 	missiontypes (
 		"harvest"
 		"baseattack"
+		"terror"
 	)
 
 	radar {
@@ -642,6 +643,7 @@ aircraft craft_ufo_corrupter
 	missiontypes (
 		"baseattack"
 		"xvi"
+		"terror"
 	)
 
 	radar {
@@ -715,6 +717,7 @@ aircraft craft_ufo_gunboat
 	interestlevel 310
 	missiontypes (
 		"baseattack"
+		"terror"
 	)
 
 	radar {
@@ -777,6 +780,7 @@ aircraft craft_ufo_bomber
 	interestlevel	310
 	missiontypes (
 		"baseattack"
+		"terror"
 	)
 
 	radar {

@@ -596,7 +596,6 @@ void CP_ResetCampaignData(void);
 /* Mission related functions */
 int CP_CountMissionOnGeoscape(void);
 void CP_UpdateMissionVisibleOnGeoscape(void);
-int CP_TerrorMissionAvailableUFOs(const mission_t* mission, ufoType_t* ufoTypes);
 bool AIR_SendAircraftToMission(aircraft_t* aircraft, mission_t* mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t* mission);
 
