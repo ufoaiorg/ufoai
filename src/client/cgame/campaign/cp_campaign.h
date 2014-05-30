@@ -161,6 +161,7 @@ typedef enum interestCategory_s {
 	INTERESTCATEGORY_SUPPLY,		/**< Alien supply one of their bases */
 	INTERESTCATEGORY_XVI,			/**< Alien try to spread XVI */
 	INTERESTCATEGORY_INTERCEPT,		/**< Alien try to intercept PHALANX aircraft */
+	INTERESTCATEGORY_INTERCEPTBOMBING,	/**< Alien try to attack PHALANX installation. A subtype of INTERCEPT */
 	INTERESTCATEGORY_HARVEST,		/**< Alien try to harvest */
 	INTERESTCATEGORY_ALIENBASE,		/**< Alien base already built on earth
 									 * @note This is not a mission alien can undertake, but the result of

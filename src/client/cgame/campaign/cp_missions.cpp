@@ -593,6 +593,7 @@ const char* MIS_GetModel (const mission_t* mission)
 		return "geoscape/base2";
 	case INTERESTCATEGORY_SUPPLY:
 	case INTERESTCATEGORY_INTERCEPT:
+	case INTERESTCATEGORY_INTERCEPTBOMBING:
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
 		break;
@@ -955,6 +956,7 @@ void CP_MissionStageEnd (const campaign_t* campaign, mission_t* mission)
 		CP_XVIMissionNextStage(mission);
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
+	case INTERESTCATEGORY_INTERCEPTBOMBING:
 		CP_InterceptNextStage(mission);
 		break;
 	case INTERESTCATEGORY_HARVEST:
@@ -1012,6 +1014,7 @@ void CP_MissionIsOver (mission_t* mission)
 			CP_XVIMissionIsSuccess(mission);
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
+	case INTERESTCATEGORY_INTERCEPTBOMBING:
 		if (mission->stage <= STAGE_INTERCEPT)
 			CP_InterceptMissionIsFailure(mission);
 		else
@@ -1335,6 +1338,7 @@ static bool MIS_IsSpawnedFromGround (const mission_t* mission)
 	case INTERESTCATEGORY_BUILDING:
 	case INTERESTCATEGORY_SUPPLY:
 	case INTERESTCATEGORY_INTERCEPT:
+	case INTERESTCATEGORY_INTERCEPTBOMBING:
 	case INTERESTCATEGORY_HARVEST:
 		return false;
 	/* missions can be spawned from ground */
@@ -1432,6 +1436,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t* mission)
 		numTypes = UFO_GetAvailableUFOsForMission(mission->category, ufoTypes);
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
+	case INTERESTCATEGORY_INTERCEPTBOMBING:
 		numTypes = CP_InterceptMissionAvailableUFOs(mission, ufoTypes);
 		break;
 	case INTERESTCATEGORY_HARVEST:

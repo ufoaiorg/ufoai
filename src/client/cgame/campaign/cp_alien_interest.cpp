@@ -175,6 +175,7 @@ const char* INT_InterestCategoryToName (interestCategory_t category)
 	case INTERESTCATEGORY_XVI:
 		return "XVI propagation";
 	case INTERESTCATEGORY_INTERCEPT:
+	case INTERESTCATEGORY_INTERCEPTBOMBING:
 		return "Interception";
 	case INTERESTCATEGORY_HARVEST:
 		return "Harvest";
