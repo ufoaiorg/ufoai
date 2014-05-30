@@ -675,6 +675,9 @@ aircraft craft_ufo_supply
 	price		20000
 	image		"geoscape/air_ufo"
 	interestlevel	200
+	missiontypes (
+		"supply"
+	)
 
 	radar {
 		range	10
