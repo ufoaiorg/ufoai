@@ -145,7 +145,7 @@ static bool UFO_CanDoMission (const ufoType_t uType, const char* mType)
  * @brief Fill an array with available UFOs for the mission type.
  * @param[in] missionType The kind ofmission we are currently creating.
  * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
- * @param[in] checkInterest Do a UFO_ShouldAppearOnGeoscape check if true
+ * @param[in] checkInterest Do a UFO_ShouldAppearOnGeoscape check if true (default)
  * @return number of elements written in @c ufoTypes
  */
 int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoType_t* ufoTypes, bool checkInterest)
