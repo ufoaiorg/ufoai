@@ -853,45 +853,49 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 		Com_DPrintf(DEBUG_GAME, "G_ShootSingle: Shooter is dead, shot not possible.\n");
 		return;
 	}
-
 	/* Calc direction of the shot. */
 	gi.GridPosToVec(ent->fieldSize, at, impact);	/* Get the position of the targeted grid-cell. ('impact' is used only temporary here)*/
-	impact[2] -= z_align;
+	const bool pointTrace = VectorCompare(impact, from);
+	if (!pointTrace)
+		impact[2] -= z_align;
 	vec3_t cur_loc;
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	vec3_t dir;
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
-	VectorNormalizeFast(dir);			/* Normalize the vector i.e. make length 1.0 */
 
-	/* places the starting-location a bit away from the attacker-model/grid. */
-	/** @todo need some change to reflect 2x2 units.
-	 * Also might need a check if the distance is bigger than the one to the impact location. */
-	/** @todo can't we use the fd->shotOrg here and get rid of the sv_shot_origin cvar? */
-	VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);
-	vec3_t angles;
-	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
+	if (!pointTrace) {
+		VectorNormalizeFast(dir);			/* Normalize the vector i.e. make length 1.0 */
 
-	/* Get accuracy value for this attacker. */
-	const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
+		/* places the starting-location a bit away from the attacker-model/grid. */
+		/** @todo need some change to reflect 2x2 units.
+		 * Also might need a check if the distance is bigger than the one to the impact location. */
+		/** @todo can't we use the fd->shotOrg here and get rid of the sv_shot_origin cvar? */
+		VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);
+		vec3_t angles;
+		VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
-	/* Get 2 gaussian distributed random values */
-	float gauss1;
-	float gauss2;
-	gaussrand(&gauss1, &gauss2);
+		/* Get accuracy value for this attacker. */
+		const float acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
 
-	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
-	/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
-	 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
-	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
-	if (G_IsCrouched(ent) && fd->crouch > 0.0) {
-		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
-		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
-	} else {
-		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor);
-		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor);
+		/* Get 2 gaussian distributed random values */
+		float gauss1;
+		float gauss2;
+		gaussrand(&gauss1, &gauss2);
+
+		/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
+		/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
+		 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
+		const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(ent, MODIFIER_ACCURACY);
+		if (G_IsCrouched(ent) && fd->crouch > 0.0) {
+			angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
+			angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
+		} else {
+			angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor);
+			angles[YAW] += gauss2 * (fd->spread[1] * commonfactor);
+		}
+		/* Convert changed angles into new direction. */
+		AngleVectors(angles, dir, nullptr, nullptr);
 	}
-	/* Convert changed angles into new direction. */
-	AngleVectors(angles, dir, nullptr, nullptr);
 
 	/* shoot and bounce */
 	int throughWall = fd->throughWall;
@@ -1021,6 +1025,12 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
 					/* Count this as a hit of this firemode. */
 					G_UpdateHitScore(ent, trEnt, fd, 0);
 				}
+			}
+
+			/* do splash damage if we haven't yet */
+			if (tr.fraction >= 1.0f && fd->splrad > 0.0f) {
+				VectorMA(impact, sv_shot_origin->value, tr.plane.normal, impact);
+				G_SplashDamage(ent, fd, impact, mock, &tr);
 			}
 			break;
 		}
