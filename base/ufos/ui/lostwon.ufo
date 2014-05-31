@@ -5,6 +5,9 @@
 window won {
 	{
 		preventtypingescape	true
+		fill		true
+		starlayout	true
+		bgcolor		"0.527 0.6 0.21 0.2"
 	}
 
 	// ==================
@@ -13,44 +16,51 @@ window won {
 
 	image background {
 		src	"background/won_bg"
+		align	LAYOUTALIGN_RIGHT
 	}
 
 	// ==================
 	// text
 	// ==================
 
-	text results {
-		pos			"500 150"
-		size		"480 460"
-		lineheight	20
-		tabwidth	350
-		rows		"23"
-		dataid		TEXT_LIST2
-	}
+	panel results {
+		{
+			pos			"50 150"
+			size		"480 490"
+		}
 
-	// ==================
-	// buttons
-	// ==================
+		text results {
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+			size		"480 460"
+			lineheight	20
+			tabwidth	350
+			rows		"23"
+			dataid		TEXT_LIST2
+		}
 
-	button bt_continue {
-		string		"_Continue"
-		background		"ui/button_blue"
-		invis		true
-		pos			"865 700"
-		size		"128 53"
-		color		"1 1 1 0.8"
-		selectcolor "1 1 1 1"
-		font		"f_big"
-		onClick		{
-			cmd "ui_pop;"
+		// ==================
+		// buttons
+		// ==================
+		MainMenu2Btn bt_continue {
+			string		"_Continue"
+			invis		true
+			pos			"300 460"
+			size		"180 30"
+			onClick		{
+				cmd "ui_pop;"
+			}
 		}
 	}
 
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
+
 	func onWindowOpened {
 		if ( *cvar:sv_maxclients == 1 ) {
-			*node:root.bt_continue@invis = false
+			*node:root.results.bt_continue@invis = false
 		} else {
-			*node:root.bt_continue@invis = true
+			*node:root.results.bt_continue@invis = true
 		}
 	}
 
@@ -68,6 +78,9 @@ window won {
 window lost {
 	{
 		preventtypingescape	true
+		fill		true
+		starlayout	true
+		bgcolor		"0.527 0.6 0.21 0.2"
 	}
 
 	// ==================
@@ -76,6 +89,7 @@ window lost {
 
 	image background {
 		src	"background/lost_bg"
+		align	LAYOUTALIGN_RIGHT
 	}
 
 	data tryagain {
@@ -86,61 +100,57 @@ window lost {
 	// text
 	// ==================
 
-	text results {
-		pos			"500 150"
-		size		"480 460"
-		lineheight	20
-		tabwidth	350
-		rows		"23"
-		dataid		TEXT_LIST2
-	}
-
-	// ==================
-	// buttons
-	// ==================
-
-	button bt_tryagain {
-		string		"_Try again"
-		tooltip		"_Retry this mission"
-		invis		true
-		background	"ui/button_blue"
-		pos			"480 700"
-		size		"128 53"
-		color		"1 1 1 0.8"
-		selectcolor "1 1 1 1"
-		font		"f_big"
-		onClick		{
-			*node:root.tryagain@integer = 1
-			cmd "ui_pop;"
+	panel results {
+		{
+			pos			"50 150"
+			size		"480 490"
 		}
-	}
-
-	button bt_continue {
-		string		"_Continue"
-		invis		true
-		background	"ui/button_blue"
-		pos			"865 700"
-		size		"128 53"
-		color		"1 1 1 0.8"
-		selectcolor "1 1 1 1"
-		font		"f_big"
-		onClick		{
-			cmd "ui_pop;"
+		text results {
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+			size		"480 460"
+			lineheight	20
+			tabwidth	350
+			rows		"23"
+			dataid		TEXT_LIST2
+		}
+		// ==================
+		// buttons
+		// ==================
+		MainMenu2Btn bt_tryagain {
+			string		"_Try again"
+			tooltip		"_Retry this mission"
+			invis		true
+			pos			"100 460"
+			size		"180 30"
+			onClick		{
+				*node:root.tryagain@integer = 1
+				cmd "ui_pop;"
+			}
+		}
+		MainMenuBtn bt_continue {
+			string		"_Continue"
+			invis		true
+			pos			"300 460"
+			size		"180 30"
+			onClick		{
+				cmd "ui_pop;"
+			}
 		}
 	}
 
 	confunc enable_retry {
-		*node:root.bt_tryagain@invis = false
+		*node:root.results.bt_tryagain@invis = false
 	}
 
 	func onWindowOpened
 	{
 		*node:root.tryagain@integer = 0
-		*node:root.bt_tryagain@invis = true
+		*node:root.results.bt_tryagain@invis = true
 		if ( *cvar:sv_maxclients == 1 ) {
-			*node:root.bt_continue@invis = false
+			*node:root.results.bt_continue@invis = false
 		} else {
-			*node:root.bt_continue@invis = true
+			*node:root.results.bt_continue@invis = true
 		}
 	}
 
@@ -165,6 +175,9 @@ window draw extends lost
 {
 	{
 		preventtypingescape	true
+		fill		true
+		starlayout	true
+		bgcolor		"0.527 0.6 0.21 0.2"
 	}
 
 	// ==================
