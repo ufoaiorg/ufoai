@@ -49,7 +49,7 @@ component cmp_installation_type extends panel {
 	}
 }
 
-window popup_newinstallation_type extends popupUI2
+window popup_newinstallation_type extends ipopup
 {
 	{
 		pos			"264 262"
@@ -143,7 +143,7 @@ window popup_newinstallation_type extends popupUI2
 
 
 // Popup new base
-window popup_newbase extends popupUI2 {
+window popup_newbase extends ipopup {
 	{
 		pos			"264 262"
 		size		"400 180"
@@ -346,7 +346,7 @@ component cmp_ufotransfer_ufoentry extends panel {
 	}
 }
 
-window popup_ufoyards extends popupUI2 {
+window popup_ufoyards extends ipopup {
 	{
 		pos			"64 250"
 		size		"768 370"

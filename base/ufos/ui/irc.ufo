@@ -208,7 +208,7 @@ window irc
 }
 
 // when your nick name is already in use you get this popup
-window irc_changename extends popupUI2
+window irc_changename extends ipopup
 {
 	{
 		pos			"256 256"
@@ -268,7 +268,7 @@ window irc_changename extends popupUI2
 
 // when you aren't connected you get this popup
 // don't change this name or change it in the code, too
-window irc_popup extends popupUI2
+window irc_popup extends ipopup
 {
 	{
 		bgcolor		"0.0784 0.1019 0.1019 1.0"
@@ -310,7 +310,7 @@ window irc_popup extends popupUI2
 }
 
 
-window hud_chat extends popupUI2
+window hud_chat extends ipopup
 {
 	{
 		pos			"112 518"

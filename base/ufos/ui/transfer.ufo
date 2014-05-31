@@ -528,7 +528,7 @@ window transfer
 // ===============================
 // POPUP TRANSFER BASE SELECT LIST
 // ===============================
-window popup_transferbaselist extends popupUI2
+window popup_transferbaselist extends ipopup
 {
 	{
 		pos			"256 256"
@@ -669,7 +669,7 @@ component trListEntry extends panel
 	}
 }
 
-window popup_transferlist extends popupUI2
+window popup_transferlist extends ipopup
 {
 	{
 		pos			"256 96"

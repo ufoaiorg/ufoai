@@ -8,7 +8,7 @@
 // POPUP
 // ==================
 
-window popup extends popupUI2
+window popup extends ipopup
 {
 	{
 		pos			"264 262"
@@ -62,7 +62,7 @@ window popup extends popupUI2
 // POPUP LIST
 // ==================
 
-window popup_list extends popupUI2
+window popup_list extends ipopup
 {
 	{
 		pos			"264 262"
@@ -124,7 +124,7 @@ window popup_list extends popupUI2
 // POPUP BUTTON
 // ==================
 
-window popup_button extends popupUI2
+window popup_button extends ipopup
 {
 	{
 		pos			"264 262"

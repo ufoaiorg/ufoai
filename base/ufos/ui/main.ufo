@@ -127,7 +127,7 @@ window main
 // CVAR CHECK MENU
 // ==================
 
-window checkcvars extends popupUI2
+window checkcvars extends ipopup
 {
 	{
 		pos			"124 192"
@@ -290,7 +290,7 @@ window checkcvars extends popupUI2
 // ==================
 // TIP OF THE DAY
 // ==================
-window popup_tipoftheday extends popupUI2
+window popup_tipoftheday extends ipopup
 {
 	{
 		pos			"38 456"

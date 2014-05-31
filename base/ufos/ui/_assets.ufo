@@ -337,7 +337,7 @@ component spinner_green extends spinner
 }
 
 //Common style for all popups
-window popupUI2
+window ipopup
 {
 	{
 		bgcolor		"0 0 0 0.6"

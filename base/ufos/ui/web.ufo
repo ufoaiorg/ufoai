@@ -1,4 +1,4 @@
-window webauth extends popupUI2
+window webauth extends ipopup
 {
 	{
 		pos			"264 262"

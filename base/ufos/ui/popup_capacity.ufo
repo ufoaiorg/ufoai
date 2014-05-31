@@ -1,4 +1,4 @@
-window popup_cap_overload extends popupUI2
+window popup_cap_overload extends ipopup
 {
 	{
 		pos				"305 270"

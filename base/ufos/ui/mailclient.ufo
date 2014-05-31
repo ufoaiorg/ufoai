@@ -2,7 +2,7 @@
 // MAILCLIENT MENU
 // ==================
 
-window mail extends popupUI2
+window mail extends ipopup
 {
 	// ==================
 	// background

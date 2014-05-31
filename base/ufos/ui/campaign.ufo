@@ -694,7 +694,7 @@ window campaign_main extends campaign
 // QUICK LOAD MENU
 // ==================
 
-window quickload extends popupUI2
+window quickload extends ipopup
 {
 	{
 		pos			"264 262"
@@ -893,7 +893,7 @@ window endgame
 // ========================
 // POPUP EXIT CONFIRMATION
 // ========================
-window popup_exit_confirmation extends popupUI2
+window popup_exit_confirmation extends ipopup
 {
 	{
 		bgcolor		"0.0784 0.1019 0.1019 1.0"

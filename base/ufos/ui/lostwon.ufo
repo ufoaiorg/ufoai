@@ -188,7 +188,7 @@ window draw extends lost
 // ==================================
 // POPUP FOR UFO RECOVERY (Base/sell)
 // ==================================
-window uforecovery extends popupUI2
+window uforecovery extends ipopup
 {
 	{
 		pos			"100 150"

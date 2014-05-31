@@ -1,4 +1,4 @@
-window basedefence extends popupUI2
+window basedefence extends ipopup
 {
 	{
 		pos			"100 150"

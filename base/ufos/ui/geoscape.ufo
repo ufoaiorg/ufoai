@@ -780,7 +780,7 @@ window geoscape
 // ======================
 // POPUP INTERCEPT READY
 // ======================
-window popup_intercept_ready extends popupUI2
+window popup_intercept_ready extends ipopup
 {
 	{
 		pos			"264 262"
@@ -873,7 +873,7 @@ window popup_intercept_ready extends popupUI2
 // ==================
 // POPUP NEW INSTALLATION
 // ==================
-window popup_newinstallation extends popupUI2
+window popup_newinstallation extends ipopup
 {
 	{
 		pos			"256 284"
@@ -978,7 +978,7 @@ window popup_newinstallation extends popupUI2
 	fuzzyScreen overlay { }
 }
 
-window popup_installationstatus extends popupUI2
+window popup_installationstatus extends ipopup
 {
 	{
 		pos			"264 262"
@@ -1074,7 +1074,7 @@ window popup_installationstatus extends popupUI2
 // POPUP INTERCEPT BASE
 // ====================
 
-window popup_intercept extends popupUI2
+window popup_intercept extends ipopup
 {
 
 	{
@@ -1246,7 +1246,7 @@ window popup_intercept extends popupUI2
 // POPUP MISSION
 // ===================
 
-window popup_mission extends popupUI2
+window popup_mission extends ipopup
 {
 
 	{
@@ -1314,7 +1314,7 @@ window popup_mission extends popupUI2
 // POPUP MULTI SELECTION
 // =====================
 
-window popup_multi_selection extends popupUI2
+window popup_multi_selection extends ipopup
 {
 	{
 		pos			"264 262"
@@ -1386,7 +1386,7 @@ window popup_multi_selection extends popupUI2
 // POPUP AIRCRAFT
 // =====================
 
-window popup_aircraft extends popupUI2
+window popup_aircraft extends ipopup
 {
 	{
 		pos			"264 262"
@@ -1458,7 +1458,7 @@ window popup_aircraft extends popupUI2
 
 // TODO: Use this menu or remove it
 
-window geoscape_options extends popupUI2
+window geoscape_options extends ipopup
 {
 	{
 		pos			"256 256"

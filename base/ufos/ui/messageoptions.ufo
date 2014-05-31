@@ -33,7 +33,7 @@ component cmpMessageOptions extends panel {
 	}
 }
 
-window messageoptions extends popupUI2
+window messageoptions extends ipopup
 {
 	{
 		pos			"206 226"

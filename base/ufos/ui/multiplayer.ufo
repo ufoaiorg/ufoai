@@ -1743,7 +1743,7 @@ window serverinfo
 // ==========================
 // SERVER PASSWORD
 // ==========================
-window serverpassword extends popupUI2
+window serverpassword extends ipopup
 {
 	{
 		pos			"256 256"
@@ -1790,7 +1790,7 @@ window serverpassword extends popupUI2
 // ==========================
 // GAME INVITATION
 // ==========================
-window multiplayer_invite extends popupUI2
+window multiplayer_invite extends ipopup
 {
 	{
 		pos			"256 256"
