@@ -1,7 +1,5 @@
 /*
  * @TODO:
- * - The back to Geoscape button actually takes you back to base. When putting an extra ui_pop in, it
- *   takes you to campaign options (load, save, etc) instead of geoscape.
  * - Scientists: Need new code in the callbacks to get hired/unhired scientists and to hire/fire them.
  * - Clicking on another base name should take the player to that base (see research_changebase).
  * -- Maybe we need an icon that suggests clicking will switch bases.
@@ -335,7 +333,11 @@ window research extends BaseMgmtWindow
 	}
 
 	// Back to geoscape
-	Geoscape geoscape_button { }
+	Geoscape geoscape_button {
+		onClick	{
+			cmd "ui_pop; ui_pop;"
+		}
+	}
 
 	// Laboratory count
 	BuildingSpace laboratoy
