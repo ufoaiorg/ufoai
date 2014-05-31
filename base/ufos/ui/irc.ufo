@@ -525,7 +525,7 @@ window hud_chat extends ipopup
 					contentalign	ALIGN_CL
 					string		"_Say:"
 				}
-				checkbox_ui2 chat_team
+				CheckBox chat_team
 				{
 					width		"20"
 					pos			"0 4"

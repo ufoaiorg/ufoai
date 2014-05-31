@@ -355,7 +355,7 @@ window basedefence extends ipopup
 			pos			"50 200"
 			size		"250 25"
 		}
-		checkbox_ui2 autofire
+		CheckBox autofire
 		{
 			pos			"310 200"
 			size		"20 20"

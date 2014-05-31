@@ -209,11 +209,11 @@ component StatBar extends panel
 	}
 }
 
-component checkbox_ui2 extends checkbox
+component CheckBox extends checkbox
 {
-	iconChecked	  "icons/checkbox_ui2_checked"
-	iconUnchecked	"icons/checkbox_ui2_unchecked"
-	iconIndeterminate "icons/checkbox_ui2_indeterminate"
+	iconChecked	  "icons/checkbox_checked"
+	iconUnchecked	"icons/checkbox_unchecked"
+	iconIndeterminate "icons/checkbox_indeterminate"
 	size "20 20"
 }
 

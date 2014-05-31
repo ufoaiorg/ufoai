@@ -304,7 +304,7 @@ window popup_tipoftheday extends ipopup
 		string		"_Tip of the day"
 	}
 
-	checkbox_ui2 activate
+	CheckBox activate
 	{
 		current		*cvar:cl_showTipOfTheDay
 		pos			"36 194"

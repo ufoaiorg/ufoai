@@ -274,7 +274,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 mtooltips_opt
+				CheckBox mtooltips_opt
 				{
 					current		*cvar:mn_show_tooltips
 					pos			"472 6"
@@ -300,7 +300,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 ctooltips_opt
+				CheckBox ctooltips_opt
 				{
 					current		*cvar:cl_show_cursor_tooltips
 					pos			"472 6"
@@ -326,7 +326,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 tipoftheday_opt
+				CheckBox tipoftheday_opt
 				{
 					current		*cvar:cl_showTipOfTheDay
 					pos			"472 6"
@@ -353,7 +353,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 precache_opt
+				CheckBox precache_opt
 				{
 					current		*cvar:cl_precache
 					pos			"472 6"
@@ -395,7 +395,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 geo3d_opt
+				CheckBox geo3d_opt
 				{
 					current		*cvar:cl_3dmap
 					pos			"472 6"
@@ -539,7 +539,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 show_fps_opt
+				CheckBox show_fps_opt
 				{
 					current		*cvar:cl_fps
 					pos			"472 6"
@@ -566,7 +566,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 intro_video_opt
+				CheckBox intro_video_opt
 				{
 					current		*cvar:cl_introshown
 					pos			"472 6"
@@ -686,7 +686,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 fullscreen_opt
+				CheckBox fullscreen_opt
 				{
 					current		*cvar:vid_fullscreen
 					pos			"472 6"
@@ -713,7 +713,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 stretch_opt
+				CheckBox stretch_opt
 				{
 					current		*cvar:vid_stretch
 					pos			"472 6"
@@ -962,7 +962,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 shaders_opt
+				CheckBox shaders_opt
 				{
 					current		*cvar:r_programs
 					pos			"472 6"
@@ -991,7 +991,7 @@ window options
 						color		"1 1 1 0.5"
 					}
 
-					checkbox_ui2 postprocessing_opt
+					CheckBox postprocessing_opt
 					{
 						current		*cvar:r_postprocess
 						pos			"472 6"
@@ -1030,7 +1030,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 light_realtime_opt
+				CheckBox light_realtime_opt
 				{
 					current		*cvar:r_lights
 					pos			"472 6"
@@ -1100,7 +1100,7 @@ window options
 						color		"1 1 1 0.5"
 					}
 
-					checkbox_ui2 light_bumpmapping_opt
+					CheckBox light_bumpmapping_opt
 					{
 						current		*cvar:r_bumpmap
 						pos			"472 6"
@@ -1150,7 +1150,7 @@ window options
 					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
 				}
-				checkbox_ui2 env_effects_coronas_opt
+				CheckBox env_effects_coronas_opt
 				{
 					current		*cvar:r_coronas
 					pos			"270 6"
@@ -1169,7 +1169,7 @@ window options
 					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
 				}
-				checkbox_ui2 env_effects_fog_opt
+				CheckBox env_effects_fog_opt
 				{
 					current		*cvar:r_fog
 					pos			"370 6"
@@ -1188,7 +1188,7 @@ window options
 					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
 				}
-				checkbox_ui2 env_effects_weather_opt
+				CheckBox env_effects_weather_opt
 				{
 					current		*cvar:cl_particleweather
 					pos			"472 6"
@@ -1207,7 +1207,7 @@ window options
 					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
 				}
-				checkbox_ui2 env_effects_flares_opt
+				CheckBox env_effects_flares_opt
 				{
 					current		*cvar:r_flares
 					pos			"472 36"
@@ -1226,7 +1226,7 @@ window options
 					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
 				}
-				checkbox_ui2 env_effects_materials_opt
+				CheckBox env_effects_materials_opt
 				{
 					current		*cvar:r_materials
 					pos			"370 36"
@@ -1293,7 +1293,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 audio_toggle_opt
+				CheckBox audio_toggle_opt
 				{
 					current		*cvar:snd_init
 					pos			"472 6"
@@ -1381,7 +1381,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 audio_menu_opt
+				CheckBox audio_menu_opt
 				{
 					current		*cvar:ui_sounds
 					pos			"472 6"
@@ -1912,7 +1912,7 @@ window options
 						color		"1 1 1 0.5"
 					}
 
-					checkbox_ui2 camera_center_opt
+					CheckBox camera_center_opt
 					{
 						current		*cvar:cl_centerview
 						pos			"472 6"
@@ -1940,7 +1940,7 @@ window options
 						color		"1 1 1 0.5"
 					}
 
-					checkbox_ui2 camera_iso_opt
+					CheckBox camera_iso_opt
 					{
 						current		*cvar:r_isometric
 						pos			"472 6"
@@ -2064,7 +2064,7 @@ window options
 						color		"1 1 1 0.5"
 					}
 
-					checkbox_ui2 battle_autostand_opt
+					CheckBox battle_autostand_opt
 					{
 						current		*cvar:cl_autostand
 						pos			"472 6"
@@ -2266,7 +2266,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 tex_compression_opt
+				CheckBox tex_compression_opt
 				{
 					current		*cvar:r_ext_texture_compression
 					pos			"472 6"
@@ -2293,7 +2293,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 tex_lod_opt
+				CheckBox tex_lod_opt
 				{
 					current		*cvar:r_texture_lod
 					pos			"472 6"
@@ -2473,7 +2473,7 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox_ui2 vertexbuffers_opt
+				CheckBox vertexbuffers_opt
 				{
 					current		*cvar:r_vertexbuffers
 					pos			"472 6"

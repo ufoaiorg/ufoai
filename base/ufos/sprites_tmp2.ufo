@@ -1,7 +1,7 @@
 // Contains sprites from banks we should split
-// then this script will became useless
+// then this script will become useless
 
-sprite icons/checkbox_ui2_unchecked {
+sprite icons/checkbox_unchecked {
 	image "banks/checkbox"
 	size "22 22"
 	texl "0 0"
@@ -10,7 +10,7 @@ sprite icons/checkbox_ui2_unchecked {
 	disabledtexl "0 96"
 }
 
-sprite icons/checkbox_ui2_checked {
+sprite icons/checkbox_checked {
 	image "banks/checkbox"
 	size "22 22"
 	texl "32 0"
@@ -19,7 +19,7 @@ sprite icons/checkbox_ui2_checked {
 	disabledtexl "32 96"
 }
 
-sprite icons/checkbox_ui2_indeterminate {
+sprite icons/checkbox_indeterminate {
 	image "banks/checkbox"
 	size "22 22"
 	texl "64 0"

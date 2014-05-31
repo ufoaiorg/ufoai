@@ -562,7 +562,7 @@ window popup_ufoyards extends ipopup {
 			contentalign	ALIGN_UR
 		}
 
-		checkbox_ui2 confirm {
+		CheckBox confirm {
 			tooltip		"_Confirm destroying"
 			pos			"120 221"
 			size		"20 20"
@@ -662,7 +662,7 @@ window popup_ufoyards extends ipopup {
 				call *node:root.ufoyardtabs@onChange
 			}
 		}
-		checkbox_ui2 confirm {
+		CheckBox confirm {
 			tooltip		"_Confirm destroying"
 			pos			"120 221"
 			size		"20 20"

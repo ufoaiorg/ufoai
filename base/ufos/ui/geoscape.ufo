@@ -1504,7 +1504,7 @@ window geoscape_options extends ipopup
 			pos			"30 130"
 			size		"320 20"
 		}
-		checkbox_ui2 value
+		CheckBox value
 		{
 			current		*cvar:cl_geoscape_overlay_fooooo
 			pos			"0 0"
@@ -1528,7 +1528,7 @@ window geoscape_options extends ipopup
 			pos			"30 160"
 			size		"320 20"
 		}
-		checkbox_ui2 value
+		CheckBox value
 		{
 			current		*cvar:cl_geoscape_overlay_fooooo
 			pos			"0 0"
@@ -1548,7 +1548,7 @@ window geoscape_options extends ipopup
 			pos			"30 190"
 			size		"320 20"
 		}
-		checkbox_ui2 value
+		CheckBox value
 		{
 			current		*cvar:cl_geoscape_overlay_fooooo
 			pos			"0 0"

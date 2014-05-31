@@ -99,7 +99,7 @@ component aircraft_teammember extends panel {
 		}
 	}
 
-	checkbox_ui2 selected {
+	CheckBox selected {
 		tooltip		"_Add/remove soldier to the team"
 		pos			"230 0"
 		size		"25 25"

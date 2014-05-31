@@ -200,7 +200,7 @@ window multiplayer extends cgame_download
 				size		"200 20"
 			}
 
-			checkbox_ui2 server_teamplay_value
+			CheckBox server_teamplay_value
 			{
 				current		*cvar:sv_teamplay
 				pos			"204 40"
@@ -370,7 +370,7 @@ window multiplayer extends cgame_download
 				size		"480 20"
 			}
 
-			checkbox_ui2 public_value
+			CheckBox public_value
 			{
 				current		*cvar:sv_public
 				pos			"481 47"
@@ -422,7 +422,7 @@ window multiplayer extends cgame_download
 				pos			"0 180"
 				size		"245 20"
 			}
-			checkbox_ui2 morale_value
+			CheckBox morale_value
 			{
 				current		*cvar:sv_enablemorale
 				pos			"481 181"
@@ -439,7 +439,7 @@ window multiplayer extends cgame_download
 				tooltip		"_Enemies respawn when killed."
 				visiblewhen "*cvar:ai_multiplayeraliens >= 1"
 			}
-			checkbox_ui2 alienrush_value
+			CheckBox alienrush_value
 			{
 				current		*cvar:g_endlessaliens
 				pos			"481 206"
@@ -1279,7 +1279,7 @@ window multiplayer_wait
 			onClick		{ cmd "teamnum_dec;" }
 		}
 
-		checkbox_ui2 cb_ready
+		CheckBox cb_ready
 		{
 			tooltip		"_Finish the teamselection and start the game"
 			pos			"200 130"

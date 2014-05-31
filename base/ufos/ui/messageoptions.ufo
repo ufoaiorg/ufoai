@@ -8,7 +8,7 @@ component cmpMessageOptions extends panel {
 		invis	true
 	}
 
-	checkbox_ui2 notify {
+	CheckBox notify {
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"0 0"
 		size		"20 20"
@@ -16,7 +16,7 @@ component cmpMessageOptions extends panel {
 		onChange	{ cmd "msgoptions_toggle <node:parent@num> notify;" }
 	}
 
-	checkbox_ui2 pause {
+	CheckBox pause {
 		tooltip		"_enable or disable game stopping"
 		pos			"30 0"
 		size		"20 20"
@@ -24,7 +24,7 @@ component cmpMessageOptions extends panel {
 		onChange	{ cmd "msgoptions_toggle <node:parent@num> pause;" }
 	}
 
-	checkbox_ui2 sound {
+	CheckBox sound {
 		tooltip		"_enable or disable playing sound"
 		pos			"60 0"
 		size		"20 20"

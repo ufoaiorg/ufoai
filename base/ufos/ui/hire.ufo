@@ -2,7 +2,7 @@
 // EMPLOYEES MENU
 // ==================
 
-component cmpSelect extends checkbox_ui2
+component cmpSelect extends CheckBox
 {
 		current		0
 		size		"20 20"

@@ -4,7 +4,7 @@
 
 component teamSoldier extends equipSoldier {
 
-	checkbox_ui2 selected {
+	CheckBox selected {
 		pos			"0 2"
 		size		"20 20"
 		onChange {
