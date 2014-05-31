@@ -234,7 +234,7 @@ window team extends iaircraft
 		actor_info local
 		{
 			{
-				pos		"01 320"
+				pos		"10 320"
 			}
 			text name
 			{
@@ -263,7 +263,7 @@ window team extends iaircraft
 		actor_info local
 		{
 			{
-				pos		"01 320"
+				pos		"10 320"
 			}
 			text name
 			{

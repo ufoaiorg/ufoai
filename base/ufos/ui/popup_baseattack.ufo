@@ -78,14 +78,14 @@ component cmp_soldierentry extends panel {
 window popup_assembleteam extends popupUI2
 {
 	{
-		pos				"0 256"
-		size			"1024 445"
+		pos				"100 256"
+		size			"844 445"
 		closebutton		true
 		modal			true				// we can't click out
 	}
 
 	string title {
-		width			"1024"
+		width			"844"
 		string			"_Assemble Team"
 	}
 
@@ -93,8 +93,8 @@ window popup_assembleteam extends popupUI2
 	}
 
 	rows soldierlist_lines {
-		pos				"35 66"
-		size			"310 299"
+		pos				"35 58"
+		size			"310 325"
 		color1			"0.56 0.81 0.76 0.15"
 		color2			"0.56 0.81 0.76 0.1"
 		lineheight		25
@@ -102,9 +102,9 @@ window popup_assembleteam extends popupUI2
 	panel soldierlist {
 		{
 			pos			"35 60"
-			size		"310 312"
+			size		"310 325"
 			layout		LAYOUT_TOP_DOWN_FLOW
-			padding		6
+			padding		0
 			wheelscrollable	true
 
 			onViewChange	{
@@ -117,7 +117,7 @@ window popup_assembleteam extends popupUI2
 	vscrollbar soldierlist_scroll {
 		image		"ui/scrollbar_v"
 		pos			"350 60"
-		height		"312"
+		height		"325"
 		hidewhenunused	true
 		onChange	{
 			*node:parent.soldierlist@viewpos = <current>
@@ -126,8 +126,8 @@ window popup_assembleteam extends popupUI2
 
 	panel soldiermodel {
 		{
-			pos		"375 70"
-			size	"179 300"
+			pos		"375 60"
+			size	"179 325"
 			border	2
 			bordercolor	"0.56 0.81 0.76 1"
 		}
@@ -167,182 +167,34 @@ window popup_assembleteam extends popupUI2
 
 		string	name {
 			string		*cvar:mn_name
-			pos			"8 247"
+			pos			"8 272"
 			size		"165 20"
 		}
 		string	rank_lbl {
 			string		*cvar:mn_chrrank
-			pos			"8 267"
+			pos			"8 292"
 			size		"165 20"
 		}
 	}
 
 	panel soldierstat {
 		{
-			pos			"555 70"
-			size		"445 300"
+			pos		"554 60"
+			size	"250 325"
+			border	2
+			bordercolor	"0.56 0.81 0.76 1"
+			layout	LAYOUT_TOP_DOWN_FLOW
+			layoutMargin 0
 		}
-
-		tab actor_stat {
-			{
-				pos		"0 0"
-				size	"438 39"
-				cvar	*cvar:mn_actor_stat
-				onChange {
-					call *node:parent.select_actor_stat
-				}
-			}
-			option phys {
-				label	"_Physical stats"
-				value	"stats_phys"
-			}
-			option missions {
-				label	"_Missions info"
-				value	"stats_missions"
-			}
-		}
-
-		func select_actor_stat {
-			if ( *cvar:mn_actor_stat eq "stats_phys" ) {
-				*node:parent.stats_phys@invis = false
-				*node:parent.stats_missions@invis = true
-			} elif ( *cvar:mn_actor_stat eq "stats_missions" ) {
-				*node:parent.stats_phys@invis = true
-				*node:parent.stats_missions@invis = false
-			}
-		}
-
-		panel stats_phys {
-			{
-				pos		"0 33"
-				size	"440 267"
-				border	2
-				bordercolor	"0.56 0.81 0.76 1"
-			}
-			cmpNamedBar pwr {
-				{
-					pos "9 27"
-				}
-				bar currbar { current *cvar:mn_vpwr }
-				bar initbar { current *cvar:mn_vpwri }
-				string lbl  { string "_Strength:" }
-				string val  { string *cvar:mn_tpwr }
-			}
-			cmpNamedBar spd {
-			{
-				pos "9 50"
-			}
-				bar currbar { current *cvar:mn_vspd }
-				bar initbar { current *cvar:mn_vspdi }
-				string lbl  { string "_Speed:" }
-				string val  { string *cvar:mn_tspd }
-			}
-			cmpNamedBar acc {
-			{
-				pos "9 73"
-			}
-				bar currbar { current *cvar:mn_vacc }
-				bar initbar { current *cvar:mn_vacci }
-				string lbl  { string "_Accuracy:" }
-				string val  { string *cvar:mn_tacc }
-			}
-			cmpNamedBar mnd {
-			{
-				pos "9 96"
-			}
-				bar currbar { current *cvar:mn_vmnd }
-				bar initbar { current *cvar:mn_vmndi }
-				string lbl  { string "_Mind:" }
-				string val  { string *cvar:mn_tmnd }
-			}
-			cmpNamedBar cls {
-			{
-				pos "9 119"
-			}
-				bar currbar { current *cvar:mn_vcls }
-				bar initbar { current *cvar:mn_vclsi }
-				string lbl  { string "_Close Combat:" }
-				string val  { string *cvar:mn_tcls }
-			}
-
-			cmpNamedBar ass {
-			{
-				pos "9 142"
-			}
-				bar currbar { current *cvar:mn_vass }
-				bar initbar { current *cvar:mn_vassi }
-				string lbl  { string "_Assault Weapons:" }
-				string val  { string *cvar:mn_tass }
-			}
-
-			cmpNamedBar snp {
-			{
-				pos "9 165"
-			}
-				bar currbar { current *cvar:mn_vsnp }
-				bar initbar { current *cvar:mn_vsnpi }
-				string lbl  { string "_Sniper Rifles:" }
-				string val  { string *cvar:mn_tsnp }
-			}
-
-			cmpNamedBar exp {
-			{
-				pos "9 188"
-			}
-				bar currbar { current *cvar:mn_vexp }
-				bar initbar { current *cvar:mn_vexpi }
-				string lbl  { string "_High-Explosives:" }
-				string val  { string *cvar:mn_texp }
-			}
-
-			cmpNamedTbar hp {
-			{
-				pos "9 211"
-			}
-				tbar bar   {
-					current *cvar:mn_vhp
-					max *cvar:mn_vhpmax
-					image "ui/bar_health"
-				}
-				string lbl { string "_Health:" }
-				string val { string *cvar:mn_thp }
-			}
-
-			}
-
-			panel stats_missions {
-				{
-					pos		"0 33"
-					size	"440 267"
-					background	"ui/panel_green_tab"
-					invis true
-				}
-
-				image	rank_img {
-					pos "195 30"
-					size "50 50"
-					src *cvar:mn_chrrank_img
-				}
-
-			string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank contentalign ALIGN_UC font "f_normal_bold" }
-
-			string	missions_lbl { pos "12 150" size "200 20" string "_Missions performed:" }
-			string	missions_val { pos "212 150" size "150 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
-
-			string	kills_lbl { pos "12 170" size "200 20" string "_Enemies killed:" }
-			string	kills_val { pos "212 170" size "150 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
-
-			string	civ_lbl { pos "12 190" size "200 20" string "_Civilians killed:" }
-			string	civ_val { pos "212 190" size "150 20" string *cvar:mn_chrkillcivilian contentalign ALIGN_UR }
-
-			string	team_lbl { pos "12 210" size "200 20" string "_Our team killed:" }
-			string	team_val { pos "212 210" size "150 20" string *cvar:mn_chrkillteam contentalign ALIGN_UR }
-		}
+		healthbar stats_health {}
+		abilities stats_abilities {}
+		skillbars stats_skills {}
+		SoldierInfo stats_missions {}
 	}
 
 	MainMenuBtn equip {
 		string		"_Equip"
-		pos			"350 380"
+		pos			"480 415"
 		disabled	true
 
 		onClick {
@@ -353,7 +205,7 @@ window popup_assembleteam extends popupUI2
 
 	MainMenu2Btn close {
 		string		"_Close"
-		pos			"550 380"
+		pos			"664 415"
 
 		onClick {
 			cmd "ui_pop;"

@@ -2,6 +2,13 @@
 // Reusable components for the UI
 // ==============================
 
+component smallstring extends string {
+	{
+		font			"f_verysmall"
+		color			"0.56 0.81 0.76 1"
+	}
+}
+
 /**
  * Fuzzy screen effect
  */
@@ -48,7 +55,7 @@ component UFOpediaBtn extends button {
 	size		"16 16"
 	padding		0
 	onClick	{
-		cmd "ui_push ufopedia"
+		cmd "ui_push ufopedia;"
 	}
 }
 
@@ -161,12 +168,10 @@ component StatBar extends panel
 	{
 		size		"180 25"
 	}
-	string label
+	smallstring label
 	{
 		pos				"-3 0"
 		size			"80 15"
-		font			"f_verysmall"
-		color			"0.56 0.81 0.76 1"
 		longlines		LONGLINES_CHOP
 		contentalign	ALIGN_UL
 	}
@@ -195,12 +200,10 @@ component StatBar extends panel
 		disabled	true
 		nohover		true
 	}
-	string valuenum
+	smallstring valuenum
 	{
 		pos				"90 0"
 		size			"90 0"
-		font			"f_verysmall"
-		color			"0.56 0.81 0.76 1"
 		longlines		LONGLINES_CHOP
 		contentalign	ALIGN_UR
 	}
@@ -374,7 +377,7 @@ component abilities extends panel
 {
 	{
 		pos			"740 100"
-		size		"250 125"
+		size		"250 120"
 		ghost		true
 	}
 	StatBarWide strength
@@ -423,7 +426,7 @@ component skillbars extends panel
 {
 	{
 		pos			"740 220"
-		size		"250 155"
+		size		"250 120"
 		ghost		true
 	}
 	StatBarWide cls
@@ -503,6 +506,39 @@ component healthbar extends panel
 		}
 	}
 }
+
+component SoldierInfo extends panel
+{
+	{
+		pos		"10 253"
+		size	"240 40"
+	}
+
+	smallstring missions_lbl {
+		pos "0 0"
+		size "180 20"
+		string "_Missions Performed:"
+	}
+	smallstring missions_val {
+		pos "160 0"
+		size "80 20"
+		string *cvar:mn_chrmis
+		contentalign ALIGN_UR
+	}
+
+	smallstring kills_lbl {
+		pos "0 20"
+		size "180 20"
+		string "_Enemies Killed:"
+	}
+	smallstring kills_val {
+		pos "160 20"
+		size "80 20"
+		string *cvar:mn_chrkillalien
+		contentalign ALIGN_UR
+	}
+}
+
 // ==================
 // actor info
 // ==================
@@ -560,21 +596,14 @@ component actor_info extends panel
 		size		"200 20"
 	}
 
-
-	panel soldier_info {
+	SoldierInfo soldier_info {
 		{
-			pos		"0 25"
-			size	"285 320"
+			pos		"10 253"
+			size	"285 40"
 		}
-
-
-		string	missions_lbl { pos "10 278" size "180 20" string "_Missions Performed:" }
-		string	missions_val { pos "200 278" size "80 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
-
-		string	kills_lbl { pos "10 298" size "180 20" string "_Enemies Killed:" }
-		string	kills_val { pos "200 298" size "80 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
 	}
 }
+
 // Pilot Skills panel
 component skillspilot extends panel
 {
