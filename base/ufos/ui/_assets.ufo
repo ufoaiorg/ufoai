@@ -329,7 +329,7 @@ component ObjectInfo extends panel
 	}
 }
 
-component spinner_green extends spinner
+component Spinner extends spinner
 {
 	topIcon	"ui/spinner_up"
 	bottomIcon	"ui/spinner_down"

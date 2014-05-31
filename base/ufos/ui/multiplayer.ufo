@@ -464,7 +464,7 @@ window multiplayer extends cgame_download
 				size		"50 20"
 				contentalign	ALIGN_UC
 			}
-			spinner_green maxclients_change
+			Spinner maxclients_change
 			{
 				current		*cvar:sv_maxclients
 				pos			"486 230"
@@ -490,7 +490,7 @@ window multiplayer extends cgame_download
 				size		"50 20"
 				contentalign	ALIGN_UC
 			}
-			spinner_green maxperplayer_change
+			Spinner maxperplayer_change
 			{
 				current		*cvar:sv_maxsoldiersperteam
 				pos			"486 250"
@@ -516,7 +516,7 @@ window multiplayer extends cgame_download
 				size		"50 20"
 				contentalign	ALIGN_UC
 			}
-			spinner_green maxsoldierperplayer_change
+			Spinner maxsoldierperplayer_change
 			{
 				current		*cvar:sv_maxsoldiersperplayer
 				pos			"486 270"
@@ -542,7 +542,7 @@ window multiplayer extends cgame_download
 				size		"50 20"
 				contentalign	ALIGN_UC
 			}
-			spinner_green maxplayersperteam_change
+			Spinner maxplayersperteam_change
 			{
 				current		*cvar:sv_maxplayersperteam
 				pos			"486 290"
@@ -568,7 +568,7 @@ window multiplayer extends cgame_download
 				size		"50 20"
 				contentalign	ALIGN_UC
 			}
-			spinner_green ai_multiplayeraliens_change
+			Spinner ai_multiplayeraliens_change
 			{
 				current		*cvar:ai_multiplayeraliens
 				pos			"486 310"
@@ -594,7 +594,7 @@ window multiplayer extends cgame_download
 				size		"50 20"
 				contentalign	ALIGN_UC
 			}
-			spinner_green timelimit_change
+			Spinner timelimit_change
 			{
 				current		*cvar:sv_roundtimelimit
 				pos			"486 330"
@@ -1326,7 +1326,7 @@ window multiplayer_wait
 			contentalign	ALIGN_UC
 		}
 
-		spinner_green maxperplayer_change
+		Spinner maxperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperteam
 			pos			"325 60"
@@ -1351,7 +1351,7 @@ window multiplayer_wait
 			contentalign	ALIGN_UC
 		}
 
-		spinner_green maxsoldierperplayer_change
+		Spinner maxsoldierperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperplayer
 			pos			"325 85"
@@ -1376,7 +1376,7 @@ window multiplayer_wait
 			contentalign	ALIGN_UC
 		}
 
-		spinner_green roundtimelimit_change
+		Spinner roundtimelimit_change
 		{
 			current		*cvar:sv_roundtimelimit
 			pos			"325 110"

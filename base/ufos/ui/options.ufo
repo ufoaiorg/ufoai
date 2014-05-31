@@ -1068,7 +1068,7 @@ window options
 						size		"40 20"
 					}
 
-					spinner_green dynamiclights_change
+					Spinner dynamiclights_change
 					{
 						current		*cvar:r_dynamic_lights
 						pos			"472 6"
@@ -2327,7 +2327,7 @@ window options
 					size		"40 20"
 				}
 
-				spinner_green tex_aniso_change
+				Spinner tex_aniso_change
 				{
 					current		*cvar:r_anisotropic
 					pos			"472 6"
@@ -2507,7 +2507,7 @@ window options
 					size		"40 20"
 				}
 
-				spinner_green multisamplebuffers_change
+				Spinner multisamplebuffers_change
 				{
 					current		*cvar:r_multisample
 					pos			"472 6"
@@ -2543,7 +2543,7 @@ window options
 					size		"40 20"
 				}
 
-				spinner_green swapinterval_change
+				Spinner swapinterval_change
 				{
 					current		*cvar:r_swapinterval
 					pos			"472 6"

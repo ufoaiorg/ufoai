@@ -30,7 +30,7 @@ component cmp_t_storage extends panel {
 		contentalign	ALIGN_CR
 		ghost			true
 	}
-	spinner_green spinner {
+	Spinner spinner {
 		tooltip				"_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 		pos					"352 0"
 		size			"   20 20"
