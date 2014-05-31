@@ -210,30 +210,6 @@ static void CP_InterceptMissionSet (mission_t* mission)
 }
 
 /**
- * @brief Fill an array with available UFOs for Intercept mission type.
- * @param[in] mission Pointer to the mission we are currently creating.
- * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
- * @note Intercept mission -- Stage 0
- * @return number of elements written in @c ufoTypes
- */
-int CP_InterceptMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
-{
-	int num = 0;
-
-	if (UFO_ShouldAppearOnGeoscape(UFO_FIGHTER))
-		ufoTypes[num++] = UFO_FIGHTER;
-	if (UFO_ShouldAppearOnGeoscape(UFO_GUNBOAT))
-		ufoTypes[num++] = UFO_GUNBOAT;
-
-	if (UFO_ShouldAppearOnGeoscape(UFO_HARVESTER))
-		ufoTypes[num++] = UFO_HARVESTER;
-	if (UFO_ShouldAppearOnGeoscape(UFO_CORRUPTER))
-		ufoTypes[num++] = UFO_CORRUPTER;
-
-	return num;
-}
-
-/**
  * @brief Determine what action should be performed when a Intercept mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */

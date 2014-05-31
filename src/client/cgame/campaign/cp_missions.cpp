@@ -1437,7 +1437,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t* mission)
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
 	case INTERESTCATEGORY_INTERCEPTBOMBING:
-		numTypes = CP_InterceptMissionAvailableUFOs(mission, ufoTypes);
+		numTypes = UFO_GetAvailableUFOsForMission(mission->category, ufoTypes);
 		break;
 	case INTERESTCATEGORY_HARVEST:
 		numTypes = UFO_GetAvailableUFOsForMission(mission->category, ufoTypes);
