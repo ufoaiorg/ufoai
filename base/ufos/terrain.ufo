@@ -763,11 +763,6 @@ terrain tex_buildings_snow/wall005 {
 	bouncefraction "0.8"
 }
 
-terrain tex_common/nodraw {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
 terrain tex_ctp1/asphalt_b_1 {
 	footstepsound "footsteps/stone1"
 	bouncefraction "1.0"
@@ -1081,96 +1076,6 @@ terrain tex_lights/light003_shell {
 terrain tex_lights/mtl_l1_fx1 {
 	footstepsound "footsteps/metal1"
 	bouncefraction "0.7"
-}
-
-terrain tex_material/blue_gray {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_black {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_blue {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_brown {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_gray050 {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_gray230 {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_gray255 {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_green1 {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_lgreen {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_orange {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_orange2 {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_orange3 {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_red {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_white {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_yellow {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_yellow2 {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/c_yellow3 {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
-}
-
-terrain tex_material/circle_gray {
-	footstepsound "footsteps/softrug1"
-	bouncefraction "0.5"
 }
 
 terrain tex_material/conc02 {
