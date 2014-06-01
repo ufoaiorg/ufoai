@@ -467,12 +467,12 @@ static const char* ufoIdsTable[UFO_MAX];
  */
 static void Com_ParseAircraftNames (const char* name, const char** text)
 {
-	ufoIdsTable[UFO_BOMBER]		= "bomber";
-	ufoIdsTable[UFO_CARRIER]	= "carrier";
-	ufoIdsTable[UFO_CORRUPTER]	= "corrupter";
+	ufoIdsTable[UFO_SCOUT]		= "scout";
 	ufoIdsTable[UFO_FIGHTER]	= "fighter";
 	ufoIdsTable[UFO_HARVESTER]	= "harvester";
-	ufoIdsTable[UFO_SCOUT]		= "scout";
+	ufoIdsTable[UFO_CORRUPTER]	= "corrupter";
+	ufoIdsTable[UFO_BOMBER]		= "bomber";
+	ufoIdsTable[UFO_CARRIER]	= "carrier";
 	ufoIdsTable[UFO_SUPPLY]		= "supply";
 	ufoIdsTable[UFO_GUNBOAT]	= "gunboat";
 	ufoIdsTable[UFO_RIPPER]		= "ripper";
