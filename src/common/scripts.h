@@ -143,6 +143,7 @@ typedef enum {
 	FADE_LAST
 } fade_t;
 
+#if 1
 /**
  * @brief All different types of UFOs.
  */
@@ -160,6 +161,10 @@ typedef enum {
 
 	UFO_MAX
 } ufoType_t;
+#else
+typedef short ufoType_t;
+#define UFO_MAX 10
+#endif
 #define UFO_NONE UFO_MAX
 
 extern const char* const align_names[];
