@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** factor to speed up refuelling */
 #define AIRCRAFT_REFUEL_FACTOR 16
 
-#define AIR_IsUFO(aircraft) ((aircraft)->getUfoType() != UFO_MAX)
+#define AIR_IsUFO(aircraft) ((aircraft)->getUfoType() != UFO_NONE)
 
 /** @brief A path on the map described by 2D points */
 typedef struct mapline_s {
@@ -155,7 +155,7 @@ typedef struct aircraft_s {
 	char* image;		/**< Image on geoscape. */
 	char* model;		/**< Model used on geoscape */
 	aircraftType_t type;/**< Type of aircraft, see aircraftType_t. */
-	ufoType_t ufotype;	/**< Type of UFO, see ufoType_t (UFO_MAX if craft is not a UFO). */
+	ufoType_t ufotype;	/**< Type of UFO, see ufoType_t (UFO_NONE if craft is not a UFO). */
 	aircraftStatus_t status;	/**< Status of this aircraft, see aircraftStatus_t. */
 
 	int price;			/**< Price of this aircraft type at game start, it's evolving on the market. */

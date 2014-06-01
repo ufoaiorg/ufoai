@@ -160,6 +160,7 @@ typedef enum {
 
 	UFO_MAX
 } ufoType_t;
+#define UFO_NONE UFO_MAX
 
 extern const char* const align_names[];
 extern const char* const blend_names[];

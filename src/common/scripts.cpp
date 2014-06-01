@@ -495,7 +495,7 @@ static ufoType_t Com_GetUfoIdNum (const char* idString)
 				return (ufoType_t)i;
 	}
 
-	return UFO_MAX;
+	return UFO_NONE;
 }
 
 static void Com_GetUfoIdStr (ufoType_t idNum, char* outStr)
@@ -515,7 +515,7 @@ static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
 				return (ufoType_t)i;
 	}
 
-	return UFO_MAX;
+	return UFO_NONE;
 }
 
 static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
@@ -547,7 +547,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 	resultStatus_t status = RESULT_OK;
 	b = (byte*) base + ofs;
 	*writtenBytes = 0;
-	ufoType_t ufoType = UFO_MAX;
+	ufoType_t ufoType = UFO_NONE;
 
 #ifdef DEBUG
 	if (b != Com_AlignPtr(b, type))
@@ -637,7 +637,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 
 	case V_UFO:
 		ufoType = Com_GetUfoIdNum(token);
-		if (ufoType != UFO_MAX)
+		if (ufoType != UFO_NONE)
 			*(ufoType_t*) b = ufoType;
 		else
 			Sys_Error("Unknown ufo type: '%s'", token);
@@ -646,7 +646,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 
 	case V_UFOCRASHED:
 		ufoType = Com_GetCrashedUfoIdNum(token);
-		if (ufoType != UFO_MAX)
+		if (ufoType != UFO_NONE)
 			*(ufoType_t*) b = ufoType;
 		else
 			Sys_Error("Unknown ufo type: '%s'", token);
@@ -921,7 +921,7 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 {
 	byte* b;
 	int len;
-	ufoType_t ufoType = UFO_MAX;
+	ufoType_t ufoType = UFO_NONE;
 
 	b = (byte*) base + ofs;
 
@@ -994,7 +994,7 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 
 	case V_UFO:
 		ufoType = Com_GetUfoIdNum((const char*)set);
-		if (ufoType != UFO_MAX)
+		if (ufoType != UFO_NONE)
 			*(ufoType_t*) b = ufoType;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char*)set);
@@ -1002,7 +1002,7 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 
 	case V_UFOCRASHED:
 		ufoType = Com_GetCrashedUfoIdNum((const char*)set);
-		if (ufoType != UFO_MAX)
+		if (ufoType != UFO_NONE)
 			*(ufoType_t*) b = ufoType;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char*)set);

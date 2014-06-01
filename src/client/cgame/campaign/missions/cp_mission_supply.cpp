@@ -157,7 +157,7 @@ static void CP_SupplyMissionCreate (mission_t* mission)
 	}
 
 	ufoType = CP_MissionChooseUFO(mission);
-	if (ufoType == UFO_MAX) {
+	if (ufoType == UFO_NONE) {
 		Com_DPrintf(DEBUG_CLIENT, "Supply mission can't be spawned without UFO: removing supply mission.\n");
 		CP_MissionRemove(mission);
 	} else {

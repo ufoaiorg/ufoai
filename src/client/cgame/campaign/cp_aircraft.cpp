@@ -1369,7 +1369,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 		aircraftTemplate->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 		aircraftTemplate->status = AIR_HOME;
 		/* default is no ufo */
-		aircraftTemplate->setUfoType(UFO_MAX);
+		aircraftTemplate->setUfoType(UFO_NONE);
 		aircraftTemplate->maxWeapons = 0;
 		aircraftTemplate->maxElectronics = 0;
 		AII_InitialiseAircraftSlots(aircraftTemplate);

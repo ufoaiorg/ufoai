@@ -1385,7 +1385,7 @@ bool CP_MissionBegin (mission_t* mission)
 		mission->finalDate = ccs.date;
 	} else {
 		ufoType_t ufoType = CP_MissionChooseUFO(mission);
-		if (ufoType == UFO_MAX) {
+		if (ufoType == UFO_NONE) {
 			CP_MissionRemove(mission);
 			return false;
 		}
@@ -1409,7 +1409,7 @@ bool CP_MissionBegin (mission_t* mission)
  * @param[in] mission Pointer to the mission where the UFO will be added
  * @sa CP_MissionChooseUFO
  * @sa CP_SupplyMissionCreate
- * @return ufoType_t of the UFO spawning the mission, UFO_MAX if the mission is spawned from ground
+ * @return ufoType_t of the UFO spawning the mission, UFO_NONE if the mission is spawned from ground
  */
 ufoType_t CP_MissionChooseUFO (const mission_t* mission)
 {
@@ -1455,7 +1455,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t* mission)
 		cgi->Com_Error(ERR_DROP, "CP_MissionChooseUFO: Too many values UFOs (%i/%i)", numTypes, UFO_MAX);
 
 	if (numTypes <= 0)
-		return UFO_MAX;
+		return UFO_NONE;
 
 	/* Roll the random number */
 	const float randNumber = frand();
