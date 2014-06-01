@@ -84,12 +84,12 @@
 // This list of ufo suffixes is used all over the place.
 aircraftnames ufoids
 {
-	"bomber"
-	"carrier"
-	"corrupter"
+	"scout"
 	"fighter"
 	"harvester"
-	"scout"
+	"corrupter"
+	"bomber"
+	"carrier"
 	"supply"
 	"gunboat"
 	"ripper"
