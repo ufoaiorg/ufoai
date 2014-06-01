@@ -176,6 +176,9 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 			case INTERESTCATEGORY_INTERCEPT:
 				if (UFO_CanDoMission(uType, "intercept"))
 					break;
+			case INTERESTCATEGORY_INTERCEPTBOMBING:
+				if (UFO_CanDoMission(uType, "interceptbombing"))
+					break;
 			default:
 				continue;
 		}
