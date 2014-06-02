@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern const int STARTING_BASEBUILD_INTEREST;
 
 bool CP_BasemissionIsSubvertingGovernmentMission(const mission_t* mission);
-int CP_BuildBaseMissionAvailableUFOs(const mission_t* mission, ufoType_t* ufoTypes);
 void CP_BuildBaseMissionNextStage(const campaign_t* campaign, mission_t* mission);
 void CP_BuildBaseMissionIsFailure(mission_t* mission);
 void CP_BuildBaseMissionBaseDestroyed(mission_t* mission);

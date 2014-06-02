@@ -1432,7 +1432,13 @@ ufoType_t CP_MissionChooseUFO (const mission_t* mission)
 		break;
 	case INTERESTCATEGORY_BUILDING:
 	case INTERESTCATEGORY_SUBVERT:
-		numTypes = CP_BuildBaseMissionAvailableUFOs(mission, ufoTypes);
+		if (CP_BasemissionIsSubvertingGovernmentMission(mission)) {
+			/* This is a subverting government mission */
+			numTypes = UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_SUBVERT, ufoTypes);
+		} else {
+			/* This is a Building base mission */
+			numTypes = UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_BUILDING, ufoTypes);
+		}
 		break;
 	case INTERESTCATEGORY_SUPPLY:
 		numTypes = UFO_GetAvailableUFOsForMission(mission->category, ufoTypes);

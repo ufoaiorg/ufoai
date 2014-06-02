@@ -231,28 +231,6 @@ static void CP_BuildBaseChooseMission (mission_t* mission)
 }
 
 /**
- * @brief Fill an array with available UFOs for build base mission type.
- * @param[in] mission Pointer to the mission we are currently creating.
- * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
- * @note Base Attack mission -- Stage 0
- * @return number of elements written in @c ufoTypes
- */
-int CP_BuildBaseMissionAvailableUFOs (const mission_t* mission, ufoType_t* ufoTypes)
-{
-	int num = 0;
-
-	if (CP_BasemissionIsSubvertingGovernmentMission(mission)) {
-		/* This is a subverting government mission */
-		num = UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_SUBVERT, ufoTypes);
-	} else {
-		/* This is a Building base mission */
-		num = UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_BUILDING, ufoTypes);
-	}
-
-	return num;
-}
-
-/**
  * @brief Determine what action should be performed when a Build Base mission stage ends.
  * @param[in] campaign The campaign data structure
  * @param[in] mission Pointer to the mission which stage ended.
