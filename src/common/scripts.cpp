@@ -468,16 +468,16 @@ static short ufoIdsNum;
  */
 static void Com_ParseAircraftNames (const char* name, const char** text)
 {
-	ufoIdsTable[UFO_SCOUT]		= "scout";
-	ufoIdsTable[UFO_FIGHTER]	= "fighter";
-	ufoIdsTable[UFO_HARVESTER]	= "harvester";
-	ufoIdsTable[UFO_CORRUPTER]	= "corrupter";
-	ufoIdsTable[UFO_BOMBER]		= "bomber";
-	ufoIdsTable[UFO_CARRIER]	= "carrier";
-	ufoIdsTable[UFO_SUPPLY]		= "supply";
-	ufoIdsTable[UFO_GUNBOAT]	= "gunboat";
-	ufoIdsTable[UFO_RIPPER]		= "ripper";
-	ufoIdsTable[UFO_MOTHERSHIP]	= "mothership";
+	ufoIdsTable[0]	= "scout";
+	ufoIdsTable[1]	= "fighter";
+	ufoIdsTable[2]	= "harvester";
+	ufoIdsTable[3]	= "corrupter";
+	ufoIdsTable[4]	= "bomber";
+	ufoIdsTable[5]	= "carrier";
+	ufoIdsTable[6]	= "supply";
+	ufoIdsTable[7]	= "gunboat";
+	ufoIdsTable[8]	= "ripper";
+	ufoIdsTable[9]	= "mothership";
 	ufoIdsNum = 10;
 }
 
