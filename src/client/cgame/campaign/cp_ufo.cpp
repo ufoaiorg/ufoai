@@ -153,7 +153,7 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 	int num = 0;
 
 	for (int i = 0; i < UFO_MAX; i++) {
-		ufoType_t uType = (ufoType_t)i;
+		ufoType_t uType = i;
 		switch (missionType) {
 			case INTERESTCATEGORY_RECON:
 				if (UFO_CanDoMission(uType, "recon"))

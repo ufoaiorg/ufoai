@@ -1280,7 +1280,7 @@ static void testTerrorMissions (void)
 
 	/* Set overall interest level so every UFO can be used for missions */
 	for (i = 0; i < UFO_MAX; i++) {
-		ufoType_t ufoType = (ufoType_t)i;
+		ufoType_t ufoType = i;
 		const aircraft_t* ufo = UFO_GetByType(ufoType);
 
 		if (!ufo)
@@ -1299,7 +1299,7 @@ static void testTerrorMissions (void)
 	/* Search with UFOs available for Terror missions */
 	numUfoTypes = UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_TERROR_ATTACK, ufoTypes, false);
 	for (i = 0; i < numUfoTypes; i++) {
-		ufoType_t ufoType = (ufoType_t)i;
+		ufoType_t ufoType = i;
 		mission_t mission;
 		aircraft_t* ufo = UFO_AddToGeoscape(ufoTypes[ufoType], nullptr, &mission);
 
@@ -1331,7 +1331,7 @@ static void testTerrorMissions (void)
 		if (!LIST_IsEmpty(md->ufos)) {
 			bool found = false;
 			for (i = 0; i < numUfoTypes; i++) {
-				ufoType_t ufoType = (ufoType_t)i;
+				ufoType_t ufoType = i;
 				const aircraft_t* ufo = UFO_GetByType(ufoTypes[ufoType]);
 
 				if (!ufo)

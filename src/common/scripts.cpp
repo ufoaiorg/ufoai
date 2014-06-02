@@ -494,7 +494,7 @@ static ufoType_t Com_GetUfoIdNum (const char* idString)
 	if (!strncmp(idString, "craft_ufo_", 10)) {
 		for (int i = 0; i < ufoIdsNum; i++)
 			if (Q_streq(idString + 10, ufoIdsTable[i]))
-				return (ufoType_t)i;
+				return i;
 	}
 
 	return UFO_NONE;
@@ -514,7 +514,7 @@ static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
 	if (!strncmp(idString, "craft_crash_", 12)) {
 		for (int i = 0; i < ufoIdsNum; i++)
 			if (Q_streq(idString + 12, ufoIdsTable[i]))
-				return (ufoType_t)i;
+				return i;
 	}
 
 	return UFO_NONE;
