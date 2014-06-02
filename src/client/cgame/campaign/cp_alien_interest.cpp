@@ -169,6 +169,7 @@ const char* INT_InterestCategoryToName (interestCategory_t category)
 	case INTERESTCATEGORY_BASE_ATTACK:
 		return "Base attack";
 	case INTERESTCATEGORY_BUILDING:
+	case INTERESTCATEGORY_SUBVERT:
 		return "Building Base or Subverting Government";
 	case INTERESTCATEGORY_SUPPLY:
 		return "Supply base";
