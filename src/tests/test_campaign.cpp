@@ -775,7 +775,9 @@ static void testAirFight (void)
 	CU_ASSERT_TRUE(AIR_IsAircraftOnGeoscape(aircraft));
 
 	/* ensure that a FIGHTER can spawn */
-	const aircraft_t* ufoTemplate = UFO_GetByType(UFO_FIGHTER);
+	ufoType_t ufoTypes[UFO_MAX];
+	UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_INTERCEPT, ufoTypes);
+	const aircraft_t* ufoTemplate = UFO_GetByType(ufoTypes[0]);		/* the first interceptor will do */
 	CU_ASSERT_PTR_NOT_NULL_FATAL(ufoTemplate);
 	ccs.overallInterest = ufoTemplate->ufoInterestOnGeoscape + 1;
 
@@ -789,7 +791,7 @@ static void testAirFight (void)
 	CU_ASSERT_EQUAL(mission->stage, STAGE_INTERCEPT);
 	ufo = mission->ufo;
 	CU_ASSERT_PTR_NOT_NULL_FATAL(ufo);
-	ufo->ufotype = UFO_FIGHTER;
+	ufo->ufotype = ufoTypes[0];
 	/* we have to update the routing data here to be sure that the ufo is
 	 * not spawned on the other side of the globe */
 	Vector2Copy(destination, ufo->pos);
