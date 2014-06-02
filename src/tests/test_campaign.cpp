@@ -842,14 +842,15 @@ static void testRadar (void)
 	const vec2_t destination = { 10, 10 };
 	aircraft_t* ufo;
 	mission_t* mission;
-	ufoType_t ufoType = UFO_FIGHTER;
+	ufoType_t ufoTypes[UFO_MAX];
+	UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_INTERCEPT, ufoTypes);
 
 	ResetCampaignData();
 
 	base = CreateBase("unittestradar", destination);
 
 	mission = CP_CreateNewMission(INTERESTCATEGORY_INTERCEPT, true);
-	ufo = UFO_AddToGeoscape(ufoType, destination, mission);
+	ufo = UFO_AddToGeoscape(ufoTypes[0], destination, mission);
 	Vector2Copy(destination, ufo->pos);
 	UFO_SendToDestination(ufo, destination);
 	CU_ASSERT_TRUE(VectorEqual(ufo->pos, base->pos));
