@@ -416,6 +416,7 @@
 		<Unit filename="../../src/common/pqueue.cpp" />
 		<Unit filename="../../src/common/routing.cpp" />
 		<Unit filename="../../src/common/scripts.cpp" />
+		<Unit filename="../../src/common/scripts.h" />
 		<Unit filename="../../src/common/sha1.cpp" />
 		<Unit filename="../../src/common/sha2.cpp" />
 		<Unit filename="../../src/common/tracing.cpp" />
