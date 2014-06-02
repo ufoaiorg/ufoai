@@ -143,29 +143,13 @@ typedef enum {
 	FADE_LAST
 } fade_t;
 
-#if 1
-/**
- * @brief All different types of UFOs.
- */
-typedef enum {
-	UFO_SCOUT,
-	UFO_FIGHTER,
-	UFO_HARVESTER,
-	UFO_CORRUPTER,
-	UFO_BOMBER,
-	UFO_CARRIER,
-	UFO_SUPPLY,
-	UFO_GUNBOAT,
-	UFO_RIPPER,
-	UFO_MOTHERSHIP,
-
-	UFO_MAX
-} ufoType_t;
-#else
 typedef short ufoType_t;
 #define UFO_MAX 10
-#endif
+#if 0
+#define UFO_NONE -1
+#else
 #define UFO_NONE UFO_MAX
+#endif
 
 extern const char* const align_names[];
 extern const char* const blend_names[];
