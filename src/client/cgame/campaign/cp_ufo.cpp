@@ -135,7 +135,7 @@ bool UFO_ShouldAppearOnGeoscape (const ufoType_t type)
 bool UFO_CanDoMission (const ufoType_t uType, const char* mType)
 {
 	const aircraft_t* ufo = UFO_GetByType(uType);
-	if (LIST_ContainsString(ufo->missionTypes, mType))
+	if (cgi->LIST_ContainsString(ufo->missionTypes, mType))
 		return true;
 
 	return false;
