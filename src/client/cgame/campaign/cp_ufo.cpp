@@ -179,6 +179,12 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 			case INTERESTCATEGORY_INTERCEPTBOMBING:
 				if (UFO_CanDoMission(uType, "interceptbombing"))
 					break;
+			case INTERESTCATEGORY_BUILDING:
+				if (UFO_CanDoMission(uType, "building"))
+					break;
+			case INTERESTCATEGORY_SUBVERT:
+				if (UFO_CanDoMission(uType, "subvert"))
+					break;
 			default:
 				continue;
 		}

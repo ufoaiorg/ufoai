@@ -524,6 +524,7 @@ aircraft craft_ufo_scout
 	interestlevel 0
 	missiontypes (
 		"recon"
+		"subvert"
 	)
 
 	radar {
@@ -596,6 +597,7 @@ aircraft craft_ufo_harvester
 		"terror"
 		"intercept"
 		"interceptbombing"
+		"subvert"
 	)
 
 	radar {
@@ -649,6 +651,7 @@ aircraft craft_ufo_corrupter
 		"terror"
 		"intercept"
 		"interceptbombing"
+		"subvert"
 	)
 
 	radar {
@@ -692,6 +695,7 @@ aircraft craft_ufo_supply
 	interestlevel	200
 	missiontypes (
 		"supply"
+		"building"
 	)
 
 	radar {

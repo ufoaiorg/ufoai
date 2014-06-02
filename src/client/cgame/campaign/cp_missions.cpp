@@ -574,6 +574,7 @@ const char* MIS_GetModel (const mission_t* mission)
 	case INTERESTCATEGORY_RESCUE:
 		return "geoscape/icon_rescue";
 	case INTERESTCATEGORY_BUILDING:
+	case INTERESTCATEGORY_SUBVERT:
 		return "geoscape/icon_build_alien_base";
 	case INTERESTCATEGORY_ALIENBASE:
 		/** @todo we have two different alienbase models */
@@ -947,6 +948,7 @@ void CP_MissionStageEnd (const campaign_t* campaign, mission_t* mission)
 		CP_BaseAttackMissionNextStage(mission);
 		break;
 	case INTERESTCATEGORY_BUILDING:
+	case INTERESTCATEGORY_SUBVERT:
 		CP_BuildBaseMissionNextStage(campaign, mission);
 		break;
 	case INTERESTCATEGORY_SUPPLY:
@@ -996,6 +998,7 @@ void CP_MissionIsOver (mission_t* mission)
 			CP_BaseAttackMissionIsSuccess(mission);
 		break;
 	case INTERESTCATEGORY_BUILDING:
+	case INTERESTCATEGORY_SUBVERT:
 		if (mission->stage <= STAGE_BUILD_BASE)
 			CP_BuildBaseMissionIsFailure(mission);
 		else
@@ -1336,6 +1339,7 @@ static bool MIS_IsSpawnedFromGround (const mission_t* mission)
 	switch (mission->category) {
 	/* missions can't be spawned from ground */
 	case INTERESTCATEGORY_BUILDING:
+	case INTERESTCATEGORY_SUBVERT:
 	case INTERESTCATEGORY_SUPPLY:
 	case INTERESTCATEGORY_INTERCEPT:
 	case INTERESTCATEGORY_INTERCEPTBOMBING:
@@ -1427,6 +1431,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t* mission)
 		numTypes = UFO_GetAvailableUFOsForMission(mission->category, ufoTypes);
 		break;
 	case INTERESTCATEGORY_BUILDING:
+	case INTERESTCATEGORY_SUBVERT:
 		numTypes = CP_BuildBaseMissionAvailableUFOs(mission, ufoTypes);
 		break;
 	case INTERESTCATEGORY_SUPPLY:
