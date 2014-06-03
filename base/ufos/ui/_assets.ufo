@@ -149,7 +149,7 @@ component TextBtn extends button {
 	contentalign	ALIGN_CL
 }
 
-component UI2TextEntry extends textentry {
+component TextEntry extends textentry {
 	background		"ui/textentry"
 	color		"1 1 1 0.5"
 	selectcolor	"1 1 1 0.9"

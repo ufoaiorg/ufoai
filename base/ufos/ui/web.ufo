@@ -21,7 +21,7 @@ window webauth extends ipopup
 		contentalign	ALIGN_CL
 	}
 
-	UI2TextEntry webusername
+	TextEntry webusername
 	{
 		string		*cvar:web_username
 		font		"f_verysmall"
@@ -37,7 +37,7 @@ window webauth extends ipopup
 		contentalign	ALIGN_CL
 	}
 
-	UI2TextEntry webpassword
+	TextEntry webpassword
 	{
 		string		*cvar:web_password
 		font		"f_verysmall"

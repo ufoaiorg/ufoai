@@ -201,7 +201,7 @@ window options
 					size			"256 20"
 					color			"1 1 1 0.5"
 				}
-				UI2TextEntry slot_name
+				TextEntry slot_name
 				{
 					string			*cvar:cl_name
 					pos				"292 5"

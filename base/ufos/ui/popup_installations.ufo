@@ -162,7 +162,7 @@ window popup_newbase extends ipopup {
 		font		"f_small_bold"
 	}
 
-	UI2TextEntry name {
+	TextEntry name {
 		string		*cvar:mn_base_title
 		pos			"25 75"
 		size		"330 25"
@@ -490,7 +490,7 @@ window popup_ufoyards extends ipopup {
 			size		"290 20"
 			font		"f_small_bold"
 		}
-		UI2TextEntry name {
+		TextEntry name {
 			string		*cvar:mn_installation_title
 			pos			"150 35"
 			size		"265 25"

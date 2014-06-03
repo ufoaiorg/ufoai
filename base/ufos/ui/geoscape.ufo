@@ -894,7 +894,7 @@ window popup_newinstallation extends ipopup
 		size		"120 25"
 		contentalign	ALIGN_CL
 	}
-	UI2TextEntry name
+	TextEntry name
 	{
 		string		*cvar:mn_installation_title
 		pos			"150 60"
@@ -996,7 +996,7 @@ window popup_installationstatus extends ipopup
 		size		"120 25"
 		contentalign	ALIGN_CL
 	}
-	UI2TextEntry name
+	TextEntry name
 	{
 		string		*cvar:mn_installation_title
 		pos			"150 60"

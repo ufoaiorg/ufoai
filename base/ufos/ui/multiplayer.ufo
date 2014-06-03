@@ -355,7 +355,7 @@ window multiplayer extends cgame_download
 				size		"202 20"
 			}
 
-			UI2TextEntry slot_hostname
+			TextEntry slot_hostname
 			{
 				string		*cvar:sv_hostname
 				font		"f_verysmall"
@@ -386,7 +386,7 @@ window multiplayer extends cgame_download
 				pos			"0 85"
 				size		"256 20"
 			}
-			UI2TextEntry slot_server_pwd
+			TextEntry slot_server_pwd
 			{
 				string		*cvar:password
 				font		"f_verysmall"
@@ -404,7 +404,7 @@ window multiplayer extends cgame_download
 				pos			"0 125"
 				size		"256 20"
 			}
-			UI2TextEntry slot_rcon_pwd
+			TextEntry slot_rcon_pwd
 			{
 				string		*cvar:rcon_password
 				font		"f_verysmall"
@@ -889,7 +889,7 @@ window multiplayer extends cgame_download
 				size		"256 20"
 			}
 
-			UI2TextEntry slot_ip
+			TextEntry slot_ip
 			{
 				string		*cvar:mn_server_ip
 				font		"f_verysmall"
@@ -1417,7 +1417,7 @@ window multiplayer_wait
 			size		"256 20"
 		}
 
-		UI2TextEntry slot_rcon_pwd
+		TextEntry slot_rcon_pwd
 		{
 			string		*cvar:rcon_password
 			font		"f_verysmall"
@@ -1767,7 +1767,7 @@ window serverpassword extends ipopup
 		size		"300 20"
 	}
 
-	UI2TextEntry slot_password
+	TextEntry slot_password
 	{
 		pos			"170 122"
 		size		"185 34"

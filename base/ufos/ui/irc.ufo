@@ -104,7 +104,7 @@ window irc
 
 
 
-			UI2TextEntry slot_irc_send_buffer
+			TextEntry slot_irc_send_buffer
 			{
 				string		*cvar:irc_send_buffer
 				font		"f_verysmall"
@@ -239,7 +239,7 @@ window irc_changename extends ipopup
 		size		"300 20"
 		color		"1 1 1 1"
 	}
-	UI2TextEntry slot_name
+	TextEntry slot_name
 	{
 		string		*cvar:cl_name
 		font		"f_verysmall"
@@ -468,7 +468,7 @@ window hud_chat extends ipopup
 					string		"_Say:"
 				}
 
-				UI2TextEntry say {
+				TextEntry say {
 					align		LAYOUTALIGN_FILL
 					string		*cvar:irc_send_buffer
 					clickoutabort	true
@@ -534,7 +534,7 @@ window hud_chat extends ipopup
 					tooltip		"_Team chat"
 				}
 
-				UI2TextEntry say {
+				TextEntry say {
 					align		LAYOUTALIGN_FILL
 					string		*cvar:mn_entry
 					clickoutabort	true

@@ -159,7 +159,7 @@ window checkcvars extends ipopup
 		size		"300 20"
 		color		"1 1 1 1"
 	}
-	UI2TextEntry slot_name
+	TextEntry slot_name
 	{
 		string		*cvar:cl_name
 		font		"f_verysmall"

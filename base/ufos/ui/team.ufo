@@ -118,7 +118,7 @@ window game_team_save_popup extends ipopup
 		string		"_Save your team"
 	}
 
-	UI2TextEntry name
+	TextEntry name
 	{
 		font		"f_verysmall"
 		pos			"50 53"

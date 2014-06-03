@@ -313,7 +313,7 @@ window basedefence extends ipopup
 			size		"250 25"
 			font		"f_small_bold"
 		}
-		UI2TextEntry name
+		TextEntry name
 		{
 			string		*cvar:mn_installation_title
 			pos			"310 90"

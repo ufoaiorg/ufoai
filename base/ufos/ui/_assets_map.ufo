@@ -259,7 +259,7 @@ component cmpMapSlot extends panel
 		size "315 35"
 	}
 
-	UI2TextEntry slot_map
+	TextEntry slot_map
 	{
 		string		*cvar:mn_svmapname
 		contentalign	ALIGN_CC
