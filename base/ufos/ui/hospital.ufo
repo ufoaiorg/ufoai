@@ -2,48 +2,6 @@
 // HOSPITAL MENU
 // ==================
 
-component cmpHhumanoid_head extends button {
-	color "1 0 0 1"
-	pos			"0 0"
-	size		"16 16"
-}
-component cmpHhumanoid_torso extends button {
-	color "1 0 0 1"
-	pos			"20 0"
-	size		"16 16"
-}
-component cmpHhumanoid_arms extends button {
-	color "1 0 0 1"
-	pos			"40 0"
-	size		"16 16"
-}
-component cmpHhumanoid_legs extends button {
-	color "1 0 0 1"
-	pos			"60 0"
-	size		"16 16"
-}
-component cmpHdefault_body extends button {
-	color "1 0 0 1"
-	pos			"0 0"
-	size		"16 16"
-}
-
-component cmpHospitalNamedTbar extends cmpDefNamedTbar {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	image	bdr {
-		pos "17 18"
-	}
-	tbar		bar {
-		pos "19 18"
-	}
-	string	val {
-		pos "160 0"
-		longlines LONGLINES_PRETTYCHOP
-	}
-}
-
 component cmpHospitalImplant extends panel {
 	{
 		size	"210 35"
@@ -203,39 +161,26 @@ window hospital
 // ======================
 window hospital_employee
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
-	image background
 	{
-		src	"background/base_bg"
+		fill		true
 	}
 
-	// ==================
-	// Base header
-	// ==================
-
-	cmpBaseHeader baseHeader {
-	}
-
-	// ==================
-	// actor info
-	// ==================
-
-	panel actorinfo {
-		pos		"457 101"
-		size	"555 471"
-		background	"ui/panel_grey_green_large"
-	}
-
-	string name
+	// Base name and container panel
+	BaseContainerPanel base_container
 	{
-		pos		"475 118"
-		size	"415 20"
+		// Hospital panel
+		panel mainBody
+		{
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Hospital"
+				}
+			}
+		}
 	}
 
 	data ucn
@@ -243,82 +188,31 @@ window hospital_employee
 		integer	-1
 	}
 
-	model body
+	actor_info local
 	{
-		{
-			anim	"stand2"
-			angles	"0 70 90"
-			scale	"6.7 6.7 6.7"
-			pos		"480 180"
-			size	"200 350"
-			origin	"0 -35 0"
-		}
-
-		model head
-		{
-			tag		"tag_head"
-			scale	"1.0 1.0 1.0"
-		}
+		pos		"20 100"
 	}
 
-	image rank {
-		pos "475 470"
-	}
-
-	string rank_lbl {
-		pos "475 175"
-		size "200 20"
-		longlines LONGLINES_PRETTYCHOP
-	}
-
-	cmpHospitalNamedTbar bar0 {
+	panel stats {
 		{
-			pos "690 182"
+			pos		"750 493"
+			size	"250 270"
+			border	2
+			bordercolor	"0.56 0.81 0.76 1"
+			layout	LAYOUT_TOP_DOWN_FLOW
+			layoutMargin 0
 		}
-		string lbl { string "_Strength:" }
-	}
-
-	cmpHospitalNamedTbar bar1 {
-		{
-			pos "690 212"
-		}
-		string lbl { string "_Speed:" }
-	}
-
-	cmpHospitalNamedTbar bar2 {
-		{
-			pos "690 242"
-		}
-		string lbl { string "_Accuracy:" }
-	}
-
-	cmpHospitalNamedTbar bar3 {
-		{
-			pos "690 272"
-		}
-		string lbl { string "_Mind:" }
-	}
-
-	cmpHospitalNamedTbar health {
-		{
-			pos "690 432"
-		}
-		tbar bar
-		{
-			image "ui/bar_health"
-		}
-		string lbl
-		{
-			string "_Health:"
-			longlines LONGLINES_PRETTYCHOP
-		}
+		abilities abilities {}
+		skillbars skills {}
+		healthbar health {}
 	}
 
 	panel implants {
 		{
-			pos		"26 101"
-			size	"276 471"
-			background	"ui/panel_grey_green_large"
+			pos		"750 5"
+			size	"250 471"
+			border	2
+			bordercolor	"0.56 0.81 0.76 1"
 		}
 		baseinventory equip {
 			pos						"20 20"
@@ -358,7 +252,11 @@ window hospital_employee
 			ghost			true
 		}
 	}
-
+	// Back to geoscape
+	Geoscape geoscape_button
+	{
+		onClick			{ cmd "ui_pop; ui_pop; ui_pop;" }
+	}
 	/**
 	 * @param <1> UCN
 	 * @param <2> Name

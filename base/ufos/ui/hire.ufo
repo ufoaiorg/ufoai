@@ -381,20 +381,20 @@ window employees
 		button alert { invis true }
 	}
 */
-		string label_people {
-			string	"_Occupation"
-			font	"f_normal_bold"
-			pos		"740 08"
-			size	"140 20"
-			contentalign	ALIGN_UC
-		}
-		string number_people {
-			string	*cvar:mn_hirepeople
-			font	"f_normal_bold"
-			pos		"880 08"
-			size	"100 20"
-			contentalign	ALIGN_UC
-		}
+	string label_people {
+		string	"_Occupation"
+		font	"f_normal_bold"
+		pos		"740 08"
+		size	"140 20"
+		contentalign	ALIGN_UC
+	}
+	string number_people {
+		string	*cvar:mn_hirepeople
+		font	"f_normal_bold"
+		pos		"880 08"
+		size	"100 20"
+		contentalign	ALIGN_UC
+	}
 
 	// ==================
 	// buttons

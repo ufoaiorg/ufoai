@@ -150,11 +150,11 @@ component TextBtn extends button {
 }
 
 component UI2TextEntry extends textentry {
-		background		"ui/textentry"
-		color		"1 1 1 0.5"
-		selectcolor	"1 1 1 0.9"
-		contentalign	ALIGN_CL
-		padding		8
+	background		"ui/textentry"
+	color		"1 1 1 0.5"
+	selectcolor	"1 1 1 0.9"
+	contentalign	ALIGN_CL
+	padding		8
 }
 
 
