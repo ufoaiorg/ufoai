@@ -44,54 +44,6 @@ component cmpHospitalNamedTbar extends cmpDefNamedTbar {
 	}
 }
 
-component cmpHospitalPanel extends panel {
-	{
-		size "300 85"
-	}
-	image button {
-		src "ui/hosp_button"
-		pos "0 0"
-	}
-
-	data index {
-		integer		-1
-	}
-
-	button icon	{
-		padding 0
-		pos "248  11"
-		size "40 40"
-	}
-
-	string item	{
-		pos "15 10"
-		color "1 1 1 1"
-		size "220 16"
-	}
-
-	string rank	{
-		pos "15 35"
-		color "1 1 1 1"
-		size "220 16"
-	}
-
-	bar health {
-		pos "22 65"
-		size "263 6"
-		color "0 .8 0 1"
-	}
-
-	zone click {
-		pos "0 0"
-		size "300 85"
-	}
-
-	panel wounds {
-		pos "150 30"
-		size "225 20"
-	}
-}
-
 component cmpHospitalImplant extends panel {
 	{
 		size	"210 35"
@@ -164,26 +116,25 @@ window hospital
 			 * @param <7> Rank
 			 */
 			confunc hospitaladd	{
-				call *node:parent.patients@createChild("hos<1>", "cmpHospitalPanel")
+				call *node:parent.patients@createChild("hos<1>", "HospitalItem")
 				if ( <2> eq "light" ) {
-					*node:parent.patients.hos<1>.icon@icon				= "icons/health_normal"
-					*node:parent.patients.hos<1>.click@tooltip	= "_Slightly wounded"
+					*node:parent.patients.hos<1>.icon@src		= "icons/health_normal"
+					*node:parent.patients.hos<1>.icon@tooltip	= "_Slightly wounded"
 				} elif ( <2> eq "medium" ) {
-					*node:parent.patients.hos<1>.icon@icon				= "icons/health_medium"
-					*node:parent.patients.hos<1>.click@tooltip	= "_Medium wounds"
+					*node:parent.patients.hos<1>.icon@src		= "icons/health_medium"
+					*node:parent.patients.hos<1>.icon@tooltip	= "_Medium wounds"
 				} elif ( <2> eq "serious" ) {
-					*node:parent.patients.hos<1>.icon@icon				= "icons/health_critical"
-					*node:parent.patients.hos<1>.click@tooltip	= "_Heavily wounded"
-				} elif ( <2> eq "healthy" ) {
-					*node:parent.patients.hos<1>.icon@icon				= "icons/health_unused"
-					*node:parent.patients.hos<1>.click@tooltip	= "_Healthy"
+					*node:parent.patients.hos<1>.icon@src		= "icons/health_critical"
+					*node:parent.patients.hos<1>.icon@tooltip	= "_Heavily wounded"
+				} else {
+					*node:parent.patients.hos<1>.icon@src		= "icons/health_unused"
+					*node:parent.patients.hos<1>.icon@tooltip	= "_Healthy"
 				}
 				*node:parent.patients.hos<1>.health@current = <3>
 				*node:parent.patients.hos<1>.health@max = <4>
-				*node:parent.patients.hos<1>.item@string = "<5>"
-				*node:parent.patients.hos<1>.rank@string = "<6>"
-				*node:parent.patients.hos<1>.index@integer = <1>
-				*node:parent.patients.hos<1>.click@onClick = { cmd "ui_push hospital_employee; hosp_empl_init <node:this.parent.index@integer>;" }
+				*node:parent.patients.hos<1>.name@string = "<5>"
+				*node:parent.patients.hos<1>.type@string = "<6>"
+				*node:parent.patients.hos<1>.id@integer = <1>
 			}
 
 			/**

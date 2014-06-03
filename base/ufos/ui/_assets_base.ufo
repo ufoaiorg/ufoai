@@ -229,6 +229,61 @@ component EmployeeCount extends panel
 	}
 }
 
+// Research item (items researched in base)
+component HospitalItem extends panel
+{
+	{
+		pos				"0 0"
+		size 			"713 28"
+		bgcolor			"0.56 0.81 0.76 0.1"
+		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.2" }
+		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
+		onClick			{
+			cmd "ui_push hospital_employee; hosp_empl_init <node:this.id@integer>;"
+		}
+	}
+	data id {
+		integer		0
+	}
+	bar health
+	{
+		pos		"0 0"
+		size	"713 28"
+		color	"0.56 0.81 0.76 0.3"
+		current 0
+		max		100
+		ghost	true
+	}
+	string name
+	{
+		pos				"30 0"
+		size			"480 28"
+		color			"0.56 0.81 0.76 1"
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+	string type
+	{
+		pos			"595 8"
+		size		"60 15"
+		color		"0.56 0.81 0.76 1"
+		font		"f_verysmall"
+		contentalign	ALIGN_CR
+		padding		0
+		ghost		true
+	}
+
+	panel wounds {
+		pos 	"360 0"
+		size	"28 28"
+	}
+
+	image icon {
+		pos 	"460 0"
+		size	"28 28"
+		ghost	true
+	}
+}
 
 // Research item (items researched in base)
 component ResearchItem extends panel
