@@ -746,30 +746,24 @@ static void testMap (void)
 static void testAirFight (void)
 {
 	const vec2_t destination = { 10, 10 };
-	mission_t* mission;
-	aircraft_t* aircraft;
-	aircraft_t* ufo;
-	base_t* base;
-	int i, cnt;
 	/* just some random delta time value that is high enough
 	 * to ensure that all the weapons are reloaded */
 	const int deltaTime = 1000;
-	campaign_t* campaign;
 
 	ResetCampaignData();
 
-	campaign = GetCampaign();
+	campaign_t* campaign = GetCampaign();
 
-	base = CreateBase("unittestairfight", destination);
+	base_t* base = CreateBase("unittestairfight", destination);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 
-	cnt = AIR_BaseCountAircraft(base);
-	i = 0;
+	int cnt = AIR_BaseCountAircraft(base);
+	int i = 0;
 	AIR_ForeachFromBase(a, base)
 		i++;
 	CU_ASSERT_EQUAL(i, cnt);
 
-	aircraft = AIR_GetFirstFromBase(base);
+	aircraft_t* aircraft = AIR_GetFirstFromBase(base);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
 	aircraft->status = AIR_IDLE;
 	CU_ASSERT_TRUE(AIR_IsAircraftOnGeoscape(aircraft));
@@ -782,14 +776,14 @@ static void testAirFight (void)
 	ccs.overallInterest = ufoTemplate->ufoInterestOnGeoscape + 1;
 
 	/* prepare the mission */
-	mission = CP_CreateNewMission(INTERESTCATEGORY_INTERCEPT, true);
+	mission_t* mission = CP_CreateNewMission(INTERESTCATEGORY_INTERCEPT, true);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(mission);
 	CU_ASSERT_EQUAL(mission->stage, STAGE_NOT_ACTIVE);
 	CP_InterceptNextStage(mission);
 	CU_ASSERT_EQUAL(mission->stage, STAGE_COME_FROM_ORBIT);
 	CP_InterceptNextStage(mission);
 	CU_ASSERT_EQUAL(mission->stage, STAGE_INTERCEPT);
-	ufo = mission->ufo;
+	aircraft_t* ufo = mission->ufo;
 	CU_ASSERT_PTR_NOT_NULL_FATAL(ufo);
 	ufo->ufotype = ufoTypes[0];
 	/* we have to update the routing data here to be sure that the ufo is
