@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-01-17 22:11+0200\n"
-"PO-Revision-Date: 2014-01-18 00:33+0300\n"
+"POT-Creation-Date: 2014-06-29 15:25+0300\n"
+"PO-Revision-Date: 2014-06-29 15:25+0300\n"
 "Last-Translator: Igor Gritsenko <xenomorph@thoradin.no-ip.org>\n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -29,11 +29,11 @@ msgstr "Африка"
 msgid "Home"
 msgstr "Штаб-квартира"
 
-#: ../base/maps/bridge.ump:101 ../base/ufos/maps.ufo:428
+#: ../base/maps/bridge.ump:101 ../base/ufos/maps.ufo:511
 msgid "Bridge"
 msgstr "Мост"
 
-#: ../base/maps/bridge.ump:111 ../base/ufos/maps.ufo:468
+#: ../base/maps/bridge.ump:111 ../base/ufos/maps.ufo:551
 msgid "Bridge (MP)"
 msgstr "Мост (М)"
 
@@ -41,7 +41,7 @@ msgstr "Мост (М)"
 msgid "Small cemetery"
 msgstr "Небольшое кладбище"
 
-#: ../base/maps/city3.ump:199
+#: ../base/maps/city3.ump:332
 msgid "The outskirt of a big city."
 msgstr "Окраина большого города."
 
@@ -95,7 +95,7 @@ msgid "Gasstation"
 msgstr "Автозаправка"
 
 #: ../base/maps/harbour2.ump:490 ../base/maps/harbour2.ump:578
-#: ../base/ufos/maps.ufo:1589 ../base/ufos/maps.ufo:1595
+#: ../base/ufos/maps.ufo:1688 ../base/ufos/maps.ufo:1694
 msgid "Harbour"
 msgstr "Порт"
 
@@ -117,9 +117,9 @@ msgstr "Ледник"
 msgid "UFO Landed"
 msgstr "Севший НЛО"
 
-#: ../base/maps/industrial.ump:376 ../base/ufos/maps.ufo:1907
-#: ../base/ufos/maps.ufo:1950 ../base/ufos/maps.ufo:1994
-#: ../base/ufos/maps.ufo:2037
+#: ../base/maps/industrial.ump:376 ../base/ufos/maps.ufo:2026
+#: ../base/ufos/maps.ufo:2069 ../base/ufos/maps.ufo:2113
+#: ../base/ufos/maps.ufo:2156
 msgid "Industrial Site"
 msgstr "Промышленный район"
 
@@ -127,21 +127,21 @@ msgstr "Промышленный район"
 msgid "Italy"
 msgstr "Италия"
 
-#: ../base/maps/japan.ump:356
+#: ../base/maps/japan.ump:362
 msgid "Japan"
 msgstr "Япония"
 
-#: ../base/maps/japan.ump:364
+#: ../base/maps/japan.ump:370
 msgid "Small eastern park."
 msgstr "Небольшой восточный парк"
 
-#: ../base/maps/japan.ump:395
+#: ../base/maps/japan.ump:401
 msgid "Harvester"
 msgstr "Охотник"
 
-#: ../base/maps/mansion.ump:398 ../base/maps/mansion.ump:442
-#: ../base/maps/mansion1.ump:68 ../base/ufos/maps.ufo:2183
-#: ../base/ufos/maps.ufo:2238 ../base/ufos/maps.ufo:2286
+#: ../base/maps/mansion.ump:393 ../base/maps/mansion.ump:437
+#: ../base/maps/mansion1.ump:74 ../base/ufos/maps.ufo:2302
+#: ../base/ufos/maps.ufo:2356 ../base/ufos/maps.ufo:2403
 msgid "Mansion"
 msgstr "Поместье"
 
@@ -165,39 +165,39 @@ msgstr "Ближневосточный — средняя карта"
 msgid "Rescue mission"
 msgstr "Спасательная миссия"
 
-#: ../base/maps/spedition.ump:62
+#: ../base/maps/spedition.ump:66
 msgid "Spedition"
 msgstr "Доставка"
 
-#: ../base/maps/tower.ump:62
+#: ../base/maps/tower.ump:69
 msgid "Tower"
 msgstr "Башня"
 
-#: ../base/maps/transport.ump:66
+#: ../base/maps/transport.ump:71
 msgid "Transport"
 msgstr "Транспортный узел"
 
-#: ../base/maps/tropic.ump:359
-msgid "Tropical river"
-msgstr "Тропическая река"
-
-#: ../base/maps/tropic.ump:391
-msgid "Tropical drug"
-msgstr "Тропическая наркоплантация"
-
-#: ../base/maps/tropic.ump:416
+#: ../base/maps/tropic.ump:359 ../base/maps/tropic.ump:398
 msgid "Tropical UFO"
 msgstr "НЛО в тропиках"
 
-#: ../base/maps/urban.ump:310 ../base/ufos/maps.ufo:2675
+#: ../base/maps/tropic.ump:377 ../base/maps/tropic.ump:416
+msgid "Tropical drug"
+msgstr "Тропическая наркоплантация"
+
+#: ../base/maps/tropic.ump:437
+msgid "Tropical river"
+msgstr "Тропическая река"
+
+#: ../base/maps/urban.ump:310 ../base/ufos/maps.ufo:2857
 msgid "Bomber in the City"
 msgstr "НЛО - «Бомбардировщик» в городе"
 
-#: ../base/maps/urban.ump:319 ../base/ufos/maps.ufo:2731
+#: ../base/maps/urban.ump:319 ../base/ufos/maps.ufo:2905
 msgid "Urban Disco"
 msgstr "Городская дискотека"
 
-#: ../base/maps/urban.ump:328 ../base/ufos/maps.ufo:2785
+#: ../base/maps/urban.ump:328 ../base/ufos/maps.ufo:2954
 msgid "Community Centre"
 msgstr "Общественный центр"
 
@@ -206,9 +206,9 @@ msgid "Stadium"
 msgstr "Стадион"
 
 #: ../base/maps/urban.ump:357 ../base/maps/urban.ump:367
-#: ../base/ufos/basemanagement.ufo:200 ../base/ufos/maps.ufo:2838
-#: ../base/ufos/maps.ufo:2893 ../base/ufos/ui/research.ufo:757
-#: client/cgame/campaign/cp_base_callbacks.cpp:327
+#: ../base/ufos/basemanagement.ufo:200 ../base/ufos/maps.ufo:3002
+#: ../base/ufos/maps.ufo:3052 ../base/ufos/ui/research.ufo:348
+#: client/cgame/campaign/cp_base_callbacks.cpp:324
 msgid "Laboratory"
 msgstr "Лаборатория"
 
@@ -216,262 +216,262 @@ msgstr "Лаборатория"
 msgid "Mart"
 msgstr "Торговый центр"
 
-#: ../base/maps/urban.ump:398 ../base/ufos/maps.ufo:3047
+#: ../base/maps/urban.ump:398 ../base/ufos/maps.ufo:3196
 #: ../base/ufos/skins.ufo:19
 msgid "Urban"
 msgstr "Город"
 
-#: ../base/maps/village.ump:758 ../base/maps/village.ump:786
-#: ../base/maps/village.ump:813 ../base/maps/village.ump:841
-#: ../base/maps/village.ump:869
+#: ../base/maps/village.ump:773 ../base/maps/village.ump:801
+#: ../base/maps/village.ump:828 ../base/maps/village.ump:856
+#: ../base/maps/village.ump:882 ../base/maps/village.ump:896
 msgid "Village"
 msgstr "Деревня"
 
-#: ../base/ufos/aircraftmanagement.ufo:102
+#: ../base/ufos/aircraftmanagement.ufo:118
 msgid "Firebird-class Dropship"
 msgstr "Десантный транспорт «Жар-птица»"
 
-#: ../base/ufos/aircraftmanagement.ufo:103
+#: ../base/ufos/aircraftmanagement.ufo:119
 msgid "Firebird D"
 msgstr "Жар-Птица ДТ"
 
-#: ../base/ufos/aircraftmanagement.ufo:143
+#: ../base/ufos/aircraftmanagement.ufo:159
 msgid "Herakles-class Heavy Lifter"
 msgstr "Тяжёлый транспорт «Геркулес»"
 
-#: ../base/ufos/aircraftmanagement.ufo:144
+#: ../base/ufos/aircraftmanagement.ufo:160
 msgid "Herakles D"
 msgstr "Геркулес ДТ"
 
-#: ../base/ufos/aircraftmanagement.ufo:185
+#: ../base/ufos/aircraftmanagement.ufo:201
 msgid "Raptor-class Combat Transport"
 msgstr "Десантный транспорт «Хищник»"
 
-#: ../base/ufos/aircraftmanagement.ufo:186
+#: ../base/ufos/aircraftmanagement.ufo:202
 msgid "Raptor"
 msgstr "Хищник ДТ"
 
-#: ../base/ufos/aircraftmanagement.ufo:240
+#: ../base/ufos/aircraftmanagement.ufo:256
 msgid "Stiletto-class Interceptor"
 msgstr "Перехватчик «Стилет»"
 
-#: ../base/ufos/aircraftmanagement.ufo:241
+#: ../base/ufos/aircraftmanagement.ufo:257
 msgid "Stiletto I"
 msgstr "Стилет Пр"
 
-#: ../base/ufos/aircraftmanagement.ufo:291
+#: ../base/ufos/aircraftmanagement.ufo:307
 msgid "Saracen-class Interceptor"
 msgstr "Перехватчик «Сарацин»"
 
-#: ../base/ufos/aircraftmanagement.ufo:292
+#: ../base/ufos/aircraftmanagement.ufo:308
 msgid "Saracen I"
 msgstr "Сарацин Пр"
 
-#: ../base/ufos/aircraftmanagement.ufo:338
+#: ../base/ufos/aircraftmanagement.ufo:354
 msgid "Dragon Interceptor"
 msgstr "Перехватчик «Дракон»"
 
-#: ../base/ufos/aircraftmanagement.ufo:339
+#: ../base/ufos/aircraftmanagement.ufo:355
 msgid "Dragon"
 msgstr "Дракон Пр"
 
-#: ../base/ufos/aircraftmanagement.ufo:385
+#: ../base/ufos/aircraftmanagement.ufo:401
 msgid "Starchaser-class Interceptor"
 msgstr "Перехватчик «Звёздный охотник»"
 
-#: ../base/ufos/aircraftmanagement.ufo:386
+#: ../base/ufos/aircraftmanagement.ufo:402
 msgid "Starchaser"
 msgstr "Звёздный охотник"
 
-#: ../base/ufos/aircraftmanagement.ufo:437
+#: ../base/ufos/aircraftmanagement.ufo:453
 msgid "Stingray Interceptor"
 msgstr "Перехватчик «Скат»"
 
-#: ../base/ufos/aircraftmanagement.ufo:438
+#: ../base/ufos/aircraftmanagement.ufo:454
 msgid "Stingray"
 msgstr "Скат Пр"
 
-#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/research.ufo:3983
+#: ../base/ufos/aircraftmanagement.ufo:516 ../base/ufos/research.ufo:3983
 msgid "UFO - Scout"
 msgstr "НЛО - «Разведчик»"
 
-#: ../base/ufos/aircraftmanagement.ufo:501
+#: ../base/ufos/aircraftmanagement.ufo:517
 msgid "Scout U"
 msgstr "Разведчик Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:527 ../base/ufos/research.ufo:4025
+#: ../base/ufos/aircraftmanagement.ufo:547 ../base/ufos/research.ufo:4025
 msgid "UFO - Fighter"
 msgstr "НЛО - «Истребитель»"
 
-#: ../base/ufos/aircraftmanagement.ufo:528
+#: ../base/ufos/aircraftmanagement.ufo:548
 msgid "Fighter U"
 msgstr "Истребитель Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:561 ../base/ufos/research.ufo:4324
+#: ../base/ufos/aircraftmanagement.ufo:585 ../base/ufos/research.ufo:4324
 msgid "UFO - Harvester"
 msgstr "НЛО - «Охотник»"
 
-#: ../base/ufos/aircraftmanagement.ufo:562
+#: ../base/ufos/aircraftmanagement.ufo:586
 msgid "Harvester U"
 msgstr "Охотник Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:607 ../base/ufos/research.ufo:4196
+#: ../base/ufos/aircraftmanagement.ufo:639 ../base/ufos/research.ufo:4196
 msgid "UFO - Corrupter"
 msgstr "НЛО - «Разрушитель»"
 
-#: ../base/ufos/aircraftmanagement.ufo:608
+#: ../base/ufos/aircraftmanagement.ufo:640
 msgid "Corrupter U"
 msgstr "Разрушитель Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:647 ../base/ufos/research.ufo:4068
+#: ../base/ufos/aircraftmanagement.ufo:687 ../base/ufos/research.ufo:4068
 msgid "UFO - Supply Ship"
 msgstr "НЛО - Транспорт снабжения"
 
-#: ../base/ufos/aircraftmanagement.ufo:648
+#: ../base/ufos/aircraftmanagement.ufo:688
 msgid "Supply U"
 msgstr "Транспорт НЛО"
 
-#: ../base/ufos/aircraftmanagement.ufo:674 ../base/ufos/research.ufo:4239
+#: ../base/ufos/aircraftmanagement.ufo:718 ../base/ufos/research.ufo:4239
 msgid "UFO - Gunboat"
 msgstr "НЛО - «Канонерка»"
 
-#: ../base/ufos/aircraftmanagement.ufo:675
+#: ../base/ufos/aircraftmanagement.ufo:719
 msgid "Gunboat U"
 msgstr "Канонерка Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:732 ../base/ufos/research.ufo:4154
+#: ../base/ufos/aircraftmanagement.ufo:781 ../base/ufos/research.ufo:4154
 msgid "UFO - Bomber"
 msgstr "НЛО - «Бомбардировщик»"
 
-#: ../base/ufos/aircraftmanagement.ufo:733
+#: ../base/ufos/aircraftmanagement.ufo:782
 msgid "Bomber U"
 msgstr "Бомбардировщик Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:797 ../base/ufos/research.ufo:4281
+#: ../base/ufos/aircraftmanagement.ufo:850 ../base/ufos/research.ufo:4281
 msgid "UFO - Ripper"
 msgstr "НЛО - «Потрошитель»"
 
-#: ../base/ufos/aircraftmanagement.ufo:798
+#: ../base/ufos/aircraftmanagement.ufo:851
 msgid "Ripper U"
 msgstr "Потрошитель Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:854 ../base/ufos/research.ufo:4111
+#: ../base/ufos/aircraftmanagement.ufo:907 ../base/ufos/research.ufo:4111
 msgid "UFO - Carrier"
 msgstr "НЛО - «Носитель»"
 
-#: ../base/ufos/aircraftmanagement.ufo:855
+#: ../base/ufos/aircraftmanagement.ufo:908
 msgid "Carrier U"
 msgstr "Носитель Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:876 ../base/ufos/research.ufo:4367
+#: ../base/ufos/aircraftmanagement.ufo:929 ../base/ufos/research.ufo:4367
 msgid "UFO - Mothership"
 msgstr "НЛО - «База»"
 
-#: ../base/ufos/aircraftmanagement.ufo:877
+#: ../base/ufos/aircraftmanagement.ufo:930
 msgid "Mothership U"
 msgstr "База Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:892 ../base/ufos/research.ufo:5174
+#: ../base/ufos/aircraftmanagement.ufo:945 ../base/ufos/research.ufo:5174
 msgid "Aerial Laser Cannon"
 msgstr "Авиационный лазер"
 
-#: ../base/ufos/aircraftmanagement.ufo:923
+#: ../base/ufos/aircraftmanagement.ufo:976
 msgid "Shiva Rotary Cannon"
 msgstr "Автопушка SHIVA"
 
-#: ../base/ufos/aircraftmanagement.ufo:934 ../base/ufos/research.ufo:5241
+#: ../base/ufos/aircraftmanagement.ufo:987 ../base/ufos/research.ufo:5241
 msgid "SHIVA 20mm API Rounds"
 msgstr "20мм БЗ снаряды SHIVA"
 
-#: ../base/ufos/aircraftmanagement.ufo:950 ../base/ufos/research.ufo:5262
+#: ../base/ufos/aircraftmanagement.ufo:1003 ../base/ufos/research.ufo:5262
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "20мм ФЗ снаряды SHIVA"
 
 # РЭБ - РадиоЭлектронная Борьба
-#: ../base/ufos/aircraftmanagement.ufo:966
+#: ../base/ufos/aircraftmanagement.ufo:1019
 msgid "Raven ECM Unit"
 msgstr "Модуль РЭБ «Ворон»"
 
-#: ../base/ufos/aircraftmanagement.ufo:978
+#: ../base/ufos/aircraftmanagement.ufo:1031
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Ракетный блок «Пустельга»"
 
 # ВВ - "воздух-воздух"
-#: ../base/ufos/aircraftmanagement.ufo:988
+#: ../base/ufos/aircraftmanagement.ufo:1041
 msgid "Sparrowhawk Missile"
 msgstr "Ракета класса ВВ «Пустельга»"
 
 # НАР - Неуправляемая Авиационная Ракета
-#: ../base/ufos/aircraftmanagement.ufo:1005 ../base/ufos/research.ufo:5321
+#: ../base/ufos/aircraftmanagement.ufo:1058 ../base/ufos/research.ufo:5321
 msgid "TR-20 Rocket Pod"
 msgstr "Блок НАР TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:1018 ../base/ufos/research.ufo:5338
+#: ../base/ufos/aircraftmanagement.ufo:1071 ../base/ufos/research.ufo:5338
 msgid "TR-20 Rocket"
 msgstr "Ракета TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:1037 ../base/ufos/research.ufo:5357
+#: ../base/ufos/aircraftmanagement.ufo:1090 ../base/ufos/research.ufo:5357
 msgid "Particle Beam Weapon"
 msgstr "Пучковое оружие"
 
-#: ../base/ufos/aircraftmanagement.ufo:1067 ../base/ufos/research.ufo:5414
+#: ../base/ufos/aircraftmanagement.ufo:1120 ../base/ufos/research.ufo:5414
 msgid "Alien Launcher"
 msgstr "Пусковая установка пришельцев"
 
-#: ../base/ufos/aircraftmanagement.ufo:1077 ../base/ufos/research.ufo:5461
+#: ../base/ufos/aircraftmanagement.ufo:1130 ../base/ufos/research.ufo:5461
 msgid "Antimatter Missile"
 msgstr "Ракета с антиматерией"
 
-#: ../base/ufos/aircraftmanagement.ufo:1094 ../base/ufos/research.ufo:5510
+#: ../base/ufos/aircraftmanagement.ufo:1147 ../base/ufos/research.ufo:5510
 msgid "Hybrid Missile"
 msgstr "Гибридная ракета"
 
-#: ../base/ufos/aircraftmanagement.ufo:1111 ../base/ufos/research.ufo:5560
+#: ../base/ufos/aircraftmanagement.ufo:1164 ../base/ufos/research.ufo:5560
 msgid "Targeting Computer"
 msgstr "Прицельный комплекс"
 
-#: ../base/ufos/aircraftmanagement.ufo:1123 ../base/ufos/research.ufo:5576
+#: ../base/ufos/aircraftmanagement.ufo:1176 ../base/ufos/research.ufo:5576
 msgid "Fuel Pod"
 msgstr "Подвесной топливный бак"
 
-#: ../base/ufos/aircraftmanagement.ufo:1137 ../base/ufos/research.ufo:4920
+#: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:4920
 msgid "Polymer Aircraft Armour"
 msgstr "Полимерная авиаброня"
 
 # Или авиаброня?
-#: ../base/ufos/aircraftmanagement.ufo:1151 ../base/ufos/research.ufo:4937
+#: ../base/ufos/aircraftmanagement.ufo:1204 ../base/ufos/research.ufo:4937
 msgid "Alien Aircraft Plating"
 msgstr "Броня НЛО"
 
-#: ../base/ufos/aircraftmanagement.ufo:1165 ../base/ufos/research.ufo:4979
+#: ../base/ufos/aircraftmanagement.ufo:1218 ../base/ufos/research.ufo:4979
 msgid "Alien Polymer Armour"
 msgstr "Полимерная броня пришельцев"
 
-#: ../base/ufos/aircraftmanagement.ufo:1179 ../base/ufos/research.ufo:5592
+#: ../base/ufos/aircraftmanagement.ufo:1232 ../base/ufos/research.ufo:5592
 msgid "Alien Electronic Warfare Suite"
 msgstr "Модуль РЭБ пришельцев"
 
-#: ../base/ufos/aircraftmanagement.ufo:1190 ../base/ufos/research.ufo:5021
+#: ../base/ufos/aircraftmanagement.ufo:1243 ../base/ufos/research.ufo:5021
 msgid "Alien Astrogation"
 msgstr "Навигационная система НЛО"
 
-#: ../base/ufos/aircraftmanagement.ufo:1200 ../base/ufos/research.ufo:5059
+#: ../base/ufos/aircraftmanagement.ufo:1253 ../base/ufos/research.ufo:5059
 msgid "Alien Propulsion"
 msgstr "Двигательная система НЛО"
 
-#: ../base/ufos/aircraftmanagement.ufo:1209 ../base/ufos/research.ufo:5097
+#: ../base/ufos/aircraftmanagement.ufo:1262 ../base/ufos/research.ufo:5097
 msgid "Advanced Alien Propulsion"
 msgstr "Улучшенная двигательная система НЛО"
 
-#: ../base/ufos/aircraftmanagement.ufo:1218 ../base/ufos/research.ufo:5136
+#: ../base/ufos/aircraftmanagement.ufo:1271 ../base/ufos/research.ufo:5136
 msgid "Alien Detection"
 msgstr "Локационная система НЛО"
 
-#: ../base/ufos/aircraftmanagement.ufo:1231 ../base/ufos/research.ufo:4872
+#: ../base/ufos/aircraftmanagement.ufo:1284 ../base/ufos/research.ufo:4872
 msgid "AA51 missile launcher"
 msgstr "РПУ АА51"
 
-#: ../base/ufos/aircraftmanagement.ufo:1261 ../base/ufos/research.ufo:249
+#: ../base/ufos/aircraftmanagement.ufo:1314 ../base/ufos/research.ufo:249
 msgid "Base-Defence Laser Turret"
 msgstr "Лазерная защита базы"
 
@@ -531,8 +531,8 @@ msgstr "Нательная броня пришельцев"
 msgid "Medium Alien Armour"
 msgstr "Средняя броня пришельцев"
 
-#: ../base/ufos/basemanagement.ufo:35 ../base/ufos/ui/aliencont.ufo:156
-#: ../base/ufos/ui/aliencont.ufo:343 ../base/ufos/ui/bases.ufo:390
+#: ../base/ufos/basemanagement.ufo:35 ../base/ufos/ui/aliencont.ufo:155
+#: ../base/ufos/ui/aliencont.ufo:342 ../base/ufos/ui/bases.ufo:390
 msgid "Alien Containment"
 msgstr "Изолятор пришельцев"
 
@@ -540,9 +540,9 @@ msgstr "Изолятор пришельцев"
 msgid "Entrance"
 msgstr "Вход"
 
-#: ../base/ufos/basemanagement.ufo:64 ../base/ufos/ui/market.ufo:296
+#: ../base/ufos/basemanagement.ufo:64 ../base/ufos/ui/market.ufo:309
 #: ../base/ufos/ui/production.ufo:243
-#: client/cgame/campaign/cp_base_callbacks.cpp:317
+#: client/cgame/campaign/cp_base_callbacks.cpp:314
 msgid "Storage"
 msgstr "Склад"
 
@@ -554,28 +554,28 @@ msgstr "Электростанция"
 msgid "Command Centre"
 msgstr "Командный центр"
 
-#: ../base/ufos/basemanagement.ufo:109 ../base/ufos/ui/hire.ufo:376
-#: client/cgame/campaign/cp_base_callbacks.cpp:337
+#: ../base/ufos/basemanagement.ufo:109 ../base/ufos/ui/hire.ufo:380
+#: client/cgame/campaign/cp_base_callbacks.cpp:334
 msgid "Living Quarters"
 msgstr "Казармы"
 
-#: ../base/ufos/basemanagement.ufo:122 ../base/ufos/ui/aircraft.ufo:252
+#: ../base/ufos/basemanagement.ufo:122 ../base/ufos/ui/aircraft.ufo:259
 #: ../base/ufos/ui/production.ufo:259
 msgid "Dropship Hangar"
 msgstr "Десантный ангар"
 
-#: ../base/ufos/basemanagement.ufo:138 ../base/ufos/ui/aircraft.ufo:260
+#: ../base/ufos/basemanagement.ufo:138 ../base/ufos/ui/aircraft.ufo:267
 #: ../base/ufos/ui/production.ufo:251
 msgid "Interceptor Hangar"
 msgstr "Ангар для перехватчиков"
 
-#: ../base/ufos/basemanagement.ufo:152 ../base/ufos/maps.ufo:4076
+#: ../base/ufos/basemanagement.ufo:152 ../base/ufos/maps.ufo:4228
 #: ../base/ufos/ui/production.ufo:267
-#: client/cgame/campaign/cp_base_callbacks.cpp:332
+#: client/cgame/campaign/cp_base_callbacks.cpp:329
 msgid "Workshop"
 msgstr "Мастерская"
 
-#: ../base/ufos/basemanagement.ufo:168 ../base/ufos/ui/hud_default.ufo:1105
+#: ../base/ufos/basemanagement.ufo:168 ../base/ufos/ui/hud_default.ufo:1084
 #: ../base/ufos/ui/radar.ufo:21
 msgid "Radar"
 msgstr "Радар"
@@ -584,8 +584,8 @@ msgstr "Радар"
 msgid "Advanced Radar"
 msgstr "Улучшенный радар"
 
-#: ../base/ufos/basemanagement.ufo:215 ../base/ufos/ui/hospital.ufo:145
-#: client/cgame/campaign/cp_base_callbacks.cpp:347
+#: ../base/ufos/basemanagement.ufo:215 ../base/ufos/ui/hospital.ufo:20
+#: client/cgame/campaign/cp_base_callbacks.cpp:344
 msgid "Hospital"
 msgstr "Лазарет"
 
@@ -626,1818 +626,1822 @@ msgid "Play the aliens"
 msgstr "Играть за пришельцев"
 
 #: ../base/ufos/cities.ufo:15
-msgid "Amsterdam"
-msgstr "Амстердам"
-
-#: ../base/ufos/cities.ufo:21
-msgid "Mumbai"
-msgstr "Мумбаи"
-
-#: ../base/ufos/cities.ufo:27
-msgid "Cape Town"
-msgstr "Кейптаун"
-
-#: ../base/ufos/cities.ufo:33
-msgid "Cayenne"
-msgstr "Кайенна"
-
-#: ../base/ufos/cities.ufo:39
-msgid "Dakar"
-msgstr "Дакар"
-
-#: ../base/ufos/cities.ufo:45
-msgid "Teheran"
-msgstr "Тегеран"
-
-#: ../base/ufos/cities.ufo:51
-msgid "Wellington"
-msgstr "Веллингтон"
-
-#: ../base/ufos/cities.ufo:57 ../base/ufos/cities.ufo:2625
-msgid "Wichita"
-msgstr "Уичита"
-
-#: ../base/ufos/cities.ufo:63
 msgid "Aarhus"
 msgstr "Орхус"
 
-#: ../base/ufos/cities.ufo:69
+#: ../base/ufos/cities.ufo:21
 msgid "Aberdeen"
 msgstr "Абердин"
 
-#: ../base/ufos/cities.ufo:75
+#: ../base/ufos/cities.ufo:27
 msgid "Abidjan"
 msgstr "Абиджан"
 
-#: ../base/ufos/cities.ufo:81
+#: ../base/ufos/cities.ufo:33
 msgid "Abuja"
 msgstr "Абуджа"
 
-#: ../base/ufos/cities.ufo:87
+#: ../base/ufos/cities.ufo:39
 msgid "Accra"
 msgstr "Аккра"
 
-#: ../base/ufos/cities.ufo:93
+#: ../base/ufos/cities.ufo:45
 msgid "Adana"
 msgstr "Адана"
 
-#: ../base/ufos/cities.ufo:99
+#: ../base/ufos/cities.ufo:51
 msgid "Addis Ababa"
 msgstr "Аддис-Абеба"
 
-#: ../base/ufos/cities.ufo:105
+#: ../base/ufos/cities.ufo:57
 msgid "Agartala"
 msgstr "Агартала"
 
-#: ../base/ufos/cities.ufo:111
+#: ../base/ufos/cities.ufo:63
 msgid "Ahmedabad"
 msgstr "Ахмадабад"
 
-#: ../base/ufos/cities.ufo:117
+#: ../base/ufos/cities.ufo:69
 msgid "Albuquerque"
 msgstr "Альбукерке"
 
-#: ../base/ufos/cities.ufo:123
+#: ../base/ufos/cities.ufo:75
 msgid "Almaty"
 msgstr "Алма-Ата"
 
-#: ../base/ufos/cities.ufo:129
+#: ../base/ufos/cities.ufo:81
 msgid "Amman"
 msgstr "Амман"
 
-#: ../base/ufos/cities.ufo:135
+#: ../base/ufos/cities.ufo:87
 msgid "Amritsar"
 msgstr "Амритсар"
 
-#: ../base/ufos/cities.ufo:141
+#: ../base/ufos/cities.ufo:93
+msgid "Amsterdam"
+msgstr "Амстердам"
+
+#: ../base/ufos/cities.ufo:99
 msgid "Anadyr"
 msgstr "Анадырь"
 
-#: ../base/ufos/cities.ufo:147
+#: ../base/ufos/cities.ufo:105
 msgid "Anchorage"
 msgstr "Анкорейдж"
 
-#: ../base/ufos/cities.ufo:153
+#: ../base/ufos/cities.ufo:111
 msgid "Andorra la Vella"
 msgstr "Андорра-ла-Велья"
 
-#: ../base/ufos/cities.ufo:159
+#: ../base/ufos/cities.ufo:117
 msgid "Ankara"
 msgstr "Анкара"
 
-#: ../base/ufos/cities.ufo:165
+#: ../base/ufos/cities.ufo:123
 msgid "Antananarivo"
 msgstr "Антананариву"
 
-#: ../base/ufos/cities.ufo:171
+#: ../base/ufos/cities.ufo:129
 msgid "Antwerp"
 msgstr "Антверпен"
 
-#: ../base/ufos/cities.ufo:177
+#: ../base/ufos/cities.ufo:135
 msgid "Arbil"
 msgstr "Эрбиль"
 
-#: ../base/ufos/cities.ufo:183
+#: ../base/ufos/cities.ufo:141
 msgid "Arequipa"
 msgstr "Арекипа"
 
-#: ../base/ufos/cities.ufo:189
+#: ../base/ufos/cities.ufo:147
 msgid "Asmara"
 msgstr "Асмэра"
 
-#: ../base/ufos/cities.ufo:195
+#: ../base/ufos/cities.ufo:153
 msgid "Assis"
 msgstr "Ассис"
 
-#: ../base/ufos/cities.ufo:201
+#: ../base/ufos/cities.ufo:159
 msgid "Astana"
 msgstr "Астана"
 
-#: ../base/ufos/cities.ufo:207
+#: ../base/ufos/cities.ufo:165
 msgid "Asuncion"
 msgstr "Асунсьон"
 
-#: ../base/ufos/cities.ufo:213
+#: ../base/ufos/cities.ufo:171
 msgid "Athens"
 msgstr "Афины"
 
-#: ../base/ufos/cities.ufo:219
+#: ../base/ufos/cities.ufo:177
 msgid "Atlanta"
 msgstr "Атланта"
 
-#: ../base/ufos/cities.ufo:225
+#: ../base/ufos/cities.ufo:183
 msgid "Austin"
 msgstr "Остин"
 
-#: ../base/ufos/cities.ufo:231
+#: ../base/ufos/cities.ufo:189
 msgid "Baghdad"
 msgstr "Багдад"
 
-#: ../base/ufos/cities.ufo:237
+#: ../base/ufos/cities.ufo:195
 msgid "Balikpapan"
 msgstr "Баликпапан"
 
-#: ../base/ufos/cities.ufo:243
+#: ../base/ufos/cities.ufo:201
 msgid "Baltimore"
 msgstr "Балтимор"
 
-#: ../base/ufos/cities.ufo:249
+#: ../base/ufos/cities.ufo:207
 msgid "Bamako"
 msgstr "Бамако"
 
-#: ../base/ufos/cities.ufo:255
+#: ../base/ufos/cities.ufo:213
 msgid "Bandung"
 msgstr "Бандунг"
 
-#: ../base/ufos/cities.ufo:261
+#: ../base/ufos/cities.ufo:219
 msgid "Bangalore"
 msgstr "Бангалор"
 
-#: ../base/ufos/cities.ufo:267
+#: ../base/ufos/cities.ufo:225
 msgid "Bangkok"
 msgstr "Бангкок"
 
-#: ../base/ufos/cities.ufo:273
+#: ../base/ufos/cities.ufo:231
 msgid "Bangui"
 msgstr "Банги"
 
-#: ../base/ufos/cities.ufo:279
+#: ../base/ufos/cities.ufo:237
 msgid "Barcelona"
 msgstr "Барселона"
 
-#: ../base/ufos/cities.ufo:285
+#: ../base/ufos/cities.ufo:243
 msgid "Basra"
 msgstr "Басра"
 
-#: ../base/ufos/cities.ufo:291
+#: ../base/ufos/cities.ufo:249
 msgid "Batticaloa"
 msgstr "Баттикалоа"
 
-#: ../base/ufos/cities.ufo:297
+#: ../base/ufos/cities.ufo:255
 msgid "Beijing"
 msgstr "Пекин"
 
-#: ../base/ufos/cities.ufo:303
+#: ../base/ufos/cities.ufo:261
 msgid "Belfast"
 msgstr "Белфаст"
 
-#: ../base/ufos/cities.ufo:309
+#: ../base/ufos/cities.ufo:267
 msgid "Belgrade"
 msgstr "Белград"
 
-#: ../base/ufos/cities.ufo:315
+#: ../base/ufos/cities.ufo:273
 msgid "Belmopan"
 msgstr "Бельмопан"
 
-#: ../base/ufos/cities.ufo:321
+#: ../base/ufos/cities.ufo:279
 msgid "Berlin"
 msgstr "Берлин"
 
-#: ../base/ufos/cities.ufo:327
+#: ../base/ufos/cities.ufo:285
 msgid "Berne"
 msgstr "Берн"
 
-#: ../base/ufos/cities.ufo:333
+#: ../base/ufos/cities.ufo:291
 msgid "Birmingham"
 msgstr "Бирмингем"
 
-#: ../base/ufos/cities.ufo:339
+#: ../base/ufos/cities.ufo:297
 msgid "Bissau"
 msgstr "Бисау"
 
-#: ../base/ufos/cities.ufo:345
+#: ../base/ufos/cities.ufo:303
 msgid "Blantyre"
 msgstr "Блантайр"
 
-#: ../base/ufos/cities.ufo:351
+#: ../base/ufos/cities.ufo:309
 msgid "Bloemfontein"
 msgstr "Блумфонтейн"
 
-#: ../base/ufos/cities.ufo:357
+#: ../base/ufos/cities.ufo:315
 msgid "Bogor"
 msgstr "Богор"
 
-#: ../base/ufos/cities.ufo:363
+#: ../base/ufos/cities.ufo:321
 msgid "Bogota"
 msgstr "Богота"
 
-#: ../base/ufos/cities.ufo:369
+#: ../base/ufos/cities.ufo:327
 msgid "Boston"
 msgstr "Бостон"
 
-#: ../base/ufos/cities.ufo:375
+#: ../base/ufos/cities.ufo:333
 msgid "Brasilia"
 msgstr "Бразилия"
 
-#: ../base/ufos/cities.ufo:381
+#: ../base/ufos/cities.ufo:339
 msgid "Bratislava"
 msgstr "Братислава"
 
-#: ../base/ufos/cities.ufo:387
+#: ../base/ufos/cities.ufo:345
 msgid "Bratsk"
 msgstr "Братск"
 
-#: ../base/ufos/cities.ufo:393
+#: ../base/ufos/cities.ufo:351
 msgid "Brazzaville"
 msgstr "Браззавилль"
 
-#: ../base/ufos/cities.ufo:399
+#: ../base/ufos/cities.ufo:357
 msgid "Brisbane"
 msgstr "Брисбен"
 
-#: ../base/ufos/cities.ufo:405
+#: ../base/ufos/cities.ufo:363
 msgid "Brussels"
 msgstr "Брюссель"
 
-#: ../base/ufos/cities.ufo:411
+#: ../base/ufos/cities.ufo:369
 msgid "Bucharest"
 msgstr "Бухарест"
 
-#: ../base/ufos/cities.ufo:417
+#: ../base/ufos/cities.ufo:375
 msgid "Budapest"
 msgstr "Будапешт"
 
-#: ../base/ufos/cities.ufo:423
+#: ../base/ufos/cities.ufo:381
 msgid "Buenos Aires"
 msgstr "Буэнос Айрес"
 
-#: ../base/ufos/cities.ufo:429
+#: ../base/ufos/cities.ufo:387
 msgid "Bujumbura"
 msgstr "Бужумбура"
 
-#: ../base/ufos/cities.ufo:435
+#: ../base/ufos/cities.ufo:393
 msgid "Busan"
 msgstr "Пусан"
 
-#: ../base/ufos/cities.ufo:441
+#: ../base/ufos/cities.ufo:399
 msgid "Cairns"
 msgstr "Кэрнс"
 
-#: ../base/ufos/cities.ufo:447
+#: ../base/ufos/cities.ufo:405
 msgid "Cairo"
 msgstr "Каир"
 
-#: ../base/ufos/cities.ufo:453
+#: ../base/ufos/cities.ufo:411
 msgid "Calama"
 msgstr "Калама"
 
-#: ../base/ufos/cities.ufo:459
+#: ../base/ufos/cities.ufo:417
 msgid "Calgary"
 msgstr "Калгари"
 
-#: ../base/ufos/cities.ufo:465
+#: ../base/ufos/cities.ufo:423
 msgid "Campinas"
 msgstr "Кампинас"
 
-#: ../base/ufos/cities.ufo:471
+#: ../base/ufos/cities.ufo:429
 msgid "Canberra"
 msgstr "Канберра"
 
-#: ../base/ufos/cities.ufo:477
+#: ../base/ufos/cities.ufo:435
 msgid "Cannes"
 msgstr "Канны"
 
-#: ../base/ufos/cities.ufo:483
+#: ../base/ufos/cities.ufo:441
+msgid "Cape Town"
+msgstr "Кейптаун"
+
+#: ../base/ufos/cities.ufo:447
 msgid "Cardiff"
 msgstr "Кардиф"
 
-#: ../base/ufos/cities.ufo:489
+#: ../base/ufos/cities.ufo:453
+msgid "Cayenne"
+msgstr "Кайенна"
+
+#: ../base/ufos/cities.ufo:459
 msgid "Changchun"
 msgstr "Чанчунь"
 
-#: ../base/ufos/cities.ufo:495
+#: ../base/ufos/cities.ufo:465
 msgid "Charlotte"
 msgstr "Шарлотт"
 
-#: ../base/ufos/cities.ufo:501
+#: ../base/ufos/cities.ufo:471
 msgid "Chengdu"
 msgstr "Чэнду"
 
-#: ../base/ufos/cities.ufo:507
+#: ../base/ufos/cities.ufo:477
 msgid "Chennai"
 msgstr "Ченнай"
 
-#: ../base/ufos/cities.ufo:513
+#: ../base/ufos/cities.ufo:483
 msgid "Chiang Mai"
 msgstr "Чианг Маи"
 
-#: ../base/ufos/cities.ufo:519
+#: ../base/ufos/cities.ufo:489
 msgid "Chicago"
 msgstr "Чикаго"
 
-#: ../base/ufos/cities.ufo:525
+#: ../base/ufos/cities.ufo:495
 msgid "Chihuahua"
 msgstr "Чихуахуа"
 
-#: ../base/ufos/cities.ufo:531
+#: ../base/ufos/cities.ufo:501
 msgid "Chisinau"
 msgstr "Кишинев"
 
-#: ../base/ufos/cities.ufo:537
+#: ../base/ufos/cities.ufo:507
 msgid "Chittagong"
 msgstr "Читтагонг"
 
-#: ../base/ufos/cities.ufo:543
+#: ../base/ufos/cities.ufo:513
 msgid "Chongjin"
 msgstr "Чонджин"
 
-#: ../base/ufos/cities.ufo:549
+#: ../base/ufos/cities.ufo:519
 msgid "Chongqing"
 msgstr "Чунцин"
 
-#: ../base/ufos/cities.ufo:555
+#: ../base/ufos/cities.ufo:525
 msgid "Christchurch"
 msgstr "Крайстчёрч"
 
-#: ../base/ufos/cities.ufo:561
+#: ../base/ufos/cities.ufo:531
 msgid "Chui"
 msgstr "Чуй"
 
-#: ../base/ufos/cities.ufo:567
+#: ../base/ufos/cities.ufo:537
 msgid "Cincinnati"
 msgstr "Цинциннати"
 
-#: ../base/ufos/cities.ufo:573
+#: ../base/ufos/cities.ufo:543
 msgid "Ciudad del Este"
 msgstr "Сьюдад-дель-Эсте"
 
-#: ../base/ufos/cities.ufo:579
+#: ../base/ufos/cities.ufo:549
 msgid "Cologne"
 msgstr "Кёльн"
 
-#: ../base/ufos/cities.ufo:585
+#: ../base/ufos/cities.ufo:555
 msgid "Columbus"
 msgstr "Коламбус"
 
-#: ../base/ufos/cities.ufo:591
+#: ../base/ufos/cities.ufo:561
 msgid "Conakry"
 msgstr "Конакри"
 
-#: ../base/ufos/cities.ufo:597
+#: ../base/ufos/cities.ufo:567
 msgid "Copenhagen"
 msgstr "Копенгаген"
 
-#: ../base/ufos/cities.ufo:603
+#: ../base/ufos/cities.ufo:573
 msgid "Cordoba"
 msgstr "Кордова"
 
-#: ../base/ufos/cities.ufo:609
+#: ../base/ufos/cities.ufo:579
 msgid "Cork"
 msgstr "Корк"
 
-#: ../base/ufos/cities.ufo:615
+#: ../base/ufos/cities.ufo:585
 msgid "Cotonou"
 msgstr "Котону"
 
-#: ../base/ufos/cities.ufo:621
+#: ../base/ufos/cities.ufo:591
 msgid "Cusco"
 msgstr "Куско"
 
-#: ../base/ufos/cities.ufo:627
-msgid "Daegu"
-msgstr "Тэгу"
-
-#: ../base/ufos/cities.ufo:633
-msgid "Dalian"
-msgstr "Далянь"
-
-#: ../base/ufos/cities.ufo:639
-msgid "Dallas"
-msgstr "Даллас"
-
-#: ../base/ufos/cities.ufo:645
-msgid "Damascus"
-msgstr "Дамаск"
-
-#: ../base/ufos/cities.ufo:651
-msgid "Dammam"
-msgstr "Даммам"
-
-#: ../base/ufos/cities.ufo:657
+#: ../base/ufos/cities.ufo:597
 msgid "Da Nang"
 msgstr "Дананг"
 
-#: ../base/ufos/cities.ufo:663
+#: ../base/ufos/cities.ufo:603
+msgid "Daegu"
+msgstr "Тэгу"
+
+#: ../base/ufos/cities.ufo:609
+msgid "Dakar"
+msgstr "Дакар"
+
+#: ../base/ufos/cities.ufo:615
+msgid "Dalian"
+msgstr "Далянь"
+
+#: ../base/ufos/cities.ufo:621
+msgid "Dallas"
+msgstr "Даллас"
+
+#: ../base/ufos/cities.ufo:627
+msgid "Damascus"
+msgstr "Дамаск"
+
+#: ../base/ufos/cities.ufo:633
+msgid "Dammam"
+msgstr "Даммам"
+
+#: ../base/ufos/cities.ufo:639
 msgid "Dar es Salaam"
 msgstr "Дар-эс-Салам"
 
-#: ../base/ufos/cities.ufo:669
+#: ../base/ufos/cities.ufo:645
 msgid "Davao City"
 msgstr "Давао"
 
-#: ../base/ufos/cities.ufo:675
+#: ../base/ufos/cities.ufo:651
 msgid "Denpasar"
 msgstr "Денпасар"
 
-#: ../base/ufos/cities.ufo:681
+#: ../base/ufos/cities.ufo:657
 msgid "Denver"
 msgstr "Денвер"
 
-#: ../base/ufos/cities.ufo:687
+#: ../base/ufos/cities.ufo:663
 msgid "Detroit"
 msgstr "Детройт"
 
-#: ../base/ufos/cities.ufo:693
+#: ../base/ufos/cities.ufo:669
 msgid "Dhaka"
 msgstr "Дакка"
 
-#: ../base/ufos/cities.ufo:699
+#: ../base/ufos/cities.ufo:675
 msgid "Dibrugarh"
 msgstr "Дибругарх"
 
-#: ../base/ufos/cities.ufo:705
+#: ../base/ufos/cities.ufo:681
 msgid "Dodoma"
 msgstr "Додома"
 
-#: ../base/ufos/cities.ufo:711
+#: ../base/ufos/cities.ufo:687
 msgid "Doha"
 msgstr "Доха"
 
-#: ../base/ufos/cities.ufo:717
+#: ../base/ufos/cities.ufo:693
 msgid "Dongguan"
 msgstr "Дунгуань"
 
-#: ../base/ufos/cities.ufo:723
+#: ../base/ufos/cities.ufo:699
 msgid "Douala"
 msgstr "Дуала"
 
-#: ../base/ufos/cities.ufo:729
+#: ../base/ufos/cities.ufo:705
 msgid "Douglas"
 msgstr "Дуглас"
 
-#: ../base/ufos/cities.ufo:735
+#: ../base/ufos/cities.ufo:711
+msgid "Dresden"
+msgstr "Дрезден"
+
+#: ../base/ufos/cities.ufo:717
 msgid "Dublin"
 msgstr "Дублин"
 
-#: ../base/ufos/cities.ufo:741
+#: ../base/ufos/cities.ufo:723
+msgid "Duesseldorf"
+msgstr "Дюссельдорф"
+
+#: ../base/ufos/cities.ufo:729
 msgid "Durango"
 msgstr "Дуранго"
 
-#: ../base/ufos/cities.ufo:747
+#: ../base/ufos/cities.ufo:735
 msgid "Durban"
 msgstr "Дурбан"
 
-#: ../base/ufos/cities.ufo:753
+#: ../base/ufos/cities.ufo:741
 msgid "Dushanbe"
 msgstr "Душанбе"
 
-#: ../base/ufos/cities.ufo:759
-msgid "Dusseldorf"
-msgstr "Дюссельдорф"
-
-#: ../base/ufos/cities.ufo:765
+#: ../base/ufos/cities.ufo:747
 msgid "Edinburgh"
 msgstr "Эдинбург"
 
-#: ../base/ufos/cities.ufo:771
+#: ../base/ufos/cities.ufo:753
 msgid "Edmonton"
 msgstr "Эдмонтон"
 
-#: ../base/ufos/cities.ufo:777
+#: ../base/ufos/cities.ufo:759
 msgid "El Paso"
 msgstr "Эль Пасо"
 
-#: ../base/ufos/cities.ufo:783
+#: ../base/ufos/cities.ufo:765
 msgid "Enugu"
 msgstr "Энугу"
 
-#: ../base/ufos/cities.ufo:789
+#: ../base/ufos/cities.ufo:771
 msgid "Espoo"
 msgstr "Эспоо"
 
-#: ../base/ufos/cities.ufo:795
+#: ../base/ufos/cities.ufo:777
 msgid "Fairbanks"
 msgstr "Фэрбенкс"
 
-#: ../base/ufos/cities.ufo:801
+#: ../base/ufos/cities.ufo:783
 msgid "Faisalabad"
 msgstr "Фейсалабад"
 
-#: ../base/ufos/cities.ufo:807
+#: ../base/ufos/cities.ufo:789
 msgid "Frankfurt am Main"
 msgstr "Франкфурт-на-Майне"
 
-#: ../base/ufos/cities.ufo:813
+#: ../base/ufos/cities.ufo:795
 msgid "Fredericton"
 msgstr "Фредериктон"
 
-#: ../base/ufos/cities.ufo:819
+#: ../base/ufos/cities.ufo:801
 msgid "Gangtok"
 msgstr "Гангток"
 
-#: ../base/ufos/cities.ufo:825
+#: ../base/ufos/cities.ufo:807
 msgid "Gaziantep"
 msgstr "Газиантеп"
 
-#: ../base/ufos/cities.ufo:831
+#: ../base/ufos/cities.ufo:813
 msgid "Geneva"
 msgstr "Женева"
 
-#: ../base/ufos/cities.ufo:837
+#: ../base/ufos/cities.ufo:819
 msgid "Georgetown"
 msgstr "Джорджтаун"
 
-#: ../base/ufos/cities.ufo:843
+#: ../base/ufos/cities.ufo:825
 msgid "Gibraltar"
 msgstr "Гибралтар"
 
-#: ../base/ufos/cities.ufo:849
+#: ../base/ufos/cities.ufo:831
 msgid "Glasgow"
 msgstr "Глазго"
 
-#: ../base/ufos/cities.ufo:855
+#: ../base/ufos/cities.ufo:837
 msgid "Gold Coast"
 msgstr "Золотой Берег"
 
-#: ../base/ufos/cities.ufo:861
+#: ../base/ufos/cities.ufo:843
 msgid "Gothenburg"
 msgstr "Гётеборг"
 
-#: ../base/ufos/cities.ufo:867
+#: ../base/ufos/cities.ufo:849
 msgid "Graz"
 msgstr "Грац"
 
-#: ../base/ufos/cities.ufo:873
+#: ../base/ufos/cities.ufo:855
 msgid "Greenwich"
 msgstr "Гринвич"
 
-#: ../base/ufos/cities.ufo:879
+#: ../base/ufos/cities.ufo:861
 msgid "Guadalajara"
 msgstr "Гвадалахара"
 
-#: ../base/ufos/cities.ufo:885
+#: ../base/ufos/cities.ufo:867
 msgid "Guangzhou"
 msgstr "Гуанчжоу"
 
-#: ../base/ufos/cities.ufo:891
+#: ../base/ufos/cities.ufo:873
 msgid "Guatemala City"
 msgstr "Гватемала"
 
-#: ../base/ufos/cities.ufo:897
+#: ../base/ufos/cities.ufo:879
 msgid "Guwahati"
 msgstr "Гувахати"
 
-#: ../base/ufos/cities.ufo:903
+#: ../base/ufos/cities.ufo:885
 msgid "Hai Phong"
 msgstr "Хайфонг"
 
-#: ../base/ufos/cities.ufo:909
+#: ../base/ufos/cities.ufo:891
 msgid "Halifax"
 msgstr "Галифакс"
 
-#: ../base/ufos/cities.ufo:915
+#: ../base/ufos/cities.ufo:897
 msgid "Hamburg"
 msgstr "Гамбург"
 
-#: ../base/ufos/cities.ufo:921
+#: ../base/ufos/cities.ufo:903
 msgid "Handan"
 msgstr "Ханьдань"
 
-#: ../base/ufos/cities.ufo:927
+#: ../base/ufos/cities.ufo:909
 msgid "Hanga Roa"
 msgstr "Ханга-Роа"
 
-#: ../base/ufos/cities.ufo:933
+#: ../base/ufos/cities.ufo:915
 msgid "Hangzhou"
 msgstr "Ханчжоу"
 
-#: ../base/ufos/cities.ufo:939
+#: ../base/ufos/cities.ufo:921
 msgid "Hanoi"
 msgstr "Ханой"
 
-#: ../base/ufos/cities.ufo:945
+#: ../base/ufos/cities.ufo:927
 msgid "Hanover"
 msgstr "Ганновер"
 
-#: ../base/ufos/cities.ufo:951
+#: ../base/ufos/cities.ufo:933
 msgid "Harare"
 msgstr "Хараре"
 
-#: ../base/ufos/cities.ufo:957
+#: ../base/ufos/cities.ufo:939
 msgid "Harbin"
 msgstr "Харбин"
 
-#: ../base/ufos/cities.ufo:963
+#: ../base/ufos/cities.ufo:945
 msgid "Hat Yai"
 msgstr "Хат Яи"
 
-#: ../base/ufos/cities.ufo:969
+#: ../base/ufos/cities.ufo:951
 msgid "Helsinki"
 msgstr "Хельсинки"
 
-#: ../base/ufos/cities.ufo:975
-msgid "Hobart"
-msgstr "Хобарт"
-
-#: ../base/ufos/cities.ufo:981
+#: ../base/ufos/cities.ufo:957
 msgid "Ho Chi Minh City"
 msgstr "Хошимин"
 
-#: ../base/ufos/cities.ufo:987
+#: ../base/ufos/cities.ufo:963
+msgid "Hobart"
+msgstr "Хобарт"
+
+#: ../base/ufos/cities.ufo:969
 msgid "Hong Kong"
 msgstr "Гонконг"
 
-#: ../base/ufos/cities.ufo:993
+#: ../base/ufos/cities.ufo:975
 msgid "Houston"
 msgstr "Хьюстон"
 
-#: ../base/ufos/cities.ufo:999 ../base/ufos/cities.ufo:1005
+#: ../base/ufos/cities.ufo:981 ../base/ufos/cities.ufo:987
 msgid "Hyderabad"
 msgstr "Хайдарабад"
 
-#: ../base/ufos/cities.ufo:1011
+#: ../base/ufos/cities.ufo:993
 msgid "Ibadan"
 msgstr "Ибадан"
 
-#: ../base/ufos/cities.ufo:1017
+#: ../base/ufos/cities.ufo:999
 msgid "Ilheus"
 msgstr "Илхеус"
 
-#: ../base/ufos/cities.ufo:1023
+#: ../base/ufos/cities.ufo:1005
 msgid "Iloilo City"
 msgstr "Илоило"
 
-#: ../base/ufos/cities.ufo:1029
+#: ../base/ufos/cities.ufo:1011
 msgid "Incheon"
 msgstr "Инчхон"
 
-#: ../base/ufos/cities.ufo:1035
+#: ../base/ufos/cities.ufo:1017
 msgid "Indianapolis"
 msgstr "Индианаполис"
 
-#: ../base/ufos/cities.ufo:1041
+#: ../base/ufos/cities.ufo:1023
 msgid "Innsbruck"
 msgstr "Инсбрук"
 
-#: ../base/ufos/cities.ufo:1047
+#: ../base/ufos/cities.ufo:1029
 msgid "Invercargill"
 msgstr "Инверкаргилл"
 
-#: ../base/ufos/cities.ufo:1053
+#: ../base/ufos/cities.ufo:1035
 msgid "Ipoh"
 msgstr "Ипох"
 
-#: ../base/ufos/cities.ufo:1059
+#: ../base/ufos/cities.ufo:1041
 msgid "Iqaluit"
 msgstr "Икалуит"
 
-#: ../base/ufos/cities.ufo:1065
+#: ../base/ufos/cities.ufo:1047
 msgid "Iquitos"
 msgstr "Икитос"
 
-#: ../base/ufos/cities.ufo:1071
+#: ../base/ufos/cities.ufo:1053
 msgid "Islamabad"
 msgstr "Исламабад"
 
-#: ../base/ufos/cities.ufo:1077
+#: ../base/ufos/cities.ufo:1059
 msgid "Istanbul"
 msgstr "Стамбул"
 
-#: ../base/ufos/cities.ufo:1083
+#: ../base/ufos/cities.ufo:1065
 msgid "Izmir"
 msgstr "Измир"
 
-#: ../base/ufos/cities.ufo:1089
+#: ../base/ufos/cities.ufo:1071
 msgid "Jacksonville"
 msgstr "Джексонвилль"
 
-#: ../base/ufos/cities.ufo:1095
+#: ../base/ufos/cities.ufo:1077
 msgid "Jaipur"
 msgstr "Джайпур"
 
-#: ../base/ufos/cities.ufo:1101
+#: ../base/ufos/cities.ufo:1083
 msgid "Jersey City"
 msgstr "Джерси-Сити"
 
-#: ../base/ufos/cities.ufo:1107
+#: ../base/ufos/cities.ufo:1089
 msgid "Jerusalem"
 msgstr "Иерусалим"
 
-#: ../base/ufos/cities.ufo:1113
+#: ../base/ufos/cities.ufo:1095
 msgid "Jinan"
 msgstr "Цзинань"
 
-#: ../base/ufos/cities.ufo:1119
+#: ../base/ufos/cities.ufo:1101
 msgid "Johannesburg"
 msgstr "Йоханнесбург"
 
-#: ../base/ufos/cities.ufo:1125
+#: ../base/ufos/cities.ufo:1107
 msgid "Johor Bahru"
 msgstr "Джохор-Бару"
 
-#: ../base/ufos/cities.ufo:1131
+#: ../base/ufos/cities.ufo:1113
 msgid "Juneau"
 msgstr "Джуно"
 
-#: ../base/ufos/cities.ufo:1137
+#: ../base/ufos/cities.ufo:1119
 msgid "Kabul"
 msgstr "Кабул"
 
-#: ../base/ufos/cities.ufo:1143
+#: ../base/ufos/cities.ufo:1125
 msgid "Kaesong"
 msgstr "Каесонг"
 
-#: ../base/ufos/cities.ufo:1149
+#: ../base/ufos/cities.ufo:1131
 msgid "Kaliningrad"
 msgstr "Калининград"
 
-#: ../base/ufos/cities.ufo:1155
+#: ../base/ufos/cities.ufo:1137
 msgid "Kandahar"
 msgstr "Кандагар"
 
-#: ../base/ufos/cities.ufo:1161
+#: ../base/ufos/cities.ufo:1143
 msgid "Kandy"
 msgstr "Канди"
 
-#: ../base/ufos/cities.ufo:1167
+#: ../base/ufos/cities.ufo:1149
 msgid "Kano"
 msgstr "Кано"
 
-#: ../base/ufos/cities.ufo:1173
+#: ../base/ufos/cities.ufo:1155
 msgid "Kanpur"
 msgstr "Канпур"
 
-#: ../base/ufos/cities.ufo:1179
+#: ../base/ufos/cities.ufo:1161
 msgid "Kansas City"
 msgstr "Канзас-сити"
 
-#: ../base/ufos/cities.ufo:1185
+#: ../base/ufos/cities.ufo:1167
 msgid "Kaohsiung"
 msgstr "Гаосюн"
 
-#: ../base/ufos/cities.ufo:1191
+#: ../base/ufos/cities.ufo:1173
 msgid "Karachi"
 msgstr "Карачи"
 
-#: ../base/ufos/cities.ufo:1197
+#: ../base/ufos/cities.ufo:1179
 msgid "Kathmandu"
 msgstr "Катманду"
 
-#: ../base/ufos/cities.ufo:1203
+#: ../base/ufos/cities.ufo:1185
 msgid "Kawasaki"
 msgstr "Кавасаки"
 
-#: ../base/ufos/cities.ufo:1209
+#: ../base/ufos/cities.ufo:1191
 msgid "Kharkiv"
 msgstr "Харьков"
 
-#: ../base/ufos/cities.ufo:1215
+#: ../base/ufos/cities.ufo:1197
 msgid "Khartoum"
 msgstr "Хартум"
 
-#: ../base/ufos/cities.ufo:1221
+#: ../base/ufos/cities.ufo:1203
 msgid "Kiev"
 msgstr "Киев"
 
-#: ../base/ufos/cities.ufo:1227
+#: ../base/ufos/cities.ufo:1209
 msgid "Kigali"
 msgstr "Кигали"
 
-#: ../base/ufos/cities.ufo:1233
+#: ../base/ufos/cities.ufo:1215
 msgid "Kingston"
 msgstr "Кингстон"
 
-#: ../base/ufos/cities.ufo:1239
+#: ../base/ufos/cities.ufo:1221
 msgid "Kinshasa"
 msgstr "Киншаса"
 
-#: ../base/ufos/cities.ufo:1245
+#: ../base/ufos/cities.ufo:1227
 msgid "Kobe"
 msgstr "Кобе"
 
-#: ../base/ufos/cities.ufo:1251
+#: ../base/ufos/cities.ufo:1233
 msgid "Kolkata"
 msgstr "Калькутта"
 
-#: ../base/ufos/cities.ufo:1257
+#: ../base/ufos/cities.ufo:1239
 msgid "Konya"
 msgstr "Конья"
 
-#: ../base/ufos/cities.ufo:1263
+#: ../base/ufos/cities.ufo:1245
 msgid "Koulikoro"
 msgstr "Куликоро"
 
-#: ../base/ufos/cities.ufo:1269
+#: ../base/ufos/cities.ufo:1251
 msgid "Krakow"
 msgstr "Краков"
 
-#: ../base/ufos/cities.ufo:1275
+#: ../base/ufos/cities.ufo:1257
 msgid "Kuala Lumpur"
 msgstr "Куала-Лумпур"
 
-#: ../base/ufos/cities.ufo:1281
+#: ../base/ufos/cities.ufo:1263
 msgid "Kunming"
 msgstr "Куньмин"
 
-#: ../base/ufos/cities.ufo:1287
+#: ../base/ufos/cities.ufo:1269
 msgid "Kuwait City"
 msgstr "Кувейт"
 
-#: ../base/ufos/cities.ufo:1293
+#: ../base/ufos/cities.ufo:1275
 msgid "Kyoto"
 msgstr "Киото"
 
-#: ../base/ufos/cities.ufo:1299
-msgid "Lagos"
-msgstr "Лагос"
-
-#: ../base/ufos/cities.ufo:1305
-msgid "Lahore"
-msgstr "Лахор"
-
-#: ../base/ufos/cities.ufo:1311
-msgid "Lanzhou"
-msgstr "Ланьчжоу"
-
-#: ../base/ufos/cities.ufo:1317
+#: ../base/ufos/cities.ufo:1281
 msgid "La Paz"
 msgstr "Ла-Пас"
 
-#: ../base/ufos/cities.ufo:1323
+#: ../base/ufos/cities.ufo:1287
+msgid "Lagos"
+msgstr "Лагос"
+
+#: ../base/ufos/cities.ufo:1293
+msgid "Lahore"
+msgstr "Лахор"
+
+#: ../base/ufos/cities.ufo:1299
+msgid "Lanzhou"
+msgstr "Ланьчжоу"
+
+#: ../base/ufos/cities.ufo:1305
 msgid "Las Vegas"
 msgstr "Лас-Вегас"
 
-#: ../base/ufos/cities.ufo:1329
+#: ../base/ufos/cities.ufo:1311
 msgid "Leeds"
 msgstr "Лидс"
 
-#: ../base/ufos/cities.ufo:1335
+#: ../base/ufos/cities.ufo:1317
 msgid "Leipzig"
 msgstr "Лейпциг"
 
-#: ../base/ufos/cities.ufo:1341
+#: ../base/ufos/cities.ufo:1323
 msgid "Lhasa"
 msgstr "Лхаса"
 
-#: ../base/ufos/cities.ufo:1347
+#: ../base/ufos/cities.ufo:1329
 msgid "Lilongwe"
 msgstr "Лилонгве"
 
-#: ../base/ufos/cities.ufo:1353
+#: ../base/ufos/cities.ufo:1335
 msgid "Linz"
 msgstr "Линц"
 
-#: ../base/ufos/cities.ufo:1359
+#: ../base/ufos/cities.ufo:1341
 msgid "Livingstone"
 msgstr "Ливингстон"
 
-#: ../base/ufos/cities.ufo:1365
+#: ../base/ufos/cities.ufo:1347
 msgid "Ljubljana"
 msgstr "Любляна"
 
-#: ../base/ufos/cities.ufo:1371
+#: ../base/ufos/cities.ufo:1353
 msgid "Lobamba"
 msgstr "Лобамба"
 
-#: ../base/ufos/cities.ufo:1377
+#: ../base/ufos/cities.ufo:1359
 msgid "Lome"
 msgstr "Ломе"
 
-#: ../base/ufos/cities.ufo:1383
+#: ../base/ufos/cities.ufo:1365
 msgid "London"
 msgstr "Лондон"
 
-#: ../base/ufos/cities.ufo:1389
+#: ../base/ufos/cities.ufo:1371
 msgid "Longyearbyen"
 msgstr "Лонгиербиен"
 
-#: ../base/ufos/cities.ufo:1395
+#: ../base/ufos/cities.ufo:1377
 msgid "Los Angeles"
 msgstr "Лос-Анджелес"
 
-#: ../base/ufos/cities.ufo:1401
+#: ../base/ufos/cities.ufo:1383
 msgid "Louisville"
 msgstr "Луисвилль"
 
-#: ../base/ufos/cities.ufo:1407
+#: ../base/ufos/cities.ufo:1389
 msgid "Lubumbashi"
 msgstr "Лубумбаши"
 
-#: ../base/ufos/cities.ufo:1413
+#: ../base/ufos/cities.ufo:1395
 msgid "Lucknow"
 msgstr "Лакхнау"
 
-#: ../base/ufos/cities.ufo:1419
+#: ../base/ufos/cities.ufo:1401
 msgid "Ludhiana"
 msgstr "Лудхияна"
 
-#: ../base/ufos/cities.ufo:1425
+#: ../base/ufos/cities.ufo:1407
 msgid "Lusaka"
 msgstr "Лусака"
 
-#: ../base/ufos/cities.ufo:1431
+#: ../base/ufos/cities.ufo:1413
 msgid "Luxembourg"
 msgstr "Люксембург"
 
-#: ../base/ufos/cities.ufo:1437
+#: ../base/ufos/cities.ufo:1419
 msgid "Luxor"
 msgstr "Луксор"
 
-#: ../base/ufos/cities.ufo:1443
+#: ../base/ufos/cities.ufo:1425
 msgid "Lviv"
 msgstr "Львов"
 
-#: ../base/ufos/cities.ufo:1449
+#: ../base/ufos/cities.ufo:1431
 msgid "Lyon"
 msgstr "Лион"
 
-#: ../base/ufos/cities.ufo:1455
+#: ../base/ufos/cities.ufo:1437
 msgid "Macapa"
 msgstr "Макапа"
 
-#: ../base/ufos/cities.ufo:1461
+#: ../base/ufos/cities.ufo:1443
 msgid "Macau"
 msgstr "Макао"
 
-#: ../base/ufos/cities.ufo:1467
+#: ../base/ufos/cities.ufo:1449
 msgid "Maceio"
 msgstr "Масейо"
 
-#: ../base/ufos/cities.ufo:1473
+#: ../base/ufos/cities.ufo:1455
 msgid "Madrid"
 msgstr "Мадрид"
 
-#: ../base/ufos/cities.ufo:1479
+#: ../base/ufos/cities.ufo:1461
 msgid "Magadan"
 msgstr "Магадан"
 
-#: ../base/ufos/cities.ufo:1485
+#: ../base/ufos/cities.ufo:1467
 msgid "Makati City"
 msgstr "Макати"
 
-#: ../base/ufos/cities.ufo:1491
+#: ../base/ufos/cities.ufo:1473
 msgid "Malacca Town"
 msgstr "Малакка"
 
-#: ../base/ufos/cities.ufo:1497
+#: ../base/ufos/cities.ufo:1479
 msgid "Malaga"
 msgstr "Малага"
 
-#: ../base/ufos/cities.ufo:1503
+#: ../base/ufos/cities.ufo:1485
 msgid "Malang"
 msgstr "Маланг"
 
-#: ../base/ufos/cities.ufo:1509
+#: ../base/ufos/cities.ufo:1491
 msgid "Malmo"
 msgstr "Мальмо"
 
-#: ../base/ufos/cities.ufo:1515
+#: ../base/ufos/cities.ufo:1497
 msgid "Managua"
 msgstr "Манагуа"
 
-#: ../base/ufos/cities.ufo:1521
+#: ../base/ufos/cities.ufo:1503
 msgid "Manaus"
 msgstr "Манаус"
 
-#: ../base/ufos/cities.ufo:1527
+#: ../base/ufos/cities.ufo:1509
 msgid "Manchester"
 msgstr "Манчестер"
 
-#: ../base/ufos/cities.ufo:1533
+#: ../base/ufos/cities.ufo:1515
 msgid "Manila"
 msgstr "Манила"
 
-#: ../base/ufos/cities.ufo:1539
+#: ../base/ufos/cities.ufo:1521
 msgid "Manzini"
 msgstr "Манзини"
 
-#: ../base/ufos/cities.ufo:1545
+#: ../base/ufos/cities.ufo:1527
 msgid "Maputo"
 msgstr "Мапуту"
 
-#: ../base/ufos/cities.ufo:1551
+#: ../base/ufos/cities.ufo:1533
 msgid "Maracaibo"
 msgstr "Маракайбо"
 
-#: ../base/ufos/cities.ufo:1557
+#: ../base/ufos/cities.ufo:1539
 msgid "Marrakech"
 msgstr "Марракеш"
 
-#: ../base/ufos/cities.ufo:1563
+#: ../base/ufos/cities.ufo:1545
 msgid "Marseille"
 msgstr "Марсель"
 
-#: ../base/ufos/cities.ufo:1569
+#: ../base/ufos/cities.ufo:1551
 msgid "Maseru"
 msgstr "Масеру"
 
-#: ../base/ufos/cities.ufo:1575
+#: ../base/ufos/cities.ufo:1557
 msgid "Mashhad"
 msgstr "Мешхед"
 
-#: ../base/ufos/cities.ufo:1581
+#: ../base/ufos/cities.ufo:1563
 msgid "Mbabane"
 msgstr "Мбабане"
 
-#: ../base/ufos/cities.ufo:1587
+#: ../base/ufos/cities.ufo:1569
 msgid "Medan"
 msgstr "Медан"
 
-#: ../base/ufos/cities.ufo:1593
+#: ../base/ufos/cities.ufo:1575
 msgid "Medina"
 msgstr "Медина"
 
-#: ../base/ufos/cities.ufo:1599
+#: ../base/ufos/cities.ufo:1581
 msgid "Memphis"
 msgstr "Мемфис"
 
-#: ../base/ufos/cities.ufo:1605
+#: ../base/ufos/cities.ufo:1587
 msgid "Mendoza"
 msgstr "Мендоза"
 
-#: ../base/ufos/cities.ufo:1611
+#: ../base/ufos/cities.ufo:1593
 msgid "Merida"
 msgstr "Мерида"
 
-#: ../base/ufos/cities.ufo:1617
+#: ../base/ufos/cities.ufo:1599
 msgid "Mexicali"
 msgstr "Мехикали"
 
-#: ../base/ufos/cities.ufo:1623
+#: ../base/ufos/cities.ufo:1605
 msgid "Mexico City"
 msgstr "Мехико"
 
-#: ../base/ufos/cities.ufo:1629
+#: ../base/ufos/cities.ufo:1611
 msgid "Miami"
 msgstr "Майами"
 
-#: ../base/ufos/cities.ufo:1635
+#: ../base/ufos/cities.ufo:1617
 msgid "Milan"
 msgstr "Милан"
 
-#: ../base/ufos/cities.ufo:1641
+#: ../base/ufos/cities.ufo:1623
 msgid "Minneapolis"
 msgstr "Миннеаполис"
 
-#: ../base/ufos/cities.ufo:1647
+#: ../base/ufos/cities.ufo:1629
 msgid "Minsk"
 msgstr "Минск"
 
-#: ../base/ufos/cities.ufo:1653
+#: ../base/ufos/cities.ufo:1635
 msgid "Monaco"
 msgstr "Монако"
 
-#: ../base/ufos/cities.ufo:1659
+#: ../base/ufos/cities.ufo:1641
 msgid "Monterrey"
 msgstr "Монтеррей"
 
-#: ../base/ufos/cities.ufo:1665
+#: ../base/ufos/cities.ufo:1647
 msgid "Montevideo"
 msgstr "Монтевидео"
 
-#: ../base/ufos/cities.ufo:1671
+#: ../base/ufos/cities.ufo:1653
 msgid "Montreal"
 msgstr "Монреаль"
 
-#: ../base/ufos/cities.ufo:1677
+#: ../base/ufos/cities.ufo:1659
 msgid "Moscow"
 msgstr "Москва"
 
-#: ../base/ufos/cities.ufo:1683
+#: ../base/ufos/cities.ufo:1665
 msgid "Multan"
 msgstr "Мултан"
 
-#: ../base/ufos/cities.ufo:1689
+#: ../base/ufos/cities.ufo:1671
+msgid "Mumbai"
+msgstr "Мумбаи"
+
+#: ../base/ufos/cities.ufo:1677
 msgid "Munich"
 msgstr "Мюнхен"
 
-#: ../base/ufos/cities.ufo:1695
+#: ../base/ufos/cities.ufo:1683
 msgid "Murmansk"
 msgstr "Мурманск"
 
-#: ../base/ufos/cities.ufo:1701
-msgid "Nagoya"
-msgstr "Нагоя"
-
-#: ../base/ufos/cities.ufo:1707
-msgid "Nagpur"
-msgstr "Нагпур"
-
-#: ../base/ufos/cities.ufo:1713
-msgid "Nairobi"
-msgstr "Найроби"
-
-#: ../base/ufos/cities.ufo:1719
-msgid "Nakhon Ratchasima"
-msgstr "Нахон Ратчасима"
-
-#: ../base/ufos/cities.ufo:1725
-msgid "Namangan"
-msgstr "Наманган"
-
-#: ../base/ufos/cities.ufo:1731
-msgid "Nanjing"
-msgstr "Нанкин"
-
-#: ../base/ufos/cities.ufo:1737
-msgid "Nanning"
-msgstr "Наньнин"
-
-#: ../base/ufos/cities.ufo:1743
-msgid "Nantes"
-msgstr "Нант"
-
-#: ../base/ufos/cities.ufo:1749
-msgid "Naples"
-msgstr "Неаполь"
-
-#: ../base/ufos/cities.ufo:1755
-msgid "Nashville"
-msgstr "Нашвилл"
-
-#: ../base/ufos/cities.ufo:1761
-msgid "Naypyidaw"
-msgstr "Найпьидо"
-
-#: ../base/ufos/cities.ufo:1767
+#: ../base/ufos/cities.ufo:1689
 msgid "N'Djamena"
 msgstr "Нджамена"
 
-#: ../base/ufos/cities.ufo:1773
+#: ../base/ufos/cities.ufo:1695
+msgid "Nagoya"
+msgstr "Нагоя"
+
+#: ../base/ufos/cities.ufo:1701
+msgid "Nagpur"
+msgstr "Нагпур"
+
+#: ../base/ufos/cities.ufo:1707
+msgid "Nairobi"
+msgstr "Найроби"
+
+#: ../base/ufos/cities.ufo:1713
+msgid "Nakhon Ratchasima"
+msgstr "Нахон Ратчасима"
+
+#: ../base/ufos/cities.ufo:1719
+msgid "Namangan"
+msgstr "Наманган"
+
+#: ../base/ufos/cities.ufo:1725
+msgid "Nanjing"
+msgstr "Нанкин"
+
+#: ../base/ufos/cities.ufo:1731
+msgid "Nanning"
+msgstr "Наньнин"
+
+#: ../base/ufos/cities.ufo:1737
+msgid "Nantes"
+msgstr "Нант"
+
+#: ../base/ufos/cities.ufo:1743
+msgid "Naples"
+msgstr "Неаполь"
+
+#: ../base/ufos/cities.ufo:1749
+msgid "Nashville"
+msgstr "Нашвилл"
+
+#: ../base/ufos/cities.ufo:1755
+msgid "Naypyidaw"
+msgstr "Найпьидо"
+
+#: ../base/ufos/cities.ufo:1761
 msgid "Ndola"
 msgstr "Ндола"
 
-#: ../base/ufos/cities.ufo:1779
-msgid "Newcastle"
-msgstr "Ньюкасл"
-
-#: ../base/ufos/cities.ufo:1785
+#: ../base/ufos/cities.ufo:1767
 msgid "New Delhi"
 msgstr "Нью Дели"
 
-#: ../base/ufos/cities.ufo:1791
+#: ../base/ufos/cities.ufo:1773
+msgid "Newcastle"
+msgstr "Ньюкасл"
+
+#: ../base/ufos/cities.ufo:1779
 msgid "Niamey"
 msgstr "Ниамей"
 
-#: ../base/ufos/cities.ufo:1797
+#: ../base/ufos/cities.ufo:1785
 msgid "Nice"
 msgstr "Ницца"
 
-#: ../base/ufos/cities.ufo:1803
+#: ../base/ufos/cities.ufo:1791
 msgid "Nizhny Novgorod"
 msgstr "Нижний Новгород"
 
-#: ../base/ufos/cities.ufo:1809
+#: ../base/ufos/cities.ufo:1797
 msgid "Norilsk"
 msgstr "Норильск"
 
-#: ../base/ufos/cities.ufo:1815
+#: ../base/ufos/cities.ufo:1803
 msgid "Noumea"
 msgstr "Нумеа"
 
-#: ../base/ufos/cities.ufo:1821
+#: ../base/ufos/cities.ufo:1809
 msgid "Novosibirsk"
 msgstr "Новосибирск"
 
-#: ../base/ufos/cities.ufo:1827
+#: ../base/ufos/cities.ufo:1815
 msgid "Odessa"
 msgstr "Одесса"
 
-#: ../base/ufos/cities.ufo:1833
+#: ../base/ufos/cities.ufo:1821
 msgid "Oklahoma City"
 msgstr "Оклахома-сити"
 
-#: ../base/ufos/cities.ufo:1839
+#: ../base/ufos/cities.ufo:1827
 msgid "Omdurman"
 msgstr "Омдурман"
 
-#: ../base/ufos/cities.ufo:1845
+#: ../base/ufos/cities.ufo:1833
 msgid "Omsk"
 msgstr "Омск"
 
-#: ../base/ufos/cities.ufo:1851
+#: ../base/ufos/cities.ufo:1839
 msgid "Osaka"
 msgstr "Осака"
 
-#: ../base/ufos/cities.ufo:1857
+#: ../base/ufos/cities.ufo:1845
 msgid "Oslo"
 msgstr "Осло"
 
-#: ../base/ufos/cities.ufo:1863
+#: ../base/ufos/cities.ufo:1851
 msgid "Ottawa"
 msgstr "Оттава"
 
-#: ../base/ufos/cities.ufo:1869
+#: ../base/ufos/cities.ufo:1857
 msgid "Ouagadougou"
 msgstr "Уагадугу"
 
-#: ../base/ufos/cities.ufo:1875
+#: ../base/ufos/cities.ufo:1863
 msgid "Palembang"
 msgstr "Палембанг"
 
-#: ../base/ufos/cities.ufo:1881
+#: ../base/ufos/cities.ufo:1869
 msgid "Panama City"
 msgstr "Панама Сити"
 
-#: ../base/ufos/cities.ufo:1887
+#: ../base/ufos/cities.ufo:1875
 msgid "Paris"
 msgstr "Париж"
 
-#: ../base/ufos/cities.ufo:1893
+#: ../base/ufos/cities.ufo:1881
 msgid "Patna"
 msgstr "Патна"
 
-#: ../base/ufos/cities.ufo:1899
+#: ../base/ufos/cities.ufo:1887
 msgid "Pekanbaru"
 msgstr "Пеканбару"
 
-#: ../base/ufos/cities.ufo:1905
+#: ../base/ufos/cities.ufo:1893
 msgid "Pelotas"
 msgstr "Пелотас"
 
-#: ../base/ufos/cities.ufo:1911
+#: ../base/ufos/cities.ufo:1899
 msgid "Perm"
 msgstr "Пермь"
 
-#: ../base/ufos/cities.ufo:1917
+#: ../base/ufos/cities.ufo:1905
 msgid "Peshawar"
 msgstr "Пешавар"
 
-#: ../base/ufos/cities.ufo:1923
+#: ../base/ufos/cities.ufo:1911
 msgid "Petropavlovsk-Kamchatsky"
 msgstr "Петропавловск-Камчатский"
 
-#: ../base/ufos/cities.ufo:1929
+#: ../base/ufos/cities.ufo:1917
 msgid "Philadelphia"
 msgstr "Филадельфия"
 
-#: ../base/ufos/cities.ufo:1935
+#: ../base/ufos/cities.ufo:1923
 msgid "Phnom Penh"
 msgstr "Пномпень"
 
-#: ../base/ufos/cities.ufo:1941 ../base/ufos/team_names.ufo:663
+#: ../base/ufos/cities.ufo:1929 ../base/ufos/team_names.ufo:663
 msgid "Phoenix"
 msgstr "Финикс"
 
-#: ../base/ufos/cities.ufo:1947
+#: ../base/ufos/cities.ufo:1935
 msgid "Pittsburgh"
 msgstr "Питсбург"
 
-#: ../base/ufos/cities.ufo:1953
+#: ../base/ufos/cities.ufo:1941
 msgid "Podgorica"
 msgstr "Подгорица"
 
-#: ../base/ufos/cities.ufo:1959
-msgid "Portland"
-msgstr "Портленд"
-
-#: ../base/ufos/cities.ufo:1965
+#: ../base/ufos/cities.ufo:1947
 msgid "Port Moresby"
 msgstr "Порт-Морсби"
 
-#: ../base/ufos/cities.ufo:1971
+#: ../base/ufos/cities.ufo:1953
+msgid "Portland"
+msgstr "Портленд"
+
+#: ../base/ufos/cities.ufo:1959
 msgid "Prague"
 msgstr "Прага"
 
-#: ../base/ufos/cities.ufo:1977
+#: ../base/ufos/cities.ufo:1965
 msgid "Pretoria"
 msgstr "Претория"
 
-#: ../base/ufos/cities.ufo:1983
+#: ../base/ufos/cities.ufo:1971
 msgid "Pristina"
 msgstr "Приштина"
 
-#: ../base/ufos/cities.ufo:1989
+#: ../base/ufos/cities.ufo:1977
 msgid "Providence"
 msgstr "Провиденс"
 
-#: ../base/ufos/cities.ufo:1995
+#: ../base/ufos/cities.ufo:1983
 msgid "Puebla"
 msgstr "Пуэбла"
 
-#: ../base/ufos/cities.ufo:2001
+#: ../base/ufos/cities.ufo:1989
 msgid "Puerto Williams"
 msgstr "Пуэрто-Вильямс"
 
-#: ../base/ufos/cities.ufo:2007
+#: ../base/ufos/cities.ufo:1995
 msgid "Pune"
 msgstr "Пуна"
 
-#: ../base/ufos/cities.ufo:2013
+#: ../base/ufos/cities.ufo:2001
 msgid "Punta Arenas"
 msgstr "Пунта-Аренас"
 
-#: ../base/ufos/cities.ufo:2019
+#: ../base/ufos/cities.ufo:2007
 msgid "Pyongyang"
 msgstr "Пхеньян"
 
-#: ../base/ufos/cities.ufo:2025
+#: ../base/ufos/cities.ufo:2013
 msgid "Qingdao"
 msgstr "Циндао"
 
-#: ../base/ufos/cities.ufo:2031
+#: ../base/ufos/cities.ufo:2019
 msgid "Quebec City"
 msgstr "Квебек"
 
-#: ../base/ufos/cities.ufo:2037
+#: ../base/ufos/cities.ufo:2025
 msgid "Quetzaltenango"
 msgstr "Кецальтенанго"
 
-#: ../base/ufos/cities.ufo:2043
+#: ../base/ufos/cities.ufo:2031
 msgid "Quezon City"
 msgstr "Кесон-Сити"
 
-#: ../base/ufos/cities.ufo:2049
+#: ../base/ufos/cities.ufo:2037
 msgid "Quito"
 msgstr "Кито"
 
-#: ../base/ufos/cities.ufo:2055
+#: ../base/ufos/cities.ufo:2043
 msgid "Raleigh"
 msgstr "Роли"
 
-#: ../base/ufos/cities.ufo:2061
+#: ../base/ufos/cities.ufo:2049
 msgid "Rawalpindi"
 msgstr "Равалпинди"
 
-#: ../base/ufos/cities.ufo:2067
+#: ../base/ufos/cities.ufo:2055
 msgid "Recife"
 msgstr "Ресифи"
 
-#: ../base/ufos/cities.ufo:2073
+#: ../base/ufos/cities.ufo:2061
 msgid "Regina"
 msgstr "Реджина"
 
-#: ../base/ufos/cities.ufo:2079
+#: ../base/ufos/cities.ufo:2067
 msgid "Rio de Janeiro"
 msgstr "Рио-де-Жанейро"
 
-#: ../base/ufos/cities.ufo:2085
+#: ../base/ufos/cities.ufo:2073
 msgid "Riverside"
 msgstr "Риверсайд"
 
-#: ../base/ufos/cities.ufo:2091
+#: ../base/ufos/cities.ufo:2079
 msgid "Rockhampton"
 msgstr "Рокгемптон"
 
-#: ../base/ufos/cities.ufo:2097
+#: ../base/ufos/cities.ufo:2085
 msgid "Rome"
 msgstr "Рим"
 
-#: ../base/ufos/cities.ufo:2103
+#: ../base/ufos/cities.ufo:2091
 msgid "Rosario"
 msgstr "Росарио"
 
-#: ../base/ufos/cities.ufo:2109
+#: ../base/ufos/cities.ufo:2097
 msgid "Sabha"
 msgstr "Сабха"
 
-#: ../base/ufos/cities.ufo:2115
+#: ../base/ufos/cities.ufo:2103
 msgid "Sacramento"
 msgstr "Сакраменто"
 
-#: ../base/ufos/cities.ufo:2121
+#: ../base/ufos/cities.ufo:2109
 msgid "Saint John"
 msgstr "Сент-Джон"
 
-#: ../base/ufos/cities.ufo:2127
+#: ../base/ufos/cities.ufo:2115
 msgid "Saint Petersburg"
 msgstr "Санкт-Петербург"
 
-#: ../base/ufos/cities.ufo:2133
+#: ../base/ufos/cities.ufo:2121
 msgid "Salzburg"
 msgstr "Зальцбург"
 
-#: ../base/ufos/cities.ufo:2139
+#: ../base/ufos/cities.ufo:2127
 msgid "Samara"
 msgstr "Самара"
 
-#: ../base/ufos/cities.ufo:2145
-msgid "Sana'a"
-msgstr "Сана"
-
-#: ../base/ufos/cities.ufo:2151
+#: ../base/ufos/cities.ufo:2133
 msgid "San Antonio"
 msgstr "Сан-Антонио"
 
-#: ../base/ufos/cities.ufo:2157
+#: ../base/ufos/cities.ufo:2139
 msgid "San Carlos de Bariloche"
 msgstr "Сан-Карлос-де-Барилоче"
 
-#: ../base/ufos/cities.ufo:2163
+#: ../base/ufos/cities.ufo:2145
 msgid "San Francisco"
 msgstr "Сан-Франциско"
 
-#: ../base/ufos/cities.ufo:2169
+#: ../base/ufos/cities.ufo:2151
 msgid "San Jose"
 msgstr "Сан-Хосе"
 
-#: ../base/ufos/cities.ufo:2175
+#: ../base/ufos/cities.ufo:2157
 msgid "San Marino"
 msgstr "Сан-Марино"
 
-#: ../base/ufos/cities.ufo:2181
+#: ../base/ufos/cities.ufo:2163
 msgid "San Salvador"
 msgstr "Сан-Сальвадор"
 
-#: ../base/ufos/cities.ufo:2187
+#: ../base/ufos/cities.ufo:2169
+msgid "Sana'a"
+msgstr "Сана"
+
+#: ../base/ufos/cities.ufo:2175
 msgid "Santa Cruz de la Sierra"
 msgstr "Санта Крус де ла Сьерра"
 
-#: ../base/ufos/cities.ufo:2193
+#: ../base/ufos/cities.ufo:2181
 msgid "Santiago"
 msgstr "Сантьяго"
 
-#: ../base/ufos/cities.ufo:2199
+#: ../base/ufos/cities.ufo:2187
 msgid "Santiago de Cuba"
 msgstr "Сантьяго-де-Куба"
 
-#: ../base/ufos/cities.ufo:2205
+#: ../base/ufos/cities.ufo:2193
 msgid "Santo Domingo"
 msgstr "Санто-Доминго"
 
-#: ../base/ufos/cities.ufo:2211
+#: ../base/ufos/cities.ufo:2199
 msgid "Sao Jose dos Campos"
 msgstr "Сан-Хосе-дус-Кампус"
 
-#: ../base/ufos/cities.ufo:2217
+#: ../base/ufos/cities.ufo:2205
 msgid "Sao Paulo"
 msgstr "Сан-Паулу"
 
-#: ../base/ufos/cities.ufo:2223
+#: ../base/ufos/cities.ufo:2211
 msgid "Sarajevo"
 msgstr "Сараево"
 
-#: ../base/ufos/cities.ufo:2229
+#: ../base/ufos/cities.ufo:2217
 msgid "Saskatoon"
 msgstr "Саскатун"
 
-#: ../base/ufos/cities.ufo:2235
+#: ../base/ufos/cities.ufo:2223
 msgid "Seattle"
 msgstr "Сиэтл"
 
-#: ../base/ufos/cities.ufo:2241
+#: ../base/ufos/cities.ufo:2229
 msgid "Seoul"
 msgstr "Сеул"
 
-#: ../base/ufos/cities.ufo:2247
+#: ../base/ufos/cities.ufo:2235
 msgid "Seville"
 msgstr "Севилья"
 
-#: ../base/ufos/cities.ufo:2253
+#: ../base/ufos/cities.ufo:2241
 msgid "Shanghai"
 msgstr "Шанхай"
 
-#: ../base/ufos/cities.ufo:2259
-msgid "Shenzhen"
-msgstr "Шэньчжэнь"
-
-#: ../base/ufos/cities.ufo:2265
+#: ../base/ufos/cities.ufo:2247
 msgid "Shenyang"
 msgstr "Шэньян"
 
-#: ../base/ufos/cities.ufo:2271
+#: ../base/ufos/cities.ufo:2253
+msgid "Shenzhen"
+msgstr "Шэньчжэнь"
+
+#: ../base/ufos/cities.ufo:2259
 msgid "Shijiazhuang"
 msgstr "Шицзячжуан"
 
-#: ../base/ufos/cities.ufo:2277
+#: ../base/ufos/cities.ufo:2265
 msgid "Shillong"
 msgstr "Шиллонг"
 
-#: ../base/ufos/cities.ufo:2283
+#: ../base/ufos/cities.ufo:2271
 msgid "Siem Reap"
 msgstr "Сием-Рип"
 
-#: ../base/ufos/cities.ufo:2289
+#: ../base/ufos/cities.ufo:2277
 msgid "Simferopol"
 msgstr "Симферополь"
 
-#: ../base/ufos/cities.ufo:2295
+#: ../base/ufos/cities.ufo:2283
 msgid "Singapore"
 msgstr "Сингапур"
 
-#: ../base/ufos/cities.ufo:2301
+#: ../base/ufos/cities.ufo:2289
 msgid "Sitka"
 msgstr "Ситка"
 
-#: ../base/ufos/cities.ufo:2307
+#: ../base/ufos/cities.ufo:2295
 msgid "Skopje"
 msgstr "Скопье"
 
-#: ../base/ufos/cities.ufo:2313
+#: ../base/ufos/cities.ufo:2301
 msgid "Sofia"
 msgstr "София"
 
-#: ../base/ufos/cities.ufo:2319
+#: ../base/ufos/cities.ufo:2307
 msgid "Split"
 msgstr "Сплит"
 
-#: ../base/ufos/cities.ufo:2325
+#: ../base/ufos/cities.ufo:2313
 msgid "Srinagar"
 msgstr "Шринагар"
 
-#: ../base/ufos/cities.ufo:2331
-msgid "Stanley"
-msgstr "Стенли"
-
-#: ../base/ufos/cities.ufo:2337
-msgid "Stepanakert"
-msgstr "Степанакерт"
-
-#: ../base/ufos/cities.ufo:2343
+#: ../base/ufos/cities.ufo:2319
 msgid "St. Louis"
 msgstr "Сент-Луис"
 
-#: ../base/ufos/cities.ufo:2349
+#: ../base/ufos/cities.ufo:2325
+msgid "Stanley"
+msgstr "Стенли"
+
+#: ../base/ufos/cities.ufo:2331
+msgid "Stepanakert"
+msgstr "Степанакерт"
+
+#: ../base/ufos/cities.ufo:2337
 msgid "Stockholm"
 msgstr "Стокгольм"
 
-#: ../base/ufos/cities.ufo:2355
+#: ../base/ufos/cities.ufo:2343
 msgid "Strasbourg"
 msgstr "Страсбург"
 
-#: ../base/ufos/cities.ufo:2361
+#: ../base/ufos/cities.ufo:2349
 msgid "Stuttgart"
 msgstr "Штутгарт"
 
-#: ../base/ufos/cities.ufo:2367
+#: ../base/ufos/cities.ufo:2355
 msgid "Sucre"
 msgstr "Сукре"
 
-#: ../base/ufos/cities.ufo:2373
+#: ../base/ufos/cities.ufo:2361
 msgid "Suez"
 msgstr "Суэц"
 
-#: ../base/ufos/cities.ufo:2379
+#: ../base/ufos/cities.ufo:2367
 msgid "Sukhumi"
 msgstr "Сухуми"
 
-#: ../base/ufos/cities.ufo:2385
+#: ../base/ufos/cities.ufo:2373
 msgid "Surabaya"
 msgstr "Сурабая"
 
-#: ../base/ufos/cities.ufo:2391
+#: ../base/ufos/cities.ufo:2379
 msgid "Surat"
 msgstr "Сурат"
 
-#: ../base/ufos/cities.ufo:2397
+#: ../base/ufos/cities.ufo:2385
 msgid "Surat Thani"
 msgstr "Сураттхани"
 
-#: ../base/ufos/cities.ufo:2403
+#: ../base/ufos/cities.ufo:2391
 msgid "Suva"
 msgstr "Сува"
 
-#: ../base/ufos/cities.ufo:2409
+#: ../base/ufos/cities.ufo:2397
 msgid "Sydney"
 msgstr "Сидней"
 
-#: ../base/ufos/cities.ufo:2415
+#: ../base/ufos/cities.ufo:2403
 msgid "Tabriz"
 msgstr "Тебриз"
 
-#: ../base/ufos/cities.ufo:2421
+#: ../base/ufos/cities.ufo:2409
 msgid "Taiyuan"
 msgstr "Тайюань"
 
-#: ../base/ufos/cities.ufo:2427
+#: ../base/ufos/cities.ufo:2415
 msgid "Tamale"
 msgstr "Тамале"
 
-#: ../base/ufos/cities.ufo:2433
+#: ../base/ufos/cities.ufo:2421
 msgid "Tampa"
 msgstr "Тампа"
 
-#: ../base/ufos/cities.ufo:2439
+#: ../base/ufos/cities.ufo:2427
 msgid "Tampere"
 msgstr "Тампере"
 
-#: ../base/ufos/cities.ufo:2445
+#: ../base/ufos/cities.ufo:2433
 msgid "Tartu"
 msgstr "Тарту"
 
-#: ../base/ufos/cities.ufo:2451
+#: ../base/ufos/cities.ufo:2439
 msgid "Tashkent"
 msgstr "Ташкент"
 
-#: ../base/ufos/cities.ufo:2457
+#: ../base/ufos/cities.ufo:2445
 msgid "Tbilisi"
 msgstr "Тбилиси"
 
-#: ../base/ufos/cities.ufo:2463
+#: ../base/ufos/cities.ufo:2451
 msgid "Tegucigalpa"
 msgstr "Тегусигальпа"
 
-#: ../base/ufos/cities.ufo:2469
+#: ../base/ufos/cities.ufo:2457
+msgid "Teheran"
+msgstr "Тегеран"
+
+#: ../base/ufos/cities.ufo:2463
 msgid "Tehran"
 msgstr "Тегеран"
 
-#: ../base/ufos/cities.ufo:2475
+#: ../base/ufos/cities.ufo:2469
 msgid "Thessaloniki"
 msgstr "Цесалоники"
 
-#: ../base/ufos/cities.ufo:2481
+#: ../base/ufos/cities.ufo:2475
 msgid "Thimphu"
 msgstr "Тхимпху"
 
-#: ../base/ufos/cities.ufo:2487
+#: ../base/ufos/cities.ufo:2481
 msgid "Tianjin"
 msgstr "Тяньцзинь"
 
-#: ../base/ufos/cities.ufo:2493
+#: ../base/ufos/cities.ufo:2487
 msgid "Tijuana"
 msgstr "Тихуана"
 
-#: ../base/ufos/cities.ufo:2499
+#: ../base/ufos/cities.ufo:2493
 msgid "Tirana"
 msgstr "Тирана"
 
-#: ../base/ufos/cities.ufo:2505
+#: ../base/ufos/cities.ufo:2499
 msgid "Tiraspol"
 msgstr "Тирасплоь"
 
-#: ../base/ufos/cities.ufo:2511
+#: ../base/ufos/cities.ufo:2505
 msgid "Tokyo"
 msgstr "Токио"
 
-#: ../base/ufos/cities.ufo:2517
+#: ../base/ufos/cities.ufo:2511
 msgid "Toronto"
 msgstr "Торонто"
 
-#: ../base/ufos/cities.ufo:2523
+#: ../base/ufos/cities.ufo:2517
 msgid "Toulouse"
 msgstr "Тулуза"
 
-#: ../base/ufos/cities.ufo:2529
+#: ../base/ufos/cities.ufo:2523
 msgid "Tskhinvali"
 msgstr "Цхинвали"
 
-#: ../base/ufos/cities.ufo:2535
+#: ../base/ufos/cities.ufo:2529
 msgid "Tucson"
 msgstr "Тусон"
 
-#: ../base/ufos/cities.ufo:2541
+#: ../base/ufos/cities.ufo:2535
 msgid "Tunis"
 msgstr "Тунис"
 
-#: ../base/ufos/cities.ufo:2547
+#: ../base/ufos/cities.ufo:2541
 msgid "Turin"
 msgstr "Турин"
 
-#: ../base/ufos/cities.ufo:2553
+#: ../base/ufos/cities.ufo:2547
 msgid "Udon Thani"
 msgstr "Удонтхани"
 
-#: ../base/ufos/cities.ufo:2559
+#: ../base/ufos/cities.ufo:2553
 msgid "Ushuaia"
 msgstr "Ушуайа"
 
-#: ../base/ufos/cities.ufo:2565
+#: ../base/ufos/cities.ufo:2559
 msgid "Vaduz"
 msgstr "Вадуц"
 
-#: ../base/ufos/cities.ufo:2571
+#: ../base/ufos/cities.ufo:2565
 msgid "Valencia"
 msgstr "Валенсия"
 
-#: ../base/ufos/cities.ufo:2577
+#: ../base/ufos/cities.ufo:2571
 msgid "Vancouver"
 msgstr "Ванкувер"
 
-#: ../base/ufos/cities.ufo:2583
+#: ../base/ufos/cities.ufo:2577
 msgid "Vienna"
 msgstr "Вена"
 
-#: ../base/ufos/cities.ufo:2589
+#: ../base/ufos/cities.ufo:2583
 msgid "Vientiane"
 msgstr "Вьентьян"
 
-#: ../base/ufos/cities.ufo:2595
+#: ../base/ufos/cities.ufo:2589
 msgid "Vilnius"
 msgstr "Вильнюс"
 
-#: ../base/ufos/cities.ufo:2601
+#: ../base/ufos/cities.ufo:2595
 msgid "Vitoria"
 msgstr "Витория"
 
-#: ../base/ufos/cities.ufo:2607
+#: ../base/ufos/cities.ufo:2601
 msgid "Warsaw"
 msgstr "Варшава"
 
-#: ../base/ufos/cities.ufo:2613
+#: ../base/ufos/cities.ufo:2607
 msgid "Washington"
 msgstr "Вашингтон"
 
-#: ../base/ufos/cities.ufo:2619
+#: ../base/ufos/cities.ufo:2613
+msgid "Wellington"
+msgstr "Веллингтон"
+
+#: ../base/ufos/cities.ufo:2619 ../base/ufos/cities.ufo:2631
+msgid "Wichita"
+msgstr "Уичита"
+
+#: ../base/ufos/cities.ufo:2625
 msgid "Whitehorse"
 msgstr "Уайтхорс"
 
-#: ../base/ufos/cities.ufo:2631
+#: ../base/ufos/cities.ufo:2637
 msgid "Winnipeg"
 msgstr "Виннипег"
 
-#: ../base/ufos/cities.ufo:2637
+#: ../base/ufos/cities.ufo:2643
 msgid "Wollongong"
 msgstr "Вуллонгонг"
 
-#: ../base/ufos/cities.ufo:2643
+#: ../base/ufos/cities.ufo:2649
 msgid "Wonsan"
 msgstr "Вонсан"
 
-#: ../base/ufos/cities.ufo:2649
+#: ../base/ufos/cities.ufo:2655
 msgid "Wuhan"
 msgstr "Ухань"
 
-#: ../base/ufos/cities.ufo:2655
+#: ../base/ufos/cities.ufo:2661
 msgid "Xi'an"
 msgstr "Сиань"
 
-#: ../base/ufos/cities.ufo:2661
+#: ../base/ufos/cities.ufo:2667
 msgid "Xining"
 msgstr "Синин"
 
-#: ../base/ufos/cities.ufo:2667
+#: ../base/ufos/cities.ufo:2673
 msgid "Yakutsk"
 msgstr "Якутск"
 
-#: ../base/ufos/cities.ufo:2673
+#: ../base/ufos/cities.ufo:2679
 msgid "Yamoussoukro"
 msgstr "Ямусукро"
 
-#: ../base/ufos/cities.ufo:2679
+#: ../base/ufos/cities.ufo:2685
 msgid "Yangon"
 msgstr "Янгон"
 
-#: ../base/ufos/cities.ufo:2685
+#: ../base/ufos/cities.ufo:2691
 msgid "Yaounde"
 msgstr "Яунде"
 
-#: ../base/ufos/cities.ufo:2691
+#: ../base/ufos/cities.ufo:2697
 msgid "Yekaterinburg"
 msgstr "Екатеринбург"
 
-#: ../base/ufos/cities.ufo:2697
+#: ../base/ufos/cities.ufo:2703
 msgid "Yellowknife"
 msgstr "Йеллоунайф"
 
-#: ../base/ufos/cities.ufo:2703
+#: ../base/ufos/cities.ufo:2709
 msgid "Yerevan"
 msgstr "Ереван"
 
-#: ../base/ufos/cities.ufo:2709
+#: ../base/ufos/cities.ufo:2715
 msgid "Yogyakarta"
 msgstr "Джокьякарта"
 
-#: ../base/ufos/cities.ufo:2715
+#: ../base/ufos/cities.ufo:2721
 msgid "Yokohama"
 msgstr "Иокогама"
 
-#: ../base/ufos/cities.ufo:2721
+#: ../base/ufos/cities.ufo:2727
 msgid "Zagreb"
 msgstr "Загреб"
 
-#: ../base/ufos/cities.ufo:2727
+#: ../base/ufos/cities.ufo:2733
 msgid "Zamboanga City"
 msgstr "Замбоанга"
 
-#: ../base/ufos/cities.ufo:2733
+#: ../base/ufos/cities.ufo:2739
 msgid "Zapopan"
 msgstr "Сапопан"
 
-#: ../base/ufos/cities.ufo:2739
+#: ../base/ufos/cities.ufo:2745
 msgid "Zhengzhou"
 msgstr "Чжэнчжоу"
 
-#: ../base/ufos/cities.ufo:2745
+#: ../base/ufos/cities.ufo:2751
 msgid "Zurich"
 msgstr "Цюрих"
 
@@ -2553,47 +2557,47 @@ msgstr "Кампании"
 msgid "Skirmish"
 msgstr "Стычка"
 
-#: ../base/ufos/gametypes.ufo:3
+#: ../base/ufos/gametypes.ufo:6
 msgid "1on1"
 msgstr "1 на 1"
 
-#: ../base/ufos/gametypes.ufo:16
+#: ../base/ufos/gametypes.ufo:19
 msgid "1on1on1"
 msgstr "1 на 1 на 1"
 
-#: ../base/ufos/gametypes.ufo:29
+#: ../base/ufos/gametypes.ufo:32
 msgid "2on2"
 msgstr "2 на 2"
 
-#: ../base/ufos/gametypes.ufo:42
+#: ../base/ufos/gametypes.ufo:45
 msgid "2on2on2"
 msgstr "2 на 2 на 2"
 
-#: ../base/ufos/gametypes.ufo:55
+#: ../base/ufos/gametypes.ufo:58
 msgid "3on3"
 msgstr "3 на 3"
 
-#: ../base/ufos/gametypes.ufo:68
+#: ../base/ufos/gametypes.ufo:71
 msgid "3on3on3"
 msgstr "3 на 3 на 3"
 
-#: ../base/ufos/gametypes.ufo:81
+#: ../base/ufos/gametypes.ufo:84
 msgid "4on4"
 msgstr "4 на 4"
 
-#: ../base/ufos/gametypes.ufo:94
+#: ../base/ufos/gametypes.ufo:97
 msgid "4on4on4"
 msgstr "4 на 4 на 4"
 
-#: ../base/ufos/gametypes.ufo:107
+#: ../base/ufos/gametypes.ufo:110
 msgid "Coop 2 players"
 msgstr "2 игрока вместе"
 
-#: ../base/ufos/gametypes.ufo:120
+#: ../base/ufos/gametypes.ufo:123
 msgid "Coop 3 players"
 msgstr "3 игрока вместе"
 
-#: ../base/ufos/gametypes.ufo:133
+#: ../base/ufos/gametypes.ufo:136
 msgid "Coop 4 players"
 msgstr "4 игрока вместе"
 
@@ -2617,7 +2621,7 @@ msgstr ""
 "помощи комплексов ПВО."
 
 #: ../base/ufos/installation.ufo:22 ../base/ufos/research.ufo:3650
-#: ../base/ufos/ui/lostwon.ufo:251
+#: ../base/ufos/ui/lostwon.ufo:264
 msgid "UFO Yard"
 msgstr "Хранилище НЛО"
 
@@ -2789,292 +2793,297 @@ msgstr "Турецкий"
 msgid "No language"
 msgstr "Нет языка"
 
-#: ../base/ufos/maps.ufo:68 ../base/ufos/maps.ufo:122
-#: ../base/ufos/maps.ufo:177
+#: ../base/ufos/maps.ufo:157 ../base/ufos/maps.ufo:210
+#: ../base/ufos/maps.ufo:264
 msgid "African Village"
 msgstr "Африканская деревня"
 
-#: ../base/ufos/maps.ufo:231 ../base/ufos/maps.ufo:281
-#: ../base/ufos/maps.ufo:332
+#: ../base/ufos/maps.ufo:317 ../base/ufos/maps.ufo:366
+#: ../base/ufos/maps.ufo:416
 msgid "African Desert"
 msgstr "Африканская пустыня"
 
-#: ../base/ufos/maps.ufo:387
+#: ../base/ufos/maps.ufo:470
 msgid "Coastal Crash Site"
 msgstr "Место крушения на побережье"
 
-#: ../base/ufos/maps.ufo:519
+#: ../base/ufos/maps.ufo:602
 msgid "Urban Periphery"
 msgstr "Городская периферия"
 
-#: ../base/ufos/maps.ufo:561 ../base/ufos/maps.ufo:649
-#: ../base/ufos/maps.ufo:698
+#: ../base/ufos/maps.ufo:644 ../base/ufos/maps.ufo:732
+#: ../base/ufos/maps.ufo:781
 msgid "Country Desert"
 msgstr "Деревня в пустыне"
 
-#: ../base/ufos/maps.ufo:605
+#: ../base/ufos/maps.ufo:688
 msgid "Some houses in the desert."
 msgstr "Несколько зданий в пустынном районе."
 
-#: ../base/ufos/maps.ufo:749 ../base/ufos/maps.ufo:791
-#: ../base/ufos/maps.ufo:832 ../base/ufos/maps.ufo:876
+#: ../base/ufos/maps.ufo:832 ../base/ufos/maps.ufo:881
+#: ../base/ufos/maps.ufo:930 ../base/ufos/maps.ufo:981
 msgid "Farm"
 msgstr "Ферма"
 
-#: ../base/ufos/maps.ufo:928 ../base/ufos/maps.ufo:968
-#: ../base/ufos/maps.ufo:1008 ../base/ufos/maps.ufo:1048
+#: ../base/ufos/maps.ufo:1033 ../base/ufos/maps.ufo:1073
+#: ../base/ufos/maps.ufo:1113 ../base/ufos/maps.ufo:1153
 msgid "Forest"
 msgstr "Лес"
 
-#: ../base/ufos/maps.ufo:1092
+#: ../base/ufos/maps.ufo:1197
 msgid "Fuel Depot"
 msgstr "Топливный склад"
 
-#: ../base/ufos/maps.ufo:1136 ../base/ufos/maps.ufo:1190
-#: ../base/ufos/maps.ufo:1246 ../base/ufos/maps.ufo:1300
-#: ../base/ufos/maps.ufo:1386 ../base/ufos/maps.ufo:1436
-#: ../base/ufos/maps.ufo:1488 ../base/ufos/maps.ufo:1539
+#: ../base/ufos/maps.ufo:1243 ../base/ufos/maps.ufo:1295
+#: ../base/ufos/maps.ufo:1349 ../base/ufos/maps.ufo:1401
+#: ../base/ufos/maps.ufo:1494 ../base/ufos/maps.ufo:1542
+#: ../base/ufos/maps.ufo:1592 ../base/ufos/maps.ufo:1640
 msgid "Snow"
 msgstr "Снег"
 
-#: ../base/ufos/maps.ufo:1351
+#: ../base/ufos/maps.ufo:1450
 msgid "Snowy Logging Site"
 msgstr "Заснеженная лесосека"
 
-#: ../base/ufos/maps.ufo:1647 ../base/ufos/maps.ufo:1691
-#: ../base/ufos/maps.ufo:1733
+#: ../base/ufos/maps.ufo:1746 ../base/ufos/maps.ufo:1796
+#: ../base/ufos/maps.ufo:1844
 msgid "Suburban Housing"
 msgstr "Жилье в пригороде"
 
-#: ../base/ufos/maps.ufo:1780 ../base/ufos/maps.ufo:1819
-#: ../base/ufos/maps.ufo:1862
+#: ../base/ufos/maps.ufo:1899 ../base/ufos/maps.ufo:1938
+#: ../base/ufos/maps.ufo:1981
 msgid "Frozen Landscape"
 msgstr "Замерзший ландшафт"
 
-#: ../base/ufos/maps.ufo:2083 ../base/ufos/maps.ufo:2131
-#: ../base/ufos/maps.ufo:3820
+#: ../base/ufos/maps.ufo:2202 ../base/ufos/maps.ufo:2250
+#: ../base/ufos/maps.ufo:3975
 msgid "East Asian Village"
 msgstr "Восточноазиатская деревня"
 
-#: ../base/ufos/maps.ufo:2337 ../base/ufos/maps.ufo:2378
-#: ../base/ufos/maps.ufo:2419 ../base/ufos/maps.ufo:3926
-#: ../base/ufos/maps.ufo:4991
+#: ../base/ufos/maps.ufo:2453 ../base/ufos/maps.ufo:2494
+#: ../base/ufos/maps.ufo:2535 ../base/ufos/maps.ufo:4078
+#: ../base/ufos/maps.ufo:5110
 msgid "Middle Eastern Suburb"
 msgstr "Ближневосточный пригород"
 
-#: ../base/ufos/maps.ufo:2474
-msgid "Crashed Scout"
-msgstr "Разбившийся НЛО-«Разведчик»"
-
-#: ../base/ufos/maps.ufo:2516 ../base/ufos/maps.ufo:2556
-#: ../base/ufos/maps.ufo:2599
+#: ../base/ufos/maps.ufo:2582 ../base/ufos/maps.ufo:2629
+#: ../base/ufos/maps.ufo:2676 ../base/ufos/maps.ufo:2723
+#: ../base/ufos/maps.ufo:2773
 msgid "Tropical Jungle"
 msgstr "Тропические джунгли"
 
-#: ../base/ufos/maps.ufo:2646
+#: ../base/ufos/maps.ufo:2828
 msgid "UFO Crash Site"
 msgstr "Место крушения НЛО"
 
-#: ../base/ufos/maps.ufo:2947
+#: ../base/ufos/maps.ufo:3101
 msgid "Supermarket"
 msgstr "Супермаркет"
 
-#: ../base/ufos/maps.ufo:2997
+#: ../base/ufos/maps.ufo:3148
 msgid "Basketball Stadium"
 msgstr "Баскетбольный стадион"
 
-#: ../base/ufos/maps.ufo:3102
+#: ../base/ufos/maps.ufo:3251
 msgid "Bungalow"
 msgstr "Бунгало"
 
-#: ../base/ufos/maps.ufo:3147
+#: ../base/ufos/maps.ufo:3287
 msgid "House"
 msgstr "Дом"
 
-#: ../base/ufos/maps.ufo:3192 ../base/ufos/maps.ufo:3231
-#: ../base/ufos/maps.ufo:3269 ../base/ufos/maps.ufo:3307
-#: ../base/ufos/maps.ufo:5296
+#: ../base/ufos/maps.ufo:3323 ../base/ufos/maps.ufo:3362
+#: ../base/ufos/maps.ufo:3400 ../base/ufos/maps.ufo:3438
+#: ../base/ufos/maps.ufo:5417
 msgid "Suburban City"
 msgstr "Пригород"
 
-#: ../base/ufos/maps.ufo:3350
+#: ../base/ufos/maps.ufo:3477
+msgid "Crashed Scout"
+msgstr "Разбившийся НЛО-«Разведчик»"
+
+#: ../base/ufos/maps.ufo:3528
 msgid "Village 2"
 msgstr "Деревня 2"
 
-#: ../base/ufos/maps.ufo:3402 ../base/ufos/maps.ufo:3438
-#: ../base/ufos/maps.ufo:5556
+#: ../base/ufos/maps.ufo:3580 ../base/ufos/maps.ufo:3616
+#: ../base/ufos/maps.ufo:5683
 msgid "PHALANX Base Under Attack"
 msgstr "База ФАЛАНКС атакована"
 
-#: ../base/ufos/maps.ufo:3478
+#: ../base/ufos/maps.ufo:3656
 msgid "Cemetery"
 msgstr "Кладбище"
 
-#: ../base/ufos/maps.ufo:3520
+#: ../base/ufos/maps.ufo:3698
 msgid "City High-Rise"
 msgstr "Высотный город"
 
-#: ../base/ufos/maps.ufo:3560
+#: ../base/ufos/maps.ufo:3738
 msgid "Construction Site"
 msgstr "Стройка"
 
-#: ../base/ufos/maps.ufo:3615
+#: ../base/ufos/maps.ufo:3788
 msgid "Tropical Jungle Estate"
 msgstr "Поместье в тропических джунглях"
 
-#: ../base/ufos/maps.ufo:3675
+#: ../base/ufos/maps.ufo:3836
 msgid "Mountain Estate"
 msgstr "Поместье в горах"
 
-#: ../base/ufos/maps.ufo:3717
+#: ../base/ufos/maps.ufo:3880
 msgid "Gas Station"
 msgstr "Автозаправка"
 
-#: ../base/ufos/maps.ufo:3766
+#: ../base/ufos/maps.ufo:3921
 msgid "Luxury House"
 msgstr "Роскошный дом"
 
-#: ../base/ufos/maps.ufo:3877
+#: ../base/ufos/maps.ufo:4028
 msgid "Military Convoy Ambush Site"
 msgstr "Попавший в засаду военный конвой"
 
-#: ../base/ufos/maps.ufo:3978
+#: ../base/ufos/maps.ufo:4130
 msgid "Military Shelter"
 msgstr "Военное убежище"
 
-#: ../base/ufos/maps.ufo:4033
+#: ../base/ufos/maps.ufo:4185
 msgid "Solar Power Plant"
 msgstr "Солнечная электростанция"
 
-#: ../base/ufos/maps.ufo:4127 ../base/ufos/maps.ufo:4945
+#: ../base/ufos/maps.ufo:4278 ../base/ufos/maps.ufo:5064
 msgid "Office Complex"
 msgstr "Офисный комплекс"
 
-#: ../base/ufos/maps.ufo:4182
+#: ../base/ufos/maps.ufo:4332
 msgid "Warehouse"
 msgstr "Склад"
 
-#: ../base/ufos/maps.ufo:4231
+#: ../base/ufos/maps.ufo:4381
 msgid "Military Bunker"
 msgstr "Военный бункер"
 
-#: ../base/ufos/maps.ufo:4280
+#: ../base/ufos/maps.ufo:4428
 msgid "Urban Warehouse"
 msgstr "Городской склад"
 
-#: ../base/ufos/maps.ufo:4325
+#: ../base/ufos/maps.ufo:4472
 msgid "Rural Village"
 msgstr "Деревня в сельской местности"
 
-#: ../base/ufos/maps.ufo:4373
+#: ../base/ufos/maps.ufo:4511
 msgid "Clinic"
 msgstr "Клиника"
 
-#: ../base/ufos/maps.ufo:4412
+#: ../base/ufos/maps.ufo:4550
 msgid "Corrupter UFO Crash Site"
 msgstr "Место крушения НЛО - «Разрушитель»"
 
-#: ../base/ufos/maps.ufo:4460
+#: ../base/ufos/maps.ufo:4595
 msgid "Hydroelectric Dam"
 msgstr "Плотина ГЭС"
 
-#: ../base/ufos/maps.ufo:4513
+#: ../base/ufos/maps.ufo:4645
 msgid "Small Village"
 msgstr "Маленькая деревня"
 
-#: ../base/ufos/maps.ufo:4562
+#: ../base/ufos/maps.ufo:4694
 msgid "Estate"
 msgstr "Поместье"
 
-#: ../base/ufos/maps.ufo:4607
+#: ../base/ufos/maps.ufo:4729
 msgid "Archaeological Dig"
 msgstr "Археологические раскопки"
 
-#: ../base/ufos/maps.ufo:4657
+#: ../base/ufos/maps.ufo:4779
 msgid "Ferry"
 msgstr "Паром"
 
-#: ../base/ufos/maps.ufo:4707
+#: ../base/ufos/maps.ufo:4827
 msgid "Fighter UFO Crash Site"
 msgstr "Место крушения НЛО - «Истребитель»"
 
-#: ../base/ufos/maps.ufo:4754
+#: ../base/ufos/maps.ufo:4873
 msgid "Secret Depot"
 msgstr "Секретный склад"
 
-#: ../base/ufos/maps.ufo:4802
+#: ../base/ufos/maps.ufo:4921
 msgid "Port"
 msgstr "Порт"
 
-#: ../base/ufos/maps.ufo:4848
+#: ../base/ufos/maps.ufo:4967
 msgid "Old Mine"
 msgstr "Старая шахта"
 
-#: ../base/ufos/maps.ufo:4901
+#: ../base/ufos/maps.ufo:5020
 msgid "Residential Neighbourhood"
 msgstr "Жилой район"
 
-#: ../base/ufos/maps.ufo:5038
+#: ../base/ufos/maps.ufo:5157
 msgid "Sewage Pipe Construction"
 msgstr "Канализация"
 
-#: ../base/ufos/maps.ufo:5085
+#: ../base/ufos/maps.ufo:5202
 msgid "Luxurious Resort"
 msgstr "Роскошный курорт"
 
-#: ../base/ufos/maps.ufo:5131
+#: ../base/ufos/maps.ufo:5251
 msgid "Old Town Center"
 msgstr "Центр старого города"
 
-#: ../base/ufos/maps.ufo:5183
+#: ../base/ufos/maps.ufo:5304
 msgid "Small House"
 msgstr "Небольшой дом"
 
-#: ../base/ufos/maps.ufo:5216
+#: ../base/ufos/maps.ufo:5337
 msgid "Small Suburban Street"
 msgstr "Маленькая улица в пригороде"
 
-#: ../base/ufos/maps.ufo:5249
+#: ../base/ufos/maps.ufo:5370
 msgid "Subway Station"
 msgstr "Станция метро"
 
-#: ../base/ufos/maps.ufo:5342
+#: ../base/ufos/maps.ufo:5463
 msgid "Wilderness"
 msgstr "Глушь"
 
-#: ../base/ufos/maps.ufo:5391
+#: ../base/ufos/maps.ufo:5514
 msgid "City High-Rise (MP)"
 msgstr "Высотный город (М)"
 
-#: ../base/ufos/maps.ufo:5419
+#: ../base/ufos/maps.ufo:5542
 msgid "Frozen Industrial Site (Coop)"
 msgstr "Замороженная промплощадка (Coop)"
 
-#: ../base/ufos/maps.ufo:5437
+#: ../base/ufos/maps.ufo:5560
 msgid "Frozen Industrial Site (MP)"
 msgstr "Замороженная промплощадка (М)"
 
-#: ../base/ufos/maps.ufo:5460
+#: ../base/ufos/maps.ufo:5583
 msgid "A container harbour."
 msgstr "Контейнерный склад."
 
-#: ../base/ufos/maps.ufo:5490 ../base/ufos/maps.ufo:5509
+#: ../base/ufos/maps.ufo:5613
 msgid "Village MP (2)"
 msgstr "Деревня МП (2v2)"
 
-#: ../base/ufos/maps.ufo:5534
+#: ../base/ufos/maps.ufo:5632
+msgid "Village MP (3)"
+msgstr "Деревня МП (3)"
+
+#: ../base/ufos/maps.ufo:5661
 msgid "Alien Base"
 msgstr "База пришельцев"
 
-#: ../base/ufos/maps.ufo:5569
+#: ../base/ufos/maps.ufo:5696
 msgid "PHALANX Craft Crash Site"
 msgstr "Место крушения корабля ФАЛАНКС"
 
-#: ../base/ufos/maps.ufo:5598
+#: ../base/ufos/maps.ufo:5725
 msgid "Training Zone: Alpha"
 msgstr "Тренировочная зона «Альфа»"
 
-#: ../base/ufos/maps.ufo:5615
+#: ../base/ufos/maps.ufo:5741
 msgid "Training Zone: Bravo"
 msgstr "Тренировочная зона «Браво»"
 
@@ -24567,12 +24576,12 @@ msgstr "Навыки и способности"
 msgid "Background"
 msgstr "Предыстория"
 
-#: ../base/ufos/research.ufo:113 ../base/ufos/ui/aircraft.ufo:58
+#: ../base/ufos/research.ufo:113 ../base/ufos/ui/aircraft.ufo:138
 #: ../base/ufos/ui/bases.ufo:313 ../base/ufos/ui/geoscape.ufo:1398
 #: ../base/ufos/ui/market.ufo:152 ../base/ufos/ui/production.ufo:73
-#: ../base/ufos/ui/transfer.ufo:153 ../base/ufos/ui/transfer.ufo:173
+#: ../base/ufos/ui/transfer.ufo:143 ../base/ufos/ui/transfer.ufo:163
 #: client/cgame/campaign/cp_geoscape.cpp:309
-#: client/cgame/campaign/cp_transfer_callbacks.cpp:800
+#: client/cgame/campaign/cp_transfer_callbacks.cpp:798
 msgid "Aircraft"
 msgstr "Авиация"
 
@@ -24588,11 +24597,11 @@ msgstr "Внешние объекты"
 msgid "Research Reports"
 msgstr "Отчёты по иследованиям"
 
-#: ../base/ufos/research.ufo:117 ../base/ufos/ui/aircraft.ufo:72
-#: ../base/ufos/ui/aircraft_equip.ufo:61 ../base/ufos/ui/equipment.ufo:46
-#: ../base/ufos/ui/hud_default.ufo:286 ../base/ufos/ui/market.ufo:119
-#: ../base/ufos/ui/transfer.ufo:147 ../base/ufos/ui/transfer.ufo:158
-#: ../base/ufos/ui/transfer.ufo:506
+#: ../base/ufos/research.ufo:117 ../base/ufos/ui/aircraft.ufo:152
+#: ../base/ufos/ui/aircraft_equip.ufo:61 ../base/ufos/ui/equipment.ufo:48
+#: ../base/ufos/ui/hud_default.ufo:261 ../base/ufos/ui/market.ufo:119
+#: ../base/ufos/ui/transfer.ufo:137 ../base/ufos/ui/transfer.ufo:148
+#: ../base/ufos/ui/transfer.ufo:489
 msgid "Equipment"
 msgstr "Вооружение"
 
@@ -24609,14 +24618,14 @@ msgid "The Alien Threat"
 msgstr "Угроза пришельцев"
 
 #: ../base/ufos/research.ufo:130 ../base/ufos/ui/bases.ufo:350
-#: ../base/ufos/ui/research.ufo:41 ../base/ufos/ui/research.ufo:619
-#: client/cgame/campaign/cp_base_callbacks.cpp:876
+#: ../base/ufos/ui/research.ufo:24
+#: client/cgame/campaign/cp_base_callbacks.cpp:864
 msgid "Research"
 msgstr "Исследования"
 
 #: ../base/ufos/research.ufo:138 ../base/ufos/ui/bases.ufo:370
 #: ../base/ufos/ui/production.ufo:21 ../base/ufos/ui/production.ufo:121
-#: client/cgame/campaign/cp_base_callbacks.cpp:862
+#: client/cgame/campaign/cp_base_callbacks.cpp:850
 msgid "Production"
 msgstr "Производство"
 
@@ -24676,7 +24685,7 @@ msgstr "Странности поведения"
 msgid "Alien Communication"
 msgstr "Связь пришельцев"
 
-#: ../base/ufos/research.ufo:558 client/cgame/campaign/cp_missions.cpp:467
+#: ../base/ufos/research.ufo:558 client/cgame/campaign/cp_missions.cpp:465
 msgid "Alien base"
 msgstr "База пришельцев"
 
@@ -25166,7 +25175,7 @@ msgstr "Выберите бойца щелчком мыши"
 msgid "Or via the keys 1-8 or Tab"
 msgstr "Или посредством клавиш 1-8 или Tab"
 
-#: ../base/ufos/seq_tutorials.ufo:475 ../base/ufos/ui/popup_baseattack.ufo:196
+#: ../base/ufos/seq_tutorials.ufo:475
 msgid "Physical stats"
 msgstr "Физические характеристики"
 
@@ -25788,83 +25797,91 @@ msgstr ""
 "видеонаблюдения Командного центра. Ваш солдат сможет использовать камеры "
 "видеонаблюдения вокруг базы для обнаружения врагов."
 
-#: ../base/ufos/ui/_assets.ufo:35
+#: ../base/ufos/ui/_assets.ufo:42
 msgid "HOME"
 msgstr "БАЗА"
 
-#: ../base/ufos/ui/_assets.ufo:47 ../base/ufos/ui/_assets_base.ufo:264
-#: ../base/ufos/ui/_assets_base.ufo:426
+#: ../base/ufos/ui/_assets.ufo:54 ../base/ufos/ui/_assets_base.ufo:319
+#: ../base/ufos/ui/_assets_base.ufo:487
 msgid "View UFOPaedia entry"
 msgstr "Посмотреть в НЛОпедии"
 
-#: ../base/ufos/ui/_assets.ufo:114 ../base/ufos/ui/hud_phone.ufo:157
+#: ../base/ufos/ui/_assets.ufo:121 ../base/ufos/ui/hud_phone.ufo:157
 #: client/cgame/campaign/cp_installation_callbacks.cpp:194
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:565
 msgid "Cancel"
 msgstr "Отмена"
 
-#: ../base/ufos/ui/_assets.ufo:115 ../base/ufos/ui/sys_popup.ufo:52
+#: ../base/ufos/ui/_assets.ufo:122 ../base/ufos/ui/sys_popup.ufo:52
 #: ../base/ufos/ui/sys_popup.ufo:115
 msgid "Close this dialogue"
 msgstr "Закрыть диалог"
 
-#: ../base/ufos/ui/_assets.ufo:385 ../base/ufos/ui/hud_default.ufo:1438
+#: ../base/ufos/ui/_assets.ufo:388 ../base/ufos/ui/hud_default.ufo:1492
 msgid "Strength"
 msgstr "Сила"
 
-#: ../base/ufos/ui/_assets.ufo:395 ../base/ufos/ui/hud_default.ufo:1447
+#: ../base/ufos/ui/_assets.ufo:398 ../base/ufos/ui/hud_default.ufo:1501
 msgid "Speed"
 msgstr "Скорость"
 
-#: ../base/ufos/ui/_assets.ufo:405 ../base/ufos/ui/hud_default.ufo:1456
+#: ../base/ufos/ui/_assets.ufo:408 ../base/ufos/ui/hud_default.ufo:1510
 #: client/cgame/campaign/cp_ufopedia.cpp:146
 msgid "Accuracy"
 msgstr "Меткость"
 
-#: ../base/ufos/ui/_assets.ufo:415 ../base/ufos/ui/hud_default.ufo:1465
+#: ../base/ufos/ui/_assets.ufo:418 ../base/ufos/ui/hud_default.ufo:1519
 msgid "Mind"
 msgstr "Интеллект"
 
-#: ../base/ufos/ui/_assets.ufo:434 ../base/ufos/ui/hud_default.ufo:1483
+#: ../base/ufos/ui/_assets.ufo:439 ../base/ufos/ui/hud_default.ufo:1537
 msgid "CQB"
 msgstr "Ближний бой"
 
-#: ../base/ufos/ui/_assets.ufo:444 ../base/ufos/ui/hud_default.ufo:1492
+#: ../base/ufos/ui/_assets.ufo:440
+msgid "Close Quarters Battle"
+msgstr "Оружие ближнего боя"
+
+#: ../base/ufos/ui/_assets.ufo:451 ../base/ufos/ui/hud_default.ufo:1546
 #: client/cl_inventory_callbacks.cpp:50
 msgid "Assault"
 msgstr "Штурмовое оружие"
 
-#: ../base/ufos/ui/_assets.ufo:454 ../base/ufos/ui/hud_default.ufo:1501
+#: ../base/ufos/ui/_assets.ufo:461 ../base/ufos/ui/hud_default.ufo:1555
 #: client/cl_inventory_callbacks.cpp:52
 msgid "Sniper"
 msgstr "снайпер"
 
-#: ../base/ufos/ui/_assets.ufo:464 ../base/ufos/ui/hud_default.ufo:1510
+#: ../base/ufos/ui/_assets.ufo:471 ../base/ufos/ui/hud_default.ufo:1564
 #: client/cl_inventory_callbacks.cpp:54
 msgid "Explosives"
 msgstr "Взрывное оружие"
 
-#: ../base/ufos/ui/_assets.ufo:484 ../base/ufos/ui/physdat.ufo:358
+#: ../base/ufos/ui/_assets.ufo:493
 msgid "Health"
 msgstr "Здоровье"
 
-#: ../base/ufos/ui/_assets.ufo:563 ../base/ufos/ui/physdat.ufo:444
+#: ../base/ufos/ui/_assets.ufo:494
+msgid "Healthpoints"
+msgstr "Очки Здоровья"
+
+#: ../base/ufos/ui/_assets.ufo:520
 msgid "Missions Performed:"
 msgstr "Операций выполнено:"
 
-#: ../base/ufos/ui/_assets.ufo:566 ../base/ufos/ui/physdat.ufo:445
+#: ../base/ufos/ui/_assets.ufo:532
 msgid "Enemies Killed:"
 msgstr "Убито противников:"
 
-#: ../base/ufos/ui/_assets.ufo:583
+#: ../base/ufos/ui/_assets.ufo:620
 msgid "Piloting"
 msgstr "Пилотирование"
 
-#: ../base/ufos/ui/_assets.ufo:592
+#: ../base/ufos/ui/_assets.ufo:629
 msgid "Targeting"
 msgstr "Наведение"
 
-#: ../base/ufos/ui/_assets.ufo:601
+#: ../base/ufos/ui/_assets.ufo:638
 msgid "Evading"
 msgstr "Уклонение"
 
@@ -25872,35 +25889,51 @@ msgstr "Уклонение"
 msgid "Back"
 msgstr "Назад"
 
-#: ../base/ufos/ui/_assets_base.ufo:320 ../base/ufos/ui/research.ufo:496
+#: ../base/ufos/ui/_assets_base.ufo:360
 msgid "Stop researching this project"
 msgstr "Остановить иследование этого проекта"
 
-#: ../base/ufos/ui/_assets_base.ufo:330 ../base/ufos/ui/research.ufo:534
+#: ../base/ufos/ui/_assets_base.ufo:370
 msgid "Assign all free scientists on this project"
 msgstr "Назначить всех свободных ученых на этот проект"
 
-#: ../base/ufos/ui/_assets_base.ufo:340 ../base/ufos/ui/research.ufo:506
+#: ../base/ufos/ui/_assets_base.ufo:380
 msgid "Assign less scientists on this project"
 msgstr "Уменьшить количество ученых назначенных на этот проект"
 
-#: ../base/ufos/ui/_assets_base.ufo:353 ../base/ufos/ui/research.ufo:524
+#: ../base/ufos/ui/_assets_base.ufo:390
 msgid "Assign more scientists on this project"
 msgstr "Увеличить количество ученых назначенных на этот проект"
 
-#: ../base/ufos/ui/_assets_base.ufo:477
+#: ../base/ufos/ui/_assets_base.ufo:409
+msgid "Currently in research on another base"
+msgstr "В данный момент исследуется на другой базе"
+
+#: ../base/ufos/ui/_assets_base.ufo:424
+msgid "N/A"
+msgstr "Н/Д"
+
+#: ../base/ufos/ui/_assets_base.ufo:425
+msgid "An artifact or prerequisite is missing for this topic"
+msgstr "Для данной темы исследования отсутствует артифакт или предпосылка"
+
+#: ../base/ufos/ui/_assets_base.ufo:433
+msgid "Expand/Collapse"
+msgstr "Развернуть/Свернуть"
+
+#: ../base/ufos/ui/_assets_base.ufo:538
 msgid "Lock current stock level"
 msgstr "Зафиксировать текущий уровень товара"
 
-#: ../base/ufos/ui/_assets_base.ufo:538
+#: ../base/ufos/ui/_assets_base.ufo:599
 msgid "Previous base"
 msgstr "Предыдущая база"
 
-#: ../base/ufos/ui/_assets_base.ufo:548
+#: ../base/ufos/ui/_assets_base.ufo:609
 msgid "Next base"
 msgstr "Следующая база"
 
-#: ../base/ufos/ui/_assets_base.ufo:626 ../base/ufos/ui/research.ufo:50
+#: ../base/ufos/ui/_assets_base.ufo:682 ../base/ufos/ui/_menu.ufo:116
 msgid "Back to base"
 msgstr "Вернуться к обзору базы"
 
@@ -25933,8 +25966,8 @@ msgid "Dropship"
 msgstr "Транспорт"
 
 #: ../base/ufos/ui/_assets_map.ufo:213
-#: client/cgame/campaign/cp_aircraft.cpp:479
-#: client/cgame/campaign/cp_ufo.cpp:156 client/cgame/campaign/cp_ufo.cpp:157
+#: client/cgame/campaign/cp_aircraft.cpp:477
+#: client/cgame/campaign/cp_ufo.cpp:247 client/cgame/campaign/cp_ufo.cpp:248
 msgid "UFO"
 msgstr "НЛО"
 
@@ -25942,7 +25975,7 @@ msgstr "НЛО"
 msgid "Enemy weapons"
 msgstr "Оружие врагов"
 
-#: ../base/ufos/ui/_assets_squad.ufo:81 ../base/ufos/ui/_assets_squad.ufo:461
+#: ../base/ufos/ui/_assets_squad.ufo:81 ../base/ufos/ui/_assets_squad.ufo:460
 msgid "Squad"
 msgstr "Отряд"
 
@@ -25979,16 +26012,16 @@ msgstr "ПО УМОЛЧАНИЮ"
 msgid "CUSTOM"
 msgstr "СОБСТВЕННАЯ"
 
-#: ../base/ufos/ui/_assets_squad.ufo:413 ../base/ufos/ui/campaign.ufo:131
+#: ../base/ufos/ui/_assets_squad.ufo:412 ../base/ufos/ui/campaign.ufo:131
 msgid "NEW"
 msgstr "НОВАЯ"
 
-#: ../base/ufos/ui/_assets_squad.ufo:429 ../base/ufos/ui/campaign.ufo:154
+#: ../base/ufos/ui/_assets_squad.ufo:428 ../base/ufos/ui/campaign.ufo:154
 #: ../base/ufos/ui/campaign.ufo:638
 msgid "LOAD"
 msgstr "ЗАГРУЗИТЬ"
 
-#: ../base/ufos/ui/_assets_squad.ufo:476 ../base/ufos/ui/multiplayer.ufo:153
+#: ../base/ufos/ui/_assets_squad.ufo:475 ../base/ufos/ui/multiplayer.ufo:153
 msgid "CREATE"
 msgstr "СОЗДАТЬ"
 
@@ -25999,10 +26032,6 @@ msgstr "БАЛАНС"
 #: ../base/ufos/ui/_menu.ufo:106 ../base/ufos/ui/geoscape.ufo:185
 msgid "Organisation capital"
 msgstr "Средства на счету у организации"
-
-#: ../base/ufos/ui/_menu.ufo:116
-msgid "Back to baseview"
-msgstr "Вернуться к обзору базы"
 
 #: ../base/ufos/ui/_menu.ufo:135
 msgid "Name of this base"
@@ -26020,109 +26049,103 @@ msgstr "Перейти к предыдущей базе"
 msgid "Switch to the next base"
 msgstr "Перейти к следующей базе"
 
-#: ../base/ufos/ui/aircraft.ufo:24 ../base/ufos/ui/popup_baseattack.ufo:68
+#: ../base/ufos/ui/aircraft.ufo:65
+msgid "Start Aircraft"
+msgstr "Запустить"
+
+#: ../base/ufos/ui/aircraft.ufo:70
+msgid "Call back"
+msgstr "Отозвать"
+
+#: ../base/ufos/ui/aircraft.ufo:103 ../base/ufos/ui/popup_baseattack.ufo:68
 msgid "Add/remove soldier to the team"
 msgstr "Добавить/убрать солдата из отряда"
 
-#: ../base/ufos/ui/aircraft.ufo:77 ../base/ufos/ui/aircraft_soldiers.ufo:25
-#: ../base/ufos/ui/bases.ufo:80 ../base/ufos/ui/bases.ufo:334
-#: ../base/ufos/ui/hire.ufo:49
-msgid "Soldiers"
-msgstr "Солдаты"
+#: ../base/ufos/ui/aircraft.ufo:157
+msgid "Soldiers & Pilots"
+msgstr "Солдаты & Пилоты"
 
-#: ../base/ufos/ui/aircraft.ufo:130
+#: ../base/ufos/ui/aircraft.ufo:183
 msgid "Rename aircraft"
 msgstr "Переименовать самолёт"
 
-#: ../base/ufos/ui/aircraft.ufo:158 ../base/ufos/ui/geoscape.ufo:1125
+#: ../base/ufos/ui/aircraft.ufo:226
+msgid "Health:"
+msgstr "Здоровье:"
+
+#: ../base/ufos/ui/aircraft.ufo:235 ../base/ufos/ui/geoscape.ufo:1125
 #: ../base/ufos/ui/geoscape.ufo:1271
 #: ../base/ufos/ui/popup_installations.ufo:618
 msgid "Status:"
 msgstr "Статус:"
 
-#: ../base/ufos/ui/aircraft.ufo:181
-msgid "Start Aircraft"
-msgstr "Запустить"
+#: ../base/ufos/ui/aircraft.ufo:244
+msgid "Team:"
+msgstr "Отряд:"
 
-#: ../base/ufos/ui/aircraft.ufo:186
-msgid "Call back"
-msgstr "Отозвать"
-
-#: ../base/ufos/ui/aircraft.ufo:194 ../base/ufos/ui/hospital.ufo:358
-#: ../base/ufos/ui/popup_baseattack.ufo:307
-msgid "Health:"
-msgstr "Здоровье:"
-
-#: ../base/ufos/ui/aircraft.ufo:228
-msgid "Team Members:"
-msgstr "Члены отряда:"
-
-#: ../base/ufos/ui/aircraft_equip.ufo:93
-msgid "Equip Aircraft"
-msgstr "Оборудовать самоле"
-
-#: ../base/ufos/ui/aircraft_equip.ufo:126
-msgid "View Aircraft"
-msgstr "Посмотреть самолет"
-
-#: ../base/ufos/ui/aircraft_equip.ufo:139
-#: ../base/ufos/ui/aircraft_equip.ufo:158
-#: ../base/ufos/ui/aircraft_equip.ufo:177
-#: ../base/ufos/ui/aircraft_equip.ufo:196
-#: ../base/ufos/ui/aircraft_equip.ufo:215
-#: ../base/ufos/ui/aircraft_equip.ufo:234
-#: ../base/ufos/ui/aircraft_equip.ufo:253
-#: ../base/ufos/ui/aircraft_equip.ufo:272
+#: ../base/ufos/ui/aircraft_equip.ufo:90
+#: ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:128
+#: ../base/ufos/ui/aircraft_equip.ufo:147
+#: ../base/ufos/ui/aircraft_equip.ufo:166
+#: ../base/ufos/ui/aircraft_equip.ufo:185
+#: ../base/ufos/ui/aircraft_equip.ufo:204
+#: ../base/ufos/ui/aircraft_equip.ufo:223
 msgid "Select this slot"
 msgstr "Выбрать слот"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:335
+#: ../base/ufos/ui/aircraft_equip.ufo:286
 msgid "Available equipment:"
 msgstr "Доступное снаряжение:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:355
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:138
+#: ../base/ufos/ui/aircraft_equip.ufo:306
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:136
 msgid "Weapons"
 msgstr "Вооружение"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:359
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:145
+#: ../base/ufos/ui/aircraft_equip.ufo:310
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:143
 msgid "Ammo"
 msgstr "Патроны"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:363 ../base/ufos/ui/equipment.ufo:398
+#: ../base/ufos/ui/aircraft_equip.ufo:314 ../base/ufos/ui/equipment.ufo:389
 #: ../base/ufos/ui/market.ufo:130 ../base/ufos/ui/production.ufo:55
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:140
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:138
 #: client/cgame/campaign/cp_ufopedia.cpp:140
 msgid "Armour"
 msgstr "Броня"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:367
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:142
-#: client/cgame/campaign/cp_transfer_callbacks.cpp:761
+#: ../base/ufos/ui/aircraft_equip.ufo:318
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:140
+#: client/cgame/campaign/cp_transfer_callbacks.cpp:759
 msgid "Items"
 msgstr "Оборудование"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:436
+#: ../base/ufos/ui/aircraft_equip.ufo:387
 msgid "Equip this item"
 msgstr "Снарядить этим агрегатом"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:453
+#: ../base/ufos/ui/aircraft_equip.ufo:404
 msgid "Remove this item"
 msgstr "Убрать этот агрегат"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:478
-#: ../base/ufos/ui/aircraft_equip.ufo:517
+#: ../base/ufos/ui/aircraft_equip.ufo:429
+#: ../base/ufos/ui/aircraft_equip.ufo:468
 msgid "Select this zone"
 msgstr "Выбрать зону"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:487
+#: ../base/ufos/ui/aircraft_equip.ufo:438
 msgid "Current item in slot"
 msgstr "Предмет в слоте"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:538
+#: ../base/ufos/ui/aircraft_equip.ufo:489
 msgid "Ammo fitting this weapon"
 msgstr "Патроны для этого оружия"
+
+#: ../base/ufos/ui/aircraft_soldiers.ufo:25 ../base/ufos/ui/bases.ufo:80
+#: ../base/ufos/ui/bases.ufo:334 ../base/ufos/ui/hire.ufo:53
+msgid "Soldiers"
+msgstr "Солдаты"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:151
 msgid "Assign tanks"
@@ -26133,7 +26156,7 @@ msgid "Assign soldiers"
 msgstr "Назначить экипаж"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:166
-#: ../base/ufos/ui/aircraft_soldiers.ufo:221 ../base/ufos/ui/hire.ufo:360
+#: ../base/ufos/ui/aircraft_soldiers.ufo:221 ../base/ufos/ui/hire.ufo:364
 msgid "Equip soldiers"
 msgstr "Снарядить солдат"
 
@@ -26141,31 +26164,31 @@ msgstr "Снарядить солдат"
 msgid "No soldiers assigned"
 msgstr "Нет приписанных солдат"
 
-#: ../base/ufos/ui/aliencont.ufo:57 ../base/ufos/ui/aliencont.ufo:305
+#: ../base/ufos/ui/aliencont.ufo:56 ../base/ufos/ui/aliencont.ufo:304
 msgid "Kill this alien"
 msgstr "Умертвить пришельца"
 
-#: ../base/ufos/ui/aliencont.ufo:76
+#: ../base/ufos/ui/aliencont.ufo:75
 msgid "Start autopsy"
 msgstr "Начать вскрытие"
 
-#: ../base/ufos/ui/aliencont.ufo:169
+#: ../base/ufos/ui/aliencont.ufo:168
 msgid "Race"
 msgstr "Раса"
 
-#: ../base/ufos/ui/aliencont.ufo:177
+#: ../base/ufos/ui/aliencont.ufo:176
 msgid "Alive"
 msgstr "Живых"
 
-#: ../base/ufos/ui/aliencont.ufo:185
+#: ../base/ufos/ui/aliencont.ufo:184
 msgid "Dead"
 msgstr "Мёртвых"
 
-#: ../base/ufos/ui/aliencont.ufo:194
+#: ../base/ufos/ui/aliencont.ufo:193
 msgid "Kill all aliens in this base"
 msgstr "Умертвить всех пришельцев на базе"
 
-#: ../base/ufos/ui/aliencont.ufo:310
+#: ../base/ufos/ui/aliencont.ufo:309
 msgid "Autopsy"
 msgstr "Вскрытие"
 
@@ -26175,7 +26198,7 @@ msgstr "Снарядить защитные системы"
 
 #: ../base/ufos/ui/basedefence.ufo:32
 #: ../base/ufos/ui/popup_installations.ufo:458
-#: client/cgame/campaign/cp_base.cpp:2064
+#: client/cgame/campaign/cp_base.cpp:2060
 msgid "Information"
 msgstr "Информация"
 
@@ -26244,10 +26267,10 @@ msgstr "Автоматический огонь"
 #: ../base/ufos/ui/basedefence.ufo:369 ../base/ufos/ui/geoscape.ufo:1041
 #: ../base/ufos/ui/popup_installations.ufo:572
 #: ../base/ufos/ui/popup_installations.ufo:672
-#: client/cgame/campaign/cp_base_callbacks.cpp:612
-#: client/cgame/campaign/cp_base_callbacks.cpp:622
-#: client/cgame/campaign/cp_base_callbacks.cpp:632
-#: client/cgame/campaign/cp_base_callbacks.cpp:645
+#: client/cgame/campaign/cp_base_callbacks.cpp:601
+#: client/cgame/campaign/cp_base_callbacks.cpp:611
+#: client/cgame/campaign/cp_base_callbacks.cpp:621
+#: client/cgame/campaign/cp_base_callbacks.cpp:634
 #: client/cgame/campaign/cp_installation_callbacks.cpp:193
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:564
 msgid "Destroy"
@@ -26260,17 +26283,16 @@ msgid "Destroy installation"
 msgstr "Уничтожить объект."
 
 #: ../base/ufos/ui/basedefence.ufo:378 ../base/ufos/ui/geoscape.ufo:1024
-#: ../base/ufos/ui/hud_default.ufo:1360 ../base/ufos/ui/inventory.ufo:240
-#: ../base/ufos/ui/main.ufo:359 ../base/ufos/ui/physdat.ufo:409
-#: ../base/ufos/ui/popup_baseattack.ufo:355
+#: ../base/ufos/ui/hud_default.ufo:1394 ../base/ufos/ui/main.ufo:359
+#: ../base/ufos/ui/popup_baseattack.ufo:207
 #: ../base/ufos/ui/popup_capacity.ufo:77
 #: ../base/ufos/ui/popup_installations.ufo:130 ../base/ufos/ui/radar.ufo:36
-#: ../base/ufos/ui/transfer.ufo:713
+#: ../base/ufos/ui/transfer.ufo:694
 msgid "Close"
 msgstr "Закрыть"
 
-#: ../base/ufos/ui/bases.ufo:62 ../base/ufos/ui/hire.ufo:64
-#: client/cgame/campaign/cp_base_callbacks.cpp:876
+#: ../base/ufos/ui/bases.ufo:62 ../base/ufos/ui/hire.ufo:68
+#: client/cgame/campaign/cp_base_callbacks.cpp:864
 msgid "Scientists"
 msgstr "Учёные"
 
@@ -26278,7 +26300,7 @@ msgstr "Учёные"
 msgid "Engineers"
 msgstr "Инженеры"
 
-#: ../base/ufos/ui/bases.ufo:89 ../base/ufos/ui/hire.ufo:54
+#: ../base/ufos/ui/bases.ufo:89 ../base/ufos/ui/hire.ufo:58
 msgid "Pilots"
 msgstr "Пилоты"
 
@@ -26289,10 +26311,10 @@ msgstr "Сводка по базе"
 #: ../base/ufos/ui/bases.ufo:118 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
 #: ../base/ufos/ui/popup_installations.ufo:654
-#: ../base/ufos/ui/transfer.ufo:127 ../base/ufos/ui/transfer.ufo:473
-#: client/cgame/campaign/cp_base_callbacks.cpp:613
-#: client/cgame/campaign/cp_base_callbacks.cpp:623
-#: client/cgame/campaign/cp_base_callbacks.cpp:633
+#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:460
+#: client/cgame/campaign/cp_base_callbacks.cpp:602
+#: client/cgame/campaign/cp_base_callbacks.cpp:612
+#: client/cgame/campaign/cp_base_callbacks.cpp:622
 msgid "Transfer"
 msgstr "Отправить"
 
@@ -26300,7 +26322,7 @@ msgstr "Отправить"
 msgid "UFOpedia"
 msgstr "НЛОпедия"
 
-#: ../base/ufos/ui/bases.ufo:140 ../base/ufos/ui/hud_default.ufo:1065
+#: ../base/ufos/ui/bases.ufo:140 ../base/ufos/ui/hud_default.ufo:1044
 msgid "Options"
 msgstr "Настройки"
 
@@ -26308,8 +26330,8 @@ msgstr "Настройки"
 msgid "Facilities"
 msgstr "Модули"
 
-#: ../base/ufos/ui/bases.ufo:210 ../base/ufos/ui/buildings.ufo:180
-#: ../base/ufos/ui/geoscape.ufo:544 client/cgame/campaign/cp_ufopedia.cpp:113
+#: ../base/ufos/ui/bases.ufo:210 ../base/ufos/ui/geoscape.ufo:544
+#: client/cgame/campaign/cp_ufopedia.cpp:113
 #: client/cgame/campaign/cp_ufopedia.cpp:842
 msgid "UFOpaedia"
 msgstr "НЛОпедия"
@@ -26318,22 +26340,6 @@ msgstr "НЛОпедия"
 #: ../base/ufos/ui/market.ufo:55
 msgid "Market"
 msgstr "Рынок"
-
-#: ../base/ufos/ui/bases.ufo:429 ../base/ufos/ui/bases.ufo:437
-msgid "<3>"
-msgstr "<3>"
-
-#: ../base/ufos/ui/buildings.ufo:79
-msgid "Open/close Building preview window"
-msgstr "Открыть/закрыть окно предпросмотра"
-
-#: ../base/ufos/ui/buildings.ufo:94 ../base/ufos/ui/buildings.ufo:140
-msgid "Building preview"
-msgstr "Предварительный просмотр"
-
-#: ../base/ufos/ui/buildings.ufo:105
-msgid "Select building"
-msgstr "Выбрать строение"
 
 #: ../base/ufos/ui/campaign.ufo:42 ../base/ufos/ui/campaign.ufo:95
 msgid "Upload"
@@ -26352,9 +26358,9 @@ msgstr "ЗАГРУЗИТЬ"
 msgid "BEGIN"
 msgstr "НАЧАТЬ"
 
-#: ../base/ufos/ui/campaign.ufo:196 ../base/ufos/ui/campaign.ufo:941
+#: ../base/ufos/ui/campaign.ufo:196 ../base/ufos/ui/campaign.ufo:931
 #: ../base/ufos/ui/multiplayer.ufo:907 ../base/ufos/ui/skirmish.ufo:197
-#: ../base/ufos/ui/tutorials.ufo:64
+#: ../base/ufos/ui/tutorials.ufo:63
 msgid "BACK"
 msgstr "НАЗАД"
 
@@ -26387,11 +26393,11 @@ msgstr "ОПЦИИ"
 msgid "EXIT"
 msgstr "ВЫХОД"
 
-#: ../base/ufos/ui/campaign.ufo:717
+#: ../base/ufos/ui/campaign.ufo:707
 msgid "Reload campaign"
 msgstr "Перезапуск компании"
 
-#: ../base/ufos/ui/campaign.ufo:723
+#: ../base/ufos/ui/campaign.ufo:713
 msgid ""
 "Are you sure that you really want to reload the last automatically saved "
 "campaign state?"
@@ -26399,31 +26405,31 @@ msgstr ""
 "Вы действительно хотите перезагрузить последнее автоматически сохраненное "
 "состояние кампании?"
 
-#: ../base/ufos/ui/campaign.ufo:731
+#: ../base/ufos/ui/campaign.ufo:721
 msgid "Load"
 msgstr "Загрузить"
 
-#: ../base/ufos/ui/campaign.ufo:761
+#: ../base/ufos/ui/campaign.ufo:751
 msgid "You've lost the game"
 msgstr "Вы потерпели поражение"
 
-#: ../base/ufos/ui/campaign.ufo:771 ../base/ufos/ui/campaign.ufo:847
+#: ../base/ufos/ui/campaign.ufo:761 ../base/ufos/ui/campaign.ufo:837
 msgid "Click to continue"
 msgstr "Нажмите для продолжения"
 
-#: ../base/ufos/ui/campaign.ufo:837
+#: ../base/ufos/ui/campaign.ufo:827
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Благодарим вас за игру в UFO: Alien Invasion"
 
-#: ../base/ufos/ui/campaign.ufo:919
+#: ../base/ufos/ui/campaign.ufo:909
 msgid "EXIT CAMPAIGN CONFIRMATION"
 msgstr "ПОДТВЕРЖДЕНИЕ ВЫХОДА ИЗ КАМПАНИИ"
 
-#: ../base/ufos/ui/campaign.ufo:924 ../base/ufos/ui/singleplayer.ufo:158
+#: ../base/ufos/ui/campaign.ufo:914 ../base/ufos/ui/singleplayer.ufo:148
 msgid "You will lose all your campaign progress."
 msgstr "Вы потеряете все ваши достижения в кампании."
 
-#: ../base/ufos/ui/campaign.ufo:933 ../base/ufos/ui/singleplayer.ufo:125
+#: ../base/ufos/ui/campaign.ufo:923 ../base/ufos/ui/singleplayer.ufo:125
 msgid "QUIT"
 msgstr "ВЫХОД"
 
@@ -26431,19 +26437,19 @@ msgstr "ВЫХОД"
 msgid "Remove this file from the server"
 msgstr "Убрать этот файл с сервера"
 
-#: ../base/ufos/ui/equipment.ufo:129 ../base/ufos/ui/hire.ufo:320
+#: ../base/ufos/ui/equipment.ufo:131 ../base/ufos/ui/hire.ufo:324
 msgid "Rename your unit"
 msgstr "Переименовать солдата"
 
-#: ../base/ufos/ui/equipment.ufo:157 ../base/ufos/ui/hud_default.ufo:1369
+#: ../base/ufos/ui/equipment.ufo:159 ../base/ufos/ui/hud_default.ufo:1402
 msgid "Next soldier"
 msgstr "Следующий солдат"
 
-#: ../base/ufos/ui/equipment.ufo:165 ../base/ufos/ui/hud_default.ufo:1377
+#: ../base/ufos/ui/equipment.ufo:167 ../base/ufos/ui/hud_default.ufo:1410
 msgid "Previous soldier"
 msgstr "Предыдущий солдат"
 
-#: ../base/ufos/ui/equipment.ufo:222 ../base/ufos/ui/inventory.ufo:252
+#: ../base/ufos/ui/equipment.ufo:224 ../base/ufos/ui/hud_default.ufo:1461
 msgid "0/0 Kg"
 msgstr "0/0 Кг"
 
@@ -26451,19 +26457,19 @@ msgstr "0/0 Кг"
 msgid "Remove all"
 msgstr "Убрать все"
 
-#: ../base/ufos/ui/equipment.ufo:378 ../base/ufos/ui/production.ufo:39
+#: ../base/ufos/ui/equipment.ufo:369 ../base/ufos/ui/production.ufo:39
 msgid "Primary"
 msgstr "Основное"
 
-#: ../base/ufos/ui/equipment.ufo:383 ../base/ufos/ui/production.ufo:43
+#: ../base/ufos/ui/equipment.ufo:374 ../base/ufos/ui/production.ufo:43
 msgid "Secondary"
 msgstr "Личное"
 
-#: ../base/ufos/ui/equipment.ufo:388 ../base/ufos/ui/production.ufo:47
+#: ../base/ufos/ui/equipment.ufo:379 ../base/ufos/ui/production.ufo:47
 msgid "Heavy"
 msgstr "Тяжёлое"
 
-#: ../base/ufos/ui/equipment.ufo:393 ../base/ufos/ui/production.ufo:51
+#: ../base/ufos/ui/equipment.ufo:384 ../base/ufos/ui/production.ufo:51
 msgid "Misc"
 msgstr "Прочее"
 
@@ -26512,7 +26518,7 @@ msgid "Change message and pause settings"
 msgstr "Изменить настройки оповещений и остановок времени"
 
 #: ../base/ufos/ui/geoscape.ufo:499 ../base/ufos/ui/geoscape.ufo:516
-#: ../base/ufos/ui/mailclient.ufo:154
+#: ../base/ufos/ui/mailclient.ufo:157
 msgid "Mailclient"
 msgstr "Почта"
 
@@ -26573,12 +26579,12 @@ msgstr "Операция:"
 msgid "Aircraft reached desired location - what to do?"
 msgstr "Самолёт достиг точки назначения, ожидаются указания."
 
-#: ../base/ufos/ui/geoscape.ufo:838 ../base/ufos/ui/popup_baseattack.ufo:486
+#: ../base/ufos/ui/geoscape.ufo:838 ../base/ufos/ui/popup_baseattack.ufo:338
 msgid "Enter"
 msgstr "Высадиться"
 
-#: ../base/ufos/ui/geoscape.ufo:839 ../base/ufos/ui/popup_baseattack.ufo:487
-#: ../base/ufos/ui/popup_baseattack.ufo:509
+#: ../base/ufos/ui/geoscape.ufo:839 ../base/ufos/ui/popup_baseattack.ufo:339
+#: ../base/ufos/ui/popup_baseattack.ufo:361
 msgid "Enter the battlefield"
 msgstr "Выйти на поле боя"
 
@@ -26643,7 +26649,7 @@ msgstr "Выберите самолёт"
 
 #: ../base/ufos/ui/geoscape.ufo:1285
 #: ../base/ufos/ui/popup_installations.ufo:642
-#: ../base/ufos/ui/transfer.ufo:620
+#: ../base/ufos/ui/transfer.ufo:601
 msgid "ETA:"
 msgstr "РВП:"
 
@@ -26679,147 +26685,138 @@ msgstr "2D"
 msgid "3D"
 msgstr "3D"
 
-#: ../base/ufos/ui/hire.ufo:27
+#: ../base/ufos/ui/hire.ufo:31
 msgid "Hire and Fire"
 msgstr "Нанять/Уволить"
 
-#: ../base/ufos/ui/hire.ufo:59
+#: ../base/ufos/ui/hire.ufo:63
 msgid "Workers"
 msgstr "Рабочие"
 
-#: ../base/ufos/ui/hire.ufo:112
+#: ../base/ufos/ui/hire.ufo:116
 msgid "Employee is away"
 msgstr "Сотрудник вне базы"
 
-#: ../base/ufos/ui/hire.ufo:124
+#: ../base/ufos/ui/hire.ufo:128
 msgid "Unhire - Right click to remove"
 msgstr "Уволить — правый клик, чтобы удалить"
 
-#: ../base/ufos/ui/hire.ufo:136
+#: ../base/ufos/ui/hire.ufo:140
 msgid "Hire - Right click to remove"
 msgstr "Нанять — правый клик, чтобы удалить"
 
-#: ../base/ufos/ui/hire.ufo:381
+#: ../base/ufos/ui/hire.ufo:385
 msgid "Occupation"
 msgstr "Заселённость"
 
-#: ../base/ufos/ui/hospital.ufo:166
+#: ../base/ufos/ui/hospital.ufo:40
 msgid "Slightly wounded"
 msgstr "Лёгкие раны"
 
-#: ../base/ufos/ui/hospital.ufo:169
+#: ../base/ufos/ui/hospital.ufo:43
 msgid "Medium wounds"
 msgstr "Средние раны"
 
-#: ../base/ufos/ui/hospital.ufo:172
+#: ../base/ufos/ui/hospital.ufo:46
 msgid "Heavily wounded"
 msgstr "Тяжёлые раны"
 
-#: ../base/ufos/ui/hospital.ufo:175
+#: ../base/ufos/ui/hospital.ufo:49
 msgid "Healthy"
 msgstr "Здоровый"
 
-#: ../base/ufos/ui/hospital.ufo:324 ../base/ufos/ui/physdat.ufo:222
-#: ../base/ufos/ui/popup_baseattack.ufo:228
-msgid "Strength:"
-msgstr "Сила:"
-
-#: ../base/ufos/ui/hospital.ufo:331 ../base/ufos/ui/physdat.ufo:236
-#: ../base/ufos/ui/popup_baseattack.ufo:237
-msgid "Speed:"
-msgstr "Скорость:"
-
-#: ../base/ufos/ui/hospital.ufo:338 ../base/ufos/ui/physdat.ufo:250
-#: ../base/ufos/ui/popup_baseattack.ufo:246
-msgid "Accuracy:"
-msgstr "Меткость:"
-
-#: ../base/ufos/ui/hospital.ufo:345 ../base/ufos/ui/physdat.ufo:264
-#: ../base/ufos/ui/popup_baseattack.ufo:255
-msgid "Mind:"
-msgstr "Интеллект:"
-
-#: ../base/ufos/ui/hud_.ufo:83
+#: ../base/ufos/ui/hud_.ufo:84
 msgid "Use this firemode for reaction fire"
 msgstr "Отметьте, для использования этого режима огня для ответной стрельбы."
 
-#: ../base/ufos/ui/hud_default.ufo:78
+#: ../base/ufos/ui/hud_default.ufo:38
 msgid "Default"
 msgstr "По умолчанию"
 
-#: ../base/ufos/ui/hud_default.ufo:309
+#: ../base/ufos/ui/hud_default.ufo:286
 msgid "Stats"
 msgstr "Состояние"
 
-#: ../base/ufos/ui/hud_default.ufo:332 ../base/ufos/ui/inventory.ufo:105
-#: ../base/ufos/ui/inventory.ufo:113
+#: ../base/ufos/ui/hud_default.ufo:311
 msgid "Headgear"
 msgstr "Шлем"
 
-#: ../base/ufos/ui/hud_default.ufo:367 ../base/ufos/ui/hud_default.ufo:379
+#: ../base/ufos/ui/hud_default.ufo:346 ../base/ufos/ui/hud_default.ufo:358
 #: client/battlescape/cl_hud_callbacks.cpp:349
 msgid "Toggle reaction fire."
 msgstr "Переключение режима ответного огня."
 
-#: ../base/ufos/ui/hud_default.ufo:408
+#: ../base/ufos/ui/hud_default.ufo:387
 msgid "Stand"
 msgstr "Встать"
 
-#: ../base/ufos/ui/hud_default.ufo:428
+#: ../base/ufos/ui/hud_default.ufo:407
 msgid "Crouch"
 msgstr "Присесть"
 
-#: ../base/ufos/ui/hud_default.ufo:440
+#: ../base/ufos/ui/hud_default.ufo:419
 msgid "Crouched"
 msgstr "Вприсядку"
 
-#: ../base/ufos/ui/hud_default.ufo:468
+#: ../base/ufos/ui/hud_default.ufo:447
 msgid "Standing"
 msgstr "Стоя"
 
-#: ../base/ufos/ui/hud_default.ufo:645
+#: ../base/ufos/ui/hud_default.ufo:624
 msgid "View other hand"
 msgstr "Выбрать другую руку"
 
-#: ../base/ufos/ui/hud_default.ufo:765
+#: ../base/ufos/ui/hud_default.ufo:744
 msgid "Hide squad"
 msgstr "Скрыть отряд"
 
-#: ../base/ufos/ui/hud_default.ufo:908
+#: ../base/ufos/ui/hud_default.ufo:887
 msgid "Show squad"
 msgstr "Показать отряд"
 
-#: ../base/ufos/ui/hud_default.ufo:971
+#: ../base/ufos/ui/hud_default.ufo:950
 msgid "Jump to alien"
 msgstr "Перейти к пришельцу"
 
-#: ../base/ufos/ui/hud_default.ufo:999
+#: ../base/ufos/ui/hud_default.ufo:978
 msgid "Jump to civilian"
 msgstr "Перейти к цивильному"
 
-#: ../base/ufos/ui/hud_default.ufo:1003
+#: ../base/ufos/ui/hud_default.ufo:982
 msgid "*"
 msgstr "*"
 
-#: ../base/ufos/ui/hud_default.ufo:1045
+#: ../base/ufos/ui/hud_default.ufo:1024
 msgid "End Turn"
 msgstr "Конец хода"
 
-#: ../base/ufos/ui/hud_default.ufo:1085
+#: ../base/ufos/ui/hud_default.ufo:1064
 msgid "Abort"
 msgstr "Прервать"
 
-#: ../base/ufos/ui/hud_default.ufo:1144 ../base/ufos/ui/hud_default.ufo:1186
+#: ../base/ufos/ui/hud_default.ufo:1103 ../base/ufos/ui/hud_default.ufo:1304
+msgid "Show rescue zone"
+msgstr "Показать зону спасения"
+
+#: ../base/ufos/ui/hud_default.ufo:1142 ../base/ufos/ui/hud_default.ufo:1184
 msgid "Target out of range"
 msgstr "Цель вне диапазона"
 
-#: ../base/ufos/ui/hud_default.ufo:1149 ../base/ufos/ui/hud_default.ufo:1191
+#: ../base/ufos/ui/hud_default.ufo:1147 ../base/ufos/ui/hud_default.ufo:1189
 msgid "Target acquired"
 msgstr "Цель обнаружена"
 
-#: ../base/ufos/ui/hud_default.ufo:1250
+#: ../base/ufos/ui/hud_default.ufo:1209
+msgid "Aborting fire!"
+msgstr "Огонь прерван!"
+
+#: ../base/ufos/ui/hud_default.ufo:1259
 msgid "Please wait"
 msgstr "Пожалуйста, подождите"
+
+#: ../base/ufos/ui/hud_default.ufo:1301
+msgid "Hide rescue zone"
+msgstr "Скрыть зону спасения"
 
 #: ../base/ufos/ui/hud_genradar.ufo:53
 msgid "Reinit"
@@ -26856,34 +26853,6 @@ msgstr "Больше нет боеприпасов"
 #: ../base/ufos/ui/hud_phone.ufo:799
 msgid "Phone HUD"
 msgstr "Для телефона"
-
-#: ../base/ufos/ui/inventory.ufo:37 ../base/ufos/ui/inventory.ufo:45
-msgid "Backpack"
-msgstr "Рюкзак"
-
-#: ../base/ufos/ui/inventory.ufo:54 ../base/ufos/ui/inventory.ufo:62
-msgid "Left Hand"
-msgstr "Левая рука"
-
-#: ../base/ufos/ui/inventory.ufo:71 ../base/ufos/ui/inventory.ufo:79
-msgid "Right Hand"
-msgstr "Правая рука"
-
-#: ../base/ufos/ui/inventory.ufo:88 ../base/ufos/ui/inventory.ufo:96
-msgid "Implant"
-msgstr "Имплантат"
-
-#: ../base/ufos/ui/inventory.ufo:122 ../base/ufos/ui/inventory.ufo:130
-msgid "Holster"
-msgstr "Кобура"
-
-#: ../base/ufos/ui/inventory.ufo:139 ../base/ufos/ui/inventory.ufo:147
-msgid "Belt"
-msgstr "Пояс"
-
-#: ../base/ufos/ui/inventory.ufo:156 ../base/ufos/ui/inventory.ufo:164
-msgid "Floor"
-msgstr "На земле"
 
 #: ../base/ufos/ui/irc.ufo:23 ../base/ufos/ui/multiplayer.ufo:1831
 msgid "Lobby"
@@ -26965,79 +26934,79 @@ msgstr "Сказать:"
 msgid "Team chat"
 msgstr "Чат отряда"
 
-#: ../base/ufos/ui/lostwon.ufo:36 ../base/ufos/ui/lostwon.ufo:119
+#: ../base/ufos/ui/lostwon.ufo:46 ../base/ufos/ui/lostwon.ufo:132
 msgid "Continue"
 msgstr "Продолжить"
 
-#: ../base/ufos/ui/lostwon.ufo:103
+#: ../base/ufos/ui/lostwon.ufo:121
 msgid "Try again"
 msgstr "Переиграть"
 
-#: ../base/ufos/ui/lostwon.ufo:104
+#: ../base/ufos/ui/lostwon.ufo:122
 msgid "Retry this mission"
 msgstr "Переиграть операцию"
 
-#: ../base/ufos/ui/lostwon.ufo:201
+#: ../base/ufos/ui/lostwon.ufo:214
 msgid "UFO recovery"
 msgstr "Восстановление НЛО"
 
-#: ../base/ufos/ui/lostwon.ufo:215
+#: ../base/ufos/ui/lostwon.ufo:228
 msgid "Store UFO"
 msgstr "Сохранить НЛО"
 
-#: ../base/ufos/ui/lostwon.ufo:219
+#: ../base/ufos/ui/lostwon.ufo:232
 msgid "Sell UFO"
 msgstr "Продать НЛО"
 
-#: ../base/ufos/ui/lostwon.ufo:258
+#: ../base/ufos/ui/lostwon.ufo:271
 msgid "Capacity (free/all)"
 msgstr "Вместительность (свободно/всего)"
 
-#: ../base/ufos/ui/lostwon.ufo:321
+#: ../base/ufos/ui/lostwon.ufo:334
 msgid "Recover"
 msgstr "Восстановить"
 
-#: ../base/ufos/ui/lostwon.ufo:322
+#: ../base/ufos/ui/lostwon.ufo:335
 msgid "Begin UFO recovery process"
 msgstr "Начать процесс восстановления НЛО"
 
-#: ../base/ufos/ui/lostwon.ufo:341
+#: ../base/ufos/ui/lostwon.ufo:354
 msgid "Nation:"
 msgstr "Страна:"
 
-#: ../base/ufos/ui/lostwon.ufo:342
+#: ../base/ufos/ui/lostwon.ufo:355
 msgid "Sort nations by name"
 msgstr "Сортировать государства по именам"
 
-#: ../base/ufos/ui/lostwon.ufo:351
+#: ../base/ufos/ui/lostwon.ufo:364
 msgid "Price:"
 msgstr "Цена:"
 
-#: ../base/ufos/ui/lostwon.ufo:352
+#: ../base/ufos/ui/lostwon.ufo:365
 msgid "Sort nations by price"
 msgstr "Сортировать государства по цене"
 
-#: ../base/ufos/ui/lostwon.ufo:361
+#: ../base/ufos/ui/lostwon.ufo:374
 msgid "Relations:"
 msgstr "Отношения:"
 
-#: ../base/ufos/ui/lostwon.ufo:362
+#: ../base/ufos/ui/lostwon.ufo:375
 msgid "Sort nations by relation"
 msgstr "Сортировать государства по отношению"
 
-#: ../base/ufos/ui/lostwon.ufo:410
+#: ../base/ufos/ui/lostwon.ufo:423
 msgid "Selected nation:"
 msgstr "Выбранная страна:"
 
-#: ../base/ufos/ui/lostwon.ufo:424 ../base/ufos/ui/popup_installations.ufo:467
+#: ../base/ufos/ui/lostwon.ufo:437 ../base/ufos/ui/popup_installations.ufo:467
 msgid "Sell"
 msgstr "Продать"
 
-#: ../base/ufos/ui/lostwon.ufo:425
+#: ../base/ufos/ui/lostwon.ufo:438
 msgid "Begin UFO sell process"
 msgstr "Начать процесс продажи НЛО"
 
-#: ../base/ufos/ui/mailclient.ufo:202
+#: ../base/ufos/ui/mailclient.ufo:205
 msgid "Mark all messages read"
 msgstr "Отметить все сообщения прочитанными"
 
@@ -27162,14 +27131,18 @@ msgid "Aircraft Equipment"
 msgstr "Снаряжение самолета"
 
 #: ../base/ufos/ui/market.ufo:163
+msgid "Implants"
+msgstr "Имплантаты"
+
+#: ../base/ufos/ui/market.ufo:174
 msgid "Other Items"
 msgstr "Другие предметы"
 
-#: ../base/ufos/ui/market.ufo:174
+#: ../base/ufos/ui/market.ufo:185
 msgid "Unmanned Ground Vehicles"
 msgstr "Автономные Беспилотные Машины"
 
-#: ../base/ufos/ui/market.ufo:311
+#: ../base/ufos/ui/market.ufo:324
 msgid "Transactions"
 msgstr "Транзакции"
 
@@ -27575,7 +27548,7 @@ msgid "Name"
 msgstr "Имя"
 
 #: ../base/ufos/ui/multiplayer.ufo:1684
-#: ../base/ufos/ui/popup_baseattack.ufo:475
+#: ../base/ufos/ui/popup_baseattack.ufo:327
 msgid "Team"
 msgstr "Отряд"
 
@@ -28178,86 +28151,42 @@ msgstr "ГЛОБАЛЬНЫЕ"
 msgid "BATTLESCAPE"
 msgstr "ПОЛЕ БОЯ"
 
-#: ../base/ufos/ui/physdat.ufo:278 ../base/ufos/ui/popup_baseattack.ufo:264
-msgid "Close Combat:"
-msgstr "Ближний бой:"
-
-#: ../base/ufos/ui/physdat.ufo:292 ../base/ufos/ui/popup_baseattack.ufo:274
-msgid "Assault Weapons:"
-msgstr "Штурмовое оружие:"
-
-#: ../base/ufos/ui/physdat.ufo:306 ../base/ufos/ui/popup_baseattack.ufo:284
-msgid "Sniper Rifles:"
-msgstr "Снайперское оружие:"
-
-#: ../base/ufos/ui/physdat.ufo:320 ../base/ufos/ui/popup_baseattack.ufo:294
-msgid "High-Explosives:"
-msgstr "Взрывное дело:"
-
-#: ../base/ufos/ui/physdat.ufo:368
-msgid "EKG"
-msgstr "ЭКГ"
-
-#: ../base/ufos/ui/physdat.ufo:385 ../base/ufos/ui/physdat.ufo:395
-msgid "Morale"
-msgstr "Мораль"
-
 #: ../base/ufos/ui/popup_baseattack.ufo:89
 msgid "Assemble Team"
 msgstr "Настройка отряда"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:200
-msgid "Missions info"
-msgstr "Информация о миссиях"
-
-#: ../base/ufos/ui/popup_baseattack.ufo:329
-msgid "Missions performed:"
-msgstr "Миссий выполнено:"
-
-#: ../base/ufos/ui/popup_baseattack.ufo:332
-msgid "Enemies killed:"
-msgstr "Убито противников:"
-
-#: ../base/ufos/ui/popup_baseattack.ufo:335
-msgid "Civilians killed:"
-msgstr "Мирных жителей убито:"
-
-#: ../base/ufos/ui/popup_baseattack.ufo:338
-msgid "Our team killed:"
-msgstr "Своих убито:"
-
-#: ../base/ufos/ui/popup_baseattack.ufo:344
+#: ../base/ufos/ui/popup_baseattack.ufo:196
 msgid "Equip"
 msgstr "Оборудование"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:420
+#: ../base/ufos/ui/popup_baseattack.ufo:272
 msgid "Base is under attack"
 msgstr "База атакована"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:436
+#: ../base/ufos/ui/popup_baseattack.ufo:288
 msgid "Kill aliens in container"
 msgstr "Умертвить всех пришельцев на базе"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:443
-#: ../base/ufos/ui/popup_baseattack.ufo:450
-#: ../base/ufos/ui/popup_baseattack.ufo:457
-#: ../base/ufos/ui/popup_baseattack.ufo:464
+#: ../base/ufos/ui/popup_baseattack.ufo:295
+#: ../base/ufos/ui/popup_baseattack.ufo:302
+#: ../base/ufos/ui/popup_baseattack.ufo:309
+#: ../base/ufos/ui/popup_baseattack.ufo:316
 msgid "Not implemented"
 msgstr "Не реализовано"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:448
+#: ../base/ufos/ui/popup_baseattack.ufo:300
 msgid "Lift aircraft"
 msgstr "Поднять самолёт в воздух"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:462
+#: ../base/ufos/ui/popup_baseattack.ufo:314
 msgid "Disable Power Plant"
 msgstr "Отключить электростанцию"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:476
+#: ../base/ufos/ui/popup_baseattack.ufo:328
 msgid "Assemble defend team"
 msgstr "Настройка отряда для защиты"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:512
+#: ../base/ufos/ui/popup_baseattack.ufo:364
 #: client/cgame/multiplayer/mp_callbacks.cpp:64
 msgid "Assemble a team first"
 msgstr "Сначала соберите отряд"
@@ -28272,14 +28201,14 @@ msgid ""
 msgstr "Нет больше места для товаров/персонала на этой базе. Освободите место."
 
 #: ../base/ufos/ui/popup_capacity.ufo:37
-#: client/cgame/campaign/cp_base_callbacks.cpp:839
+#: client/cgame/campaign/cp_base_callbacks.cpp:827
 msgid "Capacity"
 msgstr "Место"
 
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
 #: ../base/ufos/ui/popup_installations.ufo:892
-#: ../base/ufos/ui/transfer.ufo:383
+#: ../base/ufos/ui/transfer.ufo:370
 msgid "free"
 msgstr "свободно"
 
@@ -28287,7 +28216,7 @@ msgstr "свободно"
 msgid "all"
 msgstr "все"
 
-#: ../base/ufos/ui/popup_capacity.ufo:85 ../base/ufos/ui/research.ufo:564
+#: ../base/ufos/ui/popup_capacity.ufo:85
 msgid "Go to base"
 msgstr "Перейти к базе"
 
@@ -28418,41 +28347,33 @@ msgstr "Понизить приоритет"
 msgid "Requirements"
 msgstr "Требования"
 
-#: ../base/ufos/ui/research.ufo:76 ../base/ufos/ui/research.ufo:660
+#: ../base/ufos/ui/research.ufo:33
+msgid "Topics"
+msgstr "Темы исследований"
+
+#: ../base/ufos/ui/research.ufo:59
 msgid "idle scientists"
 msgstr "свободные ученые"
 
-#: ../base/ufos/ui/research.ufo:141
+#: ../base/ufos/ui/research.ufo:169
+msgid "Scientists hired"
+msgstr "Нанятые учёные"
+
+#: ../base/ufos/ui/research.ufo:194
 msgid "HIRE"
 msgstr "НАНЯТЬ"
 
-#: ../base/ufos/ui/research.ufo:151
+#: ../base/ufos/ui/research.ufo:204
 msgid "FIRE"
 msgstr "УВОЛИТЬ"
 
-#: ../base/ufos/ui/research.ufo:199
+#: ../base/ufos/ui/research.ufo:227
+msgid "Laboratory space"
+msgstr "Размер лаборатории"
+
+#: ../base/ufos/ui/research.ufo:252
 msgid "BUILD LAB"
 msgstr "ПОСТРОИТЬ ЛАБОРАТОРИЮ"
-
-#: ../base/ufos/ui/research.ufo:244
-msgid "Other Bases"
-msgstr "Остальные базы"
-
-#: ../base/ufos/ui/research.ufo:581
-msgid "N/A"
-msgstr "Н/Д"
-
-#: ../base/ufos/ui/research.ufo:582
-msgid "An artifact or prerequisite is missing for this topic"
-msgstr "Для данной темы исследования отсутствует артифакт или предпосылка"
-
-#: ../base/ufos/ui/research.ufo:590
-msgid "Expand/Collapse"
-msgstr "Развернуть/Свернуть"
-
-#: ../base/ufos/ui/research.ufo:635
-msgid "Topics"
-msgstr "Темы исследований"
 
 #: ../base/ufos/ui/singleplayer.ufo:69
 msgid "Back to the main menu."
@@ -28466,19 +28387,19 @@ msgstr "ПЕРЕЗАПУСТИТЬ МИССИЮ"
 msgid "ABORT MISSION"
 msgstr "ПРЕРВАТЬ МИССИЮ"
 
-#: ../base/ufos/ui/singleplayer.ufo:149
+#: ../base/ufos/ui/singleplayer.ufo:139
 msgid "Exit Campaign Confirmation"
 msgstr "Подтверждение выхода из кампании"
 
-#: ../base/ufos/ui/singleplayer.ufo:164
+#: ../base/ufos/ui/singleplayer.ufo:154
 msgid "Exit current campaign and return to main menu."
 msgstr "Выйти из текущей кампании и вернуться в главное меню."
 
-#: ../base/ufos/ui/singleplayer.ufo:165
+#: ../base/ufos/ui/singleplayer.ufo:155
 msgid "Quit"
 msgstr "Выйти"
 
-#: ../base/ufos/ui/singleplayer.ufo:171
+#: ../base/ufos/ui/singleplayer.ufo:161
 msgid "Do not quit."
 msgstr "Не выходить."
 
@@ -28518,8 +28439,8 @@ msgstr "Базы"
 msgid "Installations"
 msgstr "Внешние объекты"
 
-#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:149
-#: ../base/ufos/ui/transfer.ufo:163
+#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:139
+#: ../base/ufos/ui/transfer.ufo:153
 msgid "Employees"
 msgstr "Персонал"
 
@@ -28613,82 +28534,82 @@ msgstr ""
 "Добавить/Убрать предмет для транспортировки, для увеличения скорости зажмите "
 "клавишу [Shift]"
 
-#: ../base/ufos/ui/transfer.ufo:151 ../base/ufos/ui/transfer.ufo:168
+#: ../base/ufos/ui/transfer.ufo:141 ../base/ufos/ui/transfer.ufo:158
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:144
-#: client/cgame/campaign/cp_transfer_callbacks.cpp:788
+#: client/cgame/campaign/cp_transfer_callbacks.cpp:786
 msgid "Aliens"
 msgstr "Пришельцы"
 
-#: ../base/ufos/ui/transfer.ufo:203
+#: ../base/ufos/ui/transfer.ufo:190
 msgid "From"
 msgstr "Из:"
 
-#: ../base/ufos/ui/transfer.ufo:210
+#: ../base/ufos/ui/transfer.ufo:197
 msgid "To"
 msgstr "На:"
 
-#: ../base/ufos/ui/transfer.ufo:292
+#: ../base/ufos/ui/transfer.ufo:279
 msgid "Cargo"
 msgstr "Груз"
 
-#: ../base/ufos/ui/transfer.ufo:301
-#: client/cgame/campaign/cp_base_callbacks.cpp:839
+#: ../base/ufos/ui/transfer.ufo:288
+#: client/cgame/campaign/cp_base_callbacks.cpp:827
 msgid "Amount"
 msgstr "Количество"
 
-#: ../base/ufos/ui/transfer.ufo:355
+#: ../base/ufos/ui/transfer.ufo:342
 msgid "Destination base"
 msgstr "База назначения"
 
-#: ../base/ufos/ui/transfer.ufo:375
+#: ../base/ufos/ui/transfer.ufo:362
 msgid "Building"
 msgstr "Строения"
 
-#: ../base/ufos/ui/transfer.ufo:399
+#: ../base/ufos/ui/transfer.ufo:386
 msgid "all space"
 msgstr "вместимость"
 
-#: ../base/ufos/ui/transfer.ufo:428
+#: ../base/ufos/ui/transfer.ufo:415
 msgid "Capacity overload"
 msgstr "Вместимость переполнена"
 
-#: ../base/ufos/ui/transfer.ufo:447 ../base/ufos/ui/transfer.ufo:474
+#: ../base/ufos/ui/transfer.ufo:434 ../base/ufos/ui/transfer.ufo:461
 msgid "Start the transfer"
 msgstr "Начать трансферт"
 
-#: ../base/ufos/ui/transfer.ufo:461
+#: ../base/ufos/ui/transfer.ufo:448
 msgid "List"
 msgstr "Список"
 
-#: ../base/ufos/ui/transfer.ufo:462
+#: ../base/ufos/ui/transfer.ufo:449
 msgid "List active transfers"
 msgstr "Показать активные трансферты"
 
-#: ../base/ufos/ui/transfer.ufo:489
+#: ../base/ufos/ui/transfer.ufo:475
 msgid "Clear"
 msgstr "Очистить"
 
-#: ../base/ufos/ui/transfer.ufo:490
+#: ../base/ufos/ui/transfer.ufo:476
 msgid "Clear cargo"
 msgstr "Убрать грузы"
 
-#: ../base/ufos/ui/transfer.ufo:542
+#: ../base/ufos/ui/transfer.ufo:523
 msgid "Select base to transfer to"
 msgstr "Выберите базу назначения для транспортировки"
 
-#: ../base/ufos/ui/transfer.ufo:547
+#: ../base/ufos/ui/transfer.ufo:528
 msgid "Choose a base to host alien bodies:"
 msgstr "Выберите базу для хранения тел пришельцев:"
 
-#: ../base/ufos/ui/transfer.ufo:592
+#: ../base/ufos/ui/transfer.ufo:573
 msgid "From:"
 msgstr "Из:"
 
-#: ../base/ufos/ui/transfer.ufo:606
+#: ../base/ufos/ui/transfer.ufo:587
 msgid "To:"
 msgstr "На:"
 
-#: ../base/ufos/ui/transfer.ufo:685
+#: ../base/ufos/ui/transfer.ufo:666
 msgid "Actual transfers"
 msgstr "Текущие трансферты"
 
@@ -28766,16 +28687,16 @@ msgid "Frag Grenade"
 msgstr "Осколочная граната"
 
 #: ../base/ufos/weapons.ufo:157 ../base/ufos/weapons.ufo:235
-#: ../base/ufos/weapons.ufo:314 ../base/ufos/weapons.ufo:391
-#: ../base/ufos/weapons.ufo:475 ../base/ufos/weapons.ufo:558
-#: ../base/ufos/weapons.ufo:641
+#: ../base/ufos/weapons.ufo:314 ../base/ufos/weapons.ufo:393
+#: ../base/ufos/weapons.ufo:477 ../base/ufos/weapons.ufo:560
+#: ../base/ufos/weapons.ufo:643
 msgid "Lob"
 msgstr "бросок"
 
 #: ../base/ufos/weapons.ufo:182 ../base/ufos/weapons.ufo:261
-#: ../base/ufos/weapons.ufo:339 ../base/ufos/weapons.ufo:419
-#: ../base/ufos/weapons.ufo:503 ../base/ufos/weapons.ufo:586
-#: ../base/ufos/weapons.ufo:666
+#: ../base/ufos/weapons.ufo:340 ../base/ufos/weapons.ufo:421
+#: ../base/ufos/weapons.ufo:505 ../base/ufos/weapons.ufo:588
+#: ../base/ufos/weapons.ufo:668
 msgid "Roll"
 msgstr "подкат"
 
@@ -28787,23 +28708,23 @@ msgstr "Ослепляющая граната"
 msgid "Smoke Grenade"
 msgstr "Дымовая граната"
 
-#: ../base/ufos/weapons.ufo:371
+#: ../base/ufos/weapons.ufo:373
 msgid "Gas Grenade"
 msgstr "Газовая граната"
 
-#: ../base/ufos/weapons.ufo:455
+#: ../base/ufos/weapons.ufo:457
 msgid "Alien Gas Grenade"
 msgstr "Газовая граната пришельцев"
 
-#: ../base/ufos/weapons.ufo:538
+#: ../base/ufos/weapons.ufo:540
 msgid "Incendiary grenade"
 msgstr "Зажигательная граната"
 
-#: ../base/ufos/weapons.ufo:621
+#: ../base/ufos/weapons.ufo:623
 msgid "Plasma Grenade"
 msgstr "Плазменная граната"
 
-#: ../base/ufos/weapons.ufo:700 ../base/ufos/weapons.ufo:722
+#: ../base/ufos/weapons.ufo:702 ../base/ufos/weapons.ufo:724
 msgid "Bomb"
 msgstr "Бомба"
 
@@ -29232,70 +29153,70 @@ msgstr "Очередь х25"
 msgid "Autocannon Module"
 msgstr "Модуль автопушки"
 
-#: client/battlescape/cl_actor.cpp:756
+#: client/battlescape/cl_actor.cpp:726
 #: client/battlescape/events/e_server.cpp:40
 msgid "It is not your turn!"
 msgstr "Сейчас не ваш ход!"
 
-#: client/battlescape/cl_actor.cpp:1016
+#: client/battlescape/cl_actor.cpp:980
 msgid "You cannot reload this unknown item."
 msgstr "Вы не можете перезарядить этот неизвестный предмет."
 
-#: client/battlescape/cl_actor.cpp:1057 client/cl_inventory.cpp:74
-#: game/g_actor.cpp:573
+#: client/battlescape/cl_actor.cpp:1020 client/cl_inventory.cpp:74
+#: game/g_actor.cpp:525
 msgid "This soldier can not carry anything else."
 msgstr "Этот солдат не может больше ничего нести."
 
-#: client/battlescape/cl_actor.cpp:1057 client/battlescape/cl_hud.cpp:1379
-#: client/cl_inventory.cpp:74 client/cl_inventory_callbacks.cpp:388
+#: client/battlescape/cl_actor.cpp:1020 client/battlescape/cl_hud.cpp:1377
+#: client/cl_inventory.cpp:74 client/cl_inventory_callbacks.cpp:398
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: client/battlescape/cl_actor.cpp:1901
+#: client/battlescape/cl_actor.cpp:1860
 msgid "Unknown alien race"
 msgstr "Пришелец неизвестной расы"
 
-#: client/battlescape/cl_actor.cpp:2556
+#: client/battlescape/cl_actor.cpp:2519
 msgid "Toggle to next living actor"
 msgstr "Переключиться на следующего солдата"
 
-#: client/battlescape/cl_actor.cpp:2557
+#: client/battlescape/cl_actor.cpp:2520
 msgid "Toggle to previous living actor"
 msgstr "Переключиться на следующего солдата"
 
-#: client/battlescape/cl_actor.cpp:2558
+#: client/battlescape/cl_actor.cpp:2521
 msgid "Select an actor from list"
 msgstr "Выбрать солдата из списка"
 
-#: client/battlescape/cl_actor.cpp:2559
+#: client/battlescape/cl_actor.cpp:2522
 msgid "Update an actor"
 msgstr "Обновить вид солдата"
 
-#: client/battlescape/cl_actor.cpp:2560
+#: client/battlescape/cl_actor.cpp:2523
 msgid "Toggle stand/crouch."
 msgstr "Переключение положений присесть/встать."
 
-#: client/battlescape/cl_actor.cpp:2561
+#: client/battlescape/cl_actor.cpp:2524
 msgid "Toggle the headgear"
 msgstr "Пристегнуть на голову"
 
-#: client/battlescape/cl_actor.cpp:2562
+#: client/battlescape/cl_actor.cpp:2525
 msgid "Use"
 msgstr "Использовать"
 
-#: client/battlescape/cl_actor.cpp:2563
+#: client/battlescape/cl_actor.cpp:2526
 msgid "Confirm the current action"
 msgstr "Подтвердить текущее действие"
 
-#: client/battlescape/cl_actor.cpp:2564
+#: client/battlescape/cl_actor.cpp:2527
 msgid "Toggle to the next alien in sight of the selected actor."
 msgstr "Переключиться на следующего пришельца, видимого выбранным солдатом."
 
-#: client/battlescape/cl_actor.cpp:2566
+#: client/battlescape/cl_actor.cpp:2529
 msgid "Toggle camera to the next visible alien."
 msgstr "Показать следующего видимого пришельца."
 
-#: client/battlescape/cl_actor.cpp:2567
+#: client/battlescape/cl_actor.cpp:2530
 msgid "Toggle camera to the previous visible alien."
 msgstr "Переключение между пришельцами в области видимости."
 
@@ -29510,22 +29431,22 @@ msgstr "скорость реакции"
 msgid "TU"
 msgstr "ЕВ"
 
-#: client/battlescape/cl_hud.cpp:1329
+#: client/battlescape/cl_hud.cpp:1327
 #, c-format
 msgid "Damaged %s (deterioration: %i)\n"
 msgstr "Поврежденный %s (ухудшение состояния: %i)\n"
 
-#: client/battlescape/cl_hud.cpp:1329
+#: client/battlescape/cl_hud.cpp:1327
 #, c-format
 msgid "Wounded %s (bleeding: %i)\n"
 msgstr "Раненный %s (кровотечение: %i)\n"
 
-#: client/battlescape/cl_hud.cpp:1332
+#: client/battlescape/cl_hud.cpp:1330
 #, c-format
 msgid "- Reduced %s\n"
 msgstr "- уменьшение %s\n"
 
-#: client/battlescape/cl_hud.cpp:1370 client/cl_inventory_callbacks.cpp:380
+#: client/battlescape/cl_hud.cpp:1368 client/cl_inventory_callbacks.cpp:390
 msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
@@ -29534,15 +29455,15 @@ msgstr ""
 "следующих предметов:\n"
 "\n"
 
-#: client/battlescape/cl_hud.cpp:1383 client/cl_inventory_callbacks.cpp:392
+#: client/battlescape/cl_hud.cpp:1381 client/cl_inventory_callbacks.cpp:402
 msgid "Kg"
 msgstr "Кг"
 
-#: client/battlescape/cl_hud.cpp:1384 client/cl_inventory_callbacks.cpp:394
+#: client/battlescape/cl_hud.cpp:1382 client/cl_inventory_callbacks.cpp:404
 msgid "TU:"
 msgstr "ЕВ:"
 
-#: client/battlescape/cl_hud.cpp:1402
+#: client/battlescape/cl_hud.cpp:1400
 msgid "Currently panics!\n"
 msgstr "Паникует!\n"
 
@@ -29552,17 +29473,17 @@ msgid "Can't perform action - no item in hand!"
 msgstr "Невозможно выполнить действие — нет предмета в руке!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:89
-#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1166
+#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1198
 msgid "Can't perform action - no ammo!"
 msgstr "Невозможно выполнить действие — нет боеприпасов!"
 
-#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1158
+#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1190
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr ""
 "Невозможно выполнить действие — из этого оружия нельзя стрелять с одной руки!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:144
-#: client/battlescape/cl_hud_callbacks.cpp:270 game/g_actor.cpp:619
+#: client/battlescape/cl_hud_callbacks.cpp:270 game/g_actor.cpp:573
 msgid "Can't perform action - not enough TUs!"
 msgstr "Невозможно выполнить действие — не хватает ЕВ!"
 
@@ -29638,95 +29559,95 @@ msgstr "Замечен противник!"
 msgid "Civilian spotted."
 msgstr "Замечен гражданский."
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:88
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:89
 #, c-format
 msgid "%s lost a soldier\n"
 msgstr "%s потерял солдата\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:95
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:96
 #, c-format
 msgid "%s was stunned\n"
 msgstr "%s оглушён\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:97
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:98
 #, c-format
 msgid "%s has died\n"
 msgstr "%s умирает\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:99
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:100
 #, c-format
 msgid "%s was killed\n"
 msgstr "%s убит\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:108
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:109
 msgid "A civilian was stunned."
 msgstr "Мирный житель оглушён."
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:110
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:111
 msgid "A civilian has died."
 msgstr "Мирный житель умирает."
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:112
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:113
 msgid "A civilian was killed."
 msgstr "Мирный житель убит."
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:116
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:117
 msgid "An alien was stunned."
 msgstr "Пришелец оглушён."
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:118
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:119
 msgid "An alien has died."
 msgstr "Пришелец умирает."
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:120
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:121
 msgid "An alien was killed."
 msgstr "Пришелец убит."
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:124
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:125
 msgid "A soldier was stunned."
 msgstr "Боец оглушён."
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:126
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:127
 msgid "A soldier has died."
 msgstr "Боец умирает."
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:128
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:129
 msgid "A soldier was killed."
 msgstr "Боец убит."
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:132
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:133
 #, c-format
 msgid "A member of team %i was stunned."
 msgstr "Член отряда %i оглушён."
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:134
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:135
 #, c-format
 msgid "A member of team %i has died."
 msgstr "Член отряда %i умирает."
 
-#: client/battlescape/events/event/actor/e_event_actordie.cpp:136
+#: client/battlescape/events/event/actor/e_event_actordie.cpp:137
 #, c-format
 msgid "A member of team %i was killed."
 msgstr "Член отряда %i убит."
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:67
+#: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:66
 #, c-format
 msgid "%s was revitalised\n"
 msgstr "%s был оживлен\n"
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:73
+#: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:72
 msgid "A civilian was revitalised."
 msgstr "Мирный житель был оживлен."
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:76
+#: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:75
 msgid "An alien was revitalised."
 msgstr "Пришелец был оживлен."
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:79
+#: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:78
 msgid "A soldier was revitalised."
 msgstr "Боец был оживлен."
 
-#: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:82
+#: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:81
 #, c-format
 msgid "A member of team %i was revitalised."
 msgstr "Член отряда %i был оживлен."
@@ -29740,58 +29661,104 @@ msgstr "%s был ранен"
 msgid "Your round started!"
 msgstr "Начался ваш ход!"
 
-#: client/cgame/campaign/.cp_nation.cpp.swp:63
-#: client/cgame/campaign/cp_base_callbacks.cpp:977
-#: client/cgame/campaign/cp_campaign.cpp:708
-#: client/cgame/campaign/cp_nation.cpp:634
-#, c-format
-msgid "%i c"
-msgstr "%i кр"
+#: client/cgame/campaign/cp_aircraft.cpp:360
+msgid "ON RED ALERT"
+msgstr "КРАСНАЯ ТРЕВОГА"
 
-#: client/cgame/campaign/.cp_nation.cpp.swp:79
-#: client/cgame/campaign/cp_nation.cpp:808
-#, c-format
-msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
-msgstr "Получено: %i %s, %i %s, %i %s, %i %s и %i %s от правительства %s (%s)"
+#: client/cgame/campaign/cp_aircraft.cpp:364
+msgid "Nothing - should not be displayed"
+msgstr "ничего - не должно отображаться"
 
-#: client/cgame/campaign/.cp_nation.cpp.swp:79
-#: client/cgame/campaign/cp_aircraft.cpp:723
-#: client/cgame/campaign/cp_aircraft.cpp:1069
-#: client/cgame/campaign/cp_aircraft.cpp:1110
-#: client/cgame/campaign/cp_aircraft.cpp:1126
-#: client/cgame/campaign/cp_aircraft.cpp:1169
-#: client/cgame/campaign/cp_aircraft.cpp:1225
-#: client/cgame/campaign/cp_aircraft.cpp:1248
-#: client/cgame/campaign/cp_aircraft.cpp:1998
-#: client/cgame/campaign/cp_aircraft_callbacks.cpp:94
-#: client/cgame/campaign/cp_aircraft_callbacks.cpp:102
-#: client/cgame/campaign/cp_aircraft_callbacks.cpp:110
+#: client/cgame/campaign/cp_aircraft.cpp:366
+msgid "at home base"
+msgstr "на базе приписки"
+
+#: client/cgame/campaign/cp_aircraft.cpp:368
+msgid "refuelling"
+msgstr "дозаправка"
+
+#: client/cgame/campaign/cp_aircraft.cpp:370
+msgid "idle"
+msgstr "готов"
+
+#: client/cgame/campaign/cp_aircraft.cpp:372
+msgid "in transit"
+msgstr "в полёте"
+
+#: client/cgame/campaign/cp_aircraft.cpp:374
+msgid "enroute to mission"
+msgstr "направляется на миссию"
+
+#: client/cgame/campaign/cp_aircraft.cpp:376
+msgid "pursuing a UFO"
+msgstr "преследует НЛО"
+
+#: client/cgame/campaign/cp_aircraft.cpp:378
+msgid "ready to drop soldiers"
+msgstr "готов к высадке десанта"
+
+#: client/cgame/campaign/cp_aircraft.cpp:380
+msgid "intercepting a UFO"
+msgstr "выполняет перехват НЛО"
+
+#: client/cgame/campaign/cp_aircraft.cpp:382
+msgid "enroute to new home base"
+msgstr "направляется на новую базу приписки"
+
+#: client/cgame/campaign/cp_aircraft.cpp:384
+msgid "returning to base"
+msgstr "возвращается на базу"
+
+#: client/cgame/campaign/cp_aircraft.cpp:473
+msgid "Interceptor"
+msgstr "Перехватчик"
+
+#: client/cgame/campaign/cp_aircraft.cpp:475
+msgid "Transporter"
+msgstr "Транспортёр"
+
+#: client/cgame/campaign/cp_aircraft.cpp:720
+#, c-format
+msgid "A new %s is ready in %s"
+msgstr "Новый самолёт класса %s готов (база %s)"
+
+#: client/cgame/campaign/cp_aircraft.cpp:721
+#: client/cgame/campaign/cp_aircraft.cpp:1059
+#: client/cgame/campaign/cp_aircraft.cpp:1100
+#: client/cgame/campaign/cp_aircraft.cpp:1116
+#: client/cgame/campaign/cp_aircraft.cpp:1157
+#: client/cgame/campaign/cp_aircraft.cpp:1213
+#: client/cgame/campaign/cp_aircraft.cpp:1236
+#: client/cgame/campaign/cp_aircraft.cpp:1990
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:93
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:101
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:109
 #: client/cgame/campaign/cp_airfight.cpp:378
 #: client/cgame/campaign/cp_airfight.cpp:398
 #: client/cgame/campaign/cp_aliencont.cpp:103
 #: client/cgame/campaign/cp_aliencont.cpp:116
-#: client/cgame/campaign/cp_auto_mission.cpp:765
-#: client/cgame/campaign/cp_auto_mission.cpp:767
-#: client/cgame/campaign/cp_auto_mission.cpp:770
-#: client/cgame/campaign/cp_auto_mission.cpp:825
-#: client/cgame/campaign/cp_base.cpp:1339
-#: client/cgame/campaign/cp_base.cpp:1389
-#: client/cgame/campaign/cp_base.cpp:2279
-#: client/cgame/campaign/cp_base.cpp:2860
+#: client/cgame/campaign/cp_auto_mission.cpp:755
+#: client/cgame/campaign/cp_auto_mission.cpp:757
+#: client/cgame/campaign/cp_auto_mission.cpp:760
+#: client/cgame/campaign/cp_auto_mission.cpp:813
+#: client/cgame/campaign/cp_base.cpp:1337
+#: client/cgame/campaign/cp_base.cpp:1387
+#: client/cgame/campaign/cp_base.cpp:2275
+#: client/cgame/campaign/cp_base.cpp:2855
 #: client/cgame/campaign/cp_base_callbacks.cpp:70
 #: client/cgame/campaign/cp_base_callbacks.cpp:201
 #: client/cgame/campaign/cp_base_callbacks.cpp:247
-#: client/cgame/campaign/cp_base_callbacks.cpp:585
-#: client/cgame/campaign/cp_base_callbacks.cpp:600
-#: client/cgame/campaign/cp_base_callbacks.cpp:746
-#: client/cgame/campaign/cp_base_callbacks.cpp:752
-#: client/cgame/campaign/cp_base_callbacks.cpp:772
-#: client/cgame/campaign/cp_base_callbacks.cpp:782
-#: client/cgame/campaign/cp_base_callbacks.cpp:792
-#: client/cgame/campaign/cp_base_callbacks.cpp:798
-#: client/cgame/campaign/cp_base_callbacks.cpp:805
-#: client/cgame/campaign/cp_base_callbacks.cpp:809
-#: client/cgame/campaign/cp_base_callbacks.cpp:814
+#: client/cgame/campaign/cp_base_callbacks.cpp:574
+#: client/cgame/campaign/cp_base_callbacks.cpp:589
+#: client/cgame/campaign/cp_base_callbacks.cpp:734
+#: client/cgame/campaign/cp_base_callbacks.cpp:740
+#: client/cgame/campaign/cp_base_callbacks.cpp:760
+#: client/cgame/campaign/cp_base_callbacks.cpp:770
+#: client/cgame/campaign/cp_base_callbacks.cpp:780
+#: client/cgame/campaign/cp_base_callbacks.cpp:786
+#: client/cgame/campaign/cp_base_callbacks.cpp:793
+#: client/cgame/campaign/cp_base_callbacks.cpp:797
+#: client/cgame/campaign/cp_base_callbacks.cpp:802
 #: client/cgame/campaign/cp_installation_callbacks.cpp:128
 #: client/cgame/campaign/cp_mapfightequip.cpp:344
 #: client/cgame/campaign/cp_mapfightequip.cpp:363
@@ -29801,203 +29768,79 @@ msgstr "Получено: %i %s, %i %s, %i %s, %i %s и %i %s от правит�
 #: client/cgame/campaign/cp_market_callbacks.cpp:190
 #: client/cgame/campaign/cp_mission_callbacks.cpp:63
 #: client/cgame/campaign/cp_missions.cpp:728
-#: client/cgame/campaign/cp_missions.cpp:1066
-#: client/cgame/campaign/cp_nation.cpp:815
-#: client/cgame/campaign/cp_nation.cpp:833
-#: client/cgame/campaign/cp_nation.cpp:846
+#: client/cgame/campaign/cp_missions.cpp:1070
+#: client/cgame/campaign/cp_nation.cpp:809
+#: client/cgame/campaign/cp_nation.cpp:827
+#: client/cgame/campaign/cp_nation.cpp:840
+#: client/cgame/campaign/cp_nation.cpp:849
 #: client/cgame/campaign/cp_nation.cpp:855
-#: client/cgame/campaign/cp_nation.cpp:861
-#: client/cgame/campaign/cp_nation.cpp:869
+#: client/cgame/campaign/cp_nation.cpp:863
 #: client/cgame/campaign/cp_popup.cpp:480
 #: client/cgame/campaign/cp_produce.cpp:402
-#: client/cgame/campaign/cp_ufo.cpp:403 client/cgame/campaign/cp_ufo.cpp:856
-#: client/cgame/campaign/cp_ufo.cpp:860 client/cgame/campaign/cp_ufo.cpp:864
+#: client/cgame/campaign/cp_ufo.cpp:494 client/cgame/campaign/cp_ufo.cpp:942
+#: client/cgame/campaign/cp_ufo.cpp:946 client/cgame/campaign/cp_ufo.cpp:950
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:125
 #: client/cgame/multiplayer/mp_serverlist.cpp:456 client/cl_main.cpp:431
 msgid "Notice"
 msgstr "Уведомление"
 
-#: client/cgame/campaign/.cp_nation.cpp.swp:79
-#: client/cgame/campaign/cp_nation.cpp:832
-#, c-format
-msgid "Paid %i credits to: %s"
-msgstr "%i кредитов выплачено: %s"
-
-#: client/cgame/campaign/.cp_nation.cpp.swp:79
-#: client/cgame/campaign/cp_nation.cpp:809
-msgid "credit"
-msgid_plural "credits"
-msgstr[0] "кредит"
-msgstr[1] "кредита"
-msgstr[2] "кредитов"
-
-#: client/cgame/campaign/.cp_nation.cpp.swp:79
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:155
-#: client/cgame/campaign/cp_nation.cpp:812
-msgid "pilot"
-msgid_plural "pilots"
-msgstr[0] "пилот"
-msgstr[1] "пилота"
-msgstr[2] "пилотов"
-
-#: client/cgame/campaign/.cp_nation.cpp.swp:79
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:153
-#: client/cgame/campaign/cp_nation.cpp:810
-msgid "scientist"
-msgid_plural "scientists"
-msgstr[0] "учёный"
-msgstr[1] "учёных"
-msgstr[2] "учёных"
-
-#: client/cgame/campaign/.cp_nation.cpp.swp:79
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:152
-#: client/cgame/campaign/cp_nation.cpp:811
-msgid "soldier"
-msgid_plural "soldiers"
-msgstr[0] "солдат"
-msgstr[1] "солдата"
-msgstr[2] "солдат"
-
-#: client/cgame/campaign/.cp_nation.cpp.swp:79
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:154
-#: client/cgame/campaign/cp_nation.cpp:813
-msgid "worker"
-msgid_plural "workers"
-msgstr[0] "рабочий"
-msgstr[1] "рабочих"
-msgstr[2] "рабочих"
-
-#: client/cgame/campaign/.cp_nation.cpp.swp:96
-#: client/cgame/campaign/cp_nation.cpp:185
-#, c-format
-msgid "Nation %s changed happiness from %s to %s"
-msgstr "У государства %s изменилось отношение, вместо %s стало %s"
-
-# криво :-(
-#: client/cgame/campaign/.cp_nation.cpp.swp:96
-#: client/cgame/campaign/cp_nation.cpp:189
-#, c-format
-msgid "Nation %s changed happiness to %s"
-msgstr "У государства %s изменилось отношение до %s"
-
-#: client/cgame/campaign/cp_aircraft.cpp:362
-msgid "ON RED ALERT"
-msgstr "КРАСНАЯ ТРЕВОГА"
-
-#: client/cgame/campaign/cp_aircraft.cpp:366
-msgid "Nothing - should not be displayed"
-msgstr "ничего - не должно отображаться"
-
-#: client/cgame/campaign/cp_aircraft.cpp:368
-msgid "at home base"
-msgstr "на базе приписки"
-
-#: client/cgame/campaign/cp_aircraft.cpp:370
-msgid "refuelling"
-msgstr "дозаправка"
-
-#: client/cgame/campaign/cp_aircraft.cpp:372
-msgid "idle"
-msgstr "готов"
-
-#: client/cgame/campaign/cp_aircraft.cpp:374
-msgid "in transit"
-msgstr "в полёте"
-
-#: client/cgame/campaign/cp_aircraft.cpp:376
-msgid "enroute to mission"
-msgstr "направляется на миссию"
-
-#: client/cgame/campaign/cp_aircraft.cpp:378
-msgid "pursuing a UFO"
-msgstr "преследует НЛО"
-
-#: client/cgame/campaign/cp_aircraft.cpp:380
-msgid "ready to drop soldiers"
-msgstr "готов к высадке десанта"
-
-#: client/cgame/campaign/cp_aircraft.cpp:382
-msgid "intercepting a UFO"
-msgstr "выполняет перехват НЛО"
-
-#: client/cgame/campaign/cp_aircraft.cpp:384
-msgid "enroute to new home base"
-msgstr "направляется на новую базу приписки"
-
-#: client/cgame/campaign/cp_aircraft.cpp:386
-msgid "returning to base"
-msgstr "возвращается на базу"
-
-#: client/cgame/campaign/cp_aircraft.cpp:475
-msgid "Interceptor"
-msgstr "Перехватчик"
-
-#: client/cgame/campaign/cp_aircraft.cpp:477
-msgid "Transporter"
-msgstr "Транспортёр"
-
-#: client/cgame/campaign/cp_aircraft.cpp:722
-#, c-format
-msgid "A new %s is ready in %s"
-msgstr "Новый самолёт класса %s готов (база %s)"
-
-#: client/cgame/campaign/cp_aircraft.cpp:793
+#: client/cgame/campaign/cp_aircraft.cpp:791
 msgid "No operational hangars at that base."
 msgstr "На этой базе нет рабочих ангаров."
 
-#: client/cgame/campaign/cp_aircraft.cpp:797
+#: client/cgame/campaign/cp_aircraft.cpp:795
 msgid "No free hangars at that base."
 msgstr "На этой базе нет свободных ангаров."
 
-#: client/cgame/campaign/cp_aircraft.cpp:800
+#: client/cgame/campaign/cp_aircraft.cpp:798
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Недостаточно свободного места в казармах на базе"
 
-#: client/cgame/campaign/cp_aircraft.cpp:803
+#: client/cgame/campaign/cp_aircraft.cpp:801
 msgid "Insufficient storage space at that base."
 msgstr "Недостаточно свободного места на складах на базе"
 
-#: client/cgame/campaign/cp_aircraft.cpp:807
+#: client/cgame/campaign/cp_aircraft.cpp:805
 msgid "That base is beyond this aircraft's range."
 msgstr "Эта база вне радиуса действия этого самолёта."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1068
+#: client/cgame/campaign/cp_aircraft.cpp:1058
 #, c-format
 msgid "Craft %s has returned to %s."
 msgstr "Самолёт %s возвращается в %s."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1109
+#: client/cgame/campaign/cp_aircraft.cpp:1099
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 "Судно %s не удалось полностью заправить в %s. Недостаточно антиматерии."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1125
+#: client/cgame/campaign/cp_aircraft.cpp:1115
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Самолёт %s заправлен (база %s)."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1169
+#: client/cgame/campaign/cp_aircraft.cpp:1157
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "У самолёта %s заканчивается горючее, он возвращется на базу."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1225
+#: client/cgame/campaign/cp_aircraft.cpp:1213
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Сначала назначьте хотя бы одного солдата на этот самолёт."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1248
+#: client/cgame/campaign/cp_aircraft.cpp:1236
 msgid "Insufficient fuel."
 msgstr "Недостаточно горючего."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1998
+#: client/cgame/campaign/cp_aircraft.cpp:1990
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr ""
 "Самолёт %s не имеет достаточно топлива для перехвата и возвращается на базу "
 "%s."
 
-#: client/cgame/campaign/cp_aircraft_callbacks.cpp:94
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:93
 msgid ""
 "No operational Command Centre in this base.\n"
 "\n"
@@ -30007,7 +29850,7 @@ msgstr ""
 "\n"
 "Самолёт не может быть запущен.\n"
 
-#: client/cgame/campaign/cp_aircraft_callbacks.cpp:102
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:101
 msgid ""
 "There is no pilot assigned to this aircraft.\n"
 "\n"
@@ -30017,44 +29860,50 @@ msgstr ""
 "\n"
 "Самолёт не может быть запущен.\n"
 
-#: client/cgame/campaign/cp_aircraft_callbacks.cpp:110
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:109
 msgid "Aircraft started"
 msgstr "Самолёт вылетел на задание"
 
-#: client/cgame/campaign/cp_aircraft_callbacks.cpp:193
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:188
 #: client/cgame/campaign/cp_geoscape.cpp:1511
 #: client/cgame/campaign/cp_geoscape.cpp:1520
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Скорость:\t%i км/ч\n"
 
-#: client/cgame/campaign/cp_aircraft_callbacks.cpp:195
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:190
 #: client/cgame/campaign/cp_geoscape.cpp:1512
 #: client/cgame/campaign/cp_geoscape.cpp:1521
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Горючее:\t%i/%i\n"
 
-#: client/cgame/campaign/cp_aircraft_callbacks.cpp:197
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:192
 #: client/cgame/campaign/cp_ufopedia.cpp:342
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "Дальность полета:\t%i км\n"
 
-#: client/cgame/campaign/cp_aircraft_callbacks.cpp:198
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:193
 #, c-format
 msgid "Weapons:\t%i of %i\n"
 msgstr "Вооружение:\t%i из %i\n"
 
-#: client/cgame/campaign/cp_aircraft_callbacks.cpp:199
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:194
 #, c-format
 msgid "Armour:\t%i of 1\n"
 msgstr "Броня:\t%i из 1\n"
 
-#: client/cgame/campaign/cp_aircraft_callbacks.cpp:200
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:195
 #, c-format
 msgid "Electronics:\t%i of %i"
 msgstr "Электроника:\t%i из %i"
+
+#: client/cgame/campaign/cp_aircraft_callbacks.cpp:229
+#: client/cgame/campaign/cp_team.cpp:302
+#, c-format
+msgid "%i of %i"
+msgstr "%i из %i"
 
 #: client/cgame/campaign/cp_airfight.cpp:378
 #, c-format
@@ -30085,7 +29934,7 @@ msgid "Pilot killed in action"
 msgstr "Пилот погиб"
 
 #: client/cgame/campaign/cp_airfight.cpp:534
-#: client/cgame/campaign/cp_auto_mission.cpp:770
+#: client/cgame/campaign/cp_auto_mission.cpp:760
 msgid "You've lost the battle"
 msgstr "Вы проиграли сражение"
 
@@ -30105,60 +29954,60 @@ msgstr "Ожидает вскрытия"
 msgid "Researched"
 msgstr "Исследовано"
 
-#: client/cgame/campaign/cp_auto_mission.cpp:765
+#: client/cgame/campaign/cp_auto_mission.cpp:755
 msgid "You've won the battle"
 msgstr "Вы выиграли сражение"
 
-#: client/cgame/campaign/cp_auto_mission.cpp:767
+#: client/cgame/campaign/cp_auto_mission.cpp:757
 msgid ""
 "You've defeated the enemy, but did poorly, and many civilians were killed"
 msgstr ""
 "Вы победили врага, но сделали это отвратительно, погибло много гражданских"
 
-#: client/cgame/campaign/cp_auto_mission.cpp:825
+#: client/cgame/campaign/cp_auto_mission.cpp:813
 msgid "Collected alien bodies"
 msgstr "Собраны тела пришельцев"
 
-#: client/cgame/campaign/cp_base.cpp:995
+#: client/cgame/campaign/cp_base.cpp:993
 msgid "Not set"
 msgstr "Не задано"
 
-#: client/cgame/campaign/cp_base.cpp:1001
+#: client/cgame/campaign/cp_base.cpp:999
 #, c-format
 msgid "Already %i in base"
 msgstr "%i уже на базе"
 
-#: client/cgame/campaign/cp_base.cpp:1008
+#: client/cgame/campaign/cp_base.cpp:1006
 msgid "Construction finished"
 msgstr "Строительство завершено"
 
-#: client/cgame/campaign/cp_base.cpp:1012
+#: client/cgame/campaign/cp_base.cpp:1010
 msgid "Working 100%"
 msgstr "Функционирует на 100%"
 
-#: client/cgame/campaign/cp_base.cpp:1016
+#: client/cgame/campaign/cp_base.cpp:1014
 #, c-format
 msgid "Not operational, depends on %s"
 msgstr "Нерабочий, зависит от %s"
 
-#: client/cgame/campaign/cp_base.cpp:1020
+#: client/cgame/campaign/cp_base.cpp:1018
 msgid "Down"
 msgstr "Отключено"
 
-#: client/cgame/campaign/cp_base.cpp:1339
+#: client/cgame/campaign/cp_base.cpp:1337
 msgid "Not enough credits to build this\n"
 msgstr "На строительство модуля не хватает наличных средств\n"
 
-#: client/cgame/campaign/cp_base.cpp:1389
+#: client/cgame/campaign/cp_base.cpp:1387
 msgid "You must build next to existing buildings."
 msgstr "Вы должны строить рядом с существующими зданиями."
 
-#: client/cgame/campaign/cp_base.cpp:1443
+#: client/cgame/campaign/cp_base.cpp:1441
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Стоимость:\t%i кр.\n"
 
-#: client/cgame/campaign/cp_base.cpp:1446
+#: client/cgame/campaign/cp_base.cpp:1444
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
@@ -30166,19 +30015,19 @@ msgstr[0] "%i день до окончания строительства\n"
 msgstr[1] "%i  дня до окончания строительства\n"
 msgstr[2] "%i  дней до окончания строительства\n"
 
-#: client/cgame/campaign/cp_base.cpp:1449
+#: client/cgame/campaign/cp_base.cpp:1447
 #: client/cgame/campaign/cp_ufopedia.cpp:209
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Содержание:\t%i кр.\n"
 
-#: client/cgame/campaign/cp_base.cpp:1452
+#: client/cgame/campaign/cp_base.cpp:1450
 #: client/cgame/campaign/cp_ufopedia.cpp:206
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Требует:\t%s\n"
 
-#: client/cgame/campaign/cp_base.cpp:2052
+#: client/cgame/campaign/cp_base.cpp:2048
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an "
 "aircraft\n"
@@ -30186,40 +30035,40 @@ msgstr ""
 "На этой базе нет авиации. Сначала вы должны купить самолёт, или "
 "транспортировать его с другой базы.\n"
 
-#: client/cgame/campaign/cp_base.cpp:2052
-#: client/cgame/campaign/cp_base.cpp:2054
+#: client/cgame/campaign/cp_base.cpp:2048
+#: client/cgame/campaign/cp_base.cpp:2050
 #: client/cgame/campaign/cp_market_callbacks.cpp:170
 #: client/cgame/campaign/cp_market_callbacks.cpp:175
 #: client/cgame/campaign/cp_market_callbacks.cpp:180
-#: client/cgame/campaign/cp_save.cpp:381 client/cgame/campaign/cp_save.cpp:383
+#: client/cgame/campaign/cp_save.cpp:380 client/cgame/campaign/cp_save.cpp:382
 #: client/cgame/cl_game_team.cpp:306 client/cgame/cl_game_team.cpp:316
 #: client/cgame/cl_game_team.cpp:321
 msgid "Note"
 msgstr "ЗАМЕТКА"
 
-#: client/cgame/campaign/cp_base.cpp:2054
+#: client/cgame/campaign/cp_base.cpp:2050
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "На этой базе нет авиации. Сначала вы должны купить самолёт.\n"
 
-#: client/cgame/campaign/cp_base.cpp:2064
+#: client/cgame/campaign/cp_base.cpp:2060
 msgid "Antimatter (current/max):"
 msgstr "Количество антиматерии (текущее/максимальное):"
 
-#: client/cgame/campaign/cp_base.cpp:2230
+#: client/cgame/campaign/cp_base.cpp:2226
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Завершено строительство модуля %s (база %s)."
 
-#: client/cgame/campaign/cp_base.cpp:2231
+#: client/cgame/campaign/cp_base.cpp:2227
 msgid "Building finished"
 msgstr "Строительство завершено"
 
-#: client/cgame/campaign/cp_base.cpp:2277
+#: client/cgame/campaign/cp_base.cpp:2273
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "За продажу %s получено %i кр."
 
-#: client/cgame/campaign/cp_base.cpp:2278
+#: client/cgame/campaign/cp_base.cpp:2274
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -30227,7 +30076,7 @@ msgstr[0] "%i предмет собран"
 msgstr[1] "%i предмета собрано"
 msgstr[2] "%i предметов собрано"
 
-#: client/cgame/campaign/cp_base.cpp:2858
+#: client/cgame/campaign/cp_base.cpp:2853
 #, c-format
 msgid ""
 "%s does not have Antimatter Storage Facility. %i units of antimatter got "
@@ -30267,78 +30116,78 @@ msgstr "База построена"
 msgid "Not enough credits to set up a new base."
 msgstr "Не хватает наличных средств для основания новой базы."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:307
+#: client/cgame/campaign/cp_base_callbacks.cpp:304
 msgid "Aircraft management and crew equipment"
 msgstr "Управление авиацией и снаряжение экипажей"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:309
+#: client/cgame/campaign/cp_base_callbacks.cpp:306
 msgid "Buy or produce at least one aircraft first."
 msgstr "Вначале купите или произведите как минимум один самолёт."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:311
+#: client/cgame/campaign/cp_base_callbacks.cpp:308
 msgid "No Hangar functional in base."
 msgstr "На этой базе нет ангара."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:315
+#: client/cgame/campaign/cp_base_callbacks.cpp:312
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "Покупка и продажа снаряжения, авиации и наземной техники"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:317
-#: client/cgame/campaign/cp_base_callbacks.cpp:327
-#: client/cgame/campaign/cp_base_callbacks.cpp:332
-#: client/cgame/campaign/cp_base_callbacks.cpp:337
-#: client/cgame/campaign/cp_base_callbacks.cpp:342
-#: client/cgame/campaign/cp_base_callbacks.cpp:347
+#: client/cgame/campaign/cp_base_callbacks.cpp:314
+#: client/cgame/campaign/cp_base_callbacks.cpp:324
+#: client/cgame/campaign/cp_base_callbacks.cpp:329
+#: client/cgame/campaign/cp_base_callbacks.cpp:334
+#: client/cgame/campaign/cp_base_callbacks.cpp:339
+#: client/cgame/campaign/cp_base_callbacks.cpp:344
 #, c-format
 msgid "No %s functional in base."
 msgstr "На этой базе отсутствует функциональный модуль %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:320
+#: client/cgame/campaign/cp_base_callbacks.cpp:317
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
 msgstr "Пересылка снаряжения, техники, пришельцев и персонала на другие базы"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:322
+#: client/cgame/campaign/cp_base_callbacks.cpp:319
 msgid "Build at least a second base to transfer equipment or personnel"
 msgstr ""
 "Постройте ещё как минимум одну базу для пересылки персонала и оборудования"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:325
+#: client/cgame/campaign/cp_base_callbacks.cpp:322
 msgid "Research new technology"
 msgstr "Исследование новых технологий"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:330
+#: client/cgame/campaign/cp_base_callbacks.cpp:327
 msgid "Produce equipment, aircraft and UGV"
 msgstr "Производство снаряжения, авиации и наземной техники"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:335
+#: client/cgame/campaign/cp_base_callbacks.cpp:332
 msgid "Hire or dismiss employees"
 msgstr "Найм и увольнение персонала"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:340
+#: client/cgame/campaign/cp_base_callbacks.cpp:337
 msgid "Manage captured aliens"
 msgstr "Работа с захваченными инопланетянами."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:342
+#: client/cgame/campaign/cp_base_callbacks.cpp:339
 msgid "Containment"
 msgstr "Изолятор"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:345
+#: client/cgame/campaign/cp_base_callbacks.cpp:342
 msgid "Treat wounded soldiers and perform implant surgery"
 msgstr "Лечение раненых солдат и установка имплантантов"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:585
+#: client/cgame/campaign/cp_base_callbacks.cpp:574
 msgid "Base is under attack, you can't destroy buildings!"
 msgstr "База атакована, вы не можете уничтожить здание!"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:595
+#: client/cgame/campaign/cp_base_callbacks.cpp:584
 msgid "Destroy Entrance"
 msgstr "Демонтировать вход"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:595
+#: client/cgame/campaign/cp_base_callbacks.cpp:584
 msgid "You can't destroy the entrance of the base!"
 msgstr "Вы не можете уничтожить вход на базу!"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:600
+#: client/cgame/campaign/cp_base_callbacks.cpp:589
 msgid ""
 "You can't destroy this building! It is the only connection to other "
 "buildings!"
@@ -30346,11 +30195,11 @@ msgstr ""
 "Нельзя уничтожить этот модуль! Он является единственным соединением других "
 "модулей."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:610
+#: client/cgame/campaign/cp_base_callbacks.cpp:599
 msgid "Destroy Hangar"
 msgstr "Демонтировать ангар"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:610
+#: client/cgame/campaign/cp_base_callbacks.cpp:599
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
@@ -30358,32 +30207,32 @@ msgstr ""
 "При уничтожении этого ангара будет уничтожен и самолёт внутри.\n"
 "Вы уверены, что хотите это сделать?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:611
+#: client/cgame/campaign/cp_base_callbacks.cpp:600
 msgid "Go to hangar"
 msgstr "Вернуться в ангар"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:611
+#: client/cgame/campaign/cp_base_callbacks.cpp:600
 msgid "Go to hangar without destroying building"
 msgstr "Перейти в ангар вместо разрушения здания"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:612
-#: client/cgame/campaign/cp_base_callbacks.cpp:622
-#: client/cgame/campaign/cp_base_callbacks.cpp:632
-#: client/cgame/campaign/cp_base_callbacks.cpp:645
+#: client/cgame/campaign/cp_base_callbacks.cpp:601
+#: client/cgame/campaign/cp_base_callbacks.cpp:611
+#: client/cgame/campaign/cp_base_callbacks.cpp:621
+#: client/cgame/campaign/cp_base_callbacks.cpp:634
 msgid "Destroy the building"
 msgstr "Демонтировать эту постройку"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:614
-#: client/cgame/campaign/cp_base_callbacks.cpp:624
-#: client/cgame/campaign/cp_base_callbacks.cpp:634
+#: client/cgame/campaign/cp_base_callbacks.cpp:603
+#: client/cgame/campaign/cp_base_callbacks.cpp:613
+#: client/cgame/campaign/cp_base_callbacks.cpp:623
 msgid "Go to transfer menu without destroying the building"
 msgstr "Перейти в меню транспортировок вместо уничтожения модуля"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:620
+#: client/cgame/campaign/cp_base_callbacks.cpp:609
 msgid "Destroy Quarter"
 msgstr "Демонтировать казармы"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:620
+#: client/cgame/campaign/cp_base_callbacks.cpp:609
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
@@ -30391,19 +30240,19 @@ msgstr ""
 "При уничтожении этих казарм все служащие, приписанные к ней будут уволены.\n"
 "Вы уверены, что хотите это сделать?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:621
+#: client/cgame/campaign/cp_base_callbacks.cpp:610
 msgid "Dismiss"
 msgstr "Уволить"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:621
+#: client/cgame/campaign/cp_base_callbacks.cpp:610
 msgid "Go to hiring menu without destroying building"
 msgstr "Перейти в меню найма вместо уничтожения здания"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:630
+#: client/cgame/campaign/cp_base_callbacks.cpp:619
 msgid "Destroy Storage"
 msgstr "Демонтировать склад"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:630
+#: client/cgame/campaign/cp_base_callbacks.cpp:619
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
@@ -30411,31 +30260,31 @@ msgstr ""
 "Если вы уничтожите эти склады, всё их содержимое будет уничтожено.\n"
 "Вы уверены?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:631
+#: client/cgame/campaign/cp_base_callbacks.cpp:620
 msgid "Go to buy/sell menu without destroying building"
 msgstr "Перейти к меню торговли вместо уничтожения модуля"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:631
+#: client/cgame/campaign/cp_base_callbacks.cpp:620
 msgid "Go to storage"
 msgstr "Перейти к складу"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:643
+#: client/cgame/campaign/cp_base_callbacks.cpp:632
 msgid "Are you sure you want to destroy this building?"
 msgstr "Вы уверены, что этот модуль необходимо демонтировать?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:643
+#: client/cgame/campaign/cp_base_callbacks.cpp:632
 msgid "Destroy building"
 msgstr "Демонтировать строение"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:746
+#: client/cgame/campaign/cp_base_callbacks.cpp:734
 msgid "Base is under attack, you can't access this building !"
 msgstr "База атакована, к строению нет доступа"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:752
+#: client/cgame/campaign/cp_base_callbacks.cpp:740
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Вы должны построить хотя бы один ангар для использования авиации."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:772
+#: client/cgame/campaign/cp_base_callbacks.cpp:760
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -30453,17 +30302,17 @@ msgstr[2] ""
 "Строительство здания завершится через %i дней\n"
 "Пожалуйста подождите."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:782
+#: client/cgame/campaign/cp_base_callbacks.cpp:770
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Постройте %s для работы %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:792
+#: client/cgame/campaign/cp_base_callbacks.cpp:780
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Постройка %s не завершено, и требуется для использования %s"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:798
+#: client/cgame/campaign/cp_base_callbacks.cpp:786
 #, c-format
 msgid ""
 "Make sure that the dependencies of building %s (%s) are operational, so that "
@@ -30473,50 +30322,57 @@ msgstr ""
 "строение %s могло функционировать."
 
 # xgettext:c-format
-#: client/cgame/campaign/cp_base_callbacks.cpp:805
-#: client/cgame/campaign/cp_base_callbacks.cpp:809
+#: client/cgame/campaign/cp_base_callbacks.cpp:793
+#: client/cgame/campaign/cp_base_callbacks.cpp:797
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "Вы должны нанять %s для использования постройки %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:814
+#: client/cgame/campaign/cp_base_callbacks.cpp:802
 #, c-format
 msgid "Build a %s first."
 msgstr "Сначала постройте %s"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:839
+#: client/cgame/campaign/cp_base_callbacks.cpp:827
 msgid "Buildings"
 msgstr "Постройки"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:859
+#: client/cgame/campaign/cp_base_callbacks.cpp:847
 msgid "No report"
 msgstr "Отчет не представляется"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:862
-#: client/cgame/campaign/cp_base_callbacks.cpp:876
+#: client/cgame/campaign/cp_base_callbacks.cpp:850
+#: client/cgame/campaign/cp_base_callbacks.cpp:864
 msgid "Percent"
 msgstr "Процент"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:862
+#: client/cgame/campaign/cp_base_callbacks.cpp:850
 msgid "Quantity"
 msgstr "Количество"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:872
-#: client/cgame/campaign/cp_base_callbacks.cpp:887
+#: client/cgame/campaign/cp_base_callbacks.cpp:860
+#: client/cgame/campaign/cp_base_callbacks.cpp:875
 msgid "Nothing"
 msgstr "Ничего"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:892
+#: client/cgame/campaign/cp_base_callbacks.cpp:880
 msgid "^BAircraft\n"
 msgstr "^BАвиация\n"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:903
+#: client/cgame/campaign/cp_base_callbacks.cpp:891
 msgid "^BEmployees\n"
 msgstr "^BПерсонал\n"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:914
+#: client/cgame/campaign/cp_base_callbacks.cpp:902
 msgid "^BAliens\n"
 msgstr "^BПришельцы\n"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:987
+#: client/cgame/campaign/cp_campaign.cpp:708
+#: client/cgame/campaign/cp_nation.cpp:628
+#, c-format
+msgid "%i c"
+msgstr "%i кр"
 
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:146
 #, c-format
@@ -30658,6 +30514,38 @@ msgstr ""
 "Макс. сумма долга: %iкр.\n"
 "%s\n"
 
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:152
+#: client/cgame/campaign/cp_nation.cpp:805
+msgid "soldier"
+msgid_plural "soldiers"
+msgstr[0] "солдат"
+msgstr[1] "солдата"
+msgstr[2] "солдат"
+
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:153
+#: client/cgame/campaign/cp_nation.cpp:804
+msgid "scientist"
+msgid_plural "scientists"
+msgstr[0] "учёный"
+msgstr[1] "учёных"
+msgstr[2] "учёных"
+
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:154
+#: client/cgame/campaign/cp_nation.cpp:807
+msgid "worker"
+msgid_plural "workers"
+msgstr[0] "рабочий"
+msgstr[1] "рабочих"
+msgstr[2] "рабочих"
+
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:155
+#: client/cgame/campaign/cp_nation.cpp:806
+msgid "pilot"
+msgid_plural "pilots"
+msgstr[0] "пилот"
+msgstr[1] "пилота"
+msgstr[2] "пилотов"
+
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:427
 #, c-format
 msgid ""
@@ -30667,7 +30555,7 @@ msgstr ""
 "%s\n"
 "не функционирует, зависит от %s"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:482
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:481
 #, c-format
 msgid "%d day left"
 msgid_plural "%d days left"
@@ -30675,8 +30563,7 @@ msgstr[0] "%d день остался"
 msgstr[1] "%d дня осталось"
 msgstr[2] "%d дней осталось"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:621
-#: client/cgame/campaign/cp_hospital_callbacks.cpp:222
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:618
 #, c-format
 msgid "Rank: %s"
 msgstr "Звание: %s"
@@ -30688,11 +30575,11 @@ msgstr[0] "Солдат"
 msgstr[1] "Солдата"
 msgstr[2] "Солдат"
 
-#: client/cgame/campaign/cp_employee.cpp:359
+#: client/cgame/campaign/cp_employee.cpp:358
 msgid "Not enough quarters"
 msgstr "Не достаточно места в казармах!"
 
-#: client/cgame/campaign/cp_employee.cpp:359
+#: client/cgame/campaign/cp_employee.cpp:358
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -30709,9 +30596,9 @@ msgstr "Нельзя уволить этого служащего"
 msgid "Could not hire employee"
 msgstr "Не получается нанять служащего"
 
-#: client/cgame/campaign/cp_event.cpp:536
+#: client/cgame/campaign/cp_event.cpp:533
 #: client/cgame/campaign/cp_messages.cpp:314
-#: client/cgame/campaign/cp_save.cpp:277 client/cgame/campaign/cp_save.cpp:300
+#: client/cgame/campaign/cp_save.cpp:276 client/cgame/campaign/cp_save.cpp:299
 #: client/cgame/campaign/cp_time.cpp:117
 #: client/cgame/campaign/cp_ufopedia.cpp:504
 #: client/cgame/campaign/cp_ufopedia.cpp:509
@@ -30722,7 +30609,7 @@ msgstr "Не получается нанять служащего"
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/cgame/campaign/cp_event.cpp:544
+#: client/cgame/campaign/cp_event.cpp:541
 #, c-format
 msgid "You've got a new mail: %s"
 msgstr "Получено новое письмо: '%s'"
@@ -30756,85 +30643,85 @@ msgstr ""
 "\n"
 "   - Команда разработчиков UFO:AI "
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:147
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:145
 #: client/cgame/campaign/cp_geoscape.cpp:1491
 msgid "Unknown"
 msgstr "Неизвестно"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:361
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:356
 msgid "No item assigned.\n"
 msgstr "Оборудование не установлено.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:362
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:357
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "Это гнездо для предметов меньше %s"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:370
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:365
 msgid "This item is functional.\n"
 msgstr "Оборудование функционально.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:372
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:367
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "Время, необходимое на установку: %i ч.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:375
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:370
 #, c-format
 msgid "%s will be removed in %i hours.\n"
 msgstr "Снятие %s завершится через %i ч.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:377
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:372
 #, c-format
 msgid "%s will be installed in %i hours.\n"
 msgstr "Установка %s завершится через %i ч.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:380
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:375
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "Время, необходимое для снятия: %i ч.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:390
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:385
 msgid "No ammo assigned to this weapon."
 msgstr "Нет патронов, подходящих к этому оружию."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:398
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:393
 msgid "No ammo needed"
 msgstr "Не требуется боеприпасов"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:525
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:520
 msgid "No slot selected."
 msgstr "Не выбран слот."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:528
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:523
 msgid "No item selected."
 msgstr "Не выбран предмет."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:531
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:526
 msgid "You can't equip an alien technology."
 msgstr "Нельзя снарядить инопланетное оборудование."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:534
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:529
 msgid "Technology requested is not yet completed."
 msgstr "Требуемая технология неисследована."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:537
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:532
 msgid "This item is too heavy for the selected slot."
 msgstr "Предмет слишком тяжел для выбранного слота."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:540
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:535
 msgid "Equip a weapon first."
 msgstr "Сначала укомплектуйте оружием."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:543
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:538
 msgid "Ammo not usable with current weapon."
 msgstr "Боеприпасы несовместимы с текущим оружием."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:546
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:541
 msgid "Unknown problem."
 msgstr "Неизвестная проблема"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.cpp:549
+#: client/cgame/campaign/cp_fightequip_callbacks.cpp:544
 msgid "Ok"
 msgstr "Ok"
 
@@ -30946,12 +30833,12 @@ msgstr "Объект %s был уничтожен."
 msgid "Installation destroyed"
 msgstr "Объект уничтожен"
 
-#: client/cgame/campaign/cp_installation.cpp:361
+#: client/cgame/campaign/cp_installation.cpp:362
 #, c-format
 msgid "Construction of installation %s finished."
 msgstr "Строительство объекта %s завершено"
 
-#: client/cgame/campaign/cp_installation.cpp:362
+#: client/cgame/campaign/cp_installation.cpp:363
 msgid "Installation finished"
 msgstr "Строительство завершено"
 
@@ -31299,48 +31186,48 @@ msgstr "Гражданских спасено"
 msgid "Gathered items (types/all)"
 msgstr "Собрано предметов (типов/всего)"
 
-#: client/cgame/campaign/cp_missions.cpp:449
-#: client/cgame/campaign/cp_missions.cpp:476
+#: client/cgame/campaign/cp_missions.cpp:447
+#: client/cgame/campaign/cp_missions.cpp:474
 #, c-format
 msgid "Crashed %s"
 msgstr "Разбившийся %s"
 
-#: client/cgame/campaign/cp_missions.cpp:455
+#: client/cgame/campaign/cp_missions.cpp:453
 #, c-format
 msgid "Alien terror in %s"
 msgstr "Террористическая активность пишельцев в %s"
 
-#: client/cgame/campaign/cp_missions.cpp:457
+#: client/cgame/campaign/cp_missions.cpp:455
 msgid "Alien terror"
 msgstr "Террористическая активность пишельцев"
 
-#: client/cgame/campaign/cp_missions.cpp:460
+#: client/cgame/campaign/cp_missions.cpp:458
 #, c-format
 msgid "Base attacked: %s"
 msgstr "Атакована база: %s"
 
-#: client/cgame/campaign/cp_missions.cpp:462
+#: client/cgame/campaign/cp_missions.cpp:460
 #: client/cgame/campaign/missions/cp_mission_baseattack.cpp:210
 #: po/OTHER_STRINGS:8
 msgid "Base attack"
 msgstr "База атакована"
 
-#: client/cgame/campaign/cp_missions.cpp:465
+#: client/cgame/campaign/cp_missions.cpp:463
 #, c-format
 msgid "Alien base in %s"
 msgstr "База пришельцев в %s"
 
-#: client/cgame/campaign/cp_missions.cpp:479
+#: client/cgame/campaign/cp_missions.cpp:477
 #, c-format
 msgid "Landed %s"
 msgstr "Приземлившийся %s"
 
-#: client/cgame/campaign/cp_missions.cpp:484
+#: client/cgame/campaign/cp_missions.cpp:482
 #, c-format
 msgid "Alien activity in %s"
 msgstr "Активности пришельцев в %s"
 
-#: client/cgame/campaign/cp_missions.cpp:486
+#: client/cgame/campaign/cp_missions.cpp:484
 msgid "Alien activity"
 msgstr "Активность пришельцев"
 
@@ -31361,7 +31248,7 @@ msgstr "Поступил сигнал об активности пришельц
 msgid "Alien activity has been detected."
 msgstr "Поступил сигнал об активности пришельцев."
 
-#: client/cgame/campaign/cp_missions.cpp:1064
+#: client/cgame/campaign/cp_missions.cpp:1068
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Защита базы: %s прошла успешно!"
@@ -31410,6 +31297,17 @@ msgstr "Счастливо"
 msgid "Exuberant"
 msgstr "В восторге"
 
+#: client/cgame/campaign/cp_nation.cpp:185
+#, c-format
+msgid "Nation %s changed happiness from %s to %s"
+msgstr "У государства %s изменилось отношение, вместо %s стало %s"
+
+# криво :-(
+#: client/cgame/campaign/cp_nation.cpp:189
+#, c-format
+msgid "Nation %s changed happiness to %s"
+msgstr "У государства %s изменилось отношение до %s"
+
 #: client/cgame/campaign/cp_nation.cpp:193
 #, c-format
 msgid ""
@@ -31421,22 +31319,39 @@ msgstr "Отношение государства %s %s, что ниже мин�
 msgid "Nation changed happiness"
 msgstr "У государства изменилось отношение"
 
-#: client/cgame/campaign/cp_nation.cpp:845
+#: client/cgame/campaign/cp_nation.cpp:802
+#, c-format
+msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
+msgstr "Получено: %i %s, %i %s, %i %s, %i %s и %i %s от правительства %s (%s)"
+
+#: client/cgame/campaign/cp_nation.cpp:803
+msgid "credit"
+msgid_plural "credits"
+msgstr[0] "кредит"
+msgstr[1] "кредита"
+msgstr[2] "кредитов"
+
+#: client/cgame/campaign/cp_nation.cpp:826
+#, c-format
+msgid "Paid %i credits to: %s"
+msgstr "%i кредитов выплачено: %s"
+
+#: client/cgame/campaign/cp_nation.cpp:839
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "%i кредитов выплачено за самолёты"
 
-#: client/cgame/campaign/cp_nation.cpp:854
+#: client/cgame/campaign/cp_nation.cpp:848
 #, c-format
 msgid "Paid %i credits for upkeep of %s"
 msgstr "%i кредитов выплачено за техобслуживание (%s)"
 
-#: client/cgame/campaign/cp_nation.cpp:859
+#: client/cgame/campaign/cp_nation.cpp:853
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "%i кредитов выплачено на административные издержки."
 
-#: client/cgame/campaign/cp_nation.cpp:867
+#: client/cgame/campaign/cp_nation.cpp:861
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "%i кредитов выплачено по долговым обязательствам."
@@ -31707,62 +31622,62 @@ msgstr "Описание отсутствует."
 msgid "No research proposal available."
 msgstr "Предварительная заявка на исследование по данному проекту не доступна."
 
-#: client/cgame/campaign/cp_save.cpp:180
+#: client/cgame/campaign/cp_save.cpp:179
 msgid "Error decompressing data"
 msgstr "Ошибка при распаковке данных"
 
-#: client/cgame/campaign/cp_save.cpp:250
+#: client/cgame/campaign/cp_save.cpp:249
 msgid "No campaign active."
 msgstr "Нет активной компании"
 
-#: client/cgame/campaign/cp_save.cpp:256
+#: client/cgame/campaign/cp_save.cpp:255
 msgid "Nothing to save yet."
 msgstr "Нечего сохранять."
 
-#: client/cgame/campaign/cp_save.cpp:311
+#: client/cgame/campaign/cp_save.cpp:310
 msgid "Could not allocate enough memory to save this game"
 msgstr "Не могу выделить достаточно памяти для сохранения игры"
 
-#: client/cgame/campaign/cp_save.cpp:334
+#: client/cgame/campaign/cp_save.cpp:333
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr ""
 "Ошибка памяти при компрессии данных сохранённой игры. Выставьте переменную "
 "'save_compressed' в 0"
 
-#: client/cgame/campaign/cp_save.cpp:381 client/cgame/campaign/cp_save.cpp:383
+#: client/cgame/campaign/cp_save.cpp:380 client/cgame/campaign/cp_save.cpp:382
 msgid "Error saving game."
 msgstr "Ошибка сохранения игры."
 
-#: client/cgame/campaign/cp_save.cpp:494 client/cgame/campaign/cp_save.cpp:517
-#: client/cgame/campaign/cp_save.cpp:599
+#: client/cgame/campaign/cp_save.cpp:493 client/cgame/campaign/cp_save.cpp:516
+#: client/cgame/campaign/cp_save.cpp:594
 #: client/cgame/multiplayer/mp_callbacks.cpp:64 client/cl_irc.cpp:1212
-#: client/cl_irc.cpp:1437 client/cl_main.cpp:559 client/cl_main.cpp:563
+#: client/cl_irc.cpp:1436 client/cl_main.cpp:559 client/cl_main.cpp:563
 #: client/cl_main.cpp:588
 msgid "Error"
 msgstr "Ошибка"
 
-#: client/cgame/campaign/cp_save.cpp:494 client/cgame/campaign/cp_save.cpp:517
-#: client/cgame/campaign/cp_save.cpp:599
+#: client/cgame/campaign/cp_save.cpp:493 client/cgame/campaign/cp_save.cpp:516
+#: client/cgame/campaign/cp_save.cpp:594
 msgid "Error loading game."
 msgstr "Ошибка загрузки игры."
 
-#: client/cgame/campaign/cp_save.cpp:577
+#: client/cgame/campaign/cp_save.cpp:572
 msgid "QuickSave"
 msgstr "Быстрое сохранение"
 
-#: client/cgame/campaign/cp_save.cpp:581
+#: client/cgame/campaign/cp_save.cpp:576
 msgid "Campaign was successfully saved."
 msgstr "Кампания успешно сохранена."
 
-#: client/cgame/campaign/cp_save.cpp:581
+#: client/cgame/campaign/cp_save.cpp:576
 msgid "Quicksave"
 msgstr "Быстрое сохранение"
 
-#: client/cgame/campaign/cp_save.cpp:601
+#: client/cgame/campaign/cp_save.cpp:596
 msgid "Campaign loaded"
 msgstr "Игра загружена"
 
-#: client/cgame/campaign/cp_save.cpp:601
+#: client/cgame/campaign/cp_save.cpp:596
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Быстрое сохранение успешно загружено."
 
@@ -31858,24 +31773,19 @@ msgstr ""
 "Макс. ур. Внезимной Вирусной Инфекции: %i%%\n"
 "Текущ. ур. Внезимной Вирусной Инфекции: %i%%"
 
-#: client/cgame/campaign/cp_team.cpp:306
-#, c-format
-msgid "%i of %i"
-msgstr "%i из %i"
-
-#: client/cgame/campaign/cp_team_callbacks.cpp:240
+#: client/cgame/campaign/cp_team_callbacks.cpp:236
 msgid "No more employee can be assigned to this aircraft"
 msgstr "К этому транспорту больше нельзя приписать солдат"
 
-#: client/cgame/campaign/cp_team_callbacks.cpp:251
+#: client/cgame/campaign/cp_team_callbacks.cpp:247
 msgid "Employee is assigned to another aircraft"
 msgstr "Сотрудник приписан к другому самолёту"
 
-#: client/cgame/campaign/cp_team_callbacks.cpp:343
+#: client/cgame/campaign/cp_team_callbacks.cpp:339
 msgid "Employee is away from base"
 msgstr "Сотрудник вне базы"
 
-#: client/cgame/campaign/cp_team_callbacks.cpp:345
+#: client/cgame/campaign/cp_team_callbacks.cpp:341
 msgid "No more employee can be assigned to this team"
 msgstr "К этому отряду больше нельзя приписать солдат"
 
@@ -31971,8 +31881,8 @@ msgstr "На %s нет хранилища антиматерии, антимат
 
 #: client/cgame/campaign/cp_transfer.cpp:59
 #: client/cgame/campaign/cp_transfer.cpp:102
-#: client/cgame/campaign/cp_transfer.cpp:134
-#: client/cgame/campaign/cp_transfer.cpp:140
+#: client/cgame/campaign/cp_transfer.cpp:139
+#: client/cgame/campaign/cp_transfer.cpp:145
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:84
 msgid "Transport mission"
 msgstr "Транспортная операция"
@@ -31982,13 +31892,13 @@ msgstr "Транспортная операция"
 msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr "%s не имеет изолятора, пришельцы удалены!"
 
-#: client/cgame/campaign/cp_transfer.cpp:134
+#: client/cgame/campaign/cp_transfer.cpp:139
 msgid ""
 "The destination base no longer exists! Transfer cargo was lost, personnel "
 "has been discharged."
 msgstr "Базы назначения больше не существует! Груз потерян, персонал уволен."
 
-#: client/cgame/campaign/cp_transfer.cpp:139
+#: client/cgame/campaign/cp_transfer.cpp:144
 #, c-format
 msgid "Transport mission ended, unloading cargo in %s"
 msgstr "Транспортировка завершена, происходит разгрузка в %s"
@@ -32041,34 +31951,34 @@ msgstr "Живой %s"
 msgid "Aircraft %s"
 msgstr "Авиатехника %s"
 
-#: client/cgame/campaign/cp_transfer_callbacks.cpp:774
+#: client/cgame/campaign/cp_transfer_callbacks.cpp:772
 msgid "Employee"
 msgstr "Персонал"
 
-#: client/cgame/campaign/cp_transfer_callbacks.cpp:792
+#: client/cgame/campaign/cp_transfer_callbacks.cpp:790
 msgid "alive"
 msgstr "живых"
 
-#: client/cgame/campaign/cp_transfer_callbacks.cpp:794
+#: client/cgame/campaign/cp_transfer_callbacks.cpp:792
 msgid "dead"
 msgstr "мёртвых"
 
-#: client/cgame/campaign/cp_ufo.cpp:403
+#: client/cgame/campaign/cp_ufo.cpp:494
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr "НЛО направляется к %s"
 
-#: client/cgame/campaign/cp_ufo.cpp:856
+#: client/cgame/campaign/cp_ufo.cpp:942
 #, c-format
 msgid "%s is flying toward %s"
 msgstr "%s направляется к %s"
 
-#: client/cgame/campaign/cp_ufo.cpp:860
+#: client/cgame/campaign/cp_ufo.cpp:946
 #, c-format
 msgid "Our radar detected %s near %s"
 msgstr "Наши радары засекли %s неподалёку от %s"
 
-#: client/cgame/campaign/cp_ufo.cpp:864
+#: client/cgame/campaign/cp_ufo.cpp:950
 #, c-format
 msgid "Our radar has lost the tracking on %s"
 msgstr "Наш радар потерял отслеживаемый %s"
@@ -32588,8 +32498,8 @@ msgid "Size:\t%i\n"
 msgstr "Размер:\t%i\n"
 
 #: client/cl_inventory_callbacks.cpp:140 client/cl_inventory_callbacks.cpp:166
-#: client/cl_inventory_callbacks.cpp:193 client/cl_inventory_callbacks.cpp:197
-#: client/cl_inventory_callbacks.cpp:201
+#: client/cl_inventory_callbacks.cpp:193 client/cl_inventory_callbacks.cpp:207
+#: client/cl_inventory_callbacks.cpp:211
 #, c-format
 msgid "Weight:\t%g Kg\n"
 msgstr "Вес:\t%g Кг\n"
@@ -32603,13 +32513,13 @@ msgstr "^BТип повреждения:\tЗащита:\n"
 msgid "%s weapon\n"
 msgstr "%s оружие\n"
 
-#: client/cl_inventory_callbacks.cpp:155 client/cl_inventory_callbacks.cpp:196
-#: client/cl_inventory_callbacks.cpp:200
+#: client/cl_inventory_callbacks.cpp:155 client/cl_inventory_callbacks.cpp:206
+#: client/cl_inventory_callbacks.cpp:210
 msgid "One-handed"
 msgstr "Одноручное"
 
-#: client/cl_inventory_callbacks.cpp:155 client/cl_inventory_callbacks.cpp:196
-#: client/cl_inventory_callbacks.cpp:200
+#: client/cl_inventory_callbacks.cpp:155 client/cl_inventory_callbacks.cpp:206
+#: client/cl_inventory_callbacks.cpp:210
 msgid "Two-handed"
 msgstr "Двуручное"
 
@@ -32623,12 +32533,12 @@ msgstr "Ёмкость магазина:\t%i\n"
 msgid "Skill:\t%s\n"
 msgstr "Навык:\t%s\n"
 
-#: client/cl_inventory_callbacks.cpp:187 client/cl_inventory_callbacks.cpp:205
+#: client/cl_inventory_callbacks.cpp:187 client/cl_inventory_callbacks.cpp:215
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "Ед.Времени:\t%i\n"
 
-#: client/cl_inventory_callbacks.cpp:188 client/cl_inventory_callbacks.cpp:206
+#: client/cl_inventory_callbacks.cpp:188 client/cl_inventory_callbacks.cpp:216
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "Дальность:\t%g\n"
@@ -32651,30 +32561,58 @@ msgstr "Боеприпасы"
 msgid "Weapon"
 msgstr "Оружие"
 
-#: client/cl_inventory_callbacks.cpp:196
+#: client/cl_inventory_callbacks.cpp:200 po/OTHER_STRINGS:5
+msgid "No"
+msgstr "Нет"
+
+#: client/cl_inventory_callbacks.cpp:200
+#, c-format
+msgid "Permanent:\t%s\n"
+msgstr "Постоянный:\t%s\n"
+
+#: client/cl_inventory_callbacks.cpp:200 po/OTHER_STRINGS:4
+msgid "Yes"
+msgstr "Да"
+
+#: client/cl_inventory_callbacks.cpp:201
+#, c-format
+msgid "Duration:\t%i\n"
+msgstr "Продолжительность:\t%i\n"
+
+#: client/cl_inventory_callbacks.cpp:202
+#, c-format
+msgid "Period:\t%i\n"
+msgstr "Периодичность:\t%i\n"
+
+#: client/cl_inventory_callbacks.cpp:204
+#, c-format
+msgid "Price:\t%i c\n"
+msgstr "Цена:\t%i кр\n"
+
+#: client/cl_inventory_callbacks.cpp:206
 #, c-format
 msgid "%s ammo-less weapon\n"
 msgstr "%s оружие, не требующее зарядов\n"
 
-#: client/cl_inventory_callbacks.cpp:200
+#: client/cl_inventory_callbacks.cpp:210
 #, c-format
 msgid "%s auxiliary equipment\n"
 msgstr "Вспомогательное %s снаряжение\n"
 
-#: client/cl_inventory_callbacks.cpp:204
+#: client/cl_inventory_callbacks.cpp:214
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "Действие:\t%s\n"
 
-#: client/cl_inventory_callbacks.cpp:213
+#: client/cl_inventory_callbacks.cpp:223
 msgid "Unknown - not useable"
 msgstr "Неизвестная технология - нельзя использовать"
 
-#: client/cl_inventory_callbacks.cpp:393
-msgid "Warning: Not enough TUs..."
-msgstr "Предупреждение: Не достаточно ЕВ..."
+#: client/cl_inventory_callbacks.cpp:403
+msgid "Warning!"
+msgstr "Внимание!"
 
-#: client/cl_irc.cpp:1437
+#: client/cl_irc.cpp:1436
 msgid "Server closed connection"
 msgstr "Сервер закрыл соединение"
 
@@ -32741,15 +32679,15 @@ msgstr "Файлы скриптов различаются"
 msgid "Local map version differs from server"
 msgstr "Локальная верся карты отличается от версии на сервере"
 
-#: client/cl_main.cpp:941
+#: client/cl_main.cpp:935
 msgid "Target your shot to the ground"
 msgstr "Прицелиться в поверхность земли"
 
-#: client/cl_main.cpp:1191
+#: client/cl_main.cpp:1185
 msgid "This change requires a restart!"
 msgstr "Изменение требует рестарта!"
 
-#: client/cl_main.cpp:1196
+#: client/cl_main.cpp:1190
 msgid "This change might require a restart."
 msgstr "Это изменение может потребовать перезапуск игры."
 
@@ -32906,31 +32844,31 @@ msgstr "Переключение между уровнями карты по в�
 msgid "Slice through terrain at a lower level"
 msgstr "Переключение между уровнями карты по убыванию"
 
-#: client/ui/node/ui_node_container.cpp:260
-#: client/ui/node/ui_node_container.cpp:265
+#: client/ui/node/ui_node_container.cpp:259
+#: client/ui/node/ui_node_container.cpp:264
 #, c-format
 msgid "Ammo: %i\n"
 msgstr "Патроны: %i\n"
 
-#: client/ui/node/ui_node_container.cpp:264
+#: client/ui/node/ui_node_container.cpp:263
 #, c-format
 msgid "%s loaded\n"
 msgstr "%s заряжено\n"
 
-#: client/ui/node/ui_node_container.cpp:272
+#: client/ui/node/ui_node_container.cpp:270
 msgid "Usable in:\n"
 msgstr "Используется в:\n"
 
-#: client/ui/node/ui_node_container.cpp:324
+#: client/ui/node/ui_node_container.cpp:322
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "В: %i Вне: %i"
 
-#: client/ui/node/ui_node_window.cpp:250
+#: client/ui/node/ui_node_window.cpp:245
 msgid "Drag to move window"
 msgstr "Тащите, чтоб передвинуть окно"
 
-#: client/ui/node/ui_node_window.cpp:267
+#: client/ui/node/ui_node_window.cpp:262
 msgid "Close the window"
 msgstr "Закрыть диалог"
 
@@ -32939,50 +32877,42 @@ msgstr "Закрыть диалог"
 msgid "Key: %s"
 msgstr "Клавиша: %s"
 
-#: game/g_actor.cpp:98
-msgid "Soldier entered the rescue zone."
-msgstr "Солдат вошёл в зону спасения."
-
-#: game/g_actor.cpp:100
-msgid "Soldier left the rescue zone."
-msgstr "Солдат покинул зону спасения."
-
-#: game/g_actor.cpp:623
+#: game/g_actor.cpp:577
 msgid ""
 "Can't perform action - weapon already fully loaded with the same ammunition!"
 msgstr ""
 "Невозможно выполнить действие — оружие уже заряжено этим типом боеприпасов!"
 
-#: game/g_client.cpp:341
+#: game/g_client.cpp:343
 msgid "Can't perform action - object not present!"
 msgstr "Невозможно выполнить действие — объект не существует!"
 
-#: game/g_client.cpp:346
+#: game/g_client.cpp:348
 msgid "Can't perform action - not an actor!"
 msgstr "Невозможно выполнить действие — это не персонаж!"
 
-#: game/g_client.cpp:351
+#: game/g_client.cpp:353
 msgid "Can't perform action - actor is stunned!"
 msgstr "Невозможно выполнить действие — персонаж оглушён!"
 
-#: game/g_client.cpp:356
+#: game/g_client.cpp:358
 msgid "Can't perform action - actor is dead!"
 msgstr "Невозможно выполнить действие — персонаж мёртв!"
 
-#: game/g_client.cpp:361
+#: game/g_client.cpp:363
 msgid "Can't perform action - not on same team!"
 msgstr "Невозможно выполнить действие — в другой команде!"
 
-#: game/g_client.cpp:366
+#: game/g_client.cpp:368
 msgid "Can't perform action - no control over allied actors!"
 msgstr ""
 "Невозможно выполнить действие — нет контроля над дружественными персонажами!"
 
-#: game/g_client.cpp:385
+#: game/g_client.cpp:387
 msgid "Can't perform action - it is not your turn!"
 msgstr "Невозможно выполнить действие — сейчас не ваш ход!"
 
-#: game/g_client.cpp:500
+#: game/g_client.cpp:502
 msgid "Currently shaken, won't let their guard down."
 msgstr "Испуган, отказывается исполнять приказ."
 
@@ -33004,23 +32934,23 @@ msgstr ""
 "Солдат офигел!\n"
 "Враг использовал светошумовую гранату!"
 
-#: game/g_combat.cpp:647
+#: game/g_combat.cpp:671
 msgid "Can't perform action - impossible throw!"
 msgstr "Нельзя совершить действие — невозможно бросить!"
 
-#: game/g_combat.cpp:1124
+#: game/g_combat.cpp:1156
 msgid "Can't perform action - object not activatable!"
 msgstr "Невозможно выполнить действие — объект не может быть активирован!"
 
-#: game/g_combat.cpp:1150
+#: game/g_combat.cpp:1182
 msgid "Can't perform action - target is not wounded!"
 msgstr "Невозможно выполнить действие — цель не ранена!"
 
-#: game/g_combat.cpp:1175
+#: game/g_combat.cpp:1207
 msgid "Can't perform action - target out of range!"
 msgstr "Невозможно выполнить действие — цель вне зоны поражения!"
 
-#: game/g_combat.cpp:1221
+#: game/g_combat.cpp:1253
 msgid "Can't perform action - not enough ammo!"
 msgstr "Нельзя совершить действие — недостаточно боеприпасов!"
 
@@ -33041,7 +32971,7 @@ msgstr "Предмет помещён."
 msgid "%s panics!"
 msgstr "%s паникует!"
 
-#: game/g_morale.cpp:100
+#: game/g_morale.cpp:101
 #, c-format
 msgid "%s is on a rampage!"
 msgstr "%s буйствует."
@@ -33051,20 +32981,20 @@ msgstr "%s буйствует."
 msgid "%s is consumed by mad rage!"
 msgstr "%s в дикой ярости!"
 
-#: game/g_morale.cpp:184
+#: game/g_morale.cpp:188
 #, c-format
 msgid "%s is currently shaken."
 msgstr "%s дрожит от страха."
 
-#: game/g_reaction.cpp:599
+#: game/g_reaction.cpp:614
 msgid "No reaction fire enabled weapon."
 msgstr "Оружие не имеет режима ответного огня."
 
-#: game/g_reaction.cpp:604
+#: game/g_reaction.cpp:619
 msgid "No fire mode selected for reaction fire."
 msgstr "Не выбран режим стрельбы для ответного огня."
 
-#: game/g_reaction.cpp:609
+#: game/g_reaction.cpp:624
 msgid "Not enough TUs left for activating reaction fire."
 msgstr "Недостаточно ЕВ для активации режима ответного огня."
 
@@ -33096,11 +33026,11 @@ msgstr "До принудительного завершения раунда о
 msgid "Current active team hit the max round time."
 msgstr "Текущая команда потратила отведённое на раунд время."
 
-#: game/g_trigger.cpp:139
+#: game/g_trigger.cpp:138
 msgid "Switching map!"
 msgstr "Переключение карты!"
 
-#: game/g_trigger.cpp:168
+#: game/g_trigger.cpp:167
 msgid "You are now ready to switch the map."
 msgstr "Вы готовы к переключению карты."
 
@@ -33112,14 +33042,7 @@ msgstr "человек"
 msgid "alien"
 msgstr "пришелец"
 
-#: po/OTHER_STRINGS:4
-msgid "Yes"
-msgstr "Да"
-
-#: po/OTHER_STRINGS:5
-msgid "No"
-msgstr "Нет"
-
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Сделать скриншот"
+
