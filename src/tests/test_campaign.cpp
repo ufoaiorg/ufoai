@@ -776,7 +776,7 @@ static void testAirFight (void)
 
 	/* ensure that a FIGHTER can spawn */
 	ufoType_t ufoTypes[UFO_MAX];
-	UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_INTERCEPT, ufoTypes);
+	UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_INTERCEPT, ufoTypes, false);
 	const aircraft_t* ufoTemplate = UFO_GetByType(ufoTypes[0]);		/* the first interceptor will do */
 	CU_ASSERT_PTR_NOT_NULL_FATAL(ufoTemplate);
 	ccs.overallInterest = ufoTemplate->ufoInterestOnGeoscape + 1;
