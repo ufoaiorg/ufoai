@@ -196,6 +196,18 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 }
 
 /**
+ * @brief Get a suitable UFO for the mission type.
+ * @param[in] missionType The kind of mission we are currently creating.
+ * @return the first ufo found
+ */
+int UFO_GetOneAvailableUFOForMission (const interestCategory_t missionType)
+{
+	ufoType_t ufoTypes[UFO_MAX];
+	int numTypes = UFO_GetAvailableUFOsForMission(missionType, ufoTypes);
+	return numTypes ? ufoTypes[0] : UFO_NONE;
+}
+
+/**
  * @brief Translate UFO type to name.
  * @param[in] type UFO type in ufoType_t.
  * @return Translated UFO name.
