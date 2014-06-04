@@ -156,35 +156,45 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 		ufoType_t uType = i;
 		switch (missionType) {
 			case INTERESTCATEGORY_RECON:
-				if (UFO_CanDoMission(uType, "recon"))
-					break;
+				if (!UFO_CanDoMission(uType, "recon"))
+					continue;
+				break;
 			case INTERESTCATEGORY_BASE_ATTACK:
-				if (UFO_CanDoMission(uType, "baseattack"))
-					break;
+				if (!UFO_CanDoMission(uType, "baseattack"))
+					continue;
+				break;
 			case INTERESTCATEGORY_SUPPLY:
-				if (UFO_CanDoMission(uType, "supply"))
-					break;
+				if (!UFO_CanDoMission(uType, "supply"))
+					continue;
+				break;
 			case INTERESTCATEGORY_HARVEST:
-				if (UFO_CanDoMission(uType, "harvest"))
-					break;
+				if (!UFO_CanDoMission(uType, "harvest"))
+					continue;
+				break;
 			case INTERESTCATEGORY_XVI:
-				if (UFO_CanDoMission(uType, "xvi"))
-					break;
+				if (!UFO_CanDoMission(uType, "xvi"))
+					continue;
+				break;
 			case INTERESTCATEGORY_TERROR_ATTACK:
-				if (UFO_CanDoMission(uType, "terror"))
-					break;
+				if (!UFO_CanDoMission(uType, "terror"))
+					continue;
+				break;
 			case INTERESTCATEGORY_INTERCEPT:
-				if (UFO_CanDoMission(uType, "intercept"))
-					break;
+				if (!UFO_CanDoMission(uType, "intercept"))
+					continue;
+				break;
 			case INTERESTCATEGORY_INTERCEPTBOMBING:
-				if (UFO_CanDoMission(uType, "interceptbombing"))
-					break;
+				if (!UFO_CanDoMission(uType, "interceptbombing"))
+					continue;
+				break;
 			case INTERESTCATEGORY_BUILDING:
-				if (UFO_CanDoMission(uType, "building"))
-					break;
+				if (!UFO_CanDoMission(uType, "building"))
+					continue;
+				break;
 			case INTERESTCATEGORY_SUBVERT:
-				if (UFO_CanDoMission(uType, "subvert"))
-					break;
+				if (!UFO_CanDoMission(uType, "subvert"))
+					continue;
+				break;
 			default:
 				continue;
 		}
