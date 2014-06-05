@@ -229,7 +229,7 @@ component EmployeeCount extends panel
 	}
 }
 
-// Research item (items researched in base)
+// Hospital item (per employee)
 component HospitalItem extends panel
 {
 	{
