@@ -65,13 +65,12 @@ window hospital
 			// ==================
 
 			/**
-			 * @param <1> Entry index
-			 * @param <2> light, medium, serious
+			 * @param <1> ucn
+			 * @param <2> light, medium, serious, healty
 			 * @param <3> HP
 			 * @param <4> MaxHP
-			 * @param <5> Injury level
-			 * @param <6> Name
-			 * @param <7> Rank
+			 * @param <5> Name
+			 * @param <6> Rank
 			 */
 			confunc hospitaladd	{
 				call *node:parent.patients@createChild("hos<1>", "HospitalItem")
