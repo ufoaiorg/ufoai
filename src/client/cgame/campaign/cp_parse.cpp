@@ -124,7 +124,7 @@ static void CP_ParseAlienTeam (const char* name, const char** text)
 				cgi->Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing category list", name);
 			}
 			for (linkedList_t* element = list; element != nullptr; element = element->next) {
-				alienCategory->missionCategories[alienCategory->numMissionCategories] = CP_GetAlienMissionTypeByID((char*)element->data);
+				alienCategory->missionCategories[alienCategory->numMissionCategories] = CP_GetAlienMissionTypeByID((const char*)element->data);
 				if (alienCategory->missionCategories[alienCategory->numMissionCategories] == INTERESTCATEGORY_NONE)
 					Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" is used with no mission category. It won't be used in game.\n", name);
 				alienCategory->numMissionCategories++;
