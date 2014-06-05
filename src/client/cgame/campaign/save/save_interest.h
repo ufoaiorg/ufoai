@@ -41,6 +41,7 @@ static const constListEntry_t saveInterestConstants[] = {
 	{SAVE_INTERESTCAT_NAMESPACE"::terror", INTERESTCATEGORY_TERROR_ATTACK},
 	{SAVE_INTERESTCAT_NAMESPACE"::baseAttack", INTERESTCATEGORY_BASE_ATTACK},
 	{SAVE_INTERESTCAT_NAMESPACE"::building", INTERESTCATEGORY_BUILDING},
+	{SAVE_INTERESTCAT_NAMESPACE"::subvertgov", INTERESTCATEGORY_SUBVERT},
 	{SAVE_INTERESTCAT_NAMESPACE"::supply", INTERESTCATEGORY_SUPPLY},
 	{SAVE_INTERESTCAT_NAMESPACE"::XVI", INTERESTCATEGORY_XVI},
 	{SAVE_INTERESTCAT_NAMESPACE"::rescue", INTERESTCATEGORY_RESCUE},
@@ -66,8 +67,8 @@ DTD:
 <!ELEMENT interest EMPTY>
 <!ATTLIST interest
 	id			(none, recon, terror,
-				baseAttack, building,
-				supply, XVI, intercept,
+				baseAttack, building, subvertgov,
+				supply, XVI, intercept, interceptbombing,
 				harvest, alienBase)		#REQUIRED
 	value					CDATA		'0'
 >
