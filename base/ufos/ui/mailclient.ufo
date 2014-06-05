@@ -4,10 +4,6 @@
 
 window mail extends ipopup
 {
-	// ==================
-	// background
-	// ==================
-
 	{
 		pos			"10 20"
 		size		"1000 700"
@@ -20,10 +16,6 @@ window mail extends ipopup
 		string		"*cvar:mn_mail_subject"
 		width		"1000"
 	}
-
-	// ==================
-	// text and info
-	// ==================
 
 	text mail
 	{
@@ -95,45 +87,56 @@ component mailheader extends panel
 	{
 		size			"670 28"
 		bgcolor			"0.56 0.81 0.76 0.1"
-		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.15" }
-		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
 		layout			LAYOUT_LEFT_RIGHT_FLOW
 		layoutMargin	2
+
+		onMouseEnter {
+			*node:this@bgcolor = "0.56 0.81 0.76 0.15"
+		}
+		onMouseLeave {
+			*node:this@bgcolor = "0.56 0.81 0.76 0.1"
+		}
+		onClick {
+			cmd "mailclient_click <node:this.header.index@integer>;"
+		}
 	}
 
 	image icon
 	{
 		src	""
 		size	"28 28"
+		ghost	true
 	}
 
-	panel header
-	{
+	panel spacing {
+		size			"6 28"
+	}
+
+	panel header {
 		{
-			size		"670 28"
+			size		"642 28"
+			ghost		true
 		}
 
-		data index
-		{
+		data index {
 			integer		-1
 		}
 
-		string headline
-		{
-			string	""
-			pos		"10 5"
-			color			"0.56 0.81 0.76 1"
+		string headline {
+			string		""
+			color		"0.56 0.81 0.76 1"
 			contentalign	ALIGN_CL
-			size	"510 21"
-			font	"f_small"
+			size		"510 21"
+			font		"f_small"
+			ghost		true
 		}
 
-		string date
-		{
+		string date {
 			string		""
 			pos			"520 5"
-			size		"200 21"
+			size		"122 21"
 			font		"f_small"
+			ghost		true
 		}
 	}
 }
@@ -207,8 +210,7 @@ window mailclient
 				}
 			}
 
-			panel mails
-			{
+			panel mails {
 				{
 					pos				"6 50"
 					size			"680 660"
@@ -259,15 +261,12 @@ window mailclient
 	{
 		call *node:root.maillist.mainBody.mails@createChild("mail<1>", "mailheader")
 		*node:root.maillist.mainBody.mails.mail<1>.header.index@integer = <1>
-
 		*node:root.maillist.mainBody.mails.mail<1>.header.headline@string = <2>
-		*node:root.maillist.mainBody.mails.mail<1>.header.headline@onClick = { cmd "mailclient_click <node:this.parent.index@integer>;" }
-
-		*node:root.maillist.mainBody.mails.mail<1>.header.date@string = <5>
 		*node:root.maillist.mainBody.mails.mail<1>.icon@src = <3>
 		if ( <4> eq 0 ) {
 			*node:root.maillist.mainBody.mails.mail<1>.header@bgcolor	= "0.56 0.81 0.76 0.6"
 		}
+		*node:root.maillist.mainBody.mails.mail<1>.header.date@string = <5>
 	}
 
 	/**
