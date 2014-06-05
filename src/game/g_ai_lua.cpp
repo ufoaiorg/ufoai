@@ -838,12 +838,30 @@ static int AIL_positionshoot (lua_State* L)
 	/* Make things more simple. */
 	Actor* actor = AIL_ent;
 
+	/* Shooting strategy */
+	int posType = 0;
+	if ((lua_gettop(L) > 1)) {
+		if (lua_isstring(L, 2)) {
+			const char* s = lua_tostring(L, 2);
+			/** @todo Get rid of magic numbers. */
+			if (Q_streq(s, "fastest"))
+				posType = 0;
+			else if (Q_streq(s, "nearest"))
+				posType = 1;
+			else if (Q_streq(s, "farthest"))
+				posType = 2;
+			else
+				AIL_invalidparameter(1);
+		} else
+			AIL_invalidparameter(3);
+	}
+
 	/* Number of TU to spend shooting, to make sure we have enough tus to actually fire. */
 	int tus = actor->getUsableTUs();
-	if (lua_gettop(L) > 1) {
-		assert(lua_isnumber(L, 2)); /* Must be a number. */
+	if (lua_gettop(L) > 2) {
+		assert(lua_isnumber(L, 3)); /* Must be a number. */
 
-		tus = static_cast<int>(lua_tonumber(L, 2));
+		tus = static_cast<int>(lua_tonumber(L, 3));
 	}
 
 	shoot_types_t shootType = ST_RIGHT;
@@ -888,28 +906,40 @@ static int AIL_positionshoot (lua_State* L)
 
 	/* evaluate moving to every possible location in the search area,
 	 * including combat considerations */
-	int min_tu = INT_MAX;
+	float bestScore = -12000.0f;
 	pos3_t to, bestPos;
+	VectorSet(bestPos,0, 0, PATHFINDING_HEIGHT);
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++) {
 		for (to[1] = yl; to[1] < yh; to[1]++) {
 			for (to[0] = xl; to[0] < xh; to[0]++) {
-				/* Can we see the target? */
 				actor->setOrigin(to);
 				const pos_t tu = G_ActorMoveLength(actor, level.pathingMap, to, true);
 				if (tu > tus || tu == ROUTING_NOT_REACHABLE)
 					continue;
-				/* Better spot (easier to get to). */
-				if (tu < min_tu) {
-					if (G_ActorVis(actor->origin, actor, target->actor, true) > 0.3f) {
-						float dist;
-						if (!AI_FighterCheckShoot(actor, target->actor, fd, &dist))
-							continue;
-						/* gun-to-target line free? */
-						if (!AI_CheckLineOfFire(actor, target->actor, fd, 1))
-							continue;
-						VectorCopy(to, bestPos);
-						min_tu = tu;
-					}
+				/* Can we see the target? */
+				if (!G_IsVisibleForTeam(target->actor, actor->getTeam()) && G_ActorVis(actor->origin, actor, target->actor, true) < ACTOR_VIS_10)
+					continue;
+				float dist;
+				if (!AI_FighterCheckShoot(actor, target->actor, fd, &dist))
+					continue;
+				/* gun-to-target line free? */
+				if (!AI_CheckLineOfFire(actor, target->actor, fd, 1))
+					continue;
+				float score;
+				switch (posType) {
+				case 1:
+					score = -dist;
+					break;
+				case 2:
+					score = dist;
+					break;
+				default:
+					score = -tu;
+					break;
+				}
+				if (score > bestScore) {
+					VectorCopy(to, bestPos);
+					bestScore = score;
 				}
 			}
 		}
@@ -919,7 +949,7 @@ static int AIL_positionshoot (lua_State* L)
 	VectorCopy(oldOrigin, actor->origin);
 
 	/* No position found in range. */
-	if (min_tu > tus) {
+	if (bestPos[2] >= PATHFINDING_HEIGHT) {
 		lua_pushboolean(L, 0);
 		return 1;
 	}

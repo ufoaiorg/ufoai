@@ -54,7 +54,7 @@ function engage( target )
 	hide_tu = 4 -- Crouch + face
 
 	-- Move until target in sight
-	shoot_pos = ai.positionshoot(target, ai.TU() - hide_tu) -- Get a shoot position
+	shoot_pos = ai.positionshoot(target, "fastest", ai.TU() - hide_tu) -- Get a shoot position
 	if not shoot_pos then -- No position available
 		approach(target)
 	else
