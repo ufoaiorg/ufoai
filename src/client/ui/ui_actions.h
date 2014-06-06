@@ -52,6 +52,8 @@ typedef enum uiActionType_s {
 	EA_LISTENER = EA_ACTION + 9,
 	EA_PUSHVARS = EA_ACTION + 10,
 	EA_POPVARS = EA_ACTION + 11,
+	EA_FORCHILDIN = EA_ACTION + 12,
+	EA_BREAK = EA_ACTION + 13,
 
 	/* boolean to boolean operators */
 	EA_OPERATOR_BOOLEAN2BOOLEAN = 0x0300,
@@ -108,7 +110,8 @@ typedef enum uiActionType_s {
 	EA_VALUE_PARAMCOUNT = EA_VALUE + 16,				/**< reference to the number of params */
 	EA_VALUE_THIS = EA_VALUE + 17,						/**< reference to the current node */
 	EA_VALUE_WINDOW = EA_VALUE + 18,					/**< reference to the window node */
-	EA_VALUE_PARENT = EA_VALUE + 19						/**< reference to the parent node */
+	EA_VALUE_PARENT = EA_VALUE + 19,					/**< reference to the parent node */
+	EA_VALUE_CHILD = EA_VALUE + 20						/**< reference to the current child in a forchildin block */
 } uiActionType_t;
 
 
@@ -118,7 +121,7 @@ typedef enum uiActionType_s {
  * It allows different kind of data without cast
  * @sa uiAction_t
  */
-typedef union {
+typedef union uiTerminalActionData_s {
 	int integer;
 	float number;
 	const char* constString;
@@ -205,12 +208,16 @@ typedef struct uiValue_s {
 typedef struct uiCallContext_s {
 	/** node owning the action */
 	uiNode_t* source;
+	/** extra node place holder (see: forchildin) */
+	uiNode_t* tagNode;
 	/** is the function can use param from command line */
 	bool useCmdParam;
 	linkedList_t* params;
 	int paramNumber;
 	int varPosition;
 	int varNumber;
+	/** true to break a block of code (do not forget: after consuming the break reset the flag) */
+	bool breakLoop;
 } uiCallContext_t;
 
 void UI_ExecuteEventActions(uiNode_t* source, const uiAction_t* firstAction);

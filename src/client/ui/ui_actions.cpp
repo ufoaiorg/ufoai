@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../cl_language.h"
 
-typedef struct {
+typedef struct ui_typedActionToken_s {
 	const char* token;
 	int type;
 	int group;
@@ -66,6 +66,7 @@ static const ui_typedActionToken_t actionTokens[] = {
 
 	/* 'a'..'z' */
 	{"and", EA_OPERATOR_AND, EA_BINARYOPERATOR},
+	{"break", EA_BREAK, EA_ACTION},
 	{"call", EA_CALL, EA_ACTION},
 	{"cmd", EA_CMD, EA_ACTION},
 	{"delete", EA_DELETE, EA_ACTION},
@@ -73,6 +74,7 @@ static const ui_typedActionToken_t actionTokens[] = {
 	{"else", EA_ELSE, EA_ACTION},
 	{"eq", EA_OPERATOR_STR_EQ, EA_BINARYOPERATOR},
 	{"exists", EA_OPERATOR_EXISTS, EA_UNARYOPERATOR},
+	{"forchildin", EA_FORCHILDIN, EA_ACTION},
 	{"if", EA_IF, EA_ACTION},
 	{"ne", EA_OPERATOR_STR_NE, EA_BINARYOPERATOR},
 	{"not", EA_OPERATOR_NOT, EA_UNARYOPERATOR},
@@ -229,7 +231,7 @@ const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCa
 					const value_t* property;
 					const char* string;
 					int l;
-					UI_ReadNodePath(path, context->source, &node, &property);
+					UI_ReadNodePath(path, context->source, nullptr, &node, &property);
 					if (!node) {
 						Com_Printf("UI_GenInjectedString: Node '%s' wasn't found; '' returned\n", path);
 #ifdef DEBUG
@@ -405,7 +407,8 @@ static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 	else
 		Com_Error(ERR_FATAL, "UI_ExecuteSetAction: Property setter with wrong type '%d'", left->type);
 
-	UI_ReadNodePath(path, context->source, &node, &property);
+	/* context->tagNode holds reference to child in iteration loop if applicable */
+	UI_ReadNodePath(path, context->source, context->tagNode, &node, &property);
 	if (!node) {
 		Com_Printf("UI_ExecuteSetAction: node \"%s\" doesn't exist (source: %s)\n", path, UI_GetPath(context->source));
 		return;
@@ -431,7 +434,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 		path = left->d.terminal.d1.constString;
 	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION || left->type == EA_VALUE_PATHNODE_WITHINJECTION)
 		path = UI_GenInjectedString(left->d.terminal.d1.constString, false, context);
-	UI_ReadNodePath(path, context->source, &callNode, &callProperty);
+	UI_ReadNodePath(path, context->source, context->tagNode, &callNode, &callProperty);
 
 	if (callNode == nullptr) {
 		Com_Printf("UI_ExecuteCallAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, UI_GetPath(context->source));
@@ -582,12 +585,65 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t* context
 			int loop = 0;
 			while (UI_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
 				UI_ExecuteActions(action->d.nonTerminal.right, context);
+				if (context->breakLoop) {
+					context->breakLoop = false;
+					break;
+				}
 				if (loop > 1000) {
 					Com_Printf("UI_ExecuteAction: Infinite loop. Force breaking 'while'\n");
 					break;
 				}
 				loop++;
 			}
+			break;
+		}
+
+	/*
+		expected usage in .ufo scripts:
+
+		forchildin ( *node:someNode ) {
+			...
+			*node:child  <-- reference the child being iterated
+			...
+		}
+	*/
+	case EA_FORCHILDIN:
+		{
+			uiNode_t* root;
+			root = UI_GetNodeFromExpression(action->d.nonTerminal.left, context, nullptr);
+			if (!root) {
+				break;
+			}
+
+			uiNode_t* node = root->firstChild;
+			int loop = 0;
+			while (node != root->lastChild) {
+				/* associate the child node with the call context so it can be referenced inside the
+				   script block */
+				context->tagNode = node;
+				/* execute the script block inside the forchildin loop */
+				UI_ExecuteActions(action->d.nonTerminal.right, context);
+				/* clean the tag node */
+				context->tagNode = nullptr;
+				if (context->breakLoop) {
+					context->breakLoop = false;
+					break;
+				}
+				if (loop > 1000) {
+					Com_Printf("UI_ExecuteAction: Infinite loop. Force breaking 'forchildin'\n");
+					break;
+				}
+				node = node->next;
+				loop++;
+			}
+			break;
+		}
+
+	case EA_BREAK:
+		{
+			/* flag to break, the caller must check this flag before processing the next action in the list */
+			Com_Printf("BREAK: break statement found\n");
+			context->breakLoop = true;
 			break;
 		}
 
@@ -622,6 +678,11 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t* context
 	}
 }
 
+/**
+ * @brief Execute a tree of actions from a source
+ * @param[in] context Context node
+ * @param[in] action Action to execute
+ */
 static void UI_ExecuteActions (const uiAction_t* firstAction, uiCallContext_t* context)
 {
 	static int callnumber = 0;
@@ -629,7 +690,7 @@ static void UI_ExecuteActions (const uiAction_t* firstAction, uiCallContext_t* c
 		Com_Printf("UI_ExecuteActions: Break possible infinite recursion\n");
 		return;
 	}
-	for (const uiAction_t* action = firstAction; action; action = action->next) {
+	for (const uiAction_t* action = firstAction; action && !context->breakLoop; action = action->next) {
 		UI_ExecuteAction(action, context);
 	}
 	callnumber--;
@@ -799,7 +860,7 @@ static void UI_AddListener_f (void)
 		return;
 	}
 
-	UI_ReadNodePath(Cmd_Argv(1), nullptr, &node, &property);
+	UI_ReadNodePath(Cmd_Argv(1), nullptr, nullptr, &node, &property);
 	if (node == nullptr) {
 		Com_Printf("UI_AddListener_f: '%s' node not found.\n", Cmd_Argv(1));
 		return;
@@ -874,7 +935,7 @@ static void UI_RemoveListener_f (void)
 		return;
 	}
 
-	UI_ReadNodePath(Cmd_Argv(1), nullptr, &node, &property);
+	UI_ReadNodePath(Cmd_Argv(1), nullptr, nullptr, &node, &property);
 	if (node == nullptr) {
 		Com_Printf("UI_RemoveListener_f: '%s' node not found.\n", Cmd_Argv(1));
 		return;

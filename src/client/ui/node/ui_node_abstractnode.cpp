@@ -47,7 +47,7 @@ static void UI_NodeGetProperty_f (void)
 		return;
 	}
 
-	UI_ReadNodePath(Cmd_Argv(1), nullptr, &node, &property);
+	UI_ReadNodePath(Cmd_Argv(1), nullptr, nullptr, &node, &property);
 
 	if (node == nullptr) {
 		Com_Printf("UI_NodeGetProperty_f: Node from path '%s' doesn't exist\n", Cmd_Argv(1));

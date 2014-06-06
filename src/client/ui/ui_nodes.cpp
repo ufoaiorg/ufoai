@@ -194,17 +194,18 @@ const char* UI_GetPath (const uiNode_t* node)
  * @details The path token must be a window name, and then node child.
  * Reserved token 'root' and 'parent' can be used to navigate.
  * If relativeNode is set, the path can start with reserved token
- * 'this', 'root' and 'parent' (relative to this node).
+ * 'this', 'root', 'parent' and 'child' (relative to this node).
  * The function can return a node property by using a '\@',
  * the path 'foo\@pos' will return the window foo and the property 'pos'
  * from the 'window' behaviour.
  * @param[in] path Path to read. Contain a node location with dot seprator and a facultative property
  * @param[in] relativeNode relative node where the path start. It allow to use facultative command to start the path (this, parent, root).
+ * @param[in] iterationNode relative node referencing child in 'forchildin' iteration, mapped to '*node:child', can be nullptr
  * @param[out] resultNode Node found. Else nullptr.
  * @param[out] resultProperty Property found. Else nullptr.
  * TODO Speed up, evilly used function, use strncmp instead of using buffer copy (name[MAX_VAR])
  */
-void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, uiNode_t** resultNode, const value_t** resultProperty)
+void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNode_t* iterationNode, uiNode_t** resultNode, const value_t** resultProperty)
 {
 	char name[MAX_VAR];
 	uiNode_t* node = nullptr;
@@ -235,8 +236,7 @@ void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, uiNode_t**
 			if (Q_streq(name, "this")) {
 				if (relativeNode == nullptr)
 					return;
-				/** @todo find a way to fix the bad cast. only here to remove "discards qualifiers" warning */
-				node = *(uiNode_t**) ((void*)&relativeNode);
+				node = const_cast<uiNode_t *>(relativeNode);
 			} else if (Q_streq(name, "parent")) {
 				if (relativeNode == nullptr)
 					return;
@@ -245,6 +245,10 @@ void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, uiNode_t**
 				if (relativeNode == nullptr)
 					return;
 				node = relativeNode->root;
+			} else if (Q_streq(name, "child")) {
+				if (iterationNode == nullptr)
+					return;
+				node = const_cast<uiNode_t *>(iterationNode);
 			} else
 				node = UI_GetWindow(name);
 			break;
@@ -290,7 +294,7 @@ uiNode_t* UI_GetNodeByPath (const char* path)
 {
 	uiNode_t* node = nullptr;
 	const value_t* property;
-	UI_ReadNodePath(path, nullptr, &node, &property);
+	UI_ReadNodePath(path, nullptr, nullptr, &node, &property);
 	/** @todo FIXME warning if it return a property */
 	return node;
 }

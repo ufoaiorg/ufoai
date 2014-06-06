@@ -75,6 +75,7 @@ static char const* const reservedTokens[] = {
 	"float",
 	"string",
 	"var",
+	"child",
 	nullptr
 };
 
@@ -355,7 +356,7 @@ static bool UI_ParseSetAction (uiNode_t* node, uiAction_t* action, const char** 
 }
 
 /**
- * @brief Parser for c command
+ * @brief Parser for call command
  */
 static bool UI_ParseCallAction (uiNode_t* node, uiAction_t* action, const char** text, const char** token, const char* errhead)
 {
@@ -535,12 +536,49 @@ static uiAction_t* UI_ParseActionList (uiNode_t* node, const char** text, const 
 					return nullptr;
 				action->d.nonTerminal.right = UI_ParseActionList(node, text, token);
 				if (action->d.nonTerminal.right == nullptr) {
-					if (action->type == EA_IF)
+					switch (action->type) {
+					case EA_IF:
 						Com_Printf("UI_ParseActionList: block expected after \"if\" (node: %s)\n", UI_GetPath(node));
-					else if (action->type == EA_ELIF)
+						break;
+					case EA_ELIF:
 						Com_Printf("UI_ParseActionList: block expected after \"elif\" (node: %s)\n", UI_GetPath(node));
-					else
+						break;
+					case EA_WHILE:
 						Com_Printf("UI_ParseActionList: block expected after \"while\" (node: %s)\n", UI_GetPath(node));
+						break;
+					default:
+						Com_Printf("UI_ParseActionList: cannot determine statement type (node: %s)\n", UI_GetPath(node));
+					}
+					return nullptr;
+				}
+				break;
+			}
+
+		case EA_FORCHILDIN:
+			{
+				uiAction_t* expression;
+
+				/* get the node */
+				expression = UI_ParseExpression(text);
+				if (expression == nullptr) {
+					return nullptr;
+				}
+				action->d.nonTerminal.left = expression;
+
+				/* check the type */
+				type = action->d.nonTerminal.left->type;
+				if (type != EA_VALUE_PATHNODE && type != EA_VALUE_PATHNODE_WITHINJECTION) {
+					Com_Printf("UI_ParseActionList: Node property expected. Type '%x' found\n", type);
+					return nullptr;
+				}
+
+				/* get the action block */
+				*token = Com_EParse(text, errhead, nullptr);
+				if (!*text)
+					return nullptr;
+				action->d.nonTerminal.right = UI_ParseActionList(node, text, token);
+				if (action->d.nonTerminal.right == nullptr) {
+					Com_Printf("UI_ParseActionList: block expected after \"forchildin\" (node: %s)\n", UI_GetPath(node));
 					return nullptr;
 				}
 				break;

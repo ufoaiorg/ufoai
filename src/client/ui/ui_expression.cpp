@@ -68,7 +68,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t* expression, const uiCallContext_
 			if (expression->type == EA_VALUE_PATHNODE_WITHINJECTION)
 				path = UI_GenInjectedString(path, false, context);
 
-			UI_ReadNodePath(path, context->source, &node, &propertyTmp);
+			UI_ReadNodePath(path, context->source, context->tagNode, &node, &propertyTmp);
 			if (!node) {
 				Com_Printf("UI_GetNodeFromExpression: Node '%s' wasn't found; nullptr returned\n", path);
 				return nullptr;
@@ -88,7 +88,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t* expression, const uiCallContext_
 				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
 					path = UI_GenInjectedString(path, false, context);
 
-				UI_ReadNodePath(path, context->source, &node, &propertyTmp);
+				UI_ReadNodePath(path, context->source, context->tagNode, &node, &propertyTmp);
 				if (!node) {
 					Com_Printf("UI_GetNodeFromExpression: Node '%s' wasn't found; nullptr returned\n", path);
 					return nullptr;
@@ -112,6 +112,9 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t* expression, const uiCallContext_
 		case EA_VALUE_WINDOW:
 			return context->source->root;
 
+		case EA_VALUE_CHILD:
+			return context->tagNode;
+
 		default:
 			break;
 		}
@@ -124,7 +127,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t* expression, const uiCallContext_
 				uiNode_t* node;
 				const value_t* propertyTmp;
 				const char* path = expression->d.terminal.d2.constString;
-				UI_ReadNodePath(path, relativeTo, &node, &propertyTmp);
+				UI_ReadNodePath(path, relativeTo, context->tagNode, &node, &propertyTmp);
 				if (!node) {
 					Com_Printf("UI_GetNodeFromExpression: Path '%s' from node '%s' found no node; nullptr returned\n", path, UI_GetPath(relativeTo));
 					return nullptr;
@@ -494,7 +497,7 @@ bool UI_GetBooleanFromExpression (uiAction_t* expression, const uiCallContext_t*
 				case EA_VALUE_PATHNODE: {
 					uiNode_t* node = nullptr;
 					const value_t* property;
-					UI_ReadNodePath(name, context->source, &node, &property);
+					UI_ReadNodePath(name, context->source, context->tagNode, &node, &property);
 					return node != nullptr;
 				}
 				default:

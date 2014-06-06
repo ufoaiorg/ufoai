@@ -308,7 +308,7 @@ static void UI_SetKeyBindingEx (const char* path, int key, const char* descripti
 	uiNode_t* node;
 	const value_t* property = nullptr;
 
-	UI_ReadNodePath(path, nullptr, &node, &property);
+	UI_ReadNodePath(path, nullptr, nullptr, &node, &property);
 	if (node == nullptr) {
 		Com_Printf("UI_SetKeyBinding: node \"%s\" not found.\n", path);
 		return;

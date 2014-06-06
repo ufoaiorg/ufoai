@@ -154,7 +154,7 @@ void UI_InitNodes(void);
 /* nodes */
 uiNode_t* UI_AllocNode(const char* name, const char* type, bool isDynamic);
 uiNode_t* UI_GetNodeByPath(const char* path) __attribute__ ((warn_unused_result));
-void UI_ReadNodePath(const char* path, const uiNode_t* relativeNode, uiNode_t** resultNode, const value_t** resultProperty);
+void UI_ReadNodePath(const char* path, const uiNode_t* relativeNode, const uiNode_t* iterationNode, uiNode_t** resultNode, const value_t** resultProperty);
 uiNode_t* UI_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
 const char* UI_GetPath(const uiNode_t* node) __attribute__ ((warn_unused_result));
 uiNode_t* UI_CloneNode(uiNode_t const* node, uiNode_t* newWindow, bool recursive, const char* newName, bool isDynamic) __attribute__ ((warn_unused_result));
