@@ -131,11 +131,11 @@ bool INT_LoadXML (xmlNode_t* parent)
 {
 	xmlNode_t* node;
 	xmlNode_t* interestsNode = cgi->XML_GetNode(parent, SAVE_INTERESTS);
-	bool success = true;
 
 	ccs.lastInterestIncreaseDelay = cgi->XML_GetInt(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, 0);
 	ccs.lastMissionSpawnedDelay = cgi->XML_GetInt(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, 0);
 	ccs.overallInterest = cgi->XML_GetInt(interestsNode, SAVE_INTERESTS_OVERALL, 0);
+
 	cgi->Com_RegisterConstList(saveInterestConstants);
 	for (node = cgi->XML_GetNode(interestsNode, SAVE_INTERESTS_INTEREST); node;
 			node = cgi->XML_GetNextNode(node, interestsNode, SAVE_INTERESTS_INTEREST)) {
@@ -144,13 +144,13 @@ bool INT_LoadXML (xmlNode_t* parent)
 
 		if (!cgi->Com_GetConstInt(categoryId, (int*) &cat)) {
 			Com_Printf("Invalid interest category '%s'\n", categoryId);
-			success = false;
-			break;
+			continue;
 		}
 		ccs.interest[cat]= cgi->XML_GetInt(node, SAVE_INTERESTS_VAL, 0);
 	}
 	cgi->Com_UnregisterConstList(saveInterestConstants);
-	return success;
+
+	return true;
 }
 
 #ifdef DEBUG
