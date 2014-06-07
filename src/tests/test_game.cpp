@@ -71,8 +71,8 @@ TEST_F(GameTest, SpawnAndConnect)
 	Edict* e = nullptr;
 	int cnt = 0;
 
-	ASSERT_NE(size, -1);
-	ASSERT_TRUE(size > 0);
+	ASSERT_NE(size, -1) << "could not load game/entity.txt.";
+	ASSERT_TRUE(size > 0) << "game/entity.txt is empty.";
 
 	SV_InitGameProgs();
 	/* otherwise we can't link the entities */
@@ -80,8 +80,8 @@ TEST_F(GameTest, SpawnAndConnect)
 
 	player = G_PlayerGetNextHuman(0);
 	svs.ge->SpawnEntities(name, day, (const char*)buf);
-	ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
-	ASSERT_FALSE(svs.ge->RunFrame());
+	ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo))) << "Failed to connect the client";
+	ASSERT_FALSE(svs.ge->RunFrame()) << "Failed to run the server logic frame tick";
 
 	while ((e = G_EdictsGetNextInUse(e))) {
 		Com_Printf("entity %i: %s\n", cnt, e->classname);
@@ -97,10 +97,17 @@ TEST_F(GameTest, CountSpawnpoints)
 {
 	const char* filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t* md;
-	int mapCount = 0;				// the number of maps read
-	const int skipCount = 20;		// to skip the first n mapDefs
 
 	Cvar_Set("rm_drop", "+craft_drop_herakles");
+
+	/* use a known seed to reproduce an error */
+	unsigned int seed;
+	if (TEST_ExistsProperty("mapdef-seed")) {
+		seed = TEST_GetLongProperty("mapdef-seed");
+	} else {
+		seed = (unsigned int) time(nullptr);
+	}
+	srand(seed);
 
 	MapDef_Foreach(md) {
 		if (md->mapTheme[0] == '.')
@@ -110,27 +117,14 @@ TEST_F(GameTest, CountSpawnpoints)
 		if (md->aircraft)	/* if the mapdef has a list of dropships, let's assume they bring their own spawnpoints */
 			continue;
 
-		mapCount++;
-		if (mapCount <= skipCount)
-			continue;
-		/* use a known seed to reproduce an error */
-		unsigned int seed;
-		if (TEST_ExistsProperty("mapdef-seed")) {
-			seed = TEST_GetLongProperty("mapdef-seed");
-		} else {
-			seed = (unsigned int) time(nullptr);
-		}
-		srand(seed);
-
 		Com_Printf("testCountSpawnpoints: Mapdef %s (seed %u)\n", md->id, seed);
 
 		const char* asmName = (const char*)LIST_GetByIdx(md->params, 0);
+		ASSERT_TRUE(asmName != nullptr);
 		SV_Map(true, md->mapTheme, asmName, false);
 
 		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, level.num_spawnpoints[TEAM_PHALANX]);
-		// Com_Printf("Map: %s Mapdef %s Seed %u Spawnpoints: %i\n", md->mapTheme, md->id, seed, level.num_spawnpoints[TEAM_PHALANX]);
-		if (level.num_spawnpoints[TEAM_PHALANX] < 12)
-			Com_Printf("Map %s: only %i spawnpoints !\n", md->mapTheme, level.num_spawnpoints[TEAM_PHALANX]);
+		ASSERT_TRUE(level.num_spawnpoints[TEAM_PHALANX] >= 12) << "Map " << md->mapTheme << " only " << level.num_spawnpoints[TEAM_PHALANX] << " spawnpoints!";
 	}
 }
 
@@ -145,16 +139,16 @@ TEST_F(GameTest, DoorTrigger)
 	SV_Map(true, mapName, nullptr);
 	while ((e = G_EdictsGetNextInUse(e))) {
 		cnt++;
-		if (e->type == ET_DOOR) {
-			if (Q_streq(e->targetname, "left-0")) {
-				ASSERT_TRUE(e->doorState) << "this one is triggered by an actor standing inside of a trigger_touch";
-			} else if (Q_streq(e->targetname, "right-0")) {
-				ASSERT_FALSE(e->doorState) << "this one has a trigger_touch, too - but nobody is touching that trigger yet";
-			} else {
-				ASSERT_TRUE(false) << "both of the used doors have a targetname set";
-			}
-			doors++;
+		if (e->type != ET_DOOR)
+			continue;
+		if (Q_streq(e->targetname, "left-0")) {
+			ASSERT_TRUE(e->doorState) << "this one is triggered by an actor standing inside of a trigger_touch";
+		} else if (Q_streq(e->targetname, "right-0")) {
+			ASSERT_FALSE(e->doorState) << "this one has a trigger_touch, too - but nobody is touching that trigger yet";
+		} else {
+			ASSERT_TRUE(false) << "both of the used doors have a targetname set";
 		}
+		doors++;
 	}
 
 	ASSERT_TRUE(cnt > 0);
@@ -170,7 +164,6 @@ TEST_F(GameTest, Shooting)
 	/** @todo set the input variables -- gi.ReadFormat(format, &pos, &i, &firemode, &from); */
 	/** @todo do the shot -- G_ClientShoot(player, ent, pos, i, firemode, &mock, true, from); */
 	/** @todo implement the test here - e.g. extend shot_mock_t */
-	SV_ShutdownGameProgs();
 }
 
 static int GAMETEST_GetItemCount (const Edict* ent, containerIndex_t container)
@@ -207,7 +200,7 @@ TEST_F(GameTest, VisFlags)
 		num++;
 	}
 
-	ASSERT_TRUE(num > 0);
+	ASSERT_TRUE(num > 0) << "No alien actors found";
 }
 
 TEST_F(GameTest, InventoryForDiedAlien)
@@ -254,16 +247,16 @@ TEST_F(GameTest, InventoryForDiedAlien)
 		Item* entryToMove = actor->getFloor();
 		int tx, ty;
 		actor->chr.inv.findSpace(INVDEF(CID_BACKPACK), entryToMove, &tx, &ty, entryToMove);
-		if (tx != NONE) {
-			Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->def()->name, tx, ty);
-			ASSERT_TRUE(G_ActorInvMove(actor, INVDEF(CID_FLOOR), entryToMove, INVDEF(CID_BACKPACK), tx, ty, false));
-			ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_FLOOR), count - 1) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
-			Com_Printf("item %s was removed from floor\n", entryToMove->def()->name);
-			ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_BACKPACK), 1) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
-			Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->def()->name);
-			invlist = actor->getContainer(CID_BACKPACK);
-			ASSERT_TRUE(nullptr != invlist);
-		}
+		if (tx == NONE)
+			return;
+		Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->def()->name, tx, ty);
+		ASSERT_TRUE(G_ActorInvMove(actor, INVDEF(CID_FLOOR), entryToMove, INVDEF(CID_BACKPACK), tx, ty, false));
+		ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_FLOOR), count - 1) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
+		Com_Printf("item %s was removed from floor\n", entryToMove->def()->name);
+		ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_BACKPACK), 1) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
+		Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->def()->name);
+		invlist = actor->getContainer(CID_BACKPACK);
+		ASSERT_TRUE(nullptr != invlist);
 	}
 }
 
@@ -282,14 +275,14 @@ TEST_F(GameTest, InventoryWithTwoDiedAliensOnTheSameGridTile)
 
 	/* first alien that should die and drop its inventory */
 	diedEnt = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
-	ASSERT_TRUE(nullptr != diedEnt);
+	ASSERT_TRUE(nullptr != diedEnt) << "No living actor in the alien team";
 	diedEnt->HP = 0;
 	G_ActorDieOrStun(diedEnt, nullptr);
-	ASSERT_TRUE(diedEnt->isDead());
+	ASSERT_TRUE(diedEnt->isDead()) << "Actor is not dead";
 
 	/* second alien that should die and drop its inventory */
 	diedEnt2 = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
-	ASSERT_TRUE(nullptr != diedEnt2);
+	ASSERT_TRUE(nullptr != diedEnt2) << "No living actor in the alien team";
 
 	/* move to the location of the first died alien to drop the inventory into the same floor container */
 	Player& player = diedEnt2->getPlayer();
@@ -299,17 +292,17 @@ TEST_F(GameTest, InventoryWithTwoDiedAliensOnTheSameGridTile)
 
 	diedEnt2->HP = 0;
 	G_ActorDieOrStun(diedEnt2, nullptr);
-	ASSERT_TRUE(diedEnt2->isDead());
+	ASSERT_TRUE(diedEnt2->isDead()) << "Actor is not dead";
 
 	/* now try to collect the inventory with a third alien */
 	actor = G_EdictsGetNextLivingActorOfTeam(nullptr, TEAM_ALIEN);
-	ASSERT_TRUE(nullptr != actor);
+	ASSERT_TRUE(nullptr != actor) << "No living actor in the alien team";
 
 	player = actor->getPlayer();
-	ASSERT_TRUE(G_IsAIPlayer(&player));
+	ASSERT_TRUE(G_IsAIPlayer(&player)) << "Player is not ai controlled";
 
 	G_ClientMove(player, 0, actor, diedEnt->pos);
-	ASSERT_TRUE(VectorCompare(actor->pos, diedEnt->pos));
+	ASSERT_TRUE(VectorCompare(actor->pos, diedEnt->pos)) << "Actor is not at the same position as the died entity";
 
 	floorItems = G_GetFloorItems(actor);
 	ASSERT_TRUE(nullptr != floorItems);
@@ -317,7 +310,7 @@ TEST_F(GameTest, InventoryWithTwoDiedAliensOnTheSameGridTile)
 
 	/* drop everything to floor to make sure we have space in the backpack */
 	G_InventoryToFloor(actor);
-	ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_BACKPACK), 0);
+	ASSERT_EQ(0, GAMETEST_GetItemCount(actor, CID_BACKPACK));
 
 	invlist = actor->getContainer(CID_BACKPACK);
 	ASSERT_TRUE(nullptr == invlist);
@@ -327,16 +320,16 @@ TEST_F(GameTest, InventoryWithTwoDiedAliensOnTheSameGridTile)
 		Item* entryToMove = actor->getFloor();
 		int tx, ty;
 		actor->chr.inv.findSpace(INVDEF(CID_BACKPACK), entryToMove, &tx, &ty, entryToMove);
-		if (tx != NONE) {
-			Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->def()->name, tx, ty);
-			ASSERT_TRUE(G_ActorInvMove(actor, INVDEF(CID_FLOOR), entryToMove, INVDEF(CID_BACKPACK), tx, ty, false));
-			ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_FLOOR), count - 1) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
-			Com_Printf("item %s was removed from floor\n", entryToMove->def()->name);
-			ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_BACKPACK), 1) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
-			Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->def()->name);
-			invlist = actor->getContainer(CID_BACKPACK);
-			ASSERT_TRUE(nullptr == invlist);
-		}
+		if (tx == NONE)
+			return;
+		Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->def()->name, tx, ty);
+		ASSERT_TRUE(G_ActorInvMove(actor, INVDEF(CID_FLOOR), entryToMove, INVDEF(CID_BACKPACK), tx, ty, false));
+		ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_FLOOR), count - 1) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
+		Com_Printf("item %s was removed from floor\n", entryToMove->def()->name);
+		ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_BACKPACK), 1) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
+		Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->def()->name);
+		invlist = actor->getContainer(CID_BACKPACK);
+		ASSERT_TRUE(nullptr == invlist);
 	}
 }
 
@@ -356,7 +349,7 @@ TEST_F(GameTest, InventoryTempContainerLinks)
 			continue;
 		nr += cont->countItems();
 	}
-	ASSERT_TRUE(nr > 0);
+	ASSERT_TRUE(nr > 0) << "Could not find any items in the inventory of the actor";
 
 	ASSERT_TRUE(nullptr == actor->getFloor());
 	G_InventoryToFloor(actor);
@@ -370,5 +363,5 @@ TEST_F(GameTest, InventoryTempContainerLinks)
 			continue;
 		nr += cont->countItems();
 	}
-	ASSERT_EQ(nr, 0);
+	ASSERT_EQ(0, nr);
 }
