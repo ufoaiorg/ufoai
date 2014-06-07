@@ -67,7 +67,7 @@ include build/default.mk
 
 CXXFLAGS := $(CFLAGS) $(CXXFLAGS)
 
-ASSEMBLE_OBJECTS = $(patsubst %, $(BUILDDIR)/$(1)/%.o, $(filter %.c %.cpp %.rc, $($(1)_SRCS)))
+ASSEMBLE_OBJECTS = $(patsubst %, $(BUILDDIR)/$(1)/%.o, $(filter %.c %.cpp %.cc %.rc, $($(1)_SRCS)))
 FILTER_OUT = $(foreach v,$(2),$(if $(findstring $(1),$(v)),,$(v)))
 
 define INCLUDE_PROJECT_RULE
