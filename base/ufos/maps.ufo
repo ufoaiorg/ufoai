@@ -31,7 +31,6 @@
 // multiplayer: available for multiplayer games (default false)
 // campaign: available in campaign games (default true)
 //
-// nocunit: map is WIP and therefore excluded from the tests (default false)
 // hwclass: skip this map everywhere if hwclass is higher than that of the pc (default 0).
 //			5 is an i7 with a medium gfx-card
 //			3 a dual core with 2 GB of RAM

@@ -36,75 +36,65 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/stringhunk.h"
 #include "../shared/entitiesdef.h"
 #include "../ports/system.h"
-#include "test_generic.h"
 
-/**
- * The suite initialization function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_InitSuiteGeneric (void)
-{
-	TEST_Init();
-	return 0;
-}
+class GenericTest: public ::testing::Test {
+protected:
+	static void SetUpTestCase() {
+		TEST_Init();
+	}
 
-/**
- * The suite cleanup function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_CleanSuiteGeneric (void)
-{
-	TEST_Shutdown();
-	NET_Shutdown();
-	return 0;
-}
+	static void TearDownTestCase() {
+		TEST_Shutdown();
+		NET_Shutdown();
+	}
+};
 
 static void STRHUNK_VisitorTestEntry (const char* string)
 {
-	CU_ASSERT_STRING_EQUAL(string, "Test");
+	ASSERT_STREQ(string, "Test");
 }
 
 static void STRHUNK_VisitorTestEntry2 (const char* string)
 {
-	CU_ASSERT_STRING_EQUAL(string, "T");
+	ASSERT_STREQ(string, "T");
 }
 
-static void testStringHunks (void)
+TEST_F(GenericTest, StringHunks)
 {
 	stringHunk_t* hunk = STRHUNK_Create(20);
-	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
-	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 1);
-	CU_ASSERT_EQUAL(STRHUNK_GetFreeSpace(hunk), 15);
+	ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	ASSERT_EQ(STRHUNK_Size(hunk), 1);
+	ASSERT_EQ(STRHUNK_GetFreeSpace(hunk), 15);
 	STRHUNK_Visit(hunk, STRHUNK_VisitorTestEntry);
 	STRHUNK_Delete(&hunk);
-	CU_ASSERT_PTR_EQUAL(hunk, nullptr);
+	ASSERT_TRUE(nullptr == hunk);
 
 	hunk = STRHUNK_Create(23);
-	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
-	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
-	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
-	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
-	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 4);
-	CU_ASSERT_EQUAL(STRHUNK_GetFreeSpace(hunk), 0);
+	ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	ASSERT_EQ(STRHUNK_Size(hunk), 4);
+	ASSERT_EQ(STRHUNK_GetFreeSpace(hunk), 0);
 	STRHUNK_Visit(hunk, STRHUNK_VisitorTestEntry);
 
 	STRHUNK_Reset(hunk);
-	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 0);
+	ASSERT_EQ(STRHUNK_Size(hunk), 0);
 
 	STRHUNK_Delete(&hunk);
-	CU_ASSERT_PTR_EQUAL(hunk, nullptr);
+	ASSERT_TRUE(nullptr == hunk);
 
 	hunk = STRHUNK_Create(5);
-	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "T"));
-	CU_ASSERT_FALSE(STRHUNK_Add(hunk, "Test"));
+	ASSERT_TRUE(STRHUNK_Add(hunk, "T"));
+	ASSERT_FALSE(STRHUNK_Add(hunk, "Test"));
 	/* the second string is ignored */
-	CU_ASSERT_FALSE(STRHUNK_Add(hunk, "Test"));
-	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 2);
+	ASSERT_FALSE(STRHUNK_Add(hunk, "Test"));
+	ASSERT_EQ(STRHUNK_Size(hunk), 2);
 	STRHUNK_Visit(hunk, STRHUNK_VisitorTestEntry2);
 	STRHUNK_Delete(&hunk);
 }
 
-static void testConstInt (void)
+TEST_F(GenericTest, ConstInt)
 {
 	const constListEntry_t list[] = {
 		{"namespace::power", 1},
@@ -130,10 +120,10 @@ static void testConstInt (void)
 	int out;
 
 	Com_RegisterConstInt("namespace::variable", 1);
-	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable"));
+	ASSERT_TRUE(Com_UnregisterConstVariable("namespace::variable"));
 
 	Com_RegisterConstInt("namespace::variable", 1);
-	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable"));
+	ASSERT_TRUE(Com_UnregisterConstVariable("namespace::variable"));
 
 	Com_RegisterConstInt("namespace::variable2", 2);
 	Com_RegisterConstInt("namespace::variable3", 3);
@@ -144,48 +134,48 @@ static void testConstInt (void)
 	Com_RegisterConstInt("namespace2::variable2", 10);
 
 	out = 0;
-	CU_ASSERT_TRUE(Com_GetConstInt("namespace2::variable2", &out));
-	CU_ASSERT_EQUAL(out, 10);
+	ASSERT_TRUE(Com_GetConstInt("namespace2::variable2", &out));
+	ASSERT_EQ(out, 10);
 	out = 0;
-	CU_ASSERT_TRUE(Com_GetConstInt("namespace::variable2", &out));
-	CU_ASSERT_EQUAL(out, 2);
+	ASSERT_TRUE(Com_GetConstInt("namespace::variable2", &out));
+	ASSERT_EQ(out, 2);
 	out = 0;
-	CU_ASSERT_TRUE(Com_GetConstInt("variable2", &out));
-	CU_ASSERT_EQUAL(out, 10);
+	ASSERT_TRUE(Com_GetConstInt("variable2", &out));
+	ASSERT_EQ(out, 10);
 
-	CU_ASSERT_STRING_EQUAL(Com_GetConstVariable("namespace", 2), "variable2");
+	ASSERT_STREQ(Com_GetConstVariable("namespace", 2), "variable2");
 
-	CU_ASSERT(Com_UnregisterConstVariable("namespace2::variable2"));
-	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable2"));
-	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable3"));
-	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable4"));
-	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable5"));
-	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable6"));
+	ASSERT_TRUE(Com_UnregisterConstVariable("namespace2::variable2"));
+	ASSERT_TRUE(Com_UnregisterConstVariable("namespace::variable2"));
+	ASSERT_TRUE(Com_UnregisterConstVariable("namespace::variable3"));
+	ASSERT_TRUE(Com_UnregisterConstVariable("namespace::variable4"));
+	ASSERT_TRUE(Com_UnregisterConstVariable("namespace::variable5"));
+	ASSERT_TRUE(Com_UnregisterConstVariable("namespace::variable6"));
 
-	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable"));
-	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable2"));
-	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable3"));
-	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable4"));
-	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable5"));
-	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable6"));
+	ASSERT_TRUE(!Com_UnregisterConstVariable("namespace::variable"));
+	ASSERT_TRUE(!Com_UnregisterConstVariable("namespace::variable2"));
+	ASSERT_TRUE(!Com_UnregisterConstVariable("namespace::variable3"));
+	ASSERT_TRUE(!Com_UnregisterConstVariable("namespace::variable4"));
+	ASSERT_TRUE(!Com_UnregisterConstVariable("namespace::variable5"));
+	ASSERT_TRUE(!Com_UnregisterConstVariable("namespace::variable6"));
 
 	Com_RegisterConstList(list);
 	out = 0;
-	CU_ASSERT_TRUE(Com_GetConstInt("sniper", &out));
-	CU_ASSERT_EQUAL(out, 8);
+	ASSERT_TRUE(Com_GetConstInt("sniper", &out));
+	ASSERT_EQ(out, 8);
 
-	CU_ASSERT_TRUE(Com_UnregisterConstList(list));
+	ASSERT_TRUE(Com_UnregisterConstList(list));
 	out = 0;
-	CU_ASSERT_FALSE(Com_GetConstInt("sniper", &out));
+	ASSERT_FALSE(Com_GetConstInt("sniper", &out));
 
 	Com_RegisterConstList(list2);
 
 	Com_RegisterConstList(list);
-	CU_ASSERT_TRUE(Com_UnregisterConstList(list));
+	ASSERT_TRUE(Com_UnregisterConstList(list));
 
 	out = 0;
-	CU_ASSERT(Com_GetConstInt("pilot", &out));
-	CU_ASSERT_EQUAL(out, 3);
+	ASSERT_TRUE(Com_GetConstInt("pilot", &out));
+	ASSERT_EQ(out, 3);
 	Com_UnregisterConstList(list2);
 }
 
@@ -194,7 +184,7 @@ static int testListSorter (linkedList_t* entry1, linkedList_t* entry2, const voi
 	return strcmp((const char*)entry1->data, (const char*)entry2->data);
 }
 
-static void testLinkedList (void)
+TEST_F(GenericTest, LinkedList)
 {
 	linkedList_t* list = nullptr, *list2;
 	const char* data = "SomeDataForTheLinkedList";
@@ -204,25 +194,25 @@ static void testLinkedList (void)
 	const char* returnedData;
 
 	entry = LIST_Add(&list, data, length);
-	CU_ASSERT_EQUAL(LIST_Count(list), 1);
-	CU_ASSERT_TRUE(entry != nullptr);
+	ASSERT_EQ(LIST_Count(list), 1);
+	ASSERT_TRUE(entry != nullptr);
 	returnedData = (const char*)LIST_GetByIdx(list, 0);
-	CU_ASSERT_TRUE(returnedData != nullptr);
+	ASSERT_TRUE(returnedData != nullptr);
 	entry2 = LIST_ContainsString(list, returnedData);
-	CU_ASSERT_TRUE(entry2 != nullptr);
-	CU_ASSERT_EQUAL((const void*)entry2->data, (const void*)returnedData);
-	CU_ASSERT_STRING_EQUAL(entry2->data, returnedData);
+	ASSERT_TRUE(entry2 != nullptr);
+	ASSERT_EQ((const void*)entry2->data, (const void*)returnedData);
+	ASSERT_STREQ(static_cast<const char*>(entry2->data), returnedData);
 	LIST_RemoveEntry(&list, entry);
-	CU_ASSERT_EQUAL(LIST_Count(list), 0);
-	CU_ASSERT_EQUAL(LIST_Count(LIST_CopyStructure(list)), 0);
+	ASSERT_EQ(LIST_Count(list), 0);
+	ASSERT_EQ(LIST_Count(LIST_CopyStructure(list)), 0);
 	LIST_Add(&list, data, length);
 	list2 = LIST_CopyStructure(list);
-	CU_ASSERT_EQUAL(LIST_Count(list2), 1);
+	ASSERT_EQ(LIST_Count(list2), 1);
 	LIST_Delete(&list2);
-	CU_ASSERT_EQUAL(LIST_Count(list2), 0);
-	CU_ASSERT_EQUAL(LIST_Count(list), 1);
+	ASSERT_EQ(LIST_Count(list2), 0);
+	ASSERT_EQ(LIST_Count(list), 1);
 	LIST_Delete(&list);
-	CU_ASSERT_PTR_NULL(LIST_GetRandom(list2));
+	ASSERT_TRUE(nullptr == LIST_GetRandom(list2));
 
 	LIST_AddString(&list, "test6");
 	LIST_AddString(&list, "test2");
@@ -231,20 +221,20 @@ static void testLinkedList (void)
 	LIST_AddString(&list, "test5");
 	LIST_AddString(&list, "test4");
 	LIST_AddString(&list, "test7");
-	CU_ASSERT_EQUAL(LIST_Count(list), 7);
-	CU_ASSERT_PTR_NOT_NULL(LIST_GetRandom(list));
+	ASSERT_EQ(LIST_Count(list), 7);
+	ASSERT_TRUE(nullptr != LIST_GetRandom(list));
 
 	LIST_Sort(&list, testListSorter, nullptr);
-	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 0), "test1");
-	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 1), "test2");
-	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 2), "test3");
-	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 3), "test4");
-	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 4), "test5");
-	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 5), "test6");
-	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 6), "test7");
+	ASSERT_STREQ(static_cast<const char*>(LIST_GetByIdx(list, 0)), "test1");
+	ASSERT_STREQ(static_cast<const char*>(LIST_GetByIdx(list, 1)), "test2");
+	ASSERT_STREQ(static_cast<const char*>(LIST_GetByIdx(list, 2)), "test3");
+	ASSERT_STREQ(static_cast<const char*>(LIST_GetByIdx(list, 3)), "test4");
+	ASSERT_STREQ(static_cast<const char*>(LIST_GetByIdx(list, 4)), "test5");
+	ASSERT_STREQ(static_cast<const char*>(LIST_GetByIdx(list, 5)), "test6");
+	ASSERT_STREQ(static_cast<const char*>(LIST_GetByIdx(list, 6)), "test7");
 }
 
-static void testLinkedListIterator (void)
+TEST_F(GenericTest, LinkedListIterator)
 {
 	linkedList_t* list = nullptr;
 	int cnt;
@@ -255,23 +245,23 @@ static void testLinkedListIterator (void)
 
 	cnt = 0;
 	LIST_Foreach(list, char, string) {
-		CU_ASSERT_PTR_NOT_NULL(string);
+		ASSERT_TRUE(nullptr != string);
 		cnt++;
 	}
 
 	LIST_Delete(&list);
 
-	CU_ASSERT_EQUAL(cnt, 3);
+	ASSERT_EQ(cnt, 3);
 
 	list = nullptr;
 	LIST_Foreach(list, char, string) {
 		(void)string;
 		/* we should not be here, because the list is empty */
-		CU_ASSERT_TRUE(false);
+		ASSERT_TRUE(false);
 	}
 }
 
-static void testLinkedListIteratorRemove (void)
+TEST_F(GenericTest, LinkedListIteratorRemove)
 {
 	linkedList_t* list = nullptr;
 
@@ -284,23 +274,23 @@ static void testLinkedListIteratorRemove (void)
 		LIST_Remove(&list, string);
 	}
 
-	CU_ASSERT_TRUE(LIST_IsEmpty(list));
+	ASSERT_TRUE(LIST_IsEmpty(list));
 }
 
-static void testPrependStringList (void)
+TEST_F(GenericTest, PrependStringList)
 {
 	linkedList_t* list = nullptr;
 
 	LIST_PrependString(&list, "test2");
 	LIST_PrependString(&list, "test1");
 
-	CU_ASSERT_STRING_EQUAL((const char*)LIST_GetByIdx(list, 0), "test1");
-	CU_ASSERT_STRING_EQUAL((const char*)LIST_GetByIdx(list, 1), "test2");
+	ASSERT_STREQ((const char*)LIST_GetByIdx(list, 0), "test1");
+	ASSERT_STREQ((const char*)LIST_GetByIdx(list, 1), "test2");
 
 	LIST_Delete(&list);
 }
 
-static void testLinkedListStringSort (void)
+TEST_F(GenericTest, LinkedListStringSort)
 {
 	linkedList_t* list = nullptr;
 
@@ -308,63 +298,63 @@ static void testLinkedListStringSort (void)
 	LIST_AddStringSorted(&list, "test1");
 	LIST_AddStringSorted(&list, "test3");
 
-	CU_ASSERT_STRING_EQUAL((const char*)LIST_GetByIdx(list, 0), "test1");
+	ASSERT_STREQ((const char*)LIST_GetByIdx(list, 0), "test1");
 
 	LIST_Delete(&list);
 }
 
-static void testFileSystemBuildLists (void)
+TEST_F(GenericTest, FileSystemBuildLists)
 {
 	const char* filename, *prev;
 	const char* wildcard = "ufos/**.ufo";
 	const int ufosCnt = FS_BuildFileList(wildcard);
 
-	CU_ASSERT_TRUE(ufosCnt > 1);
+	ASSERT_TRUE(ufosCnt > 1);
 
 	prev = nullptr;
 	while ((filename = FS_NextFileFromFileList(wildcard)) != nullptr) {
 		if (prev != nullptr)
-			CU_ASSERT_EQUAL(Q_StringSort(prev, filename), -1);
+			ASSERT_EQ(Q_StringSort(prev, filename), -1);
 		prev = filename;
 	}
 
 	FS_NextFileFromFileList(nullptr);
 }
 
-static void testInfoStrings (void)
+TEST_F(GenericTest, InfoStrings)
 {
 	char info[MAX_INFO_STRING] = "";
 
 	Info_SetValueForKey(info, sizeof(info), "name", "test");
 
-	CU_ASSERT_STRING_EQUAL(Info_ValueForKey(info, "name"), "test");
-	CU_ASSERT_STRING_EQUAL(Info_ValueForKey(info, "name2"), "");
+	ASSERT_STREQ(Info_ValueForKey(info, "name"), "test");
+	ASSERT_STREQ(Info_ValueForKey(info, "name2"), "");
 	Info_RemoveKey(info, "name");
-	CU_ASSERT_STRING_EQUAL(Info_ValueForKey(info, "name"), "");
+	ASSERT_STREQ(Info_ValueForKey(info, "name"), "");
 
 	Info_SetValueForKey(info, sizeof(info), "name", "\\invalid\\value");
-	CU_ASSERT_STRING_EQUAL(Info_ValueForKey(info, "name"), "");
+	ASSERT_STREQ(Info_ValueForKey(info, "name"), "");
 }
 
-static void testTokenizeInfoStrings (void)
+TEST_F(GenericTest, TokenizeInfoStrings)
 {
 	Cvar_Get("password", "test", CVAR_USERINFO, nullptr);
 	char info[MAX_INFO_STRING];
 	const char* s = va(SV_CMD_CONNECT " %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo(info, sizeof(info)));
 	Cmd_TokenizeString(s, false, false);
-	CU_ASSERT_STRING_EQUAL(Cmd_Argv(0), SV_CMD_CONNECT);
-	CU_ASSERT_STRING_EQUAL(Cmd_Argv(1), DOUBLEQUOTE(PROTOCOL_VERSION));
-	CU_ASSERT_STRING_EQUAL(Cmd_Argv(2), info);
+	ASSERT_STREQ(Cmd_Argv(0), SV_CMD_CONNECT);
+	ASSERT_STREQ(Cmd_Argv(1), DOUBLEQUOTE(PROTOCOL_VERSION));
+	ASSERT_STREQ(Cmd_Argv(2), info);
 }
 
-static void testCvars (void)
+TEST_F(GenericTest, Cvars)
 {
 	Cvar_Get("testGeneric_cvar", "testGeneric_cvarValue", CVAR_NOSET, "No set");
 	Cvar_Set("testGeneric_cvar", "test");
-	CU_ASSERT_STRING_EQUAL(Cvar_GetString("testGeneric_cvar"), "testGeneric_cvarValue");
+	ASSERT_STREQ(Cvar_GetString("testGeneric_cvar"), "testGeneric_cvarValue");
 }
 
-static void testStringCopiers (void)
+TEST_F(GenericTest, StringCopiers)
 {
 	const char src[] = "Командующий, я чрезвычайно рад доложить, что наш проект ОПЭВ был завершён успешно. Я прикрепил к письму "
 			"изображения и схемы прототипа лазерного оружия, в котором реализовано непрерывное волновое излучение достаточной "
@@ -418,168 +408,168 @@ static void testStringCopiers (void)
 	while (UTF8_next(&s) != -1) {
 		cnt++;
 	}
-	CU_ASSERT_EQUAL(cnt, UTF8_strlen(src));
+	ASSERT_EQ(cnt, UTF8_strlen(src));
 
 	/* Com_sprintf */
 
 	/* empty string */
 	Com_sprintf(dest, 1, "aab%c%c", 0xd0, 0x80);
-	CU_ASSERT_EQUAL(dest[0], '\0');
+	ASSERT_EQ(dest[0], '\0');
 
 	/* trimmed non utf8 */
 	Com_sprintf(dest, 4, "aab%c%c", 0xd0, 0x80);
-	CU_ASSERT_EQUAL(dest[2], 'b');
-	CU_ASSERT_EQUAL(dest[3], '\0');
+	ASSERT_EQ(dest[2], 'b');
+	ASSERT_EQ(dest[3], '\0');
 
 	/* trimmed utf8 char. */
 	Com_sprintf(dest, 5, "aab%c%c", 0xd0, 0x80);
-	CU_ASSERT_EQUAL(dest[2], 'b');
-	CU_ASSERT_EQUAL(dest[3], '\0');
+	ASSERT_EQ(dest[2], 'b');
+	ASSERT_EQ(dest[3], '\0');
 
 	/* untrimmed utf8 char. */
 	Com_sprintf(dest, 6, "aab%c%c", 0xd0, 0x80);
-	CU_ASSERT_EQUAL((unsigned char) dest[3], 0xd0);
-	CU_ASSERT_EQUAL((unsigned char) dest[4], 0x80);
-	CU_ASSERT_EQUAL(dest[5], '\0');
+	ASSERT_EQ((unsigned char) dest[3], 0xd0);
+	ASSERT_EQ((unsigned char) dest[4], 0x80);
+	ASSERT_EQ(dest[5], '\0');
 
 	/* 2 consecutive utf8 char. */
 	Com_sprintf(dest, 7, "aab\xD0\x80\xD0\x80");
-	CU_ASSERT_NOT_EQUAL(dest[3], '\0');
-	CU_ASSERT_EQUAL(dest[5], '\0');
+	ASSERT_NE(dest[3], '\0');
+	ASSERT_EQ(dest[5], '\0');
 
 	/* UTF8_strncpyz */
 
 	/* empty string */
 	UTF8_strncpyz(dest, "aab\xD0\x80", 1);
-	CU_ASSERT_EQUAL(dest[0], '\0');
+	ASSERT_EQ(dest[0], '\0');
 
 	/* trimmed non utf8 */
 	UTF8_strncpyz(dest, "aab\xD0\x80", 4);
-	CU_ASSERT_EQUAL(dest[2], 'b');
-	CU_ASSERT_EQUAL(dest[3], '\0');
+	ASSERT_EQ(dest[2], 'b');
+	ASSERT_EQ(dest[3], '\0');
 
 	/* trimmed utf8 char. */
 	UTF8_strncpyz(dest, "aab\xD0\x80", 5);
-	CU_ASSERT_EQUAL(dest[2], 'b');
-	CU_ASSERT_EQUAL(dest[3], '\0');
+	ASSERT_EQ(dest[2], 'b');
+	ASSERT_EQ(dest[3], '\0');
 
 	/* untrimmed utf8 char. */
 	UTF8_strncpyz(dest, "aab\xD0\x80", 6);
-	CU_ASSERT_EQUAL((unsigned char) dest[3], 0xd0);
-	CU_ASSERT_EQUAL((unsigned char) dest[4], 0x80);
-	CU_ASSERT_EQUAL(dest[5], '\0');
+	ASSERT_EQ((unsigned char) dest[3], 0xd0);
+	ASSERT_EQ((unsigned char) dest[4], 0x80);
+	ASSERT_EQ(dest[5], '\0');
 
 	/* 2 consecutive utf8 char. */
 	UTF8_strncpyz(dest, "aab\xD0\x80\xD0\x80", 7);
-	CU_ASSERT_NOT_EQUAL(dest[3], '\0');
-	CU_ASSERT_EQUAL(dest[5], '\0');
+	ASSERT_NE(dest[3], '\0');
+	ASSERT_EQ(dest[5], '\0');
 }
 
-static void testStringFunctions (void)
+TEST_F(GenericTest, StringFunctions)
 {
 	char targetBuf[256];
 	char buf[16];
 	const size_t length = lengthof(targetBuf);
 
-	CU_ASSERT_FALSE(Q_strreplace("ReplaceNothing", "###", "foobar", targetBuf, length));
-	CU_ASSERT_TRUE(Q_strreplace("Replace###Something", "###", "foobar", targetBuf, length));
-	CU_ASSERT_STRING_EQUAL(targetBuf, "ReplacefoobarSomething");
+	ASSERT_FALSE(Q_strreplace("ReplaceNothing", "###", "foobar", targetBuf, length));
+	ASSERT_TRUE(Q_strreplace("Replace###Something", "###", "foobar", targetBuf, length));
+	ASSERT_STREQ(targetBuf, "ReplacefoobarSomething");
 
-	CU_ASSERT_TRUE(Q_strreplace("Replace#", "#", "foobar", targetBuf, length));
-	CU_ASSERT_STRING_EQUAL(targetBuf, "Replacefoobar");
+	ASSERT_TRUE(Q_strreplace("Replace#", "#", "foobar", targetBuf, length));
+	ASSERT_STREQ(targetBuf, "Replacefoobar");
 
-	CU_ASSERT_TRUE(Q_strreplace("#Replace", "#", "foobar", targetBuf, length));
-	CU_ASSERT_STRING_EQUAL(targetBuf, "foobarReplace");
+	ASSERT_TRUE(Q_strreplace("#Replace", "#", "foobar", targetBuf, length));
+	ASSERT_STREQ(targetBuf, "foobarReplace");
 
-	CU_ASSERT_TRUE(Q_strreplace("#Replace#", "#", "foobar", targetBuf, length));
-	CU_ASSERT_STRING_EQUAL(targetBuf, "foobarReplace#");
+	ASSERT_TRUE(Q_strreplace("#Replace#", "#", "foobar", targetBuf, length));
+	ASSERT_STREQ(targetBuf, "foobarReplace#");
 
-	CU_ASSERT_FALSE(Q_strreplace("#ReplaceNothing#", "##", "foobar", targetBuf, length));
+	ASSERT_FALSE(Q_strreplace("#ReplaceNothing#", "##", "foobar", targetBuf, length));
 
 	Q_strncpyz(buf, "foobar", sizeof(buf));
-	CU_ASSERT_STRING_EQUAL(Com_ConvertToASCII7(buf), "foobar");
+	ASSERT_STREQ(Com_ConvertToASCII7(buf), "foobar");
 
 	buf[0] = '\177';
-	CU_ASSERT_STRING_EQUAL(Com_ConvertToASCII7(buf), ".oobar");
+	ASSERT_STREQ(Com_ConvertToASCII7(buf), ".oobar");
 
 	buf[5] = '\177';
-	CU_ASSERT_STRING_EQUAL(Com_ConvertToASCII7(buf), ".ooba.");
+	ASSERT_STREQ(Com_ConvertToASCII7(buf), ".ooba.");
 
 
 	/* UTF8_char_offset_to_byte_offset */
 
 	Q_strncpyz(buf, "mn\xD0\x80opq\xD0\x81r", sizeof(buf));
 
-	CU_ASSERT_EQUAL(UTF8_char_offset_to_byte_offset(buf, 4), 5);
-	CU_ASSERT_EQUAL(UTF8_char_offset_to_byte_offset(buf, 0), 0);
-	CU_ASSERT_EQUAL(UTF8_char_offset_to_byte_offset(buf, -1), 0);
-	CU_ASSERT_EQUAL(UTF8_char_offset_to_byte_offset(buf, 999), 10);
+	ASSERT_EQ(UTF8_char_offset_to_byte_offset(buf, 4), 5);
+	ASSERT_EQ(UTF8_char_offset_to_byte_offset(buf, 0), 0);
+	ASSERT_EQ(UTF8_char_offset_to_byte_offset(buf, -1), 0);
+	ASSERT_EQ(UTF8_char_offset_to_byte_offset(buf, 999), 10);
 
 	/* UTF8_delete_char_at */
 
 	Q_strncpyz(buf, "mn\xD0\x80opq\xD0\x81r", sizeof(buf));
 
 	/* single-byte char before any multi-byte chars */
-	CU_ASSERT_EQUAL(UTF8_delete_char_at(buf, 4), 1);
-	CU_ASSERT_STRING_EQUAL(buf, "mn\xD0\x80oq\xD0\x81r")
+	ASSERT_EQ(UTF8_delete_char_at(buf, 4), 1);
+	ASSERT_STREQ(buf, "mn\xD0\x80oq\xD0\x81r");
 
 	/* multi-byte char after a multi-byte char */
-	CU_ASSERT_EQUAL(UTF8_delete_char_at(buf, 5), 2);
-	CU_ASSERT_STRING_EQUAL(buf, "mn\xD0\x80oqr");
+	ASSERT_EQ(UTF8_delete_char_at(buf, 5), 2);
+	ASSERT_STREQ(buf, "mn\xD0\x80oqr");
 
 	/* negative index deletes first char */
-	CU_ASSERT_EQUAL(UTF8_delete_char_at(buf, -1), 1);
-	CU_ASSERT_STRING_EQUAL(buf, "n\xD0\x80oqr");
+	ASSERT_EQ(UTF8_delete_char_at(buf, -1), 1);
+	ASSERT_STREQ(buf, "n\xD0\x80oqr");
 
 	/* too-high index deletes nothing */
-	CU_ASSERT_EQUAL(UTF8_delete_char_at(buf, 999), 0);
-	CU_ASSERT_STRING_EQUAL(buf, "n\xD0\x80oqr");
+	ASSERT_EQ(UTF8_delete_char_at(buf, 999), 0);
+	ASSERT_STREQ(buf, "n\xD0\x80oqr");
 
 	/* UTF8_insert_char_at */
 
 	Q_strncpyz(buf, "m\xD0\x82opqr", sizeof(buf));
 
 	/* single-byte char before any multi-byte chars */
-	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, sizeof(buf), 1, (int)'n'), 1);
-	CU_ASSERT_STRING_EQUAL(buf, "mn\xD0\x82opqr");
+	ASSERT_EQ(UTF8_insert_char_at(buf, sizeof(buf), 1, (int)'n'), 1);
+	ASSERT_STREQ(buf, "mn\xD0\x82opqr");
 
 	/* multi-byte char after a multi-byte char */
-	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, sizeof(buf), 5, 0x0403), 2);
-	CU_ASSERT_STRING_EQUAL(buf, "mn\xD0\x82op\xD0\x83qr");
+	ASSERT_EQ(UTF8_insert_char_at(buf, sizeof(buf), 5, 0x0403), 2);
+	ASSERT_STREQ(buf, "mn\xD0\x82op\xD0\x83qr");
 
 	/* negative index inserts as first char */
-	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, sizeof(buf), -1, 0x0404), 2);
-	CU_ASSERT_STRING_EQUAL(buf, "\xD0\x84mn\xD0\x82op\xD0\x83qr");
+	ASSERT_EQ(UTF8_insert_char_at(buf, sizeof(buf), -1, 0x0404), 2);
+	ASSERT_STREQ(buf, "\xD0\x84mn\xD0\x82op\xD0\x83qr");
 
 	/* too-high index inserts as last char */
-	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, sizeof(buf), 999, 0x0405), 2);
-	CU_ASSERT_STRING_EQUAL(buf, "\xD0\x84mn\xD0\x82op\xD0\x83qr\xD0\x85");
+	ASSERT_EQ(UTF8_insert_char_at(buf, sizeof(buf), 999, 0x0405), 2);
+	ASSERT_STREQ(buf, "\xD0\x84mn\xD0\x82op\xD0\x83qr\xD0\x85");
 
 	Q_strncpyz(buf, "mnopqr", sizeof(buf));
 
 	/* trigger buffer overrun protection using multi-byte char */
-	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, 8, 0, 0x0405), 0);
-	CU_ASSERT_STRING_EQUAL(buf, "mnopqr");
+	ASSERT_EQ(UTF8_insert_char_at(buf, 8, 0, 0x0405), 0);
+	ASSERT_STREQ(buf, "mnopqr");
 
 	/* trigger buffer overrun protection using single-byte char */
-	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, 7, 0, (int)'o'), 0);
-	CU_ASSERT_STRING_EQUAL(buf, "mnopqr");
+	ASSERT_EQ(UTF8_insert_char_at(buf, 7, 0, (int)'o'), 0);
+	ASSERT_STREQ(buf, "mnopqr");
 
 	/* exactly fill the buffer using multi-byte char */
-	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, 9, 1, 0x0406), 2);
-	CU_ASSERT_STRING_EQUAL(buf, "m\xD0\x86nopqr");
+	ASSERT_EQ(UTF8_insert_char_at(buf, 9, 1, 0x0406), 2);
+	ASSERT_STREQ(buf, "m\xD0\x86nopqr");
 
 	/* exactly fill the buffer using single-byte char */
-	CU_ASSERT_EQUAL(UTF8_insert_char_at(buf, 10, 1, (int)'s'), 1);
-	CU_ASSERT_STRING_EQUAL(buf, "ms\xD0\x86nopqr");
+	ASSERT_EQ(UTF8_insert_char_at(buf, 10, 1, (int)'s'), 1);
+	ASSERT_STREQ(buf, "ms\xD0\x86nopqr");
 
 	char catBuf[32] = "";
 	Q_strcat(catBuf, sizeof(catBuf), "foo");
 	Q_strcat(catBuf, sizeof(catBuf), "bar");
-	CU_ASSERT_STRING_EQUAL(catBuf, "foobar");
+	ASSERT_STREQ(catBuf, "foobar");
 }
 
-static void testHttpHelperFunctions (void)
+TEST_F(GenericTest, HttpHelperFunctions)
 {
 	char server[512];
 	char uriPath[512];
@@ -587,116 +577,117 @@ static void testHttpHelperFunctions (void)
 	const char* url;
 
 	url = "http://www.test.domain.com:123/someScript.cgi?parameter";
-	CU_ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
-	CU_ASSERT_STRING_EQUAL(server, "www.test.domain.com")
-	CU_ASSERT_EQUAL(port, 123);
-	CU_ASSERT_STRING_EQUAL(uriPath, "/someScript.cgi?parameter");
+	ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_STREQ("www.test.domain.com", server);
+	ASSERT_EQ(port, 123);
+	ASSERT_STREQ("/someScript.cgi?parameter", uriPath);
 
 	url = "http://www.test.domain.com/someScript.cgi?parameter";
-	CU_ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
-	CU_ASSERT_STRING_EQUAL(server, "www.test.domain.com")
-	CU_ASSERT_EQUAL(port, 80);
-	CU_ASSERT_STRING_EQUAL(uriPath, "/someScript.cgi?parameter");
+	ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_STREQ("www.test.domain.com", server);
+	ASSERT_EQ(80, port);
+	ASSERT_STREQ("/someScript.cgi?parameter", uriPath);
 
 	url = "http://www.test.domain.com";
-	CU_ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
-	CU_ASSERT_STRING_EQUAL(server, "www.test.domain.com")
-	CU_ASSERT_EQUAL(port, 80);
-	CU_ASSERT_STRING_EQUAL(uriPath, "");
+	ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_STREQ("www.test.domain.com", server);
+	ASSERT_EQ(80, port);
+	ASSERT_STREQ("", uriPath);
 
 	url = "http://www.test.domain.com/";
-	CU_ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
-	CU_ASSERT_STRING_EQUAL(server, "www.test.domain.com")
-	CU_ASSERT_EQUAL(port, 80);
-	CU_ASSERT_STRING_EQUAL(uriPath, "/");
+	ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_STREQ("www.test.domain.com", server);
+	ASSERT_EQ(80, port);
+	ASSERT_STREQ("/", uriPath);
 
 	url = "http://ufoai.org/ufo/masterserver.php?query";
-	CU_ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
-	CU_ASSERT_STRING_EQUAL(server, "ufoai.org")
-	CU_ASSERT_EQUAL(port, 80);
-	CU_ASSERT_STRING_EQUAL(uriPath, "/ufo/masterserver.php?query");
+	ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_STREQ("ufoai.org", server);
+	ASSERT_EQ(80, port);
+	ASSERT_STREQ("/ufo/masterserver.php?query", uriPath);
 }
 
-static void testNetResolv (void)
+TEST_F(GenericTest, NetResolv)
 {
 	char ipServer[MAX_VAR];
-	NET_ResolvNode("localhost", ipServer, sizeof(ipServer));
-	CU_ASSERT_STRING_EQUAL(ipServer, "127.0.0.1");
+	ASSERT_TRUE(NET_ResolvNode("localhost", ipServer, sizeof(ipServer))) << "failed to resolve localhost";
+	ASSERT_STREQ("127.0.0.1", ipServer);
 }
 
-static void testUnsignedIntToBinary (void)
+TEST_F(GenericTest, UnsignedIntToBinary)
 {
 	const char* buf = Com_UnsignedIntToBinary(3);
-	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000000 00000000 00000011");
+	ASSERT_STREQ(buf, "00000000 00000000 00000000 00000011");
 
 	buf = Com_UnsignedIntToBinary(255);
-	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000000 00000000 11111111");
+	ASSERT_STREQ(buf, "00000000 00000000 00000000 11111111");
 
 	buf = Com_UnsignedIntToBinary(65536);
-	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000001 00000000 00000000");
+	ASSERT_STREQ(buf, "00000000 00000001 00000000 00000000");
 
 	buf = Com_UnsignedIntToBinary(65535);
-	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000000 11111111 11111111");
+	ASSERT_STREQ(buf, "00000000 00000000 11111111 11111111");
 
 	buf = Com_ByteToBinary(2);
-	CU_ASSERT_STRING_EQUAL(buf, "00000010");
+	ASSERT_STREQ(buf, "00000010");
 
 	buf = Com_ByteToBinary(255);
-	CU_ASSERT_STRING_EQUAL(buf, "11111111");
+	ASSERT_STREQ(buf, "11111111");
 }
 
-static void testStringCheckFunctions (void)
+TEST_F(GenericTest, StringCheckFunctions)
 {
 	const char* strNull = nullptr;
 	const char* strEmpty = "";
 	const char* strValid = "someString";
-	CU_ASSERT_TRUE(Q_strnull(strNull));
-	CU_ASSERT_TRUE(Q_strnull(strEmpty));
-	CU_ASSERT_FALSE(Q_strnull(strValid));
-	CU_ASSERT_TRUE(Q_strvalid(strValid));
-	CU_ASSERT_FALSE(Q_strvalid(strEmpty));
-	CU_ASSERT_FALSE(Q_strvalid(strNull));
+	ASSERT_TRUE(Q_strnull(strNull));
+	ASSERT_TRUE(Q_strnull(strEmpty));
+	ASSERT_FALSE(Q_strnull(strValid));
+	ASSERT_TRUE(Q_strvalid(strValid));
+	ASSERT_FALSE(Q_strvalid(strEmpty));
+	ASSERT_FALSE(Q_strvalid(strNull));
 }
 
-static void testEntitiesDef (void)
+TEST_F(GenericTest, EntitiesDef)
 {
 	byte* fileBuffer;
 
-	FS_LoadFile("ufos/entities.ufo", &fileBuffer);
+	ASSERT_NE(-1, FS_LoadFile("ufos/entities.ufo", &fileBuffer)) << "Could not load ufos/entities.ufo.";
+	ASSERT_TRUE(fileBuffer != nullptr);
 
 	const char* buf = (const char*) fileBuffer;
-	CU_ASSERT_EQUAL(ED_Parse(buf), ED_OK);
+	ASSERT_EQ(ED_Parse(buf), ED_OK);
 
-	CU_ASSERT_TRUE(numEntityDefs > 0);
+	ASSERT_TRUE(numEntityDefs > 0);
 
 	bool worldSpawnFound = false;
 	for (int i = 0; i < numEntityDefs; i++) {
 		const entityDef_t* e = &entityDefs[i];
 
-		CU_ASSERT_PTR_NOT_NULL(e);
+		ASSERT_TRUE(nullptr != e);
 		if (Q_streq(e->classname, "worldspawn")) {
 			worldSpawnFound = true;
 
-			CU_ASSERT_TRUE(e->numKeyDefs > 10);
+			ASSERT_TRUE(e->numKeyDefs > 10);
 			for (int j = 0; j < e->numKeyDefs; j++) {
 				const entityKeyDef_t* keyDef = &e->keyDefs[j];
-				CU_ASSERT_PTR_NOT_NULL(keyDef);
+				ASSERT_TRUE(nullptr != keyDef);
 			}
 		}
 	}
 
-	CU_ASSERT_TRUE(worldSpawnFound);
+	ASSERT_TRUE(worldSpawnFound);
 
 	FS_FreeFile(fileBuffer);
 	ED_Free();
 }
 
-static void testGetBlock (void)
+TEST_F(GenericTest, GetBlock)
 {
 	{
 		const char* test = "invalid block";
 		const int length = Com_GetBlock(&test, nullptr);
-		UFO_CU_ASSERT_EQUAL_INT_MSG(length, -1, nullptr);
+		ASSERT_EQ(length, -1);
 	}
 	{
 		const char* test = "{the block length  }";
@@ -704,50 +695,49 @@ static void testGetBlock (void)
 		const size_t expected = strlen(test) - 2;
 		const char* start = nullptr;
 		const int length = Com_GetBlock(&buf, &start);
-		CU_ASSERT_EQUAL(length, expected);
-		UFO_CU_ASSERT_EQUAL_INT_MSG(strncmp(start, test + 1, length), 0,
-				va("%s and %s should match on the first %i characters", start, test + 1, length));
+		ASSERT_EQ(length, expected);
+		ASSERT_EQ(strncmp(start, test + 1, length), 0) << start << " and " << (test + 1) << " should match on the first " << length << " characters";
 	}
 }
 
-static void testComFilePath (void)
+TEST_F(GenericTest, ComFilePath)
 {
 	char buf[32];
 	Com_FilePath("/foo/bar/file.txt", buf, sizeof(buf));
-	CU_ASSERT_STRING_EQUAL(buf, "/foo/bar");
+	ASSERT_STREQ(buf, "/foo/bar");
 
 	Com_FilePath("/foo/bar/a/little/bit/too/long/for/the/buffer/file.txt", buf, sizeof(buf));
-	CU_ASSERT_STRING_EQUAL(buf, "");
+	ASSERT_STREQ(buf, "");
 }
 
-static void testMD5File (void)
+TEST_F(GenericTest, MD5File)
 {
 	const char* md5 = Com_MD5File("media/DejaVuSans.ttf");
 	const char* expected = "c4adcbdd6ec636e0b19cd6aabe85e8fb";
 	Com_Printf("got: '%s', expected '%s'\n", md5, expected);
-	CU_ASSERT_STRING_EQUAL(md5, expected);
+	ASSERT_STREQ(md5, expected);
 }
 
-static void testMD5Buffer (void)
+TEST_F(GenericTest, MD5Buffer)
 {
 	const char* in = "Test";
 	const char* expected = "0cbc6611f5540bd0809a388dc95a615b";
 	const char* md5 = Com_MD5Buffer((const byte*)in, strlen(in));
 	Com_Printf("got: '%s', expected '%s'\n", md5, expected);
-	CU_ASSERT_STRING_EQUAL(md5, expected);
+	ASSERT_STREQ(md5, expected);
 }
 
-static void testSHA1Buffer (void)
+TEST_F(GenericTest, SHA1Buffer)
 {
 	const char* in = "Test";
 	const char* expected = "640ab2bae07bedc4c163f679a746f7ab7fb5d1fa";
 	char digest[41];
 	Com_SHA1Buffer((const byte*)in, strlen(in), digest);
 	Com_Printf("got: '%s', expected '%s'\n", digest, expected);
-	CU_ASSERT_STRING_EQUAL(digest, expected);
+	ASSERT_STREQ(digest, expected);
 }
 
-static void testSHA2Buffer (void)
+TEST_F(GenericTest, SHA2Buffer)
 {
 	const char* in = "Test";
 	const char* expected = "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25";
@@ -756,7 +746,7 @@ static void testSHA2Buffer (void)
 	char buf[65];
 	Com_SHA2ToHex(digest, buf);
 	Com_Printf("got: '%s', expected '%s'\n", buf, expected);
-	CU_ASSERT_STRING_EQUAL(buf, expected);
+	ASSERT_STREQ(buf, expected);
 }
 
 /**
@@ -767,108 +757,21 @@ static int TEST_BEP (const char* id, const void* userdata)
 	return Q_streq(id, "a") || Q_streq(id, "c");
 }
 
-static void testBinaryExpressionParser (void)
+TEST_F(GenericTest, BinaryExpressionParser)
 {
-	CU_ASSERT_TRUE(BEP_Evaluate("", TEST_BEP));
-	CU_ASSERT_TRUE(BEP_Evaluate("a", TEST_BEP));
-	CU_ASSERT_TRUE(BEP_Evaluate("c", TEST_BEP));
-	CU_ASSERT_FALSE(BEP_Evaluate("d", TEST_BEP));
-	CU_ASSERT_TRUE(BEP_Evaluate("a|b", TEST_BEP));
-	CU_ASSERT_FALSE(BEP_Evaluate("a&b", TEST_BEP));
-	CU_ASSERT_TRUE(BEP_Evaluate("a&(b|c)", TEST_BEP));
-	CU_ASSERT_TRUE(BEP_Evaluate("a|(b&c)", TEST_BEP));
-	CU_ASSERT_FALSE(BEP_Evaluate("b|(d&c)", TEST_BEP));
-	CU_ASSERT_TRUE(BEP_Evaluate("b|(a&c)", TEST_BEP));
-	CU_ASSERT_FALSE(BEP_Evaluate("a^c", TEST_BEP));
-	CU_ASSERT_TRUE(BEP_Evaluate("a^d", TEST_BEP));
-	CU_ASSERT_TRUE(BEP_Evaluate("!z", TEST_BEP));
-	CU_ASSERT_FALSE(BEP_Evaluate("!!z", TEST_BEP));
-	CU_ASSERT_FALSE(BEP_Evaluate("!a", TEST_BEP));
-}
-
-int UFO_AddGenericTests (void)
-{
-	/* add a suite to the registry */
-	CU_pSuite GenericSuite = CU_add_suite("GenericTests", UFO_InitSuiteGeneric, UFO_CleanSuiteGeneric);
-
-	if (GenericSuite == nullptr)
-		return CU_get_error();
-
-	/* add the tests to the suite */
-	if (CU_ADD_TEST(GenericSuite, testMD5File) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testMD5Buffer) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testSHA1Buffer) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testSHA2Buffer) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testStringHunks) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testConstInt) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testLinkedList) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testLinkedListIterator) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testLinkedListIteratorRemove) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testPrependStringList) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testLinkedListStringSort) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testFileSystemBuildLists) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testInfoStrings) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testTokenizeInfoStrings) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testCvars) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testStringFunctions) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testStringCopiers) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testHttpHelperFunctions) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testNetResolv) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testUnsignedIntToBinary) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testStringCheckFunctions) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testEntitiesDef) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testGetBlock) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testComFilePath) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(GenericSuite, testBinaryExpressionParser) == nullptr)
-		return CU_get_error();
-
-	return CUE_SUCCESS;
+	ASSERT_TRUE(BEP_Evaluate("", TEST_BEP));
+	ASSERT_TRUE(BEP_Evaluate("a", TEST_BEP));
+	ASSERT_TRUE(BEP_Evaluate("c", TEST_BEP));
+	ASSERT_FALSE(BEP_Evaluate("d", TEST_BEP));
+	ASSERT_TRUE(BEP_Evaluate("a|b", TEST_BEP));
+	ASSERT_FALSE(BEP_Evaluate("a&b", TEST_BEP));
+	ASSERT_TRUE(BEP_Evaluate("a&(b|c)", TEST_BEP));
+	ASSERT_TRUE(BEP_Evaluate("a|(b&c)", TEST_BEP));
+	ASSERT_FALSE(BEP_Evaluate("b|(d&c)", TEST_BEP));
+	ASSERT_TRUE(BEP_Evaluate("b|(a&c)", TEST_BEP));
+	ASSERT_FALSE(BEP_Evaluate("a^c", TEST_BEP));
+	ASSERT_TRUE(BEP_Evaluate("a^d", TEST_BEP));
+	ASSERT_TRUE(BEP_Evaluate("!z", TEST_BEP));
+	ASSERT_FALSE(BEP_Evaluate("!!z", TEST_BEP));
+	ASSERT_FALSE(BEP_Evaluate("!a", TEST_BEP));
 }

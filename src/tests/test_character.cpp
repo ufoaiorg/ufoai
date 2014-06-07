@@ -23,31 +23,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#include "test_character.h"
 #include "test_shared.h"
 #include "../client/cl_team.h"
 
-/**
- * The suite initialization function.
- * Returns zero on success, non-zero otherwise.
- */
-static int InitSuite (void)
-{
-	TEST_Init();
+class CharacterTest: public ::testing::Test {
+protected:
+	static void SetUpTestCase() {
+		TEST_Init();
 
-	Com_ParseScripts(true);
-	return 0;
-}
+		Com_ParseScripts(true);
+	}
 
-/**
- * The suite cleanup function.
- * Returns zero on success, non-zero otherwise.
- */
-static int CleanSuite (void)
-{
-	TEST_Shutdown();
-	return 0;
-}
+	static void TearDownTestCase() {
+		TEST_Shutdown();
+	}
+};
 
 static character_t* GetCharacter (const char* teamDefID = "phalanx")
 {
@@ -72,19 +62,19 @@ static void RunImplant (const implantDef_t& implantDef)
 {
 	character_t* chr = GetCharacter();
 	const objDef_t* od = implantDef.item;
-	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
+	ASSERT_TRUE(nullptr != od);
 	const implant_t* implant = CHRSH_ApplyImplant(*chr, implantDef);
-	CU_ASSERT_PTR_NOT_NULL_FATAL(implant);
-	CU_ASSERT_PTR_NOT_NULL_FATAL(implant->def);
+	ASSERT_TRUE(nullptr != implant);
+	ASSERT_TRUE(nullptr != implant->def);
 	Com_Printf("implant: '%s': ", implant->def->id);
-	CU_ASSERT_EQUAL(implant->removedTime, 0);
-	CU_ASSERT_NOT_EQUAL(implant->installedTime, 0);
-	CU_ASSERT_PTR_NOT_NULL(implant->def);
-	CU_ASSERT_EQUAL(implant->installedTime, implantDef.installationTime);
+	ASSERT_EQ(implant->removedTime, 0);
+	ASSERT_NE(implant->installedTime, 0);
+	ASSERT_TRUE(nullptr != implant->def);
+	ASSERT_EQ(implant->installedTime, implantDef.installationTime);
 	for (int i = 0; i < implantDef.installationTime; i++) {
 		CHRSH_UpdateImplants(*chr);
 	}
-	CU_ASSERT_EQUAL(implant->installedTime, 0);
+	ASSERT_EQ(implant->installedTime, 0);
 
 	int effects = 0;
 	if (od->strengthenEffect != nullptr) {
@@ -103,28 +93,14 @@ static void RunImplant (const implantDef_t& implantDef)
 			}
 		}
 	}
-	CU_ASSERT_TRUE_FATAL(effects >= 1);
+	ASSERT_TRUE(effects >= 1);
 	Com_Printf("passed %i effects\n", effects);
 }
 
-static void testImplants (void)
+TEST_F(CharacterTest, testImplants)
 {
 	Com_Printf("\n");
 	for (int i = 0; i < csi.numImplants; i++) {
 		RunImplant(csi.implants[i]);
 	}
-}
-
-int UFO_AddCharacterTests (void)
-{
-	/* add a suite to the registry */
-	CU_pSuite DBufferSuite = CU_add_suite("CharacterTests", InitSuite, CleanSuite);
-	if (DBufferSuite == nullptr)
-		return CU_get_error();
-
-	/* add the tests to the suite */
-	if (CU_ADD_TEST(DBufferSuite, testImplants) == nullptr)
-		return CU_get_error();
-
-	return CUE_SUCCESS;
 }

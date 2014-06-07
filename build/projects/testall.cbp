@@ -103,10 +103,11 @@
 			<Add option="-DHARD_LINKED_GAME" />
 			<Add option="-DHARD_LINKED_CGAME" />
 			<Add directory="../../src/libs/mxml/" />
+			<Add directory="../../src/libs/gtest/include/" />
+			<Add directory="../../src/libs/gtest/gtest/" />
 			<Add directory="../../src/libs/mumble/" />
 		</Compiler>
 		<Linker>
-			<Add library="cunit" />
 			<Add library="mingw32" />
 			<Add library="SDLmain" />
 			<Add library="SDL" />
@@ -485,6 +486,7 @@
 		<Unit filename="../../src/game/q_shared.cpp" />
 		<Unit filename="../../src/game/q_shared.h" />
 		<Unit filename="../../src/game/srvedict.h" />
+		<Unit filename="../../src/libs/gtest/gtest/gtest-all.cc" />
 		<Unit filename="../../src/libs/lua/lapi.c">
 			<Option compilerVar="CC" />
 		</Unit>

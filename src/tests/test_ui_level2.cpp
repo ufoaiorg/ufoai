@@ -24,26 +24,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "test_shared.h"
-#include "test_ui_level2.h"
 #include "../client/cl_video.h" /* vid_imagePool */
 #include "../client/ui/ui_internal.h"
 #include "../client/renderer/r_state.h" /* r_state */
 
-/**
- * The suite initialization function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_InitSuiteUILevel2 (void)
-{
-	TEST_Init();
-	UI_Init();
+class UILevel2Test: public ::testing::Test {
+protected:
+	static void SetUpTestCase() {
+		TEST_Init();
+		UI_Init();
 
-	vid_imagePool = Mem_CreatePool("Vid: Image system");
+		vid_imagePool = Mem_CreatePool("Vid: Image system");
 
-	r_state.active_texunit = &texunit_diffuse;
+		r_state.active_texunit = &texunit_diffuse;
+	}
 
-	return 0;
-}
+	static void TearDownTestCase() {
+		UI_Shutdown();
+		TEST_Shutdown();
+	}
+};
 
 /** @todo move it somewhere */
 static void TEST_ParseScript (const char* scriptName)
@@ -59,22 +59,11 @@ static void TEST_ParseScript (const char* scriptName)
 		try {
 			CL_ParseClientData(type, name, &text);
 		} catch (const comDrop_t& e) {
-			CU_assertImplementation(CU_FALSE, __LINE__, va("Failed to parse needed scripts for type: %s and id %s", type, name), __FILE__, "", CU_FALSE);
+			ASSERT_TRUE(false) << "Failed to parse needed scripts for type: " << type << " and id " << name;
 			nbWrongScripts++;
 		}
 	}
-	CU_ASSERT_FATAL(nbWrongScripts == 0);
-}
-
-/**
- * The suite cleanup function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_CleanSuiteUILevel2 (void)
-{
-	UI_Shutdown();
-	TEST_Shutdown();
-	return 0;
+	ASSERT_TRUE(nbWrongScripts == 0);
 }
 
 /**
@@ -87,8 +76,8 @@ static void UFO_AnalyseTestWindow (const char* windowName)
 	const uiBehaviour_t* stringBehaviour = UI_GetNodeBehaviour("string");
 	const uiNode_t* node;
 	const uiNode_t* window = UI_GetWindow(windowName);
-	CU_ASSERT_FATAL(window != nullptr);
-	CU_ASSERT_FATAL(stringBehaviour != nullptr);
+	ASSERT_TRUE(window != nullptr);
+	ASSERT_TRUE(stringBehaviour != nullptr);
 
 	for (node = window->firstChild; node != nullptr; node = node->next) {
 		bool isGreen;
@@ -107,17 +96,13 @@ static void UFO_AnalyseTestWindow (const char* windowName)
 
 		if (isGreen) {
 			/** @note Useful to count number of tests */
-			CU_ASSERT_TRUE(true);
+			ASSERT_TRUE(true);
 		} else if (isRed) {
 			const char* message = va("%s.%s failed.", windowName, node->name);
-			/*Com_Printf("Error: %s\n", message);*/
-			/*CU_FAIL(message);*/
-			CU_assertImplementation(CU_FALSE, 0, va("CU_FAIL(%s)", message), va("base/ufos/uitest/%s.ufo", windowName), "", CU_FALSE);
+			ASSERT_TRUE(false) << message << " base/ufos/uitest/" << windowName << ".ufo";
 		} else {
 			const char* message = va("%s.%s have an unknown status.", windowName, node->name);
-			/*Com_Printf("Warning: %s\n", message);*/
-			/*CU_FAIL(message);*/
-			CU_assertImplementation(CU_FALSE, 0, va("CU_FAIL(%s)", message), va("base/ufos/uitest/%s.ufo", windowName), "", CU_FALSE);
+			ASSERT_TRUE(false) << message << " base/ufos/uitest/" << windowName << ".ufo";
 		}
 	}
 }
@@ -148,32 +133,32 @@ static void UFO_ExecuteTestWindow (const char* windowName)
 /**
  * @brief test behaviour name
  */
-static void testKnownBehaviours (void)
+TEST_F(UILevel2Test, KnownBehaviours)
 {
 	uiBehaviour_t* behaviour;
 
 	behaviour = UI_GetNodeBehaviour("button");
-	CU_ASSERT_FATAL(behaviour != nullptr);
-	CU_ASSERT_STRING_EQUAL(behaviour->name, "button");
+	ASSERT_TRUE(behaviour != nullptr);
+	ASSERT_STREQ(behaviour->name, "button");
 
 	/* first one */
 	behaviour = UI_GetNodeBehaviour("");
-	CU_ASSERT(behaviour != nullptr);
+	ASSERT_TRUE(behaviour != nullptr);
 
 	/* last one */
 	behaviour = UI_GetNodeBehaviour("zone");
-	CU_ASSERT_FATAL(behaviour != nullptr);
-	CU_ASSERT_STRING_EQUAL(behaviour->name, "zone");
+	ASSERT_TRUE(behaviour != nullptr);
+	ASSERT_STREQ(behaviour->name, "zone");
 
 	/* unknown */
 	behaviour = UI_GetNodeBehaviour("dahu");
-	CU_ASSERT(behaviour == nullptr);
+	ASSERT_TRUE(behaviour == nullptr);
 }
 
 /**
  * @brief test actions
  */
-static void testActions (void)
+TEST_F(UILevel2Test, Actions)
 {
 	UFO_ExecuteTestWindow("test_action");
 }
@@ -181,7 +166,7 @@ static void testActions (void)
 /**
  * @brief test actions
  */
-static void testActions2 (void)
+TEST_F(UILevel2Test, Actions2)
 {
 	UFO_ExecuteTestWindow("test_action2");
 }
@@ -189,7 +174,7 @@ static void testActions2 (void)
 /**
  * @brief test conditions
  */
-static void testConditions (void)
+TEST_F(UILevel2Test, Conditions)
 {
 	UFO_ExecuteTestWindow("test_condition");
 }
@@ -197,7 +182,7 @@ static void testConditions (void)
 /**
  * @brief test function
  */
-static void testFunctions (void)
+TEST_F(UILevel2Test, Functions)
 {
 	UFO_ExecuteTestWindow("test_function");
 }
@@ -205,7 +190,7 @@ static void testFunctions (void)
 /**
  * @brief test setters
  */
-static void testSetters (void)
+TEST_F(UILevel2Test, Setters)
 {
 	UFO_ExecuteTestWindow("test_setter");
 }
@@ -213,7 +198,7 @@ static void testSetters (void)
 /**
  * @brief test cvars
  */
-static void testCvars(void)
+TEST_F(UILevel2Test, Cvars)
 {
 	UFO_ExecuteTestWindow("test_cvar");
 }
@@ -221,7 +206,7 @@ static void testCvars(void)
 /**
  * @brief test components
  */
-static void testComponents (void)
+TEST_F(UILevel2Test, Components)
 {
 	UFO_ExecuteTestWindow("test_component");
 }
@@ -230,7 +215,7 @@ static void testComponents (void)
  * @brief test inherited confunc
  * @todo extend the text with inherited confunc from window (and not only from component)
  */
-static void testInheritedConfunc (void)
+TEST_F(UILevel2Test, InheritedConfunc)
 {
 	UFO_ExecuteTestWindow("test_inheritedconfunc");
 }
@@ -240,7 +225,7 @@ static void testInheritedConfunc (void)
  * @todo when it is possible, we should check error message
  * but ATM we only check it dont crash
  */
-static void testRuntimeError (void)
+TEST_F(UILevel2Test, RuntimeError)
 {
 	UFO_ExecuteTestWindow("test_runtimeerror");
 }
@@ -249,7 +234,7 @@ static void testRuntimeError (void)
  * @brief test video nodes
  * but ATM we only check it dont crash
  */
-static void testVideo (void)
+TEST_F(UILevel2Test, Video)
 {
 	UFO_ExecuteTestWindow("test_video");
 }
@@ -258,7 +243,7 @@ static void testVideo (void)
  * @brief test cvarlistener nodes
  * but ATM we only check it dont crash
  */
-static void testCvarListener (void)
+TEST_F(UILevel2Test, CvarListener)
 {
 	UFO_ExecuteTestWindow("test_cvarlistener");
 }
@@ -267,7 +252,7 @@ static void testCvarListener (void)
  * @brief test key binding
  * @todo unfortunately we can't use "bindui" or "press" commands in tests.
  */
-static void testBinding (void)
+TEST_F(UILevel2Test, Binding)
 {
 	//UFO_ExecuteTestWindow("test_keybinding");
 }
@@ -275,47 +260,7 @@ static void testBinding (void)
 /**
  * @brief test if we can parse all samples
  */
-static void testSamples (void)
+TEST_F(UILevel2Test, Samples)
 {
 	TEST_ParseScript("ufos/uisample/*.ufo");
-}
-
-int UFO_AddUILevel2Tests (void)
-{
-	/* add a suite to the registry */
-	CU_pSuite UISuite = CU_add_suite("UILevel2Tests", UFO_InitSuiteUILevel2, UFO_CleanSuiteUILevel2);
-
-	if (UISuite == nullptr)
-		return CU_get_error();
-
-	/* add the tests to the suite */
-	if (CU_ADD_TEST(UISuite, testKnownBehaviours) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testActions) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testActions2) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testConditions) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testFunctions) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testSetters) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testCvars) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testComponents) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testInheritedConfunc) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testRuntimeError) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testVideo) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testBinding) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testCvarListener) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(UISuite, testSamples) == nullptr)
-		return CU_get_error();
-	return CUE_SUCCESS;
 }

@@ -53,6 +53,10 @@ void TEST_Shutdown (void)
 	com_genericPool = nullptr;
 }
 
+void TEST_vPrintfSilent (const char* fmt, va_list argptr)
+{
+}
+
 void TEST_vPrintf (const char* fmt, va_list argptr)
 {
 	char text[1024];

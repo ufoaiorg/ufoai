@@ -235,7 +235,6 @@ check_headers() {
 	check_header "jpeglib.h"
 	check_header "zlib.h" "zlib"
 	check_header "png.h" "libpng"
-	check_header "CUnit/Basic.h"
 	check_header_bundled "lua.h" "lua5.1"
 	check_header_bundled "mxml.h" "mxml"
 	check_header "SDL.h" "sdl"
@@ -252,9 +251,6 @@ check_headers() {
 	check_header "libxml/parser.h" "libxml-2.0"
 	check_header "AL/al.h" "openal"
 	check_header "gtk/gtkglwidget.h" "gtkglext-1.0"
-	if [ "$HAVE_CUNIT_BASIC_H" != "1" ]; then
-		set_var "testall_DISABLE" "yes"
-	fi
 	if [ "$HAVE_GTK_GTK_H" != "1" ] || [ "$HAVE_GTKSOURCEVIEW_2_0_GTKSOURCEVIEW_H" != "1" ] || [ "$HAVE_GTKGLEXT_1_0_GTKGLWIDGET_H" != "1" ]; then
 		set_var "uforadiant_DISABLE" "yes"
 	fi

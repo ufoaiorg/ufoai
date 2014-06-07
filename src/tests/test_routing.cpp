@@ -22,7 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "test_routing.h"
 #include "test_shared.h"
 
 #include "../common/common.h"
@@ -33,70 +32,55 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/g_utils.h"
 #include "../server/server.h"
 
-/**
- * The suite initialization function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_InitSuiteRouting (void)
-{
-	TEST_Init();
-	Com_ParseScripts(true);
+class RoutingTest: public ::testing::Test {
+protected:
+	static void SetUpTestCase() {
+		TEST_Init();
+		Com_ParseScripts(true);
+	}
 
-	return 0;
-}
-
-/**
- * The suite cleanup function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_CleanSuiteRouting (void)
-{
-	TEST_Shutdown();
-	return 0;
-}
+	static void TearDownTestCase() {
+		TEST_Shutdown();
+	}
+};
 
 static mapData_t mapData;
 static mapTiles_t mapTiles;
 static const char* mapName = "test_routing";
-static void testMapLoading (void)
+
+TEST_F(RoutingTest, MapLoading)
 {
-	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		char entityString[MAX_TOKEN_CHARS];
-		CM_LoadMap(mapName, true, "", entityString, &mapData, &mapTiles);
-		CM_LoadMap(mapName, true, "", entityString, &mapData, &mapTiles);
-	} else {
-		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
-	}
+	ASSERT_NE(-1, FS_CheckFile("maps/%s.bsp", mapName)) << "Map resource '" << mapName << ".bsp' for test is missing.";
+	char entityString[MAX_TOKEN_CHARS];
+	CM_LoadMap(mapName, true, "", entityString, &mapData, &mapTiles);
+	CM_LoadMap(mapName, true, "", entityString, &mapData, &mapTiles);
 }
 
-static void testMove (void)
+TEST_F(RoutingTest, Move)
 {
 	vec3_t vec;
 	pos3_t pos;
 	pos_t gridPos;
 
-	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		char entityString[MAX_TOKEN_CHARS];
-		CM_LoadMap(mapName, true, "", entityString, &mapData, &mapTiles);
-		CM_LoadMap(mapName, true, "", entityString, &mapData, &mapTiles);
-	} else {
-		UFO_CU_FAIL_MSG_FATAL(va("Map resource '%s.bsp' for test is missing.", mapName));
-	}
+	ASSERT_NE(-1, FS_CheckFile("maps/%s.bsp", mapName)) << "Map resource '" << mapName << ".bsp' for test is missing.";
+	char entityString[MAX_TOKEN_CHARS];
+	CM_LoadMap(mapName, true, "", entityString, &mapData, &mapTiles);
+	CM_LoadMap(mapName, true, "", entityString, &mapData, &mapTiles);
 
 	VectorSet(vec, 16, 16, 48);
 	VecToPos(vec, pos);
-	CU_ASSERT_EQUAL(pos[0], 128);
-	CU_ASSERT_EQUAL(pos[1], 128);
-	CU_ASSERT_EQUAL(pos[2], 0);
+	ASSERT_EQ(pos[0], 128);
+	ASSERT_EQ(pos[1], 128);
+	ASSERT_EQ(pos[2], 0);
 
 	VectorSet(vec, 80, 16, 80);
 	VecToPos(vec, pos);
-	CU_ASSERT_EQUAL(pos[0], 130);
-	CU_ASSERT_EQUAL(pos[1], 128);
-	CU_ASSERT_EQUAL(pos[2], 1);
+	ASSERT_EQ(pos[0], 130);
+	ASSERT_EQ(pos[1], 128);
+	ASSERT_EQ(pos[2], 1);
 
 	gridPos = Grid_Fall(mapData.routing, ACTOR_SIZE_NORMAL, pos);
-	CU_ASSERT_EQUAL(gridPos, 1);
+	ASSERT_EQ(gridPos, 1);
 
 	{
 		const byte crouchingState = 0;
@@ -119,8 +103,8 @@ static void testMove (void)
 
 			lengthUnstored = Grid_MoveLength(path, to, crouchingState, false);
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthUnstored, lengthStored);
-			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_STRAIGHT);
+			ASSERT_EQ(lengthUnstored, lengthStored);
+			ASSERT_EQ(lengthStored, TU_MOVE_STRAIGHT);
 		}
 		/* try to move three steps upwards - there is a brush*/
 		{
@@ -128,7 +112,7 @@ static void testMove (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
+			ASSERT_EQ(lengthStored, ROUTING_NOT_REACHABLE);
 		}
 		/* try move into the nodraw */
 		{
@@ -136,7 +120,7 @@ static void testMove (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
+			ASSERT_EQ(lengthStored, ROUTING_NOT_REACHABLE);
 		}
 		/* move into the lightclip */
 		{
@@ -144,7 +128,7 @@ static void testMove (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_DIAGONAL);
+			ASSERT_EQ(lengthStored, TU_MOVE_DIAGONAL);
 		}
 		/* move into the passable */
 		{
@@ -152,7 +136,7 @@ static void testMove (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_DIAGONAL + TU_MOVE_STRAIGHT);
+			ASSERT_EQ(lengthStored, TU_MOVE_DIAGONAL + TU_MOVE_STRAIGHT);
 		}
 		/* go to the other side - diagonal, followed by six straight moves */
 		{
@@ -160,7 +144,7 @@ static void testMove (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, 6 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
+			ASSERT_EQ(lengthStored, 6 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
 		}
 		/* try to walk out of the map */
 		{
@@ -168,7 +152,7 @@ static void testMove (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
+			ASSERT_EQ(lengthStored, ROUTING_NOT_REACHABLE);
 		}
 		/* walk to the map border */
 		{
@@ -176,7 +160,7 @@ static void testMove (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, 4 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
+			ASSERT_EQ(lengthStored, 4 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
 		}
 		/* walk a level upwards */
 		{
@@ -184,7 +168,7 @@ static void testMove (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, 5 * TU_MOVE_STRAIGHT);
+			ASSERT_EQ(lengthStored, 5 * TU_MOVE_STRAIGHT);
 		}
 		/* move to the door (not a func_door) */
 		{
@@ -192,7 +176,7 @@ static void testMove (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, 4 * TU_MOVE_STRAIGHT + 2 * TU_MOVE_DIAGONAL);
+			ASSERT_EQ(lengthStored, 4 * TU_MOVE_STRAIGHT + 2 * TU_MOVE_DIAGONAL);
 		}
 		/* move into the trigger_touch */
 		{
@@ -200,7 +184,7 @@ static void testMove (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, 5 * TU_MOVE_STRAIGHT + 3 * TU_MOVE_DIAGONAL);
+			ASSERT_EQ(lengthStored, 5 * TU_MOVE_STRAIGHT + 3 * TU_MOVE_DIAGONAL);
 		}
 		/* try to walk into the actorclip */
 		{
@@ -208,12 +192,12 @@ static void testMove (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
+			ASSERT_EQ(lengthStored, ROUTING_NOT_REACHABLE);
 		}
 	}
 }
 
-static void testMoveEntities (void)
+TEST_F(RoutingTest, MoveEntities)
 {
 	pos3_t pos;
 	vec3_t vec;
@@ -256,7 +240,7 @@ static void testMoveEntities (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, 4 * TU_MOVE_STRAIGHT);
+			ASSERT_EQ(lengthStored, 4 * TU_MOVE_STRAIGHT);
 		}
 		/* walk over the func_breakable */
 		{
@@ -264,7 +248,7 @@ static void testMoveEntities (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, 5 * TU_MOVE_STRAIGHT);
+			ASSERT_EQ(lengthStored, 5 * TU_MOVE_STRAIGHT);
 		}
 		/* walk over the func_breakable */
 		{
@@ -272,7 +256,7 @@ static void testMoveEntities (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, 7 * TU_MOVE_STRAIGHT);
+			ASSERT_EQ(lengthStored, 7 * TU_MOVE_STRAIGHT);
 		}
 	}
 
@@ -293,7 +277,7 @@ static void testMoveEntities (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_STRAIGHT);
+			ASSERT_EQ(lengthStored, TU_MOVE_STRAIGHT);
 		}
 
 		/* walk around the opened door */
@@ -302,7 +286,7 @@ static void testMoveEntities (void)
 			VecToPos(vec, to);
 
 			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
-			CU_ASSERT_EQUAL(lengthStored, 2 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
+			ASSERT_EQ(lengthStored, 2 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
 		}
 	}
 
@@ -310,60 +294,29 @@ static void testMoveEntities (void)
 }
 
 /* tests for the new dvec format */
-static void testDvec (void)
+TEST_F(RoutingTest, Dvec)
 {
 	short dv1  = 0x0724;
-	CU_ASSERT_EQUAL(getDVdir(dv1), 0x07);
-	CU_ASSERT_EQUAL(getDVflags(dv1), 0x02);
-	CU_ASSERT_EQUAL(getDVz(dv1), 0x04);
+	ASSERT_EQ(getDVdir(dv1), 0x07);
+	ASSERT_EQ(getDVflags(dv1), 0x02);
+	ASSERT_EQ(getDVz(dv1), 0x04);
 
 	short dv2 = makeDV(6, 3);
-	CU_ASSERT_EQUAL(dv2, 0x0603);
+	ASSERT_EQ(dv2, 0x0603);
 
 	dv2 = setDVz(dv2, 4);
-	CU_ASSERT_EQUAL(dv2, 0x0604);
+	ASSERT_EQ(dv2, 0x0604);
 }
 
-static void testTUsForDir (void)
+TEST_F(RoutingTest, TUsForDir)
 {
-	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(0, 0), 2);
-	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(2, 0), 2);
-	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, 0), 3);
-	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, false), 3);
-	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(0, 1), 3);	/* now crouching */
-	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, 1), 4);
-	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, true), 4);
-	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(16, 0), 4);	/* flying takes twice as much */
-	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(16, 1), 4);	/* flying & crouching is still the same */
-}
-
-int UFO_AddRoutingTests (void)
-{
-	/* add a suite to the registry */
-	CU_pSuite routingSuite = CU_add_suite("RoutingTests", UFO_InitSuiteRouting, UFO_CleanSuiteRouting);
-	if (routingSuite == nullptr)
-		return CU_get_error();
-
-	/* add the tests to the suite */
-	if (CU_ADD_TEST(routingSuite, testMapLoading) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(routingSuite, testMove) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(routingSuite, testMoveEntities) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(routingSuite, testDvec) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(routingSuite, testTUsForDir) == nullptr)
-		return CU_get_error();
-
-	/**
-	 * @todo Test for: water, func_door_sliding, some terrain brushes to test the max
-	 * walkable raising, missing trigger types, autocrouch stuff
-	 */
-
-	return CUE_SUCCESS;
+	ASSERT_EQ(Grid_GetTUsForDirection(0, 0), 2);
+	ASSERT_EQ(Grid_GetTUsForDirection(2, 0), 2);
+	ASSERT_EQ(Grid_GetTUsForDirection(5, 0), 3);
+	ASSERT_EQ(Grid_GetTUsForDirection(5, false), 3);
+	ASSERT_EQ(Grid_GetTUsForDirection(0, 1), 3);	/* now crouching */
+	ASSERT_EQ(Grid_GetTUsForDirection(5, 1), 4);
+	ASSERT_EQ(Grid_GetTUsForDirection(5, true), 4);
+	ASSERT_EQ(Grid_GetTUsForDirection(16, 0), 4);	/* flying takes twice as much */
+	ASSERT_EQ(Grid_GetTUsForDirection(16, 1), 4);	/* flying & crouching is still the same */
 }

@@ -22,7 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "test_rma.h"
 #include "test_shared.h"
 #include "../server/server.h"
 #include "../server/sv_rma.h"
@@ -30,55 +29,57 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_ALLOWED_TIME_TO_ASSEMBLE 30000
 
-/**
- * The suite initialization function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_InitSuiteRandomMapAssembly (void)
-{
-	TEST_Init();
-	Com_ParseScripts(true);
-
-	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0");
-	sv_rma = Cvar_Get("sv_rma_tmp", "2");
-	sv_rmadisplaythemap = Cvar_Get("sv_rmadisplaythemap", "1");
-
-	return 0;
-}
-
-/**
- * The suite cleanup function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_CleanSuiteRandomMapAssembly (void)
-{
-	TEST_Shutdown();
-	return 0;
-}
-
 static char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 static char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+static cvar_t svt;
+static cvar_t maxclients;
 
-static void testUMPExtends (void)
+class RandomMapAssemblyTest: public ::testing::Test {
+protected:
+	static void SetUpTestCase() {
+		TEST_Init();
+		Com_ParseScripts(true);
+
+		sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0");
+		sv_rma = Cvar_Get("sv_rma_tmp", "2");
+		sv_rmadisplaythemap = Cvar_Get("sv_rmadisplaythemap", "1");
+
+		if (!sv_threads) {
+			sv_threads = &svt;
+			sv_threads->integer = 0;
+		}
+
+		if (!sv_maxclients) {
+			sv_maxclients = &maxclients;
+			sv_maxclients->integer = 1;
+		}
+	}
+
+	static void TearDownTestCase() {
+		TEST_Shutdown();
+	}
+};
+
+TEST_F(RandomMapAssemblyTest, UMPExtends)
 {
 	char entityString[MAX_TOKEN_CHARS];
 
 	srand(0);
 	int numPlaced = SV_AssembleMap("test_extends", "default", mapStr, posStr, entityString, 0, true);
-	CU_ASSERT(numPlaced != 0);
+	ASSERT_TRUE(numPlaced != 0);
 }
 
-static void testAssembly (void)
+TEST_F(RandomMapAssemblyTest, Assembly)
 {
 	char entityString[MAX_TOKEN_CHARS];
 
 	srand(0);
 	int numPlaced = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, 0, true);
-	CU_ASSERT(numPlaced != 0);
+	ASSERT_TRUE(numPlaced != 0);
 }
 
 /* timeout version */
-static void testMassAssemblyTimeout (void)
+TEST_F(RandomMapAssemblyTest, MassAssemblyTimeout)
 {
 	char entityString[MAX_TOKEN_CHARS];
 
@@ -89,15 +90,14 @@ static void testMassAssemblyTimeout (void)
 		long time = Sys_Milliseconds();
 		const char* mapTheme = "forest";
 		int numPlaced = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
-		CU_ASSERT(numPlaced != 0);
+		ASSERT_TRUE(numPlaced != 0);
 		time = Sys_Milliseconds() - time;
-		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
-				va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", mapTheme, i, time));
+		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << mapTheme << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
 		Com_Printf("%i: %i %li\n", i, numPlaced, time);
 	}
 }
 
-static void testMassAssemblyParallel (void)
+TEST_F(RandomMapAssemblyTest, MassAssemblyParallel)
 {
 	char entityString[MAX_TOKEN_CHARS];
 
@@ -108,16 +108,15 @@ static void testMassAssemblyParallel (void)
 		long time = Sys_Milliseconds();
 		const char* mapTheme = "forest";
 		int numPlaced = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
-		CU_ASSERT(numPlaced != 0);
+		ASSERT_TRUE(numPlaced != 0);
 		time = Sys_Milliseconds() - time;
-		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
-				va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", mapTheme, i, time));
+		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << mapTheme << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
 		Com_Printf("%i: %i %li\n", i, numPlaced, time); fflush(stdout);
 	}
 }
 
 /* sequential version */
-static void testMassAssemblySequential (void)
+TEST_F(RandomMapAssemblyTest, MassAssemblySequential)
 {
 	char entityString[MAX_TOKEN_CHARS];
 
@@ -127,16 +126,15 @@ static void testMassAssemblySequential (void)
 		long time = Sys_Milliseconds();
 		const char* mapTheme = "forest";
 		int numPlaced = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
-		CU_ASSERT(numPlaced != 0);
+		ASSERT_TRUE(numPlaced != 0);
 		time = Sys_Milliseconds() - time;
-		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
-				va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", mapTheme, i, time));
+		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << mapTheme << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
 		Com_Printf("%i: %i %li\n", i, numPlaced, time);
 	}
 }
 
 /* test the maps that have seedlists */
-static void testSeedlists (void)
+TEST_F(RandomMapAssemblyTest, Seedlists)
 {
 	const char* assNames[][2] = {
 		{"farm", "medium"},
@@ -158,11 +156,10 @@ static void testSeedlists (void)
 			int time = Sys_Milliseconds();
 			Com_Printf("Seed: %i\n", i);
 			int numPlaced = SV_AssembleMap(assNames[n][0], assNames[n][1], mapStr, posStr, entityString, i, true);
-			CU_ASSERT(numPlaced != 0);
+			ASSERT_TRUE(numPlaced != 0);
 			time = Sys_Milliseconds() - time;
 			timeSum += time;
-			UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
-					va("%s fails to assemble in a reasonable time with seed %i (time: %i ms)", assNames[n][0], i, time));
+			ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << assNames[n][0] << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
 			if (time > 10000)
 				Com_Printf("Seed %i: tiles: %i ms: %li\n", i, numPlaced, time);
 		}
@@ -176,7 +173,7 @@ static void testSeedlists (void)
  * @brief test the maps that have problems with certain seeds
  * this can also be used to produce new seedlists
  */
-static void testNewSeedlists (void)
+TEST_F(RandomMapAssemblyTest, NewSeedlists)
 {
 	long time, timeSum = 0;
 	char entityString[MAX_TOKEN_CHARS];
@@ -197,62 +194,13 @@ static void testNewSeedlists (void)
 		mapTheme = "desert"; asmName = "large";
 #endif
 		int numPlaced = SV_AssembleMap(mapTheme, asmName, mapStr, posStr, entityString, i, false);
-		CU_ASSERT(numPlaced != 0);
+		ASSERT_TRUE(numPlaced != 0);
 		time = Sys_Milliseconds() - time;
 		timeSum += time;
-		UFO_CU_ASSERT_TRUE_MSG(time < MAX_ALLOWED_TIME_TO_ASSEMBLE,
-				va("%s fails to assemble in a reasonable time with seed %i (time: %li ms)", mapTheme, i, time));
+		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << mapTheme << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
 		if (time > 10000)
 			Com_Printf("Seed %i: tiles: %i ms: %li\n", i, numPlaced, time);
 	}
 	Com_Printf("TotalTime: %li\n", timeSum);
 }
 #endif
-
-int UFO_AddRandomMapAssemblyTests (void)
-{
-	static cvar_t svt;
-	static cvar_t maxclients;
-	/* add a suite to the registry */
-	CU_pSuite RandomMapAssemblySuite = CU_add_suite("RandomMapAssemblyTests", UFO_InitSuiteRandomMapAssembly, UFO_CleanSuiteRandomMapAssembly);
-
-	if (!sv_threads) {
-		sv_threads = &svt;
-		sv_threads->integer = 0;
-	}
-
-	if (!sv_maxclients) {
-		sv_maxclients = &maxclients;
-		sv_maxclients->integer = 1;
-	}
-
-	if (RandomMapAssemblySuite == nullptr)
-		return CU_get_error();
-#if SEED_TEST
-	/* This test should normally (ie. buildbot) not be active */
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testNewSeedlists) == nullptr)
-		return CU_get_error();
-#else
-	/* add the tests to the suite */
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testSeedlists) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testUMPExtends) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testAssembly) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblyParallel) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblyTimeout) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(RandomMapAssemblySuite, testMassAssemblySequential) == nullptr)
-		return CU_get_error();
-#endif
-
-
-	return CUE_SUCCESS;
-}

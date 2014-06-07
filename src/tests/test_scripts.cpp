@@ -24,43 +24,32 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "test_shared.h"
-#include "test_scripts.h"
 #include "../client/client.h"
 #include "../client/renderer/r_state.h" /* r_state */
 #include "../client/ui/ui_main.h"
 #include "../client/battlescape/cl_particle.h"
 #include "../client/cgame/campaign/cp_campaign.h"
 
-/**
- * The suite initialization function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_InitSuiteScripts (void)
-{
-	TEST_Init();
+class ScriptTest: public ::testing::Test {
+protected:
+	static void SetUpTestCase() {
+		TEST_Init();
 
-	cl_genericPool = Mem_CreatePool("Client: Generic");
-	vid_imagePool = Mem_CreatePool("Vid: Image system");
+		cl_genericPool = Mem_CreatePool("Client: Generic");
+		vid_imagePool = Mem_CreatePool("Vid: Image system");
 
-	r_state.active_texunit = &r_state.texunits[0];
-	R_FontInit();
-	UI_Init();
+		r_state.active_texunit = &r_state.texunits[0];
+		R_FontInit();
+		UI_Init();
 
-	OBJZERO(cls);
-	Com_ParseScripts(false);
+		OBJZERO(cls);
+		Com_ParseScripts(false);
+	}
 
-	return 0;
-}
-
-/**
- * The suite cleanup function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_CleanSuiteScripts (void)
-{
-	TEST_Shutdown();
-	return 0;
-}
+	static void TearDownTestCase() {
+		TEST_Shutdown();
+	}
+};
 
 static bool TEST_CheckImage (const char* path)
 {
@@ -121,24 +110,24 @@ static bool TEST_CheckParticle (const char* particleID)
 	return CL_ParticleGet(particleID) != nullptr;
 }
 
-static void testTeamDefs (void)
+TEST_F(ScriptTest, TeamDefs)
 {
 	for (int i = 0; i < csi.numTeamDefs; i++) {
 		const teamDef_t* teamDef = &csi.teamDef[i];
 
-		UFO_CU_ASSERT_TRUE_MSG(teamDef->numTemplates > 0, va("%s has no character templates assigned", teamDef->id));
+		ASSERT_TRUE(teamDef->numTemplates > 0) << teamDef->id << " has no character templates assigned";
 
 		for (int k = 0; k < SND_MAX; k++) {
 			for (int l = 0; l < NAME_LAST; l++) {
 				LIST_Foreach(teamDef->sounds[k][l], char, soundFile) {
-					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(soundFile), va("sound %s does not exist (team %s)", soundFile, teamDef->id));
+					ASSERT_TRUE(TEST_CheckSound(soundFile)) << "sound " << soundFile << " does not exist (team " << teamDef->id << ")";
 				}
 			}
 		}
 	}
 }
 
-static void testTeamDefsModelScriptData (void)
+TEST_F(ScriptTest, TeamDefsModelScriptData)
 {
 	linkedList_t* armourPaths = nullptr;
 
@@ -160,8 +149,7 @@ static void testTeamDefsModelScriptData (void)
 				LIST_AddString(&armourPaths, od->armourPath);
 		}
 
-		UFO_CU_ASSERT_TRUE_MSG(!LIST_IsEmpty(armourPaths), va("no armour definitions found for team %s - but armour is set to true",
-				teamDef->id));
+		ASSERT_TRUE(!LIST_IsEmpty(armourPaths)) << "no armour definitions found for team " << teamDef->id << " - but armour is set to true";
 
 		LIST_Foreach(armourPaths, char const, armourPath) {
 			for (int l = NAME_NEUTRAL; l < NAME_LAST; l++) {
@@ -169,20 +157,16 @@ static void testTeamDefsModelScriptData (void)
 				if (!teamDef->numModels[l])
 					continue;
 
-				CU_ASSERT_PTR_NOT_NULL_FATAL(teamDef->models[l]);
+				ASSERT_TRUE(nullptr != teamDef->models[l]);
 
 				for (linkedList_t const* list = teamDef->models[l]; list; list = list->next) {
 					teamDef_t::model_t const& m = *static_cast<teamDef_t::model_t const*>(list->data);
 
-					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s/%s", m.path, m.body)), va("%s does not exist in models/%s (teamDef: %s)",
-							m.body, m.path, teamDef->id));
-					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s%s/%s", m.path, armourPath, m.body)), va("%s does not exist in models/%s%s (teamDef: %s)",
-							m.body, m.path, armourPath, teamDef->id));
+					ASSERT_TRUE(TEST_CheckModel(va("%s/%s", m.path, m.body))) << m.body << " does not exist in models/" << m.path << " (teamDef: " << teamDef->id << ")";
+					ASSERT_TRUE(TEST_CheckModel(va("%s%s/%s", m.path, armourPath, m.body))) << m.body << " does not exist in models/" << m.path << armourPath << " (teamDef: " << teamDef->id << ")";
 
-					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s/%s", m.path, m.head)), va("%s does not exist in models/%s (teamDef: %s)",
-							m.head, m.path, teamDef->id));
-					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s%s/%s", m.path, armourPath, m.head)), va("%s does not exist in models/%s%s (teamDef: %s)",
-							m.head, m.path, armourPath, teamDef->id));
+					ASSERT_TRUE(TEST_CheckModel(va("%s/%s", m.path, m.head))) << m.head << " does not exist in models/" << m.path << " (teamDef: " << teamDef->id << ")";
+					ASSERT_TRUE(TEST_CheckModel(va("%s%s/%s", m.path, armourPath, m.head))) << m.head << " does not exist in models/" << m.path << armourPath << " (teamDef: " << teamDef->id << ")";
 				}
 			}
 		}
@@ -191,114 +175,84 @@ static void testTeamDefsModelScriptData (void)
 	}
 }
 
-static void testItems (void)
+TEST_F(ScriptTest, Items)
 {
 	for (int j = 0; j < csi.numODs; j++) {
 		const objDef_t* od = INVSH_GetItemByIDX(j);
 		if (od->isVirtual || od->isDummy)
 			continue;
 
-		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(od->reloadSound), va("sound %s does not exist (item %s)", od->reloadSound, od->id));
-		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(od->model), va("model %s does not exist (item %s)", od->model, od->id));
-		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckImage(od->image), va("image %s does not exist (item %s)", od->image, od->id));
+		ASSERT_TRUE(TEST_CheckSound(od->reloadSound)) << "sound " << od->reloadSound << " does not exist (item " << od->id << ")";
+		ASSERT_TRUE(TEST_CheckModel(od->model)) << "model " << od->model << " does not exist (item " << od->id << ")";
+		ASSERT_TRUE(TEST_CheckImage(od->image)) << "image " << od->image << " does not exist (item " << od->id << ")";
 
 		for (int i = 0; i < od->numWeapons; i++) {
 			for (int k = 0; k < od->numFiredefs[i]; k++) {
 				const fireDef_t* fd = &od->fd[i][k];
-				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->bounceSound), va("sound %s does not exist (firedef %s for item %s)", fd->bounceSound, fd->name, od->id));
-				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->fireSound), va("sound %s does not exist (firedef %s for item %s)", fd->fireSound, fd->name, od->id));
-				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->impactSound), va("sound %s does not exist (firedef %s for item %s)", fd->impactSound, fd->name, od->id));
-				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(fd->hitBodySound), va("sound %s does not exist (firedef %s for item %s)", fd->hitBodySound, fd->name, od->id));
-				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckParticle(fd->hitBody), va("particle %s does not exist (firedef %s for item %s)", fd->hitBody, fd->name, od->id));
-				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckParticle(fd->impact), va("particle %s does not exist (firedef %s for item %s)", fd->impact, fd->name, od->id));
-				UFO_CU_ASSERT_TRUE_MSG(TEST_CheckParticle(fd->projectile), va("particle %s does not exist (firedef %s for item %s)", fd->projectile, fd->name, od->id));
+				ASSERT_TRUE(TEST_CheckSound(fd->bounceSound)) << "sound " << fd->bounceSound << " does not exist (firedef " << fd->name << " for item " << od->id << ")";
+				ASSERT_TRUE(TEST_CheckSound(fd->fireSound)) << "sound " << fd->fireSound << " does not exist (firedef " << fd->name << " for item " << od->id << ")";
+				ASSERT_TRUE(TEST_CheckSound(fd->impactSound)) << "sound " << fd->impactSound << " does not exist (firedef " << fd->name << " for item " << od->id << ")";
+				ASSERT_TRUE(TEST_CheckSound(fd->hitBodySound)) << "sound " << fd->hitBodySound << " does not exist (firedef " << fd->name << " for item " << od->id << ")";
+				ASSERT_TRUE(TEST_CheckParticle(fd->hitBody)) << "particle " << fd->hitBody << " does not exist (firedef " << fd->name << " for item " << od->id << ")";
+				ASSERT_TRUE(TEST_CheckParticle(fd->impact)) << "particle " << fd->impact << " does not exist (firedef " << fd->name << " for item " << od->id << ")";
+				ASSERT_TRUE(TEST_CheckParticle(fd->projectile)) << "particle " << fd->projectile << " does not exist (firedef " << fd->name << " for item " << od->id << ")";
 			}
 		}
 	}
 }
 
-static void testNations (void)
+TEST_F(ScriptTest, Nations)
 {
 	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t* nat = NAT_GetNationByIDX(i);
-		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckImage(va("nations/%s", nat->id)), va("nation %s has no image", nat->id));
-		CU_ASSERT_PTR_NOT_NULL(Com_GetTeamDefinitionByID(nat->id));
+		ASSERT_TRUE(TEST_CheckImage(va("nations/%s", nat->id))) << "nation " << nat->id << " has no image";
+		ASSERT_TRUE(nullptr != Com_GetTeamDefinitionByID(nat->id));
 	}
 }
 
-static void testAircraft (void)
+TEST_F(ScriptTest, Aircraft)
 {
 	AIR_Foreach(aircraft) {
-		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(aircraft->model), va("%s does not exist (aircraft: %s)", aircraft->model, aircraft->id));
-		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckImage(aircraft->image), va("%s does not exist (aircraft: %s)", aircraft->image, aircraft->id));
+		ASSERT_TRUE(TEST_CheckModel(aircraft->model)) << aircraft->model << " does not exist (aircraft: " << aircraft->id << ")";
+		ASSERT_TRUE(TEST_CheckImage(aircraft->image)) << aircraft->image << " does not exist (aircraft: " << aircraft->id << ")";
 	}
 }
 
-static void testMapDef (void)
+TEST_F(ScriptTest, MapDef)
 {
 	const mapDef_t* md;
 
 	int i = 0;
 	MapDef_Foreach(md) {
 		if (md->civTeam != nullptr)
-			CU_ASSERT_PTR_NOT_NULL(Com_GetTeamDefinitionByID(md->civTeam));
+			ASSERT_TRUE(nullptr != Com_GetTeamDefinitionByID(md->civTeam));
 
-		CU_ASSERT_FALSE(md->maxAliens <= 0);
-		CU_ASSERT_PTR_NOT_NULL(md->mapTheme);
-		CU_ASSERT_PTR_NOT_NULL(md->description);
+		ASSERT_FALSE(md->maxAliens <= 0);
+		ASSERT_TRUE(nullptr != md->mapTheme);
+		ASSERT_TRUE(nullptr != md->description);
 		i++;
 	}
 
-	CU_ASSERT_PTR_NULL(md);
-	UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(i, csi.numMDs, va("only looped over %i mapdefs, but expected %i", i, csi.numMDs));
+	ASSERT_TRUE(nullptr == md);
+	ASSERT_EQ(i, csi.numMDs) << "only looped over " << i << " mapdefs, but expected " << csi.numMDs;
 
 	i = csi.numMDs;
 
 	MapDef_ForeachCondition(md, !md->singleplayer || !md->campaign) {
 		i--;
-		CU_ASSERT_PTR_NOT_NULL(md);
+		ASSERT_TRUE(nullptr != md);
 	}
 
-	CU_ASSERT_PTR_NULL(md);
-	CU_ASSERT_NOT_EQUAL(i, csi.numMDs);
+	ASSERT_TRUE(nullptr == md);
+	ASSERT_NE(i, csi.numMDs);
 
 	MapDef_ForeachSingleplayerCampaign(md) {
 		i--;
-		CU_ASSERT_PTR_NOT_NULL(md);
-		CU_ASSERT_STRING_NOT_EQUAL(md->id, "training_a");
-		CU_ASSERT_STRING_NOT_EQUAL(md->id, "training_b");
+		ASSERT_TRUE(nullptr != md);
+		ASSERT_STRNE(md->id, "training_a");
+		ASSERT_STRNE(md->id, "training_b");
 	}
 
-	CU_ASSERT_PTR_NULL(md);
-	UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(i, 0, va("i: %i", i));
-}
-
-int UFO_AddScriptsTests (void)
-{
-	/* add a suite to the registry */
-	CU_pSuite ScriptsSuite = CU_add_suite("ScriptsTests", UFO_InitSuiteScripts, UFO_CleanSuiteScripts);
-
-	if (ScriptsSuite == nullptr)
-		return CU_get_error();
-
-	/* add the tests to the suite */
-	if (CU_ADD_TEST(ScriptsSuite, testTeamDefs) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(ScriptsSuite, testTeamDefsModelScriptData) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(ScriptsSuite, testItems) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(ScriptsSuite, testNations) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(ScriptsSuite, testAircraft) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(ScriptsSuite, testMapDef) == nullptr)
-		return CU_get_error();
-
-	return CUE_SUCCESS;
+	ASSERT_TRUE(nullptr == md);
+	ASSERT_EQ(i, 0);
 }

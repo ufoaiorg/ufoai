@@ -24,32 +24,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "test_shared.h"
-#include "test_renderer.h"
 #include "../client/cl_video.h"
 #include "../client/renderer/r_image.h"
 #include "../client/renderer/r_model.h"
 
-/**
- * The suite initialization function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_InitSuiteRenderer (void)
-{
-	TEST_Init();
-	return 0;
-}
+class RendererTest: public ::testing::Test {
+protected:
+	static void SetUpTestCase() {
+		TEST_Init();
+	}
 
-/**
- * The suite cleanup function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_CleanSuiteRenderer (void)
-{
-	TEST_Shutdown();
-	return 0;
-}
+	static void TearDownTestCase() {
+		TEST_Shutdown();
+	}
+};
 
-static void testLoadAllAnimationFiles (void)
+TEST_F(RendererTest, LoadAllAnimationFiles)
 {
 	const char* pattern = "models/**.anm";
 	const char* filename;
@@ -69,7 +59,7 @@ static void testLoadAllAnimationFiles (void)
 	FS_NextFileFromFileList(nullptr);
 }
 
-static void testCharacterAnimationFiles (void)
+TEST_F(RendererTest, CharacterAnimationFiles)
 {
 	const char* pattern = "models/**.anm";
 	const char* filename;
@@ -142,8 +132,7 @@ static void testCharacterAnimationFiles (void)
 					if (Q_streq(a->name, *animList))
 						break;
 				}
-				if (i == mod.num_anims)
-					UFO_CU_ASSERT_MSG(va("anm file %s does not contain the needed animation definition %s", filename, *animList));
+				ASSERT_FALSE(i == mod.num_anims) << "anm file " << filename << " does not contain the needed animation definition " << *animList;
 
 				animList++;
 			}
@@ -153,22 +142,4 @@ static void testCharacterAnimationFiles (void)
 	Mem_DeletePool(vid_modelPool);
 
 	FS_NextFileFromFileList(nullptr);
-}
-
-int UFO_AddRendererTests (void)
-{
-	/* add a suite to the registry */
-	CU_pSuite RendererSuite = CU_add_suite("RendererTests", UFO_InitSuiteRenderer, UFO_CleanSuiteRenderer);
-
-	if (RendererSuite == nullptr)
-		return CU_get_error();
-
-	/* add the tests to the suite */
-	if (CU_ADD_TEST(RendererSuite, testLoadAllAnimationFiles) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(RendererSuite, testCharacterAnimationFiles) == nullptr)
-		return CU_get_error();
-
-	return CUE_SUCCESS;
 }

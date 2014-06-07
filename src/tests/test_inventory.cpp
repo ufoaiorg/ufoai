@@ -23,7 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#include "test_inventory.h"
 #include "test_shared.h"
 #include "../common/common.h"
 #include "../game/inventory.h"
@@ -54,180 +53,167 @@ static inline void ResetInventoryList (void)
 	i.initInventory("test", &csi, &inventoryImport);
 }
 
-/**
- * The suite initialization function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_InitSuiteInventory (void)
-{
-	TEST_Init();
-	Com_ParseScripts(true);
+class InventoryTest: public ::testing::Test {
+protected:
+	static void SetUpTestCase() {
+		TEST_Init();
+		Com_ParseScripts(true);
+	}
 
-	return 0;
-}
+	static void TearDownTestCase() {
+		TEST_Shutdown();
+		NET_Shutdown();
+	}
 
-/**
- * The suite cleanup function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_CleanSuiteInventory (void)
-{
-	TEST_Shutdown();
-	return 0;
-}
+	void SetUp() {
+		ResetInventoryList();
+	}
+};
 
-static void testItemAdd (void)
+TEST_F(InventoryTest, ItemAdd)
 {
 	Inventory inv;
 	const objDef_t* od;
 	const invDef_t* container;
 
-	ResetInventoryList();
-
 	od = INVSH_GetItemByIDSilent("assault");
-	CU_ASSERT_PTR_NOT_NULL(od);
+	ASSERT_TRUE(nullptr != od);
 
 	container = INVSH_GetInventoryDefinitionByID("right");
-	CU_ASSERT_PTR_NOT_NULL(container);
+	ASSERT_TRUE(nullptr != container);
 
 	Item item(od);
 
-	CU_ASSERT(inv.containsItem(container->id, &item) == false);
+	ASSERT_TRUE(inv.containsItem(container->id, &item) == false);
 
-	CU_ASSERT_PTR_NOT_NULL(i.addToInventory(&inv, &item, container, NONE, NONE, 1));
+	ASSERT_TRUE(nullptr != i.addToInventory(&inv, &item, container, NONE, NONE, 1));
 
-	CU_ASSERT(inv.containsItem(container->id, &item) == true);
+	ASSERT_TRUE(inv.containsItem(container->id, &item) == true);
 }
 
-static void testItemDel (void)
+TEST_F(InventoryTest, ItemDel)
 {
 	Inventory inv;
 	const objDef_t* od;
 	const invDef_t* container;
 	Item* addedItem;
 
-	ResetInventoryList();
-
 	od = INVSH_GetItemByIDSilent("assault");
-	CU_ASSERT_PTR_NOT_NULL(od);
+	ASSERT_TRUE(nullptr != od);
 
 	container = INVSH_GetInventoryDefinitionByID("right");
-	CU_ASSERT_PTR_NOT_NULL(container);
+	ASSERT_TRUE(nullptr != container);
 
 	Item item(od);
 
-	CU_ASSERT(inv.containsItem(container->id, &item) == false);
+	ASSERT_TRUE(inv.containsItem(container->id, &item) == false);
 
 	addedItem = i.addToInventory(&inv, &item, container, NONE, NONE, 1);
 
-	CU_ASSERT(inv.containsItem(container->id, &item) == true);
+	ASSERT_TRUE(inv.containsItem(container->id, &item) == true);
 
-	CU_ASSERT(i.removeFromInventory(&inv, container, addedItem));
+	ASSERT_TRUE(i.removeFromInventory(&inv, container, addedItem));
 
-	CU_ASSERT(inv.containsItem(container->id, &item) == false);
+	ASSERT_TRUE(inv.containsItem(container->id, &item) == false);
 }
 
-static void testItemMove (void)
+TEST_F(InventoryTest, ItemMove)
 {
 	Inventory inv;
 	const objDef_t* od;
 	const invDef_t* container, *containerTo;
 	Item* addedItem;
 
-	ResetInventoryList();
-
 	od = INVSH_GetItemByIDSilent("assault");
-	CU_ASSERT_PTR_NOT_NULL(od);
+	ASSERT_TRUE(nullptr != od);
 
 	container = INVSH_GetInventoryDefinitionByID("right");
-	CU_ASSERT_PTR_NOT_NULL(container);
+	ASSERT_TRUE(nullptr != container);
 
 	Item item(od);
 
-	CU_ASSERT(inv.containsItem(container->id, &item) == false);
+	ASSERT_TRUE(inv.containsItem(container->id, &item) == false);
 
 	addedItem = i.addToInventory(&inv, &item, container, NONE, NONE, 1);
-	CU_ASSERT_PTR_NOT_NULL(addedItem);
+	ASSERT_TRUE(nullptr != addedItem);
 
-	CU_ASSERT(inv.containsItem(container->id, &item) == true);
+	ASSERT_TRUE(inv.containsItem(container->id, &item) == true);
 
 	containerTo = INVSH_GetInventoryDefinitionByID("backpack");
-	CU_ASSERT_PTR_NOT_NULL(containerTo);
+	ASSERT_TRUE(nullptr != containerTo);
 
-	CU_ASSERT_EQUAL(IA_MOVE, i.moveInInventory(&inv, container, addedItem, containerTo, NONE, NONE, nullptr, nullptr));
+	ASSERT_EQ(IA_MOVE, i.moveInInventory(&inv, container, addedItem, containerTo, NONE, NONE, nullptr, nullptr));
 
-	CU_ASSERT(inv.containsItem(container->id, &item) == false);
-	CU_ASSERT(inv.containsItem(containerTo->id, &item) == true);
+	ASSERT_TRUE(inv.containsItem(container->id, &item) == false);
+	ASSERT_TRUE(inv.containsItem(containerTo->id, &item) == true);
 }
 
-static void testItemReload (void)
+TEST_F(InventoryTest, ItemReload)
 {
 	Inventory inv;
 	const objDef_t* od, *ad;
 	const invDef_t* container, *containerFrom;
 	Item* addedItem;
 
-	ResetInventoryList();
-
 	od = INVSH_GetItemByIDSilent("rpg");
-	CU_ASSERT_PTR_NOT_NULL(od);
+	ASSERT_TRUE(nullptr != od);
 
 	container = INVSH_GetInventoryDefinitionByID("right");
-	CU_ASSERT_PTR_NOT_NULL(container);
+	ASSERT_TRUE(nullptr != container);
 
 	Item item(od);
 
-	CU_ASSERT(inv.containsItem(container->id, &item) == false);
+	ASSERT_TRUE(inv.containsItem(container->id, &item) == false);
 
 	addedItem = i.addToInventory(&inv, &item, container, NONE, NONE, 1);
-	CU_ASSERT_PTR_NOT_NULL(addedItem);
+	ASSERT_TRUE(nullptr != addedItem);
 
-	CU_ASSERT(inv.containsItem(container->id, &item) == true);
+	ASSERT_TRUE(inv.containsItem(container->id, &item) == true);
 
 	ad = INVSH_GetItemByIDSilent("rpg_ammo");
-	CU_ASSERT_PTR_NOT_NULL(ad);
+	ASSERT_TRUE(nullptr != ad);
 
 	Item ammo(ad);
 
 	containerFrom = INVSH_GetInventoryDefinitionByID("backpack");
-	CU_ASSERT_PTR_NOT_NULL(containerFrom);
+	ASSERT_TRUE(nullptr != containerFrom);
 
-	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == false);
+	ASSERT_TRUE(inv.containsItem(containerFrom->id, &ammo) == false);
 
 	addedItem = i.addToInventory(&inv, &ammo, containerFrom, NONE, NONE, 1);
-	CU_ASSERT_PTR_NOT_NULL(addedItem);
+	ASSERT_TRUE(nullptr != addedItem);
 
-	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == true);
+	ASSERT_TRUE(inv.containsItem(containerFrom->id, &ammo) == true);
 
-	CU_ASSERT_EQUAL(IA_RELOAD, i.moveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, nullptr, nullptr));
+	ASSERT_EQ(IA_RELOAD, i.moveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, nullptr, nullptr));
 
-	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == false);
+	ASSERT_TRUE(inv.containsItem(containerFrom->id, &ammo) == false);
 
 	item.setAmmoDef(ad);
 	item.setAmmoLeft(1);
 
-	CU_ASSERT(inv.containsItem(container->id, &item) == true);
+	ASSERT_TRUE(inv.containsItem(container->id, &item) == true);
 
 	ad = INVSH_GetItemByIDSilent("rpg_incendiary_ammo");
-	CU_ASSERT_PTR_NOT_NULL(ad);
+	ASSERT_TRUE(nullptr != ad);
 
 	Item ammoFrom(ad);
 
-	CU_ASSERT(inv.containsItem(containerFrom->id, &ammoFrom) == false);
+	ASSERT_TRUE(inv.containsItem(containerFrom->id, &ammoFrom) == false);
 
 	addedItem = i.addToInventory(&inv, &ammoFrom, containerFrom, NONE, NONE, 1);
-	CU_ASSERT_PTR_NOT_NULL(addedItem);
+	ASSERT_TRUE(nullptr != addedItem);
 
-	CU_ASSERT(inv.containsItem(containerFrom->id, &ammoFrom) == true);
+	ASSERT_TRUE(inv.containsItem(containerFrom->id, &ammoFrom) == true);
 
-	CU_ASSERT_EQUAL(IA_RELOAD_SWAP, i.moveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, nullptr, nullptr));
+	ASSERT_EQ(IA_RELOAD_SWAP, i.moveInInventory(&inv, containerFrom, addedItem, container, NONE, NONE, nullptr, nullptr));
 
-	CU_ASSERT(inv.containsItem(containerFrom->id, &ammoFrom) == false);
-	CU_ASSERT(inv.containsItem(containerFrom->id, &ammo) == true);
+	ASSERT_TRUE(inv.containsItem(containerFrom->id, &ammoFrom) == false);
+	ASSERT_TRUE(inv.containsItem(containerFrom->id, &ammo) == true);
 
 	item.setAmmoDef(ad);
 
-	CU_ASSERT(inv.containsItem(container->id, &item) == true);
+	ASSERT_TRUE(inv.containsItem(container->id, &item) == true);
 }
 
 static bool testAddSingle (Inventory* inv, const objDef_t* od, const invDef_t* container)
@@ -237,107 +223,79 @@ static bool testAddSingle (Inventory* inv, const objDef_t* od, const invDef_t* c
 	return i.tryAddToInventory(inv, &item, container);
 }
 
-static void testItemMassActions (void)
+TEST_F(InventoryTest, ItemMassActions)
 {
-	ResetInventoryList();
-
 	const objDef_t* od = INVSH_GetItemByIDSilent("assault");
-	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
+	ASSERT_TRUE(nullptr != od);
 
 	const invDef_t* container = INVSH_GetInventoryDefinitionByID("right");
-	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
+	ASSERT_TRUE(nullptr != container);
 
 	Inventory inv;
 	bool addedItem = testAddSingle(&inv, od, container);
-	CU_ASSERT(addedItem == true);
+	ASSERT_TRUE(addedItem == true);
 
 	/* second try should fail as the right container is a single container */
 	addedItem = testAddSingle(&inv, od, container);
-	CU_ASSERT(addedItem == false);
+	ASSERT_TRUE(addedItem == false);
 
 	container = INVSH_GetInventoryDefinitionByID("left");
-	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
+	ASSERT_TRUE(nullptr != container);
 
 	od = INVSH_GetItemByIDSilent("fraggrenade");
-	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
+	ASSERT_TRUE(nullptr != od);
 
 	addedItem = testAddSingle(&inv, od, container);
-	CU_ASSERT(addedItem == true);
+	ASSERT_TRUE(addedItem == true);
 
 	container = INVSH_GetInventoryDefinitionByID("equip");
-	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
+	ASSERT_TRUE(nullptr != container);
 
 	for (int i = 0; i < csi.numODs; i++) {
 		od = INVSH_GetItemByIDX(i);
 		/* every item should be placable on the ground container and there should really be enough space */
 		addedItem = testAddSingle(&inv, od, container);
-		CU_ASSERT(addedItem == true);
+		ASSERT_TRUE(addedItem == true);
 		addedItem = testAddSingle(&inv, od, container);
-		CU_ASSERT(addedItem == true);
+		ASSERT_TRUE(addedItem == true);
 		addedItem = testAddSingle(&inv, od, container);
-		CU_ASSERT(addedItem == true);
+		ASSERT_TRUE(addedItem == true);
 		for (int j = 0; j < od->numAmmos; j++) {
 			addedItem = testAddSingle(&inv, od->ammos[j], container);
-			CU_ASSERT(addedItem == true);
+			ASSERT_TRUE(addedItem == true);
 			addedItem = testAddSingle(&inv, od->ammos[j], container);
-			CU_ASSERT(addedItem == true);
+			ASSERT_TRUE(addedItem == true);
 			addedItem = testAddSingle(&inv, od->ammos[j], container);
-			CU_ASSERT(addedItem == true);
+			ASSERT_TRUE(addedItem == true);
 			addedItem = testAddSingle(&inv, od->ammos[j], container);
-			CU_ASSERT(addedItem == true);
+			ASSERT_TRUE(addedItem == true);
 			addedItem = testAddSingle(&inv, od->ammos[j], container);
-			CU_ASSERT(addedItem == true);
+			ASSERT_TRUE(addedItem == true);
 			addedItem = testAddSingle(&inv, od->ammos[j], container);
-			CU_ASSERT(addedItem == true);
+			ASSERT_TRUE(addedItem == true);
 		}
 	}
 }
 
-static void testItemToHeadgear (void)
+TEST_F(InventoryTest, ItemToHeadgear)
 {
 	Inventory inv;
 	const objDef_t* od;
 	const invDef_t* container;
 
-	ResetInventoryList();
-
 	od = INVSH_GetItemByIDSilent("irgoggles");
-	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
+	ASSERT_TRUE(nullptr != od);
 
 	container = INVSH_GetInventoryDefinitionByID("headgear");
-	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
+	ASSERT_TRUE(nullptr != container);
 
 	Item item(od);
 
-	CU_ASSERT_FALSE(inv.containsItem(container->id, &item));
+	ASSERT_FALSE(inv.containsItem(container->id, &item));
 
-	CU_ASSERT_PTR_NOT_NULL(i.addToInventory(&inv, &item, container, NONE, NONE, 1));
+	ASSERT_TRUE(nullptr != i.addToInventory(&inv, &item, container, NONE, NONE, 1));
 
-	CU_ASSERT_TRUE(inv.containsItem(container->id, &item));
+	ASSERT_TRUE(inv.containsItem(container->id, &item));
 
-	CU_ASSERT_PTR_NULL(i.addToInventory(&inv, &item, container, NONE, NONE, 1));
-}
-
-int UFO_AddInventoryTests (void)
-{
-	/* add a suite to the registry */
-	CU_pSuite InventorySuite = CU_add_suite("InventoryTests", UFO_InitSuiteInventory, UFO_CleanSuiteInventory);
-	if (InventorySuite == nullptr)
-		return CU_get_error();
-
-	/* add the tests to the suite */
-	if (CU_ADD_TEST(InventorySuite, testItemAdd) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(InventorySuite, testItemDel) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(InventorySuite, testItemMove) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(InventorySuite, testItemMassActions) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(InventorySuite, testItemReload) == nullptr)
-		return CU_get_error();
-	if (CU_ADD_TEST(InventorySuite, testItemToHeadgear) == nullptr)
-		return CU_get_error();
-
-	return CUE_SUCCESS;
+	ASSERT_TRUE(nullptr == i.addToInventory(&inv, &item, container, NONE, NONE, 1));
 }

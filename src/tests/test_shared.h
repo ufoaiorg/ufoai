@@ -24,38 +24,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-#include <CUnit/Basic.h>
+#include <gtest/gtest.h>
 #include "../common/common.h"
 #include "../shared/shared.h"
 
-#define UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(actual, expected, msg) \
-  { CU_assertImplementation(((actual) == (expected)), __LINE__, msg ? msg : va("UFO_CU_ASSERT(%i but expected %i)", actual, expected), __FILE__, "", CU_TRUE); }
-
-#define UFO_CU_ASSERT_EQUAL_INT_MSG(actual, expected, msg) \
-  { CU_assertImplementation(((actual) == (expected)), __LINE__, msg ? msg : va("UFO_CU_ASSERT(%i but expected %i)", actual, expected), __FILE__, "", CU_FALSE); }
-
-#define UFO_CU_ASSERT_NOT_EQUAL_INT_MSG(actual, expected, msg) \
-  { CU_assertImplementation(((actual) != (expected)), __LINE__, msg ? msg : va("UFO_CU_ASSERT(%i equals %i)", actual, expected), __FILE__, "", CU_FALSE); }
-
-#define UFO_CU_ASSERT_TRUE_MSG(value, msg) \
-  { CU_assertImplementation((value), __LINE__, msg ? msg : ("UFO_CU_ASSERT(" #value ")"), __FILE__, "", CU_FALSE); }
-
-#define UFO_CU_ASSERT_MSG(msg) \
-  { CU_assertImplementation(CU_FALSE, __LINE__, msg, __FILE__, "", CU_FALSE); }
-
-#define UFO_CU_FAIL_MSG(msg) \
-  { CU_assertImplementation(CU_FALSE, __LINE__, va("UFO_CU_FAIL(\"%s\")", msg), __FILE__, "", CU_FALSE); }
-
-#define UFO_CU_FAIL_MSG_FATAL(msg) \
-  { CU_assertImplementation(CU_FALSE, __LINE__, va("UFO_CU_FAIL(\"%s\")", msg), __FILE__, "", CU_TRUE); }
-
 void TEST_vPrintf(const char* fmt, va_list argptr);
+void TEST_vPrintfSilent(const char* fmt, va_list argptr);
 void TEST_Init(void);
 void TEST_Shutdown(void);
 
 /** interface to allow to custom tests with command line */
 void TEST_RegisterProperty(const char* name, const char* value);
-bool TEST_ExistsProperty (const char* name);
+bool TEST_ExistsProperty(const char* name);
 int TEST_GetIntProperty(const char* name);
 long TEST_GetLongProperty(const char* name);
 const char* TEST_GetStringProperty(const char* name);

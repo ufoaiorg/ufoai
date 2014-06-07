@@ -24,80 +24,52 @@
  */
 
 #include "test_shared.h"
-#include "test_particles.h"
 #include "../client/client.h"
 #include "../client/battlescape/cl_particle.h"
 #include "../client/renderer/r_state.h"
 #include "../client/ui/ui_main.h"
 
-/**
- * The suite initialization function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_InitSuiteParticles (void)
-{
-	TEST_Init();
-	PTL_InitStartup();
-	vid_imagePool = Mem_CreatePool("Vid: Image system");
+class ParticleTest: public ::testing::Test {
+protected:
+	static void SetUpTestCase() {
+		TEST_Init();
+		PTL_InitStartup();
+		vid_imagePool = Mem_CreatePool("Vid: Image system");
 
-	cl_genericPool = Mem_CreatePool("Client: Generic");
+		cl_genericPool = Mem_CreatePool("Client: Generic");
 
-	r_state.active_texunit = &r_state.texunits[0];
-	R_FontInit();
-	UI_Init();
+		r_state.active_texunit = &r_state.texunits[0];
+		R_FontInit();
+		UI_Init();
 
-	OBJZERO(cls);
-	Com_ParseScripts(false);
-	return 0;
-}
+		OBJZERO(cls);
+		Com_ParseScripts(false);
+	}
 
-/**
- * The suite cleanup function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_CleanSuiteParticles (void)
-{
-	TEST_Shutdown();
-	return 0;
-}
+	static void TearDownTestCase() {
+		TEST_Shutdown();
+	}
+};
 
-static void testFloodParticles (void)
+TEST_F(ParticleTest, FloodParticles)
 {
 	for (int i = 0; i < MAX_PTLS; i++) {
-		CU_ASSERT_PTR_NOT_NULL(CL_ParticleSpawn("fire", 0xFF, vec3_origin));
+		ASSERT_TRUE(nullptr != CL_ParticleSpawn("fire", 0xFF, vec3_origin));
 	}
 	CL_ParticleRun();
-	CU_ASSERT_PTR_NULL(CL_ParticleSpawn("fire", 0xFF, vec3_origin));
+	ASSERT_TRUE(nullptr == CL_ParticleSpawn("fire", 0xFF, vec3_origin));
 }
 
-static void testNeededParticles (void)
+TEST_F(ParticleTest, NeededParticles)
 {
-	CU_ASSERT_PTR_NOT_NULL(CL_ParticleGet("fadeTracer"));
-	CU_ASSERT_PTR_NOT_NULL(CL_ParticleGet("longRangeTracer"));
-	CU_ASSERT_PTR_NOT_NULL(CL_ParticleGet("inRangeTracer"));
-	CU_ASSERT_PTR_NOT_NULL(CL_ParticleGet("crawlTracer"));
-	CU_ASSERT_PTR_NOT_NULL(CL_ParticleGet("moveTracer"));
-	CU_ASSERT_PTR_NOT_NULL(CL_ParticleGet("stunnedactor"));
-	CU_ASSERT_PTR_NOT_NULL(CL_ParticleGet("circle"));
-	CU_ASSERT_PTR_NOT_NULL(CL_ParticleGet("cross"));
-	CU_ASSERT_PTR_NOT_NULL(CL_ParticleGet("cross_no"));
-	CU_ASSERT_PTR_NOT_NULL(CL_ParticleGet("lightTracerDebug"));
-}
-
-int UFO_AddParticlesTests (void)
-{
-	/* add a suite to the registry */
-	CU_pSuite ParticlesSuite = CU_add_suite("ParticlesTests", UFO_InitSuiteParticles, UFO_CleanSuiteParticles);
-
-	if (ParticlesSuite == nullptr)
-		return CU_get_error();
-
-	/* add the tests to the suite */
-	if (CU_ADD_TEST(ParticlesSuite, testFloodParticles) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(ParticlesSuite, testNeededParticles) == nullptr)
-		return CU_get_error();
-
-	return CUE_SUCCESS;
+	ASSERT_TRUE(nullptr != CL_ParticleGet("fadeTracer"));
+	ASSERT_TRUE(nullptr != CL_ParticleGet("longRangeTracer"));
+	ASSERT_TRUE(nullptr != CL_ParticleGet("inRangeTracer"));
+	ASSERT_TRUE(nullptr != CL_ParticleGet("crawlTracer"));
+	ASSERT_TRUE(nullptr != CL_ParticleGet("moveTracer"));
+	ASSERT_TRUE(nullptr != CL_ParticleGet("stunnedactor"));
+	ASSERT_TRUE(nullptr != CL_ParticleGet("circle"));
+	ASSERT_TRUE(nullptr != CL_ParticleGet("cross"));
+	ASSERT_TRUE(nullptr != CL_ParticleGet("cross_no"));
+	ASSERT_TRUE(nullptr != CL_ParticleGet("lightTracerDebug"));
 }

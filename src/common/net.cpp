@@ -1238,13 +1238,14 @@ static void NET_AddrinfoToString (const struct addrinfo* addr, char* buf, size_t
 	Q_strncpyz(buf, service, bufLength);
 }
 
-void NET_ResolvNode (const char* node, char* buf, size_t bufLength)
+bool NET_ResolvNode (const char* node, char* buf, size_t bufLength)
 {
 	struct addrinfo* addrinfo = NET_GetAddrinfoForNode(node, nullptr);
 	if (addrinfo == nullptr) {
 		buf[0] = '\0';
-		return;
+		return false;
 	}
 	NET_AddrinfoToString(addrinfo, buf, bufLength);
 	freeaddrinfo(addrinfo);
+	return true;
 }

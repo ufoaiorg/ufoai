@@ -22,42 +22,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "test_events.h"
 #include "test_shared.h"
 #include "../common/common.h"
 #include "../client/battlescape/events/e_parse.h"
 #include "../client/cl_shared.h"
 #include <string>
 
-/**
- * The suite initialization function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_InitSuiteEvents (void)
+class EventsTest: public ::testing::Test {
+protected:
+	static void SetUpTestCase() {
+		TEST_Init();
+		cl_genericPool = Mem_CreatePool("Client: Generic");
+	}
+
+	static void TearDownTestCase() {
+		TEST_Shutdown();
+	}
+};
+
+TEST_F(EventsTest, Range)
 {
-	TEST_Init();
-
-	cl_genericPool = Mem_CreatePool("Client: Generic");
-
-	return 0;
+	ASSERT_TRUE(EV_NUM_EVENTS < EVENT_INSTANTLY);
 }
 
-/**
- * The suite cleanup function.
- * Returns zero on success, non-zero otherwise.
- */
-static int UFO_CleanSuiteEvents (void)
-{
-	TEST_Shutdown();
-	return 0;
-}
-
-static void testRange (void)
-{
-	CU_ASSERT_TRUE(EV_NUM_EVENTS < EVENT_INSTANTLY);
-}
-
-static void testEvents (void)
+TEST_F(EventsTest, Events)
 {
 	const event_t events[] = {EV_RESET, EV_START, EV_ENDROUND, EV_ENDROUNDANNOUNCE};
 	for (int i = 0; i < lengthof(events); i++) {
@@ -65,12 +53,12 @@ static void testEvents (void)
 		NET_WriteByte(&buf, events[i]);
 		CL_ParseEvent(&buf);
 	}
-	CU_ASSERT_EQUAL(CL_ClearBattlescapeEvents(), lengthof(events));
+	ASSERT_EQ(CL_ClearBattlescapeEvents(), lengthof(events));
 }
 
 ScheduleEventPtr Dequeue_Event(int now);
 
-static void testScheduler (void)
+TEST_F(EventsTest, Scheduler)
 {
 	std::string s_one("one");
 	std::string s_two("two");
@@ -84,12 +72,12 @@ static void testScheduler (void)
 	ScheduleEventPtr four = Schedule_Event(4, nullptr, nullptr, nullptr, static_cast<void*>(&s_four));
 	ScheduleEventPtr five = Schedule_Event(5, nullptr, nullptr, nullptr, static_cast<void*>(&s_five));
 
-	CU_ASSERT_EQUAL(Dequeue_Event(1000), one);
-	CU_ASSERT_EQUAL(Dequeue_Event(1000), two);
-	CU_ASSERT_EQUAL(Dequeue_Event(1000), three);
-	CU_ASSERT_EQUAL(Dequeue_Event(1000), four);
-	CU_ASSERT_EQUAL(Dequeue_Event(1000), five);
-	CU_ASSERT_FALSE(Dequeue_Event(1000));
+	ASSERT_EQ(Dequeue_Event(1000), one);
+	ASSERT_EQ(Dequeue_Event(1000), two);
+	ASSERT_EQ(Dequeue_Event(1000), three);
+	ASSERT_EQ(Dequeue_Event(1000), four);
+	ASSERT_EQ(Dequeue_Event(1000), five);
+	ASSERT_FALSE(Dequeue_Event(1000));
 }
 
 static bool delayCheck (int now, void* data)
@@ -104,7 +92,7 @@ static bool delayCheck (int now, void* data)
 	return ret;
 }
 
-static void testSchedulerCheck (void)
+TEST_F(EventsTest, SchedulerCheck)
 {
 	std::string s_one("one");
 	std::string s_two("two");
@@ -119,22 +107,22 @@ static void testSchedulerCheck (void)
 	ScheduleEventPtr two = Schedule_Event(3, nullptr, nullptr, nullptr, static_cast<void*>(&s_two));
 
 	ScheduleEventPtr e = Dequeue_Event(1);
-	CU_ASSERT_FALSE(e);
+	ASSERT_FALSE(e);
 	e = Dequeue_Event(2);
-	CU_ASSERT_FALSE(e);
+	ASSERT_FALSE(e);
 	/* one is delayed via check function - so we get the 2nd event at the first dequeue here */
 	e = Dequeue_Event(3);
-	CU_ASSERT_EQUAL_FATAL(e, two);
+	ASSERT_EQ(e, two);
 	/* now we are ready for the 1st event */
 	e = Dequeue_Event(5);
-	CU_ASSERT_EQUAL_FATAL(e, one);
+	ASSERT_EQ(e, one);
 	/* the remaining events are in order */
 	e = Dequeue_Event(5);
-	CU_ASSERT_EQUAL_FATAL(e, three);
+	ASSERT_EQ(e, three);
 	e = Dequeue_Event(5);
-	CU_ASSERT_EQUAL_FATAL(e, four);
+	ASSERT_EQ(e, four);
 	e = Dequeue_Event(5);
-	CU_ASSERT_EQUAL_FATAL(e, five);
+	ASSERT_EQ(e, five);
 }
 
 static bool delayCheckBlockedVal = false;
@@ -143,7 +131,7 @@ static bool delayCheckBlocked (int now, void* data)
 	return delayCheckBlockedVal;
 }
 
-static void testBlocked (void)
+TEST_F(EventsTest, Blocked)
 {
 	std::string s_one("one");
 	std::string s_two("two");
@@ -165,52 +153,26 @@ static void testBlocked (void)
 	four->delayFollowing = delay;
 
 	ScheduleEventPtr e = Dequeue_Event(1);
-	CU_ASSERT_FALSE(e);
+	ASSERT_FALSE(e);
 	e = Dequeue_Event(2);
-	CU_ASSERT_FALSE(e);
+	ASSERT_FALSE(e);
 	e = Dequeue_Event(3);
-	CU_ASSERT_FALSE(e);
+	ASSERT_FALSE(e);
 	e = Dequeue_Event(5);
-	CU_ASSERT_FALSE(e);
+	ASSERT_FALSE(e);
 
 	delayCheckBlockedVal = true;
 
 	e = Dequeue_Event(5);
-	CU_ASSERT_FALSE(e);
+	ASSERT_FALSE(e);
 	e = Dequeue_Event(5 + delay);
-	CU_ASSERT_EQUAL_FATAL(e, one);
+	ASSERT_EQ(e, one);
 	e = Dequeue_Event(4 + delay);
-	CU_ASSERT_EQUAL_FATAL(e, two);
+	ASSERT_EQ(e, two);
 	e = Dequeue_Event(4 + delay);
-	CU_ASSERT_FALSE(e);
+	ASSERT_FALSE(e);
 	e = Dequeue_Event(5 + delay);
-	CU_ASSERT_EQUAL_FATAL(e, three);
+	ASSERT_EQ(e, three);
 	e = Dequeue_Event(5 + delay);
-	CU_ASSERT_EQUAL_FATAL(e, four);
-}
-
-int UFO_AddEventsTests (void)
-{
-	/* add a suite to the registry */
-	CU_pSuite EventsSuite = CU_add_suite("EventsTests", UFO_InitSuiteEvents, UFO_CleanSuiteEvents);
-	if (EventsSuite == nullptr)
-		return CU_get_error();
-
-	/* add the tests to the suite */
-	if (CU_ADD_TEST(EventsSuite, testRange) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(EventsSuite, testEvents) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(EventsSuite, testScheduler) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(EventsSuite, testSchedulerCheck) == nullptr)
-		return CU_get_error();
-
-	if (CU_ADD_TEST(EventsSuite, testBlocked) == nullptr)
-		return CU_get_error();
-
-	return CUE_SUCCESS;
+	ASSERT_EQ(e, four);
 }

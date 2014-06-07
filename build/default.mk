@@ -318,3 +318,6 @@ PICOMODEL_LIBS            =
 else
 PICOMODEL_SRCS            =
 endif
+GTEST_CFLAGS             ?= -Isrc/libs/gtest/include -Isrc/libs/gtest
+GTEST_LIBS               +=
+GTEST_SRCS                = libs/gtest/src/gtest-all.cc
