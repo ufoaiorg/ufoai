@@ -761,12 +761,10 @@ static int AIL_reactionfire (lua_State* L)
 			reactionState = Q_streq(cmd, "disable") ? ~STATE_REACTION : STATE_REACTION;
 		}
 
-		if (reactionState && lua_gettop(L) > 1 && lua_isboolean(L, 2)) {
-			const int state = lua_toboolean(L, 2);
-			G_ClientStateChange(*AIL_player, AIL_ent, reactionState,
-				(state) ? true : false);
+		if (reactionState) {
+			G_ClientStateChange(*AIL_player, AIL_ent, reactionState, false);
 		} else {
-			AIL_invalidparameter(reactionState ? 2 : 1);
+			AIL_invalidparameter(1);
 		}
 	}
 
