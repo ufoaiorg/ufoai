@@ -486,7 +486,7 @@ public:
 	inline bool isReloadable() const {
 		return _itemDef->getReloadTime() > 0;
 	}
-	/** @todo is !mustReload() equivalent to 'usable' ?? e.g. grenades are certainly not reloadable, but do they have ammo ??? */
+	/** @note !mustReload() is *not* equivalent to 'usable' e.g. medikits are not reloadable, but they do have ammo */
 	inline bool mustReload() const {
 		return isReloadable() && getAmmoLeft() <= 0;
 	}
