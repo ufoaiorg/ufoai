@@ -811,19 +811,21 @@ static int AIL_reload (lua_State* L)
 		if (lua_isstring(L, 1)) {
 			const char* s = lua_tostring(L, 1);
 
-			if (Q_streq(s, "right"))
+			if (Q_streq(s, "right")) {
 				container = CID_RIGHT;
-			else if (Q_streq(s, "left"))
+			} else if (Q_streq(s, "left")) {
 				container = CID_LEFT;
-			else
+			} else {
+				AIL_invalidparameter(1);
 				return 0;
+			}
 		} else {
 			AIL_invalidparameter(1);
 			return 0;
 		}
 	}
 
-	G_ActorReload(AIL_ent, INVDEF(container));
+	AI_TryToReloadWeapon(AIL_ent, container);
 	return 0;
 }
 
