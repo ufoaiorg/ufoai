@@ -172,6 +172,9 @@ static int AIL_positionhide(lua_State* L);
 static int AIL_positionherd(lua_State* L);
 static int AIL_distance(lua_State* L);
 static int AIL_positionapproach(lua_State* L);
+static int AIL_isarmed(lua_State* L);
+static int AIL_getweapon(lua_State* L);
+
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -192,6 +195,8 @@ static const luaL_reg AIL_methods[] = {
 	{"positionherd", AIL_positionherd},
 	{"distance", AIL_distance},
 	{"positionapproach", AIL_positionapproach},
+	{"isarmed", AIL_isarmed},
+	{"getweapon", AIL_getweapon},
 	{nullptr, nullptr}
 };
 
@@ -827,6 +832,25 @@ static int AIL_reload (lua_State* L)
 
 	AI_TryToReloadWeapon(AIL_ent, container);
 	return 0;
+}
+
+/**
+ * @brief Check if actor has weapons
+ */
+static int AIL_isarmed (lua_State* L)
+{
+	lua_pushboolean(L, AIL_ent->getRightHandItem() ? 1 : 0);
+	lua_pushboolean(L, AIL_ent->getLeftHandItem() ? 1 : 0);
+	return 2;
+}
+
+/**
+ * @brief Actor tries to grab a weapon from inventory
+ */
+static int AIL_getweapon (lua_State* L)
+{
+	lua_pushboolean(L, G_ClientGetWeaponFromInventory(AIL_ent));
+	return 1;
 }
 
 /**
