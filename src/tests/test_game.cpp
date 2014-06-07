@@ -330,7 +330,7 @@ TEST_F(GameTest, InventoryWithTwoDiedAliensOnTheSameGridTile)
 		ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_BACKPACK), 1) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
 		Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->def()->name);
 		invlist = actor->getContainer(CID_BACKPACK);
-		ASSERT_TRUE(nullptr == invlist);
+		ASSERT_TRUE(nullptr != invlist);
 	}
 }
 
