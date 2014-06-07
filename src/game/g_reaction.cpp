@@ -861,7 +861,7 @@ bool ReactionFire::checkExecution (const Edict* target, int step)
 		if (!rft.hasExpired(shooter, target, 0))
 			continue;
 		if (!rf.tryToShoot(shooter, target)) {
-			G_ReactionFireNofityClientRFAborted(shooter, target, step);
+			G_ReactionFireNotifyClientRFAborted(shooter, target, step);
 			continue;
 		}
 		rft.advance(shooter, tus);
@@ -925,12 +925,12 @@ bool G_ReactionFireOnMovement (Actor* target, int step)
 	return fired;
 }
 
-static void G_ReactionFireNofityClientStartShot (const Edict* target)
+static void G_ReactionFireNotifyClientStartShot (const Edict* target)
 {
 	rft.notifyClientMove(target, MAX_ROUTE, true);
 }
 
-static void G_ReactionFireNofityClientEndShot (const Edict* target)
+static void G_ReactionFireNotifyClientEndShot (const Edict* target)
 {
 	rft.notifyClientMove(target, MAX_ROUTE, false);
 }
@@ -946,7 +946,7 @@ void G_ReactionFirePreShot (const Actor* target, const int fdTime)
 	bool repeat = true;
 
 	/* Check to see whether this triggers any reaction fire */
-	G_ReactionFireNofityClientStartShot(target);
+	G_ReactionFireNotifyClientStartShot(target);
 	rf.updateAllTargets(target);
 	rf.notifyClientOnShot(target, fdTime);
 
@@ -964,7 +964,7 @@ void G_ReactionFirePreShot (const Actor* target, const int fdTime)
 			if (!rft.hasExpired(shooter, target, fdTime))
 				continue;
 			if (!rf.tryToShoot(shooter, target)) {
-				G_ReactionFireNofityClientRFAborted(shooter, target, MAX_ROUTE);
+				G_ReactionFireNotifyClientRFAborted(shooter, target, MAX_ROUTE);
 				continue;
 			}
 			repeat = true;
@@ -994,7 +994,7 @@ void G_ReactionFirePostShot (Actor* target)
 	/* Check to see whether this resolves any reaction fire */
 	rf.notifyClientOnShot(target, 0);
 	rf.checkExecution(target, MAX_ROUTE);
-	G_ReactionFireNofityClientEndShot(target);
+	G_ReactionFireNotifyClientEndShot(target);
 }
 
 /**
@@ -1022,18 +1022,18 @@ void G_ReactionFireReset (int team)
 	}
 }
 
-void G_ReactionFireNofityClientStartMove (const Actor* target)
+void G_ReactionFireNotifyClientStartMove (const Actor* target)
 {
 	/* note that this is sent _before_ the actual move event, so we can't use the step number */
 	rft.notifyClientMove(target, MAX_ROUTE, true);
 }
 
-void G_ReactionFireNofityClientEndMove (const Actor* target)
+void G_ReactionFireNotifyClientEndMove (const Actor* target)
 {
 	rft.notifyClientMove(target, target->moveinfo.steps - 1, false);
 }
 
-void G_ReactionFireNofityClientRFAborted (const Actor* shooter, const Edict* target, int step)
+void G_ReactionFireNotifyClientRFAborted (const Actor* shooter, const Edict* target, int step)
 {
 	rft.notifyClientRFAborted(shooter, target, step);
 }

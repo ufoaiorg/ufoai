@@ -373,7 +373,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 			G_EventMoveCameraTo(G_VisToPM(actor->visflags & ~G_TeamToVisMask(actor->getTeam())), actor->pos);
 
 		actor->moveinfo.steps = 0;
-		G_ReactionFireNofityClientStartMove(actor);
+		G_ReactionFireNotifyClientStartMove(actor);
 		while (numdv > 0) {
 			int step = actor->moveinfo.steps;
 			/* A flag to see if we needed to change crouch state */
@@ -527,5 +527,5 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 		G_ClientStateChange(player, actor, STATE_CROUCHED, true);
 	}
 
-	G_ReactionFireNofityClientEndMove(actor);
+	G_ReactionFireNotifyClientEndMove(actor);
 }

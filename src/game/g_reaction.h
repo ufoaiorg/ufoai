@@ -31,10 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void G_ReactionFirePreShot(const Actor* target, const int fdTime);
 void G_ReactionFirePostShot(Actor* target);
 void G_ReactionFireReset(int team);
-void G_ReactionFireNofityClientStartMove(const Actor* target);
-void G_ReactionFireNofityClientEndMove(const Actor* target);
+void G_ReactionFireNotifyClientStartMove(const Actor* target);
+void G_ReactionFireNotifyClientEndMove(const Actor* target);
 void G_ReactionFireSettingsUpdate(Actor* actor, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t* od);
-void G_ReactionFireNofityClientRFAborted(const Actor* shooter, const Edict* target, int step);
+void G_ReactionFireNotifyClientRFAborted(const Actor* shooter, const Edict* target, int step);
 bool G_ReactionFireSettingsReserveTUs(Actor* ent);
 bool G_ReactionFireOnMovement(Actor* target, int step);
 void G_ReactionFireOnEndTurn(void);
