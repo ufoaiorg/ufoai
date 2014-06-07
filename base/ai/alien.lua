@@ -72,6 +72,6 @@ function engage( target )
 	else
 		hide_pos:goto()
 	end
-	ai.crouch()
+	ai.crouch(true)
 	target:face()
 end

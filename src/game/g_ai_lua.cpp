@@ -688,15 +688,16 @@ static int AIL_see (lua_State* L)
 }
 
 /**
- * @brief Toggles crouch state with true/false and returns current crouch state.
+ * @brief Requests a crouch state (with true/false) and returns current crouch state.
  */
 static int AIL_crouch (lua_State* L)
 {
 	if (lua_gettop(L) > 0) {
 		if (lua_isboolean(L, 1)) {
-			const int state = lua_toboolean(L, 1);
-			G_ClientStateChange(*AIL_player, AIL_ent, STATE_CROUCHED,
-				(state) ? true : false);
+			const bool reqState = lua_toboolean(L, 1);
+			const bool state = AIL_ent->isCrouched();
+			if (reqState != state)
+				G_ClientStateChange(*AIL_player, AIL_ent, STATE_CROUCHED, false);
 		} else
 			AIL_invalidparameter(1);
 	}

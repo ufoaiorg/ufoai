@@ -92,5 +92,5 @@ function hide(team)
 	if pos then
 		pos:goto()
 	end
-	ai.crouch(false)
+	ai.crouch(true)
 end
