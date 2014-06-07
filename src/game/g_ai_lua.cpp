@@ -781,14 +781,15 @@ static int AIL_roundsleft (lua_State* L)
 {
 	/* Right hand */
 	const Item* rightHand = AIL_ent->getRightHandItem();
-	if (rightHand && rightHand->isReloadable())
+	if (rightHand && (rightHand->def()->ammo < 1 || rightHand->getAmmoLeft() > 0))
 		lua_pushnumber(L, rightHand->getAmmoLeft());
 	else
+		/* Currently unusable */
 		lua_pushnil(L);
 
 	/* Left hand */
 	const Item* leftHand = AIL_ent->getLeftHandItem();
-	if (leftHand && leftHand->isReloadable())
+	if (leftHand && (leftHand->def()->ammo < 1 || leftHand->getAmmoLeft() > 0))
 		lua_pushnumber(L, leftHand->getAmmoLeft());
 	else
 		lua_pushnil(L);
