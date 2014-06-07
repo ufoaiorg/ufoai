@@ -107,7 +107,7 @@ TEST_F(GameTest, CountSpawnpoints)
 			continue;
 		if (filterId && !Q_streq(filterId, md->id))
 			continue;
-		if (md->aircraft)	/* if the mapdef has a list of dropships, let's asume they bring their own spawnpoints */
+		if (md->aircraft)	/* if the mapdef has a list of dropships, let's assume they bring their own spawnpoints */
 			continue;
 
 		mapCount++;
@@ -320,7 +320,7 @@ TEST_F(GameTest, InventoryWithTwoDiedAliensOnTheSameGridTile)
 	ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_BACKPACK), 0);
 
 	invlist = actor->getContainer(CID_BACKPACK);
-	ASSERT_TRUE(nullptr != invlist);
+	ASSERT_TRUE(nullptr == invlist);
 
 	count = GAMETEST_GetItemCount(actor, CID_FLOOR);
 	if (count > 0) {
@@ -335,7 +335,7 @@ TEST_F(GameTest, InventoryWithTwoDiedAliensOnTheSameGridTile)
 			ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_BACKPACK), 1) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
 			Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->def()->name);
 			invlist = actor->getContainer(CID_BACKPACK);
-			ASSERT_TRUE(nullptr != invlist);
+			ASSERT_TRUE(nullptr == invlist);
 		}
 	}
 }
