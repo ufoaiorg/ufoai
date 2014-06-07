@@ -1410,7 +1410,7 @@ void AI_TurnIntoDirection (Actor* actor, const pos3_t pos)
 /**
  * @brief if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it
  */
-static bool AI_TryToReloadWeapon (Actor* actor, containerIndex_t containerID)
+bool AI_TryToReloadWeapon (Actor* actor, containerIndex_t containerID)
 {
 	if (G_ClientCanReload(actor, containerID)) {
 		return G_ActorReload(actor, INVDEF(containerID));
