@@ -120,11 +120,12 @@ TEST_F(GameTest, CountSpawnpoints)
 		Com_Printf("testCountSpawnpoints: Mapdef %s (seed %u)\n", md->id, seed);
 
 		const char* asmName = (const char*)LIST_GetByIdx(md->params, 0);
-		ASSERT_TRUE(asmName != nullptr);
+		ASSERT_TRUE(asmName != nullptr) << "No assembly name given for " << md->id;
 		SV_Map(true, md->mapTheme, asmName, false);
 
-		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, level.num_spawnpoints[TEAM_PHALANX]);
-		ASSERT_TRUE(level.num_spawnpoints[TEAM_PHALANX] >= 12) << "Map " << md->mapTheme << " only " << level.num_spawnpoints[TEAM_PHALANX] << " spawnpoints!";
+		const int spawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_PHALANX]);
+		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
+		ASSERT_TRUE(level.num_spawnpoints[TEAM_PHALANX] >= 12) << "Map " << md->mapTheme << " only " << spawnPoints << " spawnpoints";
 	}
 }
 
@@ -238,10 +239,10 @@ TEST_F(GameTest, InventoryForDiedAlien)
 
 	/* drop everything to floor to make sure we have space in the backpack */
 	G_InventoryToFloor(actor);
-	ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_BACKPACK), 0);
+	ASSERT_EQ(0, GAMETEST_GetItemCount(actor, CID_BACKPACK));
 
 	invlist = actor->getContainer(CID_BACKPACK);
-	ASSERT_TRUE(nullptr != invlist);
+	ASSERT_TRUE(nullptr == invlist);
 	count = GAMETEST_GetItemCount(actor, CID_FLOOR);
 	if (count > 0) {
 		Item* entryToMove = actor->getFloor();
@@ -251,9 +252,9 @@ TEST_F(GameTest, InventoryForDiedAlien)
 			return;
 		Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->def()->name, tx, ty);
 		ASSERT_TRUE(G_ActorInvMove(actor, INVDEF(CID_FLOOR), entryToMove, INVDEF(CID_BACKPACK), tx, ty, false));
-		ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_FLOOR), count - 1) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
+		ASSERT_EQ(count - 1, GAMETEST_GetItemCount(actor, CID_FLOOR)) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
 		Com_Printf("item %s was removed from floor\n", entryToMove->def()->name);
-		ASSERT_EQ(GAMETEST_GetItemCount(actor, CID_BACKPACK), 1) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
+		ASSERT_EQ(1, GAMETEST_GetItemCount(actor, CID_BACKPACK)) << "item " << entryToMove->def()->name << " could not get moved successfully from floor into backpack";
 		Com_Printf("item %s was moved successfully into the backpack\n", entryToMove->def()->name);
 		invlist = actor->getContainer(CID_BACKPACK);
 		ASSERT_TRUE(nullptr != invlist);
