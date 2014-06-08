@@ -37,7 +37,6 @@ CFLAGS += -Wno-format-zero-length
 # clang stuff
 ifneq (,$(findstring clang,$(CXX)))
   CFLAGS += -Wno-extended-offsetof
-  CFLAGS += -Wno-c++11-extensions
   CFLAGS += -Wno-cast-align
 endif
 
@@ -61,4 +60,5 @@ CCFLAGS += -std=c99
 #CCFLAGS += -Wdeclaration-after-statement
 #CCFLAGS += -Wc++-compat
 
+CXXFLAGS += -std=c++11
 CXXFLAGS += -Wnon-virtual-dtor
