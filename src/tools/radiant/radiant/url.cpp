@@ -24,7 +24,7 @@
 #include "iradiant.h"
 #include "gtkutil/dialog.h"
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
 #include <gdk/gdkwin32.h>
 #include <shellapi.h>
 static inline bool open_url(const char* url) {
@@ -45,6 +45,8 @@ static inline bool open_url(const char* url) {
 	snprintf (command, sizeof(command), "open \"%s\" &", url);
 	return (system(command) == 0);
 }
+#else
+#error "unknown platform"
 #endif
 
 void OpenURL (const char* url)
