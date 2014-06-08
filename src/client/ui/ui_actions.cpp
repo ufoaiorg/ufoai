@@ -451,6 +451,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 	newContext.paramNumber = 0;
 	newContext.varNumber = 0;
 	newContext.varPosition = context->varPosition + context->varNumber;
+	newContext.breakLoop = false;
 
 	if (action->type == EA_LISTENER) {
 		newContext.useCmdParam = context->useCmdParam;
