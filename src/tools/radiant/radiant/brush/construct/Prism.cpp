@@ -1,6 +1,7 @@
 #include "Prism.h"
 
 #include "radiant_i18n.h"
+#include "math/pi.h"
 
 #include "gtkutil/dialog.h"
 
