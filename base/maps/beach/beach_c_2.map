@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -354,13 +355,13 @@
 // entity 1
 {
 "classname" "info_human_start"
-"origin" "48 144 156"
+"origin" "80 208 156"
 "angle" "-90"
 }
 // entity 2
 {
 "classname" "info_human_start"
-"origin" "208 112 156"
+"origin" "208 208 156"
 "angle" "-90"
 }
 // entity 3
@@ -651,4 +652,16 @@
 "spawnflags" "252"
 "skin" "0"
 "modelscale_vec" "2.0 2.0 3.0"
+}
+// entity 23
+{
+"classname" "info_human_start"
+"origin" "208 112 156"
+"angle" "-90"
+}
+// entity 24
+{
+"classname" "info_human_start"
+"origin" "48 144 156"
+"angle" "-90"
 }

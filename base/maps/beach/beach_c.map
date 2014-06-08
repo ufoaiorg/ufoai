@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -51,12 +52,24 @@
 // entity 1
 {
 "classname" "info_human_start"
-"origin" "48 48 156"
+"origin" "48 144 156"
 "angle" "-90"
 }
 // entity 2
 {
 "classname" "info_human_start"
+"origin" "208 144 156"
+"angle" "-90"
+}
+// entity 3
+{
+"classname" "info_human_start"
 "origin" "208 48 156"
+"angle" "-90"
+}
+// entity 4
+{
+"classname" "info_human_start"
+"origin" "48 48 156"
 "angle" "-90"
 }

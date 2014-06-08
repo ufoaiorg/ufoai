@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -96,13 +97,13 @@
 // entity 1
 {
 "classname" "info_human_start"
-"origin" "48 48 156"
+"origin" "48 176 156"
 "angle" "-90"
 }
 // entity 2
 {
 "classname" "info_human_start"
-"origin" "208 48 156"
+"origin" "208 112 156"
 "angle" "-90"
 }
 // entity 3
@@ -707,4 +708,16 @@
 "origin" "79 23 137"
 "model" "models/objects/vegi/tropic/tropic02.md2"
 "spawnflags" "252"
+}
+// entity 20
+{
+"classname" "info_human_start"
+"origin" "48 48 156"
+"angle" "-90"
+}
+// entity 21
+{
+"classname" "info_human_start"
+"origin" "208 48 156"
+"angle" "-90"
 }

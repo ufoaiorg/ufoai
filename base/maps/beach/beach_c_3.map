@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -69,13 +70,13 @@
 // entity 1
 {
 "classname" "info_human_start"
-"origin" "112 208 156"
+"origin" "80 240 156"
 "angle" "-90"
 }
 // entity 2
 {
 "classname" "info_human_start"
-"origin" "176 208 156"
+"origin" "144 240 156"
 "angle" "-90"
 }
 // entity 3
@@ -781,4 +782,16 @@
 ( 256 224 132 ) ( 224 224 132 ) ( 256 224 128 ) tex_common/nodraw 0 0 0 0.5 0.5 64512 0 0
 ( 224 224 128 ) ( 224 224 132 ) ( 256 192 128 ) tex_common/nodraw 0 0 0 0.5 0.5 64512 0 0
 }
+}
+// entity 8
+{
+"classname" "info_human_start"
+"origin" "176 208 156"
+"angle" "-90"
+}
+// entity 9
+{
+"classname" "info_human_start"
+"origin" "112 208 156"
+"angle" "-90"
 }
