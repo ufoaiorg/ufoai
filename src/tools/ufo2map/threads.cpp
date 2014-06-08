@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "bsp.h"
-#include <SDL.h>
+#include "../../shared/thread.h"
 
 #define	MAX_THREADS	8
 
@@ -147,11 +147,7 @@ static void RunThreads (void)
 	ThreadInit();
 
 	for (i = 0; i < threadstate.numthreads; i++)
-#if SDL_VERSION_ATLEAST(2,0,0)
-		threads[i] = SDL_CreateThread(ThreadWork, "CompileWorker", nullptr);
-#else
-		threads[i] = SDL_CreateThread(ThreadWork, nullptr);
-#endif
+		threads[i] = Com_CreateThread(ThreadWork, "CompileWorker");
 
 	for (i = 0; i < threadstate.numthreads; i++)
 		SDL_WaitThread(threads[i], nullptr);

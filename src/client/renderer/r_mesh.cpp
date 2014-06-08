@@ -320,6 +320,10 @@ void R_DrawModelDirect (modelInfo_t* mi, modelInfo_t* pmi, const char* tagname)
 		return;
 	}
 
+	/* not yet fully loaded, so skip the rendering */
+	if (!mi->model->loaded)
+		return;
+
 	skin = R_AliasModelState(mi->model, &mi->mesh, &mi->frame, &mi->oldframe, &mi->skin);
 	if (skin == nullptr) {
 		Com_Printf("Model '%s' is broken\n", mi->name);
@@ -396,7 +400,7 @@ void R_DrawModelParticle (modelInfo_t* mi)
 	mAliasMesh_t* mesh;
 
 	/* check if the model exists */
-	if (!mi->model)
+	if (!mi->model || !mi->model->loaded)
 		return;
 
 	skin = R_AliasModelState(mi->model, &mi->mesh, &mi->frame, &mi->oldframe, &mi->skin);
@@ -712,6 +716,8 @@ static void R_DrawMeshShadow (entity_t* e, const mAliasMesh_t* mesh)
  */
 void R_DrawAliasModel (entity_t* e)
 {
+	if (!e->model->loaded)
+		return;
 	mAliasModel_t* mod = &e->model->alias;
 	/* the values are sane here already - see R_GetEntityLists */
 	const image_t* skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;

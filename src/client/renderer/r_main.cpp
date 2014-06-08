@@ -1293,6 +1293,7 @@ bool R_Init (void)
 	/* prevent reloading of some rendering cvars */
 	Cvar_ClearVars(CVAR_R_MASK);
 
+	R_ModelInit();
 	R_InitExtensions();
 	R_SetDefaultState();
 	R_InitPrograms();
@@ -1319,7 +1320,7 @@ void R_Shutdown (void)
 
 	R_ShutdownThreads();
 
-	R_ShutdownModels(true);
+	R_ModelShutdown();
 	R_ShutdownImages();
 
 	R_ShutdownPrograms();

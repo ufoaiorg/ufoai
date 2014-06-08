@@ -25,9 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "../../ports/system.h"
+#include "../../shared/thread.h"
 
 #include <unistd.h>
-#include <SDL_thread.h>
 
 renderer_threadstate_t r_threadstate;
 
@@ -82,9 +82,5 @@ void R_ShutdownThreads (void)
  */
 void R_InitThreads (void)
 {
-#if SDL_VERSION_ATLEAST(2,0,0)
-	r_threadstate.thread = SDL_CreateThread(R_RunThread, "RendererThread", nullptr);
-#else
-	r_threadstate.thread = SDL_CreateThread(R_RunThread, nullptr);
-#endif
+	r_threadstate.thread = Com_CreateThread(R_RunThread, "RendererThread");
 }

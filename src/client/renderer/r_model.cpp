@@ -105,29 +105,8 @@ model_t* R_AllocModelSlot (void)
 	return &r_models[r_numModels++];
 }
 
-/**
- * @brief Loads in a model for the given name
- * @param[in] filename Filename relative to base dir and with extension (models/model.md2)
- * @param[in,out] mod Structure to initialize
- * @return True if the loading was succeed. True or false structure mod was edited.
- */
-static bool R_LoadModel (model_t* mod, const char* filename)
+static void R_LoadModelAsync (model_t* mod, byte* buf, int modfilelen)
 {
-	byte* buf;
-	int modfilelen;
-	char animname[MAX_QPATH];
-
-	if (filename[0] == '\0')
-		Com_Error(ERR_FATAL, "R_ModForName: nullptr name");
-
-	/* load the file */
-	modfilelen = FS_LoadFile(filename, &buf);
-	if (!buf)
-		return false;
-
-	OBJZERO(*mod);
-	Q_strncpyz(mod->name, filename, sizeof(mod->name));
-
 	/* call the appropriate loader */
 	switch (LittleLong(*(unsigned* ) buf)) {
 	case IDALIASHEADER:
@@ -146,7 +125,7 @@ static bool R_LoadModel (model_t* mod, const char* filename)
 
 	default:
 	{
-		const char* ext = Com_GetExtension(filename);
+		const char* ext = Com_GetExtension(mod->name);
 		if (ext != nullptr && !Q_strcasecmp(ext, "obj"))
 			R_LoadObjModel(mod, buf, modfilelen);
 		else
@@ -155,6 +134,7 @@ static bool R_LoadModel (model_t* mod, const char* filename)
 	}
 
 	/* load the animations */
+	char animname[MAX_QPATH];
 	Com_StripExtension(mod->name, animname, sizeof(animname));
 	Com_DefaultExtension(animname, sizeof(animname), ".anm");
 
@@ -165,6 +145,32 @@ static bool R_LoadModel (model_t* mod, const char* filename)
 
 	FS_FreeFile(buf);
 
+	mod->loaded = true;
+}
+
+/**
+ * @brief Loads in a model for the given name
+ * @param[in] filename Filename relative to base dir and with extension (models/model.md2)
+ * @param[in,out] mod Structure to initialize
+ * @return True if the loading was succeed. True or false structure mod was edited.
+ */
+static bool R_LoadModel (model_t* mod, const char* filename)
+{
+	byte* buf;
+	int modfilelen;
+
+	if (filename[0] == '\0')
+		Com_Error(ERR_FATAL, "R_ModForName: nullptr name");
+
+	/* load the file */
+	modfilelen = FS_LoadFile(filename, &buf);
+	if (!buf)
+		return false;
+
+	OBJZERO(*mod);
+	Q_strncpyz(mod->name, filename, sizeof(mod->name));
+
+	R_LoadModelAsync(mod, buf, modfilelen);
 	return true;
 }
 
@@ -422,4 +428,13 @@ void R_ShutdownModels (bool complete)
 			Mem_FreeTag(vid_lightPool, 0);
 		r_numModels = r_numModelsStatic;
 	}
+}
+
+void R_ModelInit ()
+{
+}
+
+void R_ModelShutdown ()
+{
+	R_ShutdownModels(true);
 }

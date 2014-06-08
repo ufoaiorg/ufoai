@@ -51,6 +51,8 @@ typedef struct model_s {
 	AABB modBox;
 	float radius;
 
+	bool loaded;
+
 	/** solid volume for clipping */
 	bool clipbox;
 	vec3_t clipmins, clipmaxs;
@@ -79,6 +81,9 @@ model_t* R_FindModel(const char* name);
 bool R_ModelExists(const char* name);
 model_t* R_GetModel(const char* name);
 model_t* R_AllocModelSlot(void);
+
+void R_ModelInit();
+void R_ModelShutdown();
 
 /** @brief The world model(s) */
 extern model_t* r_mapTiles[MAX_MAPTILES];

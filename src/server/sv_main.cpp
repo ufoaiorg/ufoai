@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "sv_log.h"
 #include "../ports/system.h"
 #include "../shared/scopedmutex.h"
-#include <SDL.h>
+#include "../shared/thread.h"
 
 /** password for remote server commands */
 static cvar_t* rcon_password;
@@ -731,11 +731,7 @@ static void Master_Heartbeat (void)
 	if (masterServerHeartBeatThread != nullptr)
 		SDL_WaitThread(masterServerHeartBeatThread, nullptr);
 
-#if SDL_VERSION_ATLEAST(2,0,0)
-	masterServerHeartBeatThread = SDL_CreateThread(Master_HeartbeatThread, "HeartbeatThread", nullptr);
-#else
-	masterServerHeartBeatThread = SDL_CreateThread(Master_HeartbeatThread, nullptr);
-#endif
+	masterServerHeartBeatThread = Com_CreateThread(Master_HeartbeatThread, "HeartbeatThread");
 }
 
 /**

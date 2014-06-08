@@ -31,8 +31,8 @@
 #include "../common/grid.h"
 #include "../common/routing.h"
 #include "../ports/system.h"
+#include "../shared/thread.h"
 #include "../shared/scopedmutex.h"
-#include <SDL.h>
 
 /**
  * @brief Debug print to server console
@@ -895,10 +895,6 @@ void SV_InitGameProgs (void)
 
 	if (sv_threads->integer) {
 		svs.gameFrameCond = SDL_CreateCond();
-#if SDL_VERSION_ATLEAST(2,0,0)
-		svs.gameThread = SDL_CreateThread(SV_RunGameFrameThread, "GameThread", nullptr);
-#else
-		svs.gameThread = SDL_CreateThread(SV_RunGameFrameThread, nullptr);
-#endif
+		svs.gameThread = Com_CreateThread(SV_RunGameFrameThread, "GameThread");
 	}
 }
