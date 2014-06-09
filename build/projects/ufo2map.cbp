@@ -220,45 +220,20 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/libs/SDL/src/audio/SDL_wave.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/alsa/SDL_alsa_audio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/android/SDL_androidaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/arts/SDL_artsaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/bsd/SDL_bsdaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/coreaudio/SDL_coreaudio.h" />
 		<Unit filename="../../src/libs/SDL/src/audio/directsound/SDL_directsound.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/libs/SDL/src/audio/directsound/SDL_directsound.h" />
 		<Unit filename="../../src/libs/SDL/src/audio/directsound/directx.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/disk/SDL_diskaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/dsp/SDL_dspaudio.h" />
 		<Unit filename="../../src/libs/SDL/src/audio/dummy/SDL_dummyaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/esd/SDL_esdaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/fusionsound/SDL_fsaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/haiku/SDL_haikuaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/nacl/SDL_naclaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/nas/SDL_nasaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/paudio/SDL_paudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/psp/SDL_pspaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/pulseaudio/SDL_pulseaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/qsa/SDL_qsa_audio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/sndio/SDL_sndioaudio.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/sun/SDL_sunaudio.h" />
 		<Unit filename="../../src/libs/SDL/src/audio/winmm/SDL_winmm.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/libs/SDL/src/audio/winmm/SDL_winmm.h" />
-		<Unit filename="../../src/libs/SDL/src/audio/xaudio2/SDL_xaudio2_winrthelpers.h" />
-		<Unit filename="../../src/libs/SDL/src/core/android/SDL_android.h" />
-		<Unit filename="../../src/libs/SDL/src/core/linux/SDL_evdev.h" />
-		<Unit filename="../../src/libs/SDL/src/core/linux/SDL_udev.h" />
 		<Unit filename="../../src/libs/SDL/src/core/windows/SDL_windows.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/libs/SDL/src/core/windows/SDL_windows.h" />
-		<Unit filename="../../src/libs/SDL/src/core/winrt/SDL_winrtapp_common.h" />
-		<Unit filename="../../src/libs/SDL/src/core/winrt/SDL_winrtapp_direct3d.h" />
-		<Unit filename="../../src/libs/SDL/src/core/winrt/SDL_winrtapp_xaml.h" />
 		<Unit filename="../../src/libs/SDL/src/cpuinfo/SDL_cpuinfo.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -306,14 +281,10 @@
 		<Unit filename="../../src/libs/SDL/src/events/SDL_windowevents_c.h" />
 		<Unit filename="../../src/libs/SDL/src/events/blank_cursor.h" />
 		<Unit filename="../../src/libs/SDL/src/events/default_cursor.h" />
-		<Unit filename="../../src/libs/SDL/src/events/scancodes_darwin.h" />
-		<Unit filename="../../src/libs/SDL/src/events/scancodes_linux.h" />
 		<Unit filename="../../src/libs/SDL/src/events/scancodes_windows.h" />
-		<Unit filename="../../src/libs/SDL/src/events/scancodes_xfree86.h" />
 		<Unit filename="../../src/libs/SDL/src/file/SDL_rwops.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/libs/SDL/src/file/cocoa/SDL_rwopsbundlesupport.h" />
 		<Unit filename="../../src/libs/SDL/src/filesystem/windows/SDL_sysfilesystem.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -322,7 +293,6 @@
 		</Unit>
 		<Unit filename="../../src/libs/SDL/src/haptic/SDL_haptic_c.h" />
 		<Unit filename="../../src/libs/SDL/src/haptic/SDL_syshaptic.h" />
-		<Unit filename="../../src/libs/SDL/src/haptic/darwin/SDL_syshaptic_c.h" />
 		<Unit filename="../../src/libs/SDL/src/haptic/windows/SDL_syshaptic.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -336,10 +306,6 @@
 		</Unit>
 		<Unit filename="../../src/libs/SDL/src/joystick/SDL_joystick_c.h" />
 		<Unit filename="../../src/libs/SDL/src/joystick/SDL_sysjoystick.h" />
-		<Unit filename="../../src/libs/SDL/src/joystick/android/SDL_sysjoystick_c.h" />
-		<Unit filename="../../src/libs/SDL/src/joystick/darwin/SDL_sysjoystick_c.h" />
-		<Unit filename="../../src/libs/SDL/src/joystick/iphoneos/SDLUIAccelerationDelegate.h" />
-		<Unit filename="../../src/libs/SDL/src/joystick/linux/SDL_sysjoystick_c.h" />
 		<Unit filename="../../src/libs/SDL/src/joystick/windows/SDL_dxjoystick.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -403,13 +369,8 @@
 		<Unit filename="../../src/libs/SDL/src/loadso/windows/SDL_sysloadso.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/libs/SDL/src/main/haiku/SDL_BApp.h" />
-		<Unit filename="../../src/libs/SDL/src/main/haiku/SDL_BeApp.h" />
 		<Unit filename="../../src/libs/SDL/src/main/windows/SDL_windows_main.c">
 			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/SDL/src/main/windows/version.rc">
-			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="../../src/libs/SDL/src/power/SDL_power.c">
 			<Option compilerVar="CC" />
@@ -642,56 +603,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/libs/SDL/src/video/dummy/SDL_nullvideo.h" />
-		<Unit filename="../../src/libs/SDL/src/video/haiku/SDL_BWin.h" />
-		<Unit filename="../../src/libs/SDL/src/video/haiku/SDL_bclipboard.h" />
-		<Unit filename="../../src/libs/SDL/src/video/haiku/SDL_bevents.h" />
-		<Unit filename="../../src/libs/SDL/src/video/haiku/SDL_bframebuffer.h" />
-		<Unit filename="../../src/libs/SDL/src/video/haiku/SDL_bkeyboard.h" />
-		<Unit filename="../../src/libs/SDL/src/video/haiku/SDL_bmodes.h" />
-		<Unit filename="../../src/libs/SDL/src/video/haiku/SDL_bopengl.h" />
-		<Unit filename="../../src/libs/SDL/src/video/haiku/SDL_bvideo.h" />
-		<Unit filename="../../src/libs/SDL/src/video/haiku/SDL_bwindow.h" />
-		<Unit filename="../../src/libs/SDL/src/video/mir/SDL_mirdyn.h" />
-		<Unit filename="../../src/libs/SDL/src/video/mir/SDL_mirevents.h" />
-		<Unit filename="../../src/libs/SDL/src/video/mir/SDL_mirframebuffer.h" />
-		<Unit filename="../../src/libs/SDL/src/video/mir/SDL_mirmouse.h" />
-		<Unit filename="../../src/libs/SDL/src/video/mir/SDL_miropengl.h" />
-		<Unit filename="../../src/libs/SDL/src/video/mir/SDL_mirsym.h" />
-		<Unit filename="../../src/libs/SDL/src/video/mir/SDL_mirvideo.h" />
-		<Unit filename="../../src/libs/SDL/src/video/mir/SDL_mirwindow.h" />
-		<Unit filename="../../src/libs/SDL/src/video/nacl/SDL_naclevents_c.h" />
-		<Unit filename="../../src/libs/SDL/src/video/nacl/SDL_naclopengles.h" />
-		<Unit filename="../../src/libs/SDL/src/video/nacl/SDL_naclvideo.h" />
-		<Unit filename="../../src/libs/SDL/src/video/nacl/SDL_naclwindow.h" />
-		<Unit filename="../../src/libs/SDL/src/video/pandora/SDL_pandora.h" />
-		<Unit filename="../../src/libs/SDL/src/video/pandora/SDL_pandora_events.h" />
-		<Unit filename="../../src/libs/SDL/src/video/psp/SDL_pspevents_c.h" />
-		<Unit filename="../../src/libs/SDL/src/video/psp/SDL_pspgl_c.h" />
-		<Unit filename="../../src/libs/SDL/src/video/psp/SDL_pspmouse_c.h" />
-		<Unit filename="../../src/libs/SDL/src/video/psp/SDL_pspvideo.h" />
-		<Unit filename="../../src/libs/SDL/src/video/raspberry/SDL_rpievents_c.h" />
-		<Unit filename="../../src/libs/SDL/src/video/raspberry/SDL_rpimouse.h" />
-		<Unit filename="../../src/libs/SDL/src/video/raspberry/SDL_rpiopengles.h" />
-		<Unit filename="../../src/libs/SDL/src/video/raspberry/SDL_rpivideo.h" />
-		<Unit filename="../../src/libs/SDL/src/video/uikit/SDL_uikitappdelegate.h" />
-		<Unit filename="../../src/libs/SDL/src/video/uikit/SDL_uikitevents.h" />
-		<Unit filename="../../src/libs/SDL/src/video/uikit/SDL_uikitmessagebox.h" />
-		<Unit filename="../../src/libs/SDL/src/video/uikit/SDL_uikitmodes.h" />
-		<Unit filename="../../src/libs/SDL/src/video/uikit/SDL_uikitopengles.h" />
-		<Unit filename="../../src/libs/SDL/src/video/uikit/SDL_uikitopenglview.h" />
-		<Unit filename="../../src/libs/SDL/src/video/uikit/SDL_uikitvideo.h" />
-		<Unit filename="../../src/libs/SDL/src/video/uikit/SDL_uikitview.h" />
-		<Unit filename="../../src/libs/SDL/src/video/uikit/SDL_uikitviewcontroller.h" />
-		<Unit filename="../../src/libs/SDL/src/video/uikit/SDL_uikitwindow.h" />
-		<Unit filename="../../src/libs/SDL/src/video/uikit/keyinfotable.h" />
-		<Unit filename="../../src/libs/SDL/src/video/wayland/SDL_waylanddyn.h" />
-		<Unit filename="../../src/libs/SDL/src/video/wayland/SDL_waylandevents_c.h" />
-		<Unit filename="../../src/libs/SDL/src/video/wayland/SDL_waylandmouse.h" />
-		<Unit filename="../../src/libs/SDL/src/video/wayland/SDL_waylandopengles.h" />
-		<Unit filename="../../src/libs/SDL/src/video/wayland/SDL_waylandsym.h" />
-		<Unit filename="../../src/libs/SDL/src/video/wayland/SDL_waylandtouch.h" />
-		<Unit filename="../../src/libs/SDL/src/video/wayland/SDL_waylandvideo.h" />
-		<Unit filename="../../src/libs/SDL/src/video/wayland/SDL_waylandwindow.h" />
 		<Unit filename="../../src/libs/SDL/src/video/windows/SDL_msctf.h" />
 		<Unit filename="../../src/libs/SDL/src/video/windows/SDL_vkeys.h" />
 		<Unit filename="../../src/libs/SDL/src/video/windows/SDL_windowsclipboard.c">
@@ -743,29 +654,6 @@
 		</Unit>
 		<Unit filename="../../src/libs/SDL/src/video/windows/SDL_windowswindow.h" />
 		<Unit filename="../../src/libs/SDL/src/video/windows/wmmsg.h" />
-		<Unit filename="../../src/libs/SDL/src/video/winrt/SDL_winrtevents_c.h" />
-		<Unit filename="../../src/libs/SDL/src/video/winrt/SDL_winrtmessagebox.h" />
-		<Unit filename="../../src/libs/SDL/src/video/winrt/SDL_winrtmouse_c.h" />
-		<Unit filename="../../src/libs/SDL/src/video/winrt/SDL_winrtopengles.h" />
-		<Unit filename="../../src/libs/SDL/src/video/winrt/SDL_winrtvideo_cpp.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11clipboard.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11dyn.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11events.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11framebuffer.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11keyboard.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11messagebox.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11modes.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11mouse.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11opengl.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11opengles.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11shape.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11sym.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11touch.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11video.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11window.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/SDL_x11xinput2.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/edid.h" />
-		<Unit filename="../../src/libs/SDL/src/video/x11/imKStoUCS.h" />
 		<Unit filename="../../src/libs/jpeg/cderror.h" />
 		<Unit filename="../../src/libs/jpeg/cdjpeg.h" />
 		<Unit filename="../../src/libs/jpeg/jaricom.c">
