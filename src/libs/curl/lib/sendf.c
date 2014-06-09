@@ -5,7 +5,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2010, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2014, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -20,45 +20,24 @@
  *
  ***************************************************************************/
 
-#include "setup.h"
-
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <errno.h>
-
-#ifdef HAVE_SYS_SOCKET_H
-#include <sys/socket.h> /* required for send() & recv() prototypes */
-#endif
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
+#include "curl_setup.h"
 
 #include <curl/curl.h>
+
 #include "urldata.h"
 #include "sendf.h"
 #include "connect.h"
-#include "sslgen.h"
+#include "vtls/vtls.h"
 #include "ssh.h"
 #include "multiif.h"
-#include "rtsp.h"
+#include "non-ascii.h"
 
 #define _MPRINTF_REPLACE /* use the internal *printf() functions */
 #include <curl/mprintf.h>
 
-/* the krb4 functions only exists for FTP and if krb4 or gssapi is defined */
-#if !defined(CURL_DISABLE_FTP) && (defined(HAVE_KRB4) || defined(HAVE_GSSAPI))
-#include "krb4.h"
-#else
-#define Curl_sec_send(a,b,c,d) -1
-#define Curl_sec_read(a,b,c,d) -1
-#endif
-
-#include <string.h>
 #include "curl_memory.h"
 #include "strerror.h"
-#include "easyif.h" /* for the Curl_convert_from_network prototype */
+
 /* The last #include file should be: */
 #include "memdebug.h"
 
@@ -79,7 +58,7 @@ static size_t convert_lineends(struct SessionHandle *data,
     return(size);
   }
 
-  if(data->state.prev_block_had_trailing_cr == TRUE) {
+  if(data->state.prev_block_had_trailing_cr) {
     /* The previous block of incoming data
        had a trailing CR, which was turned into a LF. */
     if(*startPtr == '\n') {
@@ -270,7 +249,7 @@ CURLcode Curl_write(struct connectdata *conn,
 
   default:
     /* we got a specific curlcode, forward it */
-    return (CURLcode)curlcode;
+    return curlcode;
   }
 }
 
@@ -298,7 +277,8 @@ ssize_t Curl_send_plain(struct connectdata *conn, int num,
       /* this is just a case of EWOULDBLOCK */
       bytes_written=0;
       *code = CURLE_AGAIN;
-    } else {
+    }
+    else {
       failf(conn->data, "Send failure: %s",
             Curl_strerror(conn, err));
       conn->data->state.os_errno = err;
@@ -353,7 +333,8 @@ ssize_t Curl_recv_plain(struct connectdata *conn, int num, char *buf,
       ) {
       /* this is just a case of EWOULDBLOCK */
       *code = CURLE_AGAIN;
-    } else {
+    }
+    else {
       failf(conn->data, "Recv failure: %s",
             Curl_strerror(conn, err));
       conn->data->state.os_errno = err;
@@ -441,15 +422,13 @@ CURLcode Curl_client_write(struct connectdata *conn,
   }
 
   if(type & CLIENTWRITE_BODY) {
-    if((conn->protocol&PROT_FTP) && conn->proto.ftpc.transfertype == 'A') {
-#ifdef CURL_DOES_CONVERSIONS
+    if((conn->handler->protocol&PROTO_FAMILY_FTP) &&
+       conn->proto.ftpc.transfertype == 'A') {
       /* convert from the network encoding */
-      size_t rc;
-      rc = Curl_convert_from_network(data, ptr, len);
+      CURLcode rc = Curl_convert_from_network(data, ptr, len);
       /* Curl_convert_from_network calls failf if unsuccessful */
-      if(rc != CURLE_OK)
+      if(rc)
         return rc;
-#endif /* CURL_DOES_CONVERSIONS */
 
 #ifdef CURL_DO_LINEEND_CONV
       /* convert end-of-line markers */
@@ -465,10 +444,18 @@ CURLcode Curl_client_write(struct connectdata *conn,
       wrote = len;
     }
 
-    if(CURL_WRITEFUNC_PAUSE == wrote)
-      return pausewrite(data, type, ptr, len);
-
-    if(wrote != len) {
+    if(CURL_WRITEFUNC_PAUSE == wrote) {
+      if(conn->handler->flags & PROTOPT_NONETWORK) {
+        /* Protocols that work without network cannot be paused. This is
+           actually only FILE:// just now, and it can't pause since the
+           transfer isn't done using the "normal" procedure. */
+        failf(data, "Write callback asked for PAUSE when not supported!");
+        return CURLE_WRITE_ERROR;
+      }
+      else
+        return pausewrite(data, type, ptr, len);
+    }
+    else if(wrote != len) {
       failf(data, "Failed writing body (%zu != %zu)", wrote, len);
       return CURLE_WRITE_ERROR;
     }
@@ -533,17 +520,16 @@ CURLcode Curl_read_plain(curl_socket_t sockfd,
  * Returns a regular CURLcode value.
  */
 CURLcode Curl_read(struct connectdata *conn, /* connection data */
-              curl_socket_t sockfd,     /* read from this socket */
-              char *buf,                /* store read data here */
-              size_t sizerequested,     /* max amount to read */
-              ssize_t *n)               /* amount bytes read */
+                   curl_socket_t sockfd,     /* read from this socket */
+                   char *buf,                /* store read data here */
+                   size_t sizerequested,     /* max amount to read */
+                   ssize_t *n)               /* amount bytes read */
 {
   CURLcode curlcode = CURLE_RECV_ERROR;
   ssize_t nread = 0;
   size_t bytesfromsocket = 0;
   char *buffertofill = NULL;
-  bool pipelining = (bool)(conn->data->multi &&
-                     Curl_multi_canPipeline(conn->data->multi));
+  bool pipelining = Curl_multi_pipeline_enabled(conn->data->multi);
 
   /* Set 'num' to 0 or 1, depending on which socket that has been sent here.
      If it is the second socket, we set num to 1. Otherwise to 0. This lets
@@ -622,7 +608,7 @@ static int showit(struct SessionHandle *data, curl_infotype type,
       size_t i;
       for(i = 0; i < size-4; i++) {
         if(memcmp(&buf[i], "\x0d\x0a\x0d\x0a", 4) == 0) {
-          /* convert everthing through this CRLFCRLF but no further */
+          /* convert everything through this CRLFCRLF but no further */
           conv_size = i + 4;
           break;
         }

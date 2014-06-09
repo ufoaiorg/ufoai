@@ -1,5 +1,5 @@
-#ifndef __CURLX_H
-#define __CURLX_H
+#ifndef HEADER_CURL_CURLX_H
+#define HEADER_CURL_CURLX_H
 /***************************************************************************
  *                                  _   _ ____  _
  *  Project                     ___| | | |  _ \| |
@@ -89,7 +89,7 @@
 
 #ifdef ENABLE_CURLX_PRINTF
 /* If this define is set, we define all "standard" printf() functions to use
-   the curlx_* version instead. It makes the source code transparant and
+   the curlx_* version instead. It makes the source code transparent and
    easier to understand/patch. Undefine them first in case _MPRINTF_REPLACE
    is set. */
 # undef printf
@@ -115,4 +115,5 @@
 # define vaprintf curlx_mvaprintf
 #endif /* ENABLE_CURLX_PRINTF */
 
-#endif /* __CURLX_H */
+#endif /* HEADER_CURL_CURLX_H */
+

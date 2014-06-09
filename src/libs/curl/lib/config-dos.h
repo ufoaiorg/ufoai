@@ -1,5 +1,26 @@
-#ifndef HEADER_CONFIG_DOS_H
-#define HEADER_CONFIG_DOS_H
+#ifndef HEADER_CURL_CONFIG_DOS_H
+#define HEADER_CURL_CONFIG_DOS_H
+/***************************************************************************
+ *                                  _   _ ____  _
+ *  Project                     ___| | | |  _ \| |
+ *                             / __| | | | |_) | |
+ *                            | (__| |_| |  _ <| |___
+ *                             \___|\___/|_| \_\_____|
+ *
+ * Copyright (C) 1998 - 2013, Daniel Stenberg, <daniel@haxx.se>, et al.
+ *
+ * This software is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution. The terms
+ * are also available at http://curl.haxx.se/docs/copyright.html.
+ *
+ * You may opt to use, copy, modify, merge, publish, distribute and/or sell
+ * copies of the Software, and permit persons to whom the Software is
+ * furnished to do so, under the terms of the COPYING file.
+ *
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
+ * KIND, either express or implied.
+ *
+ ***************************************************************************/
 
 
 /* ================================================================ */
@@ -19,6 +40,7 @@
 #define PACKAGE  "curl"
 
 #define HAVE_ARPA_INET_H       1
+#define HAVE_ERRNO_H           1
 #define HAVE_FCNTL_H           1
 #define HAVE_GETADDRINFO       1
 #define HAVE_GETNAMEINFO       1
@@ -57,7 +79,6 @@
 #define HAVE_SYS_SOCKET_H      1
 #define HAVE_SYS_STAT_H        1
 #define HAVE_SYS_TYPES_H       1
-#define HAVE_TERMIOS_H         1
 #define HAVE_TIME_H            1
 #define HAVE_UNISTD_H          1
 
@@ -127,7 +148,7 @@
 
 #if defined(__HIGHC__) || \
     (defined(__GNUC__) && (__GNUC__ < 4))
-#define ssize_t    int
+  #define ssize_t  int
 #endif
 
 #define CURL_CA_BUNDLE  getenv("CURL_CA_BUNDLE")
@@ -140,11 +161,8 @@
   #define HAVE_SIGACTION  1
   #define HAVE_SIGSETJMP  1
   #define HAVE_SYS_TIME_H 1
+  #define HAVE_TERMIOS_H  1
   #define HAVE_VARIADIC_MACROS_GCC 1
-
-  #if (DJGPP_MINOR >= 4)
-    #define HAVE_STRLCAT  1
-  #endif
 
   /* Because djgpp <= 2.03 doesn't have snprintf() etc. */
   #if (DJGPP_MINOR < 4)
@@ -156,15 +174,15 @@
 
 #elif defined(__HIGHC__)
   #define HAVE_SYS_TIME_H 1
+  #define strerror(e) strerror_s_((e))
 #endif
 
 #ifdef MSDOS  /* Watt-32 */
-  #define HAVE_CLOSESOCKET_CAMEL  1
-  #define CloseSocket(s)          close_s((s))
+  #define HAVE_CLOSE_S    1
 #endif
 
 #undef word
 #undef byte
 
-#endif /* HEADER_CONFIG_DOS_H */
+#endif /* HEADER_CURL_CONFIG_DOS_H */
 

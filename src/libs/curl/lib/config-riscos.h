@@ -1,4 +1,31 @@
-/* curl_config.h.in.  Generated automatically from configure.in by autoheader.  */
+#ifndef HEADER_CURL_CONFIG_RISCOS_H
+#define HEADER_CURL_CONFIG_RISCOS_H
+/***************************************************************************
+ *                                  _   _ ____  _
+ *  Project                     ___| | | |  _ \| |
+ *                             / __| | | | |_) | |
+ *                            | (__| |_| |  _ <| |___
+ *                             \___|\___/|_| \_\_____|
+ *
+ * Copyright (C) 1998 - 2013, Daniel Stenberg, <daniel@haxx.se>, et al.
+ *
+ * This software is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution. The terms
+ * are also available at http://curl.haxx.se/docs/copyright.html.
+ *
+ * You may opt to use, copy, modify, merge, publish, distribute and/or sell
+ * copies of the Software, and permit persons to whom the Software is
+ * furnished to do so, under the terms of the COPYING file.
+ *
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
+ * KIND, either express or implied.
+ *
+ ***************************************************************************/
+
+/* ================================================================ */
+/*               Hand crafted config file for RISC OS               */
+/* ================================================================ */
+
 /* Name of this package! */
 #undef PACKAGE
 
@@ -10,6 +37,9 @@
 
 /* Define cpu-machine-OS */
 #define OS "ARM-RISC OS"
+
+/* Define if you want the built-in manual */
+#define USE_MANUAL
 
 /* Define if you have the gethostbyaddr_r() function with 5 arguments */
 #undef HAVE_GETHOSTBYADDR_R_5
@@ -53,8 +83,8 @@
 /* Define if you want to enable IPv6 support */
 #undef ENABLE_IPV6
 
-/* Define to 1 if you have the alarm function. */
-#define HAVE_ALARM 1
+/* Define if you have the alarm function. */
+#define HAVE_ALARM
 
 /* Define if you have the <alloca.h> header file. */
 #define HAVE_ALLOCA_H
@@ -71,11 +101,17 @@
 /* Define if you have the <des.h> header file. */
 #undef HAVE_DES_H
 
+/* Define if you have the <errno.h> header file. */
+#define HAVE_ERRNO_H
+
 /* Define if you have the <err.h> header file. */
 #undef HAVE_ERR_H
 
 /* Define if you have the <fcntl.h> header file. */
 #define HAVE_FCNTL_H
+
+/* Define if you have the `ftruncate' function. */
+#define HAVE_FTRUNCATE
 
 /* Define if getaddrinfo exists and works */
 #define HAVE_GETADDRINFO
@@ -120,7 +156,7 @@
 #define HAVE_INTTYPES_H
 
 /* Define if you have the <io.h> header file. */
-#define HAVE_IO_H
+#undef HAVE_IO_H
 
 /* Define if you have the `krb_get_our_ip_for_realm' function. */
 #undef HAVE_KRB_GET_OUR_IP_FOR_REALM
@@ -268,9 +304,6 @@
 
 /* Define if you have the <string.h> header file. */
 #define HAVE_STRING_H
-
-/* Define if you have the `strlcat' function. */
-#undef HAVE_STRLCAT
 
 /* Define if you have the `strlcpy' function. */
 #undef HAVE_STRLCPY
@@ -438,8 +471,8 @@
 /* Define to the type pointed by arg 2 for recvfrom. */
 #define RECVFROM_TYPE_ARG2 void
 
-/* Define to 1 if the type pointed by arg 2 for recvfrom is void. */
-#define RECVFROM_TYPE_ARG2_IS_VOID 1
+/* Define if the type pointed by arg 2 for recvfrom is void. */
+#define RECVFROM_TYPE_ARG2_IS_VOID
 
 /* Define to the type of arg 3 for recvfrom. */
 #define RECVFROM_TYPE_ARG3 size_t
@@ -476,3 +509,5 @@
 
 /* Define to the function return type for send. */
 #define SEND_TYPE_RETV ssize_t
+
+#endif /* HEADER_CURL_CONFIG_RISCOS_H */

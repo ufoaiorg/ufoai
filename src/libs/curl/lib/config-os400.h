@@ -1,5 +1,29 @@
+#ifndef HEADER_CURL_CONFIG_OS400_H
+#define HEADER_CURL_CONFIG_OS400_H
+/***************************************************************************
+ *                                  _   _ ____  _
+ *  Project                     ___| | | |  _ \| |
+ *                             / __| | | | |_) | |
+ *                            | (__| |_| |  _ <| |___
+ *                             \___|\___/|_| \_\_____|
+ *
+ * Copyright (C) 1998 - 2013, Daniel Stenberg, <daniel@haxx.se>, et al.
+ *
+ * This software is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution. The terms
+ * are also available at http://curl.haxx.se/docs/copyright.html.
+ *
+ * You may opt to use, copy, modify, merge, publish, distribute and/or sell
+ * copies of the Software, and permit persons to whom the Software is
+ * furnished to do so, under the terms of the COPYING file.
+ *
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
+ * KIND, either express or implied.
+ *
+ ***************************************************************************/
+
 /* ================================================================ */
-/*    lib/config-os400.h - Hand crafted config file for OS/400      */
+/*                Hand crafted config file for OS/400               */
 /* ================================================================ */
 
 #pragma enum(int)
@@ -75,6 +99,9 @@
 
 /* Define if you have the <des.h> header file. */
 #undef HAVE_DES_H
+
+/* Define if you have the <errno.h> header file. */
+#define HAVE_ERRNO_H
 
 /* Define if you have the <err.h> header file. */
 #undef HAVE_ERR_H
@@ -250,29 +277,32 @@
 /* Define if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H
 
+
+/* The following define is needed on OS400 to enable strcmpi(), stricmp() and
+   strdup(). */
+#define __cplusplus__strings__
+
 /* Define if you have the `strcasecmp' function. */
 #undef HAVE_STRCASECMP
 
 /* Define if you have the `strcmpi' function. */
-#undef HAVE_STRCMPI
+#define HAVE_STRCMPI
+
+/* Define if you have the `stricmp' function. */
+#define HAVE_STRICMP
 
 /* Define if you have the `strdup' function. */
-#undef HAVE_STRDUP
+#define HAVE_STRDUP
+
 
 /* Define if you have the `strftime' function. */
 #define HAVE_STRFTIME
-
-/* Define if you have the `stricmp' function. */
-#undef HAVE_STRICMP
 
 /* Define if you have the <strings.h> header file. */
 #define HAVE_STRINGS_H
 
 /* Define if you have the <string.h> header file. */
 #define HAVE_STRING_H
-
-/* Define if you have the `strlcat' function. */
-#undef HAVE_STRLCAT
 
 /* Define if you have the `strlcpy' function. */
 #undef HAVE_STRLCPY
@@ -410,10 +440,7 @@
 /* To disable LDAP */
 #undef CURL_DISABLE_LDAP
 
-/* To avoid external use of library hidden symbols */
-#define CURL_HIDDEN_SYMBOLS
-
-/* External symbols need no special keyword. */
+/* Definition to make a library symbol externally visible. */
 #define CURL_EXTERN_SYMBOL
 
 /* Define if you have the ldap_url_parse procedure. */
@@ -502,7 +529,10 @@
 #define SEND_TYPE_RETV int
 
 /* Define to use the QsoSSL package. */
-#define USE_QSOSSL
+#undef USE_QSOSSL
+
+/* Define to use the GSKit package. */
+#define USE_GSKIT
 
 /* Use the system keyring as the default CA bundle. */
 #define CURL_CA_BUNDLE  "/QIBM/UserData/ICSS/Cert/Server/DEFAULT.KDB"
@@ -518,3 +548,4 @@
 #define qadrt_use_fread_inline         /* Generate fread() wrapper inline. */
 #define qadrt_use_fwrite_inline        /* Generate fwrite() wrapper inline. */
 
+#endif /* HEADER_CURL_CONFIG_OS400_H */

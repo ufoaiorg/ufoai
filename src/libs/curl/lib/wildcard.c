@@ -20,7 +20,8 @@
  *
  ***************************************************************************/
 
-#include "setup.h"
+#include "curl_setup.h"
+
 #include "wildcard.h"
 #include "llist.h"
 #include "fileinfo.h"

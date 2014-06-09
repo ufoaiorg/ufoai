@@ -7,7 +7,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2010, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2013, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -66,7 +66,7 @@ typedef enum {
   FTP_STOR_TYPE, /* set type when about to STOR a file */
   FTP_SIZE, /* get the remote file's size for head-like request */
   FTP_RETR_SIZE, /* get the remote file's size for RETR */
-  FTP_STOR_SIZE, /* get the size for (resumed) STOR */
+  FTP_STOR_SIZE, /* get the size for STOR */
   FTP_REST, /* when used to check if the server supports it in head-like */
   FTP_RETR_REST, /* when asking for "resume" in for RETR */
   FTP_PORT, /* generic state for PORT, LPRT and EPRT, check count1 */
@@ -93,15 +93,9 @@ struct ftp_wc_tmpdata {
 typedef enum {
   FTPFILE_MULTICWD  = 1, /* as defined by RFC1738 */
   FTPFILE_NOCWD     = 2, /* use SIZE / RETR / STOR on the full path */
-  FTPFILE_SINGLECWD = 3  /* make one CWD, then SIZE / RETR / STOR on the file */
+  FTPFILE_SINGLECWD = 3  /* make one CWD, then SIZE / RETR / STOR on the
+                            file */
 } curl_ftpfile;
-
-typedef enum {
-  FTPTRANSFER_BODY, /* yes do transfer a body */
-  FTPTRANSFER_INFO, /* do still go through to get info/headers */
-  FTPTRANSFER_NONE, /* don't get anything and don't get info */
-  FTPTRANSFER_LAST  /* end of list marker, never used */
-} curl_ftptransfer;
 
 /* This FTP struct is used in the SessionHandle. All FTP data that is
    connection-oriented must be in FTP_conn to properly deal with the fact that
@@ -114,7 +108,7 @@ struct FTP {
 
   /* transfer a file/body or not, done as a typedefed enum just to make
      debuggers display the full symbol and not just the numerical value */
-  curl_ftptransfer transfer;
+  curl_pp_transfer transfer;
   curl_off_t downloadsize;
 };
 
@@ -138,6 +132,7 @@ struct ftp_conn {
                        already has been done */
   bool cwdfail;     /* set TRUE if a CWD command fails, as then we must prevent
                        caching the current directory */
+  bool wait_data_conn; /* this is set TRUE if data connection is waited */
   char *prevpath;   /* conn->path from the previous transfer */
   char transfertype; /* set by ftp_transfertype for use by Curl_client_write()a
                         and others (A/I or zero) */
@@ -145,9 +140,21 @@ struct ftp_conn {
   int count2; /* general purpose counter for the state machine */
   int count3; /* general purpose counter for the state machine */
   ftpstate state; /* always use ftp.c:state() to change state! */
+  ftpstate state_saved; /* transfer type saved to be reloaded after
+                           data connection is established */
+  curl_off_t retr_size_saved; /* Size of retrieved file saved */
   char * server_os;     /* The target server operating system. */
   curl_off_t known_filesize; /* file size is different from -1, if wildcard
-                                LIST parsing was done and wc_statemach set it */
+                                LIST parsing was done and wc_statemach set
+                                it */
+  /* newhost must be able to hold a full IP-style address in ASCII, which
+     in the IPv6 case means 5*8-1 = 39 letters */
+#define NEWHOST_BUFSIZE 48
+  char newhost[NEWHOST_BUFSIZE]; /* this is the pair to connect the DATA... */
+  unsigned short newport;        /* connection to */
+
 };
+
+#define DEFAULT_ACCEPT_TIMEOUT   60000 /* milliseconds == one minute */
 
 #endif /* HEADER_CURL_FTP_H */
