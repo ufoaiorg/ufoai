@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/cgame/campaign/cp_alien_interest.h"
 #include "../client/cgame/campaign/cp_auto_mission.h"
 #include "../shared/parse.h"
+#include "../shared/images.h"
 
 static const int TAG_INVENTORY = 1538;
 
@@ -1329,4 +1330,29 @@ TEST_F(CampaignTest, testAssembleMap)
 	/* we have three components, x, y and z for the coordinates */
 	ASSERT_EQ(coordsAmount / 3, expected) << "coords have " << coordsAmount << " entries: '" << coords << "'";
 	ASSERT_EQ(mapsAmount, expected) << "maps have " << mapsAmount << " entries: '"<< maps << "'";
+}
+
+TEST_F(CampaignTest, testGeoscapeMaps)
+{
+	const char* types[] = {"terrain", "culture", "population", "nations", nullptr};
+	for (int i = 0; i < ccs.numCampaigns; i++) {
+		const campaign_t& c = ccs.campaigns[i];
+		int refW = -1;
+		int refH = -1;
+
+		for (const char **t = types; *t; ++t) {
+			const char *image = va("pics/geoscape/%s_%s", c.map, *t);
+			SDL_Surface *surf = Img_LoadImage(image);
+			ASSERT_TRUE(surf != nullptr);
+			const int w = surf->w;
+			const int h = surf->h;
+			if (refH == -1) {
+				refH = h;
+				refW = w;
+			}
+			SDL_FreeSurface(surf);
+			ASSERT_EQ(refH, h);
+			ASSERT_EQ(refW, w);
+		}
+	}
 }
