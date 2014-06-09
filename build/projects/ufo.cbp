@@ -91,15 +91,14 @@
 			<Add directory="../../src/libs/mumble/" />
 			<Add directory="../../src/libs/curl/include" />
 			<Add directory="../../src/libs/curl/lib" />
+			<Add directory="../../src/libs/zlib" />
 		</Compiler>
 		<Linker>
 			<Add library="SDL" />
 			<Add library="SDL_ttf" />
 			<Add library="SDL_mixer" />
-			<Add library="z" />
 			<Add library="jpeg" />
 			<Add library="png" />
-			<Add library="curl" />
 			<Add library="vorbis" />
 			<Add library="ogg" />
 			<Add library="theora" />
@@ -1342,6 +1341,62 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/libs/mxml/mxml.h" />
+		<Unit filename="../../src/libs/zlib/adler32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/compress.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/crc32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/crc32.h" />
+		<Unit filename="../../src/libs/zlib/deflate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/deflate.h" />
+		<Unit filename="../../src/libs/zlib/gzclose.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/gzguts.h" />
+		<Unit filename="../../src/libs/zlib/gzlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/gzread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/gzwrite.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/infback.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/inffast.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/inffast.h" />
+		<Unit filename="../../src/libs/zlib/inffixed.h" />
+		<Unit filename="../../src/libs/zlib/inflate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/inflate.h" />
+		<Unit filename="../../src/libs/zlib/inftrees.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/inftrees.h" />
+		<Unit filename="../../src/libs/zlib/trees.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/trees.h" />
+		<Unit filename="../../src/libs/zlib/uncompr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/zconf.h" />
+		<Unit filename="../../src/libs/zlib/zlib.h" />
+		<Unit filename="../../src/libs/zlib/zutil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/libs/zlib/zutil.h" />
 		<Unit filename="../../src/ports/system.h" />
 		<Unit filename="../../src/ports/windows/ufo.rc">
 			<Option compilerVar="WINDRES" />
