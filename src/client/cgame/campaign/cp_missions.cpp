@@ -1732,9 +1732,8 @@ static void MIS_SpawnNewMissions_f (void)
 			if (!CP_MissionBegin(mission))
 				return;
 			if (type == 1) {
-				ufoType_t ufoTypes[UFO_MAX];
-				UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_INTERCEPTBOMBING, ufoTypes);
-				mission->ufo->setUfoType(ufoTypes[0]);	/* the first one will do */
+				ufoType_t ufoType = UFO_GetOneAvailableUFOForMission(INTERESTCATEGORY_INTERCEPTBOMBING);	/* the first one will do */
+				mission->ufo->setUfoType(ufoType);
 				CP_InterceptGoToInstallation(mission);
 			} else {
 				CP_InterceptAircraftMissionSet(mission);
