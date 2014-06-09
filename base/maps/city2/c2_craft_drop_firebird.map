@@ -1003,3 +1003,50 @@
 "team" "1"
 "angle" "180"
 }
+// entity 24
+{
+"classname" "info_human_start"
+"origin" "784 976 220"
+"angle" "90"
+}
+// entity 25
+{
+"classname" "info_human_start"
+"origin" "496 976 220"
+"angle" "90"
+}
+// entity 26
+{
+"classname" "info_human_start"
+"origin" "976 752 220"
+}
+// entity 27
+{
+"classname" "info_human_start"
+"origin" "976 528 220"
+"angle" "0"
+}
+// entity 28
+{
+"classname" "info_human_start"
+"origin" "496 304 220"
+"angle" "-90"
+}
+// entity 29
+{
+"classname" "info_human_start"
+"origin" "784 304 220"
+"angle" "-90"
+}
+// entity 30
+{
+"classname" "info_human_start"
+"origin" "304 752 220"
+"angle" "180"
+}
+// entity 31
+{
+"classname" "info_human_start"
+"origin" "304 528 220"
+"angle" "180"
+}
