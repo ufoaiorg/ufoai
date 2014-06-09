@@ -598,6 +598,7 @@ static int AIL_see (lua_State* L)
 	int team = TEAM_ALL;
 	int vision = 0;
 	int sortCrit = 0;
+	bool invTeam = false;
 
 	/* Handle parameters. */
 	if ((lua_gettop(L) > 0)) {
@@ -621,7 +622,14 @@ static int AIL_see (lua_State* L)
 		if ((lua_gettop(L) > 1)) {
 			if (lua_isstring(L, 2)) {
 				const char* s = lua_tostring(L, 2);
+				if (s[0] == '-' || s[0] == '~') {
+					invTeam = true;
+					++s;
+				}
 				team = AIL_toTeamInt(s);
+				/* Trying to see no one? */
+				if (team == TEAM_ALL && invTeam)
+					AIL_invalidparameter(2);
 			} else
 				AIL_invalidparameter(2);
 		}
@@ -637,7 +645,7 @@ static int AIL_see (lua_State* L)
 				else if (Q_streq(s, "HP"))
 					sortCrit = AILSC_HP;
 				else
-					AIL_invalidparameter(1);
+					AIL_invalidparameter(3);
 			} else
 				AIL_invalidparameter(3);
 		}
@@ -654,7 +662,7 @@ static int AIL_see (lua_State* L)
 			continue;
 		const float distance = VectorDistSqr(AIL_ent->pos, check->pos);
 		/* Check for team match if needed. */
-		if ((team == TEAM_ALL || check->getTeam() == team)
+		if ((team == TEAM_ALL || (check->getTeam() == team ? !invTeam : invTeam))
 				&& (vision == AILVT_ALL
 				|| (vision == AILVT_SIGHT && G_Vis(AIL_ent->getTeam(), AIL_ent, check, VT_NOFRUSTUM))
 				|| (vision == AILVT_TEAM && G_IsVisibleForTeam(check, AIL_ent->getTeam()))
