@@ -235,6 +235,7 @@ check_headers() {
 	check_header "jpeglib.h"
 	check_header "zlib.h" "zlib"
 	check_header "png.h" "libpng"
+	check_header_bundled "curl/curl.h" "libcurl"
 	check_header_bundled "lua.h" "lua5.1"
 	check_header_bundled "mxml.h" "mxml"
 	check_header "SDL.h" "sdl"
@@ -343,6 +344,7 @@ usage() {
 	echo " --disable-sdl2            disable the use of SDL2.x and prefer to use SDL1.x"
 	echo " --with-embedded-lua5.1    use the copy of lua bundled with the source"
 	echo " --with-embedded-mxml      use the copy of mxml bundled with the source"
+	echo " --with-embedded-curl      use the copy of curl bundled with the source"
 	echo " --with-embedded-SDL_mixer use the copy of SDL_mixer bundled with the source"
 	echo " --with-embedded-SDL_image use the copy of SDL_image bundled with the source"
 	echo

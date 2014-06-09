@@ -110,6 +110,8 @@ $(TARGET)_SRCS_TMP      = $(subst $(SRCDIR)/,, \
 	\
 	$(JPEG_SRCS) \
 	\
+	$(CURL_SRCS) \
+	\
 	$(GTEST_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)

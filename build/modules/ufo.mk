@@ -103,6 +103,8 @@ $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
 	\
 	$(PNG_SRCS) \
 	\
+	$(CURL_SRCS) \
+	\
 	$(JPEG_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux),)

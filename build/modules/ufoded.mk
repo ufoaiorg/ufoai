@@ -61,7 +61,9 @@ $(TARGET)_SRCS      = \
 	\
 	game/q_shared.cpp \
 	game/inv_shared.cpp \
-	game/chr_shared.cpp
+	game/chr_shared.cpp \
+	\
+	$(CURL_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux),)
 	$(TARGET)_SRCS += \
