@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,14 +18,17 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "./SDL_internal.h"
+
+#if defined(__WIN32__)
+#include "core/windows/SDL_windows.h"
+#endif
 
 /* Initialization code for SDL */
 
 #include "SDL.h"
 #include "SDL_bits.h"
 #include "SDL_revision.h"
-#include "SDL_fatal.h"
 #include "SDL_assert_c.h"
 #include "events/SDL_events_c.h"
 #include "haptic/SDL_haptic_c.h"
@@ -35,7 +38,8 @@
 #if !SDL_TIMERS_DISABLED
 extern int SDL_TimerInit(void);
 extern void SDL_TimerQuit(void);
-extern void SDL_InitTicks(void);
+extern void SDL_TicksInit(void);
+extern void SDL_TicksQuit(void);
 #endif
 #if SDL_VIDEO_DRIVER_WINDOWS
 extern int SDL_HelperWindowCreate(void);
@@ -108,8 +112,19 @@ SDL_InitSubSystem(Uint32 flags)
         return -1;
     }
 
+    /* Clear the error message */
+    SDL_ClearError();
+
+#if SDL_VIDEO_DRIVER_WINDOWS
+	if ((flags & (SDL_INIT_HAPTIC|SDL_INIT_JOYSTICK))) {
+		if (SDL_HelperWindowCreate() < 0) {
+			return -1;
+		}
+	}
+#endif
+
 #if !SDL_TIMERS_DISABLED
-    SDL_InitTicks();
+    SDL_TicksInit();
 #endif
 
     if ((flags & SDL_INIT_GAMECONTROLLER)) {
@@ -226,30 +241,7 @@ SDL_InitSubSystem(Uint32 flags)
 int
 SDL_Init(Uint32 flags)
 {
-    if (SDL_AssertionsInit() < 0) {
-        return -1;
-    }
-
-    /* Clear the error message */
-    SDL_ClearError();
-
-#if SDL_VIDEO_DRIVER_WINDOWS
-    if (SDL_HelperWindowCreate() < 0) {
-        return -1;
-    }
-#endif
-
-    /* Initialize the desired subsystems */
-    if (SDL_InitSubSystem(flags) < 0) {
-        return (-1);
-    }
-
-    /* Everything is initialized */
-    if (!(flags & SDL_INIT_NOPARACHUTE)) {
-        SDL_InstallParachute();
-    }
-
-    return (0);
+    return SDL_InitSubSystem(flags);
 }
 
 void
@@ -364,8 +356,9 @@ SDL_Quit(void)
 #endif
     SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
 
-    /* Uninstall any parachute signal handlers */
-    SDL_UninstallParachute();
+#if !SDL_TIMERS_DISABLED
+    SDL_TicksQuit();
+#endif
 
     SDL_ClearHints();
     SDL_AssertionsQuit();
@@ -408,8 +401,6 @@ SDL_GetPlatform()
     return "AIX";
 #elif __ANDROID__
     return "Android";
-#elif __BEOS__
-    return "BeOS";
 #elif __BSDI__
     return "BSDI";
 #elif __DREAMCAST__
@@ -447,7 +438,7 @@ SDL_GetPlatform()
 #elif __WIN32__
     return "Windows";
 #elif __IPHONEOS__
-    return "iPhone OS";
+    return "iOS";
 #elif __PSP__
     return "PlayStation Portable";
 #else
@@ -459,7 +450,6 @@ SDL_GetPlatform()
 
 #if !defined(HAVE_LIBC) || (defined(__WATCOMC__) && defined(BUILD_DLL))
 /* Need to include DllMain() on Watcom C for some reason.. */
-#include "core/windows/SDL_windows.h"
 
 BOOL APIENTRY
 _DllMainCRTStartup(HANDLE hModule,

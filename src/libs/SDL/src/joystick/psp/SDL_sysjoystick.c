@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-/* This is the system specific header for the SDL joystick API */
+/* This is the PSP implementation of the SDL joystick API */
 #include <pspctrl.h>
 #include <pspkernel.h>
 
@@ -60,7 +60,7 @@ static point c = { 78, 32767 };
 static point d = { 128, 32767 };
 
 /* simple linear interpolation between two points */
-static __inline__ void lerp (point *dest, point *a, point *b, float t)
+static SDL_INLINE void lerp (point *dest, point *a, point *b, float t)
 {
     dest->x = a->x + (b->x - a->x)*t;
     dest->y = a->y + (b->y - a->y)*t;

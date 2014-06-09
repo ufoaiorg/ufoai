@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #include <errno.h>
 #include <pthread.h>
@@ -150,16 +150,16 @@ SDL_SemWaitTimeout(SDL_sem * sem, Uint32 timeout)
         if (errno == ETIMEDOUT) {
             retval = SDL_MUTEX_TIMEDOUT;
         } else {
-            SDL_SetError(strerror(errno));
+            SDL_SetError("sem_timedwait returned an error: %s", strerror(errno));
         }
     }
 #else
     end = SDL_GetTicks() + timeout;
     while ((retval = SDL_SemTryWait(sem)) == SDL_MUTEX_TIMEDOUT) {
-        if ((SDL_GetTicks() - end) >= 0) {
+        if (SDL_TICKS_PASSED(SDL_GetTicks(), end)) {
             break;
         }
-        SDL_Delay(0);
+        SDL_Delay(1);
     }
 #endif /* HAVE_SEM_TIMEDWAIT */
 

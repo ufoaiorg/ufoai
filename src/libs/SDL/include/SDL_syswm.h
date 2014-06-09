@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -56,6 +56,10 @@ struct SDL_SysWMinfo;
 #include <windows.h>
 #endif
 
+#if defined(SDL_VIDEO_DRIVER_WINRT)
+#include <Inspectable.h>
+#endif
+
 /* This is the structure for custom window manager events */
 #if defined(SDL_VIDEO_DRIVER_X11)
 #if defined(__APPLE__) && defined(__MACH__)
@@ -79,7 +83,7 @@ struct SDL_SysWMinfo;
 
 #if defined(SDL_VIDEO_DRIVER_COCOA)
 #ifdef __OBJC__
-#include <Cocoa/Cocoa.h>
+@class NSWindow;
 #else
 typedef struct _NSWindow NSWindow;
 #endif
@@ -90,7 +94,13 @@ typedef struct _NSWindow NSWindow;
 #include <UIKit/UIKit.h>
 #else
 typedef struct _UIWindow UIWindow;
+typedef struct _UIViewController UIViewController;
 #endif
+#endif
+
+#if defined(SDL_VIDEO_DRIVER_ANDROID)
+typedef struct ANativeWindow ANativeWindow;
+typedef void *EGLSurface;
 #endif
 
 /**
@@ -104,6 +114,10 @@ typedef enum
     SDL_SYSWM_DIRECTFB,
     SDL_SYSWM_COCOA,
     SDL_SYSWM_UIKIT,
+    SDL_SYSWM_WAYLAND,
+    SDL_SYSWM_MIR,
+    SDL_SYSWM_WINRT,
+    SDL_SYSWM_ANDROID
 } SDL_SYSWM_TYPE;
 
 /**
@@ -168,6 +182,12 @@ struct SDL_SysWMinfo
             HWND window;                /**< The window handle */
         } win;
 #endif
+#if defined(SDL_VIDEO_DRIVER_WINRT)
+        struct
+        {
+            IInspectable * window;      /**< The WinRT CoreWindow */
+        } winrt;
+#endif
 #if defined(SDL_VIDEO_DRIVER_X11)
         struct
         {
@@ -195,6 +215,30 @@ struct SDL_SysWMinfo
             UIWindow *window;           /* The UIKit window */
         } uikit;
 #endif
+#if defined(SDL_VIDEO_DRIVER_WAYLAND)
+        struct
+        {
+            struct wl_display *display;            /**< Wayland display */
+            struct wl_surface *surface;            /**< Wayland surface */
+            struct wl_shell_surface *shell_surface; /**< Wayland shell_surface (window manager handle) */
+        } wl;
+#endif
+#if defined(SDL_VIDEO_DRIVER_MIR)
+        struct
+        {
+            struct MirConnection *connection;  /**< Mir display server connection */
+            struct MirSurface *surface;  /**< Mir surface */
+        } mir;
+#endif
+
+#if defined(SDL_VIDEO_DRIVER_ANDROID)
+        struct
+        {
+            ANativeWindow *window;
+            EGLSurface surface;
+        } android;
+#endif
+
         /* Can't have an empty union */
         int dummy;
     } info;

@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -97,6 +97,16 @@ extern DECLSPEC Uint32 SDLCALL SDL_GetRelativeMouseState(int *x, int *y);
  */
 extern DECLSPEC void SDLCALL SDL_WarpMouseInWindow(SDL_Window * window,
                                                    int x, int y);
+
+/**
+ *  \brief Moves the mouse to the given position in global screen space.
+ *
+ *  \param x The x coordinate
+ *  \param y The y coordinate
+ *
+ *  \note This function generates a mouse motion event
+ */
+extern DECLSPEC void SDLCALL SDL_WarpMouseGlobal(int x, int y);
 
 /**
  *  \brief Set relative mouse mode.

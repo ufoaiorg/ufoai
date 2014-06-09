@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../SDL_internal.h"
 
 /* General (mostly internal) pixel/color manipulation routines for SDL */
 
@@ -707,9 +707,7 @@ SDL_FreePalette(SDL_Palette * palette)
     if (--palette->refcount > 0) {
         return;
     }
-    if (palette->colors) {
-        SDL_free(palette->colors);
-    }
+    SDL_free(palette->colors);
     SDL_free(palette);
 }
 
@@ -985,10 +983,8 @@ SDL_InvalidateMap(SDL_BlitMap * map)
     map->dst = NULL;
     map->src_palette_version = 0;
     map->dst_palette_version = 0;
-    if (map->info.table) {
-        SDL_free(map->info.table);
-        map->info.table = NULL;
-    }
+    SDL_free(map->info.table);
+    map->info.table = NULL;
 }
 
 int

@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../SDL_internal.h"
 
 /* General event handling code for SDL */
 
@@ -83,7 +83,7 @@ static struct
 } SDL_EventQ = { NULL, SDL_TRUE };
 
 
-static __inline__ SDL_bool
+static SDL_INLINE SDL_bool
 SDL_ShouldPollJoystick()
 {
 #if !SDL_JOYSTICK_DISABLED
@@ -141,10 +141,8 @@ SDL_StopEventLoop(void)
 
     /* Clear disabled event state */
     for (i = 0; i < SDL_arraysize(SDL_disabled_events); ++i) {
-        if (SDL_disabled_events[i]) {
-            SDL_free(SDL_disabled_events[i]);
-            SDL_disabled_events[i] = NULL;
-        }
+        SDL_free(SDL_disabled_events[i]);
+        SDL_disabled_events[i] = NULL;
     }
 
     while (SDL_event_watchers) {
@@ -445,7 +443,7 @@ SDL_WaitEventTimeout(SDL_Event * event, int timeout)
                 /* Polling and no events, just return */
                 return 0;
             }
-            if (timeout > 0 && ((int) (SDL_GetTicks() - expiration) >= 0)) {
+            if (timeout > 0 && SDL_TICKS_PASSED(SDL_GetTicks(), expiration)) {
                 /* Timeout expired and no events */
                 return 0;
             }
@@ -505,17 +503,28 @@ SDL_GetEventFilter(SDL_EventFilter * filter, void **userdata)
 void
 SDL_AddEventWatch(SDL_EventFilter filter, void *userdata)
 {
-    SDL_EventWatcher *watcher;
+    SDL_EventWatcher *watcher, *tail;
 
     watcher = (SDL_EventWatcher *)SDL_malloc(sizeof(*watcher));
     if (!watcher) {
         /* Uh oh... */
         return;
     }
+
+    /* create the watcher */
     watcher->callback = filter;
     watcher->userdata = userdata;
-    watcher->next = SDL_event_watchers;
-    SDL_event_watchers = watcher;
+    watcher->next = NULL;
+
+    /* add the watcher to the end of the list */
+    if (SDL_event_watchers) {
+        for (tail = SDL_event_watchers; tail->next; tail = tail->next) {
+            continue;
+        }
+        tail->next = watcher;
+    } else {
+        SDL_event_watchers = watcher;
+    }
 }
 
 /* FIXME: This is not thread-safe yet */
@@ -541,7 +550,7 @@ SDL_DelEventWatch(SDL_EventFilter filter, void *userdata)
 void
 SDL_FilterEvents(SDL_EventFilter filter, void *userdata)
 {
-    if (SDL_LockMutex(SDL_EventQ.lock) == 0) {
+    if (SDL_EventQ.lock && SDL_LockMutex(SDL_EventQ.lock) == 0) {
         SDL_EventEntry *entry, *next;
         for (entry = SDL_EventQ.head; entry; entry = next) {
             next = entry->next;
@@ -599,7 +608,7 @@ SDL_RegisterEvents(int numevents)
 {
     Uint32 event_base;
 
-    if (SDL_userevents+numevents <= SDL_LASTEVENT) {
+    if ((numevents > 0) && (SDL_userevents+numevents <= SDL_LASTEVENT)) {
         event_base = SDL_userevents;
         SDL_userevents += numevents;
     } else {

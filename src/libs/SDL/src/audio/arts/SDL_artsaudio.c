@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #if SDL_AUDIO_DRIVER_ARTS
 
@@ -204,10 +204,8 @@ static void
 ARTS_CloseDevice(_THIS)
 {
     if (this->hidden != NULL) {
-        if (this->hidden->mixbuf != NULL) {
-            SDL_FreeAudioMem(this->hidden->mixbuf);
-            this->hidden->mixbuf = NULL;
-        }
+        SDL_FreeAudioMem(this->hidden->mixbuf);
+        this->hidden->mixbuf = NULL;
         if (this->hidden->stream) {
             SDL_NAME(arts_close_stream) (this->hidden->stream);
             this->hidden->stream = 0;
@@ -222,7 +220,7 @@ static int
 ARTS_Suspend(void)
 {
     const Uint32 abortms = SDL_GetTicks() + 3000; /* give up after 3 secs */
-    while ( (!SDL_NAME(arts_suspended)()) && (SDL_GetTicks() < abortms) ) {
+    while ( (!SDL_NAME(arts_suspended)()) && !SDL_TICKS_PASSED(SDL_GetTicks(), abortms) ) {
         if ( SDL_NAME(arts_suspend)() ) {
             break;
         }

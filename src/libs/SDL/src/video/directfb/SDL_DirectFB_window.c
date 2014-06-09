@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #if SDL_VIDEO_DRIVER_DIRECTFB
 
@@ -155,7 +155,7 @@ DirectFB_CreateWindow(_THIS, SDL_Window * window)
     SDL_DFB_CHECK(windata->dfbwin->RaiseToTop(windata->dfbwin));
 
     /* remember parent */
-    /*windata->sdlwin = window; */
+    /* windata->sdlwin = window; */
 
     /* Add to list ... */
 
@@ -237,8 +237,7 @@ DirectFB_SetWindowIcon(_THIS, SDL_Window * window, SDL_Surface * icon)
     }
     return;
   error:
-    if (surface)
-        SDL_FreeSurface(surface);
+    SDL_FreeSurface(surface);
     SDL_DFB_RELEASE(windata->icon);
     return;
 }

@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #ifdef SDL_TIMER_UNIX
 
@@ -56,10 +56,16 @@ mach_timebase_info_data_t mach_base_info;
 #endif
 static SDL_bool has_monotonic_time = SDL_FALSE;
 static struct timeval start_tv;
+static SDL_bool ticks_started = SDL_FALSE;
 
 void
-SDL_StartTicks(void)
+SDL_TicksInit(void)
 {
+    if (ticks_started) {
+        return;
+    }
+    ticks_started = SDL_TRUE;
+
     /* Set first ticks value */
 #if HAVE_CLOCK_GETTIME
     if (clock_gettime(CLOCK_MONOTONIC, &start_ts) == 0) {
@@ -77,10 +83,20 @@ SDL_StartTicks(void)
     }
 }
 
+void
+SDL_TicksQuit(void)
+{
+    ticks_started = SDL_FALSE;
+}
+
 Uint32
 SDL_GetTicks(void)
 {
     Uint32 ticks;
+    if (!ticks_started) {
+        SDL_TicksInit();
+    }
+
     if (has_monotonic_time) {
 #if HAVE_CLOCK_GETTIME
         struct timespec now;
@@ -106,6 +122,10 @@ Uint64
 SDL_GetPerformanceCounter(void)
 {
     Uint64 ticks;
+    if (!ticks_started) {
+        SDL_TicksInit();
+    }
+
     if (has_monotonic_time) {
 #if HAVE_CLOCK_GETTIME
         struct timespec now;
@@ -131,18 +151,22 @@ SDL_GetPerformanceCounter(void)
 Uint64
 SDL_GetPerformanceFrequency(void)
 {
+    if (!ticks_started) {
+        SDL_TicksInit();
+    }
+
     if (has_monotonic_time) {
 #if HAVE_CLOCK_GETTIME
         return 1000000000;
 #elif defined(__APPLE__)
-        Uint64 freq = mach_base_info.numer;
+        Uint64 freq = mach_base_info.denom;
         freq *= 1000000000;
-        freq /= mach_base_info.denom;
+        freq /= mach_base_info.numer;
         return freq;
 #endif
-    } else {
-        return 1000000;
-    }
+    } 
+        
+    return 1000000;
 }
 
 void

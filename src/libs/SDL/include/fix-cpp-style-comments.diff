@@ -1,0 +1,34 @@
+diff -r 239ce872e8d4 include/SDL_mouse.h
+--- a/include/SDL_mouse.h	Sun Apr 14 18:05:14 2013 -0400
++++ b/include/SDL_mouse.h	Mon Apr 15 21:32:46 2013 +0200
+@@ -47,18 +47,18 @@
+  */
+ typedef enum
+ {
+-    SDL_SYSTEM_CURSOR_ARROW,     // Arrow
+-    SDL_SYSTEM_CURSOR_IBEAM,     // I-beam
+-    SDL_SYSTEM_CURSOR_WAIT,      // Wait
+-    SDL_SYSTEM_CURSOR_CROSSHAIR, // Crosshair
+-    SDL_SYSTEM_CURSOR_WAITARROW, // Small wait cursor (or Wait if not available)
+-    SDL_SYSTEM_CURSOR_SIZENWSE,  // Double arrow pointing northwest and southeast
+-    SDL_SYSTEM_CURSOR_SIZENESW,  // Double arrow pointing northeast and southwest
+-    SDL_SYSTEM_CURSOR_SIZEWE,    // Double arrow pointing west and east
+-    SDL_SYSTEM_CURSOR_SIZENS,    // Double arrow pointing north and south
+-    SDL_SYSTEM_CURSOR_SIZEALL,   // Four pointed arrow pointing north, south, east, and west
+-    SDL_SYSTEM_CURSOR_NO,        // Slashed circle or crossbones
+-    SDL_SYSTEM_CURSOR_HAND,      // Hand
++    SDL_SYSTEM_CURSOR_ARROW,     /**< Arrow */
++    SDL_SYSTEM_CURSOR_IBEAM,     /**< I-beam */
++    SDL_SYSTEM_CURSOR_WAIT,      /**< Wait */
++    SDL_SYSTEM_CURSOR_CROSSHAIR, /**< Crosshair */
++    SDL_SYSTEM_CURSOR_WAITARROW, /**< Small wait cursor (or Wait if not available) */
++    SDL_SYSTEM_CURSOR_SIZENWSE,  /**< Double arrow pointing northwest and southeast */
++    SDL_SYSTEM_CURSOR_SIZENESW,  /**< Double arrow pointing northeast and southwest */
++    SDL_SYSTEM_CURSOR_SIZEWE,    /**< Double arrow pointing west and east */
++    SDL_SYSTEM_CURSOR_SIZENS,    /**< Double arrow pointing north and south */
++    SDL_SYSTEM_CURSOR_SIZEALL,   /**< Four pointed arrow pointing north, south, east, and west */
++    SDL_SYSTEM_CURSOR_NO,        /**< Slashed circle or crossbones */
++    SDL_SYSTEM_CURSOR_HAND,      /**< Hand */
+     SDL_NUM_SYSTEM_CURSORS
+ } SDL_SystemCursor;
+ 

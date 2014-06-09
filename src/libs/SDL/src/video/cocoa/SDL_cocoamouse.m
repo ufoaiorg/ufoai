@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,15 +18,24 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #if SDL_VIDEO_DRIVER_COCOA
 
 #include "SDL_assert.h"
 #include "SDL_events.h"
 #include "SDL_cocoamouse.h"
+#include "SDL_cocoamousetap.h"
 
 #include "../../events/SDL_mouse_c.h"
+
+/* #define DEBUG_COCOAMOUSE */
+
+#ifdef DEBUG_COCOAMOUSE
+#define DLog(fmt, ...) printf("%s: " fmt "\n", __func__, ##__VA_ARGS__)
+#else
+#define DLog(...) do { } while (0)
+#endif
 
 @implementation NSCursor (InvisibleCursor)
 + (NSCursor *)invisibleCursor
@@ -94,6 +103,8 @@ Cocoa_CreateCursor(SDL_Surface * surface, int hot_x, int hot_y)
         cursor = SDL_calloc(1, sizeof(*cursor));
         if (cursor) {
             cursor->driverdata = nscursor;
+        } else {
+            [nscursor release];
         }
     }
 
@@ -200,24 +211,19 @@ Cocoa_ShowCursor(SDL_Cursor * cursor)
 static void
 Cocoa_WarpMouse(SDL_Window * window, int x, int y)
 {
+    SDL_WindowData *data = (SDL_WindowData *) window->driverdata;
+    if ([data->listener isMoving])
+    {
+        DLog("Postponing warp, window being moved.");
+        [data->listener setPendingMoveX:x
+                                      Y:y];
+        return;
+    }
+
     SDL_Mouse *mouse = SDL_GetMouse();
-    CGPoint point = CGPointMake(x, y);
+    CGPoint point = CGPointMake(x + (float)window->x, y + (float)window->y);
 
-    if (!(window->flags & SDL_WINDOW_FULLSCREEN))
-    {
-        point.x += window->x;
-        point.y += window->y;
-    }
-
-    {
-        /* This makes Cocoa_HandleMouseEvent ignore this delta in the next
-         * movement event.
-         */
-        SDL_MouseData *driverdata = (SDL_MouseData*)mouse->driverdata;
-        NSPoint location =  [NSEvent mouseLocation];
-        driverdata->deltaXOffset = location.x - point.x;
-        driverdata->deltaYOffset = point.y - location.y;
-    }
+    Cocoa_HandleMouseWarp(point.x, point.y);
 
     /* According to the docs, this was deprecated in 10.6, but it's still
      * around. The substitute requires a CGEventSource, but I'm not entirely
@@ -235,18 +241,68 @@ Cocoa_WarpMouse(SDL_Window * window, int x, int y)
     }
 }
 
+static void
+Cocoa_WarpMouseGlobal(int x, int y)
+{
+    SDL_Mouse *mouse = SDL_GetMouse();
+    CGPoint point = CGPointMake((float)x, (float)y);
+
+    Cocoa_HandleMouseWarp(point.x, point.y);
+
+    /* According to the docs, this was deprecated in 10.6, but it's still
+     * around. The substitute requires a CGEventSource, but I'm not entirely
+     * sure how we'd procure the right one for this event.
+     */
+    CGSetLocalEventsSuppressionInterval(0.0);
+    CGWarpMouseCursorPosition(point);
+    CGSetLocalEventsSuppressionInterval(0.25);
+
+    if (!mouse->relative_mode && mouse->focus) {
+        /* CGWarpMouseCursorPosition doesn't generate a window event, unlike our
+         * other implementations' APIs.
+         */
+        SDL_SendMouseMotion(mouse->focus, mouse->mouseID, 0, x - mouse->focus->x, y - mouse->focus->y);
+    }
+}
+
 static int
 Cocoa_SetRelativeMouseMode(SDL_bool enabled)
 {
-    CGError result;
+    /* We will re-apply the relative mode when the window gets focus, if it
+     * doesn't have focus right now.
+     */
+    SDL_Window *window = SDL_GetMouseFocus();
+    if (!window) {
+      return 0;
+    }
 
+    /* We will re-apply the relative mode when the window finishes being moved,
+     * if it is being moved right now.
+     */
+    SDL_WindowData *data = (SDL_WindowData *) window->driverdata;
+    if ([data->listener isMoving]) {
+        return 0;
+    }
+
+    CGError result;
     if (enabled) {
+        DLog("Turning on.");
         result = CGAssociateMouseAndMouseCursorPosition(NO);
     } else {
+        DLog("Turning off.");
         result = CGAssociateMouseAndMouseCursorPosition(YES);
     }
     if (result != kCGErrorSuccess) {
         return SDL_SetError("CGAssociateMouseAndMouseCursorPosition() failed");
+    }
+
+    /* The hide/unhide calls are redundant most of the time, but they fix
+     * https://bugzilla.libsdl.org/show_bug.cgi?id=2550
+     */
+    if (enabled) {
+        [NSCursor hide];
+    } else {
+        [NSCursor unhide];
     }
     return 0;
 }
@@ -263,28 +319,73 @@ Cocoa_InitMouse(_THIS)
     mouse->ShowCursor = Cocoa_ShowCursor;
     mouse->FreeCursor = Cocoa_FreeCursor;
     mouse->WarpMouse = Cocoa_WarpMouse;
+    mouse->WarpMouseGlobal = Cocoa_WarpMouseGlobal;
     mouse->SetRelativeMouseMode = Cocoa_SetRelativeMouseMode;
 
     SDL_SetDefaultCursor(Cocoa_CreateDefaultCursor());
+
+    Cocoa_InitMouseEventTap(mouse->driverdata);
+
+    SDL_MouseData *driverdata = (SDL_MouseData*)mouse->driverdata;
+    const NSPoint location =  [NSEvent mouseLocation];
+    driverdata->lastMoveX = location.x;
+    driverdata->lastMoveY = location.y;
 }
 
 void
 Cocoa_HandleMouseEvent(_THIS, NSEvent *event)
 {
+    switch ([event type])
+    {
+        case NSMouseMoved:
+        case NSLeftMouseDragged:
+        case NSRightMouseDragged:
+        case NSOtherMouseDragged:
+            break;
+
+        default:
+            /* Ignore any other events. */
+            return;
+    }
+
     SDL_Mouse *mouse = SDL_GetMouse();
 
-    if (mouse->relative_mode &&
-        ([event type] == NSMouseMoved ||
-         [event type] == NSLeftMouseDragged ||
-         [event type] == NSRightMouseDragged ||
-         [event type] == NSOtherMouseDragged)) {
-        SDL_MouseData *driverdata = (SDL_MouseData*)mouse->driverdata;
-        float x = [event deltaX] + driverdata->deltaXOffset;
-        float y = [event deltaY] + driverdata->deltaYOffset;
-        driverdata->deltaXOffset = driverdata->deltaYOffset = 0;
+    SDL_MouseData *driverdata = (SDL_MouseData*)mouse->driverdata;
+    const SDL_bool seenWarp = driverdata->seenWarp;
+    driverdata->seenWarp = NO;
 
-        SDL_SendMouseMotion(mouse->focus, mouse->mouseID, 1, (int)x, (int)y);
+    const NSPoint location =  [NSEvent mouseLocation];
+    const CGFloat lastMoveX = driverdata->lastMoveX;
+    const CGFloat lastMoveY = driverdata->lastMoveY;
+    driverdata->lastMoveX = location.x;
+    driverdata->lastMoveY = location.y;
+    DLog("Last seen mouse: (%g, %g)", location.x, location.y);
+
+    /* Non-relative movement is handled in -[Cocoa_WindowListener mouseMoved:] */
+    if (!mouse->relative_mode) {
+        return;
     }
+
+    /* Ignore events that aren't inside the client area (i.e. title bar.) */
+    if ([event window]) {
+        NSRect windowRect = [[[event window] contentView] frame];
+        if (!NSPointInRect([event locationInWindow], windowRect)) {
+            return;
+        }
+    }
+
+    float deltaX = [event deltaX];
+    float deltaY = [event deltaY];
+
+    if (seenWarp)
+    {
+        deltaX += (lastMoveX - driverdata->lastWarpX);
+        deltaY += ((CGDisplayPixelsHigh(kCGDirectMainDisplay) - lastMoveY) - driverdata->lastWarpY);
+
+        DLog("Motion was (%g, %g), offset to (%g, %g)", [event deltaX], [event deltaY], deltaX, deltaY);
+    }
+
+    SDL_SendMouseMotion(mouse->focus, mouse->mouseID, 1, (int)deltaX, (int)deltaY);
 }
 
 void
@@ -292,7 +393,7 @@ Cocoa_HandleMouseWheel(SDL_Window *window, NSEvent *event)
 {
     SDL_Mouse *mouse = SDL_GetMouse();
 
-    float x = [event deltaX];
+    float x = -[event deltaX];
     float y = [event deltaY];
 
     if (x > 0) {
@@ -309,10 +410,28 @@ Cocoa_HandleMouseWheel(SDL_Window *window, NSEvent *event)
 }
 
 void
+Cocoa_HandleMouseWarp(CGFloat x, CGFloat y)
+{
+    /* This makes Cocoa_HandleMouseEvent ignore the delta caused by the warp,
+     * since it gets included in the next movement event.
+     */
+    SDL_MouseData *driverdata = (SDL_MouseData*)SDL_GetMouse()->driverdata;
+    driverdata->lastWarpX = x;
+    driverdata->lastWarpY = y;
+    driverdata->seenWarp = SDL_TRUE;
+
+    DLog("(%g, %g)", x, y);
+}
+
+void
 Cocoa_QuitMouse(_THIS)
 {
     SDL_Mouse *mouse = SDL_GetMouse();
     if (mouse) {
+        if (mouse->driverdata) {
+            Cocoa_QuitMouseEventTap(((SDL_MouseData*)mouse->driverdata));
+        }
+
         SDL_free(mouse->driverdata);
     }
 }

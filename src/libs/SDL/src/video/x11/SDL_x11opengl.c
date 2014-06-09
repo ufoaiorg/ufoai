@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #if SDL_VIDEO_DRIVER_X11
 
@@ -106,6 +106,13 @@ typedef GLXContext(*PFNGLXCREATECONTEXTATTRIBSARBPROC) (Display * dpy,
 #endif
 #endif
 
+#ifndef GLX_ARB_framebuffer_sRGB
+#define GLX_ARB_framebuffer_sRGB
+#ifndef GLX_FRAMEBUFFER_SRGB_CAPABLE_ARB
+#define GLX_FRAMEBUFFER_SRGB_CAPABLE_ARB                0x20B2
+#endif
+#endif
+
 #ifndef GLX_EXT_swap_control
 #define GLX_SWAP_INTERVAL_EXT              0x20F1
 #define GLX_MAX_SWAP_INTERVAL_EXT          0x20F2
@@ -139,25 +146,6 @@ X11_GL_LoadLibrary(_THIS, const char *path)
     if (_this->gl_data) {
         return SDL_SetError("OpenGL context already created");
     }
-
-    /* If SDL_GL_CONTEXT_EGL has been changed to 1, switch over to X11_GLES functions  */
-    if (_this->gl_config.use_egl == 1) {
-#if SDL_VIDEO_OPENGL_ES || SDL_VIDEO_OPENGL_ES2
-        _this->GL_LoadLibrary = X11_GLES_LoadLibrary;
-        _this->GL_GetProcAddress = X11_GLES_GetProcAddress;
-        _this->GL_UnloadLibrary = X11_GLES_UnloadLibrary;
-        _this->GL_CreateContext = X11_GLES_CreateContext;
-        _this->GL_MakeCurrent = X11_GLES_MakeCurrent;
-        _this->GL_SetSwapInterval = X11_GLES_SetSwapInterval;
-        _this->GL_GetSwapInterval = X11_GLES_GetSwapInterval;
-        _this->GL_SwapWindow = X11_GLES_SwapWindow;
-        _this->GL_DeleteContext = X11_GLES_DeleteContext;
-        return X11_GLES_LoadLibrary(_this, path);
-#else
-        return SDL_SetError("SDL not configured with OpenGL ES/EGL support");
-#endif
-    }
-
 
     /* Load the OpenGL library */
     if (path == NULL) {
@@ -228,6 +216,33 @@ X11_GL_LoadLibrary(_THIS, const char *path)
 
     /* Initialize extensions */
     X11_GL_InitExtensions(_this);
+    
+    /* If we need a GL ES context and there's no  
+     * GLX_EXT_create_context_es2_profile extension, switch over to X11_GLES functions  
+     */
+    if (_this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES && 
+        ! _this->gl_data->HAS_GLX_EXT_create_context_es2_profile ) {
+#if SDL_VIDEO_OPENGL_EGL
+        X11_GL_UnloadLibrary(_this);
+        /* Better avoid conflicts! */
+        if (_this->gl_config.dll_handle != NULL ) {
+            GL_UnloadObject(_this->gl_config.dll_handle);
+            _this->gl_config.dll_handle = NULL;
+        }
+        _this->GL_LoadLibrary = X11_GLES_LoadLibrary;
+        _this->GL_GetProcAddress = X11_GLES_GetProcAddress;
+        _this->GL_UnloadLibrary = X11_GLES_UnloadLibrary;
+        _this->GL_CreateContext = X11_GLES_CreateContext;
+        _this->GL_MakeCurrent = X11_GLES_MakeCurrent;
+        _this->GL_SetSwapInterval = X11_GLES_SetSwapInterval;
+        _this->GL_GetSwapInterval = X11_GLES_GetSwapInterval;
+        _this->GL_SwapWindow = X11_GLES_SwapWindow;
+        _this->GL_DeleteContext = X11_GLES_DeleteContext;
+        return X11_GLES_LoadLibrary(_this, NULL);
+#else
+        return SDL_SetError("SDL not configured with EGL support");
+#endif
+    }
 
     return 0;
 }
@@ -254,10 +269,8 @@ X11_GL_UnloadLibrary(_THIS)
 #endif
 
     /* Free OpenGL memory */
-    if (_this->gl_data) {
-        SDL_free(_this->gl_data);
-        _this->gl_data = NULL;
-    }
+    SDL_free(_this->gl_data);
+    _this->gl_data = NULL;
 }
 
 static SDL_bool
@@ -314,16 +327,16 @@ X11_GL_InitExtensions(_THIS)
     xattr.background_pixel = 0;
     xattr.border_pixel = 0;
     xattr.colormap =
-        XCreateColormap(display, RootWindow(display, screen), vinfo->visual,
+        X11_XCreateColormap(display, RootWindow(display, screen), vinfo->visual,
                         AllocNone);
-    w = XCreateWindow(display, RootWindow(display, screen), 0, 0, 32, 32, 0,
+    w = X11_XCreateWindow(display, RootWindow(display, screen), 0, 0, 32, 32, 0,
                       vinfo->depth, InputOutput, vinfo->visual,
                       (CWBackPixel | CWBorderPixel | CWColormap), &xattr);
     context = _this->gl_data->glXCreateContext(display, vinfo, NULL, True);
     if (context) {
         _this->gl_data->glXMakeCurrent(display, w, context);
     }
-    XFree(vinfo);
+    X11_XFree(vinfo);
 
     glXQueryExtensionsStringFunc =
         (const char *(*)(Display *, int)) X11_GL_GetProcAddress(_this,
@@ -369,12 +382,17 @@ X11_GL_InitExtensions(_THIS)
     if (HasExtension("GLX_EXT_visual_info", extensions)) {
         _this->gl_data->HAS_GLX_EXT_visual_info = SDL_TRUE;
     }
+    
+    /* Check for GLX_EXT_create_context_es2_profile */
+    if (HasExtension("GLX_EXT_create_context_es2_profile", extensions)) {
+        _this->gl_data->HAS_GLX_EXT_create_context_es2_profile = SDL_TRUE;
+    }
 
     if (context) {
         _this->gl_data->glXMakeCurrent(display, None, NULL);
         _this->gl_data->glXDestroyContext(display, context);
     }
-    XDestroyWindow(display, w);
+    X11_XDestroyWindow(display, w);
     X11_PumpEvents(_this);
 }
 
@@ -461,6 +479,13 @@ X11_GL_GetAttributes(_THIS, Display * display, int screen, int * attribs, int si
         attribs[i++] = _this->gl_config.multisamplesamples;
     }
 
+    if (_this->gl_config.framebuffer_srgb_capable) {
+        attribs[i++] = GLX_FRAMEBUFFER_SRGB_CAPABLE_ARB;
+        if( for_FBConfig ) {
+            attribs[i++] = True;
+        }
+    }
+
     if (_this->gl_config.accelerated >= 0 &&
         _this->gl_data->HAS_GLX_EXT_visual_rating) {
         attribs[i++] = GLX_VISUAL_CAVEAT_EXT;
@@ -486,17 +511,16 @@ X11_GL_GetAttributes(_THIS, Display * display, int screen, int * attribs, int si
 XVisualInfo *
 X11_GL_GetVisual(_THIS, Display * display, int screen)
 {
-    XVisualInfo *vinfo;
-
     /* 64 seems nice. */
     int attribs[64];
-    X11_GL_GetAttributes(_this,display,screen,attribs,64,SDL_FALSE);
+    XVisualInfo *vinfo;
 
     if (!_this->gl_data) {
         /* The OpenGL library wasn't loaded, SDL_GetError() should have info */
         return NULL;
     }
 
+    X11_GL_GetAttributes(_this, display, screen, attribs, 64, SDL_FALSE);
     vinfo = _this->gl_data->glXChooseVisual(display, screen, attribs);
     if (!vinfo) {
         SDL_SetError("Couldn't find matching GLX visual");
@@ -515,24 +539,30 @@ X11_GL_GetVisual(_THIS, Display * display, int screen)
 #endif
 static int (*handler) (Display *, XErrorEvent *) = NULL;
 static int errorBase = 0;
+static int errorCode = 0;
 static int
 X11_GL_CreateContextErrorHandler(Display * d, XErrorEvent * e)
 {
-    switch (e->error_code) {
-    case BadRequest:
-    case BadMatch:
-    case BadValue:
-    case BadAlloc:
-        return (0);
-    default:
-        if (errorBase && 
-            (e->error_code == errorBase + GLXBadContext ||
-             e->error_code == errorBase + GLXBadFBConfig ||
-             e->error_code == errorBase + GLXBadProfileARB)) {
-            return (0);
-        }
-        return (handler(d, e));
+    char *x11_error = NULL;
+    char x11_error_locale[256];
+
+    errorCode = e->error_code;
+    if (X11_XGetErrorText(d, errorCode, x11_error_locale, sizeof(x11_error_locale)) == Success)
+    {
+        x11_error = SDL_iconv_string("UTF-8", "", x11_error_locale, strlen(x11_error_locale));
     }
+
+    if (x11_error)
+    {
+        SDL_SetError("Could not create GL context: %s", x11_error);
+        SDL_free(x11_error);
+    }
+    else
+    {
+        SDL_SetError("Could not create GL context: %i (Base %i)\n", errorCode, errorBase);
+    }
+
+    return (0);
 }
 
 SDL_GLContext
@@ -546,6 +576,7 @@ X11_GL_CreateContext(_THIS, SDL_Window * window)
     XVisualInfo v, *vinfo;
     int n;
     GLXContext context = NULL, share_context;
+    PFNGLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribs = NULL;
 
     if (_this->gl_config.share_with_current_context) {
         share_context = (GLXContext)SDL_GL_GetCurrentContext();
@@ -554,13 +585,14 @@ X11_GL_CreateContext(_THIS, SDL_Window * window)
     }
 
     /* We do this to create a clean separation between X and GLX errors. */
-    XSync(display, False);
+    X11_XSync(display, False);
     errorBase = _this->gl_data->errorBase;
-    handler = XSetErrorHandler(X11_GL_CreateContextErrorHandler);
-    XGetWindowAttributes(display, data->xwindow, &xattr);
+    errorCode = Success;
+    handler = X11_XSetErrorHandler(X11_GL_CreateContextErrorHandler);
+    X11_XGetWindowAttributes(display, data->xwindow, &xattr);
     v.screen = screen;
-    v.visualid = XVisualIDFromVisual(xattr.visual);
-    vinfo = XGetVisualInfo(display, VisualScreenMask | VisualIDMask, &v, &n);
+    v.visualid = X11_XVisualIDFromVisual(xattr.visual);
+    vinfo = X11_XGetVisualInfo(display, VisualScreenMask | VisualIDMask, &v, &n);
     if (vinfo) {
         if (_this->gl_config.major_version < 3 &&
             _this->gl_config.profile_mask == 0 &&
@@ -599,7 +631,7 @@ X11_GL_CreateContext(_THIS, SDL_Window * window)
                 attribs[iattr++] = 0;
 
                 /* Get a pointer to the context creation function for GL 3.0 */
-                PFNGLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribs =
+                glXCreateContextAttribs =
                     (PFNGLXCREATECONTEXTATTRIBSARBPROC) _this->gl_data->
                     glXGetProcAddress((GLubyte *)
                                       "glXCreateContextAttribsARB");
@@ -644,13 +676,15 @@ X11_GL_CreateContext(_THIS, SDL_Window * window)
                 }
             }
         }
-        XFree(vinfo);
+        X11_XFree(vinfo);
     }
-    XSync(display, False);
-    XSetErrorHandler(handler);
+    X11_XSync(display, False);
+    X11_XSetErrorHandler(handler);
 
     if (!context) {
-        SDL_SetError("Could not create GL context");
+        if (errorCode == Success) {
+            SDL_SetError("Could not create GL context");
+        }
         return NULL;
     }
 
@@ -789,7 +823,7 @@ X11_GL_DeleteContext(_THIS, SDL_GLContext context)
         return;
     }
     _this->gl_data->glXDestroyContext(display, glx_context);
-    XSync(display, False);
+    X11_XSync(display, False);
 }
 
 #endif /* SDL_VIDEO_OPENGL_GLX */

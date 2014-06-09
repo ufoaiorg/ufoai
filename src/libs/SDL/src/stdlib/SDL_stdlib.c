@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../SDL_internal.h"
 
 /* This file contains portable stdlib functions for SDL */
 
@@ -47,12 +47,53 @@ SDL_atan2(double x, double y)
 }
 
 double
+SDL_acos(double val)
+{
+#if defined(HAVE_ACOS)
+    return acos(val);
+#else
+    double result;
+    if (val == -1.0) {
+        result = M_PI;
+    } else {
+        result = SDL_atan(SDL_sqrt(1.0 - val * val) / val);
+        if (result < 0.0)
+        {
+            result += M_PI;
+        }
+    }
+    return result;
+#endif
+}
+
+double
+SDL_asin(double val)
+{
+#if defined(HAVE_ASIN)
+    return asin(val);
+#else
+    double result;
+    if (val == -1.0) {
+        result = -(M_PI / 2.0);
+    } else {
+        result = (M_PI / 2.0) - SDL_acos(val);
+    }
+    return result;
+#endif
+}
+
+double
 SDL_ceil(double x)
 {
 #ifdef HAVE_CEIL
     return ceil(x);
 #else
-    return (double)(int)((x)+0.5);
+    double integer = SDL_floor(x);
+    double fraction = x - integer;
+    if (fraction > 0.0) {
+        integer += 1.0;
+    }
+    return integer;
 #endif /* HAVE_CEIL */
 }
 
@@ -61,6 +102,8 @@ SDL_copysign(double x, double y)
 {
 #if defined(HAVE_COPYSIGN)
     return copysign(x, y);
+#elif defined(HAVE__COPYSIGN)
+    return _copysign(x, y);
 #else
     return SDL_uclibc_copysign(x, y);
 #endif /* HAVE_COPYSIGN */
@@ -131,6 +174,8 @@ SDL_scalbn(double x, int n)
 {
 #if defined(HAVE_SCALBN)
     return scalbn(x, n);
+#elif defined(HAVE__SCALB)
+    return _scalb(x, n);
 #else
     return SDL_uclibc_scalbn(x, n);
 #endif /* HAVE_SCALBN */
@@ -163,6 +208,36 @@ SDL_sqrt(double x)
     return sqrt(x);
 #else
     return SDL_uclibc_sqrt(x);
+#endif
+}
+
+float
+SDL_sqrtf(float x)
+{
+#if defined(HAVE_SQRTF)
+    return sqrtf(x);
+#else
+    return (float)SDL_sqrt((double)x);
+#endif
+}
+
+double
+SDL_tan(double x)
+{
+#if defined(HAVE_TAN)
+    return tan(x);
+#else
+    return SDL_uclibc_tan(x);
+#endif
+}
+
+float
+SDL_tanf(float x)
+{
+#if defined(HAVE_TANF)
+    return tanf(x);
+#else
+    return (float)SDL_tan((double)x);
 #endif
 }
 
@@ -236,12 +311,6 @@ void * memcpy ( void * destination, const void * source, size_t num )
 #endif /* _MSC_VER == 1600 && defined(_WIN64) && !defined(_DEBUG) */
 
 #ifdef _M_IX86
-
-void
-__declspec(naked)
-_chkstk()
-{
-}
 
 /* Float to long */
 void

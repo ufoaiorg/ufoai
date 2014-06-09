@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "./SDL_internal.h"
 
 #include "SDL_hints.h"
 #include "SDL_error.h"
@@ -72,14 +72,8 @@ SDL_SetHintWithPriority(const char *name, const char *value,
                     entry->callback(entry->userdata, name, hint->value, value);
                     entry = next;
                 }
-                if (hint->value) {
-                    SDL_free(hint->value);
-                }
-                if (value) {
-                    hint->value = SDL_strdup(value);
-                } else {
-                    hint->value = NULL;
-                }
+                SDL_free(hint->value);
+                hint->value = value ? SDL_strdup(value) : NULL;
             }
             hint->priority = priority;
             return SDL_TRUE;
@@ -210,9 +204,7 @@ void SDL_ClearHints(void)
         SDL_hints = hint->next;
 
         SDL_free(hint->name);
-        if (hint->value) {
-            SDL_free(hint->value);
-        }
+        SDL_free(hint->value);
         for (entry = hint->callbacks; entry; ) {
             SDL_HintWatch *freeable = entry;
             entry = entry->next;

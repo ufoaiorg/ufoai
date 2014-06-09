@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../SDL_internal.h"
 
 /* This file contains portable iconv functions for SDL */
 
@@ -843,7 +843,7 @@ SDL_iconv(SDL_iconv_t cd,
 int
 SDL_iconv_close(SDL_iconv_t cd)
 {
-    if (cd && cd != (SDL_iconv_t) - 1) {
+    if (cd != (SDL_iconv_t)-1) {
         SDL_free(cd);
     }
     return 0;

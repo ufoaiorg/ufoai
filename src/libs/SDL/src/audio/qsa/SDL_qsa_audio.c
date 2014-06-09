@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #if SDL_AUDIO_DRIVER_QSA
 
@@ -83,7 +83,7 @@ uint32_t qsa_playback_devices;
 QSA_Device qsa_capture_device[QSA_MAX_DEVICES];
 uint32_t qsa_capture_devices;
 
-static inline int
+static SDL_INLINE int
 QSA_SetError(const char *fn, int status)
 {
     return SDL_SetError("QSA: %s() failed: %s", fn, snd_strerror(status));
@@ -328,10 +328,8 @@ QSA_CloseDevice(_THIS)
             this->hidden->audio_handle = NULL;
         }
 
-        if (this->hidden->pcm_buf != NULL) {
-            SDL_FreeAudioMem(this->hidden->pcm_buf);
-            this->hidden->pcm_buf = NULL;
-        }
+        SDL_FreeAudioMem(this->hidden->pcm_buf);
+        this->hidden->pcm_buf = NULL;
 
         SDL_free(this->hidden);
         this->hidden = NULL;

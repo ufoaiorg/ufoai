@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #ifndef _SDL_x11window_h
 #define _SDL_x11window_h
@@ -29,6 +29,10 @@
 */
 #define PENDING_FOCUS_IN_TIME   200
 #define PENDING_FOCUS_OUT_TIME  200
+
+#if SDL_VIDEO_OPENGL_EGL   
+#include <EGL/egl.h>
+#endif
 
 typedef enum
 {
@@ -59,6 +63,9 @@ typedef struct
     struct SDL_VideoData *videodata;
     Atom xdnd_req;
     Window xdnd_source;
+#if SDL_VIDEO_OPENGL_EGL  
+    EGLSurface egl_surface;
+#endif
 } SDL_WindowData;
 
 extern void X11_SetNetWMState(_THIS, Window xwindow, Uint32 flags);
@@ -70,6 +77,8 @@ extern char *X11_GetWindowTitle(_THIS, Window xwindow);
 extern void X11_SetWindowTitle(_THIS, SDL_Window * window);
 extern void X11_SetWindowIcon(_THIS, SDL_Window * window, SDL_Surface * icon);
 extern void X11_SetWindowPosition(_THIS, SDL_Window * window);
+extern void X11_SetWindowMinimumSize(_THIS, SDL_Window * window);
+extern void X11_SetWindowMaximumSize(_THIS, SDL_Window * window);
 extern void X11_SetWindowSize(_THIS, SDL_Window * window);
 extern void X11_ShowWindow(_THIS, SDL_Window * window);
 extern void X11_HideWindow(_THIS, SDL_Window * window);

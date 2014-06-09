@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,17 +18,21 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #if SDL_VIDEO_DRIVER_WINDOWS
+
+#include "../../core/windows/SDL_windows.h"
 
 #include "SDL_assert.h"
 #include "../SDL_sysvideo.h"
 #include "../SDL_pixels_c.h"
 #include "../../events/SDL_keyboard_c.h"
+#include "../../events/SDL_mouse_c.h"
 
 #include "SDL_windowsvideo.h"
 #include "SDL_windowswindow.h"
+#include "SDL_hints.h"
 
 /* Dropfile support */
 #include <shellapi.h>
@@ -74,6 +78,41 @@ GetWindowStyle(SDL_Window * window)
     return style;
 }
 
+static void
+WIN_SetWindowPositionInternal(_THIS, SDL_Window * window, UINT flags)
+{
+    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    HWND hwnd = data->hwnd;
+    RECT rect;
+    DWORD style;
+    HWND top;
+    BOOL menu;
+    int x, y;
+    int w, h;
+
+    /* Figure out what the window area will be */
+    if (SDL_ShouldAllowTopmost() && (window->flags & (SDL_WINDOW_FULLSCREEN|SDL_WINDOW_INPUT_FOCUS)) == (SDL_WINDOW_FULLSCREEN|SDL_WINDOW_INPUT_FOCUS)) {
+        top = HWND_TOPMOST;
+    } else {
+        top = HWND_NOTOPMOST;
+    }
+    style = GetWindowLong(hwnd, GWL_STYLE);
+    rect.left = 0;
+    rect.top = 0;
+    rect.right = window->w;
+    rect.bottom = window->h;
+    menu = (style & WS_CHILDWINDOW) ? FALSE : (GetMenu(hwnd) != NULL);
+    AdjustWindowRectEx(&rect, style, menu, 0);
+    w = (rect.right - rect.left);
+    h = (rect.bottom - rect.top);
+    x = window->x + rect.left;
+    y = window->y + rect.top;
+
+    data->expected_resize = SDL_TRUE;
+    SetWindowPos( hwnd, top, x, y, w, h, flags );
+    data->expected_resize = SDL_FALSE;
+}
+
 static int
 SetupWindowData(_THIS, SDL_Window * window, HWND hwnd, SDL_bool created)
 {
@@ -81,7 +120,7 @@ SetupWindowData(_THIS, SDL_Window * window, HWND hwnd, SDL_bool created)
     SDL_WindowData *data;
 
     /* Allocate the window data */
-    data = (SDL_WindowData *) SDL_malloc(sizeof(*data));
+    data = (SDL_WindowData *) SDL_calloc(1, sizeof(*data));
     if (!data) {
         return SDL_OutOfMemory();
     }
@@ -120,19 +159,26 @@ SetupWindowData(_THIS, SDL_Window * window, HWND hwnd, SDL_bool created)
 
     /* Fill in the SDL window with the window data */
     {
+        RECT rect;
+        if (GetClientRect(hwnd, &rect)) {
+            int w = rect.right;
+            int h = rect.bottom;
+            if ((window->w && window->w != w) || (window->h && window->h != h)) {
+                /* We tried to create a window larger than the desktop and Windows didn't allow it.  Override! */
+                WIN_SetWindowPositionInternal(_this, window, SWP_NOCOPYBITS | SWP_NOZORDER | SWP_NOACTIVATE);
+            } else {
+                window->w = w;
+                window->h = h;
+            }
+        }
+    }
+    {
         POINT point;
         point.x = 0;
         point.y = 0;
         if (ClientToScreen(hwnd, &point)) {
             window->x = point.x;
             window->y = point.y;
-        }
-    }
-    {
-        RECT rect;
-        if (GetClientRect(hwnd, &rect)) {
-            window->w = rect.right;
-            window->h = rect.bottom;
         }
     }
     {
@@ -229,6 +275,32 @@ WIN_CreateWindow(_THIS, SDL_Window * window)
         DestroyWindow(hwnd);
         return -1;
     }
+
+#if SDL_VIDEO_OPENGL_WGL
+    /* We need to initialize the extensions before deciding how to create ES profiles */
+    if (window->flags & SDL_WINDOW_OPENGL) {
+        WIN_GL_InitExtensions(_this);
+    }
+#endif
+
+#if SDL_VIDEO_OPENGL_ES2
+    if ((window->flags & SDL_WINDOW_OPENGL) &&
+        _this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES
+#if SDL_VIDEO_OPENGL_WGL           
+        && (!_this->gl_data || !_this->gl_data->HAS_WGL_EXT_create_context_es2_profile)
+#endif  
+        ) {
+#if SDL_VIDEO_OPENGL_EGL  
+        if (WIN_GLES_SetupWindow(_this, window) < 0) {
+            WIN_DestroyWindow(_this, window);
+            return -1;
+        }
+#else
+        return SDL_SetError("Could not create GLES window surface (no EGL support available)");
+#endif /* SDL_VIDEO_OPENGL_EGL */
+    } else 
+#endif /* SDL_VIDEO_OPENGL_ES2 */
+
 #if SDL_VIDEO_OPENGL_WGL
     if (window->flags & SDL_WINDOW_OPENGL) {
         if (WIN_GL_SetupWindow(_this, window) < 0) {
@@ -237,6 +309,7 @@ WIN_CreateWindow(_THIS, SDL_Window * window)
         }
     }
 #endif
+
     return 0;
 }
 
@@ -265,6 +338,32 @@ WIN_CreateWindowFrom(_THIS, SDL_Window * window, const void *data)
     if (SetupWindowData(_this, window, hwnd, SDL_FALSE) < 0) {
         return -1;
     }
+
+#if SDL_VIDEO_OPENGL_WGL
+    {
+        const char *hint = SDL_GetHint(SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT);
+        if (hint) {
+            /* This hint is a pointer (in string form) of the address of
+               the window to share a pixel format with
+            */
+            SDL_Window *otherWindow = NULL;
+            SDL_sscanf(hint, "%p", (void**)&otherWindow);
+
+            /* Do some error checking on the pointer */
+            if (otherWindow != NULL && otherWindow->magic == &_this->window_magic)
+            {
+                /* If the otherWindow has SDL_WINDOW_OPENGL set, set it for the new window as well */
+                if (otherWindow->flags & SDL_WINDOW_OPENGL)
+                {
+                    window->flags |= SDL_WINDOW_OPENGL;
+                    if(!WIN_GL_SetPixelFormatFrom(_this, otherWindow, window)) {
+                        return -1;
+                    }
+                }
+            }
+        }
+    }
+#endif
     return 0;
 }
 
@@ -280,9 +379,7 @@ WIN_SetWindowTitle(_THIS, SDL_Window * window)
         title = NULL;
     }
     SetWindowText(hwnd, title ? title : TEXT(""));
-    if (title) {
-        SDL_free(title);
-    }
+    SDL_free(title);
 }
 
 void
@@ -336,38 +433,6 @@ WIN_SetWindowIcon(_THIS, SDL_Window * window, SDL_Surface * icon)
     SendMessage(hwnd, WM_SETICON, ICON_BIG, (LPARAM) hicon);
 }
 
-static void
-WIN_SetWindowPositionInternal(_THIS, SDL_Window * window, UINT flags)
-{
-    HWND hwnd = ((SDL_WindowData *) window->driverdata)->hwnd;
-    RECT rect;
-    DWORD style;
-    HWND top;
-    BOOL menu;
-    int x, y;
-    int w, h;
-
-    /* Figure out what the window area will be */
-    if ( SDL_ShouldAllowTopmost() && (window->flags & (SDL_WINDOW_FULLSCREEN|SDL_WINDOW_INPUT_FOCUS)) == (SDL_WINDOW_FULLSCREEN|SDL_WINDOW_INPUT_FOCUS )) {
-        top = HWND_TOPMOST;
-    } else {
-        top = HWND_NOTOPMOST;
-    }
-    style = GetWindowLong(hwnd, GWL_STYLE);
-    rect.left = 0;
-    rect.top = 0;
-    rect.right = window->w;
-    rect.bottom = window->h;
-    menu = (style & WS_CHILDWINDOW) ? FALSE : (GetMenu(hwnd) != NULL);
-    AdjustWindowRectEx(&rect, style, menu, 0);
-    w = (rect.right - rect.left);
-    h = (rect.bottom - rect.top);
-    x = window->x + rect.left;
-    y = window->y + rect.top;
-
-    SetWindowPos(hwnd, top, x, y, w, h, flags);
-}
-
 void
 WIN_SetWindowPosition(_THIS, SDL_Window * window)
 {
@@ -397,22 +462,17 @@ WIN_HideWindow(_THIS, SDL_Window * window)
 void
 WIN_RaiseWindow(_THIS, SDL_Window * window)
 {
-    HWND hwnd = ((SDL_WindowData *) window->driverdata)->hwnd;
-    HWND top;
-
-    if ( SDL_ShouldAllowTopmost() && (window->flags & (SDL_WINDOW_FULLSCREEN|SDL_WINDOW_INPUT_FOCUS)) == (SDL_WINDOW_FULLSCREEN|SDL_WINDOW_INPUT_FOCUS )) {
-        top = HWND_TOPMOST;
-    } else {
-        top = HWND_NOTOPMOST;
-    }
-    SetWindowPos(hwnd, top, 0, 0, 0, 0, (SWP_NOMOVE | SWP_NOSIZE));
+    WIN_SetWindowPositionInternal(_this, window, SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOSIZE);
 }
 
 void
 WIN_MaximizeWindow(_THIS, SDL_Window * window)
 {
-    HWND hwnd = ((SDL_WindowData *) window->driverdata)->hwnd;
+    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    HWND hwnd = data->hwnd;
+    data->expected_resize = SDL_TRUE;
     ShowWindow(hwnd, SW_MAXIMIZE);
+    data->expected_resize = SDL_FALSE;
 }
 
 void
@@ -425,7 +485,8 @@ WIN_MinimizeWindow(_THIS, SDL_Window * window)
 void
 WIN_SetWindowBordered(_THIS, SDL_Window * window, SDL_bool bordered)
 {
-    HWND hwnd = ((SDL_WindowData *) window->driverdata)->hwnd;
+    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    HWND hwnd = data->hwnd;
     DWORD style = GetWindowLong(hwnd, GWL_STYLE);
 
     if (bordered) {
@@ -436,16 +497,20 @@ WIN_SetWindowBordered(_THIS, SDL_Window * window, SDL_bool bordered)
         style |= STYLE_BORDERLESS;
     }
 
-    SetWindowLong(hwnd, GWL_STYLE, style);
-    SetWindowPos(hwnd, hwnd, window->x, window->y, window->w, window->h, SWP_FRAMECHANGED | SWP_NOREPOSITION | SWP_NOZORDER |SWP_NOACTIVATE | SWP_NOSENDCHANGING);
+    data->in_border_change = SDL_TRUE;
+    SetWindowLong( hwnd, GWL_STYLE, style );
+    WIN_SetWindowPositionInternal(_this, window, SWP_NOCOPYBITS | SWP_FRAMECHANGED | SWP_NOZORDER | SWP_NOACTIVATE);
+    data->in_border_change = SDL_FALSE;
 }
 
 void
 WIN_RestoreWindow(_THIS, SDL_Window * window)
 {
-    HWND hwnd = ((SDL_WindowData *) window->driverdata)->hwnd;
-
+    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    HWND hwnd = data->hwnd;
+    data->expected_resize = SDL_TRUE;
     ShowWindow(hwnd, SW_RESTORE);
+    data->expected_resize = SDL_FALSE;
 }
 
 void
@@ -461,7 +526,7 @@ WIN_SetWindowFullscreen(_THIS, SDL_Window * window, SDL_VideoDisplay * display, 
     int x, y;
     int w, h;
 
-    if ( SDL_ShouldAllowTopmost() && (window->flags & (SDL_WINDOW_FULLSCREEN|SDL_WINDOW_INPUT_FOCUS)) == (SDL_WINDOW_FULLSCREEN|SDL_WINDOW_INPUT_FOCUS )) {
+    if (SDL_ShouldAllowTopmost() && (window->flags & (SDL_WINDOW_FULLSCREEN|SDL_WINDOW_INPUT_FOCUS)) == (SDL_WINDOW_FULLSCREEN|SDL_WINDOW_INPUT_FOCUS)) {
         top = HWND_TOPMOST;
     } else {
         top = HWND_NOTOPMOST;
@@ -491,7 +556,9 @@ WIN_SetWindowFullscreen(_THIS, SDL_Window * window, SDL_VideoDisplay * display, 
         y = window->windowed.y + rect.top;
     }
     SetWindowLong(hwnd, GWL_STYLE, style);
-    SetWindowPos(hwnd, top, x, y, w, h, SWP_NOCOPYBITS);
+    data->expected_resize = SDL_TRUE;
+    SetWindowPos(hwnd, top, x, y, w, h, SWP_NOCOPYBITS | SWP_NOACTIVATE);
+    data->expected_resize = SDL_FALSE;
 }
 
 int
@@ -535,33 +602,15 @@ WIN_GetWindowGammaRamp(_THIS, SDL_Window * window, Uint16 * ramp)
 void
 WIN_SetWindowGrab(_THIS, SDL_Window * window, SDL_bool grabbed)
 {
-    HWND hwnd = ((SDL_WindowData *) window->driverdata)->hwnd;
+    WIN_UpdateClipCursor(window);
 
-    if (grabbed) {
-        RECT rect;
-        GetClientRect(hwnd, &rect);
-        ClientToScreen(hwnd, (LPPOINT) & rect);
-        ClientToScreen(hwnd, (LPPOINT) & rect + 1);
-        ClipCursor(&rect);
-    } else {
-        ClipCursor(NULL);
-    }
+    if (window->flags & SDL_WINDOW_FULLSCREEN) {
+        UINT flags = SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOSIZE;
 
-    if ( window->flags & SDL_WINDOW_FULLSCREEN )
-    {
-        HWND top;
-        SDL_WindowData *data = (SDL_WindowData *) window->driverdata;
-        HWND hwnd = data->hwnd;
-        UINT flags = SWP_NOMOVE | SWP_NOSIZE;
-
-        if ( SDL_ShouldAllowTopmost() && (window->flags & SDL_WINDOW_INPUT_FOCUS ) ) {
-            top = HWND_TOPMOST;
-        } else {
-            top = HWND_NOTOPMOST;
-            flags |= SWP_NOZORDER;
+        if (!(window->flags & SDL_WINDOW_SHOWN)) {
+            flags |= SWP_NOACTIVATE;
         }
-
-        SetWindowPos(hwnd, top, 0, 0, 0, 0, flags);
+        WIN_SetWindowPositionInternal(_this, window, flags);
     }
 }
 
@@ -628,7 +677,7 @@ SDL_HelperWindowCreate(void)
 
     /* Register the class. */
     SDL_HelperWindowClass = RegisterClass(&wce);
-    if (SDL_HelperWindowClass == 0) {
+    if (SDL_HelperWindowClass == 0 && GetLastError() != ERROR_CLASS_ALREADY_EXISTS) {
         return WIN_SetError("Unable to create Helper Window Class");
     }
 
@@ -692,6 +741,48 @@ void WIN_OnWindowEnter(_THIS, SDL_Window * window)
 
     TrackMouseEvent(&trackMouseEvent);
 #endif /* WM_MOUSELEAVE */
+}
+
+void
+WIN_UpdateClipCursor(SDL_Window *window)
+{
+    SDL_WindowData *data = (SDL_WindowData *) window->driverdata;
+    SDL_Mouse *mouse = SDL_GetMouse();
+
+    /* Don't clip the cursor while we're in the modal resize or move loop */
+    if (data->in_title_click || data->in_modal_loop) {
+        ClipCursor(NULL);
+        return;
+    }
+
+    if ((mouse->relative_mode || (window->flags & SDL_WINDOW_INPUT_GRABBED)) &&
+        (window->flags & SDL_WINDOW_INPUT_FOCUS)) {
+        if (mouse->relative_mode && !mouse->relative_mode_warp) {
+            LONG cx, cy;
+            RECT rect;
+            GetWindowRect(data->hwnd, &rect);
+
+            cx = (rect.left + rect.right) / 2;
+            cy = (rect.top + rect.bottom) / 2;
+
+            /* Make an absurdly small clip rect */
+            rect.left = cx - 1;
+            rect.right = cx + 1;
+            rect.top = cy - 1;
+            rect.bottom = cy + 1;
+
+            ClipCursor(&rect);
+        } else {
+            RECT rect;
+            if (GetClientRect(data->hwnd, &rect) && !IsRectEmpty(&rect)) {
+                ClientToScreen(data->hwnd, (LPPOINT) & rect);
+                ClientToScreen(data->hwnd, (LPPOINT) & rect + 1);
+                ClipCursor(&rect);
+            }
+        }
+    } else {
+        ClipCursor(NULL);
+    }
 }
 
 #endif /* SDL_VIDEO_DRIVER_WINDOWS */

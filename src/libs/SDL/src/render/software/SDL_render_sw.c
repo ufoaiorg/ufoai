@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #if !SDL_RENDER_DISABLED
 
@@ -114,8 +114,6 @@ SW_ActivateRenderer(SDL_Renderer * renderer)
         SDL_Surface *surface = SDL_GetWindowSurface(renderer->window);
         if (surface) {
             data->surface = data->window = surface;
-            renderer->viewport.w = surface->w;
-            renderer->viewport.h = surface->h;
 
             SW_UpdateViewport(renderer);
             SW_UpdateClipRect(renderer);
@@ -349,11 +347,9 @@ SW_UpdateClipRect(SDL_Renderer * renderer)
 {
     SW_RenderData *data = (SW_RenderData *) renderer->driverdata;
     SDL_Surface *surface = data->surface;
-    const SDL_Rect *rect = &renderer->clip_rect;
-
     if (surface) {
-        if (!SDL_RectEmpty(rect)) {
-            SDL_SetClipRect(surface, rect);
+        if (renderer->clipping_enabled) {
+            SDL_SetClipRect(surface, &renderer->clip_rect);
         } else {
             SDL_SetClipRect(surface, NULL);
         }
@@ -611,8 +607,8 @@ SW_RenderCopyEx(SDL_Renderer * renderer, SDL_Texture * texture,
 
         retval = SDL_BlitScaled(src, srcrect, surface_scaled, &tmp_rect);
         if (!retval) {
-            _rotozoomSurfaceSizeTrig(tmp_rect.w, tmp_rect.h, -angle, &dstwidth, &dstheight, &cangle, &sangle);
-            surface_rotated = _rotateSurface(surface_scaled, -angle, dstwidth/2, dstheight/2, GetScaleQuality(), flip & SDL_FLIP_HORIZONTAL, flip & SDL_FLIP_VERTICAL, dstwidth, dstheight, cangle, sangle);
+            SDLgfx_rotozoomSurfaceSizeTrig(tmp_rect.w, tmp_rect.h, -angle, &dstwidth, &dstheight, &cangle, &sangle);
+            surface_rotated = SDLgfx_rotateSurface(surface_scaled, -angle, dstwidth/2, dstheight/2, GetScaleQuality(), flip & SDL_FLIP_HORIZONTAL, flip & SDL_FLIP_VERTICAL, dstwidth, dstheight, cangle, sangle);
             if(surface_rotated) {
                 /* Find out where the new origin is by rotating the four final_rect points around the center and then taking the extremes */
                 abscenterx = final_rect.x + (int)center->x;
@@ -720,9 +716,7 @@ SW_DestroyRenderer(SDL_Renderer * renderer)
 {
     SW_RenderData *data = (SW_RenderData *) renderer->driverdata;
 
-    if (data) {
-        SDL_free(data);
-    }
+    SDL_free(data);
     SDL_free(renderer);
 }
 

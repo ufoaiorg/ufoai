@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #ifndef SDL_POWER_DISABLED
 #if SDL_POWER_UIKIT
@@ -38,11 +38,7 @@ void
 SDL_UIKit_UpdateBatteryMonitoring(void)
 {
     if (SDL_UIKitLastPowerInfoQuery) {
-        const Uint32 prev = SDL_UIKitLastPowerInfoQuery;
-        const UInt32 now = SDL_GetTicks();
-        const UInt32 ticks = now - prev;
-        /* if timer wrapped (now < prev), shut down, too. */
-        if ((now < prev) || (ticks >= BATTERY_MONITORING_TIMEOUT)) {
+        if (SDL_TICKS_PASSED(SDL_GetTicks(), SDL_UIKitLastPowerInfoQuery + BATTERY_MONITORING_TIMEOUT)) {
             UIDevice *uidev = [UIDevice currentDevice];
             SDL_assert([uidev isBatteryMonitoringEnabled] == YES);
             [uidev setBatteryMonitoringEnabled:NO];
@@ -91,8 +87,8 @@ SDL_GetPowerInfo_UIKit(SDL_PowerState * state, int *seconds, int *percent)
     }
 
     const float level = [uidev batteryLevel];
-    *percent = ( (level < 0.0f) ? -1 : (((int) (level + 0.5f)) * 100) );
-    return SDL_TRUE;            /* always the definitive answer on iPhoneOS. */
+    *percent = ( (level < 0.0f) ? -1 : ((int) ((level * 100) + 0.5f)) );
+    return SDL_TRUE;            /* always the definitive answer on iOS. */
 }
 
 #endif /* SDL_POWER_UIKIT */

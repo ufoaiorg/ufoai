@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #if SDL_VIDEO_DRIVER_UIKIT
 
@@ -63,9 +63,7 @@ UIKit_CreateDevice(int devindex)
     /* Initialize all variables that we clean on shutdown */
     device = (SDL_VideoDevice *) SDL_calloc(1, sizeof(SDL_VideoDevice));
     if (!device) {
-        if (device) {
-            SDL_free(device);
-        }
+        SDL_free(device);
         SDL_OutOfMemory();
         return (0);
     }
@@ -91,6 +89,7 @@ UIKit_CreateDevice(int devindex)
     device->ShowScreenKeyboard = UIKit_ShowScreenKeyboard;
     device->HideScreenKeyboard = UIKit_HideScreenKeyboard;
     device->IsScreenKeyboardShown = UIKit_IsScreenKeyboardShown;
+    device->SetTextInputRect = UIKit_SetTextInputRect;
 #endif
 
     /* OpenGL (ES) functions */

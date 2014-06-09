@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../SDL_internal.h"
 
 #ifndef _SDL_sysrender_h
 #define _SDL_sysrender_h
@@ -89,6 +89,11 @@ struct SDL_Renderer
     int (*UpdateTexture) (SDL_Renderer * renderer, SDL_Texture * texture,
                           const SDL_Rect * rect, const void *pixels,
                           int pitch);
+    int (*UpdateTextureYUV) (SDL_Renderer * renderer, SDL_Texture * texture,
+                            const SDL_Rect * rect,
+                            const Uint8 *Yplane, int Ypitch,
+                            const Uint8 *Uplane, int Upitch,
+                            const Uint8 *Vplane, int Vpitch);
     int (*LockTexture) (SDL_Renderer * renderer, SDL_Texture * texture,
                         const SDL_Rect * rect, void **pixels, int *pitch);
     void (*UnlockTexture) (SDL_Renderer * renderer, SDL_Texture * texture);
@@ -138,6 +143,10 @@ struct SDL_Renderer
     SDL_Rect clip_rect;
     SDL_Rect clip_rect_backup;
 
+    /* Wether or not the clipping rectangle is used. */
+    SDL_bool clipping_enabled;
+    SDL_bool clipping_enabled_backup;
+
     /* The render output coordinate scale */
     SDL_FPoint scale;
     SDL_FPoint scale_backup;
@@ -165,6 +174,9 @@ struct SDL_RenderDriver
 
 #if SDL_VIDEO_RENDER_D3D
 extern SDL_RenderDriver D3D_RenderDriver;
+#endif
+#if SDL_VIDEO_RENDER_D3D11
+extern SDL_RenderDriver D3D11_RenderDriver;
 #endif
 #if SDL_VIDEO_RENDER_OGL
 extern SDL_RenderDriver GL_RenderDriver;

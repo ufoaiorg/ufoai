@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #if SDL_VIDEO_DRIVER_UIKIT
 
@@ -99,11 +99,13 @@ static int SetupWindowData(_THIS, SDL_Window *window, UIWindow *uiwindow, SDL_bo
     if (displaydata->uiscreen == [UIScreen mainScreen]) {
         window->flags |= SDL_WINDOW_INPUT_FOCUS;  /* always has input focus */
 
+        /* This was setup earlier for our window, and in iOS 7 is controlled by the view, not the application
         if ([UIApplication sharedApplication].statusBarHidden) {
             window->flags |= SDL_WINDOW_BORDERLESS;
         } else {
             window->flags &= ~SDL_WINDOW_BORDERLESS;
         }
+        */
     } else {
         window->flags &= ~SDL_WINDOW_RESIZABLE;  /* window is NEVER resizeable */
         window->flags &= ~SDL_WINDOW_INPUT_FOCUS;  /* never has input focus */

@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 #include "SDL_audio.h"
 #include "../SDL_audio_c.h"
 #include "../SDL_sysaudio.h"
@@ -319,7 +319,6 @@ COREAUDIO_CloseDevice(_THIS)
 {
     if (this->hidden != NULL) {
         if (this->hidden->audioUnitOpened) {
-            OSStatus result = noErr;
             AURenderCallbackStruct callback;
             const AudioUnitElement output_bus = 0;
             const AudioUnitElement input_bus = 1;
@@ -331,14 +330,13 @@ COREAUDIO_CloseDevice(_THIS)
                  kAudioUnitScope_Input);
 
             /* stop processing the audio unit */
-            result = AudioOutputUnitStop(this->hidden->audioUnit);
+            AudioOutputUnitStop(this->hidden->audioUnit);
 
             /* Remove the input callback */
             SDL_memset(&callback, 0, sizeof(AURenderCallbackStruct));
-            result = AudioUnitSetProperty(this->hidden->audioUnit,
-                                          kAudioUnitProperty_SetRenderCallback,
-                                          scope, bus, &callback,
-                                          sizeof(callback));
+            AudioUnitSetProperty(this->hidden->audioUnit,
+                                 kAudioUnitProperty_SetRenderCallback,
+                                 scope, bus, &callback, sizeof(callback));
 
             #if MACOSX_COREAUDIO
             CloseComponent(this->hidden->audioUnit);

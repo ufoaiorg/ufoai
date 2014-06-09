@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_config.h"
+#include "../../SDL_internal.h"
 
 #if SDL_AUDIO_DRIVER_DSOUND
 
@@ -91,14 +91,6 @@ DSOUND_Load(void)
     return loaded;
 }
 
-static __inline__ char *
-utf16_to_utf8(const WCHAR *S)
-{
-    /* !!! FIXME: this should be UTF-16, not UCS-2! */
-    return SDL_iconv_string("UTF-8", "UCS-2", (char *)(S),
-                            (SDL_wcslen(S)+1)*sizeof(WCHAR));
-}
-
 static int
 SetDSerror(const char *function, int code)
 {
@@ -158,7 +150,7 @@ FindAllDevs(LPGUID guid, LPCWSTR desc, LPCWSTR module, LPVOID data)
 {
     SDL_AddAudioDevice addfn = (SDL_AddAudioDevice) data;
     if (guid != NULL) {  /* skip default device */
-        char *str = utf16_to_utf8(desc);
+        char *str = WIN_StringToUTF8(desc);
         if (str != NULL) {
             addfn(str);
             SDL_free(str);  /* addfn() makes a copy of this string. */
@@ -439,7 +431,7 @@ FindDevGUID(LPGUID guid, LPCWSTR desc, LPCWSTR module, LPVOID _data)
 {
     if (guid != NULL) {  /* skip the default device. */
         FindDevGUIDData *data = (FindDevGUIDData *) _data;
-        char *str = utf16_to_utf8(desc);
+        char *str = WIN_StringToUTF8(desc);
         const int match = (SDL_strcmp(str, data->devname) == 0);
         SDL_free(str);
         if (match) {
@@ -510,7 +502,7 @@ DSOUND_OpenDevice(_THIS, const char *devname, int iscapture)
     if (!valid_format) {
         DSOUND_CloseDevice(this);
         if (tried_format) {
-            return -1;  // CreateSecondary() should have called SDL_SetError().
+            return -1;  /* CreateSecondary() should have called SDL_SetError(). */
         }
         return SDL_SetError("DirectSound: Unsupported audio format");
     }

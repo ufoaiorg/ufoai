@@ -1,5 +1,7 @@
-
-#include "SDL_config.h"
+/*
+    SDL_android_main.c, placed in the public domain by Sam Lantinga  3/13/14
+*/
+#include "../../SDL_internal.h"
 
 #ifdef __ANDROID__
 
@@ -11,11 +13,11 @@
 *******************************************************************************/
 #include <jni.h>
 
-// Called before SDL_main() to initialize JNI bindings in SDL library
+/* Called before SDL_main() to initialize JNI bindings in SDL library */
 extern void SDL_Android_Init(JNIEnv* env, jclass cls);
 
-// Start up the SDL app
-void Java_org_libsdl_app_SDLActivity_nativeInit(JNIEnv* env, jclass cls, jobject obj)
+/* Start up the SDL app */
+int Java_org_libsdl_app_SDLActivity_nativeInit(JNIEnv* env, jclass cls, jobject obj)
 {
     /* This interface could expand with ABI negotiation, calbacks, etc. */
     SDL_Android_Init(env, cls);
@@ -30,7 +32,9 @@ void Java_org_libsdl_app_SDLActivity_nativeInit(JNIEnv* env, jclass cls, jobject
     status = SDL_main(1, argv);
 
     /* Do not issue an exit or the whole application will terminate instead of just the SDL thread */
-    //exit(status);
+    /* exit(status); */
+
+    return status;
 }
 
 #endif /* __ANDROID__ */

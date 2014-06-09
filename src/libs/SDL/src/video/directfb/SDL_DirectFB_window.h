@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2014 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -34,7 +34,7 @@ struct _DFB_WindowData
     IDirectFBSurface        *surface;           /* client drawing surface */
     IDirectFBWindow         *dfbwin;
     IDirectFBEventBuffer    *eventbuffer;
-    /*SDL_Window                *sdlwin; */
+    /* SDL_Window                *sdlwin; */
     SDL_Window              *next;
     Uint8                   opacity;
     DFBRectangle            client;
