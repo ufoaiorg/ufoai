@@ -4,16 +4,15 @@
 	AI entry point.  Run at the start of the AI's turn.
 --]]
 function think ()
-
-	-- Try to make sure we have a weapon
-	if not readyweapon() then
-		-- No weapon, retreat
-		local teammates = ai.see("all", "alien")
-		if #teammates > 0 then
-			herd( teammates[1] )
-		else
+	if ai.HP() < 50 then
+		if ai.morale() < 30 then
 			hide()
+		else
+			herd()
 		end
+	-- Try to make sure we have a weapon
+	elseif not readyweapon() then
+		herd()
 	else
 		-- Look around for potential targets.  We prioritize phalanx.
 		local phalanx  = ai.see("all","phalanx")
@@ -130,10 +129,15 @@ end
 --[[
 	Tries to move to herd position
 --]]
-function herd (target)
-	local herd_pos = ai.positionherd(target)
-	if not herd_pos then -- No position available
+function herd ()
+	local aliens = ai.see("all", "alien")
+	if #aliens > 0 then
+		local herd_pos = ai.positionherd( aliens[1] )
+		if not herd_pos then -- No position available
+		else
+			herd_pos:goto()
+		end
 	else
-		herd_pos:goto()
+		hide()
 	end
 end
