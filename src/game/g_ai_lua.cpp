@@ -56,6 +56,28 @@ extern "C" {
 #define AIL_invalidparameter(n)	\
 	gi.DPrintf("AIL: Invalid parameter #%d in '%s'.\n", n, __func__)
 
+/** @brief vis check types */
+typedef enum {
+	AILVT_ALL,		/* Don't do vis checks (god's view) */
+	AILVT_SIGHT,	/* Standard vis check */
+	AILVT_TEAM,		/* Team vis check */
+	AILVT_DIST		/* Check only vis distance */
+} ailVisType_t;
+
+/** @brief target sorting criteria (lowest first) */
+typedef enum {
+	AILSC_DIST,		/* Sort by line distance */
+	AILSC_PATH,		/* Sort by pathing cost */
+	AILSC_HP		/* Sort by HP */
+} ailSortCritType_t;
+
+/** @brief Shooting position types */
+typedef enum {
+	AILSP_FAST,		/* Fastest to get to */
+	AILSP_NEAR,		/* Nearest to target */
+	AILSP_FAR		/* Farthest from target (within weapon's range) */
+} ailShootPosType_t;
+
 /*
  * Helper functions
  */
@@ -582,16 +604,14 @@ static int AIL_see (lua_State* L)
 		/* Get what to "see" with. */
 		if (lua_isstring(L, 1)) {
 			const char* s = lua_tostring(L, 1);
-			/** @todo Get rid of magic numbers. */
 			if (Q_streq(s, "all"))
-				vision = 0;
+				vision = AILVT_ALL;
 			else if (Q_streq(s, "sight"))
-				vision = 1;
+				vision = AILVT_SIGHT;
 			else if (Q_streq(s, "team"))
-				vision = 2;
-			/** @todo Properly implement at edict level */
-			else if (Q_streq(s, "infrared"))
-				vision = 3;
+				vision = AILVT_TEAM;
+			else if (Q_streq(s, "extra"))
+				vision = AILVT_DIST;
 			else
 				AIL_invalidparameter(1);
 		} else
@@ -610,13 +630,12 @@ static int AIL_see (lua_State* L)
 		if ((lua_gettop(L) > 2)) {
 			if (lua_isstring(L, 3)) {
 				const char* s = lua_tostring(L, 3);
-				/** @todo Get rid of magic numbers. */
 				if (Q_streq(s, "dist"))
-					sortCrit = 0;
+					sortCrit = AILSC_DIST;
 				else if (Q_streq(s, "path"))
-					sortCrit = 1;
+					sortCrit = AILSC_PATH;
 				else if (Q_streq(s, "HP"))
-					sortCrit = 2;
+					sortCrit = AILSC_HP;
 				else
 					AIL_invalidparameter(1);
 			} else
@@ -627,31 +646,34 @@ static int AIL_see (lua_State* L)
 	int n = 0;
 	Actor* check = nullptr;
 	Actor* unsorted[MAX_EDICTS];
-	float distLookup[MAX_EDICTS];
+	float sortLookup[MAX_EDICTS];
 	/* Get visible things. */
 	const int visDist = G_VisCheckDist(AIL_ent);
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (AIL_ent == check)
 			continue;
 		const float distance = VectorDistSqr(AIL_ent->pos, check->pos);
-		if ((team == TEAM_ALL || check->getTeam() == team) && (vision == 0 /* Check for team match if needed. */
-				|| (vision == 1 && G_Vis(AIL_ent->getTeam(), AIL_ent, check, VT_NOFRUSTUM))
-				|| (vision == 2 && G_IsVisibleForTeam(check, AIL_ent->getTeam()))
-				|| (vision == 3 && distance <= visDist * visDist))) {
+		/* Check for team match if needed. */
+		if ((team == TEAM_ALL || check->getTeam() == team)
+				&& (vision == AILVT_ALL
+				|| (vision == AILVT_SIGHT && G_Vis(AIL_ent->getTeam(), AIL_ent, check, VT_NOFRUSTUM))
+				|| (vision == AILVT_TEAM && G_IsVisibleForTeam(check, AIL_ent->getTeam()))
+				|| (vision == AILVT_DIST && distance <= visDist * visDist))) {
 			switch (sortCrit) {
-			case 1:
+			case AILSC_PATH:
 			{
 				pos_t move = ROUTING_NOT_REACHABLE;
 				if (G_FindPath(0, AIL_ent, AIL_ent->pos, check->pos, false, 0xFE))
 					move = gi.MoveLength(level.pathingMap, check->pos, 0, false);
-				distLookup[n] = move;
+				sortLookup[n] = move;
 			}
 				break;
-			case 2:
-				distLookup[n] = check->HP;
+			case AILSC_HP:
+				sortLookup[n] = check->HP;
 				break;
+			case AILSC_DIST:
 			default:
-				distLookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
+				sortLookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
 				break;
 			}
 			unsorted[n++] = check;
@@ -664,7 +686,7 @@ static int AIL_see (lua_State* L)
 		int cur = -1;
 		for (int j = 0; j < n; j++) { /* Check for minimum */
 			/* Is shorter then current minimum? */
-			if (cur < 0 || distLookup[j] < distLookup[cur]) {
+			if (cur < 0 || sortLookup[j] < sortLookup[cur]) {
 				int k;
 				/* Check if not already in sorted. */
 				for (k = 0; k < i; k++)
@@ -869,13 +891,12 @@ static int AIL_positionshoot (lua_State* L)
 	if ((lua_gettop(L) > 1)) {
 		if (lua_isstring(L, 2)) {
 			const char* s = lua_tostring(L, 2);
-			/** @todo Get rid of magic numbers. */
 			if (Q_streq(s, "fastest"))
-				posType = 0;
+				posType = AILSP_FAST;
 			else if (Q_streq(s, "nearest"))
-				posType = 1;
+				posType = AILSP_NEAR;
 			else if (Q_streq(s, "farthest"))
-				posType = 2;
+				posType = AILSP_FAR;
 			else
 				AIL_invalidparameter(1);
 		} else
@@ -932,9 +953,9 @@ static int AIL_positionshoot (lua_State* L)
 
 	/* evaluate moving to every possible location in the search area,
 	 * including combat considerations */
-	float bestScore = -12000.0f;
+	float bestScore = 0.0f;
 	pos3_t to, bestPos;
-	VectorSet(bestPos,0, 0, PATHFINDING_HEIGHT);
+	VectorSet(bestPos, 0, 0, PATHFINDING_HEIGHT);
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++) {
 		for (to[1] = yl; to[1] < yh; to[1]++) {
 			for (to[0] = xl; to[0] < xh; to[0]++) {
@@ -953,17 +974,18 @@ static int AIL_positionshoot (lua_State* L)
 					continue;
 				float score;
 				switch (posType) {
-				case 1:
+				case AILSP_NEAR:
 					score = -dist;
 					break;
-				case 2:
+				case AILSP_FAR:
 					score = dist;
 					break;
+				case AILSP_FAST:
 				default:
 					score = -tu;
 					break;
 				}
-				if (score > bestScore) {
+				if (score > bestScore || bestPos[2] >= PATHFINDING_HEIGHT) {
 					VectorCopy(to, bestPos);
 					bestScore = score;
 				}
