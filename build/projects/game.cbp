@@ -18,9 +18,6 @@
 				<Linker>
 					<Add option="--export-all-symbols" />
 				</Linker>
-				<ExtraCommands>
-					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
-				</ExtraCommands>
 			</Target>
 			<Target title="windows_debug">
 				<Option output="../../base/game" prefix_auto="1" extension_auto="1" />
@@ -37,9 +34,6 @@
 					<Add option="-pg -lgmon" />
 					<Add option="--export-all-symbols" />
 				</Linker>
-				<ExtraCommands>
-					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
-				</ExtraCommands>
 			</Target>
 		</Build>
 		<Compiler>
