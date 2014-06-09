@@ -15,17 +15,17 @@ function think ()
 		herd()
 	else
 		-- Look around for potential targets.  We prioritize phalanx.
-		local phalanx  = ai.see("all","phalanx")
+		local phalanx  = ai.see("all", "phalanx")
 		-- Choose proper action
 		if #phalanx < 1 then
-			local civilian = ai.see("all","civilian")
+			local civilian = ai.see("all", "civilian")
 			if #civilian < 1 then
 				search()
 			else
-				engage( civilian[1] )
+				engage( civilian )
 			end
 		else
-			engage( phalanx[1] )
+			engage( phalanx )
 		end
 	end
 end
@@ -76,12 +76,13 @@ end
 --[[
 	Attempts to approach the target.
 --]]
-function approach( target )
-	local near_pos = ai.positionapproach(target)
-	if not near_pos then
-		ai.print("Can't approach target")
-	else
-		near_pos:goto()
+function approach( targets )
+	for i = 1, #targets do
+		local near_pos = ai.positionapproach( targets[i] )
+		if near_pos then
+			near_pos:goto()
+			return
+		end
 	end
 end
 
@@ -91,26 +92,36 @@ end
 
 	Currently attempts to see target, shoot then hide.
 --]]
-function engage( target )
+function engage( targets )
+	local target = nil
 	local hide_tu = 4 -- Crouch + face
 
-	-- Move until target in sight
-	local shoot_pos = ai.positionshoot(target, "fastest", ai.TU() - hide_tu) -- Get a shoot position
-	if not shoot_pos then -- No position available
-		approach(target)
-	else
-		-- Go shoot
-		shoot_pos:goto()
+	local done = nil
+	for i = 1, #targets do
+		target = targets[i]
+		-- Move until target in sight
+		local shoot_pos = ai.positionshoot(target, "fastest", ai.TU() - hide_tu) -- Get a shoot position
+		if shoot_pos then
+			-- Go shoot
+			shoot_pos:goto()
 
-	-- Shoot
-	target:shoot(ai.TU() - hide_tu)
+			-- Shoot
+			target:shoot(ai.TU() - hide_tu)
+			done = i
+			break
+		end
 	end
 
+	if not done then
+		approach(targets)
+	end
 
 	-- Hide
 	hide()
 	ai.crouch(true)
-	target:face()
+	if target then
+		target:face()
+	end
 end
 
 
@@ -132,10 +143,12 @@ end
 function herd ()
 	local aliens = ai.see("all", "alien")
 	if #aliens > 0 then
-		local herd_pos = ai.positionherd( aliens[1] )
-		if not herd_pos then -- No position available
-		else
-			herd_pos:goto()
+		for i = 1, #aliens do
+			local herd_pos = ai.positionherd(aliens[i])
+			if herd_pos then
+				herd_pos:goto()
+				return
+			end
 		end
 	else
 		hide()
