@@ -112,7 +112,7 @@ static bool Destroy_Breakable (Edict* self)
 	/* now we can destroy the edict completely */
 	G_FreeEdict(self);
 
-	AABB oldAABB(vec3_origin, vec3_origin);
+	AABB oldAABB;
 	gi.GetInlineModelAABB(model, oldAABB);
 	GridBox rerouteOldBox;
 	rerouteOldBox.set(oldAABB);
