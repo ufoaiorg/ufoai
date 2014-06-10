@@ -85,7 +85,7 @@ void AABB::add (const AABB& other)
  */
 void AABB::rotateAround (const vec3_t origin, const vec3_t angles) {
 	/* reject non-rotations */
-	if VectorEmpty(angles)
+	if (VectorEmpty(angles))
 		return;
 
 	/* construct box-centered coordinates (center and corners) */
