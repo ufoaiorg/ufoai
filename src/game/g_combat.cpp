@@ -839,8 +839,8 @@ static void DumpAllEntities (void)
 	while ((check = G_EdictsGetNext(check))) {
 		char absBoxStr[AABB_STRING];
 		char entBoxStr[AABB_STRING];
-		check->absBox.asIntString(absBoxStr);
-		check->absBox.asIntString(entBoxStr);
+		check->absBox.asIntString(absBoxStr, sizeof(absBoxStr));
+		check->absBox.asIntString(entBoxStr, sizeof(entBoxStr));
 		Com_DPrintf(DEBUG_GAME, "%i %s %s %s %s %s\n", i,
 			check->inuse ? "in use" : "unused",
 			check->classname,

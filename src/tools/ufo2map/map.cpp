@@ -1249,6 +1249,6 @@ void LoadMapFile (const char* filename)
 	Verb_Printf(VERB_EXTRA, "%5i entities\n", num_entities);
 	Verb_Printf(VERB_EXTRA, "%5i planes\n", nummapplanes);
 	char sizeStr[AABB_STRING];
-	mapBox.asIntString(sizeStr);
+	mapBox.asIntString(sizeStr, sizeof(sizeStr));
 	Verb_Printf(VERB_EXTRA, "size: %s\n", sizeStr);
 }

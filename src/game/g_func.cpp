@@ -151,7 +151,7 @@ void SP_func_breakable (Edict* ent)
 	gi.LinkEdict(ent);
 
 	char boxStr[AABB_STRING];
-	ent->entBox.asIntString(boxStr);
+	ent->entBox.asIntString(boxStr, sizeof(boxStr));
 	Com_DPrintf(DEBUG_GAME, "func_breakable: model (%s) num: %i %s origin: %i %i %i\n",
 			ent->model, ent->mapNum, boxStr,
 			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
