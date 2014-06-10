@@ -523,9 +523,19 @@ static int pos3L_goto (lua_State* L)
 
 	/* Move. */
 	const pos3_t* pos = lua_topos3(L, 1);
-	G_ClientMove(*AIL_player, 0, AIL_ent, *pos);
+	/* do the move */
+	for (;;) {
+		if (AIL_ent->isDead())
+			break;
+		G_ClientMove(*AIL_player, 0, AIL_ent, *pos);
+		if (AIL_ent->isSamePosAs(*pos))
+			break;
+		const pos_t length = G_ActorMoveLength(AIL_ent, level.pathingMap, *pos, false);
+		if (length > AIL_ent->getUsableTUs() || length >= ROUTING_NOT_REACHABLE)
+			break;
+	}
 
-	lua_pushboolean(L, 1);
+	lua_pushboolean(L, AIL_ent->isSamePosAs(*pos));
 	return 1;
 }
 
