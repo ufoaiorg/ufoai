@@ -936,7 +936,7 @@ static void CL_ParticleRun2 (ptl_t* p)
 			return;
 
 		const AABB ptlbox(-size, -size, -size, size, size, size);
-		const trace_t tr = PTL_Trace(p, ptlbox);
+		const trace_t& tr = PTL_Trace(p, ptlbox);
 
 		/* hit something solid */
 		if (tr.fraction < 1.0 || tr.startsolid) {
