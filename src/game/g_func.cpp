@@ -220,8 +220,9 @@ static bool Door_Use (Edict* door, Edict* activator)
 	} else if (door->doorState == STATE_OPENED) {
 		door->doorState = STATE_CLOSED;
 		opening = -1;
-	} else
+	} else {
 		return false;
+	}
 
 	/* remember the old location */
 	AABB oldAABB;
@@ -246,7 +247,7 @@ static bool Door_Use (Edict* door, Edict* activator)
 			G_EventDoorOpen(*door);
 		else
 			G_EventDoorClose(*door);
-		if (door->noise[0] != '\0') {
+		if (Q_strvalid(door->noise)) {
 			const playermask_t playerMask = G_GetClosePlayerMask(door->origin, UNIT_SIZE * 10);
 			G_EventSpawnSound(playerMask, *door, door->origin, door->noise);
 		}
