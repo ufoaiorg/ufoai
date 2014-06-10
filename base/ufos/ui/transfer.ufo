@@ -107,29 +107,19 @@ component cmp_t_capacity extends panel {
 
 window transfer
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-
 	// Base name and container panel
-	BaseContainerPanel base_container
-	{
+	BaseContainerPanel base_container {
 		// Transfer panel
-		panel mainBody
-		{
+		panel mainBody {
 			{ size "715 534" }
+
 			// Title bar
-			panel header
-			{
-				{}
-				string title
-				{
+			panel header {
+				{ }
+				string title {
 					string			"_Transfer"
 				}
 			}
-			// ==================
-			// tab
-			// ==================
 
 			panel tab_background {
 				pos		"10 30"
@@ -175,9 +165,6 @@ window transfer
 					icon	"icons/tab_aircraft"
 				}
 			}
-			// ==================
-			// lists
-			// ==================
 
 			panel itemlist {
 				{
@@ -484,8 +471,7 @@ window transfer
 		}
 	}
 
-	MainMenuBtn bt_emptycraftstorage
-	{
+	MainMenuBtn bt_emptycraftstorage {
 		string		"_Clear"
 		tooltip		"_Clear cargo"
 		pos			"760 710"
@@ -496,33 +482,29 @@ window transfer
 		onClick		{ cmd "trans_emptyairstorage;" }
 	}
 
-	// ==================
-	// init function
-	// ==================
 
-	func onWindowOpened
-	{
+	func onWindowOpened {
 		cmd "trans_init;"
-		if ( *cvar:mn_itemtype_name eq "" ) { *cvar:mn_itemtype_name = "_Equipment" }
+		if ( *cvar:mn_itemtype_name eq "" ) {
+			*cvar:mn_itemtype_name = "_Equipment"
+		}
 	}
 
-	func onWindowClosed
-	{
+	func onWindowClosed {
 		cmd "trans_close;"
-
 		// Call base_init so storage data can be updated
 		cmd "base_init;"
 	}
 
 	// Back to geoscape
-	Geoscape geoscape_button
-	{
-		onClick			{ cmd "ui_pop; ui_pop;" }
+	Geoscape geoscape_button {
+		onClick {
+			cmd "ui_pop; ui_pop;"
+		}
 	}
 
 	// Fuzzy screen effect (see assets.ufo)
 	fuzzyScreen overlay { }
-
 }
 
 // ===============================

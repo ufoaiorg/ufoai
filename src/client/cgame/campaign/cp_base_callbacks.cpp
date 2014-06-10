@@ -553,6 +553,10 @@ static void B_BuildingClick_f (void)
 	base->buildingCurrent = building;
 	B_DrawBuilding(building);
 
+	/* Prevent building more if we reached the limit */
+	if (building->maxCount >= 0 && B_GetNumberOfBuildingsInBaseByTemplate(base, building) >= building->maxCount)
+		return;
+
 	ccs.baseAction = BA_NEWBUILDING;
 }
 
