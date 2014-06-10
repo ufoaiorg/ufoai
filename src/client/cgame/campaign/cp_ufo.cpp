@@ -208,12 +208,13 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 /**
  * @brief Get a suitable UFO for the mission type.
  * @param[in] missionType The kind of mission we are currently creating.
+ * @param[in] checkInterest Do a UFO_ShouldAppearOnGeoscape check if true (default)
  * @return the first ufo found
  */
-int UFO_GetOneAvailableUFOForMission (const interestCategory_t missionType)
+int UFO_GetOneAvailableUFOForMission (const interestCategory_t missionType, bool checkInterest)
 {
 	ufoType_t ufoTypes[UFO_MAX];
-	int numTypes = UFO_GetAvailableUFOsForMission(missionType, ufoTypes);
+	int numTypes = UFO_GetAvailableUFOsForMission(missionType, ufoTypes, checkInterest);
 	return numTypes ? ufoTypes[0] : UFO_NONE;
 }
 
