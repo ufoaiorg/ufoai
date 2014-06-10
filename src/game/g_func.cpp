@@ -185,9 +185,7 @@ static void Door_SlidingUse (Edict* door)
 
 	/* get the direction vector from the movement angles that were set on the entity */
 	AngleVectors(moveAngles, moveDir, nullptr, nullptr);
-	moveDir[0] = fabsf(moveDir[0]);
-	moveDir[1] = fabsf(moveDir[1]);
-	moveDir[2] = fabsf(moveDir[2]);
+	VectorAbs(moveDir);
 
 	/* calculate the distance from the movement angles and the entity size. This is the
 	 * distance the door has to slide to fully open or close */
