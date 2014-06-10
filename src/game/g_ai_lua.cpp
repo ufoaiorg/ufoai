@@ -1126,8 +1126,8 @@ static int AIL_positionapproach (lua_State* L)
 	while ((dvec = gi.MoveNext(level.pathingMap, to, crouchingState)) != ROUTING_UNREACHABLE) {
 		/* Note: here we skip the first position so we don't try to walk into the target */
 		PosSubDV(to, crouchingState, dvec);
-		const byte length2 =  G_ActorMoveLength(target->actor, level.pathingMap, to, false);
-		if (length2 <= tus)
+		const byte length =  G_ActorMoveLength(AIL_ent, level.pathingMap, to, false);
+		if (length <= tus)
 			break;
 		/* We are going backwards to the origin. */
 	}
