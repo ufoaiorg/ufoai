@@ -91,7 +91,7 @@ void AABB::rotateAround (const vec3_t origin, const vec3_t angles) {
 	/* construct box-centered coordinates (center and corners) */
 	vec3_t center, halfDiagonal;
 
-	VectorInterpolation(mins, maxs, 0.5, center);
+	VectorInterpolation(mins, maxs, 0.5f, center);
 	VectorSubtract(maxs, center, halfDiagonal);
 
 	/* offset coordinate frame to rotation origin */
