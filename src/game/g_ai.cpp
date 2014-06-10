@@ -754,7 +754,7 @@ static inline bool AI_IsOpponent (const Actor* actor, const Edict* check)
  * @param[in] target The possible hostile actor.
  * @returns @c true if actor perceives target as hostile
  */
-static inline bool AI_IsHostile (const Actor* actor, const Edict* target)
+bool AI_IsHostile (const Actor* actor, const Edict* target)
 {
 	if (actor == target)
 		return false;
@@ -775,7 +775,7 @@ static inline bool AI_IsHostile (const Actor* actor, const Edict* target)
 /**
  * @brief Search the edict's inventory for a grenade or other one-use weapon.
  */
-static const invDef_t* AI_SearchGrenade (const Actor* actor, Item** ip)
+const invDef_t* AI_SearchGrenade (const Actor* actor, Item** ip)
 {
 	/* search for grenades and select the one that is available easily */
 	const Container* cont = nullptr;

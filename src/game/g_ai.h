@@ -51,6 +51,8 @@ bool AI_FighterCheckShoot(const Actor* actor, const Edict* check, const fireDef_
 bool AI_CheckLineOfFire(const Edict* shooter, const Edict* target, const fireDef_t* fd, int shots);
 float AI_CalcShotDamage(Actor* actor, Actor* target, const fireDef_t* fd, shoot_types_t shotType);
 bool AI_TryToReloadWeapon(Actor* actor, containerIndex_t containerID);
+bool AI_IsHostile(const Actor* actor, const Edict* target);
+const invDef_t* AI_SearchGrenade(const Actor* actor, Item** ip);
 
 /*
  * LUA functions
