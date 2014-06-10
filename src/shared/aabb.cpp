@@ -57,7 +57,7 @@ AABB::AABB (const Line& line)
 void AABB::add (const vec3_t point)
 {
 	for (int i = 0; i < 3; i++) {
-		vec_t val = point[i];
+		const vec_t val = point[i];
 		if (val < mins[i])
 			mins[i] = val;
 		if (val > maxs[i])
