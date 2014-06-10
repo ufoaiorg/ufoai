@@ -564,7 +564,7 @@ static void LE_PlayFootStepSound (le_t* le)
 		/* we should really hit the ground with this */
 		to[2] -= UNIT_HEIGHT;
 
-		const trace_t trace = CL_Trace(Line(from, to), AABB(), nullptr, nullptr, MASK_SOLID, cl_worldlevel->integer);
+		const trace_t trace = CL_Trace(Line(from, to), AABB::EMPTY, nullptr, nullptr, MASK_SOLID, cl_worldlevel->integer);
 		if (trace.surface)
 			LE_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
 	} else

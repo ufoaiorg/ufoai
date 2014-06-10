@@ -1691,7 +1691,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	/* switch up to top level, this is needed to make sure our trace doesn't go through ceilings ... */
 	/** @todo is this really needed for straight targetting? - for grenades, yes, but not for straight no?
 	 * cl_worldlevel->integer should be enough here */
-	trace_t tr = CL_Trace(Line(start, temp), AABB(), selActor, nullptr, MASK_SHOT, cl.mapMaxLevel - 1);
+	trace_t tr = CL_Trace(Line(start, temp), AABB::EMPTY, selActor, nullptr, MASK_SHOT, cl.mapMaxLevel - 1);
 	if (tr.le && (tr.le->team == cls.team || LE_IsCivilian(tr.le)) && LE_IsCrouched(tr.le))
 		VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
 	else
@@ -1699,7 +1699,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 
 	/** @todo is this really needed for straight targetting? - for grenades, yes, but not for straight no?
 	 * cl_worldlevel->integer should be enough here */
-	tr = CL_Trace(Line(temp, mid), AABB(), selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
+	tr = CL_Trace(Line(temp, mid), AABB::EMPTY, selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
 
 	if (tr.fraction < 1.0 && (!tr.le || (!LE_IsInvisible(tr.le) && !VectorCompare(tr.le->pos, toPos)))) {
 		const float d = VectorDist(temp, mid);
@@ -1782,7 +1782,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 
 		/* trace for obstacles. Switch up to top level, to make sure our trace
 		 * doesn't go through ceilings ... */
-		const trace_t tr = CL_Trace(Line(from, next), AABB(), selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
+		const trace_t tr = CL_Trace(Line(from, next), AABB::EMPTY, selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
 
 		/* something was hit */
 		if (tr.fraction < 1.0 && (!tr.le || (!LE_IsInvisible(tr.le) && !VectorCompare(tr.le->pos, toPos)))) {
@@ -2359,7 +2359,7 @@ static bool CL_ActorVis (const le_t* le, const le_t* check)
 
 	/* do 3 tests */
 	for (int i = 0; i < 3; i++) {
-		const trace_t tr = CL_Trace(Line(from, test), AABB(), le, nullptr, MASK_SOLID, cl_worldlevel->integer);
+		const trace_t tr = CL_Trace(Line(from, test), AABB::EMPTY, le, nullptr, MASK_SOLID, cl_worldlevel->integer);
 		/* trace didn't reach the target - something was hit before */
 		if (tr.fraction < 1.0) {
 			/* look further down or stop */

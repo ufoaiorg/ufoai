@@ -120,3 +120,5 @@ void AABB::rotateAround (const vec3_t origin, const vec3_t angles) {
 	VectorAdd(newCenter, newHalfDiagonal, maxs);
 	VectorSubtract(newCenter, newHalfDiagonal, mins);
 }
+
+const AABB AABB::EMPTY;

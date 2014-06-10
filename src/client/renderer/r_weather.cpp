@@ -229,7 +229,7 @@ void Weather::update (int milliseconds)
 			VectorSet(prtPath.start, prt.x, prt.y, prt.z);
 			VectorSet(prtPath.stop, prt.x + prt.vx * lifeTime, prt.y + prt.vy * lifeTime, prt.z + prt.vz * lifeTime);
 
-			trace_t trace = CL_Trace(prtPath, AABB(), nullptr, nullptr, MASK_SOLID, cl.mapMaxLevel - 1); /* find the collision point */
+			trace_t trace = CL_Trace(prtPath, AABB::EMPTY, nullptr, nullptr, MASK_SOLID, cl.mapMaxLevel - 1); /* find the collision point */
 			lifeTime *= trace.fraction;
 
 			prt.ttl = 1000 * lifeTime; /* convert to milliseconds */

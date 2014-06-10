@@ -935,7 +935,7 @@ static void CL_ParticleRun2 (ptl_t* p)
 		if (p->hitSolid && p->stick)
 			return;
 
-		AABB ptlbox(-size, -size, -size, size, size, size);
+		const AABB ptlbox(-size, -size, -size, size, size, size);
 		const trace_t tr = PTL_Trace(p, ptlbox);
 
 		/* hit something solid */

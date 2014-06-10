@@ -395,7 +395,7 @@ static void SV_ClipMoveToEntities (MoveClipSV* clip)
 int SV_PointContents (const vec3_t p)
 {
 	/* clip to all world levels */
-	const trace_t trace = CM_CompleteBoxTrace(&sv->mapTiles, Line(p, p), AABB(), TRACE_ALL_LEVELS, MASK_ALL, 0);
+	const trace_t trace = CM_CompleteBoxTrace(&sv->mapTiles, Line(p, p), AABB::EMPTY, TRACE_ALL_LEVELS, MASK_ALL, 0);
 	if (trace.fraction == 0)
 		return trace.contentFlags;		/* blocked by the world */
 	return 0;

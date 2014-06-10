@@ -40,6 +40,7 @@ const float MWW = MAX_WORLD_WIDTH;
 
 class AABB {
 public:
+	static const AABB EMPTY;
 	/*==================
 	 *		ctors
 	 *==================*/
