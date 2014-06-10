@@ -161,7 +161,7 @@ TEST_F(RandomMapAssemblyTest, Seedlists)
 			timeSum += time;
 			ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << assNames[n][0] << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
 			if (time > 10000)
-				Com_Printf("Seed %i: tiles: %i ms: %li\n", i, numPlaced, time);
+				Com_Printf("Seed %i: tiles: %i ms: %i\n", i, numPlaced, time);
 		}
 	}
 	Com_Printf("TotalTime: %li\n", timeSum);
