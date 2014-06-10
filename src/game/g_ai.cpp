@@ -461,7 +461,12 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 	vec_t bestlength = 0.0f;
 	Actor* next = nullptr;
 	Actor* enemy = nullptr;
-	while ((next = G_EdictsGetNextLivingActorOfTeam(next, AI_GetHidingTeam(actor)))) {
+	int team = AI_GetHidingTeam(actor);
+	const bool invTeam = team < 0;
+	team = std::abs(team);
+	while ((next = G_EdictsGetNextLivingActor(next))) {
+		if (next->getTeam() == team ? invTeam : !invTeam)
+			continue;
 		const vec_t length = VectorDistSqr(target, next->origin);
 		if (!bestlength || length < bestlength) {
 			enemy = next;
