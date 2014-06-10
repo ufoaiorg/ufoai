@@ -139,6 +139,7 @@ static int actorL_pos(lua_State* L);
 static int actorL_shoot(lua_State* L);
 static int actorL_face(lua_State* L);
 static int actorL_team(lua_State* L);
+static int actorL_throwgrenade(lua_State* L);
 /** Lua Actor metatable methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -148,6 +149,7 @@ static const luaL_reg actorL_methods[] = {
 	{"shoot", actorL_shoot},
 	{"face", actorL_face},
 	{"team", actorL_team},
+	{"throwgrenade", actorL_throwgrenade},
 	{nullptr, nullptr}
 };
 
@@ -422,6 +424,123 @@ static int actorL_team (lua_State* L)
 	return 1;
 }
 
+/**
+ * @brief Throws a grenade to the actor.
+ */
+static int actorL_throwgrenade(lua_State* L)
+{
+	/* check parameter */
+	if (!(lua_gettop(L) && lua_isactor(L, 1))) {
+		AIL_invalidparameter(1);
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	const aiActor_t* target = lua_toactor(L, 1);
+	assert(target != nullptr);
+
+	/* Min number of enemies to use grenade */
+	int minNum = 0;
+	if (lua_gettop(L) > 1) {
+		if (!lua_isnumber(L, 2)) { /* Must be a number. */
+			AIL_invalidparameter(2);
+			lua_pushboolean(L, 0);
+			return 1;
+		}
+		minNum = static_cast<int>(lua_tonumber(L, 2));
+	}
+
+	/* Number of TU to spend */
+	int tus = AIL_ent->getUsableTUs();
+	if (lua_gettop(L) > 2) {
+		if (!lua_isnumber(L, 3)) { /* Must be a number. */
+			AIL_invalidparameter(3);
+			lua_pushboolean(L, 0);
+			return 1;
+		}
+		tus = static_cast<int>(lua_tonumber(L, 3));
+	}
+
+	/* Check that we have a free hand */
+	containerIndex_t hand = CID_RIGHT;
+	const Item* right = AIL_ent->getRightHandItem();
+	if (right)
+		hand = right->isHeldTwoHanded() || AIL_ent->getLeftHandItem() ? CID_MAX : CID_LEFT;
+	if (hand >= CID_MAX) {
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	/* Check if we have a grenade */
+	Item* grenade = nullptr;
+	const invDef_t* fromCont = AI_SearchGrenade(AIL_ent, &grenade);
+	if (!fromCont || !grenade) {
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	/* Now check if we can use it */
+	const fireDef_t* fdArray = grenade->getFiredefs();
+	const int invMoveCost = fromCont->out + INVDEF(hand)->in;
+	const shoot_types_t shotType = hand == CID_RIGHT ? ST_RIGHT : ST_LEFT;
+	float dist = 0.0f;
+	const fireDef_t* bestFd = nullptr;
+	for (fireDefIndex_t fdIdx = 0; fdIdx < grenade->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+		const fireDef_t* fd = &fdArray[fdIdx];
+		const int time = invMoveCost + G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
+		/* Enough TU? */
+		if (time > tus)
+			continue;
+		/* In range? */
+		if (!AI_FighterCheckShoot(AIL_ent, target->actor, fd, &dist))
+			continue;
+		/* LOF? */
+		if (!AI_CheckLineOfFire(AIL_ent, target->actor, fd, 1))
+			continue;
+
+		/* Use select first usable firemode */
+		bestFd = fd;
+		break;
+	}
+	if (!bestFd) {
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	/* Finally check if we want to use it now */
+	if (bestFd->splrad > 0) {
+		Actor* check = nullptr;
+		int n = 0;
+		while ((check = G_EdictsGetNextLivingActor(check))) {
+			/* check for distance */
+			dist = VectorDist(target->actor->origin, check->origin);
+			dist = dist > UNIT_SIZE / 2 ? dist - UNIT_SIZE / 2 : 0;
+			if (dist > bestFd->splrad)
+				continue;
+
+			if (!AI_IsHostile(AIL_ent, target->actor)) {
+				lua_pushboolean(L, 0);
+				return 1;
+			}
+			++n;
+		}
+		/* Check there's large enough group of targets */
+		if (n < minNum) {
+			lua_pushboolean(L, 0);
+			return 1;
+		}
+	}
+
+	/* Try to move the grenade to the free hand */
+	if(!G_ActorInvMove(AIL_ent, fromCont, grenade, INVDEF(hand), NONE, NONE, true)) {
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	/* All right use it! */
+	G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos, shotType, bestFd->fdIdx, nullptr, true, 0);
+
+	lua_pushboolean(L, 1);
+	return 1;
+}
+
 
 /**
  *   P O S 3 L
@@ -667,6 +786,9 @@ static int AIL_see (lua_State* L)
 	float sortLookup[MAX_EDICTS];
 	/* Get visible things. */
 	const int visDist = G_VisCheckDist(AIL_ent);
+	/* We are about to check the team view update it accordingly */
+	if (vision == AILVT_TEAM)
+		G_CheckVisTeamAll(AIL_ent->getTeam(), VT_PERISHCHK & VT_NOFRUSTUM, nullptr);
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (AIL_ent == check)
 			continue;
@@ -927,6 +1049,12 @@ static int AIL_positionshoot (lua_State* L)
 		assert(lua_isnumber(L, 3)); /* Must be a number. */
 
 		tus = static_cast<int>(lua_tonumber(L, 3));
+	}
+
+	/* Don't shoot units under our control */
+	if (!AI_IsHostile(actor, target->actor)) {
+		lua_pushboolean(L, 0);
+		return 1;
 	}
 
 	shoot_types_t shootType = ST_RIGHT;
