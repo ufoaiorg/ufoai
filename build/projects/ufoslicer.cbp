@@ -49,14 +49,14 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-I../../src/libs" />
-			<Add option="-std=c++11" />
 			<Add option="-Wcast-align" />
 			<Add option="-Winline" />
 			<Add option="-Wmissing-declarations" />
 			<Add option="-pedantic" />
+			<Add option="-std=c++11" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
+			<Add option="-I../../src/libs" />
 			<Add option="-ggdb" />
 			<Add option="-Wcast-qual" />
 			<Add option="-Wpointer-arith" />
@@ -70,6 +70,9 @@
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_MAP" />
+			<Add directory="../../src/libs/zlib" />
+			<Add directory="../../src/libs/jpeg" />
+			<Add directory="../../src/libs/png" />
 		</Compiler>
 		<Linker>
 			<Add library="SDL" />
