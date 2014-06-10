@@ -163,7 +163,7 @@ public:
 	 * @param[out] str The output string, expected to be at least AABB_STRING wide
 	 */
 	inline void asIntString (char* str, size_t len) {
-		Com_sprintf(str, len, "(%i, %i, %i) (%i, %i, %i)",
+		snprintf(str, len, "(%i, %i, %i) (%i, %i, %i)",
 			(int) mins[0], (int) mins[1], (int) mins[2],
 			(int) maxs[0], (int) maxs[1], (int) maxs[2]	);
 	}
