@@ -81,9 +81,10 @@ function approach( targets )
 		local near_pos = ai.positionapproach( targets[i] )
 		if near_pos then
 			near_pos:goto()
-			return
+			return targets[i]
 		end
 	end
+	return nil
 end
 
 
@@ -116,15 +117,17 @@ function engage( targets )
 	end
 
 	if not done then
-		approach(targets)
+		target = approach(targets)
 	end
 
 	-- Hide
 	hide()
-	ai.crouch(true)
 	if target then
 		target:face()
+	else
+		search()
 	end
+	ai.crouch(true)
 end
 
 
@@ -133,8 +136,7 @@ end
 --]]
 function hide ()
 	local hide_pos = ai.positionhide()
-	if not hide_pos then -- No position available
-	else
+	if hide_pos then
 		hide_pos:goto()
 	end
 end
