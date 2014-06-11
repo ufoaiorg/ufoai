@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -915,49 +916,48 @@
 // entity 9
 {
 "classname" "info_human_start"
-"origin" "976 752 220"
+"origin" "944 688 220"
 }
 // entity 10
 {
 "classname" "info_human_start"
-"origin" "784 976 220"
+"origin" "688 880 220"
 "angle" "90"
 }
 // entity 11
 {
 "classname" "info_human_start"
-"origin" "496 976 220"
+"origin" "592 848 220"
 "angle" "90"
 }
 // entity 12
 {
 "classname" "info_human_start"
-"origin" "304 752 220"
+"origin" "336 688 220"
 "angle" "180"
 }
 // entity 13
 {
 "classname" "info_human_start"
-"origin" "304 528 220"
+"origin" "336 592 220"
 "angle" "180"
 }
 // entity 14
 {
 "classname" "info_human_start"
-"origin" "496 304 220"
+"origin" "560 432 220"
 "angle" "-90"
 }
 // entity 15
 {
 "classname" "info_human_start"
-"origin" "784 304 220"
+"origin" "688 400 220"
 "angle" "-90"
 }
 // entity 16
 {
 "classname" "info_human_start"
-"origin" "976 528 220"
-"angle" "0"
+"origin" "944 624 220"
 }
 // entity 17
 {
