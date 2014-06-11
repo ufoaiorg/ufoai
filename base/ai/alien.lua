@@ -95,6 +95,7 @@ end
 function engage( targets )
 	local target = nil
 	local hide_tu = 4 -- Crouch + face
+	local min_group = 3 -- Min enemy group for grenade throw
 
 	local done = nil
 	for i = 1, #targets do
@@ -105,6 +106,8 @@ function engage( targets )
 			-- Go shoot
 			shoot_pos:goto()
 
+			-- Throw a grenade if enough enemies are grouped
+			target:throwgrenade(min_group, ai.TU() - hide_tu)
 			-- Shoot
 			target:shoot(ai.TU() - hide_tu)
 			done = i
