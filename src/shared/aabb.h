@@ -161,6 +161,7 @@ public:
 	/**
 	 * @brief Prints a representation of the box
 	 * @param[out] str The output string, expected to be at least AABB_STRING wide
+	 * @param[in] len The length of the output buffer
 	 */
 	inline void asIntString (char* str, size_t len) {
 		snprintf(str, len, "(%i, %i, %i) (%i, %i, %i)",
