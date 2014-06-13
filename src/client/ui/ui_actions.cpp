@@ -682,7 +682,7 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t* context
 /**
  * @brief Execute a tree of actions from a source
  * @param[in] context Context node
- * @param[in] action Action to execute
+ * @param[in] firstAction Action to execute
  */
 static void UI_ExecuteActions (const uiAction_t* firstAction, uiCallContext_t* context)
 {
