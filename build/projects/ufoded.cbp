@@ -72,8 +72,6 @@
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DDEDICATED_ONLY" />
 			<Add option="-DCOMPILE_UFO" />
-			<Add directory="../../src/libs/zlib" />
-			<Add directory="../../src/libs/curl/include" />
 		</Compiler>
 		<Linker>
 			<Add library="curl" />
