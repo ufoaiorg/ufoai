@@ -31,16 +31,14 @@
 					<Add option="-DDEBUG" />
 				</Compiler>
 				<Linker>
-					<Add option="-pg" />
-					<Add option="-lgmon" />
+					<Add option="-pg -lgmon" />
 					<Add option="--export-all-symbols" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory="../../src/libs/SDL/include" />
-			<Add directory="../../src/libs" />
-			<Add directory="../../src/libs/lua" />
+			<Add option="-I../../src/libs" />
+			<Add option="-I../../src/libs/lua" />
 			<Add option="-std=c++11" />
 			<Add option="-Wcast-align" />
 			<Add option="-Winline" />
