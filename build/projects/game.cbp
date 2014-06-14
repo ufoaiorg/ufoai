@@ -15,6 +15,9 @@
 				<Compiler>
 					<Add option="-DNDEBUG" />
 				</Compiler>
+				<Linker>
+					<Add option="--export-all-symbols" />
+				</Linker>
 			</Target>
 			<Target title="windows_debug">
 				<Option output="../../base/game" prefix_auto="1" extension_auto="1" />
@@ -28,18 +31,21 @@
 					<Add option="-DDEBUG" />
 				</Compiler>
 				<Linker>
-					<Add option="-pg -lgmon" />
 					<Add option="-pg" />
 					<Add option="-lgmon" />
+					<Add option="--export-all-symbols" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
+			<Add directory="../../src/libs/SDL/include" />
+			<Add directory="../../src/libs" />
+			<Add directory="../../src/libs/lua" />
+			<Add option="-std=c++11" />
 			<Add option="-Wcast-align" />
 			<Add option="-Winline" />
 			<Add option="-Wmissing-declarations" />
 			<Add option="-pedantic" />
-			<Add option="-std=c++11" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-ggdb" />
@@ -55,9 +61,6 @@
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_UFO" />
-			<Add directory="../../src/libs/SDL/include" />
-			<Add directory="../../src/libs" />
-			<Add directory="../../src/libs/lua" />
 		</Compiler>
 		<Unit filename="../../base/ai/alien.lua" />
 		<Unit filename="../../base/ai/civilian.lua" />
