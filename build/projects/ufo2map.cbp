@@ -44,14 +44,14 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-I../../src/libs" />
+			<Add option="-std=c++11" />
 			<Add option="-Wcast-align" />
 			<Add option="-Winline" />
 			<Add option="-Wmissing-declarations" />
 			<Add option="-pedantic" />
-			<Add option="-std=c++11" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
-			<Add option="-I../../src/libs" />
 			<Add option="-ggdb" />
 			<Add option="-Wcast-qual" />
 			<Add option="-Wpointer-arith" />
@@ -65,16 +65,14 @@
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_MAP" />
-			<Add option="-DPNG_NO_CONFIG_H" />
-			<Add option="-DAVOID_TABLES" />
-			<Add directory="../../src/libs/zlib" />
-			<Add directory="../../src/libs/jpeg" />
-			<Add directory="../../src/libs/png" />
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
 			<Add library="SDLmain" />
 			<Add library="SDL" />
+			<Add library="z" />
+			<Add library="jpeg" />
+			<Add library="png" />
 		</Linker>
 		<Unit filename="../../src/common/files.cpp" />
 		<Unit filename="../../src/common/ioapi.cpp" />
@@ -88,267 +86,6 @@
 		<Unit filename="../../src/common/tracing.h" />
 		<Unit filename="../../src/common/unzip.cpp" />
 		<Unit filename="../../src/common/unzip.h" />
-		<Unit filename="../../src/libs/jpeg/cderror.h" />
-		<Unit filename="../../src/libs/jpeg/cdjpeg.h" />
-		<Unit filename="../../src/libs/jpeg/jaricom.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jcapimin.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jcapistd.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jcarith.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jccoefct.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jccolor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jcdctmgr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jchuff.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jcinit.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jcmainct.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jcmarker.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jcmaster.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jcomapi.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jconfig.h" />
-		<Unit filename="../../src/libs/jpeg/jcparam.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jcprepct.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jcsample.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jctrans.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdapimin.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdapistd.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdarith.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdatadst.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdatasrc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdcoefct.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdcolor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdct.h" />
-		<Unit filename="../../src/libs/jpeg/jddctmgr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdhuff.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdinput.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdmainct.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdmarker.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdmaster.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdmerge.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdpostct.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdsample.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jdtrans.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jerror.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jerror.h" />
-		<Unit filename="../../src/libs/jpeg/jfdctflt.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jfdctfst.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jfdctint.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jidctflt.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jidctfst.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jidctint.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jinclude.h" />
-		<Unit filename="../../src/libs/jpeg/jmemansi.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jmemmgr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jmemsys.h" />
-		<Unit filename="../../src/libs/jpeg/jmorecfg.h" />
-		<Unit filename="../../src/libs/jpeg/jpegint.h" />
-		<Unit filename="../../src/libs/jpeg/jpeglib.h" />
-		<Unit filename="../../src/libs/jpeg/jpegtran.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jquant1.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jquant2.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jutils.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/jpeg/jversion.h" />
-		<Unit filename="../../src/libs/jpeg/transupp.h" />
-		<Unit filename="../../src/libs/png/png.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/png.h" />
-		<Unit filename="../../src/libs/png/pngconf.h" />
-		<Unit filename="../../src/libs/png/pngdebug.h" />
-		<Unit filename="../../src/libs/png/pngerror.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pngget.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pnginfo.h" />
-		<Unit filename="../../src/libs/png/pnglibconf.h" />
-		<Unit filename="../../src/libs/png/pngmem.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pngpread.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pngpriv.h" />
-		<Unit filename="../../src/libs/png/pngread.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pngrio.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pngrtran.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pngrutil.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pngset.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pngstruct.h" />
-		<Unit filename="../../src/libs/png/pngtrans.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pngwio.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pngwrite.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pngwtran.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/png/pngwutil.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/adler32.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/compress.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/crc32.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/crc32.h" />
-		<Unit filename="../../src/libs/zlib/deflate.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/deflate.h" />
-		<Unit filename="../../src/libs/zlib/gzclose.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/gzguts.h" />
-		<Unit filename="../../src/libs/zlib/gzlib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/gzread.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/gzwrite.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/infback.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/inffast.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/inffast.h" />
-		<Unit filename="../../src/libs/zlib/inffixed.h" />
-		<Unit filename="../../src/libs/zlib/inflate.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/inflate.h" />
-		<Unit filename="../../src/libs/zlib/inftrees.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/inftrees.h" />
-		<Unit filename="../../src/libs/zlib/trees.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/trees.h" />
-		<Unit filename="../../src/libs/zlib/uncompr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/zconf.h" />
-		<Unit filename="../../src/libs/zlib/zlib.h" />
-		<Unit filename="../../src/libs/zlib/zutil.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/zlib/zutil.h" />
 		<Unit filename="../../src/ports/windows/win_shared.cpp" />
 		<Unit filename="../../src/shared/aabb.cpp" />
 		<Unit filename="../../src/shared/aabb.h" />
