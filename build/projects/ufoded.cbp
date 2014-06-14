@@ -25,6 +25,9 @@
 					<Add library="imagehlp" />
 					<Add library="intl" />
 				</Linker>
+				<ExtraCommands>
+					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
+				</ExtraCommands>
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
@@ -47,6 +50,9 @@
 					<Add library="imagehlp" />
 					<Add library="intl" />
 				</Linker>
+				<ExtraCommands>
+					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
+				</ExtraCommands>
 			</Target>
 		</Build>
 		<Compiler>

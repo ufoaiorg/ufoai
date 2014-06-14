@@ -14,7 +14,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
-				<Option projectIncludeDirsRelation="0" />
+				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add option="-O2" />
@@ -22,6 +22,8 @@
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
+					<Add directory="../../src/libs/mxml/" />
+					<Add directory="../../src/libs/mumble/" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -48,7 +50,7 @@
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
 				<Option parameters="--only-ScriptsTests" />
-				<Option projectIncludeDirsRelation="0" />
+				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add option="-pg" />
@@ -57,6 +59,8 @@
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
+					<Add directory="../../src/libs/mxml/" />
+					<Add directory="../../src/libs/mumble/" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
@@ -75,11 +79,11 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add option="-Wcast-align" />
 			<Add option="-Winline" />
 			<Add option="-Wmissing-declarations" />
 			<Add option="-pedantic" />
-			<Add option="-std=c++11" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-ggdb" />
@@ -103,8 +107,6 @@
 			<Add directory="../../src/libs/gtest/include/" />
 			<Add directory="../../src/libs/gtest/gtest/" />
 			<Add directory="../../src/libs/mumble/" />
-			<Add directory="../../src/libs/curl/include" />
-			<Add directory="../../src/libs/curl/lib" />
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
@@ -485,392 +487,6 @@
 		<Unit filename="../../src/game/q_shared.cpp" />
 		<Unit filename="../../src/game/q_shared.h" />
 		<Unit filename="../../src/game/srvedict.h" />
-		<Unit filename="../../src/libs/curl/include/curl/curl.h" />
-		<Unit filename="../../src/libs/curl/include/curl/curlbuild.h" />
-		<Unit filename="../../src/libs/curl/include/curl/curlrules.h" />
-		<Unit filename="../../src/libs/curl/include/curl/curlver.h" />
-		<Unit filename="../../src/libs/curl/include/curl/easy.h" />
-		<Unit filename="../../src/libs/curl/include/curl/mprintf.h" />
-		<Unit filename="../../src/libs/curl/include/curl/multi.h" />
-		<Unit filename="../../src/libs/curl/include/curl/stdcheaders.h" />
-		<Unit filename="../../src/libs/curl/include/curl/typecheck-gcc.h" />
-		<Unit filename="../../src/libs/curl/include/curl/types.h" />
-		<Unit filename="../../src/libs/curl/lib/amigaos.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/amigaos.h" />
-		<Unit filename="../../src/libs/curl/lib/arpa_telnet.h" />
-		<Unit filename="../../src/libs/curl/lib/base64.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/config-amigaos.h" />
-		<Unit filename="../../src/libs/curl/lib/config-dos.h" />
-		<Unit filename="../../src/libs/curl/lib/config-mac.h" />
-		<Unit filename="../../src/libs/curl/lib/config-os400.h" />
-		<Unit filename="../../src/libs/curl/lib/config-riscos.h" />
-		<Unit filename="../../src/libs/curl/lib/config-symbian.h" />
-		<Unit filename="../../src/libs/curl/lib/config-tpf.h" />
-		<Unit filename="../../src/libs/curl/lib/config-vms.h" />
-		<Unit filename="../../src/libs/curl/lib/config-vxworks.h" />
-		<Unit filename="../../src/libs/curl/lib/config-win32.h" />
-		<Unit filename="../../src/libs/curl/lib/config-win32ce.h" />
-		<Unit filename="../../src/libs/curl/lib/connect.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/connect.h" />
-		<Unit filename="../../src/libs/curl/lib/content_encoding.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/content_encoding.h" />
-		<Unit filename="../../src/libs/curl/lib/cookie.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/cookie.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_addrinfo.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/curl_addrinfo.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_base64.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_config.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_fnmatch.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/curl_fnmatch.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_gethostname.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/curl_gethostname.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_hmac.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_ldap.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_md4.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_md5.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_memory.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_memrchr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/curl_memrchr.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_rand.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/curl_rand.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_rtmp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/curl_rtmp.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_sspi.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/curl_sspi.h" />
-		<Unit filename="../../src/libs/curl/lib/curl_threads.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/curl_threads.h" />
-		<Unit filename="../../src/libs/curl/lib/curlx.h" />
-		<Unit filename="../../src/libs/curl/lib/dict.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/dict.h" />
-		<Unit filename="../../src/libs/curl/lib/easy.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/easyif.h" />
-		<Unit filename="../../src/libs/curl/lib/escape.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/escape.h" />
-		<Unit filename="../../src/libs/curl/lib/file.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/file.h" />
-		<Unit filename="../../src/libs/curl/lib/fileinfo.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/fileinfo.h" />
-		<Unit filename="../../src/libs/curl/lib/formdata.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/formdata.h" />
-		<Unit filename="../../src/libs/curl/lib/ftp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/ftp.h" />
-		<Unit filename="../../src/libs/curl/lib/ftplistparser.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/ftplistparser.h" />
-		<Unit filename="../../src/libs/curl/lib/getenv.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/getinfo.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/getinfo.h" />
-		<Unit filename="../../src/libs/curl/lib/gopher.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/gopher.h" />
-		<Unit filename="../../src/libs/curl/lib/gtls.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/gtls.h" />
-		<Unit filename="../../src/libs/curl/lib/hash.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/hash.h" />
-		<Unit filename="../../src/libs/curl/lib/hmac.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/hostares.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/hostasyn.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/hostip.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/hostip.h" />
-		<Unit filename="../../src/libs/curl/lib/hostip4.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/hostip6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/hostsyn.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/hostthre.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/http.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/http.h" />
-		<Unit filename="../../src/libs/curl/lib/http_chunks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/http_chunks.h" />
-		<Unit filename="../../src/libs/curl/lib/http_digest.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/http_digest.h" />
-		<Unit filename="../../src/libs/curl/lib/http_negotiate.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/http_negotiate.h" />
-		<Unit filename="../../src/libs/curl/lib/http_ntlm.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/http_ntlm.h" />
-		<Unit filename="../../src/libs/curl/lib/if2ip.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/if2ip.h" />
-		<Unit filename="../../src/libs/curl/lib/imap.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/imap.h" />
-		<Unit filename="../../src/libs/curl/lib/inet_ntop.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/inet_ntop.h" />
-		<Unit filename="../../src/libs/curl/lib/inet_pton.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/inet_pton.h" />
-		<Unit filename="../../src/libs/curl/lib/krb4.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/krb4.h" />
-		<Unit filename="../../src/libs/curl/lib/krb5.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/ldap.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/llist.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/llist.h" />
-		<Unit filename="../../src/libs/curl/lib/md4.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/md5.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/memdebug.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/memdebug.h" />
-		<Unit filename="../../src/libs/curl/lib/mprintf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/multi.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/multiif.h" />
-		<Unit filename="../../src/libs/curl/lib/netrc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/netrc.h" />
-		<Unit filename="../../src/libs/curl/lib/nonblock.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/nonblock.h" />
-		<Unit filename="../../src/libs/curl/lib/nss.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/nssg.h" />
-		<Unit filename="../../src/libs/curl/lib/nwlib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/nwos.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/openldap.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/parsedate.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/parsedate.h" />
-		<Unit filename="../../src/libs/curl/lib/pingpong.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/pingpong.h" />
-		<Unit filename="../../src/libs/curl/lib/polarssl.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/polarssl.h" />
-		<Unit filename="../../src/libs/curl/lib/pop3.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/pop3.h" />
-		<Unit filename="../../src/libs/curl/lib/progress.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/progress.h" />
-		<Unit filename="../../src/libs/curl/lib/qssl.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/qssl.h" />
-		<Unit filename="../../src/libs/curl/lib/rawstr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/rawstr.h" />
-		<Unit filename="../../src/libs/curl/lib/rtsp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/rtsp.h" />
-		<Unit filename="../../src/libs/curl/lib/security.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/select.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/select.h" />
-		<Unit filename="../../src/libs/curl/lib/sendf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/sendf.h" />
-		<Unit filename="../../src/libs/curl/lib/setup-os400.h" />
-		<Unit filename="../../src/libs/curl/lib/setup.h" />
-		<Unit filename="../../src/libs/curl/lib/setup_once.h" />
-		<Unit filename="../../src/libs/curl/lib/share.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/share.h" />
-		<Unit filename="../../src/libs/curl/lib/slist.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/slist.h" />
-		<Unit filename="../../src/libs/curl/lib/smtp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/smtp.h" />
-		<Unit filename="../../src/libs/curl/lib/sockaddr.h" />
-		<Unit filename="../../src/libs/curl/lib/socks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/socks.h" />
-		<Unit filename="../../src/libs/curl/lib/socks_gssapi.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/socks_sspi.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/speedcheck.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/speedcheck.h" />
-		<Unit filename="../../src/libs/curl/lib/splay.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/splay.h" />
-		<Unit filename="../../src/libs/curl/lib/ssh.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/ssh.h" />
-		<Unit filename="../../src/libs/curl/lib/sslgen.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/sslgen.h" />
-		<Unit filename="../../src/libs/curl/lib/ssluse.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/ssluse.h" />
-		<Unit filename="../../src/libs/curl/lib/strdup.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/strdup.h" />
-		<Unit filename="../../src/libs/curl/lib/strequal.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/strequal.h" />
-		<Unit filename="../../src/libs/curl/lib/strerror.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/strerror.h" />
-		<Unit filename="../../src/libs/curl/lib/strtok.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/strtok.h" />
-		<Unit filename="../../src/libs/curl/lib/strtoofft.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/strtoofft.h" />
-		<Unit filename="../../src/libs/curl/lib/telnet.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/telnet.h" />
-		<Unit filename="../../src/libs/curl/lib/tftp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/tftp.h" />
-		<Unit filename="../../src/libs/curl/lib/timeval.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/timeval.h" />
-		<Unit filename="../../src/libs/curl/lib/transfer.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/transfer.h" />
-		<Unit filename="../../src/libs/curl/lib/url.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/url.h" />
-		<Unit filename="../../src/libs/curl/lib/urldata.h" />
-		<Unit filename="../../src/libs/curl/lib/version.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/warnless.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/warnless.h" />
-		<Unit filename="../../src/libs/curl/lib/wildcard.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/curl/lib/wildcard.h" />
 		<Unit filename="../../src/libs/gtest/gtest/gtest-all.cc" />
 		<Unit filename="../../src/libs/lua/lapi.c">
 			<Option compilerVar="CC" />
