@@ -28,6 +28,7 @@
 					<Add option="-DDEBUG" />
 				</Compiler>
 				<Linker>
+					<Add option="-pg -lgmon" />
 					<Add option="-pg" />
 					<Add option="-lgmon" />
 				</Linker>
