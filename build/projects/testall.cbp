@@ -101,9 +101,6 @@
 			<Add directory="../../src/libs/zlib" />
 			<Add directory="../../src/libs/jpeg" />
 			<Add directory="../../src/libs/png" />
-			<Add directory="../../src/libs/SDL_mixer" />
-			<Add directory="../../src/libs/ogg/include/" />
-			<Add directory="../../src/libs/vorbis/include/" />
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
