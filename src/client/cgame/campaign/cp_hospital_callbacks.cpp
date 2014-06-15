@@ -234,7 +234,7 @@ static void HOS_EmployeeInit_f (void)
 			ucn, echr.name, CHRSH_CharGetBody(&echr), echr.bodySkin, CHRSH_CharGetHead(&echr),
 			echr.headSkin, echr.HP, echr.maxHP, rank, rankImage, emp->isSoldier() ? 1 : 0);
 
-	CL_UpdateCharacterValues(&echr);
+	cgi->CL_UpdateCharacterValues(&echr);
 	HOS_UpdateCharacterImplantList(echr);
 }
 
