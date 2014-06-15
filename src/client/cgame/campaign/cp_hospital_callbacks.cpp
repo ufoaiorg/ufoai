@@ -234,13 +234,7 @@ static void HOS_EmployeeInit_f (void)
 			ucn, echr.name, CHRSH_CharGetBody(&echr), echr.bodySkin, CHRSH_CharGetHead(&echr),
 			echr.headSkin, echr.HP, echr.maxHP, rank, rankImage, emp->isSoldier() ? 1 : 0);
 
-	const abilityskills_t list[] = { ABILITY_POWER, ABILITY_SPEED, ABILITY_ACCURACY, ABILITY_MIND };
-	const int n = lengthof(list);
-	for (int i = 0; i < n; i++) {
-		cgi->UI_ExecuteConfunc("hospital_employee_set_values %i %i \"%s\"",
-				i, score.skills[i], cgi->CL_ActorGetSkillString(score.skills[i]));
-	}
-
+	CL_UpdateCharacterValues(&echr);
 	HOS_UpdateCharacterImplantList(echr);
 }
 

@@ -230,45 +230,42 @@ component EmployeeCount extends panel
 }
 
 // Hospital item (per employee)
-component HospitalItem extends panel
-{
+component HospitalItem extends panel {
 	{
 		pos				"0 0"
-		size 			"713 28"
+		size 			"670 28"
 		bgcolor			"0.56 0.81 0.76 0.1"
 		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.2" }
 		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
-		onClick			{
-			cmd "ui_push hospital_employee; hosp_empl_init <node:this.id@integer>;"
+		onClick {
+			cmd "ui_push hospital_employee <node:this.id@integer>;"
 		}
 	}
 	data id {
 		integer		0
 	}
-	bar health
-	{
+	bar health {
 		pos		"0 0"
-		size	"713 28"
+		size	"670 28"
 		color	"0.56 0.81 0.76 0.3"
 		current 0
 		max		100
+		readonly	true
 		ghost	true
 	}
-	string name
-	{
+	string name {
 		pos				"30 0"
-		size			"480 28"
+		size			"420 28"
 		color			"0.56 0.81 0.76 1"
 		contentalign	ALIGN_CL
 		ghost			true
 	}
-	string type
-	{
-		pos			"595 8"
-		size		"60 15"
+	string type {
+		pos			"530 8"
+		size		"100 15"
 		color		"0.56 0.81 0.76 1"
 		font		"f_verysmall"
-		contentalign	ALIGN_CR
+		contentalign	ALIGN_CC
 		padding		0
 		ghost		true
 	}
@@ -276,12 +273,17 @@ component HospitalItem extends panel
 	panel wounds {
 		pos 	"360 0"
 		size	"28 28"
+		onClick {
+			cmd "ui_push hospital_employee <node:this.id@integer>;"
+		}
 	}
 
 	image icon {
 		pos 	"460 0"
 		size	"28 28"
-		ghost	true
+		onClick {
+			cmd "ui_push hospital_employee <node:this.id@integer>;"
+		}
 	}
 }
 

@@ -25,8 +25,7 @@ component cmpHospitalImplant extends panel {
 		ghost	true
 	}
 
-	bar timeremaining
-	{
+	bar timeremaining {
 		pos		"35 22"
 		size	"170 8"
 		current	0
@@ -45,14 +44,11 @@ window hospital
 	}
 
 	// Base name and container panel
-	BaseContainerPanel base_container
-	{
+	BaseContainerPanel base_container {
 		// Hospital panel
-		panel mainBody
-		{
+		panel mainBody {
 			// Title bar
-			panel header
-			{
+			panel header {
 				{}
 				string title
 				{
@@ -111,12 +107,11 @@ window hospital
 			}
 
 			panel patients {
-				pos			"1 40"
-				size		"713 492"
-				layout		LAYOUT_COLUMN
-				layoutColumns	2
+				pos			"0 40"
+				size		"690 492"
+				layout		LAYOUT_TOP_DOWN_FLOW
 				layoutMargin	5
-				padding		20
+				padding			20
 				wheelscrollable	true
 
 				onViewChange	{
@@ -127,14 +122,14 @@ window hospital
 			}
 			vscrollbar hos_scroll {
 				image		"ui/scrollbar_v"
-				pos			"670 50"
+				pos			"680 50"
 				height		"480"
 				current		0
 				viewsize	21
 				fullsize	21
 				hidewhenunused true
 				onChange {
-				*node:parent.patients@viewpos = <current>
+					*node:parent.patients@viewpos = <current>
 				}
 			}
 		}
@@ -165,30 +160,24 @@ window hospital_employee
 	}
 
 	// Base name and container panel
-	BaseContainerPanel base_container
-	{
+	BaseContainerPanel base_container {
 		// Hospital panel
-		panel mainBody
-		{
+		panel mainBody {
 			// Title bar
-			panel header
-			{
+			panel header {
 				{}
-				string title
-				{
+				string title {
 					string			"_Hospital"
 				}
 			}
 		}
 	}
 
-	data ucn
-	{
+	data ucn {
 		integer	-1
 	}
 
-	actor_info local
-	{
+	actor_info local {
 		pos		"20 100"
 	}
 
@@ -272,15 +261,15 @@ window hospital_employee
 	confunc hospital_employee_show {
 		*node:root.ucn@integer = <1>
 		*node:root.name@string = "<2>"
-		*node:root.body@src = "<3>"
-		*node:root.body@skin = <4>
-		*node:root.body.head@src = "<5>"
-		*node:root.body.head@skin = <6>
-		*node:root.health.val@string = "<7>"
-		*node:root.health.bar@current = <7>
-		*node:root.health.bar@max = <8>
-		*node:root.rank_lbl@string = <9>
-		*node:root.rank@src = <10>
+		*node:root.local.body@src = "<3>"
+		*node:root.local.body@skin = <4>
+		*node:root.local.body.head@src = "<5>"
+		*node:root.local.body.head@skin = <6>
+		*node:root.stats.health.hp.valuenum@string = "<7>"
+		*node:root.stats.health.hp.valuebar@current = <7>
+		*node:root.stats.health.hp.valuebar@max = <8>
+		*node:root.local.rank_lbl@string = <9>
+		*node:root.local.rank_img@src = <10>
 		if ( <11> == 1 ) {
 			*node:root.implants@invis = false
 		} else {
@@ -326,5 +315,9 @@ window hospital_employee
 
 	confunc hospital_employee_clear_implants {
 		call *node:root.implants.list@removeAllchild
+	}
+
+	func onWindowOpened {
+		cmd "hosp_empl_init <1>;"
 	}
 }
