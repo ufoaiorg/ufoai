@@ -761,7 +761,7 @@ void B_ResetAllStatusAndCapacities (base_t* base, bool firstEnable)
 	/* Current aircraft capacities should not need recounting */
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)))
-		CAP_SetCurrent(base, CAP_EMPLOYEES, E_CountAllHired(base));
+		CAP_SetCurrent(base, CAP_EMPLOYEES, E_CountAllHired(base, true));
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ITEMS)))
 		CAP_UpdateStorageCap(base);

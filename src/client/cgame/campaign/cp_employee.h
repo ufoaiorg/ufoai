@@ -126,7 +126,7 @@ bool E_DeleteEmployee(Employee* employee);
 int E_CountByType(employeeType_t type);
 int E_CountHired(const base_t* const base, employeeType_t type);
 int E_CountHiredRobotByType(const base_t* const base, const struct ugv_s* ugvType);
-int E_CountAllHired(const base_t* const base);
+int E_CountAllHired(const base_t* const base, const bool peopleOnly = false);
 int E_CountUnhired(employeeType_t type);
 int E_CountUnhiredRobotsByType(const struct ugv_s* ugvType);
 int E_CountUnassigned(const base_t* const base, employeeType_t type);

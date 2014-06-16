@@ -749,11 +749,10 @@ int E_CountHiredRobotByType (const base_t* const base, const ugv_t* ugvType)
 /**
  * @brief Counts all hired employees of a given base
  * @param[in] base The base where we count
+ * @param[in] peopleOnly Count people only (skip robots)
  * @return count of hired employees of a given type in a given base
- * @note must not return 0 if hasBuilding[B_QUARTER] is false: used to update capacity
- * @todo What about EMPL_ROBOT?
  */
-int E_CountAllHired (const base_t* const base)
+int E_CountAllHired (const base_t* const base, const bool peopleOnly)
 {
 	if (!base)
 		return 0;
@@ -761,6 +760,8 @@ int E_CountAllHired (const base_t* const base)
 	int count = 0;
 	for (int i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t type = (employeeType_t)i;
+		if (peopleOnly && i == EMPL_ROBOT)
+			continue;
 		count += E_CountHired(base, type);
 	}
 
