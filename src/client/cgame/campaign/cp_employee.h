@@ -108,9 +108,10 @@ public:
 		return _ugv;
 	}
 
-	bool isAwayFromBase () const;
-	base_t* unassign ();
-	bool unhire ();
+	bool isAwayFromBase() const;
+	bool unassign();
+	bool unhire();
+	void unequip();
 
 	base_t* baseHired;				/**< Base where the soldier is hired it atm. */
 	bool transfer;				/**< Is this employee currently transferred? */

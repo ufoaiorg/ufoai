@@ -411,20 +411,18 @@ bool E_HireRobot (base_t* base, const ugv_t* ugvType)
 }
 
 /**
- * @brief Removes the inventory of the employee and also removes him from buildings
+ * @brief Removes the employee from buildings and aircraft
  */
-base_t* Employee::unassign ()
+bool Employee::unassign ()
 {
-	/* get the base where the employee is hired in */
-	base_t* base = baseHired;
-	if (!base)
-		return base;
+	if (!baseHired)
+		return false;
 
 	/* Remove employee from building/tech/production/aircraft). */
 	switch (_type) {
 	case EMPL_SCIENTIST:
 		if (isAssigned())
-			RS_RemoveFiredScientist(base, this);
+			RS_RemoveFiredScientist(baseHired, this);
 		break;
 	case EMPL_ROBOT:
 	case EMPL_SOLDIER:
@@ -433,28 +431,28 @@ base_t* Employee::unassign ()
 			AIR_RemoveEmployee(this, nullptr);
 		break;
 	case EMPL_PILOT:
-		AIR_RemovePilotFromAssignedAircraft(base, this);
+		AIR_RemovePilotFromAssignedAircraft(baseHired, this);
 		break;
 	case EMPL_WORKER:
-		/* Update current capacity and production times if worker is being counted there. */
-		PR_UpdateProductionCap(base, -1);
-		break;
 	default:
 		break;
 	}
 
+	return true;
+}
+
+/**
+ * @brief Removes the equipment from an employee
+ */
+void Employee::unequip ()
+{
 	/* Destroy the inventory of the employee (carried items will remain in base->storage) */
 	cgi->INV_DestroyInventory(&chr.inv);
-
-	/* Set all employee-tags to 'unhired'. */
-	baseHired = nullptr;
-
-	return base;
 }
 
 /**
  * @brief Fires an employee.
- * @note also remove him from the aircraft
+ * @note also unassigns him from the aircraft and buildings
  * @sa E_HireEmployee
  * @sa E_HireEmployeeByType
  * @sa CL_RemoveSoldierFromAircraft
@@ -467,22 +465,27 @@ bool Employee::unhire ()
 		return false;
 	}
 
-	base_t* base = unassign();
+	unassign();
+	unequip();
 
 	/* Remove employee from corresponding capacity */
 	switch (_type) {
-	case EMPL_PILOT:
 	case EMPL_WORKER:
+		PR_UpdateProductionCap(baseHired, -1);
+	case EMPL_PILOT:
 	case EMPL_SCIENTIST:
 	case EMPL_SOLDIER:
-		CAP_AddCurrent(base, CAP_EMPLOYEES, -1);
+		CAP_AddCurrent(baseHired, CAP_EMPLOYEES, -1);
 		break;
 	case EMPL_ROBOT:
-		CAP_AddCurrent(base, CAP_ITEMS, -UGV_SIZE);
+		CAP_AddCurrent(baseHired, CAP_ITEMS, -UGV_SIZE);
 		break;
 	case MAX_EMPL:
 		break;
 	}
+
+	/* Set all employee-tags to 'unhired'. */
+	baseHired = nullptr;
 
 	return true;
 }

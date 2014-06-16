@@ -204,6 +204,11 @@ transfer_t* TR_TransferStart (base_t* srcBase, transferData_t& transData)
 
 			transfer.hasEmployees = true;
 			employee->unassign();
+
+			/** @TODO We unarm soldiers so we don't need to manage storage. This need to be changed later */
+			employee->unequip();
+
+			E_MoveIntoNewBase(employee, transfer.destBase);
 			cgi->LIST_AddPointer(&transfer.employees[i], (void*) employee);
 			employee->transfer = true;
 			count++;
