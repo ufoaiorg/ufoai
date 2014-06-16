@@ -350,7 +350,6 @@ Employee* E_GetUnassignedEmployee (const base_t* const base, const employeeType_
  * @param[in] base Which base the employee should be hired in
  * @param[in] employee Which employee to hire
  * @sa E_HireEmployeeByType
- * @sa E_UnhireEmployee
  * @todo handle EMPL_ROBOT capacities here?
  */
 bool E_HireEmployee (base_t* base, Employee* employee)
@@ -392,7 +391,6 @@ bool E_HireEmployee (base_t* base, Employee* employee)
  * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
  * @sa E_HireEmployee
- * @sa E_UnhireEmployee
  */
 bool E_HireEmployeeByType (base_t* base, employeeType_t type)
 {
@@ -572,7 +570,6 @@ Employee* E_CreateEmployee (employeeType_t type, const nation_t* nation, const u
  * @param[in] employee The pointer to the employee you want to remove.
  * @return True if the employee was removed successfully, otherwise false.
  * @sa E_CreateEmployee
- * @sa E_UnhireEmployee
  * @note This function has the side effect, that the global employee number for
  * the given employee type is reduced by one, also the ccs.employees pointers are
  * moved to fill the gap of the removed employee. Thus pointers like acTeam in
@@ -618,42 +615,6 @@ void E_DeleteAllEmployees (base_t* base)
 				E_DeleteEmployee(employee);
 		}
 	}
-}
-
-
-/**
- * @brief Removes employee until all employees fit in quarters capacity.
- * @param[in] base Pointer to the base where the number of employees should be updated.
- * @note employees are killed, and not just unhired (if base is destroyed, you can't recruit the same employees elsewhere)
- *	if you want to unhire employees, you should do it before calling this function.
- * @note employees are not randomly chosen. Reason is that all Quarter will be destroyed at the same time,
- *	so all employees are going to be killed anyway.
- */
-void E_DeleteEmployeesExceedingCapacity (base_t* base)
-{
-	int i;
-
-	/* Check if there are too many employees */
-	if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) >= 0)
-		return;
-
-	/* do a reverse loop in order to finish by soldiers (the most important employees) */
-	for (i = MAX_EMPL - 1; i >= 0; i--) {
-		const employeeType_t type = (employeeType_t)i;
-		/* UGV are not stored in Quarters */
-		if (type == EMPL_ROBOT)
-			continue;
-
-		E_Foreach(type, employee) {
-			if (employee->isHiredInBase(base))
-				E_DeleteEmployee(employee);
-
-			if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) >= 0)
-				return;
-		}
-	}
-
-	Com_Printf("E_DeleteEmployeesExceedingCapacity: Warning, removed all employees from base '%s', but capacity is still > 0\n", base->name);
 }
 
 /**

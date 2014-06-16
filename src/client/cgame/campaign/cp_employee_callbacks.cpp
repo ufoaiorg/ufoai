@@ -138,6 +138,15 @@ static void E_EmployeeListScroll_f (void)
 }
 
 /**
+ * @brief Find an hired or free employee by the menu index
+ * @param[in] num The index from the hire menu screen (index inemployeeList).
+ */
+static Employee* E_GetEmployeeByMenuIndex (int num)
+{
+	return static_cast<Employee*>(cgi->LIST_GetByIdx(employeeList, num));
+}
+
+/**
  * @brief Will fill the list with employees
  * @note this is the init function in the employee hire menu
  */
@@ -246,15 +255,6 @@ int E_GenerateHiredEmployeesList (const base_t* base)
 	assert(base);
 	employeesInCurrentList = E_GetHiredEmployees(base, EMPL_SOLDIER, &employeeList);
 	return employeesInCurrentList;
-}
-
-/**
- * @brief Find an hired or free employee by the menu index
- * @param[in] num The index from the hire menu screen (index inemployeeList).
- */
-Employee* E_GetEmployeeByMenuIndex (int num)
-{
-	return static_cast<Employee*>(cgi->LIST_GetByIdx(employeeList, num));
 }
 
 /**

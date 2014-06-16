@@ -138,7 +138,6 @@ bool E_UnhireEmployee(Employee* employee);
 
 int E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const bool excludeUnhappyNations);
 
-base_t* E_Unassign(Employee* employee);
 int E_GenerateHiredEmployeesList(const base_t* base);
 
 employeeType_t E_GetEmployeeType(const char* type);
@@ -156,11 +155,8 @@ Employee* E_GetAssignedEmployee(const base_t* const base, employeeType_t type);
 Employee* E_GetEmployeeFromChrUCN(int uniqueCharacterNumber);
 Employee* E_GetEmployeeByTypeFromChrUCN(employeeType_t type, int uniqueCharacterNumber);
 
-Employee* E_GetEmployeeByMenuIndex(int num);
 void E_UnhireAllEmployees(base_t* base, employeeType_t type);
 void E_DeleteAllEmployees(base_t* base);
-
-void E_DeleteEmployeesExceedingCapacity(base_t* base);
 
 void E_HireForBuilding(base_t* base, building_t* building, int num);
 void E_InitialEmployees(const struct campaign_s* campaign);
