@@ -39,7 +39,7 @@ is heavily inspired by the 'X-COM' series by Mythos and Microprose.
 
 %build
 ./configure --enable-release --prefix=/usr
-%make %{?_smp_mflags}
+%make
 
 %install
 rm -rf $RPM_BUILD_ROOT
