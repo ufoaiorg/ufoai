@@ -147,16 +147,6 @@ static void TR_TransferEnd (transfer_t* transfer)
 	cgi->LIST_Remove(&ccs.transfers, transfer);
 }
 
-bool TR_AddData (transferData_t* transferData, transferCargoType_t type, const void* data)
-{
-	if (transferData->trCargoCountTmp >= MAX_CARGO)
-		return false;
-	TR_SetData(&transferData->cargo[transferData->trCargoCountTmp], type, data);
-	transferData->trCargoCountTmp++;
-
-	return true;
-}
-
 /**
  * @brief Starts a transfer
  * @param[in] srcBase start transfer from this base

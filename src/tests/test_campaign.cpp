@@ -387,7 +387,7 @@ TEST_F(CampaignTest, testTransferItem)
 	OBJZERO(td);
 	td.trItemsTmp[od->idx] += 1;
 	td.transferBase = targetBase;
-	TR_AddData(&td, CARGO_TYPE_ITEM, od);
+	td.trItemsTmp[od->idx]++;
 
 	transfer = TR_TransferStart(base, td);
 	ASSERT_TRUE(nullptr != transfer);
