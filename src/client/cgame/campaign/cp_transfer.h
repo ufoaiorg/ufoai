@@ -56,7 +56,6 @@ typedef struct transfer_s {
 
 	bool hasItems;				/**< Transfer of items. */
 	bool hasEmployees;			/**< Transfer of employees. */
-	bool hasAircraft;			/**< Transfer of aircraft. */
 } transfer_t;
 
 /**

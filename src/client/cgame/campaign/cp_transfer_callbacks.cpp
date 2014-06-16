@@ -794,7 +794,7 @@ static void TR_List_f (void)
 			cgi->LIST_Delete(&cargo);
 		}
 		/* Aircraft */
-		if (transfer->hasAircraft) {
+		if (!cgi->LIST_IsEmpty(transfer->aircraft)) {
 			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "aircraft", _("Aircraft"));
 
 			TR_ForeachAircraft(aircraft, transfer) {

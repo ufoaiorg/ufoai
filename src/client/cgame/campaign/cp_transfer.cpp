@@ -228,7 +228,6 @@ transfer_t* TR_TransferStart (base_t* srcBase, transferData_t& transData)
 		aircraft->status = AIR_TRANSFER;
 		AIR_RemoveEmployees(*aircraft);
 		aircraft->homebase = transData.transferBase;
-		transfer.hasAircraft = true;
 		cgi->LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
 		if (srcBase->aircraftCurrent == aircraft)
 			srcBase->aircraftCurrent = AIR_GetFirstFromBase(srcBase);
@@ -264,8 +263,6 @@ void TR_NotifyAircraftRemoved (const aircraft_t* aircraft)
 		return;
 
 	TR_Foreach(transfer) {
-		if (!transfer->hasAircraft)
-			continue;
 		if (cgi->LIST_Remove(&transfer->aircraft, aircraft))
 			return;
 	}
@@ -364,7 +361,7 @@ static void TR_ListTransfers_f (void)
 			cgi->LIST_Delete(&cargo);
 		}
 		/* Transfered Aircraft */
-		if (transfer->hasAircraft) {
+		if (!cgi->LIST_IsEmpty(transfer->aircraft)) {
 			Com_Printf("...Transfered Aircraft:\n");
 			TR_ForeachAircraft(aircraft, transfer) {
 				Com_Printf("......%s [idx: %i]\n", aircraft->id, aircraft->idx);
@@ -430,11 +427,9 @@ bool TR_SaveXML (xmlNode_t* p)
 			}
 		}
 		/* save aircraft */
-		if (transfer->hasAircraft) {
-			TR_ForeachAircraft(aircraft, transfer) {
-				xmlNode_t* ss = cgi->XML_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
-				cgi->XML_AddInt(ss, SAVE_TRANSFER_ID, aircraft->idx);
-			}
+		TR_ForeachAircraft(aircraft, transfer) {
+			xmlNode_t* ss = cgi->XML_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
+			cgi->XML_AddInt(ss, SAVE_TRANSFER_ID, aircraft->idx);
 		}
 	}
 	return true;
@@ -475,7 +470,6 @@ bool TR_LoadXML (xmlNode_t* p)
 		/* Initializing some variables */
 		transfer.hasItems = false;
 		transfer.hasEmployees = false;
-		transfer.hasAircraft = false;
 
 		/* load items */
 		/* If there is at last one element, hasItems is true */
@@ -531,16 +525,12 @@ bool TR_LoadXML (xmlNode_t* p)
 			}
 		}
 		/* load aircraft */
-		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_AIRCRAFT);
-		if (ss) {
-			transfer.hasAircraft = true;
-			for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_AIRCRAFT)) {
-				const int j = cgi->XML_GetInt(ss, SAVE_TRANSFER_ID, -1);
-				aircraft_t* aircraft = AIR_AircraftGetFromIDX(j);
+		for (ss = cgi->XML_GetNode(s, SAVE_TRANSFER_AIRCRAFT); ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_AIRCRAFT)) {
+			const int j = cgi->XML_GetInt(ss, SAVE_TRANSFER_ID, -1);
+			aircraft_t* aircraft = AIR_AircraftGetFromIDX(j);
 
-				if (aircraft)
-					cgi->LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
-			}
+			if (aircraft)
+				cgi->LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
 		}
 		LIST_Add(&ccs.transfers, transfer);
 	}
