@@ -245,6 +245,10 @@ window hospital_employee
 	{
 		onClick			{ cmd "ui_pop; ui_pop; ui_pop;" }
 	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
+
 	/**
 	 * @param <1> UCN
 	 * @param <2> Name
