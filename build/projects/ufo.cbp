@@ -69,13 +69,13 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-I../../src/libs" />
 			<Add option="-Wcast-align" />
 			<Add option="-Wmissing-declarations" />
 			<Add option="-pedantic" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-g" />
+			<Add option="-I../../src/libs" />
 			<Add option="-ggdb" />
 			<Add option="-Wcast-qual" />
 			<Add option="-Wpointer-arith" />
@@ -97,9 +97,9 @@
 			<Add library="SDL" />
 			<Add library="SDL_ttf" />
 			<Add library="SDL_mixer" />
+			<Add library="png" />
 			<Add library="z" />
 			<Add library="jpeg" />
-			<Add library="png" />
 			<Add library="curl" />
 			<Add library="vorbis" />
 			<Add library="ogg" />
