@@ -22,8 +22,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../common/hashtable.h"
+#include "../../common/scripts_lua.h"
+
 #include "ui_main.h"
 #include "ui_internal.h"
+#include "ui_behaviour.h"
 #include "ui_node.h"
 #include "ui_nodes.h"
 #include "ui_parse.h"
@@ -75,6 +79,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_video.h"
 #include "node/ui_node_vscrollbar.h"
 #include "node/ui_node_zone.h"
+
+#include "ui_lua.h"
 
 typedef void (*registerFunction_t)(uiBehaviour_t* node);
 
@@ -151,12 +157,19 @@ static uiBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
  */
 bool UI_CheckVisibility (uiNode_t* node)
 {
-	uiCallContext_t context;
-	if (!node->visibilityCondition)
-		return true;
-	context.source = node;
-	context.useCmdParam = false;
-	return UI_GetBooleanFromExpression(node->visibilityCondition, &context);
+	bool result = true;
+	/* old script check */
+	if (node->visibilityCondition != nullptr) {
+		uiCallContext_t context;
+		context.source = node;
+		context.useCmdParam = false;
+		result = UI_GetBooleanFromExpression(node->visibilityCondition, &context);
+	}
+	/* lua script check */
+	else if (node->lua_onVisibleWhen != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_ReturnBool (node, node->lua_onVisibleWhen, result);
+	}
+	return result;
 }
 
 /**
@@ -203,12 +216,16 @@ const char* UI_GetPath (const uiNode_t* node)
  * @param[in] iterationNode relative node referencing child in 'forchildin' iteration, mapped to '*node:child', can be nullptr
  * @param[out] resultNode Node found. Else nullptr.
  * @param[out] resultProperty Property found. Else nullptr.
+ * @param[in/out] luaMethod A pointer to a value_t structure that is filled with a lua based method identification, can be nullptr
+ * @note If luaMethod is set, the method will scan the known lua methods defined on the behaviour. If luaMethod is not set, only
+ * registered local properties are scanned.
  * TODO Speed up, evilly used function, use strncmp instead of using buffer copy (name[MAX_VAR])
+ * @note If luaMethod is set, make sure to release the allocated .name string.
  */
-void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNode_t* iterationNode, uiNode_t** resultNode, const value_t** resultProperty)
-{
+void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNode_t* iterationNode, uiNode_t** resultNode, const value_t** resultProperty, value_t *luaMethod) {
 	char name[MAX_VAR];
 	uiNode_t* node = nullptr;
+	uiNode_t* childnode = nullptr;
 	const char* nextName;
 	char nextCommand = '^';
 
@@ -254,11 +271,20 @@ void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNo
 			break;
 		case '.':	/* child node */
 			if (Q_streq(name, "parent"))
-				node = node->parent;
+				childnode = node->parent;
 			else if (Q_streq(name, "root"))
-				node = node->root;
-			else
-				node = UI_GetNode(node, name);
+				childnode = node->root;
+			else {
+				childnode = UI_GetNode(node, name);
+				/* if no node found and if we need it, then it is possible we call a lua based function */
+				if (luaMethod && !childnode) {
+					*resultProperty = UI_GetPropertyOrLuaMethod(node, name, luaMethod);
+					if (luaMethod->type) {
+						childnode = node;
+					}
+				}
+			}
+			node = childnode;
 			break;
 		case '#':	/* window index */
 			/** @todo FIXME use a warning instead of an assert */
@@ -267,7 +293,7 @@ void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNo
 			break;
 		case '@':	/* property */
 			assert(nextCommand == '\0');
-			*resultProperty = UI_GetPropertyFromBehaviour(node->behaviour, name);
+			*resultProperty = UI_GetPropertyOrLuaMethod(node, name, luaMethod);
 			*resultNode = node;
 			return;
 		}
@@ -293,9 +319,11 @@ void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNo
 uiNode_t* UI_GetNodeByPath (const char* path)
 {
 	uiNode_t* node = nullptr;
-	const value_t* property;
+	const value_t* property =  nullptr;
 	UI_ReadNodePath(path, nullptr, nullptr, &node, &property);
-	/** @todo FIXME warning if it return a property */
+	if (property) {
+		Com_Printf("WARNING: Search for node using path [%s] returns property [%s]\n", path, property->string);
+	}
 	return node;
 }
 
@@ -343,9 +371,6 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
 			Com_Printf("UI_AllocNodeWithoutNew: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
 	}
 
-	/* initialize default properties */
-	UI_Node_Loading(node);
-
 	return node;
 }
 
@@ -356,16 +381,86 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
  * @param[in] name Name of the new node, else nullptr if we don't want to edit it.
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
+ * @todo This method can be merged with UI_AllocNodeWithoutNew. Since all nodes are dynamic, there is no
+ * real reason to distinguish between types of allocation.
  */
 uiNode_t* UI_AllocNode (const char* name, const char* type, bool isDynamic)
 {
 	uiNode_t* node = UI_AllocNodeWithoutNew(name, type, isDynamic);
 
+	/* default initializtion */
+	UI_Node_InitNode(node);
+
 	/* allocate memory */
-	if (node->dynamic)
-		UI_Node_NewNode(node);
+	if (node->dynamic) {
+		UI_Node_InitNodeDynamic(node);
+	}
+
+	/* initialize default properties */
+	UI_Node_Loading(node);
 
 	return node;
+}
+
+/**
+ * @brief Clone a node
+ * @param[in] node Node to clone
+ * @param[in] recursive True if we also must clone subnodes
+ * @param[in] newWindow Window where the nodes must be add (this function only link node into window, not window into the new node)
+ * @param[in] newName New node name, else nullptr to use the source name
+ * @param[in] isDynamic Allocate a node in static or dynamic memory
+ * @todo exclude rect is not safe cloned.
+ * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
+ */
+uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t* newWindow, bool recursive, const char* newName, bool isDynamic)
+{
+	uiNode_t* newNode = UI_AllocNodeWithoutNew(nullptr, UI_Node_GetWidgetName(node), isDynamic);
+
+	/* clone all data */
+	memcpy(newNode, node, UI_Node_GetMemorySize(node));
+	newNode->dynamic = isDynamic;
+
+	/* custom name */
+	if (newName != nullptr) {
+		Q_strncpyz(newNode->name, newName, sizeof(newNode->name));
+		if (strlen(newNode->name) != strlen(newName))
+			Com_Printf("UI_CloneNode: Node name \"%s\" truncated. New name is \"%s\"\n", newName, newNode->name);
+	}
+
+	/* clean up node navigation */
+	if (node->root == node && newWindow == nullptr)
+		newWindow = newNode;
+
+	newNode->root = newWindow;
+	newNode->parent = nullptr;
+	newNode->firstChild = nullptr;
+	newNode->lastChild = nullptr;
+	newNode->next = nullptr;
+	newNode->super = node;
+
+	/* clone node methods */
+	if (node->nodeMethods) {
+		newNode->nodeMethods = HASH_CloneTable(node->nodeMethods);
+	}
+
+	/* allocate memories */
+	if (newNode->dynamic) {
+		UI_Node_InitNodeDynamic(newNode);
+	}
+
+	/* typically, cloning makes a copy of all the internals of a source node; override the ::clone(node) method
+	   to alter this behaviour */
+	UI_Node_Clone(node, newNode);
+
+	/* clone child */
+	if (recursive) {
+		for (uiNode_t* childNode = node->firstChild; childNode; childNode = childNode->next) {
+			uiNode_t* newChildNode = UI_CloneNode(childNode, newWindow, recursive, nullptr, isDynamic);
+			UI_AppendNode(newNode, newChildNode);
+		}
+	}
+
+	return newNode;
 }
 
 /**
@@ -566,58 +661,6 @@ void UI_DeleteNode (uiNode_t* node)
 	UI_Node_DeleteNode(node);
 }
 
-/**
- * @brief Clone a node
- * @param[in] node Node to clone
- * @param[in] recursive True if we also must clone subnodes
- * @param[in] newWindow Window where the nodes must be add (this function only link node into window, not window into the new node)
- * @param[in] newName New node name, else nullptr to use the source name
- * @param[in] isDynamic Allocate a node in static or dynamic memory
- * @todo exclude rect is not safe cloned.
- * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
- */
-uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t* newWindow, bool recursive, const char* newName, bool isDynamic)
-{
-	uiNode_t* newNode = UI_AllocNodeWithoutNew(nullptr, UI_Node_GetWidgetName(node), isDynamic);
-
-	/* clone all data */
-	memcpy(newNode, node, UI_Node_GetMemorySize(node));
-	newNode->dynamic = isDynamic;
-
-	/* custom name */
-	if (newName != nullptr) {
-		Q_strncpyz(newNode->name, newName, sizeof(newNode->name));
-		if (strlen(newNode->name) != strlen(newName))
-			Com_Printf("UI_CloneNode: Node name \"%s\" truncated. New name is \"%s\"\n", newName, newNode->name);
-	}
-
-	/* clean up node navigation */
-	if (node->root == node && newWindow == nullptr)
-		newWindow = newNode;
-	newNode->root = newWindow;
-	newNode->parent = nullptr;
-	newNode->firstChild = nullptr;
-	newNode->lastChild = nullptr;
-	newNode->next = nullptr;
-	newNode->super = node;
-
-	/* clone child */
-	if (recursive) {
-		for (uiNode_t* childNode = node->firstChild; childNode; childNode = childNode->next) {
-			uiNode_t* newChildNode = UI_CloneNode(childNode, newWindow, recursive, nullptr, isDynamic);
-			UI_AppendNode(newNode, newChildNode);
-		}
-	}
-
-	/* allocate memories */
-	if (newNode->dynamic)
-		UI_Node_NewNode(newNode);
-
-	UI_Node_Clone(node, newNode);
-
-	return newNode;
-}
-
 void UI_InitNodes (void)
 {
 	int i = 0;
@@ -632,6 +675,7 @@ void UI_InitNodes (void)
 		current++;
 	}
 
+	/* @todo This check for a-z sortable behaviour list can be entirely within debug */
 	/* check for safe data: list must be sorted by alphabet */
 	current = nodeBehaviourList;
 	assert(current);
@@ -685,3 +729,4 @@ void uiBox_t::alignBox (uiBox_t& inner, align_t direction)
 		Com_Error(ERR_FATAL, "UI_ImageAlignBoxInBox: Align %d not supported\n", direction);
 	}
 }
+

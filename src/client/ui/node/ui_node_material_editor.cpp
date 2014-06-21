@@ -32,12 +32,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_render.h"
 #include "../ui_parse.h"
+#include "../ui_lua.h"
+
 #include "ui_node_abstractnode.h"
 #include "ui_node_abstractscrollable.h"
+#include "ui_node_material_editor.h"
+
 #include "../../cl_video.h"
 #include "../../renderer/r_image.h"
 #include "../../renderer/r_model.h"
-#include "ui_node_material_editor.h"
+
+#include "../../../common/scripts_lua.h"
 
 #define EXTRADATA(node) UI_EXTRADATA(node, abstractScrollableExtraData_t)
 
@@ -336,8 +341,12 @@ void uiMaterialEditorNode::onMouseDown (uiNode_t* node, int x, int y, int button
 
 		node->num = id;
 
-		if (node->onChange)
+		if (node->onChange) {
 			UI_ExecuteEventActions(node, node->onChange);
+		}
+		if (node->lua_onChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript(node, node->lua_onChange);
+		}
 	}
 }
 
@@ -581,6 +590,7 @@ void UI_RegisterMaterialEditorNode (uiBehaviour_t* behaviour)
 	behaviour->name = "material_editor";
 	behaviour->extends = "abstractscrollable";
 	behaviour->manager = UINodePtr(new uiMaterialEditorNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiMaterialEditorNode_t *");
 
 	/** @todo convert it to ui functions */
 	Cmd_AddCommand("ui_materialeditor_removestage", UI_MaterialEditorRemoveStage_f, "Removes the selected material stage");

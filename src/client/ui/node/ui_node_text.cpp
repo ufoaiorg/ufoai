@@ -30,12 +30,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_behaviour.h"
 #include "../ui_render.h"
+#include "../ui_lua.h"
+
 #include "ui_node_text.h"
 #include "ui_node_abstractnode.h"
 
 #include "../../client.h"
 #include "../../cl_language.h"
 #include "../../../shared/parse.h"
+
+#include "../../../common/scripts_lua.h"
 
 #define EXTRADATA_TYPE textExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -74,8 +78,12 @@ void UI_TextNodeSelectLine (uiNode_t* node, int num)
 		return;
 	EXTRADATA(node).textLineSelected = num;
 	EXTRADATA(node).textSelected = UI_TextNodeGetSelectedText(node, num);
-	if (node->onChange)
+	if (node->onChange) {
 		UI_ExecuteEventActions(node, node->onChange);
+	}
+	if (node->lua_onChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onChange);
+	}
 }
 
 /**
@@ -100,7 +108,12 @@ void UI_TextScrollEnd (const char* nodePath)
 
 	if (EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {
 		EXTRADATA(node).super.scrollY.viewPos = EXTRADATA(node).super.scrollY.fullSize - EXTRADATA(node).super.scrollY.viewSize;
-		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+		if (EXTRADATA(node).super.onViewChange) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+		}
+		else if (EXTRADATA(node).super.lua_onViewChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript (node, EXTRADATA(node).super.lua_onViewChange);
+		}
 	}
 }
 
@@ -140,6 +153,48 @@ static int UI_TextNodeGetLine (const uiNode_t* node, int x, int y)
 void uiTextNode::onMouseMove (uiNode_t* node, int x, int y)
 {
 	EXTRADATA(node).lineUnderMouse = UI_TextNodeGetLine(node, x, y);
+}
+
+void uiTextNode::doLayout (uiNode_t* node) {
+	uiLocatedNode::doLayout(node);
+
+	int lineheight = EXTRADATA(node).lineHeight;
+	/* auto compute lineheight */
+	/* we don't overwrite EXTRADATA(node).lineHeight, because "0" is dynamically replaced by font height on draw function */
+	if (lineheight == 0) {
+		/* the font is used */
+		const char* font = UI_GetFontFromNode(node);
+		lineheight = UI_FontGetHeight(font);
+	}
+
+	/* auto compute rows (super.viewSizeY) */
+	if (EXTRADATA(node).super.scrollY.viewSize == 0) {
+		if (node->box.size[1] != 0 && lineheight != 0) {
+			EXTRADATA(node).super.scrollY.viewSize = node->box.size[1] / lineheight;
+		} else {
+			EXTRADATA(node).super.scrollY.viewSize = 1;
+			Com_Printf("UI_TextNodeLoaded: node '%s' has no rows value\n", UI_GetPath(node));
+		}
+	}
+
+	/* auto compute height */
+	if (node->box.size[1] == 0) {
+		node->box.size[1] = EXTRADATA(node).super.scrollY.viewSize * lineheight;
+	}
+
+	/* is text slot exists */
+	if (EXTRADATA(node).dataID >= UI_MAX_DATAID)
+		Com_Error(ERR_DROP, "Error in node %s - max shared data id num exceeded (num: %i, max: %i)", UI_GetPath(node), EXTRADATA(node).dataID, UI_MAX_DATAID);
+
+#ifdef DEBUG
+	if (EXTRADATA(node).super.scrollY.viewSize != (int)(node->box.size[1] / lineheight)) {
+		Com_Printf("UI_TextNodeLoaded: rows value (%i) of node '%s' differs from size (%.0f) and format (%i) values\n",
+			EXTRADATA(node).super.scrollY.viewSize, UI_GetPath(node), node->box.size[1], lineheight);
+	}
+#endif
+
+	if (node->text == nullptr && EXTRADATA(node).dataID == TEXT_NULL)
+		Com_Printf("UI_TextNodeLoaded: 'textid' property of node '%s' is not set\n", UI_GetPath(node));
 }
 
 #define UI_TEXTNODE_BUFFERSIZE		32768
@@ -416,8 +471,12 @@ void uiTextNode::onLeftClick (uiNode_t* node, int x, int y)
 
 	UI_TextNodeSelectLine(node, line);
 
-	if (node->onClick)
+	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
+	}
+	if (node->lua_onClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onClick, x, y);
+	}
 }
 
 /**
@@ -473,43 +532,7 @@ void uiTextNode::onLoading (uiNode_t* node)
 
 void uiTextNode::onLoaded (uiNode_t* node)
 {
-	int lineheight = EXTRADATA(node).lineHeight;
-	/* auto compute lineheight */
-	/* we don't overwrite EXTRADATA(node).lineHeight, because "0" is dynamically replaced by font height on draw function */
-	if (lineheight == 0) {
-		/* the font is used */
-		const char* font = UI_GetFontFromNode(node);
-		lineheight = UI_FontGetHeight(font);
-	}
-
-	/* auto compute rows (super.viewSizeY) */
-	if (EXTRADATA(node).super.scrollY.viewSize == 0) {
-		if (node->box.size[1] != 0 && lineheight != 0) {
-			EXTRADATA(node).super.scrollY.viewSize = node->box.size[1] / lineheight;
-		} else {
-			EXTRADATA(node).super.scrollY.viewSize = 1;
-			Com_Printf("UI_TextNodeLoaded: node '%s' has no rows value\n", UI_GetPath(node));
-		}
-	}
-
-	/* auto compute height */
-	if (node->box.size[1] == 0) {
-		node->box.size[1] = EXTRADATA(node).super.scrollY.viewSize * lineheight;
-	}
-
-	/* is text slot exists */
-	if (EXTRADATA(node).dataID >= UI_MAX_DATAID)
-		Com_Error(ERR_DROP, "Error in node %s - max shared data id num exceeded (num: %i, max: %i)", UI_GetPath(node), EXTRADATA(node).dataID, UI_MAX_DATAID);
-
-#ifdef DEBUG
-	if (EXTRADATA(node).super.scrollY.viewSize != (int)(node->box.size[1] / lineheight)) {
-		Com_Printf("UI_TextNodeLoaded: rows value (%i) of node '%s' differs from size (%.0f) and format (%i) values\n",
-			EXTRADATA(node).super.scrollY.viewSize, UI_GetPath(node), node->box.size[1], lineheight);
-	}
-#endif
-
-	if (node->text == nullptr && EXTRADATA(node).dataID == TEXT_NULL)
-		Com_Printf("UI_TextNodeLoaded: 'textid' property of node '%s' is not set\n", UI_GetPath(node));
+	/* code moved to doLayout since it was used to precompute layout */
 }
 
 /**
@@ -565,6 +588,7 @@ void UI_RegisterTextNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractscrollable";
 	behaviour->manager = UINodePtr(new uiTextNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTextNode_t *");
 
 	/* Current selected line  */
 	UI_RegisterExtradataNodeProperty(behaviour, "lineselected", V_INT, textExtraData_t, textLineSelected);

@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_battlescape.h"
 #include "../../client.h"
 
+#include "../../../common/scripts_lua.h"
+
 /**
  * @brief Determine the position and size of the render
  */
@@ -98,4 +100,5 @@ void UI_RegisterBattlescapeNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "battlescape";
 	behaviour->manager = UINodePtr(new uiBattleScapeNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBattlescapeNode_t *");
 }

@@ -40,6 +40,8 @@ $(TARGET)_SRCS_TMP      = $(subst $(SRCDIR)/,, \
 	\
 	$(wildcard $(SRCDIR)/client/renderer/*.cpp) \
 	\
+	client/ui/swig/ui_lua_shared.cpp \
+	\
 	common/binaryexpressionparser.cpp \
 	common/cmd.cpp \
 	common/http.cpp \
@@ -51,6 +53,7 @@ $(TARGET)_SRCS_TMP      = $(subst $(SRCDIR)/,, \
 	common/common.cpp \
 	common/cvar.cpp \
 	common/files.cpp \
+	common/hashtable.cpp \
 	common/list.cpp \
 	common/md4.cpp \
 	common/md5.cpp \
@@ -61,6 +64,7 @@ $(TARGET)_SRCS_TMP      = $(subst $(SRCDIR)/,, \
 	common/dbuffer.cpp \
 	common/pqueue.cpp \
 	common/scripts.cpp \
+	common/scripts_lua.cpp \
 	common/sha1.cpp \
 	common/sha2.cpp \
 	common/tracing.cpp \

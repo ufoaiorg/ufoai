@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../shared/ufotypes.h"
 #include "../../common/scripts.h"
+#include "../../common/scripts_lua.h"
 
 /* prototype */
 struct uiSprite_t;
@@ -34,6 +35,8 @@ struct nodeKeyBinding_s;
 struct uiCallContext_s;
 struct uiModel_s;
 struct uiBehaviour_t;
+struct uiLuaCallback_t;
+struct hashTable_s;
 
 typedef struct uiExcludeRect_s {
 	/** position of the exclude rect relative to node position */
@@ -93,7 +96,7 @@ struct uiNode_t {
 	uiBox_t box;
 
 	/* common attributes */
-	const char* tooltip;		/**< holds the tooltip */
+	char* tooltip;				/**< holds the tooltip */
 	struct uiKeyBinding_s* key;	/**< key bindings - used as tooltip */
 	bool invis;					/**< true if the node is invisible */
 	bool disabled;				/**< true if the node is inactive */
@@ -116,14 +119,17 @@ struct uiNode_t {
 	/** @todo needs cleanup */
 	int contentAlign;			/**< Content alignment inside nodes */
 	char* text;					/**< Text we want to display */
-	const char* font;			/**< Font to draw text */
-	const char* image;
+	char* font;					/**< Font to draw text */
+	char* image;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */
 	vec4_t color;				/**< rgba */
 	vec4_t selectedColor;		/**< rgba The color to draw the line specified by textLineSelected in. */
 	vec4_t flashColor;			/**< rgbx The color of the flashing effect. */
+
+	/* extended behaviour */
+	hashTable_s* nodeMethods;		/**< hash map for storing lua defined node functions */
 
 	/* common events */
 	struct uiAction_s* onClick;
@@ -135,6 +141,38 @@ struct uiNode_t {
 	struct uiAction_s* onWheelUp;
 	struct uiAction_s* onWheelDown;
 	struct uiAction_s* onChange;	/**< called when the widget change from an user action */
+
+	/* common events lua based */
+	/* note: if new events are added here, make sure the value is initialized to LUA_NOREF
+	   @sa: UI_AllocNodeWithoutNew */
+    LUA_EVENT lua_onClick; /**< references the event in lua: on_click (node, x, y) */
+    LUA_EVENT lua_onRightClick; /**< references the event in lua: on_rightclick (node, x, y) */
+    LUA_EVENT lua_onMiddleClick; /**< references the event in lua: on_middleclick (node, x, y) */
+    LUA_EVENT lua_onWheelUp; /**< references the event in lua: on_wheelup (node, dx, dy) */
+    LUA_EVENT lua_onWheelDown; /**< references the event in lua: on_wheeldown (node, dx, dy) */
+    LUA_EVENT lua_onWheel; /**< references the event in lua: on_wheel (node, dx, dy) */
+    LUA_EVENT lua_onFocusGained; /**< references the event in lua: on_focusgained (node) */
+    LUA_EVENT lua_onFocusLost; /**< references the event in lua: on_focuslost (node) */
+    LUA_EVENT lua_onKeyPressed; /**< references the event in lua: on_keypressed (node, key, unicode) */
+    LUA_EVENT lua_onKeyReleased; /**< references the event in lua: on_keyreleased (node, key, unicode) */
+    LUA_EVENT lua_onLoaded; /**< references the event in lua: on_loaded (node) */
+    LUA_EVENT lua_onActivate; /**< references the event in lua: on_activate (node) */
+    LUA_EVENT lua_onMouseEnter; /**< references the event in lua: on_mouseenter (node) */
+    LUA_EVENT lua_onMouseLeave; /**< references the event in lua: on_mouseleave (node) */
+    LUA_EVENT lua_onChange; /**< references the event in lua: on_change (node) */
+    LUA_EVENT lua_onVisibleWhen; /**< references the event in lua: on_visible (node) */
+
+	bool dragdrop; /**< set to true to enable dragdrop on this node */
+	/** Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
+    LUA_EVENT lua_onDragDropEnter; /**< references the event in lua: on_dragdropenter (node) */
+	/** Send to the target when the DND is canceled */
+    LUA_EVENT lua_onDragDropLeave; /**< references the event in lua: on_dragdropleave (node) */
+	/** Send to the target when we enter first, return true if we can drop the DND here */
+	LUA_EVENT lua_onDragDropMove; /**< references the event in lua: on_dragdropmove (node, x, y) */
+	/** Send to the target to finalize the drop */
+	LUA_EVENT lua_onDragDropDrop; /**< references the event in lua: on_dragdropdrop (node, x, y) */
+	/** Sent to the source to finalize the drop */
+	LUA_EVENT lua_onDragDropFinished; /**< references the event in lua: on_dragdropfinished (node, isdropped) */
 };
 
 
@@ -154,10 +192,10 @@ void UI_InitNodes(void);
 /* nodes */
 uiNode_t* UI_AllocNode(const char* name, const char* type, bool isDynamic);
 uiNode_t* UI_GetNodeByPath(const char* path) __attribute__ ((warn_unused_result));
-void UI_ReadNodePath(const char* path, const uiNode_t* relativeNode, const uiNode_t* iterationNode, uiNode_t** resultNode, const value_t** resultProperty);
+void UI_ReadNodePath(const char* path, const uiNode_t* relativeNode, const uiNode_t* iterationNode, uiNode_t** resultNode, const value_t** resultProperty, value_t* luaMethod = nullptr);
 uiNode_t* UI_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
 const char* UI_GetPath(const uiNode_t* node) __attribute__ ((warn_unused_result));
-uiNode_t* UI_CloneNode(uiNode_t const* node, uiNode_t* newWindow, bool recursive, const char* newName, bool isDynamic) __attribute__ ((warn_unused_result));
+uiNode_t* UI_CloneNode(const uiNode_t* node, uiNode_t* newWindow, bool recursive, const char* newName, bool isDynamic) __attribute__ ((warn_unused_result));
 bool UI_CheckVisibility(uiNode_t* node);
 void UI_DeleteAllChild(uiNode_t* node);
 void UI_DeleteNode(uiNode_t* node);
@@ -167,3 +205,4 @@ void UI_DeleteNode(uiNode_t* node);
 uiBehaviour_t* UI_GetNodeBehaviour(const char* name) __attribute__ ((warn_unused_result));
 uiBehaviour_t* UI_GetNodeBehaviourByIndex(int index) __attribute__ ((warn_unused_result));
 int UI_GetNodeBehaviourCount(void) __attribute__ ((warn_unused_result));
+

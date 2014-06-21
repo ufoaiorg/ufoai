@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "../shared/shared.h"
+#include "../common/scripts_lua.h"
 
 #define CVAR_ARCHIVE	1		/**< set to cause it to be saved to vars.rc */
 #define CVAR_USERINFO	2		/**< added to userinfo  when changed */

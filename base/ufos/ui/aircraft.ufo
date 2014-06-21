@@ -253,8 +253,6 @@ window iaircraft
 				}
 			}
 		}
-
-		data wnd_name { string "aircraft" }
 	}
 
 	BuildingSpace dropship
@@ -324,21 +322,15 @@ window iaircraft
 		*node:root.team_info@invis = true
 	}
 
-	// <1> Employee UCN
-	// <2> Employee type
-	// <3> Employee name
-	// <4> Employee assigned to aircraft?
-	// <5> Employee wounded?
-	// <6> Tooltip (Employee is out of base)
 	confunc aircraft_soldierlist_add {
 		call *node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist@createChild("member<1>", "aircraft_teammember")
 		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.id@integer = <1>
 		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.id@string = <2>
 		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@string = <3>
 		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.selected@current = <4>
-		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.status@integer = <5>
 
 		if ( <5> == 1 ) {
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.status@integer = "1"
 			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@color = "1 0.81 0.76 1"
 		}
 		if ( "<6>" ne "" ) {

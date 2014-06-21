@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_rows.h"
 #include "ui_node_abstractnode.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE rowsExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -69,6 +71,7 @@ void UI_RegisterRowsNode (uiBehaviour_t* behaviour)
 	behaviour->name = "rows";
 	behaviour->manager = UINodePtr(new uiRowsNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiRowsNode_t *");
 
 	/* Background color for odd elements */
 	UI_RegisterNodeProperty(behaviour, "color1", V_COLOR, uiNode_t, color);

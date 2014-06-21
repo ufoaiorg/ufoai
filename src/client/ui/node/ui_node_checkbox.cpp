@@ -39,9 +39,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_render.h"
 #include "../ui_sound.h"
 #include "../ui_sprite.h"
+#include "../ui_lua.h"
+
 #include "ui_node_checkbox.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_abstractvalue.h"
+
+#include "../../../common/scripts_lua.h"
 
 #define EXTRADATA_TYPE checkboxExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -68,7 +72,7 @@ void uiCheckBoxNode::draw (uiNode_t* node)
 	} else if (value > 0) {
 		icon = EXTRADATA(node).iconChecked;
 	} else { /* value < 0 */
-		icon = EXTRADATA(node).iconIndeterminate;
+		icon = EXTRADATA(node).iconUnknown;
 	}
 
 	UI_GetNodeAbsPos(node, pos);
@@ -86,16 +90,16 @@ void uiCheckBoxNode::draw (uiNode_t* node)
  */
 void uiCheckBoxNode::onActivate (uiNode_t* node)
 {
-	const float last = getValue(node);
-	float value;
+	toggle(node);
+}
 
+void uiCheckBoxNode::toggle(uiNode_t* node) {
 	if (node->disabled)
 		return;
 
-	/* update value */
-	value = (last > 0) ? 0 : 1;
-	if (last == value)
-		return;
+	/* toggle value */
+	const float last = getValue(node);
+	float value = (last > 0) ? 0 : 1;
 
 	/* save result */
 	setValue(node, value);
@@ -115,8 +119,12 @@ void uiCheckBoxNode::onLeftClick (uiNode_t* node, int x, int y)
 		return;
 
 	onActivate(node);
-	if (node->onClick)
+	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
+	}
+	if (node->lua_onClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onClick, x, y);
+	}
 	UI_PlaySound("click1");
 }
 
@@ -129,19 +137,55 @@ void uiCheckBoxNode::onLoading (uiNode_t* node)
 	setRange(node, -1, 1);
 }
 
+void UI_CheckBox_SetBackgroundByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, checkboxExtraData_t).background = sprite;
+}
+
+void UI_CheckBox_SetIconCheckedByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, checkboxExtraData_t).iconChecked = sprite;
+}
+
+void UI_CheckBox_SetIconUncheckedByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, checkboxExtraData_t).iconUnchecked = sprite;
+}
+
+void UI_CheckBox_Toggle (uiNode_t* node) {
+	uiCheckBoxNode* b=static_cast<uiCheckBoxNode*>(node->behaviour->manager.get());
+	b->toggle(node);
+}
+
+void UI_CheckBox_SetIconUnknownByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, checkboxExtraData_t).iconUnknown = sprite;
+}
+
+bool UI_CheckBox_ValueAsBoolean (uiNode_t* node) {
+	uiCheckBoxNode* b=static_cast<uiCheckBoxNode*>(node->behaviour->manager.get());
+	return ((int)(b->getValue(node)) != 0);
+}
+
+int UI_CheckBox_ValueAsInteger (uiNode_t* node) {
+	uiCheckBoxNode* b=static_cast<uiCheckBoxNode*>(node->behaviour->manager.get());
+	return (int)(b->getValue(node) != 0 ? 1 : 0);
+}
+
 void UI_RegisterCheckBoxNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "checkbox";
 	behaviour->extends = "abstractvalue";
 	behaviour->manager = UINodePtr(new uiCheckBoxNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiCheckBoxNode_t *");
 
 	/** Sprite used as an icon for checked state */
 	UI_RegisterExtradataNodeProperty(behaviour, "iconChecked", V_UI_SPRITEREF, EXTRADATA_TYPE, iconChecked);
 	/** Sprite used as an icon for unchecked state */
 	UI_RegisterExtradataNodeProperty(behaviour, "iconUnchecked", V_UI_SPRITEREF, EXTRADATA_TYPE, iconUnchecked);
 	/** Sprite used as an icon for indeterminate state */
-	UI_RegisterExtradataNodeProperty(behaviour, "iconIndeterminate", V_UI_SPRITEREF, EXTRADATA_TYPE, iconIndeterminate);
+	UI_RegisterExtradataNodeProperty(behaviour, "iconIndeterminate", V_UI_SPRITEREF, EXTRADATA_TYPE, iconUnknown);
 	/** Sprite used as a background */
 	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 

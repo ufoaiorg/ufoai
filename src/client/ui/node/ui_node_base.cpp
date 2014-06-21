@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_keys.h"
 #include "../../sound/s_main.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE baseExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -206,6 +208,7 @@ void UI_RegisterAbstractBaseNode (uiBehaviour_t* behaviour)
 	behaviour->isAbstract = true;
 	behaviour->manager = UINodePtr(new uiAbstractBaseNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractBaseNode_t *");
 
 	/* Identify the base, from a base ID, the node use. */
 	UI_RegisterExtradataNodeProperty(behaviour, "baseid", V_INT, baseExtraData_t, baseid);
@@ -216,6 +219,7 @@ void UI_RegisterBaseMapNode (uiBehaviour_t* behaviour)
 	behaviour->name = "basemap";
 	behaviour->extends = "abstractbase";
 	behaviour->manager = UINodePtr(new uiBaseMapNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBaseMapNode_t *");
 }
 
 void UI_RegisterBaseLayoutNode (uiBehaviour_t* behaviour)
@@ -223,4 +227,5 @@ void UI_RegisterBaseLayoutNode (uiBehaviour_t* behaviour)
 	behaviour->name = "baselayout";
 	behaviour->extends = "abstractbase";
 	behaviour->manager = UINodePtr(new uiBaseLayoutNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBaseLayoutNode_t *");
 }

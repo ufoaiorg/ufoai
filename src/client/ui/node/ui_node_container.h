@@ -36,6 +36,7 @@ class uiContainerNode : public uiLocatedNode {
 public:
 	void draw(uiNode_t* node) override;
 	void drawTooltip(const uiNode_t* node, int x, int y) const override;
+	void initNode (uiNode_t* node) override;
 	void onMouseDown(uiNode_t* node, int x, int y, int button) override;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
 	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
@@ -66,4 +67,5 @@ typedef struct containerExtraData_s {
 
 	int lastSelectedId;				/**< id oject the object type selected */
 	struct uiAction_s* onSelect;	/**< call when we select an item */
+	LUA_EVENT lua_onSelect; /**< references the event in lua: on_select(node) */
 } containerExtraData_t;

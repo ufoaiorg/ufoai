@@ -1,3 +1,6 @@
+--!usr/bin/lua
+
+--[[
 // Back to geoscape button
 component Geoscape extends button
 {
@@ -10,7 +13,37 @@ component Geoscape extends button
 	onMouseLeave	{ *node:this@background = "icons/circlelrg0" }
 	// handle onClick in the menu that adds this node
 }
+--]]
+local Geoscape = ufo.create_component ("button", "Geoscape", nil)
+Geoscape:set_pos (-17, -17)
+Geoscape:set_size (100, 100)
+Geoscape:set_icon ("icons/earthlrg")
+Geoscape:set_background ("icons/circlelrg0")
+Geoscape:set_tooltip ("_Back")
+Geoscape.on_mouseenter = function (sender)
+		sender:set_background ("icons/circlelrg")
+	end
+Geoscape.on_mouseleave = function (sender)
+		sender:set_background ("icons/circlelrg0")
+	end
+-- a bit of debug code
+Geoscape.on_rightclick = function (sender)
 
+		function iterate(node, tab)
+			local n = node:first()
+			while (n) do
+				ufo.print(string.format("%s child %s : %s\n", tab, n:name(), tostring(n:is_disabled())))
+				iterate (n, tab .. "  ")
+				n = n:next()
+			end
+		end
+
+		ufo.print("-----------------------------------------\n")
+		local window = sender:root()
+		iterate(window, "")
+	end
+
+--[[
 // Main panel button for base sections
 component BaseSection extends panel
 {
@@ -52,7 +85,37 @@ component BaseSection extends panel
 		ghost			true
 	}
 }
+--]]
+local BaseSection = ufo.create_component("panel", "BaseSection", nil)
+BaseSection:set_size(298, 48)
+BaseSection.on_mouseenter = function (sender)
+		sender:child("bg"):set_backgroundcolor (0.527, 0.6, 0.21, 0.4)
+		sender:child("icon"):set_background("icons/circle")
+	end
+BaseSection.on_mouseleave = function (sender)
+		sender:child("bg"):set_backgroundcolor (0.527, 0.6, 0.21, 0.2)
+		sender:child("icon"):set_background("icons/circle0")
+	end
+local BaseSection_bg = ufo.create_panel (BaseSection, "bg", nil)
+BaseSection_bg:set_pos(0, 8)
+BaseSection_bg:set_size(298, 32)
+BaseSection_bg:set_backgroundcolor (0.527, 0.6, 0.21, 0.2)
+BaseSection_bg:set_ghost (true)
+local BaseSection_icon = ufo.create_button (BaseSection, "icon", nil)
+BaseSection_icon:set_pos(12, 0)
+BaseSection_icon:set_size(48, 48)
+BaseSection_icon:set_background("icons/circle0")
+BaseSection_icon:set_ghost(true)
+BaseSection_icon.on_click = function (sender)
+	end
+local BaseSection_label = ufo.create_string (BaseSection, "label", nil)
+BaseSection_label:set_pos(75, 8)
+BaseSection_label:set_size(170, 32)
+BaseSection_label:set_contentalign(ufo.ALIGN_CL)
+BaseSection_label:set_color(0.56, 0.81, 0.76, 1)
+BaseSection_label:set_ghost(true)
 
+--[[
 // Stats bar for building space
 component BuildingSpace extends panel
 {
@@ -132,7 +195,69 @@ component BuildingSpace extends panel
 			*node:parent.data@string = <1>/<2>
 	}
 }
+--]]
+local BuildingSpace = ufo.create_component ("panel", "BuildingSpace", nil)
+BuildingSpace:set_size(298, 30)
+BuildingSpace.on_mouseenter = function (sender)
+		sender:child("label"):set_color(0.56, 0.81, 0.76, 1)
+		sender:child("data"):set_color(0.56, 0.81, 0.76, 1)
+		sender:child("alert"):set_icon("icons/windowplusb_hovered")
+	end
+BuildingSpace.on_mouseleave = function (sender)
+		sender:child("label"):set_color(0.56, 0.81, 0.76, 0.5)
+		sender:child("data"):set_color(0.56, 0.81, 0.76, 0.5)
+		sender:child("alert"):set_icon("icons/windowplusb")
+	end
+BuildingSpace.on_click = function (sender)
+		ufo.cmd(string.format("buildings_click %s;", sender:child("id"):as_string()))
+	end
+local BuildingSpace_id = ufo.create_data(BuildingSpace, "id", nil)
+local BuildingSpace_smlicon = ufo.create_button(BuildingSpace, "smlicon", nil)
+BuildingSpace_smlicon:set_pos(160, 0)
+BuildingSpace_smlicon:set_size(17, 17)
+BuildingSpace_smlicon:set_ghost(true)
+local BuildingSpace_label = ufo.create_string(BuildingSpace, "label", nil)
+BuildingSpace_label:set_pos(35, 0)
+BuildingSpace_label:set_size(120, 20)
+BuildingSpace_label:set_text("")
+BuildingSpace_label:set_font("f_verysmall")
+BuildingSpace_label:set_contentalign(ufo.ALIGN_LL)
+BuildingSpace_label:set_color(0.56, 0.81, 0.76, 0.7)
+BuildingSpace_label:set_ghost(true)
+local BuildingSpace_data = ufo.create_string(BuildingSpace, "data", nil)
+BuildingSpace_data:set_pos(155, 0)
+BuildingSpace_data:set_size(107, 20)
+BuildingSpace_data:set_text("")
+BuildingSpace_data:set_font("f_verysmall")
+BuildingSpace_data:set_contentalign(ufo.ALIGN_LR)
+BuildingSpace_data:set_color(0.56, 0.81, 0.76, 0.7)
+BuildingSpace_data:set_ghost(true)
+local BuildingSpace_data_bg = ufo.create_texture(BuildingSpace, "data_bg", nil)
+BuildingSpace_data_bg:set_pos(16, 18)
+BuildingSpace_data_bg:set_size(246, 6)
+BuildingSpace_data_bg:set_source("ui/bar_bg")
+BuildingSpace_data_bg:set_ghost(true)
+local BuildingSpace_data_bar = ufo.create_bar(BuildingSpace, "data_bar", nil)
+BuildingSpace_data_bar:set_pos(16, 18)
+BuildingSpace_data_bar:set_size(246, 6)
+BuildingSpace_data_bar:set_color(0.56, 0.81, 0.76, 1)
+BuildingSpace_data_bar:set_value(1)
+BuildingSpace_data_bar:set_max(1)
+BuildingSpace_data_bar:set_readonly(true)
+BuildingSpace_data_bar:set_ghost(true)
+local BuildingSpace_alert = ufo.create_button(BuildingSpace, "alert", nil)
+BuildingSpace_alert:set_pos(266, 12)
+BuildingSpace_alert:set_size(18, 18)
+BuildingSpace_alert:set_icon("icons/windowplusb")
+BuildingSpace_alert:set_ghost(true)
+BuildingSpace.set = function(sender, part, space)
+		ufo.print("BuildingSpace.set called\n")
+		sender:child("data_bar"):set_value(part)
+		sender:child("data_bar"):set_max(space)
+		sender:child("data"):set_text(tostring(part/space))
+	end
 
+--[[
 // Small base selector layout
 component BaseLayoutMini extends baselayout
 {
@@ -143,10 +268,26 @@ component BaseLayoutMini extends baselayout
 	padding			1
 	onMouseEnter	{ *node:this@color = "0.56 0.81 0.76 1" }
 	onMouseLeave	{ *node:this@color = "0.56 0.81 0.76 0.5" }
-	onClick			{ cmd "base_select_s <baseid> <node:root.base_container.wnd_name@string>;" }
+	onClick			{ cmd "ui_pop; mn_base_select <baseid>;" }
 }
+--]]
+local BaseLayoutMini = ufo.create_component("baselayout", "BaseLayoutMini", nil)
+BaseLayoutMini:set_pos(0, 0)
+BaseLayoutMini:set_size(16, 16)
+BaseLayoutMini:set_color(0.56, 0.81, 0.76, 0.5)
+BaseLayoutMini:set_backgroundcolor(0.56, 0.81, 0.76, 0.1)
+BaseLayoutMini:set_padding(1)
+BaseLayoutMini.on_mouseenter = function (sender)
+		sender:set_color(0.56, 0.81, 0.76, 1.0)
+	end
+BaseLayoutMini.on_mouseleave = function (sender)
+		sender:set_color(0.56, 0.81, 0.76, 0.5)
+	end
+BaseLayoutMini.on_click = function (sender)
+		ufo.cmd(string.format("ui_pop; mn_base_select %s;", tostring(sender:basedid())))
+	end
 
-
+--[[
 // Aircraft image/button
 component AircraftIcon extends panel
 {
@@ -161,7 +302,16 @@ component AircraftIcon extends panel
 	}
 	data aircraft_id { }
 }
+--]]
+local AircraftIcon = ufo.create_component("panel", "AircraftIcon", nil)
+AircraftIcon:set_pos(0, 0)
+AircraftIcon:set_size(48, 48)
+local AircraftIcon_icon = ufo.create_button(AircraftIcon, "icon", nil)
+AircraftIcon_icon:set_pos(0, 0)
+AircraftIcon_icon:set_size(48, 48)
+local AircraftIcon_id = ufo.create_data(AircraftIcon, "aircraft_id", nil)
 
+--[[
 // Research/Production
 component ProgressBar extends panel
 {
@@ -195,8 +345,31 @@ component ProgressBar extends panel
 		ghost		true
 	}
 }
+--]]
+local ProgressBar = ufo.create_component("panel", "ProgressBar", nil)
+ProgressBar:set_pos(0, 0)
+ProgressBar:set_size(250, 28)
+local ProgressBar_label = ufo.create_string(ProgressBar, "label", nil)
+ProgressBar_label:set_pos(0, 0)
+ProgressBar_label:set_size(250, 20)
+ProgressBar_label:set_font("f_verysmall")
+ProgressBar_label:set_contentalign(ufo.ALIGN_LL)
+ProgressBar_label:set_color(0.56, 0.81, 0.76, 1)
+ProgressBar_label:set_ghost(true)
+local ProgressBar_data_bg = ufo.create_texture(ProgressBar, "data_bg", nil)
+ProgressBar_data_bg:set_pos(0, 20)
+ProgressBar_data_bg:set_size(224, 6)
+ProgressBar_data_bg:set_source("ui/bar_bg")
+ProgressBar_data_bg:set_ghost(true)
+local ProgressBar_data_bar = ufo.create_bar(ProgressBar, "data_bar", nil)
+ProgressBar_data_bar:set_pos(0, 20)
+ProgressBar_data_bar:set_size(224, 6)
+ProgressBar_data_bar:set_color(0.56, 0.81, 0.76, 1)
+ProgressBar_data_bar:set_value(0)
+ProgressBar_data_bar:set_max(100)
+ProgressBar_data_bar:set_ghost(true)
 
-
+--[[
 // Employee count
 component EmployeeCount extends panel
 {
@@ -228,7 +401,27 @@ component EmployeeCount extends panel
 		ghost			true
 	}
 }
+--]]
+local EmployeeCount = ufo.create_component("panel", "EmployeeCount", nil)
+EmployeeCount:set_size(110, 48)
+local EmployeeCount_icon = ufo.create_button(EmployeeCount, "icon", nil)
+EmployeeCount_icon:set_pos(0, 0)
+EmployeeCount_icon:set_size(48, 48)
+EmployeeCount_icon:set_ghost(true)
+local EmployeeCount_data = ufo.create_string(EmployeeCount, "data", nil)
+EmployeeCount_data:set_pos(36, 0)
+EmployeeCount_data:set_size(74, 48)
+EmployeeCount_data:set_color(0.56, 0.81, 0.76, 1)
+EmployeeCount_data:set_ghost(true)
+local EmployeeCount_label = ufo.create_string(EmployeeCount, "label", nil)
+EmployeeCount_label:set_pos(36, 27)
+EmployeeCount_label:set_size(74, 17)
+EmployeeCount_label:set_color(0.56, 0.81, 0.76, 1)
+EmployeeCount_label:set_font("f_verysmall")
+EmployeeCount_label:set_contentalign(ufo.ALIGN_UL)
+EmployeeCount_label:set_ghost(true)
 
+--[[
 // Hospital item (per employee)
 component HospitalItem extends panel {
 	{
@@ -259,7 +452,7 @@ component HospitalItem extends panel {
 		ghost			true
 	}
 	string type {
-		pos			"550 8"
+		pos			"530 8"
 		size		"100 15"
 		color		"0.56 0.81 0.76 1"
 		font		"f_verysmall"
@@ -269,58 +462,73 @@ component HospitalItem extends panel {
 	}
 
 	panel wounds {
-		{
-			pos 	"310 0"
-			size	"80 28"
-			ghost		true
-		}
-		// TODO: use image instead of button — when it works with packed icons
-		button wound_humanoid_head {
-			pos			"0 6"
-			size		"16 16"
-			invis		true
-		}
-		button wound_humanoid_torso {
-			pos			"19 6"
-			size		"16 16"
-			invis		true
-		}
-		button wound_humanoid_arms {
-			pos			"38 6"
-			size		"16 16"
-			invis		true
-		}
-		button wound_humanoid_legs {
-			pos			"57 6"
-			size		"16 16"
-			invis		true
-		}
-		button wound_default_body {
-			pos			"0 6"
-			size		"16 16"
-			invis		true
-		}
+		pos 	"310 0"
+		size	"28 28"
+		ghost		true
 	}
 
 	container implant {
-		pos "390 0"
+		pos "340 0"
 		border			"1"
 		bordercolor		"0.56 0.81 0.76 1"
 	}
 
 	image icon {
-		pos 	"510 0"
+		pos 	"460 0"
 		size	"28 28"
-	}
-
-	image assigned {
-		pos		"1 2"
-		size	"24 24"
-		src		"icons/icon_aircraftsml"
-		invis	true
+		ghost		true
 	}
 }
+--]]
+local HospitalItem = ufo.create_component("panel", "HospitalItem", nil)
+HospitalItem:set_pos(0, 0)
+HospitalItem:set_size(670, 28)
+HospitalItem:set_backgroundcolor(0.56, 0.81, 0.76, 0.1)
+HospitalItem.on_mouseenter = function (sender)
+		sender:set_backgroundcolor(0.56, 0.81, 0.76, 0.2)
+	end
+HospitalItem.on_mouseleave = function (sender)
+		sender:set_backgroundcolor(0.56, 0.81, 0.76, 0.1)
+	end
+local HospitalItem_id = ufo.create_data(HospitalItem, "id", nil)
+HospitalItem_id:set_value(0)
+local HospitalItem_health = ufo.create_bar(HospitalItem, "health", nil)
+HospitalItem_health:set_pos(0, 0)
+HospitalItem_health:set_size(670, 28)
+HospitalItem_health:set_color(0.56, 0.81, 0.76, 0.3)
+HospitalItem_health:set_value(0)
+HospitalItem_health:set_max(100)
+HospitalItem_health:set_readonly(true)
+HospitalItem_health:set_ghost(true)
+local HospitalItem_name = ufo.create_string(HospitalItem, "name", nil)
+HospitalItem_name:set_pos(30, 0)
+HospitalItem_name:set_size(280, 28)
+HospitalItem_name:set_color(0.56, 0.81, 0.76, 1)
+HospitalItem_name:set_longlines(ufo.LONGLINES_PRETTYCHOP)
+HospitalItem_name:set_contentalign(ufo.ALIGN_CL)
+HospitalItem_name:set_ghost(true)
+local HospitalItem_type = ufo.create_string(HospitalItem, "type", nil)
+HospitalItem_type:set_pos(530, 8)
+HospitalItem_type:set_size(100, 15)
+HospitalItem_type:set_color(0.56, 0.81, 0.76, 1)
+HospitalItem_type:set_font("f_verysmall")
+HospitalItem_type:set_contentalign(ufo.ALIGN_CC)
+HospitalItem_type:set_padding(0)
+HospitalItem_type:set_ghost(true)
+local HospitalItem_wounds = ufo.create_panel(HospitalItem, "wounds", nil)
+HospitalItem_wounds:set_pos(310, 0)
+HospitalItem_wounds:set_size(28, 28)
+HospitalItem_wounds:set_ghost(true)
+local HospitalItem_implant = ufo.create_container(HospitalItem, "implant", nil)
+HospitalItem_implant:set_pos(340, 0)
+HospitalItem_implant:set_bordersize(1)
+HospitalItem_implant:set_bordercolor(0.56, 0.81, 0.76, 1)
+local HospitalItem_icon = ufo.create_image(HospitalItem, "icon", nil)
+HospitalItem_icon:set_pos(460, 0)
+HospitalItem_icon:set_size(28, 28)
+HospitalItem_icon:set_ghost(true)
 
+--[[
 // Research item (items researched in base)
 component ResearchItem extends panel
 {
@@ -473,7 +681,127 @@ component ResearchItem extends panel
 	}
 	/** @TODO implement research requirements listing */
 }
+--]]
+local ResearchItem = ufo.create_component("panel", "ResearchItem", nil)
+ResearchItem:set_pos(0, 0)
+ResearchItem:set_size(713, 28)
+ResearchItem:set_backgroundcolor(0.56, 0.81, 0.76, 0.1)
+ResearchItem.on_mouseenter = function (sender)
+		sender:set_backgroundcolor(0.56, 0.81, 0.76, 0.2)
+	end
+ResearchItem.on_mouseleave = function (sender)
+		sender:set_backgroundcolor(0.56, 0.81, 0.76, 0.1)
+	end
+ResearchItem.on_click = function (sender)
+		ufo.cmd(string.format("ui_research_select %s;", sender:child("id"):as_string()))
+	end
+local ResearchItem_id = ufo.create_data(ResearchItem, "id", nil)
+ResearchItem_id:set_value(-1)
+local ResearchItem_status = ufo.create_bar(ResearchItem, "status", nil)
+ResearchItem_status:set_pos(0, 0)
+ResearchItem_status:set_size(713, 28)
+ResearchItem_status:set_color(0.56, 0.81, 0.76, 0.3)
+ResearchItem_status:set_value(0)
+ResearchItem_status:set_max(100)
+ResearchItem_status:set_ghost(true)
+local ResearchItem_ufopaedia = ufo.create_button(ResearchItem, "ufopaedia", nil)
+ResearchItem_ufopaedia:set_icon("icons/windowinfo")
+ResearchItem_ufopaedia:set_tooltip("_View UFOPaedia entry")
+ResearchItem_ufopaedia:set_pos(5, 5)
+ResearchItem_ufopaedia:set_size(18, 18)
+ResearchItem_ufopaedia.on_click = function (sender)
+		ufo.cmd(string.format("ui_research_select %s;", sender:parent():child("id"):as_string()))
+		ufo.cmd(string.format("ui_push ufopedia %s;", sender:parent():child("id"):as_string()))
+	end
+local ResearchItem_progress_label = ufo.create_string(ResearchItem, "progress_label", nil)
+ResearchItem_progress_label:set_pos(615, 8)
+ResearchItem_progress_label:set_size(40, 15)
+ResearchItem_progress_label:set_color(0.56, 0.81, 0.76, 1)
+ResearchItem_progress_label:set_font("f_verysmall")
+ResearchItem_progress_label:set_contentalign(ufo.ALIGN_CR)
+ResearchItem_progress_label:set_padding(0)
+ResearchItem_progress_label:set_ghost(true)
+local ResearchItem_title = ufo.create_string(ResearchItem, "title", nil)
+ResearchItem_title:set_pos(30, 0)
+ResearchItem_title:set_size(480, 28)
+ResearchItem_title:set_color(0.56, 0.81, 0.76, 1)
+ResearchItem_title:set_contentalign(ufo.ALIGN_CL)
+ResearchItem_title:set_ghost(true)
+local ResearchItem_rsrc_control = ufo.create_panel(ResearchItem, "rsrc_control", nil)
+ResearchItem_rsrc_control:set_pos(480, 0)
+ResearchItem_rsrc_control:set_size(145, 32)
+local ResearchItem_rsrc_control_scientists = ufo.create_string(ResearchItem_rsrc_control, "scientists", nil)
+ResearchItem_rsrc_control_scientists:set_pos(60, 0)
+ResearchItem_rsrc_control_scientists:set_size(35, 28)
+ResearchItem_rsrc_control_scientists:set_color(0.56, 0.81, 0.76, 1)
+ResearchItem_rsrc_control_scientists:set_contentalign(ufo.ALIGN_CL)
+ResearchItem_rsrc_control_scientists:set_ghost(true)
+local ResearchItem_rsrc_control_stop = ufo.create_button(ResearchItem_rsrc_control, "stop", nil)
+ResearchItem_rsrc_control_stop:set_icon("icons/speed_stop")
+ResearchItem_rsrc_control_stop:set_tooltip("_Stop researching this project")
+ResearchItem_rsrc_control_stop:set_pos(0, 5)
+ResearchItem_rsrc_control_stop:set_size(18, 18)
+ResearchItem_rsrc_control_stop.on_click = function (sender)
+		local id = sender:parent():parent():child("id"):as_string()
+		ufo.cmd(string.format("ui_research_select %s; ui_research_stop %s;", id, id))
+	end
+local ResearchItem_rsrc_control_max = ufo.create_button(ResearchItem_rsrc_control, "max", nil)
+ResearchItem_rsrc_control_max:set_icon("icons/speed_play3")
+ResearchItem_rsrc_control_max:set_tooltip("_Assign all free scientists on this project")
+ResearchItem_rsrc_control_max:set_pos(25, 4)
+ResearchItem_rsrc_control_max:set_size(18, 18)
+ResearchItem_rsrc_control_max.on_click = function (sender)
+		local id = sender:parent():parent():child("id"):as_string()
+		ufo.cmd(string.format("ui_research_select %s; ui_research_max %s;", id, id))
+	end
+local ResearchItem_rsrc_control_remove_scientist = ufo.create_button(ResearchItem_rsrc_control, "remove_scientist", nil)
+ResearchItem_rsrc_control_remove_scientist:set_icon("icons/windowminusb")
+ResearchItem_rsrc_control_remove_scientist:set_tooltip("_Assign less scientists on this project")
+ResearchItem_rsrc_control_remove_scientist:set_pos(100, 5)
+ResearchItem_rsrc_control_remove_scientist:set_size(18, 18)
+ResearchItem_rsrc_control_remove_scientist.on_click = function (sender)
+		local id = sender:parent():parent():child("id"):as_string()
+		ufo.cmd(string.format("ui_research_select %s; ui_research_change %s -1;", id, id))
+	end
+local ResearchItem_rsrc_control_add_scientist = ufo.create_button(ResearchItem_rsrc_control, "add_scientist", nil)
+ResearchItem_rsrc_control_add_scientist:set_icon("icons/windowplusb")
+ResearchItem_rsrc_control_add_scientist:set_tooltip("_Assign more scientists on this project")
+ResearchItem_rsrc_control_add_scientist:set_pos(125, 5)
+ResearchItem_rsrc_control_add_scientist:set_size(18, 18)
+ResearchItem_rsrc_control_add_scientist.on_click = function (sender)
+		local id = sender:parent():parent():child("id"):as_string()
+		ufo.cmd(string.format("ui_research_select %s; ui_research_change %s 1;", id, id))
+	end
+local ResearchItem_rsrc_baselink = ufo.create_panel(ResearchItem, "rsrc_baselink", nil)
+ResearchItem_rsrc_baselink:set_pos(480, 0)
+ResearchItem_rsrc_baselink:set_size(145, 32)
+ResearchItem_rsrc_baselink:set_invisible(true)
+local ResearchItem_rsrc_baselink_basename = ufo.create_string(ResearchItem_rsrc_baselink, "basename", nil)
+ResearchItem_rsrc_baselink_basename:set_pos(0, 0)
+ResearchItem_rsrc_baselink_basename:set_tooltip("_Currently in research on another base")
+ResearchItem_rsrc_baselink_basename:set_size(145, 28)
+ResearchItem_rsrc_baselink_basename:set_color(1, 0.874, 0.294, 1)
+ResearchItem_rsrc_baselink_basename:set_contentalign(ufo.ALIGN_CL)
+ResearchItem_rsrc_baselink_basename:set_ghost(true)
+local ResearchItem_rsrc_missing = ufo.create_panel(ResearchItem, "rsrc_missing", nil)
+ResearchItem_rsrc_missing:set_pos(480, 0)
+ResearchItem_rsrc_missing:set_size(145, 32)
+ResearchItem_rsrc_missing:set_invisible(true)
+local ResearchItem_rsrc_missing_note = ufo.create_string(ResearchItem_rsrc_missing, "note", nil)
+ResearchItem_rsrc_missing_note:set_text("_N/A")
+ResearchItem_rsrc_missing_note:set_tooltip("_An artifact or prerequisite is missing for this topic")
+ResearchItem_rsrc_missing_note:set_pos(0, 0)
+ResearchItem_rsrc_missing_note:set_size(145, 28)
+ResearchItem_rsrc_missing_note:set_color(1, 0.874, 0.294, 1)
+ResearchItem_rsrc_missing_note:set_contentalign(ufo.ALIGN_CL)
+local ResearchItem_rsrc_missing_show = ufo.create_button(ResearchItem_rsrc_missing, "show", nil)
+ResearchItem_rsrc_missing_show:set_tooltip("_Expand/Collapse")
+ResearchItem_rsrc_missing_show:set_icon("icons/scroll_bottom")
+ResearchItem_rsrc_missing_show:set_pos(120, 4)
+ResearchItem_rsrc_missing_show:set_size(25, 25)
+ResearchItem_rsrc_missing_show:set_invisible(true)
 
+--[[
 // Market category label
 component MarketCategory extends panel
 {
@@ -492,7 +820,24 @@ component MarketCategory extends panel
 		ghost			true
 	}
 }
+--]]
+local MarketCategory = ufo.create_component("panel", "MarketCategory", nil)
+MarketCategory:set_size(713, 28)
+MarketCategory:set_backgroundcolor(0.56, 0.81, 0.76, 0.3)
+MarketCategory.on_mouseenter = function (sender)
+		sender:set_backgroundcolor(0.56, 0.81, 0.76, 0.4)
+	end
+MarketCategory.on_mouseleave = function (sender)
+		sender:set_backgroundcolor(0.56, 0.81, 0.76, 0.3)
+	end
+local MarketCategory_name = ufo.create_string(MarketCategory, "name", nil)
+MarketCategory_name:set_pos(30, 0)
+MarketCategory_name:set_size(400, 28)
+MarketCategory_name:set_color(0.56, 0.81, 0.76, 1)
+MarketCategory_name:set_contentalign(ufo.ALIGN_CL)
+MarketCategory_name:set_ghost(true)
 
+--[[
 // Market category list
 component MarketList extends panel
 {
@@ -500,6 +845,13 @@ component MarketList extends panel
 	layout			LAYOUT_TOP_DOWN_FLOW
 	layoutMargin	2
 }
+--]]
+local MarketList = ufo.create_component("panel", "MarketList", nil)
+MarketList:set_size(713, 0)
+MarketList:set_layout(ufo.LAYOUT_TOP_DOWN_FLOW)
+MarketList:set_layoutmargin(2)
+
+--[[
 // Market item
 component MarketItem extends panel
 {
@@ -615,7 +967,120 @@ component MarketItem extends panel
 		ghost			true
 	}
 }
+--]]
+local MarketItem = ufo.create_component("panel", "MarketItem", nil)
+MarketItem:set_pos(0, 0)
+MarketItem:set_size(713, 28)
+MarketItem:set_backgroundcolor(0.56, 0.81, 0.76, 0.1)
+MarketItem.on_mouseenter = function (sender)
+		sender:set_backgroundcolor(0.56, 0.81, 0.76, 0.15)
+	end
+MarketItem.on_mouseleave = function (sender)
+		sender:set_backgroundcolor(0.56, 0.81, 0.76, 0.1)
+	end
+MarketItem.on_click = function (sender)
+		ufo.cmd(string.format("ui_market_select %s;", sender:child("id"):as_string()))
+	end
+local MarketItem_id = ufo.create_data (MarketItem, "id", nil)
+local MarketItem_rate = ufo.create_data (MarketItem, "rate", nil)
+MarketItem_rate:set_value(1)
+local MarketItem_ufopaedia = ufo.create_button(MarketItem, "ufopaedia", nil)
+MarketItem_ufopaedia:set_icon("icons/windowinfo")
+MarketItem_ufopaedia:set_tooltip("_View UFOPaedia entry")
+MarketItem_ufopaedia:set_pos(5, 5)
+MarketItem_ufopaedia:set_size(18, 18)
+MarketItem_ufopaedia.on_click = function (sender)
+		ufo.cmd(string.format("ui_market_showinfo \"%s\";", sender:parent():child("id"):as_string()))
+		ufo.cmd("ui_market_openpedia;")
+	end
+local MarketItem_name = ufo.create_string(MarketItem, "name", nil)
+MarketItem_name:set_pos(30, 0)
+MarketItem_name:set_size(290, 28)
+MarketItem_name:set_color(0.56, 0.81, 0.76, 0.7)
+MarketItem_name:set_contentalign(ufo.ALIGN_CL)
+MarketItem_name:set_ghost(true)
+local MarketItem_base = ufo.create_string(MarketItem, "base", nil)
+MarketItem_base:set_pos(320, 0)
+MarketItem_base:set_size(80, 28)
+MarketItem_base:set_color(0.56, 0.81, 0.76, 1)
+MarketItem_base:set_contentalign(ufo.ALIGN_CR)
+MarketItem_base:set_ghost(true)
+local MarketItem_buy = ufo.create_spinner(MarketItem, "buy", nil)
+MarketItem_buy:set_pos(406, 6)
+MarketItem_buy:set_size(74, 16)
+MarketItem_buy:set_topicon("icons/arrowtext_lft")
+MarketItem_buy:set_mode(ufo.SPINNER_ONLY_INCREASE)
+MarketItem_buy:set_delta(1)
+MarketItem_buy:set_shiftmultiplier(10)
+MarketItem_buy.on_mouseenter = function (sender)
+		sender:set_topicon("icons/arrowtext_lft0")
+	end
+MarketItem_buy.on_mouseleave = function (sender)
+		sender:set_topicon("icons/arrowtext_lft")
+	end
+MarketItem_buy.on_click = function (sender)
+		ufo.cmd(string.format("ui_market_buy \"%s\" %s;", sender:parent():child("id"):as_string(), tostring(sender:lastdiff())))
+		ufo.cmd(string.format("ui_market_fill %s;", ufo.findvar("ui_market_category"):as_string()))
+		ufo.cmd(string.format("ui_market_select \"%s\";", sender:parent():child("id"):as_string()))
+	end
+local MarketItem_buy_price = ufo.create_string(MarketItem, "buy_price", nil)
+MarketItem_buy_price:set_pos(406, 6)
+MarketItem_buy_price:set_size(74, 16)
+MarketItem_buy_price:set_color(0, 0, 0, 1)
+MarketItem_buy_price:set_font("f_verysmall_bold")
+MarketItem_buy_price:set_contentalign(ufo.ALIGN_CR)
+MarketItem_buy_price:set_ghost(true)
+local MarketItem_autosell = ufo.create_checkbox(MarketItem, "autosell", nil)
+MarketItem_autosell:set_tooltip("_Lock current stock level")
+MarketItem_autosell:set_value(0)
+MarketItem_autosell:set_iconchecked("icons/windowlock")
+MarketItem_autosell:set_iconunchecked("icons/windowlock_light")
+MarketItem_autosell:set_iconunknown("icons/windowlock_light")
+MarketItem_autosell:set_pos(484, 5)
+MarketItem_autosell:set_size(18, 18)
+MarketItem_autosell:set_invisible(false)
+MarketItem_autosell.on_mouseenter = function (sender)
+		sender:set_iconunchecked("icons/windowlock")
+	end
+MarketItem_autosell.on_mouseleave = function (sender)
+		sender:set_iconunchecked("icons/windowlock_light")
+	end
+MarketItem_autosell.on_click = function (sender)
+		ufo.cmd(string.format("ui_market_setautosell \"%s\" %s;", sender:parent():child("id"):as_string(), tostring(sender:as_integer())))
+	end
+local MarketItem_sell = ufo.create_spinner(MarketItem, "sell", nil)
+MarketItem_sell:set_pos(508, 6)
+MarketItem_sell:set_size(74, 16)
+MarketItem_sell:set_topicon("icons/arrowtext_rgt")
+MarketItem_sell:set_mode(ufo.SPINNER_ONLY_DECREASE)
+MarketItem_sell:set_delta(1)
+MarketItem_sell:set_shiftmultiplier(10)
+MarketItem_sell.on_mouseenter = function (sender)
+		sender:set_topicon("icons/arrowtext_rgt0")
+	end
+MarketItem_sell.on_mouseleave = function (sender)
+		sender:set_topicon("icons/arrowtext_rgt")
+	end
+MarketItem_sell.on_change = function (sender)
+		ufo.cmd(string.format("ui_market_buy \"%s\" %s;", sender:parent():child("id"):as_string(), tostring(sender:lastdiff())))
+		ufo.cmd(string.format("ui_market_fill %s;", ufo.findvar("ui_market_category"):as_string()))
+		ufo.cmd(string.format("ui_market_select \"%s\";", sender:parent():child("id"):as_string()))
+	end
+local MarketItem_sell_price = ufo.create_string(MarketItem, "sell_price", nil)
+MarketItem_sell_price:set_pos(508, 6)
+MarketItem_sell_price:set_size(74, 16)
+MarketItem_sell_price:set_color(0, 0, 0, 1)
+MarketItem_sell_price:set_font("f_verysmall_bold")
+MarketItem_sell_price:set_contentalign(ufo.ALIGN_CL)
+MarketItem_sell_price:set_ghost(true)
+local MarketItem_market = ufo.create_string(MarketItem, "market", nil)
+MarketItem_market:set_pos(586, 0)
+MarketItem_market:set_size(100, 28)
+MarketItem_market:set_color(0.56, 0.81, 0.76, 1)
+MarketItem_market:set_contentalign(ufo.ALIGN_CL)
+MarketItem_market:set_ghost(true)
 
+--[[
 // Base name and container panel
 component BaseContainerPanel extends panel
 {
@@ -625,7 +1090,6 @@ component BaseContainerPanel extends panel
 		border			"2"
 		bordercolor		"0.56 0.81 0.76 1"
 	}
-	data wnd_name { string "" }
 
 	// @TODO: make next/prev base btns work
 	button prev
@@ -634,9 +1098,9 @@ component BaseContainerPanel extends panel
 		tooltip			"_Previous base"
 		pos				"90 6"
 		size			"18	18"
-		onClick			{ cmd "base_prev_s <node:parent.wnd_name@string>;" }
-		onWheelUp		{ cmd "base_next_s <node:parent.wnd_name@string>;" }
-		onWheelDown		{ cmd "base_prev_s <node:parent.wnd_name@string>;" }
+		onClick			{ cmd "ui_pop; mn_base_prev;" }
+		onWheelUp		{ cmd "ui_pop; mn_base_next;" }
+		onWheelDown		{ cmd "ui_pop; mn_base_prev;" }
 	}
 	button next
 	{
@@ -644,9 +1108,9 @@ component BaseContainerPanel extends panel
 		tooltip			"_Next base"
 		pos				"115 6"
 		size			"18	18"
-		onClick			{ cmd "base_next_s <node:parent.wnd_name@string>;" }
-		onWheelUp		{ cmd "base_next_s <node:parent.wnd_name@string>;" }
-		onWheelDown		{ cmd "base_prev_s <node:parent.wnd_name@string>;" }
+		onClick			{ cmd "ui_pop; mn_base_next;" }
+		onWheelUp		{ cmd "ui_pop; mn_base_next;" }
+		onWheelDown		{ cmd "ui_pop; mn_base_prev;" }
 	}
 	// Base name
 	textentry name
@@ -657,7 +1121,7 @@ component BaseContainerPanel extends panel
 		font		"f_small_bold"
 		color			"0.56 0.81 0.76 1"
 		contentalign	ALIGN_CL
-		onChange 	{ cmd "base_changename" } 	// stores the value of the cvar in the base structure
+		onChange 	{ cmd "base_changename;" } 	// stores the value of the cvar in the base structure
 	}
 	// Base selector
 	panel base_selector
@@ -722,7 +1186,92 @@ component BaseContainerPanel extends panel
 		}
 	}
 }
+--]]
+local BaseContainerPanel = ufo.create_component("panel", "BaseContainerPanel", nil)
+BaseContainerPanel:set_pos(5, 5)
+BaseContainerPanel:set_size(723, 758)
+BaseContainerPanel:set_bordersize(2)
+BaseContainerPanel:set_bordercolor(0.56, 0.81, 0.76, 1)
+local BaseContainerPanel_prev = ufo.create_button(BaseContainerPanel, "prev", nil)
+BaseContainerPanel_prev:set_icon("icons/windowprev")
+BaseContainerPanel_prev:set_tooltip("_Previous base")
+BaseContainerPanel_prev:set_pos(90, 6)
+BaseContainerPanel_prev:set_size(18, 18)
+BaseContainerPanel_prev.on_click = function (sender)
+		ufo.cmd("ui_pop; mn_base_prev;")
+	end
+BaseContainerPanel_prev.on_wheelup = function (sender)
+		ufo.cmd("ui_pop; mn_base_next;")
+	end
+BaseContainerPanel_prev.on_wheeldown = function (sender)
+		ufo.cmd("ui_pop; mn_base_prev;")
+	end
+local BaseContainerPanel_next = ufo.create_button(BaseContainerPanel, "next", nil)
+BaseContainerPanel_next:set_icon("icons/windownext")
+BaseContainerPanel_next:set_tooltip("_Next base")
+BaseContainerPanel_next:set_pos(115, 6)
+BaseContainerPanel_next:set_size(18, 18)
+BaseContainerPanel_next.on_click = function (sender)
+		ufo.cmd("ui_pop; mn_base_next;")
+	end
+BaseContainerPanel_next.on_wheelup = function (sender)
+		ufo.cmd("ui_pop; mn_base_next;")
+	end
+BaseContainerPanel_next.on_wheeldown = function (sender)
+		ufo.cmd("ui_pop; mn_base_prev;")
+	end
+local BaseContainerPanel_name = ufo.create_textentry(BaseContainerPanel, "name", nil)
+BaseContainerPanel_name:set_text("*cvar:mn_base_title")
+BaseContainerPanel_name:set_pos(135, 0)
+BaseContainerPanel_name:set_size(465, 32)
+BaseContainerPanel_name:set_font("f_small_bold")
+BaseContainerPanel_name:set_color(0.56, 0.81, 0.76, 1)
+BaseContainerPanel_name:set_contentalign(ufo.ALIGN_CL)
+BaseContainerPanel_name.on_change = function (sender)
+		ufo.cmd("base_changename;")
+	end
+local BaseContainerPanel_base_selector = ufo.create_panel(BaseContainerPanel, "base_selector", nil)
+BaseContainerPanel_base_selector:set_pos(440, 7)
+BaseContainerPanel_base_selector:set_size(160, 16)
+BaseContainerPanel_base_selector:set_layout(ufo.LAYOUT_COLUMN)
+BaseContainerPanel_base_selector:set_layoutcolumns(8)
+BaseContainerPanel_base_selector:set_layoutmargin(4)
+for i = 0, 7 do
+	local mini = ufo.create_control(BaseContainerPanel_base_selector, "BaseLayoutMini", "base" .. i, nil)
+	mini:set_baseid(i)
+end
+local BaseContainerPanel_credits = ufo.create_string(BaseContainerPanel, "credits", nil)
+BaseContainerPanel_credits:set_text("*cvar:mn_credits")
+BaseContainerPanel_credits:set_pos(600, 0)
+BaseContainerPanel_credits:set_size(120, 32)
+BaseContainerPanel_credits:set_font("f_small_bold")
+BaseContainerPanel_credits:set_color(0.56, 0.81, 0.76, 1)
+BaseContainerPanel_credits:set_contentalign(ufo.ALIGN_CR)
+local BaseContainerPanel_mainBody = ufo.create_panel(BaseContainerPanel_credits, "mainBody", nil)
+BaseContainerPanel_mainBody:set_pos(4, 30)
+BaseContainerPanel_mainBody:set_size(715, 534)
+BaseContainerPanel_mainBody:set_bordersize(2)
+BaseContainerPanel_mainBody:set_bordercolor(0.527, 0.6, 0.21, 1)
+local BaseContainerPanel_mainBody_header = ufo.create_panel(BaseContainerPanel_mainBody, "header", nil)
+BaseContainerPanel_mainBody_header:set_pos(1, 1)
+BaseContainerPanel_mainBody_header:set_size(713, 32)
+BaseContainerPanel_mainBody_header:set_backgroundcolor(0.527, 0.6, 0.21, 0.2)
+local BaseContainerPanel_mainBody_header_title = ufo.create_string(BaseContainerPanel_mainBody_header, "title", nil)
+BaseContainerPanel_mainBody_header_title:set_text("Dummy")
+BaseContainerPanel_mainBody_header_title:set_pos(90, 1)
+BaseContainerPanel_mainBody_header_title:set_size(593, 32)
+BaseContainerPanel_mainBody_header_title:set_contentalign(ufo.ALIGN_CL)
+BaseContainerPanel_mainBody_header_title:set_color(0.56, 0.81, 0.76, 1)
+local BaseContainerPanel_mainBody_header_back = ufo.create_button(BaseContainerPanel_mainBody_header, "back", nil)
+BaseContainerPanel_mainBody_header_back:set_icon("icons/system_close")
+BaseContainerPanel_mainBody_header_back:set_tooltip("_Back to base")
+BaseContainerPanel_mainBody_header_back:set_pos(683, 7)
+BaseContainerPanel_mainBody_header_back:set_size(18, 18)
+BaseContainerPanel_mainBody_header_back.on_click = function (sender)
+		ufo.cmd("ui_pop;")
+	end
 
+--[[
 window BaseMgmtWindow
 {
 	{ size	"1024 768" }
@@ -735,3 +1284,9 @@ window BaseMgmtWindow
 	// Fuzzy screen effect (see assets.ufo)
 	fuzzyScreen overlay { }
 }
+--]]
+local BaseMgmtWindow = ufo.create_window("BaseMgmtWindow", nil)
+BaseMgmtWindow:set_size(1024, 768)
+local BaseMgmtWindow_base_container = ufo.create_control(BaseMgmtWindow, "BaseContainerPanel", "base_container", nil)
+local BaseMgmtWindow_geoscape_button = ufo.create_control(BaseMgmtWindow, "Geoscape", "geoscape_button", nil)
+local BaseMgmtWindow_overlay = ufo.create_control(BaseMgmtWindow, "fuzzyScreen", "overlay", nil)

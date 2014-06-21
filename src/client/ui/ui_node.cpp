@@ -36,6 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_components.h"
 #include "ui_internal.h"
 
+#include "../../common/hashtable.h"
+
+
 bool UI_Node_IsVirtual (uiNode_t const* node)
 {
 	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
@@ -220,10 +223,15 @@ void UI_Node_Clone (uiNode_t const* source, uiNode_t* clone)
 	b->clone(source, clone);
 }
 
-void UI_Node_NewNode (uiNode_t* node)
+void UI_Node_InitNodeDynamic (uiNode_t* node) {
+	uiNode* b = node->behaviour->manager.get();
+	b->initNodeDynamic(node);
+}
+
+void UI_Node_InitNode (uiNode_t* node)
 {
 	uiNode* b = node->behaviour->manager.get();
-	b->newNode(node);
+	b->initNode(node);
 }
 
 void UI_Node_DeleteNode (uiNode_t* node)
@@ -270,6 +278,12 @@ void UI_Node_PropertyChanged (uiNode_t* node, const value_t* property)
 {
 	uiNode* b = node->behaviour->manager.get();
 	b->onPropertyChanged(node, property);
+}
+
+void UI_Node_PosChanged (uiNode_t* node)
+{
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	b->onSizeChanged(node);
 }
 
 void UI_Node_SizeChanged (uiNode_t* node)
@@ -354,6 +368,59 @@ int UI_Node_GetCellHeight (uiNode_t* node)
 {
 	uiAbstractScrollableNode* b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
 	return b->getCellHeight(node);
+}
+
+const char* UI_Node_GetText (uiNode_t* node) {
+	#ifdef DEBUG
+	if (node->text == nullptr) {
+		Com_Printf("warning: requesting uninitialized node->text from [%s]\n", UI_GetPath(node));
+	}
+	#endif // DEBUG
+	return (node->text? node->text : "");
+}
+
+void UI_Node_SetText (uiNode_t* node, const char* text) {
+	UI_FreeStringProperty(node->text);
+	node->text = Mem_PoolStrDup(text, ui_dynStringPool, 0);
+}
+
+void UI_Node_SetFont (uiNode_t* node, const char* name) {
+	UI_FreeStringProperty(node->font);
+	node->font = Mem_PoolStrDup(name, ui_dynStringPool, 0);
+}
+
+void UI_Node_SetImage (uiNode_t* node, const char* name) {
+	UI_FreeStringProperty(node->image);
+	node->image = Mem_PoolStrDup(name, ui_dynStringPool, 0);
+}
+
+const char* UI_Node_GetTooltip (uiNode_t* node) {
+	return node->tooltip;
+}
+
+void UI_Node_SetTooltip (uiNode_t* node, const char* tooltip) {
+	UI_FreeStringProperty((void*)node->tooltip);
+	node->tooltip = Mem_PoolStrDup(tooltip, ui_dynStringPool, 0);
+}
+
+bool UI_Node_IsDisabled (uiNode_t const* node) {
+	return node->disabled;
+}
+
+bool UI_Node_IsInvisible (uiNode_t const* node) {
+	return node->invis;
+}
+
+bool UI_Node_IsGhost (uiNode_t const* node) {
+	return node->ghost;
+}
+
+bool UI_Node_IsFlashing (uiNode_t const* node) {
+	return node->flash;
+}
+
+void UI_Node_SetDisabled (uiNode_t* node, const bool value) {
+	node->disabled = value;
 }
 
 #ifdef DEBUG
@@ -574,6 +641,26 @@ void UI_UnHideNode (uiNode_t* node)
 }
 
 /**
+ * @brief Update the node size and fire the pos callback
+ */
+void UI_NodeSetPos(uiNode_t* node, vec2_t pos) {
+	if (Vector2Equal(node->box.pos, pos))
+		return;
+	node->box.pos[0] = pos[0];
+	node->box.pos[1] = pos[1];
+	UI_Node_PosChanged(node);
+}
+
+/**
+ * @brief Update the node size and fire the pos callback
+ */
+void UI_NodeSetPos(uiNode_t* node, float x, float y) {
+	vec2_t p;
+	p[0] = x; p[1] = y;
+	UI_NodeSetPos(node, p);
+}
+
+/**
  * @brief Update the node size and fire the size callback
  */
 void UI_NodeSetSize (uiNode_t* node, vec2_t size)
@@ -584,13 +671,35 @@ void UI_NodeSetSize (uiNode_t* node, vec2_t size)
 	node->box.size[1] = size[1];
 	UI_Node_SizeChanged(node);
 }
+/**
+ * @brief Update the node size and fire the size callback
+ */
+void UI_NodeSetSize (uiNode_t* node, float w, float h) {
+	vec2_t s;
+	s[0] = w; s[1] = h;
+	UI_NodeSetSize(node, s);
+}
+
+/**
+ * @brief Update the node size and height and fire callbacks.
+ * @note Use value -1 for x, y, w, h to specify no change in value.
+ */
+void UI_NodeSetBox (uiNode_t* node, float x, float y, float w, float h) {
+	vec2_t p;
+	vec2_t s;
+	if (x != -1) p[0] = x; else p[0] = node->box.pos[0];
+	if (y != -1) p[1] = y; else p[1] = node->box.pos[1];
+	if (w != -1) s[0] = w; else s[0] = node->box.size[0];
+	if (h != -1) s[1] = h; else s[1] = node->box.size[1];
+	UI_NodeSetPos(node, p);
+	UI_NodeSetSize(node, s);
+}
 
 /**
  * @brief Search a child node by given name
  * @note Only search with one depth
  */
-uiNode_t* UI_GetNode (const uiNode_t* const node, const char* name)
-{
+uiNode_t* UI_GetNode(const uiNode_t* node, const char* name) {
 	uiNode_t* current = nullptr;
 
 	if (!node)
@@ -604,35 +713,72 @@ uiNode_t* UI_GetNode (const uiNode_t* const node, const char* name)
 }
 
 /**
+ * @brief Returns the previous node based on the order of nodes in the parent.
+ * @return A uiNode_t* or nullptr if no previous node is found.
+ * @note A nullptr is returned if the node is either the last node in the chain or in case the node is the
+ * only node.
+ */
+uiNode_t* UI_GetPrevNode(const uiNode_t* node) {
+	uiNode_t* current = nullptr;
+	for (current = node->parent->firstChild; current; current = current->next) {
+		if (node == current->next) break;
+	}
+	return current;
+}
+
+/**
+ * @brief Recursive searches for a child node by name in the entire subtree.
+ * @return A uiNode_t* or nullptr if not found.
+ */
+uiNode_t* UI_FindNode(const uiNode_t* node, const char* name) {
+	/* search current level */
+	uiNode_t* result = UI_GetNode(node, name);
+	if (!result) {
+		/* iterate child nodes and search next level */
+		for(uiNode_t* current = node->firstChild; current; current = current->next) {
+			result = UI_FindNode(current, name);
+			if (result) break;
+		}
+	}
+	return result;
+}
+
+/**
  * @brief Insert a node next another one into a node. If prevNode is nullptr add the node on the head of the window
- * @param[in] node Node where inserting a node
+ * @param[in] parent Node where the newNode is inserted in
  * @param[in] prevNode previous node, will became before the newNode; else nullptr if newNode will become the first child of the node
  * @param[in] newNode node we insert
  */
-void UI_InsertNode (uiNode_t* const node, uiNode_t* prevNode, uiNode_t* newNode)
+void UI_InsertNode (uiNode_t* const parent, uiNode_t* prevNode, uiNode_t* newNode)
 {
-	if (newNode->root == nullptr)
-		newNode->root = node->root;
-
-	assert(node);
+	/* parent and newNode should be valid, or else insertion doesn't make sense */
+	assert(parent);
 	assert(newNode);
 	/* insert only a single element */
 	assert(!newNode->next);
-	/* everything come from the same window (force the dev to update himself this links) */
-	assert(!prevNode || (prevNode->root == newNode->root));
 
-	uiNode_t** const anchor = prevNode ? &prevNode->next : &node->firstChild;
+	uiNode_t** const anchor = prevNode ? &prevNode->next : &parent->firstChild;
 	newNode->next   = *anchor;
 	*anchor         = newNode;
-	newNode->parent = node;
+	newNode->parent = parent;
 
-	if (!newNode->next)
-		node->lastChild = newNode;
+	UI_UpdateRoot (newNode, parent->root);
+
+	if (!parent->firstChild) {
+		parent->firstChild = newNode;
+	}
+	if (!parent->lastChild) {
+		parent->lastChild = newNode;
+	}
+
+	if (!newNode->next) {
+		parent->lastChild = newNode;
+	}
 
 	if (newNode->root && newNode->indexed)
 		UI_WindowNodeAddIndexedNode(newNode->root, newNode);
 
-	UI_Invalidate(node);
+	UI_Invalidate(parent);
 }
 
 /**
@@ -685,10 +831,12 @@ void UI_UpdateRoot (uiNode_t* node, uiNode_t* newRoot)
 
 /**
  * @brief add a node at the end of the node child
+ * @param parent The node where newNode is inserted as a child.
+ * @param newNode The node to insert.
  */
-void UI_AppendNode (uiNode_t* const node, uiNode_t* newNode)
+void UI_AppendNode (uiNode_t* const parent, uiNode_t* newNode)
 {
-	UI_InsertNode(node, node->lastChild, newNode);
+	UI_InsertNode(parent, parent->lastChild, newNode);
 }
 
 void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t* property, const void* rawValue, int rawType)
@@ -900,3 +1048,99 @@ void UI_Validate (uiNode_t* node)
 	if (node->invalidated)
 		UI_Node_DoLayout(node);
 }
+
+/**
+ * @brief Adds a lua based method to the list of available node methods for calling.
+ * @param[in] node The node to extend.
+ * @param[in] name The name of the new method to add
+ * @param[in] fcn The lua based function reference.
+ * @note If the method name is already defined, the new method is not added and a warning will be issued
+ * in the log.
+ * @note The method will be instance based, meaning that if a new node is created of the same behaviour,
+ * it will not contain this method unless this node was specified as super.
+ */
+void UI_AddNodeMethod (uiNode_t* node, const char* name, LUA_METHOD fcn) {
+	//Com_Printf ("UI_AddNodeMethod: registering node method [%s] on node [%s]\n", name, UI_GetPath(node));
+
+	/* the first method, so create a method table on this node */
+	if (!node->nodeMethods) {
+		node->nodeMethods = HASH_NewTable(true, true, false);
+	}
+	/* add the method */
+    if (!HASH_Insert(node->nodeMethods, name, strlen(name), &fcn, sizeof(fcn))) {
+		Com_Printf("UI_AddNodeMethod: method [%s] already defined on this behaviour [%s]\n", name, node->name);
+    }
+}
+
+/**
+ * @brief Finds the lua based method on this node or its super.
+ * @param[in] node The node to examine.
+ * @param[in] name The name of the method to find
+ * @param[out] fcn A reference to a LUA_METHOD value to the corresponding lua based function or to LUA_NOREF if
+ * the method is not found
+ * @return True if the method is found, false otherwise.
+ * @note This method will first search for instance methods, then it will check for behaviour methods.
+ */
+bool UI_GetNodeMethod (const uiNode_t* node, const char* name, LUA_METHOD &fcn) {
+	fcn = LUA_NOREF;
+	// search the instance methods
+	for(const uiNode_t* ref=node;ref;ref = ref->super) {
+		if (ref->nodeMethods) {
+            void* val=HASH_Get(ref->nodeMethods, name, strlen(name));
+			if (val != nullptr) {
+				fcn = *((LUA_METHOD *)val);
+				return true;
+			}
+		}
+	}
+	// no instance method found, now scan for behaviour method
+	return UI_GetBehaviourMethod(node->behaviour, name, fcn);
+}
+
+/**
+ * @brief Returns true if a node method of given name is available on this node or its super.
+ * @param[in] node The node to examine.
+ * @param[in] name The name of the method to find
+ * @return True if the method is found, false otherwise.
+ * @note This method will first search for instance methods, then it will check for behaviour methods.
+ */
+bool UI_HasNodeMethod (uiNode_t* node, const char* name) {
+	LUA_METHOD fn;
+	// search the instance methods
+	if (UI_GetNodeMethod(node, name, fn)) {
+		return true;
+	}
+	// nothing found, now check behaviour methods
+	return UI_GetBehaviourMethod(node->behaviour, name, fn);
+}
+
+
+
+/**
+ * @brief This functions adds a lua based method to the internal uiNode behaviour.
+ * @param[in] node The node getting new behaviour.
+ * @param[in] name The name of the new behaviour entry (this is the function name).
+ * @param[in] fcn A reference to a lua based method.
+ * @note This is a placeholder for extending behaviour in lua and store it in the ui internal structure.
+ * Currently, only lua based functions are supported.
+ */
+void UI_Node_SetItem (uiNode_t* node, const char* name, LUA_METHOD fcn) {
+	UI_AddNodeMethod(node, name, fcn);
+}
+
+/**
+ * @brief This functions queries a lua based method in the internal uiNode behaviour.
+ * @param[in] node The node with behaviour being queried.
+ * @param[in] name The name of the behaviour entry to find.
+ * @return A LUA_METHOD value pointing to a lua defined function or LUA_NOREF if no function is found.
+ * @note This is a placeholder for extending behaviour in lua and store it in the ui internal structure.
+ * Currently, only lua based functions are supported.
+ */
+LUA_METHOD UI_Node_GetItem (uiNode_t* node, const char* name) {
+	LUA_METHOD fcn;
+	if (UI_GetNodeMethod(node, name, fcn)) {
+		return fcn;
+	}
+	return LUA_NOREF;
+}
+

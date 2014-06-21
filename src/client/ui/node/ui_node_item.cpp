@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_container.h"
 #include "ui_node_abstractnode.h"
 
+#include "../../../common/scripts_lua.h"
+
 #include "../../cgame/cl_game.h"
 #include "../../renderer/r_draw.h"
 
@@ -81,6 +83,7 @@ void UI_RegisterItemNode (uiBehaviour_t* behaviour)
 	behaviour->name = "item";
 	behaviour->extends = "model";
 	behaviour->manager = UINodePtr(new uiItemNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiItemNode_t *");
 
 	/* Display an item like a container node do it */
 	UI_RegisterExtradataNodeProperty(behaviour, "containerlike", V_BOOL, modelExtraData_t, containerLike);
