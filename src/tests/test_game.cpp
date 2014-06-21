@@ -98,7 +98,8 @@ TEST_F(GameTest, CountSpawnpoints)
 	const char* filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t* md;
 
-	Cvar_Set("rm_drop", "+craft_drop_herakles");
+	const char *aircraft = "+craft_drop_herakles";
+	Cvar_Set("rm_drop", "%s", aircraft);
 
 	/* use a known seed to reproduce an error */
 	unsigned int seed;
@@ -124,7 +125,9 @@ TEST_F(GameTest, CountSpawnpoints)
 
 		const int spawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_PHALANX]);
 		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
-		ASSERT_TRUE(level.num_spawnpoints[TEAM_PHALANX] >= 12) << "Map " << md->mapTheme << " only " << spawnPoints << " spawnpoints";
+		ASSERT_TRUE(level.num_spawnpoints[TEAM_PHALANX] >= 12) << "Map " << md->mapTheme
+				<< " from mapdef " << md->id << " only " << spawnPoints << " spawnpoints (aircraft: "
+				<< aircraft << ")";
 	}
 }
 
