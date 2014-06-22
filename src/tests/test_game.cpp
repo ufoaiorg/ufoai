@@ -150,7 +150,8 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 			}
 		}
 
-		for (int i = TEAM_CIVILIAN + 1; i < md->teams; ++i) {
+		const int startTeam = TEAM_CIVILIAN + 1;
+		for (int i = startTeam; i < startTeam + md->teams; ++i) {
 			const int spawnPoints = static_cast<int>(level.num_spawnpoints[i]);
 			Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
 			EXPECT_TRUE(spawnPoints >= maxPlayers) << "Map " << md->mapTheme
