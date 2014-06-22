@@ -102,10 +102,23 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 {
 	SCOPED_TRACE(va("seed: %u", seed));
 
+	// TODO: somehow fix these magic values here
+	int maxPlayers;
 	if (Q_strnull(aircraft)) {
 		Cvar_Set("rm_drop", "");
+		maxPlayers = 12;
 	} else {
 		Cvar_Set("rm_drop", "%s", Com_GetRandomMapAssemblyNameForCraft(aircraft));
+		if (Q_streq(aircraft, "craft_drop_firebird"))
+			maxPlayers = 8;
+		else if (Q_streq(aircraft, "craft_drop_raptor"))
+			maxPlayers = 10;
+		else if (Q_streq(aircraft, "craft_drop_herakles"))
+			maxPlayers = 12;
+		else {
+			ADD_FAILURE() << "Map " << md->mapTheme << " from mapdef " << md->id << " with unexpected aircraft";
+			return;
+		}
 	}
 	if (Q_strnull(ufo)) {
 		Cvar_Set("rm_ufo", "");
@@ -140,7 +153,7 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 		for (int i = TEAM_CIVILIAN + 1; i < md->teams; ++i) {
 			const int spawnPoints = static_cast<int>(level.num_spawnpoints[i]);
 			Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
-			EXPECT_TRUE(spawnPoints >= 12) << "Map " << md->mapTheme
+			EXPECT_TRUE(spawnPoints >= maxPlayers) << "Map " << md->mapTheme
 					<< " from mapdef " << md->id << " only " << spawnPoints << " spawnpoints for team " << i << " (aircraft: "
 					<< aircraft << ") (ufo: " << ufo << ") => multiplayer mode";
 		}
@@ -151,7 +164,7 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 	} else if (md->singleplayer) {
 		const int spawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_PHALANX]);
 		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
-		EXPECT_TRUE(spawnPoints >= 12) << "Map " << md->mapTheme
+		EXPECT_TRUE(spawnPoints >= maxPlayers) << "Map " << md->mapTheme
 				<< " from mapdef " << md->id << " only " << spawnPoints << " human spawnpoints (aircraft: "
 				<< aircraft << ") (ufo: " << ufo << ") => singleplayer mode";
 		const int alienSpawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_ALIEN]);
