@@ -476,7 +476,7 @@ mapdef beach
 	description		"_Coastal Crash Site"
 	campaign		false
 	multiplayer		false
-	maxaliens		8
+	maxaliens		7
 
 	aircraft
 	(
