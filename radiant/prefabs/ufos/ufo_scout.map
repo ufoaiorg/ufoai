@@ -2204,3 +2204,120 @@
 ( 35.5 144.75 51.75 ) ( 18.75 206 58.875 ) ( 18.75 206 54.25 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
 }
 }
+// entity 10
+{
+"classname" "info_alien_start"
+"origin" "176 208 32"
+"angle" "180"
+}
+// entity 11
+{
+"classname" "info_alien_start"
+"origin" "176 240 32"
+"angle" "180"
+}
+// entity 12
+{
+"classname" "info_alien_start"
+"origin" "176 272 32"
+"angle" "180"
+}
+// entity 13
+{
+"classname" "info_alien_start"
+"origin" "208 240 32"
+}
+// entity 14
+{
+"classname" "info_alien_start"
+"origin" "208 208 32"
+}
+// entity 15
+{
+"classname" "info_alien_start"
+"origin" "208 272 32"
+}
+// entity 16
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "368 464 28"
+"angle" "90"
+}
+// entity 17
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "304 208 28"
+"angle" "90"
+}
+// entity 18
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "304 272 28"
+"angle" "90"
+}
+// entity 19
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "304 336 28"
+"angle" "90"
+}
+// entity 20
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "304 400 28"
+"angle" "90"
+}
+// entity 21
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "304 464 28"
+"angle" "90"
+}
+// entity 22
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "80 272 28"
+"angle" "90"
+}
+// entity 23
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "80 400 28"
+"angle" "90"
+}
+// entity 24
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "80 208 28"
+"angle" "90"
+}
+// entity 25
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "80 336 28"
+"angle" "90"
+}
+// entity 26
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "80 464 28"
+"angle" "90"
+}
+// entity 27
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "16 464 28"
+"angle" "90"
+}
