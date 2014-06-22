@@ -123,11 +123,23 @@ TEST_F(GameTest, CountSpawnpoints)
 		const char* asmName = (const char*)LIST_GetByIdx(md->params, 0);
 		SV_Map(true, md->mapTheme, asmName, false);
 
-		const int spawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_PHALANX]);
-		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
-		ASSERT_TRUE(level.num_spawnpoints[TEAM_PHALANX] >= 12) << "Map " << md->mapTheme
-				<< " from mapdef " << md->id << " only " << spawnPoints << " spawnpoints (aircraft: "
-				<< aircraft << ")";
+		if (md->multiplayer) {
+			for (int i = TEAM_CIVILIAN + 1; i < md->teams; ++i) {
+				const int spawnPoints = static_cast<int>(level.num_spawnpoints[i]);
+				Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
+				ASSERT_TRUE(spawnPoints >= 12) << "Map " << md->mapTheme
+						<< " from mapdef " << md->id << " only " << spawnPoints << " spawnpoints for team " << i << " (aircraft: "
+						<< aircraft << ") => multiplayer mode";
+			}
+		} else if (md->singleplayer) {
+			const int spawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_PHALANX]);
+			Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
+			ASSERT_TRUE(spawnPoints >= 12) << "Map " << md->mapTheme
+					<< " from mapdef " << md->id << " only " << spawnPoints << " spawnpoints (aircraft: "
+					<< aircraft << ") => singleplayer mode";
+		} else {
+			ADD_FAILURE() << "Map " << md->mapTheme << " from mapdef " << md->id << " does neither define single- nor multiplayer";
+		}
 	}
 }
 
