@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -4433,4 +4434,32 @@
 "spawnflags" "1"
 "_color" "1 1 1"
 "light" "120"
+}
+// entity 68
+{
+"classname" "info_player_start"
+"origin" "240 368 32"
+"team" "2"
+"angle" "-90"
+}
+// entity 69
+{
+"classname" "info_player_start"
+"origin" "368 400 28"
+"team" "2"
+"angle" "-90"
+}
+// entity 70
+{
+"classname" "info_player_start"
+"origin" "272 176 28"
+"team" "2"
+"angle" "90"
+}
+// entity 71
+{
+"classname" "info_player_start"
+"origin" "112 272 32"
+"team" "2"
+"angle" "90"
 }
