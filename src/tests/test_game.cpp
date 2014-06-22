@@ -110,6 +110,17 @@ TEST_F(GameTest, CountSpawnpoints)
 	}
 	srand(seed);
 
+	int maxAliensForCoop = 0;
+	for (int i = 0; i < csi.numGTs; i++) {
+		const gametype_t* gt = &csi.gts[i];
+		const cvarlist_t* list = gt->cvars;
+		for (int j = 0; j < gt->num_cvars; j++, list++) {
+			if (Q_streq(list->name, "ai_multiplayeraliens")) {
+				maxAliensForCoop = std::max(maxAliensForCoop, atoi(list->value));
+			}
+		}
+	}
+
 	MapDef_Foreach(md) {
 		if (md->mapTheme[0] == '.')
 			continue;
@@ -127,16 +138,26 @@ TEST_F(GameTest, CountSpawnpoints)
 			for (int i = TEAM_CIVILIAN + 1; i < md->teams; ++i) {
 				const int spawnPoints = static_cast<int>(level.num_spawnpoints[i]);
 				Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
-				ASSERT_TRUE(spawnPoints >= 12) << "Map " << md->mapTheme
+				EXPECT_TRUE(spawnPoints >= 12) << "Map " << md->mapTheme
 						<< " from mapdef " << md->id << " only " << spawnPoints << " spawnpoints for team " << i << " (aircraft: "
 						<< aircraft << ") => multiplayer mode";
 			}
+			const int alienSpawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_ALIEN]);
+			EXPECT_TRUE(alienSpawnPoints >= maxAliensForCoop) << "Map " << md->mapTheme
+								<< " from mapdef " << md->id << " defines a coop game mode but does not have enough alien spawn positions for that. We would need "
+								<< maxAliensForCoop << " spawn positions for aliens => multiplayer mode";
 		} else if (md->singleplayer) {
 			const int spawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_PHALANX]);
 			Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
-			ASSERT_TRUE(spawnPoints >= 12) << "Map " << md->mapTheme
-					<< " from mapdef " << md->id << " only " << spawnPoints << " spawnpoints (aircraft: "
+			EXPECT_TRUE(spawnPoints >= 12) << "Map " << md->mapTheme
+					<< " from mapdef " << md->id << " only " << spawnPoints << " human spawnpoints (aircraft: "
 					<< aircraft << ") => singleplayer mode";
+			const int alienSpawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_ALIEN]);
+			EXPECT_TRUE(alienSpawnPoints >= 1) << "Map " << md->mapTheme
+					<< " from mapdef " << md->id << " only " << alienSpawnPoints << " alien spawnpoints => singleplayer mode";
+			EXPECT_TRUE(alienSpawnPoints >= md->maxAliens) << "Map " << md->mapTheme
+					<< " from mapdef " << md->id << " only " << alienSpawnPoints << " alien spawnpoints but " << md->maxAliens
+					<< " expected => singleplayer mode";
 		} else {
 			ADD_FAILURE() << "Map " << md->mapTheme << " from mapdef " << md->id << " does neither define single- nor multiplayer";
 		}
