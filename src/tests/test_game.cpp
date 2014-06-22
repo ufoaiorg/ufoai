@@ -110,17 +110,6 @@ TEST_F(GameTest, CountSpawnpoints)
 	}
 	srand(seed);
 
-	int maxAliensForCoop = 0;
-	for (int i = 0; i < csi.numGTs; i++) {
-		const gametype_t* gt = &csi.gts[i];
-		const cvarlist_t* list = gt->cvars;
-		for (int j = 0; j < gt->num_cvars; j++, list++) {
-			if (Q_streq(list->name, "ai_multiplayeraliens")) {
-				maxAliensForCoop = std::max(maxAliensForCoop, atoi(list->value));
-			}
-		}
-	}
-
 	MapDef_Foreach(md) {
 		if (md->mapTheme[0] == '.')
 			continue;
@@ -140,6 +129,22 @@ TEST_F(GameTest, CountSpawnpoints)
 		}
 
 		if (md->multiplayer) {
+			int maxAliensForCoop = 0;
+			ASSERT_FALSE(LIST_IsEmpty(md->gameTypes)) << "No gametypes set for mapdef " << md->id;
+			LIST_Foreach(md->gameTypes, const char, gameType) {
+				for (int i = 0; i < csi.numGTs; i++) {
+					const gametype_t* gt = &csi.gts[i];
+					if (!Q_streq(gt->id, gameType))
+						continue;
+					const cvarlist_t* list = gt->cvars;
+					for (int j = 0; j < gt->num_cvars; j++, list++) {
+						if (Q_streq(list->name, "ai_multiplayeraliens")) {
+							maxAliensForCoop = std::max(maxAliensForCoop, atoi(list->value));
+						}
+					}
+				}
+			}
+
 			for (int i = TEAM_CIVILIAN + 1; i < md->teams; ++i) {
 				const int spawnPoints = static_cast<int>(level.num_spawnpoints[i]);
 				Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
