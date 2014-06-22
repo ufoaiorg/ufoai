@@ -202,8 +202,12 @@ void GameTest::testCountSpawnpointsForMap(unsigned int seed, const mapDef_t *md)
 	if (filterId && !Q_streq(filterId, md->id))
 		return;
 
-	LIST_Foreach(md->params, const char, asmName) {
-		testCountSpawnpointsForMapWithAssembly(seed, md, asmName);
+	if (LIST_IsEmpty(md->params)) {
+		testCountSpawnpointsForMapWithAssembly(seed, md, nullptr);
+	} else {
+		LIST_Foreach(md->params, const char, asmName) {
+			testCountSpawnpointsForMapWithAssembly(seed, md, asmName);
+		}
 	}
 }
 
