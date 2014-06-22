@@ -132,7 +132,12 @@ TEST_F(GameTest, CountSpawnpoints)
 		Com_Printf("testCountSpawnpoints: Mapdef %s (seed %u)\n", md->id, seed);
 
 		const char* asmName = (const char*)LIST_GetByIdx(md->params, 0);
-		SV_Map(true, md->mapTheme, asmName, false);
+		try {
+			SV_Map(true, md->mapTheme, asmName, false);
+		} catch (comDrop_t&) {
+			ADD_FAILURE() << "failed to load map " << md->mapTheme << " from mapdef " << md->id;
+			continue;
+		}
 
 		if (md->multiplayer) {
 			for (int i = TEAM_CIVILIAN + 1; i < md->teams; ++i) {
