@@ -41,8 +41,12 @@ protected:
 		/* we need the teamdefs for spawning ai actors */
 		Com_ParseScripts(true);
 		Cvar_Set("sv_threads", "0");
+		sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients for test");
+		port = Cvar_Get("port", DOUBLEQUOTE(PORT_SERVER), CVAR_NOSET);
+		masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 
 		sv_genericPool = Mem_CreatePool("server-gametest");
+		com_networkPool = Mem_CreatePool("server-gametest-network");
 		r_state.active_texunit = &r_state.texunits[0];
 	}
 
@@ -126,6 +130,12 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 		Cvar_Set("rm_ufo", "%s", Com_GetRandomMapAssemblyNameForCraft(ufo));
 	}
 
+	if (md->multiplayer) {
+		Cvar_Set("sv_maxclients", DOUBLEQUOTE(MAX_CLIENTS));
+	} else {
+		Cvar_Set("sv_maxclients", "1");
+	}
+
 	try {
 		SV_Map(true, md->mapTheme, asmName, false);
 	} catch (comDrop_t&) {
@@ -135,6 +145,7 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 
 	if (md->multiplayer) {
 		int maxAliensForCoop = 0;
+		int expectedMultiplayerSpawnPoints = 0;
 		ASSERT_FALSE(LIST_IsEmpty(md->gameTypes)) << "No gametypes set for mapdef " << md->id;
 		LIST_Foreach(md->gameTypes, const char, gameType) {
 			for (int i = 0; i < csi.numGTs; i++) {
@@ -145,6 +156,8 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 				for (int j = 0; j < gt->num_cvars; j++, list++) {
 					if (Q_streq(list->name, "ai_multiplayeraliens")) {
 						maxAliensForCoop = std::max(maxAliensForCoop, atoi(list->value));
+					} else if (Q_streq(list->name, "sv_maxsoldiersperteam")) {
+						expectedMultiplayerSpawnPoints = std::max(expectedMultiplayerSpawnPoints, atoi(list->value));
 					}
 				}
 			}
@@ -155,25 +168,28 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 			ASSERT_TRUE(i <= TEAM_MAX_HUMAN) << "Map " << md->mapTheme << " from mapdef " << md->id << " has too many team set";
 			const int spawnPoints = static_cast<int>(level.num_spawnpoints[i]);
 			Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
-			EXPECT_TRUE(spawnPoints >= maxPlayers) << "Map " << md->mapTheme
+			EXPECT_GE(spawnPoints, maxPlayers) << "Map " << md->mapTheme
 					<< " from mapdef " << md->id << " only " << spawnPoints << " spawnpoints for team " << i << " (aircraft: "
 					<< aircraft << ") (ufo: " << ufo << ") => multiplayer mode";
+			EXPECT_GE(spawnPoints, expectedMultiplayerSpawnPoints) << "Map " << md->mapTheme
+					<< " from mapdef " << md->id << " only " << spawnPoints << " spawnpoints for team " << i << " (aircraft: "
+					<< aircraft << ") (ufo: " << ufo << ") (gametype wants more spawn positions) => multiplayer mode";
 		}
 		const int alienSpawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_ALIEN]);
-		EXPECT_TRUE(alienSpawnPoints >= maxAliensForCoop) << "Map " << md->mapTheme
+		EXPECT_GE(alienSpawnPoints, maxAliensForCoop) << "Map " << md->mapTheme
 							<< " from mapdef " << md->id << " defines a coop game mode but does not have enough alien spawn positions for that. We would need "
 							<< maxAliensForCoop << " spawn positions for aliens => multiplayer mode";
 	} else if (md->singleplayer) {
 		const int spawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_PHALANX]);
 		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
-		EXPECT_TRUE(spawnPoints >= maxPlayers) << "Map " << md->mapTheme
+		EXPECT_GE(spawnPoints, maxPlayers) << "Map " << md->mapTheme
 				<< " from mapdef " << md->id << " only " << spawnPoints << " human spawnpoints (aircraft: "
 				<< aircraft << ") (ufo: " << ufo << ") => singleplayer mode";
 		const int alienSpawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_ALIEN]);
-		EXPECT_TRUE(alienSpawnPoints >= 1) << "Map " << md->mapTheme
+		EXPECT_GE(alienSpawnPoints, 1) << "Map " << md->mapTheme
 				<< " from mapdef " << md->id << " only " << alienSpawnPoints << " alien spawnpoints (aircraft: "
 				<< aircraft << ") (ufo: " << ufo << ") => singleplayer mode";
-		EXPECT_TRUE(alienSpawnPoints >= md->maxAliens) << "Map " << md->mapTheme
+		EXPECT_GE(alienSpawnPoints, md->maxAliens) << "Map " << md->mapTheme
 				<< " from mapdef " << md->id << " only " << alienSpawnPoints << " alien spawnpoints but " << md->maxAliens
 				<< " expected (aircraft: " << aircraft << ") (ufo: " << ufo << ") => singleplayer mode";
 	} else {
