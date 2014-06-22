@@ -3025,7 +3025,7 @@
 {
 "classname" "info_player_start"
 "team" "2"
-"origin" "752 528 92"
+"origin" "656 496 92"
 }
 // entity 55
 {
@@ -3055,11 +3055,35 @@
 {
 "classname" "info_player_start"
 "team" "2"
-"origin" "912 496 92"
+"origin" "1008 528 92"
 }
 // entity 60
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "848 496 92"
+}
+// entity 61
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "752 528 92"
+}
+// entity 62
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "912 496 92"
+}
+// entity 63
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "976 496 92"
+}
+// entity 64
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "688 528 92"
 }
