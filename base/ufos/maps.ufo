@@ -155,18 +155,17 @@ mapdef africa_large
 	map				"+africa"
 	params			("large")
 	description		"_African Village"
+	civilianteam	africa
+	maxaliens		30
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		30
-
-	civilianteam	africa
 
 	aircraft
 	(
@@ -209,18 +208,17 @@ mapdef africa_medium
 	map				"+africa"
 	params			("medium")
 	description		"_African Village"
+	civilianteam	africa
+	maxaliens		16
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		16
-
-	civilianteam	africa
 
 	aircraft
 	(
@@ -264,18 +262,17 @@ mapdef africa_small
 	map				"+africa"
 	params			("small")
 	description		"_African Village"
+	civilianteam	africa
+	maxaliens		6
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		6
-
-	civilianteam	africa
 
 	aircraft
 	(
@@ -318,18 +315,17 @@ mapdef africa_nature_large
 	map				"+africa"
 	params			("nature_large")
 	description		"_African Desert"
+	civilianteam	africa
+	maxaliens		30
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		30
-
-	civilianteam	africa
 
 	aircraft
 	(
@@ -368,18 +364,17 @@ mapdef africa_nature_medium
 	map				"+africa"
 	params			("nature_medium")
 	description		"_African Desert"
+	civilianteam	africa
+	maxaliens		16
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		16
-
-	civilianteam	africa
 
 	aircraft
 	(
@@ -419,18 +414,17 @@ mapdef africa_nature_small
 	map				"+africa"
 	params			("nature_small")
 	description		"_African Desert"
+	civilianteam	africa
+	maxaliens		8
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		8
-
-	civilianteam	africa
 
 	aircraft
 	(
