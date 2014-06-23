@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -4880,4 +4881,30 @@
 "noise" "ambience/hum"
 "volume" "1.0"
 "attenuation" "2.0"
+}
+// entity 96
+{
+"classname" "info_player_start"
+"origin" "208 272 160"
+"team" "3"
+}
+// entity 97
+{
+"classname" "info_player_start"
+"origin" "144 432 160"
+"team" "3"
+}
+// entity 98
+{
+"classname" "info_player_start"
+"origin" "368 144 160"
+"team" "3"
+"angle" "180"
+}
+// entity 99
+{
+"classname" "info_player_start"
+"origin" "400 48 160"
+"team" "3"
+"angle" "180"
 }

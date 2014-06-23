@@ -3419,11 +3419,35 @@
 {
 "classname" "info_player_start"
 "team" "2"
-"origin" "912 496 92"
+"origin" "1072 528 92"
 }
 // entity 78
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "848 496 92"
+}
+// entity 79
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "912 496 92"
+}
+// entity 80
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "976 496 92"
+}
+// entity 81
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1008 528 92"
+}
+// entity 82
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1040 496 92"
 }

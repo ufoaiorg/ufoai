@@ -65,11 +65,12 @@ static void Test_Parameters (const int argc, char** argv)
 			resultPrefix = prefix;
 		} else if (Q_streq(argv[i], "--log")) {
 			config.log = true;
-		} else if (Q_streq(argv[i], "--verbose")) {
+		} else if (Q_streq(argv[i], "-v") || Q_streq(argv[i], "--verbose")) {
 			config.verbose = true;
 		} else if (Q_streq(argv[i], "-h") || Q_streq(argv[i], "--help")) {
 			printf("Usage:\n");
 			printf("-h  --help                 | show this help screen\n");
+			printf("-v  --verbose              | be verbose\n");
 			printf("-Dprop=value               | defines a test property\n");
 			printf("    --log                  | log ufo output to file (testall.log in working dir)\n");
 			printf("    --output-prefix=PREFIX | set a prefix for the xml result\n");

@@ -14919,51 +14919,111 @@
 {
 "classname" "info_player_start"
 "team" "2"
-"origin" "240 496 92"
-}
-// entity 158
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "240 560 92"
-}
-// entity 159
-{
-"classname" "info_player_start"
-"team" "2"
 "origin" "1360 688 92"
 "angle" "90"
 }
-// entity 160
+// entity 158
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "1296 688 92"
 "angle" "90"
 }
-// entity 161
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "176 496 92"
-}
-// entity 162
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "176 560 92"
-}
-// entity 163
+// entity 159
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "1360 624 92"
 "angle" "90"
 }
-// entity 164
+// entity 160
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "1296 624 92"
 "angle" "90"
+}
+// entity 161
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "720 1008 92"
+"angle" "-90"
+}
+// entity 162
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "816 912 92"
+"angle" "90"
+}
+// entity 163
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "784 752 92"
+"angle" "90"
+}
+// entity 164
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "816 1040 92"
+"angle" "135"
+}
+// entity 165
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "816 1168 92"
+"angle" "-90"
+}
+// entity 166
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "784 1072 92"
+"angle" "180"
+}
+// entity 167
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "784 848 92"
+"angle" "90"
+}
+// entity 168
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "752 816 92"
+"angle" "90"
+}
+// entity 169
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "784 912 92"
+"angle" "90"
+}
+// entity 170
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "784 976 92"
+"angle" "90"
+}
+// entity 171
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "816 976 92"
+"angle" "90"
+}
+// entity 172
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "752 1232 92"
+"angle" "-90"
 }

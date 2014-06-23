@@ -4699,3 +4699,75 @@
 "origin" "272 240 32"
 "angle" "-90"
 }
+// entity 55
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "464 80 28"
+}
+// entity 56
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "208 144 28"
+}
+// entity 57
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "272 144 28"
+}
+// entity 58
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "336 144 28"
+}
+// entity 59
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "400 144 28"
+}
+// entity 60
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "464 144 28"
+}
+// entity 61
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "272 368 28"
+}
+// entity 62
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "400 368 28"
+}
+// entity 63
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "208 368 28"
+}
+// entity 64
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "336 368 28"
+}
+// entity 65
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "464 368 28"
+}
+// entity 66
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "464 432 28"
+}

@@ -1440,11 +1440,35 @@
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "304 112 60"
+"origin" "240 112 60"
 }
 // entity 48
 {
 "classname" "info_player_start"
 "team" "1"
+"origin" "240 176 60"
+}
+// entity 49
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "304 112 60"
+}
+// entity 50
+{
+"classname" "info_player_start"
+"team" "1"
 "origin" "304 176 60"
+}
+// entity 51
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "272 112 60"
+}
+// entity 52
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "272 176 60"
 }

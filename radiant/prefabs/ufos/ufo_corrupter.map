@@ -12845,3 +12845,30 @@
 "origin" "1232 752 92"
 "angle" "180"
 }
+// entity 160
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1040 720 92"
+}
+// entity 161
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1136 816 92"
+"angle" "180"
+}
+// entity 162
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1008 816 92"
+"angle" "225"
+}
+// entity 163
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1072 816 92"
+"angle" "180"
+}
