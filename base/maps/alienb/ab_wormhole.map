@@ -4195,7 +4195,6 @@
 "classname" "misc_sound"
 "origin" "256 192 96"
 "noise" "ambience/alienwormhole"
-"angle" "90"
 "volume" "1.0"
 "attenuation" "2.0"
 }

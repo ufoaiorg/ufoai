@@ -2,7 +2,6 @@
 {
 "classname" "worldspawn"
 "ambient_day" "0.1 0.2 0.1"
-"randomspawn" "1"
 "ambient_night" "0.1 0.2 0.1"
 // brush 0
 {
