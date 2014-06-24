@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -3658,90 +3659,114 @@
 }
 // entity 52
 {
-"classname" "info_player_start"
-"team" "2"
-"origin" "1264 560 60"
-}
-// entity 53
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "1264 496 60"
-}
-// entity 54
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "1264 432 60"
-}
-// entity 55
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "1328 560 60"
-}
-// entity 56
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "1328 496 60"
-}
-// entity 57
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "1328 432 60"
-}
-// entity 58
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "1264 624 60"
-}
-// entity 59
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "1328 624 60"
-}
-// entity 60
-{
 "classname" "info_alien_start"
 "origin" "272 720 60"
 }
-// entity 61
+// entity 53
 {
 "classname" "info_alien_start"
 "origin" "272 400 60"
 "angle" "-90"
 }
-// entity 62
+// entity 54
 {
 "classname" "info_alien_start"
 "origin" "560 336 60"
 "angle" "-90"
 }
-// entity 63
+// entity 55
 {
 "classname" "info_alien_start"
 "origin" "1264 144 46"
 "angle" "-90"
 }
-// entity 64
+// entity 56
 {
 "classname" "info_alien_start"
 "origin" "1104 720 46"
 "angle" "90"
 }
-// entity 65
+// entity 57
 {
 "classname" "info_alien_start"
 "origin" "880 880 46"
 "angle" "90"
 }
-// entity 66
+// entity 58
 {
 "classname" "info_alien_start"
 "origin" "592 848 46"
 "angle" "90"
+}
+// entity 59
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "816 528 110"
+}
+// entity 60
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "656 496 110"
+}
+// entity 61
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "944 528 110"
+}
+// entity 62
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "880 528 110"
+}
+// entity 63
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "784 496 110"
+}
+// entity 64
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "720 496 110"
+}
+// entity 65
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1008 528 110"
+}
+// entity 66
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "848 496 110"
+}
+// entity 67
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "752 528 110"
+}
+// entity 68
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "912 496 110"
+}
+// entity 69
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "976 496 110"
+}
+// entity 70
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "688 528 110"
 }

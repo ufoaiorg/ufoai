@@ -730,16 +730,16 @@ mapdef desert_medium
 	map				"+desert"
 	params			("medium")
 	description		"_Country Desert"
+	maxaliens		14
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		14
 
 	aircraft
 	(
@@ -779,16 +779,16 @@ mapdef desert_large
 	map				"+desert"
 	params			("large")
 	description		"_Country Desert"
+	maxaliens		30
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		30
 
 	aircraft
 	(

@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -3322,22 +3323,22 @@
 {
 "classname" "info_player_start"
 "team" "2"
-"origin" "400 80 60"
-"angle" "-90"
+"origin" "240 464 92"
+"angle" "180"
 }
 // entity 32
 {
 "classname" "info_player_start"
 "team" "2"
-"origin" "336 80 60"
-"angle" "-90"
+"origin" "240 528 92"
+"angle" "180"
 }
 // entity 33
 {
 "classname" "info_player_start"
 "team" "2"
-"origin" "272 80 60"
-"angle" "-90"
+"origin" "240 592 92"
+"angle" "180"
 }
 // entity 34
 {
@@ -3350,8 +3351,8 @@
 {
 "classname" "info_player_start"
 "team" "2"
-"origin" "464 80 60"
-"angle" "-90"
+"origin" "240 400 92"
+"angle" "180"
 }
 // entity 36
 {
@@ -3386,4 +3387,32 @@
 {
 "classname" "info_alien_start"
 "origin" "368 432 92"
+}
+// entity 42
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "400 80 60"
+"angle" "-90"
+}
+// entity 43
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "464 80 60"
+"angle" "-90"
+}
+// entity 44
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "336 80 60"
+"angle" "-90"
+}
+// entity 45
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "272 80 60"
+"angle" "-90"
 }
