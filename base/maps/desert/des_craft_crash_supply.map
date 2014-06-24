@@ -1,9 +1,6 @@
-
 // entity 0
 {
 "classname" "worldspawn"
-"randomspawn" "1"
-"maxlevel" "5"
 // brush 0
 {
 ( 1295 185 4 ) ( 1358 185 4 ) ( 1295 180 4 ) tex_nature/desert007 0 0 0 0.25 0.25 65280 0 0
@@ -4314,42 +4311,36 @@
 "classname" "info_player_start"
 "team" "2"
 "origin" "816 240 28"
-"angle" "-1.4033e-014"
 }
 // entity 26
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "816 496 28"
-"angle" "-1.4033e-014"
 }
 // entity 27
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "784 176 28"
-"angle" "-1.4033e-014"
 }
 // entity 28
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "816 432 28"
-"angle" "-1.4033e-014"
 }
 // entity 29
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "816 368 28"
-"angle" "-1.4033e-014"
 }
 // entity 30
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "816 304 28"
-"angle" "-1.4033e-014"
 }
 // entity 31
 {
