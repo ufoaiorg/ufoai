@@ -4395,16 +4395,15 @@ mapdef city_industry
 {
 	map				"city_industry"
 	description		"_Urban Warehouse"
+	maxaliens		18
+
 	multiplayer		true
-	teams			2
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens		18
 
 	aircraft
 	(

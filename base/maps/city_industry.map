@@ -23181,120 +23181,57 @@
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "-1136 -144 28"
+"origin" "-1136 -112 28"
 }
 // entity 191
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "-1264 -144 28"
+"origin" "-1264 -112 28"
 }
 // entity 192
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "-1200 -144 28"
+"origin" "-1200 -112 28"
 }
 // entity 193
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "-1136 -272 28"
+"origin" "-1136 -304 28"
 }
 // entity 194
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "-1264 -272 28"
+"origin" "-1264 -304 28"
 }
 // entity 195
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "-1200 -272 28"
+"origin" "-1200 -304 28"
 }
 // entity 196
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "-1136 -208 28"
+"origin" "-1136 -176 28"
 }
 // entity 197
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "-1264 -208 28"
+"origin" "-1264 -176 28"
 }
 // entity 198
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "-1200 -208 28"
+"origin" "-1200 -176 28"
 }
 // entity 199
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "816 560 28"
-"angle" "180"
-}
-// entity 200
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "720 528 28"
-"angle" "180"
-}
-// entity 201
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "848 656 28"
-"angle" "180"
-}
-// entity 202
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "752 496 28"
-"angle" "180"
-}
-// entity 203
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "880 496 28"
-"angle" "180"
-}
-// entity 204
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "816 496 28"
-"angle" "180"
-}
-// entity 205
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "816 624 28"
-"angle" "180"
-}
-// entity 206
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "624 688 28"
-"angle" "180"
-}
-// entity 207
-{
-"classname" "info_player_start"
-"team" "2"
-"origin" "848 720 28"
-"angle" "180"
-}
-// entity 208
 {
 "classname" "trigger_rescue"
 "team" "1"
@@ -23308,59 +23245,59 @@
 ( -1312 -64 0 ) ( -1184 -64 0 ) ( -1312 -64 96 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
 }
 }
-// entity 209
+// entity 200
 {
 "classname" "info_human_start"
 "origin" "-1136 -304 30"
 }
-// entity 210
+// entity 201
 {
 "classname" "info_human_start"
 "origin" "-1136 -240 30"
 }
-// entity 211
+// entity 202
 {
 "classname" "info_human_start"
 "origin" "-1264 -304 30"
 }
-// entity 212
+// entity 203
 {
 "classname" "info_human_start"
 "origin" "-1200 -304 30"
 }
-// entity 213
+// entity 204
 {
 "classname" "info_2x2_start"
 "origin" "-1248 -384 28"
 "team" "1"
 }
-// entity 214
+// entity 205
 {
 "classname" "info_2x2_start"
 "origin" "-1248 -32 28"
 "team" "1"
 }
-// entity 215
+// entity 206
 {
 "classname" "info_2x2_start"
 "origin" "-1056 128 28"
 "team" "1"
 }
-// entity 216
+// entity 207
 {
 "classname" "misc_particle"
 "particle" "camping_fire"
 "origin" "-500 -40 -40"
 "spawnflags" "255"
 }
-// entity 217
+// entity 208
 {
 "classname" "misc_particle"
 "particle" "smoke"
 "origin" "-92 48 -32"
 "spawnflags" "255"
 }
-// entity 218
+// entity 209
 {
 "classname" "misc_model"
 "origin" "-608 216 36"
@@ -23368,7 +23305,7 @@
 "spawnflags" "255"
 "skin" "0"
 }
-// entity 219
+// entity 210
 {
 "classname" "misc_model"
 "origin" "-608 215 36"
@@ -23376,7 +23313,7 @@
 "spawnflags" "255"
 "skin" "0"
 }
-// entity 220
+// entity 211
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -23385,21 +23322,21 @@
 "skin" "0"
 "angles" "0 -90 0"
 }
-// entity 221
+// entity 212
 {
 "classname" "misc_model"
 "origin" "97 -49 19"
 "model" "models/objects/cars/golf/car1t.md2"
 "spawnflags" "255"
 }
-// entity 222
+// entity 213
 {
 "classname" "misc_model"
 "origin" "97 -49 19"
 "model" "models/objects/cars/golf/car1.md2"
 "spawnflags" "255"
 }
-// entity 223
+// entity 214
 {
 "classname" "misc_model"
 "model" "models/objects/cars/transporter/transporter.md2"
@@ -23408,7 +23345,7 @@
 "skin" "0"
 "modelscale_vec" "0.85 1.3 1.1"
 }
-// entity 224
+// entity 215
 {
 "classname" "misc_model"
 "origin" "-987 241 -12"
@@ -23416,10 +23353,28 @@
 "spawnflags" "255"
 "angles" "0 -90 0"
 }
-// entity 225
+// entity 216
 {
 "classname" "misc_model"
 "model" "models/objects/cars/trailer/boxtrailer.md2"
 "origin" "286 960 -2"
 "spawnflags" "255"
+}
+// entity 217
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-1136 -240 28"
+}
+// entity 218
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-1264 -240 28"
+}
+// entity 219
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "-1200 -240 28"
 }
