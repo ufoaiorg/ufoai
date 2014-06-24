@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -6188,21 +6189,21 @@
 // entity 1
 {
 "classname" "info_player_start"
-"origin" "1104 464 34"
+"origin" "1104 272 34"
 "team" "2"
 "angle" "180"
 }
 // entity 2
 {
 "classname" "info_player_start"
-"origin" "1232 464 34"
+"origin" "1232 272 34"
 "team" "2"
 "angle" "180"
 }
 // entity 3
 {
 "classname" "info_player_start"
-"origin" "1168 464 34"
+"origin" "1168 272 34"
 "team" "2"
 "angle" "180"
 }
@@ -7885,4 +7886,25 @@
 "skin" "0"
 "angles" "0 -180 0"
 "modelscale_vec" "0.5 0.5 1"
+}
+// entity 100
+{
+"classname" "info_player_start"
+"origin" "1168 464 34"
+"team" "2"
+"angle" "180"
+}
+// entity 101
+{
+"classname" "info_player_start"
+"origin" "1232 464 34"
+"team" "2"
+"angle" "180"
+}
+// entity 102
+{
+"classname" "info_player_start"
+"origin" "1104 464 34"
+"team" "2"
+"angle" "180"
 }

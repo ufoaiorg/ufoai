@@ -1206,6 +1206,8 @@ mapdef fueldump
 	gametypes (
 		fight1on1
 		fight2on2
+		fight3on3
+		fight4on4
 	)
 
 	aircraft

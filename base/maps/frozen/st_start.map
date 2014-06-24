@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -116,56 +117,56 @@
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "80 144 28"
+"origin" "48 144 28"
 "angle" "180"
 }
 // entity 18
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "80 112 28"
+"origin" "48 112 28"
 "angle" "180"
 }
 // entity 19
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "112 144 28"
+"origin" "80 144 28"
 "angle" "180"
 }
 // entity 20
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "112 112 28"
+"origin" "80 112 28"
 "angle" "180"
 }
 // entity 21
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "144 144 28"
+"origin" "176 144 28"
 "angle" "180"
 }
 // entity 22
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "144 112 28"
+"origin" "176 112 28"
 "angle" "180"
 }
 // entity 23
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "176 144 28"
+"origin" "208 144 28"
 "angle" "180"
 }
 // entity 24
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "176 112 28"
+"origin" "208 112 28"
 "angle" "180"
 }
 // entity 25
@@ -182,4 +183,32 @@
 ( 0 0 0 ) ( 0 0 32 ) ( 256 0 0 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
 ( 0 0 0 ) ( 0 256 0 ) ( 0 0 32 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
 }
+}
+// entity 26
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "144 112 28"
+"angle" "180"
+}
+// entity 27
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "144 144 28"
+"angle" "180"
+}
+// entity 28
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "112 112 28"
+"angle" "180"
+}
+// entity 29
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "112 144 28"
+"angle" "180"
 }
