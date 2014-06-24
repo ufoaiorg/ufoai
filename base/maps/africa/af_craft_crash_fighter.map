@@ -1457,7 +1457,6 @@
 "noise" "ambience/fire06"
 "volume" "0.6"
 "attenuation" "2.5"
-"angle" "33.8051"
 }
 // entity 12
 {
@@ -1490,7 +1489,6 @@
 "noise" "ambience/firesoft"
 "volume" "0.6"
 "attenuation" "2.5"
-"angle" "33.8051"
 }
 // entity 16
 {
@@ -1820,7 +1818,6 @@
 "classname" "misc_sound"
 "origin" "126.5 175.375 9"
 "volume" "0.4"
-"angle" "-90"
 "noise" "ambience/firesoft"
 "attenuation" "2.5"
 }

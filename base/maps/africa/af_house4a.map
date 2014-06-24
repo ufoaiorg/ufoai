@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( -252 -192 0 ) ( -192 -192 0 ) ( -292 -128 0 ) tex_common/actorclip 32 34 -90 1 1 130816 0 0
@@ -1379,5 +1378,4 @@
 {
 "classname" "info_alien_start"
 "origin" "16 16 28"
-"angle" "-1.4033e-014"
 }

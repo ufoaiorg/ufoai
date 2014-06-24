@@ -4,17 +4,17 @@
 // brush 0
 {
 ( 1180 2028 0 ) ( 1500 2028 0 ) ( 1500 2092 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
- ( 1532 1760 4 ) ( 1164 1760 4 ) ( 1164 2048 4 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
- ( 1536 2028 8 ) ( 1536 2092 8 ) ( 1536 2092 0 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
- ( 0 2016 32 ) ( 0 1056 0 ) ( 0 2016 0 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
- ( 1504 2048 0 ) ( 1504 2048 32 ) ( 544 2048 0 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
+( 1532 1760 4 ) ( 1164 1760 4 ) ( 1164 2048 4 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
+( 1536 2028 8 ) ( 1536 2092 8 ) ( 1536 2092 0 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
+( 0 2016 32 ) ( 0 1056 0 ) ( 0 2016 0 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
+( 1504 2048 0 ) ( 1504 2048 32 ) ( 544 2048 0 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
 ( 1536 768 -64 ) ( 1024 768 -64 ) ( 1536 768 64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 }
 // brush 1
 {
 ( 1180 2028 0 ) ( 1500 2028 0 ) ( 1500 2092 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
- ( 1532 1760 4 ) ( 1164 1760 4 ) ( 1164 2048 4 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
- ( 552 0 32 ) ( 1512 0 32 ) ( 552 0 0 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
+( 1532 1760 4 ) ( 1164 1760 4 ) ( 1164 2048 4 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
+( 552 0 32 ) ( 1512 0 32 ) ( 552 0 0 ) tex_nature/desert004 0 0 0 0.25 0.25 65280 0 0
 ( 1536 768 64 ) ( 1024 768 -64 ) ( 1536 768 -64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 ( 1024 512 -64 ) ( 1024 256 -64 ) ( 1024 512 64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 ( 512 512 64 ) ( 512 256 -64 ) ( 512 512 -64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
@@ -12537,7 +12537,6 @@
 {
 "classname" "info_alien_start"
 "origin" "400 1392 96"
-"angle" "-1.4033e-014"
 }
 // entity 124
 {
@@ -12567,7 +12566,6 @@
 {
 "classname" "info_alien_start"
 "origin" "336 1808 96"
-"angle" "-1.4033e-014"
 }
 // entity 129
 {
@@ -12597,7 +12595,6 @@
 {
 "classname" "info_alien_start"
 "origin" "1360 1584 96"
-"angle" "-1.4033e-014"
 }
 // entity 134
 {
@@ -12624,7 +12621,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 138
 {
@@ -12633,7 +12629,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 139
 {
@@ -12642,7 +12637,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 140
 {
@@ -12651,7 +12645,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 141
 {
@@ -12660,7 +12653,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 142
 {
@@ -12669,7 +12661,6 @@
 "noise" "ambience/alienmachinery1"
 "volume" "0.6"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 143
 {
@@ -12678,7 +12669,6 @@
 "noise" "ambience/aliencom"
 "volume" "0.8"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 144
 {
@@ -12868,7 +12858,6 @@
 "classname" "info_player_start"
 "team" "2"
 "origin" "752 976 92"
-"angle" "-1.4033e-014"
 }
 // entity 158
 {
