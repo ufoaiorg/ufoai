@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -1256,7 +1257,8 @@
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "240 304 28"
+"origin" "240 208 28"
+"angle" "-90"
 }
 // entity 23
 {
@@ -1283,8 +1285,7 @@
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "240 208 28"
-"angle" "-90"
+"origin" "624 592 28"
 }
 // entity 27
 {
@@ -1319,4 +1320,16 @@
 "team" "1"
 "origin" "144 464 28"
 "angle" "180"
+}
+// entity 32
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "624 176 28"
+}
+// entity 33
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "240 304 28"
 }

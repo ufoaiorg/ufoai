@@ -831,9 +831,16 @@ mapdef farm_large
 	params		("large")
 	description	"_Farm"
 	size		"large"
-	teams		4
-	multiplayer	false
 	maxaliens	25
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
@@ -873,9 +880,16 @@ mapdef farm_medium
 	params		("medium")
 	description	"_Farm"
 	size		"medium"
-	teams		4
-	multiplayer	false
 	maxaliens	14
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
@@ -914,9 +928,16 @@ mapdef farm_small
 	params		("small")
 	description	"_Farm"
 	size		"small"
-	teams		4
-	multiplayer	false
-	maxaliens	6
+	maxaliens	8
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
