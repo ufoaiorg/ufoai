@@ -1,8 +1,6 @@
-
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 868 919 16 ) ( 924 919 16 ) ( 924 935 39 ) tex_misc/straw 154.9031 491.6382 11 0.174996 0.174996 65281 2048 0

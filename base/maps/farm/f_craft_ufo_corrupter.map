@@ -1,8 +1,6 @@
-
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 356 20 0 ) ( 36 20 0 ) ( 36 -44 0 ) tex_common/nodraw 216 216 0 0.5 0.5 65280 128 0
@@ -12533,7 +12531,6 @@
 {
 "classname" "info_alien_start"
 "origin" "336 656 96"
-"angle" "-1.4033e-014"
 }
 // entity 123
 {
@@ -12575,13 +12572,11 @@
 {
 "classname" "info_alien_start"
 "origin" "336 400 96"
-"angle" "-1.4033e-014"
 }
 // entity 130
 {
 "classname" "info_alien_start"
 "origin" "400 432 96"
-"angle" "-1.4033e-014"
 }
 // entity 131
 {
@@ -12626,7 +12621,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "-90"
 }
 // entity 138
 {
@@ -12635,7 +12629,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "-90"
 }
 // entity 139
 {
@@ -12644,7 +12637,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "-90"
 }
 // entity 140
 {
@@ -12653,7 +12645,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "-90"
 }
 // entity 141
 {
@@ -12662,7 +12653,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "-90"
 }
 // entity 142
 {
@@ -12671,7 +12661,6 @@
 "noise" "ambience/alienmachinery1"
 "volume" "0.6"
 "attenuation" "2.8"
-"angle" "-90"
 }
 // entity 143
 {
@@ -12680,7 +12669,6 @@
 "noise" "ambience/aliencom"
 "volume" "0.8"
 "attenuation" "2.8"
-"angle" "-90"
 }
 // entity 144
 {
