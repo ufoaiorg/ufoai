@@ -1243,6 +1243,7 @@ mapdef frozen_industrial_large
 	description		"_Snow"
 	civilianteam	worker
 	maxaliens		30
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1251,9 +1252,6 @@ mapdef frozen_industrial_large
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1297,6 +1295,7 @@ mapdef frozen_industrial_medium
 	description		"_Snow"
 	civilianteam	worker
 	maxaliens		14
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1305,9 +1304,6 @@ mapdef frozen_industrial_medium
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1353,6 +1349,7 @@ mapdef frozen_industrial_small
 	description		"_Snow"
 	civilianteam	worker
 	maxaliens		9
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1361,9 +1358,6 @@ mapdef frozen_industrial_small
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1407,6 +1401,7 @@ mapdef frozen_industrial_small_noufo
 	description		"_Snow"
 	civilianteam	worker
 	maxaliens		9
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1415,9 +1410,6 @@ mapdef frozen_industrial_small_noufo
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1458,6 +1450,15 @@ mapdef frozen_lake
 	description		"_Snowy Logging Site"
 	maxaliens		9
 
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
 	aircraft
 	(
 		// any
@@ -1492,6 +1493,7 @@ mapdef frozen_nature_large
 	params			("nature_large")
 	description		"_Snow"
 	maxaliens		30
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1500,9 +1502,6 @@ mapdef frozen_nature_large
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1542,6 +1541,7 @@ mapdef frozen_nature_medium
 	params			("nature_medium")
 	description		"_Snow"
 	maxaliens		14
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1550,9 +1550,6 @@ mapdef frozen_nature_medium
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1594,18 +1591,15 @@ mapdef frozen_nature_small
 	params			("nature_small")
 	description		"_Snow"
 	maxaliens		9
+
 	multiplayer		true
 	teams			2
-
 	gametypes
 	(
 		fight1on1
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1645,6 +1639,7 @@ mapdef frozen_nature_small_noufo
 	params			("nature_small_noufo")
 	description		"_Snow"
 	maxaliens		9
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1653,9 +1648,6 @@ mapdef frozen_nature_small_noufo
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft

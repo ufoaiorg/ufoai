@@ -21779,3 +21779,108 @@
 "origin" "564 584 44"
 "spawnflags" "1"
 }
+// entity 363
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "432 1072 92"
+"angle" "-90"
+}
+// entity 364
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "496 1072 92"
+"angle" "-90"
+}
+// entity 365
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "560 1072 92"
+"angle" "-90"
+}
+// entity 366
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "592 592 92"
+"angle" "90"
+}
+// entity 367
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "432 1136 92"
+"angle" "-90"
+}
+// entity 368
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "496 1136 92"
+"angle" "-90"
+}
+// entity 369
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "560 1136 92"
+"angle" "-90"
+}
+// entity 370
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "592 528 92"
+"angle" "90"
+}
+// entity 371
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "464 592 92"
+"angle" "90"
+}
+// entity 372
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "464 528 92"
+"angle" "90"
+}
+// entity 373
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "528 592 92"
+"angle" "90"
+}
+// entity 374
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "528 528 92"
+"angle" "90"
+}
+// entity 375
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "560 1520 92"
+"angle" "90"
+}
+// entity 376
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "432 1520 92"
+"angle" "90"
+}
+// entity 377
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "496 1520 92"
+"angle" "90"
+}
