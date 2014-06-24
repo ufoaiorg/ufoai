@@ -4346,20 +4346,18 @@ mapdef transport
 
 mapdef bunker
 {
-	map			"bunker"
-	description	"_Military Bunker"
-	multiplayer	true
-	teams		2
+	map				"bunker"
+	description		"_Military Bunker"
+	civilianteam	armysoldier
+	maxaliens		16
+
+	multiplayer		true
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens		16
-
-	civilianteam	armysoldier
 
 	aircraft
 	(
