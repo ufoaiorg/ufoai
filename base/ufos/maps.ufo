@@ -900,6 +900,7 @@ mapdef farm_medium
 
 	ufos
 	(
+		craft_ufo_gunboat
 		craft_ufo_harvester
 	)
 

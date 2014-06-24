@@ -179,6 +179,19 @@ av		+c		+c		+c		+c		av
 }
 
 // ---------------------------------
+// UFO - Gunboat
+tile +craft_ufo_gunboat
+{
+7 6
+0		ah		ah		ah		ah		ah		0
+av		+c		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		+c		av
+0		ah		ah		ah		ah		ah		0
+}
+
+// ---------------------------------
 // UFO - Harvester
 tile +craft_ufo_harvester
 {
