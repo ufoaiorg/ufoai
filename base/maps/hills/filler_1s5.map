@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 32 100 16 ) ( 32 104 16 ) ( 32 104 36 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
@@ -643,4 +642,15 @@
 ( 168 168 24 ) ( 88 168 24 ) ( 88 88 24 ) tex_nature/water 0 0 0 0.5 0.5 402718496 104 0
 ( 88 88 26 ) ( 88 168 26 ) ( 168 168 26 ) tex_nature/water 0 256 0 0.5 0.5 402718496 104 0
 }
+}
+// entity 6
+{
+"classname" "info_alien_start"
+"origin" "176 48 28"
+"angle" "-90"
+}
+// entity 7
+{
+"classname" "info_alien_start"
+"origin" "80 208 28"
 }

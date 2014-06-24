@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 0 0 0 ) ( 0 256 0 ) ( 0 0 256 ) tex_common/nodraw 224 0 0 0.5 0.5 0 128 0
@@ -255,4 +254,10 @@
 "spawnflags" "2"
 "origin" "140 108 68"
 "skin" "3"
+}
+// entity 6
+{
+"classname" "info_alien_start"
+"origin" "80 176 28"
+"angle" "-90"
 }

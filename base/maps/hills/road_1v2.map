@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 384 316 2 ) ( 384 60 2 ) ( 256 316 2 ) tex_streets/2ln_cw 512 0 0 0.25 0.25 0 0 0
@@ -195,13 +194,6 @@
 }
 // entity 2
 {
-"classname" "light"
-"light" "180"
-"color" "0.8 0.9 1"
-"origin" "368 400 24"
-}
-// entity 3
-{
 "classname" "func_group"
 // brush 0
 {
@@ -255,22 +247,15 @@
 ( 110.976 146.048 116 ) ( 115.072 146.048 116 ) ( 115.072 141.952 116 ) tex_common/nodraw 37.50008 34.50002 90 0.2560001 0.2560001 134282752 128 0
 }
 }
-// entity 4
+// entity 3
 {
 "classname" "info_alien_start"
 "origin" "80 48 28"
 }
-// entity 5
+// entity 4
 {
 "classname" "light"
 "light" "180"
 "color" "0.8 0.9 1"
 "origin" "144 144 24"
-}
-// entity 6
-{
-"classname" "light"
-"light" "180"
-"color" "0.8 0.9 1"
-"origin" "368 -112 24"
 }

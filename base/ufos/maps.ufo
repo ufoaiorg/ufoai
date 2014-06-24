@@ -1745,9 +1745,17 @@ mapdef hills_harvester
 	params		("harvester")
 	description	"_Suburban Housing"
 	size		"small"
-	teams		4
-	multiplayer	false
 	maxaliens	16
+
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
@@ -1758,14 +1766,11 @@ mapdef hills_harvester
 
 	ufos
 	(
-//		craft_ufo_scout
-//		craft_ufo_fighter
 		craft_ufo_harvester
 	)
 
 	terrains
 	(
-//		"desert"
 		"cold"
 		"mountain"
 		"grass"
@@ -1773,6 +1778,7 @@ mapdef hills_harvester
 
 	cultures
 	(
+		// any
 	)
 
 	populations
@@ -1789,21 +1795,27 @@ mapdef hills_harvester_desert
 	params		("desert_harvester")
 	description	"_Suburban Housing"
 	size		"small"
-	teams		4
-	multiplayer	false
 	maxaliens	8
+
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
 		craft_drop_firebird
-//		craft_drop_raptor
-//		craft_drop_herakles
+		craft_drop_raptor
+		craft_drop_herakles
 	)
 
 	ufos
 	(
-//		craft_ufo_scout
-//		craft_ufo_fighter
 		craft_ufo_harvester
 	)
 
@@ -1814,6 +1826,7 @@ mapdef hills_harvester_desert
 
 	cultures
 	(
+		// any
 	)
 
 	populations
@@ -1824,16 +1837,23 @@ mapdef hills_harvester_desert
 	)
 }
 
-
 mapdef hills_small
 {
 	map			"+hills"
 	params		("small_ufo")
 	description	"_Suburban Housing"
 	size		"small"
-	teams		4
-	multiplayer	false
 	maxaliens	8
+
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
@@ -1845,7 +1865,6 @@ mapdef hills_small
 	ufos
 	(
 		craft_ufo_scout
-//		craft_ufo_fighter
 	)
 
 	terrains
@@ -1858,6 +1877,7 @@ mapdef hills_small
 
 	cultures
 	(
+		// any
 	)
 
 	populations
