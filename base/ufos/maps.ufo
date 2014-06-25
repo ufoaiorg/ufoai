@@ -5728,11 +5728,15 @@ mapdef training_b
 {
 	map			"training_b"
 	description	"_Training Zone: Bravo"
-	teams		2
-	multiplayer	true
 	campaign	false
 	maxaliens	30
+
+	multiplayer	true
+	teams		2
 	gametypes (
 		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
 	)
 }
