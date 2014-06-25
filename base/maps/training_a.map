@@ -1,8 +1,6 @@
-
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "1"
 "light_night" "0"
 "light_day" "0"
 // brush 0
