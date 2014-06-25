@@ -14,48 +14,54 @@ base mansion1/m1_
 
 tile +craft_drop_firebird
 	// 8 x info_human_start
-
+	// 12 x info_player_start for team 1
+	// 4 x info_2x2_start for team 1
+	// 12 x info_player_start for team 2
+	// 2 x info_2x2_start for team 2
 {
 6 7
-0      0       0        0      0      0
-0      a       +u       +u     +u     e
-0      a       +u       +u     +u     e
-a      +u      +u       +u     +u     e
-a      +u      +u       +u     +u     e
-a      +u      +u       +u     +u     e
-0      s       s        s      s      0
+0		0		0		0		0		0
+0		a		+u		+u		+u		e
+0		a		+u		+u		+u		e
+a		+u		+u		+u		+u		e
+a		+u		+u		+u		+u		e
+a		+u		+u		+u		+u		e
+0		s		s		s		s		0
 }
 
 
 tile +craft_drop_herakles
-	// 8 x info_human_start
-
+	// 12 x info_human_start
+	// 12 x info_player_start for team 1
+	// 4 x info_2x2_start for team 1
+	// 12 x info_player_start for team 2
+	// 2 x info_2x2_start for team 2
 {
 6 7
-0      0       0        0      0      0
-0      a       +u       +u     +u     e
-0      a       +u       +u     +u     e
-a      +u      +u       +u     +u     e
-a      +u      +u       +u     +u     e
-a      +u      +u       +u     +u     e
-0      s       s        s      s      0
+0		0		0		0		0		0
+0		a		+u		+u		+u		e
+0		a		+u		+u		+u		e
+a		+u		+u		+u		+u		e
+a		+u		+u		+u		+u		e
+a		+u		+u		+u		+u		e
+0		s		s		s		s		0
 }
 
 tile +craft_drop_raptor
-	// 8 x info_human_start
-	// 8 x info_player start for team 2
+	// 10 x info_human_start
+	// 12 x info_player_start for team 1
+	// 4 x info_2x2_start for team 1
+	// 12 x info_player_start for team 2
 	// 2 x info_2x2_start for team 2
-	// 11x info_alien_start
-
 {
 6 7
-0      0       0        0      0      0
-0      a       +u       +u     +u     e
-0      a       +u       +u     +u     e
-a      +u      +u       +u     +u     e
-a      +u      +u       +u     +u     e
-a      +u      +u       +u     +u     e
-0      s       s        s      s      0
+0		0		0		0		0		0
+0		a		+u		+u		+u		e
+0		a		+u		+u		+u		e
+a		+u		+u		+u		+u		e
+a		+u		+u		+u		+u		e
+a		+u		+u		+u		+u		e
+0		s		s		s		s		0
 }
 
 

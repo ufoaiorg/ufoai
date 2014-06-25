@@ -2300,10 +2300,11 @@ mapdef mansion_huge
 	map				"+mansion"
 	params			("huge")
 	description		"_Mansion"
-	maxaliens		19
+	hwclass			3
+	maxaliens		30
+
 	multiplayer		true
 	teams			4
-	hwclass			3
 	gametypes
 	(
 		fight1on1
@@ -2314,10 +2315,8 @@ mapdef mansion_huge
 		fight3on3on3
 		fight4on4
 		fight4on4on4
-		coop2
-		coop3
-		coop4
 	)
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -2356,8 +2355,7 @@ mapdef mansion_medium
 	params			("medium")
 	description		"_Mansion"
 	maxaliens		18
-	singleplayer	true
-	campaign		true
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -2404,8 +2402,7 @@ mapdef mansion_small
 	params			("small")
 	description		"_Mansion"
 	maxaliens		15
-	singleplayer	true
-	campaign		true
+
 	multiplayer		true
 	teams			2
 	gametypes

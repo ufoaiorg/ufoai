@@ -29,7 +29,7 @@ base mansion/mansion_
 
 tile +quarters
 	// this is the basement for all mansion_craft_drop_*
-	// 8 x info_player_start for team 3
+	// 12 x info_player_start for team 3
 {
 5 5
 0      0       0      0       0
@@ -41,8 +41,8 @@ b      +d     +d      +d      g
 
 tile +craft_drop_firebird
 	// 8 x info_human_start
-	// 8 x info_player_start for Team 1
-	// 2 x info_2x2_start for Team 1
+	// 12 x info_player_start for Team 1
+	// 4 x info_2x2_start for Team 1
 {
 5 5
 0      0       0     0       0
@@ -53,9 +53,9 @@ b      +d     +d     +d      g
 }
 
 tile +craft_drop_herakles
-	// 8 x info_human_start
-	// 8 x info_player_start for Team 1
-	// 2 x info_2x2_start for Team 1
+	// 10 x info_human_start
+	// 12 x info_player_start for Team 1
+	// 3 x info_2x2_start for Team 1
 {
 5 5
 0      0       0     0       0
@@ -66,9 +66,9 @@ b      +d     +d     +d      g
 }
 
 tile +craft_drop_raptor
-	// 8 x info_human_start
-	// 8 x info_player_start for Team 1
-	// 2 x info_2x2_start for Team 1
+	// 10 x info_human_start
+	// 12 x info_player_start for Team 1
+	// 4 x info_2x2_start for Team 1
 {
 5 5
 0      0       0     0       0
@@ -80,7 +80,7 @@ b      +d     +d     +d      g
 
 tile +main
 	// main building, the centre of the map
-	// 7 x info_alien_start
+	// 24 x info_alien_start
 	// 12 x info_civilian_start
 {
 9 7
@@ -95,10 +95,9 @@ c      +a     +a     +a     +a     +a     +a     u      u
 
 tile +small
 	// the landing zone for the small assembly
-	// 8 x info_human_start
-	// 8 x info_player_start for Team 1,  2x info_2x2_start for Team 1
-	// 8 x info_player_start for Team 2,  2x info_2x2_start for Team 2
-	// 8 x info_alien_start, placed in mansion_main
+	// 12 x info_human_start
+	// 12 x info_player_start for Team 1,  2x info_2x2_start for Team 1
+	// 12 x info_player_start for Team 2,  2x info_2x2_start for Team 2
 {
 3 5
 0       b     0
@@ -182,7 +181,7 @@ o      +o     +c     a
 
 tile +coast2
 	// the coast west of the poolhouse
-	// 8 x info_player_start team 4
+	// 12 x info_player_start team 4
 {
 3 8
 0       0     0
@@ -334,9 +333,8 @@ a      +u      +u       +u     +u     e
 }
 
 tile +craft_ufo_scout
-	// 8 x info_player_start for team 2
-	// 2 x info_2x2_start for team 2
-	// 3 x info_alien_start
+	// 12 x info_player_start for team 2
+	// 6 x info_alien_start
 {
 6 7
 0      0       0        0      0      0
@@ -349,9 +347,8 @@ a      +u      +u       +u     +u     e
 }
 
 tile +craft_ufo_fighter
-	// 8 x info_player_start for team 2
-	// 2 x info_2x2_start for team 2
-	// 3 x info_alien_start
+	// 12 x info_player_start for team 2
+	// 11 x info_alien_start
 {
 6 7
 0      0       0        0      0      0
@@ -364,9 +361,8 @@ a      +u      +u       +u     +u     e
 }
 
 tile +craft_ufo_harvester
-	// 8 x info_player_start for team 2
-	// 2 x info_2x2_start for team 2
-	// 3 x info_alien_start
+	// 12 x info_player_start for team 2
+	// 20 x info_alien_start
 {
 6 7
 0      0       0        0      0      0
@@ -379,9 +375,8 @@ a      +u      +u       +u     +u     e
 }
 
 tile +craft_ufo_supply
-	// 8 x info_player_start for team 2
-	// 2 x info_2x2_start for team 2
-	// 3 x info_alien_start
+	// 12 x info_player_start for team 2
+	// 14 x info_alien_start
 {
 6 7
 0      0       0        0      0      0
