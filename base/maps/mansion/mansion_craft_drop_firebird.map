@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "8"
 // brush 0
 {
 ( 400 434 128 ) ( 436 434 128 ) ( 404 430 128 ) tex_ctp1/hedge02 0 0 0 0.25 0.25 65024 0 0

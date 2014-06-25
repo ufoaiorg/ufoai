@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "8"
 // brush 0
 {
 ( 584 1028 120 ) ( 529 1028 120 ) ( 584 1028 60 ) tex_ctp1/bricks_c_1 60.74622 34.13336 0 0.2304688 0.234375 65024 0 0
@@ -17700,7 +17699,6 @@
 "classname" "misc_sound"
 "origin" "1228 108 113"
 "noise" "ambience/water"
-"angle" "90"
 "spawnflags" "254"
 "volume" "0.25"
 "attenuation" "3.0"
@@ -17710,7 +17708,6 @@
 "classname" "misc_sound"
 "origin" "1428 109 113"
 "noise" "ambience/water"
-"angle" "90"
 "spawnflags" "254"
 "volume" "0.25"
 "attenuation" "3.0"
