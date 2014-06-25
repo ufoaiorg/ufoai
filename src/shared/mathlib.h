@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ufotypes.h"
 #include "defines.h"
 #include <algorithm>
+#include <cstdlib>
 #include <cmath>
 
 #ifndef M_PI
