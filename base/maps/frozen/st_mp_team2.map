@@ -188,7 +188,7 @@
 // entity 2
 {
 "classname" "info_player_start"
-"origin" "208 464 28"
+"origin" "208 304 28"
 "team" "2"
 }
 // entity 3
@@ -296,4 +296,16 @@
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 "angles" "0 -90 0"
 "origin" "80 272 4"
+}
+// entity 17
+{
+"classname" "info_player_start"
+"origin" "208 464 28"
+"team" "2"
+}
+// entity 18
+{
+"classname" "info_player_start"
+"origin" "208 400 28"
+"team" "2"
 }
