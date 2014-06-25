@@ -5710,18 +5710,17 @@ mapdef rescue
 
 mapdef training_a
 {
-	map			"training_a"
-	description	"_Training Zone: Alpha"
-	teams		2
-	multiplayer	true
-	campaign	false
-	maxaliens	8
+	map				"training_a"
+	description		"_Training Zone: Alpha"
+	campaign		false
+	maxaliens		8
+
+	multiplayer		true
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
-		fight3on3
 		coop2
 		coop3
+		coop4
 	)
 }
 
