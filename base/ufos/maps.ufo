@@ -3805,10 +3805,8 @@ mapdef druglord
 	params			("default")
 	description		"_Tropical Jungle Estate"
 	multiplayer		true
-	teams			2
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3822,9 +3820,10 @@ mapdef druglord
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
@@ -3833,7 +3832,7 @@ mapdef druglord
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
