@@ -353,48 +353,32 @@ abc     +a    +a      +a      +a      +a      +a      +a      +a     abc
 
 // *********************************
 
-assembly river
+assembly large
 {
-size "8 7"
-title "_Tropical river"
-
-+r01 "1 1"
-+r02 "0 8"
-+r03 "0 8"
-+r04 "1 1"
-+r05 "1 3"
-
-+h01 "0 1"
-+h02 "0 1"
-+h03 "1 1"
-+h04 "0 1"
-
-+f01 "0 1"
-+f02 "0 5"
-+f03 "0 5"
-+f04 "0 5"
+size "9 9"
+title "_Tropical UFO"
++f01 "0 10"
++f02 "0 10"
++f03 "0 10"
++f04 "0 10"
 +f05 "0 3"
 +f06 "0 3"
 +f07 "0 3"
-
-+p01 "0 3"
-+p02 "0 3"
-
-*rm_drop +craft_drop_firebird       "1 1"
-*rm_ufo +craft_ufo_scout      "1 1"
-
++h04 "0 3"
++h01 "0 1"
++p02 "0 8"
+*rm_drop +craft_drop_firebird	"1 1"
+*rm_ufo +craft_ufo_corrupter	"1 1"
 }
 
-assembly drug
+assembly medium_drug
 {
 size "6 7"
 title "_Tropical drug"
-
 +h01 "1 2"
 +h02 "1 1"
 +h03 "1 2"
 +h04 "1 2"
-
 +f01 "0 10"
 +f02 "0 10"
 +f03 "0 10"
@@ -402,19 +386,16 @@ title "_Tropical drug"
 +f05 "0 5"
 +f06 "0 3"
 +f07 "0 3"
-
 +p01 "0 8"
 +p02 "0 8"
-
-*rm_drop +craft_drop_firebird       "1 1"
-*rm_ufo  +craft_ufo_scout     "1 1"
+*rm_drop +craft_drop_firebird	"1 1"
+*rm_ufo +craft_ufo_harvester	"1 1"
 }
 
-assembly bigufo
+assembly medium_river
 {
 size "9 9"
 title "_Tropical UFO"
-
 +f01 "0 10"
 +f02 "0 10"
 +f03 "0 10"
@@ -422,12 +403,56 @@ title "_Tropical UFO"
 +f05 "0 3"
 +f06 "0 3"
 +f07 "0 3"
-
 +h04 "0 3"
 +h01 "0 1"
-
 +p02 "0 8"
+*rm_drop +craft_drop_firebird	"1 1"
+*rm_ufo +craft_ufo_harvester	"1 1"
+}
 
-*rm_drop +craft_drop_firebird       "1 1"
-*rm_ufo  +craft_ufo_corrupter "1 1"
+assembly small_drug
+{
+size "6 7"
+title "_Tropical drug"
++h01 "1 2"
++h02 "1 1"
++h03 "1 2"
++h04 "1 2"
++f01 "0 10"
++f02 "0 10"
++f03 "0 10"
++f04 "0 10"
++f05 "0 5"
++f06 "0 3"
++f07 "0 3"
++p01 "0 8"
++p02 "0 8"
+*rm_drop +craft_drop_firebird	"1 1"
+*rm_ufo +craft_ufo_scout		"1 1"
+}
+
+assembly small_river
+{
+size "8 7"
+title "_Tropical river"
++r01 "1 1"
++r02 "0 8"
++r03 "0 8"
++r04 "1 1"
++r05 "1 3"
++h01 "0 1"
++h02 "0 1"
++h03 "1 1"
++h04 "0 1"
++f01 "0 1"
++f02 "0 5"
++f03 "0 5"
++f04 "0 5"
++f05 "0 3"
++f06 "0 3"
++f07 "0 3"
++p01 "0 3"
++p02 "0 3"
+*rm_drop +craft_drop_firebird	"1 1"
+*rm_ufo +craft_ufo_scout		"1 1"
 }

@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 640 -192 0 ) ( 775.5 -290.125 0 ) ( 832 -192 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 0 0
@@ -907,4 +906,88 @@
 "model" "models/objects/vegi/bush/bush01.md2"
 "angles" "0 -37.6665 0"
 "spawnflags" "255"
+}
+// entity 44
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "336 464 28"
+"angle" "180"
+}
+// entity 45
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "208 464 28"
+"angle" "180"
+}
+// entity 46
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "400 464 28"
+"angle" "180"
+}
+// entity 47
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "272 464 28"
+"angle" "180"
+}
+// entity 48
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "272 528 28"
+"angle" "180"
+}
+// entity 49
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "464 528 28"
+"angle" "180"
+}
+// entity 50
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "400 528 28"
+"angle" "180"
+}
+// entity 51
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "336 528 28"
+"angle" "180"
+}
+// entity 52
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "240 496 28"
+"angle" "180"
+}
+// entity 53
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "432 496 28"
+"angle" "180"
+}
+// entity 54
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "368 496 28"
+"angle" "180"
+}
+// entity 55
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "304 496 28"
+"angle" "180"
 }

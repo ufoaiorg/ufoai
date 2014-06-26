@@ -2575,13 +2575,21 @@ mapdef oriental_small
 // TROPIC RANDOM MAPS //
 ////////////////////////
 
-mapdef tropic_bigufo
+mapdef tropic_large
 {
 	map			"+tropic"
-	params		("bigufo")
+	params		("large")
 	description	"_Tropical Jungle"
-	multiplayer	false
-	maxaliens	25
+	maxaliens	30
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -2593,6 +2601,52 @@ mapdef tropic_bigufo
 	ufos
 	(
 		craft_ufo_corrupter
+	)
+
+	terrains
+	(
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
+}
+
+mapdef tropic_medium_drug
+{
+	map			"+tropic"
+	params		("medium_drug")
+	description	"_Tropical Jungle"
+	maxaliens	16
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
 		craft_ufo_harvester
 	)
 
@@ -2615,13 +2669,68 @@ mapdef tropic_bigufo
 	)
 }
 
-mapdef tropic_drug
+mapdef tropic_medium_river
 {
 	map			"+tropic"
-	params		("drug")
+	params		("medium_river")
 	description	"_Tropical Jungle"
-	multiplayer	false
-	maxaliens	14
+	maxaliens	16
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_ufo_harvester
+	)
+
+	terrains
+	(
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
+}
+
+mapdef tropic_small_drug
+{
+	map			"+tropic"
+	params		("small_drug")
+	description	"_Tropical Jungle"
+	maxaliens	8
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -2636,7 +2745,6 @@ mapdef tropic_drug
 		craft_crash_scout
 		craft_ufo_fighter
 		craft_crash_fighter
-		craft_ufo_harvester
 	)
 
 	terrains
@@ -2658,13 +2766,21 @@ mapdef tropic_drug
 	)
 }
 
-mapdef tropic_river
+mapdef tropic_small_river
 {
 	map			"+tropic"
-	params		("river")
+	params		("small_river")
 	description	"_Tropical Jungle"
-	multiplayer	false
-	maxaliens	6
+	maxaliens	8
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
