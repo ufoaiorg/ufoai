@@ -2571,56 +2571,6 @@ mapdef oriental_small
 	)
 }
 
-// SCOUT_CRASH MAP //
-
-mapdef scout_crash
-{
-	map				"+scout_crash"
-	params			("standard")
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		5
-	description		"_Crashed Scout"
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_crash_scout
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-		"cold"
-	)
-
-	cultures
-	(
-		"western"
-	)
-
-	populations
-	(
-		"suburban"
-		"village"
-		"rural"
-	)
-}
-
 ////////////////////////
 // TROPIC RANDOM MAPS //
 ////////////////////////
