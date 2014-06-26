@@ -2860,16 +2860,8 @@ mapdef bomber_city
 	maxaliens		30
 
 	multiplayer		true
-	teams			4
+	teams			1
 	gametypes (
-		fight1on1
-		fight1on1on1
-		fight2on2
-		fight2on2on2
-		fight3on3
-		fight3on3on3
-		fight4on4
-		fight4on4on4
 		coop2
 		coop3
 		coop4
@@ -2916,13 +2908,8 @@ mapdef city_disco
 	maxaliens		8
 
 	multiplayer		true
-	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
+	teams			1
+	gametypes (
 		coop2
 		coop3
 		coop4
@@ -2970,12 +2957,7 @@ mapdef community_centre
 
 	multiplayer		true
 	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
+	gametypes (
 		coop2
 		coop3
 		coop4
@@ -3023,13 +3005,8 @@ mapdef laboratory
 	civilianteam	scientist
 
 	multiplayer		true
-	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
+	teams			1
+	gametypes (
 		coop2
 		coop3
 		coop4
@@ -3078,13 +3055,8 @@ mapdef laboratory_noufo
 	civilianteam	scientist
 
 	multiplayer		true
-	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
+	teams			1
+	gametypes (
 		coop2
 		coop3
 		coop4
@@ -3131,11 +3103,8 @@ mapdef mart
 	maxaliens	16
 
 	multiplayer	true
-	teams		2
-	gametypes
-	(
-		fight1on1
-		fight2on2
+	teams		1
+	gametypes (
 		coop2
 		coop3
 		coop4
@@ -3182,10 +3151,8 @@ mapdef stadium
 	maxaliens		21
 
 	multiplayer		true
-	teams			2
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
