@@ -2001,7 +2001,7 @@
 {
 "classname" "misc_sound"
 "origin" "286 368 32"
-"noise" "ambience/firesoft.wav"
+"noise" "ambience/firesoft"
 "spawnflags" "511"
 }
 // entity 15
