@@ -30392,7 +30392,6 @@
 {
 "classname" "info_alien_start"
 "origin" "2064 880 32"
-"angle" "-1.4033e-014"
 }
 // entity 232
 {
@@ -32946,7 +32945,6 @@
 {
 "classname" "info_alien_start"
 "origin" "1680 784 32"
-"angle" "-1.4033e-014"
 }
 // entity 516
 {
@@ -32964,13 +32962,11 @@
 {
 "classname" "info_alien_start"
 "origin" "1328 848 96"
-"angle" "-1.4033e-014"
 }
 // entity 519
 {
 "classname" "info_alien_start"
 "origin" "1456 816 96"
-"angle" "-1.4033e-014"
 }
 // entity 520
 {
@@ -33006,13 +33002,11 @@
 {
 "classname" "info_alien_start"
 "origin" "2448 784 32"
-"angle" "-1.4033e-014"
 }
 // entity 526
 {
 "classname" "info_alien_start"
 "origin" "2448 880 32"
-"angle" "-1.4033e-014"
 }
 // entity 527
 {
@@ -34073,7 +34067,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 579
 {
@@ -34082,7 +34075,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 580
 {
@@ -34091,7 +34083,6 @@
 "noise" "ambience/alien_engine"
 "volume" "1.0"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 581
 {
@@ -34100,7 +34091,6 @@
 "noise" "ambience/aliencom"
 "volume" "0.8"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 582
 {
@@ -34109,7 +34099,6 @@
 "noise" "ambience/alienmachinery1"
 "volume" "0.6"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 583
 {
@@ -34118,7 +34107,6 @@
 "noise" "ambience/alienmachinery1"
 "volume" "0.6"
 "attenuation" "2.8"
-"angle" "90"
 }
 // entity 584
 {
