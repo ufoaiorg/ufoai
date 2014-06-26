@@ -3405,6 +3405,53 @@ mapdef village_small
 	)
 }
 
+mapdef village_small_crash
+{
+	map				"+village"
+	params			("small_crash")
+	description		"_Crashed Scout"
+	maxaliens		8
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_crash_fighter
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+		"cold"
+	)
+
+	cultures
+	(
+		"western"
+	)
+
+	populations
+	(
+		"suburban"
+		"village"
+		"rural"
+	)
+}
+
 ////////////////////
 // VILLAGE 2 MAPS //
 ////////////////////

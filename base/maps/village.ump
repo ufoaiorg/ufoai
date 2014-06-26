@@ -5,6 +5,7 @@
 // Tiletypes
 // ------
 // a: common tile
+// c: craft, usually a dropship or UFO
 // h: street horizontally
 // v: street vertically
 
@@ -111,6 +112,20 @@ a		+cv		a		0
 a		+c		+ch		h
 a		+cv		a		0
 0		v		0		0
+}
+
+// crashed UFOs -----------------------------------------------------*
+
+tile +craft_crash_fighter
+{
+10 7
+0		x		x		x		x		x		x		x		x		0
+x		+c		+c		+c		+a		+a		+a		+a		+a		0
+x		+c		+c		+c		+a		+a		+a		+a		+a		0
+x		+c		+c		+c		+a		+a		+a		+a		+a		0
+x		+c		+c		+c		+a		+a		0		0		0		0
+x		+h		+c		+h		h		0		0		0		0		0
+x		0		0		0		0		0		0		0		0		0
 }
 
 // street tiles -----------------------------------------------------*
@@ -859,6 +874,18 @@ tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_fighter "1 1"
+}
+
+assembly small_crash
+{
+size "8 5"
+title "_Village"
++garage_02			"0 1"
++nature_01			"0 1"
+tileset nature		"0 2"
+tileset street_h	"0 5"
++start "1 1"
+*rm_ufo +craft_crash_fighter "1 1"
 }
 
 // test assemblies --------------------------------------------------*
