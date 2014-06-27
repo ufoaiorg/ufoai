@@ -4966,7 +4966,7 @@ mapdef mine
 	map				"mine"
 	description		"_Old Mine"
 	civilianteam	miner
-	maxaliens		26
+	maxaliens		12
 
 	multiplayer	true
 	teams		4
