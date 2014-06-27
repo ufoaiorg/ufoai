@@ -998,6 +998,7 @@ static bool ParseMapEntity (const char* filename, const char* entityString)
 			epair_t* e = AddEpair(key, value, num_entities);
 			if (!config.fixMap || !EpairCheckForDuplicate(mapent, e)) {
 				e->next = mapent->epairs;
+				e->ump = true;
 				mapent->epairs = e;
 			}
 		} while (true);
@@ -1017,7 +1018,8 @@ static inline void WriteMapEntities (qFILE* f, const epair_t* e)
 	if (e->next)
 		WriteMapEntities(f, e->next);
 
-	FS_Printf(f, "\"%s\" \"%s\"\n", e->key, e->value);
+	if (!e->ump)
+		FS_Printf(f, "\"%s\" \"%s\"\n", e->key, e->value);
 }
 
 

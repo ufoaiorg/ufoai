@@ -37,6 +37,7 @@ typedef struct epair_s {
 	struct epair_s* next;		/**< the next entry in the key, value list */
 	const char* key;			/**< the name of the parameter */
 	const char* value;			/**< the value of the parameter */
+	bool ump;					/**< true if the origin was the ump, not the map file */
 } epair_t;
 
 /**

@@ -438,6 +438,7 @@ epair_t* AddEpair (const char* key, const char* value, int entNum)
 	if (strlen(value) >= MAX_VALUE - 1)
 		Sys_Error("ParseEpar: token too long");
 	e->value = value;
+	e->ump = false;
 
 	return e;
 }
