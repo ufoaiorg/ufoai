@@ -52,8 +52,6 @@ class ColourScheme {
 		ColourItem _emptyColour;
 
 	public:
-		// Constructors
-		ColourScheme() {};
 		// Constructs a ColourScheme from a given xml::node
 		ColourScheme(xml::Node& schemeNode);
 
