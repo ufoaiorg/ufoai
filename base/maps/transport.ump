@@ -2,13 +2,18 @@
 // Transport
 // *********************************
 
-base transport/tra_
-
 // Tiletypes:
 // ----------
 // +: tile contains something
 // a: main
 // b: dropship
+
+base transport/tra_
+
+worldspawn {
+	"maxteams"		"2"
+	"maxlevel"		"3"
+}
 
 tile +main
 {
