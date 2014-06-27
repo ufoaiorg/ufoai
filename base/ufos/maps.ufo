@@ -4223,21 +4223,19 @@ mapdef solarplant
 
 mapdef spedition
 {
-	map			"+spedition"
-	params		("default")
-	description	"_Workshop"
-	multiplayer	true
-	teams		2
+	map				"+spedition"
+	params			("default")
+	description		"_Workshop"
+	civilianteam	worker
+	maxaliens		8
+
+	multiplayer		true
+	teams			2
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens		8
-
-	civilianteam	worker
 
 	aircraft
 	(
@@ -4246,9 +4244,10 @@ mapdef spedition
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
@@ -4258,7 +4257,7 @@ mapdef spedition
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
