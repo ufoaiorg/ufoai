@@ -568,7 +568,7 @@ assembly mp2p_01
 }
 
 
-assembly mp2p_02
+assembly mp3p_01
 {
 	size "10 10"
 
@@ -582,12 +582,12 @@ assembly mp2p_02
 	fix +st_south01						"5 2"
 	fix +sh1x1_01						"6 2"
 	fix +st_north01						"7 2"
-	fix tileset sh						"8 2"
+	fix +mp3							"8 2"
 	fix tileset sv						"2 3"
 	fix tileset sv						"7 3"
 	fix tileset sv						"2 5"
 	fix tileset sv						"7 5"
-	fix tileset sh						"0 7"
+	fix +mp4							"0 7"
 	fix +st_south01						"2 7"
 	fix +sh1x1_01						"3 7"
 	fix +st_north01						"4 7"

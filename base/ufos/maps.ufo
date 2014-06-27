@@ -5625,22 +5625,26 @@ mapdef vil2_mp2p
 	)
 }
 
-mapdef vil2_mp4p
+mapdef vil2_mp3p
 {
 	map				"+village2"
-	params			("mp2p_02")
-	description		"_Village MP (2)"
-	multiplayer		true
+	params			("mp3p_01")
+	description		"_Village MP (3)"
+	maxaliens		30
 	campaign		false
 	singleplayer	false
-	teams			4
-	maxaliens		30
 
+	multiplayer		true
+	teams			4
 	gametypes
 	(
 		fight1on1
 		fight2on2
 		fight3on3
+		fight4on4
+		coop1
+		coop2
+		coop3
 	)
 }
 
