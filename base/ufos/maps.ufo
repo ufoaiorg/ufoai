@@ -4871,16 +4871,16 @@ mapdef gate
 {
 	map				"gate"
 	description		"_Secret Depot"
+	maxaliens		9
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		9
 
 	aircraft
 	(
@@ -4963,10 +4963,13 @@ mapdef harbour
 
 mapdef mine
 {
-	map			"mine"
-	description	"_Old Mine"
+	map				"mine"
+	description		"_Old Mine"
+	civilianteam	miner
+	maxaliens		26
+
 	multiplayer	true
-	teams		3
+	teams		4
 	gametypes (
 		fight1on1
 		fight1on1on1
@@ -4978,9 +4981,6 @@ mapdef mine
 		coop3
 		coop4
 	)
-	maxaliens	26
-
-	civilianteam	miner
 
 	aircraft
 	(
