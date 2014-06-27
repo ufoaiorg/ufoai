@@ -5416,15 +5416,15 @@ mapdef village
 	map				"village"
 	description		"_Suburban City"
 	multiplayer		true
+	maxaliens		22
+
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		22
 
 	aircraft
 	(
