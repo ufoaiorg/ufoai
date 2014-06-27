@@ -1,8 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxteams" "3"
-"maxlevel" "5"
 "angles_night" "-80 40"
 "angles_day" "-75 40"
 // brush 0
