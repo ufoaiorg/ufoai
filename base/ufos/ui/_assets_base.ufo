@@ -237,9 +237,6 @@ component HospitalItem extends panel {
 		bgcolor			"0.56 0.81 0.76 0.1"
 		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.2" }
 		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
-		onClick {
-			cmd "ui_push hospital_employee <node:this.id@integer>;"
-		}
 	}
 	data id {
 		integer		0
@@ -255,8 +252,9 @@ component HospitalItem extends panel {
 	}
 	string name {
 		pos				"30 0"
-		size			"420 28"
+		size			"280 28"
 		color			"0.56 0.81 0.76 1"
+		longlines		LONGLINES_PRETTYCHOP
 		contentalign	ALIGN_CL
 		ghost			true
 	}
@@ -271,11 +269,9 @@ component HospitalItem extends panel {
 	}
 
 	panel wounds {
-		pos 	"360 0"
+		pos 	"310 0"
 		size	"28 28"
-		onClick {
-			cmd "ui_push hospital_employee <node:this.id@integer>;"
-		}
+		ghost		true
 	}
 
 	container implant {
@@ -287,9 +283,7 @@ component HospitalItem extends panel {
 	image icon {
 		pos 	"460 0"
 		size	"28 28"
-		onClick {
-			cmd "ui_push hospital_employee <node:this.id@integer>;"
-		}
+		ghost		true
 	}
 }
 
