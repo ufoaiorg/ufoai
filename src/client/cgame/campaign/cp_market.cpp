@@ -58,7 +58,7 @@ int BS_GetItemOnMarket (const objDef_t* od)
  * @param[in] od Object definition (the item itself)
  * @param[in] amount Non-negative number of items to add
  */
-static void BS_AddItemToMarket (const objDef_t* od, int amount)
+void BS_AddItemToMarket (const objDef_t* od, int amount)
 {
 	market_t* market = BS_GetMarket();
 	assert(amount >= 0);
@@ -417,7 +417,7 @@ bool BS_SellItem (const objDef_t* od, base_t* base, int count)
 	if (base) {
 		if (B_ItemInBase(od, base) < count)
 			return false;
-		B_AddToStorage(base, od, -1 * count);
+		B_AddToStorage(base, od, -count);
 	}
 
 	BS_AddItemToMarket(od, count);
