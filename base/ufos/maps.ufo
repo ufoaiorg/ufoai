@@ -5155,22 +5155,20 @@ mapdef pipes_const
 {
 	map				"pipes_const"
 	description		"_Sewage Pipe Construction"
+	civilianteam	miner
+	maxaliens		21
+
 	multiplayer		true
-	teams			3
+	teams			2
 	gametypes (
 		fight1on1
-		fight1on1on1
 		fight2on2
-		fight2on2on2
 		fight3on3
-		fight3on3on3
+		fight4on4
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens		21
-
-	civilianteam	miner
 
 	ufos
 	(
