@@ -149,6 +149,7 @@ static void UI_Restart_f (void)
 	R_FontShutdown();
 	UI_Init();
 	R_FontInit();
+	Com_Printf("UI_Restart\n");
 	Com_Printf("%i ui script files\n", FS_BuildFileList("ufos/ui/*.ufo"));
 	FS_NextScriptHeader(nullptr, nullptr, nullptr);
 	const char* type, *name, *text;
@@ -173,6 +174,13 @@ static void UI_Restart_f (void)
 			UI_ParseUIModel(name, &text);
 		else if (Q_streq(type, "sprite"))
 			UI_ParseSprite(name, &text);
+		else if (Q_streq(type, "lua")) {
+			Com_Printf ("found lua file: %s\n", name);
+			/* TODO - implementation */
+			/* skip the file */
+			text = nullptr;
+		}
+
 	}
 
 	CLMN_Init();
