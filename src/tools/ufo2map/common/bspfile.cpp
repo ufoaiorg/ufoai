@@ -565,9 +565,7 @@ const char* ValueForKey (const entity_t* ent, const char* key)
 
 vec_t FloatForKey (const entity_t* ent, const char* key)
 {
-	const char* k;
-
-	k = ValueForKey(ent, key);
+	const char* k = ValueForKey(ent, key);
 	return atof(k);
 }
 
