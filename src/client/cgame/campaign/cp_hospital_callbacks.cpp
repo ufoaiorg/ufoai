@@ -95,71 +95,6 @@ static inline void HOS_Entry (const Employee& employee, float injuryLevel)
 	HOS_EntryWoundData(chr);
 }
 
-/**
- * @brief Calls all the ui confuncs to show the implants of the given character
- * @param[in] c The character to show the implants for
- */
-static void HOS_UpdateCharacterImplantList (const character_t& c)
-{
-	cgi->UI_ExecuteConfunc("hospital_employee_clear_implants");
-	for (int i = 0; i < lengthof(c.implants); i++) {
-		const implant_t& implant = c.implants[i];
-		const implantDef_t* def = implant.def;
-		if (def == nullptr)
-			continue;
-		const objDef_t& od = *def->item;
-		cgi->UI_ExecuteConfunc("hospital_employee_add_implant %i \"%s\" \"%s\" %i %i %i %i",
-				def->idx, _(od.name), od.image, def->installationTime,
-				implant.installedTime, def->removeTime, implant.removedTime);
-	}
-}
-
-static Item* HOS_GetImplant (const character_t& chr, const implantDef_t& def)
-{
-	Item* item = chr.inv.getContainer2(CID_IMPLANT);
-	while (item) {
-		if (item->def() == def.item) {
-			return item;
-		}
-		item = item->getNext();
-	}
-	return nullptr;
-}
-
-static void HOS_ImplantChange_f (void)
-{
-	if (cgi->Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <ucn> <implantid>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	const int ucn = atoi(cgi->Cmd_Argv(1));
-	Employee* e = E_GetEmployeeFromChrUCN(ucn);
-	if (e == nullptr) {
-		Com_Printf("No employee for ucn %i found\n", ucn);
-		return;
-	}
-
-	character_t& chr = e->chr;
-	const int odIdx = atoi(cgi->Cmd_Argv(2));
-	const objDef_t* od = INVSH_GetItemByIDX(odIdx);
-	if (od == nullptr)
-		return;
-	const implantDef_t* def = INVSH_GetImplantForObjDef(od);
-	if (def == nullptr)
-		return;
-	const implant_t* implant = e->isSoldier() ? CHRSH_ApplyImplant(chr, *def) : nullptr;
-	if (implant == nullptr) {
-		Item* item = HOS_GetImplant(chr, *def);
-		if (item != nullptr) {
-			const Container& container = chr.inv.getContainer(CID_IMPLANT);
-			cgi->INV_RemoveFromInventory(&chr.inv, container.def(), item);
-			return;
-		}
-	}
-	HOS_UpdateCharacterImplantList(chr);
-}
-
 static void HOS_ImplantDetails_f (void)
 {
 	const int odIdx = atoi(cgi->Cmd_Argv(1));
@@ -169,6 +104,7 @@ static void HOS_ImplantDetails_f (void)
 	const implantDef_t* def = INVSH_GetImplantForObjDef(od);
 	if (def == nullptr)
 		return;
+	Com_Printf("implant: %s\n", def->id);
 }
 
 /**
@@ -186,6 +122,7 @@ static void HOS_Init_f (void)
 		return;
 	}
 
+	bool containerSet = false;
 	for (int type = 0; type < MAX_EMPL; type++) {
 		E_Foreach(type, employee) {
 			/* Don't show soldiers who are not in this base or gone in mission */
@@ -193,58 +130,20 @@ static void HOS_Init_f (void)
 				continue;
 			const float injuryLevel = HOS_GetInjuryLevel(&employee->chr);
 			HOS_Entry(*employee, injuryLevel);
+			if (containerSet)
+				continue;
+			CP_SetEquipContainer(&employee->chr);
+			containerSet = true;
 		}
 	}
 }
 
-/**
- * @brief This is the initialization function for the hospital_employee menu
- */
-static void HOS_EmployeeInit_f (void)
-{
-	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	const int ucn = atoi(cgi->Cmd_Argv(1));
-	Employee* emp = E_GetEmployeeFromChrUCN(ucn);
-	if (emp == nullptr)
-		return;
-
-	character_t& echr = emp->chr;
-	const chrScoreGlobal_t& score = echr.score;
-	const char* rank = "";
-	const char* rankImage = "";
-
-	if (score.rank >= 0) {
-		const rank_t* r = CL_GetRankByIdx(score.rank);
-		rank = va(_("Rank: %s"), _(r->name));
-		rankImage = r->image;
-	}
-
-	base_t* base = emp->baseHired;
-	CP_CleanTempInventory(base);
-	equipDef_t unused = base->storage;
-	CP_CleanupTeam(base, &unused);
-	CP_SetEquipContainer(&echr);
-	cgi->UI_ContainerNodeUpdateEquipment(&base->bEquipment, &unused);
-
-	cgi->UI_ExecuteConfunc("hospital_employee_show %i \"%s\" \"%s\" %i \"%s\" %i %i %i \"%s\" \"%s\" %i",
-			ucn, echr.name, CHRSH_CharGetBody(&echr), echr.bodySkin, CHRSH_CharGetHead(&echr),
-			echr.headSkin, echr.HP, echr.maxHP, rank, rankImage, emp->isSoldier() ? 1 : 0);
-
-	cgi->CL_UpdateCharacterValues(&echr);
-	HOS_UpdateCharacterImplantList(echr);
-}
-
 static const cmdList_t hospitalCmds[] = {
-	{"hosp_empl_init", HOS_EmployeeInit_f, "Init function for hospital employee menu"},
 	{"hosp_init", HOS_Init_f, "Init function for hospital menu"},
-	{"hosp_implant_change", HOS_ImplantChange_f, "Assign or remove an implant to an employee"},
 	{"hosp_implant_details", HOS_ImplantDetails_f, "Print details for an implant"},
 	{nullptr, nullptr, nullptr}
 };
+
 void HOS_InitCallbacks (void)
 {
 	cgi->Cmd_TableAddList(hospitalCmds);

@@ -374,6 +374,7 @@ bool E_HireEmployee (base_t* base, Employee* employee)
 		case EMPL_SCIENTIST:
 		case EMPL_SOLDIER:
 			CAP_AddCurrent(base, CAP_EMPLOYEES, 1);
+			/** @todo shouldn't we link CID_EQUIP here already to the base inventory equip container? */
 			break;
 		case EMPL_ROBOT:
 			CAP_AddCurrent(base, CAP_ITEMS, UGV_SIZE);

@@ -2,41 +2,6 @@
 // HOSPITAL MENU
 // ==================
 
-component cmpHospitalImplant extends panel {
-	{
-		size	"210 35"
-		bgcolor "0 0 0 0.7"
-		border	1
-		bordercolor		"1 1 1 0.2"
-	}
-
-	string name {
-		string	""
-		size	"170 17"
-		pos		"35 5"
-		ghost	true
-		font	"f_verysmall"
-	}
-
-	image img {
-		src		""
-		pos		"5 5"
-		size	"25 25"
-		ghost	true
-	}
-
-	bar timeremaining {
-		pos		"35 22"
-		size	"170 8"
-		current	0
-		max		0
-		disabled	true
-		border	1
-		bordercolor	"1 1 1 0.2"
-		ghost	true
-	}
-}
-
 window hospital
 {
 	{
@@ -134,66 +99,6 @@ window hospital
 			}
 		}
 	}
-	// Back to geoscape
-	Geoscape geoscape_button
-	{
-		onClick			{ cmd "ui_pop; ui_pop;" }
-	}
-	// ==================
-	// init function
-	// ==================
-
-	func onWindowOpened
-	{
-		call *node:root.base_container.mainBody.patients@removeAllchild
-		cmd "hosp_init;"
-	}
-}
-
-// ======================
-// HOSPITAL EMPLOYEE MENU
-// ======================
-window hospital_employee
-{
-	{
-		fill		true
-	}
-
-	// Base name and container panel
-	BaseContainerPanel base_container {
-		// Hospital panel
-		panel mainBody {
-			// Title bar
-			panel header {
-				{}
-				string title {
-					string			"_Hospital"
-				}
-			}
-		}
-	}
-
-	data ucn {
-		integer	-1
-	}
-
-	actor_info local {
-		pos		"20 100"
-	}
-
-	panel stats {
-		{
-			pos		"750 493"
-			size	"250 270"
-			border	2
-			bordercolor	"0.56 0.81 0.76 1"
-			layout	LAYOUT_TOP_DOWN_FLOW
-			layoutMargin 0
-		}
-		abilities abilities {}
-		skillbars skills {}
-		healthbar health {}
-	}
 
 	panel implants {
 		{
@@ -214,10 +119,8 @@ window hospital_employee
 				*node:root.implants.equip_scroll@viewsize = <viewsize>
 				*node:root.implants.equip_scroll@fullsize = <fullsize>
 			}
-			onSelect { cmd "hosp_implant_details <lastselectedid>;" }
-			onChange { cmd "hosp_implant_change <node:root.ucn@integer> <lastselectedid>;" }
+			onSelect { cmd "object_update <lastselectedid> update_item_list 0;" }
 		}
-
 		vscrollbar equip_scroll {
 			image	"ui/scrollbar_v"
 			pos 	"242 20"
@@ -227,11 +130,9 @@ window hospital_employee
 				*node:root.implants.equip@viewpos = <current>
 			}
 		}
-
 		container implant {
 			pos "20 240"
 		}
-
 		panel list {
 			pos "20 280"
 			size "236 190"
@@ -240,88 +141,19 @@ window hospital_employee
 			ghost			true
 		}
 	}
+
 	// Back to geoscape
 	Geoscape geoscape_button
 	{
-		onClick			{ cmd "ui_pop; ui_pop; ui_pop;" }
+		onClick			{ cmd "ui_pop; ui_pop;" }
 	}
+	// ==================
+	// init function
+	// ==================
 
-	// Fuzzy screen effect (see assets.ufo)
-	fuzzyScreen overlay { }
-
-	/**
-	 * @param <1> UCN
-	 * @param <2> Name
-	 * @param <3> Body
-	 * @param <4> BodySkin
-	 * @param <5> Head
-	 * @param <6> HeadSkin
-	 * @param <7> HP
-	 * @param <8> MaxHP
-	 * @param <9> Rank
-	 * @param <10> Rank image
-	 * @param <11> 1 if implants are possible, 0 if not
-	 */
-	confunc hospital_employee_show {
-		*node:root.ucn@integer = <1>
-		*node:root.name@string = "<2>"
-		*node:root.local.body@src = "<3>"
-		*node:root.local.body@skin = <4>
-		*node:root.local.body.head@src = "<5>"
-		*node:root.local.body.head@skin = <6>
-		*node:root.stats.health.hp.valuenum@string = "<7>"
-		*node:root.stats.health.hp.valuebar@current = <7>
-		*node:root.stats.health.hp.valuebar@max = <8>
-		*node:root.local.rank_lbl@string = <9>
-		*node:root.local.rank_img@src = <10>
-		if ( <11> == 1 ) {
-			*node:root.implants@invis = false
-		} else {
-			*node:root.implants@invis = true
-		}
-	}
-
-	/**
-	 * @param <1> index
-	 * @param <2> skill
-	 * @param <3> skill description (Poor, Mediocre, Average, ...)
-	 */
-	confunc hospital_employee_set_values {
-		*node:root.bar<1>.bar@current = "<2>"
-		*node:root.bar<1>.val@string = "<3> (<2>)"
-	}
-
-	/**
-	 * @param <1> implant id
-	 * @param <2> implant name: translated name of the implant
-	 * @param <3> implant image
-	 * @param <4> installation time: The complete time (days) it needs to be fully installed
-	 * @param <5> installed time: The time (days) that is still needs to be fully installed
-	 * @param <6> remove time: The complete time (days) it needs to be fully removed
-	 * @param <7> removed time: The time (days) that is still needs to be fully removed
-	 */
-	confunc hospital_employee_add_implant {
-		call *node:root.implants.list@createChild("implant<1>", "cmpHospitalImplant")
-		*node:root.implants.list.implant<1>.name@string = <2>
-		*node:root.implants.list.implant<1>.img@src = <3>
-		if ( <5> > 0 ) {
-			*node:root.implants.list.implant<1>.timeremaining@max = <4>
-			*node:root.implants.list.implant<1>.timeremaining@current = <5>
-			*node:root.implants.list.implant<1>.timeremaining@invis = false
-		} elif ( <7> > 0 ) {
-			*node:root.implants.list.implant<1>.timeremaining@max = <6>
-			*node:root.implants.list.implant<1>.timeremaining@current = <7>
-			*node:root.implants.list.implant<1>.timeremaining@invis = false
-		} else {
-			*node:root.implants.list.implant<1>.timeremaining@invis = true
-		}
-	}
-
-	confunc hospital_employee_clear_implants {
-		call *node:root.implants.list@removeAllchild
-	}
-
-	func onWindowOpened {
-		cmd "hosp_empl_init <1>;"
+	func onWindowOpened
+	{
+		call *node:root.base_container.mainBody.patients@removeAllchild
+		cmd "hosp_init;"
 	}
 }
