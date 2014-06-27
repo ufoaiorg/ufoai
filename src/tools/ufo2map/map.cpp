@@ -996,8 +996,10 @@ static bool ParseMapEntity (const char* filename, const char* entityString)
 				break;
 			const char* value = Mem_StrDup(token);
 			epair_t* e = AddEpair(key, value, num_entities);
-			e->next = mapent->epairs;
-			mapent->epairs = e;
+			if (!config.fixMap || !EpairCheckForDuplicate(mapent, e)) {
+				e->next = mapent->epairs;
+				mapent->epairs = e;
+			}
 		} while (true);
 	}
 	return true;

@@ -415,6 +415,16 @@ static inline bool IsInvalidEntityToken (const char* token)
 	return Q_streq(token, "}") || Q_streq(token, "{");
 }
 
+bool EpairCheckForDuplicate (const entity_t* ent, const epair_t *e)
+{
+	for (const epair_t* ep = ent->epairs; ep; ep = ep->next) {
+		if (Q_streq(ep->key, e->key)) {
+			return true;
+		}
+	}
+	return false;
+}
+
 epair_t* AddEpair (const char* key, const char* value, int entNum)
 {
 	epair_t* e = Mem_AllocType(epair_t);
@@ -550,9 +560,7 @@ void SetKeyValue (entity_t* ent, const char* key, const char* value)
 
 const char* ValueForKey (const entity_t* ent, const char* key)
 {
-	const epair_t* ep;
-
-	for (ep = ent->epairs; ep; ep = ep->next)
+	for (const epair_t* ep = ent->epairs; ep; ep = ep->next)
 		if (Q_streq(ep->key, key))
 			return ep->value;
 	return "";
