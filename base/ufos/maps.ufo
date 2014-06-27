@@ -4694,16 +4694,6 @@ mapdef estate
 	description		"_Estate"
 	maxaliens		6
 
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-
 	aircraft
 	(
 		// any
