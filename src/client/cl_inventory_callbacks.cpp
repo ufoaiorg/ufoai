@@ -192,6 +192,16 @@ void INV_ItemDescription (const objDef_t* od)
 				Com_sprintf(itemText, sizeof(itemText), _("%s. No detailed info available.\n"), od->isAmmo() ? _("Ammunition") : _("Weapon"));
 				Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
 			}
+		} else if (od->implant) {
+			//const implantDef_t* implant = INVSH_GetImplantForObjDef(od);
+			/* the strengthen effect that is bound to the implant no matter whether the user triggers some action */
+			itemEffect_t* effect = od->strengthenEffect;
+			if (effect != nullptr) {
+				Q_strcat(itemText, sizeof(itemText), _("Permanent:\t%s\n"), (effect->isPermanent ? _("Yes") : _("No")));
+				Q_strcat(itemText, sizeof(itemText), _("Duration:\t%i\n"), effect->duration);
+				Q_strcat(itemText, sizeof(itemText), _("Period:\t%i\n"), effect->period);
+			}
+			Q_strcat(itemText, sizeof(itemText), _("Price:\t%i c\n"), od->price);
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 			Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
