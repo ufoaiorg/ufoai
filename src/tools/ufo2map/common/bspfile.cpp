@@ -545,18 +545,14 @@ const char* UnparseEntities (void)
 
 void SetKeyValue (entity_t* ent, const char* key, const char* value)
 {
-	epair_t* ep;
-
-	for (ep = ent->epairs; ep; ep = ep->next)
+	for (epair_t* ep = ent->epairs; ep; ep = ep->next)
 		if (Q_streq(ep->key, key)) {
 			ep->value = Mem_StrDup(value);
 			return;
 		}
-	ep = Mem_AllocType(epair_t);
-	ep->next = ent->epairs;
-	ent->epairs = ep;
-	ep->key = Mem_StrDup(key);
-	ep->value = Mem_StrDup(value);
+	epair_t* e = AddEpair(Mem_StrDup(key), Mem_StrDup(value), -1);
+	e->next = ent->epairs;
+	ent->epairs = e;
 }
 
 const char* ValueForKey (const entity_t* ent, const char* key)
