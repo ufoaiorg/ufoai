@@ -1060,7 +1060,6 @@ void WriteMapFile (const char* filename)
 		Sys_Error("Could not open %s for writing", filename);
 
 	removed = 0;
-	FS_Printf(&f, "\n");
 	for (int i = 0; i < num_entities; i++) {
 		const entity_t* mapent = &entities[i];
 		const epair_t* e = mapent->epairs;
