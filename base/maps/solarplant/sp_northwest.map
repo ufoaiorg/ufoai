@@ -7175,3 +7175,9 @@
 ( 121 320 10 ) ( 115 320 6 ) ( 121 448 10 ) tex_common/nodraw 30 0 0 1 -1 65280 0 0
 }
 }
+// entity 90
+{
+"classname" "info_alien_start"
+"origin" "592 528 92"
+"angle" "-180"
+}
