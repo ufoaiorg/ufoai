@@ -3833,18 +3833,8 @@ mapdef eaglenest
 {
 	map				"+eaglenest"
 	params			("default")
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		5
-
 	description		"_Mountain Estate"
+	maxaliens		5
 
 	aircraft
 	(
@@ -3853,9 +3843,10 @@ mapdef eaglenest
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
