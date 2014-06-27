@@ -157,19 +157,19 @@ void CheckEntities (void)
 
 		/* check keys in the entity definition - make sure mandatory ones are present */
 		for (kd = ed->keyDefs; kd->name; kd++) {
-			if (kd->flags & ED_MANDATORY) {
-				const char* keyNameInEnt = ValueForKey(e, kd->name);
-				if (keyNameInEnt[0] == '\0') {
-					const char* defaultVal = kd->defaultVal;
-					const bool hasDefault = defaultVal ? true : false;
-					Check_Printf(VERB_CHECK, hasDefault, i, -1, "Mandatory key missing from entity: %s in %s", kd->name, name);
-					if (defaultVal) {
-						Check_Printf(VERB_CHECK, hasDefault, i, -1, ", supplying default: %s", defaultVal);
-						SetKeyValue(e, kd->name, defaultVal);
-					}
-					Check_Printf(VERB_CHECK, hasDefault, i, -1, "\n");
-				}
+			if (!(kd->flags & ED_MANDATORY))
+				continue;
+			const char* keyNameInEnt = ValueForKey(e, kd->name);
+			if (Q_strnull(keyNameInEnt))
+				continue;
+			const char* defaultVal = kd->defaultVal;
+			const bool hasDefault = defaultVal ? true : false;
+			Check_Printf(VERB_CHECK, hasDefault, i, -1, "Mandatory key missing from entity: %s in %s", kd->name, name);
+			if (defaultVal) {
+				Check_Printf(VERB_CHECK, hasDefault, i, -1, ", supplying default: %s", defaultVal);
+				SetKeyValue(e, kd->name, defaultVal);
 			}
+			Check_Printf(VERB_CHECK, hasDefault, i, -1, "\n");
 		}
 	}
 }
