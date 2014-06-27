@@ -4778,6 +4778,8 @@ mapdef ferry
 	map				"ferry"
 	description		"_Ferry"
 	size			"medium"
+	maxaliens		6
+
 	teams			4
 	multiplayer		true
 	gametypes (
@@ -4785,11 +4787,7 @@ mapdef ferry
 		fight1on1on1
 		fight2on2
 		fight2on2on2
-		coop2
-		coop3
-		coop4
 	)
-	maxaliens		6
 
 	aircraft
 	(
