@@ -11990,7 +11990,7 @@
 // entity 89
 {
 "classname" "info_alien_start"
-"origin" "-976 336 26"
+"origin" "-944 336 26"
 }
 // entity 90
 {
@@ -12197,7 +12197,7 @@
 // entity 127
 {
 "classname" "info_player_start"
-"origin" "912 -240 32"
+"origin" "816 -144 32"
 "team" "1"
 "angle" "180"
 }
@@ -12260,7 +12260,7 @@
 // entity 136
 {
 "classname" "info_player_start"
-"origin" "688 -432 96"
+"origin" "816 -80 32"
 "team" "1"
 "angle" "180"
 }
@@ -12303,14 +12303,16 @@
 // entity 143
 {
 "classname" "info_player_start"
-"origin" "-528 -880 154"
+"origin" "-976 -816 154"
 "team" "4"
+"angle" "90"
 }
 // entity 144
 {
 "classname" "info_player_start"
-"origin" "-976 336 26"
+"origin" "-1008 144 26"
 "team" "2"
+"angle" "-90"
 }
 // entity 145
 {
@@ -12351,8 +12353,9 @@
 // entity 151
 {
 "classname" "info_player_start"
-"origin" "-112 -496 26"
+"origin" "-176 -656 26"
 "team" "3"
+"angle" "180"
 }
 // entity 152
 {
@@ -12407,8 +12410,9 @@
 // entity 160
 {
 "classname" "info_player_start"
-"origin" "-176 -912 154"
+"origin" "-272 -912 154"
 "team" "4"
+"angle" "90"
 }
 // entity 161
 {
@@ -19995,4 +19999,65 @@
 "model" "models/objects/vegi/plants/plantb.md2"
 "spawnflags" "254"
 "angles" "0 -90 0"
+}
+// entity 307
+{
+"classname" "info_player_start"
+"origin" "912 -176 32"
+"team" "1"
+"angle" "180"
+}
+// entity 308
+{
+"classname" "info_player_start"
+"origin" "912 -240 32"
+"team" "1"
+"angle" "180"
+}
+// entity 309
+{
+"classname" "info_player_start"
+"origin" "-976 336 26"
+"team" "2"
+}
+// entity 310
+{
+"classname" "info_player_start"
+"origin" "-1008 272 26"
+"team" "2"
+"angle" "-90"
+}
+// entity 311
+{
+"classname" "info_player_start"
+"origin" "-976 208 26"
+"team" "2"
+"angle" "-90"
+}
+// entity 312
+{
+"classname" "info_player_start"
+"origin" "-112 -496 26"
+"team" "3"
+}
+// entity 313
+{
+"classname" "info_player_start"
+"origin" "-208 -560 26"
+"team" "3"
+"angle" "180"
+}
+// entity 314
+{
+"classname" "info_player_start"
+"origin" "-528 -880 154"
+"team" "4"
+"angle" "90"
+}
+// entity 315
+{
+"classname" "info_player_start"
+"origin" "-880 -912 154"
+"team" "4"
+"angle" "90"
 }

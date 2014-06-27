@@ -5249,6 +5249,8 @@ mapdef rivertown
 {
 	map				"rivertown"
 	description		"_Old Town Center"
+	maxaliens		16
+
 	multiplayer		true
 	teams			4
 	gametypes (
@@ -5264,7 +5266,6 @@ mapdef rivertown
 		coop3
 		coop4
 	)
-	maxaliens		16
 
 	aircraft
 	(
