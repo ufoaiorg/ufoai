@@ -455,9 +455,13 @@ static void UI_ContainerNodeDrawSingle (uiNode_t* node, const objDef_t* highligh
 				UI_DrawItem(node, pos, item, -1, -1, scale, color);
 			}
 		}
-	} else if (ui_inventory->getContainer2(contType->id)) {
+		return;
+	}
+
+	const Item* item = ui_inventory->getContainer2(contType->id);
+	if (item) {
+		assert(item->def());
 		bool disabled = false;
-		const Item* item;
 
 		if (ui_inventory->getRightHandContainer()) {
 			item = ui_inventory->getRightHandContainer();
@@ -472,9 +476,6 @@ static void UI_ContainerNodeDrawSingle (uiNode_t* node, const objDef_t* highligh
 			}
 		}
 
-		item = ui_inventory->getContainer2(contType->id);
-		assert(item);
-		assert(item->def());
 		if (highlightType && highlightType->isLoadableInWeapon(item->def())) {
 			if (disabled)
 				Vector4Copy(colorDisabledLoadable, color);
@@ -493,7 +494,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t* node, const objDef_t* highligh
 }
 
 /**
- * @brief Draw a grip container
+ * @brief Draw a grid container
  */
 static void UI_ContainerNodeDrawGrid (uiNode_t* node, const objDef_t* highlightType)
 {
