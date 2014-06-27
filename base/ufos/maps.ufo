@@ -3878,15 +3878,6 @@ mapdef gasstation
 	map				"+gasstation"
 	params			("default")
 	description		"_Gas Station"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
 	maxaliens		4
 
 	aircraft
@@ -3896,9 +3887,10 @@ mapdef gasstation
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
