@@ -4470,15 +4470,6 @@ mapdef city_train
 {
 	map				"city_train"
 	description		"_Rural Village"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
 	maxaliens		8
 
 	aircraft
