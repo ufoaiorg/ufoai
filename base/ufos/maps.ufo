@@ -4643,19 +4643,19 @@ mapdef england
 {
 	map				"england"
 	description		"_Small Village"
+	maxaliens		9
+
 	multiplayer		true
-	teams			3
+	teams			2
 	gametypes (
 		fight1on1
-		fight1on1on1
 		fight2on2
-		fight2on2on2
+		fight3on3
+		fight4on4
 		coop2
 		coop3
 		coop4
 	)
-
-	maxaliens		9
 
 	aircraft
 	(
