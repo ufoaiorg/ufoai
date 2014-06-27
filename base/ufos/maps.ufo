@@ -5461,14 +5461,16 @@ mapdef wilderness
 {
 	map				"wilderness"
 	description		"_Wilderness"
+	maxaliens		16
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
+		fight3on3
+		fight4on4
 	)
-	maxaliens		16
 
 	aircraft
 	(
