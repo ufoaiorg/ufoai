@@ -4591,21 +4591,18 @@ mapdef corrupter_crash
 
 mapdef dam
 {
-	map			"dam"
-	description	"_Hydroelectric Dam"
-	multiplayer	true
-	teams		2
+	map				"dam"
+	description		"_Hydroelectric Dam"
+	civilianteam	worker
+	maxaliens		12
+
+	multiplayer		true
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
 	)
-
-	maxaliens		12
-
-	civilianteam	worker
 
 	aircraft
 	(
