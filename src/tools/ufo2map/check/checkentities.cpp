@@ -160,7 +160,7 @@ void CheckEntities (void)
 			if (!(kd->flags & ED_MANDATORY))
 				continue;
 			const char* keyNameInEnt = ValueForKey(e, kd->name);
-			if (Q_strnull(keyNameInEnt))
+			if (Q_strvalid(keyNameInEnt))
 				continue;
 			const char* defaultVal = kd->defaultVal;
 			const bool hasDefault = defaultVal ? true : false;
