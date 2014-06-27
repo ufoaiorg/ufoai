@@ -4825,16 +4825,15 @@ mapdef fighter_crash
 {
 	map				"fighter_crash"
 	description		"_Fighter UFO Crash Site"
-	multiplayer		true
-	teams			2
 	maxaliens		6 //info_alien_start spawnpoints:19
 
+	multiplayer		true
+	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
 
 	aircraft
