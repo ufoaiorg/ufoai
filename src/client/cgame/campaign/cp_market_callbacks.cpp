@@ -444,12 +444,32 @@ static void BS_FillMarket_f (void)
 		CAP_GetFreeCapacity(base, CAP_AIRCRAFT_BIG), CAP_GetMax(base, CAP_AIRCRAFT_BIG));
 }
 
+#ifdef DEBUG
+static void BS_AddMarket_f (void)
+{
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <itemid> <count>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	const objDef_t* obj = INVSH_GetItemByID(cgi->Cmd_Argv(1));
+	if (!obj)
+		return;
+
+	const int amount = atoi(cgi->Cmd_Argv(2));
+	BS_AddItemToMarket(obj, amount);
+}
+#endif
+
 static const cmdList_t marketCallbacks[] = {
 	{"ui_market_openpedia", BS_MarketInfoClick_f, "Open UFOPedia entry for selected item"},
 	{"ui_market_setautosell", BS_SetAutosell_f, "Sets/unsets or flips the autosell property of an item on the market"},
 	{"ui_market_buy", BS_Buy_f, "Buy/Sell item/aircraft/ugv on the market"},
 	{"ui_market_showinfo", BS_ShowInfo_f, "Show information about item/aircaft/ugv in the market"},
 	{"ui_market_fill", BS_FillMarket_f, "Fill market item list"},
+#ifdef DEBUG
+	{"debug_marketadd", BS_AddMarket_f, "Add items to the market"},
+#endif
 	{nullptr, nullptr, nullptr}
 };
 /**
