@@ -389,7 +389,7 @@ static char const* const filterTypeNames[] = {
 	"heavy",		/**< FILTER_S_HEAVY */
 	"misc",			/**< FILTER_S_MISC */
 	"armour",		/**< FILTER_S_ARMOUR */
-	"implants",		/**< FILTER_S_IMPLANT */
+	"implant",		/**< FILTER_S_IMPLANT */
 	"",				/**< MAX_SOLDIER_FILTERTYPES */
 	"craftitem",	/**< FILTER_CRAFTITEM */
 	"ugvitem",		/**< FILTER_UGVITEM */
