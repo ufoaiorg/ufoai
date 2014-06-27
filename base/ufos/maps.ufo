@@ -4559,9 +4559,6 @@ mapdef corrupter_crash
 		fight2on2on2
 		fight3on3
 		fight3on3on3
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
