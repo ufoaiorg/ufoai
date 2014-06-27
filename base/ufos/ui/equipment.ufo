@@ -384,11 +384,6 @@ window equipment extends objectinfo
 			tooltip	"_Misc"
 			value	"3"
 		}
-		option implant {
-			icon "icons/icon_armoursml"
-			tooltip	"_Implants"
-			value	"5"
-		}
 		option armour {
 			icon "icons/icon_armoursml"
 			tooltip	"_Armour"
