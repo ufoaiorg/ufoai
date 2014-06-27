@@ -37,6 +37,7 @@ typedef struct epair_s {
 	struct epair_s* next;		/**< the next entry in the key, value list */
 	const char* key;			/**< the name of the parameter */
 	const char* value;			/**< the value of the parameter */
+	bool ump;					/**< true if the origin was the ump, not the map file */
 } epair_t;
 
 /**
@@ -66,5 +67,6 @@ vec_t FloatForKey(const entity_t* ent, const char* key);
 void GetVectorFromString(const char* value, vec3_t vec);
 void GetVectorForKey(const entity_t* ent, const char* key, vec3_t vec);
 epair_t* ParseEpair(int entNum);
+bool EpairCheckForDuplicate(const entity_t* ent, const epair_t *e);
 epair_t* AddEpair(const char* key, const char* value, int entNum);
 byte* CompressRouting(byte* dataStart, byte* destStart, int l);

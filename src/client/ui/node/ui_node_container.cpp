@@ -1,10 +1,10 @@
 /**
  * @file
- * @brief The container node refer to 3 different nodes merged into a singler one. Both
- * can drag and drop soldier items from a container to another one. The first container
+ * @brief The container node refer to several different nodes merged into a single one. All of them
+ * can drag and drop soldier items from one container to another. The first container
  * is a soldier slot. For example, the left arm, the bag pack... The second is the base
- * inventiory (which is now an extended node from container). And the last it a floor
- * container used into the battlescape. The node name itself is used to know the container
+ * inventory (which is now an extended node from container). And the last is a floor
+ * container used in the battlescape. The node name itself is used to know the container
  * role.
  * @todo Move container role outside of the node name
  * @todo Link soldier container with a soldier
@@ -455,9 +455,13 @@ static void UI_ContainerNodeDrawSingle (uiNode_t* node, const objDef_t* highligh
 				UI_DrawItem(node, pos, item, -1, -1, scale, color);
 			}
 		}
-	} else if (ui_inventory->getContainer2(contType->id)) {
+		return;
+	}
+
+	const Item* item = ui_inventory->getContainer2(contType->id);
+	if (item) {
+		assert(item->def());
 		bool disabled = false;
-		const Item* item;
 
 		if (ui_inventory->getRightHandContainer()) {
 			item = ui_inventory->getRightHandContainer();
@@ -472,9 +476,6 @@ static void UI_ContainerNodeDrawSingle (uiNode_t* node, const objDef_t* highligh
 			}
 		}
 
-		item = ui_inventory->getContainer2(contType->id);
-		assert(item);
-		assert(item->def());
 		if (highlightType && highlightType->isLoadableInWeapon(item->def())) {
 			if (disabled)
 				Vector4Copy(colorDisabledLoadable, color);
@@ -493,7 +494,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t* node, const objDef_t* highligh
 }
 
 /**
- * @brief Draw a grip container
+ * @brief Draw a grid container
  */
 static void UI_ContainerNodeDrawGrid (uiNode_t* node, const objDef_t* highlightType)
 {

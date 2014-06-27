@@ -249,6 +249,7 @@ base/maps/farm/f_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_bomber.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_corrupter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/farm/f_craft_ufo_fighter.map | GNU General Public License 2.0 or later
+base/maps/farm/f_craft_ufo_gunboat.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/farm/f_farmhouse_a.map | GNU General Public License 2.0 or later
@@ -608,7 +609,6 @@ base/maps/oriental_mosque/om_main.map | GNU General Public License 2.0 or later 
 base/maps/pipes_const.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/resort.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/rivertown.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/scout_crash/sc_main.map | GNU General Public License 2.0 or later
 base/maps/shared/sh_craft_crash_bomber.map | GNU General Public License 2.0 or later
 base/maps/shared/sh_craft_crash_corrupter.map | GNU General Public License 2.0 or later
 base/maps/shared/sh_craft_crash_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -740,6 +740,7 @@ base/maps/village.map | GNU General Public License 2.0 or later | "SparX" Beyele
 base/maps/village.ump | GNU General Public License 2.0 or later
 base/maps/village/vil_bungalow.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/bungalow.map
 base/maps/village/vil_bungalow2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/bungalow2.map
+base/maps/village/vil_craft_crash_fighter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/scout_crash/sc_main.map
 base/maps/village/vil_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_herakles.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_raptor.map | GNU General Public License 2.0 or later

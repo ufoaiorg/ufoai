@@ -730,16 +730,16 @@ mapdef desert_medium
 	map				"+desert"
 	params			("medium")
 	description		"_Country Desert"
+	maxaliens		14
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		14
 
 	aircraft
 	(
@@ -779,16 +779,16 @@ mapdef desert_large
 	map				"+desert"
 	params			("large")
 	description		"_Country Desert"
+	maxaliens		30
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		30
 
 	aircraft
 	(
@@ -831,9 +831,16 @@ mapdef farm_large
 	params		("large")
 	description	"_Farm"
 	size		"large"
-	teams		4
-	multiplayer	false
 	maxaliens	25
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
@@ -873,9 +880,16 @@ mapdef farm_medium
 	params		("medium")
 	description	"_Farm"
 	size		"medium"
-	teams		4
-	multiplayer	false
 	maxaliens	14
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
@@ -886,6 +900,7 @@ mapdef farm_medium
 
 	ufos
 	(
+		craft_ufo_gunboat
 		craft_ufo_harvester
 	)
 
@@ -914,9 +929,16 @@ mapdef farm_small
 	params		("small")
 	description	"_Farm"
 	size		"small"
-	teams		4
-	multiplayer	false
-	maxaliens	6
+	maxaliens	8
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
@@ -1184,6 +1206,8 @@ mapdef fueldump
 	gametypes (
 		fight1on1
 		fight2on2
+		fight3on3
+		fight4on4
 	)
 
 	aircraft
@@ -1219,6 +1243,7 @@ mapdef frozen_industrial_large
 	description		"_Snow"
 	civilianteam	worker
 	maxaliens		30
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1227,9 +1252,6 @@ mapdef frozen_industrial_large
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1273,6 +1295,7 @@ mapdef frozen_industrial_medium
 	description		"_Snow"
 	civilianteam	worker
 	maxaliens		14
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1281,9 +1304,6 @@ mapdef frozen_industrial_medium
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1329,6 +1349,7 @@ mapdef frozen_industrial_small
 	description		"_Snow"
 	civilianteam	worker
 	maxaliens		9
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1337,9 +1358,6 @@ mapdef frozen_industrial_small
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1383,6 +1401,7 @@ mapdef frozen_industrial_small_noufo
 	description		"_Snow"
 	civilianteam	worker
 	maxaliens		9
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1391,9 +1410,6 @@ mapdef frozen_industrial_small_noufo
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1434,6 +1450,15 @@ mapdef frozen_lake
 	description		"_Snowy Logging Site"
 	maxaliens		9
 
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
 	aircraft
 	(
 		// any
@@ -1468,6 +1493,7 @@ mapdef frozen_nature_large
 	params			("nature_large")
 	description		"_Snow"
 	maxaliens		30
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1476,9 +1502,6 @@ mapdef frozen_nature_large
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1518,6 +1541,7 @@ mapdef frozen_nature_medium
 	params			("nature_medium")
 	description		"_Snow"
 	maxaliens		14
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1526,9 +1550,6 @@ mapdef frozen_nature_medium
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1570,18 +1591,15 @@ mapdef frozen_nature_small
 	params			("nature_small")
 	description		"_Snow"
 	maxaliens		9
+
 	multiplayer		true
 	teams			2
-
 	gametypes
 	(
 		fight1on1
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1621,6 +1639,7 @@ mapdef frozen_nature_small_noufo
 	params			("nature_small_noufo")
 	description		"_Snow"
 	maxaliens		9
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -1629,9 +1648,6 @@ mapdef frozen_nature_small_noufo
 		fight2on2
 		fight3on3
 		fight4on4
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -1729,9 +1745,17 @@ mapdef hills_harvester
 	params		("harvester")
 	description	"_Suburban Housing"
 	size		"small"
-	teams		4
-	multiplayer	false
 	maxaliens	16
+
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
@@ -1742,14 +1766,11 @@ mapdef hills_harvester
 
 	ufos
 	(
-//		craft_ufo_scout
-//		craft_ufo_fighter
 		craft_ufo_harvester
 	)
 
 	terrains
 	(
-//		"desert"
 		"cold"
 		"mountain"
 		"grass"
@@ -1757,6 +1778,7 @@ mapdef hills_harvester
 
 	cultures
 	(
+		// any
 	)
 
 	populations
@@ -1773,21 +1795,27 @@ mapdef hills_harvester_desert
 	params		("desert_harvester")
 	description	"_Suburban Housing"
 	size		"small"
-	teams		4
-	multiplayer	false
 	maxaliens	8
+
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
 		craft_drop_firebird
-//		craft_drop_raptor
-//		craft_drop_herakles
+		craft_drop_raptor
+		craft_drop_herakles
 	)
 
 	ufos
 	(
-//		craft_ufo_scout
-//		craft_ufo_fighter
 		craft_ufo_harvester
 	)
 
@@ -1798,6 +1826,7 @@ mapdef hills_harvester_desert
 
 	cultures
 	(
+		// any
 	)
 
 	populations
@@ -1808,16 +1837,23 @@ mapdef hills_harvester_desert
 	)
 }
 
-
 mapdef hills_small
 {
 	map			"+hills"
 	params		("small_ufo")
 	description	"_Suburban Housing"
 	size		"small"
-	teams		4
-	multiplayer	false
 	maxaliens	8
+
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
@@ -1829,7 +1865,6 @@ mapdef hills_small
 	ufos
 	(
 		craft_ufo_scout
-//		craft_ufo_fighter
 	)
 
 	terrains
@@ -1842,6 +1877,7 @@ mapdef hills_small
 
 	cultures
 	(
+		// any
 	)
 
 	populations
@@ -2264,10 +2300,11 @@ mapdef mansion_huge
 	map				"+mansion"
 	params			("huge")
 	description		"_Mansion"
-	maxaliens		19
+	hwclass			3
+	maxaliens		30
+
 	multiplayer		true
 	teams			4
-	hwclass			3
 	gametypes
 	(
 		fight1on1
@@ -2278,10 +2315,8 @@ mapdef mansion_huge
 		fight3on3on3
 		fight4on4
 		fight4on4on4
-		coop2
-		coop3
-		coop4
 	)
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -2320,8 +2355,7 @@ mapdef mansion_medium
 	params			("medium")
 	description		"_Mansion"
 	maxaliens		18
-	singleplayer	true
-	campaign		true
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -2368,8 +2402,7 @@ mapdef mansion_small
 	params			("small")
 	description		"_Mansion"
 	maxaliens		15
-	singleplayer	true
-	campaign		true
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -2538,67 +2571,25 @@ mapdef oriental_small
 	)
 }
 
-// SCOUT_CRASH MAP //
-
-mapdef scout_crash
-{
-	map				"+scout_crash"
-	params			("standard")
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		5
-	description		"_Crashed Scout"
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_crash_scout
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-		"cold"
-	)
-
-	cultures
-	(
-		"western"
-	)
-
-	populations
-	(
-		"suburban"
-		"village"
-		"rural"
-	)
-}
-
 ////////////////////////
 // TROPIC RANDOM MAPS //
 ////////////////////////
 
-mapdef tropic_bigufo
+mapdef tropic_large
 {
 	map			"+tropic"
-	params		("bigufo")
+	params		("large")
 	description	"_Tropical Jungle"
-	multiplayer	false
-	maxaliens	25
+	maxaliens	30
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -2610,6 +2601,52 @@ mapdef tropic_bigufo
 	ufos
 	(
 		craft_ufo_corrupter
+	)
+
+	terrains
+	(
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
+}
+
+mapdef tropic_medium_drug
+{
+	map			"+tropic"
+	params		("medium_drug")
+	description	"_Tropical Jungle"
+	maxaliens	16
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
 		craft_ufo_harvester
 	)
 
@@ -2632,13 +2669,68 @@ mapdef tropic_bigufo
 	)
 }
 
-mapdef tropic_drug
+mapdef tropic_medium_river
 {
 	map			"+tropic"
-	params		("drug")
+	params		("medium_river")
 	description	"_Tropical Jungle"
-	multiplayer	false
-	maxaliens	14
+	maxaliens	16
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_ufo_harvester
+	)
+
+	terrains
+	(
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
+}
+
+mapdef tropic_small_drug
+{
+	map			"+tropic"
+	params		("small_drug")
+	description	"_Tropical Jungle"
+	maxaliens	8
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -2653,7 +2745,6 @@ mapdef tropic_drug
 		craft_crash_scout
 		craft_ufo_fighter
 		craft_crash_fighter
-		craft_ufo_harvester
 	)
 
 	terrains
@@ -2675,13 +2766,21 @@ mapdef tropic_drug
 	)
 }
 
-mapdef tropic_river
+mapdef tropic_small_river
 {
 	map			"+tropic"
-	params		("river")
+	params		("small_river")
 	description	"_Tropical Jungle"
-	multiplayer	false
-	maxaliens	6
+	maxaliens	8
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -2761,16 +2860,8 @@ mapdef bomber_city
 	maxaliens		30
 
 	multiplayer		true
-	teams			4
+	teams			1
 	gametypes (
-		fight1on1
-		fight1on1on1
-		fight2on2
-		fight2on2on2
-		fight3on3
-		fight3on3on3
-		fight4on4
-		fight4on4on4
 		coop2
 		coop3
 		coop4
@@ -2817,13 +2908,8 @@ mapdef city_disco
 	maxaliens		8
 
 	multiplayer		true
-	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
+	teams			1
+	gametypes (
 		coop2
 		coop3
 		coop4
@@ -2870,13 +2956,8 @@ mapdef community_centre
 	maxaliens		8
 
 	multiplayer		true
-	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
+	teams			1
+	gametypes (
 		coop2
 		coop3
 		coop4
@@ -2924,13 +3005,8 @@ mapdef laboratory
 	civilianteam	scientist
 
 	multiplayer		true
-	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
+	teams			1
+	gametypes (
 		coop2
 		coop3
 		coop4
@@ -2979,13 +3055,8 @@ mapdef laboratory_noufo
 	civilianteam	scientist
 
 	multiplayer		true
-	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
+	teams			1
+	gametypes (
 		coop2
 		coop3
 		coop4
@@ -3032,11 +3103,8 @@ mapdef mart
 	maxaliens	16
 
 	multiplayer	true
-	teams		2
-	gametypes
-	(
-		fight1on1
-		fight2on2
+	teams		1
+	gametypes (
 		coop2
 		coop3
 		coop4
@@ -3083,10 +3151,8 @@ mapdef stadium
 	maxaliens		21
 
 	multiplayer		true
-	teams			2
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3186,15 +3252,6 @@ mapdef village_bungalow
 	size			"small"
 	maxaliens		6
 
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
-	)
-
 	aircraft
 	(
 		// any
@@ -3230,15 +3287,6 @@ mapdef village_bungalow2
 	description		"_House"
 	size			"small"
 	maxaliens		6
-
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
-	)
 
 	aircraft
 	(
@@ -3419,6 +3467,53 @@ mapdef village_small
 	(
 		"village"
 		"suburban"
+	)
+}
+
+mapdef village_small_crash
+{
+	map				"+village"
+	params			("small_crash")
+	description		"_Crashed Scout"
+	maxaliens		8
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_crash_fighter
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+		"cold"
+	)
+
+	cultures
+	(
+		"western"
+	)
+
+	populations
+	(
+		"suburban"
+		"village"
+		"rural"
 	)
 }
 
@@ -3644,13 +3739,8 @@ mapdef construction
 	params			("default")
 	maxaliens		29
 	multiplayer		true
-	teams			2
-	gametypes
-	(
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
+	teams			1
+	gametypes (
 		coop2
 		coop3
 		coop4
@@ -3697,10 +3787,8 @@ mapdef druglord
 	params			("default")
 	description		"_Tropical Jungle Estate"
 	multiplayer		true
-	teams			2
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3714,9 +3802,10 @@ mapdef druglord
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
@@ -3725,7 +3814,7 @@ mapdef druglord
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
@@ -3744,18 +3833,8 @@ mapdef eaglenest
 {
 	map				"+eaglenest"
 	params			("default")
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		5
-
 	description		"_Mountain Estate"
+	maxaliens		5
 
 	aircraft
 	(
@@ -3764,9 +3843,10 @@ mapdef eaglenest
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
@@ -3798,15 +3878,6 @@ mapdef gasstation
 	map				"+gasstation"
 	params			("default")
 	description		"_Gas Station"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
 	maxaliens		4
 
 	aircraft
@@ -3816,9 +3887,10 @@ mapdef gasstation
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
@@ -3899,21 +3971,20 @@ mapdef italy
 
 mapdef japan_default
 {
-	map			"+japan"
-	description	"_East Asian Village"
-	params		("default")
-	teams		2
-	multiplayer	true
+	map				"+japan"
+	description		"_East Asian Village"
+	params			("default")
+	civilianteam	asia
+	maxaliens		16
+
+	multiplayer		true
+	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		16	// arc:2, bridge:2, buddha:2, harvester:14, scout:4, f1:2, f2:2, f3:2, f4:2, fill1:2, h1:6, h2:4, h3:6, h4:7, h5:0, p_bl:2, p_br:2, p_btl:2, p_h:2, p_tl:2, p_tr:0, p_v:0, sw:2, w1:0
-
-	civilianteam	asia
 
 	aircraft
 	(
@@ -3922,9 +3993,10 @@ mapdef japan_default
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
@@ -3945,10 +4017,6 @@ mapdef japan_default
 	)
 }
 
-/* disabled while moving the map to the +urban map theme -----------*
-
--------------------------------------------------------------------*/
-
 /////////////////////////////////
 // MILITARY_CONVOY RANDOM MAPS //
 /////////////////////////////////
@@ -3958,17 +4026,17 @@ mapdef military_convoy
 	map				"+military_convoy"
 	params			("default")
 	description		"_Military Convoy Ambush Site"
+	civilianteam	armysoldier
+	maxaliens		12
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		12
-	civilianteam	armysoldier
 
 	aircraft
 	(
@@ -3977,9 +4045,10 @@ mapdef military_convoy
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
@@ -4154,21 +4223,19 @@ mapdef solarplant
 
 mapdef spedition
 {
-	map			"+spedition"
-	params		("default")
-	description	"_Workshop"
-	multiplayer	true
-	teams		2
+	map				"+spedition"
+	params			("default")
+	description		"_Workshop"
+	civilianteam	worker
+	maxaliens		8
+
+	multiplayer		true
+	teams			2
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens		8
-
-	civilianteam	worker
 
 	aircraft
 	(
@@ -4177,9 +4244,10 @@ mapdef spedition
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
@@ -4189,7 +4257,7 @@ mapdef spedition
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
@@ -4208,6 +4276,8 @@ mapdef tower
 	map				"+tower"
 	params			("default")
 	description		"_Office Complex"
+	maxaliens		29
+
 	multiplayer		true
 	teams			3
 	gametypes (
@@ -4217,11 +4287,7 @@ mapdef tower
 		fight2on2on2
 		fight3on3
 		fight3on3on3
-		coop2
-		coop3
-		coop4
 	)
-	maxaliens		29
 
 	aircraft
 	(
@@ -4230,9 +4296,10 @@ mapdef tower
 		craft_drop_herakles
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
@@ -4244,7 +4311,7 @@ mapdef tower
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
@@ -4310,20 +4377,18 @@ mapdef transport
 
 mapdef bunker
 {
-	map			"bunker"
-	description	"_Military Bunker"
-	multiplayer	true
-	teams		2
+	map				"bunker"
+	description		"_Military Bunker"
+	civilianteam	armysoldier
+	maxaliens		16
+
+	multiplayer		true
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens		16
-
-	civilianteam	armysoldier
 
 	aircraft
 	(
@@ -4361,16 +4426,15 @@ mapdef city_industry
 {
 	map				"city_industry"
 	description		"_Urban Warehouse"
+	maxaliens		18
+
 	multiplayer		true
-	teams			2
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens		18
 
 	aircraft
 	(
@@ -5677,18 +5741,17 @@ mapdef rescue
 
 mapdef training_a
 {
-	map			"training_a"
-	description	"_Training Zone: Alpha"
-	teams		2
-	multiplayer	true
-	campaign	false
-	maxaliens	8
+	map				"training_a"
+	description		"_Training Zone: Alpha"
+	campaign		false
+	maxaliens		8
+
+	multiplayer		true
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
-		fight3on3
 		coop2
 		coop3
+		coop4
 	)
 }
 
@@ -5696,11 +5759,15 @@ mapdef training_b
 {
 	map			"training_b"
 	description	"_Training Zone: Bravo"
-	teams		2
-	multiplayer	true
 	campaign	false
 	maxaliens	30
+
+	multiplayer	true
+	teams		2
 	gametypes (
 		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
 	)
 }

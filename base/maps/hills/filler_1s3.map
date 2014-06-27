@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 12 212 4 ) ( 12 208 4 ) ( 4 212 4 ) tex_terrain/dummy 0 0 0 0.25 0.25 0 0 0
@@ -331,4 +330,15 @@
 "origin" "128 128 4"
 "model" "models/objects/vegi/pino/pino2.md2"
 "skin" "0"
+}
+// entity 8
+{
+"classname" "info_alien_start"
+"origin" "208 48 28"
+"angle" "-90"
+}
+// entity 9
+{
+"classname" "info_alien_start"
+"origin" "80 208 28"
 }

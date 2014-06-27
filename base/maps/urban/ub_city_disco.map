@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "3"
 "target" "func_breakable"
 // brush 0
 {
@@ -10086,7 +10085,6 @@
 "volume" "1.0"
 "noise" "ambience/disco"
 "spawnflags" "1"
-"angle" "180"
 }
 // entity 155
 {
@@ -11726,7 +11724,6 @@
 "origin" "912 1200 32"
 "noise" "ambience/firesoft.wav"
 "spawnflags" "511"
-"angle" "-90"
 }
 // entity 180
 {
@@ -11734,7 +11731,6 @@
 "origin" "1032 1240 32"
 "noise" "ambience/firesoft.wav"
 "spawnflags" "511"
-"angle" "-90"
 }
 // entity 181
 {
@@ -11742,7 +11738,6 @@
 "origin" "1266 880 32"
 "noise" "ambience/firesoft.wav"
 "spawnflags" "511"
-"angle" "-90"
 }
 // entity 182
 {
@@ -11750,7 +11745,6 @@
 "origin" "780 84 28"
 "noise" "ambience/firesoft.wav"
 "spawnflags" "511"
-"angle" "-90"
 }
 // entity 183
 {
@@ -11758,7 +11752,6 @@
 "origin" "588 148 28"
 "noise" "ambience/firesoft.wav"
 "spawnflags" "511"
-"angle" "-90"
 }
 // entity 184
 {
@@ -11784,7 +11777,6 @@
 "noise" "ambience/disco"
 "origin" "816 264 32"
 "volume" "1.0"
-"angle" "-90"
 }
 // entity 187
 {
@@ -11793,7 +11785,6 @@
 "noise" "ambience/disco"
 "origin" "560 264 32"
 "volume" "1.0"
-"angle" "-90"
 }
 // entity 188
 {
@@ -11802,7 +11793,6 @@
 "noise" "ambience/disco"
 "origin" "560 456 32"
 "volume" "1.0"
-"angle" "-90"
 }
 // entity 189
 {

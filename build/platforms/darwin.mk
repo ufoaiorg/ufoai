@@ -4,6 +4,7 @@ SO_LDFLAGS                = -dynamiclib
 SO_LIBS                  := -ldl
 
 CFLAGS                   += -D_BSD_SOURCE -D_XOPEN_SOURCE
+CXXFLAGS                 += -std=c++11
 LDFLAGS                  += -framework IOKit -framework Foundation -framework Cocoa -headerpad_max_install_names
 
 ### most mac users will have their additional libs and headers under /opt/local

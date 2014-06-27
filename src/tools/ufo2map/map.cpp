@@ -996,8 +996,11 @@ static bool ParseMapEntity (const char* filename, const char* entityString)
 				break;
 			const char* value = Mem_StrDup(token);
 			epair_t* e = AddEpair(key, value, num_entities);
-			e->next = mapent->epairs;
-			mapent->epairs = e;
+			if (!config.fixMap || !EpairCheckForDuplicate(mapent, e)) {
+				e->next = mapent->epairs;
+				e->ump = true;
+				mapent->epairs = e;
+			}
 		} while (true);
 	}
 	return true;
@@ -1015,7 +1018,8 @@ static inline void WriteMapEntities (qFILE* f, const epair_t* e)
 	if (e->next)
 		WriteMapEntities(f, e->next);
 
-	FS_Printf(f, "\"%s\" \"%s\"\n", e->key, e->value);
+	if (!e->ump)
+		FS_Printf(f, "\"%s\" \"%s\"\n", e->key, e->value);
 }
 
 
@@ -1060,7 +1064,6 @@ void WriteMapFile (const char* filename)
 		Sys_Error("Could not open %s for writing", filename);
 
 	removed = 0;
-	FS_Printf(&f, "\n");
 	for (int i = 0; i < num_entities; i++) {
 		const entity_t* mapent = &entities[i];
 		const epair_t* e = mapent->epairs;

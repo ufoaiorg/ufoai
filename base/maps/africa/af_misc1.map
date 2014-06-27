@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 110 80 4 ) ( 150 80 4 ) ( 110 112 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
@@ -316,7 +315,7 @@
 {
 "classname" "misc_sound"
 "origin" "126 96 32"
-"noise" "ambience/firesoft.wav"
+"noise" "ambience/firesoft"
 "spawnflags" "511"
 }
 // entity 5

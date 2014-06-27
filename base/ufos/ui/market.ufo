@@ -152,6 +152,17 @@ window market  {
 						string name { string "_Aircraft" }
 					}
 					MarketList aircraft { }
+					MarketCategory implant_label
+					{
+						{
+							onClick {
+								*cvar:ui_market_category = "implant"
+								cmd "ui_market_fill implant;"
+							}
+						}
+						string name { string "_Implants" }
+					}
+					MarketList implant { }
 					MarketCategory dummy_label
 					{
 						{
@@ -197,6 +208,8 @@ window market  {
 						*node:parent.craftitem@size = "713 0"
 						call *node:parent.aircraft@removeAllchild
 						*node:parent.aircraft@size = "713 0"
+						call *node:parent.implant@removeAllchild
+						*node:parent.implant@size = "713 0"
 						call *node:parent.dummy@removeAllchild
 						*node:parent.dummy@size = "713 0"
 						call *node:parent.ugvitem@removeAllchild

@@ -992,6 +992,11 @@ Item* Inventory::getEquipContainer () const
 	return getContainer2(CID_EQUIP);
 }
 
+Item* Inventory::getImplantContainer () const
+{
+	return getContainer2(CID_IMPLANT);
+}
+
 Item* Inventory::getArmour () const
 {
 	return getContainer2(CID_ARMOUR);

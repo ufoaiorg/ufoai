@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 792 512 4 ) ( 792 0 4 ) ( 24 512 4 ) tex_nature/grass001 0 0 0 0.5 0.5 65280 0 0
@@ -1447,11 +1446,35 @@
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "368 240 60"
+"origin" "304 240 60"
 }
 // entity 48
 {
 "classname" "info_player_start"
 "team" "1"
+"origin" "304 304 60"
+}
+// entity 49
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "368 240 60"
+}
+// entity 50
+{
+"classname" "info_player_start"
+"team" "1"
 "origin" "368 304 60"
+}
+// entity 51
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 240 60"
+}
+// entity 52
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 304 60"
 }

@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 208 256 68 ) ( 180 136 40 ) ( 160 256 68 ) tex_terrain/dummy 0 0 0 0.25 0.25 0 0 0
@@ -134,4 +133,9 @@
 "model" "models/objects/vegi/plant_hang/plant1.md2"
 "spawnflags" "255"
 "angles" "2.76369 176.95 42.1516"
+}
+// entity 2
+{
+"classname" "info_alien_start"
+"origin" "144 144 92"
 }

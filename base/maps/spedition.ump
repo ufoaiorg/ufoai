@@ -2,13 +2,17 @@
 // Spedition
 // *********************************
 
-base spedition/sp_
-
 // Tiletypes:
 // ----------
 // +: tile contains something
 // a: main
 // b: dropship
+
+base spedition/sp_
+
+worldspawn {
+	"maxlevel"		"4"
+}
 
 tile +main
 {

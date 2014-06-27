@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 12 212 4 ) ( 12 208 4 ) ( 4 212 4 ) tex_terrain/dummy 0 0 0 0.25 0.25 0 0 0
@@ -664,7 +663,6 @@
 "attenuation" "2.5"
 "noise" "ambience/radiomessage.wav"
 "spawnflags" "255"
-"angle" "-90"
 }
 // entity 4
 {
@@ -1318,4 +1316,15 @@
 ( 150 31 56 ) ( 150 31 58 ) ( 150 30 56 ) tex_common/nodraw 60 56 0 -0.25 0.25 402718466 160 0
 ( 152 32 56 ) ( 174 32 56 ) ( 152 32 58 ) tex_material/c_gray230 4 24 0 0.25 0.25 402718466 32 0
 }
+}
+// entity 19
+{
+"classname" "info_alien_start"
+"origin" "48 176 28"
+"angle" "-90"
+}
+// entity 20
+{
+"classname" "info_alien_start"
+"origin" "144 112 28"
 }

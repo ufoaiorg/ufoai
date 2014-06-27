@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 932 -292 4 ) ( 928 -292 4 ) ( 928 -294 4 ) tex_common/nodraw 25.45464 32 90 0.55 -0.5 65282 128 0

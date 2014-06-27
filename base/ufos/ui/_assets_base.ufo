@@ -278,6 +278,12 @@ component HospitalItem extends panel {
 		}
 	}
 
+	container implant {
+		pos "340 0"
+		border			"1"
+		bordercolor		"0.56 0.81 0.76 1"
+	}
+
 	image icon {
 		pos 	"460 0"
 		size	"28 28"

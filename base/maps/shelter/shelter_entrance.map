@@ -1,8 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxteams" "4"
-"maxlevel" "6"
 // brush 0
 {
 ( 0 0 260 ) ( 0 44 260 ) ( 0 0 324 ) tex_common/nodraw 0 0 0 0.3 0.3 65281 0 0
@@ -1076,83 +1074,70 @@
 // entity 3
 {
 "classname" "info_human_start"
-"origin" "656 48 224"
-"angle" "180"
-}
-// entity 4
-{
-"classname" "info_human_start"
 "origin" "464 112 156"
 "angle" "90"
 }
-// entity 5
+// entity 4
 {
 "classname" "info_human_start"
 "origin" "464 176 156"
 "angle" "90"
 }
-// entity 6
+// entity 5
 {
 "classname" "info_human_start"
 "origin" "528 176 156"
 "angle" "90"
 }
-// entity 7
+// entity 6
 {
 "classname" "info_human_start"
 "origin" "464 144 156"
 "angle" "90"
 }
+// entity 7
+{
+"classname" "info_player_start"
+"origin" "464 112 156"
+"team" "1"
+"angle" "90"
+}
 // entity 8
 {
 "classname" "info_player_start"
-"origin" "496 112 156"
+"origin" "464 144 156"
 "team" "1"
 "angle" "90"
 }
 // entity 9
 {
 "classname" "info_player_start"
-"origin" "496 144 156"
+"origin" "464 176 156"
 "team" "1"
 "angle" "90"
 }
 // entity 10
 {
 "classname" "info_player_start"
-"origin" "496 176 156"
+"origin" "528 144 156"
 "team" "1"
 "angle" "90"
 }
 // entity 11
 {
 "classname" "info_player_start"
-"origin" "560 144 156"
+"origin" "528 176 156"
 "team" "1"
 "angle" "90"
 }
 // entity 12
 {
 "classname" "info_player_start"
-"origin" "560 176 156"
+"origin" "528 80 156"
 "team" "1"
 "angle" "90"
 }
 // entity 13
-{
-"classname" "info_player_start"
-"origin" "560 80 156"
-"team" "1"
-"angle" "90"
-}
-// entity 14
-{
-"classname" "info_player_start"
-"origin" "656 16 224"
-"team" "1"
-"angle" "180"
-}
-// entity 15
 {
 "classname" "light"
 "origin" "560 544 224"
@@ -1160,7 +1145,7 @@
 "_color" "1 1 1"
 "light" "180"
 }
-// entity 16
+// entity 14
 {
 "classname" "light"
 "origin" "464 544 224"
@@ -1168,118 +1153,92 @@
 "_color" "1 1 1"
 "light" "180"
 }
-// entity 17
+// entity 15
 {
 "classname" "info_human_start"
 "origin" "528 112 156"
 "angle" "90"
 }
-// entity 18
+// entity 16
 {
 "classname" "info_player_start"
-"origin" "560 112 156"
+"origin" "528 112 156"
 "team" "1"
 "angle" "90"
 }
-// entity 19
+// entity 17
 {
 "classname" "info_2x2_start"
 "origin" "576 32 156"
 "team" "1"
 "angle" "90"
 }
-// entity 20
+// entity 18
 {
 "classname" "info_2x2_start"
 "origin" "512 32 156"
 "team" "1"
 "angle" "90"
 }
-// entity 21
+// entity 19
 {
 "classname" "info_human_start"
 "origin" "464 80 156"
 "angle" "90"
 }
-// entity 22
+// entity 20
 {
 "classname" "info_player_start"
-"origin" "496 80 156"
+"origin" "464 80 156"
 "team" "1"
 "angle" "90"
 }
-// entity 23
+// entity 21
 {
 "classname" "info_2x2_start"
 "origin" "448 32 156"
 "team" "1"
 "angle" "90"
 }
-// entity 24
+// entity 22
 {
 "classname" "info_human_start"
 "origin" "592 80 156"
 "angle" "90"
 }
-// entity 25
+// entity 23
 {
 "classname" "info_human_start"
 "origin" "592 144 156"
 "angle" "90"
 }
-// entity 26
+// entity 24
 {
 "classname" "info_human_start"
 "origin" "592 176 156"
 "angle" "90"
 }
-// entity 27
+// entity 25
 {
 "classname" "info_human_start"
 "origin" "592 112 156"
 "angle" "90"
 }
-// entity 28
-{
-"classname" "info_human_start"
-"origin" "720 48 224"
-"angle" "180"
-}
-// entity 29
-{
-"classname" "info_player_start"
-"origin" "720 16 224"
-"team" "1"
-"angle" "180"
-}
-// entity 30
-{
-"classname" "info_human_start"
-"origin" "784 48 224"
-"angle" "180"
-}
-// entity 31
-{
-"classname" "info_player_start"
-"origin" "784 16 224"
-"team" "1"
-"angle" "180"
-}
-// entity 32
+// entity 26
 {
 "classname" "light"
 "_color" "0 0.8 1"
 "light" "100"
 "origin" "445 87 77"
 }
-// entity 33
+// entity 27
 {
 "classname" "light"
 "_color" "0 0.8 1"
 "light" "100"
 "origin" "445 135 77"
 }
-// entity 34
+// entity 28
 {
 "classname" "trigger_rescue"
 "team" "1"
@@ -1293,4 +1252,32 @@
 ( 384 0 128 ) ( 384 0 320 ) ( 640 0 128 ) tex_common/trigger 0 0 0 0.2 0.2 65024 0 0
 ( 384 0 128 ) ( 384 192 128 ) ( 384 0 320 ) tex_common/trigger 0 0 0 0.2 0.2 65024 0 0
 }
+}
+// entity 29
+{
+"classname" "info_player_start"
+"origin" "592 80 156"
+"team" "1"
+"angle" "90"
+}
+// entity 30
+{
+"classname" "info_player_start"
+"origin" "592 176 156"
+"team" "1"
+"angle" "90"
+}
+// entity 31
+{
+"classname" "info_player_start"
+"origin" "592 144 156"
+"team" "1"
+"angle" "90"
+}
+// entity 32
+{
+"classname" "info_player_start"
+"origin" "592 112 156"
+"team" "1"
+"angle" "90"
 }

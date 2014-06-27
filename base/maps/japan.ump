@@ -4,6 +4,10 @@
 
 base japan/ja_
 
+worldspawn {
+	"maxlevel"		"4"
+}
+
 // Tiletypes:
 // ----------
 // +: tile contains something
@@ -20,6 +24,8 @@ base japan/ja_
 // f: vertical fence           (grid32:   -- -- -- +- ) (leftright)
 // w: vertical water: top (z0) (grid32:   -+ ++ ++ +- ) (leftright)
 //               bottom (z-40) (grid32:   -- -+ ++ -- )
+
+// aliens	// arc:2, bridge:2, buddha:2, harvester:14, scout:4, f1:2, f2:2, f3:2, f4:2, fill1:2, h1:6, h2:4, h3:6, h4:7, h5:0, p_bl:2, p_br:2, p_btl:2, p_h:2, p_tl:2, p_tr:0, p_v:0, sw:2, w1:0
 
 line vh1234gf
 

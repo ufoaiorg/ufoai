@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 224 132 66 ) ( 224 128 66 ) ( 224 128 64 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0

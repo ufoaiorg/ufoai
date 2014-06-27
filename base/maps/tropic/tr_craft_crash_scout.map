@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 344 192 0 ) ( 344 0 0 ) ( 512 0 0 ) tex_nature/jungle002 0 0 0 0.25 0.25 65280 0 0
@@ -622,4 +621,76 @@
 "angles" "0 35 0"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm_a/palm2.md2"
+}
+// entity 19
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "496 144 28"
+}
+// entity 20
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "176 80 28"
+}
+// entity 21
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "432 144 28"
+}
+// entity 22
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "112 80 28"
+}
+// entity 23
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "208 336 28"
+}
+// entity 24
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "400 336 28"
+}
+// entity 25
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "336 336 28"
+}
+// entity 26
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "272 336 28"
+}
+// entity 27
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "624 144 28"
+}
+// entity 28
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "560 144 28"
+}
+// entity 29
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "656 432 28"
+}
+// entity 30
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "592 432 28"
 }

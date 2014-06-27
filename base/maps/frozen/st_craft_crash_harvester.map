@@ -1,4 +1,3 @@
-
 // entity 0
 {
 "classname" "worldspawn"
@@ -4350,7 +4349,6 @@
 "volume" "0.2"
 "spawnflags" "2"
 "attenuation" "2"
-"angle" "-90"
 }
 // entity 87
 {
@@ -4360,7 +4358,6 @@
 "volume" "0.2"
 "spawnflags" "2"
 "attenuation" "2.0"
-"angle" "-90"
 }
 // entity 88
 {
@@ -4556,7 +4553,6 @@
 "volume" "0.6"
 "attenuation" "2.5"
 "spawnflags" "255"
-"angle" "-90"
 }
 // entity 95
 {
@@ -4565,7 +4561,6 @@
 "noise" "ambience/firesoft"
 "volume" "0.6"
 "attenuation" "2.5"
-"angle" "-90"
 }
 // entity 96
 {
@@ -4575,7 +4570,6 @@
 "volume" "0.6"
 "attenuation" "2.5"
 "spawnflags" "255"
-"angle" "-90"
 }
 // entity 97
 {
@@ -4585,7 +4579,6 @@
 "volume" "0.6"
 "attenuation" "2.5"
 "spawnflags" "255"
-"angle" "-90"
 }
 // entity 98
 {
@@ -4595,7 +4588,6 @@
 "volume" "0.6"
 "attenuation" "2.5"
 "spawnflags" "255"
-"angle" "-90"
 }
 // entity 99
 {
@@ -4610,4 +4602,87 @@
 "particle" "green_smoke"
 "origin" "525 1053 42"
 "spawnflags" "255"
+}
+// entity 101
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "560 688 28"
+"angle" "-90"
+}
+// entity 102
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "528 688 28"
+"angle" "-90"
+}
+// entity 103
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "496 688 28"
+"angle" "180"
+}
+// entity 104
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "592 592 28"
+}
+// entity 105
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "528 656 28"
+"angle" "-90"
+}
+// entity 106
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "496 656 28"
+"angle" "180"
+}
+// entity 107
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "528 592 28"
+"angle" "180"
+}
+// entity 108
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "560 656 28"
+"angle" "-90"
+}
+// entity 109
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "624 720 28"
+"angle" "-90"
+}
+// entity 110
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "624 784 28"
+"angle" "-90"
+}
+// entity 111
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "624 848 28"
+"angle" "-90"
+}
+// entity 112
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "592 688 28"
+"angle" "-90"
 }

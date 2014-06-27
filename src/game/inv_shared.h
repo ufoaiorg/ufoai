@@ -590,6 +590,7 @@ public:
 	Item* getHolsterContainer() const;
 	/** @todo this should return a reference - can't be null */
 	Item* getEquipContainer () const;
+	Item* getImplantContainer () const;
 	/** @todo this should return a reference - can't be null */
 	Item* getFloorContainer() const;
 	void setFloorContainer(Item* cont);
