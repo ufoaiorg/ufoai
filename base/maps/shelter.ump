@@ -13,6 +13,11 @@
 
 base shelter/shelter_
 
+worldspawn {
+	"maxlevel"		"6"
+	"maxteams"		"4"
+}
+
 // Map Tiles -------------------------------------------------------*
 
 tile +entrance
