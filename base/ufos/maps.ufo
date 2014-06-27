@@ -4017,10 +4017,6 @@ mapdef japan_default
 	)
 }
 
-/* disabled while moving the map to the +urban map theme -----------*
-
--------------------------------------------------------------------*/
-
 /////////////////////////////////
 // MILITARY_CONVOY RANDOM MAPS //
 /////////////////////////////////
