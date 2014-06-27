@@ -180,7 +180,7 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 		EXPECT_GE(alienSpawnPoints, maxAliensForCoop) << "Map " << md->mapTheme
 							<< " from mapdef " << md->id << " defines a coop game mode but does not have enough alien spawn positions for that. We would need "
 							<< maxAliensForCoop << " spawn positions for aliens => multiplayer mode";
-	} else if (md->singleplayer) {
+	} else {
 		const int spawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_PHALANX]);
 		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
 		EXPECT_GE(spawnPoints, maxPlayers) << "Map " << md->mapTheme
@@ -193,8 +193,6 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 		EXPECT_GE(alienSpawnPoints, md->maxAliens) << "Map " << md->mapTheme
 				<< " from mapdef " << md->id << " only " << alienSpawnPoints << " alien spawnpoints but " << md->maxAliens
 				<< " expected (aircraft: " << aircraft << ") (ufo: " << ufo << ") => singleplayer mode";
-	} else {
-		ADD_FAILURE() << "Map " << md->mapTheme << " from mapdef " << md->id << " does neither define single- nor multiplayer";
 	}
 }
 
