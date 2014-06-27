@@ -5200,16 +5200,19 @@ mapdef resort
 {
 	map				"resort"
 	description		"_Luxurious Resort"
+	maxaliens		24
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
+		fight3on3
+		fight4on4
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens		24
 
 	aircraft
 	(
