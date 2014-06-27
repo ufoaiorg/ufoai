@@ -102,14 +102,16 @@ window hospital
 
 	panel implants {
 		{
-			pos		"750 5"
-			size	"250 471"
-			border	2
+			pos		"739 5"
+			size	"280 758"
+			border	"2"
 			bordercolor	"0.56 0.81 0.76 1"
+			bgcolor			"0.56 0.81 0.76 0.3"
 		}
+
 		baseinventory equip {
 			pos						"20 20"
-			size					"220 200"
+			size					"240 714"
 			displayimplant			true
 			displayunavailableitem	true
 			columns					1
