@@ -11,7 +11,7 @@
 base transport/tra_
 
 worldspawn {
-	"maxteams"		"2"
+	"maxteams"		"1"
 	"maxlevel"		"3"
 }
 

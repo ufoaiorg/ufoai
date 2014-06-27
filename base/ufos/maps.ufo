@@ -4327,19 +4327,18 @@ mapdef tower
 
 mapdef transport
 {
-	map			"+transport"
-	params		("default")
-	description	"_Warehouse"
-	multiplayer	true
-	teams		2
+	map				"+transport"
+	params			("default")
+	description		"_Warehouse"
+	maxaliens		8
+
+	multiplayer		true
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens	8
 
 	aircraft
 	(
@@ -4348,9 +4347,10 @@ mapdef transport
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
@@ -4360,7 +4360,7 @@ mapdef transport
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations

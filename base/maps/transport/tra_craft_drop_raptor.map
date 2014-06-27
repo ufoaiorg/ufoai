@@ -1422,132 +1422,146 @@
 // entity 13
 {
 "classname" "info_human_start"
-"origin" "464 592 28"
-"angle" "90"
+"origin" "560 592 28"
+"angle" "45"
 }
 // entity 14
 {
 "classname" "info_human_start"
-"origin" "560 592 28"
-"angle" "45"
-}
-// entity 15
-{
-"classname" "info_human_start"
 "origin" "560 496 28"
 }
-// entity 16
+// entity 15
 {
 "classname" "info_human_start"
 "origin" "560 400 28"
 "angle" "-45"
 }
-// entity 17
+// entity 16
 {
 "classname" "info_human_start"
 "origin" "304 496 28"
 "angle" "-90"
 }
-// entity 18
+// entity 17
 {
 "classname" "info_human_start"
 "origin" "464 496 28"
 "angle" "-90"
 }
-// entity 19
+// entity 18
 {
 "classname" "info_2x2_start"
 "origin" "256 64 28"
 "team" "1"
 "angle" "-90"
 }
-// entity 20
+// entity 19
 {
 "classname" "info_2x2_start"
 "origin" "512 64 28"
 "team" "1"
 "angle" "-90"
 }
-// entity 21
+// entity 20
 {
 "classname" "info_2x2_start"
 "origin" "640 544 28"
 "team" "1"
 "angle" "90"
 }
-// entity 22
+// entity 21
 {
 "classname" "info_2x2_start"
 "origin" "128 448 28"
 "team" "1"
 "angle" "180"
 }
-// entity 23
+// entity 22
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "304 496 28"
 "angle" "-90"
 }
-// entity 24
+// entity 23
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "560 592 28"
 "angle" "45"
 }
-// entity 25
+// entity 24
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "208 592 28"
 "angle" "135"
 }
-// entity 26
+// entity 25
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "560 496 28"
 }
-// entity 27
+// entity 26
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "208 496 28"
 "angle" "180"
 }
-// entity 28
+// entity 27
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "464 496 28"
 "angle" "-90"
 }
-// entity 29
+// entity 28
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "208 400 28"
 "angle" "-135"
 }
-// entity 30
+// entity 29
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "560 400 28"
 "angle" "-45"
 }
-// entity 31
+// entity 30
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "304 592 28"
 "angle" "90"
 }
+// entity 31
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "80 368 28"
+"angle" "135"
+}
 // entity 32
+{
+"classname" "info_human_start"
+"origin" "464 592 28"
+"angle" "90"
+}
+// entity 33
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "464 592 28"
+"angle" "90"
+}
+// entity 34
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "688 464 28"
 "angle" "90"
 }
