@@ -4,6 +4,10 @@
 
 base japan/ja_
 
+worldspawn {
+	"maxlevel"		"4"
+}
+
 // Tiletypes:
 // ----------
 // +: tile contains something
