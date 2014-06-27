@@ -48,7 +48,7 @@ struct uiBehaviour_t;
 typedef struct baseInventoryExtraData_s {
 	containerExtraData_t super;
 
-	/** A filter */
+	/** A filter - see itemFilterTypes_t */
 	int filterEquipType;
 
 	int columns;
