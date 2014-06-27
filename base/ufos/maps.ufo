@@ -4026,17 +4026,17 @@ mapdef military_convoy
 	map				"+military_convoy"
 	params			("default")
 	description		"_Military Convoy Ambush Site"
+	civilianteam	armysoldier
+	maxaliens		12
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		12
-	civilianteam	armysoldier
 
 	aircraft
 	(
@@ -4045,9 +4045,10 @@ mapdef military_convoy
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
