@@ -98,6 +98,14 @@ window hospital
 				}
 			}
 		}
+		ObjectInfo details
+		{
+			{
+				pos				"4 574"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+		}
 	}
 
 	panel implants {
