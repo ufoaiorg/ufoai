@@ -147,9 +147,9 @@ window hospital
 	{
 		onClick			{ cmd "ui_pop; ui_pop;" }
 	}
-	// ==================
-	// init function
-	// ==================
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
 
 	func onWindowOpened
 	{
