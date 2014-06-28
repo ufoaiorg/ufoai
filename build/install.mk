@@ -31,8 +31,8 @@ mappack: maps-sync
 dataarchive: pk3
 	$(Q)tar -cvp -f ufoai-$(UFOAI_VERSION)-data.tar $(PAK_PATHS)
 
-USER?=tlh2000,ufoai
-PATH?=/home/frs/project/u/uf/ufoai/"UFO_AI\ 2.x"/$(VERSION)/
+USER?=tlh2000
+PATH?=/home/frs/project/ufoai/"UFO_AI\ 2.x"/$(VERSION)/
 UPLOADHOST?=frs.sourceforge.net
 URL=$(USER)@$(UPLOADHOST):$(PATH)
 upload-sf:
