@@ -4230,7 +4230,7 @@ mapdef spedition
 	maxaliens		8
 
 	multiplayer		true
-	teams			2
+	teams			1
 	gametypes (
 		coop2
 		coop3
