@@ -140,16 +140,6 @@ window hospital
 				*node:root.implants.equip@viewpos = <current>
 			}
 		}
-		container implant {
-			pos "20 240"
-		}
-		panel list {
-			pos "20 280"
-			size "236 190"
-			layout			LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	4
-			ghost			true
-		}
 	}
 
 	// Back to geoscape
