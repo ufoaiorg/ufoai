@@ -356,7 +356,6 @@ void G_SpawnEntities (const char* mapname, bool day, const char* entities)
 	/* parse ents */
 	entnum = 0;
 	while (1) {
-		Edict* ent;
 		/* parse the opening brace */
 		const char* token = Com_Parse(&entities);
 		if (!entities)
@@ -364,7 +363,7 @@ void G_SpawnEntities (const char* mapname, bool day, const char* entities)
 		if (token[0] != '{')
 			gi.Error("ED_LoadFromFile: found %s when expecting {", token);
 
-		ent = G_Spawn();
+		Edict* ent = G_Spawn();
 
 		entities = ED_ParseEdict(entities, ent);
 
