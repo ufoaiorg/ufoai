@@ -32,7 +32,7 @@ window aircraft_equip extends iaircraft
 			*cvar:tmp = ""
 			if ( *cvar:mn_aircraft_item_selected != -1 ) {
 				*cvar:tmp = "item"
-			} elif ( *node:root.bairequip_zone_select2@src eq "" ) {
+			} elif ( *node:root.airequip_zone_select2@src eq "" ) {
 				*cvar:tmp = "zone1"
 			} else {
 				*cvar:tmp = "zone2"
