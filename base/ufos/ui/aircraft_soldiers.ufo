@@ -186,7 +186,7 @@ window team extends iaircraft
 		}
 		// absent from base, go back to the main GUI
 		if ( *cvar:mn_aircraftinbase == 0 ) {
-			cmd "ui_pop;ui_push aircraft_equip;"
+			cmd "ui_pop;ui_push aircraft_equip <cvar:mn_aircraft_id>;"
 		}
 		cmd "aircraft_status_change;"
 	}
