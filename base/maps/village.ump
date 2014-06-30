@@ -16,30 +16,32 @@ line hv
 
 tile +craft_drop_firebird
 {
-5 4
-0		0		0		0		0
-0		+c		+c		+c		0
-0		+c		+c		+c		0
-0		0		0		0		0
+5 5
+0		0		v		0		0
+0		+c		+v		+c		0
+h		+h		+hv		+h		h
+0		+c		+v		+c		0
+0		0		v		0		0
 }
 
 tile +craft_drop_herakles
 {
-5 4
-0		0		0		0		0
-0		+c		+c		+c		0
-0		+c		+c		+c		0
-0		0		0		0		0
+5 5
+0		0		v		0		0
+0		+c		+v		+c		0
+h		+h		+hv		+h		h
+0		+c		+v		+c		0
+0		0		v		0		0
 }
 
 tile +craft_drop_raptor
 {
 5 5
-0		0		0		0		0
-0		+c		+c		+c		0
-0		+c		+c		+c		0
-0		+c		+c		+c		0
-0		0		0		0		0
+0		0		v		0		0
+0		+c		+v		+c		0
+h		+h		+hv		+h		h
+0		+c		+v		+c		0
+0		0		v		0		0
 }
 
 tile +start
@@ -56,31 +58,31 @@ tile +start
 tile +craft_ufo_bomber
 {
 6 10
-0		0		a		a		0		0
-0		a		+c		+c		a		0
-a		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		a
+0		0		0		0		0		0
+0		0		+c		+c		0		0
+x		+c		+c		+c		+c		0
+x		+c		+c		+c		+c		0
+x		+c		+c		+c		+c		0
 h		+hc		+hc		+hc		+hc		h
-a		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		a
-0		a		a		a		a		0
+x		+c		+c		+c		+c		0
+x		+c		+c		+c		+c		0
+x		+c		+c		+c		+c		0
+0		0		0		0		0		0
 }
 
 tile +craft_ufo_corrupter
 {
 8 10
-0		0		0		a		a		0		0		0
-0		0		a		+c		+c		a		0		0
-0		0		a		+c		+c		a		0		0
-0		a		a		+c		+c		a		a		0
+0		0		0		0		0		0		0		0
+0		0		0		+c		+c		0		0		0
+0		0		0		+c		+c		0		0		0
+0		0		0		+c		+c		0		0		0
 h		+hc		+hc		+hc		+hc		+hc		+hc		h
-a		+c		+c		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		+c		+c		a
-0		a		a		a		a		a		a		0
+0		+c		+c		+c		+c		+c		+c		x
+0		+c		+c		+c		+c		+c		+c		x
+0		+c		+c		+c		+c		+c		+c		x
+0		+c		+c		+c		+c		+c		+c		x
+0		0		0		0		0		0		0		0
 }
 
 tile +craft_ufo_fighter
@@ -444,13 +446,14 @@ tile +bungalow
 	// large house, A6 C3
 	// starting points for mp team 4
 {
-5 6
+5 7
 0		0		0		0		0
 0		+a		+a		+a		0
 0		+a		+a		+a		0
 0		+a		+a		+a		0
 0		+a		+a		+a		0
-0		h		h		h		0
+0		h		+h		h		0
+0		0		0		0		0
 }
 
 tile +bungalow2
@@ -459,7 +462,7 @@ tile +bungalow2
 {
 6 6
 0		0		0		0		0		0
-h		h		+h		+h		+h		h
+0		h		+h		+h		+h		h
 0		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		0
@@ -469,14 +472,14 @@ h		h		+h		+h		+h		h
 tile +diner_01
 	// diner, A4 C3
 {
-5 6
-0		0		0		0		0
-0		+a		+a		+a		0
-0		+a		+a		+a		0
-0		+a		+a		+a		0
-h		+h		h		0		0
-0		0		0		0		0
+6 5
+0		v		0		0		0		0
+0		+v		+a		+a		+a		0
+0		v		+a		+a		+a		0
+0		0		+a		+a		+a		0
+0		v		0		0		0		0
 }
+
 
 tile +garage_01
 	// garage at vertical street
@@ -516,19 +519,6 @@ h		+ah		+ah		h
 0		+a		+a		0
 0		0		0		0
 }
-
-/*
-tile +gasstation_01
-	// gas station, A3, C1
-{
-4 5
-0		0		0		0
-0		0		+a		v
-0		+a		+a		v
-0		+a		+a		v
-0		0		0		0
-}
-*/
 
 tile +gasstation_01
 	// gas station, A3, C1
@@ -573,31 +563,14 @@ tile +house_03
 }
 
 tile +mart_01
-	// small market, A3, C2
-	// TODO connect to street, add parking site
 {
-5 6
-0		0		0		0		0
-0		h		+h		h		0
-0		+a		+a		+a		0
-0		+a		+a		+a		0
-0		+a		+a		+a		0
-0		0		0		0		0
+6 5
+0		0		0		0		0		0
+0		+a		+a		+a		v		0
+0		+a		+a		+a		+av		0
+0		+a		+a		+a		v		0
+0		0		0		0		0		0
 }
-
-/* wip
-tile +mart_01
-	// small market, A3, C2
-	// TODO connect to street, add parking site
-{
-4 5
-0		0		0		0
-0		h		+ah		h
-0		+a		+a		0
-0		+a		+a		0
-0		0		0		0
-}
-*/
 
 // recreational ----------------------------------------------------*
 
@@ -664,6 +637,17 @@ r		+a		+a		0
 
 // tilesets --------------------------------------------------------*
 
+tileset main {
+	+bungalow
+	+bungalow2
+}
+
+tileset housing {
+	+house_01
+	+house_02
+	+house_03
+}
+
 tileset commercial {
 	+diner_01
 	+gasstation_01
@@ -716,7 +700,6 @@ tileset street_02 {
 }
 
 tileset street_03 {
-	+street_crossing
 	+street_junction_e
 	+street_junction_n
 	+street_junction_s
@@ -769,7 +752,7 @@ tileset street_h	"0 1"
 
 assembly large
 {
-size "12 8"
+size "10 8"
 title "_Village"
 +bungalow			"0 1"
 +bungalow2			"0 1"
@@ -826,27 +809,20 @@ assembly medium_noufo
 {
 size "8 8"
 title "_Village"
-+bungalow			"0 1"
-+bungalow2			"0 1"
-+diner_01			"0 1"
-+gasstation_01		"0 1"
-+house_01			"0 1"
-+house_02			"0 1"
-+house_03			"0 1"
-+misc_01			"0 1"
-+misc_02			"0 1"
-+mart_01			"0 1"
-+nature_00			"0 35"
-+nature_02			"0 1"
-+nature_06			"0 1"
-+nature_11			"0 1"
-tileset garage		"0 2"
-tileset nature		"0 5"
-tileset park		"0 2"
-tileset street_02	"0 1"
-tileset street_03	"0 1"
-tileset street_h	"0 5"
-tileset street_v	"0 5"
+tileset main			"1 1"
+tileset commercial		"1 1"
+tileset housing			"0 2"
++misc_01				"0 1"
++misc_02				"0 1"
++nature_00				"0 45"
++nature_02				"0 1"
++nature_06				"0 1"
++nature_11				"0 1"
+tileset garage			"0 2"
+tileset nature			"0 5"
+tileset park			"0 2"
+tileset street_h		"0 5"
+tileset street_v		"0 5"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
@@ -866,7 +842,7 @@ title "_Village"
 +nature_02			"0 1"
 +nature_06			"0 1"
 +nature_11			"0 1"
-tileset commercial	"1 1"
+tileset commercial	"0 1"
 tileset garage		"0 2"
 tileset nature		"0 5"
 tileset park		"0 2"
@@ -878,13 +854,16 @@ tileset street_v	"0 5"
 
 assembly small_crash
 {
-size "8 5"
+size "10 6"
 title "_Village"
++garage_01			"0 1"
 +garage_02			"0 1"
++garage_04			"0 1"
 +nature_01			"0 1"
-tileset nature		"0 2"
+tileset nature		"0 15"
 tileset street_h	"0 5"
-+start "1 1"
+tileset street_v	"0 5"
+*rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_crash_fighter "1 1"
 }
 
