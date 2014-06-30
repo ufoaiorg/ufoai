@@ -600,7 +600,7 @@ mapdef city3_small_noufo
 	map				"+city3"
 	params			("small_noufo")
 	description		"_Urban Periphery"
-	maxaliens		25
+	maxaliens		16
 
 	aircraft
 	(

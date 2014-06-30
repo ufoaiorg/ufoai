@@ -307,7 +307,7 @@ acv		+a14	+14		x
 
 tileset buildings
 	{
-		+bld_a
+//		+bld_a
 		+bld_abandoned
 		+bld_parking
 	}
