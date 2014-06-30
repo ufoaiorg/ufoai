@@ -487,7 +487,7 @@ tile +estate
 0		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		0
+0		h		+h		h		0		0
 0		0		0		0		0		0
 }
 
@@ -650,6 +650,7 @@ r		+a		+a		0
 tileset main {
 	+bungalow
 	+bungalow2
+	+estate
 }
 
 tileset housing {
@@ -770,8 +771,16 @@ tileset street_v	"0 5"
 
 assembly estate
 {
-size "4 4"
-fix +estate				"0 0"
+size "7 5"
++estate				"1 1"
++garage_01			"0 1"
++garage_02			"0 1"
++garage_03			"0 1"
++nature_11			"0 1"
+tileset nature		"0 10"
+tileset street_h	"0 5"
+tileset street_v	"0 5"
+*rm_drop +craft_drop_firebird	"1 1"
 }
 
 assembly large
@@ -838,7 +847,7 @@ tileset commercial		"1 1"
 tileset housing			"0 2"
 +misc_01				"0 1"
 +misc_02				"0 1"
-+nature_00				"0 45"
++nature_00				"0 9"
 +nature_02				"0 1"
 +nature_06				"0 1"
 +nature_11				"0 1"
@@ -896,31 +905,13 @@ tileset street_v	"0 5"
 assembly test
 {
 size "7 7"
-title "_Village"
-+bungalow			"0 1"
-+bungalow2			"0 1"
-+mart_01			"1 1"
-+gasstation_01		"0 1"
-+diner_01			"0 1"
-+house_01			"0 1"
-+house_02			"0 1"
-+house_03			"0 1"
-+misc_01			"0 1"
-+nature_01			"0 1"
-+nature_02			"0 1"
-+misc_02			"0 1"
-+nature_03			"0 1"
-+nature_04			"0 1"
-+nature_05			"0 15"
-+nature_06			"0 1"
++estate				"1 1"
++garage_01			"0 1"
++garage_02			"0 1"
++garage_03			"0 1"
 +nature_11			"0 1"
-+playground_01		"0 1"
-+park_01			"0 1"
-+fountain_01		"0 1"
-tileset garage		"0 2"
-tileset street_02	"0 1"
-tileset street_03	"0 1"
-tileset street_h	"0 5"
-tileset street_v	"0 5"
-+start				"1 1"
+tileset nature		"0 20"
+tileset street_h	"0 10"
+tileset street_v	"0 10"
+*rm_drop +craft_drop_firebird	"1 1"
 }
