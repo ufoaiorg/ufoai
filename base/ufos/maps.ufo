@@ -2577,10 +2577,10 @@ mapdef oriental_small
 
 mapdef tropic_large
 {
-	map			"+tropic"
-	params		("large")
-	description	"_Tropical Jungle"
-	maxaliens	30
+	map				"+tropic"
+	params			("large")
+	description		"_Tropical Jungle"
+	maxaliens		30
 
 	multiplayer		true
 	teams			1
@@ -2610,7 +2610,7 @@ mapdef tropic_large
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
@@ -2624,10 +2624,10 @@ mapdef tropic_large
 
 mapdef tropic_medium_drug
 {
-	map			"+tropic"
-	params		("medium_drug")
-	description	"_Tropical Jungle"
-	maxaliens	16
+	map				"+tropic"
+	params			("medium_drug")
+	description		"_Tropical Jungle"
+	maxaliens		16
 
 	multiplayer		true
 	teams			1
@@ -2657,7 +2657,7 @@ mapdef tropic_medium_drug
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
@@ -2671,10 +2671,10 @@ mapdef tropic_medium_drug
 
 mapdef tropic_medium_river
 {
-	map			"+tropic"
-	params		("medium_river")
-	description	"_Tropical Jungle"
-	maxaliens	16
+	map				"+tropic"
+	params			("medium_river")
+	description		"_Tropical Jungle"
+	maxaliens		16
 
 	multiplayer		true
 	teams			1
@@ -2704,7 +2704,7 @@ mapdef tropic_medium_river
 
 	cultures
 	(
-		//any
+		//	any
 	)
 
 	populations
@@ -2718,10 +2718,10 @@ mapdef tropic_medium_river
 
 mapdef tropic_small_drug
 {
-	map			"+tropic"
-	params		("small_drug")
-	description	"_Tropical Jungle"
-	maxaliens	8
+	map				"+tropic"
+	params			("small_drug")
+	description		"_Tropical Jungle"
+	maxaliens		8
 
 	multiplayer		true
 	teams			1
@@ -2754,7 +2754,7 @@ mapdef tropic_small_drug
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
@@ -2768,10 +2768,10 @@ mapdef tropic_small_drug
 
 mapdef tropic_small_river
 {
-	map			"+tropic"
-	params		("small_river")
-	description	"_Tropical Jungle"
-	maxaliens	8
+	map				"+tropic"
+	params			("small_river")
+	description		"_Tropical Jungle"
+	maxaliens		8
 
 	multiplayer		true
 	teams			1
@@ -2804,7 +2804,7 @@ mapdef tropic_small_river
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
