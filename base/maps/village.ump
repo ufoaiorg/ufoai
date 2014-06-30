@@ -732,12 +732,16 @@ tileset street_v {
 
 assembly bungalow
 {
-size "4 5"
+size "6 6"
 +bungalow			"1 1"
++garage_01			"0 1"
++garage_02			"0 1"
++garage_03			"0 1"
 +nature_11			"0 1"
-fix +start			"0 2"
-tileset nature		"0 6"
-tileset street_h	"0 4"
+tileset nature		"0 10"
+tileset street_h	"0 5"
+tileset street_v	"0 5"
+*rm_drop +craft_drop_firebird	"1 1"
 }
 
 assembly bungalow2
