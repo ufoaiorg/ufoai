@@ -2076,3 +2076,24 @@
 "volume" "0.7"
 "attenuation" "2.9"
 }
+// entity 43
+{
+"classname" "info_alien_start"
+"origin" "208 208 28"
+"angle" "180"
+}
+// entity 44
+{
+"classname" "info_alien_start"
+"origin" "368 304 28"
+}
+// entity 45
+{
+"classname" "info_alien_start"
+"origin" "112 400 28"
+}
+// entity 46
+{
+"classname" "info_alien_start"
+"origin" "272 80 28"
+}

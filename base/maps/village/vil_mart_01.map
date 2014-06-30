@@ -6856,3 +6856,44 @@
 "origin" "382 609 4"
 "model" "models/objects/city/vendorcart/vendor_cart.md2"
 }
+// entity 120
+{
+"classname" "info_alien_start"
+"origin" "208 592 28"
+"angle" "90"
+}
+// entity 121
+{
+"classname" "info_alien_start"
+"origin" "592 592 28"
+}
+// entity 122
+{
+"classname" "info_alien_start"
+"origin" "656 400 28"
+"angle" "-90"
+}
+// entity 123
+{
+"classname" "info_alien_start"
+"origin" "400 944 28"
+"angle" "180"
+}
+// entity 124
+{
+"classname" "info_alien_start"
+"origin" "240 80 28"
+"angle" "180"
+}
+// entity 125
+{
+"classname" "info_alien_start"
+"origin" "48 336 28"
+"angle" "90"
+}
+// entity 126
+{
+"classname" "info_alien_start"
+"origin" "560 144 28"
+"angle" "180"
+}

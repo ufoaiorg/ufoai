@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "4"
 // brush 0
 {
 ( 755 364 78 ) ( 708 280 78 ) ( 728 379 78 ) tex_common/weaponclip 16.07819 50.27895 -29.46236 1 1 33554432 0 0
