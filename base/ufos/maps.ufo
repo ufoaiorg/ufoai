@@ -3316,6 +3316,41 @@ mapdef village_bungalow2
 	)
 }
 
+mapdef village_estate
+{
+	map				"+village"
+	params			("estate")
+	description		"_Estate"
+	maxaliens		6
+
+	aircraft
+	(
+		// any
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+	)
+
+	cultures
+	(
+		"western"
+	)
+
+	populations
+	(
+		//any
+	)
+}
+
+
 mapdef village_large
 {
 	map				"+village"
@@ -4683,41 +4718,6 @@ mapdef england
 		"suburban"
 		"village"
 		"rural"
-	)
-}
-
-// ESTATE MAP //
-
-mapdef estate
-{
-	map				"estate"
-	description		"_Estate"
-	maxaliens		6
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-	)
-
-	cultures
-	(
-		"western"
-	)
-
-	populations
-	(
-		//any
 	)
 }
 

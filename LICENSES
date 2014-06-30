@@ -238,7 +238,6 @@ base/maps/eaglenest/en_craft_drop_herakles.map | GNU General Public License 2.0 
 base/maps/eaglenest/en_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/eaglenest/en_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/england.map | GNU General Public License 2.0 or later
-base/maps/estate.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/excavation.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/farm.ump | GNU General Public License 2.0 or later
 base/maps/farm/f_barn_a.map | GNU General Public License 2.0 or later
@@ -750,6 +749,7 @@ base/maps/village/vil_craft_ufo_fighter.map | GNU General Public License 2.0 or 
 base/maps/village/vil_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/village/vil_diner_01.map | GNU General Public License 2.0 or later
+base/maps/village/vil_estate.map | GNU General Public License 2.0 or later | Martin Gerhardy Holger 'ShipIt' Gellrich | base/maps/estate.map by Martin Gerhardy
 base/maps/village/vil_fountain_01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_garage_01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_garage_02.map | GNU General Public License 2.0 or later

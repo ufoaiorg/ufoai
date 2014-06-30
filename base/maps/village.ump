@@ -480,6 +480,16 @@ tile +diner_01
 0		v		0		0		0		0
 }
 
+tile +estate
+{
+6 6
+0		0		0		0		0		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		0		0		0		0		0
+}
 
 tile +garage_01
 	// garage at vertical street
@@ -756,6 +766,12 @@ tileset nature		"0 10"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird	"1 1"
+}
+
+assembly estate
+{
+size "4 4"
+fix +estate				"0 0"
 }
 
 assembly large
