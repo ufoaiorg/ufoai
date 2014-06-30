@@ -462,7 +462,7 @@ tile +bungalow2
 {
 6 6
 0		0		0		0		0		0
-0		h		+h		+h		+h		h
+0		0		h		+h		h		0
 0		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		0
@@ -742,12 +742,16 @@ tileset street_h	"0 4"
 
 assembly bungalow2
 {
-size "4 5"
-fix +bungalow2		"0 0"
+size "7 5"
++bungalow2			"1 1"
++garage_01			"0 1"
++garage_02			"0 1"
++garage_03			"0 1"
 +nature_11			"0 1"
-+start				"1 1"
-tileset nature		"0 1"
-tileset street_h	"0 1"
+tileset nature		"0 10"
+tileset street_h	"0 5"
+tileset street_v	"0 5"
+*rm_drop +craft_drop_firebird	"1 1"
 }
 
 assembly large
