@@ -59,7 +59,7 @@ window production
 			tab market_navigation2 {
 				{
 					pos		"5 70"
-					size	"538 39"
+					size	"670 39"
 					cvar	*cvar:mn_itemtype
 					onChange {
 						cmd "prod_type <cvar:mn_itemtype>;"
@@ -106,7 +106,7 @@ window production
 				string itemname {
 					string		"_Item"
 					pos			"50 5"
-					size		"100 20"
+					size		"150 20"
 					contentalign	ALIGN_CL
 					font		"f_small_bold"
 				}
@@ -120,7 +120,7 @@ window production
 				string production {
 					string		"_Production"
 					pos			"461 5"
-					size		"100 20"
+					size		"150 20"
 					contentalign	ALIGN_CL
 					font		"f_small_bold"
 				}
