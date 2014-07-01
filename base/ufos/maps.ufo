@@ -3473,7 +3473,7 @@ mapdef village_small
 	description		"_Suburban City"
 	multiplayer		false
 	size			"small"
-	maxaliens		9
+	maxaliens		8
 
 	aircraft
 	(

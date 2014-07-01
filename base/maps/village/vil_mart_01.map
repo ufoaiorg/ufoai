@@ -6759,7 +6759,7 @@
 // entity 111
 {
 "classname" "misc_model"
-"origin" "728 189.827 4"
+"origin" "672 169.827 4"
 "model" "models/objects/cars/policecar/policecar.md2"
 "spawnflags" "255"
 "modelscale_vec" "1.35 1 1"
