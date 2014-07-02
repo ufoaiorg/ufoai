@@ -211,6 +211,7 @@
 		<Unit filename="../../base/ufos/ui/sys_editor.ufo" />
 		<Unit filename="../../base/ufos/ui/sys_popup.ufo" />
 		<Unit filename="../../base/ufos/ui/team.ufo" />
+		<Unit filename="../../base/ufos/ui/test_lua.ufo" />
 		<Unit filename="../../base/ufos/ui/transfer.ufo" />
 		<Unit filename="../../base/ufos/ui/tutorials.ufo" />
 		<Unit filename="../../base/ufos/ui/ufopedia.ufo" />
@@ -732,7 +733,7 @@
 		<Unit filename="../../src/client/ui/node/ui_node_window.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_zone.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_zone.h" />
-		<Unit filename="../../src/client/ui/swig/ui_lua.i">
+		<Unit filename="../../src/client/ui/swig/ui_lua_shared.i">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="../../src/client/ui/ui_actions.cpp" />
@@ -754,6 +755,10 @@
 		<Unit filename="../../src/client/ui/ui_input.cpp" />
 		<Unit filename="../../src/client/ui/ui_input.h" />
 		<Unit filename="../../src/client/ui/ui_internal.h" />
+		<Unit filename="../../src/client/ui/ui_lua.cpp">
+			<Option target="windows" />
+		</Unit>
+		<Unit filename="../../src/client/ui/ui_lua.h" />
 		<Unit filename="../../src/client/ui/ui_main.cpp" />
 		<Unit filename="../../src/client/ui/ui_main.h" />
 		<Unit filename="../../src/client/ui/ui_node.cpp" />
