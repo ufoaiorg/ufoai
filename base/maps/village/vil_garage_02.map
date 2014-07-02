@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "3"
 // brush 0
 {
 ( 32 32 0 ) ( 160 32 0 ) ( 32 96 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
@@ -723,7 +722,7 @@
 // entity 5
 {
 "classname" "info_alien_start"
-"origin" "176 336 32"
+"origin" "112 144 32"
 "angle" "180"
 }
 // entity 6
@@ -733,4 +732,10 @@
 "model" "models/objects/cars/jeep/jeep.md2"
 "spawnflags" "255"
 "angles" "0 90 0"
+}
+// entity 7
+{
+"classname" "info_alien_start"
+"origin" "176 336 32"
+"angle" "180"
 }

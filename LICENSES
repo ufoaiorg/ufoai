@@ -238,7 +238,6 @@ base/maps/eaglenest/en_craft_drop_herakles.map | GNU General Public License 2.0 
 base/maps/eaglenest/en_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/eaglenest/en_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/england.map | GNU General Public License 2.0 or later
-base/maps/estate.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/excavation.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/farm.ump | GNU General Public License 2.0 or later
 base/maps/farm/f_barn_a.map | GNU General Public License 2.0 or later
@@ -750,6 +749,7 @@ base/maps/village/vil_craft_ufo_fighter.map | GNU General Public License 2.0 or 
 base/maps/village/vil_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/village/vil_diner_01.map | GNU General Public License 2.0 or later
+base/maps/village/vil_estate.map | GNU General Public License 2.0 or later | Martin Gerhardy Holger 'ShipIt' Gellrich | base/maps/estate.map by Martin Gerhardy
 base/maps/village/vil_fountain_01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_garage_01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_garage_02.map | GNU General Public License 2.0 or later
@@ -786,6 +786,7 @@ base/maps/village/vil_street_h_02.map | GNU General Public License 2.0 or later 
 base/maps/village/vil_street_h_03.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_street_h_04.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_street_h_05.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_street_h_06.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_street_junction_e.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_street_junction_n.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_street_junction_s.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
@@ -799,6 +800,7 @@ base/maps/village/vil_street_v_02.map | GNU General Public License 2.0 or later 
 base/maps/village/vil_street_v_03.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_street_v_04.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_street_v_05.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_street_v_06.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/wilderness.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/media/DejaVuSans.ttf | Public Domain | http://dejavu-fonts.org | http://dejavu.sourceforge.net/
 base/media/FreeMono.ttf | GNU General Public License 3.0 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
@@ -3206,8 +3208,6 @@ base/pics/icons/mail_tech.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_un.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/map_prev.png | Public Domain | Nate Wright | mods/ui2/pics/icons/map_prev.png by Nate Wright
 base/pics/icons/map_prev_clicked.png | Public Domain | Nate Wright | mods/ui2/pics/icons/map_prev_clicked.png by Nate Wright
-base/pics/icons/mapselection.png | Public Domain | bayo | SVG from data_source
-base/pics/icons/mapselection_clicked.png | Public Domain | bayo | SVG from data_source
 base/pics/icons/market.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/moralesml.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);Nate Wright
 base/pics/icons/moralesml0.png | GNU General Public License 2.0 or later | Michal Bilinski (Blywulf);Nate Wright

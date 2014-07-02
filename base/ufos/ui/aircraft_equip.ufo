@@ -32,7 +32,7 @@ window aircraft_equip extends iaircraft
 			*cvar:tmp = ""
 			if ( *cvar:mn_aircraft_item_selected != -1 ) {
 				*cvar:tmp = "item"
-			} elif ( *node:root.bairequip_zone_select2@src eq "" ) {
+			} elif ( *node:root.airequip_zone_select2@src eq "" ) {
 				*cvar:tmp = "zone1"
 			} else {
 				*cvar:tmp = "zone2"
@@ -609,7 +609,13 @@ window aircraft_equip extends iaircraft
 		// default is weapons @sa aircraftItemType_t (inv_shared.h)
 		*cvar:mn_aircrafttab = "aircraft_equip"
 		cmd "ui_aircraft_fill;"
-		cmd "ui_aircraft_select <1>"
+		if (<cvar:mn_aircraft_id> == "")
+		{
+			cmd "ui_aircraft_select <1>;"
+		} else
+		{
+			cmd "ui_aircraft_select <cvar:mn_aircraft_id>;"
+		}
 		cmd "airequip_updatemenu 2;"
 		cmd "airequip_select zone1;"
 		*cvar:mn_itemname = ""
@@ -634,6 +640,7 @@ window aircraft_equip extends iaircraft
 		delete *cvar:mn_aircraft_item_model_slot6
 		delete *cvar:mn_aircraft_item_model_slot7
 		delete *cvar:mn_aircraft_item_selected
+		delete *cvar:mn_aircraft_id
 
 		// call base init function because the amount of workers, scientists and
 		// so on can also change the button state in the base view

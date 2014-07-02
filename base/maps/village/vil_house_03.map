@@ -3819,13 +3819,14 @@
 // entity 35
 {
 "classname" "info_alien_start"
-"origin" "784 48 28"
+"origin" "400 496 28"
 "angle" "180"
 }
 // entity 36
 {
 "classname" "info_alien_start"
-"origin" "528 272 28"
+"origin" "80 432 28"
+"angle" "90"
 }
 // entity 37
 {
@@ -4371,4 +4372,26 @@
 "spawnflags" "255"
 "skin" "0"
 "angles" "0 90 0"
+}
+// entity 102
+{
+"classname" "info_alien_start"
+"origin" "720 272 36"
+}
+// entity 103
+{
+"classname" "info_alien_start"
+"origin" "208 400 28"
+"angle" "-90"
+}
+// entity 104
+{
+"classname" "info_alien_start"
+"origin" "528 272 28"
+}
+// entity 105
+{
+"classname" "info_alien_start"
+"origin" "784 48 28"
+"angle" "180"
 }

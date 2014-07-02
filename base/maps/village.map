@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -15937,7 +15938,7 @@
 // entity 127
 {
 "classname" "info_player_start"
-"origin" "944 -1104 28"
+"origin" "944 -976 28"
 "team" "2"
 "angle" "90"
 }
@@ -18020,7 +18021,7 @@
 // entity 196
 {
 "classname" "info_player_start"
-"origin" "80 112 32"
+"origin" "-48 176 32"
 "team" "1"
 }
 // entity 197
@@ -18032,7 +18033,7 @@
 // entity 198
 {
 "classname" "info_player_start"
-"origin" "16 112 32"
+"origin" "-144 176 32"
 "team" "1"
 }
 // entity 199
@@ -18073,7 +18074,7 @@
 // entity 204
 {
 "classname" "info_player_start"
-"origin" "848 -1136 28"
+"origin" "752 -1296 28"
 "team" "2"
 "angle" "180"
 }
@@ -20877,4 +20878,49 @@
 "_color" "1 1 1"
 "light" "120"
 "origin" "588 -576 36"
+}
+// entity 349
+{
+"classname" "info_player_start"
+"origin" "16 112 32"
+"team" "1"
+}
+// entity 350
+{
+"classname" "info_player_start"
+"origin" "240 112 32"
+"team" "1"
+}
+// entity 351
+{
+"classname" "info_player_start"
+"origin" "80 112 32"
+"team" "1"
+}
+// entity 352
+{
+"classname" "info_player_start"
+"origin" "144 144 32"
+"team" "1"
+}
+// entity 353
+{
+"classname" "info_player_start"
+"origin" "944 -1104 28"
+"team" "2"
+"angle" "90"
+}
+// entity 354
+{
+"classname" "info_player_start"
+"origin" "944 -1040 28"
+"team" "2"
+"angle" "90"
+}
+// entity 355
+{
+"classname" "info_player_start"
+"origin" "848 -1136 28"
+"team" "2"
+"angle" "180"
 }

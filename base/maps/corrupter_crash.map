@@ -16841,7 +16841,7 @@
 // entity 2
 {
 "classname" "info_player_start"
-"origin" "1296 144 28"
+"origin" "1296 208 28"
 "team" "3"
 "angle" "90"
 }
@@ -17139,21 +17139,21 @@
 // entity 15
 {
 "classname" "info_player_start"
-"origin" "1424 144 28"
+"origin" "1424 208 28"
 "team" "3"
 "angle" "90"
 }
 // entity 16
 {
 "classname" "info_player_start"
-"origin" "1360 144 28"
+"origin" "1360 208 28"
 "team" "3"
 "angle" "90"
 }
 // entity 17
 {
 "classname" "info_player_start"
-"origin" "1232 144 28"
+"origin" "1232 208 28"
 "team" "3"
 "angle" "90"
 }
@@ -17343,14 +17343,14 @@
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "304 2128 92"
+"origin" "304 2256 92"
 "angle" "-90"
 }
 // entity 46
 {
 "classname" "info_player_start"
 "team" "1"
-"origin" "336 2128 92"
+"origin" "336 2256 92"
 "angle" "-90"
 }
 // entity 47
@@ -20638,8 +20638,7 @@
 {
 "classname" "info_player_start"
 "team" "2"
-"origin" "1328 1552 92"
-"angle" "180"
+"origin" "976 976 100"
 }
 // entity 219
 {
@@ -20666,6 +20665,89 @@
 {
 "classname" "info_player_start"
 "team" "2"
+"origin" "912 1008 100"
+}
+// entity 223
+{
+"classname" "info_player_start"
+"origin" "1360 144 28"
+"team" "3"
+"angle" "90"
+}
+// entity 224
+{
+"classname" "info_player_start"
+"origin" "1424 144 28"
+"team" "3"
+"angle" "90"
+}
+// entity 225
+{
+"classname" "info_player_start"
+"origin" "1296 144 28"
+"team" "3"
+"angle" "90"
+}
+// entity 226
+{
+"classname" "info_player_start"
+"origin" "1232 144 28"
+"team" "3"
+"angle" "90"
+}
+// entity 227
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1328 1552 92"
+"angle" "180"
+}
+// entity 228
+{
+"classname" "info_player_start"
+"team" "2"
 "origin" "1392 1552 92"
 "angle" "180"
+}
+// entity 229
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1008 1040 100"
+"angle" "180"
+}
+// entity 230
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "1072 1040 100"
+"angle" "180"
+}
+// entity 231
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "304 2128 92"
+"angle" "-90"
+}
+// entity 232
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 2128 92"
+"angle" "-90"
+}
+// entity 233
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "304 2096 92"
+"angle" "-90"
+}
+// entity 234
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 2096 92"
+"angle" "-90"
 }

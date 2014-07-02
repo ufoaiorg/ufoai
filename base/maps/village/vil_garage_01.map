@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "3"
 // brush 0
 {
 ( -228 -160 0 ) ( -384 -160 0 ) ( -384 -320 0 ) tex_common/nodraw 39.16583 24.94781 -90 0.31367 1.5 65280 0 0
@@ -801,7 +800,7 @@
 // entity 5
 {
 "classname" "info_alien_start"
-"origin" "336 176 32"
+"origin" "80 144 32"
 "angle" "-90"
 }
 // entity 6
@@ -819,4 +818,10 @@
 "model" "models/objects/cars/4x4/4x4_t.md2"
 "spawnflags" "255"
 "angles" "0 -180 0"
+}
+// entity 8
+{
+"classname" "info_alien_start"
+"origin" "336 176 32"
+"angle" "-90"
 }

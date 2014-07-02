@@ -600,7 +600,7 @@ mapdef city3_small_noufo
 	map				"+city3"
 	params			("small_noufo")
 	description		"_Urban Periphery"
-	maxaliens		25
+	maxaliens		16
 
 	aircraft
 	(
@@ -2577,10 +2577,10 @@ mapdef oriental_small
 
 mapdef tropic_large
 {
-	map			"+tropic"
-	params		("large")
-	description	"_Tropical Jungle"
-	maxaliens	30
+	map				"+tropic"
+	params			("large")
+	description		"_Tropical Jungle"
+	maxaliens		30
 
 	multiplayer		true
 	teams			1
@@ -2610,7 +2610,7 @@ mapdef tropic_large
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
@@ -2624,10 +2624,10 @@ mapdef tropic_large
 
 mapdef tropic_medium_drug
 {
-	map			"+tropic"
-	params		("medium_drug")
-	description	"_Tropical Jungle"
-	maxaliens	16
+	map				"+tropic"
+	params			("medium_drug")
+	description		"_Tropical Jungle"
+	maxaliens		16
 
 	multiplayer		true
 	teams			1
@@ -2657,7 +2657,7 @@ mapdef tropic_medium_drug
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
@@ -2671,10 +2671,10 @@ mapdef tropic_medium_drug
 
 mapdef tropic_medium_river
 {
-	map			"+tropic"
-	params		("medium_river")
-	description	"_Tropical Jungle"
-	maxaliens	16
+	map				"+tropic"
+	params			("medium_river")
+	description		"_Tropical Jungle"
+	maxaliens		16
 
 	multiplayer		true
 	teams			1
@@ -2704,7 +2704,7 @@ mapdef tropic_medium_river
 
 	cultures
 	(
-		//any
+		//	any
 	)
 
 	populations
@@ -2718,10 +2718,10 @@ mapdef tropic_medium_river
 
 mapdef tropic_small_drug
 {
-	map			"+tropic"
-	params		("small_drug")
-	description	"_Tropical Jungle"
-	maxaliens	8
+	map				"+tropic"
+	params			("small_drug")
+	description		"_Tropical Jungle"
+	maxaliens		8
 
 	multiplayer		true
 	teams			1
@@ -2754,7 +2754,7 @@ mapdef tropic_small_drug
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
@@ -2768,10 +2768,10 @@ mapdef tropic_small_drug
 
 mapdef tropic_small_river
 {
-	map			"+tropic"
-	params		("small_river")
-	description	"_Tropical Jungle"
-	maxaliens	8
+	map				"+tropic"
+	params			("small_river")
+	description		"_Tropical Jungle"
+	maxaliens		8
 
 	multiplayer		true
 	teams			1
@@ -2804,7 +2804,7 @@ mapdef tropic_small_river
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
@@ -3316,6 +3316,41 @@ mapdef village_bungalow2
 	)
 }
 
+mapdef village_estate
+{
+	map				"+village"
+	params			("estate")
+	description		"_Estate"
+	maxaliens		6
+
+	aircraft
+	(
+		// any
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+	)
+
+	cultures
+	(
+		"western"
+	)
+
+	populations
+	(
+		//any
+	)
+}
+
+
 mapdef village_large
 {
 	map				"+village"
@@ -3438,7 +3473,7 @@ mapdef village_small
 	description		"_Suburban City"
 	multiplayer		false
 	size			"small"
-	maxaliens		9
+	maxaliens		8
 
 	aircraft
 	(
@@ -4230,7 +4265,7 @@ mapdef spedition
 	maxaliens		8
 
 	multiplayer		true
-	teams			2
+	teams			1
 	gametypes (
 		coop2
 		coop3
@@ -4327,19 +4362,18 @@ mapdef tower
 
 mapdef transport
 {
-	map			"+transport"
-	params		("default")
-	description	"_Warehouse"
-	multiplayer	true
-	teams		2
+	map				"+transport"
+	params			("default")
+	description		"_Warehouse"
+	maxaliens		8
+
+	multiplayer		true
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens	8
 
 	aircraft
 	(
@@ -4348,9 +4382,10 @@ mapdef transport
 		craft_drop_raptor
 	)
 
-//	ufos
-//	(
-//	)
+	ufos
+	(
+		// any
+	)
 
 	terrains
 	(
@@ -4360,7 +4395,7 @@ mapdef transport
 
 	cultures
 	(
-		//any
+		// any
 	)
 
 	populations
@@ -4470,16 +4505,7 @@ mapdef city_train
 {
 	map				"city_train"
 	description		"_Rural Village"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		8
+	maxaliens		7
 
 	aircraft
 	(
@@ -4568,9 +4594,6 @@ mapdef corrupter_crash
 		fight2on2on2
 		fight3on3
 		fight3on3on3
-		coop2
-		coop3
-		coop4
 	)
 
 	aircraft
@@ -4603,21 +4626,18 @@ mapdef corrupter_crash
 
 mapdef dam
 {
-	map			"dam"
-	description	"_Hydroelectric Dam"
-	multiplayer	true
-	teams		2
+	map				"dam"
+	description		"_Hydroelectric Dam"
+	civilianteam	worker
+	maxaliens		12
+
+	multiplayer		true
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
 		coop2
 		coop3
 		coop4
 	)
-
-	maxaliens		12
-
-	civilianteam	worker
 
 	aircraft
 	(
@@ -4658,19 +4678,19 @@ mapdef england
 {
 	map				"england"
 	description		"_Small Village"
+	maxaliens		9
+
 	multiplayer		true
-	teams			3
+	teams			2
 	gametypes (
 		fight1on1
-		fight1on1on1
 		fight2on2
-		fight2on2on2
+		fight3on3
+		fight4on4
 		coop2
 		coop3
 		coop4
 	)
-
-	maxaliens		9
 
 	aircraft
 	(
@@ -4698,51 +4718,6 @@ mapdef england
 		"suburban"
 		"village"
 		"rural"
-	)
-}
-
-// ESTATE MAP //
-
-mapdef estate
-{
-	map				"estate"
-	description		"_Estate"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-
-	maxaliens		12
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-	)
-
-	cultures
-	(
-		"western"
-	)
-
-	populations
-	(
-		//any
 	)
 }
 
@@ -4803,6 +4778,8 @@ mapdef ferry
 	map				"ferry"
 	description		"_Ferry"
 	size			"medium"
+	maxaliens		6
+
 	teams			4
 	multiplayer		true
 	gametypes (
@@ -4810,11 +4787,7 @@ mapdef ferry
 		fight1on1on1
 		fight2on2
 		fight2on2on2
-		coop2
-		coop3
-		coop4
 	)
-	maxaliens		6
 
 	aircraft
 	(
@@ -4852,16 +4825,15 @@ mapdef fighter_crash
 {
 	map				"fighter_crash"
 	description		"_Fighter UFO Crash Site"
-	multiplayer		true
-	teams			2
 	maxaliens		6 //info_alien_start spawnpoints:19
 
+	multiplayer		true
+	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
 
 	aircraft
@@ -4899,16 +4871,16 @@ mapdef gate
 {
 	map				"gate"
 	description		"_Secret Depot"
+	maxaliens		9
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		9
 
 	aircraft
 	(
@@ -4991,10 +4963,13 @@ mapdef harbour
 
 mapdef mine
 {
-	map			"mine"
-	description	"_Old Mine"
+	map				"mine"
+	description		"_Old Mine"
+	civilianteam	miner
+	maxaliens		12
+
 	multiplayer	true
-	teams		3
+	teams		4
 	gametypes (
 		fight1on1
 		fight1on1on1
@@ -5006,9 +4981,6 @@ mapdef mine
 		coop3
 		coop4
 	)
-	maxaliens	26
-
-	civilianteam	miner
 
 	aircraft
 	(
@@ -5183,22 +5155,20 @@ mapdef pipes_const
 {
 	map				"pipes_const"
 	description		"_Sewage Pipe Construction"
+	civilianteam	miner
+	maxaliens		21
+
 	multiplayer		true
-	teams			3
+	teams			2
 	gametypes (
 		fight1on1
-		fight1on1on1
 		fight2on2
-		fight2on2on2
 		fight3on3
-		fight3on3on3
+		fight4on4
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens		21
-
-	civilianteam	miner
 
 	ufos
 	(
@@ -5230,16 +5200,19 @@ mapdef resort
 {
 	map				"resort"
 	description		"_Luxurious Resort"
+	maxaliens		24
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
+		fight3on3
+		fight4on4
 		coop2
 		coop3
 		coop4
 	)
-	maxaliens		24
 
 	aircraft
 	(
@@ -5276,6 +5249,8 @@ mapdef rivertown
 {
 	map				"rivertown"
 	description		"_Old Town Center"
+	maxaliens		16
+
 	multiplayer		true
 	teams			4
 	gametypes (
@@ -5291,7 +5266,6 @@ mapdef rivertown
 		coop3
 		coop4
 	)
-	maxaliens		16
 
 	aircraft
 	(
@@ -5442,15 +5416,15 @@ mapdef village
 	map				"village"
 	description		"_Suburban City"
 	multiplayer		true
+	maxaliens		22
+
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
-		coop3
-		coop4
+		fight3on3
+		fight4on4
 	)
-	maxaliens		22
 
 	aircraft
 	(
@@ -5487,14 +5461,16 @@ mapdef wilderness
 {
 	map				"wilderness"
 	description		"_Wilderness"
+	maxaliens		16
+
 	multiplayer		true
 	teams			2
 	gametypes (
 		fight1on1
 		fight2on2
-		coop2
+		fight3on3
+		fight4on4
 	)
-	maxaliens		16
 
 	aircraft
 	(
@@ -5649,22 +5625,26 @@ mapdef vil2_mp2p
 	)
 }
 
-mapdef vil2_mp4p
+mapdef vil2_mp3p
 {
 	map				"+village2"
-	params			("mp2p_02")
-	description		"_Village MP (2)"
-	multiplayer		true
+	params			("mp3p_01")
+	description		"_Village MP (3)"
+	maxaliens		30
 	campaign		false
 	singleplayer	false
-	teams			4
-	maxaliens		30
 
+	multiplayer		true
+	teams			4
 	gametypes
 	(
 		fight1on1
 		fight2on2
 		fight3on3
+		fight4on4
+		coop1
+		coop2
+		coop3
 	)
 }
 

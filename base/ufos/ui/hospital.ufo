@@ -98,18 +98,28 @@ window hospital
 				}
 			}
 		}
+		ObjectInfo details
+		{
+			{
+				pos				"4 574"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+		}
 	}
 
 	panel implants {
 		{
-			pos		"750 5"
-			size	"250 471"
-			border	2
+			pos		"739 5"
+			size	"280 758"
+			border	"2"
 			bordercolor	"0.56 0.81 0.76 1"
+			bgcolor			"0.56 0.81 0.76 0.3"
 		}
+
 		baseinventory equip {
 			pos						"20 20"
-			size					"220 200"
+			size					"240 714"
 			displayimplant			true
 			displayunavailableitem	true
 			columns					1
@@ -130,16 +140,6 @@ window hospital
 				*node:root.implants.equip@viewpos = <current>
 			}
 		}
-		container implant {
-			pos "20 240"
-		}
-		panel list {
-			pos "20 280"
-			size "236 190"
-			layout			LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	4
-			ghost			true
-		}
 	}
 
 	// Back to geoscape
@@ -147,9 +147,9 @@ window hospital
 	{
 		onClick			{ cmd "ui_pop; ui_pop;" }
 	}
-	// ==================
-	// init function
-	// ==================
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
 
 	func onWindowOpened
 	{
