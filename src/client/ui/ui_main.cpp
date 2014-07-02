@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_sound.h"
 #include "../cl_menu.h"
 #include "node/ui_node_abstractnode.h"
+#include "ui_lua.h"
 #include <vector>
 #include <string>
 
@@ -312,4 +313,6 @@ void UI_Init (void)
 	UI_InitWindows();
 	UI_InitDraw();
 	UI_InitActions();
+
+	UI_InitLua();
 }
