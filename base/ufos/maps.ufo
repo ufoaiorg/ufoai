@@ -3252,6 +3252,14 @@ mapdef village_bungalow
 	size			"small"
 	maxaliens		6
 
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -3290,6 +3298,14 @@ mapdef village_bungalow2
 	size			"small"
 	maxaliens		6
 
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -3327,6 +3343,14 @@ mapdef village_estate
 	description		"_Estate"
 	maxaliens		6
 
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -3362,9 +3386,16 @@ mapdef village_large
 	map				"+village"
 	params			("large")
 	description		"_Suburban City"
-	multiplayer		false
 	size			"large"
 	maxaliens		30
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -3401,9 +3432,16 @@ mapdef village_medium
 	map				"+village"
 	params			("medium")
 	description		"_Suburban City"
-	multiplayer		false
 	size			"medium"
 	maxaliens		16
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -3439,9 +3477,16 @@ mapdef village_medium_noufo
 	map				"+village"
 	params			("medium_noufo")
 	description		"_Suburban City"
-	multiplayer		false
 	size			"medium"
 	maxaliens		16
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -3477,9 +3522,16 @@ mapdef village_small
 	map				"+village"
 	params			("small")
 	description		"_Suburban City"
-	multiplayer		false
 	size			"small"
 	maxaliens		8
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
