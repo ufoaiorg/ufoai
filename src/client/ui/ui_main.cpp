@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_font.h"
 #include "ui_parse.h"
 #include "ui_sound.h"
+#include "../cl_menu.h"
 #include "node/ui_node_abstractnode.h"
 #include <vector>
 #include <string>

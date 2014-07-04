@@ -391,8 +391,6 @@ void CL_LanguageInit (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageInit: system language is: '%s'\n", systemLanguage);
 
-	CL_LanguageInitMenu();
-
 	/* Set to the locale remembered previously. */
 	CL_LanguageTryToSet(systemLanguage);
 }
