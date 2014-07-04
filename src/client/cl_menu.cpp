@@ -101,3 +101,9 @@ void CLMN_InitStartup (void)
 
 	UI_Init();
 }
+
+void CLMN_Shutdown (void)
+{
+	Cmd_RemoveCommand("mn_init_keylist");
+	Cmd_RemoveCommand("mn_mods");
+}

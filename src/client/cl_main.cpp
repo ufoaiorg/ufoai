@@ -1282,6 +1282,7 @@ void CL_Shutdown (void)
 			Cvar_UnRegisterChangeListener(var->name, CL_RImagesCvarChange);
 	}
 
+	CLMN_Shutdown();
 	GAME_SetMode(nullptr);
 	GAME_UnloadGame();
 	CL_HTTP_Cleanup();
