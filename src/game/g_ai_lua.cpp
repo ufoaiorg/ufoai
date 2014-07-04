@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_combat.h"
 #include "g_edicts.h"
 #include "g_move.h"
+#include "g_utils.h"
 #include "g_vis.h"
 extern "C" {
 #include <lauxlib.h>
@@ -198,7 +199,7 @@ static int AIL_distance(lua_State* L);
 static int AIL_positionapproach(lua_State* L);
 static int AIL_isarmed(lua_State* L);
 static int AIL_getweapon(lua_State* L);
-
+static int AIL_missiontargets(lua_State* L);
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -221,6 +222,7 @@ static const luaL_reg AIL_methods[] = {
 	{"positionapproach", AIL_positionapproach},
 	{"isarmed", AIL_isarmed},
 	{"getweapon", AIL_getweapon},
+	{"missiontargets", AIL_missiontargets},
 	{nullptr, nullptr}
 };
 
@@ -1272,6 +1274,119 @@ static int AIL_positionapproach (lua_State* L)
 
 	lua_pushpos3(L, &to);
 	return 1;
+}
+
+/**
+ * @brief Returns the positions of the available mission targets.
+ */
+static int AIL_missiontargets (lua_State* L)
+{
+
+	/* Defaults. */
+	int team = TEAM_ALL;
+	int vision = 0;
+	int sortCrit = 0;
+	bool invTeam = false;
+
+	/* Handle parameters. */
+	if ((lua_gettop(L) > 0)) {
+		/* Get what to "see" with. */
+		if (lua_isstring(L, 1)) {
+			const char* s = lua_tostring(L, 1);
+			if (Q_streq(s, "all"))
+				vision = AILVT_ALL;
+			else if (Q_streq(s, "sight"))
+				vision = AILVT_SIGHT;
+			else if (Q_streq(s, "extra"))
+				vision = AILVT_DIST;
+			else
+				AIL_invalidparameter(1);
+		} else
+			AIL_invalidparameter(1);
+
+		/* We now check for different teams. */
+		if ((lua_gettop(L) > 1)) {
+			if (lua_isstring(L, 2)) {
+				const char* s = lua_tostring(L, 2);
+				if (s[0] == '-' || s[0] == '~') {
+					invTeam = true;
+					++s;
+				}
+				team = AIL_toTeamInt(s);
+				/* Trying to see no one? */
+				if (team == TEAM_ALL && invTeam)
+					AIL_invalidparameter(2);
+			} else
+				AIL_invalidparameter(2);
+		}
+
+		/* Sorting criteria */
+		if ((lua_gettop(L) > 2)) {
+			if (lua_isstring(L, 3)) {
+				const char* s = lua_tostring(L, 3);
+				if (Q_streq(s, "dist"))
+					sortCrit = AILSC_DIST;
+				else if (Q_streq(s, "path"))
+					sortCrit = AILSC_PATH;
+				else
+					AIL_invalidparameter(3);
+			} else
+				AIL_invalidparameter(3);
+		}
+	}
+
+	int n = 0;
+	struct ailTargets_s {
+		Edict* edict;
+		float sortLookup;
+	} sortTable[MAX_EDICTS];
+	/* Get visible things. */
+	const int visDist = G_VisCheckDist(AIL_ent);
+	Edict* mission = nullptr;
+	while ((mission = G_EdictsGetNextInUse(mission))) {
+		if (mission->type != ET_MISSION)
+			continue;
+		const float distance = VectorDistSqr(AIL_ent->pos, mission->pos);
+		/* Check for team match if needed. */
+		if ((team == TEAM_ALL || (mission->getTeam() == team ? !invTeam : invTeam))
+				&& (vision == AILVT_ALL
+				|| (vision == AILVT_SIGHT && !G_TestLineWithEnts(AIL_ent->origin, mission->origin))
+				|| (vision == AILVT_DIST && distance <= visDist * visDist))) {
+			switch (sortCrit) {
+			case AILSC_PATH:
+			{
+				pos_t move = ROUTING_NOT_REACHABLE;
+				if (G_FindPath(0, AIL_ent, AIL_ent->pos, mission->pos, false, ROUTING_NOT_REACHABLE - 1))
+					move = gi.MoveLength(level.pathingMap, mission->pos, 0, false);
+				sortTable[n].sortLookup = move;
+			}
+				break;
+			case AILSC_DIST:
+			default:
+				sortTable[n].sortLookup = VectorDistSqr(AIL_ent->pos, mission->pos);
+				break;
+			}
+			sortTable[n++].edict = mission;
+		}
+	}
+
+	/* Sort by given criterion - lesser first. */
+	struct ailCompTargets_s {
+		bool operator() (ailTargets_s i, ailTargets_s j)
+			{
+				return (i.sortLookup < j.sortLookup);
+			}
+	} comp;
+	std::sort(sortTable, sortTable + n, comp);
+
+	/* Now save it in a Lua table. */
+	lua_newtable(L);
+	for (int i = 0; i < n; i++) {
+		lua_pushnumber(L, i + 1); /* index, starts with 1 */
+		lua_pushpos3(L, &sortTable[i].edict->pos); /* value */
+		lua_rawset(L, -3); /* store the value in the table */
+	}
+	return 1; /* Returns the table of positions. */
 }
 
 /**
