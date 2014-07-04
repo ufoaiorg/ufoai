@@ -592,6 +592,16 @@ tile +house_03
 0		0		0		0		0		0
 }
 
+tile +house_05
+{
+5 5
+0		0		0		0		0
+0		+a		+a		v		0
+0		+a		+a		+av		0
+0		+a		+a		v		0
+0		0		0		0		0
+}
+
 tile +mart_01
 {
 6 5
@@ -690,6 +700,7 @@ tileset housing {
 	+house_01
 	+house_02
 	+house_03
+	+house_05
 }
 
 tileset commercial {
@@ -827,16 +838,22 @@ title "_Village"
 +house_01			"0 1"
 +house_02			"0 1"
 +house_03			"0 1"
++house_05			"0 1"
 +misc_01			"0 1"
 +misc_02			"0 1"
-+nature_00			"0 6"
+//+nature_00			"0 9"
 +nature_02			"0 1"
 +nature_06			"0 1"
 +nature_11			"0 1"
++park_01			"0 1"
++park_02			"0 1"
++park_03			"0 1"
++park_04			"0 1"
++fountain_01		"0 1"
++playground_01		"0 1"
 tileset garage_h	"0 1"
 tileset garage_v	"0 1"
 tileset nature		"0 9"
-tileset park		"0 2"
 tileset street_h	"0 8"
 tileset street_v	"0 8"
 *rm_drop +craft_drop_firebird	"1 1"
