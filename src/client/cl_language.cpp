@@ -351,6 +351,22 @@ void CL_LanguageShutdown (void)
 	OBJZERO(msgIDHash);
 }
 
+void CL_LanguageInitMenu (void)
+{
+	uiNode_t* languageOption = nullptr;
+	language_t* language = languageList;
+	while (language) {
+		const bool available = Q_streq(language->localeID, "none") || CL_LanguageTest(language->localeID);
+		uiNode_t* option = UI_AddOption(&languageOption, "", language->nativeString, language->localeID);
+		option->disabled = !available;
+		language = language->next;
+	}
+
+	/* sort the list, and register it to the menu */
+	UI_SortOptions(&languageOption);
+	UI_RegisterOption(OPTION_LANGUAGES, languageOption);
+}
+
 /**
  * @brief Fills the options language menu node with the parsed language mappings
  * @sa CL_InitAfter
@@ -358,46 +374,24 @@ void CL_LanguageShutdown (void)
  */
 void CL_LanguageInit (void)
 {
-	int i;
-	language_t* language;
-	uiNode_t* languageOption = nullptr;
-	char systemLanguage[MAX_VAR];
-
 	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
 
-	if (s_language->string[0] != '\0') {
+	char systemLanguage[MAX_VAR] = "";
+	if (Q_strvalid(s_language->string)) {
 		Com_Printf("CL_LanguageInit: language settings are stored in configuration: %s\n", s_language->string);
 		Q_strncpyz(systemLanguage, s_language->string, sizeof(systemLanguage));
 	} else {
 		const char* currentLocale = Sys_GetLocale();
-
 		if (currentLocale) {
 			const char* localeID = CL_GetLocaleID(currentLocale);
 			if (localeID)
 				Q_strncpyz(systemLanguage, localeID, sizeof(systemLanguage));
-			else
-				systemLanguage[0] = '\0';
-		} else
-			systemLanguage[0] = '\0';
+		}
 	}
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageInit: system language is: '%s'\n", systemLanguage);
 
-	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
-		bool available;
-		available = Q_streq(language->localeID, "none") || CL_LanguageTest(language->localeID);
-		uiNode_t* option;
-#if 0
-		option = UI_AddOption(&languageOption, "", language->localeString, language->localeID);
-#else
-		option = UI_AddOption(&languageOption, "", language->nativeString, language->localeID);
-#endif
-		option->disabled = !available;
-	}
-
-	/* sort the list, and register it to the menu */
-	UI_SortOptions(&languageOption);
-	UI_RegisterOption(OPTION_LANGUAGES, languageOption);
+	CL_LanguageInitMenu();
 
 	/* Set to the locale remembered previously. */
 	CL_LanguageTryToSet(systemLanguage);
