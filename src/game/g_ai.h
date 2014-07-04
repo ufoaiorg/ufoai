@@ -53,6 +53,7 @@ float AI_CalcShotDamage(Actor* actor, Actor* target, const fireDef_t* fd, shoot_
 bool AI_TryToReloadWeapon(Actor* actor, containerIndex_t containerID);
 bool AI_IsHostile(const Actor* actor, const Edict* target);
 const invDef_t* AI_SearchGrenade(const Actor* actor, Item** ip);
+bool AI_FindMissionLocation(Actor* actor, const pos3_t to);
 
 /*
  * LUA functions

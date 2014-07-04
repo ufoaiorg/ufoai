@@ -212,6 +212,7 @@ static int AIL_isarmed(lua_State* L);
 static int AIL_getweapon(lua_State* L);
 static int AIL_missiontargets(lua_State* L);
 static int AIL_waypoints(lua_State* L);
+static int AIL_positionmission(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -237,6 +238,7 @@ static const luaL_reg AIL_methods[] = {
 	{"getweapon", AIL_getweapon},
 	{"missiontargets", AIL_missiontargets},
 	{"waypoints", AIL_waypoints},
+	{"positionmission", AIL_positionmission},
 	{nullptr, nullptr}
 };
 
@@ -1454,6 +1456,27 @@ static int AIL_waypoints (lua_State* L)
 		lua_rawset(L, -3); /* store the value in the table */
 	}
 	return 1; /* Returns the table of positions. */
+}
+
+static int AIL_positionmission (lua_State* L)
+{
+	/* check parameter */
+	if (!(lua_gettop(L) && lua_ispos3(L, 1))) {
+		AIL_invalidparameter(1);
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	pos3_t oldPos;
+	VectorCopy(AIL_ent->pos, oldPos);
+	pos3_t* target = lua_topos3(L, 1);
+	if (AI_FindMissionLocation(AIL_ent, *target))
+		lua_pushpos3(L, &AIL_ent->pos);
+	else
+		lua_pushboolean(L, 0);
+
+	AIL_ent->setOrigin(oldPos);
+	return 1;
 }
 
 /**

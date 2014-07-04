@@ -1150,7 +1150,7 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
  * @param[in] to The target position.
  * @return @c true if found a suitable position, @c false otherwise
  */
-static bool AI_FindMissionLocation (Actor* actor, const pos3_t to)
+bool AI_FindMissionLocation (Actor* actor, const pos3_t to)
 {
 	const byte minX = std::max(to[0] - HOLD_DIST, 0);
 	const byte minY = std::max(to[1] - HOLD_DIST, 0);

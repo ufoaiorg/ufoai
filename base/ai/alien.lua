@@ -69,7 +69,29 @@ end
 	Try to find a suitable target by wandering around.
 --]]
 function search ()
-	ai.pprint("Cant find a target")
+	-- First check if we have a mission target
+	local targets = ai.missiontargets("alien")
+	if #targets < 1 then
+		-- Check if we can block an enemy target
+		targets = ai.missiontargets("phalanx")
+	end
+
+	local found = false
+	if #targets > 0 then
+		for i = 1, #targets do
+			target_pos = ai.positionmission(targets[i])
+			if target_pos then
+				target_pos:goto()
+				found = true
+				break;
+			end
+		end
+	end
+
+	if not found then
+		-- TODO: implement wandering/patrolling
+		ai.pprint("Cant find a target")
+	end
 end
 
 
@@ -98,7 +120,7 @@ function engage( targets )
 	local hide_tu = 4 -- Crouch + face
 	local min_group = 3 -- Min enemy group for grenade throw
 
-	local done = nil
+	local done = false
 	for i = 1, #targets do
 		target = targets[i]
 		-- Move until target in sight
