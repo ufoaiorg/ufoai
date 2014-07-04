@@ -190,17 +190,15 @@ static int languageCount; /**< how many languages do we have */
  */
 static const char* CL_GetLocaleID (const char* fullLocale)
 {
-	int i;
-	language_t* language;
-
-	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
+	language_t* language = languageList;
+	while (language) {
 		localeMapping_t* mapping = language->localeMapping;
-
 		while (mapping) {
 			if (Q_streq(fullLocale, mapping->localeMapping))
 				return language->localeID;
 			mapping = mapping->next;
 		}
+		language = language->next;
 	}
 	Com_DPrintf(DEBUG_CLIENT, "CL_GetLocaleID: Could not find your system locale '%s'. "
 		"Add it to the languages script file and send a patch please.\n", fullLocale);
