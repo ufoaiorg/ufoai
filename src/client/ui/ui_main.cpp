@@ -145,6 +145,7 @@ static void UI_Restart_f (void)
 	}
 
 	UI_Shutdown();
+	CLMN_Shutdown();
 	R_FontShutdown();
 	UI_Init();
 	R_FontInit();
@@ -174,7 +175,7 @@ static void UI_Restart_f (void)
 			UI_ParseSprite(name, &text);
 	}
 
-	/*GAME_InitUIData();*/
+	CLMN_Init();
 
 	for (Names::iterator i = names.begin(); i != names.end(); ++i) {
 		UI_PushWindow(i->c_str());
