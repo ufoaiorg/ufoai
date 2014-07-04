@@ -602,6 +602,19 @@ tile +mart_01
 0		0		0		0		0		0
 }
 
+tile +small_street
+{
+8 8
+0		0		0		0		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		0		0		0		0
+}
+
 // recreational ----------------------------------------------------*
 
 tile +park_01
@@ -906,6 +919,12 @@ tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_crash_fighter "1 1"
+}
+
+assembly small_street
+{
+size "6 6"
+fix +small_street	"0 0"
 }
 
 // test assemblies --------------------------------------------------*

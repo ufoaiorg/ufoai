@@ -3610,6 +3610,42 @@ mapdef village_small_crash
 	)
 }
 
+mapdef small_street
+{
+	map				"+village"
+	params			("small_street")
+	description		"_Small Suburban Street"
+	maxaliens		6
+
+	aircraft
+	(
+		// any
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"suburban"
+		"village"
+		"rural"
+	)
+}
+
 ////////////////////
 // VILLAGE 2 MAPS //
 ////////////////////
@@ -5362,39 +5398,6 @@ mapdef small_house
 	description		"_Small House"
 	multiplayer		false
 	maxaliens		8
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-	)
-
-	populations
-	(
-		"suburban"
-		"village"
-		"rural"
-	)
-}
-
-// SMALL_STREET MAP //
-
-mapdef small_street
-{
-	map			"small_street"
-	description		"_Small Suburban Street"
-	multiplayer		false
-	maxaliens		6
 
 	aircraft
 	(
