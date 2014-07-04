@@ -1148,7 +1148,7 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
  * @brief Try to go close to a mission edict
  * @param[in,out] actor The actor edict.
  * @param[in] to The target position.
- * @return @c true if hiding is possible, @c false otherwise
+ * @return @c true if found a suitable position, @c false otherwise
  */
 static bool AI_FindMissionLocation (Actor* actor, const pos3_t to)
 {
