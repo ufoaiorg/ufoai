@@ -978,7 +978,7 @@ static void CL_InitLocal (void)
 	CL_CameraInit();
 	CL_BattlescapeRadarInit();
 
-	CLMN_InitStartup();
+	CLMN_Init();
 	TUT_InitStartup();
 	PTL_InitStartup();
 	GAME_InitStartup();

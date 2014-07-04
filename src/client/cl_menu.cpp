@@ -93,7 +93,7 @@ static void CLMN_Mods_f (void)
  * @sa MN_Shutdown
  * @sa CL_InitLocal
  */
-void CLMN_InitStartup (void)
+void CLMN_Init (void)
 {
 	/* print the keyBindings to mn.menuText */
 	Cmd_AddCommand("mn_init_keylist", CLMN_InitKeyList_f);
