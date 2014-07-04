@@ -15,10 +15,10 @@ function think ()
 		herd()
 	else
 		-- Look around for potential targets.  We prioritize phalanx.
-		local phalanx  = ai.see("all", "phalanx")
+		local phalanx  = ai.see("team", "phalanx")
 		-- Choose proper action
 		if #phalanx < 1 then
-			local civilian = ai.see("all", "civilian")
+			local civilian = ai.see("team", "civilian")
 			if #civilian < 1 then
 				search()
 			else
@@ -86,11 +86,18 @@ function search ()
 				break;
 			end
 		end
+		-- Can't get to any mission target, try to approach the nearest one
+		if not found then
+			targets[0]:approach()
+			found = true
+		end
 	end
 
+	-- TODO: Implement wandering/patrolling, for now attack the nearest enemy
 	if not found then
-		-- TODO: implement wandering/patrolling
-		ai.pprint("Cant find a target")
+		-- See all (ie fall back to "cheat vision")
+		local enemy = ai.see("all", "~alien")
+		engage(enemy)
 	end
 end
 
