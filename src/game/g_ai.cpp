@@ -1204,7 +1204,7 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 		/* find waypoints in a closer distance - if civilians are not close enough, let them walk
 		 * around until they came close */
 		for (checkPoint = level.ai_waypointList; checkPoint != nullptr; checkPoint = checkPoint->groupChain) {
-			if (checkPoint->inuse)
+			if (!checkPoint->inuse)
 				continue;
 
 			/* the lower the count value - the nearer the final target */
