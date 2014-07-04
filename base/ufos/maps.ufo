@@ -3254,7 +3254,9 @@ mapdef village_bungalow
 
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	)
 
 	ufos
@@ -3290,7 +3292,9 @@ mapdef village_bungalow2
 
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	)
 
 	ufos
@@ -3325,7 +3329,9 @@ mapdef village_estate
 
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	)
 
 	ufos
