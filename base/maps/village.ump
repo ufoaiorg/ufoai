@@ -602,6 +602,18 @@ tile +house_05
 0		0		0		0		0
 }
 
+tile +house_06
+{
+6 7
+0		0		0		0		0		0
+0		0		+a		+a		+a		0
+0		0		+a		+a		+a		0
+0		v		+a		+a		+a		0
+0		+av		+a		+a		+a		0
+0		v		+a		+a		+a		0
+0		0		0		0		0		0
+}
+
 tile +mart_01
 {
 6 5
@@ -701,6 +713,7 @@ tileset housing {
 	+house_02
 	+house_03
 	+house_05
+	+house_06
 }
 
 tileset commercial {
@@ -839,6 +852,7 @@ title "_Village"
 +house_02			"0 1"
 +house_03			"0 1"
 +house_05			"0 1"
++house_06			"0 1"
 +misc_01			"0 1"
 +misc_02			"0 1"
 //+nature_00			"0 9"
