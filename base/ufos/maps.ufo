@@ -3244,7 +3244,7 @@ mapdef urban_buildings
 // VILLAGE RANDOM MAPS //
 /////////////////////////
 
-mapdef village_bungalow
+mapdef bungalow
 {
 	map				"+village"
 	params			("bungalow")
@@ -3290,7 +3290,7 @@ mapdef village_bungalow
 	)
 }
 
-mapdef village_bungalow2
+mapdef bungalow2
 {
 	map				"+village"
 	params			("bungalow2")
@@ -3336,7 +3336,7 @@ mapdef village_bungalow2
 	)
 }
 
-mapdef village_estate
+mapdef estate
 {
 	map				"+village"
 	params			("estate")
