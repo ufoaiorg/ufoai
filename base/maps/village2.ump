@@ -28,6 +28,21 @@ tile +craft_drop_firebird
 	0		0		0		0
 }
 
+tile +craft_drop_herakles
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +craft_drop_raptor
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
 // UFOs ------------------------------------------------------------*
 
 tile +craft_ufo_scout

@@ -3628,12 +3628,13 @@ mapdef vil2_sp_sml_01
 	map				"+village2"
 	params			("sp_sml_01" "sp_sml_02")
 	description		"_Village 2"
-	campaign		false
 	maxaliens		25
 
 	aircraft
 	(
 		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	)
 
 	ufos
