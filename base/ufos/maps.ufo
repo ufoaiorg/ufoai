@@ -1889,8 +1889,6 @@ mapdef ice_large
 	map				"+ice"
 	params			("large")
 	description		"_Frozen Landscape"
-	campaign 		true
-	singleplayer	true
 	maxaliens		30
 
 	aircraft
@@ -1927,8 +1925,6 @@ mapdef ice_medium
 	map				"+ice"
 	params			("medium")
 	description		"_Frozen Landscape"
-	campaign 		true
-	singleplayer	true
 	maxaliens		12
 
 	aircraft
@@ -1969,8 +1965,6 @@ mapdef ice_small
 	map				"+ice"
 	params			("small")
 	description		"_Frozen Landscape"
-	campaign 		true
-	singleplayer	true
 	maxaliens		5
 
 	aircraft
