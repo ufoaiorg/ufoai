@@ -3629,7 +3629,7 @@ mapdef vil2_sp_sml_01
 	params			("sp_sml_01" "sp_sml_02")
 	description		"_Village 2"
 	campaign		false
-	maxaliens		30
+	maxaliens		25
 
 	aircraft
 	(
