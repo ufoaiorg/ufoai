@@ -107,6 +107,9 @@
 			<Add library="theora" />
 			<Add library="xvidcore" />
 		</Linker>
+		<ExtraCommands>
+			<Add before="swig -c++ -lua -external-runtime ..\..\src\common\swig_lua_runtime.h" />
+		</ExtraCommands>
 		<Unit filename="../../base/autoexec.cfg" />
 		<Unit filename="../../base/dedicated.cfg" />
 		<Unit filename="../../base/default.cfg" />
@@ -831,6 +834,7 @@
 		<Unit filename="../../src/common/sha1.cpp" />
 		<Unit filename="../../src/common/sha2.cpp" />
 		<Unit filename="../../src/common/sha2.h" />
+		<Unit filename="../../src/common/swig_lua_runtime.h" />
 		<Unit filename="../../src/common/tracing.cpp" />
 		<Unit filename="../../src/common/tracing.h" />
 		<Unit filename="../../src/common/unzip.cpp" />

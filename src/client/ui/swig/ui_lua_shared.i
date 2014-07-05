@@ -23,5 +23,12 @@
 void Com_Printf(const char* fmt, ...);
 
 /* expose node structure */
-typedef uiNode_t ufoUiNode;
+struct uiNode_t {
+	/* values that are read only accessible from lua */
+	%immutable;
+	char name[MAX_VAR];			/**< name from the script files */
+
+	/* values that are read/write accessible from lua */
+	%mutable;
+};
 
