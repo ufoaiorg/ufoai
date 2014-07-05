@@ -469,7 +469,6 @@ mapdef beach
 	params			("default")
 	description		"_Coastal Crash Site"
 	campaign		false
-	multiplayer		false
 	maxaliens		7
 
 	aircraft
@@ -509,7 +508,6 @@ mapdef bridge
 	map				"+bridge"
 	params			("default")
 	description		"_Bridge"
-	multiplayer		false
 	gametypes ( )
 	maxaliens		30
 
@@ -640,7 +638,6 @@ mapdef country_large
 {
 	map			"+country"
 	params		("large")
-	multiplayer	false
 	description	"_Country Desert"
 	size		"large"
 	maxaliens	6
@@ -684,7 +681,6 @@ mapdef country_street
 {
 	map			"+country"
 	params		("street")
-	multiplayer	false
 	description	"_Some houses in the desert."
 	size		"large"
 	maxaliens	15
@@ -1031,7 +1027,6 @@ mapdef forest_large
 	map			"+forest"
 	params		("large")
 	description	"_Forest"
-	multiplayer	false
 	size		"large"
 	maxaliens	15
 
@@ -1071,7 +1066,6 @@ mapdef forest_large_crash
 	map			"+forest"
 	params		("large_crash")
 	description	"_Forest"
-	multiplayer	false
 	size		"large"
 	maxaliens	15
 
@@ -1111,7 +1105,6 @@ mapdef forest_small
 	map			"+forest"
 	params		("small")
 	description	"_Forest"
-	multiplayer	false
 	size		"small"
 	maxaliens	6
 
@@ -1151,7 +1144,6 @@ mapdef forest_small_crash
 	map			"+forest"
 	params		("small_crash")
 	description	"_Forest"
-	multiplayer	false
 	size		"small"
 	maxaliens	6
 
@@ -1899,7 +1891,6 @@ mapdef ice_large
 	description		"_Frozen Landscape"
 	campaign 		true
 	singleplayer	true
-	multiplayer		false
 	maxaliens		30
 
 	aircraft
@@ -1938,7 +1929,6 @@ mapdef ice_medium
 	description		"_Frozen Landscape"
 	campaign 		true
 	singleplayer	true
-	multiplayer		false
 	maxaliens		12
 
 	aircraft
@@ -1981,7 +1971,6 @@ mapdef ice_small
 	description		"_Frozen Landscape"
 	campaign 		true
 	singleplayer	true
-	multiplayer		false
 	maxaliens		5
 
 	aircraft
@@ -2025,7 +2014,6 @@ mapdef industrial_large
 	params			("large")
 	description		"_Industrial Site"
 	size			"large"
-	multiplayer		false
 	maxaliens		30
 	civilianteam	worker
 
@@ -2068,7 +2056,6 @@ mapdef industrial_medium
 	params			("medium")
 	description		"_Industrial Site"
 	size			"large"
-	multiplayer		false
 	maxaliens		14
 	civilianteam	worker
 
@@ -2112,7 +2099,6 @@ mapdef industrial_small
 	params			("small")
 	description		"_Industrial Site"
 	size			"small"
-	multiplayer		false
 	maxaliens		9
 	civilianteam	worker
 
@@ -2155,7 +2141,6 @@ mapdef industrial_noufo
 	params			("noufo")
 	description		"_Industrial Site"
 	size			"medium"
-	multiplayer		false
 	maxaliens		14
 	civilianteam	worker
 
@@ -2201,7 +2186,6 @@ mapdef japan_large
 	params		("large")
 	description	"_East Asian Village"
 	teams		2
-	multiplayer	false
 	gametypes (
 		fight1on1
 		fight2on2
@@ -2249,7 +2233,6 @@ mapdef japan_small
 	params		("small")
 	description	"_East Asian Village"
 	teams		2
-	multiplayer	false
 	gametypes (
 		fight1on1
 		fight2on2
@@ -2451,7 +2434,6 @@ mapdef oriental_large
 	map				"+oriental"
 	params			("large")
 	description		"_Middle Eastern Suburb"
-	multiplayer		false
 	size			"small"
 	maxaliens		30
 	civilianteam	middle
@@ -2492,7 +2474,6 @@ mapdef oriental_medium
 	map				"+oriental"
 	params			("medium")
 	description		"_Middle Eastern Suburb"
-	multiplayer		false
 	size			"small"
 	maxaliens		14
 	civilianteam	middle
@@ -2533,7 +2514,6 @@ mapdef oriental_small
 	map				"+oriental"
 	params			("small")
 	description		"_Middle Eastern Suburb"
-	multiplayer		false
 	size			"small"
 	maxaliens		9
 	civilianteam	middle
@@ -2824,7 +2804,6 @@ mapdef ufocrash
 {
 	map				"+ufocrash"
 	singleplayer	false
-	multiplayer		false
 	description		"_UFO Crash Site"
 	storyrelated	true
 	maxaliens		30
@@ -3655,7 +3634,6 @@ mapdef vil2_sp_sml_01
 	map				"+village2"
 	params			("sp_sml_01" "sp_sml_02")
 	description		"_Village 2"
-	multiplayer		false
 	campaign		false
 	maxaliens		30
 
@@ -3708,7 +3686,6 @@ mapdef base_initial
 	params		("initial")
 	description	"_PHALANX Base Under Attack"
 	campaign	false
-	multiplayer	false
 	maxaliens	14
 	missionbriefing		"*msgid:mission_briefing_baseattack"
 
@@ -3744,7 +3721,6 @@ mapdef base_random
 	params		("random")
 	description	"_PHALANX Base Under Attack"
 	campaign	false
-	multiplayer	false
 	maxaliens	16
 	missionbriefing		"*msgid:mission_briefing_baseattack"
 
@@ -3783,7 +3759,6 @@ mapdef cemetery_main
 	map				"+cemetery"
 	params			("main")
 	description		"_Cemetery"
-	multiplayer		false
 	maxaliens		6 //TODO: This is an arbitrary value right now.
 
 	aircraft
@@ -3825,7 +3800,6 @@ mapdef city2
 	map				"+city2"
 	params			("city2")
 	description		"_City High-Rise"
-	multiplayer		false
 	campaign		true
 	maxaliens		23
 
@@ -5396,7 +5370,6 @@ mapdef small_house
 {
 	map			"small_house"
 	description		"_Small House"
-	multiplayer		false
 	maxaliens		8
 
 	aircraft
@@ -5739,7 +5712,6 @@ mapdef alienbase
 mapdef baseattack
 {
 	map			".baseattack"
-	multiplayer	false
 	storyrelated	true
 	description	"_PHALANX Base Under Attack"
 	maxaliens	16
@@ -5753,7 +5725,6 @@ mapdef baseattack
 mapdef rescue
 {
 	map				"+rescue"
-	multiplayer		false
 	description		"_PHALANX Craft Crash Site"
 	storyrelated	true
 	maxaliens		30
