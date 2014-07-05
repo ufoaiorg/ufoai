@@ -8,34 +8,6 @@
  * interface file instead.
  * ----------------------------------------------------------------------------- */
 
-#define SWIGLUA
-#define SWIG_LUA_TARGET SWIG_LUA_FLAVOR_LUA
-#define SWIG_LUA_MODULE_GLOBAL
-
-
-#ifdef __cplusplus
-/* SwigValueWrapper is described in swig.swg */
-template<typename T> class SwigValueWrapper {
-  struct SwigMovePointer {
-    T *ptr;
-    SwigMovePointer(T *p) : ptr(p) { }
-    ~SwigMovePointer() { delete ptr; }
-    SwigMovePointer& operator=(SwigMovePointer& rhs) { T* oldptr = ptr; ptr = 0; delete oldptr; ptr = rhs.ptr; rhs.ptr = 0; return *this; }
-  } pointer;
-  SwigValueWrapper& operator=(const SwigValueWrapper<T>& rhs);
-  SwigValueWrapper(const SwigValueWrapper<T>& rhs);
-public:
-  SwigValueWrapper() : pointer(0) { }
-  SwigValueWrapper& operator=(const T& t) { SwigMovePointer tmp(new T(t)); pointer = tmp; return *this; }
-  operator T&() const { return *pointer.ptr; }
-  T *operator&() { return pointer.ptr; }
-};
-
-template <typename T> T SwigValueInit() {
-  return T();
-}
-#endif
-
 /* -----------------------------------------------------------------------------
  *  This section contains generic SWIG labels for method/variable
  *  declarations/attributes, and other compiler dependent labels.
@@ -143,6 +115,21 @@ template <typename T> T SwigValueInit() {
 #if !defined(SWIG_NO_SCL_SECURE_NO_DEPRECATE) && defined(_MSC_VER) && !defined(_SCL_SECURE_NO_DEPRECATE)
 # define _SCL_SECURE_NO_DEPRECATE
 #endif
+
+/*  Errors in SWIG */
+#define  SWIG_UnknownError    	   -1
+#define  SWIG_IOError        	   -2
+#define  SWIG_RuntimeError   	   -3
+#define  SWIG_IndexError     	   -4
+#define  SWIG_TypeError      	   -5
+#define  SWIG_DivisionByZero 	   -6
+#define  SWIG_OverflowError  	   -7
+#define  SWIG_SyntaxError    	   -8
+#define  SWIG_ValueError     	   -9
+#define  SWIG_SystemError    	   -10
+#define  SWIG_AttributeError 	   -11
+#define  SWIG_MemoryError    	   -12
+#define  SWIG_NullReferenceError   -13
 
 
 /* -----------------------------------------------------------------------------
@@ -717,7 +704,7 @@ SWIG_UnpackDataName(const char *c, void *ptr, size_t sz, const char *name) {
 #ifdef __cplusplus
 }
 #endif
-
+#define SWIG_LUA_TARGET SWIG_LUA_FLAVOR_LUA
 /* -----------------------------------------------------------------------------
  * luarun.swg
  *
@@ -2620,538 +2607,41 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #endif
 
 /* ------------------------------ end luarun.swg  ------------------------------ */
+/* -----------------------------------------------------------------------------*
+   Standard SWIG API for use inside user code.
+ 
+   Don't include this file directly, run the command
+   swig -python -external-runtime
+   Also, read the Modules chapter of the SWIG Manual.
+ 
+ * -----------------------------------------------------------------------------*/
 
+#ifdef SWIG_MODULE_CLIENTDATA_TYPE
 
-/* -------- TYPES TABLE (BEGIN) -------- */
-
-#define SWIGTYPE_p_uiNode_t swig_types[0]
-static swig_type_info *swig_types[2];
-static swig_module_info swig_module = {swig_types, 1, 0, 0, 0, 0};
-#define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
-#define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
-
-/* -------- TYPES TABLE (END) -------- */
-
-#define SWIG_name      "ufoui"
-#define SWIG_init      luaopen_ufoui
-#define SWIG_init_user luaopen_ufoui_user
-
-#define SWIG_LUACODE   luaopen_ufoui_luacode
-
-namespace swig {
-typedef struct{} LANGUAGE_OBJ;
+SWIGRUNTIMEINLINE swig_type_info *
+SWIG_TypeQuery(SWIG_MODULE_CLIENTDATA_TYPE clientdata, const char *name) {
+  swig_module_info *module = SWIG_GetModule(clientdata);
+  return SWIG_TypeQueryModule(module, module, name);
 }
 
-
-/* import headers into the interface so they can be used */
-#include <typeinfo>
-
-/* import common functions */
-#include "../../../shared/shared.h"
-
-/* import ui specific functions */
-#include "../ui_main.h"
-#include "../ui_behaviour.h"
-#include "../ui_nodes.h"
-#include "../ui_node.h"
-
-
-SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
-  int ret = lua_isstring(L, idx);
-  if (!ret)
-   ret = lua_isnil(L, idx);
-  return ret;
+SWIGRUNTIMEINLINE swig_type_info *
+SWIG_MangledTypeQuery(SWIG_MODULE_CLIENTDATA_TYPE clientdata, const char *name) {
+  swig_module_info *module = SWIG_GetModule(clientdata);
+  return SWIG_MangledTypeQueryModule(module, module, name);
 }
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-static int _wrap_Com_Printf(lua_State* L) {
-  int SWIG_arg = 0;
-  char *arg1 = (char *) 0 ;
-  void *arg2 = 0 ;
-  
-  SWIG_check_num_args("Com_Printf",1,1)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Com_Printf",1,"char const *");
-  arg1 = (char *)lua_tostring(L, 1);
-  Com_Printf((char const *)arg1,arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_uiNode_t_name_get(lua_State* L) {
-  int SWIG_arg = 0;
-  uiNode_t *arg1 = (uiNode_t *) 0 ;
-  char *result = 0 ;
-  
-  SWIG_check_num_args("uiNode_t::name",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::name",1,"uiNode_t *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
-    SWIG_fail_ptr("uiNode_t_name_get",1,SWIGTYPE_p_uiNode_t);
-  }
-  
-  result = (char *)(char *) ((arg1)->name);
-  lua_pushstring(L,(const char *)result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_new_uiNode_t(lua_State* L) {
-  int SWIG_arg = 0;
-  uiNode_t *result = 0 ;
-  
-  SWIG_check_num_args("uiNode_t::uiNode_t",0,0)
-  result = (uiNode_t *)new uiNode_t();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiNode_t,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static void swig_delete_uiNode_t(void *obj) {
-uiNode_t *arg1 = (uiNode_t *) obj;
-delete arg1;
-}
-static int _proxy__wrap_new_uiNode_t(lua_State *L) {
-    assert(lua_istable(L,1));
-    lua_pushcfunction(L,_wrap_new_uiNode_t);
-    assert(!lua_isnil(L,-1));
-    lua_replace(L,1); /* replace our table with real constructor */
-    lua_call(L,lua_gettop(L)-1,1);
-    return 1;
-}
-static swig_lua_attribute swig_uiNode_t_attributes[] = {
-    { "name", _wrap_uiNode_t_name_get, SWIG_Lua_set_immutable },
-    {0,0,0}
-};
-static swig_lua_method swig_uiNode_t_methods[]= {
-    {0,0}
-};
-static swig_lua_method swig_uiNode_t_meta[] = {
-    {0,0}
-};
-
-static swig_lua_attribute swig_uiNode_t_Sf_SwigStatic_attributes[] = {
-    {0,0,0}
-};
-static swig_lua_const_info swig_uiNode_t_Sf_SwigStatic_constants[]= {
-    {0,0,0,0,0,0}
-};
-static swig_lua_method swig_uiNode_t_Sf_SwigStatic_methods[]= {
-    {0,0}
-};
-static swig_lua_class* swig_uiNode_t_Sf_SwigStatic_classes[]= {
-    0
-};
-
-static swig_lua_namespace swig_uiNode_t_Sf_SwigStatic = {
-    "uiNode_t",
-    swig_uiNode_t_Sf_SwigStatic_methods,
-    swig_uiNode_t_Sf_SwigStatic_attributes,
-    swig_uiNode_t_Sf_SwigStatic_constants,
-    swig_uiNode_t_Sf_SwigStatic_classes,
-    0
-};
-static swig_lua_class *swig_uiNode_t_bases[] = {0};
-static const char *swig_uiNode_t_base_names[] = {0};
-static swig_lua_class _wrap_class_uiNode_t = { "uiNode_t", "uiNode_t", &SWIGTYPE_p_uiNode_t,_proxy__wrap_new_uiNode_t, swig_delete_uiNode_t, swig_uiNode_t_methods, swig_uiNode_t_attributes, &swig_uiNode_t_Sf_SwigStatic, swig_uiNode_t_meta, swig_uiNode_t_bases, swig_uiNode_t_base_names };
-
-static swig_lua_attribute swig_SwigModule_attributes[] = {
-    {0,0,0}
-};
-static swig_lua_const_info swig_SwigModule_constants[]= {
-    {0,0,0,0,0,0}
-};
-static swig_lua_method swig_SwigModule_methods[]= {
-    { "Com_Printf", _wrap_Com_Printf},
-    {0,0}
-};
-static swig_lua_class* swig_SwigModule_classes[]= {
-&_wrap_class_uiNode_t,
-    0
-};
-static swig_lua_namespace* swig_SwigModule_namespaces[] = {
-    0
-};
-
-static swig_lua_namespace swig_SwigModule = {
-    "ufoui",
-    swig_SwigModule_methods,
-    swig_SwigModule_attributes,
-    swig_SwigModule_constants,
-    swig_SwigModule_classes,
-    swig_SwigModule_namespaces
-};
-#ifdef __cplusplus
-}
-#endif
-
-/* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
-
-static swig_type_info _swigt__p_uiNode_t = {"_p_uiNode_t", "uiNode_t *", 0, 0, (void*)&_wrap_class_uiNode_t, 0};
-
-static swig_type_info *swig_type_initial[] = {
-  &_swigt__p_uiNode_t,
-};
-
-static swig_cast_info _swigc__p_uiNode_t[] = {  {&_swigt__p_uiNode_t, 0, 0, 0},{0, 0, 0, 0}};
-
-static swig_cast_info *swig_cast_initial[] = {
-  _swigc__p_uiNode_t,
-};
-
-
-/* -------- TYPE CONVERSION AND EQUIVALENCE RULES (END) -------- */
-
-/* -----------------------------------------------------------------------------
- * Type initialization:
- * This problem is tough by the requirement that no dynamic
- * memory is used. Also, since swig_type_info structures store pointers to
- * swig_cast_info structures and swig_cast_info structures store pointers back
- * to swig_type_info structures, we need some lookup code at initialization.
- * The idea is that swig generates all the structures that are needed.
- * The runtime then collects these partially filled structures.
- * The SWIG_InitializeModule function takes these initial arrays out of
- * swig_module, and does all the lookup, filling in the swig_module.types
- * array with the correct data and linking the correct swig_cast_info
- * structures together.
- *
- * The generated swig_type_info structures are assigned statically to an initial
- * array. We just loop through that array, and handle each type individually.
- * First we lookup if this type has been already loaded, and if so, use the
- * loaded structure instead of the generated one. Then we have to fill in the
- * cast linked list. The cast data is initially stored in something like a
- * two-dimensional array. Each row corresponds to a type (there are the same
- * number of rows as there are in the swig_type_initial array). Each entry in
- * a column is one of the swig_cast_info structures for that type.
- * The cast_initial array is actually an array of arrays, because each row has
- * a variable number of columns. So to actually build the cast linked list,
- * we find the array of casts associated with the type, and loop through it
- * adding the casts to the list. The one last trick we need to do is making
- * sure the type pointer in the swig_cast_info struct is correct.
- *
- * First off, we lookup the cast->type name to see if it is already loaded.
- * There are three cases to handle:
- *  1) If the cast->type has already been loaded AND the type we are adding
- *     casting info to has not been loaded (it is in this module), THEN we
- *     replace the cast->type pointer with the type pointer that has already
- *     been loaded.
- *  2) If BOTH types (the one we are adding casting info to, and the
- *     cast->type) are loaded, THEN the cast info has already been loaded by
- *     the previous module so we just ignore it.
- *  3) Finally, if cast->type has not already been loaded, then we add that
- *     swig_cast_info to the linked list (because the cast->type) pointer will
- *     be correct.
- * ----------------------------------------------------------------------------- */
-
-#ifdef __cplusplus
-extern "C" {
-#if 0
-} /* c-mode */
-#endif
-#endif
-
-#if 0
-#define SWIGRUNTIME_DEBUG
-#endif
-
-
-SWIGRUNTIME void
-SWIG_InitializeModule(void *clientdata) {
-  size_t i;
-  swig_module_info *module_head, *iter;
-  int found, init;
-
-  /* check to see if the circular list has been setup, if not, set it up */
-  if (swig_module.next==0) {
-    /* Initialize the swig_module */
-    swig_module.type_initial = swig_type_initial;
-    swig_module.cast_initial = swig_cast_initial;
-    swig_module.next = &swig_module;
-    init = 1;
-  } else {
-    init = 0;
-  }
-
-  /* Try and load any already created modules */
-  module_head = SWIG_GetModule(clientdata);
-  if (!module_head) {
-    /* This is the first module loaded for this interpreter */
-    /* so set the swig module into the interpreter */
-    SWIG_SetModule(clientdata, &swig_module);
-    module_head = &swig_module;
-  } else {
-    /* the interpreter has loaded a SWIG module, but has it loaded this one? */
-    found=0;
-    iter=module_head;
-    do {
-      if (iter==&swig_module) {
-        found=1;
-        break;
-      }
-      iter=iter->next;
-    } while (iter!= module_head);
-
-    /* if the is found in the list, then all is done and we may leave */
-    if (found) return;
-    /* otherwise we must add out module into the list */
-    swig_module.next = module_head->next;
-    module_head->next = &swig_module;
-  }
-
-  /* When multiple interpreters are used, a module could have already been initialized in
-     a different interpreter, but not yet have a pointer in this interpreter.
-     In this case, we do not want to continue adding types... everything should be
-     set up already */
-  if (init == 0) return;
-
-  /* Now work on filling in swig_module.types */
-#ifdef SWIGRUNTIME_DEBUG
-  printf("SWIG_InitializeModule: size %d\n", swig_module.size);
-#endif
-  for (i = 0; i < swig_module.size; ++i) {
-    swig_type_info *type = 0;
-    swig_type_info *ret;
-    swig_cast_info *cast;
-
-#ifdef SWIGRUNTIME_DEBUG
-    printf("SWIG_InitializeModule: type %d %s\n", i, swig_module.type_initial[i]->name);
-#endif
-
-    /* if there is another module already loaded */
-    if (swig_module.next != &swig_module) {
-      type = SWIG_MangledTypeQueryModule(swig_module.next, &swig_module, swig_module.type_initial[i]->name);
-    }
-    if (type) {
-      /* Overwrite clientdata field */
-#ifdef SWIGRUNTIME_DEBUG
-      printf("SWIG_InitializeModule: found type %s\n", type->name);
-#endif
-      if (swig_module.type_initial[i]->clientdata) {
-	type->clientdata = swig_module.type_initial[i]->clientdata;
-#ifdef SWIGRUNTIME_DEBUG
-      printf("SWIG_InitializeModule: found and overwrite type %s \n", type->name);
-#endif
-      }
-    } else {
-      type = swig_module.type_initial[i];
-    }
-
-    /* Insert casting types */
-    cast = swig_module.cast_initial[i];
-    while (cast->type) {
-
-      /* Don't need to add information already in the list */
-      ret = 0;
-#ifdef SWIGRUNTIME_DEBUG
-      printf("SWIG_InitializeModule: look cast %s\n", cast->type->name);
-#endif
-      if (swig_module.next != &swig_module) {
-        ret = SWIG_MangledTypeQueryModule(swig_module.next, &swig_module, cast->type->name);
-#ifdef SWIGRUNTIME_DEBUG
-	if (ret) printf("SWIG_InitializeModule: found cast %s\n", ret->name);
-#endif
-      }
-      if (ret) {
-	if (type == swig_module.type_initial[i]) {
-#ifdef SWIGRUNTIME_DEBUG
-	  printf("SWIG_InitializeModule: skip old type %s\n", ret->name);
-#endif
-	  cast->type = ret;
-	  ret = 0;
-	} else {
-	  /* Check for casting already in the list */
-	  swig_cast_info *ocast = SWIG_TypeCheck(ret->name, type);
-#ifdef SWIGRUNTIME_DEBUG
-	  if (ocast) printf("SWIG_InitializeModule: skip old cast %s\n", ret->name);
-#endif
-	  if (!ocast) ret = 0;
-	}
-      }
-
-      if (!ret) {
-#ifdef SWIGRUNTIME_DEBUG
-	printf("SWIG_InitializeModule: adding cast %s\n", cast->type->name);
-#endif
-        if (type->cast) {
-          type->cast->prev = cast;
-          cast->next = type->cast;
-        }
-        type->cast = cast;
-      }
-      cast++;
-    }
-    /* Set entry in modules->types array equal to the type */
-    swig_module.types[i] = type;
-  }
-  swig_module.types[i] = 0;
-
-#ifdef SWIGRUNTIME_DEBUG
-  printf("**** SWIG_InitializeModule: Cast List ******\n");
-  for (i = 0; i < swig_module.size; ++i) {
-    int j = 0;
-    swig_cast_info *cast = swig_module.cast_initial[i];
-    printf("SWIG_InitializeModule: type %d %s\n", i, swig_module.type_initial[i]->name);
-    while (cast->type) {
-      printf("SWIG_InitializeModule: cast type %s\n", cast->type->name);
-      cast++;
-      ++j;
-    }
-  printf("---- Total casts: %d\n",j);
-  }
-  printf("**** SWIG_InitializeModule: Cast List ******\n");
-#endif
-}
-
-/* This function will propagate the clientdata field of type to
-* any new swig_type_info structures that have been added into the list
-* of equivalent types.  It is like calling
-* SWIG_TypeClientData(type, clientdata) a second time.
-*/
-SWIGRUNTIME void
-SWIG_PropagateClientData(void) {
-  size_t i;
-  swig_cast_info *equiv;
-  static int init_run = 0;
-
-  if (init_run) return;
-  init_run = 1;
-
-  for (i = 0; i < swig_module.size; i++) {
-    if (swig_module.types[i]->clientdata) {
-      equiv = swig_module.types[i]->cast;
-      while (equiv) {
-        if (!equiv->converter) {
-          if (equiv->type && !equiv->type->clientdata)
-            SWIG_TypeClientData(equiv->type, swig_module.types[i]->clientdata);
-        }
-        equiv = equiv->next;
-      }
-    }
-  }
-}
-
-#ifdef __cplusplus
-#if 0
-{ /* c-mode */
-#endif
-}
-#endif
-
-
-
-/* Forward declaration of where the user's %init{} gets inserted */
-void SWIG_init_user(lua_State* L );
-    
-#ifdef __cplusplus
-extern "C" {
-#endif
-/* this is the initialization function
-  added at the very end of the code
-  the function is always called SWIG_init, but an earlier #define will rename it
-*/
-#if ((SWIG_LUA_TARGET == SWIG_LUA_FLAVOR_ELUA) || (SWIG_LUA_TARGET == SWIG_LUA_FLAVOR_ELUAC))
-LUALIB_API int SWIG_init(lua_State* L)
 #else
-SWIGEXPORT int SWIG_init(lua_State* L) /* default Lua action */
-#endif
-{
-#if (SWIG_LUA_TARGET != SWIG_LUA_FLAVOR_ELUAC) /* valid for both Lua and eLua */
-  int i;
-  int globalRegister = 0;
-  /* start with global table */
-  lua_pushglobaltable (L);
-  /* SWIG's internal initialisation */
-  SWIG_InitializeModule((void*)L);
-  SWIG_PropagateClientData();
-#endif
 
-#if ((SWIG_LUA_TARGET != SWIG_LUA_FLAVOR_ELUA) && (SWIG_LUA_TARGET != SWIG_LUA_FLAVOR_ELUAC)) || defined(SWIG_LUA_ELUA_EMULATE)
-  /* add a global fn */
-  SWIG_Lua_add_function(L,"swig_type",SWIG_Lua_type);
-  SWIG_Lua_add_function(L,"swig_equals",SWIG_Lua_class_equal);
-#endif
-
-#if (SWIG_LUA_TARGET != SWIG_LUA_FLAVOR_ELUAC)
-  /* set up base class pointers (the hierarchy) */
-  for (i = 0; swig_types[i]; i++){
-    if (swig_types[i]->clientdata){
-      SWIG_Lua_init_base_class(L,(swig_lua_class*)(swig_types[i]->clientdata));
-    }
-  }
-#ifdef SWIG_LUA_MODULE_GLOBAL
-  globalRegister = 1;
-#endif
-
-
-#if (SWIG_LUA_TARGET == SWIG_LUA_FLAVOR_LUA)
-  SWIG_Lua_namespace_register(L,&swig_SwigModule, globalRegister);
-#endif
-
-#if (SWIG_LUA_TARGET == SWIG_LUA_FLAVOR_ELUA) || (SWIG_LUA_TARGET == SWIG_LUA_FLAVOR_ELUAC)
-  for (i = 0; swig_types[i]; i++){
-    if (swig_types[i]->clientdata){
-      SWIG_Lua_elua_class_register_instance(L,(swig_lua_class*)(swig_types[i]->clientdata));
-    }
-  }
-#endif
-
-#if defined(SWIG_LUA_ELUA_EMULATE)
-  lua_newtable(L);
-  SWIG_Lua_elua_emulate_register(L,swig_SwigModule.ns_methods);
-  SWIG_Lua_elua_emulate_register_clear(L);
-  if(globalRegister) {
-    lua_pushstring(L,swig_SwigModule.name);
-    lua_pushvalue(L,-2);
-    lua_rawset(L,-4);
-  }
-#endif
-
-#endif
-
-#if (SWIG_LUA_TARGET != SWIG_LUA_FLAVOR_ELUAC)
-  /* invoke user-specific initialization */
-  SWIG_init_user(L);
-  /* end module */
-  /* Note: We do not clean up the stack here (Lua will do this for us). At this
-     point, we have the globals table and out module table on the stack. Returning
-     one value makes the module table the result of the require command. */
-  return 1;
-#else
-  return 0;
-#endif
+SWIGRUNTIMEINLINE swig_type_info *
+SWIG_TypeQuery(const char *name) {
+  swig_module_info *module = SWIG_GetModule(NULL);
+  return SWIG_TypeQueryModule(module, module, name);
 }
 
-#ifdef __cplusplus
+SWIGRUNTIMEINLINE swig_type_info *
+SWIG_MangledTypeQuery(const char *name) {
+  swig_module_info *module = SWIG_GetModule(NULL);
+  return SWIG_MangledTypeQueryModule(module, module, name);
 }
+
 #endif
-
-
-const char* SWIG_LUACODE=
-  "";
-
-void SWIG_init_user(lua_State* L)
-{
-  /* exec Lua code if applicable */
-  SWIG_Lua_dostring(L,SWIG_LUACODE);
-}
-
