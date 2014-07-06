@@ -5,23 +5,23 @@
 #
 # Karel Volný <kavol@seznam.cz>, 2006, 2007.
 # Lubomír Bláha <tritol@trilogic.cz>, 2006-2009.
+# Tomáš Glabasňa (glabasnat) <tomas.glabasna@seznam.cz>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: UFO:AI\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2010-05-26 14:37+0600\n"
-"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
+"PO-Revision-Date: 2014-07-06 21:51+0100\n"
+"Last-Translator: glabasnat <tomas.glabasna@seznam.cz>\n"
 "Language-Team: UFO:AI team <cs@li.org>\n"
-"Language: \n"
+"Language: cs_CZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Poedit 1.5.7\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Poedit-Language: Czech\n"
-"X-Poedit-Country: CZECH REPUBLIC\n"
 "X-Poedit-Basepath: ..\\\n"
+"X-Poedit-Bookmarks: 2709,2710,-1,2247,1448,1974,2245,904,2743,-1\n"
 
 #: ../base/maps/africa.ump:639 ../base/maps/africa.ump:673
 #: ../base/maps/africa.ump:705 ../base/maps/africa.ump:737
@@ -2795,9 +2795,8 @@ msgid "Chinese"
 msgstr "Čínština"
 
 #: ../base/ufos/language.ufo:336
-#, fuzzy
 msgid "Traditional Chinese"
-msgstr "Další poděkování"
+msgstr "Tradiční Čínština"
 
 #: ../base/ufos/language.ufo:345
 msgid "Bulgarian"
@@ -2902,9 +2901,8 @@ msgstr "UFO - Průzkumník"
 
 #: ../base/ufos/maps.ufo:2516 ../base/ufos/maps.ufo:2556
 #: ../base/ufos/maps.ufo:2599
-#, fuzzy
 msgid "Tropical Jungle"
-msgstr "Tropické drogy"
+msgstr "Tropical Jungle"
 
 #: ../base/ufos/maps.ufo:2646
 #, fuzzy
@@ -2912,13 +2910,12 @@ msgid "UFO Crash Site"
 msgstr "Místo havárie UFO."
 
 #: ../base/ufos/maps.ufo:2947
-#, fuzzy
 msgid "Supermarket"
-msgstr "Nadčlověk"
+msgstr "Supermarket"
 
 #: ../base/ufos/maps.ufo:2997
 msgid "Basketball Stadium"
-msgstr ""
+msgstr "Basketbalový stadion"
 
 #: ../base/ufos/maps.ufo:3102
 #, fuzzy
@@ -2958,9 +2955,8 @@ msgid "Construction Site"
 msgstr "Staveniště"
 
 #: ../base/ufos/maps.ufo:3567
-#, fuzzy
 msgid "Tropical Jungle Estate"
-msgstr "Tropické drogy"
+msgstr "Tropical Jungle , Dům"
 
 #: ../base/ufos/maps.ufo:3627
 #, fuzzy
@@ -3082,9 +3078,8 @@ msgid "Old Town Center"
 msgstr ""
 
 #: ../base/ufos/maps.ufo:5143
-#, fuzzy
 msgid "Small House"
-msgstr "Malý"
+msgstr "Malý dům"
 
 #: ../base/ufos/maps.ufo:5176
 msgid "Small Suburban Street"
@@ -3149,7 +3144,6 @@ msgstr "Medaile"
 
 #: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:168
 #: client/cgame/campaign/cp_employee.cpp:179
-#, fuzzy
 msgid "Scientist"
 msgid_plural "Scientists"
 msgstr[0] "Vědec"
@@ -3158,17 +3152,15 @@ msgstr[2] "Vědec"
 
 #: ../base/ufos/medals.ufo:39 ../base/ufos/team_humans.ufo:236
 #: client/cgame/campaign/cp_employee.cpp:183
-#, fuzzy
 msgid "Pilot"
 msgid_plural "Pilots"
 msgstr[0] "Pilot"
-msgstr[1] "Pilot"
-msgstr[2] "Pilot"
+msgstr[1] "Piloti"
+msgstr[2] "Pilotů"
 
 # Bezpilotní Pozemní Vozidlo
 #: ../base/ufos/medals.ufo:48 ../base/ufos/team_names.ufo:660
 #: ../base/ufos/team_names.ufo:669 client/cgame/campaign/cp_employee.cpp:185
-#, fuzzy
 msgid "UGV"
 msgid_plural "UGVs"
 msgstr[0] "BPV"
@@ -9095,7 +9087,6 @@ msgstr ""
 "Žádné."
 
 #: ../base/ufos/msgid/armour.ufo:54
-#, fuzzy
 msgid ""
 "Commander, I would like to report the success of our nanocomposite "
 "production research!\n"
@@ -9146,34 +9137,28 @@ msgstr ""
 "provedli některé úpravy produkce nanotrubiček. Výsledkem je znatelné zvýšení "
 "energetické úspory a vyrobeného množství.\n"
 "\n"
-"Odtud se budu držet shrnutí vlastností a taktických možností nové zbroje, "
-"které jak doufám naleznete jak fascinující tak povzbudivé.\n"
+"Zde se budu držet shrnutí vlastností a taktických možností nové zbroje, "
+"které jak doufám zjistíte, jsou jak fascinující tak povzbudivé.\n"
 "\n"
 "Téměř se nám podařilo duplikovat veškerou funkčnost cizácké zbroje, od "
 "nanokompozitního pancíře až k posilovačům pohybu. Na svůj objem je "
-"neuvěřitelně lehká, ale přesto stále těžší než než naše Bojová zbroj. Chrání "
+"neuvěřitelně lehká, ale přesto stále těžší než naše Bojová zbroj. Chrání "
 "téměř tak dobře jako cizácká verze a umožňuje podobnou rychlost pohybu i "
-"zpřesnění míření.\n"
+"pohodlnější míření.\n"
 "\n"
-"Přesto jsou některá omezení, přes která jsme se nemohli dostat. Cizáci mají "
-"prostě mnohem více zkušeností s těmito materiály a dovedou je proto "
-"zpracovat elegantněji než my. Naše zbroj je těžší a objemnější, provedení je "
-"strnulé a elektronika taky za moc nestojí. To může negativně ovlivnit "
-"reakční dobu a rychlost střelby. Naše verze polymeru není tak dobrá jako "
-"jejich, snadněji popraská. Naše posilovače jsou ve srovnání s cizáckými "
-"humpolácké. A navíc neznáme způsob jak je zmenšit.\n"
-"\n"
-"Obzvláště za boty se stydíme nejvíc, i když jsou to nejlepší čeho jsme mohli "
-"dosáhnout. Jednoduše nemáme dost přesné stroje na výrobu servomotorků "
-"velkých jak ty cizácké. Nehledě na to jsme boty vyrobili lehké a bezpečné, s "
-"účinným odpružením v podešvi, které je pružné dost i na rychlý pohyb.\n"
+"Přesto jsou některá omezení, přes která jsme se nemohli dostat. Faktem je, "
+"že cizáci mají prostě mnohem více zkušeností s těmito materiály a dovedou je "
+"proto zpracovat elegantněji než my. Naše zbroj je těžší a objemnější, "
+"provedení je strnulé a elektronika taky za moc nestojí. Naše verze polymeru "
+"není tak dobrá jako jejich, snadněji popraská. Naše posilovače jsou ve "
+"srovnání s cizáckými humpolácké. A navíc neznáme způsob jak je zmenšit.\n"
 "\n"
 "Taktické užití zbroje je rozsáhlé. Je dost lehká na to aby ji nosily "
 "předsunuté jednotky týmu i dost odolná aby vydržela těžkou palbu. Bude "
-"sloužit výjimečně dobře i jednotkám v souboji nablízko, kde je potřeba jak "
-"rychlost tak odolnost.\n"
+"sloužit výjimečně dobře jednotkám,které potřebují jak rychlost tak "
+"odolnost.\n"
 "\n"
-"--vel. Navarre"
+"vel. Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:66
 #, fuzzy
@@ -12348,7 +12333,6 @@ msgid "Base Commander, PHALANX, Atlantic Operations Command"
 msgstr "Velitel základny, PHALANX, Velení tichomořských operací"
 
 #: ../base/ufos/msgid/mails.ufo:20
-#, fuzzy
 msgid ""
 "Welcome to your new post, Commander. You now have full command over the "
 "PHALANX Extraterrestrial Response Unit. Your mission is to protect the "
@@ -12472,12 +12456,11 @@ msgstr ""
 
 #: ../base/ufos/msgid/missionbriefing.ufo:2
 msgid "Good luck commander. Bring our soldiers back alive."
-msgstr ""
+msgstr "Hodně štěstí veliteli. Přiveď své vojáky zpět živé."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:5
-#, fuzzy
 msgid "Kill all the aliens."
-msgstr "Hrát za cizáky"
+msgstr "Zabít všechny cizáky."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:8
 msgid ""
@@ -12504,7 +12487,7 @@ msgstr "Zabít všechny cizáky na této základně"
 
 #: ../base/ufos/msgid/missionbriefing.ufo:20
 msgid "The dropship has arrived at the crash site."
-msgstr ""
+msgstr "Výsadková loď dorazila na místě havárie."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:23
 msgid ""
@@ -14905,7 +14888,6 @@ msgstr ""
 "Upřímně zdraví,Dr. Connor"
 
 #: ../base/ufos/msgid/story.ufo:278
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -20577,7 +20559,6 @@ msgstr ""
 "--Velitel Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1283
-#, fuzzy
 msgid ""
 "Technical Specifications: Medikit\n"
 "\n"
@@ -20776,7 +20757,16 @@ msgstr ""
 "\n"
 "Dodatky\n"
 "\n"
-"Žádné"
+"Lékárničky jsou dodávány s třemi připravenými možnostmi léčby. Použítí první "
+"pomoci bude léčit zranění vojáka, zastaví ztrátu krve z rány, ve snaze "
+"udržet je naživu. To obnoví malé množství zdraví, ale vojáci, pro zotavení, "
+"budou muset zpátky na základnu.\n"
+"\n"
+"Stimulanty lze oživit vojáka, který padl v bezvědomí v důsledku omráčení "
+"nebo zplynování.\n"
+"\n"
+"Antipsychotika poskytne injekci endorfinů. Mnoho zoufalé velitelé zjistili, "
+"že je vhodné posílit morálku během velmi stresující angažmá."
 
 #: ../base/ufos/msgid/weapons.ufo:1301
 #, fuzzy
@@ -23581,9 +23571,8 @@ msgid "UFO Interception"
 msgstr "Stíhání"
 
 #: ../base/ufos/research.ufo:154
-#, fuzzy
 msgid "UFO Disassembly"
-msgstr "Rozebírání"
+msgstr "Rozebírání UFO"
 
 #: ../base/ufos/research.ufo:162
 #, fuzzy
@@ -23591,9 +23580,8 @@ msgid "Nation Happiness"
 msgstr "spokojenost státu"
 
 #: ../base/ufos/research.ufo:170
-#, fuzzy
 msgid "Time Units"
-msgstr "Časové jednotky:\t%i\n"
+msgstr "Časové jednotky"
 
 #: ../base/ufos/research.ufo:178
 #, fuzzy
@@ -24045,7 +24033,7 @@ msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:157
 msgid "Pawel Michalkiewicz"
-msgstr ""
+msgstr "Pawel Michalkiewicz"
 
 #: ../base/ufos/seq_credits.ufo:167
 msgid "Holger Gellrich (ShipIt)"
@@ -24116,7 +24104,6 @@ msgid "Vanethian"
 msgstr "Vanethian"
 
 #: ../base/ufos/seq_credits.ufo:339
-#, fuzzy
 msgid "Special thanks to"
 msgstr "Zvláštní poděkování"
 
@@ -24890,9 +24877,8 @@ msgid "Download new teams"
 msgstr "Stahuji [%s]"
 
 #: ../base/ufos/ui/_menu.ufo:602 ../base/ufos/ui/campaign.ufo:39
-#, fuzzy
 msgid "Download"
-msgstr "Vyložit"
+msgstr "Stáhnout"
 
 #: ../base/ufos/ui/_menu.ufo:609
 msgid "Save the current team"
@@ -25277,15 +25263,13 @@ msgid "Aircraft management and crew equipment"
 msgstr "Dostupné vybavení"
 
 #: ../base/ufos/ui/bases.ufo:123
-#, fuzzy
 msgid "Buy/Sell"
-msgstr "Prodat"
+msgstr "Koupit/Prodat"
 
 #: ../base/ufos/ui/bases.ufo:124
 #: client/cgame/campaign/cp_base_callbacks.cpp:315
-#, fuzzy
 msgid "Buy/Sell equipment, aircraft and UGV"
-msgstr "Koupit/prodat vybavení"
+msgstr "Koupit/Prodat vybavení, letadla a BPV"
 
 #: ../base/ufos/ui/bases.ufo:130 ../base/ufos/ui/popup_installations.ufo:306
 #: ../base/ufos/ui/popup_installations.ufo:456
@@ -25400,7 +25384,7 @@ msgstr "Načíst"
 
 #: ../base/ufos/ui/campaign.ufo:40
 msgid "Download savegames"
-msgstr ""
+msgstr "Stáhnout uložené hry"
 
 #: ../base/ufos/ui/campaign.ufo:47 ../base/ufos/ui/campaign.ufo:152
 #: ../base/ufos/ui/lostwon.ufo:36 ../base/ufos/ui/lostwon.ufo:119
@@ -25464,29 +25448,28 @@ msgid "Click to continue"
 msgstr "Klik pro pokračování"
 
 #: ../base/ufos/ui/campaign.ufo:536
-#, fuzzy
 msgid "Thank you for playing UFO: Alien Invasion"
-msgstr "Díky za hraní UFO:Cizácká Invaze"
+msgstr "Díky za hraní UFO: Alien Invasion [Cizácká Invaze]"
 
 #: ../base/ufos/ui/campaign.ufo:604 ../base/ufos/ui/singleplayer.ufo:159
 msgid "Exit Campaign Confirmation"
-msgstr ""
+msgstr "Potvrzení konce kampaně"
 
 #: ../base/ufos/ui/campaign.ufo:613 ../base/ufos/ui/singleplayer.ufo:168
 msgid "You will lose all your campaign progress."
-msgstr ""
+msgstr "Ztratíte všechny své pokroky v kampani."
 
 #: ../base/ufos/ui/campaign.ufo:619 ../base/ufos/ui/singleplayer.ufo:174
 msgid "Exit current campaign and return to main menu."
-msgstr ""
+msgstr "Ukončit aktuální kampaň a návrat do hlavního menu."
 
 #: ../base/ufos/ui/campaign.ufo:620
 msgid "Quit anyway"
-msgstr ""
+msgstr "Přesto opustit"
 
 #: ../base/ufos/ui/campaign.ufo:629 ../base/ufos/ui/singleplayer.ufo:181
 msgid "Do not quit."
-msgstr ""
+msgstr "Vrátit zpátky do kampaně."
 
 #: ../base/ufos/ui/cgame.ufo:26
 #, fuzzy
@@ -25906,12 +25889,11 @@ msgstr "ČJ"
 msgid "Check to use this firemode for reaction fire"
 msgstr "Nastavit jako režim pro zpětnou palbu"
 
-# Odhadovaný Čas Příletu
+# Časová jednotka
 #: ../base/ufos/ui/hud_.ufo:139 client/battlescape/cl_hud.cpp:1386
 #: client/cl_inventory_callbacks.cpp:388
-#, fuzzy
 msgid "TU:"
-msgstr "OČP:"
+msgstr "ČJ:"
 
 #: ../base/ufos/ui/hud_.ufo:155 ../base/ufos/ui/hud_phone.ufo:100
 #, fuzzy
@@ -26215,16 +26197,15 @@ msgstr "Opustit čtení pošty"
 
 #: ../base/ufos/ui/main.ufo:14
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: ../base/ufos/ui/main.ufo:15
 msgid "Like us on facebook"
 msgstr ""
 
 #: ../base/ufos/ui/main.ufo:26
-#, fuzzy
 msgid "Twitter"
-msgstr "Sitters"
+msgstr "Twitter"
 
 #: ../base/ufos/ui/main.ufo:27
 msgid "Follow us on twitter"
@@ -26243,9 +26224,8 @@ msgid "Tutorials"
 msgstr "Jak hrát"
 
 #: ../base/ufos/ui/main.ufo:91
-#, fuzzy
 msgid "Developers"
-msgstr "Revelstoke"
+msgstr "Autoři"
 
 #: ../base/ufos/ui/main.ufo:127
 msgid "Initial settings"
@@ -26331,9 +26311,8 @@ msgid "Name"
 msgstr "Jméno"
 
 #: ../base/ufos/ui/market.ufo:181
-#, fuzzy
 msgid "Store"
-msgstr "Sklady"
+msgstr "Sklad"
 
 #: ../base/ufos/ui/market.ufo:182
 #, fuzzy
@@ -26349,9 +26328,8 @@ msgid "Number of such items on the market"
 msgstr ""
 
 #: ../base/ufos/ui/market.ufo:197
-#, fuzzy
 msgid "Price"
-msgstr "Cena:"
+msgstr "Cena"
 
 #: ../base/ufos/ui/market.ufo:275
 msgid "Item autosell enabled"
@@ -26531,19 +26509,16 @@ msgstr ""
 "Levé tlačítko povoluje všechny zvuky, pravé zakazuje."
 
 #: ../base/ufos/ui/missionbriefing.ufo:59
-#, fuzzy
 msgid "Victory conditions:"
-msgstr "Potvrzovat akce:"
+msgstr "Podmínky vítězství:"
 
 #: ../base/ufos/ui/missionbriefing.ufo:73
-#, fuzzy
 msgid "Start"
-msgstr "Zahájit hru"
+msgstr "Start"
 
 #: ../base/ufos/ui/missionbriefing.ufo:74
-#, fuzzy
 msgid "Start the match"
-msgstr "Zahájit hru!"
+msgstr "Zahájit zápas"
 
 #: ../base/ufos/ui/multiplayer.ufo:9
 msgid "Connect to this server"
@@ -26860,9 +26835,8 @@ msgid "Overall Game Settings"
 msgstr "Nastavení hry"
 
 #: ../base/ufos/ui/options.ufo:163
-#, fuzzy
 msgid "Language Settings"
-msgstr "Nastavení zpráv"
+msgstr "Nastavení jazyka"
 
 #: ../base/ufos/ui/options.ufo:170
 #, fuzzy
@@ -26894,9 +26868,8 @@ msgid "Show cursor tooltips in menus."
 msgstr "Zapne vyskakovací nápovědu"
 
 #: ../base/ufos/ui/options.ufo:261
-#, fuzzy
 msgid "Tooltips (menu):"
-msgstr "Nástrojové tipy:"
+msgstr "Nástrojové tipy (menu):"
 
 #: ../base/ufos/ui/options.ufo:277
 msgid "Show cursor tooltips in tactical mode."
@@ -26933,14 +26906,12 @@ msgid "Video Settings"
 msgstr "Nastavení zobrazování"
 
 #: ../base/ufos/ui/options.ufo:368
-#, fuzzy
 msgid "General"
-msgstr "Ženeva"
+msgstr "Základní"
 
 #: ../base/ufos/ui/options.ufo:372
-#, fuzzy
 msgid "Advanced"
-msgstr "Zdokonalený radar"
+msgstr "Pokročilý"
 
 #: ../base/ufos/ui/options.ufo:395
 msgid "Resolution and Display Settings"
@@ -26981,7 +26952,6 @@ msgid "Play UFO:AI in fullscreen."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:491
-#, fuzzy
 msgid "Stretch the Screen with a 4:3 Ratio:"
 msgstr "Nezachovávat poměr obrazu 4:3:"
 
@@ -27112,27 +27082,27 @@ msgstr "Multitexturování:"
 
 #: ../base/ufos/ui/options.ufo:757
 msgid "No filtering, no mipmaps"
-msgstr ""
+msgstr "Bez filtrování, bez mipmaps"
 
 #: ../base/ufos/ui/options.ufo:761
 msgid "Bilinear filtering, no mipmaps"
-msgstr ""
+msgstr "Bilineární filtrování, vypnuté mipmaps"
 
 #: ../base/ufos/ui/options.ufo:765
 msgid "No filtering, mipmaps"
-msgstr ""
+msgstr "Bez filtrování, mipmaps"
 
 #: ../base/ufos/ui/options.ufo:769
 msgid "Bilinear filtering, mipmaps"
-msgstr ""
+msgstr "Bilineární filtrování, mipmaps"
 
 #: ../base/ufos/ui/options.ufo:773
 msgid "Trilinear filtering, mipmaps"
-msgstr ""
+msgstr "Trilineární filtrování, mipmaps"
 
 #: ../base/ufos/ui/options.ufo:777
 msgid "Bilinear filtering, trilinear filtering, mipmaps"
-msgstr ""
+msgstr "Bilineární filtrování, trilineární filtrování, mipmaps"
 
 #: ../base/ufos/ui/options.ufo:787
 msgid ""
@@ -27353,11 +27323,12 @@ msgid ""
 "Flares are used to display light reflection effects. Flare visibility is "
 "calculated according to the angle of the surface emitting the light."
 msgstr ""
+"Odlesky jsou použity pro zobrazení odrazu světelných efektů. Viditelnost "
+"odlesku  se vypočítá v závislosti na úhlu povrchu emitující světlo."
 
 #: ../base/ufos/ui/options.ufo:1190
-#, fuzzy
 msgid "Flares:"
-msgstr "Těžké"
+msgstr "Odlesky:"
 
 #: ../base/ufos/ui/options.ufo:1205
 msgid "Coronas are soft, alpha-blended, rounded polygons."
@@ -27376,14 +27347,13 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1222
 msgid "Fog:"
-msgstr ""
+msgstr "Mlha:"
 
 #: ../base/ufos/ui/options.ufo:1237
 msgid "Weather effects like rain or snow."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1238
-#, fuzzy
 msgid "Weather Effects:"
 msgstr "Efekty počasí:"
 
@@ -27394,11 +27364,14 @@ msgid ""
 "through applying special material properties like specularity or hardness to "
 "defined textures."
 msgstr ""
+"Materiál systém se používá k zobrazení textur animací, efektů, jako je "
+"otáčení, natažení nebo posouvání textury a vykreslování přes použití "
+"speciálních materiálových vlastností, jako je lesk nebo tvrdosti na "
+"definovaných texturách."
 
 #: ../base/ufos/ui/options.ufo:1254
-#, fuzzy
 msgid "Material System:"
-msgstr "Editor materiálů"
+msgstr "Materiál systém:"
 
 #: ../base/ufos/ui/options.ufo:1267
 #, fuzzy
@@ -27714,9 +27687,8 @@ msgid "Assemble Team"
 msgstr "Nejprve sestavte tým"
 
 #: ../base/ufos/ui/popup_baseattack.ufo:292
-#, fuzzy
 msgid "Equip"
-msgstr "Vybavení"
+msgstr "Vybavit"
 
 #: ../base/ufos/ui/popup_baseattack.ufo:365
 msgid "Base is under attack"
@@ -27827,9 +27799,8 @@ msgid "Condition:"
 msgstr "Potvrzovat akce:"
 
 #: ../base/ufos/ui/popup_installations.ufo:651
-#, fuzzy
 msgid "Transfer UFO"
-msgstr "Přeprava"
+msgstr "Přeprava UFO"
 
 #: ../base/ufos/ui/popup_installations.ufo:669
 msgid "Destroy UFO"
@@ -27841,7 +27812,6 @@ msgid "disassembling"
 msgstr "Rozebírání předmětů"
 
 #: ../base/ufos/ui/popup_installations.ufo:839
-#, fuzzy
 msgid "transfering"
 msgstr "přeprava"
 
@@ -27968,23 +27938,20 @@ msgid "You will lose all your progress."
 msgstr ""
 
 #: ../base/ufos/ui/singleplayer.ufo:175
-#, fuzzy
 msgid "Quit"
-msgstr "Quito"
+msgstr "Opustit"
 
 #: ../base/ufos/ui/skirmish.ufo:44
 msgid "<1>"
 msgstr ""
 
 #: ../base/ufos/ui/skirmish.ufo:121
-#, fuzzy
 msgid "Start Game"
 msgstr "Zahájit hru"
 
 #: ../base/ufos/ui/skirmish.ufo:136
-#, fuzzy
 msgid "Return to the main menu."
-msgstr "Návrat do hlavního menu"
+msgstr "Návrat do hlavního menu."
 
 #: ../base/ufos/ui/skirmish.ufo:150
 #, fuzzy
@@ -28188,9 +28155,8 @@ msgstr "Fargo"
 
 # Odhadovaný Čas Příletu
 #: ../base/ufos/ui/transfer.ufo:200
-#, fuzzy
 msgid "To"
-msgstr "OČP:"
+msgstr "OČP"
 
 #: ../base/ufos/ui/transfer.ufo:279
 msgid "Cargo"
@@ -28257,7 +28223,6 @@ msgstr "Fargo"
 
 # Odhadovaný Čas Příletu
 #: ../base/ufos/ui/transfer.ufo:590
-#, fuzzy
 msgid "To:"
 msgstr "OČP:"
 
@@ -28286,9 +28251,8 @@ msgid "Login"
 msgstr ""
 
 #: ../base/ufos/ui/web.ufo:37
-#, fuzzy
 msgid "Password"
-msgstr "Heslo:"
+msgstr "Heslo"
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -28296,16 +28260,15 @@ msgstr "Lékárnička"
 
 #: ../base/ufos/weapons.ufo:28
 msgid "First Aid"
-msgstr ""
+msgstr "První pomoc"
 
 #: ../base/ufos/weapons.ufo:44
-#, fuzzy
 msgid "Stimulants"
-msgstr "Implantáty"
+msgstr "Stimulanty"
 
 #: ../base/ufos/weapons.ufo:60
 msgid "Antipsychotics"
-msgstr ""
+msgstr "Antipsychotika"
 
 #: ../base/ufos/weapons.ufo:82
 msgid "IR Goggles"
@@ -28554,27 +28517,23 @@ msgstr "25mm výbušné granáty"
 
 #: ../base/ufos/weapons_human.ufo:1297 ../base/ufos/weapons_human.ufo:1432
 #: ../base/ufos/weapons_human.ufo:1616
-#, fuzzy
 msgid "Snap Shot (Impact)"
-msgstr "Výstřel od boku"
+msgstr "Výstřel od boku (nárazový)"
 
 #: ../base/ufos/weapons_human.ufo:1324 ../base/ufos/weapons_human.ufo:1460
 #: ../base/ufos/weapons_human.ufo:1643
-#, fuzzy
 msgid "Aimed Shot (Impact)"
-msgstr "Cílený výstřel"
+msgstr "Cílený výstřel (nárazový)"
 
 #: ../base/ufos/weapons_human.ufo:1351 ../base/ufos/weapons_human.ufo:1488
 #: ../base/ufos/weapons_human.ufo:1669
-#, fuzzy
 msgid "Snap Shot (Timer)"
-msgstr "Od boku - časovaný"
+msgstr "Výstřel od boku (časovaný)"
 
 #: ../base/ufos/weapons_human.ufo:1381 ../base/ufos/weapons_human.ufo:1519
 #: ../base/ufos/weapons_human.ufo:1698
-#, fuzzy
 msgid "Aimed Shot (Timer)"
-msgstr "Cílený - časovaný"
+msgstr "Cílený výstřel (časovaný)"
 
 #: ../base/ufos/weapons_human.ufo:1413
 msgid "25mm IC Grenades"
@@ -28987,7 +28946,7 @@ msgstr "Ponecháno %i ČJ na přikrčení/postavení se."
 
 #: client/battlescape/cl_hud.cpp:888
 msgid "Not enough TUs left to reserve for crouching/standing up."
-msgstr "Není dostatek ČJ k ponechání na přikrčení/postavení se."
+msgstr "Nedostatek ČJ k ponechání na přikrčení/postavení se."
 
 #: client/battlescape/cl_hud.cpp:897
 #, c-format
@@ -29038,7 +28997,7 @@ msgid "Morale  %i"
 msgstr "Morálka  %i"
 
 #: client/battlescape/cl_hud.cpp:1218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
 "%s %i (%i|%i TUs left)\n"
@@ -29047,7 +29006,7 @@ msgstr ""
 "%s %i (%i| Zbývá: %i ČJ)\n"
 
 #: client/battlescape/cl_hud.cpp:1222
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i\n"
 "%s %i (%i TUs left)\n"
@@ -29093,7 +29052,6 @@ msgid "reaction speed"
 msgstr "Rychlost otáčení:"
 
 #: client/battlescape/cl_hud.cpp:1301
-#, fuzzy
 msgid "TU"
 msgstr "ČJ"
 
@@ -29128,26 +29086,22 @@ msgstr "Panikaří!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:84
 #: client/battlescape/cl_hud_callbacks.cpp:252
-#, fuzzy
 msgid "Can't perform action - no item in hand!"
-msgstr "Nelze provést - není osoba!\n"
+msgstr "Nelze provést - žádný předmět v ruce!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:89
 #: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1167
-#, fuzzy
 msgid "Can't perform action - no ammo!"
-msgstr "Nelze provést - není munice!\n"
+msgstr "Nelze provést - není munice!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1159
-#, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!"
-msgstr "Nelze provést - ze zbraně nejde střílet jednou rukou!\n"
+msgstr "Nelze provést - ze zbraně nejde střílet jednou rukou!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:144
 #: client/battlescape/cl_hud_callbacks.cpp:270 game/g_actor.cpp:622
-#, fuzzy
 msgid "Can't perform action - not enough TUs!"
-msgstr "Nelze provést - nedostatek ČJ!\n"
+msgstr "Nelze provést - nedostatek ČJ!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:171
 #, fuzzy
@@ -29155,7 +29109,7 @@ msgid "Disabled automatic crouching/standing up."
 msgstr "Ponecháno %i ČJ na přikrčení/postavení se."
 
 #: client/battlescape/cl_hud_callbacks.cpp:175
-#, fuzzy, c-format
+#, c-format
 msgid "Reserved %i TUs for crouching/standing up."
 msgstr "Ponecháno %i ČJ na přikrčení/postavení se."
 
@@ -29170,11 +29124,8 @@ msgid "Reaction fire disabled."
 msgstr "Zbraň bez povolené zpětné palby.\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:258
-#, fuzzy
 msgid "Can't perform action - this item is not reloadable!"
-msgstr ""
-"Nelze provést:\n"
-"tento předmět není nabíjecí.\n"
+msgstr "Nelze provést - tento předmět není nabíjecí!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:291
 #, fuzzy
@@ -29345,14 +29296,13 @@ msgid "A member of team %i was revitalised."
 msgstr "Byl zabit člen týmu %i.\n"
 
 #: client/battlescape/events/event/actor/e_event_actorwound.cpp:58
-#, fuzzy, c-format
+#, c-format
 msgid "%s has been wounded"
-msgstr "%s byl(a) povýšen(a) do hodnosti %s.\n"
+msgstr "%s byl zraněn"
 
 #: client/battlescape/events/event/player/e_event_doendround.cpp:57
-#, fuzzy
 msgid "Your round started!"
-msgstr "Začal váš tah!\n"
+msgstr "Začal váš tah!"
 
 #: client/cgame/campaign/cp_aircraft.cpp:363
 msgid "ON RED ALERT"
@@ -29578,7 +29528,7 @@ msgid "Operational range:\t%i km\n"
 msgstr "Akční rádius:\t%i km\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:197
-#, fuzzy, c-format
+#, c-format
 msgid "Weapons:\t%i of %i\n"
 msgstr "Zbraně:\t%i z %i\n"
 
@@ -30208,12 +30158,11 @@ msgstr[2] "dělníků"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:156
 #: client/cgame/campaign/cp_nation.cpp:822
-#, fuzzy
 msgid "pilot"
 msgid_plural "pilots"
-msgstr[0] "Pilot"
-msgstr[1] "Pilot"
-msgstr[2] "Pilot"
+msgstr[0] "pilot"
+msgstr[1] "piloti"
+msgstr[2] "pilotů"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:430
 #, fuzzy, c-format
@@ -30223,12 +30172,12 @@ msgid ""
 msgstr "nefunkční, závisí na"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:485
-#, fuzzy, c-format
+#, c-format
 msgid "%d day left"
 msgid_plural "%d days left"
-msgstr[0] "zbývá %i den"
-msgstr[1] "zbývají %i dny"
-msgstr[2] "zbývá %i dnů"
+msgstr[0] "zbývá %d den"
+msgstr[1] "zbývají %d dny"
+msgstr[2] "zbývá %d dnů"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:624
 #: client/cgame/campaign/cp_hospital_callbacks.cpp:222
@@ -30237,12 +30186,11 @@ msgid "Rank: %s"
 msgstr "Hodnost: %s"
 
 #: client/cgame/campaign/cp_employee.cpp:177
-#, fuzzy
 msgid "Soldier"
 msgid_plural "Soldiers"
 msgstr[0] "Voják"
-msgstr[1] "Voják"
-msgstr[2] "Voják"
+msgstr[1] "Vojáci"
+msgstr[2] "Vojáků"
 
 #: client/cgame/campaign/cp_employee.cpp:359
 msgid "Not enough quarters"
@@ -30882,9 +30830,9 @@ msgstr "Získaných předmětů (typů/všech)\t%i/%i\n"
 
 #: client/cgame/campaign/cp_missions.cpp:454
 #: client/cgame/campaign/cp_missions.cpp:481
-#, fuzzy, c-format
+#, c-format
 msgid "Crashed %s"
-msgstr "Havarované UFO"
+msgstr "Havarované UFO %s"
 
 #: client/cgame/campaign/cp_missions.cpp:460
 #, fuzzy, c-format
@@ -31357,7 +31305,6 @@ msgid "Error loading game."
 msgstr "Chyba při načítání hry."
 
 #: client/cgame/campaign/cp_save.cpp:567
-#, fuzzy
 msgid "QuickSave"
 msgstr "Rychlé uložení"
 
@@ -31861,9 +31808,9 @@ msgid "Proposal: %s"
 msgstr "Návrh: "
 
 #: client/cgame/campaign/cp_ufopedia.cpp:1054
-#, fuzzy, c-format
+#, c-format
 msgid "Re: %s"
-msgstr "Výsledek: "
+msgstr "x Výsledek: %s"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:56
 #, c-format
@@ -32011,9 +31958,9 @@ msgid "You've ended your turn.\n"
 msgstr "Dokončil jste svůj tah\n"
 
 #: client/cgame/multiplayer/cl_game_multiplayer.cpp:61
-#, fuzzy, c-format
+#, c-format
 msgid "%s ended his turn (team %i).\n"
-msgstr "%s ukončil svůj tah (tým %i)\n"
+msgstr "%s ukončil svůj tah (tým %i).\n"
 
 #: client/cgame/multiplayer/cl_game_multiplayer.cpp:80
 msgid "Set soldiers per player lower than soldiers per team"
@@ -32029,11 +31976,9 @@ msgid "Enemies killed:\t%i"
 msgstr "Zabitých nepřátel\t%i\n"
 
 #: client/cgame/multiplayer/cl_game_multiplayer.cpp:131
-#, fuzzy, c-format
+#, c-format
 msgid "Team survivors:\t%i"
-msgstr ""
-"Tým - přeživší\t%i\n"
-"\n"
+msgstr "Tým - přeživší\t%i"
 
 #: client/cgame/multiplayer/mp_callbacks.cpp:212
 msgid "Select a free team or your coop team"
@@ -32318,11 +32263,8 @@ msgid "Unknown - not useable"
 msgstr "Neznámé - nepoužitelné"
 
 #: client/cl_inventory_callbacks.cpp:387
-#, fuzzy
 msgid "Warning: Not enough TUs..."
-msgstr ""
-"Nelze provést:\n"
-"nedostatek ČJ.\n"
+msgstr "Nelze provést: nedostatek ČJ..."
 
 #: client/cl_irc.cpp:1434
 msgid "Server closed connection"
@@ -32349,14 +32291,12 @@ msgid "The password you specified was wrong."
 msgstr ""
 
 #: client/cl_main.cpp:410
-#, fuzzy
 msgid "This server requires a password."
-msgstr "Tato změna vyžaduje restart"
+msgstr "Tento server vyžaduje heslo."
 
 #: client/cl_main.cpp:414
-#, fuzzy
 msgid "This server is full."
-msgstr "Toto vybavení funguje.\n"
+msgstr "Toto server je plný."
 
 #: client/cl_main.cpp:417
 #, fuzzy
@@ -32404,14 +32344,12 @@ msgid "Target your shot to the ground"
 msgstr "Zamířit výstřel k zemi"
 
 #: client/cl_main.cpp:1191
-#, fuzzy
 msgid "This change requires a restart!"
-msgstr "Tato změna vyžaduje restart"
+msgstr "Tato změna vyžaduje restart!"
 
 #: client/cl_main.cpp:1196
-#, fuzzy
 msgid "This change might require a restart."
-msgstr "Tato změna by mohla vyžadovat restart"
+msgstr "Tato změna by mohla vyžadovat restart."
 
 #: client/cl_screen.cpp:127
 #, c-format
@@ -32614,45 +32552,37 @@ msgid "Soldier left the rescue zone."
 msgstr "Vybrat tuto oblast"
 
 #: game/g_actor.cpp:626
-#, fuzzy
 msgid ""
 "Can't perform action - weapon already fully loaded with the same ammunition!"
-msgstr "Nelze provést - zbraň je již plně nabita stejnou municí!\n"
+msgstr "Nelze provést - zbraň je již plně nabita stejnou municí!"
 
 #: game/g_client.cpp:341
-#, fuzzy
 msgid "Can't perform action - object not present!"
-msgstr "Nelze provést - předmět tu není!\n"
+msgstr "Nelze provést - předmět tu není!"
 
 #: game/g_client.cpp:346
-#, fuzzy
 msgid "Can't perform action - not an actor!"
-msgstr "Nelze provést - není osoba!\n"
+msgstr "Nelze provést - není osoba!"
 
 #: game/g_client.cpp:351
-#, fuzzy
 msgid "Can't perform action - actor is stunned!"
-msgstr "Nelze provést - osoba je omráčena!\n"
+msgstr "Nelze provést - osoba je omráčena!"
 
 #: game/g_client.cpp:356
-#, fuzzy
 msgid "Can't perform action - actor is dead!"
-msgstr "Nelze provést - osoba je mrtva!\n"
+msgstr "Nelze provést - osoba je mrtva!"
 
 #: game/g_client.cpp:361
-#, fuzzy
 msgid "Can't perform action - not on same team!"
-msgstr "Nelze provést - není ve stejném týmu!\n"
+msgstr "Nelze provést - není ve stejném týmu!"
 
 #: game/g_client.cpp:366
-#, fuzzy
 msgid "Can't perform action - no control over allied actors!"
-msgstr "Nelze provést - neovládáte spojenecké osoby!\n"
+msgstr "Nelze provést - neovládáte spojenecké osoby!"
 
 #: game/g_client.cpp:385
-#, fuzzy
 msgid "Can't perform action - it is not your turn!"
-msgstr "Nelze provést - nejste na tahu!\n"
+msgstr "Nelze provést - nejste na tahu!"
 
 # Asi takhle?
 #: game/g_client.cpp:500
@@ -32680,29 +32610,24 @@ msgstr ""
 "Nepřítel použil oslepující granát!\n"
 
 #: game/g_combat.cpp:647
-#, fuzzy
 msgid "Can't perform action - impossible throw!"
-msgstr "Nelze provést - neuskutečnitelný hod!\n"
+msgstr "Nelze provést - neuskutečnitelný hod!"
 
 #: game/g_combat.cpp:1125
-#, fuzzy
 msgid "Can't perform action - object not activatable!"
-msgstr "Nelze provést akci - předmět není aktivovatelný!\n"
+msgstr "Nelze provést - předmět není aktivovatelný!"
 
 #: game/g_combat.cpp:1151
-#, fuzzy
 msgid "Can't perform action - target is not wounded!"
-msgstr "Nelze provést - cíl je mimo dostřel!\n"
+msgstr "Nelze provést - cíl není zraněn!"
 
 #: game/g_combat.cpp:1176
-#, fuzzy
 msgid "Can't perform action - target out of range!"
-msgstr "Nelze provést - cíl je mimo dostřel!\n"
+msgstr "Nelze provést - cíl je mimo dostřel!"
 
 #: game/g_combat.cpp:1222
-#, fuzzy
 msgid "Can't perform action - not enough ammo!"
-msgstr "Nelze provést - nedostatek munice!\n"
+msgstr "Nelze provést - nedostatek munice!"
 
 #: game/g_mission.cpp:60
 #, fuzzy
@@ -32715,9 +32640,8 @@ msgid "Target zone is occupied!"
 msgstr "Cílová oblast je obsazena\n"
 
 #: game/g_mission.cpp:96
-#, fuzzy
 msgid "Item was placed."
-msgstr "předmět byl umístěn\n"
+msgstr "Předmět byl umístěn."
 
 #: game/g_morale.cpp:40
 #, fuzzy, c-format
@@ -32750,9 +32674,8 @@ msgid "No fire mode selected for reaction fire."
 msgstr "Nenastaven režim pro zpětnou palbu.\n"
 
 #: game/g_reaction.cpp:609
-#, fuzzy
 msgid "Not enough TUs left for activating reaction fire."
-msgstr "Nedostatek ČJ pro aktivaci zpětné palby.\n"
+msgstr "Nedostatek ČJ pro aktivaci zpětné palby."
 
 #: game/g_round.cpp:54
 #, fuzzy
