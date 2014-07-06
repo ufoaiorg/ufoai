@@ -614,6 +614,16 @@ tile +house_06
 0		0		0		0		0		0
 }
 
+tile +house_07
+{
+5 5
+0		0		0		v		0
+0		+a		+a		+av		0
+0		+a		+a		v		0
+0		+a		+a		0		0
+0		0		0		0		0
+}
+
 tile +mart_01
 {
 6 5
@@ -970,9 +980,10 @@ fix +small_street	"0 0"
 
 assembly test
 {
-size "6 8"
+size "6 9"
 +house_05			"1 1"
 +house_06			"1 1"
++house_07			"1 1"
 +garage_01			"0 1"
 +garage_02			"0 1"
 +garage_03			"0 1"
