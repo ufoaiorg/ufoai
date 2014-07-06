@@ -3588,11 +3588,13 @@ mapdef small_street
 	map				"+village"
 	params			("small_street")
 	description		"_Small Suburban Street"
-	maxaliens		6
+	maxaliens		12
 
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	)
 
 	ufos
