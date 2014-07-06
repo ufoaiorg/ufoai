@@ -2795,7 +2795,6 @@ tech rs_weapon_pbeamcannon
 
 	require_AND
 	{
-		tech rs_skill_explosive
 		tech rs_skill_assault
 		item (pbeamcannon 1)
 	}
