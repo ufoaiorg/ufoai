@@ -724,6 +724,7 @@ tileset housing {
 	+house_03
 	+house_05
 	+house_06
+	+house_07
 }
 
 tileset commercial {
@@ -863,6 +864,7 @@ title "_Village"
 +house_03			"0 1"
 +house_05			"0 1"
 +house_06			"0 1"
++house_07			"0 1"
 +misc_01			"0 1"
 +misc_02			"0 1"
 //+nature_00			"0 9"
@@ -894,6 +896,7 @@ tileset commercial	"1 1"
 +house_03			"0 1"
 +house_05			"0 1"
 +house_06			"0 1"
++house_07			"0 1"
 +misc_01			"0 1"
 +misc_02			"0 1"
 +nature_00			"0 35"
@@ -921,6 +924,7 @@ tileset commercial	"1 1"
 +house_03			"0 1"
 +house_05			"0 1"
 +house_06			"0 1"
++house_07			"0 1"
 +misc_01			"0 1"
 +misc_02			"0 1"
 +nature_00			"0 9"
