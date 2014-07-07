@@ -144,6 +144,8 @@ static void UI_Restart_f (void)
 		names.push_back(std::string(ui_global.windowStack[i]->name));
 	}
 
+	Com_Printf("--> in UI_Restart_f\n");
+
 	UI_Shutdown();
 	R_FontShutdown();
 	UI_Init();
@@ -173,13 +175,8 @@ static void UI_Restart_f (void)
 			UI_ParseUIModel(name, &text);
 		else if (Q_streq(type, "sprite"))
 			UI_ParseSprite(name, &text);
-		else if (Q_streq(type, "lua")) {
-			Com_Printf ("found lua file: %s\n", name);
-			/* TODO - implementation */
-			/* skip the file */
-			text = nullptr;
-		}
-
+		else if (Q_streq(type, "lua"))
+			UI_ParseAndLoadLuaScript(name, &text);
 	}
 
 	/*GAME_InitUIData();*/

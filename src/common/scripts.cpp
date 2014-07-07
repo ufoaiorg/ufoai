@@ -3696,21 +3696,15 @@ void Com_ParseScripts (bool onlyServer)
 
 	Com_AddObjectLinks();	/* Add ammo<->weapon links to items.*/
 
+	Com_Printf("--> in Com_ParseScripts\n");
+
 	/* parse ui node script */
 	if (!onlyServer) {
 		Com_Printf("%i ui script files\n", FS_BuildFileList("ufos/ui/*.ufo"));
 		FS_NextScriptHeader(nullptr, nullptr, nullptr);
 		text = nullptr;
 		while ((type = FS_NextScriptHeader("ufos/ui/*.ufo", &name, &text)) != nullptr) {
-			if (Q_streq(type, "lua")) {
-				Com_Printf ("found lua file: %s\n", name);
-				/* TODO - implementation */
-				/* skip the file */
-				text = nullptr;
-			}
-			else {
-				CL_ParseClientData(type, name, &text);
-			}
+			CL_ParseClientData(type, name, &text);
 		}
 	}
 
