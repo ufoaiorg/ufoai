@@ -1148,9 +1148,9 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
  * @brief Try to go close to a mission edict
  * @param[in,out] actor The actor edict.
  * @param[in] to The target position.
- * @return @c true if hiding is possible, @c false otherwise
+ * @return @c true if found a suitable position, @c false otherwise
  */
-static bool AI_FindMissionLocation (Actor* actor, const pos3_t to)
+bool AI_FindMissionLocation (Actor* actor, const pos3_t to)
 {
 	const byte minX = std::max(to[0] - HOLD_DIST, 0);
 	const byte minY = std::max(to[1] - HOLD_DIST, 0);
@@ -1204,7 +1204,7 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 		/* find waypoints in a closer distance - if civilians are not close enough, let them walk
 		 * around until they came close */
 		for (checkPoint = level.ai_waypointList; checkPoint != nullptr; checkPoint = checkPoint->groupChain) {
-			if (checkPoint->inuse)
+			if (!checkPoint->inuse)
 				continue;
 
 			/* the lower the count value - the nearer the final target */

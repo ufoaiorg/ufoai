@@ -28,6 +28,21 @@ tile +craft_drop_firebird
 	0		0		0		0
 }
 
+tile +craft_drop_herakles
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +craft_drop_raptor
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
 // UFOs ------------------------------------------------------------*
 
 tile +craft_ufo_scout
@@ -526,6 +541,77 @@ assembly sp_sml_02
 
 	// Buildings and UFOs
 	fix *rm_ufo +craft_ufo_scout		"1 1"
+	fix tileset 2x2						"4 1"
+	fix tileset 2x2						"6 1"
+	fix tileset 4x4						"4 4"
+	fix tileset 2x2						"1 6"
+}
+
+assembly medium_noufo_01
+{
+	size "8 8"
+
+	// Street grid, starting from 0,0 and working up in rows
+	fix +sc_ne01						"2 0"
+	fix tileset sh						"3 0"
+	fix +sc_nw01						"5 0"
+	fix +sv1x1_01						"2 1"
+	fix +sv1x1_01						"5 1"
+	fix tileset sh						"0 2"
+	fix +st_west01						"2 2"
+	fix +st_east01						"5 2"
+	fix *rm_drop +craft_drop_firebird	"6 2"
+	fix tileset sv						"2 3"
+	fix tileset sv						"5 3"
+	fix tileset sh						"0 5"
+	fix +sx_01							"2 5"
+	fix tileset sh						"3 5"
+	fix +sx_01							"5 5"
+	fix tileset sh						"6 5"
+	fix tileset sv						"2 6"
+	fix tileset sv						"5 6"
+
+	// Buildings and UFOs
+	fix tileset 2x2						"0 0"
+	fix tileset 2x2						"6 0"
+	fix tileset 2x4						"3 1"
+	fix tileset 2x2						"0 3"
+	fix tileset 2x2						"6 3"
+	fix tileset 2x2						"0 6"
+	fix tileset 2x2						"3 6"
+	fix tileset 2x2						"6 6"
+}
+
+assembly medium_noufo_02
+{
+	size "9 8"
+
+	// Street grid, starting from 0,0 and working up in rows
+	fix +st_east01						"0 0"
+	fix tileset sh						"1 0"
+	fix tileset st_north				"3 0"
+	fix tileset sh						"4 0"
+	fix *rm_drop +craft_drop_firebird	"6 0"
+	fix +st_west01						"8 0"
+	fix tileset sv						"0 1"
+	fix tileset sv						"3 1"
+	fix tileset sv						"8 1"
+	fix tileset sv						"0 3"
+	fix +st_east01						"3 3"
+	fix tileset sh						"4 3"
+	fix tileset sh						"6 3"
+	fix +st_west01						"8 3"
+	fix +sv1x1_01						"3 4"
+	fix tileset sv						"8 4"
+	fix +st_east01						"0 5"
+	fix tileset sh						"1 5"
+	fix +st_west01						"3 5"
+	fix tileset sv						"0 6"
+	fix tileset sv						"3 6"
+	fix tileset sv						"8 6"
+
+	// Buildings and UFOs
+	fix tileset 2x4						"1 1"
 	fix tileset 2x2						"4 1"
 	fix tileset 2x2						"6 1"
 	fix tileset 4x4						"4 4"

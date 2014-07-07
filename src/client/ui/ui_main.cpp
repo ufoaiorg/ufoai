@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_font.h"
 #include "ui_parse.h"
 #include "ui_sound.h"
+#include "../cl_menu.h"
 #include "node/ui_node_abstractnode.h"
 #include "ui_lua.h"
 #include <vector>
@@ -147,6 +148,7 @@ static void UI_Restart_f (void)
 	Com_Printf("--> in UI_Restart_f\n");
 
 	UI_Shutdown();
+	CLMN_Shutdown();
 	R_FontShutdown();
 	UI_Init();
 	R_FontInit();
@@ -179,7 +181,7 @@ static void UI_Restart_f (void)
 			UI_ParseAndLoadLuaScript(name, &text);
 	}
 
-	/*GAME_InitUIData();*/
+	CLMN_Init();
 
 	for (Names::iterator i = names.begin(); i != names.end(); ++i) {
 		UI_PushWindow(i->c_str());

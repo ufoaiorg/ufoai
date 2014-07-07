@@ -691,35 +691,6 @@ static void CL_SetRatioFilter_f (void)
 	UI_RegisterOption(OPTION_VIDEO_RESOLUTIONS, firstOption);
 }
 
-static void CL_VideoInitMenu (void)
-{
-	uiNode_t* option = UI_GetOption(OPTION_VIDEO_RESOLUTIONS);
-	if (option != nullptr) {
-		return;
-	}
-	const int length = VID_GetModeNums();
-	for (int i = 0; i < length; i++) {
-		vidmode_t vidmode;
-		if (VID_GetModeInfo(i, &vidmode))
-			UI_AddOption(&option, va("r%ix%i", vidmode.width, vidmode.height), va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
-	}
-	UI_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
-}
-
-static void CL_TeamDefInitMenu (void)
-{
-	uiNode_t* option = UI_GetOption(OPTION_TEAMDEFS);
-	if (option != nullptr)
-		return;
-
-	for (int i = 0; i < csi.numTeamDefs; i++) {
-		const teamDef_t* td = &csi.teamDef[i];
-		if (td->team != TEAM_CIVILIAN)
-			UI_AddOption(&option, td->id, va("_%s", td->name), td->id);
-	}
-	UI_RegisterOption(OPTION_TEAMDEFS, option);
-}
-
 /** @brief valid actorskin descriptors */
 static const value_t actorskin_vals[] = {
 	{"name", V_STRING, offsetof(actorSkin_t, name), 0},
@@ -776,14 +747,9 @@ void CL_InitAfter (void)
 
 	/* preload all models for faster access */
 	CL_ViewPrecacheModels();
-
-	CL_TeamDefInitMenu();
-	CL_VideoInitMenu();
-	IN_JoystickInitMenu();
-
 	CL_LanguageInit();
 
-	GAME_InitUIData();
+	CLMN_Init();
 
 	/* sort the mapdef array */
 	qsort(csi.mds, csi.numMDs, sizeof(mapDef_t), Com_MapDefSort);
@@ -982,7 +948,7 @@ static void CL_InitLocal (void)
 	CL_CameraInit();
 	CL_BattlescapeRadarInit();
 
-	CLMN_InitStartup();
+	UI_Init();
 	TUT_InitStartup();
 	PTL_InitStartup();
 	GAME_InitStartup();
@@ -1286,6 +1252,7 @@ void CL_Shutdown (void)
 			Cvar_UnRegisterChangeListener(var->name, CL_RImagesCvarChange);
 	}
 
+	CLMN_Shutdown();
 	GAME_SetMode(nullptr);
 	GAME_UnloadGame();
 	CL_HTTP_Cleanup();

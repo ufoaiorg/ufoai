@@ -592,6 +592,38 @@ tile +house_03
 0		0		0		0		0		0
 }
 
+tile +house_05
+{
+5 5
+0		0		0		0		0
+0		+a		+a		v		0
+0		+a		+a		+av		0
+0		+a		+a		v		0
+0		0		0		0		0
+}
+
+tile +house_06
+{
+6 7
+0		0		0		0		0		0
+0		0		+a		+a		+a		0
+0		v		+a		+a		+a		0
+0		+av		+a		+a		+a		0
+0		v		+a		+a		+a		0
+0		0		+a		+a		+a		0
+0		0		0		0		0		0
+}
+
+tile +house_07
+{
+5 5
+0		0		0		v		0
+0		+a		+a		+av		0
+0		+a		+a		v		0
+0		+a		+a		0		0
+0		0		0		0		0
+}
+
 tile +mart_01
 {
 6 5
@@ -600,6 +632,19 @@ tile +mart_01
 0		+a		+a		+a		+av		0
 0		+a		+a		+a		v		0
 0		0		0		0		0		0
+}
+
+tile +small_street
+{
+8 8
+0		0		0		0		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		0		0		0		0
 }
 
 // recreational ----------------------------------------------------*
@@ -677,6 +722,9 @@ tileset housing {
 	+house_01
 	+house_02
 	+house_03
+	+house_05
+	+house_06
+	+house_07
 }
 
 tileset commercial {
@@ -814,16 +862,24 @@ title "_Village"
 +house_01			"0 1"
 +house_02			"0 1"
 +house_03			"0 1"
++house_05			"0 1"
++house_06			"0 1"
++house_07			"0 1"
 +misc_01			"0 1"
 +misc_02			"0 1"
-+nature_00			"0 6"
+//+nature_00			"0 9"
 +nature_02			"0 1"
 +nature_06			"0 1"
 +nature_11			"0 1"
++park_01			"0 1"
++park_02			"0 1"
++park_03			"0 1"
++park_04			"0 1"
++fountain_01		"0 1"
++playground_01		"0 1"
 tileset garage_h	"0 1"
 tileset garage_v	"0 1"
 tileset nature		"0 9"
-tileset park		"0 2"
 tileset street_h	"0 8"
 tileset street_v	"0 8"
 *rm_drop +craft_drop_firebird	"1 1"
@@ -835,7 +891,12 @@ assembly medium
 size "8 8"
 title "_Village"
 tileset commercial	"1 1"
-tileset housing		"0 1"
++house_01			"0 1"
++house_02			"0 1"
++house_03			"0 1"
++house_05			"0 1"
++house_06			"0 1"
++house_07			"0 1"
 +misc_01			"0 1"
 +misc_02			"0 1"
 +nature_00			"0 35"
@@ -856,21 +917,26 @@ assembly medium_noufo
 {
 size "8 8"
 title "_Village"
-tileset main			"1 1"
-tileset commercial		"1 1"
-tileset housing			"0 2"
-+misc_01				"0 1"
-+misc_02				"0 1"
-+nature_00				"0 9"
-+nature_02				"0 1"
-+nature_06				"0 1"
-+nature_11				"0 1"
-tileset garage_h		"0 1"
-tileset garage_v		"0 1"
-tileset nature			"0 5"
-tileset park			"0 2"
-tileset street_h		"0 5"
-tileset street_v		"0 5"
+tileset main		"1 1"
+tileset commercial	"1 1"
++house_01			"0 1"
++house_02			"0 1"
++house_03			"0 1"
++house_05			"0 1"
++house_06			"0 1"
++house_07			"0 1"
++misc_01			"0 1"
++misc_02			"0 1"
++nature_00			"0 9"
++nature_02			"0 1"
++nature_06			"0 1"
++nature_11			"0 1"
+tileset garage_h	"0 1"
+tileset garage_v	"0 1"
+tileset nature		"0 5"
+tileset park		"0 2"
+tileset street_h	"0 5"
+tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
@@ -908,19 +974,54 @@ tileset street_v	"0 5"
 *rm_ufo +craft_crash_fighter "1 1"
 }
 
+assembly small_street
+{
+size "6 9"
++house_05			"1 1"
++house_06			"1 1"
++house_07			"1 1"
++garage_01			"0 1"
++garage_02			"0 1"
++garage_03			"0 1"
++nature_01			"0 1"
++nature_02			"0 1"
++nature_03			"0 1"
++nature_04			"0 1"
++nature_05			"0 1"
++nature_06			"0 1"
++nature_07			"0 1"
++nature_08			"0 1"
++nature_09			"0 1"
++nature_10			"0 1"
++nature_11			"0 1"
+tileset street_h	"0 5"
+tileset street_v	"0 5"
+*rm_drop +craft_drop_firebird	"1 1"
+}
+
 // test assemblies --------------------------------------------------*
 
 assembly test
 {
-size "7 7"
-+estate				"0 1"
+size "6 9"
++house_05			"1 1"
++house_06			"1 1"
++house_07			"1 1"
 +garage_01			"0 1"
 +garage_02			"0 1"
 +garage_03			"0 1"
-+nature_06			"1 1"
++nature_01			"0 1"
++nature_02			"0 1"
++nature_03			"0 1"
++nature_04			"0 1"
++nature_05			"0 1"
++nature_06			"0 1"
++nature_07			"0 1"
++nature_08			"0 1"
++nature_09			"0 1"
++nature_10			"0 1"
 +nature_11			"0 1"
-tileset nature		"0 45"
-tileset street_h	"0 10"
-tileset street_v	"0 10"
+tileset street_h	"0 5"
+tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird	"1 1"
 }

@@ -759,6 +759,9 @@ base/maps/village/vil_gasstation_01.map | GNU General Public License 2.0 or late
 base/maps/village/vil_house_01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_house_02.map | GNU General Public License 2.0 or later
 base/maps/village/vil_house_03.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/village/vil_house_05.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/small_street.map by tilli
+base/maps/village/vil_house_06.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/small_street.map by tilli
+base/maps/village/vil_house_07.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/small_street.map by tilli
 base/maps/village/vil_mart_01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_misc_01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_misc_02.map | GNU General Public License 2.0 or later
@@ -779,6 +782,7 @@ base/maps/village/vil_park_02.map | GNU General Public License 2.0 or later | Ho
 base/maps/village/vil_park_03.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | Derivative work from UFO:AI
 base/maps/village/vil_park_04.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | Derivative work from UFO:AI
 base/maps/village/vil_playground_01.map | GNU General Public License 2.0 or later
+base/maps/village/vil_small_street.map | GNU General Public License 2.0 or later | tilli
 base/maps/village/vil_start.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_street_crossing.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_street_h_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich

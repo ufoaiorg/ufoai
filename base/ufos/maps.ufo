@@ -469,7 +469,6 @@ mapdef beach
 	params			("default")
 	description		"_Coastal Crash Site"
 	campaign		false
-	multiplayer		false
 	maxaliens		7
 
 	aircraft
@@ -509,7 +508,6 @@ mapdef bridge
 	map				"+bridge"
 	params			("default")
 	description		"_Bridge"
-	multiplayer		false
 	gametypes ( )
 	maxaliens		30
 
@@ -640,7 +638,6 @@ mapdef country_large
 {
 	map			"+country"
 	params		("large")
-	multiplayer	false
 	description	"_Country Desert"
 	size		"large"
 	maxaliens	6
@@ -684,7 +681,6 @@ mapdef country_street
 {
 	map			"+country"
 	params		("street")
-	multiplayer	false
 	description	"_Some houses in the desert."
 	size		"large"
 	maxaliens	15
@@ -1031,7 +1027,6 @@ mapdef forest_large
 	map			"+forest"
 	params		("large")
 	description	"_Forest"
-	multiplayer	false
 	size		"large"
 	maxaliens	15
 
@@ -1071,7 +1066,6 @@ mapdef forest_large_crash
 	map			"+forest"
 	params		("large_crash")
 	description	"_Forest"
-	multiplayer	false
 	size		"large"
 	maxaliens	15
 
@@ -1111,7 +1105,6 @@ mapdef forest_small
 	map			"+forest"
 	params		("small")
 	description	"_Forest"
-	multiplayer	false
 	size		"small"
 	maxaliens	6
 
@@ -1151,7 +1144,6 @@ mapdef forest_small_crash
 	map			"+forest"
 	params		("small_crash")
 	description	"_Forest"
-	multiplayer	false
 	size		"small"
 	maxaliens	6
 
@@ -1897,9 +1889,6 @@ mapdef ice_large
 	map				"+ice"
 	params			("large")
 	description		"_Frozen Landscape"
-	campaign 		true
-	singleplayer	true
-	multiplayer		false
 	maxaliens		30
 
 	aircraft
@@ -1936,9 +1925,6 @@ mapdef ice_medium
 	map				"+ice"
 	params			("medium")
 	description		"_Frozen Landscape"
-	campaign 		true
-	singleplayer	true
-	multiplayer		false
 	maxaliens		12
 
 	aircraft
@@ -1979,9 +1965,6 @@ mapdef ice_small
 	map				"+ice"
 	params			("small")
 	description		"_Frozen Landscape"
-	campaign 		true
-	singleplayer	true
-	multiplayer		false
 	maxaliens		5
 
 	aircraft
@@ -2025,7 +2008,6 @@ mapdef industrial_large
 	params			("large")
 	description		"_Industrial Site"
 	size			"large"
-	multiplayer		false
 	maxaliens		30
 	civilianteam	worker
 
@@ -2068,7 +2050,6 @@ mapdef industrial_medium
 	params			("medium")
 	description		"_Industrial Site"
 	size			"large"
-	multiplayer		false
 	maxaliens		14
 	civilianteam	worker
 
@@ -2112,7 +2093,6 @@ mapdef industrial_small
 	params			("small")
 	description		"_Industrial Site"
 	size			"small"
-	multiplayer		false
 	maxaliens		9
 	civilianteam	worker
 
@@ -2155,7 +2135,6 @@ mapdef industrial_noufo
 	params			("noufo")
 	description		"_Industrial Site"
 	size			"medium"
-	multiplayer		false
 	maxaliens		14
 	civilianteam	worker
 
@@ -2201,7 +2180,6 @@ mapdef japan_large
 	params		("large")
 	description	"_East Asian Village"
 	teams		2
-	multiplayer	false
 	gametypes (
 		fight1on1
 		fight2on2
@@ -2249,7 +2227,6 @@ mapdef japan_small
 	params		("small")
 	description	"_East Asian Village"
 	teams		2
-	multiplayer	false
 	gametypes (
 		fight1on1
 		fight2on2
@@ -2451,7 +2428,6 @@ mapdef oriental_large
 	map				"+oriental"
 	params			("large")
 	description		"_Middle Eastern Suburb"
-	multiplayer		false
 	size			"small"
 	maxaliens		30
 	civilianteam	middle
@@ -2492,7 +2468,6 @@ mapdef oriental_medium
 	map				"+oriental"
 	params			("medium")
 	description		"_Middle Eastern Suburb"
-	multiplayer		false
 	size			"small"
 	maxaliens		14
 	civilianteam	middle
@@ -2533,7 +2508,6 @@ mapdef oriental_small
 	map				"+oriental"
 	params			("small")
 	description		"_Middle Eastern Suburb"
-	multiplayer		false
 	size			"small"
 	maxaliens		9
 	civilianteam	middle
@@ -2824,7 +2798,6 @@ mapdef ufocrash
 {
 	map				"+ufocrash"
 	singleplayer	false
-	multiplayer		false
 	description		"_UFO Crash Site"
 	storyrelated	true
 	maxaliens		30
@@ -3244,7 +3217,7 @@ mapdef urban_buildings
 // VILLAGE RANDOM MAPS //
 /////////////////////////
 
-mapdef village_bungalow
+mapdef bungalow
 {
 	map				"+village"
 	params			("bungalow")
@@ -3252,9 +3225,19 @@ mapdef village_bungalow
 	size			"small"
 	maxaliens		6
 
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	)
 
 	ufos
@@ -3280,7 +3263,7 @@ mapdef village_bungalow
 	)
 }
 
-mapdef village_bungalow2
+mapdef bungalow2
 {
 	map				"+village"
 	params			("bungalow2")
@@ -3288,9 +3271,19 @@ mapdef village_bungalow2
 	size			"small"
 	maxaliens		6
 
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	)
 
 	ufos
@@ -3316,16 +3309,26 @@ mapdef village_bungalow2
 	)
 }
 
-mapdef village_estate
+mapdef estate
 {
 	map				"+village"
 	params			("estate")
 	description		"_Estate"
 	maxaliens		6
 
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	)
 
 	ufos
@@ -3356,9 +3359,16 @@ mapdef village_large
 	map				"+village"
 	params			("large")
 	description		"_Suburban City"
-	multiplayer		false
 	size			"large"
 	maxaliens		30
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -3395,9 +3405,16 @@ mapdef village_medium
 	map				"+village"
 	params			("medium")
 	description		"_Suburban City"
-	multiplayer		false
 	size			"medium"
 	maxaliens		16
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -3433,9 +3450,16 @@ mapdef village_medium_noufo
 	map				"+village"
 	params			("medium_noufo")
 	description		"_Suburban City"
-	multiplayer		false
 	size			"medium"
 	maxaliens		16
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -3471,9 +3495,16 @@ mapdef village_small
 	map				"+village"
 	params			("small")
 	description		"_Suburban City"
-	multiplayer		false
 	size			"small"
 	maxaliens		8
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -3552,6 +3583,44 @@ mapdef village_small_crash
 	)
 }
 
+mapdef small_street
+{
+	map				"+village"
+	params			("small_street")
+	description		"_Small Suburban Street"
+	maxaliens		12
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"suburban"
+		"village"
+		"rural"
+	)
+}
+
 ////////////////////
 // VILLAGE 2 MAPS //
 ////////////////////
@@ -3561,19 +3630,62 @@ mapdef vil2_sp_sml_01
 	map				"+village2"
 	params			("sp_sml_01" "sp_sml_02")
 	description		"_Village 2"
-	multiplayer		false
-	campaign		false
-	maxaliens		30
+	maxaliens		25
 
 	aircraft
 	(
 		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	)
 
 	ufos
 	(
 		craft_ufo_scout
 		craft_ufo_fighter
+	)
+
+	terrains
+	(
+		"cold"
+		"mountain"
+		"tropical"
+		"grass"
+		"coast"
+	)
+
+	cultures
+	(
+		"western"
+		"eastern"
+		"african"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
+}
+
+mapdef vil2_medium_noufo
+{
+	map				"+village2"
+	params			("medium_noufo_01" "medium_noufo_02")
+	description		"_Village 2"
+	maxaliens		25
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
 	)
 
 	terrains
@@ -3614,7 +3726,6 @@ mapdef base_initial
 	params		("initial")
 	description	"_PHALANX Base Under Attack"
 	campaign	false
-	multiplayer	false
 	maxaliens	14
 	missionbriefing		"*msgid:mission_briefing_baseattack"
 
@@ -3650,7 +3761,6 @@ mapdef base_random
 	params		("random")
 	description	"_PHALANX Base Under Attack"
 	campaign	false
-	multiplayer	false
 	maxaliens	16
 	missionbriefing		"*msgid:mission_briefing_baseattack"
 
@@ -3689,7 +3799,6 @@ mapdef cemetery_main
 	map				"+cemetery"
 	params			("main")
 	description		"_Cemetery"
-	multiplayer		false
 	maxaliens		6 //TODO: This is an arbitrary value right now.
 
 	aircraft
@@ -3731,7 +3840,6 @@ mapdef city2
 	map				"+city2"
 	params			("city2")
 	description		"_City High-Rise"
-	multiplayer		false
 	campaign		true
 	maxaliens		23
 
@@ -5302,41 +5410,7 @@ mapdef small_house
 {
 	map			"small_house"
 	description		"_Small House"
-	multiplayer		false
 	maxaliens		8
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-	)
-
-	populations
-	(
-		"suburban"
-		"village"
-		"rural"
-	)
-}
-
-// SMALL_STREET MAP //
-
-mapdef small_street
-{
-	map			"small_street"
-	description		"_Small Suburban Street"
-	multiplayer		false
-	maxaliens		6
 
 	aircraft
 	(
@@ -5678,7 +5752,6 @@ mapdef alienbase
 mapdef baseattack
 {
 	map			".baseattack"
-	multiplayer	false
 	storyrelated	true
 	description	"_PHALANX Base Under Attack"
 	maxaliens	16
@@ -5692,7 +5765,6 @@ mapdef baseattack
 mapdef rescue
 {
 	map				"+rescue"
-	multiplayer		false
 	description		"_PHALANX Craft Crash Site"
 	storyrelated	true
 	maxaliens		30

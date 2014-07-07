@@ -25,7 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cl_menu.h"
 #include "cl_shared.h"
+#include "cgame/cl_game.h"
 #include "input/cl_keys.h"
+#include "input/cl_joystick.h"
+#include "cl_video.h"
+#include "cl_language.h"
 #include "ui/ui_main.h"
 #include "ui/ui_input.h"
 #include "ui/ui_nodes.h"
@@ -87,17 +91,56 @@ static void CLMN_Mods_f (void)
 	}
 }
 
+static void CL_VideoInitMenu (void)
+{
+	uiNode_t* option = UI_GetOption(OPTION_VIDEO_RESOLUTIONS);
+	if (option != nullptr) {
+		return;
+	}
+	const int length = VID_GetModeNums();
+	for (int i = 0; i < length; i++) {
+		vidmode_t vidmode;
+		if (VID_GetModeInfo(i, &vidmode))
+			UI_AddOption(&option, va("r%ix%i", vidmode.width, vidmode.height), va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
+	}
+	UI_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
+}
+
+static void CL_TeamDefInitMenu (void)
+{
+	uiNode_t* option = UI_GetOption(OPTION_TEAMDEFS);
+	if (option != nullptr)
+		return;
+
+	for (int i = 0; i < csi.numTeamDefs; i++) {
+		const teamDef_t* td = &csi.teamDef[i];
+		if (td->team != TEAM_CIVILIAN)
+			UI_AddOption(&option, td->id, va("_%s", td->name), td->id);
+	}
+	UI_RegisterOption(OPTION_TEAMDEFS, option);
+}
+
 /**
  * @brief Initialize the menu data hunk, add cvars and commands
  * @note This function is called once
  * @sa MN_Shutdown
  * @sa CL_InitLocal
  */
-void CLMN_InitStartup (void)
+void CLMN_Init (void)
 {
 	/* print the keyBindings to mn.menuText */
 	Cmd_AddCommand("mn_init_keylist", CLMN_InitKeyList_f);
 	Cmd_AddCommand("mn_mods", CLMN_Mods_f);
 
-	UI_Init();
+	CL_TeamDefInitMenu();
+	CL_VideoInitMenu();
+	IN_JoystickInitMenu();
+	CL_LanguageInitMenu();
+	GAME_InitUIData();
+}
+
+void CLMN_Shutdown (void)
+{
+	Cmd_RemoveCommand("mn_init_keylist");
+	Cmd_RemoveCommand("mn_mods");
 }

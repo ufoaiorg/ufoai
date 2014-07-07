@@ -36,210 +36,6 @@
 }
 // brush 3
 {
-( 88 192 24 ) ( 582 350 24 ) ( 582 192 24 ) tex_common/nodraw 0 62 0 1 1 0 128 0
-( 224 192 64 ) ( 224 192 -32 ) ( 96 192 64 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 88 270 0 ) ( 88 270 20 ) ( 88 268 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 88 350 0 ) ( 582 350 24 ) ( 88 350 24 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 651 350 0 ) ( 581 192 24 ) ( 581 350 24 ) tex_common/nodraw 0 26 0 1 1 0 128 0
-}
-// brush 4
-{
-( 88 192 24 ) ( 582 350 24 ) ( 582 192 24 ) tex_common/actorclip 0 60 0 1 1 65536 0 0
-( 224 192 64 ) ( 224 192 -32 ) ( 96 192 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 88 270 0 ) ( 88 270 20 ) ( 88 268 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 88 350 0 ) ( 582 350 24 ) ( 88 350 24 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 652 350 0 ) ( 582 192 24 ) ( 582 350 24 ) tex_common/actorclip 0 22 0 1 1 65536 0 0
-}
-// brush 5
-{
-( 448 192 96 ) ( 256 192 96 ) ( 448 224 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 160 128 96 ) ( 160 160 96 ) ( 160 128 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 640 384 96 ) ( 640 384 0 ) ( 96 384 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 128 160 0 ) ( 128 160 96 ) ( 128 128 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 416 0 ) ( 640 416 0 ) ( 96 416 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-}
-// brush 6
-{
-( 448 192 96 ) ( 256 192 96 ) ( 448 224 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 192 96 ) ( 96 224 96 ) ( 96 192 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 224 192 64 ) ( 224 192 -32 ) ( 96 192 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 64 384 0 ) ( 64 384 96 ) ( 64 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 224 352 0 ) ( 96 352 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-}
-// brush 7
-{
-( 448 192 96 ) ( 256 192 96 ) ( 448 224 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 576 352 96 ) ( 576 384 96 ) ( 576 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 640 160 96 ) ( 640 160 0 ) ( 96 160 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 64 384 0 ) ( 64 384 96 ) ( 64 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 192 0 ) ( 640 192 0 ) ( 96 192 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-}
-// brush 8
-{
-( 448 192 96 ) ( 256 192 96 ) ( 448 224 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 576 352 96 ) ( 576 384 96 ) ( 576 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 640 384 96 ) ( 640 384 0 ) ( 96 384 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 512 160 0 ) ( 512 160 96 ) ( 512 128 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 416 0 ) ( 640 416 0 ) ( 96 416 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-}
-// brush 9
-{
-( 448 192 96 ) ( 256 192 96 ) ( 448 224 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 160 128 96 ) ( 160 160 96 ) ( 160 128 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 640 128 96 ) ( 640 128 0 ) ( 96 128 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 128 160 0 ) ( 128 160 96 ) ( 128 128 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 128 160 0 ) ( 672 160 0 ) ( 128 160 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-}
-// brush 10
-{
-( 448 192 96 ) ( 256 192 96 ) ( 448 224 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 576 352 96 ) ( 576 384 96 ) ( 576 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 640 128 96 ) ( 640 128 0 ) ( 96 128 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 512 160 0 ) ( 512 160 96 ) ( 512 128 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 128 160 0 ) ( 672 160 0 ) ( 128 160 96 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
-}
-// brush 11
-{
-( 448 192 96 ) ( 256 192 96 ) ( 448 224 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 576 352 96 ) ( 576 384 96 ) ( 576 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 406 352 84 ) ( 406 352 0 ) ( 404 352 84 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 64 384 0 ) ( 64 384 96 ) ( 64 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 384 0 ) ( 640 384 0 ) ( 96 384 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-}
-// brush 12
-{
-( 572 28 96 ) ( 572 544 96 ) ( 572 28 84 ) tex_common/nodraw 0 0 0 1 1 65024 128 0
-( 328 544 84 ) ( 328 28 84 ) ( 572 544 84 ) tex_common/nodraw 0 0 0 1 1 65024 128 0
-( 78 544 80 ) ( 78 544 92 ) ( 78 28 80 ) tex_common/nodraw 0 0 0 1 1 65024 128 0
-( 64 356 84 ) ( 64 270 96 ) ( -64 356 84 ) tex_common/nodraw 0 0 0 1 1 65024 128 0
-( 64 270 96 ) ( 64 178 84 ) ( -64 270 96 ) tex_common/nodraw 0 0 0 1 1 65024 128 0
-}
-// brush 13
-{
-( 90.75 366.5 84 ) ( 79 270 84 ) ( 73 270 84 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 104 188 0 ) ( 75 156 48.5 ) ( 104 188 84 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 104 188 84 ) ( 79 270 84 ) ( 104 188 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 65 270 0 ) ( 79 270 84 ) ( 47.5 270 37.125 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 47.5 270 37.125 ) ( 75 156 48.5 ) ( 65 270 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 73 270 84 ) ( 75 156 48.5 ) ( 47.5 270 37.125 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-}
-// brush 14
-{
-( 90.75 366.5 84 ) ( 79 270 84 ) ( 73 270 84 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 558 348 84 ) ( 558 380 42 ) ( 558 348 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 406 352 84 ) ( 406 352 0 ) ( 404 352 84 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 104 352 0 ) ( 75 384 42 ) ( 104 352 84 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 558 362 0 ) ( 75 384 42 ) ( 104 362 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 558 362 84 ) ( 75 384 42 ) ( 558 384 42 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-}
-// brush 15
-{
-( 90.75 366.5 84 ) ( 79 270 84 ) ( 73 270 84 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 104 188 84 ) ( 75 156 42 ) ( 104 188 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 257 188 84 ) ( 257 188 0 ) ( 259 188 84 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 559 198 0 ) ( 559 166 42 ) ( 559 198 84 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 559 178 0 ) ( 76 156 42 ) ( 559 156 42 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 559 178 84 ) ( 76 156 42 ) ( 105 178 84 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-}
-// brush 16
-{
-( 90.75 366.5 84 ) ( 79 270 84 ) ( 73 270 84 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 104 352 84 ) ( 75 384 48.5 ) ( 104 352 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 104 352 0 ) ( 79 270 84 ) ( 104 352 84 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 47.5 270 37.125 ) ( 79 270 84 ) ( 65 270 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 92.125 365 0 ) ( 75 384 48.5 ) ( 65 270 0 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 47.5 270 37.125 ) ( 75 384 48.5 ) ( 73 270 84 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-}
-// brush 17
-{
-( 90.75 366.5 84 ) ( 79 270 84 ) ( 73 270 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 104 188 84 ) ( 75 156 42 ) ( 104 188 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 257 188 84 ) ( 257 188 0 ) ( 259 188 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 559 198 0 ) ( 559 166 42 ) ( 559 198 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 559 178 0 ) ( 76 156 42 ) ( 559 156 42 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 559 178 84 ) ( 76 156 42 ) ( 105 178 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-}
-// brush 18
-{
-( 572 28 96 ) ( 572 544 96 ) ( 572 28 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 328 544 84 ) ( 328 28 84 ) ( 572 544 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 78 544 80 ) ( 78 544 92 ) ( 78 28 80 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 64 356 84 ) ( 64 270 96 ) ( -64 356 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 64 270 96 ) ( 64 178 84 ) ( -64 270 96 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-}
-// brush 19
-{
-( 90.75 366.5 84 ) ( 79 270 84 ) ( 73 270 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 104 188 0 ) ( 75 156 48.5 ) ( 104 188 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 104 188 84 ) ( 79 270 84 ) ( 104 188 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 65 270 0 ) ( 79 270 84 ) ( 47.5 270 37.125 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 47.5 270 37.125 ) ( 75 156 48.5 ) ( 65 270 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 73 270 84 ) ( 75 156 48.5 ) ( 47.5 270 37.125 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-}
-// brush 20
-{
-( 90.75 366.5 84 ) ( 79 270 84 ) ( 73 270 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 558 348 84 ) ( 558 380 42 ) ( 558 348 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 406 352 84 ) ( 406 352 0 ) ( 404 352 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 104 352 0 ) ( 75 384 42 ) ( 104 352 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 558 362 0 ) ( 75 384 42 ) ( 104 362 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 558 362 84 ) ( 75 384 42 ) ( 558 384 42 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-}
-// brush 21
-{
-( 90.75 366.5 84 ) ( 79 270 84 ) ( 73 270 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 104 352 84 ) ( 75 384 48.5 ) ( 104 352 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 104 352 0 ) ( 79 270 84 ) ( 104 352 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 47.5 270 37.125 ) ( 79 270 84 ) ( 65 270 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 92.125 365 0 ) ( 75 384 48.5 ) ( 65 270 0 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-( 47.5 270 37.125 ) ( 75 384 48.5 ) ( 73 270 84 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
-}
-// brush 22
-{
-( 448 192 96 ) ( 256 192 96 ) ( 448 224 96 ) tex_common/actorclip 0 32 0 1 1 65536 0 0
-( 416 192 64 ) ( 416 224 64 ) ( 416 192 32 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 224 192 64 ) ( 224 192 -32 ) ( 96 192 64 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/actorclip 0 32 0 1 1 65536 0 0
-( 352 224 32 ) ( 352 224 64 ) ( 352 192 32 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 256 224 32 ) ( 448 224 32 ) ( 256 224 64 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
-}
-// brush 23
-{
-( 448 192 96 ) ( 256 192 96 ) ( 448 224 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 448 320 64 ) ( 448 352 64 ) ( 448 320 32 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 448 320 64 ) ( 448 320 32 ) ( 256 320 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 192 352 32 ) ( 192 352 64 ) ( 192 320 32 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 224 352 0 ) ( 96 352 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-}
-// brush 24
-{
-( 448 192 96 ) ( 256 192 96 ) ( 448 224 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 320 192 64 ) ( 320 224 64 ) ( 320 192 32 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 224 192 64 ) ( 224 192 -32 ) ( 96 192 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 256 224 32 ) ( 256 224 64 ) ( 256 192 32 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 256 224 32 ) ( 448 224 32 ) ( 256 224 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-}
-// brush 25
-{
 ( 320 376 2 ) ( 320 352 2 ) ( 400 352 2 ) tex_common/nodraw 0 0 0 0.12 0.12 65280 128 0
 ( 346 492 -178 ) ( 251 482 14 ) ( 336 587 14 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 0 0
 ( 117 536 -174 ) ( 200 488 18 ) ( 69 454 18 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 0 0
@@ -253,190 +49,1514 @@
 ( 212 423 18 ) ( 199 470 18 ) ( 202 445 2 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 0 0
 ( 154 435 42 ) ( 141 464 36 ) ( 170 454 40 ) tex_nature/pjrock16 0 0 0 0.06 0.06 65280 0 0
 }
+// brush 4
+{
+( 128 303 40 ) ( 128 300 40 ) ( 0 303 40 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 226 192 36 ) ( 473 165 36 ) ( 473 192 36 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 593 318 36 ) ( 593 318 40 ) ( 593 157 36 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 5
+{
+( 616 285 21 ) ( 105 191 21 ) ( 105 285 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 616 285 21 ) ( 608 192 4 ) ( 616 191 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 616 191 21 ) ( 116 192 4 ) ( 105 191 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 608 192 4 ) ( 116 283 4 ) ( 116 192 4 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 116 192 4 ) ( 105 285 21 ) ( 105 191 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 105 285 21 ) ( 608 283 4 ) ( 616 285 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 105 238 21 ) ( 120 191 21 ) ( 128 192 4 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 128 283 4 ) ( 120 285 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 6
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 593 320 91 ) ( 593 301 91 ) ( 616 320 91 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+}
+// brush 7
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 0 157 88 ) ( 128 154 88 ) ( 128 157 88 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 593 318 36 ) ( 593 318 40 ) ( 593 157 36 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 603 240 -64 ) ( 603 236 -64 ) ( 603 240 64 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+}
+// brush 8
+{
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 226 192 36 ) ( 473 165 36 ) ( 473 192 36 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 164 320 36 ) ( 133 157 74 ) ( 133 320 74 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+}
+// brush 9
+{
+( 128 303 40 ) ( 128 300 40 ) ( 0 303 40 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 226 192 36 ) ( 473 165 36 ) ( 473 192 36 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 593 318 36 ) ( 593 318 40 ) ( 593 157 36 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 10
+{
+( 616 285 21 ) ( 105 191 21 ) ( 105 285 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 616 285 21 ) ( 608 192 4 ) ( 616 191 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 616 191 21 ) ( 116 192 4 ) ( 105 191 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 608 192 4 ) ( 116 283 4 ) ( 116 192 4 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 116 192 4 ) ( 105 285 21 ) ( 105 191 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 105 285 21 ) ( 608 283 4 ) ( 616 285 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 105 238 21 ) ( 120 191 21 ) ( 128 192 4 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 128 283 4 ) ( 120 285 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 11
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 593 320 91 ) ( 593 301 91 ) ( 616 320 91 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+}
+// brush 12
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 0 157 88 ) ( 128 154 88 ) ( 128 157 88 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 593 318 36 ) ( 593 318 40 ) ( 593 157 36 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 603 240 -64 ) ( 603 236 -64 ) ( 603 240 64 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+}
+// brush 13
+{
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 226 192 36 ) ( 473 165 36 ) ( 473 192 36 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 164 320 36 ) ( 133 157 74 ) ( 133 320 74 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+}
+// brush 14
+{
+( 128 303 40 ) ( 128 300 40 ) ( 0 303 40 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 226 192 36 ) ( 473 165 36 ) ( 473 192 36 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 593 318 36 ) ( 593 318 40 ) ( 593 157 36 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 15
+{
+( 616 285 21 ) ( 105 191 21 ) ( 105 285 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 616 285 21 ) ( 608 192 4 ) ( 616 191 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 616 191 21 ) ( 116 192 4 ) ( 105 191 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 608 192 4 ) ( 116 283 4 ) ( 116 192 4 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 116 192 4 ) ( 105 285 21 ) ( 105 191 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 105 285 21 ) ( 608 283 4 ) ( 616 285 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 105 238 21 ) ( 120 191 21 ) ( 128 192 4 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 128 283 4 ) ( 120 285 21 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 16
+{
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/actorclip 0 0 0 0.2 0.2 130816 0 0
+( 226 192 36 ) ( 473 165 36 ) ( 473 192 36 ) tex_common/actorclip 0 32 0 0.2 0.2 130816 0 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/actorclip 32 0 0 0.2 0.2 130816 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/actorclip 0 0 0 0.2 0.2 130816 0 0
+( 164 320 36 ) ( 133 157 74 ) ( 133 320 74 ) tex_common/actorclip 32 0 0 0.2 0.2 130816 0 0
+}
+// brush 17
+{
+( 160 -32 114 ) ( 160 512 114 ) ( 192 -32 114 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( 480 160 82 ) ( 480 192 82 ) ( 480 160 50 ) tex_common/actorclip 32 0 0 1 1 130816 0 0
+( 128 160 82 ) ( 160 160 82 ) ( 128 160 50 ) tex_common/actorclip 0 0 0 1 1 130816 0 0
+( 352 672 18 ) ( -160 672 18 ) ( 352 -96 18 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( 224 192 50 ) ( 224 192 82 ) ( 224 160 50 ) tex_common/actorclip 32 0 0 1 1 130816 0 0
+( 96 192 18 ) ( 640 192 18 ) ( 96 192 114 ) tex_common/actorclip 0 0 0 1 1 130816 0 0
+}
+// brush 18
+{
+( 160 -32 114 ) ( 160 512 114 ) ( 192 -32 114 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( 128 160 82 ) ( 160 160 82 ) ( 128 160 50 ) tex_common/actorclip 0 0 0 1 1 130816 0 0
+( 128 160 82 ) ( 128 160 50 ) ( 128 352 82 ) tex_common/actorclip 32 0 0 1 1 130816 0 0
+( 352 672 18 ) ( -160 672 18 ) ( 352 -96 18 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/actorclip 0 0 0 1 1 130816 0 0
+( 160 544 18 ) ( 160 0 18 ) ( 160 544 114 ) tex_common/actorclip 32 0 0 1 1 130816 0 0
+}
 }
 // entity 1
-{
-"classname" "misc_model"
-"origin" "396 270 30"
-"model" "models/aircraft/drop_herakles/herakles_top.md2"
-"angles" "0 -180 0"
-"spawnflags" "254"
-}
-// entity 2
-{
-"classname" "info_human_start"
-"origin" "432 304 51"
-}
-// entity 3
-{
-"classname" "info_human_start"
-"origin" "432 240 51"
-}
-// entity 4
-{
-"classname" "info_human_start"
-"origin" "304 304 51"
-}
-// entity 5
-{
-"classname" "info_human_start"
-"origin" "304 240 51"
-}
-// entity 6
-{
-"classname" "info_human_start"
-"origin" "400 304 51"
-}
-// entity 7
-{
-"classname" "info_human_start"
-"origin" "400 240 51"
-}
-// entity 8
-{
-"classname" "info_human_start"
-"origin" "336 304 51"
-}
-// entity 9
-{
-"classname" "info_human_start"
-"origin" "336 240 51"
-}
-// entity 10
-{
-"classname" "misc_model"
-"origin" "314 270 44"
-"model" "models/aircraft/drop_herakles/herakles_int.md2"
-"spawnflags" "255"
-}
-// entity 11
-{
-"classname" "misc_model"
-"origin" "314 270 44"
-"model" "models/aircraft/drop_herakles/herakles_int_top.md2"
-"spawnflags" "254"
-}
-// entity 12
-{
-"classname" "misc_model"
-"origin" "314 270 44"
-"model" "models/aircraft/drop_herakles/seats.md2"
-"spawnflags" "1"
-}
-// entity 13
-{
-"classname" "misc_model"
-"origin" "314 270 44"
-"model" "models/aircraft/drop_herakles/seats_2.md2"
-"spawnflags" "1"
-}
-// entity 14
-{
-"classname" "misc_model"
-"origin" "314 270 44"
-"model" "models/aircraft/drop_herakles/herakles_pod_back.md2"
-"spawnflags" "255"
-}
-// entity 15
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/bush/bush01.md2"
 "origin" "398 80 18"
 }
-// entity 16
+// entity 2
 {
 "classname" "misc_model"
 "origin" "112 72 8"
 "model" "models/objects/vegi/tropic/tropic02.md2"
 "spawnflags" "255"
 }
-// entity 17
+// entity 3
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "680 408 12"
 }
-// entity 18
+// entity 4
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "628 436 12"
 }
-// entity 19
+// entity 5
 {
 "classname" "misc_model"
 "origin" "638 414 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"
 }
-// entity 20
-{
-"classname" "trigger_rescue"
-"team" "1"
-// brush 0
-{
-( 224 192 64 ) ( 96 192 64 ) ( 224 352 64 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
-( 608 160 96 ) ( 608 320 96 ) ( 608 160 0 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
-( 224 192 64 ) ( 224 192 -32 ) ( 96 192 64 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
-( 96 352 0 ) ( 96 192 0 ) ( 224 352 0 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
-( 96 352 0 ) ( 96 352 96 ) ( 96 192 0 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
-( 96 352 0 ) ( 224 352 0 ) ( 96 352 96 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
-}
-}
-// entity 21
+// entity 6
 {
 "classname" "misc_sound"
-"origin" "384 128 32"
+"origin" "384 224 160"
 "noise" "ambience/ufo_night_atm"
 "attenuation" "0.1"
 "volume" "0.01"
 }
-// entity 22
+// entity 7
+{
+"classname" "misc_model"
+"model" "models/aircraft/drop_herakles/herakles_int.md2"
+"origin" "346 238 62"
+"spawnflags" "255"
+}
+// entity 8
+{
+"classname" "misc_model"
+"model" "models/aircraft/drop_herakles/herakles_int_top.md2"
+"origin" "346 238 62"
+"spawnflags" "254"
+}
+// entity 9
+{
+"classname" "misc_model"
+"model" "models/aircraft/drop_herakles/seats.md2"
+"origin" "346 238 62"
+"spawnflags" "3"
+}
+// entity 10
+{
+"classname" "misc_model"
+"model" "models/aircraft/drop_herakles/herakles_pod_back.md2"
+"origin" "346 238 62"
+"spawnflags" "255"
+"modelscale_vec" "1 0.95 1"
+}
+// entity 11
+{
+"classname" "func_group"
+// brush 0
+{
+( 188 354 64 ) ( 188 360 60 ) ( 188 333 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 152 377 21 ) ( 152 360 60 ) ( 152 333 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 561 122 64 ) ( 597 116 60 ) ( 561 116 60 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 597 99 21 ) ( 561 116 60 ) ( 597 116 60 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( -288 122 64 ) ( -160 143 21 ) ( -160 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 1
+{
+( 597 143 21 ) ( 597 116 60 ) ( 597 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 561 143 21 ) ( 561 116 60 ) ( 561 99 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 152 360 60 ) ( 188 360 60 ) ( 152 354 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 188 360 60 ) ( 152 360 60 ) ( 188 377 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( -569 354 64 ) ( -569 333 21 ) ( -697 354 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 2
+{
+( 188 354 64 ) ( 188 360 60 ) ( 188 333 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 152 377 21 ) ( 152 360 60 ) ( 152 333 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 152 360 60 ) ( 188 360 60 ) ( 152 354 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 188 360 60 ) ( 152 360 60 ) ( 188 377 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( -569 354 64 ) ( -569 333 21 ) ( -697 354 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 3
+{
+( 597 143 21 ) ( 597 116 60 ) ( 597 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 561 143 21 ) ( 561 116 60 ) ( 561 99 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 561 122 64 ) ( 597 116 60 ) ( 561 116 60 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 597 99 21 ) ( 561 116 60 ) ( 597 116 60 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( -288 122 64 ) ( -160 143 21 ) ( -160 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 4
+{
+( 718 156 4 ) ( 709 156 7 ) ( 709 156 11 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 709 157 7 ) ( 616 318 34 ) ( 616 157 34 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 709 319 11 ) ( 709 319 7 ) ( 718 319 4 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 709 157 11 ) ( 616 157 40 ) ( 616 318 40 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 616 157 34 ) ( 616 318 40 ) ( 616 157 40 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 709 316 7 ) ( 709 158 11 ) ( 709 316 11 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 5
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( 672 352 50 ) ( 672 352 -46 ) ( 128 352 50 ) tex_common/actorclip 0 0 0 1 1 130816 0 0
+( -202 721 0 ) ( -275 721 0 ) ( -207 716 0 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( 128 352 -64 ) ( 160 384 -64 ) ( 128 352 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 160 384 -64 ) ( 192 352 -64 ) ( 160 384 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+}
+// brush 6
+{
+( 160 -32 114 ) ( 160 512 114 ) ( 192 -32 114 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( 480 160 82 ) ( 480 192 82 ) ( 480 160 50 ) tex_common/actorclip 32 0 0 1 1 130816 0 0
+( 227 288 36 ) ( 474 288 41 ) ( 474 288 36 ) tex_common/actorclip 0 0 0 1 1 130816 0 0
+( 352 672 18 ) ( -160 672 18 ) ( 352 -96 18 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( 224 192 50 ) ( 224 192 82 ) ( 224 160 50 ) tex_common/actorclip 32 0 0 1 1 130816 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/actorclip 0 0 0 1 1 130816 0 0
+}
+// brush 7
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( 672 352 50 ) ( 672 352 -46 ) ( 128 352 50 ) tex_common/actorclip 0 0 0 1 1 130816 0 0
+( -202 721 0 ) ( -275 721 0 ) ( -207 716 0 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( 544 352 -64 ) ( 576 384 -64 ) ( 544 352 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 576 384 -64 ) ( 608 352 -64 ) ( 576 384 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+}
+// brush 8
+{
+( 120 318 36 ) ( 613 160 36 ) ( 120 160 36 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 9
+{
+( 718 156 4 ) ( 709 156 7 ) ( 709 156 11 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 718 158 4 ) ( 709 316 7 ) ( 709 158 7 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 709 319 11 ) ( 709 319 7 ) ( 718 319 4 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 709 160 11 ) ( 718 318 4 ) ( 718 160 4 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 709 158 11 ) ( 709 158 7 ) ( 709 316 7 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 10
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 142 320 102 ) ( 618 320 21 ) ( 142 320 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 354 64 ) ( 101 354 64 ) ( 133 333 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 612 354 64 ) ( 612 334 102 ) ( 127.75 334 102 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 603 240 -64 ) ( 603 236 -64 ) ( 603 240 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 11
+{
+( 618 142 102 ) ( 618 238 123 ) ( 618 334 102 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 110 142 102 ) ( 612 334 102 ) ( 110 334 102 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 130 334 108 ) ( 133 238 123 ) ( 107 238 123 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 130 142 108 ) ( 107 238 123 ) ( 133 238 123 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 612 142 102 ) ( 110 142 108 ) ( 612 142 108 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 612 334 102 ) ( 612 334 108 ) ( 110 334 108 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 12
+{
+( 323 157 102 ) ( 323 157 18 ) ( 325 157 102 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 143 21 ) ( 101 122 64 ) ( 133 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 128 303 40 ) ( 128 300 40 ) ( 0 303 40 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 13
+{
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 142 320 102 ) ( 618 320 21 ) ( 142 320 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 354 64 ) ( 101 354 64 ) ( 133 333 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 128 303 40 ) ( 128 300 40 ) ( 0 303 40 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 14
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 142 320 102 ) ( 618 320 21 ) ( 142 320 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 612 354 64 ) ( 612 334 102 ) ( 127.75 334 102 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 0 157 88 ) ( 128 154 88 ) ( 128 157 88 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 15
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 323 157 102 ) ( 323 157 18 ) ( 325 157 102 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 130 142 102 ) ( 612 122 64 ) ( 116 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 0 157 88 ) ( 128 154 88 ) ( 128 157 88 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 16
+{
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 622 320 40 ) ( 599 336 64 ) ( 622 336 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 354 64 ) ( 101 354 64 ) ( 133 333 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 0 303 40 ) ( 128 300 40 ) ( 128 303 40 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 17
+{
+( 599 157 40 ) ( 622 140 64 ) ( 599 140 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 143 21 ) ( 101 122 64 ) ( 133 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 0 303 40 ) ( 128 300 40 ) ( 128 303 40 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 18
+{
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 599 320 88 ) ( 622 336 64 ) ( 599 336 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 612 354 64 ) ( 612 334 102 ) ( 127.75 334 102 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 128 157 88 ) ( 128 154 88 ) ( 0 157 88 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 19
+{
+( 622 157 88 ) ( 599 140 64 ) ( 622 140 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 130 142 102 ) ( 612 122 64 ) ( 116 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 128 157 88 ) ( 128 154 88 ) ( 0 157 88 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 20
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 323 157 102 ) ( 323 157 18 ) ( 325 157 102 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 143 21 ) ( 101 122 64 ) ( 133 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 130 142 102 ) ( 612 122 64 ) ( 116 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 603 240 -64 ) ( 603 236 -64 ) ( 603 240 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 21
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( -202 721 0 ) ( -275 721 0 ) ( -207 716 0 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( 128 128 -50 ) ( 672 128 -50 ) ( 128 128 46 ) tex_common/actorclip 0 0 0 1 1 130816 0 0
+( 128 128 64 ) ( 160 96 -64 ) ( 128 128 -64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 160 96 64 ) ( 192 128 -64 ) ( 160 96 -64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+}
+// brush 22
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( -202 721 0 ) ( -275 721 0 ) ( -207 716 0 ) tex_common/actorclip 0 32 0 1 1 130816 0 0
+( 128 128 -50 ) ( 672 128 -50 ) ( 128 128 46 ) tex_common/actorclip 32 0 0 1 1 130816 0 0
+( 544 128 64 ) ( 576 96 -64 ) ( 544 128 -64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 576 96 64 ) ( 608 128 -64 ) ( 576 96 -64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+}
+}
+// entity 12
+{
+"classname" "trigger_rescue"
+"team" "1"
+"spawnflags" "255"
+// brush 0
+{
+( 576 160 98 ) ( 448 160 98 ) ( 576 320 98 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
+( 576 160 114 ) ( 576 320 114 ) ( 576 160 18 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
+( 128 160 82 ) ( 160 160 82 ) ( 128 160 50 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
+( 226 192 36 ) ( 473 165 36 ) ( 473 192 36 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 0 0
+( 160 64 10 ) ( 160 64 106 ) ( 160 32 10 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
+}
+}
+// entity 13
 {
 "classname" "info_human_start"
-"origin" "368 304 51"
+"origin" "432 272 60"
+}
+// entity 14
+{
+"classname" "info_human_start"
+"origin" "432 208 60"
+}
+// entity 15
+{
+"classname" "info_human_start"
+"origin" "368 208 60"
+}
+// entity 16
+{
+"classname" "info_human_start"
+"origin" "368 272 60"
+}
+// entity 17
+{
+"classname" "info_human_start"
+"origin" "400 208 60"
+}
+// entity 18
+{
+"classname" "info_human_start"
+"origin" "400 272 60"
+}
+// entity 19
+{
+"classname" "info_human_start"
+"origin" "336 208 60"
+}
+// entity 20
+{
+"classname" "info_human_start"
+"origin" "336 272 60"
+}
+// entity 21
+{
+"classname" "misc_model"
+"model" "models/aircraft/drop_herakles/seats.md2"
+"origin" "352 241 62"
+"spawnflags" "3"
+"angles" "0 -180 0"
+}
+// entity 22
+{
+"classname" "func_group"
+// brush 0
+{
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 130 142 108 ) ( 101 122 64 ) ( 76 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 64 ) ( 101 122 64 ) ( 130 142 108 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 64 ) ( 133 142 108 ) ( 130 142 108 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 1
+{
+( 130 142 108 ) ( 107 238 123 ) ( 133 238 123 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 123 ) ( 130 142 108 ) ( 133 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 76 238 64 ) ( 130 142 108 ) ( 133 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 2
+{
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 142 108 ) ( 101 122 64 ) ( 130 142 108 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 130 142 108 ) ( 101 122 64 ) ( 133 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 64 ) ( 133 142 108 ) ( 130 142 108 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 3
+{
+( 130 142 108 ) ( 107 238 123 ) ( 133 238 123 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 76 238 64 ) ( 107 238 123 ) ( 130 142 108 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 105 238 21 ) ( 133 238 64 ) ( 76 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 64 ) ( 130 142 108 ) ( 133 238 123 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 76 238 64 ) ( 130 142 108 ) ( 133 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
 }
 // entity 23
 {
-"classname" "info_human_start"
-"origin" "368 240 51"
+"classname" "func_group"
+// brush 0
+{
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 130 334 108 ) ( 76 238 64 ) ( 101 354 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 64 ) ( 130 334 108 ) ( 101 354 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 64 ) ( 130 334 108 ) ( 133 334 108 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 1
+{
+( 130 334 108 ) ( 133 238 123 ) ( 107 238 123 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 130 334 108 ) ( 133 238 123 ) ( 133 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 130 334 108 ) ( 76 238 64 ) ( 133 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 2
+{
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 354 64 ) ( 130 334 108 ) ( 101 354 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 130 334 108 ) ( 133 238 64 ) ( 101 354 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 64 ) ( 130 334 108 ) ( 133 334 108 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 3
+{
+( 130 334 108 ) ( 133 238 123 ) ( 107 238 123 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 76 238 64 ) ( 130 334 108 ) ( 107 238 123 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 76 238 64 ) ( 133 238 64 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 123 ) ( 130 334 108 ) ( 133 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 130 334 108 ) ( 76 238 64 ) ( 133 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
 }
 // entity 24
 {
-"classname" "info_human_start"
-"origin" "272 304 51"
+"classname" "func_group"
+// brush 0
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 76 238 64 ) ( 132 333 21 ) ( 101 354 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 64 ) ( 101 354 64 ) ( 132 333 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 333 21 ) ( 133 238 64 ) ( 133 333 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 1
+{
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 333 21 ) ( 133 238 64 ) ( 133 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 333 21 ) ( 133 238 64 ) ( 76 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 2
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 354 64 ) ( 101 354 64 ) ( 133 333 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 101 354 64 ) ( 133 238 64 ) ( 132 333 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 333 21 ) ( 133 238 64 ) ( 133 333 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 3
+{
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 333 21 ) ( 76 238 64 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 76 238 64 ) ( 133 238 64 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 64 ) ( 132 333 21 ) ( 133 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 333 21 ) ( 133 238 64 ) ( 76 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
 }
 // entity 25
 {
-"classname" "info_human_start"
-"origin" "272 240 51"
+"classname" "func_group"
+// brush 0
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 101 122 64 ) ( 132 143 21 ) ( 76 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 143 21 ) ( 101 122 64 ) ( 133 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 143 21 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 1
+{
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 21 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 76 238 64 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 2
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 143 21 ) ( 101 122 64 ) ( 133 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 132 143 21 ) ( 133 238 64 ) ( 101 122 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 143 21 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
+// brush 3
+{
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 105 238 21 ) ( 76 238 64 ) ( 132 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 105 238 21 ) ( 133 238 64 ) ( 76 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 133 238 21 ) ( 132 143 21 ) ( 133 238 64 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+( 76 238 64 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/nodraw 0 0 0 0.5 0.5 0 128 0
+}
 }
 // entity 26
 {
-"classname" "info_2x2_start"
-"origin" "480 320 51"
-"team" "1"
+"classname" "func_group"
+// brush 0
+{
+( 229 161 92 ) ( 473 168 92 ) ( 473 161 92 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 471 319 92 ) ( 471 312 64 ) ( 471 312 92 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 227 312 64 ) ( 227 319 92 ) ( 227 306 68 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 471 306 68 ) ( 227 312 64 ) ( 227 306 68 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 227 312 64 ) ( 471 319 92 ) ( 227 319 92 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 471 312 92 ) ( 227 306 68 ) ( 227 312 92 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+}
+// brush 1
+{
+( 474 288 36 ) ( 474 315 41 ) ( 474 315 36 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 227 288 36 ) ( 474 288 41 ) ( 474 288 36 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 226 192 36 ) ( 473 165 36 ) ( 473 192 36 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 227 312 64 ) ( 227 319 92 ) ( 227 306 68 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 474 315 36 ) ( 227 315 41 ) ( 227 315 36 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 226 165 41 ) ( 473 192 41 ) ( 473 165 41 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+}
+// brush 2
+{
+( 469 288 41 ) ( 469 309 52 ) ( 469 309 41 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 227 288 36 ) ( 474 288 41 ) ( 474 288 36 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 227 312 64 ) ( 227 319 92 ) ( 227 306 68 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 469 309 41 ) ( 227 309 52 ) ( 227 309 41 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 231 192 41 ) ( 473 171 41 ) ( 473 192 41 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 473 171 52 ) ( 231 192 52 ) ( 473 192 52 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+}
+// brush 3
+{
+( 463 293 52 ) ( 463 304 55 ) ( 463 304 52 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 463 293 55 ) ( 235 293 52 ) ( 235 293 55 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 235 293 55 ) ( 235 304 52 ) ( 235 304 55 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 463 304 52 ) ( 235 304 55 ) ( 235 304 52 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 237 187 52 ) ( 465 176 52 ) ( 465 187 52 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 465 176 55 ) ( 237 187 55 ) ( 465 187 55 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+}
+// brush 4
+{
+( 471 319 92 ) ( 471 312 64 ) ( 471 312 92 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 471 285 68 ) ( 227 285 55 ) ( 227 285 68 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 227 312 64 ) ( 227 319 92 ) ( 227 306 68 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 473 196 55 ) ( 229 168 55 ) ( 473 168 55 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 227 306 68 ) ( 471 312 64 ) ( 471 306 68 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 227 312 55 ) ( 471 312 64 ) ( 227 312 64 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( -207 716 68 ) ( -275 721 68 ) ( -202 721 68 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 128 289 68 ) ( 128 284 61 ) ( 0 289 68 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 128 284 58 ) ( 128 287 55 ) ( 0 284 58 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+}
+// brush 5
+{
+( 469 288 41 ) ( 469 309 52 ) ( 469 309 41 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 227 288 36 ) ( 474 288 41 ) ( 474 288 36 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 227 312 64 ) ( 227 319 92 ) ( 227 306 68 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 469 309 41 ) ( 227 309 52 ) ( 227 309 41 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 231 192 41 ) ( 473 171 41 ) ( 473 192 41 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 473 171 52 ) ( 231 192 52 ) ( 473 192 52 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+}
+// brush 6
+{
+( 463 293 52 ) ( 463 304 55 ) ( 463 304 52 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 463 293 55 ) ( 235 293 52 ) ( 235 293 55 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 235 293 55 ) ( 235 304 52 ) ( 235 304 55 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 463 304 52 ) ( 235 304 55 ) ( 235 304 52 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 237 187 52 ) ( 465 176 52 ) ( 465 187 52 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 465 176 55 ) ( 237 187 55 ) ( 465 187 55 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+}
+// brush 7
+{
+( 471 319 92 ) ( 471 312 64 ) ( 471 312 92 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 471 285 68 ) ( 227 285 55 ) ( 227 285 68 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 227 312 64 ) ( 227 319 92 ) ( 227 306 68 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 473 196 55 ) ( 229 168 55 ) ( 473 168 55 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 227 306 68 ) ( 471 312 64 ) ( 471 306 68 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 227 312 55 ) ( 471 312 64 ) ( 227 312 64 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( -207 716 68 ) ( -275 721 68 ) ( -202 721 68 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 128 289 68 ) ( 128 284 61 ) ( 0 289 68 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 128 284 58 ) ( 128 287 55 ) ( 0 284 58 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+}
+// brush 8
+{
+( 474 288 36 ) ( 474 315 41 ) ( 474 315 36 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 227 288 36 ) ( 474 288 41 ) ( 474 288 36 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 226 192 36 ) ( 473 165 36 ) ( 473 192 36 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 227 312 64 ) ( 227 319 92 ) ( 227 306 68 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 474 315 36 ) ( 227 315 41 ) ( 227 315 36 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 226 165 41 ) ( 473 192 41 ) ( 473 165 41 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+}
+// brush 9
+{
+( 229 161 92 ) ( 473 168 92 ) ( 473 161 92 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 471 319 92 ) ( 471 312 64 ) ( 471 312 92 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 227 312 64 ) ( 227 319 92 ) ( 227 306 68 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 471 306 68 ) ( 227 312 64 ) ( 227 306 68 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 227 312 64 ) ( 471 319 92 ) ( 227 319 92 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 471 312 92 ) ( 227 306 68 ) ( 227 312 92 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+}
 }
 // entity 27
 {
-"classname" "info_2x2_start"
-"origin" "480 224 51"
-"team" "1"
+"classname" "func_group"
+// brush 0
+{
+( 229 161 92 ) ( 473 168 92 ) ( 473 161 92 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 229 161 92 ) ( 229 168 64 ) ( 229 168 92 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 473 168 64 ) ( 473 161 92 ) ( 473 174 68 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 229 174 68 ) ( 473 168 64 ) ( 473 174 68 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 473 168 64 ) ( 229 161 92 ) ( 473 161 92 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 229 168 92 ) ( 473 174 68 ) ( 473 168 92 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+}
+// brush 1
+{
+( 226 192 36 ) ( 226 165 41 ) ( 226 165 36 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 96 192 18 ) ( 640 192 18 ) ( 96 192 114 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 226 192 36 ) ( 473 165 36 ) ( 473 192 36 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 473 168 64 ) ( 473 161 92 ) ( 473 174 68 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 226 165 36 ) ( 473 165 41 ) ( 473 165 36 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 226 165 41 ) ( 473 192 41 ) ( 473 165 41 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+}
+// brush 2
+{
+( 231 192 41 ) ( 231 171 52 ) ( 231 171 41 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 96 192 18 ) ( 640 192 18 ) ( 96 192 114 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 473 168 64 ) ( 473 161 92 ) ( 473 174 68 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 231 171 41 ) ( 473 171 52 ) ( 473 171 41 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 231 192 41 ) ( 473 171 41 ) ( 473 192 41 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 473 171 52 ) ( 231 192 52 ) ( 473 192 52 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+}
+// brush 3
+{
+( 237 187 52 ) ( 237 176 55 ) ( 237 176 52 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 237 187 55 ) ( 465 187 52 ) ( 465 187 55 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 465 187 55 ) ( 465 176 52 ) ( 465 176 55 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 237 176 52 ) ( 465 176 55 ) ( 465 176 52 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 237 187 52 ) ( 465 176 52 ) ( 465 187 52 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 465 176 55 ) ( 237 187 55 ) ( 465 187 55 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+}
+// brush 4
+{
+( 229 161 92 ) ( 229 168 64 ) ( 229 168 92 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 229 195 68 ) ( 473 195 55 ) ( 473 195 68 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 473 168 64 ) ( 473 161 92 ) ( 473 174 68 ) tex_common/nodraw 32 0 0 0.2 0.2 0 128 0
+( 473 196 55 ) ( 229 168 55 ) ( 473 168 55 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 473 174 68 ) ( 229 168 64 ) ( 229 174 68 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 473 168 55 ) ( 229 168 64 ) ( 473 168 64 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( -207 716 68 ) ( -275 721 68 ) ( -202 721 68 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+( 572 191 68 ) ( 572 196 61 ) ( 700 191 68 ) tex_common/nodraw 0 0 0 0.2 0.2 0 128 0
+( 572 196 58 ) ( 572 193 55 ) ( 700 196 58 ) tex_common/nodraw 0 32 0 0.2 0.2 0 128 0
+}
+// brush 5
+{
+( 231 192 41 ) ( 231 171 52 ) ( 231 171 41 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 96 192 18 ) ( 640 192 18 ) ( 96 192 114 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 473 168 64 ) ( 473 161 92 ) ( 473 174 68 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 231 171 41 ) ( 473 171 52 ) ( 473 171 41 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 231 192 41 ) ( 473 171 41 ) ( 473 192 41 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 473 171 52 ) ( 231 192 52 ) ( 473 192 52 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+}
+// brush 6
+{
+( 237 187 52 ) ( 237 176 55 ) ( 237 176 52 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 237 187 55 ) ( 465 187 52 ) ( 465 187 55 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 465 187 55 ) ( 465 176 52 ) ( 465 176 55 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 237 176 52 ) ( 465 176 55 ) ( 465 176 52 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 237 187 52 ) ( 465 176 52 ) ( 465 187 52 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 465 176 55 ) ( 237 187 55 ) ( 465 187 55 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+}
+// brush 7
+{
+( 229 161 92 ) ( 229 168 64 ) ( 229 168 92 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 229 195 68 ) ( 473 195 55 ) ( 473 195 68 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 473 168 64 ) ( 473 161 92 ) ( 473 174 68 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 473 196 55 ) ( 229 168 55 ) ( 473 168 55 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 473 174 68 ) ( 229 168 64 ) ( 229 174 68 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 473 168 55 ) ( 229 168 64 ) ( 473 168 64 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( -207 716 68 ) ( -275 721 68 ) ( -202 721 68 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 572 191 68 ) ( 572 196 61 ) ( 700 191 68 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 572 196 58 ) ( 572 193 55 ) ( 700 196 58 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+}
+// brush 8
+{
+( 226 192 36 ) ( 226 165 41 ) ( 226 165 36 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 96 192 18 ) ( 640 192 18 ) ( 96 192 114 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 226 192 36 ) ( 473 165 36 ) ( 473 192 36 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 473 168 64 ) ( 473 161 92 ) ( 473 174 68 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 226 165 36 ) ( 473 165 41 ) ( 473 165 36 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 226 165 41 ) ( 473 192 41 ) ( 473 165 41 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+}
+// brush 9
+{
+( 229 161 92 ) ( 473 168 92 ) ( 473 161 92 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 229 161 92 ) ( 229 168 64 ) ( 229 168 92 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 473 168 64 ) ( 473 161 92 ) ( 473 174 68 ) tex_common/lightclip 32 0 0 0.2 0.2 589568 0 0
+( 229 174 68 ) ( 473 168 64 ) ( 473 174 68 ) tex_common/lightclip 0 32 0 0.2 0.2 589568 0 0
+( 473 168 64 ) ( 229 161 92 ) ( 473 161 92 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+( 229 168 92 ) ( 473 174 68 ) ( 473 168 92 ) tex_common/lightclip 0 0 0 0.2 0.2 589568 0 0
+}
 }
 // entity 28
 {
-"classname" "info_2x2_start"
-"origin" "288 448 26"
-"team" "1"
-"angle" "180"
+"classname" "func_group"
+// brush 0
+{
+( 188 354 64 ) ( 188 360 60 ) ( 188 333 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 152 377 21 ) ( 152 360 60 ) ( 152 333 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 561 122 64 ) ( 597 116 60 ) ( 561 116 60 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 597 99 21 ) ( 561 116 60 ) ( 597 116 60 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( -288 122 64 ) ( -160 143 21 ) ( -160 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 1
+{
+( 597 143 21 ) ( 597 116 60 ) ( 597 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 561 143 21 ) ( 561 116 60 ) ( 561 99 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 152 360 60 ) ( 188 360 60 ) ( 152 354 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 188 360 60 ) ( 152 360 60 ) ( 188 377 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( -569 354 64 ) ( -569 333 21 ) ( -697 354 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 2
+{
+( 188 354 64 ) ( 188 360 60 ) ( 188 333 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 152 377 21 ) ( 152 360 60 ) ( 152 333 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 152 360 60 ) ( 188 360 60 ) ( 152 354 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 188 360 60 ) ( 152 360 60 ) ( 188 377 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( -569 354 64 ) ( -569 333 21 ) ( -697 354 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 3
+{
+( 597 143 21 ) ( 597 116 60 ) ( 597 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 561 143 21 ) ( 561 116 60 ) ( 561 99 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 561 122 64 ) ( 597 116 60 ) ( 561 116 60 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 597 99 21 ) ( 561 116 60 ) ( 597 116 60 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( -288 122 64 ) ( -160 143 21 ) ( -160 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 4
+{
+( 718 156 4 ) ( 709 156 7 ) ( 709 156 11 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 709 157 7 ) ( 616 318 34 ) ( 616 157 34 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 709 318 11 ) ( 709 318 7 ) ( 718 318 4 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 709 157 11 ) ( 616 157 40 ) ( 616 318 40 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 616 157 34 ) ( 616 318 40 ) ( 616 157 40 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 709 315 7 ) ( 709 157 11 ) ( 709 315 11 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 5
+{
+( 120 318 36 ) ( 613 160 36 ) ( 120 160 36 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 6
+{
+( 718 156 4 ) ( 709 156 7 ) ( 709 156 11 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 718 157 4 ) ( 709 315 7 ) ( 709 157 7 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 709 318 11 ) ( 709 318 7 ) ( 718 318 4 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 709 160 11 ) ( 718 318 4 ) ( 718 160 4 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 709 157 11 ) ( 709 157 7 ) ( 709 315 7 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 7
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 142 320 102 ) ( 618 320 21 ) ( 142 320 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 354 64 ) ( 101 354 64 ) ( 133 333 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 612 354 64 ) ( 612 334 102 ) ( 127.75 334 102 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 603 240 -64 ) ( 603 236 -64 ) ( 603 240 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 8
+{
+( 618 142 102 ) ( 618 238 123 ) ( 618 334 102 ) tex_common/lightclip 0 0 0 0.5 0.5 589312 0 0
+( 110 142 102 ) ( 612 334 102 ) ( 110 334 102 ) tex_common/lightclip 0 0 0 0.5 0.5 589312 0 0
+( 130 334 108 ) ( 133 238 123 ) ( 107 238 123 ) tex_common/lightclip 0 0 0 0.5 0.5 589312 0 0
+( 130 142 108 ) ( 107 238 123 ) ( 133 238 123 ) tex_common/lightclip 0 0 0 0.5 0.5 589312 0 0
+( 612 142 102 ) ( 110 142 108 ) ( 612 142 108 ) tex_common/lightclip 0 0 0 0.5 0.5 589312 0 0
+( 612 334 102 ) ( 612 334 108 ) ( 110 334 108 ) tex_common/lightclip 0 0 0 0.5 0.5 589312 0 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/lightclip 0 0 0 0.5 0.5 589312 0 0
+}
+// brush 9
+{
+( 323 157 102 ) ( 323 157 18 ) ( 325 157 102 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 143 21 ) ( 101 122 64 ) ( 133 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 128 303 40 ) ( 128 300 40 ) ( 0 303 40 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 10
+{
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 142 320 102 ) ( 618 320 21 ) ( 142 320 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 354 64 ) ( 101 354 64 ) ( 133 333 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 128 303 40 ) ( 128 300 40 ) ( 0 303 40 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 11
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 142 320 102 ) ( 618 320 21 ) ( 142 320 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 612 354 64 ) ( 612 334 102 ) ( 127.75 334 102 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 0 157 88 ) ( 128 154 88 ) ( 128 157 88 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 12
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 323 157 102 ) ( 323 157 18 ) ( 325 157 102 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 130 142 102 ) ( 612 122 64 ) ( 116 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 0 157 88 ) ( 128 154 88 ) ( 128 157 88 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 13
+{
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 622 320 40 ) ( 599 336 64 ) ( 622 336 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 354 64 ) ( 101 354 64 ) ( 133 333 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 0 303 40 ) ( 128 300 40 ) ( 128 303 40 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 14
+{
+( 599 157 40 ) ( 622 140 64 ) ( 599 140 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 143 21 ) ( 101 122 64 ) ( 133 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 0 303 40 ) ( 128 300 40 ) ( 128 303 40 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 15
+{
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 599 320 88 ) ( 622 336 64 ) ( 599 336 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 612 354 64 ) ( 612 334 102 ) ( 127.75 334 102 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 128 157 88 ) ( 128 154 88 ) ( 0 157 88 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 16
+{
+( 622 157 88 ) ( 599 140 64 ) ( 622 140 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 130 142 102 ) ( 612 122 64 ) ( 116 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 128 157 88 ) ( 128 154 88 ) ( 0 157 88 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 17
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 323 157 102 ) ( 323 157 18 ) ( 325 157 102 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 143 21 ) ( 101 122 64 ) ( 133 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 130 142 102 ) ( 612 122 64 ) ( 116 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 603 240 -64 ) ( 603 236 -64 ) ( 603 240 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
 }
 // entity 29
 {
+"classname" "func_group"
+// brush 0
+{
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 130 142 108 ) ( 101 122 64 ) ( 76 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 64 ) ( 101 122 64 ) ( 130 142 108 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 64 ) ( 133 142 108 ) ( 130 142 108 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 1
+{
+( 130 142 108 ) ( 107 238 123 ) ( 133 238 123 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 123 ) ( 130 142 108 ) ( 133 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 76 238 64 ) ( 130 142 108 ) ( 133 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 2
+{
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 142 108 ) ( 101 122 64 ) ( 130 142 108 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 130 142 108 ) ( 101 122 64 ) ( 133 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 64 ) ( 133 142 108 ) ( 130 142 108 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 3
+{
+( 130 142 108 ) ( 107 238 123 ) ( 133 238 123 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 76 238 64 ) ( 107 238 123 ) ( 130 142 108 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 105 238 21 ) ( 133 238 64 ) ( 76 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 64 ) ( 130 142 108 ) ( 133 238 123 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 76 238 64 ) ( 130 142 108 ) ( 133 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+}
+// entity 30
+{
+"classname" "func_group"
+// brush 0
+{
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 130 334 108 ) ( 76 238 64 ) ( 101 354 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 64 ) ( 130 334 108 ) ( 101 354 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 64 ) ( 130 334 108 ) ( 133 334 108 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 1
+{
+( 130 334 108 ) ( 133 238 123 ) ( 107 238 123 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 130 334 108 ) ( 133 238 123 ) ( 133 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 130 334 108 ) ( 76 238 64 ) ( 133 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 2
+{
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 354 64 ) ( 130 334 108 ) ( 101 354 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 130 334 108 ) ( 133 238 64 ) ( 101 354 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 64 ) ( 130 334 108 ) ( 133 334 108 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 3
+{
+( 130 334 108 ) ( 133 238 123 ) ( 107 238 123 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 76 238 64 ) ( 130 334 108 ) ( 107 238 123 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 76 238 64 ) ( 133 238 64 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 123 ) ( 130 334 108 ) ( 133 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 130 334 108 ) ( 76 238 64 ) ( 133 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+}
+// entity 31
+{
+"classname" "func_group"
+// brush 0
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 76 238 64 ) ( 132 333 21 ) ( 101 354 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 64 ) ( 101 354 64 ) ( 132 333 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 333 21 ) ( 133 238 64 ) ( 133 333 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 1
+{
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 333 21 ) ( 133 238 64 ) ( 133 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 333 21 ) ( 133 238 64 ) ( 76 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 2
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 354 64 ) ( 101 354 64 ) ( 133 333 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 101 354 64 ) ( 133 238 64 ) ( 132 333 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 333 21 ) ( 133 238 64 ) ( 133 333 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 3
+{
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 333 21 ) ( 76 238 64 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 76 238 64 ) ( 133 238 64 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 64 ) ( 132 333 21 ) ( 133 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 333 21 ) ( 133 238 64 ) ( 76 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+}
+// entity 32
+{
+"classname" "func_group"
+// brush 0
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 101 122 64 ) ( 132 143 21 ) ( 76 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 143 21 ) ( 101 122 64 ) ( 133 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 143 21 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 1
+{
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 21 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 76 238 64 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 2
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 143 21 ) ( 101 122 64 ) ( 133 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 132 143 21 ) ( 133 238 64 ) ( 101 122 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 143 21 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+// brush 3
+{
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 105 238 21 ) ( 76 238 64 ) ( 132 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 105 238 21 ) ( 133 238 64 ) ( 76 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 133 238 21 ) ( 132 143 21 ) ( 133 238 64 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+( 76 238 64 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/lightclip 0 0 0 0.5 0.5 589568 0 0
+}
+}
+// entity 33
+{
+"classname" "func_group"
+// brush 0
+{
+( 718 160 4 ) ( 709 160 7 ) ( 709 160 11 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 709 157 7 ) ( 616 318 34 ) ( 616 157 34 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 709 157 11 ) ( 616 157 40 ) ( 616 318 40 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 616 157 34 ) ( 616 318 40 ) ( 616 157 40 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 709 318 7 ) ( 709 160 11 ) ( 709 318 11 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 1
+{
+( 120 318 36 ) ( 613 160 36 ) ( 120 160 36 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 717 157 4 ) ( 708 157 7 ) ( 708 157 11 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 616 315 42 ) ( 616 157 18 ) ( 616 157 42 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 2
+{
+( 718 160 4 ) ( 709 160 7 ) ( 709 160 11 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 718 160 4 ) ( 709 318 7 ) ( 709 160 7 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 709 320 11 ) ( 709 320 7 ) ( 718 320 4 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 709 160 11 ) ( 718 318 4 ) ( 718 160 4 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 709 160 11 ) ( 709 160 7 ) ( 709 318 7 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 3
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 142 320 102 ) ( 618 320 21 ) ( 142 320 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 354 64 ) ( 101 354 64 ) ( 133 333 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 612 354 64 ) ( 612 334 102 ) ( 127.75 334 102 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 603 240 -64 ) ( 603 236 -64 ) ( 603 240 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 4
+{
+( 618 142 102 ) ( 618 238 123 ) ( 618 334 102 ) tex_common/actorclip 0 0 0 0.5 0.5 130560 0 0
+( 110 142 102 ) ( 612 334 102 ) ( 110 334 102 ) tex_common/actorclip 0 0 0 0.5 0.5 130560 0 0
+( 130 334 108 ) ( 133 238 123 ) ( 107 238 123 ) tex_common/actorclip 0 0 0 0.5 0.5 130560 0 0
+( 130 142 108 ) ( 107 238 123 ) ( 133 238 123 ) tex_common/actorclip 0 0 0 0.5 0.5 130560 0 0
+( 612 142 102 ) ( 110 142 108 ) ( 612 142 108 ) tex_common/actorclip 0 0 0 0.5 0.5 130560 0 0
+( 612 334 102 ) ( 612 334 108 ) ( 110 334 108 ) tex_common/actorclip 0 0 0 0.5 0.5 130560 0 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/actorclip 0 0 0 0.5 0.5 130560 0 0
+}
+// brush 5
+{
+( 327 157 102 ) ( 327 157 18 ) ( 329 157 102 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 616 134.625 88 ) ( 616 140 64 ) ( 616 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 143 21 ) ( 101 122 64 ) ( 133 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 128 303 40 ) ( 128 300 40 ) ( 0 303 40 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 6
+{
+( 616 134.625 88 ) ( 616 140 64 ) ( 616 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 146 320 102 ) ( 622 320 21 ) ( 146 320 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 354 64 ) ( 101 354 64 ) ( 133 333 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 128 303 40 ) ( 128 300 40 ) ( 0 303 40 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 7
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 616 134.625 88 ) ( 616 140 64 ) ( 616 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 146 320 102 ) ( 622 320 21 ) ( 146 320 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 612 354 64 ) ( 612 334 102 ) ( 127.75 334 102 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 0 157 88 ) ( 128 154 88 ) ( 128 157 88 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 8
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 327 157 102 ) ( 327 157 18 ) ( 329 157 102 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 616 134.625 88 ) ( 616 140 64 ) ( 616 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 130 142 102 ) ( 612 122 64 ) ( 116 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 0 157 88 ) ( 128 154 88 ) ( 128 157 88 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 9
+{
+( 616 134.625 88 ) ( 616 140 64 ) ( 616 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 626 320 40 ) ( 603 336 64 ) ( 626 336 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 354 64 ) ( 101 354 64 ) ( 133 333 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 0 303 40 ) ( 128 300 40 ) ( 128 303 40 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 10
+{
+( 603 157 40 ) ( 626 140 64 ) ( 603 140 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 616 134.625 88 ) ( 616 140 64 ) ( 616 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 143 21 ) ( 101 122 64 ) ( 133 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 0 303 40 ) ( 128 300 40 ) ( 128 303 40 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 11
+{
+( 616 134.625 88 ) ( 616 140 64 ) ( 616 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 603 320 88 ) ( 626 336 64 ) ( 603 336 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 612 354 64 ) ( 612 334 102 ) ( 127.75 334 102 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 128 157 88 ) ( 128 154 88 ) ( 0 157 88 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 12
+{
+( 626 157 88 ) ( 603 140 64 ) ( 626 140 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 616 134.625 88 ) ( 616 140 64 ) ( 616 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 130 142 102 ) ( 612 122 64 ) ( 116 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 603 122 64 ) ( 603 140 64 ) ( 603 134.625 88 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 128 157 88 ) ( 128 154 88 ) ( 0 157 88 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 13
+{
+( 136 156 102 ) ( 612 142 102 ) ( 127 142 102 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 323 157 102 ) ( 323 157 18 ) ( 325 157 102 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 143 21 ) ( 101 122 64 ) ( 133 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 130 142 102 ) ( 612 122 64 ) ( 116 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 603 240 -64 ) ( 603 236 -64 ) ( 603 240 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 157 64 ) ( 133 154 -64 ) ( 133 157 -64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+}
+// entity 34
+{
+"classname" "func_group"
+// brush 0
+{
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 130 142 108 ) ( 101 122 64 ) ( 76 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 64 ) ( 101 122 64 ) ( 130 142 108 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 64 ) ( 133 142 108 ) ( 130 142 108 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 1
+{
+( 130 142 108 ) ( 107 238 123 ) ( 133 238 123 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 123 ) ( 130 142 108 ) ( 133 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 76 238 64 ) ( 130 142 108 ) ( 133 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 2
+{
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 142 108 ) ( 101 122 64 ) ( 130 142 108 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 130 142 108 ) ( 101 122 64 ) ( 133 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 64 ) ( 133 142 108 ) ( 130 142 108 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 3
+{
+( 130 142 108 ) ( 107 238 123 ) ( 133 238 123 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 76 238 64 ) ( 107 238 123 ) ( 130 142 108 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 105 238 21 ) ( 133 238 64 ) ( 76 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 64 ) ( 130 142 108 ) ( 133 238 123 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 76 238 64 ) ( 130 142 108 ) ( 133 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+}
+// entity 35
+{
+"classname" "func_group"
+// brush 0
+{
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 130 334 108 ) ( 76 238 64 ) ( 101 354 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 64 ) ( 130 334 108 ) ( 101 354 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 64 ) ( 130 334 108 ) ( 133 334 108 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 1
+{
+( 130 334 108 ) ( 133 238 123 ) ( 107 238 123 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 130 334 108 ) ( 133 238 123 ) ( 133 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 130 334 108 ) ( 76 238 64 ) ( 133 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 2
+{
+( -270 716 64 ) ( -270 711 64 ) ( -207 716 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 354 64 ) ( 130 334 108 ) ( 101 354 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 130 334 108 ) ( 133 238 64 ) ( 101 354 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 64 ) ( 130 334 108 ) ( 133 334 108 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 3
+{
+( 130 334 108 ) ( 133 238 123 ) ( 107 238 123 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 76 238 64 ) ( 130 334 108 ) ( 107 238 123 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 76 238 64 ) ( 133 238 64 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 123 ) ( 130 334 108 ) ( 133 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 130 334 108 ) ( 76 238 64 ) ( 133 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+}
+// entity 36
+{
+"classname" "func_group"
+// brush 0
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 76 238 64 ) ( 132 333 21 ) ( 101 354 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 64 ) ( 101 354 64 ) ( 132 333 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 333 21 ) ( 133 238 64 ) ( 133 333 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 1
+{
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 333 21 ) ( 133 238 64 ) ( 133 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 333 21 ) ( 133 238 64 ) ( 76 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 2
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 354 64 ) ( 101 354 64 ) ( 133 333 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 101 354 64 ) ( 133 238 64 ) ( 132 333 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 333 21 ) ( 133 238 64 ) ( 133 333 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 3
+{
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 333 21 ) ( 76 238 64 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 76 238 64 ) ( 133 238 64 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 64 ) ( 132 333 21 ) ( 133 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 333 21 ) ( 133 238 64 ) ( 76 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+}
+// entity 37
+{
+"classname" "func_group"
+// brush 0
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 101 122 64 ) ( 132 143 21 ) ( 76 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 143 21 ) ( 101 122 64 ) ( 133 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 143 21 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 1
+{
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 21 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 76 238 64 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 2
+{
+( 101 122 64 ) ( 133 238 64 ) ( 133 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 143 21 ) ( 101 122 64 ) ( 133 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 122 64 ) ( 133 238 64 ) ( 133 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 132 143 21 ) ( 133 238 64 ) ( 101 122 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 143 21 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+// brush 3
+{
+( 132 143 21 ) ( 133 238 21 ) ( 105 238 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 105 238 21 ) ( 76 238 64 ) ( 132 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 105 238 21 ) ( 133 238 64 ) ( 76 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 133 238 21 ) ( 132 143 21 ) ( 133 238 64 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+( 76 238 64 ) ( 133 238 64 ) ( 132 143 21 ) tex_common/actorclip 0 0 0 0.5 0.5 130816 0 0
+}
+}
+// entity 38
+{
+"classname" "info_human_start"
+"origin" "304 208 60"
+}
+// entity 39
+{
+"classname" "info_human_start"
+"origin" "304 272 60"
+}
+// entity 40
+{
+"classname" "info_human_start"
+"origin" "272 208 60"
+}
+// entity 41
+{
+"classname" "info_human_start"
+"origin" "272 272 60"
+}
+// entity 42
+{
 "classname" "info_2x2_start"
-"origin" "352 96 26"
+"origin" "192 256 60"
 "team" "1"
-"angle" "180"
+}
+// entity 43
+{
+"classname" "info_2x2_start"
+"origin" "544 288 60"
+"team" "1"
+}
+// entity 44
+{
+"classname" "info_2x2_start"
+"origin" "544 192 60"
+"team" "1"
+}
+// entity 45
+{
+"classname" "info_human_start"
+"origin" "464 272 60"
+}
+// entity 46
+{
+"classname" "info_human_start"
+"origin" "464 208 60"
+}
+// entity 47
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "464 208 60"
+}
+// entity 48
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "464 272 60"
+}
+// entity 49
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "432 208 60"
+}
+// entity 50
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "432 272 60"
+}
+// entity 51
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "400 208 60"
+}
+// entity 52
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "400 272 60"
+}
+// entity 53
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "304 208 60"
+}
+// entity 54
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "304 272 60"
+}
+// entity 55
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "368 208 60"
+}
+// entity 56
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "368 272 60"
+}
+// entity 57
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 208 60"
+}
+// entity 58
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 272 60"
 }
