@@ -61,6 +61,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_font.h"
 #include "ui/ui_nodes.h"
 #include "ui/ui_parse.h"
+#include "ui/ui_lua.h"
 #include "cgame/cl_game_team.h"
 #include "../shared/infostring.h"
 #include "../shared/parse.h"
@@ -803,6 +804,9 @@ bool CL_ParseClientData (const char* type, const char* name, const char** text)
 		GAME_ParseModes(name, text);
 	else if (Q_streq(type, "tip"))
 		CL_ParseTipOfTheDay(name, text);
+	else if (Q_streq(type, "lua"))
+		UI_ParseAndLoadLuaScript(name, text);
+
 	return true;
 }
 

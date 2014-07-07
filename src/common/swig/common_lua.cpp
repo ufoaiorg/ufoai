@@ -2624,19 +2624,18 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-#define SWIGTYPE_p_uiNode_t swig_types[0]
-static swig_type_info *swig_types[2];
-static swig_module_info swig_module = {swig_types, 1, 0, 0, 0, 0};
+static swig_type_info *swig_types[1];
+static swig_module_info swig_module = {swig_types, 0, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
 /* -------- TYPES TABLE (END) -------- */
 
-#define SWIG_name      "ufoui"
-#define SWIG_init      luaopen_ufoui
-#define SWIG_init_user luaopen_ufoui_user
+#define SWIG_name      "ufo"
+#define SWIG_init      luaopen_ufo
+#define SWIG_init_user luaopen_ufo_user
 
-#define SWIG_LUACODE   luaopen_ufoui_luacode
+#define SWIG_LUACODE   luaopen_ufo_luacode
 
 namespace swig {
 typedef struct{} LANGUAGE_OBJ;
@@ -2647,31 +2646,28 @@ typedef struct{} LANGUAGE_OBJ;
 #include <typeinfo>
 
 /* import common functions */
-#include "../../../shared/shared.h"
+#include "../../shared/shared.h"
 
-/* import ui specific functions */
-#include "../ui_main.h"
-#include "../ui_behaviour.h"
-#include "../ui_nodes.h"
-#include "../ui_node.h"
+
+SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
+  int ret = lua_isstring(L, idx);
+  if (!ret)
+   ret = lua_isnil(L, idx);
+  return ret;
+}
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-static int _wrap_uiNode_t_name_get(lua_State* L) {
+static int _wrap_print(lua_State* L) {
   int SWIG_arg = 0;
-  uiNode_t *arg1 = (uiNode_t *) 0 ;
-  char *result = 0 ;
+  char *arg1 = (char *) 0 ;
   
-  SWIG_check_num_args("uiNode_t::name",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::name",1,"uiNode_t *");
+  SWIG_check_num_args("Com_Printf",1,1)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Com_Printf",1,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  Com_Printf((char const *)arg1);
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
-    SWIG_fail_ptr("uiNode_t_name_get",1,SWIGTYPE_p_uiNode_t);
-  }
-  
-  result = (char *)(char *) ((arg1)->name);
-  lua_pushstring(L,(const char *)result); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -2682,13 +2678,18 @@ fail:
 }
 
 
-static int _wrap_new_uiNode_t(lua_State* L) {
+static int _wrap_dprint(lua_State* L) {
   int SWIG_arg = 0;
-  uiNode_t *result = 0 ;
+  int arg1 ;
+  char *arg2 = (char *) 0 ;
   
-  SWIG_check_num_args("uiNode_t::uiNode_t",0,0)
-  result = (uiNode_t *)new uiNode_t();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiNode_t,1); SWIG_arg++; 
+  SWIG_check_num_args("Com_DPrintf",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Com_DPrintf",1,"int");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Com_DPrintf",2,"char const *");
+  arg1 = (int)lua_tonumber(L, 1);
+  arg2 = (char *)lua_tostring(L, 2);
+  Com_DPrintf(arg1,(char const *)arg2);
+  
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -2699,53 +2700,27 @@ fail:
 }
 
 
-static void swig_delete_uiNode_t(void *obj) {
-uiNode_t *arg1 = (uiNode_t *) obj;
-delete arg1;
+static int _wrap_error(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  char *arg2 = (char *) 0 ;
+  
+  SWIG_check_num_args("Com_Error",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Com_Error",1,"int");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Com_Error",2,"char const *");
+  arg1 = (int)lua_tonumber(L, 1);
+  arg2 = (char *)lua_tostring(L, 2);
+  Com_Error(arg1,(char const *)arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
 }
-static int _proxy__wrap_new_uiNode_t(lua_State *L) {
-    assert(lua_istable(L,1));
-    lua_pushcfunction(L,_wrap_new_uiNode_t);
-    assert(!lua_isnil(L,-1));
-    lua_replace(L,1); /* replace our table with real constructor */
-    lua_call(L,lua_gettop(L)-1,1);
-    return 1;
-}
-static swig_lua_attribute swig_uiNode_t_attributes[] = {
-    { "name", _wrap_uiNode_t_name_get, SWIG_Lua_set_immutable },
-    {0,0,0}
-};
-static swig_lua_method swig_uiNode_t_methods[]= {
-    {0,0}
-};
-static swig_lua_method swig_uiNode_t_meta[] = {
-    {0,0}
-};
 
-static swig_lua_attribute swig_uiNode_t_Sf_SwigStatic_attributes[] = {
-    {0,0,0}
-};
-static swig_lua_const_info swig_uiNode_t_Sf_SwigStatic_constants[]= {
-    {0,0,0,0,0,0}
-};
-static swig_lua_method swig_uiNode_t_Sf_SwigStatic_methods[]= {
-    {0,0}
-};
-static swig_lua_class* swig_uiNode_t_Sf_SwigStatic_classes[]= {
-    0
-};
-
-static swig_lua_namespace swig_uiNode_t_Sf_SwigStatic = {
-    "uiNode_t",
-    swig_uiNode_t_Sf_SwigStatic_methods,
-    swig_uiNode_t_Sf_SwigStatic_attributes,
-    swig_uiNode_t_Sf_SwigStatic_constants,
-    swig_uiNode_t_Sf_SwigStatic_classes,
-    0
-};
-static swig_lua_class *swig_uiNode_t_bases[] = {0};
-static const char *swig_uiNode_t_base_names[] = {0};
-static swig_lua_class _wrap_class_uiNode_t = { "uiNode_t", "uiNode_t", &SWIGTYPE_p_uiNode_t,_proxy__wrap_new_uiNode_t, swig_delete_uiNode_t, swig_uiNode_t_methods, swig_uiNode_t_attributes, &swig_uiNode_t_Sf_SwigStatic, swig_uiNode_t_meta, swig_uiNode_t_bases, swig_uiNode_t_base_names };
 
 static swig_lua_attribute swig_SwigModule_attributes[] = {
     {0,0,0}
@@ -2754,10 +2729,12 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {0,0,0,0,0,0}
 };
 static swig_lua_method swig_SwigModule_methods[]= {
+    { "print", _wrap_print},
+    { "dprint", _wrap_dprint},
+    { "error", _wrap_error},
     {0,0}
 };
 static swig_lua_class* swig_SwigModule_classes[]= {
-&_wrap_class_uiNode_t,
     0
 };
 static swig_lua_namespace* swig_SwigModule_namespaces[] = {
@@ -2765,7 +2742,7 @@ static swig_lua_namespace* swig_SwigModule_namespaces[] = {
 };
 
 static swig_lua_namespace swig_SwigModule = {
-    "ufoui",
+    "ufo",
     swig_SwigModule_methods,
     swig_SwigModule_attributes,
     swig_SwigModule_constants,
@@ -2778,16 +2755,14 @@ static swig_lua_namespace swig_SwigModule = {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
-static swig_type_info _swigt__p_uiNode_t = {"_p_uiNode_t", "uiNode_t *", 0, 0, (void*)&_wrap_class_uiNode_t, 0};
 
 static swig_type_info *swig_type_initial[] = {
-  &_swigt__p_uiNode_t,
+  NULL
 };
 
-static swig_cast_info _swigc__p_uiNode_t[] = {  {&_swigt__p_uiNode_t, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
-  _swigc__p_uiNode_t,
+  NULL
 };
 
 

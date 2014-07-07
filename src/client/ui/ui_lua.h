@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 extern "C" {
-#include <lua.h>
+	#include "../../libs/lua/lua.h"
 }
 
 /**
@@ -36,3 +36,6 @@ extern lua_State* ui_luastate;
 
 void UI_InitLua (void);
 void UI_ShutdownLua (void);
+
+bool UI_ParseAndLoadLuaScript (const char* name, const char** text);
+

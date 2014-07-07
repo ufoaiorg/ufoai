@@ -1,5 +1,16 @@
 /**
-	@file Interface file for SWIG to generarte lua ui binding.
+	@file common_lua.i
+	@brief Interface file for SWIG to generarte lua ui binding.
+
+	SWIG interface file for the lua ufo module. Common ufo functions are grouped in lua using
+	the ufo namespace. Usage in lua is like this:
+
+    @code
+    function my_lua_function ()
+		ufo.printf ("hello from the lua script")
+		ufo.error (1, "oops, something is not right!")
+    end
+    @endcode
 */
 
 /*
@@ -22,30 +33,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-/* expose the ui code using a lua table ufoui */
-%module ufoui
+/* expose common ufo stuff */
+%module ufo
 
 %{
 /* import headers into the interface so they can be used */
 #include <typeinfo>
 
 /* import common functions */
-#include "../../../shared/shared.h"
-
-/* import ui specific functions */
-#include "../ui_main.h"
-#include "../ui_behaviour.h"
-#include "../ui_nodes.h"
-#include "../ui_node.h"
+#include "../../shared/shared.h"
 %}
 
-/* expose node structure */
-struct uiNode_t {
-	/* values that are read only accessible from lua */
-	%immutable;
-	char name[MAX_VAR];			/**< name from the script files */
-
-	/* values that are read/write accessible from lua */
-	%mutable;
-};
-
+%rename (print) Com_Printf;
+void Com_Printf (const char* fmt);
+%rename (dprint) Com_DPrintf;
+void Com_DPrintf(int level, const char* fmt);
+%rename (error) Com_Error;
+void Com_Error(int code, const char* fmt);
