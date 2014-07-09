@@ -108,6 +108,18 @@ tile +mart
 0		0		0		0		0		0		0
 }
 
+tile +tower
+{
+8 7
+0		x		x		x		x		x		x		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		0		0		0		0
+0		+a		+a		+a		0		0		0		0
+0		0		0		0		0		0		0		0
+}
+
 tile +stadium
 {
 7 9
@@ -389,6 +401,27 @@ title "_Mart"
 +filler_c			"0 1"
 +filler_3x1_a		"0 1"
 +mart				"1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly tower
+{
+size "8 8"
+title "_Tower"
++dummy_ne			"0 1"
++dummy_nw			"0 1"
++dummy_se			"0 1"
++dummy_sw			"0 1"
++dummy_e			"0 6"
++dummy_n			"0 6"
++dummy_s			"0 6"
++dummy_w			"0 6"
++dummy_centre		"0 2"
++filler_a			"0 6"
++filler_b			"0 1"
++filler_c			"0 1"
++filler_3x1_a		"0 1"
++tower				"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 

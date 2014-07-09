@@ -3163,6 +3163,54 @@ mapdef stadium
 	)
 }
 
+mapdef tower
+{
+	map				"+urban"
+	description		"_Office complex"
+	params			("tower")
+	size			"medium"
+	maxaliens		18
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"cold"
+		"grass"
+		"desert"
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef urban_buildings
 {
 	map				"+urban"
