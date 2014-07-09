@@ -256,7 +256,10 @@ ac		+a14	+14		x
 
 // UFO tiles -------------------------------------------------------*
 
-/* this is a hack */
+/* this is a hack 
+   Seemingly the game does not care if we use the tile, nor does it care if we actually have it.
+   But we need a tile desriptor, because the bomber_city assembly defines the craft in maps.ufo.
+   Without the descriptor, the game refuses to load the assembly. */
 tile +craft_ufo_bomber
 {
 3 3
