@@ -10,8 +10,6 @@ base tower/t_
 // a: main
 // b: dropship
 
-base spedition/sp_
-
 worldspawn {
 	"maxteams"		"3"
 	"maxlevel"		"5"
