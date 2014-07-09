@@ -4410,60 +4410,6 @@ mapdef spedition
 	)
 }
 
-///////////////////////
-// TOWER RANDOM MAPS //
-///////////////////////
-
-mapdef tower
-{
-	map				"+tower"
-	params			("default")
-	description		"_Office Complex"
-	maxaliens		29
-
-	multiplayer		true
-	teams			3
-	gametypes (
-		fight1on1
-		fight1on1on1
-		fight2on2
-		fight2on2on2
-		fight3on3
-		fight3on3on3
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"desert"
-		"grass"
-		"cold"
-		"tropical"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"suburban"
-		"urban"
-	)
-}
-
 ///////////////////////////
 // TRANSPORT RANDOM MAPS //
 ///////////////////////////

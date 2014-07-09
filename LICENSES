@@ -671,8 +671,6 @@ base/maps/spedition/sp_craft_drop_herakles.map | GNU General Public License 2.0 
 base/maps/spedition/sp_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/spedition/sp_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/subway.map | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/maps/tower/t_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/maps/tower/t_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/transport.ump | GNU General Public License 2.0 or later
 base/maps/transport/tra_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/transport/tra_craft_drop_herakles.map | GNU General Public License 2.0 or later
@@ -735,6 +733,7 @@ base/maps/urban/ub_laboratory.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_main.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_mart.map | GNU General Public License 2.0 or later | Drew Babkirk (Druterium) | base/maps/mart/ma_main.map
 base/maps/urban/ub_stadium.map | GNU General Public License 2.0 or later | "SparX" Beyeler | renamed base/maps/stadium/st_main.map
+base/maps/urban/ub_tower.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/village.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/village.ump | GNU General Public License 2.0 or later
 base/maps/village/vil_bungalow.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | base/maps/bungalow.map
