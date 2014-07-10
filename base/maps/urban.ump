@@ -36,15 +36,14 @@ tile +bld_office_a
 
 tile +city_disco
 {
-7 8
-0		0		0		0		0		0		0
-0		0		0		0		+a		+a		0
-0		0		0		0		+a		+a		0
-0		0		0		0		+a		+a		0
-0		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		0
-0		0		0		0		0		0		0
+5 7
+0		0		0		0		0
+0		0		+a		+a		0
+0		0		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
 }
 
 tile +community_centre
@@ -286,8 +285,20 @@ title "_Bomber in the City"
 
 assembly city_disco
 {
-size "5 6"
+size "6 7"
 title "_Urban Disco"
++dummy_ne			"0 2"
++dummy_nw			"0 2"
++dummy_se			"0 2"
++dummy_sw			"0 2"
++dummy_e			"0 6"
++dummy_n			"0 6"
++dummy_s			"0 6"
++dummy_w			"0 6"
++dummy_centre		"0 2"
+//+filler_a			"0 3"
++filler_b			"0 1"
++filler_c			"0 1"
 +filler_3x1_a		"0 1"
 +city_disco		"1 1"
 *rm_drop +craft_drop_firebird "1 1"
