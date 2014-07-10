@@ -245,24 +245,6 @@ tile +craft_ufo_bomber
 0		0		0
 }
 
-tile +craft_ufo_fighter
-{
-4 4
-0		0		0		0
-0		+c		+c		0
-0		+c		+c		0
-0		0		0		0
-}
-
-tile +craft_ufo_scout
-{
-4 4
-0		0		0		0
-0		+c		+c		0
-0		+c		+c		0
-0		0		0		0
-}
-
 // Dropship tiles --------------------------------------------------*
 
 tile +craft_drop_firebird
