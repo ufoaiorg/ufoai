@@ -3071,7 +3071,7 @@ mapdef stadium
 	description		"_Basketball Stadium"
 	params			("stadium")
 	size			"medium"
-	maxaliens		21
+	maxaliens		16
 
 	multiplayer		true
 	teams			1
