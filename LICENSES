@@ -728,8 +728,6 @@ base/maps/urban/ub_filler_3x1_a.map | GNU General Public License 2.0 or later | 
 base/maps/urban/ub_filler_a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/urban/ub_filler_b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/urban/ub_filler_c.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/urban/ub_lab_parking.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/urban/ub_laboratory.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_main.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_mart.map | GNU General Public License 2.0 or later | Drew Babkirk (Druterium) | base/maps/mart/ma_main.map
 base/maps/urban/ub_stadium.map | GNU General Public License 2.0 or later | "SparX" Beyeler | renamed base/maps/stadium/st_main.map

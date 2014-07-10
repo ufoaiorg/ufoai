@@ -2994,56 +2994,6 @@ mapdef laboratory
 
 	ufos
 	(
-		craft_ufo_fighter
-		craft_ufo_scout
-	)
-
-	terrains
-	(
-		"cold"
-		"grass"
-		"desert"
-		"tropical"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"suburban"
-		"urban"
-	)
-}
-
-mapdef laboratory_noufo
-{
-	map				"+urban"
-	params			("laboratory_noufo")
-	description		"_Laboratory"
-	size			"medium"
-	maxaliens		16
-	civilianteam	scientist
-
-	multiplayer		true
-	teams			1
-	gametypes (
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
 		// any
 	)
 
