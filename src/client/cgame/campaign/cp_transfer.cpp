@@ -22,7 +22,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -152,13 +151,13 @@ static void TR_TransferEnd (transfer_t* transfer)
  * @param[in] srcBase start transfer from this base
  * @param[in] transData Container holds transfer details
  */
-transfer_t* TR_TransferStart (base_t* srcBase, transferData_t& transData)
+transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 {
 	transfer_t transfer;
 	float time;
 	int i;
 
-	if (!transData.transferBase || !srcBase) {
+	if (!transData.destBase || !srcBase) {
 		Com_Printf("TR_TransferStart: No base selected!\n");
 		return nullptr;
 	}
@@ -166,7 +165,7 @@ transfer_t* TR_TransferStart (base_t* srcBase, transferData_t& transData)
 	/* Initialize transfer. */
 	OBJZERO(transfer);
 	/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
-	time = GetDistanceOnGlobe(transData.transferBase->pos, srcBase->pos) / 90.0f;
+	time = GetDistanceOnGlobe(transData.destBase->pos, srcBase->pos) / 90.0f;
 	transfer.event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
 	transfer.event.sec = ccs.date.sec + round(time);
@@ -175,21 +174,21 @@ transfer_t* TR_TransferStart (base_t* srcBase, transferData_t& transData)
 		transfer.event.sec -= SECONDS_PER_DAY;
 		transfer.event.day++;
 	}
-	transfer.destBase = transData.transferBase;	/* Destination base. */
+	transfer.destBase = transData.destBase;	/* Destination base. */
 	transfer.srcBase = srcBase;	/* Source base. */
 
 	int count = 0;
 	for (i = 0; i < cgi->csi->numODs; i++) {	/* Items. */
-		if (transData.trItemsTmp[i] > 0) {
+		if (transData.itemAmount[i] > 0) {
 			transfer.hasItems = true;
-			transfer.itemAmount[i] = transData.trItemsTmp[i];
+			transfer.itemAmount[i] = transData.itemAmount[i];
 			count++;
 		}
 	}
 	/* Note that the employee remains hired in source base during the transfer, that is
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
-		LIST_Foreach(transData.trEmployeesTmp[i], Employee, employee) {
+		LIST_Foreach(transData.employees[i], Employee, employee) {
 			assert(employee->isHiredInBase(srcBase));
 
 			transfer.hasEmployees = true;
@@ -217,7 +216,7 @@ transfer_t* TR_TransferStart (base_t* srcBase, transferData_t& transData)
 		const baseCapacities_t capacity = AIR_GetCapacityByAircraftWeight(aircraft);
 		aircraft->status = AIR_TRANSFER;
 		AIR_RemoveEmployees(*aircraft);
-		aircraft->homebase = transData.transferBase;
+		aircraft->homebase = transData.destBase;
 		cgi->LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
 		if (srcBase->aircraftCurrent == aircraft)
 			srcBase->aircraftCurrent = AIR_GetFirstFromBase(srcBase);
@@ -226,7 +225,7 @@ transfer_t* TR_TransferStart (base_t* srcBase, transferData_t& transData)
 		/* This should happen in TR_EmptyTransferCargo but on loading capacities are
 			calculated based on aircraft->homebase. aircraft->homebase cannot be null yet
 			there are hidden tests on that. */
-		CAP_AddCurrent(transData.transferBase, capacity, 1);
+		CAP_AddCurrent(transData.destBase, capacity, 1);
 
 		count++;
 	}
@@ -546,17 +545,16 @@ void TR_InitStartup (void)
 void TR_Shutdown (void)
 {
 	TR_Foreach(transfer) {
-		int i;
-
 		if (transfer->alienCargo != nullptr) {
 			delete transfer->alienCargo;
 			transfer->alienCargo = nullptr;
 		}
 		cgi->LIST_Delete(&transfer->aircraft);
-		for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+		for (int i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 			cgi->LIST_Delete(&transfer->employees[i]);
 		}
 	}
+	cgi->LIST_Delete(&ccs.transfers);
 
 	TR_ShutdownCallbacks();
 #ifdef DEBUG
