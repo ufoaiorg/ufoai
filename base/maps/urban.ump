@@ -240,18 +240,6 @@ ac		+a14	+14		x
 
 // UFO tiles -------------------------------------------------------*
 
-/* this is a hack 
-   Seemingly the game does not care if we use the tile, nor does it care if we actually have it.
-   But we need a tile desriptor, because the bomber_city assembly defines the craft in maps.ufo.
-   Without the descriptor, the game refuses to load the assembly. */
-tile +craft_ufo_bomber
-{
-3 3
-0		0		0
-0		+c		0
-0		0		0
-}
-
 // Dropship tiles --------------------------------------------------*
 
 tile +craft_drop_firebird
@@ -292,15 +280,6 @@ tileset main {
 }
 
 // maps assemblies  ------------------------------------------------*
-
-assembly bomber_city
-{
-size "11 8"
-title "_Bomber in the City"
-+filler_3x1_a	"0 1"
-+main		"1 1"
-*rm_drop +craft_drop_firebird "1 1"
-}
 
 assembly city_disco
 {

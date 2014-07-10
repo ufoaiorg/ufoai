@@ -2824,54 +2824,6 @@ mapdef ufocrash
 // URBAN BUILDINGS RMA THEME //
 ///////////////////////////////
 
-mapdef bomber_city
-{
-	map				"+urban"
-	description		"_Bomber in the City"
-	params			("bomber_city")
-	size			"large"
-	maxaliens		30
-
-	multiplayer		true
-	teams			1
-	gametypes (
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		craft_ufo_bomber
-	)
-
-	terrains
-	(
-		"cold"
-		"grass"
-		"desert"
-		"tropical"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"suburban"
-		"urban"
-	)
-}
-
 mapdef city_disco
 {
 	map				"+urban"
