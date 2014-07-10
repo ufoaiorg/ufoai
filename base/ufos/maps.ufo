@@ -3169,8 +3169,6 @@ mapdef urban_buildings
 	size			"large"
 	maxaliens		30
 
-	campaign		false
-
 	multiplayer		true
 	teams			1
 	gametypes (

@@ -271,6 +271,14 @@ tile +craft_drop_raptor
 0		0		0		0		0
 }
 
+// tilesets --------------------------------------------------------*
+
+tileset main {
+	+bld_laboratory
+	+stadium
+	+mart
+	+tower
+}
 
 // maps assemblies  ------------------------------------------------*
 
@@ -411,10 +419,24 @@ title "_Tower"
 
 assembly buildings
 {
-size "7 7"
+size "9 9"
 title "_Urban"
-+filler_3x1_a	"0 1"
-+bld_laboratory	"1 1"
-+bld_office_a	"1 1"
++dummy_ne			"0 1"
++dummy_nw			"0 1"
++dummy_se			"0 1"
++dummy_sw			"0 1"
++dummy_e			"0 10"
++dummy_n			"0 10"
++dummy_s			"0 10"
++dummy_w			"0 10"
++dummy_centre		"0 4"
++filler_a			"0 3"
++filler_b			"0 1"
++filler_c			"0 1"
++filler_3x1_a		"0 1"
+tileset main		"1 1"
++bld_office_a		"0 1"
++city_disco			"0 1"
++community_centre	"0 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
