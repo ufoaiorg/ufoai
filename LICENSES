@@ -708,6 +708,7 @@ base/maps/ufocrash.ump | GNU General Public License 2.0 or later
 base/maps/urban.ump | GNU General Public License 2.0 or later
 base/maps/urban/ub_bld_laboratory.map | GNU General Public License 2.0 or later | | from base/maps/laboratory/lab_main.map
 base/maps/urban/ub_bld_office_a.map | GNU General Public License 2.0 or later | | from base/maps/bomber_city/bc_main.map
+base/maps/urban/ub_bld_office_a.map | GNU General Public License 2.0 or later | | from base/maps/bomber_city/bc_main.map
 base/maps/urban/ub_city_disco.map | GNU General Public License 2.0 or later | "SparX" Beyeler | base/maps/city_disco/cd_main.map
 base/maps/urban/ub_community_centre.map | GNU General Public License 2.0 or later | Martin Gerhardy | base/maps/community_centre/cm_main.map
 base/maps/urban/ub_craft_drop_firebird.map | GNU General Public License 2.0 or later

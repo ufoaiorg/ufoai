@@ -34,6 +34,17 @@ tile +bld_office_a
 0		0		0		0		0		0
 }
 
+tile +bld_office_b
+{
+5 6
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
 tile +city_disco
 {
 5 7
@@ -436,6 +447,7 @@ title "_Urban"
 +filler_3x1_a		"0 1"
 tileset main		"1 1"
 +bld_office_a		"0 1"
++bld_office_b		"0 1"
 +city_disco			"0 1"
 +community_centre	"0 1"
 *rm_drop +craft_drop_firebird "1 1"
