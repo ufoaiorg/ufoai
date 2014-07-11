@@ -1,10 +1,10 @@
 /**
  * @file
- * @brief Basic lua initialization for the ui.
+ * @brief Header file for hashtable.
  */
 
 /*
-Copyright (C) 1997-2001 Id Software, Inc.
+Copyright (C) 2002-2014 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -25,23 +25,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-extern "C" {
-	#include "../../libs/lua/lua.h"
-}
-
-/**
- * @brief global lua state used in ui-lua interfacing
- */
-extern lua_State* ui_luastate;
-
-/* lua initialization functions */
-void UI_InitLua (void);
-void UI_ShutdownLua (void);
-
-/* lua callback registration functions */
-void UI_RegisterHandler_OnLoad (lua_State *L);
-void UI_RegisterHandler_OnClick (lua_State *L);
-
-/* lua script functions */
-bool UI_ParseAndLoadLuaScript (const char* name, const char** text);
-
+// TODO implementation
