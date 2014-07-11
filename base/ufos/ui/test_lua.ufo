@@ -4,59 +4,13 @@
 	MAIN MENU
 --]]
 
--- definitions of named colors (not present yet, names are illustrative)
--- contains entry: COLOR_DARK_YELLOW = [0.0, 0.5, 0.0, 1.0]
--- contains entry: COLOR_WHITE = [1.0, 1.0, 1.0, 1.0]
-require ("_colors.ufo")
-
--- create title control
-local lb_title = Label ("_UFO: ALIEN INVASION", 500, 50, 262, 50, "f_title", [0.59, 0.78, 0.56, 1.0], ALIGN_CC)
-
--- create facebook button
-local btn_facebook = Button ("_Facebook", 10, 720, 80, 20, COLOR_DARK_YELLOW)
-btn_facebook.tooltip = "_Like us on facebook"
-btn_facebook.padding = 0
-btn_facebook.selectcolor = [1, 1, 1, 1]
-
-function btn_facebook:onClick ()
-	-- todo
+function load ()
+	print("inside test_lua.ufo: calling load")
 end
 
--- create twitter button
-local btn_twitter = Button ("_Twitter", 100, 720, 70, 20, COLOR_DARK_YELLOW)
-btn_twitter.tooltip = "_Follow us on twitter"
-btn_twitter.padding = 0
-btn_twitter.selectcolor = COLOR_WHITE
-
-function btn_twitter:onClick ()
-	-- todo
-end
-
--- import a button defined in _assets.ufo.lua (the .lua is added automatically)
-require ("_assets.ufo")
-
--- create button CAMPAIGN
-local btn_campain = MainMenuBtn ("_CAMPAIGN")
-
-function btn_campaign:onClick ()
-	-- todo
-end
-
--- create buttons panel
-local pnl_buttons = Panel ()
-pnl_buttons.pos = [312, 250]
-pnl_buttons.size = [400, 400]
-pnl_buttons.layout = LAYOUT_TOP_DOWN_FLOW
-pnl_buttons.layoutMargin = 15
-
--- create the main window
-local main = Window ()
-main.background = "ui/main_bg"
-main:add (title)
-main:add (btn_facebook)
-main:add (btn_twitter)
-main:add (pnl_buttons)
-
+-- register callbacks
+print("inside test_lua.ufo: registering callbacks")
+ufoui.register_onload (load)
 
 --[[
 

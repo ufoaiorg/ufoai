@@ -37,9 +37,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_behaviour.h"
 #include "../ui_nodes.h"
 #include "../ui_node.h"
+
+#include "../ui_lua.h"
 %}
 
 /* expose node structure */
+%rename(uiNode) uiNode_t;
 struct uiNode_t {
 	/* values that are read only accessible from lua */
 	%immutable;
@@ -48,4 +51,10 @@ struct uiNode_t {
 	/* values that are read/write accessible from lua */
 	%mutable;
 };
+
+/* expose registration functions for callbacks */
+%rename(register_onload) UI_RegisterHandler_OnLoad;
+void UI_RegisterHandler_OnLoad (lua_State *L);
+%rename(register_onclick) UI_RegisterHandler_OnClick;
+void UI_RegisterHandler_OnClick (lua_State *L);
 
