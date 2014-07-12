@@ -232,7 +232,7 @@ bool Touch_HurtTrigger (Edict* self, Edict* activator)
 		G_TakeDamage(activator, damage);
 	}
 
-	return true;
+	return damage != 0;
 }
 
 /**
