@@ -2872,6 +2872,54 @@ mapdef city_disco
 	)
 }
 
+mapdef clinic
+{
+	map				"+urban"
+	description		"_Clinic"
+	params			("clinic")
+	size			"small"
+	maxaliens		8
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"cold"
+		"grass"
+		"desert"
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef community_centre
 {
 	map				"+urban"

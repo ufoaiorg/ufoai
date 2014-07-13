@@ -57,6 +57,18 @@ tile +city_disco
 0		0		0		0		0
 }
 
+tile +clinic
+{
+9 7
+0		0		0		0		0		0		0		0		0
+0		0		0		+a		+a		+a		0		0		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		0		0		0		0		0
+}
+
 tile +community_centre
 {
 5 6
@@ -259,6 +271,7 @@ tile +craft_drop_raptor
 
 tileset main {
 	+bld_laboratory
+	+clinic
 	+stadium
 	+mart
 	+tower
@@ -284,6 +297,26 @@ title "_Urban Disco"
 +filler_c			"0 1"
 +filler_3x1_a		"0 1"
 +city_disco		"1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly clinic
+{
+size "7 8"
+title "_Clinic"
++dummy_ne			"0 2"
++dummy_nw			"0 2"
++dummy_se			"0 2"
++dummy_sw			"0 2"
++dummy_e			"0 6"
++dummy_n			"0 6"
++dummy_s			"0 6"
++dummy_w			"0 6"
++dummy_centre		"0 2"
++filler_b			"0 1"
++filler_c			"0 1"
++filler_3x1_a		"0 1"
++clinic				"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
