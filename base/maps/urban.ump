@@ -68,21 +68,6 @@ tile +community_centre
 0		0		0		0		0
 }
 
-tile +main
-{
-13 10
-0		0		0		0		0		0		0		0		0		0		0		0		0
-0		0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		0		0		0		0		0		0		0		0		0		0		0		0
-}
-
 tile +mart
 {
 7 7
