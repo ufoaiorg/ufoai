@@ -4540,45 +4540,6 @@ mapdef city_train
 	)
 }
 
-// CLINIC MAP //
-
-mapdef clinic
-{
-	map				"clinic"
-	description		"_Clinic"
-
-	maxaliens		8
-
-	civilianteam	scientist
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"tropical"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"suburban"
-		"urban"
-	)
-}
-
 // CORRUPTER_CRASH MAP //
 
 mapdef corrupter_crash

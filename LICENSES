@@ -146,7 +146,6 @@ base/maps/city3/c3_subwaycam_h.map | GNU General Public License 2.0 or later | H
 base/maps/city3/c3_subwaycam_v.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/city_industry.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/city_train.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/clinic.map | GNU General Public License 2.0 or later | AntJam
 base/maps/construction.ump | GNU General Public License 2.0 or later
 base/maps/construction/cs_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/construction/cs_craft_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
@@ -710,6 +709,7 @@ base/maps/urban/ub_bld_laboratory.map | GNU General Public License 2.0 or later 
 base/maps/urban/ub_bld_office_a.map | GNU General Public License 2.0 or later | | from base/maps/bomber_city/bc_main.map
 base/maps/urban/ub_bld_office_b.map | GNU General Public License 2.0 or later | | from base/maps/bomber_city/bc_main.map
 base/maps/urban/ub_city_disco.map | GNU General Public License 2.0 or later | "SparX" Beyeler | base/maps/city_disco/cd_main.map
+base/maps/urban/ub_clinic.map | GNU General Public License 2.0 or later | AntJam
 base/maps/urban/ub_community_centre.map | GNU General Public License 2.0 or later | Martin Gerhardy | base/maps/community_centre/cm_main.map
 base/maps/urban/ub_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/urban/ub_craft_drop_herakles.map | GNU General Public License 2.0 or later
