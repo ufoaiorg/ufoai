@@ -207,8 +207,14 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 	/* Aliens. */
 	if (transData.alienCargo != nullptr) {
 		transfer.alienCargo = new AlienCargo(*transData.alienCargo);
-		count += transData.alienCargo->getAlive();
-		count += transData.alienCargo->getDead();
+
+		linkedList_t* list = transData.alienCargo->list();
+		LIST_Foreach(list, alienCargo_t, item) {
+			if (srcBase != nullptr && srcBase->alienContainment != nullptr)
+				srcBase->alienContainment->add(item->teamDef, -item->alive, -item->dead);
+			count += item->alive;
+			count += item->dead;
+		}
 	}
 
 	/* Aircraft */

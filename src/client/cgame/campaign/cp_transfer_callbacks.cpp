@@ -347,13 +347,13 @@ static void TR_FillAliens (const base_t* srcBase, const base_t* destBase)
 			char str[128];
 			Com_sprintf(str, sizeof(str), _("Corpse of %s"), _(item->teamDef->name));
 			cgi->UI_ExecuteConfunc("ui_translist_add \"dead:%s\" \"%s\" %d %d %d %d %d",
-				item->teamDef->id, str, srcDead, dstDead, 0, transferDead, srcDead + transferDead);
+				item->teamDef->id, str, srcDead - transferDead, dstDead, 0, transferDead, srcDead);
 		}
 		if (srcAlive > 0 || transferAlive > 0) {
 			char str[128];
 			Com_sprintf(str, sizeof(str), _("Alive %s"), _(item->teamDef->name));
 			cgi->UI_ExecuteConfunc("ui_translist_add \"alive:%s\" \"%s\" %d %d %d %d %d",
-				item->teamDef->id, str, srcAlive, dstAlive,	0, transferAlive, srcAlive + transferAlive);
+				item->teamDef->id, str, srcAlive - transferAlive, dstAlive,	0, transferAlive, srcAlive);
 		}
 	}
 	cgi->LIST_Delete(&list);
@@ -535,10 +535,8 @@ static void TR_Add_f (void)
 			else
 				amount = std::max(amount, -cargo);
 
-			if (amount != 0) {
+			if (amount != 0)
 				tr.alienCargo->add(teamDef, amount, 0);
-				base->alienContainment->add(teamDef, -amount, 0);
-			}
 		}
 	} else if (Q_strstart(itemId, "dead:")) {
 		if (tr.alienCargo == nullptr)
@@ -556,10 +554,8 @@ static void TR_Add_f (void)
 			else
 				amount = std::max(amount, -cargo);
 
-			if (amount != 0) {
+			if (amount != 0)
 				tr.alienCargo->add(teamDef, 0, amount);
-				base->alienContainment->add(teamDef, 0, -amount);
-			}
 		}
 	} else if (Q_streq(itemId, ANTIMATTER_ITEM_ID)) {
 		/* antimatter */
