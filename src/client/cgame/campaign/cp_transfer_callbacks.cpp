@@ -248,7 +248,7 @@ static void TR_FillItems (const base_t* srcBase, const base_t* destBase)
 
 		if (itemCargoAmount || antiMatterInSrcBase) {
 			cgi->UI_ExecuteConfunc("ui_translist_add \"%s\" \"%s\" %d %d %d %d %d", od->id, _(od->name),
-				antiMatterInSrcBase, antiMatterInDstBase, 0, itemCargoAmount, antiMatterInSrcBase + itemCargoAmount);
+				antiMatterInSrcBase - itemCargoAmount, antiMatterInDstBase, 0, itemCargoAmount, antiMatterInSrcBase);
 		}
 	}
 	for (int i = 0; i < cgi->csi->numODs; i++) {
@@ -261,10 +261,9 @@ static void TR_FillItems (const base_t* srcBase, const base_t* destBase)
 		const int itemInDstBase = B_ItemInBase(od, destBase);
 		if (itemCargoAmount || itemInSrcBase > 0) {
 			cgi->UI_ExecuteConfunc("ui_translist_add \"%s\" \"%s\" %d %d %d %d %d", od->id, _(od->name),
-				itemInSrcBase, itemInDstBase, 0, itemCargoAmount, itemInSrcBase + itemCargoAmount);
+				itemInSrcBase - itemCargoAmount, itemInDstBase, 0, itemCargoAmount, itemInSrcBase);
 		}
 	}
-
 }
 
 /**
@@ -569,11 +568,8 @@ static void TR_Add_f (void)
 			amount = std::min(amount, store);
 		else
 			amount = std::max(amount, -cargo);
-
-		if (amount != 0) {
+		if (amount != 0)
 			tr.itemAmount[od->idx] += amount;
-			B_ManageAntimatter(base, amount, false);
-		}
 	} else {
 		/* items */
 		const objDef_t* od = INVSH_GetItemByID(itemId);
@@ -588,11 +584,8 @@ static void TR_Add_f (void)
 			amount = std::min(amount, store);
 		else
 			amount = std::max(amount, -cargo);
-
-		if (amount != 0) {
+		if (amount != 0)
 			tr.itemAmount[od->idx] += amount;
-			B_AddToStorage(base, od, -amount);
-		}
 	}
 
 	TR_Fill(base, tr.destBase, currentTransferType);

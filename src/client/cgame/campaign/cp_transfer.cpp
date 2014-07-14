@@ -179,11 +179,18 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 
 	int count = 0;
 	for (i = 0; i < cgi->csi->numODs; i++) {	/* Items. */
-		if (transData.itemAmount[i] > 0) {
-			transfer.hasItems = true;
-			transfer.itemAmount[i] = transData.itemAmount[i];
-			count++;
+		if (transData.itemAmount[i] == 0)
+			continue;
+		if (srcBase != nullptr) {
+			const objDef_t* od = INVSH_GetItemByIDX(i);
+			if (Q_streq(od->id, ANTIMATTER_ITEM_ID))
+				B_ManageAntimatter(srcBase, transData.itemAmount[i], false);
+			else
+				B_AddToStorage(srcBase, od, -transData.itemAmount[i]);
 		}
+		transfer.hasItems = true;
+		transfer.itemAmount[i] = transData.itemAmount[i];
+		count++;
 	}
 	/* Note that the employee remains hired in source base during the transfer, that is
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
