@@ -222,6 +222,7 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 			count += item->alive;
 			count += item->dead;
 		}
+		cgi->LIST_Delete(&list);
 	}
 
 	/* Aircraft */

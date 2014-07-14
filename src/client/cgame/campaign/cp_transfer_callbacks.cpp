@@ -605,24 +605,6 @@ static void TR_TransferListClear_f (void)
 	if (!base)
 		return;
 
-	for (int i = 0; i < cgi->csi->numODs; i++) {	/* Return items. */
-		const objDef_t* od = INVSH_GetItemByIDX(i);
-		const int itemCargoAmount = tr.itemAmount[od->idx];
-		if (itemCargoAmount > 0) {
-			if (Q_streq(od->id, ANTIMATTER_ITEM_ID))
-				B_ManageAntimatter(base, itemCargoAmount, true);
-			else
-				B_AddToStorage(base, od, itemCargoAmount);
-		}
-	}
-	if (tr.alienCargo && base->alienContainment) {
-		linkedList_t* list = tr.alienCargo->list();
-		LIST_Foreach(list, alienCargo_t, item) {
-			base->alienContainment->add(item->teamDef, item->alive, item->dead);
-		}
-		cgi->LIST_Delete(&list);
-	}
-
 	TR_ClearTempCargo();
 
 	/* Update cargo list and items list. */
