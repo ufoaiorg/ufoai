@@ -71,24 +71,15 @@ static void TR_EmptyTransferCargo (base_t* destination, transfer_t* transfer, bo
 	}
 
 	if (transfer->hasEmployees && transfer->srcBase) {	/* Employees. (cannot come from a mission) */
-		if (!success) {	/* Employees will be unhired. */
-			for (int i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
-				const employeeType_t type = (employeeType_t)i;
-				TR_ForeachEmployee(employee, transfer, type) {
-					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
-					employee->transfer = false;
-					employee->unhire();
-				}
-			}
-		} else {
-			for (int i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
-				const employeeType_t type = (employeeType_t)i;
-				TR_ForeachEmployee(employee, transfer, type) {
-					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
-					employee->transfer = false;
-					employee->unhire();
+		for (int i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+			const employeeType_t type = (employeeType_t)i;
+
+			TR_ForeachEmployee(employee, transfer, type) {
+				employee->baseHired = transfer->srcBase;
+				employee->transfer = false;
+				employee->unhire();
+				if (success)
 					E_HireEmployee(destination, employee);
-				}
 			}
 		}
 	}
