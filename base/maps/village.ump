@@ -634,19 +634,6 @@ tile +mart_01
 0		0		0		0		0		0
 }
 
-tile +small_street
-{
-8 8
-0		0		0		0		0		0		0		0
-0		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		0
-0		0		0		0		0		0		0		0
-}
-
 // recreational ----------------------------------------------------*
 
 tile +park_01
