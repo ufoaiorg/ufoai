@@ -233,7 +233,7 @@ bool Touch_HurtTrigger (Edict* self, Edict* activator)
 	}
 	G_CheckDeathOrKnockout(actor, nullptr, nullptr, damage);
 
-	return true;
+	return damage != 0;
 }
 
 /**

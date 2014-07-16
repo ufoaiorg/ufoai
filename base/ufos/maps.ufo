@@ -2824,13 +2824,13 @@ mapdef ufocrash
 // URBAN BUILDINGS RMA THEME //
 ///////////////////////////////
 
-mapdef bomber_city
+mapdef city_disco
 {
 	map				"+urban"
-	description		"_Bomber in the City"
-	params			("bomber_city")
-	size			"large"
-	maxaliens		30
+	description		"_Urban Disco"
+	params			("city_disco")
+	size			"small"
+	maxaliens		8
 
 	multiplayer		true
 	teams			1
@@ -2849,7 +2849,7 @@ mapdef bomber_city
 
 	ufos
 	(
-		craft_ufo_bomber
+		// any
 	)
 
 	terrains
@@ -2872,11 +2872,11 @@ mapdef bomber_city
 	)
 }
 
-mapdef city_disco
+mapdef clinic
 {
 	map				"+urban"
-	description		"_Urban Disco"
-	params			("city_disco")
+	description		"_Clinic"
+	params			("clinic")
 	size			"small"
 	maxaliens		8
 
@@ -2994,56 +2994,6 @@ mapdef laboratory
 
 	ufos
 	(
-		craft_ufo_fighter
-		craft_ufo_scout
-	)
-
-	terrains
-	(
-		"cold"
-		"grass"
-		"desert"
-		"tropical"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"suburban"
-		"urban"
-	)
-}
-
-mapdef laboratory_noufo
-{
-	map				"+urban"
-	params			("laboratory_noufo")
-	description		"_Laboratory"
-	size			"medium"
-	maxaliens		16
-	civilianteam	scientist
-
-	multiplayer		true
-	teams			1
-	gametypes (
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
 		// any
 	)
 
@@ -3121,7 +3071,55 @@ mapdef stadium
 	description		"_Basketball Stadium"
 	params			("stadium")
 	size			"medium"
-	maxaliens		21
+	maxaliens		16
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"cold"
+		"grass"
+		"desert"
+		"tropical"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
+	)
+}
+
+mapdef tower
+{
+	map				"+urban"
+	description		"_Office complex"
+	params			("tower")
+	size			"medium"
+	maxaliens		18
 
 	multiplayer		true
 	teams			1
@@ -3170,8 +3168,6 @@ mapdef urban_buildings
 	params			("buildings")
 	size			"large"
 	maxaliens		30
-
-	campaign		false
 
 	multiplayer		true
 	teams			1
@@ -4410,60 +4406,6 @@ mapdef spedition
 	)
 }
 
-///////////////////////
-// TOWER RANDOM MAPS //
-///////////////////////
-
-mapdef tower
-{
-	map				"+tower"
-	params			("default")
-	description		"_Office Complex"
-	maxaliens		29
-
-	multiplayer		true
-	teams			3
-	gametypes (
-		fight1on1
-		fight1on1on1
-		fight2on2
-		fight2on2on2
-		fight3on3
-		fight3on3on3
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"desert"
-		"grass"
-		"cold"
-		"tropical"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"suburban"
-		"urban"
-	)
-}
-
 ///////////////////////////
 // TRANSPORT RANDOM MAPS //
 ///////////////////////////
@@ -4632,45 +4574,6 @@ mapdef city_train
 		"grass"
 		"tropical"
 		"desert"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"suburban"
-		"urban"
-	)
-}
-
-// CLINIC MAP //
-
-mapdef clinic
-{
-	map				"clinic"
-	description		"_Clinic"
-
-	maxaliens		8
-
-	civilianteam	scientist
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"tropical"
 	)
 
 	cultures

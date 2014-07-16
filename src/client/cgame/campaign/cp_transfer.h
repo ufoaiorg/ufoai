@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #pragma once
@@ -40,35 +39,6 @@ typedef struct transfer_s {
 	bool hasEmployees;			/**< Transfer of employees. */
 } transfer_t;
 
-/**
- * @brief transfer types
- */
-typedef enum {
-	TRANS_TYPE_INVALID = -1,
-	TRANS_TYPE_ITEM,
-	TRANS_TYPE_EMPLOYEE,
-	TRANS_TYPE_ALIEN,
-	TRANS_TYPE_AIRCRAFT,
-
-	TRANS_TYPE_MAX
-} transferType_t;
-
-typedef struct transferData_s {
-	/** @brief Current selected base for transfer. */
-	base_t* transferBase;
-	/** @brief Current transfer type (item, employee, alien, aircraft). */
-	transferType_t currentTransferType;
-
-	/** @brief Current item cargo. Amount of items for each object definition index. */
-	int trItemsTmp[MAX_OBJDEFS];
-	/** @brief Current alien cargo. */
-	class AlienCargo* alienCargo;
-	/** @brief Current personnel cargo. */
-	linkedList_t* trEmployeesTmp[MAX_EMPL];
-	/** @brief Current aircraft for transfer. */
-	linkedList_t* aircraft;
-} transferData_t;
-
 #define TR_Foreach(var) LIST_Foreach(ccs.transfers, transfer_t, var)
 #define TR_ForeachEmployee(var, transfer, employeeType) LIST_Foreach(transfer->employees[employeeType], Employee, var)
 #define TR_ForeachAircraft(var, transfer) LIST_Foreach(transfer->aircraft, aircraft_t, var)
@@ -76,7 +46,7 @@ typedef struct transferData_s {
 void TR_TransferRun(void);
 void TR_NotifyAircraftRemoved(const aircraft_t* aircraft);
 
-transfer_t* TR_TransferStart(base_t* srcBase, transferData_t& transData);
+transfer_t* TR_TransferStart(base_t* srcBase, transfer_t& transData);
 
 void TR_InitStartup(void);
 void TR_Shutdown(void);

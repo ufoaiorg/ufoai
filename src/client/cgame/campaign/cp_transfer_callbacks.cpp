@@ -33,6 +33,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "aliencontainment.h"
 
 /**
+ * @brief transfer types
+ */
+typedef enum {
+	TRANS_TYPE_INVALID = -1,
+	TRANS_TYPE_ITEM,
+	TRANS_TYPE_EMPLOYEE,
+	TRANS_TYPE_ALIEN,
+	TRANS_TYPE_AIRCRAFT,
+
+	TRANS_TYPE_MAX
+} transferType_t;
+
+/**
  * @brief transfer typeID strings
  */
 static char const* const transferTypeIDs[] = {
@@ -44,23 +57,24 @@ static char const* const transferTypeIDs[] = {
 CASSERT(lengthof(transferTypeIDs) == TRANS_TYPE_MAX);
 
 /** @todo move this into ccs_t */
-static transferData_t td;
+static transfer_t tr;
+static transferType_t currentTransferType;
 
 /**
  * @brief Clear temporary cargo arrays
  */
 static void TR_ClearTempCargo (void)
 {
-	OBJZERO(td.trItemsTmp);
-	if (td.alienCargo != nullptr) {
-		delete td.alienCargo;
-		td.alienCargo = nullptr;
+	OBJZERO(tr.itemAmount);
+	if (tr.alienCargo != nullptr) {
+		delete tr.alienCargo;
+		tr.alienCargo = nullptr;
 	}
 	for (int i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
-		cgi->LIST_Delete(&td.trEmployeesTmp[emplType]);
+		cgi->LIST_Delete(&tr.employees[emplType]);
 	}
-	cgi->LIST_Delete(&td.aircraft);
+	cgi->LIST_Delete(&tr.aircraft);
 }
 
 /**
@@ -71,16 +85,16 @@ static void TR_TransferStart_f (void)
 	char message[1024];
 	base_t* base = B_GetCurrentSelectedBase();
 
-	if (td.currentTransferType == TRANS_TYPE_INVALID) {
+	if (currentTransferType == TRANS_TYPE_INVALID) {
 		Com_Printf("TR_TransferStart_f: currentTransferType is wrong!\n");
 		return;
 	}
 
-	if (TR_TransferStart(base, td) == nullptr)
+	if (TR_TransferStart(base, tr) == nullptr)
 		return;
 	TR_ClearTempCargo();
 
-	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), td.transferBase->name);
+	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), tr.destBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("Transport mission"), message, MSG_TRANSFERFINISHED);
 	cgi->UI_PopWindow(false);
 }
@@ -145,7 +159,7 @@ static void TR_CargoList (void)
 	/* Show items. */
 	for (int i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t* od = INVSH_GetItemByIDX(i);
-		const int amount = td.trItemsTmp[i];
+		const int amount = tr.itemAmount[i];
 		if (amount > 0)
 			cgi->UI_ExecuteConfunc("ui_cargolist_add \"%s\" \"%s\" %d", od->id, _(od->name), amount);
 	}
@@ -156,7 +170,7 @@ static void TR_CargoList (void)
 		switch (emplType) {
 		case EMPL_SOLDIER:
 		case EMPL_PILOT:
-			LIST_Foreach(td.trEmployeesTmp[emplType], Employee, employee) {
+			LIST_Foreach(tr.employees[emplType], Employee, employee) {
 				if (emplType == EMPL_SOLDIER) {
 					const rank_t* rank = CL_GetRankByIdx(employee->chr.score.rank);
 					cgi->UI_ExecuteConfunc("ui_cargolist_add \"ucn:%d\" \"%s %s %s\" %d", employee->chr.ucn,
@@ -172,7 +186,7 @@ static void TR_CargoList (void)
 			break;
 		case EMPL_SCIENTIST:
 		case EMPL_WORKER: {
-			int emplCount = cgi->LIST_Count(td.trEmployeesTmp[emplType]);
+			int emplCount = cgi->LIST_Count(tr.employees[emplType]);
 			if (emplCount <= 0)
 				break;
 			cgi->UI_ExecuteConfunc("ui_cargolist_add \"%s\" \"%s\" %d", (emplType == EMPL_SCIENTIST) ? "scientist" : "worker",
@@ -185,8 +199,8 @@ static void TR_CargoList (void)
 	}
 
 	/* Show aliens. */
-	if (td.alienCargo != nullptr) {
-		linkedList_t* cargo = td.alienCargo->list();
+	if (tr.alienCargo != nullptr) {
+		linkedList_t* cargo = tr.alienCargo->list();
 		LIST_Foreach(cargo, alienCargo_t, item) {
 			if (item->dead > 0)
 				cgi->UI_ExecuteConfunc("ui_cargolist_add \"dead:%s\" \"%s\" %d", item->teamDef->id, va(_("Corpse of %s"), _(item->teamDef->name)), item->dead);
@@ -197,7 +211,7 @@ static void TR_CargoList (void)
 	}
 
 	/* Show all aircraft. */
-	LIST_Foreach(td.aircraft, aircraft_t, aircraft) {
+	LIST_Foreach(tr.aircraft, aircraft_t, aircraft) {
 		cgi->UI_ExecuteConfunc("ui_cargolist_add \"aircraft:%d\" \"%s\" %d", aircraft->idx, va(_("Aircraft %s"), aircraft->name), 1);
 	}
 }
@@ -211,7 +225,7 @@ static bool TR_AircraftListSelect (const aircraft_t* aircraft)
 {
 	if (!AIR_IsAircraftInBase(aircraft))	/* Aircraft is not in base. */
 		return false;
-	if (cgi->LIST_GetPointer(td.aircraft, aircraft))	/* Already on transfer list. */
+	if (cgi->LIST_GetPointer(tr.aircraft, aircraft))	/* Already on transfer list. */
 		return false;
 
 	return true;
@@ -228,13 +242,13 @@ static void TR_FillItems (const base_t* srcBase, const base_t* destBase)
 
 	od = INVSH_GetItemByID(ANTIMATTER_ITEM_ID);
 	if (od) {
-		const int itemCargoAmount = td.trItemsTmp[od->idx];
+		const int itemCargoAmount = tr.itemAmount[od->idx];
 		const int antiMatterInSrcBase = B_AntimatterInBase(srcBase);
 		const int antiMatterInDstBase = B_AntimatterInBase(destBase);
 
 		if (itemCargoAmount || antiMatterInSrcBase) {
 			cgi->UI_ExecuteConfunc("ui_translist_add \"%s\" \"%s\" %d %d %d %d %d", od->id, _(od->name),
-				antiMatterInSrcBase, antiMatterInDstBase, 0, itemCargoAmount, antiMatterInSrcBase + itemCargoAmount);
+				antiMatterInSrcBase - itemCargoAmount, antiMatterInDstBase, 0, itemCargoAmount, antiMatterInSrcBase);
 		}
 	}
 	for (int i = 0; i < cgi->csi->numODs; i++) {
@@ -242,15 +256,14 @@ static void TR_FillItems (const base_t* srcBase, const base_t* destBase)
 		assert(od);
 		if (!B_ItemIsStoredInBaseStorage(od))
 			continue;
-		const int itemCargoAmount = td.trItemsTmp[od->idx];
+		const int itemCargoAmount = tr.itemAmount[od->idx];
 		const int itemInSrcBase = B_ItemInBase(od, srcBase);
 		const int itemInDstBase = B_ItemInBase(od, destBase);
 		if (itemCargoAmount || itemInSrcBase > 0) {
 			cgi->UI_ExecuteConfunc("ui_translist_add \"%s\" \"%s\" %d %d %d %d %d", od->id, _(od->name),
-				itemInSrcBase, itemInDstBase, 0, itemCargoAmount, itemInSrcBase + itemCargoAmount);
+				itemInSrcBase - itemCargoAmount, itemInDstBase, 0, itemCargoAmount, itemInSrcBase);
 		}
 	}
-
 }
 
 /**
@@ -272,7 +285,7 @@ static void TR_FillEmployees (const base_t* srcBase, const base_t* destBase)
 					continue;
 
 				/* Skip if already on transfer list. */
-				if (cgi->LIST_GetPointer(td.trEmployeesTmp[emplType], (void*) employee))
+				if (cgi->LIST_GetPointer(tr.employees[emplType], (void*) employee))
 					continue;
 
 				if (emplType == EMPL_SOLDIER) {
@@ -294,7 +307,7 @@ static void TR_FillEmployees (const base_t* srcBase, const base_t* destBase)
 		case EMPL_WORKER: {
 			const int hiredSrc = E_CountHired(srcBase, emplType);
 			const int hiredDst = E_CountHired(destBase, emplType);
-			const int trCount = cgi->LIST_Count(td.trEmployeesTmp[emplType]);
+			const int trCount = cgi->LIST_Count(tr.employees[emplType]);
 
 			if (hiredSrc <= 0)
 				break;
@@ -326,20 +339,20 @@ static void TR_FillAliens (const base_t* srcBase, const base_t* destBase)
 		const int srcAlive = item->alive;
 		const int dstDead = (destBase->alienContainment) ? destBase->alienContainment->getAlive(item->teamDef) : 0;
 		const int dstAlive = (destBase->alienContainment) ? destBase->alienContainment->getDead(item->teamDef) : 0;
-		const int transferDead = (td.alienCargo) ? td.alienCargo->getDead(item->teamDef) : 0;
-		const int transferAlive = (td.alienCargo) ? td.alienCargo->getAlive(item->teamDef) : 0;
+		const int transferDead = (tr.alienCargo) ? tr.alienCargo->getDead(item->teamDef) : 0;
+		const int transferAlive = (tr.alienCargo) ? tr.alienCargo->getAlive(item->teamDef) : 0;
 
 		if (srcDead > 0 || transferDead > 0) {
 			char str[128];
 			Com_sprintf(str, sizeof(str), _("Corpse of %s"), _(item->teamDef->name));
 			cgi->UI_ExecuteConfunc("ui_translist_add \"dead:%s\" \"%s\" %d %d %d %d %d",
-				item->teamDef->id, str, srcDead, dstDead, 0, transferDead, srcDead + transferDead);
+				item->teamDef->id, str, srcDead - transferDead, dstDead, 0, transferDead, srcDead);
 		}
 		if (srcAlive > 0 || transferAlive > 0) {
 			char str[128];
 			Com_sprintf(str, sizeof(str), _("Alive %s"), _(item->teamDef->name));
 			cgi->UI_ExecuteConfunc("ui_translist_add \"alive:%s\" \"%s\" %d %d %d %d %d",
-				item->teamDef->id, str, srcAlive, dstAlive,	0, transferAlive, srcAlive + transferAlive);
+				item->teamDef->id, str, srcAlive - transferAlive, dstAlive,	0, transferAlive, srcAlive);
 		}
 	}
 	cgi->LIST_Delete(&list);
@@ -357,7 +370,7 @@ static void TR_FillAircraft (const base_t* srcBase, const base_t* destBase)
 		if (!AIR_IsAircraftInBase(aircraft))
 			continue;
 		/* Already on transfer list. */
-		if (cgi->LIST_GetPointer(td.aircraft, aircraft))
+		if (cgi->LIST_GetPointer(tr.aircraft, aircraft))
 			continue;
 
 		cgi->UI_ExecuteConfunc("ui_translist_add \"aircraft:%d\" \"%s\" %d %d %d %d %d",
@@ -378,7 +391,7 @@ static void TR_Fill (const base_t* srcBase, const base_t* destBase, transferType
 	if (srcBase == nullptr || destBase == nullptr)
 		return;
 
-	td.currentTransferType = transferType;
+	currentTransferType = transferType;
 	/* reset for every new call */
 	cgi->UI_ExecuteConfunc("ui_translist_clear");
 	switch (transferType) {
@@ -409,15 +422,15 @@ static void TR_Fill_f (void)
 	transferType_t type;
 	const base_t* base = B_GetCurrentSelectedBase();
 
-	if (!td.transferBase || !base)
+	if (!tr.destBase || !base)
 		return;
 	if (cgi->Cmd_Argc() < 2)
-		type = td.currentTransferType;
+		type = currentTransferType;
 	else
 		type = TR_GetTransferType(cgi->Cmd_Argv(1));
 	if (type == TRANS_TYPE_INVALID)
 		return;
-	TR_Fill(base, td.transferBase, type);
+	TR_Fill(base, tr.destBase, type);
 }
 
 /**
@@ -443,9 +456,9 @@ static void TR_Add_f (void)
 		if (amount > 0) {
 			if (!TR_AircraftListSelect(aircraft))
 				return;
-			cgi->LIST_AddPointer(&td.aircraft, (void*)aircraft);
+			cgi->LIST_AddPointer(&tr.aircraft, (void*)aircraft);
 		} else if (amount < 0) {
-			cgi->LIST_Remove(&td.aircraft, (void*)aircraft);
+			cgi->LIST_Remove(&tr.aircraft, (void*)aircraft);
 		}
 	} else if (Q_strstart(itemId, "ucn:")) {
 		Employee* employee = E_GetEmployeeFromChrUCN(atoi(itemId + 4));
@@ -454,14 +467,14 @@ static void TR_Add_f (void)
 		if (amount > 0) {
 			if (!employee->isHiredInBase(base))
 				return;
-			if (cgi->LIST_GetPointer(td.trEmployeesTmp[employee->getType()], (void*)employee))
+			if (cgi->LIST_GetPointer(tr.employees[employee->getType()], (void*)employee))
 				return;
-			if (!TR_CheckEmployee(employee, td.transferBase))
+			if (!TR_CheckEmployee(employee, tr.destBase))
 				return;
 
-			cgi->LIST_AddPointer(&td.trEmployeesTmp[employee->getType()], (void*)employee);
+			cgi->LIST_AddPointer(&tr.employees[employee->getType()], (void*)employee);
 		} else if (amount < 0) {
-			cgi->LIST_Remove(&td.trEmployeesTmp[employee->getType()], (void*)employee);
+			cgi->LIST_Remove(&tr.employees[employee->getType()], (void*)employee);
 		}
 	} else if (Q_streq(itemId, "scientist")) {
 		if (amount > 0) {
@@ -471,16 +484,16 @@ static void TR_Add_f (void)
 				if (!employee->isHiredInBase(base))
 					continue;
 				/* Already on transfer list. */
-				if (cgi->LIST_GetPointer(td.trEmployeesTmp[EMPL_SCIENTIST], (void*)employee))
+				if (cgi->LIST_GetPointer(tr.employees[EMPL_SCIENTIST], (void*)employee))
 					continue;
-				if (!TR_CheckEmployee(employee, td.transferBase))
+				if (!TR_CheckEmployee(employee, tr.destBase))
 					continue;
-				cgi->LIST_AddPointer(&td.trEmployeesTmp[EMPL_SCIENTIST], (void*) employee);
+				cgi->LIST_AddPointer(&tr.employees[EMPL_SCIENTIST], (void*) employee);
 				amount--;
 			}
 		} else if (amount < 0) {
-			while (!cgi->LIST_IsEmpty(td.trEmployeesTmp[EMPL_SCIENTIST]) && amount < 0) {
-				if (cgi->LIST_RemoveEntry(&td.trEmployeesTmp[EMPL_SCIENTIST], td.trEmployeesTmp[EMPL_SCIENTIST]))
+			while (!cgi->LIST_IsEmpty(tr.employees[EMPL_SCIENTIST]) && amount < 0) {
+				if (cgi->LIST_RemoveEntry(&tr.employees[EMPL_SCIENTIST], tr.employees[EMPL_SCIENTIST]))
 					amount++;
 			}
 		}
@@ -492,28 +505,28 @@ static void TR_Add_f (void)
 				if (!employee->isHiredInBase(base))
 					continue;
 				/* Already on transfer list. */
-				if (cgi->LIST_GetPointer(td.trEmployeesTmp[EMPL_WORKER], (void*)employee))
+				if (cgi->LIST_GetPointer(tr.employees[EMPL_WORKER], (void*)employee))
 					continue;
-				if (!TR_CheckEmployee(employee, td.transferBase))
+				if (!TR_CheckEmployee(employee, tr.destBase))
 					continue;
-				cgi->LIST_AddPointer(&td.trEmployeesTmp[EMPL_WORKER], (void*) employee);
+				cgi->LIST_AddPointer(&tr.employees[EMPL_WORKER], (void*) employee);
 				amount--;
 			}
 		} else if (amount < 0) {
-			while (!cgi->LIST_IsEmpty(td.trEmployeesTmp[EMPL_WORKER]) && amount < 0) {
-				if (cgi->LIST_RemoveEntry(&td.trEmployeesTmp[EMPL_WORKER], td.trEmployeesTmp[EMPL_WORKER]))
+			while (!cgi->LIST_IsEmpty(tr.employees[EMPL_WORKER]) && amount < 0) {
+				if (cgi->LIST_RemoveEntry(&tr.employees[EMPL_WORKER], tr.employees[EMPL_WORKER]))
 					amount++;
 			}
 		}
 	} else if (Q_strstart(itemId, "alive:")) {
-		if (td.alienCargo == nullptr)
-			td.alienCargo = new AlienCargo();
-		if (td.alienCargo == nullptr)
+		if (tr.alienCargo == nullptr)
+			tr.alienCargo = new AlienCargo();
+		if (tr.alienCargo == nullptr)
 			cgi->Com_Error(ERR_DROP, "TR_Add_f: Cannot create AlienCargo object\n");
 
 		const teamDef_t* teamDef = cgi->Com_GetTeamDefinitionByID(itemId + 6);
 		if (teamDef && base->alienContainment) {
-			const int cargo = td.alienCargo->getAlive(teamDef);
+			const int cargo = tr.alienCargo->getAlive(teamDef);
 			const int store = base->alienContainment->getAlive(teamDef);
 
 			if (amount >= 0)
@@ -521,20 +534,18 @@ static void TR_Add_f (void)
 			else
 				amount = std::max(amount, -cargo);
 
-			if (amount != 0) {
-				td.alienCargo->add(teamDef, amount, 0);
-				base->alienContainment->add(teamDef, -amount, 0);
-			}
+			if (amount != 0)
+				tr.alienCargo->add(teamDef, amount, 0);
 		}
 	} else if (Q_strstart(itemId, "dead:")) {
-		if (td.alienCargo == nullptr)
-			td.alienCargo = new AlienCargo();
-		if (td.alienCargo == nullptr)
+		if (tr.alienCargo == nullptr)
+			tr.alienCargo = new AlienCargo();
+		if (tr.alienCargo == nullptr)
 			cgi->Com_Error(ERR_DROP, "TR_Add_f: Cannot create AlienCargo object\n");
 
 		const teamDef_t* teamDef = cgi->Com_GetTeamDefinitionByID(itemId + 5);
 		if (teamDef && base->alienContainment) {
-			const int cargo = td.alienCargo->getDead(teamDef);
+			const int cargo = tr.alienCargo->getDead(teamDef);
 			const int store = base->alienContainment->getDead(teamDef);
 
 			if (amount >= 0)
@@ -542,28 +553,23 @@ static void TR_Add_f (void)
 			else
 				amount = std::max(amount, -cargo);
 
-			if (amount != 0) {
-				td.alienCargo->add(teamDef, 0, amount);
-				base->alienContainment->add(teamDef, 0, -amount);
-			}
+			if (amount != 0)
+				tr.alienCargo->add(teamDef, 0, amount);
 		}
 	} else if (Q_streq(itemId, ANTIMATTER_ITEM_ID)) {
 		/* antimatter */
 		const objDef_t* od = INVSH_GetItemByID(itemId);
 		if (!od)
 			return;
-		const int cargo = td.trItemsTmp[od->idx];
+		const int cargo = tr.itemAmount[od->idx];
 		const int store = B_AntimatterInBase(base);
 
 		if (amount >= 0)
 			amount = std::min(amount, store);
 		else
 			amount = std::max(amount, -cargo);
-
-		if (amount != 0) {
-			td.trItemsTmp[od->idx] += amount;
-			B_ManageAntimatter(base, amount, false);
-		}
+		if (amount != 0)
+			tr.itemAmount[od->idx] += amount;
 	} else {
 		/* items */
 		const objDef_t* od = INVSH_GetItemByID(itemId);
@@ -572,23 +578,20 @@ static void TR_Add_f (void)
 		if (!B_ItemIsStoredInBaseStorage(od))
 			return;
 
-		const int cargo = td.trItemsTmp[od->idx];
+		const int cargo = tr.itemAmount[od->idx];
 		const int store = B_ItemInBase(od, base);
 		if (amount >= 0)
 			amount = std::min(amount, store);
 		else
 			amount = std::max(amount, -cargo);
-
-		if (amount != 0) {
-			td.trItemsTmp[od->idx] += amount;
-			B_AddToStorage(base, od, -amount);
-		}
+		if (amount != 0)
+			tr.itemAmount[od->idx] += amount;
 	}
 
-	TR_Fill(base, td.transferBase, td.currentTransferType);
+	TR_Fill(base, tr.destBase, currentTransferType);
 	/* Update capacity list of destination base */
-	if (td.transferBase)
-		cgi->Cmd_ExecuteString("ui_trans_caplist %d", td.transferBase->idx);
+	if (tr.destBase)
+		cgi->Cmd_ExecuteString("ui_trans_caplist %d", tr.destBase->idx);
 }
 
 /**
@@ -602,33 +605,15 @@ static void TR_TransferListClear_f (void)
 	if (!base)
 		return;
 
-	for (int i = 0; i < cgi->csi->numODs; i++) {	/* Return items. */
-		const objDef_t* od = INVSH_GetItemByIDX(i);
-		const int itemCargoAmount = td.trItemsTmp[od->idx];
-		if (itemCargoAmount > 0) {
-			if (Q_streq(od->id, ANTIMATTER_ITEM_ID))
-				B_ManageAntimatter(base, itemCargoAmount, true);
-			else
-				B_AddToStorage(base, od, itemCargoAmount);
-		}
-	}
-	if (td.alienCargo && base->alienContainment) {
-		linkedList_t* list = td.alienCargo->list();
-		LIST_Foreach(list, alienCargo_t, item) {
-			base->alienContainment->add(item->teamDef, item->alive, item->dead);
-		}
-		cgi->LIST_Delete(&list);
-	}
-
 	TR_ClearTempCargo();
 
 	/* Update cargo list and items list. */
 	TR_CargoList();
-	TR_Fill(base, td.transferBase, td.currentTransferType);
+	TR_Fill(base, tr.destBase, currentTransferType);
 
 	/* Update capacity list of destination base */
-	if (td.transferBase)
-		cgi->Cmd_ExecuteString("ui_trans_caplist %d", td.transferBase->idx);
+	if (tr.destBase)
+		cgi->Cmd_ExecuteString("ui_trans_caplist %d", tr.destBase->idx);
 }
 
 /**
@@ -643,16 +628,16 @@ static void TR_TransferBaseSelect (base_t* srcbase, base_t* destbase)
 		return;
 
 	/* Set global pointer to current selected base. */
-	td.transferBase = destbase;
+	tr.destBase = destbase;
 	cgi->Cvar_Set("mn_trans_base_name", "%s", destbase->name);
 	cgi->Cvar_SetValue("mn_trans_base_id", destbase->idx);
 
 	/* Update stuff-in-base list. */
-	TR_Fill(srcbase, destbase, td.currentTransferType);
+	TR_Fill(srcbase, destbase, currentTransferType);
 
 	/* Update capacity list of destination base */
-	if (td.transferBase)
-		cgi->Cmd_ExecuteString("ui_trans_caplist %d", td.transferBase->idx);
+	if (tr.destBase)
+		cgi->Cmd_ExecuteString("ui_trans_caplist %d", tr.destBase->idx);
 }
 
 /**
@@ -708,17 +693,17 @@ static void TR_Init_f (void)
 	/* Update destination base list */
 	TR_InitBaseList();
 	/* Select first available base. */
-	td.transferBase = B_GetNext(base);
+	tr.destBase = B_GetNext(base);
 	/* If this was the last base select the first */
-	if (!td.transferBase)
-		td.transferBase = B_GetNext(nullptr);
-	if (!td.transferBase)
+	if (!tr.destBase)
+		tr.destBase = B_GetNext(nullptr);
+	if (!tr.destBase)
 		cgi->Com_Error(ERR_DROP, "No bases! Transfer needs at least two...");
-	TR_TransferBaseSelect(base, td.transferBase);
+	TR_TransferBaseSelect(base, tr.destBase);
 	/* Set up cvar used to display transferBase. */
-	if (td.transferBase) {
-		cgi->Cvar_Set("mn_trans_base_name", "%s", td.transferBase->name);
-		cgi->Cvar_SetValue("mn_trans_base_id", td.transferBase->idx);
+	if (tr.destBase) {
+		cgi->Cvar_Set("mn_trans_base_name", "%s", tr.destBase->name);
+		cgi->Cvar_SetValue("mn_trans_base_id", tr.destBase->idx);
 	} else {
 		cgi->Cvar_Set("mn_trans_base_id", "");
 	}
@@ -884,13 +869,13 @@ static void TR_DestinationCapacityList_f (void)
 
 	/* Count capacity need of the current transfer plan */
 	/* - Items and Antimatter */
-	TR_CountItemSizeInArray(td.trItemsTmp, currentCap);
+	TR_CountItemSizeInArray(tr.itemAmount, currentCap);
 	/* - Employee */
-	TR_CountEmployeeInListArray(td.trEmployeesTmp, currentCap);
+	TR_CountEmployeeInListArray(tr.employees, currentCap);
 	/* - Aliens */
-	currentCap[CAP_ALIENS] += (td.alienCargo) ? td.alienCargo->getAlive() : 0;
+	currentCap[CAP_ALIENS] += (tr.alienCargo) ? tr.alienCargo->getAlive() : 0;
 	/* - Aircraft */
-	TR_CountAircraftInList(td.aircraft, currentCap);
+	TR_CountAircraftInList(tr.aircraft, currentCap);
 
 	cgi->UI_ExecuteConfunc("ui_t_capacities_clear");
 	for (int i = 0; i < ccs.numBuildingTemplates; i++) {

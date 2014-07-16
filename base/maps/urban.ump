@@ -20,7 +20,7 @@ tile +bld_laboratory
 0		+a		+a		+a		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0		0		0		0
 0		0		0		0		0		0		0		0		0
 }
 
@@ -34,17 +34,39 @@ tile +bld_office_a
 0		0		0		0		0		0
 }
 
+tile +bld_office_b
+{
+5 6
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
 tile +city_disco
 {
-7 8
-0		0		0		0		0		0		0
-0		0		0		0		+a		+a		0
-0		0		0		0		+a		+a		0
-0		0		0		0		+a		+a		0
-0		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		0
-0		0		0		0		0		0		0
+5 7
+0		0		0		0		0
+0		0		+a		+a		0
+0		0		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
+tile +clinic
+{
+9 7
+0		0		0		0		0		0		0		0		0
+0		0		0		+a		+a		+a		0		0		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		0		0		0		0		0
 }
 
 tile +community_centre
@@ -56,44 +78,6 @@ tile +community_centre
 0		+a		+a		+a		0
 0		+a		+a		+a		0
 0		0		0		0		0
-}
-
-tile +laboratory
-{
-11 9
-0		0		0		0		0		0		0		0		0		0		0
-0		0		0		0		+a		+a		+a		+a		+a		+a		0
-0		0		0		0		+a		+a		+a		+a		+a		+a		0
-0		0		0		0		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		0		0		0
-0		+a		+a		+a		+a		+a		+a		+a		0		0		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		0		0		0		0		0		0		0		0		0		0
-}
-
-tile +lab_parking
-{
-4 4
-0		0		0		0
-0		+a		+a		0
-0		+a		+a		0
-0		0		0		0
-}
-
-tile +main
-{
-13 10
-0		0		0		0		0		0		0		0		0		0		0		0		0
-0		0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		0		0		0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		0		0		0		0		0		0		0		0		0		0		0		0
 }
 
 tile +mart
@@ -108,13 +92,22 @@ tile +mart
 0		0		0		0		0		0		0
 }
 
+tile +tower
+{
+8 7
+0		x		x		x		x		x		x		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		0		0		0		0
+0		+a		+a		+a		0		0		0		0
+0		0		0		0		0		0		0		0
+}
+
 tile +stadium
 {
-7 9
+7 6
 0		0		0		0		0		0		0
-0		0		0		0		+a		+a		0
-0		0		0		0		+a		+a		0
-0		0		0		0		+a		+a		0
 0		+a		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		+a		0
@@ -244,33 +237,6 @@ ac		+a14	+14		x
 
 // UFO tiles -------------------------------------------------------*
 
-/* this is a hack */
-tile +craft_ufo_bomber
-{
-3 3
-0		0		0
-0		+c		0
-0		0		0
-}
-
-tile +craft_ufo_fighter
-{
-4 4
-0		0		0		0
-0		+c		+c		0
-0		+c		+c		0
-0		0		0		0
-}
-
-tile +craft_ufo_scout
-{
-4 4
-0		0		0		0
-0		+c		+c		0
-0		+c		+c		0
-0		0		0		0
-}
-
 // Dropship tiles --------------------------------------------------*
 
 tile +craft_drop_firebird
@@ -301,24 +267,56 @@ tile +craft_drop_raptor
 0		0		0		0		0
 }
 
+// tilesets --------------------------------------------------------*
+
+tileset main {
+	+bld_laboratory
+	+clinic
+	+stadium
+	+mart
+	+tower
+}
 
 // maps assemblies  ------------------------------------------------*
 
-assembly bomber_city
+assembly city_disco
 {
-size "11 8"
-title "_Bomber in the City"
-+filler_3x1_a	"0 1"
-+main		"1 1"
+size "6 7"
+title "_Urban Disco"
++dummy_ne			"0 2"
++dummy_nw			"0 2"
++dummy_se			"0 2"
++dummy_sw			"0 2"
++dummy_e			"0 6"
++dummy_n			"0 6"
++dummy_s			"0 6"
++dummy_w			"0 6"
++dummy_centre		"0 2"
+//+filler_a			"0 3"
++filler_b			"0 1"
++filler_c			"0 1"
++filler_3x1_a		"0 1"
++city_disco		"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
-assembly city_disco
+assembly clinic
 {
-size "5 6"
-title "_Urban Disco"
+size "7 8"
+title "_Clinic"
++dummy_ne			"0 2"
++dummy_nw			"0 2"
++dummy_se			"0 2"
++dummy_sw			"0 2"
++dummy_e			"0 6"
++dummy_n			"0 6"
++dummy_s			"0 6"
++dummy_w			"0 6"
++dummy_centre		"0 2"
++filler_b			"0 1"
++filler_c			"0 1"
 +filler_3x1_a		"0 1"
-+city_disco		"1 1"
++clinic				"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
@@ -330,11 +328,12 @@ title "_Community Centre"
 +dummy_nw			"0 2"
 +dummy_se			"0 2"
 +dummy_sw			"0 2"
-+dummy_e			"0 2"
-+dummy_n			"0 2"
-+dummy_s			"0 2"
-+dummy_w			"0 2"
-+filler_a			"0 3"
++dummy_e			"0 6"
++dummy_n			"0 6"
++dummy_s			"0 6"
++dummy_w			"0 6"
++dummy_centre		"0 2"
+//+filler_a			"0 3"
 +filler_b			"0 1"
 +filler_c			"0 1"
 +filler_3x1_a		"0 1"
@@ -344,31 +343,44 @@ title "_Community Centre"
 
 assembly stadium
 {
-size "5 7"
+size "7 7"
 title "_Stadium"
++dummy_ne			"0 2"
++dummy_nw			"0 2"
++dummy_se			"0 2"
++dummy_sw			"0 2"
++dummy_e			"0 6"
++dummy_n			"0 6"
++dummy_s			"0 6"
++dummy_w			"0 6"
++dummy_centre		"0 2"
+//+filler_a			"0 6"
++filler_b			"0 1"
++filler_c			"0 1"
 +filler_3x1_a		"0 1"
-+stadium		"1 1"
++stadium			"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
 assembly laboratory
 {
-size "9 7"
+size "7 7"
 title "_Laboratory"
++dummy_ne			"0 2"
++dummy_nw			"0 2"
++dummy_se			"0 2"
++dummy_sw			"0 2"
++dummy_e			"0 6"
++dummy_n			"0 6"
++dummy_s			"0 6"
++dummy_w			"0 6"
++dummy_centre		"0 2"
++filler_a			"0 3"
++filler_b			"0 1"
++filler_c			"0 1"
 +filler_3x1_a		"0 1"
-fix +laboratory		"0 0"
-*rm_ufo +craft_ufo_fighter		"1 1"
-*rm_drop +craft_drop_firebird	"1 1"
-}
-
-assembly laboratory_noufo
-{
-size "9 7"
-title "_Laboratory"
-+filler_3x1_a		"0 1"
-fix +laboratory		"0 0"
-fix +lab_parking	"7 1"
-*rm_drop +craft_drop_firebird	"1 1"
++bld_laboratory		"1 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
 
 assembly mart
@@ -384,7 +396,7 @@ title "_Mart"
 +dummy_s			"0 2"
 +dummy_w			"0 2"
 +dummy_centre		"0 1"
-+filler_a			"0 6"
++filler_a			"0 3"
 +filler_b			"0 1"
 +filler_c			"0 1"
 +filler_3x1_a		"0 1"
@@ -392,12 +404,48 @@ title "_Mart"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
+assembly tower
+{
+size "8 8"
+title "_Tower"
++dummy_ne			"0 1"
++dummy_nw			"0 1"
++dummy_se			"0 1"
++dummy_sw			"0 1"
++dummy_e			"0 6"
++dummy_n			"0 6"
++dummy_s			"0 6"
++dummy_w			"0 6"
++dummy_centre		"0 2"
++filler_a			"0 6"
++filler_b			"0 1"
++filler_c			"0 1"
++filler_3x1_a		"0 1"
++tower				"1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
 assembly buildings
 {
-size "7 7"
+size "9 9"
 title "_Urban"
-+filler_3x1_a	"0 1"
-+bld_laboratory	"1 1"
-+bld_office_a	"1 1"
++dummy_ne			"0 1"
++dummy_nw			"0 1"
++dummy_se			"0 1"
++dummy_sw			"0 1"
++dummy_e			"0 10"
++dummy_n			"0 10"
++dummy_s			"0 10"
++dummy_w			"0 10"
++dummy_centre		"0 4"
++filler_a			"0 3"
++filler_b			"0 1"
++filler_c			"0 1"
++filler_3x1_a		"0 1"
+tileset main		"1 1"
++bld_office_a		"0 1"
++bld_office_b		"0 1"
++city_disco			"0 1"
++community_centre	"0 1"
 *rm_drop +craft_drop_firebird "1 1"
 }

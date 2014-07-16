@@ -124,6 +124,11 @@ void BATTLE_Start (mission_t* mission, const battleParam_t* battleParameters)
 		return;
 	}
 
+	/* Set difficulty level for the battle */
+	assert(ccs.curCampaign);
+	cgi->Cvar_Delete("g_difficulty");
+	cgi->Cvar_SetValue("g_difficulty", ccs.curCampaign->difficulty);
+
 	const char* param = battleParameters->param ? battleParameters->param : (const char*)cgi->LIST_GetRandom(mission->mapDef->params);
 	cgi->Cbuf_AddText("map %s %s %s\n", (GEO_IsNight(mission->pos) ? "night" : "day"),
 		mission->mapDef->mapTheme, param ? param : "");

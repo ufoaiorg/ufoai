@@ -78,9 +78,12 @@ install-pre: pk3 lang
 	@echo "#!/bin/sh" > ufoded.sh
 	@echo "cd $(PKGDATADIR); ./ufoded \$$*; exit \$$?" >> ufoded.sh
 	$(Q)$(INSTALL_SCRIPT) ufoded.sh $(DESTDIR)$(PKGBINDIR)/ufoded
-	@echo "#!/bin/sh" > uforadiant.sh
-	@echo "cd $(PKGDATADIR)/radiant; ./uforadiant \$$*; exit \$$?" >> uforadiant.sh
-	$(Q)$(INSTALL_SCRIPT) uforadiant.sh $(DESTDIR)$(PKGBINDIR)/uforadiant
-	$(Q)rm ufoded.sh ufo.sh uforadiant.sh
+	$(Q)if [ -z "$(uforadiant_DISABLE)" ]; then \
+		echo "#!/bin/sh" > uforadiant.sh; \
+		echo "cd $(PKGDATADIR)/radiant; ./uforadiant \$$*; exit \$$?" >> uforadiant.sh; \
+		$(INSTALL_SCRIPT) uforadiant.sh $(DESTDIR)$(PKGBINDIR)/uforadiant; \
+		rm uforadiant.sh; \
+	fi
+	$(Q)rm ufoded.sh ufo.sh
 	@echo "Install pk3s"
 	$(Q)$(INSTALL_DATA) base/*.pk3 $(DESTDIR)$(PKGDATADIR)/base

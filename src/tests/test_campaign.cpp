@@ -369,7 +369,7 @@ TEST_F(CampaignTest, testTransferItem)
 	const vec2_t pos = {0, 0};
 	const vec2_t posTarget = {51, 0};
 	base_t* base, *targetBase;
-	transferData_t td;
+	transfer_t tr;
 	const objDef_t* od;
 	transfer_t* transfer;
 
@@ -384,12 +384,12 @@ TEST_F(CampaignTest, testTransferItem)
 	od = INVSH_GetItemByID("assault");
 	ASSERT_TRUE(nullptr != od);
 
-	OBJZERO(td);
-	td.trItemsTmp[od->idx] += 1;
-	td.transferBase = targetBase;
-	td.trItemsTmp[od->idx]++;
+	OBJZERO(tr);
+	tr.itemAmount[od->idx] += 1;
+	tr.destBase = targetBase;
+	tr.itemAmount[od->idx]++;
 
-	transfer = TR_TransferStart(base, td);
+	transfer = TR_TransferStart(base, tr);
 	ASSERT_TRUE(nullptr != transfer);
 
 	ASSERT_EQ(LIST_Count(ccs.transfers), 1);
@@ -413,7 +413,7 @@ TEST_F(CampaignTest, testTransferItem)
 	ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
 
 	/* Start another transfer to check higher time lapse */
-	transfer = TR_TransferStart(base, td);
+	transfer = TR_TransferStart(base, tr);
 	ASSERT_TRUE(nullptr != transfer);
 	ASSERT_EQ(LIST_Count(ccs.transfers), 1);
 
@@ -426,7 +426,7 @@ TEST_F(CampaignTest, testTransferItem)
 	ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
 
 	/* Start another transfer to check higher time lapse */
-	transfer = TR_TransferStart(base, td);
+	transfer = TR_TransferStart(base, tr);
 	ASSERT_TRUE(nullptr != transfer);
 	ASSERT_EQ(LIST_Count(ccs.transfers), 1);
 
