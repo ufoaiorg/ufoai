@@ -24,11 +24,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
+#include "ui_lua.h"
+
 #include "../../shared/cxx.h"
 #include "../../shared/defines.h"
 #include "../../shared/shared.h"
-
-#include "ui_lua.h"
+// STL
+#include <map>
+#include <string>
 
 extern "C" {
 	#include "../../libs/lua/lauxlib.h"
@@ -41,7 +44,8 @@ extern "C" {
 
 /* global lua state for ui-lua interfacing */
 lua_State* ui_luastate = nullptr;
-
+/* hash map for storing callback references */
+std::map<std::string, int> ui_onload;
 
 /**
  * @brief Initializes the ui-lua interfacing environment.
@@ -69,6 +73,7 @@ void UI_InitLua (void) {
  */
 void UI_ShutdownLua (void) {
 	if (ui_luastate) {
+		ui_onload.clear();
         lua_close(ui_luastate);
 		ui_luastate = nullptr;
 	}
@@ -90,6 +95,23 @@ void UI_RegisterHandler_OnLoad (lua_State *L) {
 	   from the stack */
 	int regvalue = luaL_ref (L, LUA_REGISTRYINDEX);
 	/* store regvalue into the list of handlers */
+	/* note that since luaL_ref pops the function from the stack, the string pushed onto the stack is now
+	   the top of the stack (see: parse & load) */
+	if (lua_isstring(L, -1)) {
+        /* get the name, use it as the key in the map */
+        size_t len;
+		const char* key=lua_tolstring(L, -1, &len);
+		if (len > 0) {
+			ui_onload.insert(std::pair<std::string,int>(key, regvalue));
+		}
+		else {
+			Com_Error(ERR_FATAL, "lua callback registration error: script name has zero length!\n");
+		}
+	}
+	else {
+		/* error: we expect the top of the stack to contain the name of the lua script */
+		Com_Error(ERR_FATAL, "lua callback registration error: script name expected on the stack!\n");
+	}
 }
 
 /**
@@ -100,8 +122,9 @@ void UI_RegisterHandler_OnLoad (lua_State *L) {
  * @note If the signature changes, this function should change too.
  */
 void UI_CallHandler_OnLoad (lua_State *L, const char* name) {
-	// TODO: get registered handler
-	lua_rawgeti (L, LUA_REGISTRYINDEX, 0);
+	/* look up the handler */
+	int regvalue=ui_onload[name];
+	lua_rawgeti (L, LUA_REGISTRYINDEX, regvalue);
 	lua_pcall (L, 0, 0, 0);
 }
 

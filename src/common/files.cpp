@@ -1301,6 +1301,9 @@ char* FS_NextScriptHeader (const char* files, const char** name, const char** te
 			if (Q_strneq (*text, "--!usr/bin/lua", 14)) {
 				Com_Printf("LUA: In FS_NextScriptHeader, after check magic string\n");
 				Com_Printf("--> file = %s\n", filename);
+				/* copy filename to header */
+				Q_strncpyz(headerName, (const char*)lFile->data, sizeof(headerName));
+				*name = headerName;
 				return "lua";
 			}
 
