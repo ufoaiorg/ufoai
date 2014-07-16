@@ -23,6 +23,46 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+/*
+	use:
+
+	hashTable* t = HASH_NewTable ();
+
+	HASH_Insert ("A1", 123);
+	HASH_Insert ("A2", 234);
+	HASH_Insert ("A3", 345);
+
+*/
+
 #pragma once
 
-// TODO implementation
+#ifndef HASHTABLE_H
+#define HASHTABLE_H
+
+/**< The hash table */
+struct hashTable_s;
+
+/**< The hash uses a 256 byte table, so we define a index type here */
+typedef unsigned short int HASH_INDEX;
+/**< The hash function signature. */
+typedef unsigned short int (*hashTable_hash) (const void* key, int len);
+/**< The compare function signature. */
+typedef int (*hashTable_compare) (const void* key1, int len1, const void* key2, int len2);
+
+hashTable_s* HASH_NewTable (bool ownsKeys, bool ownsValues, bool duplicateOverwrite);
+hashTable_s* HASH_NewTable (bool ownsKeys, bool ownsValues, bool duplicateOverwrite, hashTable_hash h, hashTable_compare c);
+void HASH_DeleteTable (hashTable_s** t);
+
+void HASH_Insert (hashTable_s* t, const void* key, int nkey, const void* value, int nvalue);
+void* HASH_Remove (hashTable_s* t, const void* key, int nkey);
+void HASH_Clear (hashTable_s* t);
+void* HASH_Get (hashTable_s* t, const void* key, int nkey);
+int HASH_Count (hashTable_s* t);
+
+#ifdef __DEBUG__
+bool HASH_test ();
+#endif // __DEBUG__
+
+#endif // HASHTABLE_H
+
+
