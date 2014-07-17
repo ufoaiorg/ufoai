@@ -33,7 +33,7 @@
 
 # include <wtypes.h>
 
-#elif defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
+#elif defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__) || defined (__OpenBSD__)
 
 # include <GL/glx.h>
 # include <dlfcn.h>
@@ -53,7 +53,7 @@ static void QGL_Shutdown (OpenGLBinding& table)
 {
 	g_message("Shutting down OpenGL module...");
 
-#if defined __linux__ || defined __FreeBSD__ || defined __APPLE__
+#if defined __linux__ || defined __FreeBSD__ || defined __APPLE__ || defined __OpenBSD__
 	qglXGetProcAddressARB = 0;
 #elif !defined _WIN32
 #error "unsupported platform"
@@ -110,7 +110,7 @@ template<typename Func>
 bool QGL_constructExtensionFunc (Func& func, const char* symbol)
 {
 	func = reinterpret_cast<Func>(
-#if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
+#if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__) || defined(__OpenBSD__)
 		qglXGetProcAddressARB ? qglXGetProcAddressARB(reinterpret_cast<GLubyte const*>(symbol)) : 0
 #elif defined(_WIN32)
 		wglGetProcAddress(symbol)
@@ -123,7 +123,7 @@ bool QGL_constructExtensionFunc (Func& func, const char* symbol)
 
 static int QGL_Init (OpenGLBinding& table)
 {
-#if defined __linux__ || defined __FreeBSD__ || defined __APPLE__
+#if defined __linux__ || defined __FreeBSD__ || defined __APPLE__ || defined __OpenBSD__
 	qglXGetProcAddressARB = reinterpret_cast<glXGetProcAddressARBProc*>(reinterpret_cast<uintptr_t>(dlsym(RTLD_DEFAULT, "glXGetProcAddressARB")));
 	if (!glXQueryExtension(GDK_DISPLAY(), 0, 0))
 		return 0;
