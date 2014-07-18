@@ -2624,10 +2624,11 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-#define SWIGTYPE_p_lua_State swig_types[0]
-#define SWIGTYPE_p_uiNode_t swig_types[1]
-static swig_type_info *swig_types[3];
-static swig_module_info swig_module = {swig_types, 2, 0, 0, 0, 0};
+#define SWIGTYPE_p_LUA_ONLOAD_CALLBACK swig_types[0]
+#define SWIGTYPE_p_lua_State swig_types[1]
+#define SWIGTYPE_p_uiNode_t swig_types[2]
+static swig_type_info *swig_types[4];
+static swig_module_info swig_module = {swig_types, 3, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2753,28 +2754,14 @@ static swig_lua_class _wrap_class_uiNode = { "uiNode", "uiNode", &SWIGTYPE_p_uiN
 static int _wrap_register_onload(lua_State* L) {
   int SWIG_arg = 0;
   lua_State *arg1 = (lua_State *) 0 ;
+  LUA_ONLOAD_CALLBACK arg2 ;
   
   arg1 = L;
-  SWIG_check_num_args("UI_RegisterHandler_OnLoad",0,0)
-  UI_RegisterHandler_OnLoad(arg1);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_register_onclick(lua_State* L) {
-  int SWIG_arg = 0;
-  lua_State *arg1 = (lua_State *) 0 ;
-  
-  arg1 = L;
-  SWIG_check_num_args("UI_RegisterHandler_OnClick",0,0)
-  UI_RegisterHandler_OnClick(arg1);
+  SWIG_check_num_args("UI_RegisterHandler_OnLoad",1,1)
+  {
+    arg2 = (LUA_ONLOAD_CALLBACK)luaL_ref (L, LUA_REGISTRYINDEX);
+  }
+  UI_RegisterHandler_OnLoad(arg1,arg2);
   
   return SWIG_arg;
   
@@ -2794,7 +2781,6 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
 };
 static swig_lua_method swig_SwigModule_methods[]= {
     { "register_onload", _wrap_register_onload},
-    { "register_onclick", _wrap_register_onclick},
     {0,0}
 };
 static swig_lua_class* swig_SwigModule_classes[]= {
@@ -2819,18 +2805,22 @@ static swig_lua_namespace swig_SwigModule = {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
+static swig_type_info _swigt__p_LUA_ONLOAD_CALLBACK = {"_p_LUA_ONLOAD_CALLBACK", "LUA_ONLOAD_CALLBACK *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_lua_State = {"_p_lua_State", "lua_State *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_uiNode_t = {"_p_uiNode_t", "uiNode_t *", 0, 0, (void*)&_wrap_class_uiNode, 0};
 
 static swig_type_info *swig_type_initial[] = {
+  &_swigt__p_LUA_ONLOAD_CALLBACK,
   &_swigt__p_lua_State,
   &_swigt__p_uiNode_t,
 };
 
+static swig_cast_info _swigc__p_LUA_ONLOAD_CALLBACK[] = {  {&_swigt__p_LUA_ONLOAD_CALLBACK, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_lua_State[] = {  {&_swigt__p_lua_State, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiNode_t[] = {  {&_swigt__p_uiNode_t, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
+  _swigc__p_LUA_ONLOAD_CALLBACK,
   _swigc__p_lua_State,
   _swigc__p_uiNode_t,
 };

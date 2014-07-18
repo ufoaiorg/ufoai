@@ -378,9 +378,11 @@ void HASH_Clear (hashTable_s* t) {
 void* HASH_Get (hashTable_s* t, const void* key, int nkey) {
 	// compute bucket index
 	int idx = t->hash(key, nkey);
-	// from this bucket, scan for exact match
-	hashItem_s* i = _find_bucket_entry(t->table[idx], t->compare, key, nkey, NULL);
-	if (i) return i->value;
+	if (t->table[idx]) {
+		// from this bucket, scan for exact match
+		hashItem_s* i = _find_bucket_entry(t->table[idx], t->compare, key, nkey, NULL);
+		if (i) return i->value;
+	}
 	return NULL;
 }
 
@@ -501,6 +503,30 @@ bool HASH_test () {
 	int idx_low = (HASH_TABLE_SIZE/2) - (HASH_TABLE_SIZE/10);
 	int idx_high = (HASH_TABLE_SIZE/2) + (HASH_TABLE_SIZE/10);
 	if ( !((idx_low <= avg) && (idx_high >= avg)) ) return false;
+
+	/* test 6: hash table without ownership test */
+	table = HASH_NewTable(true, false, true);
+	char item1[] = "AAA";
+	char item2[] = "BBB";
+	char item3[] = "CCC";
+	HASH_Insert (table, item1, 4, item1, 4);
+	HASH_Insert (table, item2, 4, item2, 4);
+	HASH_Insert (table, item3, 4, item3, 4);
+	/* check if we get the correct value pointers */
+	aaa = (char*)HASH_Get(table, "AAA", 4);
+	if (aaa != item1) return false;
+	bbb = (char*)HASH_Get(table, "BBB", 4);
+	if (bbb != item2) return false;
+	ccc = (char*)HASH_Get(table, "CCC", 4);
+	if (ccc != item3) return false;
+	HASH_DeleteTable (&table);
+	/* check table pointer is correctly set to nil */
+	result = result && (table == NULL);
+	if (!result) return false;
+	/* check alloc total */
+	result = result && (_num_allocs == 0);
+	if (!result) return false;
+
 
 	/* end of unit test, everything OK */
 	return true;
