@@ -5,11 +5,11 @@
 --]]
 
 function load ()
-	print("inside test_lua.ufo: calling load")
+	ufo.print("inside test_lua.ufo: calling load\n")
 end
 
 -- register callbacks
-print("inside test_lua.ufo: registering callbacks")
+ufo.print("inside test_lua.ufo: registering callbacks\n")
 ufoui.register_onload (load)
 
 --[[

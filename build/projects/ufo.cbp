@@ -806,9 +806,7 @@
 		<Unit filename="../../src/common/filesys.h" />
 		<Unit filename="../../src/common/grid.cpp" />
 		<Unit filename="../../src/common/grid.h" />
-		<Unit filename="../../src/common/hashtable.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="../../src/common/hashtable.cpp" />
 		<Unit filename="../../src/common/hashtable.h" />
 		<Unit filename="../../src/common/http.cpp" />
 		<Unit filename="../../src/common/http.h" />

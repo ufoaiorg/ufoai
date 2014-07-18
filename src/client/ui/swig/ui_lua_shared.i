@@ -41,6 +41,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_lua.h"
 %}
 
+/* typemap for converting lua function to C */
+%typemap(in) LUA_ONLOAD_CALLBACK {
+	$1 = (LUA_ONLOAD_CALLBACK)luaL_ref (L, LUA_REGISTRYINDEX);
+}
+
 /* expose node structure */
 %rename(uiNode) uiNode_t;
 struct uiNode_t {
@@ -54,7 +59,5 @@ struct uiNode_t {
 
 /* expose registration functions for callbacks */
 %rename(register_onload) UI_RegisterHandler_OnLoad;
-void UI_RegisterHandler_OnLoad (lua_State *L);
-%rename(register_onclick) UI_RegisterHandler_OnClick;
-void UI_RegisterHandler_OnClick (lua_State *L);
+void UI_RegisterHandler_OnLoad (lua_State *L, LUA_ONLOAD_CALLBACK fcn);
 

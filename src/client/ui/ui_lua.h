@@ -30,6 +30,12 @@ extern "C" {
 }
 
 /**
+ * @brief callback signatures for functions defined in Lua
+ */
+typedef void (*LUA_ONLOAD_CALLBACK)(void);
+typedef void (*LUA_ONCLICK_CALLBACK) (void);
+
+/**
  * @brief global lua state used in ui-lua interfacing
  */
 extern lua_State* ui_luastate;
@@ -39,8 +45,7 @@ void UI_InitLua (void);
 void UI_ShutdownLua (void);
 
 /* lua callback registration functions */
-void UI_RegisterHandler_OnLoad (lua_State *L);
-void UI_RegisterHandler_OnClick (lua_State *L);
+void UI_RegisterHandler_OnLoad (lua_State *L, LUA_ONLOAD_CALLBACK fnc);
 
 /* lua script functions */
 bool UI_ParseAndLoadLuaScript (const char* name, const char** text);
