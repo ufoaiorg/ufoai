@@ -9,11 +9,6 @@
 // h: street horizontally
 // v: street vertically
 
-worldspawn {
-	"light_day"		"300"
-	"light_night"	"300"
-}
-
 base village/vil_
 
 // dropship tiles --------------------------------------------------*
