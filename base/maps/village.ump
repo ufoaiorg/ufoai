@@ -9,8 +9,12 @@
 // h: street horizontally
 // v: street vertically
 
+worldspawn {
+	"light_day"		"300"
+	"light_night"	"300"
+}
+
 base village/vil_
-line hv
 
 // dropship tiles --------------------------------------------------*
 
@@ -44,45 +48,36 @@ h		+h		+hv		+h		h
 0		0		v		0		0
 }
 
-tile +start
-	// starting point for Phalanx in case we do not use a dropship
-{
-3 3
-0		0		0
-0		+a		0
-0		0		0
-}
-
 // UFOs ------------------------------------------------------------*
 
 tile +craft_ufo_bomber
 {
 6 10
-0		0		0		0		0		0
-0		0		+c		+c		0		0
-a		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		a
-h		+hc		+hc		+hc		+hc		h
-a		+c		+c		+c		+c		a
-0		0		0		0		0		0
+0		0		v		0		0		0
+0		0		+vc		+c		0		0
+0		+c		+vc		+c		+c		0
+0		+c		+vc		+c		+c		0
+0		+c		+vc		+c		+c		0
+0		+c		+vc		+c		+c		0
+a		+c		+vc		+c		+c		a
+h		+hc		+hvc	+hc		+hc		h
+a		+c		+vc		+c		+c		a
+0		0		v		0		0		0
 }
 
 
 tile +craft_ufo_corrupter
 {
 8 10
-0		0		0		0		0		0		0		0
-0		0		0		+c		+c		0		0		0
-0		0		0		+c		+c		0		0		0
-0		0		0		+c		+c		0		0		0
-a		+c		+c		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		+c		+c		a
-a		+c		+c		+c		+c		+c		+c		a
-h		+hc		+hc		+hc		+hc		+hc		+hc		h
-a		+c		+c		+c		+c		+c		+c		a
+0		0		0		v		0		0		0		0
+0		0		0		+vc		+c		0		0		0
+0		0		0		+vc		+c		0		0		0
+0		0		0		+vc		+c		0		0		0
+0		+c		+c		+vc		+c		+c		+c		0
+0		+c		+c		+vc		+c		+c		+c		0
+a		+c		+c		+vc		+c		+c		+c		a
+h		+hc		+hc		+hvc	+hc		+hc		+hc		h
+a		+c		+c		v		+c		+c		+c		a
 0		0		0		0		0		0		0		0
 }
 
@@ -131,8 +126,81 @@ x		+h		+c		+h		h		0		0		0		0		0
 x		0		0		0		0		0		0		0		0		0
 }
 
-// street tiles -----------------------------------------------------*
+// Dummy tiles -----------------------------------------------------*
 
+tile +dummy_ne
+{
+3 3
+0		ach		achv
+1		+a2		acv
+0		3		0
+}
+
+tile +dummy_nw
+{
+3 3
+achv	ach		0
+acv		+a1		2
+0		4		0
+}
+
+tile +dummy_se
+{
+3 3
+0		2		0
+4		+a3		acv
+0		ach		achv
+}
+
+tile +dummy_sw
+{
+3 3
+0		1		0
+acv		+a4		3
+achv	ach		0
+}
+
+tile +dummy_centre
+{
+3 3
+0		12x		0
+14x		+x		23x
+0		34x		0
+}
+
+tile +dummy_e
+{
+3 3
+0		2		0
+x		+a23	acv
+0		3		0
+}
+
+tile +dummy_n
+{
+3 3
+0		ach		0
+1		+a12	2
+0		x		0
+}
+
+tile +dummy_s
+{
+3 3
+0		x		0
+4		+a34	3
+0		ach		0
+}
+
+tile +dummy_w
+{
+3 3
+0		1		0
+acv		+a14	x
+0		4		0
+}
+
+// street tiles -----------------------------------------------------*
 
 tile +street_h_01
 {
@@ -329,30 +397,10 @@ h		+ah		+a		0
 0		0		v		0
 }
 
-// miscellaneous ---------------------------------------------------*
+// filler tiles ----------------------------------------------------*
 
 tile +misc_01
-	// a small garden, a bench, A- C2
-{
-3 3
-0		0		0
-0		+a		0
-0		0		0
-}
-
-tile +misc_02
-	// two barrels, two boxes, adverts, A- C-
-{
-3 3
-0		h		0
-0		+a		0
-0		0		0
-}
-
-// nature ----------------------------------------------------------*
-
-tile +nature_00
-	// plain, empty, A- C-
+	// a bench, A- C2
 {
 3 3
 0		0		0
@@ -363,8 +411,9 @@ tile +nature_00
 tile +nature_01
 	// a single tree, A- C-
 {
-3 3
+3 4
 0		0		0
+0		+a		0
 0		+a		0
 0		0		0
 }
@@ -387,34 +436,6 @@ tile +nature_03
 0		0		0
 }
 
-tile +nature_04
-	// a single fir, a bench, A- C-
-{
-3 3
-0		0		0
-0		+a		0
-0		0		0
-}
-
-tile +nature_05
-	// plain, some plants
-{
-3 3
-0		0		0
-0		+a		0
-0		0		0
-}
-
-tile +nature_06
-	// raised ground
-{
-4 4
-0		0		0		0
-0		+a		+a		0
-0		+a		+a		0
-0		0		0		0
-}
-
 tile +nature_07
 	// a single tree, A- C-
 {
@@ -424,35 +445,8 @@ tile +nature_07
 0		0		0
 }
 
-tile +nature_08
-	// a single rock , A- C-
-{
-3 3
-0		0		0
-0		+a		0
-0		0		0
-}
-
-tile +nature_09
-	// dead tree , A- C-
-{
-3 3
-0		0		0
-0		+a		0
-0		0		0
-}
-
-tile +nature_10
-	// fence, barrel, plants , A- C-
-{
-3 3
-0		0		0
-0		+a		0
-0		0		0
-}
-
 tile +nature_11
-	// trees, a yellow bench , A- C2
+	// four trees, a yellow bench , A- C2
 {
 5 3
 0		0		0		0		0
@@ -460,44 +454,35 @@ tile +nature_11
 0		0		0		0		0
 }
 
-// buildings -------------------------------------------------------*
+
+// main tiles ------------------------------------------------------*
+
+// main tiles need to be connected to a horizontal street tile and
+// must not be larger than 4x3 map tiles (where the street does not
+// count in)
+// the adjecent street tile should be located to either the northeast
+// or southwest
 
 tile +bungalow
-	// large house, A6 C3
-	// starting points for mp team 4
-{
-5 7
-0		0		0		0		0
-0		+a		+a		+a		0
-0		+a		+a		+a		0
-0		+a		+a		+a		0
-0		+a		+a		+a		0
-0		h		+h		h		0
-0		0		0		0		0
-}
-
-tile +bungalow2
-	// large house, A9 C2
-	// starting points for mp team 3
 {
 6 6
 0		0		0		0		0		0
-0		0		h		+h		h		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+h		+ah		h		0		0		0
+0		0		0		0		0		0
+}
+
+tile +bungalow2
+{
+6 6
+0		0		0		0		0		0
+0		0		0		h		+ah		h
 0		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		0
 0		0		0		0		0		0
-}
-
-tile +diner_01
-	// diner, A4 C3
-{
-6 5
-0		v		0		0		0		0
-0		+v		+a		+a		+a		0
-0		v		+a		+a		+a		0
-0		0		+a		+a		+a		0
-0		v		0		0		0		0
 }
 
 tile +estate
@@ -507,9 +492,106 @@ tile +estate
 0		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		0
-0		h		+h		h		0		0
+h		+ah		h		0		0		0
 0		0		0		0		0		0
 }
+
+// secondary tiles -------------------------------------------------*
+
+// secondary tiles need to be connected to a vertical street tile and
+// must not be larger than 3x3 map tiles (where the street does not
+// count in)
+// the adjecent street tile should be located to either the nortwest
+// or southeast
+
+tile +diner_01
+{
+6 5
+0		v		0		0		0		0
+0		+av		+a		+a		+a		0
+0		v		+a		+a		+a		0
+0		0		+a		+a		+a		0
+0		v		0		0		0		0
+}
+
+tile +gasstation_01
+{
+6 5
+0		0		0		0		0		0
+0		0		+a		+a		0		0
+0		+a		+a		+a		v		0
+0		+a		+a		+a		+av		0
+0		0		0		0		v		0
+}
+
+tile +mart_01
+{
+6 5
+0		0		0		0		0		0
+0		+a		+a		+a		0		0
+0		+a		+a		+a		v		0
+0		+a		+a		+a		+av		0
+0		0		0		0		v		0
+}
+
+tile +house_05
+{
+5 5
+0		0		0		0		0
+0		+a		+a		0		0
+0		+a		+a		v		0
+0		+a		+a		+av		0
+0		0		0		v		0
+}
+
+tile +house_07
+{
+5 5
+0		0		0		0		0
+0		+a		+a		0		0
+0		+a		+a		v		0
+0		+a		+a		+av		0
+0		0		0		v		0
+}
+
+// housing ---------------------------------------------------------*
+
+// house tiles are not connected to a street tile, 
+// and must not be larger than 3x3 map tiles
+
+tile +house_01
+	// big house with wooden roof, wooden fence, A6 C3
+	// entrance facing north
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +house_02
+	// L-shaped house known from +eaglenest map, A8 C1
+	// does not fit the theme at all
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +house_03
+	// modern house, A8 C1
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// others ----------------------------------------------------------*
 
 tile +garage_01
 	// garage at vertical street
@@ -550,58 +632,6 @@ h		+ah		+ah		h
 0		0		0		0
 }
 
-tile +gasstation_01
-	// gas station, A3, C1
-{
-6 5
-0		0		0		0		0		0
-0		0		+a		+a		v		0
-0		+a		+a		+a		+av		0
-0		+a		+a		+a		v		0
-0		0		0		0		0		0
-}
-
-tile +house_01
-	// big house with wooden roof, wooden fence, A3 C3
-{
-4 4
-0		0		0		0
-0		+a		+a		0
-0		+a		+a		0
-0		h		h		0
-}
-
-tile +house_02
-	// L-shaped house known from +eaglenest map, A2 C1
-	// does not fit the theme at all
-{
-4 4
-0		0		0		0
-0		+a		+a		0
-0		0		+a		0
-0		0		0		0
-}
-
-tile +house_03
-	// modern house, A3 C1
-{
-6 4
-0		v		0		0		0		0
-0		+av		+a		+a		+a		0
-0		v		0		+a		+a		0
-0		0		0		0		0		0
-}
-
-tile +house_05
-{
-5 5
-0		0		0		0		0
-0		+a		+a		v		0
-0		+a		+a		+av		0
-0		+a		+a		v		0
-0		0		0		0		0
-}
-
 tile +house_06
 {
 6 7
@@ -611,26 +641,6 @@ tile +house_06
 0		+av		+a		+a		+a		0
 0		v		+a		+a		+a		0
 0		0		+a		+a		+a		0
-0		0		0		0		0		0
-}
-
-tile +house_07
-{
-5 5
-0		0		0		v		0
-0		+a		+a		+av		0
-0		+a		+a		v		0
-0		+a		+a		0		0
-0		0		0		0		0
-}
-
-tile +mart_01
-{
-6 5
-0		0		0		0		0		0
-0		+a		+a		+a		v		0
-0		+a		+a		+a		+av		0
-0		+a		+a		+a		v		0
 0		0		0		0		0		0
 }
 
@@ -687,7 +697,7 @@ tile +playground_01
 }
 
 tile +fountain_01
-	// a fountain, A- C-
+	// a fountain, A4 C-
 {
 4 4
 0		0		0		0
@@ -705,80 +715,74 @@ tileset main {
 	+estate
 }
 
-tileset housing {
-	+house_01
-	+house_02
-	+house_03
-	+house_05
-	+house_06
-	+house_07
+// main buildings located north of a horizontal street
+tileset main_n {
+	+bungalow
+	+estate
 }
 
-tileset commercial {
+// main buildings located south of a horizontal street
+tileset main_s {
+	+bungalow2
+}
+
+tileset secondary {
 	+diner_01
 	+gasstation_01
 	+mart_01
+	+house_05
+	+house_07
 }
 
+// secondary buildings located east of a vertical street
+tileset secondary_e {
+	+diner_01
+}
+
+// secondary buildings located west of a vertical street
+tileset secondary_w {
+	+gasstation_01
+	+mart_01
+	+house_05
+	+house_07
+}
+
+tileset housing_2x2 {
+	+house_01
+	+house_02
+	+house_03
+}
+
+tileset housing_3x2 {
+	+park_01
+	+park_02
+	+park_03
+	+park_04
+}
+
+tileset misc_2x2 {
+	+fountain_01
+	+playground_01
+}
+
+// garage connected to a vertical street
 tileset garage_v {
 	+garage_01
 	+garage_03
 }
 
+// garage connected to a horizontal street
 tileset garage_h {
 	+garage_02
 	+garage_04
 }
 
-tileset nature {
-	+nature_01
-	+nature_03
-	+nature_04
-	+nature_05
-	+nature_07
-	+nature_08
-	+nature_09
-	+nature_10
-}
-
-tileset park {
-	+fountain_01
-	+park_01
-	+park_02
-	+park_03
-	+park_04
-	+playground_01
-}
-
-tileset street_01 {
-	+street_ne
-	+street_nw
-	+street_se
-	+street_sw
-	+street_junction_e
-	+street_junction_n
-	+street_junction_s
-	+street_junction_w
-}
-
-tileset street_02 {
-	+street_ne
-	+street_nw
-	+street_se
-	+street_sw
-}
-
-tileset street_03 {
-	+street_junction_e
-	+street_junction_n
-	+street_junction_s
-	+street_junction_w
+tileset filler {
+	+nature_03	// 1x1
+	+nature_07	// 1x1
 }
 
 tileset street_h {
-	+street_h_01
-	+street_h_01
-	+street_h_01
 	+street_h_02
 	+street_h_03
 	+street_h_04
@@ -787,9 +791,6 @@ tileset street_h {
 }
 
 tileset street_v {
-	+street_v_01
-	+street_v_01
-	+street_v_01
 	+street_v_02
 	+street_v_03
 	+street_v_04
@@ -801,13 +802,21 @@ tileset street_v {
 
 assembly bungalow
 {
-size "6 6"
+size "7 5"
+title "_Bungalow"
 +bungalow			"1 1"
 +garage_01			"0 1"
-+garage_02			"0 1"
 +garage_03			"0 1"
-+nature_11			"0 1"
-tileset nature		"0 10"
++garage_04			"0 1"
++misc_01			"0 1"	// 1x1
++nature_01			"0 1"	// 1x2
++nature_02			"0 1"	// 2x1
++nature_11			"0 1"	// 1x3
++dummy_ne			"0 1"
++dummy_nw			"0 1"
++dummy_se			"0 1"
++dummy_sw			"0 1"
+tileset filler		"0 5"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird	"1 1"
@@ -816,12 +825,20 @@ tileset street_v	"0 5"
 assembly bungalow2
 {
 size "7 5"
+title "_Bungalow2"
 +bungalow2			"1 1"
 +garage_01			"0 1"
 +garage_02			"0 1"
 +garage_03			"0 1"
-+nature_11			"0 1"
-tileset nature		"0 10"
++misc_01			"0 1"	// 1x1
++nature_01			"0 1"	// 1x2
++nature_02			"0 1"	// 2x1
++nature_11			"0 1"	// 1x3
++dummy_ne			"0 1"
++dummy_nw			"0 1"
++dummy_se			"0 1"
++dummy_sw			"0 1"
+tileset filler		"0 9"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird	"1 1"
@@ -830,100 +847,131 @@ tileset street_v	"0 5"
 assembly estate
 {
 size "7 5"
+title "_Estate"
 +estate				"1 1"
 +garage_01			"0 1"
-+garage_02			"0 1"
 +garage_03			"0 1"
-+nature_11			"0 1"
-tileset nature		"0 10"
++garage_04			"0 1"
++misc_01			"0 1"	// 1x1
++nature_01			"0 1"	// 1x2
++nature_02			"0 1"	// 2x1
++nature_11			"0 1"	// 1x3
++dummy_ne			"0 1"
++dummy_nw			"0 1"
++dummy_se			"0 1"
++dummy_sw			"0 1"
+tileset filler		"0 2"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird	"1 1"
 }
 
+/* TODO -----------------------------------------
+This is weird. Using the misc_01 as a filler tile it assembles
+fast (around 10 seconds/test on avg) and without any problems.
+Switching to the filler tileset instead breaks it. The average time goes
+up by 50% because some seeds take ages, while some will not work at all.
+
 assembly large
 {
 size "10 8"
 title "_Village"
-+diner_01			"0 1"
-+house_01			"0 1"
-+house_02			"0 1"
-+house_03			"0 1"
-+house_05			"0 1"
-+house_06			"0 1"
-+house_07			"0 1"
-+misc_01			"0 1"
-+misc_02			"0 1"
-//+nature_00			"0 9"
-+nature_02			"0 1"
-+nature_06			"0 1"
-+nature_11			"0 1"
-+park_01			"0 1"
-+park_02			"0 1"
-+park_03			"0 1"
-+park_04			"0 1"
-+fountain_01		"0 1"
-+playground_01		"0 1"
-tileset garage_h	"0 1"
-tileset garage_v	"0 1"
-tileset nature		"0 9"
+tileset secondary		"1 1"
+tileset housing_2x2		"1 1"
+tileset housing_3x2		"0 1"
+tileset misc_2x2		"0 1"
+
+//tileset filler			"0 30"
++misc_01				"0 30"	// 1x1
+
 tileset street_h	"0 8"
 tileset street_v	"0 8"
 *rm_drop +craft_drop_firebird	"1 1"
-*rm_ufo +craft_ufo_bomber	"1 1"
+*rm_ufo +craft_ufo_bomber		"1 1"
+}
+-----------------------------------------------*/
+
+assembly large
+{
+size "10 8"
+title "_Village"
+tileset secondary		"1 1"
+tileset housing_2x2		"1 1"
+tileset housing_3x2		"0 1"
+tileset misc_2x2		"1 1"
+tileset garage_h		"0 1"
+tileset garage_v		"0 1"
+//+dummy_ne				"0 2"
+//+dummy_nw				"0 2"
+//+dummy_se				"0 2"
+//+dummy_sw				"0 2"
+//+misc_01				"0 1"	// 1x1
++nature_01				"0 1"	// 1x2
++nature_02				"0 1"	// 2x1
+//+nature_03				"0 1"	// 1x1
++nature_07				"0 20"	// 1x1
++nature_11				"0 1"	// 1x3
+tileset street_h	"0 8"
+tileset street_v	"0 8"
+*rm_drop +craft_drop_firebird	"1 1"
+*rm_ufo +craft_ufo_bomber		"1 1"
 }
 
 assembly medium
 {
 size "8 8"
 title "_Village"
-tileset commercial	"1 1"
-+house_01			"0 1"
-+house_02			"0 1"
-+house_03			"0 1"
-+house_05			"0 1"
-+house_06			"0 1"
-+house_07			"0 1"
-+misc_01			"0 1"
-+misc_02			"0 1"
-+nature_00			"0 35"
-+nature_02			"0 1"
-+nature_06			"0 1"
-+nature_11			"0 1"
-tileset garage_h	"0 1"
-tileset garage_v	"0 1"
-tileset nature		"0 9"
-tileset park		"1 1"
-tileset street_h	"0 8"
-tileset street_v	"0 8"
-*rm_drop +craft_drop_firebird "1 1"
-*rm_ufo +craft_ufo_harvester "1 1"
+tileset secondary		"1 1"
+tileset housing_2x2		"1 1"
+tileset misc_2x2		"1 1"
+tileset garage_h		"0 1"
+tileset garage_v		"0 1"
+//tileset filler			"0 15"
+//+misc_01				"0 1"	// 1x1
++nature_01				"0 1"	// 1x2
++nature_02				"0 1"	// 2x1
+//+nature_03				"0 1"	// 1x1
++nature_07				"0 15"	// 1x1
++nature_11				"0 1"	// 1x3
+//+dummy_ne				"0 2"
+//+dummy_nw				"0 2"
+//+dummy_se				"0 2"
+//+dummy_sw				"0 2"
+tileset street_h		"0 8"
+tileset street_v		"0 8"
+*rm_drop +craft_drop_firebird	"1 1"
+*rm_ufo +craft_ufo_harvester	"1 1"
 }
 
 assembly medium_noufo
 {
 size "8 8"
 title "_Village"
-tileset main		"1 1"
-tileset commercial	"1 1"
-+house_01			"0 1"
-+house_02			"0 1"
-+house_03			"0 1"
-+house_05			"0 1"
-+house_06			"0 1"
-+house_07			"0 1"
-+misc_01			"0 1"
-+misc_02			"0 1"
-+nature_00			"0 9"
-+nature_02			"0 1"
-+nature_06			"0 1"
-+nature_11			"0 1"
-tileset garage_h	"0 1"
-tileset garage_v	"0 1"
-tileset nature		"0 5"
-tileset park		"0 2"
-tileset street_h	"0 5"
-tileset street_v	"0 5"
+tileset main			"1 1"
+tileset secondary		"1 1"
+tileset housing_2x2		"1 1"
+tileset housing_3x2		"1 1"
+tileset misc_2x2		"0 1"
+tileset garage_h		"0 1"
+tileset garage_v		"0 1"
+//tileset filler			"0 9"
++misc_01				"0 1"	// 1x1
++nature_01				"0 1"	// 1x2
++nature_02				"0 1"	// 2x1
+//+nature_03				"0 1"	// 1x1
++nature_07				"0 20"	// 1x1
++nature_11				"0 1"	// 1x3
+//+dummy_centre			"0 9"
+//+dummy_e				"0 9"
+//+dummy_n				"0 9"
+//+dummy_s				"0 9"
+//+dummy_w				"0 9"
+//+dummy_ne				"0 4"
+//+dummy_nw				"0 4"
+//+dummy_se				"0 4"
+//+dummy_sw				"0 4"
+tileset street_h		"0 5"
+tileset street_v		"0 5"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
@@ -931,30 +979,44 @@ assembly small
 {
 size "7 7"
 title "_Village"
-tileset main		"1 1"
-+misc_01			"0 1"
-+misc_02			"0 1"
-+nature_02			"0 1"
-+nature_06			"0 1"
-+nature_11			"0 1"
-tileset garage_h	"0 1"
-tileset garage_v	"0 1"
-tileset nature		"0 9"
-tileset street_h	"0 8"
-tileset street_v	"0 8"
+tileset main			"1 1"
+//tileset secondary		"0 1"
+//tileset housing_2x2		"0 1"
+tileset housing_3x2		"1 1"
+//tileset misc_2x2		"0 1"
++misc_01				"0 1"	// 1x1
++nature_01				"0 1"	// 1x2
++nature_02				"0 1"	// 2x1
++nature_11				"0 1"	// 1x3
+tileset garage_h		"0 1"
+tileset garage_v		"0 1"
+tileset filler			"0 15"
+tileset street_h		"0 8"
+tileset street_v		"0 8"
+//+dummy_centre			"0 4"
+//+dummy_e				"0 4"
+//+dummy_n				"0 4"
+//+dummy_s				"0 4"
+//+dummy_w				"0 4"
+//+dummy_ne				"0 2"
+//+dummy_nw				"0 2"
+//+dummy_se				"0 2"
+//+dummy_sw				"0 2"
 *rm_drop +craft_drop_firebird	"1 1"
-*rm_ufo +craft_ufo_fighter	"1 1"
+*rm_ufo +craft_ufo_fighter		"1 1"
 }
 
 assembly small_crash
 {
 size "10 6"
-title "_Village"
+title "_Fighter crash"
 +garage_01			"0 1"
 +garage_02			"0 1"
 +garage_04			"0 1"
-+nature_01			"0 1"
-tileset nature		"0 15"
++nature_01			"0 1"	// 1x2
++nature_02			"0 1"	// 2x1
++nature_11			"0 1"	// 1x3
+tileset filler		"0 3"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird "1 1"
@@ -964,23 +1026,22 @@ tileset street_v	"0 5"
 assembly small_street
 {
 size "6 9"
+title "_Small street"
 +house_05			"1 1"
 +house_06			"1 1"
 +house_07			"1 1"
-+garage_01			"0 1"
-+garage_02			"0 1"
-+garage_03			"0 1"
-+nature_01			"0 1"
-+nature_02			"0 1"
-+nature_03			"0 1"
-+nature_04			"0 1"
-+nature_05			"0 1"
-+nature_06			"0 1"
-+nature_07			"0 1"
-+nature_08			"0 1"
-+nature_09			"0 1"
-+nature_10			"0 1"
-+nature_11			"0 1"
++misc_01			"0 1"	// 1x1
++nature_01			"0 1"	// 1x2
++nature_02			"0 1"	// 2x1
++dummy_e			"0 4"
++dummy_n			"0 4"
++dummy_s			"0 4"
++dummy_w			"0 4"
++dummy_ne			"0 2"
++dummy_nw			"0 2"
++dummy_se			"0 2"
++dummy_sw			"0 2"
+tileset filler		"0 4"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird	"1 1"
@@ -990,25 +1051,30 @@ tileset street_v	"0 5"
 
 assembly test
 {
-size "6 9"
-+house_05			"1 1"
-+house_06			"1 1"
-+house_07			"1 1"
-+garage_01			"0 1"
-+garage_02			"0 1"
-+garage_03			"0 1"
-+nature_01			"0 1"
-+nature_02			"0 1"
-+nature_03			"0 1"
-+nature_04			"0 1"
-+nature_05			"0 1"
-+nature_06			"0 1"
-+nature_07			"0 1"
-+nature_08			"0 1"
-+nature_09			"0 1"
-+nature_10			"0 1"
-+nature_11			"0 1"
-tileset street_h	"0 5"
-tileset street_v	"0 5"
-*rm_drop +craft_drop_firebird	"1 1"
+size "7 8"
+title "_Village"
+tileset main			"1 1"
+tileset secondary		"1 1"
+tileset housing_2x2		"0 1"
+tileset housing_3x2		"0 1"
+tileset misc_2x2		"0 1"
+tileset garage_h		"0 1"
+tileset garage_v		"0 1"
+tileset filler			"0 5"
++misc_01				"0 1"	// 1x1
++nature_01				"0 1"	// 1x2
++nature_02				"0 1"	// 2x1
++nature_11				"0 1"	// 1x3
++dummy_centre			"0 9"
++dummy_e				"0 9"
++dummy_n				"0 9"
++dummy_s				"0 9"
++dummy_w				"0 9"
++dummy_ne				"0 2"
++dummy_nw				"0 2"
++dummy_se				"0 2"
++dummy_sw				"0 2"
+tileset street_h		"0 5"
+tileset street_v		"0 5"
+*rm_drop +craft_drop_firebird "1 1"
 }
