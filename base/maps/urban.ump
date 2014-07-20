@@ -80,6 +80,19 @@ tile +community_centre
 0		0		0		0		0
 }
 
+tile +hospital
+{
+6 8
+0		0		0		0		0		0
+0		0		+a		+a		+a		0
+0		0		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		0		+a		+a		+a		0
+0		0		+a		+a		+a		0
+0		0		0		0		0		0
+}
+
 tile +mart
 {
 7 7
@@ -272,6 +285,7 @@ tile +craft_drop_raptor
 tileset main {
 	+bld_laboratory
 	+clinic
+	+hospital
 	+stadium
 	+mart
 	+tower
@@ -380,6 +394,27 @@ title "_Laboratory"
 +filler_c			"0 1"
 +filler_3x1_a		"0 1"
 +bld_laboratory		"1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly hospital
+{
+size "7 7"
+title "_Hospital"
++dummy_ne			"0 2"
++dummy_nw			"0 2"
++dummy_se			"0 2"
++dummy_sw			"0 2"
++dummy_e			"0 6"
++dummy_n			"0 6"
++dummy_s			"0 6"
++dummy_w			"0 6"
++dummy_centre		"0 2"
++filler_a			"0 3"
++filler_b			"0 1"
++filler_c			"0 1"
++filler_3x1_a		"0 1"
++hospital			"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
