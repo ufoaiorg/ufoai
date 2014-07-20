@@ -508,7 +508,6 @@ mapdef bridge
 	map				"+bridge"
 	params			("default")
 	description		"_Bridge"
-	gametypes ( )
 	maxaliens		30
 
 	aircraft
@@ -522,52 +521,6 @@ mapdef bridge
 	(
 		craft_crash_fighter
 		craft_crash_scout
-	)
-
-	terrains
-	(
-		"desert"
-		"mountain"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"nopopulation"
-		"rural"
-	)
-}
-
-mapdef bridge_mp
-{
-	map				"+bridge"
-	params			("mp")
-	description		"_Bridge (MP)"
-	campaign 		false
-	singleplayer	false
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		coop2
-	)
-
-	maxaliens		30
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		craft_crash_fighter
 	)
 
 	terrains
@@ -5481,6 +5434,27 @@ mapdef wilderness
 // MULTIPLAYER ONLY MAPS //
 // ===================== //
 
+////////////////////////////
+// BRIDGE MULTIPLAYER MAP //
+////////////////////////////
+
+mapdef bridge_mp
+{
+	map				"+bridge"
+	params			("mp")
+	description		"_Bridge (MP)"
+	maxaliens		30
+	campaign 		false
+	singleplayer	false
+	multiplayer		true
+	teams			2
+	gametypes
+	(
+		fight1on1
+		coop2
+	)
+}
+
 ///////////////////////////
 // CITY2 MULTIPLAYER MAP //
 ///////////////////////////
@@ -5578,8 +5552,7 @@ mapdef harbour2mp
 	)
 }
 
-// ============ //
-
+////////////////////////////////
 // +VILLAGE2 MULTIPLAYER MAPS //
 ////////////////////////////////
 
