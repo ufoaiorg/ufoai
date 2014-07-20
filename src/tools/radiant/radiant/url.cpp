@@ -30,7 +30,7 @@
 static inline bool open_url(const char* url) {
 	return ShellExecute((HWND)GDK_WINDOW_HWND (GTK_WIDGET(GlobalRadiant().getMainWindow())->window), "open", url, 0, 0, SW_SHOW) > (HINSTANCE)32;
 }
-#elif defined(__linux__) || defined(__FreeBSD__)
+#elif defined(__linux__) || defined(__FreeBSD__) || defined (__OpenBSD__)
 #include <stdlib.h>
 static inline bool open_url (const char* url)
 {

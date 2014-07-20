@@ -49,8 +49,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #    define SO_EXT "so"
 #  endif
 
-#elif defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
+#elif defined(__FreeBSD__)
 #  define BUILDSTRING_OS "FreeBSD"
+#  ifndef SO_EXT
+#    define SO_EXT "so"
+#  endif
+
+#elif defined(__OpenBSD__)
+#  define BUILDSTRING_OS "OpenBSD"
+#  ifndef SO_EXT
+#    define SO_EXT "so"
+#  endif
+
+#elif defined(__NetBSD__)
+#  define BUILDSTRING_OS "NetBSD"
 #  ifndef SO_EXT
 #    define SO_EXT "so"
 #  endif
