@@ -1,0 +1,15 @@
+--!usr/bin/lua
+
+--[[
+	LUA TEST FILE
+	since it is named zzz.ufo it is loaded as the last .ufo file; it is used to inspect the lua environment
+--]]
+
+function load ()
+	ufo.print("inside zzz.ufo: calling load\n")
+	ufo.print("list of [package.preload]\n")
+end
+
+-- register callbacks
+ufo.print("inside zzz.ufo: registering callbacks\n")
+ufoui.register_onload (load)
