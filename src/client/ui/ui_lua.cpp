@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/defines.h"
 #include "../../shared/shared.h"
 #include "../../common/hashtable.h"
+#include "../../common/filesys.h"
 
 extern "C" {
 	#include "../../libs/lua/lauxlib.h"
@@ -48,6 +49,85 @@ char ui_scriptname[256] = "";
 hashTable_s* ui_onload = nullptr;
 
 /**
+ * @brief Loader that enables the lua files to access .ufo files through the ufo filesystem.
+ * @note This function is called from inside the lua environment. If lua encounters a 'require' statement,
+ * it uses an internal table of loading functions to load the module.
+ */
+int UI_UfoModuleLoader (lua_State* L) {
+	/* this function is called by lua with the module name on the stack */
+	char module[256];
+	char errmsg[256];
+	const char* name = lua_tostring (L, -1);
+	byte* buffer;
+
+	/* initialize */
+	memset(module, 0, sizeof(module));
+	Q_strncpyz (module, name, sizeof(module));
+	memset(errmsg, 0, sizeof(errmsg));
+
+	/* find the module using ufo's filesystem */
+	int len = FS_LoadFile (module, &buffer);
+	if (len != -1) {
+		/* found, the contents of the file is now present in buffer */
+		/* load the contents into the lua state */
+		if (luaL_loadbuffer (L, (const char*) buffer, len, module) == 0) {
+			return 1;
+		}
+		else {
+			/* push error string onto the stack */
+            sprintf(errmsg, "custom loader error - cannot load module named [%s]\n", module);
+			lua_pushstring (L, errmsg);
+		}
+	}
+	else {
+		/* push error string onto the stack */
+		sprintf(errmsg, "custom loader error - cannot find module named [%s]\n", module);
+		lua_pushstring (L, errmsg);
+	}
+	/* an error occured, return 0*/
+	return 0;
+}
+
+/**
+ * @brief This function adds loader to the lua table of module loaders that enables lua to access the
+ * ufo filesystem.
+ */
+void UI_InsertModuleLoader () {
+	/* save stack position */
+	int pos = lua_gettop (ui_luastate);
+
+	/* push the global table 'package' on the stack */
+	lua_getfield (ui_luastate, LUA_GLOBALSINDEX, "package");
+	/* using the table 'package', push the 'loaders' field on the stack */
+	lua_getfield (ui_luastate, -1, "loaders");
+	/* remote the 'package' entry from the stack */
+	lua_remove (ui_luastate, -2);
+
+	/* the lua stack now only holds the field 'loaders' on top */
+	/* next, determine the number of loaders by counting (lua doesn't have a function for this) */
+	int nloaders = 0;
+	/* lua_next pushes a (key, value) pair using the first entry following the key already on the stack;
+	   in this case we start with a nil key so lua_next will return the first (key,value) pair in the table
+	   of loaders */
+	lua_pushnil (ui_luastate);
+	/* if lua_next reaches the end, it returns 0 */
+	while (lua_next (ui_luastate, -2) != 0) {
+		/* lua_next has pushed a (key,value) pair on the stack; remove the value, keep the key
+		   for the next iteration */
+		lua_pop (ui_luastate, 1);
+		nloaders++;
+	}
+
+	/* now that we have the number of entries in the 'loaders' table, we can add or own loader */
+	lua_pushinteger (ui_luastate, nloaders + 1);
+	lua_pushcfunction (ui_luastate, UI_UfoModuleLoader);
+	lua_rawset (ui_luastate, -3);
+
+	/* restore stack position */
+	lua_settop (ui_luastate, pos);
+}
+
+/**
  * @brief Initializes the ui-lua interfacing environment.
  */
 void UI_InitLua (void) {
@@ -61,6 +141,10 @@ void UI_InitLua (void) {
 
     /* add basic lua libraries to the lua environment */
     luaL_openlibs(ui_luastate);
+
+    /* insert custom module loader */
+    UI_InsertModuleLoader();
+
     /* add the ufo module -> exposes common functions */
     luaopen_ufo (ui_luastate);
     /* add the ufoui module -> exposes ui specific functions */
@@ -115,8 +199,6 @@ static void UI_CallHandler_OnLoad (lua_State *L, const char* script) {
 		lua_rawgeti (L, LUA_REGISTRYINDEX, regvalue);
 		lua_pcall (L, 0, 0, 0);
 	}
-	else {
-	}
 }
 
 /**
@@ -129,10 +211,12 @@ static void UI_CallHandler_OnLoad (lua_State *L, const char* script) {
  * @note All parsed lua files will be added to the lua state.
  */
 bool UI_ParseAndLoadLuaScript (const char* name, const char** text) {
+	/* determine the length of the string buffer */
+	int ntext = strlen (*text);
 	/* signal lua file found */
 	Com_Printf ("UI_ParseAndLoadLuaScript: found lua file: %s\n", name);
 	/* load the contents of the lua file */
-	if (luaL_loadstring(ui_luastate, *text) == 0) {
+	if (luaL_loadbuffer(ui_luastate, *text, ntext, name) == 0) {
 		/* set the script name for calls to the registration functions */
 		Q_strncpyz (ui_scriptname, name, sizeof(ui_scriptname));
 		/* the script is loaded, now execute it; this will trigger any register_XXXX functions to be
@@ -154,3 +238,4 @@ bool UI_ParseAndLoadLuaScript (const char* name, const char** text) {
 	/* execute the onLoad function */
 	return true;
 }
+

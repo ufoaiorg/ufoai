@@ -1,0 +1,9 @@
+--!usr/bin/lua
+
+--[[
+	LUA LIBRARY
+--]]
+
+function test_lib ()
+	ufo.print("inside test_lib.ufo: calling test_lib\n")
+end

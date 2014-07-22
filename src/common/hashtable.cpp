@@ -30,6 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stddef.h>
 #include <string.h>
 
+#include "common.h"
+#include "mem.h"
+
 /*
 	The memory structure being build by the hash table looks like this:
 
@@ -114,14 +117,14 @@ static void* _hash_alloc (int n, size_t s) {
 	#ifdef __DEBUG__
 	_num_allocs++;
 	#endif // __DEBUG__
-	return calloc(n, s);
+	return Mem_Alloc (n * s);
 }
 
 static void _hash_free (void* p) {
 	#ifdef __DEBUG__
 	_num_allocs--;
 	#endif // __DEBUG__
-	free (p);
+	Mem_Free(p);
 }
 
 /**
