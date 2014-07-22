@@ -197,7 +197,9 @@ static void UI_CallHandler_OnLoad (lua_State *L, const char* script) {
 		int regvalue = * ((int*)value);
 		Com_Printf ("UI_CallHandler_OnLoad: file = %s, callback idx = %d\n", script, regvalue);
 		lua_rawgeti (L, LUA_REGISTRYINDEX, regvalue);
-		lua_pcall (L, 0, 0, 0);
+		if (lua_pcall (L, 0, 0, 0) != 0) {
+			Com_Printf ("lua error: %s\n", lua_tostring(ui_luastate, -1));
+		};
 	}
 }
 
@@ -221,7 +223,7 @@ bool UI_ParseAndLoadLuaScript (const char* name, const char** text) {
 		Q_strncpyz (ui_scriptname, name, sizeof(ui_scriptname));
 		/* the script is loaded, now execute it; this will trigger any register_XXXX functions to be
 		   called by the lua script */
-		if (lua_pcall(ui_luastate, 0, LUA_MULTRET, 0)) {
+		if (lua_pcall(ui_luastate, 0, LUA_MULTRET, 0) != 0) {
 			Com_Printf ("lua error: %s\n", lua_tostring(ui_luastate, -1));
 		};
 		ui_scriptname[0]='\0';
