@@ -892,19 +892,22 @@ size "10 8"
 title "_Village"
 tileset secondary		"1 1"
 tileset housing_2x2		"1 1"
-tileset housing_3x2		"0 1"
 tileset misc_2x2		"1 1"
 tileset garage_h		"0 1"
 tileset garage_v		"0 1"
-//+dummy_ne				"0 2"
-//+dummy_nw				"0 2"
-//+dummy_se				"0 2"
-//+dummy_sw				"0 2"
++dummy_ne				"0 3"
++dummy_nw				"0 3"
++dummy_se				"0 3"
++dummy_sw				"0 3"
+//+dummy_e				"0 2"
+//+dummy_n				"0 2"
+//+dummy_s				"0 2"
+//+dummy_w				"0 2"
 //+misc_01				"0 1"	// 1x1
 +nature_01				"0 1"	// 1x2
 +nature_02				"0 1"	// 2x1
 //+nature_03				"0 1"	// 1x1
-+nature_07				"0 20"	// 1x1
++nature_07				"0 10"	// 1x1
 +nature_11				"0 1"	// 1x3
 tileset street_h	"0 8"
 tileset street_v	"0 8"
