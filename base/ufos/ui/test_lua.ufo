@@ -4,8 +4,11 @@
 	MAIN MENU
 --]]
 
+require "ufos/ui/test_lib.ufo"
+
 function load ()
 	ufo.print("inside test_lua.ufo: calling load\n")
+	test_lib()
 end
 
 -- register callbacks
