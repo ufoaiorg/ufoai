@@ -215,6 +215,7 @@ static int AIL_getweapon(lua_State* L);
 static int AIL_missiontargets(lua_State* L);
 static int AIL_waypoints(lua_State* L);
 static int AIL_positionmission(lua_State* L);
+static int AIL_positionwander(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -241,6 +242,7 @@ static const luaL_reg AIL_methods[] = {
 	{"missiontargets", AIL_missiontargets},
 	{"waypoints", AIL_waypoints},
 	{"positionmission", AIL_positionmission},
+	{"positionwander", AIL_positionwander},
 	{nullptr, nullptr}
 };
 
@@ -1515,6 +1517,90 @@ static int AIL_positionmission (lua_State* L)
 		lua_pushboolean(L, 0);
 
 	AIL_ent->setOrigin(oldPos);
+	return 1;
+}
+
+static int AIL_positionwander (lua_State* L)
+{
+	/* Calculate move table. */
+	G_MoveCalc(0, AIL_ent, AIL_ent->pos, AIL_ent->getUsableTUs());
+	gi.MoveStore(level.pathingMap);
+
+	/* Set defaults */
+	int sphRadius = (AIL_ent->getUsableTUs() + 1) / TU_MOVE_STRAIGHT;
+	pos3_t sphCenter;
+	VectorCopy(AIL_ent->pos, sphCenter);
+
+	/* Check parameters */
+	if (lua_gettop(L) > 0) {
+		if (lua_ispos3(L, 1))
+			VectorCopy(*lua_topos3(L, 1), sphCenter);
+		else
+			AIL_invalidparameter(1);
+	}
+	if (lua_gettop(L) > 1) {
+		if (lua_isnumber(L, 2))
+			sphRadius = lua_tonumber(L, 2);
+		else
+			AIL_invalidparameter(2);
+	}
+
+	int bestScore = 0;
+	pos3_t bestPos;
+	VectorCopy(sphCenter, bestPos);
+	/* Little experiment here: this checks the positions in growing concentric spheres
+	 * from the current actor position, for this a variation of the midpoint circle algorithm is used
+	 * so to 'draw' a sphere first a circle is made at the center z level and then circles with
+	 * shrinking radi are stacked above and below it (where applicable) */
+	/* Starting with a sphere with radius 0 (just the center pos) out to the given radius */
+	for (int i = 0; i <= sphRadius; ++i) {
+		/* Battlescape has max PATHFINDING_HEIGHT levels, so cap the z offset to the max levels
+		 * the unit can currently go up or down */
+		const int zOfsMax = std::min(std::max(static_cast<int>(sphCenter[2]), PATHFINDING_HEIGHT - sphCenter[2] - 1), i);
+		/* Starting a the center z level up to zOfsMax levels */
+		for (int zOfs = 0; zOfs <= zOfsMax; ++zOfs)
+			/* We need to cover both up and down directions, so we Flip the sign (if there's actually a z offset) */
+			for (int zOfsF = zOfs, j = 0; j < 2 && (!j || zOfs); ++j, zOfsF = -zOfs) {
+				/* There are always more levels in one direction than the other (since the number is even)
+				 * so check if out of bounds */
+				if (AIL_ent->pos[2] + zOfsF < 0 || AIL_ent->pos[2] + zOfsF >= PATHFINDING_HEIGHT)
+					continue;
+				/* 'Draw' the current circle */
+				pos3_t cirCenter;
+				VectorSet(cirCenter, sphCenter[0], sphCenter[1], sphCenter[2] + zOfsF);
+				const int cirRadius = i - zOfs;
+				/* Map has a max width of PATHFINDING_WIDTH so cap the x and y offsets to the max distance to the
+				 * (max possible) map edge in the respective axis */
+				const int xOfsMax = std::max(static_cast<int>(cirCenter[0]), PATHFINDING_WIDTH - cirCenter[0] - 1);
+				const int yOfsMax = std::max(static_cast<int>(cirCenter[1]), PATHFINDING_WIDTH - cirCenter[1] - 1);
+				/* This is the main loop of the midpoint circle algorithm this specific variation
+				 * circles of consecutive integer radius won't overlap in any point or leave gaps in between,
+				 * Coincidentally (at time of writing) a circle of radius n will be exactly the farthest a normal actor can walk
+				 * with n * 2 TU, in ideal conditions (standing, no obstacles, no penalties) */
+				for (int dy = 1, xOfs = 0, yOfs = cirRadius; xOfs <= yOfs; ++xOfs, dy += 1, yOfs = cirRadius - (dy >> 1))
+					/* Have the offsets, now to fill the octants */
+					/* Need to Flip the x and y offsets */
+					for (int xOfsF = xOfs, yOfsF = yOfs, done = false; !done; done = xOfsF == yOfs, xOfsF = yOfs, yOfsF = xOfs)
+						/* And need to Flip the signs Too, for each one */
+						for (int  yOfsF2 = yOfsF, k = 0; yOfsF <= yOfsMax && k < 2 && (!k || yOfsF); yOfsF2 = -yOfsF, ++k)
+							for (int xOfsF2 = xOfsF, l = 0; xOfsF <= xOfsMax && l < 2 && (!l || xOfsF); xOfsF2 = -xOfsF, ++l) {
+								/* Again, there's more distance to one (possible) edge than the other, check if out of bounds */
+								if (cirCenter[0] + xOfsF2 < 0 || cirCenter[0] + xOfsF2 >= PATHFINDING_WIDTH || cirCenter[1] + yOfsF2 < 0 || cirCenter[1] + yOfsF2 >= PATHFINDING_WIDTH)
+									continue;
+								pos3_t pos;
+								VectorSet(pos, cirCenter[0] + xOfsF2, cirCenter[1] + yOfsF2, cirCenter[2]);
+								/* Finally got the pos to check, AI considerations go here */
+								if (G_ActorMoveLength(AIL_ent, level.pathingMap, pos, true) >= ROUTING_NOT_REACHABLE)
+									continue;
+								const int score = rand();
+								if (score > bestScore) {
+									bestScore = score;
+									VectorCopy(pos, bestPos);
+								}
+							}
+		}
+	}
+	lua_pushpos3(L, &bestPos);
 	return 1;
 }
 

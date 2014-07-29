@@ -70,16 +70,16 @@ end
 --]]
 function search ()
 	-- First check if we have a mission target
-	local targets = ai.missiontargets("alien")
+	local targets = ai.missiontargets("all", "alien")
 	if #targets < 1 then
 		-- Check if we can block an enemy target
-		targets = ai.missiontargets("phalanx")
+		targets = ai.missiontargets("all", "phalanx")
 	end
 
 	local found = false
 	if #targets > 0 then
 		for i = 1, #targets do
-			target_pos = ai.positionmission(targets[i])
+			local target_pos = ai.positionmission(targets[i])
 			if target_pos then
 				target_pos:goto()
 				found = true
@@ -93,11 +93,11 @@ function search ()
 		end
 	end
 
-	-- TODO: Implement wandering/patrolling, for now attack the nearest enemy
 	if not found then
-		-- See all (ie fall back to "cheat vision")
-		local enemy = ai.see("all", "~alien")
-		engage(enemy)
+		local next_pos = ai.positionwander()
+		if next_pos then
+			next_pos:goto()
+		end
 	end
 end
 
