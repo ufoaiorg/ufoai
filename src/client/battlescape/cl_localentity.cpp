@@ -798,7 +798,8 @@ void LE_AddProjectile (const fireDef_t* fd, int flags, const vec3_t muzzle, cons
 				if (leVictim) {
 					if (fd->obj->dmgtype != csi.damStunGas)
 						LE_ActorBodyHit(leVictim, impact, le->angle);
-					CL_ActorPlaySound(leVictim, SND_HURT);
+					if (fd->damage[0] >= 0)
+						CL_ActorPlaySound(leVictim, SND_HURT);
 				}
 			} else {
 				if (fd->impactSound != nullptr) {
