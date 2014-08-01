@@ -141,7 +141,7 @@ window stats
 	/* textlist using tabbed text */
 	text nation_stats
 	{
-		tooltip		"_Click for funding graphs"
+		tooltip		"_Click on a nation for its funding graph"
 		dataid		TEXT_STATS_NATIONS
 		pos			"518 284"
 		size		"470 240"
