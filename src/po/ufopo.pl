@@ -39,13 +39,13 @@ foreach my $file (@ARGV)
 		}
 
 		# single-line quoted string description such as "_msgid" or \"_msgid\"
-		if (!defined $str and m/"_((?:[^\\"]|\\.)*)"(.*)/)
+		if (!defined $str and m/(\\)?"_((?:[^\\"]|\\.)*?)\g1?"(.*)/)
 		{
 			# ie. translatable
-			push @{$messages{raw2postring($1)}}, "$file:$." if ($1 ne '');
+			push @{$messages{raw2postring($2)}}, "$file:$." if ($2 ne '');
 
 			# process remaining of the line
-			$_ = $3 . "\n";
+			$_ = $4 . "\n";
 			redo LINE;
 		}
 		# start of multi-line
