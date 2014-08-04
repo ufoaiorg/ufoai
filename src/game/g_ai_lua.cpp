@@ -1530,12 +1530,21 @@ static int AIL_positionwander (lua_State* L)
 	int sphRadius = (AIL_ent->getUsableTUs() + 1) / TU_MOVE_STRAIGHT;
 	pos3_t sphCenter;
 	VectorCopy(AIL_ent->pos, sphCenter);
+	int method = 0;
 
 	/* Check parameters */
 	if (lua_gettop(L) > 0) {
-		if (lua_ispos3(L, 1))
-			VectorCopy(*lua_topos3(L, 1), sphCenter);
-		else
+		if (lua_isstring(L, 1)) {
+			const char* s = lua_tostring(L, 1);
+			if (Q_streq(s, "rand"))
+				method = 0;
+			else if (Q_streq(s, "CW"))
+				method = 1;
+			else if (Q_streq(s, "CCW"))
+				method = 2;
+			else
+				AIL_invalidparameter(1);
+		} else
 			AIL_invalidparameter(1);
 	}
 	if (lua_gettop(L) > 1) {
@@ -1544,10 +1553,19 @@ static int AIL_positionwander (lua_State* L)
 		else
 			AIL_invalidparameter(2);
 	}
+	if (lua_gettop(L) > 2) {
+		if (lua_ispos3(L, 3))
+			VectorCopy(*lua_topos3(L, 3), sphCenter);
+		else
+			AIL_invalidparameter(3);
+	}
 
-	int bestScore = 0;
-	pos3_t bestPos;
-	VectorCopy(sphCenter, bestPos);
+	vec3_t d;
+	if (method > 0)
+		VectorSubtract(AIL_ent->pos, sphCenter, d);
+	const int cDir = method > 0 ? (VectorEmpty(d) ? AIL_ent->dir : AngleToDir(static_cast<int>(atan2(d[1], d[0]) * todeg))) : NONE;
+	float bestScore = 0;
+	pos3_t bestPos = {0, 0, PATHFINDING_HEIGHT};
 	/* Little experiment here: this checks the positions in growing concentric spheres
 	 * from the current actor position, for this a variation of the midpoint circle algorithm is used
 	 * so to 'draw' a sphere first a circle is made at the center z level and then circles with
@@ -1592,13 +1610,36 @@ static int AIL_positionwander (lua_State* L)
 								/* Finally got the pos to check, AI considerations go here */
 								if (G_ActorMoveLength(AIL_ent, level.pathingMap, pos, true) >= ROUTING_NOT_REACHABLE)
 									continue;
-								const int score = rand();
+								float score = 0.0f;
+								switch (method) {
+								case 0:
+									score = rand();
+									break;
+								case 1:
+								case 2: {
+									score = VectorDistSqr(sphCenter, pos);
+									VectorSubtract(pos, sphCenter, d);
+									int dir = AngleToDir(static_cast<int>(atan2(d[1], d[0]) * todeg));
+									if (!(method == 1 && dir == dvright[cDir]) && !(method == 2 && dir == dvleft[cDir]))
+										for (int n = 1; n < 8; ++n) {
+											dir = method == 1 ? dvleft[dir] : dvright[dir];
+											score /= pow(n * 2, 2);
+											if ((method == 1 && dir == dvright[cDir]) || (method == 2 && dir == dvleft[cDir]))
+												break;
+										}
+								}
+									break;
+								}
 								if (score > bestScore) {
 									bestScore = score;
 									VectorCopy(pos, bestPos);
 								}
 							}
 		}
+	}
+	if (bestPos[2] >= PATHFINDING_HEIGHT) {
+		lua_pushboolean(L, 0);
+		return 1;
 	}
 	lua_pushpos3(L, &bestPos);
 	return 1;
