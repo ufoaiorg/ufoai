@@ -84,7 +84,7 @@ ${ISSUE_TYPES}:
 
 .PHONY: monthly
 monthly:
-	$(Q)MONTH=$$(LOCATE=C date '+%m'); \
+	$(Q)MONTH=$$(LOCALE=C date '+%m'); \
 	MONTHLY_DATE_START=$$(LANG=C date -d "$${MONTH}/1 - 1 month"); \
 	MONTHLY_DATE_END=$$(LANG=C date -d "$${MONTH}/1 - 1 sec"); \
 	COMMITS=$$(git log --since="$${MONTHLY_DATE_START}" --until="$${MONTHLY_DATE_END}" --format="%s" | wc -l); \
