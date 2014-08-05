@@ -1075,7 +1075,7 @@ static void CP_DebugAddAntimatter_f (void)
 		return;
 	}
 
-	B_ManageAntimatter(base, amount, amount >= 0);
+	B_AddAntimatter(base, amount);
 }
 
 /**

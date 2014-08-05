@@ -2836,43 +2836,31 @@ int B_AntimatterInBase (const base_t* base)
 /**
  * @brief Manages antimatter (adding, removing) through Antimatter Storage Facility.
  * @param[in,out] base Pointer to the base.
- * @param[in] amount quantity of antimatter to add/remove (> 0 even if antimatter is removed)
- * @param[in] add True if we are adding antimatter, false when removing.
- * @note This function should be called whenever we add or remove antimatter from Antimatter Storage Facility.
- * @note Call with amount = 0 if you want to remove ALL antimatter from given base.
+ * @param[in] amount quantity of antimatter to add/remove
+ * @returns amount of antimater in the storage after the action
  */
-void B_ManageAntimatter (base_t* base, int amount, bool add)
+int B_AddAntimatter (base_t* base, int amount)
 {
 	const objDef_t* od;
 	capacities_t* cap;
 
 	assert(base);
 
-	if (add && !B_GetBuildingStatus(base, B_ANTIMATTER)) {
-		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-			_("%s does not have Antimatter Storage Facility. %i units of antimatter got removed."),
-			base->name, amount);
-		MS_AddNewMessage(_("Notice"), cp_messageBuffer);
-		return;
-	}
-
 	od = INVSH_GetItemByIDSilent(ANTIMATTER_ITEM_ID);
 	if (od == nullptr)
 		cgi->Com_Error(ERR_DROP, "Could not find " ANTIMATTER_ITEM_ID " object definition");
 
 	cap = CAP_Get(base, CAP_ANTIMATTER);
-	if (add) {	/* Adding. */
-		const int a = std::min(amount, cap->max - cap->cur);
-		base->storage.numItems[od->idx] += a;
-		cap->cur += a;
-	} else {	/* Removing. */
-		if (amount == 0) {
-			cap->cur = 0;
-			base->storage.numItems[od->idx] = 0;
-		} else {
-			const int a = std::min(amount, cap->cur);
-			cap->cur -= a;
-			base->storage.numItems[od->idx] -= a;
-		}
+	if (amount > 0) {
+		cap->cur += amount;
+		base->storage.numItems[od->idx] += amount;
+	} else if (amount < 0) {
+		/* correct amount */
+		const int inBase = B_AntimatterInBase(base);
+		amount = std::max(amount, -inBase);
+		cap->cur += (amount);
+		base->storage.numItems[od->idx] += amount;
 	}
+
+	return B_AntimatterInBase(base);
 }

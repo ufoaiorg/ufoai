@@ -37,11 +37,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CAP_RemoveAntimatterExceedingCapacity (base_t* base)
 {
-	const int amount = CAP_GetCurrent(base, CAP_ANTIMATTER) - CAP_GetMax(base, CAP_ANTIMATTER);
-	if (amount <= 0)
+	const int amount = CAP_GetMax(base, CAP_ANTIMATTER) - CAP_GetCurrent(base, CAP_ANTIMATTER);
+	if (amount >= 0)
 		return;
 
-	B_ManageAntimatter(base, amount, false);
+	B_AddAntimatter(base, amount);
 }
 
 /**
