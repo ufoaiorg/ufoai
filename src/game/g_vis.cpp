@@ -192,7 +192,7 @@ bool G_Vis (const int team, const Edict* from, const Edict* check, const vischec
 		return false;
 
 	/* inverse team rules */
-	if (team < 0 && check->team == -team)
+	if (team < 0 && from->team == -team)
 		return false;
 
 	/* check for same pos */
