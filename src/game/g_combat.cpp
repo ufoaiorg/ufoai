@@ -926,10 +926,13 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
 		damage = std::max(0.0f, fd->damage[0] + (fd->damage[1] * crand()));
 
 	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
-	trace_t tr = G_Trace(Line(cur_loc, impact), ent, MASK_SHOT);
+	const Edict* passEnt = ent;
+	trace_t tr = G_Trace(Line(cur_loc, impact), passEnt, MASK_SHOT);
 	Edict* trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
-	if (trEnt && (trEnt->isSameTeamAs(ent) || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt) && !FIRESH_IsMedikit(fd))
-		VectorMA(cur_loc, UNIT_SIZE * 1.4f, dir, cur_loc);
+	if (trEnt && (trEnt->isSameTeamAs(ent) || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt) && !FIRESH_IsMedikit(fd)) {
+		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
+		passEnt = trEnt;
+	}
 
 	vec3_t tracefrom;	/* sum */
 	VectorCopy(cur_loc, tracefrom);
@@ -943,7 +946,7 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
 
 		/* Do the trace from current position of the projectile
 		 * to the end_of_range location.*/
-		tr = G_Trace(Line(tracefrom, impact), ent, MASK_SHOT);
+		tr = G_Trace(Line(tracefrom, impact), passEnt, MASK_SHOT);
 		trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
 
 #ifdef DEBUG
