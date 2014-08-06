@@ -272,6 +272,7 @@ void G_InventoryToFloor (Edict* ent)
 			if (!game.invi.removeFromInventory(&ent->chr.inv, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
 						ic->def()->id, container, ent->getIdNum());
+			G_EventInventoryDelete(*ent, G_VisToPM(ent->visflags), container, ic->getX(), ic->getY());
 			if (game.invi.addToInventory(&floor->chr.inv, &item, INVDEF(CID_FLOOR), NONE, NONE, 1) == nullptr)
 				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
 						ic->def()->id, container, ent->getIdNum());
