@@ -420,10 +420,6 @@ void CL_ActorRemoveFromTeamList (le_t* le)
 				CL_ActorCleanup(le);
 				/* remove from list */
 				cl.teamList[i] = nullptr;
-			} else {
-				/** @todo why the heck is that needed? the inventory was already dropped to floor. */
-				le->left = le->right = le->headgear = NONE;
-				cls.i.destroyInventory(&le->inv);
 			}
 
 			/* disable hud button */
