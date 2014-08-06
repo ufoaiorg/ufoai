@@ -350,21 +350,20 @@ size "8 8"
 +fr02		"0 1"
 +fr03		"0 1"	// C(1)
 +fr04		"0 1"
-+fr05		"0 3"	// A(1)
-+fr06_3x2	"1 1"	// A(2) C(2)
++fr05		"0 5"	// A(1)
 +fr07		"0 1"	// A(1)
 +fr08		"0 1"
 +fr09		"0 1"	// A(1)
-+fr10		"0 9"
 +fr11_1x2	"0 1"	// A(1) C(1)
-+fr12_3x3	"0 1"	// A(3) C(3)
++fr12_3x3	"1 1"	// A(3) C(3)
 +fr13_2x1	"0 2"	// A(1) C(1)
 +fr14_1x3	"0 2"	// A(1) C(1)
 +fr15_2x1	"0 2"	// A(1)
 +fr16_5x1	"0 1"	// A(2) C(1)
 +fr17_2x2	"0 1"	// A(5)
+tileset buildings	"1 1"
 *rm_drop +craft_drop_firebird "1 1"
-*rm_ufo +craft_ufo_supply "1 1" //Enough Alien spawnpoints for Max Crew capacity
+*rm_ufo +craft_ufo_harvester "1 1"
 }
 
 assembly large
