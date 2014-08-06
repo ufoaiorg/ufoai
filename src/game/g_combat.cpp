@@ -398,7 +398,7 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* att
 	assert(attacker->getTeam() >= 0 && attacker->getTeam() < MAX_TEAMS);
 	assert(victim->getTeam() >= 0 && victim->getTeam() < MAX_TEAMS);
 
-	if (g_nodamage != nullptr && !g_nodamage->integer) {
+	if ((g_nodamage != nullptr && !g_nodamage->integer) || mock) {
 		/* hit */
 		if (mock) {
 			G_UpdateShotMock(mock, attacker, victim, damage);
