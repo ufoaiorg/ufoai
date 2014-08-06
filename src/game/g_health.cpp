@@ -40,7 +40,7 @@ static byte G_GetImpactDirection(const Edict* const target, const vec3_t impact)
 	VectorCopy(dvecs[target->dir], vec2);
 	VectorNormalize(vec2);
 
-	return AngleToDir(VectorAngleBetween(vec1, vec2) / torad);
+	return AngleToDir(VectorAngleBetween(vec2, vec1) * todeg);
 }
 
 /**
