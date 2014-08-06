@@ -846,9 +846,9 @@ static int AIL_see (lua_State* L)
 	AilSortTable<Actor*> sortTable[MAX_EDICTS];
 	/* Get visible things. */
 	const int visDist = G_VisCheckDist(AIL_ent);
-	/* We are about to check the team view update it accordingly */
+	/* We are about to check the team view, update it accordingly */
 	if (vision == AILVT_TEAM)
-		G_CheckVisTeamAll(AIL_ent->getTeam(), VT_PERISHCHK & VT_NOFRUSTUM, nullptr);
+		G_CheckVisTeamAll(AIL_ent->getTeam(), VT_NOFRUSTUM, AIL_ent);
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (AIL_ent == check)
 			continue;
