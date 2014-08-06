@@ -35,9 +35,11 @@ end
 	Search for a new weapon to grab
 --]]
 function searchweapon ()
-	-- TODO: actually implement the search
-	ai.print("No weapon available")
-
+	local weapons = ai.findweapons()
+	if #weapons > 0 then
+		weapons[1]:goto()
+		return ai.getweapon()
+	end
 	return false
 end
 

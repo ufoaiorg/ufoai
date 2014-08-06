@@ -216,6 +216,7 @@ static int AIL_missiontargets(lua_State* L);
 static int AIL_waypoints(lua_State* L);
 static int AIL_positionmission(lua_State* L);
 static int AIL_positionwander(lua_State* L);
+static int AIL_findweapons(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -243,6 +244,7 @@ static const luaL_reg AIL_methods[] = {
 	{"waypoints", AIL_waypoints},
 	{"positionmission", AIL_positionmission},
 	{"positionwander", AIL_positionwander},
+	{"findweapons", AIL_findweapons},
 	{nullptr, nullptr}
 };
 
@@ -1482,10 +1484,6 @@ static int AIL_waypoints (lua_State* L)
 		}
 	}
 
-	if (n == 0) {
-		lua_pushnil(L);
-		return 1;
-	}
 	/* Sort by distance */
 	std::sort(sortTable, sortTable + n);
 
@@ -1643,6 +1641,53 @@ static int AIL_positionwander (lua_State* L)
 	}
 	lua_pushpos3(L, &bestPos);
 	return 1;
+}
+
+/**
+ * @brief Returns a table of position of nearby usable weapons on the floor
+ */
+int AIL_findweapons (lua_State* L)
+{
+	bool full = false;
+	if (lua_gettop(L) > 0) {
+		if (lua_isboolean(L, 1))
+			full = lua_toboolean(L, 1);
+		else
+			AIL_invalidparameter(1);
+	}
+
+	AilSortTable<Edict*> sortTable[MAX_EDICTS];
+	int n = 0;
+	Edict* check = nullptr;
+	while ((check = G_EdictsGetNextInUse(check))) {
+		if (check->type != ET_ITEM)
+			continue;
+		for (const Item* item = check->getFloor(); item; item = item->getNext()) {
+			/** @todo Check if can reload the weapon with carried ammo or from the floor itself? */
+			if (item->isWeapon() && (item->getAmmoLeft() > 0 || item->def()->ammo <= 0)) {
+				if (G_FindPath(0, AIL_ent, AIL_ent->pos, check->pos, AIL_ent->isCrouched(), ROUTING_NOT_REACHABLE - 1)) {
+					const pos_t move = G_ActorMoveLength(AIL_ent, level.pathingMap, check->pos, false);
+					if (full || move <= AIL_ent->getUsableTUs() - INVDEF(CID_FLOOR)->out - INVDEF(CID_RIGHT)->in) {
+						sortTable[n].data = check;
+						sortTable[n++].sortLookup = move;
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	/* Sort by distance */
+	std::sort(sortTable, sortTable + n);
+
+	/* Now save it in a Lua table. */
+	lua_newtable(L);
+	for (int i = 0; i < n; i++) {
+		lua_pushnumber(L, i + 1); /* index, starts with 1 */
+		lua_pushpos3(L, &sortTable[i].data->pos); /* value */
+		lua_rawset(L, -3); /* store the value in the table */
+	}
+	return 1; /* Returns the table of positions. */
 }
 
 /**
