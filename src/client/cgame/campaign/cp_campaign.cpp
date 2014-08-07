@@ -1507,6 +1507,7 @@ void CP_InitStartup (void)
 
 	/* init subsystems */
 	MS_MessageInit();
+	CP_InitializeXVIOverlay();
 
 	MIS_InitStartup();
 	UP_InitStartup();
