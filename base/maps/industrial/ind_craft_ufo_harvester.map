@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "5"
 // brush 0
 {
 ( 1028 1792 4 ) ( 1028 768 4 ) ( 4 1792 4 ) tex_buildings/floor015 0 0 0 0.25 0.25 65280 0 0
@@ -4674,7 +4673,6 @@
 "volume" "0.2"
 "noise" "ambience/alien_engine"
 "spawnflags" "2"
-"angle" "-90"
 }
 // entity 92
 {
@@ -4683,7 +4681,6 @@
 "volume" "0.2"
 "noise" "ambience/alien_engine"
 "spawnflags" "2"
-"angle" "-90"
 }
 // entity 93
 {
