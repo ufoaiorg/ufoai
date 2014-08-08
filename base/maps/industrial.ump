@@ -200,10 +200,11 @@ tile +fr07
 }
 
 tile +fr08
-	// a crate, two plants
 {
-3 3
+3 5
 0		0		0
+0		+a		0
+0		+a		0
 0		+a		0
 0		0		0
 }
