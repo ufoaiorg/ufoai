@@ -1,0 +1,86 @@
+// ==================
+// MISSION OPTIONS MENU
+// ==================
+
+window missionoptions
+{
+	{
+		fill		true
+		starlayout	true
+		bgcolor		"0 0 0 0.5"
+		background	"ui/main_bg"
+	}
+
+	string version
+	{
+		string	*cvar:version
+		pos		"10 744"
+	}
+
+	panel buttons
+	{
+		{
+			size			"400 700"
+			align			LAYOUTALIGN_TOP
+			layout			LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	15
+			contentalign	LAYOUTALIGN_MIDDLE
+		}
+
+		panel spacer
+		{
+			{
+				size	"0 235"
+			}
+		}
+
+		MainMenuBtn btn_continue
+		{
+			tooltip	"_Leave this menu and continue playing."
+			onClick	{ cmd "ui_pop;" }
+			string	"_CONTINUE"
+		}
+
+
+		MainMenu2Btn btn_restartOrIRC
+		{
+		}
+
+		MainMenu2Btn btn_options
+		{
+			onClick	{ cmd "ui_push options;" }
+			string	"_OPTIONS"
+		}
+
+		MainMenuExitBtn btn_abort
+		{
+		}
+		// @TODO Consider if exit button is useful or not. Overkill?
+		/*
+		MainMenuExitBtn exit
+		{
+			onClick		{ cmd "quit;" }
+			string		"_EXIT"
+		}
+		*/
+	}
+	func onWindowOpened {
+
+		if (*cvar:gamemode eq "multiplayer") {
+			*node:root.buttons.btn_restartOrIRC@onClick = { cmd "ui_push irc;" }
+			*node:root.buttons.btn_restartOrIRC@string = "_LOBBY"
+
+			*node:root.buttons.btn_abort@onClick = { cmd "game_exit;" }
+			*node:root.buttons.btn_abort@string = "_ABORT GAME"
+
+		} else {
+			*node:root.buttons.btn_restartOrIRC@onClick = { cmd "game_go;" }
+			*node:root.buttons.btn_restartOrIRC@string = "_RESTART MISSION"
+
+			*node:root.buttons.btn_abort@onClick = { cmd "game_abort;" }
+			*node:root.buttons.btn_abort@string = "_ABORT MISSION"
+		}
+	}
+
+	fuzzyScreen overlay { }
+}
