@@ -46,7 +46,7 @@ static void GAME_MP_NotifyEvent (event_t eventType)
 	if (eventType != EV_RESET)
 		return;
 
-	cgi->HUD_InitUI("multiplayerInGame");
+	cgi->HUD_InitUI("missionoptions");
 }
 
 static void GAME_MP_EndRoundAnnounce (int playerNum, int team)
@@ -98,7 +98,7 @@ static void GAME_MP_StartServer_f (void)
 
 	cgi->Cmd_ExecuteString("map %s %s %s", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->mapTheme, md->params ? (const char*)cgi->LIST_GetRandom(md->params) : "");
 
-	cgi->UI_InitStack("multiplayer_wait", "multiplayerInGame");
+	cgi->UI_InitStack("multiplayer_wait", "missionoptions");
 }
 
 /**

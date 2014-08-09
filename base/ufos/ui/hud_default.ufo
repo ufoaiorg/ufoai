@@ -1062,7 +1062,7 @@ window hud_default extends hud
 				pos			"0 0"
 				size		"48 48"
 				tooltip		"_Abort"
-				onClick		{ cmd "ui_push singleplayermission;" }
+				onClick		{ cmd "ui_push missionoptions;" }
 				onMouseEnter	{ *node:this@icon = "icons/abortmission" }
 				onMouseLeave	{ *node:this@icon = "icons/abortmission0"	}
 			}

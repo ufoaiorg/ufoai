@@ -1511,7 +1511,7 @@ void GAME_StartBattlescape (bool isTeamPlay)
 	if (list != nullptr && list->StartBattlescape) {
 		list->StartBattlescape(isTeamPlay);
 	} else {
-		HUD_InitUI("singleplayermission");
+		HUD_InitUI("missionoptions");
 		GAME_InitMissionBriefing(_(CL_GetConfigString(CS_MAPTITLE)));
 	}
 }
