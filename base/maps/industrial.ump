@@ -144,12 +144,12 @@ tile +fr01
 }
 
 tile +fr02
-	// piece of grass, waste bag, barrel
+	// three large pots with green liquid
 {
-3 3
-0		0		0
-0		+a		0
-0		0		0
+4 3
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +fr03 //C(1)
@@ -323,7 +323,7 @@ assembly small
 title "_UFO Landed"
 size "6 6"
 +fr01		"0 1"	// A(1)
-+fr02		"0 1"
++fr02		"0 2"	// 2x1
 +fr03		"0 1"	// C(1)
 +fr04		"0 1"
 +fr05		"0 3"	// A(1)
@@ -348,7 +348,7 @@ assembly medium
 title "_UFO Landed"
 size "8 8"
 +fr01		"0 1"	// A(1)
-+fr02		"0 1"
++fr02		"0 2"	// 2x1
 +fr03		"0 1"	// C(1)
 +fr04		"0 1"
 +fr05		"0 5"	// A(1)
@@ -372,7 +372,7 @@ assembly large
 title "_UFO Landed"
 size "10 8"
 +fr01		"0 1"	// A(1)
-+fr02		"0 1"
++fr02		"0 2"	// 2x1
 +fr03		"0 1"	// C(1)
 +fr04		"0 1"
 +fr05		"0 8"	// A(1)
@@ -397,7 +397,7 @@ assembly noufo
 title "_Industrial Site"
 size "7 7"
 +fr01		"0 1"	// A(1)
-+fr02		"0 1"
++fr02		"0 2"	// 2x1
 +fr03		"0 1"	// C(1)
 +fr04		"0 1"
 +fr05		"0 3"	// A(1)
