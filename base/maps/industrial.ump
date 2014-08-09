@@ -114,12 +114,11 @@ a		+c		+c		+c		+c		a
 
 tile +craft_ufo_scout //A(3)
 {
-4 5
-0		a		a		0
-a		+c		+c		a
-a		+c		+c		a
-a		+c		+c		a
-0		a		a		0
+5 4
+0		a		a		a		0
+a		+c		+c		+c		a
+a		+c		+c		+c		a
+0		a		a		a		0
 }
 
 tile +craft_ufo_supply //A(12)
