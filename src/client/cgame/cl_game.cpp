@@ -961,6 +961,7 @@ void GAME_SetMode (const cgame_export_t* gametype)
 
 	GAME_ResetCharacters();
 	LIST_Delete(&cl.chrList);
+	Cvar_FullSet("gamemode", "", CVAR_NOSET);
 
 	list = GAME_GetCurrentType();
 	if (list) {
@@ -985,6 +986,7 @@ void GAME_SetMode (const cgame_export_t* gametype)
 		cls.i.destroyInventoryInterface();
 		cls.i.initInventory(list->name, &csi, &inventoryImport);
 		list->Init();
+		Cvar_FullSet("gamemode", list->menu, CVAR_NOSET);
 	}
 }
 
