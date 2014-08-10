@@ -3671,7 +3671,7 @@ mapdef vil2_medium_noufo
 	map				"+village2"
 	params			("medium_noufo_01" "medium_noufo_02")
 	description		"_Village 2"
-	maxaliens		21
+	maxaliens		18
 
 	aircraft
 	(
