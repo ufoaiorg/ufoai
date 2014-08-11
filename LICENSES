@@ -496,6 +496,7 @@ base/maps/industrial/ind_fr14_1x3.map | GNU General Public License 2.0 or later 
 base/maps/industrial/ind_fr15_2x1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/ind_fr16_5x1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/ind_fr17_2x2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | /base/maps/frozen/st_i02.map
+base/maps/industrial/ind_fr18_3x6.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | /base/maps/transport/tra_main.map
 base/maps/italy.ump | GNU General Public License 2.0 or later
 base/maps/italy/it_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/italy/it_craft_drop_herakles.map | GNU General Public License 2.0 or later

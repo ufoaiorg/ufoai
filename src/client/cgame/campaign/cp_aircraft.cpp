@@ -1103,7 +1103,7 @@ static void AIR_Refuel (aircraft_t* aircraft, int deltaTime)
 		}
 
 		if (amLoad > 0)
-			B_ManageAntimatter(aircraft->homebase, amLoad, false);
+			B_AddAntimatter(aircraft->homebase, -amLoad);
 	}
 
 	aircraft->fuel += fillup;

@@ -1075,7 +1075,7 @@ static void CP_DebugAddAntimatter_f (void)
 		return;
 	}
 
-	B_ManageAntimatter(base, amount, amount >= 0);
+	B_AddAntimatter(base, amount);
 }
 
 /**
@@ -1500,6 +1500,7 @@ void CP_InitStartup (void)
 
 	/* init subsystems */
 	MS_MessageInit();
+	CP_InitializeXVIOverlay();
 
 	MIS_InitStartup();
 	UP_InitStartup();

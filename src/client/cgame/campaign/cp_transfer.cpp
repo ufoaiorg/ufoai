@@ -52,7 +52,7 @@ static void TR_EmptyTransferCargo (base_t* destination, transfer_t* transfer, bo
 		/* antimatter */
 		if (transfer->itemAmount[od->idx] > 0) {
 			if (B_GetBuildingStatus(destination, B_ANTIMATTER)) {
-				B_ManageAntimatter(destination, transfer->itemAmount[od->idx], true);
+				B_AddAntimatter(destination, transfer->itemAmount[od->idx]);
 			} else {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Antimatter Storage, antimatter are removed!"), destination->name);
 				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, MSG_TRANSFERFINISHED);
@@ -155,8 +155,12 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 
 	/* Initialize transfer. */
 	OBJZERO(transfer);
-	/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
-	time = GetDistanceOnGlobe(transData.destBase->pos, srcBase->pos) / 90.0f;
+	if (srcBase != nullptr && transData.destBase != nullptr) {
+		/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
+		time = GetDistanceOnGlobe(transData.destBase->pos, srcBase->pos) / 90.0f;
+	} else {
+		time = DEFAULT_TRANSFER_TIME;
+	}
 	transfer.event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
 	transfer.event.sec = ccs.date.sec + round(time);
@@ -175,7 +179,7 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 		if (srcBase != nullptr) {
 			const objDef_t* od = INVSH_GetItemByIDX(i);
 			if (Q_streq(od->id, ANTIMATTER_ITEM_ID))
-				B_ManageAntimatter(srcBase, transData.itemAmount[i], false);
+				B_AddAntimatter(srcBase, -transData.itemAmount[i]);
 			else
 				B_AddToStorage(srcBase, od, -transData.itemAmount[i]);
 		}
@@ -187,17 +191,13 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
 		LIST_Foreach(transData.employees[i], Employee, employee) {
-			assert(employee->isHiredInBase(srcBase));
-
-			transfer.hasEmployees = true;
 			employee->unassign();
-
 			/** @TODO We unarm soldiers so we don't need to manage storage. This need to be changed later */
 			employee->unequip();
-
+			transfer.hasEmployees = true;
 			E_MoveIntoNewBase(employee, transfer.destBase);
-			cgi->LIST_AddPointer(&transfer.employees[i], (void*) employee);
 			employee->transfer = true;
+			cgi->LIST_AddPointer(&transfer.employees[i], (void*) employee);
 			count++;
 		}
 	}

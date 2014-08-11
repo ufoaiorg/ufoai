@@ -215,6 +215,8 @@ static int AIL_getweapon(lua_State* L);
 static int AIL_missiontargets(lua_State* L);
 static int AIL_waypoints(lua_State* L);
 static int AIL_positionmission(lua_State* L);
+static int AIL_positionwander(lua_State* L);
+static int AIL_findweapons(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -241,6 +243,8 @@ static const luaL_reg AIL_methods[] = {
 	{"missiontargets", AIL_missiontargets},
 	{"waypoints", AIL_waypoints},
 	{"positionmission", AIL_positionmission},
+	{"positionwander", AIL_positionwander},
+	{"findweapons", AIL_findweapons},
 	{nullptr, nullptr}
 };
 
@@ -842,9 +846,9 @@ static int AIL_see (lua_State* L)
 	AilSortTable<Actor*> sortTable[MAX_EDICTS];
 	/* Get visible things. */
 	const int visDist = G_VisCheckDist(AIL_ent);
-	/* We are about to check the team view update it accordingly */
+	/* We are about to check the team view, update it accordingly */
 	if (vision == AILVT_TEAM)
-		G_CheckVisTeamAll(AIL_ent->getTeam(), VT_PERISHCHK & VT_NOFRUSTUM, nullptr);
+		G_CheckVisTeamAll(AIL_ent->getTeam(), VT_NOFRUSTUM, AIL_ent);
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (AIL_ent == check)
 			continue;
@@ -1480,10 +1484,6 @@ static int AIL_waypoints (lua_State* L)
 		}
 	}
 
-	if (n == 0) {
-		lua_pushnil(L);
-		return 1;
-	}
 	/* Sort by distance */
 	std::sort(sortTable, sortTable + n);
 
@@ -1516,6 +1516,178 @@ static int AIL_positionmission (lua_State* L)
 
 	AIL_ent->setOrigin(oldPos);
 	return 1;
+}
+
+static int AIL_positionwander (lua_State* L)
+{
+	/* Calculate move table. */
+	G_MoveCalc(0, AIL_ent, AIL_ent->pos, AIL_ent->getUsableTUs());
+	gi.MoveStore(level.pathingMap);
+
+	/* Set defaults */
+	int sphRadius = (AIL_ent->getUsableTUs() + 1) / TU_MOVE_STRAIGHT;
+	pos3_t sphCenter;
+	VectorCopy(AIL_ent->pos, sphCenter);
+	int method = 0;
+
+	/* Check parameters */
+	if (lua_gettop(L) > 0) {
+		if (lua_isstring(L, 1)) {
+			const char* s = lua_tostring(L, 1);
+			if (Q_streq(s, "rand"))
+				method = 0;
+			else if (Q_streq(s, "CW"))
+				method = 1;
+			else if (Q_streq(s, "CCW"))
+				method = 2;
+			else
+				AIL_invalidparameter(1);
+		} else
+			AIL_invalidparameter(1);
+	}
+	if (lua_gettop(L) > 1) {
+		if (lua_isnumber(L, 2))
+			sphRadius = lua_tonumber(L, 2);
+		else
+			AIL_invalidparameter(2);
+	}
+	if (lua_gettop(L) > 2) {
+		if (lua_ispos3(L, 3))
+			VectorCopy(*lua_topos3(L, 3), sphCenter);
+		else
+			AIL_invalidparameter(3);
+	}
+
+	vec3_t d;
+	if (method > 0)
+		VectorSubtract(AIL_ent->pos, sphCenter, d);
+	const int cDir = method > 0 ? (VectorEmpty(d) ? AIL_ent->dir : AngleToDir(static_cast<int>(atan2(d[1], d[0]) * todeg))) : NONE;
+	float bestScore = 0;
+	pos3_t bestPos = {0, 0, PATHFINDING_HEIGHT};
+	/* Little experiment here: this checks the positions in growing concentric spheres
+	 * from the current actor position, for this a variation of the midpoint circle algorithm is used
+	 * so to 'draw' a sphere first a circle is made at the center z level and then circles with
+	 * shrinking radi are stacked above and below it (where applicable) */
+	/* Starting with a sphere with radius 0 (just the center pos) out to the given radius */
+	for (int i = 0; i <= sphRadius; ++i) {
+		/* Battlescape has max PATHFINDING_HEIGHT levels, so cap the z offset to the max levels
+		 * the unit can currently go up or down */
+		const int zOfsMax = std::min(std::max(static_cast<int>(sphCenter[2]), PATHFINDING_HEIGHT - sphCenter[2] - 1), i);
+		/* Starting a the center z level up to zOfsMax levels */
+		for (int zOfs = 0; zOfs <= zOfsMax; ++zOfs)
+			/* We need to cover both up and down directions, so we Flip the sign (if there's actually a z offset) */
+			for (int zOfsF = zOfs, j = 0; j < 2 && (!j || zOfs); ++j, zOfsF = -zOfs) {
+				/* There are always more levels in one direction than the other (since the number is even)
+				 * so check if out of bounds */
+				if (AIL_ent->pos[2] + zOfsF < 0 || AIL_ent->pos[2] + zOfsF >= PATHFINDING_HEIGHT)
+					continue;
+				/* 'Draw' the current circle */
+				pos3_t cirCenter;
+				VectorSet(cirCenter, sphCenter[0], sphCenter[1], sphCenter[2] + zOfsF);
+				const int cirRadius = i - zOfs;
+				/* Map has a max width of PATHFINDING_WIDTH so cap the x and y offsets to the max distance to the
+				 * (max possible) map edge in the respective axis */
+				const int xOfsMax = std::max(static_cast<int>(cirCenter[0]), PATHFINDING_WIDTH - cirCenter[0] - 1);
+				const int yOfsMax = std::max(static_cast<int>(cirCenter[1]), PATHFINDING_WIDTH - cirCenter[1] - 1);
+				/* This is the main loop of the midpoint circle algorithm this specific variation
+				 * circles of consecutive integer radius won't overlap in any point or leave gaps in between,
+				 * Coincidentally (at time of writing) a circle of radius n will be exactly the farthest a normal actor can walk
+				 * with n * 2 TU, in ideal conditions (standing, no obstacles, no penalties) */
+				for (int dy = 1, xOfs = 0, yOfs = cirRadius; xOfs <= yOfs; ++xOfs, dy += 1, yOfs = cirRadius - (dy >> 1))
+					/* Have the offsets, now to fill the octants */
+					/* Need to Flip the x and y offsets */
+					for (int xOfsF = xOfs, yOfsF = yOfs, done = false; !done; done = xOfsF == yOfs, xOfsF = yOfs, yOfsF = xOfs)
+						/* And need to Flip the signs Too, for each one */
+						for (int  yOfsF2 = yOfsF, k = 0; yOfsF <= yOfsMax && k < 2 && (!k || yOfsF); yOfsF2 = -yOfsF, ++k)
+							for (int xOfsF2 = xOfsF, l = 0; xOfsF <= xOfsMax && l < 2 && (!l || xOfsF); xOfsF2 = -xOfsF, ++l) {
+								/* Again, there's more distance to one (possible) edge than the other, check if out of bounds */
+								if (cirCenter[0] + xOfsF2 < 0 || cirCenter[0] + xOfsF2 >= PATHFINDING_WIDTH || cirCenter[1] + yOfsF2 < 0 || cirCenter[1] + yOfsF2 >= PATHFINDING_WIDTH)
+									continue;
+								pos3_t pos;
+								VectorSet(pos, cirCenter[0] + xOfsF2, cirCenter[1] + yOfsF2, cirCenter[2]);
+								/* Finally got the pos to check, AI considerations go here */
+								if (G_ActorMoveLength(AIL_ent, level.pathingMap, pos, true) >= ROUTING_NOT_REACHABLE)
+									continue;
+								float score = 0.0f;
+								switch (method) {
+								case 0:
+									score = rand();
+									break;
+								case 1:
+								case 2: {
+									score = VectorDistSqr(sphCenter, pos);
+									VectorSubtract(pos, sphCenter, d);
+									int dir = AngleToDir(static_cast<int>(atan2(d[1], d[0]) * todeg));
+									if (!(method == 1 && dir == dvright[cDir]) && !(method == 2 && dir == dvleft[cDir]))
+										for (int n = 1; n < 8; ++n) {
+											dir = method == 1 ? dvleft[dir] : dvright[dir];
+											score /= pow(n * 2, 2);
+											if ((method == 1 && dir == dvright[cDir]) || (method == 2 && dir == dvleft[cDir]))
+												break;
+										}
+								}
+									break;
+								}
+								if (score > bestScore) {
+									bestScore = score;
+									VectorCopy(pos, bestPos);
+								}
+							}
+		}
+	}
+	if (bestPos[2] >= PATHFINDING_HEIGHT) {
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	lua_pushpos3(L, &bestPos);
+	return 1;
+}
+
+/**
+ * @brief Returns a table of position of nearby usable weapons on the floor
+ */
+int AIL_findweapons (lua_State* L)
+{
+	bool full = false;
+	if (lua_gettop(L) > 0) {
+		if (lua_isboolean(L, 1))
+			full = lua_toboolean(L, 1);
+		else
+			AIL_invalidparameter(1);
+	}
+
+	AilSortTable<Edict*> sortTable[MAX_EDICTS];
+	int n = 0;
+	Edict* check = nullptr;
+	while ((check = G_EdictsGetNextInUse(check))) {
+		if (check->type != ET_ITEM)
+			continue;
+		for (const Item* item = check->getFloor(); item; item = item->getNext()) {
+			/** @todo Check if can reload the weapon with carried ammo or from the floor itself? */
+			if (item->isWeapon() && (item->getAmmoLeft() > 0 || item->def()->ammo <= 0)) {
+				if (G_FindPath(0, AIL_ent, AIL_ent->pos, check->pos, AIL_ent->isCrouched(), ROUTING_NOT_REACHABLE - 1)) {
+					const pos_t move = G_ActorMoveLength(AIL_ent, level.pathingMap, check->pos, false);
+					if (full || move <= AIL_ent->getUsableTUs() - INVDEF(CID_FLOOR)->out - INVDEF(CID_RIGHT)->in) {
+						sortTable[n].data = check;
+						sortTable[n++].sortLookup = move;
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	/* Sort by distance */
+	std::sort(sortTable, sortTable + n);
+
+	/* Now save it in a Lua table. */
+	lua_newtable(L);
+	for (int i = 0; i < n; i++) {
+		lua_pushnumber(L, i + 1); /* index, starts with 1 */
+		lua_pushpos3(L, &sortTable[i].data->pos); /* value */
+		lua_rawset(L, -3); /* store the value in the table */
+	}
+	return 1; /* Returns the table of positions. */
 }
 
 /**

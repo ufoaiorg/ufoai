@@ -140,7 +140,6 @@ bool E_MoveIntoNewBase (Employee* employee, base_t* newBase)
 {
 	if (employee) {
 		base_t* oldBase = employee->baseHired;
-		assert(oldBase);
 		employee->baseHired = newBase;
 		/* Remove employee from corresponding capacity */
 		switch (employee->getType()) {
@@ -148,11 +147,13 @@ bool E_MoveIntoNewBase (Employee* employee, base_t* newBase)
 		case EMPL_WORKER:
 		case EMPL_SCIENTIST:
 		case EMPL_SOLDIER:
-			CAP_AddCurrent(oldBase, CAP_EMPLOYEES, -1);
+			if (oldBase != nullptr)
+				CAP_AddCurrent(oldBase, CAP_EMPLOYEES, -1);
 			CAP_AddCurrent(newBase, CAP_EMPLOYEES, 1);
 			break;
 		case EMPL_ROBOT:
-			CAP_AddCurrent(oldBase, CAP_ITEMS, -UGV_SIZE);
+			if (oldBase != nullptr)
+				CAP_AddCurrent(oldBase, CAP_ITEMS, -UGV_SIZE);
 			CAP_AddCurrent(newBase, CAP_ITEMS, UGV_SIZE);
 			break;
 		case MAX_EMPL:

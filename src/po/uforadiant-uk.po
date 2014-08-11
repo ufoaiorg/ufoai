@@ -1,0 +1,1488 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: UFO Alien Invasion\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2014-08-03 00:20+0200\n"
+"Last-Translator: Igor Gritsenko <xenomorph@thoradin.no-ip.org>\n"
+"Language-Team:  <ufoai-developer@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Language: uk_UA\n"
+"X-Generator: Poedit 1.5.4\n"
+
+msgid "Processing..."
+msgstr "Обробка..."
+
+msgid "Changing Engine Path"
+msgstr "Зміна шляху до рушія"
+
+msgid "Loading Map"
+msgstr "Завантаження мапи"
+
+msgid "Saving Map"
+msgstr "Збереження мапи"
+
+msgid "Loading Model"
+msgstr "Завантаження моделей"
+
+msgid "Refreshing Models"
+msgstr "Оновлення моделей"
+
+msgid "Loading Textures"
+msgstr "Завантаження текстур"
+
+msgid "Loading Shaders"
+msgstr "Завантаження шейдерів"
+
+msgid "Autosave"
+msgstr "Автозбереження"
+
+msgid "Enable Autosave"
+msgstr "Увімкнути автозбереження"
+
+msgid "Autosave Frequency (minutes)"
+msgstr "Частота автозбереження (хвилини)"
+
+msgid "Save Snapshots"
+msgstr ""
+
+msgid "Autosave Preferences"
+msgstr "Налаштування автозбереження"
+
+msgid "Snap planes to integer grid"
+msgstr ""
+
+msgid "Default texture scale"
+msgstr "Масштаб текстур за замовчуванням"
+
+msgid "Use alternative texture-projection"
+msgstr ""
+
+msgid "Always use nodraw for new brushes"
+msgstr "Завжди використовувати «nodraw» для нових пензлів"
+
+msgid "Brush"
+msgstr "Пензель"
+
+msgid "Brush Settings"
+msgstr "Налаштування пензлів"
+
+msgid "Movement Speed"
+msgstr ""
+
+msgid "Link strafe speed to movement speed"
+msgstr ""
+
+msgid "Rotation Speed"
+msgstr "Швидкість обертання"
+
+msgid "Invert mouse vertical axis"
+msgstr "Інвертувати вертикальну вісь миші"
+
+msgid "Discrete movement"
+msgstr ""
+
+msgid "Enable far-clip plane"
+msgstr ""
+
+msgctxt "Render Mode"
+msgid "Wireframe"
+msgstr ""
+
+msgctxt "Render Mode"
+msgid "Flatshade"
+msgstr ""
+
+msgctxt "Render Mode"
+msgid "Textured"
+msgstr ""
+
+msgid "Render Mode"
+msgstr "Режим промальовування"
+
+msgctxt "Strafe Mode"
+msgid "Both"
+msgstr "Обидва"
+
+msgctxt "Strafe Mode"
+msgid "Forward"
+msgstr "Вперед"
+
+msgctxt "Strafe Mode"
+msgid "Up"
+msgstr "Вгору"
+
+msgid "Strafe Mode"
+msgstr ""
+
+msgid "Camera"
+msgstr "Камера"
+
+msgid "Camera View Preferences"
+msgstr ""
+
+msgid "Colors"
+msgstr "Кольори"
+
+msgid "Themes"
+msgstr "Теми"
+
+msgid "QE4 Original"
+msgstr ""
+
+msgid "Q3Radiant Original"
+msgstr ""
+
+msgid "Black and Green"
+msgstr "Чорно-зелений"
+
+msgid "Maya/Max/Lightwave Emulation"
+msgstr "Емуляція Майя/Макс/Лайтвейв"
+
+msgid "_Texture Background..."
+msgstr ""
+
+msgid "Grid Background..."
+msgstr ""
+
+msgid "Grid Major..."
+msgstr ""
+
+msgid "Grid Minor..."
+msgstr ""
+
+msgid "Grid Major Small..."
+msgstr ""
+
+msgid "Grid Minor Small..."
+msgstr ""
+
+msgid "Grid Text..."
+msgstr ""
+
+msgid "Grid Block..."
+msgstr ""
+
+msgid "Default Brush..."
+msgstr ""
+
+msgid "Camera Background..."
+msgstr ""
+
+msgid "Selected Brush..."
+msgstr ""
+
+msgid "Selected Brush (Camera)..."
+msgstr ""
+
+msgid "Clipper..."
+msgstr ""
+
+msgid "Active View name..."
+msgstr ""
+
+msgid "Command"
+msgstr "Команда"
+
+msgid "Key"
+msgstr "Клавіша"
+
+msgid "Close"
+msgstr "Закрити"
+
+msgid "_Help"
+msgstr ""
+
+msgid "Manual"
+msgstr "Керівництво"
+
+msgid "Bug report"
+msgstr "Повідомити про помилку"
+
+msgid "_About"
+msgstr ""
+
+msgid "_Plugins"
+msgstr ""
+
+msgid "_View"
+msgstr ""
+
+msgid "Hide _Unused"
+msgstr ""
+
+msgid "Show All"
+msgstr "Показати все"
+
+msgid "Show shaders"
+msgstr "Показати шейдери"
+
+msgid "Fixed Size"
+msgstr ""
+
+msgid "_Tools"
+msgstr ""
+
+msgid "Flush & Reload Shaders"
+msgstr "Скинути та оновити шейдери"
+
+msgid "Find / Replace..."
+msgstr "Знайти / Замінити…"
+
+msgid "Texture Thumbnail Scale"
+msgstr ""
+
+msgid "Mousewheel Increment"
+msgstr ""
+
+msgid "Texture Browser"
+msgstr "Браузер текстур"
+
+msgid "Texture Browser Preferences"
+msgstr "Налаштування браузера текстур"
+
+msgid "Window Layout"
+msgstr "Схема вікна"
+
+msgid "Detachable Menus"
+msgstr ""
+
+msgid "Plugin Toolbar"
+msgstr "Панель додатків"
+
+msgid "_File"
+msgstr ""
+
+msgid "_New Map"
+msgstr "_Нова мапа"
+
+msgid "_Open..."
+msgstr "_Відкрити..."
+
+msgid "_Import..."
+msgstr "_Імпорт"
+
+msgid "_Save"
+msgstr "_Зберегти"
+
+msgid "Save _as..."
+msgstr "Зберегти _як..."
+
+msgid "Save s_elected..."
+msgstr ""
+
+msgid "Save re_gion..."
+msgstr ""
+
+msgid "_Refresh models"
+msgstr ""
+
+msgid "E_xit"
+msgstr "_Вихід"
+
+msgid "_Edit"
+msgstr "_Редагування"
+
+msgid "_Undo"
+msgstr "_Відмінити"
+
+msgid "_Redo"
+msgstr ""
+
+msgid "_Copy"
+msgstr "_Копіювати"
+
+msgid "_Paste"
+msgstr "_Вставити"
+
+msgid "P_aste To Camera"
+msgstr ""
+
+msgid "_Duplicate"
+msgstr ""
+
+msgid "D_elete"
+msgstr ""
+
+msgid "Pa_rent"
+msgstr ""
+
+msgid "C_lear Selection"
+msgstr ""
+
+msgid "_Invert Selection"
+msgstr ""
+
+msgid "Select i_nside"
+msgstr ""
+
+msgid "Select _touching"
+msgstr ""
+
+msgid "E_xpand Selection"
+msgstr ""
+
+msgid "To Whole _Entities"
+msgstr ""
+
+msgid "Shortcuts list"
+msgstr "Список гарячих клавіш"
+
+msgid "Pre_ferences..."
+msgstr ""
+
+msgid "Filter"
+msgstr "Фільтр"
+
+msgid "Vie_w"
+msgstr ""
+
+msgid "Toggle Sidebar"
+msgstr ""
+
+msgid "Toggle EntityInspector"
+msgstr ""
+
+msgid "Toggle SurfaceInspector"
+msgstr ""
+
+msgid "_Center"
+msgstr ""
+
+msgid "_Up Floor"
+msgstr ""
+
+msgid "_Down Floor"
+msgstr ""
+
+msgid "Far Clip Plane In"
+msgstr ""
+
+msgid "Far Clip Plane Out"
+msgstr ""
+
+msgid "Look Through Selected"
+msgstr ""
+
+msgid "Look Through Camera"
+msgstr ""
+
+msgid "Orthographic"
+msgstr ""
+
+msgid "_Next (XY, YZ, YZ)"
+msgstr ""
+
+msgid "XY (Top)"
+msgstr "XY (Верх)"
+
+msgid "XZ (Side)"
+msgstr "XZ (Збоку)"
+
+msgid "YZ (Front)"
+msgstr "YZ (Перед)"
+
+msgid "_XY 100%"
+msgstr ""
+
+msgid "XY Zoom _In"
+msgstr ""
+
+msgid "XY Zoom _Out"
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "Toggle Grid"
+msgstr ""
+
+msgid "Toggle Crosshairs"
+msgstr ""
+
+msgid "Toggle Sizeinfo"
+msgstr ""
+
+msgid "Show _Angles"
+msgstr ""
+
+msgid "Show _Names"
+msgstr ""
+
+msgid "Show Blocks"
+msgstr ""
+
+msgid "Show C_oordinates"
+msgstr ""
+
+msgid "Show Window Outline"
+msgstr ""
+
+msgid "Show Axes"
+msgstr ""
+
+msgid "Show Workzone"
+msgstr ""
+
+msgid "Show Stats"
+msgstr ""
+
+msgid "Hide/Show"
+msgstr ""
+
+msgid "Hide Selected"
+msgstr ""
+
+msgid "Show Hidden"
+msgstr ""
+
+msgid "Region"
+msgstr ""
+
+msgid "_Off"
+msgstr ""
+
+msgid "_Set XY"
+msgstr ""
+
+msgid "Set _Brush"
+msgstr ""
+
+msgid "Set Se_lected Brushes"
+msgstr ""
+
+msgid "M_odify"
+msgstr ""
+
+msgid "Components"
+msgstr ""
+
+msgid "_Edges"
+msgstr "Ребра"
+
+msgid "_Vertices"
+msgstr "_Вершини"
+
+msgid "_Faces"
+msgstr "_Грані"
+
+msgid "Nudge"
+msgstr ""
+
+msgid "Nudge Left"
+msgstr ""
+
+msgid "Nudge Right"
+msgstr ""
+
+msgid "Nudge Up"
+msgstr ""
+
+msgid "Nudge Down"
+msgstr ""
+
+msgid "Rotate"
+msgstr "Обертати"
+
+msgid "Rotate X"
+msgstr "Обертати X"
+
+msgid "Rotate Y"
+msgstr "Обертати Y"
+
+msgid "Rotate Z"
+msgstr "Обертати Z"
+
+msgid "Flip"
+msgstr ""
+
+msgid "Flip _X"
+msgstr ""
+
+msgid "Flip _Y"
+msgstr ""
+
+msgid "Flip _Z"
+msgstr ""
+
+msgid "Arbitrary rotation..."
+msgstr "Довільне обертання..."
+
+msgid "Arbitrary scale..."
+msgstr "Довільне масштабування..."
+
+msgid "_Grid"
+msgstr ""
+
+msgid "M_isc"
+msgstr ""
+
+msgid "Find brush..."
+msgstr "Знайти пензель..."
+
+msgid "_Print XY View"
+msgstr ""
+
+msgid "_Background select"
+msgstr ""
+
+msgid "Tools"
+msgstr ""
+
+msgid "Check for errors"
+msgstr ""
+
+msgid "Compile the map"
+msgstr ""
+
+msgid "Show pathfinding info"
+msgstr ""
+
+msgid "E_ntity"
+msgstr ""
+
+msgid "B_rush"
+msgstr ""
+
+msgid "_Entities"
+msgstr ""
+
+msgid "_Surfaces"
+msgstr ""
+
+msgid "Map Info"
+msgstr "Інформація про мапу"
+
+msgid "Job Info"
+msgstr ""
+
+msgid "Surface Inspector"
+msgstr "Інспектор поверхонь"
+
+msgid "Texture"
+msgstr "Текстура"
+
+msgid "Horizontal shift"
+msgstr "Горизонтальний зсув"
+
+msgctxt "Step width"
+msgid "Step"
+msgstr "Крок"
+
+msgid "Vertical shift"
+msgstr "Вертикальний зсув"
+
+msgid "Horizontal stretch"
+msgstr "Горизонтальне розтягування"
+
+msgid "Vertical stretch"
+msgstr "Вертикальне розтягування"
+
+msgid "Match Grid"
+msgstr ""
+
+msgid "Texturing"
+msgstr ""
+
+msgid "Width"
+msgstr "Ширина"
+
+msgid "Height"
+msgstr "Висота"
+
+msgid "Surface Flags"
+msgstr "Флаги поверхонь"
+
+msgid "Content Flags"
+msgstr ""
+
+msgid "Value"
+msgstr "Значення"
+
+msgid "Surface Inspector Increments Match Grid"
+msgstr ""
+
+msgid "Surface Inspector Preferences"
+msgstr ""
+
+msgid "About UFORadiant"
+msgstr "Про UFORadiant"
+
+msgid "<b>UFORadiant "
+msgstr "<b>UFORadiant"
+
+msgid "<b>GTK+ Properties</b>"
+msgstr "<b>Властивості GTK+</b>"
+
+#, c-format
+msgid "Version: %i.%i.%i"
+msgstr "Версія: %i.%i.%i"
+
+msgid "<b>OpenGL Properties</b>"
+msgstr "<b>Властивості OpenGL</b>"
+
+msgid "Vendor:"
+msgstr ""
+
+msgid "Version:"
+msgstr "Версія:"
+
+msgid "Renderer:"
+msgstr ""
+
+msgid "Entity number"
+msgstr "Кількість об'єктів"
+
+msgid "Brush number"
+msgstr "Кількість пензлів"
+
+msgid "Find / Replace Texture(s)"
+msgstr "Пошук/заміна текстур"
+
+msgid "Find:"
+msgstr "Знайти:"
+
+msgid "Replace:"
+msgstr "Замінити:"
+
+msgid "Within selected brushes only"
+msgstr "Тільки вибрані пензлі"
+
+msgid "Apply"
+msgstr "Застосувати"
+
+msgid "ESC for default, ENTER to validate"
+msgstr ""
+
+msgid "OK"
+msgstr "ОК"
+
+msgid "Cancel"
+msgstr "Відміна"
+
+msgid "Fix"
+msgstr ""
+
+msgid "Will fix all errors, not only the selected ones"
+msgstr ""
+
+msgid "Check Map"
+msgstr "Перевірити мапу"
+
+msgid "Nothing to check in this map\n"
+msgstr ""
+
+msgid "Map compiling"
+msgstr ""
+
+msgid "Check output"
+msgstr ""
+
+msgid "No problems in your map found. Output was:"
+msgstr ""
+
+msgid "Nothing to compile in this map\n"
+msgstr ""
+
+msgid "Compiles the current map with the mapcompiler"
+msgstr ""
+
+msgid "Sides:"
+msgstr ""
+
+msgid "Save"
+msgstr "Зберегти"
+
+msgid "Entity Inspector"
+msgstr ""
+
+msgid "Entity List"
+msgstr ""
+
+msgid "Total Brushes"
+msgstr ""
+
+msgid "Total Entities"
+msgstr ""
+
+msgid "Entity breakdown"
+msgstr ""
+
+msgid "Entity"
+msgstr ""
+
+msgid "Count"
+msgstr ""
+
+msgid "Axial"
+msgstr ""
+
+msgid "Fit"
+msgstr ""
+
+msgid "Label"
+msgstr ""
+
+msgid "  X  "
+msgstr "  X  "
+
+msgid "  Y  "
+msgstr "  Y  "
+
+msgid "  Z  "
+msgstr "  Z  "
+
+msgid "Arbitrary scale"
+msgstr ""
+
+msgid "Grid0.125"
+msgstr ""
+
+msgid "Grid0.25"
+msgstr ""
+
+msgid "Grid0.5"
+msgstr ""
+
+msgid "Grid1"
+msgstr ""
+
+msgid "Grid2"
+msgstr ""
+
+msgid "Grid4"
+msgstr ""
+
+msgid "Grid8"
+msgstr ""
+
+msgid "Grid16"
+msgstr ""
+
+msgid "Grid32"
+msgstr ""
+
+msgid "Grid64"
+msgstr ""
+
+msgid "Grid128"
+msgstr ""
+
+msgid "Grid256"
+msgstr ""
+
+msgid "Default grid spacing"
+msgstr ""
+
+msgid "Grid"
+msgstr ""
+
+msgid "Grid Settings"
+msgstr ""
+
+msgid "UFORadiant"
+msgstr "UFORadiant"
+
+msgid ""
+"UFORadiant failed to start properly the last time it was run.\n"
+"The failure may be caused by current preferences.\n"
+"Do you want to reset all preferences to defaults?"
+msgstr ""
+
+msgid "UFORadiant - Startup Failure"
+msgstr ""
+
+msgid "UFORadiant - Console Log"
+msgstr ""
+
+msgid "Engine Path"
+msgstr "Шлях до рушія"
+
+msgid "Compiler Binary"
+msgstr "Шлях до компілятору"
+
+msgid "Paths"
+msgstr "Шляхи"
+
+msgid "Path Settings"
+msgstr "Налаштування шляхів"
+
+msgid "Path settings"
+msgstr "Налаштування шляхів"
+
+msgid "Engine Path Not Found"
+msgstr ""
+
+msgid "Solid selection boxes"
+msgstr ""
+
+msgid "Display size info"
+msgstr ""
+
+msgid "Chase mouse during drags"
+msgstr ""
+
+msgid "Update views on camera move"
+msgstr ""
+
+msgid "Orthographic View Preferences"
+msgstr ""
+
+msgid "Clipper tool uses nodraw"
+msgstr ""
+
+msgid "Clipper"
+msgstr ""
+
+msgid "Clipper Tool Settings"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "Particle"
+msgstr ""
+
+msgid "Job"
+msgstr "Завдання"
+
+msgid "Progress"
+msgstr "Прогрес"
+
+msgid "Console"
+msgstr "Консоль"
+
+msgid "Enable Logging"
+msgstr ""
+
+msgid "Load last map on open"
+msgstr "Завантажувати останню мапу при відкритті"
+
+msgid "Mouse Type"
+msgstr ""
+
+msgid "Right Button"
+msgstr ""
+
+msgid "Activates Context Menu"
+msgstr ""
+
+msgid "Mouse"
+msgstr "Миша"
+
+msgid "Mouse Preferences"
+msgstr "Налаштування миші"
+
+#, c-format
+msgid "Didn't find 'game' node in the game description file '%s'\n"
+msgstr ""
+
+msgid ""
+"This will close UFORadiant and clean the corresponding registry entries.\n"
+"Next time you start UFORadiant it will be good as new. Do you wish to "
+"continue?"
+msgstr ""
+
+msgid "Reset Registry"
+msgstr ""
+
+msgid "UFORadiant Preferences"
+msgstr "Налаштування UFORadiant"
+
+msgid "Clean"
+msgstr "Очистити"
+
+msgid "Preferences"
+msgstr "Налаштування"
+
+msgid "Front Page"
+msgstr ""
+
+msgid "Interface Preferences"
+msgstr "Налаштування інтерфейсу"
+
+msgid "Interface"
+msgstr "Інтерфейс"
+
+msgid "General Settings"
+msgstr "Загальні налаштування"
+
+msgid "Settings"
+msgstr ""
+
+msgid "Edit Preferences"
+msgstr ""
+
+msgid "Preference changes require a restart:\n"
+msgstr "Зміна налаштувань потребує перезавантаження:\n"
+
+msgid "GTK version:"
+msgstr "Версія GTK:"
+
+msgid "GTKGL version:"
+msgstr "Версія GTKGL:"
+
+msgid "GLib version:"
+msgstr "Версія GLib:"
+
+msgid "Nothing to generate materials from in this map\n"
+msgstr ""
+
+msgid "Generate Materials"
+msgstr ""
+
+msgid "Generate materials from the current map"
+msgstr ""
+
+msgid "Generate materials"
+msgstr ""
+
+msgid "2 button"
+msgstr ""
+
+msgid "3 button"
+msgstr ""
+
+#, c-format
+msgid "Brushes: %d Entities: %d"
+msgstr "Пензлів: %d Об'єктів: %d"
+
+msgid ""
+"The current map has changed since it was last saved.\n"
+"Do you want to save the current map before continuing?"
+msgstr ""
+
+msgid "Texture Quality"
+msgstr ""
+
+msgid "Texture Gamma"
+msgstr ""
+
+msgid "Texture Render Mode"
+msgstr "Режим промальовування текстур"
+
+msgid "Hardware Texture Compression"
+msgstr ""
+
+msgid "Textures"
+msgstr "Текстури"
+
+msgid "Texture Settings"
+msgstr "Налаштування текстур"
+
+msgid "BrushExport-Plugin 3.0 by namespace"
+msgstr ""
+
+msgid "Collapse mesh"
+msgstr ""
+
+msgid "Collapse all brushes into a single group"
+msgstr ""
+
+msgid "Collapse by material"
+msgstr ""
+
+msgid "Collapse into groups by material"
+msgstr ""
+
+msgid "Don't collapse"
+msgstr ""
+
+msgid "Every brush is stored in its own group"
+msgstr ""
+
+msgid "Ignored materials:"
+msgstr ""
+
+msgid "Use short material names (max. 20 chars)"
+msgstr ""
+
+msgid "Create (o)bjects instead of (g)roups"
+msgstr ""
+
+msgid "Create material information (.mtl file)"
+msgstr ""
+
+msgid "Nothing to fix in this map\n"
+msgstr "На цій мапі виправляти нічого\n"
+
+msgid "Map fixing"
+msgstr ""
+
+msgid "Close the editor?"
+msgstr "Закрити редактор?"
+
+msgid "Error saving file."
+msgstr "Помилка збереження файлу."
+
+msgid "You must have a selected class to create an entity"
+msgstr ""
+
+msgid "Info"
+msgstr "Інформація"
+
+msgid "Cannot change \"classname\" key back to worldspawn."
+msgstr ""
+
+msgid "No spaces are allowed in entity keys."
+msgstr ""
+
+msgid "Console logging"
+msgstr "Логування до консолі"
+
+msgid "Radiant - Runtime Error"
+msgstr "Radiant - Помилка під час виконання"
+
+msgid ""
+"Radiant failed to start properly the last time it was run.\n"
+"The failure may be related to current global preferences.\n"
+"Do you want to reset global preferences to defaults?"
+msgstr ""
+
+msgid "Radiant - Startup Failure"
+msgstr ""
+
+msgid "Radiant - Console Log"
+msgstr ""
+
+msgid "WARNING: Could not delete game pid at "
+msgstr ""
+
+msgid "You have to save your map before material generation can work"
+msgstr ""
+
+msgid "Failed to launch browser!"
+msgstr ""
+
+msgid "There's already a worldspawn in your map!"
+msgstr ""
+
+msgid "You have to select some brushes to get the bounding box for.\n"
+msgstr ""
+
+msgid "No selection"
+msgstr ""
+
+msgid "Background Image"
+msgstr "Фоновий малюнок"
+
+msgctxt "Context Menu Action"
+msgid "Connect"
+msgstr ""
+
+msgctxt "Context Menu Action"
+msgid "Fit Face"
+msgstr ""
+
+msgid "Open File"
+msgstr "Відкрити файл"
+
+msgid "Save File"
+msgstr "Зберегти файл"
+
+msgid "All Files (*.*)"
+msgstr "Всі файли (*.*)"
+
+msgid ""
+"The file specified already exists.\n"
+"Do you want to replace it?"
+msgstr ""
+
+msgid "Find Brush"
+msgstr "Знайти пензель"
+
+msgid "Find"
+msgstr "Знайти"
+
+msgid "Radiant - Error"
+msgstr ""
+
+msgid "Choose Model"
+msgstr "Вибрати модель"
+
+msgid "Open Wav File"
+msgstr "Відкрити звуковий файл"
+
+msgid "Choose File"
+msgstr "Вибрати файл"
+
+msgid "Layout"
+msgstr "Схема"
+
+msgid "Layout Preferences"
+msgstr "Налаштування "
+
+msgid "Pathfinding log file"
+msgstr ""
+
+msgid "Open an existing map (CTRL + O)"
+msgstr "Відкрити існуючу мапу (CTRL + O)"
+
+msgid "Save the active map (CTRL + S)"
+msgstr "Зберегти активну мапу (CTRL + S)"
+
+msgid "Undo (CTRL + Z)"
+msgstr ""
+
+msgid "Redo (CTRL + Y)"
+msgstr ""
+
+msgid "x-axis Flip"
+msgstr ""
+
+msgid "x-axis Rotate"
+msgstr ""
+
+msgid "y-axis Flip"
+msgstr ""
+
+msgid "y-axis Rotate"
+msgstr ""
+
+msgid "z-axis Flip"
+msgstr ""
+
+msgid "z-axis Rotate"
+msgstr ""
+
+msgid "Select touching"
+msgstr ""
+
+msgid "Select inside"
+msgstr ""
+
+msgid "Select whole entity"
+msgstr ""
+
+msgid "Select all of type"
+msgstr ""
+
+msgid "CSG Subtract (SHIFT + U)"
+msgstr ""
+
+msgid "CSG Merge (CTRL + U)"
+msgstr ""
+
+msgid "Hollow"
+msgstr ""
+
+msgid "Select Vertices (V)"
+msgstr ""
+
+msgid "Select Edges (E)"
+msgstr ""
+
+msgid "Select Faces (F)"
+msgstr ""
+
+msgid "Clipper (X)"
+msgstr ""
+
+msgid "Filter nodraw"
+msgstr "Фільтр nodraw"
+
+msgid "Filter actorclip"
+msgstr ""
+
+msgid "Filter weaponclip"
+msgstr ""
+
+msgid "Change views"
+msgstr ""
+
+msgid "Translate (W)"
+msgstr ""
+
+msgid "Rotate (R)"
+msgstr "Поворот (R)"
+
+msgid "Scale"
+msgstr "Масштаб"
+
+msgid "Resize (Q)"
+msgstr ""
+
+msgid "Refresh Models"
+msgstr "Оновити моделі"
+
+msgid "Background image"
+msgstr ""
+
+msgid "Create material entries for selected faces (M)"
+msgstr "Створити запис матеріалів для вибраних граней"
+
+msgid "Texture Lock (SHIFT + T)"
+msgstr "Замкнути текстуру (Shift + T)"
+
+msgid "Texture Browser (T)"
+msgstr "Браузер текстур (T)"
+
+msgid "Save Image"
+msgstr "Зберегти малюнок"
+
+msgid "Cone..."
+msgstr "Конус..."
+
+msgid "Prism..."
+msgstr "Призма..."
+
+msgid "Sphere..."
+msgstr "Сфера..."
+
+msgid "Make _Hollow"
+msgstr ""
+
+msgctxt "Constructive Solid Geometry"
+msgid "CSG _Subtract"
+msgstr ""
+
+msgctxt "Constructive Solid Geometry"
+msgid "CSG _Merge"
+msgstr ""
+
+msgid "Clip selection"
+msgstr "Обрізати виділене"
+
+msgid "Split selection"
+msgstr "Розділити виділене"
+
+msgid "Flip Clip orientation"
+msgstr "Змінити напрям обрізування"
+
+msgid "Make detail"
+msgstr ""
+
+msgid "Make structural"
+msgstr ""
+
+msgid "Texture Lock"
+msgstr "Замкнути текстуру"
+
+msgid "Copy Face Texture"
+msgstr ""
+
+msgid "Paste Face Texture"
+msgstr ""
+
+msgid "Make Hollow"
+msgstr "Зробити порожнистим"
+
+msgctxt "Constructive Solid Geometry"
+msgid "CSG Subtract"
+msgstr "CSG розділення"
+
+msgctxt "Constructive Solid Geometry"
+msgid "CSG Merge"
+msgstr "CSG злиття"
+
+msgctxt "Constructive Solid Geometry"
+msgid "CSG"
+msgstr "CSG"
+
+msgctxt "Constructive Solid Geometry"
+msgid "CSG Subtract (SHIFT + U)"
+msgstr ""
+
+msgctxt "Constructive Solid Geometry"
+msgid "CSG Merge (CTRL + U)"
+msgstr ""
+
+msgid "_Regroup"
+msgstr ""
+
+msgid "_Ungroup"
+msgstr ""
+
+msgid "_Connect"
+msgstr ""
+
+msgid "_Select Color..."
+msgstr "Вибрати колір (_s)"
+
+msgctxt "Filter Menu"
+msgid "World"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Entities"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Translucent"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Liquids"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Caulk"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Clips"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "ActorClips"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "WeaponClips"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Lights"
+msgstr "Джерела світла"
+
+msgctxt "Filter Menu"
+msgid "NoSurfLights"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "NoFootsteps"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Structural"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Nodraw"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Phong"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Details"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Hints"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Models"
+msgstr ""
+
+msgctxt "Filter Menu"
+msgid "Triggers"
+msgstr ""
+
+msgid "Invert filters"
+msgstr ""
+
+msgid "Reset filters"
+msgstr ""
+
+msgid "Save as Obj"
+msgstr ""
+
+msgid "Light intensity"
+msgstr ""
+
+msgid "Arbitrary sides"
+msgstr ""
+
+msgid "Cubic clip the camera view (\\)"
+msgstr ""
+
+msgid "Mapped Commands"
+msgstr "Назначені команди"
+
+msgid "Recent Files"
+msgstr "Нещодавно використані файли"
+
+msgid "Open Map"
+msgstr "Відкрити мапу"
+
+msgctxt "Last used files count"
+msgid "Count"
+msgstr ""
+
+msgid "Arbitrary rotation"
+msgstr "Точне обертання"
+
+msgid "CSG Subtract"
+msgstr "CSG розділення"
+
+msgid "CSG Merge"
+msgstr "CSG злиття"
+
+msgid "Select _Vertices"
+msgstr ""
+
+msgid "Select _Edges"
+msgstr ""
+
+msgid "Select _Faces"
+msgstr ""
+
+msgid "Image formats:"
+msgstr ""
+
+msgid "Yaw Angle"
+msgstr ""
+
+msgid "Direction"
+msgstr ""
+
+msgid "Select all of _same type"
+msgstr ""
+
+msgid "Error saving file"
+msgstr "Помилка збереження файлу"
+
+msgid "Prefab"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Deselect before insert"
+msgstr ""
+
+msgid "Replace current selection"
+msgstr ""
+
+msgid "Prefabs"
+msgstr ""
+
+msgid "Rock..."
+msgstr "Камінь"
+
+msgid "Open Sound File"
+msgstr ""
+
+msgid "Select all Faces of same te_xture"
+msgstr ""
+
+msgid "Toggle Prefabs"
+msgstr ""
+
+msgid "Error during load of map."
+msgstr "Помилка завантаження мапи."
+
+msgid "Import Map"
+msgstr "Імпорт мапи"
+
+msgid "Save Map"
+msgstr "Зберегти мапу"
+
+msgid "Export Selection"
+msgstr "Експортувати виділення"
+
+msgid "Export Region"
+msgstr "Експортувати регіон"
+
+msgid "Select all Faces of same texture"
+msgstr "Вибрати всі грані з такою ж текстурою"

@@ -68,7 +68,7 @@ def genBehaviourDoc(node):
 
 	result += '== ' + node.name + ' ==\n'
 	if node.extends != None:
-		result += ':This node inherite [[#' + node.extends + ']]. Check this node for more properties.\n'
+		result += ':This node inherits [[#' + node.extends + ']]. Check this node for more properties.\n'
 
 	if node.doc != "":
 		result += genDoxygenContent(node.doc) + '\n'

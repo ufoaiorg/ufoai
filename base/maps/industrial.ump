@@ -52,8 +52,8 @@ tile +craft_drop_raptor
 tile +craft_ufo_bomber
 {
 6 10
-0		a		a		a		a		0
-a		+c		+c		+c		+c		a
+0		0		a		a		0		0
+a		a		+c		+c		a		a
 a		+c		+c		+c		+c		a
 a		+c		+c		+c		+c		a
 a		+c		+c		+c		+c		a
@@ -114,12 +114,11 @@ a		+c		+c		+c		+c		a
 
 tile +craft_ufo_scout //A(3)
 {
-4 5
-0		a		a		0
-a		+c		+c		a
-a		+c		+c		a
-a		+c		+c		a
-0		a		a		0
+5 4
+0		a		a		a		0
+a		+c		+c		+c		a
+a		+c		+c		+c		a
+0		a		a		a		0
 }
 
 tile +craft_ufo_supply //A(12)
@@ -144,12 +143,12 @@ tile +fr01
 }
 
 tile +fr02
-	// piece of grass, waste bag, barrel
+	// three large pots with green liquid
 {
-3 3
-0		0		0
-0		+a		0
-0		0		0
+4 3
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +fr03 //C(1)
@@ -200,10 +199,12 @@ tile +fr07
 }
 
 tile +fr08
-	// a crate, two plants
+	// two large tanks with surrounding catwalk in levels 1 and 2
 {
-3 3
+3 5
 0		0		0
+0		+a		0
+0		+a		0
 0		+a		0
 0		0		0
 }
@@ -241,7 +242,7 @@ tile +fr12_3x3
 {
 5 5
 0		0		0		0		0
-0		+a		+a		+a		0
+0		0		+a		+a		0
 0		+a		+a		+a		0
 0		+a		+a		+a		0
 0		0		0		0		0
@@ -257,7 +258,7 @@ tile +fr13_2x1
 }
 
 tile +fr14_1x3
-	// pipeline, container, console, A(1), C(1)
+	// two pipelines with catwalk in between, a container, console
 {
 3 5
 0		0		0
@@ -286,13 +287,73 @@ tile +fr16_5x1
 }
 
 tile +fr17_2x2 //A(5)
+	// three tanks with surrounding catwalk, lots of concrete elements
+	// eventually taken from +frozen
 {
 4 4
 0		0		0		0
-0		+c		+c		0
-0		+c		+c		0
+0		+a		+a		0
+0		+a		0		0
 0		0		0		0
 }
+
+tile +fr18_3x6
+	// warehouses, A(27), C(3)
+{
+5 8
+0		0		0		0		0
+0		+a		+a		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
+// tilesets --------------------------------------------------------*
+
+tileset buildings {
+	+fr06_3x2	// 3x2
+	+fr18_3x6	// 3x6
+	}
+
+tileset 1x1 {
+	+fr01
+	+fr03
+	+fr04
+	+fr05
+	+fr07
+	+fr09
+	+fr10
+	}
+
+tileset 1x2 {
+	+fr11_1x2
+	}
+
+tileset 1x3 {
+	+fr08
+	+fr14_1x3
+	}
+
+tileset 2x1 {
+	+fr02
+	+fr13_2x1
+	+fr15_2x1
+	}
+
+tileset 3x1 {
+	
+	}
+
+tileset 2x2 {
+	+fr17_2x2
+	}
+
+tileset 3x3 {
+	+fr12_3x3
+	}
 
 // Map Assemblies ---------------------------------------------------
 
@@ -300,23 +361,23 @@ assembly small
 {
 title "_UFO Landed"
 size "6 6"
-+fr01		"0 1"	// A(1)
-+fr02		"0 1"
-+fr03		"0 1"	// C(1)
-+fr04		"0 1"
-+fr05		"0 3"	// A(1)
-+fr06_3x2	"1 1"	// A(2) C(2)
-+fr07 		"0 1"	// A(1)
-+fr08		"0 1"
-+fr09		"0 1"	// A(1)
-+fr10		"0 5"
-+fr11_1x2	"0 1"	// A(1) C(1)
-+fr12_3x3	"0 1"	// A(3) C(3)
-+fr13_2x1	"0 2"	// A(1) C(1)
-+fr14_1x3	"0 4"	// A(1) C(1)
-+fr15_2x1	"0 5"	// A(1)
-+fr16_5x1	"0 1"	// A(2) C(1)
-+fr17_2x2	"0 1"	// A(5)
+//+fr01		"0 1"	// 1x1
++fr02		"0 1"	// 2x1
+//+fr03		"0 1"	// 1x1
+//+fr04		"0 1"	// 1x1
++fr05		"0 1"	// 1x1
+//+fr07		"0 1"	// 1x1
++fr08		"0 1"	// 1x3
+//+fr09		"0 1"	// 1x1
+//+fr10		"0 5"	// 1x1
++fr11_1x2	"0 1"	// 1x2
++fr12_3x3	"0 1"	// 3x3
+//+fr13_2x1	"0 1"	// 2x1
++fr14_1x3	"0 1"	// 1x3
++fr15_2x1	"0 1"	// 2x1
++fr16_5x1	"0 1"	// 5x1
++fr17_2x2	"0 1"	// 2x2
+tileset buildings	"1 1"
 *rm_ufo +craft_ufo_scout		"1 1"
 *rm_drop +craft_drop_firebird	"1 1"
 }
@@ -325,48 +386,47 @@ assembly medium
 {
 title "_UFO Landed"
 size "8 8"
-+fr01		"0 1"	// A(1)
-+fr02		"0 1"
-+fr03		"0 1"	// C(1)
-+fr04		"0 1"
-+fr05		"0 3"	// A(1)
-+fr06_3x2	"1 1"	// A(2) C(2)
-+fr07		"0 1"	// A(1)
-+fr08		"0 1"
-+fr09		"0 1"	// A(1)
-+fr10		"0 9"
-+fr11_1x2	"0 1"	// A(1) C(1)
-+fr12_3x3	"0 1"	// A(3) C(3)
-+fr13_2x1	"0 2"	// A(1) C(1)
-+fr14_1x3	"0 2"	// A(1) C(1)
-+fr15_2x1	"0 2"	// A(1)
-+fr16_5x1	"0 1"	// A(2) C(1)
-+fr17_2x2	"0 1"	// A(5)
++fr01		"0 1"	// 1x1
++fr02		"0 2"	// 2x1
++fr03		"0 1"	// 1x1
++fr04		"0 1"	// 1x1
++fr05		"0 5"	// 1x1
++fr07		"0 1"	// 1x1
++fr08		"0 1"	// 1x3
++fr09		"0 1"	// 1x1
++fr11_1x2	"0 1"	// 1x2
++fr12_3x3	"1 1"	// 3x3
++fr13_2x1	"0 2"	// 2x1
++fr14_1x3	"0 2"	// 1x3
++fr15_2x1	"0 2"	// 2x1
++fr16_5x1	"0 1"	// 5x1
++fr17_2x2	"0 1"	// 2x2
+tileset buildings	"1 1"
 *rm_drop +craft_drop_firebird "1 1"
-*rm_ufo +craft_ufo_supply "1 1" //Enough Alien spawnpoints for Max Crew capacity
+*rm_ufo +craft_ufo_harvester "1 1"
 }
 
 assembly large
 {
 title "_UFO Landed"
 size "10 8"
-+fr01		"0 1"	// A(1)
-+fr02		"0 1"
-+fr03		"0 1"	// C(1)
-+fr04		"0 1"
-+fr05		"0 3"	// A(1)
-+fr06_3x2	"1 1"	// A(2) C(2)
-+fr07		"0 1"	// A(1)
-+fr08		"0 1"
-+fr09		"0 1"	// A(1)
-+fr10		"0 5"
-+fr11_1x2	"0 1"	// A(1) C(1)
-+fr12_3x3	"1 1"	// A(3) C(3)
-+fr13_2x1	"0 2"	// A(1) C(1)
-+fr14_1x3	"0 2"	// A(1) C(1)
-+fr15_2x1	"0 2"	// A(1)
-+fr16_5x1	"0 1"	// A(2) C(1)
-+fr17_2x2	"0 1"	// A(5)
++fr01		"0 1"	// 1x1
++fr02		"0 2"	// 2x1
++fr03		"0 1"	// 1x1
++fr04		"0 1"	// 1x1
++fr05		"0 8"	// 1x1
++fr06_3x2	"1 1"	// 3x2
++fr07		"0 1"	// 1x1
++fr08		"0 2"	// 1x3
++fr09		"0 1"	// 1x1
+//+fr10		"0 5"	// 1x1
++fr11_1x2	"0 1"	// 1x2
++fr12_3x3	"1 1"	// 3x3
++fr13_2x1	"0 2"	// 2x1
++fr14_1x3	"0 2"	// 1x3
++fr15_2x1	"0 2"	// 2x1
++fr16_5x1	"0 1"	// 5x1
++fr17_2x2	"0 1"	// 2x2
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_bomber "1 1"
 }
@@ -375,22 +435,48 @@ assembly noufo
 {
 title "_Industrial Site"
 size "7 7"
-+fr01		"0 1"	// A(1)
-+fr02		"0 1"
-+fr03		"0 1"	// C(1)
-+fr04		"0 1"
-+fr05		"0 3"	// A(1)
-+fr06_3x2	"1 1"	// A(2) C(2)
-+fr07		"0 1"	// A(1)
-+fr08		"0 1"
-+fr09		"0 1"	// A(1)
-+fr10		"0 5"
-+fr11_1x2	"0 1"	// A(1) C(1)
-+fr12_3x3	"1 1"	// A(3) C(3)
-+fr13_2x1	"0 2"	// A(1) C(1)
-+fr14_1x3	"0 2"	// A(1) C(1)
-+fr15_2x1	"0 2"	// A(1)
-+fr16_5x1	"1 1"	// A(2) C(1)
-+fr17_2x2	"0 1"	// A(5)
+//+fr01		"0 1"	// 1x1
++fr02		"0 2"	// 2x1
+//+fr03		"0 1"	// 1x1
+//+fr04		"0 1"	// 1x1
++fr05		"0 1"	// 1x1
+//+fr07		"0 1"	// 1x1
++fr08		"0 1"	// 1x1
+//+fr09		"0 1"	// 1x1
+//+fr10		"0 1"	// 1x1
++fr11_1x2	"0 2"	// 1x2
++fr12_3x3	"1 1"	// 3x3
+//+fr13_2x1	"0 2"	// 2x1
++fr14_1x3	"0 2"	// 1x3
++fr15_2x1	"0 2"	// 2x1
++fr16_5x1	"1 1"	// 5x1
++fr17_2x2	"0 1"	// 2x2
+tileset buildings	"1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+// test assembly ---------------------------------------------------*
+
+assembly test
+{
+title "_Industrial Site"
+size "7 7"
+//+fr01		"0 1"	// 1x1
++fr02		"0 2"	// 2x1
+//+fr03		"0 1"	// 1x1
+//+fr04		"0 1"	// 1x1
++fr05		"0 1"	// 1x1
+//+fr07		"0 1"	// 1x1
++fr08		"0 1"	// 1x1
+//+fr09		"0 1"	// 1x1
+//+fr10		"0 1"	// 1x1
++fr11_1x2	"0 2"	// 1x2
++fr12_3x3	"1 1"	// 3x3
+//+fr13_2x1	"0 2"	// 2x1
++fr14_1x3	"0 2"	// 1x3
++fr15_2x1	"0 2"	// 2x1
++fr16_5x1	"1 1"	// 5x1
++fr17_2x2	"0 1"	// 2x2
+tileset buildings	"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }

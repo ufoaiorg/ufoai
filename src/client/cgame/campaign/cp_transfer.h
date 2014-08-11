@@ -24,6 +24,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+/** @brief Default transfer time for cases with no source/dest base */
+#define DEFAULT_TRANSFER_TIME 2.0f
+
 /** @brief Transfer information (they are being stored in ccs.transfers). */
 typedef struct transfer_s {
 	base_t* destBase;				/**< Pointer to destination base. May not be nullptr if active is true. */

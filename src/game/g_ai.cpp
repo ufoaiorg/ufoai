@@ -414,7 +414,7 @@ bool AI_FindHidingLocation (int team, Actor* actor, const pos3_t from, int tuLef
 	const byte maxY = std::min(from[1] + HIDE_DIST, PATHFINDING_WIDTH - 1);
 
 	int bestScore = AI_ACTION_NOTHING_FOUND;
-	pos3_t bestPos = {from[0], from[1], from[2]};
+	pos3_t bestPos = {0, 0, PATHFINDING_HEIGHT};
 	for (actor->pos[1] = minY; actor->pos[1] <= maxY; actor->pos[1]++) {
 		for (actor->pos[0] = minX; actor->pos[0] <= maxX; actor->pos[0]++) {
 			/* Don't have TUs  to walk there */
@@ -438,9 +438,11 @@ bool AI_FindHidingLocation (int team, Actor* actor, const pos3_t from, int tuLef
 		}
 	}
 
-	if (!VectorCompare(from, bestPos))
+	if (bestPos[2] != PATHFINDING_HEIGHT) {
 		VectorCopy(bestPos, actor->pos);
-	return bestScore != AI_ACTION_NOTHING_FOUND;
+		return true;
+	}
+	return false;
 }
 
 /**
@@ -485,7 +487,7 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 	const byte maxY = std::min(from[1] + HERD_DIST, PATHFINDING_WIDTH - 1);
 
 	/* search the location */
-	pos3_t bestpos = {from[0], from[1], from[2]};
+	pos3_t bestpos = {0, 0, PATHFINDING_HEIGHT};
 	bestlength = VectorDistSqr(target, actor->origin);
 	for (actor->pos[1] = minY; actor->pos[1] <= maxY; actor->pos[1]++) {
 		for (actor->pos[0] = minX; actor->pos[0] <= maxX; actor->pos[0]++) {
@@ -515,7 +517,7 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 		}
 	}
 
-	if (!VectorCompare(from, bestpos)) {
+	if (bestpos[2] != PATHFINDING_HEIGHT) {
 		VectorCopy(bestpos, actor->pos);
 		return true;
 	}
