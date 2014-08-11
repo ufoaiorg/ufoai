@@ -12,7 +12,6 @@ function load ()
 end
 
 -- register callbacks
-ufo.print("inside test_lua.ufo: registering callbacks\n")
 ufoui.register_onload (load)
 
 --[[

@@ -32,6 +32,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/hashtable.h"
 #include "../../common/filesys.h"
 
+//#include "../client.h"
+#include "ui_main.h"
+#include "ui_components.h"
+#include "ui_behaviour.h"
+#include "ui_node.h"
+#include "ui_parse.h"
+#include "ui_internal.h"
+
 extern "C" {
 	#include "../../libs/lua/lauxlib.h"
 	#include "../../libs/lua/lualib.h"
@@ -241,3 +249,195 @@ bool UI_ParseAndLoadLuaScript (const char* name, const char** text) {
 	return true;
 }
 
+/**
+ * @brief Create a new control inherited from a given node class or other node.
+ * @param[in] parent The parent control or window/component owning this control.
+ * @param[in] type The behaviour type of the window to create.
+ * @param[in] name The name of the window to create.
+ * @param[in] super The name this window inherits from. If NULL the window has no super defined.
+ * @note A control is a node inside a component or window. Unlike a component or window, a control is
+ * always attached to a parent.
+ */
+uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super)
+{
+	uiNode_t* node = nullptr;
+	uiNode_t* control = nullptr;
+
+	/* get the behaviour */
+	uiBehaviour_t* behaviour = UI_GetNodeBehaviour(*token);
+	if (!behaviour) {
+		control = UI_GetComponent(*token);
+	}
+	if (behaviour == nullptr && control == nullptr) {
+		Com_Printf("UI_CreateControl: node behaviour/control '%s' doesn't exist (%s)\n", type, UI_GetPath(parent));
+		return nullptr;
+	}
+
+	/* check the name */
+	if (!UI_TokenIsName(name, false)) {
+		Com_Printf("UI_CreateControl: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
+		return false;
+	}
+	if (UI_TokenIsReserved(name)) {
+		Com_Printf("UI_CreateControl: \"%s\" is a reserved token, we can't call a node with it\n", name);
+		return false;
+	}
+
+	/* test if node already exists */
+
+	/* Already existing node should only come from inherited node, we should not have 2 definitions of the same node into the same window. */
+	if (parent)
+		node = UI_GetNode(parent, name);
+
+	/* reuse a node */
+	if (node) {
+		/* if it has the same name, it should have the same behaviour */
+		const uiBehaviour_t* test = (behaviour != nullptr) ? behaviour : (component != nullptr) ? component->behaviour : nullptr;
+		if (node->behaviour != test) {
+			Com_Printf("UI_CreateControl: new behaviour for reused node type specified (node \"%s\")\n", UI_GetPath(node));
+			return nullptr;
+		}
+	}
+	/* else initialize a new control */
+	else if (control) {
+		node = UI_CloneNode(component, nullptr, true, *token, false);
+		if (parent) {
+			if (parent->root)
+				UI_UpdateRoot(node, parent->root);
+			UI_AppendNode(parent, node);
+		}
+
+	/* else initialize a new node */
+	} else {
+		node = UI_AllocNode(name, behaviour->name, false);
+		node->parent = parent;
+		if (parent)
+			node->root = parent->root;
+		/** @todo move it into caller */
+		if (parent)
+			UI_AppendNode(parent, node);
+	}
+
+	/* call onload (properties are set from lua) */
+	UI_Node_Loaded(node);
+
+	return node;
+}
+
+/**
+ * @brief Create a new component inherited from a given node class or other node.
+ * @param[in] type The behaviour type of the component to create.
+ * @param[in] name The name of the component to create.
+ * @param[in] super The name this component inherits from. If NULL the component has no super defined.
+ * @note A component is a reusable window or panel.
+ */
+uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super)
+{
+	/* check the name */
+	if (!UI_TokenIsName(name, false)) {
+		Com_Printf("UI_CreateComponent: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
+		return false;
+	}
+	if (UI_TokenIsReserved(name)) {
+		Com_Printf("UI_CreateComponent: \"%s\" is a reserved token, we can't call a node with it\n", name);
+		return false;
+	}
+
+	/* create the component */
+	uiNode_t* component;
+	if (super != nullptr) {
+		/* check if super points to a node type */
+		uiBehaviour_t* superComponent = UI_GetNodeBehaviour (super);
+		if (superComponent == nullptr) {
+			/* check if super points to a instantiated component */
+			uiNode_t* inheritedComponent = UI_GetComponent (super);
+			if (inheritedComponent == nullptr) {
+				Com_Printf("UI_CreateComponent: node behaviour/component '%s' doesn't exists (component %s)\n", super, name);
+				return nullptr;
+			}
+			component = UI_CloneNode (inheritedComponent, nullptr, true, name, false);
+		}
+		else {
+			component = UI_AllocNode(name, superComponent->name, false);
+		}
+	}
+	else {
+		Com_Printf("UI_CreateComponent: node behaviour/component not specified!\n");
+		return nullptr;
+	}
+
+	/* call onload (properties are set and controls are created from lua) */
+	UI_Node_Loaded(component);
+
+	/* add to list of instantiated components */
+	UI_InsertComponent(component);
+
+	return component;
+}
+
+/**
+ * @brief Create a window node with specified type and inheritance.
+ * @param[in] type The behaviour type of the window to create.
+ * @param[in] name The name of the window to create.
+ * @param[in] super The name this window inherits from. If NULL the window has no super defined.
+ * @note A window is a top level component in the ui.
+ * @todo If the old style ui scripts are no longer used, the check UI_TokenIsReserved should be removed.
+ */
+uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super)
+{
+	/* make sure we create windows only here */
+	if (!Q_streq(type, "window")) {
+		Com_Error(ERR_FATAL, "UI_CreateWindow: '%s %s' is not a window node\n", type, name);
+		return false;	/* never reached */
+	}
+	/* make sure the name of the window is a correct identifier */
+	/* note: since this is called from lua, name is never quoted */
+	if (!UI_TokenIsName(name, false)) {
+		Com_Printf("UI_CreateWindow: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
+		return false;
+	}
+	/* make sure the name of the window is not a reserverd word */
+	if (UI_TokenIsReserved(name)) {
+		Com_Printf("UI_CreateWindow: \"%s\" is a reserved token, we can't call a node with it (node \"%s\")\n", name, name);
+		return false;
+	}
+
+	/* search for windows with same name */
+	int i;
+	for (i = 0; i < ui_global.numWindows; i++)
+		if (!strncmp(name, ui_global.windows[i]->name, sizeof(ui_global.windows[i]->name)))
+			break;
+
+	if (i < ui_global.numWindows) {
+		Com_Printf("UI_ParseWindow: %s \"%s\" with same name found, second ignored\n", type, name);
+	}
+
+	if (ui_global.numWindows >= UI_MAX_WINDOWS) {
+		Com_Error(ERR_FATAL, "UI_CreateWindow: max windows exceeded (%i) - ignore '%s'\n", UI_MAX_WINDOWS, name);
+		return false;	/* never reached */
+	}
+
+	/* create the window */
+	uiNode_t* window;
+
+	/* does this window inherit data from another window? */
+	if (super != nullptr) {
+		uiNode_t* superWindow;
+		superWindow = UI_GetWindow(super);
+		if (superWindow == nullptr) {
+			Sys_Error("Could not get the super window \"%s\"", super);
+		}
+		window = UI_CloneNode(superWindow, nullptr, true, name, false);
+	} else {
+		window = UI_AllocNode(name, type, false);
+		window->root = window;
+	}
+
+	/* call onload (properties are set and controls are created from lua) */
+	UI_Node_Loaded(window);
+
+	/* add to list of instantiated windows */
+	UI_InsertWindow(window);
+
+	return window;
+}
