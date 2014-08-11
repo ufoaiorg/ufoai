@@ -79,7 +79,7 @@ static char const* const reservedTokens[] = {
 	nullptr
 };
 
-static bool UI_TokenIsReserved (const char* name)
+bool UI_TokenIsReserved (const char* name)
 {
 	char const* const* token = reservedTokens;
 	while (*token) {
@@ -123,7 +123,7 @@ static bool UI_TokenIsValue (const char* name, bool isQuoted)
 	return false;
 }
 
-static bool UI_TokenIsName (const char* name, bool isQuoted)
+bool UI_TokenIsName (const char* name, bool isQuoted)
 {
 	assert(name);
 	if (isQuoted)

@@ -43,6 +43,9 @@ vec4_t* UI_AllocStaticColor(int count) __attribute__ ((warn_unused_result));
 struct uiAction_s* UI_AllocStaticAction(void) __attribute__ ((warn_unused_result));
 bool UI_InitRawActionValue(struct uiAction_s* action, uiNode_t* node, const struct value_s* property, const char* string);
 
+bool UI_TokenIsReserved (const char* name);
+bool UI_TokenIsName (const char* name, bool isQuoted);
+
 /* main special type */
 /** @todo we should split/flag parse type (type need only 1 lex; and other) */
 #define	V_UI_MASK			0x8F00			/**< Mask for all UI bits */
