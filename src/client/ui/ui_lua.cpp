@@ -257,6 +257,7 @@ bool UI_ParseAndLoadLuaScript (const char* name, const char** text) {
  * @param[in] super The name this window inherits from. If NULL the window has no super defined.
  * @note A control is a node inside a component or window. Unlike a component or window, a control is
  * always attached to a parent.
+ * @note Code needs to be refactored.
  */
 uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super)
 {
@@ -264,9 +265,10 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 	uiNode_t* control = nullptr;
 
 	/* get the behaviour */
-	uiBehaviour_t* behaviour = UI_GetNodeBehaviour(*token);
+	uiBehaviour_t* behaviour = UI_GetNodeBehaviour(type);
 	if (!behaviour) {
-		control = UI_GetComponent(*token);
+		/* if not found, try to get the component */
+		control = UI_GetComponent(name);
 	}
 	if (behaviour == nullptr && control == nullptr) {
 		Com_Printf("UI_CreateControl: node behaviour/control '%s' doesn't exist (%s)\n", type, UI_GetPath(parent));
@@ -292,7 +294,7 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 	/* reuse a node */
 	if (node) {
 		/* if it has the same name, it should have the same behaviour */
-		const uiBehaviour_t* test = (behaviour != nullptr) ? behaviour : (component != nullptr) ? component->behaviour : nullptr;
+		const uiBehaviour_t* test = (behaviour != nullptr) ? behaviour : (control != nullptr) ? control->behaviour : nullptr;
 		if (node->behaviour != test) {
 			Com_Printf("UI_CreateControl: new behaviour for reused node type specified (node \"%s\")\n", UI_GetPath(node));
 			return nullptr;
@@ -300,15 +302,15 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 	}
 	/* else initialize a new control */
 	else if (control) {
-		node = UI_CloneNode(component, nullptr, true, *token, false);
+		node = UI_CloneNode(control, nullptr, true, name, false);
 		if (parent) {
 			if (parent->root)
 				UI_UpdateRoot(node, parent->root);
 			UI_AppendNode(parent, node);
 		}
-
+	}
 	/* else initialize a new node */
-	} else {
+	else {
 		node = UI_AllocNode(name, behaviour->name, false);
 		node->parent = parent;
 		if (parent)
@@ -409,7 +411,7 @@ uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super
 			break;
 
 	if (i < ui_global.numWindows) {
-		Com_Printf("UI_ParseWindow: %s \"%s\" with same name found, second ignored\n", type, name);
+		Com_Printf("UI_CreateWindow: %s \"%s\" with same name found, second ignored\n", type, name);
 	}
 
 	if (ui_global.numWindows >= UI_MAX_WINDOWS) {
