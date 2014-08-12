@@ -8,7 +8,10 @@ require "ufos/ui/test_lib.ufo"
 
 function load ()
 	ufo.print("inside test_lua.ufo: calling load\n")
-	test_lib()
+	-- create a window node with name 'lua_test'
+	local w = ufoui.create_window ("window", "lua_test", nil)
+	-- return the window node to the game
+	return w
 end
 
 -- register callbacks

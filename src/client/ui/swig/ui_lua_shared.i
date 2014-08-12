@@ -61,3 +61,10 @@ struct uiNode_t {
 %rename(register_onload) UI_RegisterHandler_OnLoad;
 void UI_RegisterHandler_OnLoad (lua_State *L, LUA_ONLOAD_CALLBACK fcn);
 
+/* expose uiNode creation functions */
+%rename (create_control) UI_CreateControl;
+uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super);
+%rename (create_component) UI_CreateComponent;
+uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);
+%rename (create_window) UI_CreateWindow;
+uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);

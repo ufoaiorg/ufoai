@@ -29,6 +29,9 @@ extern "C" {
 	#include "../../libs/lua/lua.h"
 }
 
+// prototype
+struct uiNode_t;
+
 /**
  * @brief callback signatures for functions defined in Lua
  */
@@ -50,3 +53,7 @@ void UI_RegisterHandler_OnLoad (lua_State *L, LUA_ONLOAD_CALLBACK fnc);
 /* lua script functions */
 bool UI_ParseAndLoadLuaScript (const char* name, const char** text);
 
+/* lua uiNode create functions */
+uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super);
+uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);
+uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);

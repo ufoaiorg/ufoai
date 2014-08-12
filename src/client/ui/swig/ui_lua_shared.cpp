@@ -2659,6 +2659,14 @@ typedef struct{} LANGUAGE_OBJ;
 
 #include "../ui_lua.h"
 
+
+SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
+  int ret = lua_isstring(L, idx);
+  if (!ret)
+   ret = lua_isnil(L, idx);
+  return ret;
+}
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -2773,6 +2781,91 @@ fail:
 }
 
 
+static int _wrap_create_control(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  char *arg4 = (char *) 0 ;
+  uiNode_t *result = 0 ;
+  
+  SWIG_check_num_args("UI_CreateControl",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UI_CreateControl",1,"uiNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("UI_CreateControl",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("UI_CreateControl",3,"char const *");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("UI_CreateControl",4,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("create_control",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  arg4 = (char *)lua_tostring(L, 4);
+  result = (uiNode_t *)UI_CreateControl(arg1,(char const *)arg2,(char const *)arg3,(char const *)arg4);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiNode_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_create_component(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  uiNode_t *result = 0 ;
+  
+  SWIG_check_num_args("UI_CreateComponent",3,3)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("UI_CreateComponent",1,"char const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("UI_CreateComponent",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("UI_CreateComponent",3,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  result = (uiNode_t *)UI_CreateComponent((char const *)arg1,(char const *)arg2,(char const *)arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiNode_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_create_window(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  uiNode_t *result = 0 ;
+  
+  SWIG_check_num_args("UI_CreateWindow",3,3)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("UI_CreateWindow",1,"char const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("UI_CreateWindow",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("UI_CreateWindow",3,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  result = (uiNode_t *)UI_CreateWindow((char const *)arg1,(char const *)arg2,(char const *)arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiNode_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static swig_lua_attribute swig_SwigModule_attributes[] = {
     {0,0,0}
 };
@@ -2781,6 +2874,9 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
 };
 static swig_lua_method swig_SwigModule_methods[]= {
     { "register_onload", _wrap_register_onload},
+    { "create_control", _wrap_create_control},
+    { "create_component", _wrap_create_component},
+    { "create_window", _wrap_create_window},
     {0,0}
 };
 static swig_lua_class* swig_SwigModule_classes[]= {

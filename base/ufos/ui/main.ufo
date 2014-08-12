@@ -49,6 +49,18 @@ window main
 		padding		0
 		onClick		{ cmd "cl_openurl http://www.twitter.com/ufoai/;" }
 	}
+	
+	button test
+	{
+		pos			"190 720"
+		string		"_Testing"
+		tooltip		"_Testing ui lua integration"
+		size		"70 20"
+		color		"0 0.8 0 1"
+		selectcolor "1 1 1 1"
+		padding		0
+		onClick		{ cmd "ui_push lua_test;" }
+	}
 
 	panel buttons {
 		{
