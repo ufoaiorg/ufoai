@@ -179,6 +179,7 @@ static int pos3L_tostring(lua_State* L);
 static int pos3L_goto(lua_State* L);
 static int pos3L_face(lua_State* L);
 static int pos3L_approach(lua_State* L);
+static int pos3L_distance(lua_State* L);
 /** Lua Pos3 metatable methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -187,6 +188,7 @@ static const luaL_reg pos3L_methods[] = {
 	{"goto", pos3L_goto},
 	{"face", pos3L_face},
 	{"approach", pos3L_approach},
+	{"distance", pos3L_distance},
 	{nullptr, nullptr}
 };
 
@@ -730,6 +732,22 @@ static int pos3L_approach (lua_State* L)
 	G_ClientMove(*AIL_player, 0, AIL_ent, *pos);
 
 	lua_pushboolean(L, 1);
+	return 1;
+}
+
+static int pos3L_distance (lua_State* L)
+{
+	assert(lua_ispos3(L, 1));
+
+	pos3_t* pos = lua_topos3(L, 1);
+	assert(pos != nullptr);
+
+	/* Find a path to the target pos */
+	if (!G_FindPath(0, AIL_ent, AIL_ent->pos, *pos, AIL_ent->isCrouched(), ROUTING_NOT_REACHABLE - 1)) {
+		lua_pushnumber(L, ROUTING_NOT_REACHABLE);
+		return 1;
+	}
+	lua_pushnumber(L, G_ActorMoveLength(AIL_ent, level.pathingMap, *pos, false));
 	return 1;
 }
 
