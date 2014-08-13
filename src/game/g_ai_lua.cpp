@@ -766,7 +766,7 @@ static int AIL_print (lua_State* L)
 		bool meta = false;
 
 		lua_pushvalue(L, i);   /* value to print */
-		if (luaL_callmeta(L, 1, "__tostring")) {
+		if (luaL_callmeta(L, -1, "__tostring")) {
 			s = lua_tostring(L, -1);
 			meta = true;
 		} else {
