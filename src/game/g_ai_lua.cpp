@@ -1142,8 +1142,8 @@ static int AIL_positionshoot (lua_State* L)
 		return 1;
 	}
 
-	tus -= fd->time;
-	if (tus <= 0) {
+	int fdTime = G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
+	if (tus - fdTime <= 0) {
 		lua_pushboolean(L, 0);
 		return 1;
 	}
@@ -1179,11 +1179,40 @@ static int AIL_positionshoot (lua_State* L)
 				/* Can we see the target? */
 				if (!G_IsVisibleForTeam(target->actor, actor->getTeam()) && G_ActorVis(actor->origin, actor, target->actor, true) < ACTOR_VIS_10)
 					continue;
-				float dist;
-				if (!AI_FighterCheckShoot(actor, target->actor, fd, &dist))
-					continue;
-				/* gun-to-target line free? */
-				if (!AI_CheckLineOfFire(actor, target->actor, fd, 1))
+
+				bool hasLoF = false;
+				int shotChecked = NONE;
+				for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
+					const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
+					if (item == nullptr)
+						continue;
+
+					const fireDef_t* fdArray = item->getFiredefs();
+					if (fdArray == nullptr)
+						continue;
+
+					for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+						fd = &fdArray[fdIdx];
+						fdTime = G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
+						/* how many shoots can this actor do */
+						const int shots = tus / fdTime;
+						if (shots < 1)
+							continue;
+						float dist;
+						if (!AI_FighterCheckShoot(actor, target->actor, fd, &dist))
+							continue;
+						/* gun-to-target line free? */
+						const int shotFlags = fd->gravity | (fd->launched << 1) | (fd->rolled << 2);
+						if (shotChecked != shotFlags) {
+							shotChecked = shotFlags;
+							if ((hasLoF = AI_CheckLineOfFire(actor, target->actor, fd, shots)))
+								break;
+						}
+					}
+					if (hasLoF)
+						break;
+				}
+				if (!hasLoF)
 					continue;
 				float score;
 				switch (posType) {
