@@ -390,6 +390,13 @@ static int actorL_shoot (lua_State* L)
 			if (!shots)
 				continue;
 
+			float dist;
+			if (!AI_FighterCheckShoot(AIL_ent, target->actor, fd, &dist))
+				continue;
+
+			if (!AI_CheckLineOfFire(AIL_ent, target->actor, fd, shots))
+				continue;
+
 			/* Check if we can do the most damage here */
 			float dmg = AI_CalcShotDamage(AIL_ent, target->actor, fd, shootType) * shots;
 			if (dmg > bestDmg) {
@@ -407,15 +414,16 @@ static int actorL_shoot (lua_State* L)
 		return 1;
 	}
 
+	bool shot = false;
 	while (bestShots > 0) {
-		bestShots--;
-		G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos, bestType, bestFd, nullptr, true, 0);
 		if (G_IsDead(target->actor))
 			break;
+		bestShots--;
+		shot = G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos, bestType, bestFd, nullptr, true, 0) || shot;
 	}
 
-	/* Success. */
-	lua_pushboolean(L, 1);
+	/* Success? */
+	lua_pushboolean(L, shot);
 	return 1;
 }
 
@@ -522,7 +530,7 @@ static int actorL_throwgrenade(lua_State* L)
 		if (!AI_CheckLineOfFire(AIL_ent, target->actor, fd, 1))
 			continue;
 
-		/* Use select first usable firemode */
+		/* Select the first usable firemode */
 		bestFd = fd;
 		break;
 	}
@@ -561,9 +569,9 @@ static int actorL_throwgrenade(lua_State* L)
 		return 1;
 	}
 	/* All right use it! */
-	G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos, shotType, bestFd->fdIdx, nullptr, true, 0);
+	const bool result = G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos, shotType, bestFd->fdIdx, nullptr, true, 0);
 
-	lua_pushboolean(L, 1);
+	lua_pushboolean(L, result);
 	return 1;
 }
 
