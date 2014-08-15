@@ -745,6 +745,9 @@ static int pos3L_approach (lua_State* L)
 	return 1;
 }
 
+/**
+ * @brief Return the distance to the position
+ */
 static int pos3L_distance (lua_State* L)
 {
 	assert(lua_ispos3(L, 1));
@@ -1554,6 +1557,10 @@ static int AIL_waypoints (lua_State* L)
 	return 1; /* Returns the table of positions. */
 }
 
+/**
+ * @brief Try to find a position nearby to the given position
+ * @note Intended to make aliens defend mission targets
+ */
 static int AIL_positionmission (lua_State* L)
 {
 	/* check parameter */
@@ -1575,6 +1582,10 @@ static int AIL_positionmission (lua_State* L)
 	return 1;
 }
 
+/**
+ * @brief Return a new position to move to.
+ * @note To make the AI wander or patrol around.
+ */
 static int AIL_positionwander (lua_State* L)
 {
 	/* Calculate move table. */
@@ -1701,7 +1712,7 @@ static int AIL_positionwander (lua_State* L)
 }
 
 /**
- * @brief Returns a table of position of nearby usable weapons on the floor
+ * @brief Returns a table of the positions of nearby usable weapons on the floor
  */
 static int AIL_findweapons (lua_State* L)
 {
@@ -1747,6 +1758,9 @@ static int AIL_findweapons (lua_State* L)
 	return 1; /* Returns the table of positions. */
 }
 
+/**
+ * @brief Whether the curent AI actor is a fighter or not
+ */
 static int AIL_isfighter(lua_State* L)
 {
 	const bool result = AIL_ent->chr.teamDef->weapons || AIL_ent->chr.teamDef->onlyWeapon;
