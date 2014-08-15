@@ -219,6 +219,7 @@ static int AIL_waypoints(lua_State* L);
 static int AIL_positionmission(lua_State* L);
 static int AIL_positionwander(lua_State* L);
 static int AIL_findweapons(lua_State* L);
+static int AIL_isfighter(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -247,6 +248,7 @@ static const luaL_reg AIL_methods[] = {
 	{"positionmission", AIL_positionmission},
 	{"positionwander", AIL_positionwander},
 	{"findweapons", AIL_findweapons},
+	{"isfighter", AIL_isfighter},
 	{nullptr, nullptr}
 };
 
@@ -1701,7 +1703,7 @@ static int AIL_positionwander (lua_State* L)
 /**
  * @brief Returns a table of position of nearby usable weapons on the floor
  */
-int AIL_findweapons (lua_State* L)
+static int AIL_findweapons (lua_State* L)
 {
 	bool full = false;
 	if (lua_gettop(L) > 0) {
@@ -1743,6 +1745,13 @@ int AIL_findweapons (lua_State* L)
 		lua_rawset(L, -3); /* store the value in the table */
 	}
 	return 1; /* Returns the table of positions. */
+}
+
+static int AIL_isfighter(lua_State* L)
+{
+	const bool result = AIL_ent->chr.teamDef->weapons || AIL_ent->chr.teamDef->onlyWeapon;
+	lua_pushboolean(L, result);
+	return 1;
 }
 
 /**
