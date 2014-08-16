@@ -105,6 +105,9 @@ window equipment extends objectinfo
 	data selected {
 	}
 
+	data param {
+	}
+
 	rows soldierlist_lines {
 		pos			"55 18"
 		size		"260 320"
@@ -558,7 +561,7 @@ window equipment extends objectinfo
 		size		"230 20"
 		onChange {
 			cmd "employee_changename;"
-			cmd "ui_team_fillequip;"
+			cmd "ui_team_fillequip <node:root.param@string>"
 			cmd "update_item_list;"
 			cmd "equipment_soldierlist_select <node:root.selected@integer>;"
 		}
@@ -730,9 +733,11 @@ window equipment extends objectinfo
 		*cvar:mn_linkname = ""
 		*cvar:mn_itemname = ""
 		*node:root.selected@integer = -1
+		*node:root.param@string = ""
 
 		cmd "team_initskin;"
 		if ( paramCount > 0 ) {
+			*node:root.param@string = <1>
 			cmd "ui_team_fillequip <1>;"
 		} else {
 			cmd "ui_team_fillequip;"
