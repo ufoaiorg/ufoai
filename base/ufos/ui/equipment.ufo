@@ -134,7 +134,7 @@ window equipment extends objectinfo
 					color		"0.56 0.81 0.76 1"
 					onChange	{
 						cmd "employee_changename;"
-						cmd "ui_team_fillequip;"
+						cmd "ui_team_fillequip <node:root.param@string>;"
 						cmd "update_item_list;"
 						cmd "equipment_soldierlist_select <node:root.selected@integer>;"
 					}
@@ -322,7 +322,8 @@ window equipment extends objectinfo
 	data selected {
 	}
 
-
+	data param {
+	}
 	// ==================
 	// category buttons
 	// ==================
@@ -462,10 +463,12 @@ window equipment extends objectinfo
 		*cvar:mn_linkname = ""
 		*cvar:mn_itemname = ""
 		*node:root.selected@integer = -1
+		*node:root.param@string = ""
 
 		cmd "team_initskin;"
 		if ( paramCount > 0 ) {
 			cmd "ui_team_fillequip <1>;"
+			*node:root.param@string = <1>
 		} else {
 			cmd "ui_team_fillequip;"
 		}
