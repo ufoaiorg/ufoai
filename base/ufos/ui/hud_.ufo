@@ -9,48 +9,6 @@
  *   new UI.
  */
 
-// Components for the soldier number strings
-
-component cmp_str_soldier_shadow extends string
-{
-	size		"24 20"
-	color		"0 0 0 1"
-	ghost		true
-	font		"f_verysmall"
-	contentalign	ALIGN_CL
-}
-component cmp_str_soldier extends string
-{
-	size		"24 20"
-	color		"0 .6 0 1"
-	ghost		true
-	font		"f_verysmall"
-	contentalign	ALIGN_CL
-}
-
-// Component the extends for soldier head models
-
-component cmp_model_head extends model
-{
-	autoscale	true
-	size		"50 78"
-	ghost		true
-}
-
-// Component for the spotted enemies string (used by altHUD and defaultHUD)
-
-component cmp_str_numspotted extends string
-{
-	string		*cvar:mn_numaliensspotted
-	onClick		{ cmd "nextalien;" }
-	onRClick	{ cmd "prevalien;" }
-	onWheelUp	{ cmd "nextalien;" }
-	onWheelDown	{ cmd "prevalien;" }
-	onMouseEnter { *node:this@font = "f_small_bold" }
-	onMouseLeave { *node:this@font = "f_small" }
-	contentalign	ALIGN_CC
-}
-
 // Firemode entry
 component cmpFiremodeEntry extends panel {
 	{

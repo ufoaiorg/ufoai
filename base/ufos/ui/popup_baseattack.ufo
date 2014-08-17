@@ -1,53 +1,5 @@
 //
 
-component cmpNamedTbar extends cmpDefNamedTbar {
-	{
-		size	"440 23"
-	}
-	image	bdr {
-		pos "165 2"
-	}
-	tbar		bar {
-		pos "167 2"
-	}
-	string	val {
-		pos "265 0"
-		size "150 20"
-	}
-}
-
-component cmpNamedBar extends panel {
-	{
-		size	"440 23"
-	}
-	image			bdr {
-		pos "165 2"
-		src "ui/bar_border"
-	}
-	bar		currbar {
-		pos "167 7"
-		size "255 6"
-		color		".5 .9 .5 1"
-		max 100
-	}
-	bar		initbar {
-		pos "167 7"
-		size "255 6"
-		color		"0 .8 0 1"
-		max 100
-	}
-	string	lbl {
-		pos "0 0"
-		size "180 20"
-		string ""
-	}
-	string	val {
-		pos "265 0"
-		size "150 20"
-		contentalign ALIGN_UR
-	}
-}
-
 component cmp_soldierentry extends panel {
 	{
 		size		"310 25"
