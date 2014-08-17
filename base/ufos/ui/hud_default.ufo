@@ -1272,12 +1272,10 @@ window hud_default extends hud
 	{
 		call *node:root.reactions@removeAllChild
 		*node:root.overlay@invis = true
-		cmd "deselect_headgear;deselect_crouch;deselect_stand;"
 	}
 	confunc endround
 	{
 		*node:root.overlay@invis = false
-		cmd "disable_stand; disable_crouch; disable_reaction; disable_headgear;"
 		cmd "hud_movemode;"
 	}
 
