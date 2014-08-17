@@ -220,6 +220,7 @@ static int AIL_positionmission(lua_State* L);
 static int AIL_positionwander(lua_State* L);
 static int AIL_findweapons(lua_State* L);
 static int AIL_isfighter(lua_State* L);
+static int AIL_setwaypoint(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -249,6 +250,7 @@ static const luaL_reg AIL_methods[] = {
 	{"positionwander", AIL_positionwander},
 	{"findweapons", AIL_findweapons},
 	{"isfighter", AIL_isfighter},
+	{"setwaypoint", AIL_isfighter},
 	{nullptr, nullptr}
 };
 
@@ -1765,6 +1767,30 @@ static int AIL_isfighter(lua_State* L)
 {
 	const bool result = AIL_ent->chr.teamDef->weapons || AIL_ent->chr.teamDef->onlyWeapon;
 	lua_pushboolean(L, result);
+	return 1;
+}
+
+/**
+ * @brief Whether the curent AI actor is a fighter or not
+ */
+static int AIL_setwaypoint(lua_State* L)
+{
+	/* No waypoint, reset the count value to restart the search */
+	if (lua_gettop(L) < 1) {
+		AIL_ent->count = 100;
+		lua_pushboolean(L, 1);
+	} else if (lua_ispos3(L, 1)){
+		pos3_t pos;
+		/** @todo A better way to handle waypoints */
+		Edict* waypoint = G_GetEdictFromPos(pos, ET_CIVILIANTARGET);
+		if (waypoint != nullptr) {
+			AIL_ent->count = waypoint->count;
+			lua_pushboolean(L, 1);
+		} else
+			lua_pushboolean(L, 0);
+	} else
+		lua_pushboolean(L, 0);
+
 	return 1;
 }
 
