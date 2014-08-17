@@ -133,26 +133,25 @@ component WorldLevel extends panel
 		size	"18 10"
 		icon	"icons/arrow_down"
 		tooltip	"_lower the level"
-		onclick	{ cmd "lvlchange 0;" }
+		onclick	{ cmd "lvlchange -1;" }
 	}
 
 	// raise/lower the level
 	// param1: direction (0 = down, 1 = up)
 	confunc lvlchange
 	{
-		if (param1 eq "1") {
+		if (<1> == 1) {
 			if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 				*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				*cvar:i = (*cvar:cl_worldlevel + 1)
-				*node:parent.levelnum@string = <cvar:i>
-				delete *cvar:i
-				}
-		} else {
+			}
+		} elif (<1> == -1) {
 			if (*cvar:cl_worldlevel > "0") {
-				*node:parent.levelnum@string = <cvar:cl_worldlevel>
 				*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
 			}
 		}
+		*cvar:i = (*cvar:cl_worldlevel + 1)
+		*node:parent.levelnum@string = <cvar:i>
+		delete *cvar:i
 		// change icon if we're at top or bottom level
 		if (*cvar:cl_worldlevel eq "0") {
 			*node:parent.down@icon = "icons/arrow_down_off"

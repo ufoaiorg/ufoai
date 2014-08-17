@@ -1305,6 +1305,11 @@ window hud_default extends hud
 		}
 	}
 
+	confunc updateLevelStatus {
+		if (<1> == 1) {
+			cmd "lvlchange 0;"
+		}
+	}
 
 	func onWindowOpened
 	{
@@ -1327,7 +1332,6 @@ window hud_default extends hud
 		}
 		delete *cvar:i
 
-		cmd "lvlchange 0;"
 		// Select the current soldier and update the squad selection
 		cmd "hudselect 0;"
 
