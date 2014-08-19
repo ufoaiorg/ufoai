@@ -221,6 +221,7 @@ static int AIL_positionwander(lua_State* L);
 static int AIL_findweapons(lua_State* L);
 static int AIL_isfighter(lua_State* L);
 static int AIL_setwaypoint(lua_State* L);
+static int AIL_difficulty(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -250,7 +251,8 @@ static const luaL_reg AIL_methods[] = {
 	{"positionwander", AIL_positionwander},
 	{"findweapons", AIL_findweapons},
 	{"isfighter", AIL_isfighter},
-	{"setwaypoint", AIL_isfighter},
+	{"setwaypoint", AIL_setwaypoint},
+	{"difficulty", AIL_difficulty},
 	{nullptr, nullptr}
 };
 
@@ -1781,7 +1783,7 @@ static int AIL_findweapons (lua_State* L)
 }
 
 /**
- * @brief Whether the curent AI actor is a fighter or not
+ * @brief Whether the current AI actor is a fighter or not
  */
 static int AIL_isfighter(lua_State* L)
 {
@@ -1791,7 +1793,7 @@ static int AIL_isfighter(lua_State* L)
 }
 
 /**
- * @brief Whether the curent AI actor is a fighter or not
+ * @brief Mark the current waypoint for a civ
  */
 static int AIL_setwaypoint(lua_State* L)
 {
@@ -1811,6 +1813,14 @@ static int AIL_setwaypoint(lua_State* L)
 	} else
 		lua_pushboolean(L, 0);
 
+	return 1;
+}
+
+/**
+ * @brief Return the difficulty number (in case we want different AI for different ones)
+ */
+static int AIL_difficulty(lua_State* L){
+	lua_pushnumber(L, g_difficulty->value);
 	return 1;
 }
 
