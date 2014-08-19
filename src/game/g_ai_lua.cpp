@@ -1350,6 +1350,22 @@ static int AIL_positionapproach (lua_State* L)
 	const aiActor_t* target = lua_toactor(L, 1);
 	assert(target != nullptr);
 
+	int tus = AIL_ent->getUsableTUs();
+	if (lua_gettop(L) > 1) {
+		if (lua_isnumber(L, 2))
+			tus = static_cast<int>(lua_tonumber(L, 2));
+		else
+			AIL_invalidparameter(2);
+	}
+
+	bool hide = false;
+	if (lua_gettop(L) > 2){
+		if (lua_isboolean(L, 3))
+			hide = lua_toboolean(L, 3);
+		else
+			AIL_invalidparameter(3);
+	}
+
 	/* Find a path to the target actor */
 	const int maxTUs = ROUTING_NOT_REACHABLE - 1;
 	pos3_t to;
@@ -1362,18 +1378,22 @@ static int AIL_positionapproach (lua_State* L)
 	}
 
 	/* Find the farthest we can go with current TUs */
-	const int tus = AIL_ent->getUsableTUs();
 	int dvec;
 	while ((dvec = gi.MoveNext(level.pathingMap, to, crouchingState)) != ROUTING_UNREACHABLE) {
 		/* Note: here we skip the first position so we don't try to walk into the target */
 		PosSubDV(to, crouchingState, dvec);
+		if (hide && (G_TestVis(target->actor->getTeam(), AIL_ent, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES))
+			continue;
 		const byte length =  G_ActorMoveLength(AIL_ent, level.pathingMap, to, false);
 		if (length <= tus)
 			break;
 		/* We are going backwards to the origin. */
 	}
 
-	lua_pushpos3(L, &to);
+	if (AIL_ent->isSamePosAs(to))
+		lua_pushboolean(L, 0);
+	else
+		lua_pushpos3(L, &to);
 	return 1;
 }
 
