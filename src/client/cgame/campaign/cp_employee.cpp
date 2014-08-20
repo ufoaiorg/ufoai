@@ -340,6 +340,8 @@ Employee* E_GetUnassignedEmployee (const base_t* const base, const employeeType_
 	E_Foreach(type, employee) {
 		if (!employee->isHiredInBase(base))
 			continue;
+		if (employee->transfer)
+			continue;
 		if (!employee->isAssigned())
 			return employee;
 	}
