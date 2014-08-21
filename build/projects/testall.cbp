@@ -104,7 +104,7 @@
 			<Add option="-DHARD_LINKED_CGAME" />
 			<Add directory="../../src/libs/mxml/" />
 			<Add directory="../../src/libs/gtest/include/" />
-			<Add directory="../../src/libs/gtest/gtest/" />
+			<Add directory="../../src/libs/gtest/src/" />
 			<Add directory="../../src/libs/mumble/" />
 		</Compiler>
 		<Linker>
