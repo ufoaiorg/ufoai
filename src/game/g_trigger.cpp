@@ -213,15 +213,19 @@ void SP_trigger_nextmap (Edict* ent)
  */
 bool Touch_HurtTrigger (Edict* self, Edict* activator)
 {
+	/* Dead actors should really not be able to trigger this - they can't be hurt anymore anyway*/
+	if (!G_IsLivingActor(activator))
+		return false;
+
+	/* If no damage is dealt don't count it as triggered */
 	const int damage = G_ApplyProtection(activator, self->dmgtype, self->dmg);
+	if (damage == 0)
+		return false;
+
 	const bool stunEl = (self->dmgtype == gi.csi->damStunElectro);
 	const bool stunGas = (self->dmgtype == gi.csi->damStunGas);
 	const bool shock = (self->dmgtype == gi.csi->damShock);
 	const bool isRobot = activator->chr.teamDef->robot;
-
-	/* these actors should really not be able to trigger this - they don't move anymore */
-	if (!G_IsLivingActor(activator))
-		return false;
 	Actor* actor = makeActor(activator);
 
 	if (stunEl || (stunGas && !isRobot)) {
@@ -231,9 +235,27 @@ bool Touch_HurtTrigger (Edict* self, Edict* activator)
 	} else {
 		G_TakeDamage(actor, damage);
 	}
+	/* Play hurt sound unless this is shock damage -- it doesn't really hurt
+	 * (and we don't yet actually handle it here anyway) */
+	if (!shock) {
+		const teamDef_t* teamDef = activator->chr.teamDef;
+		const int gender = activator->chr.gender;
+		assert(teamDef->numSounds[SND_HURT][gender] > 0);
+		int random = rand() % teamDef->numSounds[SND_HURT][gender];
+		linkedList_t* list = teamDef->sounds[SND_HURT][gender];
+		for (int j = 0; j < random; j++) {
+			assert(list);
+			list = list->next;
+		}
+		assert(list);
+		assert(list->data);
+		const char* sound = static_cast<const char*>(list->data);
+		G_EventSpawnSound(G_PlayerToPM(activator->getPlayer()), *activator, nullptr, sound);
+	}
+
 	G_CheckDeathOrKnockout(actor, nullptr, nullptr, damage);
 
-	return damage != 0;
+	return true;
 }
 
 /**
