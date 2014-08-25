@@ -338,6 +338,8 @@ typedef struct teamDef_s {
 
 	const BodyData* bodyTemplate;
 
+	const char* getActorSound(int gender, actorSound_t soundType) const;
+
 //	can't add this simple constructor because in scripts.cpp, teamDefValues 'offsetof' is used on teamdef_t
 //	inline teamDef_s () {
 //		OBJZERO(*this);
