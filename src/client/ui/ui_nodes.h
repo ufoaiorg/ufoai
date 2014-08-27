@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../shared/ufotypes.h"
 #include "../../common/scripts.h"
+#include "../../common/scripts_lua.h"
 
 /* prototype */
 struct uiSprite_t;
@@ -34,6 +35,7 @@ struct nodeKeyBinding_s;
 struct uiCallContext_s;
 struct uiModel_s;
 struct uiBehaviour_t;
+struct uiLuaCallback_t;
 
 typedef struct uiExcludeRect_s {
 	/** position of the exclude rect relative to node position */
@@ -135,6 +137,12 @@ struct uiNode_t {
 	struct uiAction_s* onWheelUp;
 	struct uiAction_s* onWheelDown;
 	struct uiAction_s* onChange;	/**< called when the widget change from an user action */
+
+	/* common events lua based */
+	LUA_INSTANCE lua_Instance; /**< references the lua userdata that is this node */
+    LUA_EVENT lua_onClick; /**< references the lua on_click method attached to this node */
+    LUA_EVENT lua_onRightClick; /**< references the lua on_rightclick method attached to this node */
+    LUA_EVENT lua_onMiddleClick; /**< references the lua on_middleclick method attached to this node */
 };
 
 

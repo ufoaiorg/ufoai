@@ -76,6 +76,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_vscrollbar.h"
 #include "node/ui_node_zone.h"
 
+extern "C" {
+	#include "../../libs/lua/lua.h"
+	#include "../../libs/lua/lauxlib.h"
+}
+
+
 typedef void (*registerFunction_t)(uiBehaviour_t* node);
 
 /**
@@ -342,6 +348,12 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
 		if (strlen(node->name) != strlen(name))
 			Com_Printf("UI_AllocNodeWithoutNew: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
 	}
+
+	/* initialize lua block */
+	node->lua_Instance = LUA_NOREF;
+	node->lua_onClick = LUA_NOREF;
+	node->lua_onRightClick = LUA_NOREF;
+	node->lua_onMiddleClick = LUA_NOREF;
 
 	/* initialize default properties */
 	UI_Node_Loading(node);

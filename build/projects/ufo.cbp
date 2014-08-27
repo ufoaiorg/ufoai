@@ -833,6 +833,8 @@
 		<Unit filename="../../src/common/routing.h" />
 		<Unit filename="../../src/common/scripts.cpp" />
 		<Unit filename="../../src/common/scripts.h" />
+		<Unit filename="../../src/common/scripts_lua.cpp" />
+		<Unit filename="../../src/common/scripts_lua.h" />
 		<Unit filename="../../src/common/sha1.cpp" />
 		<Unit filename="../../src/common/sha2.cpp" />
 		<Unit filename="../../src/common/sha2.h" />

@@ -1,19 +1,27 @@
 --!usr/bin/lua
 
 --[[
-	MAIN MENU
+	TEST WINDOW
 --]]
 
-require "ufos/ui/test_lib.ufo"
-
+local Window = ufoui.create_window ("window", "lua_test", nil)
+Window.on_click = function (sender)
+		ufo.print("window on_click event handler\n")
+		-- ufo.print(string.format("sender = %s\n", tostring(sender.name)))
+	end
+Window.on_rightclick = function (sender)
+		ufo.print("window on_rightclick event handler\n")
+	end
+Window.on_middleclick = function (sender)
+		ufo.print("window on_middleclick event handler\n")
+	end
+	
 function load ()
 	ufo.print("inside test_lua.ufo: calling load\n")
-	-- create a window node with name 'lua_test'
-	local w = ufoui.create_window ("window", "lua_test", nil)
-	-- return the window node to the game
-	return w
+	ufo.print(string.format("created a ui node: name = %s\n", Window.name))
+	return Window
 end
-
+	
 -- register callbacks
 ufoui.register_onload (load)
 
