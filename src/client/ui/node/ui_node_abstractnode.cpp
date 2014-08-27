@@ -30,6 +30,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_components.h"
 #include "../ui_parse.h"
 #include "../ui_sound.h"
+#include "../ui_lua.h"
+
+extern "C" {
+	#include "../../libs/lua/lua.h"
+	#include "../../libs/lua/lauxlib.h"
+}
+
 
 #ifdef DEBUG
 /**
@@ -311,6 +318,10 @@ void uiLocatedNode::onLeftClick (uiNode_t* node, int x, int y)
 		UI_ExecuteEventActions(node, node->onClick);
 		UI_PlaySound("click1");
 	}
+	else if (node->lua_onClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onClick);
+		UI_PlaySound("click1");
+	}
 }
 
 void uiLocatedNode::onRightClick (uiNode_t* node, int x, int y)
@@ -319,12 +330,20 @@ void uiLocatedNode::onRightClick (uiNode_t* node, int x, int y)
 		UI_ExecuteEventActions(node, node->onRightClick);
 		UI_PlaySound("click1");
 	}
+	else if (node->lua_onRightClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onRightClick);
+		UI_PlaySound("click1");
+	}
 }
 
 void uiLocatedNode::onMiddleClick (uiNode_t* node, int x, int y)
 {
 	if (node->onMiddleClick != nullptr) {
 		UI_ExecuteEventActions(node, node->onMiddleClick);
+		UI_PlaySound("click1");
+	}
+	else if (node->lua_onMiddleClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onMiddleClick);
 		UI_PlaySound("click1");
 	}
 }

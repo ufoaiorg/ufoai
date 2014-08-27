@@ -25,18 +25,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#include "../../common/scripts_lua.h"
+
 extern "C" {
 	#include "../../libs/lua/lua.h"
 }
 
 // prototype
 struct uiNode_t;
-
-/**
- * @brief callback signatures for functions defined in Lua
- */
-typedef void (*LUA_ONLOAD_CALLBACK)(void);
-typedef void (*LUA_ONCLICK_CALLBACK) (void);
 
 /**
  * @brief global lua state used in ui-lua interfacing
@@ -47,13 +43,15 @@ extern lua_State* ui_luastate;
 void UI_InitLua (void);
 void UI_ShutdownLua (void);
 
-/* lua callback registration functions */
-void UI_RegisterHandler_OnLoad (lua_State *L, LUA_ONLOAD_CALLBACK fnc);
+/* lua registration functions */
+void UI_RegisterHandler_OnLoad (lua_State *L, LUA_FUNCTION fnc);
 
 /* lua script functions */
 bool UI_ParseAndLoadLuaScript (const char* name, const char** text);
+bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event);
 
 /* lua uiNode create functions */
 uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super);
 uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);
 uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);
+

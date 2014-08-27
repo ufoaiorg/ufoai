@@ -61,7 +61,7 @@ hashTable_s* ui_onload = nullptr;
  * @note This function is called from inside the lua environment. If lua encounters a 'require' statement,
  * it uses an internal table of loading functions to load the module.
  */
-int UI_UfoModuleLoader (lua_State* L) {
+static int UI_UfoModuleLoader (lua_State* L) {
 	/* this function is called by lua with the module name on the stack */
 	char module[256];
 	char errmsg[256];
@@ -100,7 +100,7 @@ int UI_UfoModuleLoader (lua_State* L) {
  * @brief This function adds loader to the lua table of module loaders that enables lua to access the
  * ufo filesystem.
  */
-void UI_InsertModuleLoader () {
+static void UI_InsertModuleLoader () {
 	/* save stack position */
 	int pos = lua_gettop (ui_luastate);
 
@@ -178,7 +178,7 @@ void UI_ShutdownLua (void) {
  * @param[in] L The lua state for calling lua.
  * @note The onload callback is file based.
 */
-void UI_RegisterHandler_OnLoad (lua_State *L, LUA_ONLOAD_CALLBACK fnc) {
+void UI_RegisterHandler_OnLoad (lua_State *L, LUA_FUNCTION fnc) {
 	int regvalue = (int) fnc;
 	/* store regvalue into the list of handlers */
 	int len = strlen (ui_scriptname);
@@ -209,6 +209,19 @@ static void UI_CallHandler_OnLoad (lua_State *L, const char* script) {
 			Com_Printf ("lua error: %s\n", lua_tostring(ui_luastate, -1));
 		};
 	}
+}
+
+/**
+ * @brief Executes a lua event handler.
+ * @param[in] node The node the event handler is associated with.
+ * @param[in] event The event to execute.
+ */
+bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
+	lua_rawgeti (ui_luastate, LUA_REGISTRYINDEX, event);
+	if (lua_pcall (ui_luastate, 0, 0, 0) != 0) {
+		Com_Printf ("lua error [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
+	};
+	return true;
 }
 
 /**
@@ -390,18 +403,18 @@ uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super
 	/* make sure we create windows only here */
 	if (!Q_streq(type, "window")) {
 		Com_Error(ERR_FATAL, "UI_CreateWindow: '%s %s' is not a window node\n", type, name);
-		return false;	/* never reached */
+		return nullptr;	/* never reached */
 	}
 	/* make sure the name of the window is a correct identifier */
 	/* note: since this is called from lua, name is never quoted */
 	if (!UI_TokenIsName(name, false)) {
 		Com_Printf("UI_CreateWindow: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
-		return false;
+		return nullptr;
 	}
 	/* make sure the name of the window is not a reserverd word */
 	if (UI_TokenIsReserved(name)) {
 		Com_Printf("UI_CreateWindow: \"%s\" is a reserved token, we can't call a node with it (node \"%s\")\n", name, name);
-		return false;
+		return nullptr;
 	}
 
 	/* search for windows with same name */
@@ -416,7 +429,7 @@ uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super
 
 	if (ui_global.numWindows >= UI_MAX_WINDOWS) {
 		Com_Error(ERR_FATAL, "UI_CreateWindow: max windows exceeded (%i) - ignore '%s'\n", UI_MAX_WINDOWS, name);
-		return false;	/* never reached */
+		return nullptr;	/* never reached */
 	}
 
 	/* create the window */
@@ -441,5 +454,21 @@ uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super
 	/* add to list of instantiated windows */
 	UI_InsertWindow(window);
 
+	return window;
+}
+
+/**
+ * @brief Create a window node with specified type and inheritance and associate a lua metatabel with it.
+ * @param[in] type The behaviour type of the window to create.
+ * @param[in] name The name of the window to create.
+ * @param[in] super The name this window inherits from. If NULL the window has no super defined.
+ * @note A window is a top level component in the ui.
+ * @todo If the old style ui scripts are no longer used, the check UI_TokenIsReserved should be removed.
+ */
+uiNode_t* UI_CreateWindowLua (const char* type, const char* name, const char* super) {
+	/* create the window */
+	uiNode_t* window;
+
+	window = UI_CreateWindow (type, name, super);
 	return window;
 }
