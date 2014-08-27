@@ -27,6 +27,52 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+/**
+ * @brief AiAreaSearch class, used to get an area of the map around a certain position for the AI to check possible moving positions.
+ */
+class AiAreaSearch {
+public:
+	AiAreaSearch();
+	AiAreaSearch(const pos3_t origin, int radius, bool flat = false);
+	~AiAreaSearch(void);
+	bool getNext(pos3_t pos);
+private:
+	/**
+	 * @brief A simple queue class.
+	 */
+	class LQueue {
+	public:
+		/**
+		 * @brief Initialize a LQueue object.
+		 */
+		LQueue(void) : _head(nullptr), _tail(nullptr), _count(0) { }
+		~LQueue(void);
+		void enqueue(const pos3_t data);
+		bool dequeue(pos3_t data);
+		/**
+		 * @brief Gets the number of elements in the queue.
+		 */
+		int size(void) const { return _count; }
+		/**
+		 * @brief Checks if the queue is empty.
+		 */
+		bool isEmpty(void) const { return size() < 1; }
+		void clear(void);
+	private:
+		struct qnode_s {
+			pos3_t data;
+			qnode_s* next;
+		};
+		qnode_s* _head;		/**< Start of the queue. */
+		qnode_s* _tail;		/**< End of the queue. */
+		int _count;			/**< Number of elements in the queue */
+	};
+	LQueue _area;			/**< Queue containing the positions in the search area */
+	void plotArea(const pos3_t origin, int radius, bool flat = false);
+	void plotCircle(const pos3_t origin, int radius);
+	void plotPos(const pos3_t origin, int xOfs, int yOfs);
+};
+
 /*
  * AI functions
  */

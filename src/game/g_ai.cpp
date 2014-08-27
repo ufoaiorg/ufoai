@@ -50,6 +50,171 @@ public:
 	}
 };
 
+/**
+ * @brief Initializes an AiAreaSearch object to default values.
+ */
+AiAreaSearch::AiAreaSearch(void) {
+	plotArea(pos3_origin, 0);
+}
+
+/**
+ * @brief Initializes an AiAreaSearch object with specific starting point and search radius.
+ */
+AiAreaSearch::AiAreaSearch(const pos3_t origin, int radius, bool flat) {
+	plotArea(origin, radius, flat);
+}
+
+/**
+ * @brief Clear AiAreaSearch internal data.
+ */
+AiAreaSearch::~AiAreaSearch(void) {
+	_area.clear();
+}
+
+/**
+ * @brief Get next position in the search area.
+ * @param[out] pos The next position in the search area.
+ * return @c true if a new position was found @c false otherwise.
+ */
+bool AiAreaSearch::getNext(pos3_t pos) {
+	return _area.dequeue(pos);
+}
+
+/** @brief Clear LQueue internal data. */
+AiAreaSearch::LQueue::~LQueue(void) {
+	clear();
+}
+
+/**
+ * @brief Add an entry to the queue.
+ * @param[in] data Data to add.
+ */
+void AiAreaSearch::LQueue::enqueue(const pos3_t data) {
+	qnode_s* node = static_cast<qnode_s*>(G_TagMalloc(sizeof(qnode_s), TAG_LEVEL));
+	VectorCopy(data, node->data);
+	node->next = nullptr;
+
+	if (isEmpty())
+		_head = _tail = node;
+	else {
+		_tail->next = node;
+		_tail = node;
+	}
+	_count++;
+}
+
+/**
+ * @brief Retrieve an entry form the queue.
+ * @param[out] The data retrieved.
+ * @return @c true if the data was retrieved @c false otherwise.
+ */
+bool AiAreaSearch::LQueue::dequeue(pos3_t data) {
+	if (isEmpty())
+		return false;
+
+	VectorCopy(_head->data, data);
+	qnode_s* node = _head;
+	_head = _head->next;
+	_count--;
+	G_MemFree(node);
+
+	return true;
+}
+
+/**
+ * @brief Remove all data from the queue.
+ */
+void AiAreaSearch::LQueue::clear(void) {
+	qnode_s* next = nullptr;
+	for (qnode_s* node = _head; node; node = next) {
+		next = node->next;
+		G_MemFree(node);
+	}
+	_head = _tail = nullptr;
+	_count = 0;
+}
+
+/**
+ * @brief Calculate the search area.
+ * @param[in] origin The starting position for the search.
+ * @param[in] radius Radius to search around the starting position.
+ * @param[in] flat If true only the level with the starting position is searched.
+ */
+void AiAreaSearch::plotArea(const pos3_t origin, int radius, bool flat) {
+		/* Starting with a sphere with radius 0 (just the center pos) out to the given radius */
+		for (int i = 0; i <= radius; ++i) {
+			/* Battlescape has max PATHFINDING_HEIGHT levels, so cap the z offset to the max levels
+			 * the unit can currently go up or down */
+			const int zOfsMax = std::min(std::max(static_cast<int>(origin[2]), PATHFINDING_HEIGHT - origin[2] - 1), i);
+			/* Starting a the center z level up to zOfsMax levels */
+			if (flat)
+				plotCircle(origin, i);
+			else
+				for (int zOfs = 0; zOfs <= zOfsMax; ++zOfs) {
+					pos3_t center = {origin[0], origin[1], static_cast<pos_t>(origin[2] + zOfs)};
+					plotCircle(center, i - zOfs);
+					/* We need to cover both up and down directions, so we Flip the sign (if there's actually a z offset) */
+					if (zOfs != 0) {
+						center[2] = origin[2] - zOfs;
+						plotCircle(center, i - zOfs);
+					}
+				}
+		}
+}
+
+void AiAreaSearch::plotCircle(const pos3_t origin, int radius) {
+	/* There are always more levels in one direction than the other (since the number is even)
+	 * so check if out of bounds */
+	if (origin[2] >= PATHFINDING_HEIGHT)
+		return;
+	/* This is the main loop of the midpoint circle algorithm this specific variation
+	 * circles of consecutive integer radius won't overlap in any point or leave gaps in between,
+	 * Coincidentally (at time of writing) a circle of radius n will be exactly the farthest a normal actor can walk
+	 * with n * 2 TU, in ideal conditions (standing, no obstacles, no penalties) */
+	for (int dy = 1, xOfs = 0, yOfs = radius; xOfs <= yOfs; ++xOfs, dy += 1, yOfs = radius - (dy >> 1)) {
+		/* Have the offsets, now to fill the octants */
+		plotPos(origin, xOfs, yOfs);
+		/* Need to Flip the signs, for each one */
+		if (xOfs != 0) {
+			plotPos(origin, -xOfs, yOfs);
+		}
+		if (yOfs != 0) {
+			plotPos(origin, xOfs, -yOfs);
+		}
+		if (xOfs != 0 && yOfs != 0) {
+			plotPos(origin, -xOfs, -yOfs);
+		}
+		/* And need to Flip the x and y offsets too */
+		if (xOfs != yOfs) {
+			plotPos(origin, yOfs, xOfs);
+			if (yOfs != 0) {
+				plotPos(origin, -yOfs, xOfs);
+			}
+			if (xOfs != 0) {
+				plotPos(origin, yOfs, -xOfs);
+			}
+			if (yOfs != 0 && xOfs != 0) {
+				plotPos(origin, -yOfs, -xOfs);
+			}
+		}
+	}
+}
+
+void AiAreaSearch::plotPos(const pos3_t origin, int xOfs, int dy) {
+	/* There's more distance to one (possible) edge of the map than the other
+	 *  check if out of bounds to be safe */
+	if (origin[0] + xOfs < 0 || origin[0] + xOfs >= PATHFINDING_WIDTH || origin[1] + dy < 0
+			|| origin[1] + dy >= PATHFINDING_WIDTH)
+		return;
+	const pos3_t pos = {static_cast<pos_t>(origin[0] + xOfs), static_cast<pos_t>(origin[1] + dy), origin[2]};
+	/* Most maps won't use the full space available so check against the actual map area */
+	vec3_t vec;
+	PosToVec(pos, vec);
+	if (!gi.isOnMap(vec))
+		return;
+	_area.enqueue(pos);
+}
+
 #define SCORE_HIDE			60
 #define SCORE_CLOSE_IN		20
 #define SCORE_KILL			30
