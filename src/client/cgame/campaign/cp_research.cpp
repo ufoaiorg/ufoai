@@ -705,16 +705,14 @@ void RS_RemoveScientist (technology_t* tech, Employee* employee)
 	if (!employee)
 		employee = E_GetAssignedEmployee(tech->base, EMPL_SCIENTIST);
 	if (!employee)
-		cgi->Com_Error(ERR_DROP, "No assigned scientists found - serious inconsistency.");
+		cgi->Com_Printf("RS_RemoveScientist: No assigned scientists found - serious inconsistency.\n");
+	else
+		employee->setAssigned(false);
 
-	/* Remove the scientist from the tech. */
 	tech->scientists--;
-	/* Update capacity. */
 	CAP_AddCurrent(tech->base, CAP_LABSPACE, -1);
-	employee->setAssigned(false);
 
 	assert(tech->scientists >= 0);
-
 	if (tech->scientists == 0) {
 		/* Remove the tech from the base if no scientists are left to research it. */
 		tech->base = nullptr;
@@ -741,8 +739,12 @@ void RS_RemoveFiredScientist (base_t* base, Employee* employee)
 	tech = RS_GetTechWithMostScientists(base);
 
 	/* tech should never be nullptr, as there is at least 1 scientist working in base */
-	assert(tech);
-	RS_RemoveScientist(tech, employee);
+	if (tech == nullptr) {
+		cgi->Com_Printf("RS_RemoveFiredScientist: Cannot unassign scientist %d no tech is being researched in base %d\n", employee->chr.ucn, base->idx);
+		employee->setAssigned(false);
+	} else {
+		RS_RemoveScientist(tech, employee);
+	}
 
 	/* if there is at least one scientist not working on a project, make this one replace removed employee */
 	if (freeScientist)

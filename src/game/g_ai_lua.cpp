@@ -179,6 +179,7 @@ static int pos3L_tostring(lua_State* L);
 static int pos3L_goto(lua_State* L);
 static int pos3L_face(lua_State* L);
 static int pos3L_approach(lua_State* L);
+static int pos3L_distance(lua_State* L);
 /** Lua Pos3 metatable methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -187,6 +188,7 @@ static const luaL_reg pos3L_methods[] = {
 	{"goto", pos3L_goto},
 	{"face", pos3L_face},
 	{"approach", pos3L_approach},
+	{"distance", pos3L_distance},
 	{nullptr, nullptr}
 };
 
@@ -217,6 +219,9 @@ static int AIL_waypoints(lua_State* L);
 static int AIL_positionmission(lua_State* L);
 static int AIL_positionwander(lua_State* L);
 static int AIL_findweapons(lua_State* L);
+static int AIL_isfighter(lua_State* L);
+static int AIL_setwaypoint(lua_State* L);
+static int AIL_difficulty(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -245,6 +250,9 @@ static const luaL_reg AIL_methods[] = {
 	{"positionmission", AIL_positionmission},
 	{"positionwander", AIL_positionwander},
 	{"findweapons", AIL_findweapons},
+	{"isfighter", AIL_isfighter},
+	{"setwaypoint", AIL_setwaypoint},
+	{"difficulty", AIL_difficulty},
 	{nullptr, nullptr}
 };
 
@@ -388,6 +396,13 @@ static int actorL_shoot (lua_State* L)
 			if (!shots)
 				continue;
 
+			float dist;
+			if (!AI_FighterCheckShoot(AIL_ent, target->actor, fd, &dist))
+				continue;
+
+			if (!AI_CheckLineOfFire(AIL_ent, target->actor, fd, shots))
+				continue;
+
 			/* Check if we can do the most damage here */
 			float dmg = AI_CalcShotDamage(AIL_ent, target->actor, fd, shootType) * shots;
 			if (dmg > bestDmg) {
@@ -405,15 +420,16 @@ static int actorL_shoot (lua_State* L)
 		return 1;
 	}
 
+	bool shot = false;
 	while (bestShots > 0) {
-		bestShots--;
-		G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos, bestType, bestFd, nullptr, true, 0);
 		if (G_IsDead(target->actor))
 			break;
+		bestShots--;
+		shot = G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos, bestType, bestFd, nullptr, true, 0) || shot;
 	}
 
-	/* Success. */
-	lua_pushboolean(L, 1);
+	/* Success? */
+	lua_pushboolean(L, shot);
 	return 1;
 }
 
@@ -520,7 +536,7 @@ static int actorL_throwgrenade(lua_State* L)
 		if (!AI_CheckLineOfFire(AIL_ent, target->actor, fd, 1))
 			continue;
 
-		/* Use select first usable firemode */
+		/* Select the first usable firemode */
 		bestFd = fd;
 		break;
 	}
@@ -559,9 +575,9 @@ static int actorL_throwgrenade(lua_State* L)
 		return 1;
 	}
 	/* All right use it! */
-	G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos, shotType, bestFd->fdIdx, nullptr, true, 0);
+	const bool result = G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos, shotType, bestFd->fdIdx, nullptr, true, 0);
 
-	lua_pushboolean(L, 1);
+	lua_pushboolean(L, result);
 	return 1;
 }
 
@@ -734,6 +750,25 @@ static int pos3L_approach (lua_State* L)
 }
 
 /**
+ * @brief Return the distance to the position
+ */
+static int pos3L_distance (lua_State* L)
+{
+	assert(lua_ispos3(L, 1));
+
+	pos3_t* pos = lua_topos3(L, 1);
+	assert(pos != nullptr);
+
+	/* Find a path to the target pos */
+	if (!G_FindPath(0, AIL_ent, AIL_ent->pos, *pos, AIL_ent->isCrouched(), ROUTING_NOT_REACHABLE - 1)) {
+		lua_pushnumber(L, ROUTING_NOT_REACHABLE);
+		return 1;
+	}
+	lua_pushnumber(L, G_ActorMoveLength(AIL_ent, level.pathingMap, *pos, false));
+	return 1;
+}
+
+/**
  *    A I L
  */
 /**
@@ -748,7 +783,7 @@ static int AIL_print (lua_State* L)
 		bool meta = false;
 
 		lua_pushvalue(L, i);   /* value to print */
-		if (luaL_callmeta(L, 1, "__tostring")) {
+		if (luaL_callmeta(L, -1, "__tostring")) {
 			s = lua_tostring(L, -1);
 			meta = true;
 		} else {
@@ -1116,8 +1151,8 @@ static int AIL_positionshoot (lua_State* L)
 		return 1;
 	}
 
-	tus -= fd->time;
-	if (tus <= 0) {
+	int fdTime = G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
+	if (tus - fdTime <= 0) {
 		lua_pushboolean(L, 0);
 		return 1;
 	}
@@ -1153,11 +1188,40 @@ static int AIL_positionshoot (lua_State* L)
 				/* Can we see the target? */
 				if (!G_IsVisibleForTeam(target->actor, actor->getTeam()) && G_ActorVis(actor->origin, actor, target->actor, true) < ACTOR_VIS_10)
 					continue;
-				float dist;
-				if (!AI_FighterCheckShoot(actor, target->actor, fd, &dist))
-					continue;
-				/* gun-to-target line free? */
-				if (!AI_CheckLineOfFire(actor, target->actor, fd, 1))
+
+				bool hasLoF = false;
+				int shotChecked = NONE;
+				for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
+					const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
+					if (item == nullptr)
+						continue;
+
+					const fireDef_t* fdArray = item->getFiredefs();
+					if (fdArray == nullptr)
+						continue;
+
+					for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+						fd = &fdArray[fdIdx];
+						fdTime = G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
+						/* how many shoots can this actor do */
+						const int shots = tus / fdTime;
+						if (shots < 1)
+							continue;
+						float dist;
+						if (!AI_FighterCheckShoot(actor, target->actor, fd, &dist))
+							continue;
+						/* gun-to-target line free? */
+						const int shotFlags = fd->gravity | (fd->launched << 1) | (fd->rolled << 2);
+						if (shotChecked != shotFlags) {
+							shotChecked = shotFlags;
+							if ((hasLoF = AI_CheckLineOfFire(actor, target->actor, fd, shots)))
+								break;
+						}
+					}
+					if (hasLoF)
+						break;
+				}
+				if (!hasLoF)
 					continue;
 				float score;
 				switch (posType) {
@@ -1288,6 +1352,22 @@ static int AIL_positionapproach (lua_State* L)
 	const aiActor_t* target = lua_toactor(L, 1);
 	assert(target != nullptr);
 
+	int tus = AIL_ent->getUsableTUs();
+	if (lua_gettop(L) > 1) {
+		if (lua_isnumber(L, 2))
+			tus = static_cast<int>(lua_tonumber(L, 2));
+		else
+			AIL_invalidparameter(2);
+	}
+
+	bool hide = false;
+	if (lua_gettop(L) > 2){
+		if (lua_isboolean(L, 3))
+			hide = lua_toboolean(L, 3);
+		else
+			AIL_invalidparameter(3);
+	}
+
 	/* Find a path to the target actor */
 	const int maxTUs = ROUTING_NOT_REACHABLE - 1;
 	pos3_t to;
@@ -1300,18 +1380,22 @@ static int AIL_positionapproach (lua_State* L)
 	}
 
 	/* Find the farthest we can go with current TUs */
-	const int tus = AIL_ent->getUsableTUs();
 	int dvec;
 	while ((dvec = gi.MoveNext(level.pathingMap, to, crouchingState)) != ROUTING_UNREACHABLE) {
 		/* Note: here we skip the first position so we don't try to walk into the target */
 		PosSubDV(to, crouchingState, dvec);
+		if (hide && (G_TestVis(target->actor->getTeam(), AIL_ent, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES))
+			continue;
 		const byte length =  G_ActorMoveLength(AIL_ent, level.pathingMap, to, false);
 		if (length <= tus)
 			break;
 		/* We are going backwards to the origin. */
 	}
 
-	lua_pushpos3(L, &to);
+	if (AIL_ent->isSamePosAs(to))
+		lua_pushboolean(L, 0);
+	else
+		lua_pushpos3(L, &to);
 	return 1;
 }
 
@@ -1497,6 +1581,10 @@ static int AIL_waypoints (lua_State* L)
 	return 1; /* Returns the table of positions. */
 }
 
+/**
+ * @brief Try to find a position nearby to the given position
+ * @note Intended to make aliens defend mission targets
+ */
 static int AIL_positionmission (lua_State* L)
 {
 	/* check parameter */
@@ -1518,6 +1606,10 @@ static int AIL_positionmission (lua_State* L)
 	return 1;
 }
 
+/**
+ * @brief Return a new position to move to.
+ * @note To make the AI wander or patrol around.
+ */
 static int AIL_positionwander (lua_State* L)
 {
 	/* Calculate move table. */
@@ -1644,9 +1736,9 @@ static int AIL_positionwander (lua_State* L)
 }
 
 /**
- * @brief Returns a table of position of nearby usable weapons on the floor
+ * @brief Returns a table of the positions of nearby usable weapons on the floor
  */
-int AIL_findweapons (lua_State* L)
+static int AIL_findweapons (lua_State* L)
 {
 	bool full = false;
 	if (lua_gettop(L) > 0) {
@@ -1688,6 +1780,48 @@ int AIL_findweapons (lua_State* L)
 		lua_rawset(L, -3); /* store the value in the table */
 	}
 	return 1; /* Returns the table of positions. */
+}
+
+/**
+ * @brief Whether the current AI actor is a fighter or not
+ */
+static int AIL_isfighter(lua_State* L)
+{
+	const bool result = AIL_ent->chr.teamDef->weapons || AIL_ent->chr.teamDef->onlyWeapon;
+	lua_pushboolean(L, result);
+	return 1;
+}
+
+/**
+ * @brief Mark the current waypoint for a civ
+ */
+static int AIL_setwaypoint(lua_State* L)
+{
+	/* No waypoint, reset the count value to restart the search */
+	if (lua_gettop(L) < 1) {
+		AIL_ent->count = 100;
+		lua_pushboolean(L, 1);
+	} else if (lua_ispos3(L, 1)){
+		pos3_t pos;
+		/** @todo A better way to handle waypoints */
+		Edict* waypoint = G_GetEdictFromPos(pos, ET_CIVILIANTARGET);
+		if (waypoint != nullptr) {
+			AIL_ent->count = waypoint->count;
+			lua_pushboolean(L, 1);
+		} else
+			lua_pushboolean(L, 0);
+	} else
+		lua_pushboolean(L, 0);
+
+	return 1;
+}
+
+/**
+ * @brief Return the difficulty number (in case we want different AI for different ones)
+ */
+static int AIL_difficulty(lua_State* L){
+	lua_pushnumber(L, g_difficulty->value);
+	return 1;
 }
 
 /**

@@ -197,7 +197,7 @@ window research extends BaseMgmtWindow
 					font			"f_small_bold"
 					color			"0 0 0 0.9"
 					selectcolor		"0 0 0 1"
-					onClick			{ cmd "ui_push employees;" }
+					onClick			{ cmd "ui_push employees 1;" }
 				}
 				MainMenuExitBtn fire
 				{
@@ -207,7 +207,7 @@ window research extends BaseMgmtWindow
 					font			"f_small_bold"
 					color			"0 0 0 0.9"
 					selectcolor		"0 0 0 1"
-					onClick			{ cmd "ui_push employees;" }
+					onClick			{ cmd "ui_push employees 1;" }
 				}
 			}
 			panel lab_space

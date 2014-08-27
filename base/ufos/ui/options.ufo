@@ -1309,6 +1309,7 @@ window options
 					size	"512 30"
 					onMouseEnter 	{ *node:this.audio_music_label@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this.audio_music_label@color = "1 1 1 0.5" }
+					visiblewhen		"*cvar:snd_init"
 				}
 
 				string audio_music_label
@@ -1340,6 +1341,7 @@ window options
 					size	"512 30"
 					onMouseEnter 	{ *node:this.audio_effects_label@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this.audio_effects_label@color = "1 1 1 0.5" }
+					visiblewhen		"*cvar:snd_init"
 				}
 
 				string audio_effects_label
@@ -1371,6 +1373,7 @@ window options
 					size	"512 30"
 					onMouseEnter 	{ *node:this.audio_menu_label@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this.audio_menu_label@color = "1 1 1 0.5" }
+					visiblewhen		"*cvar:snd_init"
 				}
 
 				string audio_menu_label
@@ -1397,6 +1400,7 @@ window options
 					size	"512 60"
 					onMouseEnter 	{ *node:this.audio_sample_label@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this.audio_sample_label@color = "1 1 1 0.5" }
+					visiblewhen		"*cvar:snd_init"
 				}
 
 				string audio_sample_label
@@ -1445,6 +1449,7 @@ window options
 					font			"f_verysmall_bold"
 					selectcolor		"0 0 0 0.9"
 					onClick			{ cmd "snd_restart;" }
+					visiblewhen		"*cvar:snd_init"
 				}
 			}
 		}

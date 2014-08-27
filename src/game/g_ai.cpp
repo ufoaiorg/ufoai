@@ -567,8 +567,9 @@ bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const fireDe
 		const trace_t trace = G_Trace(Line(origin, target->origin), shooter, MASK_SHOT);
 		const Edict* trEnt = G_EdictsGetByNum(trace.entNum);
 		const bool hitBreakable = trEnt && G_IsBrushModel(trEnt) && G_IsBreakable(trEnt);
-		const bool shotBreakable = hitBreakable && (fd->shots > 1 || shots > 1) && trEnt->HP < fd->damage[0] + fd->spldmg[0];
-		if (trace.fraction < 1.0 && (!trEnt || (!VectorCompare(trEnt->pos, target->pos) && !shotBreakable)))
+		const bool shotBreakable = hitBreakable && (fd->shots > 1 || shots > 1)
+				&& trEnt->HP < fd->damage[0] && !(fd->splrad > 0.0f) && !fd->bounce;
+		if (trace.fraction < 1.0f && (!trEnt || (!VectorCompare(trEnt->pos, target->pos) && !shotBreakable)))
 			return false;
 	} else {
 		/* gun-to-target *parabola* free? */
@@ -580,17 +581,17 @@ bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const fireDe
 		if (!dt)
 			return false;
 		VectorSubtract(at, origin, dir);
-		VectorScale(dir, 1.0 / LOF_CHECK_PARTITIONS, dir);
+		VectorScale(dir, 1.0f / LOF_CHECK_PARTITIONS, dir);
 		dir[2] = 0;
 		float vz = v[2];
 		int i;
 		for (i = 0; i < LOF_CHECK_PARTITIONS; i++) {
 			VectorAdd(origin, dir, at);
-			at[2] += dt * (vz - 0.5 * GRAVITY * dt);
+			at[2] += dt * (vz - 0.5f * GRAVITY * dt);
 			vz -= GRAVITY * dt;
 			const trace_t trace = G_Trace(Line(origin, at), shooter, MASK_SHOT);
 			const Edict* trEnt = G_EdictsGetByNum(trace.entNum);
-			if (trace.fraction < 1.0 && (!trEnt || !VectorCompare(trEnt->pos, target->pos))) {
+			if (trace.fraction < 1.0f && (!trEnt || !VectorCompare(trEnt->pos, target->pos))) {
 				break;
 			}
 			VectorCopy(at, origin);
