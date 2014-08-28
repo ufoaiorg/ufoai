@@ -1165,10 +1165,6 @@ static int AIL_positionshoot (lua_State* L)
 
 	/* set borders */
 	const int dist = (tus + 1) / TU_MOVE_STRAIGHT;
-	const int xl = std::max(actor->pos[0] - dist, 0);
-	const int yl = std::max(actor->pos[1] - dist, 0);
-	const int xh = std::min(actor->pos[0] + dist, PATHFINDING_WIDTH);
-	const int yh = std::min(actor->pos[1] + dist, PATHFINDING_WIDTH);
 
 	pos3_t oldPos;
 	vec3_t oldOrigin;
@@ -1180,69 +1176,66 @@ static int AIL_positionshoot (lua_State* L)
 	float bestScore = 0.0f;
 	pos3_t to, bestPos;
 	VectorSet(bestPos, 0, 0, PATHFINDING_HEIGHT);
-	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++) {
-		for (to[1] = yl; to[1] < yh; to[1]++) {
-			for (to[0] = xl; to[0] < xh; to[0]++) {
-				actor->setOrigin(to);
-				const pos_t tu = G_ActorMoveLength(actor, level.pathingMap, to, true);
-				if (tu > tus || tu == ROUTING_NOT_REACHABLE)
+	AiAreaSearch searchArea(oldPos, dist);
+	while (searchArea.getNext(to)) {
+		actor->setOrigin(to);
+		const pos_t tu = G_ActorMoveLength(actor, level.pathingMap, to, true);
+		if (tu > tus || tu == ROUTING_NOT_REACHABLE)
+			continue;
+		/* Can we see the target? */
+		if (!G_IsVisibleForTeam(target->actor, actor->getTeam()) && G_ActorVis(actor->origin, actor, target->actor, true) < ACTOR_VIS_10)
+			continue;
+
+		bool hasLoF = false;
+		int shotChecked = NONE;
+		for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
+			const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
+			if (item == nullptr)
+				continue;
+
+			const fireDef_t* fdArray = item->getFiredefs();
+			if (fdArray == nullptr)
+				continue;
+
+			for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+				fd = &fdArray[fdIdx];
+				fdTime = G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
+				/* how many shoots can this actor do */
+				const int shots = tus / fdTime;
+				if (shots < 1)
 					continue;
-				/* Can we see the target? */
-				if (!G_IsVisibleForTeam(target->actor, actor->getTeam()) && G_ActorVis(actor->origin, actor, target->actor, true) < ACTOR_VIS_10)
+				float dist;
+				if (!AI_FighterCheckShoot(actor, target->actor, fd, &dist))
 					continue;
-
-				bool hasLoF = false;
-				int shotChecked = NONE;
-				for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
-					const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
-					if (item == nullptr)
-						continue;
-
-					const fireDef_t* fdArray = item->getFiredefs();
-					if (fdArray == nullptr)
-						continue;
-
-					for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
-						fd = &fdArray[fdIdx];
-						fdTime = G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
-						/* how many shoots can this actor do */
-						const int shots = tus / fdTime;
-						if (shots < 1)
-							continue;
-						float dist;
-						if (!AI_FighterCheckShoot(actor, target->actor, fd, &dist))
-							continue;
-						/* gun-to-target line free? */
-						const int shotFlags = fd->gravity | (fd->launched << 1) | (fd->rolled << 2);
-						if (shotChecked != shotFlags) {
-							shotChecked = shotFlags;
-							if ((hasLoF = AI_CheckLineOfFire(actor, target->actor, fd, shots)))
-								break;
-						}
-					}
-					if (hasLoF)
+				/* gun-to-target line free? */
+				const int shotFlags = fd->gravity | (fd->launched << 1) | (fd->rolled << 2);
+				if (shotChecked != shotFlags) {
+					shotChecked = shotFlags;
+					if ((hasLoF = AI_CheckLineOfFire(actor, target->actor, fd, shots)))
 						break;
 				}
-				if (!hasLoF)
-					continue;
-				float score;
-				switch (posType) {
-				case AILSP_NEAR:
-					score = -dist;
-					break;
-				case AILSP_FAR:
-					score = dist;
-					break;
-				case AILSP_FAST:
-				default:
-					score = -tu;
-					break;
-				}
-				if (score > bestScore || bestPos[2] >= PATHFINDING_HEIGHT) {
-					VectorCopy(to, bestPos);
-					bestScore = score;
-				}
 			}
+			if (hasLoF)
+				break;
+		}
+		if (!hasLoF)
+			continue;
+		float score;
+		switch (posType) {
+		case AILSP_NEAR:
+			score = -dist;
+			break;
+		case AILSP_FAR:
+			score = dist;
+			break;
+		case AILSP_FAST:
+		default:
+			score = -tu;
+			break;
+		}
+		if (score > bestScore || bestPos[2] >= PATHFINDING_HEIGHT) {
+			VectorCopy(to, bestPos);
+			bestScore = score;
 		}
 	}
 
@@ -1619,9 +1612,9 @@ static int AIL_positionwander (lua_State* L)
 	gi.MoveStore(level.pathingMap);
 
 	/* Set defaults */
-	int sphRadius = (AIL_ent->getUsableTUs() + 1) / TU_MOVE_STRAIGHT;
-	pos3_t sphCenter;
-	VectorCopy(AIL_ent->pos, sphCenter);
+	int radius = (AIL_ent->getUsableTUs() + 1) / TU_MOVE_STRAIGHT;
+	pos3_t center;
+	VectorCopy(AIL_ent->pos, center);
 	int method = 0;
 
 	/* Check parameters */
@@ -1641,94 +1634,54 @@ static int AIL_positionwander (lua_State* L)
 	}
 	if (lua_gettop(L) > 1) {
 		if (lua_isnumber(L, 2))
-			sphRadius = lua_tonumber(L, 2);
+			radius = lua_tonumber(L, 2);
 		else
 			AIL_invalidparameter(2);
 	}
 	if (lua_gettop(L) > 2) {
 		if (lua_ispos3(L, 3))
-			VectorCopy(*lua_topos3(L, 3), sphCenter);
+			VectorCopy(*lua_topos3(L, 3), center);
 		else
 			AIL_invalidparameter(3);
 	}
 
 	vec3_t d;
 	if (method > 0)
-		VectorSubtract(AIL_ent->pos, sphCenter, d);
+		VectorSubtract(AIL_ent->pos, center, d);
 	const int cDir = method > 0 ? (VectorEmpty(d) ? AIL_ent->dir : AngleToDir(static_cast<int>(atan2(d[1], d[0]) * todeg))) : NONE;
 	float bestScore = 0;
 	pos3_t bestPos = {0, 0, PATHFINDING_HEIGHT};
-	/* Little experiment here: this checks the positions in growing concentric spheres
-	 * from the current actor position, for this a variation of the midpoint circle algorithm is used
-	 * so to 'draw' a sphere first a circle is made at the center z level and then circles with
-	 * shrinking radi are stacked above and below it (where applicable) */
-	/* Starting with a sphere with radius 0 (just the center pos) out to the given radius */
-	for (int i = 0; i <= sphRadius; ++i) {
-		/* Battlescape has max PATHFINDING_HEIGHT levels, so cap the z offset to the max levels
-		 * the unit can currently go up or down */
-		const int zOfsMax = std::min(std::max(static_cast<int>(sphCenter[2]), PATHFINDING_HEIGHT - sphCenter[2] - 1), i);
-		/* Starting a the center z level up to zOfsMax levels */
-		for (int zOfs = 0; zOfs <= zOfsMax; ++zOfs)
-			/* We need to cover both up and down directions, so we Flip the sign (if there's actually a z offset) */
-			for (int zOfsF = zOfs, j = 0; j < 2 && (!j || zOfs); ++j, zOfsF = -zOfs) {
-				/* There are always more levels in one direction than the other (since the number is even)
-				 * so check if out of bounds */
-				if (AIL_ent->pos[2] + zOfsF < 0 || AIL_ent->pos[2] + zOfsF >= PATHFINDING_HEIGHT)
-					continue;
-				/* 'Draw' the current circle */
-				pos3_t cirCenter;
-				VectorSet(cirCenter, sphCenter[0], sphCenter[1], sphCenter[2] + zOfsF);
-				const int cirRadius = i - zOfs;
-				/* Map has a max width of PATHFINDING_WIDTH so cap the x and y offsets to the max distance to the
-				 * (max possible) map edge in the respective axis */
-				const int xOfsMax = std::max(static_cast<int>(cirCenter[0]), PATHFINDING_WIDTH - cirCenter[0] - 1);
-				const int yOfsMax = std::max(static_cast<int>(cirCenter[1]), PATHFINDING_WIDTH - cirCenter[1] - 1);
-				/* This is the main loop of the midpoint circle algorithm this specific variation
-				 * circles of consecutive integer radius won't overlap in any point or leave gaps in between,
-				 * Coincidentally (at time of writing) a circle of radius n will be exactly the farthest a normal actor can walk
-				 * with n * 2 TU, in ideal conditions (standing, no obstacles, no penalties) */
-				for (int dy = 1, xOfs = 0, yOfs = cirRadius; xOfs <= yOfs; ++xOfs, dy += 1, yOfs = cirRadius - (dy >> 1))
-					/* Have the offsets, now to fill the octants */
-					/* Need to Flip the x and y offsets */
-					for (int xOfsF = xOfs, yOfsF = yOfs, done = false; !done; done = xOfsF == yOfs, xOfsF = yOfs, yOfsF = xOfs)
-						/* And need to Flip the signs Too, for each one */
-						for (int  yOfsF2 = yOfsF, k = 0; yOfsF <= yOfsMax && k < 2 && (!k || yOfsF); yOfsF2 = -yOfsF, ++k)
-							for (int xOfsF2 = xOfsF, l = 0; xOfsF <= xOfsMax && l < 2 && (!l || xOfsF); xOfsF2 = -xOfsF, ++l) {
-								/* Again, there's more distance to one (possible) edge than the other, check if out of bounds */
-								if (cirCenter[0] + xOfsF2 < 0 || cirCenter[0] + xOfsF2 >= PATHFINDING_WIDTH || cirCenter[1] + yOfsF2 < 0 || cirCenter[1] + yOfsF2 >= PATHFINDING_WIDTH)
-									continue;
-								pos3_t pos;
-								VectorSet(pos, cirCenter[0] + xOfsF2, cirCenter[1] + yOfsF2, cirCenter[2]);
-								/* Finally got the pos to check, AI considerations go here */
-								if (G_ActorMoveLength(AIL_ent, level.pathingMap, pos, true) >= ROUTING_NOT_REACHABLE)
-									continue;
-								float score = 0.0f;
-								switch (method) {
-								case 0:
-									score = rand();
-									break;
-								case 1:
-								case 2: {
-									score = VectorDistSqr(sphCenter, pos);
-									VectorSubtract(pos, sphCenter, d);
-									int dir = AngleToDir(static_cast<int>(atan2(d[1], d[0]) * todeg));
-									if (!(method == 1 && dir == dvright[cDir]) && !(method == 2 && dir == dvleft[cDir]))
-										for (int n = 1; n < 8; ++n) {
-											dir = method == 1 ? dvleft[dir] : dvright[dir];
-											score /= pow(n * 2, 2);
-											if ((method == 1 && dir == dvright[cDir]) || (method == 2 && dir == dvleft[cDir]))
-												break;
-										}
-								}
-									break;
-								}
-								if (score > bestScore) {
-									bestScore = score;
-									VectorCopy(pos, bestPos);
-								}
-							}
+	pos3_t pos;
+	AiAreaSearch searchArea(center, radius);
+	while (searchArea.getNext(pos)) {
+		if (G_ActorMoveLength(AIL_ent, level.pathingMap, pos, true) >= ROUTING_NOT_REACHABLE)
+			continue;
+		float score = 0.0f;
+		switch (method) {
+		case 0:
+			score = rand();
+			break;
+		case 1:
+		case 2: {
+			score = VectorDistSqr(center, pos);
+			VectorSubtract(pos, center, d);
+			int dir = AngleToDir(static_cast<int>(atan2(d[1], d[0]) * todeg));
+			if (!(method == 1 && dir == dvright[cDir]) && !(method == 2 && dir == dvleft[cDir]))
+				for (int n = 1; n < 8; ++n) {
+					dir = method == 1 ? dvleft[dir] : dvright[dir];
+					score /= pow(n * 2, 2);
+					if ((method == 1 && dir == dvright[cDir]) || (method == 2 && dir == dvleft[cDir]))
+						break;
+				}
+		}
+			break;
+		}
+		if (score > bestScore) {
+			bestScore = score;
+			VectorCopy(pos, bestPos);
 		}
 	}
+
 	if (bestPos[2] >= PATHFINDING_HEIGHT) {
 		lua_pushboolean(L, 0);
 		return 1;
