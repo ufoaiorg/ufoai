@@ -222,6 +222,7 @@ static int AIL_findweapons(lua_State* L);
 static int AIL_isfighter(lua_State* L);
 static int AIL_setwaypoint(lua_State* L);
 static int AIL_difficulty(lua_State* L);
+static int AIL_isdead(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -253,6 +254,7 @@ static const luaL_reg AIL_methods[] = {
 	{"isfighter", AIL_isfighter},
 	{"setwaypoint", AIL_setwaypoint},
 	{"difficulty", AIL_difficulty},
+	{"isdead", AIL_isdead},
 	{nullptr, nullptr}
 };
 
@@ -1819,8 +1821,18 @@ static int AIL_setwaypoint(lua_State* L)
 /**
  * @brief Return the difficulty number (in case we want different AI for different ones)
  */
-static int AIL_difficulty(lua_State* L){
+static int AIL_difficulty(lua_State* L)
+{
 	lua_pushnumber(L, g_difficulty->value);
+	return 1;
+}
+
+/**
+ * @brief Return the difficulty number (in case we want different AI for different ones)
+ */
+static int AIL_isdead(lua_State* L)
+{
+	lua_pushboolean(L, AIL_ent->isDead());
 	return 1;
 }
 
