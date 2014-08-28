@@ -1589,6 +1589,9 @@ static int AIL_positionmission (lua_State* L)
 		return 1;
 	}
 
+	G_MoveCalc(0, AIL_ent, AIL_ent->pos, AIL_ent->getUsableTUs());
+	gi.MoveStore(level.pathingMap);
+
 	pos3_t oldPos;
 	VectorCopy(AIL_ent->pos, oldPos);
 	pos3_t* target = lua_topos3(L, 1);
