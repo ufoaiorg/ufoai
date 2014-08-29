@@ -367,15 +367,18 @@ void UI_SetKeyBinding (const char* path, int key, const char* description)
 /**
  * @brief Check if a key binding exists for a window and execute it
  */
-static bool UI_KeyPressedInWindow (unsigned int key, const uiNode_t* window)
+static bool UI_KeyPressedInWindow (uiNode_t* window, unsigned int key, unsigned int unicode)
 {
 	uiNode_t* node;
 	const uiKeyBinding_t* binding;
 
 	/* search requested key binding */
 	binding = UI_WindowNodeGetKeyBinding(window, key);
-	if (!binding)
+	if (!binding) {
+		/* no binding found, perhaps a lua event handler is attached to this window */
+		UI_Node_KeyPressed (window, key, unicode);
 		return false;
+	}
 
 	/* check node visibility */
 	node = binding->node;
@@ -442,6 +445,7 @@ bool UI_KeyPressed (unsigned int key, unsigned short unicode)
 	}
 
 	/* translate event into the node with focus */
+	/* note: this is not executed if the top node is a modal window, see code below */
 	if (focusNode && UI_Node_KeyPressed(focusNode, key, unicode)) {
 		return true;
 	}
@@ -472,10 +476,10 @@ bool UI_KeyPressed (unsigned int key, unsigned short unicode)
 
 	/* check "active" window from top to down */
 	for (int windowId = ui_global.windowStackPos - 1; windowId >= lastWindowId; windowId--) {
-		const uiNode_t* window = ui_global.windowStack[windowId];
+		uiNode_t* window = ui_global.windowStack[windowId];
 		if (!window)
 			return false;
-		if (UI_KeyPressedInWindow(key, window))
+		if (UI_KeyPressedInWindow(window, key, unicode))
 			return true;
 		if (UI_WindowIsModal(window))
 			break;

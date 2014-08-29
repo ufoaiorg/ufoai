@@ -48,6 +48,7 @@ extern "C" {
 	extern int luaopen_ufo (lua_State *L);
 	extern int luaopen_ufoui (lua_State *L);
 }
+#include "../../common/swig_lua_runtime.h"
 
 /* global lua state for ui-lua interfacing */
 lua_State* ui_luastate = nullptr;
@@ -215,10 +216,72 @@ static void UI_CallHandler_OnLoad (lua_State *L, const char* script) {
  * @brief Executes a lua event handler.
  * @param[in] node The node the event handler is associated with.
  * @param[in] event The event to execute.
+ * @note The signature of the event handler in lua is: onevent(sender)
  */
 bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
-	lua_rawgeti (ui_luastate, LUA_REGISTRYINDEX, event);
-	if (lua_pcall (ui_luastate, 0, 0, 0) != 0) {
+	lua_rawgeti (ui_luastate, LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	swig_type_info *type_uiNode = SWIG_TypeQuery(ui_luastate, "uiNode_t *");
+	SWIG_NewPointerObj (ui_luastate, node, type_uiNode, 0); /* push sender on lua stack */
+	if (lua_pcall (ui_luastate, 1, 0, 0) != 0) {
+		Com_Printf ("lua error [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
+	};
+	return true;
+}
+
+/**
+ * @brief Executes a lua event handler with (x,y) argument.
+ * @param[in] node The node the event handler is associated with.
+ * @param[in] event The event to execute.
+ * @param[in] x The x-coordinate of the (x,y) argument.
+ * @param[in] y The y-coordinate of the (x,y) argument.
+ * @note The signature of the event handler in lua is: onevent(sender, x, y)
+ */
+bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y) {
+	lua_rawgeti (ui_luastate, LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	swig_type_info *type_uiNode = SWIG_TypeQuery(ui_luastate, "uiNode_t *");
+	SWIG_NewPointerObj (ui_luastate, node, type_uiNode, 0); /* push sender on lua stack */
+	lua_pushinteger(ui_luastate, x); /* push x on lua stack */
+	lua_pushinteger(ui_luastate, y); /* push y on lua stack */
+	if (lua_pcall (ui_luastate, 3, 0, 0) != 0) {
+		Com_Printf ("lua error [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
+	};
+	return true;}
+
+/**
+ * @brief Executes a lua event handler with (dx,dy) argument.
+ * @param[in] node The node the event handler is associated with.
+ * @param[in] event The event to execute.
+ * @param[in] dx The dx-coordinate of the (dx,dy) argument.
+ * @param[in] dy The dy-coordinate of the (dx,dy) argument.
+ * @note The signature of the event handler in lua is: onevent(sender, dx, dy)
+ */
+bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int dy) {
+	lua_rawgeti (ui_luastate, LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	swig_type_info *type_uiNode = SWIG_TypeQuery(ui_luastate, "uiNode_t *");
+	SWIG_NewPointerObj (ui_luastate, node, type_uiNode, 0); /* push sender on lua stack */
+	lua_pushinteger(ui_luastate, dx); /* push dx on lua stack */
+	lua_pushinteger(ui_luastate, dy); /* push dy on lua stack */
+	if (lua_pcall (ui_luastate, 3, 0, 0) != 0) {
+		Com_Printf ("lua error [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
+	};
+	return true;
+}
+
+/**
+ * @brief Executes a lua event handler with (keycode,unicode) argument.
+ * @param[in] node The node the event handler is associated with.
+ * @param[in] event The event to execute.
+ * @param[in] key The key value of the (keycode,unicode) argument.
+ * @param[in] unicode The unicode value of the (keycode,unicode) argument.
+ * @note The signature of the event handler in lua is: onevent(sender, key, unicode)
+ */
+bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int key, unsigned short unicode) {
+	lua_rawgeti (ui_luastate, LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	swig_type_info *type_uiNode = SWIG_TypeQuery(ui_luastate, "uiNode_t *");
+	SWIG_NewPointerObj (ui_luastate, node, type_uiNode, 0); /* push sender on lua stack */
+	lua_pushinteger(ui_luastate, key); /* push key on lua stack */
+	lua_pushinteger(ui_luastate, unicode); /* push unicode on lua stack */
+	if (lua_pcall (ui_luastate, 3, 0, 0) != 0) {
 		Com_Printf ("lua error [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
 	};
 	return true;
@@ -457,18 +520,3 @@ uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super
 	return window;
 }
 
-/**
- * @brief Create a window node with specified type and inheritance and associate a lua metatabel with it.
- * @param[in] type The behaviour type of the window to create.
- * @param[in] name The name of the window to create.
- * @param[in] super The name this window inherits from. If NULL the window has no super defined.
- * @note A window is a top level component in the ui.
- * @todo If the old style ui scripts are no longer used, the check UI_TokenIsReserved should be removed.
- */
-uiNode_t* UI_CreateWindowLua (const char* type, const char* name, const char* super) {
-	/* create the window */
-	uiNode_t* window;
-
-	window = UI_CreateWindow (type, name, super);
-	return window;
-}

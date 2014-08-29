@@ -292,16 +292,19 @@ static void UI_AbstractNodeCallDeleteTimed (uiNode_t* node, const uiCallContext_
 
 bool uiLocatedNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
-	if (node->onWheelUp && deltaY < 0) {
-		UI_ExecuteEventActions(node, node->onWheelUp);
+	if (deltaY < 0) {
+		if (node->onWheelUp != nullptr) UI_ExecuteEventActions(node, node->onWheelUp);
+		if (node->lua_onWheelUp != LUA_NOREF) UI_ExecuteLuaEventScript_DxDy (node, node->lua_onWheelUp, deltaX, deltaY);
 		return true;
 	}
-	if (node->onWheelDown && deltaY > 0) {
-		UI_ExecuteEventActions(node, node->onWheelDown);
+	if (deltaY > 0) {
+		if (node->onWheelDown != nullptr) UI_ExecuteEventActions(node, node->onWheelDown);
+		if (node->lua_onWheelDown != LUA_NOREF) UI_ExecuteLuaEventScript_DxDy (node, node->lua_onWheelDown, deltaX, deltaY);
 		return true;
 	}
-	if (node->onWheel && deltaY != 0) {
-		UI_ExecuteEventActions(node, node->onWheel);
+	if (deltaY != 0) {
+		if (node->onWheel != nullptr) UI_ExecuteEventActions(node, node->onWheel);
+		if (node->lua_onWheel != LUA_NOREF) UI_ExecuteLuaEventScript_DxDy (node, node->lua_onWheel, deltaX, deltaY);
 		return true;
 	}
 	return false;
@@ -319,7 +322,7 @@ void uiLocatedNode::onLeftClick (uiNode_t* node, int x, int y)
 		UI_PlaySound("click1");
 	}
 	else if (node->lua_onClick != LUA_NOREF) {
-		UI_ExecuteLuaEventScript(node, node->lua_onClick);
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onClick, x, y);
 		UI_PlaySound("click1");
 	}
 }
@@ -331,7 +334,7 @@ void uiLocatedNode::onRightClick (uiNode_t* node, int x, int y)
 		UI_PlaySound("click1");
 	}
 	else if (node->lua_onRightClick != LUA_NOREF) {
-		UI_ExecuteLuaEventScript(node, node->lua_onRightClick);
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onRightClick, x, y);
 		UI_PlaySound("click1");
 	}
 }
@@ -343,9 +346,37 @@ void uiLocatedNode::onMiddleClick (uiNode_t* node, int x, int y)
 		UI_PlaySound("click1");
 	}
 	else if (node->lua_onMiddleClick != LUA_NOREF) {
-		UI_ExecuteLuaEventScript(node, node->lua_onMiddleClick);
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onMiddleClick, x, y);
 		UI_PlaySound("click1");
 	}
+}
+
+void uiLocatedNode::onFocusGained(uiNode_t* node) {
+	if (node->lua_onFocusGained != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onFocusGained);
+	}
+}
+
+void uiLocatedNode::onFocusLost(uiNode_t* node) {
+	if (node->lua_onFocusLost != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onFocusLost);
+	}
+}
+
+bool uiLocatedNode::onKeyPressed(uiNode_t* node, unsigned int key, unsigned short unicode) {
+	if (node->lua_onKeyPressed != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_Key(node, node->lua_onKeyPressed, key, unicode);
+		return true;
+	}
+	return false;
+}
+
+bool uiLocatedNode::onKeyReleased(uiNode_t* node, unsigned int key, unsigned short unicode) {
+	if (node->lua_onKeyReleased != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_Key(node, node->lua_onKeyReleased, key, unicode);
+		return true;
+	}
+	return false;
 }
 
 void UI_RegisterAbstractNode (uiBehaviour_t* behaviour)

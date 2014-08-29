@@ -67,14 +67,28 @@ struct uiNode_t {
 	uiNode_t* root;			/**< Shortcut to the root node */
 
 	%mutable;
-	%rename (instance) lua_Instance;
-	LUA_INSTANCE lua_Instance; /**< references the lua userdata that is this node */
+	%rename (__instance) lua_Instance;
 	%rename (on_click) lua_onClick;
-    LUA_EVENT lua_onClick; /**< references the lua on_click method attached to this node */
     %rename (on_rightclick) lua_onRightClick;
-    LUA_EVENT lua_onRightClick; /**< references the lua on_rightclick method attached to this node */
     %rename (on_middleclick) lua_onMiddleClick;
     LUA_EVENT lua_onMiddleClick; /**< references the lua on_middleclick method attached to this node */
+    LUA_EVENT lua_onClick; /**< references the event in lua: on_click (node, x, y) */
+    LUA_EVENT lua_onRightClick; /**< references the event in lua: on_rightclick (node, x, y) */
+    LUA_EVENT lua_onMiddleClick; /**< references the event in lua: on_middleclick (node, x, y) */
+	%rename (on_wheelup) lua_onWheelUp;
+	%rename (on_wheeldown) lua_onWheelDown;
+	%rename (on_wheel) lua_onWheel;
+    LUA_EVENT lua_onWheelUp; /**< references the event in lua: on_wheelup (node, dx, dy) */
+    LUA_EVENT lua_onWheelDown; /**< references the event in lua: on_wheeldown (node, dx, dy) */
+    LUA_EVENT lua_onWheel; /**< references the event in lua: on_wheel (node, dx, dy) */
+    %rename (on_focusgained) lua_onFocusGained;
+    %rename (on_focuslost) lua_onFocusLost;
+    %rename (on_keypressed) lua_onKeyPressed;
+    %rename (on_keyreleased) lua_onKeyReleased;
+    LUA_EVENT lua_onFocusGained; /**< references the event in lua: on_focusgained (node) */
+    LUA_EVENT lua_onFocusLost; /**< references the event in lua: on_focuslost (node) */
+    LUA_EVENT lua_onKeyPressed; /**< references the event in lua: on_keypressed (node, key, unicode) */
+    LUA_EVENT lua_onKeyReleased; /**< references the event in lua: on_keyreleased (node, key, unicode) */
 };
 %extend uiNode_t {
 	/* functions operating on a node */
@@ -86,9 +100,26 @@ struct uiNode_t {
 void UI_RegisterHandler_OnLoad (lua_State *L, LUA_FUNCTION fcn);
 
 /* expose uiNode creation functions */
-%rename (create_control) UI_CreateControl;
+%rename (__create_control) UI_CreateControl;
 uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super);
-%rename (create_component) UI_CreateComponent;
+%rename (__create_component) UI_CreateComponent;
 uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);
-%rename (create_window) UI_CreateWindow;
+%rename (__create_window) UI_CreateWindow;
 uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);
+
+/* expose lua helper functions */
+%luacode {
+
+function ufoui.create_window (name, super)
+	return ufoui.__create_window ("window", name, super)
+end
+
+function ufoui.create_component (type, name, super)
+	return ufoui.__create_component (type, name, super)
+end
+
+function ufoui.create_control (parent, type, name, super)
+	return ufoui.__create_control (parent, type, name, super)
+end
+
+}
