@@ -67,11 +67,11 @@ static int G_GetEarnedExperience (abilityskills_t skill, Edict* ent)
 	case SKILL_CLOSE:
 		experience = 180 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;
-/*
+#if 0
 	case SKILL_HEAVY:
 		experience = 180 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;
-*/
+#endif
 	case SKILL_ASSAULT:
 		experience = 180 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;

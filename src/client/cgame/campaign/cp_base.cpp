@@ -1765,12 +1765,12 @@ static void CL_DoSwapSkills (character_t* cp1, character_t* cp2, const abilitysk
 		if (cp1->score.skills[ABILITY_SPEED] < cp2->score.skills[ABILITY_SPEED])
 			CL_SwapSkill(cp1, cp2, ABILITY_SPEED);
 		break;
-/*
+#if 0
 	case SKILL_HEAVY:
 		if (cp1->score.skills[ABILITY_POWER] < cp2->score.skills[ABILITY_POWER])
 			CL_SwapSkill(cp1, cp2, ABILITY_POWER);
 		break;
-*/
+#endif
 	case SKILL_ASSAULT:
 		/* no related basic attribute */
 		break;
