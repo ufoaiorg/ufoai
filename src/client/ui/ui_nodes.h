@@ -140,9 +140,16 @@ struct uiNode_t {
 
 	/* common events lua based */
 	LUA_INSTANCE lua_Instance; /**< references the lua userdata that is this node */
-    LUA_EVENT lua_onClick; /**< references the lua on_click method attached to this node */
-    LUA_EVENT lua_onRightClick; /**< references the lua on_rightclick method attached to this node */
-    LUA_EVENT lua_onMiddleClick; /**< references the lua on_middleclick method attached to this node */
+    LUA_EVENT lua_onClick; /**< references the event in lua: on_click (node, x, y) */
+    LUA_EVENT lua_onRightClick; /**< references the event in lua: on_rightclick (node, x, y) */
+    LUA_EVENT lua_onMiddleClick; /**< references the event in lua: on_middleclick (node, x, y) */
+    LUA_EVENT lua_onWheelUp; /**< references the event in lua: on_wheelup (node, dx, dy) */
+    LUA_EVENT lua_onWheelDown; /**< references the event in lua: on_wheeldown (node, dx, dy) */
+    LUA_EVENT lua_onWheel; /**< references the event in lua: on_wheel (node, dx, dy) */
+    LUA_EVENT lua_onFocusGained; /**< references the event in lua: on_focusgained (node) */
+    LUA_EVENT lua_onFocusLost; /**< references the event in lua: on_focuslost (node) */
+    LUA_EVENT lua_onKeyPressed; /**< references the event in lua: on_keypressed (node, key, unicode) */
+    LUA_EVENT lua_onKeyReleased; /**< references the event in lua: on_keyreleased (node, key, unicode) */
 };
 
 

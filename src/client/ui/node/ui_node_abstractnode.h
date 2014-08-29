@@ -130,10 +130,10 @@ public:
 	virtual bool onDndFinished(uiNode_t* node, bool isDroped);
 
 	/* focus and keyboard events */
-	virtual void onFocusGained(uiNode_t* node) {}
-	virtual void onFocusLost(uiNode_t* node) {}
-	virtual bool onKeyPressed(uiNode_t* node, unsigned int key, unsigned short unicode) {return false;}
-	virtual bool onKeyReleased(uiNode_t* node, unsigned int key, unsigned short unicode) {return false;}
+	virtual void onFocusGained(uiNode_t* node);
+	virtual void onFocusLost(uiNode_t* node);
+	virtual bool onKeyPressed(uiNode_t* node, unsigned int key, unsigned short unicode);
+	virtual bool onKeyReleased(uiNode_t* node, unsigned int key, unsigned short unicode);
 
 	/** Return the position of the client zone into the node */
 	virtual void getClientPosition(uiNode_t const* node, vec2_t position) {}

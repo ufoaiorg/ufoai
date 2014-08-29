@@ -49,6 +49,9 @@ void UI_RegisterHandler_OnLoad (lua_State *L, LUA_FUNCTION fnc);
 /* lua script functions */
 bool UI_ParseAndLoadLuaScript (const char* name, const char** text);
 bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event);
+bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y);
+bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int dy);
+bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int key, unsigned short unicode);
 
 /* lua uiNode create functions */
 uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super);

@@ -4,16 +4,20 @@
 	TEST WINDOW
 --]]
 
-local Window = ufoui.create_window ("window", "lua_test", nil)
-Window.on_click = function (sender)
+local Window = ufoui.create_window ("lua_test", nil)
+Window.on_click = function (sender, x, y)
 		ufo.print("window on_click event handler\n")
-		-- ufo.print(string.format("sender = %s\n", tostring(sender.name)))
+		ufo.print(string.format("sender = %s, position = (%s,%s)\n", tostring(sender.name), tostring(x), tostring(y)))
 	end
-Window.on_rightclick = function (sender)
+Window.on_rightclick = function (sender, x, y)
 		ufo.print("window on_rightclick event handler\n")
 	end
-Window.on_middleclick = function (sender)
+Window.on_middleclick = function (sender, x, y)
 		ufo.print("window on_middleclick event handler\n")
+	end
+Window.on_keypressed = function (sender, key, unicode)
+		ufo.print("window on_keypressed event handler\n")
+		ufo.print(string.format("key = %s\n", tostring(key)))
 	end
 	
 function load ()
