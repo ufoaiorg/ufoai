@@ -559,7 +559,12 @@ static void G_SplashDamage (Actor* ent, const fireDef_t* fd, vec3_t impact, shot
 
 		if (mock)
 			mock->allow_self = true;
-		G_Damage(check, fd, damage, ent, mock, nullptr);
+		if (G_Damage(check, fd, damage, ent, mock, nullptr) && G_IsLivingActor(check)) {
+			const teamDef_t* teamDef = check->chr.teamDef;
+			const int gender = check->chr.gender;
+			const char* sound = teamDef->getActorSound(gender, SND_HURT);
+			G_EventSpawnSound(G_VisToPM(check->visflags), *check, nullptr, sound);
+		}
 		if (mock)
 			mock->allow_self = false;
 	}
