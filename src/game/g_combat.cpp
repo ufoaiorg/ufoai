@@ -422,6 +422,8 @@ static bool G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* att
 				victim->setDazed();
 				G_ClientPrintf(victim->getPlayer(), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!"));
 				return !mock;
+			} else {
+				return false;
 			}
 		} else {
 			if (damage < 0) {
