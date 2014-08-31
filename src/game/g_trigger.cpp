@@ -235,21 +235,12 @@ bool Touch_HurtTrigger (Edict* self, Edict* activator)
 	} else {
 		G_TakeDamage(actor, damage);
 	}
-	/* Play hurt sound unless this is shock damage -- it doesn't really hurt
-	 * (and we don't yet actually handle it here anyway) */
+	/* Play hurt sound unless this is shock damage -- it doesn't do anything
+	 * because we don't actually handle it above yet */
 	if (!shock) {
 		const teamDef_t* teamDef = activator->chr.teamDef;
 		const int gender = activator->chr.gender;
-		assert(teamDef->numSounds[SND_HURT][gender] > 0);
-		int random = rand() % teamDef->numSounds[SND_HURT][gender];
-		linkedList_t* list = teamDef->sounds[SND_HURT][gender];
-		for (int j = 0; j < random; j++) {
-			assert(list);
-			list = list->next;
-		}
-		assert(list);
-		assert(list->data);
-		const char* sound = static_cast<const char*>(list->data);
+		const char* sound = teamDef->getActorSound(gender, SND_HURT);
 		G_EventSpawnSound(G_PlayerToPM(activator->getPlayer()), *activator, nullptr, sound);
 	}
 

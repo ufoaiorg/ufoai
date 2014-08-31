@@ -1212,7 +1212,7 @@ static void GEO_DrawMapOneMission (const uiNode_t* node, const mission_t* missio
 	}
 
 	/* Draw mission model (this must be called after drawing the selection circle so that the model is rendered on top of it)*/
-	if (!data.flatgeoscape) {
+	if (data.flatgeoscape) {
 		GEO_RenderImage(x, y, "pics/geoscape/mission");
 	} else {
 		GEO_Draw3DMarkerIfVisible(node, mission->pos, defaultBaseAngle, MIS_GetModel(mission), 0);

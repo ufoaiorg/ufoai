@@ -2296,38 +2296,6 @@ static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t* td)
 }
 
 /**
- * @brief Returns the actor sounds for a given category
- * @param[in] td teamDef pointer
- * @param[in] gender The gender of the actor
- * @param[in] soundType Which sound category (actorSound_t)
- */
-const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType)
-{
-	if (!td)
-		return nullptr;
-
-	if (gender < 0 || gender >= NAME_LAST) {
-		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "Com_GetActorSound: invalid gender: %i\n", gender);
-		return nullptr;
-	}
-	if (td->numSounds[soundType][gender] <= 0) {
-		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "Com_GetActorSound: no sound defined for soundtype: %i, teamID: '%s', gender: %i\n", soundType, td->id, gender);
-		return nullptr;
-	}
-
-	int random = rand() % td->numSounds[soundType][gender];
-	linkedList_t* list = td->sounds[soundType][gender];
-	for (int j = 0; j < random; j++) {
-		assert(list);
-		list = list->next;
-	}
-
-	assert(list);
-	assert(list->data);
-	return (const char*)list->data;
-}
-
-/**
  * @brief Returns the teamDef pointer for the searched team id - or nullptr if not
  * found in the teamDef array
  * @param[in] team The team id (given in ufo-script files)

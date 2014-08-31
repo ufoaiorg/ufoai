@@ -330,11 +330,12 @@ int G_ApplyProtection (const Edict* target, const byte dmgWeight, int damage)
  * @param[in] attacker The attacker.
  * @param[in] mock pseudo shooting - only for calculating mock values - nullptr for real shots
  * @param[in] impact impact location - @c nullptr for splash damage
+ * @return @c true if damage could be dealt (even if it was 0) @c false otherwise
  * @sa G_SplashDamage
  * @sa G_TakeDamage
  * @sa G_PrintActorStats
  */
-static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* attacker, shot_mock_t* mock, const vec3_t impact)
+static bool G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* attacker, shot_mock_t* mock, const vec3_t impact)
 {
 	const bool stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
 	const bool stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
@@ -348,7 +349,7 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* att
 	if (G_IsBrushModel(target) && G_IsBreakable(target)) {
 		/* Breakables are immune to stun & shock damage. */
 		if (stunEl || stunGas || shock || mock || smoke)
-			return;
+			return false;
 
 		if (damage >= target->HP) {
 			/* don't reset the HP value here, this value is used to distinguish
@@ -364,12 +365,12 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* att
 		} else {
 			G_TakeDamage(target, damage);
 		}
-		return;
+		return true;
 	}
 
 	/* Actors don't die again. */
 	if (!G_IsLivingActor(target))
-		return;
+		return false;
 	/* Now we know that the target is an actor */
 	Actor* victim = makeActor(target);
 
@@ -383,7 +384,7 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* att
 	} else if (damage < 0) {
 		/* Robots can't be healed. */
 		if (isRobot)
-			return;
+			return false;
 	}
 	Com_DPrintf(DEBUG_GAME, " Total damage: %d\n", damage);
 
@@ -420,7 +421,9 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* att
 				/* entity is dazed */
 				victim->setDazed();
 				G_ClientPrintf(victim->getPlayer(), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!"));
-				return;
+				return !mock;
+			} else {
+				return false;
 			}
 		} else {
 			if (damage < 0) {
@@ -437,9 +440,10 @@ static void G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* att
 	}
 
 	if (mock)
-		return;
+		return false;
 
 	G_CheckDeathOrKnockout(victim, attacker, fd, damage);
+	return true;
 }
 
 void G_CheckDeathOrKnockout (Actor* target, Actor* attacker, const fireDef_t* fd, int damage)
@@ -557,7 +561,12 @@ static void G_SplashDamage (Actor* ent, const fireDef_t* fd, vec3_t impact, shot
 
 		if (mock)
 			mock->allow_self = true;
-		G_Damage(check, fd, damage, ent, mock, nullptr);
+		if (G_Damage(check, fd, damage, ent, mock, nullptr) && G_IsLivingActor(check)) {
+			const teamDef_t* teamDef = check->chr.teamDef;
+			const int gender = check->chr.gender;
+			const char* sound = teamDef->getActorSound(gender, SND_HURT);
+			G_EventSpawnSound(G_VisToPM(check->visflags), *check, nullptr, sound);
+		}
 		if (mock)
 			mock->allow_self = false;
 	}

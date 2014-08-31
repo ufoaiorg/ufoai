@@ -2121,7 +2121,7 @@ void CL_AddActorPathing (void)
  */
 void CL_ActorPlaySound (const le_t* le, actorSound_t soundType)
 {
-	const char* actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
+	const char* actorSound = le->teamDef->getActorSound(le->gender, soundType);
 	if (actorSound) {
 		if (S_LoadAndPlaySample(actorSound, le->origin, SOUND_ATTN_IDLE, SND_VOLUME_DEFAULT)) {
 			Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: ActorSound: '%s'\n", actorSound);

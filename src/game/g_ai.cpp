@@ -50,6 +50,171 @@ public:
 	}
 };
 
+/**
+ * @brief Initializes an AiAreaSearch object to default values.
+ */
+AiAreaSearch::AiAreaSearch(void) {
+	plotArea(pos3_origin, 0);
+}
+
+/**
+ * @brief Initializes an AiAreaSearch object with specific starting point and search radius.
+ */
+AiAreaSearch::AiAreaSearch(const pos3_t origin, int radius, bool flat) {
+	plotArea(origin, radius, flat);
+}
+
+/**
+ * @brief Clear AiAreaSearch internal data.
+ */
+AiAreaSearch::~AiAreaSearch(void) {
+	_area.clear();
+}
+
+/**
+ * @brief Get next position in the search area.
+ * @param[out] pos The next position in the search area.
+ * return @c true if a new position was found @c false otherwise.
+ */
+bool AiAreaSearch::getNext(pos3_t pos) {
+	return _area.dequeue(pos);
+}
+
+/** @brief Clear LQueue internal data. */
+AiAreaSearch::LQueue::~LQueue(void) {
+	clear();
+}
+
+/**
+ * @brief Add an entry to the queue.
+ * @param[in] data Data to add.
+ */
+void AiAreaSearch::LQueue::enqueue(const pos3_t data) {
+	qnode_s* node = static_cast<qnode_s*>(G_TagMalloc(sizeof(qnode_s), TAG_LEVEL));
+	VectorCopy(data, node->data);
+	node->next = nullptr;
+
+	if (isEmpty())
+		_head = _tail = node;
+	else {
+		_tail->next = node;
+		_tail = node;
+	}
+	_count++;
+}
+
+/**
+ * @brief Retrieve an entry form the queue.
+ * @param[out] The data retrieved.
+ * @return @c true if the data was retrieved @c false otherwise.
+ */
+bool AiAreaSearch::LQueue::dequeue(pos3_t data) {
+	if (isEmpty())
+		return false;
+
+	VectorCopy(_head->data, data);
+	qnode_s* node = _head;
+	_head = _head->next;
+	_count--;
+	G_MemFree(node);
+
+	return true;
+}
+
+/**
+ * @brief Remove all data from the queue.
+ */
+void AiAreaSearch::LQueue::clear(void) {
+	qnode_s* next = nullptr;
+	for (qnode_s* node = _head; node; node = next) {
+		next = node->next;
+		G_MemFree(node);
+	}
+	_head = _tail = nullptr;
+	_count = 0;
+}
+
+/**
+ * @brief Calculate the search area.
+ * @param[in] origin The starting position for the search.
+ * @param[in] radius Radius to search around the starting position.
+ * @param[in] flat If true only the level with the starting position is searched.
+ */
+void AiAreaSearch::plotArea(const pos3_t origin, int radius, bool flat) {
+		/* Starting with a sphere with radius 0 (just the center pos) out to the given radius */
+		for (int i = 0; i <= radius; ++i) {
+			/* Battlescape has max PATHFINDING_HEIGHT levels, so cap the z offset to the max levels
+			 * the unit can currently go up or down */
+			const int zOfsMax = std::min(std::max(static_cast<int>(origin[2]), PATHFINDING_HEIGHT - origin[2] - 1), i);
+			/* Starting a the center z level up to zOfsMax levels */
+			if (flat)
+				plotCircle(origin, i);
+			else
+				for (int zOfs = 0; zOfs <= zOfsMax; ++zOfs) {
+					pos3_t center = {origin[0], origin[1], static_cast<pos_t>(origin[2] + zOfs)};
+					plotCircle(center, i - zOfs);
+					/* We need to cover both up and down directions, so we Flip the sign (if there's actually a z offset) */
+					if (zOfs != 0) {
+						center[2] = origin[2] - zOfs;
+						plotCircle(center, i - zOfs);
+					}
+				}
+		}
+}
+
+void AiAreaSearch::plotCircle(const pos3_t origin, int radius) {
+	/* There are always more levels in one direction than the other (since the number is even)
+	 * so check if out of bounds */
+	if (origin[2] >= PATHFINDING_HEIGHT)
+		return;
+	/* This is the main loop of the midpoint circle algorithm this specific variation
+	 * circles of consecutive integer radius won't overlap in any point or leave gaps in between,
+	 * Coincidentally (at time of writing) a circle of radius n will be exactly the farthest a normal actor can walk
+	 * with n * 2 TU, in ideal conditions (standing, no obstacles, no penalties) */
+	for (int dy = 1, xOfs = 0, yOfs = radius; xOfs <= yOfs; ++xOfs, dy += 1, yOfs = radius - (dy >> 1)) {
+		/* Have the offsets, now to fill the octants */
+		plotPos(origin, xOfs, yOfs);
+		/* Need to Flip the signs, for each one */
+		if (xOfs != 0) {
+			plotPos(origin, -xOfs, yOfs);
+		}
+		if (yOfs != 0) {
+			plotPos(origin, xOfs, -yOfs);
+		}
+		if (xOfs != 0 && yOfs != 0) {
+			plotPos(origin, -xOfs, -yOfs);
+		}
+		/* And need to Flip the x and y offsets too */
+		if (xOfs != yOfs) {
+			plotPos(origin, yOfs, xOfs);
+			if (yOfs != 0) {
+				plotPos(origin, -yOfs, xOfs);
+			}
+			if (xOfs != 0) {
+				plotPos(origin, yOfs, -xOfs);
+			}
+			if (yOfs != 0 && xOfs != 0) {
+				plotPos(origin, -yOfs, -xOfs);
+			}
+		}
+	}
+}
+
+void AiAreaSearch::plotPos(const pos3_t origin, int xOfs, int dy) {
+	/* There's more distance to one (possible) edge of the map than the other
+	 *  check if out of bounds to be safe */
+	if (origin[0] + xOfs < 0 || origin[0] + xOfs >= PATHFINDING_WIDTH || origin[1] + dy < 0
+			|| origin[1] + dy >= PATHFINDING_WIDTH)
+		return;
+	const pos3_t pos = {static_cast<pos_t>(origin[0] + xOfs), static_cast<pos_t>(origin[1] + dy), origin[2]};
+	/* Most maps won't use the full space available so check against the actual map area */
+	vec3_t vec;
+	PosToVec(pos, vec);
+	if (!gi.isOnMap(vec))
+		return;
+	_area.enqueue(pos);
+}
+
 #define SCORE_HIDE			60
 #define SCORE_CLOSE_IN		20
 #define SCORE_KILL			30
@@ -405,36 +570,31 @@ bool AI_FindHidingLocation (int team, Actor* actor, const pos3_t from, int tuLef
 		hidePathingTable = (pathing_t*) G_TagMalloc(sizeof(*hidePathingTable), TAG_LEVEL);
 
 	/* search hiding spot */
-	const int distance = std::min(tuLeft, HIDE_DIST * 2);
-	G_MoveCalcLocal(hidePathingTable, 0, actor, from, distance);
-	actor->pos[2] = from[2];
-	const byte minX = std::max(from[0] - HIDE_DIST, 0);
-	const byte minY = std::max(from[1] - HIDE_DIST, 0);
-	const byte maxX = std::min(from[0] + HIDE_DIST, PATHFINDING_WIDTH - 1);
-	const byte maxY = std::min(from[1] + HIDE_DIST, PATHFINDING_WIDTH - 1);
+	const int maxTUs = std::min(tuLeft, HIDE_DIST * 2);
+	const int distance = (maxTUs + 1) / TU_MOVE_STRAIGHT;
+	G_MoveCalcLocal(hidePathingTable, 0, actor, from, maxTUs);
 
 	int bestScore = AI_ACTION_NOTHING_FOUND;
 	pos3_t bestPos = {0, 0, PATHFINDING_HEIGHT};
-	for (actor->pos[1] = minY; actor->pos[1] <= maxY; actor->pos[1]++) {
-		for (actor->pos[0] = minX; actor->pos[0] <= maxX; actor->pos[0]++) {
-			/* Don't have TUs  to walk there */
-			const pos_t delta = G_ActorMoveLength(actor, hidePathingTable, actor->pos, false);
-			if (delta > tuLeft || delta == ROUTING_NOT_REACHABLE)
-				continue;
+	AiAreaSearch searchArea(from, distance, true);
+	while (searchArea.getNext(actor->pos)) {
+		/* Don't have TUs  to walk there */
+		const pos_t delta = G_ActorMoveLength(actor, hidePathingTable, actor->pos, false);
+		if (delta > tuLeft || delta == ROUTING_NOT_REACHABLE)
+			continue;
 
-			/* If enemies see this position, it doesn't qualify as hiding spot */
-			actor->calcOrigin();
-			if (G_TestVis(team, actor, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)
-				continue;
+		/* If enemies see this position, it doesn't qualify as hiding spot */
+		actor->calcOrigin();
+		if (G_TestVis(team, actor, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)
+			continue;
 
-			/* Don't stand on dangerous terrain! */
-			if (!AI_CheckPosition(actor))
-				continue;
-			const int score = tuLeft - delta;
-			if (score > bestScore) {
-				bestScore = score;
-				VectorCopy(actor->pos, bestPos);
-			}
+		/* Don't stand on dangerous terrain! */
+		if (!AI_CheckPosition(actor))
+			continue;
+		const int score = tuLeft - delta;
+		if (score > bestScore) {
+			bestScore = score;
+			VectorCopy(actor->pos, bestPos);
 		}
 	}
 
@@ -478,41 +638,36 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 	assert(enemy);
 
 	/* calculate move table */
-	const int distance = std::min(tu, HERD_DIST * 2);
-	G_MoveCalcLocal(herdPathingTable, 0, actor, from, distance);
-	actor->pos[2] = from[2];
-	const byte minX = std::max(from[0] - HERD_DIST, 0);
-	const byte minY = std::max(from[1] - HERD_DIST, 0);
-	const byte maxX = std::min(from[0] + HERD_DIST, PATHFINDING_WIDTH - 1);
-	const byte maxY = std::min(from[1] + HERD_DIST, PATHFINDING_WIDTH - 1);
+	const int maxTUs = std::min(tu, HERD_DIST * 2);
+	const int distance = (maxTUs + 1) / TU_MOVE_STRAIGHT;
+	G_MoveCalcLocal(herdPathingTable, 0, actor, from, maxTUs);
 
 	/* search the location */
 	pos3_t bestpos = {0, 0, PATHFINDING_HEIGHT};
 	bestlength = VectorDistSqr(target, actor->origin);
-	for (actor->pos[1] = minY; actor->pos[1] <= maxY; actor->pos[1]++) {
-		for (actor->pos[0] = minX; actor->pos[0] <= maxX; actor->pos[0]++) {
-			/* time */
-			const pos_t delta = G_ActorMoveLength(actor, herdPathingTable, actor->pos, false);
-			if (delta > tu || delta == ROUTING_NOT_REACHABLE)
-				continue;
+	AiAreaSearch searchArea(from, distance, true);
+	while (searchArea.getNext(actor->pos)) {
+		/* time */
+		const pos_t delta = G_ActorMoveLength(actor, herdPathingTable, actor->pos, false);
+		if (delta > tu || delta == ROUTING_NOT_REACHABLE)
+			continue;
 
-			/* Don't stand on dangerous terrain! */
-			if (!AI_CheckPosition(actor))
-				continue;
+		/* Don't stand on dangerous terrain! */
+		if (!AI_CheckPosition(actor))
+			continue;
 
-			actor->calcOrigin();
-			const vec_t length = VectorDistSqr(actor->origin, target);
-			if (length < bestlength) {
-				vec3_t vfriend, venemy;
-				/* check this position to locate behind target from enemy */
-				VectorSubtract(target, actor->origin, vfriend);
-				VectorNormalizeFast(vfriend);
-				VectorSubtract(enemy->origin, actor->origin, venemy);
-				VectorNormalizeFast(venemy);
-				if (DotProduct(vfriend, venemy) > 0.5) {
-					bestlength = length;
-					VectorCopy(actor->pos, bestpos);
-				}
+		actor->calcOrigin();
+		const vec_t length = VectorDistSqr(actor->origin, target);
+		if (length < bestlength) {
+			vec3_t vfriend, venemy;
+			/* check this position to locate behind target from enemy */
+			VectorSubtract(target, actor->origin, vfriend);
+			VectorNormalizeFast(vfriend);
+			VectorSubtract(enemy->origin, actor->origin, venemy);
+			VectorNormalizeFast(venemy);
+			if (DotProduct(vfriend, venemy) > 0.5) {
+				bestlength = length;
+				VectorCopy(actor->pos, bestpos);
 			}
 		}
 	}
@@ -1155,30 +1310,24 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
  */
 bool AI_FindMissionLocation (Actor* actor, const pos3_t to)
 {
-	const byte minX = std::max(to[0] - HOLD_DIST, 0);
-	const byte minY = std::max(to[1] - HOLD_DIST, 0);
-	const byte maxX = std::min(to[0] + HOLD_DIST, PATHFINDING_WIDTH - 1);
-	const byte maxY = std::min(to[1] + HOLD_DIST, PATHFINDING_WIDTH - 1);
 	int bestDist = ROUTING_NOT_REACHABLE;
 	pos3_t bestPos = {to[0], to[1], to[2]};
 
-	actor->pos[2] = to[2];
-	for (actor->pos[1] = minY; actor->pos[1] <= maxY; ++actor->pos[1]) {
-		for (actor->pos[0] = minX; actor->pos[0] <= maxX; ++actor->pos[0]) {
-			/* Can't walk there */
-			if (G_ActorMoveLength(actor, level.pathingMap, actor->pos, true) == ROUTING_NOT_REACHABLE)
-				continue;
-			/* Don't stand on dangerous terrain! */
-			if (!AI_CheckPosition(actor))
-				continue;
+	AiAreaSearch searchArea(to, HOLD_DIST, true);
+	while (searchArea.getNext(actor->pos)) {
+		/* Can't walk there */
+		if (G_ActorMoveLength(actor, level.pathingMap, actor->pos, true) == ROUTING_NOT_REACHABLE)
+			continue;
+		/* Don't stand on dangerous terrain! */
+		if (!AI_CheckPosition(actor))
+			continue;
 
-			const int distX = std::abs(actor->pos[0] - to[0]);
-			const int distY = std::abs(actor->pos[1] - to[1]);
-			const int dist = distX + distY + std::max(distX, distY);
-			if (dist < bestDist) {
-				bestDist = dist;
-				VectorCopy(actor->pos, bestPos);
-			}
+		const int distX = std::abs(actor->pos[0] - to[0]);
+		const int distY = std::abs(actor->pos[1] - to[1]);
+		const int dist = distX + distY + std::max(distX, distY);
+		if (dist < bestDist) {
+			bestDist = dist;
+			VectorCopy(actor->pos, bestPos);
 		}
 	}
 	if (!VectorCompare(to, bestPos))
@@ -1299,10 +1448,6 @@ static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 
 	/* set borders */
 	const int dist = (actor->getUsableTUs() + 1) / 2;
-	const int xl = std::max((int) actor->pos[0] - dist, 0);
-	const int yl = std::max((int) actor->pos[1] - dist, 0);
-	const int xh = std::min((int) actor->pos[0] + dist, PATHFINDING_WIDTH);
-	const int yh = std::min((int) actor->pos[1] + dist, PATHFINDING_WIDTH);
 
 	/* search best action */
 	pos3_t oldPos;
@@ -1315,27 +1460,24 @@ static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 	float bestActionScore, best = AI_ACTION_NOTHING_FOUND;
 	AiAction aia, bestAia;
 	pos3_t to;
-	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; ++to[2]) {
-		for (to[1] = yl; to[1] < yh; ++to[1]) {
-			for (to[0] = xl; to[0] < xh; ++to[0]) {
-				const pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
-				if (move >= ROUTING_NOT_REACHABLE)
-					continue;
-				if (move > actor->getUsableTUs())
-					continue;
+	AiAreaSearch searchArea(oldPos, dist);
+	while (searchArea.getNext(to)) {
+		const pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
+		if (move >= ROUTING_NOT_REACHABLE)
+			continue;
+		if (move > actor->getUsableTUs())
+			continue;
 
-				if (G_IsCivilian(actor))
-					bestActionScore = AI_CivilianCalcActionScore(actor, to, &aia);
-				else if (actor->isPanicked())
-					bestActionScore = AI_PanicCalcActionScore(actor, to, &aia);
-				else
-					bestActionScore = AI_FighterCalcActionScore(actor, to, &aia);
+		if (G_IsCivilian(actor))
+			bestActionScore = AI_CivilianCalcActionScore(actor, to, &aia);
+		else if (actor->isPanicked())
+			bestActionScore = AI_PanicCalcActionScore(actor, to, &aia);
+		else
+			bestActionScore = AI_FighterCalcActionScore(actor, to, &aia);
 
-				if (bestActionScore > best) {
-					bestAia = aia;
-					best = bestActionScore;
-				}
-			}
+		if (bestActionScore > best) {
+			bestAia = aia;
+			best = bestActionScore;
 		}
 	}
 

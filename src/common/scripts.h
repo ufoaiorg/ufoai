@@ -264,6 +264,5 @@ const char* Com_DropShipTypeToShortName(humanAircraftType_t type);
 humanAircraftType_t Com_DropShipShortNameToID(const char* token);
 void Com_GetCharacterValues(const char* teamDefition, character_t* chr);
 bool Com_GetCharacterModel(character_t* chr);
-const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
 const teamDef_t* Com_GetTeamDefinitionByID(const char* team);
 const chrTemplate_t* Com_GetCharacterTemplateByID(const char* chrTemplate);

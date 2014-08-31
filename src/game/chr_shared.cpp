@@ -43,6 +43,35 @@ void character_s::init ()
 }
 
 /**
+ * @brief Returns the actor sounds for a given category
+ * @param[in] gender The gender of the actor
+ * @param[in] soundType Which sound category (actorSound_t)
+ */
+const char* teamDef_s::getActorSound (int gender, actorSound_t soundType) const
+{
+	if (gender < 0 || gender >= NAME_LAST) {
+		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "Com_GetActorSound: invalid gender: %i\n", gender);
+		return nullptr;
+	}
+	if (numSounds[soundType][gender] <= 0) {
+		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "Com_GetActorSound: no sound defined for soundtype: %i, teamID: '%s', gender: %i\n", soundType, id, gender);
+		return nullptr;
+	}
+
+	// Can't use LIST_GetRandom() or LIST_GetByIdx() in the game module
+	int random = rand() % numSounds[soundType][gender];
+	linkedList_t* list = sounds[soundType][gender];
+	for (int j = 0; j < random; j++) {
+		assert(list);
+		list = list->next;
+	}
+
+	assert(list);
+	assert(list->data);
+	return (const char*)list->data;
+}
+
+/**
  * @brief Check if a team definition is alien.
  * @param[in] td Pointer to the team definition to check.
  */
