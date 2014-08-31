@@ -1745,7 +1745,7 @@ static int AIL_findweapons (lua_State* L)
 /**
  * @brief Whether the current AI actor is a fighter or not
  */
-static int AIL_isfighter(lua_State* L)
+static int AIL_isfighter (lua_State* L)
 {
 	const bool result = AIL_ent->chr.teamDef->weapons || AIL_ent->chr.teamDef->onlyWeapon;
 	lua_pushboolean(L, result);
@@ -1755,7 +1755,7 @@ static int AIL_isfighter(lua_State* L)
 /**
  * @brief Mark the current waypoint for a civ
  */
-static int AIL_setwaypoint(lua_State* L)
+static int AIL_setwaypoint (lua_State* L)
 {
 	/* No waypoint, reset the count value to restart the search */
 	if (lua_gettop(L) < 1) {
@@ -1779,7 +1779,7 @@ static int AIL_setwaypoint(lua_State* L)
 /**
  * @brief Return the difficulty number (in case we want different AI for different ones)
  */
-static int AIL_difficulty(lua_State* L)
+static int AIL_difficulty (lua_State* L)
 {
 	lua_pushnumber(L, g_difficulty->value);
 	return 1;
@@ -1788,7 +1788,7 @@ static int AIL_difficulty(lua_State* L)
 /**
  * @brief Return the difficulty number (in case we want different AI for different ones)
  */
-static int AIL_isdead(lua_State* L)
+static int AIL_isdead (lua_State* L)
 {
 	lua_pushboolean(L, AIL_ent->isDead());
 	return 1;
