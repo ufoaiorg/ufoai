@@ -223,6 +223,7 @@ static int AIL_isfighter(lua_State* L);
 static int AIL_setwaypoint(lua_State* L);
 static int AIL_difficulty(lua_State* L);
 static int AIL_isdead(lua_State* L);
+static int AIL_positionflee(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -255,6 +256,7 @@ static const luaL_reg AIL_methods[] = {
 	{"setwaypoint", AIL_setwaypoint},
 	{"difficulty", AIL_difficulty},
 	{"isdead", AIL_isdead},
+	{"positionflee", AIL_positionflee},
 	{nullptr, nullptr}
 };
 
@@ -1789,6 +1791,53 @@ static int AIL_difficulty(lua_State* L)
 static int AIL_isdead(lua_State* L)
 {
 	lua_pushboolean(L, AIL_ent->isDead());
+	return 1;
+}
+
+static int AIL_positionflee (lua_State* L)
+{
+	/* Calculate move table. */
+	G_MoveCalc(0, AIL_ent, AIL_ent->pos, AIL_ent->getUsableTUs());
+	pos3_t oldPos;
+	VectorCopy(AIL_ent->pos, oldPos);
+
+	const int radius = (AIL_ent->getUsableTUs() + 1) / TU_MOVE_STRAIGHT;
+	float bestScore = -1;
+	pos3_t bestPos = {0, 0, PATHFINDING_HEIGHT};
+	AiAreaSearch searchArea(AIL_ent->pos, radius);
+	while (searchArea.getNext(AIL_ent->pos)) {
+		if (G_ActorMoveLength(AIL_ent, level.pathingMap, AIL_ent->pos, false) >= ROUTING_NOT_REACHABLE)
+			continue;
+		float minDistFoe = -1, minDistFriend = -1;
+		Actor* check = nullptr;
+		while ((check = G_EdictsGetNextLivingActor(check))) {
+			const float dist = VectorDist(AIL_ent->origin, check->origin);
+			if (check->isSameTeamAs(AIL_ent)) {
+				if (minDistFriend < 0.0f || dist < minDistFriend)
+					minDistFriend = dist;
+			} else {
+				if (minDistFoe < 0.0f || dist < minDistFoe)
+					minDistFoe = dist;
+			}
+		}
+		float score = minDistFoe - (minDistFriend / GRID_WIDTH);
+		/* Try to hide */
+		AIL_ent->calcOrigin();
+		if (G_TestVis(AI_GetHidingTeam(AIL_ent), AIL_ent, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)
+			score /= UNIT_SIZE;
+		if (score > bestScore) {
+			bestScore = score;
+			VectorCopy(AIL_ent->pos, bestPos);
+		}
+	}
+	AIL_ent->setOrigin(oldPos);
+
+	if (bestPos[2] == PATHFINDING_HEIGHT) {
+		lua_pushboolean(L, 0);
+	} else {
+		lua_pushpos3(L, &bestPos);
+	}
+
 	return 1;
 }
 
