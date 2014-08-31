@@ -40,6 +40,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_node.h"
 
 #include "../ui_lua.h"
+
+/* typedefs only visible for SWIG, used for subclassing uiNode_t (see below for more details). */
+typedef uiNode_t uiWindow_t;
+typedef uiNode_t uiButton_t;
+typedef uiNode_t uiCheckBox_t;
+
+// todo: implement other ui node classes
+
 %}
 
 /* typemap for converting lua function to a reference to be used by C */
@@ -53,8 +61,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* expose node structure */
 %rename(uiNode) uiNode_t;
 struct uiNode_t {
-	/* these values are read only accessible from lua */
+	/* these values are read-only from lua */
 	%immutable;
+
 	/* common properties */
 	char* name;				/**< name from the script files */
 	/* common navigation */
@@ -66,8 +75,10 @@ struct uiNode_t {
 	uiNode_t* parent;		/**< Parent window, else nullptr */
 	uiNode_t* root;			/**< Shortcut to the root node */
 
+	/* these values are read/write from lua */
 	%mutable;
-	%rename (__instance) lua_Instance;
+
+	/* events */
 	%rename (on_click) lua_onClick;
     %rename (on_rightclick) lua_onRightClick;
     %rename (on_middleclick) lua_onMiddleClick;
@@ -93,7 +104,35 @@ struct uiNode_t {
 %extend uiNode_t {
 	/* functions operating on a node */
 	bool is_window () { return UI_Node_IsWindow ($self); };
+	uiNode_t* create_control (const char* type, const char* name, const char* super) { return UI_CreateControl ($self, type, name, super); };
 };
+
+/*
+	The following defines derived "classes" from uiNode. This solves the problem of all nodes being structures
+	of type uiNode_t where the actual "class" is found in the behaviour value. In the interface file we actually
+	implement the class hierarcy by typecasting the uiNode_t structure into various derived classes. Then we
+	use SWIG's extend mechanism to provide direct support for the properties and methods in the derived classes
+	and direct these back to a call into the behaviour class.
+*/
+%rename (uiWindow) uiWindow_t;
+struct uiWindow_t: uiNode_t {
+};
+%extend uiWindow_t {
+	void set_background (const char* name) { Com_Printf("calling uiWindow::set_background with arg = %s\n", name); };
+};
+
+%rename (uiButton) uiButton_t;
+struct uiButton_t: uiNode_t {
+};
+%extend uiButton_t {
+};
+
+%rename (uiCheckBox) uiCheckBox_t;
+struct uiCheckBox_t {
+};
+%extend uiCheckBox_t {
+};
+
 
 /* expose registration functions for callbacks */
 %rename(register_onload) UI_RegisterHandler_OnLoad;
@@ -105,13 +144,15 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 %rename (__create_component) UI_CreateComponent;
 uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);
 %rename (__create_window) UI_CreateWindow;
-uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);
+uiWindow_t* UI_CreateWindow (const char* type, const char* name, const char* super);
 
 /* expose lua helper functions */
 %luacode {
 
 function ufoui.create_window (name, super)
-	return ufoui.__create_window ("window", name, super)
+	ufo.print("entering support function: create_window\n")
+	local node=ufoui.__create_window ("window", name, super)
+	return node
 end
 
 function ufoui.create_component (type, name, super)

@@ -4,7 +4,38 @@
 	TEST WINDOW
 --]]
 
+ufo.print("------------ BEGIN LUA DEBUGGING ----------------\n")
+
+function list_table(t, tab)
+	ufo.print("[begin list --\n")
+	if (t ~= nil) then
+		for k,v in pairs(t) do
+			ufo.print(string.format("%s%s = %s\n", tostring(tab), tostring(k), tostring(v)))
+		end
+	else
+		ufo.print("nil table\n")
+	end
+	ufo.print("-- end list]\n")
+end
+
+-- listing metatable contents
+ufo.print("table: uiNode\n")
+m = getmetatable(ufoui.uiNode)
+list_table(m, "uiNode: ")
+fn = m[".fn"]
+list_table(fn, "uiNode.fn: ")
+
+ufo.print("table: uiWindow\n")
+m = getmetatable(ufoui.uiWindow)
+list_table(m, "uiWindow: ")
+fn = m[".fn"]
+list_table(fn, "uiWindow.fn: ")
+
+ufo.print("------------ END LUA DEBUGGING ----------------\n")
+
 local Window = ufoui.create_window ("lua_test", nil)
+Window:set_background ("ui/main_bg")
+
 Window.on_click = function (sender, x, y)
 		ufo.print("window on_click event handler\n")
 		ufo.print(string.format("sender = %s, position = (%s,%s)\n", tostring(sender.name), tostring(x), tostring(y)))
