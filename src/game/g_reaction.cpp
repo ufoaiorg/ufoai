@@ -205,7 +205,7 @@ void ReactionFireTargets::notifyClientMove (const Edict* target, int step, bool 
 			if (rfts->targets[j].target != target)
 				continue;
 			if (startMove) {
-				const int tus = target->TU - rfts->targets[j].triggerTUs;
+				const int tus = std::max(0, target->TU - rfts->targets[j].triggerTUs);
 				G_EventReactionFireAddTarget(*shooter, *target, tus, step);
 			} else {
 				G_EventReactionFireRemoveTarget(*shooter, *target, step);
