@@ -224,6 +224,7 @@ static int AIL_setwaypoint(lua_State* L);
 static int AIL_difficulty(lua_State* L);
 static int AIL_isdead(lua_State* L);
 static int AIL_positionflee(lua_State* L);
+static int AIL_weapontype(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -257,6 +258,7 @@ static const luaL_reg AIL_methods[] = {
 	{"difficulty", AIL_difficulty},
 	{"isdead", AIL_isdead},
 	{"positionflee", AIL_positionflee},
+	{"weapontype", AIL_weapontype},
 	{nullptr, nullptr}
 };
 
@@ -1839,6 +1841,17 @@ static int AIL_positionflee (lua_State* L)
 	}
 
 	return 1;
+}
+
+static int AIL_weapontype (lua_State* L)
+{
+	const Item* right = AIL_ent->getRightHandItem();
+	const Item* left = AIL_ent->getLeftHandItem();
+
+	lua_pushstring(L, right ? right->def()->type : "none");
+	lua_pushstring(L, left ? left->def()->type : "none");
+
+	return 2;
 }
 
 /**
