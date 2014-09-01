@@ -954,7 +954,9 @@ bool E_LoadXML (xmlNode_t* p)
 {
 	xmlNode_t* snode;
 	bool success = true;
+	linkedList_t* lastEmployee[MAX_EMPL];
 
+	OBJZERO(lastEmployee);
 	cgi->Com_RegisterConstList(saveEmployeeConstants);
 	for (snode = cgi->XML_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES); snode;
 			snode = cgi->XML_GetNextNode(snode, p, SAVE_EMPLOYEE_EMPLOYEES)) {
@@ -1002,7 +1004,15 @@ bool E_LoadXML (xmlNode_t* p)
 				success = false;
 				break;
 			}
-			LIST_Add(&ccs.employees[emplType], e);
+			if (lastEmployee[emplType] == nullptr)
+				lastEmployee[emplType] = LIST_Add(&ccs.employees[emplType], (void*) &e, sizeof(e));
+			else
+				lastEmployee[emplType] = LIST_Add(&lastEmployee[emplType], (void*) &e, sizeof(e));
+			if (lastEmployee[emplType] == nullptr) {
+				Com_Printf("Could not add employee to the game\n");
+				success = false;
+				break;
+			}
 		}
 		if (!success)
 			break;
