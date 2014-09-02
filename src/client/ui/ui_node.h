@@ -37,6 +37,7 @@ bool UI_Node_IsOptionContainer (uiNode_t const* node);
 bool UI_Node_IsBattleScape (uiNode_t const* node);
 bool UI_Node_IsScrollableContainer (uiNode_t const* node);
 bool UI_Node_IsDrawItselfChild (uiNode_t const* node);
+bool UI_Node_IsDisabled (uiNode_t const* node);
 
 const char* UI_Node_GetWidgetName (uiNode_t const* node);
 intptr_t UI_Node_GetMemorySize (uiNode_t const* node);
@@ -68,6 +69,7 @@ void UI_Node_WindowActivate (uiNode_t* node);
 void UI_Node_DoLayout (uiNode_t* node);
 void UI_Node_Activate (uiNode_t* node);
 void UI_Node_PropertyChanged (uiNode_t* node, const value_t* property);
+void UI_Node_PosChanged (uiNode_t* node);
 void UI_Node_SizeChanged (uiNode_t* node);
 void UI_Node_GetClientPosition (uiNode_t const* node, vec2_t position);
 bool UI_Node_DndEnter (uiNode_t* node);
@@ -81,6 +83,13 @@ bool UI_Node_KeyPressed (uiNode_t* node, unsigned int key, unsigned short unicod
 bool UI_Node_KeyReleased (uiNode_t* node, unsigned int key, unsigned short unicode);
 int UI_Node_GetCellWidth (uiNode_t* node);
 int UI_Node_GetCellHeight (uiNode_t* node);
+
+const char* UI_Node_GetText (uiNode_t* node);
+void UI_Node_SetText (uiNode_t* node, const char* text);
+const char* UI_Node_GetTooltip (uiNode_t* node);
+void UI_Node_SetTooltip (uiNode_t* node, const char* tooltip);
+
+void UI_Node_SetDisabled (uiNode_t* node, const bool value);
 
 #ifdef DEBUG
 void UI_Node_DebugCountWidget (uiNode_t* node, int count);
@@ -98,6 +107,7 @@ void UI_UnHideNode(uiNode_t* node);
 void UI_HideNode(uiNode_t* node);
 void UI_Invalidate(uiNode_t* node);
 void UI_Validate(uiNode_t* node);
+void UI_NodeSetPos(uiNode_t* node, vec2_t pos);
 void UI_NodeSetSize(uiNode_t* node, vec2_t size);
 
 /* position */

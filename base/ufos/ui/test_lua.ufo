@@ -33,15 +33,19 @@ list_table(fn, "uiWindow.fn: ")
 
 ufo.print("------------ END LUA DEBUGGING ----------------\n")
 
+-- first create the node structure
 local Window = ufoui.create_window ("lua_test", nil)
-Window:set_background ("ui/main_bg")
+local BtnTest = ufoui.create_button (Window, "test", nil)
 
+-- setup the window node
+Window:set_background ("ui/main_bg")
 Window.on_click = function (sender, x, y)
 		ufo.print("window on_click event handler\n")
 		ufo.print(string.format("sender = %s, position = (%s,%s)\n", tostring(sender.name), tostring(x), tostring(y)))
 	end
 Window.on_rightclick = function (sender, x, y)
 		ufo.print("window on_rightclick event handler\n")
+		BtnTest:set_enabled(not BtnTest:is_enabled());
 	end
 Window.on_middleclick = function (sender, x, y)
 		ufo.print("window on_middleclick event handler\n")
@@ -50,6 +54,29 @@ Window.on_keypressed = function (sender, key, unicode)
 		ufo.print("window on_keypressed event handler\n")
 		ufo.print(string.format("key = %s\n", tostring(key)))
 	end
+
+--[[
+	button facebook
+	{
+		pos			"10 720"
+		string		"_Facebook"
+		tooltip		"_Like us on facebook"
+		size		"80 20"
+		color		"0 1 0 1"
+		selectcolor "1 1 1 1"
+		padding		0
+		onClick		{ cmd "cl_openurl http://www.facebook.com/ufoai/;" }
+	}
+--]]
+-- setup the button node
+BtnTest:set_enabled (true)
+BtnTest:set_text("hello world!")
+BtnTest:set_tooltip("hello from the lua engine to ufo AI")
+BtnTest:set_pos(10.0, 10.0)
+BtnTest:set_size(80.0, 20.0)
+BtnTest:set_color(0.0, 0.5, 0.0, 1.0)
+BtnTest:set_selectcolor(1.0, 1.0, 1.0, 1.0)
+BtnTest:set_disabledcolor(1.0, 0.0, 0.0, 1.0)
 	
 function load ()
 	ufo.print("inside test_lua.ufo: calling load\n")
