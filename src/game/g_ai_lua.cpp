@@ -1508,7 +1508,7 @@ static int AIL_missiontargets (lua_State* L)
 static int AIL_waypoints (lua_State* L)
 {
 	/* Min distance to waypoint */
-	float minDist = 25.0f;
+	float minDist = 5.0f;
 	if (lua_gettop(L) > 0) {
 		if (lua_isnumber(L, 1))
 			minDist = lua_tonumber(L, 1);
@@ -1544,7 +1544,7 @@ static int AIL_waypoints (lua_State* L)
 				pos_t move = ROUTING_NOT_REACHABLE;
 				if (G_FindPath(0, AIL_ent, AIL_ent->pos, checkPoint->pos, false, ROUTING_NOT_REACHABLE - 1))
 					move = gi.MoveLength(level.pathingMap, checkPoint->pos, 0, false);
-				if (move > minDist * TU_MOVE_STRAIGHT)
+				if (move < minDist * TU_MOVE_STRAIGHT)
 					continue;
 				if (checkPoint->count < AIL_ent->count) {
 					sortTable[n].sortLookup = move;
@@ -1556,7 +1556,7 @@ static int AIL_waypoints (lua_State* L)
 		default:
 			{
 				const float dist = VectorDist(AIL_ent->origin, checkPoint->origin);
-				if (dist > minDist * UNIT_SIZE)
+				if (dist < minDist * UNIT_SIZE)
 					continue;
 				if (checkPoint->count < AIL_ent->count) {
 					sortTable[n].sortLookup = dist;
