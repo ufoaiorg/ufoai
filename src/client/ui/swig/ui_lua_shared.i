@@ -31,19 +31,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* import common functions */
 #include "../../../shared/shared.h"
+#include "../../../shared/vector.h"
 #include "../../../common/scripts_lua.h"
 
 /* import ui specific functions */
 #include "../ui_main.h"
 #include "../ui_behaviour.h"
+#include "../ui_sprite.h"
 #include "../ui_nodes.h"
 #include "../ui_node.h"
+
+#include "../node/ui_node_abstractnode.h"
+#include "../node/ui_node_button.h"
+#include "../node/ui_node_checkbox.h"
+#include "../node/ui_node_string.h"
+#include "../node/ui_node_window.h"
 
 #include "../ui_lua.h"
 
 /* typedefs only visible for SWIG, used for subclassing uiNode_t (see below for more details). */
 typedef uiNode_t uiWindow_t;
 typedef uiNode_t uiButton_t;
+typedef uiNode_t uiString_t;
 typedef uiNode_t uiCheckBox_t;
 
 // todo: implement other ui node classes
@@ -66,6 +75,7 @@ struct uiNode_t {
 
 	/* common properties */
 	char* name;				/**< name from the script files */
+
 	/* common navigation */
 	%rename (first) firstChild;
 	uiNode_t* firstChild; 	/**< first element of linked list of child */
@@ -103,8 +113,23 @@ struct uiNode_t {
 };
 %extend uiNode_t {
 	/* functions operating on a node */
-	bool is_window () { return UI_Node_IsWindow ($self); };
-	uiNode_t* create_control (const char* type, const char* name, const char* super) { return UI_CreateControl ($self, type, name, super); };
+	bool is_window () { return UI_Node_IsWindow($self); };
+	bool is_enabled () { return !UI_Node_IsDisabled($self); };
+
+	float left () { return $self->box.pos[0]; };
+	float top () { return $self->box.pos[1]; };
+	float widht () { return $self->box.size[0]; };
+	float height () { return $self->box.size[1]; };
+
+	void set_pos (float x, float y) { Vector2Set($self->box.pos, x, y); }
+	void set_size (float w, float h) { Vector2Set($self->box.size, w, h); }
+	void set_color (float r, float g, float b, float a) { Vector4Set($self->color, r, g, b, a); };
+	void set_disabledcolor (float r, float g, float b, float a) { Vector4Set($self->disabledColor, r, g, b, a); };
+	void set_flashcolor (float r, float g, float b, float a) { Vector4Set($self->flashColor, r, g, b, a); };
+	void set_selectcolor (float r, float g, float b, float a) { Vector4Set($self->selectedColor, r, g, b, a); };
+	void set_text (const char* text) { UI_Node_SetText($self, text); };
+	void set_tooltip (const char* text) { UI_Node_SetTooltip($self, text); };
+	void set_enabled (bool value) { UI_Node_SetDisabled($self, !value); };
 };
 
 /*
@@ -118,7 +143,11 @@ struct uiNode_t {
 struct uiWindow_t: uiNode_t {
 };
 %extend uiWindow_t {
-	void set_background (const char* name) { Com_Printf("calling uiWindow::set_background with arg = %s\n", name); };
+	void set_background (const char* name) {
+		Com_Printf("calling uiWindow::set_background with arg = %s\n", name);
+		uiSprite_t* sprite = UI_GetSpriteByName(name);
+		UI_EXTRADATA($self, windowExtraData_t).background = sprite;
+	};
 };
 
 %rename (uiButton) uiButton_t;
@@ -133,6 +162,11 @@ struct uiCheckBox_t {
 %extend uiCheckBox_t {
 };
 
+%rename (uiString) uiString_t;
+struct uiString_t {
+};
+%extend uiString_t {
+};
 
 /* expose registration functions for callbacks */
 %rename(register_onload) UI_RegisterHandler_OnLoad;
@@ -144,23 +178,37 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 %rename (__create_component) UI_CreateComponent;
 uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);
 %rename (__create_window) UI_CreateWindow;
-uiWindow_t* UI_CreateWindow (const char* type, const char* name, const char* super);
+uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);
 
-/* expose lua helper functions */
-%luacode {
-
-function ufoui.create_window (name, super)
-	ufo.print("entering support function: create_window\n")
-	local node=ufoui.__create_window ("window", name, super)
-	return node
-end
-
-function ufoui.create_component (type, name, super)
-	return ufoui.__create_component (type, name, super)
-end
-
-function ufoui.create_control (parent, type, name, super)
-	return ufoui.__create_control (parent, type, name, super)
-end
-
+/*
+  The following is inline code that is only visible in the SWIG generated module. It allows us to
+  expose control creation functions to lua that return a lua "class" derived from uiNode.
+*/
+/* define uiNode subtypes creation functions */
+%inline %{
+uiButton_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super) {
+	Com_Printf("UI_CreateButton called\n");
+	return UI_CreateControl (parent, "button", name, super);
+};
+uiCheckBox_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "checkbox", name, super);
 }
+uiString_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "string", name, super);
+}
+uiWindow_t* UI_CreateWindow (const char* name, const char* super) {
+	return UI_CreateWindow("window", name, super);
+}
+%}
+
+/* expose uiNode subtypes creation functions to lua */
+%rename (create_button) UI_CreateButton;
+uiButton_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super);
+%rename (create_checkbox) UI_CreateCheckBox;
+uiCheckBox_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super);
+%rename (create_string) UI_CreateString;
+uiString_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super);
+
+%rename (create_window) UI_CreateWindow;
+uiWindow_t* UI_CreateWindow (const char* name, const char* super);
+

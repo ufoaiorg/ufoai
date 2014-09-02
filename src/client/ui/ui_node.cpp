@@ -272,6 +272,12 @@ void UI_Node_PropertyChanged (uiNode_t* node, const value_t* property)
 	b->onPropertyChanged(node, property);
 }
 
+void UI_Node_PosChanged (uiNode_t* node)
+{
+	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
+	b->onSizeChanged(node);
+}
+
 void UI_Node_SizeChanged (uiNode_t* node)
 {
 	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
@@ -354,6 +360,32 @@ int UI_Node_GetCellHeight (uiNode_t* node)
 {
 	uiAbstractScrollableNode* b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
 	return b->getCellHeight(node);
+}
+
+const char* UI_Node_GetText (uiNode_t* node) {
+	return node->text;
+}
+
+void UI_Node_SetText (uiNode_t* node, const char* text) {
+	UI_FreeStringProperty(node->text);
+	node->text = Mem_PoolStrDup(text, ui_dynStringPool, 0);
+}
+
+const char* UI_Node_GetTooltip (uiNode_t* node) {
+	return node->tooltip;
+}
+
+void UI_Node_SetTooltip (uiNode_t* node, const char* tooltip) {
+	UI_FreeStringProperty((void*)node->tooltip);
+	node->tooltip = Mem_PoolStrDup(tooltip, ui_dynStringPool, 0);
+}
+
+bool UI_Node_IsDisabled (uiNode_t const* node) {
+	return node->disabled;
+}
+
+void UI_Node_SetDisabled (uiNode_t* node, const bool value) {
+	node->disabled = value;
 }
 
 #ifdef DEBUG
@@ -571,6 +603,17 @@ void UI_UnHideNode (uiNode_t* node)
 		node->invis = false;
 	else
 		Com_Printf("UI_UnHideNode: No node given\n");
+}
+
+/**
+ * @brief Update the node size and fire the pos callback
+ */
+void UI_NodeSetPos(uiNode_t* node, vec2_t pos) {
+	if (Vector2Equal(node->box.pos, pos))
+		return;
+	node->box.pos[0] = pos[0];
+	node->box.pos[1] = pos[1];
+	UI_Node_PosChanged(node);
 }
 
 /**
