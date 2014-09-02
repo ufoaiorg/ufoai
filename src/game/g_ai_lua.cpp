@@ -969,7 +969,7 @@ static int AIL_isinjured (lua_State* L)
  */
 static int AIL_TU (lua_State* L)
 {
-	lua_pushnumber(L, AIL_ent->getTus());
+	lua_pushnumber(L, AIL_ent->getUsableTUs());
 	return 1;
 }
 
