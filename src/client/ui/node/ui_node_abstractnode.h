@@ -37,7 +37,7 @@ public:
 	/** Called before script initialization, initialized default values */
 	virtual void onLoading(uiNode_t* node) {}
 	/** only called one time, when node parsing was finished */
-	virtual void onLoaded(uiNode_t* node) {}
+	virtual void onLoaded(uiNode_t* node);
 	/** call to initialize a cloned node */
 	virtual void clone(uiNode_t const* source, uiNode_t* clone) {}
 	/** call to initialize a dynamic node */

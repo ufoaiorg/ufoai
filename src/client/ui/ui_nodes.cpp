@@ -350,7 +350,6 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
 	}
 
 	/* initialize lua block */
-	node->lua_Instance = LUA_NOREF;
 	node->lua_onClick = LUA_NOREF;
 	node->lua_onRightClick = LUA_NOREF;
 	node->lua_onMiddleClick = LUA_NOREF;
@@ -361,6 +360,8 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
 	node->lua_onFocusLost = LUA_NOREF;
 	node->lua_onKeyPressed = LUA_NOREF;
 	node->lua_onKeyReleased = LUA_NOREF;
+	node->lua_onActivate = LUA_NOREF;
+	node->lua_onLoaded = LUA_NOREF;
 
 	/* initialize default properties */
 	UI_Node_Loading(node);
