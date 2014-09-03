@@ -2683,17 +2683,20 @@ typedef uiNode_t uiCheckBox_t;
 
 
 SWIGINTERN bool uiNode_t_is_window(uiNode_t *self){ return UI_Node_IsWindow(self); }
-SWIGINTERN bool uiNode_t_is_enabled(uiNode_t *self){ return !UI_Node_IsDisabled(self); }
+SWIGINTERN bool uiNode_t_is_disabled(uiNode_t *self){ return UI_Node_IsDisabled(self); }
 SWIGINTERN float uiNode_t_left(uiNode_t *self){ return self->box.pos[0]; }
 SWIGINTERN float uiNode_t_top(uiNode_t *self){ return self->box.pos[1]; }
 SWIGINTERN float uiNode_t_widht(uiNode_t *self){ return self->box.size[0]; }
 SWIGINTERN float uiNode_t_height(uiNode_t *self){ return self->box.size[1]; }
+SWIGINTERN int uiNode_t_borderthickness(uiNode_t *self){ return self->border; }
 SWIGINTERN void uiNode_t_set_pos(uiNode_t *self,float x,float y){ Vector2Set(self->box.pos, x, y); }
 SWIGINTERN void uiNode_t_set_size(uiNode_t *self,float w,float h){ Vector2Set(self->box.size, w, h); }
 SWIGINTERN void uiNode_t_set_color(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->color, r, g, b, a); }
 SWIGINTERN void uiNode_t_set_disabledcolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->disabledColor, r, g, b, a); }
 SWIGINTERN void uiNode_t_set_flashcolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->flashColor, r, g, b, a); }
 SWIGINTERN void uiNode_t_set_selectcolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->selectedColor, r, g, b, a); }
+SWIGINTERN void uiNode_t_set_backgroundcolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->bgcolor, r, g, b, a); }
+SWIGINTERN void uiNode_t_set_bordercolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->bordercolor, r, g, b, a); }
 
 SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
   int ret = lua_isstring(L, idx);
@@ -2704,7 +2707,8 @@ SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
 
 SWIGINTERN void uiNode_t_set_text(uiNode_t *self,char const *text){ UI_Node_SetText(self, text); }
 SWIGINTERN void uiNode_t_set_tooltip(uiNode_t *self,char const *text){ UI_Node_SetTooltip(self, text); }
-SWIGINTERN void uiNode_t_set_enabled(uiNode_t *self,bool value){ UI_Node_SetDisabled(self, !value); }
+SWIGINTERN void uiNode_t_set_disabled(uiNode_t *self,bool value){ UI_Node_SetDisabled(self, value); }
+SWIGINTERN void uiNode_t_set_borderthickness(uiNode_t *self,int value){ self->border = value; }
 SWIGINTERN void uiWindow_t_set_background(uiWindow_t *self,char const *name){
 		Com_Printf("calling uiWindow::set_background with arg = %s\n", name);
 		uiSprite_t* sprite = UI_GetSpriteByName(name);
@@ -3412,6 +3416,114 @@ fail:
 }
 
 
+static int _wrap_uiNode_on_loaded_set(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  LUA_EVENT arg2 ;
+  
+  SWIG_check_num_args("uiNode_t::lua_onLoaded",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::lua_onLoaded",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_on_loaded_set",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  {
+    arg2 = (LUA_EVENT)luaL_ref (L, LUA_REGISTRYINDEX);
+  }
+  if (arg1) (arg1)->lua_onLoaded = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_on_loaded_get(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  LUA_EVENT result;
+  
+  SWIG_check_num_args("uiNode_t::lua_onLoaded",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::lua_onLoaded",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_on_loaded_get",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  result =  ((arg1)->lua_onLoaded);
+  {
+    LUA_EVENT * resultptr = new LUA_EVENT((const LUA_EVENT &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_LUA_EVENT,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_on_activate_set(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  LUA_EVENT arg2 ;
+  
+  SWIG_check_num_args("uiNode_t::lua_onActivate",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::lua_onActivate",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_on_activate_set",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  {
+    arg2 = (LUA_EVENT)luaL_ref (L, LUA_REGISTRYINDEX);
+  }
+  if (arg1) (arg1)->lua_onActivate = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_on_activate_get(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  LUA_EVENT result;
+  
+  SWIG_check_num_args("uiNode_t::lua_onActivate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::lua_onActivate",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_on_activate_get",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  result =  ((arg1)->lua_onActivate);
+  {
+    LUA_EVENT * resultptr = new LUA_EVENT((const LUA_EVENT &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_LUA_EVENT,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiNode_is_window(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
@@ -3436,19 +3548,19 @@ fail:
 }
 
 
-static int _wrap_uiNode_is_enabled(lua_State* L) {
+static int _wrap_uiNode_is_disabled(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
   bool result;
   
-  SWIG_check_num_args("uiNode_t::is_enabled",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::is_enabled",1,"uiNode_t *");
+  SWIG_check_num_args("uiNode_t::is_disabled",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::is_disabled",1,"uiNode_t *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
-    SWIG_fail_ptr("uiNode_is_enabled",1,SWIGTYPE_p_uiNode_t);
+    SWIG_fail_ptr("uiNode_is_disabled",1,SWIGTYPE_p_uiNode_t);
   }
   
-  result = (bool)uiNode_t_is_enabled(arg1);
+  result = (bool)uiNode_t_is_disabled(arg1);
   lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
@@ -3545,6 +3657,30 @@ static int _wrap_uiNode_height(lua_State* L) {
   }
   
   result = (float)uiNode_t_height(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_borderthickness(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("uiNode_t::borderthickness",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::borderthickness",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_borderthickness",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  result = (int)uiNode_t_borderthickness(arg1);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -3754,6 +3890,76 @@ fail:
 }
 
 
+static int _wrap_uiNode_set_backgroundcolor(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  float arg2 ;
+  float arg3 ;
+  float arg4 ;
+  float arg5 ;
+  
+  SWIG_check_num_args("uiNode_t::set_backgroundcolor",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::set_backgroundcolor",1,"uiNode_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiNode_t::set_backgroundcolor",2,"float");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("uiNode_t::set_backgroundcolor",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("uiNode_t::set_backgroundcolor",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("uiNode_t::set_backgroundcolor",5,"float");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_set_backgroundcolor",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  arg2 = (float)lua_tonumber(L, 2);
+  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4);
+  arg5 = (float)lua_tonumber(L, 5);
+  uiNode_t_set_backgroundcolor(arg1,arg2,arg3,arg4,arg5);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_set_bordercolor(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  float arg2 ;
+  float arg3 ;
+  float arg4 ;
+  float arg5 ;
+  
+  SWIG_check_num_args("uiNode_t::set_bordercolor",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::set_bordercolor",1,"uiNode_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiNode_t::set_bordercolor",2,"float");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("uiNode_t::set_bordercolor",3,"float");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("uiNode_t::set_bordercolor",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("uiNode_t::set_bordercolor",5,"float");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_set_bordercolor",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  arg2 = (float)lua_tonumber(L, 2);
+  arg3 = (float)lua_tonumber(L, 3);
+  arg4 = (float)lua_tonumber(L, 4);
+  arg5 = (float)lua_tonumber(L, 5);
+  uiNode_t_set_bordercolor(arg1,arg2,arg3,arg4,arg5);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiNode_set_text(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
@@ -3806,21 +4012,47 @@ fail:
 }
 
 
-static int _wrap_uiNode_set_enabled(lua_State* L) {
+static int _wrap_uiNode_set_disabled(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
   bool arg2 ;
   
-  SWIG_check_num_args("uiNode_t::set_enabled",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::set_enabled",1,"uiNode_t *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("uiNode_t::set_enabled",2,"bool");
+  SWIG_check_num_args("uiNode_t::set_disabled",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::set_disabled",1,"uiNode_t *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("uiNode_t::set_disabled",2,"bool");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
-    SWIG_fail_ptr("uiNode_set_enabled",1,SWIGTYPE_p_uiNode_t);
+    SWIG_fail_ptr("uiNode_set_disabled",1,SWIGTYPE_p_uiNode_t);
   }
   
   arg2 = (lua_toboolean(L, 2)!=0);
-  uiNode_t_set_enabled(arg1,arg2);
+  uiNode_t_set_disabled(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_set_borderthickness(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("uiNode_t::set_borderthickness",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::set_borderthickness",1,"uiNode_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiNode_t::set_borderthickness",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_set_borderthickness",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  uiNode_t_set_borderthickness(arg1,arg2);
   
   return SWIG_arg;
   
@@ -3878,24 +4110,30 @@ static swig_lua_attribute swig_uiNode_attributes[] = {
     { "on_focuslost", _wrap_uiNode_on_focuslost_get, _wrap_uiNode_on_focuslost_set },
     { "on_keypressed", _wrap_uiNode_on_keypressed_get, _wrap_uiNode_on_keypressed_set },
     { "on_keyreleased", _wrap_uiNode_on_keyreleased_get, _wrap_uiNode_on_keyreleased_set },
+    { "on_loaded", _wrap_uiNode_on_loaded_get, _wrap_uiNode_on_loaded_set },
+    { "on_activate", _wrap_uiNode_on_activate_get, _wrap_uiNode_on_activate_set },
     {0,0,0}
 };
 static swig_lua_method swig_uiNode_methods[]= {
     { "is_window", _wrap_uiNode_is_window},
-    { "is_enabled", _wrap_uiNode_is_enabled},
+    { "is_disabled", _wrap_uiNode_is_disabled},
     { "left", _wrap_uiNode_left},
     { "top", _wrap_uiNode_top},
     { "widht", _wrap_uiNode_widht},
     { "height", _wrap_uiNode_height},
+    { "borderthickness", _wrap_uiNode_borderthickness},
     { "set_pos", _wrap_uiNode_set_pos},
     { "set_size", _wrap_uiNode_set_size},
     { "set_color", _wrap_uiNode_set_color},
     { "set_disabledcolor", _wrap_uiNode_set_disabledcolor},
     { "set_flashcolor", _wrap_uiNode_set_flashcolor},
     { "set_selectcolor", _wrap_uiNode_set_selectcolor},
+    { "set_backgroundcolor", _wrap_uiNode_set_backgroundcolor},
+    { "set_bordercolor", _wrap_uiNode_set_bordercolor},
     { "set_text", _wrap_uiNode_set_text},
     { "set_tooltip", _wrap_uiNode_set_tooltip},
-    { "set_enabled", _wrap_uiNode_set_enabled},
+    { "set_disabled", _wrap_uiNode_set_disabled},
+    { "set_borderthickness", _wrap_uiNode_set_borderthickness},
     {0,0}
 };
 static swig_lua_method swig_uiNode_meta[] = {

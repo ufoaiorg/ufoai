@@ -110,16 +110,21 @@ struct uiNode_t {
     LUA_EVENT lua_onFocusLost; /**< references the event in lua: on_focuslost (node) */
     LUA_EVENT lua_onKeyPressed; /**< references the event in lua: on_keypressed (node, key, unicode) */
     LUA_EVENT lua_onKeyReleased; /**< references the event in lua: on_keyreleased (node, key, unicode) */
+	%rename (on_loaded) lua_onLoaded;
+	%rename (on_activate) lua_onActivate;
+    LUA_EVENT lua_onLoaded; /**< references the event in lua: on_loaded (node) */
+    LUA_EVENT lua_onActivate; /**< references the event in lua: on_activate (node) */
 };
 %extend uiNode_t {
 	/* functions operating on a node */
 	bool is_window () { return UI_Node_IsWindow($self); };
-	bool is_enabled () { return !UI_Node_IsDisabled($self); };
+	bool is_disabled () { return UI_Node_IsDisabled($self); };
 
 	float left () { return $self->box.pos[0]; };
 	float top () { return $self->box.pos[1]; };
 	float widht () { return $self->box.size[0]; };
 	float height () { return $self->box.size[1]; };
+	int borderthickness () { return $self->border; };
 
 	void set_pos (float x, float y) { Vector2Set($self->box.pos, x, y); }
 	void set_size (float w, float h) { Vector2Set($self->box.size, w, h); }
@@ -127,9 +132,12 @@ struct uiNode_t {
 	void set_disabledcolor (float r, float g, float b, float a) { Vector4Set($self->disabledColor, r, g, b, a); };
 	void set_flashcolor (float r, float g, float b, float a) { Vector4Set($self->flashColor, r, g, b, a); };
 	void set_selectcolor (float r, float g, float b, float a) { Vector4Set($self->selectedColor, r, g, b, a); };
+	void set_backgroundcolor (float r, float g, float b, float a) { Vector4Set($self->bgcolor, r, g, b, a); };
+	void set_bordercolor (float r, float g, float b, float a) { Vector4Set($self->bordercolor, r, g, b, a); };
 	void set_text (const char* text) { UI_Node_SetText($self, text); };
 	void set_tooltip (const char* text) { UI_Node_SetTooltip($self, text); };
-	void set_enabled (bool value) { UI_Node_SetDisabled($self, !value); };
+	void set_disabled (bool value) { UI_Node_SetDisabled($self, value); };
+	void set_borderthickness (int value) { $self->border = value; };
 };
 
 /*
@@ -144,7 +152,6 @@ struct uiWindow_t: uiNode_t {
 };
 %extend uiWindow_t {
 	void set_background (const char* name) {
-		Com_Printf("calling uiWindow::set_background with arg = %s\n", name);
 		uiSprite_t* sprite = UI_GetSpriteByName(name);
 		UI_EXTRADATA($self, windowExtraData_t).background = sprite;
 	};
@@ -187,7 +194,6 @@ uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super
 /* define uiNode subtypes creation functions */
 %inline %{
 uiButton_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super) {
-	Com_Printf("UI_CreateButton called\n");
 	return UI_CreateControl (parent, "button", name, super);
 };
 uiCheckBox_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super) {

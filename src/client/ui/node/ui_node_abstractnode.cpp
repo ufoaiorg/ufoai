@@ -149,15 +149,6 @@ bool uiLocatedNode::onDndFinished (uiNode_t* node, bool isDroped)
 }
 
 /**
- * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
- */
-void uiNode::onActivate (uiNode_t* node)
-{
-	if (node->onClick)
-		UI_ExecuteEventActions(node, node->onClick);
-}
-
-/**
  * @brief Call to update the node layout. This common code revalidates the node tree.
  */
 void uiLocatedNode::doLayout (uiNode_t* node)
@@ -348,6 +339,25 @@ void uiLocatedNode::onMiddleClick (uiNode_t* node, int x, int y)
 	else if (node->lua_onMiddleClick != LUA_NOREF) {
 		UI_ExecuteLuaEventScript_XY(node, node->lua_onMiddleClick, x, y);
 		UI_PlaySound("click1");
+	}
+}
+
+void uiNode::onLoaded(uiNode_t* node) {
+	if (node->lua_onLoaded != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onLoaded);
+	}
+}
+
+/**
+ * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
+ * @todo The old implementation calls onClick when activated. This is odd and should be replaced by
+ * a correct onActivate event handler.
+ */
+void uiNode::onActivate(uiNode_t* node) {
+	if (node->onClick)
+		UI_ExecuteEventActions(node, node->onClick);
+	if (node->lua_onActivate != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onActivate);
 	}
 }
 
