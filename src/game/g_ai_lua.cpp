@@ -1186,6 +1186,8 @@ static int AIL_positionshoot (lua_State* L)
 		const pos_t tu = G_ActorMoveLength(actor, level.pathingMap, to, true);
 		if (tu > tus || tu == ROUTING_NOT_REACHABLE)
 			continue;
+		if (!AI_CheckPosition(actor))
+			continue;
 		/* Can we see the target? */
 		if (!G_IsVisibleForTeam(target->actor, actor->getTeam()) && G_ActorVis(actor->origin, actor, target->actor, true) < ACTOR_VIS_10)
 			continue;
@@ -1809,6 +1811,8 @@ static int AIL_positionflee (lua_State* L)
 	AiAreaSearch searchArea(AIL_ent->pos, radius);
 	while (searchArea.getNext(AIL_ent->pos)) {
 		if (G_ActorMoveLength(AIL_ent, level.pathingMap, AIL_ent->pos, false) >= ROUTING_NOT_REACHABLE)
+			continue;
+		if (!AI_CheckPosition(AIL_ent))
 			continue;
 		float minDistFoe = -1, minDistFriend = -1;
 		Actor* check = nullptr;
