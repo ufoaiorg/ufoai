@@ -541,7 +541,7 @@ int AI_GetHidingTeam (const Edict* ent)
  * @brief Checks if the  actor's position is safe to stand on.
  * @return @c true if the actor's position is deemed safe.
  */
-static bool AI_CheckPosition (const Actor* const ent)
+bool AI_CheckPosition (const Actor* const ent)
 {
 	if (ent->isInsane())
 		return true;

@@ -100,6 +100,7 @@ bool AI_TryToReloadWeapon(Actor* actor, containerIndex_t containerID);
 bool AI_IsHostile(const Actor* actor, const Edict* target);
 const invDef_t* AI_SearchGrenade(const Actor* actor, Item** ip);
 bool AI_FindMissionLocation(Actor* actor, const pos3_t to);
+bool AI_CheckPosition(const Actor* const ent);
 
 /*
  * LUA functions
