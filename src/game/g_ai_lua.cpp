@@ -1387,6 +1387,8 @@ static int AIL_positionapproach (lua_State* L)
 		PosSubDV(to, crouchingState, dvec);
 		if (hide && (G_TestVis(target->actor->getTeam(), AIL_ent, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES))
 			continue;
+		if (!AI_CheckPosition(AIL_ent, to))
+			continue;
 		const byte length =  G_ActorMoveLength(AIL_ent, level.pathingMap, to, false);
 		if (length <= tus)
 			break;
@@ -1665,6 +1667,8 @@ static int AIL_positionwander (lua_State* L)
 	while (searchArea.getNext(pos)) {
 		if (G_ActorMoveLength(AIL_ent, level.pathingMap, pos, true) >= ROUTING_NOT_REACHABLE)
 			continue;
+		if (!AI_CheckPosition(AIL_ent, pos))
+			continue;
 		float score = 0.0f;
 		switch (method) {
 		case 0:
@@ -1718,17 +1722,19 @@ static int AIL_findweapons (lua_State* L)
 	while ((check = G_EdictsGetNextInUse(check))) {
 		if (check->type != ET_ITEM)
 			continue;
-		for (const Item* item = check->getFloor(); item; item = item->getNext()) {
-			/** @todo Check if can reload the weapon with carried ammo or from the floor itself? */
-			if (item->isWeapon() && (item->getAmmoLeft() > 0 || item->def()->ammo <= 0)) {
-				if (G_FindPath(0, AIL_ent, AIL_ent->pos, check->pos, AIL_ent->isCrouched(), ROUTING_NOT_REACHABLE - 1)) {
-					const pos_t move = G_ActorMoveLength(AIL_ent, level.pathingMap, check->pos, false);
-					if (full || move <= AIL_ent->getUsableTUs() - INVDEF(CID_FLOOR)->out - INVDEF(CID_RIGHT)->in) {
-						sortTable[n].data = check;
-						sortTable[n++].sortLookup = move;
-					}
+		if(!AI_CheckPosition(AIL_ent, check->pos))
+			continue;
+		if (!G_FindPath(0, AIL_ent, AIL_ent->pos, check->pos, AIL_ent->isCrouched(), ROUTING_NOT_REACHABLE - 1))
+			continue;
+		const pos_t move = G_ActorMoveLength(AIL_ent, level.pathingMap, check->pos, false);
+		if (full || move <= AIL_ent->getUsableTUs() - INVDEF(CID_FLOOR)->out - INVDEF(CID_RIGHT)->in) {
+			for (const Item* item = check->getFloor(); item; item = item->getNext()) {
+				/** @todo Check if can reload the weapon with carried ammo or from the floor itself? */
+				if (item->isWeapon() && (item->getAmmoLeft() > 0 || item->def()->ammo <= 0)) {
+							sortTable[n].data = check;
+							sortTable[n++].sortLookup = move;
+					break;
 				}
-				break;
 			}
 		}
 	}
