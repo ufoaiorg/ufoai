@@ -805,7 +805,7 @@ bool CL_ParseClientData (const char* type, const char* name, const char** text)
 	else if (Q_streq(type, "tip"))
 		CL_ParseTipOfTheDay(name, text);
 	else if (Q_streq(type, "lua"))
-		UI_ParseAndLoadLuaScript(name, text);
+		return UI_ParseAndLoadLuaScript(name, text);
 
 	return true;
 }

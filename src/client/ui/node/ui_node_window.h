@@ -76,6 +76,11 @@ typedef struct {
 	struct uiAction_s* onWindowActivate;/**< Called when a windows gets active again after some other window was popped from the stack */
 	struct uiAction_s* onScriptLoaded;	/**< Invoked after all UI scripts are loaded */
 
+	LUA_EVENT lua_onWindowOpened;
+	LUA_EVENT lua_onWindowClosed;
+	LUA_EVENT lua_onWindowActivate;
+	LUA_EVENT lua_onScriptLoaded;
+
 	node_index_t* index;
 	node_index_t* index_hash[INDEXEDCHILD_HASH_SIZE];
 
@@ -94,3 +99,5 @@ vec_t* UI_WindowNodeGetNoticePosition(uiNode_t* node);
 uiNode_t* UI_WindowNodeGetIndexedChild(uiNode_t* node, const char* childName);
 bool UI_WindowNodeAddIndexedNode(uiNode_t* node, uiNode_t* child);
 bool UI_WindowNodeRemoveIndexedNode(uiNode_t* node, uiNode_t* child);
+
+void UI_Window_SetBackgroundByName (uiNode_t* node, const char* name);

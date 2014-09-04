@@ -184,7 +184,6 @@ void UI_RegisterHandler_OnLoad (lua_State *L, LUA_FUNCTION fnc) {
 	/* store regvalue into the list of handlers */
 	int len = strlen (ui_scriptname);
 	if (len > 0) {
-		Com_Printf ("UI_RegisterHandler_OnLoad: file = %s, callback idx = %d\n", ui_scriptname, regvalue);
 		HASH_Insert (ui_onload, ui_scriptname, len, &regvalue, sizeof(regvalue));
 	}
 	else {
@@ -204,7 +203,6 @@ static void UI_CallHandler_OnLoad (lua_State *L, const char* script) {
 	void *value = HASH_Get(ui_onload, script, strlen (script));
 	if (value) {
 		int regvalue = * ((int*)value);
-		Com_Printf ("UI_CallHandler_OnLoad: file = %s, callback idx = %d\n", script, regvalue);
 		lua_rawgeti (L, LUA_REGISTRYINDEX, regvalue);
 		if (lua_pcall (L, 0, 0, 0) != 0) {
 			Com_Printf ("lua error: %s\n", lua_tostring(ui_luastate, -1));
@@ -300,7 +298,7 @@ bool UI_ParseAndLoadLuaScript (const char* name, const char** text) {
 	/* determine the length of the string buffer */
 	int ntext = strlen (*text);
 	/* signal lua file found */
-	Com_Printf ("UI_ParseAndLoadLuaScript: found lua file: %s\n", name);
+	Com_Printf ("UI_ParseAndLoadLuaScript: %s\n", name);
 	/* load the contents of the lua file */
 	if (luaL_loadbuffer(ui_luastate, *text, ntext, name) == 0) {
 		/* set the script name for calls to the registration functions */
@@ -362,7 +360,6 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 	}
 
 	/* test if node already exists */
-
 	/* Already existing node should only come from inherited node, we should not have 2 definitions of the same node into the same window. */
 	if (parent)
 		node = UI_GetNode(parent, name);

@@ -1285,8 +1285,6 @@ char* FS_NextScriptHeader (const char* files, const char** name, const char** te
 			/* test if the contents of this file starts with the string "--!usr/bin/lua", if yes, the
 			   file is a lua script file and should be returned immediately with type set to "lua" */
 			if (Q_strneq (*text, "--!usr/bin/lua", 14)) {
-				Com_Printf("LUA: In FS_NextScriptHeader, after check magic string\n");
-				Com_Printf("--> file = %s\n", filename);
 				/* copy filename to header */
 				Q_strncpyz(headerName, (const char*)lFile->data, sizeof(headerName));
 				*name = headerName;

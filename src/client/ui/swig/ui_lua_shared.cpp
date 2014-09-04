@@ -2689,6 +2689,8 @@ SWIGINTERN float uiNode_t_top(uiNode_t *self){ return self->box.pos[1]; }
 SWIGINTERN float uiNode_t_widht(uiNode_t *self){ return self->box.size[0]; }
 SWIGINTERN float uiNode_t_height(uiNode_t *self){ return self->box.size[1]; }
 SWIGINTERN int uiNode_t_borderthickness(uiNode_t *self){ return self->border; }
+SWIGINTERN void uiNode_t_append_node(uiNode_t *self,uiNode_t *node){ UI_AppendNode(self, node); }
+SWIGINTERN void uiNode_t_insert_node(uiNode_t *self,uiNode_t *node,uiNode_t *prev){ UI_InsertNode(self, prev, node); }
 SWIGINTERN void uiNode_t_set_pos(uiNode_t *self,float x,float y){ Vector2Set(self->box.pos, x, y); }
 SWIGINTERN void uiNode_t_set_size(uiNode_t *self,float w,float h){ Vector2Set(self->box.size, w, h); }
 SWIGINTERN void uiNode_t_set_color(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->color, r, g, b, a); }
@@ -2709,14 +2711,25 @@ SWIGINTERN void uiNode_t_set_text(uiNode_t *self,char const *text){ UI_Node_SetT
 SWIGINTERN void uiNode_t_set_tooltip(uiNode_t *self,char const *text){ UI_Node_SetTooltip(self, text); }
 SWIGINTERN void uiNode_t_set_disabled(uiNode_t *self,bool value){ UI_Node_SetDisabled(self, value); }
 SWIGINTERN void uiNode_t_set_borderthickness(uiNode_t *self,int value){ self->border = value; }
-SWIGINTERN void uiWindow_t_set_background(uiWindow_t *self,char const *name){
-		Com_Printf("calling uiWindow::set_background with arg = %s\n", name);
-		uiSprite_t* sprite = UI_GetSpriteByName(name);
-		UI_EXTRADATA(self, windowExtraData_t).background = sprite;
-	}
+SWIGINTERN bool uiWindow_t_is_fullscreen(uiWindow_t *self){ return UI_EXTRADATA(self, windowExtraData_t).isFullScreen; }
+SWIGINTERN void uiWindow_t_set_background(uiWindow_t *self,char const *name){ UI_Window_SetBackgroundByName(self, name); }
+SWIGINTERN void uiWindow_t_set_fullscreen(uiWindow_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).isFullScreen = value; }
+
+static int uiWindow_t_lua_onWindowOpened_get(uiWindow_t* node) {
+	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowOpened;
+}
+static void uiWindow_t_lua_onWindowOpened_set (uiWindow_t* node, LUA_EVENT fn) {
+	UI_EXTRADATA(node, windowExtraData_t).lua_onWindowOpened = fn;
+}
+static int uiWindow_t_lua_onWindowClosed_get(uiWindow_t* node) {
+	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowClosed;
+}
+static int uiWindow_t_lua_onWindowClosed_set (uiWindow_t* node, LUA_EVENT fn) {
+	UI_EXTRADATA(node, windowExtraData_t).lua_onWindowClosed = fn;
+}
+
 
 uiButton_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super) {
-	Com_Printf("UI_CreateButton called\n");
 	return UI_CreateControl (parent, "button", name, super);
 };
 uiCheckBox_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super) {
@@ -3692,6 +3705,73 @@ fail:
 }
 
 
+static int _wrap_uiNode_append_node(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  uiNode_t *arg2 = (uiNode_t *) 0 ;
+  
+  SWIG_check_num_args("uiNode_t::append_node",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::append_node",1,"uiNode_t *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("uiNode_t::append_node",2,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_append_node",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_append_node",2,SWIGTYPE_p_uiNode_t);
+  }
+  
+  uiNode_t_append_node(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_insert_node(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  uiNode_t *arg2 = (uiNode_t *) 0 ;
+  uiNode_t *arg3 = (uiNode_t *) 0 ;
+  
+  SWIG_check_num_args("uiNode_t::insert_node",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::insert_node",1,"uiNode_t *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("uiNode_t::insert_node",2,"uiNode_t *");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("uiNode_t::insert_node",3,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_insert_node",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_insert_node",2,SWIGTYPE_p_uiNode_t);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_insert_node",3,SWIGTYPE_p_uiNode_t);
+  }
+  
+  uiNode_t_insert_node(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiNode_set_pos(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
@@ -4122,6 +4202,8 @@ static swig_lua_method swig_uiNode_methods[]= {
     { "widht", _wrap_uiNode_widht},
     { "height", _wrap_uiNode_height},
     { "borderthickness", _wrap_uiNode_borderthickness},
+    { "append_node", _wrap_uiNode_append_node},
+    { "insert_node", _wrap_uiNode_insert_node},
     { "set_pos", _wrap_uiNode_set_pos},
     { "set_size", _wrap_uiNode_set_size},
     { "set_color", _wrap_uiNode_set_color},
@@ -4165,6 +4247,30 @@ static swig_lua_class *swig_uiNode_bases[] = {0};
 static const char *swig_uiNode_base_names[] = {0};
 static swig_lua_class _wrap_class_uiNode = { "uiNode", "uiNode", &SWIGTYPE_p_uiNode_t,_proxy__wrap_new_uiNode, swig_delete_uiNode, swig_uiNode_methods, swig_uiNode_attributes, &swig_uiNode_Sf_SwigStatic, swig_uiNode_meta, swig_uiNode_bases, swig_uiNode_base_names };
 
+static int _wrap_uiWindow_is_fullscreen(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindow_t *arg1 = (uiWindow_t *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("uiWindow_t::is_fullscreen",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindow_t::is_fullscreen",1,"uiWindow_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindow_t,0))){
+    SWIG_fail_ptr("uiWindow_is_fullscreen",1,SWIGTYPE_p_uiWindow_t);
+  }
+  
+  result = (bool)uiWindow_t_is_fullscreen(arg1);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiWindow_set_background(lua_State* L) {
   int SWIG_arg = 0;
   uiWindow_t *arg1 = (uiWindow_t *) 0 ;
@@ -4181,6 +4287,140 @@ static int _wrap_uiWindow_set_background(lua_State* L) {
   arg2 = (char *)lua_tostring(L, 2);
   uiWindow_t_set_background(arg1,(char const *)arg2);
   
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiWindow_set_fullscreen(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindow_t *arg1 = (uiWindow_t *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("uiWindow_t::set_fullscreen",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindow_t::set_fullscreen",1,"uiWindow_t *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("uiWindow_t::set_fullscreen",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindow_t,0))){
+    SWIG_fail_ptr("uiWindow_set_fullscreen",1,SWIGTYPE_p_uiWindow_t);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  uiWindow_t_set_fullscreen(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiWindow_on_windowopened_set(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindow_t *arg1 = (uiWindow_t *) 0 ;
+  LUA_EVENT arg2 ;
+  
+  SWIG_check_num_args("uiWindow_t::lua_onWindowOpened",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindow_t::lua_onWindowOpened",1,"uiWindow_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindow_t,0))){
+    SWIG_fail_ptr("uiWindow_on_windowopened_set",1,SWIGTYPE_p_uiWindow_t);
+  }
+  
+  {
+    arg2 = (LUA_EVENT)luaL_ref (L, LUA_REGISTRYINDEX);
+  }
+  uiWindow_t_lua_onWindowOpened_set(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiWindow_on_windowopened_get(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindow_t *arg1 = (uiWindow_t *) 0 ;
+  LUA_EVENT result;
+  
+  SWIG_check_num_args("uiWindow_t::lua_onWindowOpened",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindow_t::lua_onWindowOpened",1,"uiWindow_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindow_t,0))){
+    SWIG_fail_ptr("uiWindow_on_windowopened_get",1,SWIGTYPE_p_uiWindow_t);
+  }
+  
+  result = uiWindow_t_lua_onWindowOpened_get(arg1);
+  {
+    LUA_EVENT * resultptr = new LUA_EVENT((const LUA_EVENT &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_LUA_EVENT,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiWindow_on_windowclosed_set(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindow_t *arg1 = (uiWindow_t *) 0 ;
+  LUA_EVENT arg2 ;
+  
+  SWIG_check_num_args("uiWindow_t::lua_onWindowClosed",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindow_t::lua_onWindowClosed",1,"uiWindow_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindow_t,0))){
+    SWIG_fail_ptr("uiWindow_on_windowclosed_set",1,SWIGTYPE_p_uiWindow_t);
+  }
+  
+  {
+    arg2 = (LUA_EVENT)luaL_ref (L, LUA_REGISTRYINDEX);
+  }
+  uiWindow_t_lua_onWindowClosed_set(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiWindow_on_windowclosed_get(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindow_t *arg1 = (uiWindow_t *) 0 ;
+  LUA_EVENT result;
+  
+  SWIG_check_num_args("uiWindow_t::lua_onWindowClosed",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindow_t::lua_onWindowClosed",1,"uiWindow_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindow_t,0))){
+    SWIG_fail_ptr("uiWindow_on_windowclosed_get",1,SWIGTYPE_p_uiWindow_t);
+  }
+  
+  result = uiWindow_t_lua_onWindowClosed_get(arg1);
+  {
+    LUA_EVENT * resultptr = new LUA_EVENT((const LUA_EVENT &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_LUA_EVENT,1); SWIG_arg++;
+  }
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -4221,10 +4461,14 @@ static int _proxy__wrap_new_uiWindow(lua_State *L) {
     return 1;
 }
 static swig_lua_attribute swig_uiWindow_attributes[] = {
+    { "on_windowopened", _wrap_uiWindow_on_windowopened_get, _wrap_uiWindow_on_windowopened_set },
+    { "on_windowclosed", _wrap_uiWindow_on_windowclosed_get, _wrap_uiWindow_on_windowclosed_set },
     {0,0,0}
 };
 static swig_lua_method swig_uiWindow_methods[]= {
+    { "is_fullscreen", _wrap_uiWindow_is_fullscreen},
     { "set_background", _wrap_uiWindow_set_background},
+    { "set_fullscreen", _wrap_uiWindow_set_fullscreen},
     {0,0}
 };
 static swig_lua_method swig_uiWindow_meta[] = {
