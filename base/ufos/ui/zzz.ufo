@@ -5,6 +5,35 @@
 	since it is named zzz.ufo it is loaded as the last .ufo file; it is used to inspect the lua environment
 --]]
 
+ufo.print("------------ BEGIN LUA DEBUGGING ----------------\n")
+
+function list_table(t, tab)
+	ufo.print("[begin list --\n")
+	if (t ~= nil) then
+		for k,v in pairs(t) do
+			ufo.print(string.format("%s%s = %s\n", tostring(tab), tostring(k), tostring(v)))
+		end
+	else
+		ufo.print("nil table\n")
+	end
+	ufo.print("-- end list]\n")
+end
+
+-- listing metatable contents
+ufo.print("table: uiNode\n")
+m = getmetatable(ufoui.uiNode)
+list_table(m, "uiNode: ")
+fn = m[".fn"]
+list_table(fn, "uiNode.fn: ")
+
+ufo.print("table: uiWindow\n")
+m = getmetatable(ufoui.uiWindow)
+list_table(m, "uiWindow: ")
+fn = m[".fn"]
+list_table(fn, "uiWindow.fn: ")
+
+ufo.print("------------ END LUA DEBUGGING ----------------\n")
+
 function load ()
 	ufo.print("inside zzz.ufo: calling load\n")
 	ufo.print("list of [package.preload]\n")

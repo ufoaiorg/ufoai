@@ -49,6 +49,14 @@ static const vec4_t modalBackground = {0, 0, 0, 0.6};
 static const vec4_t anamorphicBorder = {0, 0, 0, 1};
 
 /**
+ * @brief set background sprite
+ */
+void UI_Window_SetBackgroundByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, windowExtraData_t).background = sprite;
+}
+
+/**
  * @brief Get a node from child index
  * @return A child node by his name, else nullptr
  */

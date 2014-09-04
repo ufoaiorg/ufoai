@@ -38,6 +38,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 #include "ui_node_panel.h"
 
+extern "C" {
+	#include "../../libs/lua/lauxlib.h"
+	#include "../../libs/lua/lualib.h"
+}
+
 #define EXTRADATA_TYPE buttonExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -69,7 +74,7 @@ void uiButtonNode::draw (uiNode_t* node)
 	if (node->flash)
 		UI_EnableFlashing(node->flashColor, node->flashSpeed);
 
-	if (!node->onClick || node->disabled) {
+	if (node->disabled) {
 		textColor = node->disabledColor;
 		iconStatus = SPRITE_STATUS_DISABLED;
 	} else if (node->state) {

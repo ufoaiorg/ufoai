@@ -4,44 +4,18 @@
 	TEST WINDOW
 --]]
 
-ufo.print("------------ BEGIN LUA DEBUGGING ----------------\n")
-
-function list_table(t, tab)
-	ufo.print("[begin list --\n")
-	if (t ~= nil) then
-		for k,v in pairs(t) do
-			ufo.print(string.format("%s%s = %s\n", tostring(tab), tostring(k), tostring(v)))
-		end
-	else
-		ufo.print("nil table\n")
-	end
-	ufo.print("-- end list]\n")
-end
-
--- listing metatable contents
-ufo.print("table: uiNode\n")
-m = getmetatable(ufoui.uiNode)
-list_table(m, "uiNode: ")
-fn = m[".fn"]
-list_table(fn, "uiNode.fn: ")
-
-ufo.print("table: uiWindow\n")
-m = getmetatable(ufoui.uiWindow)
-list_table(m, "uiWindow: ")
-fn = m[".fn"]
-list_table(fn, "uiWindow.fn: ")
-
-ufo.print("------------ END LUA DEBUGGING ----------------\n")
 
 local key_x = 20
 local key_y = 80
 local key_w = 40
 local key_h = 40
+
 --[[
 	first create the node structure
 --]]
 local Window = ufoui.create_window ("lua_test", nil)
 local BtnTest = ufoui.create_button (Window, "test", nil)
+
 -- create numeric pad
 local x=key_x
 local y=key_y
@@ -52,7 +26,7 @@ for i = 1, 9 do
 	digit:set_text(tostring(i))
 	digit:set_pos(x, y)
 	digit:set_size(key_w, key_h)
-	digit:set_color(0.0, 0.1, 0.0, 1.0)
+	digit:set_color(0.0, 1.0, 0.0, 1.0)
 	digit:set_selectcolor(1.0, 1.0, 1.0, 1.0)
 	digit:set_disabledcolor(1.0, 0.0, 0.0, 1.0)
 	digit:set_borderthickness(1)
@@ -67,6 +41,10 @@ for i = 1, 9 do
 end
 
 -- setup the window node
+if (not Window:is_fullscreen()) then
+	ufo.print("setting to fullscreen...\n")
+	Window:set_fullscreen (true)
+end
 Window:set_background ("ui/main_bg")
 Window.on_click = function (sender, x, y)
 		ufo.print("window on_click event handler\n")
@@ -74,12 +52,6 @@ Window.on_click = function (sender, x, y)
 	end
 Window.on_rightclick = function (sender, x, y)
 		ufo.print("window on_rightclick event handler\n")
-		if (BtnTest:is_disabled()) then
-			ufo.print("BtnTest is disabled\n")
-		else
-			ufo.print("BtnTest is NOT disabled\n")
-		end
-		BtnTest:set_disabled(not BtnTest:is_disabled())		
 	end
 Window.on_middleclick = function (sender, x, y)
 		ufo.print("window on_middleclick event handler\n")
@@ -107,12 +79,11 @@ BtnTest:set_text("hello world!")
 BtnTest:set_tooltip("hello from the lua engine to ufo AI")
 BtnTest:set_pos(20.0, 20.0)
 BtnTest:set_size(200.0, 20.0)
-BtnTest:set_color(0.0, 0.1, 0.0, 1.0)
+BtnTest:set_color(0.0, 1.0, 0.0, 1.0)
 BtnTest:set_selectcolor(1.0, 1.0, 1.0, 1.0)
 BtnTest:set_disabledcolor(1.0, 0.0, 0.0, 1.0)
 BtnTest:set_borderthickness(1)
 BtnTest:set_bordercolor(0.0, 0.5, 0.0, 1.0)
-
 	
 function load ()
 	ufo.print("inside test_lua.ufo: calling load\n")
