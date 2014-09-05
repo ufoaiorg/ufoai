@@ -538,17 +538,17 @@ int AI_GetHidingTeam (const Edict* ent)
 }
 
 /**
- * @brief Checks if the  actor's position is safe to stand on.
+ * @brief Checks if the given position is safe to stand on.
  * @return @c true if the actor's position is deemed safe.
  */
-static bool AI_CheckPosition (const Actor* const ent)
+bool AI_CheckPosition (const Actor* const ent, const pos3_t pos)
 {
 	if (ent->isInsane())
 		return true;
 
 	/* Don't stand on hurt triggers or fire/stun gas */
-	if (G_GetEdictFromPos(ent->pos, ET_TRIGGER_HURT) || G_GetEdictFromPos(ent->pos, ET_SMOKESTUN) ||
-			G_GetEdictFromPos(ent->pos, ET_FIRE))
+	if (G_GetEdictFromPos(pos, ET_TRIGGER_HURT) || G_GetEdictFromPos(pos, ET_SMOKESTUN) ||
+			G_GetEdictFromPos(pos, ET_FIRE))
 		return false;
 
 	return true;
@@ -589,7 +589,7 @@ bool AI_FindHidingLocation (int team, Actor* actor, const pos3_t from, int tuLef
 			continue;
 
 		/* Don't stand on dangerous terrain! */
-		if (!AI_CheckPosition(actor))
+		if (!AI_CheckPosition(actor, actor->pos))
 			continue;
 		const int score = tuLeft - delta;
 		if (score > bestScore) {
@@ -653,7 +653,7 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 			continue;
 
 		/* Don't stand on dangerous terrain! */
-		if (!AI_CheckPosition(actor))
+		if (!AI_CheckPosition(actor, actor->pos))
 			continue;
 
 		actor->calcOrigin();
@@ -1046,7 +1046,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	}
 
 	/* Try not to stand in dangerous terrain (eg. fireField) */
-	if (!AI_CheckPosition(actor))
+	if (!AI_CheckPosition(actor, actor->pos))
 		bestActionScore -= SCORE_NOSAFE_POSITION_PENALTY;
 
 	if (!actor->isRaged()) {
@@ -1217,7 +1217,7 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 	float bestActionScore = delta;
 
 	/* Try not to stand in dangerous terrain */
-	if (!AI_CheckPosition(actor))
+	if (!AI_CheckPosition(actor, actor->pos))
 		bestActionScore -= SCORE_NOSAFE_POSITION_PENALTY;
 
 	/* add laziness */
@@ -1293,7 +1293,7 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
 	}
 
 	/* Try not to stand in dangerous terrain */
-	if (!AI_CheckPosition(actor))
+	if (!AI_CheckPosition(actor, actor->pos))
 		bestActionScore -= SCORE_NOSAFE_POSITION_PENALTY;
 
 	/* add random effects */
@@ -1319,7 +1319,7 @@ bool AI_FindMissionLocation (Actor* actor, const pos3_t to)
 		if (G_ActorMoveLength(actor, level.pathingMap, actor->pos, true) == ROUTING_NOT_REACHABLE)
 			continue;
 		/* Don't stand on dangerous terrain! */
-		if (!AI_CheckPosition(actor))
+		if (!AI_CheckPosition(actor, actor->pos))
 			continue;
 
 		const int distX = std::abs(actor->pos[0] - to[0]);

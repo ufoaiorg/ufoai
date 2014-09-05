@@ -213,7 +213,7 @@ static int AIL_positionherd(lua_State* L);
 static int AIL_distance(lua_State* L);
 static int AIL_positionapproach(lua_State* L);
 static int AIL_isarmed(lua_State* L);
-static int AIL_getweapon(lua_State* L);
+static int AIL_grabweapon(lua_State* L);
 static int AIL_missiontargets(lua_State* L);
 static int AIL_waypoints(lua_State* L);
 static int AIL_positionmission(lua_State* L);
@@ -224,6 +224,8 @@ static int AIL_setwaypoint(lua_State* L);
 static int AIL_difficulty(lua_State* L);
 static int AIL_isdead(lua_State* L);
 static int AIL_positionflee(lua_State* L);
+static int AIL_weapontype(lua_State* L);
+static int AIL_actor(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -246,7 +248,7 @@ static const luaL_reg AIL_methods[] = {
 	{"distance", AIL_distance},
 	{"positionapproach", AIL_positionapproach},
 	{"isarmed", AIL_isarmed},
-	{"getweapon", AIL_getweapon},
+	{"grabweapon", AIL_grabweapon},
 	{"missiontargets", AIL_missiontargets},
 	{"waypoints", AIL_waypoints},
 	{"positionmission", AIL_positionmission},
@@ -257,6 +259,8 @@ static const luaL_reg AIL_methods[] = {
 	{"difficulty", AIL_difficulty},
 	{"isdead", AIL_isdead},
 	{"positionflee", AIL_positionflee},
+	{"weapontype", AIL_weapontype},
+	{"actor", AIL_actor},
 	{nullptr, nullptr}
 };
 
@@ -967,7 +971,7 @@ static int AIL_isinjured (lua_State* L)
  */
 static int AIL_TU (lua_State* L)
 {
-	lua_pushnumber(L, AIL_ent->getTus());
+	lua_pushnumber(L, AIL_ent->getUsableTUs());
 	return 1;
 }
 
@@ -1088,7 +1092,7 @@ static int AIL_isarmed (lua_State* L)
 /**
  * @brief Actor tries to grab a weapon from inventory
  */
-static int AIL_getweapon (lua_State* L)
+static int AIL_grabweapon (lua_State* L)
 {
 	lua_pushboolean(L, G_ClientGetWeaponFromInventory(AIL_ent));
 	return 1;
@@ -1183,6 +1187,8 @@ static int AIL_positionshoot (lua_State* L)
 		actor->setOrigin(to);
 		const pos_t tu = G_ActorMoveLength(actor, level.pathingMap, to, true);
 		if (tu > tus || tu == ROUTING_NOT_REACHABLE)
+			continue;
+		if (!AI_CheckPosition(actor, actor->pos))
 			continue;
 		/* Can we see the target? */
 		if (!G_IsVisibleForTeam(target->actor, actor->getTeam()) && G_ActorVis(actor->origin, actor, target->actor, true) < ACTOR_VIS_10)
@@ -1383,6 +1389,8 @@ static int AIL_positionapproach (lua_State* L)
 		PosSubDV(to, crouchingState, dvec);
 		if (hide && (G_TestVis(target->actor->getTeam(), AIL_ent, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES))
 			continue;
+		if (!AI_CheckPosition(AIL_ent, to))
+			continue;
 		const byte length =  G_ActorMoveLength(AIL_ent, level.pathingMap, to, false);
 		if (length <= tus)
 			break;
@@ -1506,7 +1514,7 @@ static int AIL_missiontargets (lua_State* L)
 static int AIL_waypoints (lua_State* L)
 {
 	/* Min distance to waypoint */
-	float minDist = 25.0f;
+	float minDist = 5.0f;
 	if (lua_gettop(L) > 0) {
 		if (lua_isnumber(L, 1))
 			minDist = lua_tonumber(L, 1);
@@ -1542,7 +1550,7 @@ static int AIL_waypoints (lua_State* L)
 				pos_t move = ROUTING_NOT_REACHABLE;
 				if (G_FindPath(0, AIL_ent, AIL_ent->pos, checkPoint->pos, false, ROUTING_NOT_REACHABLE - 1))
 					move = gi.MoveLength(level.pathingMap, checkPoint->pos, 0, false);
-				if (move > minDist * TU_MOVE_STRAIGHT)
+				if (move < minDist * TU_MOVE_STRAIGHT)
 					continue;
 				if (checkPoint->count < AIL_ent->count) {
 					sortTable[n].sortLookup = move;
@@ -1554,7 +1562,7 @@ static int AIL_waypoints (lua_State* L)
 		default:
 			{
 				const float dist = VectorDist(AIL_ent->origin, checkPoint->origin);
-				if (dist > minDist * UNIT_SIZE)
+				if (dist < minDist * UNIT_SIZE)
 					continue;
 				if (checkPoint->count < AIL_ent->count) {
 					sortTable[n].sortLookup = dist;
@@ -1661,6 +1669,8 @@ static int AIL_positionwander (lua_State* L)
 	while (searchArea.getNext(pos)) {
 		if (G_ActorMoveLength(AIL_ent, level.pathingMap, pos, true) >= ROUTING_NOT_REACHABLE)
 			continue;
+		if (!AI_CheckPosition(AIL_ent, pos))
+			continue;
 		float score = 0.0f;
 		switch (method) {
 		case 0:
@@ -1714,17 +1724,19 @@ static int AIL_findweapons (lua_State* L)
 	while ((check = G_EdictsGetNextInUse(check))) {
 		if (check->type != ET_ITEM)
 			continue;
-		for (const Item* item = check->getFloor(); item; item = item->getNext()) {
-			/** @todo Check if can reload the weapon with carried ammo or from the floor itself? */
-			if (item->isWeapon() && (item->getAmmoLeft() > 0 || item->def()->ammo <= 0)) {
-				if (G_FindPath(0, AIL_ent, AIL_ent->pos, check->pos, AIL_ent->isCrouched(), ROUTING_NOT_REACHABLE - 1)) {
-					const pos_t move = G_ActorMoveLength(AIL_ent, level.pathingMap, check->pos, false);
-					if (full || move <= AIL_ent->getUsableTUs() - INVDEF(CID_FLOOR)->out - INVDEF(CID_RIGHT)->in) {
-						sortTable[n].data = check;
-						sortTable[n++].sortLookup = move;
-					}
+		if(!AI_CheckPosition(AIL_ent, check->pos))
+			continue;
+		if (!G_FindPath(0, AIL_ent, AIL_ent->pos, check->pos, AIL_ent->isCrouched(), ROUTING_NOT_REACHABLE - 1))
+			continue;
+		const pos_t move = G_ActorMoveLength(AIL_ent, level.pathingMap, check->pos, false);
+		if (full || move <= AIL_ent->getUsableTUs() - INVDEF(CID_FLOOR)->out - INVDEF(CID_RIGHT)->in) {
+			for (const Item* item = check->getFloor(); item; item = item->getNext()) {
+				/** @todo Check if can reload the weapon with carried ammo or from the floor itself? */
+				if (item->isWeapon() && (item->getAmmoLeft() > 0 || item->def()->ammo <= 0)) {
+							sortTable[n].data = check;
+							sortTable[n++].sortLookup = move;
+					break;
 				}
-				break;
 			}
 		}
 	}
@@ -1808,6 +1820,8 @@ static int AIL_positionflee (lua_State* L)
 	while (searchArea.getNext(AIL_ent->pos)) {
 		if (G_ActorMoveLength(AIL_ent, level.pathingMap, AIL_ent->pos, false) >= ROUTING_NOT_REACHABLE)
 			continue;
+		if (!AI_CheckPosition(AIL_ent, AIL_ent->pos))
+			continue;
 		float minDistFoe = -1, minDistFriend = -1;
 		Actor* check = nullptr;
 		while ((check = G_EdictsGetNextLivingActor(check))) {
@@ -1838,6 +1852,24 @@ static int AIL_positionflee (lua_State* L)
 		lua_pushpos3(L, &bestPos);
 	}
 
+	return 1;
+}
+
+static int AIL_weapontype (lua_State* L)
+{
+	const Item* right = AIL_ent->getRightHandItem();
+	const Item* left = AIL_ent->getLeftHandItem();
+
+	lua_pushstring(L, right ? right->def()->type : "none");
+	lua_pushstring(L, left ? left->def()->type : "none");
+
+	return 2;
+}
+
+static int AIL_actor (lua_State* L)
+{
+	aiActor_t actor = {AIL_ent};
+	lua_pushactor(L, &actor);
 	return 1;
 }
 
