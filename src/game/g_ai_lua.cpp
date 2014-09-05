@@ -225,6 +225,7 @@ static int AIL_difficulty(lua_State* L);
 static int AIL_isdead(lua_State* L);
 static int AIL_positionflee(lua_State* L);
 static int AIL_weapontype(lua_State* L);
+static int AIL_actor(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -259,6 +260,7 @@ static const luaL_reg AIL_methods[] = {
 	{"isdead", AIL_isdead},
 	{"positionflee", AIL_positionflee},
 	{"weapontype", AIL_weapontype},
+	{"actor", AIL_actor},
 	{nullptr, nullptr}
 };
 
@@ -1862,6 +1864,13 @@ static int AIL_weapontype (lua_State* L)
 	lua_pushstring(L, left ? left->def()->type : "none");
 
 	return 2;
+}
+
+static int AIL_actor (lua_State* L)
+{
+	aiActor_t actor = {AIL_ent};
+	lua_pushactor(L, &actor);
+	return 1;
 }
 
 /**
