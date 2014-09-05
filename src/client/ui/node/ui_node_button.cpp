@@ -50,18 +50,6 @@ extern "C" {
 #include "../../client.h"
 
 /**
- * @brief Handles Button clicks
- * @todo it is useless !
- */
-void uiButtonNode::onLeftClick (uiNode_t* node, int x, int y)
-{
-	if (node->onClick) {
-		UI_ExecuteEventActions(node, node->onClick);
-		UI_PlaySound("click1");
-	}
-}
-
-/**
  * @brief Handles Button draw
  */
 void uiButtonNode::draw (uiNode_t* node)

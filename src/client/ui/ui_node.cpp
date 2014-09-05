@@ -36,6 +36,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_components.h"
 #include "ui_internal.h"
 
+void uiNode::initNode(uiNode_t* node) {
+	/* initialize lua events */
+	node->lua_onClick = LUA_NOREF;
+	node->lua_onRightClick = LUA_NOREF;
+	node->lua_onMiddleClick = LUA_NOREF;
+	node->lua_onWheel = LUA_NOREF;
+	node->lua_onWheelDown = LUA_NOREF;
+	node->lua_onWheelUp = LUA_NOREF;
+	node->lua_onFocusGained = LUA_NOREF;
+	node->lua_onFocusLost = LUA_NOREF;
+	node->lua_onKeyPressed = LUA_NOREF;
+	node->lua_onKeyReleased = LUA_NOREF;
+	node->lua_onActivate = LUA_NOREF;
+	node->lua_onLoaded = LUA_NOREF;
+}
+
+void uiNode::initNodeDynamic(uiNode_t* node) {
+}
+
 bool UI_Node_IsVirtual (uiNode_t const* node)
 {
 	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager.get());
@@ -220,10 +239,15 @@ void UI_Node_Clone (uiNode_t const* source, uiNode_t* clone)
 	b->clone(source, clone);
 }
 
-void UI_Node_NewNode (uiNode_t* node)
+void UI_Node_InitNodeDynamic (uiNode_t* node) {
+	uiNode* b = node->behaviour->manager.get();
+	b->initNodeDynamic(node);
+}
+
+void UI_Node_InitNode (uiNode_t* node)
 {
 	uiNode* b = node->behaviour->manager.get();
-	b->newNode(node);
+	b->initNode(node);
 }
 
 void UI_Node_DeleteNode (uiNode_t* node)

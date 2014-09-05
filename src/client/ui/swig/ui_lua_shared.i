@@ -73,9 +73,6 @@ struct uiNode_t {
 	/* these values are read-only from lua */
 	%immutable;
 
-	/* common properties */
-	char* name;				/**< name from the script files */
-
 	/* common navigation */
 	%rename (first) firstChild;
 	uiNode_t* firstChild; 	/**< first element of linked list of child */
@@ -92,7 +89,6 @@ struct uiNode_t {
 	%rename (on_click) lua_onClick;
     %rename (on_rightclick) lua_onRightClick;
     %rename (on_middleclick) lua_onMiddleClick;
-    LUA_EVENT lua_onMiddleClick; /**< references the lua on_middleclick method attached to this node */
     LUA_EVENT lua_onClick; /**< references the event in lua: on_click (node, x, y) */
     LUA_EVENT lua_onRightClick; /**< references the event in lua: on_rightclick (node, x, y) */
     LUA_EVENT lua_onMiddleClick; /**< references the event in lua: on_middleclick (node, x, y) */
@@ -124,6 +120,10 @@ struct uiNode_t {
 	float widht () { return $self->box.size[0]; };
 	float height () { return $self->box.size[1]; };
 	int borderthickness () { return $self->border; };
+	const char* name () { return $self->name; };
+	const char* text () { return UI_Node_GetText($self); };
+
+	void invalidate () { UI_Invalidate($self); };
 
 	void append_node (uiNode_t* node) { UI_AppendNode($self, node); };
 	void insert_node (uiNode_t* node, uiNode_t* prev) { UI_InsertNode($self, prev, node); };
@@ -136,7 +136,7 @@ struct uiNode_t {
 	void set_selectcolor (float r, float g, float b, float a) { Vector4Set($self->selectedColor, r, g, b, a); };
 	void set_backgroundcolor (float r, float g, float b, float a) { Vector4Set($self->bgcolor, r, g, b, a); };
 	void set_bordercolor (float r, float g, float b, float a) { Vector4Set($self->bordercolor, r, g, b, a); };
-	void set_text (const char* text) { UI_Node_SetText($self, text); };
+	void set_text (const char* text) { Com_Printf("text = [%s]\n", text); UI_Node_SetText($self, text); };
 	void set_tooltip (const char* text) { UI_Node_SetTooltip($self, text); };
 	void set_disabled (bool value) { UI_Node_SetDisabled($self, value); };
 	void set_borderthickness (int value) { $self->border = value; };
@@ -154,9 +154,15 @@ struct uiWindow_t: uiNode_t {
 };
 %extend uiWindow_t {
 	bool is_fullscreen () { return UI_EXTRADATA($self, windowExtraData_t).isFullScreen; };
+	bool is_modal () { return UI_EXTRADATA($self, windowExtraData_t).modal; }
+
+	void add_dragbutton () { UI_EXTRADATA($self, windowExtraData_t).dragButton = true; };
+	void add_closebutton () { UI_EXTRADATA($self, windowExtraData_t).closeButton = true; };
 
 	void set_background (const char* name) { UI_Window_SetBackgroundByName($self, name); };
 	void set_fullscreen (bool value) { UI_EXTRADATA($self, windowExtraData_t).isFullScreen = value; };
+	void set_modal (bool value) { UI_EXTRADATA($self, windowExtraData_t).modal = value; };
+	void set_fill (bool value) { UI_EXTRADATA($self, windowExtraData_t).fill = value; };
 
 	%rename (on_windowopened) lua_onWindowOpened;
 	%rename (on_windowclosed) lua_onWindowClosed;
@@ -164,17 +170,17 @@ struct uiWindow_t: uiNode_t {
     LUA_EVENT lua_onWindowClosed; /**< references the event in lua: on_activate (node) */
 };
 /*
-	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used
+	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
 	to bring the values from the EXTRADATA structures to the lua class.
 */
 %{
-static int uiWindow_t_lua_onWindowOpened_get(uiWindow_t* node) {
+static LUA_EVENT uiWindow_t_lua_onWindowOpened_get(uiWindow_t* node) {
 	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowOpened;
 }
 static void uiWindow_t_lua_onWindowOpened_set (uiWindow_t* node, LUA_EVENT fn) {
 	UI_EXTRADATA(node, windowExtraData_t).lua_onWindowOpened = fn;
 }
-static int uiWindow_t_lua_onWindowClosed_get(uiWindow_t* node) {
+static LUA_EVENT uiWindow_t_lua_onWindowClosed_get(uiWindow_t* node) {
 	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowClosed;
 }
 static int uiWindow_t_lua_onWindowClosed_set (uiWindow_t* node, LUA_EVENT fn) {

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_internal.h"
 #include "../ui_render.h"
 #include "../ui_sprite.h"
+#include "../ui_lua.h"
 #include "ui_node_window.h"
 #include "ui_node_panel.h"
 #include "ui_node_abstractnode.h"
@@ -157,6 +158,14 @@ void uiWindowNode::draw (uiNode_t* node)
 		UI_DrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->box.size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text);
 }
 
+void uiWindowNode::initNode(uiNode_t* node) {
+	uiLocatedNode::initNode(node);
+	EXTRADATA(node).lua_onWindowOpened = LUA_NOREF;
+	EXTRADATA(node).lua_onWindowClosed = LUA_NOREF;
+	EXTRADATA(node).lua_onWindowActivate = LUA_NOREF;
+	EXTRADATA(node).lua_onScriptLoaded = LUA_NOREF;
+}
+
 void uiWindowNode::doLayout (uiNode_t* node)
 {
 	if (!node->invalidated)
@@ -196,8 +205,12 @@ void uiWindowNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 	uiLocatedNode::onWindowOpened(node, nullptr);
 
 	/* script callback */
-	if (EXTRADATA(node).onWindowOpened)
+	if (EXTRADATA(node).onWindowOpened) {
 		UI_ExecuteEventActionsEx(node, EXTRADATA(node).onWindowOpened, params);
+	}
+	if (EXTRADATA(node).lua_onWindowOpened != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, EXTRADATA(node).lua_onWindowOpened);
+	}
 
 	UI_Invalidate(node);
 }
@@ -210,8 +223,12 @@ void uiWindowNode::onWindowClosed (uiNode_t* node)
 	uiLocatedNode::onWindowClosed(node);
 
 	/* script callback */
-	if (EXTRADATA(node).onWindowClosed)
+	if (EXTRADATA(node).onWindowClosed) {
 		UI_ExecuteEventActions(node, EXTRADATA(node).onWindowClosed);
+	}
+	if (EXTRADATA(node).lua_onWindowClosed != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, EXTRADATA(node).lua_onWindowClosed);
+	}
 }
 
 /**

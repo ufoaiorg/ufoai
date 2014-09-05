@@ -468,7 +468,7 @@ void uiModelNode::clone (const uiNode_t* source, uiNode_t* clone)
 		EXTRADATA(clone).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
 }
 
-void uiModelNode::newNode (uiNode_t* node)
+void uiModelNode::initNodeDynamic (uiNode_t* node)
 {
 	EXTRADATA(node).oldRefValue = Mem_PoolAllocTypeN(char, MAX_OLDREFVALUE, ui_dynPool);
 	EXTRADATA(node).oldRefValue[0] = '\0';
