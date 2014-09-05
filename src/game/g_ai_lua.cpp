@@ -213,7 +213,7 @@ static int AIL_positionherd(lua_State* L);
 static int AIL_distance(lua_State* L);
 static int AIL_positionapproach(lua_State* L);
 static int AIL_isarmed(lua_State* L);
-static int AIL_getweapon(lua_State* L);
+static int AIL_grabweapon(lua_State* L);
 static int AIL_missiontargets(lua_State* L);
 static int AIL_waypoints(lua_State* L);
 static int AIL_positionmission(lua_State* L);
@@ -248,7 +248,7 @@ static const luaL_reg AIL_methods[] = {
 	{"distance", AIL_distance},
 	{"positionapproach", AIL_positionapproach},
 	{"isarmed", AIL_isarmed},
-	{"getweapon", AIL_getweapon},
+	{"grabweapon", AIL_grabweapon},
 	{"missiontargets", AIL_missiontargets},
 	{"waypoints", AIL_waypoints},
 	{"positionmission", AIL_positionmission},
@@ -1092,7 +1092,7 @@ static int AIL_isarmed (lua_State* L)
 /**
  * @brief Actor tries to grab a weapon from inventory
  */
-static int AIL_getweapon (lua_State* L)
+static int AIL_grabweapon (lua_State* L)
 {
 	lua_pushboolean(L, G_ClientGetWeaponFromInventory(AIL_ent));
 	return 1;
