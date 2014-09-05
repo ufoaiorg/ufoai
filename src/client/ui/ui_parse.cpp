@@ -1358,9 +1358,11 @@ bool UI_ParseWindow (const char* type, const char* name, const char** text)
 	}
 
 	/* search for windows with same name */
-	for (i = 0; i < ui_global.numWindows; i++)
-		if (!strncmp(name, ui_global.windows[i]->name, sizeof(ui_global.windows[i]->name)))
+	for (i = 0; i < ui_global.numWindows; i++) {
+		if (Q_streq(name, ui_global.windows[i]->name)) {
 			break;
+		}
+	}
 
 	if (i < ui_global.numWindows) {
 		Com_Printf("UI_ParseWindow: %s \"%s\" with same name found, second ignored\n", type, name);

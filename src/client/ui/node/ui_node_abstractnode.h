@@ -40,8 +40,10 @@ public:
 	virtual void onLoaded(uiNode_t* node);
 	/** call to initialize a cloned node */
 	virtual void clone(uiNode_t const* source, uiNode_t* clone) {}
+	/** call to initialize the node structure and extradata structure */
+	virtual void initNode(uiNode_t* node);
 	/** call to initialize a dynamic node */
-	virtual void newNode(uiNode_t* node) {}
+	virtual void initNodeDynamic(uiNode_t* node);
 	/** call to delete a dynamic node */
 	virtual void deleteNode(uiNode_t* node) {}
 

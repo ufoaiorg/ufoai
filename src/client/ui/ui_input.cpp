@@ -446,8 +446,10 @@ bool UI_KeyPressed (unsigned int key, unsigned short unicode)
 
 	/* translate event into the node with focus */
 	/* note: this is not executed if the top node is a modal window, see code below */
-	if (focusNode && UI_Node_KeyPressed(focusNode, key, unicode)) {
-		return true;
+	if (focusNode) {
+		if (UI_Node_KeyPressed(focusNode, key, unicode)) {
+			return true;
+		}
 	}
 
 	/* else use common behaviour */

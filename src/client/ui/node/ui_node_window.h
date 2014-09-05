@@ -35,6 +35,7 @@ struct uiKeyBinding_s;
 
 class uiWindowNode : public uiLocatedNode {
 	void draw(uiNode_t* node) override;
+	void initNode(uiNode_t* node) override;
 	void doLayout(uiNode_t* node) override;
 	void onLoading(uiNode_t* node) override;
 	void onLoaded(uiNode_t* node) override;

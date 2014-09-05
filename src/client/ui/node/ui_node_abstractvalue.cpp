@@ -57,7 +57,7 @@ void uiAbstractValueNode::onLoaded (uiNode_t* node)
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).min, 0);
 }
 
-void uiAbstractValueNode::newNode (uiNode_t* node)
+void uiAbstractValueNode::initNodeDynamic (uiNode_t* node)
 {
 	EXTRADATA(node).value = Mem_PoolAllocType(float, ui_dynPool);
 	EXTRADATA(node).delta = Mem_PoolAllocType(float, ui_dynPool);

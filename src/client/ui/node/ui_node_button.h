@@ -31,7 +31,6 @@ public:
 	void draw(uiNode_t* node) override;
 	void onLoading(uiNode_t* node) override;
 	void onLoaded(uiNode_t* node) override;
-	void onLeftClick(uiNode_t* node, int x, int y) override;
 };
 
 typedef struct buttonExtraData_s {

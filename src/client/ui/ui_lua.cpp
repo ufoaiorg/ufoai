@@ -221,7 +221,7 @@ bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
 	swig_type_info *type_uiNode = SWIG_TypeQuery(ui_luastate, "uiNode_t *");
 	SWIG_NewPointerObj (ui_luastate, node, type_uiNode, 0); /* push sender on lua stack */
 	if (lua_pcall (ui_luastate, 1, 0, 0) != 0) {
-		Com_Printf ("lua error [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
+		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
 	};
 	return true;
 }
@@ -241,7 +241,7 @@ bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y)
 	lua_pushinteger(ui_luastate, x); /* push x on lua stack */
 	lua_pushinteger(ui_luastate, y); /* push y on lua stack */
 	if (lua_pcall (ui_luastate, 3, 0, 0) != 0) {
-		Com_Printf ("lua error [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
+		Com_Printf ("lua error(1) [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
 	};
 	return true;}
 
@@ -260,7 +260,7 @@ bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int
 	lua_pushinteger(ui_luastate, dx); /* push dx on lua stack */
 	lua_pushinteger(ui_luastate, dy); /* push dy on lua stack */
 	if (lua_pcall (ui_luastate, 3, 0, 0) != 0) {
-		Com_Printf ("lua error [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
+		Com_Printf ("lua error(2) [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
 	};
 	return true;
 }
@@ -280,7 +280,7 @@ bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int
 	lua_pushinteger(ui_luastate, key); /* push key on lua stack */
 	lua_pushinteger(ui_luastate, unicode); /* push unicode on lua stack */
 	if (lua_pcall (ui_luastate, 3, 0, 0) != 0) {
-		Com_Printf ("lua error [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
+		Com_Printf ("lua error(3) [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
 	};
 	return true;
 }

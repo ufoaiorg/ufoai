@@ -349,19 +349,8 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
 			Com_Printf("UI_AllocNodeWithoutNew: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
 	}
 
-	/* initialize lua block */
-	node->lua_onClick = LUA_NOREF;
-	node->lua_onRightClick = LUA_NOREF;
-	node->lua_onMiddleClick = LUA_NOREF;
-	node->lua_onWheel = LUA_NOREF;
-	node->lua_onWheelDown = LUA_NOREF;
-	node->lua_onWheelUp = LUA_NOREF;
-	node->lua_onFocusGained = LUA_NOREF;
-	node->lua_onFocusLost = LUA_NOREF;
-	node->lua_onKeyPressed = LUA_NOREF;
-	node->lua_onKeyReleased = LUA_NOREF;
-	node->lua_onActivate = LUA_NOREF;
-	node->lua_onLoaded = LUA_NOREF;
+	/* default initializtion */
+	UI_Node_InitNode(node);
 
 	/* initialize default properties */
 	UI_Node_Loading(node);
@@ -382,8 +371,9 @@ uiNode_t* UI_AllocNode (const char* name, const char* type, bool isDynamic)
 	uiNode_t* node = UI_AllocNodeWithoutNew(name, type, isDynamic);
 
 	/* allocate memory */
-	if (node->dynamic)
-		UI_Node_NewNode(node);
+	if (node->dynamic) {
+		UI_Node_InitNodeDynamic(node);
+	}
 
 	return node;
 }
@@ -630,8 +620,9 @@ uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t* newWindow, bool recursiv
 	}
 
 	/* allocate memories */
-	if (newNode->dynamic)
-		UI_Node_NewNode(newNode);
+	if (newNode->dynamic) {
+		UI_Node_InitNode(newNode);
+	}
 
 	UI_Node_Clone(node, newNode);
 

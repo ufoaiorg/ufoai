@@ -35,7 +35,7 @@ class uiModelNode : public uiLocatedNode {
 	void onLoading(uiNode_t* node) override;
 	void onLoaded(uiNode_t* node) override;
 	void clone(uiNode_t const* source, uiNode_t* clone) override;
-	void newNode(uiNode_t* node) override;
+	void initNodeDynamic(uiNode_t* node) override;
 	void deleteNode(uiNode_t* node) override;
 	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
 };

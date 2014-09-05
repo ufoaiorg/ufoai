@@ -4,17 +4,36 @@
 	TEST WINDOW
 --]]
 
-
+-- start of calculator
 local key_x = 20
 local key_y = 80
-local key_w = 40
-local key_h = 40
+local key_w = 60
+local key_h = 60
+
+-- holds the calculation
+buffer_command = ""
+-- holds the current display value
+buffer = ""
+buffer_clear = true
+-- holds the command
+command = ""
 
 --[[
 	first create the node structure
 --]]
-local Window = ufoui.create_window ("lua_test", nil)
-local BtnTest = ufoui.create_button (Window, "test", nil)
+Window = ufoui.create_window ("lua_test", nil)
+
+-- create result field
+display = ufoui.create_button (Window, "test", nil)
+display:set_text("_")
+display:set_tooltip("calculator display")
+display:set_pos(20.0, 20.0)
+display:set_size(200.0, 20.0)
+display:set_color(1.0, 1.0, 0.0, 1.0)
+display:set_selectcolor(1.0, 1.0, 1.0, 1.0)
+display:set_disabledcolor(1.0, 0.0, 0.0, 1.0)
+display:set_borderthickness(1)
+display:set_bordercolor(0.0, 0.5, 0.0, 1.0)
 
 -- create numeric pad
 local x=key_x
@@ -31,6 +50,17 @@ for i = 1, 9 do
 	digit:set_disabledcolor(1.0, 0.0, 0.0, 1.0)
 	digit:set_borderthickness(1)
 	digit:set_bordercolor(0.0, 0.5, 0.0, 1.0)	
+	digit.on_click = function (sender)
+			ufo.print(string.format("processing [%d]\n", tostring(i)))
+			-- clear buffer on request
+			if (buffer_clear) then
+				buffer = ""
+				buffer_clear = false
+			end
+			-- add digit to buffer
+			buffer = buffer .. tostring(i)
+			display:set_text(buffer)
+		end
 	-- move to next position
 	x =  x + (key_w + 2)
 	if (i == 3) or (i == 6) then
@@ -39,12 +69,103 @@ for i = 1, 9 do
 		x = key_x
 	end
 end
-
+-- add 0 button
+zero = ufoui.create_button (Window, "btn0", nil)
+zero:set_text("0")
+zero:set_pos(key_x, y + key_h + 2)
+zero:set_size(3 * key_w, key_h)
+zero:set_color(0.0, 1.0, 0.0, 1.0)
+zero:set_selectcolor(1.0, 1.0, 1.0, 1.0)
+zero:set_disabledcolor(1.0, 0.0, 0.0, 1.0)
+zero:set_borderthickness(1)
+zero:set_bordercolor(0.0, 0.5, 0.0, 1.0)
+zero.on_click = function (sender)
+		ufo.print("processing [0]\n")
+		-- clear buffer on request
+		if (buffer_clear) then
+			buffer = ""
+			buffer_clear = false
+		end
+		-- add zero to buffer
+		buffer = buffer .. "0"
+		display:set_text(buffer)
+	end
+-- add + button
+plus = ufoui.create_button (Window, "btnAdd", nil)
+plus:set_text("+")
+plus:set_pos(x + 2, key_y)
+plus:set_size (key_w, key_h)
+plus:set_color(0.0, 1.0, 0.0, 1.0)
+plus:set_selectcolor(1.0, 1.0, 1.0, 1.0)
+plus:set_disabledcolor(1.0, 0.0, 0.0, 1.0)
+plus:set_borderthickness(1)
+plus:set_bordercolor(0.0, 0.5, 0.0, 1.0)
+plus.on_click = function (sender)
+		ufo.print("processing [+]\n")
+		-- add command to buffer_command
+		command = "+"
+		buffer_clear = true
+		buffer_command = buffer_command .. buffer .. command
+		ufo.print(string.format("command: %s\n", buffer_command))
+	end
+-- add - button
+minus = ufoui.create_button (Window, "btnSub", nil)
+minus:set_text("-")
+minus:set_pos(x + 2, key_y + (key_h + 2))
+minus:set_size (key_w, key_h)
+minus:set_color(0.0, 1.0, 0.0, 1.0)
+minus:set_selectcolor(1.0, 1.0, 1.0, 1.0)
+minus:set_disabledcolor(1.0, 0.0, 0.0, 1.0)
+minus:set_borderthickness(1)
+minus:set_bordercolor(0.0, 0.5, 0.0, 1.0)	
+minus.on_click = function (sender)
+		ufo.print("processing [-]\n")
+		-- add command to buffer_command
+		command = "-"
+		buffer_clear = true
+		buffer_command = buffer_command .. buffer .. command
+		ufo.print(string.format("command: %s\n", buffer_command))
+	end
+-- add return button
+enter = ufoui.create_button (Window, "btnGo", nil)
+enter:set_text("GO!")
+enter:set_pos(x + 2, key_y + 2 * (key_h + 2))
+enter:set_size (key_w, key_h)
+enter:set_color(0.0, 1.0, 0.0, 1.0)
+enter:set_selectcolor(1.0, 1.0, 1.0, 1.0)
+enter:set_disabledcolor(1.0, 0.0, 0.0, 1.0)
+enter:set_borderthickness(1)
+enter:set_bordercolor(0.0, 0.5, 0.0, 1.0)	
+enter.on_click = function (sender)
+		ufo.print("processing [GO!]\n")
+		buffer_command = buffer_command .. buffer
+		-- execute as lua command to perform the math
+		ufo.print(string.format("execute: %s\n", buffer_command))
+		local fn = loadstring("return ".. buffer_command)
+		buffer = tostring(fn())
+		display:set_text(buffer)
+		-- reset but keep result in buffer for next operation
+		buffer_command = ""
+		buffer_clear = true
+	end
+-- add clear button
+clear = ufoui.create_button (Window, "btnClear", nil)
+clear:set_text("C")
+clear:set_pos(x + 2, key_y + 3 * (key_h + 2))
+clear:set_size (key_w, key_h)
+clear:set_color(0.0, 1.0, 0.0, 1.0)
+clear:set_selectcolor(1.0, 1.0, 1.0, 1.0)
+clear:set_disabledcolor(1.0, 0.0, 0.0, 1.0)
+clear:set_borderthickness(1)
+clear:set_bordercolor(0.0, 0.5, 0.0, 1.0)	
+clear.on_click = function (sender)
+		ufo.print("processing [C]\n")
+		buffer_command = ""
+		buffer_clear = true
+		buffer = ""
+		display:set_text(buffer)
+	end
 -- setup the window node
-if (not Window:is_fullscreen()) then
-	ufo.print("setting to fullscreen...\n")
-	Window:set_fullscreen (true)
-end
 Window:set_background ("ui/main_bg")
 Window.on_click = function (sender, x, y)
 		ufo.print("window on_click event handler\n")
@@ -60,31 +181,13 @@ Window.on_keypressed = function (sender, key, unicode)
 		ufo.print("window on_keypressed event handler\n")
 		ufo.print(string.format("key = %s\n", tostring(key)))
 	end
+Window.on_windowopened = function (sender)
+		ufo.print("window is being opened\n")
+	end
+Window.on_windowclosed = function (sender)
+		ufo.print("window is being closed\n")
+	end
 
---[[
-	button facebook
-	{
-		pos			"10 720"
-		string		"_Facebook"
-		tooltip		"_Like us on facebook"
-		size		"80 20"
-		color		"0 1 0 1"
-		selectcolor "1 1 1 1"
-		padding		0
-		onClick		{ cmd "cl_openurl http://www.facebook.com/ufoai/;" }
-	}
---]]
--- setup the button node
-BtnTest:set_text("hello world!")
-BtnTest:set_tooltip("hello from the lua engine to ufo AI")
-BtnTest:set_pos(20.0, 20.0)
-BtnTest:set_size(200.0, 20.0)
-BtnTest:set_color(0.0, 1.0, 0.0, 1.0)
-BtnTest:set_selectcolor(1.0, 1.0, 1.0, 1.0)
-BtnTest:set_disabledcolor(1.0, 0.0, 0.0, 1.0)
-BtnTest:set_borderthickness(1)
-BtnTest:set_bordercolor(0.0, 0.5, 0.0, 1.0)
-	
 function load ()
 	ufo.print("inside test_lua.ufo: calling load\n")
 	ufo.print(string.format("created a ui node: name = %s\n", Window.name))
