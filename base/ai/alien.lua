@@ -171,7 +171,7 @@ function searchweapon ()
 	local weapons = ai.findweapons()
 	if #weapons > 0 then
 		weapons[1]:goto()
-		return ai.getweapon()
+		return ai.grabweapon()
 	end
 	return false
 end
@@ -181,7 +181,7 @@ end
 	Try to make sure to have a working weapon
 --]]
 function readyweapon ()
-	local has_right, has_left = ai.isarmed()
+	local has_right, has_left = ai.actor:isarmed()
 	local right_ammo, left_ammo = ai.roundsleft()
 	if not right_ammo and not left_ammo then
 		if has_right then
@@ -191,8 +191,8 @@ function readyweapon ()
 		end
 	end
 
-	has_right, has_left = ai.isarmed()
-	if not has_right and not has_left and not ai.getweapon() then
+	has_right, has_left = ai.actor:isarmed()
+	if not has_right and not has_left and not ai.grabweapon() then
 		return searchweapon()
 	end
 
