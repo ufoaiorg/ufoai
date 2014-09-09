@@ -681,7 +681,7 @@ static int actorL_isarmed (lua_State* L)
 }
 
 /**
- * @brief Check if hte actor is dead.
+ * @brief Check if the actor is dead.
  */
 static int actorL_isdead (lua_State* L)
 {
