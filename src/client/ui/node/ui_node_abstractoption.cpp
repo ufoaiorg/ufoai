@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractoption.h"
 #include "ui_node_abstractnode.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE abstractOptionExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
@@ -145,6 +147,7 @@ void UI_RegisterAbstractOptionNode (uiBehaviour_t* behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->drawItselfChild = true;
 	behaviour->manager = UINodePtr(new uiAbstractOptionNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractOption_t *");
 
 	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
 	UI_RegisterExtradataNodeProperty(behaviour, "dataid", V_UI_DATAID, EXTRADATA_TYPE, dataId);

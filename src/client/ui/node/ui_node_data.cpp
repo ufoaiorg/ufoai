@@ -38,6 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE dataExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -48,6 +50,7 @@ void UI_RegisterDataNode (uiBehaviour_t* behaviour)
 	behaviour->isVirtual = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = UINodePtr(new uiDataNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiData_t *");
 
 	/* Store a string into the node.
 	 * @note you should note store a cvar ref

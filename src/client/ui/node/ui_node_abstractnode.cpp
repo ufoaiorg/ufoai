@@ -32,11 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_sound.h"
 #include "../ui_lua.h"
 
-extern "C" {
-	#include "../../libs/lua/lua.h"
-	#include "../../libs/lua/lauxlib.h"
-}
-
+#include "../../../common/scripts_lua.h"
 
 #ifdef DEBUG
 /**
@@ -394,6 +390,7 @@ void UI_RegisterAbstractNode (uiBehaviour_t* behaviour)
 	behaviour->name = "abstractnode";
 	behaviour->isAbstract = true;
 	behaviour->manager = UINodePtr(new uiLocatedNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractNode_t *");
 
 	/* Top-left position of the node */
 	UI_RegisterNodeProperty(behaviour, "pos", V_POS, uiNode_t, box.pos);

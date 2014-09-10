@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_input.h"
 #include "../../input/cl_keys.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE abstractValueExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -196,6 +198,7 @@ void UI_RegisterAbstractValueNode (uiBehaviour_t* behaviour)
 	behaviour->manager = UINodePtr(new uiAbstractValueNode());
 	behaviour->isAbstract = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractValue_t *");
 
 	/* Current value of the node. It should be a cvar */
 	UI_RegisterExtradataNodeProperty(behaviour, "current", V_CVAR_OR_FLOAT, abstractValueExtraData_t, value);

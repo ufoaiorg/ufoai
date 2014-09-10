@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_behaviour.h"
 #include "ui_node_abstractscrollbar.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE abstractScrollbarExtraData_t
 
 void UI_RegisterAbstractScrollbarNode (uiBehaviour_t* behaviour)
@@ -36,6 +38,7 @@ void UI_RegisterAbstractScrollbarNode (uiBehaviour_t* behaviour)
 	behaviour->isAbstract = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = UINodePtr(new uiAbstractScrollbarNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractScrollbar_t *");
 
 	/* Current position of the scroll. Image of the <code>viewpos</code> from <code>abstractscrollable</code> node. */
 	UI_RegisterExtradataNodeProperty(behaviour, "current", V_INT, EXTRADATA_TYPE, pos);

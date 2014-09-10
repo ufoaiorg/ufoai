@@ -51,6 +51,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../battlescape/cl_actor.h"
 #include "../../cl_inventory.h"
 
+#include "../../../common/scripts_lua.h"
+
 /**
  * @todo need refactoring to remove, reduce use... of that var
  * Global access to many node content like that is very bad.
@@ -1030,6 +1032,7 @@ void UI_RegisterContainerNode (uiBehaviour_t* behaviour)
 	behaviour->name = "container";
 	behaviour->manager = UINodePtr(new uiContainerNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiContainer_t *");
 
 	/* Callback value set before calling onSelect. It is used to know the item selected */
 	UI_RegisterExtradataNodeProperty(behaviour, "lastselectedid", V_INT, containerExtraData_t, lastSelectedId);

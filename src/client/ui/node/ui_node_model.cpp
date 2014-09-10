@@ -43,6 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_mesh_anim.h"
 #include "../../renderer/r_model.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE modelExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
@@ -504,6 +506,7 @@ void UI_RegisterModelNode (uiBehaviour_t* behaviour)
 	behaviour->drawItselfChild = true;
 	behaviour->manager = UINodePtr(new uiModelNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiModel_t *");
 
 	/* Both. Name of the animation for the model */
 	UI_RegisterExtradataNodeProperty(behaviour, "anim", V_CVAR_OR_STRING, modelExtraData_t, animation);

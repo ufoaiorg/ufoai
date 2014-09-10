@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 #include "ui_node_sequence.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE sequenceExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -115,6 +117,7 @@ void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 	behaviour->name = "sequence";
 	behaviour->manager = UINodePtr(new uiSequenceNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiSequence_t *");
 
 	/** sequence script id */
 	propertySource = UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, EXTRADATA_TYPE, source);

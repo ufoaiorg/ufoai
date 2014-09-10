@@ -43,6 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 #include "ui_node_abstractvalue.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE checkboxExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
@@ -68,7 +70,7 @@ void uiCheckBoxNode::draw (uiNode_t* node)
 	} else if (value > 0) {
 		icon = EXTRADATA(node).iconChecked;
 	} else { /* value < 0 */
-		icon = EXTRADATA(node).iconIndeterminate;
+		icon = EXTRADATA(node).iconUnknown;
 	}
 
 	UI_GetNodeAbsPos(node, pos);
@@ -129,19 +131,41 @@ void uiCheckBoxNode::onLoading (uiNode_t* node)
 	setRange(node, -1, 1);
 }
 
+void UI_CheckBox_SetBackgroundByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, checkboxExtraData_t).background = sprite;
+}
+
+void UI_CheckBox_SetIconCheckedByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, checkboxExtraData_t).iconChecked = sprite;
+}
+
+void UI_CheckBox_SetIconUncheckedByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, checkboxExtraData_t).iconUnchecked = sprite;
+}
+
+void UI_CheckBox_SetIconUnknownByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, checkboxExtraData_t).iconUnknown = sprite;
+}
+
+
 void UI_RegisterCheckBoxNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "checkbox";
 	behaviour->extends = "abstractvalue";
 	behaviour->manager = UINodePtr(new uiCheckBoxNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiCheckBox_t *");
 
 	/** Sprite used as an icon for checked state */
 	UI_RegisterExtradataNodeProperty(behaviour, "iconChecked", V_UI_SPRITEREF, EXTRADATA_TYPE, iconChecked);
 	/** Sprite used as an icon for unchecked state */
 	UI_RegisterExtradataNodeProperty(behaviour, "iconUnchecked", V_UI_SPRITEREF, EXTRADATA_TYPE, iconUnchecked);
 	/** Sprite used as an icon for indeterminate state */
-	UI_RegisterExtradataNodeProperty(behaviour, "iconIndeterminate", V_UI_SPRITEREF, EXTRADATA_TYPE, iconIndeterminate);
+	UI_RegisterExtradataNodeProperty(behaviour, "iconIndeterminate", V_UI_SPRITEREF, EXTRADATA_TYPE, iconUnknown);
 	/** Sprite used as a background */
 	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 

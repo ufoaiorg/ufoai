@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../../shared/parse.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA(node) UI_EXTRADATA(node, textExtraData_t)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, textExtraData_t)
 
@@ -229,4 +231,5 @@ void UI_RegisterTextListNode (uiBehaviour_t* behaviour)
 	behaviour->name = "textlist";
 	behaviour->extends = "text";
 	behaviour->manager = UINodePtr(new uiTextListNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTextList_t *");
 }

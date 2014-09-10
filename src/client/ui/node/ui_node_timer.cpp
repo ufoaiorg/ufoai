@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_behaviour.h"
 #include "ui_node_timer.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE timerExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -69,6 +71,7 @@ void UI_RegisterTimerNode (uiBehaviour_t* behaviour)
 	behaviour->name = "timer";
 	behaviour->manager = UINodePtr(new uiTimerNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTimer_t *");
 
 	/* This property control milliseconds between each calls of <code>onEvent</code>.
 	 * If the value is 0 (the default value) nothing is called. We can change the

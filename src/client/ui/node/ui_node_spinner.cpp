@@ -38,6 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_input.h"
 #include "../../input/cl_keys.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE spinnerExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -241,6 +243,7 @@ void UI_RegisterSpinnerNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractvalue";
 	behaviour->manager = UINodePtr(new uiSpinnerNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiSpinner_t *");
 
 	/**
 	 * @brief Background used to display the spinner. It is displayed in the center of the node.

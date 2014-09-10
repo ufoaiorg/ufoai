@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
+#include "../../../common/scripts_lua.h"
+
 /**
  * Allow to check if a node is an option without string check
  */
@@ -133,6 +135,7 @@ void UI_RegisterOptionNode (uiBehaviour_t* behaviour)
 	behaviour->name = "option";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = UINodePtr(new uiOptionNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiOption_t *");
 
 	/**
 	 * Displayed text

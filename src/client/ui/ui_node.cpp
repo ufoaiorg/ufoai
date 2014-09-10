@@ -672,34 +672,39 @@ uiNode_t* UI_GetNode (const uiNode_t* const node, const char* name)
 
 /**
  * @brief Insert a node next another one into a node. If prevNode is nullptr add the node on the head of the window
- * @param[in] node Node where inserting a node
+ * @param[in] parent Node where the newNode is inserted in
  * @param[in] prevNode previous node, will became before the newNode; else nullptr if newNode will become the first child of the node
  * @param[in] newNode node we insert
  */
-void UI_InsertNode (uiNode_t* const node, uiNode_t* prevNode, uiNode_t* newNode)
+void UI_InsertNode (uiNode_t* const parent, uiNode_t* prevNode, uiNode_t* newNode)
 {
-	if (newNode->root == nullptr)
-		newNode->root = node->root;
-
-	assert(node);
+	/* parent and newNode should be valid, or else insertion doesn't make sense */
+	assert(parent);
 	assert(newNode);
 	/* insert only a single element */
 	assert(!newNode->next);
-	/* everything come from the same window (force the dev to update himself this links) */
-	assert(!prevNode || (prevNode->root == newNode->root));
 
-	uiNode_t** const anchor = prevNode ? &prevNode->next : &node->firstChild;
+	uiNode_t** const anchor = prevNode ? &prevNode->next : &parent->firstChild;
 	newNode->next   = *anchor;
 	*anchor         = newNode;
-	newNode->parent = node;
+	newNode->parent = parent;
+	newNode->root   = parent->root;
 
-	if (!newNode->next)
-		node->lastChild = newNode;
+	if (!parent->firstChild) {
+		parent->firstChild = newNode;
+	}
+	if (!parent->lastChild) {
+		parent->lastChild = newNode;
+	}
+
+	if (!newNode->next) {
+		parent->lastChild = newNode;
+	}
 
 	if (newNode->root && newNode->indexed)
 		UI_WindowNodeAddIndexedNode(newNode->root, newNode);
 
-	UI_Invalidate(node);
+	UI_Invalidate(parent);
 }
 
 /**
@@ -752,10 +757,12 @@ void UI_UpdateRoot (uiNode_t* node, uiNode_t* newRoot)
 
 /**
  * @brief add a node at the end of the node child
+ * @param parent The node where newNode is inserted as a child.
+ * @param newNode The node to insert.
  */
-void UI_AppendNode (uiNode_t* const node, uiNode_t* newNode)
+void UI_AppendNode (uiNode_t* const parent, uiNode_t* newNode)
 {
-	UI_InsertNode(node, node->lastChild, newNode);
+	UI_InsertNode(parent, parent->lastChild, newNode);
 }
 
 void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t* property, const void* rawValue, int rawType)

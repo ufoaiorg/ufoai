@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_keys.h"
 #include "../../cl_video.h"
 
+#include "../../../common/scripts_lua.h"
+
 static int deltaMouseX;
 static int deltaMouseY;
 
@@ -85,4 +87,5 @@ void UI_RegisterControlsNode (uiBehaviour_t* behaviour)
 	behaviour->name = "controls";
 	behaviour->extends = "image";
 	behaviour->manager = UINodePtr(new uiControlNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiControls_t *");
 }

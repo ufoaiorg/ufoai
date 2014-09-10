@@ -21,13 +21,13 @@ end
 
 -- listing metatable contents
 ufo.print("table: uiNode\n")
-m = getmetatable(ufoui.uiNode)
+m = getmetatable(ufo.uiNode)
 list_table(m, "uiNode: ")
 fn = m[".fn"]
 list_table(fn, "uiNode.fn: ")
 
 ufo.print("table: uiWindow\n")
-m = getmetatable(ufoui.uiWindow)
+m = getmetatable(ufo.uiWindow)
 list_table(m, "uiWindow: ")
 fn = m[".fn"]
 list_table(fn, "uiWindow.fn: ")
@@ -41,4 +41,4 @@ end
 
 -- register callbacks
 ufo.print("inside zzz.ufo: registering callbacks\n")
-ufoui.register_onload (load)
+ufo.register_onload (load)

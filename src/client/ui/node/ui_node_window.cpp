@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 #include "../../client.h" /* gettext _() */
+#include "../../../common/scripts_lua.h"
 
 #define EXTRADATA_TYPE windowExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -374,6 +375,7 @@ void UI_RegisterWindowNode (uiBehaviour_t* behaviour)
 	behaviour->name = "window";
 	behaviour->manager = UINodePtr(new uiWindowNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiWindow_t *");
 
 	/* In windows where notify messages appear (like e.g. the video options window when you have to restart the game until
 	 * the settings take effects) you can define the position of those messages with this option. */

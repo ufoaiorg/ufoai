@@ -45,6 +45,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../../shared/utf8.h"
 
+#include "../../../common/scripts_lua.h"
+
 #if SDL_VERSION_ATLEAST(2,0,0)
 #include <SDL.h>
 #else
@@ -371,6 +373,7 @@ void UI_RegisterTextEntryNode (uiBehaviour_t* behaviour)
 	behaviour->name = "textentry";
 	behaviour->manager = UINodePtr(new uiTextEntryNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTextEntry_t *");
 
 	/* Call back event called when we click on the node. If the click select the node,
 	 * it called before we start the cvar edition.

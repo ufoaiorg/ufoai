@@ -57,6 +57,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_language.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA(node) UI_EXTRADATA(node, abstractOptionExtraData_t)
 
 #define SELECTBOX_DEFAULT_HEIGHT 20.0f
@@ -290,4 +292,5 @@ void UI_RegisterSelectBoxNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->manager = UINodePtr(new uiSelectBoxNode());
 	behaviour->drawItselfChild = true;
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiSelectBox_t *");
 }

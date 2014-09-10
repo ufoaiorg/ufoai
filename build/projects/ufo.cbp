@@ -758,9 +758,7 @@
 		<Unit filename="../../src/client/ui/ui_input.cpp" />
 		<Unit filename="../../src/client/ui/ui_input.h" />
 		<Unit filename="../../src/client/ui/ui_internal.h" />
-		<Unit filename="../../src/client/ui/ui_lua.cpp">
-			<Option target="windows" />
-		</Unit>
+		<Unit filename="../../src/client/ui/ui_lua.cpp" />
 		<Unit filename="../../src/client/ui/ui_lua.h" />
 		<Unit filename="../../src/client/ui/ui_main.cpp" />
 		<Unit filename="../../src/client/ui/ui_main.h" />
@@ -838,9 +836,6 @@
 		<Unit filename="../../src/common/sha1.cpp" />
 		<Unit filename="../../src/common/sha2.cpp" />
 		<Unit filename="../../src/common/sha2.h" />
-		<Unit filename="../../src/common/swig/common_lua.i">
-			<Option compile="1" />
-		</Unit>
 		<Unit filename="../../src/common/swig_lua_runtime.h" />
 		<Unit filename="../../src/common/tracing.cpp" />
 		<Unit filename="../../src/common/tracing.h" />
