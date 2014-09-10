@@ -38,6 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_input.h"
 #include "../../input/cl_keys.h"
 
+#include "../../../common/scripts_lua.h"
+
 static const int TILE_WIDTH = 32;
 static const int TILE_HEIGHT = 18;
 static const int ELEMENT_WIDTH = 19;
@@ -392,6 +394,7 @@ void UI_RegisterVScrollbarNode (uiBehaviour_t* behaviour)
 	behaviour->name = "vscrollbar";
 	behaviour->extends = "abstractscrollbar";
 	behaviour->manager = UINodePtr(new uiVScrollbarNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiVScrollBar_t *");
 
 	/* Image to use. Each behaviour use it like they want.
 	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)

@@ -30,6 +30,9 @@ extern "C" {
 	#include "../../libs/lua/lauxlib.h"
 }
 
+
+
+
 /**
  * @brief callback signatures for functions defined in Lua
  */
@@ -51,5 +54,10 @@ typedef int LUA_EVENT;
  */
 typedef int LUA_INSTANCE;
 
-
+/**
+ * @brief queries the SWIG type table for a type information structure that can be used to create objects
+ * of a specific type in lua
+ * @sa ui_lua_shared.i
+ */
+extern void* UI_SWIG_TypeQuery (const char* name);
 

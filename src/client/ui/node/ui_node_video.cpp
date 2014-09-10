@@ -39,6 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../cinematic/cl_cinematic.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE videoExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -102,6 +104,7 @@ void UI_RegisterVideoNode (uiBehaviour_t* behaviour)
 	behaviour->name = "video";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = UINodePtr(new uiVideoNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiVideo_t *");
 
 	/** Source of the video. File name without prefix ./base/videos and without extension */
 	UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, EXTRADATA_TYPE, source);

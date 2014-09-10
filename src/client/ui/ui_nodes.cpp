@@ -604,6 +604,7 @@ uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t* newWindow, bool recursiv
 	/* clean up node navigation */
 	if (node->root == node && newWindow == nullptr)
 		newWindow = newNode;
+
 	newNode->root = newWindow;
 	newNode->parent = nullptr;
 	newNode->firstChild = nullptr;

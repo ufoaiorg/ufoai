@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractvalue.h"
 #include "ui_node_abstractnode.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE tbarExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -78,6 +80,7 @@ void UI_RegisterTBarNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractvalue";
 	behaviour->manager = UINodePtr(new uiTBarNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTBar_t *");
 
 	/* Image to use. Each behaviour use it like they want.
 	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)

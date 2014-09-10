@@ -38,10 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 #include "ui_node_panel.h"
 
-extern "C" {
-	#include "../../libs/lua/lauxlib.h"
-	#include "../../libs/lua/lualib.h"
-}
+#include "../../../common/scripts_lua.h"
 
 #define EXTRADATA_TYPE buttonExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -168,11 +165,22 @@ void uiButtonNode::onLoaded (uiNode_t* node)
 	}
 }
 
+void UI_Button_SetBackgroundByName(uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, buttonExtraData_t).background = sprite;
+}
+
+void UI_Button_SetIconByName(uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, buttonExtraData_t).icon = sprite;
+}
+
 void UI_RegisterButtonNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "button";
 	behaviour->manager = UINodePtr(new uiButtonNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiButton_t *");
 
 	/* Icon used to display the node
 	 */

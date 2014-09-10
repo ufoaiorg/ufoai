@@ -302,11 +302,11 @@ void UI_Init (void)
 	ui_global.adata    = Mem_PoolAllocTypeN(byte, ui_global.adataize, ui_sysPool);
 	ui_global.curadata = ui_global.adata;
 
+	// note: initialize the lua framework before registering the actual behaviour classes
+	UI_InitLua();
 	UI_InitData();
 	UI_InitNodes();
 	UI_InitWindows();
 	UI_InitDraw();
 	UI_InitActions();
-
-	UI_InitLua();
 }

@@ -22,8 +22,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-/* expose the ui code using a lua table ufoui */
-%module ufoui
+/*
+	This code exposes the node structures from the ui to lua. In lua, the structures are accessible
+	as a set of classes with inheritance following the inheritance defined by the manager classes.
+
+	As a rule of thumb, all fields are exposed by the following convenction.
+	- a field node->F will get a lua method node:F() for reading
+	- a field node->F will get a lua method node:set_F(value) for writing
+
+	All fields are turned to lowercase with.
+
+	Exception to these are the events. Events are exposed as direct accessible fields in lua so they
+	follow the following convenction:
+	- an event node->E will get a lua event node.E for reading and writing.
+
+    Depending on the event, the signature can vary, however all events will have a first argument named
+    'sender' wich is set to the instance the event belongs to.
+*/
+
+/* expose everything in lua using a single table 'ufo' */
+%module ufo
 
 %{
 /* import headers into the interface so they can be used */
@@ -32,6 +50,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* import common functions */
 #include "../../../shared/shared.h"
 #include "../../../shared/vector.h"
+#include "../../../common/scripts.h"
 #include "../../../common/scripts_lua.h"
 
 /* import ui specific functions */
@@ -42,22 +61,122 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_node.h"
 
 #include "../node/ui_node_abstractnode.h"
+#include "../node/ui_node_abstractoption.h"
+#include "../node/ui_node_abstractscrollable.h"
+#include "../node/ui_node_abstractscrollbar.h"
+#include "../node/ui_node_abstractvalue.h"
+
+#include "../node/ui_node_bar.h"
 #include "../node/ui_node_button.h"
 #include "../node/ui_node_checkbox.h"
+#include "../node/ui_node_panel.h"
 #include "../node/ui_node_string.h"
 #include "../node/ui_node_window.h"
 
 #include "../ui_lua.h"
 
-/* typedefs only visible for SWIG, used for subclassing uiNode_t (see below for more details). */
-typedef uiNode_t uiWindow_t;
+/*
+	typedefs only visible for SWIG, used for subclassing uiNode_t (see below for more details). Note
+	that uiAbstractNode_t is missing from the list, since this is the uiNode_t type.
+*/
+typedef uiNode_t uiAbstractValue_t;
+typedef uiNode_t uiAbstractOption_t;
+typedef uiNode_t uiAbstractScrollable_t;
+typedef uiNode_t uiAbstractScrollbar_t;
+
+typedef uiNode_t uiBar_t;
 typedef uiNode_t uiButton_t;
-typedef uiNode_t uiString_t;
 typedef uiNode_t uiCheckBox_t;
+typedef uiNode_t uiString_t;
+typedef uiNode_t uiWindow_t;
 
 // todo: implement other ui node classes
 
+/*
+   This function queries the SWIG type table for a type information structure. It is used in combination
+   with the typemap for converting return values that specify uiNode_t*.
+*/
+void* UI_SWIG_TypeQuery (const char* name) {
+	swig_type_info* info=SWIG_TypeQuery(name);
+	if (!info) {
+		info = SWIG_TypeQuery("uiNode_t *");
+	}
+	return info;
+}
+
 %}
+
+%rename (ContentAlign) align_t;
+typedef enum {
+	ALIGN_UL,
+	ALIGN_UC,
+	ALIGN_UR,
+	ALIGN_CL,
+	ALIGN_CC,
+	ALIGN_CR,
+	ALIGN_LL,
+	ALIGN_LC,
+	ALIGN_LR,
+	ALIGN_UL_RSL,
+	ALIGN_UC_RSL,
+	ALIGN_UR_RSL,
+	ALIGN_CL_RSL,
+	ALIGN_CC_RSL,
+	ALIGN_CR_RSL,
+	ALIGN_LL_RSL,
+	ALIGN_LC_RSL,
+	ALIGN_LR_RSL,
+} align_t;
+
+%rename (LayoutAlign) layoutAlign_t;
+typedef enum {
+	LAYOUTALIGN_NONE = 0,
+
+	/* vertical and horizontal flag bits */
+	LAYOUTALIGN_H_MASK    = 0x03,
+	LAYOUTALIGN_H_LEFT    = 0x01,
+	LAYOUTALIGN_H_MIDDLE  = 0x02,
+	LAYOUTALIGN_H_RIGHT   = 0x03,
+	LAYOUTALIGN_V_MASK    = 0x0C,
+	LAYOUTALIGN_V_TOP     = 0x04,
+	LAYOUTALIGN_V_MIDDLE  = 0x08,
+	LAYOUTALIGN_V_BOTTOM  = 0x0C,
+
+	/* common alignment */
+	LAYOUTALIGN_TOPLEFT     = (LAYOUTALIGN_V_TOP | LAYOUTALIGN_H_LEFT),
+	LAYOUTALIGN_TOP         = (LAYOUTALIGN_V_TOP | LAYOUTALIGN_H_MIDDLE),
+	LAYOUTALIGN_TOPRIGHT    = (LAYOUTALIGN_V_TOP | LAYOUTALIGN_H_RIGHT),
+	LAYOUTALIGN_LEFT        = (LAYOUTALIGN_V_MIDDLE | LAYOUTALIGN_H_LEFT),
+	LAYOUTALIGN_MIDDLE      = (LAYOUTALIGN_V_MIDDLE | LAYOUTALIGN_H_MIDDLE),
+	LAYOUTALIGN_RIGHT       = (LAYOUTALIGN_V_MIDDLE | LAYOUTALIGN_H_RIGHT),
+	LAYOUTALIGN_BOTTOMLEFT  = (LAYOUTALIGN_V_BOTTOM | LAYOUTALIGN_H_LEFT),
+	LAYOUTALIGN_BOTTOM      = (LAYOUTALIGN_V_BOTTOM | LAYOUTALIGN_H_MIDDLE),
+	LAYOUTALIGN_BOTTOMRIGHT = (LAYOUTALIGN_V_BOTTOM | LAYOUTALIGN_H_RIGHT),
+
+	/* special align, everything bigger 0x10 */
+	LAYOUTALIGN_SPECIAL     = 0x10,
+
+	/* pack and star layout manager only */
+	LAYOUTALIGN_FILL,
+
+	LAYOUTALIGN_MAX,
+	LAYOUTALIGN_ENSURE_32BIT = 0x7FFFFFFF
+} layoutAlign_t;
+
+%rename (LayoutPanel) panelLayout_t;
+typedef enum {
+	LAYOUT_NONE,
+	LAYOUT_TOP_DOWN_FLOW,
+	LAYOUT_LEFT_RIGHT_FLOW,
+	LAYOUT_BORDER,
+	LAYOUT_PACK,
+	LAYOUT_STAR,
+	LAYOUT_CLIENT,
+	LAYOUT_COLUMN,
+
+	LAYOUT_MAX,
+	LAYOUT_ENSURE_32BIT = 0x7FFFFFFF
+} panelLayout_t;
 
 /* typemap for converting lua function to a reference to be used by C */
 %typemap(in) LUA_FUNCTION {
@@ -67,24 +186,17 @@ typedef uiNode_t uiCheckBox_t;
 	$1 = (LUA_EVENT)luaL_ref (L, LUA_REGISTRYINDEX);
 }
 
+/* typemap for dynamic casting uiNode_t* into lua table corresponding to the actual behaviour class
+   (so a uiNode_t* representing a button will become a uiButton table in lua). The value of lua_SWIG_typeinfo
+   is set in UI_RegisterXXXX functions. */
+%typemap(out) uiNode_t* {
+	swig_type_info* info=(swig_type_info*)$1->behaviour->lua_SWIG_typeinfo;
+	SWIG_NewPointerObj(L, $1, info, 0); SWIG_arg++;
+};
+
 /* expose node structure */
 %rename(uiNode) uiNode_t;
 struct uiNode_t {
-	/* these values are read-only from lua */
-	%immutable;
-
-	/* common navigation */
-	%rename (first) firstChild;
-	uiNode_t* firstChild; 	/**< first element of linked list of child */
-	%rename (last) lastChild;
-	uiNode_t* lastChild;	/**< last element of linked list of child */
-	uiNode_t* next;			/**< Next element into linked list */
-	uiNode_t* parent;		/**< Parent window, else nullptr */
-	uiNode_t* root;			/**< Shortcut to the root node */
-
-	/* these values are read/write from lua */
-	%mutable;
-
 	/* events */
 	%rename (on_click) lua_onClick;
     %rename (on_rightclick) lua_onRightClick;
@@ -114,6 +226,9 @@ struct uiNode_t {
 %extend uiNode_t {
 	bool is_window () { return UI_Node_IsWindow($self); };
 	bool is_disabled () { return UI_Node_IsDisabled($self); };
+	bool is_invisible () { return $self->invis; };
+	bool is_ghost () { return $self->ghost; };
+	bool is_flashing () { return $self->flash; };
 
 	float left () { return $self->box.pos[0]; };
 	float top () { return $self->box.pos[1]; };
@@ -121,13 +236,27 @@ struct uiNode_t {
 	float height () { return $self->box.size[1]; };
 	int borderthickness () { return $self->border; };
 	const char* name () { return $self->name; };
+	const char* type () { return $self->behaviour->name; };
 	const char* text () { return UI_Node_GetText($self); };
+	const char* font () { return $self->font; };
+	int contentalign () { return $self->contentAlign; };
+	int layoutalign () { return $self->align; };
+	float flashspeed () { return $self->flashSpeed; };
 
-	void invalidate () { UI_Invalidate($self); };
+	/* common navigation */
+	uiNode_t* first () { return $self->firstChild; };
+	uiNode_t* last () { return $self->lastChild; };
+	uiNode_t* next () { return $self->next; };
+	uiNode_t* parent () { return $self->parent; };
+	uiNode_t* root () { return $self->root; };
 
 	void append_node (uiNode_t* node) { UI_AppendNode($self, node); };
 	void insert_node (uiNode_t* node, uiNode_t* prev) { UI_InsertNode($self, prev, node); };
 
+	void set_flashing (bool value) { $self->flash = value; };
+	void set_flashspeed (float value) { $self->flashSpeed = value; };
+	void set_invisible (bool value) { $self->invis = value; };
+	void set_ghost (bool value) { $self->ghost = value; };
 	void set_pos (float x, float y) { Vector2Set($self->box.pos, x, y); }
 	void set_size (float w, float h) { Vector2Set($self->box.size, w, h); }
 	void set_color (float r, float g, float b, float a) { Vector4Set($self->color, r, g, b, a); };
@@ -136,7 +265,10 @@ struct uiNode_t {
 	void set_selectcolor (float r, float g, float b, float a) { Vector4Set($self->selectedColor, r, g, b, a); };
 	void set_backgroundcolor (float r, float g, float b, float a) { Vector4Set($self->bgcolor, r, g, b, a); };
 	void set_bordercolor (float r, float g, float b, float a) { Vector4Set($self->bordercolor, r, g, b, a); };
-	void set_text (const char* text) { Com_Printf("text = [%s]\n", text); UI_Node_SetText($self, text); };
+	void set_text (const char* text) { UI_Node_SetText($self, text); };
+	void set_font (const char* name) { $self->font = name; };
+	void set_contentalign (int value) { $self->contentAlign = value; };
+	void set_layoutalign (int value) { $self->align = value; };
 	void set_tooltip (const char* text) { UI_Node_SetTooltip($self, text); };
 	void set_disabled (bool value) { UI_Node_SetDisabled($self, value); };
 	void set_borderthickness (int value) { $self->border = value; };
@@ -149,6 +281,44 @@ struct uiNode_t {
 	use SWIG's extend mechanism to provide direct support for the properties and methods in the derived classes
 	and direct these back to a call into the behaviour class.
 */
+
+struct uiAbstractScrollable_t: uiNode_t {
+};
+%extend uiAbstractScrollable_t {
+};
+
+struct uiAbstractValue_t: uiNode_t {
+};
+%extend uiAbstractValue_t {
+};
+
+%rename (uiButton) uiButton_t;
+struct uiButton_t: uiNode_t {
+};
+%extend uiButton_t {
+	bool flipicon() { return UI_EXTRADATA($self, buttonExtraData_t).flipIcon; };
+
+	void set_flipicon (bool value) { UI_EXTRADATA($self, buttonExtraData_t).flipIcon = value; };
+	void set_background (const char* name) { UI_Button_SetBackgroundByName($self, name); };
+	void set_icon (const char* name) { UI_Button_SetIconByName($self, name); };
+};
+
+%rename (uiCheckBox) uiCheckBox_t;
+struct uiCheckBox_t {
+};
+%extend uiCheckBox_t {
+	void set_background (const char* name) { UI_CheckBox_SetBackgroundByName($self, name); };
+	void set_iconchecked (const char* name) { UI_CheckBox_SetIconCheckedByName($self, name); };
+	void set_iconunchecked (const char* name) { UI_CheckBox_SetIconUncheckedByName($self, name); };
+	void set_iconunknown (const char* name) { UI_CheckBox_SetIconUnknownByName($self, name); };
+};
+
+%rename (uiString) uiString_t;
+struct uiString_t {
+};
+%extend uiString_t {
+};
+
 %rename (uiWindow) uiWindow_t;
 struct uiWindow_t: uiNode_t {
 };
@@ -188,23 +358,6 @@ static int uiWindow_t_lua_onWindowClosed_set (uiWindow_t* node, LUA_EVENT fn) {
 }
 %}
 
-%rename (uiButton) uiButton_t;
-struct uiButton_t: uiNode_t {
-};
-%extend uiButton_t {
-};
-
-%rename (uiCheckBox) uiCheckBox_t;
-struct uiCheckBox_t {
-};
-%extend uiCheckBox_t {
-};
-
-%rename (uiString) uiString_t;
-struct uiString_t {
-};
-%extend uiString_t {
-};
 
 /* expose registration functions for callbacks */
 %rename(register_onload) UI_RegisterHandler_OnLoad;
@@ -248,4 +401,13 @@ uiString_t* UI_CreateString (uiNode_t* parent, const char* name, const char* sup
 
 %rename (create_window) UI_CreateWindow;
 uiWindow_t* UI_CreateWindow (const char* name, const char* super);
+
+/* expose common functions to lua */
+%rename (print) Com_Printf;
+void Com_Printf (const char* fmt);
+%rename (dprint) Com_DPrintf;
+void Com_DPrintf(int level, const char* fmt);
+%rename (error) Com_Error;
+void Com_Error(int code, const char* fmt);
+
 

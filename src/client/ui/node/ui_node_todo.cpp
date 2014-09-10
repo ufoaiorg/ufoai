@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../input/cl_input.h"
 
+#include "../../../common/scripts_lua.h"
+
 /**
  * @brief Custom tooltip of todo node
  * @param[in] node Node we request to draw tooltip
@@ -89,4 +91,5 @@ void UI_RegisterTodoNode (uiBehaviour_t* behaviour)
 	behaviour->name = "todo";
 	behaviour->extends = "string";
 	behaviour->manager = UINodePtr(new uiTodoNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTodo_t *");
 }

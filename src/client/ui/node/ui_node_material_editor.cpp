@@ -39,6 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_model.h"
 #include "ui_node_material_editor.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA(node) UI_EXTRADATA(node, abstractScrollableExtraData_t)
 
 /*#define ANYIMAGES*/
@@ -581,6 +583,7 @@ void UI_RegisterMaterialEditorNode (uiBehaviour_t* behaviour)
 	behaviour->name = "material_editor";
 	behaviour->extends = "abstractscrollable";
 	behaviour->manager = UINodePtr(new uiMaterialEditorNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiMaterialEditor_t *");
 
 	/** @todo convert it to ui functions */
 	Cmd_AddCommand("ui_materialeditor_removestage", UI_MaterialEditorRemoveStage_f, "Removes the selected material stage");

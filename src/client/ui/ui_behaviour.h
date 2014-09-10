@@ -52,6 +52,9 @@ struct uiBehaviour_t {
 	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
 	intptr_t extraDataSize;			/**< Size of the extra data used (it come from "u" attribute) @note use intptr_t because we use the virtual inheritance function (see virtualFunctions) */
 	uiBehaviour_t* super;			/**< link to the extended node */
+
+	void* lua_SWIG_typeinfo;		/**< pointer to a swig_type_info structure, set during initialization */
+
 #ifdef DEBUG
 	int count;						/**< number of node allocated */
 #endif
@@ -128,7 +131,7 @@ const struct value_s* UI_RegisterNodeMethod(uiBehaviour_t* behaviour, const char
 const struct value_s* UI_GetPropertyFromBehaviour(const uiBehaviour_t* behaviour, const char* name) __attribute__ ((warn_unused_result));
 
 /**
- * @brief Initialize a node behaviour memory, after registration, and before unsing it.
+ * @brief Initialize a node behaviour memory, after registration, and before using it.
  * @param behaviour Behaviour to initialize
  */
 void UI_InitializeNodeBehaviour(uiBehaviour_t* behaviour);

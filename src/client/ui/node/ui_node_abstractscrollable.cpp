@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE abstractScrollableExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
@@ -203,6 +205,7 @@ void UI_RegisterAbstractScrollableNode (uiBehaviour_t* behaviour)
 	behaviour->manager = UINodePtr(new uiAbstractScrollableNode());
 	behaviour->isAbstract = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractScrollable_t *");
 
 	/* position of the vertical view (into the full number of elements the node contain) */
 	UI_RegisterExtradataNodeProperty(behaviour, "viewpos", V_INT, EXTRADATA_TYPE, scrollY.viewPos);

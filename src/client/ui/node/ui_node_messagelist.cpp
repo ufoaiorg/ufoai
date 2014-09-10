@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../../shared/parse.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA(node) UI_EXTRADATA(node, abstractScrollableExtraData_t)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, abstractScrollableExtraData_t)
 
@@ -306,4 +308,5 @@ void UI_RegisterMessageListNode (uiBehaviour_t* behaviour)
 	behaviour->name = "messagelist";
 	behaviour->extends = "abstractscrollable";
 	behaviour->manager = UINodePtr(new uiMessageListNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiMessageList_t *");
 }

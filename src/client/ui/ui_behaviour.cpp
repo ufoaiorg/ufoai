@@ -27,10 +27,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_behaviour.h"
 #include "ui_parse.h"
 
+#include "../../common/scripts_lua.h"
+#include "../../common/swig_lua_runtime.h"
+
 /**
  * Size of the temporary property-list allocation (per behaviour)
  */
 #define LOCAL_PROPERTY_SIZE	128
+
 
 /**
  * @brief Register a property to a behaviour.
@@ -116,8 +120,10 @@ const value_t* UI_GetPropertyFromBehaviour (const uiBehaviour_t* behaviour, cons
 }
 
 /**
- * @brief Initialize a node behaviour memory, after registration, and before unsing it.
+ * @brief Initialize a node behaviour memory, after registration, and before using it.
  * @param behaviour Behaviour to initialize
+ * @note This method sets the SWIG type for this behaviour for the runtime conversion of uiNode_t* values
+ * to the correct subclass.
  */
 void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 {
@@ -198,6 +204,9 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 			property++;
 		}
 	}
+
+	/* add SWIG type value based on the name query */
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery(behaviour->name);
 
 	behaviour->isInitialized = true;
 }

@@ -46,7 +46,6 @@ extern "C" {
 
 	/* references to SWIG generated lua bindings */
 	extern int luaopen_ufo (lua_State *L);
-	extern int luaopen_ufoui (lua_State *L);
 }
 #include "../../common/swig_lua_runtime.h"
 
@@ -156,8 +155,6 @@ void UI_InitLua (void) {
 
     /* add the ufo module -> exposes common functions */
     luaopen_ufo (ui_luastate);
-    /* add the ufoui module -> exposes ui specific functions */
-    luaopen_ufoui (ui_luastate);
 
     /* initialize hash table for onload callback mechanism */
     ui_onload = HASH_NewTable (true, true, true);
@@ -359,24 +356,24 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 		return false;
 	}
 
-	/* test if node already exists */
+	/* test if node already exists (inside the parent subtree) */
 	/* Already existing node should only come from inherited node, we should not have 2 definitions of the same node into the same window. */
 	if (parent)
 		node = UI_GetNode(parent, name);
-
-	/* reuse a node */
+	/* it exists, so reuse the node */
 	if (node) {
-		/* if it has the same name, it should have the same behaviour */
+		/* sanity check: if it has the same name (inside this parent), it should have the same behaviour */
 		const uiBehaviour_t* test = (behaviour != nullptr) ? behaviour : (control != nullptr) ? control->behaviour : nullptr;
 		if (node->behaviour != test) {
 			Com_Printf("UI_CreateControl: new behaviour for reused node type specified (node \"%s\")\n", UI_GetPath(node));
 			return nullptr;
 		}
 	}
-	/* else initialize a new control */
+	/* it doesn't exist, so initialize a new control from an existing control (if specified) */
 	else if (control) {
 		node = UI_CloneNode(control, nullptr, true, name, false);
 		if (parent) {
+			// @todo is this necessary???
 			if (parent->root)
 				UI_UpdateRoot(node, parent->root);
 			UI_AppendNode(parent, node);
@@ -385,6 +382,7 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 	/* else initialize a new node */
 	else {
 		node = UI_AllocNode(name, behaviour->name, false);
+		// @todo again, is this necessary????
 		node->parent = parent;
 		if (parent)
 			node->root = parent->root;

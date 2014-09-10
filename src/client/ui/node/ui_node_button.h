@@ -43,3 +43,5 @@ typedef struct buttonExtraData_s {
 } buttonExtraData_t;
 
 void UI_RegisterButtonNode(uiBehaviour_t* behaviour);
+void UI_Button_SetBackgroundByName(uiNode_t* node, const char* name);
+void UI_Button_SetIconByName(uiNode_t* node, const char* name);

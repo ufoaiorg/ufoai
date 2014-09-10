@@ -40,6 +40,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_language.h"
 #include "../../input/cl_input.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE abstractOptionExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -277,4 +279,5 @@ void UI_RegisterTabNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->manager = UINodePtr(new uiTabNode());
 	behaviour->drawItselfChild = true;
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTab_t *");
 }

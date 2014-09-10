@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_special.h"
 #include "ui_node_abstractnode.h"
 
+#include "../../../common/scripts_lua.h"
+
 /**
  * @brief Call after the script initialized the node
  * @todo special cases should be managed as a common property event of the parent node
@@ -54,12 +56,14 @@ void UI_RegisterFuncNode (uiBehaviour_t* behaviour)
 	behaviour->isVirtual = true;
 	behaviour->isFunction = true;
 	behaviour->manager = UINodePtr(new uiFuncNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiFunc_t *");
 }
 
 void UI_RegisterNullNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "";
 	behaviour->isVirtual = true;
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiNull_t *");
 }
 
 /**
@@ -149,6 +153,7 @@ void UI_RegisterConFuncNode (uiBehaviour_t* behaviour)
 	behaviour->isVirtual = true;
 	behaviour->isFunction = true;
 	behaviour->manager = UINodePtr(new uiConFuncNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiConFunc_t *");
 }
 
 static void UI_CvarListenerNodeCallback (const char* cvarName, const char* oldValue, const char* newValue, void* data)
@@ -231,6 +236,8 @@ void UI_RegisterCvarFuncNode (uiBehaviour_t* behaviour)
 	behaviour->isVirtual = true;
 	behaviour->isFunction = true;
 	behaviour->manager = UINodePtr(new uiCvarNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiCVarListener_t *");
+
 	/* Force to bind the node to the cvar */
 	UI_RegisterNodeMethod(behaviour, "forceBind", UI_CvarListenerNodeForceBind);
 }

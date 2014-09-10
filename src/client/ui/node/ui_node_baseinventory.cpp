@@ -45,6 +45,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_keys.h"
 #include "../../cl_inventory.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE baseInventoryExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -755,6 +757,7 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "container";
 	behaviour->manager = UINodePtr(new uiBaseInventoryNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBaseInventory_t *");
 
 	/* Display/hide weapons. */
 	UI_RegisterExtradataNodeProperty(behaviour, "displayweapon", V_BOOL, baseInventoryExtraData_t, displayWeapon);

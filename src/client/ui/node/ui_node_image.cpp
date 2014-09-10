@@ -45,6 +45,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE imageExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -198,6 +200,7 @@ void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 	behaviour->name = "image";
 	behaviour->manager = UINodePtr(new uiImageNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiImage_t *");
 
 	/* Do not change the image ratio. The image will be proportionally stretched. */
 	UI_RegisterExtradataNodeProperty(behaviour, "preventratio", V_BOOL, EXTRADATA_TYPE, preventRatio);

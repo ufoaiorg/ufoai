@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../common/scripts.h"
 #include "../../input/cl_keys.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE panelExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -573,6 +575,7 @@ void UI_RegisterPanelNode (uiBehaviour_t* behaviour)
 	behaviour->name = "panel";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = UINodePtr(new uiPanelNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiPanel_t *");
 
 	/**
 	 * Select a layout manager to set position and size of child. Most of layout manager
