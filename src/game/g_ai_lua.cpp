@@ -1860,6 +1860,9 @@ static int AIL_difficulty (lua_State* L)
 	return 1;
 }
 
+/**
+ * @brief Return a position to flee to.
+ */
 static int AIL_positionflee (lua_State* L)
 {
 	/* Calculate move table. */
@@ -1909,6 +1912,9 @@ static int AIL_positionflee (lua_State* L)
 	return 1;
 }
 
+/**
+ * @brief Returns the type of the weapons in the actors hands.
+ */
 static int AIL_weapontype (lua_State* L)
 {
 	const Item* right = AIL_ent->getRightHandItem();
@@ -1920,6 +1926,9 @@ static int AIL_weapontype (lua_State* L)
 	return 2;
 }
 
+/**
+ * @brief Returns the currently moving AI actor
+ */
 static int AIL_actor (lua_State* L)
 {
 	aiActor_t actor = {AIL_ent};
