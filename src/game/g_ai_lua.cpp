@@ -153,6 +153,12 @@ static int actorL_shoot(lua_State* L);
 static int actorL_face(lua_State* L);
 static int actorL_team(lua_State* L);
 static int actorL_throwgrenade(lua_State* L);
+static int actorL_TU(lua_State* L);
+static int actorL_HP(lua_State* L);
+static int actorL_morale(lua_State* L);
+static int actorL_isinjured(lua_State* L);
+static int actorL_isarmed(lua_State* L);
+static int actorL_isdead(lua_State* L);
 /** Lua Actor metatable methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -163,6 +169,12 @@ static const luaL_reg actorL_methods[] = {
 	{"face", actorL_face},
 	{"team", actorL_team},
 	{"throwgrenade", actorL_throwgrenade},
+	{"TU", actorL_TU},
+	{"HP", actorL_HP},
+	{"morale", actorL_morale},
+	{"isinjured", actorL_isinjured},
+	{"isarmed", actorL_isarmed},
+	{"isdead", actorL_isdead},
 	{nullptr, nullptr}
 };
 
@@ -199,10 +211,6 @@ static const luaL_reg pos3L_methods[] = {
 static int AIL_print(lua_State* L);
 static int AIL_see(lua_State* L);
 static int AIL_crouch(lua_State* L);
-static int AIL_isinjured(lua_State* L);
-static int AIL_TU(lua_State* L);
-static int AIL_HP(lua_State* L);
-static int AIL_morale(lua_State* L);
 static int AIL_reactionfire(lua_State* L);
 static int AIL_roundsleft(lua_State* L);
 static int AIL_canreload(lua_State* L);
@@ -212,7 +220,6 @@ static int AIL_positionhide(lua_State* L);
 static int AIL_positionherd(lua_State* L);
 static int AIL_distance(lua_State* L);
 static int AIL_positionapproach(lua_State* L);
-static int AIL_isarmed(lua_State* L);
 static int AIL_grabweapon(lua_State* L);
 static int AIL_missiontargets(lua_State* L);
 static int AIL_waypoints(lua_State* L);
@@ -222,7 +229,6 @@ static int AIL_findweapons(lua_State* L);
 static int AIL_isfighter(lua_State* L);
 static int AIL_setwaypoint(lua_State* L);
 static int AIL_difficulty(lua_State* L);
-static int AIL_isdead(lua_State* L);
 static int AIL_positionflee(lua_State* L);
 static int AIL_weapontype(lua_State* L);
 static int AIL_actor(lua_State* L);
@@ -234,10 +240,6 @@ static const luaL_reg AIL_methods[] = {
 	{"print", AIL_print},
 	{"see", AIL_see},
 	{"crouch", AIL_crouch},
-	{"isinjured", AIL_isinjured},
-	{"TU", AIL_TU},
-	{"HP", AIL_HP},
-	{"morale", AIL_morale},
 	{"reactionfire", AIL_reactionfire},
 	{"roundsleft", AIL_roundsleft},
 	{"canreload", AIL_canreload},
@@ -247,7 +249,6 @@ static const luaL_reg AIL_methods[] = {
 	{"positionherd", AIL_positionherd},
 	{"distance", AIL_distance},
 	{"positionapproach", AIL_positionapproach},
-	{"isarmed", AIL_isarmed},
 	{"grabweapon", AIL_grabweapon},
 	{"missiontargets", AIL_missiontargets},
 	{"waypoints", AIL_waypoints},
@@ -257,7 +258,6 @@ static const luaL_reg AIL_methods[] = {
 	{"isfighter", AIL_isfighter},
 	{"setwaypoint", AIL_setwaypoint},
 	{"difficulty", AIL_difficulty},
-	{"isdead", AIL_isdead},
 	{"positionflee", AIL_positionflee},
 	{"weapontype", AIL_weapontype},
 	{"actor", AIL_actor},
@@ -586,6 +586,115 @@ static int actorL_throwgrenade(lua_State* L)
 	const bool result = G_ClientShoot(*AIL_player, AIL_ent, target->actor->pos, shotType, bestFd->fdIdx, nullptr, true, 0);
 
 	lua_pushboolean(L, result);
+	return 1;
+}
+
+/**
+ * @brief Gets the number of TU the actor has left.
+ */
+static int actorL_TU (lua_State* L)
+{
+	/* check parameter */
+	if (!(lua_gettop(L) && lua_isactor(L, 1))) {
+		AIL_invalidparameter(1);
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	const aiActor_t* actor = lua_toactor(L, 1);
+	assert(actor != nullptr);
+
+	lua_pushnumber(L, actor->actor->getUsableTUs());
+	return 1;
+}
+
+/**
+ * @brief Gets the number of HP the actor has left.
+ */
+static int actorL_HP (lua_State* L)
+{
+	/* check parameter */
+	if (!(lua_gettop(L) && lua_isactor(L, 1))) {
+		AIL_invalidparameter(1);
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	const aiActor_t* actor = lua_toactor(L, 1);
+	assert(actor != nullptr);
+
+	lua_pushnumber(L, actor->actor->HP);
+	return 1;
+}
+
+/**
+ * @brief Gets the current morale of the actor onto the stack.
+ */
+static int actorL_morale (lua_State* L)
+{
+	/* check parameter */
+	if (!(lua_gettop(L) && lua_isactor(L, 1))) {
+		AIL_invalidparameter(1);
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	const aiActor_t* actor = lua_toactor(L, 1);
+	assert(actor != nullptr);
+
+	lua_pushnumber(L, actor->actor->getMorale());
+	return 1;
+}
+
+/**
+* @brief Checks to see if the actor is injured
+*/
+static int actorL_isinjured (lua_State* L)
+{
+	/* check parameter */
+	if (!(lua_gettop(L) && lua_isactor(L, 1))) {
+		AIL_invalidparameter(1);
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	const aiActor_t* actor = lua_toactor(L, 1);
+	assert(actor != nullptr);
+
+	lua_pushboolean(L, actor->actor->HP != actor->actor->chr.maxHP);
+	return 1;
+}
+
+/**
+ * @brief Check if actor has weapons
+ */
+static int actorL_isarmed (lua_State* L)
+{
+	/* check parameter */
+	if (!(lua_gettop(L) && lua_isactor(L, 1))) {
+		AIL_invalidparameter(1);
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	const aiActor_t* actor = lua_toactor(L, 1);
+	assert(actor != nullptr);
+
+	lua_pushboolean(L, actor->actor->getRightHandItem() ? 1 : 0);
+	lua_pushboolean(L, actor->actor->getLeftHandItem() ? 1 : 0);
+	return 2;
+}
+
+/**
+ * @brief Check if the actor is dead.
+ */
+static int actorL_isdead (lua_State* L)
+{
+	/* check parameter */
+	if (!(lua_gettop(L) && lua_isactor(L, 1))) {
+		AIL_invalidparameter(1);
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	const aiActor_t* actor = lua_toactor(L, 1);
+	assert(actor != nullptr);
+
+	lua_pushboolean(L, actor->actor->isDead());
 	return 1;
 }
 
@@ -958,42 +1067,6 @@ static int AIL_crouch (lua_State* L)
 }
 
 /**
-* @brief Checks to see if the actor is injured
-*/
-static int AIL_isinjured (lua_State* L)
-{
-	lua_pushboolean(L, AIL_ent->HP != AIL_ent->chr.maxHP);
-	return 1;
-}
-
-/**
- * @brief Gets the number of TU the actor has left.
- */
-static int AIL_TU (lua_State* L)
-{
-	lua_pushnumber(L, AIL_ent->getUsableTUs());
-	return 1;
-}
-
-/**
- * @brief Gets the number of HP the actor has left.
- */
-static int AIL_HP (lua_State* L)
-{
-	lua_pushnumber(L, AIL_ent->HP);
-	return 1;
-}
-
-/**
- * @brief Gets the current morale of the actor onto the stack.
- */
-static int AIL_morale (lua_State* L)
-{
-	lua_pushnumber(L, AIL_ent->getMorale());
-	return 1;
-}
-
-/**
  * @brief Sets the actor's reaction fire mode.
  */
 static int AIL_reactionfire (lua_State* L)
@@ -1077,16 +1150,6 @@ static int AIL_reload (lua_State* L)
 
 	AI_TryToReloadWeapon(AIL_ent, container);
 	return 0;
-}
-
-/**
- * @brief Check if actor has weapons
- */
-static int AIL_isarmed (lua_State* L)
-{
-	lua_pushboolean(L, AIL_ent->getRightHandItem() ? 1 : 0);
-	lua_pushboolean(L, AIL_ent->getLeftHandItem() ? 1 : 0);
-	return 2;
 }
 
 /**
@@ -1794,15 +1857,6 @@ static int AIL_setwaypoint (lua_State* L)
 static int AIL_difficulty (lua_State* L)
 {
 	lua_pushnumber(L, g_difficulty->value);
-	return 1;
-}
-
-/**
- * @brief Return the difficulty number (in case we want different AI for different ones)
- */
-static int AIL_isdead (lua_State* L)
-{
-	lua_pushboolean(L, AIL_ent->isDead());
 	return 1;
 }
 

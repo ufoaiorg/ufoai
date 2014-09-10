@@ -24,12 +24,6 @@
 				true:		Crouch.
 				false:		Stand.
 
-		TU () -- Return the actor's current Time Units.
-
-		HP () -- Return the actor's current Hit Points.
-
-		morale () -- Return the actor's current morale (number)
-
 		isinjured () -- Check if the AI actor is injured (HP < maxHP), returns a boolean value
 
 		isdead () -- Check if the current AI actor is dead, returns a boolean value
@@ -45,7 +39,7 @@
 
 		weapontype () -- Return the types of the weapons the actor is holding (two strings -- right and left hand)
 
-		getweapon () -- Try to get a working weapon from the AI actor's inventory or the floor (to the right hand)
+		grabweapon () -- Try to get a working weapon from the AI actor's inventory or the floor (to the right hand)
 
 		findweapons (full_search) -- Returns a table of the positions (userdatas) of nearby usable weapons on the floor
 			full_search -- If true include unreachable weapons
@@ -123,6 +117,12 @@
 			min_group -- Min number of actors that must be within the grenades splash radius to throw the grenade (defaults to zero)
 			tus -- Max TUs to use for shooting (defaults to using all available TUs)
 
+		TU (actor) -- Return the actor's current Time Units.
+
+		HP (actor) -- Return the actor's current Hit Points.
+
+		morale (actor) -- Return the actor's current morale (number)
+
 	Position (aka pos3 -- userdata) metatable methods (Parameters required unless a default is noted)
 		goto (position) -- Makes the current AI actor move to the given position, returns true if the actor reached the target positon.
 
@@ -137,8 +137,8 @@
 	AI entry point.  Run at the start of the AI's turn.
 --]]
 function think ()
-	if ai.HP() < 50 then
-		if ai.morale() < 30 then
+	if ai.actor:HP() < 50 then
+		if ai.actor:morale() < 30 then
 			hide()
 		else
 			herd()
@@ -171,7 +171,7 @@ function searchweapon ()
 	local weapons = ai.findweapons()
 	if #weapons > 0 then
 		weapons[1]:goto()
-		return ai.getweapon()
+		return ai.grabweapon()
 	end
 	return false
 end
@@ -181,7 +181,7 @@ end
 	Try to make sure to have a working weapon
 --]]
 function readyweapon ()
-	local has_right, has_left = ai.isarmed()
+	local has_right, has_left = ai.actor:isarmed()
 	local right_ammo, left_ammo = ai.roundsleft()
 	if not right_ammo and not left_ammo then
 		if has_right then
@@ -191,8 +191,8 @@ function readyweapon ()
 		end
 	end
 
-	has_right, has_left = ai.isarmed()
-	if not has_right and not has_left and not ai.getweapon() then
+	has_right, has_left = ai.actor:isarmed()
+	if not has_right and not has_left and not ai.grabweapon() then
 		return searchweapon()
 	end
 
@@ -266,15 +266,15 @@ function engage( targets )
 	for i = 1, #targets do
 		target = targets[i]
 		-- Move until target in sight
-		local shoot_pos = ai.positionshoot(target, "fastest", ai.TU() - hide_tu) -- Get a shoot position
+		local shoot_pos = ai.positionshoot(target, "fastest", ai.actor:TU() - hide_tu) -- Get a shoot position
 		if shoot_pos then
 			-- Go shoot
 			shoot_pos:goto()
 
 			-- Throw a grenade if enough enemies are grouped
-			target:throwgrenade(min_group, ai.TU() - hide_tu)
+			target:throwgrenade(min_group, ai.actor:TU() - hide_tu)
 			-- Shoot
-			target:shoot(ai.TU() - hide_tu)
+			target:shoot(ai.actor:TU() - hide_tu)
 			done = i
 			break
 		end
