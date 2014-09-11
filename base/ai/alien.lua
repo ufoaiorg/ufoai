@@ -240,13 +240,13 @@ end
 --[[
 	Attempts to approach the target.
 --]]
-function approach( targets )
+function approach( targets, tus )
 	for i = 1, #targets do
 		local near_pos = false
 		if targets[1].pos then
-			near_pos = ai.positionapproach( targets[i].pos() )
+			near_pos = ai.positionapproach( targets[i].pos(), tus )
 		else
-			near_pos = ai.positionapproach( targets[i] )
+			near_pos = ai.positionapproach( targets[i], tus )
 		if near_pos then
 			near_pos:goto()
 			return targets[i]
@@ -257,12 +257,12 @@ end
 
 
 --[[
-	Engages target in combat.
+	Engages targets in combat.
 
 	Currently attempts to see target, shoot then hide.
 --]]
 function engage( targets )
-	local target = nil
+	local target = false
 	local hide_tu = 4 -- Crouch + face
 	local min_group = 3 -- Min enemy group for grenade throw
 
@@ -279,17 +279,18 @@ function engage( targets )
 			target:throwgrenade(min_group, ai.actor:TU() - hide_tu)
 			-- Shoot
 			target:shoot(ai.actor:TU() - hide_tu)
-			done = i
+			done = true
 			break
 		end
 	end
 
-	if not done then
-		target = approach(targets)
+	-- Hide
+	if done then
+		hide()
+	else
+		target = approach(targets, ai.actor:TU() - hide_tu)
 	end
 
-	-- Hide
-	hide()
 	if target then
 		target:face()
 	else
