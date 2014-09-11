@@ -24,18 +24,12 @@
 				true:		Crouch.
 				false:		Stand.
 
-		isinjured () -- Check if the AI actor is injured (HP < maxHP), returns a boolean value
-
-		isdead () -- Check if the current AI actor is dead, returns a boolean value
-
 		reactionfire (state) -- Check if Reaction Fire is enabled (returns a boolean value) and optionally change it
 			state -- Ask to change the RF state:
 				"disable":	Disable reaction fire.
 				Any other string: Enable reaction fire.
 
 		isfighter () -- Chack if the current AI actor is capable of fighting (can use weapons or has an onlyweapon)
-
-		isarmed () -- Check if AI actor has weapons, returns two booleans one for each hand.
 
 		weapontype () -- Return the types of the weapons the actor is holding (two strings -- right and left hand)
 
@@ -100,6 +94,8 @@
 
 		difficulty () -- Returns the current difficulty of the batlescape from -4 (easiest) to 4 (hardest)
 
+		actor () -- Returns the currently mocving AI actor (userdata)
+
 
 	Actor (userdata) metatable methods (Parameters required unless a default is noted)
 		pos (actor) -- Returns the given actor's positon (userdata)
@@ -123,10 +119,15 @@
 
 		morale (actor) -- Return the actor's current morale (number)
 
+		isinjured (actor) -- Check if the AI actor is injured (HP < maxHP), returns a boolean value
+
+		isdead (actor) -- Check if the current AI actor is dead, returns a boolean value
+
+		isarmed (actor) -- Check if AI actor has weapons, returns two booleans one for each hand.
+
+
 	Position (aka pos3 -- userdata) metatable methods (Parameters required unless a default is noted)
 		goto (position) -- Makes the current AI actor move to the given position, returns true if the actor reached the target positon.
-
-		approach (position) -- Makes the current AI actor move as far towards the given position as possible (Only considers positions along the fastest path to the target)
 
 		face (position) -- Makes the current AI actor try to turn to the direction of the given postion.
 
@@ -223,8 +224,7 @@ function search ()
 		end
 		-- Can't get to any mission target, try to approach the nearest one
 		if not found then
-			targets[0]:approach()
-			found = true
+			found = approach(targets)
 		end
 	end
 
@@ -242,7 +242,11 @@ end
 --]]
 function approach( targets )
 	for i = 1, #targets do
-		local near_pos = ai.positionapproach( targets[i] )
+		local near_pos = false
+		if targets[1].pos then
+			near_pos = ai.positionapproach( targets[i].pos() )
+		else
+			near_pos = ai.positionapproach( targets[i] )
 		if near_pos then
 			near_pos:goto()
 			return targets[i]
