@@ -216,7 +216,6 @@ static int AIL_reload(lua_State* L);
 static int AIL_positionshoot(lua_State* L);
 static int AIL_positionhide(lua_State* L);
 static int AIL_positionherd(lua_State* L);
-static int AIL_distance(lua_State* L);
 static int AIL_positionapproach(lua_State* L);
 static int AIL_grabweapon(lua_State* L);
 static int AIL_missiontargets(lua_State* L);
@@ -245,7 +244,6 @@ static const luaL_reg AIL_methods[] = {
 	{"positionshoot", AIL_positionshoot},
 	{"positionhide", AIL_positionhide},
 	{"positionherd", AIL_positionherd},
-	{"distance", AIL_distance},
 	{"positionapproach", AIL_positionapproach},
 	{"grabweapon", AIL_grabweapon},
 	{"missiontargets", AIL_missiontargets},
@@ -828,7 +826,7 @@ static int pos3L_face (lua_State* L)
 }
 
 /**
- * @brief Return the distance to the position
+ * @brief Return the distance the position an the AI actor
  */
 static int pos3L_distance (lua_State* L)
 {
@@ -837,13 +835,37 @@ static int pos3L_distance (lua_State* L)
 	pos3_t* pos = lua_topos3(L, 1);
 	assert(pos != nullptr);
 
-	/* Find a path to the target pos */
-	if (!G_FindPath(0, AIL_ent, AIL_ent->pos, *pos, AIL_ent->isCrouched(), ROUTING_NOT_REACHABLE - 1)) {
-		lua_pushnumber(L, ROUTING_NOT_REACHABLE);
+	ailSortCritType_t distType = AILSC_DIST;
+	if (lua_gettop(L) > 1) {
+		if (lua_isstring(L, 2)) {
+			const char* str = lua_tostring(L, 2);
+			if (Q_streq(str, "dist"))
+				distType = AILSC_DIST;
+			else if (Q_streq(str, "path"))
+				distType = AILSC_PATH;
+			else
+				AIL_invalidparameter(2);
+		} else {
+			AIL_invalidparameter(2);
+		}
+	}
+
+	switch (distType) {
+	case AILSC_PATH:
+		/* Find a path to the target pos */
+		if (!G_FindPath(0, AIL_ent, AIL_ent->pos, *pos, AIL_ent->isCrouched(), ROUTING_NOT_REACHABLE - 1)) {
+			lua_pushnumber(L, ROUTING_NOT_REACHABLE);
+			return 1;
+		}
+		lua_pushnumber(L, G_ActorMoveLength(AIL_ent, level.pathingMap, *pos, false));
+		return 1;
+	case AILSC_DIST:
+	default:
+		vec3_t to;
+		PosToVec(*pos, to);
+		lua_pushnumber(L, VectorDist(AIL_ent->origin, to));
 		return 1;
 	}
-	lua_pushnumber(L, G_ActorMoveLength(AIL_ent, level.pathingMap, *pos, false));
-	return 1;
 }
 
 /**
@@ -1344,23 +1366,6 @@ static int AIL_positionherd (lua_State* L)
 		lua_pushboolean(L, 0);
 	}
 	AIL_ent->setOrigin(save);
-	return 1;
-}
-
-/**
- * @brief Returns distance between AI and target
- * @note @c target (passed trough the lua stack) The target to which the distance is calculated
- */
-static int AIL_distance (lua_State* L)
-{
-
-	/* check parameter */
-	assert(lua_gettop(L) && lua_isactor(L, 1));
-
-	/* calculate distance */
-	const aiActor_t* target = lua_toactor(L, 1);
-	const vec_t dist = VectorDist(AIL_ent->origin, target->actor->origin);
-	lua_pushnumber(L, dist);
 	return 1;
 }
 
