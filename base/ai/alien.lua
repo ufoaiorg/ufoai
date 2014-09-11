@@ -89,9 +89,6 @@
 
 		positionflee () -- Returns a position (userdata) where to flee.
 
-		distance (target) -- Returns the distance to the target.
-			target -- *Required* Actor (userdata) to get the distance to.
-
 		difficulty () -- Returns the current difficulty of the batlescape from -4 (easiest) to 4 (hardest)
 
 		actor () -- Returns the currently mocving AI actor (userdata)
@@ -131,7 +128,8 @@
 
 		face (position) -- Makes the current AI actor try to turn to the direction of the given postion.
 
-		distance (position) -- Returns the distance to the given position.
+		distance (position, type) -- Returns the distance to the given position.
+			type -- "dist" (default -- linear distance in map units) or "path" (pathing distance)
 --]]
 
 --[[
