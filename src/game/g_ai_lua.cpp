@@ -150,7 +150,6 @@ static aiActor_t* lua_pushactor(lua_State* L, aiActor_t* actor);
 static int actorL_tostring(lua_State* L);
 static int actorL_pos(lua_State* L);
 static int actorL_shoot(lua_State* L);
-static int actorL_face(lua_State* L);
 static int actorL_team(lua_State* L);
 static int actorL_throwgrenade(lua_State* L);
 static int actorL_TU(lua_State* L);
@@ -166,7 +165,6 @@ static const luaL_reg actorL_methods[] = {
 	{"__tostring", actorL_tostring},
 	{"pos", actorL_pos},
 	{"shoot", actorL_shoot},
-	{"face", actorL_face},
 	{"team", actorL_team},
 	{"throwgrenade", actorL_throwgrenade},
 	{"TU", actorL_TU},
@@ -434,23 +432,6 @@ static int actorL_shoot (lua_State* L)
 
 	/* Success? */
 	lua_pushboolean(L, shot);
-	return 1;
-}
-
-/**
- * @brief Makes the actor face the position.
- */
-static int actorL_face (lua_State* L)
-{
-	assert(lua_isactor(L, 1));
-
-	/* Target */
-	const aiActor_t* target = lua_toactor(L, 1);
-
-	AI_TurnIntoDirection(AIL_ent, target->actor->pos);
-
-	/* Success. */
-	lua_pushboolean(L, 1);
 	return 1;
 }
 
