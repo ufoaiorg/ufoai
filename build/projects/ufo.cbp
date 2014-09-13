@@ -540,6 +540,8 @@
 		<Unit filename="../../src/client/cl_irc.h" />
 		<Unit filename="../../src/client/cl_language.cpp" />
 		<Unit filename="../../src/client/cl_language.h" />
+		<Unit filename="../../src/client/cl_lua.cpp" />
+		<Unit filename="../../src/client/cl_lua.h" />
 		<Unit filename="../../src/client/cl_main.cpp" />
 		<Unit filename="../../src/client/cl_menu.cpp" />
 		<Unit filename="../../src/client/cl_menu.h" />
