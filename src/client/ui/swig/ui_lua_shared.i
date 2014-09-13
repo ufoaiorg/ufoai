@@ -491,5 +491,5 @@ void Com_Error(int code, const char* fmt);
 
 /* expose registration functions for callbacks */
 %rename(register_onload) UI_RegisterHandler_OnLoad;
-void UI_RegisterHandler_OnLoad (lua_State *L, LUA_FUNCTION fcn);
+void UI_RegisterHandler_OnLoad (LUA_FUNCTION fcn);
 

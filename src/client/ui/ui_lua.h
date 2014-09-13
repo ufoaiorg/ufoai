@@ -30,17 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // prototype
 struct uiNode_t;
 
-/**
- * @brief global lua state used in ui-lua interfacing
- */
-extern lua_State* ui_luastate;
-
-/* lua initialization functions */
+/* ui lua startup/shutdown */
 void UI_InitLua (void);
 void UI_ShutdownLua (void);
 
-/* lua registration functions */
-void UI_RegisterHandler_OnLoad (lua_State *L, LUA_FUNCTION fnc);
+/* register ufo module onload callback */
+void UI_RegisterHandler_OnLoad (LUA_FUNCTION fcn);
 
 /* lua script functions */
 bool UI_ParseAndLoadLuaScript (const char* name, const char** text);
