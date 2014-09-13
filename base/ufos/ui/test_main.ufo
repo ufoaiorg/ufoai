@@ -1,0 +1,195 @@
+--!usr/bin/lua
+
+--[[
+	first create the node structure
+--]]
+wndMain = ufo.create_window ("lua_main", nil)
+wndMain:set_background ("ui/main_bg")
+
+--[[
+	string title {
+		string			"_UFO: ALIEN INVASION"
+		size			"500 50"
+		pos				"262 50"
+		font			"f_title"
+		color			"0.59 0.78 0.56 1"
+		contentalign	ALIGN_CC
+	}
+--]]
+local lbTitle = ufo.create_string (wndMain, "lbTitle", nil)
+lbTitle:set_text("_UFO: ALIEN INVASION")
+lbTitle:set_pos(262, 50)
+lbTitle:set_size(500, 50)
+lbTitle:set_font("f_title")
+lbTitle:set_color(0.59, 0.78, 0.56, 1.0)
+lbTitle:set_contentalign(ufo.ALIGN_CC)
+
+--[[
+	button facebook
+	{
+		pos			"10 720"
+		string		"_Facebook"
+		tooltip		"_Like us on facebook"
+		size		"80 20"
+		color		"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		padding		0
+		onClick		{ cmd "cl_openurl http://www.facebook.com/ufoai/;" }
+	}
+--]]
+local btnFacebook = ufo.create_button(wndMain, "btnFacebook", nil)
+btnFacebook:set_text("_Facebook")
+btnFacebook:set_tooltip("_Like us on facebook")
+btnFacebook:set_pos(10, 720)
+btnFacebook:set_size(80, 20)
+btnFacebook:set_color(0.0, 0.5, 0.0, 1.0)
+btnFacebook:set_selectcolor(1.0, 1.0, 1.0, 1.0)
+btnFacebook:set_padding (0)
+btnFacebook.on_click = function (sender)
+		ufo.cmd ("cl_openurl http://www.facebook.com/ufoai/;")
+	end
+
+--[[
+	button twitter
+	{
+		pos			"100 720"
+		string		"_Twitter"
+		tooltip		"_Follow us on twitter"
+		size		"70 20"
+		color		"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		padding		0
+		onClick		{ cmd "cl_openurl http://www.twitter.com/ufoai/;" }
+	}
+--]]
+local btnTwitter = ufo.create_button(wndMain, "btnTwitter", nil)
+btnTwitter:set_text("_Twitter")
+btnTwitter:set_tooltip("_Follow u on twitter")
+btnTwitter:set_pos(100, 720)
+btnTwitter:set_size(70, 20)
+btnTwitter:set_color(0.0, 0.5, 0.0, 1.0)
+btnTwitter:set_selectcolor(1.0, 1.0, 1.0, 1.0)
+btnTwitter:set_padding (0)
+btnTwitter.on_click = function (sender)
+		ufo.cmd ("cl_openurl http://www.twitter.com/ufoai/;")
+	end
+
+--[[
+	panel buttons {
+		{
+			pos			"312 250"
+			size		"400 400"
+			layout		LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	15
+		}
+		MainMenuBtn btn_campaign {
+			string		"_CAMPAIGN"
+			onClick	{
+				cmd "ui_push campaign;"
+			}
+		}
+		MainMenuBtn btn_skirmish {
+			string		"_SKIRMISH"
+			onClick {
+				cmd "ui_push skirmish;"
+			}
+		}
+		MainMenuBtn btn_multiplayer {
+			string		"_MULTIPLAYER"
+			onClick {
+				cmd "ui_push multiplayer;"
+			}
+		}
+		MainMenu2Btn btn_options {
+			string		"_OPTIONS"
+			onClick {
+				cmd "ui_push options;"
+			}
+		}
+		MainMenu2Btn btn_tutorials {
+			string	"_TUTORIALS"
+			onClick	{
+				cmd "ui_push tutorials;"
+			}
+		}
+		MainMenu2Btn btn_credits {
+			string	"_DEVELOPERS"
+			onClick {
+				cmd "seq_start developers;"
+			}
+		}
+		MainMenuExitBtn btn_exit {
+			string	"_EXIT"
+			onClick {
+				cmd "quit;"
+			}
+		}
+	}
+--]]
+local pnlButtons = ufo.create_panel (wndMain, "pnlButtons", nil)
+pnlButtons:set_pos(312, 250)
+pnlButtons:set_size (400, 400)
+pnlButtons:set_layout (ufo.LAYOUT_TOP_DOWN_FLOW)
+pnlButtons:set_layoutmargin (15)
+
+local btnCampaign = ufo.create_button (pnlButtons, "btnCampaign", "MainMenuBtn")
+btnCampaign:set_text ("_CAMPAIGN")
+btnCampaign.on_click = function (sender)
+		ufo.cmd "ui_push campaign;"
+	end
+
+local btnSkirmish = ufo.create_button (pnlButtons, "btnSkirmish", "MainMenuBtn")
+btnSkirmish:set_text ("_SKIRMISH")
+btnSkirmish.on_click = function (sender)
+		cmd "ui_push skirmish;"
+	end
+
+local btnMultiplayer = ufo.create_button (pnlButtons, "btnMultiplayer", "MainMenuBtn")
+btnMultiplayer:set_text ("_MULTIPLAYER")
+btnMultiplayer.on_click = function (sender)
+		cmd "ui_push multiplayer;"
+	end
+
+local btnOptions = ufo.create_button (pnlButtons, "btnOptions", "MainMenu2Btn")
+btnOptions:set_text ("_OPTIONS")
+btnOptions.on_click = function (sender)
+		ufo.cmd ("ui_push options;")
+	end
+
+local btnTutorials = ufo.create_button (pnlButtons, "btnTutorials", "MainMenu2Btn")
+btnTutorials:set_text ("_TUTORIALS")
+btnTutorials.on_click = function (sender)
+		ufo.cmd ("ui_push tutorials;")
+	end
+
+local btnCredits = ufo.create_button (pnlButtons, "btnCredits", "MainMenu2Btn")
+btnCredits:set_text ("_DEVELOPERS")
+btnCredits.on_click = function (sender)
+		ufo.cmd ("seq_start developers;")
+	end
+	
+local btnExit = ufo.create_button (pnlButtons, "btnExit", "MainMenuExitBtn")
+btnExit:set_text ("_EXIT")
+btnExit.on_click = function (sender)
+		ufo.cmd ("quit;")
+	end
+
+--[[
+	string version {
+		string	*cvar:version
+		pos		"10 744"
+		size	"1004 20"
+	}
+--]]
+local lbVersion = ufo.create_string (wndMain, "lbVersion", nil)
+lbVersion:set_text (ufo.findvar("version"):as_string())
+lbVersion:set_pos (10, 744)
+lbVersion:set_size (1004, 20)
+	
+function load ()
+	return wndMain
+end
+	
+-- register callbacks
+ufo.register_onload (load)
+

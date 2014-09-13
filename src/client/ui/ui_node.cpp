@@ -688,7 +688,8 @@ void UI_InsertNode (uiNode_t* const parent, uiNode_t* prevNode, uiNode_t* newNod
 	newNode->next   = *anchor;
 	*anchor         = newNode;
 	newNode->parent = parent;
-	newNode->root   = parent->root;
+
+	UI_UpdateRoot (newNode, parent->root);
 
 	if (!parent->firstChild) {
 		parent->firstChild = newNode;

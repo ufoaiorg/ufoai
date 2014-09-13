@@ -26,11 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 extern "C" {
-	#include "../../libs/lua/lua.h"
-	#include "../../libs/lua/lauxlib.h"
+	#include "../libs/lua/lua.h"
+	#include "../libs/lua/lualib.h"
+	#include "../libs/lua/lauxlib.h"
 }
-
-
 
 
 /**
@@ -61,3 +60,7 @@ typedef int LUA_INSTANCE;
  */
 extern void* UI_SWIG_TypeQuery (const char* name);
 
+/**
+ * @brief returns the lua typename of the node.
+ */
+extern const char* UI_SWIG_NodeTypeName (void* node);
