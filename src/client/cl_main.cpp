@@ -48,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_inventory.h"
 #include "cl_menu.h"
 #include "cl_http.h"
+#include "cl_lua.h"
 #include "input/cl_joystick.h"
 #include "cinematic/cl_cinematic.h"
 #include "sound/s_music.h"
@@ -1208,6 +1209,7 @@ void CL_Init (void)
 	S_Init();
 	SCR_Init();
 
+	CL_InitLua();
 	CL_InitLocal();
 
 	Irc_Init();
@@ -1262,6 +1264,7 @@ void CL_Shutdown (void)
 	S_Shutdown();
 	R_Shutdown();
 	UI_Shutdown();
+	CL_ShutdownLua();
 	CIN_Shutdown();
 	SEQ_Shutdown();
 	GAME_Shutdown();

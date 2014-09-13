@@ -2630,18 +2630,17 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_cvar_t swig_types[3]
 #define SWIGTYPE_p_layoutAlign_t swig_types[4]
 #define SWIGTYPE_p_linkedList_t swig_types[5]
-#define SWIGTYPE_p_lua_State swig_types[6]
-#define SWIGTYPE_p_panelLayout_t swig_types[7]
-#define SWIGTYPE_p_uiAbstractScrollable_t swig_types[8]
-#define SWIGTYPE_p_uiAbstractValue_t swig_types[9]
-#define SWIGTYPE_p_uiButton_t swig_types[10]
-#define SWIGTYPE_p_uiCheckBox_t swig_types[11]
-#define SWIGTYPE_p_uiNode_t swig_types[12]
-#define SWIGTYPE_p_uiPanel_t swig_types[13]
-#define SWIGTYPE_p_uiString_t swig_types[14]
-#define SWIGTYPE_p_uiWindow_t swig_types[15]
-static swig_type_info *swig_types[17];
-static swig_module_info swig_module = {swig_types, 16, 0, 0, 0, 0};
+#define SWIGTYPE_p_panelLayout_t swig_types[6]
+#define SWIGTYPE_p_uiAbstractScrollable_t swig_types[7]
+#define SWIGTYPE_p_uiAbstractValue_t swig_types[8]
+#define SWIGTYPE_p_uiButton_t swig_types[9]
+#define SWIGTYPE_p_uiCheckBox_t swig_types[10]
+#define SWIGTYPE_p_uiNode_t swig_types[11]
+#define SWIGTYPE_p_uiPanel_t swig_types[12]
+#define SWIGTYPE_p_uiString_t swig_types[13]
+#define SWIGTYPE_p_uiWindow_t swig_types[14]
+static swig_type_info *swig_types[16];
+static swig_module_info swig_module = {swig_types, 15, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -6843,15 +6842,13 @@ fail:
 
 static int _wrap_register_onload(lua_State* L) {
   int SWIG_arg = 0;
-  lua_State *arg1 = (lua_State *) 0 ;
-  LUA_FUNCTION arg2 ;
+  LUA_FUNCTION arg1 ;
   
-  arg1 = L;
   SWIG_check_num_args("UI_RegisterHandler_OnLoad",1,1)
   {
-    arg2 = (LUA_FUNCTION)luaL_ref (L, LUA_REGISTRYINDEX);
+    arg1 = (LUA_FUNCTION)luaL_ref (L, LUA_REGISTRYINDEX);
   }
-  UI_RegisterHandler_OnLoad(arg1,arg2);
+  UI_RegisterHandler_OnLoad(arg1);
   
   return SWIG_arg;
   
@@ -6999,7 +6996,6 @@ static swig_type_info _swigt__p_align_t = {"_p_align_t", "enum align_t *|align_t
 static swig_type_info _swigt__p_cvar_t = {"_p_cvar_t", "cvar_t *", 0, 0, (void*)&_wrap_class_cvar_t, 0};
 static swig_type_info _swigt__p_layoutAlign_t = {"_p_layoutAlign_t", "enum layoutAlign_t *|layoutAlign_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_linkedList_t = {"_p_linkedList_t", "linkedList_t *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_lua_State = {"_p_lua_State", "lua_State *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_panelLayout_t = {"_p_panelLayout_t", "enum panelLayout_t *|panelLayout_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_uiAbstractScrollable_t = {"_p_uiAbstractScrollable_t", "uiAbstractScrollable_t *", 0, 0, (void*)&_wrap_class_uiAbstractScrollable_t, 0};
 static swig_type_info _swigt__p_uiAbstractValue_t = {"_p_uiAbstractValue_t", "uiAbstractValue_t *", 0, 0, (void*)&_wrap_class_uiAbstractValue_t, 0};
@@ -7017,7 +7013,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_cvar_t,
   &_swigt__p_layoutAlign_t,
   &_swigt__p_linkedList_t,
-  &_swigt__p_lua_State,
   &_swigt__p_panelLayout_t,
   &_swigt__p_uiAbstractScrollable_t,
   &_swigt__p_uiAbstractValue_t,
@@ -7035,7 +7030,6 @@ static swig_cast_info _swigc__p_align_t[] = {  {&_swigt__p_align_t, 0, 0, 0},{0,
 static swig_cast_info _swigc__p_cvar_t[] = {  {&_swigt__p_cvar_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_layoutAlign_t[] = {  {&_swigt__p_layoutAlign_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_linkedList_t[] = {  {&_swigt__p_linkedList_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_lua_State[] = {  {&_swigt__p_lua_State, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_panelLayout_t[] = {  {&_swigt__p_panelLayout_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiAbstractScrollable_t[] = {  {&_swigt__p_uiPanel_t, _p_uiPanel_tTo_p_uiAbstractScrollable_t, 0, 0},  {&_swigt__p_uiAbstractScrollable_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiAbstractValue_t[] = {  {&_swigt__p_uiAbstractValue_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -7053,7 +7047,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_cvar_t,
   _swigc__p_layoutAlign_t,
   _swigc__p_linkedList_t,
-  _swigc__p_lua_State,
   _swigc__p_panelLayout_t,
   _swigc__p_uiAbstractScrollable_t,
   _swigc__p_uiAbstractValue_t,

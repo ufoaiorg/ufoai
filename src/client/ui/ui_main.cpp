@@ -239,6 +239,7 @@ void UI_Shutdown (void)
 		}
 	}
 
+	UI_ShutdownLua();
 	UI_FontShutdown();
 	UI_ResetInput();
 	UI_ResetTimers();

@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/hashtable.h"
 #include "../../common/filesys.h"
 #include "../../common/scripts_lua.h"
+#include "../cl_lua.h"
 
 //#include "../client.h"
 #include "ui_main.h"
@@ -42,167 +43,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_parse.h"
 #include "ui_internal.h"
 
-/* references to SWIG generated lua bindings */
-extern "C" int luaopen_ufo (lua_State *L);
-
 #include "../../common/swig_lua_runtime.h"
 
-/* global lua state for ui-lua interfacing */
-lua_State* ui_luastate = nullptr;
 /* internal field for passing script name as a key to lua registration functions */
 char ui_scriptname[256] = "";
-/* hash map for storing callback references */
-hashTable_s* ui_onload = nullptr;
+
 
 /**
- * @brief Loader that enables the lua files to access .ufo files through the ufo filesystem.
- * @note This function is called from inside the lua environment. If lua encounters a 'require' statement,
- * it uses an internal table of loading functions to load the module.
- */
-static int UI_UfoModuleLoader (lua_State* L) {
-	/* this function is called by lua with the module name on the stack */
-	char module[256];
-	char errmsg[256];
-	const char* name = lua_tostring (L, -1);
-	byte* buffer;
-
-	/* initialize */
-	memset(module, 0, sizeof(module));
-	Q_strncpyz (module, name, sizeof(module));
-	memset(errmsg, 0, sizeof(errmsg));
-
-	/* find the module using ufo's filesystem */
-	int len = FS_LoadFile (module, &buffer);
-	if (len != -1) {
-		/* found, the contents of the file is now present in buffer */
-		/* load the contents into the lua state */
-		if (luaL_loadbuffer (L, (const char*) buffer, len, module) == 0) {
-			return 1;
-		}
-		else {
-			/* push error string onto the stack */
-            sprintf(errmsg, "custom loader error - cannot load module named [%s]\n", module);
-			lua_pushstring (L, errmsg);
-		}
-	}
-	else {
-		/* push error string onto the stack */
-		sprintf(errmsg, "custom loader error - cannot find module named [%s]\n", module);
-		lua_pushstring (L, errmsg);
-	}
-	/* an error occured, return 0*/
-	return 0;
-}
-
-/**
- * @brief This function adds loader to the lua table of module loaders that enables lua to access the
- * ufo filesystem.
- */
-static void UI_InsertModuleLoader () {
-	/* save stack position */
-	int pos = lua_gettop (ui_luastate);
-
-	/* push the global table 'package' on the stack */
-	lua_getfield (ui_luastate, LUA_GLOBALSINDEX, "package");
-	/* using the table 'package', push the 'loaders' field on the stack */
-	lua_getfield (ui_luastate, -1, "loaders");
-	/* remote the 'package' entry from the stack */
-	lua_remove (ui_luastate, -2);
-
-	/* the lua stack now only holds the field 'loaders' on top */
-	/* next, determine the number of loaders by counting (lua doesn't have a function for this) */
-	int nloaders = 0;
-	/* lua_next pushes a (key, value) pair using the first entry following the key already on the stack;
-	   in this case we start with a nil key so lua_next will return the first (key,value) pair in the table
-	   of loaders */
-	lua_pushnil (ui_luastate);
-	/* if lua_next reaches the end, it returns 0 */
-	while (lua_next (ui_luastate, -2) != 0) {
-		/* lua_next has pushed a (key,value) pair on the stack; remove the value, keep the key
-		   for the next iteration */
-		lua_pop (ui_luastate, 1);
-		nloaders++;
-	}
-
-	/* now that we have the number of entries in the 'loaders' table, we can add or own loader */
-	lua_pushinteger (ui_luastate, nloaders + 1);
-	lua_pushcfunction (ui_luastate, UI_UfoModuleLoader);
-	lua_rawset (ui_luastate, -3);
-
-	/* restore stack position */
-	lua_settop (ui_luastate, pos);
-}
-
-/**
- * @brief Initializes the ui-lua interfacing environment.
+ * @brief Performs UI specific initialization. Call this after CL_InitLua.
  */
 void UI_InitLua (void) {
-	/* clean up old state */
-	if (ui_luastate) {
-		UI_ShutdownLua();
-	}
-
-	/* initialize new lua environment dedicated to the ui */
-	ui_luastate = luaL_newstate();
-
-    /* add basic lua libraries to the lua environment */
-    luaL_openlibs(ui_luastate);
-
-    /* insert custom module loader */
-    UI_InsertModuleLoader();
-
-    /* add the ufo module -> exposes common functions */
-    luaopen_ufo (ui_luastate);
-
-    /* initialize hash table for onload callback mechanism */
-    ui_onload = HASH_NewTable (true, true, true);
 }
 
 /**
- * @brief Shutdown the ui-lua interfacing environment.
+ * @brief Performs UI specific lua shutdown. Call this before CL_ShutdownLua.
  */
 void UI_ShutdownLua (void) {
-	if (ui_luastate) {
-        HASH_DeleteTable (&ui_onload);
-        lua_close(ui_luastate);
-		ui_luastate = nullptr;
-	}
-}
-
-/**
- * @brief Registers a lua callback function, to be called when loading the lua script.
- * @param[in] L The lua state for calling lua.
- * @note The onload callback is file based.
-*/
-void UI_RegisterHandler_OnLoad (lua_State *L, LUA_FUNCTION fnc) {
-	int regvalue = (int) fnc;
-	/* store regvalue into the list of handlers */
-	int len = strlen (ui_scriptname);
-	if (len > 0) {
-		HASH_Insert (ui_onload, ui_scriptname, len, &regvalue, sizeof(regvalue));
-	}
-	else {
-		Com_Printf("lua callback registration error: script name has zero length!\n");
-	}
-}
-
-/**
- * @brief Calls the registered lua onload callback function.
- * @param[in] L The lua state for calling lua.
- * @param[in] script The name of the .ufo file holding the lua script.
- * @note The signature of the lua function is: onload ().
- * @note If the signature changes, this function should change too.
- */
-static void UI_CallHandler_OnLoad (lua_State *L, const char* script) {
-	/* look up the handler */
-	void *value = HASH_Get(ui_onload, script, strlen (script));
-	if (value) {
-		int regvalue = * ((int*)value);
-		lua_rawgeti (L, LUA_REGISTRYINDEX, regvalue);
-		if (lua_pcall (L, 0, 0, 0) != 0) {
-			Com_Printf ("lua error: %s\n", lua_tostring(ui_luastate, -1));
-		};
-	}
 }
 
 /**
@@ -212,11 +68,11 @@ static void UI_CallHandler_OnLoad (lua_State *L, const char* script) {
  * @note The signature of the event handler in lua is: onevent(sender)
  */
 bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
-	lua_rawgeti (ui_luastate, LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	swig_type_info *type_uiNode = SWIG_TypeQuery(ui_luastate, "uiNode_t *");
-	SWIG_NewPointerObj (ui_luastate, node, type_uiNode, 0); /* push sender on lua stack */
-	if (lua_pcall (ui_luastate, 1, 0, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
+	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
+	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
+	if (lua_pcall (CL_GetLuaState(), 1, 0, 0) != 0) {
+		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
 	};
 	return true;
 }
@@ -230,13 +86,13 @@ bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
  * @note The signature of the event handler in lua is: onevent(sender, x, y)
  */
 bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y) {
-	lua_rawgeti (ui_luastate, LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	swig_type_info *type_uiNode = SWIG_TypeQuery(ui_luastate, "uiNode_t *");
-	SWIG_NewPointerObj (ui_luastate, node, type_uiNode, 0); /* push sender on lua stack */
-	lua_pushinteger(ui_luastate, x); /* push x on lua stack */
-	lua_pushinteger(ui_luastate, y); /* push y on lua stack */
-	if (lua_pcall (ui_luastate, 3, 0, 0) != 0) {
-		Com_Printf ("lua error(1) [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
+	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
+	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
+	lua_pushinteger(CL_GetLuaState(), x); /* push x on lua stack */
+	lua_pushinteger(CL_GetLuaState(), y); /* push y on lua stack */
+	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
+		Com_Printf ("lua error(1) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
 	};
 	return true;
 }
@@ -250,13 +106,13 @@ bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y)
  * @note The signature of the event handler in lua is: onevent(sender, dx, dy)
  */
 bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int dy) {
-	lua_rawgeti (ui_luastate, LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	swig_type_info *type_uiNode = SWIG_TypeQuery(ui_luastate, "uiNode_t *");
-	SWIG_NewPointerObj (ui_luastate, node, type_uiNode, 0); /* push sender on lua stack */
-	lua_pushinteger(ui_luastate, dx); /* push dx on lua stack */
-	lua_pushinteger(ui_luastate, dy); /* push dy on lua stack */
-	if (lua_pcall (ui_luastate, 3, 0, 0) != 0) {
-		Com_Printf ("lua error(2) [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
+	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
+	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
+	lua_pushinteger(CL_GetLuaState(), dx); /* push dx on lua stack */
+	lua_pushinteger(CL_GetLuaState(), dy); /* push dy on lua stack */
+	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
+		Com_Printf ("lua error(2) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
 	};
 	return true;
 }
@@ -270,15 +126,30 @@ bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int
  * @note The signature of the event handler in lua is: onevent(sender, key, unicode)
  */
 bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int key, unsigned short unicode) {
-	lua_rawgeti (ui_luastate, LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	swig_type_info *type_uiNode = SWIG_TypeQuery(ui_luastate, "uiNode_t *");
-	SWIG_NewPointerObj (ui_luastate, node, type_uiNode, 0); /* push sender on lua stack */
-	lua_pushinteger(ui_luastate, key); /* push key on lua stack */
-	lua_pushinteger(ui_luastate, unicode); /* push unicode on lua stack */
-	if (lua_pcall (ui_luastate, 3, 0, 0) != 0) {
-		Com_Printf ("lua error(3) [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
+	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
+	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
+	lua_pushinteger(CL_GetLuaState(), key); /* push key on lua stack */
+	lua_pushinteger(CL_GetLuaState(), unicode); /* push unicode on lua stack */
+	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
+		Com_Printf ("lua error(3) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
 	};
 	return true;
+}
+
+/**
+ * @brief Register global lua callback function called after loading the module.
+ */
+void UI_RegisterHandler_OnLoad (LUA_FUNCTION fcn) {
+	CL_RegisterCallback(ui_scriptname, fcn);
+}
+
+/**
+ * @brief Call the registered callback handler. This stub primarily exists should the signature of the
+ * call change in the future. CL_ExecuteCallback only supports a callback with no arguments.
+ */
+void UI_CallHandler_OnLoad (lua_State* L, const char* key) {
+	CL_ExecuteCallback(L, key);
 }
 
 /**
@@ -296,21 +167,21 @@ bool UI_ParseAndLoadLuaScript (const char* name, const char** text) {
 	/* signal lua file found */
 	Com_Printf ("UI_ParseAndLoadLuaScript: %s\n", name);
 	/* load the contents of the lua file */
-	if (luaL_loadbuffer(ui_luastate, *text, ntext, name) == 0) {
+	if (luaL_loadbuffer(CL_GetLuaState(), *text, ntext, name) == 0) {
 		/* set the script name for calls to the registration functions */
 		Q_strncpyz (ui_scriptname, name, sizeof(ui_scriptname));
 		/* the script is loaded, now execute it; this will trigger any register_XXXX functions to be
 		   called by the lua script */
-		if (lua_pcall(ui_luastate, 0, LUA_MULTRET, 0) != 0) {
-			Com_Printf ("lua error: %s\n", lua_tostring(ui_luastate, -1));
+		if (lua_pcall(CL_GetLuaState(), 0, LUA_MULTRET, 0) != 0) {
+			Com_Printf ("lua error: %s\n", lua_tostring(CL_GetLuaState(), -1));
 		};
 		ui_scriptname[0]='\0';
 		/* at this point the lua file is loaded and callbacks are registered (on the stack),
 		   now call the onLoad if it exists */
-		UI_CallHandler_OnLoad (ui_luastate, name);
+		UI_CallHandler_OnLoad (CL_GetLuaState(), name);
 	}
 	else {
-        Com_Error(0, "lua load error: %s\n", lua_tostring(ui_luastate, -1));
+        Com_Error(0, "lua load error: %s\n", lua_tostring(CL_GetLuaState(), -1));
 	}
 	/* reset the content pointer, this will force the cached content to be released
 	   FS_NextScriptHeader. */
