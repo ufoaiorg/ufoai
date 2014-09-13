@@ -1218,7 +1218,7 @@ static int AIL_positionshoot (lua_State* L)
 		if (!AI_CheckPosition(actor, actor->pos))
 			continue;
 		/* Can we see the target? */
-		if (!G_IsVisibleForTeam(target->actor, actor->getTeam()) && G_ActorVis(actor->origin, actor, target->actor, true) < ACTOR_VIS_10)
+		if (!G_IsVisibleForTeam(target->actor, actor->getTeam()) && G_ActorVis(actor, target->actor, true) < ACTOR_VIS_10)
 			continue;
 
 		bool hasLoF = false;

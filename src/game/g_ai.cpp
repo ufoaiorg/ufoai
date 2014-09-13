@@ -384,7 +384,7 @@ bool AI_CheckUsingDoor (const Edict* ent, const Edict* door)
 			/* check whether the enemy is close enough to change the state */
 			if (VectorDist(check->origin, ent->origin) > G_VisCheckDist(ent))
 				continue;
-			const float actorVis = G_ActorVis(check->origin, check, ent, true);
+			const float actorVis = G_ActorVis(check, ent, true);
 			/* there is a visible enemy, don't use that door */
 			if (actorVis > ACTOR_VIS_0)
 				return false;
@@ -426,7 +426,7 @@ static bool AI_CheckCrouch (const Actor* actor)
 		/* check whether the enemy is close enough to change the state */
 		if (VectorDist(check->origin, actor->origin) > G_VisCheckDist(actor))
 			continue;
-		const float actorVis = G_ActorVis(check->origin, check, actor, true);
+		const float actorVis = G_ActorVis(check, actor, true);
 		if (actorVis >= ACTOR_VIS_50)
 			return true;
 	}
@@ -1017,7 +1017,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 		if (check->isSamePosAs(to) || !AI_IsHostile(actor, check))
 			continue;
 
-		if (!G_IsVisibleForTeam(check, actor->getTeam()) && G_ActorVis(actor->origin, actor, check, true) < ACTOR_VIS_10)
+		if (!G_IsVisibleForTeam(check, actor->getTeam()) && G_ActorVis(actor, check, true) < ACTOR_VIS_10)
 			continue;
 
 		/* shooting */
@@ -1210,7 +1210,7 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 		if (!(G_IsAlien(check) || actor->isInsane()))
 			continue;
 
-		if (G_ActorVis(check->origin, check, actor, true) > 0.25)
+		if (G_ActorVis(check, actor, true) > 0.25)
 			reactionTrap += SCORE_NONHIDING_PLACE_PENALTY;
 	}
 	delta -= reactionTrap;
@@ -1288,7 +1288,7 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
 		if (actor->isInsane())
 			continue;
 
-		if (G_ActorVis(check->origin, check, actor, true) > 0.25)
+		if (G_ActorVis(check, actor, true) > 0.25)
 			bestActionScore -= SCORE_NONHIDING_PLACE_PENALTY;
 	}
 

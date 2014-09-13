@@ -73,16 +73,15 @@ static bool G_LineVis (const vec3_t from, const vec3_t to)
  * particular actor.
  * @sa CL_ActorVis
  */
-float G_ActorVis (const vec3_t from, const Edict* ent, const Edict* check, bool full)
+float G_ActorVis (const Edict* ent, const Edict* check, bool full)
 {
 	const float distance = VectorDist(check->origin, ent->origin);
+	vec3_t eyeEnt;
+	G_ActorGetEyeVector(ent, eyeEnt);
 
 	/* units that are very close are visible in the smoke */
 	if (distance > UNIT_SIZE * 1.5f) {
-		vec3_t eyeEnt;
 		Edict* e = nullptr;
-
-		G_ActorGetEyeVector(ent, eyeEnt);
 
 		while ((e = G_EdictsGetNextInUse(e))) {
 			if (G_IsSmoke(e)) {
@@ -110,8 +109,8 @@ float G_ActorVis (const vec3_t from, const Edict* ent, const Edict* check, bool 
 	}
 
 	/* side shifting -> better checks */
-	dir[0] = from[1] - check->origin[1];
-	dir[1] = check->origin[0] - from[0];
+	dir[0] = eyeEnt[1] - check->origin[1];
+	dir[1] = check->origin[0] - eyeEnt[0];
 	dir[2] = 0;
 	VectorNormalizeFast(dir);
 	VectorMA(test, -7, dir, test);
@@ -119,7 +118,7 @@ float G_ActorVis (const vec3_t from, const Edict* ent, const Edict* check, bool 
 	/* do 3 tests */
 	int n = 0;
 	for (int i = 0; i < 3; i++) {
-		if (!G_LineVis(from, test)) {
+		if (!G_LineVis(eyeEnt, test)) {
 			if (full)
 				n++;
 			else
@@ -217,7 +216,7 @@ bool G_Vis (const int team, const Edict* from, const Edict* check, const vischec
 	switch (check->type) {
 	case ET_ACTOR:
 	case ET_ACTOR2x2:
-		return G_ActorVis(eye, from, check, false) > ACTOR_VIS_0;
+		return G_ActorVis(from, check, false) > ACTOR_VIS_0;
 	case ET_ITEM:
 	case ET_CAMERA:
 	case ET_PARTICLE:
