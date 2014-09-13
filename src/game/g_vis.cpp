@@ -171,8 +171,6 @@ int G_VisCheckDist (const Edict* const ent)
  */
 bool G_Vis (const int team, const Edict* from, const Edict* check, const vischeckflags_t flags)
 {
-	vec3_t eye;
-
 	/* if any of them isn't in use, then they're not visible */
 	if (!from->inuse || !check->inuse)
 		return false;
@@ -209,9 +207,6 @@ bool G_Vis (const int team, const Edict* from, const Edict* check, const vischec
 	if (!(flags & VT_NOFRUSTUM) && !G_FrustumVis(from, check->origin))
 		return false;
 
-	/* get viewers eye height */
-	G_ActorGetEyeVector(from, eye);
-
 	/* line trace check */
 	switch (check->type) {
 	case ET_ACTOR:
@@ -219,8 +214,12 @@ bool G_Vis (const int team, const Edict* from, const Edict* check, const vischec
 		return G_ActorVis(from, check, false) > ACTOR_VIS_0;
 	case ET_ITEM:
 	case ET_CAMERA:
-	case ET_PARTICLE:
+	case ET_PARTICLE: {
+		/* get viewers eye height */
+		vec3_t eye;
+		G_ActorGetEyeVector(from, eye);
 		return !G_LineVis(eye, check->origin);
+	}
 	default:
 		return false;
 	}
