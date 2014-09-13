@@ -29,8 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/cxx.h"
 #include "../../shared/defines.h"
 #include "../../shared/shared.h"
+#include "../../common/cvar.h"
 #include "../../common/hashtable.h"
 #include "../../common/filesys.h"
+#include "../../common/scripts_lua.h"
 
 //#include "../client.h"
 #include "ui_main.h"
@@ -40,13 +42,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_parse.h"
 #include "ui_internal.h"
 
-extern "C" {
-	#include "../../libs/lua/lauxlib.h"
-	#include "../../libs/lua/lualib.h"
+/* references to SWIG generated lua bindings */
+extern "C" int luaopen_ufo (lua_State *L);
 
-	/* references to SWIG generated lua bindings */
-	extern int luaopen_ufo (lua_State *L);
-}
 #include "../../common/swig_lua_runtime.h"
 
 /* global lua state for ui-lua interfacing */
@@ -240,7 +238,8 @@ bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y)
 	if (lua_pcall (ui_luastate, 3, 0, 0) != 0) {
 		Com_Printf ("lua error(1) [node=%s]: %s\n", node->name, lua_tostring(ui_luastate, -1));
 	};
-	return true;}
+	return true;
+}
 
 /**
  * @brief Executes a lua event handler with (dx,dy) argument.
@@ -323,9 +322,10 @@ bool UI_ParseAndLoadLuaScript (const char* name, const char** text) {
 /**
  * @brief Create a new control inherited from a given node class or other node.
  * @param[in] parent The parent control or window/component owning this control.
- * @param[in] type The behaviour type of the window to create.
- * @param[in] name The name of the window to create.
- * @param[in] super The name this window inherits from. If NULL the window has no super defined.
+ * @param[in] type The behaviour type of the control to create. This can be a previously defined control instance.
+ * @param[in] name The name of the control to create.
+ * @param[in] super The name this control inherits from. If specified overrides the behaviour type of
+ * super must match type.
  * @note A control is a node inside a component or window. Unlike a component or window, a control is
  * always attached to a parent.
  * @note Code needs to be refactored.
@@ -333,17 +333,31 @@ bool UI_ParseAndLoadLuaScript (const char* name, const char** text) {
 uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super)
 {
 	uiNode_t* node = nullptr;
+	uiNode_t* node_super = nullptr;
 	uiNode_t* control = nullptr;
+	uiBehaviour_t* behaviour = nullptr;
 
 	/* get the behaviour */
-	uiBehaviour_t* behaviour = UI_GetNodeBehaviour(type);
+	behaviour = UI_GetNodeBehaviour(type);
 	if (!behaviour) {
 		/* if not found, try to get the component */
 		control = UI_GetComponent(name);
+		if (!control == nullptr) {
+			Com_Printf("UI_CreateControl: node behaviour/control '%s' doesn't exist (%s)\n", type, UI_GetPath(parent));
+			return nullptr;
+		}
+		behaviour = control->behaviour;
 	}
-	if (behaviour == nullptr && control == nullptr) {
-		Com_Printf("UI_CreateControl: node behaviour/control '%s' doesn't exist (%s)\n", type, UI_GetPath(parent));
-		return nullptr;
+	/* get the super if it exists */
+	if (super) {
+		node_super = UI_GetComponent(super);
+		/* validate the behaviour matches with the type requested */
+		if (node_super) {
+			if (node_super->behaviour != behaviour) {
+				Com_Printf("UI_CreateControl: behaviour [%s] of super does not match requested type [%s]\n", behaviour->name, node_super->behaviour->name);
+				return nullptr;
+			}
+		}
 	}
 
 	/* check the name */
@@ -358,37 +372,31 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 
 	/* test if node already exists (inside the parent subtree) */
 	/* Already existing node should only come from inherited node, we should not have 2 definitions of the same node into the same window. */
-	if (parent)
+	if (parent) {
 		node = UI_GetNode(parent, name);
-	/* it exists, so reuse the node */
-	if (node) {
-		/* sanity check: if it has the same name (inside this parent), it should have the same behaviour */
-		const uiBehaviour_t* test = (behaviour != nullptr) ? behaviour : (control != nullptr) ? control->behaviour : nullptr;
-		if (node->behaviour != test) {
-			Com_Printf("UI_CreateControl: new behaviour for reused node type specified (node \"%s\")\n", UI_GetPath(node));
+		if (node) {
+			Com_Printf("UI_CreateControl: trying to create duplicate node [%s]\n", UI_GetPath(node));
 			return nullptr;
 		}
 	}
-	/* it doesn't exist, so initialize a new control from an existing control (if specified) */
-	else if (control) {
-		node = UI_CloneNode(control, nullptr, true, name, false);
+
+	/* clone using super */
+	if (node_super) {
+		node = UI_CloneNode(node_super, nullptr, true, name, false);
 		if (parent) {
-			// @todo is this necessary???
-			if (parent->root)
-				UI_UpdateRoot(node, parent->root);
 			UI_AppendNode(parent, node);
+		}
+		else {
+			// remove the roots from the cloned notes, since it can be wrong
+			UI_UpdateRoot(node, nullptr);
 		}
 	}
 	/* else initialize a new node */
 	else {
 		node = UI_AllocNode(name, behaviour->name, false);
-		// @todo again, is this necessary????
-		node->parent = parent;
-		if (parent)
-			node->root = parent->root;
-		/** @todo move it into caller */
-		if (parent)
+		if (parent) {
 			UI_AppendNode(parent, node);
+		}
 	}
 
 	/* call onload (properties are set from lua) */

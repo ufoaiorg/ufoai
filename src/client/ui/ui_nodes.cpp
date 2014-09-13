@@ -76,11 +76,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_vscrollbar.h"
 #include "node/ui_node_zone.h"
 
-extern "C" {
-	#include "../../libs/lua/lua.h"
-	#include "../../libs/lua/lauxlib.h"
-}
-
+#include "../../common/scripts_lua.h"
 
 typedef void (*registerFunction_t)(uiBehaviour_t* node);
 
@@ -644,6 +640,7 @@ void UI_InitNodes (void)
 		current++;
 	}
 
+	/* @todo This check for a-z sortable behaviour list can be entirely within debug */
 	/* check for safe data: list must be sorted by alphabet */
 	current = nodeBehaviourList;
 	assert(current);

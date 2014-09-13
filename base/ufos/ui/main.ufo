@@ -50,7 +50,7 @@ window main
 		onClick		{ cmd "cl_openurl http://www.twitter.com/ufoai/;" }
 	}
 	
-	button test
+	button test_calc
 	{
 		pos			"190 720"
 		string		"_Testing"
@@ -60,6 +60,18 @@ window main
 		selectcolor "1 1 1 1"
 		padding		0
 		onClick		{ cmd "ui_push lua_test;" }
+	}
+
+	button test_main
+	{
+		pos			"290 720"
+		string		"_Main test"
+		tooltip		"_Replica of main window from lua"
+		size		"70 20"
+		color		"0 0.8 0 1"
+		selectcolor "1 1 1 1"
+		padding		0
+		onClick		{ cmd "ui_push lua_main;" }
 	}
 
 	panel buttons {

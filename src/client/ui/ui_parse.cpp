@@ -1100,24 +1100,21 @@ static uiNode_t* UI_ParseNode (uiNode_t* parent, const char** text, const char**
 		}
 		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s\n", UI_GetPath(node));
 
+	}
 	/* else initialize a component */
-	} else if (component) {
+	else if (component) {
 		node = UI_CloneNode(component, nullptr, true, *token, false);
 		if (parent) {
-			if (parent->root)
-				UI_UpdateRoot(node, parent->root);
+			UI_AppendNode(parent, node);
+			UI_UpdateRoot(node, parent->root);
+		}
+	}
+	/* else initialize a new node */
+	else {
+		node = UI_AllocNode(*token, behaviour->name, false);
+		if (parent) {
 			UI_AppendNode(parent, node);
 		}
-
-	/* else initialize a new node */
-	} else {
-		node = UI_AllocNode(*token, behaviour->name, false);
-		node->parent = parent;
-		if (parent)
-			node->root = parent->root;
-		/** @todo move it into caller */
-		if (parent)
-			UI_AppendNode(parent, node);
 	}
 
 	/* get body */

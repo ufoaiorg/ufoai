@@ -2627,18 +2627,21 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_LUA_EVENT swig_types[0]
 #define SWIGTYPE_p_LUA_FUNCTION swig_types[1]
 #define SWIGTYPE_p_align_t swig_types[2]
-#define SWIGTYPE_p_layoutAlign_t swig_types[3]
-#define SWIGTYPE_p_lua_State swig_types[4]
-#define SWIGTYPE_p_panelLayout_t swig_types[5]
-#define SWIGTYPE_p_uiAbstractScrollable_t swig_types[6]
-#define SWIGTYPE_p_uiAbstractValue_t swig_types[7]
-#define SWIGTYPE_p_uiButton_t swig_types[8]
-#define SWIGTYPE_p_uiCheckBox_t swig_types[9]
-#define SWIGTYPE_p_uiNode_t swig_types[10]
-#define SWIGTYPE_p_uiString_t swig_types[11]
-#define SWIGTYPE_p_uiWindow_t swig_types[12]
-static swig_type_info *swig_types[14];
-static swig_module_info swig_module = {swig_types, 13, 0, 0, 0, 0};
+#define SWIGTYPE_p_cvar_t swig_types[3]
+#define SWIGTYPE_p_layoutAlign_t swig_types[4]
+#define SWIGTYPE_p_linkedList_t swig_types[5]
+#define SWIGTYPE_p_lua_State swig_types[6]
+#define SWIGTYPE_p_panelLayout_t swig_types[7]
+#define SWIGTYPE_p_uiAbstractScrollable_t swig_types[8]
+#define SWIGTYPE_p_uiAbstractValue_t swig_types[9]
+#define SWIGTYPE_p_uiButton_t swig_types[10]
+#define SWIGTYPE_p_uiCheckBox_t swig_types[11]
+#define SWIGTYPE_p_uiNode_t swig_types[12]
+#define SWIGTYPE_p_uiPanel_t swig_types[13]
+#define SWIGTYPE_p_uiString_t swig_types[14]
+#define SWIGTYPE_p_uiWindow_t swig_types[15]
+static swig_type_info *swig_types[17];
+static swig_module_info swig_module = {swig_types, 16, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2661,6 +2664,7 @@ typedef struct{} LANGUAGE_OBJ;
 /* import common functions */
 #include "../../../shared/shared.h"
 #include "../../../shared/vector.h"
+#include "../../../common/cvar.h"
 #include "../../../common/scripts.h"
 #include "../../../common/scripts_lua.h"
 
@@ -2698,6 +2702,7 @@ typedef uiNode_t uiAbstractScrollbar_t;
 typedef uiNode_t uiBar_t;
 typedef uiNode_t uiButton_t;
 typedef uiNode_t uiCheckBox_t;
+typedef uiAbstractScrollable_t uiPanel_t;
 typedef uiNode_t uiString_t;
 typedef uiNode_t uiWindow_t;
 
@@ -2715,6 +2720,26 @@ void* UI_SWIG_TypeQuery (const char* name) {
 	return info;
 }
 
+/*
+	This function returns the SWIG typename for the given node.
+*/
+const char* UI_SWIG_NodeTypeName (void* node) {
+	swig_type_info* info = (swig_type_info*)((uiNode_t*)node)->behaviour->lua_SWIG_typeinfo;
+	return info->str;
+}
+
+
+SWIGINTERN char const *cvar_t_name(cvar_t *self){ return self->name; }
+SWIGINTERN char const *cvar_t_as_string(cvar_t *self){ return self->string; }
+SWIGINTERN float cvar_t_as_float(cvar_t *self){ return self->value; }
+SWIGINTERN int cvar_t_as_integer(cvar_t *self){ return self->integer; }
+
+SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
+  int ret = lua_isstring(L, idx);
+  if (!ret)
+   ret = lua_isnil(L, idx);
+  return ret;
+}
 
 SWIGINTERN bool uiNode_t_is_window(uiNode_t *self){ return UI_Node_IsWindow(self); }
 SWIGINTERN bool uiNode_t_is_disabled(uiNode_t *self){ return UI_Node_IsDisabled(self); }
@@ -2733,6 +2758,7 @@ SWIGINTERN char const *uiNode_t_font(uiNode_t *self){ return self->font; }
 SWIGINTERN int uiNode_t_contentalign(uiNode_t *self){ return self->contentAlign; }
 SWIGINTERN int uiNode_t_layoutalign(uiNode_t *self){ return self->align; }
 SWIGINTERN float uiNode_t_flashspeed(uiNode_t *self){ return self->flashSpeed; }
+SWIGINTERN int uiNode_t_padding(uiNode_t *self){ return self->padding; }
 SWIGINTERN uiNode_t *uiNode_t_first(uiNode_t *self){ return self->firstChild; }
 SWIGINTERN uiNode_t *uiNode_t_last(uiNode_t *self){ return self->lastChild; }
 SWIGINTERN uiNode_t *uiNode_t_next(uiNode_t *self){ return self->next; }
@@ -2752,14 +2778,6 @@ SWIGINTERN void uiNode_t_set_flashcolor(uiNode_t *self,float r,float g,float b,f
 SWIGINTERN void uiNode_t_set_selectcolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->selectedColor, r, g, b, a); }
 SWIGINTERN void uiNode_t_set_backgroundcolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->bgcolor, r, g, b, a); }
 SWIGINTERN void uiNode_t_set_bordercolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->bordercolor, r, g, b, a); }
-
-SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
-  int ret = lua_isstring(L, idx);
-  if (!ret)
-   ret = lua_isnil(L, idx);
-  return ret;
-}
-
 SWIGINTERN void uiNode_t_set_text(uiNode_t *self,char const *text){ UI_Node_SetText(self, text); }
 SWIGINTERN void uiNode_t_set_font(uiNode_t *self,char const *name){ self->font = name; }
 SWIGINTERN void uiNode_t_set_contentalign(uiNode_t *self,int value){ self->contentAlign = value; }
@@ -2767,6 +2785,7 @@ SWIGINTERN void uiNode_t_set_layoutalign(uiNode_t *self,int value){ self->align 
 SWIGINTERN void uiNode_t_set_tooltip(uiNode_t *self,char const *text){ UI_Node_SetTooltip(self, text); }
 SWIGINTERN void uiNode_t_set_disabled(uiNode_t *self,bool value){ UI_Node_SetDisabled(self, value); }
 SWIGINTERN void uiNode_t_set_borderthickness(uiNode_t *self,int value){ self->border = value; }
+SWIGINTERN void uiNode_t_set_padding(uiNode_t *self,int value){ self->padding = value; }
 SWIGINTERN bool uiButton_t_flipicon(uiButton_t *self){ return UI_EXTRADATA(self, buttonExtraData_t).flipIcon; }
 SWIGINTERN void uiButton_t_set_flipicon(uiButton_t *self,bool value){ UI_EXTRADATA(self, buttonExtraData_t).flipIcon = value; }
 SWIGINTERN void uiButton_t_set_background(uiButton_t *self,char const *name){ UI_Button_SetBackgroundByName(self, name); }
@@ -2775,10 +2794,21 @@ SWIGINTERN void uiCheckBox_t_set_background(uiCheckBox_t *self,char const *name)
 SWIGINTERN void uiCheckBox_t_set_iconchecked(uiCheckBox_t *self,char const *name){ UI_CheckBox_SetIconCheckedByName(self, name); }
 SWIGINTERN void uiCheckBox_t_set_iconunchecked(uiCheckBox_t *self,char const *name){ UI_CheckBox_SetIconUncheckedByName(self, name); }
 SWIGINTERN void uiCheckBox_t_set_iconunknown(uiCheckBox_t *self,char const *name){ UI_CheckBox_SetIconUnknownByName(self, name); }
+SWIGINTERN bool uiPanel_t_is_wheelscrollable(uiPanel_t *self){ return UI_EXTRADATA(self, panelExtraData_t).wheelScrollable; }
+SWIGINTERN int uiPanel_t_layout(uiPanel_t *self){ return UI_EXTRADATA(self, panelExtraData_t).layout; }
+SWIGINTERN int uiPanel_t_layoutmargin(uiPanel_t *self){ return UI_EXTRADATA(self, panelExtraData_t).layoutMargin; }
+SWIGINTERN int uiPanel_t_layoutcolumns(uiPanel_t *self){ return UI_EXTRADATA(self, panelExtraData_t).layoutColumns; }
+SWIGINTERN void uiPanel_t_set_layout(uiPanel_t *self,int value){ UI_EXTRADATA(self, panelExtraData_t).layout = (panelLayout_t)value; }
+SWIGINTERN void uiPanel_t_set_layoutmargin(uiPanel_t *self,int value){ UI_EXTRADATA(self, panelExtraData_t).layoutMargin = value; }
+SWIGINTERN void uiPanel_t_set_layoutcolumns(uiPanel_t *self,int value){ UI_EXTRADATA(self, panelExtraData_t).layoutColumns = value; }
+SWIGINTERN void uiPanel_t_set_wheelscrollable(uiPanel_t *self,bool value){ UI_EXTRADATA(self, panelExtraData_t).wheelScrollable = value; }
+SWIGINTERN void uiPanel_t_set_background(uiPanel_t *self,char const *name){ UI_Panel_SetBackgroundByName(self, name); }
 SWIGINTERN bool uiWindow_t_is_fullscreen(uiWindow_t *self){ return UI_EXTRADATA(self, windowExtraData_t).isFullScreen; }
 SWIGINTERN bool uiWindow_t_is_modal(uiWindow_t *self){ return UI_EXTRADATA(self, windowExtraData_t).modal; }
 SWIGINTERN void uiWindow_t_add_dragbutton(uiWindow_t *self){ UI_EXTRADATA(self, windowExtraData_t).dragButton = true; }
 SWIGINTERN void uiWindow_t_add_closebutton(uiWindow_t *self){ UI_EXTRADATA(self, windowExtraData_t).closeButton = true; }
+SWIGINTERN void uiWindow_t_close(uiWindow_t *self){ UI_PopWindow (false); }
+SWIGINTERN void uiWindow_t_open(uiWindow_t *self){ UI_PushWindow(self->name, nullptr, nullptr); }
 SWIGINTERN void uiWindow_t_set_background(uiWindow_t *self,char const *name){ UI_Window_SetBackgroundByName(self, name); }
 SWIGINTERN void uiWindow_t_set_fullscreen(uiWindow_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).isFullScreen = value; }
 SWIGINTERN void uiWindow_t_set_modal(uiWindow_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).modal = value; }
@@ -2793,27 +2823,214 @@ static void uiWindow_t_lua_onWindowOpened_set (uiWindow_t* node, LUA_EVENT fn) {
 static LUA_EVENT uiWindow_t_lua_onWindowClosed_get(uiWindow_t* node) {
 	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowClosed;
 }
-static int uiWindow_t_lua_onWindowClosed_set (uiWindow_t* node, LUA_EVENT fn) {
+static void uiWindow_t_lua_onWindowClosed_set (uiWindow_t* node, LUA_EVENT fn) {
 	UI_EXTRADATA(node, windowExtraData_t).lua_onWindowClosed = fn;
 }
 
 
-uiButton_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super) {
+static uiButton_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "button", name, super);
-};
-uiCheckBox_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super) {
+}
+static uiCheckBox_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "checkbox", name, super);
 }
-uiString_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super) {
+static uiPanel_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "panel", name, super);
+}
+static uiString_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "string", name, super);
 }
-uiWindow_t* UI_CreateWindow (const char* name, const char* super) {
+static uiWindow_t* UI_CreateWindow (const char* name, const char* super) {
 	return UI_CreateWindow("window", name, super);
 }
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+static int _wrap_cvar_t_name(lua_State* L) {
+  int SWIG_arg = 0;
+  cvar_t *arg1 = (cvar_t *) 0 ;
+  char *result = 0 ;
+  
+  SWIG_check_num_args("cvar_t::name",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("cvar_t::name",1,"cvar_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_cvar_t,0))){
+    SWIG_fail_ptr("cvar_t_name",1,SWIGTYPE_p_cvar_t);
+  }
+  
+  result = (char *)cvar_t_name(arg1);
+  lua_pushstring(L,(const char *)result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_cvar_t_as_string(lua_State* L) {
+  int SWIG_arg = 0;
+  cvar_t *arg1 = (cvar_t *) 0 ;
+  char *result = 0 ;
+  
+  SWIG_check_num_args("cvar_t::as_string",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("cvar_t::as_string",1,"cvar_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_cvar_t,0))){
+    SWIG_fail_ptr("cvar_t_as_string",1,SWIGTYPE_p_cvar_t);
+  }
+  
+  result = (char *)cvar_t_as_string(arg1);
+  lua_pushstring(L,(const char *)result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_cvar_t_as_float(lua_State* L) {
+  int SWIG_arg = 0;
+  cvar_t *arg1 = (cvar_t *) 0 ;
+  float result;
+  
+  SWIG_check_num_args("cvar_t::as_float",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("cvar_t::as_float",1,"cvar_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_cvar_t,0))){
+    SWIG_fail_ptr("cvar_t_as_float",1,SWIGTYPE_p_cvar_t);
+  }
+  
+  result = (float)cvar_t_as_float(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_cvar_t_as_integer(lua_State* L) {
+  int SWIG_arg = 0;
+  cvar_t *arg1 = (cvar_t *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("cvar_t::as_integer",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("cvar_t::as_integer",1,"cvar_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_cvar_t,0))){
+    SWIG_fail_ptr("cvar_t_as_integer",1,SWIGTYPE_p_cvar_t);
+  }
+  
+  result = (int)cvar_t_as_integer(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_cvar_t(lua_State* L) {
+  int SWIG_arg = 0;
+  cvar_t *result = 0 ;
+  
+  SWIG_check_num_args("cvar_t::cvar_t",0,0)
+  result = (cvar_t *)new cvar_t();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_cvar_t,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_cvar_t(void *obj) {
+cvar_t *arg1 = (cvar_t *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_cvar_t(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_cvar_t);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_cvar_t_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_method swig_cvar_t_methods[]= {
+    { "name", _wrap_cvar_t_name},
+    { "as_string", _wrap_cvar_t_as_string},
+    { "as_float", _wrap_cvar_t_as_float},
+    { "as_integer", _wrap_cvar_t_as_integer},
+    {0,0}
+};
+static swig_lua_method swig_cvar_t_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_cvar_t_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_cvar_t_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_cvar_t_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_cvar_t_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_cvar_t_Sf_SwigStatic = {
+    "cvar_t",
+    swig_cvar_t_Sf_SwigStatic_methods,
+    swig_cvar_t_Sf_SwigStatic_attributes,
+    swig_cvar_t_Sf_SwigStatic_constants,
+    swig_cvar_t_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_cvar_t_bases[] = {0};
+static const char *swig_cvar_t_base_names[] = {0};
+static swig_lua_class _wrap_class_cvar_t = { "cvar_t", "cvar_t", &SWIGTYPE_p_cvar_t,_proxy__wrap_new_cvar_t, swig_delete_cvar_t, swig_cvar_t_methods, swig_cvar_t_attributes, &swig_cvar_t_Sf_SwigStatic, swig_cvar_t_meta, swig_cvar_t_bases, swig_cvar_t_base_names };
+
+static int _wrap_findvar(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  cvar_t *result = 0 ;
+  
+  SWIG_check_num_args("Cvar_FindVar",1,1)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_FindVar",1,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  result = (cvar_t *)Cvar_FindVar((char const *)arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_cvar_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiNode_on_click_set(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
@@ -3870,6 +4087,30 @@ fail:
 }
 
 
+static int _wrap_uiNode_padding(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("uiNode_t::padding",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::padding",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_padding",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  result = (int)uiNode_t_padding(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiNode_first(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
@@ -4626,6 +4867,32 @@ fail:
 }
 
 
+static int _wrap_uiNode_set_padding(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("uiNode_t::set_padding",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::set_padding",1,"uiNode_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiNode_t::set_padding",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_set_padding",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  uiNode_t_set_padding(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_new_uiNode(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *result = 0 ;
@@ -4691,6 +4958,7 @@ static swig_lua_method swig_uiNode_methods[]= {
     { "contentalign", _wrap_uiNode_contentalign},
     { "layoutalign", _wrap_uiNode_layoutalign},
     { "flashspeed", _wrap_uiNode_flashspeed},
+    { "padding", _wrap_uiNode_padding},
     { "first", _wrap_uiNode_first},
     { "last", _wrap_uiNode_last},
     { "next", _wrap_uiNode_next},
@@ -4717,6 +4985,7 @@ static swig_lua_method swig_uiNode_methods[]= {
     { "set_tooltip", _wrap_uiNode_set_tooltip},
     { "set_disabled", _wrap_uiNode_set_disabled},
     { "set_borderthickness", _wrap_uiNode_set_borderthickness},
+    { "set_padding", _wrap_uiNode_set_padding},
     {0,0}
 };
 static swig_lua_method swig_uiNode_meta[] = {
@@ -5218,6 +5487,305 @@ static swig_lua_class *swig_uiCheckBox_bases[] = {0};
 static const char *swig_uiCheckBox_base_names[] = {0};
 static swig_lua_class _wrap_class_uiCheckBox = { "uiCheckBox", "uiCheckBox", &SWIGTYPE_p_uiCheckBox_t,_proxy__wrap_new_uiCheckBox, swig_delete_uiCheckBox, swig_uiCheckBox_methods, swig_uiCheckBox_attributes, &swig_uiCheckBox_Sf_SwigStatic, swig_uiCheckBox_meta, swig_uiCheckBox_bases, swig_uiCheckBox_base_names };
 
+static int _wrap_uiPanel_is_wheelscrollable(lua_State* L) {
+  int SWIG_arg = 0;
+  uiPanel_t *arg1 = (uiPanel_t *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("uiPanel_t::is_wheelscrollable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiPanel_t::is_wheelscrollable",1,"uiPanel_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiPanel_t,0))){
+    SWIG_fail_ptr("uiPanel_is_wheelscrollable",1,SWIGTYPE_p_uiPanel_t);
+  }
+  
+  result = (bool)uiPanel_t_is_wheelscrollable(arg1);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiPanel_layout(lua_State* L) {
+  int SWIG_arg = 0;
+  uiPanel_t *arg1 = (uiPanel_t *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("uiPanel_t::layout",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiPanel_t::layout",1,"uiPanel_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiPanel_t,0))){
+    SWIG_fail_ptr("uiPanel_layout",1,SWIGTYPE_p_uiPanel_t);
+  }
+  
+  result = (int)uiPanel_t_layout(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiPanel_layoutmargin(lua_State* L) {
+  int SWIG_arg = 0;
+  uiPanel_t *arg1 = (uiPanel_t *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("uiPanel_t::layoutmargin",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiPanel_t::layoutmargin",1,"uiPanel_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiPanel_t,0))){
+    SWIG_fail_ptr("uiPanel_layoutmargin",1,SWIGTYPE_p_uiPanel_t);
+  }
+  
+  result = (int)uiPanel_t_layoutmargin(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiPanel_layoutcolumns(lua_State* L) {
+  int SWIG_arg = 0;
+  uiPanel_t *arg1 = (uiPanel_t *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("uiPanel_t::layoutcolumns",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiPanel_t::layoutcolumns",1,"uiPanel_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiPanel_t,0))){
+    SWIG_fail_ptr("uiPanel_layoutcolumns",1,SWIGTYPE_p_uiPanel_t);
+  }
+  
+  result = (int)uiPanel_t_layoutcolumns(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiPanel_set_layout(lua_State* L) {
+  int SWIG_arg = 0;
+  uiPanel_t *arg1 = (uiPanel_t *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("uiPanel_t::set_layout",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiPanel_t::set_layout",1,"uiPanel_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiPanel_t::set_layout",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiPanel_t,0))){
+    SWIG_fail_ptr("uiPanel_set_layout",1,SWIGTYPE_p_uiPanel_t);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  uiPanel_t_set_layout(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiPanel_set_layoutmargin(lua_State* L) {
+  int SWIG_arg = 0;
+  uiPanel_t *arg1 = (uiPanel_t *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("uiPanel_t::set_layoutmargin",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiPanel_t::set_layoutmargin",1,"uiPanel_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiPanel_t::set_layoutmargin",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiPanel_t,0))){
+    SWIG_fail_ptr("uiPanel_set_layoutmargin",1,SWIGTYPE_p_uiPanel_t);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  uiPanel_t_set_layoutmargin(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiPanel_set_layoutcolumns(lua_State* L) {
+  int SWIG_arg = 0;
+  uiPanel_t *arg1 = (uiPanel_t *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("uiPanel_t::set_layoutcolumns",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiPanel_t::set_layoutcolumns",1,"uiPanel_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiPanel_t::set_layoutcolumns",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiPanel_t,0))){
+    SWIG_fail_ptr("uiPanel_set_layoutcolumns",1,SWIGTYPE_p_uiPanel_t);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  uiPanel_t_set_layoutcolumns(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiPanel_set_wheelscrollable(lua_State* L) {
+  int SWIG_arg = 0;
+  uiPanel_t *arg1 = (uiPanel_t *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("uiPanel_t::set_wheelscrollable",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiPanel_t::set_wheelscrollable",1,"uiPanel_t *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("uiPanel_t::set_wheelscrollable",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiPanel_t,0))){
+    SWIG_fail_ptr("uiPanel_set_wheelscrollable",1,SWIGTYPE_p_uiPanel_t);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  uiPanel_t_set_wheelscrollable(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiPanel_set_background(lua_State* L) {
+  int SWIG_arg = 0;
+  uiPanel_t *arg1 = (uiPanel_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  SWIG_check_num_args("uiPanel_t::set_background",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiPanel_t::set_background",1,"uiPanel_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiPanel_t::set_background",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiPanel_t,0))){
+    SWIG_fail_ptr("uiPanel_set_background",1,SWIGTYPE_p_uiPanel_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  uiPanel_t_set_background(arg1,(char const *)arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_uiPanel(lua_State* L) {
+  int SWIG_arg = 0;
+  uiPanel_t *result = 0 ;
+  
+  SWIG_check_num_args("uiPanel_t::uiPanel_t",0,0)
+  result = (uiPanel_t *)new uiPanel_t();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiPanel_t,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_uiPanel(void *obj) {
+uiPanel_t *arg1 = (uiPanel_t *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_uiPanel(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_uiPanel);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_uiPanel_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_method swig_uiPanel_methods[]= {
+    { "is_wheelscrollable", _wrap_uiPanel_is_wheelscrollable},
+    { "layout", _wrap_uiPanel_layout},
+    { "layoutmargin", _wrap_uiPanel_layoutmargin},
+    { "layoutcolumns", _wrap_uiPanel_layoutcolumns},
+    { "set_layout", _wrap_uiPanel_set_layout},
+    { "set_layoutmargin", _wrap_uiPanel_set_layoutmargin},
+    { "set_layoutcolumns", _wrap_uiPanel_set_layoutcolumns},
+    { "set_wheelscrollable", _wrap_uiPanel_set_wheelscrollable},
+    { "set_background", _wrap_uiPanel_set_background},
+    {0,0}
+};
+static swig_lua_method swig_uiPanel_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_uiPanel_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_uiPanel_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_uiPanel_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_uiPanel_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_uiPanel_Sf_SwigStatic = {
+    "uiPanel",
+    swig_uiPanel_Sf_SwigStatic_methods,
+    swig_uiPanel_Sf_SwigStatic_attributes,
+    swig_uiPanel_Sf_SwigStatic_constants,
+    swig_uiPanel_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_uiPanel_bases[] = {0,0};
+static const char *swig_uiPanel_base_names[] = {"uiAbstractScrollable_t *",0};
+static swig_lua_class _wrap_class_uiPanel = { "uiPanel", "uiPanel", &SWIGTYPE_p_uiPanel_t,_proxy__wrap_new_uiPanel, swig_delete_uiPanel, swig_uiPanel_methods, swig_uiPanel_attributes, &swig_uiPanel_Sf_SwigStatic, swig_uiPanel_meta, swig_uiPanel_bases, swig_uiPanel_base_names };
+
 static int _wrap_new_uiString(lua_State* L) {
   int SWIG_arg = 0;
   uiString_t *result = 0 ;
@@ -5278,8 +5846,8 @@ static swig_lua_namespace swig_uiString_Sf_SwigStatic = {
     swig_uiString_Sf_SwigStatic_classes,
     0
 };
-static swig_lua_class *swig_uiString_bases[] = {0};
-static const char *swig_uiString_base_names[] = {0};
+static swig_lua_class *swig_uiString_bases[] = {0,0};
+static const char *swig_uiString_base_names[] = {"uiNode_t *",0};
 static swig_lua_class _wrap_class_uiString = { "uiString", "uiString", &SWIGTYPE_p_uiString_t,_proxy__wrap_new_uiString, swig_delete_uiString, swig_uiString_methods, swig_uiString_attributes, &swig_uiString_Sf_SwigStatic, swig_uiString_meta, swig_uiString_bases, swig_uiString_base_names };
 
 static int _wrap_uiWindow_is_fullscreen(lua_State* L) {
@@ -5365,6 +5933,52 @@ static int _wrap_uiWindow_add_closebutton(lua_State* L) {
   }
   
   uiWindow_t_add_closebutton(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiWindow_close(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindow_t *arg1 = (uiWindow_t *) 0 ;
+  
+  SWIG_check_num_args("uiWindow_t::close",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindow_t::close",1,"uiWindow_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindow_t,0))){
+    SWIG_fail_ptr("uiWindow_close",1,SWIGTYPE_p_uiWindow_t);
+  }
+  
+  uiWindow_t_close(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiWindow_open(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindow_t *arg1 = (uiWindow_t *) 0 ;
+  
+  SWIG_check_num_args("uiWindow_t::open",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindow_t::open",1,"uiWindow_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindow_t,0))){
+    SWIG_fail_ptr("uiWindow_open",1,SWIGTYPE_p_uiWindow_t);
+  }
+  
+  uiWindow_t_open(arg1);
   
   return SWIG_arg;
   
@@ -5627,6 +6241,8 @@ static swig_lua_method swig_uiWindow_methods[]= {
     { "is_modal", _wrap_uiWindow_is_modal},
     { "add_dragbutton", _wrap_uiWindow_add_dragbutton},
     { "add_closebutton", _wrap_uiWindow_add_closebutton},
+    { "close", _wrap_uiWindow_close},
+    { "open", _wrap_uiWindow_open},
     { "set_background", _wrap_uiWindow_set_background},
     { "set_fullscreen", _wrap_uiWindow_set_fullscreen},
     { "set_modal", _wrap_uiWindow_set_modal},
@@ -5661,28 +6277,6 @@ static swig_lua_namespace swig_uiWindow_Sf_SwigStatic = {
 static swig_lua_class *swig_uiWindow_bases[] = {0,0};
 static const char *swig_uiWindow_base_names[] = {"uiNode_t *",0};
 static swig_lua_class _wrap_class_uiWindow = { "uiWindow", "uiWindow", &SWIGTYPE_p_uiWindow_t,_proxy__wrap_new_uiWindow, swig_delete_uiWindow, swig_uiWindow_methods, swig_uiWindow_attributes, &swig_uiWindow_Sf_SwigStatic, swig_uiWindow_meta, swig_uiWindow_bases, swig_uiWindow_base_names };
-
-static int _wrap_register_onload(lua_State* L) {
-  int SWIG_arg = 0;
-  lua_State *arg1 = (lua_State *) 0 ;
-  LUA_FUNCTION arg2 ;
-  
-  arg1 = L;
-  SWIG_check_num_args("UI_RegisterHandler_OnLoad",1,1)
-  {
-    arg2 = (LUA_FUNCTION)luaL_ref (L, LUA_REGISTRYINDEX);
-  }
-  UI_RegisterHandler_OnLoad(arg1,arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
 
 static int _wrap___create_control(lua_State* L) {
   int SWIG_arg = 0;
@@ -5828,6 +6422,36 @@ static int _wrap_UI_CreateCheckBox(lua_State* L) {
   arg3 = (char *)lua_tostring(L, 3);
   result = (uiCheckBox_t *)UI_CreateCheckBox(arg1,(char const *)arg2,(char const *)arg3);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiCheckBox_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_UI_CreatePanel(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  uiPanel_t *result = 0 ;
+  
+  SWIG_check_num_args("UI_CreatePanel",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UI_CreatePanel",1,"uiNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("UI_CreatePanel",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("UI_CreatePanel",3,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("UI_CreatePanel",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  result = (uiPanel_t *)UI_CreatePanel(arg1,(char const *)arg2,(char const *)arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiPanel_t,0); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6030,6 +6654,36 @@ fail:
 }
 
 
+static int _wrap_create_panel(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  uiPanel_t *result = 0 ;
+  
+  SWIG_check_num_args("UI_CreatePanel",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UI_CreatePanel",1,"uiNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("UI_CreatePanel",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("UI_CreatePanel",3,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("create_panel",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  result = (uiPanel_t *)UI_CreatePanel(arg1,(char const *)arg2,(char const *)arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiPanel_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_create_window(lua_State* L) {
   int SWIG_arg = 0;
   char *arg1 = (char *) 0 ;
@@ -6043,6 +6697,77 @@ static int _wrap_create_window(lua_State* L) {
   arg2 = (char *)lua_tostring(L, 2);
   result = (uiWindow_t *)UI_CreateWindow((char const *)arg1,(char const *)arg2);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiWindow_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_pop_window(lua_State* L) {
+  int SWIG_arg = 0;
+  bool arg1 ;
+  
+  SWIG_check_num_args("UI_PopWindow",1,1)
+  if(!lua_isboolean(L,1)) SWIG_fail_arg("UI_PopWindow",1,"bool");
+  arg1 = (lua_toboolean(L, 1)!=0);
+  UI_PopWindow(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_push_window(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  linkedList_t *arg3 = (linkedList_t *) 0 ;
+  uiNode_t *result = 0 ;
+  
+  SWIG_check_num_args("UI_PushWindow",3,3)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("UI_PushWindow",1,"char const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("UI_PushWindow",2,"char const *");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("UI_PushWindow",3,"linkedList_t *");
+  arg1 = (char *)lua_tostring(L, 1);
+  arg2 = (char *)lua_tostring(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_linkedList_t,0))){
+    SWIG_fail_ptr("push_window",3,SWIGTYPE_p_linkedList_t);
+  }
+  
+  result = (uiNode_t *)UI_PushWindow((char const *)arg1,(char const *)arg2,arg3);
+  {
+    swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+    SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_cmd(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  
+  SWIG_check_num_args("Cbuf_AddText",1,1)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cbuf_AddText",1,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  Cbuf_AddText((char const *)arg1);
+  
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6116,6 +6841,28 @@ fail:
 }
 
 
+static int _wrap_register_onload(lua_State* L) {
+  int SWIG_arg = 0;
+  lua_State *arg1 = (lua_State *) 0 ;
+  LUA_FUNCTION arg2 ;
+  
+  arg1 = L;
+  SWIG_check_num_args("UI_RegisterHandler_OnLoad",1,1)
+  {
+    arg2 = (LUA_FUNCTION)luaL_ref (L, LUA_REGISTRYINDEX);
+  }
+  UI_RegisterHandler_OnLoad(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static swig_lua_attribute swig_SwigModule_attributes[] = {
     {0,0,0}
 };
@@ -6173,28 +6920,36 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {0,0,0,0,0,0}
 };
 static swig_lua_method swig_SwigModule_methods[]= {
-    { "register_onload", _wrap_register_onload},
+    { "findvar", _wrap_findvar},
     { "__create_control", _wrap___create_control},
     { "__create_component", _wrap___create_component},
     { "UI_CreateButton", _wrap_UI_CreateButton},
     { "UI_CreateCheckBox", _wrap_UI_CreateCheckBox},
+    { "UI_CreatePanel", _wrap_UI_CreatePanel},
     { "UI_CreateString", _wrap_UI_CreateString},
     { "__create_window", _wrap___create_window},
     { "create_button", _wrap_create_button},
     { "create_checkbox", _wrap_create_checkbox},
     { "create_string", _wrap_create_string},
+    { "create_panel", _wrap_create_panel},
     { "create_window", _wrap_create_window},
+    { "pop_window", _wrap_pop_window},
+    { "push_window", _wrap_push_window},
+    { "cmd", _wrap_cmd},
     { "print", _wrap_print},
     { "dprint", _wrap_dprint},
     { "error", _wrap_error},
+    { "register_onload", _wrap_register_onload},
     {0,0}
 };
 static swig_lua_class* swig_SwigModule_classes[]= {
+&_wrap_class_cvar_t,
 &_wrap_class_uiNode,
 &_wrap_class_uiAbstractScrollable_t,
 &_wrap_class_uiAbstractValue_t,
 &_wrap_class_uiButton,
 &_wrap_class_uiCheckBox,
+&_wrap_class_uiPanel,
 &_wrap_class_uiString,
 &_wrap_class_uiWindow,
     0
@@ -6220,6 +6975,12 @@ static swig_lua_namespace swig_SwigModule = {
 static void *_p_uiButton_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *)  ((uiButton_t *) x));
 }
+static void *_p_uiString_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((uiNode_t *)  ((uiString_t *) x));
+}
+static void *_p_uiPanel_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((uiNode_t *) (uiAbstractScrollable_t *) ((uiPanel_t *) x));
+}
 static void *_p_uiAbstractScrollable_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *)  ((uiAbstractScrollable_t *) x));
 }
@@ -6229,10 +6990,15 @@ static void *_p_uiAbstractValue_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newm
 static void *_p_uiWindow_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *)  ((uiWindow_t *) x));
 }
+static void *_p_uiPanel_tTo_p_uiAbstractScrollable_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((uiAbstractScrollable_t *)  ((uiPanel_t *) x));
+}
 static swig_type_info _swigt__p_LUA_EVENT = {"_p_LUA_EVENT", "LUA_EVENT *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LUA_FUNCTION = {"_p_LUA_FUNCTION", "LUA_FUNCTION *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_align_t = {"_p_align_t", "enum align_t *|align_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_cvar_t = {"_p_cvar_t", "cvar_t *", 0, 0, (void*)&_wrap_class_cvar_t, 0};
 static swig_type_info _swigt__p_layoutAlign_t = {"_p_layoutAlign_t", "enum layoutAlign_t *|layoutAlign_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_linkedList_t = {"_p_linkedList_t", "linkedList_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_lua_State = {"_p_lua_State", "lua_State *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_panelLayout_t = {"_p_panelLayout_t", "enum panelLayout_t *|panelLayout_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_uiAbstractScrollable_t = {"_p_uiAbstractScrollable_t", "uiAbstractScrollable_t *", 0, 0, (void*)&_wrap_class_uiAbstractScrollable_t, 0};
@@ -6240,6 +7006,7 @@ static swig_type_info _swigt__p_uiAbstractValue_t = {"_p_uiAbstractValue_t", "ui
 static swig_type_info _swigt__p_uiButton_t = {"_p_uiButton_t", "uiButton_t *", 0, 0, (void*)&_wrap_class_uiButton, 0};
 static swig_type_info _swigt__p_uiCheckBox_t = {"_p_uiCheckBox_t", "uiCheckBox_t *", 0, 0, (void*)&_wrap_class_uiCheckBox, 0};
 static swig_type_info _swigt__p_uiNode_t = {"_p_uiNode_t", "uiNode_t *", 0, 0, (void*)&_wrap_class_uiNode, 0};
+static swig_type_info _swigt__p_uiPanel_t = {"_p_uiPanel_t", "uiPanel_t *", 0, 0, (void*)&_wrap_class_uiPanel, 0};
 static swig_type_info _swigt__p_uiString_t = {"_p_uiString_t", "uiString_t *", 0, 0, (void*)&_wrap_class_uiString, 0};
 static swig_type_info _swigt__p_uiWindow_t = {"_p_uiWindow_t", "uiWindow_t *", 0, 0, (void*)&_wrap_class_uiWindow, 0};
 
@@ -6247,7 +7014,9 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_LUA_EVENT,
   &_swigt__p_LUA_FUNCTION,
   &_swigt__p_align_t,
+  &_swigt__p_cvar_t,
   &_swigt__p_layoutAlign_t,
+  &_swigt__p_linkedList_t,
   &_swigt__p_lua_State,
   &_swigt__p_panelLayout_t,
   &_swigt__p_uiAbstractScrollable_t,
@@ -6255,6 +7024,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_uiButton_t,
   &_swigt__p_uiCheckBox_t,
   &_swigt__p_uiNode_t,
+  &_swigt__p_uiPanel_t,
   &_swigt__p_uiString_t,
   &_swigt__p_uiWindow_t,
 };
@@ -6262,14 +7032,17 @@ static swig_type_info *swig_type_initial[] = {
 static swig_cast_info _swigc__p_LUA_EVENT[] = {  {&_swigt__p_LUA_EVENT, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LUA_FUNCTION[] = {  {&_swigt__p_LUA_FUNCTION, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_align_t[] = {  {&_swigt__p_align_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_cvar_t[] = {  {&_swigt__p_cvar_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_layoutAlign_t[] = {  {&_swigt__p_layoutAlign_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_linkedList_t[] = {  {&_swigt__p_linkedList_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_lua_State[] = {  {&_swigt__p_lua_State, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_panelLayout_t[] = {  {&_swigt__p_panelLayout_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_uiAbstractScrollable_t[] = {  {&_swigt__p_uiAbstractScrollable_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uiAbstractScrollable_t[] = {  {&_swigt__p_uiPanel_t, _p_uiPanel_tTo_p_uiAbstractScrollable_t, 0, 0},  {&_swigt__p_uiAbstractScrollable_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiAbstractValue_t[] = {  {&_swigt__p_uiAbstractValue_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiButton_t[] = {  {&_swigt__p_uiButton_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiCheckBox_t[] = {  {&_swigt__p_uiCheckBox_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_uiNode_t[] = {  {&_swigt__p_uiButton_t, _p_uiButton_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiNode_t, 0, 0, 0},  {&_swigt__p_uiAbstractScrollable_t, _p_uiAbstractScrollable_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractValue_t, _p_uiAbstractValue_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiWindow_t, _p_uiWindow_tTo_p_uiNode_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uiNode_t[] = {  {&_swigt__p_uiButton_t, _p_uiButton_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiString_t, _p_uiString_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiPanel_t, _p_uiPanel_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiNode_t, 0, 0, 0},  {&_swigt__p_uiAbstractScrollable_t, _p_uiAbstractScrollable_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractValue_t, _p_uiAbstractValue_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiWindow_t, _p_uiWindow_tTo_p_uiNode_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uiPanel_t[] = {  {&_swigt__p_uiPanel_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiString_t[] = {  {&_swigt__p_uiString_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiWindow_t[] = {  {&_swigt__p_uiWindow_t, 0, 0, 0},{0, 0, 0, 0}};
 
@@ -6277,7 +7050,9 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_LUA_EVENT,
   _swigc__p_LUA_FUNCTION,
   _swigc__p_align_t,
+  _swigc__p_cvar_t,
   _swigc__p_layoutAlign_t,
+  _swigc__p_linkedList_t,
   _swigc__p_lua_State,
   _swigc__p_panelLayout_t,
   _swigc__p_uiAbstractScrollable_t,
@@ -6285,6 +7060,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_uiButton_t,
   _swigc__p_uiCheckBox_t,
   _swigc__p_uiNode_t,
+  _swigc__p_uiPanel_t,
   _swigc__p_uiString_t,
   _swigc__p_uiWindow_t,
 };

@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static cvar_t* cvarVarsHash[CVAR_HASH_SIZE];
 
+// @todo This uses the STL, however, in a recent discussion on the forum it was stated that there
+// should be no use of STL due to memory issues, so this needs to change
 typedef std::vector<CvarListenerPtr> CvarListeners;
 static CvarListeners cvarListeners;
 

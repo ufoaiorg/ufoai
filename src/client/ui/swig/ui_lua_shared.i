@@ -50,6 +50,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* import common functions */
 #include "../../../shared/shared.h"
 #include "../../../shared/vector.h"
+#include "../../../common/cvar.h"
 #include "../../../common/scripts.h"
 #include "../../../common/scripts_lua.h"
 
@@ -87,6 +88,7 @@ typedef uiNode_t uiAbstractScrollbar_t;
 typedef uiNode_t uiBar_t;
 typedef uiNode_t uiButton_t;
 typedef uiNode_t uiCheckBox_t;
+typedef uiAbstractScrollable_t uiPanel_t;
 typedef uiNode_t uiString_t;
 typedef uiNode_t uiWindow_t;
 
@@ -104,7 +106,36 @@ void* UI_SWIG_TypeQuery (const char* name) {
 	return info;
 }
 
+/*
+	This function returns the SWIG typename for the given node.
+*/
+const char* UI_SWIG_NodeTypeName (void* node) {
+	swig_type_info* info = (swig_type_info*)((uiNode_t*)node)->behaviour->lua_SWIG_typeinfo;
+	return info->str;
+}
+
 %}
+
+/* typemap for converting lua function to a reference to be used by C */
+%typemap(in) LUA_FUNCTION {
+	$1 = (LUA_FUNCTION)luaL_ref (L, LUA_REGISTRYINDEX);
+}
+%typemap(in) LUA_EVENT {
+	$1 = (LUA_EVENT)luaL_ref (L, LUA_REGISTRYINDEX);
+}
+
+/* typemap for dynamic casting uiNode_t* into lua table corresponding to the actual behaviour class
+   (so a uiNode_t* representing a button will become a uiButton table in lua). The value of lua_SWIG_typeinfo
+   is set in UI_RegisterXXXX functions. */
+%typemap(out) uiNode_t* {
+	swig_type_info* info=(swig_type_info*)$1->behaviour->lua_SWIG_typeinfo;
+	SWIG_NewPointerObj(L, $1, info, 0); SWIG_arg++;
+};
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//	expose constants and typedefs
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 %rename (ContentAlign) align_t;
 typedef enum {
@@ -178,21 +209,26 @@ typedef enum {
 	LAYOUT_ENSURE_32BIT = 0x7FFFFFFF
 } panelLayout_t;
 
-/* typemap for converting lua function to a reference to be used by C */
-%typemap(in) LUA_FUNCTION {
-	$1 = (LUA_FUNCTION)luaL_ref (L, LUA_REGISTRYINDEX);
-}
-%typemap(in) LUA_EVENT {
-	$1 = (LUA_EVENT)luaL_ref (L, LUA_REGISTRYINDEX);
-}
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//	expose cvar
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* typemap for dynamic casting uiNode_t* into lua table corresponding to the actual behaviour class
-   (so a uiNode_t* representing a button will become a uiButton table in lua). The value of lua_SWIG_typeinfo
-   is set in UI_RegisterXXXX functions. */
-%typemap(out) uiNode_t* {
-	swig_type_info* info=(swig_type_info*)$1->behaviour->lua_SWIG_typeinfo;
-	SWIG_NewPointerObj(L, $1, info, 0); SWIG_arg++;
+struct cvar_t {
 };
+%extend cvar_t {
+	const char* name () { return $self->name; };
+
+	const char* as_string () { return $self->string; };
+	float as_float () { return $self->value; };
+	int as_integer () { return $self->integer; };
+};
+
+%rename (findvar) Cvar_FindVar;
+cvar_t* Cvar_FindVar (const char* varName);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//	expose ui nodes
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* expose node structure */
 %rename(uiNode) uiNode_t;
@@ -242,6 +278,7 @@ struct uiNode_t {
 	int contentalign () { return $self->contentAlign; };
 	int layoutalign () { return $self->align; };
 	float flashspeed () { return $self->flashSpeed; };
+	int padding () { return $self->padding; };
 
 	/* common navigation */
 	uiNode_t* first () { return $self->firstChild; };
@@ -272,6 +309,7 @@ struct uiNode_t {
 	void set_tooltip (const char* text) { UI_Node_SetTooltip($self, text); };
 	void set_disabled (bool value) { UI_Node_SetDisabled($self, value); };
 	void set_borderthickness (int value) { $self->border = value; };
+	void set_padding (int value) { $self->padding = value; };
 };
 
 /*
@@ -313,8 +351,26 @@ struct uiCheckBox_t {
 	void set_iconunknown (const char* name) { UI_CheckBox_SetIconUnknownByName($self, name); };
 };
 
+%rename (uiPanel) uiPanel_t;
+struct uiPanel_t: uiAbstractScrollable_t {
+};
+%extend uiPanel_t {
+	bool is_wheelscrollable () { return UI_EXTRADATA($self, panelExtraData_t).wheelScrollable; };
+
+	int layout () { return UI_EXTRADATA($self, panelExtraData_t).layout; };
+	int layoutmargin () { return UI_EXTRADATA($self, panelExtraData_t).layoutMargin; };
+	int layoutcolumns () { return UI_EXTRADATA($self, panelExtraData_t).layoutColumns; };
+
+	void set_layout (int value) { UI_EXTRADATA($self, panelExtraData_t).layout = (panelLayout_t)value; };
+	void set_layoutmargin (int value) { UI_EXTRADATA($self, panelExtraData_t).layoutMargin = value; };
+	void set_layoutcolumns (int value) { UI_EXTRADATA($self, panelExtraData_t).layoutColumns = value; };
+	void set_wheelscrollable (bool value) { UI_EXTRADATA($self, panelExtraData_t).wheelScrollable = value; };
+	void set_background (const char* name) { UI_Panel_SetBackgroundByName($self, name); };
+
+};
+
 %rename (uiString) uiString_t;
-struct uiString_t {
+struct uiString_t: uiNode_t {
 };
 %extend uiString_t {
 };
@@ -328,6 +384,9 @@ struct uiWindow_t: uiNode_t {
 
 	void add_dragbutton () { UI_EXTRADATA($self, windowExtraData_t).dragButton = true; };
 	void add_closebutton () { UI_EXTRADATA($self, windowExtraData_t).closeButton = true; };
+
+	void close () { UI_PopWindow (false); };
+	void open () { UI_PushWindow($self->name, nullptr, nullptr); };
 
 	void set_background (const char* name) { UI_Window_SetBackgroundByName($self, name); };
 	void set_fullscreen (bool value) { UI_EXTRADATA($self, windowExtraData_t).isFullScreen = value; };
@@ -353,15 +412,14 @@ static void uiWindow_t_lua_onWindowOpened_set (uiWindow_t* node, LUA_EVENT fn) {
 static LUA_EVENT uiWindow_t_lua_onWindowClosed_get(uiWindow_t* node) {
 	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowClosed;
 }
-static int uiWindow_t_lua_onWindowClosed_set (uiWindow_t* node, LUA_EVENT fn) {
+static void uiWindow_t_lua_onWindowClosed_set (uiWindow_t* node, LUA_EVENT fn) {
 	UI_EXTRADATA(node, windowExtraData_t).lua_onWindowClosed = fn;
 }
 %}
 
-
-/* expose registration functions for callbacks */
-%rename(register_onload) UI_RegisterHandler_OnLoad;
-void UI_RegisterHandler_OnLoad (lua_State *L, LUA_FUNCTION fcn);
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//	expose window management
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* expose uiNode creation functions */
 %rename (__create_control) UI_CreateControl;
@@ -371,22 +429,21 @@ uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* su
 %rename (__create_window) UI_CreateWindow;
 uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);
 
-/*
-  The following is inline code that is only visible in the SWIG generated module. It allows us to
-  expose control creation functions to lua that return a lua "class" derived from uiNode.
-*/
 /* define uiNode subtypes creation functions */
 %inline %{
-uiButton_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super) {
+static uiButton_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "button", name, super);
-};
-uiCheckBox_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super) {
+}
+static uiCheckBox_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "checkbox", name, super);
 }
-uiString_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super) {
+static uiPanel_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "panel", name, super);
+}
+static uiString_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "string", name, super);
 }
-uiWindow_t* UI_CreateWindow (const char* name, const char* super) {
+static uiWindow_t* UI_CreateWindow (const char* name, const char* super) {
 	return UI_CreateWindow("window", name, super);
 }
 %}
@@ -398,9 +455,27 @@ uiButton_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* sup
 uiCheckBox_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super);
 %rename (create_string) UI_CreateString;
 uiString_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super);
-
+%rename (create_panel) UI_CreatePanel;
+uiPanel_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super);
 %rename (create_window) UI_CreateWindow;
 uiWindow_t* UI_CreateWindow (const char* name, const char* super);
+
+/* expose window functions */
+%rename (pop_window) UI_PopWindow;
+void UI_PopWindow (bool all);
+%rename (push_window) UI_PushWindow;
+uiNode_t* UI_PushWindow (const char* name, const char* parentName, linkedList_t* params);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//	expose command functions
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+%rename (cmd) Cbuf_AddText;
+void Cbuf_AddText (const char* command);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//	expose common functions
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* expose common functions to lua */
 %rename (print) Com_Printf;
@@ -410,4 +485,11 @@ void Com_DPrintf(int level, const char* fmt);
 %rename (error) Com_Error;
 void Com_Error(int code, const char* fmt);
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//	expose .ufo as lua module
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* expose registration functions for callbacks */
+%rename(register_onload) UI_RegisterHandler_OnLoad;
+void UI_RegisterHandler_OnLoad (lua_State *L, LUA_FUNCTION fcn);
 

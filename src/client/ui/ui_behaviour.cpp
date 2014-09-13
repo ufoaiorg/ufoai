@@ -205,8 +205,5 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 		}
 	}
 
-	/* add SWIG type value based on the name query */
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery(behaviour->name);
-
 	behaviour->isInitialized = true;
 }

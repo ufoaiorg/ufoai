@@ -196,7 +196,7 @@ function load ()
 	ufo.print("before calling Window:first()\n")
 	local child = Window:first()
 	if (child ~= nil) then
-		ufo.print(string.format("first child, name = %s\n", child:name()))
+		ufo.print(string.format("first child, name = %s, type = %s\n", child:name(), child:type()))
 		ufo.print(string.format("access uiButton specific value: flipicon = %s\n", tostring(child:flipicon())))
 	else
 		ufo.print("first child return nil\n")

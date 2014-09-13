@@ -568,6 +568,11 @@ bool uiPanelNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 	return updated;
 }
 
+void UI_Panel_SetBackgroundByName(uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, panelExtraData_t).background = sprite;
+}
+
 void UI_RegisterPanelNode (uiBehaviour_t* behaviour)
 {
 	localBehaviour = behaviour;
