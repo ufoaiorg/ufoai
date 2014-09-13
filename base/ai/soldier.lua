@@ -7,11 +7,11 @@ function think()
 	local phalanx = ai.see("all", "phalanx")[1]
 
 	if alien then
-		local alienDist = ai.distance(alien)
+		local alienDist = alien:pos():distance()
 		-- check danger close
 		if alienDist < 128 then
 			if phalanx then
-				local phalanxDist = ai.distance(phalanx)
+				local phalanxDist = phalanx:pos():distance()
 
 				-- check alien closer than phalanx
 				if alienDist < phalanxDist then
@@ -28,13 +28,13 @@ function think()
 			end
 		else
 			if phalanx then
-				local phalanxDist = ai.distance(phalanx)
+				local phalanxDist = phalanx:pos():distance()
 				-- check alien closer than phalanx
 				if alienDist < phalanxDist then
 					hide(alien:team())
 				else
 					if civ then
-						local civDist = ai.distance(civ)
+						local civDist = civ:pos():distance()
 
 						-- check phalanx closer than civilian
 						if phalanxDist < civDist then
@@ -48,7 +48,7 @@ function think()
 				end
 			else
 				if civ then
-					local civDist = ai.distance(civ)
+					local civDist = civ:pos():distance()
 
 					-- check alien closer than civilian
 					if alienDist < civDist then

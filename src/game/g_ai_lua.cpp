@@ -190,7 +190,6 @@ static pos3_t* lua_pushpos3(lua_State* L, pos3_t* pos);
 static int pos3L_tostring(lua_State* L);
 static int pos3L_goto(lua_State* L);
 static int pos3L_face(lua_State* L);
-static int pos3L_approach(lua_State* L);
 static int pos3L_distance(lua_State* L);
 /** Lua Pos3 metatable methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -199,7 +198,6 @@ static const luaL_reg pos3L_methods[] = {
 	{"__tostring", pos3L_tostring},
 	{"goto", pos3L_goto},
 	{"face", pos3L_face},
-	{"approach", pos3L_approach},
 	{"distance", pos3L_distance},
 	{nullptr, nullptr}
 };
@@ -218,7 +216,6 @@ static int AIL_reload(lua_State* L);
 static int AIL_positionshoot(lua_State* L);
 static int AIL_positionhide(lua_State* L);
 static int AIL_positionherd(lua_State* L);
-static int AIL_distance(lua_State* L);
 static int AIL_positionapproach(lua_State* L);
 static int AIL_grabweapon(lua_State* L);
 static int AIL_missiontargets(lua_State* L);
@@ -247,7 +244,6 @@ static const luaL_reg AIL_methods[] = {
 	{"positionshoot", AIL_positionshoot},
 	{"positionhide", AIL_positionhide},
 	{"positionherd", AIL_positionherd},
-	{"distance", AIL_distance},
 	{"positionapproach", AIL_positionapproach},
 	{"grabweapon", AIL_grabweapon},
 	{"missiontargets", AIL_missiontargets},
@@ -830,44 +826,7 @@ static int pos3L_face (lua_State* L)
 }
 
 /**
- * @brief Try to Approach the given position
- */
-static int pos3L_approach (lua_State* L)
-{
-	assert(lua_ispos3(L, 1));
-
-	pos3_t* pos = lua_topos3(L, 1);
-	assert(pos != nullptr);
-
-	/* Find a path to the target pos */
-	const int maxTUs = ROUTING_NOT_REACHABLE - 1;
-	byte crouchingState = AIL_ent->isCrouched() ? 1 : 0;
-	if (!G_FindPath(0, AIL_ent, AIL_ent->pos, *pos, crouchingState, maxTUs)) {
-		/* Not found */
-		lua_pushboolean(L, 0);
-		return 1;
-	}
-
-	/* Find the farthest we can go with current TUs */
-	const int tus = AIL_ent->getUsableTUs();
-	int dvec;
-	while ((dvec = gi.MoveNext(level.pathingMap, *pos, crouchingState)) != ROUTING_UNREACHABLE) {
-		/* We are going backwards to the origin. */
-		/* Note: We skip the actual target pos because it could be blocked and G_FindPath()
-		 * skips it from the forbidden list (good -- otherwise we couldn't path to other actors) */
-		PosSubDV(*pos, crouchingState, dvec);
-		const byte length =  G_ActorMoveLength(AIL_ent, level.pathingMap, *pos, false);
-		if (length <= tus)
-			break;
-	}
-	G_ClientMove(*AIL_player, 0, AIL_ent, *pos);
-
-	lua_pushboolean(L, 1);
-	return 1;
-}
-
-/**
- * @brief Return the distance to the position
+ * @brief Return the distance the position an the AI actor
  */
 static int pos3L_distance (lua_State* L)
 {
@@ -876,13 +835,37 @@ static int pos3L_distance (lua_State* L)
 	pos3_t* pos = lua_topos3(L, 1);
 	assert(pos != nullptr);
 
-	/* Find a path to the target pos */
-	if (!G_FindPath(0, AIL_ent, AIL_ent->pos, *pos, AIL_ent->isCrouched(), ROUTING_NOT_REACHABLE - 1)) {
-		lua_pushnumber(L, ROUTING_NOT_REACHABLE);
+	ailSortCritType_t distType = AILSC_DIST;
+	if (lua_gettop(L) > 1) {
+		if (lua_isstring(L, 2)) {
+			const char* str = lua_tostring(L, 2);
+			if (Q_streq(str, "dist"))
+				distType = AILSC_DIST;
+			else if (Q_streq(str, "path"))
+				distType = AILSC_PATH;
+			else
+				AIL_invalidparameter(2);
+		} else {
+			AIL_invalidparameter(2);
+		}
+	}
+
+	switch (distType) {
+	case AILSC_PATH:
+		/* Find a path to the target pos */
+		if (!G_FindPath(0, AIL_ent, AIL_ent->pos, *pos, AIL_ent->isCrouched(), ROUTING_NOT_REACHABLE - 1)) {
+			lua_pushnumber(L, ROUTING_NOT_REACHABLE);
+			return 1;
+		}
+		lua_pushnumber(L, G_ActorMoveLength(AIL_ent, level.pathingMap, *pos, false));
+		return 1;
+	case AILSC_DIST:
+	default:
+		vec3_t to;
+		PosToVec(*pos, to);
+		lua_pushnumber(L, VectorDist(AIL_ent->origin, to));
 		return 1;
 	}
-	lua_pushnumber(L, G_ActorMoveLength(AIL_ent, level.pathingMap, *pos, false));
-	return 1;
 }
 
 /**
@@ -1387,35 +1370,18 @@ static int AIL_positionherd (lua_State* L)
 }
 
 /**
- * @brief Returns distance between AI and target
- * @note @c target (passed trough the lua stack) The target to which the distance is calculated
- */
-static int AIL_distance (lua_State* L)
-{
-
-	/* check parameter */
-	assert(lua_gettop(L) && lua_isactor(L, 1));
-
-	/* calculate distance */
-	const aiActor_t* target = lua_toactor(L, 1);
-	const vec_t dist = VectorDist(AIL_ent->origin, target->actor->origin);
-	lua_pushnumber(L, dist);
-	return 1;
-}
-
-/**
  * @brief Approach to a target actor
  */
 static int AIL_positionapproach (lua_State* L)
 {
 	/* check parameter */
-	if (!(lua_gettop(L) && lua_isactor(L, 1))) {
+	if (!(lua_gettop(L) && lua_ispos3(L, 1))) {
 		AIL_invalidparameter(1);
 		lua_pushboolean(L, 0);
 		return 1;
 	}
 
-	const aiActor_t* target = lua_toactor(L, 1);
+	const pos3_t* target = lua_topos3(L, 1);
 	assert(target != nullptr);
 
 	int tus = AIL_ent->getUsableTUs();
@@ -1437,7 +1403,7 @@ static int AIL_positionapproach (lua_State* L)
 	/* Find a path to the target actor */
 	const int maxTUs = ROUTING_NOT_REACHABLE - 1;
 	pos3_t to;
-	VectorCopy(target->actor->pos, to);
+	VectorCopy(*target, to);
 	byte crouchingState = AIL_ent->isCrouched() ? 1 : 0;
 	if (!G_FindPath(0, AIL_ent, AIL_ent->pos, to, crouchingState, maxTUs)) {
 		/* Not found */
@@ -1450,7 +1416,7 @@ static int AIL_positionapproach (lua_State* L)
 	while ((dvec = gi.MoveNext(level.pathingMap, to, crouchingState)) != ROUTING_UNREACHABLE) {
 		/* Note: here we skip the first position so we don't try to walk into the target */
 		PosSubDV(to, crouchingState, dvec);
-		if (hide && (G_TestVis(target->actor->getTeam(), AIL_ent, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES))
+		if (hide && (G_TestVis(AI_GetHidingTeam(AIL_ent), AIL_ent, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES))
 			continue;
 		if (!AI_CheckPosition(AIL_ent, to))
 			continue;
@@ -1860,6 +1826,9 @@ static int AIL_difficulty (lua_State* L)
 	return 1;
 }
 
+/**
+ * @brief Return a position to flee to.
+ */
 static int AIL_positionflee (lua_State* L)
 {
 	/* Calculate move table. */
@@ -1909,6 +1878,9 @@ static int AIL_positionflee (lua_State* L)
 	return 1;
 }
 
+/**
+ * @brief Returns the type of the weapons in the actors hands.
+ */
 static int AIL_weapontype (lua_State* L)
 {
 	const Item* right = AIL_ent->getRightHandItem();
@@ -1920,6 +1892,9 @@ static int AIL_weapontype (lua_State* L)
 	return 2;
 }
 
+/**
+ * @brief Returns the currently moving AI actor
+ */
 static int AIL_actor (lua_State* L)
 {
 	aiActor_t actor = {AIL_ent};
