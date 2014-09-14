@@ -227,6 +227,7 @@ static int AIL_difficulty(lua_State* L);
 static int AIL_positionflee(lua_State* L);
 static int AIL_weapontype(lua_State* L);
 static int AIL_actor(lua_State* L);
+static int AIL_tusforshooting(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -255,6 +256,7 @@ static const luaL_reg AIL_methods[] = {
 	{"positionflee", AIL_positionflee},
 	{"weapontype", AIL_weapontype},
 	{"actor", AIL_actor},
+	{"tusforshooting", AIL_tusforshooting},
 	{nullptr, nullptr}
 };
 
@@ -1880,6 +1882,29 @@ static int AIL_actor (lua_State* L)
 {
 	aiActor_t actor = {AIL_ent};
 	lua_pushactor(L, &actor);
+	return 1;
+}
+
+static int AIL_tusforshooting (lua_State* L)
+{
+	int bestTUs = 256;
+	const Item* weapon = AIL_ent->getRightHandItem();
+	if (weapon) {
+		const fireDef_t* fd = weapon->getFastestFireDef();
+		if (fd)
+			bestTUs = fd->time;
+	}
+	weapon = AIL_ent->getLeftHandItem();
+	if (weapon) {
+		const fireDef_t* fd = weapon->getFastestFireDef();
+		if (fd) {
+			const int tus = weapon->getFastestFireDef()->time;
+			if (tus < bestTUs)
+				bestTUs = tus;
+		}
+	}
+
+	lua_pushnumber(L, bestTUs);
 	return 1;
 }
 
