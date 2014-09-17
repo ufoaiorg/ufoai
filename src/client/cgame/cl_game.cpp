@@ -1873,7 +1873,7 @@ void GAME_InitUIData (void)
 void GAME_InitStartup (void)
 {
 	Cmd_AddCommand("game_setmode", GAME_SetMode_f, "Decides with game mode should be set - takes the menu as reference");
-	Cmd_AddCommand("game_exit", GAME_Exit_f, "Abort the game and let the aliens/opponents win");
+	Cmd_AddCommand("game_exit", GAME_Exit_f, "Quits the current running game and shutdown the game mode");
 	Cmd_AddCommand("game_abort", GAME_Abort_f, "Abort the game and let the aliens/opponents win");
 	Cmd_AddCommand("game_autoteam", GAME_AutoTeam_f, "Assign initial equipment to soldiers");
 	Cmd_AddCommand("game_toggleactor", GAME_ToggleActorForTeam_f);
