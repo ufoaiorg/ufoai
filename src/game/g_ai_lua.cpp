@@ -1886,7 +1886,9 @@ static int AIL_actor (lua_State* L)
 	lua_pushactor(L, &actor);
 	return 1;
 }
-
+/**
+ * @brief Returns the type of the actor weapons.
+ */
 static int AIL_tusforshooting (lua_State* L)
 {
 	int bestTUs = 256;
@@ -1910,6 +1912,9 @@ static int AIL_tusforshooting (lua_State* L)
 	return 1;
 }
 
+/**
+ * @brief Returns the AI actor's class.
+ */
 static int AIL_class (lua_State* L)
 {
 	lua_pushstring(L, AIL_ent->AI.subtype);
