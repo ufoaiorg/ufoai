@@ -1839,7 +1839,7 @@ static void AI_InitPlayer (const Player& player, Actor* actor, const equipDef_t*
 	if (team == TEAM_CIVILIAN)
 		AIL_InitActor(actor, "civilian", "default");
 	else if (team == TEAM_ALIEN)
-		AIL_InitActor(actor, "alien", "default");
+		AIL_InitActor(actor, "alien", actor->chr.teamDef->id);
 	else
 		gi.DPrintf("AI_InitPlayer: unknown team AI\n");
 }
