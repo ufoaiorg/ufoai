@@ -57,8 +57,7 @@ static bool G_LineVis (const vec3_t from, const vec3_t to)
 }
 
 /**
- * @brief calculate how much check is "visible" from @c from
- * @param[in] from The world coordinate to check from
+ * @brief calculate how much check is "visible" by @c ent
  * @param[in] ent The source edict of the check
  * @param[in] check The edict to check how good (or if at all) it is visible
  * @param[in] full Perform a full check in different directions. If this is
