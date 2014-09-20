@@ -269,6 +269,26 @@ void AI_Init (void)
 	herdPathingTable = nullptr;
 }
 
+bool AI_HasLineOfFire (const Edict* actor, const Edict* target)
+{
+	for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
+		const Item* item = AI_GetItemForShootType(shootType, actor);
+		if (item == nullptr)
+			continue;
+
+		const fireDef_t* fdArray = item->getFiredefs();
+		if (fdArray == nullptr)
+			continue;
+
+		for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+			const fireDef_t* fd = &fdArray[fdIdx];
+			if (AI_CheckLineOfFire(actor, target, fd, 1))
+				return true;
+		}
+	}
+	return false;
+}
+
 /**
  * @brief Check whether friendly units are in the line of fire when shooting
  * @param[in] ent AI that is trying to shoot
