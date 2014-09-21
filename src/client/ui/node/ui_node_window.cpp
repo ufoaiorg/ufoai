@@ -50,6 +50,8 @@ static const int CONTROLS_PADDING = 18;
 static const vec4_t modalBackground = {0, 0, 0, 0.6};
 static const vec4_t anamorphicBorder = {0, 0, 0, 1};
 
+static const char* WINDOW_FONT_BIG = "f_big";
+
 /**
  * @brief set background sprite
  */
@@ -251,7 +253,7 @@ void uiWindowNode::onLoading (uiNode_t* node)
 {
 	node->box.size[0] = VID_NORM_WIDTH;
 	node->box.size[1] = VID_NORM_HEIGHT;
-	node->font = "f_big";
+	node->font = const_cast<char*>(WINDOW_FONT_BIG);
 	node->padding = 5;
 }
 

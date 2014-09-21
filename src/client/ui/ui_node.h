@@ -89,7 +89,8 @@ const char* UI_Node_GetText (uiNode_t* node);
 void UI_Node_SetText (uiNode_t* node, const char* text);
 const char* UI_Node_GetTooltip (uiNode_t* node);
 void UI_Node_SetTooltip (uiNode_t* node, const char* tooltip);
-
+void UI_Node_SetFont (uiNode_t* node, const char* name);
+void UI_Node_SetImage (uiNode_t* node, const char* name);
 void UI_Node_SetDisabled (uiNode_t* node, const bool value);
 
 #ifdef DEBUG
@@ -124,3 +125,7 @@ void UI_InsertNode(uiNode_t* parent, uiNode_t* prevNode, uiNode_t* newNode);
 void UI_AppendNode(uiNode_t* parent, uiNode_t* newNode);
 uiNode_t* UI_RemoveNode(uiNode_t* node, uiNode_t* child);
 void UI_UpdateRoot(uiNode_t* node, uiNode_t* newRoot);
+
+/* behaviour */
+void UI_Node_SetItem (uiNode_t* node, const char* name, LUA_METHOD fcn);
+LUA_METHOD UI_Node_GetItem (uiNode_t* node, const char* name);

@@ -90,7 +90,10 @@ typedef uiNode_t uiButton_t;
 typedef uiNode_t uiCheckBox_t;
 typedef uiAbstractScrollable_t uiPanel_t;
 typedef uiNode_t uiString_t;
+typedef uiNode_t uiTexture_t;
 typedef uiNode_t uiWindow_t;
+
+typedef uiNode_t uiFunc_t;
 
 // todo: implement other ui node classes
 
@@ -122,6 +125,16 @@ const char* UI_SWIG_NodeTypeName (void* node) {
 }
 %typemap(in) LUA_EVENT {
 	$1 = (LUA_EVENT)luaL_ref (L, LUA_REGISTRYINDEX);
+}
+%typemap(in) LUA_METHOD {
+	$1 = (LUA_METHOD)luaL_ref (L, LUA_REGISTRYINDEX);
+}
+/* typemap for converting a reference to a lua function */
+%typemap(out) LUA_FUNCTION {
+	lua_rawgeti(L, LUA_REGISTRYINDEX, $1); SWIG_arg++;
+}
+%typemap(out) LUA_METHOD {
+	lua_rawgeti(L, LUA_REGISTRYINDEX, $1); SWIG_arg++;
 }
 
 /* typemap for dynamic casting uiNode_t* into lua table corresponding to the actual behaviour class
@@ -216,9 +229,9 @@ typedef enum {
 struct cvar_t {
 };
 %extend cvar_t {
-	const char* name () { return $self->name; };
+	char* name () { return $self->name; };
 
-	const char* as_string () { return $self->string; };
+	char* as_string () { return $self->string; };
 	float as_float () { return $self->value; };
 	int as_integer () { return $self->integer; };
 };
@@ -258,6 +271,10 @@ struct uiNode_t {
 	%rename (on_activate) lua_onActivate;
     LUA_EVENT lua_onLoaded; /**< references the event in lua: on_loaded (node) */
     LUA_EVENT lua_onActivate; /**< references the event in lua: on_activate (node) */
+    %rename (on_mouseenter) lua_onMouseEnter;
+    %rename (on_mouseleave) lua_onMouseLeave;
+    LUA_EVENT lua_onMouseEnter; /**< references the event in lua: on_mouseenter (node) */
+    LUA_EVENT lua_onMouseLeave; /**< references the event in lua: on_mouseleave (node) */
 };
 %extend uiNode_t {
 	bool is_window () { return UI_Node_IsWindow($self); };
@@ -271,10 +288,11 @@ struct uiNode_t {
 	float widht () { return $self->box.size[0]; };
 	float height () { return $self->box.size[1]; };
 	int borderthickness () { return $self->border; };
-	const char* name () { return $self->name; };
-	const char* type () { return $self->behaviour->name; };
-	const char* text () { return UI_Node_GetText($self); };
-	const char* font () { return $self->font; };
+	char* name () { return const_cast<char*>($self->name); };
+	char* type () { return const_cast<char*>($self->behaviour->name); };
+	char* text () { return const_cast<char*>(UI_Node_GetText($self)); };
+	char* font () { return const_cast<char*>($self->font); };
+	char* image () { return const_cast<char*>($self->image); };
 	int contentalign () { return $self->contentAlign; };
 	int layoutalign () { return $self->align; };
 	float flashspeed () { return $self->flashSpeed; };
@@ -303,15 +321,20 @@ struct uiNode_t {
 	void set_backgroundcolor (float r, float g, float b, float a) { Vector4Set($self->bgcolor, r, g, b, a); };
 	void set_bordercolor (float r, float g, float b, float a) { Vector4Set($self->bordercolor, r, g, b, a); };
 	void set_text (const char* text) { UI_Node_SetText($self, text); };
-	void set_font (const char* name) { $self->font = name; };
+	void set_font (const char* name) { UI_Node_SetFont($self, name); };
+	void set_image (const char* name) { UI_Node_SetImage ($self, name); };
 	void set_contentalign (int value) { $self->contentAlign = value; };
 	void set_layoutalign (int value) { $self->align = value; };
 	void set_tooltip (const char* text) { UI_Node_SetTooltip($self, text); };
 	void set_disabled (bool value) { UI_Node_SetDisabled($self, value); };
 	void set_borderthickness (int value) { $self->border = value; };
 	void set_padding (int value) { $self->padding = value; };
-};
 
+	void __setitem (const char* name, LUA_METHOD fcn) { Com_Printf("__setitem: %s = %d\n", name, fcn); UI_Node_SetItem($self, name, fcn); };
+	LUA_METHOD __getitem(const char* name) { LUA_METHOD fcn = UI_Node_GetItem($self, name); Com_Printf("__getitem: %s = %d\n", name, fcn); return fcn; };
+
+	void add_classmethod(const char* name, LUA_METHOD fcn) { UI_AddBehaviourMethod($self->behaviour, name, fcn); };
+};
 /*
 	The following defines derived "classes" from uiNode. This solves the problem of all nodes being structures
 	of type uiNode_t where the actual "class" is found in the behaviour value. In the interface file we actually
@@ -375,6 +398,12 @@ struct uiString_t: uiNode_t {
 %extend uiString_t {
 };
 
+struct uiTexture_t: uiNode_t {
+};
+%extend uiTexture_t {
+	void set_source (const char* name) { UI_Node_SetImage($self, name); };
+};
+
 %rename (uiWindow) uiWindow_t;
 struct uiWindow_t: uiNode_t {
 };
@@ -418,14 +447,21 @@ static void uiWindow_t_lua_onWindowClosed_set (uiWindow_t* node, LUA_EVENT fn) {
 %}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//	expose special ui nodes
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct uiFunc_t: uiNode_t {
+};
+%extend uiFunc_t {
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose window management
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* expose uiNode creation functions */
 %rename (__create_control) UI_CreateControl;
 uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super);
-%rename (__create_component) UI_CreateComponent;
-uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);
 %rename (__create_window) UI_CreateWindow;
 uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);
 
@@ -460,6 +496,10 @@ uiPanel_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super
 %rename (create_window) UI_CreateWindow;
 uiWindow_t* UI_CreateWindow (const char* name, const char* super);
 
+/* expose component creation fuction */
+%rename (create_component) UI_CreateComponent;
+uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);
+
 /* expose window functions */
 %rename (pop_window) UI_PopWindow;
 void UI_PopWindow (bool all);
@@ -493,3 +533,37 @@ void Com_Error(int code, const char* fmt);
 %rename(register_onload) UI_RegisterHandler_OnLoad;
 void UI_RegisterHandler_OnLoad (LUA_FUNCTION fcn);
 
+%luacode {
+--[[
+	@brief Creates an extendible wrapper around the userdata table supplied by SWIG.
+	@param[in] cppObject The SWIG wrapper that holds the C++ object, typically a uiNode
+	@note This code is used to create a proxy in lua around the userdata object SWIG provides. The SWIG
+	userdata object cannot be extended with new lua based functions and properties. Using a proxy however
+	this becomes possible.
+--]]
+local function create_proxy(cppObject)
+	local proxy = {}
+    local wrapper_metatable = {}
+
+	function wrapper_metatable.__index(self, key)
+		local ret = rawget(self, key)
+		if(not ret) then
+			ret = cppObject[key]
+			if(type(ret) == "function") then
+				return function(self, ...)
+					return ret(cppObject, ...)
+				end
+			else
+				return ret
+			end
+		else
+			return ret
+		end
+	end
+
+
+    setmetatable(proxy, wrapper_metatable)
+    return proxy
+end
+
+%}

@@ -59,6 +59,7 @@ bool UI_TokenIsName (const char* name, bool isQuoted);
 #define V_UI_CVAR			(V_UI + 0x0100) /**< Property is a CVAR string (mix this flag with base type, see bellow) */
 #define V_UI_REF			(V_UI + 0x0200) /**< Property is a ref into a value (mix this flag with base type, see bellow) */
 #define V_UI_NODEMETHOD		(V_UI + 0x0400) /**< Property is a function */
+#define V_UI_NODEMETHOD_LUA	(V_UI + 0x0800) /**< Properti is a lua based function */
 
 /* alias */
 #define V_UI_ALIGN			V_INT

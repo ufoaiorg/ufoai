@@ -107,17 +107,24 @@ struct hashTable_s {
     /**< If a (key,value) pair is inserted and there already is a (key,value) pair, then if this is set to
 	true (the default), the value is overwritten by the new value, else the operation asserts. */
     bool duplicateOverwrite;
+    /**< Memory pool used to allocate keys. */
+    memPool_t* keyPool;
+    /**< Memory pool used to duplicate item values, in case the table owns the values. */
+    memPool_t* valuePool;
+    /**< Memory pool used to allocate internal table structures, including the table structure. */
+    memPool_t* internalPool;
 };
 
 #ifdef __DEBUG__
 static unsigned long _num_allocs = 0u;
 #endif // __DEBUG__
 
-static void* _hash_alloc (int n, size_t s) {
+static void* _hash_alloc (memPool_t* pool, int n, size_t s) {
 	#ifdef __DEBUG__
 	_num_allocs++;
 	#endif // __DEBUG__
-	return Mem_Alloc (n * s);
+	if (pool) return Mem_PoolAlloc (n * s, pool, 0);
+	return Mem_Alloc(n * s);
 }
 
 static void _hash_free (void* p) {
@@ -229,6 +236,42 @@ static void _release_table (hashTable_s** t, bool full) {
 		(*t) = NULL;
 	}
 }
+/**
+ * @brief start iterating with the first item.
+ * @note the order is not necessarily sorted
+ */
+static hashItem_s* _iterator_first (hashTable_s* t) {
+	if (t) {
+		for (int ti = 0; ti < HASH_TABLE_SIZE; ti++) {
+			if (t->table[ti]) return t->table[ti]->root;
+		}
+	}
+	return nullptr;
+}
+
+/**
+ * @brief iterate to next item
+ * @note the order is not necessarily sorted
+ */
+static hashItem_s* _iterator_next (hashTable_s* t, hashItem_s* i) {
+	if (i) {
+		if (i->next) {
+			return i->next;
+		}
+		// compute the hash key of the last item iterated
+		int h = t->hash(i->key, i->nkey);
+		// now get the next filled bucket in the array
+		h++;
+		while (h < HASH_TABLE_SIZE) {
+			hashBucket_s* b = (t->table)[h];
+			if (b) {
+				return b->root;
+			}
+			h++;
+		}
+	}
+	return nullptr;
+}
 
 /**
  * @brief Creates a new hash table and sets it initial capacity.
@@ -244,6 +287,7 @@ hashTable_s* HASH_NewTable (bool ownsKeys, bool ownsValues, bool duplicateOverwr
 	return HASH_NewTable (ownsKeys, ownsValues, duplicateOverwrite, &default_hash, &default_compare);
 }
 
+
 /**
  * @brief Creates a new hash table and sets it initial capacity.
  * @param[in] ownsKeys If true, the hash table stores a copy of the key.
@@ -256,13 +300,46 @@ hashTable_s* HASH_NewTable (bool ownsKeys, bool ownsValues, bool duplicateOverwr
  * @note The table hash an initial index of HASH_TABLE_SIZE buckets.
  */
 hashTable_s* HASH_NewTable (bool ownsKeys, bool ownsValues, bool duplicateOverwrite, hashTable_hash h, hashTable_compare c) {
+	return HASH_NewTable(ownsKeys, ownsValues, duplicateOverwrite, h, c, nullptr, nullptr, nullptr);
+}
+
+/**
+ * @brief Creates a new hash table and sets it initial capacity.
+ * @param[in] ownsKeys If true, the hash table stores a copy of the key.
+ * @param[in] ownsValues If true, the hash table stores a copy of the value.
+ * @param[in] duplicateOverwrite If true, inserting a value twice will overwrite the old value. If false, the
+ * operation asserts.
+ * @param[in] h The hash function to be used when indexing.
+ * @param[in] c The compare function to be used when comparing.
+ * @param[in] keys If not null, should point to a memory pool used to allocate key values.
+ * @param[in] values If not null, should point to a memory pool used to allocated copies of inserted values.
+ * @param[in] table If not null, should point to a memory pool used to allocate the table internal structures, including the
+ * hashTable_s structure returned.
+ * @return A pointer to a hashTable_s.
+ * @note The table hash an initial index of HASH_TABLE_SIZE buckets.
+ */
+hashTable_s* HASH_NewTable (bool ownsKeys, bool ownsValues, bool duplicateOverwrite, hashTable_hash h, hashTable_compare c, memPool_t* keys, memPool_t* values, memPool_t* table) {
 	// allocate table
-	hashTable_s* t = (hashTable_s*) _hash_alloc (1, sizeof(hashTable_s));
+	hashTable_s* t = (hashTable_s*) _hash_alloc (table, 1, sizeof(hashTable_s));
 	t->hash = h;
 	t->compare = c;
 	t->ownsKeys = ownsKeys;
 	t->ownsValues = ownsValues;
 	t->duplicateOverwrite = duplicateOverwrite;
+	t->keyPool = keys;
+	t->valuePool = values;
+	t->internalPool = table;
+	return t;
+}
+
+hashTable_s* HASH_CloneTable (hashTable_s* source) {
+	hashTable_s* t = HASH_NewTable(source->ownsKeys, source->ownsValues, source->duplicateOverwrite, source->hash, source->compare);
+
+	hashItem_s* item = _iterator_first (source);
+	while (item) {
+		HASH_Insert (t, item->key, item->nkey, item->value, item->nvalue);
+		item = _iterator_next (source, item);
+	}
 	return t;
 }
 
@@ -281,51 +358,57 @@ void HASH_DeleteTable (hashTable_s** t) {
  * @param[in] nkey The length of the key value in bytes.
  * @param[in] value A pointer to a value.
  * @param[in] nvalue The length of the value in bytes.
+ * @return True if the insert succeeds, false otherwise.
+ * @note If DEBUG then insert will assert when trying to insert a duplicate key value on a list created with
+ * duplicateOverwrite = false.
  * @note By default the hash table creates duplicates of the inserted key and values. Should this behaviour
  * be modified, the user is responsible for making sure the pointers remain valid during the lifespan of the
  * hash table.
  */
-void HASH_Insert (hashTable_s* t, const void* key, int nkey, const void* value, int nvalue) {
+bool HASH_Insert (hashTable_s* t, const void* key, int nkey, const void* value, int nvalue) {
 	// compute hash index
 	int idx=t->hash(key, nkey);
 	// find the bucket, if no bucket available create a new one
 	hashBucket_s* b = t->table[idx];
 	if (b == NULL) {
-		t->table[idx] = b = (hashBucket_s*)_hash_alloc (1, sizeof(hashBucket_s));
+		t->table[idx] = b = (hashBucket_s*)_hash_alloc (t->internalPool, 1, sizeof(hashBucket_s));
 	}
 	// find entry
 	hashItem_s* i = _find_bucket_entry(b, t->compare, key, nkey, NULL);
 	if (i) {
 		// entry already found, so we are overwriting the current value here
 		// check table settings to see if we need to assert here
-		if (!t->duplicateOverwrite) assert(false);
+		if (!t->duplicateOverwrite) {
+			assert(false);
+			return false;
+		}
 		// if the table owns the items, create a copy
 		if (t->ownsValues) {
-			i->value = _hash_alloc (1, nvalue);
+			i->value = _hash_alloc (t->valuePool, 1, nvalue);
 			memcpy (i->value, value, nvalue);
 		}
 		else {
-			i->value = (void*)value;
+			i->value = const_cast<void*>(value);
 		}
 		i->nvalue = nvalue;
 	}
 	else {
 		// create a new entry, add it to the top of the list
-		i = (hashItem_s*) _hash_alloc (1, sizeof(hashItem_s));
+		i = (hashItem_s*) _hash_alloc (t->internalPool, 1, sizeof(hashItem_s));
 		if (t->ownsKeys) {
-			i->key = _hash_alloc (1, nkey);
+			i->key = _hash_alloc (t->keyPool, 1, nkey);
 			memcpy (i->key, key, nkey);
 		}
 		else {
-			i->key = (void*)key;
+			i->key = const_cast<void*>(key);
 		}
 		i->nkey = nkey;
 		if (t->ownsValues) {
-			i->value = _hash_alloc (1, nvalue);
+			i->value = _hash_alloc (t->valuePool, 1, nvalue);
 			memcpy (i->value, value, nvalue);
 		}
 		else {
-			i->value = (void*)value;
+			i->value = const_cast<void*>(value);
 		}
 		i->nvalue = nvalue;
 
@@ -334,6 +417,8 @@ void HASH_Insert (hashTable_s* t, const void* key, int nkey, const void* value, 
 	}
 	// increase the count of the bucket
 	b->count++;
+
+	return true;
 }
 
 /**

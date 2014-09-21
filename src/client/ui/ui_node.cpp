@@ -50,6 +50,8 @@ void uiNode::initNode(uiNode_t* node) {
 	node->lua_onKeyReleased = LUA_NOREF;
 	node->lua_onActivate = LUA_NOREF;
 	node->lua_onLoaded = LUA_NOREF;
+	node->lua_onMouseEnter = LUA_NOREF;
+	node->lua_onMouseLeave = LUA_NOREF;
 }
 
 void uiNode::initNodeDynamic(uiNode_t* node) {
@@ -393,6 +395,16 @@ const char* UI_Node_GetText (uiNode_t* node) {
 void UI_Node_SetText (uiNode_t* node, const char* text) {
 	UI_FreeStringProperty(node->text);
 	node->text = Mem_PoolStrDup(text, ui_dynStringPool, 0);
+}
+
+void UI_Node_SetFont (uiNode_t* node, const char* name) {
+	UI_FreeStringProperty(node->font);
+	node->font = Mem_PoolStrDup(name, ui_dynStringPool, 0);
+}
+
+void UI_Node_SetImage (uiNode_t* node, const char* name) {
+	UI_FreeStringProperty(node->image);
+	node->image = Mem_PoolStrDup(name, ui_dynStringPool, 0);
 }
 
 const char* UI_Node_GetTooltip (uiNode_t* node) {
@@ -975,3 +987,33 @@ void UI_Validate (uiNode_t* node)
 	if (node->invalidated)
 		UI_Node_DoLayout(node);
 }
+
+/**
+ * @brief This functions adds a lua based method to the internal uiNode behaviour.
+ * @param[in] node The node getting new behaviour.
+ * @param[in] name The name of the new behaviour entry (this is the function name).
+ * @param[in] fcn A reference to a lua based method.
+ * @note This is a placeholder for extending behaviour in lua and store it in the ui internal structure.
+ * Currently, only lua based functions are supported.
+ */
+void UI_Node_SetItem (uiNode_t* node, const char* name, LUA_METHOD fcn) {
+	UI_AddBehaviourMethod(node->behaviour, name, fcn);
+};
+
+/**
+ * @brief This functions queries a lua based method in the internal uiNode behaviour.
+ * @param[in] node The node with behaviour being queried.
+ * @param[in] name The name of the behaviour entry to find.
+ * @return A LUA_METHOD value pointing to a lua defined function or LUA_NOREF if no function is found.
+ * @note This is a placeholder for extending behaviour in lua and store it in the ui internal structure.
+ * Currently, only lua based functions are supported.
+ */
+LUA_METHOD UI_Node_GetItem (uiNode_t* node, const char* name) {
+	LUA_METHOD fcn;
+	if (UI_GetBehaviourMethod(node->behaviour, name, fcn)) {
+		return fcn;
+	}
+	return LUA_NOREF;
+};
+
+

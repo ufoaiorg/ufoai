@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_input.h"
 #include "ui_node.h"
 #include "ui_actions.h"
+#include "ui_lua.h"
 #include "node/ui_node_abstractnode.h"
 
 #include "../cl_language.h"
@@ -428,20 +429,20 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 	uiAction_t* left = action->d.nonTerminal.left;
 	uiCallContext_t newContext;
 	const value_t* callProperty = nullptr;
+	value_t luaMethod;
 	const char* path = left->d.terminal.d1.constString;
 
 	if (left->type == EA_VALUE_PATHPROPERTY || left->type == EA_VALUE_PATHNODE)
 		path = left->d.terminal.d1.constString;
 	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION || left->type == EA_VALUE_PATHNODE_WITHINJECTION)
 		path = UI_GenInjectedString(left->d.terminal.d1.constString, false, context);
-	UI_ReadNodePath(path, context->source, context->tagNode, &callNode, &callProperty);
 
+	UI_ReadNodePath(path, context->source, context->tagNode, &callNode, &callProperty, &luaMethod);
 	if (callNode == nullptr) {
 		Com_Printf("UI_ExecuteCallAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, UI_GetPath(context->source));
 		return;
 	}
-
-	if (callProperty != nullptr && callProperty->type != V_UI_ACTION && callProperty->type != V_UI_NODEMETHOD) {
+	if (callProperty != nullptr && callProperty->type != V_UI_ACTION && callProperty->type != V_UI_NODEMETHOD && callProperty->type != V_UI_NODEMETHOD_LUA) {
 		Com_Printf("UI_ExecuteCallAction: Call operand %d unsupported. (%s)\n", callProperty->type, UI_GetPath(callNode));
 		return;
 	}
@@ -481,10 +482,15 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 	if (callProperty == nullptr || callProperty->type == V_UI_ACTION) {
 		uiAction_t const* const actionsRef = callProperty ? Com_GetValue<uiAction_t*>(callNode, callProperty) : callNode->onClick;
 		UI_ExecuteActions(actionsRef, &newContext);
-	} else if (callProperty->type == V_UI_NODEMETHOD) {
+	}
+	else if (callProperty->type == V_UI_NODEMETHOD) {
 		uiNodeMethod_t func = (uiNodeMethod_t) callProperty->ofs;
 		func(callNode, &newContext);
-	} else {
+	}
+	else if (callProperty->type == V_UI_NODEMETHOD_LUA) {
+		UI_ExecuteLuaBehaviourMethod(callNode, callProperty->ofs, newContext.params, newContext.paramNumber);
+	}
+	else {
 		/* unreachable, already checked few line before */
 		assert(false);
 	}

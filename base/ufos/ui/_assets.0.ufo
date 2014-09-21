@@ -1,0 +1,765 @@
+--!usr/bin/lua
+
+--[[
+// ==============================
+// Reusable components for the UI
+// ==============================
+
+component smallstring extends string {
+	{
+		font			"f_verysmall"
+		color			"0.56 0.81 0.76 1"
+	}
+}
+--]]
+local lbSmallstring = ufo.create_component ("string", "smallstring", nil)
+lbSmallstring:set_font("f_verysmall")
+lbSmallstring:set_color(0.56, 0.81, 0.76, 1.0)
+
+--[[
+/**
+ * Fuzzy screen effect
+ */
+component fuzzyScreen extends texture
+{
+	pos		"0 0"
+	// TODO: this should be always the full screen
+	size		"2048 1536"
+	src			"ui/screen"
+	ghost		true
+}
+--]]
+local txFuzzyScreen = ufo.create_component("texture", "fuzzyScreen", nil)
+txFuzzyScreen:set_pos(0, 0)
+txFuzzyScreen:set_size(2048, 1536)
+txFuzzyScreen:set_source("ui/screen")
+txFuzzyScreen:set_ghost(true)
+
+--[[
+/**
+ * Toolbar for main menus
+ * @TODO: Currently, the player can jump from battlescape to
+ *			options, then use this to jump to the main menu
+ *			and launch another mission. Before implementing
+ *			this idea, need to prevent this from happening.
+ */
+component MainMenuToolbar extends panel
+{
+	{
+		size		"1024 20"
+		pos			"0 0"
+	}
+/*
+	string main_menu_str
+	{
+		pos				"10 0"
+		size			"50 20"
+		string			"_HOME"
+		color			"1 1 1 0.5"
+		contentalign	ALIGN_CC
+		onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+		onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+		onClick			{ cmd "ui_push main;" }
+	}
+*/
+}
+--]]
+local pnlMainMenuToolbar = ufo.create_component("panel", "MainMenuToolbar", nil)
+pnlMainMenuToolbar:set_pos(0, 0)
+pnlMainMenuToolbar:set_size(1024, 20)
+
+--[[
+component UFOpediaBtn extends button {
+	icon		"icons/windowinfo"
+	tooltip		"_View UFOPaedia entry"
+	size		"16 16"
+	padding		0
+	onClick	{
+		cmd "ui_push ufopedia;"
+	}
+}
+--]]
+local btnUFOpedia = ufo.create_component("button", "UFOpediaBtn", nil)
+btnUFOpedia:set_size(16, 16)
+btnUFOpedia:set_icon("icons/windowinfo")
+btnUFOpedia:set_tooltip("_View UFOPaedia entry")
+btnUFOpedia:set_padding(0)
+btnUFOpedia.on_click = function (sender)
+		ufo.cmd ("ui_push ufopedia;")
+	end
+
+--[[
+/**
+ * Main button templates. Can be resized as needed
+ */
+component MainMenuBtn extends button
+{
+	pos				"0 0"
+	size 			"400 30"
+	font			"f_normal_bold"
+	color			"0.065 0.065 0.065 1"
+	bgcolor			"0.4 0.52 0.5 1"
+	align			LAYOUTALIGN_MIDDLE
+	contentalign	ALIGN_CC
+	onMouseEnter 	{ *node:this@bgcolor = "0.58 0.81 0.76 1" }
+	onMouseLeave 	{ *node:this@bgcolor = "0.4 0.52 0.5 1" }
+}
+--]]
+local btnMainMenu = ufo.create_component("button", "MainMenuBtn", nil)
+btnMainMenu:set_pos (0, 0)
+btnMainMenu:set_size (400, 30)
+btnMainMenu:set_font ("f_normal_bold")
+btnMainMenu:set_color (0.065, 0.065, 0.065, 1)
+btnMainMenu:set_backgroundcolor (0.4, 0.52, 0.5, 1)
+btnMainMenu:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
+btnMainMenu:set_contentalign (ufo.ALIGN_CC)
+btnMainMenu.on_mouseenter = function (sender)
+		sender:set_backgroundcolor (0.58, 0.81, 0.76, 1)
+	end
+btnMainMenu.on_mouseleave = function (sender)
+		sender:set_backgroundcolor (0.4, 0.52, 0.5, 1)
+	end
+
+--[[
+component MainMenu2Btn extends button
+{
+	pos				"0 0"
+	size 			"400 30"
+	font			"f_normal_bold"
+	color			"0.065 0.065 0.065 1"
+	bgcolor			"0.53 0.61 0.21 1"
+	align			LAYOUTALIGN_MIDDLE
+	contentalign	ALIGN_CC
+	onMouseEnter 	{ *node:this@bgcolor = "0.82 0.92 0.44 1" }
+	onMouseLeave 	{ *node:this@bgcolor = "0.53 0.61 0.21 1" }
+}
+--]]
+local btnMainMenu2 = ufo.create_component ("button", "MainMenu2Btn", nil)
+btnMainMenu2:set_pos (0, 0)
+btnMainMenu2:set_size (400, 30)
+btnMainMenu2:set_font ("f_normal_bold")
+btnMainMenu2:set_color (0.065, 0.065, 0.065, 1)
+btnMainMenu2:set_backgroundcolor (0.53, 0.61, 0.21, 1)
+btnMainMenu2:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
+btnMainMenu2:set_contentalign (ufo.ALIGN_CC)
+btnMainMenu2.on_mouseenter = function (sender)
+		sender:set_backgroundcolor (0.82, 0.92, 0.44, 1)
+	end
+btnMainMenu2.on_mouseleave = function (sender)
+		sender:set_backgroundcolor (0.53, 0.61, 0.21, 1)
+	end
+
+--[[
+component MainMenu3Btn extends button
+{
+	pos				"0 0"
+	size 			"400 30"
+	font			"f_normal_bold"
+	color			"1 1 1 0.9"
+	selectcolor		"0 0 0 0.9"
+	bgcolor			"0.38 0.48 0.36 1"
+	align			LAYOUTALIGN_MIDDLE
+	contentalign	ALIGN_CC
+	onMouseEnter 	{ *node:this@bgcolor = "0.88 0.20 0.075 1" }
+	onMouseLeave 	{ *node:this@bgcolor = "0.65 0.13 0 1" }
+}
+--]]
+local btnMainMenu3 = ufo.create_component ("button", "MainMenu3Btn", nil)
+btnMainMenu3:set_pos (0, 0)
+btnMainMenu3:set_size (400, 30)
+btnMainMenu3:set_font ("f_normal_bold")
+btnMainMenu3:set_color (1, 1, 1, 0.9)
+btnMainMenu3:set_selectcolor (0, 0, 0, 0.9)
+btnMainMenu3:set_backgroundcolor (0.38, 0.48, 0.36, 0.9)
+btnMainMenu3:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
+btnMainMenu3:set_contentalign (ufo.ALIGN_CC)
+btnMainMenu3.on_mouseenter = function (sender)
+		sender:set_backgroundcolor (0.88, 0.20, 0.75, 1)
+	end
+btnMainMenu3.on_mouseleave = function (sender)
+		sender:set_backgroundcolor (0.65, 0.13, 0, 1)
+	end
+
+--[[
+component MainMenuExitBtn extends button
+{
+	pos				"0 0"
+	size 			"400 30"
+	font			"f_normal_bold"
+	color			"1 0.68 0.61 1"
+	selectcolor		"1 0.68 0.61 1"
+	bgcolor			"0.65 0.13 0 1"
+	align			LAYOUTALIGN_MIDDLE
+	contentalign	ALIGN_CC
+	onMouseEnter 	{ *node:this@bgcolor = "0.88 0.20 0.075 1" }
+	onMouseLeave 	{ *node:this@bgcolor = "0.65 0.13 0 1" }
+}
+--]]
+local btnMainMenuExit = ufo.create_component ("button", "MainMenuExitBtn", nil)
+btnMainMenuExit:set_pos (0, 0)
+btnMainMenuExit:set_size (400, 30)
+btnMainMenuExit:set_font ("f_normal_bold")
+btnMainMenuExit:set_color (1, 0.68, 0.61, 1)
+btnMainMenuExit:set_selectcolor(1, 0.68, 0.61, 1)
+btnMainMenuExit:set_backgroundcolor(0.65, 0.13, 0, 1)
+btnMainMenuExit:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
+btnMainMenuExit:set_contentalign (ufo.ALIGN_CC)
+btnMainMenuExit.on_mouseenter = function (sender)
+		sender:set_backgroundcolor (0.88, 0.20, 0.75, 1)
+	end
+btnMainMenuExit.on_mouseleave = function (sender)
+		sender:set_backgroundcolor (0.65, 0.13, 0, 1)
+	end
+
+--[[
+component MainMenuCancelBtn extends MainMenu2Btn
+{
+	string			"_Cancel"
+	tooltip			"_Close this dialogue"
+}
+--]]
+local btnMainMenuCancel = ufo.create_component ("button", "MainMenuCancelBtn", nil)
+btnMainMenuCancel:set_text ("_Cancel")
+btnMainMenuCancel:set_tooltip ("_Close this dialogue")
+
+--[[
+component MainMenuTab extends button
+{
+	{
+	size 		"125 30"
+	font		"f_small_bold"
+	bgcolor		"0.4 0.515 0.5 0.25"
+	color		"1 1 1 0.5"
+	}
+	func enable {
+		*node:parent@bgcolor = "0.4 0.515 0.5 1"
+		*node:parent@color = "0 0 0 0.9"
+	}
+	func disable {
+		*node:parent@bgcolor = "0.4 0.515 0.5 0.25"
+		*node:parent@color = "1 1 1 0.5"
+	}
+}
+--]]
+local tabMainMenu = ufo.create_component ("button", "MainMenuTab", nil)
+tabMainMenu:set_size(1215, 30)
+tabMainMenu:set_font("f_small_bold")
+tabMainMenu:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
+tabMainMenu:set_color(1, 1, 1, 0.5)
+tabMainMenu:add_classmethod ("enable", 
+	function (sender)
+		local parent = sender:parent()
+		parent:set_backgroundcolor(0.4, 0.515, 0.5, 1)
+		parent:set_color(0, 0, 0, 0.9)
+	end
+)
+tabMainMenu:add_classmethod ("disable", 
+	function (sender)
+		local parent=sender:parent()
+		parent:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
+		parent:set_color(1, 1, 1, 0.5)
+	end
+)
+
+--[[
+/**
+ * Simple text button, left aligned. Light color.
+ */
+component TextBtn extends button {
+	size			"250 20"
+	color			"1 1 1 0.5"
+	contentalign	ALIGN_CL
+}
+
+component TextEntry extends textentry {
+	background		"ui/textentry"
+	color		"1 1 1 0.5"
+	selectcolor	"1 1 1 0.9"
+	contentalign	ALIGN_CL
+	padding		8
+}
+
+
+/**
+ * Stats bar
+ * @TODO: should change color (red/yellow/green) depending
+ * on how good the value is.
+ */
+component StatBar extends panel
+{
+	{
+		size		"180 25"
+	}
+	smallstring label
+	{
+		pos				"-3 0"
+		size			"80 15"
+		longlines		LONGLINES_CHOP
+		contentalign	ALIGN_UL
+	}
+	texture bg
+	{
+		pos			"0 14"
+		size		"180 10"
+		src			"ui/bar_bg"
+	}
+	bar valuebar
+	{
+		pos			"0 14"
+		size		"180 10"
+		color		".1875 .65625 .164 0.8"
+		max			100
+		disabled	true
+		nohover		true
+	}
+	//shows initial values
+	bar initbar
+	{
+		pos			"0 14"
+		size		"180 10"
+		color		".1875 .65625 .164 1"
+		max			100
+		disabled	true
+		nohover		true
+	}
+	smallstring valuenum
+	{
+		pos				"90 0"
+		size			"90 0"
+		longlines		LONGLINES_CHOP
+		contentalign	ALIGN_UR
+	}
+}
+
+component CheckBox extends checkbox
+{
+	iconChecked	  "icons/checkbox_checked"
+	iconUnchecked	"icons/checkbox_unchecked"
+	iconIndeterminate "icons/checkbox_indeterminate"
+	size "20 20"
+}
+
+/*
+ * Shared window to display item details.
+ * Used in market, soldier equipping, etc.
+ */
+component ObjectInfo extends panel
+{
+	{
+		size			"715 180"
+		border			"2"
+		bordercolor		"0.527 0.6 0.21 1"
+	}
+	// Object titles
+	panel header
+	{
+		{
+			pos			"1 1"
+			size		"713 32"
+			bgcolor		"0.527 0.6 0.21 0.2"
+		}
+		UFOpediaBtn ufopedia
+		{
+			pos			"10 9"
+			onClick		{ cmd "ui_market_openpedia;" }
+		}
+		string title
+		{
+			string			*cvar:mn_itemname
+			pos				"30 1"
+			size			"670 32"
+			contentalign	ALIGN_CL
+			color			"0.56 0.81 0.76 1"
+		}
+	}
+	// Model and weapon/firemode panel
+	panel display
+	{
+		{
+			pos			"450 33"
+			size		"265 147"
+		}
+		item object_model
+		{
+			src			*cvar:mn_item
+			pos			"0 0"
+			size		"265 147"
+			angles		"0 180 90"
+			autoscale	true
+		}
+		string object_weapon
+		{
+			string	*cvar:mn_linkname
+			pos		"0 114"
+			size	"130 32"
+			color	"0.56 0.81 0.76 0.7"
+			bgcolor "0 0 0 0.5"
+			font	"f_small"
+			contentalign	ALIGN_CC
+			onClick { cmd "mn_increaseitem;" }
+		}
+		string object_firemode
+		{
+			string	*cvar:mn_firemodename
+			pos		"134 114"
+			size	"130 32"
+			color	"0.56 0.81 0.76 0.7"
+			bgcolor "0 0 0 0.5"
+			font	"f_small"
+			contentalign	ALIGN_CC
+			onClick { cmd "mn_increasefiremode;" }
+		}
+	}
+	// Object info and stats
+	panel info
+	{
+		{
+			pos			"0 33"
+			size		"450 147"
+		}
+		text description
+		{
+			dataid		TEXT_ITEMDESCRIPTION
+			pos			"30 10"
+			size		"420 135"
+			rows		"9"
+			lineheight	15
+			tabwidth	168
+			color		"0.56 0.81 0.76 1"
+			font		"f_verysmall"
+			onViewChange {
+				*node:parent.description_scroll@fullsize = <fullsize>
+				*node:parent.description_scroll@current = <viewpos>
+			}
+			onWheel {
+				*node:parent.description_scroll@current = <viewpos>
+			}
+		}
+		vscrollbar description_scroll
+		{
+			image		"ui/scrollbar_v"
+			pos			"430 10"
+			height		"135"
+			current		0
+			viewsize	9
+			fullsize	9
+			hidewhenunused true
+			onChange {
+				*node:parent.description@viewpos = <current>
+			}
+		}
+	}
+}
+
+component Spinner extends spinner
+{
+	topIcon	"ui/spinner_up"
+	bottomIcon	"ui/spinner_down"
+	size "15 19"
+}
+
+//Common style for all popups
+window ipopup
+{
+	{
+		bgcolor		"0 0 0 0.6"
+		border		"2"
+		bordercolor	"0.56 0.81 0.76 1"
+		dragbutton	true
+	}
+	string title
+	{
+		pos 		"0 0"
+		string		""
+		size 		"512 30"
+		contentalign	ALIGN_CL
+		font		"f_small_bold"
+		bgcolor		"0.4 0.515 0.5 0.25"
+		color		"0.56 0.81 0.76 1"
+	}
+}
+
+// StatBar was designed for hud, in equipment we need a wider bar
+component StatBarWide extends StatBar
+{
+	{
+		size	"250 25"
+	}
+	string label {size "100 15" }
+	texture bg  {  size	"250 10"}
+	bar valuebar { size "250 10" }
+	bar initbar { size "250 10" }
+	string valuenum { size	"160 0" }
+}
+
+
+// Abilities panel
+// @TODO: Remove "mediocre" dsc text. Look at CL_ActorGetSkillString, cl_team.c
+component abilities extends panel
+{
+	{
+		pos			"740 100"
+		size		"250 120"
+		ghost		true
+	}
+	StatBarWide strength
+	{
+		{
+			pos		"0	0"
+		}
+		string label { string "_Strength" }
+		bar valuebar { current *cvar:mn_vpwr }
+		bar initbar { current *cvar:mn_vpwri }
+		string valuenum { string *cvar:mn_tpwr }
+	}
+	StatBarWide speed
+	{
+		{
+			pos		"0 30"
+		}
+		string label { string "_Speed" }
+		bar valuebar { current *cvar:mn_vspd }
+		bar initbar { current *cvar:mn_vspdi }
+		string valuenum { string *cvar:mn_tspd }
+	}
+	StatBarWide accuracy
+	{
+		{
+			pos		"0 60"
+		}
+		string label { string "_Accuracy" }
+		bar valuebar { current *cvar:mn_vacc }
+		bar initbar { current *cvar:mn_vacci }
+		string valuenum { string *cvar:mn_tacc }
+	}
+	StatBarWide mind
+	{
+		{
+			pos		"0 90"
+		}
+		string label { string "_Mind" }
+		bar valuebar { current *cvar:mn_vmnd }
+		bar initbar { current *cvar:mn_vmndi }
+		string valuenum { string *cvar:mn_tmnd }
+	}
+}
+// Skillbars panel
+component skillbars extends panel
+{
+	{
+		pos			"740 220"
+		size		"250 120"
+		ghost		true
+	}
+	StatBarWide cls
+	{
+		{
+			pos		"0 0"
+		}
+		string label
+		{
+			string "_CQB"
+			tooltip "_Close Quarters Battle"
+		}
+		bar valuebar { current *cvar:mn_vcls }
+		bar initbar { current *cvar:mn_vclsi }
+		string valuenum { string *cvar:mn_tcls }
+	}
+	StatBarWide ass
+	{
+		{
+			pos		"0 30"
+		}
+		string label { string "_Assault" }
+		bar valuebar { current *cvar:mn_vass }
+		bar initbar { current *cvar:mn_vassi }
+		string valuenum { string *cvar:mn_tass }
+	}
+	StatBarWide snp
+	{
+		{
+			pos		"0 60"
+		}
+		string label { string "_Sniper" }
+		bar valuebar { current *cvar:mn_vsnp }
+		bar initbar { current *cvar:mn_vsnpi }
+		string valuenum { string *cvar:mn_tsnp }
+	}
+	StatBarWide exp
+	{
+		{
+			pos		"0 90"
+		}
+		string label { string "_Explosives" }
+		bar valuebar { current *cvar:mn_vexp }
+		bar initbar { current *cvar:mn_vexpi }
+		string valuenum { string *cvar:mn_texp }
+	}
+}
+// Health panel
+component healthbar extends panel
+{
+	{
+		visiblewhen "*cvar:mn_show_employee <= 2"
+		pos			"740 340"
+		size		"250 30"
+		ghost		true
+	}
+	StatBarWide hp
+	{
+		{
+			pos		"0 0"
+		}
+		string label
+		{
+			string "_Health"
+			tooltip "_Healthpoints"
+		}
+		bar valuebar { current *cvar:mn_vhp max *cvar:mn_vhpmax}
+		string valuenum { string *cvar:mn_thp }
+		func setColour {
+			if ( ( *node:parent.valuebar@current / *node:parent.valuebar@max ) <= 0.33 ) {
+				*node:parent.valuebar@color = "1 .0 .0 1"
+			} elif ( ( *node:parent.valuebar@current / *node:parent.valuebar@max ) <= 0.75 ) {
+				*node:parent.valuebar@color = "1 .874 .0 1"
+			} else {
+				*node:parent.valuebar@color = ".1875 .65625 .164 1"
+			}
+		}
+	}
+}
+
+component SoldierInfo extends panel
+{
+	{
+		pos		"10 253"
+		size	"240 40"
+	}
+
+	smallstring missions_lbl {
+		pos "0 0"
+		size "180 20"
+		string "_Missions Performed:"
+	}
+	smallstring missions_val {
+		pos "160 0"
+		size "80 20"
+		string *cvar:mn_chrmis
+		contentalign ALIGN_UR
+	}
+
+	smallstring kills_lbl {
+		pos "0 20"
+		size "180 20"
+		string "_Enemies Killed:"
+	}
+	smallstring kills_val {
+		pos "160 20"
+		size "80 20"
+		string *cvar:mn_chrkillalien
+		contentalign ALIGN_UR
+	}
+}
+
+// ==================
+// actor info
+// ==================
+
+component actor_info extends panel
+{
+	{
+		pos		"731 420"
+		size	"290 349"
+	}
+
+	image	rank_img
+	{
+		src		*cvar:mn_chrrank_img
+		pos			"10 25"
+		size		"110 110"
+	}
+
+	model body
+	{
+		{
+			src			*cvar:mn_body
+			skin		*cvar:mn_body_skin
+			anim		"stand2"
+			angles		"0 70 90"
+			scale		"5.1 5.1 5.1"
+			pos			"60 18"
+			size		"200 290"
+			origin		"0 -40 0"
+		}
+
+		model head
+		{
+			src			*cvar:mn_head
+			skin		*cvar:mn_head_skin
+			tag			"tag_head"
+			scale		"1.0 1.0 1.0"
+		}
+		model right_weapon
+		{
+			src			*cvar:mn_rweapon
+			tag			"tag_rweapon"
+		}
+		model left_weapon
+		{
+			src			*cvar:mn_lweapon
+			tag			"tag_lweapon"
+		}
+	}
+
+	string rank_lbl
+	{
+		string		*cvar:mn_chrrank
+		pos			"10 283"
+		size		"200 20"
+	}
+
+	SoldierInfo soldier_info {
+		{
+			pos		"10 253"
+			size	"285 40"
+		}
+	}
+}
+
+// Pilot Skills panel
+component skillspilot extends panel
+{
+	{
+		pos			"740 250"
+		size		"250 155"
+		ghost		true
+	}
+	StatBarWide pil
+	{
+		{
+			pos		"0 0"
+		}
+		string label { string "_Piloting" }
+		bar valuebar { current *cvar:mn_vpil }
+		string valuenum { string *cvar:mn_tpil }
+	}
+	StatBarWide tar
+	{
+		{
+			pos		"0 30"
+		}
+		string label { string "_Targeting" }
+		bar valuebar { current *cvar:mn_vtar }
+		string valuenum { string *cvar:mn_ttar }
+	}
+	StatBarWide evad
+	{
+		{
+			pos		"0 60"
+		}
+		string label { string "_Evading" }
+		bar valuebar { current *cvar:mn_vevad }
+		string valuenum { string *cvar:mn_tevad }
+	}
+}
+--]]
