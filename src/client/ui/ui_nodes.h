@@ -95,7 +95,7 @@ struct uiNode_t {
 	uiBox_t box;
 
 	/* common attributes */
-	const char* tooltip;		/**< holds the tooltip */
+	char* tooltip;				/**< holds the tooltip */
 	struct uiKeyBinding_s* key;	/**< key bindings - used as tooltip */
 	bool invis;					/**< true if the node is invisible */
 	bool disabled;				/**< true if the node is inactive */
@@ -118,8 +118,8 @@ struct uiNode_t {
 	/** @todo needs cleanup */
 	int contentAlign;			/**< Content alignment inside nodes */
 	char* text;					/**< Text we want to display */
-	const char* font;			/**< Font to draw text */
-	const char* image;
+	char* font;					/**< Font to draw text */
+	char* image;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */
@@ -153,6 +153,8 @@ struct uiNode_t {
     LUA_EVENT lua_onKeyReleased; /**< references the event in lua: on_keyreleased (node, key, unicode) */
     LUA_EVENT lua_onLoaded; /**< references the event in lua: on_loaded (node) */
     LUA_EVENT lua_onActivate; /**< references the event in lua: on_activate (node) */
+    LUA_EVENT lua_onMouseEnter; /**< references the event in lua: on_mouseenter (node) */
+    LUA_EVENT lua_onMouseLeave; /**< references the event in lua: on_mouseleave (node) */
 };
 
 
@@ -172,7 +174,7 @@ void UI_InitNodes(void);
 /* nodes */
 uiNode_t* UI_AllocNode(const char* name, const char* type, bool isDynamic);
 uiNode_t* UI_GetNodeByPath(const char* path) __attribute__ ((warn_unused_result));
-void UI_ReadNodePath(const char* path, const uiNode_t* relativeNode, const uiNode_t* iterationNode, uiNode_t** resultNode, const value_t** resultProperty);
+void UI_ReadNodePath(const char* path, const uiNode_t* relativeNode, const uiNode_t* iterationNode, uiNode_t** resultNode, const value_t** resultProperty, value_t* luaMethod = nullptr);
 uiNode_t* UI_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
 const char* UI_GetPath(const uiNode_t* node) __attribute__ ((warn_unused_result));
 uiNode_t* UI_CloneNode(const uiNode_t* node, uiNode_t* newWindow, bool recursive, const char* newName, bool isDynamic) __attribute__ ((warn_unused_result));

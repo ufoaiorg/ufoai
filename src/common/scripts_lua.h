@@ -46,6 +46,10 @@ typedef int LUA_FUNCTION;
  * @brief holds a reference to a lua event handler
  */
 typedef int LUA_EVENT;
+/**
+ * @brief holds a reference to a lua event handler
+ */
+typedef int LUA_METHOD;
 
 /**
  * @brief holds a reference to a lua table instance, so we can perform calls to table methods in our callback

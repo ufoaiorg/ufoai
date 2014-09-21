@@ -39,6 +39,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
+// forward declarations
+struct memPool_t;
+
 /**< The hash table */
 struct hashTable_s;
 
@@ -51,9 +54,11 @@ typedef int (*hashTable_compare) (const void* key1, int len1, const void* key2, 
 
 hashTable_s* HASH_NewTable (bool ownsKeys, bool ownsValues, bool duplicateOverwrite);
 hashTable_s* HASH_NewTable (bool ownsKeys, bool ownsValues, bool duplicateOverwrite, hashTable_hash h, hashTable_compare c);
+hashTable_s* HASH_NewTable (bool ownsKeys, bool ownsValues, bool duplicateOverwrite, hashTable_hash h, hashTable_compare c, memPool_t* keys, memPool_t* values, memPool_t* table);
+hashTable_s* HASH_CloneTable (hashTable_s* source);
 void HASH_DeleteTable (hashTable_s** t);
 
-void HASH_Insert (hashTable_s* t, const void* key, int nkey, const void* value, int nvalue);
+bool HASH_Insert (hashTable_s* t, const void* key, int nkey, const void* value, int nvalue);
 void* HASH_Remove (hashTable_s* t, const void* key, int nkey);
 void HASH_Clear (hashTable_s* t);
 void* HASH_Get (hashTable_s* t, const void* key, int nkey);

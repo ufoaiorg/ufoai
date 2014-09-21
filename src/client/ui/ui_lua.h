@@ -29,13 +29,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 // prototype
 struct uiNode_t;
+struct linkedList_t;
 
 /* ui lua startup/shutdown */
 void UI_InitLua (void);
 void UI_ShutdownLua (void);
 
-/* register ufo module onload callback */
+/* register and call ufo module onload callback */
 void UI_RegisterHandler_OnLoad (LUA_FUNCTION fcn);
+void UI_CallHandler_OnLoad (lua_State* L, const char* key);
 
 /* lua script functions */
 bool UI_ParseAndLoadLuaScript (const char* name, const char** text);
@@ -43,6 +45,8 @@ bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event);
 bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y);
 bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int dy);
 bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int key, unsigned short unicode);
+bool UI_ExecuteLuaBehaviourMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params, int nparams);
+bool UI_ExecuteLuaBehaviourMethod_ByName (uiNode_t* node, const char* name, linkedList_t* params, int nparams);
 
 /* lua uiNode create functions */
 uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super);

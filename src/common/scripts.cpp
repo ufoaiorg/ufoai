@@ -3718,8 +3718,6 @@ void Com_ParseScripts (bool onlyServer)
 
 	Com_AddObjectLinks();	/* Add ammo<->weapon links to items.*/
 
-	Com_Printf("--> in Com_ParseScripts\n");
-
 	/* parse ui node script */
 	if (!onlyServer) {
 		Com_Printf("%i ui script files\n", FS_BuildFileList("ufos/ui/*.ufo"));

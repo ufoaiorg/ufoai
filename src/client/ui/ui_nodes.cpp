@@ -22,6 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../common/hashtable.h"
+#include "../../common/scripts_lua.h"
+
 #include "ui_main.h"
 #include "ui_internal.h"
 #include "ui_node.h"
@@ -75,8 +78,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_video.h"
 #include "node/ui_node_vscrollbar.h"
 #include "node/ui_node_zone.h"
-
-#include "../../common/scripts_lua.h"
 
 typedef void (*registerFunction_t)(uiBehaviour_t* node);
 
@@ -205,10 +206,12 @@ const char* UI_GetPath (const uiNode_t* node)
  * @param[in] iterationNode relative node referencing child in 'forchildin' iteration, mapped to '*node:child', can be nullptr
  * @param[out] resultNode Node found. Else nullptr.
  * @param[out] resultProperty Property found. Else nullptr.
+ * @param[out] luaMethod A pointer to a value_t structure that is filled with a lua based method identification, can be nullptr
+ * @note If luaMethod is set, the method will scan the known lua methods defined on the behaviour. If luaMethod is not set, only
+ * registered local properties are scanned.
  * TODO Speed up, evilly used function, use strncmp instead of using buffer copy (name[MAX_VAR])
  */
-void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNode_t* iterationNode, uiNode_t** resultNode, const value_t** resultProperty)
-{
+void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNode_t* iterationNode, uiNode_t** resultNode, const value_t** resultProperty, value_t* luaMethod) {
 	char name[MAX_VAR];
 	uiNode_t* node = nullptr;
 	const char* nextName;
@@ -269,7 +272,12 @@ void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNo
 			break;
 		case '@':	/* property */
 			assert(nextCommand == '\0');
-			*resultProperty = UI_GetPropertyFromBehaviour(node->behaviour, name);
+			if (luaMethod) {
+				*resultProperty = UI_GetPropertyOrLuaMethodFromBehaviour(node->behaviour, name, *luaMethod);
+			}
+			else {
+				*resultProperty = UI_GetPropertyFromBehaviour(node->behaviour, name);
+			}
 			*resultNode = node;
 			return;
 		}
@@ -694,3 +702,4 @@ void uiBox_t::alignBox (uiBox_t& inner, align_t direction)
 		Com_Error(ERR_FATAL, "UI_ImageAlignBoxInBox: Align %d not supported\n", direction);
 	}
 }
+

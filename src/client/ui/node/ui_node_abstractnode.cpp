@@ -109,7 +109,12 @@ static void UI_NodeSetProperty_f (void)
  */
 void uiLocatedNode::onMouseEnter(uiNode_t* node)
 {
-	UI_ExecuteEventActions(node, node->onMouseEnter);
+	if (node->onMouseEnter != nullptr) {
+		UI_ExecuteEventActions(node, node->onMouseEnter);
+	}
+	if (node->lua_onMouseEnter != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onMouseEnter);
+	}
 }
 
 /**
@@ -117,7 +122,12 @@ void uiLocatedNode::onMouseEnter(uiNode_t* node)
  */
 void uiLocatedNode::onMouseLeave(uiNode_t* node)
 {
-	UI_ExecuteEventActions(node, node->onMouseLeave);
+	if (node->onMouseLeave != nullptr) {
+		UI_ExecuteEventActions(node, node->onMouseLeave);
+	}
+	if (node->lua_onMouseLeave != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onMouseLeave);
+	}
 }
 
 bool uiLocatedNode::onDndEnter (uiNode_t* node)
@@ -390,7 +400,7 @@ void UI_RegisterAbstractNode (uiBehaviour_t* behaviour)
 	behaviour->name = "abstractnode";
 	behaviour->isAbstract = true;
 	behaviour->manager = UINodePtr(new uiLocatedNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractNode_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiNode_t *");
 
 	/* Top-left position of the node */
 	UI_RegisterNodeProperty(behaviour, "pos", V_POS, uiNode_t, box.pos);

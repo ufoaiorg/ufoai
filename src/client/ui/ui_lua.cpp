@@ -65,6 +65,7 @@ void UI_ShutdownLua (void) {
  * @brief Executes a lua event handler.
  * @param[in] node The node the event handler is associated with.
  * @param[in] event The event to execute.
+ * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender)
  */
 bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
@@ -73,6 +74,7 @@ bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
 	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 1, 0, 0) != 0) {
 		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		return false;
 	};
 	return true;
 }
@@ -83,6 +85,7 @@ bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
  * @param[in] event The event to execute.
  * @param[in] x The x-coordinate of the (x,y) argument.
  * @param[in] y The y-coordinate of the (x,y) argument.
+ * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender, x, y)
  */
 bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y) {
@@ -93,6 +96,7 @@ bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y)
 	lua_pushinteger(CL_GetLuaState(), y); /* push y on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
 		Com_Printf ("lua error(1) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		return false;
 	};
 	return true;
 }
@@ -103,6 +107,7 @@ bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y)
  * @param[in] event The event to execute.
  * @param[in] dx The dx-coordinate of the (dx,dy) argument.
  * @param[in] dy The dy-coordinate of the (dx,dy) argument.
+ * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender, dx, dy)
  */
 bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int dy) {
@@ -113,6 +118,7 @@ bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int
 	lua_pushinteger(CL_GetLuaState(), dy); /* push dy on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
 		Com_Printf ("lua error(2) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		return false;
 	};
 	return true;
 }
@@ -123,6 +129,7 @@ bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int
  * @param[in] event The event to execute.
  * @param[in] key The key value of the (keycode,unicode) argument.
  * @param[in] unicode The unicode value of the (keycode,unicode) argument.
+ * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender, key, unicode)
  */
 bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int key, unsigned short unicode) {
@@ -133,8 +140,54 @@ bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int
 	lua_pushinteger(CL_GetLuaState(), unicode); /* push unicode on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
 		Com_Printf ("lua error(3) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		return false;
 	};
 	return true;
+}
+/**
+ * @brief Executes a lua based method defined on the behaviour class of a node.
+ * @param[in] node The node the method is defined on.
+ * @param[in] fcn The The method to execute.
+ * @param[in] params A linked list of parameters for the lua based function call.
+ * @param[in] nparams The number of parameters for the lua based function call.
+ * @return True if the operation succeeds, false otherwise.
+ * @note The signature of the method in lua is: function(sender, p1..pn), so the actual number of parameters
+ * for the function is actually nparams + 1.
+ * @note All parameters are send to lua as strings.
+*/
+bool UI_ExecuteLuaBehaviourMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params, int nparams) {
+	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, fcn); /* push event function on lua stack */
+	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
+	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
+	/* push parameters on stack -> note: all the parameters are pushed as strings, since this is the only
+	   parameter type the old-style script can handle */
+	for(int i=0; i<nparams; i++) {
+		const char* value=const_cast<const char*> ((char*)LIST_GetByIdx(params, i));
+		lua_pushstring(CL_GetLuaState(), value);
+	}
+	if (lua_pcall (CL_GetLuaState(), 1, 0, 0) != 0) {
+		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		return false;
+	};
+	return true;
+}
+
+/**
+ * @brief Executes a lua based method defined on the behaviour class of a node.
+ * @param[in] node The node the method is defined on.
+ * @param[in] name The name of the node.
+ * @return True if the operation succeeds, false otherwise.
+ * @note The signature of the method in lua is: function(sender)
+*/
+bool UI_ExecuteLuaBehaviourMethod_ByName (uiNode_t* node, const char* name, linkedList_t* params, int nparams) {
+	void* f=HASH_Get(node->behaviour->nodeMethods, name, strlen(name));
+	if (f) {
+		return UI_ExecuteLuaBehaviourMethod(node, *((LUA_FUNCTION*)f), params, nparams);
+	}
+	else {
+		Com_Printf("UI_ExecuteNodeMethod_ByName: calling undefined method %s on node %s\n", name, node->name);
+	}
+	return false;
 }
 
 /**
@@ -285,6 +338,10 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
  */
 uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super)
 {
+	uiNode_t* node_super = nullptr;
+	uiNode_t* component;
+	uiBehaviour_t* behaviour = nullptr;
+
 	/* check the name */
 	if (!UI_TokenIsName(name, false)) {
 		Com_Printf("UI_CreateComponent: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
@@ -295,27 +352,32 @@ uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* su
 		return false;
 	}
 
-	/* create the component */
-	uiNode_t* component;
-	if (super != nullptr) {
-		/* check if super points to a node type */
-		uiBehaviour_t* superComponent = UI_GetNodeBehaviour (super);
-		if (superComponent == nullptr) {
-			/* check if super points to a instantiated component */
-			uiNode_t* inheritedComponent = UI_GetComponent (super);
-			if (inheritedComponent == nullptr) {
-				Com_Printf("UI_CreateComponent: node behaviour/component '%s' doesn't exists (component %s)\n", super, name);
+	/* get the behaviour */
+	behaviour = UI_GetNodeBehaviour(type);
+	if (!behaviour) {
+		/* if not found, try to get the component */
+		Com_Printf("UI_CreateComponent: node behaviour/control '%s' doesn't exist\n", type);
+		return nullptr;
+	}
+	/* get the super if it exists */
+	if (super) {
+		node_super = UI_GetComponent(super);
+		/* validate the behaviour matches with the type requested */
+		if (node_super) {
+			if (node_super->behaviour != behaviour) {
+				Com_Printf("UI_CreateComponent: behaviour [%s] of super does not match requested type [%s]\n", behaviour->name, node_super->behaviour->name);
 				return nullptr;
 			}
-			component = UI_CloneNode (inheritedComponent, nullptr, true, name, false);
-		}
-		else {
-			component = UI_AllocNode(name, superComponent->name, false);
 		}
 	}
+
+	/* clone using super */
+	if (node_super) {
+		component = UI_CloneNode(node_super, nullptr, true, name, false);
+	}
+	/* else initialize a new node */
 	else {
-		Com_Printf("UI_CreateComponent: node behaviour/component not specified!\n");
-		return nullptr;
+		component = UI_AllocNode(name, behaviour->name, false);
 	}
 
 	/* call onload (properties are set and controls are created from lua) */

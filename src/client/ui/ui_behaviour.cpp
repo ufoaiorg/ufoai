@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_behaviour.h"
 #include "ui_parse.h"
 
+#include "../../common/hashtable.h"
+#include "../../common/scripts.h"
 #include "../../common/scripts_lua.h"
 #include "../../common/swig_lua_runtime.h"
 
@@ -120,6 +122,33 @@ const value_t* UI_GetPropertyFromBehaviour (const uiBehaviour_t* behaviour, cons
 }
 
 /**
+ * @brief Get a property or lua based method from a behaviour or his inheritance
+ * @param[in] behaviour Context behaviour
+ * @param[in] name Property name we search
+ * @param[out] out A reference to a value_t structure wich is filled if a lua based method is available.
+ * @return A value_t with the requested name, else nullptr
+ * @note This function first searches the local properties of the behaviour before looking into lua based functions.
+ * @note If a lua function is found, .type is set to V_UI_NODEMETHOD_LUA, .string is set to the method name and .ofs is
+ * set to the lua callback id of the function.
+ * @note After use, be sure to free the allocated .string value!!!
+ */
+const value_t* UI_GetPropertyOrLuaMethodFromBehaviour (const uiBehaviour_t* behaviour, const char* name, value_t &out) {
+	// first scan behaviour properties
+	const value_t* prop = UI_GetPropertyFromBehaviour (behaviour, name);
+	if (prop) return prop;
+	// next scan lua based functions
+    LUA_FUNCTION fn;
+    if (UI_GetBehaviourMethod(behaviour, name, fn)) {
+		out.type = (valueTypes_t)V_UI_NODEMETHOD_LUA;
+		out.string = Mem_StrDup(name);
+		out.ofs = fn;
+		out.size = 0;
+    }
+    // nothing found, report it
+    return nullptr;
+}
+
+/**
  * @brief Initialize a node behaviour memory, after registration, and before using it.
  * @param behaviour Behaviour to initialize
  * @note This method sets the SWIG type for this behaviour for the runtime conversion of uiNode_t* values
@@ -207,3 +236,58 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 
 	behaviour->isInitialized = true;
 }
+
+/**
+ * @brief Adds a lua based method to the list of available behaviour methods for calling.
+ * @param[in] behaviour The behaviour to extend.
+ * @param[in] name The name of the new method to add
+ * @param[in] fcn The lua based function reference.
+ * @note If the method name is already defined, the new method is not added and a warning will be issued
+ * in the log.
+ */
+void UI_AddBehaviourMethod (uiBehaviour_t* behaviour, const char* name, LUA_METHOD fcn) {
+	Com_Printf ("UI_AddBehaviourMethod: registering node methode [%s] on node [%s]\n", name, behaviour->name);
+
+	/* the first method, so create a method table on this node */
+	if (!behaviour->nodeMethods) {
+		behaviour->nodeMethods = HASH_NewTable(true, true, false);
+	}
+	/* add the method */
+    if (HASH_Insert(behaviour->nodeMethods, name, strlen(name), &fcn, sizeof(fcn))) {
+		Com_Printf("UI_AddBehaviourMethod: method [%s] already defined on this behaviour [%s]\n", name, behaviour->name);
+    }
+}
+
+/**
+ * @brief Finds the lua based method on this behaviour or its super.
+ * @param[in] behaviour The node behaviour to examine.
+ * @param[in] name The name of the method to find
+ * @param[out] fcn A reference to a LUA_METHOD value to the corresponding lua based function or to LUA_NOREF if
+ * the method is not found
+ * @return True if the method is found, false otherwise.
+ */
+bool UI_GetBehaviourMethod (const uiBehaviour_t* behaviour, const char* name, LUA_METHOD &fcn) {
+	fcn = LUA_NOREF;
+	for(;behaviour;behaviour = behaviour->super) {
+		if (behaviour->nodeMethods) {
+            void* val=HASH_Get(behaviour->nodeMethods, name, strlen(name));
+			if (val != nullptr) {
+				fcn = *((LUA_METHOD *)val);
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+/**
+ * @brief Returns true if a node method of given name is available on this behaviour or its super.
+ * @param[in] behaviour The node behaviour to examine.
+ * @param[in] name The name of the method to find
+ * @return True if the method is found, false otherwise.
+ */
+bool UI_HasBehaviourMethod (uiBehaviour_t* behaviour, const char* name) {
+	LUA_METHOD fn;
+	return UI_GetBehaviourMethod(behaviour, name, fn);
+}
+
