@@ -99,8 +99,6 @@
 
 		team (actor) -- Returns the given actor's team.
 
-		face (actor) -- Makes the current AI actor try .to turn to the direction of the given actor
-
 		shoot (actor, tus) -- Makes the current AI actor try to shoot the given actor, returns true if shots were fired.
 			actor -- Actor to shoot at.
 			tus -- Max TUs to use for shooting (defaults to using all available TUs)
@@ -290,7 +288,7 @@ function engage( targets )
 	end
 
 	if target then
-		target:face()
+		target:pos():face()
 	else
 		search()
 	end

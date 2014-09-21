@@ -150,7 +150,6 @@ static aiActor_t* lua_pushactor(lua_State* L, aiActor_t* actor);
 static int actorL_tostring(lua_State* L);
 static int actorL_pos(lua_State* L);
 static int actorL_shoot(lua_State* L);
-static int actorL_face(lua_State* L);
 static int actorL_team(lua_State* L);
 static int actorL_throwgrenade(lua_State* L);
 static int actorL_TU(lua_State* L);
@@ -166,7 +165,6 @@ static const luaL_reg actorL_methods[] = {
 	{"__tostring", actorL_tostring},
 	{"pos", actorL_pos},
 	{"shoot", actorL_shoot},
-	{"face", actorL_face},
 	{"team", actorL_team},
 	{"throwgrenade", actorL_throwgrenade},
 	{"TU", actorL_TU},
@@ -229,6 +227,8 @@ static int AIL_difficulty(lua_State* L);
 static int AIL_positionflee(lua_State* L);
 static int AIL_weapontype(lua_State* L);
 static int AIL_actor(lua_State* L);
+static int AIL_tusforshooting(lua_State* L);
+static int AIL_class(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -257,6 +257,8 @@ static const luaL_reg AIL_methods[] = {
 	{"positionflee", AIL_positionflee},
 	{"weapontype", AIL_weapontype},
 	{"actor", AIL_actor},
+	{"tusforshooting", AIL_tusforshooting},
+	{"class", AIL_class},
 	{nullptr, nullptr}
 };
 
@@ -434,23 +436,6 @@ static int actorL_shoot (lua_State* L)
 
 	/* Success? */
 	lua_pushboolean(L, shot);
-	return 1;
-}
-
-/**
- * @brief Makes the actor face the position.
- */
-static int actorL_face (lua_State* L)
-{
-	assert(lua_isactor(L, 1));
-
-	/* Target */
-	const aiActor_t* target = lua_toactor(L, 1);
-
-	AI_TurnIntoDirection(AIL_ent, target->actor->pos);
-
-	/* Success. */
-	lua_pushboolean(L, 1);
 	return 1;
 }
 
@@ -1237,7 +1222,7 @@ static int AIL_positionshoot (lua_State* L)
 		if (!AI_CheckPosition(actor, actor->pos))
 			continue;
 		/* Can we see the target? */
-		if (!G_IsVisibleForTeam(target->actor, actor->getTeam()) && G_ActorVis(actor->origin, actor, target->actor, true) < ACTOR_VIS_10)
+		if (!G_IsVisibleForTeam(target->actor, actor->getTeam()) && G_ActorVis(actor, target->actor, true) < ACTOR_VIS_10)
 			continue;
 
 		bool hasLoF = false;
@@ -1899,6 +1884,40 @@ static int AIL_actor (lua_State* L)
 {
 	aiActor_t actor = {AIL_ent};
 	lua_pushactor(L, &actor);
+	return 1;
+}
+/**
+ * @brief Returns the type of the actor weapons.
+ */
+static int AIL_tusforshooting (lua_State* L)
+{
+	int bestTUs = 256;
+	const Item* weapon = AIL_ent->getRightHandItem();
+	if (weapon) {
+		const fireDef_t* fd = weapon->getFastestFireDef();
+		if (fd)
+			bestTUs = fd->time;
+	}
+	weapon = AIL_ent->getLeftHandItem();
+	if (weapon) {
+		const fireDef_t* fd = weapon->getFastestFireDef();
+		if (fd) {
+			const int tus = weapon->getFastestFireDef()->time;
+			if (tus < bestTUs)
+				bestTUs = tus;
+		}
+	}
+
+	lua_pushnumber(L, bestTUs);
+	return 1;
+}
+
+/**
+ * @brief Returns the AI actor's class.
+ */
+static int AIL_class (lua_State* L)
+{
+	lua_pushstring(L, AIL_ent->AI.subtype);
 	return 1;
 }
 

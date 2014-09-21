@@ -187,7 +187,8 @@ static void GAME_SK_Results (dbuffer* msg, int winner, int* numSpawned, int* num
 	if (nextmap)
 		return;
 
-	cgi->CL_Drop();
+	/* HACK: Change to the main menu now so cgame shutdown won't kill the results popup doing it */
+	cgi->UI_InitStack("main", nullptr);
 
 	if (winner == -1) {
 		cgi->UI_Popup(_("Game Drawn!"), "%s\n", _("The game was a draw!\n\nEnemies escaped."));
@@ -217,6 +218,9 @@ static void GAME_SK_Results (dbuffer* msg, int winner, int* numSpawned, int* num
 	} else {
 		cgi->UI_Popup(_("Better luck next time"), "%s\n%s\n", _("You've lost the game!"), resultText);
 	}
+
+	/* Ask the game mode to shutdown -- don't execute the shutdown here or we will crash! */
+	cgi->Cbuf_AddText("game_exit");
 }
 
 /**

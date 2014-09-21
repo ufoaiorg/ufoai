@@ -111,7 +111,7 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 		if (type == ML_DEATH)
 			mod += mob_death->value;
 		/* seeing how someone gets shot increases the morale change */
-		if (actor == victim || (G_FrustumVis(actor, victim->origin) && G_ActorVis(actor->origin, actor, victim, false)))
+		if (actor == victim || (G_FrustumVis(actor, victim->origin) && G_ActorVis(actor, victim, false)))
 			mod *= mof_watching->value;
 		if (attacker != nullptr && actor->isSameTeamAs(attacker)) {
 			/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
