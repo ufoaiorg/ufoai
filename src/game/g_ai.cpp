@@ -269,6 +269,9 @@ void AI_Init (void)
 	herdPathingTable = nullptr;
 }
 
+/**
+ * @brief Check if @c actor has a line of fire to the @c target actor.
+ */
 bool AI_HasLineOfFire (const Edict* actor, const Edict* target)
 {
 	for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
