@@ -1233,7 +1233,7 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 		if (!(G_IsAlien(check) || actor->isInsane()))
 			continue;
 
-		if (G_ActorVis(check, actor, true) > 0.25)
+		if (G_ActorVis(check, actor, true) > ACTOR_VIS_10)
 			reactionTrap += SCORE_NONHIDING_PLACE_PENALTY;
 	}
 	delta -= reactionTrap;
@@ -1311,7 +1311,7 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
 		if (actor->isInsane())
 			continue;
 
-		if (G_ActorVis(check, actor, true) > 0.25)
+		if (G_ActorVis(check, actor, true) > ACTOR_VIS_10)
 			bestActionScore -= SCORE_NONHIDING_PLACE_PENALTY;
 	}
 
