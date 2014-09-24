@@ -135,9 +135,7 @@ pnlButtons:set_layoutmargin (15)
 local btnCampaign = ufo.create_button (pnlButtons, "btnCampaign", "MainMenuBtn")
 btnCampaign:set_text ("_CAMPAIGN")
 btnCampaign.on_click = function (sender)
-		--ufo.cmd "ui_push campaign;"
-		ufo.print (string.format("sender.MT = %s\n", tostring(getmetatable(sender))))
-		sender:test()
+		ufo.cmd "ui_push campaign;"
 	end
 
 local btnSkirmish = ufo.create_button (pnlButtons, "btnSkirmish", "MainMenuBtn")

@@ -40,6 +40,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_input.h"
 #include "../ui_render.h"
+#include "../ui_lua.h"
+
 #include "ui_node_model.h"
 #include "ui_node_container.h"
 #include "ui_node_abstractnode.h"
@@ -749,17 +751,33 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item* ic)
 	}
 	/* Run onChange events */
 	uiNode_t* targetNode = UI_GetContainerNodeByContainerIDX(node->parent, target);
-	if (node->onChange)
+	if (node->onChange) {
 		UI_ExecuteEventActions(node, node->onChange);
-	if (targetNode != nullptr && node != targetNode && targetNode->onChange)
-		UI_ExecuteEventActions(targetNode, targetNode->onChange);
+	}
+	if (node->lua_onChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onChange);
+	}
+	if (targetNode != nullptr && node != targetNode) {
+		if (targetNode->onChange) {
+			UI_ExecuteEventActions(targetNode, targetNode->onChange);
+		}
+		if (targetNode->lua_onChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript(targetNode, targetNode->lua_onChange);
+		}
+	}
 	/* Also call onChange for equip_ammo if ammo moved
 	 * Maybe there's a better way to do this? */
 	if (ic->def()->isAmmo() || ammoChanged) {
 		/** @todo hard coded node name, remove it when it is possible */
 		uiNode_t* ammoNode = UI_GetNode(node->root, "equip_ammo");
-		if (ammoNode != nullptr && node != ammoNode && ammoNode->onChange)
-			UI_ExecuteEventActions(ammoNode, ammoNode->onChange);
+		if (ammoNode != nullptr && node != ammoNode) {
+			if (ammoNode->onChange) {
+				UI_ExecuteEventActions(ammoNode, ammoNode->onChange);
+			}
+			if (ammoNode->lua_onChange != LUA_NOREF) {
+				UI_ExecuteLuaEventScript(ammoNode, ammoNode->lua_onChange);
+			}
+		}
 	}
 }
 
@@ -1015,10 +1033,21 @@ bool uiContainerNode::onDndFinished (uiNode_t* source, bool isDropped)
 				INV_LoadWeapon(tItem, ui_inventory, sourceContainer, targetContainer);
 
 			/* Run onChange events */
-			if (source->onChange)
+			if (source->onChange) {
 				UI_ExecuteEventActions(source, source->onChange);
-			if (source != target && target->onChange)
-				UI_ExecuteEventActions(target, target->onChange);
+			}
+			if (source->lua_onChange != LUA_NOREF) {
+				UI_ExecuteLuaEventScript(source, source->lua_onChange);
+			}
+
+			if (source != target) {
+				if (target->onChange) {
+					UI_ExecuteEventActions(target, target->onChange);
+				}
+				if (target->lua_onChange != LUA_NOREF) {
+					UI_ExecuteLuaEventScript(target, target->lua_onChange);
+				}
+			}
 		}
 	}
 

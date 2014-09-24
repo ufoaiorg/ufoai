@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_sound.h"
 #include "../ui_lua.h"
 
+#include "../../../common/hashtable.h"
 #include "../../../common/scripts_lua.h"
 
 #ifdef DEBUG
@@ -103,6 +104,41 @@ static void UI_NodeSetProperty_f (void)
 	UI_NodeSetProperty(node, property, Cmd_Argv(3));
 }
 #endif
+
+void uiNode::onLoading(uiNode_t* node) {
+}
+
+void uiNode::initNode(uiNode_t* node) {
+	/* initialize lua events */
+	node->lua_onClick = LUA_NOREF;
+	node->lua_onRightClick = LUA_NOREF;
+	node->lua_onMiddleClick = LUA_NOREF;
+	node->lua_onWheel = LUA_NOREF;
+	node->lua_onWheelDown = LUA_NOREF;
+	node->lua_onWheelUp = LUA_NOREF;
+	node->lua_onFocusGained = LUA_NOREF;
+	node->lua_onFocusLost = LUA_NOREF;
+	node->lua_onKeyPressed = LUA_NOREF;
+	node->lua_onKeyReleased = LUA_NOREF;
+	node->lua_onActivate = LUA_NOREF;
+	node->lua_onLoaded = LUA_NOREF;
+	node->lua_onMouseEnter = LUA_NOREF;
+	node->lua_onMouseLeave = LUA_NOREF;
+}
+
+void uiNode::initNodeDynamic(uiNode_t* node) {
+}
+
+void uiNode::clone(uiNode_t const* source, uiNode_t* clone) {
+	// clone defined methods if they exist
+	if (source->nodeMethods) {
+		clone->nodeMethods = HASH_CloneTable(source->nodeMethods);
+	}
+}
+
+void uiNode::deleteNode(uiNode_t* node) {
+	if (node->nodeMethods) HASH_DeleteTable(&(node->nodeMethods));
+}
 
 /**
  * Mouse enter on the node (a child node is part of the node)
@@ -360,8 +396,9 @@ void uiNode::onLoaded(uiNode_t* node) {
  * a correct onActivate event handler.
  */
 void uiNode::onActivate(uiNode_t* node) {
-	if (node->onClick)
+	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
+	}
 	if (node->lua_onActivate != LUA_NOREF) {
 		UI_ExecuteLuaEventScript(node, node->lua_onActivate);
 	}

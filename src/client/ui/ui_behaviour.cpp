@@ -253,7 +253,7 @@ void UI_AddBehaviourMethod (uiBehaviour_t* behaviour, const char* name, LUA_METH
 		behaviour->nodeMethods = HASH_NewTable(true, true, false);
 	}
 	/* add the method */
-    if (HASH_Insert(behaviour->nodeMethods, name, strlen(name), &fcn, sizeof(fcn))) {
+    if (!HASH_Insert(behaviour->nodeMethods, name, strlen(name), &fcn, sizeof(fcn))) {
 		Com_Printf("UI_AddBehaviourMethod: method [%s] already defined on this behaviour [%s]\n", name, behaviour->name);
     }
 }

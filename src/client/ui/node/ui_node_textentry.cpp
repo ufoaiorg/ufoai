@@ -38,6 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_render.h"
 #include "../ui_sprite.h"
+#include "../ui_lua.h"
+
 #include "ui_node_textentry.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_panel.h"
@@ -71,6 +73,14 @@ static cvar_t* editedCvar = nullptr;
 static bool isAborted = false;
 
 /**
+ * @brief set background sprite
+ */
+void UI_TextEntry_SetBackgroundByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, textEntryExtraData_s).background = sprite;
+}
+
+/**
  * @brief callback from the keyboard
  */
 static void UI_TextEntryNodeValidateEdition (uiNode_t* node)
@@ -82,6 +92,9 @@ static void UI_TextEntryNodeValidateEdition (uiNode_t* node)
 	/* fire change event */
 	if (node->onChange) {
 		UI_ExecuteEventActions(node, node->onChange);
+	}
+	if (node->lua_onChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onChange);
 	}
 }
 
@@ -146,6 +159,9 @@ void uiTextEntryNode::onLeftClick (uiNode_t* node, int x, int y)
 	if (!UI_HasFocus(node)) {
 		if (node->onClick) {
 			UI_ExecuteEventActions(node, node->onClick);
+		}
+		if (node->lua_onClick != LUA_NOREF) {
+			UI_ExecuteLuaEventScript_XY(node, node->lua_onClick, x, y);
 		}
 		UI_RequestFocus(node);
 	}

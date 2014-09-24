@@ -35,17 +35,17 @@ public:
 	/* system allocation */
 
 	/** Called before script initialization, initialized default values */
-	virtual void onLoading(uiNode_t* node) {}
+	virtual void onLoading(uiNode_t* node);
 	/** only called one time, when node parsing was finished */
 	virtual void onLoaded(uiNode_t* node);
 	/** call to initialize a cloned node */
-	virtual void clone(uiNode_t const* source, uiNode_t* clone) {}
+	virtual void clone(uiNode_t const* source, uiNode_t* clone);
 	/** call to initialize the node structure and extradata structure */
 	virtual void initNode(uiNode_t* node);
 	/** call to initialize a dynamic node */
 	virtual void initNodeDynamic(uiNode_t* node);
 	/** call to delete a dynamic node */
-	virtual void deleteNode(uiNode_t* node) {}
+	virtual void deleteNode(uiNode_t* node);
 
 	/* system callback */
 

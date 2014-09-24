@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_parse.h"
 #include "../ui_render.h"
+#include "../ui_lua.h"
+
 #include "ui_node_text2.h"
 #include "ui_node_abstractnode.h"
 
@@ -293,8 +295,12 @@ void uiText2Node::onLeftClick (uiNode_t* node, int x, int y)
 
 	UI_TextNodeSelectLine(node, line);
 
-	if (node->onClick)
+	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
+	}
+	if (node->lua_onClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onClick, x, y);
+	}
 }
 
 /**
