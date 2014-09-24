@@ -126,6 +126,10 @@ void UI_AppendNode(uiNode_t* parent, uiNode_t* newNode);
 uiNode_t* UI_RemoveNode(uiNode_t* node, uiNode_t* child);
 void UI_UpdateRoot(uiNode_t* node, uiNode_t* newRoot);
 
-/* behaviour */
+/* extended node behaviour */
 void UI_Node_SetItem (uiNode_t* node, const char* name, LUA_METHOD fcn);
 LUA_METHOD UI_Node_GetItem (uiNode_t* node, const char* name);
+
+void UI_AddNodeMethod (uiNode_t* node, const char* name, LUA_METHOD fcn);
+bool UI_GetNodeMethod (const uiNode_t* node, const char* name, LUA_METHOD &fcn);
+bool UI_HasNodeMethod (uiNode_t* node, const char* name);

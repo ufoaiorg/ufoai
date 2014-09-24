@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_input.h"
 #include "../ui_render.h"
+#include "../ui_lua.h"
+
 #include "ui_node_abstractnode.h"
 #include "ui_node_abstractscrollbar.h"
 #include "ui_node_vscrollbar.h"
@@ -111,6 +113,9 @@ static void UI_VScrollbarNodeSet (uiNode_t* node, int value)
 	/* fire change event */
 	if (node->onChange) {
 		UI_ExecuteEventActions(node, node->onChange);
+	}
+	if (node->lua_onChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onChange);
 	}
 }
 

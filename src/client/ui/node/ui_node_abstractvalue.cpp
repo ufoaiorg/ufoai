@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
 #include "../ui_internal.h"
+#include "../ui_lua.h"
+
 #include "ui_node_abstractvalue.h"
 
 #include "../../input/cl_input.h"
@@ -69,6 +71,7 @@ void uiAbstractValueNode::initNodeDynamic (uiNode_t* node)
 
 void uiAbstractValueNode::deleteNode (uiNode_t* node)
 {
+	uiNode::deleteNode(node);
 	Mem_Free(EXTRADATA(node).value);
 	Mem_Free(EXTRADATA(node).delta);
 	Mem_Free(EXTRADATA(node).max);
@@ -140,8 +143,12 @@ bool uiAbstractValueNode::setValue(uiNode_t* node, float value)
 		*(float*) EXTRADATA(node).value = value;
 
 	/* fire change event */
-	if (node->onChange)
+	if (node->onChange) {
 		UI_ExecuteEventActions(node, node->onChange);
+	}
+	if (node->lua_onChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onChange);
+	}
 
 	return true;
 }

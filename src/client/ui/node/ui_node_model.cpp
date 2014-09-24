@@ -478,6 +478,7 @@ void uiModelNode::initNodeDynamic (uiNode_t* node)
 
 void uiModelNode::deleteNode (uiNode_t* node)
 {
+	uiNode::deleteNode(node);
 	Mem_Free(EXTRADATA(node).oldRefValue);
 	EXTRADATA(node).oldRefValue = nullptr;
 }

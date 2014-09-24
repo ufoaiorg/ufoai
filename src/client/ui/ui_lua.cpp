@@ -258,19 +258,19 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 {
 	uiNode_t* node = nullptr;
 	uiNode_t* node_super = nullptr;
-	uiNode_t* control = nullptr;
+	uiNode_t* inherited_control = nullptr;
 	uiBehaviour_t* behaviour = nullptr;
 
 	/* get the behaviour */
 	behaviour = UI_GetNodeBehaviour(type);
 	if (!behaviour) {
-		/* if not found, try to get the component */
-		control = UI_GetComponent(name);
-		if (!control == nullptr) {
+		/* if behaviour class not found, try to get a component of this name*/
+		inherited_control = UI_GetComponent(type);
+		if (!inherited_control) {
 			Com_Printf("UI_CreateControl: node behaviour/control '%s' doesn't exist (%s)\n", type, UI_GetPath(parent));
 			return nullptr;
 		}
-		behaviour = control->behaviour;
+		behaviour = inherited_control->behaviour;
 	}
 	/* get the super if it exists */
 	if (super) {
@@ -314,6 +314,11 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 			// remove the roots from the cloned notes, since it can be wrong
 			UI_UpdateRoot(node, nullptr);
 		}
+	}
+	/* else try creating a clone of the component */
+	else if (inherited_control) {
+		/* initialize from a component */
+		node = UI_CloneNode(inherited_control, nullptr, true, name, false);
 	}
 	/* else initialize a new node */
 	else {
@@ -385,6 +390,8 @@ uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* su
 
 	/* add to list of instantiated components */
 	UI_InsertComponent(component);
+
+	Com_Printf("UI_CreateComponent: registered new component, name [%s], type [%s]\n", name, type);
 
 	return component;
 }

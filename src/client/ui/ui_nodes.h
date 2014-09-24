@@ -36,6 +36,7 @@ struct uiCallContext_s;
 struct uiModel_s;
 struct uiBehaviour_t;
 struct uiLuaCallback_t;
+struct hashTable_s;
 
 typedef struct uiExcludeRect_s {
 	/** position of the exclude rect relative to node position */
@@ -127,6 +128,9 @@ struct uiNode_t {
 	vec4_t selectedColor;		/**< rgba The color to draw the line specified by textLineSelected in. */
 	vec4_t flashColor;			/**< rgbx The color of the flashing effect. */
 
+	/* extended behaviour */
+	hashTable_s* nodeMethods;		/**< hash map for storing lua defined node functions */
+
 	/* common events */
 	struct uiAction_s* onClick;
 	struct uiAction_s* onRightClick;
@@ -155,6 +159,7 @@ struct uiNode_t {
     LUA_EVENT lua_onActivate; /**< references the event in lua: on_activate (node) */
     LUA_EVENT lua_onMouseEnter; /**< references the event in lua: on_mouseenter (node) */
     LUA_EVENT lua_onMouseLeave; /**< references the event in lua: on_mouseleave (node) */
+    LUA_EVENT lua_onChange; /**< references the event in lua: on_change (node) */
 };
 
 

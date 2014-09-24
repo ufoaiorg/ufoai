@@ -68,3 +68,4 @@ extern void* UI_SWIG_TypeQuery (const char* name);
  * @brief returns the lua typename of the node.
  */
 extern const char* UI_SWIG_NodeTypeName (void* node);
+

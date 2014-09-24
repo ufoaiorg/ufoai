@@ -39,6 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_render.h"
 #include "../ui_sound.h"
 #include "../ui_sprite.h"
+#include "../ui_lua.h"
+
 #include "ui_node_checkbox.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_abstractvalue.h"
@@ -117,8 +119,12 @@ void uiCheckBoxNode::onLeftClick (uiNode_t* node, int x, int y)
 		return;
 
 	onActivate(node);
-	if (node->onClick)
+	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
+	}
+	if (node->lua_onClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onClick, x, y);
+	}
 	UI_PlaySound("click1");
 }
 

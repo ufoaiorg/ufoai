@@ -2,47 +2,6 @@
 // Reusable components for the UI
 // ==============================
 
-component MainMenuCancelBtn extends MainMenu2Btn
-{
-	string			"_Cancel"
-	tooltip			"_Close this dialogue"
-}
-
-component MainMenuTab extends button
-{
-	{
-	size 		"125 30"
-	font		"f_small_bold"
-	bgcolor		"0.4 0.515 0.5 0.25"
-	color		"1 1 1 0.5"
-	}
-	func enable {
-		*node:parent@bgcolor = "0.4 0.515 0.5 1"
-		*node:parent@color = "0 0 0 0.9"
-	}
-	func disable {
-		*node:parent@bgcolor = "0.4 0.515 0.5 0.25"
-		*node:parent@color = "1 1 1 0.5"
-	}
-}
-
-/**
- * Simple text button, left aligned. Light color.
- */
-component TextBtn extends button {
-	size			"250 20"
-	color			"1 1 1 0.5"
-	contentalign	ALIGN_CL
-}
-
-component TextEntry extends textentry {
-	background		"ui/textentry"
-	color		"1 1 1 0.5"
-	selectcolor	"1 1 1 0.9"
-	contentalign	ALIGN_CL
-	padding		8
-}
-
 
 /**
  * Stats bar

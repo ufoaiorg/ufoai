@@ -36,26 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_components.h"
 #include "ui_internal.h"
 
-void uiNode::initNode(uiNode_t* node) {
-	/* initialize lua events */
-	node->lua_onClick = LUA_NOREF;
-	node->lua_onRightClick = LUA_NOREF;
-	node->lua_onMiddleClick = LUA_NOREF;
-	node->lua_onWheel = LUA_NOREF;
-	node->lua_onWheelDown = LUA_NOREF;
-	node->lua_onWheelUp = LUA_NOREF;
-	node->lua_onFocusGained = LUA_NOREF;
-	node->lua_onFocusLost = LUA_NOREF;
-	node->lua_onKeyPressed = LUA_NOREF;
-	node->lua_onKeyReleased = LUA_NOREF;
-	node->lua_onActivate = LUA_NOREF;
-	node->lua_onLoaded = LUA_NOREF;
-	node->lua_onMouseEnter = LUA_NOREF;
-	node->lua_onMouseLeave = LUA_NOREF;
-}
+#include "../../common/hashtable.h"
 
-void uiNode::initNodeDynamic(uiNode_t* node) {
-}
 
 bool UI_Node_IsVirtual (uiNode_t const* node)
 {
@@ -989,6 +971,71 @@ void UI_Validate (uiNode_t* node)
 }
 
 /**
+ * @brief Adds a lua based method to the list of available node methods for calling.
+ * @param[in] node The node to extend.
+ * @param[in] name The name of the new method to add
+ * @param[in] fcn The lua based function reference.
+ * @note If the method name is already defined, the new method is not added and a warning will be issued
+ * in the log.
+ * @note The method will be instance based, meaning that if a new node is created of the same behaviour,
+ * it will not contain this method unless this node was specified as super.
+ */
+void UI_AddNodeMethod (uiNode_t* node, const char* name, LUA_METHOD fcn) {
+	/* the first method, so create a method table on this node */
+	if (!node->nodeMethods) {
+		node->nodeMethods = HASH_NewTable(true, true, false);
+	}
+	/* add the method */
+    if (!HASH_Insert(node->nodeMethods, name, strlen(name), &fcn, sizeof(fcn))) {
+		Com_Printf("UI_AddNodeMethod: method [%s] already defined on this behaviour [%s]\n", name, node->name);
+    }
+}
+
+/**
+ * @brief Finds the lua based method on this node or its super.
+ * @param[in] node The node to examine.
+ * @param[in] name The name of the method to find
+ * @param[out] fcn A reference to a LUA_METHOD value to the corresponding lua based function or to LUA_NOREF if
+ * the method is not found
+ * @return True if the method is found, false otherwise.
+ * @note This method will first search for instance methods, then it will check for behaviour methods.
+ */
+bool UI_GetNodeMethod (const uiNode_t* node, const char* name, LUA_METHOD &fcn) {
+	fcn = LUA_NOREF;
+	// search the instance methods
+	for(const uiNode_t* ref=node;ref;ref = ref->super) {
+		if (ref->nodeMethods) {
+            void* val=HASH_Get(ref->nodeMethods, name, strlen(name));
+			if (val != nullptr) {
+				fcn = *((LUA_METHOD *)val);
+				return true;
+			}
+		}
+	}
+	// no instance method found, now scan for behaviour method
+	return UI_GetBehaviourMethod(node->behaviour, name, fcn);
+}
+
+/**
+ * @brief Returns true if a node method of given name is available on this node or its super.
+ * @param[in] node The node to examine.
+ * @param[in] name The name of the method to find
+ * @return True if the method is found, false otherwise.
+ * @note This method will first search for instance methods, then it will check for behaviour methods.
+ */
+bool UI_HasNodeMethod (uiNode_t* node, const char* name) {
+	LUA_METHOD fn;
+	// search the instance methods
+	if (UI_GetNodeMethod(node, name, fn)) {
+		return true;
+	}
+	// nothing found, now check behaviour methods
+	return UI_GetBehaviourMethod(node->behaviour, name, fn);
+}
+
+
+
+/**
  * @brief This functions adds a lua based method to the internal uiNode behaviour.
  * @param[in] node The node getting new behaviour.
  * @param[in] name The name of the new behaviour entry (this is the function name).
@@ -997,8 +1044,8 @@ void UI_Validate (uiNode_t* node)
  * Currently, only lua based functions are supported.
  */
 void UI_Node_SetItem (uiNode_t* node, const char* name, LUA_METHOD fcn) {
-	UI_AddBehaviourMethod(node->behaviour, name, fcn);
-};
+	UI_AddNodeMethod(node, name, fcn);
+}
 
 /**
  * @brief This functions queries a lua based method in the internal uiNode behaviour.
@@ -1010,10 +1057,10 @@ void UI_Node_SetItem (uiNode_t* node, const char* name, LUA_METHOD fcn) {
  */
 LUA_METHOD UI_Node_GetItem (uiNode_t* node, const char* name) {
 	LUA_METHOD fcn;
-	if (UI_GetBehaviourMethod(node->behaviour, name, fcn)) {
+	if (UI_GetNodeMethod(node, name, fcn)) {
 		return fcn;
 	}
 	return LUA_NOREF;
-};
+}
 
 

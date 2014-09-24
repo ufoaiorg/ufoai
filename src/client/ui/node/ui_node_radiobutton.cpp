@@ -41,6 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_behaviour.h"
 #include "../ui_input.h"
 #include "../ui_render.h"
+#include "../ui_lua.h"
+
 #include "ui_node_radiobutton.h"
 #include "ui_node_abstractnode.h"
 
@@ -138,8 +140,12 @@ void uiRadioButtonNode::onActivate (uiNode_t* node)
 	} else {
 		Cvar_Set(cvarName, "%s", EXTRADATA(node).string);
 	}
-	if (node->onChange)
+	if (node->onChange) {
 		UI_ExecuteEventActions(node, node->onChange);
+	}
+	if (node->lua_onChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onChange);
+	}
 }
 
 /**
@@ -147,8 +153,12 @@ void uiRadioButtonNode::onActivate (uiNode_t* node)
  */
 void uiRadioButtonNode::onLeftClick (uiNode_t* node, int x, int y)
 {
-	if (node->onClick)
+	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
+	}
+	if (node->lua_onClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onClick, x, y);
+	}
 
 	onActivate(node);
 }

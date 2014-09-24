@@ -54,6 +54,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../common/scripts.h"
 #include "../../../common/scripts_lua.h"
 
+/* import common client functions */
+#include "../../cl_renderer.h"
+
 /* import ui specific functions */
 #include "../ui_main.h"
 #include "../ui_behaviour.h"
@@ -72,6 +75,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../node/ui_node_checkbox.h"
 #include "../node/ui_node_panel.h"
 #include "../node/ui_node_string.h"
+#include "../node/ui_node_textentry.h"
 #include "../node/ui_node_window.h"
 
 #include "../ui_lua.h"
@@ -85,15 +89,16 @@ typedef uiNode_t uiAbstractOption_t;
 typedef uiNode_t uiAbstractScrollable_t;
 typedef uiNode_t uiAbstractScrollbar_t;
 
-typedef uiNode_t uiBar_t;
+typedef uiAbstractValue_t uiBar_t;
 typedef uiNode_t uiButton_t;
 typedef uiNode_t uiCheckBox_t;
 typedef uiAbstractScrollable_t uiPanel_t;
 typedef uiNode_t uiString_t;
+typedef uiNode_t uiTextEntry_t;
 typedef uiNode_t uiTexture_t;
 typedef uiNode_t uiWindow_t;
 
-typedef uiNode_t uiFunc_t;
+typedef uiNode_t uiFunc_t; /* todo: clean up, not used */
 
 // todo: implement other ui node classes
 
@@ -149,6 +154,15 @@ const char* UI_SWIG_NodeTypeName (void* node) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose constants and typedefs
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+%rename (LongLines) longlines_t;
+typedef enum {
+	LONGLINES_WRAP,
+	LONGLINES_CHOP,
+	LONGLINES_PRETTYCHOP,
+
+	LONGLINES_LAST
+} longlines_t;
 
 %rename (ContentAlign) align_t;
 typedef enum {
@@ -275,6 +289,8 @@ struct uiNode_t {
     %rename (on_mouseleave) lua_onMouseLeave;
     LUA_EVENT lua_onMouseEnter; /**< references the event in lua: on_mouseenter (node) */
     LUA_EVENT lua_onMouseLeave; /**< references the event in lua: on_mouseleave (node) */
+    %rename (on_change) lua_onChange;
+    LUA_EVENT lua_onChange; /**< references the event in lua: on_change (node) */
 };
 %extend uiNode_t {
 	bool is_window () { return UI_Node_IsWindow($self); };
@@ -330,10 +346,16 @@ struct uiNode_t {
 	void set_borderthickness (int value) { $self->border = value; };
 	void set_padding (int value) { $self->padding = value; };
 
-	void __setitem (const char* name, LUA_METHOD fcn) { Com_Printf("__setitem: %s = %d\n", name, fcn); UI_Node_SetItem($self, name, fcn); };
-	LUA_METHOD __getitem(const char* name) { LUA_METHOD fcn = UI_Node_GetItem($self, name); Com_Printf("__getitem: %s = %d\n", name, fcn); return fcn; };
+	/*
+		By implementing a __getitem and __setitem method here, we can extend the lua representation of the ui node
+		in lua with additional functions. References to these functions are stored inside the C application, so
+		lua can safely forget them.
+	*/
+	void __setitem (const char* name, LUA_METHOD fcn) { UI_Node_SetItem($self, name, fcn); };
+	LUA_METHOD __getitem(const char* name) { LUA_METHOD fcn = UI_Node_GetItem($self, name); return fcn; };
 
 	void add_classmethod(const char* name, LUA_METHOD fcn) { UI_AddBehaviourMethod($self->behaviour, name, fcn); };
+	void add_nodemethod (const char* name, LUA_METHOD fcn) { UI_AddNodeMethod($self, name, fcn); };
 };
 /*
 	The following defines derived "classes" from uiNode. This solves the problem of all nodes being structures
@@ -351,6 +373,25 @@ struct uiAbstractScrollable_t: uiNode_t {
 struct uiAbstractValue_t: uiNode_t {
 };
 %extend uiAbstractValue_t {
+	float min () { return *((float*)UI_EXTRADATA($self, abstractValueExtraData_t).min); };
+	float max () { return *((float*)UI_EXTRADATA($self, abstractValueExtraData_t).max); };
+	float value () { return *((float*)UI_EXTRADATA($self, abstractValueExtraData_t).value); };
+	float delta () { return *((float*)UI_EXTRADATA($self, abstractValueExtraData_t).delta); };
+	float lastdiff () { return UI_EXTRADATA($self, abstractValueExtraData_t).lastdiff; };
+	float shiftmultiplier () { return UI_EXTRADATA($self, abstractValueExtraData_t).shiftIncreaseFactor; };
+};
+
+struct uiBar_t: uiAbstractValue_t {
+};
+%extend uiBar_t {
+	bool is_readonly () { return UI_EXTRADATA($self, barExtraData_t).readOnly; };
+	bool is_nohover () { return UI_EXTRADATA($self, barExtraData_t).noHover; };
+
+	int direction () { return UI_EXTRADATA($self, barExtraData_t).orientation; };
+
+	void set_direction (int value) { UI_EXTRADATA($self, barExtraData_t).orientation = (align_t)value; };
+	void set_readonly (bool value) { UI_EXTRADATA($self, barExtraData_t).readOnly = value; };
+	void set_nohover (bool value) { UI_EXTRADATA($self, barExtraData_t).noHover = value; };
 };
 
 %rename (uiButton) uiButton_t;
@@ -396,7 +437,38 @@ struct uiPanel_t: uiAbstractScrollable_t {
 struct uiString_t: uiNode_t {
 };
 %extend uiString_t {
+	int longlines () { return UI_EXTRADATA($self, stringExtraData_t).longlines; };
+
+	void set_longlines (int value) { UI_EXTRADATA($self, stringExtraData_t).longlines = value; };
 };
+
+struct uiTextEntry_t: uiNode_t {
+};
+%extend uiTextEntry_t {
+	bool is_password () { return UI_EXTRADATA($self, textEntryExtraData_t).isPassword; };
+	bool is_clickoutabort () {return UI_EXTRADATA($self, textEntryExtraData_s).clickOutAbort; };
+
+	int cursorposition () { return UI_EXTRADATA($self, textEntryExtraData_s).cursorPosition; };
+
+	void set_password (bool value) { UI_EXTRADATA($self, textEntryExtraData_s).isPassword = value; };
+	void set_clickoutabort (bool value) { UI_EXTRADATA($self, textEntryExtraData_s).clickOutAbort = value; };
+	void set_background (const char* name) { UI_TextEntry_SetBackgroundByName($self, name); };
+
+	%rename (on_textabort) lua_onTextEntryAbort;
+    LUA_EVENT lua_onTextEntryAbort; /**< references the event in lua: on_textabort(node) */
+};
+/*
+	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
+	to bring the values from the EXTRADATA structures to the lua class.
+*/
+%{
+static LUA_EVENT uiTextEntry_t_lua_onTextEntryAbort_get(uiTextEntry_t* node) {
+	return UI_EXTRADATA(node, textEntryExtraData_s).lua_onTextEntryAbort;
+}
+static LUA_EVENT uiTextEntry_t_lua_onTextEntryAbort_set(uiTextEntry_t* node, LUA_EVENT fn) {
+	return UI_EXTRADATA(node, textEntryExtraData_s).lua_onTextEntryAbort;
+}
+%}
 
 struct uiTexture_t: uiNode_t {
 };
@@ -460,13 +532,16 @@ struct uiFunc_t: uiNode_t {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* expose uiNode creation functions */
-%rename (__create_control) UI_CreateControl;
+%rename (create_control) UI_CreateControl;
 uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super);
-%rename (__create_window) UI_CreateWindow;
-uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);
+//%rename (__create_window) UI_CreateWindow;
+//uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);
 
 /* define uiNode subtypes creation functions */
 %inline %{
+static uiBar_t* UI_CreateBar (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "bar", name, super);
+}
 static uiButton_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "button", name, super);
 }
@@ -479,23 +554,34 @@ static uiPanel_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char
 static uiString_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "string", name, super);
 }
+static uiTextEntry_t* UI_CreateTextEntry (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "textentry", name, super);
+}
+static uiTexture_t* UI_CreateTexture (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "texture", name, super);
+}
 static uiWindow_t* UI_CreateWindow (const char* name, const char* super) {
 	return UI_CreateWindow("window", name, super);
 }
 %}
 
 /* expose uiNode subtypes creation functions to lua */
+%rename (create_bar) UI_CreateBar;
+uiBar_t* UI_CreateBar (uiNode_t* parent, const char* name, const char* super);
 %rename (create_button) UI_CreateButton;
 uiButton_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super);
 %rename (create_checkbox) UI_CreateCheckBox;
 uiCheckBox_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super);
-%rename (create_string) UI_CreateString;
-uiString_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super);
 %rename (create_panel) UI_CreatePanel;
 uiPanel_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super);
+%rename (create_string) UI_CreateString;
+uiString_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super);
+%rename (create_textentry) UI_CreateTextEntry;
+uiString_t* UI_CreateTextEntry (uiNode_t* parent, const char* name, const char* super);
+%rename (create_texture) UI_CreateTexture;
+uiTexture_t* UI_CreateTexture (uiNode_t* parent, const char* name, const char* super);
 %rename (create_window) UI_CreateWindow;
 uiWindow_t* UI_CreateWindow (const char* name, const char* super);
-
 /* expose component creation fuction */
 %rename (create_component) UI_CreateComponent;
 uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);

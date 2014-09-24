@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_draw.h"
 #include "../ui_data.h"
+#include "../ui_lua.h"
+
 #include "ui_node_abstractoption.h"
 #include "ui_node_abstractnode.h"
 
@@ -72,8 +74,12 @@ void UI_AbstractOptionSetCurrentValue(uiNode_t* node, const char* value)
 {
 	const char* cvarName = &EXTRADATA(node).cvar[6];
 	Cvar_Set(cvarName, "%s", value);
-	if (node->onChange)
+	if (node->onChange) {
 		UI_ExecuteEventActions(node, node->onChange);
+	}
+	if (node->lua_onChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onChange);
+	}
 }
 
 void uiAbstractOptionNode::doLayout (uiNode_t* node)

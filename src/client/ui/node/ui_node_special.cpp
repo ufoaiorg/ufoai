@@ -217,6 +217,7 @@ void uiCvarNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 
 void uiCvarNode::deleteNode (uiNode_t* node)
 {
+	uiNode::deleteNode(node);
 	onWindowClosed(node);
 }
 

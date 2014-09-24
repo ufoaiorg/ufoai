@@ -12,9 +12,9 @@ component smallstring extends string {
 	}
 }
 --]]
-local lbSmallstring = ufo.create_component ("string", "smallstring", nil)
-lbSmallstring:set_font("f_verysmall")
-lbSmallstring:set_color(0.56, 0.81, 0.76, 1.0)
+local smallstring = ufo.create_component ("string", "smallstring", nil)
+smallstring:set_font("f_verysmall")
+smallstring:set_color(0.56, 0.81, 0.76, 1.0)
 
 --[[
 /**
@@ -29,11 +29,11 @@ component fuzzyScreen extends texture
 	ghost		true
 }
 --]]
-local txFuzzyScreen = ufo.create_component("texture", "fuzzyScreen", nil)
-txFuzzyScreen:set_pos(0, 0)
-txFuzzyScreen:set_size(2048, 1536)
-txFuzzyScreen:set_source("ui/screen")
-txFuzzyScreen:set_ghost(true)
+local fuzzyScreen = ufo.create_component("texture", "fuzzyScreen", nil)
+fuzzyScreen:set_pos(0, 0)
+fuzzyScreen:set_size(2048, 1536)
+fuzzyScreen:set_source("ui/screen")
+fuzzyScreen:set_ghost(true)
 
 --[[
 /**
@@ -64,9 +64,9 @@ component MainMenuToolbar extends panel
 */
 }
 --]]
-local pnlMainMenuToolbar = ufo.create_component("panel", "MainMenuToolbar", nil)
-pnlMainMenuToolbar:set_pos(0, 0)
-pnlMainMenuToolbar:set_size(1024, 20)
+local MainMenuToolbar = ufo.create_component("panel", "MainMenuToolbar", nil)
+MainMenuToolbar:set_pos(0, 0)
+MainMenuToolbar:set_size(1024, 20)
 
 --[[
 component UFOpediaBtn extends button {
@@ -79,12 +79,12 @@ component UFOpediaBtn extends button {
 	}
 }
 --]]
-local btnUFOpedia = ufo.create_component("button", "UFOpediaBtn", nil)
-btnUFOpedia:set_size(16, 16)
-btnUFOpedia:set_icon("icons/windowinfo")
-btnUFOpedia:set_tooltip("_View UFOPaedia entry")
-btnUFOpedia:set_padding(0)
-btnUFOpedia.on_click = function (sender)
+local UFOpediaBtn = ufo.create_component("button", "UFOpediaBtn", nil)
+UFOpediaBtn:set_size(16, 16)
+UFOpediaBtn:set_icon("icons/windowinfo")
+UFOpediaBtn:set_tooltip("_View UFOPaedia entry")
+UFOpediaBtn:set_padding(0)
+UFOpediaBtn.on_click = function (sender)
 		ufo.cmd ("ui_push ufopedia;")
 	end
 
@@ -105,21 +105,21 @@ component MainMenuBtn extends button
 	onMouseLeave 	{ *node:this@bgcolor = "0.4 0.52 0.5 1" }
 }
 --]]
-local btnMainMenu = ufo.create_component("button", "MainMenuBtn", nil)
-btnMainMenu:set_pos (0, 0)
-btnMainMenu:set_size (400, 30)
-btnMainMenu:set_font ("f_normal_bold")
-btnMainMenu:set_color (0.065, 0.065, 0.065, 1)
-btnMainMenu:set_backgroundcolor (0.4, 0.52, 0.5, 1)
-btnMainMenu:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
-btnMainMenu:set_contentalign (ufo.ALIGN_CC)
-btnMainMenu.on_mouseenter = function (sender)
+local MainMenuBtn = ufo.create_component("button", "MainMenuBtn", nil)
+MainMenuBtn:set_pos (0, 0)
+MainMenuBtn:set_size (400, 30)
+MainMenuBtn:set_font ("f_normal_bold")
+MainMenuBtn:set_color (0.065, 0.065, 0.065, 1)
+MainMenuBtn:set_backgroundcolor (0.4, 0.52, 0.5, 1)
+MainMenuBtn:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
+MainMenuBtn:set_contentalign (ufo.ALIGN_CC)
+MainMenuBtn.on_mouseenter = function (sender)
 		sender:set_backgroundcolor (0.58, 0.81, 0.76, 1)
 	end
-btnMainMenu.on_mouseleave = function (sender)
+MainMenuBtn.on_mouseleave = function (sender)
 		sender:set_backgroundcolor (0.4, 0.52, 0.5, 1)
 	end
-
+	
 --[[
 component MainMenu2Btn extends button
 {
@@ -134,18 +134,18 @@ component MainMenu2Btn extends button
 	onMouseLeave 	{ *node:this@bgcolor = "0.53 0.61 0.21 1" }
 }
 --]]
-local btnMainMenu2 = ufo.create_component ("button", "MainMenu2Btn", nil)
-btnMainMenu2:set_pos (0, 0)
-btnMainMenu2:set_size (400, 30)
-btnMainMenu2:set_font ("f_normal_bold")
-btnMainMenu2:set_color (0.065, 0.065, 0.065, 1)
-btnMainMenu2:set_backgroundcolor (0.53, 0.61, 0.21, 1)
-btnMainMenu2:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
-btnMainMenu2:set_contentalign (ufo.ALIGN_CC)
-btnMainMenu2.on_mouseenter = function (sender)
+local MainMenu2Btn = ufo.create_component ("button", "MainMenu2Btn", nil)
+MainMenu2Btn:set_pos (0, 0)
+MainMenu2Btn:set_size (400, 30)
+MainMenu2Btn:set_font ("f_normal_bold")
+MainMenu2Btn:set_color (0.065, 0.065, 0.065, 1)
+MainMenu2Btn:set_backgroundcolor (0.53, 0.61, 0.21, 1)
+MainMenu2Btn:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
+MainMenu2Btn:set_contentalign (ufo.ALIGN_CC)
+MainMenu2Btn.on_mouseenter = function (sender)
 		sender:set_backgroundcolor (0.82, 0.92, 0.44, 1)
 	end
-btnMainMenu2.on_mouseleave = function (sender)
+MainMenu2Btn.on_mouseleave = function (sender)
 		sender:set_backgroundcolor (0.53, 0.61, 0.21, 1)
 	end
 
@@ -164,19 +164,19 @@ component MainMenu3Btn extends button
 	onMouseLeave 	{ *node:this@bgcolor = "0.65 0.13 0 1" }
 }
 --]]
-local btnMainMenu3 = ufo.create_component ("button", "MainMenu3Btn", nil)
-btnMainMenu3:set_pos (0, 0)
-btnMainMenu3:set_size (400, 30)
-btnMainMenu3:set_font ("f_normal_bold")
-btnMainMenu3:set_color (1, 1, 1, 0.9)
-btnMainMenu3:set_selectcolor (0, 0, 0, 0.9)
-btnMainMenu3:set_backgroundcolor (0.38, 0.48, 0.36, 0.9)
-btnMainMenu3:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
-btnMainMenu3:set_contentalign (ufo.ALIGN_CC)
-btnMainMenu3.on_mouseenter = function (sender)
+local MainMenu3Btn = ufo.create_component ("button", "MainMenu3Btn", nil)
+MainMenu3Btn:set_pos (0, 0)
+MainMenu3Btn:set_size (400, 30)
+MainMenu3Btn:set_font ("f_normal_bold")
+MainMenu3Btn:set_color (1, 1, 1, 0.9)
+MainMenu3Btn:set_selectcolor (0, 0, 0, 0.9)
+MainMenu3Btn:set_backgroundcolor (0.38, 0.48, 0.36, 0.9)
+MainMenu3Btn:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
+MainMenu3Btn:set_contentalign (ufo.ALIGN_CC)
+MainMenu3Btn.on_mouseenter = function (sender)
 		sender:set_backgroundcolor (0.88, 0.20, 0.75, 1)
 	end
-btnMainMenu3.on_mouseleave = function (sender)
+MainMenu3Btn.on_mouseleave = function (sender)
 		sender:set_backgroundcolor (0.65, 0.13, 0, 1)
 	end
 
@@ -195,19 +195,19 @@ component MainMenuExitBtn extends button
 	onMouseLeave 	{ *node:this@bgcolor = "0.65 0.13 0 1" }
 }
 --]]
-local btnMainMenuExit = ufo.create_component ("button", "MainMenuExitBtn", nil)
-btnMainMenuExit:set_pos (0, 0)
-btnMainMenuExit:set_size (400, 30)
-btnMainMenuExit:set_font ("f_normal_bold")
-btnMainMenuExit:set_color (1, 0.68, 0.61, 1)
-btnMainMenuExit:set_selectcolor(1, 0.68, 0.61, 1)
-btnMainMenuExit:set_backgroundcolor(0.65, 0.13, 0, 1)
-btnMainMenuExit:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
-btnMainMenuExit:set_contentalign (ufo.ALIGN_CC)
-btnMainMenuExit.on_mouseenter = function (sender)
+local MainMenuExitBtn = ufo.create_component ("button", "MainMenuExitBtn", nil)
+MainMenuExitBtn:set_pos (0, 0)
+MainMenuExitBtn:set_size (400, 30)
+MainMenuExitBtn:set_font ("f_normal_bold")
+MainMenuExitBtn:set_color (1, 0.68, 0.61, 1)
+MainMenuExitBtn:set_selectcolor(1, 0.68, 0.61, 1)
+MainMenuExitBtn:set_backgroundcolor(0.65, 0.13, 0, 1)
+MainMenuExitBtn:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
+MainMenuExitBtn:set_contentalign (ufo.ALIGN_CC)
+MainMenuExitBtn.on_mouseenter = function (sender)
 		sender:set_backgroundcolor (0.88, 0.20, 0.75, 1)
 	end
-btnMainMenuExit.on_mouseleave = function (sender)
+MainMenuExitBtn.on_mouseleave = function (sender)
 		sender:set_backgroundcolor (0.65, 0.13, 0, 1)
 	end
 
@@ -218,9 +218,9 @@ component MainMenuCancelBtn extends MainMenu2Btn
 	tooltip			"_Close this dialogue"
 }
 --]]
-local btnMainMenuCancel = ufo.create_component ("button", "MainMenuCancelBtn", nil)
-btnMainMenuCancel:set_text ("_Cancel")
-btnMainMenuCancel:set_tooltip ("_Close this dialogue")
+local MainMenuCancelBtn = ufo.create_component ("button", "MainMenuCancelBtn", nil)
+MainMenuCancelBtn:set_text ("_Cancel")
+MainMenuCancelBtn:set_tooltip ("_Close this dialogue")
 
 --[[
 component MainMenuTab extends button
@@ -241,25 +241,21 @@ component MainMenuTab extends button
 	}
 }
 --]]
-local tabMainMenu = ufo.create_component ("button", "MainMenuTab", nil)
-tabMainMenu:set_size(1215, 30)
-tabMainMenu:set_font("f_small_bold")
-tabMainMenu:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
-tabMainMenu:set_color(1, 1, 1, 0.5)
-tabMainMenu:add_classmethod ("enable", 
-	function (sender)
-		local parent = sender:parent()
-		parent:set_backgroundcolor(0.4, 0.515, 0.5, 1)
-		parent:set_color(0, 0, 0, 0.9)
-	end
-)
-tabMainMenu:add_classmethod ("disable", 
-	function (sender)
-		local parent=sender:parent()
-		parent:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
-		parent:set_color(1, 1, 1, 0.5)
-	end
-)
+local MainMenuTab = ufo.create_component ("button", "MainMenuTab", nil)
+MainMenuTab:set_size(1215, 30)
+MainMenuTab:set_font("f_small_bold")
+MainMenuTab:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
+MainMenuTab:set_color(1, 1, 1, 0.5)
+function MainMenuTab.enable (sender)
+	local parent = sender:parent()
+	parent:set_backgroundcolor(0.4, 0.515, 0.5, 1)
+	parent:set_color(0, 0, 0, 0.9)
+end
+function MainMenuTab.disable (sender)
+	local parent=sender:parent()
+	parent:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
+	parent:set_color(1, 1, 1, 0.5)
+end
 
 --[[
 /**
@@ -270,7 +266,13 @@ component TextBtn extends button {
 	color			"1 1 1 0.5"
 	contentalign	ALIGN_CL
 }
+--]]
+local TextBtn = ufo.create_component ("button", "TextBtn", nil)
+TextBtn:set_size (250, 20)
+TextBtn:set_color (1, 1, 1, 0.5)
+TextBtn:set_contentalign (ufo.ALIGN_CL)
 
+--[[
 component TextEntry extends textentry {
 	background		"ui/textentry"
 	color		"1 1 1 0.5"
@@ -278,8 +280,15 @@ component TextEntry extends textentry {
 	contentalign	ALIGN_CL
 	padding		8
 }
+--]]
+local TextEntry = ufo.create_component ("textentry", "TextEntry", nil)
+TextEntry:set_background ("ui/textentry")
+TextEntry:set_color (1, 1, 1, 0.5)
+TextEntry:set_selectcolor (1, 1, 1, 0.9)
+TextEntry:set_contentalign (ufo.ALIGN_CL)
+TextEntry:set_padding (8)
 
-
+--[[
 /**
  * Stats bar
  * @TODO: should change color (red/yellow/green) depending
@@ -330,7 +339,26 @@ component StatBar extends panel
 		contentalign	ALIGN_UR
 	}
 }
+--]]
+local StatBar = ufo.create_component("panel", "StatBar", nil)
+StatBar:set_size(180, 25)
+local StatBar_label = ufo.create_control(StatBar, "smallstring", "label", nil)
+StatBar_label:set_pos(-3, 0)
+StatBar_label:set_size(80, 15)
+StatBar_label:set_longlines(ufo.LONGLINES_CHOP)
+StatBar_label:set_contentalign(ufo.ALIGN_UL)
+local StatBar_texture = ufo.create_texture (StatBar, "bg", nil)
+StatBar_texture:set_pos(0, 14)
+StatBar_texture:set_size(180, 10)
+StatBar_texture:set_source("ui/bar_bg")
+local StatBar_valuebar = ufo.create_bar (StatBar, "valuebar", nil)
+StatBar_valuebar:set_pos(0, 14)
+StatBar_valuebar:set_size(180, 10)
+StatBar_valuebar:set_color(.1875, .65625, .164, 0.8)
+StatBar_valuebar:set_disabled(true)
+StatBar_valuebar:set_nohover(true)
 
+--[[
 component CheckBox extends checkbox
 {
 	iconChecked	  "icons/checkbox_checked"
@@ -338,7 +366,14 @@ component CheckBox extends checkbox
 	iconIndeterminate "icons/checkbox_indeterminate"
 	size "20 20"
 }
+--]]
+local CheckBox = ufo.create_component ("checkbox", "CheckBox", nil)
+CheckBox:set_iconchecked ("icons/checkbox_checked")
+CheckBox:set_iconunchecked ("icons/checkbox_unchecked")
+CheckBox:set_iconunknown ("icons/checkbox_indeterminate")
+CheckBox:set_size (20, 20)
 
+--[[
 /*
  * Shared window to display item details.
  * Used in market, soldier equipping, etc.

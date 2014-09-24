@@ -44,6 +44,8 @@ typedef struct textEntryExtraData_s {
 	int cursorPosition;		/**< Cursor position (offset of next UTF-8 char to the right) */
 	struct uiAction_s* onAbort;
 	uiSprite_t* background;	/**< Sprite used as a background */
+	LUA_EVENT lua_onTextEntryAbort; /**< references the event in lua: on_textabort(node) */
 } textEntryExtraData_t;
 
 void UI_RegisterTextEntryNode(uiBehaviour_t* behaviour);
+void UI_TextEntry_SetBackgroundByName (uiNode_t* node, const char* name);
