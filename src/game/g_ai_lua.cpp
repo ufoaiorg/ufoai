@@ -229,6 +229,7 @@ static int AIL_weapontype(lua_State* L);
 static int AIL_actor(lua_State* L);
 static int AIL_tusforshooting(lua_State* L);
 static int AIL_class(lua_State* L);
+static int AIL_HideNeeded(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -259,6 +260,7 @@ static const luaL_reg AIL_methods[] = {
 	{"actor", AIL_actor},
 	{"tusforshooting", AIL_tusforshooting},
 	{"class", AIL_class},
+	{"hideneeded", AIL_HideNeeded},
 	{nullptr, nullptr}
 };
 
@@ -1918,6 +1920,12 @@ static int AIL_tusforshooting (lua_State* L)
 static int AIL_class (lua_State* L)
 {
 	lua_pushstring(L, AIL_ent->AI.subtype);
+	return 1;
+}
+
+static int AIL_HideNeeded (lua_State* L)
+{
+	lua_pushboolean(L, AI_HideNeeded(AIL_ent));
 	return 1;
 }
 
