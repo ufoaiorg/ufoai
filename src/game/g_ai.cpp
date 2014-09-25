@@ -293,6 +293,26 @@ bool AI_HasLineOfFire (const Edict* actor, const Edict* target)
 }
 
 /**
+ * @brief Test if @c check is exposed to the enemy @c team.
+ */
+static bool AI_IsExposed (int team, Edict* check)
+{
+	if (G_TestVis(team, check, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)
+		return true;
+
+	Edict* from = nullptr;
+	while ((from = G_EdictsGetNextInUse(from))) {
+		const int fromTeam = from->getTeam();
+		if ((team >= 0 && fromTeam != team) || (team < 0 && fromTeam == -team))
+			continue;
+
+		if (AI_HasLineOfFire(from, check))
+			return true;
+	}
+
+	return false;
+}
+/**
  * @brief Check whether friendly units are in the line of fire when shooting
  * @param[in] ent AI that is trying to shoot
  * @param[in] target Shoot to this location
@@ -491,7 +511,7 @@ bool AI_HideNeeded (const Actor* actor)
 			if (damage >= actor->HP / 3) {
 				const int hidingTeam = AI_GetHidingTeam(actor);
 				/* now check whether this enemy is visible for this alien */
-				if (G_Vis(hidingTeam, actor, from, VT_NOFRUSTUM))
+				if (G_Vis(hidingTeam, actor, from, VT_NOFRUSTUM) || AI_HasLineOfFire(from, actor))
 					return true;
 			}
 		}
@@ -608,7 +628,7 @@ bool AI_FindHidingLocation (int team, Actor* actor, const pos3_t from, int tuLef
 
 		/* If enemies see this position, it doesn't qualify as hiding spot */
 		actor->calcOrigin();
-		if (G_TestVis(team, actor, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)
+		if (AI_IsExposed(team, actor))
 			continue;
 
 		/* Don't stand on dangerous terrain! */
@@ -1075,7 +1095,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	if (!actor->isRaged()) {
 		const int hidingTeam = AI_GetHidingTeam(actor);
 		/* hide */
-		if (!(G_TestVis(hidingTeam, actor, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES) && !AI_HideNeeded(actor)) {
+		if (!(AI_IsExposed(hidingTeam, actor)) && !AI_HideNeeded(actor)) {
 			/* is a hiding spot */
 			bestActionScore += SCORE_HIDE + (aia->target ? SCORE_CLOSE_IN + SCORE_REACTION_FEAR_FACTOR : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
