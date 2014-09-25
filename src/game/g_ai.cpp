@@ -584,16 +584,19 @@ int AI_GetHidingTeam (const Edict* ent)
  * @brief Checks if the given position is safe to stand on.
  * @return @c true if the actor's position is deemed safe.
  */
-bool AI_CheckPosition (const Actor* const ent, const pos3_t pos)
+bool AI_CheckPosition (const Actor* const actor, const pos3_t pos)
 {
-	if (ent->isInsane())
+	if (actor->isInsane())
 		return true;
 
 	/* Don't stand on hurt triggers or fire/stun gas */
-	if (G_GetEdictFromPos(pos, ET_TRIGGER_HURT) || G_GetEdictFromPos(pos, ET_SMOKESTUN) ||
-			G_GetEdictFromPos(pos, ET_FIRE))
-		return false;
-
+	Edict* check = nullptr;
+	while ((check = G_EdictsGetNextInUse(check))) {
+		if (!check->isSamePosAs(pos) || check->dmg <= 0)
+			continue;
+		if (G_ApplyProtection(actor, check->dmgtype, check->dmg) > 0)
+			return false;
+	}
 	return true;
 }
 
