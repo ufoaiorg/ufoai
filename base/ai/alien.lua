@@ -243,6 +243,7 @@ function approach( targets, tus )
 			near_pos = ai.positionapproach( targets[i].pos(), tus )
 		else
 			near_pos = ai.positionapproach( targets[i], tus )
+		end
 		if near_pos then
 			near_pos:goto()
 			return targets[i]
