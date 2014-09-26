@@ -108,7 +108,12 @@ void UI_TextScrollEnd (const char* nodePath)
 
 	if (EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {
 		EXTRADATA(node).super.scrollY.viewPos = EXTRADATA(node).super.scrollY.fullSize - EXTRADATA(node).super.scrollY.viewSize;
-		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+		if (EXTRADATA(node).super.onViewChange) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+		}
+		else if (EXTRADATA(node).super.lua_onViewChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript (node, EXTRADATA(node).super.lua_onViewChange);
+		}
 	}
 }
 

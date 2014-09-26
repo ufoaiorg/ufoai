@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_input.h"
 #include "../ui_sprite.h"
+#include "../ui_lua.h"
+
 #include "ui_node_abstractnode.h"
 #include "ui_node_panel.h"
 #include "../../../common/scripts.h"
@@ -94,8 +96,14 @@ static void UI_TopDownFlowLayout (uiNode_t* node, int margin)
 
 		updated = EXTRADATA(node).super.scrollX.set(-1, node->box.size[0], node->box.size[0]);
 		updated = EXTRADATA(node).super.scrollY.set(-1, node->box.size[1], positionY + node->padding) || updated;
-		if (updated && EXTRADATA(node).super.onViewChange)
-			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+		if (updated) {
+			if (EXTRADATA(node).super.onViewChange) {
+				UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+			}
+			else if (EXTRADATA(node).super.lua_onViewChange != LUA_NOREF) {
+				UI_ExecuteLuaEventScript (node, EXTRADATA(node).super.lua_onViewChange);
+			}
+		}
 	}
 }
 
@@ -340,8 +348,14 @@ static void UI_ClientLayout (uiNode_t* node)
 
 	bool updated = EXTRADATA(node).super.scrollX.set(-1, node->box.size[0], width);
 	updated = EXTRADATA(node).super.scrollY.set(-1, node->box.size[1], height) || updated;
-	if (updated && EXTRADATA(node).super.onViewChange)
-		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+	if (updated) {
+		if (EXTRADATA(node).super.onViewChange) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+		}
+		else if (EXTRADATA(node).super.lua_onViewChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript (node, EXTRADATA(node).super.lua_onViewChange);
+		}
+	}
 }
 
 /**
@@ -412,8 +426,14 @@ static void UI_ColumnLayout (uiNode_t* node)
 
 		updated = EXTRADATA(node).super.scrollX.set(-1, node->box.size[0], width);
 		updated = EXTRADATA(node).super.scrollY.set(-1, node->box.size[1], height) || updated;
-		if (updated && EXTRADATA(node).super.onViewChange)
-			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+		if (updated) {
+			if (EXTRADATA(node).super.onViewChange) {
+				UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+			}
+			else if (EXTRADATA(node).super.lua_onViewChange != LUA_NOREF) {
+				UI_ExecuteLuaEventScript (node, EXTRADATA(node).super.lua_onViewChange);
+			}
+		}
 	}
 
 	Mem_Free(columnPos);
@@ -549,8 +569,14 @@ bool uiPanelNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 
 	updated = EXTRADATA(node).super.scrollX.moveDelta(deltaX * 50);
 	updated |= EXTRADATA(node).super.scrollY.moveDelta(deltaY * 50);
-	if (EXTRADATA(node).super.onViewChange && updated)
-		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+	if (updated) {
+		if (EXTRADATA(node).super.onViewChange) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+		}
+		else if (EXTRADATA(node).super.lua_onViewChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript (node, EXTRADATA(node).super.lua_onViewChange);
+		}
+	}
 
 	/* @todo use super behaviour */
 	if (node->onWheelUp && deltaY < 0) {

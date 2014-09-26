@@ -70,6 +70,8 @@ typedef struct {
 	uiScroll_t scrollY;
 
 	struct uiAction_s* onViewChange;	/**< called when view change (number of elements...) */
+	LUA_EVENT lua_onViewChange; 		/**< references the event in lua: on_viewchange (node) */
+
 } abstractScrollableExtraData_t;
 
 void UI_RegisterAbstractScrollableNode(uiBehaviour_t* behaviour);

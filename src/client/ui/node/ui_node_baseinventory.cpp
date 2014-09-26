@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_input.h"
 #include "../ui_render.h"
+#include "../ui_lua.h"
+
 #include "ui_node_baseinventory.h"
 #include "ui_node_model.h"
 #include "ui_node_container.h"
@@ -213,6 +215,9 @@ static void UI_BaseInventoryNodeUpdateScroll (uiNode_t* node)
 {
 	if (EXTRADATA(node).onViewChange) {
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+	}
+	else if (EXTRADATA(node).lua_onViewChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript (node, EXTRADATA(node).lua_onViewChange);
 	}
 }
 

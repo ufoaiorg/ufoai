@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_sprite.h"
 #include "../ui_render.h"
 #include "../ui_input.h"
+#include "../ui_lua.h"
+
 #include "ui_node_abstractoption.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_optionlist.h"
@@ -71,8 +73,14 @@ static void UI_OptionListNodeUpdateScroll (uiNode_t* node)
 
 	elements = (node->box.size[1] - node->padding - node->padding) / lineHeight;
 	updated = EXTRADATA(node).scrollY.set(-1, elements, EXTRADATA(node).count);
-	if (updated && EXTRADATA(node).onViewChange)
-		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+	if (updated) {
+		if (EXTRADATA(node).onViewChange) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		}
+		else if (EXTRADATA(node).lua_onViewChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript (node, EXTRADATA(node).lua_onViewChange);
+		}
+	}
 }
 
 void uiOptionListNode::draw (uiNode_t* node)
@@ -231,9 +239,14 @@ bool uiOptionListNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 	if (deltaY == 0)
 		return false;
 	updated = EXTRADATA(node).scrollY.moveDelta(down ? 1 : -1);
-	if (EXTRADATA(node).onViewChange && updated)
-		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
-
+	if (updated) {
+		if (EXTRADATA(node).onViewChange) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		}
+		else if (EXTRADATA(node).lua_onViewChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript (node, EXTRADATA(node).lua_onViewChange);
+		}
+	}
 	/* @todo use super behaviour */
 	if (node->onWheelUp && !down) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
@@ -293,8 +306,14 @@ void uiOptionListNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 	if (deltaY != 0) {
 		bool updated;
 		updated = EXTRADATA(node).scrollY.moveDelta(deltaY);
-		if (EXTRADATA(node).onViewChange && updated)
-			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		if (updated) {
+			if (EXTRADATA(node).onViewChange) {
+				UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+			}
+			else if (EXTRADATA(node).lua_onViewChange != LUA_NOREF) {
+				UI_ExecuteLuaEventScript (node, EXTRADATA(node).lua_onViewChange);
+			}
+		}
 		/* @todo not accurate */
 		mouseScrollX = x;
 		mouseScrollY = y;

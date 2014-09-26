@@ -650,8 +650,7 @@ void UI_NodeSetSize (uiNode_t* node, vec2_t size)
  * @brief Search a child node by given name
  * @note Only search with one depth
  */
-uiNode_t* UI_GetNode (const uiNode_t* const node, const char* name)
-{
+uiNode_t* UI_GetNode(const uiNode_t* node, const char* name) {
 	uiNode_t* current = nullptr;
 
 	if (!node)
@@ -1062,5 +1061,4 @@ LUA_METHOD UI_Node_GetItem (uiNode_t* node, const char* name) {
 	}
 	return LUA_NOREF;
 }
-
 
