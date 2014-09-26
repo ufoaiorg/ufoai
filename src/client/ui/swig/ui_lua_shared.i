@@ -58,11 +58,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_renderer.h"
 
 /* import ui specific functions */
-#include "../ui_main.h"
 #include "../ui_behaviour.h"
-#include "../ui_sprite.h"
-#include "../ui_nodes.h"
+#include "../ui_data.h"
 #include "../ui_node.h"
+#include "../ui_nodes.h"
+#include "../ui_main.h"
+#include "../ui_sprite.h"
 
 #include "../node/ui_node_abstractnode.h"
 #include "../node/ui_node_abstractoption.h"
@@ -84,10 +85,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	typedefs only visible for SWIG, used for subclassing uiNode_t (see below for more details). Note
 	that uiAbstractNode_t is missing from the list, since this is the uiNode_t type.
 */
-typedef uiNode_t uiAbstractValue_t;
 typedef uiNode_t uiAbstractOption_t;
 typedef uiNode_t uiAbstractScrollable_t;
 typedef uiNode_t uiAbstractScrollbar_t;
+typedef uiNode_t uiAbstractValue_t;
 
 typedef uiAbstractValue_t uiBar_t;
 typedef uiNode_t uiButton_t;
@@ -237,6 +238,24 @@ typedef enum {
 } panelLayout_t;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//	expose scroll
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct uiScroll_t {
+};
+%extend uiScroll_t {
+	int viewpos () { return $self->viewPos; };
+	int viewsize () { return $self->viewSize; };
+	bool fullsize () { return $self->fullSize; };
+
+	void set_fullsize (bool value) { $self->fullSize = (value ? 1 : 0); };
+	bool set_values (int pos, int size, bool full) { return $self->set (pos, size, (full ? 1 : 0)); };
+
+	bool moveto (int pos) { return $self->move(pos); };
+	bool movedelta (int delta) { return $self->moveDelta (delta); };
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose cvar
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -303,7 +322,7 @@ struct uiNode_t {
 	float top () { return $self->box.pos[1]; };
 	float widht () { return $self->box.size[0]; };
 	float height () { return $self->box.size[1]; };
-	int borderthickness () { return $self->border; };
+	int bordersize () { return $self->border; };
 	char* name () { return const_cast<char*>($self->name); };
 	char* type () { return const_cast<char*>($self->behaviour->name); };
 	char* text () { return const_cast<char*>(UI_Node_GetText($self)); };
@@ -320,6 +339,7 @@ struct uiNode_t {
 	uiNode_t* next () { return $self->next; };
 	uiNode_t* parent () { return $self->parent; };
 	uiNode_t* root () { return $self->root; };
+	uiNode_t* operator[] (const char* name) { return UI_GetNode(node, name); };
 
 	void append_node (uiNode_t* node) { UI_AppendNode($self, node); };
 	void insert_node (uiNode_t* node, uiNode_t* prev) { UI_InsertNode($self, prev, node); };
@@ -335,6 +355,7 @@ struct uiNode_t {
 	void set_flashcolor (float r, float g, float b, float a) { Vector4Set($self->flashColor, r, g, b, a); };
 	void set_selectcolor (float r, float g, float b, float a) { Vector4Set($self->selectedColor, r, g, b, a); };
 	void set_backgroundcolor (float r, float g, float b, float a) { Vector4Set($self->bgcolor, r, g, b, a); };
+	void set_bordersize (int size) { $self->border = size; };
 	void set_bordercolor (float r, float g, float b, float a) { Vector4Set($self->bordercolor, r, g, b, a); };
 	void set_text (const char* text) { UI_Node_SetText($self, text); };
 	void set_font (const char* name) { UI_Node_SetFont($self, name); };
@@ -365,9 +386,39 @@ struct uiNode_t {
 	and direct these back to a call into the behaviour class.
 */
 
+struct uiAbstractOption_t: uiNode_t {
+};
+%extend uiAbstractOption_t {
+	int dataid () { return UI_EXTRADATA($self, abstractOptionExtraData_t).dataId; };
+    int count () { return UI_EXTRADATA($self, abstractOptionExtraData_t).count; };
+
+	void set_dataid (const char* name) { UI_EXTRADATA($self, abstractOptionExtraData_t).dataId = UI_GetDataIDByName(name); };
+	void set_background (const char* name) { UI_AbstractOption_SetBackgroundByName($self, name); };
+
+	%rename (on_viewchange) lua_onViewChange;
+	LUA_EVENT lua_onViewChange; 		/**< references the event in lua: on_viewchange (node) */
+};
+/*
+	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
+	to bring the values from the EXTRADATA structures to the lua class.
+*/
+%{
+static LUA_EVENT uiAbstractOption_t_lua_onViewChange_get(uiAbstractOption_t* node) {
+	return UI_EXTRADATA(node, abstractOptionExtraData_t).lua_onViewChange;
+}
+static LUA_EVENT uiAbstractOption_t_lua_onViewChange_set(uiAbstractOption_t* node, LUA_EVENT fn) {
+	return UI_EXTRADATA(node, abstractOptionExtraData_t).lua_onViewChange;
+}
+%}
+
 struct uiAbstractScrollable_t: uiNode_t {
 };
 %extend uiAbstractScrollable_t {
+};
+
+struct uiAbstractScrollbar_t: uiNode_t {
+};
+%extend uiAbstractScrollbar_t {
 };
 
 struct uiAbstractValue_t: uiNode_t {
@@ -406,7 +457,7 @@ struct uiButton_t: uiNode_t {
 };
 
 %rename (uiCheckBox) uiCheckBox_t;
-struct uiCheckBox_t {
+struct uiCheckBox_t: uiNode_t {
 };
 %extend uiCheckBox_t {
 	void set_background (const char* name) { UI_CheckBox_SetBackgroundByName($self, name); };
@@ -619,6 +670,7 @@ void Com_Error(int code, const char* fmt);
 %rename(register_onload) UI_RegisterHandler_OnLoad;
 void UI_RegisterHandler_OnLoad (LUA_FUNCTION fcn);
 
+/*
 %luacode {
 --[[
 	@brief Creates an extendible wrapper around the userdata table supplied by SWIG.
@@ -653,3 +705,4 @@ local function create_proxy(cppObject)
 end
 
 %}
+*/

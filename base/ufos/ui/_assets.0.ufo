@@ -485,7 +485,28 @@ component ObjectInfo extends panel
 		}
 	}
 }
+--]]
+local ObjectInfo = ufo.create_component ("panel", "ObjectInfo", nil)
+ObjectInfo:set_size(715, 180)
+ObjectInfo:set_bordersize(2)
+ObjectInfo:set_bordercolor (0.527, 0.6, 0.21, 1)
+local ObjectInfo_header = ufo.create_panel (ObjectInfo, "header", nil)
+ObjectInfo_header:set_pos (1, 1)
+ObjectInfo_header:set_size(713, 32)
+ObjectInfo_header:set_backgroundcolor (0.527, 0.6, 0.21, 0.2)
+local ObjectInfo_header_ufopedia = ufo.create_control (ObjectInfo_header, "UFOpediaBtn", "ufopedia", nil)
+ObjectInfo_header_ufopedia:set_pos (10, 9)
+ObjectInfo_header_ufopedia.on_click = function (sender)
+		ufo.cmd ("ui_market_openpedia;")
+	end
+ObjectInfo_header_title = ufo.create_string (ObjectInfo_header, "title", nil)
+ObjectInfo_header_title:set_pos (30, 1)
+ObjectInfo_header_title:set_size (670, 32)
+ObjectInfo_header_title:set_text (ufo.findvar("mn_itemname"))
+ObjectInfo_header_title:set_contentalign(ufo.ALIGN_CL)
+ObjectInfo_header_title:set_color(0.56, 0.81, 0.76, 1)
 
+--[[
 component Spinner extends spinner
 {
 	topIcon	"ui/spinner_up"

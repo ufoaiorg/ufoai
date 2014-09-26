@@ -146,6 +146,12 @@ int uiAbstractOptionNode::getCellHeight (uiNode_t* node)
 	return 1;
 }
 
+void UI_AbstractOption_SetBackgroundByName(uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, abstractOptionExtraData_t).background = sprite;
+}
+
+
 void UI_RegisterAbstractOptionNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "abstractoption";

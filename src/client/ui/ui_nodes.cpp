@@ -303,9 +303,11 @@ void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNo
 uiNode_t* UI_GetNodeByPath (const char* path)
 {
 	uiNode_t* node = nullptr;
-	const value_t* property;
+	const value_t* property =  nullptr;
 	UI_ReadNodePath(path, nullptr, nullptr, &node, &property);
-	/** @todo FIXME warning if it return a property */
+	if (property) {
+		Com_Printf("WARNING: Search for node using path [%s] returns property [%s]\n", path, property->string);
+	}
 	return node;
 }
 

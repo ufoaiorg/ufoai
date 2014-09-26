@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_font.h"
 #include "../ui_render.h"
 #include "../ui_actions.h"
+#include "../ui_lua.h"
+
 #include "ui_node_abstractnode.h"
 #include "ui_node_abstractscrollable.h"
 
@@ -140,8 +142,15 @@ bool uiAbstractScrollableNode::setScrollY (uiNode_t* node, int viewPos, int view
 
 	updated = EXTRADATA(node).scrollY.set(viewPos, viewSize, fullSize);
 
-	if (updated && EXTRADATA(node).onViewChange)
-		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+	if (updated) {
+		if (EXTRADATA(node).onViewChange) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		}
+		else if (EXTRADATA(node).lua_onViewChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript (node, EXTRADATA(node).lua_onViewChange);
+		}
+	}
+
 
 	return updated;
 }

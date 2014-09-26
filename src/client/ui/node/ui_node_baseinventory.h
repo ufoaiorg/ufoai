@@ -64,6 +64,7 @@ typedef struct baseInventoryExtraData_s {
 	uiScroll_t scrollY;
 	/* scroll callback when the status change */
 	struct uiAction_s* onViewChange;
+	LUA_EVENT lua_onViewChange; 		/**< references the event in lua: on_viewchange (node) */
 
 } baseInventoryExtraData_t;
 

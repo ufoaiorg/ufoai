@@ -48,6 +48,7 @@ typedef struct {
 	uiScroll_t scrollY;					/**< Scroll position, if need */
 
 	struct uiAction_s* onViewChange;	/**< called when view change (number of elements...) */
+	LUA_EVENT lua_onViewChange; 		/**< references the event in lua: on_viewchange (node) */
 
 	/** Sprite used as a background */
 	uiSprite_t* background;
@@ -60,3 +61,4 @@ void UI_OptionNodeSortOptions(uiNode_t* node);
 uiNode_t* UI_AbstractOptionGetFirstOption(uiNode_t* node);
 const char* UI_AbstractOptionGetCurrentValue(uiNode_t* node);
 void UI_AbstractOptionSetCurrentValue(uiNode_t* node, const char* value);
+void UI_AbstractOption_SetBackgroundByName(uiNode_t* node, const char* name);
