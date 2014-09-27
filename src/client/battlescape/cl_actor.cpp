@@ -1637,6 +1637,27 @@ static void CL_TargetingRadius (const vec3_t center, const float radius)
 		particle->size[0] = radius;
 }
 
+static void CL_GetShotOrigin (const vec3_t from, const fireDef_t* fd, const vec3_t dir, vec3_t shotOrigin)
+{
+	const int dv = AngleToDir((int) (atan2(dir[1], dir[0]) * todeg));
+	vec3_t dvec;
+	VectorCopy(dvecs[dv], dvec);
+	/* get weapon position */
+	VectorCopy(from, shotOrigin);
+	/* adjust height: */
+	shotOrigin[2] += fd->shotOrg[1];
+	/* adjust horizontal: */
+	if (fd->shotOrg[0] != 0) {
+		/* get "right" and "left" of a unit(rotate dir 90 on the x-y plane): */
+		const float x = dvec[1];
+		const float y = -dvec[0];
+		const float length = sqrt(dvec[0] * dvec[0] + dvec[1] * dvec[1]);
+		/* assign adjustments: */
+		shotOrigin[0] += x * fd->shotOrg[0] / length;
+		shotOrigin[1] += y * fd->shotOrg[0] / length;
+	}
+}
+
 /**
  * @brief Draws line to target.
  * @param[in] fromPos The (grid-) position of the aiming actor.
@@ -1668,6 +1689,10 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 
 	/* calculate direction */
 	vec3_t dir;
+	VectorSubtract(end, start, dir);
+
+	/* Calculate shot origin */
+	CL_GetShotOrigin(start, selActor->fd, dir, start);
 	VectorSubtract(end, start, dir);
 	VectorNormalize(dir);
 
@@ -1744,7 +1769,6 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	vec3_t from, at, cross;
 	Grid_PosToVec(cl.mapData->routing, fromActorSize, fromPos, from);
 	Grid_PosToVec(cl.mapData->routing, toActorSize, toPos, at);
-	from[2] += selActor->fd->shotOrg[1];
 
 	/* prefer to aim grenades at the ground */
 	at[2] -= GROUND_DELTA;
@@ -1752,8 +1776,13 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		at[2] -= mousePosTargettingAlign;
 	VectorCopy(at, cross);
 
+	/* Calculate shot origin */
+	vec3_t ds;
+	VectorSubtract(at, from, ds);
+	CL_GetShotOrigin(from, selActor->fd, ds, from);
+
 	/* calculate parabola */
-	vec3_t v0, ds;
+	vec3_t v0;
 	float dt = Com_GrenadeTarget(from, at, selActor->fd->range, selActor->fd->launched, selActor->fd->rolled, v0);
 	if (!dt) {
 		CL_ParticleSpawn("cross_no", 0, cross);
