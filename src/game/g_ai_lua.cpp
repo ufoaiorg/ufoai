@@ -1995,6 +1995,7 @@ int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
 	}
 	if (luaL_dobuffer(AI->L, fbuf, size, path)) {
 		gi.DPrintf("Unable to parse Lua file '%s'\n", path);
+		gi.DPrintf("%s\n", lua_tostring(AI->L, lua_gettop(AI->L)));
 		gi.FS_FreeFile(fbuf);
 		return -1;
 	}
