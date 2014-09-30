@@ -681,7 +681,8 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 			bestlength = length;
 		}
 	}
-	assert(enemy);
+	if (!enemy)
+		return false;
 
 	/* calculate move table */
 	const int maxTUs = std::min(tu, HERD_DIST * 2);
