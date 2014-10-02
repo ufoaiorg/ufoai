@@ -308,5 +308,5 @@ void UI_RegisterMessageListNode (uiBehaviour_t* behaviour)
 	behaviour->name = "messagelist";
 	behaviour->extends = "abstractscrollable";
 	behaviour->manager = UINodePtr(new uiMessageListNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiMessageList_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiMessageListNode_t *");
 }

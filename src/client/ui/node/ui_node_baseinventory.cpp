@@ -762,7 +762,7 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "container";
 	behaviour->manager = UINodePtr(new uiBaseInventoryNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBaseInventory_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBaseInventoryNode_t *");
 
 	/* Display/hide weapons. */
 	UI_RegisterExtradataNodeProperty(behaviour, "displayweapon", V_BOOL, baseInventoryExtraData_t, displayWeapon);

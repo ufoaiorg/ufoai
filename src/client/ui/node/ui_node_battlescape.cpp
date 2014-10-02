@@ -100,5 +100,5 @@ void UI_RegisterBattlescapeNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "battlescape";
 	behaviour->manager = UINodePtr(new uiBattleScapeNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBattlescape_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBattlescapeNode_t *");
 }

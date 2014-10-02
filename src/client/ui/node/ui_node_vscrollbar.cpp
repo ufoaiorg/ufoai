@@ -399,10 +399,10 @@ void UI_RegisterVScrollbarNode (uiBehaviour_t* behaviour)
 	behaviour->name = "vscrollbar";
 	behaviour->extends = "abstractscrollbar";
 	behaviour->manager = UINodePtr(new uiVScrollbarNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiVScrollBar_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiVScrollBarNode_t *");
 
 	/* Image to use. Each behaviour use it like they want.
-	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
+	 * @todo use V_REF_OR_STRING when its possible ('image' is never a cvar)
 	 */
 	UI_RegisterNodeProperty(behaviour, "image", V_CVAR_OR_STRING, uiNode_t, image);
 }

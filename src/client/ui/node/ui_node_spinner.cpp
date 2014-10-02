@@ -243,7 +243,7 @@ void UI_RegisterSpinnerNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractvalue";
 	behaviour->manager = UINodePtr(new uiSpinnerNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiSpinner_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiSpinnerNode_t *");
 
 	/**
 	 * @brief Background used to display the spinner. It is displayed in the center of the node.

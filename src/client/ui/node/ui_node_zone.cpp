@@ -95,7 +95,7 @@ void UI_RegisterZoneNode (uiBehaviour_t* behaviour)
 	behaviour->name = "zone";
 	behaviour->manager = UINodePtr(new uiZoneNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiZone_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiZoneNode_t *");
 
 	/* If true, the <code>onclick</code> call back is called more than one time if the user does not release the button. */
 	UI_RegisterExtradataNodeProperty(behaviour, "repeat", V_BOOL, zoneExtraData_t, repeat);

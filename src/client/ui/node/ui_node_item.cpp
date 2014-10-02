@@ -83,7 +83,7 @@ void UI_RegisterItemNode (uiBehaviour_t* behaviour)
 	behaviour->name = "item";
 	behaviour->extends = "model";
 	behaviour->manager = UINodePtr(new uiItemNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiItem_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiItemNode_t *");
 
 	/* Display an item like a container node do it */
 	UI_RegisterExtradataNodeProperty(behaviour, "containerlike", V_BOOL, modelExtraData_t, containerLike);

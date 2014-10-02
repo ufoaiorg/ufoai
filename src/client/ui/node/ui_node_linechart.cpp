@@ -88,7 +88,7 @@ void UI_RegisterLineChartNode (uiBehaviour_t* behaviour)
 	behaviour->name = "linechart";
 	behaviour->manager = UINodePtr(new uiLineChartNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiLineChart_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiLineChartNode_t *");
 
 	/* Identity the shared data the node use. It must be a LINESTRIP data. */
 	UI_RegisterExtradataNodeProperty(behaviour, "dataid", V_UI_DATAID, lineChartExtraData_t, dataId);

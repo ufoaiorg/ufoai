@@ -182,7 +182,7 @@ btnExit.on_click = function (sender)
 	}
 --]]
 local lbVersion = ufo.create_string (wndMain, "lbVersion", nil)
-lbVersion:set_text (ufo.findvar("version"):as_string())
+lbVersion:set_text ("*cvar:version")
 lbVersion:set_pos (10, 744)
 lbVersion:set_size (1004, 20)
 	

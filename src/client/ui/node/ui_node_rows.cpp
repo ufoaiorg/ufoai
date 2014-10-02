@@ -71,7 +71,7 @@ void UI_RegisterRowsNode (uiBehaviour_t* behaviour)
 	behaviour->name = "rows";
 	behaviour->manager = UINodePtr(new uiRowsNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiRows_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiRowsNode_t *");
 
 	/* Background color for odd elements */
 	UI_RegisterNodeProperty(behaviour, "color1", V_COLOR, uiNode_t, color);

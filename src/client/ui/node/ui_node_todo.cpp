@@ -91,5 +91,5 @@ void UI_RegisterTodoNode (uiBehaviour_t* behaviour)
 	behaviour->name = "todo";
 	behaviour->extends = "string";
 	behaviour->manager = UINodePtr(new uiTodoNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTodo_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTodoNode_t *");
 }

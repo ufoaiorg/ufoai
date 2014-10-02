@@ -208,7 +208,7 @@ void UI_RegisterAbstractBaseNode (uiBehaviour_t* behaviour)
 	behaviour->isAbstract = true;
 	behaviour->manager = UINodePtr(new uiAbstractBaseNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractBase_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractBaseNode_t *");
 
 	/* Identify the base, from a base ID, the node use. */
 	UI_RegisterExtradataNodeProperty(behaviour, "baseid", V_INT, baseExtraData_t, baseid);
@@ -219,7 +219,7 @@ void UI_RegisterBaseMapNode (uiBehaviour_t* behaviour)
 	behaviour->name = "basemap";
 	behaviour->extends = "abstractbase";
 	behaviour->manager = UINodePtr(new uiBaseMapNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBaseMap_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBaseMapNode_t *");
 }
 
 void UI_RegisterBaseLayoutNode (uiBehaviour_t* behaviour)
@@ -227,5 +227,5 @@ void UI_RegisterBaseLayoutNode (uiBehaviour_t* behaviour)
 	behaviour->name = "baselayout";
 	behaviour->extends = "abstractbase";
 	behaviour->manager = UINodePtr(new uiBaseLayoutNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBaseLayout_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBaseLayoutNode_t *");
 }

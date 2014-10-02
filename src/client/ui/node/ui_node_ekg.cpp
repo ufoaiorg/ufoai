@@ -117,7 +117,7 @@ void UI_RegisterEKGNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "image";
 	behaviour->manager = UINodePtr(new uiEkgNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiEKG_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiEKGNode_t *");
 
 	/* The speed that the wrap texture is scrollend with */
 	UI_RegisterExtradataNodeProperty(behaviour, "scrollspeed", V_FLOAT, ekgExtraData_t, scrollSpeed);

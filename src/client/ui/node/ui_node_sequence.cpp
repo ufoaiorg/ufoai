@@ -117,7 +117,7 @@ void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 	behaviour->name = "sequence";
 	behaviour->manager = UINodePtr(new uiSequenceNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiSequence_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiSequenceNode_t *");
 
 	/** sequence script id */
 	propertySource = UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, EXTRADATA_TYPE, source);

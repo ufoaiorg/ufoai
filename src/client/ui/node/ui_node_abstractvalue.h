@@ -33,7 +33,7 @@ public:
 	void clone(uiNode_t const* source, uiNode_t* clone) override;
 	void initNodeDynamic(uiNode_t* node) override;
 	void deleteNode(uiNode_t* node) override;
-protected:
+
 	void setRange(uiNode_t* node, float min, float max);
 	bool setValue(uiNode_t* node, float value);
 	bool incValue(uiNode_t* node);

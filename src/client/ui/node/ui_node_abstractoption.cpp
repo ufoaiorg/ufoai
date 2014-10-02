@@ -159,7 +159,7 @@ void UI_RegisterAbstractOptionNode (uiBehaviour_t* behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->drawItselfChild = true;
 	behaviour->manager = UINodePtr(new uiAbstractOptionNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractOption_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractOptionNode_t *");
 
 	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
 	UI_RegisterExtradataNodeProperty(behaviour, "dataid", V_UI_DATAID, EXTRADATA_TYPE, dataId);

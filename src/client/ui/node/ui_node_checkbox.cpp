@@ -164,7 +164,7 @@ void UI_RegisterCheckBoxNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractvalue";
 	behaviour->manager = UINodePtr(new uiCheckBoxNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiCheckBox_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiCheckBoxNode_t *");
 
 	/** Sprite used as an icon for checked state */
 	UI_RegisterExtradataNodeProperty(behaviour, "iconChecked", V_UI_SPRITEREF, EXTRADATA_TYPE, iconChecked);

@@ -205,7 +205,7 @@ void UI_RegisterAbstractValueNode (uiBehaviour_t* behaviour)
 	behaviour->manager = UINodePtr(new uiAbstractValueNode());
 	behaviour->isAbstract = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractValue_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractValueNode_t *");
 
 	/* Current value of the node. It should be a cvar */
 	UI_RegisterExtradataNodeProperty(behaviour, "current", V_CVAR_OR_FLOAT, abstractValueExtraData_t, value);

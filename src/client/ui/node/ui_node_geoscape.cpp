@@ -708,7 +708,7 @@ void UI_RegisterGeoscapeNode (uiBehaviour_t* behaviour)
 	behaviour->name = "geoscape";
 	behaviour->manager = UINodePtr(new uiGeoscapeNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiGeoscape_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiGeoscapeNode_t *");
 
 	/* Use a right padding. */
 	UI_RegisterExtradataNodeProperty(behaviour, "padding-right", V_FLOAT, EXTRADATA_TYPE, paddingRight);

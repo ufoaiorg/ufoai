@@ -200,7 +200,7 @@ void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 	behaviour->name = "image";
 	behaviour->manager = UINodePtr(new uiImageNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiImage_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiImageNode_t *");
 
 	/* Do not change the image ratio. The image will be proportionally stretched. */
 	UI_RegisterExtradataNodeProperty(behaviour, "preventratio", V_BOOL, EXTRADATA_TYPE, preventRatio);

@@ -292,5 +292,5 @@ void UI_RegisterSelectBoxNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->manager = UINodePtr(new uiSelectBoxNode());
 	behaviour->drawItselfChild = true;
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiSelectBox_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiSelectBoxNode_t *");
 }

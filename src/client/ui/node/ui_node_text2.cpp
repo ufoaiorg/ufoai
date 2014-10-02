@@ -375,5 +375,5 @@ void UI_RegisterText2Node (uiBehaviour_t* behaviour)
 	behaviour->extends = "text";
 	behaviour->manager = UINodePtr(new uiText2Node());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiText2_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiText2Node_t *");
 }

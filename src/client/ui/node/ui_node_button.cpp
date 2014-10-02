@@ -180,7 +180,7 @@ void UI_RegisterButtonNode (uiBehaviour_t* behaviour)
 	behaviour->name = "button";
 	behaviour->manager = UINodePtr(new uiButtonNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiButton_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiButtonNode_t *");
 
 	/* Icon used to display the node
 	 */

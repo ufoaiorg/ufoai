@@ -38,7 +38,7 @@ void UI_RegisterAbstractScrollbarNode (uiBehaviour_t* behaviour)
 	behaviour->isAbstract = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = UINodePtr(new uiAbstractScrollbarNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractScrollbar_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractScrollbarNode_t *");
 
 	/* Current position of the scroll. Image of the <code>viewpos</code> from <code>abstractscrollable</code> node. */
 	UI_RegisterExtradataNodeProperty(behaviour, "current", V_INT, EXTRADATA_TYPE, pos);

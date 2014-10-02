@@ -590,7 +590,7 @@ void UI_RegisterMaterialEditorNode (uiBehaviour_t* behaviour)
 	behaviour->name = "material_editor";
 	behaviour->extends = "abstractscrollable";
 	behaviour->manager = UINodePtr(new uiMaterialEditorNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiMaterialEditor_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiMaterialEditorNode_t *");
 
 	/** @todo convert it to ui functions */
 	Cmd_AddCommand("ui_materialeditor_removestage", UI_MaterialEditorRemoveStage_f, "Removes the selected material stage");

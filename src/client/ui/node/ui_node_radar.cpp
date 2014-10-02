@@ -678,5 +678,5 @@ void UI_RegisterRadarNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "radar";
 	behaviour->manager = UINodePtr(new uiRadarNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiRadar_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiRadarNode_t *");
 }

@@ -79,6 +79,19 @@ static void UI_ListUIModels_f (void)
 	}
 }
 
+void UI_Model_SetModelSource (uiNode_t* node, const char* modelName) {
+	UI_FreeStringProperty(const_cast<char*>(UI_EXTRADATA(node, modelExtraData_t).model));
+	UI_EXTRADATA(node, modelExtraData_t).model = Mem_PoolStrDup(modelName, ui_dynStringPool, 0);
+}
+
+void UI_Model_SetSkinSource (uiNode_t* node, const char* skinName) {
+	UI_FreeStringProperty(const_cast<char*>(UI_EXTRADATA(node, modelExtraData_t).skin));
+	UI_EXTRADATA(node, modelExtraData_t).skin = Mem_PoolStrDup(skinName, ui_dynStringPool, 0);}
+
+void UI_Model_SetAnimationSource (uiNode_t* node, const char* animName) {
+	UI_FreeStringProperty(const_cast<char*>(UI_EXTRADATA(node, modelExtraData_t).animation));
+	UI_EXTRADATA(node, modelExtraData_t).animation = Mem_PoolStrDup(animName, ui_dynStringPool, 0);}
+
 void uiModelNode::draw (uiNode_t* node)
 {
 	const char* ref = UI_GetReferenceString(node, EXTRADATA(node).model);
@@ -507,7 +520,7 @@ void UI_RegisterModelNode (uiBehaviour_t* behaviour)
 	behaviour->drawItselfChild = true;
 	behaviour->manager = UINodePtr(new uiModelNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiModel_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiModelNode_t *");
 
 	/* Both. Name of the animation for the model */
 	UI_RegisterExtradataNodeProperty(behaviour, "anim", V_CVAR_OR_STRING, modelExtraData_t, animation);

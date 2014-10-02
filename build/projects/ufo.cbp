@@ -749,6 +749,7 @@
 		<Unit filename="../../src/client/ui/ui_components.h" />
 		<Unit filename="../../src/client/ui/ui_data.cpp" />
 		<Unit filename="../../src/client/ui/ui_data.h" />
+		<Unit filename="../../src/client/ui/ui_dataids.h" />
 		<Unit filename="../../src/client/ui/ui_dragndrop.cpp" />
 		<Unit filename="../../src/client/ui/ui_dragndrop.h" />
 		<Unit filename="../../src/client/ui/ui_draw.cpp" />

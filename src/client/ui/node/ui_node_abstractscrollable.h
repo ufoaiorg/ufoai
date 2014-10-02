@@ -40,6 +40,13 @@ public:
 	bool isSizeChange(uiNode_t* node);
 	bool scrollY(uiNode_t* node, int offset);
 	bool setScrollY(uiNode_t* node, int viewPos, int viewSize, int fullSize);
+
+	void pageUp (uiNode_t* node);
+	void pageDown (uiNode_t* node);
+	void moveUp (uiNode_t* node);
+	void moveDown (uiNode_t* node);
+	void moveHome (uiNode_t* node);
+	void moveEnd (uiNode_t* node);
 };
 
 /**

@@ -50,7 +50,7 @@ void UI_RegisterDataNode (uiBehaviour_t* behaviour)
 	behaviour->isVirtual = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = UINodePtr(new uiDataNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiData_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiDataNode_t *");
 
 	/* Store a string into the node.
 	 * @note you should note store a cvar ref

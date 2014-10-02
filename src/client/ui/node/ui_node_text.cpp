@@ -582,7 +582,7 @@ void UI_RegisterTextNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractscrollable";
 	behaviour->manager = UINodePtr(new uiTextNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiText_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTextNode_t *");
 
 	/* Current selected line  */
 	UI_RegisterExtradataNodeProperty(behaviour, "lineselected", V_INT, textExtraData_t, textLineSelected);

@@ -440,7 +440,7 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->manager = UINodePtr(new uiOptionTreeNode());
 	behaviour->drawItselfChild = true;
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiOptionTree_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiOptionTreeNode_t *");
 
 	/* Call this to toggle the node status. */
 	UI_RegisterNodeMethod(behaviour, "setselectedvalue", UI_OptionTreeSetSelectedValue);

@@ -80,7 +80,7 @@ void UI_RegisterTBarNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractvalue";
 	behaviour->manager = UINodePtr(new uiTBarNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTBar_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTBarNode_t *");
 
 	/* Image to use. Each behaviour use it like they want.
 	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
