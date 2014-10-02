@@ -155,38 +155,57 @@ bool uiAbstractScrollableNode::setScrollY (uiNode_t* node, int viewPos, int view
 	return updated;
 }
 
+void uiAbstractScrollableNode::pageUp (uiNode_t* node) {
+	const int pos = EXTRADATA(node).scrollY.viewPos - 10;
+	setScrollY(node, (pos >= 0)?pos:0, -1, -1);
+}
+void uiAbstractScrollableNode::pageDown (uiNode_t* node) {
+	setScrollY(node, EXTRADATA(node).scrollY.viewPos + 10, -1, -1);
+}
+void uiAbstractScrollableNode::moveUp (uiNode_t* node) {
+	setScrollY(node, EXTRADATA(node).scrollY.viewPos - 1, -1, -1);
+}
+void uiAbstractScrollableNode::moveDown(uiNode_t* node) {
+	setScrollY(node, EXTRADATA(node).scrollY.viewPos + 1, -1, -1);
+}
+void uiAbstractScrollableNode::moveHome (uiNode_t* node) {
+	setScrollY(node, 0, -1, -1);
+}
+void uiAbstractScrollableNode::moveEnd (uiNode_t* node) {
+	setScrollY(node, EXTRADATA(node).scrollY.fullSize, -1, -1);
+}
+
 /**
  * @note pos == -1 is a reserved value, that why we clamp the value
  */
 static void UI_AbstractScrollableNodePageUp (uiNode_t* node, const uiCallContext_t* context)
 {
-	const int pos = EXTRADATA(node).scrollY.viewPos - 10;
 	uiAbstractScrollableNode* b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
-	b->setScrollY(node, (pos >= 0)?pos:0, -1, -1);
+	b->pageUp(node);
 }
 
 static void UI_AbstractScrollableNodePageDown (uiNode_t* node, const uiCallContext_t* context)
 {
 	uiAbstractScrollableNode* b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
-	b->setScrollY(node, EXTRADATA(node).scrollY.viewPos + 10, -1, -1);
+	b->pageDown(node);
 }
 
 static void UI_AbstractScrollableNodeMoveUp (uiNode_t* node, const uiCallContext_t* context)
 {
 	uiAbstractScrollableNode* b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
-	b->setScrollY(node, EXTRADATA(node).scrollY.viewPos - 1, -1, -1);
+	b->moveUp(node);
 }
 
 static void UI_AbstractScrollableNodeMoveDown (uiNode_t* node, const uiCallContext_t* context)
 {
 	uiAbstractScrollableNode* b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
-	b->setScrollY(node, EXTRADATA(node).scrollY.viewPos + 1, -1, -1);
+	b->moveDown (node);
 }
 
 static void UI_AbstractScrollableNodeMoveHome (uiNode_t* node, const uiCallContext_t* context)
 {
 	uiAbstractScrollableNode* b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
-	b->setScrollY(node, 0, -1, -1);
+	b->moveHome (node);
 }
 
 /**
@@ -195,7 +214,7 @@ static void UI_AbstractScrollableNodeMoveHome (uiNode_t* node, const uiCallConte
 static void UI_AbstractScrollableNodeMoveEnd (uiNode_t* node, const uiCallContext_t* context)
 {
 	uiAbstractScrollableNode* b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager.get());
-	b->setScrollY(node, EXTRADATA(node).scrollY.fullSize, -1, -1);
+	b->moveEnd (node);
 }
 
 /**
@@ -214,7 +233,7 @@ void UI_RegisterAbstractScrollableNode (uiBehaviour_t* behaviour)
 	behaviour->manager = UINodePtr(new uiAbstractScrollableNode());
 	behaviour->isAbstract = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractScrollable_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractScrollableNode_t *");
 
 	/* position of the vertical view (into the full number of elements the node contain) */
 	UI_RegisterExtradataNodeProperty(behaviour, "viewpos", V_INT, EXTRADATA_TYPE, scrollY.viewPos);

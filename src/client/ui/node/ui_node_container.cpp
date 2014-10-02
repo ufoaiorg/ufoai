@@ -1061,7 +1061,7 @@ void UI_RegisterContainerNode (uiBehaviour_t* behaviour)
 	behaviour->name = "container";
 	behaviour->manager = UINodePtr(new uiContainerNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiContainer_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiContainerNode_t *");
 
 	/* Callback value set before calling onSelect. It is used to know the item selected */
 	UI_RegisterExtradataNodeProperty(behaviour, "lastselectedid", V_INT, containerExtraData_t, lastSelectedId);

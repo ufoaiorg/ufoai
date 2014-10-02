@@ -606,7 +606,7 @@ void UI_RegisterPanelNode (uiBehaviour_t* behaviour)
 	behaviour->name = "panel";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = UINodePtr(new uiPanelNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiPanel_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiPanelNode_t *");
 
 	/**
 	 * Select a layout manager to set position and size of child. Most of layout manager

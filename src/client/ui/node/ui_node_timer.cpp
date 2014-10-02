@@ -71,7 +71,7 @@ void UI_RegisterTimerNode (uiBehaviour_t* behaviour)
 	behaviour->name = "timer";
 	behaviour->manager = UINodePtr(new uiTimerNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTimer_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTimerNode_t *");
 
 	/* This property control milliseconds between each calls of <code>onEvent</code>.
 	 * If the value is 0 (the default value) nothing is called. We can change the

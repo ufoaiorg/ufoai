@@ -340,7 +340,7 @@ void UI_RegisterOptionListNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->manager = UINodePtr(new uiOptionListNode());
 	behaviour->drawItselfChild = true;
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiOptionList_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiOptionListNode_t *");
 
 	/* Sprite used to display the background */
 	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);

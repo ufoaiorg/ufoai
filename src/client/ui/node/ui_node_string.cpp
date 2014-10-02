@@ -126,7 +126,7 @@ void UI_RegisterStringNode (uiBehaviour_t* behaviour)
 	behaviour->name = "string";
 	behaviour->manager = UINodePtr(new uiStringNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiString_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiStringNode_t *");
 
 	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.
 	 * It can be LONGLINES_WRAP, LONGLINES_CHOP, LONGLINES_PRETTYCHOP

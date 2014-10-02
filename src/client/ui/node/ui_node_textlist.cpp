@@ -249,5 +249,5 @@ void UI_RegisterTextListNode (uiBehaviour_t* behaviour)
 	behaviour->name = "textlist";
 	behaviour->extends = "text";
 	behaviour->manager = UINodePtr(new uiTextListNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTextList_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTextListNode_t *");
 }

@@ -350,7 +350,7 @@ void UI_RegisterEditorNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "editor";
 	behaviour->manager = UINodePtr(new uiEditorNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiEditor_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiEditorNode_t *");
 
 	/* start edition mode */
 	UI_RegisterNodeMethod(behaviour, "start", UI_EditorNodeStart);

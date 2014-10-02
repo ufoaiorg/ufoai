@@ -192,3 +192,4 @@ void UI_DeleteNode(uiNode_t* node);
 uiBehaviour_t* UI_GetNodeBehaviour(const char* name) __attribute__ ((warn_unused_result));
 uiBehaviour_t* UI_GetNodeBehaviourByIndex(int index) __attribute__ ((warn_unused_result));
 int UI_GetNodeBehaviourCount(void) __attribute__ ((warn_unused_result));
+

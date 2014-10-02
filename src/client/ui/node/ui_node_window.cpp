@@ -377,7 +377,7 @@ void UI_RegisterWindowNode (uiBehaviour_t* behaviour)
 	behaviour->name = "window";
 	behaviour->manager = UINodePtr(new uiWindowNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiWindow_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiWindowNode_t *");
 
 	/* In windows where notify messages appear (like e.g. the video options window when you have to restart the game until
 	 * the settings take effects) you can define the position of those messages with this option. */

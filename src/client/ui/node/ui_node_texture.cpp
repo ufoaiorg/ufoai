@@ -74,7 +74,7 @@ void UI_RegisterTextureNode (uiBehaviour_t* behaviour)
 	behaviour->name = "texture";
 	behaviour->manager = UINodePtr(new uiTextureNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTexture_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTextureNode_t *");
 
 	/* Source of the texture */
 	UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);

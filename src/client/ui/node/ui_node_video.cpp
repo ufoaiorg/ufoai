@@ -104,7 +104,7 @@ void UI_RegisterVideoNode (uiBehaviour_t* behaviour)
 	behaviour->name = "video";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = UINodePtr(new uiVideoNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiVideo_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiVideoNode_t *");
 
 	/** Source of the video. File name without prefix ./base/videos and without extension */
 	UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, EXTRADATA_TYPE, source);

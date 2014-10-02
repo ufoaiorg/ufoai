@@ -135,7 +135,7 @@ void UI_RegisterOptionNode (uiBehaviour_t* behaviour)
 	behaviour->name = "option";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = UINodePtr(new uiOptionNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiOption_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiOptionNode_t *");
 
 	/**
 	 * Displayed text

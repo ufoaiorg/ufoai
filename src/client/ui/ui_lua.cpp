@@ -227,11 +227,13 @@ bool UI_ParseAndLoadLuaScript (const char* name, const char** text) {
 		   called by the lua script */
 		if (lua_pcall(CL_GetLuaState(), 0, LUA_MULTRET, 0) != 0) {
 			Com_Printf ("lua error: %s\n", lua_tostring(CL_GetLuaState(), -1));
-		};
+		}
+		else {
+			/* at this point the lua file is loaded and callbacks are registered (on the stack),
+			   now call the onLoad if it exists */
+			UI_CallHandler_OnLoad (CL_GetLuaState(), name);
+		}
 		ui_scriptname[0]='\0';
-		/* at this point the lua file is loaded and callbacks are registered (on the stack),
-		   now call the onLoad if it exists */
-		UI_CallHandler_OnLoad (CL_GetLuaState(), name);
 	}
 	else {
         Com_Error(0, "lua load error: %s\n", lua_tostring(CL_GetLuaState(), -1));

@@ -279,5 +279,5 @@ void UI_RegisterTabNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->manager = UINodePtr(new uiTabNode());
 	behaviour->drawItselfChild = true;
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTab_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTabNode_t *");
 }
