@@ -88,6 +88,7 @@ bool AI_CheckUsingDoor(const Edict* ent, const Edict* door);
 /*
  * Shared functions (between C AI and LUA AI)
  */
+bool AI_HasLineOfFire(const Edict* actor, const Edict* target);
 void AI_TurnIntoDirection(Actor* actor, const pos3_t pos);
 bool AI_FindHidingLocation(int team, Actor* actor, const pos3_t from, int tuLeft);
 bool AI_FindHerdLocation(Actor* actor, const pos3_t from, const vec3_t target, int tu);
@@ -101,6 +102,7 @@ bool AI_IsHostile(const Actor* actor, const Edict* target);
 const invDef_t* AI_SearchGrenade(const Actor* actor, Item** ip);
 bool AI_FindMissionLocation(Actor* actor, const pos3_t to);
 bool AI_CheckPosition(const Actor* const ent, const pos3_t pos);
+bool AI_HideNeeded(const Actor* actor);
 
 /*
  * LUA functions
