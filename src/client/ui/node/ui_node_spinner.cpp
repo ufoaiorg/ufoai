@@ -237,6 +237,22 @@ void uiSpinnerNode::onLoading (uiNode_t* node)
 	uiAbstractValueNode::onLoading(node);
 }
 
+void UI_Spinner_SetBackgroundByName(uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, spinnerExtraData_t).background = sprite;
+}
+
+void UI_Spinner_SetBottomIconByName(uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, spinnerExtraData_t).bottomIcon = sprite;
+}
+
+void UI_Spinner_SetTopIconByName(uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, spinnerExtraData_t).topIcon = sprite;
+}
+
+
 void UI_RegisterSpinnerNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "spinner";

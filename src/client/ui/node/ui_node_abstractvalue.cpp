@@ -40,6 +40,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
+/**
+ * @brief Allocates a float and initializes it if the pointer value is not set, else does nothing.
+ */
 static inline void UI_InitCvarOrFloat (float** adress, float defaultValue)
 {
 	if (*adress == nullptr) {
@@ -198,6 +201,74 @@ void uiAbstractValueNode::clone (const uiNode_t* source, uiNode_t* clone)
 	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).max, (float**)&EXTRADATA(clone).max);
 	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).min, (float**)&EXTRADATA(clone).min);
 }
+
+float UI_AbstractValue_GetMin (uiNode_t* node) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	return b->getMin(node);
+}
+
+float UI_AbstractValue_GetMax (uiNode_t* node) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	return b->getMax(node);
+}
+
+float UI_AbstractValue_GetValue (uiNode_t* node) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	return b->getValue(node);
+}
+
+float UI_AbstractValue_GetDelta (uiNode_t* node) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	return b->getDelta(node);
+}
+
+void UI_AbstractValue_IncValue (uiNode_t* node) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	b->incValue(node);
+}
+
+void UI_AbstractValue_DecValue (uiNode_t* node) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	b->decValue(node);
+}
+
+void UI_AbstractValue_SetRange (uiNode_t* node, float min, float max) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	b->setRange(node, min, max);
+}
+
+void UI_AbstractValue_SetValue (uiNode_t* node, float value) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	b->setValue(node, value);
+}
+
+void UI_AbstractValue_SetRangeCvar (uiNode_t* node, const char* min, const char* max) {
+	/* This is a special case: we have a situation where the node already has a (min,max) value
+	   (either being floats or cvars). We now want to replace this value by a new cvar. So we first
+	   need to free the existing references, then create new cvar references and store them. */
+	Mem_Free(*(void**)EXTRADATA(node).min);
+	*(void**)EXTRADATA(node).min = Mem_StrDup(min);
+	Mem_Free(*(void**)EXTRADATA(node).max);
+	*(void**)EXTRADATA(node).max = Mem_StrDup(max);
+}
+
+void UI_AbstractValue_SetValueCvar (uiNode_t* node, const char* value) {
+	/* This is a special case: we have a situation where the node already has a value reference
+	   (either being float or cvar). We now want to replace this value reference by a new cvar. So we first
+	   need to free the existing reference, then create new cvar reference (just a string starting with
+	   '*cvar' and store it. */
+	Mem_Free(*(void**)(EXTRADATA(node).value));
+	*(void**)EXTRADATA(node).value= Mem_StrDup(value);
+
+	/* fire change event */
+	if (node->onChange) {
+		UI_ExecuteEventActions(node, node->onChange);
+	}
+	if (node->lua_onChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onChange);
+	}
+}
+
 
 void UI_RegisterAbstractValueNode (uiBehaviour_t* behaviour)
 {

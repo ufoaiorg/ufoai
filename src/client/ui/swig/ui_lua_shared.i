@@ -79,6 +79,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../node/ui_node_item.h"
 #include "../node/ui_node_model.h"
 #include "../node/ui_node_panel.h"
+#include "../node/ui_node_spinner.h"
 #include "../node/ui_node_string.h"
 #include "../node/ui_node_text.h"
 #include "../node/ui_node_textentry.h"
@@ -102,6 +103,7 @@ typedef uiNode_t uiCheckBoxNode_t;
 typedef uiNode_t uiItemNode_t;
 typedef uiNode_t uiModelNode_t;
 typedef uiNode_t uiPanelNode_t;
+typedef uiNode_t uiSpinnerNode_t;
 typedef uiNode_t uiStringNode_t;
 typedef uiNode_t uiTextNode_t;
 typedef uiNode_t uiTextEntryNode_t;
@@ -404,6 +406,8 @@ struct uiNode_t {
     LUA_EVENT lua_onMouseLeave; /**< references the event in lua: on_mouseleave (node) */
     %rename (on_change) lua_onChange;
     LUA_EVENT lua_onChange; /**< references the event in lua: on_change (node) */
+    %rename (on_visiblewhen) lua_onVisibleWhen;
+    LUA_EVENT lua_onVisibleWhen; /**< references the event in lua: on_visible (node) */
 };
 %extend uiNode_t {
 	bool is_window () { return UI_Node_IsWindow($self); };
@@ -433,7 +437,7 @@ struct uiNode_t {
 	uiNode_t* next () { return $self->next; };
 	uiNode_t* parent () { return $self->parent; };
 	uiNode_t* root () { return $self->root; };
-	uiNode_t* operator[] (const char* name) { return UI_GetNode(node, name); };
+	uiNode_t* child (const char* name) { return UI_GetNode($self, name); };
 
 	void append_node (uiNode_t* node) { UI_AppendNode($self, node); };
 	void insert_node (uiNode_t* node, uiNode_t* prev) { UI_InsertNode($self, prev, node); };
@@ -561,18 +565,20 @@ struct uiAbstractScrollbarNode_t: uiNode_t {
 struct uiAbstractValueNode_t: uiNode_t {
 };
 %extend uiAbstractValueNode_t {
-	float min () { return static_cast<uiAbstractValueNode*>($self->behaviour->manager.get())->getMin($self); };
-	float max () { return static_cast<uiAbstractValueNode*>($self->behaviour->manager.get())->getMax($self); };
-	float value () { return static_cast<uiAbstractValueNode*>($self->behaviour->manager.get())->getValue($self); };
-	float delta () { return static_cast<uiAbstractValueNode*>($self->behaviour->manager.get())->getDelta($self); };
+	float min () { return UI_AbstractValue_GetMin($self); };
+	float max () { return UI_AbstractValue_GetMax($self); };
+	float value () { return UI_AbstractValue_GetValue($self); };
+	float delta () { return UI_AbstractValue_GetDelta($self); };
 	float lastdiff () { return UI_EXTRADATA($self, abstractValueExtraData_t).lastdiff; };
 	float shiftmultiplier () { return UI_EXTRADATA($self, abstractValueExtraData_t).shiftIncreaseFactor; };
 
-	void inc_value () { static_cast<uiAbstractValueNode*>($self->behaviour->manager.get())->incValue ($self); };
-	void dec_value () { static_cast<uiAbstractValueNode*>($self->behaviour->manager.get())->decValue ($self);};
+	void inc_value () { UI_AbstractValue_IncValue ($self); };
+	void dec_value () { UI_AbstractValue_DecValue ($self); };
 
-	void set_range (float min, float max) { static_cast<uiAbstractValueNode*>($self->behaviour->manager.get())->setRange ($self, min, max);  };
-	void set_value (float value) { static_cast<uiAbstractValueNode*>($self->behaviour->manager.get())->setValue ($self, value); };
+	void set_range (float min, float max) { UI_AbstractValue_SetRange ($self, min, max); };
+	void set_range (const char* min, const char* max) { UI_AbstractValue_SetRangeCvar($self, min, max); };
+	void set_value (float value) { UI_AbstractValue_SetValue ($self, value); };
+	void set_value (const char* name) { UI_AbstractValue_SetValueCvar ($self, name); };
 };
 
 %rename (uiBar) uiBarNode_t;
@@ -662,6 +668,22 @@ struct uiPanelNode_t: uiAbstractScrollableNode_t {
 
 };
 
+%rename (uiSpinner) uiSpinnerNode_t;
+struct uiSpinnerNode_t: uiAbstractValueNode_t {
+};
+%extend uiSpinnerNode_t {
+	bool is_horizontal () { return UI_EXTRADATA($self, spinnerExtraData_t).horizontal; };
+	bool is_inverted () { return UI_EXTRADATA($self, spinnerExtraData_t).inverted; };
+	int mode () { return UI_EXTRADATA($self, spinnerExtraData_t).mode; };
+
+	void set_background (const char* name) { UI_Spinner_SetBackgroundByName($self, name); };
+	void set_topicon (const char* name) { UI_Spinner_SetTopIconByName($self, name); };
+	void set_bottomicon (const char* name) { UI_Spinner_SetBottomIconByName($self, name); };
+	void set_mode (int mode) { UI_EXTRADATA($self, spinnerExtraData_t).mode = mode; };
+	void set_horizontal (bool value) { UI_EXTRADATA($self, spinnerExtraData_t).horizontal = value; };
+	void set_inverted (bool value) { UI_EXTRADATA($self, spinnerExtraData_t).inverted = value; };
+}
+
 %rename (uiString) uiStringNode_t;
 struct uiStringNode_t: uiNode_t {
 };
@@ -738,9 +760,6 @@ struct uiWindowNode_t: uiNode_t {
 	bool is_fullscreen () { return UI_EXTRADATA($self, windowExtraData_t).isFullScreen; };
 	bool is_modal () { return UI_EXTRADATA($self, windowExtraData_t).modal; }
 
-	void add_dragbutton () { UI_EXTRADATA($self, windowExtraData_t).dragButton = true; };
-	void add_closebutton () { UI_EXTRADATA($self, windowExtraData_t).closeButton = true; };
-
 	void close () { UI_PopWindow (false); };
 	void open () { UI_PushWindow($self->name, nullptr, nullptr); };
 
@@ -748,6 +767,8 @@ struct uiWindowNode_t: uiNode_t {
 	void set_fullscreen (bool value) { UI_EXTRADATA($self, windowExtraData_t).isFullScreen = value; };
 	void set_modal (bool value) { UI_EXTRADATA($self, windowExtraData_t).modal = value; };
 	void set_fill (bool value) { UI_EXTRADATA($self, windowExtraData_t).fill = value; };
+	void set_dragbutton (bool value) { UI_EXTRADATA($self, windowExtraData_t).dragButton = value; };
+	void set_closebutton (bool value) { UI_EXTRADATA($self, windowExtraData_t).closeButton = value; };
 
 	%rename (on_windowopened) lua_onWindowOpened;
 	%rename (on_windowclosed) lua_onWindowClosed;
@@ -814,6 +835,9 @@ static uiModelNode_t* UI_CreateModel (uiNode_t* parent, const char* name, const 
 static uiPanelNode_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "panel", name, super);
 }
+static uiSpinnerNode_t* UI_CreateSpinner (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "spinner", name, super);
+}
 static uiStringNode_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "string", name, super);
 }
@@ -847,6 +871,8 @@ uiItemNode_t* UI_CreateItem (uiNode_t* parent, const char* name, const char* sup
 uiModelNode_t* UI_CreateModel (uiNode_t* parent, const char* name, const char* super);
 %rename (create_panel) UI_CreatePanel;
 uiPanelNode_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super);
+%rename (create_spinner) UI_CreateSpinner;
+uiSpinnerNode_t* UI_CreateSpinner (uiNode_t* parent, const char* name, const char* super);
 %rename (create_string) UI_CreateString;
 uiStringNode_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super);
 %rename (create_text) UI_CreateText;
@@ -887,6 +913,10 @@ void Com_Printf (const char* fmt);
 void Com_DPrintf(int level, const char* fmt);
 %rename (error) Com_Error;
 void Com_Error(int code, const char* fmt);
+
+/* expose information functions */
+%rename (nodetree) UI_PrintNodeTree;
+void UI_PrintNodeTree (uiNode_t* node);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose .ufo as lua module

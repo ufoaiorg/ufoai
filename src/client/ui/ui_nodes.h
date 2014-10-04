@@ -160,6 +160,7 @@ struct uiNode_t {
     LUA_EVENT lua_onMouseEnter; /**< references the event in lua: on_mouseenter (node) */
     LUA_EVENT lua_onMouseLeave; /**< references the event in lua: on_mouseleave (node) */
     LUA_EVENT lua_onChange; /**< references the event in lua: on_change (node) */
+    LUA_EVENT lua_onVisibleWhen; /**< references the event in lua: on_visible (node) */
 };
 
 

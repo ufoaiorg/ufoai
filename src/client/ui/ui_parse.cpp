@@ -1298,7 +1298,8 @@ bool UI_ParseComponent (const char* type, const char* name, const char** text)
 	if (behaviour) {
 		/* initialize a new node from behaviour */
 		component = UI_AllocNode(name, behaviour->name, false);
-	} else {
+	}
+	else {
 		const uiNode_t* inheritedComponent = UI_GetComponent(token);
 		if (inheritedComponent) {
 			/* initialize from a component */
@@ -1425,6 +1426,12 @@ const char* UI_GetReferenceString (const uiNode_t* const node, const char* ref)
 	Sys_Error("UI_GetReferenceString: unknown reference %s", token);
 }
 
+/**
+ * @brief Returns the value of the reference variabel.
+ * @note A reference variable is either a pointer to a float or a pointer to a string. In case of
+ * a pointer to a string, a Cvar name is expected, starting with "*cvar".
+ * @sa uiAbstractValueNode
+ */
 float UI_GetReferenceFloat (const uiNode_t* const node, const void* ref)
 {
 	if (!ref)

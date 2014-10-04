@@ -42,6 +42,7 @@ void UI_CallHandler_OnLoad (lua_State* L, const char* key);
 /* lua script functions */
 bool UI_ParseAndLoadLuaScript (const char* name, const char** text);
 bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event);
+bool UI_ExecuteLuaEventScript_ReturnBool (uiNode_t* node, LUA_EVENT event, bool &result);
 bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y);
 bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int dy);
 bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int key, unsigned short unicode);
@@ -53,3 +54,5 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);
 uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);
 
+/* information */
+void UI_PrintNodeTree (uiNode_t* node, int level = 0);

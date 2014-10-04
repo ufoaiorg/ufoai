@@ -38,6 +38,7 @@ public:
 	bool setValue(uiNode_t* node, float value);
 	bool incValue(uiNode_t* node);
 	bool decValue(uiNode_t* node);
+
 	float getFactorFloat(uiNode_t const* node);
 	float getMin(uiNode_t const* node);
 	float getMax(uiNode_t const* node);
@@ -48,6 +49,8 @@ public:
 /**
  * @brief extradata for common GUI widget which allow to
  * edit a value (scrollbar, spinner, and more)
+ * @note: min, max, value and delta are reference floats, these pointers can point to a real float or
+ * to a string. @sa UI_GetReferenceFloat
  */
 typedef struct abstractValueExtraData_s {
 	void* min;	/**< Min value can take the value field */
@@ -61,3 +64,17 @@ typedef struct abstractValueExtraData_s {
 struct uiBehaviour_t; /* prototype */
 
 void UI_RegisterAbstractValueNode(uiBehaviour_t* behaviour);
+
+float UI_AbstractValue_GetMin (uiNode_t* node);
+float UI_AbstractValue_GetMax (uiNode_t* node);
+float UI_AbstractValue_GetValue (uiNode_t* node);
+float UI_AbstractValue_GetDelta (uiNode_t* node);
+
+void UI_AbstractValue_IncValue (uiNode_t* node);
+void UI_AbstractValue_DecValue (uiNode_t* node);
+
+void UI_AbstractValue_SetRange (uiNode_t* node, float min, float max);
+void UI_AbstractValue_SetValue (uiNode_t* node, float value);
+
+void UI_AbstractValue_SetRangeCvar (uiNode_t* node, const char* min, const char* max);
+void UI_AbstractValue_SetValueCvar (uiNode_t* node, const char* value);

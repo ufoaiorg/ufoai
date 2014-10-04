@@ -562,11 +562,11 @@ ObjectInfo_info_description:set_tabwidth(168)
 ObjectInfo_info_description:set_color(0.56, 0.81, 0.76, 1)
 ObjectInfo_info_description:set_font("f_verysmall")
 ObjectInfo_info_description.on_viewchange = function (sender)
-		sender["description_scroll"]:set_fullsize(sender:fullsize())
-		sender["description_scroll"]:set_current(sender:viewpos())
+		ObjectInfo_info_descriptionscroll:set_fullsize(sender:fullsize())
+		ObjectInfo_info_descriptionscroll:set_current(sender:viewpos())
 	end
 ObjectInfo_info_description.on_wheel = function (sender)
-		sender["description_scroll"]:set_current(sender:viewpos())
+		ObjectInfo_info_descriptionscroll:set_current(sender:viewpos())
 	end
 local ObjectInfo_info_descriptionscroll = ufo.create_vscrollbar(ObjectInfo_info, "description_scroll", nil)
 ObjectInfo_info_descriptionscroll:set_image("ui/scrollbar_v")
@@ -577,7 +577,7 @@ ObjectInfo_info_descriptionscroll:set_viewsize(9)
 ObjectInfo_info_descriptionscroll:set_fullsize(9)
 ObjectInfo_info_descriptionscroll:set_autoshowscroll(true)
 ObjectInfo_info_descriptionscroll.on_change = function (sender)
-		sender["description"]:set_viewpos(sender:current())
+		ObjectInfo_info_description:set_viewpos(sender:current())
 	end
 
 --[[
@@ -587,7 +587,13 @@ component Spinner extends spinner
 	bottomIcon	"ui/spinner_down"
 	size "15 19"
 }
+--]]
+local Spinner = ufo.create_component("spinner", "Spinner", nil)
+Spinner:set_topicon("ui/spinner_up")
+Spinner:set_bottomicon("ui/spinner_down")
+Spinner:set_size(15, 19)
 
+--[[
 //Common style for all popups
 window ipopup
 {
@@ -608,7 +614,22 @@ window ipopup
 		color		"0.56 0.81 0.76 1"
 	}
 }
+--]]
+local ipopup = ufo.create_window("ipopup", nil)
+ipopup:set_backgroundcolor (0, 0, 0, 0.6)
+ipopup:set_bordersize (2)
+ipopup:set_bordercolor(0.56, 0.81, 0.76, 1)
+ipopup:set_dragbutton(true)
+local ipopup_title = ufo.create_string(ipopup, "title", nil)
+ipopup_title:set_pos(0, 0)
+ipopup_title:set_size(512, 30)
+ipopup_title:set_text("")
+ipopup_title:set_contentalign(ufo.ALIGN_CL)
+ipopup_title:set_font("f_small_bold")
+ipopup_title:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
+ipopup_title:set_color(0.56, 0.81, 0.76, 1)
 
+--[[
 // StatBar was designed for hud, in equipment we need a wider bar
 component StatBarWide extends StatBar
 {
@@ -621,8 +642,16 @@ component StatBarWide extends StatBar
 	bar initbar { size "250 10" }
 	string valuenum { size	"160 0" }
 }
+--]]
+local StatBarWide = ufo.create_component("StatBar", "StatBarWide", nil)
+StatBarWide:set_size(250, 25)
+StatBarWide:child("label"):set_size (100, 15)
+StatBarWide:child("bg"):set_size(250, 10)
+StatBarWide:child("valuebar"):set_size(250, 10)
+StatBarWide:child("initbar"):set_size(250, 10)
+StatBarWide:child("valuenum"):set_size (160, 0)
 
-
+--[[
 // Abilities panel
 // @TODO: Remove "mediocre" dsc text. Look at CL_ActorGetSkillString, cl_team.c
 component abilities extends panel
@@ -673,6 +702,37 @@ component abilities extends panel
 		string valuenum { string *cvar:mn_tmnd }
 	}
 }
+--]]
+local abilities = ufo.create_component("panel", "abilities", nil)
+abilities:set_pos(740, 100)
+abilities:set_size(250, 120)
+abilities:set_ghost(true)
+local abilities_strength = ufo.create_control(abilities, "StatBarWide", "strength", nil)
+abilities_strength:set_pos(0, 0)
+abilities_strength:child("label"):set_text("_Strength")
+abilities_strength:child("valuebar"):set_value("*cvar:mn_vpwr")
+abilities_strength:child("initbar"):set_value("*cvar:mn_vpwri")
+abilities_strength:child("valuenum"):set_text("*cvar:mn_tpwr")
+local abilities_speed = ufo.create_control(abilities, "StatBarWide", "speed", nil)
+abilities_speed:set_pos(0, 30)
+abilities_speed:child("label"):set_text("_Speed")
+abilities_speed:child("valuebar"):set_value("*cvar:mn_vspd")
+abilities_speed:child("initbar"):set_value("*cvar:mn_vspdi")
+abilities_speed:child("valuenum"):set_text("*cvar:mn_tspd")
+local abilities_accuracy = ufo.create_control(abilities, "StatBarWide", "accuracy", nil)
+abilities_accuracy:set_pos(0, 60)
+abilities_accuracy:child("label"):set_text("_Accuracy")
+abilities_accuracy:child("valuebar"):set_value("*cvar:mn_vacc")
+abilities_accuracy:child("initbar"):set_value("*cvar:mn_vacci")
+abilities_accuracy:child("valuenum"):set_text("*cvar:mn_tacc")
+local abilities_mind = ufo.create_control(abilities, "StatBarWide", "mind", nil)
+abilities_mind:set_pos(0, 90)
+abilities_mind:child("label"):set_text("_Mind")
+abilities_mind:child("valuebar"):set_value("*cvar:mn_vmnd")
+abilities_mind:child("initbar"):set_value("*cvar:mn_vmndi")
+abilities_mind:child("valuenum"):set_text("*cvar:mn_tmnd")
+
+--[[
 // Skillbars panel
 component skillbars extends panel
 {
@@ -726,6 +786,38 @@ component skillbars extends panel
 		string valuenum { string *cvar:mn_texp }
 	}
 }
+--]]
+local skillbars = ufo.create_component("panel", "skillbars", nil)
+skillbars:set_pos(740, 220)
+skillbars:set_size(250, 120)
+skillbars:set_ghost(true)
+local skillbars_cls = ufo.create_control (skillbars, "StatBarWide", "cls", nil)
+skillbars_cls:set_pos(0, 0)
+skillbars_cls:child("label"):set_text("_CQB")
+skillbars_cls:child("label"):set_tooltip("_Close Quarters Battle")
+skillbars_cls:child("valuebar"):set_current("*cvar:mn_vcls")
+skillbars_cls:child("initbar"):set_current("*cvar:mn_vclsi")
+skillbars_cls:child("valuenum"):set_text("*cvar:mn_tcls")
+local skillbars_ass = ufo.create_control (skillbars, "StatBarWide", "ass", nil)
+skillbars_ass:set_pos(0, 30)
+skillbars_ass:child("label"):set_text("_Assault")
+skillbars_ass:child("valuebar"):set_current("*cvar:mn_vass")
+skillbars_ass:child("initbar"):set_current("*cvar:mn_vassi")
+skillbars_ass:child("valuenum"):set_text("*cvar:mn_tass")
+local skillbars_snp = ufo.create_control (skillbars, "StatBarWide", "snp", nil)
+skillbars_snp:set_pos(0, 60)
+skillbars_snp:child("label"):set_text("_Sniper")
+skillbars_snp:child("valuebar"):set_current("*cvar:mn_vsnp")
+skillbars_snp:child("valuebar"):set_current("*cvar:mn_vsnpi")
+skillbars_snp:child("valuenum"):set_text("*cvar:mn_tsnp")
+local skillbars_exp = ufo.create_control (skillbars, "StatBarWide", "exp", nil)
+skillbars_exp:set_pos(0, 90)
+skillbars_exp:child("label"):set_text("_Explosives")
+skillbars_exp:child("valuebar"):set_current("*cvar:mn_vexp")
+skillbars_exp:child("initbar"):set_current("*cvar:mn_vexpi")
+skillbars_exp:child("valuenum"):set_text("*cvar:mn_texp")
+
+--[[
 // Health panel
 component healthbar extends panel
 {
@@ -758,7 +850,16 @@ component healthbar extends panel
 		}
 	}
 }
+--]]
+local healthbar = ufo.create_component("panel", "healthbar", nil)
+healthbar:set_pos(740, 340)
+healthbar:set_size(250, 30)
+healthbar:set_ghost(true)
+healthbar.on_visiblewhen = function (sender)
+		return (ufo.findvar("mn_show_employee"):as_integer() <= 2)
+	end
 
+--[[
 component SoldierInfo extends panel
 {
 	{
