@@ -86,11 +86,18 @@ void UI_Model_SetModelSource (uiNode_t* node, const char* modelName) {
 
 void UI_Model_SetSkinSource (uiNode_t* node, const char* skinName) {
 	UI_FreeStringProperty(const_cast<char*>(UI_EXTRADATA(node, modelExtraData_t).skin));
-	UI_EXTRADATA(node, modelExtraData_t).skin = Mem_PoolStrDup(skinName, ui_dynStringPool, 0);}
+	UI_EXTRADATA(node, modelExtraData_t).skin = Mem_PoolStrDup(skinName, ui_dynStringPool, 0);
+}
 
 void UI_Model_SetAnimationSource (uiNode_t* node, const char* animName) {
 	UI_FreeStringProperty(const_cast<char*>(UI_EXTRADATA(node, modelExtraData_t).animation));
-	UI_EXTRADATA(node, modelExtraData_t).animation = Mem_PoolStrDup(animName, ui_dynStringPool, 0);}
+	UI_EXTRADATA(node, modelExtraData_t).animation = Mem_PoolStrDup(animName, ui_dynStringPool, 0);
+}
+
+void UI_Model_SetTagSource (uiNode_t* node, const char* tagName) {
+	UI_FreeStringProperty(const_cast<char*>(UI_EXTRADATA(node, modelExtraData_t).tag));
+	UI_EXTRADATA(node, modelExtraData_t).tag = Mem_PoolStrDup(tagName, ui_dynStringPool, 0);
+}
 
 void uiModelNode::draw (uiNode_t* node)
 {

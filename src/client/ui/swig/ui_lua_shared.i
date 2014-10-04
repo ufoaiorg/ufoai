@@ -76,6 +76,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../node/ui_node_bar.h"
 #include "../node/ui_node_button.h"
 #include "../node/ui_node_checkbox.h"
+#include "../node/ui_node_ekg.h"
+#include "../node/ui_node_image.h"
 #include "../node/ui_node_item.h"
 #include "../node/ui_node_model.h"
 #include "../node/ui_node_panel.h"
@@ -100,6 +102,8 @@ typedef uiNode_t uiAbstractValueNode_t;
 typedef uiNode_t uiBarNode_t;
 typedef uiNode_t uiButtonNode_t;
 typedef uiNode_t uiCheckBoxNode_t;
+typedef uiNode_t uiEkgNode_t;
+typedef uiNode_t uiImageNode_t;
 typedef uiNode_t uiItemNode_t;
 typedef uiNode_t uiModelNode_t;
 typedef uiNode_t uiPanelNode_t;
@@ -446,6 +450,7 @@ struct uiNode_t {
 	void set_top (float value) { $self->box.pos[1] = value; };
 	void set_widht (float value) { $self->box.size[0] = value; };
 	void set_height (float value) { $self->box.size[1] = value; };
+	void set_box (float left, float top, float width, float height) { Vector2Set($self->box.pos, left, top); Vector2Set($self->box.size, width, height); };
 
 	void set_flashing (bool value) { $self->flash = value; };
 	void set_flashspeed (float value) { $self->flashSpeed = value; };
@@ -577,7 +582,11 @@ struct uiAbstractValueNode_t: uiNode_t {
 
 	void set_range (float min, float max) { UI_AbstractValue_SetRange ($self, min, max); };
 	void set_range (const char* min, const char* max) { UI_AbstractValue_SetRangeCvar($self, min, max); };
+	void set_min (float min) { UI_AbstractValue_SetMin($self, min);  }
+	void set_max (float max) { UI_AbstractValue_SetMax($self, max); }
 	void set_value (float value) { UI_AbstractValue_SetValue ($self, value); };
+	void set_min (const char* min) { UI_AbstractValue_SetMinCvar($self, min); };
+	void set_max (const char* max) { UI_AbstractValue_SetMaxCvar($self, max); };
 	void set_value (const char* name) { UI_AbstractValue_SetValueCvar ($self, name); };
 };
 
@@ -616,6 +625,34 @@ struct uiCheckBoxNode_t: uiNode_t {
 	void set_iconunknown (const char* name) { UI_CheckBox_SetIconUnknownByName($self, name); };
 };
 
+%rename (uiEkg) uiEkgNode_t;
+struct uiEkgNode_t: uiImageNode_t {
+};
+%extend uiEkgNode_t {
+	float scrollspeed () { return UI_EXTRADATA($self, ekgExtraData_t).scrollSpeed; };
+	float cvarscale () { return UI_EXTRADATA($self, ekgExtraData_t).scaleCvarValue; };
+
+	void set_scrollspeed (float value) { UI_EXTRADATA($self, ekgExtraData_t).scrollSpeed = value; };
+	void set_cvarscale (float value) { UI_EXTRADATA($self, ekgExtraData_t).scaleCvarValue = value; };
+};
+
+%rename (uiImage) uiImageNode_t;
+struct uiImageNode_t: uiNode_t {
+};
+%extend uiImageNode_t {
+	bool is_keepratio () { return UI_EXTRADATA($self, imageExtraData_t).preventRatio; }
+	bool is_mousefx () { return UI_EXTRADATA($self, imageExtraData_t).mousefx; }
+
+	vec2_struct_t* texh () { return (vec2_struct_t*)UI_EXTRADATA($self, imageExtraData_t).texh; };
+	vec2_struct_t* texl () { return (vec2_struct_t*)UI_EXTRADATA($self, imageExtraData_t).texl; };
+
+	void set_keepratio (bool value) { UI_EXTRADATA($self, imageExtraData_t).preventRatio = value; }
+	void set_mousefx (bool value) { UI_EXTRADATA($self, imageExtraData_t).mousefx = value; }
+	void set_source (const char* name) { UI_Node_SetImage($self, name); };
+	void set_texh (float v1, float v2) { Vector2Set(UI_EXTRADATA($self, imageExtraData_t).texh, v1, v2); };
+	void set_texl (float v1, float v2) { Vector2Set(UI_EXTRADATA($self, imageExtraData_t).texl, v1, v2); };
+};
+
 %rename (uiModel) uiModelNode_t;
 struct uiModelNode_t: uiNode_t {
 };
@@ -631,14 +668,20 @@ struct uiModelNode_t: uiNode_t {
 	char* model () { return const_cast<char*>(UI_EXTRADATA($self, modelExtraData_t).model); };
 	char* skin () { return const_cast<char*>(UI_EXTRADATA($self, modelExtraData_t).skin); };
 	char* animation () { return const_cast<char*>(UI_EXTRADATA($self, modelExtraData_t).animation); };
+	char* tag () { return const_cast<char*>(UI_EXTRADATA($self, modelExtraData_t).tag); };
 
 	void set_autoscale (bool value) { UI_EXTRADATA($self, modelExtraData_t).autoscale = value; };
 	void set_mouserotate (bool value) { UI_EXTRADATA($self, modelExtraData_t).rotateWithMouse = value; };
+
 	void set_angles (float a1, float a2, float a3) { VectorSet(UI_EXTRADATA($self, modelExtraData_t).angles, a1, a2, a3); };
+	void set_origin (float a1, float a2, float a3) { VectorSet(UI_EXTRADATA($self, modelExtraData_t).origin, a1, a2, a3); };
+	void set_omega (float a1, float a2, float a3) { VectorSet(UI_EXTRADATA($self, modelExtraData_t).omega, a1, a2, a3); };
+	void set_scale (float a1, float a2, float a3) { VectorSet(UI_EXTRADATA($self, modelExtraData_t).scale, a1, a2, a3); };
 
 	void set_model (const char* name) { UI_Model_SetModelSource($self, name); };
 	void set_skin (const char* name) { UI_Model_SetSkinSource($self, name); };
 	void set_animation (const char* name) { UI_Model_SetAnimationSource($self, name); };
+	void set_tag (const char* name) { UI_Model_SetTagSource($self, name); };
 };
 
 %rename (uiItem) uiItemNode_t;
@@ -826,6 +869,12 @@ static uiButtonNode_t* UI_CreateButton (uiNode_t* parent, const char* name, cons
 static uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "checkbox", name, super);
 }
+static uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "ekg", name, super);
+}
+static uiImageNode_t* UI_CreateImage (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "image", name, super);
+}
 static uiItemNode_t* UI_CreateItem (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "item", name, super);
 }
@@ -865,6 +914,10 @@ uiBarNode_t* UI_CreateBar (uiNode_t* parent, const char* name, const char* super
 uiButtonNode_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super);
 %rename (create_checkbox) UI_CreateCheckBox;
 uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super);
+%rename (create_ekg) UI_CreateEKG;
+uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super);
+%rename (create_image) UI_CreateImage;
+uiImageNode_t* UI_CreateImage (uiNode_t* parent, const char* name, const char* super);
 %rename (create_item) UI_CreateItem;
 uiItemNode_t* UI_CreateItem (uiNode_t* parent, const char* name, const char* super);
 %rename (create_model) UI_CreateModel;

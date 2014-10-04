@@ -74,7 +74,11 @@ void UI_AbstractValue_IncValue (uiNode_t* node);
 void UI_AbstractValue_DecValue (uiNode_t* node);
 
 void UI_AbstractValue_SetRange (uiNode_t* node, float min, float max);
+void UI_AbstractValue_SetMin (uiNode_t* node, float min);
+void UI_AbstractValue_SetMax (uiNode_t* node, float max);
 void UI_AbstractValue_SetValue (uiNode_t* node, float value);
 
 void UI_AbstractValue_SetRangeCvar (uiNode_t* node, const char* min, const char* max);
+void UI_AbstractValue_SetMinCvar (uiNode_t* node, const char* min);
+void UI_AbstractValue_SetMaxCvar (uiNode_t* node, const char* max);
 void UI_AbstractValue_SetValueCvar (uiNode_t* node, const char* value);

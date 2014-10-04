@@ -83,3 +83,4 @@ void UI_RegisterModelNode(uiBehaviour_t* behaviour);
 void UI_Model_SetModelSource (uiNode_t* node, const char* modelName);
 void UI_Model_SetSkinSource (uiNode_t* node, const char* skinName);
 void UI_Model_SetAnimationSource (uiNode_t* node, const char* animName);
+void UI_Model_SetTagSource (uiNode_t* node, const char* tagName);
