@@ -2645,15 +2645,16 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_uiNode_t swig_types[18]
 #define SWIGTYPE_p_uiPanelNode_t swig_types[19]
 #define SWIGTYPE_p_uiScroll_t swig_types[20]
-#define SWIGTYPE_p_uiStringNode_t swig_types[21]
-#define SWIGTYPE_p_uiTextEntryNode_t swig_types[22]
-#define SWIGTYPE_p_uiTextNode_t swig_types[23]
-#define SWIGTYPE_p_uiTextureNode_t swig_types[24]
-#define SWIGTYPE_p_uiVScrollBarNode_t swig_types[25]
-#define SWIGTYPE_p_uiWindowNode_t swig_types[26]
-#define SWIGTYPE_p_vec3_struct_t swig_types[27]
-static swig_type_info *swig_types[29];
-static swig_module_info swig_module = {swig_types, 28, 0, 0, 0, 0};
+#define SWIGTYPE_p_uiSpinnerNode_t swig_types[21]
+#define SWIGTYPE_p_uiStringNode_t swig_types[22]
+#define SWIGTYPE_p_uiTextEntryNode_t swig_types[23]
+#define SWIGTYPE_p_uiTextNode_t swig_types[24]
+#define SWIGTYPE_p_uiTextureNode_t swig_types[25]
+#define SWIGTYPE_p_uiVScrollBarNode_t swig_types[26]
+#define SWIGTYPE_p_uiWindowNode_t swig_types[27]
+#define SWIGTYPE_p_vec3_struct_t swig_types[28]
+static swig_type_info *swig_types[30];
+static swig_module_info swig_module = {swig_types, 29, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2705,6 +2706,7 @@ typedef struct{} LANGUAGE_OBJ;
 #include "../node/ui_node_item.h"
 #include "../node/ui_node_model.h"
 #include "../node/ui_node_panel.h"
+#include "../node/ui_node_spinner.h"
 #include "../node/ui_node_string.h"
 #include "../node/ui_node_text.h"
 #include "../node/ui_node_textentry.h"
@@ -2728,6 +2730,7 @@ typedef uiNode_t uiCheckBoxNode_t;
 typedef uiNode_t uiItemNode_t;
 typedef uiNode_t uiModelNode_t;
 typedef uiNode_t uiPanelNode_t;
+typedef uiNode_t uiSpinnerNode_t;
 typedef uiNode_t uiStringNode_t;
 typedef uiNode_t uiTextNode_t;
 typedef uiNode_t uiTextEntryNode_t;
@@ -2800,6 +2803,7 @@ SWIGINTERN uiNode_t *uiNode_t_last(uiNode_t *self){ return self->lastChild; }
 SWIGINTERN uiNode_t *uiNode_t_next(uiNode_t *self){ return self->next; }
 SWIGINTERN uiNode_t *uiNode_t_parent(uiNode_t *self){ return self->parent; }
 SWIGINTERN uiNode_t *uiNode_t_root(uiNode_t *self){ return self->root; }
+SWIGINTERN uiNode_t *uiNode_t_child(uiNode_t *self,char const *name){ return UI_GetNode(self, name); }
 SWIGINTERN void uiNode_t_append_node(uiNode_t *self,uiNode_t *node){ UI_AppendNode(self, node); }
 SWIGINTERN void uiNode_t_insert_node(uiNode_t *self,uiNode_t *node,uiNode_t *prev){ UI_InsertNode(self, prev, node); }
 SWIGINTERN void uiNode_t_set_left(uiNode_t *self,float value){ self->box.pos[0] = value; }
@@ -2872,16 +2876,18 @@ SWIGINTERN void uiAbstractScrollbarNode_t_set_autoshowscroll(uiAbstractScrollbar
 SWIGINTERN void uiAbstractScrollbarNode_t_set_current(uiAbstractScrollbarNode_t *self,int pos){ UI_EXTRADATA(self, abstractScrollbarExtraData_t).pos; }
 SWIGINTERN void uiAbstractScrollbarNode_t_set_viewsize(uiAbstractScrollbarNode_t *self,int size){ UI_EXTRADATA(self, abstractScrollbarExtraData_t).viewsize = size; }
 SWIGINTERN void uiAbstractScrollbarNode_t_set_fullsize(uiAbstractScrollbarNode_t *self,int size){ UI_EXTRADATA(self, abstractScrollbarExtraData_t).fullsize = size; }
-SWIGINTERN float uiAbstractValueNode_t_min(uiAbstractValueNode_t *self){ return static_cast<uiAbstractValueNode*>(self->behaviour->manager.get())->getMin(self); }
-SWIGINTERN float uiAbstractValueNode_t_max(uiAbstractValueNode_t *self){ return static_cast<uiAbstractValueNode*>(self->behaviour->manager.get())->getMax(self); }
-SWIGINTERN float uiAbstractValueNode_t_value(uiAbstractValueNode_t *self){ return static_cast<uiAbstractValueNode*>(self->behaviour->manager.get())->getValue(self); }
-SWIGINTERN float uiAbstractValueNode_t_delta(uiAbstractValueNode_t *self){ return static_cast<uiAbstractValueNode*>(self->behaviour->manager.get())->getDelta(self); }
+SWIGINTERN float uiAbstractValueNode_t_min(uiAbstractValueNode_t *self){ return UI_AbstractValue_GetMin(self); }
+SWIGINTERN float uiAbstractValueNode_t_max(uiAbstractValueNode_t *self){ return UI_AbstractValue_GetMax(self); }
+SWIGINTERN float uiAbstractValueNode_t_value(uiAbstractValueNode_t *self){ return UI_AbstractValue_GetValue(self); }
+SWIGINTERN float uiAbstractValueNode_t_delta(uiAbstractValueNode_t *self){ return UI_AbstractValue_GetDelta(self); }
 SWIGINTERN float uiAbstractValueNode_t_lastdiff(uiAbstractValueNode_t *self){ return UI_EXTRADATA(self, abstractValueExtraData_t).lastdiff; }
 SWIGINTERN float uiAbstractValueNode_t_shiftmultiplier(uiAbstractValueNode_t *self){ return UI_EXTRADATA(self, abstractValueExtraData_t).shiftIncreaseFactor; }
-SWIGINTERN void uiAbstractValueNode_t_inc_value(uiAbstractValueNode_t *self){ static_cast<uiAbstractValueNode*>(self->behaviour->manager.get())->incValue (self); }
-SWIGINTERN void uiAbstractValueNode_t_dec_value(uiAbstractValueNode_t *self){ static_cast<uiAbstractValueNode*>(self->behaviour->manager.get())->decValue (self);}
-SWIGINTERN void uiAbstractValueNode_t_set_range(uiAbstractValueNode_t *self,float min,float max){ static_cast<uiAbstractValueNode*>(self->behaviour->manager.get())->setRange (self, min, max);  }
-SWIGINTERN void uiAbstractValueNode_t_set_value(uiAbstractValueNode_t *self,float value){ static_cast<uiAbstractValueNode*>(self->behaviour->manager.get())->setValue (self, value); }
+SWIGINTERN void uiAbstractValueNode_t_inc_value(uiAbstractValueNode_t *self){ UI_AbstractValue_IncValue (self); }
+SWIGINTERN void uiAbstractValueNode_t_dec_value(uiAbstractValueNode_t *self){ UI_AbstractValue_DecValue (self); }
+SWIGINTERN void uiAbstractValueNode_t_set_range__SWIG_0(uiAbstractValueNode_t *self,float min,float max){ UI_AbstractValue_SetRange (self, min, max); }
+SWIGINTERN void uiAbstractValueNode_t_set_range__SWIG_1(uiAbstractValueNode_t *self,char const *min,char const *max){ UI_AbstractValue_SetRangeCvar(self, min, max); }
+SWIGINTERN void uiAbstractValueNode_t_set_value__SWIG_0(uiAbstractValueNode_t *self,float value){ UI_AbstractValue_SetValue (self, value); }
+SWIGINTERN void uiAbstractValueNode_t_set_value__SWIG_1(uiAbstractValueNode_t *self,char const *name){ UI_AbstractValue_SetValueCvar (self, name); }
 SWIGINTERN bool uiBarNode_t_is_readonly(uiBarNode_t *self){ return UI_EXTRADATA(self, barExtraData_t).readOnly; }
 SWIGINTERN bool uiBarNode_t_is_nohover(uiBarNode_t *self){ return UI_EXTRADATA(self, barExtraData_t).noHover; }
 SWIGINTERN int uiBarNode_t_direction(uiBarNode_t *self){ return UI_EXTRADATA(self, barExtraData_t).orientation; }
@@ -2922,6 +2928,15 @@ SWIGINTERN void uiPanelNode_t_set_layoutmargin(uiPanelNode_t *self,int value){ U
 SWIGINTERN void uiPanelNode_t_set_layoutcolumns(uiPanelNode_t *self,int value){ UI_EXTRADATA(self, panelExtraData_t).layoutColumns = value; }
 SWIGINTERN void uiPanelNode_t_set_wheelscrollable(uiPanelNode_t *self,bool value){ UI_EXTRADATA(self, panelExtraData_t).wheelScrollable = value; }
 SWIGINTERN void uiPanelNode_t_set_background(uiPanelNode_t *self,char const *name){ UI_Panel_SetBackgroundByName(self, name); }
+SWIGINTERN bool uiSpinnerNode_t_is_horizontal(uiSpinnerNode_t *self){ return UI_EXTRADATA(self, spinnerExtraData_t).horizontal; }
+SWIGINTERN bool uiSpinnerNode_t_is_inverted(uiSpinnerNode_t *self){ return UI_EXTRADATA(self, spinnerExtraData_t).inverted; }
+SWIGINTERN int uiSpinnerNode_t_mode(uiSpinnerNode_t *self){ return UI_EXTRADATA(self, spinnerExtraData_t).mode; }
+SWIGINTERN void uiSpinnerNode_t_set_background(uiSpinnerNode_t *self,char const *name){ UI_Spinner_SetBackgroundByName(self, name); }
+SWIGINTERN void uiSpinnerNode_t_set_topicon(uiSpinnerNode_t *self,char const *name){ UI_Spinner_SetTopIconByName(self, name); }
+SWIGINTERN void uiSpinnerNode_t_set_bottomicon(uiSpinnerNode_t *self,char const *name){ UI_Spinner_SetBottomIconByName(self, name); }
+SWIGINTERN void uiSpinnerNode_t_set_mode(uiSpinnerNode_t *self,int mode){ UI_EXTRADATA(self, spinnerExtraData_t).mode = mode; }
+SWIGINTERN void uiSpinnerNode_t_set_horizontal(uiSpinnerNode_t *self,bool value){ UI_EXTRADATA(self, spinnerExtraData_t).horizontal = value; }
+SWIGINTERN void uiSpinnerNode_t_set_inverted(uiSpinnerNode_t *self,bool value){ UI_EXTRADATA(self, spinnerExtraData_t).inverted = value; }
 SWIGINTERN int uiStringNode_t_longlines(uiStringNode_t *self){ return UI_EXTRADATA(self, stringExtraData_t).longlines; }
 SWIGINTERN void uiStringNode_t_set_longlines(uiStringNode_t *self,int value){ UI_EXTRADATA(self, stringExtraData_t).longlines = value; }
 SWIGINTERN int uiTextNode_t_dataid(uiTextNode_t *self){ return UI_EXTRADATA(self, textExtraData_t).dataID; }
@@ -2952,14 +2967,14 @@ static LUA_EVENT uiTextEntryNode_t_lua_onTextEntryAbort_set(uiTextEntryNode_t* n
 SWIGINTERN void uiTextureNode_t_set_source(uiTextureNode_t *self,char const *name){ UI_Node_SetImage(self, name); }
 SWIGINTERN bool uiWindowNode_t_is_fullscreen(uiWindowNode_t *self){ return UI_EXTRADATA(self, windowExtraData_t).isFullScreen; }
 SWIGINTERN bool uiWindowNode_t_is_modal(uiWindowNode_t *self){ return UI_EXTRADATA(self, windowExtraData_t).modal; }
-SWIGINTERN void uiWindowNode_t_add_dragbutton(uiWindowNode_t *self){ UI_EXTRADATA(self, windowExtraData_t).dragButton = true; }
-SWIGINTERN void uiWindowNode_t_add_closebutton(uiWindowNode_t *self){ UI_EXTRADATA(self, windowExtraData_t).closeButton = true; }
 SWIGINTERN void uiWindowNode_t_close(uiWindowNode_t *self){ UI_PopWindow (false); }
 SWIGINTERN void uiWindowNode_t_open(uiWindowNode_t *self){ UI_PushWindow(self->name, nullptr, nullptr); }
 SWIGINTERN void uiWindowNode_t_set_background(uiWindowNode_t *self,char const *name){ UI_Window_SetBackgroundByName(self, name); }
 SWIGINTERN void uiWindowNode_t_set_fullscreen(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).isFullScreen = value; }
 SWIGINTERN void uiWindowNode_t_set_modal(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).modal = value; }
 SWIGINTERN void uiWindowNode_t_set_fill(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).fill = value; }
+SWIGINTERN void uiWindowNode_t_set_dragbutton(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).dragButton = value; }
+SWIGINTERN void uiWindowNode_t_set_closebutton(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).closeButton = value; }
 
 static LUA_EVENT uiWindowNode_t_lua_onWindowOpened_get(uiWindowNode_t* node) {
 	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowOpened;
@@ -2992,6 +3007,9 @@ static uiModelNode_t* UI_CreateModel (uiNode_t* parent, const char* name, const 
 }
 static uiPanelNode_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "panel", name, super);
+}
+static uiSpinnerNode_t* UI_CreateSpinner (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "spinner", name, super);
 }
 static uiStringNode_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "string", name, super);
@@ -4856,6 +4874,36 @@ fail:
 }
 
 
+static int _wrap_uiNode_child(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  uiNode_t *result = 0 ;
+  
+  SWIG_check_num_args("uiNode_t::child",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::child",1,"uiNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiNode_t::child",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_child",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  result = (uiNode_t *)uiNode_t_child(arg1,(char const *)arg2);
+  {
+    swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+    SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiNode_append_node(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
@@ -5853,6 +5901,7 @@ static swig_lua_method swig_uiNode_methods[]= {
     { "next", _wrap_uiNode_next},
     { "parent", _wrap_uiNode_parent},
     { "root", _wrap_uiNode_root},
+    { "child", _wrap_uiNode_child},
     { "append_node", _wrap_uiNode_append_node},
     { "insert_node", _wrap_uiNode_insert_node},
     { "set_left", _wrap_uiNode_set_left},
@@ -7022,7 +7071,7 @@ fail:
 }
 
 
-static int _wrap_uiAbstractValueNode_t_set_range(lua_State* L) {
+static int _wrap_uiAbstractValueNode_t_set_range__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   uiAbstractValueNode_t *arg1 = (uiAbstractValueNode_t *) 0 ;
   float arg2 ;
@@ -7039,7 +7088,7 @@ static int _wrap_uiAbstractValueNode_t_set_range(lua_State* L) {
   
   arg2 = (float)lua_tonumber(L, 2);
   arg3 = (float)lua_tonumber(L, 3);
-  uiAbstractValueNode_t_set_range(arg1,arg2,arg3);
+  uiAbstractValueNode_t_set_range__SWIG_0(arg1,arg2,arg3);
   
   return SWIG_arg;
   
@@ -7051,7 +7100,100 @@ fail:
 }
 
 
-static int _wrap_uiAbstractValueNode_t_set_value(lua_State* L) {
+static int _wrap_uiAbstractValueNode_t_set_range__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  uiAbstractValueNode_t *arg1 = (uiAbstractValueNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  
+  SWIG_check_num_args("uiAbstractValueNode_t::set_range",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractValueNode_t::set_range",1,"uiAbstractValueNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiAbstractValueNode_t::set_range",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("uiAbstractValueNode_t::set_range",3,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractValueNode_t,0))){
+    SWIG_fail_ptr("uiAbstractValueNode_t_set_range",1,SWIGTYPE_p_uiAbstractValueNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  uiAbstractValueNode_t_set_range__SWIG_1(arg1,(char const *)arg2,(char const *)arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiAbstractValueNode_t_set_range(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_uiAbstractValueNode_t, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_uiAbstractValueNode_t_set_range__SWIG_0(L);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_uiAbstractValueNode_t, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_uiAbstractValueNode_t_set_range__SWIG_1(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'uiAbstractValueNode_t_set_range'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    uiAbstractValueNode_t::set_range(float,float)\n"
+    "    uiAbstractValueNode_t::set_range(char const *,char const *)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_uiAbstractValueNode_t_set_value__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   uiAbstractValueNode_t *arg1 = (uiAbstractValueNode_t *) 0 ;
   float arg2 ;
@@ -7065,7 +7207,7 @@ static int _wrap_uiAbstractValueNode_t_set_value(lua_State* L) {
   }
   
   arg2 = (float)lua_tonumber(L, 2);
-  uiAbstractValueNode_t_set_value(arg1,arg2);
+  uiAbstractValueNode_t_set_value__SWIG_0(arg1,arg2);
   
   return SWIG_arg;
   
@@ -7074,6 +7216,86 @@ static int _wrap_uiAbstractValueNode_t_set_value(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
+}
+
+
+static int _wrap_uiAbstractValueNode_t_set_value__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  uiAbstractValueNode_t *arg1 = (uiAbstractValueNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  SWIG_check_num_args("uiAbstractValueNode_t::set_value",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractValueNode_t::set_value",1,"uiAbstractValueNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiAbstractValueNode_t::set_value",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractValueNode_t,0))){
+    SWIG_fail_ptr("uiAbstractValueNode_t_set_value",1,SWIGTYPE_p_uiAbstractValueNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  uiAbstractValueNode_t_set_value__SWIG_1(arg1,(char const *)arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiAbstractValueNode_t_set_value(lua_State* L) {
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_uiAbstractValueNode_t, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_uiAbstractValueNode_t_set_value__SWIG_0(L);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_uiAbstractValueNode_t, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_uiAbstractValueNode_t_set_value__SWIG_1(L);
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'uiAbstractValueNode_t_set_value'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    uiAbstractValueNode_t::set_value(float)\n"
+    "    uiAbstractValueNode_t::set_value(char const *)\n");
+  lua_error(L);return 0;
 }
 
 
@@ -8585,6 +8807,307 @@ static swig_lua_class *swig_uiPanel_bases[] = {0,0};
 static const char *swig_uiPanel_base_names[] = {"uiAbstractScrollableNode_t *",0};
 static swig_lua_class _wrap_class_uiPanel = { "uiPanel", "uiPanel", &SWIGTYPE_p_uiPanelNode_t,_proxy__wrap_new_uiPanel, swig_delete_uiPanel, swig_uiPanel_methods, swig_uiPanel_attributes, &swig_uiPanel_Sf_SwigStatic, swig_uiPanel_meta, swig_uiPanel_bases, swig_uiPanel_base_names };
 
+static int _wrap_uiSpinner_is_horizontal(lua_State* L) {
+  int SWIG_arg = 0;
+  uiSpinnerNode_t *arg1 = (uiSpinnerNode_t *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("uiSpinnerNode_t::is_horizontal",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiSpinnerNode_t::is_horizontal",1,"uiSpinnerNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiSpinnerNode_t,0))){
+    SWIG_fail_ptr("uiSpinner_is_horizontal",1,SWIGTYPE_p_uiSpinnerNode_t);
+  }
+  
+  result = (bool)uiSpinnerNode_t_is_horizontal(arg1);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiSpinner_is_inverted(lua_State* L) {
+  int SWIG_arg = 0;
+  uiSpinnerNode_t *arg1 = (uiSpinnerNode_t *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("uiSpinnerNode_t::is_inverted",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiSpinnerNode_t::is_inverted",1,"uiSpinnerNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiSpinnerNode_t,0))){
+    SWIG_fail_ptr("uiSpinner_is_inverted",1,SWIGTYPE_p_uiSpinnerNode_t);
+  }
+  
+  result = (bool)uiSpinnerNode_t_is_inverted(arg1);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiSpinner_mode(lua_State* L) {
+  int SWIG_arg = 0;
+  uiSpinnerNode_t *arg1 = (uiSpinnerNode_t *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("uiSpinnerNode_t::mode",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiSpinnerNode_t::mode",1,"uiSpinnerNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiSpinnerNode_t,0))){
+    SWIG_fail_ptr("uiSpinner_mode",1,SWIGTYPE_p_uiSpinnerNode_t);
+  }
+  
+  result = (int)uiSpinnerNode_t_mode(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiSpinner_set_background(lua_State* L) {
+  int SWIG_arg = 0;
+  uiSpinnerNode_t *arg1 = (uiSpinnerNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  SWIG_check_num_args("uiSpinnerNode_t::set_background",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiSpinnerNode_t::set_background",1,"uiSpinnerNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiSpinnerNode_t::set_background",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiSpinnerNode_t,0))){
+    SWIG_fail_ptr("uiSpinner_set_background",1,SWIGTYPE_p_uiSpinnerNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  uiSpinnerNode_t_set_background(arg1,(char const *)arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiSpinner_set_topicon(lua_State* L) {
+  int SWIG_arg = 0;
+  uiSpinnerNode_t *arg1 = (uiSpinnerNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  SWIG_check_num_args("uiSpinnerNode_t::set_topicon",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiSpinnerNode_t::set_topicon",1,"uiSpinnerNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiSpinnerNode_t::set_topicon",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiSpinnerNode_t,0))){
+    SWIG_fail_ptr("uiSpinner_set_topicon",1,SWIGTYPE_p_uiSpinnerNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  uiSpinnerNode_t_set_topicon(arg1,(char const *)arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiSpinner_set_bottomicon(lua_State* L) {
+  int SWIG_arg = 0;
+  uiSpinnerNode_t *arg1 = (uiSpinnerNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  SWIG_check_num_args("uiSpinnerNode_t::set_bottomicon",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiSpinnerNode_t::set_bottomicon",1,"uiSpinnerNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiSpinnerNode_t::set_bottomicon",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiSpinnerNode_t,0))){
+    SWIG_fail_ptr("uiSpinner_set_bottomicon",1,SWIGTYPE_p_uiSpinnerNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  uiSpinnerNode_t_set_bottomicon(arg1,(char const *)arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiSpinner_set_mode(lua_State* L) {
+  int SWIG_arg = 0;
+  uiSpinnerNode_t *arg1 = (uiSpinnerNode_t *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("uiSpinnerNode_t::set_mode",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiSpinnerNode_t::set_mode",1,"uiSpinnerNode_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiSpinnerNode_t::set_mode",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiSpinnerNode_t,0))){
+    SWIG_fail_ptr("uiSpinner_set_mode",1,SWIGTYPE_p_uiSpinnerNode_t);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  uiSpinnerNode_t_set_mode(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiSpinner_set_horizontal(lua_State* L) {
+  int SWIG_arg = 0;
+  uiSpinnerNode_t *arg1 = (uiSpinnerNode_t *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("uiSpinnerNode_t::set_horizontal",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiSpinnerNode_t::set_horizontal",1,"uiSpinnerNode_t *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("uiSpinnerNode_t::set_horizontal",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiSpinnerNode_t,0))){
+    SWIG_fail_ptr("uiSpinner_set_horizontal",1,SWIGTYPE_p_uiSpinnerNode_t);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  uiSpinnerNode_t_set_horizontal(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiSpinner_set_inverted(lua_State* L) {
+  int SWIG_arg = 0;
+  uiSpinnerNode_t *arg1 = (uiSpinnerNode_t *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("uiSpinnerNode_t::set_inverted",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiSpinnerNode_t::set_inverted",1,"uiSpinnerNode_t *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("uiSpinnerNode_t::set_inverted",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiSpinnerNode_t,0))){
+    SWIG_fail_ptr("uiSpinner_set_inverted",1,SWIGTYPE_p_uiSpinnerNode_t);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  uiSpinnerNode_t_set_inverted(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_uiSpinner(lua_State* L) {
+  int SWIG_arg = 0;
+  uiSpinnerNode_t *result = 0 ;
+  
+  SWIG_check_num_args("uiSpinnerNode_t::uiSpinnerNode_t",0,0)
+  result = (uiSpinnerNode_t *)new uiSpinnerNode_t();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiSpinnerNode_t,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_uiSpinner(void *obj) {
+uiSpinnerNode_t *arg1 = (uiSpinnerNode_t *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_uiSpinner(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_uiSpinner);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_uiSpinner_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_method swig_uiSpinner_methods[]= {
+    { "is_horizontal", _wrap_uiSpinner_is_horizontal},
+    { "is_inverted", _wrap_uiSpinner_is_inverted},
+    { "mode", _wrap_uiSpinner_mode},
+    { "set_background", _wrap_uiSpinner_set_background},
+    { "set_topicon", _wrap_uiSpinner_set_topicon},
+    { "set_bottomicon", _wrap_uiSpinner_set_bottomicon},
+    { "set_mode", _wrap_uiSpinner_set_mode},
+    { "set_horizontal", _wrap_uiSpinner_set_horizontal},
+    { "set_inverted", _wrap_uiSpinner_set_inverted},
+    {0,0}
+};
+static swig_lua_method swig_uiSpinner_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_uiSpinner_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_uiSpinner_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_uiSpinner_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_uiSpinner_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_uiSpinner_Sf_SwigStatic = {
+    "uiSpinner",
+    swig_uiSpinner_Sf_SwigStatic_methods,
+    swig_uiSpinner_Sf_SwigStatic_attributes,
+    swig_uiSpinner_Sf_SwigStatic_constants,
+    swig_uiSpinner_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_uiSpinner_bases[] = {0,0};
+static const char *swig_uiSpinner_base_names[] = {"uiAbstractValueNode_t *",0};
+static swig_lua_class _wrap_class_uiSpinner = { "uiSpinner", "uiSpinner", &SWIGTYPE_p_uiSpinnerNode_t,_proxy__wrap_new_uiSpinner, swig_delete_uiSpinner, swig_uiSpinner_methods, swig_uiSpinner_attributes, &swig_uiSpinner_Sf_SwigStatic, swig_uiSpinner_meta, swig_uiSpinner_bases, swig_uiSpinner_base_names };
+
 static int _wrap_uiString_longlines(lua_State* L) {
   int SWIG_arg = 0;
   uiStringNode_t *arg1 = (uiStringNode_t *) 0 ;
@@ -9528,52 +10051,6 @@ fail:
 }
 
 
-static int _wrap_uiWindow_add_dragbutton(lua_State* L) {
-  int SWIG_arg = 0;
-  uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
-  
-  SWIG_check_num_args("uiWindowNode_t::add_dragbutton",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindowNode_t::add_dragbutton",1,"uiWindowNode_t *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindowNode_t,0))){
-    SWIG_fail_ptr("uiWindow_add_dragbutton",1,SWIGTYPE_p_uiWindowNode_t);
-  }
-  
-  uiWindowNode_t_add_dragbutton(arg1);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_uiWindow_add_closebutton(lua_State* L) {
-  int SWIG_arg = 0;
-  uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
-  
-  SWIG_check_num_args("uiWindowNode_t::add_closebutton",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindowNode_t::add_closebutton",1,"uiWindowNode_t *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindowNode_t,0))){
-    SWIG_fail_ptr("uiWindow_add_closebutton",1,SWIGTYPE_p_uiWindowNode_t);
-  }
-  
-  uiWindowNode_t_add_closebutton(arg1);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_uiWindow_close(lua_State* L) {
   int SWIG_arg = 0;
   uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
@@ -9713,6 +10190,58 @@ static int _wrap_uiWindow_set_fill(lua_State* L) {
   
   arg2 = (lua_toboolean(L, 2)!=0);
   uiWindowNode_t_set_fill(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiWindow_set_dragbutton(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("uiWindowNode_t::set_dragbutton",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindowNode_t::set_dragbutton",1,"uiWindowNode_t *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("uiWindowNode_t::set_dragbutton",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindowNode_t,0))){
+    SWIG_fail_ptr("uiWindow_set_dragbutton",1,SWIGTYPE_p_uiWindowNode_t);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  uiWindowNode_t_set_dragbutton(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiWindow_set_closebutton(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("uiWindowNode_t::set_closebutton",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindowNode_t::set_closebutton",1,"uiWindowNode_t *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("uiWindowNode_t::set_closebutton",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindowNode_t,0))){
+    SWIG_fail_ptr("uiWindow_set_closebutton",1,SWIGTYPE_p_uiWindowNode_t);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  uiWindowNode_t_set_closebutton(arg1,arg2);
   
   return SWIG_arg;
   
@@ -9869,14 +10398,14 @@ static swig_lua_attribute swig_uiWindow_attributes[] = {
 static swig_lua_method swig_uiWindow_methods[]= {
     { "is_fullscreen", _wrap_uiWindow_is_fullscreen},
     { "is_modal", _wrap_uiWindow_is_modal},
-    { "add_dragbutton", _wrap_uiWindow_add_dragbutton},
-    { "add_closebutton", _wrap_uiWindow_add_closebutton},
     { "close", _wrap_uiWindow_close},
     { "open", _wrap_uiWindow_open},
     { "set_background", _wrap_uiWindow_set_background},
     { "set_fullscreen", _wrap_uiWindow_set_fullscreen},
     { "set_modal", _wrap_uiWindow_set_modal},
     { "set_fill", _wrap_uiWindow_set_fill},
+    { "set_dragbutton", _wrap_uiWindow_set_dragbutton},
+    { "set_closebutton", _wrap_uiWindow_set_closebutton},
     {0,0}
 };
 static swig_lua_method swig_uiWindow_meta[] = {
@@ -10114,6 +10643,36 @@ static int _wrap_UI_CreatePanel(lua_State* L) {
   arg3 = (char *)lua_tostring(L, 3);
   result = (uiPanelNode_t *)UI_CreatePanel(arg1,(char const *)arg2,(char const *)arg3);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiPanelNode_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_UI_CreateSpinner(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  uiSpinnerNode_t *result = 0 ;
+  
+  SWIG_check_num_args("UI_CreateSpinner",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UI_CreateSpinner",1,"uiNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("UI_CreateSpinner",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("UI_CreateSpinner",3,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("UI_CreateSpinner",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  result = (uiSpinnerNode_t *)UI_CreateSpinner(arg1,(char const *)arg2,(char const *)arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiSpinnerNode_t,0); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -10477,6 +11036,36 @@ fail:
 }
 
 
+static int _wrap_create_spinner(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  uiSpinnerNode_t *result = 0 ;
+  
+  SWIG_check_num_args("UI_CreateSpinner",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UI_CreateSpinner",1,"uiNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("UI_CreateSpinner",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("UI_CreateSpinner",3,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("create_spinner",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  result = (uiSpinnerNode_t *)UI_CreateSpinner(arg1,(char const *)arg2,(char const *)arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiSpinnerNode_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_create_string(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
@@ -10813,6 +11402,29 @@ fail:
 }
 
 
+static int _wrap_nodetree(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  
+  SWIG_check_num_args("UI_PrintNodeTree",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UI_PrintNodeTree",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("nodetree",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  UI_PrintNodeTree(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_register_onload(lua_State* L) {
   int SWIG_arg = 0;
   LUA_FUNCTION arg1 ;
@@ -10981,6 +11593,7 @@ static swig_lua_method swig_SwigModule_methods[]= {
     { "UI_CreateItem", _wrap_UI_CreateItem},
     { "UI_CreateModel", _wrap_UI_CreateModel},
     { "UI_CreatePanel", _wrap_UI_CreatePanel},
+    { "UI_CreateSpinner", _wrap_UI_CreateSpinner},
     { "UI_CreateString", _wrap_UI_CreateString},
     { "UI_CreateText", _wrap_UI_CreateText},
     { "UI_CreateTextEntry", _wrap_UI_CreateTextEntry},
@@ -10993,6 +11606,7 @@ static swig_lua_method swig_SwigModule_methods[]= {
     { "create_item", _wrap_create_item},
     { "create_model", _wrap_create_model},
     { "create_panel", _wrap_create_panel},
+    { "create_spinner", _wrap_create_spinner},
     { "create_string", _wrap_create_string},
     { "create_text", _wrap_create_text},
     { "create_textentry", _wrap_create_textentry},
@@ -11006,6 +11620,7 @@ static swig_lua_method swig_SwigModule_methods[]= {
     { "print", _wrap_print},
     { "dprint", _wrap_dprint},
     { "error", _wrap_error},
+    { "nodetree", _wrap_nodetree},
     { "register_onload", _wrap_register_onload},
     {0,0}
 };
@@ -11023,6 +11638,7 @@ static swig_lua_class* swig_SwigModule_classes[]= {
 &_wrap_class_uiModel,
 &_wrap_class_uiItem,
 &_wrap_class_uiPanel,
+&_wrap_class_uiSpinner,
 &_wrap_class_uiString,
 &_wrap_class_uiText,
 &_wrap_class_uiTextEntry,
@@ -11058,8 +11674,8 @@ static void *_p_uiTextNode_tTo_p_uiAbstractScrollableNode_t(void *x, int *SWIGUN
 static void *_p_uiBarNode_tTo_p_uiAbstractValueNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiAbstractValueNode_t *)  ((uiBarNode_t *) x));
 }
-static void *_p_uiTextureNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((uiNode_t *)  ((uiTextureNode_t *) x));
+static void *_p_uiSpinnerNode_tTo_p_uiAbstractValueNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((uiAbstractValueNode_t *)  ((uiSpinnerNode_t *) x));
 }
 static void *_p_uiTextEntryNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *)  ((uiTextEntryNode_t *) x));
@@ -11076,11 +11692,17 @@ static void *_p_uiAbstractValueNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(
 static void *_p_uiAbstractScrollableNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *)  ((uiAbstractScrollableNode_t *) x));
 }
+static void *_p_uiTextureNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((uiNode_t *)  ((uiTextureNode_t *) x));
+}
 static void *_p_uiWindowNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *)  ((uiWindowNode_t *) x));
 }
 static void *_p_uiTextNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *) (uiAbstractScrollableNode_t *) ((uiTextNode_t *) x));
+}
+static void *_p_uiSpinnerNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((uiNode_t *) (uiAbstractValueNode_t *) ((uiSpinnerNode_t *) x));
 }
 static void *_p_uiPanelNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *) (uiAbstractScrollableNode_t *) ((uiPanelNode_t *) x));
@@ -11133,6 +11755,7 @@ static swig_type_info _swigt__p_uiModelNode_t = {"_p_uiModelNode_t", "uiModelNod
 static swig_type_info _swigt__p_uiNode_t = {"_p_uiNode_t", "uiNode_t *", 0, 0, (void*)&_wrap_class_uiNode, 0};
 static swig_type_info _swigt__p_uiPanelNode_t = {"_p_uiPanelNode_t", "uiPanelNode_t *", 0, 0, (void*)&_wrap_class_uiPanel, 0};
 static swig_type_info _swigt__p_uiScroll_t = {"_p_uiScroll_t", "uiScroll_t *", 0, 0, (void*)&_wrap_class_uiScroll_t, 0};
+static swig_type_info _swigt__p_uiSpinnerNode_t = {"_p_uiSpinnerNode_t", "uiSpinnerNode_t *", 0, 0, (void*)&_wrap_class_uiSpinner, 0};
 static swig_type_info _swigt__p_uiStringNode_t = {"_p_uiStringNode_t", "uiStringNode_t *", 0, 0, (void*)&_wrap_class_uiString, 0};
 static swig_type_info _swigt__p_uiTextEntryNode_t = {"_p_uiTextEntryNode_t", "uiTextEntryNode_t *", 0, 0, (void*)&_wrap_class_uiTextEntry, 0};
 static swig_type_info _swigt__p_uiTextNode_t = {"_p_uiTextNode_t", "uiTextNode_t *", 0, 0, (void*)&_wrap_class_uiText, 0};
@@ -11163,6 +11786,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_uiNode_t,
   &_swigt__p_uiPanelNode_t,
   &_swigt__p_uiScroll_t,
+  &_swigt__p_uiSpinnerNode_t,
   &_swigt__p_uiStringNode_t,
   &_swigt__p_uiTextEntryNode_t,
   &_swigt__p_uiTextNode_t,
@@ -11184,15 +11808,16 @@ static swig_cast_info _swigc__p_panelLayout_t[] = {  {&_swigt__p_panelLayout_t, 
 static swig_cast_info _swigc__p_uiAbstractOptionNode_t[] = {  {&_swigt__p_uiAbstractOptionNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiAbstractScrollableNode_t[] = {  {&_swigt__p_uiPanelNode_t, _p_uiPanelNode_tTo_p_uiAbstractScrollableNode_t, 0, 0},  {&_swigt__p_uiTextNode_t, _p_uiTextNode_tTo_p_uiAbstractScrollableNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollableNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiAbstractScrollbarNode_t[] = {  {&_swigt__p_uiAbstractScrollbarNode_t, 0, 0, 0},  {&_swigt__p_uiVScrollBarNode_t, _p_uiVScrollBarNode_tTo_p_uiAbstractScrollbarNode_t, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_uiAbstractValueNode_t[] = {  {&_swigt__p_uiBarNode_t, _p_uiBarNode_tTo_p_uiAbstractValueNode_t, 0, 0},  {&_swigt__p_uiAbstractValueNode_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uiAbstractValueNode_t[] = {  {&_swigt__p_uiBarNode_t, _p_uiBarNode_tTo_p_uiAbstractValueNode_t, 0, 0},  {&_swigt__p_uiSpinnerNode_t, _p_uiSpinnerNode_tTo_p_uiAbstractValueNode_t, 0, 0},  {&_swigt__p_uiAbstractValueNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiBarNode_t[] = {  {&_swigt__p_uiBarNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiButtonNode_t[] = {  {&_swigt__p_uiButtonNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiCheckBoxNode_t[] = {  {&_swigt__p_uiCheckBoxNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiItemNode_t[] = {  {&_swigt__p_uiItemNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiModelNode_t[] = {  {&_swigt__p_uiModelNode_t, 0, 0, 0},  {&_swigt__p_uiItemNode_t, _p_uiItemNode_tTo_p_uiModelNode_t, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_uiNode_t[] = {  {&_swigt__p_uiTextureNode_t, _p_uiTextureNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextEntryNode_t, _p_uiTextEntryNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiStringNode_t, _p_uiStringNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiItemNode_t, _p_uiItemNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractValueNode_t, _p_uiAbstractValueNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollableNode_t, _p_uiAbstractScrollableNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiWindowNode_t, _p_uiWindowNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiNode_t, 0, 0, 0},  {&_swigt__p_uiModelNode_t, _p_uiModelNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiCheckBoxNode_t, _p_uiCheckBoxNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiButtonNode_t, _p_uiButtonNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiBarNode_t, _p_uiBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextNode_t, _p_uiTextNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiPanelNode_t, _p_uiPanelNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollbarNode_t, _p_uiAbstractScrollbarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiVScrollBarNode_t, _p_uiVScrollBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractOptionNode_t, _p_uiAbstractOptionNode_tTo_p_uiNode_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uiNode_t[] = {  {&_swigt__p_uiTextEntryNode_t, _p_uiTextEntryNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiStringNode_t, _p_uiStringNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiItemNode_t, _p_uiItemNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractValueNode_t, _p_uiAbstractValueNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollableNode_t, _p_uiAbstractScrollableNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextureNode_t, _p_uiTextureNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiWindowNode_t, _p_uiWindowNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiNode_t, 0, 0, 0},  {&_swigt__p_uiCheckBoxNode_t, _p_uiCheckBoxNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiButtonNode_t, _p_uiButtonNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSpinnerNode_t, _p_uiSpinnerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiBarNode_t, _p_uiBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextNode_t, _p_uiTextNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiPanelNode_t, _p_uiPanelNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiModelNode_t, _p_uiModelNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollbarNode_t, _p_uiAbstractScrollbarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiVScrollBarNode_t, _p_uiVScrollBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractOptionNode_t, _p_uiAbstractOptionNode_tTo_p_uiNode_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiPanelNode_t[] = {  {&_swigt__p_uiPanelNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiScroll_t[] = {  {&_swigt__p_uiScroll_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uiSpinnerNode_t[] = {  {&_swigt__p_uiSpinnerNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiStringNode_t[] = {  {&_swigt__p_uiStringNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiTextEntryNode_t[] = {  {&_swigt__p_uiTextEntryNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiTextNode_t[] = {  {&_swigt__p_uiTextNode_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -11223,6 +11848,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_uiNode_t,
   _swigc__p_uiPanelNode_t,
   _swigc__p_uiScroll_t,
+  _swigc__p_uiSpinnerNode_t,
   _swigc__p_uiStringNode_t,
   _swigc__p_uiTextEntryNode_t,
   _swigc__p_uiTextNode_t,

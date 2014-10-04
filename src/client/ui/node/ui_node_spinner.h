@@ -52,3 +52,8 @@ struct spinnerExtraData_t {
 };
 
 void UI_RegisterSpinnerNode(uiBehaviour_t* behaviour);
+
+void UI_Spinner_SetBackgroundByName(uiNode_t* node, const char* name);
+void UI_Spinner_SetBottomIconByName(uiNode_t* node, const char* name);
+void UI_Spinner_SetTopIconByName(uiNode_t* node, const char* name);
+

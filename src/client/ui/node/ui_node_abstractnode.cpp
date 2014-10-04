@@ -124,6 +124,8 @@ void uiNode::initNode(uiNode_t* node) {
 	node->lua_onLoaded = LUA_NOREF;
 	node->lua_onMouseEnter = LUA_NOREF;
 	node->lua_onMouseLeave = LUA_NOREF;
+	node->lua_onChange = LUA_NOREF;
+	node->lua_onVisibleWhen = LUA_NOREF;
 }
 
 void uiNode::initNodeDynamic(uiNode_t* node) {

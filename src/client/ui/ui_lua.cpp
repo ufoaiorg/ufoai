@@ -80,6 +80,30 @@ bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
 }
 
 /**
+ * @brief Executes a lua event handler and returns the result as a boolean.
+ * @param[in] node The node the event handler is associated with.
+ * @param[in] event The event to execute.
+ * @param[in/out] result The boolean value returned by the lua script.
+ * @return True if the operation succeeds, false otherwise.
+ * @note The signature of the event handler in lua is: onevent(sender) and must return a boolean value
+ */
+bool UI_ExecuteLuaEventScript_ReturnBool (uiNode_t* node, LUA_EVENT event, bool &result) {
+	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
+	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
+	if (lua_pcall (CL_GetLuaState(), 1, 1, 0) != 0) {
+		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		return false;
+	};
+    if (!lua_isboolean(CL_GetLuaState(), -1)) {
+		Com_Printf ("lua error(0) [node=%s]: expecting a boolean as return value\n", node->name);
+		return false;
+    }
+    result = lua_toboolean(CL_GetLuaState(), -1);
+	return true;
+}
+
+/**
  * @brief Executes a lua event handler with (x,y) argument.
  * @param[in] node The node the event handler is associated with.
  * @param[in] event The event to execute.
@@ -144,6 +168,8 @@ bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int
 	};
 	return true;
 }
+
+
 /**
  * @brief Executes a lua based method defined on the behaviour class of a node.
  * @param[in] node The node the method is defined on.
@@ -309,13 +335,6 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 	/* clone using super */
 	if (node_super) {
 		node = UI_CloneNode(node_super, nullptr, true, name, false);
-		if (parent) {
-			UI_AppendNode(parent, node);
-		}
-		else {
-			// remove the roots from the cloned notes, since it can be wrong
-			UI_UpdateRoot(node, nullptr);
-		}
 	}
 	/* else try creating a clone of the component */
 	else if (inherited_control) {
@@ -325,15 +344,29 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 	/* else initialize a new node */
 	else {
 		node = UI_AllocNode(name, behaviour->name, false);
-		if (parent) {
-			UI_AppendNode(parent, node);
-		}
+	}
+
+	if (parent) {
+		UI_AppendNode(parent, node);
 	}
 
 	/* call onload (properties are set from lua) */
 	UI_Node_Loaded(node);
 
 	return node;
+}
+
+void UI_PrintNodeTree (uiNode_t* node, int level) {
+	int i;
+	char* indent = new char[level+1];
+	for(i=0; i<level; i++) indent[i] = '\t';
+	indent[i] = 0x00;
+
+	Com_Printf("%s[%s]\n", indent, node->name);
+	for(uiNode_t* child=node->firstChild; child; child=child->next) {
+		UI_PrintNodeTree(child, level + 1);
+	}
+	delete indent;
 }
 
 /**
@@ -346,7 +379,8 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super)
 {
 	uiNode_t* node_super = nullptr;
-	uiNode_t* component;
+	uiNode_t* component = nullptr;
+	uiNode_t* inherited = nullptr;
 	uiBehaviour_t* behaviour = nullptr;
 
 	/* check the name */
@@ -359,12 +393,15 @@ uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* su
 		return false;
 	}
 
-	/* get the behaviour */
+	/* get the type of behaviour */
 	behaviour = UI_GetNodeBehaviour(type);
 	if (!behaviour) {
-		/* if not found, try to get the component */
-		Com_Printf("UI_CreateComponent: node behaviour/control '%s' doesn't exist\n", type);
-		return nullptr;
+		/* if no default behaviour found, try to get a custom component */
+		inherited = UI_GetComponent(type);
+		if (!inherited) {
+			Com_Printf("UI_CreateComponent: node behaviour/control '%s' doesn't exist\n", type);
+			return nullptr;
+		}
 	}
 	/* get the super if it exists */
 	if (super) {
@@ -384,7 +421,14 @@ uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* su
 	}
 	/* else initialize a new node */
 	else {
-		component = UI_AllocNode(name, behaviour->name, false);
+		/* use inherited if available */
+		if (inherited) {
+			component = UI_CloneNode(inherited, nullptr, true, name, false);
+		}
+		/* else use the behaviour type */
+		else {
+			component = UI_AllocNode(name, behaviour->name, false);
+		}
 	}
 
 	/* call onload (properties are set and controls are created from lua) */

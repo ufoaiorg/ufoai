@@ -154,12 +154,19 @@ static uiBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
  */
 bool UI_CheckVisibility (uiNode_t* node)
 {
-	uiCallContext_t context;
-	if (!node->visibilityCondition)
-		return true;
-	context.source = node;
-	context.useCmdParam = false;
-	return UI_GetBooleanFromExpression(node->visibilityCondition, &context);
+	bool result = true;
+	/* old script check */
+	if (node->visibilityCondition != nullptr) {
+		uiCallContext_t context;
+		context.source = node;
+		context.useCmdParam = false;
+		result = UI_GetBooleanFromExpression(node->visibilityCondition, &context);
+	}
+	/* lua script check */
+	else if (node->lua_onVisibleWhen != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_ReturnBool (node, node->lua_onVisibleWhen, result);
+	}
+	return result;
 }
 
 /**
