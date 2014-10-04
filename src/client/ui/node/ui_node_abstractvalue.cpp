@@ -237,6 +237,16 @@ void UI_AbstractValue_SetRange (uiNode_t* node, float min, float max) {
 	b->setRange(node, min, max);
 }
 
+void UI_AbstractValue_SetMin (uiNode_t* node, float min) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	b->setRange(node, min, b->getMax(node));
+}
+
+void UI_AbstractValue_SetMax (uiNode_t* node, float max) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	b->setRange(node, b->getMin(node), max);
+}
+
 void UI_AbstractValue_SetValue (uiNode_t* node, float value) {
 	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
 	b->setValue(node, value);
@@ -248,6 +258,22 @@ void UI_AbstractValue_SetRangeCvar (uiNode_t* node, const char* min, const char*
 	   need to free the existing references, then create new cvar references and store them. */
 	Mem_Free(*(void**)EXTRADATA(node).min);
 	*(void**)EXTRADATA(node).min = Mem_StrDup(min);
+	Mem_Free(*(void**)EXTRADATA(node).max);
+	*(void**)EXTRADATA(node).max = Mem_StrDup(max);
+}
+
+void UI_AbstractValue_SetMinCvar (uiNode_t* node, const char* min) {
+	/* This is a special case: we have a situation where the node already has a (min,max) value
+	   (either being floats or cvars). We now want to replace this value by a new cvar. So we first
+	   need to free the existing references, then create new cvar references and store them. */
+	Mem_Free(*(void**)EXTRADATA(node).min);
+	*(void**)EXTRADATA(node).min = Mem_StrDup(min);
+}
+
+void UI_AbstractValue_SetMaxCvar (uiNode_t* node, const char* max) {
+	/* This is a special case: we have a situation where the node already has a (min,max) value
+	   (either being floats or cvars). We now want to replace this value by a new cvar. So we first
+	   need to free the existing references, then create new cvar references and store them. */
 	Mem_Free(*(void**)EXTRADATA(node).max);
 	*(void**)EXTRADATA(node).max = Mem_StrDup(max);
 }

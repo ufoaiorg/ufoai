@@ -79,6 +79,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_vscrollbar.h"
 #include "node/ui_node_zone.h"
 
+#include "ui_lua.h"
+
 typedef void (*registerFunction_t)(uiBehaviour_t* node);
 
 /**
