@@ -28,8 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractscrollable.h"
 
 class uiBaseInventoryNode : public uiContainerNode {
+public:
+	void initNode(uiNode_t* node) override;
 	void draw(uiNode_t* node) override;
 	void drawTooltip(const uiNode_t* node, int x, int y) const override;
+
 	void onMouseDown(uiNode_t* node, int x, int y, int button) override;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
 	bool onScroll(uiNode_t* node, int deltaX, int deltaY) override;

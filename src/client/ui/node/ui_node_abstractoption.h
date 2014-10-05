@@ -30,6 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct uiAction_s;
 
 class uiAbstractOptionNode : public uiLocatedNode {
+public:
+	/** call to initialize the node structure and extradata structure */
+	void initNode(uiNode_t* node) override;
+
 	void doLayout(uiNode_t* node) override;
 	int getCellWidth(uiNode_t* node) override;
 	int getCellHeight(uiNode_t* node) override;

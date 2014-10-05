@@ -46,8 +46,8 @@ bool UI_ExecuteLuaEventScript_ReturnBool (uiNode_t* node, LUA_EVENT event, bool 
 bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y);
 bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int dy);
 bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int key, unsigned short unicode);
-bool UI_ExecuteLuaBehaviourMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params, int nparams);
-bool UI_ExecuteLuaBehaviourMethod_ByName (uiNode_t* node, const char* name, linkedList_t* params, int nparams);
+bool UI_ExecuteLuaMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params, int nparams);
+bool UI_ExecuteLuaMethod_ByName (uiNode_t* node, const char* name, linkedList_t* params, int nparams);
 
 /* lua uiNode create functions */
 uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super);

@@ -436,6 +436,11 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t* node, const objDef_t* highlight
 		UI_BaseInventoryNodeUpdateScroll(node);
 }
 
+void uiBaseInventoryNode::initNode(uiNode_t* node) {
+	uiContainerNode::initNode(node);
+	EXTRADATA(node).lua_onViewChange = LUA_NOREF;
+}
+
 /**
  * @brief Main function to draw a container node
  */

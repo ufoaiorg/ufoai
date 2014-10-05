@@ -34,6 +34,9 @@ struct uiNode_t;
 
 class uiAbstractScrollableNode : public uiLocatedNode {
 public:
+	/** call to initialize the node structure and extradata structure */
+	void initNode(uiNode_t* node) override;
+
 	/**
 	 * @todo remove it, use property listener
 	 */
