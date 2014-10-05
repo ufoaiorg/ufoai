@@ -897,11 +897,6 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
 	if (!pointTrace) {
 		VectorNormalizeFast(dir);			/* Normalize the vector i.e. make length 1.0 */
 
-		/* places the starting-location a bit away from the attacker-model/grid. */
-		/** @todo need some change to reflect 2x2 units.
-		 * Also might need a check if the distance is bigger than the one to the impact location. */
-		/** @todo can't we use the fd->shotOrg here and get rid of the sv_shot_origin cvar? */
-		VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);
 		vec3_t angles;
 		VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
