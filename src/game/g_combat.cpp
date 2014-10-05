@@ -1343,7 +1343,7 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 	}
 
 	vec3_t shotOrigin;
-	G_GetShotOrigin(actor, fd, dir, shotOrigin);
+	fd->getShotOrigin(actor->origin, dir, shotOrigin);
 
 	/* Fire all shots. */
 	vec3_t impact;
