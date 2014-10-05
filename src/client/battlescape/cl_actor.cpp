@@ -1637,27 +1637,6 @@ static void CL_TargetingRadius (const vec3_t center, const float radius)
 		particle->size[0] = radius;
 }
 
-static void CL_GetShotOrigin (const vec3_t from, const fireDef_t* fd, const vec3_t dir, vec3_t shotOrigin)
-{
-	const int dv = AngleToDir((int) (atan2(dir[1], dir[0]) * todeg));
-	vec3_t dvec;
-	VectorCopy(dvecs[dv], dvec);
-	/* get weapon position */
-	VectorCopy(from, shotOrigin);
-	/* adjust height: */
-	shotOrigin[2] += fd->shotOrg[1];
-	/* adjust horizontal: */
-	if (fd->shotOrg[0] != 0) {
-		/* get "right" and "left" of a unit(rotate dir 90 on the x-y plane): */
-		const float x = dvec[1];
-		const float y = -dvec[0];
-		const float length = sqrt(dvec[0] * dvec[0] + dvec[1] * dvec[1]);
-		/* assign adjustments: */
-		shotOrigin[0] += x * fd->shotOrg[0] / length;
-		shotOrigin[1] += y * fd->shotOrg[0] / length;
-	}
-}
-
 /**
  * @brief Draws line to target.
  * @param[in] fromPos The (grid-) position of the aiming actor.

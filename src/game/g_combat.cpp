@@ -1071,24 +1071,6 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
 	}
 }
 
-void G_GetShotOrigin (const Edict* shooter, const fireDef_t* fd, const vec3_t dir, vec3_t shotOrigin)
-{
-	/* get weapon position */
-	gi.GridPosToVec(shooter->fieldSize, shooter->pos, shotOrigin);
-	/* adjust height: */
-	shotOrigin[2] += fd->shotOrg[1];
-	/* adjust horizontal: */
-	if (fd->shotOrg[0] != 0) {
-		/* get "right" and "left" of a unit(rotate dir 90 on the x-y plane): */
-		const float x = dir[1];
-		const float y = -dir[0];
-		const float length = sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
-		/* assign adjustments: */
-		shotOrigin[0] += x * fd->shotOrg[0] / length;
-		shotOrigin[1] += y * fd->shotOrg[0] / length;
-	}
-}
-
 /**
  * @brief Prepares weapon, firemode and container used for shoot.
  * @param[in] ent Pointer to attacker.
