@@ -127,6 +127,11 @@ bool uiScroll_t::set (int viewPos, int viewSize, int fullSize)
 	return updated;
 }
 
+void uiAbstractScrollableNode::initNode(uiNode_t* node) {
+	uiLocatedNode::initNode(node);
+	EXTRADATA(node).lua_onViewChange = LUA_NOREF;
+}
+
 /**
  * @brief Set the Y scroll to a position, and call event if need
  * @param[in] node Context node

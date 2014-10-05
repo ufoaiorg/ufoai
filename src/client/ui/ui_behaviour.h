@@ -132,11 +132,11 @@ const struct value_s* UI_RegisterNodeMethod(uiBehaviour_t* behaviour, const char
 const struct value_s* UI_GetPropertyFromBehaviour(const uiBehaviour_t* behaviour, const char* name) __attribute__ ((warn_unused_result));
 
 /**
- * @brief Return a property or lua based method from a node behaviour
+ * @brief Return a property or lua based method from a node, node behaviour or inherited behaviour.
  * @return A local property or lua method, else nullptr if not found.
  * @note Important: in case of a lua method, free the allocated .string value holding the method name!!!
  */
-const value_t* UI_GetPropertyOrLuaMethodFromBehaviour (const uiBehaviour_t* behaviour, const char* name, value_t &out);
+const value_t* UI_GetPropertyOrLuaMethod(const uiNode_t* node, const char* name, value_t *out);
 
 /**
  * @brief Initialize a node behaviour memory, after registration, and before using it.

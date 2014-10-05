@@ -81,6 +81,10 @@ void UI_AbstractOptionSetCurrentValue(uiNode_t* node, const char* value)
 		UI_ExecuteLuaEventScript(node, node->lua_onChange);
 	}
 }
+void uiAbstractOptionNode::initNode(uiNode_t* node) {
+	uiLocatedNode::initNode(node);
+	EXTRADATA(node).lua_onViewChange = LUA_NOREF;
+}
 
 void uiAbstractOptionNode::doLayout (uiNode_t* node)
 {

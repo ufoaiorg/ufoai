@@ -122,8 +122,8 @@ const value_t* UI_GetPropertyFromBehaviour (const uiBehaviour_t* behaviour, cons
 }
 
 /**
- * @brief Get a property or lua based method from a behaviour or his inheritance
- * @param[in] behaviour Context behaviour
+ * @brief Get a property or lua based method from a node, node behaviour or inherted behaviour
+ * @param[in] node The node holding the method
  * @param[in] name Property name we search
  * @param[out] out A reference to a value_t structure wich is filled if a lua based method is available.
  * @return A value_t with the requested name, else nullptr
@@ -132,17 +132,17 @@ const value_t* UI_GetPropertyFromBehaviour (const uiBehaviour_t* behaviour, cons
  * set to the lua callback id of the function.
  * @note After use, be sure to free the allocated .string value!!!
  */
-const value_t* UI_GetPropertyOrLuaMethodFromBehaviour (const uiBehaviour_t* behaviour, const char* name, value_t &out) {
+const value_t* UI_GetPropertyOrLuaMethod (const uiNode_t* node, const char* name, value_t *out) {
 	// first scan behaviour properties
-	const value_t* prop = UI_GetPropertyFromBehaviour (behaviour, name);
+	const value_t* prop = UI_GetPropertyFromBehaviour (node->behaviour, name);
 	if (prop) return prop;
 	// next scan lua based functions
     LUA_FUNCTION fn;
-    if (UI_GetBehaviourMethod(behaviour, name, fn)) {
-		out.type = (valueTypes_t)V_UI_NODEMETHOD_LUA;
-		out.string = Mem_StrDup(name);
-		out.ofs = fn;
-		out.size = 0;
+    if (UI_GetNodeMethod(node, name, fn)) {
+		out->type = (valueTypes_t)V_UI_NODEMETHOD_LUA;
+		out->string = Mem_StrDup(name);
+		out->ofs = fn;
+		out->size = 0;
     }
     // nothing found, report it
     return nullptr;
@@ -246,7 +246,7 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
  * in the log.
  */
 void UI_AddBehaviourMethod (uiBehaviour_t* behaviour, const char* name, LUA_METHOD fcn) {
-	Com_Printf ("UI_AddBehaviourMethod: registering node methode [%s] on node [%s]\n", name, behaviour->name);
+	Com_Printf ("UI_AddBehaviourMethod: registering class method [%s] on behaviour [%s]\n", name, behaviour->name);
 
 	/* the first method, so create a method table on this node */
 	if (!behaviour->nodeMethods) {

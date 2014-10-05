@@ -181,7 +181,7 @@ bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int
  * for the function is actually nparams + 1.
  * @note All parameters are send to lua as strings.
 */
-bool UI_ExecuteLuaBehaviourMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params, int nparams) {
+bool UI_ExecuteLuaMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params, int nparams) {
 	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, fcn); /* push event function on lua stack */
 	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
 	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
@@ -205,10 +205,10 @@ bool UI_ExecuteLuaBehaviourMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_
  * @return True if the operation succeeds, false otherwise.
  * @note The signature of the method in lua is: function(sender)
 */
-bool UI_ExecuteLuaBehaviourMethod_ByName (uiNode_t* node, const char* name, linkedList_t* params, int nparams) {
-	void* f=HASH_Get(node->behaviour->nodeMethods, name, strlen(name));
-	if (f) {
-		return UI_ExecuteLuaBehaviourMethod(node, *((LUA_FUNCTION*)f), params, nparams);
+bool UI_ExecuteLuaMethod_ByName (uiNode_t* node, const char* name, linkedList_t* params, int nparams) {
+	LUA_FUNCTION fn;
+	if (UI_GetNodeMethod(node, name, fn)) {
+		return UI_ExecuteLuaMethod(node, fn, params, nparams);
 	}
 	else {
 		Com_Printf("UI_ExecuteNodeMethod_ByName: calling undefined method %s on node %s\n", name, node->name);

@@ -432,13 +432,16 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 	value_t luaMethod;
 	const char* path = left->d.terminal.d1.constString;
 
+	// clear luaMethod structure before using it
+	memset(&luaMethod, 0, sizeof(luaMethod));
+
 	if (left->type == EA_VALUE_PATHPROPERTY || left->type == EA_VALUE_PATHNODE)
 		path = left->d.terminal.d1.constString;
 	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION || left->type == EA_VALUE_PATHNODE_WITHINJECTION)
 		path = UI_GenInjectedString(left->d.terminal.d1.constString, false, context);
 
 	UI_ReadNodePath(path, context->source, context->tagNode, &callNode, &callProperty, &luaMethod);
-	if (callNode == nullptr) {
+	if ((callNode == nullptr) && (!luaMethod.type)) {
 		Com_Printf("UI_ExecuteCallAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, UI_GetPath(context->source));
 		return;
 	}
@@ -479,16 +482,16 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 		}
 	}
 
-	if (callProperty == nullptr || callProperty->type == V_UI_ACTION) {
+	if (luaMethod.type == V_UI_NODEMETHOD_LUA) {
+		UI_ExecuteLuaMethod(callNode, luaMethod.ofs, newContext.params, newContext.paramNumber);
+	}
+	else if (callProperty == nullptr || callProperty->type == V_UI_ACTION) {
 		uiAction_t const* const actionsRef = callProperty ? Com_GetValue<uiAction_t*>(callNode, callProperty) : callNode->onClick;
 		UI_ExecuteActions(actionsRef, &newContext);
 	}
 	else if (callProperty->type == V_UI_NODEMETHOD) {
 		uiNodeMethod_t func = (uiNodeMethod_t) callProperty->ofs;
 		func(callNode, &newContext);
-	}
-	else if (callProperty->type == V_UI_NODEMETHOD_LUA) {
-		UI_ExecuteLuaBehaviourMethod(callNode, callProperty->ofs, newContext.params, newContext.paramNumber);
 	}
 	else {
 		/* unreachable, already checked few line before */
@@ -694,7 +697,7 @@ static void UI_ExecuteActions (const uiAction_t* firstAction, uiCallContext_t* c
 {
 	static int callnumber = 0;
 	if (callnumber++ > 20) {
-		Com_Printf("UI_ExecuteActions: Break possible infinite recursion\n");
+		Com_Printf("UI_ExecuteActions: Break possible infinite recursion, source [%s]\n", UI_GetPath(context->source));
 		return;
 	}
 	for (const uiAction_t* action = firstAction; action && !context->breakLoop; action = action->next) {

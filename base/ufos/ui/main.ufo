@@ -141,13 +141,13 @@ btnCampaign.on_click = function (sender)
 local btnSkirmish = ufo.create_button (pnlButtons, "btnSkirmish", "MainMenuBtn")
 btnSkirmish:set_text ("_SKIRMISH")
 btnSkirmish.on_click = function (sender)
-		cmd "ui_push skirmish;"
+		ufo.cmd "ui_push skirmish;"
 	end
 
 local btnMultiplayer = ufo.create_button (pnlButtons, "btnMultiplayer", "MainMenuBtn")
 btnMultiplayer:set_text ("_MULTIPLAYER")
 btnMultiplayer.on_click = function (sender)
-		cmd "ui_push multiplayer;"
+		ufo.cmd "ui_push multiplayer;"
 	end
 
 local btnOptions = ufo.create_button (pnlButtons, "btnOptions", "MainMenu2Btn")
