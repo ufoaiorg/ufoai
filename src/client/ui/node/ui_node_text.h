@@ -39,7 +39,6 @@ public:
 	void onLoading(uiNode_t* node) override;
 	void onLoaded(uiNode_t* node) override;
 	int getCellHeight (uiNode_t* node) override;
-public:
 	void validateCache(uiNode_t* node);
 protected:
 	void drawText (uiNode_t* node, const char* text, const linkedList_t* list, bool noDraw);
