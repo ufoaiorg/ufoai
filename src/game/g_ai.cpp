@@ -295,7 +295,7 @@ bool AI_HasLineOfFire (const Edict* actor, const Edict* target)
 /**
  * @brief Test if @c check is exposed to the enemy @c team.
  */
-static bool AI_IsExposed (int team, Edict* check)
+static bool AI_IsExposed (int team, Actor* check)
 {
 	if (G_TestVis(team, check, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)
 		return true;
