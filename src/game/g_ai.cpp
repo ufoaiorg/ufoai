@@ -270,9 +270,9 @@ void AI_Init (void)
 }
 
 /**
- * @brief Check if @c actor has a line of fire to the @c target actor.
+ * @brief Check if @c actor has a line of fire to the @c target given.
  */
-bool AI_HasLineOfFire (const Edict* actor, const Edict* target)
+bool AI_HasLineOfFire (const Actor* actor, const Edict* target)
 {
 	for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
 		const Item* item = AI_GetItemForShootType(shootType, actor);
@@ -300,8 +300,8 @@ static bool AI_IsExposed (int team, Actor* check)
 	if (G_TestVis(team, check, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)
 		return true;
 
-	Edict* from = nullptr;
-	while ((from = G_EdictsGetNextInUse(from))) {
+	Actor* from = nullptr;
+	while ((from = G_EdictsGetNextLivingActor(from))) {
 		const int fromTeam = from->getTeam();
 		if ((team >= 0 && fromTeam != team) || (team < 0 && fromTeam == -team))
 			continue;
