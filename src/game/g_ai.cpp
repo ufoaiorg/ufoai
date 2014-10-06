@@ -759,7 +759,7 @@ static Edict* AI_SearchDestroyableObject (const Actor* actor, const fireDef_t* f
 }
 
 #define LOF_CHECK_PARTITIONS	4
-bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const fireDef_t* fd, int shots)
+bool AI_CheckLineOfFire (const Actor* shooter, const Edict* target, const fireDef_t* fd, int shots)
 {
 	vec3_t dir, origin;
 	VectorSubtract(target->origin, shooter->origin, dir);
