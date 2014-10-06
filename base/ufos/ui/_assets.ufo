@@ -242,7 +242,7 @@ component MainMenuTab extends button
 }
 --]]
 local MainMenuTab = ufo.create_component ("button", "MainMenuTab", nil)
-MainMenuTab:set_size(1215, 30)
+MainMenuTab:set_size(125, 30)
 MainMenuTab:set_font("f_small_bold")
 MainMenuTab:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
 MainMenuTab:set_color(1, 1, 1, 0.5)
@@ -370,6 +370,7 @@ StatBar_valuenum:set_pos(90, 0)
 StatBar_valuenum:set_size(90, 0)
 StatBar_valuenum:set_longlines(ufo.LONGLINES_CHOP)
 StatBar_valuenum:set_contentalign(ufo.ALIGN_UR)
+
 
 --[[
 component CheckBox extends checkbox

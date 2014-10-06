@@ -484,6 +484,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 
 	if (luaMethod.type == V_UI_NODEMETHOD_LUA) {
 		UI_ExecuteLuaMethod(callNode, luaMethod.ofs, newContext.params, newContext.paramNumber);
+		Mem_Free(const_cast<char*>(luaMethod.string));
 	}
 	else if (callProperty == nullptr || callProperty->type == V_UI_ACTION) {
 		uiAction_t const* const actionsRef = callProperty ? Com_GetValue<uiAction_t*>(callNode, callProperty) : callNode->onClick;
