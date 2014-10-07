@@ -171,7 +171,7 @@ typedef struct fireDef_s {
 	int weaponSkill;	/**< What weapon skill is needed to fire this weapon. */
 	int rounds;			/**< e.g. for incendiary grenades */
 
-	void getShotOrigin (const vec3_t from, const vec3_t dir, vec3_t shotOrigin) const;
+	void getShotOrigin (const vec3_t from, const vec3_t dir, bool crouching, vec3_t shotOrigin) const;
 } fireDef_t;
 
 /**

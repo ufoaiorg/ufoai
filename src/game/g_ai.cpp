@@ -763,7 +763,7 @@ bool AI_CheckLineOfFire (const Actor* shooter, const Edict* target, const fireDe
 {
 	vec3_t dir, origin;
 	VectorSubtract(target->origin, shooter->origin, dir);
-	fd->getShotOrigin(shooter->origin, dir, origin);
+	fd->getShotOrigin(shooter->origin, dir, shooter->isCrouched(), origin);
 	if (!fd->gravity) {
 		/* gun-to-target line free? */
 		const trace_t trace = G_Trace(Line(origin, target->origin), shooter, MASK_SHOT);

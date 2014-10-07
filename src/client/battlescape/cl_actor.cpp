@@ -1671,7 +1671,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	VectorSubtract(end, start, dir);
 
 	/* Calculate shot origin */
-	selActor->fd->getShotOrigin(start, dir, start);
+	selActor->fd->getShotOrigin(start, dir, LE_IsCrouched(selActor), start);
 	VectorSubtract(end, start, dir);
 	VectorNormalize(dir);
 
@@ -1758,7 +1758,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	/* Calculate shot origin */
 	vec3_t ds;
 	VectorSubtract(at, from, ds);
-	selActor->fd->getShotOrigin(from, ds, from);
+	selActor->fd->getShotOrigin(from, ds, LE_IsCrouched(selActor), from);
 
 	/* calculate parabola */
 	vec3_t v0;
