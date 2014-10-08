@@ -76,6 +76,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../node/ui_node_bar.h"
 #include "../node/ui_node_button.h"
 #include "../node/ui_node_checkbox.h"
+#include "../node/ui_node_data.h"
 #include "../node/ui_node_ekg.h"
 #include "../node/ui_node_image.h"
 #include "../node/ui_node_item.h"
@@ -102,6 +103,7 @@ typedef uiNode_t uiAbstractValueNode_t;
 typedef uiNode_t uiBarNode_t;
 typedef uiNode_t uiButtonNode_t;
 typedef uiNode_t uiCheckBoxNode_t;
+typedef uiNode_t uiDataNode_t;
 typedef uiNode_t uiEkgNode_t;
 typedef uiNode_t uiImageNode_t;
 typedef uiNode_t uiItemNode_t;
@@ -625,6 +627,19 @@ struct uiCheckBoxNode_t: uiNode_t {
 	void set_iconunknown (const char* name) { UI_CheckBox_SetIconUnknownByName($self, name); };
 };
 
+%rename (uiData) uiDataNode_t;
+struct uiDataNode_t: uiNode_t {
+};
+%extend uiDataNode_t {
+	char* as_string () { return const_cast<char*>(UI_Node_GetText($self)); };
+	int as_integer () { return UI_EXTRADATA($self, dataExtraData_t).integer; };
+	float as_float () { return UI_EXTRADATA($self, dataExtraData_t).number; };
+
+	void set_value (const char* value ) { UI_Node_SetText($self, value); };
+	void set_value (int value) { UI_EXTRADATA($self, dataExtraData_t).integer = value; };
+	void set_value (float value) { UI_EXTRADATA($self, dataExtraData_t).number = value; };
+};
+
 %rename (uiEkg) uiEkgNode_t;
 struct uiEkgNode_t: uiImageNode_t {
 };
@@ -869,6 +884,9 @@ static uiButtonNode_t* UI_CreateButton (uiNode_t* parent, const char* name, cons
 static uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "checkbox", name, super);
 }
+static uiDataNode_t* UI_CreateData (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "data", name, super);
+}
 static uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "ekg", name, super);
 }
@@ -914,6 +932,8 @@ uiBarNode_t* UI_CreateBar (uiNode_t* parent, const char* name, const char* super
 uiButtonNode_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super);
 %rename (create_checkbox) UI_CreateCheckBox;
 uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super);
+%rename (create_data) UI_CreateData;
+uiDataNode_t* UI_CreateData (uiNode_t* parent, const char* name, const char* super);
 %rename (create_ekg) UI_CreateEKG;
 uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super);
 %rename (create_image) UI_CreateImage;

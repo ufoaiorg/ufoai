@@ -279,7 +279,7 @@ void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNo
 				/* if no node found, then it is possible we call a lua based function */
 				if (!childnode) {
 					*resultProperty = UI_GetPropertyOrLuaMethod(node, name, luaMethod);
-					if (luaMethod->type) {
+					if (luaMethod && luaMethod->type) {
 						childnode = node;
 					}
 				}
