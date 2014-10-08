@@ -897,11 +897,6 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
 	if (!pointTrace) {
 		VectorNormalizeFast(dir);			/* Normalize the vector i.e. make length 1.0 */
 
-		/* places the starting-location a bit away from the attacker-model/grid. */
-		/** @todo need some change to reflect 2x2 units.
-		 * Also might need a check if the distance is bigger than the one to the impact location. */
-		/** @todo can't we use the fd->shotOrg here and get rid of the sv_shot_origin cvar? */
-		VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);
 		vec3_t angles;
 		VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
@@ -1068,24 +1063,6 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
 		VectorAdd(temp, dir, dir);
 		VectorAdd(temp, dir, dir);
 		flags |= SF_BOUNCED;
-	}
-}
-
-void G_GetShotOrigin (const Edict* shooter, const fireDef_t* fd, const vec3_t dir, vec3_t shotOrigin)
-{
-	/* get weapon position */
-	gi.GridPosToVec(shooter->fieldSize, shooter->pos, shotOrigin);
-	/* adjust height: */
-	shotOrigin[2] += fd->shotOrg[1];
-	/* adjust horizontal: */
-	if (fd->shotOrg[0] != 0) {
-		/* get "right" and "left" of a unit(rotate dir 90 on the x-y plane): */
-		const float x = dir[1];
-		const float y = -dir[0];
-		const float length = sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
-		/* assign adjustments: */
-		shotOrigin[0] += x * fd->shotOrg[0] / length;
-		shotOrigin[1] += y * fd->shotOrg[0] / length;
 	}
 }
 
@@ -1343,7 +1320,7 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 	}
 
 	vec3_t shotOrigin;
-	G_GetShotOrigin(actor, fd, dir, shotOrigin);
+	fd->getShotOrigin(actor->origin, dir, actor->isCrouched(), shotOrigin);
 
 	/* Fire all shots. */
 	vec3_t impact;

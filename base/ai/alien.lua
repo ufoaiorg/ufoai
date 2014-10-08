@@ -1,5 +1,24 @@
 --[[
-	AI moduel methods, these work on the currently moving AI actor (Unless noted otherwise parameters are optional):
+Copyright (C) 2002-2014 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+--[[
+	AI module methods, these work on the currently moving AI actor (Unless noted otherwise parameters are optional):
 		print (...) -- Works more or less like Lua's builtin print.
 
 		see (vision_type, team, sort_order) -- Returns a table of actors (userdatas) the current AI actor can see.
@@ -54,7 +73,7 @@
 			tus -- max number of TUs to use for moving + shooting (defaults to use all tus).
 
 		postionhide (team) -- Returns a position (pos3 userdata) for the AI actor to hide in or false if none found.
-			team -- Team to hide from, vlaid values: "phalanx", "civilian" and "alien", defaults to "alien" if AI is civilian and "all but our own team" (not a valid value) otherwise.
+			team -- Team to hide from, valid values: "phalanx", "civilian" and "alien", defaults to "alien" if AI is civilian and "all but our own team" (which cannot be directly specified) otherwise.
 
 		positionherd (target) -- Returns a position (pos3 userdata) from where target can be used as a meatshield or false if none found.
 			target -- *Required* Actor (userdata) to hide behind.
@@ -93,6 +112,10 @@
 
 		actor () -- Returns the currently mocving AI actor (userdata)
 
+		class () -- Returns the current AI actor's class (LUA AI subtype).
+
+		hideneeded () -- Returns true if the AI actor need hiding (Low morale or exposed position) false otherwise.
+
 
 	Actor (userdata) metatable methods (Parameters required unless a default is noted)
 		pos (actor) -- Returns the given actor's positon (userdata)
@@ -130,85 +153,93 @@
 			type -- "dist" (default -- linear distance in map units) or "path" (pathing distance)
 --]]
 
---[[
-	AI entry point.  Run at the start of the AI's turn.
---]]
-function think ()
-	if ai.actor:HP() < 50 then
-		if ai.actor:morale() < 30 then
-			hide()
-		else
-			herd()
-		end
-	-- Try to make sure we have a weapon
-	elseif not readyweapon() then
-		herd()
-	else
-		-- Look around for potential targets.  We prioritize phalanx.
-		local phalanx  = ai.see("team", "phalanx")
-		-- Choose proper action
-		if #phalanx < 1 then
-			local civilian = ai.see("team", "civilian")
-			if #civilian < 1 then
-				search()
-			else
-				engage( civilian )
-			end
-		else
-			engage( phalanx )
-		end
-	end
+local ai = ai
+
+local params
+ai.params = {
+	taman =	{ vis = "team", ord = "dist", pos = "fastest", move = "CW", prio = {"~civilian", "civilian"} },
+	shevaar = { vis = "extra", ord = "path", pos = "farthest", move = "CCW", prio = {"~civilian", "civilian"} },
+	ortnok = { vis = "extra", ord = "HP", pos = "nearest", move = "rand", prio = {"~civilian", "civilian"} },
+	bloodspider = { vis = "sight", ord = "path", pos = "nearest", move = "hide", prio = {"civilian", "~civilian"} },
+	bloodspider_adv = { vis = "sight", ord = "path", pos = "nearest", move = "hide", prio = {"~alien"} },
+	hovernet = { vis = "team", ord = "dist", pos = "fastest", move = "herd", prio = {"~civilian", "civilian"} },
+	hovernet_adv = { vis = "team", ord = "dist", pos = "farthest", move = "herd", prio = {"~civilian", "civilian"} },
+	default = { vis = "sight", ord = "dist", pos = "fastest", move = rand, prio = {"~alien"} }
+}
+
+function ai.hidetus ()
+	return ai.actor():TU() - 4
 end
 
+function ai.ismelee()
+	local right, left = ai.weapontype()
+	return (right == "melee" and (left == "melee" or left == "none")) or (right == "none" and left == "melee")
+end
 
---[[
-	Search for a new weapon to grab
---]]
-function searchweapon ()
-	local weapons = ai.findweapons()
-	if #weapons > 0 then
-		weapons[1]:goto()
-		return ai.grabweapon()
+function ai.flee ()
+	local flee_pos = ai.positionflee()
+	if flee_pos then
+		return flee_pos:goto()
 	end
 	return false
 end
 
+function ai.hide ()
+	local hide_pos = ai.positionhide()
+	if hide_pos then
+		return hide_pos:goto()
+	end
+	return false
+end
 
---[[
-	Try to make sure to have a working weapon
---]]
-function readyweapon ()
-	local has_right, has_left = ai.actor:isarmed()
-	local right_ammo, left_ammo = ai.roundsleft()
-	if not right_ammo and not left_ammo then
-		if has_right then
-			ai.reload("right")
-		elseif has_left then
-			ai.reload("left")
+function ai.herd ()
+	local aliens = ai.see("all", "alien", "path")
+	if #aliens > 0 then
+		for i = 1, #aliens do
+			local herd_pos = ai.positionherd(aliens[i])
+			if herd_pos then
+				return herd_pos:goto()
+			end
+		end
+	end
+	return false
+end
+
+function ai.approach (targets)
+	for i = 1, #targets do
+		local near_pos
+		for j = 1, 2 do
+			if targets[i].pos then
+				near_pos = ai.positionapproach(targets[i]:pos(), ai.hidetus(), j == 1)
+			else
+				near_pos = ai.positionapproach(targets[i], ai.hidetus(), j == 1)
+			end
+			if near_pos then
+				break
+			end
+		end
+		if near_pos then
+			near_pos:goto()
+			return targets[i]
+		end
+	end
+	return nil
+end
+
+function ai.search ()
+	-- First check if we have a mission target
+	local targets = ai.missiontargets("all", "alien", "path")
+	if #targets < 1 then
+		-- Check if we can block an enemy target
+		for i = 1, #params.prio do
+			targets = ai.missiontargets("all", params.prio[i], "path")
+			if #targets > 0 then
+				break
+			end
 		end
 	end
 
-	has_right, has_left = ai.actor:isarmed()
-	if not has_right and not has_left and not ai.grabweapon() then
-		return searchweapon()
-	end
-
-	return true
-end
-
-
---[[
-	Try to find a suitable target by wandering around.
---]]
-function search ()
-	-- First check if we have a mission target
-	local targets = ai.missiontargets("all", "alien")
-	if #targets < 1 then
-		-- Check if we can block an enemy target
-		targets = ai.missiontargets("all", "phalanx")
-	end
-
-	local found = false
+	local found
 	if #targets > 0 then
 		for i = 1, #targets do
 			local target_pos = ai.positionmission(targets[i])
@@ -220,108 +251,201 @@ function search ()
 		end
 		-- Can't get to any mission target, try to approach the nearest one
 		if not found then
-			found = approach(targets)
+			found = ai.approach(targets)
 		end
 	end
 
+	-- Nothing found wander around
 	if not found then
-		local next_pos = ai.positionwander()
-		if next_pos then
-			next_pos:goto()
+		if params.move == "herd" then
+			ai.herd()
+		else if params.move == "hide" then
+			ai.hide()
+		else
+			local search_tus = (ai.hidetus() - ai.tusforshooting() + 1) / 2
+			if search_tus < 1 then
+				search_tus =  ai.hidetus() + 1 / 2
+			end
+			local next_pos = ai.positionwander(params.move, search_tus)
+			if next_pos then
+				next_pos:goto()
+			end
 		end
 	end
 end
 
+function ai.searchweapon ()
+	local weapons = ai.findweapons()
+	if #weapons > 0 then
+		weapons[1]:goto()
+		return ai.grabweapon()
+	end
+	return false
+end
 
---[[
-	Attempts to approach the target.
---]]
-function approach( targets, tus )
-	for i = 1, #targets do
-		local near_pos = false
-		if targets[1].pos then
-			near_pos = ai.positionapproach( targets[i].pos(), tus )
-		else
-			near_pos = ai.positionapproach( targets[i], tus )
+function ai.readyweapon ()
+	local has_right, has_left = ai.actor():isarmed()
+	local right_ammo, left_ammo = ai.roundsleft()
+	if not right_ammo and not left_ammo then
+		if has_right then
+			ai.reload("right")
 		end
-		if near_pos then
-			near_pos:goto()
-			return targets[i]
+		right_ammo, left_ammo = ai.roundsleft()
+		if has_left and not right_ammo then
+			ai.reload("left")
+		end
+	end
+
+	right_ammo, left_ammo = ai.roundsleft()
+	return right_ammo or left_ammo or ai.grabweapon()
+end
+
+-- Shoot (from current position) the first suitable target in the table
+function ai.shoot (targets)
+	local min_group = 3 -- Min enemy group for grenade throw
+
+	for i = 1, #targets do
+		local target = targets[i]
+		-- Throw a grenade if enough enemies are grouped
+		local shot
+		-- Be nice in low difficulties and don't throw grenades
+		if ai.difficulty() >= 0 then
+			 shot = target:throwgrenade(min_group, ai.hidetus())
+		end
+		-- Shoot
+		if not target:isdead() then
+			shot = target:shoot(ai.hidetus()) or shot
+		end
+		if shot then
+			return target
 		end
 	end
 	return nil
 end
 
-
---[[
-	Engages targets in combat.
-
-	Currently attempts to see target, shoot then hide.
---]]
-function engage( targets )
-	local target = false
-	local hide_tu = 4 -- Crouch + face
-	local min_group = 3 -- Min enemy group for grenade throw
-
-	local done = false
+-- Attack the first suitable target in the table - move to position and shoot
+function ai.attack (targets)
 	for i = 1, #targets do
-		target = targets[i]
-		-- Move until target in sight
-		local shoot_pos = ai.positionshoot(target, "fastest", ai.actor:TU() - hide_tu) -- Get a shoot position
+		-- Get a shoot position
+		local shoot_pos = ai.positionshoot(targets[i], params.pos, ai.hidetus())
 		if shoot_pos then
-			-- Go shoot
+			-- Move until target in sight
 			shoot_pos:goto()
 
-			-- Throw a grenade if enough enemies are grouped
-			target:throwgrenade(min_group, ai.actor:TU() - hide_tu)
-			-- Shoot
-			target:shoot(ai.actor:TU() - hide_tu)
-			done = true
+			local target = ai.shoot{targets[i]}
+			if target then
+				return target
+			end
+		end
+	end
+	return nil
+end
+
+-- Engage the first suitable target in the table - approaching if currently out of range
+function ai.engage(targets)
+	local target
+	for i = 1, #targets do
+		target = ai.attack{targets[i]}
+		if target then
 			break
 		end
 	end
+	if not target then
+		ai.reactionfire("enable")
+		target = ai.approach(targets)
+	end
+	return target
+end
 
-	-- Hide
-	if done then
-		hide()
-	else
-		target = approach(targets, ai.actor:TU() - hide_tu)
+-- Short term reactionary phase
+function ai.phase_one ()
+	if ai.isfighter() and ai.actor():morale() >= 30 and ai.readyweapon() then
+		-- If we don't have enough TUs for shooting try disabling reaction fire to get more available TUs
+		if ai.tusforshooting() > ai.actor():TU() then
+			ai.reactionfire("disable")
+		end
+		local targets = ai.see(params.vis, "~civilian")
+		while #targets > 0 do
+			if ai.actor():HP() < 50 then
+				ai.target = ai.shoot(targets)
+			else
+				ai.target = ai.attack(targets)
+			end
+			-- We died attacking or cannot attack
+			if ai.actor():isdead() or not ai.target or ai.tusforshooting() > ai.actor():TU() then
+				return
+			end
+			targets = ai.see(params.vis, "~civilian")
+		end
+	end
+end
+
+-- Longer term actions
+function ai.phase_two ()
+	if ai.isfighter() and ai.actor():morale() >= 30 then
+		if not ai.readyweapon() then
+			if ai.searchweapon() then
+				ai.phase_two()
+			end
+		elseif ai.actor():HP() >= 50 then
+			local done
+			for i = 1, #params.prio do
+				local targets = ai.see(params.vis, params.prio[i], params.ord)
+				while #targets > 0 do
+					ai.target = ai.engage(targets)
+					if not ai.target or not ai.target:isdead() then
+						done = true
+						break
+					end
+					targets = ai.see(params.vis, params.prio[i], params.ord)
+				end
+				if done then
+					break
+				end
+			end
+			if not ai.target then
+				ai.reactionfire("disable")
+				ai.crouch(false)
+				ai.search()
+			end
+		end
+	end
+end
+
+-- Round end actions
+function ai.phase_three ()
+	for i = 1, #params.prio do
+		local targets = ai.see(params.vis, params.prio[i], params.ord)
+		if #targets > 0 and ai.tusforshooting() <= ai.actor():TU() then
+			ai.target = ai.shoot(targets) or ai.target
+		end
 	end
 
-	if target then
-		target:pos():face()
-	else
-		search()
+	local hid
+	if ai.hideneeded() then
+		hid = ai.hide()
+	elseif ai.actor():HP() < 50 then
+		hid = ai.herd() or ai.hide()
 	end
+	if not hid and ai.actor():morale() < 30 then
+		ai.flee()
+	end
+
+	if ai.target then
+		ai.target:pos():face()
+	end
+	ai.reactionfire("enable")
 	ai.crouch(true)
 end
 
-
---[[
-	Tries to move to hide position
---]]
-function hide ()
-	local hide_pos = ai.positionhide()
-	if hide_pos then
-		hide_pos:goto()
+function think ()
+	params = ai.params[ai.class()]
+	ai.target = nil
+	if not params then
+		params = ai.params.default
 	end
-end
 
-
---[[
-	Tries to move to herd position
---]]
-function herd ()
-	local aliens = ai.see("all", "alien")
-	if #aliens > 0 then
-		for i = 1, #aliens do
-			local herd_pos = ai.positionherd(aliens[i])
-			if herd_pos then
-				herd_pos:goto()
-				return
-			end
-		end
-	else
-		hide()
-	end
+	ai.phase_one()
+	ai.phase_two()
+	ai.phase_three()
 end

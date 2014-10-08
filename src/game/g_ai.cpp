@@ -270,9 +270,9 @@ void AI_Init (void)
 }
 
 /**
- * @brief Check if @c actor has a line of fire to the @c target actor.
+ * @brief Check if @c actor has a line of fire to the @c target given.
  */
-bool AI_HasLineOfFire (const Edict* actor, const Edict* target)
+bool AI_HasLineOfFire (const Actor* actor, const Edict* target)
 {
 	for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
 		const Item* item = AI_GetItemForShootType(shootType, actor);
@@ -295,13 +295,13 @@ bool AI_HasLineOfFire (const Edict* actor, const Edict* target)
 /**
  * @brief Test if @c check is exposed to the enemy @c team.
  */
-static bool AI_IsExposed (int team, Edict* check)
+static bool AI_IsExposed (int team, Actor* check)
 {
 	if (G_TestVis(team, check, VT_PERISHCHK | VT_NOFRUSTUM) & VS_YES)
 		return true;
 
-	Edict* from = nullptr;
-	while ((from = G_EdictsGetNextInUse(from))) {
+	Actor* from = nullptr;
+	while ((from = G_EdictsGetNextLivingActor(from))) {
 		const int fromTeam = from->getTeam();
 		if ((team >= 0 && fromTeam != team) || (team < 0 && fromTeam == -team))
 			continue;
@@ -759,11 +759,11 @@ static Edict* AI_SearchDestroyableObject (const Actor* actor, const fireDef_t* f
 }
 
 #define LOF_CHECK_PARTITIONS	4
-bool AI_CheckLineOfFire (const Edict* shooter, const Edict* target, const fireDef_t* fd, int shots)
+bool AI_CheckLineOfFire (const Actor* shooter, const Edict* target, const fireDef_t* fd, int shots)
 {
 	vec3_t dir, origin;
 	VectorSubtract(target->origin, shooter->origin, dir);
-	G_GetShotOrigin(shooter, fd, dir, origin);
+	fd->getShotOrigin(shooter->origin, dir, shooter->isCrouched(), origin);
 	if (!fd->gravity) {
 		/* gun-to-target line free? */
 		const trace_t trace = G_Trace(Line(origin, target->origin), shooter, MASK_SHOT);

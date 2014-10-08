@@ -1045,3 +1045,28 @@ void equipDef_t::addClip (const Item* item)
 		numItems[ammoIdx]++;
 	}
 }
+
+void fireDef_t::getShotOrigin (const vec3_t from, const vec3_t dir, bool crouching, vec3_t shotOrigin) const
+{
+	const int dv = AngleToDir((int) (atan2(dir[1], dir[0]) * todeg));
+	vec3_t dvec;
+	VectorCopy(dvecs[dv], dvec);
+	/* get weapon position */
+	VectorCopy(from, shotOrigin);
+	/* adjust height: */
+	if (shotOrg[1] != 0) {
+		shotOrigin[2] += shotOrg[1];
+		if (crouching)
+			shotOrigin[2] -= EYE_STAND - PLAYER_CROUCH;
+	}
+	/* adjust horizontal: */
+	if (shotOrg[0] != 0) {
+		/* get "right" and "left" of a unit(rotate dir 90 on the x-y plane): */
+		const float x = dvec[1];
+		const float y = -dvec[0];
+		const float length = sqrt(dvec[0] * dvec[0] + dvec[1] * dvec[1]);
+		/* assign adjustments: */
+		shotOrigin[0] += x * shotOrg[0] / length;
+		shotOrigin[1] += y * shotOrg[0] / length;
+	}
+}
