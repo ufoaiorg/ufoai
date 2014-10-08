@@ -125,7 +125,8 @@ const value_t* UI_GetPropertyFromBehaviour (const uiBehaviour_t* behaviour, cons
  * @brief Get a property or lua based method from a node, node behaviour or inherted behaviour
  * @param[in] node The node holding the method
  * @param[in] name Property name we search
- * @param[out] out A reference to a value_t structure wich is filled if a lua based method is available.
+ * @param[out] out A reference to a value_t structure wich is filled if a lua based method is available. Set to
+ * nullptr to onlys scan for properties and not for lua based methods.
  * @return A value_t with the requested name, else nullptr
  * @note This function first searches the local properties of the behaviour before looking into lua based functions.
  * @note If a lua function is found, .type is set to V_UI_NODEMETHOD_LUA, .string is set to the method name and .ofs is
@@ -137,13 +138,15 @@ const value_t* UI_GetPropertyOrLuaMethod (const uiNode_t* node, const char* name
 	const value_t* prop = UI_GetPropertyFromBehaviour (node->behaviour, name);
 	if (prop) return prop;
 	// next scan lua based functions
-    LUA_FUNCTION fn;
-    if (UI_GetNodeMethod(node, name, fn)) {
-		out->type = (valueTypes_t)V_UI_NODEMETHOD_LUA;
-		out->string = Mem_StrDup(name);
-		out->ofs = fn;
-		out->size = 0;
-    }
+	if (out) {
+		LUA_FUNCTION fn;
+		if (UI_GetNodeMethod(node, name, fn)) {
+			out->type = (valueTypes_t)V_UI_NODEMETHOD_LUA;
+			out->string = Mem_StrDup(name);
+			out->ofs = fn;
+			out->size = 0;
+		}
+	}
     // nothing found, report it
     return nullptr;
 }
