@@ -87,5 +87,7 @@ void UI_RegisterControlsNode (uiBehaviour_t* behaviour)
 	behaviour->name = "controls";
 	behaviour->extends = "image";
 	behaviour->manager = UINodePtr(new uiControlNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiControlsNode_t *");
+	/* in lua, this class is renamed 'widget' since the generic name 'control' is reserved for a child
+	   node in a component/window node */
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiWidgetNode_t *");
 }

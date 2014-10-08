@@ -276,10 +276,10 @@ void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNo
 				childnode = node->root;
 			else {
 				childnode = UI_GetNode(node, name);
-				/* if no node found, then it is possible we call a lua based function */
-				if (!childnode) {
+				/* if no node found and if we need it, then it is possible we call a lua based function */
+				if (luaMethod && !childnode) {
 					*resultProperty = UI_GetPropertyOrLuaMethod(node, name, luaMethod);
-					if (luaMethod && luaMethod->type) {
+					if (luaMethod->type) {
 						childnode = node;
 					}
 				}

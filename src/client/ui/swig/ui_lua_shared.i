@@ -44,10 +44,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 %module ufo
 
 %{
-/* import headers into the interface so they can be used */
-#include <typeinfo>
+/* disable al casting warnings (enabled at the bottom line of this file) */
+#pragma GCC diagnostic ignored "-Wcast-qual"
 
-/* import common functions */
+/* common client stuff */
 #include "../../../shared/shared.h"
 #include "../../../shared/vector.h"
 #include "../../../shared/ufotypes.h"
@@ -55,10 +55,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../common/scripts.h"
 #include "../../../common/scripts_lua.h"
 
-/* import common client functions */
 #include "../../cl_renderer.h"
+#include "../../cl_inventory.h"
 
-/* import ui specific functions */
+/* ui specific stuff */
 #include "../ui_behaviour.h"
 #include "../ui_data.h"
 #include "../ui_dataids.h"
@@ -74,10 +74,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../node/ui_node_abstractvalue.h"
 
 #include "../node/ui_node_bar.h"
+#include "../node/ui_node_base.h"
+#include "../node/ui_node_baseinventory.h"
+#include "../node/ui_node_battlescape.h"
 #include "../node/ui_node_button.h"
 #include "../node/ui_node_checkbox.h"
+#include "../node/ui_node_container.h"
+#include "../node/ui_node_controls.h"
 #include "../node/ui_node_data.h"
 #include "../node/ui_node_ekg.h"
+#include "../node/ui_node_geoscape.h"
 #include "../node/ui_node_image.h"
 #include "../node/ui_node_item.h"
 #include "../node/ui_node_model.h"
@@ -90,21 +96,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_lua.h"
 
+/* other game stuff */
+#include "../../../game/inv_shared.h"
 
 /*
 	typedefs only visible for SWIG, used for subclassing uiNode_t (see below for more details). Note
 	that uiAbstractNode_t is missing from the list, since this is the uiNode_t type.
 */
+typedef uiNode_t uiAbstractBaseNode_t;
 typedef uiNode_t uiAbstractOptionNode_t;
 typedef uiNode_t uiAbstractScrollableNode_t;
 typedef uiNode_t uiAbstractScrollbarNode_t;
 typedef uiNode_t uiAbstractValueNode_t;
 
 typedef uiNode_t uiBarNode_t;
+typedef uiNode_t uiBaseMapNode_t;
+typedef uiNode_t uiBaseLayoutNode_t;
+typedef uiNode_t uiBaseInventoryNode_t;
 typedef uiNode_t uiButtonNode_t;
 typedef uiNode_t uiCheckBoxNode_t;
+typedef uiNode_t uiContainerNode_t;
 typedef uiNode_t uiDataNode_t;
 typedef uiNode_t uiEkgNode_t;
+typedef uiNode_t uiGeoscapeNode_t;
 typedef uiNode_t uiImageNode_t;
 typedef uiNode_t uiItemNode_t;
 typedef uiNode_t uiModelNode_t;
@@ -115,6 +129,7 @@ typedef uiNode_t uiTextNode_t;
 typedef uiNode_t uiTextEntryNode_t;
 typedef uiNode_t uiTextureNode_t;
 typedef uiNode_t uiVScrollBarNode_t;
+typedef uiNode_t uiWidgetNode_t; /* note: ufo class = "controls" */
 typedef uiNode_t uiWindowNode_t;
 
 // todo: implement other ui node classes
@@ -339,6 +354,38 @@ typedef enum {
 	LAYOUT_ENSURE_32BIT = 0x7FFFFFFF
 } panelLayout_t;
 
+/**
+ * @brief A list of filter types in the market and production view.
+ * @note Run-time only, please do not use this in savegame/structures and the like.
+ * Please also do not use hardcoded numbers to access this (e.g. in a .ufo script).
+ * @sa inv_shared.c:INV_ItemMatchesFilter
+ * @sa inv_shared.c:INV_GetFilterTypeID
+ */
+typedef enum {
+	/* All types starting with "FILTER_S_" contain items that can be used on/with soldiers (i.e. personal equipment). */
+	FILTER_S_PRIMARY,		/**< All 'Primary' weapons and their ammo for soldiers (Except for heavy weapons). */
+	FILTER_S_SECONDARY,		/**< All 'Secondary' weapons and their ammo for soldiers. */
+	FILTER_S_HEAVY,			/**< Heavy weapons for soldiers. */
+	FILTER_S_MISC,			/**< Misc. soldier equipment (i.e. everything else that is not in the other soldier-item filters) */
+	FILTER_S_ARMOUR,		/**< Armour for soldiers. */
+	FILTER_S_IMPLANT,		/**< Implants */
+	MAX_SOLDIER_FILTERTYPES,
+
+	/* Non-soldier items */
+	FILTER_CRAFTITEM,	/**< Aircraft equipment. */
+	FILTER_UGVITEM,		/**< Heavy equipment like tanks (i.e. these are actually employees) and their parts.
+						 * Some of the content are special normal items (like for soldiers).
+						 * The UGVs themself are specially handled.*/
+	FILTER_AIRCRAFT,	/**< Aircrafts. */
+	FILTER_DUMMY,		/**< Everything that is not in _any_ of the other filter types.
+						 * Mostly plot-relevant stuff, unproducible stuff and stuff. */
+	FILTER_DISASSEMBLY,
+
+	MAX_FILTERTYPES,
+
+	FILTER_ENSURE_32BIT = 0x7FFFFFFF
+} itemFilterTypes_t;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose scroll
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -369,10 +416,24 @@ struct cvar_t {
 	char* as_string () { return $self->string; };
 	float as_float () { return $self->value; };
 	int as_integer () { return $self->integer; };
+
+	void set_value (int number) { Cvar_SetValue($self->name, number); };
+	void set_value (float number) { Cvar_SetValue($self->name, number);  };
 };
 
 %rename (findvar) Cvar_FindVar;
 cvar_t* Cvar_FindVar (const char* varName);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//	expose inventory item
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+%rename (invDef) invDef_t;
+struct invDef_t {
+};
+%extend invDef_t {
+	char* name() { return $self->name; };
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose ui nodes
@@ -564,7 +625,7 @@ struct uiAbstractScrollbarNode_t: uiNode_t {
 	int fullsize () { return UI_EXTRADATA($self, abstractScrollbarExtraData_t).fullsize; };
 
 	void set_autoshowscroll (bool value) { UI_EXTRADATA($self, abstractScrollbarExtraData_t).hideWhenUnused = value; };
-	void set_current (int pos) { UI_EXTRADATA($self, abstractScrollbarExtraData_t).pos; };
+	void set_current (int pos) { UI_EXTRADATA($self, abstractScrollbarExtraData_t).pos = pos; };
 	void set_viewsize (int size) { UI_EXTRADATA($self, abstractScrollbarExtraData_t).viewsize = size; };
 	void set_fullsize (int size) { UI_EXTRADATA($self, abstractScrollbarExtraData_t).fullsize = size; };
 };
@@ -606,6 +667,25 @@ struct uiBarNode_t: uiAbstractValueNode_t {
 	void set_nohover (bool value) { UI_EXTRADATA($self, barExtraData_t).noHover = value; };
 };
 
+%rename (uiAbstractBase) uiAbstractBaseNode_t;
+struct uiAbstractBaseNode_t: uiNode_t {
+};
+%extend uiAbstractBaseNode_t {
+	int baseid() { return UI_EXTRADATA($self, baseExtraData_t).baseid; };
+};
+
+%rename (uiBaseMap) uiBaseMapNode_t;
+struct uiBaseMapNode_t: uiAbstractBaseNode_t {
+};
+%extend uiBaseMapNode_t {
+};
+
+%rename (uiBaseLayout) uiBaseLayoutNode_t;
+struct uiBaseLayoutNode_t: uiAbstractBaseNode_t {
+};
+%extend uiBaseLayoutNode_t {
+};
+
 %rename (uiButton) uiButtonNode_t;
 struct uiButtonNode_t: uiNode_t {
 };
@@ -627,6 +707,76 @@ struct uiCheckBoxNode_t: uiNode_t {
 	void set_iconunknown (const char* name) { UI_CheckBox_SetIconUnknownByName($self, name); };
 };
 
+%rename (uiContainer) uiContainerNode_t;
+struct uiContainerNode_t: uiNode_t {
+};
+%extend uiContainerNode_t {
+
+	int selectedid () { return UI_EXTRADATA($self, containerExtraData_t).lastSelectedId; };
+
+	%rename (on_select) lua_onSelect;
+    LUA_EVENT lua_onSelect; /**< references the event in lua: on_select(node) */
+};
+/*
+	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
+	to bring the values from the EXTRADATA structures to the lua class.
+*/
+%{
+static LUA_EVENT uiContainerNode_t_lua_onSelect_get(uiContainerNode_t* node) {
+	return UI_EXTRADATA(node, containerExtraData_t).lua_onSelect;
+}
+static LUA_EVENT uiContainerNode_t_lua_onSelect_set(uiContainerNode_t* node, LUA_EVENT fn) {
+	return UI_EXTRADATA(node, containerExtraData_t).lua_onSelect;
+}
+%}
+
+%rename (uiBaseInventory) uiBaseInventoryNode_t;
+struct uiBaseInventoryNode_t: uiContainerNode_t {
+};
+%extend uiBaseInventoryNode_t {
+
+	int filtertype () { return UI_EXTRADATA($self, baseInventoryExtraData_t).filterEquipType; };
+	int columns () { return UI_EXTRADATA($self, baseInventoryExtraData_t).columns; };
+
+	bool is_displayweapon () { return UI_EXTRADATA($self, baseInventoryExtraData_t).displayWeapon; };
+	bool is_displayweaponammo () { return UI_EXTRADATA($self, baseInventoryExtraData_t).displayAmmoOfWeapon; };
+	bool is_displayammo () { return UI_EXTRADATA($self, baseInventoryExtraData_t).displayAmmo; };
+	bool is_displayimplant () { return UI_EXTRADATA($self, baseInventoryExtraData_t).displayImplant; };
+	bool is_displayunavailable () { return UI_EXTRADATA($self, baseInventoryExtraData_t).displayUnavailableItem; };
+	bool is_displayunavailableammo () { return UI_EXTRADATA($self, baseInventoryExtraData_t).displayUnavailableAmmoOfWeapon; };
+	bool is_displayavailableontop () { return UI_EXTRADATA($self, baseInventoryExtraData_t).displayAvailableOnTop; };
+
+	void set_displayweapon (bool value) { UI_EXTRADATA($self, baseInventoryExtraData_t).displayWeapon = value; };
+	void set_displayweaponammo (bool value) { UI_EXTRADATA($self, baseInventoryExtraData_t).displayAmmoOfWeapon = value; };
+	void set_displayammo (bool value) { UI_EXTRADATA($self, baseInventoryExtraData_t).displayAmmo = value; };
+	void set_displayimplant (bool value) { UI_EXTRADATA($self, baseInventoryExtraData_t).displayImplant = value; };
+	void set_displayunavailable (bool value) { UI_EXTRADATA($self, baseInventoryExtraData_t).displayUnavailableItem = value; };
+	void set_displayunavailableammo (bool value) { UI_EXTRADATA($self, baseInventoryExtraData_t).displayUnavailableAmmoOfWeapon = value; };
+	void set_displayavailableontop (bool value) { UI_EXTRADATA($self, baseInventoryExtraData_t).displayAvailableOnTop = value; };
+
+	int viewpos () { return UI_EXTRADATA($self, baseInventoryExtraData_t).scrollY.viewPos; };
+	int viewsize () { return UI_EXTRADATA($self, baseInventoryExtraData_t).scrollY.viewSize; };
+	int fullsize () { return UI_EXTRADATA($self, baseInventoryExtraData_t).scrollY.fullSize; };
+	void set_viewpos (int pos) { UI_EXTRADATA($self, baseInventoryExtraData_t).scrollY.viewPos = pos; };
+	void set_viewsize (int size) { UI_EXTRADATA($self, baseInventoryExtraData_t).scrollY.viewSize = size; };
+	void set_fullsize (int size) { UI_EXTRADATA($self, baseInventoryExtraData_t).scrollY.fullSize = size; };
+
+	%rename (on_viewchange) lua_onViewChange;
+	LUA_EVENT lua_onViewChange; 		/**< references the event in lua: on_viewchange (node) */
+};
+/*
+	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
+	to bring the values from the EXTRADATA structures to the lua class.
+*/
+%{
+static LUA_EVENT uiBaseInventoryNode_t_lua_onViewChange_get(uiBaseInventoryNode_t* node) {
+	return UI_EXTRADATA(node, baseInventoryExtraData_t).lua_onViewChange;
+}
+static LUA_EVENT uiBaseInventoryNode_t_lua_onViewChange_set(uiBaseInventoryNode_t* node, LUA_EVENT fn) {
+	return UI_EXTRADATA(node, baseInventoryExtraData_t).lua_onViewChange;
+}
+%}
+
 %rename (uiData) uiDataNode_t;
 struct uiDataNode_t: uiNode_t {
 };
@@ -640,15 +790,13 @@ struct uiDataNode_t: uiNode_t {
 	void set_value (float value) { UI_EXTRADATA($self, dataExtraData_t).number = value; };
 };
 
-%rename (uiEkg) uiEkgNode_t;
-struct uiEkgNode_t: uiImageNode_t {
+%rename (uiGeoscape) uiGeoscapeNode_t;
+struct uiGeoscapeNode_t: uiNode_t {
 };
-%extend uiEkgNode_t {
-	float scrollspeed () { return UI_EXTRADATA($self, ekgExtraData_t).scrollSpeed; };
-	float cvarscale () { return UI_EXTRADATA($self, ekgExtraData_t).scaleCvarValue; };
+%extend uiGeoscapeNode_t {
 
-	void set_scrollspeed (float value) { UI_EXTRADATA($self, ekgExtraData_t).scrollSpeed = value; };
-	void set_cvarscale (float value) { UI_EXTRADATA($self, ekgExtraData_t).scaleCvarValue = value; };
+	void zoomin () { dynamic_cast<uiGeoscapeNode*>($self->behaviour->manager.get())->zoom($self, false); }
+	void zoomout () { dynamic_cast<uiGeoscapeNode*>($self->behaviour->manager.get())->zoom($self, true); }
 };
 
 %rename (uiImage) uiImageNode_t;
@@ -666,6 +814,17 @@ struct uiImageNode_t: uiNode_t {
 	void set_source (const char* name) { UI_Node_SetImage($self, name); };
 	void set_texh (float v1, float v2) { Vector2Set(UI_EXTRADATA($self, imageExtraData_t).texh, v1, v2); };
 	void set_texl (float v1, float v2) { Vector2Set(UI_EXTRADATA($self, imageExtraData_t).texl, v1, v2); };
+};
+
+%rename (uiEkg) uiEkgNode_t;
+struct uiEkgNode_t: uiImageNode_t {
+};
+%extend uiEkgNode_t {
+	float scrollspeed () { return UI_EXTRADATA($self, ekgExtraData_t).scrollSpeed; };
+	float cvarscale () { return UI_EXTRADATA($self, ekgExtraData_t).scaleCvarValue; };
+
+	void set_scrollspeed (float value) { UI_EXTRADATA($self, ekgExtraData_t).scrollSpeed = value; };
+	void set_cvarscale (float value) { UI_EXTRADATA($self, ekgExtraData_t).scaleCvarValue = value; };
 };
 
 %rename (uiModel) uiModelNode_t;
@@ -805,10 +964,16 @@ struct uiTextureNode_t: uiNode_t {
 	void set_source (const char* name) { UI_Node_SetImage($self, name); };
 };
 
-%rename (uiVScrollbar) uiVScrollbarNode_t;
+%rename (uiVScrollbar) uiVScrollBarNode_t;
 struct uiVScrollBarNode_t: uiAbstractScrollbarNode_t {
 };
-%extend uiVScrollbarNode_t {
+%extend uiVScrollBarNode_t {
+};
+
+%rename (uiWidget) uiWidgetNode_t;
+struct uiWidgetNode_t: uiImageNode_t {
+};
+%extend uiWidgetNode_t {
 };
 
 %rename (uiWindow) uiWindowNode_t;
@@ -878,17 +1043,32 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 static uiBarNode_t* UI_CreateBar (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "bar", name, super);
 }
+static uiBaseMapNode_t* UI_CreateBaseMap (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "basemap", name, super);
+}
+static uiBaseLayoutNode_t* UI_CreateBaseLayout (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "baselayout", name, super);
+}
+static uiBaseInventoryNode_t* UI_CreateBaseInventory (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "baseinventory", name, super);
+}
 static uiButtonNode_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "button", name, super);
 }
 static uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "checkbox", name, super);
 }
+static uiContainerNode_t* UI_CreateContainer (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "container", name, super);
+}
 static uiDataNode_t* UI_CreateData (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "data", name, super);
 }
 static uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "ekg", name, super);
+}
+static uiGeoscapeNode_t* UI_CreateGeoscape (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "geoscape", name, super);
 }
 static uiImageNode_t* UI_CreateImage (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "image", name, super);
@@ -920,6 +1100,9 @@ static uiTextureNode_t* UI_CreateTexture (uiNode_t* parent, const char* name, co
 static uiVScrollBarNode_t* UI_CreateVScrollbar (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "vscrollbar", name, super);
 }
+static uiWidgetNode_t* UI_CreateWidget (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "controls", name, super);
+}
 static uiWindowNode_t* UI_CreateWindow (const char* name, const char* super) {
 	return UI_CreateWindow("window", name, super);
 }
@@ -930,12 +1113,24 @@ static uiWindowNode_t* UI_CreateWindow (const char* name, const char* super) {
 uiBarNode_t* UI_CreateBar (uiNode_t* parent, const char* name, const char* super);
 %rename (create_button) UI_CreateButton;
 uiButtonNode_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super);
+%rename (create_basemap) UI_CreateBaseMap;
+uiBaseMapNode_t* UI_CreateBaseMap (uiNode_t* parent, const char* name, const char* super);
+%rename (create_baselayout) UI_CreateBaseLayout;
+uiBaseLayoutNode_t* UI_CreateBaseLayout (uiNode_t* parent, const char* name, const char* super);
+%rename (create_baseinventory) UI_CreateBaseInventory;
+uiBaseInventoryNode_t* UI_CreateBaseInventory (uiNode_t* parent, const char* name, const char* super);
 %rename (create_checkbox) UI_CreateCheckBox;
 uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super);
+%rename (create_container) UI_CreateContainer;
+uiContainerNode_t* UI_CreateContainer (uiNode_t* parent, const char* name, const char* super);
+%rename (create_widget) UI_CreateWidget;
+uiWidgetNode_t* UI_CreateWidget (uiNode_t* parent, const char* name, const char* super);
 %rename (create_data) UI_CreateData;
 uiDataNode_t* UI_CreateData (uiNode_t* parent, const char* name, const char* super);
-%rename (create_ekg) UI_CreateEKG;
+%rename (create_ekg) UI_CreateEkg;
 uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super);
+%rename (create_geoscape) UI_CreateGeoscape;
+uiGeoscapeNode_t* UI_CreateGeoscape (uiNode_t* parent, const char* name, const char* super);
 %rename (create_image) UI_CreateImage;
 uiImageNode_t* UI_CreateImage (uiNode_t* parent, const char* name, const char* super);
 %rename (create_item) UI_CreateItem;

@@ -749,6 +749,9 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, Item* ic)
 	if (EXTRADATA(node).onSelect) {
 		UI_ExecuteEventActions(node, EXTRADATA(node).onSelect);
 	}
+	if (EXTRADATA(node).lua_onSelect != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, EXTRADATA(node).lua_onSelect);
+	}
 	/* Run onChange events */
 	uiNode_t* targetNode = UI_GetContainerNodeByContainerIDX(node->parent, target);
 	if (node->onChange) {
@@ -839,6 +842,9 @@ void uiContainerNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 			if (EXTRADATA(node).onSelect) {
 				UI_ExecuteEventActions(node, EXTRADATA(node).onSelect);
 			}
+			if (EXTRADATA(node).lua_onSelect != LUA_NOREF) {
+				UI_ExecuteLuaEventScript(node, EXTRADATA(node).lua_onSelect);
+			}
 		}
 		break;
 	}
@@ -865,6 +871,11 @@ void uiContainerNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 	if (UI_DNDIsDragging()) {
 		UI_DNDDrop();
 	}
+}
+
+void uiContainerNode::onInitNode (uiNode_t* node) {
+	/* initialize lua events */
+	EXTRADATA(node).lua_onSelect = LUA_NOREF;
 }
 
 void uiContainerNode::onLoading (uiNode_t* node)
