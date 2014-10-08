@@ -679,6 +679,9 @@ void uiBaseInventoryNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 			if (EXTRADATA(node).super.onSelect) {
 				UI_ExecuteEventActions(node, EXTRADATA(node).super.onSelect);
 			}
+			if (EXTRADATA(node).super.lua_onSelect != LUA_NOREF) {
+				UI_ExecuteLuaEventScript(node, EXTRADATA(node).super.lua_onSelect);
+			}
 		}
 		break;
 	}

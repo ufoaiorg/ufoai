@@ -669,7 +669,6 @@ void Cvar_SetValue (const char* varName, float value)
 		Cvar_Set(varName, "%1.2f", value);
 }
 
-
 /**
  * @brief Any variables with latched values will now be updated
  * @note CVAR_LATCH cvars are not updated during a game (tactical mission)
