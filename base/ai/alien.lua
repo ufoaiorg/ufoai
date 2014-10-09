@@ -160,8 +160,8 @@ ai.params = {
 	taman =	{ vis = "team", ord = "dist", pos = "fastest", move = "CW", prio = {"~civilian", "civilian"} },
 	shevaar = { vis = "extra", ord = "path", pos = "farthest", move = "CCW", prio = {"~civilian", "civilian"} },
 	ortnok = { vis = "extra", ord = "HP", pos = "nearest", move = "rand", prio = {"~civilian", "civilian"} },
-	bloodspider = { vis = "sight", ord = "path", pos = "nearest", move = "hide", prio = {"civilian", "~civilian"} },
-	bloodspider_adv = { vis = "sight", ord = "path", pos = "nearest", move = "hide", prio = {"~alien"} },
+	bloodspider = { vis = "team", ord = "path", pos = "nearest", move = "hide", prio = {"civilian", "~civilian"} },
+	bloodspider_adv = { vis = "team", ord = "path", pos = "nearest", move = "hide", prio = {"~alien"} },
 	hovernet = { vis = "team", ord = "dist", pos = "fastest", move = "herd", prio = {"~civilian", "civilian"} },
 	hovernet_adv = { vis = "team", ord = "dist", pos = "farthest", move = "herd", prio = {"~civilian", "civilian"} },
 	default = { vis = "sight", ord = "dist", pos = "fastest", move = rand, prio = {"~alien"} }
@@ -259,7 +259,7 @@ function ai.search ()
 	if not found then
 		if params.move == "herd" then
 			ai.herd()
-		else if params.move == "hide" then
+		elseif params.move == "hide" then
 			ai.hide()
 		else
 			local search_tus = (ai.hidetus() - ai.tusforshooting() + 1) / 2
