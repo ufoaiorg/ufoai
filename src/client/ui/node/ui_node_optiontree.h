@@ -40,3 +40,4 @@ class uiOptionTreeNode : public uiAbstractOptionNode {
 };
 
 void UI_RegisterOptionTreeNode(uiBehaviour_t* behaviour);
+void UI_OptionTree_SelectValue (uiNode_t* node, const char* value);

@@ -423,12 +423,12 @@ static uiNode_t* UI_FindOptionAtIndex (int index, uiNode_t* option, uiOptionIter
  * @endcode
  * @todo Rework that code, we should split "Init" and "AtIndex"
  */
-uiNode_t* UI_InitOptionIteratorAtIndex (int index, uiNode_t* option, uiOptionIterator_t* iterator)
+uiNode_t* UI_InitOptionIteratorAtIndex (int index, uiNode_t* option, uiOptionIterator_t* iterator, bool skipCollapsed, bool skipInvisible)
 {
 	assert(option == nullptr || option->behaviour == ui_optionBehaviour);
 	OBJZERO(*iterator);
-	iterator->skipCollapsed = true;
-	iterator->skipInvisible = true;
+	iterator->skipCollapsed = skipCollapsed;
+	iterator->skipInvisible = skipInvisible;
 	return UI_FindOptionAtIndex(index, option, iterator);
 }
 
