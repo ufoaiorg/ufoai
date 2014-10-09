@@ -130,6 +130,19 @@ uiNode_t* UI_AllocOptionNode (const char* name, const char* label, const char* v
 	return option;
 }
 
+void UI_Option_SetLabel (uiNode_t* node, const char* text) {
+	Q_strncpyz(OPTIONEXTRADATA(node).label, text, sizeof(OPTIONEXTRADATA(node).label));
+}
+
+void UI_Option_SetValue (uiNode_t* node, const char* text) {
+	Q_strncpyz(OPTIONEXTRADATA(node).value, text, sizeof(OPTIONEXTRADATA(node).value));
+}
+
+void UI_Option_SetIconByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	OPTIONEXTRADATA(node).icon = sprite;
+}
+
 void UI_RegisterOptionNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "option";

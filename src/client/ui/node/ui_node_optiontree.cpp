@@ -321,29 +321,19 @@ void uiOptionTreeNode::onLoaded (uiNode_t* node)
 {
 }
 
-static void UI_OptionTreeSetSelectedValue (uiNode_t* node, const uiCallContext_t* context)
-{
-	if (UI_GetParamNumber(context) != 1) {
-		Com_Printf("UI_OptionTreeSetSelectedValue: Invalide number of param\n");
-		return;
-	}
-
-	const char* value = UI_GetParam(context, 1);
-
+void UI_OptionTree_SelectValue (uiNode_t* node, const char* value) {
 	/* is the option exists */
 	uiNode_t* firstOption = UI_OptionTreeNodeGetFirstOption(node);
 
 	uiOptionIterator_t iterator;
-	UI_InitOptionIteratorAtIndex(0, firstOption, &iterator);
-	/** @todo merge that into the Init iterator function */
-	iterator.skipCollapsed = false;
+	UI_InitOptionIteratorAtIndex(0, firstOption, &iterator, false, true);
 	uiNode_t* option = UI_FindOptionByValue(&iterator, value);
 
 	/* update the selection */
 	if (option) {
 		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
 	} else {
-		Com_Printf("UI_OptionTreeSetSelectedValue: Option value \"%s\" not found\n", value);
+		Com_Printf("UI_OptionTree_SelectValue: Option value \"%s\" not found\n", value);
 		return;
 	}
 
@@ -369,7 +359,19 @@ static void UI_OptionTreeSetSelectedValue (uiNode_t* node, const uiCallContext_t
 		else if (EXTRADATA(node).lua_onViewChange != LUA_NOREF) {
 			UI_ExecuteLuaEventScript (node, EXTRADATA(node).lua_onViewChange);
 		}
+	}
 }
+
+static void UI_OptionTreeSetSelectedValue (uiNode_t* node, const uiCallContext_t* context)
+{
+	if (UI_GetParamNumber(context) != 1) {
+		Com_Printf("UI_OptionTreeSetSelectedValue: Invalide number of param\n");
+		return;
+	}
+
+	const char* value = UI_GetParam(context, 1);
+
+	UI_OptionTree_SelectValue(node, value);
 }
 
 void uiOptionTreeNode::doLayout (uiNode_t* node)

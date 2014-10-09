@@ -163,6 +163,15 @@ void uiRadioButtonNode::onLeftClick (uiNode_t* node, int x, int y)
 	onActivate(node);
 }
 
+void UI_RadioButton_SetBackgroundByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	EXTRADATA(node).background = sprite;
+}
+
+void UI_RadioButton_SetIconByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	EXTRADATA(node).icon = sprite;}
+
 void UI_RegisterRadioButtonNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "radiobutton";

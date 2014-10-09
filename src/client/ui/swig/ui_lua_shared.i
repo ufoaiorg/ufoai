@@ -86,8 +86,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../node/ui_node_geoscape.h"
 #include "../node/ui_node_image.h"
 #include "../node/ui_node_item.h"
+#include "../node/ui_node_linechart.h"
+#include "../node/ui_node_messagelist.h"
 #include "../node/ui_node_model.h"
+#include "../node/ui_node_option.h"
+#include "../node/ui_node_optionlist.h"
+#include "../node/ui_node_optiontree.h"
 #include "../node/ui_node_panel.h"
+#include "../node/ui_node_radar.h"
+#include "../node/ui_node_radiobutton.h"
 #include "../node/ui_node_spinner.h"
 #include "../node/ui_node_string.h"
 #include "../node/ui_node_text.h"
@@ -121,8 +128,15 @@ typedef uiNode_t uiEkgNode_t;
 typedef uiNode_t uiGeoscapeNode_t;
 typedef uiNode_t uiImageNode_t;
 typedef uiNode_t uiItemNode_t;
+typedef uiNode_t uiLineChartNode_t;
+typedef uiNode_t uiMessageListNode_t;
 typedef uiNode_t uiModelNode_t;
+typedef uiNode_t uiOptionNode_t;
+typedef uiNode_t uiOptionListNode_t;
+typedef uiNode_t uiOptionTreeNode_t;
 typedef uiNode_t uiPanelNode_t;
+typedef uiNode_t uiRadarNode_t;
+typedef uiNode_t uiRadioButtonNode_t;
 typedef uiNode_t uiSpinnerNode_t;
 typedef uiNode_t uiStringNode_t;
 typedef uiNode_t uiTextNode_t;
@@ -827,6 +841,25 @@ struct uiEkgNode_t: uiImageNode_t {
 	void set_cvarscale (float value) { UI_EXTRADATA($self, ekgExtraData_t).scaleCvarValue = value; };
 };
 
+%rename (uiLineChart) uiLineChartNode_t;
+struct uiLineChartNode_t: uiNode_t {
+};
+%extend uiLineChartNode_t {
+	bool is_showaxes () { return UI_EXTRADATA($self, lineChartExtraData_t).displayAxes; };
+
+	int dataid () { return UI_EXTRADATA($self, lineChartExtraData_t).dataId; };
+
+	void set_dataid (const char* name) { UI_EXTRADATA($self, lineChartExtraData_t).dataId = UI_GetDataIDByName(name); };
+	void set_showaxes(bool value) { UI_EXTRADATA($self, lineChartExtraData_t).displayAxes = value; };
+	void set_axescolor(float r, float g, float b, float a) { Vector4Set(UI_EXTRADATA($self, lineChartExtraData_s).axesColor, r, g, b, a); };
+};
+
+%rename (uiMessageList) uiMessageListNode_t;
+struct uiMessageListNode_t: uiAbstractScrollableNode_t {
+};
+%extend uiMessageListNode_t {
+};
+
 %rename (uiModel) uiModelNode_t;
 struct uiModelNode_t: uiNode_t {
 };
@@ -867,6 +900,39 @@ struct uiItemNode_t: uiModelNode_t {
 	void set_containerlike (bool value) { UI_EXTRADATA($self, modelExtraData_t).containerLike = value; };
 };
 
+%rename (uiOption) uiOptionNode_t;
+struct uiOptionNode_t: uiNode_t {
+};
+%extend uiOptionNode_t {
+	bool is_collapsed () { return UI_EXTRADATA($self, optionExtraData_t).collapsed; };
+	bool is_flipicion () { return UI_EXTRADATA($self, optionExtraData_t).flipIcon; };
+	bool is_truncated () { return UI_EXTRADATA($self, optionExtraData_t).truncated; };
+
+	char* label () { return UI_EXTRADATA($self, optionExtraData_t).label; };
+	char* value () { return UI_EXTRADATA($self, optionExtraData_t).value; };
+	int count () { return UI_EXTRADATA($self, optionExtraData_t).childCount; };
+
+	void set_label (const char* text) { UI_Option_SetLabel ($self, text); };
+	void set_value (const char* text) { UI_Option_SetValue ($self, text); };
+	void set_collapsed (bool value) { UI_EXTRADATA($self, optionExtraData_t).collapsed = value; };
+	void set_flipicion (bool value) { UI_EXTRADATA($self, optionExtraData_t).flipIcon = value; };
+	void set_truncated (bool value) { UI_EXTRADATA($self, optionExtraData_t).truncated = value; };
+	void set_icon (const char* name) { UI_Option_SetIconByName ($self, name); };
+};
+
+%rename (uiOptionList) uiOptionListNode_t;
+struct uiOptionListNode_t: uiAbstractOptionNode_t {
+};
+%extend uiOptionListNode_t {
+};
+
+%rename (uiOptionTree) uiOptionTreeNode_t;
+struct uiOptionTreeNode_t: uiAbstractOptionNode_t {
+};
+%extend uiOptionTreeNode_t {
+	void set_selectedvalue (const char* value) { UI_OptionTree_SelectValue($self, value); };
+};
+
 %rename (uiPanel) uiPanelNode_t;
 struct uiPanelNode_t: uiAbstractScrollableNode_t {
 };
@@ -883,6 +949,23 @@ struct uiPanelNode_t: uiAbstractScrollableNode_t {
 	void set_wheelscrollable (bool value) { UI_EXTRADATA($self, panelExtraData_t).wheelScrollable = value; };
 	void set_background (const char* name) { UI_Panel_SetBackgroundByName($self, name); };
 
+};
+
+%rename (uiRadar) uiRadarNode_t;
+struct uiRadarNode_t: uiNode_t {
+};
+%extend uiRadarNode_t {
+};
+
+%rename (uiRadioButton) uiRadioButtonNode_t;
+struct uiRadioButtonNode_t: uiNode_t {
+};
+%extend uiRadioButtonNode_t {
+	bool is_flipicon () { return UI_EXTRADATA($self, radioButtonExtraData_t).flipIcon; };
+
+	void set_flipicon (bool value) { UI_EXTRADATA($self, radioButtonExtraData_t).flipIcon = value; };
+	void set_background (const char* name) { UI_RadioButton_SetBackgroundByName($self, name); };
+	void set_icon (const char* name) { UI_RadioButton_SetIconByName($self, name); };
 };
 
 %rename (uiSpinner) uiSpinnerNode_t;
@@ -1076,11 +1159,32 @@ static uiImageNode_t* UI_CreateImage (uiNode_t* parent, const char* name, const 
 static uiItemNode_t* UI_CreateItem (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "item", name, super);
 }
+static uiLineChartNode_t* UI_CreateLineChart(uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "linechart", name, super);
+}
+static uiMessageListNode_t* UI_CreateMessageList (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "messagelist", name, super);
+}
 static uiModelNode_t* UI_CreateModel (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "model", name, super);
 }
+static uiOptionNode_t* UI_CreateOption (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "option", name, super);
+}
+static uiOptionListNode_t* UI_CreateOptionList (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "optionlist", name, super);
+}
+static uiOptionTreeNode_t* UI_CreateOptionTree (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "optiontree", name, super);
+}
 static uiPanelNode_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "panel", name, super);
+}
+static uiRadarNode_t* UI_CreateRadar (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "radar", name, super);
+}
+static uiRadioButtonNode_t* UI_CreateRadioButton (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "radiobutton", name, super);
 }
 static uiSpinnerNode_t* UI_CreateSpinner (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "spinner", name, super);
@@ -1123,8 +1227,6 @@ uiBaseInventoryNode_t* UI_CreateBaseInventory (uiNode_t* parent, const char* nam
 uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super);
 %rename (create_container) UI_CreateContainer;
 uiContainerNode_t* UI_CreateContainer (uiNode_t* parent, const char* name, const char* super);
-%rename (create_widget) UI_CreateWidget;
-uiWidgetNode_t* UI_CreateWidget (uiNode_t* parent, const char* name, const char* super);
 %rename (create_data) UI_CreateData;
 uiDataNode_t* UI_CreateData (uiNode_t* parent, const char* name, const char* super);
 %rename (create_ekg) UI_CreateEkg;
@@ -1135,10 +1237,24 @@ uiGeoscapeNode_t* UI_CreateGeoscape (uiNode_t* parent, const char* name, const c
 uiImageNode_t* UI_CreateImage (uiNode_t* parent, const char* name, const char* super);
 %rename (create_item) UI_CreateItem;
 uiItemNode_t* UI_CreateItem (uiNode_t* parent, const char* name, const char* super);
+%rename (create_linechart) UI_CreateLineChart;
+uiLineChartNode_t* UI_CreateLineChart (uiNode_t* parent, const char* name, const char* super);
+%rename (create_messagelist) UI_CreateMessageList;
+uiMessageListNode_t* UI_CreateMessageList (uiNode_t* parent, const char* name, const char* super);
 %rename (create_model) UI_CreateModel;
 uiModelNode_t* UI_CreateModel (uiNode_t* parent, const char* name, const char* super);
+%rename (create_option) UI_CreateOption;
+uiOptionNode_t* UI_CreateOption (uiNode_t* parent, const char* name, const char* super);
+%rename (create_optionlist) UI_CreateOptionList;
+uiOptionListNode_t* UI_CreateOptionList (uiNode_t* parent, const char* name, const char* super);
+%rename (create_optiontree) UI_CreateOptionTree;
+uiOptionTreeNode_t* UI_CreateOptionTree (uiNode_t* parent, const char* name, const char* super);
 %rename (create_panel) UI_CreatePanel;
 uiPanelNode_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super);
+%rename (create_radar) UI_CreateRadar;
+uiRadarNode_t* UI_CreateRadar (uiNode_t* parent, const char* name, const char* super);
+%rename (create_radiobutton) UI_CreateRadioButton;
+uiRadioButtonNode_t* UI_CreateRadioButton (uiNode_t* parent, const char* name, const char* super);
 %rename (create_spinner) UI_CreateSpinner;
 uiSpinnerNode_t* UI_CreateSpinner (uiNode_t* parent, const char* name, const char* super);
 %rename (create_string) UI_CreateString;
@@ -1151,6 +1267,8 @@ uiStringNode_t* UI_CreateTextEntry (uiNode_t* parent, const char* name, const ch
 uiTextureNode_t* UI_CreateTexture (uiNode_t* parent, const char* name, const char* super);
 %rename (create_vscrollbar) UI_CreateVScrollbar;
 uiVScrollBarNode_t* UI_CreateVScrollbar (uiNode_t* parent, const char* name, const char* super);
+%rename (create_widget) UI_CreateWidget;
+uiWidgetNode_t* UI_CreateWidget (uiNode_t* parent, const char* name, const char* super);
 %rename (create_window) UI_CreateWindow;
 uiWindowNode_t* UI_CreateWindow (const char* name, const char* super);
 /* expose component creation fuction */

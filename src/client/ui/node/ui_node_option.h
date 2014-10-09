@@ -60,3 +60,8 @@ typedef struct optionExtraData_s {
 
 int UI_OptionUpdateCache(uiNode_t* option);
 uiNode_t* UI_AllocOptionNode(const char* name, const char* label, const char* value);
+
+void UI_Option_SetLabel (uiNode_t* node, const char* text);
+void UI_Option_SetValue (uiNode_t* node, const char* text);
+void UI_Option_SetIconByName (uiNode_t* node, const char* name);
+
