@@ -69,7 +69,8 @@ item chaingun_ammo
 			damage				"20 3"
 			dmgweight			"normal_spray"
 			reaction			true
-			throughwall 5
+			throughwall			5
+			shotorg				"3.5 6.5"
 		}
 		firedef
 		{
@@ -92,7 +93,8 @@ item chaingun_ammo
 			time				28
 			damage				"20 3"
 			dmgweight			"normal_spray"
-			throughwall 5
+			throughwall			5
+			shotorg				"3.5 6.5"
 			}
 		firedef
 		{
@@ -116,7 +118,8 @@ item chaingun_ammo
 			damage				"20 3"
 			dmgweight			"normal_spray"
 			reaction			true
-			throughwall 5
+			throughwall			5
+			shotorg				"3.5 6.5"
 		}
 	}
 }
@@ -186,6 +189,7 @@ item shotgun_ammo
 			damage				"20 5"
 			dmgweight			"normal_spray"
 			reaction			true
+			shotorg				"3.5 6"
 		}
 		firedef
 		{
@@ -209,6 +213,7 @@ item shotgun_ammo
 			damage				"20 5"
 			dmgweight			"normal_spray"
 			reaction			true
+			shotorg				"3.5 6"
 		}
 	}
 }
@@ -305,7 +310,8 @@ item xaw95_ammo
 			damage				"20 3"
 			dmgweight			"normal_spray"
 			reaction			true
-			throughwall 5
+			throughwall			5
+			shotorg				"3.5 6.5"
 		}
 		firedef
 		{
@@ -328,7 +334,8 @@ item xaw95_ammo
 			time				26
 			damage				"20 3"
 			dmgweight			"normal_spray"
-			throughwall 5
+			throughwall			5
+			shotorg				"3.5 6.5"
 		}
 		firedef
 		{
@@ -352,7 +359,8 @@ item xaw95_ammo
 			damage				"20 3"
 			dmgweight			"normal_spray"
 			reaction			true
-			throughwall 5
+			throughwall			5
+			shotorg				"3.5 6.5"
 		}
 	}
 }

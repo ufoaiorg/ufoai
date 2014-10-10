@@ -38,6 +38,7 @@ item knife
 			damage		"50 5"
 			dmgweight	"normal_steelblade"
 			reaction	true
+			shotorg		"-9 11"
 		}
 		firedef
 		{
@@ -58,6 +59,7 @@ item knife
 			damage		"20 5"
 			dmgweight	"normal_steelblade"
 			reaction	true
+			shotorg		"-9 11"
 		}
 	}
 }
@@ -102,6 +104,7 @@ item knifemono
 			damage		"80 5"
 			dmgweight	"normal_monomolecularblade"
 			reaction	true
+			shotorg		"-9 11"
 		}
 		firedef
 		{
@@ -122,6 +125,7 @@ item knifemono
 			damage		"40 5"
 			dmgweight	"normal_monomolecularblade"
 			reaction	true
+			shotorg		"-9 11"
 		}
 	}
 }
@@ -170,6 +174,7 @@ item stunrod
 			damage		"60 20"
 			dmgweight	"stun_electro"
 			reaction	true
+			shotorg		"-9 11"
 		}
 
 		firedef
@@ -189,6 +194,7 @@ item stunrod
 			damage				"60 20"
 			dmgweight			"stun_electro"
 			reaction			true
+			shotorg				"-9 11"
 		}
 		firedef
 		{
@@ -205,6 +211,7 @@ item stunrod
 			damage		"30 4"
 			dmgweight	"normal_light"
 			reaction	true
+			shotorg		"-9 11"
 		}
 	}
 }
@@ -253,6 +260,7 @@ item kerrblade
 			damage		"100 10"
 			dmgweight	"normal_monomolecularblade"
 			reaction	true
+			shotorg		"-9 11"
 		}
 		firedef
 		{
@@ -271,6 +279,7 @@ item kerrblade
 			damage		"200 20"
 			dmgweight	"normal_monomolecularblade"
 			reaction	true
+			shotorg		"-9 11"
 		}
 	}
 }
@@ -318,6 +327,7 @@ item plasblade
 			damage		"350 20"
 			dmgweight	"plasma_heavy"
 			reaction	true
+			shotorg		"-9 11"
 		}
 	}
 }

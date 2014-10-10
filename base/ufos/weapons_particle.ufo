@@ -60,6 +60,7 @@ item pbeampistol_ammo
 			damage		"70 10"
 			dmgweight	"particlebeam_light"
 			reaction	true
+			shotorg		"1 11.5"
 		}
 		firedef
 		{
@@ -81,6 +82,7 @@ item pbeampistol_ammo
 			time				10
 			damage				"70 10"
 			dmgweight			"particlebeam_light"
+			shotorg				"1 11.5"
 		}
 	}
 }
@@ -149,6 +151,7 @@ item pbeamrifle_ammo
 			damage		"110 10"
 			dmgweight	"particlebeam_medium"
 			reaction	true
+			shotorg		"2 6"
 		}
 		firedef
 		{
@@ -170,7 +173,8 @@ item pbeamrifle_ammo
 			time				15
 			damage				"110 10"
 			dmgweight			"particlebeam_medium"
-			reaction	true
+			reaction			true
+			shotorg				"2 6"
 		}
 		firedef
 		{
@@ -191,6 +195,7 @@ item pbeamrifle_ammo
 			time		18
 			damage		"110 10"
 			dmgweight	"particlebeam_medium"
+			shotorg		"2 6"
 		}
 	}
 }
@@ -256,11 +261,11 @@ item pbeamcannon_ammo
 			range				200
 			shots				1
 			ammo				1
-			delaybetweenshots	5
 			time				13
 			damage				"150 30"
 			dmgweight			"particlebeam_heavy"
 			reaction			true
+			shotorg				"3.5 4"
 		}
 		firedef
 		{
@@ -283,6 +288,7 @@ item pbeamcannon_ammo
 			damage				"150 30"
 			dmgweight			"particlebeam_heavy"
 			reaction			true
+			shotorg				"3.5 4"
 		}
 		firedef
 		{
@@ -305,6 +311,7 @@ item pbeamcannon_ammo
 			spldmg		"250 50"
 			splrad		3
 			dmgweight	"particlebeam_heavy"
+			shotorg		"3.5 4"
 		}
 	}
 }

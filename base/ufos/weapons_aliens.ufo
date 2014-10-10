@@ -85,6 +85,7 @@ item needlergun_ammo
 			damage		"8 2"
 			dmgweight	"normal_needle"
 			reaction	true
+			shotorg		"4 4"
 		}
 
 		firedef
@@ -109,6 +110,7 @@ item needlergun_ammo
 			damage		"8 2"
 			dmgweight	"normal_needle"
 			reaction	true
+			shotorg		"4 4"
 		}
 		firedef
 		{
@@ -132,6 +134,7 @@ item needlergun_ammo
 			damage		"8 2"
 			dmgweight	"normal_needle"
 			reaction	true
+			shotorg		"4 4"
 		}
 	}
 
@@ -160,6 +163,7 @@ item needlergun_ammo
 			damage		"8 2"
 			dmgweight	"normal_needle"
 			reaction	true
+			shotorg		"2 4.5"
 		}
 
 		firedef
@@ -184,6 +188,7 @@ item needlergun_ammo
 			damage		"8 2"
 			dmgweight	"normal_needle"
 			reaction	true
+			shotorg		"2 4.5"
 		}
 		firedef
 		{
@@ -207,6 +212,7 @@ item needlergun_ammo
 			damage		"8 2"
 			dmgweight	"normal_needle"
 			reaction	true
+			shotorg		"2 4.5"
 		}
 	}
 }
