@@ -418,7 +418,7 @@ component PlayerSquad extends panel
 			onMouseLeave 	{
 				*node:this@color = "1 1 1 0.5"
 			}
-			onClick		{ cmd "game_autoteam multiplayer_initial;toggle_custom_team_opts new;" }
+			onClick		{ cmd "game_autoteam *cvar:cl_equip;toggle_custom_team_opts new;" }
 		}
 
 		string squad_custom_load
@@ -450,12 +450,57 @@ component PlayerSquad extends panel
 			{
 				{
 					pos		"0 0"
-					size	"485 40"
+					size	"485 80"
+				}
+
+				string squad_equip
+				{
+					pos			"0 10"
+					size		"220 20"
+					string		"_Equipment"
+					color		"1 1 1 0.5"
+				}
+				textentry squad_slot_equipment
+				{
+					pos			"260 5"
+					size		"200 30"
+					string		*cvar:cl_equipname
+					background		"ui/button_green_verysmall"
+					color		"0 .78 0 1"
+					selectcolor	"1 1 1 1"
+					contentalign	ALIGN_CC
+					padding		8
+					font		"f_verysmall"
+					disabled	true
+					onWheelUp	{ cmd "sk_prevequip cl_equip;" }
+					onWheelDown	{ cmd "sk_nextequip cl_equip;" }
+				}
+				button prev_squad_equipment
+				{
+					pos			"225 5"
+					size		"35 35"
+					icon		"icons/arrow_left"
+					onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+					onMouseLeave { *node:this@icon = "icons/arrow_left" }
+					onWheelUp	{ cmd "sk_prevequip cl_equip;" }
+					onWheelDown	{ cmd "sk_nextequip cl_equip;" }
+					onClick		{ cmd "sk_prevequip cl_equip;" }
+				}
+				button next_squad_equipment
+				{
+					pos			"460 5"
+					size		"35 35"
+					icon		"icons/arrow_right"
+					onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
+					onMouseLeave { *node:this@icon = "icons/arrow_right" }
+					onWheelUp	{ cmd "sk_prevequip cl_equip;" }
+					onWheelDown	{ cmd "sk_nextequip cl_equip;" }
+					onClick		{ cmd "sk_nextequip cl_equip;" }
 				}
 
 				string squad_default_type_str
 				{
-					pos			"0 10"
+					pos			"0 50"
 					size		"120 40"
 					string		"_Squad"
 					color		"1 1 1 0.5"
@@ -463,7 +508,7 @@ component PlayerSquad extends panel
 
 				selectbox squad_default_sel
 				{
-					pos		"165 10"
+					pos		"165 50"
 					size	"200 40"
 					color	"1 1 1 0.5"
 					cvar	*cvar:cl_teamdef
@@ -473,7 +518,7 @@ component PlayerSquad extends panel
 				MainMenu2Btn selected_squad_edit
 				{
 					string		"_CREATE"
-					pos			"385 5"
+					pos			"385 45"
 					size		"100 25"
 					font		"f_verysmall_bold"
 					onClick		{
