@@ -6974,12 +6974,6 @@ src/docs/tex/chapters/tactical.tex | GNU General Public License 2.0 | Eric Golle
 src/docs/tex/header.tex | GNU General Public License 2.0 | Eric Goller
 src/docs/tex/ufo-manual_EN.tex | GNU General Public License 2.0 | Eric Goller
 src/tools/blender/export_marker_list.py | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-src/tools/blender/export_md2_new.py | GNU General Public License 2.0
-src/tools/blender/md2_export.py | GNU General Public License 2.0
-src/tools/blender/md2_import.py | GNU General Public License 2.0
-src/tools/blender/md2tag_export.py | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-src/tools/blender/md2tag_test.blend |  | Werner "hoehrer" Höhrer
-src/tools/blender/test_matrix.py | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 src/tools/findrep.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 src/tools/map2obj.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 src/tools/md2.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
