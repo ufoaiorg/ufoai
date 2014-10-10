@@ -6964,8 +6964,6 @@ radiant/bitmaps/grid_window.png | GNU General Public License 2.0 or later | Nate
 radiant/bitmaps/particle_map.png | GNU General Public License 2.0 or later | Nate Wright
 radiant/bitmaps/particle_weapon.png | GNU General Public License 2.0 or later | Nate Wright
 radiant/bitmaps/texwindow_uniformsize.png | GNU General Public License 2.0 or later | orbweaver (commiter in darkradiant repository) | http://sourceforge.net/p/darkradiant/code/309/tree/trunk/darkradiant/install/bitmaps/texwindow_uniformsize.png
-src/common/pqueue.cpp | Public Domain
-src/common/pqueue.h | Public Domain
 src/docs/pathfinding.odg | GNU Free Documentation License | Werner "hoehrer" Höhrer
 src/docs/tex/chapters/geoscape.tex | GNU General Public License 2.0 | Eric Goller
 src/docs/tex/chapters/intro.tex | GNU General Public License 2.0 | Eric Goller
@@ -6973,10 +6971,3 @@ src/docs/tex/chapters/multiplayer.tex | GNU General Public License 2.0 | Eric Go
 src/docs/tex/chapters/tactical.tex | GNU General Public License 2.0 | Eric Goller
 src/docs/tex/header.tex | GNU General Public License 2.0 | Eric Goller
 src/docs/tex/ufo-manual_EN.tex | GNU General Public License 2.0 | Eric Goller
-src/tools/blender/export_marker_list.py | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-src/tools/findrep.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-src/tools/map2obj.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-src/tools/md2.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-src/tools/md2_tag.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-src/tools/savegametool.pl | GNU General Public License 2.0 | Tamás Fehérvári (geever)
-src/tools/ufo2dot.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
