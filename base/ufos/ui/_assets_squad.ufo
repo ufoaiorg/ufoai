@@ -322,7 +322,7 @@ component SelectedSquad extends panel
 		size		"100 25"
 		font		"f_verysmall_bold"
 		onClick		{
-			cmd		"team_initskin;team_update_item_list;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_save_popup;"
+			cmd		"team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_save_popup;"
 		}
 	}
 
@@ -333,7 +333,7 @@ component SelectedSquad extends panel
 		size		"100 25"
 		font		"f_verysmall_bold"
 		onClick		{
-			cmd		"team_initskin;team_update_item_list;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_edit;"
+			cmd		"team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_edit;"
 		}
 	}
 }
@@ -550,7 +550,7 @@ component PlayerSquad extends panel
 					size		"100 25"
 					font		"f_verysmall_bold"
 					onClick		{
-						cmd		"team_initskin;team_update_item_list;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_edit;"
+						cmd		"team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_edit;toggle_custom_team_opts loaded;"
 					}
 				}
 			}
@@ -564,78 +564,130 @@ component PlayerSquad extends panel
 				invis	true
 			}
 
-			TextBtn slot_team0 {
-				pos			"0 0"
-				size		"240 20"
-				string		*cvar:mn_slot0
-				bgcolor		"1 1 1 0.02"
-				onClick		{ cmd "set_team_load 0;" }
+			// Load slots
+			panel slots
+			{
+				size	"495 145"
+				layout			LAYOUT_TOP_DOWN_FLOW
+				layoutMargin	2
+				wheelscrollable	true
+
+				onViewChange {
+					*node:parent.slots_scroll@fullsize = <fullsize>
+					*node:parent.slots_scroll@current = <viewpos>
+					*node:parent.slots_scroll@viewsize = <viewsize>
+				}
 			}
-			TextBtn slot_team1 {
-				pos			"0 25"
-				size		"240 20"
-				string		*cvar:mn_slot1
-				bgcolor		"1 1 1 0.02"
-				onClick		{ cmd "set_team_load 1;" }
+
+			vscrollbar slots_scroll {
+				image		"ui/scrollbar_v"
+				pos			"465 0"
+				height		"145"
+				hidewhenunused	true
+				onChange {
+					*node:parent.slots@viewpos = <current>
+				}
 			}
-			TextBtn slot_team2 {
-				pos			"0 50"
-				size		"240 20"
-				string		*cvar:mn_slot2
-				bgcolor		"1 1 1 0.02"
-				onClick		{ cmd "set_team_load 2;" }
+
+			confunc teamsaveslotadd
+			{
+				call *node:parent.slots@createChild("slot<1>", "LoadSlot")
+				*node:parent.slots.slot<1>.filename@string = "<2>"
+				*node:parent.slots.slot<1>.index@integer = <1>
+				*node:parent.slots.slot<1>.button@string = "<3> (<4>)"
+				*node:parent.slots.slot<1>.button@tooltip = "<3> (<4>)"
+				*node:parent.slots.slot<1>.button@onClick = {
+					cmd "set_team_load <node:parent.index@integer>;ui_push game_team_edit;toggle_custom_team_opts loaded;"
+				}
+
+				*node:parent.slots.slot<1>.button@width = "390"
+				*node:parent.slots.slot<1>.upload@onClick = { cmd "web_uploadcgame 0 <node:this.parent.filename@string>;" }
+				*node:parent.slots.slot<1>.delete@onClick = { cmd "game_teamdelete <node:this.parent.filename@string>;game_teamcomments;" }
+				if (<5> == 0) {
+					*node:parent.slots.slot<1>.upload@invis = true
+					*node:parent.slots.slot<1>.delete@invis = true
+				}
 			}
-			TextBtn slot_team3 {
-				pos			"0 75"
-				size		"240 20"
-				string		*cvar:mn_slot3
-				bgcolor		"1 1 1 0.02"
-				onClick		{ cmd "set_team_load 3;" }
-			}
-			TextBtn slot_team4 {
-				pos			"250 0"
-				size		"240 20"
-				string		*cvar:mn_slot4
-				bgcolor		"1 1 1 0.02"
-				onClick		{ cmd "set_team_load 4;" }
-			}
-			TextBtn slot_team5 {
-				pos			"250 25"
-				size		"240 20"
-				string		*cvar:mn_slot5
-				bgcolor		"1 1 1 0.02"
-				onClick		{ cmd "set_team_load 5;" }
-			}
-			TextBtn slot_team6 {
-				pos			"250 50"
-				size		"240 20"
-				string		*cvar:mn_slot6
-				bgcolor		"1 1 1 0.02"
-				onClick		{ cmd "set_team_load 6;" }
-			}
-			TextBtn slot_team7 {
-				pos			"250 75"
-				size		"240 20"
-				string		*cvar:mn_slot7
-				bgcolor		"1 1 1 0.02"
-				onClick		{ cmd "set_team_load 7;" }
+
+			confunc teamsaveslotsclear
+			{
+				call *node:parent.slots@removeAllChild
 			}
 
 			// Set the team to load
 			// * param <1> (team slot to load)
 			confunc set_team_load {
-				cmd "game_loadteam <1>;team_initskin;team_update_item_list;game_actorselect 0;game_teamupdate;game_saveteamstate;"
+				cmd "game_loadteam <1>;team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;"
 
 				// Remove white color from any button that might be saved
 				// Then add it back to the selected button
-				*cvar:i = 0
-				while ( *cvar:i < 8 ) {
-					*node:parent.slot_team<cvar:i>@color = "1 1 1 0.5"
-					*cvar:i = ( *cvar:i + 1 )
+				forchildin ( *node:parent.slots ) {
+					*node:child@color = "1 1 1 0.5"
 				}
-				delete *cvar:i
-				*node:parent.slot_team<1>@color = "1 1 1 0.9"
-				*cvar:cl_teamdef = *cvar:mn_slot<1>
+				*node:parent.slots.slot<1>@color = "1 1 1 0.9"
+			}
+		}
+
+		panel squad_custom_loaded_opts
+		{
+			{
+				pos		"10 80"
+				size	"495 150"
+				invis	true
+			}
+
+			string title
+			{
+				size			"495 20"
+				contentalign	ALIGN_CC
+				string			"_Currently loaded"
+				font	"f_small_bold"
+			}
+
+			panel soldierlist
+			{
+				pos				"0 25"
+				size			"495 125"
+				padding			6
+				layout			LAYOUT_TOP_DOWN_FLOW
+				wheelscrollable	true
+				contentalign	ALIGN_CC
+				onViewChange
+				{
+					*node:parent.soldierlist_scroll@fullsize = <fullsize>
+					*node:parent.soldierlist_scroll@current = <viewpos>
+					*node:parent.soldierlist_scroll@viewsize = <viewsize>
+				}
+			}
+
+			vscrollbar soldierlist_scroll
+			{
+				image			"ui/scrollbar_v"
+				pos				"465 25"
+				height			"125"
+				current			0
+				viewsize		4
+				hidewhenunused	true
+				onChange
+				{
+					*node:parent.soldierlist@viewpos = <current>
+				}
+			}
+
+			confunc team_memberadd
+			{
+				call *node:parent.soldierlist@createChild("member<1>", "string")
+				*node:parent.soldierlist.member<1>@string = <2>
+				*node:parent.soldierlist.member<1>@contentalign = ALIGN_CL
+				*node:parent.soldierlist.member<1>@size = "490 20"
+			}
+
+			/**
+			 * @brief Removes all entries from the current team list.
+			 */
+			confunc team_membersclear
+			{
+				call *node:parent.soldierlist@removeAllChild
 			}
 		}
 
@@ -645,9 +697,15 @@ component PlayerSquad extends panel
 			if (param1 eq "new") {
 				*node:parent.squad_custom_new_opts@invis = false
 				*node:parent.squad_custom_load_opts@invis = true
+				*node:parent.squad_custom_loaded_opts@invis = true
 			} elif (param1 eq "load") {
 				*node:parent.squad_custom_new_opts@invis = true
 				*node:parent.squad_custom_load_opts@invis = false
+				*node:parent.squad_custom_loaded_opts@invis = true
+			} elif (param1 eq "loaded") {
+				*node:parent.squad_custom_new_opts@invis = true
+				*node:parent.squad_custom_load_opts@invis = true
+				*node:parent.squad_custom_loaded_opts@invis = false
 			}
 		}
 	}
