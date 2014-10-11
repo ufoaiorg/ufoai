@@ -446,7 +446,7 @@ component PlayerSquad extends panel
 			onMouseLeave 	{
 				*node:this@color = "1 1 1 0.5"
 			}
-			onClick		{ cmd "game_autoteam *cvar:cl_equip;toggle_custom_team_opts new;" }
+			onClick		{ cmd "toggle_custom_team_opts new;" }
 		}
 
 		string squad_custom_load
@@ -478,19 +478,36 @@ component PlayerSquad extends panel
 			{
 				{
 					pos		"0 0"
-					size	"485 80"
+					size	"485 130"
+				}
+
+				string squad_default_type_str
+				{
+					pos			"0 5"
+					size		"120 40"
+					string		"_Squad"
+					color		"1 1 1 0.5"
+				}
+
+				selectbox squad_default_sel
+				{
+					pos		"235 5"
+					size	"250 40"
+					color	"1 1 1 0.5"
+					cvar	*cvar:cl_teamdef
+					dataid	OPTION_TEAMDEFS
 				}
 
 				string squad_equip
 				{
-					pos			"0 10"
-					size		"220 20"
+					pos			"0 55"
+					size		"120 40"
 					string		"_Equipment"
 					color		"1 1 1 0.5"
 				}
 				textentry squad_slot_equipment
 				{
-					pos			"260 5"
+					pos			"260 50"
 					size		"200 30"
 					string		*cvar:cl_equipname
 					background		"ui/button_green_verysmall"
@@ -505,7 +522,7 @@ component PlayerSquad extends panel
 				}
 				button prev_squad_equipment
 				{
-					pos			"225 5"
+					pos			"225 50"
 					size		"35 35"
 					icon		"icons/arrow_left"
 					onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
@@ -516,7 +533,7 @@ component PlayerSquad extends panel
 				}
 				button next_squad_equipment
 				{
-					pos			"460 5"
+					pos			"460 50"
 					size		"35 35"
 					icon		"icons/arrow_right"
 					onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
@@ -526,31 +543,14 @@ component PlayerSquad extends panel
 					onClick		{ cmd "sk_nextequip cl_equip;" }
 				}
 
-				string squad_default_type_str
-				{
-					pos			"0 50"
-					size		"120 40"
-					string		"_Squad"
-					color		"1 1 1 0.5"
-				}
-
-				selectbox squad_default_sel
-				{
-					pos		"165 50"
-					size	"200 40"
-					color	"1 1 1 0.5"
-					cvar	*cvar:cl_teamdef
-					dataid	OPTION_TEAMDEFS
-				}
-
 				MainMenu2Btn selected_squad_edit
 				{
 					string		"_CREATE"
-					pos			"385 45"
+					pos			"385 105"
 					size		"100 25"
 					font		"f_verysmall_bold"
 					onClick		{
-						cmd		"team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_edit;toggle_custom_team_opts loaded;"
+						cmd		"game_autoteam *cvar:cl_equip;team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_edit;toggle_custom_team_opts loaded;"
 					}
 				}
 			}
