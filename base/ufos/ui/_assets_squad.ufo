@@ -9,6 +9,34 @@
   * --					OR: in the NEW team option, put an equip button and don't update the selected team until it has been equipped.
   */
 
+// Team loading
+component team_loadslots extends panel
+{
+	/**
+	 * @brief adds a new entry to the team load list
+	 * @param <1> the id
+	 * @param <2> the file name
+	 * @param <3> the slot name
+	 * @param <4> the team members
+	 * @param <5> true if user created, false if the save was delievered with the original game data
+	 */
+	confunc teamsaveslotadd { }
+	confunc teamsaveslotsclear { }
+}
+
+component team_loadedcurrent extends panel
+{
+	/**
+	 * @brief Adds a member to the current loaded team list
+	 * @param <1> id
+	 * @param <2> Name
+	 * @param <3> Head model
+	 * @param <4> Head skin
+	 */
+	confunc team_memberadd { }
+	confunc team_membersclear { }
+}
+
 // Enemy team equipment
 component EnemyEquip extends panel
 {

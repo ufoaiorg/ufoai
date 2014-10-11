@@ -42,7 +42,7 @@ component currentTeamMember extends panel
 	// TODO: head and skin
 }
 
-component cmpCurrentLoadedTeamPanel extends panel
+component cmpCurrentLoadedTeamPanel extends team_loadedcurrent
 {
 	{
 		size	"504 375"
@@ -90,13 +90,6 @@ component cmpCurrentLoadedTeamPanel extends panel
 		}
 	}
 
-	/**
-	 * @brief Adds a member to the current loaded team list
-	 * @param <1> id
-	 * @param <2> Name
-	 * @param <3> Head model
-	 * @param <4> Head skin
-	 */
 	confunc team_memberadd
 	{
 		call *node:parent.soldierlist@createChild("member<1>", "currentTeamMember")
@@ -113,7 +106,7 @@ component cmpCurrentLoadedTeamPanel extends panel
 	}
 }
 
-component cmpLoadSlots extends panel
+component cmpLoadSlots extends team_loadslots
 {
 	{
 		size	"500 324"
@@ -143,14 +136,6 @@ component cmpLoadSlots extends panel
 		}
 	}
 
-	/**
-	 * @brief adds a new entry to the right slot
-	 * @param <1> the id
-	 * @param <2> the file name
-	 * @param <3> the slot name
-	 * @param <4> the team members
-	 * @param <5> true if user created, false if the save was delievered with the original game data
-	 */
 	confunc teamsaveslotadd
 	{
 		call *node:parent.slots@createChild("slot<1>", "LoadSlot")
