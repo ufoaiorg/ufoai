@@ -143,8 +143,10 @@ bool E_MoveIntoNewBase (Employee* employee, base_t* newBase)
 		employee->baseHired = newBase;
 		/* Remove employee from corresponding capacity */
 		switch (employee->getType()) {
-		case EMPL_PILOT:
 		case EMPL_WORKER:
+			if (oldBase != nullptr)
+				PR_UpdateProductionCap(oldBase, 0);
+		case EMPL_PILOT:
 		case EMPL_SCIENTIST:
 		case EMPL_SOLDIER:
 			if (oldBase != nullptr)
