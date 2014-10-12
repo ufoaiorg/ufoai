@@ -61,6 +61,7 @@ item assault_ammo
 			damage		"42 5"
 			dmgweight	"normal_medium"
 			reaction	true
+			shotorg		"3 6"
 		}
 		firedef
 		{
@@ -84,6 +85,7 @@ item assault_ammo
 			damage				"42 5"
 			dmgweight			"normal_medium"
 			reaction			true
+			shotorg				"3 6"
 		}
 		firedef
 		{
@@ -106,7 +108,8 @@ item assault_ammo
 			time				16
 			damage				"42 5"
 			dmgweight			"normal_medium"
-			reaction	true
+			reaction			true
+			shotorg				"3 6"
 		}
 		firedef
 		{
@@ -128,6 +131,7 @@ item assault_ammo
 			damage		"42 5"
 			dmgweight	"normal_medium"
 			reaction	true
+			shotorg		"3 6"
 		}
 	}
 
@@ -154,6 +158,7 @@ item assault_ammo
 			damage		"42 5"
 			dmgweight	"normal_medium"
 			reaction	true
+			shotorg		"4 5.5"
 		}
 		firedef
 		{
@@ -176,6 +181,7 @@ item assault_ammo
 			damage				"42 5"
 			dmgweight			"normal_medium"
 			reaction			true
+			shotorg				"4 5.5"
 		}
 		firedef
 		{
@@ -197,7 +203,8 @@ item assault_ammo
 			time				16
 			damage				"42 5"
 			dmgweight			"normal_medium"
-			reaction	true
+			reaction			true
+			shotorg				"4 5.5"
 		}
 		firedef
 		{
@@ -219,6 +226,7 @@ item assault_ammo
 			damage		"42 5"
 			dmgweight	"normal_medium"
 			reaction	true
+			shotorg		"4 5.5"
 		}
 	}
 }
@@ -290,6 +298,7 @@ item machinegun_ammo
 			damage				"42 5"
 			dmgweight			"normal_medium"
 			reaction			true
+			shotorg				"2 8"
 		}
 		firedef
 		{
@@ -313,6 +322,7 @@ item machinegun_ammo
 			damage				"42 5"
 			dmgweight			"normal_medium"
 			reaction			true
+			shotorg				"2 8"
 		}
 		firedef
 		{
@@ -336,6 +346,7 @@ item machinegun_ammo
 			damage				"42 5"
 			dmgweight			"normal_medium"
 			reaction			true
+			shotorg				"2 8"
 		}
 	}
 }
@@ -404,6 +415,7 @@ item sniper_ammo
 			dmgweight	"normal_medium"
 			reaction	true
 			throughwall 1
+			shotorg		"2 7"
 		}
 		firedef
 		{
@@ -426,6 +438,7 @@ item sniper_ammo
 			dmgweight	"normal_medium"
 			reaction	true
 			throughwall 1
+			shotorg		"2 7"
 		}
 	}
 }
@@ -494,7 +507,8 @@ item coilgun_ammo
 			damage		"180 30"
 			dmgweight	"normal_heavy"
 			reaction	true
-			throughwall 3
+			throughwall	3
+			shotorg		"2 6"
 		}
 		firedef
 		{
@@ -516,7 +530,8 @@ item coilgun_ammo
 			damage		"180 30"
 			dmgweight	"normal_heavy"
 			reaction	true
-			throughwall 3
+			throughwall	3
+			shotorg		"2 6"
 		}
 	}
 }
@@ -584,6 +599,7 @@ item pistol_ammo
 			damage		"30 5"
 			dmgweight	"normal_light"
 			reaction	true
+			shotorg		"1 10.5"
 		}
 		firedef
 		{
@@ -605,6 +621,7 @@ item pistol_ammo
 			time				8
 			damage				"30 5"
 			dmgweight			"normal_light"
+			shotorg				"1 10.5"
 		}
 	}
 }
@@ -672,6 +689,7 @@ item pistol2_ammo
 			damage		"20 5"
 			reaction	true
 			dmgweight	"normal_light"
+			shotorg		"1 9.5"
 		}
 		firedef
 		{
@@ -694,6 +712,7 @@ item pistol2_ammo
 			damage				"20 5"
 			dmgweight			"normal_light"
 			reaction			true
+			shotorg				"1 9.5"
 		}
 		firedef
 		{
@@ -716,6 +735,7 @@ item pistol2_ammo
 			damage				"20 5"
 			dmgweight			"normal_light"
 			reaction			true
+			shotorg				"1 9.5"
 		}
 	}
 }
@@ -785,6 +805,7 @@ item smg_ammo
 			damage				"15 3"
 			dmgweight			"normal_spray"
 			reaction			true
+			shotorg				"1 11.5"
 		}
 		firedef
 		{
@@ -808,6 +829,7 @@ item smg_ammo
 			damage				"15 3"
 			dmgweight			"normal_spray"
 			reaction			true
+			shotorg				"1 11.5"
 		}
 	}
 }
@@ -877,6 +899,7 @@ item shotgun2_slug_ammo
 			damage				"120 20"
 			dmgweight			"normal_medium"
 			reaction			true
+			shotorg				"3.5 7.5"
 		}
 	}
 }
@@ -945,6 +968,7 @@ item shotgun_micro_ammo
 			damage				"20 5"
 			dmgweight			"normal_spray"
 			reaction			true
+			shotorg				"3.5 8"
 		}
 	}
 
@@ -973,6 +997,7 @@ item shotgun_micro_ammo
 			damage				"20 5"
 			dmgweight			"normal_spray"
 			reaction			true
+			shotorg				"3.5 7.5"
 		}
 	}
 }
@@ -1041,6 +1066,7 @@ item flamer_ammo
 			damage				"6 2"
 			dmgweight			"fire_flamer"
 			reaction			true
+			shotorg				"3.5 7"
 		}
 		firedef
 		{
@@ -1062,6 +1088,7 @@ item flamer_ammo
 			damage				"6 2"
 			dmgweight			"fire_flamer"
 			reaction			true
+			shotorg				"3.5 7"
 		}
 		firedef
 		{
@@ -1083,6 +1110,7 @@ item flamer_ammo
 			damage				"6 2"
 			dmgweight			"fire_flamer"
 			reaction			true
+			shotorg				"3.5 7"
 		}
 	}
 }
@@ -1154,6 +1182,7 @@ item rpg_ammo
 			spldmg		"250 20"
 			splrad		7
 			dmgweight	"blast"
+			shotorg		"3.5 7"
 		}
 	}
 }
@@ -1199,6 +1228,7 @@ item rpg_incendiary_ammo
 			splrad		7
 			dmgweight	"incendiary"
 			rounds		4
+			shotorg		"3.5 7"
 		}
 	}
 }
@@ -1243,6 +1273,7 @@ item rpg_hybrid_ammo
 			spldmg		"350 20"
 			splrad		7
 			dmgweight	"blast"
+			shotorg		"3.5 7"
 		}
 	}
 }
@@ -1317,6 +1348,7 @@ item grenl_ammo
 			splrad				3
 			dmgweight			"blast"
 			reaction			false
+			shotorg				"3 7"
 		}
 
 		firedef
@@ -1344,6 +1376,7 @@ item grenl_ammo
 			splrad				3
 			dmgweight			"blast"
 			reaction			false
+			shotorg				"3 7"
 		}
 
 		firedef
@@ -1374,6 +1407,7 @@ item grenl_ammo
 			splrad				3
 			dmgweight			"blast"
 			reaction			false
+			shotorg				"3 7"
 		}
 
 		firedef
@@ -1404,6 +1438,7 @@ item grenl_ammo
 			splrad				3
 			dmgweight			"blast"
 			reaction			false
+			shotorg				"3 7"
 		}
 	}
 }
@@ -1453,6 +1488,7 @@ item grenl_incendiary_ammo
 			dmgweight			"incendiary"
 			reaction			false
 			rounds				4
+			shotorg				"3 7"
 		}
 
 		firedef
@@ -1481,6 +1517,7 @@ item grenl_incendiary_ammo
 			dmgweight			"incendiary"
 			reaction			false
 			rounds				4
+			shotorg				"3 7"
 		}
 
 		firedef
@@ -1512,6 +1549,7 @@ item grenl_incendiary_ammo
 			dmgweight			"incendiary"
 			reaction			false
 			rounds				4
+			shotorg				"3 7"
 		}
 
 		firedef
@@ -1543,6 +1581,7 @@ item grenl_incendiary_ammo
 			dmgweight			"incendiary"
 			reaction			false
 			rounds				4
+			shotorg				"3 7"
 		}
 	}
 }
@@ -1588,6 +1627,7 @@ item grenl_fle_ammo
 			damage				"20 5"
 			dmgweight			"normal_spray"
 			reaction			true
+			shotorg				"3 7"
 		}
 	}
 }
@@ -1636,6 +1676,7 @@ item grenl_plasma_ammo
 			splrad				3
 			dmgweight			"plasma_heavy"
 			reaction			false
+			shotorg				"3 7"
 		}
 
 		firedef
@@ -1662,6 +1703,7 @@ item grenl_plasma_ammo
 			spldmg				"180 20"
 			splrad				3
 			dmgweight			"plasma_heavy"
+			shotorg				"3 7"
 		}
 
 		firedef
@@ -1691,6 +1733,7 @@ item grenl_plasma_ammo
 			spldmg				"180 20"
 			splrad				3
 			dmgweight			"plasma_heavy"
+			shotorg				"3 7"
 		}
 
 		firedef
@@ -1720,6 +1763,7 @@ item grenl_plasma_ammo
 			spldmg				"180 20"
 			splrad				3
 			dmgweight			"plasma_heavy"
+			shotorg				"3 7"
 		}
 	}
 }
@@ -1790,7 +1834,8 @@ item bolterrifle_ammo
 			damage		"160 20"
 			dmgweight	"normal_heavy"
 			reaction	true
-			throughwall 2
+			throughwall	2
+			shotorg		"3.5 6"
 		}
 
 		firedef
@@ -1812,8 +1857,9 @@ item bolterrifle_ammo
 			time				24
 			damage				"160 20"
 			dmgweight			"normal_heavy"
-			reaction	true
-			throughwall 2
+			reaction			true
+			throughwall			2
+			shotorg				"3.5 6"
 		}
 	}
 }
@@ -1858,7 +1904,8 @@ item bolterrifle_am_ammo
 			damage		"250 20"
 			dmgweight	"blast"
 			reaction	true
-			throughwall 2
+			throughwall	2
+			shotorg		"3.5 6"
 		}
 
 		firedef
@@ -1880,8 +1927,9 @@ item bolterrifle_am_ammo
 			time				24
 			damage				"250 20"
 			dmgweight			"blast"
-			reaction	true
-			throughwall 2
+			reaction			true
+			throughwall			2
+			shotorg				"3.5 6"
 		}
 	}
 }

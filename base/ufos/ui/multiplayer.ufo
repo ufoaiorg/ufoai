@@ -42,7 +42,7 @@ component currentTeamMember extends panel
 	// TODO: head and skin
 }
 
-component cmpCurrentLoadedTeamPanel extends panel
+component cmpCurrentLoadedTeamPanel extends team_loadedcurrent
 {
 	{
 		size	"504 375"
@@ -90,13 +90,6 @@ component cmpCurrentLoadedTeamPanel extends panel
 		}
 	}
 
-	/**
-	 * @brief Adds a member to the current loaded team list
-	 * @param <1> id
-	 * @param <2> Name
-	 * @param <3> Head model
-	 * @param <4> Head skin
-	 */
 	confunc team_memberadd
 	{
 		call *node:parent.soldierlist@createChild("member<1>", "currentTeamMember")
@@ -110,6 +103,63 @@ component cmpCurrentLoadedTeamPanel extends panel
 	confunc team_membersclear
 	{
 		call *node:parent.soldierlist@removeAllChild
+	}
+}
+
+component cmpLoadSlots extends team_loadslots
+{
+	{
+		size	"500 324"
+	}
+	panel slots
+	{
+		pos		"1 30"
+		size	"500 324"
+		layout			LAYOUT_TOP_DOWN_FLOW
+		layoutMargin	2
+		wheelscrollable	true
+
+		onViewChange {
+			*node:parent.slots_scroll@fullsize = <fullsize>
+			*node:parent.slots_scroll@current = <viewpos>
+			*node:parent.slots_scroll@viewsize = <viewsize>
+		}
+	}
+
+	vscrollbar slots_scroll {
+		image		"ui/scrollbar_v"
+		pos			"485 30"
+		height		"324"
+		hidewhenunused	true
+		onChange {
+			*node:parent.slots@viewpos = <current>
+		}
+	}
+
+	confunc teamsaveslotadd
+	{
+		call *node:parent.slots@createChild("slot<1>", "LoadSlot")
+		*node:parent.slots.slot<1>.filename@string = "<2>"
+		*node:parent.slots.slot<1>.index@integer = <1>
+		*node:parent.slots.slot<1>.button@string = "<3> (<4>)"
+		*node:parent.slots.slot<1>.button@tooltip = "<3> (<4>)"
+		*node:parent.slots.slot<1>.button@onClick = {
+			cmd "game_loadteam <node:parent.index@integer>;ui_push game_team_edit;"
+//					*node:root.leftpan.mp_team_list.button_save@disabled = false
+		}
+
+		*node:parent.slots.slot<1>.button@width = "410"
+		*node:parent.slots.slot<1>.upload@onClick = { cmd "web_uploadcgame 0 <node:this.parent.filename@string>;" }
+		*node:parent.slots.slot<1>.delete@onClick = { cmd "game_teamdelete <node:this.parent.filename@string>;game_teamcomments;" }
+		if (<5> == 0) {
+			*node:parent.slots.slot<1>.upload@invis = true
+			*node:parent.slots.slot<1>.delete@invis = true
+		}
+	}
+
+	confunc teamsaveslotsclear
+	{
+		call *node:parent.slots@removeAllChild
 	}
 }
 
@@ -634,31 +684,9 @@ window multiplayer extends cgame_download
 			// ================
 			// save team slots
 			// ================
-			panel slots
+			cmpLoadSlots slots
 			{
-				{
-					pos		"1 30"
-					size	"500 324"
-					layout			LAYOUT_TOP_DOWN_FLOW
-					layoutMargin	2
-					wheelscrollable	true
-
-					onViewChange {
-						*node:parent.slots_scroll@fullsize = <fullsize>
-						*node:parent.slots_scroll@current = <viewpos>
-						*node:parent.slots_scroll@viewsize = <viewsize>
-					}
-				}
-			}
-
-			vscrollbar slots_scroll {
-				image		"ui/scrollbar_v"
-				pos			"485 30"
-				height		"324"
-				hidewhenunused	true
-				onChange {
-					*node:parent.slots@viewpos = <current>
-				}
+				pos		"1 30"
 			}
 
 			MainMenuBtn button_download
@@ -684,40 +712,6 @@ window multiplayer extends cgame_download
 				}
 				tooltip	"_Generate New Team"
 				string	"_GENERATE"
-			}
-
-			/**
-			 * @brief adds a new entry to the right slot
-			 * @param <1> the id
-			 * @param <2> the file name
-			 * @param <3> the slot name
-			 * @param <4> the team members
-			 * @param <5> true if user created, false if the save was delievered with the original game data
-			 */
-			confunc teamsaveslotadd
-			{
-				call *node:this.parent.slots@createChild("slot<1>", "LoadSlot")
-				*node:this.parent.slots.slot<1>.filename@string = "<2>"
-				*node:this.parent.slots.slot<1>.index@integer = <1>
-				*node:this.parent.slots.slot<1>.button@string = "<3> (<4>)"
-				*node:this.parent.slots.slot<1>.button@tooltip = "<3> (<4>)"
-				*node:this.parent.slots.slot<1>.button@onClick = {
-					cmd "game_loadteam <node:this.parent.index@integer>;ui_push game_team_edit;"
-//					*node:root.leftpan.mp_team_list.button_save@disabled = false
-				}
-
-				*node:this.parent.slots.slot<1>.button@width = "410"
-				*node:this.parent.slots.slot<1>.upload@onClick = { cmd "web_uploadcgame 0 <node:this.parent.filename@string>;" }
-				*node:this.parent.slots.slot<1>.delete@onClick = { cmd "game_teamdelete <node:this.parent.filename@string>;game_teamcomments;" }
-				if (<5> == 0) {
-					*node:this.parent.slots.slot<1>.upload@invis = true
-					*node:this.parent.slots.slot<1>.delete@invis = true
-				}
-			}
-
-			confunc teamsaveslotsclear
-			{
-				call *node:this.parent.slots@removeAllChild
 			}
 		}
 

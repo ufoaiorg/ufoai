@@ -1057,7 +1057,7 @@ void fireDef_t::getShotOrigin (const vec3_t from, const vec3_t dir, bool crouchi
 	if (shotOrg[1] != 0) {
 		shotOrigin[2] += shotOrg[1];
 		if (crouching)
-			shotOrigin[2] -= EYE_STAND - PLAYER_CROUCH;
+			shotOrigin[2] -= EYE_STAND - PLAYER_CROUCH - 1;
 	}
 	/* adjust horizontal: */
 	if (shotOrg[0] != 0) {

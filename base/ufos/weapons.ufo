@@ -176,6 +176,7 @@ item fraggrenade
 			spldmg	"110 30"
 			splrad	4
 			dmgweight "blast"
+			shotorg	"7.5 6.5"
 		}
 		firedef
 		{
@@ -202,6 +203,7 @@ item fraggrenade
 			spldmg	"110 30"
 			splrad	4
 			dmgweight "blast"
+			shotorg	"5.5 2"
 		}
 	}
 }
@@ -255,6 +257,7 @@ item flashbang
 			spldmg	"999 0"	// TODO: needed at all?
 			splrad	5
 			dmgweight "shock"
+			shotorg	"7.5 6.5"
 		}
 		firedef
 		{
@@ -282,6 +285,7 @@ item flashbang
 			spldmg	"999 0"	// TODO: needed at all?
 			splrad	5
 			dmgweight "shock"
+			shotorg	"5.5 2"
 		}
 	}
 }
@@ -334,6 +338,7 @@ item smokegrenade
 			splrad	3
 			dmgweight "normal_light"
 			rounds	4
+			shotorg	"7.5 6.5"
 		}
 		firedef
 		{
@@ -361,6 +366,7 @@ item smokegrenade
 			splrad	3
 			dmgweight "normal_light"
 			rounds	4
+			shotorg	"5.5 2"
 		}
 	}
 }
@@ -415,6 +421,7 @@ item stungrenade
 			splrad	3
 			dmgweight "stun_gas"
 			rounds	4
+			shotorg	"7.5 6.5"
 		}
 		firedef
 		{
@@ -444,6 +451,7 @@ item stungrenade
 			splrad	3
 			dmgweight "stun_gas"
 			rounds	4
+			shotorg	"5.5 2"
 		}
 	}
 }
@@ -499,6 +507,7 @@ item stungrenade_alien
 			splrad	4
 			dmgweight "stun_gas"
 			rounds	4
+			shotorg	"7.5 6.5"
 		}
 		firedef
 		{
@@ -528,6 +537,7 @@ item stungrenade_alien
 			splrad	4
 			dmgweight "stun_gas"
 			rounds	4
+			shotorg	"5.5 2"
 		}
 	}
 }
@@ -582,6 +592,7 @@ item incgrenade
 			splrad	3
 			dmgweight "incendiary"
 			rounds	4
+			shotorg	"7.5 6.5"
 		}
 		firedef
 		{
@@ -611,6 +622,7 @@ item incgrenade
 			splrad	3
 			dmgweight "incendiary"
 			rounds	4
+			shotorg	"5.5 2"
 		}
 	}
 }
@@ -662,6 +674,7 @@ item plasmagrenade
 			spldmg	"160 20"
 			splrad	5
 			dmgweight "plasma_heavy"
+			shotorg	"7.5 6.5"
 		}
 		firedef
 		{
@@ -688,6 +701,7 @@ item plasmagrenade
 			spldmg	"160 20"
 			splrad	5
 			dmgweight "plasma_heavy"
+			shotorg	"5.5 2"
 		}
 	}
 }
