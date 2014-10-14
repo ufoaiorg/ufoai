@@ -70,16 +70,26 @@ static void TR_EmptyTransferCargo (base_t* destination, transfer_t* transfer, bo
 		}
 	}
 
+	/* Employee */
 	if (transfer->hasEmployees && transfer->srcBase) {	/* Employees. (cannot come from a mission) */
 		for (int i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 			const employeeType_t type = (employeeType_t)i;
-
 			TR_ForeachEmployee(employee, transfer, type) {
-				employee->baseHired = transfer->srcBase;
 				employee->transfer = false;
-				employee->unhire();
-				if (success)
-					E_HireEmployee(destination, employee);
+				if (!success) {
+					E_DeleteEmployee(employee);
+					continue;
+				}
+				switch (type) {
+				case EMPL_WORKER:
+					PR_UpdateProductionCap(destination, 0);
+					break;
+				case EMPL_PILOT:
+					AIR_AutoAddPilotToAircraft(destination, employee);
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
@@ -194,10 +204,10 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 			employee->unassign();
 			/** @TODO We unarm soldiers so we don't need to manage storage. This need to be changed later */
 			employee->unequip();
-			transfer.hasEmployees = true;
 			E_MoveIntoNewBase(employee, transfer.destBase);
 			employee->transfer = true;
 			cgi->LIST_AddPointer(&transfer.employees[i], (void*) employee);
+			transfer.hasEmployees = true;
 			count++;
 		}
 	}
