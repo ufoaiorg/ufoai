@@ -963,6 +963,12 @@ struct uiRadioButtonNode_t: uiNode_t {
 %extend uiRadioButtonNode_t {
 	bool is_flipicon () { return UI_EXTRADATA($self, radioButtonExtraData_t).flipIcon; };
 
+	char* as_string () { return UI_EXTRADATA($self, radioButtonExtraData_t).string; };
+	float as_float () { return UI_EXTRADATA($self, radioButtonExtraData_t).value; };
+
+	void set_value (const char* value) { UI_RadioButton_SetValue($self, value); };
+	void set_value (float value) { UI_RadioButton_SetValue($self, value); };
+
 	void set_flipicon (bool value) { UI_EXTRADATA($self, radioButtonExtraData_t).flipIcon = value; };
 	void set_background (const char* name) { UI_RadioButton_SetBackgroundByName($self, name); };
 	void set_icon (const char* name) { UI_RadioButton_SetIconByName($self, name); };

@@ -163,6 +163,24 @@ void uiRadioButtonNode::onLeftClick (uiNode_t* node, int x, int y)
 	onActivate(node);
 }
 
+void UI_RadioButton_SetValue (uiNode_t* node, const char* value) {
+
+	/* This is a special case: we have a situation where the node already has a value reference
+	   (either being float or cvar). We now want to replace this value reference by a new cvar. So we first
+	   need to free the existing reference, then create new cvar reference (just a string starting with
+	   '*cvar' and store it. */
+	Mem_Free(*(void**)(EXTRADATA(node).value));
+	*(void**)EXTRADATA(node).value= Mem_StrDup(value);
+	uiRadioButtonNode* b=static_cast<uiRadioButtonNode*>(node->behaviour->manager.get());
+	b->onActivate(node);
+}
+
+void UI_RadioButton_SetValue (uiNode_t* node, float value) {
+	EXTRADATA(node).value = value;
+	uiRadioButtonNode* b=static_cast<uiRadioButtonNode*>(node->behaviour->manager.get());
+	b->onActivate(node);
+}
+
 void UI_RadioButton_SetBackgroundByName (uiNode_t* node, const char* name) {
 	uiSprite_t* sprite = UI_GetSpriteByName(name);
 	EXTRADATA(node).background = sprite;

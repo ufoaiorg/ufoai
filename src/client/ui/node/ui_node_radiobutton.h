@@ -43,6 +43,8 @@ typedef struct radioButtonExtraData_s {
 
 void UI_RadioButton_SetBackgroundByName (uiNode_t* node, const char* name);
 void UI_RadioButton_SetIconByName (uiNode_t* node, const char* name);
+void UI_RadioButton_SetValue (uiNode_t* node, const char* value);
+void UI_RadioButton_SetValue (uiNode_t* node, float value);
 
 
 void UI_RegisterRadioButtonNode(uiBehaviour_t* behaviour);
