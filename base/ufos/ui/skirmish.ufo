@@ -410,6 +410,12 @@ window skirmish extends cgame_download
 		cmd "game_teamcomments;"
 	}
 
+	func onWindowClosed
+	{
+		// Prevent a nasty surprise if user fiddles with this
+		// option and then goes to play a campaign
+		delete *cvar:g_endlessaliens
+	}
 	// Fuzzy screen effect (see assets.ufo)
 	fuzzyScreen overlay { }
 }
