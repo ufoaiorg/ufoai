@@ -95,11 +95,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../node/ui_node_panel.h"
 #include "../node/ui_node_radar.h"
 #include "../node/ui_node_radiobutton.h"
+#include "../node/ui_node_rows.h"
+#include "../node/ui_node_selectbox.h"
+#include "../node/ui_node_sequence.h"
+#include "../node/ui_node_special.h"
 #include "../node/ui_node_spinner.h"
 #include "../node/ui_node_string.h"
+#include "../node/ui_node_tab.h"
+#include "../node/ui_node_tbar.h"
 #include "../node/ui_node_text.h"
 #include "../node/ui_node_textentry.h"
+#include "../node/ui_node_timer.h"
+#include "../node/ui_node_video.h"
 #include "../node/ui_node_window.h"
+#include "../node/ui_node_zone.h"
 
 #include "../ui_lua.h"
 
@@ -122,6 +131,7 @@ typedef uiNode_t uiBaseLayoutNode_t;
 typedef uiNode_t uiBaseInventoryNode_t;
 typedef uiNode_t uiButtonNode_t;
 typedef uiNode_t uiCheckBoxNode_t;
+typedef uiNode_t uiConFuncNode_t;
 typedef uiNode_t uiContainerNode_t;
 typedef uiNode_t uiDataNode_t;
 typedef uiNode_t uiEkgNode_t;
@@ -137,16 +147,26 @@ typedef uiNode_t uiOptionTreeNode_t;
 typedef uiNode_t uiPanelNode_t;
 typedef uiNode_t uiRadarNode_t;
 typedef uiNode_t uiRadioButtonNode_t;
+typedef uiNode_t uiRowsNode_t;
+typedef uiNode_t uiSelectBoxNode_t;
+typedef uiNode_t uiSequenceNode_t;
 typedef uiNode_t uiSpinnerNode_t;
 typedef uiNode_t uiStringNode_t;
+typedef uiNode_t uiTabNode_t;
+typedef uiNode_t uiTBarNode_t;
 typedef uiNode_t uiTextNode_t;
+typedef uiNode_t uiText2Node_t;
 typedef uiNode_t uiTextEntryNode_t;
+typedef uiNode_t uiTextListNode_t;
 typedef uiNode_t uiTextureNode_t;
+typedef uiNode_t uiTimerNode_t;
+typedef uiNode_t uiVideoNode_t;
 typedef uiNode_t uiVScrollBarNode_t;
 typedef uiNode_t uiWidgetNode_t; /* note: ufo class = "controls" */
 typedef uiNode_t uiWindowNode_t;
+typedef uiNode_t uiZoneNode_t;
 
-// todo: implement other ui node classes
+// skipped: uiFuncNode, uiNullNode, uiTodoNode
 
 /*
    This function queries the SWIG type table for a type information structure. It is used in combination
@@ -721,6 +741,12 @@ struct uiCheckBoxNode_t: uiNode_t {
 	void set_iconunknown (const char* name) { UI_CheckBox_SetIconUnknownByName($self, name); };
 };
 
+%rename (uiConFunc) uiConFuncNode_t;
+struct uiConFuncNode_t: uiNode_t {
+};
+%extend uiConFuncNode_t {
+};
+
 %rename (uiContainer) uiContainerNode_t;
 struct uiContainerNode_t: uiNode_t {
 };
@@ -974,6 +1000,46 @@ struct uiRadioButtonNode_t: uiNode_t {
 	void set_icon (const char* name) { UI_RadioButton_SetIconByName($self, name); };
 };
 
+%rename (uiRows) uiRowsNode_t;
+struct uiRowsNode_t: uiNode_t {
+};
+%extend uiRowsNode_t {
+	int current () { return UI_EXTRADATA($self, rowsExtraData_t).current; };
+	int lineheight () { return UI_EXTRADATA($self, rowsExtraData_t).lineHeight; };
+
+	void set_current (int value) { UI_EXTRADATA($self, rowsExtraData_t).current = value; };
+	void set_lineheight (int value) { UI_EXTRADATA($self, rowsExtraData_t).lineHeight = value; };
+};
+
+%rename (uiSelectBox) uiSelectBoxNode_t;
+struct uiSelectBoxNode_t: uiNode_t {
+};
+%extend uiSelectBoxNode_t {
+};
+
+%rename (uiSequence) uiSequenceNode_t;
+struct uiSequenceNode_t: uiNode_t {
+};
+%extend uiSequenceNode_t {
+	bool is_playing () { return UI_EXTRADATA($self, sequenceExtraData_t).playing; };
+
+	void set_source (const char* name) { UI_Sequence_SetSource($self, name); };
+
+	LUA_EVENT lua_onEnd; 		/**< references the event in lua: on_end(node) */
+};
+/*
+	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
+	to bring the values from the EXTRADATA structures to the lua class.
+*/
+%{
+static LUA_EVENT uiSequenceNode_t_lua_onEnd_get(uiSequenceNode_t* node) {
+	return UI_EXTRADATA(node, sequenceExtraData_t).lua_onEnd;
+}
+static LUA_EVENT uiSequenceNode_t_lua_onEnd_set(uiSequenceNode_t* node, LUA_EVENT fn) {
+	return UI_EXTRADATA(node, sequenceExtraData_t).lua_onEnd;
+}
+%}
+
 %rename (uiSpinner) uiSpinnerNode_t;
 struct uiSpinnerNode_t: uiAbstractValueNode_t {
 };
@@ -999,6 +1065,24 @@ struct uiStringNode_t: uiNode_t {
 	void set_longlines (int value) { UI_EXTRADATA($self, stringExtraData_t).longlines = value; };
 };
 
+%rename (uiTab) uiTabNode_t;
+struct uiTabNode_t: uiAbstractOptionNode_t {
+};
+%extend uiTabNode_t {
+};
+
+%rename (uiTBar) uiTBarNode_t;
+struct uiTBarNode_t: uiAbstractValueNode {
+};
+%extend uiTBarNode_t {
+	vec2_struct_t* texh () { return (vec2_struct_t*)UI_EXTRADATA($self, tbarExtraData_t).texh; };
+	vec2_struct_t* texl () { return (vec2_struct_t*)UI_EXTRADATA($self, tbarExtraData_t).texl; };
+
+	void set_source (const char* name) { UI_TBar_SetImage($self, name); };
+	void set_texh (float v1, float v2) { Vector2Set(UI_EXTRADATA($self, tbarExtraData_t).texh, v1, v2); };
+	void set_texl (float v1, float v2) { Vector2Set(UI_EXTRADATA($self, tbarExtraData_t).texl, v1, v2); };
+};
+
 %rename (uiText) uiTextNode_t;
 struct uiTextNode_t: uiAbstractScrollableNode_t {
 };
@@ -1015,6 +1099,12 @@ struct uiTextNode_t: uiAbstractScrollableNode_t {
 	void set_lineheight (int value) { UI_EXTRADATA($self, textExtraData_t).lineHeight = value; };
 	void set_lineselected (int line) { UI_TextNodeSelectLine($self, line); };
 	void set_tabwidth (int value) { UI_EXTRADATA($self, textExtraData_t).tabWidth = value; };
+};
+
+%rename (uiText2) uiText2Node_t;
+struct uiText2Node_t: uiText2Node_t {
+};
+%extend uiText2Node_t {
 };
 
 %rename (uiTextEntry) uiTextEntryNode_t;
@@ -1046,12 +1136,67 @@ static LUA_EVENT uiTextEntryNode_t_lua_onTextEntryAbort_set(uiTextEntryNode_t* n
 }
 %}
 
+%rename (uiTextList) uiTextListNode_t;
+struct uiTextListNode_t: uiText_t {
+};
+%extend uiTextListNode_t {
+};
+
 %rename (uiTexture) uiTextureNode_t;
 struct uiTextureNode_t: uiNode_t {
 };
 %extend uiTextureNode_t {
 	void set_source (const char* name) { UI_Node_SetImage($self, name); };
 };
+
+%rename (uiTimer) uiTimerNode_t;
+struct uiTimerNode_t: uiNode_t {
+};
+%extend uiTimerNode_t {
+	int timeout () { return UI_EXTRADATA($self, timerExtraData_t).timeOut; }
+
+	void set_timeout (int value) { UI_EXTRADATA($self, timerExtraData_t).timeOut = value; };
+
+    LUA_EVENT lua_onEvent; 			/**< references the event in lua: on_event (node, x, y) */
+};
+/*
+	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
+	to bring the values from the EXTRADATA structures to the lua class.
+*/
+%{
+static LUA_EVENT uiTimerNode_t_lua_onEvent_get(uiTimerNode_t* node) {
+	return UI_EXTRADATA(node, timerExtraData_t).lua_onEvent;
+}
+static LUA_EVENT uiTimerNode_t_lua_onEvent_set(uiTimerNode_t* node, LUA_EVENT fn) {
+	return UI_EXTRADATA(node, timerExtraData_t).lua_onEvent;
+}
+%}
+
+%rename (uiVideo) uiVideoNode_t;
+struct uiVideoNode_t: uiNode_t {
+};
+%extend uiVideoNode_t {
+	bool is_nosound () { return UI_EXTRADATA($self, videoExtraData_t).nosound; };
+
+	void set_nosound (bool value) { UI_EXTRADATA($self, videoExtraData_t).nosound = value; };
+	void set_source (const char* name) { UI_Sequence_SetSource($self, name); };
+
+	LUA_EVENT lua_onEnd; 		/**< references the event in lua: on_end(node) */
+};
+/*
+	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
+	to bring the values from the EXTRADATA structures to the lua class.
+*/
+%{
+static LUA_EVENT uiVideoNode_t_lua_onEnd_get(uiVideoNode_t* node) {
+	return UI_EXTRADATA(node, videoExtraData_t).lua_onEnd;
+}
+static LUA_EVENT uiVideoNode_t_lua_onEnd_set(uiVideoNode_t* node, LUA_EVENT fn) {
+	return UI_EXTRADATA(node, videoExtraData_t).lua_onEnd;
+}
+%}
+
+
 
 %rename (uiVScrollbar) uiVScrollBarNode_t;
 struct uiVScrollBarNode_t: uiAbstractScrollbarNode_t {
@@ -1106,6 +1251,17 @@ static void uiWindowNode_t_lua_onWindowClosed_set (uiWindowNode_t* node, LUA_EVE
 }
 %}
 
+%rename (uiZone) uiZoneNode_t;
+struct uiZoneNode_t: uiNode_t {
+};
+%extend uiZoneNode_t {
+	bool is_repeat () { return UI_EXTRADATA($self, zoneExtraData_t).repeat; }
+	int clickdelay () { return UI_EXTRADATA($self, zoneExtraData_t).clickDelay; };
+
+	void set_repeat (bool value) { UI_EXTRADATA($self, zoneExtraData_t).repeat = value; };
+	void set_clickdelay (int value) { UI_EXTRADATA($self, zoneExtraData_t).clickDelay = value; };
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose special ui nodes
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1146,6 +1302,9 @@ static uiButtonNode_t* UI_CreateButton (uiNode_t* parent, const char* name, cons
 }
 static uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "checkbox", name, super);
+}
+static uiConFuncNode_t* UI_CreateConFunc (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "confunc", name, super);
 }
 static uiContainerNode_t* UI_CreateContainer (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "container", name, super);
@@ -1192,20 +1351,47 @@ static uiRadarNode_t* UI_CreateRadar (uiNode_t* parent, const char* name, const 
 static uiRadioButtonNode_t* UI_CreateRadioButton (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "radiobutton", name, super);
 }
+static uiRowsNode_t* UI_CreateRows (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "rows", name, super);
+}
+static uiSelectBoxNode_t* UI_CreateSelectBox (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "selectbox", name, super);
+}
+static uiSequenceNode_t* UI_CreateSequence (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "sequence", name, super);
+}
 static uiSpinnerNode_t* UI_CreateSpinner (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "spinner", name, super);
 }
 static uiStringNode_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "string", name, super);
 }
+static uiTabNode_t* UI_CreateTab (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "tab", name, super);
+}
+static uiTBarNode_t* UI_CreateTBar (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "tbar", name, super);
+}
 static uiTextNode_t* UI_CreateText (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "text", name, super);
+}
+static uiText2Node_t* UI_CreateText2 (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "text2", name, super);
 }
 static uiTextEntryNode_t* UI_CreateTextEntry (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "textentry", name, super);
 }
+static uiTextListNode_t* UI_CreateTextList (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "textlist", name, super);
+}
 static uiTextureNode_t* UI_CreateTexture (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "texture", name, super);
+}
+static uiTimerNode_t* UI_CreateTimer (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "timer", name, super);
+}
+static uiVideoNode_t* UI_CreateVideo (uiNode_t* parent, const char* name, const char* super) {
+	return UI_CreateControl (parent, "video", name, super);
 }
 static uiVScrollBarNode_t* UI_CreateVScrollbar (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "vscrollbar", name, super);
@@ -1215,6 +1401,9 @@ static uiWidgetNode_t* UI_CreateWidget (uiNode_t* parent, const char* name, cons
 }
 static uiWindowNode_t* UI_CreateWindow (const char* name, const char* super) {
 	return UI_CreateWindow("window", name, super);
+}
+static uiZoneNode_t* UI_CreateZone (const char* name, const char* super) {
+	return UI_CreateWindow("zone", name, super);
 }
 %}
 
@@ -1231,6 +1420,8 @@ uiBaseLayoutNode_t* UI_CreateBaseLayout (uiNode_t* parent, const char* name, con
 uiBaseInventoryNode_t* UI_CreateBaseInventory (uiNode_t* parent, const char* name, const char* super);
 %rename (create_checkbox) UI_CreateCheckBox;
 uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super);
+%rename (create_confunc) UI_CreateConFunc;
+uiConFuncNode_t* UI_CreateConFunc (uiNode_t* parent, const char* name, const char* super);
 %rename (create_container) UI_CreateContainer;
 uiContainerNode_t* UI_CreateContainer (uiNode_t* parent, const char* name, const char* super);
 %rename (create_data) UI_CreateData;
@@ -1261,22 +1452,42 @@ uiPanelNode_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* s
 uiRadarNode_t* UI_CreateRadar (uiNode_t* parent, const char* name, const char* super);
 %rename (create_radiobutton) UI_CreateRadioButton;
 uiRadioButtonNode_t* UI_CreateRadioButton (uiNode_t* parent, const char* name, const char* super);
+%rename (create_rows) UI_CreateRows;
+uiRowsNode_t* UI_CreateRows (uiNode_t* parent, const char* name, const char* super);
+%rename (create_selectbox) UI_CreateSelectBox;
+uiSelectBoxNode_t* UI_CreateSelectBox (uiNode_t* parent, const char* name, const char* super);
+%rename (create_sequence) UI_CreateSequence;
+uiSequenceNode_t* UI_CreateSequence (uiNode_t* parent, const char* name, const char* super);
 %rename (create_spinner) UI_CreateSpinner;
 uiSpinnerNode_t* UI_CreateSpinner (uiNode_t* parent, const char* name, const char* super);
 %rename (create_string) UI_CreateString;
 uiStringNode_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super);
+%rename (create_tab) UI_CreateTab;
+uiTabNode_t* UI_CreateTab (uiNode_t* parent, const char* name, const char* super);
+%rename (create_tbar) UI_CreateTBar;
+uiTBarNode_t* UI_CreateTBar (uiNode_t* parent, const char* name, const char* super);
 %rename (create_text) UI_CreateText;
 uiTextNode_t* UI_CreateText (uiNode_t* parent, const char* name, const char* super);
+%rename (create_text2) UI_CreateText2;
+uiText2Node_t* UI_CreateText2 (uiNode_t* parent, const char* name, const char* super);
 %rename (create_textentry) UI_CreateTextEntry;
-uiStringNode_t* UI_CreateTextEntry (uiNode_t* parent, const char* name, const char* super);
+uiTextEntryNode_t* UI_CreateTextEntry (uiNode_t* parent, const char* name, const char* super);
+%rename (create_textlist) UI_CreateTextList;
+uiTextListNode_t* UI_CreateTextList (uiNode_t* parent, const char* name, const char* super);
 %rename (create_texture) UI_CreateTexture;
 uiTextureNode_t* UI_CreateTexture (uiNode_t* parent, const char* name, const char* super);
+%rename (create_timer) UI_CreateTimer;
+uiTimerNode_t* UI_CreateTimer (uiNode_t* parent, const char* name, const char* super);
+%rename (create_video) UI_CreateVideo;
+uiVideoNode_t* UI_CreateVideo (uiNode_t* parent, const char* name, const char* super);
 %rename (create_vscrollbar) UI_CreateVScrollbar;
 uiVScrollBarNode_t* UI_CreateVScrollbar (uiNode_t* parent, const char* name, const char* super);
 %rename (create_widget) UI_CreateWidget;
 uiWidgetNode_t* UI_CreateWidget (uiNode_t* parent, const char* name, const char* super);
 %rename (create_window) UI_CreateWindow;
 uiWindowNode_t* UI_CreateWindow (const char* name, const char* super);
+%rename (create_zone) UI_CreateZone;
+uiZoneNode_t* UI_CreateZone (const char* name, const char* super);
 /* expose component creation fuction */
 %rename (create_component) UI_CreateComponent;
 uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);

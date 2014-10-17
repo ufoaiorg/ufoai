@@ -28,11 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_draw.h"
 #include "../ui_render.h"
+#include "../ui_lua.h"
 #include "../../client.h"
 #include "../../renderer/r_misc.h"
 #include "../../renderer/r_draw.h"
 #include "../../cinematic/cl_sequence.h"
 #include "ui_node_abstractnode.h"
+
 #include "ui_node_sequence.h"
 
 #include "../../../common/scripts_lua.h"
@@ -41,10 +43,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
+extern memPool_t* ui_dynStringPool;
+
 static const value_t* propertySource;
 
 static const uiBehaviour_t* localBehaviour;
 
+void uiSequenceNode::initNode (uiNode_t* node) {
+	uiLocatedNode::initNode(node);
+	EXTRADATA(node).lua_onEnd = LUA_NOREF;
+}
 
 void uiSequenceNode::draw (uiNode_t* node)
 {
@@ -65,9 +73,14 @@ void uiSequenceNode::draw (uiNode_t* node)
 		UI_PopClipRect();
 		R_PopMatrix();
 
-		if (finished && EXTRADATA(node).onEnd) {
-			UI_ExecuteEventActions(node, EXTRADATA(node).onEnd);
-			EXTRADATA(node).playing = true;
+		if (finished) {
+			if (EXTRADATA(node).onEnd != nullptr) {
+				UI_ExecuteEventActions(node, EXTRADATA(node).onEnd);
+			}
+			else if (EXTRADATA(node).lua_onEnd != LUA_NOREF) {
+				UI_ExecuteLuaEventScript(node, EXTRADATA(node).lua_onEnd);
+			}
+			EXTRADATA(node).playing = false;
 		}
 	}
 }
@@ -109,6 +122,11 @@ void uiSequenceNode::onPropertyChanged (uiNode_t* node, const value_t* property)
 		return;
 	}
 	uiLocatedNode::onPropertyChanged(node, property);
+}
+
+void UI_Sequence_SetSource(uiNode_t* node, const char* name) {
+	UI_FreeStringProperty(const_cast<char*>(EXTRADATA(node).source));
+	node->image = Mem_PoolStrDup(name, ui_dynStringPool, 0);
 }
 
 void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)

@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_actions.h"
 #include "../ui_behaviour.h"
+#include "../ui_lua.h"
 #include "ui_node_timer.h"
 
 #include "../../../common/scripts_lua.h"
@@ -61,7 +62,12 @@ void uiTimerNode::draw (uiNode_t* node)
 			/* allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
 			data.lastTime = 0;
 			Com_DPrintf(DEBUG_CLIENT, "uiTimerNode::draw: Timeout for node '%s'\n", node->name);
-			UI_ExecuteEventActions(node, data.onTimeOut);
+			if (data.onTimeOut != nullptr) {
+				UI_ExecuteEventActions(node, data.onTimeOut);
+			}
+			else if (data.lua_onEvent != LUA_NOREF) {
+				UI_ExecuteLuaEventScript(node, data.lua_onEvent);
+			}
 		}
 	}
 }
