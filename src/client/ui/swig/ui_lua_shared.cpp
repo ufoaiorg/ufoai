@@ -2762,9 +2762,13 @@ typedef struct{} LANGUAGE_OBJ;
 #include "../node/ui_node_tab.h"
 #include "../node/ui_node_tbar.h"
 #include "../node/ui_node_text.h"
+#include "../node/ui_node_text2.h"
 #include "../node/ui_node_textentry.h"
+#include "../node/ui_node_textlist.h"
+#include "../node/ui_node_texture.h"
 #include "../node/ui_node_timer.h"
 #include "../node/ui_node_video.h"
+#include "../node/ui_node_vscrollbar.h"
 #include "../node/ui_node_window.h"
 #include "../node/ui_node_zone.h"
 
@@ -14385,6 +14389,35 @@ static swig_lua_class *swig_uiText_bases[] = {0,0};
 static const char *swig_uiText_base_names[] = {"uiAbstractScrollableNode_t *",0};
 static swig_lua_class _wrap_class_uiText = { "uiText", "uiText", &SWIGTYPE_p_uiTextNode_t,_proxy__wrap_new_uiText, swig_delete_uiText, swig_uiText_methods, swig_uiText_attributes, &swig_uiText_Sf_SwigStatic, swig_uiText_meta, swig_uiText_bases, swig_uiText_base_names };
 
+static int _wrap_new_uiText2(lua_State* L) {
+  int SWIG_arg = 0;
+  uiText2Node_t *result = 0 ;
+  
+  SWIG_check_num_args("uiText2Node_t::uiText2Node_t",0,0)
+  result = (uiText2Node_t *)new uiText2Node_t();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiText2Node_t,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_uiText2(void *obj) {
+uiText2Node_t *arg1 = (uiText2Node_t *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_uiText2(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_uiText2);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
 static swig_lua_attribute swig_uiText2_attributes[] = {
     {0,0,0}
 };
@@ -14417,8 +14450,8 @@ static swig_lua_namespace swig_uiText2_Sf_SwigStatic = {
     0
 };
 static swig_lua_class *swig_uiText2_bases[] = {0,0};
-static const char *swig_uiText2_base_names[] = {"uiText2Node_t *",0};
-static swig_lua_class _wrap_class_uiText2 = { "uiText2", "uiText2", &SWIGTYPE_p_uiText2Node_t,0,0, swig_uiText2_methods, swig_uiText2_attributes, &swig_uiText2_Sf_SwigStatic, swig_uiText2_meta, swig_uiText2_bases, swig_uiText2_base_names };
+static const char *swig_uiText2_base_names[] = {"uiTextNode_t *",0};
+static swig_lua_class _wrap_class_uiText2 = { "uiText2", "uiText2", &SWIGTYPE_p_uiText2Node_t,_proxy__wrap_new_uiText2, swig_delete_uiText2, swig_uiText2_methods, swig_uiText2_attributes, &swig_uiText2_Sf_SwigStatic, swig_uiText2_meta, swig_uiText2_bases, swig_uiText2_base_names };
 
 static int _wrap_uiTextEntry_is_password(lua_State* L) {
   int SWIG_arg = 0;
@@ -18895,8 +18928,8 @@ static void *_p_uiTabNode_tTo_p_uiAbstractOptionNode_t(void *x, int *SWIGUNUSEDP
 static void *_p_uiOptionTreeNode_tTo_p_uiAbstractOptionNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiAbstractOptionNode_t *)  ((uiOptionTreeNode_t *) x));
 }
-static void *_p_uiText2Node_tTo_p_uiText2Node_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((uiText2Node_t *)  ((uiText2Node_t *) x));
+static void *_p_uiText2Node_tTo_p_uiTextNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((uiTextNode_t *)  ((uiText2Node_t *) x));
 }
 static void *_p_uiVScrollBarNode_tTo_p_uiAbstractScrollbarNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiAbstractScrollbarNode_t *)  ((uiVScrollBarNode_t *) x));
@@ -18960,6 +18993,9 @@ static void *_p_uiCheckBoxNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newme
 }
 static void *_p_uiContainerNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *)  ((uiContainerNode_t *) x));
+}
+static void *_p_uiText2Node_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((uiNode_t *) (uiAbstractScrollableNode_t *)(uiTextNode_t *) ((uiText2Node_t *) x));
 }
 static void *_p_uiTimerNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *)  ((uiTimerNode_t *) x));
@@ -19053,6 +19089,9 @@ static void *_p_uiPanelNode_tTo_p_uiAbstractScrollableNode_t(void *x, int *SWIGU
 }
 static void *_p_uiTextNode_tTo_p_uiAbstractScrollableNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiAbstractScrollableNode_t *)  ((uiTextNode_t *) x));
+}
+static void *_p_uiText2Node_tTo_p_uiAbstractScrollableNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((uiAbstractScrollableNode_t *) (uiTextNode_t *) ((uiText2Node_t *) x));
 }
 static swig_type_info _swigt__p_LUA_EVENT = {"_p_LUA_EVENT", "LUA_EVENT *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LUA_FUNCTION = {"_p_LUA_FUNCTION", "LUA_FUNCTION *", 0, 0, (void*)0, 0};
@@ -19191,7 +19230,7 @@ static swig_cast_info _swigc__p_longlines_t[] = {  {&_swigt__p_longlines_t, 0, 0
 static swig_cast_info _swigc__p_panelLayout_t[] = {  {&_swigt__p_panelLayout_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiAbstractBaseNode_t[] = {  {&_swigt__p_uiBaseMapNode_t, _p_uiBaseMapNode_tTo_p_uiAbstractBaseNode_t, 0, 0},  {&_swigt__p_uiBaseLayoutNode_t, _p_uiBaseLayoutNode_tTo_p_uiAbstractBaseNode_t, 0, 0},  {&_swigt__p_uiAbstractBaseNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiAbstractOptionNode_t[] = {  {&_swigt__p_uiAbstractOptionNode_t, 0, 0, 0},  {&_swigt__p_uiOptionListNode_t, _p_uiOptionListNode_tTo_p_uiAbstractOptionNode_t, 0, 0},  {&_swigt__p_uiTabNode_t, _p_uiTabNode_tTo_p_uiAbstractOptionNode_t, 0, 0},  {&_swigt__p_uiOptionTreeNode_t, _p_uiOptionTreeNode_tTo_p_uiAbstractOptionNode_t, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_uiAbstractScrollableNode_t[] = {  {&_swigt__p_uiMessageListNode_t, _p_uiMessageListNode_tTo_p_uiAbstractScrollableNode_t, 0, 0},  {&_swigt__p_uiPanelNode_t, _p_uiPanelNode_tTo_p_uiAbstractScrollableNode_t, 0, 0},  {&_swigt__p_uiTextNode_t, _p_uiTextNode_tTo_p_uiAbstractScrollableNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollableNode_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uiAbstractScrollableNode_t[] = {  {&_swigt__p_uiMessageListNode_t, _p_uiMessageListNode_tTo_p_uiAbstractScrollableNode_t, 0, 0},  {&_swigt__p_uiPanelNode_t, _p_uiPanelNode_tTo_p_uiAbstractScrollableNode_t, 0, 0},  {&_swigt__p_uiTextNode_t, _p_uiTextNode_tTo_p_uiAbstractScrollableNode_t, 0, 0},  {&_swigt__p_uiText2Node_t, _p_uiText2Node_tTo_p_uiAbstractScrollableNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollableNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiAbstractScrollbarNode_t[] = {  {&_swigt__p_uiAbstractScrollbarNode_t, 0, 0, 0},  {&_swigt__p_uiVScrollBarNode_t, _p_uiVScrollBarNode_tTo_p_uiAbstractScrollbarNode_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiAbstractValueNode_t[] = {  {&_swigt__p_uiBarNode_t, _p_uiBarNode_tTo_p_uiAbstractValueNode_t, 0, 0},  {&_swigt__p_uiSpinnerNode_t, _p_uiSpinnerNode_tTo_p_uiAbstractValueNode_t, 0, 0},  {&_swigt__p_uiAbstractValueNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiBarNode_t[] = {  {&_swigt__p_uiBarNode_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -19210,7 +19249,7 @@ static swig_cast_info _swigc__p_uiItemNode_t[] = {  {&_swigt__p_uiItemNode_t, 0,
 static swig_cast_info _swigc__p_uiLineChartNode_t[] = {  {&_swigt__p_uiLineChartNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiMessageListNode_t[] = {  {&_swigt__p_uiMessageListNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiModelNode_t[] = {  {&_swigt__p_uiModelNode_t, 0, 0, 0},  {&_swigt__p_uiItemNode_t, _p_uiItemNode_tTo_p_uiModelNode_t, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_uiNode_t[] = {  {&_swigt__p_uiAbstractOptionNode_t, _p_uiAbstractOptionNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiLineChartNode_t, _p_uiLineChartNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiMessageListNode_t, _p_uiMessageListNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiModelNode_t, _p_uiModelNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiOptionNode_t, _p_uiOptionNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiOptionListNode_t, _p_uiOptionListNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiPanelNode_t, _p_uiPanelNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiRadarNode_t, _p_uiRadarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiRadioButtonNode_t, _p_uiRadioButtonNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSelectBoxNode_t, _p_uiSelectBoxNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSpinnerNode_t, _p_uiSpinnerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiWidgetNode_t, _p_uiWidgetNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiVScrollBarNode_t, _p_uiVScrollBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTimerNode_t, _p_uiTimerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiContainerNode_t, _p_uiContainerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiCheckBoxNode_t, _p_uiCheckBoxNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiButtonNode_t, _p_uiButtonNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiBaseLayoutNode_t, _p_uiBaseLayoutNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiBaseMapNode_t, _p_uiBaseMapNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiBarNode_t, _p_uiBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollbarNode_t, _p_uiAbstractScrollbarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextNode_t, _p_uiTextNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTabNode_t, _p_uiTabNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSequenceNode_t, _p_uiSequenceNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiRowsNode_t, _p_uiRowsNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiEkgNode_t, _p_uiEkgNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiImageNode_t, _p_uiImageNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiGeoscapeNode_t, _p_uiGeoscapeNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollableNode_t, _p_uiAbstractScrollableNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractValueNode_t, _p_uiAbstractValueNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiOptionTreeNode_t, _p_uiOptionTreeNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiItemNode_t, _p_uiItemNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiNode_t, 0, 0, 0},  {&_swigt__p_uiBaseInventoryNode_t, _p_uiBaseInventoryNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiStringNode_t, _p_uiStringNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractBaseNode_t, _p_uiAbstractBaseNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiConFuncNode_t, _p_uiConFuncNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiDataNode_t, _p_uiDataNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextEntryNode_t, _p_uiTextEntryNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextureNode_t, _p_uiTextureNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiVideoNode_t, _p_uiVideoNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiWindowNode_t, _p_uiWindowNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiZoneNode_t, _p_uiZoneNode_tTo_p_uiNode_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uiNode_t[] = {  {&_swigt__p_uiAbstractOptionNode_t, _p_uiAbstractOptionNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiLineChartNode_t, _p_uiLineChartNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiMessageListNode_t, _p_uiMessageListNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiModelNode_t, _p_uiModelNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiOptionNode_t, _p_uiOptionNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiOptionListNode_t, _p_uiOptionListNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiPanelNode_t, _p_uiPanelNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiRadarNode_t, _p_uiRadarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiRadioButtonNode_t, _p_uiRadioButtonNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSelectBoxNode_t, _p_uiSelectBoxNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSpinnerNode_t, _p_uiSpinnerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTabNode_t, _p_uiTabNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiWidgetNode_t, _p_uiWidgetNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiVScrollBarNode_t, _p_uiVScrollBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTimerNode_t, _p_uiTimerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiText2Node_t, _p_uiText2Node_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiContainerNode_t, _p_uiContainerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiCheckBoxNode_t, _p_uiCheckBoxNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiButtonNode_t, _p_uiButtonNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiBaseLayoutNode_t, _p_uiBaseLayoutNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiBaseMapNode_t, _p_uiBaseMapNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiBarNode_t, _p_uiBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollbarNode_t, _p_uiAbstractScrollbarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextNode_t, _p_uiTextNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSequenceNode_t, _p_uiSequenceNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiRowsNode_t, _p_uiRowsNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiEkgNode_t, _p_uiEkgNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiImageNode_t, _p_uiImageNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiGeoscapeNode_t, _p_uiGeoscapeNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollableNode_t, _p_uiAbstractScrollableNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiOptionTreeNode_t, _p_uiOptionTreeNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiItemNode_t, _p_uiItemNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiNode_t, 0, 0, 0},  {&_swigt__p_uiBaseInventoryNode_t, _p_uiBaseInventoryNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiStringNode_t, _p_uiStringNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractValueNode_t, _p_uiAbstractValueNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractBaseNode_t, _p_uiAbstractBaseNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiConFuncNode_t, _p_uiConFuncNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiDataNode_t, _p_uiDataNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextEntryNode_t, _p_uiTextEntryNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextureNode_t, _p_uiTextureNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiVideoNode_t, _p_uiVideoNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiWindowNode_t, _p_uiWindowNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiZoneNode_t, _p_uiZoneNode_tTo_p_uiNode_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiOptionListNode_t[] = {  {&_swigt__p_uiOptionListNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiOptionNode_t[] = {  {&_swigt__p_uiOptionNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiOptionTreeNode_t[] = {  {&_swigt__p_uiOptionTreeNode_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -19225,10 +19264,10 @@ static swig_cast_info _swigc__p_uiSpinnerNode_t[] = {  {&_swigt__p_uiSpinnerNode
 static swig_cast_info _swigc__p_uiStringNode_t[] = {  {&_swigt__p_uiStringNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiTBarNode_t[] = {  {&_swigt__p_uiTBarNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiTabNode_t[] = {  {&_swigt__p_uiTabNode_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_uiText2Node_t[] = {  {&_swigt__p_uiText2Node_t, _p_uiText2Node_tTo_p_uiText2Node_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uiText2Node_t[] = {  {&_swigt__p_uiText2Node_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiTextEntryNode_t[] = {  {&_swigt__p_uiTextEntryNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiTextListNode_t[] = {  {&_swigt__p_uiTextListNode_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_uiTextNode_t[] = {  {&_swigt__p_uiTextNode_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uiTextNode_t[] = {  {&_swigt__p_uiTextNode_t, 0, 0, 0},  {&_swigt__p_uiText2Node_t, _p_uiText2Node_tTo_p_uiTextNode_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiTextureNode_t[] = {  {&_swigt__p_uiTextureNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiTimerNode_t[] = {  {&_swigt__p_uiTimerNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiVScrollBarNode_t[] = {  {&_swigt__p_uiVScrollBarNode_t, 0, 0, 0},{0, 0, 0, 0}};

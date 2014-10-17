@@ -104,9 +104,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../node/ui_node_tab.h"
 #include "../node/ui_node_tbar.h"
 #include "../node/ui_node_text.h"
+#include "../node/ui_node_text2.h"
 #include "../node/ui_node_textentry.h"
+#include "../node/ui_node_textlist.h"
+#include "../node/ui_node_texture.h"
 #include "../node/ui_node_timer.h"
 #include "../node/ui_node_video.h"
+#include "../node/ui_node_vscrollbar.h"
 #include "../node/ui_node_window.h"
 #include "../node/ui_node_zone.h"
 
@@ -1102,7 +1106,7 @@ struct uiTextNode_t: uiAbstractScrollableNode_t {
 };
 
 %rename (uiText2) uiText2Node_t;
-struct uiText2Node_t: uiText2Node_t {
+struct uiText2Node_t: uiTextNode_t {
 };
 %extend uiText2Node_t {
 };

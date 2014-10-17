@@ -1,0 +1,51 @@
+--!usr/bin/lua
+
+--[[
+	Code to generate the ufo api.
+--]]
+
+
+-- print a table
+function printTable(list, i)
+
+    local listString = ""
+	-- begin of the list so write the {
+    if not i then
+        listString = listString .. "{\n"
+    end
+
+    i = i or 1
+    local element = list[i]
+
+	-- it may be the end of the list
+    if not element then
+        return listString .. "}\n"
+    end
+	-- if the element is a list too call it recursively
+    if(type(element) == "table") then
+        listString = listString .. printTable(element)
+	elseif(type(element) == "userdata") then
+		local t = getmetatable(element)
+		if t then
+			listString = listString .. printTable(t)
+		end
+    else
+        listString = listString .. element
+    end
+
+    return listString .. ", " .. printTable(list, i + 1)
+end
+
+-- callback
+function load ()
+	ufo.print("---------------------- begin api ----------------------------\n")
+	ufo.print(printTable(ufo))
+	ufo.print("---------------------- end api ----------------------------\n")
+end
+	
+-- register callbacks
+ufo.register_onload (load)
+
+
+
+
