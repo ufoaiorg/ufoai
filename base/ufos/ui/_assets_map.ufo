@@ -154,6 +154,30 @@ component SetEnemyCount extends panel
 	}
 }
 
+component SetEnemyRush extends panel
+{
+	{
+		size	"495 30"
+		onMouseEnter 	{ *node:this.enemy_rush_str@color = "1 1 1 0.9" }
+		onMouseLeave 	{ *node:this.enemy_rush_str@color = "1 1 1 0.5" }
+	}
+
+	string enemy_rush_str
+	{
+		string		"_Alien rush"
+		pos			"0 10"
+		size		"200 20"
+		color		"1 1 1 0.5"
+	}
+
+	CheckBox enemy_rush_toggle
+	{
+		current		*cvar:g_endlessaliens
+		pos			"465 10"
+		size		"20 20"
+	}
+}
+
 // Dropship selection panel
 component SelDropship extends panel
 {

@@ -217,20 +217,27 @@ window skirmish extends cgame_download
 				SetEnemyCount sk_sel_enemy
 				{
 					{
-						pos		"0 210"
+						pos		"0 200"
+					}
+				}
+
+				SetEnemyRush sk_sel_rush
+				{
+					{
+						pos		"0 240"
 					}
 				}
 
 				SelDropship map_sel_drop
 				{
 					{
-						pos		"0 250"
+						pos		"0 280"
 					}
 				}
 				SelUFO map_sel_ufo
 				{
 					{
-						pos		"0 290"
+						pos		"0 330"
 					}
 				}
 			}
