@@ -2,13 +2,6 @@
 // Squad selection screen
 // ====================================
 
- /*
-  * TEAM SAVING PROBLEM
-  * - If I select a new team and then save before equipping, the team is not saved properly. Then, if I try to load it, nothing is loaded.
-  * -- Possible workaround: disable the save button until the team has been equipped?
-  * --					OR: in the NEW team option, put an equip button and don't update the selected team until it has been equipped.
-  */
-
 // Team loading
 component team_loadslots extends panel
 {
