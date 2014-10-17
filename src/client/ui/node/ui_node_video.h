@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cinematic/cl_cinematic.h"
 
 class uiVideoNode : public uiLocatedNode {
+	void initNode(uiNode_t* node) override;
 	void draw(uiNode_t* node) override;
 	void drawOverWindow(uiNode_t* node) override;
 	void onWindowOpened(uiNode_t* node, linkedList_t* params) override;
@@ -47,4 +48,7 @@ typedef struct {
 	cinematic_t cin;
 	bool nosound;
 	struct uiAction_s* onEnd;
+	LUA_EVENT lua_onEnd; 		/**< references the event in lua: on_end(node) */
 } videoExtraData_t;
+
+void UI_Video_SetSource (uiNode_t* node, const char* name);

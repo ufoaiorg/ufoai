@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_behaviour.h"
 #include "../ui_draw.h"
 #include "../ui_actions.h"
-#include "ui_node_video.h"
+#include "../ui_lua.h"
 #include "ui_node_abstractnode.h"
 
 #include "../../client.h"
@@ -41,9 +41,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../common/scripts_lua.h"
 
+#include "ui_node_video.h"
+
 #define EXTRADATA_TYPE videoExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
+
+extern memPool_t* ui_dynStringPool;
+
+void uiVideoNode::initNode(uiNode_t* node) {
+	uiLocatedNode::initNode(node);
+	EXTRADATA(node).lua_onEnd = LUA_NOREF;
+}
 
 void uiVideoNode::drawOverWindow (uiNode_t* node)
 {
@@ -58,7 +67,12 @@ void uiVideoNode::drawOverWindow (uiNode_t* node)
 
 		CIN_OpenCinematic(&(EXTRADATA(node).cin), va("videos/%s", EXTRADATA(node).source));
 		if (EXTRADATA(node).cin.status == CIN_STATUS_INVALID) {
-			UI_ExecuteEventActions(node, EXTRADATA(node).onEnd);
+			if (EXTRADATA(node).onEnd != nullptr) {
+				UI_ExecuteEventActions(node, EXTRADATA(node).onEnd);
+			}
+			else if (EXTRADATA(node).lua_onEnd != LUA_NOREF) {
+				UI_ExecuteLuaEventScript(node, EXTRADATA(node).lua_onEnd);
+			}
 			return;
 		}
 
@@ -70,7 +84,12 @@ void uiVideoNode::drawOverWindow (uiNode_t* node)
 		/* only set replay to true if video was found and is running */
 		CIN_RunCinematic(&(EXTRADATA(node).cin));
 		if (EXTRADATA(node).cin.status == CIN_STATUS_NONE) {
-			UI_ExecuteEventActions(node, EXTRADATA(node).onEnd);
+			if (EXTRADATA(node).onEnd != nullptr) {
+				UI_ExecuteEventActions(node, EXTRADATA(node).onEnd);
+			}
+			else if (EXTRADATA(node).lua_onEnd != LUA_NOREF) {
+				UI_ExecuteLuaEventScript(node, EXTRADATA(node).lua_onEnd);
+			}
 		}
 	}
 }
@@ -97,6 +116,11 @@ void uiVideoNode::onWindowClosed (uiNode_t* node)
 {
 	/* If playing a cinematic, stop it */
 	CIN_CloseCinematic(&(EXTRADATA(node).cin));
+}
+
+void UI_Video_SetSource (uiNode_t* node, const char* name) {
+	UI_FreeStringProperty(const_cast<char*>(EXTRADATA(node).source));
+	EXTRADATA(node).source = Mem_PoolStrDup(name, ui_dynStringPool, 0);
 }
 
 void UI_RegisterVideoNode (uiBehaviour_t* behaviour)

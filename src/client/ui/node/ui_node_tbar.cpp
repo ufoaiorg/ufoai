@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_behaviour.h"
 #include "../ui_render.h"
+#include "../ui_actions.h"
 #include "ui_node_tbar.h"
 #include "ui_node_abstractvalue.h"
 #include "ui_node_abstractnode.h"
@@ -37,6 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 #define TEXTURE_WIDTH 250.0
+
+extern memPool_t* ui_dynStringPool;
 
 void uiTBarNode::draw (uiNode_t* node)
 {
@@ -72,6 +75,11 @@ void uiTBarNode::draw (uiNode_t* node)
 
 	UI_DrawNormImageByName(false, nodepos[0], nodepos[1], width, node->box.size[1],
 		shx, EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], ref);
+}
+
+void UI_TBar_SetImage(uiNode_t* node, const char* name) {
+	UI_FreeStringProperty(node->image);
+	node->image = Mem_PoolStrDup(name, ui_dynStringPool, 0);
 }
 
 void UI_RegisterTBarNode (uiBehaviour_t* behaviour)

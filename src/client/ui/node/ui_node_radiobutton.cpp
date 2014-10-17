@@ -169,8 +169,8 @@ void UI_RadioButton_SetValue (uiNode_t* node, const char* value) {
 	   (either being float or cvar). We now want to replace this value reference by a new cvar. So we first
 	   need to free the existing reference, then create new cvar reference (just a string starting with
 	   '*cvar' and store it. */
-	Mem_Free(*(void**)(EXTRADATA(node).value));
-	*(void**)EXTRADATA(node).value= Mem_StrDup(value);
+	Mem_Free(*(void**)(EXTRADATA(node).string));
+	*(void**)EXTRADATA(node).string= Mem_StrDup(value);
 	uiRadioButtonNode* b=static_cast<uiRadioButtonNode*>(node->behaviour->manager.get());
 	b->onActivate(node);
 }
