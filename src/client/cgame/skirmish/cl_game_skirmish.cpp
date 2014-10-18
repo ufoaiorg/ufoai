@@ -341,6 +341,8 @@ static void GAME_SK_Shutdown (void)
 	cgi->Cmd_RemoveCommand("sk_prevequip");
 	cgi->Cmd_RemoveCommand("sk_initequip");
 	cgi->Cmd_RemoveCommand("game_go");
+	/* You really don't want this with campaign */
+	cgi->Cvar_ForceSet("g_endlessaliens", "0");
 
 	cgi->UI_ResetData(OPTION_DROPSHIPS);
 	cgi->UI_ResetData(OPTION_UFOS);
