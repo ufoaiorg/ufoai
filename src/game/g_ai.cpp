@@ -705,6 +705,10 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 
 		actor->calcOrigin();
 		const vec_t length = VectorDistSqr(actor->origin, target);
+		/* Don't pack them too close */
+		if (length < HERD_THRESHOLD)
+			continue;
+
 		if (length < bestLength || bestPos[2] == PATHFINDING_HEIGHT) {
 			vec3_t vfriend, venemy;
 			/* check this position to locate behind target from enemy */
