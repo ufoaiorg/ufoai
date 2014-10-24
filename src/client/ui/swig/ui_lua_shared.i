@@ -428,6 +428,7 @@ typedef enum {
 //	expose scroll
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+%rename(uiScroll) uiScroll_t;
 struct uiScroll_t {
 };
 %extend uiScroll_t {
@@ -446,6 +447,7 @@ struct uiScroll_t {
 //	expose cvar
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+%rename (cvar) cvar_t;
 struct cvar_t {
 };
 %extend cvar_t {
@@ -595,6 +597,7 @@ struct uiNode_t {
 	and direct these back to a call into the behaviour class.
 */
 
+%rename (uiAbstractOptionNode) uiAbstractOptionNode_t;
 struct uiAbstractOptionNode_t: uiNode_t {
 };
 %extend uiAbstractOptionNode_t {
@@ -620,6 +623,7 @@ static LUA_EVENT uiAbstractOptionNode_t_lua_onViewChange_set(uiAbstractOptionNod
 }
 %}
 
+%rename (uiAbstractScrollableNode) uiAbstractScrollableNode_t;
 struct uiAbstractScrollableNode_t: uiNode_t {
 };
 %extend uiAbstractScrollableNode_t {
@@ -654,6 +658,7 @@ static LUA_EVENT uiAbstractScrollableNode_t_lua_onViewChange_set(uiAbstractScrol
 }
 %}
 
+%rename (uiAbstractScrollbarNode) uiAbstractScrollbarNode_t;
 struct uiAbstractScrollbarNode_t: uiNode_t {
 };
 %extend uiAbstractScrollbarNode_t {
@@ -668,6 +673,7 @@ struct uiAbstractScrollbarNode_t: uiNode_t {
 	void set_fullsize (int size) { UI_EXTRADATA($self, abstractScrollbarExtraData_t).fullsize = size; };
 };
 
+%rename (uiAbstractValueNode) uiAbstractValueNode_t;
 struct uiAbstractValueNode_t: uiNode_t {
 };
 %extend uiAbstractValueNode_t {
