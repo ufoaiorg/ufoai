@@ -244,18 +244,14 @@ function ai.search ()
 		for i = 1, #targets do
 			local target_pos = ai.positionmission(targets[i])
 			if target_pos then
-				target_pos:goto()
-				found = true
-				break;
+				return target_pos:goto()
 			end
 		end
 		-- Can't get to any mission target, try to approach the nearest one
-		if not found then
-			found = ai.approach(targets)
-		end
+		found = ai.approach(targets)
 	end
 
-	-- Nothing found wander around
+	-- Nothing found, wander around
 	if not found then
 		if params.move == "herd" then
 			ai.herd()
