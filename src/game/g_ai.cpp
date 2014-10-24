@@ -234,7 +234,7 @@ void AiAreaSearch::plotPos(const pos3_t origin, int xOfs, int dy) {
 #define SCORE_CIV_LAZINESS	5
 #define RUN_AWAY_DIST		160
 #define WAYPOINT_CIV_DIST	768
-#define HERD_THRESHOLD 128
+#define HERD_THRESHOLD		128.0f
 #define SCORE_HERDING_PENALTY 100
 #define SCORE_NOSAFE_POSITION_PENALTY 500
 
@@ -666,7 +666,7 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 		herdPathingTable = (pathing_t*) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
 
 	/* find the nearest enemy actor to the target*/
-	vec_t bestlength = 0.0f;
+	vec_t bestLength = 0.0f;
 	Actor* next = nullptr;
 	Actor* enemy = nullptr;
 	int team = AI_GetHidingTeam(actor);
@@ -676,9 +676,9 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 		if (next->getTeam() == team ? invTeam : !invTeam)
 			continue;
 		const vec_t length = VectorDistSqr(target, next->origin);
-		if (!bestlength || length < bestlength) {
+		if (!bestLength || length < bestLength) {
 			enemy = next;
-			bestlength = length;
+			bestLength = length;
 		}
 	}
 	if (!enemy)
@@ -690,8 +690,8 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 	G_MoveCalcLocal(herdPathingTable, 0, actor, from, maxTUs);
 
 	/* search the location */
-	pos3_t bestpos = {0, 0, PATHFINDING_HEIGHT};
-	bestlength = VectorDistSqr(target, actor->origin);
+	pos3_t bestPos = {0, 0, PATHFINDING_HEIGHT};
+	bestLength = VectorDistSqr(target, actor->origin);
 	AiAreaSearch searchArea(from, distance, true);
 	while (searchArea.getNext(actor->pos)) {
 		/* time */
@@ -705,7 +705,11 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 
 		actor->calcOrigin();
 		const vec_t length = VectorDistSqr(actor->origin, target);
-		if (length < bestlength) {
+		/* Don't pack them too close */
+		if (length < HERD_THRESHOLD)
+			continue;
+
+		if (length < bestLength || bestPos[2] == PATHFINDING_HEIGHT) {
 			vec3_t vfriend, venemy;
 			/* check this position to locate behind target from enemy */
 			VectorSubtract(target, actor->origin, vfriend);
@@ -713,14 +717,14 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 			VectorSubtract(enemy->origin, actor->origin, venemy);
 			VectorNormalizeFast(venemy);
 			if (DotProduct(vfriend, venemy) > 0.5) {
-				bestlength = length;
-				VectorCopy(actor->pos, bestpos);
+				bestLength = length;
+				VectorCopy(actor->pos, bestPos);
 			}
 		}
 	}
 
-	if (bestpos[2] != PATHFINDING_HEIGHT) {
-		VectorCopy(bestpos, actor->pos);
+	if (bestPos[2] != PATHFINDING_HEIGHT) {
+		VectorCopy(bestPos, actor->pos);
 		return true;
 	}
 
