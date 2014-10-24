@@ -88,7 +88,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 			team -- Which team mission targets to get. Accepts same values as see() (defaults to "all")
 			sort_order -- In which order to sort the targets. LIke for see() but only allows "dist" (default) and "path"
 
-		positionmission (position) -- Returns a position in the area of the given target position, it is meant to have the AI deend mission targets or move to waypoints without all AI actors trying to move into the exact same position.
+		positionmission (position) -- Returns a position in the area of the given target position, it is meant to have the AI defend mission targets or move to waypoints without all AI actors trying to move into the exact same position.
 			position -- Position (pos3 userdata) to move close to.
 
 		waypoints (distance, sort_order) -- Return a table of positions (userdatas) of the next waypoints for the current AI actor (Note: currently only civilian waypoints exist)
