@@ -1529,8 +1529,9 @@ static int AIL_missiontargets (lua_State* L)
  */
 static int AIL_waypoints (lua_State* L)
 {
+	const float minEnemyDist = 160.0f;
 	/* Min distance to waypoint */
-	float minDist = 5.0f;
+	float minDist = 800.0f;
 	if (lua_gettop(L) > 0) {
 		if (lua_isnumber(L, 1))
 			minDist = lua_tonumber(L, 1);
@@ -1559,6 +1560,19 @@ static int AIL_waypoints (lua_State* L)
 		if (checkPoint->inuse)
 			continue;
 		if (checkPoint->getTeam() != AIL_ent->getTeam())
+			continue;
+		/* Don't walk to enemy ambush */
+		Actor* check = nullptr;
+		bool ambush = false;
+		while ((check = G_EdictsGetNextLivingActorOfTeam(check, TEAM_ALIEN))) {
+			const float dist = VectorDist(AIL_ent->origin, check->origin);
+			/* @todo add visibility check here? */
+			if (dist < minEnemyDist) {
+				ambush = true;
+				break;
+			}
+		}
+		if (ambush)
 			continue;
 		switch (sortCrit) {
 		case AILSC_PATH:
