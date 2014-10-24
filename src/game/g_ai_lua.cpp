@@ -1558,7 +1558,7 @@ static int AIL_waypoints (lua_State* L)
 	for (Edict* checkPoint = level.ai_waypointList; checkPoint != nullptr; checkPoint = checkPoint->groupChain) {
 		if (checkPoint->inuse)
 			continue;
-		if (!checkPoint->getTeam() == AIL_ent->getTeam())
+		if (checkPoint->getTeam() != AIL_ent->getTeam())
 			continue;
 		switch (sortCrit) {
 		case AILSC_PATH:
