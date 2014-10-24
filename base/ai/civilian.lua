@@ -96,7 +96,7 @@ function ai.think_nf ()
 		if #waypoints > 0 then
 			ai.route(waypoints)
 		else
-			ai.setwaypoint()
+			ai.setwaypoint(nil)
 			local phalanx = ai.see("sight", "phalanx")
 			if #phalanx > 0 then
 				ai.herd(phalanx)

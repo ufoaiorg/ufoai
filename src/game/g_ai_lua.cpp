@@ -1800,7 +1800,7 @@ static int AIL_isfighter (lua_State* L)
 static int AIL_setwaypoint (lua_State* L)
 {
 	/* No waypoint, reset the count value to restart the search */
-	if (lua_gettop(L) < 1) {
+	if (lua_gettop(L) < 1 || lua_isnil(L, 1)) {
 		AIL_ent->count = 100;
 		lua_pushboolean(L, 1);
 	} else if (lua_ispos3(L, 1)){
