@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-08-17 22:14-0500\n"
-"PO-Revision-Date: 2014-09-18 18:05-0600\n"
+"POT-Creation-Date: 2014-10-24 18:45-0500\n"
+"PO-Revision-Date: 2014-10-24 18:47-0600\n"
 "Last-Translator: DarkRain <dark.rain@zoho.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -3105,28 +3105,28 @@ msgid "Coin"
 msgstr "Moneda"
 
 #: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:168
-#: client/cgame/campaign/cp_employee.cpp:180
+#: client/cgame/campaign/cp_employee.cpp:182
 msgid "Scientist"
 msgid_plural "Scientists"
 msgstr[0] "Científico"
 msgstr[1] "Científicos"
 
 #: ../base/ufos/medals.ufo:39 ../base/ufos/team_humans.ufo:236
-#: client/cgame/campaign/cp_employee.cpp:184
+#: client/cgame/campaign/cp_employee.cpp:186
 msgid "Pilot"
 msgid_plural "Pilots"
 msgstr[0] "Piloto"
 msgstr[1] "Pilotos"
 
 #: ../base/ufos/medals.ufo:48 ../base/ufos/team_names.ufo:660
-#: ../base/ufos/team_names.ufo:669 client/cgame/campaign/cp_employee.cpp:186
+#: ../base/ufos/team_names.ufo:669 client/cgame/campaign/cp_employee.cpp:188
 msgid "UGV"
 msgid_plural "UGVs"
 msgstr[0] "VTNT"
 msgstr[1] "VTNT"
 
 #: ../base/ufos/medals.ufo:57 ../base/ufos/team_humans.ufo:295
-#: client/cgame/campaign/cp_employee.cpp:182
+#: client/cgame/campaign/cp_employee.cpp:184
 msgid "Worker"
 msgid_plural "Workers"
 msgstr[0] "Trabajador"
@@ -24947,8 +24947,8 @@ msgid "Alien Materials"
 msgstr "Materiales Alienígenas"
 
 #: ../base/ufos/otheritems.ufo:46 ../base/ufos/otheritems.ufo:82
-#: ../base/ufos/weapons_melee.ufo:26 ../base/ufos/weapons_melee.ufo:90
-#: ../base/ufos/weapons_melee.ufo:241
+#: ../base/ufos/weapons_melee.ufo:26 ../base/ufos/weapons_melee.ufo:92
+#: ../base/ufos/weapons_melee.ufo:248
 msgid "Stab"
 msgstr "Estocada"
 
@@ -25010,11 +25010,11 @@ msgstr "Instalaciones Globales"
 msgid "Research Reports"
 msgstr "Reportes de Investigación"
 
-#: ../base/ufos/research.ufo:117 ../base/ufos/ui/aircraft.ufo:152
-#: ../base/ufos/ui/aircraft_equip.ufo:61 ../base/ufos/ui/equipment.ufo:48
-#: ../base/ufos/ui/hud_default.ufo:261 ../base/ufos/ui/market.ufo:119
-#: ../base/ufos/ui/transfer.ufo:137 ../base/ufos/ui/transfer.ufo:148
-#: ../base/ufos/ui/transfer.ufo:489
+#: ../base/ufos/research.ufo:117 ../base/ufos/ui/_assets_squad.ufo:498
+#: ../base/ufos/ui/aircraft.ufo:152 ../base/ufos/ui/aircraft_equip.ufo:61
+#: ../base/ufos/ui/equipment.ufo:48 ../base/ufos/ui/hud_default.ufo:261
+#: ../base/ufos/ui/market.ufo:119 ../base/ufos/ui/transfer.ufo:137
+#: ../base/ufos/ui/transfer.ufo:148 ../base/ufos/ui/transfer.ufo:489
 msgid "Equipment"
 msgstr "Equipamiento"
 
@@ -25114,15 +25114,15 @@ msgstr "Origen Alienígena"
 msgid "UFO Theory"
 msgstr "Teoría OVNI"
 
-#: ../base/ufos/research.ufo:1097 ../base/ufos/weapons_human.ufo:1733
+#: ../base/ufos/research.ufo:1097 ../base/ufos/weapons_human.ufo:1777
 msgid "Electromagnetic Rifle"
 msgstr "Rifle Electromagnético"
 
-#: ../base/ufos/research.ufo:1136 ../base/ufos/weapons_human.ufo:1755
+#: ../base/ufos/research.ufo:1136 ../base/ufos/weapons_human.ufo:1799
 msgid "Electromagnetic Rifle Magazine"
 msgstr "Cargador de Rifle Electromagnético"
 
-#: ../base/ufos/research.ufo:1154 ../base/ufos/weapons_human.ufo:1823
+#: ../base/ufos/research.ufo:1154 ../base/ufos/weapons_human.ufo:1869
 msgid "Electromagnetic Rifle Antimatter Magazine"
 msgstr "Cargador Antimateria para Rifle Electromagnético"
 
@@ -25172,7 +25172,7 @@ msgid "Heavy Needler Gun"
 msgstr "Aguijoneador Pesado"
 
 #: ../base/ufos/research.ufo:2341 ../base/ufos/research.ufo:2349
-#: ../base/ufos/weapons_human.ufo:439
+#: ../base/ufos/weapons_human.ufo:452
 msgid "Coilgun"
 msgstr "Rifle Gauss"
 
@@ -25704,7 +25704,7 @@ msgstr "Volver al menú principal"
 msgid "HOW TO PLAY MULTIPLAYER"
 msgstr "COMO JUGAR EN MODO MULTIJUGADOR"
 
-#: ../base/ufos/seq_tutorials.ufo:1061 ../base/ufos/ui/multiplayer.ufo:916
+#: ../base/ufos/seq_tutorials.ufo:1061 ../base/ufos/ui/multiplayer.ufo:910
 msgid ""
 "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr ""
@@ -26230,24 +26230,24 @@ msgstr "Cancelar"
 msgid "Close this dialogue"
 msgstr "Cerrar este dialogo"
 
-#: ../base/ufos/ui/_assets.ufo:388 ../base/ufos/ui/hud_default.ufo:1492
+#: ../base/ufos/ui/_assets.ufo:388 ../base/ufos/ui/hud_default.ufo:1494
 msgid "Strength"
 msgstr "Fuerza"
 
-#: ../base/ufos/ui/_assets.ufo:398 ../base/ufos/ui/hud_default.ufo:1501
+#: ../base/ufos/ui/_assets.ufo:398 ../base/ufos/ui/hud_default.ufo:1503
 msgid "Speed"
 msgstr "Velocidad"
 
-#: ../base/ufos/ui/_assets.ufo:408 ../base/ufos/ui/hud_default.ufo:1510
+#: ../base/ufos/ui/_assets.ufo:408 ../base/ufos/ui/hud_default.ufo:1512
 #: client/cgame/campaign/cp_ufopedia.cpp:146
 msgid "Accuracy"
 msgstr "Precisión"
 
-#: ../base/ufos/ui/_assets.ufo:418 ../base/ufos/ui/hud_default.ufo:1519
+#: ../base/ufos/ui/_assets.ufo:418 ../base/ufos/ui/hud_default.ufo:1521
 msgid "Mind"
 msgstr "Mentalidad"
 
-#: ../base/ufos/ui/_assets.ufo:439 ../base/ufos/ui/hud_default.ufo:1537
+#: ../base/ufos/ui/_assets.ufo:439 ../base/ufos/ui/hud_default.ufo:1539
 msgid "CQB"
 msgstr "CEC"
 
@@ -26255,17 +26255,17 @@ msgstr "CEC"
 msgid "Close Quarters Battle"
 msgstr "Combate en Espacios Cerrados"
 
-#: ../base/ufos/ui/_assets.ufo:451 ../base/ufos/ui/hud_default.ufo:1546
+#: ../base/ufos/ui/_assets.ufo:451 ../base/ufos/ui/hud_default.ufo:1548
 #: client/cl_inventory_callbacks.cpp:50
 msgid "Assault"
 msgstr "Armas de Asalto"
 
-#: ../base/ufos/ui/_assets.ufo:461 ../base/ufos/ui/hud_default.ufo:1555
+#: ../base/ufos/ui/_assets.ufo:461 ../base/ufos/ui/hud_default.ufo:1557
 #: client/cl_inventory_callbacks.cpp:52
 msgid "Sniper"
 msgstr "Francotirador"
 
-#: ../base/ufos/ui/_assets.ufo:471 ../base/ufos/ui/hud_default.ufo:1564
+#: ../base/ufos/ui/_assets.ufo:471 ../base/ufos/ui/hud_default.ufo:1566
 #: client/cl_inventory_callbacks.cpp:54
 msgid "Explosives"
 msgstr "Explosivos"
@@ -26346,7 +26346,7 @@ msgstr "Base anterior"
 msgid "Next base"
 msgstr "Base siguiente"
 
-#: ../base/ufos/ui/_assets_base.ufo:682 ../base/ufos/ui/_menu.ufo:116
+#: ../base/ufos/ui/_assets_base.ufo:682 ../base/ufos/ui/_menu.ufo:88
 msgid "Back to base"
 msgstr "Regresar a la base"
 
@@ -26374,91 +26374,99 @@ msgstr "Enemigos"
 msgid "The maximum number of enemies you could face"
 msgstr "El número máximo de enemigos que puedes enfrentar"
 
-#: ../base/ufos/ui/_assets_map.ufo:168
+#: ../base/ufos/ui/_assets_map.ufo:167
+msgid "Alien rush"
+msgstr "Asalto alienígena"
+
+#: ../base/ufos/ui/_assets_map.ufo:192
 msgid "Dropship"
 msgstr "Transporte"
 
-#: ../base/ufos/ui/_assets_map.ufo:213
+#: ../base/ufos/ui/_assets_map.ufo:237
 #: client/cgame/campaign/cp_aircraft.cpp:477
 #: client/cgame/campaign/cp_ufo.cpp:247 client/cgame/campaign/cp_ufo.cpp:248
 msgid "UFO"
 msgstr "OVNI"
 
-#: ../base/ufos/ui/_assets_squad.ufo:28
+#: ../base/ufos/ui/_assets_squad.ufo:49
 msgid "Enemy weapons"
 msgstr "Armamento Enemigo"
 
-#: ../base/ufos/ui/_assets_squad.ufo:81 ../base/ufos/ui/_assets_squad.ufo:460
+#: ../base/ufos/ui/_assets_squad.ufo:102 ../base/ufos/ui/_assets_squad.ufo:481
 msgid "Squad"
 msgstr "Escuadrón"
 
-#: ../base/ufos/ui/_assets_squad.ufo:119
+#: ../base/ufos/ui/_assets_squad.ufo:140
 msgid "Max Soldiers"
 msgstr "Máximo de Soldados"
 
-#: ../base/ufos/ui/_assets_squad.ufo:201
+#: ../base/ufos/ui/_assets_squad.ufo:222
 msgid "Max UGVs"
 msgstr "Máximo de VTNT"
 
-#: ../base/ufos/ui/_assets_squad.ufo:278
+#: ../base/ufos/ui/_assets_squad.ufo:299
 msgid "Selected squad name here"
 msgstr "Escuadrón seleccionado aquí"
 
-#: ../base/ufos/ui/_assets_squad.ufo:292 ../base/ufos/ui/campaign.ufo:146
+#: ../base/ufos/ui/_assets_squad.ufo:313 ../base/ufos/ui/campaign.ufo:146
 #: ../base/ufos/ui/campaign.ufo:652
 msgid "SAVE"
 msgstr "GUARDAR"
 
-#: ../base/ufos/ui/_assets_squad.ufo:303
+#: ../base/ufos/ui/_assets_squad.ufo:324
 msgid "EQUIP"
 msgstr "EQUIPAR"
 
-#: ../base/ufos/ui/_assets_squad.ufo:331
+#: ../base/ufos/ui/_assets_squad.ufo:352
 msgid "Squad settings"
 msgstr "Opciones del escuadrón"
 
-#: ../base/ufos/ui/_assets_squad.ufo:338
+#: ../base/ufos/ui/_assets_squad.ufo:359
 msgid "DEFAULT"
 msgstr "POR DEFECTO"
 
-#: ../base/ufos/ui/_assets_squad.ufo:349
+#: ../base/ufos/ui/_assets_squad.ufo:370
 msgid "CUSTOM"
 msgstr "PERSONALIZADO"
 
-#: ../base/ufos/ui/_assets_squad.ufo:412 ../base/ufos/ui/campaign.ufo:131
+#: ../base/ufos/ui/_assets_squad.ufo:433 ../base/ufos/ui/campaign.ufo:131
 msgid "NEW"
 msgstr "NUEVO"
 
-#: ../base/ufos/ui/_assets_squad.ufo:428 ../base/ufos/ui/campaign.ufo:154
+#: ../base/ufos/ui/_assets_squad.ufo:449 ../base/ufos/ui/campaign.ufo:154
 #: ../base/ufos/ui/campaign.ufo:638
 msgid "LOAD"
 msgstr "CARGAR"
 
-#: ../base/ufos/ui/_assets_squad.ufo:475 ../base/ufos/ui/multiplayer.ufo:153
+#: ../base/ufos/ui/_assets_squad.ufo:541 ../base/ufos/ui/multiplayer.ufo:203
 msgid "CREATE"
 msgstr "CREAR"
 
-#: ../base/ufos/ui/_menu.ufo:98 ../base/ufos/ui/geoscape.ufo:175
+#: ../base/ufos/ui/_assets_squad.ufo:636 ../base/ufos/ui/multiplayer.ufo:58
+msgid "Currently loaded"
+msgstr "Equipo Actual"
+
+#: ../base/ufos/ui/_menu.ufo:70 ../base/ufos/ui/geoscape.ufo:175
 msgid "CREDITS"
 msgstr "Créditos"
 
-#: ../base/ufos/ui/_menu.ufo:106 ../base/ufos/ui/geoscape.ufo:185
+#: ../base/ufos/ui/_menu.ufo:78 ../base/ufos/ui/geoscape.ufo:185
 msgid "Organisation capital"
 msgstr "Organización del capital"
 
-#: ../base/ufos/ui/_menu.ufo:135
+#: ../base/ufos/ui/_menu.ufo:107
 msgid "Name of this base"
 msgstr "Nombre de esta base"
 
-#: ../base/ufos/ui/_menu.ufo:155 ../base/ufos/ui/popup_installations.ufo:173
+#: ../base/ufos/ui/_menu.ufo:127 ../base/ufos/ui/popup_installations.ufo:173
 msgid "Rename your base"
 msgstr "Renombrar tu base"
 
-#: ../base/ufos/ui/_menu.ufo:168
+#: ../base/ufos/ui/_menu.ufo:140
 msgid "Switch to the previous base"
 msgstr "Cambiar a la base anterior"
 
-#: ../base/ufos/ui/_menu.ufo:182
+#: ../base/ufos/ui/_menu.ufo:154
 msgid "Switch to the next base"
 msgstr "Cambiar a la siguiente base"
 
@@ -26470,7 +26478,7 @@ msgstr "Lanzar la Aeronave"
 msgid "Call back"
 msgstr "Llamar de vuelta"
 
-#: ../base/ufos/ui/aircraft.ufo:103 ../base/ufos/ui/popup_baseattack.ufo:68
+#: ../base/ufos/ui/aircraft.ufo:103 ../base/ufos/ui/popup_baseattack.ufo:20
 msgid "Add/remove soldier to the team"
 msgstr "Agregar/Quitar soldado"
 
@@ -26521,7 +26529,7 @@ msgstr "Armas"
 msgid "Ammo"
 msgstr "Munición"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:314 ../base/ufos/ui/equipment.ufo:389
+#: ../base/ufos/ui/aircraft_equip.ufo:314 ../base/ufos/ui/equipment.ufo:390
 #: ../base/ufos/ui/market.ufo:130 ../base/ufos/ui/production.ufo:55
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:138
 #: client/cgame/campaign/cp_ufopedia.cpp:140
@@ -26696,8 +26704,8 @@ msgid "Destroy installation"
 msgstr "Destruir instalación"
 
 #: ../base/ufos/ui/basedefence.ufo:378 ../base/ufos/ui/geoscape.ufo:1024
-#: ../base/ufos/ui/hud_default.ufo:1394 ../base/ufos/ui/main.ufo:359
-#: ../base/ufos/ui/popup_baseattack.ufo:207
+#: ../base/ufos/ui/hud_default.ufo:1396 ../base/ufos/ui/main.ufo:359
+#: ../base/ufos/ui/popup_baseattack.ufo:159
 #: ../base/ufos/ui/popup_capacity.ufo:77
 #: ../base/ufos/ui/popup_installations.ufo:130 ../base/ufos/ui/radar.ufo:36
 #: ../base/ufos/ui/transfer.ufo:694
@@ -26762,7 +26770,7 @@ msgstr "Subir"
 msgid "Delete this savegame"
 msgstr "Borrar este juego"
 
-#: ../base/ufos/ui/campaign.ufo:166 ../base/ufos/ui/multiplayer.ufo:674
+#: ../base/ufos/ui/campaign.ufo:166 ../base/ufos/ui/multiplayer.ufo:702
 #: ../base/ufos/ui/skirmish.ufo:175
 msgid "DOWNLOAD"
 msgstr "DESCARGAR"
@@ -26772,13 +26780,13 @@ msgid "BEGIN"
 msgstr "INICIAR"
 
 #: ../base/ufos/ui/campaign.ufo:196 ../base/ufos/ui/campaign.ufo:931
-#: ../base/ufos/ui/multiplayer.ufo:907 ../base/ufos/ui/skirmish.ufo:197
+#: ../base/ufos/ui/multiplayer.ufo:901 ../base/ufos/ui/skirmish.ufo:197
 #: ../base/ufos/ui/tutorials.ufo:63
 msgid "BACK"
 msgstr "ATRÁS"
 
-#: ../base/ufos/ui/campaign.ufo:353 ../base/ufos/ui/multiplayer.ufo:1071
-#: ../base/ufos/ui/skirmish.ufo:362
+#: ../base/ufos/ui/campaign.ufo:353 ../base/ufos/ui/multiplayer.ufo:1065
+#: ../base/ufos/ui/skirmish.ufo:369
 msgid "No files uploaded yet"
 msgstr "Aún no se han subido archivos"
 
@@ -26853,15 +26861,15 @@ msgstr "Remover este archivo del servidor"
 msgid "Rename your unit"
 msgstr "Renombra tu unidad"
 
-#: ../base/ufos/ui/equipment.ufo:159 ../base/ufos/ui/hud_default.ufo:1402
+#: ../base/ufos/ui/equipment.ufo:159 ../base/ufos/ui/hud_default.ufo:1404
 msgid "Next soldier"
 msgstr "Soldado siguiente"
 
-#: ../base/ufos/ui/equipment.ufo:167 ../base/ufos/ui/hud_default.ufo:1410
+#: ../base/ufos/ui/equipment.ufo:167 ../base/ufos/ui/hud_default.ufo:1412
 msgid "Previous soldier"
 msgstr "Soldado anterior"
 
-#: ../base/ufos/ui/equipment.ufo:224 ../base/ufos/ui/hud_default.ufo:1461
+#: ../base/ufos/ui/equipment.ufo:224 ../base/ufos/ui/hud_default.ufo:1463
 msgid "0/0 Kg"
 msgstr "0/0 Kg"
 
@@ -26869,19 +26877,19 @@ msgstr "0/0 Kg"
 msgid "Remove all"
 msgstr "Quitar todo"
 
-#: ../base/ufos/ui/equipment.ufo:369 ../base/ufos/ui/production.ufo:39
+#: ../base/ufos/ui/equipment.ufo:370 ../base/ufos/ui/production.ufo:39
 msgid "Primary"
 msgstr "Primario"
 
-#: ../base/ufos/ui/equipment.ufo:374 ../base/ufos/ui/production.ufo:43
+#: ../base/ufos/ui/equipment.ufo:375 ../base/ufos/ui/production.ufo:43
 msgid "Secondary"
 msgstr "Auxiliar"
 
-#: ../base/ufos/ui/equipment.ufo:379 ../base/ufos/ui/production.ufo:47
+#: ../base/ufos/ui/equipment.ufo:380 ../base/ufos/ui/production.ufo:47
 msgid "Heavy"
 msgstr "Pesado"
 
-#: ../base/ufos/ui/equipment.ufo:384 ../base/ufos/ui/production.ufo:51
+#: ../base/ufos/ui/equipment.ufo:385 ../base/ufos/ui/production.ufo:51
 msgid "Misc"
 msgstr "Misc"
 
@@ -26991,12 +26999,12 @@ msgstr "Misión:"
 msgid "Aircraft reached desired location - what to do?"
 msgstr "La aeronave ha alcanzado la ubicación deseada - ¿Que deseas hacer?"
 
-#: ../base/ufos/ui/geoscape.ufo:838 ../base/ufos/ui/popup_baseattack.ufo:338
+#: ../base/ufos/ui/geoscape.ufo:838 ../base/ufos/ui/popup_baseattack.ufo:290
 msgid "Enter"
 msgstr "Entrar"
 
-#: ../base/ufos/ui/geoscape.ufo:839 ../base/ufos/ui/popup_baseattack.ufo:339
-#: ../base/ufos/ui/popup_baseattack.ufo:361
+#: ../base/ufos/ui/geoscape.ufo:839 ../base/ufos/ui/popup_baseattack.ufo:291
+#: ../base/ufos/ui/popup_baseattack.ufo:313
 msgid "Enter the battlefield"
 msgstr "Entrar al campo de batalla"
 
@@ -27137,7 +27145,7 @@ msgstr "Heridas serias"
 msgid "Healthy"
 msgstr "Saludable"
 
-#: ../base/ufos/ui/hud_.ufo:84
+#: ../base/ufos/ui/hud_.ufo:42
 msgid "Use this firemode for reaction fire"
 msgstr "Utilizar este modo de disparo para el disparo de reacción"
 
@@ -27206,7 +27214,7 @@ msgstr "Terminar el Turno"
 msgid "Abort"
 msgstr "Abortar"
 
-#: ../base/ufos/ui/hud_default.ufo:1103 ../base/ufos/ui/hud_default.ufo:1304
+#: ../base/ufos/ui/hud_default.ufo:1103 ../base/ufos/ui/hud_default.ufo:1302
 msgid "Show rescue zone"
 msgstr "Mostrar la zona de rescate"
 
@@ -27226,7 +27234,7 @@ msgstr "¡Abortando el disparo!"
 msgid "Please wait"
 msgstr "Espera un momento"
 
-#: ../base/ufos/ui/hud_default.ufo:1301
+#: ../base/ufos/ui/hud_default.ufo:1299
 msgid "Hide rescue zone"
 msgstr "Ocultar la zona de rescate"
 
@@ -27266,7 +27274,7 @@ msgstr "No hay más munición"
 msgid "Phone HUD"
 msgstr "HUD para móvil."
 
-#: ../base/ufos/ui/irc.ufo:23 ../base/ufos/ui/multiplayer.ufo:1831
+#: ../base/ufos/ui/irc.ufo:23 ../base/ufos/ui/multiplayer.ufo:1825
 msgid "Lobby"
 msgstr "Lobby"
 
@@ -27310,7 +27318,7 @@ msgstr "No estas conectado"
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr "No estas conectado al lobby ¿Quieres conectarte?"
 
-#: ../base/ufos/ui/irc.ufo:295 ../base/ufos/ui/multiplayer.ufo:1710
+#: ../base/ufos/ui/irc.ufo:295 ../base/ufos/ui/multiplayer.ufo:1704
 msgid "Connect"
 msgstr "Conectar"
 
@@ -27491,7 +27499,7 @@ msgid "You have to set the playername and hit the 'OK' button:"
 msgstr ""
 "Necesitas configurar el nombre de jugador y presionar el boton 'Listo':"
 
-#: ../base/ufos/ui/main.ufo:274 ../base/ufos/ui/multiplayer.ufo:1780
+#: ../base/ufos/ui/main.ufo:274 ../base/ufos/ui/multiplayer.ufo:1774
 #: ../base/ufos/ui/sys_popup.ufo:51 ../base/ufos/ui/sys_popup.ufo:114
 msgid "OK"
 msgstr "Listo"
@@ -27717,7 +27725,7 @@ msgstr "Comenzar"
 msgid "Start the match"
 msgstr "Comenzar el juego"
 
-#: ../base/ufos/ui/missionmenu.ufo:71 ../base/ufos/ui/multiplayer.ufo:329
+#: ../base/ufos/ui/missionmenu.ufo:71 ../base/ufos/ui/multiplayer.ufo:379
 msgid "LOBBY"
 msgstr "LOBBY"
 
@@ -27741,278 +27749,274 @@ msgstr "Conectar a este servidor"
 msgid "Delete this bookmark"
 msgstr "Borrar este marcador"
 
-#: ../base/ufos/ui/multiplayer.ufo:58
-msgid "Currently loaded"
-msgstr "Equipo Actual"
-
-#: ../base/ufos/ui/multiplayer.ufo:144
+#: ../base/ufos/ui/multiplayer.ufo:194
 msgid "JOIN"
 msgstr "UNIRSE"
 
-#: ../base/ufos/ui/multiplayer.ufo:162
+#: ../base/ufos/ui/multiplayer.ufo:212
 msgid "TEAM"
 msgstr "EQUIPO"
 
-#: ../base/ufos/ui/multiplayer.ufo:178
+#: ../base/ufos/ui/multiplayer.ufo:228
 msgid "Gametype:"
 msgstr "Tipo de juego:"
 
-#: ../base/ufos/ui/multiplayer.ufo:198
+#: ../base/ufos/ui/multiplayer.ufo:248
 msgid "Teamplay:"
 msgstr "Juego en equipo:"
 
-#: ../base/ufos/ui/multiplayer.ufo:218
+#: ../base/ufos/ui/multiplayer.ufo:268
 msgid "Allowed gametype:"
 msgstr "Tipo de juego permitido:"
 
-#: ../base/ufos/ui/multiplayer.ufo:270
+#: ../base/ufos/ui/multiplayer.ufo:320
 msgid "Save the current team"
 msgstr "Guardar el equipo actual"
 
-#: ../base/ufos/ui/multiplayer.ufo:275
+#: ../base/ufos/ui/multiplayer.ufo:325
 msgid "SAVE TEAM"
 msgstr "GUARDAR EQUIPO"
 
-#: ../base/ufos/ui/multiplayer.ufo:295
+#: ../base/ufos/ui/multiplayer.ufo:345
 msgid "Bookmarks"
 msgstr "Favoritos"
 
-#: ../base/ufos/ui/multiplayer.ufo:353
+#: ../base/ufos/ui/multiplayer.ufo:403
 msgid "Hostname:"
 msgstr "Nombre del anfitrión:"
 
-#: ../base/ufos/ui/multiplayer.ufo:368
+#: ../base/ufos/ui/multiplayer.ufo:418
 msgid "Make this server public:"
 msgstr "Hacer público este servidor:"
 
-#: ../base/ufos/ui/multiplayer.ufo:385
+#: ../base/ufos/ui/multiplayer.ufo:435
 msgid "Server-Password:"
 msgstr "Clave del Servidor:"
 
-#: ../base/ufos/ui/multiplayer.ufo:403 ../base/ufos/ui/multiplayer.ufo:1415
+#: ../base/ufos/ui/multiplayer.ufo:453 ../base/ufos/ui/multiplayer.ufo:1409
 msgid "RCON-Password:"
 msgstr "Clave RCON:"
 
-#: ../base/ufos/ui/multiplayer.ufo:421
+#: ../base/ufos/ui/multiplayer.ufo:471
 msgid "Enable morale states:"
 msgstr "Habilitar estados morales:"
 
-#: ../base/ufos/ui/multiplayer.ufo:436
+#: ../base/ufos/ui/multiplayer.ufo:486
 msgid "Alien rush:"
 msgstr "Asalto alienígena:"
 
-#: ../base/ufos/ui/multiplayer.ufo:439
+#: ../base/ufos/ui/multiplayer.ufo:489
 msgid "Enemies respawn when killed."
 msgstr "Nuevos enemigos siguen apareciendo."
 
-#: ../base/ufos/ui/multiplayer.ufo:455
+#: ../base/ufos/ui/multiplayer.ufo:505
 msgid "Max. clients:"
 msgstr "Máximo de clientes:"
 
-#: ../base/ufos/ui/multiplayer.ufo:456
+#: ../base/ufos/ui/multiplayer.ufo:506
 msgid "Sets the max allowed clients to connect"
 msgstr "Establece el máximo de clientes a conectar"
 
-#: ../base/ufos/ui/multiplayer.ufo:481 ../base/ufos/ui/multiplayer.ufo:1315
+#: ../base/ufos/ui/multiplayer.ufo:531 ../base/ufos/ui/multiplayer.ufo:1309
 msgid "Max. soldiers per team:"
 msgstr "Máximo de soldados por equipo:"
 
-#: ../base/ufos/ui/multiplayer.ufo:482 ../base/ufos/ui/multiplayer.ufo:1316
-#: ../base/ufos/ui/multiplayer.ufo:1366
+#: ../base/ufos/ui/multiplayer.ufo:532 ../base/ufos/ui/multiplayer.ufo:1310
+#: ../base/ufos/ui/multiplayer.ufo:1360
 msgid "Sets the max allowed soldiers per team"
 msgstr "Establece el máximo de soldados permitidos por equipo"
 
-#: ../base/ufos/ui/multiplayer.ufo:507 ../base/ufos/ui/multiplayer.ufo:1340
+#: ../base/ufos/ui/multiplayer.ufo:557 ../base/ufos/ui/multiplayer.ufo:1334
 msgid "Max. soldiers per player:"
 msgstr "Máximo de soldados por jugador:"
 
-#: ../base/ufos/ui/multiplayer.ufo:508 ../base/ufos/ui/multiplayer.ufo:1341
+#: ../base/ufos/ui/multiplayer.ufo:558 ../base/ufos/ui/multiplayer.ufo:1335
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "Establece el máximo de soldados por jugador en juego de equipo"
 
-#: ../base/ufos/ui/multiplayer.ufo:534
+#: ../base/ufos/ui/multiplayer.ufo:584
 msgid "Max. human players per team:"
 msgstr "Máximo de jugadores humanos por equipo:"
 
-#: ../base/ufos/ui/multiplayer.ufo:559
+#: ../base/ufos/ui/multiplayer.ufo:609
 msgid "Max. AI actors:"
 msgstr "Máximo personajes AI:"
 
-#: ../base/ufos/ui/multiplayer.ufo:560
+#: ../base/ufos/ui/multiplayer.ufo:610
 msgid "Max AI actors for teamplay mode"
 msgstr "Máximo de personajes AI para el modo de juego en equipo"
 
-#: ../base/ufos/ui/multiplayer.ufo:586
+#: ../base/ufos/ui/multiplayer.ufo:636
 msgid "Round time limit in seconds:"
 msgstr "Tiempo máximo del turno en segundos:"
 
-#: ../base/ufos/ui/multiplayer.ufo:608
+#: ../base/ufos/ui/multiplayer.ufo:658
 msgid "START SERVER"
 msgstr "INICIAR SERVIDOR"
 
-#: ../base/ufos/ui/multiplayer.ufo:629
+#: ../base/ufos/ui/multiplayer.ufo:679
 msgid "Teams"
 msgstr "Equipos"
 
-#: ../base/ufos/ui/multiplayer.ufo:668
+#: ../base/ufos/ui/multiplayer.ufo:696
 msgid "Download new teams"
 msgstr "Descargar nuevos equipos"
 
-#: ../base/ufos/ui/multiplayer.ufo:685
+#: ../base/ufos/ui/multiplayer.ufo:713
 msgid "Generate New Team"
 msgstr "Generar un Nuevo Equipo"
 
-#: ../base/ufos/ui/multiplayer.ufo:686
+#: ../base/ufos/ui/multiplayer.ufo:714
 msgid "GENERATE"
 msgstr "GENERAR"
 
-#: ../base/ufos/ui/multiplayer.ufo:771
+#: ../base/ufos/ui/multiplayer.ufo:765
 msgid "Close web panel"
 msgstr "Cerrar el panel web"
 
-#: ../base/ufos/ui/multiplayer.ufo:772
+#: ../base/ufos/ui/multiplayer.ufo:766
 msgid "CLOSE"
 msgstr "CERRAR"
 
-#: ../base/ufos/ui/multiplayer.ufo:787
+#: ../base/ufos/ui/multiplayer.ufo:781
 msgid "REFRESH"
 msgstr "ACTUALIZAR"
 
-#: ../base/ufos/ui/multiplayer.ufo:794
+#: ../base/ufos/ui/multiplayer.ufo:788
 msgid "Serverfilter:"
 msgstr "Filtro de servidores:"
 
-#: ../base/ufos/ui/multiplayer.ufo:876
+#: ../base/ufos/ui/multiplayer.ufo:870
 msgid "CONNECT"
 msgstr "CONECTAR"
 
-#: ../base/ufos/ui/multiplayer.ufo:887
+#: ../base/ufos/ui/multiplayer.ufo:881
 msgid "Connect to IP"
 msgstr "Conectar a IP"
 
-#: ../base/ufos/ui/multiplayer.ufo:1007 ../base/ufos/ui/options.ufo:626
+#: ../base/ufos/ui/multiplayer.ufo:1001 ../base/ufos/ui/options.ufo:626
 msgid "All"
 msgstr "Todo"
 
-#: ../base/ufos/ui/multiplayer.ufo:1009
+#: ../base/ufos/ui/multiplayer.ufo:1003
 msgid "Free"
 msgstr "Disponible"
 
-#: ../base/ufos/ui/multiplayer.ufo:1011
+#: ../base/ufos/ui/multiplayer.ufo:1005
 msgid "Playing"
 msgstr "Jugando"
 
-#: ../base/ufos/ui/multiplayer.ufo:1013
+#: ../base/ufos/ui/multiplayer.ufo:1007
 msgid "Invalid"
 msgstr "Invalido"
 
-#: ../base/ufos/ui/multiplayer.ufo:1177
+#: ../base/ufos/ui/multiplayer.ufo:1171
 msgid "Players connected"
 msgstr "Jugadores conectados"
 
-#: ../base/ufos/ui/multiplayer.ufo:1226
+#: ../base/ufos/ui/multiplayer.ufo:1220
 msgid "Team selection"
 msgstr "Selección de equipo"
 
-#: ../base/ufos/ui/multiplayer.ufo:1243
+#: ../base/ufos/ui/multiplayer.ufo:1237
 msgid "Team preference:"
 msgstr "Preferencias del Equipo:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1259
+#: ../base/ufos/ui/multiplayer.ufo:1253
 msgid "Next free team"
 msgstr "Siguiente equipo disponible"
 
-#: ../base/ufos/ui/multiplayer.ufo:1272
+#: ../base/ufos/ui/multiplayer.ufo:1266
 msgid "Previous free team"
 msgstr "Equipo disponible anterior"
 
-#: ../base/ufos/ui/multiplayer.ufo:1284 ../base/ufos/ui/multiplayer.ufo:1293
+#: ../base/ufos/ui/multiplayer.ufo:1278 ../base/ufos/ui/multiplayer.ufo:1287
 msgid "Finish the teamselection and start the game"
 msgstr "Terminar la selección del equipo e iniciar el juego"
 
-#: ../base/ufos/ui/multiplayer.ufo:1292
+#: ../base/ufos/ui/multiplayer.ufo:1286
 msgid "Are you ready?"
 msgstr "¿Estás listo?"
 
-#: ../base/ufos/ui/multiplayer.ufo:1309
+#: ../base/ufos/ui/multiplayer.ufo:1303
 msgid "Admin control"
 msgstr "Control del Administrador"
 
-#: ../base/ufos/ui/multiplayer.ufo:1365
+#: ../base/ufos/ui/multiplayer.ufo:1359
 msgid "Round time limit:"
 msgstr "Tiempo máximo del turno:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1390
+#: ../base/ufos/ui/multiplayer.ufo:1384
 msgid "Force start"
 msgstr "Forzar inicio"
 
-#: ../base/ufos/ui/multiplayer.ufo:1391
+#: ../base/ufos/ui/multiplayer.ufo:1385
 msgid "Launch the game before all teams are ready"
 msgstr "Iniciar el juego antes de que todos los equipos estén listos"
 
-#: ../base/ufos/ui/multiplayer.ufo:1409
+#: ../base/ufos/ui/multiplayer.ufo:1403
 msgid "Remote Admin Control"
 msgstr "Control Remoto (Administrador)"
 
-#: ../base/ufos/ui/multiplayer.ufo:1515
+#: ../base/ufos/ui/multiplayer.ufo:1509
 msgid "Server Info"
 msgstr "Información del servidor"
 
-#: ../base/ufos/ui/multiplayer.ufo:1582
+#: ../base/ufos/ui/multiplayer.ufo:1576
 msgid "Map screenshots"
 msgstr "Capturas de pantalla"
 
-#: ../base/ufos/ui/multiplayer.ufo:1656
+#: ../base/ufos/ui/multiplayer.ufo:1650
 msgid "Userlist"
 msgstr "Lista de usuarios"
 
-#: ../base/ufos/ui/multiplayer.ufo:1674 ../base/ufos/ui/options.ufo:199
+#: ../base/ufos/ui/multiplayer.ufo:1668 ../base/ufos/ui/options.ufo:199
 #: ../base/ufos/ui/web.ufo:18
 msgid "Name"
 msgstr "Nombre"
 
-#: ../base/ufos/ui/multiplayer.ufo:1684
-#: ../base/ufos/ui/popup_baseattack.ufo:327
+#: ../base/ufos/ui/multiplayer.ufo:1678
+#: ../base/ufos/ui/popup_baseattack.ufo:279
 msgid "Team"
 msgstr "Equipo"
 
-#: ../base/ufos/ui/multiplayer.ufo:1718
+#: ../base/ufos/ui/multiplayer.ufo:1712
 msgid "Bookmark"
 msgstr "Agregar a Favoritos"
 
-#: ../base/ufos/ui/multiplayer.ufo:1719
+#: ../base/ufos/ui/multiplayer.ufo:1713
 msgid "Add server to bookmarks"
 msgstr "Añadir el servidor a los marcadores"
 
-#: ../base/ufos/ui/multiplayer.ufo:1729
+#: ../base/ufos/ui/multiplayer.ufo:1723
 msgid "Leave Serverbrowser"
 msgstr "Salir del navegador de servidores"
 
-#: ../base/ufos/ui/multiplayer.ufo:1757
+#: ../base/ufos/ui/multiplayer.ufo:1751
 msgid "Enter server password"
 msgstr "Teclear la clave del servidor"
 
-#: ../base/ufos/ui/multiplayer.ufo:1765
+#: ../base/ufos/ui/multiplayer.ufo:1759
 msgid "Password:"
 msgstr "Clave:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1803
+#: ../base/ufos/ui/multiplayer.ufo:1797
 msgid "Game invitation"
 msgstr "Invitación al juego"
 
-#: ../base/ufos/ui/multiplayer.ufo:1818
+#: ../base/ufos/ui/multiplayer.ufo:1812
 msgid "Server info"
 msgstr "Información del servidor"
 
-#: ../base/ufos/ui/multiplayer.ufo:1819
+#: ../base/ufos/ui/multiplayer.ufo:1813
 msgid "Show server information"
 msgstr "Mostrar la información del servidor"
 
-#: ../base/ufos/ui/multiplayer.ufo:1832
+#: ../base/ufos/ui/multiplayer.ufo:1826
 msgid "Go into the lobby"
 msgstr "Ir al lobby"
 
-#: ../base/ufos/ui/multiplayer.ufo:1841
+#: ../base/ufos/ui/multiplayer.ufo:1835
 msgid ""
 "You received a invitation to take part of a multiplayer game. Hit the "
 "connect button to connect to the server"
@@ -28036,8 +28040,8 @@ msgstr "SONIDO"
 msgid "KEYS"
 msgstr "TECLAS"
 
-#: ../base/ufos/ui/options.ufo:174 ../base/ufos/ui/options.ufo:2421
-#: ../base/ufos/ui/options.ufo:2559
+#: ../base/ufos/ui/options.ufo:174 ../base/ufos/ui/options.ufo:2426
+#: ../base/ufos/ui/options.ufo:2564
 msgid "DONE"
 msgstr "HECHO"
 
@@ -28081,8 +28085,8 @@ msgstr "Ver el mapamundi como un globo en 3D"
 msgid "Camera zoom"
 msgstr "Acercamiento"
 
-#: ../base/ufos/ui/options.ufo:426 ../base/ufos/ui/options.ufo:1622
-#: ../base/ufos/ui/options.ufo:1754
+#: ../base/ufos/ui/options.ufo:426 ../base/ufos/ui/options.ufo:1627
+#: ../base/ufos/ui/options.ufo:1759
 msgid "Min"
 msgstr "Mín."
 
@@ -28090,8 +28094,8 @@ msgstr "Mín."
 msgid "1.0"
 msgstr "1.0"
 
-#: ../base/ufos/ui/options.ufo:476 ../base/ufos/ui/options.ufo:1681
-#: ../base/ufos/ui/options.ufo:1812
+#: ../base/ufos/ui/options.ufo:476 ../base/ufos/ui/options.ufo:1686
+#: ../base/ufos/ui/options.ufo:1817
 msgid "Max"
 msgstr "Máx."
 
@@ -28227,7 +28231,7 @@ msgstr "Efectos de Post-Procesamiento"
 msgid "Effects like light bloom and reflected light"
 msgstr "Efectos como refracción y luz reflejada"
 
-#: ../base/ufos/ui/options.ufo:1005 ../base/ufos/ui/options.ufo:2449
+#: ../base/ufos/ui/options.ufo:1005 ../base/ufos/ui/options.ufo:2454
 msgid "Advanced OpenGL options"
 msgstr "Otras Opciones de OpenGL"
 
@@ -28304,132 +28308,132 @@ msgstr "Otras Opciones de Video"
 msgid "Enable audio"
 msgstr "Activar el Sonido"
 
-#: ../base/ufos/ui/options.ufo:1316
+#: ../base/ufos/ui/options.ufo:1317
 msgid "Music volume"
 msgstr "Volumen de la música"
 
-#: ../base/ufos/ui/options.ufo:1347
+#: ../base/ufos/ui/options.ufo:1349
 msgid "Sound effects"
 msgstr "Efectos de Sonido"
 
-#: ../base/ufos/ui/options.ufo:1378
+#: ../base/ufos/ui/options.ufo:1381
 msgid "Menu sounds"
 msgstr "Sonidos del Menú"
 
-#: ../base/ufos/ui/options.ufo:1404
+#: ../base/ufos/ui/options.ufo:1408
 msgid "Audio sample rate"
 msgstr "Frecuencia de Muestreo"
 
-#: ../base/ufos/ui/options.ufo:1405
+#: ../base/ufos/ui/options.ufo:1409
 msgid "Higher sample rates provide better audio quality"
 msgstr "Velocidades de muestreo más altas producen mayor calidad de audio"
 
-#: ../base/ufos/ui/options.ufo:1420
+#: ../base/ufos/ui/options.ufo:1424
 msgid "11025 kHz"
 msgstr "11025 kHz"
 
-#: ../base/ufos/ui/options.ufo:1425
+#: ../base/ufos/ui/options.ufo:1429
 msgid "22050 kHz"
 msgstr "22050 kHz"
 
-#: ../base/ufos/ui/options.ufo:1430
+#: ../base/ufos/ui/options.ufo:1434
 msgid "44100 kHz"
 msgstr "44100 kHz"
 
-#: ../base/ufos/ui/options.ufo:1435
+#: ../base/ufos/ui/options.ufo:1439
 msgid "48000 kHz"
 msgstr "48000 kHz"
 
-#: ../base/ufos/ui/options.ufo:1442
+#: ../base/ufos/ui/options.ufo:1446
 msgid "Apply Sample Rate"
 msgstr "Aplicar la Frecuencia"
 
-#: ../base/ufos/ui/options.ufo:1495
+#: ../base/ufos/ui/options.ufo:1500
 msgid "Battlescape view configuration"
 msgstr "Opciones de la vista de combate"
 
-#: ../base/ufos/ui/options.ufo:1513
+#: ../base/ufos/ui/options.ufo:1518
 msgid "Scroll speed"
 msgstr "Velocidad de desplazamiento"
 
-#: ../base/ufos/ui/options.ufo:1546
+#: ../base/ufos/ui/options.ufo:1551
 msgid "Rotation speed"
 msgstr "Velocidad de rotación"
 
-#: ../base/ufos/ui/options.ufo:1579
+#: ../base/ufos/ui/options.ufo:1584
 msgid "Inertia"
 msgstr "Inercia"
 
-#: ../base/ufos/ui/options.ufo:1580
+#: ../base/ufos/ui/options.ufo:1585
 msgid "Higher values will cause the camera to stop more gradually"
 msgstr "Valores más altos causan que la cámara se detenga de forma más gradual"
 
-#: ../base/ufos/ui/options.ufo:1613
+#: ../base/ufos/ui/options.ufo:1618
 msgid "Pitch"
 msgstr "Inclinación"
 
-#: ../base/ufos/ui/options.ufo:1623
+#: ../base/ufos/ui/options.ufo:1628
 msgid "Maps optimized for values above 10"
 msgstr "Los mapas han sido optimizados para valores mayores a 10"
 
-#: ../base/ufos/ui/options.ufo:1682
+#: ../base/ufos/ui/options.ufo:1687
 msgid "Values above 90 will result in inverted views"
 msgstr "Valores mayores a 90 resultarán en vista invertida"
 
-#: ../base/ufos/ui/options.ufo:1745
+#: ../base/ufos/ui/options.ufo:1750
 msgid "Zoom constraints"
 msgstr "Limites de Acercamiento"
 
-#: ../base/ufos/ui/options.ufo:1875
+#: ../base/ufos/ui/options.ufo:1880
 msgid "Zoom speed"
 msgstr "Velocidad de acercamiento"
 
-#: ../base/ufos/ui/options.ufo:1908
+#: ../base/ufos/ui/options.ufo:1913
 msgid "Center view"
 msgstr "Centrar vista"
 
-#: ../base/ufos/ui/options.ufo:1935
+#: ../base/ufos/ui/options.ufo:1940
 msgid "Isometric view"
 msgstr "Vista Isométrica"
 
-#: ../base/ufos/ui/options.ufo:1936
+#: ../base/ufos/ui/options.ufo:1941
 msgid "3D rendering without perspective for an old-school look"
 msgstr ""
 "Vista 3D sin perspectiva para una apariencia al estilo de la vieja escuela"
 
-#: ../base/ufos/ui/options.ufo:1967
+#: ../base/ufos/ui/options.ufo:1972
 msgid "Battlescape gameplay options"
 msgstr "Opciones del combate"
 
-#: ../base/ufos/ui/options.ufo:1985
+#: ../base/ufos/ui/options.ufo:1990
 msgid "Actor speed"
 msgstr "Velocidad del personaje"
 
-#: ../base/ufos/ui/options.ufo:2017
+#: ../base/ufos/ui/options.ufo:2022
 msgid "Confirm actions"
 msgstr "Confirmar Acciones"
 
-#: ../base/ufos/ui/options.ufo:2018
+#: ../base/ufos/ui/options.ufo:2023
 msgid "Confirm your actions on the battlefield before committing"
 msgstr "Confirmar las acciones antes de realizarlas"
 
-#: ../base/ufos/ui/options.ufo:2033
+#: ../base/ufos/ui/options.ufo:2038
 msgid "Never"
 msgstr "Nunca"
 
-#: ../base/ufos/ui/options.ufo:2037
+#: ../base/ufos/ui/options.ufo:2042
 msgid "When moving"
 msgstr "Al mover"
 
-#: ../base/ufos/ui/options.ufo:2041
+#: ../base/ufos/ui/options.ufo:2046
 msgid "Always"
 msgstr "Siempre"
 
-#: ../base/ufos/ui/options.ufo:2059
+#: ../base/ufos/ui/options.ufo:2064
 msgid "Stand when moving"
 msgstr "Levantar al mover"
 
-#: ../base/ufos/ui/options.ufo:2060
+#: ../base/ufos/ui/options.ufo:2065
 msgid ""
 "Soldiers will automatically stand when ordered to move while they are "
 "crouched"
@@ -28437,179 +28441,179 @@ msgstr ""
 "Los soldados se levantarán automáticamente si están arrodillados cuando se "
 "les ordene moverse"
 
-#: ../base/ufos/ui/options.ufo:2087
+#: ../base/ufos/ui/options.ufo:2092
 msgid "Battlescape interface"
 msgstr "Interface de combate"
 
-#: ../base/ufos/ui/options.ufo:2137
+#: ../base/ufos/ui/options.ufo:2142
 msgid "Advanced Video options"
 msgstr "Otras Opciones de Video"
 
-#: ../base/ufos/ui/options.ufo:2158
+#: ../base/ufos/ui/options.ufo:2163
 msgid "Max texture resolution"
 msgstr "Resolución de las texturas"
 
-#: ../base/ufos/ui/options.ufo:2172 ../base/ufos/ui/options.ufo:2367
+#: ../base/ufos/ui/options.ufo:2177 ../base/ufos/ui/options.ufo:2372
 msgid "256"
 msgstr "256"
 
-#: ../base/ufos/ui/options.ufo:2176 ../base/ufos/ui/options.ufo:2371
+#: ../base/ufos/ui/options.ufo:2181 ../base/ufos/ui/options.ufo:2376
 msgid "512"
 msgstr "512"
 
-#: ../base/ufos/ui/options.ufo:2180 ../base/ufos/ui/options.ufo:2375
+#: ../base/ufos/ui/options.ufo:2185 ../base/ufos/ui/options.ufo:2380
 msgid "1024"
 msgstr "1024"
 
-#: ../base/ufos/ui/options.ufo:2184 ../base/ufos/ui/options.ufo:2379
+#: ../base/ufos/ui/options.ufo:2189 ../base/ufos/ui/options.ufo:2384
 msgid "2048"
 msgstr "2048"
 
-#: ../base/ufos/ui/options.ufo:2188
+#: ../base/ufos/ui/options.ufo:2193
 msgid "4096"
 msgstr "4096"
 
-#: ../base/ufos/ui/options.ufo:2192
+#: ../base/ufos/ui/options.ufo:2197
 msgid "8192"
 msgstr "8192"
 
-#: ../base/ufos/ui/options.ufo:2210
+#: ../base/ufos/ui/options.ufo:2215
 msgid "Texture filtering"
 msgstr "Filtrado de las texturas"
 
-#: ../base/ufos/ui/options.ufo:2224
+#: ../base/ufos/ui/options.ufo:2229
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:214
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:617
 #: client/cgame/campaign/cp_ufopedia.cpp:206 client/input/cl_joystick.cpp:282
 msgid "None"
 msgstr "Ninguno(a)"
 
-#: ../base/ufos/ui/options.ufo:2228
+#: ../base/ufos/ui/options.ufo:2233
 msgid "Bilinear only"
 msgstr "Solo Bilineal"
 
-#: ../base/ufos/ui/options.ufo:2232
+#: ../base/ufos/ui/options.ufo:2237
 msgid "Mipmaps only"
 msgstr "Solo mapas MIP"
 
-#: ../base/ufos/ui/options.ufo:2236
+#: ../base/ufos/ui/options.ufo:2241
 msgid "Bilinear and mipmaps"
 msgstr "Bilineal y mapas MIP"
 
-#: ../base/ufos/ui/options.ufo:2240
+#: ../base/ufos/ui/options.ufo:2245
 msgid "Trilinear and mipmaps"
 msgstr "Trilineal y mapas MIP"
 
-#: ../base/ufos/ui/options.ufo:2244
+#: ../base/ufos/ui/options.ufo:2249
 msgid "Bi-/trilinear and mipmaps"
 msgstr "Bilineal/Trilineal y mapas MIP"
 
-#: ../base/ufos/ui/options.ufo:2262
+#: ../base/ufos/ui/options.ufo:2267
 msgid "Texture compression"
 msgstr "Compresión de texturas"
 
-#: ../base/ufos/ui/options.ufo:2263
+#: ../base/ufos/ui/options.ufo:2268
 msgid "Improves memory performance but reduces visual quality"
 msgstr ""
 "Mejora el rendimiento de la memoria pero reduce la calidad de la imagen"
 
-#: ../base/ufos/ui/options.ufo:2289
+#: ../base/ufos/ui/options.ufo:2294
 msgid "LOD"
 msgstr "Niveles de detalle"
 
-#: ../base/ufos/ui/options.ufo:2290
+#: ../base/ufos/ui/options.ufo:2295
 msgid "Reduce distant texture sizes for better performance"
 msgstr "Reduce las texturas distantes para un mejor desempeño"
 
-#: ../base/ufos/ui/options.ufo:2316
+#: ../base/ufos/ui/options.ufo:2321
 msgid "Anisotropic filtering"
 msgstr "Filtrado anisotrópico"
 
-#: ../base/ufos/ui/options.ufo:2317
+#: ../base/ufos/ui/options.ufo:2322
 msgid "Distant textures appear sharper at higher resolutions"
 msgstr ""
 "Las texturas distantes parecen más definidas en las resoluciones más altas"
 
-#: ../base/ufos/ui/options.ufo:2352
+#: ../base/ufos/ui/options.ufo:2357
 msgid "Lightmap size"
 msgstr "Tamaño del mapa de luz"
 
-#: ../base/ufos/ui/options.ufo:2353
+#: ../base/ufos/ui/options.ufo:2358
 msgid "High resolution creates smoother shadows"
 msgstr "Una resolución más alta crea sombras más suaves"
 
-#: ../base/ufos/ui/options.ufo:2397
+#: ../base/ufos/ui/options.ufo:2402
 msgid "Lightmap brightness"
 msgstr "Brillo del mapa de luz"
 
-#: ../base/ufos/ui/options.ufo:2470
+#: ../base/ufos/ui/options.ufo:2475
 msgid "Vertex Buffers"
 msgstr "Búfer de Vértices"
 
-#: ../base/ufos/ui/options.ufo:2496
+#: ../base/ufos/ui/options.ufo:2501
 msgid "Multisample Buffers"
 msgstr "Búfer de Muestreo"
 
-#: ../base/ufos/ui/options.ufo:2497
+#: ../base/ufos/ui/options.ufo:2502
 msgid "Antialias GL primitives (more buffers create smoother edges)"
 msgstr "Alisar las primitivas GL (más búferes producen formas más suaves)"
 
-#: ../base/ufos/ui/options.ufo:2532
+#: ../base/ufos/ui/options.ufo:2537
 msgid "Swap Interval"
 msgstr "Intervalo de intercambio"
 
-#: ../base/ufos/ui/options.ufo:2533
+#: ../base/ufos/ui/options.ufo:2538
 msgid "Higher values will typically provide better results"
 msgstr "Valores más altos usualmente producen mejores resultados"
 
-#: ../base/ufos/ui/options.ufo:2628
+#: ../base/ufos/ui/options.ufo:2633
 msgid "MENU"
 msgstr "MENÚ"
 
-#: ../base/ufos/ui/options.ufo:2629
+#: ../base/ufos/ui/options.ufo:2634
 msgid "GLOBAL"
 msgstr "GLOBAL"
 
-#: ../base/ufos/ui/options.ufo:2630
+#: ../base/ufos/ui/options.ufo:2635
 msgid "BATTLESCAPE"
 msgstr "COMBATE"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:89
+#: ../base/ufos/ui/popup_baseattack.ufo:41
 msgid "Assemble Team"
 msgstr "Formar un equipo"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:196
+#: ../base/ufos/ui/popup_baseattack.ufo:148
 msgid "Equip"
 msgstr "Equipar"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:272
+#: ../base/ufos/ui/popup_baseattack.ufo:224
 msgid "Base is under attack"
 msgstr "Base bajo ataque"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:288
+#: ../base/ufos/ui/popup_baseattack.ufo:240
 msgid "Kill aliens in container"
 msgstr "Asesinar a los alienígenas en las celdas"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:295
-#: ../base/ufos/ui/popup_baseattack.ufo:302
-#: ../base/ufos/ui/popup_baseattack.ufo:309
-#: ../base/ufos/ui/popup_baseattack.ufo:316
+#: ../base/ufos/ui/popup_baseattack.ufo:247
+#: ../base/ufos/ui/popup_baseattack.ufo:254
+#: ../base/ufos/ui/popup_baseattack.ufo:261
+#: ../base/ufos/ui/popup_baseattack.ufo:268
 msgid "Not implemented"
 msgstr "No ha sido implementado"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:300
+#: ../base/ufos/ui/popup_baseattack.ufo:252
 msgid "Lift aircraft"
 msgstr "Lanzar la aeronave:"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:314
+#: ../base/ufos/ui/popup_baseattack.ufo:266
 msgid "Disable Power Plant"
 msgstr "Desactivar la Central Eléctrica"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:328
+#: ../base/ufos/ui/popup_baseattack.ufo:280
 msgid "Assemble defend team"
 msgstr "Formar un equipo de defensa"
 
-#: ../base/ufos/ui/popup_baseattack.ufo:364
+#: ../base/ufos/ui/popup_baseattack.ufo:316
 #: client/cgame/multiplayer/mp_callbacks.cpp:64
 msgid "Assemble a team first"
 msgstr "Primero construye un equipo"
@@ -29074,8 +29078,8 @@ msgstr "Lentes Infrarrojos"
 msgid "Scan"
 msgstr "Escanear"
 
-#: ../base/ufos/weapons.ufo:113 ../base/ufos/weapons_melee.ufo:44
-#: ../base/ufos/weapons_melee.ufo:108
+#: ../base/ufos/weapons.ufo:113 ../base/ufos/weapons_melee.ufo:45
+#: ../base/ufos/weapons_melee.ufo:111
 msgid "Throw"
 msgstr "Lanzar"
 
@@ -29083,45 +29087,45 @@ msgstr "Lanzar"
 msgid "Frag Grenade"
 msgstr "Granada de Fragmentación"
 
-#: ../base/ufos/weapons.ufo:157 ../base/ufos/weapons.ufo:235
-#: ../base/ufos/weapons.ufo:314 ../base/ufos/weapons.ufo:393
-#: ../base/ufos/weapons.ufo:477 ../base/ufos/weapons.ufo:560
-#: ../base/ufos/weapons.ufo:643
+#: ../base/ufos/weapons.ufo:157 ../base/ufos/weapons.ufo:237
+#: ../base/ufos/weapons.ufo:318 ../base/ufos/weapons.ufo:399
+#: ../base/ufos/weapons.ufo:485 ../base/ufos/weapons.ufo:570
+#: ../base/ufos/weapons.ufo:655
 msgid "Lob"
 msgstr "Lanzar"
 
-#: ../base/ufos/weapons.ufo:182 ../base/ufos/weapons.ufo:261
-#: ../base/ufos/weapons.ufo:340 ../base/ufos/weapons.ufo:421
-#: ../base/ufos/weapons.ufo:505 ../base/ufos/weapons.ufo:588
-#: ../base/ufos/weapons.ufo:668
+#: ../base/ufos/weapons.ufo:183 ../base/ufos/weapons.ufo:264
+#: ../base/ufos/weapons.ufo:345 ../base/ufos/weapons.ufo:428
+#: ../base/ufos/weapons.ufo:514 ../base/ufos/weapons.ufo:599
+#: ../base/ufos/weapons.ufo:681
 msgid "Roll"
 msgstr "Rodar"
 
-#: ../base/ufos/weapons.ufo:215
+#: ../base/ufos/weapons.ufo:217
 msgid "Flashbang"
 msgstr "Granada Aturdidora"
 
-#: ../base/ufos/weapons.ufo:294
+#: ../base/ufos/weapons.ufo:298
 msgid "Smoke Grenade"
 msgstr "Granada de Humo"
 
-#: ../base/ufos/weapons.ufo:373
+#: ../base/ufos/weapons.ufo:379
 msgid "Gas Grenade"
 msgstr "Granada de Gas"
 
-#: ../base/ufos/weapons.ufo:457
+#: ../base/ufos/weapons.ufo:465
 msgid "Alien Gas Grenade"
 msgstr "Granada de Gas Alienígena"
 
-#: ../base/ufos/weapons.ufo:540
+#: ../base/ufos/weapons.ufo:550
 msgid "Incendiary grenade"
 msgstr "Granada Incendiaria"
 
-#: ../base/ufos/weapons.ufo:623
+#: ../base/ufos/weapons.ufo:635
 msgid "Plasma Grenade"
 msgstr "Granada de Plasma"
 
-#: ../base/ufos/weapons.ufo:702 ../base/ufos/weapons.ufo:724
+#: ../base/ufos/weapons.ufo:716 ../base/ufos/weapons.ufo:738
 msgid "Bomb"
 msgstr "Bomba"
 
@@ -29129,15 +29133,15 @@ msgstr "Bomba"
 msgid "Needler Gun Magazine"
 msgstr "Cargador de Aguijoneador"
 
-#: ../base/ufos/weapons_aliens.ufo:68 ../base/ufos/weapons_aliens.ufo:143
+#: ../base/ufos/weapons_aliens.ufo:68 ../base/ufos/weapons_aliens.ufo:146
 msgid "Short Burst"
 msgstr "Ráfaga Corta"
 
-#: ../base/ufos/weapons_aliens.ufo:92 ../base/ufos/weapons_aliens.ufo:167
+#: ../base/ufos/weapons_aliens.ufo:93 ../base/ufos/weapons_aliens.ufo:171
 msgid "Cannonade"
 msgstr "Cañonazo"
 
-#: ../base/ufos/weapons_aliens.ufo:115 ../base/ufos/weapons_aliens.ufo:190
+#: ../base/ufos/weapons_aliens.ufo:117 ../base/ufos/weapons_aliens.ufo:195
 msgid "Needle Stream"
 msgstr "Ráfaga de Agujas"
 
@@ -29149,193 +29153,193 @@ msgstr "Rifle de Asalto"
 msgid "Assault Rifle Magazine"
 msgstr "Cargador de Rifle de Asalto"
 
-#: ../base/ufos/weapons_human.ufo:46 ../base/ufos/weapons_human.ufo:139
-#: ../base/ufos/weapons_human.ufo:388 ../base/ufos/weapons_human.ufo:479
-#: ../base/ufos/weapons_human.ufo:569 ../base/ufos/weapons_human.ufo:657
-#: ../base/ufos/weapons_human.ufo:860 ../base/ufos/weapons_human.ufo:928
-#: ../base/ufos/weapons_human.ufo:956 ../base/ufos/weapons_human.ufo:1574
-#: ../base/ufos/weapons_human.ufo:1774 ../base/ufos/weapons_human.ufo:1842
-#: ../base/ufos/weapons_particle.ufo:45 ../base/ufos/weapons_particle.ufo:134
-#: ../base/ufos/weapons_particle.ufo:245 ../base/ufos/weapons_plasma.ufo:45
-#: ../base/ufos/weapons_plasma.ufo:156 ../base/ufos/weapons_plasma.ufo:317
-#: ../base/ufos/weapons_plasma.ufo:387 ../base/ufos/weapons_plasma.ufo:585
+#: ../base/ufos/weapons_human.ufo:46 ../base/ufos/weapons_human.ufo:143
+#: ../base/ufos/weapons_human.ufo:399 ../base/ufos/weapons_human.ufo:492
+#: ../base/ufos/weapons_human.ufo:584 ../base/ufos/weapons_human.ufo:674
+#: ../base/ufos/weapons_human.ufo:882 ../base/ufos/weapons_human.ufo:951
+#: ../base/ufos/weapons_human.ufo:980 ../base/ufos/weapons_human.ufo:1613
+#: ../base/ufos/weapons_human.ufo:1818 ../base/ufos/weapons_human.ufo:1888
+#: ../base/ufos/weapons_particle.ufo:45 ../base/ufos/weapons_particle.ufo:136
+#: ../base/ufos/weapons_particle.ufo:250 ../base/ufos/weapons_plasma.ufo:45
+#: ../base/ufos/weapons_plasma.ufo:158 ../base/ufos/weapons_plasma.ufo:321
+#: ../base/ufos/weapons_plasma.ufo:392 ../base/ufos/weapons_plasma.ufo:597
 msgid "Snap Shot"
 msgstr "Disparo Rápido"
 
-#: ../base/ufos/weapons_human.ufo:67 ../base/ufos/weapons_human.ufo:160
-#: ../base/ufos/weapons_human.ufo:678 ../base/ufos/weapons_particle.ufo:155
-#: ../base/ufos/weapons_plasma.ufo:178 ../base/ufos/weapons_plasma.ufo:340
-#: ../base/ufos/weapons_plasma.ufo:408
+#: ../base/ufos/weapons_human.ufo:68 ../base/ufos/weapons_human.ufo:165
+#: ../base/ufos/weapons_human.ufo:696 ../base/ufos/weapons_particle.ufo:158
+#: ../base/ufos/weapons_plasma.ufo:180 ../base/ufos/weapons_plasma.ufo:344
+#: ../base/ufos/weapons_plasma.ufo:414
 msgid "3-Round Burst"
 msgstr "Ráfaga de 3 Disparos"
 
-#: ../base/ufos/weapons_human.ufo:90 ../base/ufos/weapons_human.ufo:182
-#: ../base/ufos/weapons_human.ufo:296 ../base/ufos/weapons_human.ufo:700
-#: ../base/ufos/weapons_human.ufo:791 ../base/ufos/weapons_multiplayer.ufo:76
-#: ../base/ufos/weapons_multiplayer.ufo:312
-#: ../base/ufos/weapons_plasma.ufo:200 ../base/ufos/weapons_plasma.ufo:431
-#: ../base/ufos/weapons_plasma.ufo:518 ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
+#: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
+#: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
+#: ../base/ufos/weapons_multiplayer.ufo:318
+#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:438
+#: ../base/ufos/weapons_plasma.ufo:528 ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr "Modo Automático"
 
-#: ../base/ufos/weapons_human.ufo:113 ../base/ufos/weapons_human.ufo:204
-#: ../base/ufos/weapons_human.ufo:410 ../base/ufos/weapons_human.ufo:501
-#: ../base/ufos/weapons_human.ufo:590 ../base/ufos/weapons_human.ufo:1138
-#: ../base/ufos/weapons_human.ufo:1182 ../base/ufos/weapons_human.ufo:1227
-#: ../base/ufos/weapons_human.ufo:1798 ../base/ufos/weapons_human.ufo:1866
-#: ../base/ufos/weapons_particle.ufo:66 ../base/ufos/weapons_particle.ufo:177
-#: ../base/ufos/weapons_plasma.ufo:88 ../base/ufos/weapons_plasma.ufo:222
-#: ../base/ufos/weapons_plasma.ufo:453 ../base/ufos/weapons_plasma.ufo:607
+#: ../base/ufos/weapons_human.ufo:116 ../base/ufos/weapons_human.ufo:211
+#: ../base/ufos/weapons_human.ufo:422 ../base/ufos/weapons_human.ufo:515
+#: ../base/ufos/weapons_human.ufo:606 ../base/ufos/weapons_human.ufo:1166
+#: ../base/ufos/weapons_human.ufo:1211 ../base/ufos/weapons_human.ufo:1257
+#: ../base/ufos/weapons_human.ufo:1843 ../base/ufos/weapons_human.ufo:1913
+#: ../base/ufos/weapons_particle.ufo:67 ../base/ufos/weapons_particle.ufo:181
+#: ../base/ufos/weapons_plasma.ufo:89 ../base/ufos/weapons_plasma.ufo:226
+#: ../base/ufos/weapons_plasma.ufo:461 ../base/ufos/weapons_plasma.ufo:620
 msgid "Aimed Shot"
 msgstr "Disparo de Precisión"
 
-#: ../base/ufos/weapons_human.ufo:231
+#: ../base/ufos/weapons_human.ufo:239
 msgid "Machine Gun"
 msgstr "Ametralladora"
 
-#: ../base/ufos/weapons_human.ufo:254
+#: ../base/ufos/weapons_human.ufo:262
 msgid "Machine Gun Magazine"
 msgstr "Cartucho de Ametralladora"
 
-#: ../base/ufos/weapons_human.ufo:273 ../base/ufos/weapons_plasma.ufo:495
+#: ../base/ufos/weapons_human.ufo:281 ../base/ufos/weapons_plasma.ufo:504
 msgid "5-Shot Burst"
 msgstr "Ráfaga de 5 Disparos"
 
-#: ../base/ufos/weapons_human.ufo:319 ../base/ufos/weapons_multiplayer.ufo:99
-#: ../base/ufos/weapons_multiplayer.ufo:335
-#: ../base/ufos/weapons_plasma.ufo:541 ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
+#: ../base/ufos/weapons_multiplayer.ufo:342
+#: ../base/ufos/weapons_plasma.ufo:552 ../base/ufos/weapons_ugv.ufo:135
 msgid "Full-Auto Sweep"
 msgstr "Barrido en Automático"
 
-#: ../base/ufos/weapons_human.ufo:348
+#: ../base/ufos/weapons_human.ufo:359
 msgid "Sniper Rifle"
 msgstr "Rifle de Francotirador"
 
-#: ../base/ufos/weapons_human.ufo:370
+#: ../base/ufos/weapons_human.ufo:381
 msgid "Sniper Rifle Magazine"
 msgstr "Cargador de Rifle de Francotirador"
 
-#: ../base/ufos/weapons_human.ufo:461
+#: ../base/ufos/weapons_human.ufo:474
 msgid "Coilgun Clip"
 msgstr "Cargador de Rifle Gauss"
 
-#: ../base/ufos/weapons_human.ufo:530
+#: ../base/ufos/weapons_human.ufo:545
 msgid "7.62mm Pistol"
 msgstr "Pistola Calibre 7.62mm"
 
-#: ../base/ufos/weapons_human.ufo:551
+#: ../base/ufos/weapons_human.ufo:566
 msgid "7.62mm Pistol Magazine"
 msgstr "Cargador de Pistola Calibre 7.62mm"
 
-#: ../base/ufos/weapons_human.ufo:617
+#: ../base/ufos/weapons_human.ufo:634
 msgid "Machine Pistol"
 msgstr "Pistola Automática"
 
-#: ../base/ufos/weapons_human.ufo:639
+#: ../base/ufos/weapons_human.ufo:656
 msgid "4.2mm MP Magazine"
 msgstr "Cargador de Pistola Automática Calibre 4.2mm"
 
-#: ../base/ufos/weapons_human.ufo:729
+#: ../base/ufos/weapons_human.ufo:749
 msgid "Submachine Gun"
 msgstr "Subfusil"
 
-#: ../base/ufos/weapons_human.ufo:750
+#: ../base/ufos/weapons_human.ufo:770
 msgid "SMG Magazine"
 msgstr "Cargador de Subfusil"
 
-#: ../base/ufos/weapons_human.ufo:768 ../base/ufos/weapons_multiplayer.ufo:52
+#: ../base/ufos/weapons_human.ufo:788 ../base/ufos/weapons_multiplayer.ufo:52
 msgid "5-Round Burst"
 msgstr "Ráfaga de 5 Disparos"
 
-#: ../base/ufos/weapons_human.ufo:820
+#: ../base/ufos/weapons_human.ufo:842
 msgid "Riot Shotgun"
 msgstr "Escopeta Antimotín"
 
-#: ../base/ufos/weapons_human.ufo:842
+#: ../base/ufos/weapons_human.ufo:864
 msgid "Saboted Slugs"
 msgstr "Municiones Subcalibradas"
 
-#: ../base/ufos/weapons_human.ufo:889
+#: ../base/ufos/weapons_human.ufo:912
 msgid "Micro Shotgun"
 msgstr "Escopeta Recortada"
 
-#: ../base/ufos/weapons_human.ufo:910 ../base/ufos/weapons_multiplayer.ufo:151
+#: ../base/ufos/weapons_human.ufo:933 ../base/ufos/weapons_multiplayer.ufo:154
 msgid "Flechette Shells"
 msgstr "Municiones de Dardos"
 
-#: ../base/ufos/weapons_human.ufo:985
+#: ../base/ufos/weapons_human.ufo:1010
 msgid "Flamethrower"
 msgstr "Lanzallamas"
 
-#: ../base/ufos/weapons_human.ufo:1007
+#: ../base/ufos/weapons_human.ufo:1032
 msgid "C90 Canister"
 msgstr "Tubo C90"
 
-#: ../base/ufos/weapons_human.ufo:1026
+#: ../base/ufos/weapons_human.ufo:1051
 msgid "Candlelight"
 msgstr "Vela"
 
-#: ../base/ufos/weapons_human.ufo:1047
+#: ../base/ufos/weapons_human.ufo:1073
 msgid "Inferno"
 msgstr "Infierno"
 
-#: ../base/ufos/weapons_human.ufo:1068
+#: ../base/ufos/weapons_human.ufo:1095
 msgid "Inferno Sweep"
 msgstr "Barrido de Infierno"
 
-#: ../base/ufos/weapons_human.ufo:1096
+#: ../base/ufos/weapons_human.ufo:1124
 msgid "Rocket Launcher"
 msgstr "Lanzamisiles"
 
-#: ../base/ufos/weapons_human.ufo:1119
+#: ../base/ufos/weapons_human.ufo:1147
 msgid "HE Rocket"
 msgstr "Misil Explosivo"
 
-#: ../base/ufos/weapons_human.ufo:1163
+#: ../base/ufos/weapons_human.ufo:1192
 msgid "IC Rocket"
 msgstr "Misil Incendiario"
 
-#: ../base/ufos/weapons_human.ufo:1208
+#: ../base/ufos/weapons_human.ufo:1238
 msgid "Hybrid Rocket"
 msgstr "Misil Híbrido"
 
-#: ../base/ufos/weapons_human.ufo:1255
+#: ../base/ufos/weapons_human.ufo:1286
 msgid "Grenade Launcher"
 msgstr "Lanza Granadas"
 
-#: ../base/ufos/weapons_human.ufo:1278
+#: ../base/ufos/weapons_human.ufo:1309
 msgid "25mm HIT Grenades"
 msgstr "Granadas AIT de 25mm"
 
-#: ../base/ufos/weapons_human.ufo:1297 ../base/ufos/weapons_human.ufo:1432
-#: ../base/ufos/weapons_human.ufo:1616
+#: ../base/ufos/weapons_human.ufo:1328 ../base/ufos/weapons_human.ufo:1467
+#: ../base/ufos/weapons_human.ufo:1656
 msgid "Snap Shot (Impact)"
 msgstr "Disparo Rápido (Impacto)"
 
-#: ../base/ufos/weapons_human.ufo:1324 ../base/ufos/weapons_human.ufo:1460
-#: ../base/ufos/weapons_human.ufo:1643
+#: ../base/ufos/weapons_human.ufo:1356 ../base/ufos/weapons_human.ufo:1496
+#: ../base/ufos/weapons_human.ufo:1684
 msgid "Aimed Shot (Impact)"
 msgstr "Disparo de Precisión (Impacto)"
 
-#: ../base/ufos/weapons_human.ufo:1351 ../base/ufos/weapons_human.ufo:1488
-#: ../base/ufos/weapons_human.ufo:1669
+#: ../base/ufos/weapons_human.ufo:1384 ../base/ufos/weapons_human.ufo:1525
+#: ../base/ufos/weapons_human.ufo:1711
 msgid "Snap Shot (Timer)"
 msgstr "D. Rápido (Temporizado)"
 
-#: ../base/ufos/weapons_human.ufo:1381 ../base/ufos/weapons_human.ufo:1519
-#: ../base/ufos/weapons_human.ufo:1698
+#: ../base/ufos/weapons_human.ufo:1415 ../base/ufos/weapons_human.ufo:1557
+#: ../base/ufos/weapons_human.ufo:1741
 msgid "Aimed Shot (Timer)"
 msgstr "D. de Precisión (Temporizado)"
 
-#: ../base/ufos/weapons_human.ufo:1413
+#: ../base/ufos/weapons_human.ufo:1448
 msgid "25mm IC Grenades"
 msgstr "Granadas Incendiarias de 25mm"
 
-#: ../base/ufos/weapons_human.ufo:1555
+#: ../base/ufos/weapons_human.ufo:1594
 msgid "25mm Flechette Grenades"
 msgstr "Granadas de Dardos de 25mm"
 
-#: ../base/ufos/weapons_human.ufo:1597
+#: ../base/ufos/weapons_human.ufo:1637
 msgid "25mm PB Grenades"
 msgstr "Granadas RP de 25mm"
 
@@ -29355,25 +29359,25 @@ msgstr "Láser Pesado"
 msgid "D-F Cartridge"
 msgstr "Cartucho F-D"
 
-#: ../base/ufos/weapons_laser.ufo:101 ../base/ufos/weapons_laser.ufo:147
-#: ../base/ufos/weapons_laser.ufo:195
+#: ../base/ufos/weapons_laser.ufo:101 ../base/ufos/weapons_laser.ufo:149
+#: ../base/ufos/weapons_laser.ufo:199
 msgid "Wave Fire"
 msgstr "Disparo Continuo"
 
-#: ../base/ufos/weapons_laser.ufo:120 ../base/ufos/weapons_laser.ufo:168
-#: ../base/ufos/weapons_laser.ufo:214
+#: ../base/ufos/weapons_laser.ufo:121 ../base/ufos/weapons_laser.ufo:171
+#: ../base/ufos/weapons_laser.ufo:219
 msgid "Pulsed Fire"
 msgstr "Disparo Pulsante"
 
-#: ../base/ufos/weapons_laser.ufo:242
+#: ../base/ufos/weapons_laser.ufo:248
 msgid "Electro Laser"
 msgstr "Electro Láser"
 
-#: ../base/ufos/weapons_laser.ufo:264
+#: ../base/ufos/weapons_laser.ufo:270
 msgid "D-F Cartridge Stun"
 msgstr "Cartucho F-D (Electroláser)"
 
-#: ../base/ufos/weapons_laser.ufo:282
+#: ../base/ufos/weapons_laser.ufo:288
 msgid "Stun Shot"
 msgstr "Disparo Paralizante"
 
@@ -29381,39 +29385,39 @@ msgstr "Disparo Paralizante"
 msgid "Combat Knife"
 msgstr "Cuchillo de Combate"
 
-#: ../base/ufos/weapons_melee.ufo:70
+#: ../base/ufos/weapons_melee.ufo:72
 msgid "Monomolecular Knife"
 msgstr "Cuchillo Monomolecular"
 
-#: ../base/ufos/weapons_melee.ufo:134
+#: ../base/ufos/weapons_melee.ufo:138
 msgid "Stun Rod"
 msgstr "Bastón Aturdidor"
 
-#: ../base/ufos/weapons_melee.ufo:159
+#: ../base/ufos/weapons_melee.ufo:163
 msgid "Stun Charge"
 msgstr "Descarga Paralizante"
 
-#: ../base/ufos/weapons_melee.ufo:177
+#: ../base/ufos/weapons_melee.ufo:182
 msgid "Double Charge"
 msgstr "Descarga Doble"
 
-#: ../base/ufos/weapons_melee.ufo:195
+#: ../base/ufos/weapons_melee.ufo:201
 msgid "Bludgeon"
 msgstr "Golpear"
 
-#: ../base/ufos/weapons_melee.ufo:218
+#: ../base/ufos/weapons_melee.ufo:225
 msgid "Kerrblade"
 msgstr "Sable Kerr"
 
-#: ../base/ufos/weapons_melee.ufo:259
+#: ../base/ufos/weapons_melee.ufo:267
 msgid "Slash"
 msgstr "Acuchillar"
 
-#: ../base/ufos/weapons_melee.ufo:284
+#: ../base/ufos/weapons_melee.ufo:293
 msgid "Plasma Blade"
 msgstr "Sable de Plasma"
 
-#: ../base/ufos/weapons_melee.ufo:305
+#: ../base/ufos/weapons_melee.ufo:314
 msgid "Lock"
 msgstr "Asegurar"
 
@@ -29425,31 +29429,31 @@ msgstr "Ametralladora Giratoria"
 msgid "Minigun Magazine"
 msgstr "Cargador de Ametralladora Giratoria"
 
-#: ../base/ufos/weapons_multiplayer.ufo:130
+#: ../base/ufos/weapons_multiplayer.ufo:133
 msgid "Shotgun"
 msgstr "Escopeta"
 
-#: ../base/ufos/weapons_multiplayer.ufo:169
+#: ../base/ufos/weapons_multiplayer.ufo:172
 msgid "Single Barrel"
 msgstr "Barril Único"
 
-#: ../base/ufos/weapons_multiplayer.ufo:192
+#: ../base/ufos/weapons_multiplayer.ufo:196
 msgid "Double Barrel"
 msgstr "Doble Barril"
 
-#: ../base/ufos/weapons_multiplayer.ufo:221
+#: ../base/ufos/weapons_multiplayer.ufo:226
 msgid "VHS Assault Rifle"
 msgstr "Rifle de Asalto VHS"
 
-#: ../base/ufos/weapons_multiplayer.ufo:246
+#: ../base/ufos/weapons_multiplayer.ufo:251
 msgid "XAW95"
 msgstr "XAW95"
 
-#: ../base/ufos/weapons_multiplayer.ufo:269
+#: ../base/ufos/weapons_multiplayer.ufo:274
 msgid "XAW95 Magazine"
 msgstr "Cargador XAW95"
 
-#: ../base/ufos/weapons_multiplayer.ufo:288
+#: ../base/ufos/weapons_multiplayer.ufo:293
 msgid "10-Round Burst"
 msgstr "Ráfaga de 10 Disparos"
 
@@ -29461,27 +29465,27 @@ msgstr "Pistola de Partículas"
 msgid "Pistol Particle Accelerator"
 msgstr "Acelerador de Partículas para Pistola"
 
-#: ../base/ufos/weapons_particle.ufo:94
+#: ../base/ufos/weapons_particle.ufo:96
 msgid "Particle Beam Rifle"
 msgstr "Rifle de Partículas"
 
-#: ../base/ufos/weapons_particle.ufo:116
+#: ../base/ufos/weapons_particle.ufo:118
 msgid "Rifle Particle Accelerator"
 msgstr "Acelerador de Partículas para Rifle"
 
-#: ../base/ufos/weapons_particle.ufo:204
+#: ../base/ufos/weapons_particle.ufo:209
 msgid "Particle Beam Cannon"
 msgstr "Cañón de Partículas"
 
-#: ../base/ufos/weapons_particle.ufo:226
+#: ../base/ufos/weapons_particle.ufo:231
 msgid "Cannon Particle Accelerator"
 msgstr "Acelerador de Partículas para Cañón"
 
-#: ../base/ufos/weapons_particle.ufo:267
+#: ../base/ufos/weapons_particle.ufo:272
 msgid "4-Round Burst"
 msgstr "Ráfaga de 4 Disparos"
 
-#: ../base/ufos/weapons_particle.ufo:289
+#: ../base/ufos/weapons_particle.ufo:295
 msgid "Unrestricted Blast"
 msgstr "Ráfaga sin Restricción"
 
@@ -29493,35 +29497,35 @@ msgstr "Pistola de Plasma"
 msgid "Plasma Pistol Charger"
 msgstr "Cargador de Pistola de Plasma"
 
-#: ../base/ufos/weapons_plasma.ufo:117
+#: ../base/ufos/weapons_plasma.ufo:119
 msgid "Plasma Rifle"
 msgstr "Rifle de Plasma"
 
-#: ../base/ufos/weapons_plasma.ufo:138
+#: ../base/ufos/weapons_plasma.ufo:140
 msgid "Plasma Rifle Charger"
 msgstr "Cargador de Rifle de Plasma"
 
-#: ../base/ufos/weapons_plasma.ufo:251
+#: ../base/ufos/weapons_plasma.ufo:255
 msgid "Plasma Blaster"
 msgstr "Cañón de Plasma"
 
-#: ../base/ufos/weapons_plasma.ufo:274
+#: ../base/ufos/weapons_plasma.ufo:278
 msgid "Plasma Blaster Charge"
 msgstr "Cargador de Cañón de Plasma"
 
-#: ../base/ufos/weapons_plasma.ufo:293
+#: ../base/ufos/weapons_plasma.ufo:297
 msgid "Ball"
 msgstr "Esfera"
 
-#: ../base/ufos/weapons_plasma.ufo:369
+#: ../base/ufos/weapons_plasma.ufo:374
 msgid "Assault Rifle EP Magazine"
 msgstr "Cargador PE de Rifle de Asalto"
 
-#: ../base/ufos/weapons_plasma.ufo:476
+#: ../base/ufos/weapons_plasma.ufo:485
 msgid "Machine Gun EP Magazine"
 msgstr "Cartucho PE de Ametralladora"
 
-#: ../base/ufos/weapons_plasma.ufo:567
+#: ../base/ufos/weapons_plasma.ufo:579
 msgid "Sniper Rifle EP Magazine"
 msgstr "Cargador PE de Rifle de Francotirador"
 
@@ -29570,51 +29574,51 @@ msgstr "Este soldado no puede llevar más carga."
 msgid "Warning"
 msgstr "Advertencia"
 
-#: client/battlescape/cl_actor.cpp:1856
+#: client/battlescape/cl_actor.cpp:1864
 msgid "Unknown alien race"
 msgstr "Raza alienígena desconocida"
 
-#: client/battlescape/cl_actor.cpp:2515
+#: client/battlescape/cl_actor.cpp:2523
 msgid "Toggle to next living actor"
 msgstr "Cambiar al siguiente personaje"
 
-#: client/battlescape/cl_actor.cpp:2516
+#: client/battlescape/cl_actor.cpp:2524
 msgid "Toggle to previous living actor"
 msgstr "Cambiar al personaje anterior"
 
-#: client/battlescape/cl_actor.cpp:2517
+#: client/battlescape/cl_actor.cpp:2525
 msgid "Select an actor from list"
 msgstr "Seleccionar a un personaje de la lista"
 
-#: client/battlescape/cl_actor.cpp:2518
+#: client/battlescape/cl_actor.cpp:2526
 msgid "Update an actor"
 msgstr "Actualizar un personaje"
 
-#: client/battlescape/cl_actor.cpp:2519
+#: client/battlescape/cl_actor.cpp:2527
 msgid "Toggle stand/crouch."
 msgstr "Cambiar entre parado/agachado"
 
-#: client/battlescape/cl_actor.cpp:2520
+#: client/battlescape/cl_actor.cpp:2528
 msgid "Toggle the headgear"
 msgstr "Encender/Apagar el equipo"
 
-#: client/battlescape/cl_actor.cpp:2521
+#: client/battlescape/cl_actor.cpp:2529
 msgid "Use"
 msgstr "Usar"
 
-#: client/battlescape/cl_actor.cpp:2522
+#: client/battlescape/cl_actor.cpp:2530
 msgid "Confirm the current action"
 msgstr "Confirmar la acción actual:"
 
-#: client/battlescape/cl_actor.cpp:2523
+#: client/battlescape/cl_actor.cpp:2531
 msgid "Toggle to the next alien in sight of the selected actor."
 msgstr "Enfocar el siguiente alienígena que el soldado seleccionado puede ver."
 
-#: client/battlescape/cl_actor.cpp:2525
+#: client/battlescape/cl_actor.cpp:2533
 msgid "Toggle camera to the next visible alien."
 msgstr "Enfocar el siguiente alienígena visible."
 
-#: client/battlescape/cl_actor.cpp:2526
+#: client/battlescape/cl_actor.cpp:2534
 msgid "Toggle camera to the previous visible alien."
 msgstr "Enfocar el alienígena visible anterior."
 
@@ -29871,11 +29875,11 @@ msgid "Can't perform action - no item in hand!"
 msgstr "No se puede efectuar la acción - ¡No hay nada en la mano!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:89
-#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1201
+#: client/battlescape/cl_hud_callbacks.cpp:265 game/g_combat.cpp:1187
 msgid "Can't perform action - no ammo!"
 msgstr "No se puede efectuar la acción - ¡No hay municiones!"
 
-#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1193
+#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1179
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr ""
 "No se puede efectuar la acción - ¡El arma no se puede disparar con una sola "
@@ -30961,17 +30965,17 @@ msgstr[1] "Faltan %d días."
 msgid "Rank: %s"
 msgstr "Rango: %s"
 
-#: client/cgame/campaign/cp_employee.cpp:178
+#: client/cgame/campaign/cp_employee.cpp:180
 msgid "Soldier"
 msgid_plural "Soldiers"
 msgstr[0] "Soldado"
 msgstr[1] "Soldados"
 
-#: client/cgame/campaign/cp_employee.cpp:359
+#: client/cgame/campaign/cp_employee.cpp:363
 msgid "Not enough quarters"
 msgstr "No hay suficientes alojamientos"
 
-#: client/cgame/campaign/cp_employee.cpp:359
+#: client/cgame/campaign/cp_employee.cpp:363
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -31994,24 +31998,24 @@ msgstr ""
 msgid "Not enough laboratories"
 msgstr "No hay suficientes laboratorios"
 
-#: client/cgame/campaign/cp_research.cpp:798
-#: client/cgame/campaign/cp_research.cpp:822
+#: client/cgame/campaign/cp_research.cpp:800
+#: client/cgame/campaign/cp_research.cpp:824
 #, c-format
 msgid "Research prerequisites of %s do not met at %s. Research halted!"
 msgstr ""
 "Los requisitos para la investigación de %s no se cumplen en %s ¡Se ha "
 "detenido la investigación!"
 
-#: client/cgame/campaign/cp_research.cpp:799
-#: client/cgame/campaign/cp_research.cpp:823
+#: client/cgame/campaign/cp_research.cpp:801
+#: client/cgame/campaign/cp_research.cpp:825
 msgid "Research halted"
 msgstr "Investigación detenida"
 
-#: client/cgame/campaign/cp_research.cpp:1166
+#: client/cgame/campaign/cp_research.cpp:1168
 msgid "No description available."
 msgstr "No hay descripción"
 
-#: client/cgame/campaign/cp_research.cpp:1167
+#: client/cgame/campaign/cp_research.cpp:1169
 msgid "No research proposal available."
 msgstr "No hay propuesta de investigación"
 
@@ -32273,20 +32277,20 @@ msgid "%s does not have Antimatter Storage, antimatter are removed!"
 msgstr "¡%s no tiene Almacén de Antimateria, la Antimateria se perdió!"
 
 #: client/cgame/campaign/cp_transfer.cpp:58
-#: client/cgame/campaign/cp_transfer.cpp:92
-#: client/cgame/campaign/cp_transfer.cpp:129
-#: client/cgame/campaign/cp_transfer.cpp:135
+#: client/cgame/campaign/cp_transfer.cpp:102
+#: client/cgame/campaign/cp_transfer.cpp:139
+#: client/cgame/campaign/cp_transfer.cpp:145
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:98
 msgid "Transport mission"
 msgstr "Misión de transporte"
 
-#: client/cgame/campaign/cp_transfer.cpp:91
+#: client/cgame/campaign/cp_transfer.cpp:101
 #, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr ""
 "¡%s no tiene una Celda para Alienígenas, los Alienígenas fueron eliminados!"
 
-#: client/cgame/campaign/cp_transfer.cpp:129
+#: client/cgame/campaign/cp_transfer.cpp:139
 msgid ""
 "The destination base no longer exists! Transfer cargo was lost, personnel "
 "has been discharged."
@@ -32294,7 +32298,7 @@ msgstr ""
 "¡El destino ya no existe! La carga se ha perdido, el personal ha sido "
 "despedido."
 
-#: client/cgame/campaign/cp_transfer.cpp:134
+#: client/cgame/campaign/cp_transfer.cpp:144
 #, c-format
 msgid "Transport mission ended, unloading cargo in %s"
 msgstr "Se ha completado la misión de transporte, descargando en %s"
@@ -32828,12 +32832,12 @@ msgstr ""
 "Todos los marcadores están ocupados - por favor elimina las entradas no "
 "utilizadas y repite este paso"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:193
-#: client/cgame/skirmish/cl_game_skirmish.cpp:198
+#: client/cgame/skirmish/cl_game_skirmish.cpp:194
+#: client/cgame/skirmish/cl_game_skirmish.cpp:199
 msgid "Game Drawn!"
 msgstr "¡Empate!"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:193
+#: client/cgame/skirmish/cl_game_skirmish.cpp:194
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -32843,7 +32847,7 @@ msgstr ""
 "\n"
 "El enemigo ha escapado."
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:198
+#: client/cgame/skirmish/cl_game_skirmish.cpp:199
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -32853,7 +32857,7 @@ msgstr ""
 "\n"
 "No hay sobrevivientes de ningún bando."
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:209
+#: client/cgame/skirmish/cl_game_skirmish.cpp:210
 #, c-format
 msgid ""
 "\n"
@@ -32868,19 +32872,19 @@ msgstr ""
 "%i de %i civiles rescatados, %i bajas civiles, %i bajas civiles por fuego "
 "aliado."
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:216
+#: client/cgame/skirmish/cl_game_skirmish.cpp:217
 msgid "Congratulations"
 msgstr "Felicidades"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:216
+#: client/cgame/skirmish/cl_game_skirmish.cpp:217
 msgid "You won the game!"
 msgstr "¡Has ganado!"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:218
+#: client/cgame/skirmish/cl_game_skirmish.cpp:219
 msgid "Better luck next time"
 msgstr "Suerte para la próxima"
 
-#: client/cgame/skirmish/cl_game_skirmish.cpp:218
+#: client/cgame/skirmish/cl_game_skirmish.cpp:219
 msgid "You've lost the game!"
 msgstr "¡Has perdido!"
 
@@ -33331,7 +33335,7 @@ msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr ""
 "Protección contra desbordamiento: No podrás conversar por %d segundos.\n"
 
-#: game/g_combat.cpp:422
+#: game/g_combat.cpp:423
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!"
@@ -33339,23 +33343,23 @@ msgstr ""
 "¡El soldado está aturdido!\n"
 "¡El enemigo uso una granada aturdidora!"
 
-#: game/g_combat.cpp:671
+#: game/g_combat.cpp:680
 msgid "Can't perform action - impossible throw!"
 msgstr "No se puede efectuar la acción - ¡Lanzamiento imposible!"
 
-#: game/g_combat.cpp:1159
+#: game/g_combat.cpp:1145
 msgid "Can't perform action - object not activatable!"
 msgstr "No se puede efectuar la acción - ¡El objeto no puede ser activado!"
 
-#: game/g_combat.cpp:1185
+#: game/g_combat.cpp:1171
 msgid "Can't perform action - target is not wounded!"
 msgstr "No se puede efectuar la acción - ¡El blanco no está herido!"
 
-#: game/g_combat.cpp:1210
+#: game/g_combat.cpp:1196
 msgid "Can't perform action - target out of range!"
 msgstr "No se puede efectuar la acción - ¡El blanco esta fuera de alcance!"
 
-#: game/g_combat.cpp:1256
+#: game/g_combat.cpp:1242
 msgid "Can't perform action - not enough ammo!"
 msgstr "No se puede efectuar la acción - ¡No hay municiones suficientes!"
 
