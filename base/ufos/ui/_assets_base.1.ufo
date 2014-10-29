@@ -1,3 +1,16 @@
+/*
+// Back to geoscape button
+component Geoscape extends button
+{
+	pos				"-17 -17"
+	size			"100 100"
+	icon			"icons/earthlrg"
+	background		"icons/circlelrg0"
+	tooltip			"_Back"
+	onMouseEnter	{ *node:this@background = "icons/circlelrg" }
+	onMouseLeave	{ *node:this@background = "icons/circlelrg0" }
+	// handle onClick in the menu that adds this node
+}
 
 // Main panel button for base sections
 component BaseSection extends panel
@@ -120,6 +133,7 @@ component BuildingSpace extends panel
 			*node:parent.data@string = <1>/<2>
 	}
 }
+*/
 
 // Small base selector layout
 component BaseLayoutMini extends baselayout

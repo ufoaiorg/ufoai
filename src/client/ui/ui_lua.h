@@ -56,3 +56,5 @@ uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super
 
 /* information */
 void UI_PrintNodeTree (uiNode_t* node, int level = 0);
+const char* UI_Node_TypeOf(uiNode_t* node);
+

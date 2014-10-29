@@ -147,3 +147,5 @@ void UI_InitializeNodeBehaviour(uiBehaviour_t* behaviour);
 void UI_AddBehaviourMethod (uiBehaviour_t* behaviour, const char* name, LUA_METHOD fcn);
 bool UI_HasBehaviourMethod (uiBehaviour_t* behaviour, const char* name);
 bool UI_GetBehaviourMethod (const uiBehaviour_t* behaviour, const char* name, LUA_METHOD &fcn);
+
+

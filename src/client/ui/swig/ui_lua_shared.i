@@ -215,8 +215,13 @@ const char* UI_SWIG_NodeTypeName (void* node) {
    (so a uiNode_t* representing a button will become a uiButton table in lua). The value of lua_SWIG_typeinfo
    is set in UI_RegisterXXXX functions. */
 %typemap(out) uiNode_t* {
-	swig_type_info* info=(swig_type_info*)$1->behaviour->lua_SWIG_typeinfo;
-	SWIG_NewPointerObj(L, $1, info, 0); SWIG_arg++;
+	if ($1) {
+		swig_type_info* info=(swig_type_info*)$1->behaviour->lua_SWIG_typeinfo;
+		SWIG_NewPointerObj(L, $1, info, 0); SWIG_arg++;
+	}
+	else {
+		SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
+	}
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -463,6 +468,8 @@ struct cvar_t {
 
 %rename (findvar) Cvar_FindVar;
 cvar_t* Cvar_FindVar (const char* varName);
+%rename (getvar) Cvar_Get;
+cvar_t* Cvar_Get (const char* var_name, const char* var_value = nullptr, int flags = 0, const char* desc = nullptr);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose inventory item
@@ -522,6 +529,10 @@ struct uiNode_t {
 	bool is_invisible () { return $self->invis; };
 	bool is_ghost () { return $self->ghost; };
 	bool is_flashing () { return $self->flash; };
+	bool is_function () { return $self->behaviour->isFunction; };
+	bool is_virtual () { return $self->behaviour->isVirtual; };
+	bool is_abstract () { return $self->behaviour->isAbstract; };
+	const char* type() { return $self->behaviour->name; };
 
 	float left () { return $self->box.pos[0]; };
 	float top () { return $self->box.pos[1]; };
@@ -545,6 +556,7 @@ struct uiNode_t {
 	uiNode_t* parent () { return $self->parent; };
 	uiNode_t* root () { return $self->root; };
 	uiNode_t* child (const char* name) { return UI_GetNode($self, name); };
+	uiNode_t* find (const char* name) { return UI_FindNode($self, name); };
 
 	void append_node (uiNode_t* node) { UI_AppendNode($self, node); };
 	void insert_node (uiNode_t* node, uiNode_t* prev) { UI_InsertNode($self, prev, node); };
@@ -1530,6 +1542,8 @@ void Com_Error(int code, const char* fmt);
 /* expose information functions */
 %rename (nodetree) UI_PrintNodeTree;
 void UI_PrintNodeTree (uiNode_t* node);
+%rename (nodepath) %UI_GetPath;
+const char* UI_GetPath(const uiNode_t* node);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose .ufo as lua module

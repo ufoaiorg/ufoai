@@ -121,6 +121,7 @@ void UI_NodeGetPoint(const uiNode_t* node, vec2_t pos, int pointDirection);
 
 /* navigation */
 uiNode_t* UI_GetNode(const uiNode_t* node, const char* name);
+uiNode_t* UI_FindNode(const uiNode_t* node, const char* name);
 void UI_InsertNode(uiNode_t* parent, uiNode_t* prevNode, uiNode_t* newNode);
 void UI_AppendNode(uiNode_t* parent, uiNode_t* newNode);
 uiNode_t* UI_RemoveNode(uiNode_t* node, uiNode_t* child);
