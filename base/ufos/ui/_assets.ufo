@@ -857,7 +857,7 @@ healthbar:set_pos(740, 340)
 healthbar:set_size(250, 30)
 healthbar:set_ghost(true)
 healthbar.on_visiblewhen = function (sender)
-		return (ufo.findvar("mn_show_employee"):as_integer() <= 2)
+		return (ufo.getvar("mn_show_employee"):as_integer() <= 2)
 	end
 local healthbar_hp = ufo.create_control(healthbar, "StatBarWide", "hp", nil)
 healthbar_hp:set_pos(0, 0)

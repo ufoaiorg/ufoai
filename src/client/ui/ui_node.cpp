@@ -664,6 +664,23 @@ uiNode_t* UI_GetNode(const uiNode_t* node, const char* name) {
 }
 
 /**
+ * @brief Recursive searches for a child node by name in the entire subtree.
+ * @return A uiNode_t* of nullptr if not found.
+ */
+uiNode_t* UI_FindNode(const uiNode_t* node, const char* name) {
+	/* search current level */
+	uiNode_t* result = UI_GetNode(node, name);
+	if (!result) {
+		/* iterate child nodes and search next level */
+		for(uiNode_t* current = node->firstChild; current; current = current->next) {
+			result = UI_FindNode(current, name);
+			if (result) break;
+		}
+	}
+	return result;
+}
+
+/**
  * @brief Insert a node next another one into a node. If prevNode is nullptr add the node on the head of the window
  * @param[in] parent Node where the newNode is inserted in
  * @param[in] prevNode previous node, will became before the newNode; else nullptr if newNode will become the first child of the node

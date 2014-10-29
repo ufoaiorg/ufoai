@@ -301,6 +301,7 @@ void uiWindowNode::onLoaded (uiNode_t* node)
 
 void uiWindowNode::clone (const uiNode_t* source, uiNode_t* clone)
 {
+	uiLocatedNode::clone(source, clone);
 	/* clean up index */
 	EXTRADATA(clone).index = nullptr;
 	OBJZERO(EXTRADATA(clone).index_hash);

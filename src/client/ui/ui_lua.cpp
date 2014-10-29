@@ -70,8 +70,7 @@ void UI_ShutdownLua (void) {
  */
 bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
 	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
-	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
+	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 1, 0, 0) != 0) {
 		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
@@ -89,8 +88,7 @@ bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
  */
 bool UI_ExecuteLuaEventScript_ReturnBool (uiNode_t* node, LUA_EVENT event, bool &result) {
 	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
-	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
+	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 1, 1, 0) != 0) {
 		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
@@ -114,8 +112,7 @@ bool UI_ExecuteLuaEventScript_ReturnBool (uiNode_t* node, LUA_EVENT event, bool 
  */
 bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y) {
 	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
-	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
+	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	lua_pushinteger(CL_GetLuaState(), x); /* push x on lua stack */
 	lua_pushinteger(CL_GetLuaState(), y); /* push y on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
@@ -136,8 +133,7 @@ bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y)
  */
 bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int dy) {
 	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
-	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
+	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	lua_pushinteger(CL_GetLuaState(), dx); /* push dx on lua stack */
 	lua_pushinteger(CL_GetLuaState(), dy); /* push dy on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
@@ -158,8 +154,7 @@ bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int
  */
 bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int key, unsigned short unicode) {
 	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
-	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
+	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	lua_pushinteger(CL_GetLuaState(), key); /* push key on lua stack */
 	lua_pushinteger(CL_GetLuaState(), unicode); /* push unicode on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
@@ -183,8 +178,7 @@ bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int
 */
 bool UI_ExecuteLuaMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params, int nparams) {
 	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, fcn); /* push event function on lua stack */
-	swig_type_info *type_uiNode = SWIG_TypeQuery(CL_GetLuaState(), "uiNode_t *");
-	SWIG_NewPointerObj (CL_GetLuaState(), node, type_uiNode, 0); /* push sender on lua stack */
+	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	/* push parameters on stack -> note: all the parameters are pushed as strings, since this is the only
 	   parameter type the old-style script can handle */
 	for(int i=0; i<nparams; i++) {
@@ -367,6 +361,13 @@ void UI_PrintNodeTree (uiNode_t* node, int level) {
 		UI_PrintNodeTree(child, level + 1);
 	}
 	delete indent;
+}
+
+const char* UI_Node_TypeOf(uiNode_t* node) {
+	if (node) {
+		return node->behaviour->name;
+	}
+	return nullptr;
 }
 
 /**

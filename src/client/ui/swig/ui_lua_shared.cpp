@@ -2877,13 +2877,16 @@ SWIGINTERN bool uiNode_t_is_disabled(uiNode_t *self){ return UI_Node_IsDisabled(
 SWIGINTERN bool uiNode_t_is_invisible(uiNode_t *self){ return self->invis; }
 SWIGINTERN bool uiNode_t_is_ghost(uiNode_t *self){ return self->ghost; }
 SWIGINTERN bool uiNode_t_is_flashing(uiNode_t *self){ return self->flash; }
+SWIGINTERN bool uiNode_t_is_function(uiNode_t *self){ return self->behaviour->isFunction; }
+SWIGINTERN bool uiNode_t_is_virtual(uiNode_t *self){ return self->behaviour->isVirtual; }
+SWIGINTERN bool uiNode_t_is_abstract(uiNode_t *self){ return self->behaviour->isAbstract; }
+SWIGINTERN char const *uiNode_t_type(uiNode_t *self){ return self->behaviour->name; }
 SWIGINTERN float uiNode_t_left(uiNode_t *self){ return self->box.pos[0]; }
 SWIGINTERN float uiNode_t_top(uiNode_t *self){ return self->box.pos[1]; }
 SWIGINTERN float uiNode_t_widht(uiNode_t *self){ return self->box.size[0]; }
 SWIGINTERN float uiNode_t_height(uiNode_t *self){ return self->box.size[1]; }
 SWIGINTERN int uiNode_t_bordersize(uiNode_t *self){ return self->border; }
 SWIGINTERN char *uiNode_t_name(uiNode_t *self){ return const_cast<char*>(self->name); }
-SWIGINTERN char *uiNode_t_type(uiNode_t *self){ return const_cast<char*>(self->behaviour->name); }
 SWIGINTERN char *uiNode_t_text(uiNode_t *self){ return const_cast<char*>(UI_Node_GetText(self)); }
 SWIGINTERN char *uiNode_t_font(uiNode_t *self){ return const_cast<char*>(self->font); }
 SWIGINTERN char *uiNode_t_image(uiNode_t *self){ return const_cast<char*>(self->image); }
@@ -2897,6 +2900,7 @@ SWIGINTERN uiNode_t *uiNode_t_next(uiNode_t *self){ return self->next; }
 SWIGINTERN uiNode_t *uiNode_t_parent(uiNode_t *self){ return self->parent; }
 SWIGINTERN uiNode_t *uiNode_t_root(uiNode_t *self){ return self->root; }
 SWIGINTERN uiNode_t *uiNode_t_child(uiNode_t *self,char const *name){ return UI_GetNode(self, name); }
+SWIGINTERN uiNode_t *uiNode_t_find(uiNode_t *self,char const *name){ return UI_FindNode(self, name); }
 SWIGINTERN void uiNode_t_append_node(uiNode_t *self,uiNode_t *node){ UI_AppendNode(self, node); }
 SWIGINTERN void uiNode_t_insert_node(uiNode_t *self,uiNode_t *node,uiNode_t *prev){ UI_InsertNode(self, prev, node); }
 SWIGINTERN void uiNode_t_set_left(uiNode_t *self,float value){ self->box.pos[0] = value; }
@@ -3892,6 +3896,188 @@ static int _wrap_findvar(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
+}
+
+
+static int _wrap_getvar__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int arg3 ;
+  char *arg4 = (char *) 0 ;
+  cvar_t *result = 0 ;
+  
+  SWIG_check_num_args("Cvar_Get",4,4)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_Get",1,"char const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Cvar_Get",2,"char const *");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Cvar_Get",3,"int");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Cvar_Get",4,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (int)lua_tonumber(L, 3);
+  arg4 = (char *)lua_tostring(L, 4);
+  result = (cvar_t *)Cvar_Get((char const *)arg1,(char const *)arg2,arg3,(char const *)arg4);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_cvar_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_getvar__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int arg3 ;
+  cvar_t *result = 0 ;
+  
+  SWIG_check_num_args("Cvar_Get",3,3)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_Get",1,"char const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Cvar_Get",2,"char const *");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Cvar_Get",3,"int");
+  arg1 = (char *)lua_tostring(L, 1);
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (int)lua_tonumber(L, 3);
+  result = (cvar_t *)Cvar_Get((char const *)arg1,(char const *)arg2,arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_cvar_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_getvar__SWIG_2(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  cvar_t *result = 0 ;
+  
+  SWIG_check_num_args("Cvar_Get",2,2)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_Get",1,"char const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Cvar_Get",2,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  arg2 = (char *)lua_tostring(L, 2);
+  result = (cvar_t *)Cvar_Get((char const *)arg1,(char const *)arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_cvar_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_getvar__SWIG_3(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  cvar_t *result = 0 ;
+  
+  SWIG_check_num_args("Cvar_Get",1,1)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_Get",1,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  result = (cvar_t *)Cvar_Get((char const *)arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_cvar_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_getvar(lua_State* L) {
+  int argc;
+  int argv[5]={
+    1,2,3,4,5
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 1) {
+    int _v;
+    {
+      _v = SWIG_lua_isnilstring(L,argv[0]);
+    }
+    if (_v) {
+      return _wrap_getvar__SWIG_3(L);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      _v = SWIG_lua_isnilstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_getvar__SWIG_2(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      _v = SWIG_lua_isnilstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_getvar__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      _v = SWIG_lua_isnilstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_getvar__SWIG_0(L);
+          }
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'getvar'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Cvar_Get(char const *,char const *,int,char const *)\n"
+    "    Cvar_Get(char const *,char const *,int)\n"
+    "    Cvar_Get(char const *,char const *)\n"
+    "    Cvar_Get(char const *)\n");
+  lua_error(L);return 0;
 }
 
 
@@ -4968,6 +5154,102 @@ fail:
 }
 
 
+static int _wrap_uiNode_is_function(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("uiNode_t::is_function",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::is_function",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_is_function",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  result = (bool)uiNode_t_is_function(arg1);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_is_virtual(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("uiNode_t::is_virtual",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::is_virtual",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_is_virtual",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  result = (bool)uiNode_t_is_virtual(arg1);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_is_abstract(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("uiNode_t::is_abstract",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::is_abstract",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_is_abstract",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  result = (bool)uiNode_t_is_abstract(arg1);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_type(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  char *result = 0 ;
+  
+  SWIG_check_num_args("uiNode_t::type",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::type",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_type",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  result = (char *)uiNode_t_type(arg1);
+  lua_pushstring(L,(const char *)result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiNode_left(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
@@ -5101,30 +5383,6 @@ static int _wrap_uiNode_name(lua_State* L) {
   }
   
   result = (char *)uiNode_t_name(arg1);
-  lua_pushstring(L,(const char *)result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_uiNode_type(lua_State* L) {
-  int SWIG_arg = 0;
-  uiNode_t *arg1 = (uiNode_t *) 0 ;
-  char *result = 0 ;
-  
-  SWIG_check_num_args("uiNode_t::type",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::type",1,"uiNode_t *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
-    SWIG_fail_ptr("uiNode_type",1,SWIGTYPE_p_uiNode_t);
-  }
-  
-  result = (char *)uiNode_t_type(arg1);
   lua_pushstring(L,(const char *)result); SWIG_arg++;
   return SWIG_arg;
   
@@ -5318,8 +5576,13 @@ static int _wrap_uiNode_first(lua_State* L) {
   
   result = (uiNode_t *)uiNode_t_first(arg1);
   {
-    swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
-    SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    if (result) {
+      swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+      SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    }
+    else {
+      SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
+    }
   }
   return SWIG_arg;
   
@@ -5345,8 +5608,13 @@ static int _wrap_uiNode_last(lua_State* L) {
   
   result = (uiNode_t *)uiNode_t_last(arg1);
   {
-    swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
-    SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    if (result) {
+      swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+      SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    }
+    else {
+      SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
+    }
   }
   return SWIG_arg;
   
@@ -5372,8 +5640,13 @@ static int _wrap_uiNode_next(lua_State* L) {
   
   result = (uiNode_t *)uiNode_t_next(arg1);
   {
-    swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
-    SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    if (result) {
+      swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+      SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    }
+    else {
+      SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
+    }
   }
   return SWIG_arg;
   
@@ -5399,8 +5672,13 @@ static int _wrap_uiNode_parent(lua_State* L) {
   
   result = (uiNode_t *)uiNode_t_parent(arg1);
   {
-    swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
-    SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    if (result) {
+      swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+      SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    }
+    else {
+      SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
+    }
   }
   return SWIG_arg;
   
@@ -5426,8 +5704,13 @@ static int _wrap_uiNode_root(lua_State* L) {
   
   result = (uiNode_t *)uiNode_t_root(arg1);
   {
-    swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
-    SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    if (result) {
+      swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+      SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    }
+    else {
+      SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
+    }
   }
   return SWIG_arg;
   
@@ -5456,8 +5739,48 @@ static int _wrap_uiNode_child(lua_State* L) {
   arg2 = (char *)lua_tostring(L, 2);
   result = (uiNode_t *)uiNode_t_child(arg1,(char const *)arg2);
   {
-    swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
-    SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    if (result) {
+      swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+      SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    }
+    else {
+      SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
+    }
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_find(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  uiNode_t *result = 0 ;
+  
+  SWIG_check_num_args("uiNode_t::find",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::find",1,"uiNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiNode_t::find",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_find",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  result = (uiNode_t *)uiNode_t_find(arg1,(char const *)arg2);
+  {
+    if (result) {
+      swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+      SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    }
+    else {
+      SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
+    }
   }
   return SWIG_arg;
   
@@ -6433,8 +6756,13 @@ static int _wrap_new_uiNode(lua_State* L) {
   SWIG_check_num_args("uiNode_t::uiNode_t",0,0)
   result = (uiNode_t *)new uiNode_t();
   {
-    swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
-    SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    if (result) {
+      swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+      SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    }
+    else {
+      SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
+    }
   }
   return SWIG_arg;
   
@@ -6483,13 +6811,16 @@ static swig_lua_method swig_uiNode_methods[]= {
     { "is_invisible", _wrap_uiNode_is_invisible},
     { "is_ghost", _wrap_uiNode_is_ghost},
     { "is_flashing", _wrap_uiNode_is_flashing},
+    { "is_function", _wrap_uiNode_is_function},
+    { "is_virtual", _wrap_uiNode_is_virtual},
+    { "is_abstract", _wrap_uiNode_is_abstract},
+    { "type", _wrap_uiNode_type},
     { "left", _wrap_uiNode_left},
     { "top", _wrap_uiNode_top},
     { "widht", _wrap_uiNode_widht},
     { "height", _wrap_uiNode_height},
     { "bordersize", _wrap_uiNode_bordersize},
     { "name", _wrap_uiNode_name},
-    { "type", _wrap_uiNode_type},
     { "text", _wrap_uiNode_text},
     { "font", _wrap_uiNode_font},
     { "image", _wrap_uiNode_image},
@@ -6503,6 +6834,7 @@ static swig_lua_method swig_uiNode_methods[]= {
     { "parent", _wrap_uiNode_parent},
     { "root", _wrap_uiNode_root},
     { "child", _wrap_uiNode_child},
+    { "find", _wrap_uiNode_find},
     { "append_node", _wrap_uiNode_append_node},
     { "insert_node", _wrap_uiNode_insert_node},
     { "set_left", _wrap_uiNode_set_left},
@@ -16005,8 +16337,13 @@ static int _wrap_create_control(lua_State* L) {
   arg4 = (char *)lua_tostring(L, 4);
   result = (uiNode_t *)UI_CreateControl(arg1,(char const *)arg2,(char const *)arg3,(char const *)arg4);
   {
-    swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
-    SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    if (result) {
+      swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+      SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    }
+    else {
+      SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
+    }
   }
   return SWIG_arg;
   
@@ -18406,8 +18743,13 @@ static int _wrap_create_component(lua_State* L) {
   arg3 = (char *)lua_tostring(L, 3);
   result = (uiNode_t *)UI_CreateComponent((char const *)arg1,(char const *)arg2,(char const *)arg3);
   {
-    swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
-    SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    if (result) {
+      swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+      SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    }
+    else {
+      SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
+    }
   }
   return SWIG_arg;
   
@@ -18458,8 +18800,13 @@ static int _wrap_push_window(lua_State* L) {
   
   result = (uiNode_t *)UI_PushWindow((char const *)arg1,(char const *)arg2,arg3);
   {
-    swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
-    SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    if (result) {
+      swig_type_info* info=(swig_type_info*)result->behaviour->lua_SWIG_typeinfo;
+      SWIG_NewPointerObj(L, result, info, 0); SWIG_arg++;
+    }
+    else {
+      SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
+    }
   }
   return SWIG_arg;
   
@@ -18566,6 +18913,30 @@ static int _wrap_nodetree(lua_State* L) {
   
   UI_PrintNodeTree(arg1);
   
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_UI_GetPath(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  char *result = 0 ;
+  
+  SWIG_check_num_args("UI_GetPath",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UI_GetPath",1,"uiNode_t const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("UI_GetPath",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  result = (char *)UI_GetPath((uiNode_t const *)arg1);
+  lua_pushstring(L,(const char *)result); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -18751,6 +19122,7 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
 };
 static swig_lua_method swig_SwigModule_methods[]= {
     { "findvar", _wrap_findvar},
+    { "getvar", _wrap_getvar},
     { "create_control", _wrap_create_control},
     { "UI_CreateBar", _wrap_UI_CreateBar},
     { "UI_CreateBaseMap", _wrap_UI_CreateBaseMap},
@@ -18840,6 +19212,7 @@ static swig_lua_method swig_SwigModule_methods[]= {
     { "dprint", _wrap_dprint},
     { "error", _wrap_error},
     { "nodetree", _wrap_nodetree},
+    { "UI_GetPath", _wrap_UI_GetPath},
     { "register_onload", _wrap_register_onload},
     {0,0}
 };

@@ -21,10 +21,29 @@ Geoscape:set_icon ("icons/earthlrg")
 Geoscape:set_background ("icons/circlelrg0")
 Geoscape:set_tooltip ("_Back")
 Geoscape.on_mouseenter = function (sender)
-		Geoscape:set_background ("icons/circlelrg")
+		sender:set_background ("icons/circlelrg")
 	end
 Geoscape.on_mouseleave = function (sender)
-		Geoscape:set_background ("icons/circlelrg0")
+		sender:set_background ("icons/circlelrg0")
+	end
+-- a bit of debug code
+Geoscape.on_rightclick = function (sender)
+
+		function iterate(node, tab)
+			local n = node:first()
+			while (n) do
+				ufo.print(string.format("%s child %s : %s\n", tab, n:name(), tostring(n:is_disabled())))
+				iterate (n, tab .. "  ")
+				n = n:next()
+			end
+		end
+
+		ufo.print("-----------------------------------------\n")
+		local window = sender:root()
+		--iterate(window, "")		
+		local node = window:find("building_storage")
+		ufo.print(string.format("on_mouseenter = %s\n", tostring(node.on_mouseenter)))
+		ufo.print(string.format("on_mouseleave = %s\n", tostring(node.on_mouseleave)))
 	end
 
 --[[
@@ -69,7 +88,37 @@ component BaseSection extends panel
 		ghost			true
 	}
 }
+--]]
+local BaseSection = ufo.create_component("panel", "BaseSection", nil)
+BaseSection:set_size(298, 48)
+BaseSection.on_mouseenter = function (sender)
+		sender:child("bg"):set_backgroundcolor (0.527, 0.6, 0.21, 0.4)
+		sender:child("icon"):set_background("icons/circle")
+	end
+BaseSection.on_mouseleave = function (sender)
+		sender:child("bg"):set_backgroundcolor (0.527, 0.6, 0.21, 0.2)
+		sender:child("icon"):set_background("icons/circle0")
+	end
+local BaseSection_bg = ufo.create_panel (BaseSection, "bg", nil)
+BaseSection_bg:set_pos(0, 8)
+BaseSection_bg:set_size(298, 32)
+BaseSection_bg:set_backgroundcolor (0.527, 0.6, 0.21, 0.2)
+BaseSection_bg:set_ghost (true)
+local BaseSection_icon = ufo.create_button (BaseSection, "icon", nil)
+BaseSection_icon:set_pos(12, 0)
+BaseSection_icon:set_size(48, 48)
+BaseSection_icon:set_background("icons/circle0")
+BaseSection_icon:set_ghost(true)
+BaseSection_icon.on_click = function (sender)
+	end
+local BaseSection_label = ufo.create_string (BaseSection, "label", nil)
+BaseSection_label:set_pos(75, 8)
+BaseSection_label:set_size(170, 32)
+BaseSection_label:set_contentalign(ufo.ALIGN_CL)
+BaseSection_label:set_color(0.56, 0.81, 0.76, 1)
+BaseSection_label:set_ghost(true)
 
+--[[
 // Stats bar for building space
 component BuildingSpace extends panel
 {
@@ -149,7 +198,69 @@ component BuildingSpace extends panel
 			*node:parent.data@string = <1>/<2>
 	}
 }
+--]]
+local BuildingSpace = ufo.create_component ("panel", "BuildingSpace", nil)
+BuildingSpace:set_size(298, 30)
+BuildingSpace.on_mouseenter = function (sender)
+		sender:child("label"):set_color(0.56, 0.81, 0.76, 1)
+		sender:child("data"):set_color(0.56, 0.81, 0.76, 1)
+		sender:child("alert"):set_icon("icons/windowplusb_hovered")
+	end
+BuildingSpace.on_mouseleave = function (sender)
+		sender:child("label"):set_color(0.56, 0.81, 0.76, 0.5)
+		sender:child("data"):set_color(0.56, 0.81, 0.76, 0.5)
+		sender:child("alert"):set_icon("icons/windowplusb")
+	end
+BuildingSpace.on_click = function (sender)
+		ufo.cmd(string.format("buildings_click %s;", sender:child("id"):as_string()))
+	end
+local BuildingSpace_id = ufo.create_data(BuildingSpace, "id", nil)
+local BuildingSpace_smlicon = ufo.create_button(BuildingSpace, "smlicon", nil)
+BuildingSpace_smlicon:set_pos(160, 0)
+BuildingSpace_smlicon:set_size(17, 17)
+BuildingSpace_smlicon:set_ghost(true)
+local BuildingSpace_label = ufo.create_string(BuildingSpace, "label", nil)
+BuildingSpace_label:set_pos(35, 0)
+BuildingSpace_label:set_size(120, 20)
+BuildingSpace_label:set_text("")
+BuildingSpace_label:set_font("f_verysmall")
+BuildingSpace_label:set_contentalign(ufo.ALIGN_LL)
+BuildingSpace_label:set_color(0.56, 0.81, 0.76, 0.7)
+BuildingSpace_label:set_ghost(true)
+local BuildingSpace_data = ufo.create_string(BuildingSpace, "data", nil)
+BuildingSpace_data:set_pos(155, 0)
+BuildingSpace_data:set_size(107, 20)
+BuildingSpace_data:set_text("")
+BuildingSpace_data:set_font("f_verysmall")
+BuildingSpace_data:set_contentalign(ufo.ALIGN_LR)
+BuildingSpace_data:set_color(0.56, 0.81, 0.76, 0.7)
+BuildingSpace_data:set_ghost(true)
+local BuildingSpace_data_bg = ufo.create_texture(BuildingSpace, "data_bg", nil)
+BuildingSpace_data_bg:set_pos(16, 18)
+BuildingSpace_data_bg:set_size(246, 6)
+BuildingSpace_data_bg:set_source("ui/bar_bg")
+BuildingSpace_data_bg:set_ghost(true)
+local BuildingSpace_data_bar = ufo.create_bar(BuildingSpace, "data_bar", nil)
+BuildingSpace_data_bar:set_pos(16, 18)
+BuildingSpace_data_bar:set_size(246, 6)
+BuildingSpace_data_bar:set_color(0.56, 0.81, 0.76, 1)
+BuildingSpace_data_bar:set_value(1)
+BuildingSpace_data_bar:set_max(1)
+BuildingSpace_data_bar:set_readonly(true)
+BuildingSpace_data_bar:set_ghost(true)
+local BuildingSpace_alert = ufo.create_button(BuildingSpace, "alert", nil)
+BuildingSpace_alert:set_pos(266, 12)
+BuildingSpace_alert:set_size(18, 18)
+BuildingSpace_alert:set_icon("icons/windowplusb")
+BuildingSpace_alert:set_ghost(true)
+BuildingSpace.set = function(sender, part, space)
+		ufo.print("BuildingSpace.set called\n")
+		sender:child("data_bar"):set_value(part)
+		sender:child("data_bar"):set_max(space)
+		sender:child("data"):set_text(tostring(part/space))
+	end
 
+--[[
 // Small base selector layout
 component BaseLayoutMini extends baselayout
 {

@@ -120,6 +120,7 @@ void uiConFuncNode::onLoaded (uiNode_t* node)
 
 void uiConFuncNode::clone (const uiNode_t* source, uiNode_t* clone)
 {
+	uiNode::clone(source, clone);
 	onLoaded(clone);
 }
 
@@ -223,6 +224,7 @@ void uiCvarNode::deleteNode (uiNode_t* node)
 
 void uiCvarNode::clone (const uiNode_t* source, uiNode_t* clone)
 {
+	uiNode::clone(source, clone);
 	UI_CvarListenerNodeBind(clone);
 }
 

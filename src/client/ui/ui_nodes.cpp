@@ -649,7 +649,7 @@ uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t* newWindow, bool recursiv
 
 	/* allocate memories */
 	if (newNode->dynamic) {
-		UI_Node_InitNode(newNode);
+		UI_Node_InitNodeDynamic(newNode);
 	}
 
 	UI_Node_Clone(node, newNode);

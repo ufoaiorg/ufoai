@@ -167,7 +167,7 @@ btnCredits:set_text ("_DEVELOPERS")
 btnCredits.on_click = function (sender)
 		ufo.cmd ("seq_start developers;")
 	end
-	
+
 local btnExit = ufo.create_button (pnlButtons, "btnExit", "MainMenuExitBtn")
 btnExit:set_text ("_EXIT")
 btnExit.on_click = function (sender)
