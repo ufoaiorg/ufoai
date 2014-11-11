@@ -371,7 +371,12 @@ int UI_Node_GetCellHeight (uiNode_t* node)
 }
 
 const char* UI_Node_GetText (uiNode_t* node) {
-	return node->text;
+	#ifdef DEBUG
+	if (node->text == nullptr) {
+		Com_Printf("warning: requesting uninitialized node->text from [%s]\n", UI_GetPath(node));
+	}
+	#endif // DEBUG
+	return (node->text? node->text : "");
 }
 
 void UI_Node_SetText (uiNode_t* node, const char* text) {

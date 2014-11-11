@@ -36,6 +36,7 @@ public:
 
 	void setRange(uiNode_t* node, float min, float max);
 	bool setValue(uiNode_t* node, float value);
+	bool setDelta(uiNode_t* node, float delta);
 	bool incValue(uiNode_t* node);
 	bool decValue(uiNode_t* node);
 
@@ -77,6 +78,7 @@ void UI_AbstractValue_SetRange (uiNode_t* node, float min, float max);
 void UI_AbstractValue_SetMin (uiNode_t* node, float min);
 void UI_AbstractValue_SetMax (uiNode_t* node, float max);
 void UI_AbstractValue_SetValue (uiNode_t* node, float value);
+void UI_AbstractValue_SetDelta (uiNode_t* node, float delta);
 
 void UI_AbstractValue_SetRangeCvar (uiNode_t* node, const char* min, const char* max);
 void UI_AbstractValue_SetMinCvar (uiNode_t* node, const char* min);

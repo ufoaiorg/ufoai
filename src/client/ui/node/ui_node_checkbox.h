@@ -51,3 +51,6 @@ void UI_CheckBox_SetBackgroundByName (uiNode_t* node, const char* name);
 void UI_CheckBox_SetIconCheckedByName (uiNode_t* node, const char* name);
 void UI_CheckBox_SetIconUncheckedByName (uiNode_t* node, const char* name);
 void UI_CheckBox_SetIconUnknownByName (uiNode_t* node, const char* name);
+
+bool UI_CheckBox_ValueAsBoolean (uiNode_t* node);
+int UI_CheckBox_ValueAsInteger (uiNode_t* node);
