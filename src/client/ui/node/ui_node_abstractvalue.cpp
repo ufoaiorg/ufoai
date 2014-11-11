@@ -156,6 +156,24 @@ bool uiAbstractValueNode::setValue(uiNode_t* node, float value)
 	return true;
 }
 
+bool uiAbstractValueNode::setDelta(uiNode_t* node, float delta) {
+	const float last = UI_GetReferenceFloat(node, EXTRADATA(node).delta);
+
+	/* nothing change? */
+	if (last == delta) {
+		return false;
+	}
+
+	/* save result */
+	const char* cvar = Q_strstart((char*)EXTRADATA(node).delta, "*cvar:");
+	if (cvar)
+		Cvar_SetValue(cvar, delta);
+	else
+		*(float*) EXTRADATA(node).delta = delta;
+
+	return true;
+}
+
 bool uiAbstractValueNode::incValue(uiNode_t* node)
 {
 	float value = UI_GetReferenceFloat(node, EXTRADATA(node).value);
@@ -250,6 +268,11 @@ void UI_AbstractValue_SetMax (uiNode_t* node, float max) {
 void UI_AbstractValue_SetValue (uiNode_t* node, float value) {
 	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
 	b->setValue(node, value);
+}
+
+void UI_AbstractValue_SetDelta (uiNode_t* node, float delta) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	b->setDelta(node, delta);
 }
 
 void UI_AbstractValue_SetRangeCvar (uiNode_t* node, const char* min, const char* max) {

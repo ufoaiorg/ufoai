@@ -133,7 +133,7 @@ component BuildingSpace extends panel
 			*node:parent.data@string = <1>/<2>
 	}
 }
-*/
+
 
 // Small base selector layout
 component BaseLayoutMini extends baselayout
@@ -147,7 +147,6 @@ component BaseLayoutMini extends baselayout
 	onMouseLeave	{ *node:this@color = "0.56 0.81 0.76 0.5" }
 	onClick			{ cmd "ui_pop; mn_base_select <baseid>;" }
 }
-
 
 // Aircraft image/button
 component AircraftIcon extends panel
@@ -197,7 +196,6 @@ component ProgressBar extends panel
 		ghost		true
 	}
 }
-
 
 // Employee count
 component EmployeeCount extends panel
@@ -288,6 +286,7 @@ component HospitalItem extends panel {
 		ghost		true
 	}
 }
+
 
 // Research item (items researched in base)
 component ResearchItem extends panel
@@ -468,6 +467,8 @@ component MarketList extends panel
 	layout			LAYOUT_TOP_DOWN_FLOW
 	layoutMargin	2
 }
+
+
 // Market item
 component MarketItem extends panel
 {
@@ -702,3 +703,4 @@ window BaseMgmtWindow
 	// Fuzzy screen effect (see assets.ufo)
 	fuzzyScreen overlay { }
 }
+*/

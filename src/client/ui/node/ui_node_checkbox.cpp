@@ -157,6 +157,15 @@ void UI_CheckBox_SetIconUnknownByName (uiNode_t* node, const char* name) {
 	UI_EXTRADATA(node, checkboxExtraData_t).iconUnknown = sprite;
 }
 
+bool UI_CheckBox_ValueAsBoolean (uiNode_t* node) {
+	uiCheckBoxNode* b=static_cast<uiCheckBoxNode*>(node->behaviour->manager.get());
+	return ((int)(b->getValue(node)) != 0);
+}
+
+int UI_CheckBox_ValueAsInteger (uiNode_t* node) {
+	uiCheckBoxNode* b=static_cast<uiCheckBoxNode*>(node->behaviour->manager.get());
+	return (int)(b->getValue(node) != 0 ? 1 : 0);
+}
 
 void UI_RegisterCheckBoxNode (uiBehaviour_t* behaviour)
 {

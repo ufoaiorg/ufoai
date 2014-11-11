@@ -397,6 +397,22 @@ typedef enum {
 	LAYOUT_ENSURE_32BIT = 0x7FFFFFFF
 } panelLayout_t;
 
+enum spinnerMode_t {
+	/**
+	 * Normal mode. The upper side of the node increase the value
+	 * and the lower side of the node decrease the value
+	 */
+	SPINNER_NORMAL,
+	/**
+	 * Only increase mode. The whole node increase the value.
+	 */
+	SPINNER_ONLY_INCREASE,
+	/**
+	 * Only decrease mode. The whole node decrease the value.
+	 */
+	SPINNER_ONLY_DECREASE
+};
+
 /**
  * @brief A list of filter types in the market and production view.
  * @note Run-time only, please do not use this in savegame/structures and the like.
@@ -462,7 +478,6 @@ struct cvar_t {
 	float as_float () { return $self->value; };
 	int as_integer () { return $self->integer; };
 
-	void set_value (int number) { Cvar_SetValue($self->name, number); };
 	void set_value (float number) { Cvar_SetValue($self->name, number);  };
 };
 
@@ -470,6 +485,8 @@ struct cvar_t {
 cvar_t* Cvar_FindVar (const char* varName);
 %rename (getvar) Cvar_Get;
 cvar_t* Cvar_Get (const char* var_name, const char* var_value = nullptr, int flags = 0, const char* desc = nullptr);
+%rename (delvar) Cvar_Delete;
+bool Cvar_Delete(const char* var_name);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose inventory item
@@ -532,7 +549,6 @@ struct uiNode_t {
 	bool is_function () { return $self->behaviour->isFunction; };
 	bool is_virtual () { return $self->behaviour->isVirtual; };
 	bool is_abstract () { return $self->behaviour->isAbstract; };
-	const char* type() { return $self->behaviour->name; };
 
 	float left () { return $self->box.pos[0]; };
 	float top () { return $self->box.pos[1]; };
@@ -707,6 +723,8 @@ struct uiAbstractValueNode_t: uiNode_t {
 	void set_min (const char* min) { UI_AbstractValue_SetMinCvar($self, min); };
 	void set_max (const char* max) { UI_AbstractValue_SetMaxCvar($self, max); };
 	void set_value (const char* name) { UI_AbstractValue_SetValueCvar ($self, name); };
+	void set_delta (float delta) { UI_AbstractValue_SetDelta($self, delta); };
+	void set_shiftmultiplier(float value) { UI_EXTRADATA($self, abstractValueExtraData_t).shiftIncreaseFactor = value; };
 };
 
 %rename (uiBar) uiBarNode_t;
@@ -728,6 +746,7 @@ struct uiAbstractBaseNode_t: uiNode_t {
 };
 %extend uiAbstractBaseNode_t {
 	int baseid() { return UI_EXTRADATA($self, baseExtraData_t).baseid; };
+	void set_baseid(int value) { UI_EXTRADATA($self, baseExtraData_t).baseid = value; };
 };
 
 %rename (uiBaseMap) uiBaseMapNode_t;
@@ -754,9 +773,12 @@ struct uiButtonNode_t: uiNode_t {
 };
 
 %rename (uiCheckBox) uiCheckBoxNode_t;
-struct uiCheckBoxNode_t: uiNode_t {
+struct uiCheckBoxNode_t: uiAbstractValueNode_t {
 };
 %extend uiCheckBoxNode_t {
+	bool as_boolean () { return UI_CheckBox_ValueAsBoolean($self); };
+	int as_integer() { return UI_CheckBox_ValueAsInteger($self); };
+
 	void set_background (const char* name) { UI_CheckBox_SetBackgroundByName($self, name); };
 	void set_iconchecked (const char* name) { UI_CheckBox_SetIconCheckedByName($self, name); };
 	void set_iconunchecked (const char* name) { UI_CheckBox_SetIconUncheckedByName($self, name); };
@@ -849,7 +871,7 @@ struct uiDataNode_t: uiNode_t {
 
 	void set_value (const char* value ) { UI_Node_SetText($self, value); };
 	void set_value (int value) { UI_EXTRADATA($self, dataExtraData_t).integer = value; };
-	void set_value (float value) { UI_EXTRADATA($self, dataExtraData_t).number = value; };
+	void set_valuef (float value) { UI_EXTRADATA($self, dataExtraData_t).number = value; };
 };
 
 %rename (uiGeoscape) uiGeoscapeNode_t;
@@ -1094,7 +1116,7 @@ struct uiTabNode_t: uiAbstractOptionNode_t {
 };
 
 %rename (uiTBar) uiTBarNode_t;
-struct uiTBarNode_t: uiAbstractValueNode {
+struct uiTBarNode_t: uiAbstractValueNode_t {
 };
 %extend uiTBarNode_t {
 	vec2_struct_t* texh () { return (vec2_struct_t*)UI_EXTRADATA($self, tbarExtraData_t).texh; };
@@ -1159,7 +1181,7 @@ static LUA_EVENT uiTextEntryNode_t_lua_onTextEntryAbort_set(uiTextEntryNode_t* n
 %}
 
 %rename (uiTextList) uiTextListNode_t;
-struct uiTextListNode_t: uiText_t {
+struct uiTextListNode_t: uiTextNode_t {
 };
 %extend uiTextListNode_t {
 };

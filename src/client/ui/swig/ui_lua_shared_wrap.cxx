@@ -4005,26 +4005,6 @@ static int _wrap_getvar(lua_State* L) {
 }
 
 
-static int _wrap_delvar(lua_State* L) {
-  int SWIG_arg = 0;
-  char *arg1 = (char *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("Cvar_Delete",1,1)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_Delete",1,"char const *");
-  arg1 = (char *)lua_tostring(L, 1);
-  result = (bool)Cvar_Delete((char const *)arg1);
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_invDef_name(lua_State* L) {
   int SWIG_arg = 0;
   invDef_t *arg1 = (invDef_t *) 0 ;
@@ -19182,7 +19162,6 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
 static swig_lua_method swig_SwigModule_methods[]= {
     { "findvar", _wrap_findvar},
     { "getvar", _wrap_getvar},
-    { "delvar", _wrap_delvar},
     { "create_control", _wrap_create_control},
     { "UI_CreateBar", _wrap_UI_CreateBar},
     { "UI_CreateBaseMap", _wrap_UI_CreateBaseMap},
