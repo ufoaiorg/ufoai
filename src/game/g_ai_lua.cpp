@@ -1847,15 +1847,15 @@ static int AIL_positionflee (lua_State* L)
 			continue;
 		if (!AI_CheckPosition(AIL_ent, AIL_ent->pos))
 			continue;
-		float minDistFoe = -1, minDistFriend = -1;
+		float minDistFoe = -1.0f, minDistFriend = -1.0f;
 		Actor* check = nullptr;
 		while ((check = G_EdictsGetNextLivingActor(check))) {
 			const float dist = VectorDist(AIL_ent->origin, check->origin);
 			if (check->isSameTeamAs(AIL_ent)) {
-				if (minDistFriend < 0.0f || dist < minDistFriend)
+				if (dist < minDistFriend || minDistFriend < 0.0f)
 					minDistFriend = dist;
 			} else {
-				if (minDistFoe < 0.0f || dist < minDistFoe)
+				if (dist < minDistFoe || minDistFoe < 0.0f)
 					minDistFoe = dist;
 			}
 		}

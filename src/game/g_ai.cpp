@@ -666,7 +666,7 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 		herdPathingTable = (pathing_t*) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
 
 	/* find the nearest enemy actor to the target*/
-	vec_t bestLength = 0.0f;
+	vec_t bestLength = -1.0f;
 	Actor* next = nullptr;
 	Actor* enemy = nullptr;
 	int team = AI_GetHidingTeam(actor);
@@ -676,7 +676,7 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 		if (next->getTeam() == team ? invTeam : !invTeam)
 			continue;
 		const vec_t length = VectorDistSqr(target, next->origin);
-		if (!bestLength || length < bestLength) {
+		if (length < bestLength || bestLength < 0.0f) {
 			enemy = next;
 			bestLength = length;
 		}
@@ -706,7 +706,7 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 		actor->calcOrigin();
 		const vec_t length = VectorDistSqr(actor->origin, target);
 		/* Don't pack them too close */
-		if (length < HERD_THRESHOLD)
+		if (length < HERD_THRESHOLD * HERD_THRESHOLD)
 			continue;
 
 		if (length < bestLength || bestPos[2] == PATHFINDING_HEIGHT) {
