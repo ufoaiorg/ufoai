@@ -303,7 +303,6 @@ typedef struct moveinfo_s {
 typedef struct AI_s {
 	char type[MAX_QPATH];	/**< Lua file used by the AI. */
 	char subtype[MAX_VAR];	/**< Subtype to be used by AI. */
-	lua_State* L;			/**< The lua state used by the AI. */
 } AI_t;
 
 typedef struct camera_edict_data_s {

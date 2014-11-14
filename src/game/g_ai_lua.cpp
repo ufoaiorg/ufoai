@@ -49,6 +49,7 @@ extern "C" {
 #define ACTOR_METATABLE	"actor" /**< Actor Lua Metable name. */
 #define AI_METATABLE	"ai" /**< AI Lua Metable name. */
 
+static lua_State* ailState;
 /**
  * Provides an api like luaL_dostring for buffers.
  */
@@ -1950,18 +1951,20 @@ static int AIL_HideNeeded (lua_State* L)
  */
 void AIL_ActorThink (Player& player, Actor* actor)
 {
-	/* The Lua State we will work with. */
-	lua_State* L = actor->AI.L;
-
 	/* Set the global player and edict */
 	AIL_ent = actor;
 	AIL_player = &player;
 
 	/* Try to run the function. */
-	lua_getglobal(L, "think");
-	if (lua_pcall(L, 0, 0, 0)) { /* error has occured */
-		gi.DPrintf("Error while running Lua: %s\n",
-			lua_isstring(L, -1) ? lua_tostring(L, -1) : "Unknown Error");
+	lua_getglobal(ailState, actor->AI.type);
+	if (lua_istable(ailState, -1)) {
+		lua_getfield(ailState, -1, "think");
+		if (lua_pcall(ailState, 0, 0, 0)) { /* error has occured */
+			gi.DPrintf("Error while running Lua: %s\n",
+				lua_isstring(ailState, -1) ? lua_tostring(ailState, -1) : "Unknown Error");
+		}
+	} else {
+		gi.DPrintf("Error while running Lua: AI for %s not found!\n", actor->AI.type);
 	}
 
 	/* Cleanup */
@@ -1969,7 +1972,19 @@ void AIL_ActorThink (Player& player, Actor* actor)
 	AIL_player = nullptr;
 }
 
+static lua_State* AIL_InitLua () {
+	/* Create the Lua state */
+	lua_State* newState = luaL_newstate();
 
+	/* Register metatables. */
+	actorL_register(newState);
+	pos3L_register(newState);
+
+	/* Register libraries. */
+	luaL_register(newState, AI_METATABLE, AIL_methods);
+
+	return newState;
+}
 /**
  * @brief Initializes the AI.
  * @param[in] ent Pointer to actor to initialize AI for.
@@ -1984,53 +1999,37 @@ int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
 	Q_strncpyz(AI->type, type, sizeof(AI->type));
 	Q_strncpyz(AI->subtype, subtype, sizeof(AI->subtype));
 
-	/* Create the new Lua state */
-	AI->L = luaL_newstate();
-	if (AI->L == nullptr) {
+	/* Create the a new Lua state if needed */
+	if (ailState == nullptr)
+		ailState = AIL_InitLua();
+
+	if (ailState == nullptr) {
 		gi.DPrintf("Unable to create Lua state.\n");
 		return -1;
 	}
 
-	/* Register metatables. */
-	actorL_register(AI->L);
-	pos3L_register(AI->L);
-
-	/* Register libraries. */
-	luaL_register(AI->L, AI_METATABLE, AIL_methods);
-
-	/* Load the AI */
-	char path[MAX_VAR];
-	Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
-	char* fbuf;
-	const int size = gi.FS_LoadFile(path, (byte**) &fbuf);
-	if (size == 0) {
-		gi.DPrintf("Unable to load Lua file '%s'.\n", path);
-		return -1;
-	}
-	if (luaL_dobuffer(AI->L, fbuf, size, path)) {
-		gi.DPrintf("Unable to parse Lua file '%s'\n", path);
-		gi.DPrintf("%s\n", lua_tostring(AI->L, lua_gettop(AI->L)));
+	/* Load the AI if needed */
+	lua_getglobal(ailState, AI->type);
+	if (!lua_istable(ailState, -1)) {
+		char path[MAX_VAR];
+		Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
+		char* fbuf;
+		const int size = gi.FS_LoadFile(path, (byte**) &fbuf);
+		if (size == 0) {
+			gi.DPrintf("Unable to load Lua file '%s'.\n", path);
+			return -1;
+		}
+		if (luaL_dobuffer(ailState, fbuf, size, path)) {
+			gi.DPrintf("Unable to parse Lua file '%s'\n", path);
+			gi.DPrintf("%s\n", lua_isstring(ailState, -1) ? lua_tostring(ailState, -1) : "Unknown Error");
+			gi.FS_FreeFile(fbuf);
+			return -1;
+		}
+		lua_setglobal(ailState, AI->type);
 		gi.FS_FreeFile(fbuf);
-		return -1;
 	}
-	gi.FS_FreeFile(fbuf);
 
 	return 0;
-}
-
-/**
- * @brief Cleans up the AI part of the actor.
- * @param[in] ent Pointer to actor to cleanup AI.
- */
-static void AIL_CleanupActor (Edict* ent)
-{
-	AI_t* AI = &ent->AI;
-
-	/* Cleanup. */
-	if (AI->L != nullptr) {
-		lua_close(AI->L);
-		AI->L = nullptr;
-	}
 }
 
 void AIL_Init (void)
@@ -2039,6 +2038,8 @@ void AIL_Init (void)
 	gi.RegisterConstInt("luaaiteam::civilian", TEAM_CIVILIAN);
 	gi.RegisterConstInt("luaaiteam::alien", TEAM_ALIEN);
 	gi.RegisterConstInt("luaaiteam::all", TEAM_ALL);
+
+	ailState = nullptr;
 }
 
 void AIL_Shutdown (void)
@@ -2054,8 +2055,6 @@ void AIL_Shutdown (void)
  */
 void AIL_Cleanup (void)
 {
-	Actor* actor = nullptr;
-
-	while ((actor = G_EdictsGetNextActor(actor)))
-		AIL_CleanupActor(actor);
+	lua_close(ailState);
+	ailState = nullptr;
 }

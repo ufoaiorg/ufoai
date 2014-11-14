@@ -17,32 +17,32 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --]]
 
-local ai = ai
+local civai = ai
 
-function ai.hidetus ()
-	return ai.actor():TU() - 4
+function civai.hidetus ()
+	return civai.actor():TU() - 4
 end
 
-function ai.flee()
-	local flee_pos = ai.positionflee()
+function civai.flee()
+	local flee_pos = civai.positionflee()
 	if flee_pos then
 		return flee_pos:goto()
 	end
 	return false
 end
 
-function ai.hide (team)
-	local hide_pos = ai.positionhide(team)
+function civai.hide (team)
+	local hide_pos = civai.positionhide(team)
 	if hide_pos then
 		return hide_pos:goto()
 	end
 	return false
 end
 
-function ai.herd (targets)
+function civai.herd (targets)
 	if #targets > 0 then
 		for i = 1, #targets do
-			local herd_pos = ai.positionherd(targets[i])
+			local herd_pos = civai.positionherd(targets[i])
 			if herd_pos then
 				return herd_pos:goto()
 			end
@@ -51,10 +51,10 @@ function ai.herd (targets)
 	return false
 end
 
-function ai.approach (targets)
+function civai.approach (targets)
 	for i = 1, #targets do
 		for j = 1, 2 do
-			local near_pos = ai.positionapproach(targets[i], ai.hidetus(), j == 1)
+			local near_pos = civai.positionapproach(targets[i], civai.hidetus(), j == 1)
 			if near_pos then
 				return near_pos:goto()
 			end
@@ -63,66 +63,68 @@ function ai.approach (targets)
 	return false
 end
 
-function ai.route (waypoints)
+function civai.route (waypoints)
 	if #waypoints > 0 then
 		for i = 1, #waypoints do
-			local target_pos = ai.positionmission(waypoints[i])
+			local target_pos = civai.positionmission(waypoints[i])
 			if target_pos then
 				if target_pos:goto() then
-					ai.setwaypoint(waypoints[i])
+					civai.setwaypoint(waypoints[i])
 				end
 			end
 		end
 		-- Can't get to any waypoints, try to approach the nearest one
-		return ai.approach(waypoints)
+		return civai.approach(waypoints)
 	end
 end
 
-function ai.wander ()
-	local next_pos = ai.positionwander("rand", (ai.actor():TU() + 1) / 6)
+function civai.wander ()
+	local next_pos = civai.positionwander("rand", (civai.actor():TU() + 1) / 6)
 	if next_pos then
 		next_pos:goto()
 	end
 end
 
-function ai.think_nf ()
-	local aliens = ai.see("sight", "alien")
+function civai.think_nf ()
+	local aliens = civai.see("sight", "alien")
 	if #aliens > 0 then
-		if not ai.hide(aliens[1]:team()) then
-			ai.flee()
+		if not civai.hide(aliens[1]:team()) then
+			civai.flee()
 		end
 	else
-		local waypoints = ai.waypoints(25, "path")
+		local waypoints = civai.waypoints(25, "path")
 		if #waypoints > 0 then
-			ai.route(waypoints)
+			civai.route(waypoints)
 		else
-			ai.setwaypoint(nil)
-			local phalanx = ai.see("sight", "phalanx")
+			civai.setwaypoint(nil)
+			local phalanx = civai.see("sight", "phalanx")
 			if #phalanx > 0 then
-				ai.herd(phalanx)
+				civai.herd(phalanx)
 			else
-				local civs = ai.see("sight", "civilian")
+				local civs = civai.see("sight", "civilian")
 				if #civs > 0 then
-					ai.herd(civs)
+					civai.herd(civs)
 				else
-					ai.wander()
+					civai.wander()
 				end
 			end
 		end
 	end
-	aliens = ai.see("sight", "alien")
+	aliens = civai.see("sight", "alien")
 	if #aliens > 0 then
 		-- Some civ models don't have crouching animations
-		-- ai.crouch(true)
+		-- civai.crouch(true)
 	end
 end
 
-function think ()
-	if not ai.isfighter() then
-		ai.think_nf()
+function civai.think ()
+	if not civai.isfighter() then
+		civai.think_nf()
 	else
 		-- We don't currently have fight capable civ teams, so no point in implementing this yet
-		ai.print("Warning: no fight capable lua ai available for civilian ", ai.actor())
-		ai.think_nf()
+		civai.print("Warning: no fight capable lua ai available for civilian ", civai.actor())
+		civai.think_nf()
 	end
 end
+
+return ai

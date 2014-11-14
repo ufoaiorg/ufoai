@@ -1720,7 +1720,7 @@ static void AI_PlayerRun (Player& player)
 			if (beforeTUs > 0) {
 				/* Human players' actors don't have a LUA state,
 				 * so don't try to run them with the LUA AI */
-				if (g_ailua->integer && actor->AI.L)
+				if (g_ailua->integer && !Q_strnull(actor->AI.type))
 					AIL_ActorThink(player, actor);
 				else
 					AI_ActorThink(player, actor);
@@ -1888,7 +1888,7 @@ static void AI_InitPlayer (const Player& player, Actor* actor, const equipDef_t*
 
 	/* initialize the LUA AI now */
 	if (team == TEAM_CIVILIAN)
-		AIL_InitActor(actor, "civilian", "default");
+		AIL_InitActor(actor, "civilian", actor->chr.teamDef->id);
 	else if (team == TEAM_ALIEN)
 		AIL_InitActor(actor, "alien", actor->chr.teamDef->id);
 	else
