@@ -163,7 +163,7 @@ ail.params = {
 	bloodspider_adv = { vis = "team", ord = "path", pos = "nearest", move = "hide", prio = {"~alien"} },
 	hovernet = { vis = "team", ord = "dist", pos = "fastest", move = "herd", prio = {"~civilian", "civilian"} },
 	hovernet_adv = { vis = "team", ord = "dist", pos = "farthest", move = "herd", prio = {"~civilian", "civilian"} },
-	default = { vis = "sight", ord = "dist", pos = "fastest", move = rand, prio = {"~alien"} }
+	default = { vis = "sight", ord = "dist", pos = "fastest", move = "rand", prio = {"~alien"} }
 }
 
 function ail.tustouse ()
@@ -434,7 +434,24 @@ function ail.phase_three ()
 end
 
 function ail.think ()
-	ail.param = ail.params[ail.class()]
+	local morale = ail.actor():morale()
+	if morale == "panic" then
+		ail.flee()
+		return
+	end
+
+	-- copy the default params for this actor class
+	local par = ail.params[ail.class()]
+	ail.param = { vis = par.vis, ord = par.ord, pos = par.pos, move = par.move, prio = par.prio }
+	-- adjust for morale
+	if morale == "rage" or morale == "insane" then
+		ail.param.ord = "dist"
+		ail.param.pos = "fastest"
+		ail.param.move = "rand"
+		if morale == "insane" then
+			ail.params.prio = {"all"}
+		end
+	end
 	ail.target = nil
 	if not ail.param then
 		ail.param = ail.params.default

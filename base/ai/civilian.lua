@@ -118,12 +118,16 @@ function civai.think_nf ()
 end
 
 function civai.think ()
-	if not civai.isfighter() then
-		civai.think_nf()
+	if civai.actor().morale() ~= "normal" then
+		civai.flee()
 	else
-		-- We don't currently have fight capable civ teams, so no point in implementing this yet
-		civai.print("Warning: no fight capable lua ai available for civilian ", civai.actor())
-		civai.think_nf()
+		if not civai.isfighter() then
+			civai.think_nf()
+		else
+			-- We don't currently have fight capable civ teams, so no point in implementing this yet
+			civai.print("Warning: no fight capable lua ai available for civilian ", civai.actor())
+			civai.think_nf()
+		end
 	end
 end
 
