@@ -1204,7 +1204,7 @@ static int AIL_positionshoot (lua_State* L)
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
-	const int dist = (tus + 1) / TU_MOVE_STRAIGHT;
+	const int rad = (tus + 1) / TU_MOVE_STRAIGHT;
 
 	pos3_t oldPos;
 	vec3_t oldOrigin;
@@ -1216,7 +1216,7 @@ static int AIL_positionshoot (lua_State* L)
 	float bestScore = 0.0f;
 	pos3_t to, bestPos;
 	VectorSet(bestPos, 0, 0, PATHFINDING_HEIGHT);
-	AiAreaSearch searchArea(oldPos, dist);
+	AiAreaSearch searchArea(oldPos, rad);
 	while (searchArea.getNext(to)) {
 		actor->setOrigin(to);
 		const pos_t tu = G_ActorMoveLength(actor, level.pathingMap, to, true);
@@ -1230,6 +1230,7 @@ static int AIL_positionshoot (lua_State* L)
 
 		bool hasLoF = false;
 		int shotChecked = NONE;
+		float dist;
 		for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
 			const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
 			if (item == nullptr)
@@ -1243,10 +1244,9 @@ static int AIL_positionshoot (lua_State* L)
 				fd = &fdArray[fdIdx];
 				fdTime = G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
 				/* how many shoots can this actor do */
-				const int shots = tus / fdTime;
+				const int shots = (tus - tu) / fdTime;
 				if (shots < 1)
 					continue;
-				float dist;
 				if (!AI_FighterCheckShoot(actor, target->actor, fd, &dist))
 					continue;
 				/* gun-to-target line free? */
