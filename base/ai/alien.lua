@@ -64,7 +64,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		reload (hand) -- Try to reload a weapon
 			hand -- Which hand's weapon to reload, valid values: "right" (default) and "left"
 
-		positonshoot (target, position_type, tus) -- Returns a position (pos3 userdata) from which the target actor can be shot or flase in none found.
+		positionshoot (target, position_type, tus) -- Returns a position (pos3 userdata) from which the target actor can be shot or flase in none found.
 			target -- *Required* Actor (userdata) to shoot at.
 			position_type -- Strategy to find the shooting position:
 				"fastest":	(Default) Less pathing cost to get to.
@@ -166,7 +166,7 @@ ail.params = {
 	default = { vis = "sight", ord = "dist", pos = "fastest", move = rand, prio = {"~alien"} }
 }
 
-function ail.hidetus ()
+function ail.tustouse ()
 	return ail.actor():TU() - 4
 end
 
@@ -209,9 +209,9 @@ function ail.approach (targets)
 		local near_pos
 		for j = 1, 2 do
 			if targets[i].pos then
-				near_pos = ail.positionapproach(targets[i]:pos(), ail.hidetus(), j == 1)
+				near_pos = ail.positionapproach(targets[i]:pos(), ail.tustouse(), j == 1)
 			else
-				near_pos = ail.positionapproach(targets[i], ail.hidetus(), j == 1)
+				near_pos = ail.positionapproach(targets[i], ail.tustouse(), j == 1)
 			end
 			if near_pos then
 				break
@@ -257,9 +257,9 @@ function ail.search ()
 		elseif ail.param.move == "hide" then
 			ail.hide()
 		else
-			local search_tus = (ail.hidetus() - ail.tusforshooting() + 1) / 2
+			local search_tus = (ail.tustouse() - ail.tusforshooting() + 1) / 2
 			if search_tus < 1 then
-				search_tus =  ail.hidetus() + 1 / 2
+				search_tus =  ail.tustouse() + 1 / 2
 			end
 			local next_pos = ail.positionwander(ail.param.move, search_tus)
 			if next_pos then
@@ -305,11 +305,11 @@ function ail.shoot (targets)
 		local shot
 		-- Be nice in low difficulties and don't throw grenades
 		if ail.difficulty() >= 0 then
-			 shot = target:throwgrenade(min_group, ail.hidetus())
+			 shot = target:throwgrenade(min_group, ail.tustouse())
 		end
 		-- Shoot
 		if not target:isdead() then
-			shot = target:shoot(ail.hidetus()) or shot
+			shot = target:shoot(ail.tustouse()) or shot
 		end
 		if shot then
 			return target
@@ -322,7 +322,7 @@ end
 function ail.attack (targets)
 	for i = 1, #targets do
 		-- Get a shoot position
-		local shoot_pos = ail.positionshoot(targets[i], ail.param.pos, ail.hidetus())
+		local shoot_pos = ail.positionshoot(targets[i], ail.param.pos, ail.tustouse())
 		if shoot_pos then
 			-- Move until target in sight
 			shoot_pos:goto()
@@ -356,7 +356,7 @@ end
 function ail.phase_one ()
 	if ail.isfighter() and ail.actor():morale() >= 30 and ail.readyweapon() then
 		-- If we don't have enough TUs for shooting try disabling reaction fire to get more available TUs
-		if ail.tusforshooting() > ail.actor():TU() then
+		if ail.tusforshooting() > ail.tustouse() then
 			ail.reactionfire("disable")
 		end
 		local targets = ail.see(ail.param.vis, "~civilian")
@@ -367,7 +367,7 @@ function ail.phase_one ()
 				ail.target = ail.attack(targets)
 			end
 			-- We died attacking or cannot attack
-			if ail.actor():isdead() or not ail.target or ail.tusforshooting() > ail.actor():TU() then
+			if ail.actor():isdead() or not ail.target or ail.tusforshooting() > ail.tustouse() then
 				return
 			end
 			targets = ail.see(ail.param.vis, "~civilian")
@@ -382,7 +382,7 @@ function ail.phase_two ()
 			if ail.searchweapon() then
 				ail.phase_two()
 			end
-		elseif ail.actor():HP() >= 50 and ail.actor():TU() >= ail.tusforshooting() then
+		elseif ail.actor():HP() >= 50 and ail.tustouse() >= ail.tusforshooting() then
 			local done
 			for i = 1, #ail.param.prio do
 				local targets = ail.see(ail.param.vis, ail.param.prio[i], ail.param.ord)
@@ -411,7 +411,7 @@ end
 function ail.phase_three ()
 	for i = 1, #ail.param.prio do
 		local targets = ail.see(ail.param.vis, ail.param.prio[i], ail.param.ord)
-		if #targets > 0 and ail.tusforshooting() <= ail.actor():TU() then
+		if #targets > 0 and ail.tusforshooting() <= ail.tustouse() then
 			ail.target = ail.shoot(targets) or ail.target
 		end
 	end
@@ -439,7 +439,6 @@ function ail.think ()
 	if not ail.param then
 		ail.param = ail.params.default
 	end
-
 	ail.phase_one()
 	ail.phase_two()
 	ail.phase_three()
