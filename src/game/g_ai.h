@@ -81,7 +81,7 @@ void AI_CheckRespawn(int team);
 extern Edict* ai_waypointList;
 void G_AddToWayPointList(Edict* ent);
 void AI_Run(void);
-void AI_ActorThink(Player& player, Actor* actor);
+void AI_ActorRun(Player& player, Actor* actor);
 Player* AI_CreatePlayer(int team);
 bool AI_CheckUsingDoor(const Edict* ent, const Edict* door);
 

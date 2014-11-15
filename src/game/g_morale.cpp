@@ -62,7 +62,7 @@ static void G_MoralePanic (Actor* actor)
 	G_EventCenterView(*actor);
 
 	/* move around a bit, try to avoid opponents */
-	AI_ActorThink(actor->getPlayer(), actor);
+	AI_ActorRun(actor->getPlayer(), actor);
 
 	/* kill TUs */
 	G_ActorSetTU(actor, 0);
@@ -107,7 +107,7 @@ static void G_MoraleRage (Actor* actor)
 	G_EventSendState(G_VisToPM(actor->visflags), *actor);
 	G_ClientStateChange(actor->getPlayer(), actor, ~STATE_REACTION, false);
 
-	AI_ActorThink(actor->getPlayer(), actor);
+	AI_ActorRun(actor->getPlayer(), actor);
 }
 
 /**
