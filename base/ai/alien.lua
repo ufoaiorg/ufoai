@@ -135,7 +135,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 		HP (actor) -- Return the actor's current Hit Points.
 
-		morale (actor) -- Return the actor's current morale (number)
+		morale (actor) -- Return the actor's current morale state ("normal", "panic", "insane", "rage" or "cower")
 
 		isinjured (actor) -- Check if the AI actor is injured (HP < maxHP), returns a boolean value
 
@@ -377,7 +377,7 @@ end
 
 -- Longer term actions
 function ail.phase_two ()
-	if ail.isfighter() and ail.actor():morale() >= 30 then
+	if ail.isfighter() and ail.actor():morale() ~= "cower" then
 		if not ail.readyweapon() then
 			if ail.searchweapon() then
 				ail.phase_two()
@@ -422,7 +422,7 @@ function ail.phase_three ()
 	elseif ail.actor():HP() < 50 then
 		hid = ail.herd() or ail.hide()
 	end
-	if not hid and ail.actor():morale() < 30 then
+	if not hid and ail.actor():morale() == "cower" then
 		ail.flee()
 	end
 

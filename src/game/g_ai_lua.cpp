@@ -623,7 +623,17 @@ static int actorL_morale (lua_State* L)
 	const aiActor_t* actor = lua_toactor(L, 1);
 	assert(actor != nullptr);
 
-	lua_pushnumber(L, actor->actor->getMorale());
+	const char* morStat = "normal";
+	if (actor->actor->isPanicked())
+		morStat = "panic";
+	else if (actor->actor->isInsane())
+		morStat = "insane";
+	else if (actor->actor->isRaged())
+		morStat = "rage";
+	else if (actor->actor->getMorale() <= mor_brave->integer)
+		morStat = "cower";
+
+	lua_pushstring(L, morStat);
 	return 1;
 }
 
