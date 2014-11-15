@@ -137,7 +137,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 		morale (actor) -- Return the actor's current morale state ("normal", "panic", "insane", "rage" or "cower")
 
-		isinjured (actor) -- Check if the AI actor is injured (HP < maxHP), returns a boolean value
+		isinjured (actor) -- Check if the AI actor is injured (wounded or HP < maxHP * 0.5), returns a boolean value
 
 		isdead (actor) -- Check if the current AI actor is dead, returns a boolean value
 
@@ -354,14 +354,14 @@ end
 
 -- Short term reactionary phase
 function ail.phase_one ()
-	if ail.isfighter() and ail.actor():morale() >= 30 and ail.readyweapon() then
+	if ail.isfighter() and ail.actor():morale() ~= "cower" and ail.readyweapon() then
 		-- If we don't have enough TUs for shooting try disabling reaction fire to get more available TUs
 		if ail.tusforshooting() > ail.tustouse() then
 			ail.reactionfire("disable")
 		end
 		local targets = ail.see(ail.param.vis, "~civilian")
 		while #targets > 0 do
-			if ail.actor():HP() < 50 then
+			if ail.actor():isinjured() then
 				ail.target = ail.shoot(targets)
 			else
 				ail.target = ail.attack(targets)
@@ -382,7 +382,7 @@ function ail.phase_two ()
 			if ail.searchweapon() then
 				ail.phase_two()
 			end
-		elseif ail.actor():HP() >= 50 and ail.tustouse() >= ail.tusforshooting() then
+		elseif not ail.actor():isinjured() and ail.tustouse() >= ail.tusforshooting() then
 			local done
 			for i = 1, #ail.param.prio do
 				local targets = ail.see(ail.param.vis, ail.param.prio[i], ail.param.ord)
@@ -419,7 +419,7 @@ function ail.phase_three ()
 	local hid
 	if ail.hideneeded() then
 		hid = ail.hide()
-	elseif ail.actor():HP() < 50 then
+	elseif ail.actor():isinjured() then
 		hid = ail.herd() or ail.hide()
 	end
 	if not hid and ail.actor():morale() == "cower" then

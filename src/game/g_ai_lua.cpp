@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_client.h"
 #include "g_combat.h"
 #include "g_edicts.h"
+#include "g_health.h"
 #include "g_move.h"
 #include "g_utils.h"
 #include "g_vis.h"
@@ -638,7 +639,7 @@ static int actorL_morale (lua_State* L)
 }
 
 /**
-* @brief Checks to see if the actor is injured
+* @brief Checks to see if the actor is seriously injured
 */
 static int actorL_isinjured (lua_State* L)
 {
@@ -651,7 +652,8 @@ static int actorL_isinjured (lua_State* L)
 	const aiActor_t* actor = lua_toactor(L, 1);
 	assert(actor != nullptr);
 
-	lua_pushboolean(L, actor->actor->HP != actor->actor->chr.maxHP);
+	lua_pushboolean(L, G_IsActorWounded(actor->actor, true)
+			|| actor->actor->HP <= actor->actor->chr.maxHP * 0.5);
 	return 1;
 }
 

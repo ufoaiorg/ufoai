@@ -31,4 +31,4 @@ void G_TreatActor(Actor* target, const fireDef_t* const fd, const int heal, cons
 void G_BleedWounds(const int team);
 void G_SendWoundStats(Edict* const ent);
 float G_ActorGetInjuryPenalty(const Edict* const ent, const modifier_types_t type);
-bool G_IsActorWounded(const Edict* ent);
+bool G_IsActorWounded(const Edict* ent, bool serious = false);
