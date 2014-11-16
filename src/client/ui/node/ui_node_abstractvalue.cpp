@@ -51,6 +51,37 @@ static inline void UI_InitCvarOrFloat (float** adress, float defaultValue)
 	}
 }
 
+static void UI_CloneCvarOrFloat (const uiNode_t* source, uiNode_t* clone, const float*const* sourceData, float** cloneData)
+{
+	/* dont update cvar */
+	if (Q_strstart(*(const char*const*)sourceData, "*cvar:")) {
+		/* thats anyway a const string */
+		assert(!source->dynamic);
+		if (clone->dynamic)
+			Mem_Free(*(char**)cloneData);
+		*(const char**)cloneData = *(const char*const*)sourceData;
+	} else {
+		/* clone float */
+		if (!clone->dynamic)
+			*cloneData = UI_AllocStaticFloat(1);
+		**cloneData = **sourceData;
+	}
+}
+
+static void UI_FreeCvarOrFloat (const uiNode_t* node, void** data) {
+	/* if this is a string starting with "*cvar", then it points to a cvar variable and the
+	   allocated string should be released */
+	if (Q_strstart((char*)(*data), "*cvar:")) {
+		Mem_Free(*data);
+	}
+	/* else this is a reference float */
+	else {
+		/* static floats do not have to be released */
+	}
+	*data = nullptr;
+}
+
+
 void uiAbstractValueNode::onLoading (uiNode_t* node)
 {
 	EXTRADATA(node).shiftIncreaseFactor = 2.0F;
@@ -75,31 +106,10 @@ void uiAbstractValueNode::initNodeDynamic (uiNode_t* node)
 void uiAbstractValueNode::deleteNode (uiNode_t* node)
 {
 	uiNode::deleteNode(node);
-	Mem_Free(EXTRADATA(node).value);
-	Mem_Free(EXTRADATA(node).delta);
-	Mem_Free(EXTRADATA(node).max);
-	Mem_Free(EXTRADATA(node).min);
-	EXTRADATA(node).value = nullptr;
-	EXTRADATA(node).delta = nullptr;
-	EXTRADATA(node).max = nullptr;
-	EXTRADATA(node).min = nullptr;
-}
-
-static void UI_CloneCvarOrFloat (const uiNode_t* source, uiNode_t* clone, const float*const* sourceData, float** cloneData)
-{
-	/* dont update cvar */
-	if (Q_strstart(*(const char*const*)sourceData, "*cvar:")) {
-		/* thats anyway a const string */
-		assert(!source->dynamic);
-		if (clone->dynamic)
-			Mem_Free(*(char**)cloneData);
-		*(const char**)cloneData = *(const char*const*)sourceData;
-	} else {
-		/* clone float */
-		if (!clone->dynamic)
-			*cloneData = UI_AllocStaticFloat(1);
-		**cloneData = **sourceData;
-	}
+	UI_FreeCvarOrFloat(node, &EXTRADATA(node).min);
+	UI_FreeCvarOrFloat(node, &EXTRADATA(node).max);
+	UI_FreeCvarOrFloat(node, &EXTRADATA(node).value);
+	UI_FreeCvarOrFloat(node, &EXTRADATA(node).delta);
 }
 
 float uiAbstractValueNode::getFactorFloat (const uiNode_t* node)
@@ -279,26 +289,26 @@ void UI_AbstractValue_SetRangeCvar (uiNode_t* node, const char* min, const char*
 	/* This is a special case: we have a situation where the node already has a (min,max) value
 	   (either being floats or cvars). We now want to replace this value by a new cvar. So we first
 	   need to free the existing references, then create new cvar references and store them. */
-	Mem_Free(*(void**)EXTRADATA(node).min);
-	*(void**)EXTRADATA(node).min = Mem_StrDup(min);
-	Mem_Free(*(void**)EXTRADATA(node).max);
-	*(void**)EXTRADATA(node).max = Mem_StrDup(max);
+	UI_FreeCvarOrFloat(node, &EXTRADATA(node).min);
+	EXTRADATA(node).min = Mem_StrDup(min);
+	UI_FreeCvarOrFloat(node, &EXTRADATA(node).max);
+	EXTRADATA(node).max = Mem_StrDup(max);
 }
 
 void UI_AbstractValue_SetMinCvar (uiNode_t* node, const char* min) {
 	/* This is a special case: we have a situation where the node already has a (min,max) value
 	   (either being floats or cvars). We now want to replace this value by a new cvar. So we first
 	   need to free the existing references, then create new cvar references and store them. */
-	Mem_Free(*(void**)EXTRADATA(node).min);
-	*(void**)EXTRADATA(node).min = Mem_StrDup(min);
+	UI_FreeCvarOrFloat(node, &EXTRADATA(node).min);
+	EXTRADATA(node).min = Mem_StrDup(min);
 }
 
 void UI_AbstractValue_SetMaxCvar (uiNode_t* node, const char* max) {
 	/* This is a special case: we have a situation where the node already has a (min,max) value
 	   (either being floats or cvars). We now want to replace this value by a new cvar. So we first
 	   need to free the existing references, then create new cvar references and store them. */
-	Mem_Free(*(void**)EXTRADATA(node).max);
-	*(void**)EXTRADATA(node).max = Mem_StrDup(max);
+	UI_FreeCvarOrFloat(node, &EXTRADATA(node).max);
+	EXTRADATA(node).max = Mem_StrDup(max);
 }
 
 void UI_AbstractValue_SetValueCvar (uiNode_t* node, const char* value) {
@@ -306,8 +316,8 @@ void UI_AbstractValue_SetValueCvar (uiNode_t* node, const char* value) {
 	   (either being float or cvar). We now want to replace this value reference by a new cvar. So we first
 	   need to free the existing reference, then create new cvar reference (just a string starting with
 	   '*cvar' and store it. */
-	Mem_Free(*(void**)(EXTRADATA(node).value));
-	*(void**)EXTRADATA(node).value= Mem_StrDup(value);
+	UI_FreeCvarOrFloat(node, &EXTRADATA(node).value);
+	EXTRADATA(node).value= Mem_StrDup(value);
 
 	/* fire change event */
 	if (node->onChange) {
