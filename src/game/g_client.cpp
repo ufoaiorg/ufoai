@@ -39,6 +39,7 @@
 
 #include "g_client.h"
 #include "g_actor.h"
+#include "g_ai.h"
 #include "g_combat.h"
 #include "g_edicts.h"
 #include "g_inventory.h"
@@ -1280,6 +1281,7 @@ void G_ClientTeamInfo (const Player& player)
 				G_ActorGiveTimeUnits(actor);
 				G_TouchTriggers(actor);
 				actor->contentFlags = G_ActorGetContentFlags(actor->origin);
+				AIL_InitActor(actor, "soldier", actor->chr.teamDef->id);
 			} else {
 				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player.getTeam(), actorFieldSize);
 
