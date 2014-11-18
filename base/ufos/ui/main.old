@@ -49,7 +49,7 @@ window main
 		padding		0
 		onClick		{ cmd "cl_openurl http://www.twitter.com/ufoai/;" }
 	}
-	
+
 	button test_calc
 	{
 		pos			"190 720"

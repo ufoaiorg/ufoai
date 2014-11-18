@@ -1427,7 +1427,7 @@ const char* UI_GetReferenceString (const uiNode_t* const node, const char* ref)
 }
 
 /**
- * @brief Returns the value of the reference variabel.
+ * @brief Returns the value of the reference variable.
  * @note A reference variable is either a pointer to a float or a pointer to a string. In case of
  * a pointer to a string, a Cvar name is expected, starting with "*cvar".
  * @sa uiAbstractValueNode
