@@ -185,11 +185,11 @@ local lbVersion = ufo.create_string (wndMain, "lbVersion", nil)
 lbVersion:set_text ("*cvar:version")
 lbVersion:set_pos (10, 744)
 lbVersion:set_size (1004, 20)
-	
+
 function load ()
 	return wndMain
 end
-	
+
 -- register callbacks
 ufo.register_onload (load)
 
