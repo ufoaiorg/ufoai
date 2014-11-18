@@ -174,10 +174,10 @@ MainMenu3Btn:set_backgroundcolor (0.38, 0.48, 0.36, 0.9)
 MainMenu3Btn:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
 MainMenu3Btn:set_contentalign (ufo.ALIGN_CC)
 MainMenu3Btn.on_mouseenter = function (sender)
-		sender:set_backgroundcolor (0.88, 0.20, 0.75, 1)
+		sender:set_backgroundcolor (0.88, 0.20, 0.075, 1)
 	end
 MainMenu3Btn.on_mouseleave = function (sender)
-		sender:set_backgroundcolor (0.65, 0.13, 0, 1)
+		sender:set_backgroundcolor (0.38, 0.48, 0.36, 0.9)
 	end
 
 --[[
@@ -205,7 +205,7 @@ MainMenuExitBtn:set_backgroundcolor(0.65, 0.13, 0, 1)
 MainMenuExitBtn:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
 MainMenuExitBtn:set_contentalign (ufo.ALIGN_CC)
 MainMenuExitBtn.on_mouseenter = function (sender)
-		sender:set_backgroundcolor (0.88, 0.20, 0.75, 1)
+		sender:set_backgroundcolor (0.88, 0.20, 0.075, 1)
 	end
 MainMenuExitBtn.on_mouseleave = function (sender)
 		sender:set_backgroundcolor (0.65, 0.13, 0, 1)
@@ -354,7 +354,7 @@ StatBar_texture:set_source("ui/bar_bg")
 local StatBar_valuebar = ufo.create_bar (StatBar, "valuebar", nil)
 StatBar_valuebar:set_pos(0, 14)
 StatBar_valuebar:set_size(180, 10)
-StatBar_valuebar:set_color(.1875, .65625, .164, 0.8)
+StatBar_valuebar:set_color(0.1875, 0.65625, 0.164, 0.8)
 StatBar_valuebar:set_range(0, 100)
 StatBar_valuebar:set_disabled(true)
 StatBar_valuebar:set_nohover(true)
@@ -873,9 +873,9 @@ healthbar_hp.update_healthcolor = function (sender)
 		if (ratio <= 0.33) then
 			sender:parent():child("valuebar"):set_color(1, 0, 0, 1)
 		elseif (ratio <= 0.75) then
-			sender:parent():child("valuebar"):set_color(1, .874, 0, 1)
+			sender:parent():child("valuebar"):set_color(1, 0.874, 0, 1)
 		else
-			sender:parent():child("valuebar"):set_color(.1875, .65625, .164, 1)
+			sender:parent():child("valuebar"):set_color(0.1875, 0.65625, 0.164, 1)
 		end
 	end
 
