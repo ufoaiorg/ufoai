@@ -119,7 +119,7 @@ MainMenuBtn.on_mouseenter = function (sender)
 MainMenuBtn.on_mouseleave = function (sender)
 		sender:set_backgroundcolor (0.4, 0.52, 0.5, 1)
 	end
-	
+
 --[[
 component MainMenu2Btn extends button
 {

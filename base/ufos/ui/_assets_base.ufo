@@ -40,7 +40,7 @@ Geoscape.on_rightclick = function (sender)
 
 		ufo.print("-----------------------------------------\n")
 		local window = sender:root()
-		iterate(window, "")		
+		iterate(window, "")
 	end
 
 --[[
@@ -800,7 +800,7 @@ ResearchItem_rsrc_missing_show:set_icon("icons/scroll_bottom")
 ResearchItem_rsrc_missing_show:set_pos(120, 4)
 ResearchItem_rsrc_missing_show:set_size(25, 25)
 ResearchItem_rsrc_missing_show:set_invisible(true)
-	
+
 --[[
 // Market category label
 component MarketCategory extends panel
