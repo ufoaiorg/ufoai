@@ -1,0 +1,27 @@
+language:
+  - cpp
+
+compiler:
+  - gcc
+  - clang
+
+os:
+  - linux
+
+script:
+  - git checkout -f; git clean -fdx && ./configure make -j 2 && ./tests
+
+notifications:
+  email: true
+
+before_install:
+  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update -qq
+
+install:
+  - sudo apt-get install -qq g++-4.8
+  - sudo apt-get install -qq libc6:i386
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
+  - sudo apt-get install -qq libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev  libxxf86vm-dev libxss-dev libgl1-mesa-dev libesd0-dev libdbus-1-dev libudev-dev libgles1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev
+  - sudo apt-get install -qq libvorbis-dev libtheora-dev
+
