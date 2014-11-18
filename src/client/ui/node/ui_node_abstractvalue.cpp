@@ -71,7 +71,7 @@ static void UI_CloneCvarOrFloat (const uiNode_t* source, uiNode_t* clone, const 
 static void UI_FreeCvarOrFloat (const uiNode_t* node, void** data) {
 	/* if this is a string starting with "*cvar", then it points to a cvar variable and the
 	   allocated string should be released */
-	if (Q_strstart((char*)(*data), "*cvar:")) {
+	if ((*data != nullptr) && Q_strstart((char*)(*data), "*cvar:")) {
 		Mem_Free(*data);
 	}
 	/* else this is a reference float */
