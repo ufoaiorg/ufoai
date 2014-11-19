@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_actions.h"
 #include "../ui_behaviour.h"
+#include "../ui_lua.h"
 #include "ui_node_window.h"
 #include "ui_node_special.h"
 #include "ui_node_abstractnode.h"
@@ -74,7 +75,12 @@ static void UI_ConfuncCommand_f (void)
 	uiNode_t* node = static_cast<uiNode_t*>(Cmd_Userdata());
 	assert(node);
 	assert(UI_NodeInstanceOf(node, "confunc"));
-	UI_ExecuteConFuncActions(node, node->onClick);
+	if (node->onClick != nullptr) {
+		UI_ExecuteConFuncActions(node, node->onClick);
+	}
+	else if (node->lua_onClick != LUA_NOREF) {
+		UI_ExecuteLuaConFunc (node, node->lua_onClick);
+	}
 }
 
 /**

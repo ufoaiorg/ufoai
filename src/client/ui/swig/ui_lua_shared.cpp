@@ -2902,6 +2902,8 @@ SWIGINTERN uiNode_t *uiNode_t_child(uiNode_t *self,char const *name){ return UI_
 SWIGINTERN uiNode_t *uiNode_t_find(uiNode_t *self,char const *name){ return UI_FindNode(self, name); }
 SWIGINTERN void uiNode_t_append_node(uiNode_t *self,uiNode_t *node){ UI_AppendNode(self, node); }
 SWIGINTERN void uiNode_t_insert_node(uiNode_t *self,uiNode_t *node,uiNode_t *prev){ UI_InsertNode(self, prev, node); }
+SWIGINTERN void uiNode_t_delete_node(uiNode_t *self){ UI_DeleteNode (self); }
+SWIGINTERN void uiNode_t_remove_childs(uiNode_t *self){ UI_DeleteAllChild (self); }
 SWIGINTERN void uiNode_t_set_left(uiNode_t *self,float value){ self->box.pos[0] = value; }
 SWIGINTERN void uiNode_t_set_top(uiNode_t *self,float value){ self->box.pos[1] = value; }
 SWIGINTERN void uiNode_t_set_widht(uiNode_t *self,float value){ self->box.size[0] = value; }
@@ -5803,6 +5805,52 @@ fail:
 }
 
 
+static int _wrap_uiNode_delete_node(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  
+  SWIG_check_num_args("uiNode_t::delete_node",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::delete_node",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_delete_node",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  uiNode_t_delete_node(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_remove_childs(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  
+  SWIG_check_num_args("uiNode_t::remove_childs",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::remove_childs",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_remove_childs",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  uiNode_t_remove_childs(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiNode_set_left(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
@@ -6781,6 +6829,8 @@ static swig_lua_method swig_uiNode_methods[]= {
     { "find", _wrap_uiNode_find},
     { "append_node", _wrap_uiNode_append_node},
     { "insert_node", _wrap_uiNode_insert_node},
+    { "delete_node", _wrap_uiNode_delete_node},
+    { "remove_childs", _wrap_uiNode_remove_childs},
     { "set_left", _wrap_uiNode_set_left},
     { "set_top", _wrap_uiNode_set_top},
     { "set_widht", _wrap_uiNode_set_widht},
@@ -18874,6 +18924,29 @@ fail:
 }
 
 
+static int _wrap_delete_node(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  
+  SWIG_check_num_args("UI_DeleteNode",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UI_DeleteNode",1,"uiNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("delete_node",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  UI_DeleteNode(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_cmd(lua_State* L) {
   int SWIG_arg = 0;
   char *arg1 = (char *) 0 ;
@@ -19267,6 +19340,7 @@ static swig_lua_method swig_SwigModule_methods[]= {
     { "create_component", _wrap_create_component},
     { "pop_window", _wrap_pop_window},
     { "push_window", _wrap_push_window},
+    { "delete_node", _wrap_delete_node},
     { "cmd", _wrap_cmd},
     { "print", _wrap_print},
     { "dprint", _wrap_dprint},
