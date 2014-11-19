@@ -1,0 +1,289 @@
+// ==================
+// MAILCLIENT MENU
+// ==================
+
+window mail extends ipopup
+{
+	{
+		pos			"10 20"
+		size		"1000 700"
+		bgcolor		"0 0 0 0.95"
+		closebutton	true
+	}
+
+	string title
+	{
+		string		"*cvar:mn_mail_subject"
+		width		"1000"
+	}
+
+	text mail
+	{
+		dataid		TEXT_UFOPEDIA
+		pos			"50 200"
+		size		"904 480"
+		lineheight	24
+		tabwidth	100
+		onViewChange	{
+			*node:root.mail_scroll@fullsize = <fullsize>
+			*node:root.mail_scroll@current = <viewpos>
+			*node:root.mail_scroll@viewsize = <viewsize>
+		}
+	}
+
+	vscrollbar mail_scroll {
+		image		"ui/scrollbar_v"
+		pos			"960 208"
+		height		"470"
+		hidewhenunused true
+		onChange	{ *node:root.mail@viewpos = <current> }
+	}
+
+	model sender_body
+	{
+		{
+			visiblewhen "*cvar:mn_mail_sender_head ne \"\""
+			src			"civilians/male/body01"
+			anim		"stand_still"
+			angles		"0 85 90"
+			scale		"7.5 7.5 7.5"
+			pos			"63 83"
+			size		"62 62"
+			origin		"5 125 0"
+			border		2
+			bordercolor	"0.56 0.81 0.76 1"
+		}
+
+		model sender_head
+		{
+			src		*cvar:mn_mail_sender_head
+			tag		"tag_head"
+		}
+	}
+
+	text mail_header
+	{
+		dataid		TEXT_UFOPEDIA_MAILHEADER
+		pos			"150 70"
+		size		"824 120"
+		lineheight	"24"
+		rows		"5"
+		font		"f_small_bold"
+	}
+
+	func onWindowOpened
+	{
+		*node:root.mail@viewpos = 0
+		*node:root.mail_scroll@current = 0
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
+
+}
+
+component mailheader extends panel
+{
+	{
+		size			"670 28"
+		bgcolor			"0.56 0.81 0.76 0.1"
+		layout			LAYOUT_LEFT_RIGHT_FLOW
+		layoutMargin	2
+
+		onMouseEnter {
+			*node:this@bgcolor = "0.56 0.81 0.76 0.15"
+		}
+		onMouseLeave {
+			*node:this@bgcolor = "0.56 0.81 0.76 0.1"
+		}
+		onClick {
+			cmd "mailclient_click <node:this.header.index@integer>;"
+		}
+	}
+
+	image icon
+	{
+		src	""
+		size	"28 28"
+		ghost	true
+	}
+
+	panel spacing {
+		size			"6 28"
+	}
+
+	panel header {
+		{
+			size		"642 28"
+			ghost		true
+		}
+
+		data index {
+			integer		-1
+		}
+
+		string headline {
+			string		""
+			color		"0.56 0.81 0.76 1"
+			contentalign	ALIGN_CL
+			size		"510 21"
+			font		"f_small"
+			ghost		true
+		}
+
+		string date {
+			string		""
+			pos			"520 5"
+			size		"122 21"
+			font		"f_small"
+			ghost		true
+		}
+	}
+}
+
+window mailclient
+{
+	panel maillist
+	{
+		{
+			pos				"5 5"
+			size			"723 758"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
+
+		string mailclienthead
+		{
+			string			"_Mailclient"
+			pos				"0 0"
+			size			"723 30"
+			contentalign	ALIGN_CC
+			font			"f_big"
+		}
+
+		panel mainBody
+		{
+			{
+				pos				"4 30"
+				size			"715 724"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+			// Title bar
+			panel header
+			{
+				{
+					pos			"1 1"
+					size		"713 32"
+					bgcolor		"0.527 0.6 0.21 0.2"
+				}
+
+				string date
+				{
+					string			*cvar:mn_mapdate
+					pos				"1 1"
+					size			"220 32"
+					font			"f_normal"
+					contentalign	ALIGN_CR
+					color			"0.56 0.81 0.76 1"
+				}
+
+				string time
+				{
+					string			*cvar:mn_maptime
+					pos				"230 1"
+					size			"200 32"
+					font			"f_normal"
+					contentalign	ALIGN_CL
+					color			"0.56 0.81 0.76 1"
+				}
+
+
+				button mail_allread
+				{
+					icon		"icons/mail_read"
+					tooltip		"_Mark all messages read"
+					pos			"654 1"
+					size		"32 32"
+					padding		0
+					onClick		{ cmd "mn_mail_readall 0;" }
+				}
+			}
+
+			panel mails {
+				{
+					pos				"6 50"
+					size			"680 660"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					ghost			true
+					wheelscrollable	true
+
+					onViewChange {
+						*node:parent.mail_scroll@fullsize = <fullsize>
+						*node:parent.mail_scroll@current = <viewpos>
+						*node:parent.mail_scroll@viewsize = <viewsize>
+					}
+				}
+			}
+
+			vscrollbar mail_scroll {
+				image			"ui/scrollbar_v"
+				pos				"697 50"
+				height			"660"
+				current			0
+				viewsize		22
+				fullsize		32
+				hidewhenunused	true
+				onChange		{
+					*node:parent.mails@viewpos = <current>
+				}
+			}
+		}
+	}
+	// Back to geoscape
+	Geoscape geoscape_button {
+		onClick { cmd "ui_pop;" }
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
+
+	/**
+	 * @brief Adds a new mail header entry to the mail panel
+	 * @param <1> index The index that can be used to reference a mail header entry
+	 * @param <2> headline The headline
+	 * @param <3> icon The icon of the mail entry
+	 * @param <4> 1=read 0=unread
+	 * @param <5> date The date the mail was sent
+	 */
+	confunc add_mail
+	{
+		call *node:root.maillist.mainBody.mails@createChild("mail<1>", "mailheader")
+		*node:root.maillist.mainBody.mails.mail<1>.header.index@integer = <1>
+		*node:root.maillist.mainBody.mails.mail<1>.header.headline@string = <2>
+		*node:root.maillist.mainBody.mails.mail<1>.icon@src = <3>
+		if ( <4> eq 0 ) {
+			*node:root.maillist.mainBody.mails.mail<1>.header@bgcolor	= "0.56 0.81 0.76 0.6"
+		}
+		*node:root.maillist.mainBody.mails.mail<1>.header.date@string = <5>
+	}
+
+	/**
+	 * @brief Removes all dynamic mail nodes
+	 */
+	confunc clear_mails
+	{
+		call *node:root.maillist.mainBody.mails@removeAllChild
+	}
+
+	func onWindowOpened
+	{
+		cmd "ufopedia_openmail;"
+	}
+
+	func onWindowActivate
+	{
+		cmd "ufopedia_openmail;"
+	}
+}

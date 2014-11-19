@@ -576,6 +576,8 @@ struct uiNode_t {
 
 	void append_node (uiNode_t* node) { UI_AppendNode($self, node); };
 	void insert_node (uiNode_t* node, uiNode_t* prev) { UI_InsertNode($self, prev, node); };
+	void delete_node () { UI_DeleteNode ($self); };
+	void remove_childs () { UI_DeleteAllChild ($self); };
 
 	void set_left (float value) { $self->box.pos[0] = value; };
 	void set_top (float value) { $self->box.pos[1] = value; };
@@ -1541,6 +1543,13 @@ uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* su
 void UI_PopWindow (bool all);
 %rename (push_window) UI_PushWindow;
 uiNode_t* UI_PushWindow (const char* name, const char* parentName, linkedList_t* params);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//	expose generic node functions
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+%rename (delete_node) UI_DeleteNode;
+void UI_DeleteNode(uiNode_t* node);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose command functions

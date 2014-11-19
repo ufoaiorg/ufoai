@@ -193,6 +193,33 @@ bool UI_ExecuteLuaMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params
 }
 
 /**
+ * @brief Executes a lua based confunc node.
+ * @param[in] node The node the method is defined on.
+ * @param[in] fcn The The method to execute.
+ * @return True if the operation succeeds, false otherwise.
+ * @note The signature of the method in lua is: function(sender, p1..pn), so the actual number of parameters
+ * for the function is actually nparams + 1.
+ * @note Parameters are read from cmd.
+ * @note All parameters are send to lua as strings.
+*/
+bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn) {
+	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, fcn); /* push event function on lua stack */
+	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+	/* read parameters from cmd and push them on the stack; first parameter is skipped, since this is the
+	   function name; all parameters are strings */
+	for(int i=1; i < Cmd_Argc(); i++) {
+		const char* s = Cmd_Argv(i);
+		lua_pushstring(CL_GetLuaState(), Cmd_Argv(i));
+	}
+	/* execute the confunc */
+	if (lua_pcall (CL_GetLuaState(), Cmd_Argc(), 0, 0) != 0) {
+		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		return false;
+	};
+	return true;
+}
+
+/**
  * @brief Executes a lua based method defined on the behaviour class of a node.
  * @param[in] node The node the method is defined on.
  * @param[in] name The name of the node.
