@@ -666,7 +666,7 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 		herdPathingTable = (pathing_t*) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
 
 	/* find the nearest enemy actor to the target*/
-	vec_t bestLength = 0.0f;
+	vec_t bestLength = -1.0f;
 	Actor* next = nullptr;
 	Actor* enemy = nullptr;
 	int team = AI_GetHidingTeam(actor);
@@ -676,7 +676,7 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 		if (next->getTeam() == team ? invTeam : !invTeam)
 			continue;
 		const vec_t length = VectorDistSqr(target, next->origin);
-		if (!bestLength || length < bestLength) {
+		if (length < bestLength || bestLength < 0.0f) {
 			enemy = next;
 			bestLength = length;
 		}
@@ -706,7 +706,7 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 		actor->calcOrigin();
 		const vec_t length = VectorDistSqr(actor->origin, target);
 		/* Don't pack them too close */
-		if (length < HERD_THRESHOLD)
+		if (length < HERD_THRESHOLD * HERD_THRESHOLD)
 			continue;
 
 		if (length < bestLength || bestPos[2] == PATHFINDING_HEIGHT) {
@@ -1629,7 +1629,7 @@ bool AI_TryToReloadWeapon (Actor* actor, containerIndex_t containerID)
  * @sa AI_FighterCalcActionScore
  * @sa AI_CivilianCalcActionScore
  */
-void AI_ActorThink (Player& player, Actor* actor)
+static void AI_ActorThink (Player& player, Actor* actor)
 {
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	Item* rightH = actor->getRightHandItem();
@@ -1692,6 +1692,16 @@ void AI_ActorThink (Player& player, Actor* actor)
 	}
 }
 
+void AI_ActorRun (Player& player, Actor* actor)
+{
+	/* Human players' actors don't have a loaded LUA script,
+	 * so don't try to run them with the LUA AI */
+	if (g_ailua->integer && !Q_strnull(actor->AI.type))
+		AIL_ActorThink(player, actor);
+	else
+		AI_ActorThink(player, actor);
+}
+
 #if 0
 #include "g_ai2.cpp"
 #else
@@ -1718,12 +1728,7 @@ static void AI_PlayerRun (Player& player)
 		while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, player.getTeam()))) {
 			const int beforeTUs = actor->getTus();
 			if (beforeTUs > 0) {
-				/* Human players' actors don't have a LUA state,
-				 * so don't try to run them with the LUA AI */
-				if (g_ailua->integer && actor->AI.L)
-					AIL_ActorThink(player, actor);
-				else
-					AI_ActorThink(player, actor);
+				AI_ActorRun(player, actor);
 				player.pers.setLastActor(actor);
 
 				if (beforeTUs > actor->getTus())
@@ -1888,7 +1893,7 @@ static void AI_InitPlayer (const Player& player, Actor* actor, const equipDef_t*
 
 	/* initialize the LUA AI now */
 	if (team == TEAM_CIVILIAN)
-		AIL_InitActor(actor, "civilian", "default");
+		AIL_InitActor(actor, "civilian", actor->chr.teamDef->id);
 	else if (team == TEAM_ALIEN)
 		AIL_InitActor(actor, "alien", actor->chr.teamDef->id);
 	else

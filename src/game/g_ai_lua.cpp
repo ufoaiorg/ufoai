@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_client.h"
 #include "g_combat.h"
 #include "g_edicts.h"
+#include "g_health.h"
 #include "g_move.h"
 #include "g_utils.h"
 #include "g_vis.h"
@@ -49,6 +50,7 @@ extern "C" {
 #define ACTOR_METATABLE	"actor" /**< Actor Lua Metable name. */
 #define AI_METATABLE	"ai" /**< AI Lua Metable name. */
 
+static lua_State* ailState;
 /**
  * Provides an api like luaL_dostring for buffers.
  */
@@ -622,12 +624,22 @@ static int actorL_morale (lua_State* L)
 	const aiActor_t* actor = lua_toactor(L, 1);
 	assert(actor != nullptr);
 
-	lua_pushnumber(L, actor->actor->getMorale());
+	const char* morStat = "normal";
+	if (actor->actor->isPanicked())
+		morStat = "panic";
+	else if (actor->actor->isInsane())
+		morStat = "insane";
+	else if (actor->actor->isRaged())
+		morStat = "rage";
+	else if (actor->actor->getMorale() <= mor_brave->integer)
+		morStat = "cower";
+
+	lua_pushstring(L, morStat);
 	return 1;
 }
 
 /**
-* @brief Checks to see if the actor is injured
+* @brief Checks to see if the actor is seriously injured
 */
 static int actorL_isinjured (lua_State* L)
 {
@@ -640,7 +652,8 @@ static int actorL_isinjured (lua_State* L)
 	const aiActor_t* actor = lua_toactor(L, 1);
 	assert(actor != nullptr);
 
-	lua_pushboolean(L, actor->actor->HP != actor->actor->chr.maxHP);
+	lua_pushboolean(L, G_IsActorWounded(actor->actor, true)
+			|| actor->actor->HP <= actor->actor->chr.maxHP * 0.5);
 	return 1;
 }
 
@@ -1203,7 +1216,7 @@ static int AIL_positionshoot (lua_State* L)
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
-	const int dist = (tus + 1) / TU_MOVE_STRAIGHT;
+	const int rad = (tus + 1) / TU_MOVE_STRAIGHT;
 
 	pos3_t oldPos;
 	vec3_t oldOrigin;
@@ -1215,7 +1228,7 @@ static int AIL_positionshoot (lua_State* L)
 	float bestScore = 0.0f;
 	pos3_t to, bestPos;
 	VectorSet(bestPos, 0, 0, PATHFINDING_HEIGHT);
-	AiAreaSearch searchArea(oldPos, dist);
+	AiAreaSearch searchArea(oldPos, rad);
 	while (searchArea.getNext(to)) {
 		actor->setOrigin(to);
 		const pos_t tu = G_ActorMoveLength(actor, level.pathingMap, to, true);
@@ -1229,6 +1242,7 @@ static int AIL_positionshoot (lua_State* L)
 
 		bool hasLoF = false;
 		int shotChecked = NONE;
+		float dist;
 		for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
 			const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
 			if (item == nullptr)
@@ -1242,10 +1256,9 @@ static int AIL_positionshoot (lua_State* L)
 				fd = &fdArray[fdIdx];
 				fdTime = G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
 				/* how many shoots can this actor do */
-				const int shots = tus / fdTime;
+				const int shots = (tus - tu) / fdTime;
 				if (shots < 1)
 					continue;
-				float dist;
 				if (!AI_FighterCheckShoot(actor, target->actor, fd, &dist))
 					continue;
 				/* gun-to-target line free? */
@@ -1846,15 +1859,15 @@ static int AIL_positionflee (lua_State* L)
 			continue;
 		if (!AI_CheckPosition(AIL_ent, AIL_ent->pos))
 			continue;
-		float minDistFoe = -1, minDistFriend = -1;
+		float minDistFoe = -1.0f, minDistFriend = -1.0f;
 		Actor* check = nullptr;
 		while ((check = G_EdictsGetNextLivingActor(check))) {
 			const float dist = VectorDist(AIL_ent->origin, check->origin);
 			if (check->isSameTeamAs(AIL_ent)) {
-				if (minDistFriend < 0.0f || dist < minDistFriend)
+				if (dist < minDistFriend || minDistFriend < 0.0f)
 					minDistFriend = dist;
 			} else {
-				if (minDistFoe < 0.0f || dist < minDistFoe)
+				if (dist < minDistFoe || minDistFoe < 0.0f)
 					minDistFoe = dist;
 			}
 		}
@@ -1950,18 +1963,20 @@ static int AIL_HideNeeded (lua_State* L)
  */
 void AIL_ActorThink (Player& player, Actor* actor)
 {
-	/* The Lua State we will work with. */
-	lua_State* L = actor->AI.L;
-
 	/* Set the global player and edict */
 	AIL_ent = actor;
 	AIL_player = &player;
 
 	/* Try to run the function. */
-	lua_getglobal(L, "think");
-	if (lua_pcall(L, 0, 0, 0)) { /* error has occured */
-		gi.DPrintf("Error while running Lua: %s\n",
-			lua_isstring(L, -1) ? lua_tostring(L, -1) : "Unknown Error");
+	lua_getglobal(ailState, actor->AI.type);
+	if (lua_istable(ailState, -1)) {
+		lua_getfield(ailState, -1, "think");
+		if (lua_pcall(ailState, 0, 0, 0)) { /* error has occured */
+			gi.DPrintf("Error while running Lua: %s\n",
+				lua_isstring(ailState, -1) ? lua_tostring(ailState, -1) : "Unknown Error");
+		}
+	} else {
+		gi.DPrintf("Error while running Lua: AI for %s not found!\n", actor->AI.type);
 	}
 
 	/* Cleanup */
@@ -1969,7 +1984,19 @@ void AIL_ActorThink (Player& player, Actor* actor)
 	AIL_player = nullptr;
 }
 
+static lua_State* AIL_InitLua () {
+	/* Create the Lua state */
+	lua_State* newState = luaL_newstate();
 
+	/* Register metatables. */
+	actorL_register(newState);
+	pos3L_register(newState);
+
+	/* Register libraries. */
+	luaL_register(newState, AI_METATABLE, AIL_methods);
+
+	return newState;
+}
 /**
  * @brief Initializes the AI.
  * @param[in] ent Pointer to actor to initialize AI for.
@@ -1984,53 +2011,37 @@ int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
 	Q_strncpyz(AI->type, type, sizeof(AI->type));
 	Q_strncpyz(AI->subtype, subtype, sizeof(AI->subtype));
 
-	/* Create the new Lua state */
-	AI->L = luaL_newstate();
-	if (AI->L == nullptr) {
+	/* Create the a new Lua state if needed */
+	if (ailState == nullptr)
+		ailState = AIL_InitLua();
+
+	if (ailState == nullptr) {
 		gi.DPrintf("Unable to create Lua state.\n");
 		return -1;
 	}
 
-	/* Register metatables. */
-	actorL_register(AI->L);
-	pos3L_register(AI->L);
-
-	/* Register libraries. */
-	luaL_register(AI->L, AI_METATABLE, AIL_methods);
-
-	/* Load the AI */
-	char path[MAX_VAR];
-	Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
-	char* fbuf;
-	const int size = gi.FS_LoadFile(path, (byte**) &fbuf);
-	if (size == 0) {
-		gi.DPrintf("Unable to load Lua file '%s'.\n", path);
-		return -1;
-	}
-	if (luaL_dobuffer(AI->L, fbuf, size, path)) {
-		gi.DPrintf("Unable to parse Lua file '%s'\n", path);
-		gi.DPrintf("%s\n", lua_tostring(AI->L, lua_gettop(AI->L)));
+	/* Load the AI if needed */
+	lua_getglobal(ailState, AI->type);
+	if (!lua_istable(ailState, -1)) {
+		char path[MAX_VAR];
+		Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
+		char* fbuf;
+		const int size = gi.FS_LoadFile(path, (byte**) &fbuf);
+		if (size == 0) {
+			gi.DPrintf("Unable to load Lua file '%s'.\n", path);
+			return -1;
+		}
+		if (luaL_dobuffer(ailState, fbuf, size, path)) {
+			gi.DPrintf("Unable to parse Lua file '%s'\n", path);
+			gi.DPrintf("%s\n", lua_isstring(ailState, -1) ? lua_tostring(ailState, -1) : "Unknown Error");
+			gi.FS_FreeFile(fbuf);
+			return -1;
+		}
+		lua_setglobal(ailState, AI->type);
 		gi.FS_FreeFile(fbuf);
-		return -1;
 	}
-	gi.FS_FreeFile(fbuf);
 
 	return 0;
-}
-
-/**
- * @brief Cleans up the AI part of the actor.
- * @param[in] ent Pointer to actor to cleanup AI.
- */
-static void AIL_CleanupActor (Edict* ent)
-{
-	AI_t* AI = &ent->AI;
-
-	/* Cleanup. */
-	if (AI->L != nullptr) {
-		lua_close(AI->L);
-		AI->L = nullptr;
-	}
 }
 
 void AIL_Init (void)
@@ -2039,6 +2050,8 @@ void AIL_Init (void)
 	gi.RegisterConstInt("luaaiteam::civilian", TEAM_CIVILIAN);
 	gi.RegisterConstInt("luaaiteam::alien", TEAM_ALIEN);
 	gi.RegisterConstInt("luaaiteam::all", TEAM_ALL);
+
+	ailState = nullptr;
 }
 
 void AIL_Shutdown (void)
@@ -2054,8 +2067,6 @@ void AIL_Shutdown (void)
  */
 void AIL_Cleanup (void)
 {
-	Actor* actor = nullptr;
-
-	while ((actor = G_EdictsGetNextActor(actor)))
-		AIL_CleanupActor(actor);
+	lua_close(ailState);
+	ailState = nullptr;
 }

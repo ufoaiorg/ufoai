@@ -216,13 +216,14 @@ float G_ActorGetInjuryPenalty (const Edict* const ent, const modifier_types_t ty
 	return penalty;
 }
 
-bool G_IsActorWounded (const Edict* ent)
+bool G_IsActorWounded (const Edict* ent, bool serious)
 {
 	if (ent == nullptr || !G_IsLivingActor(ent) || ent->chr.teamDef == nullptr)
 		return false;
-
-	for (int i = 0; i < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++i)
-		if (ent->chr.wounds.woundLevel[i] > 0)
+	const character_t& chr = ent->chr;
+	const BodyData* bodyTmp = chr.teamDef->bodyTemplate;
+	for (int i = 0; i < bodyTmp->numBodyParts(); ++i)
+		if (chr.wounds.woundLevel[i] > serious ? chr.maxHP * bodyTmp->woundThreshold(i) : 0)
 			return true;
 
 	return false;
