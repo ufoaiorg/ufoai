@@ -153,9 +153,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 			type -- "dist" (default -- linear distance in map units) or "path" (pathing distance)
 --]]
 
-local ail = ai
+local aila = { }
 
-ail.params = {
+aila.params = {
 	taman =	{ vis = "team", ord = "dist", pos = "fastest", move = "CW", prio = {"~civilian", "civilian"} },
 	shevaar = { vis = "extra", ord = "path", pos = "farthest", move = "CCW", prio = {"~civilian", "civilian"} },
 	ortnok = { vis = "extra", ord = "HP", pos = "nearest", move = "rand", prio = {"~civilian", "civilian"} },
@@ -166,36 +166,36 @@ ail.params = {
 	default = { vis = "sight", ord = "dist", pos = "fastest", move = "rand", prio = {"~alien"} }
 }
 
-function ail.tustouse ()
-	return ail.actor():TU() - 4
+function aila.tustouse ()
+	return ai.actor():TU() - 4
 end
 
-function ail.ismelee()
-	local right, left = ail.weapontype()
+function aila.ismelee()
+	local right, left = ai.weapontype()
 	return (right == "melee" and (left == "melee" or left == "none")) or (right == "none" and left == "melee")
 end
 
-function ail.flee ()
-	local flee_pos = ail.positionflee()
+function aila.flee ()
+	local flee_pos = ai.positionflee()
 	if flee_pos then
 		return flee_pos:goto()
 	end
 	return false
 end
 
-function ail.hide ()
-	local hide_pos = ail.positionhide()
+function aila.hide ()
+	local hide_pos = ai.positionhide()
 	if hide_pos then
 		return hide_pos:goto()
 	end
 	return false
 end
 
-function ail.herd ()
-	local aliens = ail.see("all", "alien", "path")
+function aila.herd ()
+	local aliens = ai.see("all", "alien", "path")
 	if #aliens > 0 then
 		for i = 1, #aliens do
-			local herd_pos = ail.positionherd(aliens[i])
+			local herd_pos = ai.positionherd(aliens[i])
 			if herd_pos then
 				return herd_pos:goto()
 			end
@@ -204,14 +204,14 @@ function ail.herd ()
 	return false
 end
 
-function ail.approach (targets)
+function aila.approach (targets)
 	for i = 1, #targets do
 		local near_pos
 		for j = 1, 2 do
 			if targets[i].pos then
-				near_pos = ail.positionapproach(targets[i]:pos(), ail.tustouse(), j == 1)
+				near_pos = ai.positionapproach(targets[i]:pos(), aila.tustouse(), j == 1)
 			else
-				near_pos = ail.positionapproach(targets[i], ail.tustouse(), j == 1)
+				near_pos = ai.positionapproach(targets[i], aila.tustouse(), j == 1)
 			end
 			if near_pos then
 				break
@@ -225,13 +225,13 @@ function ail.approach (targets)
 	return nil
 end
 
-function ail.search ()
+function aila.search ()
 	-- First check if we have a mission target
-	local targets = ail.missiontargets("all", "alien", "path")
+	local targets = ai.missiontargets("all", "alien", "path")
 	if #targets < 1 then
 		-- Check if we can block an enemy target
-		for i = 1, #ail.param.prio do
-			targets = ail.missiontargets("all", ail.param.prio[i], "path")
+		for i = 1, #aila.param.prio do
+			targets = ai.missiontargets("all", aila.param.prio[i], "path")
 			if #targets > 0 then
 				break
 			end
@@ -241,27 +241,27 @@ function ail.search ()
 	local found
 	if #targets > 0 then
 		for i = 1, #targets do
-			local target_pos = ail.positionmission(targets[i])
+			local target_pos = ai.positionmission(targets[i])
 			if target_pos then
 				return target_pos:goto()
 			end
 		end
 		-- Can't get to any mission target, try to approach the nearest one
-		found = ail.approach(targets)
+		found = aila.approach(targets)
 	end
 
 	-- Nothing found, wander around
 	if not found then
-		if ail.param.move == "herd" then
-			ail.herd()
-		elseif ail.param.move == "hide" then
-			ail.hide()
+		if aila.param.move == "herd" then
+			aila.herd()
+		elseif aila.param.move == "hide" then
+			aila.hide()
 		else
-			local search_tus = (ail.tustouse() - ail.tusforshooting() + 1) / 2
-			if search_tus < 1 then
-				search_tus =  ail.tustouse() + 1 / 2
+			local search_rad = (aila.tustouse() - ai.tusforshooting() + 1) / 2
+			if search_rad < 1 then
+				search_rad =  aila.tustouse() + 1 / 2
 			end
-			local next_pos = ail.positionwander(ail.param.move, search_tus)
+			local next_pos = ai.positionwander(aila.param.move, search_rad)
 			if next_pos then
 				next_pos:goto()
 			end
@@ -269,34 +269,34 @@ function ail.search ()
 	end
 end
 
-function ail.searchweapon ()
-	local weapons = ail.findweapons()
+function aila.searchweapon ()
+	local weapons = ai.findweapons()
 	if #weapons > 0 then
 		weapons[1]:goto()
-		return ail.grabweapon()
+		return ai.grabweapon()
 	end
 	return false
 end
 
-function ail.readyweapon ()
-	local has_right, has_left = ail.actor():isarmed()
-	local right_ammo, left_ammo = ail.roundsleft()
+function aila.readyweapon ()
+	local has_right, has_left = ai.actor():isarmed()
+	local right_ammo, left_ammo = ai.roundsleft()
 	if not right_ammo and not left_ammo then
 		if has_right then
-			ail.reload("right")
+			ai.reload("right")
 		end
-		right_ammo, left_ammo = ail.roundsleft()
+		right_ammo, left_ammo = ai.roundsleft()
 		if has_left and not right_ammo then
-			ail.reload("left")
+			ai.reload("left")
 		end
 	end
 
-	right_ammo, left_ammo = ail.roundsleft()
-	return right_ammo or left_ammo or ail.grabweapon()
+	right_ammo, left_ammo = ai.roundsleft()
+	return right_ammo or left_ammo or ai.grabweapon()
 end
 
 -- Shoot (from current position) the first suitable target in the table
-function ail.shoot (targets)
+function aila.shoot (targets)
 	local min_group = 3 -- Min enemy group for grenade throw
 
 	for i = 1, #targets do
@@ -304,12 +304,12 @@ function ail.shoot (targets)
 		-- Throw a grenade if enough enemies are grouped
 		local shot
 		-- Be nice in low difficulties and don't throw grenades
-		if ail.difficulty() >= 0 then
-			 shot = target:throwgrenade(min_group, ail.tustouse())
+		if ai.difficulty() >= 0 then
+			 shot = target:throwgrenade(min_group, aila.tustouse())
 		end
 		-- Shoot
 		if not target:isdead() then
-			shot = target:shoot(ail.tustouse()) or shot
+			shot = target:shoot(aila.tustouse()) or shot
 		end
 		if shot then
 			return target
@@ -319,15 +319,15 @@ function ail.shoot (targets)
 end
 
 -- Attack the first suitable target in the table - move to position and shoot
-function ail.attack (targets)
+function aila.attack (targets)
 	for i = 1, #targets do
 		-- Get a shoot position
-		local shoot_pos = ail.positionshoot(targets[i], ail.param.pos, ail.tustouse())
+		local shoot_pos = ai.positionshoot(targets[i], aila.param.pos, aila.tustouse())
 		if shoot_pos then
 			-- Move until target in sight
 			shoot_pos:goto()
 
-			local target = ail.shoot{targets[i]}
+			local target = aila.shoot{targets[i]}
 			if target then
 				return target
 			end
@@ -337,128 +337,140 @@ function ail.attack (targets)
 end
 
 -- Engage the first suitable target in the table - approaching if currently out of range
-function ail.engage(targets)
+function aila.engage(targets)
 	local target
 	for i = 1, #targets do
-		target = ail.attack{targets[i]}
+		target = aila.attack{targets[i]}
 		if target then
 			break
 		end
 	end
 	if not target then
-		ail.reactionfire("enable")
-		target = ail.approach(targets)
+		ai.reactionfire("enable")
+		target = aila.approach(targets)
 	end
 	return target
 end
 
 -- Short term reactionary phase
-function ail.phase_one ()
-	if ail.isfighter() and ail.actor():morale() ~= "cower" and ail.readyweapon() then
+function aila.phase_one ()
+	if ai.isfighter() and ai.actor():morale() ~= "cower" and aila.readyweapon() then
 		-- If we don't have enough TUs for shooting try disabling reaction fire to get more available TUs
-		if ail.tusforshooting() > ail.tustouse() then
-			ail.reactionfire("disable")
+		if ai.tusforshooting() > aila.tustouse() then
+			ai.reactionfire("disable")
 		end
-		local targets = ail.see(ail.param.vis, "~civilian")
+		local targets = ai.see(aila.param.vis, "~civilian")
 		while #targets > 0 do
-			if ail.actor():isinjured() then
-				ail.target = ail.shoot(targets)
+			if ai.actor():isinjured() then
+				aila.target = aila.shoot(targets)
 			else
-				ail.target = ail.attack(targets)
+				aila.target = aila.attack(targets)
 			end
 			-- We died attacking or cannot attack
-			if ail.actor():isdead() or not ail.target or ail.tusforshooting() > ail.tustouse() then
+			if ai.actor():isdead() or not aila.target or ai.tusforshooting() > aila.tustouse() then
 				return
 			end
-			targets = ail.see(ail.param.vis, "~civilian")
+			targets = ai.see(aila.param.vis, "~civilian")
 		end
 	end
 end
 
 -- Longer term actions
-function ail.phase_two ()
-	if ail.isfighter() and ail.actor():morale() ~= "cower" then
-		if not ail.readyweapon() then
-			if ail.searchweapon() then
-				ail.phase_two()
+function aila.phase_two ()
+	if not ai.actor():isdead() and ai.isfighter() and ai.actor():morale() ~= "cower" then
+		if not aila.readyweapon() then
+			if aila.searchweapon() then
+				aila.phase_two()
 			end
-		elseif not ail.actor():isinjured() and ail.tustouse() >= ail.tusforshooting() then
+		elseif not ai.actor():isinjured() and aila.tustouse() >= ai.tusforshooting() then
 			local done
-			for i = 1, #ail.param.prio do
-				local targets = ail.see(ail.param.vis, ail.param.prio[i], ail.param.ord)
+			for i = 1, #aila.param.prio do
+				local targets = ai.see(aila.param.vis, aila.param.prio[i], aila.param.ord)
 				while #targets > 0 do
-					ail.target = ail.engage(targets)
-					if not ail.target or not ail.target:isdead() then
+					aila.target = aila.engage(targets)
+					-- Did we die while attacking?
+					if ai:actor():isdead() then
+						return
+					end
+					-- No target in sight or we failed to kill it
+					if not aila.target or not aila.target:isdead() then
 						done = true
 						break
 					end
-					targets = ail.see(ail.param.vis, ail.param.prio[i], ail.param.ord)
+					targets = aila.see(aila.param.vis, aila.param.prio[i], aila.param.ord)
 				end
 				if done then
 					break
 				end
 			end
-			if not ail.target then
-				ail.reactionfire("disable")
-				ail.crouch(false)
-				ail.search()
+			if not aila.target then
+				ai.reactionfire("disable")
+				ai.crouch(false)
+				aila.search()
 			end
 		end
 	end
 end
 
 -- Round end actions
-function ail.phase_three ()
-	for i = 1, #ail.param.prio do
-		local targets = ail.see(ail.param.vis, ail.param.prio[i], ail.param.ord)
-		if #targets > 0 and ail.tusforshooting() <= ail.tustouse() then
-			ail.target = ail.shoot(targets) or ail.target
+function aila.phase_three ()
+	if not ai.actor():isdead() then
+		for i = 1, #aila.param.prio do
+			local targets = ai.see(aila.param.vis, aila.param.prio[i], aila.param.ord)
+			if #targets > 0 and ai.tusforshooting() <= aila.tustouse() then
+				aila.target = aila.shoot(targets) or aila.target
+				if ai.actor():isdead() then
+					return
+				end
+			end
 		end
-	end
 
-	local hid
-	if ail.hideneeded() then
-		hid = ail.hide()
-	elseif ail.actor():isinjured() then
-		hid = ail.herd() or ail.hide()
-	end
-	if not hid and ail.actor():morale() == "cower" then
-		ail.flee()
-	end
+		local hid
+		if ai.hideneeded() then
+			hid = aila.hide()
+		elseif ai.actor():isinjured() then
+			hid = aila.herd() or aila.hide()
+		end
+		if not hid and ai.actor():morale() == "cower" then
+			aila.flee()
+		end
 
-	if ail.target then
-		ail.target:pos():face()
+		if aila.target then
+			aila.target:pos():face()
+		end
+		ai.reactionfire("enable")
+		ai.crouch(true)
 	end
-	ail.reactionfire("enable")
-	ail.crouch(true)
 end
 
-function ail.think ()
-	local morale = ail.actor():morale()
+function aila.think ()
+	local morale = ai.actor():morale()
 	if morale == "panic" then
-		ail.flee()
+		if not aila.hide() then
+			aila.flee()
+		end
 		return
 	end
 
 	-- copy the default params for this actor class
-	local par = ail.params[ail.class()]
-	ail.param = { vis = par.vis, ord = par.ord, pos = par.pos, move = par.move, prio = par.prio }
+	local par = aila.params[ai.class()]
+	if not par then
+		par = aila.params.default
+	end
+	aila.param = { vis = par.vis, ord = par.ord, pos = par.pos, move = par.move, prio = par.prio }
 	-- adjust for morale
 	if morale == "rage" or morale == "insane" then
-		ail.param.ord = "dist"
-		ail.param.pos = "fastest"
-		ail.param.move = "rand"
+		aila.param.ord = "dist"
+		aila.param.pos = "fastest"
+		aila.param.move = "rand"
 		if morale == "insane" then
-			ail.params.prio = {"all"}
+			aila.params.prio = {"all"}
 		end
 	end
-	ail.target = nil
-	if not ail.param then
-		ail.param = ail.params.default
-	end
-	ail.phase_one()
-	ail.phase_two()
-	ail.phase_three()
+	aila.target = nil
+	aila.phase_one()
+	aila.phase_two()
+	aila.phase_three()
 end
 
-return ail
+return aila
