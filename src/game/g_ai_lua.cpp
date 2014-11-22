@@ -1055,7 +1055,7 @@ static int AIL_crouch (lua_State* L)
 			const bool reqState = lua_toboolean(L, 1);
 			const bool state = AIL_ent->isCrouched();
 			if (reqState != state)
-				G_ClientStateChange(*AIL_player, AIL_ent, STATE_CROUCHED, false);
+				G_ClientStateChange(*AIL_player, AIL_ent, STATE_CROUCHED, true);
 		} else
 			AIL_invalidparameter(1);
 	}
@@ -1079,7 +1079,7 @@ static int AIL_reactionfire (lua_State* L)
 		}
 
 		if (reactionState) {
-			G_ClientStateChange(*AIL_player, AIL_ent, reactionState, false);
+			G_ClientStateChange(*AIL_player, AIL_ent, reactionState, true);
 		} else {
 			AIL_invalidparameter(1);
 		}
