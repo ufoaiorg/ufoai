@@ -207,6 +207,19 @@ function ails.engage(targets)
 	return target
 end
 
+function ails.findtargets(vision, team, order)
+	local targets = { }
+	local seen = ai.see(vision, team, order)
+	if #seen > 0 then
+		for i = 1, #seen do
+			if seen[i]:isvalidtarget() then
+				targets[#targets + 1] = seen[i]
+			end
+		end
+	end
+	return targets
+end
+
 -- Short term reactionary phase
 function ails.phase_one ()
 	if ai.isfighter() and ai.actor():morale() ~= "cower" and ails.readyweapon() then
@@ -214,7 +227,7 @@ function ails.phase_one ()
 		if ai.tusforshooting() > ails.tustouse() then
 			ai.reactionfire("disable")
 		end
-		local targets = ai.see(ails.param.vis, "~civilian")
+		local targets = ails.findtargets(ails.param.vis, "~civilian", "dist")
 		while #targets > 0 do
 			if ai.actor():isinjured() then
 				ails.target = ails.shoot(targets)
@@ -225,7 +238,7 @@ function ails.phase_one ()
 			if ai.actor():isdead() or not ails.target or ai.tusforshooting() > ails.tustouse() then
 				return
 			end
-			targets = ai.see(ails.param.vis, "~civilian")
+			targets = ails.findtargets(ails.param.vis, "~civilian", "dist")
 		end
 	end
 end
@@ -240,7 +253,7 @@ function ails.phase_two ()
 		elseif not ai.actor():isinjured() and ails.tustouse() >= ai.tusforshooting() then
 			local done
 			for i = 1, #ails.param.prio do
-				local targets = ai.see(ails.param.vis, ails.param.prio[i], ails.param.ord)
+				local targets = ails.findtargets(ails.param.vis, ails.param.prio[i], ails.param.ord)
 				while #targets > 0 do
 					ails.target = ails.engage(targets)
 					-- Did we die while attacking?
@@ -252,7 +265,7 @@ function ails.phase_two ()
 						done = true
 						break
 					end
-					targets = ails.see(ails.param.vis, ails.param.prio[i], ails.param.ord)
+					targets = ails.findtargets(ails.param.vis, ails.param.prio[i], ails.param.ord)
 				end
 				if done then
 					break
@@ -271,7 +284,7 @@ end
 function ails.phase_three ()
 	if not ai.actor():isdead() then
 		for i = 1, #ails.param.prio do
-			local targets = ai.see(ails.param.vis, ails.param.prio[i], ails.param.ord)
+			local targets = ails.findtargets(ails.param.vis, ails.param.prio[i], ails.param.ord)
 			if #targets > 0 and ai.tusforshooting() <= ails.tustouse() then
 				ails.target = ails.shoot(targets) or ails.target
 				if ai.actor():isdead() then

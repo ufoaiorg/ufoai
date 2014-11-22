@@ -352,6 +352,19 @@ function aila.engage(targets)
 	return target
 end
 
+function aila.findtargets(vision, team, order)
+	local targets = { }
+	local seen = ai.see(vision, team, order)
+	if #seen > 0 then
+		for i = 1, #seen do
+			if seen[i]:isvalidtarget() then
+				targets[#targets + 1] = seen[i]
+			end
+		end
+	end
+	return targets
+end
+
 -- Short term reactionary phase
 function aila.phase_one ()
 	if ai.isfighter() and ai.actor():morale() ~= "cower" and aila.readyweapon() then
@@ -359,7 +372,7 @@ function aila.phase_one ()
 		if ai.tusforshooting() > aila.tustouse() then
 			ai.reactionfire("disable")
 		end
-		local targets = ai.see(aila.param.vis, "~civilian")
+		local targets = aila.findtargets(aila.param.vis, "~civilian", "dist")
 		while #targets > 0 do
 			if ai.actor():isinjured() then
 				aila.target = aila.shoot(targets)
@@ -370,7 +383,7 @@ function aila.phase_one ()
 			if ai.actor():isdead() or not aila.target or ai.tusforshooting() > aila.tustouse() then
 				return
 			end
-			targets = ai.see(aila.param.vis, "~civilian")
+			targets = aila.findtargets(aila.param.vis, "~civilian", "dist")
 		end
 	end
 end
@@ -385,7 +398,7 @@ function aila.phase_two ()
 		elseif not ai.actor():isinjured() and aila.tustouse() >= ai.tusforshooting() then
 			local done
 			for i = 1, #aila.param.prio do
-				local targets = ai.see(aila.param.vis, aila.param.prio[i], aila.param.ord)
+				local targets = aila.findtargets(aila.param.vis, aila.param.prio[i], aila.param.ord)
 				while #targets > 0 do
 					aila.target = aila.engage(targets)
 					-- Did we die while attacking?
@@ -397,7 +410,7 @@ function aila.phase_two ()
 						done = true
 						break
 					end
-					targets = aila.see(aila.param.vis, aila.param.prio[i], aila.param.ord)
+					targets = aila.findtargets(aila.param.vis, aila.param.prio[i], aila.param.ord)
 				end
 				if done then
 					break
@@ -416,7 +429,7 @@ end
 function aila.phase_three ()
 	if not ai.actor():isdead() then
 		for i = 1, #aila.param.prio do
-			local targets = ai.see(aila.param.vis, aila.param.prio[i], aila.param.ord)
+			local targets = aila.findtargets(aila.param.vis, aila.param.prio[i], aila.param.ord)
 			if #targets > 0 and ai.tusforshooting() <= aila.tustouse() then
 				aila.target = aila.shoot(targets) or aila.target
 				if ai.actor():isdead() then
