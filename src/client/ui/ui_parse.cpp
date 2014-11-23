@@ -1103,7 +1103,7 @@ static uiNode_t* UI_ParseNode (uiNode_t* parent, const char** text, const char**
 	}
 	/* else initialize a component */
 	else if (component) {
-		node = UI_CloneNode(component, nullptr, true, *token, false);
+		node = UI_CloneNode(component, nullptr, true, *token, true);
 		if (parent) {
 			UI_AppendNode(parent, node);
 			UI_UpdateRoot(node, parent->root);
@@ -1111,7 +1111,7 @@ static uiNode_t* UI_ParseNode (uiNode_t* parent, const char** text, const char**
 	}
 	/* else initialize a new node */
 	else {
-		node = UI_AllocNode(*token, behaviour->name, false);
+		node = UI_AllocNode(*token, behaviour->name, true);
 		if (parent) {
 			UI_AppendNode(parent, node);
 		}
@@ -1381,10 +1381,10 @@ bool UI_ParseWindow (const char* type, const char* name, const char** text)
 		superWindow = UI_GetWindow(token);
 		if (superWindow == nullptr)
 			Sys_Error("Could not get the super window \"%s\"", token);
-		window = UI_CloneNode(superWindow, nullptr, true, name, false);
+		window = UI_CloneNode(superWindow, nullptr, true, name, true);
 		token = Com_Parse(text);
 	} else {
-		window = UI_AllocNode(name, type, false);
+		window = UI_AllocNode(name, type, true);
 		window->root = window;
 	}
 

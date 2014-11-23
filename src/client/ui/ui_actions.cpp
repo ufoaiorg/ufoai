@@ -827,6 +827,8 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void* data)
  */
 void UI_AddListener (uiNode_t* node, const value_t* property, const uiNode_t* functionNode)
 {
+	/* all nodes are now created in a dynamic way, so this check is removed */
+	/*
 	if (node->dynamic) {
 		Com_Printf("UI_AddListener: '%s' is a dynamic node. We can't listen it.\n", UI_GetPath(node));
 		return;
@@ -835,6 +837,7 @@ void UI_AddListener (uiNode_t* node, const value_t* property, const uiNode_t* fu
 		Com_Printf("UI_AddListener: '%s' is a dynamic node. It can't be a listener callback.\n", UI_GetPath(functionNode));
 		return;
 	}
+	*/
 
 	/* create the call action */
 	uiAction_t* const action = Mem_PoolAllocType(uiAction_t, ui_sysPool);

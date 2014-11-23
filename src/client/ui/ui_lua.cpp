@@ -297,19 +297,17 @@ bool UI_ParseAndLoadLuaScript (const char* name, const char** text) {
  * @param[in] type The behaviour type of the control to create. This can be a previously defined control instance.
  * @param[in] name The name of the control to create.
  * @param[in] super The name this control inherits from. If specified overrides the behaviour type of
- * @param[in] dynamic True to create a dynamic node, false to create a static node.
  * super must match type.
  * @note A control is a node inside a component or window. Unlike a component or window, a control is
  * always attached to a parent.
  * @note Code needs to be refactored.
  */
-uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super, nodeCreateFlags_t flags)
+uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super)
 {
 	uiNode_t* node = nullptr;
 	uiNode_t* node_super = nullptr;
 	uiNode_t* inherited_control = nullptr;
 	uiBehaviour_t* behaviour = nullptr;
-	bool dynamic = (flags == DYNAMIC_CONTROL);
 
 	/* get the behaviour */
 	behaviour = UI_GetNodeBehaviour(type);
@@ -356,16 +354,16 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 
 	/* clone using super */
 	if (node_super) {
-		node = UI_CloneNode(node_super, nullptr, true, name, dynamic);
+		node = UI_CloneNode(node_super, nullptr, true, name, true);
 	}
 	/* else try creating a clone of the component */
 	else if (inherited_control) {
 		/* initialize from a component */
-		node = UI_CloneNode(inherited_control, nullptr, true, name, dynamic);
+		node = UI_CloneNode(inherited_control, nullptr, true, name, true);
 	}
 	/* else initialize a new node */
 	else {
-		node = UI_AllocNode(name, behaviour->name, dynamic);
+		node = UI_AllocNode(name, behaviour->name, true);
 	}
 
 	if (parent) {
@@ -403,16 +401,14 @@ const char* UI_Node_TypeOf(uiNode_t* node) {
  * @param[in] type The behaviour type of the component to create.
  * @param[in] name The name of the component to create.
  * @param[in] super The name this component inherits from. If NULL the component has no super defined.
- * @param[in] dynamic True to create a dynamic node, false to create a static node.
  * @note A component is a reusable window or panel.
  */
-uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super, nodeCreateFlags_t flags)
+uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super)
 {
 	uiNode_t* node_super = nullptr;
 	uiNode_t* component = nullptr;
 	uiNode_t* inherited = nullptr;
 	uiBehaviour_t* behaviour = nullptr;
-	bool dynamic = (flags == DYNAMIC_CONTROL);
 
 	/* check the name */
 	if (!UI_TokenIsName(name, false)) {
@@ -448,17 +444,17 @@ uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* su
 
 	/* clone using super */
 	if (node_super) {
-		component = UI_CloneNode(node_super, nullptr, true, name, dynamic);
+		component = UI_CloneNode(node_super, nullptr, true, name, true);
 	}
 	/* else initialize a new node */
 	else {
 		/* use inherited if available */
 		if (inherited) {
-			component = UI_CloneNode(inherited, nullptr, true, name, dynamic);
+			component = UI_CloneNode(inherited, nullptr, true, name, true);
 		}
 		/* else use the behaviour type */
 		else {
-			component = UI_AllocNode(name, behaviour->name, dynamic);
+			component = UI_AllocNode(name, behaviour->name, true);
 		}
 	}
 
@@ -478,14 +474,11 @@ uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* su
  * @param[in] type The behaviour type of the window to create.
  * @param[in] name The name of the window to create.
  * @param[in] super The name this window inherits from. If NULL the window has no super defined.
- * @param[in] dynamic True to create a dynamic node, false to create a static node.
  * @note A window is a top level component in the ui.
  * @todo If the old style ui scripts are no longer used, the check UI_TokenIsReserved should be removed.
  */
-uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super, nodeCreateFlags_t flags)
+uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super)
 {
-	bool dynamic = (flags == DYNAMIC_CONTROL);
-
 	/* make sure we create windows only here */
 	if (!Q_streq(type, "window")) {
 		Com_Error(ERR_FATAL, "UI_CreateWindow: '%s %s' is not a window node\n", type, name);
@@ -528,9 +521,9 @@ uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super
 		if (superWindow == nullptr) {
 			Sys_Error("Could not get the super window \"%s\"", super);
 		}
-		window = UI_CloneNode(superWindow, nullptr, true, name, dynamic);
+		window = UI_CloneNode(superWindow, nullptr, true, name, true);
 	} else {
-		window = UI_AllocNode(name, type, dynamic);
+		window = UI_AllocNode(name, type, true);
 		window->root = window;
 	}
 

@@ -13,7 +13,6 @@ mail:set_backgroundcolor(0, 0, 0, 0.95)
 mail:child("title"):set_text("*cvar:mn_mail_subject")
 mail:child("title"):set_size(1000, 32)
 mail:set_closebutton(true)
-
 local mail_text = ufo.create_control(mail, "text", "mail_text", nil)
 mail_text:set_dataid(ufo.TEXT_UFOPEDIA)
 mail_text:set_pos(50, 200)
@@ -21,11 +20,10 @@ mail_text:set_size(904, 480)
 mail_text:set_lineheight(24)
 mail_text:set_tabwidth(100)
 mail_text.on_viewchange = function (sender)
-		mail_scroll:set_fullsize(sender:fullsize())
-		mail_scroll:set_current(sender:viewpos())
-		mail_scroll:set_viewsize(sender:viewsize())
+		sender:parent():child("mail_scroll"):set_fullsize(sender:fullsize())
+		sender:parent():child("mail_scroll"):set_current(sender:viewpos())
+		sender:parent():child("mail_scroll"):set_viewsize(sender:viewsize())
 	end
-
 local mail_scroll = ufo.create_control(mail, "vscrollbar", "mail_scroll", nil)
 mail_scroll:set_image("ui/scrollbar_v")
 mail_scroll:set_pos(960, 208)
@@ -170,25 +168,29 @@ mail_scroll:set_fullsize(32)
 mail_scroll.on_change = function (sender)
 mails:set_viewpos(sender:current())
 end
+
 local geoscape_button = ufo.create_control(mailclient, "Geoscape", "geoscape_button", nil)
 geoscape_button.on_click = function(sender)
 ufo.cmd("ui_pop;")
 end
+
 local add_mail = ufo.create_confunc(mailclient, "add_mail", nil)
 add_mail.on_click = function(sender, index, headline, icon, state, date)
-		local mail = ufo.create_control(mails, "mailheader", "mail" .. index, nil, ufo.DYNAMIC_CONTROL)
+		local mail = ufo.create_control(mails, "mailheader", "mail" .. index, nil)
 		mail:child("icon"):set_source(icon)
 		mail:child("header"):child("index"):set_value(index)
 		mail:child("header"):child("headline"):set_text(headline)
 		mail:child("header"):child("date"):set_text(date)
-		if (state == 0) then
+		if (state == "0") then
 			mail:child("header"):set_backgroundcolor(0.56, 0.81, 0.76, 0.6)
 		end
 	end
+
 local clear_mails = ufo.create_confunc(mailclient, "clear_mails", nil)
 clear_mails.on_click = function(sender)
-		mailclient:child("maillist"):child("mainBody"):child("mails"):remove_childs()
+		mailclient:child("maillist"):child("mainBody"):child("mails"):remove_children()
 	end
+
 mailclient.on_windowopened = function(sender)
 		ufo.cmd("ufopedia_openmail;")
 	end
