@@ -176,7 +176,7 @@ ufo.cmd("ui_pop;")
 end
 local add_mail = ufo.create_confunc(mailclient, "add_mail", nil)
 add_mail.on_click = function(sender, index, headline, icon, state, date)
-		local mail = ufo.create_control(mails, "mailheader", "mail" .. index, nil)
+		local mail = ufo.create_control(mails, "mailheader", "mail" .. index, nil, ufo.DYNAMIC_CONTROL)
 		mail:child("icon"):set_source(icon)
 		mail:child("header"):child("index"):set_value(index)
 		mail:child("header"):child("headline"):set_text(headline)

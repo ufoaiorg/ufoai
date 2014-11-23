@@ -69,3 +69,11 @@ extern void* UI_SWIG_TypeQuery (const char* name);
  */
 extern const char* UI_SWIG_NodeTypeName (void* node);
 
+/**
+ * @brief enumeration to define flags for the creation of node.
+ */
+enum nodeCreateFlags_t {
+	STATIC_CONTROL = 0x0000,
+	DYNAMIC_CONTROL = 0x0001
+};
+
