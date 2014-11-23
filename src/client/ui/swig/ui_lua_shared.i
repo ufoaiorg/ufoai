@@ -191,6 +191,7 @@ const char* UI_SWIG_NodeTypeName (void* node) {
 	swig_type_info* info = (swig_type_info*)((uiNode_t*)node)->behaviour->lua_SWIG_typeinfo;
 	return info->str;
 }
+
 %}
 
 /* typemap for converting lua function to a reference to be used by C */
@@ -227,6 +228,12 @@ const char* UI_SWIG_NodeTypeName (void* node) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose constants and typedefs
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+%rename (CreateControlFlags) createControlFlags_t;
+enum nodeCreateFlags_t {
+	STATIC_CONTROL = 0x0000,
+	DYNAMIC_CONTROL = 0x0001
+};
 
 /** @brief linked into ui_global.sharedData - defined in UI scripts via dataId property */
 %rename (DataIds) uiDataIDs_t;
@@ -1325,218 +1332,216 @@ struct uiFunc_t: uiNode_t {
 
 /* expose uiNode creation functions */
 %rename (create_control) UI_CreateControl;
-uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super);
-//%rename (__create_window) UI_CreateWindow;
-//uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);
+uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 
 /* define uiNode subtypes creation functions */
 %inline %{
-static uiBarNode_t* UI_CreateBar (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "bar", name, super);
+static uiBarNode_t* UI_CreateBar (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "bar", name, super, flags);
 }
-static uiBaseMapNode_t* UI_CreateBaseMap (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "basemap", name, super);
+static uiBaseMapNode_t* UI_CreateBaseMap (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "basemap", name, super, flags);
 }
-static uiBaseLayoutNode_t* UI_CreateBaseLayout (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "baselayout", name, super);
+static uiBaseLayoutNode_t* UI_CreateBaseLayout (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "baselayout", name, super, flags);
 }
-static uiBaseInventoryNode_t* UI_CreateBaseInventory (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "baseinventory", name, super);
+static uiBaseInventoryNode_t* UI_CreateBaseInventory (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "baseinventory", name, super, flags);
 }
-static uiButtonNode_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "button", name, super);
+static uiButtonNode_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "button", name, super, flags);
 }
-static uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "checkbox", name, super);
+static uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "checkbox", name, super, flags);
 }
-static uiConFuncNode_t* UI_CreateConFunc (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "confunc", name, super);
+static uiConFuncNode_t* UI_CreateConFunc (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "confunc", name, super, flags);
 }
-static uiContainerNode_t* UI_CreateContainer (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "container", name, super);
+static uiContainerNode_t* UI_CreateContainer (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "container", name, super, flags);
 }
-static uiDataNode_t* UI_CreateData (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "data", name, super);
+static uiDataNode_t* UI_CreateData (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "data", name, super, flags);
 }
-static uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "ekg", name, super);
+static uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "ekg", name, super, flags);
 }
-static uiGeoscapeNode_t* UI_CreateGeoscape (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "geoscape", name, super);
+static uiGeoscapeNode_t* UI_CreateGeoscape (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "geoscape", name, super, flags);
 }
-static uiImageNode_t* UI_CreateImage (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "image", name, super);
+static uiImageNode_t* UI_CreateImage (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "image", name, super, flags);
 }
-static uiItemNode_t* UI_CreateItem (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "item", name, super);
+static uiItemNode_t* UI_CreateItem (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "item", name, super, flags);
 }
-static uiLineChartNode_t* UI_CreateLineChart(uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "linechart", name, super);
+static uiLineChartNode_t* UI_CreateLineChart(uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "linechart", name, super, flags);
 }
-static uiMessageListNode_t* UI_CreateMessageList (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "messagelist", name, super);
+static uiMessageListNode_t* UI_CreateMessageList (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "messagelist", name, super, flags);
 }
-static uiModelNode_t* UI_CreateModel (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "model", name, super);
+static uiModelNode_t* UI_CreateModel (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "model", name, super, flags);
 }
-static uiOptionNode_t* UI_CreateOption (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "option", name, super);
+static uiOptionNode_t* UI_CreateOption (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "option", name, super, flags);
 }
-static uiOptionListNode_t* UI_CreateOptionList (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "optionlist", name, super);
+static uiOptionListNode_t* UI_CreateOptionList (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "optionlist", name, super, flags);
 }
-static uiOptionTreeNode_t* UI_CreateOptionTree (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "optiontree", name, super);
+static uiOptionTreeNode_t* UI_CreateOptionTree (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "optiontree", name, super, flags);
 }
-static uiPanelNode_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "panel", name, super);
+static uiPanelNode_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "panel", name, super, flags);
 }
-static uiRadarNode_t* UI_CreateRadar (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "radar", name, super);
+static uiRadarNode_t* UI_CreateRadar (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "radar", name, super, flags);
 }
-static uiRadioButtonNode_t* UI_CreateRadioButton (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "radiobutton", name, super);
+static uiRadioButtonNode_t* UI_CreateRadioButton (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "radiobutton", name, super, flags);
 }
-static uiRowsNode_t* UI_CreateRows (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "rows", name, super);
+static uiRowsNode_t* UI_CreateRows (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "rows", name, super, flags);
 }
-static uiSelectBoxNode_t* UI_CreateSelectBox (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "selectbox", name, super);
+static uiSelectBoxNode_t* UI_CreateSelectBox (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "selectbox", name, super, flags);
 }
-static uiSequenceNode_t* UI_CreateSequence (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "sequence", name, super);
+static uiSequenceNode_t* UI_CreateSequence (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "sequence", name, super, flags);
 }
-static uiSpinnerNode_t* UI_CreateSpinner (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "spinner", name, super);
+static uiSpinnerNode_t* UI_CreateSpinner (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "spinner", name, super, flags);
 }
-static uiStringNode_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "string", name, super);
+static uiStringNode_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "string", name, super, flags);
 }
-static uiTabNode_t* UI_CreateTab (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "tab", name, super);
+static uiTabNode_t* UI_CreateTab (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "tab", name, super, flags);
 }
-static uiTBarNode_t* UI_CreateTBar (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "tbar", name, super);
+static uiTBarNode_t* UI_CreateTBar (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "tbar", name, super, flags);
 }
-static uiTextNode_t* UI_CreateText (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "text", name, super);
+static uiTextNode_t* UI_CreateText (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "text", name, super, flags);
 }
-static uiText2Node_t* UI_CreateText2 (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "text2", name, super);
+static uiText2Node_t* UI_CreateText2 (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "text2", name, super, flags);
 }
-static uiTextEntryNode_t* UI_CreateTextEntry (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "textentry", name, super);
+static uiTextEntryNode_t* UI_CreateTextEntry (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "textentry", name, super, flags);
 }
-static uiTextListNode_t* UI_CreateTextList (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "textlist", name, super);
+static uiTextListNode_t* UI_CreateTextList (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "textlist", name, super, flags);
 }
-static uiTextureNode_t* UI_CreateTexture (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "texture", name, super);
+static uiTextureNode_t* UI_CreateTexture (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "texture", name, super, flags);
 }
-static uiTimerNode_t* UI_CreateTimer (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "timer", name, super);
+static uiTimerNode_t* UI_CreateTimer (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "timer", name, super, flags);
 }
-static uiVideoNode_t* UI_CreateVideo (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "video", name, super);
+static uiVideoNode_t* UI_CreateVideo (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "video", name, super, flags);
 }
-static uiVScrollBarNode_t* UI_CreateVScrollbar (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "vscrollbar", name, super);
+static uiVScrollBarNode_t* UI_CreateVScrollbar (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "vscrollbar", name, super, flags);
 }
-static uiWidgetNode_t* UI_CreateWidget (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "controls", name, super);
+static uiWidgetNode_t* UI_CreateWidget (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "controls", name, super, flags);
 }
-static uiWindowNode_t* UI_CreateWindow (const char* name, const char* super) {
-	return UI_CreateWindow("window", name, super);
+static uiWindowNode_t* UI_CreateWindow (const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateWindow("window", name, super, flags);
 }
-static uiZoneNode_t* UI_CreateZone (const char* name, const char* super) {
-	return UI_CreateWindow("zone", name, super);
+static uiZoneNode_t* UI_CreateZone (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL) {
+	return UI_CreateControl (parent, "zone", name, super, flags);
 }
 %}
 
 /* expose uiNode subtypes creation functions to lua */
 %rename (create_bar) UI_CreateBar;
-uiBarNode_t* UI_CreateBar (uiNode_t* parent, const char* name, const char* super);
+uiBarNode_t* UI_CreateBar (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_button) UI_CreateButton;
-uiButtonNode_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super);
+uiButtonNode_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_basemap) UI_CreateBaseMap;
-uiBaseMapNode_t* UI_CreateBaseMap (uiNode_t* parent, const char* name, const char* super);
+uiBaseMapNode_t* UI_CreateBaseMap (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_baselayout) UI_CreateBaseLayout;
-uiBaseLayoutNode_t* UI_CreateBaseLayout (uiNode_t* parent, const char* name, const char* super);
+uiBaseLayoutNode_t* UI_CreateBaseLayout (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_baseinventory) UI_CreateBaseInventory;
-uiBaseInventoryNode_t* UI_CreateBaseInventory (uiNode_t* parent, const char* name, const char* super);
+uiBaseInventoryNode_t* UI_CreateBaseInventory (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_checkbox) UI_CreateCheckBox;
-uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super);
+uiCheckBoxNode_t* UI_CreateCheckBox (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_confunc) UI_CreateConFunc;
-uiConFuncNode_t* UI_CreateConFunc (uiNode_t* parent, const char* name, const char* super);
+uiConFuncNode_t* UI_CreateConFunc (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_container) UI_CreateContainer;
-uiContainerNode_t* UI_CreateContainer (uiNode_t* parent, const char* name, const char* super);
+uiContainerNode_t* UI_CreateContainer (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_data) UI_CreateData;
-uiDataNode_t* UI_CreateData (uiNode_t* parent, const char* name, const char* super);
+uiDataNode_t* UI_CreateData (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_ekg) UI_CreateEkg;
-uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super);
+uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_geoscape) UI_CreateGeoscape;
-uiGeoscapeNode_t* UI_CreateGeoscape (uiNode_t* parent, const char* name, const char* super);
+uiGeoscapeNode_t* UI_CreateGeoscape (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_image) UI_CreateImage;
-uiImageNode_t* UI_CreateImage (uiNode_t* parent, const char* name, const char* super);
+uiImageNode_t* UI_CreateImage (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_item) UI_CreateItem;
-uiItemNode_t* UI_CreateItem (uiNode_t* parent, const char* name, const char* super);
+uiItemNode_t* UI_CreateItem (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_linechart) UI_CreateLineChart;
-uiLineChartNode_t* UI_CreateLineChart (uiNode_t* parent, const char* name, const char* super);
+uiLineChartNode_t* UI_CreateLineChart (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_messagelist) UI_CreateMessageList;
-uiMessageListNode_t* UI_CreateMessageList (uiNode_t* parent, const char* name, const char* super);
+uiMessageListNode_t* UI_CreateMessageList (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_model) UI_CreateModel;
-uiModelNode_t* UI_CreateModel (uiNode_t* parent, const char* name, const char* super);
+uiModelNode_t* UI_CreateModel (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_option) UI_CreateOption;
-uiOptionNode_t* UI_CreateOption (uiNode_t* parent, const char* name, const char* super);
+uiOptionNode_t* UI_CreateOption (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_optionlist) UI_CreateOptionList;
-uiOptionListNode_t* UI_CreateOptionList (uiNode_t* parent, const char* name, const char* super);
+uiOptionListNode_t* UI_CreateOptionList (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_optiontree) UI_CreateOptionTree;
-uiOptionTreeNode_t* UI_CreateOptionTree (uiNode_t* parent, const char* name, const char* super);
+uiOptionTreeNode_t* UI_CreateOptionTree (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_panel) UI_CreatePanel;
-uiPanelNode_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super);
+uiPanelNode_t* UI_CreatePanel (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_radar) UI_CreateRadar;
-uiRadarNode_t* UI_CreateRadar (uiNode_t* parent, const char* name, const char* super);
+uiRadarNode_t* UI_CreateRadar (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_radiobutton) UI_CreateRadioButton;
-uiRadioButtonNode_t* UI_CreateRadioButton (uiNode_t* parent, const char* name, const char* super);
+uiRadioButtonNode_t* UI_CreateRadioButton (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_rows) UI_CreateRows;
-uiRowsNode_t* UI_CreateRows (uiNode_t* parent, const char* name, const char* super);
+uiRowsNode_t* UI_CreateRows (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_selectbox) UI_CreateSelectBox;
-uiSelectBoxNode_t* UI_CreateSelectBox (uiNode_t* parent, const char* name, const char* super);
+uiSelectBoxNode_t* UI_CreateSelectBox (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_sequence) UI_CreateSequence;
-uiSequenceNode_t* UI_CreateSequence (uiNode_t* parent, const char* name, const char* super);
+uiSequenceNode_t* UI_CreateSequence (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_spinner) UI_CreateSpinner;
-uiSpinnerNode_t* UI_CreateSpinner (uiNode_t* parent, const char* name, const char* super);
+uiSpinnerNode_t* UI_CreateSpinner (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_string) UI_CreateString;
-uiStringNode_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super);
+uiStringNode_t* UI_CreateString (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_tab) UI_CreateTab;
-uiTabNode_t* UI_CreateTab (uiNode_t* parent, const char* name, const char* super);
+uiTabNode_t* UI_CreateTab (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_tbar) UI_CreateTBar;
-uiTBarNode_t* UI_CreateTBar (uiNode_t* parent, const char* name, const char* super);
+uiTBarNode_t* UI_CreateTBar (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_text) UI_CreateText;
-uiTextNode_t* UI_CreateText (uiNode_t* parent, const char* name, const char* super);
+uiTextNode_t* UI_CreateText (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_text2) UI_CreateText2;
-uiText2Node_t* UI_CreateText2 (uiNode_t* parent, const char* name, const char* super);
+uiText2Node_t* UI_CreateText2 (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_textentry) UI_CreateTextEntry;
-uiTextEntryNode_t* UI_CreateTextEntry (uiNode_t* parent, const char* name, const char* super);
+uiTextEntryNode_t* UI_CreateTextEntry (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_textlist) UI_CreateTextList;
-uiTextListNode_t* UI_CreateTextList (uiNode_t* parent, const char* name, const char* super);
+uiTextListNode_t* UI_CreateTextList (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_texture) UI_CreateTexture;
-uiTextureNode_t* UI_CreateTexture (uiNode_t* parent, const char* name, const char* super);
+uiTextureNode_t* UI_CreateTexture (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_timer) UI_CreateTimer;
-uiTimerNode_t* UI_CreateTimer (uiNode_t* parent, const char* name, const char* super);
+uiTimerNode_t* UI_CreateTimer (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_video) UI_CreateVideo;
-uiVideoNode_t* UI_CreateVideo (uiNode_t* parent, const char* name, const char* super);
+uiVideoNode_t* UI_CreateVideo (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_vscrollbar) UI_CreateVScrollbar;
-uiVScrollBarNode_t* UI_CreateVScrollbar (uiNode_t* parent, const char* name, const char* super);
+uiVScrollBarNode_t* UI_CreateVScrollbar (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_widget) UI_CreateWidget;
-uiWidgetNode_t* UI_CreateWidget (uiNode_t* parent, const char* name, const char* super);
+uiWidgetNode_t* UI_CreateWidget (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_window) UI_CreateWindow;
-uiWindowNode_t* UI_CreateWindow (const char* name, const char* super);
+uiWindowNode_t* UI_CreateWindow (const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 %rename (create_zone) UI_CreateZone;
-uiZoneNode_t* UI_CreateZone (const char* name, const char* super);
+uiZoneNode_t* UI_CreateZone (uiNode_t* parent, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 /* expose component creation fuction */
 %rename (create_component) UI_CreateComponent;
-uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);
+uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 
 /* expose window functions */
 %rename (pop_window) UI_PopWindow;

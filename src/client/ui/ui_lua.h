@@ -51,9 +51,9 @@ bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn);
 bool UI_ExecuteLuaMethod_ByName (uiNode_t* node, const char* name, linkedList_t* params, int nparams);
 
 /* lua uiNode create functions */
-uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super);
-uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);
-uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super);
+uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
+uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
+uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super, nodeCreateFlags_t flags = STATIC_CONTROL);
 
 /* information */
 void UI_PrintNodeTree (uiNode_t* node, int level = 0);
