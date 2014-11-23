@@ -160,6 +160,7 @@ static int actorL_morale(lua_State* L);
 static int actorL_isinjured(lua_State* L);
 static int actorL_isarmed(lua_State* L);
 static int actorL_isdead(lua_State* L);
+static int actorL_isvalidtarget(lua_State* L);
 /** Lua Actor metatable methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -175,6 +176,7 @@ static const luaL_reg actorL_methods[] = {
 	{"isinjured", actorL_isinjured},
 	{"isarmed", actorL_isarmed},
 	{"isdead", actorL_isdead},
+	{"isvalidtarget", actorL_isvalidtarget},
 	{nullptr, nullptr}
 };
 
@@ -691,6 +693,19 @@ static int actorL_isdead (lua_State* L)
 	assert(actor != nullptr);
 
 	lua_pushboolean(L, actor->actor->isDead());
+	return 1;
+}
+
+/**
+ * @brief Gets the actor's team.
+ */
+static int actorL_isvalidtarget (lua_State* L)
+{
+	assert(lua_isactor(L, 1));
+
+	const aiActor_t* target = lua_toactor(L, 1);
+	assert(target != nullptr);
+	lua_pushboolean(L, AI_IsHostile(AIL_ent, target->actor));
 	return 1;
 }
 
