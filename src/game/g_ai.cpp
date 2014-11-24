@@ -653,14 +653,15 @@ bool AI_FindHidingLocation (int team, Actor* actor, const pos3_t from, int tuLef
 
 /**
  * @brief Tries to search a spot where actor will be more closer to the target and
- * behind the target from enemy
+ * behind the target from enemy (ie hide behind target)
  * @param[in] actor The actor edict.
  * @param[in] from The grid position the actor is (theoretically) standing at and
  * searching the nearest location from
  * @param[in] target Tries to find the nearest position to this location
  * @param[in] tu The available TUs of the actor
+ * @param[in] inverse Try to shield the target instead of using target as shield
  */
-bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, int tu)
+bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, int tu, bool inverse)
 {
 	if (!herdPathingTable)
 		herdPathingTable = (pathing_t*) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
@@ -716,7 +717,8 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 			VectorNormalizeFast(vfriend);
 			VectorSubtract(enemy->origin, actor->origin, venemy);
 			VectorNormalizeFast(venemy);
-			if (DotProduct(vfriend, venemy) > 0.5) {
+			const float dotProd = DotProduct(vfriend, venemy);
+			if ((inverse ? -dotProd : dotProd) > 0.5f) {
 				bestLength = length;
 				VectorCopy(actor->pos, bestPos);
 			}
