@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ui_node_abstractnode.h"
 
+struct uiBehaviour_t; /* prototype */
+
 class uiAbstractScrollbarNode : public uiLocatedNode {
 };
 
@@ -41,6 +43,5 @@ typedef struct abstractScrollbarExtraData_s {
 	bool hideWhenUnused; /** Hide the scrollbar when we can't scroll anything */
 } abstractScrollbarExtraData_t;
 
-struct uiBehaviour_t; /* prototype */
-
+void UI_AbstractScrollbarNodeSet (uiNode_t* node, int value);
 void UI_RegisterAbstractScrollbarNode(uiBehaviour_t* behaviour);

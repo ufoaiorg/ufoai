@@ -699,7 +699,7 @@ struct uiAbstractScrollbarNode_t: uiNode_t {
 	int fullsize () { return UI_EXTRADATA($self, abstractScrollbarExtraData_t).fullsize; };
 
 	void set_autoshowscroll (bool value) { UI_EXTRADATA($self, abstractScrollbarExtraData_t).hideWhenUnused = value; };
-	void set_current (int pos) { UI_EXTRADATA($self, abstractScrollbarExtraData_t).pos = pos; };
+	void set_current (int pos) { UI_AbstractScrollbarNodeSet($self, pos); };
 	void set_viewsize (int size) { UI_EXTRADATA($self, abstractScrollbarExtraData_t).viewsize = size; };
 	void set_fullsize (int size) { UI_EXTRADATA($self, abstractScrollbarExtraData_t).fullsize = size; };
 };
