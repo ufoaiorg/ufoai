@@ -2973,7 +2973,7 @@ SWIGINTERN int uiAbstractScrollbarNode_t_current(uiAbstractScrollbarNode_t *self
 SWIGINTERN int uiAbstractScrollbarNode_t_viewsize(uiAbstractScrollbarNode_t *self){ return UI_EXTRADATA(self, abstractScrollbarExtraData_t).viewsize; }
 SWIGINTERN int uiAbstractScrollbarNode_t_fullsize(uiAbstractScrollbarNode_t *self){ return UI_EXTRADATA(self, abstractScrollbarExtraData_t).fullsize; }
 SWIGINTERN void uiAbstractScrollbarNode_t_set_autoshowscroll(uiAbstractScrollbarNode_t *self,bool value){ UI_EXTRADATA(self, abstractScrollbarExtraData_t).hideWhenUnused = value; }
-SWIGINTERN void uiAbstractScrollbarNode_t_set_current(uiAbstractScrollbarNode_t *self,int pos){ UI_EXTRADATA(self, abstractScrollbarExtraData_t).pos = pos; }
+SWIGINTERN void uiAbstractScrollbarNode_t_set_current(uiAbstractScrollbarNode_t *self,int pos){ UI_AbstractScrollbarNodeSet(self, pos); }
 SWIGINTERN void uiAbstractScrollbarNode_t_set_viewsize(uiAbstractScrollbarNode_t *self,int size){ UI_EXTRADATA(self, abstractScrollbarExtraData_t).viewsize = size; }
 SWIGINTERN void uiAbstractScrollbarNode_t_set_fullsize(uiAbstractScrollbarNode_t *self,int size){ UI_EXTRADATA(self, abstractScrollbarExtraData_t).fullsize = size; }
 SWIGINTERN float uiAbstractValueNode_t_min(uiAbstractValueNode_t *self){ return UI_AbstractValue_GetMin(self); }

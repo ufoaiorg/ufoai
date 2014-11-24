@@ -26,11 +26,46 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../ui_behaviour.h"
+#include "../ui_actions.h"
+#include "../ui_lua.h"
+
 #include "ui_node_abstractscrollbar.h"
 
 #include "../../../common/scripts_lua.h"
 
 #define EXTRADATA_TYPE abstractScrollbarExtraData_t
+#define EXTRADATA(node) UI_EXTRADATA(node, abstractScrollbarExtraData_t)
+
+/**
+ * @brief Set the position of the scrollbar to a value
+ */
+void UI_AbstractScrollbarNodeSet (uiNode_t* node, int value)
+{
+	int pos = value;
+
+	if (pos < 0) {
+		pos = 0;
+	} else if (pos > EXTRADATA(node).fullsize - EXTRADATA(node).viewsize) {
+		pos = EXTRADATA(node).fullsize - EXTRADATA(node).viewsize;
+	}
+	if (pos < 0)
+		pos = 0;
+
+	/* nothing change */
+	if (EXTRADATA(node).pos == pos)
+		return;
+
+	/* update status */
+	EXTRADATA(node).pos = pos;
+
+	/* fire change event */
+	if (node->onChange) {
+		UI_ExecuteEventActions(node, node->onChange);
+	}
+	if (node->lua_onChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onChange);
+	}
+}
 
 void UI_RegisterAbstractScrollbarNode (uiBehaviour_t* behaviour)
 {
