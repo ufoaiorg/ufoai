@@ -485,16 +485,12 @@ static bool AI_CheckCrouch (const Actor* actor)
 bool AI_HideNeeded (const Actor* actor)
 {
 	/* aliens will consider hiding if they are not brave, or there is a dangerous enemy in sight */
-	if (actor->morale <= mor_brave->integer)
-		return true;
+	const bool brave = actor->morale > mor_brave->integer;
 
 	Actor* from = nullptr;
 	/* test if actor is visible */
 	while ((from = G_EdictsGetNextLivingActor(from))) {
-		if (from->isSameTeamAs(actor))
-			continue;
-
-		if (G_IsCivilian(from))
+		if (!AI_IsHostile(actor, from))
 			continue;
 
 		const Item* item = from->getRightHandItem();
@@ -505,15 +501,14 @@ bool AI_HideNeeded (const Actor* actor)
 
 		const fireDef_t* fd = item->getFiredefs();
 		/* search the (visible) inventory (by just checking the weapon in the hands of the enemy) */
-		if (fd != nullptr && fd->range * fd->range >= VectorDistSqr(actor->origin, from->origin)) {
-			const int damageRand = fd->damage[0] + fd->spldmg[0] + ((fd->damage[1] + fd->spldmg[1]) * crand());
-			const int damage = std::max(0, damageRand);
-			if (damage >= actor->HP / 3) {
-				const int hidingTeam = AI_GetHidingTeam(actor);
-				/* now check whether this enemy is visible for this alien */
-				if (G_Vis(hidingTeam, actor, from, VT_NOFRUSTUM) || AI_HasLineOfFire(from, actor))
-					return true;
-			}
+		const bool inRange = fd != nullptr && fd->range * fd->range >= VectorDistSqr(actor->origin, from->origin);
+		const int damageRand = !inRange ? 0 : fd->damage[0] + fd->spldmg[0] + ((fd->damage[1] + fd->spldmg[1]) * crand());
+		const int damage = std::max(0, damageRand);
+		if (!brave || damage >= actor->HP / 3) {
+			const int hidingTeam = AI_GetHidingTeam(actor);
+			/* now check whether this enemy is visible for this alien */
+			if (G_Vis(hidingTeam, actor, from, VT_NOFRUSTUM) || AI_HasLineOfFire(from, actor))
+				return true;
 		}
 	}
 	return false;
@@ -1105,7 +1100,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	if (!actor->isRaged()) {
 		const int hidingTeam = AI_GetHidingTeam(actor);
 		/* hide */
-		if (!(AI_IsExposed(hidingTeam, actor)) && !AI_HideNeeded(actor)) {
+		if (!AI_HideNeeded(actor)) {
 			/* is a hiding spot */
 			bestActionScore += SCORE_HIDE + (aia->target ? SCORE_CLOSE_IN + SCORE_REACTION_FEAR_FACTOR : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
