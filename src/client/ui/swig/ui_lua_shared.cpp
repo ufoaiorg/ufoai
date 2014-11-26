@@ -2905,17 +2905,17 @@ SWIGINTERN void uiNode_t_append_node(uiNode_t *self,uiNode_t *node){ UI_AppendNo
 SWIGINTERN void uiNode_t_insert_node(uiNode_t *self,uiNode_t *node,uiNode_t *prev){ UI_InsertNode(self, prev, node); }
 SWIGINTERN void uiNode_t_delete_node(uiNode_t *self){ UI_DeleteNode (self); }
 SWIGINTERN void uiNode_t_remove_children(uiNode_t *self){ UI_DeleteAllChild (self); }
-SWIGINTERN void uiNode_t_set_left(uiNode_t *self,float value){ self->box.pos[0] = value; }
-SWIGINTERN void uiNode_t_set_top(uiNode_t *self,float value){ self->box.pos[1] = value; }
-SWIGINTERN void uiNode_t_set_widht(uiNode_t *self,float value){ self->box.size[0] = value; }
-SWIGINTERN void uiNode_t_set_height(uiNode_t *self,float value){ self->box.size[1] = value; }
-SWIGINTERN void uiNode_t_set_box(uiNode_t *self,float left,float top,float width,float height){ Vector2Set(self->box.pos, left, top); Vector2Set(self->box.size, width, height); }
+SWIGINTERN void uiNode_t_set_left(uiNode_t *self,float value){ UI_NodeSetBox(self, value, -1, -1, -1); }
+SWIGINTERN void uiNode_t_set_top(uiNode_t *self,float value){ UI_NodeSetBox(self, -1, value, -1, -1); }
+SWIGINTERN void uiNode_t_set_widht(uiNode_t *self,float value){ UI_NodeSetBox(self, -1, -1, value, -1); }
+SWIGINTERN void uiNode_t_set_height(uiNode_t *self,float value){ UI_NodeSetBox(self, -1, -1, -1, value); }
+SWIGINTERN void uiNode_t_set_box(uiNode_t *self,float left,float top,float width,float height){ UI_NodeSetBox(self, left, top, width, height); }
 SWIGINTERN void uiNode_t_set_flashing(uiNode_t *self,bool value){ self->flash = value; }
 SWIGINTERN void uiNode_t_set_flashspeed(uiNode_t *self,float value){ self->flashSpeed = value; }
 SWIGINTERN void uiNode_t_set_invisible(uiNode_t *self,bool value){ self->invis = value; }
 SWIGINTERN void uiNode_t_set_ghost(uiNode_t *self,bool value){ self->ghost = value; }
-SWIGINTERN void uiNode_t_set_pos(uiNode_t *self,float x,float y){ Vector2Set(self->box.pos, x, y); }
-SWIGINTERN void uiNode_t_set_size(uiNode_t *self,float w,float h){ Vector2Set(self->box.size, w, h); }
+SWIGINTERN void uiNode_t_set_pos(uiNode_t *self,float x,float y){ UI_NodeSetPos(self, x, y); }
+SWIGINTERN void uiNode_t_set_size(uiNode_t *self,float w,float h){ UI_NodeSetSize(self, w, h); }
 SWIGINTERN void uiNode_t_set_color(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->color, r, g, b, a); }
 SWIGINTERN void uiNode_t_set_disabledcolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->disabledColor, r, g, b, a); }
 SWIGINTERN void uiNode_t_set_flashcolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->flashColor, r, g, b, a); }
@@ -2957,9 +2957,9 @@ SWIGINTERN void uiAbstractScrollableNode_t_moveup(uiAbstractScrollableNode_t *se
 SWIGINTERN void uiAbstractScrollableNode_t_movedown(uiAbstractScrollableNode_t *self){ dynamic_cast<uiAbstractScrollableNode*>(self->behaviour->manager.get())->moveDown(self); }
 SWIGINTERN void uiAbstractScrollableNode_t_movehome(uiAbstractScrollableNode_t *self){ dynamic_cast<uiAbstractScrollableNode*>(self->behaviour->manager.get())->moveHome(self); }
 SWIGINTERN void uiAbstractScrollableNode_t_moveend(uiAbstractScrollableNode_t *self){ dynamic_cast<uiAbstractScrollableNode*>(self->behaviour->manager.get())->moveEnd(self); }
-SWIGINTERN void uiAbstractScrollableNode_t_set_viewpos(uiAbstractScrollableNode_t *self,int pos){ UI_EXTRADATA(self, abstractScrollableExtraData_t).scrollY.viewPos = pos; }
-SWIGINTERN void uiAbstractScrollableNode_t_set_viewsize(uiAbstractScrollableNode_t *self,int size){ UI_EXTRADATA(self, abstractScrollableExtraData_t).scrollY.viewSize = size; }
-SWIGINTERN void uiAbstractScrollableNode_t_set_fullsize(uiAbstractScrollableNode_t *self,int size){ UI_EXTRADATA(self, abstractScrollableExtraData_t).scrollY.fullSize = size; }
+SWIGINTERN void uiAbstractScrollableNode_t_set_viewpos(uiAbstractScrollableNode_t *self,int pos){ dynamic_cast<uiAbstractScrollableNode*>(self->behaviour->manager.get())->setScrollY(self, pos, -1, -1); }
+SWIGINTERN void uiAbstractScrollableNode_t_set_viewsize(uiAbstractScrollableNode_t *self,int size){ dynamic_cast<uiAbstractScrollableNode*>(self->behaviour->manager.get())->setScrollY(self, -1, size, -1); }
+SWIGINTERN void uiAbstractScrollableNode_t_set_fullsize(uiAbstractScrollableNode_t *self,int size){ dynamic_cast<uiAbstractScrollableNode*>(self->behaviour->manager.get())->setScrollY(self, -1, -1, size); }
 
 static LUA_EVENT uiAbstractScrollableNode_t_lua_onViewChange_get(uiAbstractScrollableNode_t* node) {
 	return UI_EXTRADATA(node, abstractScrollableExtraData_t).lua_onViewChange;
@@ -3214,8 +3214,8 @@ SWIGINTERN void uiWindowNode_t_set_background(uiWindowNode_t *self,char const *n
 SWIGINTERN void uiWindowNode_t_set_fullscreen(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).isFullScreen = value; }
 SWIGINTERN void uiWindowNode_t_set_modal(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).modal = value; }
 SWIGINTERN void uiWindowNode_t_set_fill(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).fill = value; }
-SWIGINTERN void uiWindowNode_t_set_dragbutton(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).dragButton = value; }
-SWIGINTERN void uiWindowNode_t_set_closebutton(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).closeButton = value; }
+SWIGINTERN void uiWindowNode_t_set_dragbutton(uiWindowNode_t *self,bool value){ UI_Window_SetDragButton(self, value); }
+SWIGINTERN void uiWindowNode_t_set_closebutton(uiWindowNode_t *self,bool value){ UI_Window_SetCloseButton(self, value); }
 
 static LUA_EVENT uiWindowNode_t_lua_onWindowOpened_get(uiWindowNode_t* node) {
 	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowOpened;

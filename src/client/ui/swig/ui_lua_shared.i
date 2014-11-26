@@ -580,18 +580,18 @@ struct uiNode_t {
 	void delete_node () { UI_DeleteNode ($self); };
 	void remove_children () { UI_DeleteAllChild ($self); };
 
-	void set_left (float value) { $self->box.pos[0] = value; };
-	void set_top (float value) { $self->box.pos[1] = value; };
-	void set_widht (float value) { $self->box.size[0] = value; };
-	void set_height (float value) { $self->box.size[1] = value; };
-	void set_box (float left, float top, float width, float height) { Vector2Set($self->box.pos, left, top); Vector2Set($self->box.size, width, height); };
+	void set_left (float value) { UI_NodeSetBox($self, value, -1, -1, -1); };
+	void set_top (float value) { UI_NodeSetBox($self, -1, value, -1, -1); };
+	void set_widht (float value) { UI_NodeSetBox($self, -1, -1, value, -1); };
+	void set_height (float value) { UI_NodeSetBox($self, -1, -1, -1, value); };
+	void set_box (float left, float top, float width, float height) { UI_NodeSetBox($self, left, top, width, height); };
 
 	void set_flashing (bool value) { $self->flash = value; };
 	void set_flashspeed (float value) { $self->flashSpeed = value; };
 	void set_invisible (bool value) { $self->invis = value; };
 	void set_ghost (bool value) { $self->ghost = value; };
-	void set_pos (float x, float y) { Vector2Set($self->box.pos, x, y); }
-	void set_size (float w, float h) { Vector2Set($self->box.size, w, h); }
+	void set_pos (float x, float y) { UI_NodeSetPos($self, x, y); }
+	void set_size (float w, float h) { UI_NodeSetSize($self, w, h); }
 	void set_color (float r, float g, float b, float a) { Vector4Set($self->color, r, g, b, a); };
 	void set_disabledcolor (float r, float g, float b, float a) { Vector4Set($self->disabledColor, r, g, b, a); };
 	void set_flashcolor (float r, float g, float b, float a) { Vector4Set($self->flashColor, r, g, b, a); };
@@ -669,9 +669,9 @@ struct uiAbstractScrollableNode_t: uiNode_t {
 	void movehome () { dynamic_cast<uiAbstractScrollableNode*>($self->behaviour->manager.get())->moveHome($self); };
 	void moveend () { dynamic_cast<uiAbstractScrollableNode*>($self->behaviour->manager.get())->moveEnd($self); };
 
-	void set_viewpos (int pos) { UI_EXTRADATA($self, abstractScrollableExtraData_t).scrollY.viewPos = pos; };
-	void set_viewsize (int size) { UI_EXTRADATA($self, abstractScrollableExtraData_t).scrollY.viewSize = size; };
-	void set_fullsize (int size) { UI_EXTRADATA($self, abstractScrollableExtraData_t).scrollY.fullSize = size; };
+	void set_viewpos (int pos) { dynamic_cast<uiAbstractScrollableNode*>($self->behaviour->manager.get())->setScrollY($self, pos, -1, -1); };
+	void set_viewsize (int size) { dynamic_cast<uiAbstractScrollableNode*>($self->behaviour->manager.get())->setScrollY($self, -1, size, -1); };
+	void set_fullsize (int size) { dynamic_cast<uiAbstractScrollableNode*>($self->behaviour->manager.get())->setScrollY($self, -1, -1, size); };
 
 	%rename (on_viewchange) lua_onViewChange;
 	LUA_EVENT lua_onViewChange; 		/**< references the event in lua: on_viewchange (node) */
@@ -1271,8 +1271,8 @@ struct uiWindowNode_t: uiNode_t {
 	void set_fullscreen (bool value) { UI_EXTRADATA($self, windowExtraData_t).isFullScreen = value; };
 	void set_modal (bool value) { UI_EXTRADATA($self, windowExtraData_t).modal = value; };
 	void set_fill (bool value) { UI_EXTRADATA($self, windowExtraData_t).fill = value; };
-	void set_dragbutton (bool value) { UI_EXTRADATA($self, windowExtraData_t).dragButton = value; };
-	void set_closebutton (bool value) { UI_EXTRADATA($self, windowExtraData_t).closeButton = value; };
+	void set_dragbutton (bool value) { UI_Window_SetDragButton($self, value); };
+	void set_closebutton (bool value) { UI_Window_SetCloseButton($self, value); };
 
 	%rename (on_windowopened) lua_onWindowOpened;
 	%rename (on_windowclosed) lua_onWindowClosed;

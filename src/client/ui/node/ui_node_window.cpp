@@ -174,6 +174,9 @@ void uiWindowNode::doLayout (uiNode_t* node)
 	if (!node->invalidated)
 		return;
 
+	/* check for fullscreen window */
+	UI_Window_FlagFullscreen(node);
+
 	/* use a the space */
 	if (EXTRADATA(node).fill) {
 		if (node->box.size[0] != viddef.virtualWidth) {
@@ -258,12 +261,42 @@ void uiWindowNode::onLoading (uiNode_t* node)
 }
 
 /**
- * @brief Called at the end of the load from script
+ * @brief Create/remove close button on window.
+ * @note Creates a onClick event handler, should be refactored.
  */
-void uiWindowNode::onLoaded (uiNode_t* node)
-{
-	/* create a drag zone, if it is requested */
-	if (EXTRADATA(node).dragButton) {
+void UI_Window_SetCloseButton (uiNode_t* node, bool value) {
+	if (value) {
+		uiNode_t* control = UI_AllocNode("close_window_button", "button", node->dynamic);
+		const int positionFromRight = CONTROLS_PADDING;
+		static const char* closeCommand = "ui_close <path:root>;";
+
+		control->root = node;
+		UI_NodeSetProperty(control, UI_GetPropertyFromBehaviour(control->behaviour, "icon"), "icons/system_close");
+		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
+		control->box.size[0] = CONTROLS_IMAGE_DIMENSIONS;
+		control->box.size[1] = CONTROLS_IMAGE_DIMENSIONS;
+		control->box.pos[0] = node->box.size[0] - positionFromRight - control->box.size[0];
+		control->box.pos[1] = CONTROLS_PADDING;
+		control->tooltip = _("Close the window");
+		control->onClick = UI_AllocStaticCommandAction(closeCommand);
+		UI_AppendNode(node, control);
+	}
+	else {
+		// drop the close node
+		uiNode_t* control = UI_FindNode(node, "close_window_button");
+		if (control) {
+			UI_RemoveNode (node, control);
+		}
+	}
+	EXTRADATA(node).closeButton = value;
+}
+
+/**
+ * @brief Create/remove drag button.
+ */
+void UI_Window_SetDragButton (uiNode_t* node, bool value) {
+	if (value) {
+		// create the drag node
 		uiNode_t* control = UI_AllocNode("move_window_button", "controls", node->dynamic);
 		control->root = node;
 		control->box.size[0] = node->box.size[0];
@@ -273,30 +306,35 @@ void uiWindowNode::onLoaded (uiNode_t* node)
 		control->tooltip = _("Drag to move window");
 		UI_AppendNode(node, control);
 	}
-
-	/* create a close button, if it is requested */
-	if (EXTRADATA(node).closeButton) {
-		uiNode_t* button = UI_AllocNode("close_window_button", "button", node->dynamic);
-		const int positionFromRight = CONTROLS_PADDING;
-		static const char* closeCommand = "ui_close <path:root>;";
-
-		button->root = node;
-		UI_NodeSetProperty(button, UI_GetPropertyFromBehaviour(button->behaviour, "icon"), "icons/system_close");
-		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
-		button->box.size[0] = CONTROLS_IMAGE_DIMENSIONS;
-		button->box.size[1] = CONTROLS_IMAGE_DIMENSIONS;
-		button->box.pos[0] = node->box.size[0] - positionFromRight - button->box.size[0];
-		button->box.pos[1] = CONTROLS_PADDING;
-		button->tooltip = _("Close the window");
-		button->onClick = UI_AllocStaticCommandAction(closeCommand);
-		UI_AppendNode(node, button);
+	else {
+		// drop the drag node
+		uiNode_t* control = UI_FindNode(node, "move_window_button");
+		if (control) {
+			UI_RemoveNode (node, control);
+		}
 	}
+	EXTRADATA(node).dragButton = value;
+}
 
-	EXTRADATA(node).isFullScreen = node->box.size[0] == VID_NORM_WIDTH
-			&& node->box.size[1] == VID_NORM_HEIGHT;
+/**
+ * @brief Called at the end of the load from script
+ */
+void uiWindowNode::onLoaded (uiNode_t* node)
+{
+	UI_Window_SetCloseButton (node, EXTRADATA(node).closeButton);
+	UI_Window_SetDragButton(node, EXTRADATA(node).dragButton);
+	UI_Window_FlagFullscreen(node);
 
 	if (EXTRADATA(node).starLayout)
 		UI_Invalidate(node);
+}
+
+/**
+ * @brief If the node size equals the full screen size, flag the node as isFullscreen, so it
+ * is displayed properly.
+ */
+void UI_Window_FlagFullscreen(uiNode_t* node) {
+	EXTRADATA(node).isFullScreen = (node->box.size[0] == VID_NORM_WIDTH) && (node->box.size[1] == VID_NORM_HEIGHT);
 }
 
 void uiWindowNode::clone (const uiNode_t* source, uiNode_t* clone)

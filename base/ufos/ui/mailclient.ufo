@@ -20,7 +20,6 @@ mail_text:set_size(904, 480)
 mail_text:set_lineheight(24)
 mail_text:set_tabwidth(100)
 mail_text.on_viewchange = function (sender)
-		ufo.print("mail_text.on_viewchange\n")
 		sender:parent():child("mail_scroll"):set_fullsize(sender:fullsize())
 		sender:parent():child("mail_scroll"):set_current(sender:viewpos())
 		sender:parent():child("mail_scroll"):set_viewsize(sender:viewsize())
@@ -31,7 +30,6 @@ mail_scroll:set_pos(960, 208)
 mail_scroll:set_size(32, 470)
 mail_scroll:set_autoshowscroll(true)
 mail_scroll.on_change = function (sender)
-		ufo.print("mail_scroll.on_change\n")
 		sender:root():child("mail_text"):set_viewpos(sender:current())
 	end
 
@@ -65,6 +63,7 @@ mail.on_windowopen = function (sender)
 		sender:child("mail_text"):set_viewpos(0)
 		sender:child("mail_scroll"):set_current(0)
 	end
+local overlay = ufo.create_control(mail, "fuzzyScreen", "overlay", nil)
 	
 local mailheader = ufo.create_component("panel", "mailheader", nil)
 mailheader:set_size(670, 28)
