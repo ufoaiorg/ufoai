@@ -110,7 +110,10 @@ void UI_HideNode(uiNode_t* node);
 void UI_Invalidate(uiNode_t* node);
 void UI_Validate(uiNode_t* node);
 void UI_NodeSetPos(uiNode_t* node, vec2_t pos);
+void UI_NodeSetPos(uiNode_t* node, float x, float y);
 void UI_NodeSetSize(uiNode_t* node, vec2_t size);
+void UI_NodeSetSize (uiNode_t* node, float w, float h);
+void UI_NodeSetBox (uiNode_t* node, float x, float y, float w, float h);
 
 /* position */
 void UI_GetNodeAbsPos(uiNode_t const* node, vec2_t pos);

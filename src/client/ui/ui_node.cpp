@@ -640,6 +640,15 @@ void UI_NodeSetPos(uiNode_t* node, vec2_t pos) {
 }
 
 /**
+ * @brief Update the node size and fire the pos callback
+ */
+void UI_NodeSetPos(uiNode_t* node, float x, float y) {
+	vec2_t p;
+	p[0] = x; p[1] = y;
+	UI_NodeSetPos(node, p);
+}
+
+/**
  * @brief Update the node size and fire the size callback
  */
 void UI_NodeSetSize (uiNode_t* node, vec2_t size)
@@ -649,6 +658,29 @@ void UI_NodeSetSize (uiNode_t* node, vec2_t size)
 	node->box.size[0] = size[0];
 	node->box.size[1] = size[1];
 	UI_Node_SizeChanged(node);
+}
+/**
+ * @brief Update the node size and fire the size callback
+ */
+void UI_NodeSetSize (uiNode_t* node, float w, float h) {
+	vec2_t s;
+	s[0] = w; s[1] = h;
+	UI_NodeSetSize(node, s);
+}
+
+/**
+ * @brief Update the node size and height and fire callbacks.
+ * @note Use value -1 for x, y, w, h to specify no change in value.
+ */
+void UI_NodeSetBox (uiNode_t* node, float x, float y, float w, float h) {
+	vec2_t p;
+	vec2_t s;
+	if (x != -1) p[0] = x; else p[0] = node->box.pos[0];
+	if (y != -1) p[1] = y; else p[1] = node->box.pos[1];
+	if (w != -1) s[0] = w; else s[0] = node->box.size[0];
+	if (h != -1) s[1] = h; else s[1] = node->box.size[1];
+	UI_NodeSetPos(node, p);
+	UI_NodeSetSize(node, s);
 }
 
 /**
