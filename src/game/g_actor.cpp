@@ -237,7 +237,7 @@ void G_ActorSetMaxs (Actor* actor)
 
 int G_ActorCalculateMaxTU (const Edict* ent)
 {
-	const int invWeight = ent->chr.inv.getWeight();
+	const float invWeight = ent->chr.inv.getWeight();
 	const int currentMaxTU = GET_TU(ent->chr.score.skills[ABILITY_SPEED], GET_ENCUMBRANCE_PENALTY(invWeight,
 			ent->chr.score.skills[ABILITY_POWER])) * G_ActorGetInjuryPenalty(ent, MODIFIER_TU);
 
