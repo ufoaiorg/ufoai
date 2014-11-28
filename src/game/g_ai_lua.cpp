@@ -2064,6 +2064,8 @@ int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
 		}
 		lua_setglobal(ailState, AI->type);
 		gi.FS_FreeFile(fbuf);
+	} else {
+		lua_pop(ailState, 1);
 	}
 
 	return 0;
