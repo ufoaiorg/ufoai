@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_team.h"
 #include "cp_team_callbacks.h"
+#include "cp_hospital.h" /* HOS_GetInjuryLevel */
 #ifdef DEBUG
 #include "cp_geoscape.h" /* GEO_GetSelectedAircraft */
 #endif
@@ -233,7 +234,7 @@ static void CP_TEAM_FillEmployeeList_f (void)
 			/* employee unassigned */
 			if (teamSize >= maxTeamSize)
 				/* aircraft is full */
-				tooltip = _("No more employee can be assigned to this aircraft");
+				tooltip = _("No more employees can be assigned to this aircraft");
 			else
 				/* aircraft has free space */
 				tooltip = "";
@@ -247,7 +248,9 @@ static void CP_TEAM_FillEmployeeList_f (void)
 				tooltip = _("Employee is assigned to another aircraft");
 		}
 
-		cgi->UI_ExecuteConfunc("aircraft_soldierlist_add %d \"%s\" \"%s\" %d \"%s\"", employee->chr.ucn, typeId, employee->chr.name, assignedCraft == aircraft, tooltip);
+		const bool inHospital = HOS_GetInjuryLevel(&employee->chr) > 0.0001f && B_GetBuildingStatus(employee->baseHired, B_HOSPITAL);
+		const bool isHealing = inHospital || employee->chr.HP < employee->chr.maxHP;
+		cgi->UI_ExecuteConfunc("aircraft_soldierlist_add %d \"%s\" \"%s\" %d %d \"%s\"", employee->chr.ucn, typeId, employee->chr.name, assignedCraft == aircraft, isHealing, tooltip);
 	}
 }
 
