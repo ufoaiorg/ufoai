@@ -27,7 +27,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void HOS_InitStartup(void);
 bool HOS_HealCharacter(character_t* chr, bool hospital);
-bool HOS_HealEmployee(Employee* employee);
-void HOS_HealAll(const base_t* const base);
 void HOS_HospitalRun(void);
 float HOS_GetInjuryLevel(const character_t* const chr);

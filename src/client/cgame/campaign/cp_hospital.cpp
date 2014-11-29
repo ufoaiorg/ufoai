@@ -93,36 +93,6 @@ void HOS_HospitalRun (void)
 	}
 }
 
-/**
- * @brief Callback for HOS_HealCharacter() in hospital.
- * @param[in] employee Pointer to the employee to heal.
- * @sa HOS_HealCharacter
- * @sa HOS_HealAll
- */
-bool HOS_HealEmployee (Employee* employee)
-{
-	assert(employee);
-	return HOS_HealCharacter(&employee->chr, true);
-}
-
-/**
- * @brief Heal all employees in the given base
- * @param[in] base The base the employees should become healed
- * @sa HOS_HealEmployee
- */
-void HOS_HealAll (const base_t* const base)
-{
-	assert(base);
-
-	for (int type = 0; type < MAX_EMPL; type++) {
-		E_Foreach(type, employee) {
-			if (!employee->isHiredInBase(base))
-				continue;
-			HOS_HealEmployee(employee);
-		}
-	}
-}
-
 float HOS_GetInjuryLevel (const character_t* const chr)
 {
 	float injuryLevel = 0.0f;
@@ -132,7 +102,6 @@ float HOS_GetInjuryLevel (const character_t* const chr)
 
 	return injuryLevel;
 }
-
 
 #ifdef DEBUG
 /**
