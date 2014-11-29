@@ -52,6 +52,9 @@ static const vec4_t anamorphicBorder = {0, 0, 0, 1};
 
 static const char* WINDOW_FONT_BIG = "f_big";
 
+static const char* WINDOW_CLOSE_BUTTON_NAME = "close_window_button";
+static const char* WINDOW_DRAG_BUTTON_NAME = "move_window_button";
+
 /**
  * @brief set background sprite
  */
@@ -174,9 +177,6 @@ void uiWindowNode::doLayout (uiNode_t* node)
 	if (!node->invalidated)
 		return;
 
-	/* check for fullscreen window */
-	UI_Window_FlagFullscreen(node);
-
 	/* use a the space */
 	if (EXTRADATA(node).fill) {
 		if (node->box.size[0] != viddef.virtualWidth) {
@@ -191,6 +191,17 @@ void uiWindowNode::doLayout (uiNode_t* node)
 	if (UI_WindowIsFullScreen(node)) {
 		node->box.pos[0] = (int) ((viddef.virtualWidth - node->box.size[0]) / 2);
 		node->box.pos[1] = (int) ((viddef.virtualHeight - node->box.size[1]) / 2);
+	}
+
+	/* reposition the close button */
+	if (EXTRADATA(node).closeButton) {
+		uiNode_t* control = UI_FindNode(node, WINDOW_CLOSE_BUTTON_NAME);
+		control->box.pos[0] = node->box.size[0] - CONTROLS_PADDING - control->box.size[0];
+	}
+	/* resize the dragw button */
+	if (EXTRADATA(node).dragButton) {
+		uiNode_t* control = UI_FindNode(node, WINDOW_DRAG_BUTTON_NAME);
+		control->box.size[0] = node->box.size[0];
 	}
 
 	/** @todo check and fix here window outside the screen */
@@ -249,6 +260,13 @@ void uiWindowNode::onWindowActivate (uiNode_t* node)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onWindowActivate);
 }
 
+void uiWindowNode::onSizeChanged(uiNode_t* node) {
+	uiLocatedNode::onWindowActivate(node);
+
+	/* check for fullscreen window */
+	UI_Window_FlagFullscreen(node);
+}
+
 /**
  * @brief Called at the begin of the load from script
  */
@@ -266,7 +284,7 @@ void uiWindowNode::onLoading (uiNode_t* node)
  */
 void UI_Window_SetCloseButton (uiNode_t* node, bool value) {
 	if (value) {
-		uiNode_t* control = UI_AllocNode("close_window_button", "button", node->dynamic);
+		uiNode_t* control = UI_AllocNode(WINDOW_CLOSE_BUTTON_NAME, "button", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
 		static const char* closeCommand = "ui_close <path:root>;";
 
@@ -283,7 +301,7 @@ void UI_Window_SetCloseButton (uiNode_t* node, bool value) {
 	}
 	else {
 		// drop the close node
-		uiNode_t* control = UI_FindNode(node, "close_window_button");
+		uiNode_t* control = UI_FindNode(node, WINDOW_CLOSE_BUTTON_NAME);
 		if (control) {
 			UI_RemoveNode (node, control);
 		}
@@ -297,18 +315,31 @@ void UI_Window_SetCloseButton (uiNode_t* node, bool value) {
 void UI_Window_SetDragButton (uiNode_t* node, bool value) {
 	if (value) {
 		// create the drag node
-		uiNode_t* control = UI_AllocNode("move_window_button", "controls", node->dynamic);
+		uiNode_t* control = UI_AllocNode(WINDOW_DRAG_BUTTON_NAME, "controls", node->dynamic);
 		control->root = node;
 		control->box.size[0] = node->box.size[0];
 		control->box.size[1] = TOP_HEIGHT;
 		control->box.pos[0] = 0;
 		control->box.pos[1] = 0;
 		control->tooltip = _("Drag to move window");
-		UI_AppendNode(node, control);
+		/* if there is a close button already on this windown, then insert the drag button before the close
+		   button; this is needed so the drag button is "below" the close button; if we don't do this, the
+		   drag button recieves input events for the close button first making the close button no longer
+		   working */
+		if (EXTRADATA(node).closeButton) {
+			uiNode_t* close = UI_FindNode(node, WINDOW_DRAG_BUTTON_NAME);
+			assert(close);
+			// get the previous node of close
+			close = UI_GetPrevNode(close);
+			UI_InsertNode(node, close, control);
+		}
+		else {
+			UI_AppendNode(node, control);
+		}
 	}
 	else {
 		// drop the drag node
-		uiNode_t* control = UI_FindNode(node, "move_window_button");
+		uiNode_t* control = UI_FindNode(node, WINDOW_DRAG_BUTTON_NAME);
 		if (control) {
 			UI_RemoveNode (node, control);
 		}
@@ -321,8 +352,10 @@ void UI_Window_SetDragButton (uiNode_t* node, bool value) {
  */
 void uiWindowNode::onLoaded (uiNode_t* node)
 {
-	UI_Window_SetCloseButton (node, EXTRADATA(node).closeButton);
+	/* note: the order here is important, first the drag button, then the close button otherwise the drag button
+	   will be over the close button and the close button will no longer recieve input events */
 	UI_Window_SetDragButton(node, EXTRADATA(node).dragButton);
+	UI_Window_SetCloseButton (node, EXTRADATA(node).closeButton);
 	UI_Window_FlagFullscreen(node);
 
 	if (EXTRADATA(node).starLayout)

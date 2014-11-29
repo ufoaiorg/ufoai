@@ -701,8 +701,22 @@ uiNode_t* UI_GetNode(const uiNode_t* node, const char* name) {
 }
 
 /**
+ * @brief Returns the previous node based on the order of nodes in the parent.
+ * @return A uiNode_t* or nullptr if no previous node is found.
+ * @note A nullptr is returned if the node is either the last node in the chain or in case the node is the
+ * only node.
+ */
+uiNode_t* UI_GetPrevNode(const uiNode_t* node) {
+	uiNode_t* current = nullptr;
+	for (current = node->parent->firstChild; current; current = current->next) {
+		if (node == current->next) break;
+	}
+	return current;
+}
+
+/**
  * @brief Recursive searches for a child node by name in the entire subtree.
- * @return A uiNode_t* of nullptr if not found.
+ * @return A uiNode_t* or nullptr if not found.
  */
 uiNode_t* UI_FindNode(const uiNode_t* node, const char* name) {
 	/* search current level */

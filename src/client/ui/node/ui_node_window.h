@@ -42,6 +42,7 @@ class uiWindowNode : public uiLocatedNode {
 	void onWindowOpened(uiNode_t* node, linkedList_t* params) override;
 	void onWindowClosed(uiNode_t* node) override;
 	void onWindowActivate(uiNode_t* node) override;
+	void onSizeChanged(uiNode_t* node) override;
 	void clone(uiNode_t const* source, uiNode_t* clone) override;
 };
 
