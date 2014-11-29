@@ -485,16 +485,12 @@ static bool AI_CheckCrouch (const Actor* actor)
 bool AI_HideNeeded (const Actor* actor)
 {
 	/* aliens will consider hiding if they are not brave, or there is a dangerous enemy in sight */
-	if (actor->morale <= mor_brave->integer)
-		return true;
+	const bool brave = actor->morale > mor_brave->integer;
 
 	Actor* from = nullptr;
 	/* test if actor is visible */
 	while ((from = G_EdictsGetNextLivingActor(from))) {
-		if (from->isSameTeamAs(actor))
-			continue;
-
-		if (G_IsCivilian(from))
+		if (!AI_IsHostile(actor, from))
 			continue;
 
 		const Item* item = from->getRightHandItem();
@@ -505,15 +501,14 @@ bool AI_HideNeeded (const Actor* actor)
 
 		const fireDef_t* fd = item->getFiredefs();
 		/* search the (visible) inventory (by just checking the weapon in the hands of the enemy) */
-		if (fd != nullptr && fd->range * fd->range >= VectorDistSqr(actor->origin, from->origin)) {
-			const int damageRand = fd->damage[0] + fd->spldmg[0] + ((fd->damage[1] + fd->spldmg[1]) * crand());
-			const int damage = std::max(0, damageRand);
-			if (damage >= actor->HP / 3) {
-				const int hidingTeam = AI_GetHidingTeam(actor);
-				/* now check whether this enemy is visible for this alien */
-				if (G_Vis(hidingTeam, actor, from, VT_NOFRUSTUM) || AI_HasLineOfFire(from, actor))
-					return true;
-			}
+		const bool inRange = fd != nullptr && fd->range * fd->range >= VectorDistSqr(actor->origin, from->origin);
+		const int damageRand = !inRange ? 0 : fd->damage[0] + fd->spldmg[0] + ((fd->damage[1] + fd->spldmg[1]) * crand());
+		const int damage = std::max(0, damageRand);
+		if (!brave || damage >= actor->HP / 3) {
+			const int hidingTeam = AI_GetHidingTeam(actor);
+			/* now check whether this enemy is visible for this alien */
+			if (G_Vis(hidingTeam, actor, from, VT_NOFRUSTUM) || AI_HasLineOfFire(from, actor))
+				return true;
 		}
 	}
 	return false;
@@ -653,14 +648,15 @@ bool AI_FindHidingLocation (int team, Actor* actor, const pos3_t from, int tuLef
 
 /**
  * @brief Tries to search a spot where actor will be more closer to the target and
- * behind the target from enemy
+ * behind the target from enemy (ie hide behind target)
  * @param[in] actor The actor edict.
  * @param[in] from The grid position the actor is (theoretically) standing at and
  * searching the nearest location from
  * @param[in] target Tries to find the nearest position to this location
  * @param[in] tu The available TUs of the actor
+ * @param[in] inverse Try to shield the target instead of using target as shield
  */
-bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, int tu)
+bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, int tu, bool inverse)
 {
 	if (!herdPathingTable)
 		herdPathingTable = (pathing_t*) G_TagMalloc(sizeof(*herdPathingTable), TAG_LEVEL);
@@ -716,7 +712,8 @@ bool AI_FindHerdLocation (Actor* actor, const pos3_t from, const vec3_t target, 
 			VectorNormalizeFast(vfriend);
 			VectorSubtract(enemy->origin, actor->origin, venemy);
 			VectorNormalizeFast(venemy);
-			if (DotProduct(vfriend, venemy) > 0.5) {
+			const float dotProd = DotProduct(vfriend, venemy);
+			if ((inverse ? -dotProd : dotProd) > 0.5f) {
 				bestLength = length;
 				VectorCopy(actor->pos, bestPos);
 			}
@@ -1103,7 +1100,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	if (!actor->isRaged()) {
 		const int hidingTeam = AI_GetHidingTeam(actor);
 		/* hide */
-		if (!(AI_IsExposed(hidingTeam, actor)) && !AI_HideNeeded(actor)) {
+		if (!AI_HideNeeded(actor)) {
 			/* is a hiding spot */
 			bestActionScore += SCORE_HIDE + (aia->target ? SCORE_CLOSE_IN + SCORE_REACTION_FEAR_FACTOR : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {

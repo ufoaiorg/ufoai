@@ -188,7 +188,7 @@ static void GAME_SK_Results (dbuffer* msg, int winner, int* numSpawned, int* num
 		return;
 
 	/* HACK: Change to the main menu now so cgame shutdown won't kill the results popup doing it */
-	cgi->UI_InitStack("main", nullptr);
+	cgi->UI_InitStack("main", "");
 
 	if (winner == -1) {
 		cgi->UI_Popup(_("Game Drawn!"), "%s\n", _("The game was a draw!\n\nEnemies escaped."));

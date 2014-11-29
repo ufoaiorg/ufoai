@@ -325,10 +325,13 @@ window iaircraft
 		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@string = <3>
 		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.selected@current = <4>
 
-		if ( "<5>" ne "" ) {
+		if ( <5> == 1 ) {
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@color = "1 0 0 1"
+		}
+		if ( "<6>" ne "" ) {
 			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.selected@disabled = true
-			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@tooltip = "<5>"
-			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.selected@tooltip = "<5>"
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@tooltip = "<6>"
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.selected@tooltip = "<6>"
 		}
 		if ( *node:root.selected@integer < 0 ) {
 		//	cmd "aircraft_soldierlist_select <1>;"

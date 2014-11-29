@@ -306,7 +306,9 @@ function ails.phase_three ()
 		if ails.target then
 			ails.target:pos():face()
 		end
-		ai.reactionfire("enable")
+		if not ai.reactionfire() and ai.tusforshooting() <= ai.actor():TU() then
+			ai.reactionfire("enable")
+		end
 		ai.crouch(true)
 	end
 end

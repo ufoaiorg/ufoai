@@ -1055,7 +1055,7 @@ static int AIL_crouch (lua_State* L)
 			const bool reqState = lua_toboolean(L, 1);
 			const bool state = AIL_ent->isCrouched();
 			if (reqState != state)
-				G_ClientStateChange(*AIL_player, AIL_ent, STATE_CROUCHED, false);
+				G_ClientStateChange(*AIL_player, AIL_ent, STATE_CROUCHED, true);
 		} else
 			AIL_invalidparameter(1);
 	}
@@ -1079,7 +1079,7 @@ static int AIL_reactionfire (lua_State* L)
 		}
 
 		if (reactionState) {
-			G_ClientStateChange(*AIL_player, AIL_ent, reactionState, false);
+			G_ClientStateChange(*AIL_player, AIL_ent, reactionState, true);
 		} else {
 			AIL_invalidparameter(1);
 		}
@@ -1362,6 +1362,8 @@ static int AIL_positionhide (lua_State* L)
  * locate behind the target from enemy
  * @note @c target (parameter is passed through the lua stack) The actor
  * to which AI tries to become closer
+ * @note @c inverse (passed through the lua stack) Try to shield the target instead
+ * of using it as shield
  */
 static int AIL_positionherd (lua_State* L)
 {
@@ -1371,11 +1373,19 @@ static int AIL_positionherd (lua_State* L)
 		lua_pushboolean(L, 0);
 		return 1;
 	}
+	const aiActor_t* target = lua_toactor(L, 1);
+
+	bool inverse = false;
+	if (lua_gettop(L) > 1) {
+		if (lua_isboolean(L, 2))
+			inverse = lua_toboolean(L, 2);
+		else
+			AIL_invalidparameter(2);
+	}
 
 	pos3_t save;
 	VectorCopy(AIL_ent->pos, save);
-	const aiActor_t* target = lua_toactor(L, 1);
-	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->actor->origin, AIL_ent->getUsableTUs())) {
+	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->actor->origin, AIL_ent->getUsableTUs(), inverse)) {
 		lua_pushpos3(L, &AIL_ent->pos);
 	} else {
 		lua_pushboolean(L, 0);
@@ -2054,6 +2064,8 @@ int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
 		}
 		lua_setglobal(ailState, AI->type);
 		gi.FS_FreeFile(fbuf);
+	} else {
+		lua_pop(ailState, 1);
 	}
 
 	return 0;

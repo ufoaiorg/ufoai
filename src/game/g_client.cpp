@@ -468,12 +468,12 @@ static void G_ClientStateChangeUpdate (Edict& ent)
 
 /**
  * @brief Changes the state of a player/soldier.
- * @param[in,out] player The player who controlls the actor
+ * @param[in,out] player The player who controls the actor
  * @param[in] actor the edict to perform the state change for
  * @param[in] reqState The bit-map of the requested state change
- * @param[in] checkaction only activate the events - network stuff is handled in the calling function
+ * @param[in] checkaction if false only activate the events - network stuff is handled in the calling function
  * don't even use the G_ActionCheckForCurrentTeam function
- * @note Use checkaction true only for e.g. spawning values
+ * @note Use checkaction false only for e.g. spawning values
  */
 void G_ClientStateChange (const Player& player, Actor* actor, int reqState, bool checkaction)
 {

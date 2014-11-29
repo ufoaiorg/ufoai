@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_team.h"
 #include "cp_team_callbacks.h"
+#include "cp_hospital.h" /* HOS_GetInjuryLevel */
 #ifdef DEBUG
 #include "cp_geoscape.h" /* GEO_GetSelectedAircraft */
 #endif
@@ -39,27 +40,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void CP_TEAM_AssignSoldierByUCN_f (void)
 {
-	base_t* base = B_GetCurrentSelectedBase();
-	aircraft_t* aircraft;
-	int ucn;
-	const employeeType_t employeeType = EMPL_SOLDIER;
-	Employee* employee;
-
 	/* check syntax */
 	if (cgi->Cmd_Argc() < 1 ) {
 		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	ucn = atoi(cgi->Cmd_Argv(1));
+	const int ucn = atoi(cgi->Cmd_Argv(1));
 	if (ucn < 0)
 		return;
 
-	aircraft = base->aircraftCurrent;
+	const base_t* base = B_GetCurrentSelectedBase();
+	const employeeType_t employeeType = EMPL_SOLDIER;
+	aircraft_t* aircraft = base->aircraftCurrent;
 	if (!aircraft)
 		return;
 
-	employee = E_GetEmployeeFromChrUCN(ucn);
+	Employee* employee = E_GetEmployeeFromChrUCN(ucn);
 	if (!employee)
 		cgi->Com_Error(ERR_DROP, "CP_TEAM_SelectActorByUCN_f: No employee with UCN %i", ucn);
 
@@ -82,31 +79,28 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
  */
 static void CP_TEAM_SelectActorByUCN_f (void)
 {
-	Employee* employee;
-	character_t* chr;
-	int ucn;
-	base_t* base = B_GetCurrentSelectedBase();
-
-	if (!base)
-		return;
-
 	/* check syntax */
 	if (cgi->Cmd_Argc() < 1) {
 		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	ucn = atoi(cgi->Cmd_Argv(1));
+	const base_t* base = B_GetCurrentSelectedBase();
+
+	if (!base)
+		return;
+
+	const int ucn = atoi(cgi->Cmd_Argv(1));
 	if (ucn < 0) {
 		cgi->UI_ExecuteConfunc("reset_character_cvars");
 		return;
 	}
 
-	employee = E_GetEmployeeFromChrUCN(ucn);
+	Employee* employee = E_GetEmployeeFromChrUCN(ucn);
 	if (!employee)
 		cgi->Com_Error(ERR_DROP, "CP_TEAM_SelectActorByUCN_f: No employee with UCN %i", ucn);
 
-	chr = &employee->chr;
+	character_t* chr = &employee->chr;
 
 	/* update menu inventory */
 	CP_SetEquipContainer(chr);
@@ -120,31 +114,28 @@ static void CP_TEAM_SelectActorByUCN_f (void)
  */
 static void CP_TEAM_DeEquipActor_f (void)
 {
-	Employee* employee;
-	character_t* chr;
-	int ucn;
-	base_t* base = B_GetCurrentSelectedBase();
-
-	if (!base)
-		return;
-
 	/* check syntax */
 	if (cgi->Cmd_Argc() < 1) {
 		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	ucn = atoi(cgi->Cmd_Argv(1));
+	base_t* base = B_GetCurrentSelectedBase();
+
+	if (!base)
+		return;
+
+	const int ucn = atoi(cgi->Cmd_Argv(1));
 	if (ucn < 0) {
 		cgi->UI_ExecuteConfunc("reset_character_cvars");
 		return;
 	}
 
-	employee = E_GetEmployeeFromChrUCN(ucn);
+	Employee* employee = E_GetEmployeeFromChrUCN(ucn);
 	if (!employee)
 		cgi->Com_Error(ERR_DROP, "CP_TEAM_DeEquipActor_f: No employee with UCN %i", ucn);
 
-	chr = &employee->chr;
+	character_t* chr = &employee->chr;
 
 	cgi->INV_DestroyInventory(&chr->inv);
 
@@ -163,13 +154,13 @@ static void CP_TEAM_DeEquipActor_f (void)
  */
 static void CP_TeamListDebug_f (void)
 {
-	aircraft_t* aircraft = GEO_GetSelectedAircraft();
+	const aircraft_t* aircraft = GEO_GetSelectedAircraft();
 	if (!aircraft) {
 		Com_Printf("Buy/build an aircraft first.\n");
 		return;
 	}
 
-	base_t* base = aircraft->homebase;
+	const base_t* base = aircraft->homebase;
 	if (!base) {
 		Com_Printf("Build and select a base first\n");
 		return;
@@ -188,23 +179,22 @@ static void CP_TeamListDebug_f (void)
  */
 static void CP_TEAM_FillEmployeeList_f (void)
 {
-	base_t* base = B_GetCurrentSelectedBase();
-	aircraft_t* aircraft = base->aircraftCurrent;
-	employeeType_t employeeType;
-	char typeId[MAX_VAR];
-
 	if (cgi->Cmd_Argc() <= 1 ) {
 		Com_Printf("Usage: %s <soldier|pilot> [aircraftIDX]\n", cgi->Cmd_Argv(0));
 		return;
 	}
+
+	char typeId[MAX_VAR];
 	Q_strncpyz(typeId, cgi->Cmd_Argv(1), lengthof(typeId));
-	employeeType = E_GetEmployeeType(typeId);
+	const employeeType_t employeeType = E_GetEmployeeType(typeId);
 
 	if (employeeType == MAX_EMPL) {
 		Com_Printf("Invalid employeeType: %s\n", typeId);
 		return;
 	}
 
+	const base_t* base = B_GetCurrentSelectedBase();
+	const aircraft_t* aircraft = base->aircraftCurrent;
 	if (cgi->Cmd_Argc() > 2 ) {
 		aircraft = AIR_AircraftGetFromIDX(atoi(cgi->Cmd_Argv(2)));
 		if (!aircraft) {
@@ -233,7 +223,7 @@ static void CP_TEAM_FillEmployeeList_f (void)
 			/* employee unassigned */
 			if (teamSize >= maxTeamSize)
 				/* aircraft is full */
-				tooltip = _("No more employee can be assigned to this aircraft");
+				tooltip = _("No more employees can be assigned to this aircraft");
 			else
 				/* aircraft has free space */
 				tooltip = "";
@@ -247,7 +237,9 @@ static void CP_TEAM_FillEmployeeList_f (void)
 				tooltip = _("Employee is assigned to another aircraft");
 		}
 
-		cgi->UI_ExecuteConfunc("aircraft_soldierlist_add %d \"%s\" \"%s\" %d \"%s\"", employee->chr.ucn, typeId, employee->chr.name, assignedCraft == aircraft, tooltip);
+		const bool inHospital = HOS_GetInjuryLevel(&employee->chr) > 0.0001f && B_GetBuildingStatus(employee->baseHired, B_HOSPITAL);
+		const bool isHealing = inHospital || employee->chr.HP < employee->chr.maxHP;
+		cgi->UI_ExecuteConfunc("aircraft_soldierlist_add %d \"%s\" \"%s\" %d %d \"%s\"", employee->chr.ucn, typeId, employee->chr.name, assignedCraft == aircraft, isHealing, tooltip);
 	}
 }
 
@@ -260,7 +252,7 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 	if (!base)
 		return;
 
-	aircraft_t* aircraft = base->aircraftCurrent;
+	const aircraft_t* aircraft = base->aircraftCurrent;
 
 	if (cgi->Cmd_Argc() > 1 ) {
 		int idx = atoi(cgi->Cmd_Argv(1));

@@ -93,36 +93,15 @@ void HOS_HospitalRun (void)
 	}
 }
 
-/**
- * @brief Callback for HOS_HealCharacter() in hospital.
- * @param[in] employee Pointer to the employee to heal.
- * @sa HOS_HealCharacter
- * @sa HOS_HealAll
- */
-bool HOS_HealEmployee (Employee* employee)
+float HOS_GetInjuryLevel (const character_t* const chr)
 {
-	assert(employee);
-	return HOS_HealCharacter(&employee->chr, true);
+	float injuryLevel = 0.0f;
+
+	for (int i = 0; i < chr->teamDef->bodyTemplate->numBodyParts(); ++i)
+		injuryLevel += static_cast<float>(chr->wounds.treatmentLevel[i]) / chr->maxHP;
+
+	return injuryLevel;
 }
-
-/**
- * @brief Heal all employees in the given base
- * @param[in] base The base the employees should become healed
- * @sa HOS_HealEmployee
- */
-void HOS_HealAll (const base_t* const base)
-{
-	assert(base);
-
-	for (int type = 0; type < MAX_EMPL; type++) {
-		E_Foreach(type, employee) {
-			if (!employee->isHiredInBase(base))
-				continue;
-			HOS_HealEmployee(employee);
-		}
-	}
-}
-
 
 #ifdef DEBUG
 /**
@@ -130,7 +109,7 @@ void HOS_HealAll (const base_t* const base)
  */
 static void HOS_HealAll_f (void)
 {
-	base_t* base = B_GetCurrentSelectedBase();
+	const base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -149,13 +128,13 @@ static void HOS_HealAll_f (void)
  */
 static void HOS_HurtAll_f (void)
 {
-	int amount;
-	base_t* base = B_GetCurrentSelectedBase();
+	const base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
 
-	if (cgi->Cmd_Argc() == 2)
+	int amount;
+	if (cgi->Cmd_Argc() >= 2)
 		amount = atoi(cgi->Cmd_Argv(1));
 	else
 		amount = 1;

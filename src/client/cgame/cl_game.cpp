@@ -1217,7 +1217,7 @@ static bool GAME_LoadGame (const char* path, const char* name)
 		return true;
 	} else {
 		Com_Printf("not found at '%s'\n", path);
-		Com_Printf("%s\n", SDL_GetError());
+		Com_DPrintf(DEBUG_SYSTEM, "%s\n", SDL_GetError());
 		return false;
 	}
 }
