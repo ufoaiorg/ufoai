@@ -3208,6 +3208,7 @@ static void uiVideoNode_t_lua_onEnd_set(uiVideoNode_t* node, LUA_EVENT fn) {
 
 SWIGINTERN bool uiWindowNode_t_is_fullscreen(uiWindowNode_t *self){ return UI_EXTRADATA(self, windowExtraData_t).isFullScreen; }
 SWIGINTERN bool uiWindowNode_t_is_modal(uiWindowNode_t *self){ return UI_EXTRADATA(self, windowExtraData_t).modal; }
+SWIGINTERN bool uiWindowNode_t_is_starlayout(uiWindowNode_t *self){ return UI_EXTRADATA(self, windowExtraData_t).starLayout; }
 SWIGINTERN void uiWindowNode_t_close(uiWindowNode_t *self){ UI_PopWindow (false); }
 SWIGINTERN void uiWindowNode_t_open(uiWindowNode_t *self){ UI_PushWindow(self->name, nullptr, nullptr); }
 SWIGINTERN void uiWindowNode_t_set_background(uiWindowNode_t *self,char const *name){ UI_Window_SetBackgroundByName(self, name); }
@@ -3216,6 +3217,7 @@ SWIGINTERN void uiWindowNode_t_set_modal(uiWindowNode_t *self,bool value){ UI_EX
 SWIGINTERN void uiWindowNode_t_set_fill(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).fill = value; }
 SWIGINTERN void uiWindowNode_t_set_dragbutton(uiWindowNode_t *self,bool value){ UI_Window_SetDragButton(self, value); }
 SWIGINTERN void uiWindowNode_t_set_closebutton(uiWindowNode_t *self,bool value){ UI_Window_SetCloseButton(self, value); }
+SWIGINTERN void uiWindowNode_t_set_starlayout(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).starLayout = value; }
 
 static LUA_EVENT uiWindowNode_t_lua_onWindowOpened_get(uiWindowNode_t* node) {
 	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowOpened;
@@ -15867,6 +15869,30 @@ fail:
 }
 
 
+static int _wrap_uiWindow_is_starlayout(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("uiWindowNode_t::is_starlayout",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindowNode_t::is_starlayout",1,"uiWindowNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindowNode_t,0))){
+    SWIG_fail_ptr("uiWindow_is_starlayout",1,SWIGTYPE_p_uiWindowNode_t);
+  }
+  
+  result = (bool)uiWindowNode_t_is_starlayout(arg1);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiWindow_close(lua_State* L) {
   int SWIG_arg = 0;
   uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
@@ -16069,6 +16095,32 @@ fail:
 }
 
 
+static int _wrap_uiWindow_set_starlayout(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("uiWindowNode_t::set_starlayout",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindowNode_t::set_starlayout",1,"uiWindowNode_t *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("uiWindowNode_t::set_starlayout",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindowNode_t,0))){
+    SWIG_fail_ptr("uiWindow_set_starlayout",1,SWIGTYPE_p_uiWindowNode_t);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  uiWindowNode_t_set_starlayout(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiWindow_on_windowopened_set(lua_State* L) {
   int SWIG_arg = 0;
   uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
@@ -16214,6 +16266,7 @@ static swig_lua_attribute swig_uiWindow_attributes[] = {
 static swig_lua_method swig_uiWindow_methods[]= {
     { "is_fullscreen", _wrap_uiWindow_is_fullscreen},
     { "is_modal", _wrap_uiWindow_is_modal},
+    { "is_starlayout", _wrap_uiWindow_is_starlayout},
     { "close", _wrap_uiWindow_close},
     { "open", _wrap_uiWindow_open},
     { "set_background", _wrap_uiWindow_set_background},
@@ -16222,6 +16275,7 @@ static swig_lua_method swig_uiWindow_methods[]= {
     { "set_fill", _wrap_uiWindow_set_fill},
     { "set_dragbutton", _wrap_uiWindow_set_dragbutton},
     { "set_closebutton", _wrap_uiWindow_set_closebutton},
+    { "set_starlayout", _wrap_uiWindow_set_starlayout},
     {0,0}
 };
 static swig_lua_method swig_uiWindow_meta[] = {

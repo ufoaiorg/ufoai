@@ -1263,6 +1263,7 @@ struct uiWindowNode_t: uiNode_t {
 %extend uiWindowNode_t {
 	bool is_fullscreen () { return UI_EXTRADATA($self, windowExtraData_t).isFullScreen; };
 	bool is_modal () { return UI_EXTRADATA($self, windowExtraData_t).modal; }
+	bool is_starlayout () { return UI_EXTRADATA($self, windowExtraData_t).starLayout; };
 
 	void close () { UI_PopWindow (false); };
 	void open () { UI_PushWindow($self->name, nullptr, nullptr); };
@@ -1273,6 +1274,7 @@ struct uiWindowNode_t: uiNode_t {
 	void set_fill (bool value) { UI_EXTRADATA($self, windowExtraData_t).fill = value; };
 	void set_dragbutton (bool value) { UI_Window_SetDragButton($self, value); };
 	void set_closebutton (bool value) { UI_Window_SetCloseButton($self, value); };
+	void set_starlayout (bool value) { UI_EXTRADATA($self, windowExtraData_t).starLayout = value; };
 
 	%rename (on_windowopened) lua_onWindowOpened;
 	%rename (on_windowclosed) lua_onWindowClosed;
