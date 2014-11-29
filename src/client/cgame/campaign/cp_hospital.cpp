@@ -140,7 +140,7 @@ float HOS_GetInjuryLevel (const character_t* const chr)
  */
 static void HOS_HealAll_f (void)
 {
-	base_t* base = B_GetCurrentSelectedBase();
+	const base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -159,13 +159,13 @@ static void HOS_HealAll_f (void)
  */
 static void HOS_HurtAll_f (void)
 {
-	int amount;
-	base_t* base = B_GetCurrentSelectedBase();
+	const base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
 
-	if (cgi->Cmd_Argc() == 2)
+	int amount;
+	if (cgi->Cmd_Argc() >= 2)
 		amount = atoi(cgi->Cmd_Argv(1));
 	else
 		amount = 1;
