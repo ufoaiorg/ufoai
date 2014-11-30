@@ -50,17 +50,17 @@ void character_s::init ()
 const char* teamDef_s::getActorSound (int gender, actorSound_t soundType) const
 {
 	if (gender < 0 || gender >= NAME_LAST) {
-		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "Com_GetActorSound: invalid gender: %i\n", gender);
+		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "getActorSound: invalid gender: %i\n", gender);
 		return nullptr;
 	}
 	if (numSounds[soundType][gender] <= 0) {
-		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "Com_GetActorSound: no sound defined for soundtype: %i, teamID: '%s', gender: %i\n", soundType, id, gender);
+		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "getActorSound: no sound defined for sound type: %i, teamID: '%s', gender: %i\n", soundType, id, gender);
 		return nullptr;
 	}
 
 	// Can't use LIST_GetRandom() or LIST_GetByIdx() in the game module
-	int random = rand() % numSounds[soundType][gender];
-	linkedList_t* list = sounds[soundType][gender];
+	const int random = rand() % numSounds[soundType][gender];
+	const linkedList_t* list = sounds[soundType][gender];
 	for (int j = 0; j < random; j++) {
 		assert(list);
 		list = list->next;
