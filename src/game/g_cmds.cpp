@@ -139,7 +139,7 @@ static void G_KillTeam_f (void)
 	/* with a parameter we will be able to kill a specific team */
 	if (gi.Cmd_Argc() >= 2) {
 		teamToKill = atoi(gi.Cmd_Argv(1));
-		if (gi.Cmd_Argc() == 3)
+		if (gi.Cmd_Argc() >= 3)
 			amount = atoi(gi.Cmd_Argv(2));
 	}
 
@@ -175,7 +175,7 @@ static void G_StunTeam_f (void)
 	int teamToKill = -1;
 
 	/* with a parameter we will be able to kill a specific team */
-	if (gi.Cmd_Argc() == 2)
+	if (gi.Cmd_Argc() >= 2)
 		teamToKill = atoi(gi.Cmd_Argv(1));
 
 	if (teamToKill >= 0) {
@@ -202,10 +202,9 @@ static void G_StunTeam_f (void)
 static void G_ListMissionScore_f (void)
 {
 	int team = -1;
-	int i, j;
 
 	/* With a parameter we will be able to get the info for a specific team */
-	if (gi.Cmd_Argc() == 2) {
+	if (gi.Cmd_Argc() >= 2) {
 		team = atoi(gi.Cmd_Argv(1));
 	} else {
 		gi.DPrintf("Usage: %s <teamnumber>\n", gi.Cmd_Argv(0));
@@ -225,28 +224,28 @@ static void G_ListMissionScore_f (void)
 		gi.DPrintf("  Move: Normal=%i Crouched=%i\n", actor->chr.scoreMission->movedNormal, actor->chr.scoreMission->movedCrouched);
 
 		gi.DPrintf("  Kills:");
-		for (i = 0; i < KILLED_NUM_TYPES; i++) {
+		for (int i = 0; i < KILLED_NUM_TYPES; i++) {
 			gi.DPrintf(" %i", actor->chr.scoreMission->kills[i]);
 		}
 		gi.DPrintf("\n");
 
 		gi.DPrintf("  Stuns:");
-		for (i = 0; i < KILLED_NUM_TYPES; i++) {
+		for (int i = 0; i < KILLED_NUM_TYPES; i++) {
 			gi.DPrintf(" %i", actor->chr.scoreMission->stuns[i]);
 		}
 		gi.DPrintf("\n");
 
 		/* ===================== */
 		gi.DPrintf("  Fired:");
-		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+		for (int i = 0; i < SKILL_NUM_TYPES; i++) {
 			gi.DPrintf(" %i", actor->chr.scoreMission->fired[i]);
 		}
 		gi.DPrintf("\n");
 
 		gi.DPrintf("  Hits:\n");
-		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+		for (int i = 0; i < SKILL_NUM_TYPES; i++) {
 			gi.DPrintf("    Skill%i: ",i);
-			for (j = 0; j < KILLED_NUM_TYPES; j++) {
+			for (int j = 0; j < KILLED_NUM_TYPES; j++) {
 				gi.DPrintf(" %i", actor->chr.scoreMission->hits[i][j]);
 			}
 			gi.DPrintf("\n");
@@ -254,24 +253,24 @@ static void G_ListMissionScore_f (void)
 
 		/* ===================== */
 		gi.DPrintf("  Fired Splash:");
-		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+		for (int i = 0; i < SKILL_NUM_TYPES; i++) {
 			gi.DPrintf(" %i", actor->chr.scoreMission->firedSplash[i]);
 		}
 		gi.DPrintf("\n");
 
 		gi.DPrintf("  Hits Splash:\n");
-		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+		for (int i = 0; i < SKILL_NUM_TYPES; i++) {
 			gi.DPrintf("    Skill%i: ",i);
-			for (j = 0; j < KILLED_NUM_TYPES; j++) {
+			for (int j = 0; j < KILLED_NUM_TYPES; j++) {
 				gi.DPrintf(" %i", actor->chr.scoreMission->hitsSplash[i][j]);
 			}
 			gi.DPrintf("\n");
 		}
 
 		gi.DPrintf("  Splash Damage:\n");
-		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+		for (int i = 0; i < SKILL_NUM_TYPES; i++) {
 			gi.DPrintf("    Skill%i: ",i);
-			for (j = 0; j < KILLED_NUM_TYPES; j++) {
+			for (int j = 0; j < KILLED_NUM_TYPES; j++) {
 				gi.DPrintf(" %i", actor->chr.scoreMission->hitsSplashDamage[i][j]);
 			}
 			gi.DPrintf("\n");
@@ -279,7 +278,7 @@ static void G_ListMissionScore_f (void)
 
 		/* ===================== */
 		gi.DPrintf("  Kills per skill:");
-		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+		for (int i = 0; i < SKILL_NUM_TYPES; i++) {
 			gi.DPrintf(" %i", actor->chr.scoreMission->skillKills[i]);
 		}
 		gi.DPrintf("\n");
@@ -327,19 +326,16 @@ void G_InvList_f (const Player& player)
 
 static void G_TouchEdict_f (void)
 {
-	Edict* e;
-	int i;
-
 	if (gi.Cmd_Argc() < 2) {
 		gi.DPrintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
 		return;
 	}
 
-	i = atoi(gi.Cmd_Argv(1));
+	const int i = atoi(gi.Cmd_Argv(1));
 	if (!G_EdictsIsValidNum(i))
 		return;
 
-	e = G_EdictsGetByNum(i);
+	Edict* e = G_EdictsGetByNum(i);
 	if (!e->hasTouch()) {
 		gi.DPrintf("No touch function for entity %s\n", e->classname);
 		return;
@@ -355,21 +351,18 @@ static void G_TouchEdict_f (void)
 
 static void G_UseEdict_f (void)
 {
-	Edict* e;
-	int i;
-
 	if (gi.Cmd_Argc() < 2) {
 		gi.DPrintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
 		return;
 	}
 
-	i = atoi(gi.Cmd_Argv(1));
+	const int i = atoi(gi.Cmd_Argv(1));
 	if (!G_EdictsIsValidNum(i)) {
 		gi.DPrintf("No entity with number %i\n", i);
 		return;
 	}
 
-	e = G_EdictsGetByNum(i);
+	Edict* e = G_EdictsGetByNum(i);
 	if (!e->use) {
 		gi.DPrintf("No use function for entity %s\n", e->classname);
 		return;
@@ -381,19 +374,16 @@ static void G_UseEdict_f (void)
 
 static void G_DestroyEdict_f (void)
 {
-	Edict* e;
-	int i;
-
 	if (gi.Cmd_Argc() < 2) {
 		gi.DPrintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
 		return;
 	}
 
-	i = atoi(gi.Cmd_Argv(1));
+	const int i = atoi(gi.Cmd_Argv(1));
 	if (!G_EdictsIsValidNum(i))
 		return;
 
-	e = G_EdictsGetByNum(i);
+	Edict* e = G_EdictsGetByNum(i);
 	if (!e->destroy) {
 		gi.DPrintf("No destroy function for entity %s\n", e->classname);
 		return;
@@ -432,12 +422,10 @@ static void G_StateChange_f (void)
 
 void G_ClientCommand (Player& player)
 {
-	const char* cmd;
-
 	if (!player.isInUse())
 		return;					/* not fully in game yet */
 
-	cmd = gi.Cmd_Argv(0);
+	const char* cmd = gi.Cmd_Argv(0);
 
 	if (Q_strcasecmp(cmd, "players") == 0)
 		G_Players_f(player);
