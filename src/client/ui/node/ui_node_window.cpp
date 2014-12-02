@@ -326,9 +326,8 @@ void UI_Window_SetDragButton (uiNode_t* node, bool value) {
 		   button; this is needed so the drag button is "below" the close button; if we don't do this, the
 		   drag button recieves input events for the close button first making the close button no longer
 		   working */
-		if (EXTRADATA(node).closeButton) {
-			uiNode_t* close = UI_FindNode(node, WINDOW_DRAG_BUTTON_NAME);
-			assert(close);
+		uiNode_t* close = UI_FindNode(node, WINDOW_CLOSE_BUTTON_NAME);
+		if (close != nullptr) {
 			// get the previous node of close
 			close = UI_GetPrevNode(close);
 			UI_InsertNode(node, close, control);
