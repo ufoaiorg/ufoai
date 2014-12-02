@@ -90,6 +90,10 @@ component aircraft_teammember extends panel {
 		string		""
 	}
 
+	data status {
+		integer		"0"
+	}
+
 	string name {
 		pos			"0 0"
 		color		"0.56 0.81 0.76 1"
@@ -326,7 +330,8 @@ window iaircraft
 		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.selected@current = <4>
 
 		if ( <5> == 1 ) {
-			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@color = "1 0 0 1"
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.status@integer = "1"
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@color = "1 0.81 0.76 1"
 		}
 		if ( "<6>" ne "" ) {
 			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.selected@disabled = true
@@ -346,7 +351,11 @@ window iaircraft
 			if (<node:root.selected@string> eq "pilot" ) {
 				*node:root.panelLoc@string = "pilots_background"
 			}
-			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<node:root.selected@integer>.name@color = "0.56 0.81 0.76 1"
+			if (*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<node:root.selected@integer>.status@integer == 0) {
+				*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<node:root.selected@integer>.name@color = "0.56 0.81 0.76 1"
+			} else {
+				*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<node:root.selected@integer>.name@color = "1 0.81 0.76 1"
+			}
 //			cmd "echo unhighlighted;"
 		}
 //		cmd "echo old done;"
