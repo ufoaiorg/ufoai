@@ -1,94 +1,68 @@
-// ===========================================
-// MISSION BRIEFING DIALOG
-// ===========================================
-window mission_briefing
-{
-	{
-		fill		true
-		starlayout	true
-		modal		true
-		preventtypingescape	true
-	}
+--!usr/bin/lua
 
-	image background
-	{
-		visiblewhen	"*cvar:cl_onbattlescape != 1"
-		src			"background/maploading"
-		pos			"0 0"
-		size		"1024 768"
-		align		LAYOUTALIGN_MIDDLE
-	}
+-- ===========================================
+-- MISSION BRIEFING DIALOG
+-- ===========================================
 
-	battlescape render
-	{
-		pos			"0 0"
-		size		"1024 768"
-		align		LAYOUTALIGN_FILL
-	}
 
-	panel mission_description {
-		{
-			pos			"212 134"
-			size		"600 500"
-			bgcolor		"0 0 0 0.6"
-			border		"2"
-			bordercolor	"0.56 0.81 0.76 1"
-			align		LAYOUTALIGN_MIDDLE
-		}
-
-		text name
-		{
-			pos			"10 10"
-			size		"580 20"
-			longlines	LONGLINES_PRETTYCHOP
-			font		"f_menu"
-			dataid		TEXT_MISSIONBRIEFING_TITLE
-			lineheight	20
-		}
-
-		text briefing
-		{
-			dataid		TEXT_MISSIONBRIEFING
-			pos			"10 40"
-			size		"580 240"
-			lineheight	20
-		}
-
-		string victory_conditions
-		{
-			pos			"10 300"
-			font		"f_menu"
-			string		"_Victory conditions:"
-		}
-
-		text briefing_conditions
-		{
-			dataid		TEXT_MISSIONBRIEFING_VICTORY_CONDITIONS
-			pos			"10 330"
-			size		"360 160"
-			lineheight	20
-		}
-
-		MainMenuBtn button_ready
-		{
-			visiblewhen	"*cvar:cl_onbattlescape == 1"
-			string		"_Start"
-			tooltip		"_Start the match"
-			pos			"400 470"
-			width		"200"
-			onClick		{
-				cmd "cl_ready 1;ui_pop;"
-			}
-		}
-	fuzzyScreen overlay { }
-	}
-
-	// ===================
-	// EVENTS
-	// ===================
-
-	func onWindowOpened
-	{
-		*cvar:cl_ready = 0
-	}
-}
+local mission_briefing = ufo.create_window("mission_briefing", nil)
+mission_briefing:set_fill(true)
+mission_briefing:set_starlayout(true)
+mission_briefing:set_modal(true)
+--@TODO: uncomment line below when preventtypingescape is implemented
+--mission_briefing:set_preventtypingescape(true)
+local mission_briefing_background = ufo.create_control(mission_briefing, "image", "background", nil)
+mission_briefing_background:set_source("background/maploading")
+mission_briefing_background:set_pos(0, 0)
+mission_briefing_background:set_size(1024, 768)
+mission_briefing_background:set_layoutalign(ufo.LAYOUTALIGN_MIDDLE)
+mission_briefing_background.on_visiblewhen = function (sender)
+		return (ufo.getvar("cl_onbattlescape"):as_integer() ~= 1)
+	end
+local mission_briefing_render = ufo.create_control(mission_briefing, "battlescape", "render", nil)
+mission_briefing_render:set_pos(0,0)
+mission_briefing_render:set_size(1024,768)
+mission_briefing_render:set_contentalign(ufo.LAYOUTALIGN_FILL)
+local mission_briefing_description = ufo.create_control(mission_briefing, "panel", "mission_description", nil)
+mission_briefing_description:set_pos(212, 134)
+mission_briefing_description:set_size(600, 500)
+mission_briefing_description:set_backgroundcolor(0, 0, 0, 0.6)
+mission_briefing_description:set_bordersize(2)
+mission_briefing_description:set_bordercolor(0.56, 0.81, 0.76, 1.0)
+mission_briefing_description:set_layoutalign(ufo.LAYOUTALIGN_MIDDLE)
+local mission_briefing_description_name = ufo.create_control(mission_briefing_description, "text", "name", nil)
+mission_briefing_description_name:set_pos(10, 10)
+mission_briefing_description_name:set_size(580, 20)
+mission_briefing_description_name:set_longlines(ufo.LONGLINES_PRETTYCHOP)
+mission_briefing_description_name:set_lineheight(20)
+mission_briefing_description_name:set_dataid(ufo.TEXT_MISSIONBRIEFING_TITLE)
+mission_briefing_description_name:set_font("f_menu")
+local mission_briefing_description_briefing = ufo.create_control(mission_briefing_description, "text", "briefing", nil)
+mission_briefing_description_briefing:set_pos(10, 40)
+mission_briefing_description_briefing:set_size(580, 240)
+mission_briefing_description_briefing:set_lineheight(20)
+mission_briefing_description_briefing:set_dataid(ufo.TEXT_MISSIONBRIEFING)
+local mission_briefing_description_victory_conditions = ufo.create_control(mission_briefing_description, "string", "victory_conditions", nil)
+mission_briefing_description_victory_conditions:set_pos(10, 300)
+mission_briefing_description_victory_conditions:set_font("f_menu")
+mission_briefing_description_victory_conditions:set_text("_Victory conditions:")
+local mission_briefing_description_briefing_conditions = ufo.create_control(mission_briefing_description, "text", "briefing_conditions", nil)
+mission_briefing_description_briefing_conditions:set_pos(10, 330)
+mission_briefing_description_briefing_conditions:set_size(360, 160)
+mission_briefing_description_briefing_conditions:set_lineheight(20)
+mission_briefing_description_briefing_conditions:set_dataid(ufo.TEXT_MISSIONBRIEFING_VICTORY_CONDITIONS)
+local mission_briefing_description_button_ready = ufo.create_control(mission_briefing_description, "MainMenuBtn","button_ready", nil)
+mission_briefing_description_button_ready:set_pos(400,470)
+mission_briefing_description_button_ready:set_size(200,30)
+mission_briefing_description_button_ready:set_text("_Start")
+mission_briefing_description_button_ready:set_tooltip("_Start the match")
+mission_briefing_description_button_ready.on_visiblewhen = function (sender)
+		return (ufo.getvar("cl_onbattlescape"):as_integer() == 1)
+	end
+mission_briefing_description_button_ready.on_click = function(sender)
+		ufo.cmd("cl_ready 1; ui_pop;")
+	end
+mission_briefing.on_windowopened = function (sender)
+		ufo.getvar("cl_ready"):set_value(0)
+	end
+local overlay = ufo.create_control(mission_briefing, "fuzzyScreen", "overlay", nil)
