@@ -59,7 +59,7 @@ void G_EdictsInit (void)
  */
 int G_EdictsGetNumber (const Edict* ent)
 {
-	int idx = ent - g_edicts;
+	const int idx = ent - g_edicts;
 	assert(idx >= 0 && idx < globals.num_edicts);
 	return idx;
 }
@@ -106,18 +106,17 @@ Edict* G_EdictsGetFirst (void)
  */
 Edict* G_EdictsGetNext (Edict* lastEnt)
 {
-	Edict* endOfEnts = &g_edicts[globals.num_edicts];
-	Edict* ent;
-
 	if (!globals.num_edicts)
 		return nullptr;
 
 	if (!lastEnt)
 		return g_edicts;
+
+	const Edict* endOfEnts = &g_edicts[globals.num_edicts];
 	assert(lastEnt >= g_edicts);
 	assert(lastEnt < endOfEnts);
 
-	ent = lastEnt;
+	Edict* ent = lastEnt;
 
 	ent++;
 	if (ent >= endOfEnts)
