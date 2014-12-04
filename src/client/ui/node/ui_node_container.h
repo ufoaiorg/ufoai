@@ -36,10 +36,10 @@ class uiContainerNode : public uiLocatedNode {
 public:
 	void draw(uiNode_t* node) override;
 	void drawTooltip(const uiNode_t* node, int x, int y) const override;
+	void initNode (uiNode_t* node) override;
 	void onMouseDown(uiNode_t* node, int x, int y, int button) override;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) override;
 	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
-	void onInitNode(uiNode_t* node) override;
 	void onLoading(uiNode_t* node) override;
 	void onLoaded(uiNode_t* node) override;
 	bool onDndEnter(uiNode_t* node) override;
