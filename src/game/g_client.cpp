@@ -58,18 +58,18 @@ static int scoreMissionNum = 0;
  */
 Player* G_PlayerGetNextHuman (Player* lastPlayer)
 {
-	Player* endOfPlayers = &game.players[game.sv_maxplayersperteam];
-	Player* player;
-
 	if (!game.sv_maxplayersperteam)
 		return nullptr;
 
 	if (!lastPlayer)
 		return game.players;
+
+	const Player* endOfPlayers = &game.players[game.sv_maxplayersperteam];
+
 	assert(lastPlayer >= game.players);
 	assert(lastPlayer < endOfPlayers);
 
-	player = lastPlayer;
+	Player* player = lastPlayer;
 
 	player++;
 	if (player >= endOfPlayers)
@@ -84,18 +84,18 @@ Player* G_PlayerGetNextHuman (Player* lastPlayer)
  */
 Player* G_PlayerGetNextAI (Player* lastPlayer)
 {
-	Player* endOfPlayers = &game.players[game.sv_maxplayersperteam * 2];	/* two teams */
-	Player* player;
-
 	if (!game.sv_maxplayersperteam)
 		return nullptr;
 
 	if (!lastPlayer)
 		return &game.players[game.sv_maxplayersperteam];
+
+	const Player* endOfPlayers = &game.players[game.sv_maxplayersperteam * 2];	/* two teams */
+
 	assert(lastPlayer >= &game.players[game.sv_maxplayersperteam]);	/* AI players are in the upper half of the players array */
 	assert(lastPlayer < endOfPlayers);
 
-	player = lastPlayer;
+	Player* player = lastPlayer;
 
 	player++;
 	if (player >= endOfPlayers)
@@ -206,13 +206,12 @@ playermask_t G_VisToPM (teammask_t teamMask)
  */
 void G_ClientPrintf (const Player& player, int printLevel, const char* fmt, ...)
 {
-	va_list ap;
-
 	/* there is no client for an AI controlled player on the server where we
 	 * could send the message to */
 	if (G_IsAIPlayer(&player))
 		return;
 
+	va_list ap;
 	va_start(ap, fmt);
 	gi.PlayerPrintf(&player, printLevel, fmt, ap);
 	va_end(ap);
@@ -246,13 +245,11 @@ void G_GiveTimeUnits (int team)
  */
 void G_AppearPerishEvent (playermask_t playerMask, bool appear, Edict& check, const Edict* ent)
 {
-	teammask_t teamMaskDiff;
-
 	/* test for pointless player mask */
 	if (!playerMask)
 		return;
 
-	teamMaskDiff = G_PMToVis(playerMask);
+	const teammask_t teamMaskDiff = G_PMToVis(playerMask);
 	G_VisFlagsSwap(check, teamMaskDiff);
 
 	if (appear) {
@@ -418,13 +415,12 @@ bool G_ActionCheckForReaction (const Player& player, Actor* actor, int TU)
  */
 static void G_ClientTurn (Player& player, Actor* actor, dvec_t dvec)
 {
-	const int dir = getDVdir(dvec);
-
 	/* check if action is possible */
 	if (!G_ActionCheckForCurrentTeam(player, actor, TU_TURN))
 		return;
 
 	/* check if we're already facing that direction */
+	const int dir = getDVdir(dvec);
 	if (actor->dir == dir)
 		return;
 
@@ -760,10 +756,8 @@ static void G_GetTeam (Player& player)
 	if (playersInGame <= 1 && G_IsMultiPlayer() && !sv_teamplay->integer) {
 		int spawnCheck[MAX_TEAMS];
 		int spawnSpots = 0;
-		int randomSpot;
-		int i;
 		/* skip civilian teams */
-		for (i = TEAM_PHALANX; i < MAX_TEAMS; i++) {
+		for (int i = TEAM_PHALANX; i < MAX_TEAMS; i++) {
 			spawnCheck[i] = 0;
 			/* check whether there are spawnpoints for this team */
 			if (level.num_spawnpoints[i])
@@ -774,8 +768,8 @@ static void G_GetTeam (Player& player)
 			gi.Error("G_GetTeam: Not enough spawn spots in map!");
 
 		/* assign random valid team number */
-		i = spawnSpots;
-		randomSpot = rand() % spawnSpots;
+		int i = spawnSpots;
+		int randomSpot = rand() % spawnSpots;
 		for (;;) {
 			const int team = spawnCheck[randomSpot];
 			if (i == 0)
@@ -921,11 +915,6 @@ bool G_ClientIsReady (const Player* player)
  */
 static void G_GetStartingTeam (const Player& player)
 {
-	int teamCount;
-	int playerCount;
-	int knownTeams[MAX_TEAMS];
-	Player* p;
-
 	/* return with no action if activeTeam already assigned or if are in single-player mode */
 	if (G_MatchIsRunning())
 		return;
@@ -937,9 +926,10 @@ static void G_GetStartingTeam (const Player& player)
 	}
 
 	/* count number of currently connected unique teams and players (human controlled players only) */
-	p = nullptr;
-	teamCount = 0;
-	playerCount = 0;
+	int knownTeams[MAX_TEAMS];
+	Player* p = nullptr;
+	int teamCount = 0;
+	int playerCount = 0;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		int j;
 		playerCount++;
@@ -972,11 +962,10 @@ static void G_GetStartingTeam (const Player& player)
  */
 static Edict* G_ClientGetFreeSpawnPoint (const Player& player, int spawnType)
 {
-	Edict* ent = nullptr;
-
 	/* Abort for non-spawnpoints */
 	assert(spawnType == ET_ACTORSPAWN || spawnType == ET_ACTOR2x2SPAWN);
 
+	Edict* ent = nullptr;
 	if (level.noRandomSpawn) {
 		while ((ent = G_EdictsGetNextInUse(ent)))
 			if (ent->type == spawnType && player.getTeam() == ent->getTeam()) {
@@ -1113,9 +1102,7 @@ Actor* G_ClientGetFreeSpawnPointForActorSize (const Player& player, const actorS
 static void G_ClientReadInventory (Edict* ent)
 {
 	/* inventory */
-	int nr = gi.ReadShort();
-
-	for (; nr-- > 0;) {
+	for (int nr = gi.ReadShort(); nr > 0; nr--) {
 		const invDef_t* container;
 		Item item;
 		int x, y;
@@ -1137,9 +1124,6 @@ static void G_ClientReadInventory (Edict* ent)
  */
 static void G_ClientReadCharacter (Edict* ent)
 {
-	int k;
-	int teamDefIdx;
-
 	ent->chr.init();
 	/* model */
 	ent->chr.ucn = gi.ReadShort();
@@ -1153,7 +1137,7 @@ static void G_ClientReadCharacter (Edict* ent)
 	ent->chr.HP = gi.ReadShort();
 	ent->chr.minHP = ent->chr.HP;
 	ent->chr.maxHP = gi.ReadShort();
-	teamDefIdx = gi.ReadByte();
+	const int teamDefIdx = gi.ReadByte();
 	if (teamDefIdx < 0 || teamDefIdx >= MAX_TEAMDEFS)
 		gi.Error("Invalid team definition index given: %i", teamDefIdx);
 	ent->chr.teamDef = &gi.csi->teamDef[teamDefIdx];
@@ -1162,16 +1146,16 @@ static void G_ClientReadCharacter (Edict* ent)
 	ent->chr.STUN = gi.ReadByte();
 	ent->chr.morale = gi.ReadByte();
 
-	for (k = 0; k < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++k)
+	for (int k = 0; k < ent->chr.teamDef->bodyTemplate->numBodyParts(); ++k)
 		ent->chr.wounds.treatmentLevel[k] = gi.ReadByte();
 
-	for (k = 0; k < SKILL_NUM_TYPES + 1; k++) /* new attributes */
+	for (int k = 0; k < SKILL_NUM_TYPES + 1; k++) /* new attributes */
 		ent->chr.score.experience[k] = gi.ReadLong();
-	for (k = 0; k < SKILL_NUM_TYPES; k++) /* new attributes */
+	for (int k = 0; k < SKILL_NUM_TYPES; k++) /* new attributes */
 		ent->chr.score.skills[k] = gi.ReadByte();
-	for (k = 0; k < KILLED_NUM_TYPES; k++)
+	for (int k = 0; k < KILLED_NUM_TYPES; k++)
 		ent->chr.score.kills[k] = gi.ReadShort();
-	for (k = 0; k < KILLED_NUM_TYPES; k++)
+	for (int k = 0; k < KILLED_NUM_TYPES; k++)
 		ent->chr.score.stuns[k] = gi.ReadShort();
 	ent->chr.score.assignedMissions = gi.ReadShort();
 }
@@ -1234,19 +1218,16 @@ void G_ClientInitActorStates (const Player& player)
 
 	for (int i = 0; i < length; i++) {
 		const int ucn = gi.ReadShort();
-		int saveTU;
-		actorHands_t hand;
-		int fmIdx, objIdx;
 		Actor* actor = G_EdictsGetActorByUCN(ucn, player.getTeam());
 		if (!actor)
 			gi.Error("Could not find character on team %i with unique character number %i", player.getTeam(), ucn);
 
 		/* these state changes are not consuming any TUs */
-		saveTU = actor->getTus();
+		const int saveTU = actor->getTus();
 		G_ClientStateChange(player, actor, gi.ReadShort(), false);
-		hand = (actorHands_t)gi.ReadShort();
-		fmIdx = gi.ReadShort();
-		objIdx = gi.ReadShort();
+		const actorHands_t hand = (actorHands_t)gi.ReadShort();
+		const fireDefIndex_t fmIdx = gi.ReadShort();
+		const int objIdx = gi.ReadShort();
 		G_ActorSetTU(actor, saveTU);
 		if (objIdx != NONE) {
 			G_ReactionFireSettingsUpdate(actor, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
@@ -1444,9 +1425,7 @@ void G_ClientUserinfoChanged (Player& player, const char* userinfo)
  */
 bool G_ClientConnect (Player* player, char* userinfo, size_t userinfoSize)
 {
-	const char* value;
-
-	value = Info_ValueForKey(userinfo, "ip");
+	const char* value = Info_ValueForKey(userinfo, "ip");
 
 	Com_Printf("connection attempt from %s\n", value);
 

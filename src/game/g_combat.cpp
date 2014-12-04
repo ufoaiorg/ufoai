@@ -50,14 +50,13 @@ typedef enum {
  */
 static bool G_TeamPointVis (int team, const vec3_t point)
 {
-	Actor* from = nullptr;
-	vec3_t eye;
-
 	/* test if point is visible from team */
+	Actor* from = nullptr;
 	while ((from = G_EdictsGetNextLivingActorOfTeam(from, team))) {
 		if (!G_FrustumVis(from, point))
 			continue;
 		/* get viewers eye height */
+		vec3_t eye;
 		G_ActorGetEyeVector(from, eye);
 
 		/* line of sight */
@@ -202,19 +201,16 @@ static void G_UpdateShotMock (shot_mock_t* mock, const Edict* shooter, const Edi
  */
 static void G_UpdateCharacterBodycount (Edict* attacker, const fireDef_t* fd, const Actor* target)
 {
-	chrScoreMission_t* scoreMission;
-	chrScoreGlobal_t* scoreGlobal;
-	killtypes_t type;
-
 	if (!attacker || !target)
 		return;
 
-	scoreGlobal = &attacker->chr.score;
-	scoreMission = attacker->chr.scoreMission;
+	chrScoreGlobal_t* scoreGlobal = &attacker->chr.score;
+	chrScoreMission_t* scoreMission = attacker->chr.scoreMission;
 	/* only phalanx soldiers have this */
 	if (!scoreMission)
 		return;
 
+	killtypes_t type;
 	switch (target->getTeam()) {
 	case TEAM_ALIEN:
 		type = KILLED_ENEMIES;
@@ -337,13 +333,12 @@ int G_ApplyProtection (const Edict* target, const byte dmgWeight, int damage)
  */
 static bool G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* attacker, shot_mock_t* mock, const vec3_t impact)
 {
+	assert(target);
+
 	const bool stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
 	const bool stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
 	const bool shock = (fd->obj->dmgtype == gi.csi->damShock);
 	const bool smoke = (fd->obj->dmgtype == gi.csi->damSmoke);
-	bool isRobot;
-
-	assert(target);
 
 	/* Breakables */
 	if (G_IsBrushModel(target) && G_IsBreakable(target)) {
@@ -376,7 +371,7 @@ static bool G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* att
 
 	/* only actors after this point - and they must have a teamdef */
 	assert(victim->chr.teamDef);
-	isRobot = CHRSH_IsTeamDefRobot(victim->chr.teamDef);
+	const bool isRobot = CHRSH_IsTeamDefRobot(victim->chr.teamDef);
 
 	/* Apply armour effects. */
 	if (damage > 0) {
@@ -507,21 +502,18 @@ static inline bool G_FireAffectedSurface (const cBspSurface_t* surface, const fi
  */
 static void G_SplashDamage (Actor* ent, const fireDef_t* fd, vec3_t impact, shot_mock_t* mock, const trace_t* tr)
 {
-	Edict* check = nullptr;
-	vec3_t center;
-	float dist;
-	int damage;
+	assert(fd->splrad > 0.0);
 
 	const bool shock = (fd->obj->dmgtype == gi.csi->damShock);
 
-	assert(fd->splrad > 0.0);
-
+	Edict* check = nullptr;
 	while ((check = G_EdictsGetNextInUse(check))) {
 		/* If we use a blinding weapon we skip the target if it's looking
 		 * away from the impact location. */
 		if (shock && !G_FrustumVis(check, impact))
 			continue;
 
+		vec3_t center;
 		if (G_IsBrushModel(check) && G_IsBreakable(check))
 			check->absBox.getCenter(center);
 		else if (G_IsLivingActor(check) || G_IsBreakable(check))
@@ -530,7 +522,7 @@ static void G_SplashDamage (Actor* ent, const fireDef_t* fd, vec3_t impact, shot
 			continue;
 
 		/* check for distance */
-		dist = VectorDist(impact, center);
+		float dist = VectorDist(impact, center);
 		dist = dist > UNIT_SIZE / 2 ? dist - UNIT_SIZE / 2 : 0;
 		if (dist > fd->splrad)
 			continue;
@@ -554,10 +546,7 @@ static void G_SplashDamage (Actor* ent, const fireDef_t* fd, vec3_t impact, shot
 			continue;
 
 		/* do damage */
-		if (shock)
-			damage = 0;
-		else
-			damage = fd->spldmg[0] * (1.0 - dist / fd->splrad);
+		const int damage = shock ? 0 : fd->spldmg[0] * (1.0 - dist / fd->splrad);
 
 		if (mock)
 			mock->allow_self = true;
@@ -586,9 +575,7 @@ static void G_SplashDamage (Actor* ent, const fireDef_t* fd, vec3_t impact, shot
  */
 static void G_SpawnItemOnFloor (const pos3_t pos, const Item* item)
 {
-	Edict* floor;
-
-	floor = G_GetFloorItemFromPos(pos);
+	Edict* floor = G_GetFloorItemFromPos(pos);
 	if (floor == nullptr) {
 		floor = G_SpawnFloor(pos);
 
@@ -682,9 +669,7 @@ static void G_ShootGrenade (const Player& player, Actor* shooter, const fireDef_
 	}
 
 	/* cap start speed */
-	float speed = VectorLength(startV);
-	if (speed > fd->range)
-		speed = fd->range;
+	const float speed = std::min(VectorLength(startV), fd->range);
 
 	/* add random effects and get new dir */
 	vec3_t angles;
@@ -1079,12 +1064,10 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
  */
 static bool G_PrepareShot (Edict* ent, shoot_types_t shootType, fireDefIndex_t firemode, Item** weapon, containerIndex_t* container, const fireDef_t** fd)
 {
-	const fireDef_t* fdArray;
-	Item* item;
-
 	if (shootType >= ST_NUM_SHOOT_TYPES)
 		gi.Error("G_GetShotFromType: unknown shoot type %i.\n", shootType);
 
+	Item* item;
 	if (IS_SHOT_HEADGEAR(shootType)) {
 		item = ent->chr.inv.getHeadgear();
 		if (!item)
@@ -1103,7 +1086,7 @@ static bool G_PrepareShot (Edict* ent, shoot_types_t shootType, fireDefIndex_t f
 	}
 
 	/* Get firedef from the weapon entry instead */
-	fdArray = item->getFiredefs();
+	const fireDef_t* fdArray = item->getFiredefs();
 	if (fdArray == nullptr)
 		return false;
 
@@ -1270,9 +1253,6 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 			mask |= G_TeamToVisMask(i);
 
 	if (!mock) {
-		/* State info so we can check if an item was already removed. */
-		bool itemAlreadyRemoved = false;
-
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
 			G_ReactionFirePreShot(actor, tusNeeded);  /* if commented out,  this disables the 'draw' situation */
@@ -1290,6 +1270,8 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 		/* send shot sound to the others */
 		G_EventShootHidden(mask, fd, true);
 
+		/* State info so we can check if an item was already removed. */
+		bool itemAlreadyRemoved = false;
 		/* ammo... */
 		if (fd->ammo) {
 			if (ammo > 0 || !weapon->def()->thrown) {
@@ -1308,9 +1290,9 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 
 		/* remove throwable oneshot && deplete weapon from inventory */
 		if (weapon->def()->thrown && weapon->def()->oneshot && weapon->def()->deplete) {
-			const invDef_t* invDef = INVDEF(container);
 			if (itemAlreadyRemoved)
 				gi.Error("Item %s is already removed", weapon->def()->id);
+			const invDef_t* invDef = INVDEF(container);
 			assert(invDef->single);
 			game.invi.emptyContainer(&actor->chr.inv, invDef->id);
 			G_EventInventoryDelete(*actor, G_VisToPM(actor->visflags), invDef->id, 0, 0);
