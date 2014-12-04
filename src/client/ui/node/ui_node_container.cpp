@@ -873,8 +873,9 @@ void uiContainerNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 	}
 }
 
-void uiContainerNode::onInitNode (uiNode_t* node) {
+void uiContainerNode::initNode (uiNode_t* node) {
 	/* initialize lua events */
+	uiLocatedNode::initNode(node);
 	EXTRADATA(node).lua_onSelect = LUA_NOREF;
 }
 
