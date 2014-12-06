@@ -142,10 +142,6 @@ bool G_MissionUse (Edict* self, Edict* activator)
  */
 void G_MissionThink (Edict* self)
 {
-	Edict* chain = self->groupMaster;
-	Edict* ent;
-	int team;
-
 	if (!G_MatchIsRunning())
 		return;
 
@@ -158,6 +154,7 @@ void G_MissionThink (Edict* self)
 		self->particle = nullptr;
 	}
 
+	Edict* chain = self->groupMaster;
 	if (!chain)
 		chain = self;
 	while (chain) {
@@ -205,8 +202,7 @@ void G_MissionThink (Edict* self)
 		self->use(self, nullptr);
 
 	/* store team before the edict is released */
-	team = self->getTeam();
-
+	const int team = self->getTeam();
 	chain = self->groupMaster;
 	if (!chain)
 		chain = self;
@@ -231,7 +227,7 @@ void G_MissionThink (Edict* self)
 			chain->link = nullptr;
 		}
 
-		ent = chain->groupChain;
+		Edict* ent = chain->groupChain;
 		/* free the trigger */
 		if (chain->child())
 			G_FreeEdict(chain->child());
@@ -242,7 +238,7 @@ void G_MissionThink (Edict* self)
 	self = nullptr;
 
 	/* still active mission edicts left */
-	ent = nullptr;
+	Edict* ent = nullptr;
 	while ((ent = G_EdictsGetNextInUse(ent)))
 		if (ent->type == ET_MISSION && ent->getTeam() == team)
 			return;
