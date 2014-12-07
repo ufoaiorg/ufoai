@@ -135,7 +135,7 @@ void uiTabNode::onLeftClick (uiNode_t* node, int x, int y)
 
 	/* only execute the click stuff if the selectbox is active */
 	if (node->state)
-		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOption_SetCurrentValue(node, OPTIONEXTRADATA(option).value);
 
 	UI_PlaySound("click1");
 }

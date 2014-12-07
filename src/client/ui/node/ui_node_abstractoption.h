@@ -64,5 +64,12 @@ void UI_RegisterAbstractOptionNode(uiBehaviour_t* behaviour);
 void UI_OptionNodeSortOptions(uiNode_t* node);
 uiNode_t* UI_AbstractOptionGetFirstOption(uiNode_t* node);
 const char* UI_AbstractOptionGetCurrentValue(uiNode_t* node);
-void UI_AbstractOptionSetCurrentValue(uiNode_t* node, const char* value);
+void UI_AbstractOption_SetCurrentValue(uiNode_t* node, const char* value);
+
+int UI_AbstractOption_GetDataId (uiNode_t* node);
+int UI_AbstractOption_GetCount (uiNode_t* node);
+const char* UI_AbstractOption_GetCvar (uiNode_t* node);
+
+void UI_AbstractOption_SetDataIdByName (uiNode_t* node, const char* name);
+void UI_AbstractOption_SetCvar (uiNode_t* node, const char* name);
 void UI_AbstractOption_SetBackgroundByName(uiNode_t* node, const char* name);
