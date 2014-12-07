@@ -177,23 +177,24 @@ DOOR FUNCTIONS
 static void Door_SlidingUse (Edict* door)
 {
 	const bool open = door->doorState == STATE_OPENED;
-	vec3_t moveAngles, moveDir, distanceVec;
-	int distance;
 
 	/* get the movement angle vector - a negative speed value will close the door*/
+	vec3_t moveAngles;
 	GET_SLIDING_DOOR_SHIFT_VECTOR(door->dir, open ? 1 : -1, moveAngles);
 
 	/* get the direction vector from the movement angles that were set on the entity */
+	vec3_t moveDir;
 	AngleVectors(moveAngles, moveDir, nullptr, nullptr);
 	VectorAbs(moveDir);
 
 	/* calculate the distance from the movement angles and the entity size. This is the
 	 * distance the door has to slide to fully open or close */
-	distance = DotProduct(moveDir, door->size);
+	const int distance = DotProduct(moveDir, door->size);
 
 	/* the door is moved in one step on the server side - lerping is not needed here - so we
 	 * perform the scalar multiplication with the distance the door must move in order to
 	 * fully close/open */
+	vec3_t distanceVec;
 	VectorMul(distance, moveAngles, distanceVec);
 
 	/* set the updated position. The bounding boxes that are used for tracing must be
@@ -330,8 +331,6 @@ static void Reset_DoorTrigger (Edict* self, Edict* activator)
  */
 void SP_func_door (Edict* ent)
 {
-	Edict* other;
-
 	ent->classname = "door";
 	ent->type = ET_DOOR;
 	if (!ent->noise)
@@ -352,7 +351,7 @@ void SP_func_door (Edict* ent)
 	ent->flags |= FL_CLIENTACTION;
 
 	/* spawn the trigger entity */
-	other = G_TriggerSpawn(ent);
+	Edict* other = G_TriggerSpawn(ent);
 	other->setTouch(Touch_DoorTrigger);
 	other->reset = Reset_DoorTrigger;
 	ent->setChild(other);

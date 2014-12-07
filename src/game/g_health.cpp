@@ -55,17 +55,16 @@ void G_DamageActor (Edict* target, const int damage, const vec3_t impact)
 
 	G_TakeDamage(target, damage);
 	if (damage > 0 && target->HP > 0) {
-		short bodyPart;
 		const teamDef_t* const teamDef = target->chr.teamDef;
 		if (impact) {
 			/* Direct hit */
 			const byte impactDirection = G_GetImpactDirection(target, impact);
 			const float impactHeight = impact[2] / (target->absBox.mins[2] + target->absBox.maxs[2]);
-			bodyPart = teamDef->bodyTemplate->getHitBodyPart(impactDirection, impactHeight);
+			const int bodyPart = teamDef->bodyTemplate->getHitBodyPart(impactDirection, impactHeight);
 			target->chr.wounds.woundLevel[bodyPart] += damage;
 		} else {
 			/* No direct hit (splash damage) */
-			for (bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
+			for (int bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
 				target->chr.wounds.woundLevel[bodyPart] += teamDef->bodyTemplate->getArea(bodyPart) * damage;
 		}
 #if 0
@@ -141,7 +140,7 @@ void G_BleedWounds (const int team)
 		if (CHRSH_IsTeamDefRobot(actor->chr.teamDef))
 			continue;
 		const teamDef_t* const teamDef = actor->chr.teamDef;
-		woundInfo_t& wounds = actor->chr.wounds;
+		const woundInfo_t& wounds = actor->chr.wounds;
 		int damage = 0;
 		for (int bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
 			if (wounds.woundLevel[bodyPart] > actor->chr.maxHP * teamDef->bodyTemplate->woundThreshold(bodyPart))

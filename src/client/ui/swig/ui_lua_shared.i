@@ -553,7 +553,7 @@ struct uiNode_t {
 
 	float left () { return $self->box.pos[0]; };
 	float top () { return $self->box.pos[1]; };
-	float widht () { return $self->box.size[0]; };
+	float width () { return $self->box.size[0]; };
 	float height () { return $self->box.size[1]; };
 	int bordersize () { return $self->border; };
 	char* name () { return const_cast<char*>($self->name); };
@@ -582,7 +582,7 @@ struct uiNode_t {
 
 	void set_left (float value) { UI_NodeSetBox($self, value, -1, -1, -1); };
 	void set_top (float value) { UI_NodeSetBox($self, -1, value, -1, -1); };
-	void set_widht (float value) { UI_NodeSetBox($self, -1, -1, value, -1); };
+	void set_width (float value) { UI_NodeSetBox($self, -1, -1, value, -1); };
 	void set_height (float value) { UI_NodeSetBox($self, -1, -1, -1, value); };
 	void set_box (float left, float top, float width, float height) { UI_NodeSetBox($self, left, top, width, height); };
 

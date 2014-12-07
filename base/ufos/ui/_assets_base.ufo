@@ -1121,7 +1121,7 @@ component BaseContainerPanel extends panel
 		font		"f_small_bold"
 		color			"0.56 0.81 0.76 1"
 		contentalign	ALIGN_CL
-		onChange 	{ cmd "base_changename" } 	// stores the value of the cvar in the base structure
+		onChange 	{ cmd "base_changename;" } 	// stores the value of the cvar in the base structure
 	}
 	// Base selector
 	panel base_selector
@@ -1228,7 +1228,7 @@ BaseContainerPanel_name:set_font("f_small_bold")
 BaseContainerPanel_name:set_color(0.56, 0.81, 0.76, 1)
 BaseContainerPanel_name:set_contentalign(ufo.ALIGN_CL)
 BaseContainerPanel_name.on_change = function (sender)
-		ufo.cmd("base_changename")
+		ufo.cmd("base_changename;")
 	end
 local BaseContainerPanel_base_selector = ufo.create_panel(BaseContainerPanel, "base_selector", nil)
 BaseContainerPanel_base_selector:set_pos(440, 7)
