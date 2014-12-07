@@ -2882,7 +2882,7 @@ SWIGINTERN bool uiNode_t_is_virtual(uiNode_t *self){ return self->behaviour->isV
 SWIGINTERN bool uiNode_t_is_abstract(uiNode_t *self){ return self->behaviour->isAbstract; }
 SWIGINTERN float uiNode_t_left(uiNode_t *self){ return self->box.pos[0]; }
 SWIGINTERN float uiNode_t_top(uiNode_t *self){ return self->box.pos[1]; }
-SWIGINTERN float uiNode_t_widht(uiNode_t *self){ return self->box.size[0]; }
+SWIGINTERN float uiNode_t_width(uiNode_t *self){ return self->box.size[0]; }
 SWIGINTERN float uiNode_t_height(uiNode_t *self){ return self->box.size[1]; }
 SWIGINTERN int uiNode_t_bordersize(uiNode_t *self){ return self->border; }
 SWIGINTERN char *uiNode_t_name(uiNode_t *self){ return const_cast<char*>(self->name); }
@@ -2907,7 +2907,7 @@ SWIGINTERN void uiNode_t_delete_node(uiNode_t *self){ UI_DeleteNode (self); }
 SWIGINTERN void uiNode_t_remove_children(uiNode_t *self){ UI_DeleteAllChild (self); }
 SWIGINTERN void uiNode_t_set_left(uiNode_t *self,float value){ UI_NodeSetBox(self, value, -1, -1, -1); }
 SWIGINTERN void uiNode_t_set_top(uiNode_t *self,float value){ UI_NodeSetBox(self, -1, value, -1, -1); }
-SWIGINTERN void uiNode_t_set_widht(uiNode_t *self,float value){ UI_NodeSetBox(self, -1, -1, value, -1); }
+SWIGINTERN void uiNode_t_set_width(uiNode_t *self,float value){ UI_NodeSetBox(self, -1, -1, value, -1); }
 SWIGINTERN void uiNode_t_set_height(uiNode_t *self,float value){ UI_NodeSetBox(self, -1, -1, -1, value); }
 SWIGINTERN void uiNode_t_set_box(uiNode_t *self,float left,float top,float width,float height){ UI_NodeSetBox(self, left, top, width, height); }
 SWIGINTERN void uiNode_t_set_flashing(uiNode_t *self,bool value){ self->flash = value; }
@@ -5223,19 +5223,19 @@ fail:
 }
 
 
-static int _wrap_uiNode_widht(lua_State* L) {
+static int _wrap_uiNode_width(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
   float result;
   
-  SWIG_check_num_args("uiNode_t::widht",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::widht",1,"uiNode_t *");
+  SWIG_check_num_args("uiNode_t::width",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::width",1,"uiNode_t *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
-    SWIG_fail_ptr("uiNode_widht",1,SWIGTYPE_p_uiNode_t);
+    SWIG_fail_ptr("uiNode_width",1,SWIGTYPE_p_uiNode_t);
   }
   
-  result = (float)uiNode_t_widht(arg1);
+  result = (float)uiNode_t_width(arg1);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -5906,21 +5906,21 @@ fail:
 }
 
 
-static int _wrap_uiNode_set_widht(lua_State* L) {
+static int _wrap_uiNode_set_width(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
   float arg2 ;
   
-  SWIG_check_num_args("uiNode_t::set_widht",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::set_widht",1,"uiNode_t *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiNode_t::set_widht",2,"float");
+  SWIG_check_num_args("uiNode_t::set_width",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::set_width",1,"uiNode_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiNode_t::set_width",2,"float");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
-    SWIG_fail_ptr("uiNode_set_widht",1,SWIGTYPE_p_uiNode_t);
+    SWIG_fail_ptr("uiNode_set_width",1,SWIGTYPE_p_uiNode_t);
   }
   
   arg2 = (float)lua_tonumber(L, 2);
-  uiNode_t_set_widht(arg1,arg2);
+  uiNode_t_set_width(arg1,arg2);
   
   return SWIG_arg;
   
@@ -6811,7 +6811,7 @@ static swig_lua_method swig_uiNode_methods[]= {
     { "is_abstract", _wrap_uiNode_is_abstract},
     { "left", _wrap_uiNode_left},
     { "top", _wrap_uiNode_top},
-    { "widht", _wrap_uiNode_widht},
+    { "width", _wrap_uiNode_width},
     { "height", _wrap_uiNode_height},
     { "bordersize", _wrap_uiNode_bordersize},
     { "name", _wrap_uiNode_name},
@@ -6836,7 +6836,7 @@ static swig_lua_method swig_uiNode_methods[]= {
     { "remove_children", _wrap_uiNode_remove_children},
     { "set_left", _wrap_uiNode_set_left},
     { "set_top", _wrap_uiNode_set_top},
-    { "set_widht", _wrap_uiNode_set_widht},
+    { "set_width", _wrap_uiNode_set_width},
     { "set_height", _wrap_uiNode_set_height},
     { "set_box", _wrap_uiNode_set_box},
     { "set_flashing", _wrap_uiNode_set_flashing},
