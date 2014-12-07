@@ -158,7 +158,7 @@ static bool G_IsMoraleEnabled (int team)
  */
 void G_MoraleBehaviour (int team)
 {
-	bool enabled = G_IsMoraleEnabled(team);
+	const bool enabled = G_IsMoraleEnabled(team);
 	if (!enabled)
 		return;
 
@@ -199,7 +199,7 @@ void G_MoraleBehaviour (int team)
 		G_ActorSetMaxs(actor);
 
 		/* morale-regeneration, capped at max: */
-		int newMorale = actor->morale + MORALE_RANDOM(mor_regeneration->value);
+		const int newMorale = actor->morale + MORALE_RANDOM(mor_regeneration->value);
 		const int maxMorale = GET_MORALE(actor->chr.score.skills[ABILITY_MIND]);
 		if (newMorale > maxMorale)
 			actor->morale = maxMorale;
