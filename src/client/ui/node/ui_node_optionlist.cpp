@@ -226,7 +226,7 @@ void uiOptionListNode::onLeftClick (uiNode_t* node, int x, int y)
 
 	/* update the status */
 	if (option)
-		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOption_SetCurrentValue(node, OPTIONEXTRADATA(option).value);
 }
 
 /**

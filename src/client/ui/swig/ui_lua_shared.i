@@ -632,10 +632,12 @@ struct uiNode_t {
 struct uiAbstractOptionNode_t: uiNode_t {
 };
 %extend uiAbstractOptionNode_t {
-	int dataid () { return UI_EXTRADATA($self, abstractOptionExtraData_t).dataId; };
-    int count () { return UI_EXTRADATA($self, abstractOptionExtraData_t).count; };
+	int dataid () { return UI_AbstractOption_GetDataId($self); };
+    int count () { return UI_AbstractOption_GetCount($self); };
+	const char* cvar () { return UI_AbstractOption_GetCvar($self); };
 
-	void set_dataid (const char* name) { UI_EXTRADATA($self, abstractOptionExtraData_t).dataId = UI_GetDataIDByName(name); };
+	void set_dataid (const char* name) { UI_AbstractOption_SetDataIdByName($self, name); };
+	void set_cvar (const char* name) { UI_AbstractOption_SetCvar ($self, name); };
 	void set_background (const char* name) { UI_AbstractOption_SetBackgroundByName($self, name); };
 
 	%rename (on_viewchange) lua_onViewChange;

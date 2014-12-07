@@ -269,7 +269,7 @@ void uiOptionTreeNode::onLeftClick (uiNode_t* node, int x, int y)
 
 	/* update the status */
 	if (option)
-		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOption_SetCurrentValue(node, OPTIONEXTRADATA(option).value);
 }
 
 /**
@@ -331,7 +331,7 @@ void UI_OptionTree_SelectValue (uiNode_t* node, const char* value) {
 
 	/* update the selection */
 	if (option) {
-		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOption_SetCurrentValue(node, OPTIONEXTRADATA(option).value);
 	} else {
 		Com_Printf("UI_OptionTree_SelectValue: Option value \"%s\" not found\n", value);
 		return;

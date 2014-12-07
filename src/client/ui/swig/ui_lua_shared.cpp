@@ -2936,9 +2936,11 @@ SWIGINTERN void uiNode_t___setitem(uiNode_t *self,char const *name,LUA_METHOD fc
 SWIGINTERN LUA_METHOD uiNode_t___getitem(uiNode_t *self,char const *name){ LUA_METHOD fcn = UI_Node_GetItem(self, name); return fcn; }
 SWIGINTERN void uiNode_t_add_classmethod(uiNode_t *self,char const *name,LUA_METHOD fcn){ UI_AddBehaviourMethod(self->behaviour, name, fcn); }
 SWIGINTERN void uiNode_t_add_nodemethod(uiNode_t *self,char const *name,LUA_METHOD fcn){ UI_AddNodeMethod(self, name, fcn); }
-SWIGINTERN int uiAbstractOptionNode_t_dataid(uiAbstractOptionNode_t *self){ return UI_EXTRADATA(self, abstractOptionExtraData_t).dataId; }
-SWIGINTERN int uiAbstractOptionNode_t_count(uiAbstractOptionNode_t *self){ return UI_EXTRADATA(self, abstractOptionExtraData_t).count; }
-SWIGINTERN void uiAbstractOptionNode_t_set_dataid(uiAbstractOptionNode_t *self,char const *name){ UI_EXTRADATA(self, abstractOptionExtraData_t).dataId = UI_GetDataIDByName(name); }
+SWIGINTERN int uiAbstractOptionNode_t_dataid(uiAbstractOptionNode_t *self){ return UI_AbstractOption_GetDataId(self); }
+SWIGINTERN int uiAbstractOptionNode_t_count(uiAbstractOptionNode_t *self){ return UI_AbstractOption_GetCount(self); }
+SWIGINTERN char const *uiAbstractOptionNode_t_cvar(uiAbstractOptionNode_t *self){ return UI_AbstractOption_GetCvar(self); }
+SWIGINTERN void uiAbstractOptionNode_t_set_dataid(uiAbstractOptionNode_t *self,char const *name){ UI_AbstractOption_SetDataIdByName(self, name); }
+SWIGINTERN void uiAbstractOptionNode_t_set_cvar(uiAbstractOptionNode_t *self,char const *name){ UI_AbstractOption_SetCvar (self, name); }
 SWIGINTERN void uiAbstractOptionNode_t_set_background(uiAbstractOptionNode_t *self,char const *name){ UI_AbstractOption_SetBackgroundByName(self, name); }
 
 static LUA_EVENT uiAbstractOptionNode_t_lua_onViewChange_get(uiAbstractOptionNode_t* node) {
@@ -6946,6 +6948,30 @@ fail:
 }
 
 
+static int _wrap_uiAbstractOptionNode_cvar(lua_State* L) {
+  int SWIG_arg = 0;
+  uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
+  char *result = 0 ;
+  
+  SWIG_check_num_args("uiAbstractOptionNode_t::cvar",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::cvar",1,"uiAbstractOptionNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
+    SWIG_fail_ptr("uiAbstractOptionNode_cvar",1,SWIGTYPE_p_uiAbstractOptionNode_t);
+  }
+  
+  result = (char *)uiAbstractOptionNode_t_cvar(arg1);
+  lua_pushstring(L,(const char *)result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiAbstractOptionNode_set_dataid(lua_State* L) {
   int SWIG_arg = 0;
   uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
@@ -6961,6 +6987,32 @@ static int _wrap_uiAbstractOptionNode_set_dataid(lua_State* L) {
   
   arg2 = (char *)lua_tostring(L, 2);
   uiAbstractOptionNode_t_set_dataid(arg1,(char const *)arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiAbstractOptionNode_set_cvar(lua_State* L) {
+  int SWIG_arg = 0;
+  uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  SWIG_check_num_args("uiAbstractOptionNode_t::set_cvar",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::set_cvar",1,"uiAbstractOptionNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiAbstractOptionNode_t::set_cvar",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
+    SWIG_fail_ptr("uiAbstractOptionNode_set_cvar",1,SWIGTYPE_p_uiAbstractOptionNode_t);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  uiAbstractOptionNode_t_set_cvar(arg1,(char const *)arg2);
   
   return SWIG_arg;
   
@@ -7088,7 +7140,9 @@ static swig_lua_attribute swig_uiAbstractOptionNode_attributes[] = {
 static swig_lua_method swig_uiAbstractOptionNode_methods[]= {
     { "dataid", _wrap_uiAbstractOptionNode_dataid},
     { "count", _wrap_uiAbstractOptionNode_count},
+    { "cvar", _wrap_uiAbstractOptionNode_cvar},
     { "set_dataid", _wrap_uiAbstractOptionNode_set_dataid},
+    { "set_cvar", _wrap_uiAbstractOptionNode_set_cvar},
     { "set_background", _wrap_uiAbstractOptionNode_set_background},
     {0,0}
 };
