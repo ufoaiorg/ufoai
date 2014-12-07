@@ -9,7 +9,7 @@ os:
   - linux
 
 script:
-  - git checkout -f; git clean -fdx && ./configure make -j 2 && ./testall
+  - git checkout -f; git clean -fdx && ./configure && make -j 2 && ./testall
 
 notifications:
   email: true

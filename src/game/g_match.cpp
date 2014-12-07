@@ -44,7 +44,6 @@ static int G_GetEarnedExperience (abilityskills_t skill, Edict* ent)
 	character_t* chr = &ent->chr;
 
 	int experience = 0;
-	int i;
 
 	switch (skill) {
 	case ABILITY_POWER: {
@@ -55,7 +54,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, Edict* ent)
 	}
 	case ABILITY_ACCURACY:
 		/* skip skills < ABILITY_NUM_TYPES, they are abilities not real skills */
-		for (i = ABILITY_NUM_TYPES; i < SKILL_NUM_TYPES; i++)
+		for (int i = ABILITY_NUM_TYPES; i < SKILL_NUM_TYPES; i++)
 			if (i == SKILL_SNIPER)
 				experience += 60 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
 			else
@@ -153,8 +152,6 @@ void G_MatchEndTrigger (int team, int timeGap)
  */
 static void G_SendCharacterData (const Actor* actor)
 {
-	int k;
-
 	assert(actor);
 
 	/* write character number */
@@ -164,15 +161,15 @@ static void G_SendCharacterData (const Actor* actor)
 	gi.WriteByte(actor->getStun());
 	gi.WriteByte(actor->morale);
 
-	for (k = 0; k < BODYPART_MAXTYPE; ++k)
+	for (int k = 0; k < BODYPART_MAXTYPE; ++k)
 		gi.WriteByte(actor->chr.wounds.woundLevel[k] + actor->chr.wounds.treatmentLevel[k]);
 
 	/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
+	for (int k = 0; k < SKILL_NUM_TYPES + 1; k++)
 		gi.WriteLong(actor->chr.score.experience[k]);
-	for (k = 0; k < KILLED_NUM_TYPES; k++)
+	for (int k = 0; k < KILLED_NUM_TYPES; k++)
 		gi.WriteShort(actor->chr.score.kills[k]);
-	for (k = 0; k < KILLED_NUM_TYPES; k++)
+	for (int k = 0; k < KILLED_NUM_TYPES; k++)
 		gi.WriteShort(actor->chr.score.stuns[k]);
 	gi.WriteShort(actor->chr.score.assignedMissions);
 }
@@ -186,10 +183,7 @@ static void G_SendCharacterData (const Actor* actor)
  */
 static void G_MatchSendResults (int team, bool nextmap)
 {
-	Edict* attacker;
-	int i, j = 0;
-
-	attacker = nullptr;
+	Edict* attacker = nullptr;
 	Actor* actor = nullptr;
 	/* Calculate new scores/skills for the soldiers. */
 	while ((actor = G_EdictsGetNextLivingActor(actor))) {
@@ -217,30 +211,30 @@ static void G_MatchSendResults (int team, bool nextmap)
 	gi.WriteByte(team);
 	gi.WriteByte(nextmap);
 
-	for (i = 0; i < MAX_TEAMS; i++) {
+	for (int i = 0; i < MAX_TEAMS; i++) {
 		gi.WriteByte(level.num_spawned[i]);
 		gi.WriteByte(level.num_alive[i]);
 	}
 
-	for (i = 0; i <= MAX_TEAMS; i++)
-		for (j = 0; j < MAX_TEAMS; j++)
+	for (int i = 0; i <= MAX_TEAMS; i++)
+		for (int j = 0; j < MAX_TEAMS; j++)
 			gi.WriteByte(level.num_kills[i][j]);
 
-	for (i = 0; i <= MAX_TEAMS; i++)
-		for (j = 0; j < MAX_TEAMS; j++)
+	for (int i = 0; i <= MAX_TEAMS; i++)
+		for (int j = 0; j < MAX_TEAMS; j++)
 			gi.WriteByte(level.num_stuns[i][j]);
 
 	/* how many actors */
-	j = 0;
+	int n  = 0;
 	actor = nullptr;
 	while ((actor = G_EdictsGetNextActor(actor)))
 		if (!G_IsAI(actor))
-			j++;
+			n++;
 
 	/* number of soldiers */
-	gi.WriteByte(j);
+	gi.WriteByte(n);
 
-	if (j) {
+	if (n) {
 		actor = nullptr;
 		while ((actor = G_EdictsGetNextActor(actor))) {
 			if (!G_IsAI(actor)) {
@@ -285,9 +279,6 @@ bool G_MatchDoEnd (void)
  */
 void G_MatchEndCheck (void)
 {
-	int activeTeams;
-	int i, last;
-
 	if (level.intermissionTime > 0.0) /* already decided */
 		return;
 
@@ -296,8 +287,10 @@ void G_MatchEndCheck (void)
 		return;
 	}
 
+	int last = 0;
+	int activeTeams = 0;
 	/** @todo count from 0 to get the civilians for objectives */
-	for (i = 1, activeTeams = 0, last = 0; i < MAX_TEAMS; i++) {
+	for (int i = 1; i < MAX_TEAMS; i++) {
 		Actor* actor = nullptr;
 		/* search for living but not stunned actors - there must at least be one actor
 		 * that is still able to attack or defend himself */
