@@ -214,7 +214,7 @@ static void G_SendFootstepSound (Edict* ent, const int contentFlags)
  * @param[in] dvec The direction vector for the step to be added
  * @param[in] contentFlags The material we are walking over
  */
-static void G_WriteStep (Actor* ent, byte** stepAmount, const int dvec, const int contentFlags)
+static void G_WriteStep (Actor* ent, const int dvec, const int contentFlags)
 {
 	/* write move header if not yet done */
 	if (gi.GetEvent() != EV_ACTOR_MOVE) {
@@ -438,8 +438,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 				}
 				/* write the step to the net */
 				const int contentFlags = G_ActorGetContentFlags(actor->origin);
-				byte* stepAmount = nullptr;
-				G_WriteStep(actor, &stepAmount, dvec, contentFlags);
+				G_WriteStep(actor, dvec, contentFlags);
 
 				status = 0;
 
