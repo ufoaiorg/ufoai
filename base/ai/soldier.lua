@@ -77,6 +77,19 @@ function ails.shield ()
 	return false
 end
 
+function ails.shield ()
+	local civs = ai.see(ails.param.vis, "phalanx", "path")
+	if #civs > 0 then
+		for i = 1, #civs do
+			local herd_pos = ai.positionherd(civs[i], true)
+			if herd_pos then
+				return herd_pos:goto()
+			end
+		end
+	end
+	return false
+end
+
 function ails.approach (targets)
 	for i = 1, #targets do
 		local near_pos
