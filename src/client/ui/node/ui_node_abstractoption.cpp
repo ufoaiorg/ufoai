@@ -72,7 +72,14 @@ const char* UI_AbstractOptionGetCurrentValue (uiNode_t* node)
 
 void UI_AbstractOption_SetCurrentValue(uiNode_t* node, const char* value)
 {
-	UI_AbstractOption_SetCvar(node, value);
+	const char* cvarName = &EXTRADATA(node).cvar[6];
+	Cvar_Set(cvarName, "%s", value);
+	if (node->onChange) {
+		UI_ExecuteEventActions(node, node->onChange);
+	}
+	if (node->lua_onChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onChange);
+	}
 }
 
 void uiAbstractOptionNode::initNode(uiNode_t* node) {
@@ -161,14 +168,8 @@ void UI_AbstractOption_SetDataIdByName (uiNode_t* node, const char* name) {
 }
 
 void UI_AbstractOption_SetCvar (uiNode_t* node, const char* name) {
-	const char* cvarName = &EXTRADATA(node).cvar[6];
-	Cvar_Set(cvarName, "%s", name);
-	if (node->onChange) {
-		UI_ExecuteEventActions(node, node->onChange);
-	}
-	if (node->lua_onChange != LUA_NOREF) {
-		UI_ExecuteLuaEventScript(node, node->lua_onChange);
-	}
+	cvar_t* var = Cvar_Get(name);
+	EXTRADATA(node).cvar = var->name;
 }
 
 void UI_AbstractOption_SetBackgroundByName(uiNode_t* node, const char* name) {
