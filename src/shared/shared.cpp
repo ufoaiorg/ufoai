@@ -577,6 +577,17 @@ const char* Q_stristr (const char* str, const char* substr)
 	return str;
 }
 
+/**
+ * @brief Matches the start of a string.
+ * @param[in] str The source string to scan.
+ * @param[in] start The string to match.
+ * @return Zero if no match is found, otherwise returns the pointer of the first character in str
+ * after the match.
+ * <code>
+ *   const char* name = "*cvar:version";
+ *   char *p = Q_strstrart(name, "*cvar:"); // <-- p now points to the substring "version"
+ * </code>
+ */
 char const* Q_strstart (char const* str, char const* start)
 {
 	for (; *start != '\0'; ++str, ++start) {

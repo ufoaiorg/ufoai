@@ -480,6 +480,7 @@ struct cvar_t {
 	int as_integer () { return $self->integer; };
 
 	void set_value (float number) { Cvar_SetValue($self->name, number);  };
+	void set_value (const char* text) { Cvar_Set($self->name, text); };
 };
 
 %rename (findvar) Cvar_FindVar;
