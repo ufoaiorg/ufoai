@@ -662,8 +662,6 @@ static void SP_player_start (Edict* ent)
 	/** @todo Wrong place here */
 	/* maybe there are already the max soldiers allowed per team connected */
 	if (sv_maxsoldiersperteam->integer > level.num_spawnpoints[ent->getTeam()]) {
-		ent->setStun(0);
-		ent->HP = INITIAL_HP;
 		G_ActorSpawn(ent);
 	} else
 		G_FreeEdict(ent);
@@ -680,9 +678,8 @@ static void SP_human_start (Edict* ent)
 		G_FreeEdict(ent);
 		return;
 	}
+
 	ent->setTeam(TEAM_PHALANX);
-	ent->setStun(0);
-	ent->HP = INITIAL_HP;
 	G_ActorSpawn(ent);
 }
 
@@ -698,9 +695,6 @@ static void SP_2x2_start (Edict* ent)
 		G_FreeEdict(ent);
 		return;
 	}
-	/* set stats */
-	ent->setStun(0);
-	ent->HP = INITIAL_HP;
 
 	if (!ent->getTeam())
 		ent->setTeam(TEAM_PHALANX);
@@ -725,9 +719,6 @@ static void SP_alien_start (Edict* ent)
 		return;
 	}
 	ent->setTeam(TEAM_ALIEN);
-	/* set stats */
-	ent->setStun(0);
-	ent->HP = INITIAL_HP;
 
 	G_ActorSpawn(ent);
 }
@@ -745,9 +736,6 @@ static void SP_civilian_start (Edict* ent)
 		return;
 	}
 	ent->setTeam(TEAM_CIVILIAN);
-	/* set stats */
-	ent->setStun(99);	/** @todo Does anybody know _why_ this is set to 99? */
-	ent->HP = INITIAL_HP;
 	ent->count = 100; /* current waypoint */
 	G_ActorSpawn(ent);
 }
