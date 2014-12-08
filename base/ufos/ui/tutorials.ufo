@@ -1,87 +1,62 @@
-// ==================
-// TUTORIALS MENU
-// ==================
-
-window tutorials
-{
-	{
-		background		"ui/main_bg"
-	}
-
-	string headline
-	{
-		string			"_TUTORIALS"
-		size			"500 50"
-		pos				"262 50"
-		font			"f_title"
-		color			"0.59 0.78 0.56 1"
-		contentalign	ALIGN_CC
-	}
-
-	panel buttons
-	{
-		{
-			pos			"312 250"
-			size		"420 400"
-		}
-
-		panel dynbuttons
-		{
-			{
-				pos				"0 0"
-				size			"400 300"
-				layout			LAYOUT_TOP_DOWN_FLOW
-				layoutMargin	15
-				wheelscrollable	true
-				onViewChange {
-						*node:parent.tutorials_scroll@fullsize = <fullsize>
-						*node:parent.tutorials_scroll@current = <viewpos>
-						*node:parent.tutorials_scroll@viewsize = <viewsize>
-				}
-			}
-		}
-
-		vscrollbar tutorials_scroll
-		{
-			{
-				image			"ui/scrollbar_v"
-				pos				"402 0"
-				height			"300"
-				current			0
-				fullsize		16
-				viewsize		6
-				hidewhenunused	true
-				onChange { *node:parent.dynbuttons@viewpos = <current> }
-			}
-
-		}
-
-		MainMenuExitBtn button_back
-		{
-			pos		"0 300"
-			onClick	{ cmd "ui_pop;" }
-			string	"_BACK"
-		}
-	}
-
-	fuzzyScreen overlay { }
-
-	func onWindowOpened
-	{
-		cmd	"gettutorials;"
-	}
-
-	confunc tutorialsListAdd
-	{
-		call *node:root.buttons.dynbuttons@createChild("tutorial<1>", "MainMenuBtn")
-		*node:root.buttons.dynbuttons.tutorial<1>@string = "<2>"
-		call *node:root.buttons.dynbuttons.tutorial<1>@createChild("index","data")
-		*node:root.buttons.dynbuttons.tutorial<1>.index@integer = <1>
-		*node:root.buttons.dynbuttons.tutorial<1>@onClick = { cmd "tutoriallist_click <node:this.index@integer>;" }
-	}
-
-	confunc tutorialsListClear
-	{
-		call *node:root.buttons.dynbuttons@removeAllChild
-	}
-}
+--!usr/bin/lua
+-- ==================
+-- TUTORIALS MENU
+-- ==================
+local tutorials = ufo.create_window("tutorials", nil)
+tutorials:set_background("ui/main_bg")
+local headline = ufo.create_control(tutorials, "string", "headline", nil)
+headline:set_text("_TUTORIALS")
+headline:set_size(500, 50)
+headline:set_pos(262, 50)
+headline:set_font("f_title")
+headline:set_color(0.59, 0.78, 0.56, 1)
+headline:set_contentalign(ufo.ALIGN_CC)
+local buttons = ufo.create_control(tutorials, "panel", "buttons", nil)
+buttons:set_pos(312, 250)
+buttons:set_size(420, 400)
+local dynbuttons = ufo.create_control(buttons, "panel", "dynbuttons", nil)
+dynbuttons:set_pos(0, 0)
+dynbuttons:set_size(400, 300)
+dynbuttons:set_layout(ufo.LAYOUT_TOP_DOWN_FLOW)
+dynbuttons:set_layoutmargin(15)
+dynbuttons:set_wheelscrollable(true)
+dynbuttons.on_viewchange = function(sender)
+		sender:parent():child("tutorials_scroll"):set_fullsize(sender:fullsize())
+		sender:parent():child("tutorials_scroll"):set_current(sender:viewpos())
+		sender:parent():child("tutorials_scroll"):set_viewsize(sender:viewsize())
+	end
+local tutorials_scroll = ufo.create_control(buttons, "vscrollbar", "tutorials_scroll", nil)
+tutorials_scroll:set_image("ui/scrollbar_v")
+tutorials_scroll:set_pos(402, 0)
+tutorials_scroll:set_height(300)
+tutorials_scroll:set_current(0)
+tutorials_scroll:set_fullsize(16)
+tutorials_scroll:set_viewsize(6)
+tutorials_scroll:set_autoshowscroll(true)
+tutorials_scroll.on_change = function(sender)
+		sender:parent():child("dynbuttons"):set_viewpos(sender:current())
+	end
+local button_back = ufo.create_control(buttons, "MainMenuExitBtn", "button_back", nil)
+button_back:set_pos(0, 300)
+button_back:set_text("_BACK")
+button_back.on_click = function(sender)
+		ufo.cmd("ui_pop;")
+	end
+local overlay = ufo.create_control(tutorials, "fuzzyScreen", "overlay", nil)
+tutorials.on_windowopened = function(sender)
+		ufo.cmd("gettutorials;")
+	end
+local tutorialsListAdd = ufo.create_control(tutorials, "confunc", "tutorialsListAdd", nil)
+tutorialsListAdd.on_click = function(sender, index, text)
+		local tutorial = ufo.create_control(dynbuttons, "MainMenuBtn", "tutorial"..index, nil)
+		tutorial:set_text(text)
+		local tutorial_index = ufo.create_control(tutorial, "data", "index", nil)
+		tutorial_index:set_value(index)
+		tutorial.on_click = function(sender)
+				ufo.cmd(string.format("tutoriallist_click %s;", index ))
+			end
+	end
+local tutorialsListClear = ufo.create_control(tutorials, "confunc", "tutorialsListClear", nil)
+tutorialsListClear.on_click = function(sender)
+		sender:root():child("buttons"):child("dynbuttons"):remove_children()
+	end
