@@ -120,8 +120,9 @@ static void G_UpdateStunState (int team)
 
 	Actor* actor = nullptr;
 	while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, team))) {
-		if (actor->getStun() > 0) {
-			if (regen > actor->getStun())
+		const int stun = actor->getStun();
+		if (stun > 0) {
+			if (regen > stun)
 				actor->setStun(0);
 			else
 				actor->addStun(-regen);
@@ -160,14 +161,13 @@ static void G_RoundTouchTriggers (int team)
  */
 static void G_GetNextActiveTeam (void)
 {
-	int i;
 	const int lastTeam = G_GetActiveTeam();
 
 	Com_Printf("round end from team %i\n", lastTeam);
 	level.activeTeam = TEAM_NO_ACTIVE;
 
 	/* search next team */
-	for (i = 1; i < MAX_TEAMS; i++) {
+	for (int i = 1; i < MAX_TEAMS; i++) {
 		const int team = (lastTeam + i) % MAX_TEAMS;
 		if (level.num_alive[team]) {
 			/* found next player */
@@ -183,8 +183,6 @@ static void G_GetNextActiveTeam (void)
  */
 void G_ClientEndRound (Player& player)
 {
-	Player* p;
-
 	const int lastTeamIndex = (G_GetActiveTeam() + level.teamOfs) % MAX_TEAMS;
 
 	if (!G_IsAIPlayer(&player)) {
@@ -209,7 +207,7 @@ void G_ClientEndRound (Player& player)
 			G_EventEndRoundAnnounce(player);
 			G_EventEnd();
 		}
-		p = nullptr;
+		Player* p = nullptr;
 		while ((p = G_PlayerGetNextActiveHuman(p)))
 			if (p->getTeam() == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(*p) > 0)
 				return;
@@ -281,7 +279,7 @@ void G_ClientEndRound (Player& player)
 
 	/* start ai - there is only one player for ai teams, and the last pointer must only
 	 * be updated for ai players */
-	p = G_GetPlayerForTeam(level.activeTeam);
+	Player* p = G_GetPlayerForTeam(level.activeTeam);
 	if (p == nullptr)
 		gi.Error("Could not find player for team %i", level.activeTeam);
 
