@@ -1048,7 +1048,7 @@ void UI_Validate (uiNode_t* node)
  * it will not contain this method unless this node was specified as super.
  */
 void UI_AddNodeMethod (uiNode_t* node, const char* name, LUA_METHOD fcn) {
-	Com_Printf ("UI_AddNodeMethod: registering node method [%s] on node [%s]\n", name, UI_GetPath(node));
+	//Com_Printf ("UI_AddNodeMethod: registering node method [%s] on node [%s]\n", name, UI_GetPath(node));
 
 	/* the first method, so create a method table on this node */
 	if (!node->nodeMethods) {
