@@ -1,0 +1,31 @@
+// ==================
+// MODEL DISPLAY TEST-MENU (DEBUG)
+// ==================
+//
+// The model to be checked MUST NOT use "menutransform" for menu "model_test" in models.ufo
+//
+// Invoke this menu with:
+//	ui_push model_test
+// Or start from command-line:
+//	./ufo +ui_push model_test
+// ==================
+
+window model_test
+{
+	model mdl
+	{
+		src		*cvar:mn_model
+		origin	"0 0 0"
+		scale	"1 1 1"
+		angles	"0 0 0"
+		pos		"0 0"
+		size	"1024 768"
+		rotatewithmouse	true
+	}
+
+	func onWindowOpened
+	{
+		*cvar:mn_model = "drop_firebird"
+	}
+
+}

@@ -251,7 +251,7 @@ ReactionFireTargetList* ReactionFireTargets::find (const Edict* shooter)
  */
 void ReactionFireTargets::create (const Edict* shooter)
 {
-	ReactionFireTargetList* rfts = find(shooter);
+	const ReactionFireTargetList* rfts = find(shooter);
 
 	if (rfts)
 		gi.Error("Entity already has rfData");

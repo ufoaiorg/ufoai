@@ -61,11 +61,7 @@ static void G_BuildForbiddenList (int team, const Edict* movingActor)
 	forbiddenList.reset();
 
 	/* team visibility */
-	teammask_t teamMask;
-	if (team)
-		teamMask = G_TeamToVisMask(team);
-	else
-		teamMask = TEAM_ALL;
+	const teammask_t teamMask = team ? G_TeamToVisMask(team) : TEAM_ALL;
 
 	Edict* ent = nullptr;
 	while ((ent = G_EdictsGetNextInUse(ent))) {
@@ -218,7 +214,7 @@ static void G_SendFootstepSound (Edict* ent, const int contentFlags)
  * @param[in] dvec The direction vector for the step to be added
  * @param[in] contentFlags The material we are walking over
  */
-static void G_WriteStep (Actor* ent, byte** stepAmount, const int dvec, const int contentFlags)
+static void G_WriteStep (Actor* ent, const int dvec, const int contentFlags)
 {
 	/* write move header if not yet done */
 	if (gi.GetEvent() != EV_ACTOR_MOVE) {
@@ -311,9 +307,6 @@ pos_t G_ActorMoveLength (const Actor* actor, const pathing_t* path, const pos3_t
  */
 void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t to)
 {
-	pos3_t pos;
-	bool autoCrouchRequired = false;
-
 	if (VectorCompare(actor->pos, to))
 		return;
 
@@ -321,6 +314,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 	if (!G_ActionCheckForCurrentTeam(player, actor, TU_MOVE_STRAIGHT))
 		return;
 
+	bool autoCrouchRequired = false;
 	byte crouchingState = actor->isCrouched() ? 1 : 0;
 
 	/* calculate move table */
@@ -349,8 +343,8 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 		return;
 
 	/* assemble dvec-encoded move data */
+	pos3_t pos;
 	VectorCopy(to, pos);
-	const int initTU = actor->TU;
 
 	dvec_t dvtab[MAX_ROUTE];
 	byte numdv = G_FillDirectionTable(dvtab, lengthof(dvtab), crouchingState, pos);
@@ -360,24 +354,19 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 
 	/* everything ok, found valid route? */
 	if (VectorCompare(pos, actor->pos)) {
-		int oldHP = 0;
-		int oldSTUN = 0;
-		int oldState = 0;
-		byte* stepAmount = nullptr;
-		int usedTUs = 0;
 		/* no floor inventory at this point */
 		actor->resetFloor();
-		const int movingModifier = G_ActorGetInjuryPenalty(actor, MODIFIER_MOVEMENT);
 
 		if (!G_IsCivilian(actor))
 			G_EventMoveCameraTo(G_VisToPM(actor->visflags & ~G_TeamToVisMask(actor->getTeam())), actor->pos);
 
 		actor->moveinfo.steps = 0;
 		G_ReactionFireNotifyClientStartMove(actor);
+		const int initTU = actor->TU;
+		int usedTUs = 0;
+		const int movingModifier = G_ActorGetInjuryPenalty(actor, MODIFIER_MOVEMENT);
 		while (numdv > 0) {
-			int step = actor->moveinfo.steps;
-			/* A flag to see if we needed to change crouch state */
-			int crouchFlag;
+			const int step = actor->moveinfo.steps;
 			const byte oldDir = actor->dir;
 
 			/* get next dvec */
@@ -417,7 +406,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 
 			/* This is now a flag to indicate a change in crouching - we need this for
 			 * the stop in mid move call(s), because we need the updated entity position */
-			crouchFlag = 0;
+			int crouchFlag = 0;
 			/* Calculate the new position after the decrease in TUs, otherwise the game
 			 * remembers the false position if the time runs out */
 			PosAddDV(actor->pos, crouchFlag, dvec);
@@ -429,10 +418,11 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 				actor->speed = ACTOR_SPEED_NORMAL;
 			actor->speed *= g_actorspeed->value;
 
+			const int oldState = actor->state;
+			const int oldHP = actor->HP;
+			const int oldSTUN = actor->getStun();
 			if (crouchFlag == 0) { /* No change in crouch */
 				actor->calcOrigin();
-
-				const int contentFlags = G_ActorGetContentFlags(actor->origin);
 
 				/* link it at new position - this must be done for every edict
 				 * movement - to let the server know about it. */
@@ -440,14 +430,15 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 
 				/* Only the PHALANX team has these stats right now. */
 				if (actor->chr.scoreMission) {
-					float truediv = gi.GetTUsForDirection(dir, 0);		/* regardless of crouching ! */
+					const float truediv = gi.GetTUsForDirection(dir, 0);		/* regardless of crouching ! */
 					if (actor->isCrouched())
 						actor->chr.scoreMission->movedCrouched += truediv;
 					else
 						actor->chr.scoreMission->movedNormal += truediv;
 				}
 				/* write the step to the net */
-				G_WriteStep(actor, &stepAmount, dvec, contentFlags);
+				const int contentFlags = G_ActorGetContentFlags(actor->origin);
+				G_WriteStep(actor, dvec, contentFlags);
 
 				status = 0;
 
@@ -455,9 +446,6 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 				G_ActorSetTU(actor, initTU - usedTUs);
 
 				Edict* clientAction = actor->clientAction;
-				oldState = actor->state;
-				oldHP = actor->HP;
-				oldSTUN = actor->getStun();
 				/* check triggers at new position */
 				if (G_TouchTriggers(actor)) {
 					if (!clientAction)
@@ -491,7 +479,7 @@ void G_ClientMove (const Player& player, int visTeam, Actor* actor, const pos3_t
 			}
 
 			/* check for death */
-			if (((oldHP != 0 && (oldHP != actor->HP || oldSTUN != actor->getStun())) || (oldState != actor->state)) && !actor->isDazed()) {
+			if (oldHP != actor->HP || oldSTUN != actor->getStun() || oldState != actor->state) {
 				/** @todo Handle dazed via trigger_hurt */
 				/* maybe this was due to rf - then the G_ActorDie was already called */
 				if (!actor->isDead()) {

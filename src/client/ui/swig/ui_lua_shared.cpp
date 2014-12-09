@@ -7033,20 +7033,20 @@ static int _wrap_uiAbstractOptionNode_cvar(lua_State* L) {
   int SWIG_arg = 0;
   uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
   char *result = 0 ;
-  
+
   SWIG_check_num_args("uiAbstractOptionNode_t::cvar",1,1)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::cvar",1,"uiAbstractOptionNode_t *");
-  
+
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
     SWIG_fail_ptr("uiAbstractOptionNode_cvar",1,SWIGTYPE_p_uiAbstractOptionNode_t);
   }
-  
+
   result = (char *)uiAbstractOptionNode_t_cvar(arg1);
   lua_pushstring(L,(const char *)result); SWIG_arg++;
   return SWIG_arg;
-  
+
   if(0) SWIG_fail;
-  
+
 fail:
   lua_error(L);
   return SWIG_arg;
@@ -7083,22 +7083,22 @@ static int _wrap_uiAbstractOptionNode_set_cvar(lua_State* L) {
   int SWIG_arg = 0;
   uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
   char *arg2 = (char *) 0 ;
-  
+
   SWIG_check_num_args("uiAbstractOptionNode_t::set_cvar",2,2)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::set_cvar",1,"uiAbstractOptionNode_t *");
   if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiAbstractOptionNode_t::set_cvar",2,"char const *");
-  
+
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
     SWIG_fail_ptr("uiAbstractOptionNode_set_cvar",1,SWIGTYPE_p_uiAbstractOptionNode_t);
   }
-  
+
   arg2 = (char *)lua_tostring(L, 2);
   uiAbstractOptionNode_t_set_cvar(arg1,(char const *)arg2);
-  
+
   return SWIG_arg;
-  
+
   if(0) SWIG_fail;
-  
+
 fail:
   lua_error(L);
   return SWIG_arg;

@@ -120,13 +120,11 @@ static const spawn_t spawns[] = {
  */
 static void ED_CallSpawn (Edict* ent)
 {
-	const spawn_t* s;
-
 	if (!ent->classname)
 		return;
 
 	/* check normal spawn functions */
-	for (s = spawns; s->name; s++) {
+	for (const spawn_t* s = spawns; s->name; s++) {
 		/* found it */
 		if (Q_streq(s->name, ent->classname)) {
 			s->spawn(ent);
@@ -332,8 +330,6 @@ static void G_FindEdictGroups (void)
  */
 void G_SpawnEntities (const char* mapname, bool day, const char* entities)
 {
-	int entnum;
-
 	G_FreeTags(TAG_LEVEL);
 
 	OBJZERO(level);
@@ -354,7 +350,7 @@ void G_SpawnEntities (const char* mapname, bool day, const char* entities)
 	level.hurtAliens = sv_hurtaliens->integer;
 
 	/* parse ents */
-	entnum = 0;
+	int entnum = 0;
 	while (1) {
 		/* parse the opening brace */
 		const char* token = Com_Parse(&entities);
@@ -440,11 +436,9 @@ static void Think_SmokeAndFire (Edict* self)
 static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, const char* particle, int rounds, int damage)
 {
 	pos3_t pos;
-	Edict* ent;
-
 	VecToPos(vec, pos);		/* calculate grid position */
 
-	ent = G_GetEdictFromPos(pos, fieldtype);
+	Edict* ent = G_GetEdictFromPos(pos, fieldtype);
 	if (ent == nullptr) {
 		pos_t z = gi.GridFall(ACTOR_SIZE_NORMAL, pos);
 		if (z != pos[2])
@@ -486,13 +480,11 @@ static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, c
  */
 static void G_SpawnFieldGroup (const entity_type_t fieldtype, const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius)
 {
-	vec_t x, y;
-
 	G_SpawnFieldPart(fieldtype, vec, particle, rounds, damage);
 
 	/* for all cells in a square of +/- radius */
-	for (x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
-		for (y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
+	for (vec_t x = vec[0] - radius; x <= vec[0] + radius; x += UNIT_SIZE) {
+		for (vec_t y = vec[1] - radius; y <= vec[1] + radius; y += UNIT_SIZE) {
 			vec3_t end;
 			VectorSet(end, x, y, vec[2]);
 
@@ -541,9 +533,7 @@ void G_SpawnStunSmokeField (const vec3_t vec, const char* particle, int rounds, 
  */
 Edict* G_SpawnFloor (const pos3_t pos)
 {
-	Edict* floorItem;
-
-	floorItem = G_Spawn("item");
+	Edict* floorItem = G_Spawn("item");
 	floorItem->type = ET_ITEM;
 	/* make sure that the item is always on a field that even the smallest actor can reach */
 	floorItem->fieldSize = ACTOR_SIZE_NORMAL;
@@ -672,8 +662,6 @@ static void SP_player_start (Edict* ent)
 	/** @todo Wrong place here */
 	/* maybe there are already the max soldiers allowed per team connected */
 	if (sv_maxsoldiersperteam->integer > level.num_spawnpoints[ent->getTeam()]) {
-		ent->setStun(0);
-		ent->HP = INITIAL_HP;
 		G_ActorSpawn(ent);
 	} else
 		G_FreeEdict(ent);
@@ -690,9 +678,8 @@ static void SP_human_start (Edict* ent)
 		G_FreeEdict(ent);
 		return;
 	}
+
 	ent->setTeam(TEAM_PHALANX);
-	ent->setStun(0);
-	ent->HP = INITIAL_HP;
 	G_ActorSpawn(ent);
 }
 
@@ -708,9 +695,6 @@ static void SP_2x2_start (Edict* ent)
 		G_FreeEdict(ent);
 		return;
 	}
-	/* set stats */
-	ent->setStun(0);
-	ent->HP = INITIAL_HP;
 
 	if (!ent->getTeam())
 		ent->setTeam(TEAM_PHALANX);
@@ -735,9 +719,6 @@ static void SP_alien_start (Edict* ent)
 		return;
 	}
 	ent->setTeam(TEAM_ALIEN);
-	/* set stats */
-	ent->setStun(0);
-	ent->HP = INITIAL_HP;
 
 	G_ActorSpawn(ent);
 }
@@ -755,9 +736,6 @@ static void SP_civilian_start (Edict* ent)
 		return;
 	}
 	ent->setTeam(TEAM_CIVILIAN);
-	/* set stats */
-	ent->setStun(99);	/** @todo Does anybody know _why_ this is set to 99? */
-	ent->HP = INITIAL_HP;
 	ent->count = 100; /* current waypoint */
 	G_ActorSpawn(ent);
 }
@@ -792,8 +770,6 @@ static void SP_civilian_target (Edict* ent)
  */
 static void SP_misc_mission (Edict* ent)
 {
-	Edict* other;
-
 	ent->classname = "misc_mission";
 	ent->type = ET_MISSION;
 
@@ -828,7 +804,7 @@ static void SP_misc_mission (Edict* ent)
 		G_MissionAddVictoryMessage(ent->message);
 
 	/* spawn the trigger entity */
-	other = G_TriggerSpawn(ent);
+	Edict* other = G_TriggerSpawn(ent);
 	other->setTouch(G_MissionTouch);
 	if (ent->target)
 		ent->use = G_MissionUse;
@@ -842,8 +818,6 @@ static void SP_misc_mission (Edict* ent)
  */
 static void SP_misc_mission_aliens (Edict* ent)
 {
-	Edict* other;
-
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
 	ent->setTeam(TEAM_ALIEN);
@@ -857,7 +831,7 @@ static void SP_misc_mission_aliens (Edict* ent)
 	ent->absBox.setMins(-(PLAYER_WIDTH * 3), -(PLAYER_WIDTH * 3), PLAYER_MIN);
 
 	/* spawn the trigger entity */
-	other = G_TriggerSpawn(ent);
+	Edict* other = G_TriggerSpawn(ent);
 	other->setTouch(G_MissionTouch);
 	ent->setChild(other);
 
@@ -872,19 +846,18 @@ static void SP_misc_mission_aliens (Edict* ent)
  */
 static void G_BuildForbiddenListForEntity (Edict* ent)
 {
-	pos3_t mins, maxs, origin;
 	vec3_t center;
-
 	AABB shiftedBox(ent->absBox);
 	shiftedBox.shift(ent->origin);
 	shiftedBox.getCenter(center);
 
+	pos3_t mins, maxs, origin;
 	VecToPos(shiftedBox.mins, mins);
 	VecToPos(shiftedBox.maxs, maxs);
 	VecToPos(center, origin);
 
-	int xDelta = std::max(1, maxs[0] - mins[0]);
-	int yDelta = std::max(1, maxs[1] - mins[1]);
+	const int xDelta = std::max(1, maxs[0] - mins[0]);
+	const int yDelta = std::max(1, maxs[1] - mins[1]);
 
 	int size = xDelta * yDelta;
 	ent->forbiddenListPos = (pos3_t*)G_TagMalloc(size * sizeof(pos3_t), TAG_LEVEL);
@@ -970,8 +943,6 @@ static bool Message_Use (Edict* self, Edict* activator)
 
 static void G_SpawnField (Edict* ent, const char* classname, entity_type_t type, solid_t solid)
 {
-	vec3_t particleOrigin;
-
 	ent->classname = classname;
 	ent->type = type;
 	ent->fieldSize = ACTOR_SIZE_NORMAL;
@@ -986,6 +957,7 @@ static void G_SpawnField (Edict* ent, const char* classname, entity_type_t type,
 
 	gi.LinkEdict(ent);
 
+	vec3_t particleOrigin;
 	VectorCopy(ent->origin, particleOrigin);
 	particleOrigin[2] -= GROUND_DELTA;
 	ent->particleLink = G_SpawnParticle(particleOrigin, ent->spawnflags, ent->particle);
