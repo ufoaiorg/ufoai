@@ -40,12 +40,12 @@ login.on_click = function(sender)
 	end
 webauth.on_windowopened = function (sender)
 		-- it's encrypted, so it has no value any longer in this dialog
-		-- ufo.getvar("web_password"):set_value("")
+		ufo.getvar("web_password"):set_value("")
 	end
 local web_authsuccessful = ufo.create_control(webauth, "confunc", "web_authsuccessful", nil)
 web_authsuccessful.on_click = function(sender)
 		ufo.cmd("echo \"Authentication successful\";ui_pop;")
-		-- ufo.getvar("web_password"):set_value("")
+		ufo.getvar("web_password"):set_value("")
 	end
 local web_authfailed = ufo.create_control(webauth, "confunc", "web_authfailed", nil)
 web_authfailed.on_click = function(sender)

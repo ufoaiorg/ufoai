@@ -195,18 +195,20 @@ end
 
 -- register callbacks
 ufo.register_onload (load)
+
 local overlay = ufo.create_control(wndMain, "fuzzyScreen", "overlay", nil)
 wndMain.on_windowopened = function (sender)
 ufo.cmd("music_change main;")
 -- @TODO: activate this again
--- ufo.cmd("ui_push_child popup_tipoftheday main;")
+ufo.cmd("ui_push_child popup_tipoftheday main;")
 ufo.cmd("check_cvars;")
 		if (ufo.getvar("cl_introshown"):as_integer() ~= 1) then
 			ufo.cmd("ui_push intro;")
 			ufo.getvar("cl_introshown"):set_value(1)
 		end
 	end
---[[
+
+
 local checkcvars = ufo.create_window("checkcvars", "ipopup")
 checkcvars:set_modal(true)
 checkcvars:set_pos(124, 192)

@@ -464,7 +464,7 @@ uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* su
 	/* add to list of instantiated components */
 	UI_InsertComponent(component);
 
-	Com_Printf("UI_CreateComponent: registered new component, name [%s], type [%s]\n", name, type);
+	//Com_Printf("UI_CreateComponent: registered new component, name [%s], type [%s]\n", name, type);
 
 	return component;
 }
