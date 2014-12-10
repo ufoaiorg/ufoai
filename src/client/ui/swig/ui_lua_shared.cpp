@@ -2856,6 +2856,8 @@ SWIGINTERN int uiScroll_t_viewsize(uiScroll_t *self){ return self->viewSize; }
 SWIGINTERN bool uiScroll_t_fullsize(uiScroll_t *self){ return self->fullSize; }
 SWIGINTERN void uiScroll_t_set_fullsize(uiScroll_t *self,bool value){ self->fullSize = (value ? 1 : 0); }
 SWIGINTERN bool uiScroll_t_set_values(uiScroll_t *self,int pos,int size,bool full){ return self->set (pos, size, (full ? 1 : 0)); }
+SWIGINTERN bool uiScroll_t_set_viewpos(uiScroll_t *self,int pos){ return self->set (pos, self->viewSize, self->fullSize); }
+SWIGINTERN bool uiScroll_t_set_viewsize(uiScroll_t *self,int size){ return self->set (self->viewPos, size, self->fullSize); }
 SWIGINTERN bool uiScroll_t_moveto(uiScroll_t *self,int pos){ return self->move(pos); }
 SWIGINTERN bool uiScroll_t_movedelta(uiScroll_t *self,int delta){ return self->moveDelta (delta); }
 SWIGINTERN char *cvar_t_name(cvar_t *self){ return self->name; }
@@ -2940,9 +2942,13 @@ SWIGINTERN void uiNode_t_add_nodemethod(uiNode_t *self,char const *name,LUA_METH
 SWIGINTERN int uiAbstractOptionNode_t_dataid(uiAbstractOptionNode_t *self){ return UI_AbstractOption_GetDataId(self); }
 SWIGINTERN int uiAbstractOptionNode_t_count(uiAbstractOptionNode_t *self){ return UI_AbstractOption_GetCount(self); }
 SWIGINTERN char const *uiAbstractOptionNode_t_cvar(uiAbstractOptionNode_t *self){ return UI_AbstractOption_GetCvar(self); }
+SWIGINTERN int uiAbstractOptionNode_t_current(uiAbstractOptionNode_t *self){ return UI_AbstractOption_Scroll_Current(self); }
+SWIGINTERN int uiAbstractOptionNode_t_viewsize(uiAbstractOptionNode_t *self){ return UI_AbstractOption_Scroll_ViewSize(self); }
+SWIGINTERN int uiAbstractOptionNode_t_fullsize(uiAbstractOptionNode_t *self){ return UI_AbstractOption_Scroll_FullSize(self); }
 SWIGINTERN void uiAbstractOptionNode_t_set_dataid(uiAbstractOptionNode_t *self,char const *name){ UI_AbstractOption_SetDataIdByName(self, name); }
 SWIGINTERN void uiAbstractOptionNode_t_set_cvar(uiAbstractOptionNode_t *self,char const *name){ UI_AbstractOption_SetCvar (self, name); }
 SWIGINTERN void uiAbstractOptionNode_t_set_background(uiAbstractOptionNode_t *self,char const *name){ UI_AbstractOption_SetBackgroundByName(self, name); }
+SWIGINTERN void uiAbstractOptionNode_t_set_current(uiAbstractOptionNode_t *self,int pos){ UI_AbstractOption_Scroll_SetCurrent(self, pos); }
 
 static LUA_EVENT uiAbstractOptionNode_t_lua_onViewChange_get(uiAbstractOptionNode_t* node) {
 	return UI_EXTRADATA(node, abstractOptionExtraData_t).lua_onViewChange;
@@ -3495,6 +3501,60 @@ fail:
 }
 
 
+static int _wrap_uiScroll_set_viewpos(lua_State* L) {
+  int SWIG_arg = 0;
+  uiScroll_t *arg1 = (uiScroll_t *) 0 ;
+  int arg2 ;
+  bool result;
+  
+  SWIG_check_num_args("uiScroll_t::set_viewpos",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiScroll_t::set_viewpos",1,"uiScroll_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiScroll_t::set_viewpos",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiScroll_t,0))){
+    SWIG_fail_ptr("uiScroll_set_viewpos",1,SWIGTYPE_p_uiScroll_t);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (bool)uiScroll_t_set_viewpos(arg1,arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiScroll_set_viewsize(lua_State* L) {
+  int SWIG_arg = 0;
+  uiScroll_t *arg1 = (uiScroll_t *) 0 ;
+  int arg2 ;
+  bool result;
+  
+  SWIG_check_num_args("uiScroll_t::set_viewsize",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiScroll_t::set_viewsize",1,"uiScroll_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiScroll_t::set_viewsize",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiScroll_t,0))){
+    SWIG_fail_ptr("uiScroll_set_viewsize",1,SWIGTYPE_p_uiScroll_t);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (bool)uiScroll_t_set_viewsize(arg1,arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiScroll_moveto(lua_State* L) {
   int SWIG_arg = 0;
   uiScroll_t *arg1 = (uiScroll_t *) 0 ;
@@ -3587,6 +3647,8 @@ static swig_lua_method swig_uiScroll_methods[]= {
     { "fullsize", _wrap_uiScroll_fullsize},
     { "set_fullsize", _wrap_uiScroll_set_fullsize},
     { "set_values", _wrap_uiScroll_set_values},
+    { "set_viewpos", _wrap_uiScroll_set_viewpos},
+    { "set_viewsize", _wrap_uiScroll_set_viewsize},
     { "moveto", _wrap_uiScroll_moveto},
     { "movedelta", _wrap_uiScroll_movedelta},
     {0,0}
@@ -7053,6 +7115,78 @@ fail:
 }
 
 
+static int _wrap_uiAbstractOptionNode_current(lua_State* L) {
+  int SWIG_arg = 0;
+  uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("uiAbstractOptionNode_t::current",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::current",1,"uiAbstractOptionNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
+    SWIG_fail_ptr("uiAbstractOptionNode_current",1,SWIGTYPE_p_uiAbstractOptionNode_t);
+  }
+  
+  result = (int)uiAbstractOptionNode_t_current(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiAbstractOptionNode_viewsize(lua_State* L) {
+  int SWIG_arg = 0;
+  uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("uiAbstractOptionNode_t::viewsize",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::viewsize",1,"uiAbstractOptionNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
+    SWIG_fail_ptr("uiAbstractOptionNode_viewsize",1,SWIGTYPE_p_uiAbstractOptionNode_t);
+  }
+  
+  result = (int)uiAbstractOptionNode_t_viewsize(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiAbstractOptionNode_fullsize(lua_State* L) {
+  int SWIG_arg = 0;
+  uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("uiAbstractOptionNode_t::fullsize",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::fullsize",1,"uiAbstractOptionNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
+    SWIG_fail_ptr("uiAbstractOptionNode_fullsize",1,SWIGTYPE_p_uiAbstractOptionNode_t);
+  }
+  
+  result = (int)uiAbstractOptionNode_t_fullsize(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiAbstractOptionNode_set_dataid(lua_State* L) {
   int SWIG_arg = 0;
   uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
@@ -7120,6 +7254,32 @@ static int _wrap_uiAbstractOptionNode_set_background(lua_State* L) {
   
   arg2 = (char *)lua_tostring(L, 2);
   uiAbstractOptionNode_t_set_background(arg1,(char const *)arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiAbstractOptionNode_set_current(lua_State* L) {
+  int SWIG_arg = 0;
+  uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("uiAbstractOptionNode_t::set_current",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::set_current",1,"uiAbstractOptionNode_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiAbstractOptionNode_t::set_current",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
+    SWIG_fail_ptr("uiAbstractOptionNode_set_current",1,SWIGTYPE_p_uiAbstractOptionNode_t);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  uiAbstractOptionNode_t_set_current(arg1,arg2);
   
   return SWIG_arg;
   
@@ -7222,9 +7382,13 @@ static swig_lua_method swig_uiAbstractOptionNode_methods[]= {
     { "dataid", _wrap_uiAbstractOptionNode_dataid},
     { "count", _wrap_uiAbstractOptionNode_count},
     { "cvar", _wrap_uiAbstractOptionNode_cvar},
+    { "current", _wrap_uiAbstractOptionNode_current},
+    { "viewsize", _wrap_uiAbstractOptionNode_viewsize},
+    { "fullsize", _wrap_uiAbstractOptionNode_fullsize},
     { "set_dataid", _wrap_uiAbstractOptionNode_set_dataid},
     { "set_cvar", _wrap_uiAbstractOptionNode_set_cvar},
     { "set_background", _wrap_uiAbstractOptionNode_set_background},
+    { "set_current", _wrap_uiAbstractOptionNode_set_current},
     {0,0}
 };
 static swig_lua_method swig_uiAbstractOptionNode_meta[] = {

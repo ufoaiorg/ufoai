@@ -72,7 +72,7 @@ bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
 	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
 	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 1, 0, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
 	return true;
@@ -90,11 +90,11 @@ bool UI_ExecuteLuaEventScript_ReturnBool (uiNode_t* node, LUA_EVENT event, bool 
 	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
 	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 1, 1, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
     if (!lua_isboolean(CL_GetLuaState(), -1)) {
-		Com_Printf ("lua error(0) [node=%s]: expecting a boolean as return value\n", node->name);
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", node->name, node->behaviour->name);
 		return false;
     }
     result = lua_toboolean(CL_GetLuaState(), -1);
@@ -116,7 +116,7 @@ bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y)
 	lua_pushinteger(CL_GetLuaState(), x); /* push x on lua stack */
 	lua_pushinteger(CL_GetLuaState(), y); /* push y on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
-		Com_Printf ("lua error(1) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
 	return true;
@@ -137,7 +137,7 @@ bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int
 	lua_pushinteger(CL_GetLuaState(), dx); /* push dx on lua stack */
 	lua_pushinteger(CL_GetLuaState(), dy); /* push dy on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
-		Com_Printf ("lua error(2) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
 	return true;
@@ -158,7 +158,7 @@ bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int
 	lua_pushinteger(CL_GetLuaState(), key); /* push key on lua stack */
 	lua_pushinteger(CL_GetLuaState(), unicode); /* push unicode on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
-		Com_Printf ("lua error(3) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
 	return true;
@@ -186,7 +186,7 @@ bool UI_ExecuteLuaMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params
 		lua_pushstring(CL_GetLuaState(), value);
 	}
 	if (lua_pcall (CL_GetLuaState(), 1, 0, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
 	return true;
@@ -212,7 +212,7 @@ bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn) {
 	}
 	/* execute the confunc */
 	if (lua_pcall (CL_GetLuaState(), Cmd_Argc(), 0, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s]: %s\n", node->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
 	return true;

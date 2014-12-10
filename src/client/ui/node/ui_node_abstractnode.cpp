@@ -210,7 +210,7 @@ void uiLocatedNode::doLayout (uiNode_t* node)
 void uiNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
 	for (uiNode_t* child = node->firstChild; child; child = child->next) {
-		UI_Node_WindowOpened(child, nullptr);
+		UI_Node_WindowOpened(child, params);
 	}
 }
 

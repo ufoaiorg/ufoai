@@ -135,7 +135,7 @@ void uiOptionTreeNode::draw (uiNode_t* node)
 	if (!systemCollapse)
 		systemCollapse = UI_GetSpriteByName("icons/system_collapse");
 
-	ref = UI_AbstractOptionGetCurrentValue(node);
+	ref = UI_AbstractOption_GetCurrentValue(node);
 	if (ref == nullptr)
 		return;
 
@@ -249,7 +249,7 @@ void uiOptionTreeNode::onLeftClick (uiNode_t* node, int x, int y)
 	uiNode_t* option;
 	int depth;
 
-	if (UI_AbstractOptionGetCurrentValue(node) == nullptr)
+	if (UI_AbstractOption_GetCurrentValue(node) == nullptr)
 		return;
 
 	/* select the right option */

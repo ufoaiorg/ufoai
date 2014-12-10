@@ -76,7 +76,7 @@ btnTwitter:set_padding (0)
 btnTwitter.on_click = function (sender)
 		ufo.cmd ("cl_openurl http://www.twitter.com/ufoai/;")
 	end
-
+	
 --[[
 	panel buttons {
 		{
@@ -291,7 +291,7 @@ select_language:set_contentalign(ufo.ALIGN_CC)
 select_language:set_dataid(ufo.OPTION_LANGUAGES)
 select_language:set_cvar("*cvar:s_language")
 select_language.on_viewchange = function (sender)
-		sender:root():child("select_language_scroll"):set_current(sender:viewpos())
+		sender:root():child("select_language_scroll"):set_current(sender:current())
 		sender:root():child("select_language_scroll"):set_fullsize(sender:fullsize())
 		sender:root():child("select_language_scroll"):set_viewsize(sender:viewsize())
 	end
@@ -303,7 +303,7 @@ select_language_scroll:set_current(0)
 select_language_scroll:set_viewsize(8)
 select_language_scroll:set_fullsize(21)
 select_language_scroll.on_change = function (sender)
-		sender:root():child("select_language"):set_viewpos(sender:viewpos())
+		sender:root():child("select_language"):set_current(sender:current())
 	end
 -- ===================
 -- VALIDATION
@@ -389,4 +389,19 @@ popup_tipoftheday.on_windowopened = function(sender)
 		else
 			ufo.cmd("ui_close popup_tipoftheday;")
 		end
+	end
+
+--[[
+	This is a test button; remove it when testing is done!!!
+--]]
+local btnTest = ufo.create_button(wndMain, "btnTest", nil)
+btnTest:set_text("Testing")
+btnTest:set_tooltip("Testing the code")
+btnTest:set_pos(800, 720)
+btnTest:set_size(70, 20)
+btnTest:set_color(0.0, 1.0, 0.0, 1.0)
+btnTest:set_selectcolor(1.0, 1.0, 1.0, 1.0)
+btnTest:set_padding (0)
+btnTest.on_click = function (sender)
+		ufo.cmd ("ui_push checkcvars;")
 	end

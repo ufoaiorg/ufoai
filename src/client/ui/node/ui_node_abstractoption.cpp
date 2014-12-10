@@ -55,16 +55,17 @@ void UI_OptionNodeSortOptions (uiNode_t* node)
 	node->lastChild = option;
 }
 
-const char* UI_AbstractOptionGetCurrentValue (uiNode_t* node)
+const char* UI_AbstractOption_GetCurrentValue (uiNode_t* node)
 {
 	/* no cvar given? */
 	if (!EXTRADATA(node).cvar || !*EXTRADATA(node).cvar) {
-		Com_Printf("UI_AbstractOptionGetCurrentValue: node '%s' doesn't have a valid cvar assigned\n", UI_GetPath(node));
+		Com_Printf("UI_AbstractOptionGetCurrentValue: node [%s] doesn't have a valid cvar assigned\n", UI_GetPath(node));
 		return nullptr;
 	}
 
 	/* not a cvar? */
 	if (!Q_strstart(EXTRADATA(node).cvar, "*cvar:"))
+		Com_Printf("UI_AbstractOptionGetCurrentValue: in node [%s], the name [%s] is not a value cvar\n", UI_GetPath(node), EXTRADATA(node).cvar);
 		return nullptr;
 
 	return UI_GetReferenceString(node, EXTRADATA(node).cvar);
@@ -110,7 +111,7 @@ void uiAbstractOptionNode::doLayout (uiNode_t* node)
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t* node)
+uiNode_t* UI_AbstractOption_GetFirstOption (uiNode_t* node)
 {
 	if (node->firstChild && node->firstChild->behaviour == ui_optionBehaviour) {
 		return node->firstChild;
@@ -175,6 +176,22 @@ void UI_AbstractOption_SetCvar (uiNode_t* node, const char* name) {
 void UI_AbstractOption_SetBackgroundByName(uiNode_t* node, const char* name) {
 	uiSprite_t* sprite = UI_GetSpriteByName(name);
 	UI_EXTRADATA(node, abstractOptionExtraData_t).background = sprite;
+}
+
+int UI_AbstractOption_Scroll_Current (uiNode_t* node) {
+	return EXTRADATA(node).scrollY.viewPos;
+}
+
+void UI_AbstractOption_Scroll_SetCurrent (uiNode_t* node, int pos) {
+	EXTRADATA(node).scrollY.move(pos);
+}
+
+int UI_AbstractOption_Scroll_ViewSize (uiNode_t* node) {
+	return EXTRADATA(node).scrollY.viewSize;
+}
+
+int UI_AbstractOption_Scroll_FullSize (uiNode_t* node) {
+	return EXTRADATA(node).scrollY.fullSize;
 }
 
 

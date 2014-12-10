@@ -123,7 +123,7 @@ void uiTabNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	uiNode_t* option;
 
-	if (UI_AbstractOptionGetCurrentValue(node) == nullptr)
+	if (UI_AbstractOption_GetCurrentValue(node) == nullptr)
 		return;
 
 	option = UI_TabNodeTabAtPosition(node, x, y);
@@ -142,7 +142,7 @@ void uiTabNode::onLeftClick (uiNode_t* node, int x, int y)
 
 void uiTabNode::draw (uiNode_t* node)
 {
-	const char* ref = UI_AbstractOptionGetCurrentValue(node);
+	const char* ref = UI_AbstractOption_GetCurrentValue(node);
 	if (ref == nullptr)
 		return;
 
