@@ -3200,7 +3200,7 @@ static void uiTimerNode_t_lua_onEvent_set(uiTimerNode_t* node, LUA_EVENT fn) {
 
 SWIGINTERN bool uiVideoNode_t_is_nosound(uiVideoNode_t *self){ return UI_EXTRADATA(self, videoExtraData_t).nosound; }
 SWIGINTERN void uiVideoNode_t_set_nosound(uiVideoNode_t *self,bool value){ UI_EXTRADATA(self, videoExtraData_t).nosound = value; }
-SWIGINTERN void uiVideoNode_t_set_source(uiVideoNode_t *self,char const *name){ UI_Sequence_SetSource(self, name); }
+SWIGINTERN void uiVideoNode_t_set_source(uiVideoNode_t *self,char const *name){ UI_Video_SetSource(self, name); }
 
 static LUA_EVENT uiVideoNode_t_lua_onEnd_get(uiVideoNode_t* node) {
 	return UI_EXTRADATA(node, videoExtraData_t).lua_onEnd;
@@ -7033,20 +7033,20 @@ static int _wrap_uiAbstractOptionNode_cvar(lua_State* L) {
   int SWIG_arg = 0;
   uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
   char *result = 0 ;
-
+  
   SWIG_check_num_args("uiAbstractOptionNode_t::cvar",1,1)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::cvar",1,"uiAbstractOptionNode_t *");
-
+  
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
     SWIG_fail_ptr("uiAbstractOptionNode_cvar",1,SWIGTYPE_p_uiAbstractOptionNode_t);
   }
-
+  
   result = (char *)uiAbstractOptionNode_t_cvar(arg1);
   lua_pushstring(L,(const char *)result); SWIG_arg++;
   return SWIG_arg;
-
+  
   if(0) SWIG_fail;
-
+  
 fail:
   lua_error(L);
   return SWIG_arg;
@@ -7083,22 +7083,22 @@ static int _wrap_uiAbstractOptionNode_set_cvar(lua_State* L) {
   int SWIG_arg = 0;
   uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
   char *arg2 = (char *) 0 ;
-
+  
   SWIG_check_num_args("uiAbstractOptionNode_t::set_cvar",2,2)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::set_cvar",1,"uiAbstractOptionNode_t *");
   if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiAbstractOptionNode_t::set_cvar",2,"char const *");
-
+  
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
     SWIG_fail_ptr("uiAbstractOptionNode_set_cvar",1,SWIGTYPE_p_uiAbstractOptionNode_t);
   }
-
+  
   arg2 = (char *)lua_tostring(L, 2);
   uiAbstractOptionNode_t_set_cvar(arg1,(char const *)arg2);
-
+  
   return SWIG_arg;
-
+  
   if(0) SWIG_fail;
-
+  
 fail:
   lua_error(L);
   return SWIG_arg;

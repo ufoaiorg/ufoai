@@ -126,7 +126,7 @@ void uiSequenceNode::onPropertyChanged (uiNode_t* node, const value_t* property)
 
 void UI_Sequence_SetSource(uiNode_t* node, const char* name) {
 	UI_FreeStringProperty(const_cast<char*>(EXTRADATA(node).source));
-	node->image = Mem_PoolStrDup(name, ui_dynStringPool, 0);
+	EXTRADATA(node).source = Mem_PoolStrDup(name, ui_dynStringPool, 0);
 }
 
 void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
