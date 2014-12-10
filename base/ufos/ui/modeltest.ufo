@@ -8,18 +8,29 @@
 -- Invoke this menu with:
 --	ui_push model_test
 -- Or start from command-line:
---	./ufo +ui_push model_test
+--	./ufo +ui_push model_test +set mn_model <model_name>
 -- ==================
 local model_test = ufo.create_window("model_test", nil)
 local mdl = ufo.create_control(model_test, "model", "mdl", nil)
+local scales = 1
 mdl:set_model("*cvar:mn_model")
-mdl:set_origin(0,0,0)
+mdl:set_origin(scales,scales,scales)
 mdl:set_scale(1,1,1)
 mdl:set_angles(0,0,0)
 mdl:set_pos(0,0)
 mdl:set_size(1024,768)
 mdl:set_mouserotate(true)
+mdl.on_wheelup = function(sender)
+		scales = scales*1.1
+		sender:set_scale(scales, scales, scales)
+	end
+mdl.on_wheeldown = function(sender)
+		scales = scales/1.1
+		sender:set_scale(scales, scales, scales)
+	end
 model_test.on_windowopened = function(sender)
-		--@TODO: wait for implementation
-		--ufo.getvar("mn_model"):set_value("drop_firebird")
+		local model = ufo.getvar("mn_model"):as_string()
+		if (model == nil or model == "") then
+			ufo.getvar("mn_model"):set_value("drop_firebird")
+		end
 	end
