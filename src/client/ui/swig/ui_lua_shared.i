@@ -1229,7 +1229,7 @@ struct uiVideoNode_t: uiNode_t {
 	bool is_nosound () { return UI_EXTRADATA($self, videoExtraData_t).nosound; };
 
 	void set_nosound (bool value) { UI_EXTRADATA($self, videoExtraData_t).nosound = value; };
-	void set_source (const char* name) { UI_Sequence_SetSource($self, name); };
+	void set_source (const char* name) { UI_Video_SetSource($self, name); };
 
 	LUA_EVENT lua_onEnd; 		/**< references the event in lua: on_end(node) */
 };

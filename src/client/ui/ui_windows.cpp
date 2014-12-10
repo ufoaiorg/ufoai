@@ -193,6 +193,9 @@ uiNode_t* UI_PushWindow (const char* name, const char* parentName, linkedList_t*
 	else
 		Com_Printf("Window stack overflow\n");
 
+	if (Q_streq(name, "intro")) {
+		Com_Printf("opening intro window\n");
+	}
 	UI_Node_WindowOpened(window, params);
 
 	/* change from e.g. console mode to game input mode (fetch input) */
