@@ -461,6 +461,10 @@ struct uiScroll_t {
 	void set_fullsize (bool value) { $self->fullSize = (value ? 1 : 0); };
 	bool set_values (int pos, int size, bool full) { return $self->set (pos, size, (full ? 1 : 0)); };
 
+	bool set_viewpos (int pos) { return $self->set (pos, $self->viewSize, $self->fullSize); };
+	bool set_viewsize (int size) { return $self->set ($self->viewPos, size, $self->fullSize); };
+	bool set_fullsize (bool value) { return $self->set ($self->viewPos, $self->viewSize, value); };
+
 	bool moveto (int pos) { return $self->move(pos); };
 	bool movedelta (int delta) { return $self->moveDelta (delta); };
 };
@@ -637,9 +641,15 @@ struct uiAbstractOptionNode_t: uiNode_t {
     int count () { return UI_AbstractOption_GetCount($self); };
 	const char* cvar () { return UI_AbstractOption_GetCvar($self); };
 
+	int current () { return UI_AbstractOption_Scroll_Current($self); };
+	int viewsize () { return UI_AbstractOption_Scroll_ViewSize($self); };
+	int fullsize () { return UI_AbstractOption_Scroll_FullSize($self); };
+
 	void set_dataid (const char* name) { UI_AbstractOption_SetDataIdByName($self, name); };
 	void set_cvar (const char* name) { UI_AbstractOption_SetCvar ($self, name); };
 	void set_background (const char* name) { UI_AbstractOption_SetBackgroundByName($self, name); };
+
+	void set_current (int pos) { UI_AbstractOption_Scroll_SetCurrent($self, pos); };
 
 	%rename (on_viewchange) lua_onViewChange;
 	LUA_EVENT lua_onViewChange; 		/**< references the event in lua: on_viewchange (node) */
@@ -697,6 +707,7 @@ struct uiAbstractScrollbarNode_t: uiNode_t {
 };
 %extend uiAbstractScrollbarNode_t {
 	bool is_autoshowscroll () { return UI_EXTRADATA($self, abstractScrollbarExtraData_t).hideWhenUnused; };
+
 	int current () { return UI_EXTRADATA($self, abstractScrollbarExtraData_t).pos; };
 	int viewsize () { return UI_EXTRADATA($self, abstractScrollbarExtraData_t).viewsize; };
 	int fullsize () { return UI_EXTRADATA($self, abstractScrollbarExtraData_t).fullsize; };

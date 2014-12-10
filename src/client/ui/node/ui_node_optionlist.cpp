@@ -94,7 +94,7 @@ void uiOptionListNode::draw (uiNode_t* node)
 	const float* textColor;
 	int count = 0;
 
-	ref = UI_AbstractOptionGetCurrentValue(node);
+	ref = UI_AbstractOption_GetCurrentValue(node);
 	if (ref == nullptr)
 		return;
 
@@ -112,7 +112,7 @@ void uiOptionListNode::draw (uiNode_t* node)
 	currentY = pos[1] + node->padding;
 
 	/* skip option over current position */
-	option = UI_AbstractOptionGetFirstOption(node);
+	option = UI_AbstractOption_GetFirstOption(node);
 	while (option && count < EXTRADATA(node).scrollY.viewPos) {
 		option = option->next;
 		count++;
@@ -194,7 +194,7 @@ static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t* node, int x, in
 		lineHeight = UI_FontGetHeight(font);
 	}
 
-	option = UI_AbstractOptionGetFirstOption(node);
+	option = UI_AbstractOption_GetFirstOption(node);
 	while (option && count < EXTRADATA(node).scrollY.viewPos) {
 		option = option->next;
 		count++;
@@ -218,7 +218,7 @@ void uiOptionListNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	uiNode_t* option;
 
-	if (UI_AbstractOptionGetCurrentValue(node) == nullptr)
+	if (UI_AbstractOption_GetCurrentValue(node) == nullptr)
 		return;
 
 	/* select the right option */
