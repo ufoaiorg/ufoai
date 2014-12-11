@@ -80,21 +80,21 @@ Edict* G_GetEdictFromPos (const pos3_t pos, const entity_type_t type)
  */
 Edict* G_GetEdictFromPosExcluding (const pos3_t pos, const int n, ...)
 {
-	Edict* ent = nullptr;
 	entity_type_t types[ET_MAX];
 	va_list ap;
-	int i;
 
 	assert(n > 0);
 	assert(n < sizeof(types));
 
 	va_start(ap, n);
 
-	for (i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 		types[i] = (entity_type_t)va_arg(ap, int);
 	}
 
+	Edict* ent = nullptr;
 	while ((ent = G_EdictsGetNextInUse(ent))) {
+		int i;
 		for (i = 0; i < n; i++)
 			if (ent->type == types[i])
 				break;
@@ -187,10 +187,8 @@ const char* G_GetWeaponNameForFiredef (const fireDef_t* fd)
  */
 Player* G_GetPlayerForTeam (int team)
 {
-	Player* p;
-
 	/* search corresponding player (even ai players) */
-	p = nullptr;
+	Player* p = nullptr;
 	while ((p = G_PlayerGetNextActiveHuman(p)))
 		if (p->getTeam() == team)
 			/* found player */
@@ -314,12 +312,11 @@ void G_PrintStats (const char* format, ...)
 
 	gi.DPrintf("[STATS] %s\n", buffer);
 	if (logstatsfile) {
-		struct tm* t;
 		char tbuf[32];
 		time_t aclock;
 
 		time(&aclock);
-		t = localtime(&aclock);
+		const struct tm* t = localtime(&aclock);
 
 		Com_sprintf(tbuf, sizeof(tbuf), "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900,
 				t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
@@ -554,7 +551,7 @@ int G_TouchTriggers (Edict* ent)
 		return 0;
 	Actor* actor = makeActor(ent);
 
-	int num = G_GetTouchingEdicts(actor->absBox, touched, lengthof(touched), actor);
+	const int num = G_GetTouchingEdicts(actor->absBox, touched, lengthof(touched), actor);
 
 	G_ResetTriggers(actor, touched, num);
 
@@ -597,7 +594,7 @@ int G_TouchSolids (Edict* ent, float extend)
 	absbox.expand(extend);
 
 	Edict* touched[MAX_EDICTS];
-	int num = G_GetTouchingEdicts(absbox, touched, lengthof(touched), actor);
+	const int num = G_GetTouchingEdicts(absbox, touched, lengthof(touched), actor);
 
 	int usedNum = 0;
 	/* be careful, it is possible to have an entity in this
@@ -630,7 +627,7 @@ void G_TouchEdicts (Edict* trigger, float extend)
 	absbox.expand(extend);
 
 	Edict* touched[MAX_EDICTS];
-	int num = G_GetTouchingEdicts(absbox, touched, lengthof(touched), trigger);
+	const int num = G_GetTouchingEdicts(absbox, touched, lengthof(touched), trigger);
 	Com_DPrintf(DEBUG_GAME, "G_TouchEdicts: Entities touching %s: %i (%f extent).\n", entName, num, extend);
 
 	/* be careful, it is possible to have an entity in this
