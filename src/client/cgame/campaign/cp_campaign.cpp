@@ -1496,7 +1496,7 @@ void CP_InitStartup (void)
 	cgi->Cmd_AddCommand("debug_statsupdate", CP_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
 #endif
 
-	cp_missiontest = cgi->Cvar_Get("cp_missiontest", "0", CVAR_DEVELOPER, "This will never stop the time on geoscape and print information about spawned missions");
+	cp_missiontest = cgi->Cvar_GetOrCreate("cp_missiontest", "0", CVAR_DEVELOPER, "This will never stop the time on geoscape and print information about spawned missions");
 
 	/* init subsystems */
 	MS_MessageInit();

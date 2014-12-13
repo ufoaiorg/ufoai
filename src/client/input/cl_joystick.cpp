@@ -292,10 +292,10 @@ void IN_JoystickInitMenu (void)
  */
 void IN_StartupJoystick (void)
 {
-	in_joystick = Cvar_Get("in_joystick", "0", CVAR_ARCHIVE, "Activate or deactivate the use of a joystick");
-	in_joystickNo = Cvar_Get("in_joystickNo", "0", CVAR_ARCHIVE, "Joystick to use - 0 is the first - 1 is the second ...");
-	in_joystickThreshold = Cvar_Get("in_joystickThreshold", "0.05", CVAR_ARCHIVE, "The threshold for the joystick axes");
-	in_joystickSpeed = Cvar_Get("in_joystickSpeed", "20", CVAR_ARCHIVE, "The joystick speed for the cursor");
+	in_joystick = Cvar_GetOrCreate("in_joystick", "0", CVAR_ARCHIVE, "Activate or deactivate the use of a joystick");
+	in_joystickNo = Cvar_GetOrCreate("in_joystickNo", "0", CVAR_ARCHIVE, "Joystick to use - 0 is the first - 1 is the second ...");
+	in_joystickThreshold = Cvar_GetOrCreate("in_joystickThreshold", "0.05", CVAR_ARCHIVE, "The threshold for the joystick axes");
+	in_joystickSpeed = Cvar_GetOrCreate("in_joystickSpeed", "20", CVAR_ARCHIVE, "The joystick speed for the cursor");
 
 	if (stick != nullptr) {
 		Com_Printf("... closing already initialized joystick\n");

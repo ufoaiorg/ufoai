@@ -825,7 +825,7 @@ static cvarList_t checkcvar[] = {
 static void CL_CheckCvars_f (void)
 {
 	for (cvarList_t* c = checkcvar; c->name != nullptr; c++) {
-		cvar_t* var = Cvar_Get(c->name);
+		cvar_t* var = Cvar_GetOrCreate(c->name);
 		if (var->string[0] == '\0') {
 			Com_Printf("%s has no value\n", var->name);
 			UI_PushWindow("checkcvars");
@@ -882,24 +882,24 @@ static void CL_InitLocal (void)
 	cls.realtime = Sys_Milliseconds();
 
 	/* register our variables */
-	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
-	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
-	cl_log_battlescape_events = Cvar_Get("cl_log_battlescape_events", "1", 0, "Log all battlescape events to events.log");
-	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
-	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "25000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
+	cl_introshown = Cvar_GetOrCreate("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
+	cl_fps = Cvar_GetOrCreate("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
+	cl_log_battlescape_events = Cvar_GetOrCreate("cl_log_battlescape_events", "1", 0, "Log all battlescape events to events.log");
+	cl_selected = Cvar_GetOrCreate("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
+	cl_connecttimeout = Cvar_GetOrCreate("cl_connecttimeout", "25000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
 	/* userinfo */
-	cl_name = Cvar_Get("cl_name", Sys_GetCurrentUser(), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
-	cl_teamnum = Cvar_Get("cl_teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Preferred teamnum for multiplayer teamplay games");
-	cl_ready = Cvar_Get("cl_ready", "0", CVAR_USERINFO, "Ready indicator in the userinfo for tactical missions");
-	cl_msg = Cvar_Get("cl_msg", "2", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
-	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are multiplayer mode (see sv_teamplay)");
+	cl_name = Cvar_GetOrCreate("cl_name", Sys_GetCurrentUser(), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
+	cl_teamnum = Cvar_GetOrCreate("cl_teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Preferred teamnum for multiplayer teamplay games");
+	cl_ready = Cvar_GetOrCreate("cl_ready", "0", CVAR_USERINFO, "Ready indicator in the userinfo for tactical missions");
+	cl_msg = Cvar_GetOrCreate("cl_msg", "2", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
+	sv_maxclients = Cvar_GetOrCreate("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are multiplayer mode (see sv_teamplay)");
 
-	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
+	masterserver_url = Cvar_GetOrCreate("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 
-	cl_map_debug = Cvar_Get("debug_map", "0", 0, "Activate realtime map debugging options - bitmask. Valid values are 0, 1, 3 and 7");
-	cl_le_debug = Cvar_Get("debug_le", "0", 0, "Activates some local entity debug rendering");
-	cl_trace_debug = Cvar_Get("debug_trace", "0", 0, "Activates some client side trace debug rendering");
-	cl_leshowinvis = Cvar_Get("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entities as null models");
+	cl_map_debug = Cvar_GetOrCreate("debug_map", "0", 0, "Activate realtime map debugging options - bitmask. Valid values are 0, 1, 3 and 7");
+	cl_le_debug = Cvar_GetOrCreate("debug_le", "0", 0, "Activates some local entity debug rendering");
+	cl_trace_debug = Cvar_GetOrCreate("debug_trace", "0", 0, "Activates some client side trace debug rendering");
+	cl_leshowinvis = Cvar_GetOrCreate("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entities as null models");
 
 	/* register our commands */
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
@@ -1178,7 +1178,7 @@ void CL_Init (void)
 
 	OBJZERO(cls);
 
-	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
+	fs_i18ndir = Cvar_GetOrCreate("fs_i18ndir", "", 0, "System path to language files");
 	/* i18n through gettext */
 	setlocale(LC_ALL, "C");
 	setlocale(LC_MESSAGES, "");

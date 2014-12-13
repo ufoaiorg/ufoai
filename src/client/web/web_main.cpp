@@ -187,12 +187,12 @@ void WEB_InitStartup (void)
 {
 	Cmd_AddCommand("web_auth", WEB_Auth_f, "Perform the authentication against the UFOAI server");
 
-	web_username = Cvar_Get("web_username", Sys_GetCurrentUser(), CVAR_ARCHIVE, "The username for the UFOAI server.");
+	web_username = Cvar_GetOrCreate("web_username", Sys_GetCurrentUser(), CVAR_ARCHIVE, "The username for the UFOAI server.");
 	/* if the password is a non-empty string, this means that username and password
 	 * are valid, and the authentication was successful */
-	web_password = Cvar_Get("web_password", "", CVAR_ARCHIVE, "The encrypted password for the UFOAI server.");
-	web_userid = Cvar_Get("web_userid", "0", 0, "Your userid for the UFOAI server");
-	web_authurl = Cvar_Get("web_authurl", WEB_API_SERVER "api/auth.php", CVAR_ARCHIVE,
+	web_password = Cvar_GetOrCreate("web_password", "", CVAR_ARCHIVE, "The encrypted password for the UFOAI server.");
+	web_userid = Cvar_GetOrCreate("web_userid", "0", 0, "Your userid for the UFOAI server");
+	web_authurl = Cvar_GetOrCreate("web_authurl", WEB_API_SERVER "api/auth.php", CVAR_ARCHIVE,
 				"The url to perform the authentication against.");
 
 	WEB_CGameCvars();

@@ -158,16 +158,16 @@ void VID_Minimize (void)
  */
 void VID_Init (void)
 {
-	vid_stretch = Cvar_Get("vid_stretch", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Backward compatibility to stretch the screen with a 4:3 ratio");
-	vid_fullscreen = Cvar_Get("vid_fullscreen", "1", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Run the game in fullscreen mode");
-	vid_mode = Cvar_Get("vid_mode", "-1", CVAR_ARCHIVE | CVAR_R_CONTEXT, "The video mode - set to -1 and use vid_width and vid_height to use a custom resolution");
+	vid_stretch = Cvar_GetOrCreate("vid_stretch", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Backward compatibility to stretch the screen with a 4:3 ratio");
+	vid_fullscreen = Cvar_GetOrCreate("vid_fullscreen", "1", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Run the game in fullscreen mode");
+	vid_mode = Cvar_GetOrCreate("vid_mode", "-1", CVAR_ARCHIVE | CVAR_R_CONTEXT, "The video mode - set to -1 and use vid_width and vid_height to use a custom resolution");
 	Cvar_SetCheckFunction("vid_mode", CL_CvarCheckVidMode);
-	vid_grabmouse = Cvar_Get("vid_grabmouse", "0", CVAR_ARCHIVE, "Grab the mouse in the game window - open the console to switch back to your desktop via Alt+Tab");
-	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, "Controls the gamma settings");
-	vid_ignoregamma = Cvar_Get("vid_ignoregamma", "0", CVAR_ARCHIVE, "Don't control the gamma settings if set to 1");
+	vid_grabmouse = Cvar_GetOrCreate("vid_grabmouse", "0", CVAR_ARCHIVE, "Grab the mouse in the game window - open the console to switch back to your desktop via Alt+Tab");
+	vid_gamma = Cvar_GetOrCreate("vid_gamma", "1", CVAR_ARCHIVE, "Controls the gamma settings");
+	vid_ignoregamma = Cvar_GetOrCreate("vid_ignoregamma", "0", CVAR_ARCHIVE, "Don't control the gamma settings if set to 1");
 	Cvar_SetCheckFunction("vid_gamma", CL_CvarCheckVidGamma);
-	vid_height = Cvar_Get("vid_height", "-1", CVAR_ARCHIVE, "Custom video height - set vid_mode to -1 to use this");
-	vid_width = Cvar_Get("vid_width", "-1", CVAR_ARCHIVE, "Custom video width - set vid_mode to -1 to use this");
+	vid_height = Cvar_GetOrCreate("vid_height", "-1", CVAR_ARCHIVE, "Custom video height - set vid_mode to -1 to use this");
+	vid_width = Cvar_GetOrCreate("vid_width", "-1", CVAR_ARCHIVE, "Custom video width - set vid_mode to -1 to use this");
 
 	Cmd_AddCommand("vid_restart", VID_Restart_f, "Restart the renderer - or change the resolution");
 	Cmd_AddCommand("vid_minimize", VID_Minimize, "Minimize the game window");

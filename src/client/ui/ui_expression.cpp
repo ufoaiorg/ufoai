@@ -203,7 +203,7 @@ float UI_GetFloatFromExpression (uiAction_t* expression, const uiCallContext_t* 
 				const char* cvarName = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
 					cvarName = UI_GenInjectedString(cvarName, false, context);
-				cvar = Cvar_Get(cvarName, "", 0, "Cvar from UI script expression");
+				cvar = Cvar_GetOrCreate(cvarName, "", 0, "Cvar from UI script expression");
 				return cvar->value;
 			}
 		case EA_VALUE_PATHPROPERTY:
@@ -354,7 +354,7 @@ const char* UI_GetStringFromExpression (uiAction_t* expression, const uiCallCont
 			const char* cvarName = expression->d.terminal.d1.constString;
 			if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
 				cvarName = UI_GenInjectedString(cvarName, false, context);
-			cvar = Cvar_Get(cvarName, "", 0, "Cvar from UI script expression");
+			cvar = Cvar_GetOrCreate(cvarName, "", 0, "Cvar from UI script expression");
 			return cvar->string;
 		}
 		case EA_VALUE_PATHPROPERTY:

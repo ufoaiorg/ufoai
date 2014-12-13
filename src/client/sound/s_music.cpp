@@ -356,8 +356,8 @@ void M_Init (void)
 		Cmd_RemoveCommand("music_change");
 	Cmd_TableAddList(musicCmds);
 	Cmd_AddParamCompleteFunction("music_play", M_CompleteMusic);
-	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
-	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128.");
+	snd_music = Cvar_GetOrCreate("snd_music", "PsymongN3", 0, "Background music track");
+	snd_music_volume = Cvar_GetOrCreate("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128.");
 	snd_music_volume->modified = true;
 
 	OBJZERO(musicArrays);

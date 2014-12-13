@@ -1172,8 +1172,8 @@ void IN_Init (void)
 	Com_Printf("\n------- input initialization -------\n");
 
 	/* cvars */
-	in_debug = Cvar_Get("in_debug", "0", 0, "Show input key codes on game console");
-	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
+	in_debug = Cvar_GetOrCreate("in_debug", "0", 0, "Show input key codes on game console");
+	cl_isometric = Cvar_GetOrCreate("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
 
 	/* commands */
 	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, N_("Rotate battlescape camera anti-clockwise"));

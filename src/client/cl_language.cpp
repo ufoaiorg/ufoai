@@ -377,7 +377,7 @@ void CL_LanguageInitMenu (void)
  */
 void CL_LanguageInit (void)
 {
-	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
+	fs_i18ndir = Cvar_GetOrCreate("fs_i18ndir", "", 0, "System path to language files");
 
 	char systemLanguage[MAX_VAR] = "";
 	if (Q_strvalid(s_language->string)) {

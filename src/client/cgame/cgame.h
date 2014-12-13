@@ -289,7 +289,7 @@ typedef struct cgame_import_s {
 	char* (IMPORT* FS_NextScriptHeader) (const char* files, const char** name, const char** text);
 
 	/* console variable interaction */
-	cvar_t* (IMPORT* Cvar_Get) (const char* varName, const char* value, int flags, const char* desc);
+	cvar_t* (IMPORT* Cvar_GetOrCreate) (const char* varName, const char* value, int flags, const char* desc);
 	cvar_t* (IMPORT* Cvar_Set) (const char* varName, const char* value, ...) __attribute__((format(__printf__, 2, 3)));
 	void (IMPORT* Cvar_SetValue) (const char* varName, float value);
 	const char* (IMPORT* Cvar_GetString) (const char* varName);

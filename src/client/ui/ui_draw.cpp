@@ -425,6 +425,6 @@ void UI_DisplayNotice (const char* text, int time, const char* windowName)
 
 void UI_InitDraw (void)
 {
-	ui_show_tooltips = Cvar_Get("ui_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in the UI");
+	ui_show_tooltips = Cvar_GetOrCreate("ui_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in the UI");
 	tooltipTimer = UI_AllocTimer(nullptr, TOOLTIP_DELAY, UI_CheckTooltipDelay);
 }

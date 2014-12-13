@@ -300,7 +300,7 @@ void CL_ViewCenterAtGridPosition (const pos3_t pos)
 
 void CL_ViewInit (void)
 {
-	cl_precache = Cvar_Get("cl_precache", "0", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
-	cl_map_displayavailablecells = Cvar_Get("cl_map_displayavailablecells", "0", 0, "Display cells where a soldier can move");
-	cl_map_draw_rescue_zone = Cvar_Get("cl_map_draw_rescue_zone", "2", 0, "Draw rescue zone: 1 - draw perimeter, 2 - draw circles on the ground, 3 - draw both");
+	cl_precache = Cvar_GetOrCreate("cl_precache", "0", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
+	cl_map_displayavailablecells = Cvar_GetOrCreate("cl_map_displayavailablecells", "0", 0, "Display cells where a soldier can move");
+	cl_map_draw_rescue_zone = Cvar_GetOrCreate("cl_map_draw_rescue_zone", "2", 0, "Draw rescue zone: 1 - draw perimeter, 2 - draw circles on the ground, 3 - draw both");
 }

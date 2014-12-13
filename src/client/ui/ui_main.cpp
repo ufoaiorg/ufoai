@@ -277,16 +277,16 @@ void UI_FinishInit (void)
 
 void UI_Init (void)
 {
-	cvar_t* ui_hunkSize = Cvar_Get("ui_hunksize", "3", 0, "UI memory hunk size in megabytes");
+	cvar_t* ui_hunkSize = Cvar_GetOrCreate("ui_hunksize", "3", 0, "UI memory hunk size in megabytes");
 
 #ifdef DEBUG
-	ui_debug = Cvar_Get("debug_ui", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
+	ui_debug = Cvar_GetOrCreate("debug_ui", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
 #endif
 
 	/* reset global UI structures */
 	OBJZERO(ui_global);
 
-	ui_sounds = Cvar_Get("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
+	ui_sounds = Cvar_GetOrCreate("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_uimemory", UI_Memory_f, "Display info about UI memory allocation");
