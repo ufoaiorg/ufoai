@@ -68,16 +68,13 @@ static int numipfilters;
 static bool StringToFilter (const char* s, ipfilter_t* f)
 {
 	char num[128];
-	int i;
 	byte b[4];
 	byte m[4];
 
-	for (i = 0; i < 4; i++) {
-		b[i] = 0;
-		m[i] = 0;
-	}
+	OBJZERO(b);
+	OBJZERO(m);
 
-	for (i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) {
 		if (*s < '0' || *s > '9') {
 			/** @todo find out if this printf is needed. Passing nullptr as a player would have crashed anyway. */
 			//G_ClientPrintf(nullptr, PRINT_CONSOLE, "Bad filter address: %s\n", s);
@@ -106,13 +103,10 @@ static bool StringToFilter (const char* s, ipfilter_t* f)
 
 bool SV_FilterPacket (const char* from)
 {
-	int i;
-	unsigned in;
 	byte m[4];
-	const char* p;
+	int i = 0;
+	const char* p = from;
 
-	i = 0;
-	p = from;
 	while (*p && i < 4) {
 		m[i] = 0;
 		while (*p >= '0' && *p <= '9') {
@@ -124,7 +118,7 @@ bool SV_FilterPacket (const char* from)
 		i++, p++;
 	}
 
-	in = *(unsigned* ) m;
+	const unsigned in = *(unsigned* ) m;
 
 	for (i = 0; i < numipfilters; i++)
 		if ((in & ipfilters[i].mask) == ipfilters[i].compare)
@@ -139,13 +133,12 @@ bool SV_FilterPacket (const char* from)
  */
 static void SVCmd_AddIP_f (void)
 {
-	int i;
-
 	if (gi.Cmd_Argc() < 3) {
 		gi.DPrintf("Usage: %s <ip-mask>\n", gi.Cmd_Argv(1));
 		return;
 	}
 
+	int i;
 	for (i = 0; i < numipfilters; i++)
 		if (ipfilters[i].compare == ~0x0)
 			break;				/* free spot */
@@ -172,7 +165,6 @@ static void SVCmd_RemoveIP_f (void)
 	}
 
 	ipfilter_t f;
-
 	if (!StringToFilter(gi.Cmd_Argv(2), &f))
 		return;
 
@@ -235,13 +227,11 @@ static void SVCmd_WriteIP_f (void)
  */
 static void SVCmd_AI_Add_f (void)
 {
-	int team;
-
 	if (gi.Cmd_Argc() < 3) {
 		gi.DPrintf("Usage: %s <teamnum>\n", gi.Cmd_Argv(1));
 		return;
 	}
-	team = atoi(gi.Cmd_Argv(2));
+	const int team = atoi(gi.Cmd_Argv(2));
 	if (team > TEAM_CIVILIAN && team < MAX_TEAMS) {
 		if (!AI_CreatePlayer(team))
 			gi.DPrintf("Couldn't create AI player.\n");
@@ -257,13 +247,11 @@ static void SVCmd_AI_Add_f (void)
  */
 static void SVCmd_Win_f (void)
 {
-	int team;
-
 	if (gi.Cmd_Argc() < 3) {
 		gi.DPrintf("Usage: %s <teamnum>\n", gi.Cmd_Argv(1));
 		return;
 	}
-	team = atoi(gi.Cmd_Argv(2));
+	const int team = atoi(gi.Cmd_Argv(2));
 	if (team > TEAM_CIVILIAN && team < MAX_TEAMS)
 		G_MatchEndTrigger(team, 0);
 	else

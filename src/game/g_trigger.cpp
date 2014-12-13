@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 bool G_TriggerIsInList (Edict* self, Edict* activator)
 {
-	Edict* e = self->touchedNext;
+	const Edict* e = self->touchedNext;
 
 	if (activator == nullptr)
 		return true;
@@ -213,7 +213,7 @@ void SP_trigger_nextmap (Edict* ent)
  */
 bool Touch_HurtTrigger (Edict* self, Edict* activator)
 {
-	/* Dead actors should really not be able to trigger this - they can't be hurt anymore anyway*/
+	/* Dead actors should really not be able to trigger this - they can't be hurt anymore anyway */
 	if (!G_IsLivingActor(activator))
 		return false;
 

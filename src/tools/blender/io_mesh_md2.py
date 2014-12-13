@@ -1038,6 +1038,12 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 		if not self.info.isUnwrapped:
 			self.report({'ERROR'}, "Mesh must be unwrapped")
 			return {'CANCELLED'}
+		if len(self.info.skins) < 1:
+			self.report({'ERROR'}, "There must be at least one skin")
+			return {'CANCELLED'}
+		if len(self.info.skins) > MD2_MAX_SKINS:
+			self.report({'ERROR'}, "There are too many skins (%i), at most %i are supported in md2" % (len(self.info.skins), MD2_MAX_SKINS))
+			return {'CANCELLED'}
 
 		wm = context.window_manager
 		wm.fileselect_add(self)
