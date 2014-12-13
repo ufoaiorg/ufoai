@@ -64,9 +64,10 @@ const char* UI_AbstractOption_GetCurrentValue (uiNode_t* node)
 	}
 
 	/* not a cvar? */
-	if (!Q_strstart(EXTRADATA(node).cvar, "*cvar:"))
+	if (!Q_strstart(EXTRADATA(node).cvar, "*cvar:")) {
 		Com_Printf("UI_AbstractOptionGetCurrentValue: in node [%s], the name [%s] is not a value cvar\n", UI_GetPath(node), EXTRADATA(node).cvar);
 		return nullptr;
+	}
 
 	return UI_GetReferenceString(node, EXTRADATA(node).cvar);
 }
@@ -162,6 +163,10 @@ int UI_AbstractOption_GetCount (uiNode_t* node) {
 
 const char* UI_AbstractOption_GetCvar (uiNode_t* node) {
 	return EXTRADATA(node).cvar;
+}
+
+void UI_AbstractOption_SetDataId (uiNode_t* node, int id) {
+	EXTRADATA(node).dataId = id;
 }
 
 void UI_AbstractOption_SetDataIdByName (uiNode_t* node, const char* name) {

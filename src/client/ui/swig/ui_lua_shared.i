@@ -645,7 +645,7 @@ struct uiAbstractOptionNode_t: uiNode_t {
 	int viewsize () { return UI_AbstractOption_Scroll_ViewSize($self); };
 	int fullsize () { return UI_AbstractOption_Scroll_FullSize($self); };
 
-	void set_dataid (const char* name) { UI_AbstractOption_SetDataIdByName($self, name); };
+	void set_dataid (int id) { UI_AbstractOption_SetDataId($self, id); };
 	void set_cvar (const char* name) { UI_AbstractOption_SetCvar ($self, name); };
 	void set_background (const char* name) { UI_AbstractOption_SetBackgroundByName($self, name); };
 
@@ -936,7 +936,7 @@ struct uiLineChartNode_t: uiNode_t {
 
 	int dataid () { return UI_EXTRADATA($self, lineChartExtraData_t).dataId; };
 
-	void set_dataid (const char* name) { UI_EXTRADATA($self, lineChartExtraData_t).dataId = UI_GetDataIDByName(name); };
+	void set_dataid (int id) { UI_EXTRADATA($self, lineChartExtraData_t).dataId = id; };
 	void set_showaxes(bool value) { UI_EXTRADATA($self, lineChartExtraData_t).displayAxes = value; };
 	void set_axescolor(float r, float g, float b, float a) { Vector4Set(UI_EXTRADATA($self, lineChartExtraData_s).axesColor, r, g, b, a); };
 };
