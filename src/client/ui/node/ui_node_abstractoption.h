@@ -61,7 +61,7 @@ typedef struct {
 struct uiBehaviour_t;
 
 void UI_RegisterAbstractOptionNode(uiBehaviour_t* behaviour);
-void UI_OptionNodeSortOptions(uiNode_t* node);
+void UI_AbstractOption_SortOptions(uiNode_t* node);
 
 uiNode_t* UI_AbstractOption_GetFirstOption(uiNode_t* node);
 const char* UI_AbstractOption_GetCurrentValue(uiNode_t* node);

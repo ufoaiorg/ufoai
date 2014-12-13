@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Sort options by alphabet
  */
-void UI_OptionNodeSortOptions (uiNode_t* node)
+void UI_AbstractOption_SortOptions (uiNode_t* node)
 {
 	uiNode_t* option;
 	assert(UI_Node_IsOptionContainer(node));

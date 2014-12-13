@@ -549,12 +549,12 @@ struct uiNode_t {
 %extend uiNode_t {
 	bool is_window () { return UI_Node_IsWindow($self); };
 	bool is_disabled () { return UI_Node_IsDisabled($self); };
-	bool is_invisible () { return $self->invis; };
-	bool is_ghost () { return $self->ghost; };
-	bool is_flashing () { return $self->flash; };
-	bool is_function () { return $self->behaviour->isFunction; };
-	bool is_virtual () { return $self->behaviour->isVirtual; };
-	bool is_abstract () { return $self->behaviour->isAbstract; };
+	bool is_invisible () { return UI_Node_IsInvisible($self); };
+	bool is_ghost () { return UI_Node_IsGhost($self); };
+	bool is_flashing () { return UI_Node_IsFlashing($self); };
+	bool is_function () { return UI_Node_IsFunction($self); };
+	bool is_virtual () { return UI_Node_IsVirtual($self); };
+	bool is_abstract () { return UI_Node_IsAbstract($self); };
 
 	float left () { return $self->box.pos[0]; };
 	float top () { return $self->box.pos[1]; };
