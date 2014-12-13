@@ -71,6 +71,7 @@ int UI_AbstractOption_GetDataId (uiNode_t* node);
 int UI_AbstractOption_GetCount (uiNode_t* node);
 const char* UI_AbstractOption_GetCvar (uiNode_t* node);
 
+void UI_AbstractOption_SetDataId (uiNode_t* node, int id);
 void UI_AbstractOption_SetDataIdByName (uiNode_t* node, const char* name);
 void UI_AbstractOption_SetCvar (uiNode_t* node, const char* name);
 void UI_AbstractOption_SetBackgroundByName(uiNode_t* node, const char* name);

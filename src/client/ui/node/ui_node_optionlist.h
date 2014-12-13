@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 
 class uiOptionListNode : public uiAbstractOptionNode {
+public:
 	void draw(uiNode_t* node) override;
 	void onLeftClick(uiNode_t* node, int x, int y) override;
 	bool onScroll(uiNode_t* node, int deltaX, int deltaY) override;

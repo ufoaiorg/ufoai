@@ -2945,7 +2945,7 @@ SWIGINTERN char const *uiAbstractOptionNode_t_cvar(uiAbstractOptionNode_t *self)
 SWIGINTERN int uiAbstractOptionNode_t_current(uiAbstractOptionNode_t *self){ return UI_AbstractOption_Scroll_Current(self); }
 SWIGINTERN int uiAbstractOptionNode_t_viewsize(uiAbstractOptionNode_t *self){ return UI_AbstractOption_Scroll_ViewSize(self); }
 SWIGINTERN int uiAbstractOptionNode_t_fullsize(uiAbstractOptionNode_t *self){ return UI_AbstractOption_Scroll_FullSize(self); }
-SWIGINTERN void uiAbstractOptionNode_t_set_dataid(uiAbstractOptionNode_t *self,char const *name){ UI_AbstractOption_SetDataIdByName(self, name); }
+SWIGINTERN void uiAbstractOptionNode_t_set_dataid(uiAbstractOptionNode_t *self,int id){ UI_AbstractOption_SetDataId(self, id); }
 SWIGINTERN void uiAbstractOptionNode_t_set_cvar(uiAbstractOptionNode_t *self,char const *name){ UI_AbstractOption_SetCvar (self, name); }
 SWIGINTERN void uiAbstractOptionNode_t_set_background(uiAbstractOptionNode_t *self,char const *name){ UI_AbstractOption_SetBackgroundByName(self, name); }
 SWIGINTERN void uiAbstractOptionNode_t_set_current(uiAbstractOptionNode_t *self,int pos){ UI_AbstractOption_Scroll_SetCurrent(self, pos); }
@@ -3083,7 +3083,7 @@ SWIGINTERN void uiEkgNode_t_set_scrollspeed(uiEkgNode_t *self,float value){ UI_E
 SWIGINTERN void uiEkgNode_t_set_cvarscale(uiEkgNode_t *self,float value){ UI_EXTRADATA(self, ekgExtraData_t).scaleCvarValue = value; }
 SWIGINTERN bool uiLineChartNode_t_is_showaxes(uiLineChartNode_t *self){ return UI_EXTRADATA(self, lineChartExtraData_t).displayAxes; }
 SWIGINTERN int uiLineChartNode_t_dataid(uiLineChartNode_t *self){ return UI_EXTRADATA(self, lineChartExtraData_t).dataId; }
-SWIGINTERN void uiLineChartNode_t_set_dataid(uiLineChartNode_t *self,char const *name){ UI_EXTRADATA(self, lineChartExtraData_t).dataId = UI_GetDataIDByName(name); }
+SWIGINTERN void uiLineChartNode_t_set_dataid(uiLineChartNode_t *self,int id){ UI_EXTRADATA(self, lineChartExtraData_t).dataId = id; }
 SWIGINTERN void uiLineChartNode_t_set_showaxes(uiLineChartNode_t *self,bool value){ UI_EXTRADATA(self, lineChartExtraData_t).displayAxes = value; }
 SWIGINTERN void uiLineChartNode_t_set_axescolor(uiLineChartNode_t *self,float r,float g,float b,float a){ Vector4Set(UI_EXTRADATA(self, lineChartExtraData_s).axesColor, r, g, b, a); }
 SWIGINTERN bool uiModelNode_t_is_autoscale(uiModelNode_t *self){ return UI_EXTRADATA(self, modelExtraData_t).autoscale; }
@@ -7190,18 +7190,18 @@ fail:
 static int _wrap_uiAbstractOptionNode_set_dataid(lua_State* L) {
   int SWIG_arg = 0;
   uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
-  char *arg2 = (char *) 0 ;
+  int arg2 ;
   
   SWIG_check_num_args("uiAbstractOptionNode_t::set_dataid",2,2)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::set_dataid",1,"uiAbstractOptionNode_t *");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiAbstractOptionNode_t::set_dataid",2,"char const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiAbstractOptionNode_t::set_dataid",2,"int");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
     SWIG_fail_ptr("uiAbstractOptionNode_set_dataid",1,SWIGTYPE_p_uiAbstractOptionNode_t);
   }
   
-  arg2 = (char *)lua_tostring(L, 2);
-  uiAbstractOptionNode_t_set_dataid(arg1,(char const *)arg2);
+  arg2 = (int)lua_tonumber(L, 2);
+  uiAbstractOptionNode_t_set_dataid(arg1,arg2);
   
   return SWIG_arg;
   
@@ -11533,18 +11533,18 @@ fail:
 static int _wrap_uiLineChart_set_dataid(lua_State* L) {
   int SWIG_arg = 0;
   uiLineChartNode_t *arg1 = (uiLineChartNode_t *) 0 ;
-  char *arg2 = (char *) 0 ;
+  int arg2 ;
   
   SWIG_check_num_args("uiLineChartNode_t::set_dataid",2,2)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiLineChartNode_t::set_dataid",1,"uiLineChartNode_t *");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiLineChartNode_t::set_dataid",2,"char const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiLineChartNode_t::set_dataid",2,"int");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiLineChartNode_t,0))){
     SWIG_fail_ptr("uiLineChart_set_dataid",1,SWIGTYPE_p_uiLineChartNode_t);
   }
   
-  arg2 = (char *)lua_tostring(L, 2);
-  uiLineChartNode_t_set_dataid(arg1,(char const *)arg2);
+  arg2 = (int)lua_tonumber(L, 2);
+  uiLineChartNode_t_set_dataid(arg1,arg2);
   
   return SWIG_arg;
   
