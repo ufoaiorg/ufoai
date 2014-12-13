@@ -323,7 +323,7 @@ void NET_Init (void)
 	signal(SIGPIPE, SIG_IGN);
 #endif
 
-	net_ipv4 = Cvar_Get("net_ipv4", "1", CVAR_ARCHIVE, "Only use ipv4");
+	net_ipv4 = Cvar_GetOrCreate("net_ipv4", "1", CVAR_ARCHIVE, "Only use ipv4");
 	Cmd_AddCommand("net_showstreams", NET_ShowStreams_f, "Show opened streams");
 
 	netMutex = SDL_CreateMutex();

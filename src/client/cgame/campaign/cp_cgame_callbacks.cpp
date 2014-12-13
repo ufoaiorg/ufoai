@@ -660,7 +660,7 @@ void GAME_CP_InitStartup (void)
 
 	CP_InitStartup();
 
-	cp_start_employees = cgi->Cvar_Get("cp_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
+	cp_start_employees = cgi->Cvar_GetOrCreate("cp_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	/* cvars might have been changed by other gametypes */
 	cgi->Cvar_ForceSet("sv_maxclients", "1");
 	cgi->Cvar_ForceSet("sv_ai", "1");

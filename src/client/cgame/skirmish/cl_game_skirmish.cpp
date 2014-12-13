@@ -323,7 +323,7 @@ static const cmdList_t skirmishCmds[] = {
 static void GAME_SK_InitStartup (void)
 {
 	cgi->Cvar_ForceSet("sv_maxclients", "1");
-	cl_equip = cgi->Cvar_Get("cl_equip", "multiplayer_initial", 0, "Equipment that is used for skirmish mode games");
+	cl_equip = cgi->Cvar_GetOrCreate("cl_equip", "multiplayer_initial", 0, "Equipment that is used for skirmish mode games");
 
 	cgi->Cmd_TableAddList(skirmishCmds);
 

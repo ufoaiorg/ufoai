@@ -332,7 +332,7 @@ bool Cvar_Delete (const char* varName)
  * If the variable already exists, the value will not be set
  * The flags will be or'ed in if the variable exists.
  */
-cvar_t* Cvar_Get (const char* var_name, const char* var_value, int flags, const char* desc)
+cvar_t* Cvar_GetOrCreate (const char* var_name, const char* var_value, int flags, const char* desc)
 {
 	const unsigned hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
 
@@ -510,7 +510,7 @@ static cvar_t* Cvar_Set2 (const char* varName, const char* value, bool force)
 	cvar_t* var = Cvar_FindVar(varName);
 	/* create it */
 	if (!var)
-		return Cvar_Get(varName, value);
+		return Cvar_GetOrCreate(varName, value);
 
 	if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO)) {
 		if (!Cvar_InfoValidate(value)) {
@@ -638,7 +638,7 @@ cvar_t* Cvar_FullSet (const char* varName, const char* value, int flags)
 	cvar_t* var = Cvar_FindVar(varName);
 	/* create it */
 	if (!var)
-		return Cvar_Get(varName, value, flags);
+		return Cvar_GetOrCreate(varName, value, flags);
 
 	var->modified = true;
 

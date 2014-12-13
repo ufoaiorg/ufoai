@@ -720,8 +720,8 @@ void UI_RegisterGeoscapeNode (uiBehaviour_t* behaviour)
 	Cmd_AddCommand("map_zoom", UI_GeoscapeNodeZoom_f);
 	Cmd_AddCommand("map_scroll", UI_GeoscapeNodeScroll_f);
 
-	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
-	cl_3dmapAmbient = Cvar_Get("cl_3dmapAmbient", "0", CVAR_ARCHIVE, "3D geoscape ambient lighting factor");
-	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
-	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
+	cl_3dmap = Cvar_GetOrCreate("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
+	cl_3dmapAmbient = Cvar_GetOrCreate("cl_3dmapAmbient", "0", CVAR_ARCHIVE, "3D geoscape ambient lighting factor");
+	cl_mapzoommax = Cvar_GetOrCreate("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
+	cl_mapzoommin = Cvar_GetOrCreate("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
 }

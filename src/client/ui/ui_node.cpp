@@ -1005,7 +1005,7 @@ float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 	} else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
 		void* const b = Com_GetValue<void*>(node, property);
 		if (char const* const cvarName = Q_strstart((char const*)b, "*cvar:")) {
-			const cvar_t* cvar = Cvar_Get(cvarName, "", 0, "UI script cvar property");
+			const cvar_t* cvar = Cvar_GetOrCreate(cvarName, "", 0, "UI script cvar property");
 			return cvar->value;
 		} else if (property->type == V_CVAR_OR_FLOAT) {
 			return *(const float*) b;

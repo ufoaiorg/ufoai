@@ -177,23 +177,23 @@ void S_Init (void)
 
 	OBJZERO(s_env);
 
-	snd_init = Cvar_Get("snd_init", "1", CVAR_ARCHIVE, "Should the sound renderer get initialized");
+	snd_init = Cvar_GetOrCreate("snd_init", "1", CVAR_ARCHIVE, "Should the sound renderer get initialized");
 	snd_init->modified = false; /* don't restart right away */
 	Cmd_AddCommand("snd_restart", S_Restart_f, "Restart the sound renderer");
 
 	if (!snd_init->integer) {
 		Com_Printf("not initializing.\n");
 		Cmd_AddCommand("music_change", Cmd_Dummy_f, "Dummy command if sound is disabled");
-		Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
+		Cvar_GetOrCreate("snd_music", "PsymongN3", 0, "Background music track");
 		return;
 	}
 
 	cl_soundSysPool = Mem_CreatePool("Client: Sound system");
 
-	snd_distance_scale = Cvar_Get("snd_distance_scale", "0.1", 0, "Sound distance scale");
-	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
-	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
-	snd_chunkbufsize = Cvar_Get("snd_chunkbufsize", "1024", CVAR_ARCHIVE, "The sound buffer chunk size");
+	snd_distance_scale = Cvar_GetOrCreate("snd_distance_scale", "0.1", 0, "Sound distance scale");
+	snd_volume = Cvar_GetOrCreate("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
+	snd_rate = Cvar_GetOrCreate("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
+	snd_chunkbufsize = Cvar_GetOrCreate("snd_chunkbufsize", "1024", CVAR_ARCHIVE, "The sound buffer chunk size");
 	/* set volumes to be changed so they are applied again for next sound/music playing */
 	/** @todo implement the volume change for already loaded sample chunks */
 	snd_volume->modified = true;

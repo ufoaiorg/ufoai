@@ -2360,6 +2360,6 @@ void GEO_InitStartup (void)
 	cgi->Cmd_AddCommand("mn_mapaction_reset", GEO_ResetAction, nullptr);
 
 #ifdef DEBUG
-	debug_showInterest = cgi->Cvar_Get("debug_showinterest", "0", CVAR_DEVELOPER, "Shows the global interest value on geoscape");
+	debug_showInterest = cgi->Cvar_GetOrCreate("debug_showinterest", "0", CVAR_DEVELOPER, "Shows the global interest value on geoscape");
 #endif
 }

@@ -633,7 +633,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 
 		cgi->Cvar_Delete = Cvar_Delete;
 		/** @todo add a wrapper here that stores the cgame cvars and removes them on shutdown automatically */
-		cgi->Cvar_Get = Cvar_Get;
+		cgi->Cvar_GetOrCreate = Cvar_GetOrCreate;
 		cgi->Cvar_GetInteger = Cvar_GetInteger;
 		cgi->Cvar_GetValue = Cvar_GetValue;
 		cgi->Cvar_VariableStringOld = Cvar_VariableStringOld;

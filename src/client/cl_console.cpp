@@ -278,9 +278,9 @@ void Con_Init (void)
 	Com_Printf("\n----- console initialization -------\n");
 
 	/* register our commands and cvars */
-	con_notifytime = Cvar_Get("con_notifytime", "10", CVAR_ARCHIVE, "How many seconds console messages should be shown before they fade away");
-	con_history = Cvar_Get("con_history", "1", CVAR_ARCHIVE, "Permanent console history");
-	con_background = Cvar_Get("con_background", "1", CVAR_ARCHIVE, "Console is rendered with background image");
+	con_notifytime = Cvar_GetOrCreate("con_notifytime", "10", CVAR_ARCHIVE, "How many seconds console messages should be shown before they fade away");
+	con_history = Cvar_GetOrCreate("con_history", "1", CVAR_ARCHIVE, "Permanent console history");
+	con_background = Cvar_GetOrCreate("con_background", "1", CVAR_ARCHIVE, "Console is rendered with background image");
 
 	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, N_("Show/hide ufoconsole."));
 	Cmd_AddCommand("togglechat", Con_ToggleChat_f);

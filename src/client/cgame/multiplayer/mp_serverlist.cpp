@@ -588,8 +588,8 @@ void GAME_MP_ServerListInit (const cgame_import_t* import)
 	cgi = import;
 	/* register our variables */
 	for (int i = 0; i < MAX_BOOKMARKS; i++)
-		cgi->Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
-	cl_serverlist = cgi->Cvar_Get("cl_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
+		cgi->Cvar_GetOrCreate(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
+	cl_serverlist = cgi->Cvar_GetOrCreate("cl_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
 
 	cgi->Cmd_TableAddList(serverListCmds);
 }

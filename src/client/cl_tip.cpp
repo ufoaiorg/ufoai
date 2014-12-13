@@ -95,7 +95,7 @@ void CL_ParseTipOfTheDay (const char* name, const char** text)
  */
 void TOTD_InitStartup (void)
 {
-	cl_showTipOfTheDay = Cvar_Get("cl_showTipOfTheDay", "1", CVAR_ARCHIVE, "Show the tip of the day for singleplayer campaigns");
+	cl_showTipOfTheDay = Cvar_GetOrCreate("cl_showTipOfTheDay", "1", CVAR_ARCHIVE, "Show the tip of the day for singleplayer campaigns");
 
 	/* commands */
 	Cmd_AddCommand("tipoftheday", CL_GetTipOfTheDay_f, "Get the next tip of the day from the script files - called from tip of the day menu");

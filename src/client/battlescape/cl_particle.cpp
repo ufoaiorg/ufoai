@@ -1484,7 +1484,7 @@ void PTL_InitStartup (void)
 	OBJZERO(ptlCmd);
 	OBJZERO(r_particlesArt);
 
-	cl_particleweather = Cvar_Get("cl_particleweather", "1", CVAR_ARCHIVE, "Switch the weather particles on or off");
+	cl_particleweather = Cvar_GetOrCreate("cl_particleweather", "1", CVAR_ARCHIVE, "Switch the weather particles on or off");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_spawnmarker", PTL_DebugSpawnMarker_f, "Spawn a marker particle in the world at a given location");
 	Cmd_AddCommand("debug_particlelist", PTL_DebugList_f);
