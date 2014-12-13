@@ -99,6 +99,23 @@ void UI_Model_SetTagSource (uiNode_t* node, const char* tagName) {
 	UI_EXTRADATA(node, modelExtraData_t).tag = Mem_PoolStrDup(tagName, ui_dynStringPool, 0);
 }
 
+void uiModelNode::doLayout (uiNode_t* node) {
+	uiLocatedNode::doLayout(node);
+	/* a tag without but not a submodel */
+	if (EXTRADATA(node).tag != nullptr && node->behaviour != node->parent->behaviour) {
+		Com_Printf("UI_ModelNodeLoaded: '%s' use a tag but is not a submodel. Tag removed.\n", UI_GetPath(node));
+		EXTRADATA(node).tag = nullptr;
+	}
+
+	if (EXTRADATA(node).oldRefValue == nullptr)
+		EXTRADATA(node).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
+
+	/* no tag but no size */
+	if (EXTRADATA(node).tag == nullptr && (node->box.size[0] == 0 || node->box.size[1] == 0)) {
+		Com_Printf("UI_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", UI_GetPath(node));
+	}
+};
+
 void uiModelNode::draw (uiNode_t* node)
 {
 	const char* ref = UI_GetReferenceString(node, EXTRADATA(node).model);
@@ -505,19 +522,7 @@ void uiModelNode::deleteNode (uiNode_t* node)
 
 void uiModelNode::onLoaded (uiNode_t* node)
 {
-	/* a tag without but not a submodel */
-	if (EXTRADATA(node).tag != nullptr && node->behaviour != node->parent->behaviour) {
-		Com_Printf("UI_ModelNodeLoaded: '%s' use a tag but is not a submodel. Tag removed.\n", UI_GetPath(node));
-		EXTRADATA(node).tag = nullptr;
-	}
-
-	if (EXTRADATA(node).oldRefValue == nullptr)
-		EXTRADATA(node).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
-
-	/* no tag but no size */
-	if (EXTRADATA(node).tag == nullptr && (node->box.size[0] == 0 || node->box.size[1] == 0)) {
-		Com_Printf("UI_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", UI_GetPath(node));
-	}
+	/* checks moved to doLayout */
 }
 
 void UI_RegisterModelNode (uiBehaviour_t* behaviour)

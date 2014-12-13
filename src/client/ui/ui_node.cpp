@@ -407,6 +407,18 @@ bool UI_Node_IsDisabled (uiNode_t const* node) {
 	return node->disabled;
 }
 
+bool UI_Node_IsInvisible (uiNode_t const* node) {
+	return node->invis;
+}
+
+bool UI_Node_IsGhost (uiNode_t const* node) {
+	return node->ghost;
+}
+
+bool UI_Node_IsFlashing (uiNode_t const* node) {
+	return node->flash;
+}
+
 void UI_Node_SetDisabled (uiNode_t* node, const bool value) {
 	node->disabled = value;
 }

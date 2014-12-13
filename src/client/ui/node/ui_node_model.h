@@ -38,6 +38,7 @@ class uiModelNode : public uiLocatedNode {
 	void initNodeDynamic(uiNode_t* node) override;
 	void deleteNode(uiNode_t* node) override;
 	void onCapturedMouseMove(uiNode_t* node, int x, int y) override;
+	void doLayout (uiNode_t* node) override;
 };
 
 #define UI_MAX_MODELS		128

@@ -38,6 +38,9 @@ bool UI_Node_IsBattleScape (uiNode_t const* node);
 bool UI_Node_IsScrollableContainer (uiNode_t const* node);
 bool UI_Node_IsDrawItselfChild (uiNode_t const* node);
 bool UI_Node_IsDisabled (uiNode_t const* node);
+bool UI_Node_IsInvisible (uiNode_t const* node);
+bool UI_Node_IsGhost (uiNode_t const* node);
+bool UI_Node_IsFlashing (uiNode_t const* node);
 
 const char* UI_Node_GetWidgetName (uiNode_t const* node);
 intptr_t UI_Node_GetMemorySize (uiNode_t const* node);
