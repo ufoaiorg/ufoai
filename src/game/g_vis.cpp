@@ -242,7 +242,6 @@ bool G_Vis (const int team, const Edict* from, const Edict* check, const vischec
  */
 int G_TestVis (const int team, Edict* check, const vischeckflags_t flags)
 {
-	Edict* from = nullptr;
 	/* store old flag */
 	const int old = G_IsVisibleForTeam(check, team) ? VS_CHANGE : 0;
 
@@ -253,6 +252,7 @@ int G_TestVis (const int team, Edict* check, const vischeckflags_t flags)
 		return VS_YES;
 
 	/* test if check is visible */
+	Edict* from = nullptr;
 	while ((from = G_EdictsGetNextInUse(from)))
 		if (G_Vis(team, from, check, flags))
 			/* visible */
@@ -396,9 +396,7 @@ void G_VisMakeEverythingVisible (void)
  */
 void G_CheckVis (Edict* check, const vischeckflags_t visFlags)
 {
-	int team;
-
-	for (team = 0; team < MAX_TEAMS; team++)
+	for (int team = 0; team < MAX_TEAMS; team++)
 		if (level.num_alive[team]) {
 			if (!check)	/* no special entity given, so check them all */
 				G_CheckVisTeamAll(team, visFlags, nullptr);
