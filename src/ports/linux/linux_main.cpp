@@ -35,9 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void Sys_Init (void)
 {
-	sys_os = Cvar_Get("sys_os", "linux", CVAR_SERVERINFO);
-	sys_affinity = Cvar_Get("sys_affinity", "0", CVAR_ARCHIVE);
-	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
+	sys_os = Cvar_GetOrCreate("sys_os", "linux", CVAR_SERVERINFO);
+	sys_affinity = Cvar_GetOrCreate("sys_affinity", "0", CVAR_ARCHIVE);
+	sys_priority = Cvar_GetOrCreate("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
 }
 
 /**
