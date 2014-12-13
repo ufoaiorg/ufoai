@@ -132,10 +132,6 @@ void uiNode::initNodeDynamic(uiNode_t* node) {
 }
 
 void uiNode::clone(uiNode_t const* source, uiNode_t* clone) {
-	// clone defined methods if they exist
-	if (source->nodeMethods) {
-		clone->nodeMethods = HASH_CloneTable(source->nodeMethods);
-	}
 }
 
 void uiNode::deleteNode(uiNode_t* node) {
