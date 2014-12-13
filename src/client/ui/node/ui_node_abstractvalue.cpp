@@ -83,23 +83,26 @@ static void UI_FreeCvarOrFloat (const uiNode_t* node, void** data) {
 
 void uiAbstractValueNode::onLoading (uiNode_t* node)
 {
+	uiLocatedNode::onLoading(node);
 	EXTRADATA(node).shiftIncreaseFactor = 2.0F;
 }
 
 void uiAbstractValueNode::onLoaded (uiNode_t* node)
 {
+	uiLocatedNode::onLoaded(node);
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).value, 0);
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).delta, 1);
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).max, 0);
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).min, 0);
 }
 
+void uiAbstractValueNode::initNode(uiNode_t* node) {
+	uiLocatedNode::initNode(node);
+}
+
 void uiAbstractValueNode::initNodeDynamic (uiNode_t* node)
 {
-	EXTRADATA(node).value = Mem_PoolAllocType(float, ui_dynPool);
-	EXTRADATA(node).delta = Mem_PoolAllocType(float, ui_dynPool);
-	EXTRADATA(node).max   = Mem_PoolAllocType(float, ui_dynPool);
-	EXTRADATA(node).min   = Mem_PoolAllocType(float, ui_dynPool);
+	uiLocatedNode::initNodeDynamic(node);
 }
 
 void uiAbstractValueNode::deleteNode (uiNode_t* node)
@@ -109,6 +112,26 @@ void uiAbstractValueNode::deleteNode (uiNode_t* node)
 	UI_FreeCvarOrFloat(node, &EXTRADATA(node).max);
 	UI_FreeCvarOrFloat(node, &EXTRADATA(node).value);
 	UI_FreeCvarOrFloat(node, &EXTRADATA(node).delta);
+}
+
+/**
+ * @brief Call to update a cloned node
+ */
+void uiAbstractValueNode::clone (const uiNode_t* source, uiNode_t* clone)
+{
+	uiLocatedNode::clone(source, clone);
+	/* upon cloning a memcpy is done of the internal data so we need to replace the allocated floats with
+	   new allocs or else a mismatch will occur between the number of allocated floats and the number of
+	   deleted floats if nodes go out of scope */
+	EXTRADATA(clone).value = Mem_PoolAllocType(float, ui_dynPool);
+	EXTRADATA(clone).delta = Mem_PoolAllocType(float, ui_dynPool);
+	EXTRADATA(clone).max   = Mem_PoolAllocType(float, ui_dynPool);
+	EXTRADATA(clone).min   = Mem_PoolAllocType(float, ui_dynPool);
+	/* now clone the values */
+	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).value, (float**)&EXTRADATA(clone).value);
+	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).delta, (float**)&EXTRADATA(clone).delta);
+	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).max, (float**)&EXTRADATA(clone).max);
+	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).min, (float**)&EXTRADATA(clone).min);
 }
 
 float uiAbstractValueNode::getFactorFloat (const uiNode_t* node)
@@ -215,18 +238,6 @@ float uiAbstractValueNode::getDelta (uiNode_t const* node)
 float uiAbstractValueNode::getValue (uiNode_t const* node)
 {
 	return UI_GetReferenceFloat(node, EXTRADATACONST(node).value);
-}
-
-/**
- * @brief Call to update a cloned node
- */
-void uiAbstractValueNode::clone (const uiNode_t* source, uiNode_t* clone)
-{
-	uiLocatedNode::clone(source, clone);
-	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).value, (float**)&EXTRADATA(clone).value);
-	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).delta, (float**)&EXTRADATA(clone).delta);
-	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).max, (float**)&EXTRADATA(clone).max);
-	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).min, (float**)&EXTRADATA(clone).min);
 }
 
 float UI_AbstractValue_GetMin (uiNode_t* node) {

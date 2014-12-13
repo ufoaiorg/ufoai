@@ -31,6 +31,7 @@ public:
 	void onLoaded(uiNode_t* node) override;
 	void onLoading(uiNode_t* node) override;
 	void clone(uiNode_t const* source, uiNode_t* clone) override;
+	void initNode(uiNode_t* node) override;
 	void initNodeDynamic(uiNode_t* node) override;
 	void deleteNode(uiNode_t* node) override;
 

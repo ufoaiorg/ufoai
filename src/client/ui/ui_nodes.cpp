@@ -371,12 +371,6 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
 			Com_Printf("UI_AllocNodeWithoutNew: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
 	}
 
-	/* default initializtion */
-	UI_Node_InitNode(node);
-
-	/* initialize default properties */
-	UI_Node_Loading(node);
-
 	return node;
 }
 
@@ -387,17 +381,86 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
  * @param[in] name Name of the new node, else nullptr if we don't want to edit it.
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
+ * @todo This method can be merged with UI_AllocNodeWithoutNew. Since all nodes are dynamic, there is no
+ * real reason to distinguish between types of allocation.
  */
 uiNode_t* UI_AllocNode (const char* name, const char* type, bool isDynamic)
 {
 	uiNode_t* node = UI_AllocNodeWithoutNew(name, type, isDynamic);
+
+	/* default initializtion */
+	UI_Node_InitNode(node);
 
 	/* allocate memory */
 	if (node->dynamic) {
 		UI_Node_InitNodeDynamic(node);
 	}
 
+	/* initialize default properties */
+	UI_Node_Loading(node);
+
 	return node;
+}
+
+/**
+ * @brief Clone a node
+ * @param[in] node Node to clone
+ * @param[in] recursive True if we also must clone subnodes
+ * @param[in] newWindow Window where the nodes must be add (this function only link node into window, not window into the new node)
+ * @param[in] newName New node name, else nullptr to use the source name
+ * @param[in] isDynamic Allocate a node in static or dynamic memory
+ * @todo exclude rect is not safe cloned.
+ * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
+ */
+uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t* newWindow, bool recursive, const char* newName, bool isDynamic)
+{
+	uiNode_t* newNode = UI_AllocNodeWithoutNew(nullptr, UI_Node_GetWidgetName(node), isDynamic);
+
+	/* clone all data */
+	memcpy(newNode, node, UI_Node_GetMemorySize(node));
+	newNode->dynamic = isDynamic;
+
+	/* custom name */
+	if (newName != nullptr) {
+		Q_strncpyz(newNode->name, newName, sizeof(newNode->name));
+		if (strlen(newNode->name) != strlen(newName))
+			Com_Printf("UI_CloneNode: Node name \"%s\" truncated. New name is \"%s\"\n", newName, newNode->name);
+	}
+
+	/* clean up node navigation */
+	if (node->root == node && newWindow == nullptr)
+		newWindow = newNode;
+
+	newNode->root = newWindow;
+	newNode->parent = nullptr;
+	newNode->firstChild = nullptr;
+	newNode->lastChild = nullptr;
+	newNode->next = nullptr;
+	newNode->super = node;
+
+	/* clone node methods */
+	if (node->nodeMethods) {
+		newNode->nodeMethods = HASH_CloneTable(node->nodeMethods);
+	}
+
+	/* allocate memories */
+	if (newNode->dynamic) {
+		UI_Node_InitNodeDynamic(newNode);
+	}
+
+	/* typically, cloning makes a copy of all the internals of a source node; override the ::clone(node) method
+	   to alter this behaviour */
+	UI_Node_Clone(node, newNode);
+
+	/* clone child */
+	if (recursive) {
+		for (uiNode_t* childNode = node->firstChild; childNode; childNode = childNode->next) {
+			uiNode_t* newChildNode = UI_CloneNode(childNode, newWindow, recursive, nullptr, isDynamic);
+			UI_AppendNode(newNode, newChildNode);
+		}
+	}
+
+	return newNode;
 }
 
 /**
@@ -596,65 +659,6 @@ void UI_DeleteNode (uiNode_t* node)
 	}
 
 	UI_Node_DeleteNode(node);
-}
-
-/**
- * @brief Clone a node
- * @param[in] node Node to clone
- * @param[in] recursive True if we also must clone subnodes
- * @param[in] newWindow Window where the nodes must be add (this function only link node into window, not window into the new node)
- * @param[in] newName New node name, else nullptr to use the source name
- * @param[in] isDynamic Allocate a node in static or dynamic memory
- * @todo exclude rect is not safe cloned.
- * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
- */
-uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t* newWindow, bool recursive, const char* newName, bool isDynamic)
-{
-	uiNode_t* newNode = UI_AllocNodeWithoutNew(nullptr, UI_Node_GetWidgetName(node), isDynamic);
-
-	/* clone all data */
-	memcpy(newNode, node, UI_Node_GetMemorySize(node));
-	newNode->dynamic = isDynamic;
-
-	/* custom name */
-	if (newName != nullptr) {
-		Q_strncpyz(newNode->name, newName, sizeof(newNode->name));
-		if (strlen(newNode->name) != strlen(newName))
-			Com_Printf("UI_CloneNode: Node name \"%s\" truncated. New name is \"%s\"\n", newName, newNode->name);
-	}
-
-	/* clean up node navigation */
-	if (node->root == node && newWindow == nullptr)
-		newWindow = newNode;
-
-	newNode->root = newWindow;
-	newNode->parent = nullptr;
-	newNode->firstChild = nullptr;
-	newNode->lastChild = nullptr;
-	newNode->next = nullptr;
-	newNode->super = node;
-
-	/* clone node methods */
-	if (node->nodeMethods) {
-		newNode->nodeMethods = HASH_CloneTable(node->nodeMethods);
-	}
-
-	/* clone child */
-	if (recursive) {
-		for (uiNode_t* childNode = node->firstChild; childNode; childNode = childNode->next) {
-			uiNode_t* newChildNode = UI_CloneNode(childNode, newWindow, recursive, nullptr, isDynamic);
-			UI_AppendNode(newNode, newChildNode);
-		}
-	}
-
-	/* allocate memories */
-	if (newNode->dynamic) {
-		UI_Node_InitNodeDynamic(newNode);
-	}
-
-	UI_Node_Clone(node, newNode);
-
-	return newNode;
 }
 
 void UI_InitNodes (void)

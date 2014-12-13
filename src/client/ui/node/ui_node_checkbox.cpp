@@ -90,16 +90,12 @@ void uiCheckBoxNode::draw (uiNode_t* node)
  */
 void uiCheckBoxNode::onActivate (uiNode_t* node)
 {
-	const float last = getValue(node);
-	float value;
-
 	if (node->disabled)
 		return;
 
-	/* update value */
-	value = (last > 0) ? 0 : 1;
-	if (last == value)
-		return;
+	/* toggle value */
+	const float last = getValue(node);
+	float value = (last > 0) ? 0 : 1;
 
 	/* save result */
 	setValue(node, value);
