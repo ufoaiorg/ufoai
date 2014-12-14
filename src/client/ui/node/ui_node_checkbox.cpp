@@ -90,6 +90,10 @@ void uiCheckBoxNode::draw (uiNode_t* node)
  */
 void uiCheckBoxNode::onActivate (uiNode_t* node)
 {
+	toggle(node);
+}
+
+void uiCheckBoxNode::toggle(uiNode_t* node) {
 	if (node->disabled)
 		return;
 
@@ -146,6 +150,11 @@ void UI_CheckBox_SetIconCheckedByName (uiNode_t* node, const char* name) {
 void UI_CheckBox_SetIconUncheckedByName (uiNode_t* node, const char* name) {
 	uiSprite_t* sprite = UI_GetSpriteByName(name);
 	UI_EXTRADATA(node, checkboxExtraData_t).iconUnchecked = sprite;
+}
+
+void UI_CheckBox_Toggle (uiNode_t* node) {
+	uiCheckBoxNode* b=static_cast<uiCheckBoxNode*>(node->behaviour->manager.get());
+	b->toggle(node);
 }
 
 void UI_CheckBox_SetIconUnknownByName (uiNode_t* node, const char* name) {

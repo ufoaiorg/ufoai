@@ -3021,6 +3021,7 @@ SWIGINTERN void uiCheckBoxNode_t_set_background(uiCheckBoxNode_t *self,char cons
 SWIGINTERN void uiCheckBoxNode_t_set_iconchecked(uiCheckBoxNode_t *self,char const *name){ UI_CheckBox_SetIconCheckedByName(self, name); }
 SWIGINTERN void uiCheckBoxNode_t_set_iconunchecked(uiCheckBoxNode_t *self,char const *name){ UI_CheckBox_SetIconUncheckedByName(self, name); }
 SWIGINTERN void uiCheckBoxNode_t_set_iconunknown(uiCheckBoxNode_t *self,char const *name){ UI_CheckBox_SetIconUnknownByName(self, name); }
+SWIGINTERN void uiCheckBoxNode_t_toggle(uiCheckBoxNode_t *self){ UI_CheckBox_Toggle(self); }
 SWIGINTERN int uiContainerNode_t_selectedid(uiContainerNode_t *self){ return UI_EXTRADATA(self, containerExtraData_t).lastSelectedId; }
 
 static LUA_EVENT uiContainerNode_t_lua_onSelect_get(uiContainerNode_t* node) {
@@ -9657,6 +9658,29 @@ fail:
 }
 
 
+static int _wrap_uiCheckBox_toggle(lua_State* L) {
+  int SWIG_arg = 0;
+  uiCheckBoxNode_t *arg1 = (uiCheckBoxNode_t *) 0 ;
+  
+  SWIG_check_num_args("uiCheckBoxNode_t::toggle",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiCheckBoxNode_t::toggle",1,"uiCheckBoxNode_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiCheckBoxNode_t,0))){
+    SWIG_fail_ptr("uiCheckBox_toggle",1,SWIGTYPE_p_uiCheckBoxNode_t);
+  }
+  
+  uiCheckBoxNode_t_toggle(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_new_uiCheckBox(lua_State* L) {
   int SWIG_arg = 0;
   uiCheckBoxNode_t *result = 0 ;
@@ -9696,6 +9720,7 @@ static swig_lua_method swig_uiCheckBox_methods[]= {
     { "set_iconchecked", _wrap_uiCheckBox_set_iconchecked},
     { "set_iconunchecked", _wrap_uiCheckBox_set_iconunchecked},
     { "set_iconunknown", _wrap_uiCheckBox_set_iconunknown},
+    { "toggle", _wrap_uiCheckBox_toggle},
     {0,0}
 };
 static swig_lua_method swig_uiCheckBox_meta[] = {

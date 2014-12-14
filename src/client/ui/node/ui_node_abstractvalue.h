@@ -38,6 +38,8 @@ public:
 	void setRange(uiNode_t* node, float min, float max);
 	bool setValue(uiNode_t* node, float value);
 	bool setDelta(uiNode_t* node, float delta);
+	bool setMax(uiNode_t* node, float max);
+	bool setMin(uiNode_t* node, float min);
 	bool incValue(uiNode_t* node);
 	bool decValue(uiNode_t* node);
 

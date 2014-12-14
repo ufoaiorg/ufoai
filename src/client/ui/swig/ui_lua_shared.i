@@ -800,6 +800,7 @@ struct uiCheckBoxNode_t: uiAbstractValueNode_t {
 	void set_iconchecked (const char* name) { UI_CheckBox_SetIconCheckedByName($self, name); };
 	void set_iconunchecked (const char* name) { UI_CheckBox_SetIconUncheckedByName($self, name); };
 	void set_iconunknown (const char* name) { UI_CheckBox_SetIconUnknownByName($self, name); };
+	void toggle () { UI_CheckBox_Toggle($self); };
 };
 
 %rename (uiConFunc) uiConFuncNode_t;
