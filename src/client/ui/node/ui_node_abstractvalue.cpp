@@ -147,8 +147,14 @@ void uiAbstractValueNode::setRange(uiNode_t* node, float min, float max)
 	if (EXTRADATA(node).min == nullptr) {
 		UI_InitCvarOrFloat((float**)&EXTRADATA(node).min, min);
 	}
+	else {
+        setMin(node, min);
+	}
 	if (EXTRADATA(node).max == nullptr) {
 		UI_InitCvarOrFloat((float**)&EXTRADATA(node).max, max);
+	}
+	else {
+		setMax(node, max);
 	}
 }
 
@@ -202,6 +208,41 @@ bool uiAbstractValueNode::setDelta(uiNode_t* node, float delta) {
 		Cvar_SetValue(cvar, delta);
 	else
 		*(float*) EXTRADATA(node).delta = delta;
+
+	return true;
+}
+bool uiAbstractValueNode::setMax(uiNode_t* node, float max) {
+	const float last = UI_GetReferenceFloat(node, EXTRADATA(node).max);
+
+	/* nothing change? */
+	if (last == max) {
+		return false;
+	}
+
+	/* save result */
+	const char* cvar = Q_strstart((char*)EXTRADATA(node).max, "*cvar:");
+	if (cvar)
+		Cvar_SetValue(cvar, max);
+	else
+		*(float*) EXTRADATA(node).max = max;
+
+	return true;
+}
+
+bool uiAbstractValueNode::setMin(uiNode_t* node, float min) {
+	const float last = UI_GetReferenceFloat(node, EXTRADATA(node).min);
+
+	/* nothing change? */
+	if (last == min) {
+		return false;
+	}
+
+	/* save result */
+	const char* cvar = Q_strstart((char*)EXTRADATA(node).min, "*cvar:");
+	if (cvar)
+		Cvar_SetValue(cvar, min);
+	else
+		*(float*) EXTRADATA(node).min = min;
 
 	return true;
 }

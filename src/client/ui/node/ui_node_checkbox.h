@@ -27,10 +27,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractvalue.h"
 
 class uiCheckBoxNode : public uiAbstractValueNode {
+public:
 	void draw(uiNode_t* node) override;
 	void onLoading(uiNode_t* node) override;
 	void onLeftClick(uiNode_t* node, int x, int y) override;
 	void onActivate(uiNode_t* node) override;
+	void toggle(uiNode_t* node);
 };
 
 struct checkboxExtraData_t {
@@ -51,6 +53,7 @@ void UI_CheckBox_SetBackgroundByName (uiNode_t* node, const char* name);
 void UI_CheckBox_SetIconCheckedByName (uiNode_t* node, const char* name);
 void UI_CheckBox_SetIconUncheckedByName (uiNode_t* node, const char* name);
 void UI_CheckBox_SetIconUnknownByName (uiNode_t* node, const char* name);
+void UI_CheckBox_Toggle (uiNode_t* node);
 
 bool UI_CheckBox_ValueAsBoolean (uiNode_t* node);
 int UI_CheckBox_ValueAsInteger (uiNode_t* node);
