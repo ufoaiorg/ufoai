@@ -12,7 +12,7 @@
 
 void Sys_Init (void)
 {
-	sys_os = Cvar_Get("sys_os", "macosx", CVAR_SERVERINFO, nullptr);
-	sys_affinity = Cvar_Get("sys_affinity", "0", CVAR_ARCHIVE, nullptr);
-	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
+	sys_os = Cvar_GetOrCreate("sys_os", "macosx", CVAR_SERVERINFO, nullptr);
+	sys_affinity = Cvar_GetOrCreate("sys_affinity", "0", CVAR_ARCHIVE, nullptr);
+	sys_priority = Cvar_GetOrCreate("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
 }
