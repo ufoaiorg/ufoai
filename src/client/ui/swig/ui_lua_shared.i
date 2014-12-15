@@ -450,24 +450,24 @@ typedef enum {
 //	expose scroll
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*
 %rename(uiScroll) uiScroll_t;
 struct uiScroll_t {
 };
 %extend uiScroll_t {
 	int viewpos () { return $self->viewPos; };
 	int viewsize () { return $self->viewSize; };
-	bool fullsize () { return $self->fullSize; };
+	int fullsize () { return $self->fullSize; };
 
-	void set_fullsize (bool value) { $self->fullSize = (value ? 1 : 0); };
-	bool set_values (int pos, int size, bool full) { return $self->set (pos, size, (full ? 1 : 0)); };
-
-	bool set_viewpos (int pos) { return $self->set (pos, $self->viewSize, $self->fullSize); };
-	bool set_viewsize (int size) { return $self->set ($self->viewPos, size, $self->fullSize); };
-	bool set_fullsize (bool value) { return $self->set ($self->viewPos, $self->viewSize, value); };
+	bool set_values (int pos, int size, bool full) { return $self->set (pos, size, full); };
+	bool set_viewpos (int pos) { return $self->set (pos, -1, -1); };
+	bool set_viewsize (int size) { return $self->set (-1, size, -1); };
+	bool set_fullsize (bool value) { return $self->set (-1, -1, value); };
 
 	bool moveto (int pos) { return $self->move(pos); };
 	bool movedelta (int delta) { return $self->moveDelta (delta); };
 };
+*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose cvar
@@ -650,6 +650,8 @@ struct uiAbstractOptionNode_t: uiNode_t {
 	void set_background (const char* name) { UI_AbstractOption_SetBackgroundByName($self, name); };
 
 	void set_current (int pos) { UI_AbstractOption_Scroll_SetCurrent($self, pos); };
+	void set_viewsize (int size) { UI_AbstractOption_Scroll_SetViewSize($self, size); };
+	void set_fullsize (int size) { UI_AbstractOption_Scroll_SetFullSize($self, size);};
 
 	%rename (on_viewchange) lua_onViewChange;
 	LUA_EVENT lua_onViewChange; 		/**< references the event in lua: on_viewchange (node) */
@@ -726,8 +728,8 @@ struct uiAbstractValueNode_t: uiNode_t {
 	float max () { return UI_AbstractValue_GetMax($self); };
 	float value () { return UI_AbstractValue_GetValue($self); };
 	float delta () { return UI_AbstractValue_GetDelta($self); };
-	float lastdiff () { return UI_EXTRADATA($self, abstractValueExtraData_t).lastdiff; };
-	float shiftmultiplier () { return UI_EXTRADATA($self, abstractValueExtraData_t).shiftIncreaseFactor; };
+	float lastdiff () { return UI_AbstractValue_GetLastDiff($self); };
+	float shiftmultiplier () { return UI_AbstractValue_GetShiftIncreaseFactor($self); };
 
 	void inc_value () { UI_AbstractValue_IncValue ($self); };
 	void dec_value () { UI_AbstractValue_DecValue ($self); };
@@ -741,7 +743,7 @@ struct uiAbstractValueNode_t: uiNode_t {
 	void set_max (const char* max) { UI_AbstractValue_SetMaxCvar($self, max); };
 	void set_value (const char* name) { UI_AbstractValue_SetValueCvar ($self, name); };
 	void set_delta (float delta) { UI_AbstractValue_SetDelta($self, delta); };
-	void set_shiftmultiplier(float value) { UI_EXTRADATA($self, abstractValueExtraData_t).shiftIncreaseFactor = value; };
+	void set_shiftmultiplier(float value) { UI_AbstractValue_SetShiftIncreaseFactor($self, value); };
 };
 
 %rename (uiBar) uiBarNode_t;
