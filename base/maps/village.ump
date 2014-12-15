@@ -480,6 +480,14 @@ tile +bungalow2
 0		0		0		0		0		0
 }
 
+tile +england
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
 tile +estate
 {
 6 6
@@ -837,6 +845,13 @@ tileset filler		"0 9"
 tileset street_h	"0 5"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird	"1 1"
+}
+
+assembly england
+{
+size "1 1"
+title "_England"
++england			"1 1"
 }
 
 assembly estate

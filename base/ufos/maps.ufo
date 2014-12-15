@@ -3306,6 +3306,54 @@ mapdef bungalow2
 	)
 }
 
+mapdef england
+{
+	map				"+village"
+	params			("england")
+	description		"_Small Village"
+	maxaliens		9
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		// any
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+	)
+
+	cultures
+	(
+		"western"
+	)
+
+	populations
+	(
+		"suburban"
+		"village"
+		"rural"
+	)
+}
+
 mapdef estate
 {
 	map				"+village"
@@ -4681,55 +4729,6 @@ mapdef dam
 		"village"
 		"rural"
 		"nopopulation"
-	)
-}
-
-// ENGLAND MAP //
-
-mapdef england
-{
-	map				"england"
-	description		"_Small Village"
-	maxaliens		9
-
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-	)
-
-	cultures
-	(
-		"western"
-	)
-
-	populations
-	(
-		"suburban"
-		"village"
-		"rural"
 	)
 }
 
