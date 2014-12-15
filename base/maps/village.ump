@@ -482,10 +482,15 @@ tile +bungalow2
 
 tile +england
 {
-3 3
-0		0		0
-0		+a		0
-0		0		0
+10 8
+0		0		0		0		0		0		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		0
+0		0		+a		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		0		0		0		0		0		0
 }
 
 tile +estate
@@ -849,9 +854,13 @@ tileset street_v	"0 5"
 
 assembly england
 {
-size "1 1"
+size "10 8"
 title "_England"
 +england			"1 1"
++nature_07			"0 15"	// 1x1
+tileset street_h	"0 7"
+tileset street_v	"0 5"
+*rm_drop +craft_drop_firebird	"1 1"
 }
 
 assembly estate
