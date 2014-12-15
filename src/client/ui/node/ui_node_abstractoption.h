@@ -79,5 +79,6 @@ void UI_AbstractOption_SetBackgroundByName(uiNode_t* node, const char* name);
 int UI_AbstractOption_Scroll_Current (uiNode_t* node);
 void UI_AbstractOption_Scroll_SetCurrent (uiNode_t* node, int pos);
 int UI_AbstractOption_Scroll_ViewSize (uiNode_t* node);
+void UI_AbstractOption_Scroll_SetViewSize (uiNode_t* node, int size);
 int UI_AbstractOption_Scroll_FullSize (uiNode_t* node);
-
+void UI_AbstractOption_Scroll_SetFullSize (uiNode_t* node, int size);

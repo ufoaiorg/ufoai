@@ -48,6 +48,8 @@ public:
 	float getMax(uiNode_t const* node);
 	float getDelta(uiNode_t const* node);
 	float getValue(uiNode_t const* node);
+	float getLastDiff (uiNode_t const* node);
+	float getShiftIncreaseFactor (uiNode_t* const node);
 };
 
 /**
@@ -73,6 +75,8 @@ float UI_AbstractValue_GetMin (uiNode_t* node);
 float UI_AbstractValue_GetMax (uiNode_t* node);
 float UI_AbstractValue_GetValue (uiNode_t* node);
 float UI_AbstractValue_GetDelta (uiNode_t* node);
+float UI_AbstractValue_GetLastDiff (uiNode_t* node);
+float UI_AbstractValue_GetShiftIncreaseFactor (uiNode_t* node);
 
 void UI_AbstractValue_IncValue (uiNode_t* node);
 void UI_AbstractValue_DecValue (uiNode_t* node);
@@ -87,3 +91,4 @@ void UI_AbstractValue_SetRangeCvar (uiNode_t* node, const char* min, const char*
 void UI_AbstractValue_SetMinCvar (uiNode_t* node, const char* min);
 void UI_AbstractValue_SetMaxCvar (uiNode_t* node, const char* max);
 void UI_AbstractValue_SetValueCvar (uiNode_t* node, const char* value);
+void UI_AbstractValue_SetShiftIncreaseFactor (uiNode_t* node, float factor);

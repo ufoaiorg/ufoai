@@ -142,6 +142,14 @@ float uiAbstractValueNode::getFactorFloat (const uiNode_t* node)
 	return EXTRADATACONST(node).shiftIncreaseFactor;
 }
 
+float uiAbstractValueNode::getLastDiff (uiNode_t const* node) {
+	return EXTRADATA(node).lastdiff;
+}
+
+float uiAbstractValueNode::getShiftIncreaseFactor (uiNode_t* const node) {
+	return EXTRADATA(node).shiftIncreaseFactor;
+}
+
 void uiAbstractValueNode::setRange(uiNode_t* node, float min, float max)
 {
 	if (EXTRADATA(node).min == nullptr) {
@@ -301,6 +309,16 @@ float UI_AbstractValue_GetDelta (uiNode_t* node) {
 	return b->getDelta(node);
 }
 
+float UI_AbstractValue_GetLastDiff (uiNode_t* node) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	return b->getLastDiff(node);
+}
+
+float UI_AbstractValue_GetShiftIncreaseFactor (uiNode_t* node) {
+	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
+	return b->getShiftIncreaseFactor(node);
+}
+
 void UI_AbstractValue_IncValue (uiNode_t* node) {
 	uiAbstractValueNode* b=static_cast<uiAbstractValueNode*>(node->behaviour->manager.get());
 	b->incValue(node);
@@ -379,6 +397,9 @@ void UI_AbstractValue_SetValueCvar (uiNode_t* node, const char* value) {
 	}
 }
 
+void UI_AbstractValue_SetShiftIncreaseFactor (uiNode_t* node, float factor) {
+	EXTRADATA(node).shiftIncreaseFactor = factor;
+}
 
 void UI_RegisterAbstractValueNode (uiBehaviour_t* behaviour)
 {

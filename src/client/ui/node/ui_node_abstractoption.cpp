@@ -191,6 +191,14 @@ void UI_AbstractOption_Scroll_SetCurrent (uiNode_t* node, int pos) {
 	EXTRADATA(node).scrollY.move(pos);
 }
 
+void UI_AbstractOption_Scroll_SetViewSize (uiNode_t* node, int size) {
+	EXTRADATA(node).scrollY.set(-1, size, -1);
+}
+
+void UI_AbstractOption_Scroll_SetFullSize (uiNode_t* node, int size) {
+	EXTRADATA(node).scrollY.set(-1, -1, size);
+}
+
 int UI_AbstractOption_Scroll_ViewSize (uiNode_t* node) {
 	return EXTRADATA(node).scrollY.viewSize;
 }
