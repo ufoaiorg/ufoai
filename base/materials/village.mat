@@ -47,6 +47,11 @@
 		terrain 4.5 30
 		lightmap
 	}
+	{
+		texture tex_mattn/grass003
+		dirtmap 0.8
+		lightmap
+	}
 }
 
 {
