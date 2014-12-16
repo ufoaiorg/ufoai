@@ -383,7 +383,7 @@ static int actorL_shoot (lua_State* L)
 	if (lua_gettop(L) > 1) {
 		assert(lua_isnumber(L, 2)); /* Must be a number. */
 
-		tu = (int) lua_tonumber(L, 2);
+		tu = std::min(static_cast<int>(lua_tonumber(L, 2)), tu);
 	}
 
 	shoot_types_t bestType = NONE;
@@ -492,7 +492,7 @@ static int actorL_throwgrenade(lua_State* L)
 			lua_pushboolean(L, 0);
 			return 1;
 		}
-		tus = static_cast<int>(lua_tonumber(L, 3));
+		tus = std::min(static_cast<int>(lua_tonumber(L, 3)), tus);
 	}
 
 	/* Check that we have a free hand */
@@ -1193,7 +1193,7 @@ static int AIL_positionshoot (lua_State* L)
 	if (lua_gettop(L) > 2) {
 		assert(lua_isnumber(L, 3)); /* Must be a number. */
 
-		tus = static_cast<int>(lua_tonumber(L, 3));
+		tus = std::min(static_cast<int>(lua_tonumber(L, 3)), tus);
 	}
 
 	/* Don't shoot units under our control */
@@ -1412,7 +1412,7 @@ static int AIL_positionapproach (lua_State* L)
 	int tus = AIL_ent->getUsableTUs();
 	if (lua_gettop(L) > 1) {
 		if (lua_isnumber(L, 2))
-			tus = static_cast<int>(lua_tonumber(L, 2));
+			tus = std::min(static_cast<int>(lua_tonumber(L, 2)), tus);
 		else
 			AIL_invalidparameter(2);
 	}
