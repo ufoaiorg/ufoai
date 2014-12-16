@@ -577,7 +577,7 @@ static int actorL_throwgrenade(lua_State* L)
 }
 
 /**
- * @brief Gets the number of TU the actor has left.
+ * @brief Gets the number of usable TU the actor has left.
  */
 static int actorL_TU (lua_State* L)
 {
@@ -2090,7 +2090,7 @@ void AIL_Shutdown (void)
 }
 
 /**
- * @brief Purges all the AI from the entities.
+ * @brief Closes the LUA AI.
  */
 void AIL_Cleanup (void)
 {
