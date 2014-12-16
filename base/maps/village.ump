@@ -482,15 +482,14 @@ tile +bungalow2
 
 tile +england
 {
-10 8
-0		0		0		0		0		0		0		0		0		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		+a		+a		+a		0
-0		0		+a		+a		+a		+a		+a		+a		+a		0
-0		0		0		0		0		0		0		0		0		0
+9 7
+0		x		x		x		x		x		x		x		x
+0		+a		+a		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		+a		+a		x
+0		0		+a		+a		+a		+a		+a		+a		x
+0		0		0		0		0		0		0		0		0
 }
 
 tile +estate
@@ -854,10 +853,19 @@ tileset street_v	"0 5"
 
 assembly england
 {
-size "10 8"
+size "9 7"
 title "_England"
 +england			"1 1"
-+nature_07			"0 15"	// 1x1
++dummy_ne			"0 2"
++dummy_nw			"0 2"
++dummy_se			"0 2"
++dummy_sw			"0 2"
++misc_01			"0 1"	// 1x1
++nature_01			"0 1"	// 1x2
++nature_02			"0 1"	// 2x1
++nature_03			"0 1"	// 1x1
++nature_07			"0 9"	// 1x1
++nature_11			"0 1"	// 1x3
 tileset street_h	"0 7"
 tileset street_v	"0 5"
 *rm_drop +craft_drop_firebird	"1 1"
