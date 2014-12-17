@@ -1335,15 +1335,33 @@ static int AIL_positionhide (lua_State* L)
 	if (lua_gettop(L)) {
 		if (lua_isstring(L, 1)) {
 			const char* s = lua_tostring(L, 1);
-			hidingTeam = AIL_toTeamInt(s);
-			if (hidingTeam == TEAM_ALL)
+			bool invTeam = false;
+			if (s[0] == '-' || s[0] == '~') {
+				invTeam = true;
+				++s;
+			}
+			const int team = AIL_toTeamInt(s);
+			if (team == TEAM_ALL)
 				AIL_invalidparameter(1);
+			else if (invTeam)
+				hidingTeam = -team;
+			else
+				hidingTeam = team;
 		} else {
 			AIL_invalidparameter(1);
 		}
 	}
 
-	const int tus = AIL_ent->getUsableTUs();
+	int tus = AIL_ent->getUsableTUs();
+	/* parse parameter */
+	if (lua_gettop(L) > 1) {
+		if (lua_isnumber(L, 2)) {
+			tus = std::min(static_cast<int>(lua_tonumber(L, 2)), tus);
+		} else {
+			AIL_invalidparameter(2);
+		}
+	}
+
 	pos3_t save;
 	VectorCopy(AIL_ent->pos, save);
 
