@@ -1393,17 +1393,27 @@ static int AIL_positionherd (lua_State* L)
 	}
 	const aiActor_t* target = lua_toactor(L, 1);
 
-	bool inverse = false;
+	int tus = AIL_ent->getUsableTUs();
+	/* parse parameter */
 	if (lua_gettop(L) > 1) {
-		if (lua_isboolean(L, 2))
-			inverse = lua_toboolean(L, 2);
-		else
+		if (lua_isnumber(L, 2)) {
+			tus = std::min(static_cast<int>(lua_tonumber(L, 2)), tus);
+		} else {
 			AIL_invalidparameter(2);
+		}
+	}
+
+	bool inverse = false;
+	if (lua_gettop(L) > 2) {
+		if (lua_isboolean(L, 3))
+			inverse = lua_toboolean(L, 3);
+		else
+			AIL_invalidparameter(3);
 	}
 
 	pos3_t save;
 	VectorCopy(AIL_ent->pos, save);
-	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->actor->origin, AIL_ent->getUsableTUs(), inverse)) {
+	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->actor->origin, tus, inverse)) {
 		lua_pushpos3(L, &AIL_ent->pos);
 	} else {
 		lua_pushboolean(L, 0);
