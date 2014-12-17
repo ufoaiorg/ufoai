@@ -184,7 +184,7 @@ function aila.flee ()
 end
 
 function aila.hide ()
-	local hide_pos = ai.positionhide()
+	local hide_pos = ai.positionhide("~alien", aila.tustouse())
 	if hide_pos then
 		return hide_pos:goto()
 	end
@@ -195,7 +195,7 @@ function aila.herd ()
 	local aliens = ai.see("all", "alien", "path")
 	if #aliens > 0 then
 		for i = 1, #aliens do
-			local herd_pos = ai.positionherd(aliens[i])
+			local herd_pos = ai.positionherd(aliens[i], aila.tustouse())
 			if herd_pos then
 				return herd_pos:goto()
 			end
