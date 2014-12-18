@@ -233,7 +233,7 @@ static int AIL_weapontype(lua_State* L);
 static int AIL_actor(lua_State* L);
 static int AIL_tusforshooting(lua_State* L);
 static int AIL_class(lua_State* L);
-static int AIL_HideNeeded(lua_State* L);
+static int AIL_hideneeded(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -264,7 +264,7 @@ static const luaL_reg AIL_methods[] = {
 	{"actor", AIL_actor},
 	{"tusforshooting", AIL_tusforshooting},
 	{"class", AIL_class},
-	{"hideneeded", AIL_HideNeeded},
+	{"hideneeded", AIL_hideneeded},
 	{nullptr, nullptr}
 };
 
@@ -1725,6 +1725,7 @@ static int AIL_positionwander (lua_State* L)
 	pos3_t center;
 	VectorCopy(AIL_ent->pos, center);
 	int method = 0;
+	int tus = AIL_ent->getUsableTUs();
 
 	/* Check parameters */
 	if (lua_gettop(L) > 0) {
@@ -1754,6 +1755,13 @@ static int AIL_positionwander (lua_State* L)
 			AIL_invalidparameter(3);
 	}
 
+	if (lua_gettop(L) > 3) {
+		if (lua_isnumber(L, 4))
+			tus = std::min(static_cast<int>(lua_tonumber(L, 4)), tus);
+		else
+			AIL_invalidparameter(4);
+	}
+
 	vec3_t d;
 	if (method > 0)
 		VectorSubtract(AIL_ent->pos, center, d);
@@ -1763,7 +1771,8 @@ static int AIL_positionwander (lua_State* L)
 	pos3_t pos;
 	AiAreaSearch searchArea(center, radius);
 	while (searchArea.getNext(pos)) {
-		if (G_ActorMoveLength(AIL_ent, level.pathingMap, pos, true) >= ROUTING_NOT_REACHABLE)
+		const pos_t move = G_ActorMoveLength(AIL_ent, level.pathingMap, pos, true);
+		if (move >= ROUTING_NOT_REACHABLE || move > tus)
 			continue;
 		if (!AI_CheckPosition(AIL_ent, pos))
 			continue;
@@ -1898,17 +1907,26 @@ static int AIL_difficulty (lua_State* L)
  */
 static int AIL_positionflee (lua_State* L)
 {
+	int tus = AIL_ent->getUsableTUs();
+	if (lua_gettop(L)) {
+		if (lua_isnumber(L, 1))
+			tus = std::min(static_cast<int>(lua_tonumber(L, 1)), tus);
+		else
+			AIL_invalidparameter(1);
+	}
+
 	/* Calculate move table. */
 	G_MoveCalc(0, AIL_ent, AIL_ent->pos, AIL_ent->getUsableTUs());
 	pos3_t oldPos;
 	VectorCopy(AIL_ent->pos, oldPos);
 
-	const int radius = (AIL_ent->getUsableTUs() + 1) / TU_MOVE_STRAIGHT;
+	const int radius = (tus + 1) / TU_MOVE_STRAIGHT;
 	float bestScore = -1;
 	pos3_t bestPos = {0, 0, PATHFINDING_HEIGHT};
 	AiAreaSearch searchArea(AIL_ent->pos, radius);
 	while (searchArea.getNext(AIL_ent->pos)) {
-		if (G_ActorMoveLength(AIL_ent, level.pathingMap, AIL_ent->pos, false) >= ROUTING_NOT_REACHABLE)
+		const pos_t move = G_ActorMoveLength(AIL_ent, level.pathingMap, AIL_ent->pos, false);
+		if (move >= ROUTING_NOT_REACHABLE || move > tus)
 			continue;
 		if (!AI_CheckPosition(AIL_ent, AIL_ent->pos))
 			continue;
@@ -2003,7 +2021,7 @@ static int AIL_class (lua_State* L)
 	return 1;
 }
 
-static int AIL_HideNeeded (lua_State* L)
+static int AIL_hideneeded (lua_State* L)
 {
 	lua_pushboolean(L, AI_HideNeeded(AIL_ent));
 	return 1;

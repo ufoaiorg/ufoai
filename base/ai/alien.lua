@@ -176,7 +176,7 @@ function aila.ismelee()
 end
 
 function aila.flee ()
-	local flee_pos = ai.positionflee()
+	local flee_pos = ai.positionflee(ai.actor():TU() - 3)
 	if flee_pos then
 		return flee_pos:goto()
 	end
@@ -261,7 +261,7 @@ function aila.search ()
 			if search_rad < 1 then
 				search_rad =  aila.tustouse() + 1 / 2
 			end
-			local next_pos = ai.positionwander(aila.param.move, search_rad)
+			local next_pos = ai.positionwander(aila.param.move, search_rad, ai.actor():pos(), aila.tustouse())
 			if next_pos then
 				next_pos:goto()
 			end

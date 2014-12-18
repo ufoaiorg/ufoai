@@ -24,7 +24,7 @@ function ailc.tustouse ()
 end
 
 function ailc.flee()
-	local flee_pos = ai.positionflee()
+	local flee_pos = ai.positionflee(ailc.tustouse())
 	if flee_pos then
 		return flee_pos:goto()
 	end
@@ -80,7 +80,7 @@ function ailc.route (waypoints)
 end
 
 function ailc.wander ()
-	local next_pos = ai.positionwander("rand", (ai.actor():TU() + 1) / 6)
+	local next_pos = ai.positionwander("rand", (ai.actor():TU() + 1) / 6, ai.actor():pos(), ailc.tustouse())
 	if next_pos then
 		next_pos:goto()
 	end
