@@ -70,13 +70,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 				"fastest":	(Default) Less pathing cost to get to.
 				"nearest":	Closest to the target.
 				"farthest":	Farhest from the target.
-			tus -- max number of TUs to use for moving + shooting (defaults to use all tus).
+			tus -- Max number of TUs to use for moving + shooting (defaults to use all tus).
 
-		postionhide (team) -- Returns a position (pos3 userdata) for the AI actor to hide in or false if none found.
-			team -- Team to hide from, valid values: "phalanx", "civilian" and "alien", defaults to "alien" if AI is civilian and "all but our own team" (which cannot be directly specified) otherwise.
+		postionhide (team, tus) -- Returns a position (pos3 userdata) for the AI actor to hide in or false if none found.
+			team -- Team to hide from, valid values: "phalanx", "civilian" and "alien", defaults to "alien" if AI is civilian and "all but our own team" otherwise.
+					Note: Prefixing the team name with '-' or '~' will inverse the team rules (means: members *not* from the given team), *do not* use with "all"
+			tus -- Max number of TUs to use for moving (defaults to use all tus).
 
-		positionherd (target) -- Returns a position (pos3 userdata) from where target can be used as a meatshield or false if none found.
+		positionherd (target, tus, inverse) -- Returns a position (pos3 userdata) from where target can be used as a meatshield or false if none found.
 			target -- *Required* Actor (userdata) to hide behind.
+			tus -- Max number of TUs to use for moving (defaults to use all tus).
+			inverse -- If true try to shield _target_ instead of using it as shield (defaults to false).
 
 		positionapproach (target, tus, hide) -- Returns a position closer to target or false if none found (Only considers positions along the fastest path to the target)
 			target -- *Required* Actor (userdata) to approach to.
@@ -105,8 +109,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 				"CCW":		Try to move counter-clockwise around the given area.
 			origin -- Center of the area to wander about, defaults to current actor position.
 			radius -- Radius -in maptiles- of the area to wander about, defaults to current actor TUs / 2
+			tus -- Max number of TUs to use for moving (defaults to use all tus).
 
-		positionflee () -- Returns a position (userdata) where to flee.
+		positionflee (tus) -- Returns a position (userdata) where to flee.
+			tus -- Max number of TUs to use for moving (defaults to use all tus).
 
 		difficulty () -- Returns the current difficulty of the batlescape from -4 (easiest) to 4 (hardest)
 
