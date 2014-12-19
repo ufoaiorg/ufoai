@@ -202,6 +202,14 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 		LIST_Foreach(transData.employees[i], Employee, employee) {
 			if (employee->isAssigned())
 				employee->unassign();
+
+			const aircraft_t *aircraft = AIR_IsEmployeeInAircraft(employee, nullptr);
+			if (aircraft && cgi->LIST_GetPointer(transData.aircraft, (const void*)aircraft) == nullptr) {
+				/* get a non-constant pointer */
+				aircraft_t* craft = AIR_AircraftGetFromIDX(aircraft->idx);
+				AIR_RemoveEmployee(employee, craft);
+			}
+
 			E_MoveIntoNewBase(employee, transfer.destBase);
 			employee->transfer = true;
 			cgi->LIST_AddPointer(&transfer.employees[i], (void*) employee);
