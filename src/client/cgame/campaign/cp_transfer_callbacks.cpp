@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_transfer.h"
 #include "cp_popup.h"
 #include "cp_time.h"
-#include "../../ui/ui_dataids.h"
 #include "aliencargo.h"
 #include "aliencontainment.h"
 
@@ -111,41 +110,6 @@ static transferType_t TR_GetTransferType (const char* id)
 			return (transferType_t)i;
 	}
 	return TRANS_TYPE_INVALID;
-}
-
-/**
- * @brief Checks condition for employee transfer.
- * @param[in] employee Pointer to employee for transfer.
- * @param[in] destbase Pointer to destination base.
- * @return true if transfer of this type of employee is possible.
- */
-static bool TR_CheckEmployee (const Employee* employee, const base_t* destbase)
-{
-	assert(employee && destbase);
-
-	switch (employee->getType()) {
-	case EMPL_SOLDIER:
-		/* Is this a soldier assigned to aircraft? */
-		if (AIR_IsEmployeeInAircraft(employee, nullptr)) {
-			const rank_t* rank = CL_GetRankByIdx(employee->chr.score.rank);
-			CP_Popup(_("Soldier in aircraft"), _("%s %s is assigned to aircraft and cannot be\ntransferred to another base.\n"),
-					_(rank->shortname), employee->chr.name);
-			return false;
-		}
-		break;
-	case EMPL_PILOT:
-		/* Is this a pilot assigned to aircraft? */
-		if (AIR_IsEmployeeInAircraft(employee, nullptr)) {
-			CP_Popup(_("Pilot in aircraft"), _("%s is assigned to aircraft and cannot be\ntransferred to another base.\n"),
-					employee->chr.name);
-			return false;
-		}
-		break;
-	default:
-		break;
-	}
-
-	return true;
 }
 
 /**
@@ -456,25 +420,87 @@ static void TR_Add_f (void)
 		if (amount > 0) {
 			if (!TR_AircraftListSelect(aircraft))
 				return;
+
+			/* Add aircraft */
 			cgi->LIST_AddPointer(&tr.aircraft, (void*)aircraft);
+
+			/* Add pilot */
+			if (aircraft->pilot)
+				Cmd_ExecuteString("ui_trans_add ucn:%d 1", aircraft->pilot->chr.ucn);
+
+			/* Add soldiers */
+			LIST_Foreach(aircraft->acTeam, Employee, employee) {
+				Cmd_ExecuteString("ui_trans_add ucn:%d 1", employee->chr.ucn);
+			}
 		} else if (amount < 0) {
+			/* Remove aircraft */
 			cgi->LIST_Remove(&tr.aircraft, (void*)aircraft);
+
+			/* Remove pilot */
+			if (aircraft->pilot)
+				Cmd_ExecuteString("ui_trans_add ucn:%d -1", aircraft->pilot->chr.ucn);
+
+			/* Remove soldiers */
+			LIST_Foreach(aircraft->acTeam, Employee, employee) {
+				Cmd_ExecuteString("ui_trans_add ucn:%d -1", employee->chr.ucn);
+			}
 		}
 	} else if (Q_strstart(itemId, "ucn:")) {
 		Employee* employee = E_GetEmployeeFromChrUCN(atoi(itemId + 4));
 		if (!employee)
 			return;
+
 		if (amount > 0) {
 			if (!employee->isHiredInBase(base))
 				return;
 			if (cgi->LIST_GetPointer(tr.employees[employee->getType()], (void*)employee))
 				return;
-			if (!TR_CheckEmployee(employee, tr.destBase))
-				return;
 
+			/* Add employee */
 			cgi->LIST_AddPointer(&tr.employees[employee->getType()], (void*)employee);
+
+			/* Add inventory */
+			const Container* cont = nullptr;
+			while ((cont = employee->chr.inv.getNextCont(cont, true))) {
+				Item* ic = cont->getNextItem(nullptr);
+				while (ic) {
+					const Item item = *ic;
+					const objDef_t* od = item.def();
+					Item* next = ic->getNext();
+
+					if (od)
+						Cmd_ExecuteString("ui_trans_add %s 1", od->id);
+					if (item.getAmmoLeft() && od->isReloadable()) {
+						const objDef_t* ammo = item.ammoDef();
+						if (ammo)
+							Cmd_ExecuteString("ui_trans_add %s 1", ammo->id);
+					}
+					ic = next;
+				}
+			}
 		} else if (amount < 0) {
+			/* Remove employee */
 			cgi->LIST_Remove(&tr.employees[employee->getType()], (void*)employee);
+
+			/* Remove inventory */
+			const Container* cont = nullptr;
+			while ((cont = employee->chr.inv.getNextCont(cont, true))) {
+				Item* ic = cont->getNextItem(nullptr);
+				while (ic) {
+					const Item item = *ic;
+					const objDef_t* od = item.def();
+					Item* next = ic->getNext();
+
+					if (od)
+						Cmd_ExecuteString("ui_trans_add %s -1", od->id);
+					if (item.getAmmoLeft() && od->isReloadable()) {
+						const objDef_t* ammo = item.ammoDef();
+						if (ammo)
+							Cmd_ExecuteString("ui_trans_add %s -1", ammo->id);
+					}
+					ic = next;
+				}
+			}
 		}
 	} else if (Q_streq(itemId, "scientist")) {
 		if (amount > 0) {
@@ -485,8 +511,6 @@ static void TR_Add_f (void)
 					continue;
 				/* Already on transfer list. */
 				if (cgi->LIST_GetPointer(tr.employees[EMPL_SCIENTIST], (void*)employee))
-					continue;
-				if (!TR_CheckEmployee(employee, tr.destBase))
 					continue;
 				cgi->LIST_AddPointer(&tr.employees[EMPL_SCIENTIST], (void*) employee);
 				amount--;
@@ -506,8 +530,6 @@ static void TR_Add_f (void)
 					continue;
 				/* Already on transfer list. */
 				if (cgi->LIST_GetPointer(tr.employees[EMPL_WORKER], (void*)employee))
-					continue;
-				if (!TR_CheckEmployee(employee, tr.destBase))
 					continue;
 				cgi->LIST_AddPointer(&tr.employees[EMPL_WORKER], (void*) employee);
 				amount--;
