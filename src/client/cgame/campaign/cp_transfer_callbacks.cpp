@@ -426,11 +426,11 @@ static void TR_Add_f (void)
 
 			/* Add pilot */
 			if (aircraft->pilot)
-				Cmd_ExecuteString("ui_trans_add ucn:%d 1", aircraft->pilot->chr.ucn);
+				cgi->Cmd_ExecuteString("ui_trans_add ucn:%d 1", aircraft->pilot->chr.ucn);
 
 			/* Add soldiers */
 			LIST_Foreach(aircraft->acTeam, Employee, employee) {
-				Cmd_ExecuteString("ui_trans_add ucn:%d 1", employee->chr.ucn);
+				cgi->Cmd_ExecuteString("ui_trans_add ucn:%d 1", employee->chr.ucn);
 			}
 		} else if (amount < 0) {
 			/* Remove aircraft */
@@ -438,11 +438,11 @@ static void TR_Add_f (void)
 
 			/* Remove pilot */
 			if (aircraft->pilot)
-				Cmd_ExecuteString("ui_trans_add ucn:%d -1", aircraft->pilot->chr.ucn);
+				cgi->Cmd_ExecuteString("ui_trans_add ucn:%d -1", aircraft->pilot->chr.ucn);
 
 			/* Remove soldiers */
 			LIST_Foreach(aircraft->acTeam, Employee, employee) {
-				Cmd_ExecuteString("ui_trans_add ucn:%d -1", employee->chr.ucn);
+				cgi->Cmd_ExecuteString("ui_trans_add ucn:%d -1", employee->chr.ucn);
 			}
 		}
 	} else if (Q_strstart(itemId, "ucn:")) {
@@ -469,11 +469,11 @@ static void TR_Add_f (void)
 					Item* next = ic->getNext();
 
 					if (od)
-						Cmd_ExecuteString("ui_trans_add %s 1", od->id);
+						cgi->Cmd_ExecuteString("ui_trans_add %s 1", od->id);
 					if (item.getAmmoLeft() && od->isReloadable()) {
 						const objDef_t* ammo = item.ammoDef();
 						if (ammo)
-							Cmd_ExecuteString("ui_trans_add %s 1", ammo->id);
+							cgi->Cmd_ExecuteString("ui_trans_add %s 1", ammo->id);
 					}
 					ic = next;
 				}
@@ -492,11 +492,11 @@ static void TR_Add_f (void)
 					Item* next = ic->getNext();
 
 					if (od)
-						Cmd_ExecuteString("ui_trans_add %s -1", od->id);
+						cgi->Cmd_ExecuteString("ui_trans_add %s -1", od->id);
 					if (item.getAmmoLeft() && od->isReloadable()) {
 						const objDef_t* ammo = item.ammoDef();
 						if (ammo)
-							Cmd_ExecuteString("ui_trans_add %s -1", ammo->id);
+							cgi->Cmd_ExecuteString("ui_trans_add %s -1", ammo->id);
 					}
 					ic = next;
 				}
