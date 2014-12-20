@@ -1937,7 +1937,7 @@ static int AIL_positionflee (lua_State* L)
 			if (check->isSameTeamAs(AIL_ent)) {
 				if (dist < minDistFriend || minDistFriend < 0.0f)
 					minDistFriend = dist;
-			} else {
+			} else if (AI_IsHostile(AIL_ent, check) || AIL_ent->isPanicked()) {
 				if (dist < minDistFoe || minDistFoe < 0.0f)
 					minDistFoe = dist;
 			}
