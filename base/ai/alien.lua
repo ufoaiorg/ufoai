@@ -74,7 +74,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 		postionhide (team, tus) -- Returns a position (pos3 userdata) for the AI actor to hide in or false if none found.
 			team -- Team to hide from, valid values: "phalanx", "civilian" and "alien", defaults to "alien" if AI is civilian and "all but our own team" otherwise.
-					Note: Prefixing the team name with '-' or '~' will inverse the team rules (means: members *not* from the given team), *do not* use with "all"
+					Note: Prefixing the team name with '-' or '~' will inverse the team rules (means: members *not* from the given team)
 			tus -- Max number of TUs to use for moving (defaults to use all tus).
 
 		positionherd (target, tus, inverse) -- Returns a position (pos3 userdata) from where target can be used as a meatshield or false if none found.
