@@ -233,7 +233,7 @@ static int AIL_weapontype(lua_State* L);
 static int AIL_actor(lua_State* L);
 static int AIL_tusforshooting(lua_State* L);
 static int AIL_class(lua_State* L);
-static int AIL_HideNeeded(lua_State* L);
+static int AIL_hideneeded(lua_State* L);
 
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
@@ -264,7 +264,7 @@ static const luaL_reg AIL_methods[] = {
 	{"actor", AIL_actor},
 	{"tusforshooting", AIL_tusforshooting},
 	{"class", AIL_class},
-	{"hideneeded", AIL_HideNeeded},
+	{"hideneeded", AIL_hideneeded},
 	{nullptr, nullptr}
 };
 
@@ -383,7 +383,7 @@ static int actorL_shoot (lua_State* L)
 	if (lua_gettop(L) > 1) {
 		assert(lua_isnumber(L, 2)); /* Must be a number. */
 
-		tu = (int) lua_tonumber(L, 2);
+		tu = std::min(static_cast<int>(lua_tonumber(L, 2)), tu);
 	}
 
 	shoot_types_t bestType = NONE;
@@ -492,7 +492,7 @@ static int actorL_throwgrenade(lua_State* L)
 			lua_pushboolean(L, 0);
 			return 1;
 		}
-		tus = static_cast<int>(lua_tonumber(L, 3));
+		tus = std::min(static_cast<int>(lua_tonumber(L, 3)), tus);
 	}
 
 	/* Check that we have a free hand */
@@ -577,7 +577,7 @@ static int actorL_throwgrenade(lua_State* L)
 }
 
 /**
- * @brief Gets the number of TU the actor has left.
+ * @brief Gets the number of usable TU the actor has left.
  */
 static int actorL_TU (lua_State* L)
 {
@@ -1193,7 +1193,7 @@ static int AIL_positionshoot (lua_State* L)
 	if (lua_gettop(L) > 2) {
 		assert(lua_isnumber(L, 3)); /* Must be a number. */
 
-		tus = static_cast<int>(lua_tonumber(L, 3));
+		tus = std::min(static_cast<int>(lua_tonumber(L, 3)), tus);
 	}
 
 	/* Don't shoot units under our control */
@@ -1335,15 +1335,33 @@ static int AIL_positionhide (lua_State* L)
 	if (lua_gettop(L)) {
 		if (lua_isstring(L, 1)) {
 			const char* s = lua_tostring(L, 1);
-			hidingTeam = AIL_toTeamInt(s);
-			if (hidingTeam == TEAM_ALL)
+			bool invTeam = false;
+			if (s[0] == '-' || s[0] == '~') {
+				invTeam = true;
+				++s;
+			}
+			const int team = AIL_toTeamInt(s);
+			if (team == TEAM_ALL)
 				AIL_invalidparameter(1);
+			else if (invTeam)
+				hidingTeam = -team;
+			else
+				hidingTeam = team;
 		} else {
 			AIL_invalidparameter(1);
 		}
 	}
 
-	const int tus = AIL_ent->getUsableTUs();
+	int tus = AIL_ent->getUsableTUs();
+	/* parse parameter */
+	if (lua_gettop(L) > 1) {
+		if (lua_isnumber(L, 2)) {
+			tus = std::min(static_cast<int>(lua_tonumber(L, 2)), tus);
+		} else {
+			AIL_invalidparameter(2);
+		}
+	}
+
 	pos3_t save;
 	VectorCopy(AIL_ent->pos, save);
 
@@ -1375,17 +1393,27 @@ static int AIL_positionherd (lua_State* L)
 	}
 	const aiActor_t* target = lua_toactor(L, 1);
 
-	bool inverse = false;
+	int tus = AIL_ent->getUsableTUs();
+	/* parse parameter */
 	if (lua_gettop(L) > 1) {
-		if (lua_isboolean(L, 2))
-			inverse = lua_toboolean(L, 2);
-		else
+		if (lua_isnumber(L, 2)) {
+			tus = std::min(static_cast<int>(lua_tonumber(L, 2)), tus);
+		} else {
 			AIL_invalidparameter(2);
+		}
+	}
+
+	bool inverse = false;
+	if (lua_gettop(L) > 2) {
+		if (lua_isboolean(L, 3))
+			inverse = lua_toboolean(L, 3);
+		else
+			AIL_invalidparameter(3);
 	}
 
 	pos3_t save;
 	VectorCopy(AIL_ent->pos, save);
-	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->actor->origin, AIL_ent->getUsableTUs(), inverse)) {
+	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->actor->origin, tus, inverse)) {
 		lua_pushpos3(L, &AIL_ent->pos);
 	} else {
 		lua_pushboolean(L, 0);
@@ -1412,7 +1440,7 @@ static int AIL_positionapproach (lua_State* L)
 	int tus = AIL_ent->getUsableTUs();
 	if (lua_gettop(L) > 1) {
 		if (lua_isnumber(L, 2))
-			tus = static_cast<int>(lua_tonumber(L, 2));
+			tus = std::min(static_cast<int>(lua_tonumber(L, 2)), tus);
 		else
 			AIL_invalidparameter(2);
 	}
@@ -1697,6 +1725,7 @@ static int AIL_positionwander (lua_State* L)
 	pos3_t center;
 	VectorCopy(AIL_ent->pos, center);
 	int method = 0;
+	int tus = AIL_ent->getUsableTUs();
 
 	/* Check parameters */
 	if (lua_gettop(L) > 0) {
@@ -1726,6 +1755,13 @@ static int AIL_positionwander (lua_State* L)
 			AIL_invalidparameter(3);
 	}
 
+	if (lua_gettop(L) > 3) {
+		if (lua_isnumber(L, 4))
+			tus = std::min(static_cast<int>(lua_tonumber(L, 4)), tus);
+		else
+			AIL_invalidparameter(4);
+	}
+
 	vec3_t d;
 	if (method > 0)
 		VectorSubtract(AIL_ent->pos, center, d);
@@ -1735,7 +1771,8 @@ static int AIL_positionwander (lua_State* L)
 	pos3_t pos;
 	AiAreaSearch searchArea(center, radius);
 	while (searchArea.getNext(pos)) {
-		if (G_ActorMoveLength(AIL_ent, level.pathingMap, pos, true) >= ROUTING_NOT_REACHABLE)
+		const pos_t move = G_ActorMoveLength(AIL_ent, level.pathingMap, pos, true);
+		if (move >= ROUTING_NOT_REACHABLE || move > tus)
 			continue;
 		if (!AI_CheckPosition(AIL_ent, pos))
 			continue;
@@ -1870,17 +1907,26 @@ static int AIL_difficulty (lua_State* L)
  */
 static int AIL_positionflee (lua_State* L)
 {
+	int tus = AIL_ent->getUsableTUs();
+	if (lua_gettop(L)) {
+		if (lua_isnumber(L, 1))
+			tus = std::min(static_cast<int>(lua_tonumber(L, 1)), tus);
+		else
+			AIL_invalidparameter(1);
+	}
+
 	/* Calculate move table. */
 	G_MoveCalc(0, AIL_ent, AIL_ent->pos, AIL_ent->getUsableTUs());
 	pos3_t oldPos;
 	VectorCopy(AIL_ent->pos, oldPos);
 
-	const int radius = (AIL_ent->getUsableTUs() + 1) / TU_MOVE_STRAIGHT;
+	const int radius = (tus + 1) / TU_MOVE_STRAIGHT;
 	float bestScore = -1;
 	pos3_t bestPos = {0, 0, PATHFINDING_HEIGHT};
 	AiAreaSearch searchArea(AIL_ent->pos, radius);
 	while (searchArea.getNext(AIL_ent->pos)) {
-		if (G_ActorMoveLength(AIL_ent, level.pathingMap, AIL_ent->pos, false) >= ROUTING_NOT_REACHABLE)
+		const pos_t move = G_ActorMoveLength(AIL_ent, level.pathingMap, AIL_ent->pos, false);
+		if (move >= ROUTING_NOT_REACHABLE || move > tus)
 			continue;
 		if (!AI_CheckPosition(AIL_ent, AIL_ent->pos))
 			continue;
@@ -1891,7 +1937,7 @@ static int AIL_positionflee (lua_State* L)
 			if (check->isSameTeamAs(AIL_ent)) {
 				if (dist < minDistFriend || minDistFriend < 0.0f)
 					minDistFriend = dist;
-			} else {
+			} else if (AI_IsHostile(AIL_ent, check) || AIL_ent->isPanicked()) {
 				if (dist < minDistFoe || minDistFoe < 0.0f)
 					minDistFoe = dist;
 			}
@@ -1975,7 +2021,7 @@ static int AIL_class (lua_State* L)
 	return 1;
 }
 
-static int AIL_HideNeeded (lua_State* L)
+static int AIL_hideneeded (lua_State* L)
 {
 	lua_pushboolean(L, AI_HideNeeded(AIL_ent));
 	return 1;
@@ -2090,7 +2136,7 @@ void AIL_Shutdown (void)
 }
 
 /**
- * @brief Purges all the AI from the entities.
+ * @brief Closes the LUA AI.
  */
 void AIL_Cleanup (void)
 {

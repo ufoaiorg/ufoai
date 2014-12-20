@@ -31,7 +31,7 @@ function ails.ismelee()
 end
 
 function ails.flee ()
-	local flee_pos = ai.positionflee()
+	local flee_pos = ai.positionflee(ai.actor():TU() - 3)
 	if flee_pos then
 		return flee_pos:goto()
 	end
@@ -39,7 +39,7 @@ function ails.flee ()
 end
 
 function ails.hide ()
-	local hide_pos = ai.positionhide()
+	local hide_pos = ai.positionhide("~phalanx", ails.tustouse())
 	if hide_pos then
 		return hide_pos:goto()
 	end
@@ -50,7 +50,7 @@ function ails.herd ()
 	local team = ai.see("all", "phalanx", "path")
 	if #team > 0 then
 		for i = 1, #team do
-			local herd_pos = ai.positionherd(team[i])
+			local herd_pos = ai.positionherd(team[i], ails.tustouse())
 			if herd_pos then
 				return herd_pos:goto()
 			end
@@ -63,7 +63,7 @@ function ails.shield ()
 	local civs = ai.see(ails.param.vis, "phalanx", "path")
 	if #civs > 0 then
 		for i = 1, #civs do
-			local herd_pos = ai.positionherd(civs[i], true)
+			local herd_pos = ai.positionherd(civs[i], ails.tustouse(), true)
 			if herd_pos then
 				return herd_pos:goto()
 			end
@@ -134,7 +134,7 @@ function ails.search ()
 			if search_rad < 1 then
 				search_rad =  ails.tustouse() + 1 / 2
 			end
-			local next_pos = ai.positionwander(ails.param.move, search_rad)
+			local next_pos = ai.positionwander(ails.param.move, search_rad, ai.actor():pos(), ails.tustouse())
 			if next_pos then
 				next_pos:goto()
 			end

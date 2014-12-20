@@ -197,13 +197,19 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 		transfer.itemAmount[i] = transData.itemAmount[i];
 		count++;
 	}
-	/* Note that the employee remains hired in source base during the transfer, that is
-	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
+
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
 		LIST_Foreach(transData.employees[i], Employee, employee) {
-			employee->unassign();
-			/** @TODO We unarm soldiers so we don't need to manage storage. This need to be changed later */
-			employee->unequip();
+			if (employee->isAssigned())
+				employee->unassign();
+
+			const aircraft_t *aircraft = AIR_IsEmployeeInAircraft(employee, nullptr);
+			if (aircraft && cgi->LIST_GetPointer(transData.aircraft, (const void*)aircraft) == nullptr) {
+				/* get a non-constant pointer */
+				aircraft_t* craft = AIR_AircraftGetFromIDX(aircraft->idx);
+				AIR_RemoveEmployee(employee, craft);
+			}
+
 			E_MoveIntoNewBase(employee, transfer.destBase);
 			employee->transfer = true;
 			cgi->LIST_AddPointer(&transfer.employees[i], (void*) employee);
@@ -230,9 +236,19 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 	LIST_Foreach(transData.aircraft, aircraft_t, aircraft) {
 		const baseCapacities_t capacity = AIR_GetCapacityByAircraftWeight(aircraft);
 		aircraft->status = AIR_TRANSFER;
-		AIR_RemoveEmployees(*aircraft);
 		aircraft->homebase = transData.destBase;
+
+		/* Remove crew if not transfered */
+		if (aircraft->pilot != nullptr && cgi->LIST_GetPointer(transfer.employees[aircraft->pilot->getType()], (void*)aircraft->pilot) == nullptr)
+			AIR_RemoveEmployee(aircraft->pilot, aircraft);
+
+		LIST_Foreach(aircraft->acTeam, Employee, employee) {
+			if (cgi->LIST_GetPointer(transfer.employees[employee->getType()], (void*)employee) == nullptr)
+				AIR_RemoveEmployee(employee, aircraft);
+		}
+
 		cgi->LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
+
 		if (srcBase->aircraftCurrent == aircraft)
 			srcBase->aircraftCurrent = AIR_GetFirstFromBase(srcBase);
 		CAP_AddCurrent(srcBase, capacity, -1);

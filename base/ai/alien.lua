@@ -70,13 +70,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 				"fastest":	(Default) Less pathing cost to get to.
 				"nearest":	Closest to the target.
 				"farthest":	Farhest from the target.
-			tus -- max number of TUs to use for moving + shooting (defaults to use all tus).
+			tus -- Max number of TUs to use for moving + shooting (defaults to use all tus).
 
-		postionhide (team) -- Returns a position (pos3 userdata) for the AI actor to hide in or false if none found.
-			team -- Team to hide from, valid values: "phalanx", "civilian" and "alien", defaults to "alien" if AI is civilian and "all but our own team" (which cannot be directly specified) otherwise.
+		postionhide (team, tus) -- Returns a position (pos3 userdata) for the AI actor to hide in or false if none found.
+			team -- Team to hide from, valid values: "phalanx", "civilian" and "alien", defaults to "alien" if AI is civilian and "all but our own team" otherwise.
+					Note: Prefixing the team name with '-' or '~' will inverse the team rules (means: members *not* from the given team)
+			tus -- Max number of TUs to use for moving (defaults to use all tus).
 
-		positionherd (target) -- Returns a position (pos3 userdata) from where target can be used as a meatshield or false if none found.
+		positionherd (target, tus, inverse) -- Returns a position (pos3 userdata) from where target can be used as a meatshield or false if none found.
 			target -- *Required* Actor (userdata) to hide behind.
+			tus -- Max number of TUs to use for moving (defaults to use all tus).
+			inverse -- If true try to shield _target_ instead of using it as shield (defaults to false).
 
 		positionapproach (target, tus, hide) -- Returns a position closer to target or false if none found (Only considers positions along the fastest path to the target)
 			target -- *Required* Actor (userdata) to approach to.
@@ -105,8 +109,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 				"CCW":		Try to move counter-clockwise around the given area.
 			origin -- Center of the area to wander about, defaults to current actor position.
 			radius -- Radius -in maptiles- of the area to wander about, defaults to current actor TUs / 2
+			tus -- Max number of TUs to use for moving (defaults to use all tus).
 
-		positionflee () -- Returns a position (userdata) where to flee.
+		positionflee (tus) -- Returns a position (userdata) where to flee.
+			tus -- Max number of TUs to use for moving (defaults to use all tus).
 
 		difficulty () -- Returns the current difficulty of the batlescape from -4 (easiest) to 4 (hardest)
 
@@ -176,7 +182,7 @@ function aila.ismelee()
 end
 
 function aila.flee ()
-	local flee_pos = ai.positionflee()
+	local flee_pos = ai.positionflee(ai.actor():TU() - 3)
 	if flee_pos then
 		return flee_pos:goto()
 	end
@@ -184,7 +190,7 @@ function aila.flee ()
 end
 
 function aila.hide ()
-	local hide_pos = ai.positionhide()
+	local hide_pos = ai.positionhide("~alien", aila.tustouse())
 	if hide_pos then
 		return hide_pos:goto()
 	end
@@ -195,7 +201,7 @@ function aila.herd ()
 	local aliens = ai.see("all", "alien", "path")
 	if #aliens > 0 then
 		for i = 1, #aliens do
-			local herd_pos = ai.positionherd(aliens[i])
+			local herd_pos = ai.positionherd(aliens[i], aila.tustouse())
 			if herd_pos then
 				return herd_pos:goto()
 			end
@@ -261,7 +267,7 @@ function aila.search ()
 			if search_rad < 1 then
 				search_rad =  aila.tustouse() + 1 / 2
 			end
-			local next_pos = ai.positionwander(aila.param.move, search_rad)
+			local next_pos = ai.positionwander(aila.param.move, search_rad, ai.actor():pos(), aila.tustouse())
 			if next_pos then
 				next_pos:goto()
 			end

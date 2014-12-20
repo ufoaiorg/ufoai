@@ -2828,7 +2828,7 @@ bool AIR_RemoveEmployee (Employee* employee, aircraft_t* aircraft)
 	if (AIR_GetPilot(aircraft) == employee) {
 #ifdef DEBUG
 		if (employee->getType() != EMPL_PILOT)
-			Com_Printf("Warning: pilot of aircraf %i is not a qualified pilot (ucn: %i)\n", aircraft->idx, employee->chr.ucn);
+			Com_Printf("Warning: pilot of aircraft %i is not a qualified pilot (ucn: %i)\n", aircraft->idx, employee->chr.ucn);
 #endif
 		return AIR_SetPilot(aircraft, nullptr);
 	}

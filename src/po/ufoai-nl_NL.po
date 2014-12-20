@@ -9,16 +9,16 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2012-02-19 11:51+0200\n"
-"Last-Translator: Sander van Grieken <sander@outrightsolutions.nl>\n"
+"PO-Revision-Date: 2014-12-13 16:00+0100\n"
+"Last-Translator: Jelle <jelle.verreth@gmail.com>\n"
 "Language-Team: Dutch <pverha10@cis.hzeeland.nl>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Language: Dutch\n"
 "X-Poedit-Basepath: ../\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #: ../base/maps/africa.ump:639 ../base/maps/africa.ump:673
 #: ../base/maps/africa.ump:705 ../base/maps/africa.ump:737
@@ -85,7 +85,7 @@ msgstr "Kleine bungalo in een bos"
 #: ../base/maps/frozen.ump:734 ../base/maps/frozen.ump:756
 #: ../base/maps/frozen.ump:826
 msgid "Frozen"
-msgstr ""
+msgstr "Bevroren"
 
 #: ../base/maps/frozen.ump:781
 msgid "Multiplayer Coop"
@@ -101,13 +101,12 @@ msgstr "Tankstation"
 
 #: ../base/maps/harbour2.ump:490 ../base/maps/harbour2.ump:578
 #: ../base/ufos/maps.ufo:1589 ../base/ufos/maps.ufo:1595
-#, fuzzy
 msgid "Harbour"
-msgstr "Haven."
+msgstr "Haven"
 
 #: ../base/maps/harbour2.ump:534
 msgid "Pier"
-msgstr ""
+msgstr "Pier"
 
 #: ../base/maps/hills.ump:488 ../base/maps/hills.ump:519
 #: ../base/maps/hills.ump:572
@@ -115,9 +114,8 @@ msgid "UFO landed in hills area"
 msgstr "UFO geland in de bergen"
 
 #: ../base/maps/ice.ump:361 ../base/maps/ice.ump:384 ../base/maps/ice.ump:408
-#, fuzzy
 msgid "Ice"
-msgstr "Incheon"
+msgstr "Ijs"
 
 #: ../base/maps/industrial.ump:301 ../base/maps/industrial.ump:326
 #: ../base/maps/industrial.ump:351
@@ -127,9 +125,8 @@ msgstr "UFO geland"
 #: ../base/maps/industrial.ump:376 ../base/ufos/maps.ufo:1907
 #: ../base/ufos/maps.ufo:1950 ../base/ufos/maps.ufo:1994
 #: ../base/ufos/maps.ufo:2037
-#, fuzzy
 msgid "Industrial Site"
-msgstr "Industrieel thema."
+msgstr "Industriële  site"
 
 #: ../base/maps/italy.ump:61
 msgid "Italy"
@@ -236,9 +233,8 @@ msgstr "Stedelijk"
 #: ../base/maps/village.ump:758 ../base/maps/village.ump:786
 #: ../base/maps/village.ump:813 ../base/maps/village.ump:841
 #: ../base/maps/village.ump:869
-#, fuzzy
 msgid "Village"
-msgstr "Dorp groot"
+msgstr "Dorp"
 
 #: ../base/ufos/aircraftmanagement.ufo:102
 msgid "Firebird-class Dropship"
@@ -436,7 +432,7 @@ msgstr "Antimaterie"
 
 #: ../base/ufos/aircraftmanagement.ufo:1094 ../base/ufos/research.ufo:5507
 msgid "Hybrid Missile"
-msgstr ""
+msgstr "Hybride Raket"
 
 #: ../base/ufos/aircraftmanagement.ufo:1111 ../base/ufos/research.ufo:5557
 msgid "Targeting Computer"
@@ -2795,13 +2791,12 @@ msgstr "Geen Taal"
 #: ../base/ufos/maps.ufo:68 ../base/ufos/maps.ufo:122
 #: ../base/ufos/maps.ufo:177
 msgid "African Village"
-msgstr ""
+msgstr "Afrikaans Dorp"
 
 #: ../base/ufos/maps.ufo:231 ../base/ufos/maps.ufo:281
 #: ../base/ufos/maps.ufo:332
-#, fuzzy
 msgid "African Desert"
-msgstr "Afrika"
+msgstr "Afrika woestijn"
 
 #: ../base/ufos/maps.ufo:387
 msgid "Coastal Crash Site"
@@ -2824,13 +2819,12 @@ msgstr "Enkele huizen in de woestijn."
 #: ../base/ufos/maps.ufo:749 ../base/ufos/maps.ufo:791
 #: ../base/ufos/maps.ufo:832 ../base/ufos/maps.ufo:876
 msgid "Farm"
-msgstr ""
+msgstr "Boerderij"
 
 #: ../base/ufos/maps.ufo:928 ../base/ufos/maps.ufo:968
 #: ../base/ufos/maps.ufo:1008 ../base/ufos/maps.ufo:1048
-#, fuzzy
 msgid "Forest"
-msgstr "Opslag"
+msgstr "Bos"
 
 #: ../base/ufos/maps.ufo:1092
 #, fuzzy
@@ -2851,17 +2845,17 @@ msgstr ""
 #: ../base/ufos/maps.ufo:1647 ../base/ufos/maps.ufo:1691
 #: ../base/ufos/maps.ufo:1733
 msgid "Suburban Housing"
-msgstr ""
+msgstr "Voorstedelijke woningen"
 
 #: ../base/ufos/maps.ufo:1780 ../base/ufos/maps.ufo:1819
 #: ../base/ufos/maps.ufo:1862
 msgid "Frozen Landscape"
-msgstr ""
+msgstr "Bevroren Landschap"
 
 #: ../base/ufos/maps.ufo:2083 ../base/ufos/maps.ufo:2131
 #: ../base/ufos/maps.ufo:3772
 msgid "East Asian Village"
-msgstr ""
+msgstr "Oost Aziatisch Dorp"
 
 #: ../base/ufos/maps.ufo:2337 ../base/ufos/maps.ufo:2378
 #: ../base/ufos/maps.ufo:2419 ../base/ufos/maps.ufo:3878
@@ -2876,9 +2870,8 @@ msgstr "Neergestorte UFO - Scout"
 
 #: ../base/ufos/maps.ufo:2516 ../base/ufos/maps.ufo:2556
 #: ../base/ufos/maps.ufo:2599
-#, fuzzy
 msgid "Tropical Jungle"
-msgstr "Tropische drugs"
+msgstr "Tropisch Oerwoud"
 
 #: ../base/ufos/maps.ufo:2646
 #, fuzzy
@@ -2886,30 +2879,26 @@ msgid "UFO Crash Site"
 msgstr "UFO crash locatie."
 
 #: ../base/ufos/maps.ufo:2947
-#, fuzzy
 msgid "Supermarket"
-msgstr "Bovenmenselijk"
+msgstr "Supermarkt"
 
 #: ../base/ufos/maps.ufo:2997
 msgid "Basketball Stadium"
-msgstr ""
+msgstr "Basketbal Stadion"
 
 #: ../base/ufos/maps.ufo:3102
-#, fuzzy
 msgid "Bungalow"
-msgstr "Bangalore"
+msgstr "Bungalow"
 
 #: ../base/ufos/maps.ufo:3147
-#, fuzzy
 msgid "House"
-msgstr "Houston"
+msgstr "Huis"
 
 #: ../base/ufos/maps.ufo:3192 ../base/ufos/maps.ufo:3231
 #: ../base/ufos/maps.ufo:3269 ../base/ufos/maps.ufo:3307
 #: ../base/ufos/maps.ufo:5256
-#, fuzzy
 msgid "Suburban City"
-msgstr "Een buitenwijk."
+msgstr "Een buitenwijk"
 
 #: ../base/ufos/maps.ufo:3354 ../base/ufos/maps.ufo:3390
 #: ../base/ufos/maps.ufo:5555
@@ -2918,9 +2907,8 @@ msgid "PHALANX Base Under Attack"
 msgstr "Basis wordt aangevallen"
 
 #: ../base/ufos/maps.ufo:3430
-#, fuzzy
 msgid "Cemetery"
-msgstr "Klein kerkhof"
+msgstr "Kerkhof"
 
 #: ../base/ufos/maps.ufo:3472
 msgid "City High-Rise"
@@ -2932,9 +2920,8 @@ msgid "Construction Site"
 msgstr "Bouw"
 
 #: ../base/ufos/maps.ufo:3567
-#, fuzzy
 msgid "Tropical Jungle Estate"
-msgstr "Tropische drugs"
+msgstr "Tropische Oerwoud Landgoed"
 
 #: ../base/ufos/maps.ufo:3627
 msgid "Mountain Estate"
@@ -2947,7 +2934,7 @@ msgstr "Tankstation"
 
 #: ../base/ufos/maps.ufo:3718
 msgid "Luxury House"
-msgstr ""
+msgstr "Luxueus Huis"
 
 #: ../base/ufos/maps.ufo:3829
 #, fuzzy
@@ -2956,7 +2943,7 @@ msgstr "Militair convooi"
 
 #: ../base/ufos/maps.ufo:3930
 msgid "Military Shelter"
-msgstr ""
+msgstr "Militaire Schuilplaats"
 
 #: ../base/ufos/maps.ufo:3985
 #, fuzzy
@@ -2965,11 +2952,11 @@ msgstr "Energievoorziening"
 
 #: ../base/ufos/maps.ufo:4079 ../base/ufos/maps.ufo:4905
 msgid "Office Complex"
-msgstr ""
+msgstr "Kantorencomplex"
 
 #: ../base/ufos/maps.ufo:4134
 msgid "Warehouse"
-msgstr ""
+msgstr "Magazijn"
 
 #: ../base/ufos/maps.ufo:4184
 #, fuzzy
@@ -2997,7 +2984,7 @@ msgstr "UFO crash locatie."
 
 #: ../base/ufos/maps.ufo:4420
 msgid "Hydroelectric Dam"
-msgstr ""
+msgstr "Hydro-elektrische Dam"
 
 #: ../base/ufos/maps.ufo:4473
 #, fuzzy
@@ -3011,7 +2998,7 @@ msgstr "Roteer"
 
 #: ../base/ufos/maps.ufo:4567
 msgid "Archaeological Dig"
-msgstr ""
+msgstr "Archeologische Opgraving"
 
 #: ../base/ufos/maps.ufo:4617
 #, fuzzy
@@ -3025,7 +3012,7 @@ msgstr "UFO crash locatie."
 
 #: ../base/ufos/maps.ufo:4714
 msgid "Secret Depot"
-msgstr ""
+msgstr "Geheime Depot"
 
 #: ../base/ufos/maps.ufo:4762
 #, fuzzy
@@ -3034,11 +3021,11 @@ msgstr "Portland"
 
 #: ../base/ufos/maps.ufo:4808
 msgid "Old Mine"
-msgstr ""
+msgstr "Oude MIjn"
 
 #: ../base/ufos/maps.ufo:4861
 msgid "Residential Neighbourhood"
-msgstr ""
+msgstr "Residentiële Wijk"
 
 #: ../base/ufos/maps.ufo:4998
 #, fuzzy
@@ -3052,7 +3039,7 @@ msgstr "Een luxueus vakantieoord."
 
 #: ../base/ufos/maps.ufo:5091
 msgid "Old Town Center"
-msgstr ""
+msgstr "Oud Dorp Centrum"
 
 #: ../base/ufos/maps.ufo:5143
 #, fuzzy
@@ -3070,7 +3057,7 @@ msgstr "Tankstation"
 
 #: ../base/ufos/maps.ufo:5302
 msgid "Wilderness"
-msgstr ""
+msgstr "Wildernis"
 
 #: ../base/ufos/maps.ufo:5351
 msgid "City High-Rise (MP)"
@@ -4455,7 +4442,7 @@ msgstr ""
 #: ../base/ufos/msgid/weapons.ufo:487 ../base/ufos/msgid/weapons.ufo:495
 #: ../base/ufos/msgid/weapons.ufo:503 ../base/ufos/msgid/weapons.ufo:1887
 msgid "No pre research info available"
-msgstr "<TODO>"
+msgstr "Geen pre onderzoek info beschikbaar"
 
 #: ../base/ufos/msgid/aircraft.ufo:340
 msgid ""
@@ -11927,7 +11914,7 @@ msgstr ""
 
 #: ../base/ufos/msgid/campaigntexts.ufo:10
 msgid "To many people on Earth, it seems like things are going all right."
-msgstr ""
+msgstr "Te veel mensen op Aarde, het lijkt alsof alles in orde is."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:14
 msgid ""
@@ -12494,7 +12481,7 @@ msgstr ""
 
 #: ../base/ufos/msgid/missionbriefing.ufo:2
 msgid "Good luck commander. Bring our soldiers back alive."
-msgstr ""
+msgstr "Veel succes commandant. Breng onze soldaten levend terug."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:5
 #, fuzzy
@@ -21021,6 +21008,11 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Commandant, we hebben nieuwe alien wapens gerecupereerd. Het lijkt een "
+"grotere versie te zijn van de Needler. Laat mijn mannen er alsjeblief zo "
+"snel mogelijk naar kijken.\n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1481
 #, fuzzy
@@ -23061,11 +23053,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:109
 msgid "Basic Concepts (Campaign)"
-msgstr ""
+msgstr "Basis Concepten (Campagne)"
 
 #: ../base/ufos/research.ufo:110
 msgid "Basic Concepts (Ground Combat)"
-msgstr ""
+msgstr "Basis Contepten (Grondgevechten)"
 
 #: ../base/ufos/research.ufo:111
 #, fuzzy
@@ -23152,11 +23144,11 @@ msgstr "Geen reactie vuur"
 
 #: ../base/ufos/research.ufo:186
 msgid "Soldier Weight and Encumbrance"
-msgstr ""
+msgstr "Soldaat  gewicht en ballast"
 
 #: ../base/ufos/research.ufo:194
 msgid "Wounds and Healing"
-msgstr ""
+msgstr "Wonden en Genezing"
 
 #: ../base/ufos/research.ufo:202
 #, fuzzy
@@ -23566,7 +23558,7 @@ msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:97
 msgid "Alexander Tishin (Sandro)"
-msgstr ""
+msgstr "Alexander Tishin (Sandro)"
 
 #: ../base/ufos/seq_credits.ufo:107
 msgid "bayo"
@@ -23574,7 +23566,7 @@ msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:117
 msgid "Christian Hoffmann (crystan)"
-msgstr ""
+msgstr "Christian Hoffmann (crystan)"
 
 #: ../base/ufos/seq_credits.ufo:127
 msgid "DarkRain"
@@ -23586,19 +23578,19 @@ msgstr "Tamas Fehervari (geever)"
 
 #: ../base/ufos/seq_credits.ufo:147
 msgid "Nate Wright (H-Hour)"
-msgstr ""
+msgstr "Nate Wright (H-Hour)"
 
 #: ../base/ufos/seq_credits.ufo:157
 msgid "Pawel Michalkiewicz"
-msgstr ""
+msgstr "Pawel Michalkiewicz"
 
 #: ../base/ufos/seq_credits.ufo:167
 msgid "Holger Gellrich (ShipIt)"
-msgstr ""
+msgstr "Holger Gellrich (ShipIt)"
 
 #: ../base/ufos/seq_credits.ufo:181
 msgid "Other contributors"
-msgstr ""
+msgstr "Andere bijdragers"
 
 #: ../base/ufos/seq_credits.ufo:191
 msgid "Bas Fournier (BTAxis)"
@@ -23615,7 +23607,7 @@ msgstr "Kostia Romanov (Kildor)"
 
 #: ../base/ufos/seq_credits.ufo:221
 msgid "Olivier Alloschery (Kracken)"
-msgstr ""
+msgstr "Olivier Alloschery (Kracken)"
 
 #: ../base/ufos/seq_credits.ufo:231
 msgid "Forest Hale (LordHavoc)"
@@ -23623,7 +23615,7 @@ msgstr "Forest Hale (LordHavoc)"
 
 #: ../base/ufos/seq_credits.ufo:241
 msgid "Christoph Mallon (Tron)"
-msgstr ""
+msgstr "Christoph Mallon (Tron)"
 
 #: ../base/ufos/seq_credits.ufo:251
 msgid "Ryan A. Span. (Winter)"
@@ -23947,19 +23939,19 @@ msgstr "Ares W"
 
 #: ../base/ufos/team_templates.ufo:232
 msgid "Body"
-msgstr ""
+msgstr "Lichaam"
 
 #: ../base/ufos/team_templates.ufo:241
 msgid "Torso"
-msgstr ""
+msgstr "Torso"
 
 #: ../base/ufos/team_templates.ufo:248
 msgid "Legs"
-msgstr ""
+msgstr "Benen"
 
 #: ../base/ufos/team_templates.ufo:255
 msgid "Arms"
-msgstr ""
+msgstr "Armen"
 
 #: ../base/ufos/team_templates.ufo:263
 #, fuzzy
@@ -24155,6 +24147,8 @@ msgid ""
 "Keep soldiers close so that they can support each other. A lone gunner is "
 "easily killed."
 msgstr ""
+"Hou soldaten dicht bij elkaar zodat ze elkaar kunnen helpen. Een eenzame "
+"schutter is makkelijker uit te schakelen."
 
 #: ../base/ufos/tips.ufo:29
 msgid ""
@@ -24974,7 +24968,7 @@ msgstr "Laden"
 
 #: ../base/ufos/ui/campaign.ufo:40
 msgid "Download savegames"
-msgstr ""
+msgstr "Download de opgeslagen spellen"
 
 #: ../base/ufos/ui/campaign.ufo:47 ../base/ufos/ui/campaign.ufo:152
 #: ../base/ufos/ui/lostwon.ufo:36 ../base/ufos/ui/lostwon.ufo:119
@@ -25072,7 +25066,7 @@ msgstr "Beschikbare talen"
 
 #: ../base/ufos/ui/cgame.ufo:93
 msgid "No files uploaded yet"
-msgstr ""
+msgstr "Nog geen bestanden geupload"
 
 #: ../base/ufos/ui/equipment.ufo:42 ../base/ufos/ui/inventory.ufo:37
 #: ../base/ufos/ui/inventory.ufo:45 ../base/ufos/ui/team.ufo:43
@@ -25171,7 +25165,7 @@ msgstr "Hernoem uw eenheid"
 #: ../base/ufos/ui/equipment.ufo:683 ../base/ufos/ui/inventory.ufo:252
 #: ../base/ufos/ui/team.ufo:616
 msgid "0/0 Kg"
-msgstr ""
+msgstr "0/0 Kg"
 
 #: ../base/ufos/ui/equipment.ufo:709 ../base/ufos/ui/team.ufo:633
 msgid "Done"
@@ -25303,7 +25297,7 @@ msgstr "Verwerk de missie automatisch"
 
 #: ../base/ufos/ui/geoscape.ufo:818
 msgid "This kind of mission cannot be done automatically"
-msgstr ""
+msgstr "Deze soort missie kan niet automatisch worden gedaan"
 
 #: ../base/ufos/ui/geoscape.ufo:868
 #: ../base/ufos/ui/popup_installations.ufo:183
@@ -25430,7 +25424,7 @@ msgstr "Doelzoek-Computer"
 
 #: ../base/ufos/ui/hire.ufo:494
 msgid "Evading:"
-msgstr ""
+msgstr "Ontwijken:"
 
 #: ../base/ufos/ui/hire.ufo:519 ../base/ufos/ui/hire.ufo:535
 msgid "Occupation"
@@ -25771,11 +25765,11 @@ msgstr "Verlaat e-mail programma"
 
 #: ../base/ufos/ui/main.ufo:14
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: ../base/ufos/ui/main.ufo:15
 msgid "Like us on facebook"
-msgstr ""
+msgstr "Vind ons leuk op facebook"
 
 #: ../base/ufos/ui/main.ufo:26
 #, fuzzy
@@ -25784,7 +25778,7 @@ msgstr "Sitters"
 
 #: ../base/ufos/ui/main.ufo:27
 msgid "Follow us on twitter"
-msgstr ""
+msgstr "Volg ons op Twitter"
 
 #: ../base/ufos/ui/main.ufo:66
 msgid "Single-player"
@@ -25800,7 +25794,7 @@ msgstr "Instructies"
 
 #: ../base/ufos/ui/main.ufo:91
 msgid "Developers"
-msgstr ""
+msgstr "Ontwikkelaars"
 
 #: ../base/ufos/ui/main.ufo:127
 msgid "Initial settings"
@@ -25897,11 +25891,11 @@ msgstr "Naam van deze basis"
 
 #: ../base/ufos/ui/market.ufo:189
 msgid "Market"
-msgstr ""
+msgstr "Markt"
 
 #: ../base/ufos/ui/market.ufo:190
 msgid "Number of such items on the market"
-msgstr ""
+msgstr "Aantal van zo'n artikelen op de markt"
 
 #: ../base/ufos/ui/market.ufo:197
 #, fuzzy
@@ -25928,7 +25922,7 @@ msgstr "Basis capaciteit"
 #: ../base/ufos/ui/popup_installations.ufo:888
 #: ../base/ufos/ui/production.ufo:123 ../base/ufos/ui/transfer.ufo:367
 msgid "free"
-msgstr ""
+msgstr "gratis"
 
 #: ../base/ufos/ui/market.ufo:327 ../base/ufos/ui/popup_capacity.ufo:51
 #: ../base/ufos/ui/production.ufo:130 ../base/ufos/ui/research.ufo:308
@@ -26299,7 +26293,7 @@ msgstr "Bent u klaar?"
 
 #: ../base/ufos/ui/multiplayer.ufo:1291
 msgid "Admin control"
-msgstr ""
+msgstr "Admin control"
 
 #: ../base/ufos/ui/multiplayer.ufo:1347
 #, fuzzy
@@ -26317,7 +26311,7 @@ msgstr "Start het spel, zelfs als niet alle teams verbonden zijn"
 
 #: ../base/ufos/ui/multiplayer.ufo:1391
 msgid "Remote Admin Control"
-msgstr ""
+msgstr "Remote Admin Control"
 
 #: ../base/ufos/ui/multiplayer.ufo:1429
 msgid "Invite others"
@@ -26409,7 +26403,7 @@ msgstr "Beschikbare talen"
 
 #: ../base/ufos/ui/options.ufo:203
 msgid "Mods"
-msgstr ""
+msgstr "Mods"
 
 #: ../base/ufos/ui/options.ufo:210
 #, fuzzy
@@ -26437,7 +26431,7 @@ msgstr "Hulpballonnen:"
 
 #: ../base/ufos/ui/options.ufo:277
 msgid "Show cursor tooltips in tactical mode."
-msgstr ""
+msgstr "Toon cursor tips in tactische modus."
 
 #: ../base/ufos/ui/options.ufo:278
 #, fuzzy
@@ -26514,7 +26508,7 @@ msgstr "Rek het scherm op met een verhouding van 4:3:"
 
 #: ../base/ufos/ui/options.ufo:506
 msgid "Prevent the mousepointer from leaving the game window."
-msgstr ""
+msgstr "Voorkom dat de muis het spelscherm kan verlaten."
 
 #: ../base/ufos/ui/options.ufo:507
 msgid "Hint: Press CTRL+G to grab/release the mousepointer."
@@ -26737,7 +26731,7 @@ msgstr "Deactiveer alles"
 
 #: ../base/ufos/ui/options.ufo:879
 msgid "Low quality"
-msgstr ""
+msgstr "Lage kwaliteit"
 
 #: ../base/ufos/ui/options.ufo:884
 #, fuzzy
@@ -26891,7 +26885,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1150
 msgid "Intel Graphics Hardware Hack:"
-msgstr ""
+msgstr "Intel Graphics Hardware Hack:"
 
 #: ../base/ufos/ui/options.ufo:1156
 msgid ""
@@ -27241,7 +27235,7 @@ msgstr "Menu"
 
 #: ../base/ufos/ui/options.ufo:2030
 msgid "Global"
-msgstr ""
+msgstr "Globaal:"
 
 #: ../base/ufos/ui/options.ufo:2034
 #, fuzzy
@@ -27344,9 +27338,8 @@ msgstr "Hernoem installatie"
 
 #: ../base/ufos/ui/popup_installations.ufo:512
 #: ../base/ufos/ui/popup_installations.ufo:626
-#, fuzzy
 msgid "Location:"
-msgstr "Land:"
+msgstr "Locatie:"
 
 #: ../base/ufos/ui/popup_installations.ufo:538
 #, fuzzy
@@ -27355,7 +27348,7 @@ msgstr "Basis capaciteit"
 
 #: ../base/ufos/ui/popup_installations.ufo:550
 msgid "Free Space:"
-msgstr ""
+msgstr "Vrije Ruimte:"
 
 #: ../base/ufos/ui/popup_installations.ufo:562
 #: ../base/ufos/ui/popup_installations.ufo:662
@@ -27711,7 +27704,7 @@ msgstr "Naar:"
 
 #: ../base/ufos/ui/transfer.ufo:279
 msgid "Cargo"
-msgstr ""
+msgstr "Cargo"
 
 #: ../base/ufos/ui/transfer.ufo:287
 #: client/cgame/campaign/cp_base_callbacks.cpp:840
@@ -27793,7 +27786,7 @@ msgstr "Benodigdheden:"
 #: ../base/ufos/ui/web.ufo:10 ../base/ufos/ui/web.ufo:64
 #: ../base/ufos/ui/web.ufo:69
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 #: ../base/ufos/ui/web.ufo:37
 #, fuzzy
@@ -27806,7 +27799,7 @@ msgstr "EHBO koffer"
 
 #: ../base/ufos/weapons.ufo:28
 msgid "First Aid"
-msgstr ""
+msgstr "Eerste hulp"
 
 #: ../base/ufos/weapons.ufo:44
 #, fuzzy
@@ -28329,7 +28322,7 @@ msgstr "U kunt dit onbekende onderdeel niet herladen.\n"
 #: client/battlescape/cl_actor.cpp:1060 client/cl_inventory.cpp:76
 #: game/g_actor.cpp:576
 msgid "This soldier can not carry anything else."
-msgstr ""
+msgstr "Deze soldaat kan niet anders meer dragen."
 
 #: client/battlescape/cl_actor.cpp:1060 client/battlescape/cl_hud.cpp:1381
 #: client/cl_inventory.cpp:76 client/cl_inventory_callbacks.cpp:382
@@ -28582,7 +28575,7 @@ msgstr "Kruissnelheid"
 
 #: client/battlescape/cl_hud.cpp:1295
 msgid "movement speed"
-msgstr ""
+msgstr "bewegingssnelheid"
 
 #: client/battlescape/cl_hud.cpp:1297
 #, fuzzy
@@ -28619,10 +28612,13 @@ msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
 msgstr ""
+"Deze soldaat heeft niet langer genoeg TU's om de volgende items te "
+"gebruiken:\n"
+"\n"
 
 #: client/battlescape/cl_hud.cpp:1385 client/cl_inventory_callbacks.cpp:386
 msgid "Kg"
-msgstr ""
+msgstr "Kg"
 
 #: client/battlescape/cl_hud.cpp:1404
 msgid "Currently panics!\n"
@@ -29509,16 +29505,16 @@ msgstr "Bouw eerst een %s."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:860
 msgid "No report"
-msgstr ""
+msgstr "Geen rapport"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 #: client/cgame/campaign/cp_base_callbacks.cpp:877
 msgid "Percent"
-msgstr ""
+msgstr "Percent"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:863
 msgid "Quantity"
-msgstr ""
+msgstr "Kwantiteit"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:873
 #: client/cgame/campaign/cp_base_callbacks.cpp:888
@@ -30747,7 +30743,7 @@ msgstr ""
 #: client/cgame/campaign/cp_produce_callbacks.cpp:699
 #, c-format
 msgid "Work begun on %s"
-msgstr ""
+msgstr "Werk begonnen op %s"
 
 #: client/cgame/campaign/cp_produce_callbacks.cpp:700
 msgid "Production started"
@@ -31463,7 +31459,7 @@ msgstr "UFO - Vliegdekschip"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:64
 msgid "Wait"
-msgstr ""
+msgstr "Wachten"
 
 #: client/cgame/campaign/missions/cp_mission_ufocarrier.cpp:65
 #, fuzzy
@@ -31673,6 +31669,12 @@ msgid ""
 "%i of %i team members survived, %i lost in action, %i friendly fire loses.\n"
 "%i of %i civilians saved, %i civilian loses, %i friendly fire loses."
 msgstr ""
+"\n"
+"%i of %i vijanden gedood, %i verdoofd, %i overleefd.\n"
+"%i of %i teamleden overleefd, %i verloren in actie, %i verliezen door "
+"vriendschappelijk vuur.\n"
+"%i of %i burgers gered, %i burgers verloren, %i verliezen door "
+"vriendschappelijk vuur."
 
 #: client/cgame/skirmish/cl_game_skirmish.cpp:221
 msgid "Congratulations"
@@ -33347,8 +33349,8 @@ msgstr "Maak een schermafdruk"
 #~ "Use a fast soldier with pistols, one handed melee weapons, grenades, "
 #~ "flashbangs and medikits as a medic."
 #~ msgstr ""
-#~ "Gebruik een snelle soldaat met pistolen, enkelhandige steekwapens, (flits)"
-#~ "granaten en EHBO koffer als veldarts."
+#~ "Gebruik een snelle soldaat met pistolen, enkelhandige steekwapens, "
+#~ "(flits)granaten en EHBO koffer als veldarts."
 
 #~ msgid ""
 #~ "Plasma grenades do the most damage, while frag grenades have a slightly "

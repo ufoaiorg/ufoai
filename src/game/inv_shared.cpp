@@ -202,11 +202,10 @@ static bool INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int 
  */
 static bool INVSH_ShapeCheckPosition (const Item* item, const int x, const int y)
 {
-	uint32_t shape;
-
 	assert(item);
 
 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
+	uint32_t shape;
 	if (item->rotated) {
 		shape = item->def()->getShapeRotated();
 	} else {
@@ -340,10 +339,9 @@ const implantDef_t* INVSH_GetImplantByID (const char* id)
  */
 const invDef_t* INVSH_GetInventoryDefinitionByID (const char* id)
 {
-	containerIndex_t i;
-	const invDef_t* container;
+	const invDef_t* container = CSI->ids;
 
-	for (i = 0, container = CSI->ids; i < CID_MAX; ++container, ++i)
+	for (containerIndex_t i = 0; i < CID_MAX; ++container, ++i)
 		if (Q_streq(id, container->name))
 			return container;
 
@@ -415,14 +413,13 @@ void INVSH_MergeShapes (uint32_t* shape, const uint32_t itemShape, const int x, 
  */
 bool INVSH_CheckShape (const uint32_t* shape, const int x, const int y)
 {
-	const uint32_t row = shape[y];
-	const int position = powf(2.0f, (float)x);
-
 	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0) {
 		Com_Printf("INVSH_CheckShape: Bad x or y value: (x=%i, y=%i)\n", x, y);
 		return false;
 	}
 
+	const uint32_t row = shape[y];
+	const int position = powf(2.0f, (float)x);
 	if ((row & position) == 0)
 		return false;
 
@@ -474,12 +471,11 @@ static uint32_t INVSH_ShapeSetBit (uint32_t shape, const int x, const int y)
  */
 uint32_t objDef_t::getShapeRotated () const
 {
-	int h, w;
 	uint32_t shapeNew = 0;
 	int maxWidth = -1;
 
-	for (w = SHAPE_SMALL_MAX_WIDTH - 1; w >= 0; w--) {
-		for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
+	for (int w = SHAPE_SMALL_MAX_WIDTH - 1; w >= 0; w--) {
+		for (int h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
 			if (!INVSH_CheckShapeSmall(shape, w, h))
 				continue;
 			if (w >= SHAPE_SMALL_MAX_HEIGHT) {
@@ -560,10 +556,8 @@ bool Item::isSameAs (const Item* const other) const
  */
 void Item::getFirstShapePosition (int* const x, int* const y) const
 {
-	int tempX, tempY;
-
-	for (tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
-		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
+	for (int tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
+		for (int tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
 			if (INVSH_ShapeCheckPosition(this, this->getX() + tempX, this->getY() + tempY)) {
 				*x = tempX;
 				*y = tempY;
@@ -630,7 +624,7 @@ const fireDef_t* Item::getSlowestFireDef () const
 const fireDef_t* Item::getFastestFireDef () const
 {
 	const fireDef_t* fdArray = getFiredefs();
-	int fdCount = getNumFiredefs();
+	const int fdCount = getNumFiredefs();
 	int fastestTime = 999;
 	int fastest = -1;
 
@@ -769,7 +763,6 @@ int Inventory::countItems () const
  */
 int Inventory::canHoldItem (const invDef_t* container, const objDef_t* od, const int x, const int y, const Item* ignoredItem) const
 {
-	int fits;
 	assert(container);
 	assert(od);
 
@@ -814,7 +807,7 @@ int Inventory::canHoldItem (const invDef_t* container, const objDef_t* od, const
 			/* There is already an item. */
 			return INV_DOES_NOT_FIT;
 		} else {
-			fits = INV_DOES_NOT_FIT; /* equals 0 */
+			int fits = INV_DOES_NOT_FIT; /* equals 0 */
 
 			if (INVSH_CheckToInventory_shape(this, container, od->shape, x, y, ignoredItem))
 				fits |= INV_FITS;
@@ -834,7 +827,7 @@ int Inventory::canHoldItem (const invDef_t* container, const objDef_t* od, const
 		return INV_FITS;
 
 	/* Check 'grid' containers. */
-	fits = INV_DOES_NOT_FIT; /* equals 0 */
+	int fits = INV_DOES_NOT_FIT; /* equals 0 */
 	if (INVSH_CheckToInventory_shape(this, container, od->shape, x, y, ignoredItem))
 		fits |= INV_FITS;
 	/** @todo aren't both (equip and floor) temp container? */

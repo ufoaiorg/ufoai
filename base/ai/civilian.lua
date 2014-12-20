@@ -20,11 +20,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 local ailc = { }
 
 function ailc.tustouse ()
-	return ai.actor():TU() - 4
+	return ai.actor():TU() - 3
 end
 
 function ailc.flee()
-	local flee_pos = ai.positionflee()
+	local flee_pos = ai.positionflee(ailc.tustouse())
 	if flee_pos then
 		return flee_pos:goto()
 	end
@@ -32,7 +32,7 @@ function ailc.flee()
 end
 
 function ailc.hide (team)
-	local hide_pos = ai.positionhide(team)
+	local hide_pos = ai.positionhide(team, ailc.tustouse())
 	if hide_pos then
 		return hide_pos:goto()
 	end
@@ -42,7 +42,7 @@ end
 function ailc.herd (targets)
 	if #targets > 0 then
 		for i = 1, #targets do
-			local herd_pos = ai.positionherd(targets[i])
+			local herd_pos = ai.positionherd(targets[i], ailc.tustouse())
 			if herd_pos then
 				return herd_pos:goto()
 			end
@@ -80,7 +80,7 @@ function ailc.route (waypoints)
 end
 
 function ailc.wander ()
-	local next_pos = ai.positionwander("rand", (ai.actor():TU() + 1) / 6)
+	local next_pos = ai.positionwander("rand", (ai.actor():TU() + 1) / 6, ai.actor():pos(), ailc.tustouse())
 	if next_pos then
 		next_pos:goto()
 	end
@@ -89,7 +89,7 @@ end
 function ailc.think_nf ()
 	local aliens = ai.see("sight", "alien")
 	if #aliens > 0 then
-		if not ailc.hide(aliens[1]:team()) then
+		if not ailc.hide("alien") then
 			ailc.flee()
 		end
 	else
@@ -120,7 +120,7 @@ end
 
 function ailc.think ()
 	if ai.actor():morale() ~= "normal" then
-		if not ailc.hide() then
+		if not ailc.hide("~civilian") then
 			ailc.flee()
 		end
 	else
