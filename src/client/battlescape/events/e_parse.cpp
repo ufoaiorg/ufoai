@@ -158,7 +158,9 @@ static bool CL_DelayBattlescapeEvent (int now, void* data)
 		return false;
 	const evTimes_t* event = (evTimes_t*)data;
 	const eventRegister_t* eventData = CL_GetEvent(event->eType);
+#ifdef PARANOID
 	Com_DPrintf(DEBUG_EVENTSYS, "delay event %p type %s from %i\n", (const void*)event, eventData->name, now);
+#endif
 	return true;
 }
 
