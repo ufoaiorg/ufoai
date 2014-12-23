@@ -1694,14 +1694,20 @@ static int AIL_positionmission (lua_State* L)
 		lua_pushboolean(L, 0);
 		return 1;
 	}
-
-	G_MoveCalc(0, AIL_ent, AIL_ent->pos, AIL_ent->getUsableTUs());
+	const pos3_t* target = lua_topos3(L, 1);
+	int tus = AIL_ent->getUsableTUs();
+	if (lua_gettop(L) > 1) {
+		if (lua_isnumber(L, 2))
+			tus = lua_tonumber(L, 2);
+		else
+			AIL_invalidparameter(2);
+	}
+	G_MoveCalc(0, AIL_ent, AIL_ent->pos, tus);
 	gi.MoveStore(level.pathingMap);
 
 	pos3_t oldPos;
 	VectorCopy(AIL_ent->pos, oldPos);
-	pos3_t* target = lua_topos3(L, 1);
-	if (AI_FindMissionLocation(AIL_ent, *target))
+	if (AI_FindMissionLocation(AIL_ent, *target, tus))
 		lua_pushpos3(L, &AIL_ent->pos);
 	else
 		lua_pushboolean(L, 0);

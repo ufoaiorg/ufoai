@@ -66,7 +66,7 @@ end
 function ailc.route (waypoints)
 	if #waypoints > 0 then
 		for i = 1, #waypoints do
-			local target_pos = ai.positionmission(waypoints[i])
+			local target_pos = ai.positionmission(waypoints[i], ailc.tustouse())
 			if target_pos then
 				if target_pos:goto() then
 					ai.setwaypoint(waypoints[i])

@@ -109,7 +109,7 @@ function ails.search ()
 	local found
 	if #targets > 0 then
 		for i = 1, #targets do
-			local target_pos = ai.positionmission(targets[i])
+			local target_pos = ai.positionmission(targets[i], ails.tustouse())
 			if target_pos then
 				return target_pos:goto()
 			end
