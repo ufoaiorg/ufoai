@@ -60,7 +60,7 @@ function ails.herd ()
 end
 
 function ails.shield ()
-	local civs = ai.see(ails.param.vis, "phalanx", "path")
+	local civs = ai.see(ails.param.vis, "civilian", "HP")
 	if #civs > 0 then
 		for i = 1, #civs do
 			local herd_pos = ai.positionherd(civs[i], ails.tustouse(), true)
