@@ -1693,9 +1693,7 @@ static void AI_ActorThink (Player& player, Actor* actor)
 
 void AI_ActorRun (Player& player, Actor* actor)
 {
-	/* Human players' actors don't have a loaded LUA script,
-	 * so don't try to run them with the LUA AI */
-	if (g_ailua->integer && !Q_strnull(actor->AI.type))
+	if (g_ailua->integer)
 		AIL_ActorThink(player, actor);
 	else
 		AI_ActorThink(player, actor);
