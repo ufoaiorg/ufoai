@@ -1312,8 +1312,7 @@ static void HUD_ActorWoundData_f (void)
 		return;
 
 	woundInfo_t* wounds = &selActor->wounds;
-	const character_t* chr = CL_ActorGetChr(selActor);
-	const BodyData* bodyData = chr->teamDef->bodyTemplate;
+	const BodyData* bodyData = selActor->teamDef->bodyTemplate;
 
 	for (int bodyPart = 0; bodyPart < bodyData->numBodyParts(); ++bodyPart) {
 		const int woundThreshold = selActor->maxHP * bodyData->woundThreshold(bodyPart);
@@ -1323,7 +1322,7 @@ static void HUD_ActorWoundData_f (void)
 								 ? bodyData->bleedingFactor(bodyPart) : 0);
 			char text[256];
 
-			Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(chr->teamDef) ?
+			Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(selActor->teamDef) ?
 					_("Damaged %s (deterioration: %i)\n") : _("Wounded %s (bleeding: %i)\n"), _(bodyData->name(bodyPart)), bleeding);
 			for (int penalty = MODIFIER_ACCURACY; penalty < MODIFIER_MAX; penalty++)
 				if (bodyData->penalty(bodyPart, static_cast<modifier_types_t>(penalty)) != 0)
