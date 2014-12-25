@@ -1254,6 +1254,13 @@ window hud_default extends hud
 		cmd "show_oweapon;"
 	}
 
+	confunc huddisable {
+		cmd "updateactorvalues <1> \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\";"
+		*node:root.soldier.squad.sld<1>@bgcolor = "0 0.1 0 0.7"
+		*node:root.soldier.squad.sld<1>@onMouseEnter = { }
+		*node:root.soldier.squad.sld<1>@onMouseLeave = { }
+	}
+
 	string overlay
 	{
 		string  "_Please wait"
@@ -1306,6 +1313,20 @@ window hud_default extends hud
 	confunc updateLevelStatus {
 		if (<1> == 1) {
 			cmd "lvlchange 0;"
+		}
+	}
+
+	confunc updateactorstatus {
+		if ( <2> eq "bleeding" ) {
+			if ( <3> != 0 ) {
+				*node:root.soldier.squad.sld<1>@bgcolor = "0.7 0.1 0 0.7"
+				*node:root.soldier.squad.sld<1>@onMouseEnter = { *node:this@bgcolor = "0.9 0 0 1" }
+				*node:root.soldier.squad.sld<1>@onMouseLeave = { *node:this@bgcolor = "0.7 0.1 0 0.7" }
+			} else {
+				*node:root.soldier.squad.sld<1>@bgcolor = "0 0.1 0 0.7"
+				*node:root.soldier.squad.sld<1>@onMouseEnter = { *node:this@bgcolor = "0 0 0 1" }
+				*node:root.soldier.squad.sld<1>@onMouseLeave = { *node:this@bgcolor = "0 0.1 0 0.7" }
+			}
 		}
 	}
 

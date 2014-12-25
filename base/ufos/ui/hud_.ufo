@@ -284,6 +284,13 @@ window hud extends levelbuttons {
 		*cvar:mn_soldier<1>_tt = "<10>"
 	}
 
+	/**
+	 * @param <1> The id of the soldier (starting at 0)
+	 * @param <2> The status type
+	 * @param <3> The value of the status
+	 */
+	confunc updateactorstatus { }
+
 	confunc clean_firemode_entries {
 		call *node:root.firemodes.dock@removeAllChild
 	}

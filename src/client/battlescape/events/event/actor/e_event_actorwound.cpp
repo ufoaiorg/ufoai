@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../client.h"
 #include "../../../cl_actor.h"
 #include "../../../cl_hud.h"
+#include "../../../../ui/ui_main.h"
 #include "e_event_actorwound.h"
 
 /**
@@ -51,8 +52,9 @@ void CL_ActorWound (const eventRegister_t* self, dbuffer* msg)
 		return;
 	}
 
+	const BodyData* const bodyData = le->teamDef->bodyTemplate;
 	if (le->wounds.woundLevel[bodyPart] < wounds && wounds > le->maxHP *
-			le->teamDef->bodyTemplate->woundThreshold(bodyPart) && !LE_IsDead(le)) {
+			bodyData->woundThreshold(bodyPart) && !LE_IsDead(le)) {
 		const character_t* chr = CL_ActorGetChr(le);
 		char tmpbuf[128];
 		Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s has been wounded"), chr->name);
@@ -60,4 +62,12 @@ void CL_ActorWound (const eventRegister_t* self, dbuffer* msg)
 	}
 	le->wounds.woundLevel[bodyPart] = wounds;
 	le->wounds.treatmentLevel[bodyPart] = treatment;
+	const int actorIdx = CL_ActorGetNumber(le);
+	if (actorIdx < 0)
+		return;
+
+	/* Update bleeding status */
+	const int bleeding = (wounds > le->maxHP * bodyData->woundThreshold(bodyPart)
+			? static_cast<int>(wounds * bodyData->bleedingFactor(bodyPart)) : 0);
+	UI_ExecuteConfunc("updateactorstatus %i %s %i", actorIdx, "bleeding", bleeding);
 }
