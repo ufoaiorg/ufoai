@@ -14,7 +14,6 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
-				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add option="-O2" />
@@ -50,7 +49,6 @@
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
 				<Option parameters="--only-ScriptsTests" />
-				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add option="-pg" />
@@ -104,7 +102,7 @@
 			<Add option="-DHARD_LINKED_CGAME" />
 			<Add directory="../../src/libs/mxml/" />
 			<Add directory="../../src/libs/gtest/include/" />
-			<Add directory="../../src/libs/gtest/src/" />
+			<Add directory="../../src/libs/gtest/" />
 			<Add directory="../../src/libs/mumble/" />
 		</Compiler>
 		<Linker>
@@ -486,7 +484,7 @@
 		<Unit filename="../../src/game/q_shared.cpp" />
 		<Unit filename="../../src/game/q_shared.h" />
 		<Unit filename="../../src/game/srvedict.h" />
-		<Unit filename="../../src/libs/gtest/gtest/gtest-all.cc" />
+		<Unit filename="../../src/libs/gtest/src/gtest-all.cc" />
 		<Unit filename="../../src/libs/lua/lapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -683,7 +681,6 @@
 		<Unit filename="../../src/tests/test_inventory.cpp" />
 		<Unit filename="../../src/tests/test_inventory.h" />
 		<Unit filename="../../src/tests/test_mapdef.cpp" />
-		<Unit filename="../../src/tests/test_mathlibextra.cpp" />
 		<Unit filename="../../src/tests/test_parser.cpp" />
 		<Unit filename="../../src/tests/test_parser.h" />
 		<Unit filename="../../src/tests/test_particles.cpp" />
