@@ -145,8 +145,8 @@ static void G_KillTeam_f (void)
 
 	Com_DPrintf(DEBUG_GAME, "G_KillTeam: kill team %i\n", teamToKill);
 
-	Actor* actor = nullptr;
 	if (teamToKill >= 0) {
+		Actor* actor = nullptr;
 		while ((actor = G_EdictsGetNextLivingActorOfTeam(actor, teamToKill))) {
 			if (amount == 0)
 				break;
