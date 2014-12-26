@@ -1045,7 +1045,7 @@ void HUD_UpdateCursor (void)
 		}
 
 		/* Height of 'crouched' icon. */
-		iconOffsetY += 16;
+		iconOffsetY += iconH;
 		iconOffsetY += iconSpacing;
 
 		/* Display 'Reaction shot' icon if actor has it activated. */
@@ -1057,9 +1057,10 @@ void HUD_UpdateCursor (void)
 		if (image)
 			R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, image);
 
-		/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
+		/* Height of 'reaction fire' icon. ... in case we add further icons below.
 		iconOffsetY += iconH;
 		iconOffsetY += iconSpacing;
+		*/
 
 		/* Display weaponmode (text) heR_ */
 		HUD_DrawMouseCursorText(iconOffsetX + iconW, -10, TEXT_MOUSECURSOR_RIGHT);
