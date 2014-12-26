@@ -335,7 +335,7 @@ static void R_LoadObjModel_ (model_t* mod, mobj_t* obj, const byte* buffer, int 
 		}
 
 		if (c[0] == '\r' || c[0] == '\n') {
-			line[i++] = 0;
+			line[i] = 0;
 			i = 0;
 
 			if (!comment)

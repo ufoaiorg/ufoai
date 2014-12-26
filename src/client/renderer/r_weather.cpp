@@ -164,7 +164,6 @@ Weather::~Weather ()
 void Weather::update (int milliseconds)
 {
 	size_t dead = 0;
-	int debugCreated = 0;
 	/* physics: check for ttl and move live particles */
 	for (size_t i = 0; i < Weather::MAX_PARTICLES; i++) {
 		Weather::particle &prt = particles[i];
@@ -212,6 +211,7 @@ void Weather::update (int milliseconds)
 
 		if (dead > 200) dead = 200; /* avoid creating too much particles in the single frame, it could kill the low-end hardware */
 
+		int debugCreated = 0;
 		for (size_t i = 0; dead &&  i < Weather::MAX_PARTICLES && i < weatherStrength * Weather::MAX_PARTICLES; i++) {
 			Weather::particle &prt = particles[i];
 			if (prt.ttl >= 0)

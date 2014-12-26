@@ -440,7 +440,6 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 	const vec4_t ambientLightColor = { ambient + 0.2f, ambient + 0.2f, ambient + 0.2f, ambient + 0.2f };
 	/* billboard textures */
 	image_t* starfield;
-	image_t* halo;
 	image_t* sun;
 	image_t* sunOverlay;
 
@@ -628,7 +627,7 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 		r_globeEarthAtmosphere.glslProgram = r_state.atmosphere_program;
 		R_SphereRender(&r_globeEarthAtmosphere, earthPos, rotate, fullscale, sunPos);
 	} else {
-		halo = R_FindImage("pics/geoscape/map_earth_halo", it_pic);
+		image_t* halo = R_FindImage("pics/geoscape/map_earth_halo", it_pic);
 		if (halo != r_noTexture) {
 			/** @todo Replace this magic number with some speaking constant */
 			const float earthSizeX = fullscale * 20500.0f * viddef.rx;
