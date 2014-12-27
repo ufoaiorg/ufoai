@@ -81,6 +81,11 @@ typedef enum {
 	AILSP_FAR		/* Farthest from target (within weapon's range) */
 } ailShootPosType_t;
 
+typedef enum {
+	AILPW_RAND,		/* Wander randomly */
+	AILPW_CW,		/* Move clockwise */
+	AILPW_CCW		/* Move counter-clockwise */
+} ailWanderPosType;
 /*
  * Helper functions
  */
@@ -1738,11 +1743,11 @@ static int AIL_positionwander (lua_State* L)
 		if (lua_isstring(L, 1)) {
 			const char* s = lua_tostring(L, 1);
 			if (Q_streq(s, "rand"))
-				method = 0;
+				method = AILPW_RAND;
 			else if (Q_streq(s, "CW"))
-				method = 1;
+				method = AILPW_CW;
 			else if (Q_streq(s, "CCW"))
-				method = 2;
+				method = AILPW_CCW;
 			else
 				AIL_invalidparameter(1);
 		} else
@@ -1784,15 +1789,15 @@ static int AIL_positionwander (lua_State* L)
 			continue;
 		float score = 0.0f;
 		switch (method) {
-		case 0:
+		case AILPW_RAND:
 			score = rand();
 			break;
-		case 1:
-		case 2: {
+		case AILPW_CW:
+		case AILPW_CCW: {
 			score = VectorDistSqr(center, pos);
 			VectorSubtract(pos, center, d);
 			int dir = AngleToDir(static_cast<int>(atan2(d[1], d[0]) * todeg));
-			if (!(method == 1 && dir == dvright[cDir]) && !(method == 2 && dir == dvleft[cDir]))
+			if (!(method == AILPW_CW && dir == dvright[cDir]) && !(method == AILPW_CCW && dir == dvleft[cDir]))
 				for (int n = 1; n < 8; ++n) {
 					dir = method == 1 ? dvleft[dir] : dvright[dir];
 					score /= pow(n * 2, 2);
