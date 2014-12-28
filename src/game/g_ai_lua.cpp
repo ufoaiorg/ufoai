@@ -118,6 +118,14 @@ static int AIL_toTeamInt (const char* team)
 	return teamInt;
 }
 
+static int AIL_toVisInt (const char* team, const int param)
+{
+	int visInt = AILVT_ALL;
+	if (!gi.GetConstIntFromNamespace("luaaivis", team, &visInt))
+		AIL_invalidparameter(param);
+	return visInt;
+}
+
 /**
  * @brief Wrapper around edict.
  */
@@ -950,16 +958,7 @@ static int AIL_see (lua_State* L)
 		/* Get what to "see" with. */
 		if (lua_isstring(L, 1)) {
 			const char* s = lua_tostring(L, 1);
-			if (Q_streq(s, "all"))
-				vision = AILVT_ALL;
-			else if (Q_streq(s, "sight"))
-				vision = AILVT_SIGHT;
-			else if (Q_streq(s, "team"))
-				vision = AILVT_TEAM;
-			else if (Q_streq(s, "extra"))
-				vision = AILVT_DIST;
-			else
-				AIL_invalidparameter(1);
+			vision = AIL_toVisInt(s, 1);
 		} else
 			AIL_invalidparameter(1);
 
@@ -1508,14 +1507,7 @@ static int AIL_missiontargets (lua_State* L)
 		/* Get what to "see" with. */
 		if (lua_isstring(L, 1)) {
 			const char* s = lua_tostring(L, 1);
-			if (Q_streq(s, "all"))
-				vision = AILVT_ALL;
-			else if (Q_streq(s, "sight"))
-				vision = AILVT_SIGHT;
-			else if (Q_streq(s, "extra"))
-				vision = AILVT_DIST;
-			else
-				AIL_invalidparameter(1);
+			vision = AIL_toVisInt(s, 1);
 		} else
 			AIL_invalidparameter(1);
 
@@ -2135,6 +2127,11 @@ void AIL_Init (void)
 	gi.RegisterConstInt("luaaiteam::alien", TEAM_ALIEN);
 	gi.RegisterConstInt("luaaiteam::all", TEAM_ALL);
 
+	gi.RegisterConstInt("luaaivis::all", AILVT_ALL);
+	gi.RegisterConstInt("luaaivis::sight", AILVT_SIGHT);
+	gi.RegisterConstInt("luaaivis::team", AILVT_TEAM);
+	gi.RegisterConstInt("luaaivis::extra", AILVT_DIST);
+
 	ailState = nullptr;
 }
 
@@ -2144,6 +2141,11 @@ void AIL_Shutdown (void)
 	gi.UnregisterConstVariable("luaaiteam::civilian");
 	gi.UnregisterConstVariable("luaaiteam::alien");
 	gi.UnregisterConstVariable("luaaiteam::all");
+
+	gi.UnregisterConstVariable("luaaivis::all");
+	gi.UnregisterConstVariable("luaaivis::sight");
+	gi.UnregisterConstVariable("luaaivis::team");
+	gi.UnregisterConstVariable("luaaivis::extra");
 }
 
 /**
