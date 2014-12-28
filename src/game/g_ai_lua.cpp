@@ -153,6 +153,14 @@ static ailShootPosType_t AIL_toShotPInt (const char* team, const int param)
 	return static_cast<ailShootPosType_t> (spInt);
 }
 
+static ailWanderPosType AIL_toWanderPInt (const char* team, const int param)
+{
+	int wpInt = AILPW_RAND;
+	if (!gi.GetConstIntFromNamespace("luaawander", team, &wpInt))
+		AIL_invalidparameter(param);
+	return static_cast<ailWanderPosType> (wpInt);
+}
+
 /**
  * @brief Wrapper around edict.
  */
@@ -1725,21 +1733,14 @@ static int AIL_positionwander (lua_State* L)
 	int radius = (AIL_ent->getUsableTUs() + 1) / TU_MOVE_STRAIGHT;
 	pos3_t center;
 	VectorCopy(AIL_ent->pos, center);
-	int method = 0;
+	int method = AILPW_RAND;
 	int tus = AIL_ent->getUsableTUs();
 
 	/* Check parameters */
 	if (lua_gettop(L) > 0) {
 		if (lua_isstring(L, 1)) {
 			const char* s = lua_tostring(L, 1);
-			if (Q_streq(s, "rand"))
-				method = AILPW_RAND;
-			else if (Q_streq(s, "CW"))
-				method = AILPW_CW;
-			else if (Q_streq(s, "CCW"))
-				method = AILPW_CCW;
-			else
-				AIL_invalidparameter(1);
+			method = AIL_toWanderPInt(s, 1);
 		} else
 			AIL_invalidparameter(1);
 	}
@@ -2138,6 +2139,10 @@ void AIL_Init (void)
 	gi.RegisterConstInt("luaaishot::near", AILSP_NEAR);
 	gi.RegisterConstInt("luaaishot::far", AILSP_FAR);
 
+	gi.RegisterConstInt("luaaiwander::rand", AILPW_RAND);
+	gi.RegisterConstInt("luaaiwander::CW", AILPW_CW);
+	gi.RegisterConstInt("luaaiwander::CCW", AILPW_CCW);
+
 	ailState = nullptr;
 }
 
@@ -2160,6 +2165,10 @@ void AIL_Shutdown (void)
 	gi.UnregisterConstVariable("luaaishot::fast");
 	gi.UnregisterConstVariable("luaaishot::near");
 	gi.UnregisterConstVariable("luaaishot::far");
+
+	gi.UnregisterConstVariable("luaaiwander::rand");
+	gi.UnregisterConstVariable("luaaiwander::CW");
+	gi.UnregisterConstVariable("luaaiwander::CCW");
 }
 
 /**
