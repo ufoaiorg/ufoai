@@ -118,12 +118,12 @@ static int AIL_toTeamInt (const char* team)
 	return teamInt;
 }
 
-static int AIL_toVisInt (const char* team, const int param)
+static ailVisType_t AIL_toVisInt (const char* team, const int param)
 {
 	int visInt = AILVT_ALL;
 	if (!gi.GetConstIntFromNamespace("luaaivis", team, &visInt))
 		AIL_invalidparameter(param);
-	return visInt;
+	return static_cast<ailVisType_t> (visInt);
 }
 
 /**
