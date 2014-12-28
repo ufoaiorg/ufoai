@@ -110,11 +110,11 @@ static const char* AIL_toTeamString (const int team)
  * @return The integer representation of the given team string
  * @sa AIL_Init
  */
-static int AIL_toTeamInt (const char* team)
+static int AIL_toTeamInt (const char* team, const int param)
 {
 	int teamInt = TEAM_DEFAULT;
 	if (!gi.GetConstIntFromNamespace("luaaiteam", team, &teamInt))
-		AIL_invalidparameter(1);
+		AIL_invalidparameter(param);
 	return teamInt;
 }
 
@@ -970,7 +970,7 @@ static int AIL_see (lua_State* L)
 					invTeam = true;
 					++s;
 				}
-				team = AIL_toTeamInt(s);
+				team = AIL_toTeamInt(s, 2);
 				/* Trying to see no one? */
 				if (team == TEAM_ALL && invTeam)
 					AIL_invalidparameter(2);
@@ -1344,7 +1344,7 @@ static int AIL_positionhide (lua_State* L)
 				invTeam = true;
 				++s;
 			}
-			const int team = AIL_toTeamInt(s);
+			const int team = AIL_toTeamInt(s, 1);
 			if (team == TEAM_ALL)
 				AIL_invalidparameter(1);
 			else if (invTeam)
@@ -1519,7 +1519,7 @@ static int AIL_missiontargets (lua_State* L)
 					invTeam = true;
 					++s;
 				}
-				team = AIL_toTeamInt(s);
+				team = AIL_toTeamInt(s, 2);
 				/* Trying to see no one? */
 				if (team == TEAM_ALL && invTeam)
 					AIL_invalidparameter(2);
