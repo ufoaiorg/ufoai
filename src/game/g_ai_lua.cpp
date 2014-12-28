@@ -126,6 +126,25 @@ static ailVisType_t AIL_toVisInt (const char* team, const int param)
 	return static_cast<ailVisType_t> (visInt);
 }
 
+static ailSortCritType_t AIL_toSortInt (const char* team, const int param, const bool dist = false)
+{
+	int sortInt = AILSC_DIST;
+	if (!gi.GetConstIntFromNamespace("luaaisort", team, &sortInt)) {
+		AIL_invalidparameter(param);
+	} else if (dist) {
+		switch (sortInt) {
+		case AILSC_DIST:
+		case AILSC_PATH:
+			break;
+		default:
+			sortInt = AILSC_DIST;
+			AIL_invalidparameter(param);
+			break;
+		}
+	}
+	return static_cast<ailSortCritType_t> (sortInt);
+}
+
 /**
  * @brief Wrapper around edict.
  */
@@ -867,12 +886,7 @@ static int pos3L_distance (lua_State* L)
 	if (lua_gettop(L) > 1) {
 		if (lua_isstring(L, 2)) {
 			const char* str = lua_tostring(L, 2);
-			if (Q_streq(str, "dist"))
-				distType = AILSC_DIST;
-			else if (Q_streq(str, "path"))
-				distType = AILSC_PATH;
-			else
-				AIL_invalidparameter(2);
+			distType = AIL_toSortInt(str, 2, true);
 		} else {
 			AIL_invalidparameter(2);
 		}
@@ -982,14 +996,7 @@ static int AIL_see (lua_State* L)
 		if ((lua_gettop(L) > 2)) {
 			if (lua_isstring(L, 3)) {
 				const char* s = lua_tostring(L, 3);
-				if (Q_streq(s, "dist"))
-					sortCrit = AILSC_DIST;
-				else if (Q_streq(s, "path"))
-					sortCrit = AILSC_PATH;
-				else if (Q_streq(s, "HP"))
-					sortCrit = AILSC_HP;
-				else
-					AIL_invalidparameter(3);
+				sortCrit = AIL_toSortInt(s, 3);
 			} else
 				AIL_invalidparameter(3);
 		}
@@ -1531,12 +1538,7 @@ static int AIL_missiontargets (lua_State* L)
 		if ((lua_gettop(L) > 2)) {
 			if (lua_isstring(L, 3)) {
 				const char* s = lua_tostring(L, 3);
-				if (Q_streq(s, "dist"))
-					sortCrit = AILSC_DIST;
-				else if (Q_streq(s, "path"))
-					sortCrit = AILSC_PATH;
-				else
-					AIL_invalidparameter(3);
+				sortCrit = AIL_toSortInt(s, 3, true);
 			} else
 				AIL_invalidparameter(3);
 		}
@@ -1607,12 +1609,7 @@ static int AIL_waypoints (lua_State* L)
 	if ((lua_gettop(L) > 1)) {
 		if (lua_isstring(L, 2)) {
 			const char* s = lua_tostring(L, 2);
-			if (Q_streq(s, "dist"))
-				sortCrit = AILSC_DIST;
-			else if (Q_streq(s, "path"))
-				sortCrit = AILSC_PATH;
-			else
-				AIL_invalidparameter(2);
+			sortCrit = AIL_toSortInt(s, 2, true);
 		} else
 			AIL_invalidparameter(2);
 	}
@@ -2132,6 +2129,10 @@ void AIL_Init (void)
 	gi.RegisterConstInt("luaaivis::team", AILVT_TEAM);
 	gi.RegisterConstInt("luaaivis::extra", AILVT_DIST);
 
+	gi.RegisterConstInt("luaaisort::dist", AILSC_DIST);
+	gi.RegisterConstInt("luaaisort::path", AILSC_PATH);
+	gi.RegisterConstInt("luaaisort::HP", AILSC_HP);
+
 	ailState = nullptr;
 }
 
@@ -2146,6 +2147,10 @@ void AIL_Shutdown (void)
 	gi.UnregisterConstVariable("luaaivis::sight");
 	gi.UnregisterConstVariable("luaaivis::team");
 	gi.UnregisterConstVariable("luaaivis::extra");
+
+	gi.UnregisterConstVariable("luaaisort::dist");
+	gi.UnregisterConstVariable("luaaisort::path");
+	gi.UnregisterConstVariable("luaaisort::HP");
 }
 
 /**
