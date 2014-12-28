@@ -145,6 +145,14 @@ static ailSortCritType_t AIL_toSortInt (const char* team, const int param, const
 	return static_cast<ailSortCritType_t> (sortInt);
 }
 
+static ailShootPosType_t AIL_toShotPInt (const char* team, const int param)
+{
+	int spInt = AILSP_FAST;
+	if (!gi.GetConstIntFromNamespace("luaaishot", team, &spInt))
+		AIL_invalidparameter(param);
+	return static_cast<ailShootPosType_t> (spInt);
+}
+
 /**
  * @brief Wrapper around edict.
  */
@@ -1187,14 +1195,7 @@ static int AIL_positionshoot (lua_State* L)
 	if ((lua_gettop(L) > 1)) {
 		if (lua_isstring(L, 2)) {
 			const char* s = lua_tostring(L, 2);
-			if (Q_streq(s, "fastest"))
-				posType = AILSP_FAST;
-			else if (Q_streq(s, "nearest"))
-				posType = AILSP_NEAR;
-			else if (Q_streq(s, "farthest"))
-				posType = AILSP_FAR;
-			else
-				AIL_invalidparameter(1);
+			posType = AIL_toShotPInt(s, 2);
 		} else
 			AIL_invalidparameter(3);
 	}
@@ -2133,6 +2134,10 @@ void AIL_Init (void)
 	gi.RegisterConstInt("luaaisort::path", AILSC_PATH);
 	gi.RegisterConstInt("luaaisort::HP", AILSC_HP);
 
+	gi.RegisterConstInt("luaaishot::fast", AILSP_FAST);
+	gi.RegisterConstInt("luaaishot::near", AILSP_NEAR);
+	gi.RegisterConstInt("luaaishot::far", AILSP_FAR);
+
 	ailState = nullptr;
 }
 
@@ -2151,6 +2156,10 @@ void AIL_Shutdown (void)
 	gi.UnregisterConstVariable("luaaisort::dist");
 	gi.UnregisterConstVariable("luaaisort::path");
 	gi.UnregisterConstVariable("luaaisort::HP");
+
+	gi.UnregisterConstVariable("luaaishot::fast");
+	gi.UnregisterConstVariable("luaaishot::near");
+	gi.UnregisterConstVariable("luaaishot::far");
 }
 
 /**
