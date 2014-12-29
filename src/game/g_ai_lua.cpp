@@ -130,10 +130,14 @@ static ailVisType_t AIL_toVisInt (lua_State* L, const int param)
 	return static_cast<ailVisType_t> (visInt);
 }
 
-static ailSortCritType_t AIL_toSortInt (const char* team, const int param)
+static ailSortCritType_t AIL_toSortInt (lua_State* L, const int param)
 {
 	int sortInt = AILSC_DIST;
-	if (!gi.GetConstIntFromNamespace("luaaisort", team, &sortInt))
+	if (lua_isstring(L, param)) {
+		const char* s = lua_tostring(L, param);
+		if (!gi.GetConstIntFromNamespace("luaaisort", s, &sortInt))
+			AIL_invalidparameter(param);
+	} else
 		AIL_invalidparameter(param);
 	return static_cast<ailSortCritType_t> (sortInt);
 }
@@ -1007,11 +1011,7 @@ static int AIL_see (lua_State* L)
 
 		/* Sorting criteria */
 		if ((lua_gettop(L) > 2)) {
-			if (lua_isstring(L, 3)) {
-				const char* s = lua_tostring(L, 3);
-				sortCrit = AIL_toSortInt(s, 3);
-			} else
-				AIL_invalidparameter(3);
+			sortCrit = AIL_toSortInt(L, 3);
 		}
 	}
 
