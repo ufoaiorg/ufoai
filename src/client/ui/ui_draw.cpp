@@ -74,14 +74,15 @@ static int debugPositionX = 0;
 
 static void UI_HighlightNode (const uiNode_t* node, const vec4_t color)
 {
-	static const vec4_t grey = {0.7, 0.7, 0.7, 1.0};
 	vec2_t pos;
 	int width;
 	int lineDefinition[4];
 	const char* text;
 
-	if (node->parent)
+	if (node->parent) {
+		static const vec4_t grey = {0.7, 0.7, 0.7, 1.0};
 		UI_HighlightNode(node->parent, grey);
+	}
 
 	UI_GetNodeAbsPos(node, pos);
 
@@ -126,8 +127,6 @@ static void UI_HighlightNode (const uiNode_t* node, const vec4_t color)
  */
 static void UI_DrawDebugNodeNames (void)
 {
-	static const vec4_t red = {1.0, 0.0, 0.0, 1.0};
-	static const vec4_t green = {0.0, 0.5, 0.0, 1.0};
 	static const vec4_t white = {1, 1.0, 1.0, 1.0};
 	static const vec4_t background = {0.0, 0.0, 0.0, 0.5};
 
@@ -170,6 +169,7 @@ static void UI_DrawDebugNodeNames (void)
 	/* hovered node */
 	uiNode_t* hoveredNode = UI_GetHoveredNode();
 	if (hoveredNode) {
+		static const vec4_t red = {1.0, 0.0, 0.0, 1.0};
 		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "-----------------------", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 
@@ -183,6 +183,7 @@ static void UI_DrawDebugNodeNames (void)
 	if (UI_DNDIsDragging()) {
 		uiNode_t* targetNode = UI_DNDGetTargetNode();
 		if (targetNode) {
+			static const vec4_t green = {0.0, 0.5, 0.0, 1.0};
 			UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "-----------------------", 0, 0, nullptr, false, LONGLINES_PRETTYCHOP);
 			debugTextPositionY += 15;
 

@@ -81,6 +81,11 @@ typedef enum {
 	AILSP_FAR		/* Farthest from target (within weapon's range) */
 } ailShootPosType_t;
 
+typedef enum {
+	AILPW_RAND,		/* Wander randomly */
+	AILPW_CW,		/* Move clockwise */
+	AILPW_CCW		/* Move counter-clockwise */
+} ailWanderPosType;
 /*
  * Helper functions
  */
@@ -105,12 +110,72 @@ static const char* AIL_toTeamString (const int team)
  * @return The integer representation of the given team string
  * @sa AIL_Init
  */
-static int AIL_toTeamInt (const char* team)
+static int AIL_toTeamInt (const char* team, const int param)
 {
 	int teamInt = TEAM_DEFAULT;
 	if (!gi.GetConstIntFromNamespace("luaaiteam", team, &teamInt))
-		AIL_invalidparameter(1);
+		AIL_invalidparameter(param);
 	return teamInt;
+}
+
+static ailVisType_t AIL_toVisInt (lua_State* L, const int param)
+{
+	int visInt = AILVT_ALL;
+	if (lua_isstring(L, param)) {
+		const char* s = lua_tostring(L, param);
+		if (!gi.GetConstIntFromNamespace("luaaivis", s, &visInt))
+			AIL_invalidparameter(param);
+	} else
+		AIL_invalidparameter(param);
+	return static_cast<ailVisType_t> (visInt);
+}
+
+static ailSortCritType_t AIL_toSortInt (lua_State* L, const int param)
+{
+	int sortInt = AILSC_DIST;
+	if (lua_isstring(L, param)) {
+		const char* s = lua_tostring(L, param);
+		if (!gi.GetConstIntFromNamespace("luaaisort", s, &sortInt))
+			AIL_invalidparameter(param);
+	} else
+		AIL_invalidparameter(param);
+	return static_cast<ailSortCritType_t> (sortInt);
+}
+
+static ailSortCritType_t AIL_toDistInt (lua_State* L, const int param)
+{
+	int distInt = AILSC_DIST;
+	if (lua_isstring(L, param)) {
+		const char* s = lua_tostring(L, param);
+		if (!gi.GetConstIntFromNamespace("luaaidist", s, &distInt))
+			AIL_invalidparameter(param);
+	} else
+		AIL_invalidparameter(param);
+	return static_cast<ailSortCritType_t> (distInt);
+}
+
+static ailShootPosType_t AIL_toShotPInt (lua_State* L, const int param)
+{
+	int spInt = AILSP_FAST;
+	if (lua_isstring(L, param)) {
+		const char* s = lua_tostring(L, param);
+		if (!gi.GetConstIntFromNamespace("luaaishot", s, &spInt))
+			AIL_invalidparameter(param);
+	} else
+		AIL_invalidparameter(param);
+	return static_cast<ailShootPosType_t> (spInt);
+}
+
+static ailWanderPosType AIL_toWanderPInt (lua_State* L, const int param)
+{
+	int wpInt = AILPW_RAND;
+	if (lua_isstring(L, param)) {
+		const char* s = lua_tostring(L, param);
+		if (!gi.GetConstIntFromNamespace("luaaiwander", s, &wpInt))
+			AIL_invalidparameter(param);
+	} else
+		AIL_invalidparameter(param);
+	return static_cast<ailWanderPosType> (wpInt);
 }
 
 /**
@@ -851,19 +916,8 @@ static int pos3L_distance (lua_State* L)
 	assert(pos != nullptr);
 
 	ailSortCritType_t distType = AILSC_DIST;
-	if (lua_gettop(L) > 1) {
-		if (lua_isstring(L, 2)) {
-			const char* str = lua_tostring(L, 2);
-			if (Q_streq(str, "dist"))
-				distType = AILSC_DIST;
-			else if (Q_streq(str, "path"))
-				distType = AILSC_PATH;
-			else
-				AIL_invalidparameter(2);
-		} else {
-			AIL_invalidparameter(2);
-		}
-	}
+	if (lua_gettop(L) > 1)
+		distType = AIL_toDistInt(L, 2);
 
 	switch (distType) {
 	case AILSC_PATH:
@@ -943,20 +997,7 @@ static int AIL_see (lua_State* L)
 	/* Handle parameters. */
 	if ((lua_gettop(L) > 0)) {
 		/* Get what to "see" with. */
-		if (lua_isstring(L, 1)) {
-			const char* s = lua_tostring(L, 1);
-			if (Q_streq(s, "all"))
-				vision = AILVT_ALL;
-			else if (Q_streq(s, "sight"))
-				vision = AILVT_SIGHT;
-			else if (Q_streq(s, "team"))
-				vision = AILVT_TEAM;
-			else if (Q_streq(s, "extra"))
-				vision = AILVT_DIST;
-			else
-				AIL_invalidparameter(1);
-		} else
-			AIL_invalidparameter(1);
+		vision = AIL_toVisInt(L, 1);
 
 		/* We now check for different teams. */
 		if ((lua_gettop(L) > 1)) {
@@ -966,7 +1007,7 @@ static int AIL_see (lua_State* L)
 					invTeam = true;
 					++s;
 				}
-				team = AIL_toTeamInt(s);
+				team = AIL_toTeamInt(s, 2);
 				/* Trying to see no one? */
 				if (team == TEAM_ALL && invTeam)
 					AIL_invalidparameter(2);
@@ -976,18 +1017,7 @@ static int AIL_see (lua_State* L)
 
 		/* Sorting criteria */
 		if ((lua_gettop(L) > 2)) {
-			if (lua_isstring(L, 3)) {
-				const char* s = lua_tostring(L, 3);
-				if (Q_streq(s, "dist"))
-					sortCrit = AILSC_DIST;
-				else if (Q_streq(s, "path"))
-					sortCrit = AILSC_PATH;
-				else if (Q_streq(s, "HP"))
-					sortCrit = AILSC_HP;
-				else
-					AIL_invalidparameter(3);
-			} else
-				AIL_invalidparameter(3);
+			sortCrit = AIL_toSortInt(L, 3);
 		}
 	}
 
@@ -1173,20 +1203,8 @@ static int AIL_positionshoot (lua_State* L)
 
 	/* Shooting strategy */
 	ailShootPosType_t posType = AILSP_FAST;
-	if ((lua_gettop(L) > 1)) {
-		if (lua_isstring(L, 2)) {
-			const char* s = lua_tostring(L, 2);
-			if (Q_streq(s, "fastest"))
-				posType = AILSP_FAST;
-			else if (Q_streq(s, "nearest"))
-				posType = AILSP_NEAR;
-			else if (Q_streq(s, "farthest"))
-				posType = AILSP_FAR;
-			else
-				AIL_invalidparameter(1);
-		} else
-			AIL_invalidparameter(3);
-	}
+	if ((lua_gettop(L) > 1))
+		posType = AIL_toShotPInt(L, 2);
 
 	/* Number of TU to spend shooting, to make sure we have enough tus to actually fire. */
 	int tus = actor->getUsableTUs();
@@ -1340,7 +1358,7 @@ static int AIL_positionhide (lua_State* L)
 				invTeam = true;
 				++s;
 			}
-			const int team = AIL_toTeamInt(s);
+			const int team = AIL_toTeamInt(s, 1);
 			if (team == TEAM_ALL)
 				AIL_invalidparameter(1);
 			else if (invTeam)
@@ -1501,18 +1519,7 @@ static int AIL_missiontargets (lua_State* L)
 	/* Handle parameters. */
 	if ((lua_gettop(L) > 0)) {
 		/* Get what to "see" with. */
-		if (lua_isstring(L, 1)) {
-			const char* s = lua_tostring(L, 1);
-			if (Q_streq(s, "all"))
-				vision = AILVT_ALL;
-			else if (Q_streq(s, "sight"))
-				vision = AILVT_SIGHT;
-			else if (Q_streq(s, "extra"))
-				vision = AILVT_DIST;
-			else
-				AIL_invalidparameter(1);
-		} else
-			AIL_invalidparameter(1);
+		vision = AIL_toVisInt(L, 1);
 
 		/* We now check for different teams. */
 		if ((lua_gettop(L) > 1)) {
@@ -1522,7 +1529,7 @@ static int AIL_missiontargets (lua_State* L)
 					invTeam = true;
 					++s;
 				}
-				team = AIL_toTeamInt(s);
+				team = AIL_toTeamInt(s, 2);
 				/* Trying to see no one? */
 				if (team == TEAM_ALL && invTeam)
 					AIL_invalidparameter(2);
@@ -1531,18 +1538,8 @@ static int AIL_missiontargets (lua_State* L)
 		}
 
 		/* Sorting criteria */
-		if ((lua_gettop(L) > 2)) {
-			if (lua_isstring(L, 3)) {
-				const char* s = lua_tostring(L, 3);
-				if (Q_streq(s, "dist"))
-					sortCrit = AILSC_DIST;
-				else if (Q_streq(s, "path"))
-					sortCrit = AILSC_PATH;
-				else
-					AIL_invalidparameter(3);
-			} else
-				AIL_invalidparameter(3);
-		}
+		if ((lua_gettop(L) > 2))
+			sortCrit = AIL_toDistInt(L, 3);
 	}
 
 	int n = 0;
@@ -1607,18 +1604,8 @@ static int AIL_waypoints (lua_State* L)
 
 	/* Sorting criteria */
 	ailSortCritType_t sortCrit = AILSC_DIST;
-	if ((lua_gettop(L) > 1)) {
-		if (lua_isstring(L, 2)) {
-			const char* s = lua_tostring(L, 2);
-			if (Q_streq(s, "dist"))
-				sortCrit = AILSC_DIST;
-			else if (Q_streq(s, "path"))
-				sortCrit = AILSC_PATH;
-			else
-				AIL_invalidparameter(2);
-		} else
-			AIL_invalidparameter(2);
-	}
+	if ((lua_gettop(L) > 1))
+		sortCrit = AIL_toDistInt(L, 2);
 
 	int n = 0;
 	AilSortTable<Edict*> sortTable[MAX_EDICTS];
@@ -1694,14 +1681,20 @@ static int AIL_positionmission (lua_State* L)
 		lua_pushboolean(L, 0);
 		return 1;
 	}
-
-	G_MoveCalc(0, AIL_ent, AIL_ent->pos, AIL_ent->getUsableTUs());
+	const pos3_t* target = lua_topos3(L, 1);
+	int tus = AIL_ent->getUsableTUs();
+	if (lua_gettop(L) > 1) {
+		if (lua_isnumber(L, 2))
+			tus = lua_tonumber(L, 2);
+		else
+			AIL_invalidparameter(2);
+	}
+	G_MoveCalc(0, AIL_ent, AIL_ent->pos, tus);
 	gi.MoveStore(level.pathingMap);
 
 	pos3_t oldPos;
 	VectorCopy(AIL_ent->pos, oldPos);
-	pos3_t* target = lua_topos3(L, 1);
-	if (AI_FindMissionLocation(AIL_ent, *target))
+	if (AI_FindMissionLocation(AIL_ent, *target, tus))
 		lua_pushpos3(L, &AIL_ent->pos);
 	else
 		lua_pushboolean(L, 0);
@@ -1724,24 +1717,12 @@ static int AIL_positionwander (lua_State* L)
 	int radius = (AIL_ent->getUsableTUs() + 1) / TU_MOVE_STRAIGHT;
 	pos3_t center;
 	VectorCopy(AIL_ent->pos, center);
-	int method = 0;
+	int method = AILPW_RAND;
 	int tus = AIL_ent->getUsableTUs();
 
 	/* Check parameters */
-	if (lua_gettop(L) > 0) {
-		if (lua_isstring(L, 1)) {
-			const char* s = lua_tostring(L, 1);
-			if (Q_streq(s, "rand"))
-				method = 0;
-			else if (Q_streq(s, "CW"))
-				method = 1;
-			else if (Q_streq(s, "CCW"))
-				method = 2;
-			else
-				AIL_invalidparameter(1);
-		} else
-			AIL_invalidparameter(1);
-	}
+	if (lua_gettop(L) > 0)
+			method = AIL_toWanderPInt(L, 1);
 	if (lua_gettop(L) > 1) {
 		if (lua_isnumber(L, 2))
 			radius = lua_tonumber(L, 2);
@@ -1778,15 +1759,15 @@ static int AIL_positionwander (lua_State* L)
 			continue;
 		float score = 0.0f;
 		switch (method) {
-		case 0:
+		case AILPW_RAND:
 			score = rand();
 			break;
-		case 1:
-		case 2: {
+		case AILPW_CW:
+		case AILPW_CCW: {
 			score = VectorDistSqr(center, pos);
 			VectorSubtract(pos, center, d);
 			int dir = AngleToDir(static_cast<int>(atan2(d[1], d[0]) * todeg));
-			if (!(method == 1 && dir == dvright[cDir]) && !(method == 2 && dir == dvleft[cDir]))
+			if (!(method == AILPW_CW && dir == dvright[cDir]) && !(method == AILPW_CCW && dir == dvleft[cDir]))
 				for (int n = 1; n < 8; ++n) {
 					dir = method == 1 ? dvleft[dir] : dvright[dir];
 					score /= pow(n * 2, 2);
@@ -2124,6 +2105,26 @@ void AIL_Init (void)
 	gi.RegisterConstInt("luaaiteam::alien", TEAM_ALIEN);
 	gi.RegisterConstInt("luaaiteam::all", TEAM_ALL);
 
+	gi.RegisterConstInt("luaaivis::all", AILVT_ALL);
+	gi.RegisterConstInt("luaaivis::sight", AILVT_SIGHT);
+	gi.RegisterConstInt("luaaivis::team", AILVT_TEAM);
+	gi.RegisterConstInt("luaaivis::extra", AILVT_DIST);
+
+	gi.RegisterConstInt("luaaisort::dist", AILSC_DIST);
+	gi.RegisterConstInt("luaaisort::path", AILSC_PATH);
+	gi.RegisterConstInt("luaaisort::HP", AILSC_HP);
+
+	gi.RegisterConstInt("luaaidist::dist", AILSC_DIST);
+	gi.RegisterConstInt("luaaidist::path", AILSC_PATH);
+
+	gi.RegisterConstInt("luaaishot::fast", AILSP_FAST);
+	gi.RegisterConstInt("luaaishot::near", AILSP_NEAR);
+	gi.RegisterConstInt("luaaishot::far", AILSP_FAR);
+
+	gi.RegisterConstInt("luaaiwander::rand", AILPW_RAND);
+	gi.RegisterConstInt("luaaiwander::CW", AILPW_CW);
+	gi.RegisterConstInt("luaaiwander::CCW", AILPW_CCW);
+
 	ailState = nullptr;
 }
 
@@ -2133,6 +2134,26 @@ void AIL_Shutdown (void)
 	gi.UnregisterConstVariable("luaaiteam::civilian");
 	gi.UnregisterConstVariable("luaaiteam::alien");
 	gi.UnregisterConstVariable("luaaiteam::all");
+
+	gi.UnregisterConstVariable("luaaivis::all");
+	gi.UnregisterConstVariable("luaaivis::sight");
+	gi.UnregisterConstVariable("luaaivis::team");
+	gi.UnregisterConstVariable("luaaivis::extra");
+
+	gi.UnregisterConstVariable("luaaisort::dist");
+	gi.UnregisterConstVariable("luaaisort::path");
+	gi.UnregisterConstVariable("luaaisort::HP");
+
+	gi.UnregisterConstVariable("luaaidist::dist");
+	gi.UnregisterConstVariable("luaaidist::path");
+
+	gi.UnregisterConstVariable("luaaishot::fast");
+	gi.UnregisterConstVariable("luaaishot::near");
+	gi.UnregisterConstVariable("luaaishot::far");
+
+	gi.UnregisterConstVariable("luaaiwander::rand");
+	gi.UnregisterConstVariable("luaaiwander::CW");
+	gi.UnregisterConstVariable("luaaiwander::CCW");
 }
 
 /**

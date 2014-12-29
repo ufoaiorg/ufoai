@@ -108,7 +108,7 @@ static uiSprite_t* UI_MessageGetIcon (const uiMessageListNodeMessage_t* message)
 	if (Q_strnull(iconName))
 		iconName = "icons/message_info";
 
-	return UI_GetSpriteByName(message->iconName);
+	return UI_GetSpriteByName(iconName);
 }
 
 static void UI_MessageDraw (const uiNode_t* node, uiMessageListNodeMessage_t* message, const char* fontID, int x, int y, int width, int* screenLines)

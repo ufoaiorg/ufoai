@@ -39,7 +39,7 @@ component SoldierSelect extends panel
 		border			"2"
 		bordercolor		"0.527 0.6 0.21 1"
 		onMouseEnter	{ *node:this@bgcolor = "0 0 0 1" }
-		onMouseLeave	{ *node:this@bgcolor = "0 0 0 0.7" }
+		onMouseLeave	{ *node:this@bgcolor = "0 0.1 0 0.7" }
 		onClick			{ cmd "actor_select <node:this@num>;" }
 	}
 	model head

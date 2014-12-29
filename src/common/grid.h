@@ -38,6 +38,9 @@ private:
 	int fbListLength;	/**< Current length of fbList. */
 public:
 
+	forbiddenList_s () {
+		reset();
+	}
 	inline void add(pos3_t pos, byte* entSize) {
 		fbList[fbListLength++] = pos;
 		fbList[fbListLength++] = entSize;

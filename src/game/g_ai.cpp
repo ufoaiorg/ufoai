@@ -1356,15 +1356,16 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
  * @param[in] to The target position.
  * @return @c true if found a suitable position, @c false otherwise
  */
-bool AI_FindMissionLocation (Actor* actor, const pos3_t to)
+bool AI_FindMissionLocation (Actor* actor, const pos3_t to, int tus)
 {
 	int bestDist = ROUTING_NOT_REACHABLE;
 	pos3_t bestPos = {to[0], to[1], to[2]};
 
 	AiAreaSearch searchArea(to, HOLD_DIST, true);
 	while (searchArea.getNext(actor->pos)) {
+		const pos_t length = G_ActorMoveLength(actor, level.pathingMap, actor->pos, true);
 		/* Can't walk there */
-		if (G_ActorMoveLength(actor, level.pathingMap, actor->pos, true) == ROUTING_NOT_REACHABLE)
+		if (length == ROUTING_NOT_REACHABLE || length > tus)
 			continue;
 		/* Don't stand on dangerous terrain! */
 		if (!AI_CheckPosition(actor, actor->pos))
@@ -1410,10 +1411,11 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 			/* the lower the count value - the nearer the final target */
 			if (checkPoint->count < actor->count) {
 				if (VectorDist(actor->origin, checkPoint->origin) <= WAYPOINT_CIV_DIST) {
-					if (!AI_FindMissionLocation(actor, checkPoint->pos))
+					const int actorTUs = actor->getUsableTUs();
+					if (!AI_FindMissionLocation(actor, checkPoint->pos, actorTUs))
 						continue;
 
-					const int length = actor->getUsableTUs() - G_ActorMoveLength(actor, level.pathingMap, actor->pos, true);
+					const int length = actorTUs - G_ActorMoveLength(actor, level.pathingMap, actor->pos, true);
 					i++;
 
 					/* test for time and distance */
@@ -1445,7 +1447,7 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 		Edict* mission = nullptr;
 		while ((mission = G_EdictsGetNextInUse(mission))) {
 			if (mission->type == ET_MISSION) {
-				if (!AI_FindMissionLocation(actor, mission->pos))
+				if (!AI_FindMissionLocation(actor, mission->pos, actor->getUsableTUs()))
 					continue;
 				if (player.getTeam() == mission->getTeam()) {
 					actionScore = SCORE_MISSION_TARGET;
@@ -1691,9 +1693,7 @@ static void AI_ActorThink (Player& player, Actor* actor)
 
 void AI_ActorRun (Player& player, Actor* actor)
 {
-	/* Human players' actors don't have a loaded LUA script,
-	 * so don't try to run them with the LUA AI */
-	if (g_ailua->integer && !Q_strnull(actor->AI.type))
+	if (g_ailua->integer)
 		AIL_ActorThink(player, actor);
 	else
 		AI_ActorThink(player, actor);
