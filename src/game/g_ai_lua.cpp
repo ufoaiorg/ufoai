@@ -166,10 +166,14 @@ static ailShootPosType_t AIL_toShotPInt (lua_State* L, const int param)
 	return static_cast<ailShootPosType_t> (spInt);
 }
 
-static ailWanderPosType AIL_toWanderPInt (const char* team, const int param)
+static ailWanderPosType AIL_toWanderPInt (lua_State* L, const int param)
 {
 	int wpInt = AILPW_RAND;
-	if (!gi.GetConstIntFromNamespace("luaawander", team, &wpInt))
+	if (lua_isstring(L, param)) {
+		const char* s = lua_tostring(L, param);
+		if (!gi.GetConstIntFromNamespace("luaaiwander", s, &wpInt))
+			AIL_invalidparameter(param);
+	} else
 		AIL_invalidparameter(param);
 	return static_cast<ailWanderPosType> (wpInt);
 }
@@ -1717,13 +1721,8 @@ static int AIL_positionwander (lua_State* L)
 	int tus = AIL_ent->getUsableTUs();
 
 	/* Check parameters */
-	if (lua_gettop(L) > 0) {
-		if (lua_isstring(L, 1)) {
-			const char* s = lua_tostring(L, 1);
-			method = AIL_toWanderPInt(s, 1);
-		} else
-			AIL_invalidparameter(1);
-	}
+	if (lua_gettop(L) > 0)
+			method = AIL_toWanderPInt(L, 1);
 	if (lua_gettop(L) > 1) {
 		if (lua_isnumber(L, 2))
 			radius = lua_tonumber(L, 2);
