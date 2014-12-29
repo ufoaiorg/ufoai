@@ -126,23 +126,20 @@ static ailVisType_t AIL_toVisInt (const char* team, const int param)
 	return static_cast<ailVisType_t> (visInt);
 }
 
-static ailSortCritType_t AIL_toSortInt (const char* team, const int param, const bool dist = false)
+static ailSortCritType_t AIL_toSortInt (const char* team, const int param)
 {
 	int sortInt = AILSC_DIST;
-	if (!gi.GetConstIntFromNamespace("luaaisort", team, &sortInt)) {
+	if (!gi.GetConstIntFromNamespace("luaaisort", team, &sortInt))
 		AIL_invalidparameter(param);
-	} else if (dist) {
-		switch (sortInt) {
-		case AILSC_DIST:
-		case AILSC_PATH:
-			break;
-		default:
-			sortInt = AILSC_DIST;
-			AIL_invalidparameter(param);
-			break;
-		}
-	}
 	return static_cast<ailSortCritType_t> (sortInt);
+}
+
+static ailSortCritType_t AIL_toDistInt (const char* team, const int param)
+{
+	int distInt = AILSC_DIST;
+	if (!gi.GetConstIntFromNamespace("luaaidist", team, &distInt))
+		AIL_invalidparameter(param);
+	return static_cast<ailSortCritType_t> (distInt);
 }
 
 static ailShootPosType_t AIL_toShotPInt (const char* team, const int param)
@@ -902,7 +899,7 @@ static int pos3L_distance (lua_State* L)
 	if (lua_gettop(L) > 1) {
 		if (lua_isstring(L, 2)) {
 			const char* str = lua_tostring(L, 2);
-			distType = AIL_toSortInt(str, 2, true);
+			distType = AIL_toDistInt(str, 2);
 		} else {
 			AIL_invalidparameter(2);
 		}
@@ -1547,7 +1544,7 @@ static int AIL_missiontargets (lua_State* L)
 		if ((lua_gettop(L) > 2)) {
 			if (lua_isstring(L, 3)) {
 				const char* s = lua_tostring(L, 3);
-				sortCrit = AIL_toSortInt(s, 3, true);
+				sortCrit = AIL_toDistInt(s, 3);
 			} else
 				AIL_invalidparameter(3);
 		}
@@ -1618,7 +1615,7 @@ static int AIL_waypoints (lua_State* L)
 	if ((lua_gettop(L) > 1)) {
 		if (lua_isstring(L, 2)) {
 			const char* s = lua_tostring(L, 2);
-			sortCrit = AIL_toSortInt(s, 2, true);
+			sortCrit = AIL_toDistInt(s, 2);
 		} else
 			AIL_invalidparameter(2);
 	}
@@ -2135,6 +2132,9 @@ void AIL_Init (void)
 	gi.RegisterConstInt("luaaisort::path", AILSC_PATH);
 	gi.RegisterConstInt("luaaisort::HP", AILSC_HP);
 
+	gi.RegisterConstInt("luaaidist::dist", AILSC_DIST);
+	gi.RegisterConstInt("luaaidist::path", AILSC_PATH);
+
 	gi.RegisterConstInt("luaaishot::fast", AILSP_FAST);
 	gi.RegisterConstInt("luaaishot::near", AILSP_NEAR);
 	gi.RegisterConstInt("luaaishot::far", AILSP_FAR);
@@ -2161,6 +2161,9 @@ void AIL_Shutdown (void)
 	gi.UnregisterConstVariable("luaaisort::dist");
 	gi.UnregisterConstVariable("luaaisort::path");
 	gi.UnregisterConstVariable("luaaisort::HP");
+
+	gi.UnregisterConstVariable("luaaidist::dist");
+	gi.UnregisterConstVariable("luaaidist::path");
 
 	gi.UnregisterConstVariable("luaaishot::fast");
 	gi.UnregisterConstVariable("luaaishot::near");
