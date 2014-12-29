@@ -118,10 +118,14 @@ static int AIL_toTeamInt (const char* team, const int param)
 	return teamInt;
 }
 
-static ailVisType_t AIL_toVisInt (const char* team, const int param)
+static ailVisType_t AIL_toVisInt (lua_State* L, const int param)
 {
 	int visInt = AILVT_ALL;
-	if (!gi.GetConstIntFromNamespace("luaaivis", team, &visInt))
+	if (lua_isstring(L, param)) {
+		const char* s = lua_tostring(L, param);
+		if (!gi.GetConstIntFromNamespace("luaaivis", s, &visInt))
+			AIL_invalidparameter(param);
+	} else
 		AIL_invalidparameter(param);
 	return static_cast<ailVisType_t> (visInt);
 }
@@ -983,11 +987,7 @@ static int AIL_see (lua_State* L)
 	/* Handle parameters. */
 	if ((lua_gettop(L) > 0)) {
 		/* Get what to "see" with. */
-		if (lua_isstring(L, 1)) {
-			const char* s = lua_tostring(L, 1);
-			vision = AIL_toVisInt(s, 1);
-		} else
-			AIL_invalidparameter(1);
+		vision = AIL_toVisInt(L, 1);
 
 		/* We now check for different teams. */
 		if ((lua_gettop(L) > 1)) {
@@ -1518,11 +1518,7 @@ static int AIL_missiontargets (lua_State* L)
 	/* Handle parameters. */
 	if ((lua_gettop(L) > 0)) {
 		/* Get what to "see" with. */
-		if (lua_isstring(L, 1)) {
-			const char* s = lua_tostring(L, 1);
-			vision = AIL_toVisInt(s, 1);
-		} else
-			AIL_invalidparameter(1);
+		vision = AIL_toVisInt(L, 1);
 
 		/* We now check for different teams. */
 		if ((lua_gettop(L) > 1)) {
