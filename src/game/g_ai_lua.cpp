@@ -154,10 +154,14 @@ static ailSortCritType_t AIL_toDistInt (lua_State* L, const int param)
 	return static_cast<ailSortCritType_t> (distInt);
 }
 
-static ailShootPosType_t AIL_toShotPInt (const char* team, const int param)
+static ailShootPosType_t AIL_toShotPInt (lua_State* L, const int param)
 {
 	int spInt = AILSP_FAST;
-	if (!gi.GetConstIntFromNamespace("luaaishot", team, &spInt))
+	if (lua_isstring(L, param)) {
+		const char* s = lua_tostring(L, param);
+		if (!gi.GetConstIntFromNamespace("luaaishot", s, &spInt))
+			AIL_invalidparameter(param);
+	} else
 		AIL_invalidparameter(param);
 	return static_cast<ailShootPosType_t> (spInt);
 }
@@ -1195,13 +1199,8 @@ static int AIL_positionshoot (lua_State* L)
 
 	/* Shooting strategy */
 	ailShootPosType_t posType = AILSP_FAST;
-	if ((lua_gettop(L) > 1)) {
-		if (lua_isstring(L, 2)) {
-			const char* s = lua_tostring(L, 2);
-			posType = AIL_toShotPInt(s, 2);
-		} else
-			AIL_invalidparameter(3);
-	}
+	if ((lua_gettop(L) > 1))
+		posType = AIL_toShotPInt(L, 2);
 
 	/* Number of TU to spend shooting, to make sure we have enough tus to actually fire. */
 	int tus = actor->getUsableTUs();
