@@ -129,7 +129,7 @@ public:
 	/** Send to the target to finalize the drop */
 	virtual bool onDndDrop(uiNode_t* node, int x, int y);
 	/** Sent to the source to finalize the drop */
-	virtual bool onDndFinished(uiNode_t* node, bool isDroped);
+	virtual bool onDndFinished(uiNode_t* node, bool isDropped);
 
 	/* focus and keyboard events */
 	virtual void onFocusGained(uiNode_t* node);

@@ -126,6 +126,12 @@ void uiNode::initNode(uiNode_t* node) {
 	node->lua_onMouseLeave = LUA_NOREF;
 	node->lua_onChange = LUA_NOREF;
 	node->lua_onVisibleWhen = LUA_NOREF;
+
+	node->lua_onDragDropEnter = LUA_NOREF;
+	node->lua_onDragDropLeave = LUA_NOREF;
+	node->lua_onDragDropMove = LUA_NOREF;
+	node->lua_onDragDropDrop = LUA_NOREF;
+	node->lua_onDragDropFinished = LUA_NOREF;
 }
 
 void uiNode::initNodeDynamic(uiNode_t* node) {
@@ -166,26 +172,59 @@ void uiLocatedNode::onMouseLeave(uiNode_t* node)
 
 bool uiLocatedNode::onDndEnter (uiNode_t* node)
 {
+	if (!node->dragdrop) return false;
+
+	if (node->lua_onDragDropEnter != LUA_NOREF) {
+		bool result;
+		UI_ExecuteLuaEventScript_DragDrop (node, node->lua_onDragDropEnter, result);
+		return result;
+	}
 	return false;
 }
 
 bool uiLocatedNode::onDndMove (uiNode_t* node, int x, int y)
 {
+	if (!node->dragdrop) return true;
+
+	if (node->lua_onDragDropMove != LUA_NOREF) {
+		bool result;
+		UI_ExecuteLuaEventScript_DragDrop_XY (node, node->lua_onDragDropMove, x, y, result);
+		return result;
+	}
 	return true;
 }
 
 void uiLocatedNode::onDndLeave (uiNode_t* node)
 {
+	if (!node->dragdrop) return;
+
+	if (node->lua_onDragDropLeave != LUA_NOREF) {
+		bool result;
+		UI_ExecuteLuaEventScript_DragDrop (node, node->lua_onDragDropLeave, result);
+	}
 }
 
 bool uiLocatedNode::onDndDrop (uiNode_t* node, int x, int y)
 {
+	if (!node->dragdrop) return true;
+
+	if (node->lua_onDragDropDrop != LUA_NOREF) {
+		bool result;
+		UI_ExecuteLuaEventScript_DragDrop_XY (node, node->lua_onDragDropDrop, x, y, result);
+		return result;
+	}
 	return true;
 }
 
-bool uiLocatedNode::onDndFinished (uiNode_t* node, bool isDroped)
+bool uiLocatedNode::onDndFinished (uiNode_t* node, bool isDropped)
 {
-	return isDroped;
+	if (!node->dragdrop) return isDropped;
+
+	if (node->lua_onDragDropFinished != LUA_NOREF) {
+		bool result;
+		UI_ExecuteLuaEventScript_DragDrop_IsDropped (node, node->lua_onDragDropFinished, isDropped, result);
+	}
+	return isDropped;
 }
 
 /**

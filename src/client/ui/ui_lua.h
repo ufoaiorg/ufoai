@@ -46,6 +46,11 @@ bool UI_ExecuteLuaEventScript_ReturnBool (uiNode_t* node, LUA_EVENT event, bool 
 bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y);
 bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int dy);
 bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int key, unsigned short unicode);
+
+bool UI_ExecuteLuaEventScript_DragDrop (uiNode_t* node, LUA_EVENT event, bool &result);
+bool UI_ExecuteLuaEventScript_DragDrop_XY (uiNode_t* node, LUA_EVENT event, int x, int y, bool &result);
+bool UI_ExecuteLuaEventScript_DragDrop_IsDropped (uiNode_t* node, LUA_EVENT event, bool isDropped, bool &result);
+
 bool UI_ExecuteLuaMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params, int nparams);
 bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn);
 bool UI_ExecuteLuaMethod_ByName (uiNode_t* node, const char* name, linkedList_t* params, int nparams);
