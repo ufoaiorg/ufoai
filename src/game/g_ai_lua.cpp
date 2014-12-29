@@ -142,10 +142,14 @@ static ailSortCritType_t AIL_toSortInt (lua_State* L, const int param)
 	return static_cast<ailSortCritType_t> (sortInt);
 }
 
-static ailSortCritType_t AIL_toDistInt (const char* team, const int param)
+static ailSortCritType_t AIL_toDistInt (lua_State* L, const int param)
 {
 	int distInt = AILSC_DIST;
-	if (!gi.GetConstIntFromNamespace("luaaidist", team, &distInt))
+	if (lua_isstring(L, param)) {
+		const char* s = lua_tostring(L, param);
+		if (!gi.GetConstIntFromNamespace("luaaidist", s, &distInt))
+			AIL_invalidparameter(param);
+	} else
 		AIL_invalidparameter(param);
 	return static_cast<ailSortCritType_t> (distInt);
 }
@@ -904,14 +908,8 @@ static int pos3L_distance (lua_State* L)
 	assert(pos != nullptr);
 
 	ailSortCritType_t distType = AILSC_DIST;
-	if (lua_gettop(L) > 1) {
-		if (lua_isstring(L, 2)) {
-			const char* str = lua_tostring(L, 2);
-			distType = AIL_toDistInt(str, 2);
-		} else {
-			AIL_invalidparameter(2);
-		}
-	}
+	if (lua_gettop(L) > 1)
+		distType = AIL_toDistInt(L, 2);
 
 	switch (distType) {
 	case AILSC_PATH:
@@ -1537,13 +1535,8 @@ static int AIL_missiontargets (lua_State* L)
 		}
 
 		/* Sorting criteria */
-		if ((lua_gettop(L) > 2)) {
-			if (lua_isstring(L, 3)) {
-				const char* s = lua_tostring(L, 3);
-				sortCrit = AIL_toDistInt(s, 3);
-			} else
-				AIL_invalidparameter(3);
-		}
+		if ((lua_gettop(L) > 2))
+			sortCrit = AIL_toDistInt(L, 3);
 	}
 
 	int n = 0;
@@ -1608,13 +1601,8 @@ static int AIL_waypoints (lua_State* L)
 
 	/* Sorting criteria */
 	ailSortCritType_t sortCrit = AILSC_DIST;
-	if ((lua_gettop(L) > 1)) {
-		if (lua_isstring(L, 2)) {
-			const char* s = lua_tostring(L, 2);
-			sortCrit = AIL_toDistInt(s, 2);
-		} else
-			AIL_invalidparameter(2);
-	}
+	if ((lua_gettop(L) > 1))
+		sortCrit = AIL_toDistInt(L, 2);
 
 	int n = 0;
 	AilSortTable<Edict*> sortTable[MAX_EDICTS];
