@@ -164,6 +164,82 @@ bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int
 	return true;
 }
 
+/**
+ * @brief Executes a lua event handler for dragdrop interaction.
+ * @param[in] node The node the event handler is associated with.
+ * @param[in] event The event to execute.
+ * @param[out] result A reference to a bool set to the function result.
+ * @return True if the operation succeeds, false otherwise.
+ * @note The signature of the event handler in lua is: onevent(sender) and should return a boolean
+ */
+bool UI_ExecuteLuaEventScript_DragDrop (uiNode_t* node, LUA_EVENT event, bool &result) {
+	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+	if (lua_pcall (CL_GetLuaState(), 1, 1, 0) != 0) {
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		return false;
+	};
+    if (!lua_isboolean(CL_GetLuaState(), -1)) {
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", node->name, node->behaviour->name);
+		return false;
+    }
+    result = lua_toboolean(CL_GetLuaState(), -1);
+	return true;
+}
+
+/**
+ * @brief Executes a lua event handler for dragdrop interaction.
+ * @param[in] node The node the event handler is associated with.
+ * @param[in] event The event to execute.
+ * @param[in] x The x value of the call signature (x, y)
+ * @param[in] y The y value of the call signature (x, y)
+ * @param[out] result A reference to a bool set to the function result.
+ * @return True if the operation succeeds, false otherwise.
+ * @note The signature of the event handler in lua is: onevent(sender, x, y) and should return a boolean
+ */
+bool UI_ExecuteLuaEventScript_DragDrop_XY (uiNode_t* node, LUA_EVENT event, int x, int y, bool &result) {
+	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+	lua_pushinteger(CL_GetLuaState(), x); /* push x to lua stack */
+	lua_pushinteger(CL_GetLuaState(), y); /* push y to lua stack */
+	if (lua_pcall (CL_GetLuaState(), 3, 1, 0) != 0) {
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		return false;
+	};
+    if (!lua_isboolean(CL_GetLuaState(), -1)) {
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", node->name, node->behaviour->name);
+		return false;
+    }
+    result = lua_toboolean(CL_GetLuaState(), -1);
+	return true;
+}
+
+/**
+ * @brief Executes a lua event handler for dragdrop interaction.
+ * @param[in] node The node the event handler is associated with.
+ * @param[in] event The event to execute.
+ * @param[in] isDropped The boolean of the call signature (isDropped).
+ * @param[out] result A reference to a bool set to the function result.
+ * @return True if the operation succeeds, false otherwise.
+ * @note The signature of the event handler in lua is: onevent(sender, isDropped) and should return a boolean
+ */
+bool UI_ExecuteLuaEventScript_DragDrop_IsDropped (uiNode_t* node, LUA_EVENT event, bool isDropped, bool &result) {
+	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+	lua_pushboolean(CL_GetLuaState(), isDropped); /* push isDropped to lua stack */
+	if (lua_pcall (CL_GetLuaState(), 2, 1, 0) != 0) {
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		return false;
+	};
+    if (!lua_isboolean(CL_GetLuaState(), -1)) {
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", node->name, node->behaviour->name);
+		return false;
+    }
+    result = lua_toboolean(CL_GetLuaState(), -1);
+	return true;
+}
+
+
 
 /**
  * @brief Executes a lua based method defined on the behaviour class of a node.

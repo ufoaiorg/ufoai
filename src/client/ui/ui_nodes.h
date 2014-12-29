@@ -161,6 +161,18 @@ struct uiNode_t {
     LUA_EVENT lua_onMouseLeave; /**< references the event in lua: on_mouseleave (node) */
     LUA_EVENT lua_onChange; /**< references the event in lua: on_change (node) */
     LUA_EVENT lua_onVisibleWhen; /**< references the event in lua: on_visible (node) */
+
+	bool dragdrop; /**< set to true to enable dragdrop on this node */
+	/** Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
+    LUA_EVENT lua_onDragDropEnter; /**< references the event in lua: on_dragdropenter (node) */
+	/** Send to the target when the DND is canceled */
+    LUA_EVENT lua_onDragDropLeave; /**< references the event in lua: on_dragdropleave (node) */
+	/** Send to the target when we enter first, return true if we can drop the DND here */
+	LUA_EVENT lua_onDragDropMove; /**< references the event in lua: on_dragdropmove (node, x, y) */
+	/** Send to the target to finalize the drop */
+	LUA_EVENT lua_onDragDropDrop; /**< references the event in lua: on_dragdropdrop (node, x, y) */
+	/** Sent to the source to finalize the drop */
+	LUA_EVENT lua_onDragDropFinished; /**< references the event in lua: on_dragdropfinished (node, isdropped) */
 };
 
 
