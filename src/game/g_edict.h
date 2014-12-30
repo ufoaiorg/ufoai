@@ -273,7 +273,7 @@ public:
 	inline Player& getPlayer () const {
 		return game.players[this->pnum];
 	}
-	/* also used by camera ! */
+	/* also used by camera, mission and civilian_target! */
 	inline int getTeam() const {
 		return team;
 	}
