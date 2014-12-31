@@ -138,7 +138,7 @@ public:
 	byte dmgtype;				/**< damage type done by the entity */
 	/** @sa memcpy in Grid_CheckForbidden */
 	actorSizeEnum_t fieldSize;	/**< ACTOR_SIZE_* */
-	bool hiding;				/**< for ai actors - when they try to hide after the performed their action */
+	bool hiding;				/**< for ai actors - when they try to hide after they performed their action */
 
 	/** function to call when triggered - this function should only return true when there is
 	 * a client action associated with it */
