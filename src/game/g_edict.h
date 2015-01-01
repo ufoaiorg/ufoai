@@ -153,7 +153,7 @@ public:
 	bool (*use)(Edict* self, Edict* activator);
 	bool (*destroy)(Edict* self);
 
-	Edict* touchedNext;			/**< entity list of edict that are currently touching the trigger_touch */
+	linkedList_t* touchedList;			/**< entity list of edicts that are currently touching the trigger_touch */
 	int doorState;				/**< open or closed */
 
 	moveinfo_t		moveinfo;

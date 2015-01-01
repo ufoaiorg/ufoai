@@ -98,13 +98,13 @@ static bool Destroy_Breakable (Edict* self)
 	if (self->child()) {
 		Edict* trigger = self->child();
 		/* Remove all activators and reset client actions before removing the trigger */
-		Edict* activator = trigger->touchedNext;
-		while (activator) {
-			Edict* next = activator->touchedNext;
-			G_TriggerRemoveFromList(trigger, activator);
+		linkedList_t* list = trigger->touchedList;
+		while (list) {
+			linkedList_t* next = list->next;
+			G_TriggerRemoveFromList(trigger, static_cast<Edict*>(list->data));
 			if (trigger->reset != nullptr)
-				trigger->reset(trigger, activator);
-			activator = next;
+				trigger->reset(trigger, static_cast<Edict*>(list->data));
+			list = next;
 		}
 		G_FreeEdict(trigger);
 	}
