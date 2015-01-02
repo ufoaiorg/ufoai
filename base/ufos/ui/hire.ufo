@@ -73,11 +73,10 @@ window employees
 
 			panel employees
 			{
-				/** @todo Remove me */
 				{
 					pos			"5 75"
 					size		"520 460"
-				} // empty properties to fix parsing problem with "image" token (behaviour or property?)
+				}
 
 
 				// ==================
