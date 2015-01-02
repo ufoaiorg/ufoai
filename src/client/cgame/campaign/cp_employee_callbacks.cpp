@@ -198,8 +198,9 @@ static void E_EmployeeList_f (void)
 	/* If the list is empty OR we are in pilots/scientists/workers-mode: don't show the model&stats. */
 	/** @note
 	 * 0 == nothing is displayed
-	 * 1 == all is displayed
-	 * 2 == only stuff wanted for scientists/workers/pilots are displayed
+	 * 1 == only stuff wanted for soldiers is displayed
+	 * 2 == only stuff wanted for pilots is displayed
+	 * 3 == only stuff wanted for scientists/workers is displayed
 	 */
 	/** @todo replace magic numbers - use confuncs */
 	if (employeesInCurrentList == 0) {
@@ -377,7 +378,7 @@ static void E_EmployeeSelect_f (void)
 static const cmdList_t employeeCmds[] = {
 	{"employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI"},
 	{"employee_init", E_EmployeeList_f, "Init function for employee hire menu"},
-	{"employee_delete", E_EmployeeDelete_f, "Removed an employee from the global employee list"},
+	{"employee_delete", E_EmployeeDelete_f, "Remove an employee from the global employee list"},
 	{"employee_hire", E_EmployeeHire_f, nullptr},
 	{"employee_select", E_EmployeeSelect_f, nullptr},
 	{"employee_changename", E_ChangeName_f, "Change the name of an employee"},
