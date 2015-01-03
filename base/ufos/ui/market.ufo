@@ -347,6 +347,13 @@ window market  {
 	// ==================
 
 	func onWindowOpened {
+		*node:root.base_container.prev@onClick = { cmd "ui_pop;mn_base_prev;ui_push market;" }
+		*node:root.base_container.next@onClick = { cmd "ui_pop;mn_base_next;ui_push market;" }
+		*cvar:i = 0
+		while ( *cvar:i < 7 ) {
+			*node:root.base_container.base_selector.base<cvar:i>@onClick = { cmd "ui_pop;mn_base_select <baseid>;ui_push market;"}
+			*cvar:i = ( *cvar:i + 1 )
+		}
 		if (<cvar:ui_market_category> ne "") {
 			cmd "ui_market_fill <cvar:ui_market_category>;"
 		}
