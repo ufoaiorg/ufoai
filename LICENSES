@@ -3137,8 +3137,8 @@ base/pics/icons/crouch0.png | GNU General Public License 2.0 or later | Nate Wri
 base/pics/icons/day.png | Public Domain | Nate Wright | mods/ui2/pics/icons/day.png by Nate Wright
 base/pics/icons/dblarrowrgt.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/dblarrowrgt0.png | GNU General Public License 2.0 or later | Nate Wright
-base/pics/icons/delete.png | GNU General Public License 2.0 or later | cooler_sk
-base/pics/icons/delete_hovered.png | GNU General Public License 2.0 or later | cooler_sk
+base/pics/icons/delete.png | GNU General Public License 2.0 or later | Igor Gritsenko
+base/pics/icons/delete_hovered.png | GNU General Public License 2.0 or later | Igor Gritsenko
 base/pics/icons/earthlrg.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/facilities.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/fire.png | GNU General Public License 2.0 or later | Nate Wright
@@ -3197,6 +3197,9 @@ base/pics/icons/information.png | GNU General Public License 2.0 | Kostia "Kildo
 base/pics/icons/inv.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/inv0.png | GNU General Public License 2.0 or later | Nate Wright
 base/pics/icons/levels.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/load.png | GNU General Public License 2.0 or later | Igor Gritsenko
+base/pics/icons/load_disabled.png | GNU General Public License 2.0 or later | Igor Gritsenko
+base/pics/icons/load_hovered.png | GNU General Public License 2.0 or later | Igor Gritsenko
 base/pics/icons/mail_air.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_alien.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_artifact.png | GNU General Public License 2.0 | Gerd Heisse
@@ -3238,6 +3241,9 @@ base/pics/icons/reload_full.png | GNU General Public License 2.0 or later | Nate
 base/pics/icons/rescue.png | GNU General Public License 2.0 or later | Igor Gritsenko
 base/pics/icons/rescue0.png | GNU General Public License 2.0 or later | Igor Gritsenko
 base/pics/icons/research.png | GNU General Public License 2.0 or later | Nate Wright
+base/pics/icons/save.png | GNU General Public License 2.0 or later | Igor Gritsenko
+base/pics/icons/save_disabled.png | GNU General Public License 2.0 or later | Igor Gritsenko
+base/pics/icons/save_hovered.png | GNU General Public License 2.0 or later | Igor Gritsenko
 base/pics/icons/scroll_bottom.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/scroll_bottom_hovered.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/scroll_top.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
