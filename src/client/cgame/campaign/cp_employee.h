@@ -139,8 +139,6 @@ bool E_UnhireEmployee(Employee* employee);
 
 int E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const bool excludeUnhappyNations);
 
-int E_GenerateHiredEmployeesList(const base_t* base);
-
 employeeType_t E_GetEmployeeType(const char* type);
 extern const char* E_GetEmployeeString(employeeType_t type, int n);
 

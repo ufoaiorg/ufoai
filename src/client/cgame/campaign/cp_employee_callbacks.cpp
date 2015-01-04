@@ -247,17 +247,6 @@ static void E_ChangeName_f (void)
 }
 
 /**
- * @brief Fill employeeList with a list of employees in the current base (i.e. they are hired and not transferred)
- * @sa E_GetEmployeeByMenuIndex - It is used to get a specific entry from the generated employeeList.
- */
-int E_GenerateHiredEmployeesList (const base_t* base)
-{
-	assert(base);
-	employeesInCurrentList = E_GetHiredEmployees(base, EMPL_SOLDIER, &employeeList);
-	return employeesInCurrentList;
-}
-
-/**
  * @brief This removes an employee from the global list so that
  * he/she is no longer hireable.
  */
