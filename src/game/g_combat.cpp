@@ -914,12 +914,13 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
 	else
 		damage = std::max(0.0f, fd->damage[0] + (fd->damage[1] * crand()));
 
-	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
+	/* Check if we are shooting over an adjacent crouching friendly unit */
+	VectorMA(cur_loc, UNIT_SIZE * 1.4f, dir, impact);
 	const Edict* passEnt = ent;
 	trace_t tr = G_Trace(Line(cur_loc, impact), passEnt, MASK_SHOT);
 	Edict* trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
 	if (trEnt && (trEnt->isSameTeamAs(ent) || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt) && !FIRESH_IsMedikit(fd)) {
-		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
+		VectorMA(cur_loc, UNIT_SIZE * 1.4f, dir, cur_loc);
 		passEnt = trEnt;
 	}
 
