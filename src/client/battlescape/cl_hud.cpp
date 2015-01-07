@@ -1348,7 +1348,7 @@ static void HUD_UpdateActorLoad_f (void)
 	const character_t* chr = CL_ActorGetChr(selActor);
 	const float invWeight = selActor->inv.getWeight();
 	const int maxWeight = GAME_GetChrMaxLoad(chr);
-	const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, chr->score.skills[ABILITY_POWER]);
+	const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, maxWeight);
 	const int normalTU = GET_TU(chr->score.skills[ABILITY_SPEED], 1.0f - WEIGHT_NORMAL_PENALTY);
 	const int tus = GET_TU(chr->score.skills[ABILITY_SPEED], penalty);
 	const int tuPenalty = tus - normalTU;
