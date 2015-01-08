@@ -1346,7 +1346,7 @@ static void HUD_UpdateActorLoad_f (void)
 		return;
 
 	const character_t* chr = CL_ActorGetChr(selActor);
-	const float invWeight = selActor->inv.getWeight();
+	const int invWeight = selActor->inv.getWeight();
 	const int maxWeight = GAME_GetChrMaxLoad(chr);
 	const float penalty = GET_ENCUMBRANCE_PENALTY(invWeight, maxWeight);
 	const int normalTU = GET_TU(chr->score.skills[ABILITY_SPEED], 1.0f - WEIGHT_NORMAL_PENALTY);
@@ -1378,7 +1378,7 @@ static void HUD_UpdateActorLoad_f (void)
 
 	char label[MAX_VAR];
 	char tooltip[MAX_VAR];
-	Com_sprintf(label, sizeof(label), "%g/%i %s", invWeight, maxWeight, _("Kg"));
+	Com_sprintf(label, sizeof(label), "%g/%i %s", invWeight / WEIGHT_FACTOR, maxWeight, _("Kg"));
 	Com_sprintf(tooltip, sizeof(tooltip), "%s %i (%+i)", _("TU:"), tus, tuPenalty);
 	UI_ExecuteConfunc("inv_actorload \"%s\" \"%s\" %f %i", label, tooltip, WEIGHT_NORMAL_PENALTY - (1.0f - penalty), count);
 }

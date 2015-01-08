@@ -137,7 +137,7 @@ void INV_ItemDescription (const objDef_t* od)
 		*itemText = '\0';
 		if (od->isArmour()) {
 			Com_sprintf(itemText, sizeof(itemText), _("Size:\t%i\n"), od->size);
-			Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
+			Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight / WEIGHT_FACTOR);
 			Q_strcat(itemText, sizeof(itemText), "\n");
 			Q_strcat(itemText, sizeof(itemText), _("^BDamage type:\tProtection:\n"));
 			for (i = 0; i < csi.numDTs; i++) {
@@ -163,7 +163,7 @@ void INV_ItemDescription (const objDef_t* od)
 					weaponIndex = itemIndex;
 				}
 
-				Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
+				Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight / WEIGHT_FACTOR);
 				/** @todo is there ammo with no firedefs? */
 				if (GAME_ItemIsUseable(odAmmo) && odAmmo->numFiredefs[weaponIndex] > 0) {
 					const fireDef_t* fd;
@@ -190,7 +190,7 @@ void INV_ItemDescription (const objDef_t* od)
 				}
 			} else {
 				Com_sprintf(itemText, sizeof(itemText), _("%s. No detailed info available.\n"), od->isAmmo() ? _("Ammunition") : _("Weapon"));
-				Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
+				Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight / WEIGHT_FACTOR);
 			}
 		} else if (od->implant) {
 			//const implantDef_t* implant = INVSH_GetImplantForObjDef(od);
@@ -204,11 +204,11 @@ void INV_ItemDescription (const objDef_t* od)
 			Q_strcat(itemText, sizeof(itemText), _("Price:\t%i c\n"), od->price);
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
+			Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight / WEIGHT_FACTOR);
 		} else {
 			/* just an item - only primary definition */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight);
+			Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight / WEIGHT_FACTOR);
 			if (od->numWeapons > 0 && od->numFiredefs[0] > 0) {
 				const fireDef_t* fd = &od->fd[0][0];
 				Q_strcat(itemText, sizeof(itemText), _("Action:\t%s\n"), _(fd->name));
@@ -399,7 +399,7 @@ static void INV_UpdateActorLoad_f (void)
 
 	char label[MAX_VAR];
 	char tooltip[MAX_VAR];
-	Com_sprintf(label, sizeof(label), "%g/%i %s %s", invWeight, maxWeight, _("Kg"),
+	Com_sprintf(label, sizeof(label), "%g/%i %s %s", invWeight / WEIGHT_FACTOR, maxWeight, _("Kg"),
 			(count > 0 ? _("Warning!") : ""));
 	Com_sprintf(tooltip, sizeof(tooltip), "%s %i (%+i)", _("TU:"), tus, tuPenalty);
 	UI_ExecuteConfunc("%s \"%s\" \"%s\" %f %i", Cmd_Argv(1), label, tooltip, WEIGHT_NORMAL_PENALTY - (1.0f - penalty), count);

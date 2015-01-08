@@ -36,7 +36,7 @@ item bloodspider_weapon
 	firetwohanded	true
 	dmgtype			"normal"
 	virtual			true
-	weight		15
+	weight		15000
 
 	weapon_mod
 	{
@@ -72,7 +72,7 @@ item bloodspider_adv_weapon
 	firetwohanded	true
 	dmgtype			"normal"
 	virtual			true
-	weight		15
+	weight		15000
 
 	weapon_mod
 	{
@@ -112,7 +112,7 @@ item hovernet_plasma
 	reload			12
 	reloadsound		"weapons/reload-rifle"
 	virtual			true
-	weight		15
+	weight		15000
 
 	weapon_mod
 	{
@@ -158,7 +158,7 @@ item hovernet_adv_plasma
 	reload			12
 	reloadsound		"weapons/reload-rifle"
 	virtual			true
-	weight		15
+	weight		15000
 
 	weapon_mod
 	{

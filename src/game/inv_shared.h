@@ -341,7 +341,7 @@ typedef struct objDef_s {
 	int price;				/**< Price for this item. */
 	int productionCost;		/**< Production costs for this item. */
 	int size;				/**< Size of an item, used in storage capacities. */
-	float weight;			/**< The weight of the item */
+	int weight;			/**< The weight of the item */
 	bool notOnMarket;		/**< True if this item should not be available on market. */
 
 
@@ -508,7 +508,7 @@ public:
 	}
 
 
-	float getWeight() const;
+	int getWeight() const;
 	void getFirstShapePosition(int* const x, int* const y) const;
 	const objDef_t* getReactionFireWeaponType() const;
 	const fireDef_t* getFiredefs() const;
@@ -600,7 +600,7 @@ public:
 	void findSpace (const invDef_t* container, const Item* item, int* const px, int* const py, const Item* ignoredItem) const;
 	Item* findInContainer (const containerIndex_t contId, const Item*  const item) const;
 	Item* getItemAtPos (const invDef_t* container, const int x, const int y) const;
-	float getWeight () const;
+	int getWeight () const;
 	int canHoldItem (const invDef_t* container, const objDef_t* od, const int x, const int y, const Item* ignoredItem) const;
 	bool canHoldItemWeight (containerIndex_t from, containerIndex_t to, const Item& item, int maxWeight) const;
 	bool holdsReactionFireWeapon () const;

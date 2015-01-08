@@ -539,20 +539,17 @@ void InventoryInterface::destroyInventory (Inventory* const inv)
  */
 float InventoryInterface::GetInventoryState (const Inventory* inventory, int& slowestFd)
 {
-	float weight = 0;
-
 	slowestFd = 0;
 	const Container* cont = nullptr;
 	while ((cont = inventory->getNextCont(cont))) {
 		for (Item* ic = cont->_invList, *next; ic; ic = next) {
 			next = ic->getNext();
-			weight += ic->getWeight();
 			const fireDef_t* fireDef = ic->getSlowestFireDef();
 			if (slowestFd == 0 || (fireDef && fireDef->time > slowestFd))
 					slowestFd = fireDef->time;
 		}
 	}
-	return weight;
+	return inventory->getWeight();
 }
 
 #define WEAPONLESS_BONUS	0.4		/* if you got neither primary nor secondary weapon, this is the chance to retry to get one (before trying to get grenades or blades) */
@@ -625,7 +622,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 	int tuNeed = 0;
 	float weight = GetInventoryState(inv, tuNeed) + item.getWeight();
 	int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
-	if (weight > maxWeight || tuNeed > maxTU) {
+	if (weight > maxWeight * WEIGHT_FACTOR || tuNeed > maxTU) {
 		Com_DPrintf(DEBUG_SHARED, "PackAmmoAndWeapon: weapon too heavy: '%s' in equipment '%s' (%s).\n",
 				weapon->id, ed->id, invName);
 		return 0;
@@ -664,7 +661,7 @@ int InventoryInterface::PackAmmoAndWeapon (character_t* const chr, const objDef_
 
 			Item mun(ammo);
 			/* ammo to backpack; belt is for knives and grenades */
-			if (weight <= maxWeight && tuNeed <= maxTU)
+			if (weight <= maxWeight * WEIGHT_FACTOR && tuNeed <= maxTU)
 					numpacked += tryAddToInventory(inv, &mun, &csi->ids[CID_BACKPACK]);
 			/* no problem if no space left; one ammo already loaded */
 			if (numpacked > ammoMult || numpacked * weapon->ammo > 11)
@@ -898,9 +895,9 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t* e
 					if (randNumber < 0) {
 						const Item item(armour);
 						int tuNeed = 0;
-						const float weight = GetInventoryState(inv, tuNeed) + item.getWeight();
+						const int weight = GetInventoryState(inv, tuNeed) + item.getWeight();
 						const int maxTU = GET_TU(speed, GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]));
-						if (weight > maxWeight || tuNeed > maxTU)
+						if (weight > maxWeight * WEIGHT_FACTOR || tuNeed > maxTU)
 							continue;
 						if (tryAddToInventory(inv, &item, &this->csi->ids[CID_ARMOUR])) {
 							repeat = 0;
@@ -937,7 +934,7 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t* e
 							container = CID_IMPLANT;
 						else
 							container = CID_BACKPACK;
-						if (weight > maxWeight || tuNeed > maxTU || (itemFd && itemFd->time > maxTU))
+						if (weight > maxWeight * WEIGHT_FACTOR || tuNeed > maxTU || (itemFd && itemFd->time > maxTU))
 							continue;
 						tryAddToInventory(inv, &item, &this->csi->ids[container]);
 					}

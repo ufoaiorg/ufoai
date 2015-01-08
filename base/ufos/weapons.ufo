@@ -18,7 +18,7 @@ item medikit
 	oneshot		true
 	ammo			5
 	dmgtype 	"normal"
-	weight		2.0
+	weight		2000
 
 	weapon_mod
 	{
@@ -93,7 +93,7 @@ item irgoggles
 	thrown		true
 	headgear		true
 	dmgtype "normal"
-	weight		0.2
+	weight		200
 
 	weapon_mod
 	{
@@ -147,7 +147,7 @@ item fraggrenade
 	is_misc	true
 	thrown		true
 	dmgtype "blast"
-	weight		0.4
+	weight		400
 
 	weapon_mod
 	{
@@ -227,7 +227,7 @@ item flashbang
 	is_misc	true
 	thrown		true
 	dmgtype "shock"
-	weight		0.2
+	weight		200
 
 	weapon_mod
 	{
@@ -308,7 +308,7 @@ item smokegrenade
 	is_misc	true
 	thrown		true
 	dmgtype "smoke"
-	weight		0.2
+	weight		200
 
 	weapon_mod
 	{
@@ -389,7 +389,7 @@ item stungrenade
 	is_misc	true
 	thrown		true
 	dmgtype "stun_gas"
-	weight		0.2
+	weight		200
 
 	weapon_mod
 	{
@@ -475,7 +475,7 @@ item stungrenade_alien
 	is_misc	true
 	thrown		true
 	dmgtype "stun_gas"
-	weight		0.2
+	weight		200
 
 	weapon_mod
 	{
@@ -560,7 +560,7 @@ item incgrenade
 	is_misc	true
 	thrown		true
 	dmgtype 	"incendiary"
-	weight		0.2
+	weight		200
 
 	weapon_mod
 	{
@@ -645,7 +645,7 @@ item plasmagrenade
 	is_misc	true
 	thrown		true
 	dmgtype "plasma"
-	weight		0.6
+	weight		600
 
 	weapon_mod
 	{
@@ -725,7 +725,7 @@ item bomb1
 	notonmarket	true
 	thrown		true
 	is_misc	true
-	weight		4.0
+	weight		4000
 }
 
 /*
@@ -747,6 +747,6 @@ item bomb2
 	size		15
 	thrown		true
 	is_misc	true
-	weight		4.0
+	weight		4000
 }
 */

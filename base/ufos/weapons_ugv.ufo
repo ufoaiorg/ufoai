@@ -58,7 +58,7 @@ item ugv_chaingun
 	size			120
 	notonmarket		true
 	is_ugvitem		true
-	weight			30.0
+	weight			30000
 }
 
 item ugv_chaingun_belt
@@ -74,7 +74,7 @@ item ugv_chaingun_belt
 	is_ugvitem		true
 	size			40
 	dmgtype			"normal"
-	weight			10.0
+	weight			10000
 
 	weapon_mod
 	{
@@ -175,7 +175,7 @@ item ugv_weapon_autocannon
 	size			120
 	notonmarket		true
 	is_ugvitem		true
-	weight			30.0
+	weight			30000
 }
 
 // TODO:
