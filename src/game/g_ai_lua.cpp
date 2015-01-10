@@ -2140,9 +2140,9 @@ void AIL_Init (void)
 	gi.RegisterConstInt("luaaidist::dist", AILSC_DIST);
 	gi.RegisterConstInt("luaaidist::path", AILSC_PATH);
 
-	gi.RegisterConstInt("luaaishot::fast", AILSP_FAST);
-	gi.RegisterConstInt("luaaishot::near", AILSP_NEAR);
-	gi.RegisterConstInt("luaaishot::far", AILSP_FAR);
+	gi.RegisterConstInt("luaaishot::fastest", AILSP_FAST);
+	gi.RegisterConstInt("luaaishot::nearest", AILSP_NEAR);
+	gi.RegisterConstInt("luaaishot::farthest", AILSP_FAR);
 
 	gi.RegisterConstInt("luaaiwander::rand", AILPW_RAND);
 	gi.RegisterConstInt("luaaiwander::CW", AILPW_CW);
