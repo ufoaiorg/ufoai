@@ -2056,7 +2056,26 @@ static const char* AIL_GetAIType (const int team)
 
 bool AIL_TeamThink (Player& player)
 {
-	return false;
+	/* Set the global player */
+	AIL_player = &player;
+
+	bool thinkAgain = false;
+	/* Try to run the function. */
+	lua_getglobal(ailState, AIL_GetAIType(player.getTeam()));
+	if (lua_istable(ailState, -1)) {
+		lua_getfield(ailState, -1, "team_think");
+		if (lua_pcall(ailState, 0, 1, 0)) { /* error has occured */
+			gi.DPrintf("Error while running Lua: %s\n",
+				lua_isstring(ailState, -1) ? lua_tostring(ailState, -1) : "Unknown Error");
+		} else
+			thinkAgain = lua_toboolean(ailState, -1);
+	} else {
+		gi.DPrintf("Error while running Lua: AI for %s not found!\n", AIL_toTeamString(player.getTeam()));
+	}
+
+	/* Cleanup */
+	AIL_player = nullptr;
+	return thinkAgain;
 }
 
 static lua_State* AIL_InitLua () {
