@@ -2036,6 +2036,24 @@ void AIL_ActorThink (Player& player, Actor* actor)
 	AIL_player = nullptr;
 }
 
+static const char* AIL_GetAIType (const int team)
+{
+	const char* type;
+	switch (team) {
+	case TEAM_ALIEN:
+		type = "alien";
+		break;
+	case TEAM_CIVILIAN:
+		type = "civilian";
+		break;
+	case TEAM_PHALANX:
+	default:	/* Default to "soldier" AI for multiplayer teams */
+		type = "soldier";
+		break;
+	}
+	return type;
+}
+
 bool AIL_TeamThink (Player& player)
 {
 	return false;
@@ -2061,12 +2079,12 @@ static lua_State* AIL_InitLua () {
  * @param[in] subtype Subtype of the AI.
  * @return 0 on success.
  */
-int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
+int AIL_InitActor (Edict* ent)
 {
 	/* Prepare the AI */
 	AI_t* AI = &ent->AI;
-	Q_strncpyz(AI->type, type, sizeof(AI->type));
-	Q_strncpyz(AI->subtype, subtype, sizeof(AI->subtype));
+	Q_strncpyz(AI->type, AIL_GetAIType(ent->getTeam()), sizeof(AI->type));
+	Q_strncpyz(AI->subtype, ent->chr.teamDef->id, sizeof(AI->subtype));
 
 	/* Create the a new Lua state if needed */
 	if (ailState == nullptr)
@@ -2081,7 +2099,7 @@ int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
 	lua_getglobal(ailState, AI->type);
 	if (!lua_istable(ailState, -1)) {
 		char path[MAX_VAR];
-		Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
+		Com_sprintf(path, sizeof(path), "ai/%s.lua", AI->type);
 		char* fbuf;
 		const int size = gi.FS_LoadFile(path, (byte**) &fbuf);
 		if (size == 0) {

@@ -109,7 +109,7 @@ bool AI_HideNeeded(const Actor* actor);
  */
 bool AIL_TeamThink(Player& player);
 void AIL_ActorThink(Player& player, Actor* actor);
-int AIL_InitActor(Edict* ent, const char* type, const char* subtype);
+int AIL_InitActor(Edict* ent);
 void AIL_Cleanup(void);
 void AIL_Init(void);
 void AIL_Shutdown(void);

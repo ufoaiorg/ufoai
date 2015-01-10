@@ -1895,12 +1895,7 @@ static void AI_InitPlayer (const Player& player, Actor* actor, const equipDef_t*
 	}
 
 	/* initialize the LUA AI now */
-	if (team == TEAM_CIVILIAN)
-		AIL_InitActor(actor, "civilian", actor->chr.teamDef->id);
-	else if (team == TEAM_ALIEN)
-		AIL_InitActor(actor, "alien", actor->chr.teamDef->id);
-	else
-		gi.DPrintf("AI_InitPlayer: unknown team AI\n");
+	AIL_InitActor(actor);
 }
 
 static const equipDef_t* G_GetEquipmentForAISpawn (int team)
