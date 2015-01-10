@@ -107,6 +107,7 @@ bool AI_HideNeeded(const Actor* actor);
 /*
  * LUA functions
  */
+bool AIL_TeamThink(Player& player);
 void AIL_ActorThink(Player& player, Actor* actor);
 int AIL_InitActor(Edict* ent, const char* type, const char* subtype);
 void AIL_Cleanup(void);

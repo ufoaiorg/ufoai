@@ -1713,8 +1713,14 @@ static void AI_PlayerRun (Player& player)
 	if (level.activeTeam != player.getTeam() || player.roundDone)
 		return;
 
+	if (g_ailua->integer > 1) {
+		if (AIL_TeamThink(player))
+			/* did some thinking, come back next time */
+			return;
+		/* finished thinking, end round */
+	}
 	/** Duke's playground for a completely new AI. While in developement, it is only available to Phalanx */
-	if (player.getTeam() == TEAM_PHALANX && g_aihumans->integer == 2) {
+	 else if (player.getTeam() == TEAM_PHALANX && g_aihumans->integer == 2) {
 		if (AI_TeamThink(player))
 			return;		/* did some thinking, come back next frame */
 		/* finished thinking, end round */

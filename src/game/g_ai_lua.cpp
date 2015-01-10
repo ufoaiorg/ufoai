@@ -2036,6 +2036,11 @@ void AIL_ActorThink (Player& player, Actor* actor)
 	AIL_player = nullptr;
 }
 
+bool AIL_TeamThink (Player& player)
+{
+	return false;
+}
+
 static lua_State* AIL_InitLua () {
 	/* Create the Lua state */
 	lua_State* newState = luaL_newstate();
