@@ -275,6 +275,7 @@ static const luaL_reg pos3L_methods[] = {
  */
 static int AIL_print(lua_State* L);
 static int AIL_see(lua_State* L);
+static int AIL_squad(lua_State* L);
 static int AIL_crouch(lua_State* L);
 static int AIL_reactionfire(lua_State* L);
 static int AIL_roundsleft(lua_State* L);
@@ -306,6 +307,7 @@ static int AIL_hideneeded(lua_State* L);
 static const luaL_reg AIL_methods[] = {
 	{"print", AIL_print},
 	{"see", AIL_see},
+	{"squad", AIL_squad},
 	{"crouch", AIL_crouch},
 	{"reactionfire", AIL_reactionfire},
 	{"roundsleft", AIL_roundsleft},
@@ -940,6 +942,10 @@ static int pos3L_distance (lua_State* L)
 /**
  *    A I L
  */
+/*
+ * General functions.
+ */
+
 /**
  * @brief Works more or less like Lua's builtin print.
  */
@@ -982,6 +988,34 @@ static int AIL_print (lua_State* L)
 	gi.DPrintf("\n");
 	return 0;
 }
+
+/*
+ * Player functions.
+ */
+
+/** @brief Returns a table with the actors in the current player's team */
+static int AIL_squad (lua_State* L)
+{
+	/* New Lua table. */
+	lua_newtable(L);
+
+	int i = 1; /* LUA indexes starting from one */
+	Actor* check = nullptr;
+	while ((check = G_EdictsGetNextActor(check))) {
+		if (check->getPlayerNum() != AIL_player->getNum())
+			continue;
+		lua_pushnumber(L, i++); /* index */
+		aiActor_t target;
+		target.actor = check;
+		lua_pushactor(L, &target); /* value */
+		lua_rawset(L, -3); /* store the value in the table */
+	}
+	return 1; /* Returns the table of actors. */
+}
+
+/*
+ * Actor functions
+ */
 
 /**
  * @brief Returns what the actor can see.
