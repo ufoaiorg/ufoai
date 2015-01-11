@@ -2098,12 +2098,12 @@ static lua_State* AIL_InitLua () {
  * @param[in] subtype Subtype of the AI.
  * @return 0 on success.
  */
-int AIL_InitActor (Edict* ent)
+int AIL_InitActor (Actor* actor)
 {
 	/* Prepare the AI */
-	AI_t* AI = &ent->AI;
-	Q_strncpyz(AI->type, AIL_GetAIType(ent->getTeam()), sizeof(AI->type));
-	Q_strncpyz(AI->subtype, ent->chr.teamDef->id, sizeof(AI->subtype));
+	AI_t* AI = &actor->AI;
+	Q_strncpyz(AI->type, AIL_GetAIType(actor->getTeam()), sizeof(AI->type));
+	Q_strncpyz(AI->subtype, actor->chr.teamDef->id, sizeof(AI->subtype));
 
 	/* Create the a new Lua state if needed */
 	if (ailState == nullptr)
