@@ -1000,6 +1000,11 @@ static int AIL_print (lua_State* L)
  */
 static int AIL_squad (lua_State* L)
 {
+	if (g_ailua->integer < 2) {
+		lua_pushnil(L);
+		return 1;
+	}
+
 	/* New Lua table. */
 	lua_newtable(L);
 
@@ -1022,6 +1027,11 @@ static int AIL_squad (lua_State* L)
  */
 static int AIL_select (lua_State* L)
 {
+	if (g_ailua->integer < 2) {
+		lua_pushnil(L);
+		return 1;
+	}
+
 	if (lua_gettop(L) > 0 && lua_isactor(L, 1)) {
 		aiActor_t* target = lua_toactor(L, 1);
 		AIL_ent = target->actor;
