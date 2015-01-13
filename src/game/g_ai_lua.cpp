@@ -274,8 +274,9 @@ static const luaL_reg pos3L_methods[] = {
  * General AI bindings.
  */
 static int AIL_print(lua_State* L);
-static int AIL_see(lua_State* L);
 static int AIL_squad(lua_State* L);
+static int AIL_select(lua_State* L);
+static int AIL_see(lua_State* L);
 static int AIL_crouch(lua_State* L);
 static int AIL_reactionfire(lua_State* L);
 static int AIL_roundsleft(lua_State* L);
@@ -306,8 +307,9 @@ static int AIL_hideneeded(lua_State* L);
  */
 static const luaL_reg AIL_methods[] = {
 	{"print", AIL_print},
-	{"see", AIL_see},
 	{"squad", AIL_squad},
+	{"select", AIL_select},
+	{"see", AIL_see},
 	{"crouch", AIL_crouch},
 	{"reactionfire", AIL_reactionfire},
 	{"roundsleft", AIL_roundsleft},
@@ -993,7 +995,9 @@ static int AIL_print (lua_State* L)
  * Player functions.
  */
 
-/** @brief Returns a table with the actors in the current player's team */
+/**
+ * @brief Returns a table with the actors in the current player's team
+ */
 static int AIL_squad (lua_State* L)
 {
 	/* New Lua table. */
@@ -1011,6 +1015,22 @@ static int AIL_squad (lua_State* L)
 		lua_rawset(L, -3); /* store the value in the table */
 	}
 	return 1; /* Returns the table of actors. */
+}
+
+/**
+ * @brief Select an specific AI actor.
+ */
+static int AIL_select (lua_State* L)
+{
+	if (lua_gettop(L) > 0 && lua_isactor(L, 1)) {
+		aiActor_t* target = lua_toactor(L, 1);
+		AIL_ent = target->actor;
+		lua_pushboolean(L, AIL_ent != nullptr);
+	} else {
+		AIL_invalidparameter(1);
+		lua_pushboolean(L, false);
+	}
+	return 1;
 }
 
 /*
@@ -2092,6 +2112,7 @@ bool AIL_TeamThink (Player& player)
 {
 	/* Set the global player */
 	AIL_player = &player;
+	AIL_ent = nullptr;
 
 	bool thinkAgain = false;
 	/* Try to run the function. */
@@ -2109,6 +2130,7 @@ bool AIL_TeamThink (Player& player)
 
 	/* Cleanup */
 	AIL_player = nullptr;
+	AIL_ent = nullptr;
 	return thinkAgain;
 }
 
