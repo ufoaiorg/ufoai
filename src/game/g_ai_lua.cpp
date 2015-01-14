@@ -2255,9 +2255,9 @@ void AIL_Shutdown (void)
 	gi.UnregisterConstVariable("luaaidist::dist");
 	gi.UnregisterConstVariable("luaaidist::path");
 
-	gi.UnregisterConstVariable("luaaishot::fast");
-	gi.UnregisterConstVariable("luaaishot::near");
-	gi.UnregisterConstVariable("luaaishot::far");
+	gi.UnregisterConstVariable("luaaishot::fastest");
+	gi.UnregisterConstVariable("luaaishot::nearest");
+	gi.UnregisterConstVariable("luaaishot::farthest");
 
 	gi.UnregisterConstVariable("luaaiwander::rand");
 	gi.UnregisterConstVariable("luaaiwander::CW");
