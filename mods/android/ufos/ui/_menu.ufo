@@ -607,3 +607,101 @@ component spinner_horiz extends spinner
 	size		"80 50"
 	horizontal	true
 }
+
+component cmpLoadSlotPanel extends panel
+{
+	{
+		size		"228 34"
+		layout			LAYOUT_LEFT_RIGHT_FLOW
+		layoutMargin	1
+	}
+
+	data filename
+	{
+		string		""
+	}
+
+	data index
+	{
+		integer		-1
+	}
+
+	button button
+	{
+		background		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		font		"f_verysmall"
+		size		"160 34"
+	}
+
+	button upload
+	{
+		background		"icons/upload"
+		tooltip		"_Upload"
+		size		"34 34"
+	}
+
+	button delete
+	{
+		size		"34 34"
+		icon 		"icons/delete"
+		tooltip		"_Delete this game"
+	}
+}
+
+component cmpSaveSlotPanel extends panel
+{
+	{
+		size		"228 34"
+		layout			LAYOUT_LEFT_RIGHT_FLOW
+		layoutMargin	1
+	}
+
+	data filename
+	{
+		string		""
+	}
+
+	data title
+	{
+		string		""
+	}
+
+	data date
+	{
+		string		""
+	}
+
+	data index
+	{
+		integer		-1
+	}
+
+	textentry name
+	{
+		background		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CL
+		padding		8
+		font		"f_verysmall"
+		size		"160 34"
+		clickoutabort   true
+	}
+
+	button upload
+	{
+		background		"icons/upload"
+		tooltip		"_Upload"
+		size		"34 34"
+	}
+
+	button delete
+	{
+		size		"34 34"
+		icon 		"icons/delete"
+		tooltip		"_Delete this game"
+	}
+}
