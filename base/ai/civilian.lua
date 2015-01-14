@@ -134,4 +134,32 @@ function ailc.think ()
 	end
 end
 
+--[[
+	Team think function, just run the normal think function, no idea what team tactics would be for civilians
+--]]
+function ailc.team_think ()
+	-- Round just started set up.
+	if ailc.squed = nil then
+		ailc.squad = ai.squad()
+		ailc.actor = 1
+	-- Run next actor
+	else
+		ailc.actor = ailc.actor + 1
+	end
+
+	-- Done with this round.
+	if ailc.actor > #ailc.squad then
+		ailc.squad = nil
+		return false
+	end
+
+	-- Run the think function for this actor
+	ai.select(ailc.squad[ailc.actor])
+	if not ai:actor():isdead() then
+		ailc.think()
+	end
+
+	return true
+end
+
 return ailc

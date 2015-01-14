@@ -331,7 +331,7 @@ function ails.phase_three ()
 	end
 end
 
-function ails.think ()
+function ails.prethink ()
 	local morale = ai.actor():morale()
 	if morale == "panic" then
 		if not ails.hide() then
@@ -350,10 +350,63 @@ function ails.think ()
 			ails.params.prio = {"all"}
 		end
 	end
+end
+
+function ails.think ()
 	ails.target = nil
 	ails.phase_one()
 	ails.phase_two()
 	ails.phase_three()
+end
+
+--[[
+	Team AI example
+	No actual team tactics, just run the AI by phases, first short term actions for everybody followed by
+	longer term actions for all and close with round end actions for everybody
+--]]
+
+ails.phase = 0
+
+function ails.team_think ()
+	-- Turn just started set things up.
+	if ails.phase < 1 then
+		ails.squad = ai.squad()
+		ails.actor = 1
+		ails.phase = 1
+		ails.targets = {}
+	-- Run next actor
+	else
+		ails.actor = ails.actor + 1
+	end
+
+	-- We are done with this phase advance to next one.
+	if ails.actor > #ails.squad then
+		ails.phase = ails.phase + 1
+		ails.actor = 1
+	end
+
+	-- We are done thinking for the turn.
+	if #ails.squad < 1 or ails.phase > 3 then
+		ails.phase = 0
+		return false
+	end
+
+	ai.select(ails.squad[ails.actor])
+	if not ai.actor():isdead() then
+		ails.prethink()
+		ails.target = ails.targets[ails.actor]
+		if ails.phase == 1 then
+			ails.phase_one()
+		elseif ails.phase == 2 then
+			ails.phase_two()
+		else
+			ails.phase_three()
+		end
+		ails.targets[ails.actor] = ails.target
+	end
+
+	-- Come back again, we are not done with this turn yet
+	return true
 end
 
 return ails
