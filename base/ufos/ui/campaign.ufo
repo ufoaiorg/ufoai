@@ -305,11 +305,15 @@ window load
 			cmd "game_load slot<node:this.parent.index@integer>; game_timestop;"
 			*cvar:mn_fastexit = 1
 		}
-		*node:this.parent.slots.slot<1>.upload@onClick = {
-			cmd "web_uploadcgame 0 <node:this.parent.filename@string>;"
+
+		if ( "<5>" eq "" ) {
+			*node:this.parent.slots.slot<1>.upload@invis = true
+		} else  {
+			*node:this.parent.slots.slot<1>.upload@onClick = {
+				cmd "web_uploadcgame 0 <node:this.parent.filename@string>;"
+			}
+			*node:this.parent.slots.slot<1>.upload@invis = false
 		}
-		//*node:this.parent.slots.slot<1>.delete@onClick = {}
-		*node:this.parent.slots.slot<1>.upload@invis = false
 		*node:this.parent.slots.slot<1>.delete@invis = true
 	}
 
@@ -432,11 +436,8 @@ window save {
 			cmd "game_save \"slot<node:this.parent.index@integer>\" \"<node:this.parent.name@string>\";"
 			*cvar:mn_fastexit = 1
 		}
-		*node:this.parent.slots.slot<1>.upload@onClick = {
-			cmd "web_uploadcgame 0 \"<node:this.parent.filename@string>\";"
-		}
-		//*node:this.parent.slots.slot<1>.delete@onClick = {}
-		*node:this.parent.slots.slot<1>.upload@invis = false
+
+		*node:this.parent.slots.slot<1>.upload@invis = true
 		*node:this.parent.slots.slot<1>.delete@invis = true
 	}
 
