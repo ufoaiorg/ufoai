@@ -1341,9 +1341,10 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 		 * by fire fields and similar triggers after all) */
 		/* @todo decide if stunned should be able to touch some triggers and adjust accordingly */
 		if (smoke || incendiary || stunGas) {
+			const entity_type_t type = smoke ? ET_SMOKE : incendiary ? ET_FIRE : ET_SMOKESTUN;
 			Edict* closeActor = nullptr;
 			while ((closeActor = G_FindRadius(closeActor, impact, fd->splrad, ET_ACTOR))) {
-				G_TouchTriggers(closeActor);
+				G_TouchTriggers(closeActor, type);
 			}
 		}
 
