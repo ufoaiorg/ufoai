@@ -543,7 +543,7 @@ static int G_GetTouchingEdicts (const AABB& aabb, Edict** list, int maxCount, Ed
  * @param[in,out] ent The entity that maybe touches others
  * @return Returns the number of associated client actions
  */
-int G_TouchTriggers (Edict* ent)
+int G_TouchTriggers (Edict* ent, const entity_type_t type)
 {
 	Edict* touched[MAX_EDICTS];
 
@@ -561,6 +561,8 @@ int G_TouchTriggers (Edict* ent)
 	for (int i = 0; i < num; i++) {
 		Edict* hit = touched[i];
 		if (hit->solid != SOLID_TRIGGER)
+			continue;
+		if (type != ET_NULL && hit->type != type)
 			continue;
 		if (!hit->hasTouch())
 			continue;
