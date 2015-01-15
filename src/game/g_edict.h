@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2014 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 Original file from Quake 2 v3.21: quake2-2.31/game/g_local.h
 Copyright (C) 1997-2001 Id Software, Inc.
@@ -138,7 +138,7 @@ public:
 	byte dmgtype;				/**< damage type done by the entity */
 	/** @sa memcpy in Grid_CheckForbidden */
 	actorSizeEnum_t fieldSize;	/**< ACTOR_SIZE_* */
-	bool hiding;				/**< for ai actors - when they try to hide after the performed their action */
+	bool hiding;				/**< for ai actors - when they try to hide after they performed their action */
 
 	/** function to call when triggered - this function should only return true when there is
 	 * a client action associated with it */
@@ -153,7 +153,7 @@ public:
 	bool (*use)(Edict* self, Edict* activator);
 	bool (*destroy)(Edict* self);
 
-	Edict* touchedNext;			/**< entity list of edict that are currently touching the trigger_touch */
+	linkedList_t* touchedList;			/**< entity list of edicts that are currently touching the trigger_touch */
 	int doorState;				/**< open or closed */
 
 	moveinfo_t		moveinfo;
@@ -273,7 +273,7 @@ public:
 	inline Player& getPlayer () const {
 		return game.players[this->pnum];
 	}
-	/* also used by camera ! */
+	/* also used by camera, mission and civilian_target! */
 	inline int getTeam() const {
 		return team;
 	}

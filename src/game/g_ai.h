@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2014 UFO: Alien Invasion.
+Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -107,8 +107,9 @@ bool AI_HideNeeded(const Actor* actor);
 /*
  * LUA functions
  */
+bool AIL_TeamThink(Player& player);
 void AIL_ActorThink(Player& player, Actor* actor);
-int AIL_InitActor(Edict* ent, const char* type, const char* subtype);
+int AIL_InitActor(Actor* actor);
 void AIL_Cleanup(void);
 void AIL_Init(void);
 void AIL_Shutdown(void);

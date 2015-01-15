@@ -18,7 +18,7 @@
  */
 
 /*
- Copyright (C) 2002-2014 UFO: Alien Invasion.
+ Copyright (C) 2002-2015 UFO: Alien Invasion.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -1262,7 +1262,7 @@ void G_ClientTeamInfo (const Player& player)
 				G_ActorGiveTimeUnits(actor);
 				G_TouchTriggers(actor);
 				actor->contentFlags = G_ActorGetContentFlags(actor->origin);
-				AIL_InitActor(actor, "soldier", actor->chr.teamDef->id);
+				AIL_InitActor(actor);
 			} else {
 				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player.getTeam(), actorFieldSize);
 

@@ -462,7 +462,7 @@ function aila.phase_three ()
 	end
 end
 
-function aila.think ()
+function aila.prethink ()
 	local morale = ai.actor():morale()
 	if morale == "panic" then
 		if not aila.hide() then
@@ -486,10 +486,65 @@ function aila.think ()
 			aila.params.prio = {"all"}
 		end
 	end
+end
+
+function aila.think ()
 	aila.target = nil
+	aila.prethink()
 	aila.phase_one()
 	aila.phase_two()
 	aila.phase_three()
+end
+
+--[[
+	Team AI example
+	No actual team tactics, just run the AI by phases, first short term actions for everybody followed by
+	longer term actions for all and close with round end actions for everybody
+--]]
+
+aila.phase = 0
+
+function aila.team_think ()
+	-- Turn just started set things up.
+	if aila.phase < 1 then
+		aila.squad = ai.squad()
+		aila.actor = 1
+		aila.phase = 1
+		aila.targets = {}
+	-- Run next actor
+	else
+		aila.actor = aila.actor + 1
+	end
+
+	-- We are done with this phase advance to next one.
+	if aila.actor > #aila.squad then
+		aila.phase = aila.phase + 1
+		aila.actor = 1
+	end
+
+	-- We are done thinking for the turn.
+	if #aila.squad < 1 or aila.phase > 3 then
+		aila.phase = 0
+		return false
+	end
+
+	ai.select(aila.squad[aila.actor])
+	ai.print("Phase: ", aila.phase, "Actor: ", aila.squad[aila.actor], aila.actor)
+	if not ai.actor():isdead() then
+		aila.prethink()
+		aila.target = aila.targets[aila.actor]
+		if aila.phase == 1 then
+			aila.phase_one()
+		elseif aila.phase == 2 then
+			aila.phase_two()
+		else
+			aila.phase_three()
+		end
+		aila.targets[aila.actor] = aila.target
+	end
+
+	-- Come back again, we are not done with this turn yet
+	return true
 end
 
 return aila

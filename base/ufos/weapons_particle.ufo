@@ -19,7 +19,7 @@ item pbeampistol
 	price			3000
 	size			20
 	is_secondary	true
-	weight			1.3
+	weight			1300
 }
 
 item pbeampistol_ammo
@@ -35,7 +35,7 @@ item pbeampistol_ammo
 	size			3
 	is_secondary	true
 	dmgtype			"particlebeam"
-	weight			0.3
+	weight			300
 
 	weapon_mod
 	{
@@ -110,7 +110,7 @@ item pbeamrifle
 	price			4000
 	size			40
 	is_primary		true
-	weight			3.4
+	weight			3400
 }
 
 item pbeamrifle_ammo
@@ -126,7 +126,7 @@ item pbeamrifle_ammo
 	size			5
 	is_primary		true
 	dmgtype			"particlebeam"
-	weight			0.5
+	weight			500
 
 	weapon_mod
 	{
@@ -223,7 +223,7 @@ item pbeamcannon
 	size			70
 	is_primary		true
 	is_heavy		true
-	weight			6.0
+	weight			6000
 }
 
 item pbeamcannon_ammo
@@ -240,7 +240,7 @@ item pbeamcannon_ammo
 	is_primary		true
 	is_heavy		true
 	dmgtype			"particlebeam"
-	weight			0.8
+	weight			800
 
 	weapon_mod
 	{

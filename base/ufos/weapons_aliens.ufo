@@ -20,7 +20,7 @@ item needlergun
 	price			5000
 	size			45
 	is_primary		true
-	weight			6.0
+	weight			6000
 }
 
 item needlerheavy
@@ -42,7 +42,7 @@ item needlerheavy
 	price			5000
 	size			45
 	is_primary		true
-	weight			9.0
+	weight			9000
 }
 
 item needlergun_ammo
@@ -58,7 +58,7 @@ item needlergun_ammo
 	size			9
 	is_primary		true
 	dmgtype			"normal"
-	weight			1.0
+	weight			1000
 
 	weapon_mod
 	{

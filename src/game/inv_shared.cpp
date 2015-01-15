@@ -6,7 +6,7 @@
  */
 
 /*
-Copyright (C) 2002-2014 UFO: Alien Invasion.
+Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -519,9 +519,9 @@ Item::Item (const objDef_t* itemDef, const objDef_t* ammo, int ammoLeft)
  * @brief Return the weight of an item.
  * @return The weight of the given item including any ammo loaded.
  */
-float Item::getWeight () const
+int Item::getWeight () const
 {
-	float weight = def()->weight;
+	int weight = def()->weight;
 	if (ammoDef() && ammoDef() != def() && getAmmoLeft() > 0) {
 		weight += ammoDef()->weight;
 	}
@@ -924,22 +924,22 @@ bool Inventory::canHoldItemWeight (containerIndex_t from, containerIndex_t to, c
 	if (CSI->ids[to].temp || !CSI->ids[from].temp)
 		return true;
 
-	const float itemWeight = item.getWeight();
-	if (itemWeight <= 0.00001f)
+	const int itemWeight = item.getWeight();
+	if (itemWeight < 1)
 		return true;
 	const bool swapArmour = item.isArmour() && getArmour();
-	const float invWeight = getWeight() - (swapArmour ? getArmour()->getWeight() : 0);
+	const int invWeight = getWeight() - (swapArmour ? getArmour()->getWeight() : 0);
 
-	return (maxWeight < 0 || maxWeight >= invWeight + itemWeight);
+	return (maxWeight < 0 || maxWeight * WEIGHT_FACTOR >= invWeight + itemWeight);
 }
 
 /**
  * @brief Get the weight of the items in the given inventory (excluding those in temp containers).
  * @return The total weight of the inventory items (excluding those in temp containers)
  */
-float Inventory::getWeight () const
+int Inventory::getWeight () const
 {
-	float weight = 0;
+	int weight = 0;
 	const Container* cont = nullptr;
 	while ((cont = getNextCont(cont))) {
 		Item* item = nullptr;

@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2014 UFO: Alien Invasion.
+Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -65,6 +65,8 @@ int CL_ActorDoMoveTime (const eventRegister_t* self, dbuffer* msg, eventTiming_t
 	/* the end of this event is marked with a 0 */
 	while (NET_PeekLong(msg) != 0) {
 		newStep->steps = NET_ReadByte(msg);
+		if (newStep->steps >= MAX_ROUTE || newStep->steps < 0)
+			Com_Error(ERR_DROP, "CL_ActorDoMoveTime: Invalid step number: %i", newStep->steps);
 		const dvec_t dvec = NET_ReadShort(msg);
 		const byte dir = getDVdir(dvec);
 		pos3_t oldPos;
@@ -75,10 +77,6 @@ int CL_ActorDoMoveTime (const eventRegister_t* self, dbuffer* msg, eventTiming_t
 		time += stepTime;
 		NET_ReadShort(msg);
 	}
-	++newStep->steps;
-
-	if (newStep->steps > MAX_ROUTE)
-		Com_Error(ERR_DROP, "route length overflow: %i", newStep->steps);
 
 	/* skip the end of move marker */
 	NET_ReadLong(msg);

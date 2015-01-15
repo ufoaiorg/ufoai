@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2014 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -47,7 +47,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, Edict* ent)
 
 	switch (skill) {
 	case ABILITY_POWER: {
-		const float weight = chr->scoreMission->carriedWeight / level.actualRound;
+		const float weight = chr->scoreMission->carriedWeight / WEIGHT_FACTOR / level.actualRound;
 		const float penalty = GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]);
 		experience = 50 * (weight / chr->score.skills[ABILITY_POWER]) / penalty;
 		break;

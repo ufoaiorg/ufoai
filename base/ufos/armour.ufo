@@ -67,7 +67,7 @@ item armour_light
 	scale		0.7
 	price		1400
 	size		60
-	weight		7.0
+	weight		7000
 	armourpath	"light"
 	useable		"phalanx"
 
@@ -131,7 +131,7 @@ item armour_medium
 	scale		0.7
 	price		7500
 	size		120
-	weight		9.0
+	weight		9000
 	useable		"phalanx"
 	armourpath	"medium"
 
@@ -195,7 +195,7 @@ item armour_power
 	scale		0.7
 	price		32000
 	size		150
-	weight		14.0
+	weight		14000
 	useable		"phalanx"
 	armourpath	"power"
 
@@ -262,7 +262,7 @@ item armour_light_alien
 	center		"0 0 -5"
 	scale		0.7
 	price		1400
-	weight		7.0
+	weight		7000
 	size		50
 	useable		"alien"
 	armourpath	"light"
@@ -326,7 +326,7 @@ item armour_medium_alien
 	center		"0 0 -5"
 	scale		0.7
 	price		7500
-	weight		12.0
+	weight		12000
 	size		75
 	useable		"alien"
 	armourpath	"medium"

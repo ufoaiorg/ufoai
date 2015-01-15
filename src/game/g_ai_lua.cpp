@@ -13,7 +13,7 @@
  */
 
 /*
-Copyright (C) 2002-2014 UFO: Alien Invasion.
+Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -274,6 +274,8 @@ static const luaL_reg pos3L_methods[] = {
  * General AI bindings.
  */
 static int AIL_print(lua_State* L);
+static int AIL_squad(lua_State* L);
+static int AIL_select(lua_State* L);
 static int AIL_see(lua_State* L);
 static int AIL_crouch(lua_State* L);
 static int AIL_reactionfire(lua_State* L);
@@ -305,6 +307,8 @@ static int AIL_hideneeded(lua_State* L);
  */
 static const luaL_reg AIL_methods[] = {
 	{"print", AIL_print},
+	{"squad", AIL_squad},
+	{"select", AIL_select},
 	{"see", AIL_see},
 	{"crouch", AIL_crouch},
 	{"reactionfire", AIL_reactionfire},
@@ -940,6 +944,10 @@ static int pos3L_distance (lua_State* L)
 /**
  *    A I L
  */
+/*
+ * General functions.
+ */
+
 /**
  * @brief Works more or less like Lua's builtin print.
  */
@@ -982,6 +990,62 @@ static int AIL_print (lua_State* L)
 	gi.DPrintf("\n");
 	return 0;
 }
+
+/*
+ * Player functions.
+ */
+
+/**
+ * @brief Returns a table with the actors in the current player's team
+ */
+static int AIL_squad (lua_State* L)
+{
+	if (g_ailua->integer < 2) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	/* New Lua table. */
+	lua_newtable(L);
+
+	int i = 1; /* LUA indexes starting from one */
+	Actor* check = nullptr;
+	while ((check = G_EdictsGetNextActor(check))) {
+		if (check->getPlayerNum() != AIL_player->getNum())
+			continue;
+		lua_pushnumber(L, i++); /* index */
+		aiActor_t target;
+		target.actor = check;
+		lua_pushactor(L, &target); /* value */
+		lua_rawset(L, -3); /* store the value in the table */
+	}
+	return 1; /* Returns the table of actors. */
+}
+
+/**
+ * @brief Select an specific AI actor.
+ */
+static int AIL_select (lua_State* L)
+{
+	if (g_ailua->integer < 2) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	if (lua_gettop(L) > 0 && lua_isactor(L, 1)) {
+		aiActor_t* target = lua_toactor(L, 1);
+		AIL_ent = target->actor;
+		lua_pushboolean(L, AIL_ent != nullptr);
+	} else {
+		AIL_invalidparameter(1);
+		lua_pushboolean(L, false);
+	}
+	return 1;
+}
+
+/*
+ * Actor functions
+ */
 
 /**
  * @brief Returns what the actor can see.
@@ -2036,6 +2100,50 @@ void AIL_ActorThink (Player& player, Actor* actor)
 	AIL_player = nullptr;
 }
 
+static const char* AIL_GetAIType (const int team)
+{
+	const char* type;
+	switch (team) {
+	case TEAM_ALIEN:
+		type = "alien";
+		break;
+	case TEAM_CIVILIAN:
+		type = "civilian";
+		break;
+	case TEAM_PHALANX:
+	default:	/* Default to "soldier" AI for multiplayer teams */
+		type = "soldier";
+		break;
+	}
+	return type;
+}
+
+bool AIL_TeamThink (Player& player)
+{
+	/* Set the global player */
+	AIL_player = &player;
+	AIL_ent = nullptr;
+
+	bool thinkAgain = false;
+	/* Try to run the function. */
+	lua_getglobal(ailState, AIL_GetAIType(player.getTeam()));
+	if (lua_istable(ailState, -1)) {
+		lua_getfield(ailState, -1, "team_think");
+		if (lua_pcall(ailState, 0, 1, 0)) { /* error has occured */
+			gi.DPrintf("Error while running Lua: %s\n",
+				lua_isstring(ailState, -1) ? lua_tostring(ailState, -1) : "Unknown Error");
+		} else
+			thinkAgain = lua_toboolean(ailState, -1);
+	} else {
+		gi.DPrintf("Error while running Lua: AI for %s not found!\n", AIL_toTeamString(player.getTeam()));
+	}
+
+	/* Cleanup */
+	AIL_player = nullptr;
+	AIL_ent = nullptr;
+	return thinkAgain;
+}
+
 static lua_State* AIL_InitLua () {
 	/* Create the Lua state */
 	lua_State* newState = luaL_newstate();
@@ -2056,12 +2164,12 @@ static lua_State* AIL_InitLua () {
  * @param[in] subtype Subtype of the AI.
  * @return 0 on success.
  */
-int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
+int AIL_InitActor (Actor* actor)
 {
 	/* Prepare the AI */
-	AI_t* AI = &ent->AI;
-	Q_strncpyz(AI->type, type, sizeof(AI->type));
-	Q_strncpyz(AI->subtype, subtype, sizeof(AI->subtype));
+	AI_t* AI = &actor->AI;
+	Q_strncpyz(AI->type, AIL_GetAIType(actor->getTeam()), sizeof(AI->type));
+	Q_strncpyz(AI->subtype, actor->chr.teamDef->id, sizeof(AI->subtype));
 
 	/* Create the a new Lua state if needed */
 	if (ailState == nullptr)
@@ -2076,7 +2184,7 @@ int AIL_InitActor (Edict* ent, const char* type, const char* subtype)
 	lua_getglobal(ailState, AI->type);
 	if (!lua_istable(ailState, -1)) {
 		char path[MAX_VAR];
-		Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
+		Com_sprintf(path, sizeof(path), "ai/%s.lua", AI->type);
 		char* fbuf;
 		const int size = gi.FS_LoadFile(path, (byte**) &fbuf);
 		if (size == 0) {
@@ -2117,9 +2225,9 @@ void AIL_Init (void)
 	gi.RegisterConstInt("luaaidist::dist", AILSC_DIST);
 	gi.RegisterConstInt("luaaidist::path", AILSC_PATH);
 
-	gi.RegisterConstInt("luaaishot::fast", AILSP_FAST);
-	gi.RegisterConstInt("luaaishot::near", AILSP_NEAR);
-	gi.RegisterConstInt("luaaishot::far", AILSP_FAR);
+	gi.RegisterConstInt("luaaishot::fastest", AILSP_FAST);
+	gi.RegisterConstInt("luaaishot::nearest", AILSP_NEAR);
+	gi.RegisterConstInt("luaaishot::farthest", AILSP_FAR);
 
 	gi.RegisterConstInt("luaaiwander::rand", AILPW_RAND);
 	gi.RegisterConstInt("luaaiwander::CW", AILPW_CW);
@@ -2147,9 +2255,9 @@ void AIL_Shutdown (void)
 	gi.UnregisterConstVariable("luaaidist::dist");
 	gi.UnregisterConstVariable("luaaidist::path");
 
-	gi.UnregisterConstVariable("luaaishot::fast");
-	gi.UnregisterConstVariable("luaaishot::near");
-	gi.UnregisterConstVariable("luaaishot::far");
+	gi.UnregisterConstVariable("luaaishot::fastest");
+	gi.UnregisterConstVariable("luaaishot::nearest");
+	gi.UnregisterConstVariable("luaaishot::farthest");
 
 	gi.UnregisterConstVariable("luaaiwander::rand");
 	gi.UnregisterConstVariable("luaaiwander::CW");

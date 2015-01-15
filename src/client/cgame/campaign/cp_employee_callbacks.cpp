@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2014 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,7 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #include "../../cl_shared.h"
-#include "../../cl_team.h" /* CL_UpdateCharacterValues */
 #include "../../ui/ui_dataids.h"
 #include "cp_campaign.h"
 #include "cp_employee_callbacks.h"
@@ -198,8 +197,9 @@ static void E_EmployeeList_f (void)
 	/* If the list is empty OR we are in pilots/scientists/workers-mode: don't show the model&stats. */
 	/** @note
 	 * 0 == nothing is displayed
-	 * 1 == all is displayed
-	 * 2 == only stuff wanted for scientists/workers/pilots are displayed
+	 * 1 == only stuff wanted for soldiers is displayed
+	 * 2 == only stuff wanted for pilots is displayed
+	 * 3 == only stuff wanted for scientists/workers is displayed
 	 */
 	/** @todo replace magic numbers - use confuncs */
 	if (employeesInCurrentList == 0) {
@@ -244,17 +244,6 @@ static void E_ChangeName_f (void)
 	}
 
 	Q_strncpyz(employee->chr.name, cgi->Cvar_GetString("mn_name"), sizeof(employee->chr.name));
-}
-
-/**
- * @brief Fill employeeList with a list of employees in the current base (i.e. they are hired and not transferred)
- * @sa E_GetEmployeeByMenuIndex - It is used to get a specific entry from the generated employeeList.
- */
-int E_GenerateHiredEmployeesList (const base_t* base)
-{
-	assert(base);
-	employeesInCurrentList = E_GetHiredEmployees(base, EMPL_SOLDIER, &employeeList);
-	return employeesInCurrentList;
 }
 
 /**
@@ -377,7 +366,7 @@ static void E_EmployeeSelect_f (void)
 static const cmdList_t employeeCmds[] = {
 	{"employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI"},
 	{"employee_init", E_EmployeeList_f, "Init function for employee hire menu"},
-	{"employee_delete", E_EmployeeDelete_f, "Removed an employee from the global employee list"},
+	{"employee_delete", E_EmployeeDelete_f, "Remove an employee from the global employee list"},
 	{"employee_hire", E_EmployeeHire_f, nullptr},
 	{"employee_select", E_EmployeeSelect_f, nullptr},
 	{"employee_changename", E_ChangeName_f, "Change the name of an employee"},

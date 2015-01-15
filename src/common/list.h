@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2014 UFO: Alien Invasion.
+Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -45,7 +45,7 @@ typedef int (*linkedListSort_t) (linkedList_t* entry1, linkedList_t* entry2, con
 				if (var##__iter = var##__iter->next, false) {} else
 
 /**
- * @brief Will sort the list before loop over the sorted list. Make sure the free the sortedList after you done with the loop.
+ * @brief Will sort the list before loop over the sorted list. Make sure to free the sortedList after you are done with the loop.
  */
 #define LIST_ForeachSorted(list, type, var, sorter, userdata, sortedlist) \
 	sortedlist = LIST_CopyStructure(list); \

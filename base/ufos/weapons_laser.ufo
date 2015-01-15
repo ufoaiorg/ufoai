@@ -19,7 +19,7 @@ item laserpistol
 	price			2000
 	size			10
 	is_secondary	true
-	weight			1.0
+	weight			1000
 }
 
 // =======================
@@ -44,7 +44,7 @@ item laserrifle
 	price			2500
 	size			35
 	is_primary		true
-	weight			2.5
+	weight			2500
 }
 
 
@@ -71,7 +71,7 @@ item heavylaser
 	size			50
 	is_primary		true
 	is_heavy		true
-	weight			7.1
+	weight			7100
 }
 
 // =======================
@@ -91,7 +91,7 @@ item laser_ammo
 	size			7
 	is_primary		true
 	dmgtype			"laser"
-	weight			0.3
+	weight			300
 
 	weapon_mod
 	{
@@ -262,7 +262,7 @@ item electrolaser
 	price			1000
 	size			35
 	is_primary		true
-	weight			3.2
+	weight			3200
 }
 
 item laser_ammo_stun
@@ -278,7 +278,7 @@ item laser_ammo_stun
 	size			7
 	is_primary		true
 	dmgtype			"stun_electro"
-	weight			0.3
+	weight			300
 
 	weapon_mod
 	{

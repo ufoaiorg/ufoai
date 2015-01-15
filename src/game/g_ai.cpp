@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2014 UFO: Alien Invasion.
+Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -1713,8 +1713,14 @@ static void AI_PlayerRun (Player& player)
 	if (level.activeTeam != player.getTeam() || player.roundDone)
 		return;
 
+	if (g_ailua->integer > 1) {
+		if (AIL_TeamThink(player))
+			/* did some thinking, come back next time */
+			return;
+		/* finished thinking, end round */
+	}
 	/** Duke's playground for a completely new AI. While in developement, it is only available to Phalanx */
-	if (player.getTeam() == TEAM_PHALANX && g_aihumans->integer == 2) {
+	 else if (player.getTeam() == TEAM_PHALANX && g_aihumans->integer == 2) {
 		if (AI_TeamThink(player))
 			return;		/* did some thinking, come back next frame */
 		/* finished thinking, end round */
@@ -1889,12 +1895,7 @@ static void AI_InitPlayer (const Player& player, Actor* actor, const equipDef_t*
 	}
 
 	/* initialize the LUA AI now */
-	if (team == TEAM_CIVILIAN)
-		AIL_InitActor(actor, "civilian", actor->chr.teamDef->id);
-	else if (team == TEAM_ALIEN)
-		AIL_InitActor(actor, "alien", actor->chr.teamDef->id);
-	else
-		gi.DPrintf("AI_InitPlayer: unknown team AI\n");
+	AIL_InitActor(actor);
 }
 
 static const equipDef_t* G_GetEquipmentForAISpawn (int team)

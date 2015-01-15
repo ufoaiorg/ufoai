@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2014 UFO: Alien Invasion.
+Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -237,7 +237,7 @@ void G_ActorSetMaxs (Actor* actor)
 
 int G_ActorCalculateMaxTU (const Edict* ent)
 {
-	const float invWeight = ent->chr.inv.getWeight();
+	const int invWeight = ent->chr.inv.getWeight();
 	const int currentMaxTU = GET_TU(ent->chr.score.skills[ABILITY_SPEED], GET_ENCUMBRANCE_PENALTY(invWeight,
 			ent->chr.score.skills[ABILITY_POWER])) * G_ActorGetInjuryPenalty(ent, MODIFIER_TU);
 

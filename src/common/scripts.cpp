@@ -5,7 +5,7 @@
  */
 
 /*
-Copyright (C) 2002-2014 UFO: Alien Invasion.
+Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -1420,7 +1420,7 @@ static const value_t od_vals[] = {
 	{"reload", V_INT, offsetof(objDef_t, _reload), MEMBER_SIZEOF(objDef_t, _reload)},
 	{"reloadattenuation", V_FLOAT, offsetof(objDef_t, reloadAttenuation), MEMBER_SIZEOF(objDef_t, reloadAttenuation)},
 	{"size", V_INT, offsetof(objDef_t, size), MEMBER_SIZEOF(objDef_t, size)},
-	{"weight", V_FLOAT, offsetof(objDef_t, weight), MEMBER_SIZEOF(objDef_t, weight)},
+	{"weight", V_INT, offsetof(objDef_t, weight), MEMBER_SIZEOF(objDef_t, weight)},
 	{"price", V_INT, offsetof(objDef_t, price), MEMBER_SIZEOF(objDef_t, price)},
 	{"productioncost", V_INT, offsetof(objDef_t, productionCost), MEMBER_SIZEOF(objDef_t, productionCost)},
 	{"useable", V_TEAM, offsetof(objDef_t, useable), MEMBER_SIZEOF(objDef_t, useable)},

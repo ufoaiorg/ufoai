@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2014 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 Original file from Quake 2 v3.21: quake2-2.31/game/g_spawn.c
 Copyright (C) 1997-2001 Id Software, Inc.
@@ -45,15 +45,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 bool G_TriggerIsInList (Edict* self, Edict* activator)
 {
-	const Edict* e = self->touchedNext;
-
 	if (activator == nullptr)
 		return true;
 
-	while (e) {
-		if (e == activator)
+	const linkedList_t* entry = self->touchedList;
+	while (entry) {
+		if (entry->data == activator)
 			return true;
-		e = e->touchedNext;
+		entry = entry->next;
 	}
 
 	return false;
@@ -66,16 +65,16 @@ bool G_TriggerIsInList (Edict* self, Edict* activator)
  */
 void G_TriggerAddToList (Edict* self, Edict* activator)
 {
-	Edict* e = self->touchedNext;
-
 	if (activator == nullptr)
 		return;
 
 	if (G_TriggerIsInList(self, activator))
 		return;
 
-	activator->touchedNext = e;
-	self->touchedNext = activator;
+	linkedList_t* entry = static_cast<linkedList_t*>(G_TagMalloc(sizeof(linkedList_t), TAG_LEVEL));
+	entry->data = activator;
+	entry->next = self->touchedList;
+	self->touchedList = entry;
 }
 
 /**
@@ -86,20 +85,18 @@ void G_TriggerAddToList (Edict* self, Edict* activator)
  */
 bool G_TriggerRemoveFromList (Edict* self, Edict* activator)
 {
-	Edict* prev = self;
-	Edict* e = self->touchedNext;
-
 	if (activator == nullptr)
 		return true;
 
-	while (e) {
-		if (e == activator) {
-			prev->touchedNext = e->touchedNext;
-			activator->touchedNext = nullptr;
+	linkedList_t** list = &self->touchedList;
+	while (*list) {
+		linkedList_t* entry = *list;
+		if (entry->data == activator) {
+			*list = entry->next;
+			G_MemFree(entry);
 			return true;
 		}
-		prev = e;
-		e = e->touchedNext;
+		*list = entry->next;
 	}
 
 	return false;
@@ -293,7 +290,7 @@ static bool Touch_TouchTrigger (Edict* self, Edict* activator)
 
 	if (self->owner()->flags & FL_CLIENTACTION) {
 		G_ActorSetClientAction(activator, self->owner());
-	} else if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || self->touchedNext == nullptr) {
+	} else if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || self->touchedList == nullptr) {
 		if (!self->owner()->use) {
 			gi.DPrintf("Owner of %s doesn't have a use function\n", self->classname);
 			G_FreeEdict(self);
@@ -310,7 +307,7 @@ static void Reset_TouchTrigger (Edict* self, Edict* activator)
 	/* fire the use function on leaving the trigger area */
 	if (activator != nullptr && (self->owner()->flags & FL_CLIENTACTION))
 		G_ActorSetClientAction(activator, nullptr);
-	else if ((self->spawnflags & TRIGGER_TOUCH_ONCE) && self->touchedNext == nullptr)
+	else if ((self->spawnflags & TRIGGER_TOUCH_ONCE) && self->touchedList == nullptr)
 		G_UseEdict(self->owner(), activator);
 }
 

@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2014 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 Original file from Quake 2 v3.21: quake2-2.31/game/g_spawn.c
 Copyright (C) 1997-2001 Id Software, Inc.
@@ -98,13 +98,13 @@ static bool Destroy_Breakable (Edict* self)
 	if (self->child()) {
 		Edict* trigger = self->child();
 		/* Remove all activators and reset client actions before removing the trigger */
-		Edict* activator = trigger->touchedNext;
-		while (activator) {
-			Edict* next = activator->touchedNext;
-			G_TriggerRemoveFromList(trigger, activator);
+		linkedList_t* list = trigger->touchedList;
+		while (list) {
+			linkedList_t* next = list->next;
+			G_TriggerRemoveFromList(trigger, static_cast<Edict*>(list->data));
 			if (trigger->reset != nullptr)
-				trigger->reset(trigger, activator);
-			activator = next;
+				trigger->reset(trigger, static_cast<Edict*>(list->data));
+			list = next;
 		}
 		G_FreeEdict(trigger);
 	}
