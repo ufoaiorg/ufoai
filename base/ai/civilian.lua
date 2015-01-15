@@ -139,7 +139,7 @@ end
 --]]
 function ailc.team_think ()
 	-- Round just started set up.
-	if ailc.squed = nil then
+	if ailc.squed == nil then
 		ailc.squad = ai.squad()
 		ailc.actor = 1
 	-- Run next actor
