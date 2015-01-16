@@ -1335,11 +1335,6 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 		}
 
 		/* check whether this caused a touch event for close actors */
-		/* NOTE: Right now stunned actors are skipped from activating triggers, which makes sense
-		 * if triggers could only be activated by walking in them (which was the original behaviour), now
-		 * its use here implies that may not always be the case (it does make sense that they would affected
-		 * by fire fields and similar triggers after all) */
-		/* @todo decide if stunned should be able to touch some triggers and adjust accordingly */
 		if (smoke || incendiary || stunGas) {
 			const entity_type_t type = smoke ? ET_SMOKE : incendiary ? ET_FIRE : ET_SMOKESTUN;
 			Edict* closeActor = nullptr;
