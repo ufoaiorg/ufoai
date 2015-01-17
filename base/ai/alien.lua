@@ -21,6 +21,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	AI module methods, these work on the currently moving AI actor (Unless noted otherwise parameters are optional):
 		print (...) -- Works more or less like Lua's builtin print.
 
+		squad () -- Returns a table of actors of the current AI player. (Only works if the lua AI is in team mode)
+
+		select (actor) -- Manually select the current AI actor. (Only works if the lua AI is in team mode)
+			actor -- The actor to select as the moving AI actor.
+
 		see (vision_type, team, sort_order) -- Returns a table of actors (userdatas) the current AI actor can see.
 			vision_type -- What to see with, valid values:
 				"all":		See everything (cheat vision), this is the default
@@ -122,11 +127,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 		hideneeded () -- Returns true if the AI actor need hiding (Low morale or exposed position) false otherwise.
 
+		tusforshooting () -- Returns the min TUs the current AI actor needs for shooting its weapon.
+
 
 	Actor (userdata) metatable methods (Parameters required unless a default is noted)
 		pos (actor) -- Returns the given actor's positon (userdata)
 
 		team (actor) -- Returns the given actor's team.
+
+		isvalidtarget (actor) -- Check if the given actor is a valid target for the current AI actor.
 
 		shoot (actor, tus) -- Makes the current AI actor try to shoot the given actor, returns true if shots were fired.
 			actor -- Actor to shoot at.
@@ -148,7 +157,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		isdead (actor) -- Check if the current AI actor is dead, returns a boolean value
 
 		isarmed (actor) -- Check if AI actor has weapons, returns two booleans one for each hand.
-
 
 	Position (aka pos3 -- userdata) metatable methods (Parameters required unless a default is noted)
 		goto (position) -- Makes the current AI actor move to the given position, returns true if the actor reached the target positon.
