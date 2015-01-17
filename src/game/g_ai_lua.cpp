@@ -118,6 +118,12 @@ static int AIL_toTeamInt (const char* team, const int param)
 	return teamInt;
 }
 
+/**
+ * @brief Return visibility mode int representation from the string representation in the lua stack
+ * @param L The lua state to use
+ * @param index Index on the lua stack where the string representation is stored
+ * @return The integer representation of the visibility mode
+ */
 static ailVisType_t AIL_toVisInt (lua_State* L, const int index)
 {
 	int visInt = AILVT_ALL;
@@ -130,6 +136,12 @@ static ailVisType_t AIL_toVisInt (lua_State* L, const int index)
 	return static_cast<ailVisType_t> (visInt);
 }
 
+/**
+ * @brief Return sort type int representation from the string representation in the lua stack
+ * @param L The lua state to use
+ * @param index Index on the lua stack where the string representation is stored
+ * @return The integer representation of the sort type
+ */
 static ailSortCritType_t AIL_toSortInt (lua_State* L, const int index)
 {
 	int sortInt = AILSC_DIST;
@@ -142,6 +154,12 @@ static ailSortCritType_t AIL_toSortInt (lua_State* L, const int index)
 	return static_cast<ailSortCritType_t> (sortInt);
 }
 
+/**
+ * @brief Return distance type int representation from the string representation in the lua stack
+ * @param L The lua state to use
+ * @param index Index on the lua stack where the string representation is stored
+ * @return The integer representation of the distance type
+ */
 static ailSortCritType_t AIL_toDistInt (lua_State* L, const int index)
 {
 	int distInt = AILSC_DIST;
@@ -154,6 +172,12 @@ static ailSortCritType_t AIL_toDistInt (lua_State* L, const int index)
 	return static_cast<ailSortCritType_t> (distInt);
 }
 
+/**
+ * @brief Return shooting position type int representation from the string representation in the lua stack
+ * @param L The lua state to use
+ * @param index Index on the lua stack where the string representation is stored
+ * @return The integer representation of the shooting position type
+ */
 static ailShootPosType_t AIL_toShotPInt (lua_State* L, const int index)
 {
 	int spInt = AILSP_FAST;
@@ -166,6 +190,12 @@ static ailShootPosType_t AIL_toShotPInt (lua_State* L, const int index)
 	return static_cast<ailShootPosType_t> (spInt);
 }
 
+/**
+ * @brief Return wander position type int representation from the string representation in the lua stack
+ * @param L The lua state to use
+ * @param index Index on the lua stack where the string representation is stored
+ * @return The integer representation of the wander position type
+ */
 static ailWanderPosType AIL_toWanderPInt (lua_State* L, const int index)
 {
 	int wpInt = AILPW_RAND;
