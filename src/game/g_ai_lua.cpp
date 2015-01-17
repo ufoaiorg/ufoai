@@ -118,63 +118,63 @@ static int AIL_toTeamInt (const char* team, const int param)
 	return teamInt;
 }
 
-static ailVisType_t AIL_toVisInt (lua_State* L, const int param)
+static ailVisType_t AIL_toVisInt (lua_State* L, const int index)
 {
 	int visInt = AILVT_ALL;
-	if (lua_isstring(L, param)) {
-		const char* s = lua_tostring(L, param);
+	if (lua_isstring(L, index)) {
+		const char* s = lua_tostring(L, index);
 		if (!gi.GetConstIntFromNamespace("luaaivis", s, &visInt))
-			AIL_invalidparameter(param);
+			AIL_invalidparameter(index);
 	} else
-		AIL_invalidparameter(param);
+		AIL_invalidparameter(index);
 	return static_cast<ailVisType_t> (visInt);
 }
 
-static ailSortCritType_t AIL_toSortInt (lua_State* L, const int param)
+static ailSortCritType_t AIL_toSortInt (lua_State* L, const int index)
 {
 	int sortInt = AILSC_DIST;
-	if (lua_isstring(L, param)) {
-		const char* s = lua_tostring(L, param);
+	if (lua_isstring(L, index)) {
+		const char* s = lua_tostring(L, index);
 		if (!gi.GetConstIntFromNamespace("luaaisort", s, &sortInt))
-			AIL_invalidparameter(param);
+			AIL_invalidparameter(index);
 	} else
-		AIL_invalidparameter(param);
+		AIL_invalidparameter(index);
 	return static_cast<ailSortCritType_t> (sortInt);
 }
 
-static ailSortCritType_t AIL_toDistInt (lua_State* L, const int param)
+static ailSortCritType_t AIL_toDistInt (lua_State* L, const int index)
 {
 	int distInt = AILSC_DIST;
-	if (lua_isstring(L, param)) {
-		const char* s = lua_tostring(L, param);
+	if (lua_isstring(L, index)) {
+		const char* s = lua_tostring(L, index);
 		if (!gi.GetConstIntFromNamespace("luaaidist", s, &distInt))
-			AIL_invalidparameter(param);
+			AIL_invalidparameter(index);
 	} else
-		AIL_invalidparameter(param);
+		AIL_invalidparameter(index);
 	return static_cast<ailSortCritType_t> (distInt);
 }
 
-static ailShootPosType_t AIL_toShotPInt (lua_State* L, const int param)
+static ailShootPosType_t AIL_toShotPInt (lua_State* L, const int index)
 {
 	int spInt = AILSP_FAST;
-	if (lua_isstring(L, param)) {
-		const char* s = lua_tostring(L, param);
+	if (lua_isstring(L, index)) {
+		const char* s = lua_tostring(L, index);
 		if (!gi.GetConstIntFromNamespace("luaaishot", s, &spInt))
-			AIL_invalidparameter(param);
+			AIL_invalidparameter(index);
 	} else
-		AIL_invalidparameter(param);
+		AIL_invalidparameter(index);
 	return static_cast<ailShootPosType_t> (spInt);
 }
 
-static ailWanderPosType AIL_toWanderPInt (lua_State* L, const int param)
+static ailWanderPosType AIL_toWanderPInt (lua_State* L, const int index)
 {
 	int wpInt = AILPW_RAND;
-	if (lua_isstring(L, param)) {
-		const char* s = lua_tostring(L, param);
+	if (lua_isstring(L, index)) {
+		const char* s = lua_tostring(L, index);
 		if (!gi.GetConstIntFromNamespace("luaaiwander", s, &wpInt))
-			AIL_invalidparameter(param);
+			AIL_invalidparameter(index);
 	} else
-		AIL_invalidparameter(param);
+		AIL_invalidparameter(index);
 	return static_cast<ailWanderPosType> (wpInt);
 }
 
