@@ -1059,13 +1059,11 @@ static int AIL_select (lua_State* L)
 {
 	if (g_ailua->integer < 2) {
 		lua_pushnil(L);
-		return 1;
-	}
-
-	if (lua_gettop(L) > 0 && lua_isactor(L, 1)) {
+	} else if (lua_gettop(L) > 0 && lua_isactor(L, 1)) {
 		aiActor_t* target = lua_toactor(L, 1);
-		AIL_ent = target->actor;
-		lua_pushboolean(L, AIL_ent != nullptr);
+		if (target->actor->getPlayerNum() == AIL_player->getNum())
+			AIL_ent = target->actor;
+		lua_pushboolean(L, AIL_ent == target->actor);
 	} else {
 		AIL_invalidparameter(1);
 		lua_pushboolean(L, false);
