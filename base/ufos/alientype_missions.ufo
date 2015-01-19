@@ -14,7 +14,8 @@
 //
 //	Note that in missions which include a UFO the numbers given in minaliencount/maxaliencount might get limited by the crew 
 //	capacity of the given UFO. This is not true for ground based missions.
-//	In addition the number of aliens that show up in the battlescape is limited by the number of spawnpoints in the map.
+//	In addition the number of aliens that show up in the battlescape is limited by the 'maxaliens' parameter given in the mapdef
+//	of, and further by the number of spawnpoints available in the map.
 //
 //	Notes:
 //	 * If there are several possible alien teams (either in different alien teams, or because several teams in the
