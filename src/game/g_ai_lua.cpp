@@ -1031,6 +1031,7 @@ static int AIL_print (lua_State* L)
 static int AIL_squad (lua_State* L)
 {
 	if (g_ailua->integer < 2) {
+		gi.DPrintf("Problem while running lua: attempt to get the player's team while not in team mode.");
 		lua_pushnil(L);
 		return 1;
 	}
@@ -1058,6 +1059,7 @@ static int AIL_squad (lua_State* L)
 static int AIL_select (lua_State* L)
 {
 	if (g_ailua->integer < 2) {
+		gi.DPrintf("Problem while running lua: attempt to select the active AI actor while not in team mode.");
 		lua_pushnil(L);
 	} else if (lua_gettop(L) > 0 && lua_isactor(L, 1)) {
 		aiActor_t* target = lua_toactor(L, 1);
