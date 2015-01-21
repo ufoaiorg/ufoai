@@ -10,6 +10,32 @@ component cmpSelect extends CheckBox
 		onRClick		{ cmd "employee_delete <num>; employee_equipcheck;" }
 }
 
+component cmpEmployee extends panel
+{
+	{
+		size "360 38"
+	}
+
+	string name
+	{
+		size		"280 38"
+		pos			"15 0"
+		color		"0.56 0.81 0.76 1"
+		onClick		{
+			cmd "employee_select <node:parent@num>;"
+			cmd "set_healthbar_color;"
+		}
+	}
+	CheckBox select
+	{
+		current		0
+		size		"20 20"
+		pos			"325 9"
+		onChange	{ cmd "employee_hire <node:parent@num>; employee_equipcheck;" }
+		onRClick	{ cmd "employee_delete <node:parent@num>; employee_equipcheck;" }
+	}
+}
+
 window employees
 {
 	{
