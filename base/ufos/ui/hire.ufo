@@ -135,10 +135,10 @@ window employees
 				 */
 				confunc employeedisable
 				{
-					*node:parent.bt_employee<1>@current = 1
-					*node:parent.bt_employee<1>@invis = false
-					*node:parent.bt_employee<1>@disabled = true
-					*node:parent.bt_employee<1>@tooltip = "_Employee is away"
+					*node:parent.bt_employee<1>.select@current = 1
+					*node:parent.bt_employee<1>.select@invis = false
+					*node:parent.bt_employee<1>.select@disabled = true
+					*node:parent.bt_employee<1>.select@tooltip = "_Employee is away"
 				}
 
 				/**
@@ -147,10 +147,10 @@ window employees
 				 */
 				confunc employeefire
 				{
-					*node:parent.bt_employee<1>@current = 1
-					*node:parent.bt_employee<1>@invis = false
-					*node:parent.bt_employee<1>@disabled = false
-					*node:parent.bt_employee<1>@tooltip = "_Unhire - Right click to remove"
+					*node:parent.bt_employee<1>.select@current = 1
+					*node:parent.bt_employee<1>.select@invis = false
+					*node:parent.bt_employee<1>.select@disabled = false
+					*node:parent.bt_employee<1>.select@tooltip = "_Unhire - Right click to remove"
 				}
 
 				/**
@@ -159,10 +159,10 @@ window employees
 				 */
 				confunc employeehire
 				{
-					*node:parent.bt_employee<1>@current = 0
-					*node:parent.bt_employee<1>@invis = false
-					*node:parent.bt_employee<1>@disabled = false
-					*node:parent.bt_employee<1>@tooltip = "_Hire - Right click to remove"
+					*node:parent.bt_employee<1>.select@current = 0
+					*node:parent.bt_employee<1>.select@invis = false
+					*node:parent.bt_employee<1>.select@disabled = false
+					*node:parent.bt_employee<1>.select@tooltip = "_Hire - Right click to remove"
 				}
 
 				/**
@@ -171,7 +171,7 @@ window employees
 				 */
 				confunc employeehide
 				{
-					*node:parent.bt_employee<1>@invis = true
+					*node:parent.bt_employee<1>.select@invis = true
 				}
 
 				confunc employee_equipcheck {
@@ -182,88 +182,88 @@ window employees
 					}
 				}
 
-				cmpSelect bt_employee0
+				cmpEmployee bt_employee0
 				{
 					num 0
-					pos "325 15"
+					pos "0 15"
 				}
 
-				cmpSelect bt_employee1
+				cmpEmployee bt_employee1
 				{
 					num 1
-					pos "325 53"
+					pos "0 53"
 				}
 
-				cmpSelect bt_employee2
+				cmpEmployee bt_employee2
 				{
 					num 2
-					pos "325 91"
+					pos "0 91"
 				}
 
-				cmpSelect bt_employee3
+				cmpEmployee bt_employee3
 				{
 					num 3
-					pos "325 129"
+					pos "0 129"
 				}
 
-				cmpSelect bt_employee4
+				cmpEmployee bt_employee4
 				{
 					num 4
-					pos "325 167"
+					pos "0 167"
 				}
 
-				cmpSelect bt_employee5
+				cmpEmployee bt_employee5
 				{
 					num 5
-					pos "325 205"
+					pos "0 205"
 				}
 
-				cmpSelect bt_employee6
+				cmpEmployee bt_employee6
 				{
 					num 6
-					pos "325 243"
+					pos "0 243"
 				}
 
-				cmpSelect bt_employee7
+				cmpEmployee bt_employee7
 				{
 					num 7
-					pos "325 281"
+					pos "0 281"
 				}
 
-				cmpSelect bt_employee8
+				cmpEmployee bt_employee8
 				{
 					num 8
-					pos "325 319"
+					pos "0 319"
 				}
 
-				cmpSelect bt_employee9
+				cmpEmployee bt_employee9
 				{
 					num 9
-					pos "325 357"
+					pos "0 357"
 				}
 
-				cmpSelect bt_employee10
+				cmpEmployee bt_employee10
 				{
 					num 10
-					pos "325 395"
+					pos "0 395"
 				}
 
-				cmpSelect bt_employee11
+				cmpEmployee bt_employee11
 				{
 					num 11
-					pos "325 433"
+					pos "0 433"
 				}
 
-				cmpSelect bt_employee12
+				cmpEmployee bt_employee12
 				{
 					num 12
-					pos "325 471"
+					pos "0 471"
 				}
 
-				cmpSelect bt_employee13
+				cmpEmployee bt_employee13
 				{
 					num 13
-					pos "325 519"
+					pos "0 519"
 				}
 
 				/**
