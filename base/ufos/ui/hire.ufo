@@ -2,14 +2,6 @@
 // EMPLOYEES MENU
 // ==================
 
-component cmpSelect extends CheckBox
-{
-		current		0
-		size		"20 20"
-		onChange	{ cmd "employee_hire <num>; employee_equipcheck;" }
-		onRClick		{ cmd "employee_delete <num>; employee_equipcheck;" }
-}
-
 component cmpEmployee extends panel
 {
 	{
