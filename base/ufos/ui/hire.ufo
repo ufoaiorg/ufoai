@@ -14,7 +14,7 @@ component cmpEmployee extends panel
 		pos			"15 0"
 		color		"0.56 0.81 0.76 1"
 		onClick		{
-			cmd "employee_select <node:parent@num>;"
+			cmd "employee_select <node:parent@num>; hire_select <node:parent@num>"
 			cmd "set_healthbar_color;"
 		}
 	}
@@ -62,9 +62,9 @@ window employees
 					size		"713 39"
 					onChange {
 						cmd "employee_init <cvar:mn_hiretype>;"
-						*node:parent.employees.employee_list@lineselected = 0
 						*node:parent.employees.employee_list@viewpos = 0
 						*node:parent.employees.scroll@current = 0
+						cmd "hire_select 0"
 					}
 				}
 				option soldier {
@@ -127,10 +127,10 @@ window employees
 				 */
 				confunc employeedisable
 				{
-					*node:parent.bt_employee<1>.select@current = 1
-					*node:parent.bt_employee<1>.select@invis = false
-					*node:parent.bt_employee<1>.select@disabled = true
-					*node:parent.bt_employee<1>.select@tooltip = "_Employee is away"
+					*node:parent.employee_list.bt_employee<1>.select@current = 1
+					*node:parent.employee_list.bt_employee<1>.select@invis = false
+					*node:parent.employee_list.bt_employee<1>.select@disabled = true
+					*node:parent.employee_list.bt_employee<1>.select@tooltip = "_Employee is away"
 				}
 
 				/**
@@ -139,10 +139,10 @@ window employees
 				 */
 				confunc employeefire
 				{
-					*node:parent.bt_employee<1>.select@current = 1
-					*node:parent.bt_employee<1>.select@invis = false
-					*node:parent.bt_employee<1>.select@disabled = false
-					*node:parent.bt_employee<1>.select@tooltip = "_Unhire - Right click to remove"
+					*node:parent.employee_list.bt_employee<1>.select@current = 1
+					*node:parent.employee_list.bt_employee<1>.select@invis = false
+					*node:parent.employee_list.bt_employee<1>.select@disabled = false
+					*node:parent.employee_list.bt_employee<1>.select@tooltip = "_Unhire - Right click to remove"
 				}
 
 				/**
@@ -151,10 +151,10 @@ window employees
 				 */
 				confunc employeehire
 				{
-					*node:parent.bt_employee<1>.select@current = 0
-					*node:parent.bt_employee<1>.select@invis = false
-					*node:parent.bt_employee<1>.select@disabled = false
-					*node:parent.bt_employee<1>.select@tooltip = "_Hire - Right click to remove"
+					*node:parent.employee_list.bt_employee<1>.select@current = 0
+					*node:parent.employee_list.bt_employee<1>.select@invis = false
+					*node:parent.employee_list.bt_employee<1>.select@disabled = false
+					*node:parent.employee_list.bt_employee<1>.select@tooltip = "_Hire - Right click to remove"
 				}
 
 				/**
@@ -163,7 +163,7 @@ window employees
 				 */
 				confunc employeehide
 				{
-					*node:parent.bt_employee<1>.select@invis = true
+					*node:parent.employee_list.bt_employee<1>.select@invis = true
 				}
 
 				confunc employee_equipcheck {
@@ -174,90 +174,6 @@ window employees
 					}
 				}
 
-				cmpEmployee bt_employee0
-				{
-					num 0
-					pos "0 15"
-				}
-
-				cmpEmployee bt_employee1
-				{
-					num 1
-					pos "0 53"
-				}
-
-				cmpEmployee bt_employee2
-				{
-					num 2
-					pos "0 91"
-				}
-
-				cmpEmployee bt_employee3
-				{
-					num 3
-					pos "0 129"
-				}
-
-				cmpEmployee bt_employee4
-				{
-					num 4
-					pos "0 167"
-				}
-
-				cmpEmployee bt_employee5
-				{
-					num 5
-					pos "0 205"
-				}
-
-				cmpEmployee bt_employee6
-				{
-					num 6
-					pos "0 243"
-				}
-
-				cmpEmployee bt_employee7
-				{
-					num 7
-					pos "0 281"
-				}
-
-				cmpEmployee bt_employee8
-				{
-					num 8
-					pos "0 319"
-				}
-
-				cmpEmployee bt_employee9
-				{
-					num 9
-					pos "0 357"
-				}
-
-				cmpEmployee bt_employee10
-				{
-					num 10
-					pos "0 395"
-				}
-
-				cmpEmployee bt_employee11
-				{
-					num 11
-					pos "0 433"
-				}
-
-				cmpEmployee bt_employee12
-				{
-					num 12
-					pos "0 471"
-				}
-
-				cmpEmployee bt_employee13
-				{
-					num 13
-					pos "0 519"
-				}
-
 				/**
 				 * @param[in] <1> number of employee in the list
 				 */
@@ -265,38 +181,39 @@ window employees
 					*node:parent.scroll@fullsize = <1>
 				}
 
-				confunc hire_fix_scroll {
-					*node:parent.scroll@current = <1>
-					*node:parent.list_background@current = <1>
-				}
-
 				confunc hire_select {
-					*node:parent.employee_list@lineselected = <1>
+					forchildin ( *node:parent.employee_list ) {
+						*node:child.name@color = "0.56 0.81 0.76 1"
+					}
+					*node:parent.employee_list.bt_employee<1>.name@color = "1 1 1 1"
 				}
 
-				// Ugly, but this is needed to prevent the call from beeing executed before employee_select is
+				confunc hire_clear {
+					call *node:parent.employee_list@removeAllchild
+				}
+
+				confunc hire_addemployee {
+					call *node:parent.employee_list@createChild("bt_employee<1>", "cmpEmployee")
+					*node:parent.employee_list.bt_employee<1>@num = <1>
+					*node:parent.employee_list.bt_employee<1>.name@string = <2>
+				}
+
+				// Ugly, but this is needed to prevent the call from being executed before employee_select is
 				confunc set_healthbar_color {
 					call *node:root.actorhealth.hp.setColour
 				}
-				textlist employee_list
+
+				panel employee_list
 				{
-					dataid			TEXT_LIST
-					pos				"15 5"
-					width			280
-					lineheight		38
-					tabwidth		100
-					rows			"14"
-					color			"0.56 0.81 0.76 1"
-					selectcolor		"1 1 1 1"
-					onClick			{
-						cmd "employee_select <lineselected>;"
-						cmd "set_healthbar_color;"
-					}
-					onViewChange	{
+					size			"360 450"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					wheelscrollable	true
+
+					onViewChange {
 						*node:parent.scroll@fullsize = <fullsize>
 						*node:parent.scroll@current = <viewpos>
 						*node:parent.scroll@viewsize = <viewsize>
-						cmd "employee_scroll <viewpos>;"
 					}
 				}
 
@@ -310,7 +227,6 @@ window employees
 					fullsize	50
 					onChange	{
 						*node:parent.employee_list@viewpos = <current>
-						cmd "employee_scroll <current>;"
 					}
 				}
 			}
@@ -502,11 +418,10 @@ window employees
 	func onWindowOpened
 	{
 		*node:root.base_container.mainBody.employees.employee_list@viewpos = 0
-		*node:root.base_container.mainBody.employees.employee_list@lineselected = 0
 		*node:root.base_container.mainBody.employees.scroll@current = 0
 		cmd "employee_init <1>;"
 		*cvar:mn_hiretype = <1>
-		cmd "employee_update_count; employee_equipcheck;"
+		cmd "employee_update_count; employee_equipcheck; hire_select 0"
 	}
 
 	func onWindowClosed
