@@ -1314,17 +1314,20 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 			G_ShootSingle(actor, fd, shotOrigin, at, mask, weapon, mock, z_align, i, shootType, impact);
 
 	if (!mock) {
+		const bool smoke = fd->obj->dmgtype == gi.csi->damSmoke;
+		const bool incendiary = fd->obj->dmgtype == gi.csi->damIncendiary;
+		const bool stunGas = fd->obj->dmgtype == gi.csi->damStunGas;
 		/* Ignore off-map impacts when spawning fire, smoke, etc fields */
 		if (gi.isOnMap(impact)) {
-			if (fd->obj->dmgtype == gi.csi->damSmoke) {
+			if (smoke) {
 				const int damage = std::max(0.0f, fd->damage[0] + fd->damage[1] * crand());
 				const int rounds = std::max(2, fd->rounds);
 				G_SpawnSmokeField(impact, "smokefield", rounds, damage, fd->splrad);
-			} else if (fd->obj->dmgtype == gi.csi->damIncendiary) {
+			} else if (incendiary) {
 				const int damage = std::max(0.0f, fd->damage[0] + fd->damage[1] * crand());
 				const int rounds = std::max(2, fd->rounds);
 				G_SpawnFireField(impact, "firefield", rounds, damage, fd->splrad);
-			} else if (fd->obj->dmgtype == gi.csi->damStunGas) {
+			} else if (stunGas) {
 				const int damage = std::max(0.0f, fd->damage[0] + fd->damage[1] * crand());
 				const int rounds = std::max(2, fd->rounds);
 				G_SpawnStunSmokeField(impact, "green_smoke", rounds, damage, fd->splrad);
@@ -1332,14 +1335,12 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 		}
 
 		/* check whether this caused a touch event for close actors */
-		/* NOTE: Right now stunned actors are skipped from activating triggers, which makes sense
-		 * if triggers could only be activated by walking in them (which was the original behaviour), now
-		 * its use here implies that may not always be the case (it does make sense that they would affected
-		 * by fire fields and similar triggers after all) */
-		/* @todo decide if stunned should be able to touch some triggers and adjust accordingly */
-		Edict* closeActor = nullptr;
-		while ((closeActor = G_FindRadius(closeActor, impact, fd->splrad, ET_ACTOR))) {
-			G_TouchTriggers(closeActor);
+		if (smoke || incendiary || stunGas) {
+			const entity_type_t type = smoke ? ET_SMOKE : incendiary ? ET_FIRE : ET_SMOKESTUN;
+			Edict* closeActor = nullptr;
+			while ((closeActor = G_FindRadius(closeActor, impact, fd->splrad, ET_ACTOR))) {
+				G_TouchTriggers(closeActor, type);
+			}
 		}
 
 		/* send TUs if actor still alive */

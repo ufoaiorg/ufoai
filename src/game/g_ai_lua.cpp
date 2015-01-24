@@ -118,63 +118,93 @@ static int AIL_toTeamInt (const char* team, const int param)
 	return teamInt;
 }
 
-static ailVisType_t AIL_toVisInt (lua_State* L, const int param)
+/**
+ * @brief Return visibility mode int representation from the string representation in the lua stack
+ * @param L The lua state to use
+ * @param index Index on the lua stack where the string representation is stored
+ * @return The integer representation of the visibility mode
+ */
+static ailVisType_t AIL_toVisInt (lua_State* L, const int index)
 {
 	int visInt = AILVT_ALL;
-	if (lua_isstring(L, param)) {
-		const char* s = lua_tostring(L, param);
+	if (lua_isstring(L, index)) {
+		const char* s = lua_tostring(L, index);
 		if (!gi.GetConstIntFromNamespace("luaaivis", s, &visInt))
-			AIL_invalidparameter(param);
+			AIL_invalidparameter(index);
 	} else
-		AIL_invalidparameter(param);
+		AIL_invalidparameter(index);
 	return static_cast<ailVisType_t> (visInt);
 }
 
-static ailSortCritType_t AIL_toSortInt (lua_State* L, const int param)
+/**
+ * @brief Return sort type int representation from the string representation in the lua stack
+ * @param L The lua state to use
+ * @param index Index on the lua stack where the string representation is stored
+ * @return The integer representation of the sort type
+ */
+static ailSortCritType_t AIL_toSortInt (lua_State* L, const int index)
 {
 	int sortInt = AILSC_DIST;
-	if (lua_isstring(L, param)) {
-		const char* s = lua_tostring(L, param);
+	if (lua_isstring(L, index)) {
+		const char* s = lua_tostring(L, index);
 		if (!gi.GetConstIntFromNamespace("luaaisort", s, &sortInt))
-			AIL_invalidparameter(param);
+			AIL_invalidparameter(index);
 	} else
-		AIL_invalidparameter(param);
+		AIL_invalidparameter(index);
 	return static_cast<ailSortCritType_t> (sortInt);
 }
 
-static ailSortCritType_t AIL_toDistInt (lua_State* L, const int param)
+/**
+ * @brief Return distance type int representation from the string representation in the lua stack
+ * @param L The lua state to use
+ * @param index Index on the lua stack where the string representation is stored
+ * @return The integer representation of the distance type
+ */
+static ailSortCritType_t AIL_toDistInt (lua_State* L, const int index)
 {
 	int distInt = AILSC_DIST;
-	if (lua_isstring(L, param)) {
-		const char* s = lua_tostring(L, param);
+	if (lua_isstring(L, index)) {
+		const char* s = lua_tostring(L, index);
 		if (!gi.GetConstIntFromNamespace("luaaidist", s, &distInt))
-			AIL_invalidparameter(param);
+			AIL_invalidparameter(index);
 	} else
-		AIL_invalidparameter(param);
+		AIL_invalidparameter(index);
 	return static_cast<ailSortCritType_t> (distInt);
 }
 
-static ailShootPosType_t AIL_toShotPInt (lua_State* L, const int param)
+/**
+ * @brief Return shooting position type int representation from the string representation in the lua stack
+ * @param L The lua state to use
+ * @param index Index on the lua stack where the string representation is stored
+ * @return The integer representation of the shooting position type
+ */
+static ailShootPosType_t AIL_toShotPInt (lua_State* L, const int index)
 {
 	int spInt = AILSP_FAST;
-	if (lua_isstring(L, param)) {
-		const char* s = lua_tostring(L, param);
+	if (lua_isstring(L, index)) {
+		const char* s = lua_tostring(L, index);
 		if (!gi.GetConstIntFromNamespace("luaaishot", s, &spInt))
-			AIL_invalidparameter(param);
+			AIL_invalidparameter(index);
 	} else
-		AIL_invalidparameter(param);
+		AIL_invalidparameter(index);
 	return static_cast<ailShootPosType_t> (spInt);
 }
 
-static ailWanderPosType AIL_toWanderPInt (lua_State* L, const int param)
+/**
+ * @brief Return wander position type int representation from the string representation in the lua stack
+ * @param L The lua state to use
+ * @param index Index on the lua stack where the string representation is stored
+ * @return The integer representation of the wander position type
+ */
+static ailWanderPosType AIL_toWanderPInt (lua_State* L, const int index)
 {
 	int wpInt = AILPW_RAND;
-	if (lua_isstring(L, param)) {
-		const char* s = lua_tostring(L, param);
+	if (lua_isstring(L, index)) {
+		const char* s = lua_tostring(L, index);
 		if (!gi.GetConstIntFromNamespace("luaaiwander", s, &wpInt))
-			AIL_invalidparameter(param);
+			AIL_invalidparameter(index);
 	} else
-		AIL_invalidparameter(param);
+		AIL_invalidparameter(index);
 	return static_cast<ailWanderPosType> (wpInt);
 }
 
@@ -766,7 +796,7 @@ static int actorL_isdead (lua_State* L)
 }
 
 /**
- * @brief Gets the actor's team.
+ * @brief Check if the acotr is a valid target to attack.
  */
 static int actorL_isvalidtarget (lua_State* L)
 {
@@ -1001,6 +1031,7 @@ static int AIL_print (lua_State* L)
 static int AIL_squad (lua_State* L)
 {
 	if (g_ailua->integer < 2) {
+		gi.DPrintf("Problem while running lua: attempt to get the player's team while not in team mode.");
 		lua_pushnil(L);
 		return 1;
 	}
@@ -1028,14 +1059,13 @@ static int AIL_squad (lua_State* L)
 static int AIL_select (lua_State* L)
 {
 	if (g_ailua->integer < 2) {
+		gi.DPrintf("Problem while running lua: attempt to select the active AI actor while not in team mode.");
 		lua_pushnil(L);
-		return 1;
-	}
-
-	if (lua_gettop(L) > 0 && lua_isactor(L, 1)) {
+	} else if (lua_gettop(L) > 0 && lua_isactor(L, 1)) {
 		aiActor_t* target = lua_toactor(L, 1);
-		AIL_ent = target->actor;
-		lua_pushboolean(L, AIL_ent != nullptr);
+		if (target->actor->getPlayerNum() == AIL_player->getNum())
+			AIL_ent = target->actor;
+		lua_pushboolean(L, AIL_ent == target->actor);
 	} else {
 		AIL_invalidparameter(1);
 		lua_pushboolean(L, false);
@@ -1458,8 +1488,8 @@ static int AIL_positionhide (lua_State* L)
 }
 
 /**
- * @brief Determine the position where actor is more closer to the target and
- * locate behind the target from enemy
+ * @brief Determine the position where actor is closest to the target and
+ * with the target located between the actor and the nemy enemy
  * @note @c target (parameter is passed through the lua stack) The actor
  * to which AI tries to become closer
  * @note @c inverse (passed through the lua stack) Try to shield the target instead
@@ -2032,7 +2062,7 @@ static int AIL_actor (lua_State* L)
 	return 1;
 }
 /**
- * @brief Returns the type of the actor weapons.
+ * @brief Returns the min TUs the actor needs to fire.
  */
 static int AIL_tusforshooting (lua_State* L)
 {
@@ -2066,6 +2096,9 @@ static int AIL_class (lua_State* L)
 	return 1;
 }
 
+/**
+ * @brief Check if the actor needs wants to hide.
+ */
 static int AIL_hideneeded (lua_State* L)
 {
 	lua_pushboolean(L, AI_HideNeeded(AIL_ent));
@@ -2073,7 +2106,7 @@ static int AIL_hideneeded (lua_State* L)
 }
 
 /**
- * @brief The think function for the ai controlled aliens
+ * @brief The think function for the ai controlled players
  * @param[in] player
  * @param[in] actor
  */
@@ -2100,6 +2133,9 @@ void AIL_ActorThink (Player& player, Actor* actor)
 	AIL_player = nullptr;
 }
 
+/**
+ * @brief Return the AI type for the given team (the lua file the team actors should run)
+ */
 static const char* AIL_GetAIType (const int team)
 {
 	const char* type;
@@ -2118,6 +2154,10 @@ static const char* AIL_GetAIType (const int team)
 	return type;
 }
 
+/**
+ * @brief The team think function for the ai controlled players
+ * @param[in] player
+ */
 bool AIL_TeamThink (Player& player)
 {
 	/* Set the global player */
@@ -2144,6 +2184,9 @@ bool AIL_TeamThink (Player& player)
 	return thinkAgain;
 }
 
+/**
+ * Initializes a new ai lua state.
+ */
 static lua_State* AIL_InitLua () {
 	/* Create the Lua state */
 	lua_State* newState = luaL_newstate();
@@ -2158,7 +2201,7 @@ static lua_State* AIL_InitLua () {
 	return newState;
 }
 /**
- * @brief Initializes the AI.
+ * @brief Initializes the lua AI for an actor.
  * @param[in] ent Pointer to actor to initialize AI for.
  * @param[in] type Type of AI (Lua file name without .lua).
  * @param[in] subtype Subtype of the AI.
