@@ -532,7 +532,8 @@ void G_ReactionFireSettingsUpdate (Actor* actor, fireDefIndex_t fmIdx, actorHand
 
 	if (!G_ActorHasWorkingFireModeSet(actor)) {
 		/* Disable reaction fire if no valid firemode was found. */
-		G_ClientStateChange(actor->getPlayer(), actor, ~STATE_REACTION, true);
+		G_ClientStateChange(actor->getPlayer(), actor, ~STATE_REACTION, false);
+		G_EventReactionFireChange(*actor);
 		return;
 	}
 
