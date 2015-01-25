@@ -93,12 +93,12 @@ void HOS_HospitalRun (void)
 	}
 }
 
-float HOS_GetInjuryLevel (const character_t* const chr)
+float HOS_GetInjuryLevel (const character_t& chr)
 {
 	float injuryLevel = 0.0f;
 
-	for (int i = 0; i < chr->teamDef->bodyTemplate->numBodyParts(); ++i)
-		injuryLevel += static_cast<float>(chr->wounds.treatmentLevel[i]) / chr->maxHP;
+	for (int i = 0; i < chr.teamDef->bodyTemplate->numBodyParts(); ++i)
+		injuryLevel += static_cast<float>(chr.wounds.treatmentLevel[i]) / chr.maxHP;
 
 	return injuryLevel;
 }
