@@ -26,6 +26,7 @@ component cmpEmployee extends panel
 		onChange	{ cmd "employee_hire <node:parent@num>; employee_equipcheck;" }
 		onRClick	{ cmd "employee_delete <node:parent@num>; employee_equipcheck;" }
 	}
+	data status { integer 0 }
 }
 
 window employees
@@ -183,7 +184,11 @@ window employees
 
 				confunc hire_select {
 					forchildin ( *node:parent.employee_list ) {
-						*node:child.name@color = "0.56 0.81 0.76 1"
+						if ( *node:child.status@integer == 0 ) {
+							*node:child.name@color = "0.56 0.81 0.76 1"
+						} else {
+							*node:child.name@color = "1 0.81 0.76 1"
+						}
 					}
 					*node:parent.employee_list.bt_employee<1>.name@color = "1 1 1 1"
 				}
@@ -196,6 +201,10 @@ window employees
 					call *node:parent.employee_list@createChild("bt_employee<1>", "cmpEmployee")
 					*node:parent.employee_list.bt_employee<1>@num = <1>
 					*node:parent.employee_list.bt_employee<1>.name@string = <2>
+					*node:parent.employee_list.bt_employee<1>.status@integer = <3>
+					if ( <3> == 1) {
+						*node:parent.employee_list.bt_employee<1>.name@color = "1 0.81 0.76 1"
+					}
 				}
 
 				// Ugly, but this is needed to prevent the call from being executed before employee_select is

@@ -25,9 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_shared.h"
 #include "../../ui/ui_dataids.h"
 #include "cp_campaign.h"
+#include "cp_hospital.h" /* HOS_NeedsHealing */
 #include "cp_employee_callbacks.h"
 #include "cp_employee.h"
-
 
 /** Currently selected employee. */
 static Employee* selectedEmployee = nullptr;
@@ -123,7 +123,8 @@ static void E_EmployeeList_f (void)
 		if (e->transfer)
 			continue;
 		cgi->LIST_AddPointer(&employeeList, e);
-		cgi->UI_ExecuteConfunc("hire_addemployee %i \"%s\"", employeesInCurrentList, e->chr.name);
+		const int needsHealing = HOS_NeedsHealing(e->chr) ? 1 : 0;
+		cgi->UI_ExecuteConfunc("hire_addemployee %i \"%s\" %i", employeesInCurrentList, e->chr.name, needsHealing);
 		if (e->isHired()) {
 			if (e->isAwayFromBase())
 				cgi->UI_ExecuteConfunc("employeedisable %i", employeesInCurrentList);

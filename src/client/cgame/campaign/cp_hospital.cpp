@@ -103,6 +103,11 @@ float HOS_GetInjuryLevel (const character_t& chr)
 	return injuryLevel;
 }
 
+bool HOS_NeedsHealing (const character_t& chr)
+{
+	return HOS_GetInjuryLevel(chr) > 0.0001f || chr.HP < chr.maxHP;
+}
+
 #ifdef DEBUG
 /**
  * @brief Set the character HP field to maxHP.

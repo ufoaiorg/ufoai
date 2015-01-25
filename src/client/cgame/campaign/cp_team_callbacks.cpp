@@ -237,9 +237,8 @@ static void CP_TEAM_FillEmployeeList_f (void)
 				tooltip = _("Employee is assigned to another aircraft");
 		}
 
-		const bool inHospital = HOS_GetInjuryLevel(&employee->chr) > 0.0001f && B_GetBuildingStatus(employee->baseHired, B_HOSPITAL);
-		const bool isHealing = inHospital || employee->chr.HP < employee->chr.maxHP;
-		cgi->UI_ExecuteConfunc("aircraft_soldierlist_add %d \"%s\" \"%s\" %d %d \"%s\"", employee->chr.ucn, typeId, employee->chr.name, assignedCraft == aircraft, isHealing, tooltip);
+		const int needsHealing = HOS_NeedsHealing(employee->chr) ? 1 : 0;
+		cgi->UI_ExecuteConfunc("aircraft_soldierlist_add %d \"%s\" \"%s\" %d %d \"%s\"", employee->chr.ucn, typeId, employee->chr.name, assignedCraft == aircraft, needsHealing, tooltip);
 	}
 }
 

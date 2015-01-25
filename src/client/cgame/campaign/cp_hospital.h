@@ -29,3 +29,4 @@ void HOS_InitStartup(void);
 bool HOS_HealCharacter(character_t* chr, bool hospital);
 void HOS_HospitalRun(void);
 float HOS_GetInjuryLevel(const character_t& chr);
+bool HOS_NeedsHealing(const character_t& chr);

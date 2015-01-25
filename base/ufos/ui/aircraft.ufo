@@ -328,9 +328,9 @@ window iaircraft
 		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.id@string = <2>
 		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@string = <3>
 		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.selected@current = <4>
+		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.status@integer = <5>
 
 		if ( <5> == 1 ) {
-			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.status@integer = "1"
 			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@color = "1 0.81 0.76 1"
 		}
 		if ( "<6>" ne "" ) {
