@@ -163,9 +163,6 @@ static void E_EmployeeList_f (void)
 		employee = selectedEmployee;
 
 	E_EmployeeSelect(employee);
-
-	/* update scroll */
-	cgi->UI_ExecuteConfunc("hire_update_number %i", employeesInCurrentList);
 }
 
 /**

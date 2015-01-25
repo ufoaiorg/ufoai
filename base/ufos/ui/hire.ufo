@@ -65,7 +65,7 @@ window employees
 						cmd "employee_init <cvar:mn_hiretype>;"
 						*node:parent.employees.employee_list@viewpos = 0
 						*node:parent.employees.scroll@current = 0
-						cmd "hire_select 0"
+						cmd "employee_select 0; hire_select 0"
 					}
 				}
 				option soldier {
@@ -173,13 +173,6 @@ window employees
 					} else {
 						*node:employees.bt_equipsoldiers@disabled = true
 					}
-				}
-
-				/**
-				 * @param[in] <1> number of employee in the list
-				 */
-				confunc hire_update_number {
-					*node:parent.scroll@fullsize = <1>
 				}
 
 				confunc hire_select {
@@ -430,7 +423,7 @@ window employees
 		*node:root.base_container.mainBody.employees.scroll@current = 0
 		cmd "employee_init <1>;"
 		*cvar:mn_hiretype = <1>
-		cmd "employee_update_count; employee_equipcheck; hire_select 0"
+		cmd "employee_update_count; employee_equipcheck; employee_select 0; hire_select 0"
 	}
 
 	func onWindowClosed
