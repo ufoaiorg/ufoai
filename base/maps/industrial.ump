@@ -131,6 +131,17 @@ a		+c		+c		+c		+c		a
 0		a		a		a		a		0
 }
 
+// city_industry ----------------------------------------------------
+
+tile +city_industry
+	// fake size!, A(18), C(7)
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
 // Common Tiles -----------------------------------------------------
 
 tile +fr01
@@ -356,6 +367,13 @@ tileset 3x3 {
 	}
 
 // Map Assemblies ---------------------------------------------------
+
+assembly city_industry
+{
+title "_Industrial Site"
+size "1 1"
++city_industry		"1 1"
+}
 
 assembly small
 {

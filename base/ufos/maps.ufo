@@ -1955,6 +1955,52 @@ mapdef ice_small
 // INDUSTRIAL RANDOM MAPS //
 ////////////////////////////
 
+// CITY_INDUSTRY MAP //
+
+mapdef city_industry
+{
+	map				"+industrial"
+	params			("city_industry")
+	description		"_Urban Warehouse"
+	size			"medium"
+	civilianteam	worker
+	maxaliens		18
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		// any
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		// any
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef industrial_large
 {
 	map				"+industrial"
@@ -4551,50 +4597,6 @@ mapdef bunker
 		"village"
 		"rural"
 		"nopopulation"
-	)
-}
-
-// CITY_INDUSTRY MAP //
-
-mapdef city_industry
-{
-	map				"city_industry"
-	description		"_Urban Warehouse"
-	maxaliens		18
-
-	multiplayer		true
-	teams			1
-	gametypes (
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"tropical"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"suburban"
-		"urban"
 	)
 }
 
