@@ -263,6 +263,14 @@ window employees
 			onChange	{ cmd "employee_changename;" }
 		}
 
+		button rename
+		{
+			tooltip		"_Rename your unit"
+			pos			"3 0"
+			size		"290 20"
+			onClick		{ if ( *cvar:mn_employee_hired == 1 ) { call *node:parent.name@edit } }
+		}
+
 		image	rank_img
 		{
 			visiblewhen "*cvar:mn_show_employee >= 1"
