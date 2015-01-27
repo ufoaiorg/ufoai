@@ -184,6 +184,14 @@ window employees
 						}
 					}
 					*node:parent.employee_list.bt_employee<1>.name@color = "1 1 1 1"
+					call *node:root.local.name@exit
+					if ( *cvar:mn_employee_hired == 0 ) {
+						*node:root.local.rename@disabled = true
+						*node:root.local.rename@tooltip = ""
+					} else {
+						*node:root.local.rename@disabled = false
+						*node:root.local.rename@tooltip = "_Rename your unit"
+					}
 				}
 
 				confunc hire_clear {
@@ -256,7 +264,6 @@ window employees
 		{
 			visiblewhen "*cvar:mn_show_employee >= 1"
 			string		*cvar:mn_name
-			tooltip		"_Rename your unit"
 			pos			"3 0"
 			size		"290 20"
 			color		"0.56 0.81 0.76 1"
@@ -268,7 +275,7 @@ window employees
 			tooltip		"_Rename your unit"
 			pos			"3 0"
 			size		"290 20"
-			onClick		{ if ( *cvar:mn_employee_hired == 1 ) { call *node:parent.name@edit } }
+			onClick		{ call *node:parent.name@edit }
 		}
 
 		image	rank_img
