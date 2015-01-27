@@ -2,11 +2,17 @@
 // Alien base THEME
 // *********************************
 
-
 // Tile Definitions
 // ----------------
 base alienb/ab_		// Prefix for each tile's .map file including path from /maps/
 
+worldspawn {
+"light_day"			"0 0 0"				// it is underground, thus no sunlight
+"light_night"		"0 0 0"				// it is underground, thus no moonlight
+"ambient_day"		"0.1 0.2 0.1"
+"ambient_night"		"0.1 0.2 0.1"
+// "_color" "0.37 0.59 0.37"			// some tiles had this set
+}
 
 // Entrance
 tile +entrance

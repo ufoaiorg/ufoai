@@ -1,8 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"ambient_day" "0.1 0.2 0.1"
-"ambient_night" "0.1 0.2 0.1"
 // brush 0
 {
 ( 309 100 120 ) ( 309 92 120 ) ( 308 100 120 ) tex_common/nodraw 48 48 0 0.25 0.25 65280 0 0
