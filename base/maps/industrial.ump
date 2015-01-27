@@ -144,6 +144,21 @@ tile +city_industry
 
 // buildings --------------------------------------------------------
 
+tile +complex_01
+	// large building including storage, factory and office
+{
+9 9
+0		0		0		0		0		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		+a		0
+0		0		0		0		0		0		+a		+a		0
+0		0		0		0		0		0		+a		+a		0
+0		0		0		0		+a		+a		+a		+a		0
+0		0		0		0		0		0		0		0		0
+}
+
 tile +storage_01
 	// cubic storage building
 {
