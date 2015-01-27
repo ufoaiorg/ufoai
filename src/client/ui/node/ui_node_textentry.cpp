@@ -116,6 +116,18 @@ static void UI_TextEntryNodeFocus (uiNode_t* node, const uiCallContext_t* contex
 }
 
 /**
+ * @brief force exit the edit mode of a textentry node
+ * @note the textentry must be on the active window
+ */
+static void UI_TextEntryNodeUnFocus (uiNode_t* node, const uiCallContext_t* context)
+{
+	/* remove the focus to show changes */
+	if (UI_HasFocus(node)) {
+		UI_RemoveFocus();
+	}
+}
+
+/**
  * @brief Called when the user click with the right mouse button
  */
 void uiTextEntryNode::onLeftClick (uiNode_t* node, int x, int y)
@@ -384,4 +396,6 @@ void UI_RegisterTextEntryNode (uiBehaviour_t* behaviour)
 	UI_RegisterNodeMethod(behaviour, "edit", UI_TextEntryNodeFocus);
 	/* Sprite used to display the background */
 	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
+	/* Call it to force exit of node edition */
+	UI_RegisterNodeMethod(behaviour, "exit", UI_TextEntryNodeUnFocus);
 }
