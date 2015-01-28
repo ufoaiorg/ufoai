@@ -416,8 +416,20 @@ tileset 3x3 {
 assembly city_industry
 {
 title "_Industrial Site"
-size "1 1"
-+city_industry		"1 1"
+size "9 7"
++fr01				"0 1"	// 1x1
++fr02				"0 1"	// 2x1
++fr05				"0 1"	// 1x1
++fr09				"0 1"	// 1x1
++fr11_1x2			"0 1"	// 1x2
++fr13_2x1			"0 1"	// 2x1
++fr15_2x1			"0 1"	// 2x1
++fr17_2x2			"0 1"	// 2x2
+fix +complex_01		"2 0"	// 7x7
+fix +ditch_01		"3 2"	// 5x1
+fix +gasstation_01	"0 4"	// 2x3
+fix +storage_01		"3 0"	// 2x2
+fix *rm_drop +craft_drop_firebird "0 0"
 }
 
 assembly large
