@@ -133,17 +133,6 @@ a		+c		+c		+c		+c		a
 
 // city_industry ----------------------------------------------------
 
-tile +city_industry
-	// fake size!, A(18), C(7)
-{
-3 3
-0		0		0
-0		+a		0
-0		0		0
-}
-
-// buildings --------------------------------------------------------
-
 tile +complex_01
 	// large building including storage, factory and office
 {

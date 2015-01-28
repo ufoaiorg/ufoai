@@ -467,7 +467,6 @@ base/maps/ice/ice_r11_b.map | GNU General Public License 2.0 or later | Holger '
 base/maps/ice/ice_r11_c.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/ice/ice_r11_d.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/industrial.ump | GNU General Public License 2.0 or later
-base/maps/industrial/ind_city_industry.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/industrial/ind_complex_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | derived from city_industry.map by Martin Gerhardy
 base/maps/industrial/ind_craft_drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/ind_craft_drop_herakles.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
