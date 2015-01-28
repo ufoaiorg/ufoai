@@ -479,6 +479,7 @@ base/maps/industrial/ind_craft_ufo_gunboat.map | GNU General Public License 2.0 
 base/maps/industrial/ind_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/industrial/ind_craft_ufo_scout.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/ind_craft_ufo_supply.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/ind_ditch_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | derived from city_industry.map by Martin Gerhardy
 base/maps/industrial/ind_fr01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/ind_fr02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/ind_fr03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey

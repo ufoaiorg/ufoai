@@ -159,6 +159,14 @@ tile +complex_01
 0		0		0		0		0		0		0		0		0
 }
 
+tile +ditch_01
+{
+6 3
+0		0		0		0		0		0
+0		+a		+a		+a		+a		0
+0		0		0		0		0		0
+}
+
 tile +storage_01
 	// cubic storage building
 {
@@ -423,6 +431,7 @@ size "10 8"
 +fr15_2x1	"0 2"	// 2x1
 +fr16_5x1	"0 1"	// 5x1
 +fr17_2x2	"0 1"	// 2x2
++ditch_01	"0 1"	// 4x1
 +storage_01	"0 1"	// 2x2
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_bomber "1 1"
@@ -447,6 +456,7 @@ size "8 8"
 +fr15_2x1	"0 2"	// 2x1
 +fr16_5x1	"0 1"	// 5x1
 +fr17_2x2	"0 1"	// 2x2
++ditch_01	"0 1"	// 4x1
 +storage_01	"0 1"	// 2x2
 tileset buildings	"1 1"
 *rm_drop +craft_drop_firebird "1 1"
@@ -474,6 +484,7 @@ size "6 6"
 +fr16_5x1	"0 1"	// 5x1
 +fr17_2x2	"0 1"	// 2x2
 +storage_01	"0 1"	// 2x2
++ditch_01	"0 1"	// 4x1
 tileset buildings	"1 1"
 *rm_ufo +craft_ufo_scout		"1 1"
 *rm_drop +craft_drop_firebird	"1 1"
@@ -500,6 +511,7 @@ size "7 7"
 +fr16_5x1	"1 1"	// 5x1
 +fr17_2x2	"0 1"	// 2x2
 +storage_01	"0 1"	// 2x2
++ditch_01	"0 1"	// 4x1
 tileset buildings	"1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
@@ -523,6 +535,7 @@ size "7 7"
 +fr15_2x1		"0 1"	// 2x1
 +fr16_5x1		"0 1"	// 5x1
 +complex_01		"1 1"	// 7x7
++ditch_01		"0 1"	// 4x1
 *rm_drop +craft_drop_firebird "1 1"
 }
 
@@ -548,7 +561,8 @@ size "7 7"
 +fr15_2x1		"0 1"	// 2x1
 +fr16_5x1		"0 1"	// 5x1
 //+fr17_2x2		"0 1"	// 2x2
-//+storage_01		"0 1"	// 2x2
+//+storage_01		"0 1" // 2x2
 +complex_01		"1 1"	// 7x7
++ditch_01		"1 1"	// 5x1
 *rm_drop +craft_drop_firebird "1 1"
 }
