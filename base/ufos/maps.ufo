@@ -2128,10 +2128,10 @@ mapdef industrial_small
 	)
 }
 
-mapdef industrial_noufo
+mapdef industrial_small_noufo
 {
 	map				"+industrial"
-	params			("noufo")
+	params			("small_noufo_a")
 	description		"_Industrial Site"
 	size			"medium"
 	maxaliens		14

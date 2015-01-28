@@ -479,7 +479,7 @@ size "10 8"
 *rm_ufo +craft_ufo_bomber "1 1"
 }
 
-assembly noufo
+assembly small_noufo_a
 {
 title "_Industrial Site"
 size "7 7"
