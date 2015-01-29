@@ -35,6 +35,7 @@ int CL_ActorStartShootTime (const eventRegister_t* self, dbuffer* msg, eventTimi
 	const int eventTime = eventTiming->nextTime;
 
 	eventTiming->parsedShot = true;
+	eventTiming->parsedDeath = false;
 	eventTiming->nextTime += 300;
 	eventTiming->shootTime = eventTiming->nextTime;
 
