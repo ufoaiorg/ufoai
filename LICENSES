@@ -498,6 +498,7 @@ base/maps/industrial/ind_fr16_5x1.map | GNU General Public License 2.0 or later 
 base/maps/industrial/ind_fr17_2x2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | /base/maps/frozen/st_i02.map
 base/maps/industrial/ind_fr18_3x6.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | /base/maps/transport/tra_main.map
 base/maps/industrial/ind_gasstation_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | derived from city_industry.map by Martin Gerhardy
+base/maps/industrial/ind_spedition_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | derived from /spedition/sp_main.map by Martin Gerhardy
 base/maps/industrial/ind_storage_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | derived from city_industry.map by Martin Gerhardy
 base/maps/italy.ump | GNU General Public License 2.0 or later
 base/maps/italy/it_craft_drop_firebird.map | GNU General Public License 2.0 or later
@@ -667,11 +668,6 @@ base/maps/solarplant/sp_main.map | GNU General Public License 2.0 or later | Dav
 base/maps/solarplant/sp_northeast.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
 base/maps/solarplant/sp_northwest.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
 base/maps/solarplant/sp_west.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
-base/maps/spedition.ump | GNU General Public License 2.0 or later
-base/maps/spedition/sp_craft_drop_firebird.map | GNU General Public License 2.0 or later
-base/maps/spedition/sp_craft_drop_herakles.map | GNU General Public License 2.0 or later
-base/maps/spedition/sp_craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/spedition/sp_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/subway.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/transport.ump | GNU General Public License 2.0 or later
 base/maps/transport/tra_craft_drop_firebird.map | GNU General Public License 2.0 or later
@@ -3479,9 +3475,6 @@ base/pics/maps/shots/small_house_3.png | GNU General Public License 2.0 or later
 base/pics/maps/shots/solarplant.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/solarplant_2.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/solarplant_3.png | GNU General Public License 2.0 or later | Duke
-base/pics/maps/shots/spedition.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/spedition_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/spedition_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/subway.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/subway_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/subway_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy

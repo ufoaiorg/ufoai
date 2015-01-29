@@ -4452,56 +4452,6 @@ mapdef solarplant
 }
 
 ///////////////////////////
-// SPEDITION RANDOM MAPS //
-///////////////////////////
-
-mapdef spedition
-{
-	map				"+spedition"
-	params			("default")
-	description		"_Workshop"
-	civilianteam	worker
-	maxaliens		8
-
-	multiplayer		true
-	teams			1
-	gametypes (
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"cold"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-	)
-}
-
-///////////////////////////
 // TRANSPORT RANDOM MAPS //
 ///////////////////////////
 
