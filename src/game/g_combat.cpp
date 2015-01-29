@@ -1283,9 +1283,9 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 				assert(invDef->single);
 				itemAlreadyRemoved = true;	/* for assert only */
 				game.invi.emptyContainer(&actor->chr.inv, invDef->id);
-				G_EventInventoryDelete(*actor, G_VisToPM(actor->visflags), invDef->id, 0, 0);
 				G_ReactionFireSettingsUpdate(actor, actor->chr.RFmode.getFmIdx(), actor->chr.RFmode.getHand(),
 						actor->chr.RFmode.getWeapon());
+				G_EventInventoryDelete(*actor, G_VisToPM(actor->visflags), invDef->id, 0, 0);
 			}
 		}
 
@@ -1296,9 +1296,9 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 			const invDef_t* invDef = INVDEF(container);
 			assert(invDef->single);
 			game.invi.emptyContainer(&actor->chr.inv, invDef->id);
-			G_EventInventoryDelete(*actor, G_VisToPM(actor->visflags), invDef->id, 0, 0);
 			G_ReactionFireSettingsUpdate(actor, actor->chr.RFmode.getFmIdx(), actor->chr.RFmode.getHand(),
 					actor->chr.RFmode.getWeapon());
+			G_EventInventoryDelete(*actor, G_VisToPM(actor->visflags), invDef->id, 0, 0);
 		}
 	}
 
