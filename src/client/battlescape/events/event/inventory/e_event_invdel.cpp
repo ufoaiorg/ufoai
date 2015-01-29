@@ -36,7 +36,7 @@ int CL_InvDelTime (const struct eventRegister_s* self, dbuffer* msg, eventTiming
 		if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
 			return eventTiming->impactTime + 400;
 		} else if (eventTiming->impactTime > cl.time) { /* item thrown on the ground */
-			return eventTiming->impactTime + 75;
+			return eventTiming->shootTime + 75;
 		}
 	}
 	return eventTiming->nextTime;
