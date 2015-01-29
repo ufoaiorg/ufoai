@@ -205,14 +205,14 @@ window skirmish extends cgame_download
 		{
 			{
 				pos			"10 50"
-				size		"490 320"
+				size		"490 360"
 			}
 
 			MapOptions panel_map
 			{
 				{
 					pos		"0 0"
-					size	"490 320"
+					size	"490 360"
 				}
 				SetEnemyCount sk_sel_enemy
 				{
@@ -224,20 +224,20 @@ window skirmish extends cgame_download
 				SetEnemyRush sk_sel_rush
 				{
 					{
-						pos		"0 240"
+						pos		"0 230"
 					}
 				}
 
 				SelDropship map_sel_drop
 				{
 					{
-						pos		"0 280"
+						pos		"0 260"
 					}
 				}
 				SelUFO map_sel_ufo
 				{
 					{
-						pos		"0 330"
+						pos		"0 300"
 					}
 				}
 			}
