@@ -276,7 +276,8 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 		LIST_Foreach(aircraft->acTeam, Employee, employee) {
 			character_t* chr = &employee->chr;
 			CP_SetEquipContainer(chr);
-			cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", chr->ucn, chr->name);
+			const int needsHealing = HOS_NeedsHealing(*chr) ? 1 : 0;
+			cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\" %d", chr->ucn, chr->name, needsHealing);
 			count++;
 		}
 	} else {
@@ -289,7 +290,8 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 				continue;
 			character_t* chr = &employee->chr;
 			CP_SetEquipContainer(chr);
-			cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", chr->ucn, chr->name);
+			const int needsHealing = HOS_NeedsHealing(*chr) ? 1 : 0;
+			cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\" %d", chr->ucn, chr->name, needsHealing);
 			count++;
 		}
 	}
