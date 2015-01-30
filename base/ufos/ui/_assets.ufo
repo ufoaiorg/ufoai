@@ -511,7 +511,7 @@ component SoldierInfo extends panel
 {
 	{
 		pos		"10 253"
-		size	"240 40"
+		size	"240 80"
 	}
 
 	smallstring missions_lbl {
@@ -535,6 +535,30 @@ component SoldierInfo extends panel
 		pos "160 20"
 		size "80 20"
 		string *cvar:mn_chrkillalien
+		contentalign ALIGN_UR
+	}
+
+	smallstring killsciv_lbl {
+		pos "0 40"
+		size "180 20"
+		string "_Civilians Killed:"
+	}
+	smallstring killsciv_val {
+		pos "160 40"
+		size "80 20"
+		string *cvar:mn_chrkillcivilian
+		contentalign ALIGN_UR
+	}
+
+	smallstring killsteam_lbl {
+		pos "0 60"
+		size "180 20"
+		string "_Our Team Killed:"
+	}
+	smallstring killsteam_val {
+		pos "160 60"
+		size "80 20"
+		string *cvar:mn_chrkillteam
 		contentalign ALIGN_UR
 	}
 }
@@ -592,16 +616,11 @@ component actor_info extends panel
 	string rank_lbl
 	{
 		string		*cvar:mn_chrrank
-		pos			"10 283"
+		pos			"10 328"
 		size		"200 20"
 	}
 
-	SoldierInfo soldier_info {
-		{
-			pos		"10 253"
-			size	"285 40"
-		}
-	}
+	SoldierInfo soldier_info { }
 }
 
 // Pilot Skills panel
