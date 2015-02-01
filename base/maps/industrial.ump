@@ -179,12 +179,14 @@ tile +storage_01
 // Spedition --------------------------------------------------------
 
 tile +spedition_01
-	// fake size!
 {
-3 3
-0		0		0
-0		+a		0
-0		0		0
+8 6
+0		0		0		0		0		0		0		0
+0		0		+a		+a		0		0		0		0
+0		+a		+a		+a		0		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		0		+a		+a		0		0		0		0
+0		0		0		0		0		0		0		0
 }
 
 // Common Tiles -----------------------------------------------------
@@ -561,36 +563,59 @@ size "7 7"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
+assembly small_noufo_c
+{
+title "_Industrial Site"
+size "7 7"
++fr01			"0 1"	// 1x1
++fr02			"0 1"	// 2x1
+//+fr03			"0 1"	// 1x1
+//+fr04			"0 1"	// 1x1
++fr05			"0 1"	// 1x1
+//+fr07			"0 1"	// 1x1
++fr08			"0 1"	// 1x1
+//+fr09			"0 1"	// 1x1
+//+fr10			"0 1"	// 1x1
++fr11_1x2		"0 1"	// 1x2
++fr12_3x3		"0 1"	// 3x3
++fr13_2x1		"0 1"	// 2x1
++fr14_1x3		"0 1"	// 1x3
++fr15_2x1		"0 1"	// 2x1
++fr16_5x1		"0 1"	// 5x1
++fr17_2x2		"0 1"	// 2x2
++ditch_01		"0 1"	// 5x1
++gasstation_01	"0 1"	// 2x3
++spedition_01	"1 1"	// 6x4
++storage_01		"0 1"	// 2x2
+*rm_drop +craft_drop_firebird "1 1"
+}
+
 // test assembly ---------------------------------------------------*
 
 assembly test
 {
 title "_Industrial Site"
-size "9 7"
-fix +complex_01		"2 0"	// 7x7
-fix +ditch_01		"3 2"	// 5x1
-fix +gasstation_01	"0 4"	// 2x3
-fix +storage_01		"3 0"	// 2x2
-fix *rm_drop +craft_drop_firebird "0 0"
-//size "7 7"
+size "7 7"
 +fr01			"0 1"	// 1x1
 +fr02			"0 1"	// 2x1
-////+fr03			"0 1"	// 1x1
-////+fr04			"0 1"	// 1x1
+//+fr03			"0 1"	// 1x1
+//+fr04			"0 1"	// 1x1
 +fr05			"0 1"	// 1x1
-////+fr07			"0 1"	// 1x1
-////+fr08			"0 1"	// 1x1
-+fr09			"0 1"	// 1x1
-////+fr10			"0 1"	// 1x1
+//+fr07			"0 1"	// 1x1
++fr08			"0 1"	// 1x1
+//+fr09			"0 1"	// 1x1
+//+fr10			"0 1"	// 1x1
 +fr11_1x2		"0 1"	// 1x2
-////+fr12_3x3		"0 1"	// 3x3
++fr12_3x3		"0 1"	// 3x3
 +fr13_2x1		"0 1"	// 2x1
-//+fr14_1x3		"0 1"	// 1x3
++fr14_1x3		"0 1"	// 1x3
 +fr15_2x1		"0 1"	// 2x1
-//+fr16_5x1		"0 1"	// 5x1
++fr16_5x1		"0 1"	// 5x1
 +fr17_2x2		"0 1"	// 2x2
-////+storage_01		"0 1" // 2x2
-//+complex_01		"1 1"	// 7x7
-//+ditch_01		"1 1"	// 5x1
-//*rm_drop +craft_drop_firebird "1 1"
+//+complex_01	"1 1"	// 7x7
++ditch_01		"0 1"	// 5x1
++gasstation_01	"0 1"	// 2x3
++spedition_01	"1 1"	// 6x4
++storage_01		"0 1"	// 2x2
+*rm_drop +craft_drop_firebird "1 1"
 }
