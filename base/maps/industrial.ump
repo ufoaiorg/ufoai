@@ -355,7 +355,7 @@ tile +fr17_2x2 //A(5)
 0		0		0		0
 }
 
-tile +fr18_3x6
+tile +transport
 	// warehouses, A(27), C(3)
 {
 5 8
@@ -373,7 +373,7 @@ tile +fr18_3x6
 
 tileset buildings {
 	+fr06_3x2	// 3x2
-	+fr18_3x6	// 3x6
+	+transport	// 3x6
 	}
 
 tileset 1x1 {
