@@ -491,7 +491,7 @@ assembly small
 {
 title "_UFO Landed"
 size "6 6"
-//+fr01		"0 1"	// 1x1
++fr01		"0 1"	// 1x1
 +fr02		"0 1"	// 2x1
 //+fr03		"0 1"	// 1x1
 //+fr04		"0 1"	// 1x1
@@ -518,7 +518,7 @@ assembly small_noufo_a
 {
 title "_Industrial Site"
 size "7 7"
-//+fr01		"0 1"	// 1x1
++fr01		"0 1"	// 1x1
 +fr02		"0 2"	// 2x1
 //+fr03		"0 1"	// 1x1
 //+fr04		"0 1"	// 1x1
@@ -544,7 +544,7 @@ assembly small_noufo_b
 {
 title "_Industrial Site"
 size "7 7"
-//+fr01			"0 1"	// 1x1
++fr01			"0 1"	// 1x1
 +fr02			"0 1"	// 2x1
 //+fr03			"0 1"	// 1x1
 //+fr04			"0 1"	// 1x1
