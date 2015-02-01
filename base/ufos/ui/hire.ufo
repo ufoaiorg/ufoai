@@ -198,6 +198,9 @@ window employees
 					call *node:parent.employee_list@removeAllchild
 				}
 
+				// <1> Employee position in menu
+				// <2> Employee name
+				// <3> Employee is wounded?
 				confunc hire_addemployee {
 					call *node:parent.employee_list@createChild("bt_employee<1>", "cmpEmployee")
 					*node:parent.employee_list.bt_employee<1>@num = <1>

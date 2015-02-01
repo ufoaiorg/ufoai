@@ -88,6 +88,9 @@ window equipment extends objectinfo
 				confunc equipment_soldierlist_clear {
 					call *node:parent.soldierlist@removeAllChild
 				}
+				// <1> Soldier UCN
+				// <2> Soldier name
+				// <3> Is soldier wounded?
 				confunc equipment_soldierlist_add {
 					call *node:parent.soldierlist@createChild("member<1>", "equipSoldier")
 					*node:parent.soldierlist.member<1>.id@integer = <1>
