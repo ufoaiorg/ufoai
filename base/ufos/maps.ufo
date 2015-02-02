@@ -978,7 +978,7 @@ mapdef farm2
 mapdef forest_large
 {
 	map			"+forest"
-	params		("large")
+	params		("large_a" "large_b")
 	description	"_Forest"
 	size		"large"
 	maxaliens	15
@@ -1019,7 +1019,7 @@ mapdef forest_large
 mapdef forest_small
 {
 	map			"+forest"
-	params		("small")
+	params		("small_a" "small_b")
 	description	"_Forest"
 	size		"small"
 	maxaliens	6
