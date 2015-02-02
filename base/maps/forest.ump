@@ -848,3 +848,15 @@ tileset house_22 "0 2"
 *rm_ufo +craft_crash_fighter "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
+
+// test assembly ---------------------------------------------------*
+
+assembly test
+{
+title "_Forest"
+size "6 6"
++a1				"1 1"	// 3x3
++a2				"1 1"	// 2x2
++f50			"0 25"	// 1x1
+*rm_drop +craft_drop_firebird "1 1"
+}
