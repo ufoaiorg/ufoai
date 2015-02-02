@@ -738,7 +738,7 @@ tileset house_22{
 +h7
 }
 
-///** Assemblies
+// map assemblies --------------------------------------------------*
 
 assembly small
 {
@@ -764,33 +764,6 @@ tileset forest_33 "0 1"
 tileset house_22 "0 1"
 tileset house_22 "0 1"
 *rm_ufo +craft_ufo_scout "1 1"
-*rm_drop +craft_drop_firebird "1 1"
-}
-
-assembly small_crash
-{
-title "_Little forest"
-size "5 10"
-
-+w1 "0 5"
-+w2 "0 5"
-+w3 "0 5"
-+w4 "0 5"
-+w5 "0 5"
-+w6 "1 1"
-+w7 "0 5"
-+w8 "1 1"
-tileset forest_11b "0 3"
-tileset forest_11d "0 16"
-tileset forest_12 "0 6"
-tileset forest_22a "0 4"
-tileset forest_22b "0 1"
-tileset forest_33 "0 1"
-+h1 "0 1"
-+h2 "0 1"
-tileset house_22 "0 1"
-tileset house_22 "0 1"
-*rm_ufo +craft_crash_scout "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
@@ -822,41 +795,31 @@ tileset house_22 "0 3"
 *rm_drop +craft_drop_firebird "1 1"
 }
 
-assembly large_crash
-{
-title "_Little bungalo in forest"
-size "8 9"
-
-+w1 "0 5"
-+w2 "0 6"
-+w3 "0 6"
-+w4 "0 6"
-+w5 "0 6"
-+w6 "0 4"
-+w7 "0 6"
-+w8 "1 1"
-tileset forest_11b "0 3"
-tileset forest_11d "0 16"
-tileset forest_12 "0 6"
-tileset forest_22a "0 4"
-tileset forest_22b "0 1"
-tileset forest_33 "0 1"
-+h1 "0 1"
-+h2 "0 1"
-tileset house_22 "0 2"
-+a2 "0 1"
-*rm_ufo +craft_crash_fighter "1 1"
-*rm_drop +craft_drop_firebird "1 1"
-}
-
 // test assembly ---------------------------------------------------*
 
 assembly test
 {
 title "_Forest"
-size "6 6"
-+a1				"1 1"	// 3x3
-+a2				"1 1"	// 2x2
-+f50			"0 25"	// 1x1
-*rm_drop +craft_drop_firebird "1 1"
+size "8 9"
+
++a2				"0 1"
++h1				"0 1"
++h2				"0 1"
++w1				"0 5"
++w2				"0 6"
++w3				"0 6"
++w4				"0 6"
++w5				"0 6"
++w6				"0 4"
++w7				"0 6"
++w8				"0 1"
+tileset forest_11b	"0 3"
+tileset forest_11d	"0 16"
+tileset forest_12	"0 6"
+tileset forest_22a	"0 4"
+tileset forest_22b	"0 1"
+tileset forest_33	"0 1"
+tileset house_22	"0 2"
+*rm_ufo +craft_crash_fighter	"1 1"
+*rm_drop +craft_drop_firebird	"1 1"
 }
