@@ -239,7 +239,7 @@ class MD2:
 		if self.numSkins > 0:
 			material = bpy.data.materials.new(self.name)
 			for skin in self.skins:
-				skinImg = Util.loadImage(skin, self.name)
+				skinImg = Util.loadImage(skin, self.filePath)
 				skinTex = bpy.data.textures.new(self.name + skin, type='IMAGE')
 				skinTex.image = skinImg
 				matTex = material.texture_slots.add()
@@ -891,6 +891,9 @@ class Util:
 
 	@staticmethod
 	def loadImage(imagePath, filePath):
+		image = load_image(imagePath, os.path.dirname(imagePath), recursive=False)
+		if image is not None:
+			return image
 		image = load_image(imagePath, os.path.dirname(filePath), recursive=False)
 		if image is not None:
 			return image
