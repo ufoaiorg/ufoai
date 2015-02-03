@@ -235,11 +235,16 @@ class MD2:
 
 	def makeObject(self):
 		print("Creating mesh", end='')
+		# Create the mesh
+		mesh = bpy.data.meshes.new(self.name)
+		mesh.tessface_uv_textures.new()
+
 		# Skins
 		if self.numSkins > 0:
 			material = bpy.data.materials.new(self.name)
 			for skin in self.skins:
 				skinImg = Util.loadImage(skin, self.filePath)
+				skinImg.mapping = 'UV'
 				skinTex = bpy.data.textures.new(self.name + skin, type='IMAGE')
 				skinTex.image = skinImg
 				matTex = material.texture_slots.add()
@@ -247,15 +252,13 @@ class MD2:
 				matTex.texture_coords = 'UV'
 				matTex.use_map_color_diffuse = True
 				matTex.use_map_alpha = True
+				matTex.uv_layer = mesh.tessface_uv_textures[0].name
+			mesh.materials.append(material)
 		print('.', end='')
 
-		# Create the mesh
-		mesh = bpy.data.meshes.new(self.name)
-		if self.numSkins > 0:
-			mesh.materials.append(material)
+		# Prepare vertices and faces
 		mesh.vertices.add(self.numVerts)
 		mesh.tessfaces.add(self.numTris)
-		mesh.tessface_uv_textures.new()
 		print('.', end='')
 
 		# Verts
@@ -268,11 +271,11 @@ class MD2:
 		print('.', end='')
 
 		# UV
-		mesh.tessface_uv_textures.active.data.foreach_set("uv_raw", unpack_list([self.uvs[i] for i in unpack_face_list([face[1] for face in self.tris])]))
+		mesh.tessface_uv_textures[0].data.foreach_set("uv_raw", unpack_list([self.uvs[i] for i in unpack_face_list([face[1] for face in self.tris])]))
 		if self.numSkins > 0:
 			image = mesh.materials[0].texture_slots[0].texture.image
 			if image != None:
-				for uv in mesh.tessface_uv_textures.active.data:
+				for uv in mesh.tessface_uv_textures[0].data:
 					uv.image = image
 		print('.', end='')
 
