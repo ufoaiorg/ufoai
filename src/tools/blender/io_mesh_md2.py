@@ -356,22 +356,22 @@ class MD2:
 
 			# write skin file names
 			for iSkin, (skinPath, skinName) in enumerate(skins):
-				filePath = bpy.path.abspath(skinPath)
+				sourcePath = bpy.path.abspath(skinPath)
 
 				if self.options.fCopyTextureSxS:
-					destPath = os.path.join(os.path.dirname(filePath), os.path.basename(filePath))
-					print("Copying texture %s to %s" % (filePath, destPath))
+					destPath = os.path.join(os.path.dirname(filePath), os.path.basename(sourcePath))
+					print("Copying texture %s to %s" % (sourcePath, destPath))
 					try:
-						shutil.copy(filePath, destPath)
+						shutil.copy(sourcePath, destPath)
 					except:
-						print("Copying texture %s to %s failed." % (filePath, destPath))
+						print("Copying texture %s to %s failed." % (sourcePath, destPath))
 					if self.options.eTextureNameMethod == 'FILEPATH':
 						skinName = destPath
 
 				if len(skinName) > MD2_MAX_SKINNAME:
 					print("WARNING: The texture name '%s' is too long. It was automatically truncated." % skinName)
 					if self.options.eTextureNameMethod == 'FILEPATH':
-						skinName = os.path.basename(filePath)
+						skinName = os.path.basename(skinName)
 
 				data = struct.pack("<64s", bytes(skinName[0:MD2_MAX_SKINNAME], encoding="utf8"))
 				file.write(data) # skin name
