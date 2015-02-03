@@ -32,7 +32,7 @@ Thanks to David Henry for the documentation about the MD2 file format.
 bl_info = {
 	"name": "Quake2 MD2 format",
 	"description": "Importer and exporter for Quake2 file format (.md2)",
-	"author": "DarkRain, based on the work of Bob Holcomb/Sebastian Lieberknecht/Dao Nguyen/Bernd Meyer/Damien Thebault/Erwan Mathieu",
+	"author": "DarkRain, based on the work of Bob Holcomb/Sebastian Lieberknecht/Dao Nguyen/Bernd Meyer/Damien Thebault/Erwan Mathieu/Takehiko Nawata",
 	"version": (1, 0),
 	"blender": (2, 63, 0),
 	"location": "File > Import/Export > Quake2 MD2",
@@ -228,8 +228,6 @@ class MD2:
 		self.object = None
 		self.ident = 844121161
 		self.version = 8
-		self.skinWidth = 2 ** 10 - 1 #1023
-		self.skinHeight = 2 ** 10 - 1 #1023
 		return
 
 	def setObject(self, object):
@@ -237,8 +235,6 @@ class MD2:
 
 	def makeObject(self):
 		print("Creating mesh", end='')
-		width = max(1.0, float(self.skinWidth))
-		height = max(1.0, float(self.skinHeight))
 		# Skins
 		if self.numSkins > 0:
 			material = bpy.data.materials.new(self.name)
@@ -311,7 +307,7 @@ class MD2:
 	def write(self, filePath):
 		mesh = self.object.data
 
-		skins = Util.getSkins(mesh, self.options.eTextureNameMethod)
+		self.skinWidth, self.skinHeight, skins = Util.getSkins(mesh, self.options.eTextureNameMethod)
 		self.numSkins = len(skins)
 		self.numVerts = len(mesh.vertices)
 		self.numUV, uvList, uvDict = self.buildTexCoord()
@@ -485,8 +481,8 @@ class MD2:
 			if data[0] != self.ident or data[1] != self.version:
 				raise NameError("Invalid MD2 file")
 
-			self.skinWidth = float(max(1, data[2]))
-			self.skinHeight = float(max(1, data[3]))
+			self.skinWidth = max(1, data[2])
+			self.skinHeight = max(1, data[3])
 			self.numSkins = data[5]
 			self.numVerts = data[6]
 			self.numUV = data[7]
@@ -872,6 +868,8 @@ class Util:
 	@staticmethod
 	def getSkins(mesh, method):
 		skins = []
+		width = -1
+		height = -1
 		for material in mesh.materials:
 			for texSlot in material.texture_slots:
 				if not texSlot or texSlot.texture.type != 'IMAGE':
@@ -883,8 +881,11 @@ class Util:
 				else:
 					texname = texSlot.texture.image.name
 				skins.append((texSlot.texture.image.filepath, texname))
-
-		return skins
+				if texSlot.texture.image.size[0] > width:
+					width = texSlot.texture.image.size[0]
+				if texSlot.texture.image.size[1] > height:
+					height = texSlot.texture.image.size[1]
+		return width, height, skins
 
 	@staticmethod
 	def loadImage(imagePath, filePath):
@@ -912,7 +913,7 @@ class ObjectInfo:
 			originalObject = object
 			mesh = object.data
 
-			self.skins = Util.getSkins(mesh, 'DATANAME')
+			self.skinWidth, self.skinHeight, self.skins = Util.getSkins(mesh, 'DATANAME')
 
 			tmpObjectName = Util.pickName()
 			try:
