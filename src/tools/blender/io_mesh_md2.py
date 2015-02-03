@@ -874,6 +874,8 @@ class Util:
 			for texSlot in material.texture_slots:
 				if not texSlot or texSlot.texture.type != 'IMAGE':
 					continue
+				if any(texSlot.texture.image.filepath in skin for skin in skins):
+					continue
 				if method == 'BASENAME':
 					texname = os.path.basename(texSlot.texture.image.filepath)
 				elif method == 'FILEPATH':
