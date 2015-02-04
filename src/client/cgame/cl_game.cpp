@@ -259,7 +259,19 @@ void GAME_AppendTeamMember (int memberIndex, const char* teamDefID, const equipD
 
 	CL_GenerateCharacter(chr, teamDefID);
 	/* pack equipment */
-	cls.i.EquipActor(chr, ed, GAME_GetChrMaxLoad(chr));
+	if (chr->teamDef->robot && chr->teamDef->onlyWeapon) {
+		const objDef_t* weapon = chr->teamDef->onlyWeapon;
+		if (weapon->numAmmos > 0)
+			cls.i.EquipActorRobot(&chr->inv, weapon);
+		else if (weapon->fireTwoHanded)
+			cls.i.EquipActorMelee(&chr->inv, chr->teamDef);
+		else
+			Com_Printf("GAME_AppendTeamMember: weapon %s has no ammo assigned and must not be fired two handed\n", weapon->id);
+	} else if (chr->teamDef->weapons) {
+		cls.i.EquipActor(chr, ed, GAME_GetChrMaxLoad(chr));
+	} else {
+		Com_Printf("GAME_AppendTeamMember: actor with no equipment - %s\n", chr->name);
+	}
 
 	LIST_AddPointer(&chrDisplayList, (void*)chr);
 
