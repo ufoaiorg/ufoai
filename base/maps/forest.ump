@@ -44,7 +44,7 @@ tile +craft_drop_herakles
 0      abfg   abfg   abfg   0
 acdg   +a     +a     +a     acef
 acdg   +a     +a     +a     acef
-0      abdek  abdek  abdek  0
+0      abde   abde   abde   0
 }
 
 tile +craft_drop_raptor
@@ -55,7 +55,7 @@ tile +craft_drop_raptor
 acdg   +a      +a      +a     acef
 acdg   +a      +a      +a     acef
 acdg   +a      +a      +a     acef
-0     abdek   abdek   abdek   0
+0     abde    abde    abde    0
 }
 
 tile +craft_crash_scout
