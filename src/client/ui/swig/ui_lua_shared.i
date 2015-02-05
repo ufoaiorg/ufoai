@@ -561,11 +561,11 @@ struct uiNode_t {
 	float width () { return $self->box.size[0]; };
 	float height () { return $self->box.size[1]; };
 	int bordersize () { return $self->border; };
-	char* name () { return const_cast<char*>($self->name); };
-	char* type () { return const_cast<char*>($self->behaviour->name); };
-	char* text () { return const_cast<char*>(UI_Node_GetText($self)); };
-	char* font () { return const_cast<char*>($self->font); };
-	char* image () { return const_cast<char*>($self->image); };
+	const char* name () { return $self->name; };
+	const char* type () { return $self->behaviour->name; };
+	const char* text () { return UI_Node_GetText($self); };
+	const char* font () { return $self->font; };
+	const char* image () { return $self->image; };
 	int contentalign () { return $self->contentAlign; };
 	int layoutalign () { return $self->align; };
 	float flashspeed () { return $self->flashSpeed; };

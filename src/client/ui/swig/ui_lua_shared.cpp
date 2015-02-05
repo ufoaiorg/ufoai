@@ -2878,11 +2878,11 @@ SWIGINTERN float uiNode_t_top(uiNode_t *self){ return self->box.pos[1]; }
 SWIGINTERN float uiNode_t_width(uiNode_t *self){ return self->box.size[0]; }
 SWIGINTERN float uiNode_t_height(uiNode_t *self){ return self->box.size[1]; }
 SWIGINTERN int uiNode_t_bordersize(uiNode_t *self){ return self->border; }
-SWIGINTERN char *uiNode_t_name(uiNode_t *self){ return const_cast<char*>(self->name); }
-SWIGINTERN char *uiNode_t_type(uiNode_t *self){ return const_cast<char*>(self->behaviour->name); }
-SWIGINTERN char *uiNode_t_text(uiNode_t *self){ return const_cast<char*>(UI_Node_GetText(self)); }
-SWIGINTERN char *uiNode_t_font(uiNode_t *self){ return const_cast<char*>(self->font); }
-SWIGINTERN char *uiNode_t_image(uiNode_t *self){ return const_cast<char*>(self->image); }
+SWIGINTERN char const *uiNode_t_name(uiNode_t *self){ return self->name; }
+SWIGINTERN char const *uiNode_t_type(uiNode_t *self){ return self->behaviour->name; }
+SWIGINTERN char const *uiNode_t_text(uiNode_t *self){ return UI_Node_GetText(self); }
+SWIGINTERN char const *uiNode_t_font(uiNode_t *self){ return self->font; }
+SWIGINTERN char const *uiNode_t_image(uiNode_t *self){ return self->image; }
 SWIGINTERN int uiNode_t_contentalign(uiNode_t *self){ return self->contentAlign; }
 SWIGINTERN int uiNode_t_layoutalign(uiNode_t *self){ return self->align; }
 SWIGINTERN float uiNode_t_flashspeed(uiNode_t *self){ return self->flashSpeed; }
