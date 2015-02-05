@@ -626,9 +626,8 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t* context
 				break;
 			}
 
-			uiNode_t* node = root->firstChild;
 			int loop = 0;
-			while (node != root->lastChild) {
+			for (uiNode_t* node = root->firstChild; node; node = node->next, loop++) {
 				/* associate the child node with the call context so it can be referenced inside the
 				   script block */
 				context->tagNode = node;
@@ -644,8 +643,6 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t* context
 					Com_Printf("UI_ExecuteAction: Infinite loop. Force breaking 'forchildin'\n");
 					break;
 				}
-				node = node->next;
-				loop++;
 			}
 			break;
 		}

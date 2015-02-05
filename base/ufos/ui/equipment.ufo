@@ -23,6 +23,10 @@ component equipSoldier extends panel {
 			cmd "equipment_soldierlist_select <node:parent.id@integer>;"
 		}
 	}
+
+	data status {
+		integer		0
+	}
 }
 
 
@@ -84,10 +88,17 @@ window equipment extends objectinfo
 				confunc equipment_soldierlist_clear {
 					call *node:parent.soldierlist@removeAllChild
 				}
+				// <1> Soldier UCN
+				// <2> Soldier name
+				// <3> Is soldier wounded?
 				confunc equipment_soldierlist_add {
 					call *node:parent.soldierlist@createChild("member<1>", "equipSoldier")
 					*node:parent.soldierlist.member<1>.id@integer = <1>
 					*node:parent.soldierlist.member<1>.name@string = <2>
+					*node:parent.soldierlist.member<1>.status@integer = <3>
+					if ( <3> == 1 ) {
+						*node:parent.soldierlist.member<1>.name@color = "1 0.81 0.76 1"
+					}
 
 					if ( *node:root.selected@integer < 0 ) {
 						cmd "equipment_soldierlist_select <1>;"
@@ -96,7 +107,11 @@ window equipment extends objectinfo
 				}
 				confunc equipment_soldierlist_select {
 					if ( *node:root.selected@integer >= 0 ) {
-						*node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0.56 0.81 0.76 1"
+						if ( *node:parent.soldierlist.member<node:root.selected@integer>.status@integer == 0 ) {
+							*node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0.56 0.81 0.76 1"
+						} else {
+							*node:parent.soldierlist.member<node:root.selected@integer>.name@color = "1 0.81 0.76 1"
+						}
 					}
 					*node:root.selected@integer = <1>
 					*cvar:mn_ucn = <1>

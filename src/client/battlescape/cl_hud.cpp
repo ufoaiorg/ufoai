@@ -762,7 +762,7 @@ static bool HUD_DisplayImpossibleReaction (const le_t* actor)
 
 	/* Display 'impossible" (red) reaction buttons */
 	if (actor->state & STATE_REACTION) {
-		Com_Printf("HUD_DisplayImpossibleReaction: Warning reaction fire enable and no suitable weapon found!\n");
+		Com_Printf("HUD_DisplayImpossibleReaction: Warning! Reaction fire enabled but no suitable weapon found!\n");
 		UI_ExecuteConfunc("startreaction_impos");
 		buttonStates[BT_REACTION] = BT_STATE_UNINITIALZED;
 		return false;

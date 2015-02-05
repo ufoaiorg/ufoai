@@ -91,6 +91,17 @@ static void GAME_MP_StartServer_f (void)
 	cgi->Cvar_Set("rm_ufo", "");
 	cgi->Cvar_Set("sv_hurtaliens", "0");
 
+	if (md->mapTheme[0] == '+') {
+		const linkedList_t* const ufos = md->ufos;
+		const linkedList_t* const crafts = md->aircraft;
+		if (ufos)
+			cgi->Cvar_Set("rm_ufo", "%s",
+					cgi->Com_GetRandomMapAssemblyNameForCraft((const char*)ufos->data));
+		if (crafts)
+			cgi->Cvar_Set("rm_drop", "%s",
+					cgi->Com_GetRandomMapAssemblyNameForCraft((const char*)crafts->data));
+	}
+
 	if (md->teams)
 		cgi->Cvar_SetValue("sv_maxteams", md->teams);
 	else

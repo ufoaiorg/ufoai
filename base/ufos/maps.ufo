@@ -978,7 +978,7 @@ mapdef farm2
 mapdef forest_large
 {
 	map			"+forest"
-	params		("large")
+	params		("large_a" "large_b")
 	description	"_Forest"
 	size		"large"
 	maxaliens	15
@@ -993,45 +993,8 @@ mapdef forest_large
 	ufos
 	(
 		craft_ufo_fighter
-		craft_ufo_harvester
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"rural"
-		"nopopulation"
-	)
-}
-
-mapdef forest_large_crash
-{
-	map			"+forest"
-	params		("large_crash")
-	description	"_Forest"
-	size		"large"
-	maxaliens	15
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
 		craft_crash_fighter
+		craft_ufo_harvester
 		craft_crash_harvester
 	)
 
@@ -1056,7 +1019,7 @@ mapdef forest_large_crash
 mapdef forest_small
 {
 	map			"+forest"
-	params		("small")
+	params		("small_a" "small_b")
 	description	"_Forest"
 	size		"small"
 	maxaliens	6
@@ -1071,45 +1034,8 @@ mapdef forest_small
 	ufos
 	(
 		craft_ufo_scout
-		craft_ufo_fighter
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"rural"
-		"nopopulation"
-	)
-}
-
-mapdef forest_small_crash
-{
-	map			"+forest"
-	params		("small_crash")
-	description	"_Forest"
-	size		"small"
-	maxaliens	6
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
 		craft_crash_scout
+		craft_ufo_fighter
 		craft_crash_fighter
 	)
 
@@ -1955,6 +1881,52 @@ mapdef ice_small
 // INDUSTRIAL RANDOM MAPS //
 ////////////////////////////
 
+// CITY_INDUSTRY MAP //
+
+mapdef city_industry
+{
+	map				"+industrial"
+	params			("city_industry")
+	description		"_Urban Warehouse"
+	size			"medium"
+	civilianteam	worker
+	maxaliens		18
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		// any
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		// any
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef industrial_large
 {
 	map				"+industrial"
@@ -2082,10 +2054,10 @@ mapdef industrial_small
 	)
 }
 
-mapdef industrial_noufo
+mapdef industrial_small_noufo
 {
 	map				"+industrial"
-	params			("noufo")
+	params			("small_noufo_a" "small_noufo_b")
 	description		"_Industrial Site"
 	size			"medium"
 	maxaliens		14
@@ -4406,56 +4378,6 @@ mapdef solarplant
 }
 
 ///////////////////////////
-// SPEDITION RANDOM MAPS //
-///////////////////////////
-
-mapdef spedition
-{
-	map				"+spedition"
-	params			("default")
-	description		"_Workshop"
-	civilianteam	worker
-	maxaliens		8
-
-	multiplayer		true
-	teams			1
-	gametypes (
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"cold"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-	)
-}
-
-///////////////////////////
 // TRANSPORT RANDOM MAPS //
 ///////////////////////////
 
@@ -4551,50 +4473,6 @@ mapdef bunker
 		"village"
 		"rural"
 		"nopopulation"
-	)
-}
-
-// CITY_INDUSTRY MAP //
-
-mapdef city_industry
-{
-	map				"city_industry"
-	description		"_Urban Warehouse"
-	maxaliens		18
-
-	multiplayer		true
-	teams			1
-	gametypes (
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"tropical"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"suburban"
-		"urban"
 	)
 }
 

@@ -73,9 +73,10 @@ static const char* HOS_GetInjuryLevelString (const Employee& employee, float inj
 	return "light";
 }
 
-static inline void HOS_Entry (const Employee& employee, float injuryLevel)
+static inline void HOS_Entry (const Employee& employee)
 {
 	const character_t& chr = employee.chr;
+	const float injuryLevel = HOS_GetInjuryLevel(chr);
 	if (!employee.isSoldier() && chr.HP >= chr.maxHP && injuryLevel <= 0)
 		return;
 
@@ -119,8 +120,7 @@ static void HOS_Init_f (void)
 			/* Don't show soldiers who are not in this base or gone in mission */
 			if (!employee->isHiredInBase(base) || employee->isAwayFromBase())
 				continue;
-			const float injuryLevel = HOS_GetInjuryLevel(&employee->chr);
-			HOS_Entry(*employee, injuryLevel);
+			HOS_Entry(*employee);
 			if (containerSet)
 				continue;
 			CP_SetEquipContainer(&employee->chr);

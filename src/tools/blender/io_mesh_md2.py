@@ -32,7 +32,7 @@ Thanks to David Henry for the documentation about the MD2 file format.
 bl_info = {
 	"name": "Quake2 MD2 format",
 	"description": "Importer and exporter for Quake2 file format (.md2)",
-	"author": "DarkRain, based on the work of Bob Holcomb/Sebastian Lieberknecht/Dao Nguyen/Bernd Meyer/Damien Thebault/Erwan Mathieu",
+	"author": "DarkRain, based on the work of Bob Holcomb/Sebastian Lieberknecht/Dao Nguyen/Bernd Meyer/Damien Thebault/Erwan Mathieu/Takehiko Nawata",
 	"version": (1, 0),
 	"blender": (2, 63, 0),
 	"location": "File > Import/Export > Quake2 MD2",
@@ -228,8 +228,6 @@ class MD2:
 		self.object = None
 		self.ident = 844121161
 		self.version = 8
-		self.skinWidth = 2 ** 10 - 1 #1023
-		self.skinHeight = 2 ** 10 - 1 #1023
 		return
 
 	def setObject(self, object):
@@ -237,13 +235,16 @@ class MD2:
 
 	def makeObject(self):
 		print("Creating mesh", end='')
-		width = max(1.0, float(self.skinWidth))
-		height = max(1.0, float(self.skinHeight))
+		# Create the mesh
+		mesh = bpy.data.meshes.new(self.name)
+		mesh.tessface_uv_textures.new()
+
 		# Skins
 		if self.numSkins > 0:
 			material = bpy.data.materials.new(self.name)
 			for skin in self.skins:
-				skinImg = Util.loadImage(skin, self.name)
+				skinImg = Util.loadImage(skin, self.filePath)
+				skinImg.mapping = 'UV'
 				skinTex = bpy.data.textures.new(self.name + skin, type='IMAGE')
 				skinTex.image = skinImg
 				matTex = material.texture_slots.add()
@@ -251,15 +252,13 @@ class MD2:
 				matTex.texture_coords = 'UV'
 				matTex.use_map_color_diffuse = True
 				matTex.use_map_alpha = True
+				matTex.uv_layer = mesh.tessface_uv_textures[0].name
+			mesh.materials.append(material)
 		print('.', end='')
 
-		# Create the mesh
-		mesh = bpy.data.meshes.new(self.name)
-		if self.numSkins > 0:
-			mesh.materials.append(material)
+		# Prepare vertices and faces
 		mesh.vertices.add(self.numVerts)
 		mesh.tessfaces.add(self.numTris)
-		mesh.tessface_uv_textures.new()
 		print('.', end='')
 
 		# Verts
@@ -272,11 +271,11 @@ class MD2:
 		print('.', end='')
 
 		# UV
-		mesh.tessface_uv_textures.active.data.foreach_set("uv_raw", unpack_list([self.uvs[i] for i in unpack_face_list([face[1] for face in self.tris])]))
+		mesh.tessface_uv_textures[0].data.foreach_set("uv_raw", unpack_list([self.uvs[i] for i in unpack_face_list([face[1] for face in self.tris])]))
 		if self.numSkins > 0:
 			image = mesh.materials[0].texture_slots[0].texture.image
 			if image != None:
-				for uv in mesh.tessface_uv_textures.active.data:
+				for uv in mesh.tessface_uv_textures[0].data:
 					uv.image = image
 		print('.', end='')
 
@@ -311,7 +310,7 @@ class MD2:
 	def write(self, filePath):
 		mesh = self.object.data
 
-		skins = Util.getSkins(mesh, self.options.eTextureNameMethod)
+		self.skinWidth, self.skinHeight, skins = Util.getSkins(mesh, self.options.eTextureNameMethod)
 		self.numSkins = len(skins)
 		self.numVerts = len(mesh.vertices)
 		self.numUV, uvList, uvDict = self.buildTexCoord()
@@ -360,22 +359,22 @@ class MD2:
 
 			# write skin file names
 			for iSkin, (skinPath, skinName) in enumerate(skins):
-				filePath = bpy.path.abspath(skinPath)
+				sourcePath = bpy.path.abspath(skinPath)
 
 				if self.options.fCopyTextureSxS:
-					destPath = os.path.join(os.path.dirname(filePath), os.path.basename(filePath))
-					print("Copying texture %s to %s" % (filePath, destPath))
+					destPath = os.path.join(os.path.dirname(filePath), os.path.basename(sourcePath))
+					print("Copying texture %s to %s" % (sourcePath, destPath))
 					try:
-						shutil.copy(filePath, destPath)
+						shutil.copy(sourcePath, destPath)
 					except:
-						print("Copying texture %s to %s failed." % (filePath, destPath))
+						print("Copying texture %s to %s failed." % (sourcePath, destPath))
 					if self.options.eTextureNameMethod == 'FILEPATH':
 						skinName = destPath
 
 				if len(skinName) > MD2_MAX_SKINNAME:
 					print("WARNING: The texture name '%s' is too long. It was automatically truncated." % skinName)
 					if self.options.eTextureNameMethod == 'FILEPATH':
-						skinName = os.path.basename(filePath)
+						skinName = os.path.basename(skinName)
 
 				data = struct.pack("<64s", bytes(skinName[0:MD2_MAX_SKINNAME], encoding="utf8"))
 				file.write(data) # skin name
@@ -485,8 +484,8 @@ class MD2:
 			if data[0] != self.ident or data[1] != self.version:
 				raise NameError("Invalid MD2 file")
 
-			self.skinWidth = float(max(1, data[2]))
-			self.skinHeight = float(max(1, data[3]))
+			self.skinWidth = max(1, data[2])
+			self.skinHeight = max(1, data[3])
 			self.numSkins = data[5]
 			self.numVerts = data[6]
 			self.numUV = data[7]
@@ -872,9 +871,13 @@ class Util:
 	@staticmethod
 	def getSkins(mesh, method):
 		skins = []
+		width = -1
+		height = -1
 		for material in mesh.materials:
 			for texSlot in material.texture_slots:
 				if not texSlot or texSlot.texture.type != 'IMAGE':
+					continue
+				if any(texSlot.texture.image.filepath in skin for skin in skins):
 					continue
 				if method == 'BASENAME':
 					texname = os.path.basename(texSlot.texture.image.filepath)
@@ -883,11 +886,17 @@ class Util:
 				else:
 					texname = texSlot.texture.image.name
 				skins.append((texSlot.texture.image.filepath, texname))
-
-		return skins
+				if texSlot.texture.image.size[0] > width:
+					width = texSlot.texture.image.size[0]
+				if texSlot.texture.image.size[1] > height:
+					height = texSlot.texture.image.size[1]
+		return width, height, skins
 
 	@staticmethod
 	def loadImage(imagePath, filePath):
+		image = load_image(imagePath, os.path.dirname(imagePath), recursive=False)
+		if image is not None:
+			return image
 		image = load_image(imagePath, os.path.dirname(filePath), recursive=False)
 		if image is not None:
 			return image
@@ -912,7 +921,7 @@ class ObjectInfo:
 			originalObject = object
 			mesh = object.data
 
-			self.skins = Util.getSkins(mesh, 'DATANAME')
+			self.skinWidth, self.skinHeight, self.skins = Util.getSkins(mesh, 'DATANAME')
 
 			tmpObjectName = Util.pickName()
 			try:
