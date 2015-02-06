@@ -250,16 +250,23 @@ void GAME_ResetCharacters (void)
 
 void GAME_AppendTeamMember (int memberIndex, const char* teamDefID, const equipDef_t* ed)
 {
-	character_t* chr;
-
 	if (ed == nullptr)
 		Com_Error(ERR_DROP, "No equipment definition given");
 
-	chr = GAME_GetCharacter(memberIndex);
+	character_t* chr = GAME_GetCharacter(memberIndex);
 
 	CL_GenerateCharacter(chr, teamDefID);
+
+	const objDef_t* weapon = chr->teamDef->onlyWeapon;
+	if (chr->teamDef->robot && !weapon) {
+		/* This is likely an UGV, try to guess which one and get the weapon */
+		const char* ugvId = strstr(chr->teamDef->id, "ugv");
+		const ugv_t* ugv = Com_GetUGVByIDSilent(ugvId);
+		if (ugv)
+			weapon = INVSH_GetItemByID(ugv->weapon);
+	}
 	/* pack equipment */
-	cls.i.EquipActor(chr, ed, chr->teamDef->onlyWeapon, GAME_GetChrMaxLoad(chr));
+	cls.i.EquipActor(chr, ed, weapon, GAME_GetChrMaxLoad(chr));
 
 	LIST_AddPointer(&chrDisplayList, (void*)chr);
 
