@@ -55,14 +55,16 @@ typedef struct music_s {
 	 * into a deadlock. This is due to the installed hook function for music mixing that is used
 	 * whenever we stream the music on our own */
 	bool interruptStream;
+	bool playing;
 } music_t;
 
 #define MUSIC_MAX_ENTRIES 64
 static char* musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES] = {{}, {}};
 static int musicArrayLength[MUSIC_MAX] = {};
-static music_t music = {{}, {}, nullptr, 0, nullptr, false, false};
+static music_t music = {{}, {}, nullptr, 0, nullptr, false, false, true};
 static cvar_t* snd_music;
 static cvar_t* snd_music_volume;
+static cvar_t* snd_music_play;
 
 /**
  * @brief Parses music definitions for different situations
@@ -146,7 +148,7 @@ static void M_Start (const char* file)
 		return;
 	}
 
-	if (music.playingStream)
+	if (music.playingStream || !music.playing)
 		return;
 
 	Com_StripExtension(file, name, sizeof(name));
@@ -217,7 +219,7 @@ static void M_Play_f (void)
  */
 static void M_RandomTrack_f (void)
 {
-	if (!s_env.initialized)
+	if (!s_env.initialized || !music.playing)
 		return;
 
 	const int musicTrackCount = FS_BuildFileList("music/*.ogg");
@@ -262,7 +264,7 @@ static void M_Change_f (void)
 	const char* type;
 	int category;
 
-	if (!s_env.initialized)
+	if (!s_env.initialized || !music.playing)
 		return;
 
 	if (Cmd_Argc() != 2) {
@@ -319,6 +321,15 @@ static void M_MusicStreamUpdate (void)
 
 void M_Frame (void)
 {
+	if (snd_music_play && snd_music_play->modified) {
+		music.playing = snd_music_play->integer != 0;
+		snd_music_play->modified = false;
+	}
+	if (!music.playing) {
+		if (Mix_PlayingMusic())
+			M_Stop();
+		return;
+	}
 	if (snd_music->modified) {
 		M_Start(snd_music->string);
 		snd_music->modified = false;
@@ -359,6 +370,8 @@ void M_Init (void)
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128.");
 	snd_music_volume->modified = true;
+	snd_music_play = Cvar_Get("snd_music_play", "1", CVAR_ARCHIVE, "Enable background music.");
+	music.playing = snd_music_play->integer != 0;
 }
 
 void M_Shutdown (void)
