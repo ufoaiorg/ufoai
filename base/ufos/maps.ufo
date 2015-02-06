@@ -3286,12 +3286,8 @@ mapdef england
 	maxaliens		9
 
 	multiplayer		true
-	teams			2
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
 		coop2
 		coop3
 		coop4
