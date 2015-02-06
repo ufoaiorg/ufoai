@@ -212,12 +212,14 @@ entity misc_model {
 	}
 
 	type {
+		angles		"V_FLOAT 3"
 		origin		"V_FLOAT 3"
 		spawnflags	"V_INT"
 		skin		"UNSIGNED V_INT"
 	}
 
 	default {
+		angles			"0.0 0.0 0.0"
 		skin			"0"
 		frame			"0"
 		modelscale_vec	"1.0 1.0 1.0"
