@@ -361,9 +361,7 @@ typedef struct cgame_import_s {
 
 	const equipDef_t* (IMPORT* INV_GetEquipmentDefinitionByID) (const char* name);
 	void (IMPORT* INV_DestroyInventory) (Inventory* const i) __attribute__((nonnull(1)));
-	void (IMPORT* INV_EquipActor) (character_t* const chr, const equipDef_t* ed, int maxWeight);
-	void (IMPORT* INV_EquipActorMelee) (Inventory* const inv, const teamDef_t* td);
-	void (IMPORT* INV_EquipActorRobot) (Inventory* const inv, const objDef_t* weapon);
+	void (IMPORT* INV_EquipActor) (character_t* const chr, const equipDef_t* ed, const objDef_t* weapon, int maxWeight);
 	bool (IMPORT* INV_RemoveFromInventory) (Inventory* const i, const invDef_t*  container, Item* fItem);
 
 	void (IMPORT* INV_ItemDescription) (const objDef_t* od);

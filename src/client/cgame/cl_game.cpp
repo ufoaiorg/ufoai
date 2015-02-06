@@ -259,19 +259,7 @@ void GAME_AppendTeamMember (int memberIndex, const char* teamDefID, const equipD
 
 	CL_GenerateCharacter(chr, teamDefID);
 	/* pack equipment */
-	if (chr->teamDef->robot && chr->teamDef->onlyWeapon) {
-		const objDef_t* weapon = chr->teamDef->onlyWeapon;
-		if (weapon->numAmmos > 0)
-			cls.i.EquipActorRobot(&chr->inv, weapon);
-		else if (weapon->fireTwoHanded)
-			cls.i.EquipActorMelee(&chr->inv, chr->teamDef);
-		else
-			Com_Printf("GAME_AppendTeamMember: weapon %s has no ammo assigned and must not be fired two handed\n", weapon->id);
-	} else if (chr->teamDef->weapons) {
-		cls.i.EquipActor(chr, ed, GAME_GetChrMaxLoad(chr));
-	} else {
-		Com_Printf("GAME_AppendTeamMember: actor with no equipment - %s\n", chr->name);
-	}
+	cls.i.EquipActor(chr, ed, chr->teamDef->onlyWeapon, GAME_GetChrMaxLoad(chr));
 
 	LIST_AddPointer(&chrDisplayList, (void*)chr);
 
@@ -460,19 +448,9 @@ static void GAME_DestroyInventory (Inventory* const inv)
 	cls.i.destroyInventory(inv);
 }
 
-static void GAME_EquipActor (character_t* const chr, const equipDef_t* ed, int maxWeight)
+static void GAME_EquipActor (character_t* const chr, const equipDef_t* ed, const objDef_t* weapon, int maxWeight)
 {
-	cls.i.EquipActor(chr, ed, maxWeight);
-}
-
-static void GAME_EquipActorMelee (Inventory* const inv, const teamDef_t* td)
-{
-	cls.i.EquipActorMelee(inv, td);
-}
-
-static void GAME_EquipActorRobot (Inventory* const inv, const objDef_t* weapon)
-{
-	cls.i.EquipActorRobot(inv, weapon);
+	cls.i.EquipActor(chr, ed, weapon, maxWeight);
 }
 
 static bool GAME_RemoveFromInventory (Inventory* const i, const invDef_t* container, Item* fItem)
@@ -825,8 +803,6 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 		cgi->INV_GetEquipmentDefinitionByID = INV_GetEquipmentDefinitionByID;
 		cgi->INV_DestroyInventory = GAME_DestroyInventory;
 		cgi->INV_EquipActor = GAME_EquipActor;
-		cgi->INV_EquipActorMelee = GAME_EquipActorMelee;
-		cgi->INV_EquipActorRobot = GAME_EquipActorRobot;
 		cgi->INV_RemoveFromInventory = GAME_RemoveFromInventory;
 
 		cgi->INV_ItemDescription = INV_ItemDescription;

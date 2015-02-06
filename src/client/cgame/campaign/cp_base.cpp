@@ -1888,7 +1888,7 @@ static void B_InitialEquipment (aircraft_t* aircraft, const equipDef_t* ed)
 
 		/* pack equipment */
 		Com_DPrintf(DEBUG_CLIENT, "B_InitialEquipment: Packing initial equipment for %s.\n", chr->name);
-		cgi->INV_EquipActor(chr, ed, cgi->GAME_GetChrMaxLoad(chr));
+		cgi->INV_EquipActor(chr, ed, nullptr, cgi->GAME_GetChrMaxLoad(chr));
 		cgi->LIST_AddPointer(&chrListTemp, (void*)chr);
 	}
 
