@@ -58,9 +58,9 @@ typedef struct music_s {
 } music_t;
 
 #define MUSIC_MAX_ENTRIES 64
-static char* musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
-static int musicArrayLength[MUSIC_MAX];
-static music_t music;
+static char* musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES] = {{}, {}};
+static int musicArrayLength[MUSIC_MAX] = {};
+static music_t music = {{}, {}, nullptr, 0, nullptr, false, false};
 static cvar_t* snd_music;
 static cvar_t* snd_music_volume;
 
@@ -359,19 +359,11 @@ void M_Init (void)
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128.");
 	snd_music_volume->modified = true;
-
-	OBJZERO(musicArrays);
-	OBJZERO(musicArrayLength);
-	OBJZERO(music);
 }
 
 void M_Shutdown (void)
 {
 	M_Stop();
-
-	OBJZERO(musicArrays);
-	OBJZERO(musicArrayLength);
-	OBJZERO(music);
 
 	Cmd_TableRemoveList(musicCmds);
 }
