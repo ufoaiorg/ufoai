@@ -208,31 +208,34 @@ void UI_Shutdown (void)
 	const uiBehaviour_t* confunc = UI_GetNodeBehaviour("confunc");
 
 	/* remove all confunc commands */
-	for (int i = 0; i < ui_global.numWindows; i++) {
-		uiNode_t* node = ui_global.windows[i];
-		while (node) {
-			/* remove the command */
-			if (node->behaviour == confunc) {
-				/* many nodes to one command is allowed */
-				if (Cmd_Exists(node->name))
-					Cmd_RemoveCommand(node->name);
-			}
-
-			/* recursive next */
-			if (node->firstChild != nullptr) {
-				node = node->firstChild;
-				continue;
-			}
+	uiNode_t** nodes[] = {ui_global.windows, ui_global.components};
+	for (int nodeType = 0; nodeType < 2; ++nodeType) {
+		for (int i = 0; i < ui_global.numWindows; i++) {
+			uiNode_t* node = nodes[nodeType][i];
 			while (node) {
-				if (node->next != nullptr) {
-					node = node->next;
-					break;
+				/* remove the command */
+				if (node->behaviour == confunc) {
+					/* many nodes to one command is allowed */
+					if (Cmd_Exists(node->name)) {
+						Cmd_RemoveCommand(node->name);
+					}
 				}
-				node = node->parent;
+
+				/* recursive next */
+				if (node->firstChild != nullptr) {
+					node = node->firstChild;
+					continue;
+				}
+				while (node) {
+					if (node->next != nullptr) {
+						node = node->next;
+						break;
+					}
+					node = node->parent;
+				}
 			}
 		}
 	}
-
 	UI_FontShutdown();
 	UI_ResetInput();
 	UI_ResetTimers();
