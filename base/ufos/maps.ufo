@@ -1936,6 +1936,18 @@ mapdef industrial_large
 	maxaliens		30
 	civilianteam	worker
 
+	multiplayer		true
+	teams			2
+	gametypes (
+		coop2
+		coop3
+		coop4
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -1977,6 +1989,18 @@ mapdef industrial_medium
 	size			"large"
 	maxaliens		14
 	civilianteam	worker
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		coop2
+		coop3
+		coop4
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
@@ -2021,6 +2045,18 @@ mapdef industrial_small
 	maxaliens		9
 	civilianteam	worker
 
+	multiplayer		true
+	teams			2
+	gametypes (
+		coop2
+		coop3
+		coop4
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -2062,6 +2098,14 @@ mapdef industrial_small_noufo
 	size			"medium"
 	maxaliens		14
 	civilianteam	worker
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
