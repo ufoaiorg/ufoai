@@ -244,6 +244,18 @@ tile +craft_drop_raptor
 0		0		0		0		0
 }
 
+// UFOs ------------------------------------------------------------*
+
+tile +craft_crash_scout
+{
+4 5
+0		ah		ah		0
+av		+c		+c		av
+av		+c		+c		av
+av		+c		+c		av
+0		ah		ah		0
+}
+
 // nature tiles ----------------------------------------------------*
 
 tile +nature_01
