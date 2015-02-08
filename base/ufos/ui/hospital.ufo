@@ -68,13 +68,13 @@ window hospital
 			 * @param <4> Tooltip
 			 */
 			confunc hospital_wounds {
-				call *node:parent.patients.hos<1>.wounds@createChild("wound_<2>", "cmpH<2>")
 				if (<3> >= 0.3) {
 					*node:parent.patients.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound"
 				} else {
 					*node:parent.patients.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound_treated"
 				}
 				*node:parent.patients.hos<1>.wounds.wound_<2>@tooltip = "<4>"
+				*node:parent.patients.hos<1>.wounds.wound_<2>@invis = false
 			}
 
 			panel patients {
