@@ -312,6 +312,11 @@ component HospitalItem extends panel {
 		size	"28 28"
 		ghost		true
 	}
+
+	image assigned {
+		pos		"1 2"
+		size	"24 24"
+	}
 }
 
 // Research item (items researched in base)
