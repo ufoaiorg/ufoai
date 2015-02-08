@@ -1,0 +1,41 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"noequipment" "1"
+// brush 0
+{
+( 952 -884 9 ) ( 970 -878 9 ) ( 954 -887 9 ) tex_common/lightclip 28 60 0 0.25 0.25 589568 0 0
+( 959 -890 7 ) ( 963 -872 7 ) ( 954 -887 7 ) tex_common/lightclip 28 60 0 0.25 0.25 589568 0 0
+( 11 3 7 ) ( 11 -4 9 ) ( 11 3 9 ) tex_common/lightclip 4 0 0 0.25 0.25 589568 0 0
+( 11 3 7 ) ( 9 7 9 ) ( 9 7 7 ) tex_common/lightclip 4 0 0 0.25 0.25 589568 0 0
+( 4 10 7 ) ( 9 7 9 ) ( 4 10 9 ) tex_common/lightclip 28 0 0 0.25 0.25 589568 0 0
+( -3 10 7 ) ( 4 10 9 ) ( -3 10 9 ) tex_common/lightclip 28 0 0 0.25 0.25 589568 0 0
+( -3 10 7 ) ( -9 7 9 ) ( -9 7 7 ) tex_common/lightclip 28 0 0 0.25 0.25 589568 0 0
+( -9 7 9 ) ( -11 3 7 ) ( -9 7 7 ) tex_common/lightclip 4 0 0 0.25 0.25 589568 0 0
+( -11 44 4 ) ( -11 46 16 ) ( -11 44 16 ) tex_common/lightclip 4 0 0 0.25 0.25 589568 0 0
+( -7 -10 7 ) ( -11 -4 9 ) ( -7 -10 9 ) tex_common/lightclip 4 0 0 0.25 0.25 589568 0 0
+( -7 -10 7 ) ( -4 -12 9 ) ( -4 -12 7 ) tex_common/lightclip 28 0 0 0.25 0.25 589568 0 0
+( -4 -12 9 ) ( 3 -12 7 ) ( -4 -12 7 ) tex_common/lightclip 28 0 0 0.25 0.25 589568 0 0
+( 8 -9 9 ) ( 3 -12 7 ) ( 3 -12 9 ) tex_common/lightclip 28 0 0 0.25 0.25 589568 0 0
+( 11 -4 7 ) ( 8 -9 9 ) ( 11 -4 9 ) tex_common/lightclip 4 0 0 0.25 0.25 589568 0 0
+}
+// brush 1
+{
+( 4 4 64 ) ( 4 -4 64 ) ( -4 4 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 4 4 64 ) ( -4 4 64 ) ( 4 4 0 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 4 4 64 ) ( 4 4 0 ) ( 4 -4 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( -4 -4 0 ) ( 4 -4 0 ) ( -4 4 0 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( -4 -4 0 ) ( -4 -4 64 ) ( 4 -4 0 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( -4 479 6 ) ( -4 479 5 ) ( -4 480 5 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/bush/bush01.md2"
+"origin" "0 0 18"
+"angles" "0 45 0"
+"modelscale_vec" "0.75 0.75 1.25"
+}

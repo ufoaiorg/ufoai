@@ -1,0 +1,17 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"noequipment" "1"
+// brush 0
+{
+( 93 76 4 ) ( -2 39 4 ) ( 90 35 4 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
+( 64 8 4 ) ( 53 49 18 ) ( 90 35 4 ) tex_nature/grass_mowed_dry_c 0 0 0 0.25 0.25 65280 0 0
+( 53 49 18 ) ( 93 76 4 ) ( 90 35 4 ) tex_nature/grass_mowed_dry_c 0 0 0 0.25 0.25 65280 0 0
+( 93 76 4 ) ( 53 49 18 ) ( 54 99 4 ) tex_nature/grass_mowed_dry_c 0 0 0 0.25 0.25 65280 0 0
+( 54 99 4 ) ( 53 49 18 ) ( 7 79 4 ) tex_nature/grass_mowed_dry_c 0 0 0 0.25 0.25 65280 0 0
+( 53 49 18 ) ( -2 39 4 ) ( 7 79 4 ) tex_nature/grass_mowed_dry_c 0 0 0 0.25 0.25 65280 0 0
+( 26 0 4 ) ( -2 39 4 ) ( 53 49 18 ) tex_nature/grass_mowed_dry_c 0 0 0 0.25 0.25 65280 0 0
+( 26 0 4 ) ( 53 49 18 ) ( 64 8 4 ) tex_nature/grass_mowed_dry_c 0 0 0 0.25 0.25 65280 0 0
+}
+}
