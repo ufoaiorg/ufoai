@@ -27,7 +27,7 @@ window hospital
 
 			/**
 			 * @param <1> ucn
-			 * @param <2> light, medium, serious, healty
+			 * @param <2> light, medium, serious, healthy
 			 * @param <3> HP
 			 * @param <4> MaxHP
 			 * @param <5> Name
@@ -62,13 +62,13 @@ window hospital
 			 * @param <4> Tooltip
 			 */
 			confunc hospital_wounds {
-				call *node:root.panel.hos<1>.wounds@createChild("wound_<2>", "cmpH<2>")
+				call *node:parent.patients.hos<1>.wounds@createChild("wound_<2>", "cmpH<2>")
 				if (<3> >= 0.3) {
-					*node:root.panel.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound"
+					*node:parent.patients.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound"
 				} else {
-					*node:root.panel.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound_treated"
+					*node:parent.patients.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound_treated"
 				}
-				*node:root.panel.hos<1>.wounds.wound_<2>@tooltip = "<4>"
+				*node:parent.patients.hos<1>.wounds.wound_<2>@tooltip = "<4>"
 			}
 
 			panel patients {

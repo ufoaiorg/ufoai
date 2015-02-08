@@ -229,6 +229,33 @@ component EmployeeCount extends panel
 	}
 }
 
+// Hospital wound icons
+component cmpHhumanoid_head extends button {
+	color "1 0 0 1"
+	pos			"0 6"
+	size		"16 16"
+}
+component cmpHhumanoid_torso extends button {
+	color "1 0 0 1"
+	pos			"19 6"
+	size		"16 16"
+}
+component cmpHhumanoid_arms extends button {
+	color "1 0 0 1"
+	pos			"38 6"
+	size		"16 16"
+}
+component cmpHhumanoid_legs extends button {
+	color "1 0 0 1"
+	pos			"57 6"
+	size		"16 16"
+}
+component cmpHdefault_body extends button {
+	color "1 0 0 1"
+	pos			"0 6"
+	size		"16 16"
+}
+
 // Hospital item (per employee)
 component HospitalItem extends panel {
 	{
@@ -259,7 +286,7 @@ component HospitalItem extends panel {
 		ghost			true
 	}
 	string type {
-		pos			"530 8"
+		pos			"550 8"
 		size		"100 15"
 		color		"0.56 0.81 0.76 1"
 		font		"f_verysmall"
@@ -270,18 +297,18 @@ component HospitalItem extends panel {
 
 	panel wounds {
 		pos 	"310 0"
-		size	"28 28"
+		size	"80 28"
 		ghost		true
 	}
 
 	container implant {
-		pos "340 0"
+		pos "390 0"
 		border			"1"
 		bordercolor		"0.56 0.81 0.76 1"
 	}
 
 	image icon {
-		pos 	"460 0"
+		pos 	"510 0"
 		size	"28 28"
 		ghost		true
 	}

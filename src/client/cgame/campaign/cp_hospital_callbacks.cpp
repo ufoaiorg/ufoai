@@ -77,7 +77,7 @@ static inline void HOS_Entry (const Employee& employee)
 {
 	const character_t& chr = employee.chr;
 	const float injuryLevel = HOS_GetInjuryLevel(chr);
-	if (!employee.isSoldier() && chr.HP >= chr.maxHP && injuryLevel <= 0)
+	if (!employee.isSoldier() && chr.HP >= chr.maxHP && injuryLevel <= 0.0f)
 		return;
 
 	const char* rank = HOS_GetRank(employee);
