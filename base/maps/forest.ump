@@ -313,8 +313,8 @@ assembly nature_small
 title "_Forest"
 size "7 7"
 +nature_01	"1 1"	// 4x4
-+nature_02	"0 1"	// 4x4
-+nature_03	"0 1"	// 4x3
++nature_02	"1 1"	// 4x4
+//+nature_03	"0 1"	// 4x3
 +nature_11	"0 5"	// 1x1
 +nature_12	"0 5"	// 1x1
 *rm_ufo +craft_crash_scout	"1 1"
