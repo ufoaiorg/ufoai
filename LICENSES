@@ -274,27 +274,6 @@ base/maps/farm2/f_main.map | GNU General Public License 2.0 or later | "SparX" B
 base/maps/ferry.map | GNU General Public License 2.0 or later
 base/maps/fighter_crash.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/forest.ump | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_a1.map | GNU General Public License 2.0 or later
-base/maps/forest/fr_a2.map | GNU General Public License 2.0 or later
-base/maps/forest/fr_craft_crash_fighter.map | GNU General Public License 2.0 or later
-base/maps/forest/fr_craft_crash_harvester.map | GNU General Public License 2.0 or later
-base/maps/forest/fr_craft_crash_scout.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_craft_drop_firebird.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_craft_drop_herakles.map | GNU General Public License 2.0 or later
-base/maps/forest/fr_craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/forest/fr_craft_ufo_fighter.map | GNU General Public License 2.0 or later
-base/maps/forest/fr_craft_ufo_harvester.map | GNU General Public License 2.0 or later
-base/maps/forest/fr_craft_ufo_scout.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_f1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_f10.map | GNU General Public License 2.0 or later
-base/maps/forest/fr_f2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_f3.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_f4.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_f5.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_f6.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_f7.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_f8.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_f9.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_h1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_h2.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_nature_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
