@@ -975,6 +975,44 @@ mapdef farm2
 // FOREST RANDOM MAPS //
 ////////////////////////
 
+mapdef forest_nature_medium
+{
+	map			"+forest"
+	params		("nature_medium")
+	description	"_Forest"
+	size		"medium"
+	maxaliens	16
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_crash_harvester
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+		"wasted"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"nopopulation"
+	)
+}
+
 mapdef forest_nature_small
 {
 	map			"+forest"
