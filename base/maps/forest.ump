@@ -253,7 +253,7 @@ tile +craft_crash_scout
 av		+c		+c		av
 av		+c		+c		av
 av		+c		+c		av
-0		ah		ah		0
+0		x		x		0
 }
 
 // nature tiles ----------------------------------------------------*
@@ -308,6 +308,18 @@ tile +nature_12
 
 // map assemblies --------------------------------------------------*
 
+assembly nature_small
+{
+title "_Forest"
+size "7 7"
++nature_01	"1 1"	// 4x4
++nature_02	"0 1"	// 4x4
++nature_03	"0 1"	// 4x3
++nature_11	"0 5"	// 1x1
++nature_12	"0 5"	// 1x1
+*rm_ufo +craft_crash_scout	"1 1"
+*rm_drop +craft_drop_herakles	"1 1"
+}
 
 // test assembly ---------------------------------------------------*
 

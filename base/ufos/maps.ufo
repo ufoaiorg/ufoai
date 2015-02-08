@@ -971,57 +971,14 @@ mapdef farm2
 	)
 }
 
-/* WIP -------------------------------------------------------------*
-
 ////////////////////////
 // FOREST RANDOM MAPS //
 ////////////////////////
 
-mapdef forest_large
+mapdef forest_nature_small
 {
 	map			"+forest"
-	params		("large_a" "large_b")
-	description	"_Forest"
-	size		"large"
-	maxaliens	15
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_ufo_fighter
-		craft_crash_fighter
-		craft_ufo_harvester
-		craft_crash_harvester
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"rural"
-		"nopopulation"
-	)
-}
-
-mapdef forest_small
-{
-	map			"+forest"
-	params		("small_a" "small_b")
+	params		("nature_small")
 	description	"_Forest"
 	size		"small"
 	maxaliens	6
@@ -1035,16 +992,14 @@ mapdef forest_small
 
 	ufos
 	(
-		craft_ufo_scout
 		craft_crash_scout
-		craft_ufo_fighter
-		craft_crash_fighter
 	)
 
 	terrains
 	(
 		"grass"
 		"mountain"
+		"wasted"
 	)
 
 	cultures
@@ -1054,12 +1009,9 @@ mapdef forest_small
 
 	populations
 	(
-		"rural"
 		"nopopulation"
 	)
 }
-
--------------------------------------------------------------------*/
 
 ////////////////////////
 // FROZEN RANDOM MAPS //
