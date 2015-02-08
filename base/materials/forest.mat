@@ -1,3 +1,4 @@
+/*
 {
 	material tex_nature/grass_mowed_dry_c
 	{
@@ -6,6 +7,15 @@
 		lightmap
 	}
 }
+
+{
+	material tex_mattn/wood006
+	{
+		texture tex_nature/grass_mowed_dry_c
+		dirtmap 1.0
+		lightmap
+	}
+}*/
 
 /* ufo2: (Harvester, Corrupter, Bomber) */
 
