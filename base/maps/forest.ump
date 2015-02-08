@@ -20,6 +20,14 @@
 // g: water left-top curve
 // u: UFO tiles
 
+// tiletypes:
+// ----------
+// +: tile contains something
+// 0: always means no restrictions
+// a: common tiles
+// c: craft tiles contain UFOs and dropships
+// x: do not define +x, it is used to force placing tiles at the border of the map
+
 base forest/fr_
 
 worldspawn {
@@ -206,6 +214,36 @@ b      +d      +g       au
 0       c       au       0
 }
 
+// dropships -------------------------------------------------------*
+
+tile +craft_drop_firebird
+{
+5 4
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
+
+tile +craft_drop_herakles
+{
+5 4
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
+
+tile +craft_drop_raptor
+{
+5 5
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
+
 // nature tiles ----------------------------------------------------*
 
 tile +nature_01
@@ -240,6 +278,21 @@ tile +nature_03
 0		0		0		0		0		0
 }
 
+tile +nature_11
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +nature_12
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
 
 // map assemblies --------------------------------------------------*
 
@@ -250,10 +303,12 @@ assembly test
 {
 title "_Forest"
 size "7 6"
-+nature_01	"0 1"	// 4x4
-+nature_02	"1 1"	// 4x4
-+nature_03	"1 1"	// 4x3
-*rm_drop +craft_drop_firebird	"1 1"
++nature_01	"1 1"	// 4x4
++nature_02	"0 1"	// 4x4
++nature_03	"0 1"	// 4x3
++nature_11	"0 5"	// 1x1
++nature_12	"0 5"	// 1x1
+*rm_drop +craft_drop_herakles	"1 1"
 }
 
 /* contents --------------------------------------------------------*
@@ -273,5 +328,10 @@ size "7 6"
 +w8			"0 1"	// 2x1	brook -,-'
 
 tileset house_22	"0 1"	// +h5 +h6 +h7
+
++nature_01	"0 1"	// 4x4
++nature_02	"0 1"	// 4x4
++nature_03	"0 1"	// 4x3
++nature_11	"0 1"	// 1x1
 
 -------------------------------------------------------------------*/
