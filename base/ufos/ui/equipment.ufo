@@ -15,7 +15,7 @@ component equipSoldier extends panel {
 	}
 
 	string name {
-		pos				"0 0"
+		pos				"30 0"
 		color			"0.56 0.81 0.76 1"
 		size			"285 25"
 		contentalign	ALIGN_CL
@@ -26,6 +26,11 @@ component equipSoldier extends panel {
 
 	data status {
 		integer		0
+	}
+
+	image assigned {
+		pos		"0 0"
+		size	"24 24"
 	}
 }
 
@@ -98,6 +103,10 @@ window equipment extends objectinfo
 					*node:parent.soldierlist.member<1>.status@integer = <3>
 					if ( <3> == 1 ) {
 						*node:parent.soldierlist.member<1>.name@color = "1 0.81 0.76 1"
+					}
+					if ( <4> ne "" ) {
+						*node:parent.soldierlist.member<1>.assigned@src = "icons/icon_aircraftsml"
+						*node:parent.soldierlist.member<1>.assigned@tooltip = <4>
 					}
 
 					if ( *node:root.selected@integer < 0 ) {
