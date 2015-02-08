@@ -1,17 +1,14 @@
 // ****************
 // Forest assembly
 // ****************
-
-base forest/fr_
-
-
+//
 // Legend:
 // ------
 // fxy - ordinary forest tiles
 // wxy - water tiles with brooks
 // axy - forest tiles with info_alien_start
 // hxy- house tiles, with info_civilian_start.
-
+//
 // Tiletypes
 // ------
 // a: normal
@@ -22,8 +19,8 @@ base forest/fr_
 // f: water right-top curve
 // g: water left-top curve
 // u: UFO tiles
-//
 
+base forest/fr_
 
 //** drop and crashes tiles
 
@@ -674,6 +671,40 @@ b      +d      +g       au
 0       c       au       0
 }
 
+// nature tiles ----------------------------------------------------*
+
+tile +nature_01
+{
+6 6
+0		0		0		0		0		0
+0		0		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		0		0
+0		0		0		0		0		0
+}
+
+tile +nature_02
+{
+6 6
+0		0		0		0		0		0
+0		+a		+a		+a		0		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		0		+a		+a		+a		0
+0		0		0		0		0		0
+}
+
+tile +nature_03
+{
+6 5
+0		0		0		0		0		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		0		0		0		0		0
+}
+
 ///** tilesets
 
 tileset forest_11a {
@@ -837,49 +868,11 @@ tileset house_22 "0 3"
 assembly test
 {
 title "_Forest"
-size "5 10"
-+a1			"0 1"	// 3x3	hunting high stand
-+a2			"0 1"	// 2x2¯	three pines
-+f1			"0 1"	// 3x3	maaaaaany pines, dead tree
-+f2			"0 1"	// 1x1	two pines, ficus, plant2
-+f3			"0 1"	// 1x2	two chestnut trees flank a rock north and south
-+f4			"0 1"	// 2x2	three chestnut trees, dead tree, tree stump
-+f5			"0 1"	// 2x2	six chestnut trees, some small rocks
-+f6			"0 1"	// 1x2	three chestnut trees, the middle one overturned
-+f7			"0 1"	// 3x3	chestnut trees, firs, plants, gumtree, ferns
-+f8			"0 1"	// 3x3	chestnut trees, firs, plants, pine, ferns
-+f9			"0 1"	// 2x2	four chestnut trees, pile of rocks
-+f10		"0 1"	// 3x3	four chestnut trees, five plant2, ground raised
-+f31		"0 1"	// 1x1	raised ground + chestnut tree
-+f32		"0 1"	// 1x2	raised ground, three chestnut trees, two firs, a fern
-+f33		"0 1"	// 1x2	ficus, gumtree, fern2, fir
-+f34		"0 1"	// 1x1	four firs form a X, middle is a fern
-+f35		"0 1"	// 1x1	chestnut + fir + ficus
-+f36		"0 1"	// 2x2	six firs, six small firs around a fern, fern2, chestnut, flat rock
-+f37		"0 1"	// 1x1	raised ground, chestnut, a small fir in each corner
-+f38		"0 1"	// 1x1	fir, fern, fern2, small firs
-+f39		"0 1"	// 1x1	pile of strains
-+f40		"0 1"	// 1x1	very small shelter, fir
-+f41		"0 1"	// 1x2	two rocks, four firs, a fern2
-+f42		"0 1"	// 1x1	chestnut, small firs
-+f43		"0 1"	// 1x1	h-shaped ruin walls, fir
-+f44		"0 1"	// 1x1	_c-shaped ruin walls
-+f45		"0 1"	// 2x2	three firs, chestnut, ficus, fern2, small hill
-+f46		"0 1"	// 1x1	three firs and a fern form a X, middle is a chestnut
-+f47		"0 1"	// 1x1	two firs and two plant2 form a X, middle is a chestnut
-+f48		"0 1"	// 2x2	gumtree, two pines, two firs, fern2
-+f49		"0 1"	// 1x1	two firs east of a rock
-+f50		"0 1"	// 1x1	a large rock
-+f51		"0 1"	// 2x2	eight firs, pine, chestnut, fern
-+f52		"0 1"	// 2x2	a rock, gumtree, two chestnut trees, two firs, two fern2
-+f53		"0 1"	// 2x2	three gumtrees, six firs, chestnut, ¯|shaped ruin walls
-+f54		"0 1"	// 2x2	two dead trees, a fir, a pine
-+h1			"0 1"	// 2x3	house from lake_ice
-+h2			"0 1"	// 1x2	tent
-+h5			"0 1"	// 2x2	house with green roof
-+h6			"0 1"	// 2x2	house with grey roof and garden
-+h7			"0 1"	// 2x2	house with walkable, yellow roof
-*rm_ufo +craft_crash_fighter	"1 1"
+size "7 6"
++nature_01	"0 1"	// 4x4
++nature_02	"1 1"	// 4x4
++nature_03	"1 1"	// 4x3
++f50		"0 10"	// 1x1	a large rock
 *rm_drop +craft_drop_firebird	"1 1"
 }
 
