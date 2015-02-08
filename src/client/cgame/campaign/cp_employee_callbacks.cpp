@@ -124,7 +124,9 @@ static void E_EmployeeList_f (void)
 			continue;
 		cgi->LIST_AddPointer(&employeeList, e);
 		const int needsHealing = HOS_NeedsHealing(e->chr) ? 1 : 0;
-		cgi->UI_ExecuteConfunc("hire_addemployee %i \"%s\" %i", employeesInCurrentList, e->chr.name, needsHealing);
+		const aircraft_t* craft = AIR_IsEmployeeInAircraft(e, nullptr);
+		cgi->UI_ExecuteConfunc("hire_addemployee %i \"%s\" %i \"%s\"",
+				employeesInCurrentList, e->chr.name, needsHealing, craft ? craft->name : "");
 		if (e->isHired()) {
 			if (e->isAwayFromBase())
 				cgi->UI_ExecuteConfunc("employeedisable %i", employeesInCurrentList);

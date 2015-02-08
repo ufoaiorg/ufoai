@@ -11,8 +11,9 @@ component cmpEmployee extends panel
 	string name
 	{
 		size		"280 38"
-		pos			"15 0"
+		pos			"30 0"
 		color		"0.56 0.81 0.76 1"
+		contentalign ALIGN_CL
 		onClick		{
 			cmd "employee_select <node:parent@num>; hire_select <node:parent@num>"
 			cmd "set_healthbar_color;"
@@ -27,6 +28,10 @@ component cmpEmployee extends panel
 		onRClick	{ cmd "employee_delete <node:parent@num>; employee_equipcheck;" }
 	}
 	data status { integer 0 }
+	image assigned {
+		pos 	"0 7"
+		size	"24 24"
+	}
 }
 
 window employees
@@ -201,6 +206,7 @@ window employees
 				// <1> Employee position in menu
 				// <2> Employee name
 				// <3> Employee is wounded?
+				// <4> Employee aircraft
 				confunc hire_addemployee {
 					call *node:parent.employee_list@createChild("bt_employee<1>", "cmpEmployee")
 					*node:parent.employee_list.bt_employee<1>@num = <1>
@@ -208,6 +214,10 @@ window employees
 					*node:parent.employee_list.bt_employee<1>.status@integer = <3>
 					if ( <3> == 1) {
 						*node:parent.employee_list.bt_employee<1>.name@color = "1 0.81 0.76 1"
+					}
+					if ( <4> ne "" ) {
+						*node:parent.employee_list.bt_employee<1>.assigned@src = "icons/icon_aircraftsml"
+						*node:parent.employee_list.bt_employee<1>.assigned@tooltip = <4>
 					}
 				}
 
