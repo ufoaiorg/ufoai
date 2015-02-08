@@ -992,6 +992,7 @@ mapdef forest_nature_small
 
 	ufos
 	(
+		craft_crash_fighter
 		craft_crash_scout
 	)
 
