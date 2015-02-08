@@ -310,7 +310,6 @@ component HospitalItem extends panel {
 	image icon {
 		pos 	"510 0"
 		size	"28 28"
-		ghost		true
 	}
 
 	image assigned {
