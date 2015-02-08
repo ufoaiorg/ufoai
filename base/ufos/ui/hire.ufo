@@ -31,6 +31,8 @@ component cmpEmployee extends panel
 	image assigned {
 		pos 	"0 7"
 		size	"24 24"
+		src		"icons/icon_aircraftsml"
+		invis	true
 	}
 }
 
@@ -216,7 +218,7 @@ window employees
 						*node:parent.employee_list.bt_employee<1>.name@color = "1 0.81 0.76 1"
 					}
 					if ( <4> ne "" ) {
-						*node:parent.employee_list.bt_employee<1>.assigned@src = "icons/icon_aircraftsml"
+						*node:parent.employee_list.bt_employee<1>.assigned@invis = false
 						*node:parent.employee_list.bt_employee<1>.assigned@tooltip = <4>
 					}
 				}

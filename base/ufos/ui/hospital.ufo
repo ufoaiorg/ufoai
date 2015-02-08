@@ -56,7 +56,7 @@ window hospital
 				*node:parent.patients.hos<1>.id@integer = <1>
 
 				if ( <7> ne "" ) {
-					*node:parent.patients.hos<1>.assigned@src = "icons/icon_aircraftsml"
+					*node:parent.patients.hos<1>.assigned@invis = false
 					*node:parent.patients.hos<1>.assigned@tooltip = <7>
 				}
 			}

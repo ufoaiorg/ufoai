@@ -316,6 +316,8 @@ component HospitalItem extends panel {
 	image assigned {
 		pos		"1 2"
 		size	"24 24"
+		src		"icons/icon_aircraftsml"
+		invis	true
 	}
 }
 

@@ -31,6 +31,8 @@ component equipSoldier extends panel {
 	image assigned {
 		pos		"0 0"
 		size	"24 24"
+		src		"icons/icon_aircraftsml"
+		invis	true
 	}
 }
 
@@ -105,7 +107,7 @@ window equipment extends objectinfo
 						*node:parent.soldierlist.member<1>.name@color = "1 0.81 0.76 1"
 					}
 					if ( <4> ne "" ) {
-						*node:parent.soldierlist.member<1>.assigned@src = "icons/icon_aircraftsml"
+						*node:parent.soldierlist.member<1>.assigned@invis = false
 						*node:parent.soldierlist.member<1>.assigned@tooltip = <4>
 					}
 
