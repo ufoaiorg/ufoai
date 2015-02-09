@@ -392,6 +392,16 @@ window bases
 			data state { string "true" }
 		}
 
+		BaseSection hospital
+		{
+			{
+				onClick		{ cmd "ui_push hospital;" }
+			}
+			string label { string "_Hospital" }
+			button icon { icon "icons/hos_bed" }
+			data state { string "true" }
+		}
+
 		// Hide/show the other base sections
 		func setOthersInvis
 		{
@@ -401,6 +411,7 @@ window bases
 			*node:parent.research@invis = <1>
 			*node:parent.production@invis = <1>
 			*node:parent.containment@invis = <1>
+			*node:parent.hospital@invis = <1>
 		}
 	}
 
@@ -427,7 +438,6 @@ window bases
 				*node:parent.sections.soldiers@onMouseLeave = { }
 				*node:parent.sections.soldiers@onClick = { }
 				*node:parent.sections.soldiers@tooltip = "<3>"
-			} elif (<1> eq "hospital") {
 			} elif (<1> eq "transfer") {
 			} else {
 				*node:parent.sections.<1>.bg@bgcolor = "1 1 1 0.2"
@@ -443,7 +453,6 @@ window bases
 				*node:parent.sections.soldiers@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
 				*node:parent.sections.soldiers@onClick = { cmd "ui_push equipment -1;" }
 				*node:parent.sections.soldiers@tooltip = ""
-			} elif (<1> eq "hospital") {
 			} elif (<1> eq "transfer") {
 			} else {
 				*node:parent.sections.<1>.bg@bgcolor = "0.527 0.6 0.21 0.2"
@@ -460,6 +469,8 @@ window bases
 					*node:parent.sections.<1>@onClick = { cmd "ui_push production;" }
 				} elif (<1> eq "containment") {
 					*node:parent.sections.<1>@onClick = { cmd "ui_push aliencont;" }
+				} elif (<1> eq "hospital") {
+					*node:parent.sections.<1>@onClick = { cmd "ui_push hospital;" }
 				}
 			}
 		}
