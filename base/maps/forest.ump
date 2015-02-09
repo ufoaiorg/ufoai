@@ -414,10 +414,11 @@ size "10 7"
 +nature_01		"1 1"	// 4x4
 +nature_02		"1 1"	// 4x4
 +nature_03		"1 1"	// 4x3
-+nature_11		"0 8"	// 1x1
-+nature_12		"0 8"	// 1x1
-+nature_30		"0 1"	// 3x2
-+nature_31		"0 1"	// 2x3
++nature_11		"0 6"	// 1x1
++nature_12		"0 6"	// 1x1
++nature_30		"0 3"	// 3x2
++nature_31		"0 3"	// 2x3
++nature_33		"0 3"	// 2x3
 *rm_ufo +craft_crash_scout	"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
