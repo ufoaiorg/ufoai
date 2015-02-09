@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -1212,7 +1213,7 @@
 // entity 1
 {
 "classname" "misc_model"
-"spawnflags" "4"
+"spawnflags" "252"
 "model" "models/objects/vegi/pino/pino2.md2"
 "origin" "112 496 4"
 "skin" "0"

@@ -5435,7 +5435,7 @@
 // entity 32
 {
 "classname" "misc_model"
-"spawnflags" "4"
+"spawnflags" "252"
 "model" "models/objects/vegi/pino/pino2.md2"
 "origin" "688 528 4"
 "skin" "0"
@@ -5500,7 +5500,7 @@
 // entity 39
 {
 "classname" "misc_model"
-"spawnflags" "4"
+"spawnflags" "252"
 "model" "models/objects/vegi/pino/pino2.md2"
 "origin" "272 624 4"
 "skin" "0"

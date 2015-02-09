@@ -5876,7 +5876,7 @@
 // entity 75
 {
 "classname" "misc_model"
-"spawnflags" "4"
+"spawnflags" "252"
 "model" "models/objects/vegi/pino/pino2.md2"
 "origin" "720 1040 4"
 "skin" "0"

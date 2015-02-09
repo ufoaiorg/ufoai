@@ -3036,7 +3036,7 @@
 // entity 3
 {
 "classname" "misc_model"
-"spawnflags" "4"
+"spawnflags" "252"
 "model" "models/objects/vegi/pino/pino2.md2"
 "origin" "144 240 12"
 "skin" "0"
@@ -3101,7 +3101,7 @@
 // entity 10
 {
 "classname" "misc_model"
-"spawnflags" "4"
+"spawnflags" "252"
 "model" "models/objects/vegi/pino/pino2.md2"
 "origin" "560 688 36"
 "skin" "0"
@@ -3166,7 +3166,7 @@
 // entity 17
 {
 "classname" "misc_model"
-"spawnflags" "4"
+"spawnflags" "252"
 "model" "models/objects/vegi/pino/pino2.md2"
 "origin" "528 336 40"
 "skin" "0"
