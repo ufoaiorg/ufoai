@@ -27,7 +27,6 @@
 	parallax 1.0
 	specular 1.0
 	{
-		envmap 0
 		lightmap
 	}
 }
@@ -52,7 +51,6 @@
 	parallax 1.0
 	specular 5.0
 	{
-		envmap 0
 		lightmap
 	}
 }
