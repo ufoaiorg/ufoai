@@ -327,6 +327,25 @@ tile +nature_12
 0		0		0
 }
 
+tile +nature_30
+{
+5 4
+0		0		0		0		0
+0		+a		+a		+a		0
+0		0		+a		+a		0
+0		0		0		0		0
+}
+
+tile +nature_31
+{
+4 5
+0		0		0		0
+0		+a		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
 // tilesets --------------------------------------------------------*
 
 tileset 4x4 {
@@ -340,9 +359,11 @@ assembly nature_medium
 {
 title "_Forest"
 size "8 8"
-+nature_03	"1 1"	// 4x3
-+nature_11	"0 25"	// 1x1
-+nature_12	"0 25"	// 1x1
++nature_03		"1 1"	// 4x3
++nature_11		"0 6"	// 1x1
++nature_12		"0 6"	// 1x1
++nature_30		"0 1"	// 3x2
++nature_31		"0 1"	// 2x3
 tileset 4x4		"1 1"
 *rm_ufo +craft_crash_harvester	"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
