@@ -255,6 +255,18 @@ av		+c		+c		x
 0		x		x		0
 }
 
+tile +craft_crash_gunboat
+{
+6 7
+0		0		ah		ah		ah		0
+0		a		+c		+c		+c		0
+av		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		av
+0		a		+c		+c		a		0
+0		0		x		x		0		0
+}
+
 tile +craft_crash_harvester
 {
 6 7
@@ -348,6 +360,10 @@ tile +nature_31
 
 // tilesets --------------------------------------------------------*
 
+tileset 3x3 {
+	+nature_03
+}
+
 tileset 4x4 {
 	+nature_01
 	+nature_02
@@ -366,7 +382,7 @@ size "12 10"
 +nature_12		"0 8"	// 1x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
-*rm_ufo +craft_crash_harvester	"1 1"
+*rm_ufo +craft_crash_gunboat	"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
