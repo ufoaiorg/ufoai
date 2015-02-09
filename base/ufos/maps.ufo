@@ -992,6 +992,7 @@ mapdef forest_nature_medium
 
 	ufos
 	(
+		craft_crash_supply
 		craft_crash_gunboat
 		craft_crash_harvester
 	)
