@@ -219,7 +219,7 @@ b      +d      +g       au
 tile +craft_drop_firebird
 {
 5 4
-0		0		0		0		0
+0		x		x		x		0
 0		+c		+c		+c		0
 0		+c		+c		+c		0
 0		0		0		0		0
@@ -228,7 +228,7 @@ tile +craft_drop_firebird
 tile +craft_drop_herakles
 {
 5 4
-0		0		0		0		0
+0		x		x		x		0
 0		+c		+c		+c		0
 0		+c		+c		+c		0
 0		0		0		0		0
@@ -237,7 +237,7 @@ tile +craft_drop_herakles
 tile +craft_drop_raptor
 {
 5 5
-0		0		0		0		0
+0		x		x		x		0
 0		+c		+c		+c		0
 0		+c		+c		+c		0
 0		+c		+c		+c		0
@@ -358,13 +358,14 @@ tileset 4x4 {
 assembly nature_medium
 {
 title "_Forest"
-size "8 8"
-+nature_03		"1 1"	// 4x3
-+nature_11		"0 6"	// 1x1
-+nature_12		"0 6"	// 1x1
-+nature_30		"0 1"	// 3x2
-+nature_31		"0 1"	// 2x3
-tileset 4x4		"1 1"
+size "12 10"
++nature_01		"1 2"	// 4x4
++nature_02		"1 2"	// 4x4
++nature_03		"4 4"	// 4x3
++nature_11		"0 8"	// 1x1
++nature_12		"0 8"	// 1x1
++nature_30		"0 5"	// 3x2
++nature_31		"0 5"	// 2x3
 *rm_ufo +craft_crash_harvester	"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
@@ -372,12 +373,14 @@ tileset 4x4		"1 1"
 assembly nature_small
 {
 title "_Forest"
-size "7 7"
-+nature_01	"1 1"	// 4x4
-+nature_02	"1 1"	// 4x4
-//+nature_03	"0 1"	// 4x3
-+nature_11	"0 6"	// 1x1
-+nature_12	"0 6"	// 1x1
+size "10 7"
++nature_01		"1 1"	// 4x4
++nature_02		"1 1"	// 4x4
++nature_03		"1 1"	// 4x3
++nature_11		"0 8"	// 1x1
++nature_12		"0 8"	// 1x1
++nature_30		"0 1"	// 3x2
++nature_31		"0 1"	// 2x3
 *rm_ufo +craft_crash_scout	"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
