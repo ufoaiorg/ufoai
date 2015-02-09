@@ -368,6 +368,16 @@ tile +nature_31
 0		0		0		0
 }
 
+tile +nature_33
+{
+5 5
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
 // tilesets --------------------------------------------------------*
 
 tileset 3x3 {
@@ -387,11 +397,12 @@ title "_Forest"
 size "12 10"
 +nature_01		"1 3"	// 4x4
 +nature_02		"1 3"	// 4x4
-+nature_03		"4 8"	// 4x3
++nature_03		"1 3"	// 4x3
 +nature_11		"0 8"	// 1x1
 +nature_12		"0 8"	// 1x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
++nature_33		"4 9"	// 2x3
 *rm_ufo +craft_crash_supply	"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
