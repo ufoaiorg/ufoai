@@ -1503,8 +1503,8 @@ window inv_stats_hud
 	panel abilities
 	{
 		{
-			pos			"370 60"
-			size		"180 140"
+			pos		"370 50"
+			size		"180 120"
 			ghost		true
 		}
 		StatBar strength
@@ -1519,7 +1519,7 @@ window inv_stats_hud
 		StatBar speed
 		{
 			{
-				pos		"0 35"
+				pos		"0 30"
 			}
 			string label { string "_Speed" }
 			bar valuebar { current *cvar:mn_vspd }
@@ -1528,7 +1528,7 @@ window inv_stats_hud
 		StatBar accuracy
 		{
 			{
-				pos		"0 70"
+				pos		"0 60"
 			}
 			string label { string "_Accuracy" }
 			bar valuebar { current *cvar:mn_vacc }
@@ -1537,7 +1537,7 @@ window inv_stats_hud
 		StatBar mind
 		{
 			{
-				pos		"0 105"
+				pos		"0 90"
 			}
 			string label { string "_Mind" }
 			bar valuebar { current *cvar:mn_vmnd }
@@ -1548,8 +1548,8 @@ window inv_stats_hud
 	panel skills
 	{
 		{
-			pos			"370 278"
-			size		"180 140"
+			pos			"370 180"
+			size		"180 120"
 			ghost		true
 		}
 		StatBar cls
@@ -1564,7 +1564,7 @@ window inv_stats_hud
 		StatBar ass
 		{
 			{
-				pos		"0 35"
+				pos		"0 30"
 			}
 			string label { string "_Assault" }
 			bar valuebar { current *cvar:mn_vass }
@@ -1573,7 +1573,7 @@ window inv_stats_hud
 		StatBar snp
 		{
 			{
-				pos		"0 70"
+				pos		"0 60"
 			}
 			string label { string "_Sniper" }
 			bar valuebar { current *cvar:mn_vsnp }
@@ -1582,7 +1582,7 @@ window inv_stats_hud
 		StatBar exp
 		{
 			{
-				pos		"0 105"
+				pos		"0 90"
 			}
 			string label { string "_Explosives" }
 			bar valuebar { current *cvar:mn_vexp }
@@ -1595,9 +1595,49 @@ window inv_stats_hud
 	// ======
 	panel wounds
 	{
-		pos		"370 200"
-		size		"180 100"
+		pos		"370 310"
+		size		"180 64"
 		layout		LAYOUT_TOP_DOWN_FLOW
+	}
+
+	panel info
+	{
+		{
+			pos		"370 384"
+			size		"180 30"
+		}
+		smallstring mis_label
+		{
+			pos		"0 0"
+			size		"160 15"
+			longlines	LONGLINES_CHOP
+			contentalign	ALIGN_UL
+			string		"_Missions"
+		}
+		smallstring mis_kills
+		{
+			pos		"0 15"
+			size		"160 15"
+			longlines	LONGLINES_CHOP
+			contentalign	ALIGN_UL
+			string		"_Aliens killed"
+		}
+		smallstring missions
+		{
+			pos		"160 0"
+			size		"20 15"
+			longlines	LONGLINES_CHOP
+			contentalign	ALIGN_UR
+			string		*cvar:mn_chrmis
+		}
+		smallstring kills
+		{
+			pos		"160 15"
+			size		"20 15"
+			longlines	LONGLINES_CHOP
+			contentalign	ALIGN_UR
+			string		*cvar:mn_chrkillalien
+		}
 	}
 
 	// <1> Body part type (id)
@@ -1634,6 +1674,9 @@ window inv_stats_hud
 		*cvar:inv_stats_window_open = 1
 		cmd "ui_addcvarlistener cl_selected update_actor_state;"
 		cmd "update_actor_state;"
+		if ( *cvar:mn_base_count < 1 ) {
+			*node:root.info@invis = true
+		}
 	}
 
 	func onWindowClosed {
