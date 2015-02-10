@@ -416,7 +416,7 @@ tile +nature_33
 // tilesets --------------------------------------------------------*
 
 tileset 3x3 {
-	+nature_03
+	+nature_33
 }
 
 tileset 4x4 {
