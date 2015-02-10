@@ -105,13 +105,12 @@ static bool HUD_CheckShooting (const le_t* le, Item* weapon)
  */
 static void HUD_FireWeapon_f (void)
 {
-	le_t* actor = selActor;
-
 	if (Cmd_Argc() < 3) { /* no argument given */
 		Com_Printf("Usage: %s <l|r> <firemode number>\n", Cmd_Argv(0));
 		return;
 	}
 
+	le_t* actor = selActor;
 	if (actor == nullptr)
 		return;
 
@@ -160,7 +159,7 @@ static void HUD_SetMoveMode_f (void)
  */
 static void HUD_ToggleCrouchReservation_f (void)
 {
-	le_t* actor = selActor;
+	const le_t* actor = selActor;
 
 	if (!CL_ActorCheckAction(actor))
 		return;
@@ -182,7 +181,7 @@ static void HUD_ToggleCrouchReservation_f (void)
 static void HUD_ToggleReaction_f (void)
 {
 	int state = 0;
-	le_t* actor = selActor;
+	const le_t* actor = selActor;
 
 	if (!CL_ActorCheckAction(actor))
 		return;
