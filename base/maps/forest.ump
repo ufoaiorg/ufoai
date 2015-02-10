@@ -248,11 +248,11 @@ tile +craft_drop_raptor
 
 tile +craft_crash_fighter
 {
-4 4
-0		ah		ah		0
-av		+c		+c		x
-av		+c		+c		x
-0		x		x		0
+5 4
+0		ah		ah		ah		0
+av		+c		+c		+c		av
+av		+c		+c		+c		av
+0		x		x		x		0
 }
 
 tile +craft_crash_gunboat
