@@ -479,12 +479,15 @@ size "7 6"
 
 tileset house_22	"0 1"	// +h5 +h6 +h7
 
-+nature_01		"0 1"	// 4x4
-+nature_02		"0 1"	// 4x4
-+nature_03		"0 1"	// 4x3
-+nature_11		"0 1"	// 1x1
-+nature_20		"0 1"	// 2x2
-+nature_21		"0 1"	// 1x2	tent
-+nature_33		"0 3"	// 3x3
++nature_01		"0 1"	// 4x4¯		raised ground with three large pines, pile of rocks pointing n in se corner
++nature_02		"0 1"	// 4x4¯		large rock in center, dead tree in se corner
++nature_03		"0 1"	// 4x3		bumpy ground, stone 'wall'
++nature_11		"0 1"	// 1x1		large stub + bush, small rock
++nature_12		"0 1"	// 1x1		large pine + fern
++nature_20		"0 1"	// 2x2		generic, three small hills. large pine, pine, chestnut, rocks
++nature_21		"0 1"	// 1x2		tent
++nature_30		"0 1"	// 3x2¯		medium hill <>, large chestnut, pine
++nature_31		"0 1"	// 2x3¯		large rock, large pine, stub + stem
++nature_33		"0 1"	// 3x3		generic, three chestnut trees, large stub in se corner
 
 -------------------------------------------------------------------*/
