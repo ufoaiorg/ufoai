@@ -84,19 +84,6 @@ acdgu    +a       +a     acefu
 0      abdeu      abdeu    0
 }
 
-
-// *** Tent and fire
-tile +h2
-{
-
-3 4
-
-0       abfgu     0
-acdgu   +a     acefu
-acdgu   +a     acefu
-0       abdeu    0
-}
-
 //** Water tiles
 
 //  .   .
@@ -464,7 +451,6 @@ size "7 6"
 /* contents --------------------------------------------------------*
 
 +h1			"0 1"	// 2x3	house from lake_ice
-+h2			"0 1"	// 1x2	tent
 +h5			"0 1"	// 2x2	house with green roof
 +h6			"0 1"	// 2x2	house with grey roof and garden
 +h7			"0 1"	// 2x2	house with walkable, yellow roof
