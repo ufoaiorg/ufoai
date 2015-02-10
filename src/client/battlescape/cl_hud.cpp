@@ -656,24 +656,11 @@ static void HUD_RemainingTUs_f (void)
  */
 static int HUD_GetMinimumTUsForUsage (const Item* item)
 {
-	/** @todo what is this 100? replace with constant please - MAX_TUS? */
-	int time = 100;
-
 	assert(item->def());
 
-	const fireDef_t* fdArray = item->getFiredefs();
-	if (fdArray == nullptr)
-		return time;
+	const fireDef_t* fd = item->getFastestFireDef();
 
-	/* Search for the smallest TU needed to shoot. */
-	for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-		if (!fdArray[i].time)
-			continue;
-		if (fdArray[i].time < time)
-			time = fdArray[i].time;
-	}
-
-	return time;
+	return fd ? fd->time : 900;
 }
 
 /**
