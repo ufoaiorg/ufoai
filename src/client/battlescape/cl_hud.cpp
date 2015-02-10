@@ -951,7 +951,6 @@ static void HUD_UpdateButtons (const le_t* le)
 		const char* menuName = UI_GetActiveWindowName();
 		if (menuName[0] != '\0' && strstr(UI_GetActiveWindowName(), POPUPLIST_NODE_NAME)) {
 			/* Update firemode reservation popup. */
-			/** @todo this is called every frames... is this really needed? */
 			HUD_PopupFiremodeReservation(le, true);
 		}
 	}
