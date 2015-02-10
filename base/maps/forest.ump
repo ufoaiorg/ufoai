@@ -2,24 +2,6 @@
 // Forest assembly
 // ****************
 //
-// Legend:
-// ------
-// fxy - ordinary forest tiles
-// wxy - water tiles with brooks
-// axy - forest tiles with info_alien_start
-// hxy- house tiles, with info_civilian_start.
-//
-// Tiletypes
-// ------
-// a: normal
-// b: water horizontal
-// c: water vertical
-// d: water left-bottom curve
-// e: water right-bottom curve
-// f: water right-top curve
-// g: water left-top curve
-// u: UFO tiles
-
 // tiletypes:
 // ----------
 // +: tile contains something
@@ -310,15 +292,6 @@ tile +nature_33
 
 // tilesets --------------------------------------------------------*
 
-tileset 3x3 {
-	+nature_33
-}
-
-tileset 4x4 {
-	+nature_01
-	+nature_02
-}
-
 // map assemblies --------------------------------------------------*
 
 assembly nature_large
@@ -398,18 +371,6 @@ size "7 10"
 }
 
 /* contents --------------------------------------------------------*
-
-+h1			"0 1"	// 2x3	house from lake_ice
-+w1			"0 5"	// 1x1	brook ¯|
-+w2			"0 6"	// 1x1	brook --
-+w3			"0 6"	// 1x1	brook |
-+w4			"0 6"	// 1x1	brook |
-+w5			"0 6"	// 1x1	brook |¯
-+w6			"0 4"	// 1x2	brook ¯|_
-+w7			"0 6"	// 1x1	brook --
-+w8			"0 1"	// 2x1	brook -,-'
-
-tileset house_22	"0 1"	// +h5 +h6 +h7
 
 +brook_h1		"0 1"	// 1x1		river horizontal
 +brook_v1		"0 1"	// 1x1		river vertical
