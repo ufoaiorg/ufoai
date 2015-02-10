@@ -268,21 +268,15 @@ static uiNode_t* popupListNode;
  */
 static void HUD_PopupFiremodeReservation (const le_t* le, bool popupReload)
 {
-	static char text[MAX_VAR];
-	linkedList_t* popupListText = nullptr;
-	reserveShot_t reserveShotData;
-
 	/* reset the list */
 	UI_ResetData(TEXT_LIST);
 
 	LIST_Delete(&popupListData);
 
 	/* Add list-entry for deactivation of the reservation. */
+	linkedList_t* popupListText = nullptr;
 	LIST_AddPointer(&popupListText, (void*)(_("[0 TU] No reservation")));
-	reserveShotData.hand = ACTOR_HAND_NOT_SET;
-	reserveShotData.fireModeIndex = -1;
-	reserveShotData.weaponIndex = NONE;
-	reserveShotData.TUs = -1;
+	reserveShot_t reserveShotData = {ACTOR_HAND_NOT_SET, NONE, NONE, NONE};
 	LIST_Add(&popupListData, reserveShotData);
 	int selectedEntry = 0;
 
@@ -299,6 +293,7 @@ static void HUD_PopupFiremodeReservation (const le_t* le, bool popupReload)
 			const fireDef_t* ammoFD = &ammo->fd[fd->weapFdsIdx][i];
 			const int time = CL_ActorTimeForFireDef(le, ammoFD);
 			if (CL_ActorUsableTUs(le) + CL_ActorReservedTUs(le, RES_SHOT) >= time) {
+				static char text[MAX_VAR];
 				/* Get firemode name and TUs. */
 				Com_sprintf(text, lengthof(text), _("[%i TU] %s"), time, _(ammoFD->name));
 
@@ -404,14 +399,12 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	if (index >= ammo->numFiredefs[weapFdsIdx])
 		return;
 
-	/* We have a defined fd ... */
-	const fireDef_t* fd = &ammo->fd[weapFdsIdx][index];
-	const int time = CL_ActorTimeForFireDef(actor, fd);
-
 	assert(actor);
 	assert(hand == ACTOR_HAND_RIGHT || hand == ACTOR_HAND_LEFT);
 
-	const bool status = time <= CL_ActorUsableTUs(actor);
+	/* We have a defined fd ... */
+	const fireDef_t* fd = &ammo->fd[weapFdsIdx][index];
+	const int time = CL_ActorTimeForFireDef(actor, fd);
 	const int usableTusForRF = HUD_UsableReactionTUs(actor);
 
 	char tuString[MAX_VAR];
@@ -427,6 +420,7 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	char id[32];
 	Com_sprintf(id, sizeof(id), "fire_hand%c_i%i", ACTOR_GET_HAND_CHAR(hand), index);
 
+	const bool status = time <= CL_ActorUsableTUs(actor);
 	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" \"%i\" \"%i\" \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
 			fd->fdIdx, fd->reaction, status, _(fd->name), time, fd->ammo, tooltip);
 
@@ -447,8 +441,6 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
  */
 static void HUD_DisplayActions (const char* callback, const le_t* actor, actionType_t type)
 {
-	int i;
-
 	if (!actor)
 		return;
 
@@ -473,7 +465,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 			return;
 		}
 
-		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+		for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 			/* Display the firemode information (image + text). */
 			HUD_DisplayFiremodeEntry(callback, actor, ammo, fd->weapFdsIdx, hand, i);
 		}
@@ -485,15 +477,11 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 
 		/* Reloeadable item in hand. */
 		if (weapon && weapon->def() && weapon->isReloadable()) {
-			int tus;
 			containerIndex_t container = CID_RIGHT;
-			bool noAmmo;
-			bool noTU;
 			const char* actionId = "reload_handr";
-
-			tus = HUD_CalcReloadTime(actor, weapon->def(), container);
-			noAmmo = tus == -1;
-			noTU = actor->TU < tus;
+			const int tus = HUD_CalcReloadTime(actor, weapon->def(), container);
+			const bool noAmmo = tus == -1;
+			const bool noTU = actor->TU < tus;
 			UI_ExecuteConfunc("%s reload %s %c %i %i %i", callback, actionId, 'r', tus, !noAmmo, !noTU);
 		}
 	}
@@ -513,7 +501,7 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, actionT
 			return;
 		}
 
-		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+		for (int i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 			/* Display the firemode information (image + text). */
 			HUD_DisplayFiremodeEntry(callback, actor, ammo, fd->weapFdsIdx, hand, i);
 		}
@@ -600,17 +588,14 @@ static void HUD_DisplayFiremodes_f (void)
  */
 static void HUD_UpdateReactionFiremodes (const le_t* actor, const actorHands_t hand, fireDefIndex_t firemodeActive)
 {
-	const fireDef_t* fd;
-	const objDef_t* ammo, *od;
-
 	assert(actor);
 
-	fd = HUD_GetFireDefinitionForHand(actor, hand);
+	const fireDef_t* fd = HUD_GetFireDefinitionForHand(actor, hand);
 	if (fd == nullptr)
 		return;
 
-	ammo = fd->obj;
-	od = ammo->weapons[fd->weapFdsIdx];
+	const objDef_t* ammo = fd->obj;
+	const objDef_t* od = ammo->weapons[fd->weapFdsIdx];
 
 	if (!GAME_ItemIsUseable(od))
 		return;
@@ -834,16 +819,6 @@ static void HUD_UpdateButtons (const le_t* le)
 	if (!le)
 		return;
 
-	Item* weaponR = le->getRightHandItem();
-	Item* headgear = le->inv.getHeadgear();
-
-	Item* weaponL;
-	/* check for two-handed weapon - if not, also define weaponL */
-	if (!weaponR || !weaponR->isHeldTwoHanded())
-		weaponL = le->getLeftHandItem();
-	else
-		weaponL = nullptr;
-
 	const int time = CL_ActorUsableTUs(le);
 	/* Crouch/stand button. */
 	if (LE_IsCrouched(le)) {
@@ -947,6 +922,7 @@ static void HUD_UpdateButtons (const le_t* le)
 
 	const float shootingPenalty = CL_ActorInjuryModifier(le, MODIFIER_SHOOTING);
 	/* Headgear button */
+	const Item* headgear = le->inv.getHeadgear();
 	if (headgear) {
 		const int minheadgeartime = HUD_GetMinimumTUsForUsage(headgear) * shootingPenalty;
 		if (time < minheadgeartime)
@@ -958,6 +934,7 @@ static void HUD_UpdateButtons (const le_t* le)
 	}
 
 	/* Weapon firing buttons. */
+	const Item* weaponR = le->getRightHandItem();
 	if (weaponR) {
 		const int minweaponrtime = HUD_GetMinimumTUsForUsage(weaponR) * shootingPenalty;
 		if (time < minweaponrtime)
@@ -968,6 +945,10 @@ static void HUD_UpdateButtons (const le_t* le)
 		HUD_SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DISABLE);
 	}
 
+	const Item* weaponL = nullptr;
+	/* check for two-handed weapon - if not, also define weaponL */
+	if (!weaponR || !weaponR->isHeldTwoHanded())
+		weaponL = le->getLeftHandItem();
 	if (weaponL) {
 		const int minweaponltime = HUD_GetMinimumTUsForUsage(weaponL) * shootingPenalty;
 		if (time < minweaponltime)
@@ -1389,11 +1370,9 @@ static void HUD_UpdateActorLoad_f (void)
  */
 static void HUD_UpdateActor (le_t* actor)
 {
-	int time;
-
 	HUD_UpdateActorCvar(actor);
 	/* write info */
-	time = 0;
+	int time = 0;
 
 	/* handle actor in a panic */
 	if (LE_IsPanicked(actor)) {
