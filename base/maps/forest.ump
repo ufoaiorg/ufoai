@@ -349,6 +349,15 @@ tile +nature_12
 0		0		0
 }
 
+tile +nature_21
+{
+3 4
+0		0		0
+0		+a		0
+0		+a		0
+0		0		0
+}
+
 tile +nature_30
 {
 5 4
@@ -398,12 +407,13 @@ size "12 10"
 +nature_01		"1 3"	// 4x4
 +nature_02		"1 3"	// 4x4
 +nature_03		"1 3"	// 4x3
-+nature_11		"0 8"	// 1x1
-+nature_12		"0 8"	// 1x1
++nature_11		"0 7"	// 1x1
++nature_12		"0 7"	// 1x1
++nature_21		"0 1"	// 1x2
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"4 9"	// 2x3
-*rm_ufo +craft_crash_supply	"1 1"
+*rm_ufo +craft_crash_supply		"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
@@ -414,12 +424,13 @@ size "10 7"
 +nature_01		"1 1"	// 4x4
 +nature_02		"1 1"	// 4x4
 +nature_03		"1 1"	// 4x3
-+nature_11		"0 6"	// 1x1
-+nature_12		"0 6"	// 1x1
++nature_11		"0 5"	// 1x1
++nature_12		"0 5"	// 1x1
++nature_21		"0 1"	// 1x2
 +nature_30		"0 3"	// 3x2
 +nature_31		"0 3"	// 2x3
 +nature_33		"0 3"	// 2x3
-*rm_ufo +craft_crash_scout	"1 1"
+*rm_ufo +craft_crash_scout		"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
@@ -429,11 +440,12 @@ assembly test
 {
 title "_Forest"
 size "7 6"
-+nature_01	"1 1"	// 4x4
-+nature_02	"0 1"	// 4x4
-+nature_03	"0 1"	// 4x3
-+nature_11	"0 5"	// 1x1
-+nature_12	"0 5"	// 1x1
++nature_01		"1 1"	// 4x4
++nature_02		"0 1"	// 4x4
++nature_03		"0 1"	// 4x3
++nature_11		"0 4"	// 1x1
++nature_12		"0 4"	// 1x1
++nature_21		"0 1"	// 1x2
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
@@ -459,5 +471,7 @@ tileset house_22	"0 1"	// +h5 +h6 +h7
 +nature_02	"0 1"	// 4x4
 +nature_03	"0 1"	// 4x3
 +nature_11	"0 1"	// 1x1
++nature_21	"0 1"	// 1x2	tent
+
 
 -------------------------------------------------------------------*/
