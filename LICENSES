@@ -296,14 +296,6 @@ base/maps/forest/fr_nature_20.map | GNU General Public License 2.0 or later | Ho
 base/maps/forest/fr_nature_21.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
 base/maps/forest/fr_nature_30.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
 base/maps/forest/fr_nature_31.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
-base/maps/forest/fr_w1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_w2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_w3.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_w4.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_w5.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/maps/forest/fr_w6.map | GNU General Public License 2.0 or later
-base/maps/forest/fr_w7.map | GNU General Public License 2.0 or later
-base/maps/forest/fr_w8.map | GNU General Public License 2.0 or later
 base/maps/frozen.ump | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_crash_bomber.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | crashed_bomber prefab
 base/maps/frozen/st_craft_crash_corrupter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | crashed_corrupter prefab
