@@ -993,6 +993,7 @@ mapdef forest_nature_large
 	ufos
 	(
 		craft_crash_bomber
+		craft_crash_corrupter
 	)
 
 	terrains

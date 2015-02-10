@@ -248,6 +248,21 @@ av		+c		+c		+c		+c		av
 0		x		x		x		x		0
 }
 
+tile +craft_crash_corrupter
+{
+8 10
+0		0		0		ah		ah		ah		0		0
+0		0		a		+c		+c		a		0		0
+0		0		a		+c		+c		a		0		0
+0		a		a		+c		+c		a		a		av
+av		+c		+c		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		+c		+c		av
+0		x		x		x		x		x		x		0
+}
+
 tile +craft_crash_fighter
 {
 5 4
