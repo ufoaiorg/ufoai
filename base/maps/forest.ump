@@ -39,18 +39,6 @@ worldspawn {
 
 //** House tiles
 
-tile +h1
-{
-
-4 5
-
-0      abfgu      abfgu     0
-acdgu    +a       +a     acefu
-acdgu    +a       +a     acefu
-acdgu    +a       +a     acefu
-0      abdeu      abdeu    0
-}
-
 tile +h5
 {
 
