@@ -37,41 +37,6 @@ worldspawn {
 "angles_night"	"-80 135"
 }
 
-//** House tiles
-
-tile +h5
-{
-
-4 4
-
-0      abfgu      abfgu     0
-acdgu    +a       +a     acefu
-acdgu    +a       +a     acefu
-0      abdeu      abdeu    0
-}
-
-tile +h6
-{
-
-4 4
-
-0      abfgu      abfgu     0
-acdgu    +a       +a     acefu
-acdgu    +a       +a     acefu
-0      abdeu      abdeu    0
-}
-
-tile +h7
-{
-
-4 4
-
-0      abfgu      abfgu     0
-acdgu    +a       +a     acefu
-acdgu    +a       +a     acefu
-0      abdeu      abdeu    0
-}
-
 // dropships -------------------------------------------------------*
 
 tile +craft_drop_firebird
@@ -185,6 +150,35 @@ av		+c		+c		+c		+c		av
 av		+c		+c		+c		+c		av
 av		+c		+c		+c		+c		av
 0		x		x		x		x		0
+}
+
+// house tiles -----------------------------------------------------*
+
+tile +h5
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +h6
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+tile +h7
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 // nature tiles ----------------------------------------------------*
@@ -406,9 +400,6 @@ size "7 10"
 /* contents --------------------------------------------------------*
 
 +h1			"0 1"	// 2x3	house from lake_ice
-+h5			"0 1"	// 2x2	house with green roof
-+h6			"0 1"	// 2x2	house with grey roof and garden
-+h7			"0 1"	// 2x2	house with walkable, yellow roof
 +w1			"0 5"	// 1x1	brook ¯|
 +w2			"0 6"	// 1x1	brook --
 +w3			"0 6"	// 1x1	brook |
@@ -422,6 +413,9 @@ tileset house_22	"0 1"	// +h5 +h6 +h7
 
 +brook_h1		"0 1"	// 1x1		river horizontal
 +brook_v1		"0 1"	// 1x1		river vertical
++h5				"0 1"	// 2x2		house with green roof
++h6				"0 1"	// 2x2		house with grey roof and garden
++h7				"0 1"	// 2x2		house with walkable, yellow roof
 +nature_01		"0 1"	// 4x4¯		raised ground with three large pines, pile of rocks pointing n in se corner
 +nature_02		"0 1"	// 4x4¯		large rock in center, dead tree in se corner
 +nature_03		"0 1"	// 4x3		bumpy ground, stone 'wall'
