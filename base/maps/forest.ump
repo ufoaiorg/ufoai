@@ -233,6 +233,21 @@ tile +craft_drop_raptor
 
 // UFOs ------------------------------------------------------------*
 
+tile +craft_crash_bomber
+{
+6 10
+0		ah		ah		ah		ah		0
+av		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		av
+av		+a		+a		+a		+a		av
+av		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		av
+av		+c		+c		+c		+c		av
+0		x		x		x		x		0
+}
+
 tile +craft_crash_fighter
 {
 5 4
@@ -395,6 +410,24 @@ tileset 4x4 {
 }
 
 // map assemblies --------------------------------------------------*
+
+assembly nature_large
+{
+title "_Forest"
+size "13 10"
++nature_01		"0 2"	// 4x4
++nature_02		"0 2"	// 4x4
++nature_03		"0 2"	// 4x3
++nature_11		"0 3"	// 1x1
++nature_12		"0 3"	// 1x1
++nature_20		"0 6"	// 2x2
++nature_21		"0 1"	// 1x2
++nature_30		"0 5"	// 3x2
++nature_31		"0 5"	// 2x3
++nature_33		"0 9"	// 3x3
+*rm_ufo +craft_crash_bomber		"1 1"
+*rm_drop +craft_drop_herakles	"1 1"
+}
 
 assembly nature_medium
 {
