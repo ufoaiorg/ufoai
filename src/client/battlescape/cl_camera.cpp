@@ -92,6 +92,12 @@ static inline void CL_ClampCamToMap (const float border)
  */
 void CL_CameraMove (void)
 {
+	if (cls.state != ca_active)
+		return;
+
+	if (!viddef.viewWidth || !viddef.viewHeight)
+		return;
+
 	/* get relevant variables */
 	const float rotspeed =
 		(cl_camrotspeed->value > MIN_CAMROT_SPEED) ? ((cl_camrotspeed->value < MAX_CAMROT_SPEED) ? cl_camrotspeed->value : MAX_CAMROT_SPEED) : MIN_CAMROT_SPEED;
@@ -101,12 +107,6 @@ void CL_CameraMove (void)
 	const float moveaccel =
 		(cl_cammoveaccel->value > MIN_CAMMOVE_ACCEL) ?
 		((cl_cammoveaccel->value < MAX_CAMMOVE_ACCEL) ? cl_cammoveaccel->value / cl.cam.zoom : MAX_CAMMOVE_ACCEL / cl.cam.zoom) : MIN_CAMMOVE_ACCEL / cl.cam.zoom;
-
-	if (cls.state != ca_active)
-		return;
-
-	if (!viddef.viewWidth || !viddef.viewHeight)
-		return;
 
 	/* calculate camera omega */
 	/* stop acceleration */
@@ -356,7 +356,7 @@ static void CL_CamPrintAngles_f (void)
 
 static void CL_CamSetAngles_f (void)
 {
-	int c = Cmd_Argc();
+	const int c = Cmd_Argc();
 
 	if (c < 3) {
 		Com_Printf("Usage %s <value> <value>\n", Cmd_Argv(0));
@@ -370,7 +370,7 @@ static void CL_CamSetAngles_f (void)
 
 static void CL_CamSetZoom_f (void)
 {
-	int c = Cmd_Argc();
+	const int c = Cmd_Argc();
 
 	if (c < 2) {
 		Com_Printf("Usage %s <value>\n", Cmd_Argv(0));
