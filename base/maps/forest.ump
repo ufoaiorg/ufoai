@@ -318,6 +318,22 @@ av		+c		+c		+c		+c		av
 
 // nature tiles ----------------------------------------------------*
 
+tile +brook_h1
+{
+3 3
+0		0		0
+h		+h		h
+0		0		0
+}
+
+tile +brook_v1
+{
+3 3
+0		v		0
+0		+v		0
+0		v		0
+}
+
 tile +nature_01
 {
 6 6
@@ -348,6 +364,20 @@ tile +nature_03
 0		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		0
 0		0		0		0		0		0
+}
+
+tile +nature_04
+{
+9 9
+0		0		0		0		0		0		0		v		0
+0		0		0		0		0		+a		+a		+hv		h
+0		0		0		0		+a		+a		+a		+a		0
+0		0		0		0		+a		+a		+a		+a		0
+0		0		+a		+a		+a		+a		+a		0		0
+0		+a		+a		+a		+a		0		0		0		0
+0		+a		+a		+a		+a		0		0		0		0
+h		+hv		+a		+a		0		0		0		0		0
+0		v		0		0		0		0		0		0		0
 }
 
 tile +nature_11
@@ -485,14 +515,20 @@ size "10 7"
 assembly test
 {
 title "_Forest"
-size "7 6"
-+nature_01		"1 1"	// 4x4
+size "7 10"
++brook_h1		"0 9"	// 1x1
++brook_v1		"0 9"	// 1x1
++nature_01		"0 1"	// 4x4
 +nature_02		"0 1"	// 4x4
-+nature_03		"0 1"	// 4x3
++nature_03		"0 5"	// 4x3
++nature_04		"1 1"	// 7x7
 +nature_11		"0 4"	// 1x1
 +nature_12		"0 4"	// 1x1
-+nature_20		"0 1"	// 2x2
++nature_20		"0 5"	// 2x2
 +nature_21		"0 1"	// 1x2
++nature_30		"0 5"	// 3x2
++nature_31		"0 5"	// 2x3
++nature_33		"0 5"	// 3x3
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
@@ -513,9 +549,12 @@ size "7 6"
 
 tileset house_22	"0 1"	// +h5 +h6 +h7
 
++brook_h1		"0 1"	// 1x1		river horizontal
++brook_v1		"0 1"	// 1x1		river vertical
 +nature_01		"0 1"	// 4x4¯		raised ground with three large pines, pile of rocks pointing n in se corner
 +nature_02		"0 1"	// 4x4¯		large rock in center, dead tree in se corner
 +nature_03		"0 1"	// 4x3		bumpy ground, stone 'wall'
++nature_04		"0 1"	// 7x7¯		river
 +nature_11		"0 1"	// 1x1		large stub + bush, small rock
 +nature_12		"0 1"	// 1x1		large pine + fern
 +nature_20		"0 1"	// 2x2		generic, three small hills. large pine, pine, chestnut, rocks
