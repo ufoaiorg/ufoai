@@ -16223,7 +16223,7 @@
 // entity 137
 {
 "classname" "info_alien_start"
-"origin" "1136 1136 32"
+"origin" "1168 880 79"
 "angle" "90"
 }
 // entity 138

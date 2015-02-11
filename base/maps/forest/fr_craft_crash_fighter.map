@@ -2131,12 +2131,12 @@
 // entity 20
 {
 "classname" "info_alien_start"
-"origin" "464 272 28"
+"origin" "656 464 28"
 }
 // entity 21
 {
 "classname" "info_alien_start"
-"origin" "240 48 28"
+"origin" "752 144 28"
 "angle" "-90"
 }
 // entity 22
@@ -3085,7 +3085,7 @@
 // entity 30
 {
 "classname" "info_alien_start"
-"origin" "48 80 28"
+"origin" "688 272 60"
 }
 // entity 31
 {
@@ -4601,4 +4601,26 @@
 ( 419 119 4 ) ( 403 120 4 ) ( 419 119 6 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 ( 419 119 6 ) ( 403 120 4 ) ( 403 128 4 ) tex_mattn/wood006 384 128 -90 0.125 0.125 65280 0 0
 }
+}
+// entity 90
+{
+"classname" "info_alien_start"
+"origin" "464 272 28"
+}
+// entity 91
+{
+"classname" "info_alien_start"
+"origin" "240 48 28"
+"angle" "-90"
+}
+// entity 92
+{
+"classname" "info_alien_start"
+"origin" "48 80 28"
+}
+// entity 93
+{
+"classname" "info_alien_start"
+"origin" "592 112 28"
+"angle" "180"
 }
