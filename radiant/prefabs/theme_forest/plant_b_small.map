@@ -1,0 +1,49 @@
+
+// entity 0
+{
+"classname" "misc_model"
+"origin" "0 0 5"
+"skin" "0"
+"spawnflags" "255"
+"model" "models/objects/vegi/ficus/ficus.md2"
+"modelscale_vec" "1.75 1.75 1.75"
+}
+// entity 1
+{
+"classname" "func_group"
+// brush 0
+{
+( -10 -4 48 ) ( 2 8 48 ) ( 2 -14 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( 10 3 48 ) ( 7 6 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( 12 -2 48 ) ( 10 3 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( 12 -4 48 ) ( 12 -2 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( 10 -9 48 ) ( 12 -4 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( 7 -12 48 ) ( 10 -9 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( 2 -14 48 ) ( 7 -12 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( 0 -14 48 ) ( 2 -14 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( -5 -12 48 ) ( 0 -14 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( -8 -9 48 ) ( -5 -12 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( -10 -4 48 ) ( -8 -9 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( -10 -2 48 ) ( -10 -4 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( -8 3 48 ) ( -10 -2 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( -5 6 48 ) ( -8 3 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( 0 8 48 ) ( -5 6 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( 2 8 48 ) ( 0 8 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 1 -3 4 ) ( 7 6 48 ) ( 2 8 48 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+}
+// brush 1
+{
+( 8 -1 8 ) ( -6 4 8 ) ( 6 -6 8 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( -6 4 10 ) ( 6 -6 10 ) ( -8 -1 10 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 2 6 22 ) ( -2 6 8 ) ( 2 6 8 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 6 4 22 ) ( 2 6 8 ) ( 6 4 8 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 6 4 22 ) ( 8 -1 8 ) ( 8 -1 22 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 8 -1 8 ) ( 6 -6 22 ) ( 8 -1 22 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 2 -8 8 ) ( 6 -6 22 ) ( 6 -6 8 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( -2 -8 22 ) ( 2 -8 8 ) ( -2 -8 8 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( -2 -8 22 ) ( -6 -6 8 ) ( -6 -6 22 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( -6 -6 8 ) ( -8 -1 22 ) ( -6 -6 22 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( -6 4 8 ) ( -8 -1 22 ) ( -8 -1 8 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( -2 6 22 ) ( -6 4 8 ) ( -2 6 8 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+}
+}

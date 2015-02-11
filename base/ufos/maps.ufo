@@ -975,13 +975,13 @@ mapdef farm2
 // FOREST RANDOM MAPS //
 ////////////////////////
 
-mapdef forest_large
+mapdef forest_nature_large
 {
 	map			"+forest"
-	params		("large_a" "large_b")
+	params		("nature_large_a" "nature_large_b")
 	description	"_Forest"
 	size		"large"
-	maxaliens	15
+	maxaliens	30
 
 	aircraft
 	(
@@ -992,16 +992,15 @@ mapdef forest_large
 
 	ufos
 	(
-		craft_ufo_fighter
-		craft_crash_fighter
-		craft_ufo_harvester
-		craft_crash_harvester
+		craft_crash_bomber
+		craft_crash_corrupter
 	)
 
 	terrains
 	(
 		"grass"
 		"mountain"
+		"wasted"
 	)
 
 	cultures
@@ -1011,15 +1010,55 @@ mapdef forest_large
 
 	populations
 	(
-		"rural"
 		"nopopulation"
 	)
 }
 
-mapdef forest_small
+
+mapdef forest_nature_medium
 {
 	map			"+forest"
-	params		("small_a" "small_b")
+	params		("nature_medium_a" "nature_medium_b")
+	description	"_Forest"
+	size		"medium"
+	maxaliens	16
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_crash_supply
+		craft_crash_gunboat
+		craft_crash_harvester
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+		"wasted"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"nopopulation"
+	)
+}
+
+mapdef forest_nature_small
+{
+	map			"+forest"
+	params		("nature_small_a" "nature_small_b")
 	description	"_Forest"
 	size		"small"
 	maxaliens	6
@@ -1033,16 +1072,15 @@ mapdef forest_small
 
 	ufos
 	(
-		craft_ufo_scout
-		craft_crash_scout
-		craft_ufo_fighter
 		craft_crash_fighter
+		craft_crash_scout
 	)
 
 	terrains
 	(
 		"grass"
 		"mountain"
+		"wasted"
 	)
 
 	cultures
@@ -1052,7 +1090,6 @@ mapdef forest_small
 
 	populations
 	(
-		"rural"
 		"nopopulation"
 	)
 }
