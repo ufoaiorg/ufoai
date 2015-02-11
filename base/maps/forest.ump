@@ -312,6 +312,27 @@ size "13 10"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
+assembly nature_large_b
+{
+title "_Forest"
+size "16 10"
++brook_h1		"0 9"	// 1x1
++brook_v1		"0 9"	// 1x1
++nature_01		"0 3"	// 4x4
++nature_02		"0 3"	// 4x4
++nature_03		"0 3"	// 4x3
++nature_04		"1 1"	// 7x7
++nature_11		"0 4"	// 1x1
++nature_12		"0 4"	// 1x1
++nature_20		"0 5"	// 2x2
++nature_21		"0 1"	// 1x2
++nature_30		"0 5"	// 3x2
++nature_31		"0 5"	// 2x3
++nature_33		"0 5"	// 3x3
+*rm_ufo +craft_crash_bomber		"1 1"
+*rm_drop +craft_drop_herakles	"1 1"
+}
+
 assembly nature_medium_a
 {
 title "_Forest"
@@ -326,6 +347,27 @@ size "12 10"
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"4 9"	// 3x3
+*rm_ufo +craft_crash_supply		"1 1"
+*rm_drop +craft_drop_herakles	"1 1"
+}
+
+assembly nature_medium_b
+{
+title "_Forest"
+size "10 12"
++brook_h1		"0 9"	// 1x1
++brook_v1		"0 9"	// 1x1
++nature_01		"0 1"	// 4x4
++nature_02		"0 1"	// 4x4
++nature_03		"0 3"	// 4x3
++nature_04		"1 1"	// 7x7
++nature_11		"0 4"	// 1x1
++nature_12		"0 4"	// 1x1
++nature_20		"0 5"	// 2x2
++nature_21		"0 1"	// 1x2
++nature_30		"0 5"	// 3x2
++nature_31		"0 5"	// 2x3
++nature_33		"0 5"	// 3x3
 *rm_ufo +craft_crash_supply		"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
@@ -348,9 +390,7 @@ size "10 7"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
-// test assembly ---------------------------------------------------*
-
-assembly test
+assembly nature_small_b
 {
 title "_Forest"
 size "10 10"
@@ -358,7 +398,7 @@ size "10 10"
 +brook_v1		"0 9"	// 1x1
 +nature_01		"0 1"	// 4x4
 +nature_02		"0 1"	// 4x4
-+nature_03		"0 5"	// 4x3
++nature_03		"0 3"	// 4x3
 +nature_04		"1 1"	// 7x7
 +nature_11		"0 4"	// 1x1
 +nature_12		"0 4"	// 1x1
@@ -367,7 +407,30 @@ size "10 10"
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 5"	// 3x3
-+craft_crash_scout				"1 1"
+*rm_ufo +craft_crash_scout		"1 1"
+*rm_drop +craft_drop_herakles	"1 1"
+}
+
+// test assembly ---------------------------------------------------*
+
+assembly test
+{
+title "_Forest"
+size "16 10"
++brook_h1		"0 9"	// 1x1
++brook_v1		"0 9"	// 1x1
++nature_01		"0 3"	// 4x4
++nature_02		"0 3"	// 4x4
++nature_03		"0 3"	// 4x3
++nature_04		"1 1"	// 7x7
++nature_11		"0 4"	// 1x1
++nature_12		"0 4"	// 1x1
++nature_20		"0 5"	// 2x2
++nature_21		"0 1"	// 1x2
++nature_30		"0 5"	// 3x2
++nature_31		"0 5"	// 2x3
++nature_33		"0 5"	// 3x3
++craft_crash_bomber				"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
