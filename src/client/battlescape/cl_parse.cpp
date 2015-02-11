@@ -61,15 +61,12 @@ SERVER CONNECTING MESSAGES
  */
 static void CL_ParseServerData (dbuffer* msg)
 {
-	char str[1024];
-	int i;
-
 	Com_DPrintf(DEBUG_CLIENT, "Serverdata packet received.\n");
 
 	CL_SetClientState(ca_connected);
 
 	/* parse protocol version number */
-	i = NET_ReadLong(msg);
+	const int i = NET_ReadLong(msg);
 	/* compare versions */
 	if (i != PROTOCOL_VERSION)
 		Com_Error(ERR_DROP, "Server returned version %i, not %i", i, PROTOCOL_VERSION);
@@ -78,6 +75,7 @@ static void CL_ParseServerData (dbuffer* msg)
 	cl.pnum = NET_ReadShort(msg);
 
 	/* get the full level name */
+	char str[1024];
 	NET_ReadString(msg, str, sizeof(str));
 
 	Com_DPrintf(DEBUG_CLIENT, "serverdata: pnum %d, level %s\n", cl.pnum, str);
