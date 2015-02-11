@@ -294,7 +294,7 @@ tile +nature_33
 
 // map assemblies --------------------------------------------------*
 
-assembly nature_large
+assembly nature_large_a
 {
 title "_Forest"
 size "13 10"
@@ -312,7 +312,7 @@ size "13 10"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
-assembly nature_medium
+assembly nature_medium_a
 {
 title "_Forest"
 size "12 10"
@@ -330,7 +330,7 @@ size "12 10"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
-assembly nature_small
+assembly nature_small_a
 {
 title "_Forest"
 size "10 7"
@@ -353,7 +353,7 @@ size "10 7"
 assembly test
 {
 title "_Forest"
-size "7 10"
+size "10 10"
 +brook_h1		"0 9"	// 1x1
 +brook_v1		"0 9"	// 1x1
 +nature_01		"0 1"	// 4x4
@@ -367,6 +367,7 @@ size "7 10"
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 5"	// 3x3
++craft_crash_scout				"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
