@@ -2546,7 +2546,7 @@
 // entity 32
 {
 "classname" "info_alien_start"
-"origin" "528 848 92"
+"origin" "528 144 54"
 "angle" "-90"
 }
 // entity 33
@@ -3476,5 +3476,77 @@
 "classname" "info_player_start"
 "team" "2"
 "origin" "496 336 92"
+"angle" "-90"
+}
+// entity 83
+{
+"classname" "info_alien_start"
+"origin" "528 848 92"
+"angle" "-90"
+}
+// entity 84
+{
+"classname" "info_alien_start"
+"origin" "528 784 92"
+"angle" "-90"
+}
+// entity 85
+{
+"classname" "info_alien_start"
+"origin" "528 688 92"
+"angle" "-90"
+}
+// entity 86
+{
+"classname" "info_alien_start"
+"origin" "496 624 92"
+"angle" "-90"
+}
+// entity 87
+{
+"classname" "info_alien_start"
+"origin" "496 624 92"
+"angle" "-90"
+}
+// entity 88
+{
+"classname" "info_alien_start"
+"origin" "528 528 92"
+"angle" "-90"
+}
+// entity 89
+{
+"classname" "info_alien_start"
+"origin" "496 560 92"
+"angle" "-90"
+}
+// entity 90
+{
+"classname" "info_alien_start"
+"origin" "496 496 92"
+"angle" "-90"
+}
+// entity 91
+{
+"classname" "info_alien_start"
+"origin" "528 400 92"
+"angle" "-90"
+}
+// entity 92
+{
+"classname" "info_alien_start"
+"origin" "528 336 92"
+"angle" "-90"
+}
+// entity 93
+{
+"classname" "info_alien_start"
+"origin" "496 272 92"
+"angle" "-90"
+}
+// entity 94
+{
+"classname" "info_alien_start"
+"origin" "496 208 92"
 "angle" "-90"
 }
