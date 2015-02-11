@@ -9,6 +9,14 @@
 // a: common tiles
 // c: craft tiles contain UFOs and dropships
 // x: do not define +x, it is used to force placing tiles at the border of the map
+//
+// TODO	tiles 1x2, 2x1, 1x3 and 3x1 are missing
+// TODO	the brook tile misses its furnishing
+// TODO	add alien spawnpoints
+// TODO	the brook tile should not cut the map that many ways, just vertical would be better
+// TODO shifting everything up for a level would give additional opportunitys,
+//		like implementing a swamp, using the brook for cover, ...
+//		oc this is loooots of work
 
 base forest/fr_
 
@@ -435,9 +443,9 @@ size "10 16"
 
 +brook_h1		"0 1"	// 1x1		river horizontal
 +brook_v1		"0 1"	// 1x1		river vertical
-+h5				"0 1"	// 2x2		house with green roof
-+h6				"0 1"	// 2x2		house with grey roof and garden
-+h7				"0 1"	// 2x2		house with walkable, yellow roof
++h5				"0 1"	// 2x2		house with green roof (currently unused)
++h6				"0 1"	// 2x2		house with grey roof and garden (currently unused)
++h7				"0 1"	// 2x2		house with walkable, yellow roof (currently unused)
 +nature_01		"0 1"	// 4x4¯		raised ground with three large pines, pile of rocks pointing n in se corner
 +nature_02		"0 1"	// 4x4¯		large rock in center, dead tree in se corner
 +nature_03		"0 1"	// 4x3		bumpy ground, stone 'wall'
