@@ -14,9 +14,6 @@
 // TODO	the brook tile misses its furnishing
 // TODO	add alien spawnpoints
 // TODO	the brook tile should not cut the map that many ways, just vertical would be better
-// TODO shifting everything up for a level would give additional opportunitys,
-//		like implementing a swamp, using the brook for cover, ...
-//		oc this is loooots of work
 
 base forest/fr_
 
