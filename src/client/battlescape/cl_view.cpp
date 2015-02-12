@@ -47,10 +47,6 @@ static cvar_t* cl_map_displayavailablecells;
  */
 void CL_ViewLoadMedia (void)
 {
-	le_t* le;
-	int i, max;
-	float loadingPercent;
-
 	CL_ViewUpdateRenderData();
 
 	if (CL_GetConfigString(CS_TILES)[0] == '\0')
@@ -58,7 +54,7 @@ void CL_ViewLoadMedia (void)
 
 	GAME_InitMissionBriefing(_(CL_GetConfigString(CS_MAPTITLE)));
 
-	loadingPercent = 0;
+	float loadingPercent = 0;
 
 	/* register models, pics, and skins */
 	SCR_DrawLoading(loadingPercent);
@@ -72,12 +68,13 @@ void CL_ViewLoadMedia (void)
 	LM_Register();
 	CL_ParticleRegisterArt();
 
-	for (i = 1, max = 0; i < MAX_MODELS && CL_GetConfigString(CS_MODELS + i)[0] != '\0'; i++)
+	int  max = 0;
+	for (int i = 1; i < MAX_MODELS && CL_GetConfigString(CS_MODELS + i)[0] != '\0'; i++)
 		max++;
 
 	max += csi.numODs;
 
-	for (i = 1; i < MAX_MODELS; i++) {
+	for (int i = 1; i < MAX_MODELS; i++) {
 		const char* name = CL_GetConfigString(CS_MODELS + i);
 		if (name[0] == '\0')
 			break;
@@ -98,7 +95,7 @@ void CL_ViewLoadMedia (void)
 	}
 
 	/* update le model references */
-	le = nullptr;
+	le_t* le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
 		if (le->modelnum1 > 0)
 			le->model1 = LE_GetDrawModel(le->modelnum1);
@@ -119,14 +116,13 @@ void CL_ViewLoadMedia (void)
  */
 static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 {
-	const float percent = 40.0f;
-
 	if (!cl_precache->integer)
 		return 0;
 
+	const float percent = 40.0f;
 	/* search the name */
-	teamDef_t* td = csi.teamDef;
-	for (int i = 0; i < csi.numTeamDefs; i++, td++)
+	for (int i = 0; i < csi.numTeamDefs; i++) {
+		teamDef_t* td = &csi.teamDef[i];
 		for (int j = NAME_NEUTRAL; j < NAME_LAST; j++) {
 			/* search one of the model definitions */
 			for (linkedList_t const* list = td->models[j]; list; list = list->next) {
@@ -145,6 +141,7 @@ static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 				SCR_DrawLoadingScreen(true, alreadyLoadedPercent);
 			}
 		}
+	}
 	/* some genders may not have models - ensure that we do the wanted percent step */
 	return percent;
 }
@@ -157,7 +154,7 @@ void CL_ViewPrecacheModels (void)
 	float percent = 30.0f;
 	float alreadyLoadedPercent = 30.0f;
 
-	float loaded = CL_PrecacheCharacterModels(alreadyLoadedPercent);
+	const float loaded = CL_PrecacheCharacterModels(alreadyLoadedPercent);
 	alreadyLoadedPercent += loaded;
 	if (loaded == 0)
 		percent = 100 - alreadyLoadedPercent;
