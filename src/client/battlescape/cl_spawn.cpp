@@ -113,11 +113,6 @@ static const value_t localEntityValues[] = {
 /** @note Defaults should match those of ufo2map, or lighting will be inconsistent between world and models */
 static void SP_worldspawn (const localEntityParse_t* entData)
 {
-	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
-	vec3_t sunAngles;
-	vec4_t sunColor;
-	vec_t sunIntensity;
-
 	/* maximum level */
 	cl.mapMaxLevel = entData->maxLevel;
 
@@ -132,8 +127,12 @@ static void SP_worldspawn (const localEntityParse_t* entData)
 	}
 
 	/** @todo - make sun position/color vary based on local time at location? */
+	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
 
 	/** @note Some vectors have exra elements to comply with mathlib and/or OpenGL conventions, but handled as shorter ones */
+	vec3_t sunAngles;
+	vec4_t sunColor;
+	vec_t sunIntensity;
 	if (dayLightmap) {
 		/* set defaults for daylight */
 		Vector4Set(refdef.ambientColor, 0.26, 0.26, 0.26, 1.0);
@@ -203,19 +202,17 @@ static void SP_worldspawn (const localEntityParse_t* entData)
 
 static void SP_misc_model (const localEntityParse_t* entData)
 {
-	localModel_t* lm;
-	int renderFlags = 0;
-
 	if (entData->model[0] == '\0') {
 		Com_Printf("misc_model without \"model\" specified\n");
 		return;
 	}
 
+	int renderFlags = 0;
 	if (entData->spawnflags & (1 << MISC_MODEL_GLOW))
 		renderFlags |= RF_PULSE;
 
 	/* add it */
-	lm = LM_AddModel(entData->model, entData->origin, entData->angles, entData->entnum, (entData->spawnflags & 0xFF), renderFlags, entData->scale);
+	localModel_t* lm = LM_AddModel(entData->model, entData->origin, entData->angles, entData->entnum, (entData->spawnflags & 0xFF), renderFlags, entData->scale);
 	if (lm) {
 		if (LM_GetByID(entData->targetname) != nullptr)
 			Com_Error(ERR_DROP, "Ambiguous targetname '%s'", entData->targetname);
@@ -261,11 +258,10 @@ static void SP_misc_sound (const localEntityParse_t* entData)
  */
 static void SP_light (const localEntityParse_t* entData)
 {
-	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
-
 	if (entData->light < 1.0)
 		return;
 
+	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
 	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY)))) {
 		R_AddStaticLight(entData->origin, entData->light, entData->color);
 	}
@@ -311,8 +307,7 @@ static void CL_SpawnCall (const localEntityParse_t* entData)
  */
 void CL_SpawnParseEntitystring (void)
 {
-	const char* es = cl.mapData->mapEntityString;
-	int entnum = 0, maxLevel;
+	int maxLevel;
 
 	if (cl.mapMaxLevel > 0 && cl.mapMaxLevel < PATHFINDING_HEIGHT)
 		maxLevel = cl.mapMaxLevel;
@@ -324,6 +319,8 @@ void CL_SpawnParseEntitystring (void)
 		return;
 
 	/* parse ents */
+	const char* es = cl.mapData->mapEntityString;
+	int entnum = 0;
 	while (1) {
 		localEntityParse_t entData;
 		/* parse the opening brace */
