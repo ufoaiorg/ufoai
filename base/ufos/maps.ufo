@@ -3634,7 +3634,7 @@ mapdef village_small_crash
 {
 	map				"+village"
 	params			("small_crash")
-	description		"_Crashed Scout"
+	description		"_Crash Site"
 	maxaliens		8
 
 	multiplayer		true
