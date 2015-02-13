@@ -1,7 +1,0 @@
-{
-	material tex_buildings/concrete008
-	{
-		texture tex_nature/grass
-		terrain 3 4
-	}
-}
