@@ -141,13 +141,15 @@ av		+c		+c		+c		+c		av
 
 // small house map -------------------------------------------------*
 
-// fake size!
 tile +small_house
 {
-3 3
-0		0		0
-0		+a		0
-0		0		0
+8 6
+0		0		0		0		0		0		0		0
+0		0		+a		+a		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		x		x		x		x		x		x		0
 }
 
 // house tiles -----------------------------------------------------*
@@ -430,8 +432,19 @@ size "10 10"
 assembly small_house
 {
 title "_Forest"
-size "1 1"
-fix +small_house	"0 0"
+size "9 9"
++small_house	"1 1"	// 6x4
++nature_01		"0 1"	// 4x4
++nature_02		"0 1"	// 4x4
++nature_03		"0 1"	// 4x3
++nature_11		"0 4"	// 1x1
++nature_12		"0 4"	// 1x1
++nature_20		"0 3"	// 2x2
++nature_21		"0 1"	// 1x2
++nature_30		"0 3"	// 3x2
++nature_31		"0 3"	// 2x3
++nature_33		"0 3"	// 3x3
+*rm_drop +craft_drop_herakles	"1 1"
 }
 
 // test assembly ---------------------------------------------------*
@@ -472,5 +485,5 @@ size "10 16"
 +nature_30		"0 1"	// 3x2¯		medium hill <>, large chestnut, pine
 +nature_31		"0 1"	// 2x3¯		large rock, large pine, stub + stem
 +nature_33		"0 1"	// 3x3		generic, three chestnut trees, large stub in se corner
-
++small_house	"0 1"	// 6x4
 -------------------------------------------------------------------*/
