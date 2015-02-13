@@ -1094,6 +1094,37 @@ mapdef forest_nature_small
 	)
 }
 
+mapdef small_house
+{
+	map				"+forest"
+	params			("small_house")
+	description		"_Small House"
+	maxaliens		8
+
+	aircraft
+	(
+		// any
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+	)
+
+	populations
+	(
+		"suburban"
+		"village"
+		"rural"
+	)
+}
+
 ////////////////////////
 // FROZEN RANDOM MAPS //
 ////////////////////////
@@ -5259,38 +5290,6 @@ mapdef rivertown
 		"rural"
 		"village"
 		"suburban"
-	)
-}
-
-// SMALL_HOUSE MAP //
-
-mapdef small_house
-{
-	map			"small_house"
-	description		"_Small House"
-	maxaliens		8
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-	)
-
-	populations
-	(
-		"suburban"
-		"village"
-		"rural"
 	)
 }
 

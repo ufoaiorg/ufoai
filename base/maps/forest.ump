@@ -139,6 +139,17 @@ av		+c		+c		+c		+c		av
 0		x		x		x		x		0
 }
 
+// small house map -------------------------------------------------*
+
+// fake size!
+tile +small_house
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
 // house tiles -----------------------------------------------------*
 
 tile +h5
@@ -414,6 +425,13 @@ size "10 10"
 +nature_33		"0 5"	// 3x3
 *rm_ufo +craft_crash_scout		"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
+}
+
+assembly small_house
+{
+title "_Forest"
+size "1 1"
+fix +small_house	"0 0"
 }
 
 // test assembly ---------------------------------------------------*
