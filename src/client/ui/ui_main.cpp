@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_sound.h"
 #include "../cl_menu.h"
 #include "node/ui_node_abstractnode.h"
+#include "ui_lua.h"
 #include <vector>
 #include <string>
 
@@ -173,6 +174,8 @@ static void UI_Restart_f (void)
 			UI_ParseUIModel(name, &text);
 		else if (Q_streq(type, "sprite"))
 			UI_ParseSprite(name, &text);
+		else if (Q_streq(type, "lua"))
+			UI_ParseAndLoadLuaScript(name, &text);
 	}
 
 	CLMN_Init();
@@ -236,6 +239,7 @@ void UI_Shutdown (void)
 			}
 		}
 	}
+	UI_ShutdownLua();
 	UI_FontShutdown();
 	UI_ResetInput();
 	UI_ResetTimers();
@@ -273,16 +277,16 @@ void UI_FinishInit (void)
 
 void UI_Init (void)
 {
-	cvar_t* ui_hunkSize = Cvar_Get("ui_hunksize", "3", 0, "UI memory hunk size in megabytes");
+	cvar_t* ui_hunkSize = Cvar_GetOrCreate("ui_hunksize", "3", 0, "UI memory hunk size in megabytes");
 
 #ifdef DEBUG
-	ui_debug = Cvar_Get("debug_ui", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
+	ui_debug = Cvar_GetOrCreate("debug_ui", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
 #endif
 
 	/* reset global UI structures */
 	OBJZERO(ui_global);
 
-	ui_sounds = Cvar_Get("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
+	ui_sounds = Cvar_GetOrCreate("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_uimemory", UI_Memory_f, "Display info about UI memory allocation");
@@ -299,6 +303,7 @@ void UI_Init (void)
 	ui_global.adata    = Mem_PoolAllocTypeN(byte, ui_global.adataize, ui_sysPool);
 	ui_global.curadata = ui_global.adata;
 
+	UI_InitLua();
 	UI_InitData();
 	UI_InitNodes();
 	UI_InitWindows();

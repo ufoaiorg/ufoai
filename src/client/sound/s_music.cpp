@@ -370,7 +370,7 @@ void M_Init (void)
 	snd_music = Cvar_GetOrCreate("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_GetOrCreate("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128.");
 	snd_music_volume->modified = true;
-	snd_music_play = Cvar_Get("snd_music_play", "1", CVAR_ARCHIVE, "Enable background music.");
+	snd_music_play = Cvar_GetOrCreate ("snd_music_play", "1", CVAR_ARCHIVE, "Enable background music.");
 	music.playing = snd_music_play->integer != 0;
 }
 
