@@ -53,18 +53,18 @@
 // entity 1
 {
 "classname" "info_alien_start"
-"origin" "48 48 92"
+"origin" "48 45 51"
 "angle" "90"
 }
 // entity 2
 {
 "classname" "info_alien_start"
-"origin" "80 80 92"
+"origin" "80 77 63"
 "angle" "90"
 }
 // entity 3
 {
 "classname" "info_alien_start"
-"origin" "48 80 92"
+"origin" "48 77 51"
 "angle" "90"
 }

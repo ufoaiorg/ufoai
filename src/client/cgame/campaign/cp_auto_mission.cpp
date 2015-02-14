@@ -214,21 +214,7 @@ static void AM_CreateUnitChr (autoUnit_t* unit, const teamDef_t* teamDef, const 
 	unit->chr = Mem_PoolAllocType(character_t, cp_campaignPool);
 	cgi->CL_GenerateCharacter(unit->chr, teamDef->id);
 
-	if (ed) {
-		if (teamDef->robot && teamDef->onlyWeapon) {
-			const objDef_t* weapon = teamDef->onlyWeapon;
-			if (weapon->numAmmos > 0)
-				cgi->INV_EquipActorRobot(&unit->chr->inv, weapon);
-			else if (weapon->fireTwoHanded)
-				cgi->INV_EquipActorMelee(&unit->chr->inv, teamDef);
-			else
-				Com_Printf("AM_CreateUnitChr: weapon %s has no ammo assigned and must not be fired two handed\n", weapon->id);
-		} else {
-			/* Pack equipment. */
-			if (teamDef->weapons)
-				cgi->INV_EquipActor(unit->chr, ed, cgi->GAME_GetChrMaxLoad(unit->chr));
-		}
-	}
+	cgi->INV_EquipActor(unit->chr, ed, unit->chr->teamDef->onlyWeapon, cgi->GAME_GetChrMaxLoad(unit->chr));
 }
 
 /**

@@ -668,7 +668,7 @@ void R_GetEntityLists (void)
 				if (e->model->loaded)
 					Com_Error(ERR_DROP, "Unknown model type in R_GetEntityLists entity chain: %i (%s)",
 							e->model->type, e->model->name);
-				break;
+				return;
 			}
 		}
 		e->next = *chain;

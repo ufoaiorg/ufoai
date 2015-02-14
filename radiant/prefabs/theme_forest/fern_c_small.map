@@ -1,0 +1,31 @@
+// entity 0
+{
+"classname" "worldspawn"
+"noequipment" "1"
+// brush 0
+{
+( 968 -850 71 ) ( 972 -832 71 ) ( 963 -847 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 961 -844 73 ) ( 979 -838 73 ) ( 963 -847 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 9 -3 73 ) ( 9 3 71 ) ( 9 -3 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 9 -3 71 ) ( 7 -7 73 ) ( 9 -3 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 3 -9 71 ) ( 7 -7 73 ) ( 7 -7 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -2 -9 73 ) ( 3 -9 71 ) ( -2 -9 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -2 -9 73 ) ( -7 -6 71 ) ( -7 -6 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -7 -6 71 ) ( -9 -3 73 ) ( -7 -6 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -9 2 71 ) ( -9 -3 73 ) ( -9 -3 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -6 7 73 ) ( -9 2 71 ) ( -6 7 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -6 7 73 ) ( -3 9 71 ) ( -3 9 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -3 9 71 ) ( 2 9 73 ) ( -3 9 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 7 6 71 ) ( 2 9 73 ) ( 2 9 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 9 3 73 ) ( 7 6 71 ) ( 9 3 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/fern2/fern2_lrg.md2"
+"origin" "0 0 68"
+"spawnflags" "254"
+"skin" "1"
+"modelscale_vec" "0.2 0.2 0.3"
+}

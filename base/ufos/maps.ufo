@@ -975,13 +975,13 @@ mapdef farm2
 // FOREST RANDOM MAPS //
 ////////////////////////
 
-mapdef forest_large
+mapdef forest_nature_large
 {
 	map			"+forest"
-	params		("large_a" "large_b")
+	params		("nature_large_a" "nature_large_b")
 	description	"_Forest"
 	size		"large"
-	maxaliens	15
+	maxaliens	30
 
 	aircraft
 	(
@@ -992,16 +992,15 @@ mapdef forest_large
 
 	ufos
 	(
-		craft_ufo_fighter
-		craft_crash_fighter
-		craft_ufo_harvester
-		craft_crash_harvester
+		craft_crash_bomber
+		craft_crash_corrupter
 	)
 
 	terrains
 	(
 		"grass"
 		"mountain"
+		"wasted"
 	)
 
 	cultures
@@ -1011,15 +1010,55 @@ mapdef forest_large
 
 	populations
 	(
-		"rural"
 		"nopopulation"
 	)
 }
 
-mapdef forest_small
+
+mapdef forest_nature_medium
 {
 	map			"+forest"
-	params		("small_a" "small_b")
+	params		("nature_medium_a" "nature_medium_b")
+	description	"_Forest"
+	size		"medium"
+	maxaliens	16
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_crash_supply
+		craft_crash_gunboat
+		craft_crash_harvester
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+		"wasted"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"nopopulation"
+	)
+}
+
+mapdef forest_nature_small
+{
+	map			"+forest"
+	params		("nature_small_a" "nature_small_b")
 	description	"_Forest"
 	size		"small"
 	maxaliens	6
@@ -1033,16 +1072,15 @@ mapdef forest_small
 
 	ufos
 	(
-		craft_ufo_scout
-		craft_crash_scout
-		craft_ufo_fighter
 		craft_crash_fighter
+		craft_crash_scout
 	)
 
 	terrains
 	(
 		"grass"
 		"mountain"
+		"wasted"
 	)
 
 	cultures
@@ -1052,8 +1090,38 @@ mapdef forest_small
 
 	populations
 	(
-		"rural"
 		"nopopulation"
+	)
+}
+
+mapdef small_house
+{
+	map				"+forest"
+	params			("small_house")
+	description		"_Small House"
+	maxaliens		8
+
+	aircraft
+	(
+		// any
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+	)
+
+	populations
+	(
+		"suburban"
+		"village"
+		"rural"
 	)
 }
 
@@ -1936,6 +2004,18 @@ mapdef industrial_large
 	maxaliens		30
 	civilianteam	worker
 
+	multiplayer		true
+	teams			2
+	gametypes (
+		coop2
+		coop3
+		coop4
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -1977,6 +2057,18 @@ mapdef industrial_medium
 	size			"large"
 	maxaliens		14
 	civilianteam	worker
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		coop2
+		coop3
+		coop4
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
 
 	aircraft
 	(
@@ -2021,6 +2113,18 @@ mapdef industrial_small
 	maxaliens		9
 	civilianteam	worker
 
+	multiplayer		true
+	teams			2
+	gametypes (
+		coop2
+		coop3
+		coop4
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -2062,6 +2166,14 @@ mapdef industrial_small_noufo
 	size			"medium"
 	maxaliens		14
 	civilianteam	worker
+
+	multiplayer		true
+	teams			1
+	gametypes (
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -3286,12 +3398,8 @@ mapdef england
 	maxaliens		9
 
 	multiplayer		true
-	teams			2
+	teams			1
 	gametypes (
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
 		coop2
 		coop3
 		coop4
@@ -3557,7 +3665,7 @@ mapdef village_small_crash
 {
 	map				"+village"
 	params			("small_crash")
-	description		"_Crashed Scout"
+	description		"_Crash Site"
 	maxaliens		8
 
 	multiplayer		true
@@ -5182,38 +5290,6 @@ mapdef rivertown
 		"rural"
 		"village"
 		"suburban"
-	)
-}
-
-// SMALL_HOUSE MAP //
-
-mapdef small_house
-{
-	map			"small_house"
-	description		"_Small House"
-	maxaliens		8
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-	)
-
-	populations
-	(
-		"suburban"
-		"village"
-		"rural"
 	)
 }
 

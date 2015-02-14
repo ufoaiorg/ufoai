@@ -738,7 +738,7 @@ typedef enum {
  * Beware: If two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t* ed, int maxWeight)
+void InventoryInterface::EquipActorNormal (character_t* const chr, const equipDef_t* ed, int maxWeight)
 {
 	const teamDef_t* td = chr->teamDef;
 	const int numEquip = lengthof(ed->numItems);
@@ -944,6 +944,21 @@ void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t* e
 	}
 }
 
+void InventoryInterface::EquipActor (character_t* const chr, const equipDef_t* ed, const objDef_t* weapon, int maxWeight)
+{
+	if (chr->teamDef->robot && weapon) {
+		if (weapon->numAmmos > 0)
+			EquipActorRobot(&chr->inv, weapon);
+		else if (weapon->fireTwoHanded)
+			EquipActorMelee(&chr->inv, chr->teamDef);
+		else
+			Com_Printf("EquipActor: weapon %s has no ammo assigned and must not be fired two handed\n", weapon->id);
+	} else if (chr->teamDef->weapons && ed) {
+		EquipActorNormal(chr, ed, maxWeight);
+	} else {
+		Com_Printf("EquipActor: actor with no equipment\n");
+	}
+}
 /**
  * @brief Calculate the number of used inventory slots
  * @return The number of free inventory slots

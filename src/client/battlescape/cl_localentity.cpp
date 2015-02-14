@@ -83,13 +83,12 @@ static void CL_GridRecalcRouting (const le_t* le)
  */
 void CL_CompleteRecalcRouting (void)
 {
-	double start = time(nullptr);	/* stopwatch */
+	const double start = time(nullptr);	/* stopwatch */
 
 	LE_GenerateInlineModelList();
 
-	le_t* le;
-	int i;
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
+	int i = 0;
+	for (const le_t* le = cl.LEs; i < cl.numLEs; i++, le++)
 		CL_GridRecalcRouting(le);
 
 	Com_Printf("Rerouted for %i LEs in %5.2fs\n", i, time(nullptr) - start);
@@ -110,61 +109,59 @@ void CL_RecalcRouting (const le_t* le)
 
 static void LM_AddToSceneOrder (bool parents)
 {
-	localModel_t* lm;
-	int i;
-
-	for (i = 0, lm = cl.LMs; i < cl.numLMs; i++, lm++) {
-		if (!lm->inuse)
+	for (int i = 0; i < cl.numLMs; i++) {
+		localModel_t& lm = cl.LMs[i];
+		if (!lm.inuse)
 			continue;
 
 		/* check for visibility */
-		if (!((1 << cl_worldlevel->integer) & lm->levelflags))
+		if (!((1 << cl_worldlevel->integer) & lm.levelflags))
 			continue;
 
 		/* if we want to render the parents and this is a child (has a parent assigned)
 		 * then skip it */
-		if (parents && lm->parent)
+		if (parents && lm.parent)
 			continue;
 
 		/* if we want to render the children and this is a parent (no further parent
 		 * assigned), then skip it. */
-		if (!parents && lm->parent == nullptr)
+		if (!parents && lm.parent == nullptr)
 			continue;
 
 		/* set entity values */
 		entity_t ent(RF_NONE);
-		assert(lm->model);
-		ent.model = lm->model;
-		ent.skinnum = lm->skin;
-		ent.lighting = &lm->lighting;
-		ent.setScale(lm->scale);
+		assert(lm.model);
+		ent.model = lm.model;
+		ent.skinnum = lm.skin;
+		ent.lighting = &lm.lighting;
+		ent.setScale(lm.scale);
 
-		if (lm->parent) {
+		if (lm.parent) {
 			/** @todo what if the tagent is not rendered due to different level flags? */
-			ent.tagent = R_GetEntity(lm->parent->renderEntityNum);
+			ent.tagent = R_GetEntity(lm.parent->renderEntityNum);
 			if (ent.tagent == nullptr)
 				Com_Error(ERR_DROP, "Invalid parent entity num for local model (%s/%s): %i",
-						lm->model->name, lm->id, lm->parent->renderEntityNum);
-			ent.tagname = lm->tagname;
+						lm.model->name, lm.id, lm.parent->renderEntityNum);
+			ent.tagname = lm.tagname;
 		} else {
-			R_EntitySetOrigin(&ent, lm->origin);
-			VectorCopy(lm->origin, ent.oldorigin);
-			VectorCopy(lm->angles, ent.angles);
+			R_EntitySetOrigin(&ent, lm.origin);
+			VectorCopy(lm.origin, ent.oldorigin);
+			VectorCopy(lm.angles, ent.angles);
 
-			if (lm->animname[0] != '\0') {
-				ent.as = lm->as;
+			if (lm.animname[0] != '\0') {
+				ent.as = lm.as;
 				/* do animation */
-				R_AnimRun(&lm->as, ent.model, cls.frametime * 1000);
+				R_AnimRun(&lm.as, ent.model, cls.frametime * 1000);
 			} else {
-				ent.as.frame = lm->frame;
+				ent.as.frame = lm.frame;
 			}
 		}
 
 		/* renderflags like RF_PULSE */
-		ent.flags = lm->renderFlags;
+		ent.flags = lm.renderFlags;
 
 		/* add it to the scene */
-		lm->renderEntityNum = R_AddEntity(&ent);
+		lm.renderEntityNum = R_AddEntity(&ent);
 	}
 }
 
@@ -250,20 +247,19 @@ bool LE_IsLivingAndVisibleActor (const le_t* le)
  */
 void LM_Register (void)
 {
-	localModel_t* lm;
-	int i;
+	for (int i = 0; i < cl.numLMs; i++) {
+		localModel_t& lm = cl.LMs[i];
 
-	for (i = 0, lm = cl.LMs; i < cl.numLMs; i++, lm++) {
 		/* register the model */
-		lm->model = R_FindModel(lm->name);
-		if (lm->animname[0]) {
-			R_AnimChange(&lm->as, lm->model, lm->animname);
-			if (!lm->as.change)
+		lm.model = R_FindModel(lm.name);
+		if (lm.animname[0]) {
+			R_AnimChange(&lm.as, lm.model, lm.animname);
+			if (!lm.as.change)
 				Com_Printf("LM_Register: Could not change anim of %s to '%s'\n",
-						lm->name, lm->animname);
+						lm.name, lm.animname);
 		}
-		if (!lm->model)
-			lm->inuse = false;
+		if (!lm.model)
+			lm.inuse = false;
 	}
 }
 
@@ -300,20 +296,18 @@ localModel_t* LM_GetByID (const char* id)
  */
 localModel_t* LM_AddModel (const char* model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
 {
-	localModel_t* lm;
-
-	lm = &cl.LMs[cl.numLMs++];
-
 	if (cl.numLMs >= MAX_LOCALMODELS)
 		Com_Error(ERR_DROP, "Too many local models\n");
 
+	/* check whether there is already a model with that number */
+	if (LM_Find(entnum))
+		Com_Error(ERR_DROP, "Already a local model with the same id (%i) loaded\n", entnum);
+
+	localModel_t* lm = &cl.LMs[cl.numLMs++];
 	OBJZERO(*lm);
 	Q_strncpyz(lm->name, model, sizeof(lm->name));
 	VectorCopy(origin, lm->origin);
 	VectorCopy(angles, lm->angles);
-	/* check whether there is already a model with that number */
-	if (LM_Find(entnum))
-		Com_Error(ERR_DROP, "Already a local model with the same id (%i) loaded\n", entnum);
 	lm->entnum = entnum;
 	lm->levelflags = levelflags;
 	lm->renderFlags = renderFlags;
@@ -348,11 +342,10 @@ void LE_ExecuteThink (le_t* le)
  */
 void LE_Think (void)
 {
-	le_t* le = nullptr;
-
 	if (cls.state != ca_active)
 		return;
 
+	le_t* le = nullptr;
 	while ((le = LE_GetNext(le))) {
 		LE_ExecuteThink(le);
 		/* do animation - even for invisible entities */
@@ -362,12 +355,10 @@ void LE_Think (void)
 
 void LM_Think (void)
 {
-	int i;
-	localModel_t* lm;
-
-	for (i = 0, lm = cl.LMs; i < cl.numLMs; i++, lm++) {
-		if (lm->think)
-			lm->think(lm);
+	for (int i = 0; i < cl.numLMs; i++) {
+		localModel_t& lm = cl.LMs[i];
+		if (lm.think)
+			lm.think(&lm);
 	}
 }
 
@@ -401,7 +392,7 @@ const char* LE_GetAnim (const char* anim, int right, int left, int state)
 	}
 
 	/* determine relevant data */
-	char        animationIndex;
+	char animationIndex;
 	char const* type;
 	if (right == NONE) {
 		animationIndex = '0';
@@ -508,14 +499,12 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
  */
 static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char* textureName)
 {
-	const terrainType_t* t;
-	vec3_t origin;
-
-	t = Com_GetTerrainType(textureName);
+	const terrainType_t* t = Com_GetTerrainType(textureName);
 	if (!t)
 		return;
 
 	/* origin might not be up-to-date here - but pos should be */
+	vec3_t origin;
 	PosToVec(le->pos, origin);
 
 	/** @todo use the Grid_Fall method (ACTOR_SIZE_NORMAL) to ensure, that the particle is
@@ -643,9 +632,6 @@ static void LE_ActorBodyHit (const le_t* le, const vec3_t impact, int normal)
  */
 static void LET_PathMove (le_t* le)
 {
-	float frac;
-	vec3_t start, dest, delta;
-
 	/* check for start of the next step */
 	if (cl.time < le->startTime)
 		return;
@@ -667,11 +653,12 @@ static void LET_PathMove (le_t* le)
 	}
 
 	/* interpolate the position */
+	vec3_t start, dest, delta;
 	Grid_PosToVec(cl.mapData->routing, le->fieldSize, le->oldPos, start);
 	Grid_PosToVec(cl.mapData->routing, le->fieldSize, le->pos, dest);
 	VectorSubtract(dest, start, delta);
 
-	frac = (float) (cl.time - le->startTime) / (float) (le->endTime - le->startTime);
+	const float frac = (float) (cl.time - le->startTime) / (float) (le->endTime - le->startTime);
 
 	/* calculate the new interpolated actor origin in the world */
 	VectorMA(start, frac, delta, le->origin);
@@ -752,12 +739,8 @@ static void LET_Projectile (le_t* le)
 
 void LE_AddProjectile (const fireDef_t* fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, le_t* leVictim)
 {
-	le_t* le;
-	vec3_t delta;
-	float dist;
-
 	/* add le */
-	le = LE_Add(0);
+	le_t* le = LE_Add(0);
 	if (!le)
 		return;
 	LE_SetInvisible(le);
@@ -769,8 +752,9 @@ void LE_AddProjectile (const fireDef_t* fd, int flags, const vec3_t muzzle, cons
 	}
 
 	/* calculate parameters */
+	vec3_t delta;
 	VectorSubtract(impact, muzzle, delta);
-	dist = VectorLength(delta);
+	const float dist = VectorLength(delta);
 
 	VecToAngles(delta, le->ptl->angles);
 	/* direction - bytedirs index */
@@ -867,11 +851,10 @@ static const objDef_t* LE_BiggestItem (const Item* ic)
  */
 void LE_PlaceItem (le_t* le)
 {
-	le_t* actor = nullptr;
-
 	assert(LE_IsItem(le));
 
 	/* search owners (there can be many, some of them dead) */
+	le_t* actor = nullptr;
 	while ((actor = LE_GetNextInUse(actor))) {
 		if ((actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 		 && VectorCompare(actor->pos, le->pos)) {
@@ -912,16 +895,14 @@ void LE_PlaceItem (le_t* le)
  */
 void LE_AddGrenade (const fireDef_t* fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim)
 {
-	le_t* le;
-	vec3_t accel;
-
 	/* add le */
-	le = LE_Add(0);
+	le_t* le = LE_Add(0);
 	if (!le)
 		return;
 	LE_SetInvisible(le);
 
 	/* bind particle */
+	vec3_t accel;
 	VectorSet(accel, 0, 0, -GRAVITY);
 	le->ptl = CL_ParticleSpawn(fd->projectile, 0, muzzle, v0, accel);
 	if (!le->ptl) {
@@ -1085,8 +1066,6 @@ void LET_RotateDoor (le_t* le, int speed)
 void LET_SlideDoor (le_t* le, int speed)
 {
 	vec3_t moveAngles, moveDir;
-	bool endPos = false;
-	int distance;
 
 	/* get the movement angle vector */
 	GET_SLIDING_DOOR_SHIFT_VECTOR(le->dir, speed, moveAngles);
@@ -1100,8 +1079,9 @@ void LET_SlideDoor (le_t* le, int speed)
 	moveDir[1] = fabsf(moveDir[1]);
 	moveDir[2] = fabsf(moveDir[2]);
 	/* calculate the distance from the movement angles and the entity size */
-	distance = DotProduct(moveDir, le->size);
+	const int distance = DotProduct(moveDir, le->size);
 
+	bool endPos = false;
 	if (speed > 0) {
 		/* check whether the distance the door may slide is slided already
 		 * - if so, stop the movement of the door */
@@ -1144,17 +1124,14 @@ void LET_SlideDoor (le_t* le, int speed)
  */
 void LE_AddAmbientSound (const char* sound, const vec3_t origin, int levelflags, float volume, float attenuation)
 {
-	le_t* le;
-	int sampleIdx;
-
 	if (strstr(sound, "sound/"))
 		sound += 6;
 
-	sampleIdx = S_LoadSampleIdx(sound);
+	int sampleIdx = S_LoadSampleIdx(sound);
 	if (!sampleIdx)
 		return;
 
-	le = LE_Add(0);
+	le_t* le = LE_Add(0);
 	if (!le) {
 		Com_Printf("Could not add ambient sound entity\n");
 		return;
@@ -1348,19 +1325,18 @@ le_t* LE_GetFromPos (const pos3_t pos)
  */
 le_t* LE_GetNext (le_t* lastLE)
 {
-	le_t* endOfLEs = &cl.LEs[cl.numLEs];
-	le_t* le;
-
 	if (!cl.numLEs)
 		return nullptr;
 
 	if (!lastLE)
 		return cl.LEs;
 
+	le_t* endOfLEs = &cl.LEs[cl.numLEs];
+
 	assert(lastLE >= cl.LEs);
 	assert(lastLE < endOfLEs);
 
-	le = lastLE;
+	le_t* le = lastLE;
 
 	le++;
 	if (le >= endOfLEs)
@@ -1468,32 +1444,30 @@ static void LE_AddEdictHighlight (const le_t* le)
  */
 void LE_AddToScene (void)
 {
-	le_t* le;
-	int i;
-
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
-		if (le->flags & LE_REMOVE_NEXT_FRAME) {
-			le->inuse = false;
-			le->flags &= ~LE_REMOVE_NEXT_FRAME;
+	for (int i = 0; i < cl.numLEs; i++) {
+		le_t& le = cl.LEs[i];
+		if (le.flags & LE_REMOVE_NEXT_FRAME) {
+			le.inuse = false;
+			le.flags &= ~LE_REMOVE_NEXT_FRAME;
 		}
-		if (le->inuse && !LE_IsInvisible(le)) {
-			if (le->flags & LE_CHECK_LEVELFLAGS) {
-				if (!((1 << cl_worldlevel->integer) & le->levelflags))
+		if (le.inuse && !LE_IsInvisible(&le)) {
+			if (le.flags & LE_CHECK_LEVELFLAGS) {
+				if (!((1 << cl_worldlevel->integer) & le.levelflags))
 					continue;
-			} else if (le->flags & LE_ALWAYS_VISIBLE) {
+			} else if (le.flags & LE_ALWAYS_VISIBLE) {
 				/* show them always */
-			} else if (le->pos[2] > cl_worldlevel->integer)
+			} else if (le.pos[2] > cl_worldlevel->integer)
 				continue;
 
 			entity_t ent(RF_NONE);
-			ent.alpha = le->alpha;
+			ent.alpha = le.alpha;
 
-			VectorCopy(le->angles, ent.angles);
-			ent.model = le->model1;
-			ent.skinnum = le->bodySkin;
-			ent.lighting = &le->lighting;
+			VectorCopy(le.angles, ent.angles);
+			ent.model = le.model1;
+			ent.skinnum = le.bodySkin;
+			ent.lighting = &le.lighting;
 
-			switch (le->contents) {
+			switch (le.contents) {
 			/* Only breakables do not use their origin; func_doors and func_rotating do!!!
 			 * But none of them have animations. */
 			case CONTENTS_SOLID:
@@ -1501,25 +1475,25 @@ void LE_AddToScene (void)
 				break;
 			default:
 				/* set entity values */
-				R_EntitySetOrigin(&ent, le->origin);
-				VectorCopy(le->origin, ent.oldorigin);
+				R_EntitySetOrigin(&ent, le.origin);
+				VectorCopy(le.origin, ent.oldorigin);
 				/* store animation values */
-				ent.as = le->as;
+				ent.as = le.as;
 				break;
 			}
 
-			if (LE_IsOriginBrush(le)) {
+			if (LE_IsOriginBrush(&le)) {
 				ent.isOriginBrushModel = true;
-				R_EntitySetOrigin(&ent, le->origin);
-				VectorCopy(le->origin, ent.oldorigin);
+				R_EntitySetOrigin(&ent, le.origin);
+				VectorCopy(le.origin, ent.oldorigin);
 			}
 
 			/* Offset the model to be inside the cursor box */
-			switch (le->fieldSize) {
+			switch (le.fieldSize) {
 			case ACTOR_SIZE_NORMAL:
 			case ACTOR_SIZE_2x2:
 				vec3_t modelOffset;
-				ModelOffset(le->fieldSize, modelOffset);
+				ModelOffset(le.fieldSize, modelOffset);
 				R_EntityAddToOrigin(&ent, modelOffset);
 				VectorAdd(ent.oldorigin, modelOffset, ent.oldorigin);
 				break;
@@ -1527,23 +1501,23 @@ void LE_AddToScene (void)
 				break;
 			}
 
-			if (LE_IsSelected(le) && le->clientAction != nullptr) {
-				const le_t* action = le->clientAction;
+			if (LE_IsSelected(&le) && le.clientAction != nullptr) {
+				const le_t* action = le.clientAction;
 				if (action->inuse && action->type > ET_NULL && action->type < ET_MAX)
 					LE_AddEdictHighlight(action);
 			}
 
 			/* call add function */
 			/* if it returns false, don't draw */
-			if (le->addFunc)
-				if (!le->addFunc(le, &ent))
+			if (le.addFunc)
+				if (!le.addFunc(&le, &ent))
 					continue;
 
 			/* add it to the scene */
 			R_AddEntity(&ent);
 
 			if (cl_le_debug->integer)
-				CL_ParticleSpawn("cross", 0, le->origin);
+				CL_ParticleSpawn("cross", 0, le.origin);
 		}
 	}
 }
@@ -1554,11 +1528,9 @@ void LE_AddToScene (void)
  */
 void LE_Cleanup (void)
 {
-	int i;
-	le_t* le;
-
 	Com_DPrintf(DEBUG_CLIENT, "LE_Cleanup: Clearing up to %i unused LE inventories\n", cl.numLEs);
-	for (i = cl.numLEs - 1, le = &cl.LEs[cl.numLEs - 1]; i >= 0; i--, le--) {
+	for (int i = cl.numLEs - 1; i >= 0; i--) {
+		le_t* le = &cl.LEs[i];
 		if (!le->inuse)
 			continue;
 		if (LE_IsActor(le))
@@ -1576,21 +1548,19 @@ void LE_Cleanup (void)
  */
 void LE_List_f (void)
 {
-	int i;
-	le_t* le;
-
 	Com_Printf("number | entnum | type | inuse | invis | pnum | team | size |  HP | state | level | model/ptl\n");
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
+	for (int i = 0; i < cl.numLEs; i++) {
+		le_t& le = cl.LEs[i];
 		Com_Printf("#%5i | #%5i | %4i | %5i | %5i | %4i | %4i | %4i | %3i | %5i | %5i | ",
-			i, le->entnum, le->type, le->inuse, LE_IsInvisible(le), le->pnum, le->team,
-			le->fieldSize, le->HP, le->state, le->levelflags);
-		if (le->type == ET_PARTICLE) {
-			if (le->ptl)
-				Com_Printf("%s\n", le->ptl->ctrl->name);
+			i, le.entnum, le.type, le.inuse, LE_IsInvisible(&le), le.pnum, le.team,
+			le.fieldSize, le.HP, le.state, le.levelflags);
+		if (le.type == ET_PARTICLE) {
+			if (le.ptl)
+				Com_Printf("%s\n", le.ptl->ctrl->name);
 			else
 				Com_Printf("no ptl\n");
-		} else if (le->model1)
-			Com_Printf("%s\n", le->model1->name);
+		} else if (le.model1)
+			Com_Printf("%s\n", le.model1->name);
 		else
 			Com_Printf("no mdl\n");
 	}
@@ -1601,14 +1571,12 @@ void LE_List_f (void)
  */
 void LM_List_f (void)
 {
-	int i;
-	localModel_t* lm;
-
 	Com_Printf("number | entnum | skin | frame | lvlflg | renderflags | origin          | name\n");
-	for (i = 0, lm = cl.LMs; i < cl.numLMs; i++, lm++) {
+	for (int i = 0; i < cl.numLMs; i++) {
+		localModel_t& lm = cl.LMs[i];
 		Com_Printf("#%5i | #%5i | #%3i | #%4i | %6i | %11i | %5.0f:%5.0f:%3.0f | %s\n",
-			i, lm->entnum, lm->skin, lm->frame, lm->levelflags, lm->renderFlags,
-			lm->origin[0], lm->origin[1], lm->origin[2], lm->name);
+			i, lm.entnum, lm.skin, lm.frame, lm.levelflags, lm.renderFlags,
+			lm.origin[0], lm.origin[1], lm.origin[2], lm.name);
 	}
 }
 
@@ -1640,10 +1608,9 @@ const cBspModel_t* LE_GetClipModel (const le_t* le)
 
 model_t* LE_GetDrawModel (unsigned int index)
 {
-	model_t* model;
 	if (index == 0 || index > lengthof(cl.model_draw))
 		Com_Error(ERR_DROP, "Draw model index out of bounds");
-	model = cl.model_draw[index];
+	model_t* model = cl.model_draw[index];
 	if (!model)
 		Com_Error(ERR_DROP, "LE_GetDrawModel: Could not find model %u", index);
 	return model;
@@ -1689,35 +1656,31 @@ static int32_t CL_HullForEntity (const le_t* le, int* tile, vec3_t rmaShift, vec
  */
 static void CL_ClipMoveToLEs (MoveClipCL* clip)
 {
-	le_t* le = nullptr;
-
 	if (clip->trace.allsolid)
 		return;
 
+	le_t* le = nullptr;
 	while ((le = LE_GetNextInUse(le))) {
 		int tile = 0;
-		int32_t headnode;
-		vec3_t angles;
-		vec3_t origin, shift;
 
 		if (!(le->contents & clip->contentmask))
 			continue;
 		if (le == clip->passle || le == clip->passle2)
 			continue;
 
-		headnode = CL_HullForEntity(le, &tile, shift, angles);
+		vec3_t angles, shift;
+		const int32_t headnode = CL_HullForEntity(le, &tile, shift, angles);
 		assert(headnode < MAX_MAP_NODES);
 
+		vec3_t origin;
 		VectorCopy(le->origin, origin);
 
 		trace_t trace = CM_HintedTransformedBoxTrace(cl.mapTiles->mapTiles[tile], clip->moveLine, clip->objBox,
 				headnode, clip->contentmask, 0, origin, angles, shift, 1.0);
 
 		if (trace.fraction < clip->trace.fraction) {
-			bool oldStart;
-
 			/* make sure we keep a startsolid from a previous trace */
-			oldStart = clip->trace.startsolid;
+			const bool oldStart = clip->trace.startsolid;
 			trace.le = le;
 			clip->trace = trace;
 			clip->trace.startsolid |= oldStart;
@@ -1747,12 +1710,11 @@ static void CL_ClipMoveToLEs (MoveClipCL* clip)
  */
 trace_t CL_Trace (const Line& traceLine, const AABB& box, const le_t* passle, le_t* passle2, int contentmask, int worldLevel)
 {
-	MoveClipCL clip;
-
 	if (cl_trace_debug->integer)
 		R_DrawBoundingBoxBatched(box);
 
 	/* clip to world */
+	MoveClipCL clip;
 	clip.trace = CM_CompleteBoxTrace(cl.mapTiles, traceLine, box, (1 << (worldLevel + 1)) - 1, contentmask, 0);
 	clip.trace.le = nullptr;
 	if (clip.trace.fraction == 0)

@@ -164,8 +164,8 @@ chrtemplate alien_hovernet {
 }
 
 chrtemplate robot {
-	strength	"55 55"
-	speed	"40 40"
+	strength	"90 90"
+	speed	"70 70"
 	accuracy	"30 30"
 	mind	"0 0"
 	close	"35 35"

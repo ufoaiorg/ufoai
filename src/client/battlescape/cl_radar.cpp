@@ -110,8 +110,8 @@ static void CL_BattlescapeRadarGenerate_f (void)
 
 static void CL_BattlescapeRadarGenerateAll (uiNode_t* node, uiTimer_t* timer)
 {
-	int level = (timer->calledTime - 1) / 2;
-	int mode = (timer->calledTime - 1) % 2;
+	const int level = (timer->calledTime - 1) / 2;
+	const int mode = (timer->calledTime - 1) % 2;
 
 	if (level >= cl.mapMaxLevel) {
 		Cbuf_AddText("ui_genallradarmaprelease");

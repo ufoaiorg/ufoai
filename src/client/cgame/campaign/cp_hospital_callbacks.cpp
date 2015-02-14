@@ -77,13 +77,15 @@ static inline void HOS_Entry (const Employee& employee)
 {
 	const character_t& chr = employee.chr;
 	const float injuryLevel = HOS_GetInjuryLevel(chr);
-	if (!employee.isSoldier() && chr.HP >= chr.maxHP && injuryLevel <= 0)
+	if (!employee.isSoldier() && chr.HP >= chr.maxHP && injuryLevel <= 0.0f)
 		return;
 
 	const char* rank = HOS_GetRank(employee);
 	const char* level = HOS_GetInjuryLevelString(employee, injuryLevel);
+	const aircraft_t* craft = AIR_IsEmployeeInAircraft(&employee, nullptr);
 
-	cgi->UI_ExecuteConfunc("hospitaladd %i \"%s\" %i %i \"%s\" \"%s\"", chr.ucn, level, chr.HP, chr.maxHP, chr.name, rank);
+	cgi->UI_ExecuteConfunc("hospitaladd %i \"%s\" %i %i \"%s\" \"%s\" \"%s\"",
+			chr.ucn, level, chr.HP, chr.maxHP, chr.name, rank, craft ? craft->name : "");
 	HOS_EntryWoundData(chr);
 }
 

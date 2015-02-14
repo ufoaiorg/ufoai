@@ -1,0 +1,30 @@
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( -724 16 71 ) ( -720 34 71 ) ( -729 19 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -731 22 73 ) ( -713 28 73 ) ( -729 19 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 8 -3 86 ) ( 8 3 68 ) ( 8 -3 68 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 8 -3 68 ) ( 6 -7 86 ) ( 8 -3 86 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 2 -9 68 ) ( 6 -7 86 ) ( 6 -7 68 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -3 -9 86 ) ( 2 -9 68 ) ( -3 -9 68 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -3 -9 86 ) ( -8 -6 68 ) ( -8 -6 86 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -8 -6 68 ) ( -10 -3 86 ) ( -8 -6 86 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -10 2 68 ) ( -10 -3 86 ) ( -10 -3 68 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -7 7 86 ) ( -10 2 68 ) ( -7 7 68 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -7 7 86 ) ( -4 9 68 ) ( -4 9 86 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -4 9 68 ) ( 1 9 86 ) ( -4 9 86 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 6 6 68 ) ( 1 9 86 ) ( 1 9 68 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 8 3 86 ) ( 6 6 68 ) ( 8 3 68 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "-0.701 0.261999 68"
+"model" "models/objects/vegi/plant/plant.md2"
+"spawnflags" "254"
+"modelscale_vec" "0.5 0.5 0.25"
+"angles" "0 22.5 0"
+}

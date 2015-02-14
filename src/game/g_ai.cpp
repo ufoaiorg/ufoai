@@ -1850,19 +1850,7 @@ static void AI_SetCharacterValues (Edict* ent, int team)
 static void AI_SetEquipment (Edict* ent, const equipDef_t* ed)
 {
 	/* Pack equipment. */
-	if (ent->chr.teamDef->robot && ent->chr.teamDef->onlyWeapon) {
-		const objDef_t* weapon = ent->chr.teamDef->onlyWeapon;
-		if (weapon->numAmmos > 0)
-			game.invi.EquipActorRobot(&ent->chr.inv, weapon);
-		else if (weapon->fireTwoHanded)
-			game.invi.EquipActorMelee(&ent->chr.inv, ent->chr.teamDef);
-		else
-			gi.DPrintf("AI_InitPlayer: weapon %s has no ammo assigned and must not be fired two handed\n", weapon->id);
-	} else if (ent->chr.teamDef->weapons) {
-		game.invi.EquipActor(&ent->chr, ed, ent->chr.score.skills[ABILITY_POWER]);
-	} else {
-		gi.DPrintf("AI_InitPlayer: actor with no equipment\n");
-	}
+	game.invi.EquipActor(&ent->chr, ed, ent->chr.teamDef->onlyWeapon, ent->chr.score.skills[ABILITY_POWER]);
 }
 
 /**

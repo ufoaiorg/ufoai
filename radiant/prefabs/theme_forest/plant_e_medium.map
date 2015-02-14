@@ -1,0 +1,40 @@
+// entity 0
+{
+"classname" "worldspawn"
+"noequipment" "1"
+// brush 0
+{
+( 952 -884 73 ) ( 970 -878 73 ) ( 954 -887 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 959 -890 71 ) ( 963 -872 71 ) ( 954 -887 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 11 3 71 ) ( 11 -4 73 ) ( 11 3 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 11 3 71 ) ( 9 7 73 ) ( 9 7 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 4 10 71 ) ( 9 7 73 ) ( 4 10 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -3 10 71 ) ( 4 10 73 ) ( -3 10 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -3 10 71 ) ( -9 7 73 ) ( -9 7 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -9 7 73 ) ( -11 3 71 ) ( -9 7 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -11 44 68 ) ( -11 46 80 ) ( -11 44 80 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -7 -10 71 ) ( -11 -4 73 ) ( -7 -10 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -7 -10 71 ) ( -4 -12 73 ) ( -4 -12 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( -4 -12 73 ) ( 3 -12 71 ) ( -4 -12 71 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 8 -9 73 ) ( 3 -12 71 ) ( 3 -12 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 11 -4 71 ) ( 8 -9 73 ) ( 11 -4 73 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+}
+// brush 1
+{
+( 4 4 128 ) ( 4 -4 128 ) ( -4 4 128 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
+( 4 4 128 ) ( -4 4 128 ) ( 4 4 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
+( 4 4 128 ) ( 4 4 64 ) ( 4 -4 128 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
+( -4 -4 64 ) ( 4 -4 64 ) ( -4 4 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
+( -4 -4 64 ) ( -4 -4 128 ) ( 4 -4 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
+( -4 479 70 ) ( -4 479 69 ) ( -4 480 69 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"model" "models/objects/vegi/bush/bush01.md2"
+"origin" "0 0 82"
+"angles" "0 45 0"
+"modelscale_vec" "0.75 0.75 1.25"
+}

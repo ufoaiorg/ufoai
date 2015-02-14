@@ -275,16 +275,12 @@ static void CL_ParticleSpawnTimed (const char* name, ptl_t* parent, bool childre
  */
 void CL_AddMapParticle (const char* ptl, const vec3_t origin, const vec2_t wait, const char* info, int levelflags)
 {
-	mapParticle_t* mp;
-
-	mp = &mapParticles[cl.numMapParticles];
-
 	if (cl.numMapParticles >= MAX_MAPPARTICLES) {
 		Com_Printf("Too many map particles (don't add %s) - exceeded %i\n", ptl, MAX_MAPPARTICLES);
 		return;
 	}
-	cl.numMapParticles++;
 
+	mapParticle_t* mp = &mapParticles[cl.numMapParticles++];
 	Q_strncpyz(mp->ptl, ptl, sizeof(mp->ptl));
 	VectorCopy(origin, mp->origin);
 	mp->info = info;
@@ -327,11 +323,11 @@ static inline void CL_ParticleLoadArt (ptlArt_t* a)
 
 void CL_ParticleRegisterArt (void)
 {
-	ptlArt_t* a;
-	int i;
 
-	for (i = 0, a = r_particlesArt; i < r_numParticlesArt; i++, a++)
+	for (int i = 0; i < r_numParticlesArt; i++) {
+		ptlArt_t* a = &r_particlesArt[i];
 		CL_ParticleLoadArt(a);
+	}
 }
 
 /**
@@ -389,20 +385,17 @@ static inline void* CL_ParticleCommandGetDataLocation (ptl_t* p, const ptlCmd_t*
 
 static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 {
-	int stackIdx;
-	ptrdiff_t e;
-	int type;
-	int i, j, n;
-	void* cmdData;
-	float arg;
-	ptl_t* pnew;
-
 	/* test for null cmd */
 	if (!cmd)
 		return;
 
+	ptrdiff_t e = 0;
 	/* run until finding PC_END */
-	for (stackIdx = 0, e = 0; cmd->cmd != PC_END; cmd++) {
+	for (int stackIdx = 0; cmd->cmd != PC_END; cmd++) {
+		int i, j, n;
+		void* cmdData;
+		float arg;
+		ptl_t* pnew;
 		if (cmd->ref > RSTACK)
 			cmdData = CL_ParticleCommandGetDataLocation(p, cmd);
 		else {
@@ -428,6 +421,7 @@ static void CL_ParticleFunction (ptl_t* p, ptlCmd_t* cmd)
 			}
 		}
 
+		int type;
 		switch (cmd->cmd) {
 		case PC_PUSH:
 			/* check for stack overflow */
@@ -710,8 +704,6 @@ ptlDef_t* CL_ParticleGet (const char* name)
  */
 ptl_t* CL_ParticleSpawn (const char* name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
 {
-	int i;
-
 	if (Q_strnull(name))
 		return nullptr;
 
@@ -723,6 +715,7 @@ ptl_t* CL_ParticleSpawn (const char* name, int levelFlags, const vec3_t s, const
 	}
 
 	/* add the particle */
+	int i;
 	for (i = 0; i < r_numParticles; i++)
 		if (!r_particleArray[i].inuse)
 			break;
@@ -798,27 +791,25 @@ void CL_ParticleFree (ptl_t* p)
  */
 static void CL_Fading (vec4_t color, fade_t fade, float frac, bool onlyAlpha)
 {
-	int i;
-
 	switch (fade) {
 	case FADE_IN:
-		for (i = onlyAlpha ? 3 : 0; i < 4; i++)
+		for (int i = onlyAlpha ? 3 : 0; i < 4; i++)
 			color[i] *= frac;
 		break;
 	case FADE_OUT:
-		for (i = onlyAlpha ? 3 : 0; i < 4; i++)
+		for (int i = onlyAlpha ? 3 : 0; i < 4; i++)
 			color[i] *= (1.0 - frac);
 		break;
 	case FADE_SIN:
-		for (i = onlyAlpha ? 3 : 0; i < 4; i++)
+		for (int i = onlyAlpha ? 3 : 0; i < 4; i++)
 			color[i] *= sin(frac * M_PI);
 		break;
 	case FADE_SAW:
 		if (frac < 0.5)
-			for (i = onlyAlpha ? 3 : 0; i < 4; i++)
+			for (int i = onlyAlpha ? 3 : 0; i < 4; i++)
 				color[i] *= frac * 2;
 		else
-			for (i = onlyAlpha ? 3 : 0; i < 4; i++)
+			for (int i = onlyAlpha ? 3 : 0; i < 4; i++)
 				color[i] *= (1.0 - frac) * 2;
 		break;
 	case FADE_NONE:
@@ -835,10 +826,8 @@ static void CL_Fading (vec4_t color, fade_t fade, float frac, bool onlyAlpha)
  */
 void CL_ParticleCheckRounds (void)
 {
-	ptl_t* p;
-	int i;
-
-	for (i = 0, p = r_particleArray; i < r_numParticles; i++, p++) {
+	for (int i = 0; i < r_numParticles; i++) {
+		ptl_t* p = &r_particleArray[i];
 		if (!p->inuse)
 			continue;
 		/* run round function */
@@ -1072,12 +1061,8 @@ static void CL_ParticleRunTimed (void)
  */
 static void CL_ParseMapParticle (ptl_t* ptl, const char* es, bool afterwards)
 {
-	char keyname[MAX_VAR];
 	const char* token;
-	char* key;
-	const value_t* pp;
 
-	key = keyname + 1;
 	do {
 		/* get keyname */
 		token = Com_Parse(&es);
@@ -1086,6 +1071,7 @@ static void CL_ParseMapParticle (ptl_t* ptl, const char* es, bool afterwards)
 		if (!es)
 			Com_Error(ERR_DROP, "CL_ParseMapParticle: EOF without closing brace");
 
+		char keyname[MAX_VAR];
 		Q_strncpyz(keyname, token, sizeof(keyname));
 
 		/* parse value */
@@ -1101,6 +1087,8 @@ static void CL_ParseMapParticle (ptl_t* ptl, const char* es, bool afterwards)
 		if (afterwards && keyname[0] != '+')
 			continue;
 
+		char* key = keyname + 1;
+		const value_t* pp;
 		for (pp = pps; pp->string; pp++) {
 			if (Q_streq(key, pp->string)) {
 				/* found a normal particle value */
@@ -1126,10 +1114,8 @@ static void CL_ParseMapParticle (ptl_t* ptl, const char* es, bool afterwards)
 
 static void CL_RunMapParticles (void)
 {
-	mapParticle_t* mp;
-	int i;
-
-	for (i = 0, mp = mapParticles; i < cl.numMapParticles; i++, mp++) {
+	for (int i = 0; i < cl.numMapParticles; i++) {
+		mapParticle_t* mp = &mapParticles[i];
 		if (!mp->nextTime)
 			continue;
 		if (cl.time < mp->nextTime)
@@ -1161,34 +1147,29 @@ static void CL_RunMapParticles (void)
  */
 void CL_ParticleRun (void)
 {
-	ptl_t* p;
-	int i;
-
 	CL_RunMapParticles();
 
 	CL_ParticleRunTimed();
 
-	for (i = 0, p = r_particleArray; i < r_numParticles; i++, p++)
+	for (int i = 0; i < r_numParticles; i++) {
+		ptl_t* p = &r_particleArray[i];
 		if (p->inuse)
 			CL_ParticleRun2(p);
+	}
 }
 
 static void CL_ParsePtlCmds (const char* name, const char** text)
 {
-	ptlCmd_t* pc;
-	const value_t* pp;
-	const char* errhead = "CL_ParsePtlCmds: unexpected end of file";
-	const char* token;
-	int i, j;
-
 	/* get it's body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParsePtlCmds: particle cmds \"%s\" without body ignored\n", name);
 		return;
 	}
 
+	const char* errhead = "CL_ParsePtlCmds: unexpected end of file";
+	ptlCmd_t* pc;
 	do {
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
@@ -1196,6 +1177,8 @@ static void CL_ParsePtlCmds (const char* name, const char** text)
 		if (*token == '}')
 			break;
 
+		const value_t* pp;
+		int i;
 		for (i = 0; i < PC_NUM_PTLCMDS; i++)
 			if (Q_streq(token, pc_strings[i])) {
 				/* allocate an new cmd */
@@ -1223,7 +1206,6 @@ static void CL_ParsePtlCmds (const char* name, const char** text)
 				}
 
 				if (token[0] == '*') {
-					int len;
 					char baseComponentToken[MAX_VAR];
 
 					/* it's a variable reference */
@@ -1233,7 +1215,7 @@ static void CL_ParsePtlCmds (const char* name, const char** text)
 					Q_strncpyz(baseComponentToken, token, sizeof(baseComponentToken));
 
 					/* check for component specifier */
-					len = strlen(baseComponentToken);
+					int len = strlen(baseComponentToken);
 					/* it's possible to change only the second value of e.g. a vector
 					 * just defined e.g. 'size.2' to modify the second value of size */
 					if (len >= 2 && baseComponentToken[len - 2] == '.') {
@@ -1291,6 +1273,7 @@ static void CL_ParsePtlCmds (const char* name, const char** text)
 				}
 
 				/* get the type */
+				int j;
 				if (pc_types[i] & PTL_ONLY_ONE_TYPE)
 					/* extract the real type */
 					j = pc_types[i] & ~PTL_ONLY_ONE_TYPE;
@@ -1371,9 +1354,6 @@ static void CL_ParsePtlCmds (const char* name, const char** text)
  */
 void CL_ParseParticle (const char* name, const char** text)
 {
-	const char* errhead = "CL_ParseParticle: unexpected end of file (particle ";
-	ptlDef_t* pd;
-	const char* token;
 	int i;
 
 	/* search for particles with same name */
@@ -1381,6 +1361,7 @@ void CL_ParseParticle (const char* name, const char** text)
 		if (Q_streq(name, ptlDef[i].name))
 			break;
 
+	ptlDef_t* pd;
 	if (i < numPtlDefs) {
 		Com_Printf("CL_ParseParticle: particle def \"%s\" with same name found, reset first one\n", name);
 		pd = &ptlDef[i];
@@ -1398,7 +1379,7 @@ void CL_ParseParticle (const char* name, const char** text)
 	Q_strncpyz(pd->name, name, sizeof(pd->name));
 
 	/* get it's body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseParticle: particle def \"%s\" without body ignored\n", name);
@@ -1407,6 +1388,7 @@ void CL_ParseParticle (const char* name, const char** text)
 		return;
 	}
 
+	const char* errhead = "CL_ParseParticle: unexpected end of file (particle ";
 	do {
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
@@ -1446,13 +1428,12 @@ void CL_ParseParticle (const char* name, const char** text)
  */
 static void PTL_DebugSpawnMarker_f (void)
 {
-	vec3_t worldOrigin;
-
 	if (Cmd_Argc() < 4) {
 		Com_Printf("Usage: %s <x> <y> <z>\n", Cmd_Argv(0));
 		return;
 	}
 
+	vec3_t worldOrigin;
 	worldOrigin[0] = atof(Cmd_Argv(1));
 	worldOrigin[1] = atof(Cmd_Argv(2));
 	worldOrigin[2] = atof(Cmd_Argv(3));
@@ -1466,12 +1447,11 @@ static void PTL_DebugList_f (void)
 	for (int i = 0; i < r_numParticles; i++) {
 		const ptl_t* p = &r_particleArray[i];
 		const ptlDef_t* def = p->ctrl;
-		const value_t* pp = pps;
 		if (!p->inuse)
 			continue;
 		Com_Printf("particle %i\n", i);
 		Com_Printf(" name: %s\n", def->name);
-		for (pp = pps; pp->string; pp++) {
+		for (const value_t* pp = pps; pp->string; pp++) {
 			const char* value = "";
 			if (Q_streq(pp->string, "image") && p->pic) {
 				value = p->pic->name;

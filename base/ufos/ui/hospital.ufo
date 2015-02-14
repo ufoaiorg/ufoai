@@ -27,11 +27,12 @@ window hospital
 
 			/**
 			 * @param <1> ucn
-			 * @param <2> light, medium, serious, healty
+			 * @param <2> light, medium, serious, healthy
 			 * @param <3> HP
 			 * @param <4> MaxHP
 			 * @param <5> Name
 			 * @param <6> Rank
+			 * @param <7> Assigned to aircraft?
 			 */
 			confunc hospitaladd	{
 				call *node:parent.patients@createChild("hos<1>", "HospitalItem")
@@ -53,6 +54,11 @@ window hospital
 				*node:parent.patients.hos<1>.name@string = "<5>"
 				*node:parent.patients.hos<1>.type@string = "<6>"
 				*node:parent.patients.hos<1>.id@integer = <1>
+
+				if ( <7> ne "" ) {
+					*node:parent.patients.hos<1>.assigned@invis = false
+					*node:parent.patients.hos<1>.assigned@tooltip = <7>
+				}
 			}
 
 			/**
@@ -62,13 +68,13 @@ window hospital
 			 * @param <4> Tooltip
 			 */
 			confunc hospital_wounds {
-				call *node:root.panel.hos<1>.wounds@createChild("wound_<2>", "cmpH<2>")
 				if (<3> >= 0.3) {
-					*node:root.panel.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound"
+					*node:parent.patients.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound"
 				} else {
-					*node:root.panel.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound_treated"
+					*node:parent.patients.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound_treated"
 				}
-				*node:root.panel.hos<1>.wounds.wound_<2>@tooltip = "<4>"
+				*node:parent.patients.hos<1>.wounds.wound_<2>@tooltip = "<4>"
+				*node:parent.patients.hos<1>.wounds.wound_<2>@invis = false
 			}
 
 			panel patients {
