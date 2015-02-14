@@ -629,6 +629,7 @@ static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCa
 
 	/* ignore alpha when blitting - just copy it over */
 #if SDL_VERSION_ATLEAST(2,0,0)
+	SDL_SetSurfaceBlendMode(textSurface, SDL_BLENDMODE_NONE);
 	SDL_SetSurfaceAlphaMod(textSurface, 255);
 #else
 	SDL_SetAlpha(textSurface, 0, 255);
