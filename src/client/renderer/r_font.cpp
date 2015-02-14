@@ -164,21 +164,18 @@ void R_FontShutdown (void)
  */
 static font_t* R_FontAnalyze (const char* name, const char* path, int renderStyle, int size)
 {
-	font_t* f;
-	int ttfSize;
-
 	if (numFonts >= MAX_FONTS)
 		return nullptr;
 
 	/* allocate new font */
-	f = &fonts[numFonts];
+	font_t* f = &fonts[numFonts];
 	OBJZERO(*f);
 
 	/* copy fontname */
 	f->name = name;
 
 	byte* buf;
-	ttfSize = FS_LoadFile(path, &buf);
+	const int ttfSize = FS_LoadFile(path, &buf);
 	if (ttfSize == -1)
 		Com_Error(ERR_FATAL, "...could not load font file %s", path);
 
@@ -567,37 +564,32 @@ void R_FontTextSize (const char* fontId, const char* text, int maxWidth, longlin
  */
 static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCache_t* chunk)
 {
-	SDL_Surface* textSurface;
-	SDL_Surface* openGLSurface;
-	SDL_Rect rect = {0, 0, 0, 0};
-	char buf[BUF_SIZE];
-	static const SDL_Color color = {255, 255, 255, 0};	/* The 4th value is unused */
-	int colordepth = 32;
-
 #ifdef GL_VERSION_ES_CM_1_0
 	const int samples = GL_RGBA;
-	int pixelFormat = GL_RGBA; /* There's no GL_BGRA symbol defined in Android GLES headers */
+	const int pixelFormat = GL_RGBA; /* There's no GL_BGRA symbol defined in Android GLES headers */
 #else
 	const int samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
-	int pixelFormat = GL_BGRA;
+	const int pixelFormat = GL_BGRA;
 #endif
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-	Uint32 rmask = 0xff000000;
-	Uint32 gmask = 0x00ff0000;
-	Uint32 bmask = 0x0000ff00;
-	Uint32 amask = 0x000000ff;
+	const Uint32 rmask = 0xff000000;
+	const Uint32 gmask = 0x00ff0000;
+	const Uint32 bmask = 0x0000ff00;
+	const Uint32 amask = 0x000000ff;
 #else
-	Uint32 rmask = 0x000000ff;
-	Uint32 gmask = 0x0000ff00;
-	Uint32 bmask = 0x00ff0000;
-	Uint32 amask = 0xff000000;
+	const Uint32 rmask = 0x000000ff;
+	const Uint32 gmask = 0x0000ff00;
+	const Uint32 bmask = 0x00ff0000;
+	const Uint32 amask = 0xff000000;
 #endif
 
 	if (chunk->texnum != 0)
 		return;  /* already generated */
 
 	assert(strlen(text) >= chunk->pos + chunk->len);
+
+	char buf[BUF_SIZE];
 	if (chunk->len >= sizeof(buf))
 		return;
 	memcpy(buf, &text[chunk->pos], chunk->len);
@@ -606,7 +598,8 @@ static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCa
 	if (chunk->truncated)
 		Q_strncpyz(buf + chunk->len, truncmarker, sizeof(buf) - chunk->len);
 
-	textSurface = TTF_RenderUTF8_Blended(font->font, buf, color);
+	static const SDL_Color color = {255, 255, 255, 0};	/* The 4th value is unused */
+	SDL_Surface* textSurface = TTF_RenderUTF8_Blended(font->font, buf, color);
 	if (!textSurface) {
 		Com_Printf("%s (%s)\n", TTF_GetError(), buf);
 		return;
@@ -617,15 +610,14 @@ static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCa
 	for (w = 2; w < textSurface->w; w <<= 1) {}
 	for (h = 2; h < textSurface->h; h <<= 1) {}
 
-	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, colordepth, rmask, gmask, bmask, amask);
+	const int colordepth = 32;
+	SDL_Surface* openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, colordepth, rmask, gmask, bmask, amask);
 	if (!openGLSurface)
 		return;
 
-	rect.x = rect.y = 0;
-	rect.w = textSurface->w;
+	SDL_Rect rect = {0, 0, textSurface->w, textSurface->h};
 	if (rect.w > chunk->width)
 		rect.w = chunk->width;
-	rect.h = textSurface->h;
 
 	/* ignore alpha when blitting - just copy it over */
 #if SDL_VERSION_ATLEAST(2,0,0)
