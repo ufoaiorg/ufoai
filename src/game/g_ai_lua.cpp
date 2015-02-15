@@ -796,7 +796,7 @@ static int actorL_isdead (lua_State* L)
 }
 
 /**
- * @brief Check if the acotr is a valid target to attack.
+ * @brief Check if the actor is a valid target to attack.
  */
 static int actorL_isvalidtarget (lua_State* L)
 {
