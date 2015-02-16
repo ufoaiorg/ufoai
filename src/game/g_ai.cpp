@@ -624,14 +624,15 @@ bool AI_FindHidingLocation (int team, Actor* actor, const pos3_t from, int tuLef
 		if (delta > tuLeft || delta == ROUTING_NOT_REACHABLE)
 			continue;
 
+		/* Don't stand on dangerous terrain! */
+		if (!AI_CheckPosition(actor, actor->pos))
+			continue;
+
 		/* If enemies see this position, it doesn't qualify as hiding spot */
 		actor->calcOrigin();
 		if (AI_IsExposed(team, actor))
 			continue;
 
-		/* Don't stand on dangerous terrain! */
-		if (!AI_CheckPosition(actor, actor->pos))
-			continue;
 		const int score = tuLeft - delta;
 		if (score > bestScore) {
 			bestScore = score;
