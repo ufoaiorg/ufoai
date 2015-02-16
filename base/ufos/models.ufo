@@ -226,8 +226,10 @@ menu_model drop_raptor_gear
 }
 menu_model drop_raptor
 {
-	model	"aircraft/drop_raptor/drop_raptor_landed"
-	need	drop_raptor_gear
+	model	"aircraft/drop_raptor/drop_raptor"
+// Landed model and landing gear are facing the wrong way, fix it some day (with new model maybe?)
+//	model	"aircraft/drop_raptor/drop_raptor_landed"
+//	need	drop_raptor_gear
 }
 menu_model drop_raptor_flying_lq
 {
