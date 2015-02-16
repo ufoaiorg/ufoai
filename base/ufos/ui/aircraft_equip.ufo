@@ -32,7 +32,7 @@ window aircraft_equip extends iaircraft
 			*cvar:tmp = ""
 			if ( *cvar:mn_aircraft_item_selected != -1 ) {
 				*cvar:tmp = "item"
-			} elif ( *node:root.airequip_zone_select2@src eq "" ) {
+			} elif ( *node:root.airequip2.airequip_zone_select2@src eq "" ) {
 				*cvar:tmp = "zone1"
 			} else {
 				*cvar:tmp = "zone2"
@@ -609,7 +609,7 @@ window aircraft_equip extends iaircraft
 		// default is weapons @sa aircraftItemType_t (inv_shared.h)
 		*cvar:mn_aircrafttab = "aircraft_equip"
 		cmd "ui_aircraft_fill;"
-		if (<cvar:mn_aircraft_id> == "")
+		if (<cvar:mn_aircraft_id> eq "")
 		{
 			cmd "ui_aircraft_select <1>;"
 		} else

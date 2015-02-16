@@ -552,8 +552,7 @@ window bases
 	 */
 	confunc show_aircraft
 	{
-		*node:root.aircraft_count@integer = ( *node:root.aircraft_count@integer + 1 )
-		if ( *node:root.aircraft_count@integer <= 5 ) {
+		if ( *node:root.aircraft_count@integer < 5 ) {
 			*node:parent.sections.aircraft@size	= "298 96"
 			call *node:parent.sections.aircraft.aircraft_list@createChild("<1>", "AircraftIcon")
 			*node:parent.sections.aircraft.aircraft_list.<1>.icon@tooltip = "<2> (<4>)"
@@ -562,8 +561,8 @@ window bases
 			} else {
 				*node:parent.sections.aircraft.aircraft_list.<1>.icon@icon = "icons/<3>_off"
 			}
-			*node:parent.sections.aircraft.aircraft_list.<1>.aircraft_id@string = <1>
-			*node:parent.sections.aircraft.aircraft_list.<1>.icon@onClick = { cmd "ui_push aircraft_equip <node:parent.aircraft_id@string>;" }
+			*node:parent.sections.aircraft.aircraft_list.<1>.aircraft_id@string = <node:root.aircraft_count@integer>
+			*node:parent.sections.aircraft.aircraft_list.<1>.icon@onClick = { cmd "ui_push aircraft_equip \"<node:parent.aircraft_id@string>\";" }
 			*node:parent.sections.aircraft.aircraft_list@invis = false
 			/*
 			THEN ADD THIS TO AIRCRAFT onWindowOpened
@@ -573,6 +572,7 @@ window bases
 			}
 			*/
 		}
+		*node:root.aircraft_count@integer = ( *node:root.aircraft_count@integer + 1 )
 	}
 
 	/**
