@@ -1145,18 +1145,20 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 				minDist = std::min(dist, minDist);
 			}
 		}
-		bestActionScore += SCORE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
+		bestActionScore += SCORE_CLOSE_IN * (1.0f - minDist / CLOSE_IN_DIST);
 	} else {
 		/* if no target available let them wander around until they find one */
 		bestActionScore += SCORE_RANDOM * frand();
 	}
 
 	/* penalize herding */
-	check = nullptr;
-	while ((check = G_EdictsGetNextLivingActorOfTeam(check, actor->getTeam()))) {
-		const float dist = VectorDist(actor->origin, check->origin);
-		if (dist < HERD_THRESHOLD)
-			bestActionScore -= SCORE_HERDING_PENALTY;
+	if (!actor->isRaged()) {
+		check = nullptr;
+		while ((check = G_EdictsGetNextLivingActorOfTeam(check, actor->getTeam()))) {
+			const float dist = VectorDist(actor->origin, check->origin);
+			if (dist < HERD_THRESHOLD)
+				bestActionScore -= SCORE_HERDING_PENALTY;
+		}
 	}
 
 	return bestActionScore;
