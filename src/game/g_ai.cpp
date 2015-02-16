@@ -1251,15 +1251,17 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 
 	/* try to hide */
 	float reactionTrap = 0.0;
-	check = nullptr;
-	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (actor == check)
-			continue;
-		if (!(G_IsAlien(check) || actor->isInsane()))
-			continue;
+	if (!actor->isInsane()) {
+		check = nullptr;
+		while ((check = G_EdictsGetNextLivingActor(check))) {
+			if (actor == check)
+				continue;
+			if (!(G_IsAlien(check)))
+				continue;
 
-		if (G_ActorVis(check, actor, true) > ACTOR_VIS_10)
-			reactionTrap += SCORE_NONHIDING_PLACE_PENALTY;
+			if (G_ActorVis(check, actor, true) > ACTOR_VIS_10)
+				reactionTrap += SCORE_NONHIDING_PLACE_PENALTY;
+		}
 	}
 	delta -= reactionTrap;
 	float bestActionScore = delta;
@@ -1330,15 +1332,14 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
 
 	/* try to hide */
 	check = nullptr;
-	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (actor == check)
-			continue;
-		if (actor->isInsane())
-			continue;
+	if (!actor->isInsane())
+		while ((check = G_EdictsGetNextLivingActor(check))) {
+			if (actor == check)
+				continue;
 
-		if (G_ActorVis(check, actor, true) > ACTOR_VIS_10)
-			bestActionScore -= SCORE_NONHIDING_PLACE_PENALTY;
-	}
+			if (G_ActorVis(check, actor, true) > ACTOR_VIS_10)
+				bestActionScore -= SCORE_NONHIDING_PLACE_PENALTY;
+		}
 
 	/* Try not to stand in dangerous terrain */
 	if (!AI_CheckPosition(actor, actor->pos))
