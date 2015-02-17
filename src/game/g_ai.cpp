@@ -327,7 +327,7 @@ static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, flo
 		spread = 1.0;
 	spread *= torad;
 
-	float cosSpread = cos(spread);
+	const float cosSpread = cos(spread);
 	vec3_t dtarget;
 	VectorSubtract(target, ent->origin, dtarget);
 	VectorNormalizeFast(dtarget);
@@ -372,7 +372,7 @@ bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef
 	if (actor->isInsane())
 		return true;
 
-	/* don't shoot - we are to close */
+	/* don't shoot - we are too close */
 	if (*dist < fd->splrad)
 		return false;
 
