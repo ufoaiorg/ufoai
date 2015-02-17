@@ -30,7 +30,9 @@ stand_still			33	34	1
 stand_menu			33	34	1
 
 shoot_melee			34	55	22
+cshoot_melee			34	55	22
 move_melee			0	32	22
+cmove_melee			0	32	22
 
 death1				56	83	22
 death2				84	95	22
