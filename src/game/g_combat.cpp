@@ -502,7 +502,7 @@ static inline bool G_FireAffectedSurface (const cBspSurface_t* surface, const fi
  */
 static void G_SplashDamage (Actor* ent, const fireDef_t* fd, vec3_t impact, shot_mock_t* mock, const trace_t* tr)
 {
-	assert(fd->splrad > 0.0);
+	assert(fd->splrad > 0.0f);
 
 	const bool shock = (fd->obj->dmgtype == gi.csi->damShock);
 
@@ -513,22 +513,23 @@ static void G_SplashDamage (Actor* ent, const fireDef_t* fd, vec3_t impact, shot
 		if (shock && !G_FrustumVis(check, impact))
 			continue;
 
+		const bool isActor = G_IsLivingActor(check);
 		vec3_t center;
 		if (G_IsBrushModel(check) && G_IsBreakable(check))
 			check->absBox.getCenter(center);
-		else if (G_IsLivingActor(check) || G_IsBreakable(check))
+		else if (isActor || G_IsBreakable(check))
 			VectorCopy(check->origin, center);
 		else
 			continue;
 
 		/* check for distance */
 		float dist = VectorDist(impact, center);
-		dist = dist > UNIT_SIZE / 2 ? dist - UNIT_SIZE / 2 : 0;
+		dist = dist > UNIT_SIZE / 2 ? dist - UNIT_SIZE / 2 : 0.0f;
 		if (dist > fd->splrad)
 			continue;
 
 		if (fd->irgoggles) {
-			if (G_IsActor(check)) {
+			if (isActor) {
 				/* check whether this actor (check) is in the field of view of the 'shooter' (ent) */
 				if (G_FrustumVis(ent, check->origin)) {
 					if (!mock) {
@@ -542,15 +543,17 @@ static void G_SplashDamage (Actor* ent, const fireDef_t* fd, vec3_t impact, shot
 		}
 
 		/* check for walls */
-		if (G_IsLivingActor(check) && G_TestLine(impact, check->origin))
+		if (isActor && G_TestLine(impact, check->origin))
 			continue;
 
 		/* do damage */
-		const int damage = shock ? 0 : fd->spldmg[0] * (1.0 - dist / fd->splrad);
+		const int damage = shock ? 0 : fd->spldmg[0] * (1.0f - dist / fd->splrad);
 
 		if (mock)
 			mock->allow_self = true;
-		if (G_Damage(check, fd, damage, ent, mock, nullptr) && G_IsLivingActor(check)) {
+		/* Send hurt sounds for actors, but only if they'll recieve damage from this attack */
+		if (G_Damage(check, fd, damage, ent, mock, nullptr) && isActor
+				&& (G_ApplyProtection(check, fd->dmgweight,  damage) > 0) && !shock) {
 			const teamDef_t* teamDef = check->chr.teamDef;
 			const int gender = check->chr.gender;
 			const char* sound = teamDef->getActorSound(gender, SND_HURT);
