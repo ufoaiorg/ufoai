@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_WALL_THICKNESS_FOR_SHOOTING_THROUGH 8
 
 typedef enum {
+	ML_SHOOT,
 	ML_WOUND,
 	ML_DEATH
 } morale_modifiers;
@@ -106,6 +107,8 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 
 		/* morale damage depends on the damage */
 		float mod = mob_wound->value * param;
+		if (type == ML_SHOOT)
+			mod *= mob_shoot->value;
 		/* death hurts morale even more than just damage */
 		if (type == ML_DEATH)
 			mod += mob_death->value;
@@ -155,6 +158,61 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 		/* send phys data */
 		G_SendStats(*actor);
 	}
+}
+
+/**
+ * @brief Applies morale changes to actors who find themselves in the general direction of a shot.
+ * @param shooter The shooting actor.
+ * @param fd The firedef used to shoot.
+ * @param from The weapon's muzzle location.
+ * @param weapon The weapon used to shoot.
+ * @param impact The shoot's impact location.
+ */
+static void G_ShotMorale (const Actor* shooter, const fireDef_t* fd, const vec3_t from, const Item* weapon, const vec3_t impact)
+{
+#if 0
+	/* Skip not detectable shoots */
+	if (weapon->def()->dmgtype == gi.csi->damLaser || fd->irgoggles)
+		return;
+
+	Actor* check = nullptr;
+	const float minDist = UNIT_SIZE * 1.5f;
+	while ((check = G_EdictsGetNextLivingActor(check))) {
+		/* Skip yourself */
+		if (check == shooter)
+			continue;
+		pos3_t target;
+		VecToPos(impact, target);
+		/* Skip the hit actor -- morale was already handled */
+		if (check->isSamePosAs(target))
+			continue;
+		vec3_t dir1, dir2;
+		VectorSubtract(check->origin, from, dir1);
+		VectorSubtract(impact, from, dir2);
+		const float len1 = VectorLength(dir1);
+		const float len2 = VectorLength(dir2);
+		const float dot = DotProduct(dir1, dir2);
+		if (dot / (len1 * len2) < 0.7f)
+			continue;
+		/* Skip if shooting next or over an ally */
+		if (check->isSameTeamAs(shooter) && VectorDistSqr(check->origin, shooter->origin)
+				<= minDist * minDist)
+			continue;
+		vec3_t vec1;
+		if (len1 > len2) {
+			VectorSubtract(dir2, dir1, vec1);
+		} else {
+			VectorScale(dir2, dot / (len2 * len2), vec1);
+			VectorSubtract(dir1, vec1, vec1);
+		}
+		const float morDist = (check->isSamePosAs(target) ? UNIT_SIZE * 0.5f : minDist);
+		if (VectorLengthSqr(vec1) <= morDist * morDist) {
+			/* @todo Add a visibility check here? */
+			G_Morale(ML_SHOOT, check, shooter, fd->damage[0]);
+			gi.DPrintf("Suppressing: %s\n", check->chr.name);
+		}
+	}
+#endif
 }
 
 /**
@@ -1311,10 +1369,13 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 	/* Fire all shots. */
 	vec3_t impact;
 	for (int i = 0; i < shots; i++)
-		if (fd->gravity)
+		if (fd->gravity) {
 			G_ShootGrenade(player, actor, fd, shotOrigin, at, mask, weapon, mock, z_align, impact);
-		else
+		} else {
 			G_ShootSingle(actor, fd, shotOrigin, at, mask, weapon, mock, z_align, i, shootType, impact);
+			if (mor_panic->integer)
+				G_ShotMorale(actor, fd, shotOrigin, weapon, impact);
+		}
 
 	if (!mock) {
 		const bool smoke = fd->obj->dmgtype == gi.csi->damSmoke;
