@@ -241,3 +241,8 @@ void Sys_Mkfifo (const char *ospath, qFILE *f)
 		f->f = nullptr;
 	}
 }
+
+FILE* Sys_Fopen(const char *filename, const char *mode)
+{
+	return fopen(filename, mode);
+}

@@ -38,6 +38,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 HINSTANCE global_hInstance;
 
+static void Sys_Utf8ToUtf16 (const char* source, LPWSTR dest, size_t destlen)
+{
+	const int len = MultiByteToWideChar(CP_UTF8, 0, source, -1, dest, destlen - 1);
+	dest[len] = 0;
+}
+
+static void Sys_Utf16ToUtf8 (const LPWSTR source, char* dest, size_t destsize)
+{
+	const int len = WideCharToMultiByte(CP_UTF8, 0, source, -1, dest, destsize - 1, nullptr, nullptr);
+	dest[len] = '\0';
+}
+
 int Sys_Milliseconds (void)
 {
 	static int base = 0;
@@ -51,7 +63,9 @@ int Sys_Milliseconds (void)
 
 void Sys_Mkdir (const char* path)
 {
-	_mkdir(path);
+	WCHAR wpath[MAX_OSPATH];
+	Sys_Utf8ToUtf16(path, wpath, lengthof(wpath));
+	_wmkdir(wpath);
 }
 
 void Sys_Breakpoint (void)
@@ -150,6 +164,8 @@ const char* Sys_GetLocale (void)
 
 static char findbase[MAX_OSPATH];
 static char findpath[MAX_OSPATH];
+static char findname[MAX_OSPATH];
+static WCHAR wfindpath[MAX_OSPATH];
 static int findhandle;
 
 static bool CompareAttributes (unsigned found, unsigned musthave, unsigned canthave)
@@ -185,22 +201,24 @@ static bool CompareAttributes (unsigned found, unsigned musthave, unsigned canth
  */
 char* Sys_FindFirst (const char* path, unsigned musthave, unsigned canthave)
 {
-	struct _finddata_t findinfo;
+	struct _wfinddata_t findinfo;
 
 	if (findhandle)
 		Sys_Error("Sys_BeginFind without close");
 	findhandle = 0;
 
 	Com_FilePath(path, findbase, sizeof(findbase));
-	findhandle = _findfirst(path, &findinfo);
+	Sys_Utf8ToUtf16(path, wfindpath, lengthof(wfindpath));
+	findhandle = _wfindfirst(wfindpath, &findinfo);
 	while (findhandle != -1) {
 		/* found one that matched */
-		if (!Q_streq(findinfo.name, ".") && !Q_streq(findinfo.name, "..") &&
+		Sys_Utf16ToUtf8(findinfo.name, findname, sizeof(findname));
+		if (!Q_streq(findname, ".") && !Q_streq(findname, "..") &&
 			CompareAttributes(findinfo.attrib, musthave, canthave)) {
-			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
+			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findname);
 			return findpath;
 		/* doesn't match - try the next one */
-		} else if (_findnext(findhandle, &findinfo) == -1) {
+		} else if (_wfindnext(findhandle, &findinfo) == -1) {
 			/* ok, no further entries here - leave the while loop */
 			_findclose(findhandle);
 			findhandle = -1;
@@ -217,16 +235,17 @@ char* Sys_FindFirst (const char* path, unsigned musthave, unsigned canthave)
  */
 char* Sys_FindNext (unsigned musthave, unsigned canthave)
 {
-	struct _finddata_t findinfo;
+	struct _wfinddata_t findinfo;
 
 	if (findhandle == -1)
 		return nullptr;
 
 	/* until we found the next entry */
-	while (_findnext(findhandle, &findinfo) != -1) {
-		if (!Q_streq(findinfo.name, ".") && !Q_streq(findinfo.name, "..") &&
+	while (_wfindnext(findhandle, &findinfo) != -1) {
+		Sys_Utf16ToUtf8(findinfo.name, findname, sizeof(findname));
+		if (!Q_streq(findname, ".") && !Q_streq(findname, "..") &&
 			CompareAttributes(findinfo.attrib, musthave, canthave)) {
-			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
+			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findname);
 			return findpath;
 		}
 	}
@@ -255,7 +274,7 @@ void Sys_ListFilteredFiles (const char* basedir, const char* subdirs, const char
 	char search[MAX_OSPATH], newsubdirs[MAX_OSPATH];
 	char filename[MAX_OSPATH];
 	int findhandle;
-	struct _finddata_t findinfo;
+	struct _wfinddata_t findinfo;
 
 	if (subdirs[0] != '\0') {
 		Com_sprintf(search, sizeof(search), "%s\\%s\\*", basedir, subdirs);
@@ -263,26 +282,28 @@ void Sys_ListFilteredFiles (const char* basedir, const char* subdirs, const char
 		Com_sprintf(search, sizeof(search), "%s\\*", basedir);
 	}
 
-	findhandle = _findfirst(search, &findinfo);
+	Sys_Utf8ToUtf16(search, wfindpath, lengthof(wfindpath));
+	findhandle = _wfindfirst(wfindpath, &findinfo);
 	if (findhandle == -1)
 		return;
 
 	do {
+		Sys_Utf16ToUtf8(findinfo.name, findname, sizeof(findname));
 		if (findinfo.attrib & _A_SUBDIR) {
-			if (Q_strcasecmp(findinfo.name, ".") && Q_strcasecmp(findinfo.name, "..")) {
+			if (Q_strcasecmp(findname, ".") && Q_strcasecmp(findname, "..")) {
 				if (subdirs[0] != '\0') {
-					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s\\%s", subdirs, findinfo.name);
+					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s\\%s", subdirs, findname);
 				} else {
-					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s", findinfo.name);
+					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s", findname);
 				}
 				Sys_ListFilteredFiles(basedir, newsubdirs, filter, list);
 			}
 		}
-		Com_sprintf(filename, sizeof(filename), "%s\\%s", subdirs, findinfo.name);
+		Com_sprintf(filename, sizeof(filename), "%s\\%s", subdirs, findname);
 		if (!Com_Filter(filter, filename))
 			continue;
 		LIST_AddString(list, filename);
-	} while (_findnext(findhandle, &findinfo) != -1);
+	} while (_wfindnext(findhandle, &findinfo) != -1);
 
 	_findclose(findhandle);
 }
@@ -367,10 +388,13 @@ void Sys_Error (const char* error, ...)
 const char* Sys_GetCurrentUser (void)
 {
 	static char s_userName[1024];
-	unsigned long size = sizeof(s_userName);
+	WCHAR w_userName[1024];
+	unsigned long size = lengthof(w_userName);
 
-	if (!GetUserName(s_userName, &size))
+	if (!GetUserNameW(w_userName, &size))
 		Q_strncpyz(s_userName, "", sizeof(s_userName));
+	else
+		Sys_Utf16ToUtf8(w_userName, s_userName, sizeof(s_userName));
 
 	return s_userName;
 }
@@ -381,10 +405,12 @@ const char* Sys_GetCurrentUser (void)
 char* Sys_Cwd (void)
 {
 	static char cwd[MAX_OSPATH];
+	WCHAR wcwd[MAX_OSPATH];
 
-	if (_getcwd(cwd, sizeof(cwd) - 1) == nullptr)
+	if (_wgetcwd(wcwd, lengthof(wcwd)) == nullptr)
 		return nullptr;
-	cwd[MAX_OSPATH-1] = 0;
+	else
+		Sys_Utf16ToUtf8(wcwd, cwd, sizeof(cwd));
 
 	return cwd;
 }
@@ -423,29 +449,34 @@ char* Sys_GetHomeDirectory (void)
 		return nullptr;
 	}
 
-	typedef HRESULT WINAPI SHGetFolderPath_t(HWND, int, HANDLE, DWORD, LPSTR);
-	SHGetFolderPath_t* const qSHGetFolderPath = (SHGetFolderPath_t*)GetProcAddress(shfolder, "SHGetFolderPathA");
+	typedef HRESULT WINAPI SHGetFolderPath_t(HWND, int, HANDLE, DWORD, LPWSTR);
+	SHGetFolderPath_t* const qSHGetFolderPath = (SHGetFolderPath_t*)GetProcAddress(shfolder, "SHGetFolderPathW");
 	if (qSHGetFolderPath == nullptr) {
 		Com_Printf("Unable to find SHGetFolderPath in SHFolder.dll\n");
 		FreeLibrary(shfolder);
 		return nullptr;
 	}
 
-	if (!SUCCEEDED(qSHGetFolderPath(nullptr, CSIDL_APPDATA, nullptr, 0, path))) {
+	WCHAR wpath[MAX_PATH];
+	if (!SUCCEEDED(qSHGetFolderPath(nullptr, CSIDL_APPDATA, nullptr, 0, wpath))) {
 		Com_Printf("Unable to detect CSIDL_APPDATA\n");
 		FreeLibrary(shfolder);
 		return nullptr;
 	}
 
+	Sys_Utf16ToUtf8(wpath, path, sizeof(path));
 	Q_strcat(path, sizeof(path), "\\UFOAI");
 	FreeLibrary(shfolder);
 
-	if (!CreateDirectory(path, nullptr)) {
+	Sys_Utf8ToUtf16(path, wpath, MAX_PATH);
+	if (!CreateDirectoryW(wpath, nullptr)) {
 		if (GetLastError() != ERROR_ALREADY_EXISTS) {
 			Com_Printf("Unable to create directory \"%s\"\n", path);
 			return nullptr;
 		}
 	}
+
+	Sys_Utf16ToUtf8(wpath, path, sizeof(path));
 	return path;
 }
 
@@ -487,4 +518,13 @@ void Sys_Mkfifo (const char* ospath, qFILE* f)
 void Sys_OpenURL (const char* url)
 {
 	ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
+
+FILE* Sys_Fopen(const char *filename, const char *mode)
+{
+	WCHAR wname[MAX_OSPATH];
+	WCHAR wmode[MAX_VAR];
+	Sys_Utf8ToUtf16(filename, wname, lengthof(wname));
+	Sys_Utf8ToUtf16(mode, wmode, MAX_VAR);
+	return _wfopen(wname, wmode);
 }

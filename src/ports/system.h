@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "../common/list.h"
+#include <stdio.h>
 
 /*
 ==============================================================
@@ -67,3 +68,4 @@ int Sys_Milliseconds(void);
 void Sys_Backtrace(void);
 void Sys_Breakpoint(void);
 void Sys_OpenURL(const char* url);
+FILE* Sys_Fopen(const char *filename, const char *mode);
