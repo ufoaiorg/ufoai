@@ -975,6 +975,53 @@ mapdef farm2
 // FOREST RANDOM MAPS //
 ////////////////////////
 
+mapdef gate
+{
+	map				"+forest"
+	params			("gate")
+	description		"_Secret Depot"
+	maxaliens		9
+
+	multiplayer		true
+	teams			2
+	gametypes (
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
+	)
+
+	aircraft
+	(
+		// any
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"grass"
+		"tropical"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"rural"
+		"nopopulation"
+		"village"
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef forest_nature_large
 {
 	map			"+forest"
@@ -4859,54 +4906,6 @@ mapdef fighter_crash
 		"village"
 		"nopopulation"
 		"rural"
-	)
-}
-
-// GATE MAP //
-
-mapdef gate
-{
-	map				"gate"
-	description		"_Secret Depot"
-	maxaliens		9
-
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
-	)
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"tropical"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"rural"
-		"nopopulation"
-		"village"
-		"suburban"
-		"urban"
 	)
 }
 
