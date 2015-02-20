@@ -162,7 +162,7 @@ static void CL_StartHTTPDownload (dlqueue_t* entry, dlhandle_t* dl)
 		FS_CreatePath(dl->filePath);
 
 		/* don't bother with http resume... too annoying if server doesn't support it. */
-		dl->file = fopen(dl->filePath, "wb");
+		dl->file = Sys_Fopen(dl->filePath, "wb");
 		if (!dl->file) {
 			Com_Printf("CL_StartHTTPDownload: Couldn't open %s for writing.\n", dl->filePath);
 			entry->state = DLQ_STATE_DONE;
@@ -455,7 +455,7 @@ static void CL_CheckAndQueueDownload (char* path)
 			char gamePath[MAX_OSPATH];
 			FILE* f;
 			Com_sprintf(gamePath, sizeof(gamePath), "%s/%s", FS_Gamedir(), path);
-			f = fopen(gamePath, "rb");
+			f = Sys_Fopen(gamePath, "rb");
 			if (!f)
 				exists = false;
 			else {

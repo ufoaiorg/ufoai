@@ -122,7 +122,7 @@ extern "C" int main (int argc, char** argv)
 
 	if (config.log) {
 		const char* path = "testall.log";
-		logFile = fopen(path, "wb");
+		logFile = Sys_Fopen(path, "wb");
 		Qcommon_SetPrintFunction(TEST_vPrintfLog);
 	} else if (config.verbose){
 		Qcommon_SetPrintFunction(TEST_vPrintf);
