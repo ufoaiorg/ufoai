@@ -143,14 +143,13 @@ av		+c		+c		+c		+c		av
 
 tile +gate
 {
-7 7
+7 6
 0		0		0		0		0		0		0
 0		+a		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		+a		0
-0		0		0		0		0		0		0
+0		x		x		x		x		x		0
 }
 
 // small house map -------------------------------------------------*
@@ -329,8 +328,16 @@ tile +nature_33
 assembly gate
 {
 title "_Secret Depot"
-size "5 5"
-fix +gate		"0 0"	// 5x5
+size "8 8"
++gate			"1 1"	// 5x4
++nature_11		"0 3"	// 1x1
++nature_12		"0 3"	// 1x1
++nature_20		"0 6"	// 2x2
++nature_21		"0 1"	// 1x2
++nature_30		"0 5"	// 3x2
++nature_31		"0 5"	// 2x3
++nature_33		"0 9"	// 3x3
+*rm_drop +craft_drop_firebird	"1 1"
 }
 
 assembly nature_large_a
@@ -490,7 +497,7 @@ size "10 16"
 
 /* contents --------------------------------------------------------*
 
-+gate			"0 1"	// 5x5		gate.map
++gate			"0 1"	// 5x4		gate.map
 +brook_h1		"0 1"	// 1x1		river horizontal
 +brook_v1		"0 1"	// 1x1		river vertical
 +h5				"0 1"	// 2x2		house with green roof (currently unused)

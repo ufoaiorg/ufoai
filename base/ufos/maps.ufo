@@ -982,18 +982,11 @@ mapdef gate
 	description		"_Secret Depot"
 	maxaliens		9
 
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
-	)
-
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	)
 
 	ufos
@@ -1004,7 +997,8 @@ mapdef gate
 	terrains
 	(
 		"grass"
-		"tropical"
+		"mountain"
+		"wasted"
 	)
 
 	cultures
@@ -1016,9 +1010,6 @@ mapdef gate
 	(
 		"rural"
 		"nopopulation"
-		"village"
-		"suburban"
-		"urban"
 	)
 }
 
