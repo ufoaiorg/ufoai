@@ -244,7 +244,7 @@ void GameTest::testCountSpawnpointsForMap(unsigned int seed, const mapDef_t *md)
 	}
 }
 
-TEST_F(GameTest, CountSpawnpoints)
+TEST_F(GameTest, CountSpawnpointsStatic)
 {
 	/* use a known seed to reproduce an error */
 	unsigned int seed;
@@ -257,6 +257,27 @@ TEST_F(GameTest, CountSpawnpoints)
 
 	const mapDef_t* md;
 	MapDef_Foreach(md) {
+		if (md->mapTheme[0] == '+')
+			continue;
+		testCountSpawnpointsForMap(seed, md);
+	}
+}
+
+TEST_F(GameTest, CountSpawnpointsRMA)
+{
+	/* use a known seed to reproduce an error */
+	unsigned int seed;
+	if (TEST_ExistsProperty("mapdef-seed")) {
+		seed = TEST_GetLongProperty("mapdef-seed");
+	} else {
+		seed = (unsigned int) time(nullptr);
+	}
+	srand(seed);
+
+	const mapDef_t* md;
+	MapDef_Foreach(md) {
+		if (md->mapTheme[0] != '+')
+			continue;
 		testCountSpawnpointsForMap(seed, md);
 	}
 }
