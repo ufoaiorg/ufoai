@@ -2010,7 +2010,9 @@ mapdef city_industry
 
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	)
 
 	ufos
@@ -3447,7 +3449,9 @@ mapdef england
 
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	)
 
 	ufos
@@ -4239,8 +4243,6 @@ mapdef italy
 		coop3
 		coop4
 	)
-
-
 
 	aircraft
 	(
