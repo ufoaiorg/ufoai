@@ -1176,7 +1176,7 @@ static void G_ClientSkipActorInfo (void)
 	G_ClientReadCharacter(&ent);
 
 	/* skip inventory */
-	int n = gi.ReadShort();
+	const int n = gi.ReadShort();
 	for (int i = 0; i < n; i++) {
 		G_ReadItem(&item, &c, &x, &y);
 	}
