@@ -1230,7 +1230,10 @@ void G_ClientInitActorStates (const Player& player)
 		const int objIdx = gi.ReadShort();
 		G_ActorSetTU(actor, saveTU);
 		if (objIdx != NONE) {
-			G_ReactionFireSettingsUpdate(actor, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
+			if (fmIdx == NONE)
+				G_ReactionFireSettingsReserveTUs(actor);
+			else
+				G_ReactionFireSettingsUpdate(actor, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		}
 		G_ClientStateChangeUpdate(*actor);
 	}
