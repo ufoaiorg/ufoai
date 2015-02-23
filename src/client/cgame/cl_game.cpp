@@ -1553,12 +1553,26 @@ static void GAME_InitializeBattlescape (linkedList_t* team)
 		UI_ExecuteConfunc("huddisable %i", i);
 	}
 
+	dbuffer msg;
 	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->InitializeBattlescape) {
-		dbuffer msg;
 		list->InitializeBattlescape(&msg, team);
-		NET_WriteMsg(cls.netStream, msg);
+	} else {
+		const int teamSize = LIST_Count(team);
+		dbuffer* m = &msg;
+
+		NET_WriteByte(m, clc_initactorstates);
+		NET_WriteByte(m, teamSize);
+
+		LIST_Foreach(team, character_t, chr) {
+			NET_WriteShort(m, chr->ucn);
+			NET_WriteShort(m, STATE_REACTION);
+			NET_WriteShort(m, ACTOR_HAND_NOT_SET);
+			NET_WriteShort(m, NONE);
+			NET_WriteShort(m, NONE);
+		}
 	}
+	NET_WriteMsg(cls.netStream, msg);
 }
 
 /**
