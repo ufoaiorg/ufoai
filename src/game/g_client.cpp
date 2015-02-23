@@ -1219,8 +1219,15 @@ void G_ClientInitActorStates (const Player& player)
 	for (int i = 0; i < length; i++) {
 		const int ucn = gi.ReadShort();
 		Actor* actor = G_EdictsGetActorByUCN(ucn, player.getTeam());
-		if (!actor)
-			gi.Error("Could not find character on team %i with unique character number %i", player.getTeam(), ucn);
+		if (!actor) {
+			gi.DPrintf("Could not find character on team %i with unique character number %i\n", player.getTeam(), ucn);
+			/* Skip actor info */
+			gi.ReadShort();
+			gi.ReadShort();
+			gi.ReadShort();
+			gi.ReadShort();
+			continue;
+		}
 
 		/* these state changes are not consuming any TUs */
 		const int saveTU = actor->getTus();
