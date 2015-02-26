@@ -87,8 +87,8 @@ void GAME_ToggleActorForTeam_f (void)
 		return;
 	}
 
-	int ucn = atoi(Cmd_Argv(1));
-	int value = atoi(Cmd_Argv(2));
+	const int ucn = atoi(Cmd_Argv(1));
+	const int value = atoi(Cmd_Argv(2));
 
 	int i = 0;
 	bool found = false;
@@ -142,8 +142,6 @@ void GAME_TeamSlotComments_f (void)
 {
 	UI_ExecuteConfunc("teamsaveslotsclear");
 
-	const char* filename;
-	int i = 0;
 	char relSavePath[MAX_OSPATH];
 	GAME_GetRelativeSavePath(relSavePath, sizeof(relSavePath));
 	char pattern[MAX_OSPATH];
@@ -151,6 +149,8 @@ void GAME_TeamSlotComments_f (void)
 	Q_strcat(pattern, sizeof(pattern), "*.mpt");
 
 	FS_BuildFileList(pattern);
+	int i = 0;
+	const char* filename;
 	while ((filename = FS_NextFileFromFileList(pattern)) != nullptr) {
 		ScopedFile f;
 		const char* savePath = va("%s/%s", relSavePath, filename);
@@ -198,15 +198,14 @@ static void GAME_SaveTeamInfo (xmlNode_t* p)
  */
 static void GAME_LoadTeamInfo (xmlNode_t* p)
 {
-	int i;
-	xmlNode_t* n;
 	const size_t size = GAME_GetCharacterArraySize();
 
 	GAME_ResetCharacters();
 	OBJZERO(characterActive);
 
 	/* header */
-	for (i = 0, n = XML_GetNode(p, SAVE_TEAM_CHARACTER); n && i < size; i++, n = XML_GetNextNode(n, p, SAVE_TEAM_CHARACTER)) {
+	int i = 0;
+	for (xmlNode_t* n = XML_GetNode(p, SAVE_TEAM_CHARACTER); n && i < size; i++, n = XML_GetNextNode(n, p, SAVE_TEAM_CHARACTER)) {
 		character_t* chr = GAME_GetCharacter(i);
 		GAME_LoadCharacter(n, chr);
 		UI_ExecuteConfunc("team_memberadd %i \"%s\" \"%s\" %i", i, chr->name, chr->head, chr->headSkin);
@@ -223,17 +222,16 @@ static bool GAME_SaveTeam (const char* filename, const char* name)
 {
 	teamSaveFileHeader_t header;
 	char dummy[2];
-	xmlNode_t* topNode, *node, *snode;
 	equipDef_t* ed = GAME_GetEquipmentDefinition();
 
-	topNode = mxmlNewXML("1.0");
-	node = XML_AddNode(topNode, SAVE_TEAM_ROOTNODE);
+	xmlNode_t* topNode = mxmlNewXML("1.0");
+	xmlNode_t* node = XML_AddNode(topNode, SAVE_TEAM_ROOTNODE);
 	OBJZERO(header);
 	header.version = LittleLong(TEAM_SAVE_FILE_VERSION);
 	header.soldiercount = LittleLong(LIST_Count(chrDisplayList));
 	Q_strncpyz(header.name, name, sizeof(header.name));
 
-	snode = XML_AddNode(node, SAVE_TEAM_NODE);
+	xmlNode_t* snode = XML_AddNode(node, SAVE_TEAM_NODE);
 	GAME_SaveTeamInfo(snode);
 
 	snode = XML_AddNode(node, SAVE_TEAM_EQUIPMENT);
@@ -246,7 +244,7 @@ static bool GAME_SaveTeam (const char* filename, const char* name)
 			XML_AddIntValue(ssnode, SAVE_TEAM_NUMLOOSE, ed->numItemsLoose[od->idx]);
 		}
 	}
-	int requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
+	const int requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
 	/* required for storing compressed */
 	header.xmlSize = LittleLong(requiredBufferLength);
 
@@ -326,11 +324,6 @@ void GAME_SaveTeam_f (void)
  */
 static bool GAME_LoadTeam (const char* filename)
 {
-	int clen;
-	xmlNode_t* topNode, *node, *snode, *ssnode;
-	teamSaveFileHeader_t header;
-	equipDef_t* ed;
-
 	/* open file */
 	ScopedFile f;
 	FS_OpenFile(filename, &f, FILE_READ);
@@ -339,7 +332,7 @@ static bool GAME_LoadTeam (const char* filename)
 		return false;
 	}
 
-	clen = FS_FileLength(&f);
+	const int clen = FS_FileLength(&f);
 	byte* const cbuf = Mem_PoolAllocTypeN(byte, clen, cl_genericPool);
 	if (FS_Read(cbuf, clen, &f) != clen) {
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
@@ -347,6 +340,7 @@ static bool GAME_LoadTeam (const char* filename)
 		return false;
 	}
 
+	teamSaveFileHeader_t header;
 	memcpy(&header, cbuf, sizeof(header));
 	/* swap all int values if needed */
 	header.version = LittleLong(header.version);
@@ -360,21 +354,21 @@ static bool GAME_LoadTeam (const char* filename)
 
 	Com_Printf("Loading team (size %d / %i)\n", clen, header.xmlSize);
 
-	topNode = XML_Parse((const char*)(cbuf + sizeof(header)));
+	xmlNode_t* topNode = XML_Parse((const char*)(cbuf + sizeof(header)));
 	Mem_Free(cbuf);
 	if (!topNode) {
 		Com_Printf("Error: Failure in loading the xml data!");
 		return false;
 	}
 
-	node = XML_GetNode(topNode, SAVE_TEAM_ROOTNODE);
+	xmlNode_t* node = XML_GetNode(topNode, SAVE_TEAM_ROOTNODE);
 	if (!node) {
 		mxmlDelete(topNode);
 		Com_Printf("Error: Failure in loading the xml data! (node '" SAVE_TEAM_ROOTNODE "' not found)\n");
 		return false;
 	}
 
-	snode = XML_GetNode(node, SAVE_TEAM_NODE);
+	xmlNode_t* snode = XML_GetNode(node, SAVE_TEAM_NODE);
 	if (!snode) {
 		mxmlDelete(topNode);
 		Com_Printf("Error: Failure in loading the xml data! (node '" SAVE_TEAM_NODE "' not found)\n");
@@ -389,8 +383,8 @@ static bool GAME_LoadTeam (const char* filename)
 		return false;
 	}
 
-	ed = GAME_GetEquipmentDefinition();
-	for (ssnode = XML_GetNode(snode, SAVE_TEAM_ITEM); ssnode; ssnode = XML_GetNextNode(ssnode, snode, SAVE_TEAM_ITEM)) {
+	equipDef_t* ed = GAME_GetEquipmentDefinition();
+	for (xmlNode_t* ssnode = XML_GetNode(snode, SAVE_TEAM_ITEM); ssnode; ssnode = XML_GetNextNode(ssnode, snode, SAVE_TEAM_ITEM)) {
 		const char* objID = XML_GetString(ssnode, SAVE_TEAM_ID);
 		const objDef_t* od = INVSH_GetItemByID(objID);
 
@@ -665,9 +659,7 @@ static void GAME_LoadItem (xmlNode_t* n, Item* item, containerIndex_t* container
   */
 static void GAME_LoadInventory (xmlNode_t* p, Inventory* inv, int maxLoad)
 {
-	xmlNode_t* s;
-
-	for (s = XML_GetNode(p, SAVE_INVENTORY_ITEM); s; s = XML_GetNextNode(s, p, SAVE_INVENTORY_ITEM)) {
+	for (xmlNode_t* s = XML_GetNode(p, SAVE_INVENTORY_ITEM); s; s = XML_GetNextNode(s, p, SAVE_INVENTORY_ITEM)) {
 		Item item;
 		containerIndex_t container;
 		int x, y;
@@ -691,11 +683,6 @@ static void GAME_LoadInventory (xmlNode_t* p, Inventory* inv, int maxLoad)
  */
 bool GAME_SaveCharacter (xmlNode_t* p, const character_t* chr)
 {
-	xmlNode_t* sScore;
-	xmlNode_t* sInventory;
-	xmlNode_t* sInjuries;
-	const chrScoreGlobal_t* score;
-
 	assert(chr);
 	Com_RegisterConstList(saveCharacterConstants);
 	/* Store the character data */
@@ -728,7 +715,7 @@ bool GAME_SaveCharacter (xmlNode_t* p, const character_t* chr)
 		XML_AddString(sImplant, SAVE_CHARACTER_IMPLANT_IMPLANT, implant.def->id);
 	}
 
-	sInjuries = XML_AddNode(p, SAVE_CHARACTER_INJURIES);
+	xmlNode_t* sInjuries = XML_AddNode(p, SAVE_CHARACTER_INJURIES);
 	/* Store wounds */
 	for (int k = 0; k < chr->teamDef->bodyTemplate->numBodyParts(); ++k) {
 		if (!chr->wounds.treatmentLevel[k])
@@ -739,9 +726,9 @@ bool GAME_SaveCharacter (xmlNode_t* p, const character_t* chr)
 		XML_AddInt(sWound, SAVE_CHARACTER_WOUNDSEVERITY, chr->wounds.treatmentLevel[k]);
 	}
 
-	score = &chr->score;
+	const chrScoreGlobal_t* score = &chr->score;
 
-	sScore = XML_AddNode(p, SAVE_CHARACTER_SCORES);
+	xmlNode_t* sScore = XML_AddNode(p, SAVE_CHARACTER_SCORES);
 	/* Store skills */
 	for (int k = 0; k <= SKILL_NUM_TYPES; k++) {
 		if (score->experience[k] || score->initialSkills[k]
@@ -773,7 +760,7 @@ bool GAME_SaveCharacter (xmlNode_t* p, const character_t* chr)
 	XML_AddInt(sScore, SAVE_CHARACTER_SCORE_RANK, score->rank);
 
 	/* Store inventories */
-	sInventory = XML_AddNode(p, SAVE_INVENTORY_INVENTORY);
+	xmlNode_t* sInventory = XML_AddNode(p, SAVE_INVENTORY_INVENTORY);
 	GAME_SaveInventory(sInventory, &chr->inv);
 
 	Com_UnregisterConstList(saveCharacterConstants);
@@ -787,13 +774,6 @@ bool GAME_SaveCharacter (xmlNode_t* p, const character_t* chr)
  */
 bool GAME_LoadCharacter (xmlNode_t* p, character_t* chr)
 {
-	const char* s;
-	xmlNode_t* sScore;
-	xmlNode_t* sSkill;
-	xmlNode_t* sKill;
-	xmlNode_t* sInventory;
-	xmlNode_t* sInjuries;
-	xmlNode_t* sWound;
 	bool success = true;
 
 	/* Load the character data */
@@ -816,14 +796,14 @@ bool GAME_LoadCharacter (xmlNode_t* p, character_t* chr)
 	chr->state = XML_GetInt(p, SAVE_CHARACTER_STATE, 0);
 
 	/* Team-definition */
-	s = XML_GetString(p, SAVE_CHARACTER_TEAMDEF);
+	const char* s = XML_GetString(p, SAVE_CHARACTER_TEAMDEF);
 	chr->teamDef = Com_GetTeamDefinitionByID(s);
 	if (!chr->teamDef)
 		return false;
 
-	sInjuries = XML_GetNode(p, SAVE_CHARACTER_INJURIES);
+	xmlNode_t* sInjuries = XML_GetNode(p, SAVE_CHARACTER_INJURIES);
 	/* Load wounds */
-	for (sWound = XML_GetNode(sInjuries, SAVE_CHARACTER_WOUND); sWound; sWound = XML_GetNextNode(sWound, sInjuries, SAVE_CHARACTER_WOUND)) {
+	for (xmlNode_t* sWound = XML_GetNode(sInjuries, SAVE_CHARACTER_WOUND); sWound; sWound = XML_GetNextNode(sWound, sInjuries, SAVE_CHARACTER_WOUND)) {
 		const char* bodyPartId = XML_GetString(sWound, SAVE_CHARACTER_WOUNDEDPART);
 		short bodyPart;
 
@@ -856,9 +836,9 @@ bool GAME_LoadCharacter (xmlNode_t* p, character_t* chr)
 
 	Com_RegisterConstList(saveCharacterConstants);
 
-	sScore = XML_GetNode(p, SAVE_CHARACTER_SCORES);
+	xmlNode_t* sScore = XML_GetNode(p, SAVE_CHARACTER_SCORES);
 	/* Load Skills */
-	for (sSkill = XML_GetNode(sScore, SAVE_CHARACTER_SKILLS); sSkill; sSkill = XML_GetNextNode(sSkill, sScore, SAVE_CHARACTER_SKILLS)) {
+	for (xmlNode_t* sSkill = XML_GetNode(sScore, SAVE_CHARACTER_SKILLS); sSkill; sSkill = XML_GetNextNode(sSkill, sScore, SAVE_CHARACTER_SKILLS)) {
 		int idx;
 		const char* type = XML_GetString(sSkill, SAVE_CHARACTER_SKILLTYPE);
 
@@ -882,7 +862,7 @@ bool GAME_LoadCharacter (xmlNode_t* p, character_t* chr)
 	}
 
 	/* Load kills */
-	for (sKill = XML_GetNode(sScore, SAVE_CHARACTER_KILLS); sKill; sKill = XML_GetNextNode(sKill, sScore, SAVE_CHARACTER_KILLS)) {
+	for (xmlNode_t* sKill = XML_GetNode(sScore, SAVE_CHARACTER_KILLS); sKill; sKill = XML_GetNextNode(sKill, sScore, SAVE_CHARACTER_KILLS)) {
 		int idx;
 		const char* type = XML_GetString(sKill, SAVE_CHARACTER_KILLTYPE);
 
@@ -904,7 +884,7 @@ bool GAME_LoadCharacter (xmlNode_t* p, character_t* chr)
 	chr->score.rank = XML_GetInt(sScore, SAVE_CHARACTER_SCORE_RANK, -1);
 
 	cls.i.destroyInventory(&chr->inv);
-	sInventory = XML_GetNode(p, SAVE_INVENTORY_INVENTORY);
+	xmlNode_t* sInventory = XML_GetNode(p, SAVE_INVENTORY_INVENTORY);
 	GAME_LoadInventory(sInventory, &chr->inv, GAME_GetChrMaxLoad(chr));
 
 	Com_UnregisterConstList(saveCharacterConstants);
