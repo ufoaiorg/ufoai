@@ -848,7 +848,6 @@ static void G_BuildForbiddenListForEntity (Edict* ent)
 {
 	vec3_t center;
 	AABB shiftedBox(ent->absBox);
-	shiftedBox.shift(ent->origin);
 	shiftedBox.getCenter(center);
 
 	pos3_t mins, maxs, origin;
