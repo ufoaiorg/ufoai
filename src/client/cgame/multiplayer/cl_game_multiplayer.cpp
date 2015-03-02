@@ -70,8 +70,6 @@ static void GAME_MP_EndRoundAnnounce (int playerNum, int team)
  */
 static void GAME_MP_StartServer_f (void)
 {
-	const mapDef_t* md;
-
 	if (!cgi->Cvar_GetInteger("sv_dedicated") && cgi->GAME_IsTeamEmpty())
 		cgi->GAME_AutoTeam("multiplayer_initial", cgi->GAME_GetCharacterArraySize());
 
@@ -81,7 +79,7 @@ static void GAME_MP_StartServer_f (void)
 		return;
 	}
 
-	md = cgi->GAME_GetCurrentSelectedMap();
+	const mapDef_t* md = cgi->GAME_GetCurrentSelectedMap();
 	if (!md || !md->multiplayer)
 		return;
 	assert(md->mapTheme);
@@ -127,10 +125,9 @@ static void GAME_MP_StartServer_f (void)
 static void GAME_MP_Results (dbuffer* msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	linkedList_t* list = nullptr;
-	int enemiesKilled, enemiesStunned;
+	int enemiesKilled = 0, enemiesStunned = 0;
 	const int team = cgi->GAME_GetCurrentTeam();
 
-	enemiesKilled = enemiesStunned = 0;
 	for (int i = 0; i < MAX_TEAMS; i++) {
 		if (i == team)
 			continue;
