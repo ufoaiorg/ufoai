@@ -491,11 +491,11 @@ static void G_SpawnFieldGroup (const entity_type_t fieldtype, const vec3_t vec, 
 			/* cut off the edges of the square to resemble a circle */
 			if (VectorDist(end, vec) > radius)
 				continue;
-			if (!gi.isOnMap(vec))
+			if (!gi.isOnMap(end))
 				continue;
 			const trace_t tr = G_Trace(Line(vec, end), nullptr, MASK_SMOKE_AND_FIRE);
 			/* trace didn't reach the target - something was hit before */
-			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
+			if (tr.fraction < 1.0f || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;
 			}
 			G_SpawnFieldPart(fieldtype, end, particle, rounds, damage);
