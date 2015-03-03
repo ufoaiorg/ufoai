@@ -76,6 +76,7 @@ cvar_t* ai_multiplayeraliens;
 /* morale cvars */
 cvar_t* mob_death;
 cvar_t* mob_wound;
+cvar_t* mob_shoot;
 cvar_t* mof_watching;
 cvar_t* mof_teamkill;
 cvar_t* mof_civilian;
@@ -201,6 +202,7 @@ static void G_Init (void)
 
 	mob_death = gi.Cvar_GetOrCreate("mob_death", "10", CVAR_LATCH|CVAR_NOSET, nullptr);
 	mob_wound = gi.Cvar_GetOrCreate("mob_wound", "0.1", CVAR_LATCH|CVAR_NOSET, nullptr);
+	mob_shoot = gi.Cvar_GetOrCreate("mob_shoot", "0.1", CVAR_LATCH|CVAR_NOSET, nullptr);
 	mof_watching = gi.Cvar_GetOrCreate("mof_watching", "1.7", CVAR_LATCH|CVAR_NOSET, nullptr);
 	mof_teamkill = gi.Cvar_GetOrCreate("mof_teamkill", "2.0", CVAR_LATCH|CVAR_NOSET, nullptr);
 	mof_civilian = gi.Cvar_GetOrCreate("mof_civilian", "0.3", CVAR_LATCH|CVAR_NOSET, nullptr);
