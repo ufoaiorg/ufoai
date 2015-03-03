@@ -821,7 +821,8 @@ float AI_CalcShotDamage (Actor* actor, Actor* target, const fireDef_t* fd, shoot
 		return 0.0f;
 
 	const int totalCount = mock.enemyCount + mock.friendCount + mock.civilian;
-	const int eCount = totalCount - (mock.friendCount + (G_IsAlien(actor) ? 0 : mock.civilian));
+	const int eCount = totalCount - ((actor->isInsane() ? 0 : mock.friendCount)
+			+ (G_IsAlien(actor) || actor->isInsane() ? 0 : mock.civilian));
 	return mock.damage * (static_cast<float>(eCount) / totalCount) / shots;
 }
 
