@@ -609,7 +609,7 @@ static bool G_ReactionFireCanBeEnabled (const Edict* ent)
 		return false;
 
 	/* actor may not carry weapons at all - so no further checking is needed */
-	if (!ent->chr.teamDef->weapons)
+	if (!ent->chr.teamDef->weapons && !ent->chr.teamDef->onlyWeapon)
 		return false;
 
 	if (!ent->chr.inv.holdsReactionFireWeapon()) {
