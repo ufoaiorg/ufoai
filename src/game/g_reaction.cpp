@@ -821,7 +821,10 @@ bool ReactionFire::tryToShoot (Actor* shooter, const Edict* target)
 	}
 
 	/* take the shot */
-	const bool tookShot = rf.shoot(shooter, target->pos, ST_RIGHT_REACTION, shooter->chr.RFmode.getFmIdx());
+	const actorHands_t hand = shooter->chr.RFmode.getHand();
+	const shoot_types_t type = (hand == ACTOR_HAND_RIGHT ? ST_RIGHT_REACTION
+			: (hand == ACTOR_HAND_LEFT ? ST_LEFT_REACTION : ST_NUM_SHOOT_TYPES));
+	const bool tookShot = rf.shoot(shooter, target->pos, type, shooter->chr.RFmode.getFmIdx());
 
 	if (tookShot) {
 		/* clear any shakenness */
