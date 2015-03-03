@@ -2922,3 +2922,27 @@
 ( 367 114 139 ) ( 352 159 276 ) ( 380 121 139 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
 }
 }
+// entity 45
+{
+"classname" "info_alien_start"
+"origin" "240 112 92"
+"angle" "-90"
+}
+// entity 46
+{
+"classname" "info_alien_start"
+"origin" "208 592 92"
+"angle" "-90"
+}
+// entity 47
+{
+"classname" "info_alien_start"
+"origin" "400 240 92"
+"angle" "180"
+}
+// entity 48
+{
+"classname" "info_alien_start"
+"origin" "80 336 92"
+"angle" "90"
+}

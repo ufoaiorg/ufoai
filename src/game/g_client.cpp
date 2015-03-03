@@ -1176,7 +1176,7 @@ static void G_ClientSkipActorInfo (void)
 	G_ClientReadCharacter(&ent);
 
 	/* skip inventory */
-	int n = gi.ReadShort();
+	const int n = gi.ReadShort();
 	for (int i = 0; i < n; i++) {
 		G_ReadItem(&item, &c, &x, &y);
 	}
@@ -1219,8 +1219,15 @@ void G_ClientInitActorStates (const Player& player)
 	for (int i = 0; i < length; i++) {
 		const int ucn = gi.ReadShort();
 		Actor* actor = G_EdictsGetActorByUCN(ucn, player.getTeam());
-		if (!actor)
-			gi.Error("Could not find character on team %i with unique character number %i", player.getTeam(), ucn);
+		if (!actor) {
+			gi.DPrintf("Could not find character on team %i with unique character number %i\n", player.getTeam(), ucn);
+			/* Skip actor info */
+			gi.ReadShort();
+			gi.ReadShort();
+			gi.ReadShort();
+			gi.ReadShort();
+			continue;
+		}
 
 		/* these state changes are not consuming any TUs */
 		const int saveTU = actor->getTus();
@@ -1230,7 +1237,10 @@ void G_ClientInitActorStates (const Player& player)
 		const int objIdx = gi.ReadShort();
 		G_ActorSetTU(actor, saveTU);
 		if (objIdx != NONE) {
-			G_ReactionFireSettingsUpdate(actor, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
+			if (fmIdx == NONE)
+				G_ReactionFireSettingsReserveTUs(actor);
+			else
+				G_ReactionFireSettingsUpdate(actor, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		}
 		G_ClientStateChangeUpdate(*actor);
 	}

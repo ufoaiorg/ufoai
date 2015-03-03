@@ -185,6 +185,7 @@ extern cvar_t* ai_multiplayeraliens;
 
 extern cvar_t* mob_death;
 extern cvar_t* mob_wound;
+extern cvar_t* mob_shoot;
 extern cvar_t* mof_watching;
 extern cvar_t* mof_teamkill;
 extern cvar_t* mof_civilian;

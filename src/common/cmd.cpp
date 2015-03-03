@@ -830,11 +830,11 @@ void Cmd_RemoveCommand (const char* cmdName)
 }
 
 /**
- * @brief Check both the functiontable and the associated hashteble for in valid entries.
- * A helper function to hunt the 'crash on exit' bug when trying to remove the "fs_restart" cmd.
+ * @brief Check both the functiontable and the associated hashtable for invalid entries.
  */
 void Cmd_TableCheck (void)
 {
+#ifdef PARANOID
 	int cmdCount = 0;
 	for (cmd_function_t* cmd = cmd_functions; cmd; cmd = cmd->next) {
 		cmdCount++;
@@ -853,7 +853,10 @@ void Cmd_TableCheck (void)
 			}
 		}
 	}
+	/* This causes a <path/to/ufo>/(null)/ufoconsole.log to be created just to log this line
+	 * file system shutdown has already run */
 	Com_Printf("cmdCount: %i hashCount: %i\n", cmdCount, hashCount);
+#endif
 }
 
 void Cmd_TableAddList (const cmdList_t* cmdList)

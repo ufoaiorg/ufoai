@@ -327,7 +327,7 @@ static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, flo
 		spread = 1.0;
 	spread *= torad;
 
-	float cosSpread = cos(spread);
+	const float cosSpread = cos(spread);
 	vec3_t dtarget;
 	VectorSubtract(target, ent->origin, dtarget);
 	VectorNormalizeFast(dtarget);
@@ -372,7 +372,7 @@ bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef
 	if (actor->isInsane())
 		return true;
 
-	/* don't shoot - we are to close */
+	/* don't shoot - we are too close */
 	if (*dist < fd->splrad)
 		return false;
 
@@ -624,14 +624,15 @@ bool AI_FindHidingLocation (int team, Actor* actor, const pos3_t from, int tuLef
 		if (delta > tuLeft || delta == ROUTING_NOT_REACHABLE)
 			continue;
 
+		/* Don't stand on dangerous terrain! */
+		if (!AI_CheckPosition(actor, actor->pos))
+			continue;
+
 		/* If enemies see this position, it doesn't qualify as hiding spot */
 		actor->calcOrigin();
 		if (AI_IsExposed(team, actor))
 			continue;
 
-		/* Don't stand on dangerous terrain! */
-		if (!AI_CheckPosition(actor, actor->pos))
-			continue;
 		const int score = tuLeft - delta;
 		if (score > bestScore) {
 			bestScore = score;
@@ -1145,18 +1146,20 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 				minDist = std::min(dist, minDist);
 			}
 		}
-		bestActionScore += SCORE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
+		bestActionScore += SCORE_CLOSE_IN * (1.0f - minDist / CLOSE_IN_DIST);
 	} else {
 		/* if no target available let them wander around until they find one */
 		bestActionScore += SCORE_RANDOM * frand();
 	}
 
 	/* penalize herding */
-	check = nullptr;
-	while ((check = G_EdictsGetNextLivingActorOfTeam(check, actor->getTeam()))) {
-		const float dist = VectorDist(actor->origin, check->origin);
-		if (dist < HERD_THRESHOLD)
-			bestActionScore -= SCORE_HERDING_PENALTY;
+	if (!actor->isRaged()) {
+		check = nullptr;
+		while ((check = G_EdictsGetNextLivingActorOfTeam(check, actor->getTeam()))) {
+			const float dist = VectorDist(actor->origin, check->origin);
+			if (dist < HERD_THRESHOLD)
+				bestActionScore -= SCORE_HERDING_PENALTY;
+		}
 	}
 
 	return bestActionScore;
@@ -1251,15 +1254,17 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 
 	/* try to hide */
 	float reactionTrap = 0.0;
-	check = nullptr;
-	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (actor == check)
-			continue;
-		if (!(G_IsAlien(check) || actor->isInsane()))
-			continue;
+	if (!actor->isInsane()) {
+		check = nullptr;
+		while ((check = G_EdictsGetNextLivingActor(check))) {
+			if (actor == check)
+				continue;
+			if (!(G_IsAlien(check)))
+				continue;
 
-		if (G_ActorVis(check, actor, true) > ACTOR_VIS_10)
-			reactionTrap += SCORE_NONHIDING_PLACE_PENALTY;
+			if (G_ActorVis(check, actor, true) > ACTOR_VIS_10)
+				reactionTrap += SCORE_NONHIDING_PLACE_PENALTY;
+		}
 	}
 	delta -= reactionTrap;
 	float bestActionScore = delta;
@@ -1330,15 +1335,14 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
 
 	/* try to hide */
 	check = nullptr;
-	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (actor == check)
-			continue;
-		if (actor->isInsane())
-			continue;
+	if (!actor->isInsane())
+		while ((check = G_EdictsGetNextLivingActor(check))) {
+			if (actor == check)
+				continue;
 
-		if (G_ActorVis(check, actor, true) > ACTOR_VIS_10)
-			bestActionScore -= SCORE_NONHIDING_PLACE_PENALTY;
-	}
+			if (G_ActorVis(check, actor, true) > ACTOR_VIS_10)
+				bestActionScore -= SCORE_NONHIDING_PLACE_PENALTY;
+		}
 
 	/* Try not to stand in dangerous terrain */
 	if (!AI_CheckPosition(actor, actor->pos))

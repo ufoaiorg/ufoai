@@ -171,7 +171,7 @@ int FS_OpenFile (const char* filename, qFILE* file, filemode_t mode)
 		Com_sprintf(netpath, sizeof(netpath), "%s/%s", FS_Gamedir(), filename);
 		FS_CreatePath(netpath);
 
-		file->f = fopen(netpath, (mode == FILE_WRITE ? "wb" : "ab"));
+		file->f = Sys_Fopen(netpath, (mode == FILE_WRITE ? "wb" : "ab"));
 		if (file->f) {
 			fs_openedFiles++;
 			return 0;
@@ -223,7 +223,7 @@ int FS_OpenFile (const char* filename, qFILE* file, filemode_t mode)
 			/* check a file in the directory tree */
 			Com_sprintf(netpath, sizeof(netpath), "%s/%s", search->filename, filename);
 
-			file->f = fopen(netpath, "rb");
+			file->f = Sys_Fopen(netpath, "rb");
 			if (!file->f)
 				continue;
 
@@ -1675,7 +1675,7 @@ void FS_CopyFile (const char* fromOSPath, const char* toOSPath)
 
 	Com_Printf("FS_CopyFile: copy %s to %s\n", fromOSPath, toOSPath);
 
-	f = fopen(fromOSPath, "rb");
+	f = Sys_Fopen(fromOSPath, "rb");
 	if (!f)
 		return;
 
@@ -1690,7 +1690,7 @@ void FS_CopyFile (const char* fromOSPath, const char* toOSPath)
 
 	FS_CreatePath(toOSPath);
 
-	f = fopen(toOSPath, "wb");
+	f = Sys_Fopen(toOSPath, "wb");
 	if (!f) {
 		Mem_Free(buf);
 		return;

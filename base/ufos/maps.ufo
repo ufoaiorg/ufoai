@@ -975,6 +975,53 @@ mapdef farm2
 // FOREST RANDOM MAPS //
 ////////////////////////
 
+mapdef gate
+{
+	map				"+forest"
+	params			("gate")
+	description		"_Secret Depot"
+	maxaliens		9
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+		"wasted"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"rural"
+		"nopopulation"
+	)
+}
+
 mapdef forest_nature_large
 {
 	map			"+forest"
@@ -982,6 +1029,15 @@ mapdef forest_nature_large
 	description	"_Forest"
 	size		"large"
 	maxaliens	30
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
 
 	aircraft
 	(
@@ -1023,6 +1079,15 @@ mapdef forest_nature_medium
 	size		"medium"
 	maxaliens	16
 
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -1063,6 +1128,15 @@ mapdef forest_nature_small
 	size		"small"
 	maxaliens	6
 
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -1101,9 +1175,20 @@ mapdef small_house
 	description		"_Small House"
 	maxaliens		8
 
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	)
 
 	ufos
@@ -1970,7 +2055,9 @@ mapdef city_industry
 
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	)
 
 	ufos
@@ -3407,7 +3494,9 @@ mapdef england
 
 	aircraft
 	(
-		// any
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	)
 
 	ufos
@@ -4200,8 +4289,6 @@ mapdef italy
 		coop4
 	)
 
-
-
 	aircraft
 	(
 		craft_drop_firebird
@@ -4859,54 +4946,6 @@ mapdef fighter_crash
 		"village"
 		"nopopulation"
 		"rural"
-	)
-}
-
-// GATE MAP //
-
-mapdef gate
-{
-	map				"gate"
-	description		"_Secret Depot"
-	maxaliens		9
-
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
-	)
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"tropical"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"rural"
-		"nopopulation"
-		"village"
-		"suburban"
-		"urban"
 	)
 }
 
@@ -5609,6 +5648,7 @@ mapdef vil2_mp3p
 mapdef alienbase
 {
 	map				"+alienbase"
+	params			("small1" "small2")
 	description		"_Alien Base"
 	storyrelated	true
 	maxaliens		30

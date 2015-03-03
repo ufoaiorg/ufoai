@@ -70,6 +70,7 @@ namespace internal {
 // of them.
 const char kPathSeparator = '\\';
 const char kAlternatePathSeparator = '/';
+const char kPathSeparatorString[] = "\\";
 const char kAlternatePathSeparatorString[] = "/";
 # if GTEST_OS_WINDOWS_MOBILE
 // Windows CE doesn't have a current directory. You should not use
@@ -83,6 +84,7 @@ const char kCurrentDirectoryString[] = ".\\";
 # endif  // GTEST_OS_WINDOWS_MOBILE
 #else
 const char kPathSeparator = '/';
+const char kPathSeparatorString[] = "/";
 const char kCurrentDirectoryString[] = "./";
 #endif  // GTEST_OS_WINDOWS
 
@@ -97,7 +99,7 @@ static bool IsPathSeparator(char c) {
 
 // Returns the current working directory, or "" if unsuccessful.
 FilePath FilePath::GetCurrentDir() {
-#if GTEST_OS_WINDOWS_MOBILE || GTEST_OS_WINDOWS_PHONE || GTEST_OS_WINDOWS_RT
+#if GTEST_OS_WINDOWS_MOBILE
   // Windows CE doesn't have a current directory, so we just return
   // something reasonable.
   return FilePath(kCurrentDirectoryString);

@@ -248,6 +248,9 @@ void CL_GenerateCharacter (character_t* chr, const char* teamDefName)
 	Com_GetCharacterValues(teamDefName, chr);
 	/* Create attributes. */
 	CHRSH_CharGenAbilitySkills(chr, GAME_IsMultiplayer());
+
+	chr->RFmode.set(ACTOR_HAND_NOT_SET, -1, nullptr);
+	chr->state |= STATE_REACTION;
 }
 
 /**

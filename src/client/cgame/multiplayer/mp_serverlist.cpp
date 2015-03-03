@@ -274,13 +274,12 @@ static char userInfoText[256];
  */
 static void GAME_MP_ParseServerInfoMessage (dbuffer* msg, const char* hostname)
 {
-	const char* value;
 	char str[MAX_INFO_STRING];
 
 	cgi->NET_ReadString(msg, str, sizeof(str));
 
 	/* check for server status response message */
-	value = Info_ValueForKey(str, "sv_dedicated");
+	const char* value = Info_ValueForKey(str, "sv_dedicated");
 	if (Q_strnull(value)) {
 		cgi->Com_Printf(S_COLOR_GREEN "%s", str);
 		return;
@@ -452,7 +451,7 @@ static void GAME_MP_BookmarkAdd_f (void)
 			return;
 		}
 	}
-	/* bookmarks are full - overwrite the first entry */
+	/* bookmarks are full */
 	cgi->UI_Popup(_("Notice"), "%s", _("All bookmark slots are used - please removed unused entries and repeat this step"));
 }
 
@@ -504,10 +503,10 @@ static void GAME_MP_ServerListClick_f (void)
 	}
 	const int num = atoi(cgi->Cmd_Argv(1));
 
-	cgi->UI_RegisterText(TEXT_STANDARD, serverInfoText);
 	if (num < 0 || num >= serverListLength)
 		return;
 
+	cgi->UI_RegisterText(TEXT_STANDARD, serverInfoText);
 	for (int i = 0; i < serverListLength; i++) {
 		if (!serverList[i].pinged || serverList[i].serverListPos != num)
 			continue;

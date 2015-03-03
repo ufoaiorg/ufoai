@@ -228,7 +228,7 @@ void Sys_Mkfifo (const char *ospath, qFILE *f)
 	if (result != 0)
 		return;
 
-	fifo = fopen(ospath, "w+");
+	fifo = Sys_Fopen(ospath, "w+");
 	if (fifo) {
 		const int fn = fileno(fifo);
 		fcntl(fn, F_SETFL, O_NONBLOCK);
@@ -240,4 +240,9 @@ void Sys_Mkfifo (const char *ospath, qFILE *f)
 		Com_Printf("WARNING: Could not create fifo pipe at %s.\n", ospath);
 		f->f = nullptr;
 	}
+}
+
+FILE* Sys_Fopen(const char *filename, const char *mode)
+{
+	return fopen(filename, mode);
 }

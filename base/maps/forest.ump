@@ -12,7 +12,6 @@
 //
 // TODO	tiles 1x2, 2x1, 1x3 and 3x1 are missing
 // TODO	the brook tile misses its furnishing
-// TODO	add alien spawnpoints
 // TODO	the brook tile should not cut the map that many ways, just vertical would be better
 
 base forest/fr_
@@ -137,6 +136,19 @@ av		+c		+c		+c		+c		av
 av		+c		+c		+c		+c		av
 av		+c		+c		+c		+c		av
 0		x		x		x		x		0
+}
+
+// gate map --------------------------------------------------------*
+
+tile +gate
+{
+8 6
+0		0		0		0		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		+a		+a		0
+0		x		x		x		x		x		x		0
 }
 
 // small house map -------------------------------------------------*
@@ -312,6 +324,21 @@ tile +nature_33
 
 // map assemblies --------------------------------------------------*
 
+assembly gate
+{
+title "_Secret Depot"
+size "8 8"
++gate			"1 1"	// 6x4
++nature_11		"0 3"	// 1x1
++nature_12		"0 3"	// 1x1
++nature_20		"0 6"	// 2x2
++nature_21		"0 1"	// 1x2
++nature_30		"0 5"	// 3x2
++nature_31		"0 5"	// 2x3
++nature_33		"0 9"	// 3x3
+*rm_drop +craft_drop_firebird	"1 1"
+}
+
 assembly nature_large_a
 {
 title "_Forest"
@@ -469,6 +496,7 @@ size "10 16"
 
 /* contents --------------------------------------------------------*
 
++gate			"0 1"	// 6x4		gate.map
 +brook_h1		"0 1"	// 1x1		river horizontal
 +brook_v1		"0 1"	// 1x1		river vertical
 +h5				"0 1"	// 2x2		house with green roof (currently unused)

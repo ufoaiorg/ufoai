@@ -1016,8 +1016,6 @@ static void UI_MapInfoGetNext (int step)
  */
 static void UI_MapInfo (int step)
 {
-	const char* mapname;
-	const mapDef_t* md;
 	const cgame_export_t* list = GAME_GetCurrentType();
 
 	if (!list)
@@ -1028,11 +1026,11 @@ static void UI_MapInfo (int step)
 
 	UI_MapInfoGetNext(step);
 
-	md = list->MapInfo(step);
+	const mapDef_t* md = list->MapInfo(step);
 	if (!md)
 		return;
 
-	mapname = md->mapTheme;
+	const char* mapname = md->mapTheme;
 	/* skip random map char. */
 	Cvar_Set("mn_svmapid", "%s", md->id);
 	if (mapname[0] == '+') {
@@ -1060,10 +1058,6 @@ static void UI_MapInfo (int step)
 
 static void UI_RequestMapList_f (void)
 {
-	const char* callbackCmd;
-	const mapDef_t* md;
-	const bool multiplayer = GAME_IsMultiplayer();
-
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <callback>\n", Cmd_Argv(0));
 		return;
@@ -1072,10 +1066,12 @@ static void UI_RequestMapList_f (void)
 	if (!csi.numMDs)
 		return;
 
-	callbackCmd = Cmd_Argv(1);
+	const char* callbackCmd = Cmd_Argv(1);
 
 	Cbuf_AddText("%s begin\n", callbackCmd);
 
+	const mapDef_t* md;
+	const bool multiplayer = GAME_IsMultiplayer();
 	MapDef_ForeachCondition(md, multiplayer ? md->multiplayer : md->singleplayer) {
 		const char* preview;
 
@@ -1123,10 +1119,6 @@ static void UI_PreviousMap_f (void)
 
 static void UI_SelectMap_f (void)
 {
-	const char* mapname;
-	const mapDef_t* md;
-	int i;
-
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <mapname>\n", Cmd_Argv(0));
 		return;
@@ -1135,8 +1127,9 @@ static void UI_SelectMap_f (void)
 	if (!csi.numMDs)
 		return;
 
-	mapname = Cmd_Argv(1);
-	i = 0;
+	const char* mapname = Cmd_Argv(1);
+	int i = 0;
+	const mapDef_t* md;
 
 	MapDef_Foreach(md) {
 		i++;
@@ -1222,9 +1215,6 @@ static const cgame_export_t* GAME_GetCGameAPI (const cgameType_t* t)
 {
 	const char* name = t->id;
 #ifndef HARD_LINKED_CGAME
-	cgame_api_t GetCGameAPI;
-	const char* path;
-
 	if (cls.cgameLibrary)
 		Com_Error(ERR_FATAL, "GAME_GetCGameAPI without GAME_UnloadGame");
 
@@ -1235,7 +1225,7 @@ static const cgame_export_t* GAME_GetCGameAPI (const cgameType_t* t)
 #endif
 
 	/* now run through the search paths */
-	path = nullptr;
+	const char* path = nullptr;
 	while (!cls.cgameLibrary) {
 		path = FS_NextPath(path);
 		if (!path)
@@ -1245,7 +1235,7 @@ static const cgame_export_t* GAME_GetCGameAPI (const cgameType_t* t)
 			break;
 	}
 
-	GetCGameAPI = (cgame_api_t)(uintptr_t)SDL_LoadFunction(cls.cgameLibrary, "GetCGameAPI");
+	cgame_api_t GetCGameAPI = (cgame_api_t)(uintptr_t)SDL_LoadFunction(cls.cgameLibrary, "GetCGameAPI");
 	if (!GetCGameAPI) {
 		GAME_UnloadGame();
 		return nullptr;
@@ -1365,8 +1355,7 @@ static void GAME_NetSendInventory (dbuffer* buf, const Inventory* inv)
 
 	NET_WriteShort(buf, nr);
 
-	containerIndex_t container;
-	for (container = 0; container < CID_MAX; container++) {
+	for (containerIndex_t container = 0; container < CID_MAX; container++) {
 		if (INVDEF(container)->temp)
 			continue;
 		const Item* ic;
@@ -1383,8 +1372,6 @@ static void GAME_NetSendInventory (dbuffer* buf, const Inventory* inv)
  */
 static void GAME_NetSendCharacter (dbuffer* buf, const character_t* chr)
 {
-	int j;
-
 	if (!chr)
 		Com_Error(ERR_DROP, "No character given");
 	if (chr->fieldSize != ACTOR_SIZE_2x2 && chr->fieldSize != ACTOR_SIZE_NORMAL)
@@ -1411,16 +1398,16 @@ static void GAME_NetSendCharacter (dbuffer* buf, const character_t* chr)
 	NET_WriteByte(buf, chr->STUN);
 	NET_WriteByte(buf, chr->morale);
 
-	for (j = 0; j < chr->teamDef->bodyTemplate->numBodyParts(); ++j)
+	for (int j = 0; j < chr->teamDef->bodyTemplate->numBodyParts(); ++j)
 		NET_WriteByte(buf, chr->wounds.treatmentLevel[j]);
 
-	for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
+	for (int j = 0; j < SKILL_NUM_TYPES + 1; j++)
 		NET_WriteLong(buf, chr->score.experience[j]);
-	for (j = 0; j < SKILL_NUM_TYPES; j++)
+	for (int j = 0; j < SKILL_NUM_TYPES; j++)
 		NET_WriteByte(buf, chr->score.skills[j]);
-	for (j = 0; j < KILLED_NUM_TYPES; j++)
+	for (int j = 0; j < KILLED_NUM_TYPES; j++)
 		NET_WriteShort(buf, chr->score.kills[j]);
-	for (j = 0; j < KILLED_NUM_TYPES; j++)
+	for (int j = 0; j < KILLED_NUM_TYPES; j++)
 		NET_WriteShort(buf, chr->score.stuns[j]);
 	NET_WriteShort(buf, chr->score.assignedMissions);
 }
@@ -1452,13 +1439,12 @@ static void GAME_SendCurrentTeamSpawningInfo (dbuffer* buf, linkedList_t* team)
 
 const char* GAME_GetTeamDef (void)
 {
-	const char* teamDefID;
 	const cgame_export_t* list = GAME_GetCurrentType();
 
 	if (list && list->GetTeamDef)
 		return list->GetTeamDef();
 
-	teamDefID = Cvar_GetString("cl_teamdef");
+	const char* teamDefID = Cvar_GetString("cl_teamdef");
 	if (teamDefID[0] == '\0')
 		teamDefID = "phalanx";
 	return teamDefID;
@@ -1553,12 +1539,26 @@ static void GAME_InitializeBattlescape (linkedList_t* team)
 		UI_ExecuteConfunc("huddisable %i", i);
 	}
 
+	dbuffer msg;
 	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->InitializeBattlescape) {
-		dbuffer msg;
 		list->InitializeBattlescape(&msg, team);
-		NET_WriteMsg(cls.netStream, msg);
+	} else {
+		const int teamSize = LIST_Count(team);
+		dbuffer* m = &msg;
+
+		NET_WriteByte(m, clc_initactorstates);
+		NET_WriteByte(m, teamSize);
+
+		LIST_Foreach(team, character_t, chr) {
+			NET_WriteShort(m, chr->ucn);
+			NET_WriteShort(m, STATE_REACTION);
+			NET_WriteShort(m, ACTOR_HAND_NOT_SET);
+			NET_WriteShort(m, NONE);
+			NET_WriteShort(m, NONE);
+		}
 	}
+	NET_WriteMsg(cls.netStream, msg);
 }
 
 /**
@@ -1684,13 +1684,11 @@ static void GAME_Exit_f (void)
  */
 void GAME_Frame (void)
 {
-	const cgame_export_t* list;
-
 	/* don't run the cgame in console mode */
 	if (cls.keyDest == key_console)
 		return;
 
-	list = GAME_GetCurrentType();
+	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->RunFrame != nullptr)
 		list->RunFrame(cls.frametime);
 }
@@ -1792,11 +1790,10 @@ const equipDef_t* GAME_ChangeEquip (const linkedList_t* equipmentList, changeEqu
 	const equipDef_t* ed;
 
 	if (LIST_IsEmpty(equipmentList)) {
-		int index;
 		ed = INV_GetEquipmentDefinitionByID(equipID);
 		if (ed == nullptr)
 			Com_Error(ERR_DROP, "Could not find the equipment definition for '%s'", equipID);
-		index = ed - csi.eds;
+		int index = ed - csi.eds;
 
 		switch (changeType) {
 		case BACKWARD:

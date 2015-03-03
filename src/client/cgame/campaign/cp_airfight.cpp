@@ -531,7 +531,7 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t* shoo
 		if (shooter)
 			CP_UFOProceedMission(campaign, shooter);
 
-		MS_AddNewMessage(_("Interception"), _("You've lost the battle"), MSG_DEATH);
+		MS_AddNewMessage(_("Interception"), _("A PHALANX craft has been destroyed"), MSG_DEATH);
 	}
 }
 

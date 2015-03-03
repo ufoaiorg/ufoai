@@ -164,21 +164,18 @@ void R_FontShutdown (void)
  */
 static font_t* R_FontAnalyze (const char* name, const char* path, int renderStyle, int size)
 {
-	font_t* f;
-	int ttfSize;
-
 	if (numFonts >= MAX_FONTS)
 		return nullptr;
 
 	/* allocate new font */
-	f = &fonts[numFonts];
+	font_t* f = &fonts[numFonts];
 	OBJZERO(*f);
 
 	/* copy fontname */
 	f->name = name;
 
 	byte* buf;
-	ttfSize = FS_LoadFile(path, &buf);
+	const int ttfSize = FS_LoadFile(path, &buf);
 	if (ttfSize == -1)
 		Com_Error(ERR_FATAL, "...could not load font file %s", path);
 
@@ -189,6 +186,10 @@ static font_t* R_FontAnalyze (const char* name, const char* path, int renderStyl
 	f->font = TTF_OpenFontRW(f->rw, 0, size);
 	if (!f->font)
 		Com_Error(ERR_FATAL, "...could not load ttf font data %s (%s)", path, TTF_GetError());
+
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+	TTF_SetFontHinting(f->font, TTF_HINTING_NONE);
+#endif
 
 	/* font style */
 	f->style = renderStyle;
@@ -252,10 +253,8 @@ void R_FontListCache_f (void)
  */
 static int R_FontHash (const char* string, const font_t* font)
 {
-	register int hashValue, i;
-
-	hashValue = 0x2040189 * ((font - fonts) + 1);
-	for (i = 0; string[i] != '\0'; i++)
+	int hashValue = 0x2040189 * ((font - fonts) + 1);
+	for (int i = 0; string[i] != '\0'; i++)
 		hashValue = (hashValue + string[i]) * 16777619 + 1;
 
 	hashValue = (hashValue ^ (hashValue >> 10) ^ (hashValue >> 20));
@@ -268,14 +267,12 @@ static int R_FontHash (const char* string, const font_t* font)
  */
 static int R_FontChunkLength (const font_t* f, char* text, int len)
 {
-	int width;
-	char old;
-
 	if (len == 0)
 		return 0;
 
-	old = text[len];
+	const char old = text[len];
 	text[len] = '\0';
+	int width;
 	TTF_SizeUTF8(f->font, text, &width, nullptr);
 	text[len] = old;
 
@@ -297,15 +294,13 @@ static int R_FontChunkLength (const font_t* f, char* text, int len)
 static int R_FontFindFit (const font_t* font, char* text, int maxlen, int maxWidth, int* widthp)
 {
 	int bestbreak = 0;
-	int width;
-	int len;
 
 	*widthp = 0;
 
 	/* Fit whole words */
-	for (len = 1; len < maxlen; len++) {
+	for (int len = 1; len < maxlen; len++) {
 		if (text[len] == ' ') {
-			width = R_FontChunkLength(font, text, len);
+			int width = R_FontChunkLength(font, text, len);
 			if (width > maxWidth)
 				break;
 			bestbreak = len;
@@ -314,9 +309,9 @@ static int R_FontFindFit (const font_t* font, char* text, int maxlen, int maxWid
 	}
 
 	/* Fit hyphenated word parts */
-	for (len = bestbreak + 1; len < maxlen; len++) {
+	for (int len = bestbreak + 1; len < maxlen; len++) {
 		if (text[len] == '-') {
-			width = R_FontChunkLength(font, text, len + 1);
+			int width = R_FontChunkLength(font, text, len + 1);
 			if (width > maxWidth)
 				break;
 			bestbreak = len + 1;
@@ -330,10 +325,10 @@ static int R_FontFindFit (const font_t* font, char* text, int maxlen, int maxWid
 	/** @todo Smart breaking of Chinese text */
 
 	/* Can't fit even one word. Break first word anywhere. */
-	for (len = 1; len < maxlen; len++) {
+	for (int len = 1; len < maxlen; len++) {
 		if (UTF8_CONTINUATION_BYTE(text[len]))
 			continue;
-		width = R_FontChunkLength(font, text, len);
+		int width = R_FontChunkLength(font, text, len);
 		if (width > maxWidth)
 			break;
 		bestbreak = len;
@@ -357,7 +352,6 @@ static int R_FontFindTruncFit (const font_t* f, const char* text, int maxlen, in
 	*widthp = 0;
 
 	for (int len = 1; len < maxlen; len++) {
-		int width;
 		buf[len - 1] = text[len - 1];
 		if (UTF8_CONTINUATION_BYTE(text[len]))
 			continue;
@@ -365,6 +359,7 @@ static int R_FontFindTruncFit (const font_t* f, const char* text, int maxlen, in
 			Q_strncpyz(&buf[len], truncmarker, sizeof(buf) - len);
 		else
 			buf[len] = '\0';
+		int width;
 		TTF_SizeUTF8(f->font, buf, &width, nullptr);
 		if (width > maxWidth)
 			return breaklen;
@@ -382,28 +377,25 @@ static int R_FontFindTruncFit (const font_t* f, const char* text, int maxlen, in
  */
 static int R_FontMakeChunks (const font_t* f, const char* text, int maxWidth, longlines_t method, int* lines, bool* aborted)
 {
+	assert(text);
+
 	int lineno = 0;
 	int pos = 0;
 	int startChunks = numChunks;
 	char buf[BUF_SIZE];
 
-	assert(text);
-
 	Q_strncpyz(buf, text, sizeof(buf));
 
 	do {
-		int width;
-		int len;
-		int utf8len;
 		int skip = 0;
 		bool truncated = false;
 
 		/* find mandatory break */
-		len = strcspn(&buf[pos], "\n");
+		int len = strcspn(&buf[pos], "\n");
 
 		/* tidy up broken UTF-8 at end of line which may have been
 		 * truncated by caller by use of functions like Q_strncpyz */
-		utf8len = 1;
+		int utf8len = 1;
 		while (len > utf8len && UTF8_CONTINUATION_BYTE(buf[pos + len - utf8len]))
 			utf8len++;
 		if (len > 0 && utf8len != UTF8_char_len(buf[pos + len - utf8len])) {
@@ -417,7 +409,7 @@ static int R_FontMakeChunks (const font_t* f, const char* text, int maxWidth, lo
 			skip++;
 		}
 
-		width = R_FontChunkLength(f, &buf[pos], len);
+		int width = R_FontChunkLength(f, &buf[pos], len);
 		if (maxWidth > 0 && width > maxWidth) {
 			if (method == LONGLINES_WRAP) {
 				/* full chunk didn't fit; try smaller */
@@ -472,10 +464,7 @@ static int R_FontMakeChunks (const font_t* f, const char* text, int maxWidth, lo
 static wrapCache_t* R_FontWrapText (const font_t* f, const char* text, int maxWidth, longlines_t method)
 {
 	wrapCache_t* wrap;
-	int hashValue = R_FontHash(text ,f);
-	int chunksUsed;
-	int lines;
-	bool aborted = false;
+	const int hashValue = R_FontHash(text ,f);
 
 	/* String is considered a match if the part that fit in entry->string
 	 * matches. Since the hash value also matches and the hash was taken
@@ -496,7 +485,9 @@ static wrapCache_t* R_FontWrapText (const font_t* f, const char* text, int maxWi
 
 	/* It is possible that R_FontMakeChunks will wipe the cache,
 	 * so do not rely on numWraps until it completes. */
-	chunksUsed = R_FontMakeChunks(f, text, maxWidth, method, &lines, &aborted);
+	int lines;
+	bool aborted = false;
+	const int chunksUsed = R_FontMakeChunks(f, text, maxWidth, method, &lines, &aborted);
 
 	wrap = &wrapCache[numWraps];
 	strncpy(wrap->text, text, sizeof(wrap->text));
@@ -563,37 +554,32 @@ void R_FontTextSize (const char* fontId, const char* text, int maxWidth, longlin
  */
 static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCache_t* chunk)
 {
-	SDL_Surface* textSurface;
-	SDL_Surface* openGLSurface;
-	SDL_Rect rect = {0, 0, 0, 0};
-	char buf[BUF_SIZE];
-	static const SDL_Color color = {255, 255, 255, 0};	/* The 4th value is unused */
-	int colordepth = 32;
-
 #ifdef GL_VERSION_ES_CM_1_0
 	const int samples = GL_RGBA;
-	int pixelFormat = GL_RGBA; /* There's no GL_BGRA symbol defined in Android GLES headers */
+	const int pixelFormat = GL_RGBA; /* There's no GL_BGRA symbol defined in Android GLES headers */
 #else
 	const int samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
-	int pixelFormat = GL_BGRA;
+	const int pixelFormat = GL_BGRA;
 #endif
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-	Uint32 rmask = 0xff000000;
-	Uint32 gmask = 0x00ff0000;
-	Uint32 bmask = 0x0000ff00;
-	Uint32 amask = 0x000000ff;
+	const Uint32 rmask = 0xff000000;
+	const Uint32 gmask = 0x00ff0000;
+	const Uint32 bmask = 0x0000ff00;
+	const Uint32 amask = 0x000000ff;
 #else
-	Uint32 rmask = 0x000000ff;
-	Uint32 gmask = 0x0000ff00;
-	Uint32 bmask = 0x00ff0000;
-	Uint32 amask = 0xff000000;
+	const Uint32 rmask = 0x000000ff;
+	const Uint32 gmask = 0x0000ff00;
+	const Uint32 bmask = 0x00ff0000;
+	const Uint32 amask = 0xff000000;
 #endif
 
 	if (chunk->texnum != 0)
 		return;  /* already generated */
 
 	assert(strlen(text) >= chunk->pos + chunk->len);
+
+	char buf[BUF_SIZE];
 	if (chunk->len >= sizeof(buf))
 		return;
 	memcpy(buf, &text[chunk->pos], chunk->len);
@@ -602,7 +588,8 @@ static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCa
 	if (chunk->truncated)
 		Q_strncpyz(buf + chunk->len, truncmarker, sizeof(buf) - chunk->len);
 
-	textSurface = TTF_RenderUTF8_Blended(font->font, buf, color);
+	static const SDL_Color color = {255, 255, 255, 0};	/* The 4th value is unused */
+	SDL_Surface* textSurface = TTF_RenderUTF8_Blended(font->font, buf, color);
 	if (!textSurface) {
 		Com_Printf("%s (%s)\n", TTF_GetError(), buf);
 		return;
@@ -613,18 +600,18 @@ static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCa
 	for (w = 2; w < textSurface->w; w <<= 1) {}
 	for (h = 2; h < textSurface->h; h <<= 1) {}
 
-	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, colordepth, rmask, gmask, bmask, amask);
+	const int colordepth = 32;
+	SDL_Surface* openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, colordepth, rmask, gmask, bmask, amask);
 	if (!openGLSurface)
 		return;
 
-	rect.x = rect.y = 0;
-	rect.w = textSurface->w;
+	SDL_Rect rect = {0, 0, textSurface->w, textSurface->h};
 	if (rect.w > chunk->width)
 		rect.w = chunk->width;
-	rect.h = textSurface->h;
 
 	/* ignore alpha when blitting - just copy it over */
 #if SDL_VERSION_ATLEAST(2,0,0)
+	SDL_SetSurfaceBlendMode(textSurface, SDL_BLENDMODE_NONE);
 	SDL_SetSurfaceAlphaMod(textSurface, 255);
 #else
 	SDL_SetAlpha(textSurface, 0, 255);

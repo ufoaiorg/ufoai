@@ -12,6 +12,7 @@
 
 #include <zlib.h>
 #include "ioapi.h"
+#include "../ports/system.h"
 
 
 
@@ -44,7 +45,7 @@ static voidpf ZCALLBACK fopen_file_func (voidpf opaque, const char* filename, in
         mode_fopen = "wb";
 
     if ((filename!=NULL) && (mode_fopen != NULL))
-        file = fopen(filename, mode_fopen);
+        file = Sys_Fopen(filename, mode_fopen);
     return file;
 }
 

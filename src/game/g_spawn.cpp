@@ -441,9 +441,10 @@ static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, c
 	Edict* ent = G_GetEdictFromPos(pos, fieldtype);
 	if (ent == nullptr) {
 		pos_t z = gi.GridFall(ACTOR_SIZE_NORMAL, pos);
-		if (z != pos[2])
+		if (std::abs(pos[2] - z) > 1)
 			return;
 
+		pos[2] = z;
 		ent = G_Spawn();
 		VectorCopy(pos, ent->pos);
 		ent->calcOrigin();		/* although vec is supposed to be the origin, calc origin from pos. That's safer. */
@@ -491,11 +492,11 @@ static void G_SpawnFieldGroup (const entity_type_t fieldtype, const vec3_t vec, 
 			/* cut off the edges of the square to resemble a circle */
 			if (VectorDist(end, vec) > radius)
 				continue;
-			if (!gi.isOnMap(vec))
+			if (!gi.isOnMap(end))
 				continue;
 			const trace_t tr = G_Trace(Line(vec, end), nullptr, MASK_SMOKE_AND_FIRE);
 			/* trace didn't reach the target - something was hit before */
-			if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
+			if (tr.fraction < 1.0f || (tr.contentFlags & CONTENTS_WATER)) {
 				continue;
 			}
 			G_SpawnFieldPart(fieldtype, end, particle, rounds, damage);
@@ -848,7 +849,6 @@ static void G_BuildForbiddenListForEntity (Edict* ent)
 {
 	vec3_t center;
 	AABB shiftedBox(ent->absBox);
-	shiftedBox.shift(ent->origin);
 	shiftedBox.getCenter(center);
 
 	pos3_t mins, maxs, origin;

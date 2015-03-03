@@ -240,7 +240,7 @@ void Sys_Backtrace (void)
 #endif
 
 	const char *dumpFile = "crashdump.txt";
-	FILE *file = fopen(dumpFile, "w");
+	FILE *file = Sys_Fopen(dumpFile, "w");
 	FILE *crash = file != nullptr ? file : stderr;
 
 	fprintf(crash, "======start======\n");

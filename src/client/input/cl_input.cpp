@@ -888,12 +888,12 @@ void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, bool keyDo
 	}
 }
 
-static bool IN_ToggleFullscreen (void)
+static bool IN_ToggleFullscreen (const bool full)
 {
 #if SDL_VERSION_ATLEAST(2,0,0)
-	const int mask = SDL_WINDOW_FULLSCREEN_DESKTOP;
+	const int mask = full ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
 	const bool isFullScreen = SDL_GetWindowFlags(cls.window) & mask;
-	SDL_SetWindowFullscreen(cls.window, isFullScreen ? 0 : SDL_WINDOW_FULLSCREEN);
+	SDL_SetWindowFullscreen(cls.window, isFullScreen ? 0 : mask);
 	return SDL_GetWindowFlags(cls.window) & mask;
 #else
 #ifdef _WIN32
@@ -1031,10 +1031,21 @@ void IN_Frame (void)
 			IN_PrintKey(&event, 1);
 			if ((event.key.keysym.mod & KMOD_ALT) && event.key.keysym.sym == SDLK_RETURN) {
 				Com_Printf("try to toggle fullscreen\n");
-				if (IN_ToggleFullscreen()) {
+				if (IN_ToggleFullscreen(false)) {
 					Cvar_SetValue("vid_fullscreen", 1);
 					/* make sure, that input grab is deactivated in fullscreen mode */
 					Cvar_SetValue("vid_grabmouse", 0);
+				} else {
+					Cvar_SetValue("vid_fullscreen", 0);
+				}
+				vid_fullscreen->modified = false; /* we just changed it with SDL. */
+				break; /* ignore this key */
+			}
+
+			if ((event.key.keysym.mod & KMOD_CTRL) && event.key.keysym.sym == SDLK_RETURN) {
+				Com_Printf("try to toggle fullscreen\n");
+				if (IN_ToggleFullscreen(true)) {
+					Cvar_SetValue("vid_fullscreen", 2);
 				} else {
 					Cvar_SetValue("vid_fullscreen", 0);
 				}

@@ -239,7 +239,7 @@ bool R_InitGraphics (const viddefContext_t* context)
 	uint32_t flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 	if (context->fullscreen)
-		flags |= SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_BORDERLESS;
+		flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
 	cls.window = SDL_CreateWindow(GAME_TITLE_LONG, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, context->width, context->height, flags);
 	if (!cls.window) {
