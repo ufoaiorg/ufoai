@@ -345,37 +345,37 @@ particle firetrailptl
 	think { kill }
 }
 
-//particle explosion_1
-//{
-//	init
-//	{
-//
-//		push   int 18
-//		nspawn explosionSmoke
-//
-//		push   int 18
-//		nspawn explosionSmoke2
-//
-//		push   int 18
-//		nspawn explosionSmoke3
-//
-//		push   int 15
-//		nspawn explosionFlame
-//
-//		push   int 5
-//		nspawn explosionFlame2
-//
-//		push   int 13
-//		nspawn explosionVolumetric
-//
-//		push   int 13
-//		nspawn explosionVolumetric2
-//
-//		spawn  explosionFlash
-//
-//		kill
-//	}
-//}
+particle explosion_1
+{
+	init
+	{
+
+		push   int 18
+		nspawn explosionSmoke
+
+		push   int 18
+		nspawn explosionSmoke2
+
+		push   int 18
+		nspawn explosionSmoke3
+
+		push   int 15
+		nspawn explosionFlame
+
+		push   int 5
+		nspawn explosionFlame2
+
+		push   int 13
+		nspawn explosionVolumetric
+
+		push   int 13
+		nspawn explosionVolumetric2
+
+		spawn  explosionFlash
+
+		kill
+	}
+}
 
 particle explosionFlame
 {
