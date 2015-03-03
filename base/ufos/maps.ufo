@@ -5648,6 +5648,7 @@ mapdef vil2_mp3p
 mapdef alienbase
 {
 	map				"+alienbase"
+	params			("small1" "small2")
 	description		"_Alien Base"
 	storyrelated	true
 	maxaliens		30
