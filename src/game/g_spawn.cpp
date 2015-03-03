@@ -441,9 +441,10 @@ static void G_SpawnFieldPart (const entity_type_t fieldtype, const vec3_t vec, c
 	Edict* ent = G_GetEdictFromPos(pos, fieldtype);
 	if (ent == nullptr) {
 		pos_t z = gi.GridFall(ACTOR_SIZE_NORMAL, pos);
-		if (z != pos[2])
+		if (std::abs(pos[2] - z) > 1)
 			return;
 
+		pos[2] = z;
 		ent = G_Spawn();
 		VectorCopy(pos, ent->pos);
 		ent->calcOrigin();		/* although vec is supposed to be the origin, calc origin from pos. That's safer. */
