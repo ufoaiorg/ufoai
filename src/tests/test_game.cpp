@@ -278,6 +278,11 @@ TEST_F(GameTest, CountSpawnpointsRMA)
 	MapDef_Foreach(md) {
 		if (md->mapTheme[0] != '+')
 			continue;
+		/* +ufocrash is a special map - it cannot be tested this way */
+		if (Q_streq(md->mapTheme, "+ufocrash")) {
+			Com_Printf("Test skipped for theme: %s\n", md->mapTheme);
+			continue;
+		}
 		testCountSpawnpointsForMap(seed, md);
 	}
 }
