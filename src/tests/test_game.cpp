@@ -231,8 +231,6 @@ void GameTest::testCountSpawnpointsForMap(unsigned int seed, const mapDef_t *md)
 	if (md->mapTheme[0] == '.')
 		return;
 
-	std::cout << "[          ] testing mapdef: " << md->id << std::endl;
-
 	const char* filterId = TEST_GetStringProperty("mapdef-id");
 	if (filterId && !Q_streq(filterId, md->id))
 		return;
