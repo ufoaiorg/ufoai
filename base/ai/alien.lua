@@ -536,9 +536,9 @@ function aila.team_think ()
 		return false
 	end
 
-	ai.select(aila.squad[aila.actor])
-	ai.print("Phase: ", aila.phase, "Actor: ", aila.squad[aila.actor], aila.actor)
-	if not ai.actor():isdead() then
+	if not aila.squad[aila.actor]:isdead() then
+		ai.print("Actor ", aila.actor, aila.squad[aila.actor], "Phase: ", aila.phase)
+		ai.select(aila.squad[aila.actor])
 		aila.prethink()
 		aila.target = aila.targets[aila.actor]
 		if aila.phase == 1 then

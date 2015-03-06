@@ -138,8 +138,8 @@ end
 	Team think function, just run the normal think function, no idea what team tactics would be for civilians
 --]]
 function ailc.team_think ()
-	-- Round just started set up.
-	if ailc.squed == nil then
+	-- Round just started, set up.
+	if ailc.squad == nil then
 		ailc.squad = ai.squad()
 		ailc.actor = 1
 	-- Run next actor
@@ -154,8 +154,9 @@ function ailc.team_think ()
 	end
 
 	-- Run the think function for this actor
-	ai.select(ailc.squad[ailc.actor])
-	if not ai:actor():isdead() then
+	if not ailc.squad[ailc.actor]:isdead() then
+		ai.select(ailc.squad[ailc.actor])
+		ai.print("Actor: ", ailc.squad[ailc.actor], ailc.actor)
 		ailc.think()
 	end
 

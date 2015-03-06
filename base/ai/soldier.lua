@@ -354,6 +354,7 @@ end
 
 function ails.think ()
 	ails.target = nil
+	ails.prethink()
 	ails.phase_one()
 	ails.phase_two()
 	ails.phase_three()
@@ -391,8 +392,9 @@ function ails.team_think ()
 		return false
 	end
 
-	ai.select(ails.squad[ails.actor])
-	if not ai.actor():isdead() then
+	if not ails.squad[ails.actor]:isdead() then
+		ai.select(ails.squad[ails.actor])
+		ai.print("Actor ", ails.actor, ails.squad[ails.actor], "Phase: ", ails.phase)
 		ails.prethink()
 		ails.target = ails.targets[ails.actor]
 		if ails.phase == 1 then
