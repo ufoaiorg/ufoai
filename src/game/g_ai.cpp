@@ -361,11 +361,10 @@ static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, flo
  * @todo Check whether radius and power of fd are to to big for dist
  * @todo Check whether the alien will die when shooting
  */
-bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef_t* fd, float* dist)
+bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef_t* fd, float dist)
 {
 	/* check range */
-	*dist = VectorDist(actor->origin, check->origin);
-	if (*dist > fd->range)
+	if (dist > fd->range)
 		return false;
 
 	/* if insane, we don't check more */
@@ -373,7 +372,7 @@ bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef
 		return true;
 
 	/* don't shoot - we are too close */
-	if (*dist < fd->splrad)
+	if (dist < fd->splrad)
 		return false;
 
 	/* check FF */
@@ -809,7 +808,7 @@ bool AI_CheckLineOfFire (const Actor* shooter, const Edict* target, const fireDe
 /**
  * @brief Calculate estimated damage per single shoot
  */
-float AI_CalcShotDamage (Actor* actor, Actor* target, const fireDef_t* fd, shoot_types_t shotType)
+float AI_CalcShotDamage (Actor* actor, const Actor* target, const fireDef_t* fd, shoot_types_t shotType)
 {
 	const int shots = ceil(CALC_DAMAGE_SAMPLES / fd->shots);
 	const int zAlign = !fd->gravity && (fd->splrad > 0.0f || target->isStunned()) ? GROUND_DELTA : 0;
@@ -834,6 +833,7 @@ static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const
 	bool hasLineOfFire = false;
 	int shotChecked = NONE;
 
+	const float dist = VectorDist(actor->origin, check->origin);
 	for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 		const fireDef_t* fd = &fdArray[fdIdx];
 		const int time = G_ActorGetModifiedTimeForFiredef(actor, fd, false);
@@ -844,8 +844,7 @@ static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const
 			if (stunWeapon && !actor->isInsane() && (check->isStunned() || CHRSH_IsTeamDefRobot(check->chr.teamDef)))
 				return;
 
-			float dist;
-			if (!AI_FighterCheckShoot(actor, check, fd, &dist))
+			if (!AI_FighterCheckShoot(actor, check, fd, dist))
 				continue;
 
 			/*

@@ -170,13 +170,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 local aila = { }
 
 aila.params = {
-	taman =	{ vis = "team", ord = "dist", pos = "fastest", move = "CW", prio = {"~civilian", "civilian"} },
-	shevaar = { vis = "extra", ord = "path", pos = "farthest", move = "CCW", prio = {"~civilian", "civilian"} },
+	taman =	{ vis = "team", ord = "dist", pos = "best_dam", move = "CW", prio = {"~civilian", "civilian"} },
+	shevaar = { vis = "extra", ord = "path", pos = "fastest", move = "CCW", prio = {"~civilian", "civilian"} },
 	ortnok = { vis = "extra", ord = "HP", pos = "nearest", move = "rand", prio = {"~civilian", "civilian"} },
 	bloodspider = { vis = "team", ord = "path", pos = "nearest", move = "hide", prio = {"civilian", "~civilian"} },
 	bloodspider_adv = { vis = "team", ord = "path", pos = "nearest", move = "hide", prio = {"~alien"} },
-	hovernet = { vis = "team", ord = "dist", pos = "fastest", move = "herd", prio = {"~civilian", "civilian"} },
-	hovernet_adv = { vis = "team", ord = "dist", pos = "farthest", move = "herd", prio = {"~civilian", "civilian"} },
+	hovernet = { vis = "team", ord = "dist", pos = "farthest", move = "herd", prio = {"~civilian", "civilian"} },
+	hovernet_adv = { vis = "team", ord = "dist", pos = "fastest", move = "herd", prio = {"~civilian", "civilian"} },
 	default = { vis = "sight", ord = "dist", pos = "fastest", move = "rand", prio = {"~alien"} }
 }
 

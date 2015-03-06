@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 local ails = { }
 
-ails.params = {	vis = "sight", ord = "dist", pos = "fastest", move = "rand", prio = {"~civilian"} }
+ails.params = {	vis = "sight", ord = "dist", pos = "best_dam", move = "rand", prio = {"~civilian"} }
 
 function ails.tustouse ()
 	return ai.actor():TU() - 4
