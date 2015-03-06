@@ -227,7 +227,7 @@ void AiAreaSearch::plotPos(const pos3_t origin, int xOfs, int dy) {
 #define SCORE_DAMAGE_FACTOR	1.25f
 #define SCORE_CIV_FACTOR	0.25f
 #define SCORE_DISABLED_FACTOR 0.25f
-#define SCORE_DAMAGE_WORHT_FACTOR	0.1f
+#define SCORE_DAMAGE_WORTH_FACTOR	0.1f
 
 #define SCORE_CIV_RANDOM	10
 #define SCORE_RUN_AWAY		50
@@ -257,7 +257,7 @@ void AiAreaSearch::plotPos(const pos3_t origin, int xOfs, int dy) {
 #define HERD_DIST			25
 #define HOLD_DIST			3
 
-#define CALC_DAMAGE_SAMPLES	10.0
+#define CALC_DAMAGE_SAMPLES	10.0f
 #define INVDEF_FOR_SHOOTTYPE(st) (IS_SHOT_RIGHT(st)?INVDEF(CID_RIGHT):IS_SHOT_LEFT(st)?INVDEF(CID_LEFT):IS_SHOT_HEADGEAR(st)?INVDEF(CID_HEADGEAR):nullptr)
 
 static pathing_t* hidePathingTable;
@@ -874,7 +874,7 @@ static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const
 				dmg = check->HP + SCORE_KILL;
 
 			/* ammo is limited and shooting gives away your position */
-			if (dmg < check->HP * SCORE_DAMAGE_WORHT_FACTOR)
+			if (dmg < check->HP * SCORE_DAMAGE_WORTH_FACTOR)
 				continue;
 
 			/* civilian malus */
