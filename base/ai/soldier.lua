@@ -143,6 +143,10 @@ function ails.search ()
 end
 
 function ails.searchweapon ()
+	if ai.actor():morale() == "panic" then
+		return false
+	end
+
 	local weapons = ai.findweapons()
 	if #weapons > 0 then
 		weapons[1]:goto()
@@ -152,6 +156,10 @@ function ails.searchweapon ()
 end
 
 function ails.readyweapon ()
+	if ai.actor():morale() == "panic" then
+		return false
+	end
+
 	local has_right, has_left = ai.actor():isarmed()
 	local right_ammo, left_ammo = ai.roundsleft()
 	if not right_ammo and not left_ammo then
@@ -355,9 +363,11 @@ end
 function ails.think ()
 	ails.target = nil
 	ails.prethink()
-	ails.phase_one()
-	ails.phase_two()
-	ails.phase_three()
+	if ai.actor():morale() ~= "panic" then
+		ails.phase_one()
+		ails.phase_two()
+		ails.phase_three()
+	end
 end
 
 --[[

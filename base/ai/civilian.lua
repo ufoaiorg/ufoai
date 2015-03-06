@@ -113,6 +113,9 @@ function ailc.think_nf ()
 	end
 	aliens = ai.see("sight", "alien")
 	if #aliens > 0 then
+		if not ailc.hide("alien") then
+			ailc.flee()
+		end
 		-- Some civ models don't have crouching animations
 		-- ailc.crouch(true)
 	end
