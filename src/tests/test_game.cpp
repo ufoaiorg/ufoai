@@ -235,6 +235,9 @@ void GameTest::testCountSpawnpointsForMap(unsigned int seed, const mapDef_t *md)
 	if (filterId && !Q_streq(filterId, md->id))
 		return;
 
+	/* This also prevents the test from timing out on buildbot. */
+	std::cout << "[          ] testing mapdef: " << md->id << std::endl;
+
 	if (LIST_IsEmpty(md->params)) {
 		testCountSpawnpointsForMapWithAssembly(seed, md, nullptr);
 	} else {
