@@ -177,7 +177,7 @@ aila.params = {
 	bloodspider_adv = { vis = "team", ord = "path", pos = "nearest", move = "hide", prio = {"~alien"} },
 	hovernet = { vis = "team", ord = "dist", pos = "farthest", move = "herd", prio = {"~civilian", "civilian"} },
 	hovernet_adv = { vis = "team", ord = "dist", pos = "fastest", move = "herd", prio = {"~civilian", "civilian"} },
-	default = { vis = "sight", ord = "dist", pos = "fastest", move = "rand", prio = {"~alien"} }
+	default = { vis = "team", ord = "dist", pos = "fastest", move = "rand", prio = {"~alien"} }
 }
 
 function aila.tustouse ()
@@ -239,6 +239,17 @@ function aila.approach (targets)
 	return nil
 end
 
+function aila.wander ()
+	local search_rad = (aila.tustouse() - ai.tusforshooting() + 1) / 2
+	if search_rad < 1 then
+		search_rad =  (aila.tustouse() + 1) / 2
+	end
+	local next_pos = ai.positionwander(aila.param.move, search_rad, ai.actor():pos(), aila.tustouse())
+	if next_pos then
+		next_pos:goto()
+	end
+end
+
 function aila.search ()
 	-- First check if we have a mission target
 	local targets = ai.missiontargets("all", "alien", "path")
@@ -266,19 +277,14 @@ function aila.search ()
 
 	-- Nothing found, wander around
 	if not found then
+		local done
 		if aila.param.move == "herd" then
-			aila.herd()
+			done = aila.herd()
 		elseif aila.param.move == "hide" then
-			aila.hide()
-		else
-			local search_rad = (aila.tustouse() - ai.tusforshooting() + 1) / 2
-			if search_rad < 1 then
-				search_rad =  aila.tustouse() + 1 / 2
-			end
-			local next_pos = ai.positionwander(aila.param.move, search_rad, ai.actor():pos(), aila.tustouse())
-			if next_pos then
-				next_pos:goto()
-			end
+			done = aila.hide()
+		end
+		if not done then
+			aila.wander()
 		end
 	end
 end
@@ -429,7 +435,7 @@ function aila.phase_two ()
 					end
 					-- No target in sight or we failed to kill it
 					if not aila.target or not aila.target:isdead() then
-						done = true
+						done = aila.target
 						break
 					end
 					targets = aila.findtargets(aila.param.vis, aila.param.prio[i], aila.param.ord)

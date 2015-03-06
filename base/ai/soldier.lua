@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 local ails = { }
 
-ails.params = {	vis = "sight", ord = "dist", pos = "best_dam", move = "rand", prio = {"~civilian"} }
+ails.params = {	vis = "team", ord = "dist", pos = "best_dam", move = "CCW", prio = {"~civilian"} }
 
 function ails.tustouse ()
 	return ai.actor():TU() - 4
@@ -288,7 +288,7 @@ function ails.phase_two ()
 					end
 					-- No target in sight or we failed to kill it
 					if not ails.target or not ails.target:isdead() then
-						done = true
+						done = ails.target
 						break
 					end
 					targets = ails.findtargets(ails.param.vis, ails.param.prio[i], ails.param.ord)
