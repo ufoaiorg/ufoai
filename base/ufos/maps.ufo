@@ -3844,7 +3844,7 @@ mapdef vil2_sp_sml_01
 	map				"+village2"
 	params			("sp_sml_01" "sp_sml_02")
 	description		"_Village 2"
-	maxaliens		21
+	maxaliens		16
 
 	aircraft
 	(
@@ -3940,7 +3940,7 @@ mapdef base_initial
 	params		("initial")
 	description	"_PHALANX Base Under Attack"
 	campaign	false
-	maxaliens	14
+	maxaliens	12
 	missionbriefing		"*msgid:mission_briefing_baseattack"
 
 	aircraft
@@ -3975,7 +3975,7 @@ mapdef base_random
 	params		("random")
 	description	"_PHALANX Base Under Attack"
 	campaign	false
-	maxaliens	16
+	maxaliens	12
 	missionbriefing		"*msgid:mission_briefing_baseattack"
 
 	aircraft
