@@ -181,9 +181,8 @@ TEST_F(MapDefMassRMATest, DISABLED_MapDefsMassRMA)
 						else
 							asmName = (const char*)LIST_GetByIdx(md->params, 0);
 
-
 						char* entityString = SV_GetConfigString(CS_ENTITYSTRING);
-						int numPlaced = SV_AssembleMap(p, asmName, mapStr, posStr, entityString, i, false);
+						const int numPlaced = SV_AssembleMap(p, asmName, mapStr, posStr, entityString, i, false);
 						ASSERT_TRUE(numPlaced != 0);
 						time = (Sys_Milliseconds() - time);
 						ASSERT_TRUE(time < 30000);
