@@ -218,15 +218,15 @@ void ReactionFireTargets::notifyClientMove (const Edict* target, int step, bool 
 
 void ReactionFireTargets::notifyClientRFAborted (const Edict* shooter, const Edict* target, int step)
 {
-		ReactionFireTargetList* rfts = find(shooter);
-		assert(rfts);
+	ReactionFireTargetList* rfts = find(shooter);
+	assert(rfts);
 
-		for (int i = 0; i < rfts->count; i++) {
-			ReactionFireTarget& t = rfts->targets[i];
-			if (t.target != target)
-				continue;
-			G_EventReactionFireAbortShot(*shooter, *target, step);
-		}
+	for (int i = 0; i < rfts->count; i++) {
+		ReactionFireTarget& t = rfts->targets[i];
+		if (t.target != target)
+			continue;
+		G_EventReactionFireAbortShot(*shooter, *target, step);
+	}
 }
 
 /**
