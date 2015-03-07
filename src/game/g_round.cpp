@@ -239,6 +239,9 @@ void G_ClientEndRound (Player& player)
 		}
 	}
 
+	/* Wounded team members bleed now */
+	G_BleedWounds(level.activeTeam);
+
 	/* let all the invisible players perish now */
 	G_CheckVisTeamAll(level.activeTeam, VIS_APPEAR, nullptr);
 
@@ -258,9 +261,6 @@ void G_ClientEndRound (Player& player)
 
 	/* store the round start time to be able to abort the round after a give time */
 	level.roundstartTime = level.time;
-
-	/* Wounded team members bleed */
-	G_BleedWounds(level.activeTeam);
 
 	G_RoundTouchTriggers(level.activeTeam);
 
