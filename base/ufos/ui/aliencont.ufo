@@ -140,6 +140,9 @@ component cmpAlienContainment extends panel {
 
 window aliencont
 {
+	{
+		fill		true
+	}
 	BaseContainerPanel base_container
 	{
 		// Alien Containment panel
