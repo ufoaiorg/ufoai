@@ -520,7 +520,7 @@ void Sys_OpenURL (const char* url)
 	ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
-FILE* Sys_Fopen(const char *filename, const char *mode)
+FILE* Sys_Fopen (const char *filename, const char *mode)
 {
 	WCHAR wname[MAX_OSPATH];
 	WCHAR wmode[MAX_VAR];

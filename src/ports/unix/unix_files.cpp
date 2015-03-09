@@ -242,7 +242,7 @@ void Sys_Mkfifo (const char *ospath, qFILE *f)
 	}
 }
 
-FILE* Sys_Fopen(const char *filename, const char *mode)
+FILE* Sys_Fopen (const char *filename, const char *mode)
 {
 	return fopen(filename, mode);
 }
