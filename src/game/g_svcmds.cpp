@@ -203,7 +203,7 @@ static void SVCmd_WriteIP_f (void)
 
 	gi.DPrintf("Writing %s.\n", name);
 
-	FILE* f = fopen(name, "wb");
+	FILE* f = gi.Sys_Fopen(name, "wb");
 	if (!f) {
 		gi.DPrintf("Couldn't open %s\n", name);
 		return;

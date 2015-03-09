@@ -267,7 +267,7 @@ static void G_Init (void)
 	game.invi.initInventory("game", gi.csi, &inventoryImport);
 
 	if (logstats->integer)
-		logstatsfile = fopen(va("%s/stats.log", gi.FS_Gamedir()), "a");
+		logstatsfile = gi.Sys_Fopen(va("%s/stats.log", gi.FS_Gamedir()), "a");
 	else
 		logstatsfile = nullptr;
 
