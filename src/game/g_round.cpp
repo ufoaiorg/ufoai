@@ -270,12 +270,12 @@ void G_ClientEndRound (Player& player)
 	/* Give the actors of the now active team their TUs. */
 	G_GiveTimeUnits(level.activeTeam);
 
+	G_UpdateCarriedWeight(level.activeTeam);
+
 	/* apply morale behaviour, reset reaction fire */
 	G_ReactionFireReset(level.activeTeam);
 	if (mor_panic->integer)
 		G_MoraleBehaviour(level.activeTeam);
-
-	G_UpdateCarriedWeight(level.activeTeam);
 
 	/* start ai - there is only one player for ai teams, and the last pointer must only
 	 * be updated for ai players */
