@@ -281,13 +281,6 @@ TEST_F(GameTest, CountSpawnpointsRMA)
 			Com_Printf("Test skipped for theme: %s\n", md->mapTheme);
 			continue;
 		}
-		/* +alienbase fails the test with message :
-		   ERROR: Game Error: Not enough rfData
-		   thus disabling it for now */
-		if (Q_streq(md->mapTheme, "+alienbase")) {
-			Com_Printf("Test skipped for theme: %s\n", md->mapTheme);
-			continue;
-		}
 		testCountSpawnpointsForMap(seed, md);
 	}
 }
