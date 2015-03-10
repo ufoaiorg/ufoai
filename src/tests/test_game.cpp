@@ -58,6 +58,7 @@ protected:
 	void testCountSpawnpointsForMapWithAssembly(unsigned int seed, const mapDef_t *md, const char *asmName);
 	void testCountSpawnpointsForMapWithAssemblyAndAircraft(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft);
 	void testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo);
+	int testCountSpawnpointsGetNumteamValue(const char *vehicle);
 
 	void SetUp() {
 		OBJZERO(*sv);
@@ -102,25 +103,48 @@ TEST_F(GameTest, SpawnAndConnect)
 	FS_FreeFile(buf);
 }
 
+int GameTest::testCountSpawnpointsGetNumteamValue(const char *vehicle)
+{
+	// TODO: somehow fix these magic values here
+	if (Q_streq(vehicle, "craft_drop_firebird")) {
+		return 8;
+	} else if (Q_streq(vehicle, "craft_drop_raptor")) {
+		return 10;
+	} else if (Q_streq(vehicle, "craft_drop_herakles")) {
+		return 12;
+	} else if (Q_streq(vehicle, "craft_ufo_scout") || Q_streq(vehicle, "craft_crash_scout")) {
+		return 4;
+	} else if (Q_streq(vehicle, "craft_ufo_fighter") || Q_streq(vehicle, "craft_crash_fighter")) {
+		return  6;
+	} else if (Q_streq(vehicle, "craft_ufo_harvester") || Q_streq(vehicle, "craft_crash_harvester")) {
+		return  8;
+	} else if (Q_streq(vehicle, "craft_ufo_corrupter") || Q_streq(vehicle, "craft_crash_corrupter")) {
+		return  10;
+	} else if (Q_streq(vehicle, "craft_ufo_supply") || Q_streq(vehicle, "craft_crash_supply")) {
+		return  12;
+	} else if (Q_streq(vehicle, "craft_ufo_gunboat") || Q_streq(vehicle, "craft_crash_gunboat")) {
+		return  12;
+	} else if (Q_streq(vehicle, "craft_ufo_bomber") || Q_streq(vehicle, "craft_crash_bomber")) {
+		return  18;
+	} else if (Q_streq(vehicle, "craft_ufo_ripper") || Q_streq(vehicle, "craft_crash_ripper")) {
+		return  14;
+	} else {
+		ADD_FAILURE() << "Error: Mapdef defines unknown aircraft: " << vehicle;
+		return 0;
+	}
+}
+
 void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
 {
 	SCOPED_TRACE(va("seed: %u", seed));
 
-	// TODO: somehow fix these magic values here
+	/* The number of human spawnpoints required on the map depends on the 'numteam' value
+	   of the used dropship, if any. */
 	int maxPlayers;
-	if (Q_strnull(aircraft)) {
-		maxPlayers = 12;
+	if (aircraft) {
+		maxPlayers = testCountSpawnpointsGetNumteamValue(aircraft);
 	} else {
-		if (Q_streq(aircraft, "craft_drop_firebird"))
-			maxPlayers = 8;
-		else if (Q_streq(aircraft, "craft_drop_raptor"))
-			maxPlayers = 10;
-		else if (Q_streq(aircraft, "craft_drop_herakles"))
-			maxPlayers = 12;
-		else {
-			ADD_FAILURE() << "Map " << md->mapTheme << " from mapdef " << md->id << " with unexpected aircraft";
-			return;
-		}
+		maxPlayers = 12;
 	}
 
 	if (md->multiplayer) {
