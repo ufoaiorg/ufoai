@@ -135,10 +135,10 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 	} else {
 		Cvar_Set("sv_maxclients", "1");
 	}
-	Cvar_Set("sv_maxsoldiersperteam", "256");
-	Cvar_Set("ai_multiplayeraliens", "256");
-	Cvar_Set("ai_singleplayeraliens", "256");
-	Cvar_Set("ai_numcivilians", "256");
+	Cvar_Set("sv_maxsoldiersperteam", "128");
+	Cvar_Set("ai_multiplayeraliens", "128");
+	Cvar_Set("ai_singleplayeraliens", "128");
+	Cvar_Set("ai_numcivilians", "128");
 
 	try {
 		SV_Map(true, md->mapTheme, asmName, false);
