@@ -109,10 +109,8 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 	// TODO: somehow fix these magic values here
 	int maxPlayers;
 	if (Q_strnull(aircraft)) {
-		Cvar_Set("rm_drop", "");
 		maxPlayers = 12;
 	} else {
-		Cvar_Set("rm_drop", "%s", Com_GetRandomMapAssemblyNameForCraft(aircraft));
 		if (Q_streq(aircraft, "craft_drop_firebird"))
 			maxPlayers = 8;
 		else if (Q_streq(aircraft, "craft_drop_raptor"))
@@ -123,11 +121,6 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 			ADD_FAILURE() << "Map " << md->mapTheme << " from mapdef " << md->id << " with unexpected aircraft";
 			return;
 		}
-	}
-	if (Q_strnull(ufo)) {
-		Cvar_Set("rm_ufo", "");
-	} else {
-		Cvar_Set("rm_ufo", "%s", Com_GetRandomMapAssemblyNameForCraft(ufo));
 	}
 
 	if (md->multiplayer) {
@@ -202,9 +195,12 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraft(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft)
 {
 	if (LIST_IsEmpty(md->ufos)) {
+		/* The mapdef defines no UFOs */
+		Cvar_Set("rm_ufo", "");
 		testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(seed, md, asmName, aircraft, nullptr);
 	} else {
 		LIST_Foreach(md->ufos, const char, ufo) {
+			Cvar_Set("rm_ufo", "%s", Com_GetRandomMapAssemblyNameForCraft(ufo));
 			testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(seed, md, asmName, aircraft, ufo);
 		}
 	}
@@ -213,9 +209,12 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraft(unsigned int se
 void GameTest::testCountSpawnpointsForMapWithAssembly(unsigned int seed, const mapDef_t *md, const char *asmName)
 {
 	if (LIST_IsEmpty(md->aircraft)) {
+		/* There is no aircraft defined in the mapdef. */
+		Cvar_Set("rm_drop", "");
 		testCountSpawnpointsForMapWithAssemblyAndAircraft(seed, md, asmName, nullptr);
 	} else {
 		LIST_Foreach(md->aircraft, const char, aircraft) {
+			Cvar_Set("rm_drop", "%s", Com_GetRandomMapAssemblyNameForCraft(aircraft));
 			testCountSpawnpointsForMapWithAssemblyAndAircraft(seed, md, asmName, aircraft);
 		}
 	}
