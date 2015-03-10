@@ -213,6 +213,14 @@ void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, c
 
 void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
 {
+	/* The ufocrash map is a special one. The mapdef should not define single- nor
+	multiplayer mode. It uses one assembly for each ufo defined in the mapdef,
+	where the assembly name is equal the name of the UFO. */
+	if (Q_streq(md->id, "ufocrash")) {
+		testCountSpawnpointsForMapInSingleplayerMode(seed, md, ufo, aircraft, ufo);
+		return;
+	}
+
 	if (md->singleplayer)
 		testCountSpawnpointsForMapInSingleplayerMode(seed, md, asmName, aircraft, ufo);
 }
@@ -303,11 +311,7 @@ TEST_F(GameTest, CountSpawnpointsRMA)
 	MapDef_Foreach(md) {
 		if (md->mapTheme[0] != '+')
 			continue;
-		/* +ufocrash is a special map - it cannot be tested this way */
-		if (Q_streq(md->mapTheme, "+ufocrash")) {
-			Com_Printf("Test skipped for theme: %s\n", md->mapTheme);
-			continue;
-		}
+
 		testCountSpawnpointsForMap(seed, md);
 	}
 	Com_Printf("CountSpawnpoints - maps tested: RMA %i\n", mapCount);
