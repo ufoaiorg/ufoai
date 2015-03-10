@@ -213,12 +213,7 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraft(unsigned int se
 void GameTest::testCountSpawnpointsForMapWithAssembly(unsigned int seed, const mapDef_t *md, const char *asmName)
 {
 	if (LIST_IsEmpty(md->aircraft)) {
-		const humanAircraftType_t types[] = { DROPSHIP_FIREBIRD, DROPSHIP_HERAKLES, DROPSHIP_RAPTOR };
-		for (int i = 0; i < lengthof(types); ++i) {
-			const humanAircraftType_t t = types[i];
-			const char *aircraft = Com_DropShipTypeToShortName(t);
-			testCountSpawnpointsForMapWithAssemblyAndAircraft(seed, md, asmName, aircraft);
-		}
+		testCountSpawnpointsForMapWithAssemblyAndAircraft(seed, md, asmName, nullptr);
 	} else {
 		LIST_Foreach(md->aircraft, const char, aircraft) {
 			testCountSpawnpointsForMapWithAssemblyAndAircraft(seed, md, asmName, aircraft);
