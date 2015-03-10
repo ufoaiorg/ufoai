@@ -162,7 +162,7 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, co
 			<< md->mapTheme << " aircraft: " << aircraft << ", ufo: " << ufo << " => multiplayer mode.";
 		return;
 	}
-#if 0
+
 	mapCount++;
 	const int spawnCivs = static_cast<int>(level.num_spawnpoints[TEAM_CIVILIAN]);
 
@@ -207,7 +207,7 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, co
 			break;
 		}
 	}
-
+#if 0
 	if (coop) {
 		if (ufo) {
 			minAliens = std::min(md->maxAliens, testCountSpawnpointsGetNumteamValue(ufo));
