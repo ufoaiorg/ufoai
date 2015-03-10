@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../server/server.h"
 #include "../client/renderer/r_state.h"
 
+static int mapCount = 0;
+
 class GameTest: public ::testing::Test {
 protected:
 	static void SetUpTestCase() {
@@ -155,6 +157,8 @@ void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, c
 		return;
 	}
 
+	mapCount++;
+
 	/* The number of human spawnpoints required on the map depends on the 'numteam' value
 	   of the used dropship, if any. */
 	int minHumans;
@@ -273,12 +277,14 @@ TEST_F(GameTest, CountSpawnpointsStatic)
 	}
 	srand(seed);
 
+	mapCount = 0;
 	const mapDef_t* md;
 	MapDef_Foreach(md) {
 		if (md->mapTheme[0] == '+')
 			continue;
 		testCountSpawnpointsForMap(seed, md);
 	}
+	Com_Printf("CountSpawnpoints - maps tested: RMA %i\n", mapCount);
 }
 
 TEST_F(GameTest, CountSpawnpointsRMA)
@@ -292,6 +298,7 @@ TEST_F(GameTest, CountSpawnpointsRMA)
 	}
 	srand(seed);
 
+	mapCount = 0;
 	const mapDef_t* md;
 	MapDef_Foreach(md) {
 		if (md->mapTheme[0] != '+')
@@ -303,6 +310,7 @@ TEST_F(GameTest, CountSpawnpointsRMA)
 		}
 		testCountSpawnpointsForMap(seed, md);
 	}
+	Com_Printf("CountSpawnpoints - maps tested: RMA %i\n", mapCount);
 }
 
 TEST_F(GameTest, DoorTrigger)
