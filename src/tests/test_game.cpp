@@ -58,6 +58,7 @@ protected:
 	void testCountSpawnpointsForMapWithAssembly(unsigned int seed, const mapDef_t *md, const char *asmName);
 	void testCountSpawnpointsForMapWithAssemblyAndAircraft(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft);
 	void testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo);
+	void testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo);
 	int testCountSpawnpointsGetNumteamValue(const char *vehicle);
 
 	void SetUp() {
@@ -134,86 +135,82 @@ int GameTest::testCountSpawnpointsGetNumteamValue(const char *vehicle)
 	}
 }
 
-void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
+void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
 {
+	/* Make the test report back the seed number along with any other message. */
 	SCOPED_TRACE(va("seed: %u", seed));
 
-	/* The number of human spawnpoints required on the map depends on the 'numteam' value
-	   of the used dropship, if any. */
-	int maxPlayers;
-	if (aircraft) {
-		maxPlayers = testCountSpawnpointsGetNumteamValue(aircraft);
-	} else {
-		maxPlayers = 12;
-	}
-
-	if (md->multiplayer) {
-		Cvar_Set("sv_maxclients", DOUBLEQUOTE(MAX_CLIENTS));
-	} else {
-		Cvar_Set("sv_maxclients", "1");
-	}
 	Cvar_Set("sv_maxsoldiersperteam", "128");
-	Cvar_Set("ai_multiplayeraliens", "128");
 	Cvar_Set("ai_singleplayeraliens", "128");
 	Cvar_Set("ai_numcivilians", "128");
 
+	/* load singleplayer map */
+	Cvar_Set("sv_maxclients", "1");
+	Com_Printf("CountSpawnpoints - loading map: seed %i mode singleplayer mapdef %s map %s assembly %s dropship %s ufo %s\n", seed, md->id, md->mapTheme, asmName, aircraft, ufo);
 	try {
 		SV_Map(true, md->mapTheme, asmName, false);
 	} catch (comDrop_t&) {
-		ADD_FAILURE() << "failed to load map " << md->mapTheme << " from mapdef " << md->id;
+		ADD_FAILURE() << "Error: Failed to load assembly " << asmName << " from mapdef " << md->id << ", map "
+			<< md->mapTheme << " aircraft: " << aircraft << ", ufo: " << ufo << " => singleplayer mode.";
 		return;
 	}
 
-	if (md->multiplayer) {
-		int maxAliensForCoop = 0;
-		int expectedMultiplayerSpawnPoints = 0;
-		ASSERT_FALSE(LIST_IsEmpty(md->gameTypes)) << "No gametypes set for mapdef " << md->id;
-		LIST_Foreach(md->gameTypes, const char, gameType) {
-			for (int i = 0; i < csi.numGTs; i++) {
-				const gametype_t* gt = &csi.gts[i];
-				if (!Q_streq(gt->id, gameType))
-					continue;
-				const cvarlist_t* list = gt->cvars;
-				for (int j = 0; j < gt->num_cvars; j++, list++) {
-					if (Q_streq(list->name, "ai_multiplayeraliens")) {
-						maxAliensForCoop = std::max(maxAliensForCoop, atoi(list->value));
-					} else if (Q_streq(list->name, "sv_maxsoldiersperteam")) {
-						expectedMultiplayerSpawnPoints = std::max(expectedMultiplayerSpawnPoints, atoi(list->value));
-					}
-				}
-			}
-		}
-
-		const int startTeam = TEAM_CIVILIAN + 1;
-		for (int i = startTeam; i < startTeam + md->teams; ++i) {
-			ASSERT_TRUE(i <= TEAM_MAX_HUMAN) << "Map " << md->mapTheme << " from mapdef " << md->id << " has too many team set";
-			const int spawnPoints = static_cast<int>(level.num_spawnpoints[i]);
-			Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
-			EXPECT_GE(spawnPoints, maxPlayers) << "Map " << md->mapTheme
-					<< " from mapdef " << md->id << " only " << spawnPoints << " spawnpoints for team " << i << " (aircraft: "
-					<< aircraft << ") (ufo: " << ufo << ") => multiplayer mode";
-			EXPECT_GE(spawnPoints, expectedMultiplayerSpawnPoints) << "Map " << md->mapTheme
-					<< " from mapdef " << md->id << " only " << spawnPoints << " spawnpoints for team " << i << " (aircraft: "
-					<< aircraft << ") (ufo: " << ufo << ") (gametype wants more spawn positions) => multiplayer mode";
-		}
-		const int alienSpawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_ALIEN]);
-		EXPECT_GE(alienSpawnPoints, maxAliensForCoop) << "Map " << md->mapTheme
-							<< " from mapdef " << md->id << " defines a coop game mode but does not have enough alien spawn positions for that. We would need "
-							<< maxAliensForCoop << " spawn positions for aliens => multiplayer mode";
+	/* The number of human spawnpoints required on the map depends on the 'numteam' value
+	   of the used dropship, if any. */
+	int minHumans;
+	if (aircraft) {
+		minHumans = testCountSpawnpointsGetNumteamValue(aircraft);
 	} else {
-		const int spawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_PHALANX]);
-		Com_Printf("Map: %s Mapdef %s Spawnpoints: %i\n", md->mapTheme, md->id, spawnPoints);
-		EXPECT_GE(spawnPoints, maxPlayers) << "Map " << md->mapTheme
-				<< " from mapdef " << md->id << " only " << spawnPoints << " human spawnpoints (aircraft: "
-				<< aircraft << ") (ufo: " << ufo << ") => singleplayer mode";
-		const int alienSpawnPoints = static_cast<int>(level.num_spawnpoints[TEAM_ALIEN]);
-		EXPECT_GE(alienSpawnPoints, 1) << "Map " << md->mapTheme
-				<< " from mapdef " << md->id << " only " << alienSpawnPoints << " alien spawnpoints (aircraft: "
-				<< aircraft << ") (ufo: " << ufo << ") => singleplayer mode";
-		EXPECT_GE(alienSpawnPoints, md->maxAliens) << "Map " << md->mapTheme
-				<< " from mapdef " << md->id << " only " << alienSpawnPoints << " alien spawnpoints but " << md->maxAliens
-				<< " expected (aircraft: " << aircraft << ") (ufo: " << ufo << ") => singleplayer mode";
+		minHumans = 12;
 	}
+
+	/* How many aliens do we need to have on the map, at least?
+	   The mapdef defines the map to support up to 'maxaliens' aliens, so the map should have
+	   at least this number of spawnpoints available.
+	   However, this number must not be higher than the 'numteam' value of the used UFO, if any. */
+	int minAliens;
+	if (ufo)  {
+		minAliens = std::min(md->maxAliens, testCountSpawnpointsGetNumteamValue(ufo));
+	}else {
+		minAliens = md->maxAliens;
+	}
+
+	/* Count the spawnpoints available on the map. */
+	const int spawnCivs = static_cast<int>(level.num_spawnpoints[TEAM_CIVILIAN]);
+	const int spawnHumans = static_cast<int>(level.num_spawnpoints[TEAM_PHALANX]);
+	const int spawnAliens = static_cast<int>(level.num_spawnpoints[TEAM_ALIEN]);
+
+	/* Make gtest report back in case there are not enough human spawnpoints. */
+	EXPECT_GE(spawnHumans, minHumans) << "Error: Assembly " << asmName << " in mapdef " << md->id
+		<< " from map " << md->mapTheme << " in singleplayer mode (aircraft: " << aircraft
+		<< " ufo: " << ufo << "): Only " << spawnHumans << " human spawnpoints but " << minHumans
+		<< " expected.";
+	/* Make gtest report back in case there are not enough alien spawnpoints. */
+	EXPECT_GE(spawnAliens, minAliens) << "Error: Assembly " << asmName << " in mapdef " << md->id
+		<< " from map " << md->mapTheme << " in singleplayer mode (aircraft: " << aircraft
+		<< " ufo: " << ufo << "): Only " << spawnAliens << " alien spawnpoints but " << minAliens
+		<< " expected.";
+
+	/* Print report to log. */
+	Com_Printf("CountSpawnpoints - map: mode singleplayer\n");
+	Com_Printf("CountSpawnpoints - map: mapdef %s\n", md->id);
+	Com_Printf("CountSpawnpoints - map: map %s\n", md->mapTheme);
+	Com_Printf("CountSpawnpoints - map: assembly %s\n", asmName);
+	Com_Printf("CountSpawnpoints - map: aircraft %s \n", aircraft);
+	Com_Printf("CountSpawnpoints - map: ufo %s\n", ufo);
+	Com_Printf("CountSpawnpoints - count spawnpoints: civilian %i\n", spawnCivs);
+	Com_Printf("CountSpawnpoints - count spawnpoints: singleplayer needs/found %i/%i\n", minHumans, spawnHumans);
+	Com_Printf("CountSpawnpoints - count spawnpoints: alien needs/found %i/%i\n", minAliens, spawnAliens);
+	if (spawnHumans < minHumans)
+		Com_Printf("CountSpawnpoints - error: missing spawnpoints - singleplayer needs/found %i/%i\n", minHumans, spawnHumans);
+	if (spawnAliens < minAliens)
+		Com_Printf("CountSpawnpoints - error: missing spawnpoints - alien needs/found %i/%i\n", minAliens, spawnAliens);
+}
+
+void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
+{
+	if (md->singleplayer)
+		testCountSpawnpointsForMapInSingleplayerMode(seed, md, asmName, aircraft, ufo);
 }
 
 void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraft(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft)
