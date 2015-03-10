@@ -162,7 +162,7 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, co
 			<< md->mapTheme << " aircraft: " << aircraft << ", ufo: " << ufo << " => multiplayer mode.";
 		return;
 	}
-
+#if 0
 	mapCount++;
 	const int spawnCivs = static_cast<int>(level.num_spawnpoints[TEAM_CIVILIAN]);
 
@@ -246,6 +246,7 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, co
 		if (spawnAliens < minAliens)
 			Com_Printf("CountSpawnpoints - error: missing spawnpoints - alien needs/found %i/%i\n", minAliens, spawnAliens);
 	}
+#endif
 }
 
 void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
