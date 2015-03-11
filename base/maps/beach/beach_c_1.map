@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -718,5 +719,12 @@
 {
 "classname" "info_human_start"
 "origin" "208 48 156"
+"angle" "-90"
+}
+// entity 22
+{
+"classname" "info_2x2_start"
+"origin" "128 224 156"
+"team" "1"
 "angle" "-90"
 }
