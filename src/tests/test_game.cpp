@@ -376,9 +376,14 @@ void GameTest::testCountSpawnpointsForMap(unsigned int seed, const mapDef_t *md)
 	if (md->mapTheme[0] == '.')
 		return;
 
-	const char* filterId = TEST_GetStringProperty("mapdef-id");
-	if (filterId && !Q_streq(filterId, md->id))
-		return;
+	/* Check if we are only testing a certain mapdef. */
+	char* filterId;
+	if (TEST_ExistsProperty("mapdef-id")){
+		filterId = strdup(TEST_GetStringProperty("mapdef-id"));
+		if (filterId && !Q_streq(filterId, md->id)) {
+			return;
+		}
+	}
 
 	Com_Printf("\nCountSpawnpoints - test start: mapdef %s %s\n", md->mapTheme, md->id);
 	/* This also prevents the test from timing out on buildbot. */
