@@ -18,12 +18,12 @@
 // * craft_ufo_bomber		craft_crash_bomber
 // * craft_ufo_corrupter	craft_crash_corrupter
 // * craft_ufo_supply		craft_crash_supply
+// * craft_ufo_gunboat		craft_crash_gunboat
 //
 // valid aircraft values (skirmish only):
 // * craft_drop_firebird
 // * craft_drop_herakles
 // * craft_drop_raptor
-// * craft_drop_dragon
 //
 // Empty block means 'any' value
 //
