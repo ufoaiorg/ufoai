@@ -1967,9 +1967,11 @@ void AI_CheckRespawn (int team)
 		if (actor == nullptr)
 			break;
 
+		/* Some events need the actor added to the client before they are even *parsed*
+		 * - namely all the ones that rely on step times */
+		G_EventActorAdd(PM_ALL, *actor, true);
 		const playermask_t playerMask = G_VisToPM(actor->visflags);
 		G_AppearPerishEvent(playerMask, true, *actor, nullptr);
-		G_EventActorAdd(~playerMask, *actor);
 
 		diff--;
 	}

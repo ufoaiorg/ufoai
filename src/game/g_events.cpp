@@ -502,9 +502,9 @@ void G_EventMoveCameraTo (playermask_t playerMask, const pos3_t pos)
 /**
  * @sa CL_ActorAdd
  */
-void G_EventActorAdd (playermask_t playerMask, const Edict& ent)
+void G_EventActorAdd (playermask_t playerMask, const Edict& ent, const bool instant)
 {
-	G_EventAdd(playerMask, EV_ACTOR_ADD, ent.getIdNum());
+	G_EventAdd(playerMask, EV_ACTOR_ADD | (instant ? EVENT_INSTANTLY : 0), ent.getIdNum());
 	gi.WriteByte(ent.getTeam());
 	gi.WriteByte(ent.chr.teamDef ? ent.chr.teamDef->idx : NONE);
 	gi.WriteByte(ent.chr.gender);
