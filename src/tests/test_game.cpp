@@ -335,7 +335,7 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 		testCountSpawnpointsForMapInSingleplayerMode(seed, md, ufo, aircraft, ufo);
 		return;
 	}
-	if (md->singleplayer)
+	if (md->singleplayer || md->campaign)
 		testCountSpawnpointsForMapInSingleplayerMode(seed, md, asmName, aircraft, ufo);
 #endif
 	if (md->multiplayer)
