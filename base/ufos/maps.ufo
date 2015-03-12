@@ -5499,7 +5499,33 @@ mapdef bridge_mp
 // CITY2 MULTIPLAYER MAP //
 ///////////////////////////
 
-mapdef city2mp
+mapdef city2_mp_coop
+{
+	map				"+city2"
+	description		"_City High-Rise (MP)"
+	params			("city2mp")
+	maxaliens		23
+	singleplayer	false
+	campaign		false
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+}
+
+mapdef city2_mp_PvP
 {
 	map				"+city2"
 	description		"_City High-Rise (MP)"
