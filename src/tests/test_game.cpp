@@ -62,7 +62,8 @@ protected:
 	void testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo);
 	void testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo);
 	void testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo);
-	int testCountSpawnpointsGetNumteamValue(const char *vehicle);
+	int testCountSpawnpointsGetNumteamValueForAircraft(const char *aircraft);
+	int testCountSpawnpointsGetNumteamValueForUFO(const char *ufo);
 	int testCountSpawnpointsGetNum2x2ValueForAircraft(const char *aircraft);
 
 	void SetUp() {
@@ -130,33 +131,48 @@ int GameTest::testCountSpawnpointsGetNum2x2ValueForAircraft(const char *aircraft
 	}
 }
 
-int GameTest::testCountSpawnpointsGetNumteamValue(const char *vehicle)
+int GameTest::testCountSpawnpointsGetNumteamValueForAircraft(const char *aircraft)
 {
 	// TODO: somehow fix these magic values here
-	if (Q_streq(vehicle, "craft_drop_firebird")) {
-		return 8;
-	} else if (Q_streq(vehicle, "craft_drop_raptor")) {
-		return 10;
-	} else if (Q_streq(vehicle, "craft_drop_herakles")) {
+	if (Q_strnull(aircraft)) {
+		/* Could be any, so we return the max supported number. */
 		return 12;
-	} else if (Q_streq(vehicle, "craft_ufo_scout") || Q_streq(vehicle, "craft_crash_scout")) {
+	} else if (Q_streq(aircraft, "craft_drop_firebird")) {
+		return 8;
+	} else if (Q_streq(aircraft, "craft_drop_raptor")) {
+		return 10;
+	} else if (Q_streq(aircraft, "craft_drop_herakles")) {
+		return 12;
+	} else {
+		ADD_FAILURE() << "Error: Mapdef defines unknown aircraft: " << aircraft;
+		return 0;
+	}
+}
+
+int GameTest::testCountSpawnpointsGetNumteamValueForUFO(const char *ufo)
+{
+	// TODO: somehow fix these magic values here
+	if (Q_strnull(ufo)) {
+		/* Could be any, or none (ground based mission), so we return the max supported number. */
+		return 30;
+	} else if (Q_streq(ufo, "craft_ufo_scout") || Q_streq(ufo, "craft_crash_scout")) {
 		return 4;
-	} else if (Q_streq(vehicle, "craft_ufo_fighter") || Q_streq(vehicle, "craft_crash_fighter")) {
+	} else if (Q_streq(ufo, "craft_ufo_fighter") || Q_streq(ufo, "craft_crash_fighter")) {
 		return  6;
-	} else if (Q_streq(vehicle, "craft_ufo_harvester") || Q_streq(vehicle, "craft_crash_harvester")) {
+	} else if (Q_streq(ufo, "craft_ufo_harvester") || Q_streq(ufo, "craft_crash_harvester")) {
 		return  8;
-	} else if (Q_streq(vehicle, "craft_ufo_corrupter") || Q_streq(vehicle, "craft_crash_corrupter")) {
+	} else if (Q_streq(ufo, "craft_ufo_corrupter") || Q_streq(ufo, "craft_crash_corrupter")) {
 		return  10;
-	} else if (Q_streq(vehicle, "craft_ufo_supply") || Q_streq(vehicle, "craft_crash_supply")) {
+	} else if (Q_streq(ufo, "craft_ufo_supply") || Q_streq(ufo, "craft_crash_supply")) {
 		return  12;
-	} else if (Q_streq(vehicle, "craft_ufo_gunboat") || Q_streq(vehicle, "craft_crash_gunboat")) {
+	} else if (Q_streq(ufo, "craft_ufo_gunboat") || Q_streq(ufo, "craft_crash_gunboat")) {
 		return  12;
-	} else if (Q_streq(vehicle, "craft_ufo_bomber") || Q_streq(vehicle, "craft_crash_bomber")) {
+	} else if (Q_streq(ufo, "craft_ufo_bomber") || Q_streq(ufo, "craft_crash_bomber")) {
 		return  18;
-	} else if (Q_streq(vehicle, "craft_ufo_ripper") || Q_streq(vehicle, "craft_crash_ripper")) {
+	} else if (Q_streq(ufo, "craft_ufo_ripper") || Q_streq(ufo, "craft_crash_ripper")) {
 		return  14;
 	} else {
-		ADD_FAILURE() << "Error: Mapdef defines unknown aircraft: " << vehicle;
+		ADD_FAILURE() << "Error: Mapdef defines unknown UFO: " << ufo;
 		return 0;
 	}
 }
@@ -250,13 +266,8 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, co
 	coop = 1;
 	minMP = 12;
 #endif
-	if (coop) {
-		if (ufo) {
-			minAliens = std::min(md->maxAliens, testCountSpawnpointsGetNumteamValue(ufo));
-		} else {
-			minAliens = md->maxAliens;
-		}
-	}
+	if (coop)
+		minAliens = std::min(md->maxAliens, testCountSpawnpointsGetNumteamValueForUFO(ufo));
 
 	const int startTeam = TEAM_CIVILIAN + 1;
 	/* For every single mp team defined in the mapdef - check if there are enough spawnpoints available. */
@@ -314,12 +325,7 @@ void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, c
 
 	/* The number of human spawnpoints required on the map depends on the 'numteam' value
 	   of the used dropship, if any. */
-	int minHumans;
-	if (aircraft) {
-		minHumans = testCountSpawnpointsGetNumteamValue(aircraft);
-	} else {
-		minHumans = 12;
-	}
+	const int minHumans = testCountSpawnpointsGetNumteamValueForAircraft(aircraft);
 
 	/* The number of spawnpoints for 2x2 units required on the map depends on the number
 	   of UGVs the aircraft can transport. */
@@ -329,12 +335,7 @@ void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, c
 	   The mapdef defines the map to support up to 'maxaliens' aliens, so the map should have
 	   at least this number of spawnpoints available.
 	   However, this number must not be higher than the 'numteam' value of the used UFO, if any. */
-	int minAliens;
-	if (ufo)  {
-		minAliens = std::min(md->maxAliens, testCountSpawnpointsGetNumteamValue(ufo));
-	}else {
-		minAliens = md->maxAliens;
-	}
+	const int minAliens = std::min(md->maxAliens, testCountSpawnpointsGetNumteamValueForUFO(ufo));
 
 	/* Count the spawnpoints available on the map. */
 	const int spawnCivs = static_cast<int>(level.num_spawnpoints[TEAM_CIVILIAN]);
