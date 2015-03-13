@@ -184,6 +184,22 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, co
 	/* The number of player spawnpoints required for each team is determined
 	   by the value of sv_maxsoldiersperteam given in the gametype def. */
 	int minMP = 0;
+
+	LIST_Foreach(md->gameTypes, const char, gameType) {
+		for (int i = 0; i < csi.numGTs; i++) {
+			const gametype_t* gt = &csi.gts[i];
+			if (!Q_streq(gt->id, gameType))
+				continue;
+			const cvarlist_t* list = gt->cvars;
+			for (int j = 0; j < gt->num_cvars; j++, list++) {
+				if (Q_streq(list->name, "ai_multiplayeraliens")) {
+					coop = std::max(coop, atoi(list->value));
+				} else if (Q_streq(list->name, "sv_maxsoldiersperteam")) {
+					minMP = std::max(minMP, atoi(list->value));
+				}
+			}
+		}
+	}
 #if 0
 	LIST_Foreach(md->gameTypes, const char, gameType) {
 		/* For every mp gametype given in the mapdef ... */
@@ -207,10 +223,10 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, co
 			break;
 		}
 	}
-#endif
+
 	coop = 1;
 	minMP = 12;
-
+#endif
 	if (coop) {
 		if (ufo) {
 			minAliens = std::min(md->maxAliens, testCountSpawnpointsGetNumteamValue(ufo));
