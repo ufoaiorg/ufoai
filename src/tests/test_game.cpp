@@ -343,7 +343,6 @@ void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, c
 
 void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
 {
-#if 0
 	/* The ufocrash map is a special one. The mapdef should not define single- nor
 	multiplayer mode. It uses one assembly for each ufo defined in the mapdef,
 	where the assembly name is equal the name of the UFO. */
@@ -353,7 +352,7 @@ void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned 
 	}
 	if (md->singleplayer || md->campaign)
 		testCountSpawnpointsForMapInSingleplayerMode(seed, md, asmName, aircraft, ufo);
-#endif
+
 	if (md->multiplayer)
 		testCountSpawnpointsForMapInMultiplayerMode(seed, md, asmName, aircraft, ufo);
 
