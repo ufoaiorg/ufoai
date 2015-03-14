@@ -323,6 +323,9 @@ void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, c
 
 	mapCount++;
 
+	/* This is the max number of aliens the UFO can bring to the battlefield. */
+	const int numteamUFO = testCountSpawnpointsGetNumteamValueForUFO(ufo);
+
 	/* The number of human spawnpoints required on the map depends on the 'numteam' value
 	   of the used dropship, if any. */
 	const int minHumans = testCountSpawnpointsGetNumteamValueForAircraft(aircraft);
@@ -335,7 +338,7 @@ void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, c
 	   The mapdef defines the map to support up to 'maxaliens' aliens, so the map should have
 	   at least this number of spawnpoints available.
 	   However, this number must not be higher than the 'numteam' value of the used UFO, if any. */
-	const int minAliens = std::min(md->maxAliens, testCountSpawnpointsGetNumteamValueForUFO(ufo));
+	const int minAliens = std::min(md->maxAliens, numteamUFO);
 
 	/* Count the spawnpoints available on the map. */
 	const int spawnCivs = static_cast<int>(level.num_spawnpoints[TEAM_CIVILIAN]);
@@ -358,6 +361,11 @@ void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, c
 		<< " from map " << md->mapTheme << " in singleplayer mode (aircraft: " << aircraft
 		<< " ufo: " << ufo << "): Only " << spawnHuman2x2 << " human 2x2 spawnpoints but " << minHuman2x2
 		<< " expected.";
+	/* Make gtest report back if the number of aliens allowed on the map is smaller than the crew number of the used UFO, if any. */
+	if (ufo)
+		EXPECT_GE(md->maxAliens, numteamUFO) << "Error: Assembly " << asmName << " in mapdef " << md->id
+			<< " from map " << md->mapTheme << " in singleplayer mode (aircraft: " << aircraft
+			<< " ufo: " << ufo << "): The number of aliens allowed on the map is smaller than expected.";
 
 	/* Print report to log. */
 	Com_Printf("CountSpawnpoints - map: mode singleplayer\n");
@@ -376,6 +384,11 @@ void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, c
 		Com_Printf("CountSpawnpoints - error: missing spawnpoints - singleplayer_2x2 needs/found %i/%i\n", minHuman2x2, spawnHuman2x2);
 	if (spawnAliens < minAliens)
 		Com_Printf("CountSpawnpoints - error: missing spawnpoints - alien needs/found %i/%i\n", minAliens, spawnAliens);
+	if (ufo) {
+		if (md->maxAliens < numteamUFO) {
+			Com_Printf("CountSpawnpoints - error: mapdef parameter - maxaliens needs/found %i/%i\n", numteamUFO, md->maxAliens);
+		}
+	}
 }
 
 void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
