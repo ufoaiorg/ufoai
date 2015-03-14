@@ -1992,3 +1992,31 @@
 ( -352 102.5 204.5 ) ( -352 103.5 205.25 ) ( -224 102.5 204.5 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
 }
 }
+// entity 25
+{
+"classname" "info_alien_start"
+"origin" "304 272 156"
+"angle" "90"
+}
+// entity 26
+{
+"classname" "info_alien_start"
+"origin" "80 208 156"
+}
+// entity 27
+{
+"classname" "info_alien_start"
+"origin" "464 464 156"
+}
+// entity 28
+{
+"classname" "info_alien_start"
+"origin" "400 144 156"
+"angle" "-90"
+}
+// entity 29
+{
+"classname" "info_alien_start"
+"origin" "336 48 156"
+"angle" "180"
+}

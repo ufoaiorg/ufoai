@@ -299,3 +299,14 @@
 "origin" "20 128 62"
 "spawnflags" "511"
 }
+// entity 7
+{
+"classname" "info_alien_start"
+"origin" "48 208 156"
+"angle" "180"
+}
+// entity 8
+{
+"classname" "info_alien_start"
+"origin" "48 48 156"
+}

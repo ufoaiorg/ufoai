@@ -1633,6 +1633,29 @@
 // entity 27
 {
 "classname" "info_alien_start"
+"origin" "272 144 156"
+"angle" "180"
+}
+// entity 28
+{
+"classname" "info_alien_start"
 "origin" "80 304 156"
 "angle" "180"
+}
+// entity 29
+{
+"classname" "info_alien_start"
+"origin" "240 400 156"
+"angle" "90"
+}
+// entity 30
+{
+"classname" "info_alien_start"
+"origin" "464 304 156"
+}
+// entity 31
+{
+"classname" "info_alien_start"
+"origin" "464 80 156"
+"angle" "-90"
 }

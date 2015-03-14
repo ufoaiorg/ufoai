@@ -1831,3 +1831,14 @@
 ( 355 128 600.25 ) ( 357 126 599.375 ) ( 355 126 600.25 ) tex_common/nodraw 0 0 0 0.5 0.5 61440 0 0
 }
 }
+// entity 21
+{
+"classname" "info_alien_start"
+"origin" "112 80 156"
+"angle" "-90"
+}
+// entity 22
+{
+"classname" "info_alien_start"
+"origin" "176 240 156"
+}
