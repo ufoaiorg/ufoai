@@ -120,9 +120,7 @@ static inline byte CIN_ROQ_ClampByte (int value)
  */
 static void CIN_ROQ_ApplyVector2x2 (cinematic_t* cin, int x, int y, const byte* indices)
 {
-	int i;
-
-	for (i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) {
 		const int xp = x + roqCin_quadOffsets2[0][i];
 		const int yp = y + roqCin_quadOffsets2[1][i];
 		const unsigned int* src = (const unsigned int*)ROQCIN.quadVectors + (indices[i] * 4);
@@ -143,9 +141,7 @@ static void CIN_ROQ_ApplyVector2x2 (cinematic_t* cin, int x, int y, const byte* 
  */
 static void CIN_ROQ_ApplyVector4x4 (cinematic_t* cin, int x, int y, const byte* indices)
 {
-	int i;
-
-	for (i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) {
 		const int xp = x + roqCin_quadOffsets4[0][i];
 		const int yp = y + roqCin_quadOffsets4[1][i];
 		const unsigned int* src = (const unsigned int*)ROQCIN.quadVectors + (indices[i] * 4);
@@ -184,13 +180,12 @@ static void CIN_ROQ_ApplyVector4x4 (cinematic_t* cin, int x, int y, const byte* 
  */
 static void CIN_ROQ_ApplyMotion4x4 (cinematic_t* cin, int x, int y, int mx, int my, int mv)
 {
-	int i;
 	const int xp = x + 8 - (mv >> 4) - mx;
 	const int yp = y + 8 - (mv & 15) - my;
 	unsigned const* src = ROQCIN.frameBuffer[1] + (yp * ROQCIN.frameWidth + xp);
 	unsigned*       dst = ROQCIN.frameBuffer[0] + (y  * ROQCIN.frameWidth + x);
 
-	for (i = 0; i < 4; i++, src += ROQCIN.frameWidth, dst += ROQCIN.frameWidth) {
+	for (int i = 0; i < 4; i++, src += ROQCIN.frameWidth, dst += ROQCIN.frameWidth) {
 		dst[0] = src[0];
 		dst[1] = src[1];
 		dst[2] = src[2];
@@ -203,13 +198,12 @@ static void CIN_ROQ_ApplyMotion4x4 (cinematic_t* cin, int x, int y, int mx, int 
  */
 static void CIN_ROQ_ApplyMotion8x8 (cinematic_t* cin, int x, int y, int mx, int my, int mv)
 {
-	int i;
 	const int xp = x + 8 - (mv >> 4) - mx;
 	const int yp = y + 8 - (mv & 15) - my;
 	unsigned const* src = ROQCIN.frameBuffer[1] + (yp * ROQCIN.frameWidth + xp);
 	unsigned*       dst = ROQCIN.frameBuffer[0] + (y  * ROQCIN.frameWidth + x);
 
-	for (i = 0; i < 8; i++, src += ROQCIN.frameWidth, dst += ROQCIN.frameWidth) {
+	for (int i = 0; i < 8; i++, src += ROQCIN.frameWidth, dst += ROQCIN.frameWidth) {
 		dst[0] = src[0];
 		dst[1] = src[1];
 		dst[2] = src[2];
@@ -249,7 +243,6 @@ static void CIN_ROQ_DecodeInfo (cinematic_t* cin, const byte* data)
 static void CIN_ROQ_DecodeCodeBook (cinematic_t* cin, const byte* data)
 {
 	int		numQuadVectors, numQuadCells;
-	int		i;
 
 	if (ROQCIN.chunk.flags) {
 		numQuadVectors = (ROQCIN.chunk.flags >> 8) & 0xFF;
@@ -263,7 +256,7 @@ static void CIN_ROQ_DecodeCodeBook (cinematic_t* cin, const byte* data)
 	}
 
 	/* Decode YUV quad vectors to RGB */
-	for (i = 0; i < numQuadVectors; i++) {
+	for (int i = 0; i < numQuadVectors; i++) {
 		const int r = roqCin_yuvTable.vr[data[5]];
 		const int g = roqCin_yuvTable.ug[data[4]] + roqCin_yuvTable.vg[data[5]];
 		const int b = roqCin_yuvTable.ub[data[4]];
@@ -292,7 +285,7 @@ static void CIN_ROQ_DecodeCodeBook (cinematic_t* cin, const byte* data)
 	}
 
 	/* Copy quad cells */
-	for (i = 0; i < numQuadCells; i++) {
+	for (int i = 0; i < numQuadCells; i++) {
 		ROQCIN.quadCells[i].index[0] = data[0];
 		ROQCIN.quadCells[i].index[1] = data[1];
 		ROQCIN.quadCells[i].index[2] = data[2];
@@ -307,29 +300,23 @@ static void CIN_ROQ_DecodeCodeBook (cinematic_t* cin, const byte* data)
  */
 static void CIN_ROQ_DecodeVideo (cinematic_t* cin, const byte* data)
 {
-	int		vqFlag, vqFlagPos, vqCode;
-	int		xPos, yPos, xMot, yMot;
-	int		x, y;
-	int		index;
-	int		i;
-
 	if (!ROQCIN.frameBuffer[0] || !ROQCIN.frameBuffer[1])
 		return;		/* No frame buffer */
 
-	vqFlag = 0;
-	vqFlagPos = 0;
+	int vqFlag = 0;
+	int vqFlagPos = 0;
 
-	xPos = 0;
-	yPos = 0;
+	int xPos = 0;
+	int yPos = 0;
 
-	xMot = (char)((ROQCIN.chunk.flags >> 8) & 0xFF);
-	yMot = (char)((ROQCIN.chunk.flags >> 0) & 0xFF);
+	const int xMot = (char)((ROQCIN.chunk.flags >> 8) & 0xFF);
+	const int yMot = (char)((ROQCIN.chunk.flags >> 0) & 0xFF);
 
-	index = 0;
+	int index = 0;
 
 	while (1) {
-		for (y = yPos; y < yPos + 16; y += 8) {
-			for (x = xPos; x < xPos + 16; x += 8) {
+		for (int y = yPos; y < yPos + 16; y += 8) {
+			for (int x = xPos; x < xPos + 16; x += 8) {
 				if (!vqFlagPos) {
 					vqFlagPos = 7;
 					vqFlag = data[index + 0] | (data[index + 1] << 8);
@@ -338,7 +325,7 @@ static void CIN_ROQ_DecodeVideo (cinematic_t* cin, const byte* data)
 				} else
 					vqFlagPos--;
 
-				vqCode = vqFlag & ROQ_ID_CCC;
+				int vqCode = vqFlag & ROQ_ID_CCC;
 				vqFlag <<= 2;
 
 				switch (vqCode) {
@@ -351,7 +338,7 @@ static void CIN_ROQ_DecodeVideo (cinematic_t* cin, const byte* data)
 					index += 1;
 					break;
 				case ROQ_ID_CCC:
-					for (i = 0; i < 4; i++) {
+					for (int i = 0; i < 4; i++) {
 						const int xp = x + roqCin_quadOffsets4[0][i];
 						const int yp = y + roqCin_quadOffsets4[1][i];
 
@@ -417,9 +404,9 @@ static void CIN_ROQ_DecodeSoundMono (cinematic_t* cin, const byte* data)
 {
 	short samples[ROQ_MAX_CHUNK_SIZE * 2];
 	int prev = 0;
-	int i, j;
+	int i = 0;
 
-	for (i = 0, j = 0; i < ROQCIN.chunk.size; i++, j += 2) {
+	for (int j = 0; i < ROQCIN.chunk.size; i++, j += 2) {
 		prev = (short)(prev + roqCin_sqrTable[data[i]]);
 		samples[j] = (short)prev;
 		samples[j + 1] = (short)prev;
@@ -456,12 +443,10 @@ static void CIN_ROQ_DecodeSoundStereo (cinematic_t* cin, const byte* data)
  */
 static bool CIN_ROQ_DecodeChunk (cinematic_t* cin)
 {
-	int frame;
-
 	if (ROQCIN.startTime + ((1000 / ROQCIN.frameRate) * ROQCIN.currentFrame) > CL_Milliseconds())
 		return true;
 
-	frame = ROQCIN.currentFrame;
+	const int frame = ROQCIN.currentFrame;
 
 	do {
 		if (ROQCIN.offset >= ROQCIN.size)
@@ -518,13 +503,11 @@ static bool CIN_ROQ_DecodeChunk (cinematic_t* cin)
  */
 static void CIN_ROQ_DrawCinematic (cinematic_t* cin)
 {
-	int texnum;
-
 	assert(cin->status != CIN_STATUS_NONE);
 
 	if (!ROQCIN.frameBuffer[1])
 		return;
-	texnum = R_UploadData("***cinematic***", ROQCIN.frameBuffer[1], ROQCIN.frameWidth, ROQCIN.frameHeight);
+	const int texnum = R_UploadData("***cinematic***", ROQCIN.frameBuffer[1], ROQCIN.frameWidth, ROQCIN.frameHeight);
 	R_DrawTexture(texnum, cin->x, cin->y, cin->w, cin->h);
 }
 
@@ -533,7 +516,7 @@ static void CIN_ROQ_DrawCinematic (cinematic_t* cin)
  */
 bool CIN_ROQ_RunCinematic (cinematic_t* cin)
 {
-	bool runState = CIN_ROQ_DecodeChunk(cin);
+	const bool runState = CIN_ROQ_DecodeChunk(cin);
 	if (runState)
 		CIN_ROQ_DrawCinematic(cin);
 	return runState;
@@ -558,7 +541,6 @@ void CIN_ROQ_CloseCinematic (cinematic_t* cin)
 int CIN_ROQ_OpenCinematic (cinematic_t* cin, const char* fileName)
 {
 	roqChunk_t chunk;
-	int size;
 	byte header[ROQ_CHUNK_HEADER_SIZE];
 
 	if (cin->codecData && (ROQCIN.file.f || ROQCIN.file.z)) {
@@ -571,7 +553,7 @@ int CIN_ROQ_OpenCinematic (cinematic_t* cin, const char* fileName)
 	OBJZERO(ROQCIN);
 
 	/* Open the file */
-	size = FS_OpenFile(fileName, &ROQCIN.file, FILE_READ);
+	const int size = FS_OpenFile(fileName, &ROQCIN.file, FILE_READ);
 	if (!ROQCIN.file.f && !ROQCIN.file.z) {
 		Com_Printf("Cinematic %s not found\n", fileName);
 		return 1;
@@ -621,17 +603,15 @@ int CIN_ROQ_OpenCinematic (cinematic_t* cin, const char* fileName)
 
 void CIN_ROQ_Init (void)
 {
-	int i;
-
 	/* Build square table */
-	for (i = 0; i < 128; i++) {
+	for (int i = 0; i < 128; i++) {
 		const short s = (short)(i * i);
 		roqCin_sqrTable[i] = s;
 		roqCin_sqrTable[i + 128] = -s;
 	}
 
 	/* Set up quad offsets */
-	for (i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) {
 		roqCin_quadOffsets2[0][i] = 2 * (i & 1);
 		roqCin_quadOffsets2[1][i] = 2 * (i >> 1);
 		roqCin_quadOffsets4[0][i] = 4 * (i & 1);
@@ -639,7 +619,7 @@ void CIN_ROQ_Init (void)
 	}
 
 	/* Build YUV table */
-	for (i = 0; i < 256; i++) {
+	for (int i = 0; i < 256; i++) {
 		const float f = (float)(i - 128);
 		roqCin_yuvTable.vr[i] = Q_ftol(f * 1.40200f);
 		roqCin_yuvTable.ug[i] = Q_ftol(f * 0.34414f);
