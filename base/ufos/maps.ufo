@@ -3844,7 +3844,7 @@ mapdef vil2_sp_sml_01
 	map				"+village2"
 	params			("sp_sml_01" "sp_sml_02")
 	description		"_Village 2"
-	maxaliens		16
+	maxaliens		12
 
 	aircraft
 	(
@@ -3888,7 +3888,7 @@ mapdef vil2_medium_noufo
 	map				"+village2"
 	params			("medium_noufo_01" "medium_noufo_02")
 	description		"_Village 2"
-	maxaliens		18
+	maxaliens		12
 
 	aircraft
 	(
