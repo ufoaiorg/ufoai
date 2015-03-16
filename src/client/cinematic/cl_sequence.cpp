@@ -281,9 +281,6 @@ static seq2D_t* SEQ_Find2D (sequenceContext_t* context, const char* name)
  */
 static void SEQ_Render3D (sequenceContext_t* context)
 {
-	seqEnt_t* se;
-	int i;
-
 	if (context->numEnts == 0)
 		return;
 
@@ -294,7 +291,8 @@ static void SEQ_Render3D (sequenceContext_t* context)
 	refdef.mapTiles = cl.mapTiles;
 
 	/* render sequence */
-	for (i = 0, se = context->ents; i < context->numEnts; i++, se++) {
+	for (int i = 0; i < context->numEnts; i++) {
+		seqEnt_t* se = &context->ents[i];
 		if (!se->inuse)
 			continue;
 
@@ -315,9 +313,7 @@ static void SEQ_Render3D (sequenceContext_t* context)
 		VectorCopy(se->angles, ent.angles);
 
 		if (se->parent && se->tag) {
-			seqEnt_t* parent;
-
-			parent = SEQ_FindEnt(context, se->parent);
+			seqEnt_t* parent = SEQ_FindEnt(context, se->parent);
 			if (parent)
 				ent.tagent = parent->ep;
 			ent.tagname = se->tag;
@@ -355,12 +351,11 @@ static void SEQ_Render3D (sequenceContext_t* context)
  */
 static void SEQ_Render2D (sequenceContext_t* context, bool backgroundObjects)
 {
-	seq2D_t* s2d;
-	int i, j;
 	int height = 0;
 
 	/* add texts */
-	for (i = 0, s2d = context->obj2Ds; i < context->numObj2Ds; i++, s2d++) {
+	for (int i = 0; i < context->numObj2Ds; i++) {
+		seq2D_t* s2d = &context->obj2Ds[i];
 		if (!s2d->inuse)
 			continue;
 		if (backgroundObjects != s2d->inBackground)
@@ -371,14 +366,14 @@ static void SEQ_Render2D (sequenceContext_t* context, bool backgroundObjects)
 			s2d->relativePos = false;
 		}
 		/* advance in time */
-		for (j = 0; j < 4; j++) {
+		for (int j = 0; j < 4; j++) {
 			s2d->color[j] += cls.frametime * s2d->fade[j];
 			if (s2d->color[j] < 0.0)
 				s2d->color[j] = 0.0;
 			else if (s2d->color[j] > 1.0)
 				s2d->color[j] = 1.0;
 		}
-		for (j = 0; j < 2; j++) {
+		for (int j = 0; j < 2; j++) {
 			s2d->pos[j] += cls.frametime * s2d->speed[j];
 			s2d->size[j] += cls.frametime * s2d->enlarge[j];
 		}
@@ -514,8 +509,6 @@ static bool SEQ_Execute (sequenceContext_t* context)
  */
 bool SEQ_Render (sequenceContext_t* context)
 {
-	vec3_t pos;
-
 	if (!context->size[0] || !context->size[1])
 		return true;
 
@@ -523,6 +516,7 @@ bool SEQ_Render (sequenceContext_t* context)
 		return false;
 
 	/* center screen */
+	vec3_t pos;
 	pos[0] = context->pos[0] + (context->size[0] - VID_NORM_WIDTH) / 2;
 	pos[1] = context->pos[1] + (context->size[1] - VID_NORM_HEIGHT) / 2;
 	pos[2] = 0;
@@ -542,8 +536,7 @@ bool SEQ_Render (sequenceContext_t* context)
  */
 sequenceContext_t* SEQ_AllocContext (void)
 {
-	sequenceContext_t* context;
-	context = Mem_AllocType(sequenceContext_t);
+	sequenceContext_t* context = Mem_AllocType(sequenceContext_t);
 	return context;
 }
 
@@ -731,8 +724,6 @@ static int SEQ_ExecuteSound (sequenceContext_t* context, const char* name, const
  */
 static int SEQ_ExecuteObj2D (sequenceContext_t* context, const char* name, const char* data)
 {
-	const value_t* vp;
-
 	/* get sequence text */
 	seq2D_t* s2d = SEQ_Find2D(context, name);
 	if (!s2d) {
@@ -757,6 +748,7 @@ static int SEQ_ExecuteObj2D (sequenceContext_t* context, const char* name, const
 
 	/* get values */
 	while (*data) {
+		const value_t* vp;
 		for (vp = seq2D_vals; vp->string; vp++)
 			if (Q_streq(data, vp->string)) {
 				data += strlen(data) + 1;
@@ -788,14 +780,11 @@ static int SEQ_ExecuteObj2D (sequenceContext_t* context, const char* name, const
  */
 static int SEQ_ExecuteDelete (sequenceContext_t* context, const char* name, const char* data)
 {
-	seqEnt_t* se;
-	seq2D_t* s2d;
-
-	se = SEQ_FindEnt(context, name);
+	seqEnt_t* se = SEQ_FindEnt(context, name);
 	if (se)
 		se->inuse = false;
 
-	s2d = SEQ_Find2D(context, name);
+	seq2D_t* s2d = SEQ_Find2D(context, name);
 	if (s2d) {
 		s2d->inuse = false;
 
@@ -866,8 +855,7 @@ CASSERT(lengthof(seqCmdFunc) == lengthof(seqCmdName));
  */
 static int CL_FindSequenceCommand (const char* commandName)
 {
-	int i;
-	for (i = 0; i < SEQ_NUMCMDS; i++) {
+	for (int i = 0; i < SEQ_NUMCMDS; i++) {
 		if (Q_streq(commandName, seqCmdName[i])) {
 			return i;
 		}
@@ -882,8 +870,6 @@ static int CL_FindSequenceCommand (const char* commandName)
 void CL_ParseSequence (const char* name, const char** text)
 {
 	const char* errhead = "CL_ParseSequence: unexpected end of file (sequence ";
-	sequence_t* sp;
-	const char* token;
 	int i;
 
 	/* search for sequences with same name */
@@ -900,13 +886,13 @@ void CL_ParseSequence (const char* name, const char** text)
 	if (numSequences >= MAX_SEQUENCES)
 		Com_Error(ERR_FATAL, "Too many sequences");
 
-	sp = &sequences[numSequences++];
+	sequence_t* sp = &sequences[numSequences++];
 	OBJZERO(*sp);
 	Q_strncpyz(sp->name, name, sizeof(sp->name));
 	sp->start = numSeqCmds;
 
 	/* get it's body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseSequence: sequence def \"%s\" without body ignored\n", name);
@@ -926,7 +912,6 @@ void CL_ParseSequence (const char* name, const char** text)
 		if (i != -1) {
 			int maxLength = MAX_DATA_LENGTH;
 			char* data;
-			seqCmd_t* sc;
 
 			/* found a command */
 			token = Com_EParse(text, errhead, name);
@@ -939,7 +924,7 @@ void CL_ParseSequence (const char* name, const char** text)
 			/* init seqCmd */
 			if (seqCmds == nullptr)
 				seqCmds = Mem_PoolAllocTypeN(seqCmd_t, MAX_SEQCMDS, cl_genericPool);
-			sc = &seqCmds[numSeqCmds++];
+			seqCmd_t* sc = &seqCmds[numSeqCmds++];
 			OBJZERO(*sc);
 			sc->handler = seqCmdFunc[i];
 			sp->length++;
