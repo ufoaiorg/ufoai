@@ -402,7 +402,6 @@ static bool G_ActorDie (Actor* actor, const Edict* attacker)
 	if (actor->isDead())
 		return false;
 
-	G_ReactionFireTargetsDestroy(actor);
 	G_SetState(actor, 1 + rand() % MAX_DEATH);
 	G_ActorSetMaxs(actor);
 
@@ -464,6 +463,8 @@ bool G_ActorDieOrStun (Actor* actor, Edict* attacker)
 	actor->resetFloor();
 
 	G_ReactionFireOnDead(actor);
+	if (!actor->isStunned())
+		G_ReactionFireTargetsDestroy(actor);
 
 	return true;
 }

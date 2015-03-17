@@ -276,8 +276,10 @@ void ReactionFireTargets::destroy (const Edict* shooter)
 {
 	ReactionFireTargetList* rfts = find(shooter);
 
-	if (!rfts)
+	if (!rfts) {
 		gi.DPrintf("Entity doesn't have rfData");
+		return;
+	}
 
 	rfts->init();
 }
