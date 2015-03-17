@@ -975,6 +975,47 @@ mapdef farm2
 // FOREST RANDOM MAPS //
 ////////////////////////
 
+/* ---------------- WIP ---------------
+mapdef eaglenest
+{
+	map				"+forest"
+	params			("eaglenest")
+	description		"_Mountain Estate"
+	maxaliens		5
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+		"wasted"
+	)
+
+	cultures
+	(
+		// any
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+		"rural"
+	)
+}
+-------------------------------------*/
+
 mapdef gate
 {
 	map				"+forest"
@@ -4175,50 +4216,6 @@ mapdef druglord
 	cultures
 	(
 		// any
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-		"rural"
-	)
-}
-
-///////////////////////////
-// EAGLENEST RANDOM MAPS //
-///////////////////////////
-
-mapdef eaglenest
-{
-	map				"+eaglenest"
-	params			("default")
-	description		"_Mountain Estate"
-	maxaliens		5
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-		"cold"
-	)
-
-	cultures
-	(
-		"western"
-		"eastern"
 	)
 
 	populations
