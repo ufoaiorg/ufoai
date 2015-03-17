@@ -131,6 +131,7 @@ public:
 	void notifyClientMove(const Edict* target, int step, bool startMove);
 	void notifyClientOnStep(const Edict* target, int step);
 	void create(const Edict* shooter);
+	void destroy(const Edict* shooter);
 	void resetTargetList(const Edict* shooter);
 	void notifyClientOnShot(const Edict* target, int step);
 	void notifyClientRFAborted(const Edict* shooter, const Edict* target, int step);
@@ -265,6 +266,20 @@ void ReactionFireTargets::create (const Edict* shooter)
 	}
 
 	gi.Error("Not enough rfData");
+}
+
+/**
+ * @brief Destroys the table of reaction fire targets for the given edict.
+ * @param[in] shooter The reaction firing actor
+ */
+void ReactionFireTargets::destroy (const Edict* shooter)
+{
+	ReactionFireTargetList* rfts = find(shooter);
+
+	if (!rfts)
+		gi.DPrintf("Entity doesn't have rfData");
+
+	rfts->init();
 }
 
 /**
@@ -419,6 +434,15 @@ void G_ReactionFireTargetsInit (void)
 void G_ReactionFireTargetsCreate (const Edict* shooter)
 {
 	rft.create(shooter);
+}
+
+/**
+ * @brief free function to destroy the table of reaction fire targets for the given edict.
+ * @param[in] shooter The reaction firing actor
+ */
+void G_ReactionFireTargetsDestroy (const Edict* shooter)
+{
+	rft.destroy(shooter);
 }
 
 class ReactionFire

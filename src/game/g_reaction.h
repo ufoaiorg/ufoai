@@ -41,3 +41,4 @@ void G_ReactionFireOnEndTurn(void);
 void G_ReactionFireOnDead(const Actor* target);
 void G_ReactionFireTargetsInit(void);
 void G_ReactionFireTargetsCreate(const Edict* shooter);
+void G_ReactionFireTargetsDestroy(const Edict* shooter);

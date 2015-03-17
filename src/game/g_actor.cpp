@@ -402,6 +402,7 @@ static bool G_ActorDie (Actor* actor, const Edict* attacker)
 	if (actor->isDead())
 		return false;
 
+	G_ReactionFireTargetsDestroy(actor);
 	G_SetState(actor, 1 + rand() % MAX_DEATH);
 	G_ActorSetMaxs(actor);
 
