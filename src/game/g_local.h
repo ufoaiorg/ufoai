@@ -109,12 +109,12 @@ typedef struct level_locals_s {
 	int noEquipment;		/**< can be set via worldspawn to force the players to collect their equipment in the map */
 
 	int initialAlienActorsSpawned;
+	unsigned num_spawned[MAX_TEAMS];			/**< the number of spawned actors per team */
+	unsigned num_kills[MAX_TEAMS + 1][MAX_TEAMS];	/**< the amount of kills per team, the first dimension contains the attacker team, the second the victim team */
+	unsigned num_stuns[MAX_TEAMS + 1][MAX_TEAMS];	/**< the amount of stuns per team, the first dimension contains the attacker team, the second the victim team */
 	byte num_alive[MAX_TEAMS];				/**< the number of alive actors per team */
-	byte num_spawned[MAX_TEAMS];			/**< the number of spawned actors per team */
 	byte num_spawnpoints[MAX_TEAMS];		/**< the number of spawn points in the map per team */
 	byte num_2x2spawnpoints[MAX_TEAMS]; 	/**< the number of spawn points for 2x2 units in the map per team */
-	byte num_kills[MAX_TEAMS + 1][MAX_TEAMS];	/**< the amount of kills per team, the first dimension contains the attacker team, the second the victim team */
-	byte num_stuns[MAX_TEAMS + 1][MAX_TEAMS];	/**< the amount of stuns per team, the first dimension contains the attacker team, the second the victim team */
 	Edict* ai_waypointList;
 } level_locals_t;
 
