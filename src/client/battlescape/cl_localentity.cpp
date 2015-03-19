@@ -1488,19 +1488,6 @@ void LE_AddToScene (void)
 				VectorCopy(le.origin, ent.oldorigin);
 			}
 
-			/* Offset the model to be inside the cursor box */
-			switch (le.fieldSize) {
-			case ACTOR_SIZE_NORMAL:
-			case ACTOR_SIZE_2x2:
-				vec3_t modelOffset;
-				ModelOffset(le.fieldSize, modelOffset);
-				R_EntityAddToOrigin(&ent, modelOffset);
-				VectorAdd(ent.oldorigin, modelOffset, ent.oldorigin);
-				break;
-			default:
-				break;
-			}
-
 			if (LE_IsSelected(&le) && le.clientAction != nullptr) {
 				const le_t* action = le.clientAction;
 				if (action->inuse && action->type > ET_NULL && action->type < ET_MAX)
