@@ -373,8 +373,11 @@ void R_LoadActorSkinsFromModel (mAliasMesh_t* outMesh, image_t* defaultSkin)
 			const char* skin = R_GetActorSkin(i);
 			modelSkin->skin = R_AliasModelGetSkin(nullptr, va("%s_%s", defaultSkin->name, skin));
 			/** @todo should we add warning here? */
-			if (modelSkin->skin == r_noTexture)
+			if (modelSkin->skin == r_noTexture) {
+				Com_Printf("R_LoadActorSkinsFromModel: Skin %s_%s not found, defaulting to: %s\n",
+						defaultSkin->name, skin, defaultSkin->name);
 				modelSkin->skin = defaultSkin;
+			}
 		}
 		Q_strncpyz(modelSkin->name, modelSkin->skin->name, sizeof(outMesh->skins[i].name));
 	}

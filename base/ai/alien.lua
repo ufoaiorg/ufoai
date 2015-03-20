@@ -170,14 +170,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 local aila = { }
 
 aila.params = {
-	taman =	{ vis = "team", ord = "dist", pos = "fastest", move = "CW", prio = {"~civilian", "civilian"} },
-	shevaar = { vis = "extra", ord = "path", pos = "farthest", move = "CCW", prio = {"~civilian", "civilian"} },
+	taman =	{ vis = "team", ord = "dist", pos = "best_dam", move = "CW", prio = {"~civilian", "civilian"} },
+	shevaar = { vis = "extra", ord = "path", pos = "fastest", move = "CCW", prio = {"~civilian", "civilian"} },
 	ortnok = { vis = "extra", ord = "HP", pos = "nearest", move = "rand", prio = {"~civilian", "civilian"} },
 	bloodspider = { vis = "team", ord = "path", pos = "nearest", move = "hide", prio = {"civilian", "~civilian"} },
 	bloodspider_adv = { vis = "team", ord = "path", pos = "nearest", move = "hide", prio = {"~alien"} },
-	hovernet = { vis = "team", ord = "dist", pos = "fastest", move = "herd", prio = {"~civilian", "civilian"} },
-	hovernet_adv = { vis = "team", ord = "dist", pos = "farthest", move = "herd", prio = {"~civilian", "civilian"} },
-	default = { vis = "sight", ord = "dist", pos = "fastest", move = "rand", prio = {"~alien"} }
+	hovernet = { vis = "team", ord = "dist", pos = "farthest", move = "herd", prio = {"~civilian", "civilian"} },
+	hovernet_adv = { vis = "team", ord = "dist", pos = "fastest", move = "herd", prio = {"~civilian", "civilian"} },
+	default = { vis = "team", ord = "dist", pos = "fastest", move = "rand", prio = {"~alien"} }
 }
 
 function aila.tustouse ()
@@ -239,6 +239,17 @@ function aila.approach (targets)
 	return nil
 end
 
+function aila.wander ()
+	local search_rad = (aila.tustouse() - ai.tusforshooting() + 1) / 2
+	if search_rad < 1 then
+		search_rad =  (aila.tustouse() + 1) / 2
+	end
+	local next_pos = ai.positionwander(aila.param.move, search_rad, ai.actor():pos(), aila.tustouse())
+	if next_pos then
+		next_pos:goto()
+	end
+end
+
 function aila.search ()
 	-- First check if we have a mission target
 	local targets = ai.missiontargets("all", "alien", "path")
@@ -266,24 +277,23 @@ function aila.search ()
 
 	-- Nothing found, wander around
 	if not found then
+		local done
 		if aila.param.move == "herd" then
-			aila.herd()
+			done = aila.herd()
 		elseif aila.param.move == "hide" then
-			aila.hide()
-		else
-			local search_rad = (aila.tustouse() - ai.tusforshooting() + 1) / 2
-			if search_rad < 1 then
-				search_rad =  aila.tustouse() + 1 / 2
-			end
-			local next_pos = ai.positionwander(aila.param.move, search_rad, ai.actor():pos(), aila.tustouse())
-			if next_pos then
-				next_pos:goto()
-			end
+			done = aila.hide()
+		end
+		if not done then
+			aila.wander()
 		end
 	end
 end
 
 function aila.searchweapon ()
+	if ai.actor():morale() == "panic" then
+		return false
+	end
+
 	local weapons = ai.findweapons()
 	if #weapons > 0 then
 		weapons[1]:goto()
@@ -293,6 +303,10 @@ function aila.searchweapon ()
 end
 
 function aila.readyweapon ()
+	if ai.actor():morale() == "panic" then
+		return false
+	end
+
 	local has_right, has_left = ai.actor():isarmed()
 	local right_ammo, left_ammo = ai.roundsleft()
 	if not right_ammo and not left_ammo then
@@ -421,7 +435,7 @@ function aila.phase_two ()
 					end
 					-- No target in sight or we failed to kill it
 					if not aila.target or not aila.target:isdead() then
-						done = true
+						done = aila.target
 						break
 					end
 					targets = aila.findtargets(aila.param.vis, aila.param.prio[i], aila.param.ord)
@@ -499,9 +513,11 @@ end
 function aila.think ()
 	aila.target = nil
 	aila.prethink()
-	aila.phase_one()
-	aila.phase_two()
-	aila.phase_three()
+	if ai.actor():morale() ~= "panic" then
+		aila.phase_one()
+		aila.phase_two()
+		aila.phase_three()
+	end
 end
 
 --[[
@@ -536,9 +552,9 @@ function aila.team_think ()
 		return false
 	end
 
-	ai.select(aila.squad[aila.actor])
-	ai.print("Phase: ", aila.phase, "Actor: ", aila.squad[aila.actor], aila.actor)
-	if not ai.actor():isdead() then
+	if not aila.squad[aila.actor]:isdead() then
+		ai.print("Actor ", aila.actor, aila.squad[aila.actor], "Phase: ", aila.phase)
+		ai.select(aila.squad[aila.actor])
 		aila.prethink()
 		aila.target = aila.targets[aila.actor]
 		if aila.phase == 1 then

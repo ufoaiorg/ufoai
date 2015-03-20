@@ -3251,12 +3251,35 @@
 // entity 35
 {
 "classname" "info_alien_start"
-"origin" "240 880 156"
-"angle" "-90"
+"origin" "432 272 156"
+"angle" "180"
 }
 // entity 36
 {
 "classname" "info_alien_start"
+"origin" "80 912 156"
+}
+// entity 37
+{
+"classname" "info_alien_start"
+"origin" "240 880 156"
+"angle" "-90"
+}
+// entity 38
+{
+"classname" "info_alien_start"
+"origin" "432 560 156"
+"angle" "-90"
+}
+// entity 39
+{
+"classname" "info_alien_start"
 "origin" "208 48 156"
+"angle" "90"
+}
+// entity 40
+{
+"classname" "info_alien_start"
+"origin" "48 592 156"
 "angle" "90"
 }

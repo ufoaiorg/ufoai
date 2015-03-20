@@ -164,6 +164,11 @@ void SV_Map (bool day, const char* levelstring, const char* assembly, bool verbo
 	char asmTitle[MAX_VAR];
 	int numPlaced = 0;
 	if (levelstring[0] == '+') {
+		if (verbose) {
+			Com_Printf("Map info - map type: RMA\n");
+			Com_Printf("Map info - map name: %s\n", levelstring);
+			Com_Printf("Map info - assembly name: %s\n", assembly);
+		}
 		numPlaced = SV_AssembleMapAndTitle(levelstring + 1, assembly, tileString, posString, entityString, 0, verbose, asmTitle);
 		if (!numPlaced) {
 			Com_Printf("Could not load assembly for map '%s'\n", levelstring);
@@ -173,6 +178,10 @@ void SV_Map (bool day, const char* levelstring, const char* assembly, bool verbo
 		SV_SetConfigString(CS_TILES, levelstring);
 		SV_SetConfigString(CS_POSITIONS, assembly ? assembly : "");
 		SV_SetConfigString(CS_ENTITYSTRING, "");
+		if (verbose) {
+			Com_Printf("Map info - map type: Static\n");
+			Com_Printf("Map info - map name: %s\n", levelstring);
+		}
 	}
 
 	CM_LoadMap(tileString, day, posString, entityString, &sv->mapData, &sv->mapTiles);

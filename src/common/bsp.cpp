@@ -882,9 +882,6 @@ void CM_LoadMap (const char* tiles, bool day, const char* pos, const char* entit
 	OBJZERO(*mapData);
 	OBJZERO(*mapTiles);
 
-	if (pos && *pos)
-		Com_Printf("CM_LoadMap: \"%s\" \"%s\"\n", tiles, pos);
-
 	/* load tiles */
 	while (tiles) {
 		/* get tile name */

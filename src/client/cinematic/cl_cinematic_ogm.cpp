@@ -84,8 +84,6 @@ static yuvTable_t ogmCin_yuvTable;
 
 static int CIN_XVID_Init (cinematic_t* cin)
 {
-	int ret;
-
 	xvid_gbl_init_t xvid_gbl_init;
 	xvid_dec_create_t xvid_dec_create;
 
@@ -108,7 +106,7 @@ static int CIN_XVID_Init (cinematic_t* cin)
 	xvid_dec_create.width = 0;
 	xvid_dec_create.height = 0;
 
-	ret = xvid_decore(nullptr, XVID_DEC_CREATE, &xvid_dec_create, nullptr);
+	const int ret = xvid_decore(nullptr, XVID_DEC_CREATE, &xvid_dec_create, nullptr);
 
 	OGMCIN.xvidDecodeHandle = xvid_dec_create.handle;
 
@@ -117,8 +115,6 @@ static int CIN_XVID_Init (cinematic_t* cin)
 
 static int CIN_XVID_Decode (cinematic_t* cin, unsigned char* input, int inputSize)
 {
-	int ret;
-
 	xvid_dec_frame_t xvid_dec_frame;
 
 	/* Reset all structures */
@@ -144,7 +140,7 @@ static int CIN_XVID_Decode (cinematic_t* cin, unsigned char* input, int inputSiz
 	else
 		xvid_dec_frame.output.csp = XVID_CSP_RGBA;
 
-	ret = xvid_decore(OGMCIN.xvidDecodeHandle, XVID_DEC_DECODE, &xvid_dec_frame, &OGMCIN.xvidDecodeStats);
+	const int ret = xvid_decore(OGMCIN.xvidDecodeHandle, XVID_DEC_DECODE, &xvid_dec_frame, &OGMCIN.xvidDecodeStats);
 
 	return ret;
 }
@@ -283,7 +279,7 @@ static int CIN_XVID_LoadVideoFrame (cinematic_t* cin)
 	OBJZERO(op);
 
 	while (!r && (ogg_stream_packetout(&OGMCIN.os_video, &op))) {
-		int usedBytes = CIN_XVID_Decode(cin, op.packet, op.bytes);
+		const int usedBytes = CIN_XVID_Decode(cin, op.packet, op.bytes);
 		if (OGMCIN.xvidDecodeStats.type == XVID_TYPE_VOL) {
 			if (OGMCIN.outputWidth != OGMCIN.xvidDecodeStats.data.vol.width || OGMCIN.outputHeight
 					!= OGMCIN.xvidDecodeStats.data.vol.height) {
@@ -330,9 +326,7 @@ static int CIN_XVID_LoadVideoFrame (cinematic_t* cin)
  */
 static int CIN_THEORA_FindSizeShift (int x, int y)
 {
-	int i;
-
-	for (i = 0; (y >> i); ++i)
+	for (int i = 0; (y >> i); ++i)
 		if (x == (y >> i))
 			return i;
 
@@ -554,11 +548,6 @@ typedef struct
  */
 int CIN_OGM_OpenCinematic (cinematic_t* cin, const char* filename)
 {
-	int status;
-	ogg_page og;
-	ogg_packet op;
-	int i;
-
 	if (cin->codecData && (OGMCIN.ogmFile.f || OGMCIN.ogmFile.z)) {
 		Com_Printf("WARNING: it seams there was already a ogm running, it will be killed to start %s\n", filename);
 		CIN_OGM_CloseCinematic(cin);
@@ -580,6 +569,7 @@ int CIN_OGM_OpenCinematic (cinematic_t* cin, const char* filename)
 
 	/** @todo FIXME? can serialno be 0 in ogg? (better way to check initialized?) */
 	/** @todo support for more than one audio stream? / detect files with one stream(or without correct ones) */
+	ogg_page og;
 	while (!OGMCIN.os_audio.serialno || !OGMCIN.os_video.serialno) {
 		if (ogg_sync_pageout(&OGMCIN.oy, &og) == 1) {
 			if (og.body_len >= 7 && !memcmp(og.body, "\x01vorbis", 7)) {
@@ -609,11 +599,9 @@ int CIN_OGM_OpenCinematic (cinematic_t* cin, const char* filename)
 					Com_Printf("more than one video stream, in ogm-file(%s) ... we will stay at the first one\n",
 							filename);
 				} else {
-					stream_header_t* sh;
-
 					OGMCIN.videoStreamIsXvid = true;
 
-					sh = (stream_header_t*) (og.body + 1);
+					stream_header_t* sh = (stream_header_t*) (og.body + 1);
 
 					OGMCIN.Vtime_unit = sh->time_unit;
 
@@ -643,7 +631,9 @@ int CIN_OGM_OpenCinematic (cinematic_t* cin, const char* filename)
 	/* load vorbis header */
 	vorbis_info_init(&OGMCIN.vi);
 	vorbis_comment_init(&OGMCIN.vc);
-	i = 0;
+	int i = 0;
+	int status;
+	ogg_packet op;
 	while (i < 3) {
 		status = ogg_stream_packetout(&OGMCIN.os_audio, &op);
 		if (status < 0) {
@@ -718,13 +708,11 @@ int CIN_OGM_OpenCinematic (cinematic_t* cin, const char* filename)
  */
 static void CIN_OGM_DrawCinematic (cinematic_t* cin)
 {
-	int texnum;
-
 	assert(cin->status != CIN_STATUS_NONE);
 
 	if (!OGMCIN.outputBuffer)
 		return;
-	texnum = R_UploadData("***cinematic***", OGMCIN.outputBuffer, OGMCIN.outputWidth, OGMCIN.outputHeight);
+	const int texnum = R_UploadData("***cinematic***", OGMCIN.outputBuffer, OGMCIN.outputWidth, OGMCIN.outputHeight);
 	R_DrawTexture(texnum, cin->x, cin->y, cin->w, cin->h);
 }
 
@@ -785,13 +773,12 @@ void CIN_OGM_CloseCinematic (cinematic_t* cin)
 
 void CIN_OGM_Init (void)
 {
-	long i;
 	const float t_ub = (1.77200f / 2.0f) * (float)(1 << 6) + 0.5f;
 	const float t_vr = (1.40200f / 2.0f) * (float)(1 << 6) + 0.5f;
 	const float t_ug = (0.34414f / 2.0f) * (float)(1 << 6) + 0.5f;
 	const float t_vg = (0.71414f / 2.0f) * (float)(1 << 6) + 0.5f;
 
-	for (i = 0; i < 256; i++) {
+	for (long i = 0; i < 256; i++) {
 		const float x = (float)(2 * i - 255);
 
 		ogmCin_yuvTable.ub[i] = (long)(( t_ub * x) + (1 << 5));

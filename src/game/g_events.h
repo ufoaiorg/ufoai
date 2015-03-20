@@ -36,7 +36,7 @@ typedef unsigned int playermask_t;
 #define PM_ALL			0xFFFFFFFF
 #define G_PlayerToPM(player) ((player).getNum() < game.sv_maxplayersperteam ? 1 << ((player).getNum()) : 0)
 
-void G_EventActorAdd(playermask_t playerMask, const Edict& ent);
+void G_EventActorAdd(playermask_t playerMask, const Edict& ent, const bool instant = false);
 void G_EventActorAppear(playermask_t playerMask, const Actor& check, const Edict* ent);
 void G_EventActorDie(const Edict& ent, bool attacker);
 void G_EventActorFall(const Edict& ent);

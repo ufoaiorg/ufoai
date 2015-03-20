@@ -243,6 +243,7 @@ typedef struct game_import_s {
 	const char* (IMPORT* FS_Gamedir) (void);
 	int (IMPORT* FS_LoadFile) (const char* path, byte** buffer);
 	void (IMPORT* FS_FreeFile) (void* buffer);
+	FILE* (IMPORT* Sys_Fopen) (const char *filename, const char *mode);
 
 	/* network messaging (writing) */
 	void (IMPORT* WriteChar) (char c);

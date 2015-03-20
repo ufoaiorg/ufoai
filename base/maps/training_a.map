@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -3682,5 +3683,26 @@
 {
 "classname" "info_human_start"
 "origin" "528 976 28"
+"angle" "-90"
+}
+// entity 35
+{
+"classname" "info_2x2_start"
+"origin" "704 960 28"
+"team" "1"
+"angle" "-90"
+}
+// entity 36
+{
+"classname" "info_2x2_start"
+"origin" "352 960 28"
+"team" "1"
+"angle" "-90"
+}
+// entity 37
+{
+"classname" "info_2x2_start"
+"origin" "608 960 28"
+"team" "1"
 "angle" "-90"
 }

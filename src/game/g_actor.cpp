@@ -290,7 +290,7 @@ static bool G_ActorStun (Actor* actor, const Edict* attacker)
 void G_ActorModifyCounters (const Edict* attacker, const Edict* victim, int deltaAlive, int deltaKills, int deltaStuns)
 {
 	const int victimTeam = victim->getTeam();
-	const int spawned = level.num_spawned[victimTeam];
+	const unsigned spawned = level.num_spawned[victimTeam];
 	const int attackerTeam = (attacker != nullptr ? attacker->getTeam() : MAX_TEAMS);
 	byte* alive = level.num_alive;
 
@@ -299,14 +299,14 @@ void G_ActorModifyCounters (const Edict* attacker, const Edict* victim, int delt
 		gi.Error("alive counter out of sync");
 
 	if (deltaStuns != 0) {
-		byte* stuns = level.num_stuns[attackerTeam];
+		unsigned* stuns = level.num_stuns[attackerTeam];
 		stuns[victimTeam] += deltaStuns;
 		if (stuns[victimTeam] > spawned)
 			gi.Error("stuns counter out of sync");
 	}
 
 	if (deltaKills != 0) {
-		byte* kills = level.num_kills[attackerTeam];
+		unsigned* kills = level.num_kills[attackerTeam];
 		kills[victimTeam] += deltaKills;
 		if (kills[victimTeam] > spawned)
 			gi.Error("kills counter out of sync");
@@ -463,6 +463,8 @@ bool G_ActorDieOrStun (Actor* actor, Edict* attacker)
 	actor->resetFloor();
 
 	G_ReactionFireOnDead(actor);
+	if (!actor->isStunned())
+		G_ReactionFireTargetsDestroy(actor);
 
 	return true;
 }

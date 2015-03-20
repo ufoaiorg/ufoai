@@ -32,12 +32,18 @@
 // entity 1
 {
 "classname" "info_alien_start"
-"origin" "208 144 156"
-"angle" "-90"
+"origin" "48 176 156"
+"angle" "90"
 }
 // entity 2
 {
 "classname" "info_civilian_start"
 "origin" "112 16 156"
 "angle" "180"
+}
+// entity 3
+{
+"classname" "info_alien_start"
+"origin" "208 144 156"
+"angle" "-90"
 }

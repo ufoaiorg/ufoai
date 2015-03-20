@@ -115,7 +115,6 @@ TEST_F(MapDefTest, MapDefsMultiplayer)
 
 	MapDef_ForeachCondition(md, md->multiplayer) {
 		unsigned int seed;
-		SrvPlayer* player;
 
 		if (filterId && !Q_streq(filterId, md->id))
 			continue;
@@ -132,7 +131,7 @@ TEST_F(MapDefTest, MapDefsMultiplayer)
 		if (LIST_IsEmpty(md->params)) {
 			SV_Map(true, md->mapTheme, nullptr);
 
-			player = PLAYER_NUM(0);
+			SrvPlayer* player = PLAYER_NUM(0);
 			Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");
 			ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
 
@@ -142,7 +141,7 @@ TEST_F(MapDefTest, MapDefsMultiplayer)
 				Com_Printf("testMapDefsMultiplayer: Mapdef %s (param %s)\n", md->id, param);
 				SV_Map(true, md->mapTheme, param);
 
-				player = PLAYER_NUM(0);
+				SrvPlayer* player = PLAYER_NUM(0);
 				Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");
 				ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
 

@@ -1,7 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "5"
 "ambient_day" "0.70 0.70 0.70"
 "contrast" "0.7"
 // brush 0
@@ -40,7 +39,7 @@
 // entity 5
 {
 "classname" "info_player_start"
-"team" "4"
+"team" "1"
 "origin" "656 624 220"
 "angle" "-90"
 }
@@ -48,89 +47,89 @@
 {
 "classname" "info_2x2_start"
 "origin" "640 832 220"
-"team" "4"
+"team" "1"
 "angle" "90"
 }
 // entity 7
 {
 "classname" "info_2x2_start"
 "origin" "672 448 220"
-"team" "4"
+"team" "1"
 "angle" "-90"
 }
 // entity 8
 {
 "classname" "info_player_start"
-"team" "4"
+"team" "1"
 "origin" "656 656 220"
 }
 // entity 9
 {
 "classname" "info_player_start"
-"team" "4"
+"team" "1"
 "origin" "624 624 220"
 "angle" "180"
 }
 // entity 10
 {
 "classname" "info_player_start"
-"team" "4"
+"team" "1"
 "origin" "624 656 220"
 "angle" "90"
 }
 // entity 11
 {
 "classname" "info_player_start"
-"team" "4"
+"team" "1"
 "origin" "624 912 220"
 "angle" "90"
 }
 // entity 12
 {
 "classname" "info_player_start"
-"team" "4"
+"team" "1"
 "origin" "656 912 220"
 "angle" "90"
 }
 // entity 13
 {
 "classname" "info_player_start"
-"team" "4"
+"team" "1"
 "origin" "912 656 220"
 "angle" "0"
 }
 // entity 14
 {
 "classname" "info_player_start"
-"team" "4"
+"team" "1"
 "origin" "912 624 220"
 "angle" "0"
 }
 // entity 15
 {
 "classname" "info_player_start"
-"team" "4"
+"team" "1"
 "origin" "656 368 220"
 "angle" "-90"
 }
 // entity 16
 {
 "classname" "info_player_start"
-"team" "4"
+"team" "1"
 "origin" "624 368 220"
 "angle" "-90"
 }
 // entity 17
 {
 "classname" "info_player_start"
-"team" "4"
+"team" "1"
 "origin" "368 624 220"
 "angle" "180"
 }
 // entity 18
 {
 "classname" "info_player_start"
-"team" "4"
+"team" "1"
 "origin" "368 656 220"
 "angle" "180"
 }

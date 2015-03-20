@@ -1128,7 +1128,9 @@ window hud_default extends hud
 	 * @param <8> Name of the selected firedef of the shooter
 	 */
 	confunc reactionfire_addtarget {
-		call *node:root.reactions@createChild("rf-<1>-<2>", "ReactionFireShooter")
+		if (not exists *node:root.reactions.rf-<1>-<2>) {
+			call *node:root.reactions@createChild("rf-<1>-<2>", "ReactionFireShooter")
+		}
 		*node:root.reactions.rf-<1>-<2>.head_shooter@src = "<3>"
 		*node:root.reactions.rf-<1>-<2>.head_shooter@skin = "<4>"
 		if ( <5> == 1 ) {
@@ -1164,7 +1166,9 @@ window hud_default extends hud
 	 */
 	confunc reactionfire_removetarget {
 		//call *node:root.reactions.rf-<1>-<2>@deletetimed(1500)
-		call *node:root.reactions.rf-<1>-<2>@delete
+		if (exists *node:root.reactions.rf-<1>-<2>) {
+			call *node:root.reactions.rf-<1>-<2>@delete
+		}
 	}
 
 	/**
@@ -1176,23 +1180,25 @@ window hud_default extends hud
 	 * @param <4> Out of range = 1, in range = 0
 	 */
 	confunc reactionfire_updatetarget {
-		*node:root.reactions.rf-<1>-<2>.timeremaining@current = (*node:root.reactions.rf-<1>-<2>.timeremaining@max - <3>)
+		if (exists *node:root.reactions.rf-<1>-<2>) {
+			*node:root.reactions.rf-<1>-<2>.timeremaining@current = (*node:root.reactions.rf-<1>-<2>.timeremaining@max - <3>)
 
-		if ( <4> == 1 ) {
-			// Target is out of range
-			*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.65 0.13 0 1"
-			*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Target out of range"
-		} else {
-			if ( <3> <= 0 ) {
-				// Turn the panel red if the unit is ready to fire
-				*node:root.reactions.rf-<1>-<2>@bgcolor = "0.65 0.13 0 1"
-				*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Target acquired"
-			} elif ( <3> < 5 ) {
-				// Turn the bar yellow if the unit is nearing fire capability
-				*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.83 0.92 0.44 1"
+			if ( <4> == 1 ) {
+				// Target is out of range
+				*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.65 0.13 0 1"
+				*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Target out of range"
 			} else {
-				// Otherwise the bar should be blue
-				*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.1 0.1 0.7 1"
+				if ( <3> <= 0 ) {
+					// Turn the panel red if the unit is ready to fire
+					*node:root.reactions.rf-<1>-<2>@bgcolor = "0.65 0.13 0 1"
+					*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Target acquired"
+				} elif ( <3> < 5 ) {
+					// Turn the bar yellow if the unit is nearing fire capability
+					*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.83 0.92 0.44 1"
+				} else {
+					// Otherwise the bar should be blue
+					*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.1 0.1 0.7 1"
+				}
 			}
 		}
 	}
@@ -1204,9 +1210,11 @@ window hud_default extends hud
 	 * @param <2> target entity number
 	 */
 	confunc reactionfire_shotaborted {
-		*node:root.reactions.rf-<1>-<2>@bgcolor = "0.65 0.13 0 1"
-		*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.65 0.13 0 1"
-		*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Aborting fire!"
+		if (exists *node:root.reactions.rf-<1>-<2>) {
+			*node:root.reactions.rf-<1>-<2>@bgcolor = "0.65 0.13 0 1"
+			*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.65 0.13 0 1"
+			*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Aborting fire!"
+		}
 	}
 
 	// Resets the reaction fire button when new soldier is selected

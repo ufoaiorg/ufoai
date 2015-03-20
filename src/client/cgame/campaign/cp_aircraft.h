@@ -25,6 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "cp_capacity.h"
+#include "cp_radar.h"
+
+class Employee;
+typedef struct technology_s technology_t;
 
 #define MAX_CARGO		32
 #define MAX_AIRCRAFT	64

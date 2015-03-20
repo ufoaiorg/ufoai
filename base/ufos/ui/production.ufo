@@ -3,6 +3,9 @@
 // ==================
 window production
 {
+	{
+		fill		true
+	}
 /*	cmpBaseHeader baseHeader {
 	}
 */

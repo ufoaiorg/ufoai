@@ -822,6 +822,18 @@
 // entity 10
 {
 "classname" "info_alien_start"
+"origin" "16 48 156"
+"angle" "90"
+}
+// entity 11
+{
+"classname" "info_alien_start"
 "origin" "304 144 156"
+"angle" "180"
+}
+// entity 12
+{
+"classname" "info_alien_start"
+"origin" "432 240 156"
 "angle" "180"
 }

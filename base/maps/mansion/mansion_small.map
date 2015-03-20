@@ -2253,7 +2253,7 @@
 // entity 17
 {
 "classname" "info_2x2_start"
-"origin" "64 704 156"
+"origin" "192 704 156"
 "angle" "180"
 "team" "1"
 }
@@ -2760,4 +2760,11 @@
 "classname" "info_player_start"
 "team" "2"
 "origin" "-1360 592 156"
+}
+// entity 70
+{
+"classname" "info_2x2_start"
+"origin" "64 704 156"
+"angle" "180"
+"team" "1"
 }

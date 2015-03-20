@@ -11,7 +11,9 @@ component FoldingList extends panel
  * - Make autosell button work properly
  */
 window market  {
-	{ size	"1024 768" }
+	{
+		fill		true
+	}
 
 	// Base name and container panel
 	BaseContainerPanel base_container

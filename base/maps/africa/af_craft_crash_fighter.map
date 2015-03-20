@@ -2138,3 +2138,20 @@
 "origin" "400 368 32"
 "angle" "-90"
 }
+// entity 44
+{
+"classname" "info_alien_start"
+"origin" "464 112 28"
+"angle" "180"
+}
+// entity 45
+{
+"classname" "info_alien_start"
+"origin" "240 112 28"
+}
+// entity 46
+{
+"classname" "info_alien_start"
+"origin" "464 464 28"
+"angle" "-90"
+}

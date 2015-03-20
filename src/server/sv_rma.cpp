@@ -1143,9 +1143,9 @@ static void SV_BuildMapStrings (const MapInfo* map, char* asmTiles, char* asmPos
 	}
 
 	if (print) {
-		Com_Printf("tiles: %s\n", asmTiles);
-		Com_Printf("pos: %s\n", asmPos);
-		Com_Printf("tiles: %i\n", map->numPlaced);
+		Com_Printf("Map info - tiles used: %s\n", asmTiles);
+		Com_Printf("Map info - tiles pos: %s\n", asmPos);
+		Com_Printf("Map info - tiles count: %i\n", map->numPlaced);
 	}
 }
 

@@ -750,7 +750,7 @@ item smg
 	model			"weapons/smg/smg"
 	weapon			true
 	type			"pistol"
-	animationindex	2
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape			"0 0 3 2"

@@ -227,7 +227,7 @@ void AiAreaSearch::plotPos(const pos3_t origin, int xOfs, int dy) {
 #define SCORE_DAMAGE_FACTOR	1.25f
 #define SCORE_CIV_FACTOR	0.25f
 #define SCORE_DISABLED_FACTOR 0.25f
-#define SCORE_DAMAGE_WORHT_FACTOR	0.1f
+#define SCORE_DAMAGE_WORTH_FACTOR	0.1f
 
 #define SCORE_CIV_RANDOM	10
 #define SCORE_RUN_AWAY		50
@@ -257,7 +257,7 @@ void AiAreaSearch::plotPos(const pos3_t origin, int xOfs, int dy) {
 #define HERD_DIST			25
 #define HOLD_DIST			3
 
-#define CALC_DAMAGE_SAMPLES	10.0
+#define CALC_DAMAGE_SAMPLES	10.0f
 #define INVDEF_FOR_SHOOTTYPE(st) (IS_SHOT_RIGHT(st)?INVDEF(CID_RIGHT):IS_SHOT_LEFT(st)?INVDEF(CID_LEFT):IS_SHOT_HEADGEAR(st)?INVDEF(CID_HEADGEAR):nullptr)
 
 static pathing_t* hidePathingTable;
@@ -361,11 +361,10 @@ static bool AI_CheckFF (const Edict* ent, const vec3_t target, float spread, flo
  * @todo Check whether radius and power of fd are to to big for dist
  * @todo Check whether the alien will die when shooting
  */
-bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef_t* fd, float* dist)
+bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef_t* fd, float dist)
 {
 	/* check range */
-	*dist = VectorDist(actor->origin, check->origin);
-	if (*dist > fd->range)
+	if (dist > fd->range)
 		return false;
 
 	/* if insane, we don't check more */
@@ -373,7 +372,7 @@ bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef
 		return true;
 
 	/* don't shoot - we are too close */
-	if (*dist < fd->splrad)
+	if (dist < fd->splrad)
 		return false;
 
 	/* check FF */
@@ -809,7 +808,7 @@ bool AI_CheckLineOfFire (const Actor* shooter, const Edict* target, const fireDe
 /**
  * @brief Calculate estimated damage per single shoot
  */
-float AI_CalcShotDamage (Actor* actor, Actor* target, const fireDef_t* fd, shoot_types_t shotType)
+float AI_CalcShotDamage (Actor* actor, const Actor* target, const fireDef_t* fd, shoot_types_t shotType)
 {
 	const int shots = ceil(CALC_DAMAGE_SAMPLES / fd->shots);
 	const int zAlign = !fd->gravity && (fd->splrad > 0.0f || target->isStunned()) ? GROUND_DELTA : 0;
@@ -821,7 +820,8 @@ float AI_CalcShotDamage (Actor* actor, Actor* target, const fireDef_t* fd, shoot
 		return 0.0f;
 
 	const int totalCount = mock.enemyCount + mock.friendCount + mock.civilian;
-	const int eCount = totalCount - (mock.friendCount + (G_IsAlien(actor) ? 0 : mock.civilian));
+	const int eCount = totalCount - ((actor->isInsane() ? 0 : mock.friendCount)
+			+ (G_IsAlien(actor) || actor->isInsane() ? 0 : mock.civilian));
 	return mock.damage * (static_cast<float>(eCount) / totalCount) / shots;
 }
 
@@ -833,6 +833,7 @@ static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const
 	bool hasLineOfFire = false;
 	int shotChecked = NONE;
 
+	const float dist = VectorDist(actor->origin, check->origin);
 	for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 		const fireDef_t* fd = &fdArray[fdIdx];
 		const int time = G_ActorGetModifiedTimeForFiredef(actor, fd, false);
@@ -843,8 +844,7 @@ static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const
 			if (stunWeapon && !actor->isInsane() && (check->isStunned() || CHRSH_IsTeamDefRobot(check->chr.teamDef)))
 				return;
 
-			float dist;
-			if (!AI_FighterCheckShoot(actor, check, fd, &dist))
+			if (!AI_FighterCheckShoot(actor, check, fd, dist))
 				continue;
 
 			/*
@@ -873,7 +873,7 @@ static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const
 				dmg = check->HP + SCORE_KILL;
 
 			/* ammo is limited and shooting gives away your position */
-			if (dmg < check->HP * SCORE_DAMAGE_WORHT_FACTOR)
+			if (dmg < check->HP * SCORE_DAMAGE_WORTH_FACTOR)
 				continue;
 
 			/* civilian malus */
@@ -1967,9 +1967,11 @@ void AI_CheckRespawn (int team)
 		if (actor == nullptr)
 			break;
 
+		/* Some events need the actor added to the client before they are even *parsed*
+		 * - namely all the ones that rely on step times */
+		G_EventActorAdd(PM_ALL, *actor, true);
 		const playermask_t playerMask = G_VisToPM(actor->visflags);
 		G_AppearPerishEvent(playerMask, true, *actor, nullptr);
-		G_EventActorAdd(~playerMask, *actor);
 
 		diff--;
 	}

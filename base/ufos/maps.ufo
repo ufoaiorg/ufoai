@@ -18,12 +18,12 @@
 // * craft_ufo_bomber		craft_crash_bomber
 // * craft_ufo_corrupter	craft_crash_corrupter
 // * craft_ufo_supply		craft_crash_supply
+// * craft_ufo_gunboat		craft_crash_gunboat
 //
 // valid aircraft values (skirmish only):
 // * craft_drop_firebird
 // * craft_drop_herakles
 // * craft_drop_raptor
-// * craft_drop_dragon
 //
 // Empty block means 'any' value
 //
@@ -551,7 +551,7 @@ mapdef city3_small_noufo
 	map				"+city3"
 	params			("small_noufo")
 	description		"_Urban Periphery"
-	maxaliens		16
+	maxaliens		12
 
 	aircraft
 	(
@@ -1997,7 +1997,7 @@ mapdef ice_small
 	map				"+ice"
 	params			("small")
 	description		"_Frozen Landscape"
-	maxaliens		5
+	maxaliens		6
 
 	aircraft
 	(
@@ -3844,7 +3844,7 @@ mapdef vil2_sp_sml_01
 	map				"+village2"
 	params			("sp_sml_01" "sp_sml_02")
 	description		"_Village 2"
-	maxaliens		21
+	maxaliens		12
 
 	aircraft
 	(
@@ -3888,7 +3888,7 @@ mapdef vil2_medium_noufo
 	map				"+village2"
 	params			("medium_noufo_01" "medium_noufo_02")
 	description		"_Village 2"
-	maxaliens		18
+	maxaliens		12
 
 	aircraft
 	(
@@ -3940,7 +3940,7 @@ mapdef base_initial
 	params		("initial")
 	description	"_PHALANX Base Under Attack"
 	campaign	false
-	maxaliens	14
+	maxaliens	12
 	missionbriefing		"*msgid:mission_briefing_baseattack"
 
 	aircraft
@@ -3975,7 +3975,7 @@ mapdef base_random
 	params		("random")
 	description	"_PHALANX Base Under Attack"
 	campaign	false
-	maxaliens	16
+	maxaliens	12
 	missionbriefing		"*msgid:mission_briefing_baseattack"
 
 	aircraft
@@ -5499,7 +5499,33 @@ mapdef bridge_mp
 // CITY2 MULTIPLAYER MAP //
 ///////////////////////////
 
-mapdef city2mp
+mapdef city2_mp_coop
+{
+	map				"+city2"
+	description		"_City High-Rise (MP)"
+	params			("city2mp")
+	maxaliens		23
+	singleplayer	false
+	campaign		false
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+}
+
+mapdef city2_mp_PvP
 {
 	map				"+city2"
 	description		"_City High-Rise (MP)"

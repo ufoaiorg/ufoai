@@ -520,11 +520,11 @@ void Sys_OpenURL (const char* url)
 	ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
-FILE* Sys_Fopen(const char *filename, const char *mode)
+FILE* Sys_Fopen (const char *filename, const char *mode)
 {
 	WCHAR wname[MAX_OSPATH];
 	WCHAR wmode[MAX_VAR];
 	Sys_Utf8ToUtf16(filename, wname, lengthof(wname));
-	Sys_Utf8ToUtf16(mode, wmode, MAX_VAR);
+	Sys_Utf8ToUtf16(mode, wmode, lengthof(wmode));
 	return _wfopen(wname, wmode);
 }

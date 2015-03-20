@@ -78,7 +78,8 @@ typedef enum {
 typedef enum {
 	AILSP_FAST,		/* Fastest to get to */
 	AILSP_NEAR,		/* Nearest to target */
-	AILSP_FAR		/* Farthest from target (within weapon's range) */
+	AILSP_FAR,		/* Farthest from target (within weapon's range) */
+	AILSP_DMG		/* Best expected damage */
 } ailShootPosType_t;
 
 typedef enum {
@@ -234,6 +235,52 @@ bool operator< (AilSortTable<T> i, AilSortTable<T> j) {
 static Actor* AIL_ent; /**< Actor currently running the Lua AI. */
 static Player* AIL_player; /**< Player currently running the Lua AI. */
 
+static float AIL_GetBestShot(const Actor& shooter, const Actor& target, const int tu, const float dist, shoot_types_t& bestType, fireDefIndex_t& bestFd, int& bestShots)
+{
+	int shotChecked = NONE;
+	float bestDmg = 0.0f;
+	bestShots = bestType = bestFd = NONE;
+	for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
+		const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
+		if (item == nullptr)
+			continue;
+
+		const fireDef_t* fdArray = item->getFiredefs();
+		if (fdArray == nullptr)
+			continue;
+
+		for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+			const fireDef_t* fd = &fdArray[fdIdx];
+			const int time = G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
+			/* how many shoots can this actor do */
+			const int shots = tu / time;
+
+			if (!shots)
+				continue;
+
+			if (!AI_FighterCheckShoot(AIL_ent, &target, fd, dist))
+				continue;
+
+			const int shotFlags = fd->gravity | (fd->launched << 1) | (fd->rolled << 2);
+			if (shotChecked != shotFlags) {
+				shotChecked = shotFlags;
+				if (!AI_CheckLineOfFire(AIL_ent, &target, fd, shots))
+					continue;
+			}
+
+			/* Check if we can do the most damage here */
+			float dmg = AI_CalcShotDamage(AIL_ent, &target, fd, shootType) * shots;
+			if (dmg > bestDmg) {
+				bestDmg = dmg;
+				bestShots = shots;
+				bestFd = fdIdx;
+				bestType = shootType;
+			}
+		}
+	}
+
+	return bestDmg;
+}
 
 /*
  * Actor metatable.
@@ -485,45 +532,11 @@ static int actorL_shoot (lua_State* L)
 		tu = std::min(static_cast<int>(lua_tonumber(L, 2)), tu);
 	}
 
+	const float dist = VectorDist(AIL_ent->origin, target->actor->origin);
 	shoot_types_t bestType = NONE;
 	fireDefIndex_t bestFd = NONE;
 	int bestShots = 0;
-	float bestDmg = 0.0f;
-	for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
-		const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
-		if (item == nullptr)
-			continue;
-
-		const fireDef_t* fdArray = item->getFiredefs();
-		if (fdArray == nullptr)
-			continue;
-
-		for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
-			const fireDef_t* fd = &fdArray[fdIdx];
-			const int time = G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
-			/* how many shoots can this actor do */
-			const int shots = tu / time;
-
-			if (!shots)
-				continue;
-
-			float dist;
-			if (!AI_FighterCheckShoot(AIL_ent, target->actor, fd, &dist))
-				continue;
-
-			if (!AI_CheckLineOfFire(AIL_ent, target->actor, fd, shots))
-				continue;
-
-			/* Check if we can do the most damage here */
-			float dmg = AI_CalcShotDamage(AIL_ent, target->actor, fd, shootType) * shots;
-			if (dmg > bestDmg) {
-				bestDmg = dmg;
-				bestShots = shots;
-				bestFd = fdIdx;
-				bestType = shootType;
-			}
-		}
-	}
+	AIL_GetBestShot(*AIL_ent, *target->actor, tu, dist, bestType, bestFd, bestShots);
 
 	/* Failure - no weapon. */
 	if (bestType == NONE) {
@@ -615,7 +628,7 @@ static int actorL_throwgrenade(lua_State* L)
 	const fireDef_t* fdArray = grenade->getFiredefs();
 	const int invMoveCost = fromCont->out + INVDEF(hand)->in;
 	const shoot_types_t shotType = hand == CID_RIGHT ? ST_RIGHT : ST_LEFT;
-	float dist = 0.0f;
+	float dist = VectorDist(AIL_ent->origin, target->actor->origin);
 	const fireDef_t* bestFd = nullptr;
 	for (fireDefIndex_t fdIdx = 0; fdIdx < grenade->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 		const fireDef_t* fd = &fdArray[fdIdx];
@@ -624,7 +637,7 @@ static int actorL_throwgrenade(lua_State* L)
 		if (time > tus)
 			continue;
 		/* In range? */
-		if (!AI_FighterCheckShoot(AIL_ent, target->actor, fd, &dist))
+		if (!AI_FighterCheckShoot(AIL_ent, target->actor, fd, dist))
 			continue;
 		/* LOF? */
 		if (!AI_CheckLineOfFire(AIL_ent, target->actor, fd, 1))
@@ -1358,8 +1371,8 @@ static int AIL_positionshoot (lua_State* L)
 	AiAreaSearch searchArea(oldPos, rad);
 	while (searchArea.getNext(to)) {
 		actor->setOrigin(to);
-		const pos_t tu = G_ActorMoveLength(actor, level.pathingMap, to, true);
-		if (tu > tus || tu == ROUTING_NOT_REACHABLE)
+		const pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
+		if (move > tus || move == ROUTING_NOT_REACHABLE)
 			continue;
 		if (!AI_CheckPosition(actor, actor->pos))
 			continue;
@@ -1367,40 +1380,12 @@ static int AIL_positionshoot (lua_State* L)
 		if (!G_IsVisibleForTeam(target->actor, actor->getTeam()) && G_ActorVis(actor, target->actor, true) < ACTOR_VIS_10)
 			continue;
 
-		bool hasLoF = false;
-		int shotChecked = NONE;
-		float dist;
-		for (shoot_types_t shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
-			const Item* item = AI_GetItemForShootType(shootType, AIL_ent);
-			if (item == nullptr)
-				continue;
-
-			const fireDef_t* fdArray = item->getFiredefs();
-			if (fdArray == nullptr)
-				continue;
-
-			for (fireDefIndex_t fdIdx = 0; fdIdx < item->ammoDef()->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
-				fd = &fdArray[fdIdx];
-				fdTime = G_ActorGetModifiedTimeForFiredef(AIL_ent, fd, false);
-				/* how many shoots can this actor do */
-				const int shots = (tus - tu) / fdTime;
-				if (shots < 1)
-					continue;
-				if (!AI_FighterCheckShoot(actor, target->actor, fd, &dist))
-					continue;
-				/* gun-to-target line free? */
-				const int shotFlags = fd->gravity | (fd->launched << 1) | (fd->rolled << 2);
-				if (shotChecked != shotFlags) {
-					shotChecked = shotFlags;
-					if ((hasLoF = AI_CheckLineOfFire(actor, target->actor, fd, shots)))
-						break;
-				}
-			}
-			if (hasLoF)
-				break;
-		}
-		if (!hasLoF)
+		const float dist = VectorDist(actor->origin, target->actor->origin);
+		int dummy = NONE;
+		const float bestDmg = AIL_GetBestShot(*actor, *target->actor, tus - move, dist, dummy, dummy, dummy);
+		if (dummy == NONE)
 			continue;
+
 		float score;
 		switch (posType) {
 		case AILSP_NEAR:
@@ -1409,9 +1394,12 @@ static int AIL_positionshoot (lua_State* L)
 		case AILSP_FAR:
 			score = dist;
 			break;
+		case AILSP_DMG:
+			score = bestDmg;
+			break;
 		case AILSP_FAST:
 		default:
-			score = -tu;
+			score = -move;
 			break;
 		}
 		if (score > bestScore || bestPos[2] >= PATHFINDING_HEIGHT) {
@@ -2271,6 +2259,7 @@ void AIL_Init (void)
 	gi.RegisterConstInt("luaaishot::fastest", AILSP_FAST);
 	gi.RegisterConstInt("luaaishot::nearest", AILSP_NEAR);
 	gi.RegisterConstInt("luaaishot::farthest", AILSP_FAR);
+	gi.RegisterConstInt("luaaishot::best_dam", AILSP_DMG);
 
 	gi.RegisterConstInt("luaaiwander::rand", AILPW_RAND);
 	gi.RegisterConstInt("luaaiwander::CW", AILPW_CW);
@@ -2301,6 +2290,7 @@ void AIL_Shutdown (void)
 	gi.UnregisterConstVariable("luaaishot::fastest");
 	gi.UnregisterConstVariable("luaaishot::nearest");
 	gi.UnregisterConstVariable("luaaishot::farthest");
+	gi.UnregisterConstVariable("luaaishot::best_dam");
 
 	gi.UnregisterConstVariable("luaaiwander::rand");
 	gi.UnregisterConstVariable("luaaiwander::CW");

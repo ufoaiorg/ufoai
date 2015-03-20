@@ -820,6 +820,7 @@ void SV_InitGameProgs (void)
 	import.FS_Gamedir = FS_Gamedir;
 	import.FS_LoadFile = FS_LoadFile;
 	import.FS_FreeFile = FS_FreeFile;
+	import.Sys_Fopen = Sys_Fopen;
 
 	import.WriteChar = SV_WriteChar;
 	import.WriteByte = SV_WriteByte;

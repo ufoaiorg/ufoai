@@ -131,6 +131,7 @@ public:
 	void notifyClientMove(const Edict* target, int step, bool startMove);
 	void notifyClientOnStep(const Edict* target, int step);
 	void create(const Edict* shooter);
+	void destroy(const Edict* shooter);
 	void resetTargetList(const Edict* shooter);
 	void notifyClientOnShot(const Edict* target, int step);
 	void notifyClientRFAborted(const Edict* shooter, const Edict* target, int step);
@@ -218,15 +219,15 @@ void ReactionFireTargets::notifyClientMove (const Edict* target, int step, bool 
 
 void ReactionFireTargets::notifyClientRFAborted (const Edict* shooter, const Edict* target, int step)
 {
-		ReactionFireTargetList* rfts = find(shooter);
-		assert(rfts);
+	ReactionFireTargetList* rfts = find(shooter);
+	assert(rfts);
 
-		for (int i = 0; i < rfts->count; i++) {
-			ReactionFireTarget& t = rfts->targets[i];
-			if (t.target != target)
-				continue;
-			G_EventReactionFireAbortShot(*shooter, *target, step);
-		}
+	for (int i = 0; i < rfts->count; i++) {
+		ReactionFireTarget& t = rfts->targets[i];
+		if (t.target != target)
+			continue;
+		G_EventReactionFireAbortShot(*shooter, *target, step);
+	}
 }
 
 /**
@@ -265,6 +266,22 @@ void ReactionFireTargets::create (const Edict* shooter)
 	}
 
 	gi.Error("Not enough rfData");
+}
+
+/**
+ * @brief Destroys the table of reaction fire targets for the given edict.
+ * @param[in] shooter The reaction firing actor
+ */
+void ReactionFireTargets::destroy (const Edict* shooter)
+{
+	ReactionFireTargetList* rfts = find(shooter);
+
+	if (!rfts) {
+		gi.DPrintf("Entity doesn't have rfData");
+		return;
+	}
+
+	rfts->init();
 }
 
 /**
@@ -421,6 +438,15 @@ void G_ReactionFireTargetsCreate (const Edict* shooter)
 	rft.create(shooter);
 }
 
+/**
+ * @brief free function to destroy the table of reaction fire targets for the given edict.
+ * @param[in] shooter The reaction firing actor
+ */
+void G_ReactionFireTargetsDestroy (const Edict* shooter)
+{
+	rft.destroy(shooter);
+}
+
 class ReactionFire
 {
 private:
@@ -534,6 +560,7 @@ void G_ReactionFireSettingsUpdate (Actor* actor, fireDefIndex_t fmIdx, actorHand
 		/* Disable reaction fire if no valid firemode was found. */
 		G_ClientStateChange(actor->getPlayer(), actor, ~STATE_REACTION, false);
 		G_EventReactionFireChange(*actor);
+		G_EventSendState(G_VisToPM(actor->visflags), *actor);
 		return;
 	}
 
@@ -608,7 +635,7 @@ static bool G_ReactionFireCanBeEnabled (const Edict* ent)
 		return false;
 
 	/* actor may not carry weapons at all - so no further checking is needed */
-	if (!ent->chr.teamDef->weapons)
+	if (!ent->chr.teamDef->weapons && !ent->chr.teamDef->onlyWeapon)
 		return false;
 
 	if (!ent->chr.inv.holdsReactionFireWeapon()) {
@@ -820,7 +847,10 @@ bool ReactionFire::tryToShoot (Actor* shooter, const Edict* target)
 	}
 
 	/* take the shot */
-	const bool tookShot = rf.shoot(shooter, target->pos, ST_RIGHT_REACTION, shooter->chr.RFmode.getFmIdx());
+	const actorHands_t hand = shooter->chr.RFmode.getHand();
+	const shoot_types_t type = (hand == ACTOR_HAND_RIGHT ? ST_RIGHT_REACTION
+			: (hand == ACTOR_HAND_LEFT ? ST_LEFT_REACTION : ST_NUM_SHOOT_TYPES));
+	const bool tookShot = rf.shoot(shooter, target->pos, type, shooter->chr.RFmode.getFmIdx());
 
 	if (tookShot) {
 		/* clear any shakenness */
