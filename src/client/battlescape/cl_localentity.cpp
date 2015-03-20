@@ -1408,9 +1408,6 @@ le_t* LE_Find (entity_type_t type, const pos3_t pos)
 	return nullptr;
 }
 
-/** @sa BoxOffset in cl_actor.c */
-#define ModelOffset(i, target) (target[0]=(i-1)*(UNIT_SIZE+BOX_DELTA_WIDTH)/2, target[1]=(i-1)*(UNIT_SIZE+BOX_DELTA_LENGTH)/2, target[2]=0)
-
 /**
  * Origin brush entities are bmodel entities that have their mins/maxs relative to the world origin.
  * The origin vector of the entity will be used to calculate e.g. the culling (and not the mins/maxs like
