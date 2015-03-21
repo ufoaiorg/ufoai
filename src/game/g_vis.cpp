@@ -57,6 +57,31 @@ static bool G_LineVis (const vec3_t from, const vec3_t to)
 }
 
 /**
+ * @brief tests for smoke interference
+ * @param[in] from The point to check visibility from
+ * @param[in] check The edict to check visibility to
+ * @return true if @c check is invisible from @c from (smoke is in the way), false otherwise.
+ */
+bool G_SmokeVis (const vec3_t from, const Edict* check)
+{
+	const float distance = VectorDist(check->origin, from);
+	/* units that are very close are visible in the smoke */
+	if (distance > UNIT_SIZE * 1.5f) {
+		Edict* e = nullptr;
+
+		while ((e = G_EdictsGetNextInUse(e))) {
+			if (G_IsSmoke(e)) {
+				if (RayIntersectAABB(from, check->absBox.mins, e->absBox)
+				 || RayIntersectAABB(from, check->absBox.maxs, e->absBox)) {
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+/**
  * @brief calculate how much check is "visible" by @c ent
  * @param[in] ent The source edict of the check
  * @param[in] check The edict to check how good (or if at all) it is visible
@@ -74,23 +99,10 @@ static bool G_LineVis (const vec3_t from, const vec3_t to)
  */
 float G_ActorVis (const Edict* ent, const Edict* check, bool full)
 {
-	const float distance = VectorDist(check->origin, ent->origin);
 	vec3_t eyeEnt;
 	G_ActorGetEyeVector(ent, eyeEnt);
-
-	/* units that are very close are visible in the smoke */
-	if (distance > UNIT_SIZE * 1.5f) {
-		Edict* e = nullptr;
-
-		while ((e = G_EdictsGetNextInUse(e))) {
-			if (G_IsSmoke(e)) {
-				if (RayIntersectAABB(eyeEnt, check->absBox.mins, e->absBox)
-				 || RayIntersectAABB(eyeEnt, check->absBox.maxs, e->absBox)) {
-					return ACTOR_VIS_0;
-				}
-			}
-		}
-	}
+	if (G_SmokeVis(eyeEnt, check))
+		return ACTOR_VIS_0;
 
 	vec3_t test, dir;
 	float delta;
