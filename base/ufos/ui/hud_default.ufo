@@ -1348,6 +1348,7 @@ window hud_default extends hud
 		while ( *cvar:i < 12 ) {
 			*node:root.soldier.squad.sld<cvar:i>@num = <cvar:i>
 			*node:root.soldier.squad.sld<cvar:i>.head@src = *cvar:mn_head<cvar:i>
+			*node:root.soldier.squad.sld<cvar:i>.head@skin = *cvar:mn_head_skin<cvar:i>
 			*node:root.soldier.squad.sld<cvar:i>.health@max = *cvar:mn_hpmax<cvar:i>
 			*node:root.soldier.squad.sld<cvar:i>.health@current = *cvar:mn_hp<cvar:i>
 			*node:root.soldier.squad.sld<cvar:i>.tu@max = *cvar:mn_tumax<cvar:i>
