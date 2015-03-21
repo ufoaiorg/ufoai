@@ -225,7 +225,16 @@ int G_ActorDoTurn (Edict* ent, byte dir)
  */
 void G_ActorSetMaxs (Actor* actor)
 {
-	actor->entBox.setMaxs(PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
+	switch (actor->type) {
+	case ET_ACTOR:
+		actor->entBox.setMaxs(PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
+		break;
+	case ET_ACTOR2x2:
+		actor->entBox.setMaxs(PLAYER2x2_WIDTH, PLAYER2x2_WIDTH, PLAYER_STAND);
+		break;
+	default:
+		gi.Error("G_ActorSetMaxs: Unknown actor type: %i (ent %i)", actor->type, actor->getIdNum());
+	}
 	if (actor->isCrouched())
 		actor->entBox.setMaxZ(PLAYER_CROUCH);
 	else if (actor->isDead() && !CHRSH_IsTeamDefRobot(actor->chr.teamDef))
