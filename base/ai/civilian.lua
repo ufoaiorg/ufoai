@@ -87,7 +87,7 @@ function ailc.wander ()
 end
 
 function ailc.think_nf ()
-	local aliens = ai.see("sight", "alien")
+	local aliens = ai.see("all", "alien")
 	if #aliens > 0 then
 		if not ailc.hide("alien") then
 			ailc.flee()
