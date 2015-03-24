@@ -357,11 +357,11 @@ function ails.prethink ()
 	-- copy the default params for this actor
 	ails.param = { vis = ails.params.vis, ord = ails.params.ord, pos = ails.params.pos, move = ails.params.move, prio = ails.params.prio }
 	-- adjust for morale
-	if morale == "rage" or morale == "insane" then
+	if ails.israging() then
 		ails.param.pos = "nearest"
 		ails.param.move = "rand"
 		if morale == "insane" then
-			ails.params.prio = {"all"}
+			ails.param.prio = {"all"}
 		end
 	end
 end
@@ -410,7 +410,6 @@ function ails.team_think ()
 
 	if not ails.squad[ails.actor]:isdead() then
 		ai.select(ails.squad[ails.actor])
-		ai.print("Actor ", ails.actor, ails.squad[ails.actor], "Phase: ", ails.phase)
 		ails.prethink()
 		ails.target = ails.targets[ails.actor]
 		if ails.phase == 1 then

@@ -87,7 +87,7 @@ function ailc.wander ()
 end
 
 function ailc.think_nf ()
-	local aliens = ai.see("all", "alien")
+	local aliens = ai.see("sight", "alien")
 	if #aliens > 0 then
 		if not ailc.hide("alien") then
 			ailc.flee()
@@ -159,7 +159,6 @@ function ailc.team_think ()
 	-- Run the think function for this actor
 	if not ailc.squad[ailc.actor]:isdead() then
 		ai.select(ailc.squad[ailc.actor])
-		ai.print("Actor: ", ailc.squad[ailc.actor], ailc.actor)
 		ailc.think()
 	end
 

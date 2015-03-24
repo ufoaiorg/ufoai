@@ -431,9 +431,8 @@ function aila.phase_two ()
 			end
 		elseif not ai.actor():isinjured() or aila.israging() and aila.tustouse() >= ai.tusforshooting() then
 			local done
-			local findteams = ai.actor():morale() == "insane" and {"all"} or aila.ismelee() and {"~alien"} or aila.param.prio
-			for i = 1, #findteams do
-				local targets = aila.findtargets(aila.param.vis, findteams[i], aila.param.ord)
+			for i = 1, #aila.param.prio do
+				local targets = aila.findtargets(aila.param.vis, aila.param.prio[i], aila.param.ord)
 				while #targets > 0 do
 					aila.target = aila.engage(targets)
 					-- Did we die while attacking?
@@ -445,7 +444,7 @@ function aila.phase_two ()
 						done = aila.target
 						break
 					end
-					targets = aila.findtargets(aila.param.vis, findteams[i], aila.param.ord)
+					targets = aila.findtargets(aila.param.vis, aila.param.prio[i], aila.param.ord)
 				end
 				if done then
 					break
@@ -506,13 +505,16 @@ function aila.prethink ()
 		par = aila.params.default
 	end
 	aila.param = { vis = par.vis, ord = par.ord, pos = par.pos, move = par.move, prio = par.prio }
+	if aila.ismelee() then
+		aila.param.prio = {"all"}
+	end
 	-- adjust for morale
-	if morale == "rage" or morale == "insane" then
+	if aila.israging() then
 		aila.param.ord = "dist"
 		aila.param.pos = "fastest"
 		aila.param.move = "rand"
 		if morale == "insane" then
-			aila.params.prio = {"all"}
+			aila.param.prio = {"all"}
 		end
 	end
 end
@@ -560,7 +562,6 @@ function aila.team_think ()
 	end
 
 	if not aila.squad[aila.actor]:isdead() then
-		ai.print("Actor ", aila.actor, aila.squad[aila.actor], "Phase: ", aila.phase)
 		ai.select(aila.squad[aila.actor])
 		aila.prethink()
 		aila.target = aila.targets[aila.actor]
