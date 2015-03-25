@@ -429,12 +429,17 @@ function aila.phase_two ()
 			if aila.searchweapon() then
 				aila.phase_two()
 			end
-		elseif not ai.actor():isinjured() or aila.israging() and aila.tustouse() >= ai.tusforshooting() then
+		elseif not ai.actor():isinjured() and aila.tustouse() >= ai.tusforshooting() or aila.israging() then
 			local done
 			for i = 1, #aila.param.prio do
 				local targets = aila.findtargets(aila.param.vis, aila.param.prio[i], aila.param.ord)
 				while #targets > 0 do
-					aila.target = aila.engage(targets)
+					-- Prevent melee actors from rushing a target unless they can complete the attack
+					if aila.ismelee() and not aila.israging() then
+						aila.target = aila.attack(targets)
+					else
+						aila.target = aila.engage(targets)
+					end
 					-- Did we die while attacking?
 					if ai:actor():isdead() then
 						return
@@ -478,12 +483,29 @@ function aila.phase_three ()
 		elseif ai.actor():isinjured() then
 			hid = aila.herd() or aila.hide()
 		end
-		if not hid and ai.actor():morale() == "cower" then
-			aila.flee()
+		if not hid then
+			if ai.actor():morale() == "cower" then
+				aila.flee()
+			elseif aila.ismelee() then
+				for i = 1, #aila.param.prio do
+					local targets = aila.findtargets(aila.param.vis, aila.param.prio[i], aila.param.ord)
+					if #targets > 0 then
+						aila.target = aila.engage(targets) or aila.target
+						if ai.actor():isdead() then
+							return
+						end
+					end
+				end
+			end
 		end
 
 		if aila.target then
 			aila.target:pos():face()
+		else
+			local targets = aila.findtargets("sight", "~civilian", "dist")
+			if #targets > 0 then
+				targets[1]:face()
+			end
 		end
 		ai.reactionfire("enable")
 		ai.crouch(true)
