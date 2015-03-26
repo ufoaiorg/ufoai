@@ -528,7 +528,7 @@ function aila.prethink ()
 	end
 	aila.param = { vis = par.vis, ord = par.ord, pos = par.pos, move = par.move, prio = par.prio }
 	if aila.ismelee() then
-		aila.param.prio = {"all"}
+		aila.param.prio = {"~alien"}
 	end
 	-- adjust for morale
 	if aila.israging() then
