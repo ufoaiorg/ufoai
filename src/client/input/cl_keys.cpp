@@ -231,8 +231,6 @@ LINE TYPING INTO THE CONSOLE
  */
 static void Key_Console (int key, int unicode)
 {
-	int i;
-
 	if (keyDown[K_CTRL]) {
 		switch (toupper(key)) {
 		/* ctrl-L clears screen */
@@ -334,6 +332,7 @@ static void Key_Console (int key, int unicode)
 			keyLinePos--;
 		return;
 	} else if (key == K_RIGHTARROW) {  /* move cursor right */
+		int i;
 		if ((i = strlen(keyLines[editLine])) == keyLinePos)
 			return; /* no character to get */
 		if (keyDown[K_CTRL]) {  /* by a whole word */
@@ -431,6 +430,7 @@ static void Key_Console (int key, int unicode)
 		return;					/* non printable */
 
 	if (keyLinePos < MAXCMDLINE - 1) {
+		int i;
 		if (keyInsert) {  /* can't do strcpy to move string to right */
 			i = strlen(keyLines[editLine]) - 1;
 
@@ -457,8 +457,6 @@ static void Key_Console (int key, int unicode)
  */
 int Key_StringToKeynum (const char* str)
 {
-	const keyName_t* kn;
-
 	if (Q_strnull(str))
 		return -1;
 
@@ -466,7 +464,7 @@ int Key_StringToKeynum (const char* str)
 	if (str[1] == '\0')
 		return str[0];
 
-	for (kn = keyNames; kn->name; kn++) {
+	for (const keyName_t* kn = keyNames; kn->name; kn++) {
 		if (!Q_strcasecmp(str, kn->name))
 			return kn->keynum;
 	}
@@ -482,8 +480,6 @@ int Key_StringToKeynum (const char* str)
  */
 const char* Key_KeynumToString (int keynum)
 {
-	const keyName_t* kn;
-
 	if (keynum == -1)
 		return "<KEY NOT FOUND>";
 	/** @todo use isprint here? */
@@ -494,7 +490,7 @@ const char* Key_KeynumToString (int keynum)
 		return tinystr;
 	}
 
-	for (kn = keyNames; kn->name; kn++)
+	for (const keyName_t* kn = keyNames; kn->name; kn++)
 		if (keynum == kn->keynum)
 			return kn->name;
 
@@ -510,7 +506,6 @@ const char* Key_KeynumToString (int keynum)
  */
 const char* Key_GetBinding (const char* binding, keyBindSpace_t space)
 {
-	int i;
 	char** keySpace = nullptr;
 
 	switch (space) {
@@ -527,7 +522,7 @@ const char* Key_GetBinding (const char* binding, keyBindSpace_t space)
 		Sys_Error("Unknown key space (%i) given", space);
 	}
 
-	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
+	for (int i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keySpace[i] && *keySpace[i] && Q_streq(keySpace[i], binding)) {
 			return Key_KeynumToString(i);
 		}
@@ -586,14 +581,12 @@ void Key_SetBinding (int keynum, const char* binding, keyBindSpace_t space)
  */
 static void Key_Unbind_f (void)
 {
-	int b;
-
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <key> : remove commands from a key\n", Cmd_Argv(0));
 		return;
 	}
 
-	b = Key_StringToKeynum(Cmd_Argv(1));
+	const int b = Key_StringToKeynum(Cmd_Argv(1));
 	if (b == -1) {
 		Com_Printf("\"%s\" isn't a valid key\n", Cmd_Argv(1));
 		return;
@@ -613,9 +606,7 @@ static void Key_Unbind_f (void)
  */
 static void Key_Unbindall_f (void)
 {
-	int i;
-
-	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
+	for (int i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keyBindings[i]) {
 			if (Q_streq(Cmd_Argv(0), "unbindallmenu"))
 				Key_SetBinding(i, "", KEYSPACE_UI);
@@ -630,15 +621,13 @@ static void Key_Unbindall_f (void)
  */
 static void Key_Bind_f (void)
 {
-	int c, b;
-
-	c = Cmd_Argc();
+	const int c = Cmd_Argc();
 
 	if (c < 2) {
 		Com_Printf("Usage: %s <key> [command] : attach a command to a key\n", Cmd_Argv(0));
 		return;
 	}
-	b = Key_StringToKeynum(Cmd_Argv(1));
+	const int b = Key_StringToKeynum(Cmd_Argv(1));
 	if (b == -1) {
 		Com_Printf("\"%s\" isn't a valid key\n", Cmd_Argv(1));
 		return;
@@ -670,7 +659,6 @@ static void Key_Bind_f (void)
  */
 void Key_WriteBindings (const char* filename)
 {
-	int i;
 	bool writeError = false;
 	int cnt = 0;
 
@@ -687,26 +675,26 @@ void Key_WriteBindings (const char* filename)
 	FS_Printf(&f, "unbindall\n");
 	FS_Printf(&f, "unbindallbattle\n");
 	/* failfast, stops loop for first occurred error in fprintf */
-	for (i = 0; i < K_LAST_KEY && !writeError; i++)
+	for (int i = 0; i < K_LAST_KEY && !writeError; i++)
 		if (menuKeyBindings[i] && menuKeyBindings[i][0]) {
 			if (FS_Printf(&f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menuKeyBindings[i]) < 0)
 				writeError = true;
 			cnt++;
 		}
-	for (i = 0; i < K_LAST_KEY && !writeError; i++)
+	for (int i = 0; i < K_LAST_KEY && !writeError; i++)
 		if (keyBindings[i] && keyBindings[i][0]) {
 			if (FS_Printf(&f, "bind %s \"%s\"\n", Key_KeynumToString(i), keyBindings[i]) < 0)
 				writeError = true;
 			cnt++;
 		}
-	for (i = 0; i < K_LAST_KEY && !writeError; i++)
+	for (int i = 0; i < K_LAST_KEY && !writeError; i++)
 		if (battleKeyBindings[i] && battleKeyBindings[i][0]) {
 			if (FS_Printf(&f, "bindbattle %s \"%s\"\n", Key_KeynumToString(i), battleKeyBindings[i]) < 0)
 				writeError = true;
 			cnt++;
 		}
 
-	for (i = 0; i < UI_GetKeyBindingCount(); i++) {
+	for (int i = 0; i < UI_GetKeyBindingCount(); i++) {
 		const char* path;
 		uiKeyBinding_t*binding = UI_GetKeyBindingByIndex(i);
 
@@ -754,18 +742,16 @@ static void Key_WriteBindings_f (void)
  */
 static void Key_Bindlist_f (void)
 {
-	int i;
-
 	Com_Printf("key space: game\n");
-	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
+	for (int i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keyBindings[i] && keyBindings[i][0])
 			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), keyBindings[i]);
 	Com_Printf("key space: menu\n");
-	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
+	for (int i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (menuKeyBindings[i] && menuKeyBindings[i][0])
 			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), menuKeyBindings[i]);
 	Com_Printf("key space: battle\n");
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (int i = 0; i < K_LAST_KEY; i++)
 		if (battleKeyBindings[i] && battleKeyBindings[i][0])
 			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), battleKeyBindings[i]);
 
