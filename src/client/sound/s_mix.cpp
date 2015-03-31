@@ -64,12 +64,12 @@ void S_FreeChannel (int c)
 void S_SpatializeChannel (const s_channel_t* ch)
 {
 	vec3_t delta;
-	float dist, angle;
+	float angle;
 	const int c = (int)((ptrdiff_t)(ch - s_env.channels));
 
 	VectorSubtract(ch->org, cl.cam.camorg, delta);
 
-	dist = VectorNormalize(delta) * snd_distance_scale->value * ch->atten;
+	float dist = VectorNormalize(delta) * snd_distance_scale->value * ch->atten;
 
 	if (dist > 255.0)  /* clamp to max */
 		dist = 255.0;
@@ -95,9 +95,6 @@ void S_SpatializeChannel (const s_channel_t* ch)
  */
 void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float relVolume)
 {
-	s_channel_t* ch;
-	int i;
-	float volume;
 
 	if (!s_env.initialized)
 		return;
@@ -109,11 +106,12 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 	if (sample->lastPlayed > CL_Milliseconds() - s_env.sampleRepeatRate)
 		return;
 
-	if ((i = S_AllocChannel()) == -1)
+	const int chIdx = S_AllocChannel();
+	if (chIdx == -1)
 		return;
 
 	sample->lastPlayed = CL_Milliseconds();
-	ch = &s_env.channels[i];
+	s_channel_t* ch = &s_env.channels[chIdx];
 
 	ch->atten = atten;
 	ch->sample = sample;
@@ -123,11 +121,11 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 		S_SpatializeChannel(ch);
 	}
 
-	volume = snd_volume->value * relVolume * MIX_MAX_VOLUME;
+	const float volume = snd_volume->value * relVolume * MIX_MAX_VOLUME;
 	Com_DPrintf(DEBUG_SOUND, "%i: Playing sample '%s' at volume %f at channel %i\n",
-			CL_Milliseconds(), sample->name, volume, i);
+			CL_Milliseconds(), sample->name, volume, chIdx);
 	Mix_VolumeChunk(ch->sample->chunk, volume);
-	Mix_PlayChannel(i, ch->sample->chunk, 0);
+	Mix_PlayChannel(chIdx, ch->sample->chunk, 0);
 }
 
 /**
@@ -140,8 +138,7 @@ void S_LoopSample (const vec3_t org, s_sample_t* sample, float relVolume, float 
 
 	s_channel_t* ch = nullptr;
 
-	int i;
-	for (i = 0; i < MAX_CHANNELS; i++){  /* find existing loop sound */
+	for (int i = 0; i < MAX_CHANNELS; i++){  /* find existing loop sound */
 		if (s_env.channels[i].sample == sample) {
 			vec3_t delta;
 			VectorSubtract(s_env.channels[i].org, org, delta);
@@ -157,10 +154,11 @@ void S_LoopSample (const vec3_t org, s_sample_t* sample, float relVolume, float 
 
 		VectorMix(ch->org, org, 1.0 / ch->count, ch->org);
 	} else {  /* or allocate a new one */
-		if ((i = S_AllocChannel()) == -1)
+		const int chIdx = S_AllocChannel();
+		if (chIdx == -1)
 			return;
 
-		ch = &s_env.channels[i];
+		ch = &s_env.channels[chIdx];
 
 		sample->lastPlayed = CL_Milliseconds();
 		VectorCopy(org, ch->org);
@@ -170,7 +168,7 @@ void S_LoopSample (const vec3_t org, s_sample_t* sample, float relVolume, float 
 
 		float volume = snd_volume->value * relVolume * MIX_MAX_VOLUME;
 		Mix_VolumeChunk(ch->sample->chunk, volume);
-		Mix_PlayChannel(i, ch->sample->chunk, 0);
+		Mix_PlayChannel(chIdx, ch->sample->chunk, 0);
 	}
 
 	S_SpatializeChannel(ch);
@@ -185,12 +183,10 @@ void S_LoopSample (const vec3_t org, s_sample_t* sample, float relVolume, float 
  */
 void S_StartLocalSample (const char* name, float relVolume)
 {
-	s_sample_t* sample;
-
 	if (!s_env.initialized)
 		return;
 
-	sample = S_LoadSample(name);
+	s_sample_t* sample = S_LoadSample(name);
 	if (!sample) {
 		Com_Printf("S_StartLocalSample: Failed to load %s\n", name);
 		return;
