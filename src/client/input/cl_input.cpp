@@ -627,8 +627,9 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
 /**
  * @brief Translate the keys to ufo keys
  */
-static void IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
+static bool IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 {
+	bool special = true;
 	switch (keycode) {
 	case SDLK_PAGEUP:
 		*ascii = K_PGUP;
@@ -866,12 +867,14 @@ static void IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 		*ascii = K_SPACE;
 		break;
 	default:
+		special = false;
 		if (UTF8_encoded_len(keycode) == 1 && isprint(keycode))
 			*ascii = keycode;
 		else
 			*ascii = 0;
 		break;
 	}
+	return special;
 }
 
 void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, bool keyDown)
