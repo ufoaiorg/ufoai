@@ -1073,23 +1073,27 @@ void IN_Frame (void)
 			}
 
 #if SDL_VERSION_ATLEAST(2,0,0)
-			unicode = 0;
+			/* SDL_TEXTINPUT above will handle normal text for sdl2 */
+			if (IN_TranslateKey(event.key.keysym.sym, &key))
+				IN_EventEnqueue(key, 0, true);
 #else
 			unicode = event.key.keysym.unicode;
-#endif
 			IN_TranslateKey(event.key.keysym.sym, &key);
 			IN_EventEnqueue(key, unicode, true);
+#endif
 			break;
 
 		case SDL_KEYUP:
 			IN_PrintKey(&event, 0);
 #if SDL_VERSION_ATLEAST(2,0,0)
-			unicode = 0;
+			/* SDL_TEXTINPUT above will handle normal text for sdl2 */
+			if (IN_TranslateKey(event.key.keysym.sym, &key))
+					IN_EventEnqueue(key, 0, false);
 #else
 			unicode = event.key.keysym.unicode;
-#endif
 			IN_TranslateKey(event.key.keysym.sym, &key);
 			IN_EventEnqueue(key, unicode, false);
+#endif
 			break;
 
 #if SDL_VERSION_ATLEAST(2,0,0)
