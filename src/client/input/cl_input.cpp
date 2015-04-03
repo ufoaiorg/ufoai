@@ -72,6 +72,7 @@ static struct {
 
 static int keyq_head = 0;
 static int keyq_tail = 0;
+static unsigned int lastDown = 0;
 
 static cvar_t* in_debug;
 cvar_t* cl_isometric;
@@ -976,8 +977,15 @@ void IN_Frame (void)
 				}
 				unicode = characterUnicode;
 				IN_TranslateKey(characterUnicode, &key);
-				IN_EventEnqueue(key, unicode, true);
-				IN_EventEnqueue(key, unicode, false);
+				/** @todo Fix numpad handling */
+				/* Don't send the key events if they come from the numpad: the navigation key events
+				 * are already sent with the SDL_KEYDOWN/UP events, this will prevents entering
+				 * numbers with the numpad, but the key bindings rely on the K_KP_* navigation
+				 * keys being sent. */
+				if ((!isdigit(key) && key != '.') || lastDown < K_KP_INS || lastDown > K_KP_DEL) {
+					IN_EventEnqueue(key, unicode, true);
+					IN_EventEnqueue(key, unicode, false);
+				}
 			}
 			break;
 		}
@@ -1094,6 +1102,7 @@ void IN_Frame (void)
 			IN_TranslateKey(event.key.keysym.sym, &key);
 			IN_EventEnqueue(key, unicode, false);
 #endif
+			lastDown = key;
 			break;
 
 #if SDL_VERSION_ATLEAST(2,0,0)
