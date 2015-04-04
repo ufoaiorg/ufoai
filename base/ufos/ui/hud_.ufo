@@ -263,25 +263,27 @@ window hud extends levelbuttons {
 	/**
 	 * @param <1> the id of the soldier (starting at 0)
 	 * @param <2> the model path of the head model
-	 * @param <3> the hp of the actor
-	 * @param <4> the max hp of the actor
-	 * @param <5> the tus of the actor
-	 * @param <6> the max tus of the actor
-	 * @param <7> the morale of the actor
-	 * @param <8> the max morale of the actor
-	 * @param <9> the stun value of the actor
-	 * @param <10> the tooltip
+	 * @param <3> the skin for the head model
+	 * @param <4> the hp of the actor
+	 * @param <5> the max hp of the actor
+	 * @param <6> the tus of the actor
+	 * @param <7> the max tus of the actor
+	 * @param <8> the morale of the actor
+	 * @param <9> the max morale of the actor
+	 * @param <10> the stun value of the actor
+	 * @param <11> the tooltip
 	 */
 	confunc updateactorvalues {
 		*cvar:mn_head<1> = "<2>"
-		*cvar:mn_hp<1> = "<3>"
-		*cvar:mn_hpmax<1> = "<4>"
-		*cvar:mn_tu<1> = "<5>"
-		*cvar:mn_tumax<1> = "<6>"
-		*cvar:mn_morale<1> = "<7>"
-		*cvar:mn_moralemax<1> = "<8>"
-		*cvar:mn_stun<1> = "<9>"
-		*cvar:mn_soldier<1>_tt = "<10>"
+		*cvar:mn_head_skin<1> = "<3>"
+		*cvar:mn_hp<1> = "<4>"
+		*cvar:mn_hpmax<1> = "<5>"
+		*cvar:mn_tu<1> = "<6>"
+		*cvar:mn_tumax<1> = "<7>"
+		*cvar:mn_morale<1> = "<8>"
+		*cvar:mn_moralemax<1> = "<9>"
+		*cvar:mn_stun<1> = "<10>"
+		*cvar:mn_soldier<1>_tt = "<11>"
 	}
 
 	/**

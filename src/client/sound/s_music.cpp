@@ -134,12 +134,6 @@ void M_Stop (void)
  */
 static void M_Start (const char* file)
 {
-	char name[MAX_QPATH];
-	size_t len;
-	byte* musicBuf;
-	int size;
-	SDL_RWops* rw;
-
 	if (Q_strnull(file))
 		return;
 
@@ -151,8 +145,9 @@ static void M_Start (const char* file)
 	if (music.playingStream || !music.playing)
 		return;
 
+	char name[MAX_QPATH];
 	Com_StripExtension(file, name, sizeof(name));
-	len = strlen(name);
+	const size_t len = strlen(name);
 	if (len + 4 >= MAX_QPATH) {
 		Com_Printf("M_Start: MAX_QPATH exceeded: " UFO_SIZE_T "\n", len + 4);
 		return;
@@ -174,12 +169,14 @@ static void M_Start (const char* file)
 	M_Stop();
 
 	/* load it in */
-	if ((size = FS_LoadFile(va("music/%s.ogg", name), &musicBuf)) == -1) {
+	byte* musicBuf;
+	const int size = FS_LoadFile(va("music/%s.ogg", name), &musicBuf);
+	if (size == -1) {
 		Com_Printf("M_Start: Could not load '%s' background track!\n", name);
 		return;
 	}
 
-	rw = SDL_RWFromMem(musicBuf, size);
+	SDL_RWops* rw = SDL_RWFromMem(musicBuf, size);
 	if (!rw) {
 		Com_Printf("M_Start: Could not load music: 'music/%s'!\n", name);
 		FS_FreeFile(musicBuf);
@@ -261,9 +258,6 @@ static bool M_PlayRandomByCategory (int category)
  */
 static void M_Change_f (void)
 {
-	const char* type;
-	int category;
-
 	if (!s_env.initialized || !music.playing)
 		return;
 
@@ -271,7 +265,8 @@ static void M_Change_f (void)
 		Com_Printf("Usage: %s <geoscape|battlescape|main|aircombat>\n", Cmd_Argv(0));
 		return;
 	}
-	type = Cmd_Argv(1);
+	const char* type = Cmd_Argv(1);
+	int category;
 	if (Q_streq(type, "geoscape")) {
 		category = MUSIC_GEOSCAPE;
 	} else if (Q_streq(type, "battlescape")) {
@@ -435,8 +430,6 @@ static void M_PlayMusicStream (musicStream_t* userdata)
  */
 void M_AddToSampleBuffer (musicStream_t* userdata, int rate, int samples, const byte* data)
 {
-	int i;
-
 	if (!s_env.initialized)
 		return;
 
@@ -444,7 +437,7 @@ void M_AddToSampleBuffer (musicStream_t* userdata, int rate, int samples, const 
 
 	if (rate != s_env.rate) {
 		const float scale = (float)rate / s_env.rate;
-		for (i = 0;; i++) {
+		for (int i = 0;; i++) {
 			const int src = i * scale;
 			short* ptr = (short*)&userdata->sampleBuf[userdata->samplePos];
 			if (src >= samples)
@@ -457,7 +450,7 @@ void M_AddToSampleBuffer (musicStream_t* userdata, int rate, int samples, const 
 			userdata->samplePos %= MAX_RAW_SAMPLES;
 		}
 	} else {
-		for (i = 0; i < samples; i++) {
+		for (int i = 0; i < samples; i++) {
 			short* ptr = (short*)&userdata->sampleBuf[userdata->samplePos];
 			*ptr = LittleShort(((const short*) data)[i * 2]);
 			ptr++;

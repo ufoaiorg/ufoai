@@ -163,7 +163,6 @@ static void IN_KeyDown (kbutton_t* b)
 static void IN_KeyUp (kbutton_t* b)
 {
 	int k;
-	unsigned uptime;
 	const char* c = Cmd_Argv(1);
 
 	if (c[0])
@@ -192,7 +191,7 @@ static void IN_KeyUp (kbutton_t* b)
 
 	/* save timestamp */
 	c = Cmd_Argv(2);
-	uptime = atoi(c);
+	const unsigned uptime = atoi(c);
 	if (uptime)
 		b->msec = uptime - b->downtime;
 	else
@@ -611,11 +610,10 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
 {
 	if (in_debug->integer) {
 		Com_Printf("key name: %s (down: %i)", SDL_GetKeyName(event->key.keysym.sym), down);
-		int unicode;
 #if SDL_VERSION_ATLEAST(2,0,0)
-		unicode = event->key.keysym.sym;
+		const int unicode = event->key.keysym.sym;
 #else
-		unicode = event->key.keysym.unicode;
+		const int unicode = event->key.keysym.unicode;
 #endif
 		if (unicode) {
 			Com_Printf(" unicode: %x", unicode);
@@ -1141,14 +1139,12 @@ void IN_Frame (void)
  */
 static void CL_PressKey_f (void)
 {
-	unsigned int keyNum;
-
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <key> : simulate press of a key\n", Cmd_Argv(0));
 		return;
 	}
 
-	keyNum = Key_StringToKeynum(Cmd_Argv(1));
+	const unsigned int keyNum = Key_StringToKeynum(Cmd_Argv(1));
 	/* @todo unicode value is wrong */
 	IN_EventEnqueue(keyNum, '?', true);
 	IN_EventEnqueue(keyNum, '?', false);

@@ -30,6 +30,11 @@ function ails.ismelee()
 	return (right == "melee" and (left == "melee" or left == "none")) or (right == "none" and left == "melee")
 end
 
+function ails.israging()
+	local morale = ai.actor():morale()
+	return morale == "rage" or morale == "insane"
+end
+
 function ails.flee ()
 	local flee_pos = ai.positionflee(ai.actor():TU() - 3)
 	if flee_pos then
@@ -250,21 +255,22 @@ end
 function ails.phase_one ()
 	if ai.isfighter() and ai.actor():morale() ~= "cower" and ails.readyweapon() then
 		-- If we don't have enough TUs for shooting try disabling reaction fire to get more available TUs
-		if ai.tusforshooting() > ails.tustouse() then
+		if ai.tusforshooting() > ails.tustouse() or ails.israging() then
 			ai.reactionfire("disable")
 		end
-		local targets = ails.findtargets(ails.param.vis, "~civilian", "dist")
+		local findteam = ai.actor():morale() == "insane" and "all" or "~civilian"
+		local targets = ails.findtargets(ails.param.vis, findteam, "dist")
 		while #targets > 0 do
-			if ai.actor():isinjured() then
-				ails.target = ails.shoot(targets)
-			else
+			if not ai.actor():isinjured() or ails.israging() then
 				ails.target = ails.attack(targets)
+			else
+				ails.target = ails.shoot(targets)
 			end
 			-- We died attacking or cannot attack
 			if ai.actor():isdead() or not ails.target or ai.tusforshooting() > ails.tustouse() then
 				return
 			end
-			targets = ails.findtargets(ails.param.vis, "~civilian", "dist")
+			targets = ails.findtargets(ails.param.vis, findteam, "dist")
 		end
 	end
 end
@@ -276,7 +282,7 @@ function ails.phase_two ()
 			if ails.searchweapon() then
 				ails.phase_two()
 			end
-		elseif not ai.actor():isinjured() and ails.tustouse() >= ai.tusforshooting() then
+		elseif not ai.actor():isinjured() or ails.israging() and ails.tustouse() >= ai.tusforshooting() then
 			local done
 			for i = 1, #ails.param.prio do
 				local targets = ails.findtargets(ails.param.vis, ails.param.prio[i], ails.param.ord)
@@ -351,11 +357,11 @@ function ails.prethink ()
 	-- copy the default params for this actor
 	ails.param = { vis = ails.params.vis, ord = ails.params.ord, pos = ails.params.pos, move = ails.params.move, prio = ails.params.prio }
 	-- adjust for morale
-	if morale == "rage" or morale == "insane" then
+	if ails.israging() then
 		ails.param.pos = "nearest"
 		ails.param.move = "rand"
 		if morale == "insane" then
-			ails.params.prio = {"all"}
+			ails.param.prio = {"all"}
 		end
 	end
 end
@@ -404,7 +410,6 @@ function ails.team_think ()
 
 	if not ails.squad[ails.actor]:isdead() then
 		ai.select(ails.squad[ails.actor])
-		ai.print("Actor ", ails.actor, ails.squad[ails.actor], "Phase: ", ails.phase)
 		ails.prethink()
 		ails.target = ails.targets[ails.actor]
 		if ails.phase == 1 then

@@ -77,8 +77,6 @@ void IN_JoystickMove (void)
 	bool joy_pressed[lengthof(joy_keys)];
 	unsigned int axes = 0;
 	unsigned int hats = 0;
-	int total = 0;
-	int i = 0;
 
 	/* check whether a user has changed the joystick number */
 	if (in_joystickNo->modified)
@@ -95,11 +93,11 @@ void IN_JoystickMove (void)
 	OBJZERO(joy_pressed);
 
 	/* update the ball state */
-	total = SDL_JoystickNumBalls(stick);
+	int total = SDL_JoystickNumBalls(stick);
 	if (total > 0) {
 		int balldx = 0;
 		int balldy = 0;
-		for (i = 0; i < total; i++) {
+		for (int i = 0; i < total; i++) {
 			int dx = 0;
 			int dy = 0;
 			SDL_JoystickGetBall(stick, i, &dx, &dy);
@@ -117,7 +115,7 @@ void IN_JoystickMove (void)
 	if (total > 0) {
 		if (total > lengthof(stick_state.buttons))
 			total = lengthof(stick_state.buttons);
-		for (i = 0; i < total; i++) {
+		for (int i = 0; i < total; i++) {
 			const bool pressed = (SDL_JoystickGetButton(stick, i) != 0);
 			if (pressed != stick_state.buttons[i]) {
 				IN_EventEnqueue(K_JOY1 + i, 0, pressed);
@@ -131,13 +129,13 @@ void IN_JoystickMove (void)
 	if (total > 0) {
 		if (total > 4)
 			total = 4;
-		for (i = 0; i < total; i++)
+		for (int i = 0; i < total; i++)
 			((Uint8 *)&hats)[i] = SDL_JoystickGetHat(stick, i);
 	}
 
 	/* update hat state */
 	if (hats != stick_state.oldhats) {
-		for (i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) {
 			if (((Uint8 *)&hats)[i] != ((Uint8 *)&stick_state.oldhats)[i]) {
 				/* release event */
 				switch (((Uint8 *)&stick_state.oldhats)[i]) {
@@ -216,7 +214,7 @@ void IN_JoystickMove (void)
 	total = SDL_JoystickNumAxes(stick);
 	if (total >= 2) {
 		/* the first two axes are used for the cursor movement */
-		for (i = 0; i < 2; i++) {
+		for (int i = 0; i < 2; i++) {
 			const Sint16 axis = SDL_JoystickGetAxis(stick, i);
 			const float velocity = ((float) axis) / 32767.0f;
 			if (velocity > -in_joystickThreshold->value && velocity < in_joystickThreshold->value)
@@ -243,7 +241,7 @@ void IN_JoystickMove (void)
 		if (total > 16)
 			total = 16;
 		/* every axis except the first two can be normally bound to an action */
-		for (i = 2; i < total; i++) {
+		for (int i = 2; i < total; i++) {
 			const Sint16 axis = SDL_JoystickGetAxis(stick, i);
 			const float f = ((float) axis) / 32767.0f;
 			if (f < -in_joystickThreshold->value) {
@@ -257,7 +255,7 @@ void IN_JoystickMove (void)
 
 	/* Time to update axes state based on old vs. new. */
 	if (axes != stick_state.oldaxes) {
-		for (i = 2; i < 16; i++) {
+		for (int i = 2; i < 16; i++) {
 			if ((axes & (1 << i)) && !(stick_state.oldaxes & (1 << i)))
 				IN_EventEnqueue(joy_keys[i], 0, true);
 

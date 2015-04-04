@@ -189,6 +189,11 @@ function aila.ismelee()
 	return (right == "melee" and (left == "melee" or left == "none")) or (right == "none" and left == "melee")
 end
 
+function aila.israging()
+	local morale = ai.actor():morale()
+	return morale == "rage" or morale == "insane"
+end
+
 function aila.flee ()
 	local flee_pos = ai.positionflee(ai.actor():TU() - 3)
 	if flee_pos then
@@ -397,21 +402,22 @@ end
 function aila.phase_one ()
 	if ai.isfighter() and ai.actor():morale() ~= "cower" and aila.readyweapon() then
 		-- If we don't have enough TUs for shooting try disabling reaction fire to get more available TUs
-		if ai.tusforshooting() > aila.tustouse() then
+		if ai.tusforshooting() > aila.tustouse() or aila.israging() then
 			ai.reactionfire("disable")
 		end
-		local targets = aila.findtargets(aila.param.vis, "~civilian", "dist")
+		local findteam = ai.actor():morale() == "insane" and "all" or "~civilian"
+		local targets = aila.findtargets(aila.param.vis, findteam, "dist")
 		while #targets > 0 do
-			if ai.actor():isinjured() then
-				aila.target = aila.shoot(targets)
-			else
+			if not ai.actor():isinjured() or aila.israging() or aila.ismelee() then
 				aila.target = aila.attack(targets)
+			else
+				aila.target = aila.shoot(targets)
 			end
 			-- We died attacking or cannot attack
 			if ai.actor():isdead() or not aila.target or ai.tusforshooting() > aila.tustouse() then
 				return
 			end
-			targets = aila.findtargets(aila.param.vis, "~civilian", "dist")
+			targets = aila.findtargets(aila.param.vis, findteam, "dist")
 		end
 	end
 end
@@ -423,12 +429,17 @@ function aila.phase_two ()
 			if aila.searchweapon() then
 				aila.phase_two()
 			end
-		elseif not ai.actor():isinjured() and aila.tustouse() >= ai.tusforshooting() then
+		elseif not ai.actor():isinjured() and aila.tustouse() >= ai.tusforshooting() or aila.israging() then
 			local done
 			for i = 1, #aila.param.prio do
 				local targets = aila.findtargets(aila.param.vis, aila.param.prio[i], aila.param.ord)
 				while #targets > 0 do
-					aila.target = aila.engage(targets)
+					-- Prevent melee actors from rushing a target unless they can complete the attack
+					if aila.ismelee() and not aila.israging() then
+						aila.target = aila.attack(targets)
+					else
+						aila.target = aila.engage(targets)
+					end
 					-- Did we die while attacking?
 					if ai:actor():isdead() then
 						return
@@ -472,12 +483,29 @@ function aila.phase_three ()
 		elseif ai.actor():isinjured() then
 			hid = aila.herd() or aila.hide()
 		end
-		if not hid and ai.actor():morale() == "cower" then
-			aila.flee()
+		if not hid then
+			if ai.actor():morale() == "cower" then
+				aila.flee()
+			elseif aila.ismelee() then
+				for i = 1, #aila.param.prio do
+					local targets = aila.findtargets(aila.param.vis, aila.param.prio[i], aila.param.ord)
+					if #targets > 0 then
+						aila.target = aila.engage(targets) or aila.target
+						if ai.actor():isdead() then
+							return
+						end
+					end
+				end
+			end
 		end
 
 		if aila.target then
 			aila.target:pos():face()
+		else
+			local targets = aila.findtargets("sight", "~civilian", "dist")
+			if #targets > 0 then
+				targets[1]:face()
+			end
 		end
 		ai.reactionfire("enable")
 		ai.crouch(true)
@@ -499,13 +527,16 @@ function aila.prethink ()
 		par = aila.params.default
 	end
 	aila.param = { vis = par.vis, ord = par.ord, pos = par.pos, move = par.move, prio = par.prio }
+	if aila.ismelee() then
+		aila.param.prio = {"~alien"}
+	end
 	-- adjust for morale
-	if morale == "rage" or morale == "insane" then
+	if aila.israging() then
 		aila.param.ord = "dist"
 		aila.param.pos = "fastest"
 		aila.param.move = "rand"
 		if morale == "insane" then
-			aila.params.prio = {"all"}
+			aila.param.prio = {"all"}
 		end
 	end
 end
@@ -553,7 +584,6 @@ function aila.team_think ()
 	end
 
 	if not aila.squad[aila.actor]:isdead() then
-		ai.print("Actor ", aila.actor, aila.squad[aila.actor], "Phase: ", aila.phase)
 		ai.select(aila.squad[aila.actor])
 		aila.prethink()
 		aila.target = aila.targets[aila.actor]

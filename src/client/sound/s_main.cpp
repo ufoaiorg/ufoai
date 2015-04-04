@@ -120,14 +120,12 @@ void S_Frame (void)
  */
 static void S_Play_f (void)
 {
-	int i;
-
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <filename> [<filename> ...]\n", Cmd_Argv(0));
 		return;
 	}
 
-	i = 1;
+	int i = 1;
 	while (i < Cmd_Argc()) {
 		S_StartLocalSample(Cmd_Argv(i), SND_VOLUME_DEFAULT);
 		i++;
@@ -343,7 +341,7 @@ void S_PlayStdSample (const stdsound_t sId, const vec3_t origin, float attenuati
  */
 s_sample_t* S_LoadSample (const char* soundFile)
 {
-	int sampleIdx = S_LoadSampleIdx(soundFile);
+	const int sampleIdx = S_LoadSampleIdx(soundFile);
 	return S_GetSample(sampleIdx);
 }
 

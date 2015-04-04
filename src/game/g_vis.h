@@ -64,6 +64,7 @@ typedef unsigned int vischeckflags_t;
 #define ACTOR_VIS_0		0.0
 
 bool G_FrustumVis(const Edict* from, const vec3_t point);
+bool G_SmokeVis (const vec3_t from, const Edict* check);
 float G_ActorVis(const Edict* ent, const Edict* check, bool full);
 void G_VisFlagsClear(int team);
 void G_VisFlagsAdd(Edict& ent, teammask_t teamMask);
