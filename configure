@@ -141,6 +141,8 @@ makefile_local() {
 	add_to_makefile_local TARGET_ARCH "Compile for ${TARGET_ARCH}"
 	add_to_makefile_local MODE "Compile in ${MODE} mode"
 	add_to_makefile_local USE_CCACHE "Use ccache" "Disable ccache"
+	add_to_makefile_local CFLAGS "Added CFLAGS ${CFLAGS}" "Using default CFLAGS"
+	add_to_makefile_local LDFLAGS "Added LDFLAGS ${LDFLAGS}" "Using default LDFLAGS"
 	add_to_makefile_local_quote CC "Found cc ${CC}"
 	add_to_makefile_local_quote CXX "Found cxx ${CXX}"
 	add_to_makefile_local_quote CROSS "Using tools prefix ${CROSS}"
