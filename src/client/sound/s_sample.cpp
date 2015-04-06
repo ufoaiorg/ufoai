@@ -57,17 +57,14 @@ static s_sample_t* S_FindByName (const char* name)
 
 static Mix_Chunk* S_LoadSampleChunk (const char* sound)
 {
-	size_t len;
 	byte* buf;
 	const char* soundExtensions[] = SAMPLE_TYPES;
 	const char** extension = soundExtensions;
-	SDL_RWops* rw;
-	Mix_Chunk* chunk;
 
 	if (!sound || sound[0] == '*')
 		return nullptr;
 
-	len = strlen(sound);
+	size_t len = strlen(sound);
 	if (len + 4 >= MAX_QPATH) {
 		Com_Printf("S_LoadSound: MAX_QPATH exceeded for: '%s'\n", sound);
 		return nullptr;
@@ -77,12 +74,14 @@ static Mix_Chunk* S_LoadSampleChunk (const char* sound)
 		if ((len = FS_LoadFile(va("sound/%s.%s", sound, *extension++), &buf)) == -1)
 			continue;
 
-		if (!(rw = SDL_RWFromMem(buf, len))){
+		SDL_RWops* rw = SDL_RWFromMem(buf, len);
+		if (!rw){
 			FS_FreeFile(buf);
 			continue;
 		}
 
-		if (!(chunk = Mix_LoadWAV_RW(rw, false)))
+		Mix_Chunk* chunk = Mix_LoadWAV_RW(rw, false);
+		if (!chunk)
 			Com_Printf("S_LoadSound: %s.\n", Mix_GetError());
 
 		FS_FreeFile(buf);
@@ -105,24 +104,21 @@ static Mix_Chunk* S_LoadSampleChunk (const char* sound)
  */
 int S_LoadSampleIdx (const char* soundFile)
 {
-	Mix_Chunk* chunk;
-	char name[MAX_QPATH];
-	unsigned hash;
-
 	if (!s_env.initialized)
 		return 0;
 
+	char name[MAX_QPATH];
 	Com_StripExtension(soundFile, name, sizeof(name));
 
 	if (s_sample_t* const sample = S_FindByName(name))
 		return sample->index;
 
 	/* make sure the sound is loaded */
-	chunk = S_LoadSampleChunk(name);
+	Mix_Chunk* chunk = S_LoadSampleChunk(name);
 	if (!chunk)
 		return 0;		/* couldn't load the sound's data */
 
-	hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
+	const unsigned hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
 	s_sample_t* const sample = Mem_PoolAllocType(s_sample_t, cl_soundSysPool);
 	sample->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
 	sample->chunk = chunk;
@@ -142,18 +138,15 @@ s_sample_t* S_GetSample (const int soundIdx)
 
 void S_FreeSamples (void)
 {
-	int i;
-	s_sample_t* sample;
-
-	for (i = 0; i < SAMPLE_HASH_SIZE; i++)
-		for (sample = sampleHash[i]; sample; sample = sample->hashNext) {
+	for (int i = 0; i < SAMPLE_HASH_SIZE; i++)
+		for (s_sample_t* sample = sampleHash[i]; sample; sample = sample->hashNext) {
 			Mix_FreeChunk(sample->chunk);
 			Mem_Free(sample->name);
 		}
 
-	for (i = 0; i < SAMPLE_HASH_SIZE; i++) {
+	for (int i = 0; i < SAMPLE_HASH_SIZE; i++) {
 		s_sample_t* next;
-		for (sample = sampleHash[i]; sample; sample = next) {
+		for (s_sample_t* sample = sampleHash[i]; sample; sample = next) {
 			next = sample->hashNext;
 			Mem_Free(sample);
 		}
