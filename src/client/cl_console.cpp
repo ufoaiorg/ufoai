@@ -104,16 +104,15 @@ static void Con_DrawText (const short* text, int x, int y, size_t width)
  */
 void Con_DrawString (const char* txt, int x, int y, unsigned int width)
 {
-	short buf[512], *pos;
+	short buf[512];
 	const size_t size = lengthof(buf);
 	char c;
-	int color;
 
 	if (width > size || strlen(txt) > size)
 		Sys_Error("Overflow in Con_DrawString");
 
-	color = CON_COLOR_WHITE;
-	pos = buf;
+	int color = CON_COLOR_WHITE;
+	short* pos = buf;
 
 	while ((c = *txt) != 0) {
 		if (Q_IsColorString(txt) ) {
@@ -319,14 +318,13 @@ static void Con_Linefeed (void)
 void Con_Print (const char* txt)
 {
 	int y;
-	int c, len;
+	int c;
 	static bool cr;
-	int color;
 
 	if (!con.initialized)
 		return;
 
-	color = CON_COLOR_WHITE;
+	int color = CON_COLOR_WHITE;
 
 	while ((c = *txt) != 0) {
 		const int charLength = UTF8_char_len(c);
@@ -337,6 +335,7 @@ void Con_Print (const char* txt)
 		}
 
 		/* count word length */
+		int len;
 		for (len = 0; len < con.lineWidth; len++)
 			if (txt[len] <= ' ')
 				break;
@@ -402,21 +401,20 @@ void Con_Close (void)
  */
 static void Con_DrawInput (void)
 {
-	unsigned int i;
-	short editlinecopy[MAXCMDLINE], *text;
+	short editlinecopy[MAXCMDLINE];
 	const size_t size = lengthof(editlinecopy);
 
 	if (cls.keyDest != key_console && cls.state == ca_active)
 		return;					/* don't draw anything (always draw if not active) */
 
 	int y = 0;
-	for (i = 0; i < size; i++) {
+	for (unsigned int i = 0; i < size; i++) {
 		editlinecopy[i] = (CON_COLOR_WHITE << 8) | keyLines[editLine][i];
 		if (keyLines[editLine][i] == '\0')
 			break;
 		y++;
 	}
-	text = editlinecopy;
+	short* text = editlinecopy;
 
 	/* add the cursor frame */
 	if ((int)(CL_Milliseconds() >> 8) & 1) {
@@ -426,7 +424,7 @@ static void Con_DrawInput (void)
 	}
 
 	/* fill out remainder with spaces */
-	for (i = y; i < size; i++)
+	for (unsigned int i = y; i < size; i++)
 		text[i] = (CON_COLOR_WHITE << 8) | ' ';
 
 	/* prestep if horizontally scrolling */
