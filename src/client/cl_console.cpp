@@ -442,8 +442,6 @@ static void Con_DrawInput (void)
  */
 void Con_DrawConsole (float frac)
 {
-	int x, y;
-
 	unsigned int lines = viddef.context.height * frac;
 	if (lines == 0)
 		return;
@@ -463,7 +461,7 @@ void Con_DrawConsole (float frac)
 		const int versionY = lines - (con_fontHeight + CONSOLE_CHAR_ALIGN);
 		const uint32_t color = g_color_table[CON_COLOR_WHITE];
 
-		for (x = 0; x < len; x++)
+		for (int x = 0; x < len; x++)
 			R_DrawChar(versionX + x * con_fontWidth, versionY, consoleMessage[x], color);
 	}
 
@@ -472,21 +470,20 @@ void Con_DrawConsole (float frac)
 
 	int rows = (lines - con_fontHeight * 2) >> con_fontShift;	/* rows of text to draw */
 
-	y = lines - con_fontHeight * 3;
+	int y = lines - con_fontHeight * 3;
 
 	/* draw from the bottom up */
 	if (con.displayLine != con.currentLine) {
 		const uint32_t color = g_color_table[CON_COLOR_GREEN];
 		/* draw arrows to show the buffer is backscrolled */
-		for (x = 0; x < con.lineWidth; x += 4)
+		for (int x = 0; x < con.lineWidth; x += 4)
 			R_DrawChar((x + 1) << con_fontShift, y, '^', color);
 
 		y -= con_fontHeight;
 		rows--;
 	}
 
-	int row = con.displayLine;
-	for (int i = 0; i < rows; i++, y -= con_fontHeight, row--) {
+	for (int i = 0, row = con.displayLine; i < rows; i++, y -= con_fontHeight, row--) {
 		if (row < 0)
 			break;
 		if (con.currentLine - row >= con.totalLines)
