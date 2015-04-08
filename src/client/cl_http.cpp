@@ -80,9 +80,7 @@ static inline bool isvalidchar (int c)
  */
 static int CL_HTTP_Progress (void* clientp, double dltotal, double dlnow, double ultotal, double ulnow)
 {
-	dlhandle_t* dl;
-
-	dl = (dlhandle_t*)clientp;
+	dlhandle_t* dl = (dlhandle_t*)clientp;
 
 	dl->position = (unsigned)dlnow;
 
@@ -392,22 +390,18 @@ bool CL_CheckOrDownloadFile (const char* filename)
  */
 static void CL_CheckAndQueueDownload (char* path)
 {
-	size_t length;
-	const char* ext;
-	bool pak;
-	bool gameLocal;
-
 	StripHighBits(path);
 
-	length = strlen(path);
+	size_t length = strlen(path);
 
 	if (length >= MAX_QPATH)
 		return;
 
-	ext = Com_GetExtension(path);
+	const char* ext = Com_GetExtension(path);
 	if (ext == nullptr)
 		return;
 
+	bool pak;
 	if (Q_streq(ext, "pk3")) {
 		Com_Printf("NOTICE: Filelist is requesting a .pk3 file (%s)\n", path);
 		pak = true;
@@ -429,6 +423,7 @@ static void CL_CheckAndQueueDownload (char* path)
 		return;
 	}
 
+	bool gameLocal;
 	if (path[0] == '@') {
 		if (pak) {
 			Com_Printf("WARNING: @ prefix used on a pk3 file (%s) in filelist.\n", path);
@@ -453,9 +448,8 @@ static void CL_CheckAndQueueDownload (char* path)
 		/* search the user homedir to find the pk3 file */
 		if (pak) {
 			char gamePath[MAX_OSPATH];
-			FILE* f;
 			Com_sprintf(gamePath, sizeof(gamePath), "%s/%s", FS_Gamedir(), path);
-			f = Sys_Fopen(gamePath, "rb");
+			FILE* f = Sys_Fopen(gamePath, "rb");
 			if (!f)
 				exists = false;
 			else {
@@ -491,12 +485,10 @@ static void CL_CheckAndQueueDownload (char* path)
  */
 static void CL_ParseFileList (dlhandle_t* dl)
 {
-	char* list;
-
 	if (!cl_http_filelists->integer)
 		return;
 
-	list = dl->tempBuffer;
+	char* list = dl->tempBuffer;
 
 	for (;;) {
 		char* p = strchr(list, '\n');
@@ -573,14 +565,7 @@ void CL_HTTP_Cleanup (void)
  */
 static void CL_FinishHTTPDownload (void)
 {
-	int messagesInQueue, i;
-	CURLcode result;
-	CURL* curl;
-	long responseCode;
-	double timeTaken, fileSize;
-	char tempName[MAX_OSPATH];
-	bool isFile;
-
+	int messagesInQueue;
 	do {
 		CURLMsg* msg = curl_multi_info_read(multi, &messagesInQueue);
 		dlhandle_t* dl = nullptr;
@@ -595,10 +580,10 @@ static void CL_FinishHTTPDownload (void)
 			continue;
 		}
 
-		curl = msg->easy_handle;
+		CURL* curl = msg->easy_handle;
 
 		/* curl doesn't provide reverse-lookup of the void*  ptr, so search for it */
-		for (i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) {
 			if (cls.HTTPHandles[i].curl == curl) {
 				dl = &cls.HTTPHandles[i];
 				break;
@@ -612,6 +597,7 @@ static void CL_FinishHTTPDownload (void)
 		dl->queueEntry->state = DLQ_STATE_DONE;
 
 		/* filelist processing is done on read */
+		bool isFile;
 		if (dl->file)
 			isFile = true;
 		else
@@ -630,8 +616,11 @@ static void CL_FinishHTTPDownload (void)
 		cls.downloadName[0] = 0;
 		cls.downloadPosition = 0;
 
-		result = msg->data.result;
+		CURLcode result = msg->data.result;
 
+		long responseCode;
+		double timeTaken, fileSize;
+		char tempName[MAX_OSPATH];
 		switch (result) {
 		/* for some reason curl returns CURLE_OK for a 404... */
 		case CURLE_HTTP_RETURNED_ERROR:
@@ -676,8 +665,8 @@ static void CL_FinishHTTPDownload (void)
 			CL_CancelHTTPDownloads(true);
 			continue;
 		default:
-			i = strlen(dl->queueEntry->ufoPath);
-			if (Q_streq(dl->queueEntry->ufoPath + i - 4, ".pk3"))
+			//i = strlen(dl->queueEntry->ufoPath);
+			if (Q_streq(dl->queueEntry->ufoPath + strlen(dl->queueEntry->ufoPath) - 4, ".pk3"))
 				downloadingPK3 = false;
 			if (isFile)
 				FS_RemoveFile(dl->filePath);
@@ -694,7 +683,7 @@ static void CL_FinishHTTPDownload (void)
 				Com_Printf("Failed to rename %s for some odd reason...", dl->filePath);
 
 			/* a pk3 file is very special... */
-			i = strlen(tempName);
+			int i = strlen(tempName);
 			if (Q_streq(tempName + i - 4, ".pk3")) {
 				FS_RestartFilesystem(nullptr);
 				CL_ReVerifyHTTPQueue();
@@ -737,7 +726,6 @@ static void CL_StartNextHTTPDownload (void)
 {
 	for (dlqueue_t* q = cls.downloadQueue; q; q = q->next) {
 		if (q->state == DLQ_STATE_NOT_STARTED) {
-			size_t len;
 			dlhandle_t* dl = CL_GetFreeDLHandle();
 			if (!dl)
 				return;
@@ -745,7 +733,7 @@ static void CL_StartNextHTTPDownload (void)
 			CL_StartHTTPDownload(q, dl);
 
 			/* ugly hack for pk3 file single downloading */
-			len = strlen(q->ufoPath);
+			const size_t len = strlen(q->ufoPath);
 			if (len > 4 && !Q_strcasecmp(q->ufoPath + len - 4, ".pk3"))
 				downloadingPK3 = true;
 
