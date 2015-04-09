@@ -67,8 +67,6 @@ static const char* CL_WeaponSkillToName (int weaponSkill)
 void INV_ItemDescription (const objDef_t* od)
 {
 	static char itemText[UI_MAX_SMALLTEXTLEN];
-	int i;
-	int count;
 
 	currentDisplayedObject = od;
 	Cvar_Set("mn_firemodename", "");
@@ -87,12 +85,12 @@ void INV_ItemDescription (const objDef_t* od)
 	Cvar_Set("mn_itemname", "%s", _(od->name));
 	Cvar_Set("mn_item", "%s", od->id);
 
-	count = 0;
+	int count = 0;
 	if (GAME_ItemIsUseable(od)) {
 		if (od->isAmmo()) {
 			/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons
 			 * we are counting the number of weapons that are usable with this ammo */
-			for (i = 0; i < od->numWeapons; i++)
+			for (int i = 0; i < od->numWeapons; i++)
 				if (GAME_ItemIsUseable(od->weapons[i]))
 					count++;
 			if (itemIndex >= od->numWeapons || itemIndex < 0)
@@ -108,7 +106,7 @@ void INV_ItemDescription (const objDef_t* od)
 		} else if (od->weapon) {
 			/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo
 			 * we are counting the number of ammo that is usable with this weapon */
-			for (i = 0; i < od->numAmmos; i++)
+			for (int i = 0; i < od->numAmmos; i++)
 				if (GAME_ItemIsUseable(od->ammos[i]))
 					count++;
 
@@ -140,7 +138,7 @@ void INV_ItemDescription (const objDef_t* od)
 			Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight / WEIGHT_FACTOR);
 			Q_strcat(itemText, sizeof(itemText), "\n");
 			Q_strcat(itemText, sizeof(itemText), _("^BDamage type:\tProtection:\n"));
-			for (i = 0; i < csi.numDTs; i++) {
+			for (int i = 0; i < csi.numDTs; i++) {
 				const damageType_t* dt = &csi.dts[i];
 				if (!dt->showInMenu)
 					continue;
@@ -166,7 +164,6 @@ void INV_ItemDescription (const objDef_t* od)
 				Q_strcat(itemText, sizeof(itemText), _("Weight:\t%g Kg\n"), od->weight / WEIGHT_FACTOR);
 				/** @todo is there ammo with no firedefs? */
 				if (GAME_ItemIsUseable(odAmmo) && odAmmo->numFiredefs[weaponIndex] > 0) {
-					const fireDef_t* fd;
 					numFiredefs = odAmmo->numFiredefs[weaponIndex];
 
 					/* This contains everything common for weapons and ammos */
@@ -176,7 +173,7 @@ void INV_ItemDescription (const objDef_t* od)
 					if (fireModeIndex < 0)
 						fireModeIndex = numFiredefs - 1;
 
-					fd = &odAmmo->fd[weaponIndex][fireModeIndex];
+					const fireDef_t* fd = &odAmmo->fd[weaponIndex][fireModeIndex];
 
 					/* We always display the name of the firemode for an ammo */
 					Cvar_Set("mn_firemodename", "%s", _(fd->name));
