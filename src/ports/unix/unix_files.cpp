@@ -242,7 +242,22 @@ void Sys_Mkfifo (const char *ospath, qFILE *f)
 	}
 }
 
-FILE* Sys_Fopen (const char *filename, const char *mode)
+FILE* Sys_Fopen (const char* filename, const char* mode)
 {
 	return fopen(filename, mode);
+}
+
+int Sys_Remove (const char* filename)
+{
+	return remove(filename);
+}
+
+int Sys_Rename (const char* oldname, const char* newname)
+{
+	return rename(oldname, newname);
+}
+
+int Sys_Access (const char* filename, int mode)
+{
+	return access(filename, mode);
 }

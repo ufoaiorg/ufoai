@@ -536,7 +536,7 @@ void CL_HTTP_Cleanup (void)
 
 		if (dl->file) {
 			fclose(dl->file);
-			remove(dl->filePath);
+			Sys_Remove(dl->filePath);
 			dl->file = nullptr;
 		}
 

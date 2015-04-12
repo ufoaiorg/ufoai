@@ -68,4 +68,7 @@ int Sys_Milliseconds(void);
 void Sys_Backtrace(void);
 void Sys_Breakpoint(void);
 void Sys_OpenURL(const char* url);
-FILE* Sys_Fopen(const char *filename, const char *mode);
+FILE* Sys_Fopen(const char* filename, const char* mode);
+int Sys_Remove (const char* filename);
+int Sys_Rename (const char* oldname, const char* newname);
+int Sys_Access (const char* filename, int mode);

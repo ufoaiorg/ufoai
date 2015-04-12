@@ -520,11 +520,34 @@ void Sys_OpenURL (const char* url)
 	ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
-FILE* Sys_Fopen (const char *filename, const char *mode)
+FILE* Sys_Fopen (const char* filename, const char* mode)
 {
 	WCHAR wname[MAX_OSPATH];
 	WCHAR wmode[MAX_VAR];
 	Sys_Utf8ToUtf16(filename, wname, lengthof(wname));
 	Sys_Utf8ToUtf16(mode, wmode, lengthof(wmode));
 	return _wfopen(wname, wmode);
+}
+
+int Sys_Remove (const char* filename)
+{
+	WCHAR wname[MAX_OSPATH];
+	Sys_Utf8ToUtf16(filename, wname, lengthof(wname));
+	return _wremove(wname);
+}
+
+int Sys_Remove (const char* oldname, const char* filename)
+{
+	WCHAR woldname[MAX_OSPATH];
+	WCHAR wnewname[MAX_OSPATH];
+	Sys_Utf8ToUtf16(oldname, woldname, lengthof(woldname));
+	Sys_Utf8ToUtf16(newname, wnewname, lengthof(wnewname));
+	return _wremove(woldname, wnewname);
+}
+
+int Sys_Access (const char* filename, int mode)
+{
+	WCHAR wname[MAX_OSPATH];
+	Sys_Utf8ToUtf16(filename, wname, lengthof(wname));
+	return _waccess(filename, mode);
 }
