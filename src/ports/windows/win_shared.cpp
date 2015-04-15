@@ -536,18 +536,18 @@ int Sys_Remove (const char* filename)
 	return _wremove(wname);
 }
 
-int Sys_Remove (const char* oldname, const char* filename)
+int Sys_Rename (const char* oldname, const char* newname)
 {
 	WCHAR woldname[MAX_OSPATH];
 	WCHAR wnewname[MAX_OSPATH];
 	Sys_Utf8ToUtf16(oldname, woldname, lengthof(woldname));
 	Sys_Utf8ToUtf16(newname, wnewname, lengthof(wnewname));
-	return _wremove(woldname, wnewname);
+	return _wrename(woldname, wnewname);
 }
 
 int Sys_Access (const char* filename, int mode)
 {
 	WCHAR wname[MAX_OSPATH];
 	Sys_Utf8ToUtf16(filename, wname, lengthof(wname));
-	return _waccess(filename, mode);
+	return _waccess(wname, mode);
 }
