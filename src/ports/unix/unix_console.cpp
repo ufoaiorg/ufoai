@@ -112,7 +112,7 @@ static void Sys_TTYConsoleShow (void)
 	}
 }
 
-static void Sys_TTYConsoleHistoryAdd (consoleHistory_t *field)
+static void Sys_TTYConsoleHistoryAdd (consoleHistory_t* field)
 {
 	int i;
 	const size_t size = lengthof(ttyEditLines);
@@ -132,7 +132,7 @@ static void Sys_TTYConsoleHistoryAdd (consoleHistory_t *field)
 	histCurrent = -1; /* re-init */
 }
 
-static consoleHistory_t *Sys_TTYConsoleHistoryPrevious (void)
+static consoleHistory_t* Sys_TTYConsoleHistoryPrevious (void)
 {
 	int histPrev;
 
@@ -149,7 +149,7 @@ static consoleHistory_t *Sys_TTYConsoleHistoryPrevious (void)
 	return &(ttyEditLines[histCurrent]);
 }
 
-static consoleHistory_t *Sys_TTYConsoleHistoryNext (void)
+static consoleHistory_t* Sys_TTYConsoleHistoryNext (void)
 {
 	assert(histCount <= CON_HISTORY);
 	assert(histCount >= 0);
@@ -207,7 +207,7 @@ void Sys_ConsoleShutdown (void)
 	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL, 0) & ~O_NONBLOCK);
 }
 
-static void Sys_TTYConsoleHistoryClear (consoleHistory_t *edit)
+static void Sys_TTYConsoleHistoryClear (consoleHistory_t* edit)
 {
 	OBJZERO(*edit);
 }
@@ -269,7 +269,7 @@ void Sys_ConsoleInit (void)
 	ttyConsoleActivated = true;
 }
 
-const char *Sys_ConsoleInput (void)
+const char* Sys_ConsoleInput (void)
 {
 	/* we use this when sending back commands */
 	static char text[256];
@@ -303,8 +303,8 @@ const char *Sys_ConsoleInput (void)
 				}
 				if (key == '\t') {
 					const size_t size = sizeof(ttyConsoleHistory.buffer);
-					const char *s = ttyConsoleHistory.buffer;
-					char *target = ttyConsoleHistory.buffer;
+					const char* s = ttyConsoleHistory.buffer;
+					char* target = ttyConsoleHistory.buffer;
 					Sys_ShowConsole(false);
 					Com_ConsoleCompleteCommand(s, target, size, &ttyConsoleHistory.cursor, 0);
 					Sys_ShowConsole(true);
@@ -314,7 +314,7 @@ const char *Sys_ConsoleInput (void)
 				if (avail != -1) {
 					/* VT 100 keys */
 					if (key == '[' || key == 'O') {
-						consoleHistory_t *history;
+						consoleHistory_t* history;
 						avail = read(STDIN_FILENO, &key, 1);
 						if (avail != -1) {
 							switch (key) {
@@ -389,7 +389,7 @@ const char *Sys_ConsoleInput (void)
 	return nullptr;
 }
 
-void Sys_ConsoleOutput (const char *string)
+void Sys_ConsoleOutput (const char* string)
 {
 	/* BUG: for some reason, NDELAY also affects stdout (1) when used on stdin (0). */
 	const int origflags = fcntl(STDOUT_FILENO, F_GETFL, 0);
