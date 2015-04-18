@@ -186,19 +186,17 @@ static void INV_InventoryList_f (void)
  */
 static bool INV_EquipmentDefSanityCheck (void)
 {
-	int sum;
 	bool result = true;
 
 	for (int i = 0; i < csi.numEDs; i++) {
-		int j;
 		const equipDef_t* const ed = &csi.eds[i];
 		/* only check definitions used for generating teams */
 		if (!Q_strstart(ed->id, "alien") && !Q_strstart(ed->id, "phalanx"))
 			continue;
 
 		/* Check primary */
-		sum = 0;
-		for (j = 0; j < csi.numODs; j++) {
+		int sum = 0;
+		for (int j = 0; j < csi.numODs; j++) {
 			const objDef_t* const obj = INVSH_GetItemByIDX(j);
 			if (obj->weapon && obj->fireTwoHanded
 			 && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY)))
@@ -211,7 +209,7 @@ static bool INV_EquipmentDefSanityCheck (void)
 
 		/* Check secondary */
 		sum = 0;
-		for (j = 0; j < csi.numODs; j++) {
+		for (int j = 0; j < csi.numODs; j++) {
 			const objDef_t* const obj = INVSH_GetItemByIDX(j);
 			if (obj->weapon && obj->isReloadable() && !obj->deplete && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY))
 				sum += ed->numItems[j];
@@ -223,7 +221,7 @@ static bool INV_EquipmentDefSanityCheck (void)
 
 		/* Check armour */
 		sum = 0;
-		for (j = 0; j < csi.numODs; j++) {
+		for (int j = 0; j < csi.numODs; j++) {
 			const objDef_t* const obj = INVSH_GetItemByIDX(j);
 			if (INV_ItemMatchesFilter(obj, FILTER_S_ARMOUR))
 				sum += ed->numItems[j];
@@ -269,8 +267,6 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t* obj)
  */
 bool INV_ItemMatchesFilter (const objDef_t* obj, const itemFilterTypes_t filterType)
 {
-	int i;
-
 	if (!obj)
 		return false;
 
@@ -280,7 +276,7 @@ bool INV_ItemMatchesFilter (const objDef_t* obj, const itemFilterTypes_t filterT
 			return true;
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
-		for (i = 0; i < obj->numWeapons; i++) {
+		for (int i = 0; i < obj->numWeapons; i++) {
 			const objDef_t* weapon = obj->weapons[i];
 			if (weapon && weapon != obj && INV_ItemMatchesFilter(weapon, filterType))
 				return true;
@@ -292,7 +288,7 @@ bool INV_ItemMatchesFilter (const objDef_t* obj, const itemFilterTypes_t filterT
 			return true;
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
-		for (i = 0; i < obj->numWeapons; i++) {
+		for (int i = 0; i < obj->numWeapons; i++) {
 			const objDef_t* weapon = obj->weapons[i];
 			if (weapon && weapon != obj && INV_ItemMatchesFilter(weapon, filterType))
 				return true;
@@ -304,7 +300,7 @@ bool INV_ItemMatchesFilter (const objDef_t* obj, const itemFilterTypes_t filterT
 			return true;
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
-		for (i = 0; i < obj->numWeapons; i++) {
+		for (int i = 0; i < obj->numWeapons; i++) {
 			const objDef_t* weapon = obj->weapons[i];
 			if (weapon && weapon != obj && INV_ItemMatchesFilter(weapon, filterType))
 				return true;
@@ -360,15 +356,13 @@ bool INV_ItemMatchesFilter (const objDef_t* obj, const itemFilterTypes_t filterT
  */
 Item* INV_SearchInInventoryWithFilter (const Inventory* const inv, const invDef_t* container, const objDef_t* itemType,  const itemFilterTypes_t filterType)
 {
-	Item* ic;
-
 	if (inv == nullptr)
 		return nullptr;
 
 	if (itemType == nullptr)
 		return nullptr;
 
-	for (ic = inv->getContainer2(container->id); ic; ic = ic->getNext()) {
+	for (Item* ic = inv->getContainer2(container->id); ic; ic = ic->getNext()) {
 		/* Search only in the items that could get displayed. */
 		if (ic && ic->def() && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->def(), filterType))) {
 			/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
