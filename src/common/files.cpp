@@ -1569,7 +1569,7 @@ int FS_WriteFile (const void* buffer, size_t len, const char* filename)
 	/* if file write failed (file is incomplete) then delete it */
 	if (c != len || lencheck != len) {
 		Com_Printf("FS_WriteFile: failed to finish writing '%s'\n", filename);
-		if (remove(va("%s/%s", FS_Gamedir(), filename)))
+		if (Sys_Remove(va("%s/%s", FS_Gamedir(), filename)))
 			Com_Printf("FS_WriteFile: could not remove file: %s\n", filename);
 		return 0;
 	}
@@ -1603,9 +1603,9 @@ bool FS_FileExists (const char* filename, ...)
 	va_end(ap);
 
 #ifdef _WIN32
-	return (_access(path, 00) == 0);
+	return (Sys_Access(path, 00) == 0);
 #else
-	return (access(path, R_OK) == 0);
+	return (Sys_Access(path, R_OK) == 0);
 #endif
 }
 
@@ -1712,7 +1712,7 @@ void FS_RemoveFile (const char* osPath)
 		Sys_Error("Filesystem call made without initialization");
 
 	Com_Printf("FS_RemoveFile: remove %s\n", osPath);
-	remove(osPath);
+	Sys_Remove(osPath);
 }
 
 /**
@@ -1738,5 +1738,5 @@ bool FS_RenameFile (const char* from, const char* to, bool relative)
 		to = to_buf;
 	}
 
-	return rename(from, to) == 0;
+	return Sys_Rename(from, to) == 0;
 }

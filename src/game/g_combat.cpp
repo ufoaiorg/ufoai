@@ -674,11 +674,12 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const Item* item)
 void G_CalcEffectiveSpread (const Actor* shooter, const fireDef_t* fd, vec2_t effSpread)
 {
 	/* Get accuracy value for this attacker. */
-	const float acc = GET_ACC(shooter->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? shooter->chr.score.skills[fd->weaponSkill] : 0);
+	const float acc = GET_ACC(shooter->chr.score.skills[ABILITY_ACCURACY],
+			fd->weaponSkill ? shooter->chr.score.skills[fd->weaponSkill] : 0, G_ActorGetInjuryPenalty(shooter, MODIFIER_ACCURACY));
 
 	/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
 	 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
-	const float commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * G_ActorGetInjuryPenalty(shooter, MODIFIER_ACCURACY);
+	const float commonfactor = std::max(0.0f, WEAPON_BALANCE + SKILL_BALANCE * acc);
 	effSpread[PITCH] = fd->spread[0] * commonfactor;
 	effSpread[YAW] = fd->spread[1] * commonfactor;
 

@@ -72,6 +72,7 @@ static struct {
 
 static int keyq_head = 0;
 static int keyq_tail = 0;
+static unsigned int lastDown = 0;
 
 static cvar_t* in_debug;
 cvar_t* cl_isometric;
@@ -627,8 +628,9 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
 /**
  * @brief Translate the keys to ufo keys
  */
-static void IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
+static bool IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 {
+	bool special = true;
 	switch (keycode) {
 	case SDLK_PAGEUP:
 		*ascii = K_PGUP;
@@ -866,12 +868,14 @@ static void IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 		*ascii = K_SPACE;
 		break;
 	default:
+		special = false;
 		if (UTF8_encoded_len(keycode) == 1 && isprint(keycode))
 			*ascii = keycode;
 		else
 			*ascii = 0;
 		break;
 	}
+	return special;
 }
 
 void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, bool keyDown)
@@ -964,6 +968,9 @@ void IN_Frame (void)
 			/** @todo */
 			break;
 		case SDL_TEXTINPUT: {
+			if (!SDL_IsTextInputActive())
+				break;
+
 			const char* text = event.text.text;
 			const char** str = &text;
 			for (;;) {
@@ -973,8 +980,15 @@ void IN_Frame (void)
 				}
 				unicode = characterUnicode;
 				IN_TranslateKey(characterUnicode, &key);
-				IN_EventEnqueue(key, unicode, true);
-				IN_EventEnqueue(key, unicode, false);
+				/** @todo Fix numpad handling */
+				/* Don't send the key events if they come from the numpad: the navigation key events
+				 * are already sent with the SDL_KEYDOWN/UP events, this will prevents entering
+				 * numbers with the numpad, but the key bindings rely on the K_KP_* navigation
+				 * keys being sent. */
+				if ((!isdigit(key) && key != '.') || lastDown < K_KP_INS || lastDown > K_KP_DEL) {
+					IN_EventEnqueue(key, unicode, true);
+					IN_EventEnqueue(key, unicode, false);
+				}
 			}
 			break;
 		}
@@ -1070,23 +1084,28 @@ void IN_Frame (void)
 			}
 
 #if SDL_VERSION_ATLEAST(2,0,0)
-			unicode = 0;
+			/* SDL_TEXTINPUT above will handle normal text for sdl2 */
+			if (IN_TranslateKey(event.key.keysym.sym, &key) || !SDL_IsTextInputActive())
+				IN_EventEnqueue(key, 0, true);
 #else
 			unicode = event.key.keysym.unicode;
-#endif
 			IN_TranslateKey(event.key.keysym.sym, &key);
 			IN_EventEnqueue(key, unicode, true);
+#endif
+			lastDown = key;
 			break;
 
 		case SDL_KEYUP:
 			IN_PrintKey(&event, 0);
 #if SDL_VERSION_ATLEAST(2,0,0)
-			unicode = 0;
+			/* SDL_TEXTINPUT above will handle normal text for sdl2 */
+			if (IN_TranslateKey(event.key.keysym.sym, &key) || !SDL_IsTextInputActive())
+					IN_EventEnqueue(key, 0, false);
 #else
 			unicode = event.key.keysym.unicode;
-#endif
 			IN_TranslateKey(event.key.keysym.sym, &key);
 			IN_EventEnqueue(key, unicode, false);
+#endif
 			break;
 
 #if SDL_VERSION_ATLEAST(2,0,0)

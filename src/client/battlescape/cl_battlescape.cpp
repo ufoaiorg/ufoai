@@ -218,11 +218,12 @@ int CL_GetHitProbability (const le_t* actor)
 	if (!chr)
 		Com_Error(ERR_DROP, "No character given for local entity");
 
-	const float acc = GET_ACC(chr->score.skills[ABILITY_ACCURACY], actor->fd->weaponSkill ? chr->score.skills[actor->fd->weaponSkill] : 0.0);
+	const float acc = GET_ACC(chr->score.skills[ABILITY_ACCURACY],
+			actor->fd->weaponSkill ? chr->score.skills[actor->fd->weaponSkill] : 0.0, CL_ActorInjuryModifier(actor, MODIFIER_ACCURACY));
 
 	const float crouch = (LE_IsCrouched(actor) && actor->fd->crouch) ? actor->fd->crouch : 1.0;
 
-	const float commonfactor = crouch * torad * distance * CL_ActorInjuryModifier(actor, MODIFIER_ACCURACY);
+	const float commonfactor = crouch * torad * distance;
 	const float stdevupdown = (actor->fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
 	const float stdevleftright = (actor->fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
 	const float hitchance = (stdevupdown > LOOKUP_EPSILON ? CL_LookupErrorFunction(height * 0.3536f / stdevupdown) : 1.0f)

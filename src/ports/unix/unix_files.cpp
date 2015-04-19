@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Returns the home environment variable
  * (which hold the path of the user's homedir)
  */
-char *Sys_GetHomeDirectory (void)
+char* Sys_GetHomeDirectory (void)
 {
 	return getenv("HOME");
 }
@@ -54,9 +54,9 @@ void Sys_NormPath (char* path)
 static	char	findbase[MAX_OSPATH];
 static	char	findpath[MAX_OSPATH];
 static	char	findpattern[MAX_OSPATH];
-static	DIR		*fdir;
+static	DIR*	fdir;
 
-static bool CompareAttributes (const char *path, const char *name, unsigned musthave, unsigned canthave)
+static bool CompareAttributes (const char* path, const char* name, unsigned musthave, unsigned canthave)
 {
 	struct stat st;
 	char fn[MAX_OSPATH];
@@ -85,10 +85,10 @@ static bool CompareAttributes (const char *path, const char *name, unsigned must
  * @sa Sys_FindNext
  * @sa Sys_FindClose
  */
-char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
+char* Sys_FindFirst (const char* path, unsigned musthave, unsigned canhave)
 {
-	struct dirent *d;
-	char *p;
+	struct dirent* d;
+	char* p;
 
 	if (fdir)
 		Sys_Error("Sys_BeginFind without close");
@@ -124,9 +124,9 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
  * @sa Sys_FindFirst
  * @sa static var findpattern
  */
-char *Sys_FindNext (unsigned musthave, unsigned canhave)
+char* Sys_FindNext (unsigned musthave, unsigned canhave)
 {
-	struct dirent *d;
+	struct dirent* d;
 
 	if (fdir == nullptr)
 		return nullptr;
@@ -150,12 +150,12 @@ void Sys_FindClose (void)
 
 #define MAX_FOUND_FILES 0x1000
 
-void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char *filter, linkedList_t **list)
+void Sys_ListFilteredFiles (const char* basedir, const char* subdirs, const char* filter, linkedList_t** list)
 {
 	char search[MAX_OSPATH], newsubdirs[MAX_OSPATH];
 	char filename[MAX_OSPATH];
-	DIR *directory;
-	struct dirent *d;
+	DIR* directory;
+	struct dirent* d;
 	struct stat st;
 
 	if (subdirs[0] != '\0') {
@@ -194,7 +194,7 @@ void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char
 /**
  * @return nullptr if getcwd failed
  */
-char *Sys_Cwd (void)
+char* Sys_Cwd (void)
 {
 	static char cwd[MAX_OSPATH];
 
@@ -205,7 +205,7 @@ char *Sys_Cwd (void)
 	return cwd;
 }
 
-void Sys_Mkdir (const char *thePath)
+void Sys_Mkdir (const char* thePath)
 {
 	if (mkdir(thePath, 0777) != -1)
 		return;
@@ -214,9 +214,9 @@ void Sys_Mkdir (const char *thePath)
 		Com_Printf("\"mkdir %s\" failed, reason: \"%s\".", thePath, strerror(errno));
 }
 
-void Sys_Mkfifo (const char *ospath, qFILE *f)
+void Sys_Mkfifo (const char* ospath, qFILE* f)
 {
-	FILE *fifo;
+	FILE* fifo;
 	int result;
 	struct stat buf;
 
@@ -242,7 +242,22 @@ void Sys_Mkfifo (const char *ospath, qFILE *f)
 	}
 }
 
-FILE* Sys_Fopen (const char *filename, const char *mode)
+FILE* Sys_Fopen (const char* filename, const char* mode)
 {
 	return fopen(filename, mode);
+}
+
+int Sys_Remove (const char* filename)
+{
+	return remove(filename);
+}
+
+int Sys_Rename (const char* oldname, const char* newname)
+{
+	return rename(oldname, newname);
+}
+
+int Sys_Access (const char* filename, int mode)
+{
+	return access(filename, mode);
 }
