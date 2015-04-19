@@ -297,14 +297,13 @@ static inline bool Irc_IsChannel (const char* target)
 
 static void Irc_ParseName (const char* mask, char* nick, size_t size, irc_nick_prefix_t* prefix)
 {
-	const char* emph;
 	if (mask[0] == IRC_NICK_PREFIX_OP || mask[0] == IRC_NICK_PREFIX_VOICE) {
 		*prefix = (irc_nick_prefix_t) *mask;	/* read prefix */
 		++mask;									/* crop prefix from mask */
 	} else {
 		*prefix = IRC_NICK_PREFIX_NONE;
 	}
-	emph = strchr(mask, '!');
+	const char* emph = strchr(mask, '!');
 	if (emph) {
 		size_t length = emph - mask;
 		if (length >= size - 1)
@@ -591,7 +590,7 @@ static bool Irc_Proto_PollServerMsg (irc_server_msg_t* msg, bool* msg_complete)
 		return true;
 
 	/* terminate buf string */
-	const char*  const begin = buf;
+	const char* const begin = buf;
 	last += recvd;
 	*last = '\0';
 	if (last != begin) {
@@ -664,12 +663,11 @@ static void Irc_Client_CmdRplWhowasuser (const char* params, const char* trailin
 {
 	char buf[IRC_SEND_BUF_SIZE];
 	const char* nick = "", *user = "", *host = "", *real_name = trailing;
-	char* p;
 	unsigned int i = 0;
 
 	/* parse params "<nick> <user> <host> * :<real name>" */
 	Q_strncpyz(buf, params, sizeof(buf));
-	for (p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
+	for (char* p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
 			nick = p;
@@ -703,12 +701,11 @@ static void Irc_Client_CmdRplWhoisuser (const char* params, const char* trailing
 {
 	char buf[IRC_SEND_BUF_SIZE];
 	const char* nick = "", *user = "", *host = "", *real_name = trailing;
-	char* p;
 	unsigned int i = 0;
 
 	/* parse params "<nick> <user> <host> * :<real name>" */
 	strcpy(buf, params);
-	for (p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
+	for (char* p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
 			nick = p;
@@ -728,12 +725,11 @@ static void Irc_Client_CmdRplWhoisserver (const char* params, const char* traili
 {
 	char buf[IRC_SEND_BUF_SIZE];
 	const char* nick = "", *server = "", *server_info = trailing;
-	char* p;
 	unsigned int i = 0;
 
 	/* parse params "<nick> <server> :<server info>" */
 	strcpy(buf, params);
-	for (p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
+	for (char* p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
 			nick = p;
@@ -750,12 +746,11 @@ static void Irc_Client_CmdRplWhoisaccount (const char* params, const char* trail
 {
 	char buf[IRC_SEND_BUF_SIZE];
 	const char* nick = "", *account = "";
-	char* p;
 	unsigned int i = 0;
 
 	/* parse params "<nick> <account> :is logged in as" */
 	strcpy(buf, params);
-	for (p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
+	for (char* p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
 			nick = p;
@@ -772,12 +767,11 @@ static void Irc_Client_CmdRplWhoisidle (const char* params, const char* trailing
 {
 	char buf[IRC_SEND_BUF_SIZE];
 	const char* nick = "", *idle = "";
-	char* p;
 	unsigned int i = 0;
 
 	/* parse params "<nick> <integer> :seconds idle" */
 	strcpy(buf, params);
-	for (p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
+	for (char* p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
 			nick = p;
@@ -794,12 +788,11 @@ static void Irc_Client_CmdRplWhoreply (const char* params, const char* trailing)
 {
 	char buf[IRC_SEND_BUF_SIZE];
 	const char* channel = "", *user = "", *host = "", *server = "", *nick = "", *hg = "";
-	char* p;
 	unsigned int i = 0;
 
 	/* parse params "<channel> <user> <host> <server> <nick> <H|G>[*][@|+] :<hopcount> <real name>" */
 	strcpy(buf, params);
-	for (p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
+	for (char* p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 0:
 			channel = p;
@@ -873,11 +866,10 @@ static void Irc_Client_CmdKick (const char* prefix, const char* params, const ch
 	char buf[IRC_SEND_BUF_SIZE];
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
-	const char* channel, *victim;
 	Irc_ParseName(prefix, nick, sizeof(nick), &p);
 	strcpy(buf, params);
-	channel = strtok(buf, " ");
-	victim = strtok(nullptr, " ");
+	const char* channel = strtok(buf, " ");
+	const char* victim = strtok(nullptr, " ");
 	if (Q_streq(victim, irc_nick->string)) {
 		/* we have been kicked */
 		Irc_AppendToBuffer("^BYou were kicked from %s by %s (%s)", channel, nick, trailing);
@@ -949,11 +941,9 @@ static void Irc_Client_CmdPrivmsg (const char* prefix, const char* params, const
 	} else {
 		if (!strncmp(trailing, IRC_INVITE_FOR_A_GAME, strlen(IRC_INVITE_FOR_A_GAME))) {
 			char serverIPAndPort[128];
-			char* port;
-			char* version;
 			Q_strncpyz(serverIPAndPort, trailing + strlen(IRC_INVITE_FOR_A_GAME), sizeof(serverIPAndPort));
 			/* values are splitted by ; */
-			port = strstr(serverIPAndPort, ";");
+			char* port = strstr(serverIPAndPort, ";");
 			if (port == nullptr) {
 				Com_DPrintf(DEBUG_CLIENT, "Invalid irc invite message received\n");
 				return;
@@ -963,7 +953,7 @@ static void Irc_Client_CmdPrivmsg (const char* prefix, const char* params, const
 			*port++ = '\0';
 
 			/* the version is optional */
-			version = strstr(port, ";");
+			char* version = strstr(port, ";");
 			if (version != nullptr) {
 				/* split port and version */
 				*version++ = '\0';
@@ -997,10 +987,9 @@ static void Irc_Client_CmdPrivmsg (const char* prefix, const char* params, const
 
 static void Irc_Client_CmdRplNamreply (const char* params, const char* trailing)
 {
-	char* pos;
 	char* space;
 	char nick[MAX_VAR];
-	size_t len = strlen(trailing) + 1;
+	const size_t len = strlen(trailing) + 1;
 	irc_nick_prefix_t p;
 
 	if (!chan)
@@ -1011,7 +1000,7 @@ static void Irc_Client_CmdRplNamreply (const char* params, const char* trailing)
 		return;
 
 	Q_strncpyz(parseBuf, trailing, len);
-	pos = parseBuf;
+	char* pos = parseBuf;
 
 	do {
 		/* names are space separated */
@@ -1372,10 +1361,9 @@ static void Irc_Proto_RefillBucket (void)
 static void Irc_Proto_DrainBucket (void)
 {
 	const double characterBucketBurst = irc_characterBucketBurst->value;
-	irc_bucket_message_t* msg;
 
 	/* remove messages whose size exceed our burst size (we can not send them) */
-	for (msg = irc_bucket.first_msg; msg && msg->msg_len > characterBucketBurst; msg = irc_bucket.first_msg) {
+	for (irc_bucket_message_t* msg = irc_bucket.first_msg; msg && msg->msg_len > characterBucketBurst; msg = irc_bucket.first_msg) {
 		irc_bucket_message_t*  const next = msg->next;
 		/* update bucket sizes */
 		--irc_bucket.message_size;
@@ -1386,7 +1374,7 @@ static void Irc_Proto_DrainBucket (void)
 		irc_bucket.first_msg = next;
 	}
 	/* send burst of remaining messages */
-	for (msg = irc_bucket.first_msg; msg; msg = irc_bucket.first_msg) {
+	for (irc_bucket_message_t* msg = irc_bucket.first_msg; msg; msg = irc_bucket.first_msg) {
 		/* send message */
 		Irc_Net_Send(msg->msg, msg->msg_len);
 		irc_bucket.character_token -= msg->msg_len;
@@ -1712,10 +1700,10 @@ static void Irc_Client_PrivMsg_f (void)
 {
 	if (Cmd_Argc() >= 3) {
 		char cropped_msg[IRC_SEND_BUF_SIZE];
-		const char*  const target = Cmd_Argv(1);
+		const char* const target = Cmd_Argv(1);
 		const char* msg = Cmd_Args() + strlen(target) + 1;
 		if (*msg == '"') {
-			size_t msg_len = strlen(msg);
+			const size_t msg_len = strlen(msg);
 			memcpy(cropped_msg, msg + 1, msg_len - 2);
 			cropped_msg[msg_len - 2] = '\0';
 			msg = cropped_msg;
@@ -1755,9 +1743,8 @@ static void Irc_Client_Topic_f (void)
 				in += strlen(channel) + 1;
 				Q_strncpyz(out, in, sizeof(out));
 				if (*out == '"') {
-					size_t out_len;
 					++out;
-					out_len = strlen(out);
+					const size_t out_len = strlen(out);
 					assert(out_len >= 1);
 					out[out_len - 1] = '\0';
 				}
@@ -1822,7 +1809,6 @@ static void Irc_Client_Kick_f (void)
 
 static void Irc_GetExternalIP (const char* externalIP, void* userdata)
 {
-	const irc_user_t* user;
 	char buf[128];
 
 	if (!externalIP) {
@@ -1831,7 +1817,7 @@ static void Irc_GetExternalIP (const char* externalIP, void* userdata)
 	}
 	Com_sprintf(buf, sizeof(buf), "%s%s;%s;%s", IRC_INVITE_FOR_A_GAME, externalIP, port->string, UFO_VERSION);
 
-	user = chan->user;
+	const irc_user_t* user = chan->user;
 	while (user) {
 		/** @todo Maybe somehow check the version of the client with ctcp VERSION and only send
 		 * to those, that are connected with ufoai and have a correct version */
@@ -1901,23 +1887,19 @@ Menu functions
  */
 static void Irc_UserClick_f (void)
 {
-	const char* name;
-	int num, cnt;
-
 	if (Cmd_Argc() != 2)
 		return;
 
 	if (!chan)
 		return;
 
-	num = atoi(Cmd_Argv(1));
+	const int num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= chan->users || num >= IRC_MAX_USERLIST)
 		return;
 
-	cnt = std::min(chan->users, IRC_MAX_USERLIST);
-	cnt -= num + 1;
+	const int cnt = std::min(chan->users, IRC_MAX_USERLIST) - (num + 1);
 
-	name = irc_userListOrdered[cnt];
+	const char* name = irc_userListOrdered[cnt];
 	Cvar_Set("irc_send_buffer", "%s%s: ", irc_send_buffer->string, &name[1]);
 }
 
@@ -1927,23 +1909,19 @@ static void Irc_UserClick_f (void)
  */
 static void Irc_UserRightClick_f (void)
 {
-	const char* name;
-	int num, cnt;
-
 	if (Cmd_Argc() != 2)
 		return;
 
 	if (!chan)
 		return;
 
-	num = atoi(Cmd_Argv(1));
+	const int num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= chan->users || num >= IRC_MAX_USERLIST)
 		return;
 
-	cnt = std::min(chan->users, IRC_MAX_USERLIST);
-	cnt -= num + 1;
+	const int cnt = std::min(chan->users, IRC_MAX_USERLIST) - (num + 1);
 
-	name = irc_userListOrdered[cnt];
+	const char* name = irc_userListOrdered[cnt];
 	Irc_Proto_Whois(&name[1]);
 }
 
