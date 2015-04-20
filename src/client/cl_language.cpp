@@ -136,7 +136,7 @@ const char* CL_Translate (const char* t)
 
 void CL_ParseMessageIDs (void)
 {
-	const char* type, *name, *text;
+	const char* type, *name;
 
 	numMsgIDs = 0;
 	OBJZERO(msgIDHash);
@@ -151,7 +151,7 @@ void CL_ParseMessageIDs (void)
 	Com_Printf("\n----------- parse msgids -----------\n");
 
 	Com_Printf("%i msgid files\n", FS_BuildFileList("ufos/msgid/*.ufo"));
-	text = nullptr;
+	const char* text = nullptr;
 
 	FS_NextScriptHeader(nullptr, nullptr, nullptr);
 
@@ -211,14 +211,13 @@ static const char* CL_GetLocaleID (const char* fullLocale)
 void CL_ParseLanguages (const char* name, const char** text)
 {
 	const char* errhead = "CL_ParseLanguages: unexpected end of file (language ";
-	const char* token;
 
 	if (!*text) {
 		Com_Printf("CL_ParseLanguages: language without body ignored (%s)\n", name);
 		return;
 	}
 
-	token = Com_EParse(text, errhead, name);
+	const char* token = Com_EParse(text, errhead, name);
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseLanguages: language without body ignored (%s)\n", name);
 		return;
@@ -280,7 +279,6 @@ static bool CL_LanguageTest (const char* localeID)
 #ifndef _WIN32
 	int i;
 	language_t* language;
-	localeMapping_t* mapping;
 #endif
 	char languagePath[MAX_OSPATH];
 
@@ -319,7 +317,7 @@ static bool CL_LanguageTest (const char* localeID)
 		return false;
 	}
 
-	mapping = language->localeMapping;
+	localeMapping_t* mapping = language->localeMapping;
 	if (!mapping) {
 		Com_DPrintf(DEBUG_CLIENT, "No locale mappings for locale with id '%s'\n", localeID);
 		return false;
@@ -416,7 +414,6 @@ bool CL_LanguageTryToSet (const char* localeID)
 {
 	int i;
 	language_t* language;
-	localeMapping_t* mapping;
 
 	assert(localeID);
 
@@ -433,7 +430,7 @@ bool CL_LanguageTryToSet (const char* localeID)
 		return false;
 	}
 
-	mapping = language->localeMapping;
+	localeMapping_t* mapping = language->localeMapping;
 	if (!mapping) {
 		Com_Printf("No locale mappings for locale with id '%s'\n", localeID);
 		return false;
