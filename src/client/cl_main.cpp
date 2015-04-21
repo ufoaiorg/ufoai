@@ -349,8 +349,7 @@ static void CL_ConnectionlessPacket (dbuffer* msg)
 
 	/* server connection */
 	if (Q_streq(c, CL_CMD_CLIENT_CONNECT)) {
-		int i;
-		for (i = 1; i < Cmd_Argc(); i++) {
+		for (int i = 1; i < Cmd_Argc(); i++) {
 			if (char const* const p = Q_strstart(Cmd_Argv(i), "dlserver=")) {
 				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", cls.servername);
 				CL_SetHTTPServer(p);
@@ -1069,13 +1068,12 @@ void CL_SetClientState (connstate_t state)
 void CL_Frame (int now, void* data)
 {
 	static int lastFrame = 0;
-	int delta;
 
 	if (sys_priority->modified || sys_affinity->modified)
 		Sys_SetAffinityAndPriority();
 
 	/* decide the simulation time */
-	delta = now - lastFrame;
+	const int delta = now - lastFrame;
 	if (lastFrame)
 		cls.frametime = delta / 1000.0;
 	else
@@ -1164,7 +1162,6 @@ void CL_Init (void)
 {
 	/* i18n through gettext */
 	char languagePath[MAX_OSPATH];
-	cvar_t* fs_i18ndir;
 
 	isdown = false;
 
@@ -1173,7 +1170,7 @@ void CL_Init (void)
 
 	OBJZERO(cls);
 
-	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
+	cvar_t* fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
 	/* i18n through gettext */
 	setlocale(LC_ALL, "C");
 	setlocale(LC_MESSAGES, "");
