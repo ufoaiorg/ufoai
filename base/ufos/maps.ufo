@@ -1070,6 +1070,8 @@ mapdef forest_nature_large
 	)
 }
 
+/* Disabled for testing, as the spawnpoints test frequently
+   hangs here.
 
 mapdef forest_nature_medium
 {
@@ -1119,6 +1121,7 @@ mapdef forest_nature_medium
 		"nopopulation"
 	)
 }
+*/
 
 mapdef forest_nature_small
 {
