@@ -99,11 +99,9 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  */
 void SCR_DrawLoadingScreen (bool string, int percent)
 {
-	const image_t* image;
-
 	R_BeginFrame();
 
-	image = R_FindImage("pics/background/loading", it_pic);
+	const image_t* image = R_FindImage("pics/background/loading", it_pic);
 	if (image)
 		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, image);
 	if (string) {
@@ -199,14 +197,13 @@ static void SCR_DrawCursor (void)
 
 	if (!UI_DNDIsDragging()) {
 		const char* pic;
-		image_t* image;
 
 		if (!cls.isOurRound() && CL_BattlescapeRunning())
 			pic = "pics/cursors/wait";
 		else
 			pic = cursorImage;
 
-		image = R_FindImage(pic, it_pic);
+		const image_t* image = R_FindImage(pic, it_pic);
 		if (image)
 			R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, image);
 
@@ -284,25 +281,21 @@ void SCR_EndLoadingPlaque (void)
 
 static void SCR_TimeRefresh_f (void)
 {
-	int i;
-	int start, stop;
-	float time;
-
 	if (cls.state != ca_active)
 		return;
 
-	start = Sys_Milliseconds();
+	const int start = Sys_Milliseconds();
 
 	if (Cmd_Argc() == 2) {		/* run without page flipping */
 		R_BeginFrame();
-		for (i = 0; i < 128; i++) {
+		for (int i = 0; i < 128; i++) {
 			refdef.viewAngles[1] = i / 128.0 * 360.0;
 			r_threadstate.state = THREAD_BSP;
 			R_RenderFrame();
 		}
 		R_EndFrame();
 	} else {
-		for (i = 0; i < 128; i++) {
+		for (int i = 0; i < 128; i++) {
 			refdef.viewAngles[1] = i / 128.0 * 360.0;
 
 			R_BeginFrame();
@@ -312,8 +305,8 @@ static void SCR_TimeRefresh_f (void)
 		}
 	}
 
-	stop = Sys_Milliseconds();
-	time = (stop - start) / 1000.0;
+	const int stop = Sys_Milliseconds();
+	const float time = (stop - start) / 1000.0f;
 	Com_Printf("%f seconds (%f fps)\n", time, 128 / time);
 }
 
