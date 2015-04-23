@@ -142,11 +142,10 @@ static void CL_CharacterSkillAndScoreCvars (const character_t* chr)
  */
 static void CL_ActorCvars (const character_t* chr)
 {
-	Item* weapon;
 	assert(chr);
 
 	/* visible equipment */
-	weapon = chr->inv.getRightHandContainer();
+	Item* weapon = chr->inv.getRightHandContainer();
 	if (weapon)
 		Cvar_Set("mn_rweapon", "%s", weapon->def()->model);
 	else

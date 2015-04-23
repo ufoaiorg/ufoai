@@ -73,9 +73,7 @@ static void CON_FlushIn (void)
  */
 static void Sys_TTYDeleteCharacter (void)
 {
-	char key;
-
-	key = '\b';
+	char key = '\b';
 	write(STDOUT_FILENO, &key, 1);
 	key = ' ';
 	write(STDOUT_FILENO, &key, 1);
@@ -90,8 +88,7 @@ static void Sys_TTYDeleteCharacter (void)
 static void Sys_TTYConsoleHide (void)
 {
 	if (ttyConsoleHistory.cursor > 0) {
-		unsigned int i;
-		for (i = 0; i < ttyConsoleHistory.cursor; i++)
+		for (unsigned int i = 0; i < ttyConsoleHistory.cursor; i++)
 			Sys_TTYDeleteCharacter();
 	}
 	Sys_TTYDeleteCharacter(); /* Delete "]" */
@@ -105,8 +102,7 @@ static void Sys_TTYConsoleShow (void)
 {
 	write(STDOUT_FILENO, "]", 1);
 	if (ttyConsoleHistory.cursor) {
-		unsigned int i;
-		for (i = 0; i < ttyConsoleHistory.cursor; i++) {
+		for (unsigned int i = 0; i < ttyConsoleHistory.cursor; i++) {
 			write(STDOUT_FILENO, ttyConsoleHistory.buffer + i, 1);
 		}
 	}
@@ -114,7 +110,6 @@ static void Sys_TTYConsoleShow (void)
 
 static void Sys_TTYConsoleHistoryAdd (consoleHistory_t* field)
 {
-	int i;
 	const size_t size = lengthof(ttyEditLines);
 
 	assert(histCount <= size);
@@ -122,7 +117,7 @@ static void Sys_TTYConsoleHistoryAdd (consoleHistory_t* field)
 	assert(histCurrent >= -1);
 	assert(histCurrent <= histCount);
 	/* make some room */
-	for (i = size - 1; i > 0; i--)
+	for (int i = size - 1; i > 0; i--)
 		ttyEditLines[i] = ttyEditLines[i - 1];
 
 	ttyEditLines[0] = *field;
@@ -134,14 +129,12 @@ static void Sys_TTYConsoleHistoryAdd (consoleHistory_t* field)
 
 static consoleHistory_t* Sys_TTYConsoleHistoryPrevious (void)
 {
-	int histPrev;
-
 	assert(histCount <= lengthof(ttyEditLines));
 	assert(histCount >= 0);
 	assert(histCurrent >= -1);
 	assert(histCurrent <= histCount);
 
-	histPrev = histCurrent + 1;
+	const int histPrev = histCurrent + 1;
 	if (histPrev >= histCount)
 		return nullptr;
 
@@ -223,8 +216,6 @@ static bool Sys_IsATTY (void)
  */
 void Sys_ConsoleInit (void)
 {
-	struct termios tc;
-
 	/* If the process is backgrounded (running non interactively)
 	 * then SIGTTIN or SIGTOU is emitted, if not caught, turns into a SIGSTP */
 	signal(SIGTTIN, SIG_IGN);
@@ -247,7 +238,7 @@ void Sys_ConsoleInit (void)
 	tcgetattr(STDIN_FILENO, &TTY_tc);
 	TTY_erase = TTY_tc.c_cc[VERASE];
 	TTY_eof = TTY_tc.c_cc[VEOF];
-	tc = TTY_tc;
+	struct termios tc = TTY_tc;
 
 	/*
 	 * ECHO: don't echo input characters.
@@ -362,7 +353,6 @@ const char* Sys_ConsoleInput (void)
 
 		return nullptr;
 	} else if (stdinActive) {
-		int len;
 		fd_set fdset;
 		struct timeval timeout;
 
@@ -374,7 +364,7 @@ const char* Sys_ConsoleInput (void)
 				|| !FD_ISSET(STDIN_FILENO, &fdset))
 			return nullptr;
 
-		len = read(STDIN_FILENO, text, sizeof(text));
+		const int len = read(STDIN_FILENO, text, sizeof(text));
 		if (len == 0) { /* eof! */
 			stdinActive = false;
 			return nullptr;
