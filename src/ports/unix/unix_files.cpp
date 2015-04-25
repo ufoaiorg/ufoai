@@ -58,14 +58,13 @@ static	DIR*	fdir;
 
 static bool CompareAttributes (const char* path, const char* name, unsigned musthave, unsigned canthave)
 {
-	struct stat st;
-	char fn[MAX_OSPATH];
-
 	/* . and .. never match */
 	if (Q_streq(name, ".") || Q_streq(name, ".."))
 		return false;
 
+	char fn[MAX_OSPATH];
 	Com_sprintf(fn, sizeof(fn), "%s/%s", path, name);
+	struct stat st;
 	if (stat(fn, &st) == -1) {
 		Com_Printf("CompareAttributes: Warning, stat failed: %s\n", name);
 		return false; /* shouldn't happen */
@@ -87,14 +86,12 @@ static bool CompareAttributes (const char* path, const char* name, unsigned must
  */
 char* Sys_FindFirst (const char* path, unsigned musthave, unsigned canhave)
 {
-	struct dirent* d;
-	char* p;
-
 	if (fdir)
 		Sys_Error("Sys_BeginFind without close");
 
 	Q_strncpyz(findbase, path, sizeof(findbase));
 
+	char* p;
 	if ((p = strrchr(findbase, '/')) != nullptr) {
 		*p = 0;
 		Q_strncpyz(findpattern, p + 1, sizeof(findpattern));
@@ -107,6 +104,7 @@ char* Sys_FindFirst (const char* path, unsigned musthave, unsigned canhave)
 	if ((fdir = opendir(findbase)) == nullptr)
 		return nullptr;
 
+	const struct dirent* d;
 	while ((d = readdir(fdir)) != nullptr) {
 		if (!*findpattern || Com_Filter(findpattern, d->d_name)) {
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
@@ -126,10 +124,10 @@ char* Sys_FindFirst (const char* path, unsigned musthave, unsigned canhave)
  */
 char* Sys_FindNext (unsigned musthave, unsigned canhave)
 {
-	struct dirent* d;
-
 	if (fdir == nullptr)
 		return nullptr;
+
+	const struct dirent* d;
 	while ((d = readdir(fdir)) != nullptr) {
 		if (!*findpattern || Com_Filter(findpattern, d->d_name)) {
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
@@ -152,11 +150,7 @@ void Sys_FindClose (void)
 
 void Sys_ListFilteredFiles (const char* basedir, const char* subdirs, const char* filter, linkedList_t** list)
 {
-	char search[MAX_OSPATH], newsubdirs[MAX_OSPATH];
-	char filename[MAX_OSPATH];
-	DIR* directory;
-	struct dirent* d;
-	struct stat st;
+	char search[MAX_OSPATH];
 
 	if (subdirs[0] != '\0') {
 		Com_sprintf(search, sizeof(search), "%s/%s", basedir, subdirs);
@@ -164,8 +158,13 @@ void Sys_ListFilteredFiles (const char* basedir, const char* subdirs, const char
 		Com_sprintf(search, sizeof(search), "%s", basedir);
 	}
 
+	DIR* directory;
 	if ((directory = opendir(search)) == nullptr)
 		return;
+
+	char filename[MAX_OSPATH];
+	const struct dirent* d;
+	struct stat st;
 
 	while ((d = readdir(directory)) != nullptr) {
 		Com_sprintf(filename, sizeof(filename), "%s/%s", search, d->d_name);
@@ -173,6 +172,7 @@ void Sys_ListFilteredFiles (const char* basedir, const char* subdirs, const char
 			continue;
 
 		if (st.st_mode & S_IFDIR) {
+			char newsubdirs[MAX_OSPATH];
 			if (Q_strcasecmp(d->d_name, ".") && Q_strcasecmp(d->d_name, "..")) {
 				if (subdirs[0] != '\0') {
 					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s/%s", subdirs, d->d_name);
@@ -216,25 +216,20 @@ void Sys_Mkdir (const char* thePath)
 
 void Sys_Mkfifo (const char* ospath, qFILE* f)
 {
-	FILE* fifo;
-	int result;
 	struct stat buf;
 
 	/* if file already exists AND is a pipefile, remove it */
 	if (!stat(ospath, &buf) && S_ISFIFO(buf.st_mode))
 		FS_RemoveFile(ospath);
 
-	result = mkfifo(ospath, 0600);
+	const int result = mkfifo(ospath, 0600);
 	if (result != 0)
 		return;
 
-	fifo = Sys_Fopen(ospath, "w+");
+	FILE* fifo = Sys_Fopen(ospath, "w+");
 	if (fifo) {
 		const int fn = fileno(fifo);
 		fcntl(fn, F_SETFL, O_NONBLOCK);
-	}
-
-	if (fifo) {
 		f->f = fifo;
 	} else {
 		Com_Printf("WARNING: Could not create fifo pipe at %s.\n", ospath);
