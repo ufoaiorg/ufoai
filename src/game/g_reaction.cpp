@@ -754,7 +754,7 @@ bool ReactionFire::canSee (const Actor* shooter, const Edict* target) const
 		return false;
 
 	const float actorVis = G_ActorVis(shooter, target, true);
-	if (actorVis < 0.1)
+	if (actorVis < ACTOR_VIS_10)
 		return false;
 
 	return true;
