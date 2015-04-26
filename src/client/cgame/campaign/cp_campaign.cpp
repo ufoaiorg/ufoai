@@ -801,7 +801,6 @@ bool CP_LoadXML (xmlNode_t* parent)
 	}
 	radarOverlayWasSet = cgi->XML_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, false);
 	ccs.startXVI = cgi->XML_GetBool(mapNode, SAVE_CAMPAIGN_XVISTARTED, false);
-	CP_UpdateXVIMapButton();
 
 	mapDefStat = cgi->XML_GetNode(campaignNode, SAVE_CAMPAIGN_MAPDEFSTAT);
 	if (mapDefStat && !CP_LoadMapDefStatXML(mapDefStat))

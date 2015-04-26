@@ -68,6 +68,9 @@ static bool SAV_GameActionsAfterLoad (void)
 	/* Update number of UFO detected by radar */
 	RADAR_SetRadarAfterLoading();
 
+	/* Update the XVI button -- needs to be done after research was loaded */
+	CP_UpdateXVIMapButton();
+
 	return result;
 }
 
