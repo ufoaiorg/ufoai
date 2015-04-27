@@ -983,8 +983,8 @@ static const cmdList_t baseCallbacks[] = {
 /** @todo unify the names into mn_base_* */
 void B_InitCallbacks (void)
 {
-	mn_base_title = cgi->Cvar_GetOrCreate("mn_base_title", "", 0, "The title of the current base");
-	cl_start_buildings = cgi->Cvar_GetOrCreate("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
+	mn_base_title = cgi->Cvar_Get("mn_base_title", "", 0, "The title of the current base");
+	cl_start_buildings = cgi->Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
 	cgi->Cvar_Set("mn_base_cost", _("%i c"), ccs.curCampaign->basecost);
 	cgi->Cvar_SetValue("mn_base_count", B_GetCount());
 	cgi->Cvar_SetValue("mn_base_max", MAX_BASES);

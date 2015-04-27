@@ -403,10 +403,10 @@ static void WEB_ListCGame_f (void)
 
 void WEB_CGameCvars (void)
 {
-	web_cgamedownloadurl = Cvar_GetOrCreate("web_cgamedownloadurl", WEB_API_SERVER "cgame/$cgame$/$userid$/$category$/$file$", 0, "The url to download a shared cgame file from. Use $userid$, $category$, $cgame$ and $file$ as placeholders.");
-	web_cgamelisturl = Cvar_GetOrCreate("web_cgamelisturl", WEB_API_SERVER "api/cgamelist.php?cgame=$cgame$&category=$category$&userid=$userid$", 0, "The url to get the cgame file list from.");
-	web_cgamedeleteurl = Cvar_GetOrCreate("web_cgamedeleteurl", WEB_API_SERVER "api/cgamedelete.php?cgame=$cgame$&category=$category$&file=$file$", 0, "The url to call if you want to delete one of your own cgame files again.");
-	web_cgameuploadurl = Cvar_GetOrCreate("web_cgameuploadurl", WEB_API_SERVER "api/cgameupload.php?cgame=$cgame$&category=$category$", 0, "The url to upload a cgame file to.");
+	web_cgamedownloadurl = Cvar_Get("web_cgamedownloadurl", WEB_API_SERVER "cgame/$cgame$/$userid$/$category$/$file$", 0, "The url to download a shared cgame file from. Use $userid$, $category$, $cgame$ and $file$ as placeholders.");
+	web_cgamelisturl = Cvar_Get("web_cgamelisturl", WEB_API_SERVER "api/cgamelist.php?cgame=$cgame$&category=$category$&userid=$userid$", 0, "The url to get the cgame file list from.");
+	web_cgamedeleteurl = Cvar_Get("web_cgamedeleteurl", WEB_API_SERVER "api/cgamedelete.php?cgame=$cgame$&category=$category$&file=$file$", 0, "The url to call if you want to delete one of your own cgame files again.");
+	web_cgameuploadurl = Cvar_Get("web_cgameuploadurl", WEB_API_SERVER "api/cgameupload.php?cgame=$cgame$&category=$category$", 0, "The url to upload a cgame file to.");
 }
 
 void WEB_CGameCommands (void)

@@ -221,7 +221,7 @@ const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCa
 			if (next) {
 				/* cvar injection */
 				if (char const* const rest = Q_strstart(propertyName, "cvar:")) {
-					cvar_t const* const cvar = Cvar_GetOrCreate(rest);
+					cvar_t const* const cvar = Cvar_Get(rest);
 					const int l = snprintf(cout, length, "%s", cvar->string);
 					cout += l;
 					cin = next;

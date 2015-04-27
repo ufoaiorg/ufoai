@@ -869,7 +869,7 @@ void SV_InitGameProgs (void)
 	import.TagFree = SV_MemFree;
 	import.FreeTags = SV_FreeTags;
 
-	import.Cvar_GetOrCreate = Cvar_GetOrCreate;
+	import.Cvar_Get = Cvar_Get;
 	import.Cvar_Set = Cvar_Set;
 	import.Cvar_String = Cvar_GetString;
 

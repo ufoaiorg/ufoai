@@ -32,9 +32,9 @@ static cvar_t* snd_mumble_scale;
 
 void S_MumbleInit (void)
 {
-	snd_mumble = Cvar_GetOrCreate("snd_mumble", "0", CVAR_ARCHIVE | CVAR_LATCH);
-	snd_mumble_alltalk = Cvar_GetOrCreate("snd_mumble_alltalk", "0", CVAR_ARCHIVE | CVAR_LATCH);
-	snd_mumble_scale = Cvar_GetOrCreate("snd_mumble_scale", "0.0254", CVAR_ARCHIVE);
+	snd_mumble = Cvar_Get("snd_mumble", "0", CVAR_ARCHIVE | CVAR_LATCH);
+	snd_mumble_alltalk = Cvar_Get("snd_mumble_alltalk", "0", CVAR_ARCHIVE | CVAR_LATCH);
+	snd_mumble_scale = Cvar_Get("snd_mumble_scale", "0.0254", CVAR_ARCHIVE);
 }
 
 void S_MumbleLink (void)

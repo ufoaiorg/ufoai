@@ -969,26 +969,26 @@ void SV_Init (void)
 
 	SV_InitOperatorCommands();
 
-	rcon_password = Cvar_GetOrCreate("rcon_password", "", CVAR_ARCHIVE);
-	Cvar_GetOrCreate("sv_cheats", "0", CVAR_SERVERINFO | CVAR_LATCH);
-	Cvar_GetOrCreate("sv_protocol", DOUBLEQUOTE(PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET);
+	rcon_password = Cvar_Get("rcon_password", "", CVAR_ARCHIVE);
+	Cvar_Get("sv_cheats", "0", CVAR_SERVERINFO | CVAR_LATCH);
+	Cvar_Get("sv_protocol", DOUBLEQUOTE(PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET);
 	/* this cvar will become a latched cvar when you start the server */
-	sv_maxclients = Cvar_GetOrCreate("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
-	sv_hostname = Cvar_GetOrCreate("sv_hostname", "noname", CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
-	sv_http_downloadserver = Cvar_GetOrCreate("sv_http_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
-	sv_enablemorale = Cvar_GetOrCreate("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
-	sv_maxsoldiersperteam = Cvar_GetOrCreate("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see sv_maxsoldiersperplayer and sv_teamplay)");
-	sv_maxsoldiersperplayer = Cvar_GetOrCreate("sv_maxsoldiersperplayer", DOUBLEQUOTE(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can control (see maxsoldiers and sv_teamplay)");
+	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
+	sv_hostname = Cvar_Get("sv_hostname", "noname", CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
+	sv_http_downloadserver = Cvar_Get("sv_http_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
+	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
+	sv_maxsoldiersperteam = Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see sv_maxsoldiersperplayer and sv_teamplay)");
+	sv_maxsoldiersperplayer = Cvar_Get("sv_maxsoldiersperplayer", DOUBLEQUOTE(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can control (see maxsoldiers and sv_teamplay)");
 	Cvar_SetCheckFunction("sv_maxsoldiersperplayer", SV_CheckMaxSoldiersPerPlayer);
 
-	sv_dumpmapassembly = Cvar_GetOrCreate("sv_dumpmapassembly", "0", CVAR_ARCHIVE, "Dump map assembly information to game console");
+	sv_dumpmapassembly = Cvar_Get("sv_dumpmapassembly", "0", CVAR_ARCHIVE, "Dump map assembly information to game console");
 
-	sv_threads = Cvar_GetOrCreate("sv_threads", "1", CVAR_LATCH | CVAR_ARCHIVE, "Run the server threaded");
-	sv_rma = Cvar_GetOrCreate("sv_rma", "2", 0, "1 = old algorithm, 2 = new algorithm");
-	sv_rmadisplaythemap = Cvar_GetOrCreate("sv_rmadisplaythemap", "0", 0, "Activate rma problem output");
-	sv_public = Cvar_GetOrCreate("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
-	sv_reconnect_limit = Cvar_GetOrCreate("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
-	sv_timeout = Cvar_GetOrCreate("sv_timeout", "200", CVAR_ARCHIVE, "Seconds until a client times out");
+	sv_threads = Cvar_Get("sv_threads", "1", CVAR_LATCH | CVAR_ARCHIVE, "Run the server threaded");
+	sv_rma = Cvar_Get("sv_rma", "2", 0, "1 = old algorithm, 2 = new algorithm");
+	sv_rmadisplaythemap = Cvar_Get("sv_rmadisplaythemap", "0", 0, "Activate rma problem output");
+	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
+	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
+	sv_timeout = Cvar_Get("sv_timeout", "200", CVAR_ARCHIVE, "Seconds until a client times out");
 
 	SV_MapcycleInit();
 	SV_LogInit();

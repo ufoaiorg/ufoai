@@ -3662,16 +3662,16 @@ static int _wrap_getvar__SWIG_0(lua_State* L) {
   char *arg4 = (char *) 0 ;
   cvar_t *result = 0 ;
   
-  SWIG_check_num_args("Cvar_GetOrCreate",4,4)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_GetOrCreate",1,"char const *");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Cvar_GetOrCreate",2,"char const *");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("Cvar_GetOrCreate",3,"int");
-  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Cvar_GetOrCreate",4,"char const *");
+  SWIG_check_num_args("Cvar_Get",4,4)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_Get",1,"char const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Cvar_Get",2,"char const *");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Cvar_Get",3,"int");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Cvar_Get",4,"char const *");
   arg1 = (char *)lua_tostring(L, 1);
   arg2 = (char *)lua_tostring(L, 2);
   arg3 = (int)lua_tonumber(L, 3);
   arg4 = (char *)lua_tostring(L, 4);
-  result = (cvar_t *)Cvar_GetOrCreate((char const *)arg1,(char const *)arg2,arg3,(char const *)arg4);
+  result = (cvar_t *)Cvar_Get((char const *)arg1,(char const *)arg2,arg3,(char const *)arg4);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_cvar_t,0); SWIG_arg++; 
   return SWIG_arg;
   
@@ -3690,14 +3690,14 @@ static int _wrap_getvar__SWIG_1(lua_State* L) {
   int arg3 ;
   cvar_t *result = 0 ;
   
-  SWIG_check_num_args("Cvar_GetOrCreate",3,3)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_GetOrCreate",1,"char const *");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Cvar_GetOrCreate",2,"char const *");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("Cvar_GetOrCreate",3,"int");
+  SWIG_check_num_args("Cvar_Get",3,3)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_Get",1,"char const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Cvar_Get",2,"char const *");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Cvar_Get",3,"int");
   arg1 = (char *)lua_tostring(L, 1);
   arg2 = (char *)lua_tostring(L, 2);
   arg3 = (int)lua_tonumber(L, 3);
-  result = (cvar_t *)Cvar_GetOrCreate((char const *)arg1,(char const *)arg2,arg3);
+  result = (cvar_t *)Cvar_Get((char const *)arg1,(char const *)arg2,arg3);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_cvar_t,0); SWIG_arg++; 
   return SWIG_arg;
   
@@ -3715,12 +3715,12 @@ static int _wrap_getvar__SWIG_2(lua_State* L) {
   char *arg2 = (char *) 0 ;
   cvar_t *result = 0 ;
   
-  SWIG_check_num_args("Cvar_GetOrCreate",2,2)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_GetOrCreate",1,"char const *");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Cvar_GetOrCreate",2,"char const *");
+  SWIG_check_num_args("Cvar_Get",2,2)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_Get",1,"char const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Cvar_Get",2,"char const *");
   arg1 = (char *)lua_tostring(L, 1);
   arg2 = (char *)lua_tostring(L, 2);
-  result = (cvar_t *)Cvar_GetOrCreate((char const *)arg1,(char const *)arg2);
+  result = (cvar_t *)Cvar_Get((char const *)arg1,(char const *)arg2);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_cvar_t,0); SWIG_arg++; 
   return SWIG_arg;
   
@@ -3737,10 +3737,10 @@ static int _wrap_getvar__SWIG_3(lua_State* L) {
   char *arg1 = (char *) 0 ;
   cvar_t *result = 0 ;
   
-  SWIG_check_num_args("Cvar_GetOrCreate",1,1)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_GetOrCreate",1,"char const *");
+  SWIG_check_num_args("Cvar_Get",1,1)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Cvar_Get",1,"char const *");
   arg1 = (char *)lua_tostring(L, 1);
-  result = (cvar_t *)Cvar_GetOrCreate((char const *)arg1);
+  result = (cvar_t *)Cvar_Get((char const *)arg1);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_cvar_t,0); SWIG_arg++; 
   return SWIG_arg;
   
@@ -3828,10 +3828,10 @@ static int _wrap_getvar(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'getvar'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    Cvar_GetOrCreate(char const *,char const *,int,char const *)\n"
-    "    Cvar_GetOrCreate(char const *,char const *,int)\n"
-    "    Cvar_GetOrCreate(char const *,char const *)\n"
-    "    Cvar_GetOrCreate(char const *)\n");
+    "    Cvar_Get(char const *,char const *,int,char const *)\n"
+    "    Cvar_Get(char const *,char const *,int)\n"
+    "    Cvar_Get(char const *,char const *)\n"
+    "    Cvar_Get(char const *)\n");
   lua_error(L);return 0;
 }
 

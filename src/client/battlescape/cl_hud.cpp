@@ -1598,28 +1598,28 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_updateactorload", HUD_UpdateActorLoad_f, "Update the HUD with the selected actor inventory load.");
 
 	/** @note We can't check the value at startup cause scripts are not yet loaded */
-	cl_hud = Cvar_GetOrCreate("cl_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "Current selected HUD.");
+	cl_hud = Cvar_Get("cl_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "Current selected HUD.");
 	Cvar_SetCheckFunction("cl_hud", HUD_CvarCheckMNHud);
 
-	cl_worldlevel = Cvar_GetOrCreate("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode.");
+	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode.");
 	Cvar_SetCheckFunction("cl_worldlevel", CL_CvarWorldLevel);
 	cl_worldlevel->modified = false;
 
-	Cvar_GetOrCreate("mn_ammoleft", "", 0, "The remaining amount of ammunition in the left hand weapon.");
-	Cvar_GetOrCreate("mn_lweapon", "", 0, "The left hand weapon model of the current selected actor - empty if no weapon.");
+	Cvar_Get("mn_ammoleft", "", 0, "The remaining amount of ammunition in the left hand weapon.");
+	Cvar_Get("mn_lweapon", "", 0, "The left hand weapon model of the current selected actor - empty if no weapon.");
 	Cvar_RegisterChangeListener("mn_ammoleft", HUD_LeftHandChangeListener);
 	Cvar_RegisterChangeListener("mn_lweapon", HUD_LeftHandChangeListener);
 
-	Cvar_GetOrCreate("mn_ammoright", "", 0, "The remaining amount of ammunition in the right hand weapon.");
-	Cvar_GetOrCreate("mn_rweapon", "", 0, "The right hand weapon model of the current selected actor - empty if no weapon.");
+	Cvar_Get("mn_ammoright", "", 0, "The remaining amount of ammunition in the right hand weapon.");
+	Cvar_Get("mn_rweapon", "", 0, "The right hand weapon model of the current selected actor - empty if no weapon.");
 	Cvar_RegisterChangeListener("mn_ammoright", HUD_RightHandChangeListener);
 	Cvar_RegisterChangeListener("mn_rweapon", HUD_RightHandChangeListener);
 
-	Cvar_GetOrCreate("mn_turemain", "", 0, "Remaining TUs for the current selected actor.");
+	Cvar_Get("mn_turemain", "", 0, "Remaining TUs for the current selected actor.");
 	Cvar_RegisterChangeListener("mn_turemain", HUD_TUChangeListener);
 
 	Cvar_RegisterChangeListener("cl_selected", HUD_ActorSelectionChangeListener);
 
-	cl_hud_message_timeout = Cvar_GetOrCreate("cl_hud_message_timeout", "2000", CVAR_ARCHIVE, "Timeout for HUD messages (milliseconds).");
-	cl_show_cursor_tooltips = Cvar_GetOrCreate("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode.");
+	cl_hud_message_timeout = Cvar_Get("cl_hud_message_timeout", "2000", CVAR_ARCHIVE, "Timeout for HUD messages (milliseconds).");
+	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode.");
 }

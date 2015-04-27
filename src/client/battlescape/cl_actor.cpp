@@ -2517,9 +2517,9 @@ static void CL_ActorConfirmAction_f (void)
 
 void ACTOR_InitStartup (void)
 {
-	cl_autostand = Cvar_GetOrCreate("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Prevent accidental wasting of TUs by allowing the actor to automatically stand up before starting long walks.");
-	confirm_actions = Cvar_GetOrCreate("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
-	cl_showactors = Cvar_GetOrCreate("cl_showactors", "1", 0, "Show actors on the battlefield");
+	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Prevent accidental wasting of TUs by allowing the actor to automatically stand up before starting long walks.");
+	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
+	cl_showactors = Cvar_Get("cl_showactors", "1", 0, "Show actors on the battlefield");
 	Cmd_AddCommand("actor_next", CL_ActorNext_f, N_("Toggle to next living actor"));
 	Cmd_AddCommand("actor_prev", CL_ActorPrev_f, N_("Toggle to previous living actor"));
 	Cmd_AddCommand("actor_select", CL_ActorSelect_f, N_("Select an actor from list"));

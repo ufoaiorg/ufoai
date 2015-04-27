@@ -571,67 +571,67 @@ static void R_UpdateWeather (const char* cvarName, const char* oldValue, const c
 
 static void R_RegisterSystemVars (void)
 {
-	r_driver = Cvar_GetOrCreate("r_driver", "", CVAR_ARCHIVE | CVAR_R_CONTEXT, "You can define the opengl driver you want to use - empty if you want to use the system default");
-	r_weather = Cvar_GetOrCreate("r_weather", "0", 0, "Current battlescape weather effect");
+	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE | CVAR_R_CONTEXT, "You can define the opengl driver you want to use - empty if you want to use the system default");
+	r_weather = Cvar_Get("r_weather", "0", 0, "Current battlescape weather effect");
 	Cvar_SetCheckFunction("r_weather", R_CvarCheckWeather);
 	Cvar_RegisterChangeListener("r_weather", R_UpdateWeather);
-	r_drawentities = Cvar_GetOrCreate("r_drawentities", "1", 0, "Draw the local entities");
-	r_drawworld = Cvar_GetOrCreate("r_drawworld", "1", 0, "Draw the world brushes");
-	r_isometric = Cvar_GetOrCreate("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
-	r_nocull = Cvar_GetOrCreate("r_nocull", "0", 0, "Don't perform culling for brushes and entities");
-	r_anisotropic = Cvar_GetOrCreate("r_anisotropic", "1", CVAR_ARCHIVE);
-	r_texture_lod = Cvar_GetOrCreate("r_texture_lod", "0", CVAR_ARCHIVE);
-	r_screenshot_format = Cvar_GetOrCreate("r_screenshot_format", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
-	r_screenshot_jpeg_quality = Cvar_GetOrCreate("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
-	r_threads = Cvar_GetOrCreate("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
+	r_drawentities = Cvar_Get("r_drawentities", "1", 0, "Draw the local entities");
+	r_drawworld = Cvar_Get("r_drawworld", "1", 0, "Draw the world brushes");
+	r_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
+	r_nocull = Cvar_Get("r_nocull", "0", 0, "Don't perform culling for brushes and entities");
+	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE);
+	r_texture_lod = Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE);
+	r_screenshot_format = Cvar_Get("r_screenshot_format", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
+	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
+	r_threads = Cvar_Get("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
 
-	r_materials = Cvar_GetOrCreate("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
-	r_overridematerial = Cvar_GetOrCreate("r_overridematerial", "", 0, "Used to override the material for a map");
-	r_default_specular = Cvar_GetOrCreate("r_default_specular", "0.2", CVAR_R_CONTEXT, "Default specular exponent");
-	r_default_hardness = Cvar_GetOrCreate("r_default_hardness", "0.2", CVAR_R_CONTEXT, "Default specular brightness");
+	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
+	r_overridematerial = Cvar_Get("r_overridematerial", "", 0, "Used to override the material for a map");
+	r_default_specular = Cvar_Get("r_default_specular", "0.2", CVAR_R_CONTEXT, "Default specular exponent");
+	r_default_hardness = Cvar_Get("r_default_hardness", "0.2", CVAR_R_CONTEXT, "Default specular brightness");
 	Cvar_RegisterChangeListener("r_default_specular", R_UpdateDefaultMaterial);
 	Cvar_RegisterChangeListener("r_default_hardness", R_UpdateDefaultMaterial);
-	r_checkerror = Cvar_GetOrCreate("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
-	r_shadows = Cvar_GetOrCreate("r_shadows", "1", CVAR_ARCHIVE, "Multiplier for the alpha of the shadows");
-	r_stencilshadows = Cvar_GetOrCreate("r_stencilshadows", "0", CVAR_ARCHIVE, "Activate or deactivate stencil shadows");
-	r_maxtexres = Cvar_GetOrCreate("r_maxtexres", "2048", CVAR_ARCHIVE | CVAR_R_IMAGES, "The maximum texture resolution UFO should use");
-	r_texturemode = Cvar_GetOrCreate("r_texturemode", "GL_LINEAR_MIPMAP_LINEAR", CVAR_ARCHIVE, "change the filtering and mipmapping for textures");
-	r_texturealphamode = Cvar_GetOrCreate("r_texturealphamode", "GL_RGBA", CVAR_ARCHIVE);
-	r_texturesolidmode = Cvar_GetOrCreate("r_texturesolidmode", "GL_RGB", CVAR_ARCHIVE);
-	r_wire = Cvar_GetOrCreate("r_wire", "0", 0, "Draw the scene in wireframe mode");
-	r_showbox = Cvar_GetOrCreate("r_showbox", "0", CVAR_ARCHIVE, "1=Shows model bounding box, 2=show also the brushes bounding boxes");
-	r_lightmap = Cvar_GetOrCreate("r_lightmap", "0", CVAR_R_PROGRAMS, "Draw only the lightmap");
+	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
+	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Multiplier for the alpha of the shadows");
+	r_stencilshadows = Cvar_Get("r_stencilshadows", "0", CVAR_ARCHIVE, "Activate or deactivate stencil shadows");
+	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE | CVAR_R_IMAGES, "The maximum texture resolution UFO should use");
+	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_LINEAR", CVAR_ARCHIVE, "change the filtering and mipmapping for textures");
+	r_texturealphamode = Cvar_Get("r_texturealphamode", "GL_RGBA", CVAR_ARCHIVE);
+	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "GL_RGB", CVAR_ARCHIVE);
+	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
+	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "1=Shows model bounding box, 2=show also the brushes bounding boxes");
+	r_lightmap = Cvar_Get("r_lightmap", "0", CVAR_R_PROGRAMS, "Draw only the lightmap");
 	r_lightmap->modified = false;
-	r_deluxemap = Cvar_GetOrCreate("r_deluxemap", "0", CVAR_R_PROGRAMS, "Draw only the deluxemap");
+	r_deluxemap = Cvar_Get("r_deluxemap", "0", CVAR_R_PROGRAMS, "Draw only the deluxemap");
 	r_deluxemap->modified = false;
-	r_debug_normals = Cvar_GetOrCreate("r_debug_normals", "0", CVAR_R_PROGRAMS, "Draw dot(normal, light_0 direction)");
+	r_debug_normals = Cvar_Get("r_debug_normals", "0", CVAR_R_PROGRAMS, "Draw dot(normal, light_0 direction)");
 	r_debug_normals->modified = false;
-	r_debug_tangents = Cvar_GetOrCreate("r_debug_tangents", "0", CVAR_R_PROGRAMS, "Draw tangent, bitangent, and normal dotted with light dir as RGB espectively");
+	r_debug_tangents = Cvar_Get("r_debug_tangents", "0", CVAR_R_PROGRAMS, "Draw tangent, bitangent, and normal dotted with light dir as RGB espectively");
 	r_debug_tangents->modified = false;
-	r_debug_lights = Cvar_GetOrCreate("r_debug_lights", "0", CVAR_ARCHIVE, "Draw active light sources");
-	r_ext_texture_compression = Cvar_GetOrCreate("r_ext_texture_compression", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT);
-	r_ext_nonpoweroftwo = Cvar_GetOrCreate("r_ext_nonpoweroftwo", "1", CVAR_ARCHIVE, "Enable or disable the non power of two extension");
-	r_ext_s3tc_compression = Cvar_GetOrCreate("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
-	r_intel_hack = Cvar_GetOrCreate("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have no shaders until this is set to 0 - to it to a value > 1 to not limit the max texture resolution");
-	r_vertexbuffers = Cvar_GetOrCreate("r_vertexbuffers", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls usage of OpenGL Vertex Buffer Objects (VBO) versus legacy vertex arrays.");
-	r_maxlightmap = Cvar_GetOrCreate("r_maxlightmap", "2048", CVAR_ARCHIVE | CVAR_LATCH, "Reduce this value on older hardware");
+	r_debug_lights = Cvar_Get("r_debug_lights", "0", CVAR_ARCHIVE, "Draw active light sources");
+	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT);
+	r_ext_nonpoweroftwo = Cvar_Get("r_ext_nonpoweroftwo", "1", CVAR_ARCHIVE, "Enable or disable the non power of two extension");
+	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
+	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have no shaders until this is set to 0 - to it to a value > 1 to not limit the max texture resolution");
+	r_vertexbuffers = Cvar_Get("r_vertexbuffers", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls usage of OpenGL Vertex Buffer Objects (VBO) versus legacy vertex arrays.");
+	r_maxlightmap = Cvar_Get("r_maxlightmap", "2048", CVAR_ARCHIVE | CVAR_LATCH, "Reduce this value on older hardware");
 	Cvar_SetCheckFunction("r_maxlightmap", R_CvarCheckMaxLightmap);
 
-	r_drawbuffer = Cvar_GetOrCreate("r_drawbuffer", "GL_BACK");
-	r_swapinterval = Cvar_GetOrCreate("r_swapinterval", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls swap interval synchronization (V-Sync). Values between 0 and 2");
-	r_multisample = Cvar_GetOrCreate("r_multisample", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls multisampling (anti-aliasing). Values between 0 and 4");
+	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK");
+	r_swapinterval = Cvar_Get("r_swapinterval", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls swap interval synchronization (V-Sync). Values between 0 and 2");
+	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls multisampling (anti-aliasing). Values between 0 and 4");
 	Cvar_SetCheckFunction("r_multisample", R_CvarCheckMultisample);
-	r_warp = Cvar_GetOrCreate("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
-	r_shownormals = Cvar_GetOrCreate("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
-	r_bumpmap = Cvar_GetOrCreate("r_bumpmap", "1.0", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate bump mapping");
-	r_specular = Cvar_GetOrCreate("r_specular", "1.0", CVAR_ARCHIVE, "Controls specular parameters");
-	r_hardness = Cvar_GetOrCreate("r_hardness", "1.0", CVAR_ARCHIVE, "Hardness control for GLSL shaders (specular, bump, ...)");
-	r_parallax = Cvar_GetOrCreate("r_parallax", "1.0", CVAR_ARCHIVE, "Controls parallax parameters");
-	r_fog = Cvar_GetOrCreate("r_fog", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate or deactivate fog");
-	r_flares = Cvar_GetOrCreate("r_flares", "1", CVAR_ARCHIVE, "Activate or deactivate flares");
-	r_coronas = Cvar_GetOrCreate("r_coronas", "1", CVAR_ARCHIVE, "Activate or deactivate coronas");
-	r_particles = Cvar_GetOrCreate("r_particles", "1", 0, "Activate or deactivate particle rendering");
-	r_drawtags = Cvar_GetOrCreate("r_drawtags", "0", 0, "Activate or deactivate tag rendering");
+	r_warp = Cvar_Get("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
+	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
+	r_bumpmap = Cvar_Get("r_bumpmap", "1.0", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate bump mapping");
+	r_specular = Cvar_Get("r_specular", "1.0", CVAR_ARCHIVE, "Controls specular parameters");
+	r_hardness = Cvar_Get("r_hardness", "1.0", CVAR_ARCHIVE, "Hardness control for GLSL shaders (specular, bump, ...)");
+	r_parallax = Cvar_Get("r_parallax", "1.0", CVAR_ARCHIVE, "Controls parallax parameters");
+	r_fog = Cvar_Get("r_fog", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate or deactivate fog");
+	r_flares = Cvar_Get("r_flares", "1", CVAR_ARCHIVE, "Activate or deactivate flares");
+	r_coronas = Cvar_Get("r_coronas", "1", CVAR_ARCHIVE, "Activate or deactivate coronas");
+	r_particles = Cvar_Get("r_particles", "1", 0, "Activate or deactivate particle rendering");
+	r_drawtags = Cvar_Get("r_drawtags", "0", 0, "Activate or deactivate tag rendering");
 
 	Cmd_TableAddList(r_commands);
 }
@@ -1081,14 +1081,14 @@ static void R_InitExtensions (void)
 		Com_Printf("Framebuffer objects unsupported by OpenGL implementation.\n");
 	}
 
-	r_programs = Cvar_GetOrCreate("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL shaders level: 0 - disabled, 1 - low, 2 - medium, 3 - high");
+	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL shaders level: 0 - disabled, 1 - low, 2 - medium, 3 - high");
 	r_programs->modified = false;
 	Cvar_SetCheckFunction("r_programs", R_CvarPrograms);
 
-	r_glsl_version = Cvar_GetOrCreate("r_glsl_version", "1.10", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL Version");
+	r_glsl_version = Cvar_Get("r_glsl_version", "1.10", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL Version");
 	Cvar_SetCheckFunction("r_glsl_version", R_CvarGLSLVersionCheck);
 
-	r_postprocess = Cvar_GetOrCreate("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
+	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
 	Cvar_SetCheckFunction("r_postprocess", R_CvarPostProcess);
 
 	/* reset gl error state */
@@ -1100,7 +1100,7 @@ static void R_InitExtensions (void)
 	glGetIntegerv(GL_MAX_LIGHTS, &r_config.maxLights);
 	Com_Printf("max supported lights: %i\n", r_config.maxLights);
 
-	r_dynamic_lights = Cvar_GetOrCreate("r_dynamic_lights", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Sets max number of GL lightsources to use in shaders");
+	r_dynamic_lights = Cvar_Get("r_dynamic_lights", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Sets max number of GL lightsources to use in shaders");
 	Cvar_SetCheckFunction("r_dynamic_lights", R_CvarCheckDynamicLights);
 
 	glGetIntegerv(GL_MAX_TEXTURE_UNITS, &r_config.maxTextureUnits);

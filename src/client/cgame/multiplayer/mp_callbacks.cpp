@@ -300,12 +300,12 @@ static const cmdList_t mpCallbacks[] = {
 void GAME_MP_CallbacksInit (const cgame_import_t* import)
 {
 	cgi = import;
-	rcon_client_password = cgi->Cvar_GetOrCreate("rcon_password", "", 0, "Remote console password");
-	rcon_address = cgi->Cvar_GetOrCreate("rcon_address", "", 0, "Address of the host you would like to control via rcon");
-	info_password = cgi->Cvar_GetOrCreate("password", "", CVAR_USERINFO, nullptr);
-	cl_maxsoldiersperteam = cgi->Cvar_GetOrCreate("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers may one team have");
-	cl_maxsoldiersperplayer = cgi->Cvar_GetOrCreate("sv_maxsoldiersperplayer", DOUBLEQUOTE(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers one player is able to control in a given team");
-	cl_roundtimelimit = cgi->Cvar_GetOrCreate("sv_roundtimelimit", "90", CVAR_ARCHIVE | CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");
+	rcon_client_password = cgi->Cvar_Get("rcon_password", "", 0, "Remote console password");
+	rcon_address = cgi->Cvar_Get("rcon_address", "", 0, "Address of the host you would like to control via rcon");
+	info_password = cgi->Cvar_Get("password", "", CVAR_USERINFO, nullptr);
+	cl_maxsoldiersperteam = cgi->Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers may one team have");
+	cl_maxsoldiersperplayer = cgi->Cvar_Get("sv_maxsoldiersperplayer", DOUBLEQUOTE(MAX_ACTIVETEAM), CVAR_ARCHIVE | CVAR_SERVERINFO, "How many soldiers one player is able to control in a given team");
+	cl_roundtimelimit = cgi->Cvar_Get("sv_roundtimelimit", "90", CVAR_ARCHIVE | CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");
 
 	cgi->Cmd_TableAddList(mpCallbacks);
 	cgi->Cmd_AddParamCompleteFunction("connect", GAME_MP_CompleteNetworkAddress);

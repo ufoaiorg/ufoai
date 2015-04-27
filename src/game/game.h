@@ -299,7 +299,7 @@ typedef struct game_import_s {
 	void (IMPORT* FreeTags) (int tag, const char* file, int line);
 
 	/* console variable interaction */
-	cvar_t* (IMPORT* Cvar_GetOrCreate) (const char* varName, const char* value, int flags, const char* desc);
+	cvar_t* (IMPORT* Cvar_Get) (const char* varName, const char* value, int flags, const char* desc);
 	cvar_t* (IMPORT* Cvar_Set) (const char* varName, const char* value, ...) __attribute__((format(__printf__, 2, 3)));
 	const char* (IMPORT* Cvar_String) (const char* varName);
 
