@@ -57,7 +57,7 @@ int Sys_Milliseconds (void)
 /**
  * @brief set/unset environment variables (empty value removes it)
  */
-int Sys_Setenv (const char *name, const char *value)
+int Sys_Setenv (const char* name, const char* value)
 {
 	if (value && value[0] != '\0')
 		return setenv(name, value, 1);
@@ -87,9 +87,9 @@ void Sys_Breakpoint (void)
 }
 
 #ifdef COMPILE_UFO
-const char *Sys_SetLocale (const char *localeID)
+const char* Sys_SetLocale (const char* localeID)
 {
-	const char *locale;
+	const char* locale;
 
 # ifndef __sun
 	unsetenv("LANGUAGE");
@@ -127,10 +127,10 @@ const char *Sys_SetLocale (const char *localeID)
 	return locale;
 }
 
-const char *Sys_GetLocale (void)
+const char* Sys_GetLocale (void)
 {
 	/* Calling with nullptr param should return current system settings. */
-	const char *currentLocale = setlocale(LC_MESSAGES, nullptr);
+	const char* currentLocale = setlocale(LC_MESSAGES, nullptr);
 	if (Q_strvalid(currentLocale))
 		return currentLocale;
 	return "C";
@@ -193,7 +193,7 @@ void Sys_InitSignals (void)
 #endif
 }
 
-void Sys_OpenURL (const char *url)
+void Sys_OpenURL (const char* url)
 {
 	char buf[512];
 #ifdef __APPLE__

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_save.h"
 #include "cp_time.h"
 #include "cp_popup.h"
+#include "cp_xvi.h" /* CP_UpdateXVIMapButton */
 #include "save/save.h"
 #include "missions/cp_mission_baseattack.h"
 
@@ -67,6 +68,9 @@ static bool SAV_GameActionsAfterLoad (void)
 
 	/* Update number of UFO detected by radar */
 	RADAR_SetRadarAfterLoading();
+
+	/* Update the XVI button -- needs to be done after research was loaded */
+	CP_UpdateXVIMapButton();
 
 	return result;
 }

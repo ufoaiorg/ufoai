@@ -48,7 +48,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_inventory.h"
 #include "cl_menu.h"
 #include "cl_http.h"
-#include "cl_lua.h"
 #include "input/cl_joystick.h"
 #include "cinematic/cl_cinematic.h"
 #include "sound/s_music.h"
@@ -62,7 +61,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_font.h"
 #include "ui/ui_nodes.h"
 #include "ui/ui_parse.h"
-#include "ui/ui_lua.h"
 #include "cgame/cl_game_team.h"
 #include "../shared/infostring.h"
 #include "../shared/parse.h"
@@ -351,8 +349,7 @@ static void CL_ConnectionlessPacket (dbuffer* msg)
 
 	/* server connection */
 	if (Q_streq(c, CL_CMD_CLIENT_CONNECT)) {
-		int i;
-		for (i = 1; i < Cmd_Argc(); i++) {
+		for (int i = 1; i < Cmd_Argc(); i++) {
 			if (char const* const p = Q_strstart(Cmd_Argv(i), "dlserver=")) {
 				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", cls.servername);
 				CL_SetHTTPServer(p);
@@ -806,9 +803,6 @@ bool CL_ParseClientData (const char* type, const char* name, const char** text)
 		GAME_ParseModes(name, text);
 	else if (Q_streq(type, "tip"))
 		CL_ParseTipOfTheDay(name, text);
-	else if (Q_streq(type, "lua"))
-		return UI_ParseAndLoadLuaScript(name, text);
-
 	return true;
 }
 
@@ -825,7 +819,7 @@ static cvarList_t checkcvar[] = {
 static void CL_CheckCvars_f (void)
 {
 	for (cvarList_t* c = checkcvar; c->name != nullptr; c++) {
-		cvar_t* var = Cvar_GetOrCreate(c->name);
+		cvar_t* var = Cvar_Get(c->name);
 		if (var->string[0] == '\0') {
 			Com_Printf("%s has no value\n", var->name);
 			UI_PushWindow("checkcvars");
@@ -882,24 +876,24 @@ static void CL_InitLocal (void)
 	cls.realtime = Sys_Milliseconds();
 
 	/* register our variables */
-	cl_introshown = Cvar_GetOrCreate("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
-	cl_fps = Cvar_GetOrCreate("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
-	cl_log_battlescape_events = Cvar_GetOrCreate("cl_log_battlescape_events", "1", 0, "Log all battlescape events to events.log");
-	cl_selected = Cvar_GetOrCreate("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
-	cl_connecttimeout = Cvar_GetOrCreate("cl_connecttimeout", "25000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
+	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
+	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
+	cl_log_battlescape_events = Cvar_Get("cl_log_battlescape_events", "1", 0, "Log all battlescape events to events.log");
+	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
+	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "25000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
 	/* userinfo */
-	cl_name = Cvar_GetOrCreate("cl_name", Sys_GetCurrentUser(), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
-	cl_teamnum = Cvar_GetOrCreate("cl_teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Preferred teamnum for multiplayer teamplay games");
-	cl_ready = Cvar_GetOrCreate("cl_ready", "0", CVAR_USERINFO, "Ready indicator in the userinfo for tactical missions");
-	cl_msg = Cvar_GetOrCreate("cl_msg", "2", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
-	sv_maxclients = Cvar_GetOrCreate("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are multiplayer mode (see sv_teamplay)");
+	cl_name = Cvar_Get("cl_name", Sys_GetCurrentUser(), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
+	cl_teamnum = Cvar_Get("cl_teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Preferred teamnum for multiplayer teamplay games");
+	cl_ready = Cvar_Get("cl_ready", "0", CVAR_USERINFO, "Ready indicator in the userinfo for tactical missions");
+	cl_msg = Cvar_Get("cl_msg", "2", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
+	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are multiplayer mode (see sv_teamplay)");
 
-	masterserver_url = Cvar_GetOrCreate("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
+	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 
-	cl_map_debug = Cvar_GetOrCreate("debug_map", "0", 0, "Activate realtime map debugging options - bitmask. Valid values are 0, 1, 3 and 7");
-	cl_le_debug = Cvar_GetOrCreate("debug_le", "0", 0, "Activates some local entity debug rendering");
-	cl_trace_debug = Cvar_GetOrCreate("debug_trace", "0", 0, "Activates some client side trace debug rendering");
-	cl_leshowinvis = Cvar_GetOrCreate("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entities as null models");
+	cl_map_debug = Cvar_Get("debug_map", "0", 0, "Activate realtime map debugging options - bitmask. Valid values are 0, 1, 3 and 7");
+	cl_le_debug = Cvar_Get("debug_le", "0", 0, "Activates some local entity debug rendering");
+	cl_trace_debug = Cvar_Get("debug_trace", "0", 0, "Activates some client side trace debug rendering");
+	cl_leshowinvis = Cvar_Get("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entities as null models");
 
 	/* register our commands */
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
@@ -1074,13 +1068,12 @@ void CL_SetClientState (connstate_t state)
 void CL_Frame (int now, void* data)
 {
 	static int lastFrame = 0;
-	int delta;
 
 	if (sys_priority->modified || sys_affinity->modified)
 		Sys_SetAffinityAndPriority();
 
 	/* decide the simulation time */
-	delta = now - lastFrame;
+	const int delta = now - lastFrame;
 	if (lastFrame)
 		cls.frametime = delta / 1000.0;
 	else
@@ -1169,7 +1162,6 @@ void CL_Init (void)
 {
 	/* i18n through gettext */
 	char languagePath[MAX_OSPATH];
-	cvar_t* fs_i18ndir;
 
 	isdown = false;
 
@@ -1178,7 +1170,7 @@ void CL_Init (void)
 
 	OBJZERO(cls);
 
-	fs_i18ndir = Cvar_GetOrCreate("fs_i18ndir", "", 0, "System path to language files");
+	cvar_t* fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
 	/* i18n through gettext */
 	setlocale(LC_ALL, "C");
 	setlocale(LC_MESSAGES, "");
@@ -1209,7 +1201,6 @@ void CL_Init (void)
 	S_Init();
 	SCR_Init();
 
-	CL_InitLua();
 	CL_InitLocal();
 
 	Irc_Init();
@@ -1264,7 +1255,6 @@ void CL_Shutdown (void)
 	S_Shutdown();
 	R_Shutdown();
 	UI_Shutdown();
-	CL_ShutdownLua();
 	CIN_Shutdown();
 	SEQ_Shutdown();
 	GAME_Shutdown();

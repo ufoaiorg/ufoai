@@ -754,7 +754,7 @@ bool ReactionFire::canSee (const Actor* shooter, const Edict* target) const
 		return false;
 
 	const float actorVis = G_ActorVis(shooter, target, true);
-	if (actorVis < 0.1)
+	if (actorVis < ACTOR_VIS_10)
 		return false;
 
 	return true;
@@ -798,29 +798,48 @@ void ReactionFire::resetTargets (const Edict* shooter)
  */
 bool ReactionFire::shoot (Actor* shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
 {
-	/* this is the max amount of friendly units that were hit during the mock calculation */
-	int maxff;
+	const Item* weapon = nullptr;
+	if (IS_SHOT_RIGHT(type)) {
+		weapon = shooter->getRightHandItem();
+		if (!weapon)
+			return false;
+	} else {
+		weapon = shooter->getLeftHandItem();
+		if (!weapon)
+			return false;
+	}
 
-	if (shooter->isInsane())
-		maxff = 100;
-	else if (shooter->isRaged())
-		maxff = 60;
-	else if (shooter->isPanicked())
-		maxff = 30;
-	else if (shooter->isShaken())
-		maxff = 15;
-	else
-		maxff = 5;
+	const fireDef_t* fdArray = weapon->getFiredefs();
+	if (!fdArray)
+		return false;
 
-	/* calculate the mock values - e.g. how many friendly units we would hit
-	 * when opening the reaction fire */
-	const int minhit = 30;
-	shot_mock_t mock;
+	/* Adjust the number of samples we take so that we don't end firing thousands of shots
+	 * in case the fire mode is multi-shot */
+	const int shotsPerFD = fdArray[firemode].shots;
+	const int samples = std::max(1, 100 / shotsPerFD);
 	const Player& player = shooter->getPlayer();
-	for (int i = 0; i < 100; i++)
+	shot_mock_t mock;
+	for (int i = 0; i < samples; ++i)
 		if (!G_ClientShoot(player, shooter, at, type, firemode, &mock, false, 0))
 			break;
 
+	/* this is the max amount of friendly units that were hit during the mock calculation */
+	const int maxShots = samples * shotsPerFD;
+	int maxff;
+	if (shooter->isInsane())
+		maxff = maxShots;
+	else if (shooter->isRaged())
+		maxff = maxShots * 2 / 3;
+	else if (shooter->isPanicked())
+		maxff = maxShots / 3;
+	else if (shooter->isShaken())
+		maxff = maxShots / 6;
+	else
+		maxff = maxShots / 20;
+
+	/* calculate the mock values - e.g. how many friendly units we would hit
+	 * when opening the reaction fire */
+	const int minhit = maxShots / 3;
 	const int ff = mock.friendCount + (G_IsAlien(shooter) ? 0 : mock.civilian);
 	if (ff <= maxff && mock.enemyCount >= minhit)
 		return G_ClientShoot(player, shooter, at, type, firemode, nullptr, false, 0);

@@ -56,10 +56,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #include "../../shared/bfd.h"
 
-const char *Sys_GetCurrentUser (void)
+const char* Sys_GetCurrentUser (void)
 {
 	static char s_userName[MAX_VAR];
-	struct passwd *p;
+	struct passwd* p;
 
 	if ((p = getpwuid(getuid())) == nullptr)
 		s_userName[0] = '\0';
@@ -75,7 +75,7 @@ const char *Sys_GetCurrentUser (void)
  * @note The error message should not have a newline - it's added inside of this function
  * @note This function does never return
  */
-void Sys_Error (const char *error, ...)
+void Sys_Error (const char* error, ...)
 {
 	va_list argptr;
 	char string[1024];
@@ -121,11 +121,11 @@ void Sys_Quit (void)
 }
 
 #ifdef HAVE_LINK_H
-static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, void *data)
+static int Sys_BacktraceLibsCallback (struct dl_phdr_info* info, size_t size, void* data)
 {
 	int j;
 	int end;
-	FILE *crash = (FILE*)data;
+	FILE* crash = (FILE*)data;
 
 	end = 0;
 
@@ -145,27 +145,27 @@ static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, vo
 /* following code parts are taken from libcairo */
 
 struct file_match {
-	const char *file;
-	void *address;
-	void *base;
-	void *hdr;
+	const char* file;
+	void* address;
+	void* base;
+	void* hdr;
 };
 
 #define BUFFER_MAX (16*1024)
 static char g_output[BUFFER_MAX];
 
-static int find_matching_file (struct dl_phdr_info *info, size_t size, void *data)
+static int find_matching_file (struct dl_phdr_info* info, size_t size, void* data)
 {
 #ifdef ElfW
 	typedef ElfW(Phdr) Elf_Phdr;
 	typedef ElfW(Addr) Elf_Addr;
 #endif
 
-	struct file_match *match = (file_match*)data;
+	struct file_match* match = (file_match*)data;
 	/* This code is modeled from Gfind_proc_info-lsb.c:callback() from libunwind */
 	long n;
 	Elf_Addr const  load_base = info->dlpi_addr;
-	Elf_Phdr const *phdr      = info->dlpi_phdr;
+	Elf_Phdr const* phdr      = info->dlpi_phdr;
 	for (n = info->dlpi_phnum; --n >= 0; phdr++) {
 		if (phdr->p_type == PT_LOAD) {
 			Elf_Addr vaddr = phdr->p_vaddr + load_base;
@@ -179,12 +179,12 @@ static int find_matching_file (struct dl_phdr_info *info, size_t size, void *dat
 	return 0;
 }
 
-static void _backtrace (FILE *crash, void * const *buffer, int size)
+static void _backtrace (FILE* crash, void* const* buffer, int size)
 {
 	int x;
-	struct bfd_set *set = (bfd_set*)calloc(1, sizeof(*set));
+	struct bfd_set* set = (bfd_set*)calloc(1, sizeof(*set));
 	struct output_buffer ob;
-	struct bfd_ctx *bc = nullptr;
+	struct bfd_ctx* bc = nullptr;
 
 	output_init(&ob, g_output, sizeof(g_output));
 
@@ -193,13 +193,13 @@ static void _backtrace (FILE *crash, void * const *buffer, int size)
 	for (x = 0; x < size; x++) {
 		struct file_match match = {(const char*)buffer[x], nullptr, nullptr, nullptr};
 		unsigned long addr;
-		const char * file = nullptr;
-		const char * func = nullptr;
+		const char* file = nullptr;
+		const char* func = nullptr;
 		unsigned line = 0;
-		const char *procname;
+		const char* procname;
 
 		dl_iterate_phdr(find_matching_file, &match);
-		addr = (char *)buffer[x] - (char *)match.base;
+		addr = (char*)buffer[x] - (char*)match.base;
 
 		if (match.file && strlen(match.file))
 			procname = match.file;
@@ -239,9 +239,9 @@ void Sys_Backtrace (void)
 	Com_BreakIntoDebugger();
 #endif
 
-	const char *dumpFile = "crashdump.txt";
-	FILE *file = Sys_Fopen(dumpFile, "w");
-	FILE *crash = file != nullptr ? file : stderr;
+	const char* dumpFile = "crashdump.txt";
+	FILE* file = Sys_Fopen(dumpFile, "w");
+	FILE* crash = file != nullptr ? file : stderr;
 
 	fprintf(crash, "======start======\n");
 
@@ -255,7 +255,7 @@ void Sys_Backtrace (void)
 	fflush(crash);
 
 #ifdef HAVE_EXECINFO_H
-	void *symbols[MAX_BACKTRACE_SYMBOLS];
+	void* symbols[MAX_BACKTRACE_SYMBOLS];
 	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
 #if defined HAVE_LINK_H && defined HAVE_BFD_H
 	_backtrace(crash, symbols, i);

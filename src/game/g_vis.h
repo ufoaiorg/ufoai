@@ -58,10 +58,10 @@ typedef unsigned int vischeckflags_t;
 #define VT_NEW			4
 
 /** Actor visibility constants */
-#define ACTOR_VIS_100	1.0
-#define ACTOR_VIS_50	0.5
-#define ACTOR_VIS_10	0.1
-#define ACTOR_VIS_0		0.0
+#define ACTOR_VIS_100	1.0f
+#define ACTOR_VIS_50	0.5f
+#define ACTOR_VIS_10	0.1f
+#define ACTOR_VIS_0		0.0f
 
 bool G_FrustumVis(const Edict* from, const vec3_t point);
 bool G_SmokeVis (const vec3_t from, const Edict* check);

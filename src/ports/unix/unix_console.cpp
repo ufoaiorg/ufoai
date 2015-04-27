@@ -73,9 +73,7 @@ static void CON_FlushIn (void)
  */
 static void Sys_TTYDeleteCharacter (void)
 {
-	char key;
-
-	key = '\b';
+	char key = '\b';
 	write(STDOUT_FILENO, &key, 1);
 	key = ' ';
 	write(STDOUT_FILENO, &key, 1);
@@ -90,8 +88,7 @@ static void Sys_TTYDeleteCharacter (void)
 static void Sys_TTYConsoleHide (void)
 {
 	if (ttyConsoleHistory.cursor > 0) {
-		unsigned int i;
-		for (i = 0; i < ttyConsoleHistory.cursor; i++)
+		for (unsigned int i = 0; i < ttyConsoleHistory.cursor; i++)
 			Sys_TTYDeleteCharacter();
 	}
 	Sys_TTYDeleteCharacter(); /* Delete "]" */
@@ -105,16 +102,14 @@ static void Sys_TTYConsoleShow (void)
 {
 	write(STDOUT_FILENO, "]", 1);
 	if (ttyConsoleHistory.cursor) {
-		unsigned int i;
-		for (i = 0; i < ttyConsoleHistory.cursor; i++) {
+		for (unsigned int i = 0; i < ttyConsoleHistory.cursor; i++) {
 			write(STDOUT_FILENO, ttyConsoleHistory.buffer + i, 1);
 		}
 	}
 }
 
-static void Sys_TTYConsoleHistoryAdd (consoleHistory_t *field)
+static void Sys_TTYConsoleHistoryAdd (consoleHistory_t* field)
 {
-	int i;
 	const size_t size = lengthof(ttyEditLines);
 
 	assert(histCount <= size);
@@ -122,7 +117,7 @@ static void Sys_TTYConsoleHistoryAdd (consoleHistory_t *field)
 	assert(histCurrent >= -1);
 	assert(histCurrent <= histCount);
 	/* make some room */
-	for (i = size - 1; i > 0; i--)
+	for (int i = size - 1; i > 0; i--)
 		ttyEditLines[i] = ttyEditLines[i - 1];
 
 	ttyEditLines[0] = *field;
@@ -132,16 +127,14 @@ static void Sys_TTYConsoleHistoryAdd (consoleHistory_t *field)
 	histCurrent = -1; /* re-init */
 }
 
-static consoleHistory_t *Sys_TTYConsoleHistoryPrevious (void)
+static consoleHistory_t* Sys_TTYConsoleHistoryPrevious (void)
 {
-	int histPrev;
-
 	assert(histCount <= lengthof(ttyEditLines));
 	assert(histCount >= 0);
 	assert(histCurrent >= -1);
 	assert(histCurrent <= histCount);
 
-	histPrev = histCurrent + 1;
+	const int histPrev = histCurrent + 1;
 	if (histPrev >= histCount)
 		return nullptr;
 
@@ -149,7 +142,7 @@ static consoleHistory_t *Sys_TTYConsoleHistoryPrevious (void)
 	return &(ttyEditLines[histCurrent]);
 }
 
-static consoleHistory_t *Sys_TTYConsoleHistoryNext (void)
+static consoleHistory_t* Sys_TTYConsoleHistoryNext (void)
 {
 	assert(histCount <= CON_HISTORY);
 	assert(histCount >= 0);
@@ -207,7 +200,7 @@ void Sys_ConsoleShutdown (void)
 	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL, 0) & ~O_NONBLOCK);
 }
 
-static void Sys_TTYConsoleHistoryClear (consoleHistory_t *edit)
+static void Sys_TTYConsoleHistoryClear (consoleHistory_t* edit)
 {
 	OBJZERO(*edit);
 }
@@ -223,8 +216,6 @@ static bool Sys_IsATTY (void)
  */
 void Sys_ConsoleInit (void)
 {
-	struct termios tc;
-
 	/* If the process is backgrounded (running non interactively)
 	 * then SIGTTIN or SIGTOU is emitted, if not caught, turns into a SIGSTP */
 	signal(SIGTTIN, SIG_IGN);
@@ -247,7 +238,7 @@ void Sys_ConsoleInit (void)
 	tcgetattr(STDIN_FILENO, &TTY_tc);
 	TTY_erase = TTY_tc.c_cc[VERASE];
 	TTY_eof = TTY_tc.c_cc[VEOF];
-	tc = TTY_tc;
+	struct termios tc = TTY_tc;
 
 	/*
 	 * ECHO: don't echo input characters.
@@ -269,7 +260,7 @@ void Sys_ConsoleInit (void)
 	ttyConsoleActivated = true;
 }
 
-const char *Sys_ConsoleInput (void)
+const char* Sys_ConsoleInput (void)
 {
 	/* we use this when sending back commands */
 	static char text[256];
@@ -303,8 +294,8 @@ const char *Sys_ConsoleInput (void)
 				}
 				if (key == '\t') {
 					const size_t size = sizeof(ttyConsoleHistory.buffer);
-					const char *s = ttyConsoleHistory.buffer;
-					char *target = ttyConsoleHistory.buffer;
+					const char* s = ttyConsoleHistory.buffer;
+					char* target = ttyConsoleHistory.buffer;
 					Sys_ShowConsole(false);
 					Com_ConsoleCompleteCommand(s, target, size, &ttyConsoleHistory.cursor, 0);
 					Sys_ShowConsole(true);
@@ -314,7 +305,7 @@ const char *Sys_ConsoleInput (void)
 				if (avail != -1) {
 					/* VT 100 keys */
 					if (key == '[' || key == 'O') {
-						consoleHistory_t *history;
+						consoleHistory_t* history;
 						avail = read(STDIN_FILENO, &key, 1);
 						if (avail != -1) {
 							switch (key) {
@@ -362,7 +353,6 @@ const char *Sys_ConsoleInput (void)
 
 		return nullptr;
 	} else if (stdinActive) {
-		int len;
 		fd_set fdset;
 		struct timeval timeout;
 
@@ -374,7 +364,7 @@ const char *Sys_ConsoleInput (void)
 				|| !FD_ISSET(STDIN_FILENO, &fdset))
 			return nullptr;
 
-		len = read(STDIN_FILENO, text, sizeof(text));
+		const int len = read(STDIN_FILENO, text, sizeof(text));
 		if (len == 0) { /* eof! */
 			stdinActive = false;
 			return nullptr;
@@ -389,7 +379,7 @@ const char *Sys_ConsoleInput (void)
 	return nullptr;
 }
 
-void Sys_ConsoleOutput (const char *string)
+void Sys_ConsoleOutput (const char* string)
 {
 	/* BUG: for some reason, NDELAY also affects stdout (1) when used on stdin (0). */
 	const int origflags = fcntl(STDOUT_FILENO, F_GETFL, 0);

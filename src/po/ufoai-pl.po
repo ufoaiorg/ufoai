@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2014-01-11 13:32+0100\n"
+"PO-Revision-Date: 2015-04-22 12:18+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
@@ -3390,6 +3390,28 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Dowódco, z radością prezentuję schemat budowy dla nowego samolotu: ciężkiego "
+"transportowca klasy Herakles. \n"
+"\n"
+"Aby przyspieszyć badanie nad tym statkiem, wykorzystaliśmy istniejące "
+"rozwiązania z cywilnego ciężkiego transportowca. Przebudowaliśmy luk "
+"ładunkowy aby pomieścił maks. 12 żołnierzy. \n"
+"\n"
+"Samolot posiada funkcję pionowego startu i lądowania (VSTOL), lecz z "
+"ulepszonymi silnikami, aby pojazd posiadał większą prędkość przelotową. "
+"Dodatkowo wzmocniona została konstrukcja kadłuba dodatkową ochroną w postaci "
+"pancerza. Herakles dostarczy naszych żołnierzy, szybciej i bezpieczniej, niż "
+"ówczesny Firebird. \n"
+"\n"
+"Tak jak Firebird, samolot posiada jedno miejsce na broń lekką. Więc powinien "
+"poruszać się w miejsca gdzie ryzyko pojawienia się przeciwnika jest małe. \n"
+"\n"
+"Dowódco powinniśmy zacząć prace nad Heraklesem jak najszybciej, aby wzmocnić "
+"nasze odziały w misjach naziemnych, oraz jeśli chcemy wysłać nasze wojska do "
+"wrogiej bazy, to Herakles jest najlepszym transportowcem, do tego rodzaju "
+"misji. \n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:64
 msgid ""
@@ -4185,7 +4207,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:270
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar "
 "for disassembly. We're ready to start studying and dismantling the craft "
@@ -4291,7 +4312,6 @@ msgstr ""
 "Uzbrojenie: Brak"
 
 #: ../base/ufos/msgid/aircraft.ufo:288
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here "
 "is my summary for your review.\n"
@@ -4396,7 +4416,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:296
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar "
 "for disassembly. Recovering a Fighter-class UFO has been one of the things "
@@ -4423,7 +4442,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:310
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here "
 "is my summary for your review.\n"
@@ -4506,7 +4524,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:318
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar "
 "for disassembly. It seems to be unarmed and its large cargo hold suggests "
@@ -4602,7 +4619,6 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:366
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here "
 "is my summary for your review.\n"
@@ -4682,7 +4698,6 @@ msgstr ""
 "--mjr Paul Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:376
-#, fuzzy
 msgid ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar "
 "for disassembly. This is one of the largest UFOs we have observed so far. "
@@ -5344,7 +5359,6 @@ msgstr ""
 "Brak."
 
 #: ../base/ufos/msgid/aircraftitems.ufo:112
-#, fuzzy
 msgid ""
 "Commander, now that we have the ability to produce and work the alien "
 "materials, a whole new range of options has opened up to us. These materials "
@@ -5699,7 +5713,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:178
-#, fuzzy
 msgid ""
 "Commander, the alien antimatter engines we recovered have been fascinating "
 "my team ever since they arrived. With our new understanding of the alien "
@@ -5730,7 +5743,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:200
-#, fuzzy
 msgid ""
 "Commander, I'm happy to report the success of our alien propulsion program. "
 "We've cracked the mysteries of the alien engine set-up and we finally "
@@ -5829,7 +5841,7 @@ msgstr ""
 "spowodowane siłą przyśpieszenia. Zdarzało się, że piloci ginęli z powodu "
 "nadmiernego przeciążenia.\n"
 "\n"
-"W silniku na antymaterię ten problem rośnie kilkusetkrotnie. Silniki mają "
+"W silniku na antymaterię ten problem rośnie kilkuset krotnie. Silniki mają "
 "taką moc, że przeciążenie może zmienić pilota w krwawą miazgę. Nawet nasze "
 "samoloty mogą źle znosić to przyśpieszenie - nasi mechanicy będą musieli być "
 "wyjątkowo ostrożni w sprawdzaniu zmęczenia metalu i uszkodzeń powierzchni. "
@@ -5893,7 +5905,6 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/msgid/aircraftitems.ufo:230
-#, fuzzy
 msgid ""
 "Commander, the alien sensor suite appears to be a very powerful set of "
 "passive and active scanning systems, including radar, lidar, magnetic and UV/"
@@ -7242,7 +7253,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:578
-#, fuzzy
 msgid ""
 "Commander, we made an extremely interesting find on the UFO we disassembled. "
 "It carried an advanced and highly dangerous onboard missile launcher, using "
@@ -7262,39 +7272,15 @@ msgid ""
 msgstr ""
 "Dowódco.\n"
 "\n"
-"Przedstawiam raport dot. naszego ostatniego projektu broni laserowych. "
-"Stworzyliśmy prototyp działa laserowego i jesteśmy gotowi do produkcji tego "
-"typu uzbrojenia.\n"
+"Odkryliśmy niespotykany wcześniej rodzaj broni. Z rozmontowanego statku UFO "
+"wydobyliśmy pokładową wyrzutnie rakiet, wykorzystującą szyny magnetyczne, "
+"które przyspieszają rakietę do hipersonicznych prędkości. \n"
 "\n"
-"Osiągnęliśmy założone cele: ciągłą falę, zasilanie deuterowo-fluorkowe dużej "
-"mocy, zdolność namierzania i atakowania UFO w promieniu 5 km. Celność jest "
-"wyśmienita, zmniejszają ją tylko wrogie systemy walki elektronicznej, nie ma "
-"na nią wpływu zasięg. Promień lasera biegnie wprost do celu i pokonuje cały "
-"dystans niemal natychmiast, co uniemożliwia wykonanie skutecznych manewrów "
-"unikowych.\n"
-"\n"
-"Niestety zanieczyszczenia atmosferyczne nadal stwarzają duży problem: im "
-"większą odległość promień lasera ma do pokonania przez nie, tym mniejsza "
-"jego moc w celu. Przy dystansie 5 km potrzeba 32 sekundy ciągłego ognia w to "
-"samo miejsce, aby przedziurawić poszycie UFO. Rzadko będziemy mieli tyle "
-"czasu na atak. Kompromisem między zasięgiem a zadawanymi uszkodzeniami jest "
-"prowadzenie ognia z odległości 2-3 km. Średnia skuteczność ognia w takim "
-"przypadku jest niewiele niższa od skuteczności działa SHIVA, ale zasięg jest "
-"większy o ok. 1,5 km.\n"
-"\n"
-"Działo posiada zintegrowany pakiet FD pozwalający na prowadzenie 30-"
-"minutowego ognia ciągłego. Ze względu na niebezpieczeństwo trzymania tych "
-"substancji w bazie i dostęp do dużych, zewnętrznych składów wszystkich "
-"potrzebnych składników, nie musimy mieć na miejscu amunicji.\n"
-"\n"
-"Wdrożenie broni zależy tylko od Pana. Chciałbym jednak zarekomendować "
-"wymianę dział SHIVA na laserowe w całej flocie za wyjątkiem samolotów "
-"przeznaczonych ściśle do walki na małych dystansach. Wszystko, co "
-"charakteryzuje się mniejszą manewrowością od UFO, będzie miało spore "
-"trudności z namierzaniem za pomocą działa SHIVA, więc laser oferuje dużo "
-"lepsze rozwiązanie o niemal takiej samej mocy.\n"
-"\n"
-"--mjr Paul Navarre"
+"Musimy zbadać tą wyrzutnię, aby sprawdzić czy i co można wykorzystać dla "
+"naszych celów. Jeśli się uda można wyposażyć nasze myśliwce oraz baterie "
+"rakietowe w nową technologię. Dzięki temu uzyskamy większą skuteczność w "
+"walce z wrogimi latającymi obiektami. \n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:592
 msgid ""
@@ -8945,7 +8931,6 @@ msgstr ""
 "Dr Connor"
 
 #: ../base/ufos/msgid/aliens.ufo:358
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -9434,7 +9419,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:80
-#, fuzzy
 msgid ""
 "Commander, we've successfully prototyped our new powered armour. The "
 "prototype is waiting in R&D if you'd like to have a go in it yourself.\n"
@@ -9525,7 +9509,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:88
-#, fuzzy
 msgid ""
 "Commander, the weaponry the aliens are fielding in battle is growing more "
 "devastating by the week. We need a soldier-support system that can level the "
@@ -9573,7 +9556,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:112
-#, fuzzy
 msgid ""
 "Commander, we've got a full report on the alien armour for you.\n"
 "\n"
@@ -9687,7 +9669,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:120
-#, fuzzy
 msgid ""
 "Commander, we've recovered a suit of alien body armour from the battlefield. "
 "This armour has been a plague to our soldiers; aliens wearing it have "
@@ -9719,7 +9700,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:136
-#, fuzzy
 msgid ""
 "Where armour is concerned, the aliens' design philosophy seems to be, \"If "
 "it works, let's use more of it.\" This new armour is similar in design to "
@@ -9814,7 +9794,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/armour.ufo:144
-#, fuzzy
 msgid ""
 "Commander, we've salvaged a new suit of alien armour from the field. It's "
 "much heavier than the alien armour we've encountered previously, and it "
@@ -9846,7 +9825,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/buildings.ufo:14
-#, fuzzy
 msgid ""
 "Commander, my team and I are happy to report our test weapons are living up "
 "to all our expectations, and I'm submitting a new set of blueprints to your "
@@ -9925,7 +9903,6 @@ msgstr ""
 "--mjr Paul Navarre"
 
 #: ../base/ufos/msgid/buildings.ufo:24
-#, fuzzy
 msgid ""
 "Our CW laser program has been successful in miniaturising and lightening the "
 "necessary components for a powerful deuterium-fluoride reaction. We want to "
@@ -9968,7 +9945,6 @@ msgstr ""
 "--mjr Paul Navarre"
 
 #: ../base/ufos/msgid/buildings.ufo:62
-#, fuzzy
 msgid ""
 "Blueprints -- Alien Containment Facility\n"
 "\n"
@@ -10121,7 +10097,6 @@ msgstr ""
 "pożądaną funkcjonalność, mogą być wymagane modernizacje i poprawki."
 
 #: ../base/ufos/msgid/buildings.ufo:102
-#, fuzzy
 msgid ""
 "Blueprints -- Command Centre\n"
 "\n"
@@ -10254,7 +10229,6 @@ msgstr ""
 "się do użytkowania."
 
 #: ../base/ufos/msgid/buildings.ufo:134
-#, fuzzy
 msgid ""
 "Blueprints -- Entrance\n"
 "\n"
@@ -11613,7 +11587,6 @@ msgstr ""
 "powstrzymanie tych drani."
 
 #: ../base/ufos/msgid/buildings.ufo:488
-#, fuzzy
 msgid ""
 "Commander, thanks to our recent capture and research into alien sensor "
 "equipment, I am now confident that we can drastically upgrade our radar "
@@ -12173,6 +12146,11 @@ msgid ""
 "most of Earth's people, the Second Cold War is a dark shadow from the past, "
 "much like the World Wars were to the children of the late 20th."
 msgstr ""
+"Jest rok 2084. Ziemia, ciesząca się stabilzacją, pokojem i rozwojem. "
+"Brutalne czasy XXI wieku, są odległymi wspomnieniami, ale nie na tyle "
+"dalekimi aby o nich zapomnieć. Dla większość ludzi druga zimna wojna jest "
+"cieniem z przeszłości, jak wojny światowe dla naszych dzieci z końca XX "
+"wieku."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:6
 msgid ""
@@ -12195,7 +12173,7 @@ msgstr ""
 
 #: ../base/ufos/msgid/campaigntexts.ufo:10
 msgid "To many people on Earth, it seems like things are going all right."
-msgstr ""
+msgstr "Zbyt dużo ludzi na Ziemi myślało, że jakoś to wszystko będzie."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:14
 msgid ""
@@ -12210,6 +12188,15 @@ msgid ""
 "their craft and vanish back into orbit, leaving only the ravaged streets of "
 "Mumbai as evidence."
 msgstr ""
+"Pierwszy atak rozpoczął się 3-go marca 2084, w mieście Mubai. Sześć małych "
+"UFO znikąd pojawiło się nad miastem, niepostrzeżone przez stacje radarowe, "
+"pokrywając niebo jednego z najbardziej gęsto zaludnionych miast na Ziemi. "
+"Bez ostrzeżeń, bez wyjaśnień. Dwanaście tysięcy niewinnych cywili i trzy "
+"bataliony elitarnych oddziałów żołnierzy zostało zmasakrowanych. Obrona "
+"trwała dwanaście godzin, zanim przybyły posiłki od najbardziej zamożnych "
+"państw aby dać jakikolwiek opór. Tak jak nagle się pojawili, tak nagle "
+"zniknęli. Wycofali się do swoich pojazdów i wrócili z powrotem na orbitę "
+"okołoziemską, pozostawiając ulice Mubai jako dowód swojego istnienia."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:18
 msgid ""
@@ -12343,6 +12330,25 @@ msgid ""
 "doesn't reach and the funding nations will be angry when PHALANX fails to "
 "respond to these attacks."
 msgstr ""
+"Nie możemy czekać aż obcy zapukają nam do drzwi. Musimy wykryć wrogi statek "
+"i zestrzelić go wszystkimi możliwymi opcjami. Baza PHALANX posiada potężny "
+"radar, lecz aby pokryć większą część nieba musimy zbudować stanowiska "
+"radarowe poza granicami naszych baz. \n"
+"\n"
+"W momencie gdy wykryjemy UFO, potrzebujemy wysłać nasze myśliwce "
+"przechwytujące aby spróbowały zniszczyć obcy obiekt. Niestety w powietrzu "
+"nie przewyższamy siłą ognia, więc zalecamy aby wysyłać na misje "
+"przechwycenia więcej niż jeden myśliwiec. \n"
+"\n"
+"Aktywność obcych pozostanie niezauważona w obszarach, które są poza "
+"zasięgiem naszych radarów, co spowoduję, że nasi fundatorzy, kraje które nas "
+"wspierają mogą się złościć i ograniczyć wsparcie finansowe. \n"
+"\n"
+"Radary które zbudowane są w naszych bazach mają takie same parametry jak "
+"stacje radarowe wybudowane poza terenem naszych baz. \n"
+"\n"
+"Uwaga atak na nieznane nam statki UFO powinny odbywać się z uwzględniłem, że "
+"napotkamy bardzo silny opór, zalecamy ostrożność.  "
 
 #: ../base/ufos/msgid/concepts.ufo:39
 msgid ""
@@ -12360,6 +12366,17 @@ msgid ""
 "materials, they'll need the complete technical readout from the research "
 "teams."
 msgstr ""
+"Dzięki demontażowi schwytanego statku UFO, uzyskamy informacje o obcej nam "
+"technologii. Aby tego dokonać potrzebujemy hangaru UFO, której budowa może "
+"odbyć się poza naszą bazą. Do hangaru będziemy transportować schwytane "
+"jednostki po zakończeniu misji lądowej. Zalecamy rozpoczęcie budowy hangaru "
+"jak najszybciej to się da. \n"
+"\n"
+"Nasi inżynierowie będą podróżować pomiędzy baza, a hangarem, zalecamy aby "
+"budowa hangaru odbyła się w pobliżu baz. \n"
+"\n"
+"Dzięki rozbiórce statków UFO otrzymamy niezbędne materiały, które zbadamy i "
+"wykorzystamy do naszej produkcji. "
 
 #: ../base/ufos/msgid/concepts.ufo:45
 msgid ""
@@ -14090,7 +14107,6 @@ msgstr ""
 "po polu bitwy."
 
 #: ../base/ufos/msgid/story.ufo:16
-#, fuzzy
 msgid ""
 "Our study on antimatter is complete, Commander, and we're ready to present "
 "our results. I'm afraid the news is mostly bad.\n"
@@ -14767,7 +14783,6 @@ msgstr ""
 "Dr Connor"
 
 #: ../base/ufos/msgid/story.ufo:160
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14820,7 +14835,6 @@ msgstr ""
 "Dr Connor"
 
 #: ../base/ufos/msgid/story.ufo:178
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -14933,7 +14947,6 @@ msgstr ""
 "dr Connor"
 
 #: ../base/ufos/msgid/story.ufo:196
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -15006,7 +15019,6 @@ msgstr ""
 "dr Connor"
 
 #: ../base/ufos/msgid/story.ufo:216
-#, fuzzy
 msgid ""
 "Good morning, Sir.\n"
 "\n"
@@ -15105,7 +15117,6 @@ msgstr ""
 "--płk Falkland"
 
 #: ../base/ufos/msgid/story.ufo:234
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -15184,7 +15195,6 @@ msgstr ""
 "dr Connor"
 
 #: ../base/ufos/msgid/story.ufo:248
-#, fuzzy
 msgid ""
 "Commander,\n"
 "\n"
@@ -16704,9 +16714,15 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Dowódco, \n"
+"\n"
+"Bateria rakiet została ukończona, lecz nie przydzielimy jej żadnej amunicji. "
+"Proszę o wyposażenie naszych wyrzutni jak najszybciej się da, bez tego nie "
+"zestrzelimy obcych z naszego nieba. \n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:16
-#, fuzzy
 msgid ""
 "Commander, I'm extremely pleased to report that our project has been "
 "succesful. I've included images of our prototype laser weapon, which "
@@ -20912,7 +20928,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1237
-#, fuzzy
 msgid ""
 "This is one of several proposals I'm submitting for the research and "
 "development of new laser weaponry. Each of these will have to be developed "
@@ -20962,7 +20977,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1283
-#, fuzzy
 msgid ""
 "Technical Specifications: Medikit\n"
 "\n"
@@ -23516,7 +23530,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1973
-#, fuzzy
 msgid ""
 "Commander, we've recovered a large alien cannon that fires high-energy "
 "particle beams. It is extremely deadly and has frightening effects on our "
@@ -23618,7 +23631,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1997
-#, fuzzy
 msgid ""
 "Commander, we've recovered an alien rifle that fires high-energy particle "
 "beams. It's more deadly than anything we've seen -- an extremely nasty new "
@@ -23639,7 +23651,6 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:2015
-#, fuzzy
 msgid ""
 "Commander, my method worked. I think we've managed to crack the secrets of "
 "the mysterious particle beam weaponry. Here are my conclusions.\n"
@@ -23694,7 +23705,7 @@ msgid ""
 "Cdr. Navarre"
 msgstr ""
 "Dowódco, nasza metoda sprawdziła się w stu procentach. Udało się nam "
-"zdeaktywować i otworzyć baterię zasilającą broń cząsteczkową.\n"
+"zdezaktywować i otworzyć baterię zasilającą broń cząsteczkową.\n"
 "\n"
 "Konkluzje wynikające z naszych badań daleko wykraczają poza informacje o "
 "funkcjonowaniu broni cząsteczkowej. Staje się bowiem powoli oczywiste, że "
@@ -23916,7 +23927,6 @@ msgid "Base Facilities"
 msgstr "Moduły"
 
 #: ../base/ufos/research.ufo:115
-#, fuzzy
 msgid "Global Installations"
 msgstr "Instalacje"
 
@@ -26474,13 +26484,12 @@ msgid "Like us on facebook"
 msgstr "Poleć nas na facebook"
 
 #: ../base/ufos/ui/main.ufo:26
-#, fuzzy
 msgid "Twitter"
-msgstr "Sitters"
+msgstr "Twitter"
 
 #: ../base/ufos/ui/main.ufo:27
 msgid "Follow us on twitter"
-msgstr ""
+msgstr "Dołącz do nas na twiterze:"
 
 #: ../base/ufos/ui/main.ufo:66
 msgid "Single-player"
@@ -26637,7 +26646,7 @@ msgstr "Mocne strony:"
 
 #: ../base/ufos/ui/material_editor.ufo:94
 msgid "Bump:"
-msgstr ""
+msgstr "Zrzut:"
 
 #: ../base/ufos/ui/material_editor.ufo:117
 msgid "Specular:"
@@ -26994,7 +27003,6 @@ msgid "Force start"
 msgstr "Rozpocznij"
 
 #: ../base/ufos/ui/multiplayer.ufo:1371
-#, fuzzy
 msgid "Launch the game before all teams are ready"
 msgstr "Uruchom grę nawet jeśli nie wszystkie drużyny są dołączone lub gotowe"
 
@@ -27484,6 +27492,8 @@ msgstr ""
 #: ../base/ufos/ui/options.ufo:998
 msgid "Change the number of allowed hardware accelerated dynamic lights."
 msgstr ""
+"Podaj liczbę dozwolonych źródeł dynamicznego oświetlenia, akceleracyjnego "
+"sprzętowo."
 
 #: ../base/ufos/ui/options.ufo:1027
 msgid "Also known as bumpmapping."
@@ -27560,7 +27570,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1190
 msgid "Flares:"
-msgstr ""
+msgstr "Odbicia:"
 
 #: ../base/ufos/ui/options.ufo:1205
 msgid "Coronas are soft, alpha-blended, rounded polygons."
@@ -27576,6 +27586,8 @@ msgid ""
 "Fog does not relate to any weather effect here, but when enabled distant "
 "textures on the battlescape are faded out."
 msgstr ""
+"Mgła nie dodaje dodatkowego efektu pogodowego, ale kiedy jest włączona to "
+"odległe tekstury w trybie bitewnym zostają przyciemnione."
 
 #: ../base/ufos/ui/options.ufo:1222
 msgid "Fog:"
@@ -27882,7 +27894,7 @@ msgstr "Menu"
 
 #: ../base/ufos/ui/options.ufo:2030
 msgid "Global"
-msgstr ""
+msgstr "Globalnie"
 
 #: ../base/ufos/ui/options.ufo:2034
 msgid "Battlescape"
@@ -28087,7 +28099,7 @@ msgstr ""
 
 #: ../base/ufos/ui/research.ufo:162
 msgid "Expand/Collapse"
-msgstr ""
+msgstr "Rozwiń/Zwiń"
 
 #: ../base/ufos/ui/research.ufo:199
 msgid "Topics"
@@ -28131,7 +28143,7 @@ msgstr "Zakończ"
 
 #: ../base/ufos/ui/skirmish.ufo:44
 msgid "<1>"
-msgstr ""
+msgstr "<1>"
 
 #: ../base/ufos/ui/skirmish.ufo:121
 msgid "Start Game"
@@ -32353,11 +32365,11 @@ msgstr "Uruchomiony Serwer działa na innej wersji gry"
 
 #: client/cl_main.cpp:426
 msgid "Bad rcon password"
-msgstr ""
+msgstr "Złe hasło rcon"
 
 #: client/cl_main.cpp:426
 msgid "The rcon password you specified was wrong."
-msgstr ""
+msgstr "Podane hasło rcon jest złe"
 
 #: client/cl_main.cpp:429
 msgid "The server refused the connection."
