@@ -489,8 +489,8 @@ struct cvar_t {
 
 %rename (findvar) Cvar_FindVar;
 cvar_t* Cvar_FindVar (const char* varName);
-%rename (getvar) Cvar_GetOrCreate;
-cvar_t* Cvar_GetOrCreate (const char* var_name, const char* var_value = nullptr, int flags = 0, const char* desc = nullptr);
+%rename (getvar) Cvar_Get;
+cvar_t* Cvar_Get (const char* var_name, const char* var_value = nullptr, int flags = 0, const char* desc = nullptr);
 %rename (delvar) Cvar_Delete;
 bool Cvar_Delete(const char* var_name);
 

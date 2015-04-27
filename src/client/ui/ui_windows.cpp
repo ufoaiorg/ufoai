@@ -708,8 +708,8 @@ static void UI_Popup_f (void)
 
 void UI_InitWindows (void)
 {
-	ui_sys_main = Cvar_GetOrCreate("ui_sys_main", "", 0, "This is the main window id that is at the very first window stack - also see ui_sys_active");
-	ui_sys_active = Cvar_GetOrCreate("ui_sys_active", "", 0, "The active window we will return to when hitting esc once - also see ui_sys_main");
+	ui_sys_main = Cvar_Get("ui_sys_main", "", 0, "This is the main window id that is at the very first window stack - also see ui_sys_active");
+	ui_sys_active = Cvar_Get("ui_sys_active", "", 0, "The active window we will return to when hitting esc once - also see ui_sys_main");
 
 	/* add command */
 	Cmd_AddCommand("ui_push", UI_PushWindow_f, "Push a window to the window stack");

@@ -118,7 +118,7 @@ void R_SphereGenerate (sphere_t* sphere, const int tris, const float radius)
  */
 void R_SphereInit (void)
 {
-	r_sphereDetails = Cvar_GetOrCreate("r_sphereDetails", "1.0", CVAR_ARCHIVE, "Factor to increase or decrease the sphere tris");
+	r_sphereDetails = Cvar_Get("r_sphereDetails", "1.0", CVAR_ARCHIVE, "Factor to increase or decrease the sphere tris");
 	if (r_sphereDetails->integer <= 0)
 		Cvar_SetValue("r_sphereDetails", 1.0);
 

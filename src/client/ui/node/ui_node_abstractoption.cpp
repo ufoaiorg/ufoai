@@ -174,7 +174,7 @@ void UI_AbstractOption_SetDataIdByName (uiNode_t* node, const char* name) {
 }
 
 void UI_AbstractOption_SetCvar (uiNode_t* node, const char* name) {
-	cvar_t* var = Cvar_GetOrCreate(name);
+	cvar_t* var = Cvar_Get(name);
 	EXTRADATA(node).cvar = var->name;
 }
 

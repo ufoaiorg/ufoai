@@ -668,6 +668,6 @@ void SAV_Init (void)
 	cgi->Cmd_AddCommand("game_delete", SAV_GameDelete_f, "Deletes a given filename");
 	cgi->Cmd_AddCommand("game_comments", SAV_GameReadGameComments_f, "Loads the savegame names");
 	cgi->Cmd_AddCommand("game_continue", SAV_GameContinue_f, "Continue with the last saved game");
-	save_compressed = cgi->Cvar_GetOrCreate("save_compressed", "1", CVAR_ARCHIVE, "Save the savefiles compressed if set to 1");
-	cl_lastsave = cgi->Cvar_GetOrCreate("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
+	save_compressed = cgi->Cvar_Get("save_compressed", "1", CVAR_ARCHIVE, "Save the savefiles compressed if set to 1");
+	cl_lastsave = cgi->Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 }

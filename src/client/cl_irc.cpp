@@ -1983,24 +1983,24 @@ void Irc_Init (void)
 	Cmd_AddCommand("irc_deactivate", Irc_Input_Deactivate_f, "IRC deactivate when leaving the irc menu");
 
 	/* cvars */
-	irc_server = Cvar_GetOrCreate("irc_server", "irc.freenode.org", CVAR_ARCHIVE, "IRC server to connect to");
-	irc_channel = Cvar_GetOrCreate("irc_channel", "#ufoai-gamer", CVAR_ARCHIVE, "IRC channel to join into");
+	irc_server = Cvar_Get("irc_server", "irc.freenode.org", CVAR_ARCHIVE, "IRC server to connect to");
+	irc_channel = Cvar_Get("irc_channel", "#ufoai-gamer", CVAR_ARCHIVE, "IRC channel to join into");
 	irc_channel->modified = false;
-	irc_port = Cvar_GetOrCreate("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");
-	irc_user = Cvar_GetOrCreate("irc_user", "UFOAIPlayer", CVAR_ARCHIVE);
-	irc_password = Cvar_GetOrCreate("irc_password", "", CVAR_ARCHIVE);
-	irc_topic = Cvar_GetOrCreate("irc_topic", "Connecting (please wait)...", CVAR_NOSET);
-	irc_defaultChannel = Cvar_GetOrCreate("irc_defaultChannel", "", CVAR_NOSET);
-	irc_logConsole = Cvar_GetOrCreate("irc_logConsole", "0", CVAR_ARCHIVE, "Log all irc conversations to game console, too");
-	irc_showIfNotInMenu = Cvar_GetOrCreate("irc_showIfNotInMenu", "0", CVAR_ARCHIVE, "Show chat messages on top of the menu stack if we are not in the irc menu");
-	irc_send_buffer = Cvar_GetOrCreate("irc_send_buffer");
-	irc_nick = Cvar_GetOrCreate("cl_name");
+	irc_port = Cvar_Get("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");
+	irc_user = Cvar_Get("irc_user", "UFOAIPlayer", CVAR_ARCHIVE);
+	irc_password = Cvar_Get("irc_password", "", CVAR_ARCHIVE);
+	irc_topic = Cvar_Get("irc_topic", "Connecting (please wait)...", CVAR_NOSET);
+	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET);
+	irc_logConsole = Cvar_Get("irc_logConsole", "0", CVAR_ARCHIVE, "Log all irc conversations to game console, too");
+	irc_showIfNotInMenu = Cvar_Get("irc_showIfNotInMenu", "0", CVAR_ARCHIVE, "Show chat messages on top of the menu stack if we are not in the irc menu");
+	irc_send_buffer = Cvar_Get("irc_send_buffer");
+	irc_nick = Cvar_Get("cl_name");
 
-	irc_messageBucketSize = Cvar_GetOrCreate("irc_messageBucketSize", "100", CVAR_ARCHIVE, "max 100 messages in bucket");
-	irc_messageBucketBurst = Cvar_GetOrCreate("irc_messageBucketBurst", "5", CVAR_ARCHIVE, "max burst size is 5 messages");
-	irc_characterBucketSize = Cvar_GetOrCreate("irc_characterBucketSize", "2500", CVAR_ARCHIVE, "max 2,500 characters in bucket");
-	irc_characterBucketBurst = Cvar_GetOrCreate("irc_characterBucketBurst", "250", CVAR_ARCHIVE, "max burst size is 250 characters");
-	irc_characterBucketRate = Cvar_GetOrCreate("irc_characterBucketRate", "10", CVAR_ARCHIVE, "per second (100 characters in 10 seconds)");
+	irc_messageBucketSize = Cvar_Get("irc_messageBucketSize", "100", CVAR_ARCHIVE, "max 100 messages in bucket");
+	irc_messageBucketBurst = Cvar_Get("irc_messageBucketBurst", "5", CVAR_ARCHIVE, "max burst size is 5 messages");
+	irc_characterBucketSize = Cvar_Get("irc_characterBucketSize", "2500", CVAR_ARCHIVE, "max 2,500 characters in bucket");
+	irc_characterBucketBurst = Cvar_Get("irc_characterBucketBurst", "250", CVAR_ARCHIVE, "max burst size is 250 characters");
+	irc_characterBucketRate = Cvar_Get("irc_characterBucketRate", "10", CVAR_ARCHIVE, "per second (100 characters in 10 seconds)");
 }
 
 void Irc_Shutdown (void)

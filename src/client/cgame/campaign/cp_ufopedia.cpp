@@ -1139,8 +1139,8 @@ void UP_InitStartup (void)
 	/* add commands and cvars */
 	cgi->Cmd_TableAddList(ufopediaCmds);
 
-	mn_uppretext = cgi->Cvar_GetOrCreate("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
-	mn_uppreavailable = cgi->Cvar_GetOrCreate("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");
+	mn_uppretext = cgi->Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
+	mn_uppreavailable = cgi->Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");
 	cgi->Cvar_Set("mn_uprequirement", "");
 	cgi->Cvar_Set("mn_upmetadata", "");
 }

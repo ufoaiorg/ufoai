@@ -390,16 +390,16 @@ static void CL_CenterCameraIntoMap_f (void)
 
 void CL_CameraInit (void)
 {
-	cl_camrotspeed = Cvar_GetOrCreate("cl_camrotspeed", "250", CVAR_ARCHIVE, "Rotation speed of the battlescape camera.");
-	cl_cammovespeed = Cvar_GetOrCreate("cl_cammovespeed", "450", CVAR_ARCHIVE, "Movement speed of the battlescape camera.");
-	cl_cammoveaccel = Cvar_GetOrCreate("cl_cammoveaccel", "1250", CVAR_ARCHIVE, "Movement acceleration of the battlescape camera.");
-	cl_campitchmax = Cvar_GetOrCreate("cl_campitchmax", "89", 0, "Max. battlescape camera pitch - over 90 presents apparent mouse inversion.");
-	cl_camzoomspeed = Cvar_GetOrCreate("cl_camzoomspeed", "2.0", 0);
-	cl_campitchmin = Cvar_GetOrCreate("cl_campitchmin", "10", 0, "Min. battlescape camera pitch - under 35 presents difficulty positioning cursor.");
-	cl_camzoomquant = Cvar_GetOrCreate("cl_camzoomquant", "0.16", CVAR_ARCHIVE, "Battlescape camera zoom quantisation.");
-	cl_camzoommin = Cvar_GetOrCreate("cl_camzoommin", "0.3", 0, "Minimum zoom value for tactical missions.");
-	cl_camzoommax = Cvar_GetOrCreate("cl_camzoommax", "3.4", 0, "Maximum zoom value for tactical missions.");
-	cl_centerview = Cvar_GetOrCreate("cl_centerview", "1", CVAR_ARCHIVE, "Center the view when selecting a new soldier.");
+	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", CVAR_ARCHIVE, "Rotation speed of the battlescape camera.");
+	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "450", CVAR_ARCHIVE, "Movement speed of the battlescape camera.");
+	cl_cammoveaccel = Cvar_Get("cl_cammoveaccel", "1250", CVAR_ARCHIVE, "Movement acceleration of the battlescape camera.");
+	cl_campitchmax = Cvar_Get("cl_campitchmax", "89", 0, "Max. battlescape camera pitch - over 90 presents apparent mouse inversion.");
+	cl_camzoomspeed = Cvar_Get("cl_camzoomspeed", "2.0", 0);
+	cl_campitchmin = Cvar_Get("cl_campitchmin", "10", 0, "Min. battlescape camera pitch - under 35 presents difficulty positioning cursor.");
+	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.16", CVAR_ARCHIVE, "Battlescape camera zoom quantisation.");
+	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.3", 0, "Minimum zoom value for tactical missions.");
+	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.4", 0, "Maximum zoom value for tactical missions.");
+	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, "Center the view when selecting a new soldier.");
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_camangles", CL_CamPrintAngles_f, "Print current camera angles.");

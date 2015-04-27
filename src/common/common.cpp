@@ -1132,7 +1132,7 @@ void Qcommon_Init (int argc, char** argv)
 		Cmd_Init();
 		Cvar_Init();
 
-		uploadcrashdump = Cvar_GetOrCreate("uploadcrashdump", "1", 0, "upload crashdumps to the developers");
+		uploadcrashdump = Cvar_Get("uploadcrashdump", "1", 0, "upload crashdumps to the developers");
 
 		Key_Init();
 
@@ -1167,30 +1167,30 @@ void Qcommon_Init (int argc, char** argv)
 #endif
 		Cmd_AddCommand("setdeveloper", Com_DeveloperSet_f, "Set the developer cvar to only get the debug output you want");
 
-		developer = Cvar_GetOrCreate("developer", "0", 0, "Activate developer output to logfile and gameconsole");
+		developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
 #ifdef DEBUG
-		logfile_active = Cvar_GetOrCreate("logfile", "2", 0, "0 = deactivate logfile, 1 = write normal logfile, 2 = flush on every new line, 3 = always append to existing file");
+		logfile_active = Cvar_Get("logfile", "2", 0, "0 = deactivate logfile, 1 = write normal logfile, 2 = flush on every new line, 3 = always append to existing file");
 #else
-		logfile_active = Cvar_GetOrCreate("logfile", "1", 0, "0 = deactivate logfile, 1 = write normal logfile, 2 = flush on every new line, 3 = always append to existing file");
+		logfile_active = Cvar_Get("logfile", "1", 0, "0 = deactivate logfile, 1 = write normal logfile, 2 = flush on every new line, 3 = always append to existing file");
 #endif
-		sv_gametype = Cvar_GetOrCreate("sv_gametype", "fight1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
-		http_proxy = Cvar_GetOrCreate("http_proxy", "", CVAR_ARCHIVE, "Use this proxy for http transfers");
-		http_timeout = Cvar_GetOrCreate("http_timeout", "3", CVAR_ARCHIVE, "Http connection and read timeout");
-		port = Cvar_GetOrCreate("port", DOUBLEQUOTE(PORT_SERVER), CVAR_NOSET);
-		masterserver_url = Cvar_GetOrCreate("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
+		sv_gametype = Cvar_Get("sv_gametype", "fight1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
+		http_proxy = Cvar_Get("http_proxy", "", CVAR_ARCHIVE, "Use this proxy for http transfers");
+		http_timeout = Cvar_Get("http_timeout", "3", CVAR_ARCHIVE, "Http connection and read timeout");
+		port = Cvar_Get("port", DOUBLEQUOTE(PORT_SERVER), CVAR_NOSET);
+		masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 #ifdef DEDICATED_ONLY
-		sv_dedicated = Cvar_GetOrCreate("sv_dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
+		sv_dedicated = Cvar_Get("sv_dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 		/* don't allow to override this from commandline of config */
 		Cvar_ForceSet("sv_dedicated", "1");
 #else
-		sv_dedicated = Cvar_GetOrCreate("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
+		sv_dedicated = Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 
 		/* set this to false for client - otherwise Qcommon_Frame would set the initial values to multiplayer */
 		sv_gametype->modified = false;
 
-		s_language = Cvar_GetOrCreate("s_language", "", CVAR_ARCHIVE, "Game language - full language string e.g. en_EN.UTF-8");
+		s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, "Game language - full language string e.g. en_EN.UTF-8");
 		s_language->modified = false;
-		cl_maxfps = Cvar_GetOrCreate("cl_maxfps", "50", CVAR_ARCHIVE);
+		cl_maxfps = Cvar_Get("cl_maxfps", "50", CVAR_ARCHIVE);
 		Cvar_SetCheckFunction("cl_maxfps", Com_CvarCheckMaxFPS);
 #endif
 
@@ -1203,11 +1203,11 @@ void Qcommon_Init (int argc, char** argv)
 		/** get the hardware class of the machine we are running on. */
 		hwclassVal = "1";
 #endif
-		hwclass = Cvar_GetOrCreate("hwclass", hwclassVal, 0, "Defines the hardware class of this machine. 1 is the lowest, 5 is the highest.");
+		hwclass = Cvar_Get("hwclass", hwclassVal, 0, "Defines the hardware class of this machine. 1 is the lowest, 5 is the highest.");
 
 		const char* s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
-		Cvar_GetOrCreate("version", s, CVAR_NOSET, "Full version string");
-		Cvar_GetOrCreate("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, "Version number");
+		Cvar_Get("version", s, CVAR_NOSET, "Full version string");
+		Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, "Version number");
 
 		if (sv_dedicated->integer)
 			Cmd_AddCommand("quit", Com_Quit, "Quits the game");
@@ -1248,7 +1248,7 @@ void Qcommon_Init (int argc, char** argv)
 			SCR_EndLoadingPlaque();
 		}
 
-		const cvar_t* com_pipefile = Cvar_GetOrCreate("com_pipefile", "", CVAR_ARCHIVE, "Filename of the pipe that is used to send commands to the game");
+		const cvar_t* com_pipefile = Cvar_Get("com_pipefile", "", CVAR_ARCHIVE, "Filename of the pipe that is used to send commands to the game");
 		if (com_pipefile->string[0] != '\0') {
 			FS_CreateOpenPipeFile(com_pipefile->string, &pipefile);
 		}
@@ -1261,17 +1261,17 @@ void Qcommon_Init (int argc, char** argv)
 #ifndef DEDICATED_ONLY
 		if (!sv_dedicated->integer) {
 			Schedule_Timer(cl_maxfps, &CL_Frame, nullptr, nullptr);
-			Schedule_Timer(Cvar_GetOrCreate("cl_slowfreq", "10", 0, nullptr), &CL_SlowFrame, nullptr, nullptr);
+			Schedule_Timer(Cvar_Get("cl_slowfreq", "10", 0, nullptr), &CL_SlowFrame, nullptr, nullptr);
 
 			/* now hide the console */
 			Sys_ShowConsole(false);
 		}
 #endif
 
-		Schedule_Timer(Cvar_GetOrCreate("sv_freq", "10", CVAR_NOSET, nullptr), &SV_Frame, nullptr, nullptr);
+		Schedule_Timer(Cvar_Get("sv_freq", "10", CVAR_NOSET, nullptr), &SV_Frame, nullptr, nullptr);
 
 		/** @todo This line wants to be removed */
-		Schedule_Timer(Cvar_GetOrCreate("cbuf_freq", "10", 0, nullptr), &Cbuf_Execute_timer, nullptr, nullptr);
+		Schedule_Timer(Cvar_Get("cbuf_freq", "10", 0, nullptr), &Cbuf_Execute_timer, nullptr, nullptr);
 
 		Com_Printf("====== UFO Initialized ======\n");
 		Com_Printf("=============================\n");
