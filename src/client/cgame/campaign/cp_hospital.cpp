@@ -97,8 +97,12 @@ float HOS_GetInjuryLevel (const character_t& chr)
 {
 	float injuryLevel = 0.0f;
 
-	for (int i = 0; i < chr.teamDef->bodyTemplate->numBodyParts(); ++i)
-		injuryLevel += static_cast<float>(chr.wounds.treatmentLevel[i]) / chr.maxHP;
+	const BodyData* const bt = chr.teamDef->bodyTemplate;
+	for (int i = 0; i < bt->numBodyParts(); ++i) {
+		const float woundLevel = chr.wounds.treatmentLevel[i];
+		if (woundLevel * 0.5f >= bt->woundThreshold(i) * chr.maxHP)
+			injuryLevel += woundLevel / chr.maxHP;
+	}
 
 	return injuryLevel;
 }
