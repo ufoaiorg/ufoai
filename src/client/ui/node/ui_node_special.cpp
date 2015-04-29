@@ -245,7 +245,7 @@ void UI_RegisterCvarFuncNode (uiBehaviour_t* behaviour)
 	behaviour->isVirtual = true;
 	behaviour->isFunction = true;
 	behaviour->manager = UINodePtr(new uiCvarNode());
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiCVarListenerNode_t *");
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiCvarListenerNode_t *");
 
 	/* Force to bind the node to the cvar */
 	UI_RegisterNodeMethod(behaviour, "forceBind", UI_CvarListenerNodeForceBind);
