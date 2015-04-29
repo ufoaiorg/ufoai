@@ -218,7 +218,7 @@ component MainMenuCancelBtn extends MainMenu2Btn
 	tooltip			"_Close this dialogue"
 }
 --]]
-local MainMenuCancelBtn = ufo.create_component ("button", "MainMenuCancelBtn", nil)
+local MainMenuCancelBtn = ufo.create_component ("button", "MainMenuCancelBtn", "MainMenu2Btn")
 MainMenuCancelBtn:set_text ("_Cancel")
 MainMenuCancelBtn:set_tooltip ("_Close this dialogue")
 

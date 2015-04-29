@@ -48,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_inventory.h"
 #include "cl_menu.h"
 #include "cl_http.h"
+#include "cl_lua.h"
 #include "input/cl_joystick.h"
 #include "cinematic/cl_cinematic.h"
 #include "sound/s_music.h"
@@ -61,6 +62,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_font.h"
 #include "ui/ui_nodes.h"
 #include "ui/ui_parse.h"
+#include "ui/ui_lua.h"
 #include "cgame/cl_game_team.h"
 #include "../shared/infostring.h"
 #include "../shared/parse.h"
@@ -803,6 +805,9 @@ bool CL_ParseClientData (const char* type, const char* name, const char** text)
 		GAME_ParseModes(name, text);
 	else if (Q_streq(type, "tip"))
 		CL_ParseTipOfTheDay(name, text);
+	else if (Q_streq(type, "lua"))
+		return UI_ParseAndLoadLuaScript(name, text);
+
 	return true;
 }
 
@@ -1201,6 +1206,7 @@ void CL_Init (void)
 	S_Init();
 	SCR_Init();
 
+	CL_InitLua();
 	CL_InitLocal();
 
 	Irc_Init();
@@ -1255,6 +1261,7 @@ void CL_Shutdown (void)
 	S_Shutdown();
 	R_Shutdown();
 	UI_Shutdown();
+	CL_ShutdownLua();
 	CIN_Shutdown();
 	SEQ_Shutdown();
 	GAME_Shutdown();
