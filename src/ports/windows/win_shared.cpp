@@ -212,9 +212,9 @@ char* Sys_FindFirst (const char* path, unsigned musthave, unsigned canthave)
 	findhandle = _wfindfirst(wfindpath, &findinfo);
 	while (findhandle != -1) {
 		/* found one that matched */
-		Sys_Utf16ToUtf8(findinfo.name, findname, sizeof(findname));
 		if (!Q_streq(findname, ".") && !Q_streq(findname, "..") &&
 			CompareAttributes(findinfo.attrib, musthave, canthave)) {
+			Sys_Utf16ToUtf8(findinfo.name, findname, sizeof(findname));
 			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findname);
 			return findpath;
 		/* doesn't match - try the next one */
@@ -242,9 +242,9 @@ char* Sys_FindNext (unsigned musthave, unsigned canthave)
 
 	/* until we found the next entry */
 	while (_wfindnext(findhandle, &findinfo) != -1) {
-		Sys_Utf16ToUtf8(findinfo.name, findname, sizeof(findname));
 		if (!Q_streq(findname, ".") && !Q_streq(findname, "..") &&
 			CompareAttributes(findinfo.attrib, musthave, canthave)) {
+			Sys_Utf16ToUtf8(findinfo.name, findname, sizeof(findname));
 			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findname);
 			return findpath;
 		}
@@ -273,7 +273,6 @@ void Sys_ListFilteredFiles (const char* basedir, const char* subdirs, const char
 {
 	char search[MAX_OSPATH], newsubdirs[MAX_OSPATH];
 	char filename[MAX_OSPATH];
-	int findhandle;
 	struct _wfinddata_t findinfo;
 
 	if (subdirs[0] != '\0') {
@@ -283,14 +282,14 @@ void Sys_ListFilteredFiles (const char* basedir, const char* subdirs, const char
 	}
 
 	Sys_Utf8ToUtf16(search, wfindpath, lengthof(wfindpath));
-	findhandle = _wfindfirst(wfindpath, &findinfo);
+	const int findhandle = _wfindfirst(wfindpath, &findinfo);
 	if (findhandle == -1)
 		return;
 
 	do {
-		Sys_Utf16ToUtf8(findinfo.name, findname, sizeof(findname));
 		if (findinfo.attrib & _A_SUBDIR) {
 			if (Q_strcasecmp(findname, ".") && Q_strcasecmp(findname, "..")) {
+				Sys_Utf16ToUtf8(findinfo.name, findname, sizeof(findname));
 				if (subdirs[0] != '\0') {
 					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s\\%s", subdirs, findname);
 				} else {
@@ -337,8 +336,8 @@ static void Sys_ColoredOutput (const char* text, unsigned int fgColor, bool toSt
 	/* store default current colors. */
 	unsigned int cliCurColor = cliPaintColor;
 	CONSOLE_SCREEN_BUFFER_INFO cliInfo;
-	DWORD handle = toStdOut ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE;
-	HANDLE console = GetStdHandle(handle);
+	const DWORD handle = toStdOut ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE;
+	const HANDLE console = GetStdHandle(handle);
 
 	if (GetConsoleScreenBufferInfo(console, &cliInfo)) {
 		/* store current colors. */
@@ -440,9 +439,8 @@ void Sys_NormPath (char* path)
 char* Sys_GetHomeDirectory (void)
 {
 	static char path[MAX_PATH];
-	HMODULE shfolder;
 
-	shfolder = LoadLibrary("shfolder.dll");
+	const HMODULE shfolder = LoadLibrary("shfolder.dll");
 
 	if (shfolder == nullptr) {
 		Com_Printf("Unable to load SHFolder.dll\n");

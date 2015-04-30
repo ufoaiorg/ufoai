@@ -206,7 +206,6 @@ void Sys_Error (const char* error, ...)
 	}
 }
 
-
 void Sys_ShowConsole (bool show)
 {
 	if (!show) {
@@ -381,16 +380,14 @@ void Sys_ConsoleShutdown (void)
 void Sys_ConsoleInit (void)
 {
 	WNDCLASSEX wc;
-	HDC hDC;
 	RECT r;
-	int x, y, w, h;
 
 	Sys_BacktraceInit();
 
 	/* Center the window in the desktop */
-	hDC = GetDC(0);
-	w = GetDeviceCaps(hDC, HORZRES);
-	h = GetDeviceCaps(hDC, VERTRES);
+	const HDC hDC = GetDC(0);
+	int w = GetDeviceCaps(hDC, HORZRES);
+	int h = GetDeviceCaps(hDC, VERTRES);
 	ReleaseDC(0, hDC);
 
 	r.left = (w - 540) / 2;
@@ -400,8 +397,8 @@ void Sys_ConsoleInit (void)
 
 	AdjustWindowRect(&r, CONSOLE_WINDOW_STYLE, FALSE);
 
-	x = r.left;
-	y = r.top;
+	const int x = r.left;
+	const int y = r.top;
 	w = r.right - r.left;
 	h = r.bottom - r.top;
 
