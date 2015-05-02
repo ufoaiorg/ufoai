@@ -975,7 +975,6 @@ mapdef farm2
 // FOREST RANDOM MAPS //
 ////////////////////////
 
-/* ---------------- WIP ---------------
 mapdef eaglenest
 {
 	map				"+forest"
@@ -983,6 +982,15 @@ mapdef eaglenest
 	description		"_Mountain Estate"
 	maxaliens		5
 
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+	
 	aircraft
 	(
 		craft_drop_firebird
@@ -1014,7 +1022,6 @@ mapdef eaglenest
 		"rural"
 	)
 }
--------------------------------------*/
 
 mapdef gate
 {

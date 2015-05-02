@@ -138,6 +138,21 @@ av		+c		+c		+c		+c		av
 0		x		x		x		x		0
 }
 
+// eaglenest map ---------------------------------------------------*
+
+tile +eaglenest
+{
+7 8
+0		0		0		0		0		0		0
+0		+a		+a		+a		+a		0		0
+0		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		x
+0		x		x		x		x		x		0
+}
+
 // gate map --------------------------------------------------------*
 
 tile +gate
@@ -324,6 +339,22 @@ tile +nature_33
 
 // map assemblies --------------------------------------------------*
 
+assembly eaglenest
+{
+title "_Forest"
+size "9 9"
++eaglenest		"1 1"	// 5x6
++nature_03		"0 1"	// 4x3
++nature_11		"0 3"	// 1x1
++nature_12		"0 3"	// 1x1
++nature_20		"0 6"	// 2x2
++nature_21		"0 1"	// 1x2
++nature_30		"0 5"	// 3x2
++nature_31		"0 5"	// 2x3
++nature_33		"0 3"	// 3x3
+*rm_drop +craft_drop_firebird	"1 1"
+}
+
 assembly gate
 {
 title "_Secret Depot"
@@ -479,10 +510,8 @@ size "9 9"
 assembly test
 {
 title "_Forest"
-size "10 16"
-+nature_01		"0 3"	// 4x4
-+nature_02		"0 3"	// 4x4
-+nature_03		"0 5"	// 4x3
+size "9 9"
++eaglenest		"1 1"	// 5x6
 +nature_11		"0 3"	// 1x1
 +nature_12		"0 3"	// 1x1
 +nature_20		"0 6"	// 2x2
@@ -490,12 +519,12 @@ size "10 16"
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 9"	// 3x3
-*rm_ufo +craft_crash_bomber		"1 1"
-*rm_drop +craft_drop_herakles	"1 1"
+*rm_drop +craft_drop_firebird	"1 1"
 }
 
 /* contents --------------------------------------------------------*
 
++eaglenest		"0 1"	// 5x6		eaglenest.map
 +gate			"0 1"	// 6x4		gate.map
 +brook_h1		"0 1"	// 1x1		river horizontal
 +brook_v1		"0 1"	// 1x1		river vertical
