@@ -156,14 +156,13 @@ void Cbuf_AddText (const char* format, ...)
  */
 void Cbuf_InsertText (const char* text)
 {
-	char* temp;
-	int templen;
-
 	if (Q_strnull(text))
 		return;
 
 	/* copy off any commands still remaining in the exec buffer */
-	templen = cmd_text.cursize;
+	char* temp;
+	const int templen = cmd_text.cursize;
+
 	if (templen) {
 		temp = Mem_AllocTypeN(char, templen);
 		memcpy(temp, cmd_text.data, templen);
@@ -352,16 +351,13 @@ SCRIPT COMMANDS
 
 static void Cmd_Exec_f (void)
 {
-	byte* f;
-	char* f2;
-	int len;
-
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <filename> : execute a script file\n", Cmd_Argv(0));
 		return;
 	}
 
-	len = FS_LoadFile(Cmd_Argv(1), &f);
+	byte* f;
+	const int len = FS_LoadFile(Cmd_Argv(1), &f);
 	if (!f) {
 		Com_Printf("couldn't execute %s\n", Cmd_Argv(1));
 		return;
@@ -369,7 +365,7 @@ static void Cmd_Exec_f (void)
 	Com_Printf("executing %s\n", Cmd_Argv(1));
 
 	/* the file doesn't have a trailing 0, so we need to copy it off */
-	f2 = Mem_AllocTypeN(char, len + 1);
+	char* f2 = Mem_AllocTypeN(char, len + 1);
 	memcpy(f2, f, len);
 	/* make really sure that there is a newline */
 	f2[len] = 0;
@@ -386,9 +382,7 @@ static void Cmd_Exec_f (void)
  */
 static void Cmd_Echo_f (void)
 {
-	int i;
-
-	for (i = 1; i < Cmd_Argc(); i++)
+	for (int i = 1; i < Cmd_Argc(); i++)
 		Com_Printf("%s ", Cmd_Argv(i));
 	Com_Printf("\n");
 }
@@ -418,7 +412,7 @@ static void Cmd_Alias_f (void)
 	}
 
 	/* if the alias already exists, reuse it */
-	unsigned int hash = Com_HashKey(s, ALIAS_HASH_SIZE);
+	const unsigned int hash = Com_HashKey(s, ALIAS_HASH_SIZE);
 	for (a = cmd_alias_hash[hash]; a; a = a->hash_next) {
 		if (Q_streq(s, a->name)) {
 			Mem_Free(a->value);
@@ -439,7 +433,7 @@ static void Cmd_Alias_f (void)
 	/* copy the rest of the command line */
 	char cmd[MAX_STRING_CHARS];
 	cmd[0] = 0;					/* start out with a null string */
-	int c = Cmd_Argc();
+	const int c = Cmd_Argc();
 	for (int i = 2; i < c; i++) {
 		Q_strcat(cmd, sizeof(cmd), "%s", Cmd_Argv(i));
 		if (i != (c - 1))
@@ -570,13 +564,11 @@ void Cmd_BufClear (void)
  */
 void Cmd_TokenizeString (const char* text, bool macroExpand, bool replaceWhitespaces)
 {
-	const char* expanded;
-
 	Cmd_BufClear();
 
 	/* macro expand the text */
 	if (macroExpand) {
-		expanded = Com_MacroExpandString(text);
+		const char* expanded = Com_MacroExpandString(text);
 		if (expanded)
 			text = expanded;
 	}
@@ -620,7 +612,7 @@ void Cmd_TokenizeString (const char* text, bool macroExpand, bool replaceWhitesp
 
 static cmd_function_t* Cmd_TableFind (const char* cmdName)
 {
-	unsigned int hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
+	const unsigned int hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
 	for (cmd_function_t* cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (Q_streq(cmdName, cmd->getName()))
 			return cmd;
@@ -644,7 +636,7 @@ const char* Cmd_GetCommandDesc (const char* cmdName)
 	if (sep)
 		*sep = '\0';
 
-	cmd_function_t* cmd = Cmd_TableFind(searchName);
+	const cmd_function_t* cmd = Cmd_TableFind(searchName);
 	if (cmd) {
 		if (cmd->description)
 			return cmd->description;
@@ -712,7 +704,7 @@ void* Cmd_GetUserdata (const char* cmdName)
 		return nullptr;
 	}
 
-	cmd_function_t* cmd = Cmd_TableFind(cmdName);
+	const cmd_function_t* cmd = Cmd_TableFind(cmdName);
 	if (cmd) {
 		return cmd->userdata;
 	}
@@ -793,12 +785,11 @@ void Cmd_AddCommand (const char* cmdName, xcommand_t function, const char* desc)
  */
 void Cmd_RemoveCommand (const char* cmdName)
 {
-	cmd_function_t* cmd, **back;
 	const unsigned int hash = Com_HashKey(cmdName, CMD_HASH_SIZE);
-	back = &cmd_functions_hash[hash];
+	cmd_function_t **back = &cmd_functions_hash[hash];
 
 	while (1) {
-		cmd = *back;
+		cmd_function_t* cmd = *back;
 		if (!cmd) {
 			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmdName);
 			return;
@@ -812,7 +803,7 @@ void Cmd_RemoveCommand (const char* cmdName)
 
 	back = &cmd_functions;
 	while (1) {
-		cmd = *back;
+		cmd_function_t* cmd = *back;
 		if (!cmd) {
 			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmdName);
 			return;
@@ -895,7 +886,7 @@ void Cmd_UnRegisterCmdListener (CmdListenerPtr listener)
  */
 bool Cmd_Exists (const char* cmdName)
 {
-	cmd_function_t* cmd = Cmd_TableFind(cmdName);
+	const cmd_function_t* cmd = Cmd_TableFind(cmdName);
 	if (cmd)
 		return true;
 	return false;
@@ -912,7 +903,7 @@ bool Cmd_Exists (const char* cmdName)
 int Cmd_CompleteCommandParameters (const char* command, const char* partial, const char** match)
 {
 	/* check for partial matches in commands */
-	unsigned int hash = Com_HashKey(command, CMD_HASH_SIZE);
+	const unsigned int hash = Com_HashKey(command, CMD_HASH_SIZE);
 	for (const cmd_function_t* cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcasecmp(command, cmd->getName())) {
 			if (!cmd->completeParam)
@@ -1036,19 +1027,17 @@ static void Cmd_Help_f (void)
  */
 static void Cmd_List_f (void)
 {
-	const cmd_function_t* cmd;
-	const cmd_alias_t* alias;
-	int i = 0, j = 0, c, len = 0;
+	int i = 0, j = 0, len = 0;
 	const char* token = nullptr;
 
-	c = Cmd_Argc();
+	const int c = Cmd_Argc();
 
 	if (c == 2) {
 		token = Cmd_Argv(1);
 		len = strlen(token);
 	}
 
-	for (cmd = cmd_functions; cmd; cmd = cmd->next, i++) {
+	for (const cmd_function_t* cmd = cmd_functions; cmd; cmd = cmd->next, i++) {
 		if (c == 2 && strncmp(cmd->getName(), token, len)) {
 			i--;
 			continue;
@@ -1058,7 +1047,7 @@ static void Cmd_List_f (void)
 			Com_Printf(S_COLOR_GREEN "      %s\n", cmd->description);
 	}
 	/* check alias */
-	for (alias = cmd_alias; alias; alias = alias->next, j++) {
+	for (const cmd_alias_t* alias = cmd_alias; alias; alias = alias->next, j++) {
 		if (c == 2 && strncmp(alias->name, token, len)) {
 			j--;
 			continue;
