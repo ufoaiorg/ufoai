@@ -144,13 +144,13 @@ tile +eaglenest
 {
 7 8
 0		0		0		0		0		0		0
-0		+a		+a		+a		+a		0		0
+0		+a		+a		+a		0		0		0
+0		+a		+a		+a		0		0		x
 0		+a		+a		+a		+a		+a		x
-0		+a		+a		+a		+a		+a		x
-0		+a		+a		+a		+a		+a		x
-0		+a		+a		+a		+a		+a		x
-0		+a		+a		+a		+a		+a		x
-0		x		x		x		x		x		0
+0		0		+a		+a		+a		+a		x
+0		0		+a		+a		+a		+a		x
+0		0		+a		+a		+a		+a		x
+0		0		x		x		x		x		0
 }
 
 // gate map --------------------------------------------------------*
@@ -359,8 +359,10 @@ tile +nature_33
 assembly eaglenest
 {
 title "_Forest"
-size "9 9"
+size "8 9"
 +eaglenest		"1 1"	// 5x6
++nature_01		"0 1"	// 4x4
++nature_02		"0 1"	// 4x4
 +nature_03		"0 1"	// 4x3
 +nature_11		"0 3"	// 1x1
 +nature_12		"0 3"	// 1x1
