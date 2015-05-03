@@ -230,7 +230,6 @@ base/maps/druglord/dl_craft_drop_firebird.map | GNU General Public License 2.0 o
 base/maps/druglord/dl_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/druglord/dl_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/druglord/dl_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/forest/fr_eaglenest.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/excavation.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/farm.ump | GNU General Public License 2.0 or later
 base/maps/farm/f_barn_a.map | GNU General Public License 2.0 or later
@@ -281,6 +280,7 @@ base/maps/forest/fr_craft_crash_scout.map | GNU General Public License 2.0 or la
 base/maps/forest/fr_craft_drop_firebird.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
 base/maps/forest/fr_craft_drop_herakles.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
 base/maps/forest/fr_craft_drop_raptor.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
+base/maps/forest/fr_eaglenest.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/forest/fr_gate.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/forest/fr_h5.map | GNU General Public License 2.0 or later | tilmanuwe
 base/maps/forest/fr_h6.map | GNU General Public License 2.0 or later | tilmanuwe
