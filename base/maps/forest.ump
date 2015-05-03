@@ -306,6 +306,23 @@ tile +nature_21
 0		0		0
 }
 
+tile +nature_22
+{
+3 4
+0		0		0
+0		+a		0
+0		+a		0
+0		0		0
+}
+
+tile +nature_23
+{
+4 3
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
+}
+
 tile +nature_30
 {
 5 4
@@ -349,6 +366,8 @@ size "9 9"
 +nature_12		"0 3"	// 1x1
 +nature_20		"0 6"	// 2x2
 +nature_21		"0 1"	// 1x2
++nature_22		"0 2"	// 1x2
++nature_23		"0 2"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 3"	// 3x3
@@ -364,6 +383,8 @@ size "8 8"
 +nature_12		"0 3"	// 1x1
 +nature_20		"0 6"	// 2x2
 +nature_21		"0 1"	// 1x2
++nature_22		"0 2"	// 1x2
++nature_23		"0 2"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 9"	// 3x3
@@ -381,6 +402,8 @@ size "10 16"
 +nature_12		"0 3"	// 1x1
 +nature_20		"0 6"	// 2x2
 +nature_21		"0 1"	// 1x2
++nature_22		"0 2"	// 1x2
++nature_23		"0 2"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 9"	// 3x3
@@ -402,6 +425,8 @@ size "16 10"
 +nature_12		"0 4"	// 1x1
 +nature_20		"0 5"	// 2x2
 +nature_21		"0 1"	// 1x2
++nature_22		"0 2"	// 1x2
++nature_23		"0 2"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 5"	// 3x3
@@ -420,6 +445,8 @@ size "10 12"
 +nature_12		"0 6"	// 1x1
 +nature_20		"0 6"	// 2x2
 +nature_21		"0 1"	// 1x2
++nature_22		"0 2"	// 1x2
++nature_23		"0 2"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 9"	// 3x3
@@ -441,6 +468,8 @@ size "10 12"
 +nature_12		"0 4"	// 1x1
 +nature_20		"0 5"	// 2x2
 +nature_21		"0 1"	// 1x2
++nature_22		"0 2"	// 1x2
++nature_23		"0 2"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 5"	// 3x3
@@ -459,6 +488,8 @@ size "8 10"
 +nature_12		"0 4"	// 1x1
 +nature_20		"0 3"	// 2x2
 +nature_21		"0 1"	// 1x2
++nature_22		"0 2"	// 1x2
++nature_23		"0 2"	// 2x1
 +nature_30		"0 3"	// 3x2
 +nature_31		"0 3"	// 2x3
 +nature_33		"0 3"	// 3x3
@@ -480,6 +511,8 @@ size "10 10"
 +nature_12		"0 4"	// 1x1
 +nature_20		"0 5"	// 2x2
 +nature_21		"0 1"	// 1x2
++nature_22		"0 2"	// 1x2
++nature_23		"0 2"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 5"	// 3x3
@@ -499,6 +532,8 @@ size "9 9"
 +nature_12		"0 4"	// 1x1
 +nature_20		"0 3"	// 2x2
 +nature_21		"0 1"	// 1x2
++nature_22		"0 2"	// 1x2
++nature_23		"0 2"	// 2x1
 +nature_30		"0 3"	// 3x2
 +nature_31		"0 3"	// 2x3
 +nature_33		"0 3"	// 3x3
@@ -516,6 +551,8 @@ size "9 9"
 +nature_12		"0 3"	// 1x1
 +nature_20		"0 6"	// 2x2
 +nature_21		"0 1"	// 1x2
++nature_22		"0 2"	// 1x2
++nature_23		"0 2"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 9"	// 3x3
@@ -539,6 +576,8 @@ size "9 9"
 +nature_12		"0 1"	// 1x1		large pine + fern
 +nature_20		"0 1"	// 2x2		generic, three small hills. large pine, pine, chestnut, rocks
 +nature_21		"0 1"	// 1x2		tent
++nature_22		"0 1"	// 1x2		a stub_a_medium, small fir, small chestnut, fir_b_small
++nature_23		"0 1"	// 2x1		two small hills, two fir_b_small, a fir_b_medium, very small rocks
 +nature_30		"0 1"	// 3x2¯		medium hill <>, large chestnut, pine
 +nature_31		"0 1"	// 2x3¯		large rock, large pine, stub + stem
 +nature_33		"0 1"	// 3x3		generic, three chestnut trees, large stub in se corner
