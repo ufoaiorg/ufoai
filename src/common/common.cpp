@@ -704,28 +704,6 @@ void Com_UploadCrashDump (const char* crashDumpFile)
 }
 
 /**
- * @brief Checks for duplicate files
- * @param[in] file The file path to check whether there is an identical file
- * @param[in] wildcard The wildcard to specify which files should be checked
- * @return @c false if no duplicate was found, @c true otherwise
- */
-bool Com_CheckDuplicateFile (const char* file, const char* wildcard)
-{
-	const char* md5 = Com_MD5File(file);
-	const char* filename;
-	bool match = false;
-	while ((filename = FS_NextFileFromFileList(wildcard)) != nullptr) {
-		const char* md5Other = Com_MD5File(filename);
-		if (Q_streq(md5, md5Other)) {
-			match = true;
-			break;
-		}
-	}
-	FS_NextFileFromFileList(nullptr);
-	return match;
-}
-
-/**
  * @brief Console completion for command and variables
  * @sa Key_CompleteCommand
  * @sa Cmd_CompleteCommand
