@@ -115,11 +115,9 @@ cvar_t* Cvar_FindVar (const char* varName)
  */
 float Cvar_GetValue (const char* varName)
 {
-	cvar_t* var;
-
-	var = Cvar_FindVar(varName);
+	const cvar_t* var = Cvar_FindVar(varName);
 	if (!var)
-		return 0.0;
+		return 0.0f;
 	return atof(var->string);
 }
 
@@ -131,9 +129,7 @@ float Cvar_GetValue (const char* varName)
  */
 bool Cvar_SetCheckFunction (const char* varName, bool (*check) (cvar_t* cvar))
 {
-	cvar_t* var;
-
-	var = Cvar_FindVar(varName);
+	cvar_t* var = Cvar_FindVar(varName);
 	if (!var) {
 		Com_Printf("Could not set check function for cvar '%s'\n", varName);
 		return false;
@@ -188,9 +184,7 @@ bool Cvar_AssertValue (cvar_t* cvar, float minVal, float maxVal, bool shouldBeIn
  */
 int Cvar_GetInteger (const char* varName)
 {
-	const cvar_t* var;
-
-	var = Cvar_FindVar(varName);
+	const cvar_t* var = Cvar_FindVar(varName);
 	if (!var)
 		return 0;
 	return var->integer;
@@ -206,9 +200,7 @@ int Cvar_GetInteger (const char* varName)
  */
 const char* Cvar_GetString (const char* varName)
 {
-	const cvar_t* var;
-
-	var = Cvar_FindVar(varName);
+	const cvar_t* var = Cvar_FindVar(varName);
 	if (!var)
 		return "";
 	return var->string;
@@ -224,9 +216,7 @@ const char* Cvar_GetString (const char* varName)
  */
 const char* Cvar_VariableStringOld (const char* varName)
 {
-	cvar_t* var;
-
-	var = Cvar_FindVar(varName);
+	const cvar_t* var = Cvar_FindVar(varName);
 	if (!var)
 		return "";
 	if (var->oldString)
@@ -241,12 +231,10 @@ const char* Cvar_VariableStringOld (const char* varName)
  */
 void Cvar_Reset (cvar_t* cvar)
 {
-	char* str;
-
 	if (cvar->oldString == nullptr)
 		return;
 
-	str = Mem_StrDup(cvar->oldString);
+	char* str = Mem_StrDup(cvar->oldString);
 	Cvar_Set(cvar->name, "%s", str);
 	Mem_Free(str);
 }
@@ -281,13 +269,10 @@ int Cvar_CompleteVariable (const char* partial, const char** match)
  */
 bool Cvar_Delete (const char* varName)
 {
-	unsigned hash;
-
-	hash = Com_HashKey(varName, CVAR_HASH_SIZE);
+	const unsigned hash = Com_HashKey(varName, CVAR_HASH_SIZE);
 	for (cvar_t** anchor = &cvarVarsHash[hash]; *anchor; anchor = &(*anchor)->hash_next) {
 		cvar_t* const var = *anchor;
 		if (!Q_strcasecmp(varName, var->name)) {
-			cvarChangeListener_t* changeListener;
 			if (var->flags != 0) {
 				Com_Printf("Can't delete the cvar '%s' - it's a special cvar\n", varName);
 				return false;
@@ -314,7 +299,7 @@ bool Cvar_Delete (const char* varName)
 			Mem_Free(var->defaultString);
 			/* latched cvars should not be removable */
 			assert(var->latchedString == nullptr);
-			changeListener = var->changeListener;
+			cvarChangeListener_t* changeListener = var->changeListener;
 			while (changeListener) {
 				cvarChangeListener_t* changeListener2 = changeListener->next;
 				Mem_Free(changeListener);
@@ -517,12 +502,10 @@ void Cvar_UnRegisterChangeListener (const char* varName, cvarChangeListenerFunc_
  */
 static cvar_t* Cvar_Set2 (const char* varName, const char* value, bool force)
 {
-	cvar_t* var;
-
 	if (!value)
 		return nullptr;
 
-	var = Cvar_FindVar(varName);
+	cvar_t* var = Cvar_FindVar(varName);
 	/* create it */
 	if (!var)
 		return Cvar_Get(varName, value);
@@ -647,12 +630,10 @@ cvar_t* Cvar_Set (const char* varName, const char* value, ...)
  */
 cvar_t* Cvar_FullSet (const char* varName, const char* value, int flags)
 {
-	cvar_t* var;
-
 	if (!value)
 		return nullptr;
 
-	var = Cvar_FindVar(varName);
+	cvar_t* var = Cvar_FindVar(varName);
 	/* create it */
 	if (!var)
 		return Cvar_Get(varName, value, flags);
@@ -738,15 +719,13 @@ bool Cvar_Command (void)
  */
 static void Cvar_SetOld_f (void)
 {
-	cvar_t* v;
-
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <variable>\n", Cmd_Argv(0));
 		return;
 	}
 
 	/* check variables */
-	v = Cvar_FindVar(Cmd_Argv(1));
+	cvar_t* v = Cvar_FindVar(Cmd_Argv(1));
 	if (!v) {
 		Com_Printf("cvar '%s' not found\n", Cmd_Argv(1));
 		return;
@@ -757,14 +736,12 @@ static void Cvar_SetOld_f (void)
 
 static void Cvar_Define_f (void)
 {
-	const char* name;
-
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <cvarname> <value>\n", Cmd_Argv(0));
 		return;
 	}
 
-	name = Cmd_Argv(1);
+	const char* name = Cmd_Argv(1);
 
 	if (Cvar_FindVar(name) == nullptr)
 		Cvar_Set(name, "%s", Cmd_Argc() == 3 ? Cmd_Argv(2) : "");
@@ -853,9 +830,7 @@ static void Cvar_Switch_f (void)
  */
 static void Cvar_Copy_f (void)
 {
-	int c;
-
-	c = Cmd_Argc();
+	const int c = Cmd_Argc();
 	if (c < 3) {
 		Com_Printf("Usage: %s <target> <source>\n", Cmd_Argv(0));
 		return;
@@ -906,17 +881,16 @@ void Cvar_ClearVars (int flags)
  */
 static void Cvar_List_f (void)
 {
-	int i, c, l = 0;
+	int l = 0;
 	const char* token = nullptr;
-
-	c = Cmd_Argc();
+	const int c = Cmd_Argc();
 
 	if (c == 2) {
 		token = Cmd_Argv(1);
 		l = strlen(token);
 	}
 
-	i = 0;
+	int i = 0;
 	for (cvar_t* var = cvarVars; var; var = var->next, i++) {
 		if (token && strncmp(var->name, token, l)) {
 			i--;
@@ -992,9 +966,7 @@ const char* Cvar_Serverinfo (char* info, size_t infoSize)
  */
 static void Cvar_Del_f (void)
 {
-	int c;
-
-	c = Cmd_Argc();
+	const int c = Cmd_Argc();
 	if (c != 2) {
 		Com_Printf("Usage: %s <variable>\n", Cmd_Argv(0));
 		return;
@@ -1008,20 +980,18 @@ static void Cvar_Del_f (void)
  */
 static void Cvar_Add_f (void)
 {
-	cvar_t* cvar;
-	float value;
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <variable> <value>\n", Cmd_Argv(0));
 		return;
 	}
 
-	cvar = Cvar_FindVar(Cmd_Argv(1));
+	const cvar_t* cvar = Cvar_FindVar(Cmd_Argv(1));
 	if (!cvar) {
 		Com_Printf("Cvar_Add_f: %s does not exist\n", Cmd_Argv(1));
 		return;
 	}
 
-	value = cvar->value + atof(Cmd_Argv(2));
+	const float value = cvar->value + atof(Cmd_Argv(2));
 	Cvar_SetValue(Cmd_Argv(1), value);
 }
 
@@ -1030,20 +1000,18 @@ static void Cvar_Add_f (void)
  */
 static void Cvar_Mod_f (void)
 {
-	cvar_t* cvar;
-	int value;
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <variable> <value>\n", Cmd_Argv(0));
 		return;
 	}
 
-	cvar = Cvar_FindVar(Cmd_Argv(1));
+	const cvar_t* cvar = Cvar_FindVar(Cmd_Argv(1));
 	if (!cvar) {
 		Com_Printf("Cvar_Mod_f: %s does not exist\n", Cmd_Argv(1));
 		return;
 	}
 
-	value = cvar->integer % atoi(Cmd_Argv(2));
+	const int value = cvar->integer % atoi(Cmd_Argv(2));
 	Cvar_SetValue(Cmd_Argv(1), value);
 }
 
