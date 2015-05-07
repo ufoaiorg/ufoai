@@ -754,11 +754,17 @@ static void Cvar_Set_f (void)
 {
 	const int c = Cmd_Argc();
 	if (c != 3 && c != 4) {
-		Com_Printf("Usage: %s <variable> <value> [u / s]\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <variable> <value> [u / s / a]\n", Cmd_Argv(0));
 		return;
 	}
 
 	if (c == 4) {
+		const cvar_t* const var = Cvar_FindVar(Cmd_Argv(1));
+		if (var && (var->flags & (CVAR_NOSET | CVAR_LATCH))) {
+			Com_Printf("Can't set %s: is a special cvar\n", Cmd_Argv(1));
+			return;
+		}
+
 		const char* arg = Cmd_Argv(3);
 		int flags = 0;
 
@@ -774,7 +780,7 @@ static void Cvar_Set_f (void)
 				flags |= CVAR_ARCHIVE;
 				break;
 			default:
-				Com_Printf("invalid flags %c given\n", arg[0]);
+				Com_Printf("Invalid flags %c given\n", arg[0]);
 				break;
 			}
 			arg++;
@@ -797,6 +803,12 @@ static void Cvar_Switch_f (void)
 	}
 
 	if (c == 3) {
+		const cvar_t* const var = Cvar_FindVar(Cmd_Argv(1));
+		if (var && (var->flags & (CVAR_NOSET | CVAR_LATCH))) {
+			Com_Printf("Can't switch %s: is a special cvar\n", Cmd_Argv(1));
+			return;
+		}
+
 		const char* arg = Cmd_Argv(2);
 		int flags = 0;
 
@@ -812,7 +824,7 @@ static void Cvar_Switch_f (void)
 				flags |= CVAR_ARCHIVE;
 				break;
 			default:
-				Com_Printf("invalid flags %c given\n", arg[0]);
+				Com_Printf("Invalid flags %c given\n", arg[0]);
 				break;
 			}
 			arg++;
