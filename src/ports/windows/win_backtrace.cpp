@@ -17,10 +17,10 @@
 #include <imagehlp.h>
 #include <psapi.h>
 
-static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth, LPCONTEXT context)
+static void _backtrace (struct output_buffer* ob, struct bfd_set* set, int depth, LPCONTEXT context)
 {
 	char procname[MAX_PATH];
-	struct bfd_ctx *bc = nullptr;
+	struct bfd_ctx* bc = nullptr;
 	HANDLE process = GetCurrentProcess();
 	HANDLE thread = GetCurrentThread();
 	STACKFRAME frame;
@@ -45,7 +45,7 @@ static void _backtrace (struct output_buffer *ob, struct bfd_set *set, int depth
 		unsigned line = 0;
 		DWORD module_base = SymGetModuleBase(process, frame.AddrPC.Offset);
 		const char*  module_name = "[unknown module]";
-		IMAGEHLP_SYMBOL *symbol = (IMAGEHLP_SYMBOL *) symbol_buffer;
+		IMAGEHLP_SYMBOL* symbol = (IMAGEHLP_SYMBOL*) symbol_buffer;
 
 		--depth;
 		if (depth < 0)
@@ -90,9 +90,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 	struct output_buffer ob;
 	SYSTEMTIME timeInfo;
 	OSVERSIONINFOEX osInfo;
-	FILE* crash;
 	const char* dumpFile = "crashdump.txt";
-	int ret;
 
 	GetSystemTime(&timeInfo);
 
@@ -108,7 +106,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 	if (!SymInitialize(GetCurrentProcess(), 0, TRUE)) {
 		output_print(&ob, "Failed to init symbol context\n");
 	} else {
-		struct bfd_set *set = (struct bfd_set *)calloc(1, sizeof(*set));
+		struct bfd_set* set = (struct bfd_set *)calloc(1, sizeof(*set));
 		bfd_init();
 		_backtrace(&ob, set, 128, info->ContextRecord);
 		release_set(set);
@@ -116,7 +114,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 		SymCleanup(GetCurrentProcess());
 	}
 
-	crash = Sys_Fopen(dumpFile, "w");
+	FILE* crash = Sys_Fopen(dumpFile, "w");
 	if (crash != nullptr) {
 		fprintf(crash, "======start======\n");
 		fprintf(crash, "Date: %.4d-%.2d-%.2d\n",
@@ -130,7 +128,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 	}
 	fputs(g_output, stderr);
 
-	ret = MessageBox(nullptr, "Would you like to upload this crash dump and your ufoconsole.log? This will help the developers to fix the problem.", GAME_TITLE_LONG" Fatal Error", MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2);
+	const int ret = MessageBox(nullptr, "Would you like to upload this crash dump and your ufoconsole.log? This will help the developers to fix the problem.", GAME_TITLE_LONG" Fatal Error", MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2);
 	if (ret == IDYES)
 		Com_UploadCrashDump(dumpFile);
 

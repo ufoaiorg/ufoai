@@ -230,11 +230,6 @@ base/maps/druglord/dl_craft_drop_firebird.map | GNU General Public License 2.0 o
 base/maps/druglord/dl_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/druglord/dl_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/druglord/dl_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/eaglenest.ump | GNU General Public License 2.0 or later
-base/maps/eaglenest/en_craft_drop_firebird.map | GNU General Public License 2.0 or later
-base/maps/eaglenest/en_craft_drop_herakles.map | GNU General Public License 2.0 or later
-base/maps/eaglenest/en_craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/eaglenest/en_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/excavation.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/farm.ump | GNU General Public License 2.0 or later
 base/maps/farm/f_barn_a.map | GNU General Public License 2.0 or later
@@ -285,6 +280,7 @@ base/maps/forest/fr_craft_crash_scout.map | GNU General Public License 2.0 or la
 base/maps/forest/fr_craft_drop_firebird.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
 base/maps/forest/fr_craft_drop_herakles.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
 base/maps/forest/fr_craft_drop_raptor.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
+base/maps/forest/fr_eaglenest.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/forest/fr_gate.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/forest/fr_h5.map | GNU General Public License 2.0 or later | tilmanuwe
 base/maps/forest/fr_h6.map | GNU General Public License 2.0 or later | tilmanuwe
@@ -297,6 +293,8 @@ base/maps/forest/fr_nature_11.map | GNU General Public License 2.0 or later | Ho
 base/maps/forest/fr_nature_12.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
 base/maps/forest/fr_nature_20.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
 base/maps/forest/fr_nature_21.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
+base/maps/forest/fr_nature_22.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/forest/fr_nature_23.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/forest/fr_nature_30.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
 base/maps/forest/fr_nature_31.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
 base/maps/forest/fr_small_house.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3374,9 +3372,6 @@ base/pics/maps/shots/desert_3.png | GNU General Public License 2.0 or later | Du
 base/pics/maps/shots/druglord.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/druglord_2.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/druglord_3.png | GNU General Public License 2.0 or later | Duke
-base/pics/maps/shots/eaglenest.png | GNU General Public License 2.0 or later | Duke
-base/pics/maps/shots/eaglenest_2.png | GNU General Public License 2.0 or later | Duke
-base/pics/maps/shots/eaglenest_3.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/excavation.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/excavation_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/excavation_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy

@@ -44,7 +44,7 @@ static int CMod_ValidateLump (const lump_t* lump, const char* functionName, size
 		Com_Error(ERR_DROP, "%s: No lump given", functionName);
 	if (lump->filelen % elementSize)
 		Com_Error(ERR_DROP, "%s: funny lump size (%i => " UFO_SIZE_T ")", functionName, lump->filelen, elementSize);
-	int count = lump->filelen / elementSize;
+	const int count = lump->filelen / elementSize;
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...%s: %i\n", elementName, count);
 
 	if (count < 1)
@@ -67,7 +67,7 @@ static int CMod_ValidateLump (const lump_t* lump, const char* functionName, size
  */
 static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspModel_t), "models", MAX_MAP_MODELS);
+	const int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspModel_t), "models", MAX_MAP_MODELS);
 
 	const dBspModel_t* in = (const dBspModel_t*) (base + lump->fileofs);
 
@@ -96,7 +96,7 @@ static void CMod_LoadSubmodels (MapTile& tile, const byte* base, const lump_t* l
  */
 static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspTexinfo_t), "surfaces", MAX_MAP_TEXINFO);
+	const int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspTexinfo_t), "surfaces", MAX_MAP_TEXINFO);
 
 	const dBspTexinfo_t* in = (const dBspTexinfo_t*) (base + lump->fileofs);
 
@@ -123,7 +123,7 @@ static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lu
  */
 static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspNode_t), "nodes", MAX_MAP_NODES);
+	const int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspNode_t), "nodes", MAX_MAP_NODES);
 
 	const dBspNode_t* in = (const dBspNode_t*) (base + lump->fileofs);
 
@@ -140,13 +140,12 @@ static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* lump,
 			out->plane = tile.planes + LittleLong(in->planenum);
 
 		/* in case this is a map assemble */
-		int j;
-		for (j = 0; j < 3; j++) {
+		for (int j = 0; j < 3; j++) {
 			out->mins[j] = LittleShort(in->mins[j]) + shift[j];
 			out->maxs[j] = LittleShort(in->maxs[j]) + shift[j];
 		}
 
-		for (j = 0; j < 2; j++) {
+		for (int j = 0; j < 2; j++) {
 			int child = LittleLong(in->children[j]);
 			out->children[j] = child;
 		}
@@ -161,7 +160,7 @@ static void CMod_LoadNodes (MapTile& tile, const byte* base, const lump_t* lump,
  */
 static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspBrush_t), "brushes", MAX_MAP_BRUSHES);
+	const int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspBrush_t), "brushes", MAX_MAP_BRUSHES);
 
 	const dBspBrush_t* in = (const dBspBrush_t*) (base + lump->fileofs);
 
@@ -186,7 +185,7 @@ static void CMod_LoadBrushes (MapTile& tile, const byte* base, const lump_t* lum
  */
 static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspLeaf_t), "leafs", MAX_MAP_LEAFS);
+	const int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspLeaf_t), "leafs", MAX_MAP_LEAFS);
 
 	const dBspLeaf_t* in = (const dBspLeaf_t*) (base + lump->fileofs);
 
@@ -196,9 +195,7 @@ static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* lump)
 	tile.numleafs = count;
 	tile.leafs = out;
 
-	int i;
-
-	for (i = 0; i < count; i++, in++, out++) {
+	for (int i = 0; i < count; i++, in++, out++) {
 		out->contentFlags = LittleLong(in->contentFlags);
 		out->firstleafbrush = LittleShort(in->firstleafbrush);
 		out->numleafbrushes = LittleShort(in->numleafbrushes);
@@ -207,7 +204,7 @@ static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* lump)
 	if (tile.leafs[0].contentFlags != CONTENTS_SOLID)
 		Com_Error(ERR_DROP, "Map leaf 0 is not CONTENTS_SOLID");
 	tile.emptyleaf = -1;
-	for (i = 1; i < tile.numleafs; i++) {
+	for (int i = 1; i < tile.numleafs; i++) {
 		if (!tile.leafs[i].contentFlags) {
 			tile.emptyleaf = i;
 			break;
@@ -227,7 +224,7 @@ static void CMod_LoadLeafs (MapTile& tile, const byte* base, const lump_t* lump)
  */
 static void CMod_LoadPlanes (MapTile& tile, const byte* base, const lump_t* lump, const vec3_t shift)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspPlane_t), "planes", MAX_MAP_PLANES);
+	const int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspPlane_t), "planes", MAX_MAP_PLANES);
 
 	const dBspPlane_t* in = (const dBspPlane_t*) (base + lump->fileofs);
 
@@ -257,7 +254,7 @@ static void CMod_LoadPlanes (MapTile& tile, const byte* base, const lump_t* lump
  */
 static void CMod_LoadLeafBrushes (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(unsigned short), "leafbrushes", MAX_MAP_LEAFBRUSHES);
+	const int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(unsigned short), "leafbrushes", MAX_MAP_LEAFBRUSHES);
 
 	const unsigned short* in = (const unsigned short*) (base + lump->fileofs);
 
@@ -279,7 +276,7 @@ static void CMod_LoadLeafBrushes (MapTile& tile, const byte* base, const lump_t*
  */
 static void CMod_LoadBrushSides (MapTile& tile, const byte* base, const lump_t* lump)
 {
-	int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspBrushSide_t), "brushsides", MAX_MAP_BRUSHSIDES);
+	const int count = CMod_ValidateLump(lump, __FUNCTION__, sizeof(dBspBrushSide_t), "brushsides", MAX_MAP_BRUSHSIDES);
 
 	const dBspBrushSide_t* in = (const dBspBrushSide_t*) (base + lump->fileofs);
 
@@ -311,19 +308,19 @@ static int CMod_DeCompressRouting (const byte**  source, byte*  dataStart)
 	const byte* src = *source;
 
 	while (*src) {
-		int i, c;
+		int c;
 
 		if (*src & 0x80) {
 			/* repetitions */
 			c = *src++ & ~0x80;
 			/* Remember that the total bytes that are the same is c + 2 */
-			for (i = 0; i < c + 2; i++)
+			for (int i = 0; i < c + 2; i++)
 				*data_p++ = *src;
 			src++;
 		} else {
 			/* identities */
 			c = *src++;
-			for (i = 0; i < c; i++)
+			for (int i = 0; i < c; i++)
 				*data_p++ = *src++;
 		}
 	}
@@ -436,12 +433,12 @@ static void CMod_LoadRouting (MapTile& tile, mapData_t* mapData, const byte* bas
 	 * model data is adjacent to a cell with existing model data. */
 
 	/* Copy the routing information into our master table */
-	int minX = std::max(tile.wpMins[0], 0);
-	int minY = std::max(tile.wpMins[1], 0);
-	int minZ = std::max(tile.wpMins[2], 0);
-	int maxX = std::min(tile.wpMaxs[0], PATHFINDING_WIDTH - 1);
-	int maxY = std::min(tile.wpMaxs[1], PATHFINDING_WIDTH - 1);
-	int maxZ = std::min(tile.wpMaxs[2], PATHFINDING_HEIGHT - 1);
+	const int minX = std::max(tile.wpMins[0], 0);
+	const int minY = std::max(tile.wpMins[1], 0);
+	const int minZ = std::max(tile.wpMins[2], 0);
+	const int maxX = std::min(tile.wpMaxs[0], PATHFINDING_WIDTH - 1);
+	const int maxY = std::min(tile.wpMaxs[1], PATHFINDING_WIDTH - 1);
+	const int maxZ = std::min(tile.wpMaxs[2], PATHFINDING_HEIGHT - 1);
 
 	assert(minX <= maxX);
 	assert(minY <= maxY);
@@ -677,15 +674,6 @@ void CM_LoadBsp (MapTile& tile, const dBspHeader_t& header, const vec3_t shift, 
  */
 static void CM_AddMapTile (const char* name, const char* entityString, const bool day, const int sX, const int sY, const byte sZ, mapData_t* mapData, mapTiles_t* mapTiles)
 {
-	char filename[MAX_QPATH];
-	unsigned checksum;
-	byte* buf;
-	int length;
-	dBspHeader_t header;
-	/* use for random map assembly for shifting origins and so on */
-	vec3_t shift;
-	const byte* base;
-
 	Com_DPrintf(DEBUG_ENGINE, "CM_AddMapTile: %s at %i,%i,%i\n", name, sX, sY, sZ);
 	assert(name);
 	assert(name[0]);
@@ -694,20 +682,22 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 	assert(sZ < PATHFINDING_HEIGHT);
 
 	/* load the file */
+	char filename[MAX_QPATH];
 	Com_sprintf(filename, sizeof(filename), "maps/%s.bsp", name);
-	length = FS_LoadFile(filename, &buf);
+	byte* buf;
+	const int length = FS_LoadFile(filename, &buf);
 	if (!buf)
 		Com_Error(ERR_DROP, "Couldn't load %s", filename);
 
-	checksum = LittleLong(Com_BlockChecksum(buf, length));
+	const unsigned checksum = LittleLong(Com_BlockChecksum(buf, length));
 
-	header = *(dBspHeader_t*) buf;
+	dBspHeader_t header = *(dBspHeader_t*) buf;
 	BSP_SwapHeader(&header, filename);
 
 	if (header.version != BSPVERSION)
 		Com_Error(ERR_DROP, "CM_AddMapTile: %s has wrong version number (%i should be %i)", name, header.version, BSPVERSION);
 
-	base = (const byte*) buf;
+	const byte* base = (const byte*) buf;
 
 	/* init */
 	if (mapTiles->numTiles >= MAX_MAPTILES)
@@ -718,6 +708,8 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
 	tile.idx = mapTiles->numTiles;
 	Q_strncpyz(tile.name, name, sizeof(tile.name));
 
+	/* use for random map assembly for shifting origins and so on */
+	vec3_t shift;
 	/* pathfinding and the like must be shifted on the worldplane when we
 	 * are assembling a map */
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_HEIGHT);
@@ -753,19 +745,17 @@ static void CM_AddMapTile (const char* name, const char* entityString, const boo
  */
 static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 {
-	actorSizeEnum_t actorSize;
-	int x, y, z, dir;
+	int x, y, z;
 	int cols = 0;
-	double start, end;	/* stopwatch */
-
-	start = time(nullptr);
+	/* stopwatch */
+	const double start = time(nullptr);
 
 	GridBox rBox(mapData->mapBox);	/* the box we will actually reroute */
 	rBox.clipToMaxBoundaries();
 
 	/* First, close the borders of the map. This is needed once we produce tiles with open borders.
 	 * It's done by setting the connection (height) to 0 */
-	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
+	for (actorSizeEnum_t actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
 		for (z = rBox.getMinZ(); z <= rBox.getMaxZ(); z++) {
 			for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
 				x = rBox.getMinX();
@@ -791,7 +781,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 	}
 
 	/* Floor pass */
-	for (actorSize = ACTOR_SIZE_INVALID; actorSize < ACTOR_MAX_SIZE; actorSize++) {
+	for (actorSizeEnum_t actorSize = ACTOR_SIZE_INVALID; actorSize < ACTOR_MAX_SIZE; actorSize++) {
 		for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
 			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
 				if (mapData->reroute[actorSize][y][x] == ROUTING_NOT_REACHABLE) {
@@ -807,7 +797,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 	}
 
 	/* Wall pass */
-	for (actorSize = ACTOR_SIZE_INVALID; actorSize < ACTOR_MAX_SIZE; actorSize++) {
+	for (actorSizeEnum_t actorSize = ACTOR_SIZE_INVALID; actorSize < ACTOR_MAX_SIZE; actorSize++) {
 		for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
 			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
 				const byte tile = mapData->reroute[actorSize][y][x];
@@ -816,7 +806,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 					byte fromTile2 = 0;
 					byte fromTile3 = 0;
 					mapTiles->getTilesAt(x ,y, fromTile1, fromTile2, fromTile3);
-					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
+					for (int dir = 0; dir < CORE_DIRECTIONS; dir++) {
 						const int dx = x + dvecs[dir][0];
 						const int dy = y + dvecs[dir][1];
 						/* Skip if the destination is out of bounds. */
@@ -850,7 +840,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 			}
 		}
 	}
-	end = time(nullptr);
+	const double end = time(nullptr);
 	Com_Printf("Rerouted %i cols for RMA in %5.1fs\n", cols, end - start);
 }
 
@@ -989,7 +979,7 @@ cBspModel_t* CM_SetInlineModelOrientation (mapTiles_t* mapTiles, const char* nam
  */
 void CM_GetInlineModelAABB (mapTiles_t* mapTiles, const char* name, AABB& aabb)
 {
-	cBspModel_t* model = CM_InlineModel(mapTiles, name);
+	const cBspModel_t* model = CM_InlineModel(mapTiles, name);
 	assert(model);
 	CalculateMinsMaxs(model->angles, model->cbmBox, model->origin, aabb);
 }

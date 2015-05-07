@@ -44,7 +44,7 @@ static void CM_CalculateWidestBoundingBox (const cBspModel_t* model, AABB& box)
 	box.set(model->cbmBox);
 	box.shift(model->origin);
 	if (VectorNotEmpty(model->angles)) {
-		const float offset = std::max(std::max(box.getWidthX(), box.getWidthY()), box.getWidthZ()) / 2.0;
+		const float offset = std::max(std::max(box.getWidthX(), box.getWidthY()), box.getWidthZ()) / 2.0f;
 		box.expand(offset);		/* expand the whole box by the highest extent we found */
 	}
 }
@@ -127,7 +127,7 @@ trace_t CM_HintedTransformedBoxTrace (MapTile& tile, const Line& traceLine, cons
 	trace_t trace = TR_BoxTrace(traceData, Line(start_l, end_l), traceBox, headnode, fraction);
 	trace.mapTile = tile.idx;
 
-	if (rotated && trace.fraction != 1.0) {
+	if (rotated && trace.fraction != 1.0f) {
 		vec3_t a;
 		/** @todo figure out how to do this with existing angles */
 		VectorNegate(angles, a);
@@ -193,11 +193,10 @@ bool CM_EntTestLine (mapTiles_t* mapTiles, const Line& traceLine, const int leve
 		return false;
 
 	for (const char** name = entlist; *name; name++) {
-		const cBspModel_t* model;
 		/* check whether this is really an inline model */
 		if (*name[0] != '*')
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
-		model = CM_InlineModel(mapTiles, *name);
+		const cBspModel_t* model = CM_InlineModel(mapTiles, *name);
 		assert(model);
 		if (model->headnode >= mapTiles->mapTiles[model->tile].numnodes + 6)
 			continue;
@@ -207,10 +206,10 @@ bool CM_EntTestLine (mapTiles_t* mapTiles, const Line& traceLine, const int leve
 			continue;
 
 		const trace_t trace = CM_HintedTransformedBoxTrace(mapTiles->mapTiles[model->tile], traceLine, AABB(),
-				model->headnode, MASK_VISIBILILITY, 0, model->origin, model->angles, model->shift, 1.0);
+				model->headnode, MASK_VISIBILILITY, 0, model->origin, model->angles, model->shift, 1.0f);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
-		if (trace.startsolid || trace.fraction < 1.0)
+		if (trace.startsolid || trace.fraction < 1.0f)
 			return true;
 	}
 
@@ -238,14 +237,13 @@ bool CM_EntTestLineDM (mapTiles_t* mapTiles, const Line& trLine, vec3_t hit, con
 		return blocked;
 
 	for (const char** name = entlist; *name; name++) {
-		const cBspModel_t* model;
 		/* check whether this is really an inline model */
 		if (*name[0] != '*') {
 			/* Let's see what the data looks like... */
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s' (inlines: %p, name: %p)",
 					*name, (void*)entlist, (void*)name);
 		}
-		model = CM_InlineModel(mapTiles, *name);
+		const cBspModel_t* model = CM_InlineModel(mapTiles, *name);
 		assert(model);
 		if (model->headnode >= mapTiles->mapTiles[model->tile].numnodes + 6)
 			continue;
@@ -304,7 +302,7 @@ trace_t CM_CompleteBoxTrace (mapTiles_t* mapTiles, const Line& trLine, const AAB
 		newtr.mapTile = tile;
 
 		/* memorize the trace with the minimal fraction */
-		if (newtr.fraction == 0.0)
+		if (newtr.fraction == 0.0f)
 			return newtr;
 		if (newtr.fraction < tr.fraction)
 			tr = newtr;
@@ -348,7 +346,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, con
 
 	/* trace against world first */
 	const trace_t tr = CM_CompleteBoxTrace(mapTiles, traceLine, *traceBox, newLevelMask, brushmask, brushreject);
-	if (!list || tr.fraction == 0.0)
+	if (!list || tr.fraction == 0.0f)
 		return tr;
 
 	trace_t trace = tr;
@@ -373,7 +371,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t* mapTiles, const Line& traceLine, con
 				model->headnode, brushmask, brushreject, model->origin, model->angles, model->shift, trace.fraction);
 
 		/* memorize the trace with the minimal fraction */
-		if (newtr.fraction == 0.0)
+		if (newtr.fraction == 0.0f)
 			return newtr;
 		if (newtr.fraction < trace.fraction)
 			trace = newtr;

@@ -612,7 +612,7 @@ const char* Com_MacroExpandString (const char* text)
 	if (!text || !*text)
 		return nullptr;
 
-	int len = strlen(scan);
+	const int len = strlen(scan);
 	if (len >= MAX_STRING_CHARS) {
 		Com_Printf("Line exceeded %i chars, discarded.\n", MAX_STRING_CHARS);
 		return nullptr;
@@ -626,7 +626,6 @@ const char* Com_MacroExpandString (const char* text)
 	/* also the \0 */
 	assert(scan[len] == '\0');
 	for (int i = 0; i <= len; i++) {
-		const char* token, *start, *cvarvalue;
 		if (scan[i] == '"')
 			inquote ^= 1;
 		/* don't expand inside quotes */
@@ -636,8 +635,8 @@ const char* Com_MacroExpandString (const char* text)
 		}
 
 		/* scan out the complete macro and only parse the cvar name */
-		start = &scan[i + MACRO_CVAR_ID_LENGTH];
-		token = Com_Parse(&start);
+		const char* start = &scan[i + MACRO_CVAR_ID_LENGTH];
+		const char* token = Com_Parse(&start);
 		if (!start)
 			continue;
 
@@ -647,13 +646,13 @@ const char* Com_MacroExpandString (const char* text)
 		i--;
 
 		/* get the cvar value */
-		cvarvalue = Cvar_GetString(token);
+		const char* cvarvalue = Cvar_GetString(token);
 		if (!cvarvalue) {
 			Com_Printf("Could not get cvar value for cvar: %s\n", token);
 			return nullptr;
 		}
 
-		int j = strlen(cvarvalue);
+		const int j = strlen(cvarvalue);
 		if (strlen(pos) + j >= MAX_STRING_CHARS) {
 			Com_Printf("Expanded line exceeded %i chars, discarded.\n", MAX_STRING_CHARS);
 			return nullptr;
@@ -705,28 +704,6 @@ void Com_UploadCrashDump (const char* crashDumpFile)
 }
 
 /**
- * @brief Checks for duplicate files
- * @param[in] file The file path to check whether there is an identical file
- * @param[in] wildcard The wildcard to specify which files should be checked
- * @return @c false if no duplicate was found, @c true otherwise
- */
-bool Com_CheckDuplicateFile (const char* file, const char* wildcard)
-{
-	const char* md5 = Com_MD5File(file);
-	const char* filename;
-	bool match = false;
-	while ((filename = FS_NextFileFromFileList(wildcard)) != nullptr) {
-		const char* md5Other = Com_MD5File(filename);
-		if (Q_streq(md5, md5Other)) {
-			match = true;
-			break;
-		}
-	}
-	FS_NextFileFromFileList(nullptr);
-	return match;
-}
-
-/**
  * @brief Console completion for command and variables
  * @sa Key_CompleteCommand
  * @sa Cmd_CompleteCommand
@@ -760,13 +737,11 @@ bool Com_ConsoleCompleteCommand (const char* s, char* target, size_t bufSize, ui
 	/* don't try to search a command or cvar if we are already in the
 	 * parameter stage */
 	if (strstr(s, " ")) {
-		int cntParams;
-		char* tmp;
 		Q_strncpyz(cmdLine, s, sizeof(cmdLine));
 		/* remove the last whitespace */
 		cmdLine[strlen(cmdLine) - 1] = '\0';
 
-		tmp = cmdBase;
+		char* tmp = cmdBase;
 		while (*s != ' ')
 			*tmp++ = *s++;
 		/* get rid of the whitespace */
@@ -779,7 +754,7 @@ bool Com_ConsoleCompleteCommand (const char* s, char* target, size_t bufSize, ui
 		if (tmp)
 			*tmp = '\0';
 
-		cntParams = Cmd_CompleteCommandParameters(cmdBase, s, &cmd);
+		const int cntParams = Cmd_CompleteCommandParameters(cmdBase, s, &cmd);
 		if (cntParams > 1)
 			Com_Printf("\n");
 		if (cmd) {
@@ -792,11 +767,10 @@ bool Com_ConsoleCompleteCommand (const char* s, char* target, size_t bufSize, ui
 	} else {
 		/* Cmd_GenericCompleteFunction uses one static buffer for output, so backup one completion here if available */
 		static char cmdBackup[MAX_QPATH];
-		int cntCvar;
-		int cntCmd = Cmd_CompleteCommand(s, &cmd);
+		const int cntCmd = Cmd_CompleteCommand(s, &cmd);
 		if (cmd)
 			Q_strncpyz(cmdBackup, cmd, sizeof(cmdBackup));
-		cntCvar = Cvar_CompleteVariable(s, &cvar);
+		const int cntCvar = Cvar_CompleteVariable(s, &cvar);
 
 		/* complete as much as possible, append only if one single match is found */
 		if (cntCmd > 0 && !cntCvar) {
@@ -808,7 +782,7 @@ bool Com_ConsoleCompleteCommand (const char* s, char* target, size_t bufSize, ui
 			if (cntCvar != 1)
 				append = false;
 		} else if (cmd && cvar) {
-			int maxLength = std::min(strlen(cmdBackup),strlen(cvar));
+			const int maxLength = std::min(strlen(cmdBackup),strlen(cvar));
 			int idx = 0;
 			/* try to find similar content of cvar and cmd match */
 			Q_strncpyz(cmdLine, cmdBackup,sizeof(cmdLine));
@@ -952,7 +926,7 @@ static const debugLevel_t debugLevels[] = {
 
 static void Com_DeveloperSet_f (void)
 {
-	int oldValue = Cvar_GetInteger("developer");
+	const int oldValue = Cvar_GetInteger("developer");
 	int newValue = oldValue;
 	int i = 0;
 
@@ -1031,7 +1005,7 @@ void Com_SetRandomSeed (unsigned int seed)
 const char* Com_ByteToBinary (byte x)
 {
 	static char buf[9];
-	int mask = 1 << 7;
+	const int mask = 1 << 7;
 	char* b = buf;
 
 	for (int cnt = 1; cnt <= 8; ++cnt) {
@@ -1047,7 +1021,7 @@ const char* Com_ByteToBinary (byte x)
 const char* Com_UnsignedIntToBinary (uint32_t x)
 {
 	static char buf[37];
-	int mask = 1 << 31;
+	const int mask = 1 << 31;
 	char* b = buf;
 
 	for (int cnt = 1; cnt <= 32; ++cnt) {
@@ -1408,7 +1382,7 @@ ScheduleEventPtr Schedule_Event (int when, event_func* func, event_check_func* c
  */
 static size_t Delay_Events (int now, EventPriorityQueue::iterator i)
 {
-	ScheduleEventPtr event = *i;
+	const ScheduleEventPtr event = *i;
 	EventPriorityQueue reOrder;
 	EventPriorityQueue::iterator itEnd = eventQueue.end();
 	for (; i != itEnd;) {

@@ -397,7 +397,6 @@ const char* Com_Argv(int arg);		/* range and null checked */
 void Com_ClearArgv(int arg);
 const char* Com_MacroExpandString(const char* text);
 void Com_UploadCrashDump(const char* crashDumpFile);
-bool Com_CheckDuplicateFile(const char* file, const char* wildcard);
 
 bool Com_ConsoleCompleteCommand(const char* s, char* target, size_t bufSize, uint32_t* pos, uint32_t offset);
 

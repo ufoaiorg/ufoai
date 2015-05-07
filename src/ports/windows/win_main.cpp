@@ -73,12 +73,11 @@ void Sys_Init (void)
 
 static void FixWorkingDirectory (void)
 {
-	char* p;
 	char curDir[MAX_PATH];
 
 	GetModuleFileName(nullptr, curDir, sizeof(curDir)-1);
 
-	p = strrchr(curDir, '\\');
+	char* p = strrchr(curDir, '\\');
 	p[0] = 0;
 
 	if (strlen(curDir) > (MAX_OSPATH - MAX_QPATH))
