@@ -91,11 +91,14 @@ TEST_F(MapDefTest, MapDefsSingleplayer)
 
 		Com_Printf("testMapDefsSingleplayer: Mapdef %s (seed %u)\n", md->id, seed);
 		if (LIST_IsEmpty(md->params)) {
+			std::cout << "[          ] testing mapdef: " << md->id << std::endl;
 			SV_Map(true, md->mapTheme, nullptr);
 			SV_ShutdownGameProgs();
 		} else {
 			LIST_Foreach(md->params, const char, param) {
 				Com_Printf("testMapDefsSingleplayer: Mapdef %s (param %s)\n", md->id, param);
+				std::cout << "[          ] testing mapdef: " << md->id << ", assembly: "
+					<< param << std::endl;
 				SV_Map(true, md->mapTheme, param);
 				SV_ShutdownGameProgs();
 			}
@@ -129,6 +132,7 @@ TEST_F(MapDefTest, MapDefsMultiplayer)
 
 		Com_Printf("testMapDefsMultiplayer: Mapdef %s (seed %u)\n", md->id, seed);
 		if (LIST_IsEmpty(md->params)) {
+			std::cout << "[          ] testing mapdef: " << md->id << std::endl;
 			SV_Map(true, md->mapTheme, nullptr);
 
 			SrvPlayer* player = PLAYER_NUM(0);
@@ -140,7 +144,8 @@ TEST_F(MapDefTest, MapDefsMultiplayer)
 			LIST_Foreach(md->params, const char, param) {
 				Com_Printf("testMapDefsMultiplayer: Mapdef %s (param %s)\n", md->id, param);
 				SV_Map(true, md->mapTheme, param);
-
+				std::cout << "[          ] testing mapdef: " << md->id << ", assembly: "
+					<< param << std::endl;
 				SrvPlayer* player = PLAYER_NUM(0);
 				Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");
 				ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
