@@ -387,7 +387,7 @@ end
 
 function aila.findtargets(vision, team, order)
 	local targets = { }
-	local seen = ai.see(vision, team, order)
+	local seen = ai.see(ai.difficulty() > 2 and "all" or vision, team, order)
 	if #seen > 0 then
 		for i = 1, #seen do
 			if seen[i]:isvalidtarget() then
