@@ -662,8 +662,7 @@ void FS_AddHomeAsGameDirectory (const char* dir, bool write)
 }
 
 /**
- * @brief Adds the directory to the head of the search path
- * @note No ending slash here
+ * @brief Searches and builds a list of mod directories.
  */
 int FS_GetModList (linkedList_t** mods)
 {
