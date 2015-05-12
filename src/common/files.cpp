@@ -1046,12 +1046,11 @@ int FS_BuildFileList (const char* fileList)
 			LIST_Delete(&list);
 		} else {
 			int nfiles = 0;
-			char** filenames;
 
 			Com_sprintf(findname, sizeof(findname), "%s/%s", search->filename, files);
 			FS_NormPath(findname);
 
-			filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM);
+			char** filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (filenames != nullptr) {
 				for (int i = 0; i < nfiles - 1; i++) {
 					_AddToListBlock(&block->files, filenames[i], true);
@@ -1079,8 +1078,6 @@ const char* FS_NextFileFromFileList (const char* files)
 {
 	static linkedList_t* listEntry = nullptr;
 	static listBlock_t* _block = nullptr;
-	listBlock_t* block;
-	const char* file = nullptr;
 
 	/* restart the list? */
 	if (files == nullptr) {
@@ -1088,6 +1085,7 @@ const char* FS_NextFileFromFileList (const char* files)
 		return nullptr;
 	}
 
+	listBlock_t* block;
 	for (block = fs_blocklist; block; block = block->next) {
 		if (!strncmp(files, block->path, MAX_QPATH))
 			break;
@@ -1113,6 +1111,7 @@ const char* FS_NextFileFromFileList (const char* files)
 		listEntry = block->files;
 	}
 
+	const char* file = nullptr;
 	if (listEntry) {
 		file = (const char*)listEntry->data;
 		listEntry = listEntry->next;
@@ -1133,7 +1132,6 @@ const char* FS_NextFileFromFileList (const char* files)
  */
 const char* FS_GetFileData (const char* files)
 {
-	listBlock_t* block;
 	static linkedList_t* fileList = nullptr;
 	static byte* buffer = nullptr;
 
@@ -1148,6 +1146,7 @@ const char* FS_GetFileData (const char* files)
 		return nullptr;
 	}
 
+	listBlock_t* block;
 	for (block = fs_blocklist; block; block = block->next) {
 		if (Q_streq(files, block->path))
 			break;
@@ -1196,11 +1195,8 @@ char* FS_NextScriptHeader (const char* files, const char** name, const char** te
 	static listBlock_t* lBlock;
 	static linkedList_t* lFile;
 	static byte* lBuffer;
-
 	static char headerType[MAX_VAR];
 	static char headerName[512];
-	listBlock_t* block;
-	const char* token;
 
 	if (!text) {
 		*lastList = 0;
@@ -1218,6 +1214,7 @@ char* FS_NextScriptHeader (const char* files, const char** name, const char** te
 		/* search for file lists */
 		Q_strncpyz(lastList, files, sizeof(lastList));
 
+		listBlock_t* block;
 		for (block = fs_blocklist; block; block = block->next) {
 			if (Q_streq(files, block->path))
 				break;
@@ -1235,7 +1232,7 @@ char* FS_NextScriptHeader (const char* files, const char** name, const char** te
 		if (lBuffer) {
 			/* continue reading the current file */
 			if (*text) {
-				token = Com_Parse(text);
+				const char* token = Com_Parse(text);
 				if (*token == '{') {
 					Com_SkipBlock(text);
 					continue;
@@ -1364,16 +1361,14 @@ static int CheckBSPFile (const char* filename)
 void FS_GetMaps (bool reset)
 {
 	char filename[MAX_QPATH];
-	int i;
 	const char* baseMapName = nullptr;
-	char** dirnames;
 	int ndirs;
 
 	/* force a reread */
 	if (!reset && fs_mapsInstalledInit)
 		return;
 	else if (fs_mapsInstalledInit) {
-		for (i = 0; i <= fs_numInstalledMaps; i++)
+		for (int i = 0; i <= fs_numInstalledMaps; i++)
 			Mem_Free(fs_maps[i]);
 	}
 
@@ -1386,7 +1381,7 @@ void FS_GetMaps (bool reset)
 		if (search->pack) {
 			/* look through all the pak file elements */
 			pack_t* pak = search->pack;
-			for (i = 0; i < pak->numfiles; i++) {
+			for (int i = 0; i < pak->numfiles; i++) {
 				/* found it! */
 				baseMapName = strchr(pak->files[i].name, '/');
 				if (baseMapName) {
@@ -1423,12 +1418,12 @@ void FS_GetMaps (bool reset)
 			Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", search->filename);
 			FS_NormPath(findname);
 
-			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
+			char** dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (dirnames != nullptr) {
-				for (i = 0; i < ndirs - 1; i++) {
+				for (int i = 0; i < ndirs - 1; i++) {
 					baseMapName = Com_SkipPath(dirnames[i]);
 					Com_StripExtension(baseMapName, filename, sizeof(filename));
-					int status = CheckBSPFile(filename);
+					const int status = CheckBSPFile(filename);
 					if (!status) {
 						if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
 							Com_Printf("FS_GetMaps: Max maps limit hit\n");
@@ -1454,7 +1449,7 @@ void FS_GetMaps (bool reset)
 
 			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (dirnames != nullptr) {
-				for (i = 0; i < ndirs - 1; i++) {
+				for (int i = 0; i < ndirs - 1; i++) {
 					baseMapName = Com_SkipPath(dirnames[i]);
 					Com_StripExtension(baseMapName, filename, sizeof(filename));
 					if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
@@ -1488,12 +1483,11 @@ void FS_GetMaps (bool reset)
 int FS_Printf (qFILE* f, const char* msg, ...)
 {
 	va_list ap;
-	int len;
 	char buf[1024];
 
 	va_start(ap, msg);
 	Q_vsnprintf(buf, sizeof(buf), msg, ap);
-	len = fprintf(f->f, "%s", buf);
+	const int len = fprintf(f->f, "%s", buf);
 	va_end(ap);
 
 	return len;
@@ -1512,8 +1506,8 @@ int FS_Write (const void* buffer, int len, qFILE*  f)
 	int remaining = len;
 	int tries = 0;
 	while (remaining) {
-		int block = remaining;
-		int written = fwrite(buf, 1, block, f->f);
+		const int block = remaining;
+		const int written = fwrite(buf, 1, block, f->f);
 		if (written == 0) {
 			if (!tries) {
 				tries = 1;
@@ -1595,14 +1589,13 @@ bool FS_FileExists (const char* filename, ...)
  */
 void FS_Shutdown (void)
 {
-	searchpath_t* p, *next;
-
 	if (fs_openedFiles != 0) {
 		Com_Printf("There are still %i opened files\n", fs_openedFiles);
 	}
 
 	/* free everything */
-	for (p = fs_searchpaths; p; p = next) {
+	searchpath_t* next;
+	for (searchpath_t* p = fs_searchpaths; p; p = next) {
 		next = p->next;
 
 		if (p->pack) {
@@ -1646,20 +1639,17 @@ void FS_RestartFilesystem (const char* gamedir)
  */
 void FS_CopyFile (const char* fromOSPath, const char* toOSPath)
 {
-	FILE* f;
-	int len;
-
 	if (!fs_searchpaths)
 		Sys_Error("Filesystem call made without initialization");
 
 	Com_Printf("FS_CopyFile: copy %s to %s\n", fromOSPath, toOSPath);
 
-	f = Sys_Fopen(fromOSPath, "rb");
+	FILE* f = Sys_Fopen(fromOSPath, "rb");
 	if (!f)
 		return;
 
 	fseek(f, 0, SEEK_END);
-	len = ftell(f);
+	const int len = ftell(f);
 	fseek(f, 0, SEEK_SET);
 
 	byte* const buf = Mem_PoolAllocTypeN(byte, len, com_fileSysPool);
