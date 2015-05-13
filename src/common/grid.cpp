@@ -718,10 +718,10 @@ pos_t Grid_MoveLength (const pathing_t* path, const pos3_t to, byte crouchingSta
  */
 int Grid_MoveNext (const pathing_t* path, const pos3_t toPos, byte crouchingState)
 {
-	const pos_t l = RT_AREA_POS(path, toPos, crouchingState); /**< Get TUs for this square */
+	const pos_t moveLen = RT_AREA_POS(path, toPos, crouchingState); /**< Get TUs for this square */
 
 	/* Check to see if the TUs needed to move here are greater than 0 and less then ROUTING_NOT_REACHABLE */
-	if (!l || l == ROUTING_NOT_REACHABLE) {
+	if (!moveLen || moveLen == ROUTING_NOT_REACHABLE) {
 		/* ROUTING_UNREACHABLE means, not possible/reachable */
 		return ROUTING_UNREACHABLE;
 	}
