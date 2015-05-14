@@ -262,13 +262,13 @@ tile +nature_04
 {
 9 9
 0		0		0		0		0		0		0		v		0
-0		0		0		0		0		+a		+a		+hv		h
+0		0		0		0		0		+a		+a		+v		0
 0		0		0		0		+a		+a		+a		+a		0
 0		0		0		0		+a		+a		+a		+a		0
 0		0		+a		+a		+a		+a		+a		0		0
 0		+a		+a		+a		+a		0		0		0		0
 0		+a		+a		+a		+a		0		0		0		0
-h		+hv		+a		+a		0		0		0		0		0
+0		+v		+a		+a		0		0		0		0		0
 0		v		0		0		0		0		0		0		0
 }
 
@@ -417,7 +417,6 @@ assembly nature_large_b
 {
 title "_Forest"
 size "16 10"
-+brook_h1		"0 9"	// 1x1
 +brook_v1		"0 9"	// 1x1
 +nature_01		"0 3"	// 4x4
 +nature_02		"0 3"	// 4x4
@@ -460,7 +459,6 @@ assembly nature_medium_b
 {
 title "_Forest"
 size "10 12"
-+brook_h1		"0 9"	// 1x1
 +brook_v1		"0 9"	// 1x1
 +nature_01		"0 1"	// 4x4
 +nature_02		"0 1"	// 4x4
@@ -503,7 +501,6 @@ assembly nature_small_b
 {
 title "_Forest"
 size "10 10"
-+brook_h1		"0 9"	// 1x1
 +brook_v1		"0 9"	// 1x1
 +nature_01		"0 1"	// 4x4
 +nature_02		"0 1"	// 4x4
