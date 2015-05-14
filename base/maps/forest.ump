@@ -418,8 +418,8 @@ size "16 10"
 +nature_12		"0 4"	// 1x1
 +nature_20		"0 5"	// 2x2
 +nature_21		"0 1"	// 1x2
-+nature_22		"0 2"	// 1x2
-+nature_23		"0 2"	// 2x1
++nature_22		"0 4"	// 1x2
++nature_23		"0 4"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 5"	// 3x3
