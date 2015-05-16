@@ -194,11 +194,10 @@ bool LIST_RemoveEntry (linkedList_t** list, linkedList_t* entry)
  */
 void LIST_Delete (linkedList_t** list)
 {
-	linkedList_t* next;
 	linkedList_t* l = *list;
 
 	while (l) {
-		next = l->next;
+		linkedList_t* next = l->next;
 		if (!l->ptr)
 			Mem_Free(l->data);
 		Mem_Free(l);
@@ -227,8 +226,7 @@ bool LIST_Remove (linkedList_t** list, const void* data)
  */
 static linkedList_t* _LIST_Sort (linkedList_t* list, linkedListSort_t sorter, const void* userData)
 {
-	linkedList_t* p, *q, *e;
-	int insize, psize, qsize, i;
+	linkedList_t* e;
 
 	/*
 	 * Silly special case: if `list' was passed in as nullptr, return
@@ -237,21 +235,20 @@ static linkedList_t* _LIST_Sort (linkedList_t* list, linkedListSort_t sorter, co
 	if (!list)
 		return nullptr;
 
-	insize = 1;
+	int insize = 1;
 
 	while (1) {
-		p = list;
+		linkedList_t* p = list;
 		list = nullptr;
 		linkedList_t* tail = nullptr;
-
 		int nmerges = 0; /* count number of merges we do in this pass */
 
 		while (p) {
 			nmerges++; /* there exists a merge to be done */
 			/* step `insize' places along from p */
-			q = p;
-			psize = 0;
-			for (i = 0; i < insize; i++) {
+			linkedList_t* q = p;
+			int psize = 0;
+			for (int i = 0; i < insize; i++) {
 				psize++;
 				q = q->next;
 				if (!q)
@@ -259,7 +256,7 @@ static linkedList_t* _LIST_Sort (linkedList_t* list, linkedListSort_t sorter, co
 			}
 
 			/* if q hasn't fallen off end, we have two lists to merge */
-			qsize = insize;
+			int qsize = insize;
 
 			/* now we have two lists; merge them */
 			while (psize > 0 || (qsize > 0 && q)) {
@@ -364,15 +361,13 @@ int LIST_Count (const linkedList_t* list)
  */
 void* LIST_GetByIdx (linkedList_t* list, int index)
 {
-	int i;
-
 	if (LIST_IsEmpty(list))
 		return nullptr;
 
 	if (index < 0)
 		return nullptr;
 
-	i = 0;
+	int i = 0;
 	while (list) {
 		if (i == index)
 			return list->data;
