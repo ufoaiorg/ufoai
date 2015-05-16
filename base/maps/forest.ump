@@ -346,6 +346,12 @@ tile +nature_33
 
 // tilesets --------------------------------------------------------*
 
+tileset bigz {
+	+nature_01		// 4x4
+	+nature_02		// 4x4
+	+nature_03		// 4x3
+}
+
 // map assemblies --------------------------------------------------*
 
 assembly eaglenest
@@ -410,20 +416,18 @@ assembly nature_large_b
 title "_Forest"
 size "16 10"
 +brook_v1		"0 9"	// 1x1
-+nature_01		"0 3"	// 4x4
-+nature_02		"0 3"	// 4x4
-+nature_03		"0 3"	// 4x3
 +nature_04		"1 1"	// 7x7
-+nature_11		"0 4"	// 1x1
-+nature_12		"0 4"	// 1x1
-+nature_20		"0 5"	// 2x2
++nature_11		"0 6"	// 1x1
++nature_12		"0 6"	// 1x1
++nature_20		"0 6"	// 2x2
 +nature_21		"0 1"	// 1x2
-+nature_22		"0 4"	// 1x2
-+nature_23		"0 4"	// 2x1
++nature_22		"0 6"	// 1x2
++nature_23		"0 6"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 5"	// 3x3
-*rm_ufo +craft_crash_bomber		"1 1"
+tileset bigz	"1 1"
+*rm_ufo +craft_crash_bomber	"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
