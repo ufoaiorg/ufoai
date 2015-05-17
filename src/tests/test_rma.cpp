@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ports/system.h"
 
 #define MAX_ALLOWED_TIME_TO_ASSEMBLE 30000
+#define TEST_THEME "forest"
+#define TEST_ASSEMBLY "nature_large_b"
 
 static char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 static char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
@@ -74,7 +76,7 @@ TEST_F(RandomMapAssemblyTest, Assembly)
 	char entityString[MAX_TOKEN_CHARS];
 
 	srand(0);
-	int numPlaced = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, 0, true);
+	int numPlaced = SV_AssembleMap(TEST_THEME, TEST_ASSEMBLY, mapStr, posStr, entityString, 0, true);
 	ASSERT_TRUE(numPlaced != 0);
 }
 
@@ -88,11 +90,10 @@ TEST_F(RandomMapAssemblyTest, MassAssemblyTimeout)
 		/** @todo the assemble thread sets a different seed */
 		srand(i);
 		long time = Sys_Milliseconds();
-		const char* mapTheme = "forest";
-		int numPlaced = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
+		int numPlaced = SV_AssembleMap(TEST_THEME, TEST_ASSEMBLY, mapStr, posStr, entityString, i, true);
 		ASSERT_TRUE(numPlaced != 0);
 		time = Sys_Milliseconds() - time;
-		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << mapTheme << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
+		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << TEST_THEME << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
 		Com_Printf("%i: %i %li\n", i, numPlaced, time);
 	}
 }
@@ -106,11 +107,10 @@ TEST_F(RandomMapAssemblyTest, MassAssemblyParallel)
 		/** @todo the assemble thread sets a different seed */
 		srand(i);
 		long time = Sys_Milliseconds();
-		const char* mapTheme = "forest";
-		int numPlaced = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
+		int numPlaced = SV_AssembleMap(TEST_THEME, TEST_ASSEMBLY, mapStr, posStr, entityString, i, true);
 		ASSERT_TRUE(numPlaced != 0);
 		time = Sys_Milliseconds() - time;
-		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << mapTheme << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
+		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << TEST_THEME << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
 		Com_Printf("%i: %i %li\n", i, numPlaced, time); fflush(stdout);
 	}
 }
@@ -124,11 +124,10 @@ TEST_F(RandomMapAssemblyTest, MassAssemblySequential)
 	for (int i = 0; i < 10; i++) {
 		srand(i);
 		long time = Sys_Milliseconds();
-		const char* mapTheme = "forest";
-		int numPlaced = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
+		int numPlaced = SV_AssembleMap(TEST_THEME, TEST_ASSEMBLY, mapStr, posStr, entityString, i, true);
 		ASSERT_TRUE(numPlaced != 0);
 		time = Sys_Milliseconds() - time;
-		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << mapTheme << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
+		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << TEST_THEME << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
 		Com_Printf("%i: %i %li\n", i, numPlaced, time);
 	}
 }
@@ -139,10 +138,10 @@ TEST_F(RandomMapAssemblyTest, Seedlists)
 	const char* assNames[][2] = {
 		{"farm", "medium"},
 		{"farm", "large"},
-		{"forest", "large"},
-		{"forest", "large_crash"},
+		{TEST_THEME, TEST_ASSEMBLY},
+		{"forest", "nature_medium_b"},
 		{"oriental", "large"},
-		{"village", "commercial"},
+		{"village", "large"},
 		{"village", "small"}
 	};
 	size_t length = sizeof(assNames) / (2 * sizeof(char*));
