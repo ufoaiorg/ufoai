@@ -337,7 +337,11 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 	param->mission = mission;
 	const byte* color = GEO_GetColor(mission->pos, MAPTYPE_TERRAIN, nullptr);
 	param->zoneType = cgi->csi->terrainDefs.getTerrainName(color); /* store to terrain type for texture replacement */
-	cgi->Cvar_Set("r_weather", "%s", cgi->csi->terrainDefs.getWeather(color));
+	/* Hack: Alienbase is fully indoors (underground) so no weather effects, maybe this should be a mapdef property? */
+	if (mission->category == INTERESTCATEGORY_ALIENBASE)
+		cgi->Cvar_Set("r_weather", "0");
+	else
+		cgi->Cvar_Set("r_weather", "%s", cgi->csi->terrainDefs.getWeather(color));
 
 	/* Is there a UFO to recover ? */
 	if (mission->ufo) {
