@@ -78,12 +78,11 @@ static void MD5Init (struct MD5Context *ctx)
  */
 static void MD5Transform (uint32_t buf[4], uint32_t const in[16])
 {
-	register uint32_t a, b, c, d;
 
-	a = buf[0];
-	b = buf[1];
-	c = buf[2];
-	d = buf[3];
+	register uint32_t a = buf[0];
+	register uint32_t b = buf[1];
+	register uint32_t c = buf[2];
+	register uint32_t d = buf[3];
 
 	MD5STEP(F1, a, b, c, d, in[0] + 0xd76aa478, 7);
 	MD5STEP(F1, d, a, b, c, in[1] + 0xe8c7b756, 12);
@@ -165,11 +164,9 @@ static void MD5Transform (uint32_t buf[4], uint32_t const in[16])
  */
 static void MD5Update (struct MD5Context *ctx, unsigned char const* buf, unsigned len)
 {
-	uint32_t t;
-
 	/* Update bitcount */
 
-	t = ctx->bits[0];
+	uint32_t t = ctx->bits[0];
 	if ((ctx->bits[0] = t + ((uint32_t) len << 3)) < t)
 		ctx->bits[1]++; /* Carry from low to high */
 	ctx->bits[1] += len >> 29;
@@ -213,15 +210,12 @@ static void MD5Update (struct MD5Context *ctx, unsigned char const* buf, unsigne
  */
 static void MD5Final (struct MD5Context *ctx, unsigned char* digest)
 {
-	unsigned count;
-	unsigned char* p;
-
 	/* Compute number of bytes mod 64 */
-	count = (ctx->bits[0] >> 3) & 0x3F;
+	unsigned count = (ctx->bits[0] >> 3) & 0x3F;
 
 	/* Set the first char of padding to 0x80.  This is safe since there is
 	 always at least one byte free */
-	p = ctx->in + count;
+	unsigned char* p = ctx->in + count;
 	*p++ = 0x80;
 
 	/* Bytes of padding needed to make 64 bytes */
