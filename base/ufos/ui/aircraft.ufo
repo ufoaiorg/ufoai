@@ -253,6 +253,8 @@ window iaircraft
 				}
 			}
 		}
+
+		data wnd_name { string "aircraft" }
 	}
 
 	BuildingSpace dropship

@@ -308,10 +308,11 @@ window bases
 		BaseSection aircraft
 		{
 			{
-				onClick		{ cmd "ui_push aircraft_equip;" }
+				onClick		{ call *node:this.funcClick }
 			}
 			string label { string "_Aircraft" }
 			button icon { icon "icons/aircraft" }
+			func funcClick { cmd "ui_push aircraft_equip;" }
 
 			// Aircraft added as child nodes to this panel
 			panel aircraft_list
@@ -337,18 +338,20 @@ window bases
 		BaseSection buysell
 		{
 			{
-				onClick		{ cmd "ui_push market;" }
+				onClick		{ call *node:this.funcClick }
 			}
 			string label { string "_Market" }
 			button icon { icon "icons/market" }
+			func funcClick { cmd "ui_push market;" }
 		}
 		BaseSection research
 		{
 			{
-				onClick		{ cmd "ui_push research;" }
+				onClick		{ call *node:this.funcClick }
 			}
 			string label { string "_Research" }
 			button icon { icon "icons/research" }
+			func funcClick { cmd "ui_push research;" }
 
 			// Aircraft added as child nodes to this panel
 			panel research_list
@@ -365,10 +368,11 @@ window bases
 		BaseSection production
 		{
 			{
-				onClick		{ cmd "ui_push production;" }
+				onClick		{ call *node:this.funcClick }
 			}
 			string label { string "_Production" }
 			button icon { icon "icons/wrench" }
+			func funcClick { cmd "ui_push production;" }
 
 			// Production added as child nodes to this panel
 			panel production_list
@@ -385,21 +389,23 @@ window bases
 		BaseSection containment
 		{
 			{
-				onClick		{ cmd "ui_push aliencont;" }
+				onClick		{ call *node:this.funcClick }
 			}
 			string label { string "_Alien Containment" }
 			button icon { icon "icons/aliens" }
 			data state { string "true" }
+			func funcClick { cmd "ui_push aliencont;" }
 		}
 
 		BaseSection hospital
 		{
 			{
-				onClick		{ cmd "ui_push hospital;" }
+				onClick		{ call *node:this.funcClick }
 			}
 			string label { string "_Hospital" }
 			button icon { icon "icons/hos_bed" }
 			data state { string "true" }
+			func funcClick { cmd "ui_push hospital;" }
 		}
 
 		// Hide/show the other base sections
@@ -420,6 +426,7 @@ window bases
 		onClick { cmd "ui_pop;" }
 	}
 
+	data last_section { string "" }
 	/**
 	 * @brief Used to enable/disable the overall base buttons
 	 * @param <1> button
@@ -445,6 +452,7 @@ window bases
 				*node:parent.sections.<1>@onMouseLeave = { }
 				*node:parent.sections.<1>@onClick = { }
 				*node:parent.sections.<1>@tooltip = "<3>"
+				*node:parent.sections.<1>@disabled = true
 			}
 		} else {
 			if (<1> eq "hire") {
@@ -459,19 +467,8 @@ window bases
 				*node:parent.sections.<1>@onMouseEnter = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.4" *node:this.icon@background = "icons/circle" }
 				*node:parent.sections.<1>@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
 				*node:parent.sections.<1>@tooltip = ""
-				if (<1> eq "aircraft") {
-					*node:parent.sections.<1>@onClick = { cmd "ui_push aircraft_equip;" }
-				} elif (<1> eq "buysell") {
-					*node:parent.sections.<1>@onClick = { cmd "ui_push market;" }
-				} elif (<1> eq "research") {
-					*node:parent.sections.<1>@onClick = { cmd "ui_push research;" }
-				} elif (<1> eq "production") {
-					*node:parent.sections.<1>@onClick = { cmd "ui_push production;" }
-				} elif (<1> eq "containment") {
-					*node:parent.sections.<1>@onClick = { cmd "ui_push aliencont;" }
-				} elif (<1> eq "hospital") {
-					*node:parent.sections.<1>@onClick = { cmd "ui_push hospital;" }
-				}
+				*node:parent.sections.<1>@disabled = false
+				*node:parent.sections.<1>@onClick = { call *node:this.funcClick }
 			}
 		}
 	}
@@ -614,6 +611,31 @@ window bases
 		*node:parent.sections.production.production_list.<1>.data_bar@current = <3>
 	}
 
+	confunc restore_section
+	{
+		if ((exists *node:parent.sections.<1>) && (*node:parent.sections.<1>@disabled != true)) {
+			call *node:parent.sections.<1>@funcClick
+		}
+	}
+
+	confunc base_next_s
+	{
+		cmd "ui_pop;mn_base_next;"
+		*node:parent.last_section@string = "<1>"
+	}
+
+	confunc base_prev_s
+	{
+		cmd "ui_pop;mn_base_prev;"
+		*node:parent.last_section@string = "<1>"
+	}
+
+	confunc base_select_s
+	{
+		cmd "ui_pop;mn_base_select <1>;"
+		*node:parent.last_section@string = "<2>"
+	}
+
 	/**
 	 * @brief Reset base status/display info when the player switches to a new base
 	 * or comes back from another window
@@ -638,5 +660,11 @@ window bases
 
 		// Close all panels and reset base to default position
 		call *node:root.reset_base
+
+		// Try to restore the last base section opened
+		if (*node:root.last_section@string ne "") {
+			cmd "restore_section <node:root.last_section@string>;"
+			*node:root.last_section@string = ""
+		}
 	}
 }
