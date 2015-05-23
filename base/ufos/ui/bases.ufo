@@ -330,10 +330,11 @@ window bases
 		BaseSection soldiers
 		{
 			{
-				onClick		{ cmd "ui_push equipment -1;" }
+				onClick		{ call *node:this.funcClick }
 			}
 			string label { string "_Soldiers" }
 			button icon { icon "icons/crouch" }
+			func funcClick { cmd "ui_push equipment -1;" }
 		}
 		BaseSection buysell
 		{
@@ -445,6 +446,7 @@ window bases
 				*node:parent.sections.soldiers@onMouseLeave = { }
 				*node:parent.sections.soldiers@onClick = { }
 				*node:parent.sections.soldiers@tooltip = "<3>"
+				*node:parent.sections.soldiers@disabled = true
 			} elif (<1> eq "transfer") {
 			} else {
 				*node:parent.sections.<1>.bg@bgcolor = "1 1 1 0.2"
@@ -459,8 +461,9 @@ window bases
 				*node:parent.sections.soldiers.bg@bgcolor = "0.527 0.6 0.21 0.2"
 				*node:parent.sections.soldiers@onMouseEnter = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.4" *node:this.icon@background = "icons/circle" }
 				*node:parent.sections.soldiers@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
-				*node:parent.sections.soldiers@onClick = { cmd "ui_push equipment -1;" }
+				*node:parent.sections.soldiers@onClick = { call *node:this.funcClick }
 				*node:parent.sections.soldiers@tooltip = ""
+				*node:parent.sections.soldiers@disabled = false
 			} elif (<1> eq "transfer") {
 			} else {
 				*node:parent.sections.<1>.bg@bgcolor = "0.527 0.6 0.21 0.2"
