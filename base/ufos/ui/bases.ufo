@@ -618,6 +618,8 @@ window bases
 	{
 		if ((exists *node:parent.sections.<1>) && (*node:parent.sections.<1>@disabled != true)) {
 			call *node:parent.sections.<1>@funcClick
+		} elif ((<1> eq "hire") && (*node:parent.sections.soldiers@disabled != true)) {
+			cmd "ui_push employees <cvar:mn_hiretype>;"
 		}
 	}
 
