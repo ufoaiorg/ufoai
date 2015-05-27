@@ -327,9 +327,7 @@ int NET_ReadString (dbuffer* buf, char* string, size_t length)
  */
 int NET_ReadStringLine (dbuffer* buf, char* string, size_t length)
 {
-	unsigned int l;
-
-	l = 0;
+	unsigned int l = 0;
 	do {
 		int c = NET_ReadByte(buf);
 		if (c == -1 || c == 0 || c == '\n')
@@ -384,7 +382,7 @@ void NET_ReadGPos (dbuffer* buf, pos3_t pos)
 
 float NET_ReadAngle (dbuffer* buf)
 {
-	return (float) NET_ReadChar(buf) * (360.0 / 256);
+	return (float) NET_ReadChar(buf) * (360.0f / 256);
 }
 
 float NET_ReadAngle16 (dbuffer* buf)
