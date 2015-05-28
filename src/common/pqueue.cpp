@@ -46,7 +46,6 @@ void PQueueInitialise (priorityQueue_t* pq, uint32_t maxElements)
 
 void PQueuePush (priorityQueue_t* pq, const pos4_t item, priorityQueueRating_t r)
 {
-	uint32_t i;
 	uint32_t currentSize = pq->currentSize;
 
 	if (currentSize == pq->maxSize) {
@@ -56,7 +55,7 @@ void PQueuePush (priorityQueue_t* pq, const pos4_t item, priorityQueueRating_t r
 	}
 
 	/* set i to the first unused element and increment CurrentSize */
-	i = (++currentSize);
+	uint32_t i = (++currentSize);
 
 	/* while the parent of the space we're putting the new node into is worse than
 	 * our new node, swap the space with the worse node. We keep doing that until we
@@ -91,24 +90,22 @@ void PQueueFree (priorityQueue_t* pq)
  */
 void PQueuePop (priorityQueue_t* pq, pos4_t item)
 {
-	uint32_t i;
-	uint32_t child;
-	priorityQueueElement_t* elements = pq->elements;
-	uint32_t currentSize = pq->currentSize;
-	priorityQueueElement_t pMaxElement;
-	priorityQueueElement_t pLastElement;
 
 	if (PQueueIsEmpty(pq))
 		return;
 
-	pMaxElement = elements[PQ_FIRST_ENTRY];
+	priorityQueueElement_t* elements = pq->elements;
+	const priorityQueueElement_t pMaxElement = elements[PQ_FIRST_ENTRY];
 
 	/* get pointer to last element in tree */
-	pLastElement = elements[currentSize--];
+	uint32_t currentSize = pq->currentSize;
+	const priorityQueueElement_t pLastElement = elements[currentSize--];
 
 	for (int j = 0; j < 4; j++)
 		item[j] = pMaxElement.item[j];
 
+	uint32_t i;
+	uint32_t child;
 	for (i = PQ_FIRST_ENTRY; (child = PQ_LEFT_CHILD_INDEX(i)) <= currentSize; i = child) {
 		/* set child to the smaller of the two children... */
 
