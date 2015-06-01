@@ -77,7 +77,6 @@ void Com_SHA2Starts (sha2_context *ctx)
 static void Com_SHA2Process (sha2_context *ctx, const byte data[64])
 {
 	uint64_t temp1, temp2, W[64];
-	uint64_t A, B, C, D, E, F, G, H;
 
 	GET_UINT32_BE(W[0], data, 0);
 	GET_UINT32_BE(W[1], data, 4);
@@ -121,14 +120,14 @@ static void Com_SHA2Process (sha2_context *ctx, const byte data[64])
     d += temp1; h = temp1 + temp2;              \
 }
 
-	A = ctx->state[0];
-	B = ctx->state[1];
-	C = ctx->state[2];
-	D = ctx->state[3];
-	E = ctx->state[4];
-	F = ctx->state[5];
-	G = ctx->state[6];
-	H = ctx->state[7];
+	uint64_t A = ctx->state[0];
+	uint64_t B = ctx->state[1];
+	uint64_t C = ctx->state[2];
+	uint64_t D = ctx->state[3];
+	uint64_t E = ctx->state[4];
+	uint64_t F = ctx->state[5];
+	uint64_t G = ctx->state[6];
+	uint64_t H = ctx->state[7];
 
 	P(A, B, C, D, E, F, G, H, W[0], 0x428A2F98);
 	P(H, A, B, C, D, E, F, G, W[1], 0x71374491);
@@ -308,7 +307,6 @@ void Com_SHA2ToHex (const byte digest[32], char final[65])
 
 void Com_SHA2Hmac (const byte* buf, uint32_t buflen, const byte* key, uint32_t keylen, byte digest[32])
 {
-	uint32_t i;
 	sha2_context ctx;
 	byte k_ipad[64];
 	byte k_opad[64];
@@ -317,7 +315,7 @@ void Com_SHA2Hmac (const byte* buf, uint32_t buflen, const byte* key, uint32_t k
 	memset(k_ipad, 0x36, 64);
 	memset(k_opad, 0x5C, 64);
 
-	for (i = 0; i < keylen; i++) {
+	for (uint32_t i = 0; i < keylen; i++) {
 		if (i >= 64)
 			break;
 
