@@ -3489,7 +3489,7 @@ mapdef urban_buildings
 	description		"_Urban"
 	params			("buildings")
 	size			"large"
-	maxaliens		30
+	maxaliens		25
 
 	multiplayer		true
 	teams			1
