@@ -35,20 +35,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 bool HTTP_ExtractComponents (const char* url, char* server, size_t serverLength, char* path, size_t pathLength, int* port)
 {
-	char* s, *buf;
 	const char* proto = "http://";
 	const size_t protoLength = strlen(proto);
 	char buffer[1024];
-	int i;
 
 	if (Q_strncasecmp(proto, url, protoLength))
 		return false;
 
 	Q_strncpyz(buffer, url, sizeof(buffer));
-	buf = buffer;
+	char* buf = buffer;
 
 	buf += protoLength;
-	i = 0;
+	int i = 0;
+	char* s;
 	for (s = server; *buf != '\0' && *buf != ':' && *buf != '/';) {
 		if (i >= serverLength - 1)
 			return false;
@@ -79,10 +78,8 @@ bool HTTP_ExtractComponents (const char* url, char* server, size_t serverLength,
 size_t HTTP_Header (void* ptr, size_t size, size_t nmemb, void* stream)
 {
 	char headerBuff[1024];
-	size_t bytes;
+	const size_t bytes = size * nmemb;
 	size_t len;
-
-	bytes = size * nmemb;
 
 	if (bytes <= 16)
 		return bytes;
@@ -108,12 +105,8 @@ size_t HTTP_Header (void* ptr, size_t size, size_t nmemb, void* stream)
  */
 size_t HTTP_Recv (void* ptr, size_t size, size_t nmemb, void* stream)
 {
-	size_t bytes;
-	dlhandle_t* dl;
-
-	dl = (dlhandle_t*)stream;
-
-	bytes = size * nmemb;
+	const size_t bytes = size * nmemb;
+	dlhandle_t* dl = (dlhandle_t*)stream;
 
 	if (!dl->fileSize) {
 		dl->fileSize = bytes > 131072 ? bytes : 131072;

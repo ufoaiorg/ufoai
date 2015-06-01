@@ -30,7 +30,6 @@
 #define SEEK_SET    0
 #endif
 
-
 static voidpf ZCALLBACK fopen_file_func (voidpf opaque, const char* filename, int mode)
 {
     FILE* file = NULL;
@@ -49,33 +48,24 @@ static voidpf ZCALLBACK fopen_file_func (voidpf opaque, const char* filename, in
     return file;
 }
 
-
 static uLong ZCALLBACK fread_file_func (voidpf opaque, voidpf stream, void* buf, uLong size)
 {
-    uLong ret;
-    ret = (uLong)fread(buf, 1, (size_t)size, (FILE* )stream);
-    return ret;
+    return (uLong)fread(buf, 1, (size_t)size, (FILE* )stream);
 }
-
 
 static uLong ZCALLBACK fwrite_file_func (voidpf opaque, voidpf stream, const void* buf, uLong size)
 {
-    uLong ret;
-    ret = (uLong)fwrite(buf, 1, (size_t)size, (FILE* )stream);
-    return ret;
+    return (uLong)fwrite(buf, 1, (size_t)size, (FILE* )stream);
 }
 
 static long ZCALLBACK ftell_file_func (voidpf opaque, voidpf stream)
 {
-    long ret;
-    ret = ftell((FILE* )stream);
-    return ret;
+    return ftell((FILE* )stream);
 }
 
 static long ZCALLBACK fseek_file_func (voidpf opaque, voidpf stream, uLong offset, int origin)
 {
     int fseek_origin=0;
-    long ret;
     switch (origin)
     {
     case ZLIB_FILEFUNC_SEEK_CUR :
@@ -89,23 +79,17 @@ static long ZCALLBACK fseek_file_func (voidpf opaque, voidpf stream, uLong offse
         break;
     default: return -1;
     }
-    ret = 0;
-    fseek((FILE* )stream, offset, fseek_origin);
-    return ret;
+    return fseek((FILE* )stream, offset, fseek_origin);
 }
 
 static int ZCALLBACK fclose_file_func (voidpf opaque, voidpf stream)
 {
-    int ret;
-    ret = fclose((FILE* )stream);
-    return ret;
+    return fclose((FILE* )stream);
 }
 
 static int ZCALLBACK ferror_file_func (voidpf opaque, voidpf stream)
 {
-    int ret;
-    ret = ferror((FILE* )stream);
-    return ret;
+    return ferror((FILE* )stream);
 }
 
 void fill_fopen_filefunc (zlib_filefunc_def* pzlib_filefunc_def)

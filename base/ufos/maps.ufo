@@ -1070,10 +1070,61 @@ mapdef gate
 	)
 }
 
-mapdef forest_nature_large
+/* Splitted the forest_nature_large mapdef into parts _a and _b,
+   to see if the tests fail a certain assembly. */
+
+mapdef forest_nature_large_a
 {
 	map			"+forest"
-	params		("nature_large_a" "nature_large_b")
+	params		("nature_large_a")
+	description	"_Forest"
+	size		"large"
+	maxaliens	30
+
+	multiplayer		true
+	teams			1
+	gametypes
+	(
+		coop2
+		coop3
+		coop4
+	)
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		craft_crash_bomber
+		craft_crash_corrupter
+	)
+
+	terrains
+	(
+		"grass"
+		"mountain"
+		"wasted"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"nopopulation"
+	)
+}
+
+mapdef forest_nature_large_b
+{
+	map			"+forest"
+	params		("nature_large_b")
 	description	"_Forest"
 	size		"large"
 	maxaliens	30
@@ -3438,7 +3489,7 @@ mapdef urban_buildings
 	description		"_Urban"
 	params			("buildings")
 	size			"large"
-	maxaliens		30
+	maxaliens		25
 
 	multiplayer		true
 	teams			1

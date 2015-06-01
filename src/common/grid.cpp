@@ -258,17 +258,14 @@ void Step::calcNewTUs (const pathing_t* path)
  */
 bool Step::checkWalkingDirections (const pathing_t* path)
 {
-	int nx, ny, nz;
-	int passageHeight;
 	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
 	const int fallingHeight = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
 	const int stepupHeight = routing.getStepupHeight(actorSize, fromPos[0], fromPos[1], fromPos[2], dir);		/**< The actual stepup height without the level flags */
-	int heightChange;
 	/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
-	int actorStepupHeight = PATHFINDING_MAX_STEPUP;
+	const int actorStepupHeight = PATHFINDING_MAX_STEPUP;
 
 	/* This is the standard passage height for all units trying to move horizontally. */
-	passageHeight = routing.getConn(actorSize, fromPos, dir);
+	const int passageHeight = routing.getConn(actorSize, fromPos, dir);
 	if (passageHeight < actorHeight) {
 #if 0
 /** I know this code could be streamlined, but until I understand it myself, plz leave it like it is !*/
@@ -316,9 +313,9 @@ bool Step::checkWalkingDirections (const pathing_t* path)
 		return false;	/* Actor cannot stepup high enough. */
 	}
 
-	nx = toPos[0];
-	ny = toPos[1];
-	nz = toPos[2];
+	const int nx = toPos[0];
+	const int ny = toPos[1];
+	const int nz = toPos[2];
 
 	if (routing.isStepUpLevel(actorSize, fromPos, dir) && toPos[2] < PATHFINDING_HEIGHT - 1) {
 		toPos[2]++;
@@ -328,16 +325,16 @@ bool Step::checkWalkingDirections (const pathing_t* path)
 		 *
 		 * @brief OK, now some crazy tests:
 		 * Because of the grid based nature of this game, each cell can have at most only ONE
-		 * floor that can be stood upon.  If an actor can walk down a slope that is in the
+		 * floor that can be stood upon. If an actor can walk down a slope that is in the
 		 * same level, and actor should be able to walk on (and not fall into) the slope that
-		 * decends a game level.  BUT it is possible for an actor to be able to crawl under a
+		 * decends a game level. BUT it is possible for an actor to be able to crawl under a
 		 * floor that can be stood on, with this opening being in the same cell as the floor.
 		 * SO to prevent any conflicts, we will move down a floor under the following conditions:
 		 * - The STEPDOWN flag is set
 		 * - The floor in the immediately adjacent cell is lower than the current floor, but not
 		 *   more than CELL_HEIGHT units (in QUANT units) below the current floor.
-		 * - The actor's stepup value is at least the inverse stepup value.  This is the stepup
-		 *   FROM the cell we are moving towards back into the cell we are starting in.  This
+		 * - The actor's stepup value is at least the inverse stepup value. This is the stepup
+		 *   FROM the cell we are moving towards back into the cell we are starting in. This
 		 *    ensures that the actor can actually WALK BACK.
 		 * If the actor does not have a high enough stepup but meets all the other requirements to
 		 * descend the level, the actor will move into a fall state, provided that there is no
@@ -352,7 +349,7 @@ bool Step::checkWalkingDirections (const pathing_t* path)
 		toPos[2]--;		/* Stepping down into lower cell. */
 	}
 
-	heightChange = routing.getFloor(actorSize, toPos) - routing.getFloor(actorSize, fromPos) + (toPos[2] - fromPos[2]) * CELL_HEIGHT;
+	const int heightChange = routing.getFloor(actorSize, toPos) - routing.getFloor(actorSize, fromPos) + (toPos[2] - fromPos[2]) * CELL_HEIGHT;
 
 	/* If the actor tries to fall more than falling_height, then prohibit the move. */
 	if (heightChange < -fallingHeight && !hasLadderSupport) {
@@ -369,7 +366,6 @@ bool Step::checkWalkingDirections (const pathing_t* path)
 		if (routing.isStepDownLevel(actorSize, fromPos, dir)) {
 			return false;		/* There is stepdown from here. */
 		}
-		heightChange = 0;
 		toPos[2]--;
 	}
 	return true;
@@ -425,21 +421,17 @@ bool Step::checkVerticalDirections () const
 	} else if (dir == DIRECTION_CLIMB_UP) {
 		if (flier && QuantToModel(routing.getCeiling(actorSize, fromPos)) < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* Not enough headroom to fly up. */
 			return false;
-		}
-		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
-		if (dir == DIRECTION_CLIMB_UP && !hasLadderToClimb) {
+		} else if (!hasLadderToClimb) {
+			/* If the actor is not a flyer and tries to move up, there must be a ladder. */
 			return false;
 		}
 	} else if (dir == DIRECTION_CLIMB_DOWN) {
-		if (flier) {
-			if (routing.getFloor(actorSize, fromPos) >= 0 ) { /* Can't fly down through a floor. */
-				return false;
-			}
-		} else {
+		if (flier && routing.getFloor(actorSize, fromPos) >= 0) {
+			/* Can't fly down through a floor. */
+			return false;
+		} else if (!hasLadderToClimb) {
 			/* If the actor is not a flyer and tries to move down, there must be a ladder. */
-			if (!hasLadderToClimb) {
-				return false;
-			}
+			return false;
 		}
 	}
 	return true;
@@ -504,12 +496,6 @@ bool Step::isPossible (const pathing_t* path)
  */
 void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, int maxTUs, forbiddenList_t*  fb_list)
 {
-	priorityQueue_t pqueue;
-	pos4_t epos; /**< Extended position; includes crouching state */
-	pos3_t pos;
-	/* this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
-	pos3_t excludeFromForbiddenList;
-
 	/* Confirm bounds */
 	assert((from[2]) < PATHFINDING_HEIGHT);
 
@@ -520,11 +506,16 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 
 	maxTUs = std::min(maxTUs, MAX_ROUTE_TUS);
 
+	/* this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
+	pos3_t excludeFromForbiddenList;
 	/* Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
 	VectorCopy(from, excludeFromForbiddenList);
 
+	priorityQueue_t pqueue;
+	pos4_t epos; /**< Extended position; includes crouching state */
+	pos3_t pos;
 	/* amst is the acronym for actor movement state */
-	for (int amst = 0; amst < ACTOR_MAX_STATES; amst++) {
+	for (int amst = 0; amst < ACTOR_MAX_STATES; ++amst) {
 		/* set starting position to 0 TUs.*/
 		RT_AREA_POS(path, from, amst) = 0;
 
@@ -532,11 +523,9 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 		Vector4Set(epos, from[0], from[1], from[2], amst);
 		PQueuePush(&pqueue, epos, 0);
 
-		int count = 0;
 		while (!PQueueIsEmpty(&pqueue)) {
 			PQueuePop(&pqueue, epos);
 			VectorCopy(epos, pos);
-			count++;
 
 			/* if reaching that square already took too many TUs,
 			 * don't bother to reach new squares *from* there. */
@@ -545,7 +534,6 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 				continue;
 
 			for (int dir = 0; dir < PATHFINDING_DIRECTIONS; ++dir) {
-				Step step(routing, pos, actorSize, amst, dir);
 				/* Directions 12, 14, and 15 are currently undefined. */
 				if (dir == 12 || dir == 14 || dir == 15)
 					continue;
@@ -553,6 +541,7 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 				if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
 					continue;
 
+				Step step(routing, pos, actorSize, amst, dir);
 				if (!step.init())
 					continue; /* either dir is irrelevant or something worse happened */
 
@@ -577,7 +566,6 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
 				}
 			}
 		}
-		/* Com_Printf("Loop: %i", count); */
 		PQueueFree(&pqueue);
 	}
 }
@@ -601,14 +589,6 @@ void Grid_CalcPathing (const Routing& routing, const actorSizeEnum_t actorSize, 
  */
 bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pathing_t* path, const pos3_t from, const pos3_t targetPos, byte crouchingState, int maxTUs, forbiddenList_t* forbiddenList)
 {
-	bool found = false;
-	int count;
-	priorityQueue_t pqueue;
-	pos4_t epos; /**< Extended position; includes crouching state */
-	pos3_t pos;
-	/* this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
-	pos3_t excludeFromForbiddenList;
-
 	/* Confirm bounds */
 	assert((from[2]) < PATHFINDING_HEIGHT);
 	assert(crouchingState == 0 || crouchingState == 1);	/* s.a. ACTOR_MAX_STATES */
@@ -620,20 +600,25 @@ bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pat
 		path->fbList = forbiddenList;
 	}
 
+	/* this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
+	pos3_t excludeFromForbiddenList;
 	/* Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
 	VectorCopy(from, excludeFromForbiddenList);
 	/* set starting position to 0 TUs.*/
 	RT_AREA_POS(path, from, crouchingState) = 0;
 
+	bool found = false;
+	priorityQueue_t pqueue;
+	pos4_t epos; /**< Extended position; includes crouching state */
+	pos3_t pos;
+
 	PQueueInitialise(&pqueue, 1024);
 	Vector4Set(epos, from[0], from[1], from[2], crouchingState);
 	PQueuePush(&pqueue, epos, 0);
 
-	count = 0;
 	while (!PQueueIsEmpty(&pqueue)) {
 		PQueuePop(&pqueue, epos);
 		VectorCopy(epos, pos);
-		count++;
 
 		/* if reaching that square already took too many TUs,
 		 * don't bother to reach new squares *from* there. */
@@ -642,7 +627,6 @@ bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pat
 			continue;
 
 		for (int dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
-			Step step(routing, pos, actorSize, crouchingState, dir);
 			/* Directions 12, 14, and 15 are currently undefined. */
 			if (dir == 12 || dir == 14 || dir == 15)
 				continue;
@@ -650,6 +634,7 @@ bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pat
 			if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH)
 				continue;
 
+			Step step(routing, pos, actorSize, crouchingState, dir);
 			if (!step.init())
 				continue;		/* either dir is irrelevant or something worse happened */
 
@@ -686,7 +671,6 @@ bool Grid_FindPath (const Routing& routing, const actorSizeEnum_t actorSize, pat
 		if (found)
 			break;
 	}
-	/* Com_Printf("Loop: %i", count); */
 	PQueueFree(&pqueue);
 	return found;
 }
@@ -734,10 +718,10 @@ pos_t Grid_MoveLength (const pathing_t* path, const pos3_t to, byte crouchingSta
  */
 int Grid_MoveNext (const pathing_t* path, const pos3_t toPos, byte crouchingState)
 {
-	const pos_t l = RT_AREA_POS(path, toPos, crouchingState); /**< Get TUs for this square */
+	const pos_t moveLen = RT_AREA_POS(path, toPos, crouchingState); /**< Get TUs for this square */
 
 	/* Check to see if the TUs needed to move here are greater than 0 and less then ROUTING_NOT_REACHABLE */
-	if (!l || l == ROUTING_NOT_REACHABLE) {
+	if (!moveLen || moveLen == ROUTING_NOT_REACHABLE) {
 		/* ROUTING_UNREACHABLE means, not possible/reachable */
 		return ROUTING_UNREACHABLE;
 	}
@@ -798,7 +782,7 @@ int Grid_GetTUsForDirection (const int dir, bool crouched)
  */
 pos_t Grid_Fall (const Routing& routing, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
-	int z = pos[2], base, diff;
+	int z = pos[2];
 	bool flier = false; /** @todo if an actor can fly, then set this to true. */
 
 	/* Is z off the map? */
@@ -814,9 +798,9 @@ pos_t Grid_Fall (const Routing& routing, const actorSizeEnum_t actorSize, const 
 	 * If z < 0, we are going down.
 	 * If z >= CELL_HEIGHT, we are going up.
 	 * If 0 <= z <= CELL_HEIGHT, then z / 16 = 0, no change. */
-	base = routing.getFloor(actorSize, pos[0], pos[1], z);
+	const int base = routing.getFloor(actorSize, pos[0], pos[1], z);
 	/* Hack to deal with negative numbers- otherwise rounds toward 0 instead of down. */
-	diff = base < 0 ? (base - (CELL_HEIGHT - 1)) / CELL_HEIGHT : base / CELL_HEIGHT;
+	const int diff = base < 0 ? (base - (CELL_HEIGHT - 1)) / CELL_HEIGHT : base / CELL_HEIGHT;
 	z += diff;
 	/* The tracing code will set locations without a floor to -1.  Compensate for that. */
 	if (z < 0)
@@ -869,19 +853,17 @@ void Grid_PosToVec (const Routing& routing, const actorSizeEnum_t actorSize, con
  */
 void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing& routing, const GridBox& box, const char** list)
 {
-	int x, y, z, actorSize;
-
 	/* check unit heights */
-	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
+	for (int actorSize = 1; actorSize <= ACTOR_MAX_SIZE; ++actorSize) {
 		GridBox rBox(box);	/* the box we will actually reroute */
 		/* Offset the initial X and Y to compensate for larger actors when needed. */
 		rBox.expandXY(actorSize - 1);
 		/* also start one level above the box to measure high floors correctly */
 		rBox.addOneZ();
-		for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
-			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
+		for (int y = rBox.getMinY(); y <= rBox.getMaxY(); ++y) {
+			for (int x = rBox.getMinX(); x <= rBox.getMaxX(); ++x) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
-				for (z = rBox.getMaxZ(); z >= 0; z--) {
+				for (int z = rBox.getMaxZ(); z >= 0; --z) {
 					const int newZ = RT_CheckCell(mapTiles, routing, actorSize, x, y, z, list);
 					assert(newZ <= z);
 					z = newZ;
@@ -891,13 +873,13 @@ void Grid_RecalcBoxRouting (mapTiles_t* mapTiles, Routing& routing, const GridBo
 	}
 
 	/* check connections */
-	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
+	for (int actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
 		GridBox rBox(box);			/* the box we will actually reroute */
 		rBox.expandXY(actorSize);	/* for connections, expand by the full size of the actor */
 		rBox.addOneZ();
-		for (y = rBox.getMinY(); y <= rBox.getMaxY(); y++) {
-			for (x = rBox.getMinX(); x <= rBox.getMaxX(); x++) {
-				for (int dir = 0; dir < CORE_DIRECTIONS; dir++) {
+		for (int y = rBox.getMinY(); y <= rBox.getMaxY(); ++y) {
+			for (int x = rBox.getMinX(); x <= rBox.getMaxX(); ++x) {
+				for (int dir = 0; dir < CORE_DIRECTIONS; ++dir) {
 					/* for places outside the model box, skip dirs that can not be affected by the model */
 					if (x > box.getMaxX() && dir != 1 && dir != 5 && dir != 6)
 						continue;

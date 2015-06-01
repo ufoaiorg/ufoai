@@ -102,9 +102,6 @@ static memPool_t* Mem_FindPool (const char* name)
  */
 memPool_t* _Mem_CreatePool (const char* name, const char* fileName, const int fileLine)
 {
-	memPool_t* pool;
-	uint32_t i;
-
 	/* Check name */
 	if (!name || !name[0])
 		Sys_Error("Mem_CreatePool: nullptr name %s:#%i", fileName, fileLine);
@@ -112,11 +109,12 @@ memPool_t* _Mem_CreatePool (const char* name, const char* fileName, const int fi
 		Com_Printf("Mem_CreatePoole: name '%s' too long, truncating!\n", name);
 
 	/* See if it already exists */
-	pool = Mem_FindPool(name);
+	memPool_t* pool = Mem_FindPool(name);
 	if (pool)
 		return pool;
 
 	/* Nope, create a slot */
+	uint32_t i;
 	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
 		if (!pool->inUse)
 			break;
@@ -205,9 +203,6 @@ static void _Mem_CheckSentinels (memBlock_t* const mem, const char* fileName, co
  */
 void _Mem_Free (void* ptr, const char* fileName, const int fileLine)
 {
-	memBlock_t* search;
-	memBlock_t** prev;
-
 	if (!ptr)
 		return;
 
@@ -221,9 +216,9 @@ void _Mem_Free (void* ptr, const char* fileName, const int fileLine)
 	mem->pool->byteCount -= Mem_BlockRawSize(mem);
 
 	/* De-link it */
-	prev = &mem->pool->blocks[(uintptr_t)mem % MEM_HASH];
+	memBlock_t** prev = &mem->pool->blocks[(uintptr_t)mem % MEM_HASH];
 	for (;;) {
-		search = *prev;
+		memBlock_t* search = *prev;
 		if (!search)
 			break;
 
@@ -249,15 +244,13 @@ void _Mem_FreeTag (memPool_t* pool, const int tagNum, const char* fileName, cons
 		return;
 
 	for (int j = 0; j < MEM_HASH; j++) {
-		memBlock_t* mem, *next;
-		for (mem = pool->blocks[j]; mem; mem = next) {
+		for (memBlock_t* mem = pool->blocks[j], *next = nullptr; mem; mem = next) {
 			next = mem->next;
 			if (mem->tagNum == tagNum)
 				_Mem_Free(Mem_BlockToPtr(mem), fileName, fileLine);
 		}
 	}
 }
-
 
 /**
  * @brief Free all items within a pool
@@ -270,8 +263,7 @@ void _Mem_FreePool (memPool_t* pool, const char* fileName, const int fileLine)
 		return;
 
 	for (int j = 0; j < MEM_HASH; j++) {
-		memBlock_t* mem, *next;
-		for (mem = pool->blocks[j]; mem; mem = next) {
+		for (memBlock_t* mem = pool->blocks[j], *next = nullptr; mem; mem = next) {
 			next = mem->next;
 			_Mem_Free(Mem_BlockToPtr(mem), fileName, fileLine);
 		}
@@ -281,14 +273,11 @@ void _Mem_FreePool (memPool_t* pool, const char* fileName, const int fileLine)
 	assert(pool->byteCount == 0);
 }
 
-
 /**
  * @brief Optionally returns 0 filled memory allocated in a pool with a tag
  */
 void* _Mem_Alloc (size_t size, bool zeroFill, memPool_t* pool, const int tagNum, const char* fileName, const int fileLine)
 {
-	memBlock_t* mem;
-
 	/* Check pool */
 	if (!pool)
 		Sys_Error("Mem_Alloc: Error - no pool given\n" "alloc: %s:#%i", fileName, fileLine);
@@ -302,7 +291,7 @@ void* _Mem_Alloc (size_t size, bool zeroFill, memPool_t* pool, const int tagNum,
 
 	/* Add header and round to cacheline */
 	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
-	mem = static_cast<memBlock_t* >(malloc(size));
+	memBlock_t* mem = static_cast<memBlock_t* >(malloc(size));
 	if (!mem)
 		Sys_Error("Mem_Alloc: failed on allocation of '" UFO_SIZE_T "' bytes\n" "alloc: %s:#%i", size, fileName, fileLine);
 
@@ -339,9 +328,6 @@ void* _Mem_Alloc (size_t size, bool zeroFill, memPool_t* pool, const int tagNum,
 
 void* _Mem_ReAlloc (void* ptr, size_t size, const char* fileName, const int fileLine)
 {
-	memPool_t* pool;
-	void* newPtr;
-
 	if (!size)
 		Sys_Error("Use Mem_Free instead");
 
@@ -355,10 +341,10 @@ void* _Mem_ReAlloc (void* ptr, size_t size, const char* fileName, const int file
 	if (mem->memSize == size)
 		return ptr;
 
-	pool = mem->pool;
+	memPool_t* pool = mem->pool;
 
 	/* allocate memory for the new size */
-	newPtr = _Mem_Alloc(size, false, pool, mem->tagNum, fileName, fileLine);
+	void* newPtr = _Mem_Alloc(size, false, pool, mem->tagNum, fileName, fileLine);
 
 	/* copy old data */
 	memcpy(newPtr, ptr, std::min(mem->memSize, size));
@@ -398,12 +384,10 @@ char* _Mem_PoolStrDupTo (const char* in, char** out, memPool_t* pool, const int 
 
 void* _Mem_PoolDup (const void* in, size_t size, memPool_t* pool, const int tagNum, const char* fileName, const int fileLine)
 {
-	void* copy;
-
 	assert(in != nullptr);
 	assert(size > 0);
 
-	copy = _Mem_Alloc(size, false, pool, tagNum, fileName, fileLine);
+	void* copy = _Mem_Alloc(size, false, pool, tagNum, fileName, fileLine);
 	memcpy(copy, in, size);
 	return copy;
 }
@@ -418,9 +402,7 @@ void* _Mem_PoolDup (const void* in, size_t size, memPool_t* pool, const int tagN
  */
 char* _Mem_PoolStrDup (const char* in, memPool_t* pool, const int tagNum, const char* fileName, const int fileLine)
 {
-	char* out;
-
-	out = (char*)_Mem_Alloc((size_t)(strlen(in) + 1), true, pool, tagNum, fileName, fileLine);
+	char* out = (char*)_Mem_Alloc((size_t)(strlen(in) + 1), true, pool, tagNum, fileName, fileLine);
 	strcpy(out, in);
 
 	return out;
@@ -436,7 +418,6 @@ uint32_t _Mem_PoolSize (memPool_t* pool)
 
 	return pool->byteCount;
 }
-
 
 uint32_t _Mem_ChangeTag (memPool_t* pool, const int tagFrom, const int tagTo)
 {
@@ -456,7 +437,6 @@ uint32_t _Mem_ChangeTag (memPool_t* pool, const int tagFrom, const int tagTo)
 
 	return numChanged;
 }
-
 
 static void _Mem_CheckPoolIntegrity (memPool_t* pool, const char* fileName, const int fileLine)
 {
@@ -483,7 +463,6 @@ static void _Mem_CheckPoolIntegrity (memPool_t* pool, const char* fileName, cons
 		Sys_Error("Mem_CheckPoolIntegrity: bad pool size\n" "check: %s:#%i", fileName, fileLine);
 }
 
-
 void _Mem_CheckGlobalIntegrity (const char* fileName, const int fileLine)
 {
 	memPool_t* pool;
@@ -494,7 +473,6 @@ void _Mem_CheckGlobalIntegrity (const char* fileName, const int fileLine)
 			_Mem_CheckPoolIntegrity(pool, fileName, fileLine);
 	}
 }
-
 
 /**
  * Searches a given pointer in all memory pool blocks
@@ -529,9 +507,8 @@ static void Mem_Check_f (void)
 
 static void Mem_Stats_f (void)
 {
-	uint32_t totalBlocks, totalBytes;
+	uint32_t totalBytes, i;
 	memPool_t* pool;
-	uint32_t poolNum, i;
 
 	if (Cmd_Argc() > 1) {
 		memPool_t* best;
@@ -558,7 +535,7 @@ static void Mem_Stats_f (void)
 		Com_Printf("block line  file                 size       \n");
 		Com_Printf("----- ----- -------------------- ---------- \n");
 
-		totalBytes = 0;
+		uint32_t totalBytes = 0;
 		int j = 0;
 		for (j = 0; j < MEM_HASH; j++) {
 			for (i = 0, mem = best->blocks[j]; mem; mem = mem->next, i++) {
@@ -582,9 +559,9 @@ static void Mem_Stats_f (void)
 	Com_Printf("    blocks size                  name\n");
 	Com_Printf("--- ------ ---------- ---------- --------\n");
 
-	totalBlocks = 0;
+	uint32_t totalBlocks = 0;
 	totalBytes = 0;
-	poolNum = 0;
+	uint32_t poolNum = 0;
 	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
 		if (!pool->inUse)
 			continue;

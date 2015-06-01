@@ -450,13 +450,14 @@ void GameTest::testCountSpawnpointsForMap(unsigned int seed, const mapDef_t *md)
 	}
 
 	Com_Printf("\nCountSpawnpoints - test start: mapdef %s %s\n", md->mapTheme, md->id);
-	/* This also prevents the test from timing out on buildbot. */
-	std::cout << "[          ] testing mapdef: " << md->id << std::endl;
-
+	/* Calling std::cout also prevents the test from timing out on buildbot. */
 	if (LIST_IsEmpty(md->params)) {
+		std::cout << "[          ] testing mapdef: " << md->id << std::endl;
 		testCountSpawnpointsForMapWithAssembly(seed, md, nullptr);
 	} else {
 		LIST_Foreach(md->params, const char, asmName) {
+			std::cout << "[          ] testing mapdef: " << md->id << ", assembly: "
+				<< asmName << std::endl;
 			testCountSpawnpointsForMapWithAssembly(seed, md, asmName);
 		}
 	}

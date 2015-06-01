@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ports/system.h"
 
 #define MAX_ALLOWED_TIME_TO_ASSEMBLE 30000
+#define TEST_THEME "forest"
+#define TEST_ASSEMBLY "nature_large_b"
 
 static char mapStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 static char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
@@ -55,10 +57,44 @@ protected:
 		}
 	}
 
+	long testAssembly(const char *source, const unsigned int numRuns, const char *mapTheme, const char *mapAssembly);
+
 	static void TearDownTestCase() {
 		TEST_Shutdown();
 	}
 };
+
+long RandomMapAssemblyTest::testAssembly(const char *source, const unsigned int numRuns, const char *mapTheme, const char *mapAssembly)
+{
+	char entityString[MAX_TOKEN_CHARS];
+	long time = 0;
+
+	for (int i = 0; i < numRuns; i++) {
+		/** @todo the assemble thread sets a different seed */
+		srand(i);
+		Com_Printf("%s - assembling map: theme: %s assembly: %s seed: %i\n", source, mapTheme, mapAssembly, i);
+
+		long time = Sys_Milliseconds();
+		int numPlaced = SV_AssembleMap(mapTheme, mapAssembly, mapStr, posStr, entityString, i, true);
+		time = Sys_Milliseconds() - time;
+
+		if (numPlaced < 1) {
+			Com_Printf("%s - error: No tiles placed.\n", source);
+			ADD_FAILURE() << source << " - error: No tiles placed (theme: " << mapTheme
+				<< " assembly: " << mapAssembly << " seed: " << i << ").";
+		}
+		if (time > MAX_ALLOWED_TIME_TO_ASSEMBLE) {
+			Com_Printf("%s - error: Assembly %s in map theme +%s failed to assemble in a reasonable time with seed %i\n", source, mapTheme, mapAssembly, i);
+			ADD_FAILURE() << "Assembly " << mapTheme << "in map theme +" << mapAssembly
+				<< " failed " << source << "using seed: %i " << i
+				<< "(time measured: " << time << " ms).";
+		}
+
+		Com_Printf("%s - result: seed: %i tiles placed: %i time measured: %li ms\n", source, i, numPlaced, time);
+		fflush(stdout);
+	}
+	return time;
+}
 
 TEST_F(RandomMapAssemblyTest, UMPExtends)
 {
@@ -74,63 +110,37 @@ TEST_F(RandomMapAssemblyTest, Assembly)
 	char entityString[MAX_TOKEN_CHARS];
 
 	srand(0);
-	int numPlaced = SV_AssembleMap("forest", "large", mapStr, posStr, entityString, 0, true);
+	int numPlaced = SV_AssembleMap(TEST_THEME, TEST_ASSEMBLY, mapStr, posStr, entityString, 0, true);
 	ASSERT_TRUE(numPlaced != 0);
 }
 
 /* timeout version */
 TEST_F(RandomMapAssemblyTest, MassAssemblyTimeout)
 {
-	char entityString[MAX_TOKEN_CHARS];
-
+	const char *self = "RandomMapAssemblyTest.MassAssemblyTimeout";
+	unsigned const int numRuns = 10;
 	sv_threads->integer = 1;
-	for (int i = 0; i < 10; i++) {
-		/** @todo the assemble thread sets a different seed */
-		srand(i);
-		long time = Sys_Milliseconds();
-		const char* mapTheme = "forest";
-		int numPlaced = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
-		ASSERT_TRUE(numPlaced != 0);
-		time = Sys_Milliseconds() - time;
-		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << mapTheme << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
-		Com_Printf("%i: %i %li\n", i, numPlaced, time);
-	}
+	SCOPED_TRACE(va(self));
+	testAssembly(self, numRuns, TEST_THEME, TEST_ASSEMBLY);
 }
 
 TEST_F(RandomMapAssemblyTest, MassAssemblyParallel)
 {
-	char entityString[MAX_TOKEN_CHARS];
-
+	const char *self = "RandomMapAssemblyTest.MassAssemblyParallel";
+	unsigned const int numRuns = 10;
 	sv_threads->integer = 2;
-	for (int i = 0; i < 10; i++) {
-		/** @todo the assemble thread sets a different seed */
-		srand(i);
-		long time = Sys_Milliseconds();
-		const char* mapTheme = "forest";
-		int numPlaced = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
-		ASSERT_TRUE(numPlaced != 0);
-		time = Sys_Milliseconds() - time;
-		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << mapTheme << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
-		Com_Printf("%i: %i %li\n", i, numPlaced, time); fflush(stdout);
-	}
+	SCOPED_TRACE(va(self));
+	testAssembly(self, numRuns, TEST_THEME, TEST_ASSEMBLY);
 }
 
 /* sequential version */
 TEST_F(RandomMapAssemblyTest, MassAssemblySequential)
 {
-	char entityString[MAX_TOKEN_CHARS];
-
+	const char *self = "RandomMapAssemblyTest.MassAssemblySequential";
+	unsigned const int numRuns = 10;
 	sv_threads->integer = 0;
-	for (int i = 0; i < 10; i++) {
-		srand(i);
-		long time = Sys_Milliseconds();
-		const char* mapTheme = "forest";
-		int numPlaced = SV_AssembleMap(mapTheme, "large", mapStr, posStr, entityString, i, true);
-		ASSERT_TRUE(numPlaced != 0);
-		time = Sys_Milliseconds() - time;
-		ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << mapTheme << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
-		Com_Printf("%i: %i %li\n", i, numPlaced, time);
-	}
+	SCOPED_TRACE(va(self));
+	testAssembly(self, numRuns, TEST_THEME, TEST_ASSEMBLY);
 }
 
 /* test the maps that have seedlists */
@@ -139,32 +149,24 @@ TEST_F(RandomMapAssemblyTest, Seedlists)
 	const char* assNames[][2] = {
 		{"farm", "medium"},
 		{"farm", "large"},
-		{"forest", "large"},
-		{"forest", "large_crash"},
+		{TEST_THEME, TEST_ASSEMBLY},
+		{"forest", "nature_medium_b"},
 		{"oriental", "large"},
-		{"village", "commercial"},
+		{"village", "large"},
 		{"village", "small"}
 	};
-	size_t length = sizeof(assNames) / (2 * sizeof(char*));
-	char entityString[MAX_TOKEN_CHARS];
 
+	size_t length = sizeof(assNames) / (2 * sizeof(char*));
+	const char *self = "RandomMapAssemblyTest.Seedlists";
+	unsigned const int numRuns = 20;
 	sv_threads->integer = 0;
 	long timeSum = 0;
+
+	SCOPED_TRACE(va(self));
 	for (int n = 0; n < length; n++) {
-		for (int i = 1; i < 20; i++) {
-			srand(i);
-			int time = Sys_Milliseconds();
-			Com_Printf("Seed: %i\n", i);
-			int numPlaced = SV_AssembleMap(assNames[n][0], assNames[n][1], mapStr, posStr, entityString, i, true);
-			ASSERT_TRUE(numPlaced != 0);
-			time = Sys_Milliseconds() - time;
-			timeSum += time;
-			ASSERT_TRUE(time < MAX_ALLOWED_TIME_TO_ASSEMBLE) << assNames[n][0] << " fails to assemble in a reasonable time with seed " << i << "(time: " << time << " ms)";
-			if (time > 10000)
-				Com_Printf("Seed %i: tiles: %i ms: %i\n", i, numPlaced, time);
-		}
+		timeSum += testAssembly(self, numRuns, assNames[n][0], assNames[n][1]);
 	}
-	Com_Printf("TotalTime: %li\n", timeSum);
+	Com_Printf("%s - result: time total %li ms\n", self, timeSum);
 }
 
 #define SEED_TEST 0

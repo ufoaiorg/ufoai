@@ -210,14 +210,6 @@ tile +h7
 
 // nature tiles ----------------------------------------------------*
 
-tile +brook_h1
-{
-3 3
-0		0		0
-h		+h		h
-0		0		0
-}
-
 tile +brook_v1
 {
 3 3
@@ -262,13 +254,13 @@ tile +nature_04
 {
 9 9
 0		0		0		0		0		0		0		v		0
-0		0		0		0		0		+a		+a		+hv		h
+0		0		0		0		0		+a		+a		+v		0
 0		0		0		0		+a		+a		+a		+a		0
 0		0		0		0		+a		+a		+a		+a		0
 0		0		+a		+a		+a		+a		+a		0		0
 0		+a		+a		+a		+a		0		0		0		0
 0		+a		+a		+a		+a		0		0		0		0
-h		+hv		+a		+a		0		0		0		0		0
+0		+v		+a		+a		0		0		0		0		0
 0		v		0		0		0		0		0		0		0
 }
 
@@ -354,6 +346,12 @@ tile +nature_33
 
 // tilesets --------------------------------------------------------*
 
+tileset bigz {
+	+nature_01		// 4x4
+	+nature_02		// 4x4
+	+nature_03		// 4x3
+}
+
 // map assemblies --------------------------------------------------*
 
 assembly eaglenest
@@ -417,22 +415,19 @@ assembly nature_large_b
 {
 title "_Forest"
 size "16 10"
-+brook_h1		"0 9"	// 1x1
 +brook_v1		"0 9"	// 1x1
-+nature_01		"0 3"	// 4x4
-+nature_02		"0 3"	// 4x4
-+nature_03		"0 3"	// 4x3
 +nature_04		"1 1"	// 7x7
-+nature_11		"0 4"	// 1x1
-+nature_12		"0 4"	// 1x1
-+nature_20		"0 5"	// 2x2
++nature_11		"0 6"	// 1x1
++nature_12		"0 6"	// 1x1
++nature_20		"0 6"	// 2x2
 +nature_21		"0 1"	// 1x2
-+nature_22		"0 2"	// 1x2
-+nature_23		"0 2"	// 2x1
++nature_22		"0 6"	// 1x2
++nature_23		"0 6"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 5"	// 3x3
-*rm_ufo +craft_crash_bomber		"1 1"
+tileset bigz	"1 1"
+*rm_ufo +craft_crash_bomber	"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
@@ -460,7 +455,6 @@ assembly nature_medium_b
 {
 title "_Forest"
 size "10 12"
-+brook_h1		"0 9"	// 1x1
 +brook_v1		"0 9"	// 1x1
 +nature_01		"0 1"	// 4x4
 +nature_02		"0 1"	// 4x4
@@ -470,8 +464,8 @@ size "10 12"
 +nature_12		"0 4"	// 1x1
 +nature_20		"0 5"	// 2x2
 +nature_21		"0 1"	// 1x2
-+nature_22		"0 2"	// 1x2
-+nature_23		"0 2"	// 2x1
++nature_22		"0 6"	// 1x2
++nature_23		"0 6"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 5"	// 3x3
@@ -503,7 +497,6 @@ assembly nature_small_b
 {
 title "_Forest"
 size "10 10"
-+brook_h1		"0 9"	// 1x1
 +brook_v1		"0 9"	// 1x1
 +nature_01		"0 1"	// 4x4
 +nature_02		"0 1"	// 4x4

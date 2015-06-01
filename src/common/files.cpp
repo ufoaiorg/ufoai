@@ -65,9 +65,7 @@ void FS_CreateOpenPipeFile (const char* filename, qFILE* f)
  */
 const char* FS_Gamedir (void)
 {
-	searchpath_t* search;
-
-	for (search = fs_searchpaths; search; search = search->next) {
+	for (const searchpath_t* search = fs_searchpaths; search; search = search->next) {
 		if (search->write)
 			return search->filename;
 	}
@@ -92,10 +90,9 @@ int FS_FileLength (qFILE*  f)
 {
 	if (f->f) {
 		const int pos = ftell(f->f);
-		int end;
 
 		fseek(f->f, 0, SEEK_END);
-		end = ftell(f->f);
+		const int end = ftell(f->f);
 		fseek(f->f, pos, SEEK_SET);
 
 		return end;
@@ -183,11 +180,10 @@ int FS_OpenFile (const char* filename, qFILE* file, filemode_t mode)
 	Q_strncpyz(file->name, filename, sizeof(file->name));
 
 	/* check for links first */
-	for (filelink_t* link = fs_links; link; link = link->next) {
+	for (const filelink_t* link = fs_links; link; link = link->next) {
 		if (!strncmp(filename, link->from, link->fromlength)) {
-			int length;
 			Com_sprintf(netpath, sizeof(netpath), "%s%s", link->to, filename + link->fromlength);
-			length = FS_OpenFile(netpath, file, mode);
+			const int length = FS_OpenFile(netpath, file, mode);
 			Q_strncpyz(file->name, filename, sizeof(file->name));
 			if (length == -1)
 				Com_Printf("linked file could not be opened: %s\n", netpath);
@@ -196,11 +192,11 @@ int FS_OpenFile (const char* filename, qFILE* file, filemode_t mode)
 	}
 
 	/* search through the path, one element at a time */
-	for (searchpath_t* search = fs_searchpaths; search; search = search->next) {
+	for (const searchpath_t* search = fs_searchpaths; search; search = search->next) {
 		/* is the element a pak file? */
 		if (search->pack) {
 			/* look through all the pak file elements */
-			pack_t* pak = search->pack;
+			const pack_t* pak = search->pack;
 			for (int i = 0; i < pak->numfiles; i++) {
 				/* found it! */
 				if (!Q_strcasecmp(pak->files[i].name, filename)) {
@@ -260,7 +256,7 @@ int FS_Seek (qFILE*  f, long offset, int origin)
 		case FS_SEEK_SET:
 			unzSetCurrentFileInfoPosition(f->z, (unsigned long)f->filepos);
 			unzOpenCurrentFile(f->z);
-			/* fallthrough */
+			/* fall through */
 		case FS_SEEK_CUR:
 			while (remainder > PK3_SEEK_BUFFER_SIZE) {
 				FS_Read(buffer, PK3_SEEK_BUFFER_SIZE, f);
@@ -328,14 +324,10 @@ int FS_CheckFile (const char* fmt, ...)
  */
 int FS_Read2 (void* buffer, int len, qFILE* f, bool failOnEmptyRead)
 {
-	int read;
-	byte* buf;
-	int tries;
-
-	buf = (byte*) buffer;
+	byte* buf = (byte*) buffer;
 
 	if (f->z) {
-		read = unzReadCurrentFile(f->z, buf, len);
+		const int read = unzReadCurrentFile(f->z, buf, len);
 		if (read == -1)
 			Sys_Error("FS_Read (zipfile): -1 bytes read");
 
@@ -343,12 +335,12 @@ int FS_Read2 (void* buffer, int len, qFILE* f, bool failOnEmptyRead)
 	}
 
 	int remaining = len;
-	tries = 0;
+	int tries = 0;
 	while (remaining) {
 		int block = remaining;
 		if (block > MAX_READ)
 			block = MAX_READ;
-		read = fread(buf, 1, block, f->f);
+		const int read = fread(buf, 1, block, f->f);
 
 		/* end of file reached */
 		if (read != block && feof(f->f))
@@ -390,10 +382,9 @@ int FS_Read (void* buffer, int len, qFILE* f)
 int FS_LoadFile (const char* path, byte** buffer)
 {
 	ScopedFile h;
-	int len;
 
 	/* look for it in the filesystem or pack files */
-	len = FS_OpenFile(path, &h, FILE_READ);
+	const int len = FS_OpenFile(path, &h, FILE_READ);
 	if (!h) {
 		if (buffer)
 			*buffer = nullptr;
@@ -501,7 +492,7 @@ static char const* const pakFileExt[] = {
  */
 void FS_AddGameDirectory (const char* dir, bool write)
 {
-	int ndirs = 0, i;
+	int ndirs = 0;
 	char pakfile_list[MAX_PACKFILES][MAX_OSPATH];
 	int pakfile_count = 0;
 	char pattern[MAX_OSPATH];
@@ -519,10 +510,9 @@ void FS_AddGameDirectory (const char* dir, bool write)
 
 	for (char const* const* extList = pakFileExt; *extList; ++extList) {
 		Com_sprintf(pattern, sizeof(pattern), "%s/*.%s", dir, *extList);
-		char** dirnames = nullptr;
-		dirnames = FS_ListFiles(pattern, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
+		char** dirnames = FS_ListFiles(pattern, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
 		if (dirnames != nullptr) {
-			for (i = 0; i < ndirs - 1; i++) {
+			for (int i = 0; i < ndirs - 1; i++) {
 				if (strrchr(dirnames[i], '/')) {
 					Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], sizeof(pakfile_list[pakfile_count]));
 					pakfile_count++;
@@ -540,7 +530,7 @@ void FS_AddGameDirectory (const char* dir, bool write)
 	/* Sort our list alphabetically */
 	qsort((void*)pakfile_list, pakfile_count, MAX_OSPATH, Q_StringSort);
 
-	for (i = 0; i < pakfile_count; i++) {
+	for (int i = 0; i < pakfile_count; i++) {
 		pack_t* pak = FS_LoadPackFile(pakfile_list[i]);
 		if (!pak)
 			continue;
@@ -672,8 +662,7 @@ void FS_AddHomeAsGameDirectory (const char* dir, bool write)
 }
 
 /**
- * @brief Adds the directory to the head of the search path
- * @note No ending slash here
+ * @brief Searches and builds a list of mod directories.
  */
 int FS_GetModList (linkedList_t** mods)
 {
@@ -1057,12 +1046,11 @@ int FS_BuildFileList (const char* fileList)
 			LIST_Delete(&list);
 		} else {
 			int nfiles = 0;
-			char** filenames;
 
 			Com_sprintf(findname, sizeof(findname), "%s/%s", search->filename, files);
 			FS_NormPath(findname);
 
-			filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM);
+			char** filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (filenames != nullptr) {
 				for (int i = 0; i < nfiles - 1; i++) {
 					_AddToListBlock(&block->files, filenames[i], true);
@@ -1090,8 +1078,6 @@ const char* FS_NextFileFromFileList (const char* files)
 {
 	static linkedList_t* listEntry = nullptr;
 	static listBlock_t* _block = nullptr;
-	listBlock_t* block;
-	const char* file = nullptr;
 
 	/* restart the list? */
 	if (files == nullptr) {
@@ -1099,6 +1085,7 @@ const char* FS_NextFileFromFileList (const char* files)
 		return nullptr;
 	}
 
+	listBlock_t* block;
 	for (block = fs_blocklist; block; block = block->next) {
 		if (!strncmp(files, block->path, MAX_QPATH))
 			break;
@@ -1124,6 +1111,7 @@ const char* FS_NextFileFromFileList (const char* files)
 		listEntry = block->files;
 	}
 
+	const char* file = nullptr;
 	if (listEntry) {
 		file = (const char*)listEntry->data;
 		listEntry = listEntry->next;
@@ -1144,7 +1132,6 @@ const char* FS_NextFileFromFileList (const char* files)
  */
 const char* FS_GetFileData (const char* files)
 {
-	listBlock_t* block;
 	static linkedList_t* fileList = nullptr;
 	static byte* buffer = nullptr;
 
@@ -1159,6 +1146,7 @@ const char* FS_GetFileData (const char* files)
 		return nullptr;
 	}
 
+	listBlock_t* block;
 	for (block = fs_blocklist; block; block = block->next) {
 		if (Q_streq(files, block->path))
 			break;
@@ -1207,11 +1195,8 @@ char* FS_NextScriptHeader (const char* files, const char** name, const char** te
 	static listBlock_t* lBlock;
 	static linkedList_t* lFile;
 	static byte* lBuffer;
-
 	static char headerType[MAX_VAR];
 	static char headerName[512];
-	listBlock_t* block;
-	const char* token;
 
 	if (!text) {
 		*lastList = 0;
@@ -1229,6 +1214,7 @@ char* FS_NextScriptHeader (const char* files, const char** name, const char** te
 		/* search for file lists */
 		Q_strncpyz(lastList, files, sizeof(lastList));
 
+		listBlock_t* block;
 		for (block = fs_blocklist; block; block = block->next) {
 			if (Q_streq(files, block->path))
 				break;
@@ -1246,7 +1232,7 @@ char* FS_NextScriptHeader (const char* files, const char** name, const char** te
 		if (lBuffer) {
 			/* continue reading the current file */
 			if (*text) {
-				token = Com_Parse(text);
+				const char* token = Com_Parse(text);
 				if (*token == '{') {
 					Com_SkipBlock(text);
 					continue;
@@ -1385,16 +1371,14 @@ static int CheckBSPFile (const char* filename)
 void FS_GetMaps (bool reset)
 {
 	char filename[MAX_QPATH];
-	int i;
 	const char* baseMapName = nullptr;
-	char** dirnames;
 	int ndirs;
 
 	/* force a reread */
 	if (!reset && fs_mapsInstalledInit)
 		return;
 	else if (fs_mapsInstalledInit) {
-		for (i = 0; i <= fs_numInstalledMaps; i++)
+		for (int i = 0; i <= fs_numInstalledMaps; i++)
 			Mem_Free(fs_maps[i]);
 	}
 
@@ -1407,7 +1391,7 @@ void FS_GetMaps (bool reset)
 		if (search->pack) {
 			/* look through all the pak file elements */
 			pack_t* pak = search->pack;
-			for (i = 0; i < pak->numfiles; i++) {
+			for (int i = 0; i < pak->numfiles; i++) {
 				/* found it! */
 				baseMapName = strchr(pak->files[i].name, '/');
 				if (baseMapName) {
@@ -1444,12 +1428,12 @@ void FS_GetMaps (bool reset)
 			Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", search->filename);
 			FS_NormPath(findname);
 
-			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
+			char** dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (dirnames != nullptr) {
-				for (i = 0; i < ndirs - 1; i++) {
+				for (int i = 0; i < ndirs - 1; i++) {
 					baseMapName = Com_SkipPath(dirnames[i]);
 					Com_StripExtension(baseMapName, filename, sizeof(filename));
-					int status = CheckBSPFile(filename);
+					const int status = CheckBSPFile(filename);
 					if (!status) {
 						if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
 							Com_Printf("FS_GetMaps: Max maps limit hit\n");
@@ -1475,7 +1459,7 @@ void FS_GetMaps (bool reset)
 
 			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (dirnames != nullptr) {
-				for (i = 0; i < ndirs - 1; i++) {
+				for (int i = 0; i < ndirs - 1; i++) {
 					baseMapName = Com_SkipPath(dirnames[i]);
 					Com_StripExtension(baseMapName, filename, sizeof(filename));
 					if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
@@ -1509,12 +1493,11 @@ void FS_GetMaps (bool reset)
 int FS_Printf (qFILE* f, const char* msg, ...)
 {
 	va_list ap;
-	int len;
 	char buf[1024];
 
 	va_start(ap, msg);
 	Q_vsnprintf(buf, sizeof(buf), msg, ap);
-	len = fprintf(f->f, "%s", buf);
+	const int len = fprintf(f->f, "%s", buf);
 	va_end(ap);
 
 	return len;
@@ -1533,8 +1516,8 @@ int FS_Write (const void* buffer, int len, qFILE*  f)
 	int remaining = len;
 	int tries = 0;
 	while (remaining) {
-		int block = remaining;
-		int written = fwrite(buf, 1, block, f->f);
+		const int block = remaining;
+		const int written = fwrite(buf, 1, block, f->f);
 		if (written == 0) {
 			if (!tries) {
 				tries = 1;
@@ -1616,14 +1599,13 @@ bool FS_FileExists (const char* filename, ...)
  */
 void FS_Shutdown (void)
 {
-	searchpath_t* p, *next;
-
 	if (fs_openedFiles != 0) {
 		Com_Printf("There are still %i opened files\n", fs_openedFiles);
 	}
 
 	/* free everything */
-	for (p = fs_searchpaths; p; p = next) {
+	searchpath_t* next;
+	for (searchpath_t* p = fs_searchpaths; p; p = next) {
 		next = p->next;
 
 		if (p->pack) {
@@ -1667,20 +1649,17 @@ void FS_RestartFilesystem (const char* gamedir)
  */
 void FS_CopyFile (const char* fromOSPath, const char* toOSPath)
 {
-	FILE* f;
-	int len;
-
 	if (!fs_searchpaths)
 		Sys_Error("Filesystem call made without initialization");
 
 	Com_Printf("FS_CopyFile: copy %s to %s\n", fromOSPath, toOSPath);
 
-	f = Sys_Fopen(fromOSPath, "rb");
+	FILE* f = Sys_Fopen(fromOSPath, "rb");
 	if (!f)
 		return;
 
 	fseek(f, 0, SEEK_END);
-	len = ftell(f);
+	const int len = ftell(f);
 	fseek(f, 0, SEEK_SET);
 
 	byte* const buf = Mem_PoolAllocTypeN(byte, len, com_fileSysPool);

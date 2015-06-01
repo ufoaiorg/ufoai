@@ -50,16 +50,13 @@ static struct mdfour *m;
 /* this applies md4 to 64 byte chunks */
 static void mdfour64 (uint32_t* M)
 {
-	int j;
-	uint32_t AA, BB, CC, DD;
 	uint32_t X[16];
-	uint32_t A, B, C, D;
 
-	for (j = 0; j < 16; j++)
+	for (int j = 0; j < 16; j++)
 		X[j] = M[j];
 
-	A = m->A; B = m->B; C = m->C; D = m->D;
-	AA = A; BB = B; CC = C; DD = D;
+	uint32_t A = m->A, B = m->B, C = m->C, D = m->D;
+	uint32_t AA = A, BB = B, CC = C, DD = D;
 
 	ROUND1(A,B,C,D,  0,  3);  ROUND1(D,A,B,C,  1,  7);
 	ROUND1(C,D,A,B,  2, 11);  ROUND1(B,C,D,A,  3, 19);
@@ -95,7 +92,7 @@ static void mdfour64 (uint32_t* M)
 	C &= 0xFFFFFFFF; D &= 0xFFFFFFFF;
 #endif
 
-	for (j = 0; j < 16; j++)
+	for (int j = 0; j < 16; j++)
 		X[j] = 0;
 
 	m->A = A; m->B = B; m->C = C; m->D = D;
@@ -129,11 +126,10 @@ static void mdfour_tail (const unsigned char* in, int n)
 {
 	unsigned char buf[128];
 	uint32_t M[16];
-	uint32_t b;
 
 	m->totalN += n;
 
-	b = m->totalN * 8;
+	const uint32_t b = m->totalN * 8;
 
 	OBJZERO(buf);
 	if (n)
@@ -206,11 +202,8 @@ static void mdfour (unsigned char* out, const unsigned char* in, int n)
 unsigned Com_BlockChecksum (const void* buffer, int length)
 {
 	int digest[4];
-	unsigned val;
 
 	mdfour((unsigned char*) digest, (const unsigned char*) buffer, length);
 
-	val = digest[0] ^ digest[1] ^ digest[2] ^ digest[3];
-
-	return val;
+	return digest[0] ^ digest[1] ^ digest[2] ^ digest[3];
 }

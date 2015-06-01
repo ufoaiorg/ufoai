@@ -163,6 +163,13 @@ Weather::~Weather ()
  */
 void Weather::update (int milliseconds)
 {
+	/* Don't play the weather particles if the user doesn't want them */
+	if (!Cvar_GetInteger("cl_particleweather")) {
+		/* This makes weather look very weird if it is enabled mid-battle */
+		/* clearParticles(); */
+		return;
+	}
+
 	size_t dead = 0;
 	/* physics: check for ttl and move live particles */
 	for (size_t i = 0; i < Weather::MAX_PARTICLES; i++) {
@@ -249,6 +256,11 @@ void Weather::update (int milliseconds)
  */
 void Weather::render (void)
 {
+	/* Don't play the weather particles if the user doesn't want them */
+	if (!Cvar_GetInteger("cl_particleweather")) {
+		return;
+	}
+
 	GLfloat prtPos[3 * 4 * Weather::MAX_PARTICLES];
 	GLfloat prtTexcoord[2 * 4 * Weather::MAX_PARTICLES];
 	size_t prtCount = 0;
