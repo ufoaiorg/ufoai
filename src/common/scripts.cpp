@@ -2419,6 +2419,9 @@ static void Com_ParseActorNames (const char* name, const char** text)
 			break;
 
 		const int nameType = Com_FindNameType(token);
+		if (nameType == -1) {
+			Com_Error(ERR_DROP, "Com_ParseActorNames: name type \"%s\" unknown", token);
+		}
 
 		linkedList_t* list;
 		if (!Com_ParseList(text, &list)) {
