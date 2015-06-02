@@ -109,7 +109,9 @@ $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
 	\
 	$(CURL_SRCS) \
 	\
-	$(JPEG_SRCS)
+	$(JPEG_SRCS) \
+	\
+	$(LUA_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), openbsd netbsd freebsd linux openpandora),)
 	$(TARGET)_SRCS += \
