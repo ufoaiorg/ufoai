@@ -453,25 +453,7 @@ void* Com_AlignPtr (const void* memory, valueTypes_t type)
  * the numeric/enum type in the code. This table and the following functions convert these ids
  */
 static const char* ufoIdsTable[UFO_MAX];
-static short ufoIdsNum;
-
-/**
- * @brief Pretend to parse the aircraft names from the scripts until we have gotten rid of the enum ufoType_t
- */
-static void Com_ParseAircraftNames (const char* name, const char** text)
-{
-	ufoIdsTable[0]	= "scout";
-	ufoIdsTable[1]	= "fighter";
-	ufoIdsTable[2]	= "harvester";
-	ufoIdsTable[3]	= "corrupter";
-	ufoIdsTable[4]	= "bomber";
-	ufoIdsTable[5]	= "carrier";
-	ufoIdsTable[6]	= "supply";
-	ufoIdsTable[7]	= "gunboat";
-	ufoIdsTable[8]	= "ripper";
-	ufoIdsTable[9]	= "mothership";
-	ufoIdsNum = 10;
-}
+static short ufoIdsNum = 0;
 
 static const char* Com_GetUfoDef (ufoType_t idNum)
 {
@@ -519,6 +501,42 @@ static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
 		sprintf(outStr, "craft_crash_%s", uDef);
 	else
 		outStr[0] = 0;
+}
+
+/**
+ * @brief Pretend to parse the aircraft names from the scripts until we have gotten rid of the enum ufoType_t
+ */
+static void Com_ParseAircraftNames (const char* const name, const char** text)
+{
+	if (!Q_streq(name, "ufoids")) {
+		Com_Printf("Com_ParseAircraftNames: Unknown aircraft name type '%s' ignored\n", name);
+		return;
+	}
+
+	const char* token = Com_Parse(text);
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseActorNames: names def \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	const char* const errhead = "Com_ParseAircraftNames: Unexpected end of file (name type ";
+	do {
+		/* get the name type */
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+		if (ufoIdsNum >= UFO_MAX) {
+			Com_Printf("Com_ParseAircraftNames: Too many aircraft ids for type '%s', '%s' ignored!\n", name, token);
+			continue;
+		}
+		if (Com_GetUfoIdNum(va("craft_ufo_%s", token)) != UFO_NONE) {
+			Com_Printf("Com_ParseAircraftNames: Aircraft with same name found '%s', second ignored\n", token);
+			continue;
+		}
+		ufoIdsTable[ufoIdsNum++] = Mem_StrDup(token);
+	} while (*text);
 }
 
 /**

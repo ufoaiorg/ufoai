@@ -144,7 +144,7 @@ typedef enum {
 } fade_t;
 
 typedef short ufoType_t;
-#define UFO_MAX 10
+#define UFO_MAX 12
 #if 0
 #define UFO_NONE -1
 #else
