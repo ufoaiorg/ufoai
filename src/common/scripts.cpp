@@ -504,7 +504,8 @@ static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
 }
 
 /**
- * @brief Pretend to parse the aircraft names from the scripts until we have gotten rid of the enum ufoType_t
+ * @brief Parse the aircraft names from the scripts
+ * @note UFOs only until we have gotten rid of the enum humanAircraftType_t
  */
 static void Com_ParseAircraftNames (const char* const name, const char** text)
 {
