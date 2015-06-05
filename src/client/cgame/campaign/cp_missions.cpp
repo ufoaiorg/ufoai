@@ -1471,8 +1471,8 @@ ufoType_t CP_MissionChooseUFO (const mission_t* mission)
 		cgi->Com_Error(ERR_DROP, "CP_MissionChooseUFO: Wrong mission category %i", mission->category);
 	}
 
-	if (numTypes > UFO_MAX)
-		cgi->Com_Error(ERR_DROP, "CP_MissionChooseUFO: Too many values UFOs (%i/%i)", numTypes, UFO_MAX);
+	if (numTypes > cgi->Com_GetUFOIdsNum())
+		cgi->Com_Error(ERR_DROP, "CP_MissionChooseUFO: Too many values UFOs (%i/%i)", numTypes, cgi->Com_GetUFOIdsNum());
 
 	if (numTypes <= 0)
 		return UFO_NONE;

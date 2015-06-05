@@ -295,11 +295,11 @@ static void GAME_InitMenuOptions (void)
 	uiNode_t* ufoOptions = nullptr;
 	uiNode_t* aircraftOptions = nullptr;
 
-	for (int i = 0; i < UFO_MAX; i++) {
+	for (int i = 0; i < cgi->Com_GetUFOIdsNum(); i++) {
 		const char* shortName = cgi->Com_UFOTypeToShortName((ufoType_t)i);
 		cgi->UI_AddOption(&ufoOptions, shortName, shortName, GAME_SK_GetRandomMapAssemblyNameForCraft(shortName));
 	}
-	for (int i = 0; i < UFO_MAX; i++) {
+	for (int i = 0; i < cgi->Com_GetUFOIdsNum(); i++) {
 		const char* shortName = cgi->Com_UFOCrashedTypeToShortName((ufoType_t)i);
 		cgi->UI_AddOption(&ufoOptions, shortName, shortName, GAME_SK_GetRandomMapAssemblyNameForCraft(shortName));
 	}
