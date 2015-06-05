@@ -503,6 +503,12 @@ static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
 		outStr[0] = 0;
 }
 
+/* @todo Get rid of this somehow */
+short Com_GetUfoIdsNum (void)
+{
+	return ufoIdsNum;
+}
+
 /**
  * @brief Parse the aircraft names from the scripts
  * @note UFOs only until we have gotten rid of the enum humanAircraftType_t

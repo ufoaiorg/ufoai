@@ -735,6 +735,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 		cgi->Com_ValueToStr = Com_ValueToStr;
 		cgi->Com_GetTeamDefinitionByID = Com_GetTeamDefinitionByID;
 		cgi->Com_UFOShortNameToID = Com_UFOShortNameToID;
+		cgi->Com_GetUFOIdsNum = Com_GetUfoIdsNum;
 		cgi->Com_GetRandomMapAssemblyNameForCrashedCraft = Com_GetRandomMapAssemblyNameForCrashedCraft;
 		cgi->Com_SetGameType = Com_SetGameType;
 		cgi->Com_RegisterConstInt = Com_RegisterConstInt;
