@@ -1169,32 +1169,32 @@ void B_SetUpFirstBase (const campaign_t* campaign, base_t* base)
 	base->storage = *ed;
 
 	/* Add aircraft to the first base */
-	/** @todo move aircraft to .ufo */
-	/* buy two first aircraft and hire pilots for them. */
-	if (B_GetBuildingStatus(base, B_HANGAR)) {
-		const equipDef_t* equipDef = cgi->INV_GetEquipmentDefinitionByID(campaign->soldierEquipment);
-		const char* firebird = cgi->Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
-		const aircraft_t* firebirdAircraft = AIR_GetAircraft(firebird);
-		aircraft_t* aircraft = AIR_NewAircraft(base, firebirdAircraft);
-		CP_UpdateCredits(ccs.credits - firebirdAircraft->price);
-		if (!E_HireEmployeeByType(base, EMPL_PILOT))
-			cgi->Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
-		/* refuel initial aicraft instantly */
-		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
-		/* Assign and equip soldiers on Dropships */
-		AIR_AssignInitial(aircraft);
-		B_InitialEquipment(aircraft, equipDef);
-	}
-	if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-		const char* stiletto = cgi->Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
-		const aircraft_t* stilettoAircraft = AIR_GetAircraft(stiletto);
-		aircraft_t* aircraft = AIR_NewAircraft(base, stilettoAircraft);
-		CP_UpdateCredits(ccs.credits - stilettoAircraft->price);
-		if (!E_HireEmployeeByType(base, EMPL_PILOT))
-			cgi->Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
-		/* refuel initial aicraft instantly */
-		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
-		AIM_AutoEquipAircraft(aircraft);
+	LIST_Foreach(campaign->initialCraft, const char, aircraftName) {
+		const aircraft_t* tempAircraft = AIR_GetAircraft(aircraftName);
+		if (tempAircraft->type == AIRCRAFT_TRANSPORTER && CAP_GetFreeCapacity(base, CAP_AIRCRAFT_BIG)) {
+			const equipDef_t* equipDef = cgi->INV_GetEquipmentDefinitionByID(campaign->soldierEquipment);
+			aircraft_t* aircraft = AIR_NewAircraft(base, tempAircraft);
+			CP_UpdateCredits(ccs.credits - tempAircraft->price);
+			if (!E_HireEmployeeByType(base, EMPL_PILOT))
+				cgi->Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
+			/* refuel initial aicraft instantly */
+			aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
+			/* Assign and equip soldiers on Dropships */
+			AIR_AssignInitial(aircraft);
+			B_InitialEquipment(aircraft, equipDef);
+			continue;
+		}
+		if (tempAircraft->type == AIRCRAFT_INTERCEPTOR && CAP_GetFreeCapacity(base, CAP_AIRCRAFT_SMALL)) {
+			aircraft_t* aircraft = AIR_NewAircraft(base, tempAircraft);
+			CP_UpdateCredits(ccs.credits - tempAircraft->price);
+			if (!E_HireEmployeeByType(base, EMPL_PILOT))
+				cgi->Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
+			/* refuel initial aicraft instantly */
+			aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
+			AIM_AutoEquipAircraft(aircraft);
+			continue;
+		}
+		cgi->Com_Error(ERR_DROP, "B_SetUpFirstBase: Failed to add aircraft %s.", aircraftName);
 	}
 }
 

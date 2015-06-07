@@ -53,6 +53,8 @@ campaign veryhard
 		admin_robot 150
 		debt_interest 0.01
 	}
+
+	aircraft ( "craft_drop_firebird" "craft_inter_stiletto" )
 }
 
 campaign hard
@@ -110,6 +112,8 @@ campaign hard
 		admin_robot 150
 		debt_interest 0.0075
 	}
+
+	aircraft ( "craft_drop_firebird" "craft_inter_stiletto" )
 }
 
 campaign main
@@ -167,6 +171,8 @@ campaign main
 		admin_robot 150
 		debt_interest 0.005
 	}
+
+	aircraft ( "craft_drop_firebird" "craft_inter_stiletto" )
 }
 
 campaign easy
@@ -223,6 +229,8 @@ campaign easy
 		admin_robot 150
 		debt_interest 0.005
 	}
+
+	aircraft ( "craft_drop_firebird" "craft_inter_stiletto" )
 }
 
 campaign veryeasy
@@ -279,6 +287,8 @@ campaign veryeasy
 		admin_robot 150
 		debt_interest 0.005
 	}
+
+	aircraft ( "craft_drop_firebird" "craft_inter_stiletto" )
 }
 
 /*

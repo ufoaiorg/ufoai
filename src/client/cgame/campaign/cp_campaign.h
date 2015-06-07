@@ -366,6 +366,7 @@ typedef struct campaign_s {
 	float employeeRate;			/**< Easier difficulties could offer more monthly recruits and harder difficulties less */
 	int initialInterest;
 	int alienBaseInterest;		/**< the alien interest level at which aliens begin trying to build bases. */
+	linkedList_t* initialCraft;	/**< List of aircraft the player starts the campaign with */
 } campaign_t;
 
 int CP_GetSalaryBaseEmployee(const salary_t* salary, employeeType_t type);

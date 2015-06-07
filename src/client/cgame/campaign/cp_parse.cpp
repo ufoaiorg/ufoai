@@ -456,6 +456,8 @@ static void CP_ParseCampaign (const char* name, const char** text)
 			if (!*text)
 				return;
 			cp->events = CP_GetEventsByID(token);
+		} else if (Q_streq(token, "aircraft")) {
+			cgi->Com_ParseList(text, &cp->initialCraft);
 		} else {
 			Com_Printf("CP_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
 			cgi->Com_EParse(text, errhead, name);
