@@ -152,7 +152,8 @@ int UFO_GetAvailableUFOsForMission (const interestCategory_t missionType, ufoTyp
 {
 	int num = 0;
 
-	for (int i = 0; i < cgi->Com_GetUFOIdsNum(); i++) {
+	const short ufoIdsNum = cgi->Com_GetUFOIdsNum();
+	for (int i = 0; i < ufoIdsNum; i++) {
 		ufoType_t uType = i;
 		switch (missionType) {
 			case INTERESTCATEGORY_RECON:
