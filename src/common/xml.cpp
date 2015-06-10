@@ -291,9 +291,9 @@ bool XML_GetBool (xmlNode_t* parent, const char* name, const bool defaultval)
 	if (!txt)
 		return defaultval;
 
-	if (!strcmp(txt, "true") || !strcmp(txt, "1"))
+	if (Q_streq(txt, "true") || Q_streq(txt, "1"))
 		return true;
-	if (!strcmp(txt, "false") || !strcmp(txt, "0"))
+	if (Q_streq(txt, "false") || Q_streq(txt, "0"))
 		return false;
 
 	return defaultval;
@@ -512,13 +512,13 @@ static mxml_type_t mxml_ufo_type_cb (xmlNode_t* node)
 	if (type == nullptr)
 		type = node->value.element.name;
 
-	if (!strcmp(type, "int"))
+	if (Q_streq(type, "int"))
 		return MXML_INTEGER;
-	else if (!strcmp(type, "opaque"))
+	else if (Q_streq(type, "opaque"))
 		return MXML_OPAQUE;
-	else if (!strcmp(type, "string"))
+	else if (Q_streq(type, "string"))
 		return MXML_OPAQUE;
-	else if (!strcmp(type, "double"))
+	else if (Q_streq(type, "double"))
 		return MXML_REAL;
 	return MXML_TEXT;
 }
