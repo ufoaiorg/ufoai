@@ -233,8 +233,7 @@ void XML_AddLongValue (xmlNode_t* parent, const char* name, long value)
  */
 void XML_AddPos3 (xmlNode_t* parent, const char* name, const vec3_t pos)
 {
-	xmlNode_t* t;
-	t = mxmlNewElement(parent, name);
+	xmlNode_t* t = mxmlNewElement(parent, name);
 	XML_AddFloat(t, "x", pos[0]);
 	XML_AddFloat(t, "y", pos[1]);
 	XML_AddFloat(t, "z", pos[2]);
@@ -249,8 +248,7 @@ void XML_AddPos3 (xmlNode_t* parent, const char* name, const vec3_t pos)
  */
 void XML_AddPos2 (xmlNode_t* parent, const char* name, const vec2_t pos)
 {
-	xmlNode_t* t;
-	t = mxmlNewElement(parent, name);
+	xmlNode_t* t = mxmlNewElement(parent, name);
 	XML_AddFloat(t, "x", pos[0]);
 	XML_AddFloat(t, "y", pos[1]);
 }
@@ -265,8 +263,7 @@ void XML_AddPos2 (xmlNode_t* parent, const char* name, const vec2_t pos)
  */
 void XML_AddDate (xmlNode_t* parent, const char* name, const int day, const int sec)
 {
-	xmlNode_t* t;
-	t = mxmlNewElement(parent, name);
+	xmlNode_t* t = mxmlNewElement(parent, name);
 	XML_AddInt(t, "day", day);
 	XML_AddInt(t, "sec", sec);
 }
@@ -290,8 +287,7 @@ xmlNode_t* XML_AddNode (xmlNode_t* parent, const char* name)
  */
 bool XML_GetBool (xmlNode_t* parent, const char* name, const bool defaultval)
 {
-	const char* txt;
-	txt = mxmlElementGetAttr(parent, name);
+	const char* txt = mxmlElementGetAttr(parent, name);
 	if (!txt)
 		return defaultval;
 
