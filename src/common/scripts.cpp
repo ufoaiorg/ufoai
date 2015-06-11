@@ -3589,6 +3589,10 @@ void Com_ParseScripts (bool onlyServer)
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStunElectro = csi.damStunGas = NONE;
 	csi.damSmoke = csi.damIncendiary = NONE;
 
+	/* Reset ufo ids */
+	OBJZERO(ufoIdsTable);
+	ufoIdsNum = 0;
+
 	/* pre-stage parsing */
 	Com_Printf("%i script files\n", FS_BuildFileList("ufos/*.ufo"));
 	const char* text = nullptr;
