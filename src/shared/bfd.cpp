@@ -54,7 +54,6 @@ void output_print (struct output_buffer* ob, const char*  format, ...)
 static void lookup_section (bfd* abfd, asection* sec, void* opaque_data)
 {
 	struct find_info* data = (struct find_info*)opaque_data;
-	bfd_vma vma;
 
 	if (data->func)
 		return;
@@ -62,7 +61,7 @@ static void lookup_section (bfd* abfd, asection* sec, void* opaque_data)
 	if (!(bfd_get_section_flags(abfd, sec) & SEC_ALLOC))
 		return;
 
-	vma = bfd_get_section_vma(abfd, sec);
+	const bfd_vma vma = bfd_get_section_vma(abfd, sec);
 	if (data->counter < vma || vma + bfd_get_section_size(sec) <= data->counter)
 		return;
 
@@ -105,7 +104,6 @@ static void list_matching_formats (struct output_buffer* ob, const char*  procna
 
 static int init_bfd_ctx (struct bfd_ctx* bc, const char*  procname, struct output_buffer* ob)
 {
-	bfd* b;
 	void* symbol_table;
 	unsigned dummy = 0;
 	char** matching = nullptr;
@@ -113,7 +111,7 @@ static int init_bfd_ctx (struct bfd_ctx* bc, const char*  procname, struct outpu
 	bc->handle = nullptr;
 	bc->symbol = nullptr;
 
-	b = bfd_openr(procname, 0);
+	bfd* b = bfd_openr(procname, 0);
 	if (!b) {
 		output_print(ob, "Failed to open bfd from (%s)\n", procname);
 		return 1;
