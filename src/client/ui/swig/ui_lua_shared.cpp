@@ -2629,62 +2629,63 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_LUA_METHOD swig_types[2]
 #define SWIGTYPE_p_align_t swig_types[3]
 #define SWIGTYPE_p_cvar_t swig_types[4]
-#define SWIGTYPE_p_invDef_t swig_types[5]
-#define SWIGTYPE_p_itemFilterTypes_t swig_types[6]
-#define SWIGTYPE_p_layoutAlign_t swig_types[7]
-#define SWIGTYPE_p_linkedList_t swig_types[8]
-#define SWIGTYPE_p_longlines_t swig_types[9]
-#define SWIGTYPE_p_panelLayout_t swig_types[10]
-#define SWIGTYPE_p_uiAbstractBaseNode_t swig_types[11]
-#define SWIGTYPE_p_uiAbstractOptionNode_t swig_types[12]
-#define SWIGTYPE_p_uiAbstractScrollableNode_t swig_types[13]
-#define SWIGTYPE_p_uiAbstractScrollbarNode_t swig_types[14]
-#define SWIGTYPE_p_uiAbstractValueNode_t swig_types[15]
-#define SWIGTYPE_p_uiBarNode_t swig_types[16]
-#define SWIGTYPE_p_uiBaseInventoryNode_t swig_types[17]
-#define SWIGTYPE_p_uiBaseLayoutNode_t swig_types[18]
-#define SWIGTYPE_p_uiBaseMapNode_t swig_types[19]
-#define SWIGTYPE_p_uiButtonNode_t swig_types[20]
-#define SWIGTYPE_p_uiCheckBoxNode_t swig_types[21]
-#define SWIGTYPE_p_uiConFuncNode_t swig_types[22]
-#define SWIGTYPE_p_uiContainerNode_t swig_types[23]
-#define SWIGTYPE_p_uiDataNode_t swig_types[24]
-#define SWIGTYPE_p_uiEkgNode_t swig_types[25]
-#define SWIGTYPE_p_uiGeoscapeNode_t swig_types[26]
-#define SWIGTYPE_p_uiImageNode_t swig_types[27]
-#define SWIGTYPE_p_uiItemNode_t swig_types[28]
-#define SWIGTYPE_p_uiLineChartNode_t swig_types[29]
-#define SWIGTYPE_p_uiMessageListNode_t swig_types[30]
-#define SWIGTYPE_p_uiModelNode_t swig_types[31]
-#define SWIGTYPE_p_uiNode_t swig_types[32]
-#define SWIGTYPE_p_uiOptionListNode_t swig_types[33]
-#define SWIGTYPE_p_uiOptionNode_t swig_types[34]
-#define SWIGTYPE_p_uiOptionTreeNode_t swig_types[35]
-#define SWIGTYPE_p_uiPanelNode_t swig_types[36]
-#define SWIGTYPE_p_uiRadarNode_t swig_types[37]
-#define SWIGTYPE_p_uiRadioButtonNode_t swig_types[38]
-#define SWIGTYPE_p_uiRowsNode_t swig_types[39]
-#define SWIGTYPE_p_uiSelectBoxNode_t swig_types[40]
-#define SWIGTYPE_p_uiSequenceNode_t swig_types[41]
-#define SWIGTYPE_p_uiSpinnerNode_t swig_types[42]
-#define SWIGTYPE_p_uiStringNode_t swig_types[43]
-#define SWIGTYPE_p_uiTBarNode_t swig_types[44]
-#define SWIGTYPE_p_uiTabNode_t swig_types[45]
-#define SWIGTYPE_p_uiText2Node_t swig_types[46]
-#define SWIGTYPE_p_uiTextEntryNode_t swig_types[47]
-#define SWIGTYPE_p_uiTextListNode_t swig_types[48]
-#define SWIGTYPE_p_uiTextNode_t swig_types[49]
-#define SWIGTYPE_p_uiTextureNode_t swig_types[50]
-#define SWIGTYPE_p_uiTimerNode_t swig_types[51]
-#define SWIGTYPE_p_uiVScrollBarNode_t swig_types[52]
-#define SWIGTYPE_p_uiVideoNode_t swig_types[53]
-#define SWIGTYPE_p_uiWidgetNode_t swig_types[54]
-#define SWIGTYPE_p_uiWindowNode_t swig_types[55]
-#define SWIGTYPE_p_uiZoneNode_t swig_types[56]
-#define SWIGTYPE_p_vec2_struct_t swig_types[57]
-#define SWIGTYPE_p_vec3_struct_t swig_types[58]
-static swig_type_info *swig_types[60];
-static swig_module_info swig_module = {swig_types, 59, 0, 0, 0, 0};
+#define SWIGTYPE_p_float swig_types[5]
+#define SWIGTYPE_p_invDef_t swig_types[6]
+#define SWIGTYPE_p_itemFilterTypes_t swig_types[7]
+#define SWIGTYPE_p_layoutAlign_t swig_types[8]
+#define SWIGTYPE_p_linkedList_t swig_types[9]
+#define SWIGTYPE_p_longlines_t swig_types[10]
+#define SWIGTYPE_p_panelLayout_t swig_types[11]
+#define SWIGTYPE_p_uiAbstractBaseNode_t swig_types[12]
+#define SWIGTYPE_p_uiAbstractOptionNode_t swig_types[13]
+#define SWIGTYPE_p_uiAbstractScrollableNode_t swig_types[14]
+#define SWIGTYPE_p_uiAbstractScrollbarNode_t swig_types[15]
+#define SWIGTYPE_p_uiAbstractValueNode_t swig_types[16]
+#define SWIGTYPE_p_uiBarNode_t swig_types[17]
+#define SWIGTYPE_p_uiBaseInventoryNode_t swig_types[18]
+#define SWIGTYPE_p_uiBaseLayoutNode_t swig_types[19]
+#define SWIGTYPE_p_uiBaseMapNode_t swig_types[20]
+#define SWIGTYPE_p_uiButtonNode_t swig_types[21]
+#define SWIGTYPE_p_uiCheckBoxNode_t swig_types[22]
+#define SWIGTYPE_p_uiConFuncNode_t swig_types[23]
+#define SWIGTYPE_p_uiContainerNode_t swig_types[24]
+#define SWIGTYPE_p_uiDataNode_t swig_types[25]
+#define SWIGTYPE_p_uiEkgNode_t swig_types[26]
+#define SWIGTYPE_p_uiGeoscapeNode_t swig_types[27]
+#define SWIGTYPE_p_uiImageNode_t swig_types[28]
+#define SWIGTYPE_p_uiItemNode_t swig_types[29]
+#define SWIGTYPE_p_uiLineChartNode_t swig_types[30]
+#define SWIGTYPE_p_uiMessageListNode_t swig_types[31]
+#define SWIGTYPE_p_uiModelNode_t swig_types[32]
+#define SWIGTYPE_p_uiNode_t swig_types[33]
+#define SWIGTYPE_p_uiOptionListNode_t swig_types[34]
+#define SWIGTYPE_p_uiOptionNode_t swig_types[35]
+#define SWIGTYPE_p_uiOptionTreeNode_t swig_types[36]
+#define SWIGTYPE_p_uiPanelNode_t swig_types[37]
+#define SWIGTYPE_p_uiRadarNode_t swig_types[38]
+#define SWIGTYPE_p_uiRadioButtonNode_t swig_types[39]
+#define SWIGTYPE_p_uiRowsNode_t swig_types[40]
+#define SWIGTYPE_p_uiSelectBoxNode_t swig_types[41]
+#define SWIGTYPE_p_uiSequenceNode_t swig_types[42]
+#define SWIGTYPE_p_uiSpinnerNode_t swig_types[43]
+#define SWIGTYPE_p_uiStringNode_t swig_types[44]
+#define SWIGTYPE_p_uiTBarNode_t swig_types[45]
+#define SWIGTYPE_p_uiTabNode_t swig_types[46]
+#define SWIGTYPE_p_uiText2Node_t swig_types[47]
+#define SWIGTYPE_p_uiTextEntryNode_t swig_types[48]
+#define SWIGTYPE_p_uiTextListNode_t swig_types[49]
+#define SWIGTYPE_p_uiTextNode_t swig_types[50]
+#define SWIGTYPE_p_uiTextureNode_t swig_types[51]
+#define SWIGTYPE_p_uiTimerNode_t swig_types[52]
+#define SWIGTYPE_p_uiVScrollBarNode_t swig_types[53]
+#define SWIGTYPE_p_uiVideoNode_t swig_types[54]
+#define SWIGTYPE_p_uiWidgetNode_t swig_types[55]
+#define SWIGTYPE_p_uiWindowNode_t swig_types[56]
+#define SWIGTYPE_p_uiZoneNode_t swig_types[57]
+#define SWIGTYPE_p_vec2_struct_t swig_types[58]
+#define SWIGTYPE_p_vec3_struct_t swig_types[59]
+static swig_type_info *swig_types[61];
+static swig_module_info swig_module = {swig_types, 60, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2909,7 +2910,8 @@ SWIGINTERN void uiNode_t_set_invisible(uiNode_t *self,bool value){ self->invis =
 SWIGINTERN void uiNode_t_set_ghost(uiNode_t *self,bool value){ self->ghost = value; }
 SWIGINTERN void uiNode_t_set_pos(uiNode_t *self,float x,float y){ UI_NodeSetPos(self, x, y); }
 SWIGINTERN void uiNode_t_set_size(uiNode_t *self,float w,float h){ UI_NodeSetSize(self, w, h); }
-SWIGINTERN void uiNode_t_set_color(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->color, r, g, b, a); }
+SWIGINTERN void uiNode_t_set_color__SWIG_0(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->color, r, g, b, a); }
+SWIGINTERN void uiNode_t_set_color__SWIG_1(uiNode_t *self,float *rgba){ Vector4Set(self->color, rgba[0], rgba[1], rgba[2], rgba[3]); }
 SWIGINTERN void uiNode_t_set_disabledcolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->disabledColor, r, g, b, a); }
 SWIGINTERN void uiNode_t_set_flashcolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->flashColor, r, g, b, a); }
 SWIGINTERN void uiNode_t_set_selectcolor(uiNode_t *self,float r,float g,float b,float a){ Vector4Set(self->selectedColor, r, g, b, a); }
@@ -5981,7 +5983,7 @@ fail:
 }
 
 
-static int _wrap_uiNode_set_color(lua_State* L) {
+static int _wrap_uiNode_set_color__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
   float arg2 ;
@@ -6004,7 +6006,7 @@ static int _wrap_uiNode_set_color(lua_State* L) {
   arg3 = (float)lua_tonumber(L, 3);
   arg4 = (float)lua_tonumber(L, 4);
   arg5 = (float)lua_tonumber(L, 5);
-  uiNode_t_set_color(arg1,arg2,arg3,arg4,arg5);
+  uiNode_t_set_color__SWIG_0(arg1,arg2,arg3,arg4,arg5);
   
   return SWIG_arg;
   
@@ -6013,6 +6015,110 @@ static int _wrap_uiNode_set_color(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_set_color__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  uiNode_t *arg1 = (uiNode_t *) 0 ;
+  float *arg2 = (float *) 0 ;
+  
+  SWIG_check_num_args("uiNode_t::set_color",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiNode_t::set_color",1,"uiNode_t *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("uiNode_t::set_color",2,"float *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
+    SWIG_fail_ptr("uiNode_set_color",1,SWIGTYPE_p_uiNode_t);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_float,0))){
+    SWIG_fail_ptr("uiNode_set_color",2,SWIGTYPE_p_float);
+  }
+  
+  uiNode_t_set_color__SWIG_1(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiNode_set_color(lua_State* L) {
+  int argc;
+  int argv[6]={
+    1,2,3,4,5,6
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_uiNode_t, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_float, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_uiNode_set_color__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_uiNode_t, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isnumber(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isnumber(L,argv[4]);
+            }
+            if (_v) {
+              return _wrap_uiNode_set_color__SWIG_0(L);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'uiNode_set_color'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    uiNode_t::set_color(float,float,float,float)\n"
+    "    uiNode_t::set_color(float *)\n");
+  lua_error(L);return 0;
 }
 
 
@@ -19749,6 +19855,7 @@ static swig_type_info _swigt__p_LUA_FUNCTION = {"_p_LUA_FUNCTION", "LUA_FUNCTION
 static swig_type_info _swigt__p_LUA_METHOD = {"_p_LUA_METHOD", "LUA_METHOD *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_align_t = {"_p_align_t", "enum align_t *|align_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_cvar_t = {"_p_cvar_t", "cvar_t *", 0, 0, (void*)&_wrap_class_cvar, 0};
+static swig_type_info _swigt__p_float = {"_p_float", "float *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_invDef_t = {"_p_invDef_t", "invDef_t *", 0, 0, (void*)&_wrap_class_invDef, 0};
 static swig_type_info _swigt__p_itemFilterTypes_t = {"_p_itemFilterTypes_t", "enum itemFilterTypes_t *|itemFilterTypes_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_layoutAlign_t = {"_p_layoutAlign_t", "enum layoutAlign_t *|layoutAlign_t *", 0, 0, (void*)0, 0};
@@ -19810,6 +19917,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_LUA_METHOD,
   &_swigt__p_align_t,
   &_swigt__p_cvar_t,
+  &_swigt__p_float,
   &_swigt__p_invDef_t,
   &_swigt__p_itemFilterTypes_t,
   &_swigt__p_layoutAlign_t,
@@ -19871,6 +19979,7 @@ static swig_cast_info _swigc__p_LUA_FUNCTION[] = {  {&_swigt__p_LUA_FUNCTION, 0,
 static swig_cast_info _swigc__p_LUA_METHOD[] = {  {&_swigt__p_LUA_METHOD, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_align_t[] = {  {&_swigt__p_align_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_cvar_t[] = {  {&_swigt__p_cvar_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_float[] = {  {&_swigt__p_float, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_invDef_t[] = {  {&_swigt__p_invDef_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_itemFilterTypes_t[] = {  {&_swigt__p_itemFilterTypes_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_layoutAlign_t[] = {  {&_swigt__p_layoutAlign_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -19932,6 +20041,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_LUA_METHOD,
   _swigc__p_align_t,
   _swigc__p_cvar_t,
+  _swigc__p_float,
   _swigc__p_invDef_t,
   _swigc__p_itemFilterTypes_t,
   _swigc__p_layoutAlign_t,
