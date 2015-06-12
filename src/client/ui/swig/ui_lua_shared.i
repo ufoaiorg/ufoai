@@ -598,7 +598,6 @@ struct uiNode_t {
 	void set_pos (float x, float y) { UI_NodeSetPos($self, x, y); }
 	void set_size (float w, float h) { UI_NodeSetSize($self, w, h); }
 	void set_color (float r, float g, float b, float a) { Vector4Set($self->color, r, g, b, a); };
-	void set_color (float rgba[]) { Vector4Set($self->color, rgba[0], rgba[1], rgba[2], rgba[3]); };
 	void set_disabledcolor (float r, float g, float b, float a) { Vector4Set($self->disabledColor, r, g, b, a); };
 	void set_flashcolor (float r, float g, float b, float a) { Vector4Set($self->flashColor, r, g, b, a); };
 	void set_selectcolor (float r, float g, float b, float a) { Vector4Set($self->selectedColor, r, g, b, a); };
