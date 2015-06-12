@@ -268,7 +268,7 @@ component BaseLayoutMini extends baselayout
 	padding			1
 	onMouseEnter	{ *node:this@color = "0.56 0.81 0.76 1" }
 	onMouseLeave	{ *node:this@color = "0.56 0.81 0.76 0.5" }
-	onClick			{ cmd "ui_pop; mn_base_select <baseid>;" }
+	onClick			{ cmd "base_select_s <baseid> <node:root.base_container.wnd_name@string>;" }
 }
 --]]
 local BaseLayoutMini = ufo.create_component("baselayout", "BaseLayoutMini", nil)
@@ -1124,6 +1124,7 @@ component BaseContainerPanel extends panel
 		border			"2"
 		bordercolor		"0.56 0.81 0.76 1"
 	}
+	data wnd_name { string "" }
 
 	// @TODO: make next/prev base btns work
 	button prev
@@ -1132,9 +1133,9 @@ component BaseContainerPanel extends panel
 		tooltip			"_Previous base"
 		pos				"90 6"
 		size			"18	18"
-		onClick			{ cmd "ui_pop; mn_base_prev;" }
-		onWheelUp		{ cmd "ui_pop; mn_base_next;" }
-		onWheelDown		{ cmd "ui_pop; mn_base_prev;" }
+		onClick			{ cmd "base_prev_s <node:parent.wnd_name@string>;" }
+		onWheelUp		{ cmd "base_next_s <node:parent.wnd_name@string>;" }
+		onWheelDown		{ cmd "base_prev_s <node:parent.wnd_name@string>;" }
 	}
 	button next
 	{
@@ -1142,9 +1143,9 @@ component BaseContainerPanel extends panel
 		tooltip			"_Next base"
 		pos				"115 6"
 		size			"18	18"
-		onClick			{ cmd "ui_pop; mn_base_next;" }
-		onWheelUp		{ cmd "ui_pop; mn_base_next;" }
-		onWheelDown		{ cmd "ui_pop; mn_base_prev;" }
+		onClick			{ cmd "base_next_s <node:parent.wnd_name@string>;" }
+		onWheelUp		{ cmd "base_next_s <node:parent.wnd_name@string>;" }
+		onWheelDown		{ cmd "base_prev_s <node:parent.wnd_name@string>;" }
 	}
 	// Base name
 	textentry name

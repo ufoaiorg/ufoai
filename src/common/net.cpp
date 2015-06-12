@@ -302,14 +302,10 @@ static void NET_ShowStreams_f (void)
  */
 void NET_Init (void)
 {
-	int i;
-#ifdef _WIN32
-	WSADATA winsockdata;
-#endif
-
 	Com_Printf("\n----- network initialization -------\n");
 
 #ifdef _WIN32
+	WSADATA winsockdata;
 	if (WSAStartup(MAKEWORD(2, 0), &winsockdata) != 0)
 		Com_Error(ERR_FATAL, "Winsock initialization failed.");
 #endif
@@ -318,9 +314,9 @@ void NET_Init (void)
 	FD_ZERO(&read_fds);
 	FD_ZERO(&write_fds);
 
-	for (i = 0; i < MAX_STREAMS; i++)
+	for (int i = 0; i < MAX_STREAMS; i++)
 		streams[i] = nullptr;
-	for (i = 0; i < MAX_DATAGRAM_SOCKETS; i++)
+	for (int i = 0; i < MAX_DATAGRAM_SOCKETS; i++)
 		datagram_sockets[i] = nullptr;
 
 #ifndef _WIN32
@@ -398,14 +394,13 @@ static void NET_StreamClose (struct net_stream* s)
 static void do_accept (SOCKET sock)
 {
 	const int index = NET_StreamGetFree();
-	struct net_stream* s;
 	if (index == -1) {
 		Com_Printf("Too many streams open, rejecting inbound connection\n");
 		netCloseSocket(sock);
 		return;
 	}
 
-	s = NET_StreamNew(index);
+	struct net_stream* s = NET_StreamNew(index);
 	s->socket = sock;
 	s->inbound = dbufferptr(new dbuffer(4096));
 	s->outbound = dbufferptr(new dbuffer(4096));
@@ -427,7 +422,6 @@ void NET_Wait (int timeout)
 {
 	struct timeval tv;
 	int ready;
-	int i;
 
 	fd_set read_fds_out;
 	fd_set write_fds_out;
@@ -467,7 +461,7 @@ void NET_Wait (int timeout)
 			do_accept(client_socket);
 	}
 
-	for (i = 0; i < MAX_STREAMS; i++) {
+	for (int i = 0; i < MAX_STREAMS; i++) {
 		struct net_stream* s = streams[i];
 
 		if (!s)
@@ -490,9 +484,6 @@ void NET_Wait (int timeout)
 			continue;
 
 		if (FD_ISSET(s->socket, &write_fds_out)) {
-			char buf[4096];
-			int len;
-
 			if (dbuffer_len(s->outbound) == 0) {
 				FD_CLR(s->socket, &write_fds);
 
@@ -503,6 +494,8 @@ void NET_Wait (int timeout)
 				continue;
 			}
 
+			char buf[4096];
+			int len;
 			{
 				const ScopedMutex scopedMutex(netMutex);
 				len = s->outbound->get(buf, sizeof(buf));
@@ -546,7 +539,7 @@ void NET_Wait (int timeout)
 		}
 	}
 
-	for (i = 0; i < MAX_DATAGRAM_SOCKETS; i++) {
+	for (int i = 0; i < MAX_DATAGRAM_SOCKETS; i++) {
 		struct datagram_socket* s = datagram_sockets[i];
 
 		if (!s)
@@ -597,7 +590,6 @@ static bool NET_SocketSetNonBlocking (SOCKET socketNum)
 
 static struct net_stream* NET_DoConnect (const char* node, const char* service, const struct addrinfo* addr, int i, stream_onclose_func* onclose)
 {
-	struct net_stream* s;
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	if (sock == INVALID_SOCKET) {
 		Com_Printf("Failed to create socket: %s\n", netStringError(netError));
@@ -622,7 +614,7 @@ static struct net_stream* NET_DoConnect (const char* node, const char* service, 
 		}
 	}
 
-	s = NET_StreamNew(i);
+	struct net_stream* s = NET_StreamNew(i);
 	s->socket = sock;
 	s->inbound = dbufferptr(new dbuffer(4096));
 	s->outbound = dbufferptr(new dbuffer(4096));
@@ -651,9 +643,6 @@ struct net_stream* NET_Connect (const char* node, const char* service, stream_on
 {
 	struct addrinfo* res;
 	struct addrinfo hints;
-	int rc;
-	struct net_stream* s = nullptr;
-	int index;
 
 	OBJZERO(hints);
 	hints.ai_flags = AI_ADDRCONFIG | AI_NUMERICSERV;
@@ -662,20 +651,20 @@ struct net_stream* NET_Connect (const char* node, const char* service, stream_on
 	if (net_ipv4->integer)
 		hints.ai_family = AF_INET;
 
-	rc = getaddrinfo(node, service, &hints, &res);
+	const int rc = getaddrinfo(node, service, &hints, &res);
 	if (rc != 0) {
 		Com_Printf("Failed to resolve host %s:%s: %s\n", node, service, gai_strerror(rc));
 		return nullptr;
 	}
 
-	index = NET_StreamGetFree();
+	const int index = NET_StreamGetFree();
 	if (index == -1) {
 		Com_Printf("Failed to connect to host %s:%s, too many streams open\n", node, service);
 		freeaddrinfo(res);
 		return nullptr;
 	}
 
-	s = NET_DoConnect(node, service, res, index, onclose);
+	struct net_stream* s = NET_DoConnect(node, service, res, index, onclose);
 
 	freeaddrinfo(res);
 	return s;
@@ -689,27 +678,24 @@ struct net_stream* NET_Connect (const char* node, const char* service, stream_on
  */
 struct net_stream* NET_ConnectToLoopBack (stream_onclose_func* onclose)
 {
-	struct net_stream* client, *server;
-	int server_index, client_index;
-
 	if (!server_running)
 		return nullptr;
 
-	server_index = NET_StreamGetFree();
-	client_index = NET_StreamGetFree();
+	const int server_index = NET_StreamGetFree();
+	const int client_index = NET_StreamGetFree();
 
 	if (server_index == -1 || client_index == -1 || server_index == client_index) {
 		Com_Printf("Failed to connect to loopback server, too many streams open\n");
 		return nullptr;
 	}
 
-	client = NET_StreamNew(client_index);
+	struct net_stream* client = NET_StreamNew(client_index);
 	client->loopback = true;
 	client->inbound = dbufferptr(new dbuffer(4096));
 	client->outbound = dbufferptr(new dbuffer(4096));
 	client->onclose = onclose;
 
-	server = NET_StreamNew(server_index);
+	struct net_stream* server = NET_StreamNew(server_index);
 	server->loopback = true;
 	server->inbound = client->outbound;
 	server->outbound = client->inbound;
@@ -759,7 +745,7 @@ static int NET_StreamPeek (struct net_stream* s, char* data, int len)
 	if (len <= 0 || !s)
 		return 0;
 
-	dbufferptr& dbuf = s->inbound;
+	const dbufferptr& dbuf = s->inbound;
 	if ((s->closed || s->finished) && dbuffer_len(dbuf) == 0)
 		return 0;
 
@@ -973,7 +959,6 @@ static struct addrinfo* NET_GetAddrinfoForNode (const char* node, const char* se
 {
 	struct addrinfo* res;
 	struct addrinfo hints;
-	int rc;
 
 	OBJZERO(hints);
 	hints.ai_flags = AI_ADDRCONFIG | AI_PASSIVE;
@@ -982,7 +967,7 @@ static struct addrinfo* NET_GetAddrinfoForNode (const char* node, const char* se
 	if (net_ipv4->integer)
 		hints.ai_family = AF_INET;
 
-	rc = getaddrinfo(node, service, &hints, &res);
+	const int rc = getaddrinfo(node, service, &hints, &res);
 	if (rc != 0) {
 		Com_Printf("Failed to resolve host %s:%s: %s\n", node ? node : "*", service, gai_strerror(rc));
 		return nullptr;
@@ -1111,10 +1096,8 @@ static struct datagram_socket* NET_DatagramSocketDoNew (const struct addrinfo* a
  */
 struct datagram_socket* NET_DatagramSocketNew (const char* node, const char* service, datagram_callback_func* func)
 {
-	struct datagram_socket* s;
 	struct addrinfo* res;
 	struct addrinfo hints;
-	int rc;
 
 	if (!service || !func)
 		return nullptr;
@@ -1126,14 +1109,14 @@ struct datagram_socket* NET_DatagramSocketNew (const char* node, const char* ser
 	if (net_ipv4->integer)
 		hints.ai_family = AF_INET;
 
-	rc = getaddrinfo(node, service, &hints, &res);
+	const int rc = getaddrinfo(node, service, &hints, &res);
 
 	if (rc != 0) {
 		Com_Printf("Failed to resolve host %s:%s: %s\n", node ? node : "*", service, gai_strerror(rc));
 		return nullptr;
 	}
 
-	s = NET_DatagramSocketDoNew(res);
+	struct datagram_socket* s = NET_DatagramSocketDoNew(res);
 	if (s)
 		s->func = func;
 

@@ -341,6 +341,7 @@ typedef struct cgame_import_s {
 	const char* (IMPORT* Com_ValueToStr) (const void* base, const valueTypes_t type, const int ofs);
 	const teamDef_t* (IMPORT* Com_GetTeamDefinitionByID) (const char* team);
 	ufoType_t (IMPORT* Com_UFOShortNameToID) (const char* token);
+	short (IMPORT* Com_GetUFOIdsNum) (void);
 	const char* (IMPORT* Com_GetRandomMapAssemblyNameForCrashedCraft) (const char* craftID);
 	void (IMPORT* Com_Drop) (void);
 	const ugv_t* (IMPORT* Com_GetUGVByID) (const char* ugvID);

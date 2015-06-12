@@ -85,11 +85,10 @@ static void TR_MakeTracingNode (TR_TILE_TYPE* tile, tnode_t**  tnode, int32_t no
 	tnode_t* t = (*tnode)++;		/* the tracing node to build */
 	TR_NODE_TYPE* node = tile->nodes + nodenum;		/* the node we are investigating */
 
-	TR_PLANE_TYPE* plane;
 #ifdef COMPILE_UFO
-	plane = node->plane;
+	const TR_PLANE_TYPE* plane = node->plane;
 #else
-	plane = tile->planes + node->planenum;
+	const TR_PLANE_TYPE* plane = tile->planes + node->planenum;
 #endif
 
 	t->type = plane->type;
@@ -158,8 +157,7 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE* tile, tnode_t** tnode, int32_t nodenum
 			(int)tile->nodes[n->children[1]].maxs[0], (int)tile->nodes[n->children[1]].maxs[1]);
 #endif
 
-		int i;
-		for (i = 0; i < 2; i++)
+		for (int i = 0; i < 2; i++)
 			if (c0maxs[i] <= c1mins[i]) {
 				/* create a separation plane */
 				t->type = i;
@@ -176,7 +174,7 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE* tile, tnode_t** tnode, int32_t nodenum
 		/* can't construct such a separation plane */
 		t->type = PLANE_NONE;
 
-		for (i = 0; i < 2; i++) {
+		for (int i = 0; i < 2; i++) {
 			t->children[i] = *tnode - tile->tnodes;
 			TR_BuildTracingNode_r(tile, tnode, n->children[i], level);
 		}
@@ -210,7 +208,6 @@ LINE TRACING - TEST FOR BRUSH PRESENCE
  */
 int TR_TestLine_r (TR_TILE_TYPE* tile, int32_t nodenum, const vec3_t start, const vec3_t end)
 {
-	tnode_t* tnode;
 	float front, back;
 	int r;
 
@@ -219,7 +216,7 @@ int TR_TestLine_r (TR_TILE_TYPE* tile, int32_t nodenum, const vec3_t start, cons
 	if (nodenum & (1 << 31))
 		return nodenum & ~(1 << 31);
 
-	tnode = &tile->tnodes[nodenum];
+	const tnode_t* tnode = &tile->tnodes[nodenum];
 	assert(tnode);
 	switch (tnode->type) {
 	case PLANE_X:
@@ -312,9 +309,7 @@ static bool TR_TileTestLine (TR_TILE_TYPE* tile, const vec3_t start, const vec3_
  */
 bool TR_TestLine (mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, const int levelmask)
 {
-	int tile;
-
-	for (tile = 0; tile < mapTiles->numTiles; tile++) {
+	for (int tile = 0; tile < mapTiles->numTiles; tile++) {
 		if (TR_TileTestLine(&mapTiles->mapTiles[tile], start, end, levelmask))
 			return true;
 	}
@@ -340,10 +335,8 @@ LINE TRACING - TEST FOR BRUSH LOCATION
  */
 static int TR_TestLineDist_r (TR_TILE_TYPE* tile, int32_t nodenum, const vec3_t start, const vec3_t end, vec3_t tr_end)
 {
-	tnode_t* tnode;
 	float front, back;
 	vec3_t mid;
-	float frac;
 	int side;
 	int r;
 
@@ -354,7 +347,7 @@ static int TR_TestLineDist_r (TR_TILE_TYPE* tile, int32_t nodenum, const vec3_t 
 		return r;				/* leaf node */
 	}
 
-	tnode = &tile->tnodes[nodenum];
+	const tnode_t* tnode = &tile->tnodes[nodenum];
 	assert(tnode);
 	switch (tnode->type) {
 	case PLANE_X:
@@ -397,7 +390,7 @@ static int TR_TestLineDist_r (TR_TILE_TYPE* tile, int32_t nodenum, const vec3_t 
 
 	side = front < 0;
 
-	frac = front / (front - back);
+	const float frac = front / (front - back);
 
 	VectorInterpolation(start, end, frac, mid);
 
@@ -464,13 +457,12 @@ static bool TR_TileTestLineDM (TR_TILE_TYPE* tile, const vec3_t start, const vec
  */
 bool TR_TestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t end, vec3_t hit, const int levelmask)
 {
-	int tile;
 	vec3_t t_end;
 
 	VectorCopy(end, hit);
 	VectorCopy(end, t_end);
 
-	for (tile = 0; tile < mapTiles->numTiles; tile++) {
+	for (int tile = 0; tile < mapTiles->numTiles; tile++) {
 		if (TR_TileTestLineDM(&mapTiles->mapTiles[tile], start, end, t_end, levelmask)) {
 			if (VectorNearer(t_end, hit, start))
 				VectorCopy(t_end, hit);
@@ -506,10 +498,10 @@ void mapTiles_s::getTilesAt (int x ,int y, byte& fromTile1, byte& fromTile2, byt
 void mapTiles_s::getTileOverlap (const byte tile1, const byte tile2, int& minZ, int& maxZ)
 {
 #if defined(COMPILE_UFO)
-	int lowZ1 = mapTiles[tile1 - 1].wpMins[2];
-	int lowZ2 = mapTiles[tile2 - 1].wpMins[2];
-	int highZ1 = mapTiles[tile1 - 1].wpMaxs[2];
-	int highZ2 = mapTiles[tile2 - 1].wpMaxs[2];
+	const int lowZ1 = mapTiles[tile1 - 1].wpMins[2];
+	const int lowZ2 = mapTiles[tile2 - 1].wpMins[2];
+	const int highZ1 = mapTiles[tile1 - 1].wpMaxs[2];
+	const int highZ2 = mapTiles[tile2 - 1].wpMaxs[2];
 	minZ = std::max(lowZ1, lowZ2);
 	if (minZ > 0)
 		minZ--;			/* routing needs to start one level below the actual overlap */
@@ -549,11 +541,9 @@ BOX TRACING
  */
 int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE* plane)
 {
-	int side;
-
 	/* axial planes are easy */
 	if (AXIAL(plane)) {
-		side = 0;
+		int side = 0;
 		if (maxs[plane->type] > plane->dist + PLANESIDE_EPSILON)
 			side |= PSIDE_FRONT;
 		if (mins[plane->type] < plane->dist - PLANESIDE_EPSILON)
@@ -576,7 +566,7 @@ int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE
 
 	vec_t dist1 = DotProduct(plane->normal, corners[0]) - plane->dist;
 	vec_t dist2 = DotProduct(plane->normal, corners[1]) - plane->dist;
-	side = 0;
+	int side = 0;
 	if (dist1 >= PLANESIDE_EPSILON)
 		side = PSIDE_FRONT;
 	if (dist2 < PLANESIDE_EPSILON)
@@ -598,7 +588,7 @@ typedef struct leaf_check_s {
  */
 static void TR_BoxLeafnums_r (boxtrace_t* traceData, int32_t nodenum, leaf_check_t* lc)
 {
-	TR_TILE_TYPE* myTile = traceData->tile;
+	const TR_TILE_TYPE* myTile = traceData->tile;
 
 	while (1) {
 		if (nodenum <= LEAFNODE) {
@@ -611,16 +601,15 @@ static void TR_BoxLeafnums_r (boxtrace_t* traceData, int32_t nodenum, leaf_check
 		}
 
 		assert(nodenum < myTile->numnodes + 6); /* +6 => bbox */
-		TR_NODE_TYPE* node = &myTile->nodes[nodenum];
+		const TR_NODE_TYPE* node = &myTile->nodes[nodenum];
 
-		TR_PLANE_TYPE* plane;
 #ifdef COMPILE_UFO
-		plane = node->plane;
+		const TR_PLANE_TYPE* plane = node->plane;
 #else
-		plane = myTile->planes + node->planenum;
+		const TR_PLANE_TYPE* plane = myTile->planes + node->planenum;
 #endif
 
-		int s = TR_BoxOnPlaneSide(traceData->absmins, traceData->absmaxs, plane);
+		const int s = TR_BoxOnPlaneSide(traceData->absmins, traceData->absmaxs, plane);
 		if (s == PSIDE_FRONT)
 			nodenum = node->children[0];
 		else if (s == PSIDE_BACK)
@@ -670,26 +659,26 @@ static void TR_ClipBoxToBrush (boxtrace_t* traceData, cBspBrush_t* brush, TR_LEA
 		return;
 
 #ifdef COMPILE_UFO
-	TR_BRUSHSIDE_TYPE* leadside = nullptr;
+	const TR_BRUSHSIDE_TYPE* leadside = nullptr;
 #endif
-	TR_TILE_TYPE* myTile = traceData->tile;
+	const TR_TILE_TYPE* myTile = traceData->tile;
 
 	float enterfrac = -1.0;
 	float leavefrac = 1.0;
 	bool getout = false;
 	bool startout = false;
 
-	TR_PLANE_TYPE* clipplane = nullptr;
+	const TR_PLANE_TYPE* clipplane = nullptr;
 	int clipplanenum = 0;
 
 	float dist;
 	vec3_t ofs;
 	for (int i = 0; i < brush->numsides; i++) {
-		TR_BRUSHSIDE_TYPE* side = &myTile->brushsides[brush->firstbrushside + i];
+		const TR_BRUSHSIDE_TYPE* side = &myTile->brushsides[brush->firstbrushside + i];
 #ifdef COMPILE_UFO
-		TR_PLANE_TYPE* plane = side->plane;
+		const TR_PLANE_TYPE* plane = side->plane;
 #else
-		TR_PLANE_TYPE* plane = myTile->planes + side->planenum;
+		const TR_PLANE_TYPE* plane = myTile->planes + side->planenum;
 #endif
 
 		/** @todo special case for axial */
@@ -707,8 +696,8 @@ static void TR_ClipBoxToBrush (boxtrace_t* traceData, cBspBrush_t* brush, TR_LEA
 			dist = plane->dist;
 		}
 
-		float d1 = DotProduct(traceData->start, plane->normal) - dist;
-		float d2 = DotProduct(traceData->end, plane->normal) - dist;
+		const float d1 = DotProduct(traceData->start, plane->normal) - dist;
+		const float d2 = DotProduct(traceData->end, plane->normal) - dist;
 
 		if (d2 > 0)
 			getout = true;		/* endpoint is not in solid */
@@ -769,19 +758,18 @@ static void TR_ClipBoxToBrush (boxtrace_t* traceData, cBspBrush_t* brush, TR_LEA
  */
 static void TR_TestBoxInBrush (boxtrace_t* traceData, cBspBrush_t* brush)
 {
-	TR_PLANE_TYPE* plane;
 	vec3_t ofs;
-	TR_TILE_TYPE* myTile = traceData->tile;
+	const TR_TILE_TYPE* myTile = traceData->tile;
 
 	if (!brush || !brush->numsides)
 		return;
 
 	for (int i = 0; i < brush->numsides; i++) {
-		TR_BRUSHSIDE_TYPE* side = &myTile->brushsides[brush->firstbrushside + i];
+		const TR_BRUSHSIDE_TYPE* side = &myTile->brushsides[brush->firstbrushside + i];
 #ifdef COMPILE_UFO
-		plane = side->plane;
+		const TR_PLANE_TYPE* plane = side->plane;
 #else
-		plane = myTile->planes + side->planenum;
+		const TR_PLANE_TYPE* plane = myTile->planes + side->planenum;
 #endif
 
 		/** @todo special case for axial */
@@ -793,8 +781,7 @@ static void TR_TestBoxInBrush (boxtrace_t* traceData, cBspBrush_t* brush)
 			else
 				ofs[j] = traceData->mins[j];
 		}
-		float dist = DotProduct(ofs, plane->normal);
-		dist = plane->dist - dist;
+		const float dist = plane->dist - DotProduct(ofs, plane->normal);
 
 		float d1 = DotProduct(traceData->start, plane->normal) - dist;
 
@@ -903,15 +890,6 @@ static void TR_TestInLeaf (boxtrace_t* traceData, int32_t leafnum)
  */
 static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float p1f, float p2f, const vec3_t p1, const vec3_t p2)
 {
-	TR_NODE_TYPE* node;
-	TR_PLANE_TYPE* plane;
-	float t1, t2, offset;
-	float frac, frac2;
-	int side;
-	float midf;
-	vec3_t mid;
-	TR_TILE_TYPE* myTile = traceData->tile;
-
 	if (traceData->trace.fraction <= p1f)
 		return;					/* already hit something nearer */
 
@@ -925,15 +903,17 @@ static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float
 
 	/* find the point distances to the seperating plane
 	 * and the offset for the size of the box */
-	node = myTile->nodes + nodenum;
+	const TR_TILE_TYPE* myTile = traceData->tile;
+	const TR_NODE_TYPE* node = myTile->nodes + nodenum;
 
 #ifdef COMPILE_UFO
-	plane = node->plane;
+	const TR_PLANE_TYPE* plane = node->plane;
 #else
 	assert(node->planenum < MAX_MAP_PLANES);
-	plane = myTile->planes + node->planenum;
+	const TR_PLANE_TYPE* plane = myTile->planes + node->planenum;
 #endif
 
+	float t1, t2, offset;
 	if (AXIAL(plane)) {
 		const int type = plane->type;
 		t1 = p1[type] - plane->dist;
@@ -966,6 +946,8 @@ static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float
 	 * WHOLE line being traced.  However, the interpolated vector is based on the CURRENT endpoints so uses frac and
 	 * frac2 to find the actual splitting point.
 	 */
+	float frac, frac2;
+	int side;
 	if (t1 < t2) {
 		const float idist = 1.0 / (t1 - t2);
 		side = 1;
@@ -988,7 +970,8 @@ static void TR_RecursiveHullCheck (boxtrace_t* traceData, int32_t nodenum, float
 	else if (frac > 1)
 		frac = 1;
 
-	midf = p1f + (p2f - p1f) * frac;
+	float midf = p1f + (p2f - p1f) * frac;
+	vec3_t mid;
 	VectorInterpolation(p1, p2, frac, mid);
 	TR_RecursiveHullCheck(traceData, node->children[side], p1f, midf, p1, mid);
 
@@ -1038,7 +1021,7 @@ trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& t
 		VectorAdd(traceData.start, traceData.maxs, traceData.absmaxs);
 		VectorAdd(traceData.start, traceData.mins, traceData.absmins);
 
-		int numleafs = TR_BoxLeafnums_headnode(&traceData, leafs, MAX_LEAFS, headnode);
+		const int numleafs = TR_BoxLeafnums_headnode(&traceData, leafs, MAX_LEAFS, headnode);
 		for (int i = 0; i < numleafs; i++) {
 			TR_TestInLeaf(&traceData, leafs[i]);
 			if (traceData.trace.allsolid)
@@ -1059,9 +1042,9 @@ trace_t TR_BoxTrace (boxtrace_t& traceData, const Line& traceLine, const AABB& t
 
 	/* general sweeping through world */
 	/** @todo Would Interpolating traceData.end to traceData.fraction and passing traceData.fraction instead of 1.0 make this faster? */
-	TR_RecursiveHullCheck(&traceData, headnode, 0.0, 1.0, traceData.start, traceData.end);
+	TR_RecursiveHullCheck(&traceData, headnode, 0.0f, 1.0f, traceData.start, traceData.end);
 
-	if (traceData.trace.fraction >= 1.0) {
+	if (traceData.trace.fraction >= 1.0f) {
 		VectorCopy(traceData.end, traceData.trace.endpos);
 	} else {
 		VectorInterpolation(traceData.start, traceData.end, traceData.trace.fraction, traceData.trace.endpos);

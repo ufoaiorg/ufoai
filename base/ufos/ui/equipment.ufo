@@ -339,6 +339,7 @@ window equipment extends objectinfo
 			}
 		}
 
+		data wnd_name { string "soldiers" }
 	} // end base_container
 
 	// ==================

@@ -188,18 +188,16 @@ typedef struct opening_s {
  */
 static void RT_DumpMap (const Routing& routing, actorSizeEnum_t actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
 {
-	int x, y, z;
-
 	Com_Printf("\nRT_DumpMap (%i %i %i) (%i %i %i)\n", lx, ly, lz, hx, hy, hz);
-	for (z = hz; z >= lz; --z) {
+	for (int z = hz; z >= lz; --z) {
 		Com_Printf("\nLayer %i:\n   ", z);
-		for (x = lx; x <= hx; ++x) {
+		for (int x = lx; x <= hx; ++x) {
 			Com_Printf("%9i", x);
 		}
 		Com_Printf("\n");
-		for (y = hy; y >= ly; --y) {
+		for (int y = hy; y >= ly; --y) {
 			Com_Printf("%3i ", y);
-			for (x = lx; x <= hx; ++x) {
+			for (int x = lx; x <= hx; ++x) {
 				Com_Printf("%s%s%s%s "
 					, RT_CONN_NX(routing, actorSize, x, y, z) ? "w" : " "
 					, RT_CONN_PY(routing, actorSize, x, y, z) ? "n" : " "
@@ -378,12 +376,6 @@ int RT_CheckCell (mapTiles_t* mapTiles, Routing& routing, const int actorSize, c
 	AABB box; /* Holds the exact bounds to be traced for legs and torso. */
 	pos3_t pos;
 	float bottom, top; /* Floor and ceiling model distances from the cell base. (in mapunits) */
-#ifdef DEBUG
-	float initial; /* Cell floor and ceiling z coordinate. */
-#endif
-	int bottomQ, topQ; /* The floor and ceiling in QUANTs */
-	int i;
-	int fz, cz; /* Floor and ceiling Z cell coordinates */
 
 	assert(actorSize > ACTOR_SIZE_INVALID && actorSize <= ACTOR_MAX_SIZE);
 	/* x and y cannot exceed PATHFINDING_WIDTH - actorSize */
@@ -401,7 +393,7 @@ int RT_CheckCell (mapTiles_t* mapTiles, Routing& routing, const int actorSize, c
 	 * Adjust these points so that start to end is from the top of the cell to the bottom of the model.
 	 */
 #ifdef DEBUG
-	initial = start[2] + UNIT_HEIGHT / 2; /* This is the top-most starting point in this cell. */
+	float initial = start[2] + UNIT_HEIGHT / 2; /* This is the top-most starting point in this cell. */
 #endif
 	start[2] += UNIT_HEIGHT / 2 - QUANT; /* This one QUANT unit below initial. */
 	end[2] = -UNIT_HEIGHT * 2; /* To the bottom of the model! (Plus some for good measure) */
@@ -513,16 +505,16 @@ int RT_CheckCell (mapTiles_t* mapTiles, Routing& routing, const int actorSize, c
 	 * Actually, we have to give back two DIST_EPSILON to prevent rounding issues */
 	bottom -= 2 * DIST_EPSILON;
 	top += 2 * DIST_EPSILON;
-	bottomQ = ModelFloorToQuant(bottom); /* Convert to QUANT units to ensure the floor is rounded up to the correct value. */
-	topQ = ModelCeilingToQuant(top); /* Convert to QUANT units to ensure the floor is rounded down to the correct value. */
-	fz = floorf(bottomQ / CELL_HEIGHT); /* Ensure we round down to get the bottom-most affected cell */
+	const int bottomQ = ModelFloorToQuant(bottom); /* Convert to QUANT units to ensure the floor is rounded up to the correct value. */
+	const int topQ = ModelCeilingToQuant(top); /* Convert to QUANT units to ensure the floor is rounded down to the correct value. */
+	const int fz = floorf(bottomQ / CELL_HEIGHT); /* Ensure we round down to get the bottom-most affected cell */
 	/** @note Remember that ceiling values of 1-16 belong to a cell.  We need to adjust topQ by 1 to round to the correct z value. */
-	cz = std::min(z, (int)(floorf((topQ - 1) / CELL_HEIGHT))); /* Use the lower of z or the calculated ceiling */
+	const int cz = std::min(z, (int)(floorf((topQ - 1) / CELL_HEIGHT))); /* Use the lower of z or the calculated ceiling */
 
 	assert(fz <= cz);
 
 	/* Last, update the floors and ceilings of cells from (x, y, fz) to (x, y, cz) */
-	for (i = fz; i <= cz; i++) {
+	for (int i = fz; i <= cz; i++) {
 		/* Round up floor to keep feet out of model. */
 		routing.setFloor(actorSize, x, y, i, bottomQ - i * CELL_HEIGHT);
 		/* Round down ceiling to heep head out of model.  Also offset by floor and max at 255. */
@@ -549,8 +541,6 @@ int RT_CheckCell (mapTiles_t* mapTiles, Routing& routing, const int actorSize, c
 static int RT_FillPassageData (RoutingData* rtd, const int dir, const int  x, const int y, const int z, const int openingSize, const int openingBase, const int stepup)
 {
 	const int openingTop = openingBase + openingSize;
-	int fz, cz; /**< Floor and ceiling Z cell coordinates */
-	int i;
 
 	/* Final interpretation:
 	 * We now have the floor and the ceiling of the passage traveled between the two cells.
@@ -565,8 +555,9 @@ static int RT_FillPassageData (RoutingData* rtd, const int dir, const int  x, co
 	 *  can be made and that both have ceilings above the current level.
 	 */
 
-	fz = z;
-	cz = ceil((float)openingTop / CELL_HEIGHT) - 1;
+	/**< Floor and ceiling Z cell coordinates */
+	const int fz = z;
+	int cz = ceil((float)openingTop / CELL_HEIGHT) - 1;
 	cz = std::min(PATHFINDING_HEIGHT - 1, cz);
 
 	/* last chance- if cz < z, then bail (and there is an error with the ceiling data somewhere */
@@ -581,10 +572,9 @@ static int RT_FillPassageData (RoutingData* rtd, const int dir, const int  x, co
 	assert(fz <= z && z <= cz);
 
 	/* Last, update the connections of cells from (x, y, fz) to (x, y, cz) for direction dir */
-	for (i = fz; i <= cz; i++) {
-		int oh;
+	for (int i = fz; i <= cz; i++) {
 		/* Offset from the floor or the bottom of the current cell, whichever is higher. */
-		oh = openingTop - std::max(openingBase, i * CELL_HEIGHT);
+		const int oh = openingTop - std::max(openingBase, i * CELL_HEIGHT);
 		/* Only if > 0 */
 		assert (oh >= 0);
 		rtd->routing.setConn(rtd->actorSize, x, y, i, dir, oh);
@@ -699,14 +689,12 @@ static int RT_FindOpeningFloor (const RoutingData* rtd, const vec3_t start, cons
 		/* For orthogonal dirs, find the height at the midpoint. */
 		midfloor = RT_FindOpeningFloorFrac(rtd, start, end, 0.5, startingHeight);
 	} else {
-		int midfloor2;
-
 		/* If this is diagonal, trace the 1/3 and 2/3 points instead. */
 		/* 1/3 point */
 		midfloor = RT_FindOpeningFloorFrac(rtd, start, end, 0.33, startingHeight);
 
 		/* 2/3 point */
-		midfloor2 = RT_FindOpeningFloorFrac(rtd, start, end, 0.66, startingHeight);
+		const int midfloor2 = RT_FindOpeningFloorFrac(rtd, start, end, 0.66, startingHeight);
 		midfloor = std::max(midfloor, midfloor2);
 	}
 
@@ -732,14 +720,12 @@ static int RT_FindOpeningCeiling (const RoutingData* rtd, const vec3_t start, co
 		/* For orthogonal dirs, find the height at the midpoint. */
 		midceil = RT_FindOpeningCeilingFrac(rtd, start, end, 0.5, startingHeight);
 	} else {
-		int midceil2;
-
 		/* If this is diagonal, trace the 1/3 and 2/3 points instead. */
 		/* 1/3 point */
 		midceil = RT_FindOpeningCeilingFrac(rtd, start, end, 0.33, startingHeight);
 
 		/* 2/3 point */
-		midceil2 = RT_FindOpeningCeilingFrac(rtd, start, end, 0.66, startingHeight);
+		const int midceil2 = RT_FindOpeningCeilingFrac(rtd, start, end, 0.66, startingHeight);
 		midceil = std::min(midceil, midceil2);
 	}
 
@@ -750,11 +736,9 @@ static int RT_FindOpeningCeiling (const RoutingData* rtd, const vec3_t start, co
 
 static int RT_CalcNewZ (const RoutingData* rtd, const int ax, const int ay, const int top, const int hi)
 {
-	int temp_z, adj_lo;
-
-	temp_z = floorf((hi - 1) / CELL_HEIGHT);
+	int temp_z = floorf((hi - 1) / CELL_HEIGHT);
 	temp_z = std::min(temp_z, PATHFINDING_HEIGHT - 1);
-	adj_lo = rtd->routing.getFloor(rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+	int adj_lo = rtd->routing.getFloor(rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
 	if (adj_lo > hi) {
 		temp_z--;
 		adj_lo = rtd->routing.getFloor(rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
@@ -794,7 +778,6 @@ static int RT_TraceOpening (const RoutingData* rtd, const vec3_t start, const ve
 		lo = RT_FindOpeningFloor(rtd, start, end, lo, bottom);
 		hi = RT_FindOpeningCeiling(rtd, start, end, hi, top);
 		if (hi - lo >= PATHFINDING_MIN_OPENING) {
-			int tempZ;
 			if (lo == -1) {
 				/* Bailing- no floor in destination cell. */
 				*foundLow = *foundHigh = 0;
@@ -804,7 +787,7 @@ static int RT_TraceOpening (const RoutingData* rtd, const vec3_t start, const ve
 			*foundLow = lo;
 			*foundHigh = hi;
 			/* Find the floor for the highest adjacent cell in this passage. */
-			tempZ = RT_CalcNewZ(rtd, ax, ay, top, hi);
+			const int tempZ = RT_CalcNewZ(rtd, ax, ay, top, hi);
 			if (tempZ != RT_NO_OPENING)
 				return tempZ;
 		}
@@ -828,15 +811,14 @@ static int RT_TraceOpening (const RoutingData* rtd, const vec3_t start, const ve
  */
 static int RT_FindOpening (RoutingData* rtd, const place_t* from, const int ax, const int ay, const int bottom, const int top, int* foundLow, int* foundHigh)
 {
-	vec3_t start, end;
-	pos3_t pos;
-	int tempZ;
-
 	if (bottom == -1) {
 		/* Bailing- no floor in current cell. */
 		*foundLow = *foundHigh = 0;
 		return RT_NO_OPENING;
 	}
+
+	vec3_t start, end;
+	pos3_t pos;
 
 	/* Initialize the starting vector */
 	SizedPosToVec(from->cell, rtd->actorSize, start);
@@ -879,6 +861,7 @@ static int RT_FindOpening (RoutingData* rtd, const place_t* from, const int ax, 
 	 * the floor to the ceiling is not too tall, there must be a section that
 	 * will always be vacant if there is a usable passage of any size and at
 	 * any height. */
+	int tempZ;
 	if (top - bottom < PATHFINDING_MIN_OPENING * 2) {
 		const int lo = top - PATHFINDING_MIN_OPENING;
 		const int hi = bottom + PATHFINDING_MIN_OPENING;
@@ -918,12 +901,10 @@ static int RT_MicroTrace (RoutingData* rtd, const place_t* from, const int ax, c
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
-	int top = opening->base + opening->size;
+	const int top = opening->base + opening->size;
 	signed char bases[UNIT_SIZE / PATHFINDING_MICROSTEP_SIZE + 1];
-	float sx, sy, ex, ey;
 	/* Shortcut the value of UNIT_SIZE / PATHFINDING_MICROSTEP_SIZE. */
 	const int steps = UNIT_SIZE / PATHFINDING_MICROSTEP_SIZE;
-	int i, current_h, highest_h, highest_i = 0, skipped, newBottom;
 	vec3_t start, end;
 	pos3_t pos;
 
@@ -944,20 +925,20 @@ static int RT_MicroTrace (RoutingData* rtd, const place_t* from, const int ax, c
 	end[2] = -QUANT;
 
 	/* Memorize the start and end x,y points */
-	sx = start[0];
-	sy = start[1];
-	ex = end[0];
-	ey = end[1];
+	const float sx = start[0];
+	const float sy = start[1];
+	const float ex = end[0];
+	const float ey = end[1];
 
-	newBottom = std::max(bases[0], bases[steps]);
+	int newBottom = std::max(bases[0], bases[steps]);
 	/* Now calculate the rest of the microheights. */
-	for (i = 1; i < steps; i++) {
+	for (int i = 1; i < steps; i++) {
 		start[0] = end[0] = sx + (ex - sx) * (i / (float)steps);
 		start[1] = end[1] = sy + (ey - sy) * (i / (float)steps);
 
 		/* perform the trace, then return true if the trace was obstructed. */
 		const trace_t tr = RT_COMPLETEBOXTRACE_PASSAGE(rtd->mapTiles, Line(start, end), &footBox, rtd->list);
-		if (tr.fraction >= 1.0) {
+		if (tr.fraction >= 1.0f) {
 			bases[i] = -1;
 		} else {
 			bases[i] = ModelFloorToQuant(tr.endpos[2] - DIST_EPSILON);
@@ -988,12 +969,12 @@ static int RT_MicroTrace (RoutingData* rtd, const place_t* from, const int ax, c
 	/** @note This for loop is bi-directional: i may be decremented to retrace prior steps. */
 	/* Now find the maximum stepup moving from (x, y) to (ax, ay). */
 	/* Initialize stepup. */
-	current_h = bases[0];
-	highest_h = -1;
-	highest_i = 1;
+	int current_h = bases[0];
+	int highest_h = -1;
+	int highest_i = 1;
 	opening->stepup = 0; /**<  Was originally -CELL_HEIGHT, but stepup is needed to go UP, not down. */
-	skipped = 0;
-	for (i = 1; i <= steps; i++) {
+	int skipped = 0;
+	for (int i = 1; i <= steps; i++) {
 		if (debugTrace)
 			Com_Printf("Tracing forward i:%i h:%i\n", i, current_h);
 		/* If there is a rise, use it. */
@@ -1037,7 +1018,7 @@ static int RT_MicroTrace (RoutingData* rtd, const place_t* from, const int ax, c
 	highest_i = steps - 1;	/**< Note that for this part of the code, this is the LOWEST i. */
 	opening->invstepup = 0;	/**<  Was originally -CELL_HEIGHT, but stepup is needed to go UP, not down. */
 	skipped = 0;
-	for (i = steps - 1; i >= 0; i--) {
+	for (int i = steps - 1; i >= 0; i--) {
 		if (debugTrace)
 			Com_Printf("Tracing backward i:%i h:%i\n", i, current_h);
 		/* If there is a rise, use it. */
@@ -1111,7 +1092,6 @@ static int RT_TraceOnePassage (RoutingData* rtd, const place_t* from, const plac
 {
 	int hi; /**< absolute ceiling of the passage found. */
 	const int z = from->cell[2];
-	int az; /**< z height of the actor after moving in this direction. */
 	const int lower = std::max(from->floor, to->floor);
 	const int upper = std::min(from->ceiling, to->ceiling);
 	const int ax = to->cell[0];
@@ -1120,7 +1100,7 @@ static int RT_TraceOnePassage (RoutingData* rtd, const place_t* from, const plac
 	RT_FindOpening(rtd, from, ax, ay, lower, upper, &opening->base, &hi);
 	/* calc opening found so far and set stepup */
 	opening->size = hi - opening->base;
-	az = to->floorZ;
+	const int az = to->floorZ; /**< z height of the actor after moving in this direction. */
 
 	/* We subtract MIN_STEPUP because that is foot space-
 	 * the opening there only needs to be the microtrace
@@ -1133,7 +1113,7 @@ static int RT_TraceOnePassage (RoutingData* rtd, const place_t* from, const plac
 		if (opening->size < ACTOR_MAX_HEIGHT
 			|| abs(srcFloor - opening->base) > PATHFINDING_MIN_STEPUP
 			|| abs(dstFloor - opening->base) > PATHFINDING_MIN_STEPUP) {
-			int stairway = RT_PlaceIsShifted(from, to);
+			const int stairway = RT_PlaceIsShifted(from, to);
 			/* This returns the total opening height, as the
 			 * microtrace may reveal more passage height from the foot space. */
 			const int bonusSize = RT_MicroTrace(rtd, from, ax, ay, az, stairway, opening);
@@ -1187,7 +1167,6 @@ static int RT_TraceOnePassage (RoutingData* rtd, const place_t* from, const plac
  */
 static void RT_TracePassage (RoutingData* rtd, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
 {
-	int aboveCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
 	place_t from, to, above;
 	const place_t* placeToCheck = nullptr;
@@ -1195,8 +1174,8 @@ static void RT_TracePassage (RoutingData* rtd, const int x, const int y, const i
 	RT_PlaceInit(rtd->routing, rtd->actorSize, &from, x, y, z);
 	RT_PlaceInit(rtd->routing, rtd->actorSize, &to, ax, ay, z);
 
-	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? rtd->routing.getCeiling(rtd->actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
-	lowCeil = std::min(from.ceiling, (rtd->routing.getCeiling(rtd->actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
+	const int aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? rtd->routing.getCeiling(rtd->actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
+	const int lowCeil = std::min(from.ceiling, (rtd->routing.getCeiling(rtd->actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
 
 	/*
 	 * First check the ceiling for the cell beneath the adjacent floor to see
@@ -1293,7 +1272,7 @@ static int RT_UpdateConnection (RoutingData* rtd, const int x, const int y, cons
 	/** Apply the data to the routing table.
 	 * We always call the fill function.  If the passage cannot be traveled, the
 	 * function fills it in as unpassable. */
-	int newZ = RT_FillPassageData(rtd, dir, x, y, z, opening.size, opening.base, opening.stepup);
+	const int newZ = RT_FillPassageData(rtd, dir, x, y, z, opening.size, opening.base, opening.stepup);
 
 	return newZ;
 }
@@ -1350,7 +1329,6 @@ void RT_UpdateConnectionColumn (mapTiles_t* mapTiles, Routing& routing, const in
 void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const GridBox& box)
 {
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
-	int x, y, z;
 
 	/* An elevation files- dumps the floor and ceiling levels relative to each cell. */
 	for (int i = 1; i <= ACTOR_MAX_SIZE; i++) {
@@ -1362,13 +1340,13 @@ void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const G
 		if (!f)
 			Sys_Error("Could not open file %s.", filename);
 		FS_Printf(&f, ",");
-		for (x = box.getMinX(); x <= box.getMaxX() - i + 1; x++)
+		for (int x = box.getMinX(); x <= box.getMaxX() - i + 1; x++)
 			FS_Printf(&f, "x:%i,", x);
 		FS_Printf(&f, "\n");
-		for (z = box.getMaxZ(); z >= box.getMinZ(); z--) {
-			for (y = box.getMaxY(); y >= box.getMinY() - i + 1; y--) {
+		for (int z = box.getMaxZ(); z >= box.getMinZ(); z--) {
+			for (int y = box.getMaxY(); y >= box.getMinY() - i + 1; y--) {
 				FS_Printf(&f, "z:%i  y:%i,", z ,y);
-				for (x = box.getMinX(); x <= box.getMaxX() - i + 1; x++) {
+				for (int x = box.getMinX(); x <= box.getMaxX() - i + 1; x++) {
 					/* compare results */
 					FS_Printf(&f, "h:%i c:%i,", routing.getFloor(i, x, y, z), routing.getCeiling(i, x, y, z));
 				}
@@ -1388,13 +1366,13 @@ void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const G
 		if (!f)
 			Sys_Error("Could not open file %s.", filename);
 		FS_Printf(&f, ",");
-		for (x = box.getMinX(); x <= box.getMaxX() - i + 1; x++)
+		for (int x = box.getMinX(); x <= box.getMaxX() - i + 1; x++)
 			FS_Printf(&f, "x:%i,", x);
 		FS_Printf(&f, "\n");
-		for (z = box.getMaxZ(); z >= box.getMinZ(); z--) {
-			for (y = box.getMaxY(); y >= box.getMinY() - i + 1; y--) {
+		for (int z = box.getMaxZ(); z >= box.getMinZ(); z--) {
+			for (int y = box.getMaxY(); y >= box.getMinY() - i + 1; y--) {
 				FS_Printf(&f, "z:%i  y:%i,", z, y);
-				for (x = box.getMinX(); x <= box.getMaxX() - i + 1; x++) {
+				for (int x = box.getMinX(); x <= box.getMaxX() - i + 1; x++) {
 					/* compare results */
 					FS_Printf(&f, "\"");
 
@@ -1450,15 +1428,14 @@ void RT_WriteCSVFiles (const Routing& routing, const char* baseFilename, const G
  */
 int RT_DebugSpecial (mapTiles_t* mapTiles, Routing& routing, const int actorSize, const int x, const int y, const int dir, const char** list)
 {
-	int z = 0; /**< The current z value that we are testing. */
-	int new_z; /**< The last z value processed by the tracing function.  */
 	RoutingData rtd(mapTiles, routing, actorSize, list);	/* the essential data passed down the calltree */
 
 	/* get the neighbor cell's coordinates */
 	const int ax = x + dvecs[dir][0];
 	const int ay = y + dvecs[dir][1];
 
-	new_z = RT_UpdateConnection(&rtd, x, y, ax, ay, z, dir);
+	/**< The last z value processed by the tracing function.  */
+	const int new_z = RT_UpdateConnection(&rtd, x, y, ax, ay, 0, dir);
 	return new_z;
 }
 

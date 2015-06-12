@@ -144,7 +144,7 @@ typedef enum {
 } fade_t;
 
 typedef short ufoType_t;
-#define UFO_MAX 10
+#define UFO_MAX 12
 #if 0
 #define UFO_NONE -1
 #else
@@ -253,6 +253,7 @@ const char* Com_GetRandomMapAssemblyNameForCrashedCraft(const char* craftID);
 ufoType_t Com_UFOShortNameToID(const char* token);
 const char* Com_UFOTypeToShortName(ufoType_t type);
 const char* Com_UFOCrashedTypeToShortName(ufoType_t type);
+short Com_GetUfoIdsNum(void);
 int Com_GetScriptChecksum(void);
 void Com_Shutdown(void);
 

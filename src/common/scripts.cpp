@@ -73,15 +73,11 @@ static const char* Com_ConstIntGetVariable (const char* name)
  */
 bool Com_GetConstInt (const char* name, int* value)
 {
-	com_constNameInt_t* a;
-	unsigned int hash;
-	const char* variable;
-
-	variable = Com_ConstIntGetVariable(name);
+	const char* variable = Com_ConstIntGetVariable(name);
 
 	/* if the alias already exists */
-	hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
-	for (a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
+	const unsigned int hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
+	for (com_constNameInt_t* a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
 		if (Q_streq(variable, a->name)) {
 			if (!a->fullname || variable == name || Q_streq(a->fullname, name)) {
 				*value = a->value;
@@ -125,10 +121,9 @@ bool Com_GetConstIntFromNamespace (const char* space, const char* variable, int*
  */
 const char* Com_GetConstVariable (const char* space, int value)
 {
-	com_constNameInt_t* a;
 	const size_t namespaceLength = strlen(space);
 
-	a = com_constNameInt;
+	com_constNameInt_t* a = com_constNameInt;
 	while (a) {
 		if (a->value == value && a->fullname) {
 			if (!strncmp(a->fullname, space, namespaceLength))
@@ -203,13 +198,10 @@ bool Com_UnregisterConstVariable (const char* name)
 void Com_RegisterConstInt (const char* name, int value)
 {
 	com_constNameInt_t* a;
-	unsigned int hash;
-	const char* variable;
-
-	variable = Com_ConstIntGetVariable(name);
+	const char* variable = Com_ConstIntGetVariable(name);
 
 	/* if the alias already exists, reuse it */
-	hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
+	const unsigned int hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
 	for (a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
 		if (a->fullname) {
 			if (Q_streq(a->fullname, name))
@@ -461,25 +453,7 @@ void* Com_AlignPtr (const void* memory, valueTypes_t type)
  * the numeric/enum type in the code. This table and the following functions convert these ids
  */
 static const char* ufoIdsTable[UFO_MAX];
-static short ufoIdsNum;
-
-/**
- * @brief Pretend to parse the aircraft names from the scripts until we have gotten rid of the enum ufoType_t
- */
-static void Com_ParseAircraftNames (const char* name, const char** text)
-{
-	ufoIdsTable[0]	= "scout";
-	ufoIdsTable[1]	= "fighter";
-	ufoIdsTable[2]	= "harvester";
-	ufoIdsTable[3]	= "corrupter";
-	ufoIdsTable[4]	= "bomber";
-	ufoIdsTable[5]	= "carrier";
-	ufoIdsTable[6]	= "supply";
-	ufoIdsTable[7]	= "gunboat";
-	ufoIdsTable[8]	= "ripper";
-	ufoIdsTable[9]	= "mothership";
-	ufoIdsNum = 10;
-}
+static short ufoIdsNum = 0;
 
 static const char* Com_GetUfoDef (ufoType_t idNum)
 {
@@ -529,6 +503,49 @@ static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
 		outStr[0] = 0;
 }
 
+/* @todo Get rid of this somehow */
+short Com_GetUfoIdsNum (void)
+{
+	return ufoIdsNum;
+}
+
+/**
+ * @brief Parse the aircraft names from the scripts
+ * @note UFOs only until we have gotten rid of the enum humanAircraftType_t
+ */
+static void Com_ParseAircraftNames (const char* const name, const char** text)
+{
+	if (!Q_streq(name, "ufoids")) {
+		Com_Printf("Com_ParseAircraftNames: Unknown aircraft name type '%s' ignored\n", name);
+		return;
+	}
+
+	const char* token = Com_Parse(text);
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseActorNames: names def \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	const char* const errhead = "Com_ParseAircraftNames: Unexpected end of file (name type ";
+	do {
+		/* get the name type */
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+		if (ufoIdsNum >= UFO_MAX) {
+			Com_Printf("Com_ParseAircraftNames: Too many aircraft ids for type '%s', '%s' ignored!\n", name, token);
+			continue;
+		}
+		if (Com_GetUfoIdNum(va("craft_ufo_%s", token)) != UFO_NONE) {
+			Com_Printf("Com_ParseAircraftNames: Aircraft with same name found '%s', second ignored\n", token);
+			continue;
+		}
+		ufoIdsTable[ufoIdsNum++] = Mem_StrDup(token);
+	} while (*text);
+}
+
 /**
  * @brief Parse a value from a string
  * @param[in] base The start pointer to a given data type (typedef, struct) where the parsed data is stored
@@ -543,11 +560,10 @@ static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
  */
 resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type, int ofs, size_t size, size_t* writtenBytes)
 {
-	byte* b;
 	int x, y, w, h;
 	byte num;
 	resultStatus_t status = RESULT_OK;
-	b = (byte*) base + ofs;
+	byte* b = (byte*) base + ofs;
 	*writtenBytes = 0;
 	ufoType_t ufoType = UFO_NONE;
 
@@ -921,11 +937,10 @@ int Com_SetValueDebug (void* base, const void* set, valueTypes_t type, int ofs, 
 int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_t size)
 #endif
 {
-	byte* b;
 	int len;
 	ufoType_t ufoType = UFO_NONE;
 
-	b = (byte*) base + ofs;
+	byte* b = (byte*) base + ofs;
 
 	if (size) {
 #ifdef DEBUG
@@ -1100,9 +1115,7 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int ofs)
 {
 	static char valuestr[MAX_VAR];
-	const byte* b;
-
-	b = (const byte*) base + ofs;
+	const byte* b = (const byte*) base + ofs;
 
 #ifdef DEBUG
 	if (b != Com_AlignPtr(b, type)) {
@@ -1344,10 +1357,9 @@ bool Com_ParseList (const char** text, linkedList_t** list)
 bool Com_ParseBlock (const char* name, const char** text, void* base, const value_t* values, memPool_t* mempool)
 {
 	const char* errhead = "Com_ParseBlock: unexpected end of file (";
-	const char* token;
 
 	/* get name/id */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseBlock: block \"%s\" without body ignored\n", name);
@@ -1620,10 +1632,9 @@ static void Com_ParseFireEffect (fireDef_t* fd, const char* name, const char** t
 static bool Com_ParseFire (const char* name, const char** text, fireDef_t* fd)
 {
 	const char* errhead = "Com_ParseFire: unexpected end of file";
-	const char* token;
 
 	/* get its body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseFire: fire definition \"%s\" without body ignored\n", name);
@@ -1761,9 +1772,8 @@ static void Com_ParseFireDefinition (objDef_t* od, const char* name, const char*
 	if (od->numWeapons >= MAX_WEAPONS_PER_OBJDEF)
 		Sys_Error("max weapons per objdef exceeded");
 
-	const char* token;
 	/* get it's body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseFireDefinition: weapon_mod \"%s\" without body ignored\n", name);
 		return;
@@ -2134,9 +2144,7 @@ static const value_t equipment_definition_vals[] = {
 static void Com_ParseEquipment (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseEquipment: unexpected end of file (equipment ";
-	equipDef_t* ed;
-	const char* token;
-	int i, n;
+	int i;
 
 	/* search for equipments with same name */
 	for (i = 0; i < csi.numEDs; i++)
@@ -2152,14 +2160,14 @@ static void Com_ParseEquipment (const char* name, const char** text)
 		Sys_Error("Com_ParseEquipment: MAX_EQUIPDEFS exceeded\n");
 
 	/* initialize the equipment definition */
-	ed = &csi.eds[csi.numEDs++];
+	equipDef_t* ed = &csi.eds[csi.numEDs++];
 	OBJZERO(*ed);
 
 	Q_strncpyz(ed->id, name, sizeof(ed->id));
 	ed->name = ed->id;
 
 	/* get it's body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseEquipment: equipment def \"%s\" without body ignored\n", name);
@@ -2187,7 +2195,7 @@ static void Com_ParseEquipment (const char* name, const char** text)
 				const objDef_t* od;
 				od = INVSH_GetItemByID(itemToken);
 				if (od) {
-					n = atoi(amountToken);
+					const int n = atoi(amountToken);
 					if (ed->numItems[od->idx])
 						Com_Printf("Com_ParseEquipment: item '%s' is used several times in def '%s'. Only last entry will be taken into account.\n",
 							od->id, name);
@@ -2210,7 +2218,7 @@ static void Com_ParseEquipment (const char* name, const char** text)
 
 				humanAircraftType_t type;
 				type = Com_DropShipShortNameToID(aircraftToken);
-				n = atoi(amountToken);
+				const int n = atoi(amountToken);
 				if (ed->numAircraft[type])
 					Com_Printf("Com_ParseEquipment: aircraft type '%i' is used several times in def '%s'. Only last entry will be taken into account.\n",
 						type, name);
@@ -2238,10 +2246,10 @@ NAME AND TEAM DEFINITION INTERPRETER
  */
 static const char* Com_GiveName (int gender, const teamDef_t* td)
 {
-	int j, name = 0;
+	int name = 0;
 
 #ifdef DEBUG
-	for (j = 0; j < NAME_NUM_TYPES; j++)
+	for (int j = 0; j < NAME_NUM_TYPES; j++)
 		name += td->numNames[j];
 	if (!name)
 		Sys_Error("Could not find any valid name definitions for category '%s'\n", td->id);
@@ -2257,7 +2265,7 @@ static const char* Com_GiveName (int gender, const teamDef_t* td)
 
 	/* skip names */
 	linkedList_t* list = td->names[gender];
-	for (j = 0; j < name; j++) {
+	for (int j = 0; j < name; j++) {
 		assert(list);
 		list = list->next;
 	}
@@ -2273,8 +2281,6 @@ static const char* Com_GiveName (int gender, const teamDef_t* td)
  */
 static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t* td)
 {
-	const linkedList_t* list;
-
 	/* found category */
 	if (!td->numModels[gender]) {
 		Com_Printf("Com_GiveModel: no models defined for gender %i and category '%s'\n", gender, td->id);
@@ -2285,7 +2291,7 @@ static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t* td)
 	size_t n = rand() % td->numModels[gender];
 
 	/* skip models and unwanted info */
-	list = td->models[gender];
+	const linkedList_t* list = td->models[gender];
 	while (n-- != 0) {
 		assert(list);
 		list = list->next;
@@ -2380,13 +2386,12 @@ void Com_GetCharacterValues (const char* teamDefition, character_t* chr)
 
 	/* get the models */
 	while (retry--) {
-		const char* str;
 		const int gender = Com_GetGender(chr->teamDef);
 
 		chr->gender = gender;
 
 		/* get name */
-		str = Com_GiveName(gender, chr->teamDef);
+		const char* str = Com_GiveName(gender, chr->teamDef);
 		if (!str)
 			continue;
 		Q_strncpyz(chr->name, str, sizeof(chr->name));
@@ -2411,7 +2416,6 @@ void Com_GetCharacterValues (const char* teamDefition, character_t* chr)
 static void Com_ParseActorNames (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseNames: unexpected end of file (names ";
-	const char* token;
 	teamNames_t nameList;
 
 	LIST_Foreach(csi.actorNames, teamNames_t, names) {
@@ -2425,7 +2429,7 @@ static void Com_ParseActorNames (const char* name, const char** text)
 	Q_strncpyz(nameList.id, name, sizeof(nameList.id));
 
 	/* get name list body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseActorNames: names def \"%s\" without body ignored\n", name);
 		return;
@@ -2439,7 +2443,10 @@ static void Com_ParseActorNames (const char* name, const char** text)
 		if (*token == '}')
 			break;
 
-		int nameType = Com_FindNameType(token);
+		const int nameType = Com_FindNameType(token);
+		if (nameType == -1) {
+			Com_Error(ERR_DROP, "Com_ParseActorNames: name type \"%s\" unknown", token);
+		}
 
 		linkedList_t* list;
 		if (!Com_ParseList(text, &list)) {
@@ -2485,10 +2492,9 @@ static void Com_ParseActorNames (const char* name, const char** text)
 static void Com_ParseActorModels (const char* name, const char** text, teamDef_t* td)
 {
 	const char* errhead = "Com_ParseActorModels: unexpected end of file (actors ";
-	const char* token;
 
 	/* get name list body body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseActorModels: actor def \"%s\" without body ignored\n", td->id);
@@ -2646,7 +2652,6 @@ static void Com_ParseTeam (const char* name, const char** text)
 {
 	teamDef_t* td;
 	const char* errhead = "Com_ParseTeam: unexpected end of file (team ";
-	const char* token;
 	int i;
 
 	/* check for additions to existing name categories */
@@ -2676,7 +2681,7 @@ static void Com_ParseTeam (const char* name, const char** text)
 	td->onlyWeapon = nullptr;
 
 	/* get name list body body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseTeam: team def \"%s\" without body ignored\n", name);
@@ -2695,11 +2700,10 @@ static void Com_ParseTeam (const char* name, const char** text)
 
 		if (!Com_ParseBlockToken(name, text, td, teamDefValues, nullptr, token)) {
 			if (Q_streq(token, "onlyWeapon")) {
-				const objDef_t* od;
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				od = INVSH_GetItemByID(token);
+				const objDef_t* od = INVSH_GetItemByID(token);
 
 				if (od)
 					td->onlyWeapon = od;
@@ -2729,16 +2733,14 @@ static void Com_ParseTeam (const char* name, const char** text)
 				}
 				LIST_Delete(&list);
 			} else if (Q_streq(token, "bodytype")) {
-				const BodyData* bd;
 				token = Com_EParse(text, errhead, name);
-				bd = Com_GetBodyTemplateByID(token);
+				const BodyData* bd = Com_GetBodyTemplateByID(token);
 				if (bd == nullptr)
 					Sys_Error("Com_ParseTeam: Could not find body type %s in team def %s\n", token, name);
 				td->bodyTemplate = bd;
 			} else if (Q_streq(token, "names")) {
-				const teamNames_t* nameList;
 				token = Com_EParse(text, errhead, name);
-				nameList = Com_GetNameListByID(token);
+				const teamNames_t* nameList = Com_GetNameListByID(token);
 				if (nameList == nullptr)
 					Sys_Error("Com_ParseTeam: Could not find name list %s in team def %s\n", token, name);
 				td->names = nameList->names;
@@ -2827,8 +2829,6 @@ static void Com_ParseUGVs (const char* name, const char** text)
 static void Com_ParseCharacterTemplate (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseCharacterTemplate: unexpected end of file";
-	const char* token;
-	chrTemplate_t* ct;
 	int i;
 
 	for (i = 0; i < csi.numChrTemplates; i++)
@@ -2841,12 +2841,12 @@ static void Com_ParseCharacterTemplate (const char* name, const char** text)
 		Sys_Error("Com_ParseCharacterTemplate: too many character templates");
 
 	/* initialize the character template */
-	ct = &csi.chrTemplates[csi.numChrTemplates++];
+	chrTemplate_t* ct = &csi.chrTemplates[csi.numChrTemplates++];
 	OBJZERO(*ct);
 
 	Q_strncpyz(ct->id, name, sizeof(ct->id));
 
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseCharacterTemplate: character template \"%s\" without body ignored\n", name);
@@ -2897,8 +2897,6 @@ static const char* const penaltyNames[MODIFIER_MAX] = {
 static void Com_ParseBodyPart (const char* name, const char** text, BodyData* bd)
 {
 	const char* errhead = "Com_ParseBodyPart: unexpected end of file";
-	const char* token;
-	BodyPartData bp;
 	int i;
 
 	for (i = 0; i < bd->numBodyParts(); i++) {
@@ -2912,10 +2910,11 @@ static void Com_ParseBodyPart (const char* name, const char** text, BodyData* bd
 		Com_Printf("Com_ParseBodyPart: too many BodyParts '%s' ignored ('%s')\n", name, bd->id());
 	}
 
+	BodyPartData bp;
 	OBJZERO(bp);
 	Q_strncpyz(bp.id, name, sizeof(bp.id));
 
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseBodyPart: BodyPart '%s' without body ignored\n", name);
@@ -2964,7 +2963,6 @@ static void Com_ParseBodyPart (const char* name, const char** text, BodyData* bd
 static void Com_ParseBodyTemplate (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseBodyTemplate: unexpected end of file";
-	const char* token;
 	BodyData bd;
 
 	LIST_Foreach(csi.bodyTemplates, BodyData, bt) {
@@ -2974,7 +2972,7 @@ static void Com_ParseBodyTemplate (const char* name, const char** text)
 		}
 	}
 
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseBodyTemplate: body template '%s' without body ignored\n", name);
@@ -3032,12 +3030,9 @@ static const value_t terrainTypeValues[] = {
  */
 const terrainType_t* Com_GetTerrainType (const char* textureName)
 {
-	unsigned hash;
-	const terrainType_t* t;
-
 	assert(textureName);
-	hash = Com_HashKey(textureName, TERRAIN_HASH_SIZE);
-	for (t = terrainTypesHash[hash]; t; t = t->hash_next) {
+	const unsigned hash = Com_HashKey(textureName, TERRAIN_HASH_SIZE);
+	for (const terrainType_t* t = terrainTypesHash[hash]; t; t = t->hash_next) {
 		if (Q_streq(textureName, t->texture))
 			return t;
 	}
@@ -3052,7 +3047,6 @@ const terrainType_t* Com_GetTerrainType (const char* textureName)
  */
 static void Com_ParseTerrain (const char* name, const char** text)
 {
-
 	/* check for additions to existing name categories */
 	if (Com_GetTerrainType(name) != nullptr) {
 		Com_Printf("Terrain definition with same name already parsed: '%s'\n", name);
@@ -3089,13 +3083,10 @@ static const value_t gameTypeValues[] = {
 static void Com_ParseGameTypes (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseGameTypes: unexpected end of file (gametype ";
-	const char* token;
 	int i;
-	gametype_t* gt;
-	cvarlist_t* cvarlist;
 
 	/* get it's body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseGameTypes: gametype \"%s\" without body ignored\n", name);
 		return;
@@ -3109,7 +3100,7 @@ static void Com_ParseGameTypes (const char* name, const char** text)
 	if (i == csi.numGTs) {
 		if (i >= MAX_GAMETYPES)
 			Sys_Error("Com_ParseGameTypes: MAX_GAMETYPES exceeded");
-		gt = &csi.gts[csi.numGTs++];
+		gametype_t* gt = &csi.gts[csi.numGTs++];
 		OBJZERO(*gt);
 		Q_strncpyz(gt->id, name, sizeof(gt->id));
 		if (csi.numGTs >= MAX_GAMETYPES)
@@ -3141,7 +3132,7 @@ static void Com_ParseGameTypes (const char* name, const char** text)
 							break;
 					}
 					/* initial pointer */
-					cvarlist = &gt->cvars[gt->num_cvars++];
+					cvarlist_t* cvarlist = &gt->cvars[gt->num_cvars++];
 					if (gt->num_cvars >= MAX_CVARLISTINGAMETYPE)
 						Sys_Error("Com_ParseGameTypes: gametype \"%s\" max cvarlist hit", name);
 					Q_strncpyz(cvarlist->name, token, sizeof(cvarlist->name));
@@ -3167,11 +3158,10 @@ DAMAGE TYPES INTERPRETER
 static void Com_ParseDamageTypes (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseDamageTypes: unexpected end of file (damagetype ";
-	const char* token;
 	int i;
 
 	/* get it's body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseDamageTypes: damage type list \"%s\" without body ignored\n", name);
@@ -3446,18 +3436,16 @@ static const value_t mapdef_vals[] = {
 static void Com_ParseMapDefinition (const char* name, const char** text)
 {
 	const char* errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
-	mapDef_t* md;
-	const char* token;
 
 	/* get it's body */
-	token = Com_Parse(text);
+	const char* token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" without body ignored\n", name);
 		return;
 	}
 
-	md = Com_GetMapDefByIDX(csi.numMDs);
+	mapDef_t* md = Com_GetMapDefByIDX(csi.numMDs);
 	csi.numMDs++;
 	if (csi.numMDs >= lengthof(csi.mds))
 		Sys_Error("Com_ParseMapDefinition: Max mapdef hit");
@@ -3592,7 +3580,7 @@ mapDef_t* Com_GetMapDefinitionByID (const char* mapDefID)
  */
 void Com_ParseScripts (bool onlyServer)
 {
-	const char* type, *name, *text;
+	const char* type, *name;
 
 	Com_Printf("\n----------- parse scripts ----------\n");
 
@@ -3601,9 +3589,13 @@ void Com_ParseScripts (bool onlyServer)
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStunElectro = csi.damStunGas = NONE;
 	csi.damSmoke = csi.damIncendiary = NONE;
 
+	/* Reset ufo ids */
+	OBJZERO(ufoIdsTable);
+	ufoIdsNum = 0;
+
 	/* pre-stage parsing */
 	Com_Printf("%i script files\n", FS_BuildFileList("ufos/*.ufo"));
-	text = nullptr;
+	const char* text = nullptr;
 
 	FS_NextScriptHeader(nullptr, nullptr, nullptr);
 
