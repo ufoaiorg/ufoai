@@ -1176,7 +1176,8 @@ TEST_F(CampaignTest, testTerrorMissions)
 	int i;
 
 	/* Set overall interest level so every UFO can be used for missions */
-	for (i = 0; i < UFO_MAX; i++) {
+	const short ufoIdsNum = Com_GetUfoIdsNum();
+	for (i = 0; i < ufoIdsNum; i++) {
 		ufoType_t ufoType = i;
 		const aircraft_t* ufo = UFO_GetByType(ufoType);
 
