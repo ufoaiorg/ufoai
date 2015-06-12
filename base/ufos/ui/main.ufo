@@ -27,6 +27,10 @@ lbTitle:set_font("f_title")
 lbTitle:set_color(0.59, 0.78, 0.56, 1.0)
 lbTitle:set_contentalign(ufo.ALIGN_CC)
 
+-- test for color - title should now be RED
+TITLE_COLOR = { 1.0, 1.0, 1.0, 1.0 }
+lbTitle:set_color(TITLE_COLOR)
+
 --[[
 	button facebook
 	{
