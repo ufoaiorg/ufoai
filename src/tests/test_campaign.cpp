@@ -375,8 +375,11 @@ TEST_F(CampaignTest, testTransferItem)
 
 	base = CreateBase("unittesttransferitem", pos);
 	ASSERT_TRUE(nullptr != base);
-	/* make sure that we get all buildings in our second base, too.
-	 * This is needed for starting a transfer */
+	/**
+	 * @todo make sure that we get all buildings in our second base, too.
+	 * B_SetUpFirstBase is not enough! We need to create it from the template.
+	 * This is needed for starting a transfer.
+	 */
 	targetBase = CreateBase("unittesttransferitemtargetbase", posTarget);
 	ASSERT_TRUE(nullptr != targetBase);
 	B_SetUpFirstBase(campaign, targetBase);
@@ -1176,7 +1179,8 @@ TEST_F(CampaignTest, testTerrorMissions)
 	int i;
 
 	/* Set overall interest level so every UFO can be used for missions */
-	for (i = 0; i < UFO_MAX; i++) {
+	const short ufoIdsNum = Com_GetUfoIdsNum();
+	for (i = 0; i < ufoIdsNum; i++) {
 		ufoType_t ufoType = i;
 		const aircraft_t* ufo = UFO_GetByType(ufoType);
 

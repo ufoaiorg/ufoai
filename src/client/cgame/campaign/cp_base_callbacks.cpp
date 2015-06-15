@@ -241,6 +241,7 @@ static void B_BuildBase_f (void)
 		cgi->Cvar_SetValue("mn_base_count", B_GetCount());
 		B_SelectBase(base);
 	} else {
+		/** @todo Why is this needed? Also see bug #5401 */
 		if (GEO_IsRadarOverlayActivated())
 			GEO_SetOverlay("radar", 0);
 
