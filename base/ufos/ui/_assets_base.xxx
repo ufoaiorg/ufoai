@@ -143,7 +143,7 @@ component BaseLayoutMini extends baselayout
 	padding			1
 	onMouseEnter	{ *node:this@color = "0.56 0.81 0.76 1" }
 	onMouseLeave	{ *node:this@color = "0.56 0.81 0.76 0.5" }
-	onClick			{ cmd "base_select_s <baseid> <node:root.base_container.wnd_name@string>;" }
+	onClick			{ cmd "ui_pop; mn_base_select <baseid>;" }
 }
 
 
@@ -259,7 +259,7 @@ component HospitalItem extends panel {
 		ghost			true
 	}
 	string type {
-		pos			"550 8"
+		pos			"530 8"
 		size		"100 15"
 		color		"0.56 0.81 0.76 1"
 		font		"f_verysmall"
@@ -269,55 +269,21 @@ component HospitalItem extends panel {
 	}
 
 	panel wounds {
-		{
-			pos 	"310 0"
-			size	"80 28"
-			ghost		true
-		}
-		// TODO: use image instead of button — when it works with packed icons
-		button wound_humanoid_head {
-			pos			"0 6"
-			size		"16 16"
-			invis		true
-		}
-		button wound_humanoid_torso {
-			pos			"19 6"
-			size		"16 16"
-			invis		true
-		}
-		button wound_humanoid_arms {
-			pos			"38 6"
-			size		"16 16"
-			invis		true
-		}
-		button wound_humanoid_legs {
-			pos			"57 6"
-			size		"16 16"
-			invis		true
-		}
-		button wound_default_body {
-			pos			"0 6"
-			size		"16 16"
-			invis		true
-		}
+		pos 	"310 0"
+		size	"28 28"
+		ghost		true
 	}
 
 	container implant {
-		pos "390 0"
+		pos "340 0"
 		border			"1"
 		bordercolor		"0.56 0.81 0.76 1"
 	}
 
 	image icon {
-		pos 	"510 0"
+		pos 	"460 0"
 		size	"28 28"
-	}
-
-	image assigned {
-		pos		"1 2"
-		size	"24 24"
-		src		"icons/icon_aircraftsml"
-		invis	true
+		ghost		true
 	}
 }
 
@@ -625,7 +591,6 @@ component BaseContainerPanel extends panel
 		border			"2"
 		bordercolor		"0.56 0.81 0.76 1"
 	}
-	data wnd_name { string "" }
 
 	// @TODO: make next/prev base btns work
 	button prev
@@ -634,9 +599,9 @@ component BaseContainerPanel extends panel
 		tooltip			"_Previous base"
 		pos				"90 6"
 		size			"18	18"
-		onClick			{ cmd "base_prev_s <node:parent.wnd_name@string>;" }
-		onWheelUp		{ cmd "base_next_s <node:parent.wnd_name@string>;" }
-		onWheelDown		{ cmd "base_prev_s <node:parent.wnd_name@string>;" }
+		onClick			{ cmd "ui_pop; mn_base_prev;" }
+		onWheelUp		{ cmd "ui_pop; mn_base_next;" }
+		onWheelDown		{ cmd "ui_pop; mn_base_prev;" }
 	}
 	button next
 	{
@@ -644,9 +609,9 @@ component BaseContainerPanel extends panel
 		tooltip			"_Next base"
 		pos				"115 6"
 		size			"18	18"
-		onClick			{ cmd "base_next_s <node:parent.wnd_name@string>;" }
-		onWheelUp		{ cmd "base_next_s <node:parent.wnd_name@string>;" }
-		onWheelDown		{ cmd "base_prev_s <node:parent.wnd_name@string>;" }
+		onClick			{ cmd "ui_pop; mn_base_next;" }
+		onWheelUp		{ cmd "ui_pop; mn_base_next;" }
+		onWheelDown		{ cmd "ui_pop; mn_base_prev;" }
 	}
 	// Base name
 	textentry name
