@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_draw.h"
 #include "../../../shared/parse.h"
 
+#include "../../../common/scripts_lua.h"
+
 /** @brief Each maptile must have an entry in the images array */
 typedef struct hudRadarImage_s {
 	/* image */
@@ -676,4 +678,5 @@ void UI_RegisterRadarNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "radar";
 	behaviour->manager = UINodePtr(new uiRadarNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiRadarNode_t *");
 }

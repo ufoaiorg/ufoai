@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2015 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2014 UFO: Alien Invasion.
 
 Original file from Quake 2 v3.21: quake2-2.31/client/cl_main.c
 Copyright (C) 1997-2001 Id Software, Inc.
@@ -48,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_inventory.h"
 #include "cl_menu.h"
 #include "cl_http.h"
+#include "cl_lua.h"
 #include "input/cl_joystick.h"
 #include "cinematic/cl_cinematic.h"
 #include "sound/s_music.h"
@@ -61,6 +62,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_font.h"
 #include "ui/ui_nodes.h"
 #include "ui/ui_parse.h"
+#include "ui/ui_lua.h"
 #include "cgame/cl_game_team.h"
 #include "../shared/infostring.h"
 #include "../shared/parse.h"
@@ -349,7 +351,8 @@ static void CL_ConnectionlessPacket (dbuffer* msg)
 
 	/* server connection */
 	if (Q_streq(c, CL_CMD_CLIENT_CONNECT)) {
-		for (int i = 1; i < Cmd_Argc(); i++) {
+		int i;
+		for (i = 1; i < Cmd_Argc(); i++) {
 			if (char const* const p = Q_strstart(Cmd_Argv(i), "dlserver=")) {
 				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", cls.servername);
 				CL_SetHTTPServer(p);
@@ -803,6 +806,9 @@ bool CL_ParseClientData (const char* type, const char* name, const char** text)
 		GAME_ParseModes(name, text);
 	else if (Q_streq(type, "tip"))
 		CL_ParseTipOfTheDay(name, text);
+	else if (Q_streq(type, "lua"))
+		return UI_ParseAndLoadLuaScript(name, text);
+
 	return true;
 }
 
@@ -1068,12 +1074,13 @@ void CL_SetClientState (connstate_t state)
 void CL_Frame (int now, void* data)
 {
 	static int lastFrame = 0;
+	int delta;
 
 	if (sys_priority->modified || sys_affinity->modified)
 		Sys_SetAffinityAndPriority();
 
 	/* decide the simulation time */
-	const int delta = now - lastFrame;
+	delta = now - lastFrame;
 	if (lastFrame)
 		cls.frametime = delta / 1000.0;
 	else
@@ -1162,6 +1169,7 @@ void CL_Init (void)
 {
 	/* i18n through gettext */
 	char languagePath[MAX_OSPATH];
+	cvar_t* fs_i18ndir;
 
 	isdown = false;
 
@@ -1170,7 +1178,7 @@ void CL_Init (void)
 
 	OBJZERO(cls);
 
-	cvar_t* fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
+	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
 	/* i18n through gettext */
 	setlocale(LC_ALL, "C");
 	setlocale(LC_MESSAGES, "");
@@ -1201,6 +1209,7 @@ void CL_Init (void)
 	S_Init();
 	SCR_Init();
 
+	CL_InitLua();
 	CL_InitLocal();
 
 	Irc_Init();
@@ -1255,6 +1264,7 @@ void CL_Shutdown (void)
 	S_Shutdown();
 	R_Shutdown();
 	UI_Shutdown();
+	CL_ShutdownLua();
 	CIN_Shutdown();
 	SEQ_Shutdown();
 	GAME_Shutdown();

@@ -39,6 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_texture.h"
 #include "ui_node_abstractnode.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE 0
 
 /**
@@ -72,6 +74,7 @@ void UI_RegisterTextureNode (uiBehaviour_t* behaviour)
 	behaviour->name = "texture";
 	behaviour->manager = UINodePtr(new uiTextureNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTextureNode_t *");
 
 	/* Source of the texture */
 	UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);

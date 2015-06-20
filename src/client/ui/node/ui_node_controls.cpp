@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_keys.h"
 #include "../../cl_video.h"
 
+#include "../../../common/scripts_lua.h"
+
 static int deltaMouseX;
 static int deltaMouseY;
 
@@ -85,4 +87,7 @@ void UI_RegisterControlsNode (uiBehaviour_t* behaviour)
 	behaviour->name = "controls";
 	behaviour->extends = "image";
 	behaviour->manager = UINodePtr(new uiControlNode());
+	/* in lua, this class is renamed 'widget' since the generic name 'control' is reserved for a child
+	   node in a component/window node */
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiWidgetNode_t *");
 }

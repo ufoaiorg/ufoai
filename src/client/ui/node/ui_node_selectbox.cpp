@@ -57,6 +57,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_language.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA(node) UI_EXTRADATA(node, abstractOptionExtraData_t)
 
 #define SELECTBOX_DEFAULT_HEIGHT 20.0f
@@ -81,7 +83,7 @@ void uiSelectBoxNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 	}
 
 	int posy = node->box.size[1];
-	for (uiNode_t* option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
+	for (uiNode_t* option = UI_AbstractOption_GetFirstOption(node); option; option = option->next) {
 		if (option->invis)
 			continue;
 		OPTIONEXTRADATA(option).hovered = (posy <= y && y < posy + node->box.size[1]);
@@ -94,7 +96,7 @@ void uiSelectBoxNode::draw (uiNode_t* node)
 	vec2_t nodepos;
 	static vec4_t invisColor = {1.0, 1.0, 1.0, 0.7};
 
-	const char* ref = UI_AbstractOptionGetCurrentValue(node);
+	const char* ref = UI_AbstractOption_GetCurrentValue(node);
 	if (ref == nullptr)
 		return;
 
@@ -120,7 +122,7 @@ void uiSelectBoxNode::draw (uiNode_t* node)
 		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, image);
 
 	/* draw the label for the current selected option */
-	for (uiNode_t* option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
+	for (uiNode_t* option = UI_AbstractOption_GetFirstOption(node); option; option = option->next) {
 		if (!Q_streq(OPTIONEXTRADATA(option).value, ref))
 			continue;
 
@@ -145,7 +147,7 @@ void uiSelectBoxNode::draw (uiNode_t* node)
 
 void uiSelectBoxNode::drawOverWindow (uiNode_t* node)
 {
-	const char* ref = UI_AbstractOptionGetCurrentValue(node);
+	const char* ref = UI_AbstractOption_GetCurrentValue(node);
 	if (ref == nullptr)
 		return;
 
@@ -179,7 +181,7 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t* node)
 
 	/* now draw all available options for this selectbox */
 	int check = 0;
-	for (uiNode_t* option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
+	for (uiNode_t* option = UI_AbstractOption_GetFirstOption(node); option; option = option->next) {
 		if (option->invis)
 			continue;
 		/* draw the hover effect */
@@ -249,11 +251,11 @@ void uiSelectBoxNode::onLeftClick (uiNode_t* node, int x, int y)
 	if (clickedAtOption < 0 || clickedAtOption >= EXTRADATA(node).count)
 		return;
 
-	if (UI_AbstractOptionGetCurrentValue(node) == nullptr)
+	if (UI_AbstractOption_GetCurrentValue(node) == nullptr)
 		return;
 
 	/* select the right option */
-	uiNode_t* option = UI_AbstractOptionGetFirstOption(node);
+	uiNode_t* option = UI_AbstractOption_GetFirstOption(node);
 	for (; option; option = option->next) {
 		if (option->invis)
 			continue;
@@ -264,7 +266,7 @@ void uiSelectBoxNode::onLeftClick (uiNode_t* node, int x, int y)
 
 	/* update the status */
 	if (option)
-		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOption_SetCurrentValue(node, OPTIONEXTRADATA(option).value);
 
 	/* close the dropdown */
 	UI_MouseRelease();
@@ -290,4 +292,5 @@ void UI_RegisterSelectBoxNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->manager = UINodePtr(new uiSelectBoxNode());
 	behaviour->drawItselfChild = true;
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiSelectBoxNode_t *");
 }

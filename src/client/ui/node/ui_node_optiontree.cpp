@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_sprite.h"
 #include "../ui_render.h"
 #include "../ui_input.h"
+#include "../ui_lua.h"
+
 #include "ui_node_abstractoption.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_optiontree.h"
@@ -40,6 +42,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_language.h"
 #include "../../input/cl_keys.h"
+
+#include "../../../common/scripts_lua.h"
 
 #define EXTRADATA_TYPE abstractOptionExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -72,8 +76,14 @@ static void UI_OptionTreeNodeUpdateScroll (uiNode_t* node)
 
 	elements = (node->box.size[1] - node->padding - node->padding) / fontHeight;
 	updated = EXTRADATA(node).scrollY.set(-1, elements, EXTRADATA(node).count);
-	if (updated && EXTRADATA(node).onViewChange)
-		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+	if (updated) {
+		if (EXTRADATA(node).onViewChange) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		}
+		else if (EXTRADATA(node).lua_onViewChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript (node, EXTRADATA(node).lua_onViewChange);
+		}
+	}
 }
 
 /** @todo we should remove this call loop */
@@ -125,7 +135,7 @@ void uiOptionTreeNode::draw (uiNode_t* node)
 	if (!systemCollapse)
 		systemCollapse = UI_GetSpriteByName("icons/system_collapse");
 
-	ref = UI_AbstractOptionGetCurrentValue(node);
+	ref = UI_AbstractOption_GetCurrentValue(node);
 	if (ref == nullptr)
 		return;
 
@@ -239,7 +249,7 @@ void uiOptionTreeNode::onLeftClick (uiNode_t* node, int x, int y)
 	uiNode_t* option;
 	int depth;
 
-	if (UI_AbstractOptionGetCurrentValue(node) == nullptr)
+	if (UI_AbstractOption_GetCurrentValue(node) == nullptr)
 		return;
 
 	/* select the right option */
@@ -259,7 +269,7 @@ void uiOptionTreeNode::onLeftClick (uiNode_t* node, int x, int y)
 
 	/* update the status */
 	if (option)
-		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOption_SetCurrentValue(node, OPTIONEXTRADATA(option).value);
 }
 
 /**
@@ -272,9 +282,14 @@ bool uiOptionTreeNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 	if (deltaY == 0)
 		return false;
 	updated = EXTRADATA(node).scrollY.move(down ? 1 : -1);
-	if (EXTRADATA(node).onViewChange && updated)
-		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
-
+	if (updated) {
+		if (EXTRADATA(node).onViewChange) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		}
+		else if (EXTRADATA(node).lua_onViewChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript (node, EXTRADATA(node).lua_onViewChange);
+		}
+	}
 	/* @todo use super behaviour */
 	if (node->onWheelUp && !down) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
@@ -306,29 +321,19 @@ void uiOptionTreeNode::onLoaded (uiNode_t* node)
 {
 }
 
-static void UI_OptionTreeSetSelectedValue (uiNode_t* node, const uiCallContext_t* context)
-{
-	if (UI_GetParamNumber(context) != 1) {
-		Com_Printf("UI_OptionTreeSetSelectedValue: Invalide number of param\n");
-		return;
-	}
-
-	const char* value = UI_GetParam(context, 1);
-
+void UI_OptionTree_SelectValue (uiNode_t* node, const char* value) {
 	/* is the option exists */
 	uiNode_t* firstOption = UI_OptionTreeNodeGetFirstOption(node);
 
 	uiOptionIterator_t iterator;
-	UI_InitOptionIteratorAtIndex(0, firstOption, &iterator);
-	/** @todo merge that into the Init iterator function */
-	iterator.skipCollapsed = false;
+	UI_InitOptionIteratorAtIndex(0, firstOption, &iterator, false, true);
 	uiNode_t* option = UI_FindOptionByValue(&iterator, value);
 
 	/* update the selection */
 	if (option) {
-		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOption_SetCurrentValue(node, OPTIONEXTRADATA(option).value);
 	} else {
-		Com_Printf("UI_OptionTreeSetSelectedValue: Option value \"%s\" not found\n", value);
+		Com_Printf("UI_OptionTree_SelectValue: Option value \"%s\" not found\n", value);
 		return;
 	}
 
@@ -347,8 +352,26 @@ static void UI_OptionTreeSetSelectedValue (uiNode_t* node, const uiCallContext_t
 
 	bool updated;
 	updated = EXTRADATA(node).scrollY.move(pos);
-	if (updated && EXTRADATA(node).onViewChange)
-		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+	if (updated) {
+		if (EXTRADATA(node).onViewChange) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		}
+		else if (EXTRADATA(node).lua_onViewChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript (node, EXTRADATA(node).lua_onViewChange);
+		}
+	}
+}
+
+static void UI_OptionTreeSetSelectedValue (uiNode_t* node, const uiCallContext_t* context)
+{
+	if (UI_GetParamNumber(context) != 1) {
+		Com_Printf("UI_OptionTreeSetSelectedValue: Invalide number of param\n");
+		return;
+	}
+
+	const char* value = UI_GetParam(context, 1);
+
+	UI_OptionTree_SelectValue(node, value);
 }
 
 void uiOptionTreeNode::doLayout (uiNode_t* node)
@@ -385,8 +408,14 @@ void uiOptionTreeNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 	if (deltaY != 0) {
 		bool updated;
 		updated = EXTRADATA(node).scrollY.moveDelta(deltaY);
-		if (EXTRADATA(node).onViewChange && updated)
-			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		if (updated) {
+			if (EXTRADATA(node).onViewChange) {
+				UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+			}
+			else if (EXTRADATA(node).lua_onViewChange != LUA_NOREF) {
+				UI_ExecuteLuaEventScript (node, EXTRADATA(node).lua_onViewChange);
+			}
+		}
 		/* @todo not accurate */
 		mouseScrollX = x;
 		mouseScrollY = y;
@@ -413,6 +442,7 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->manager = UINodePtr(new uiOptionTreeNode());
 	behaviour->drawItselfChild = true;
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiOptionTreeNode_t *");
 
 	/* Call this to toggle the node status. */
 	UI_RegisterNodeMethod(behaviour, "setselectedvalue", UI_OptionTreeSetSelectedValue);

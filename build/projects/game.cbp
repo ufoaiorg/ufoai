@@ -219,9 +219,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/libs/lua/ltm.h" />
-		<Unit filename="../../src/libs/lua/lua.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/libs/lua/lua.h" />
 		<Unit filename="../../src/libs/lua/luaconf.h" />
 		<Unit filename="../../src/libs/lua/lualib.h" />

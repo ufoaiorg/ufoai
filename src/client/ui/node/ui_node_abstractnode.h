@@ -35,15 +35,17 @@ public:
 	/* system allocation */
 
 	/** Called before script initialization, initialized default values */
-	virtual void onLoading(uiNode_t* node) {}
+	virtual void onLoading(uiNode_t* node);
 	/** only called one time, when node parsing was finished */
-	virtual void onLoaded(uiNode_t* node) {}
+	virtual void onLoaded(uiNode_t* node);
 	/** call to initialize a cloned node */
-	virtual void clone(uiNode_t const* source, uiNode_t* clone) {}
+	virtual void clone(uiNode_t const* source, uiNode_t* clone);
+	/** call to initialize the node structure and extradata structure */
+	virtual void initNode(uiNode_t* node);
 	/** call to initialize a dynamic node */
-	virtual void newNode(uiNode_t* node) {}
+	virtual void initNodeDynamic(uiNode_t* node);
 	/** call to delete a dynamic node */
-	virtual void deleteNode(uiNode_t* node) {}
+	virtual void deleteNode(uiNode_t* node);
 
 	/* system callback */
 
@@ -127,13 +129,13 @@ public:
 	/** Send to the target to finalize the drop */
 	virtual bool onDndDrop(uiNode_t* node, int x, int y);
 	/** Sent to the source to finalize the drop */
-	virtual bool onDndFinished(uiNode_t* node, bool isDroped);
+	virtual bool onDndFinished(uiNode_t* node, bool isDropped);
 
 	/* focus and keyboard events */
-	virtual void onFocusGained(uiNode_t* node) {}
-	virtual void onFocusLost(uiNode_t* node) {}
-	virtual bool onKeyPressed(uiNode_t* node, unsigned int key, unsigned short unicode) {return false;}
-	virtual bool onKeyReleased(uiNode_t* node, unsigned int key, unsigned short unicode) {return false;}
+	virtual void onFocusGained(uiNode_t* node);
+	virtual void onFocusLost(uiNode_t* node);
+	virtual bool onKeyPressed(uiNode_t* node, unsigned int key, unsigned short unicode);
+	virtual bool onKeyReleased(uiNode_t* node, unsigned int key, unsigned short unicode);
 
 	/** Return the position of the client zone into the node */
 	virtual void getClientPosition(uiNode_t const* node, vec2_t position) {}

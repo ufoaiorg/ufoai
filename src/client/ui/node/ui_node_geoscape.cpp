@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_input.h"
 #include "../../input/cl_keys.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE mapExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -706,6 +708,7 @@ void UI_RegisterGeoscapeNode (uiBehaviour_t* behaviour)
 	behaviour->name = "geoscape";
 	behaviour->manager = UINodePtr(new uiGeoscapeNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiGeoscapeNode_t *");
 
 	/* Use a right padding. */
 	UI_RegisterExtradataNodeProperty(behaviour, "padding-right", V_FLOAT, EXTRADATA_TYPE, paddingRight);

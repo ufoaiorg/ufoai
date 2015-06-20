@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_input.h"
 #include "ui_node.h"
 #include "ui_actions.h"
+#include "ui_lua.h"
 #include "node/ui_node_abstractnode.h"
 
 #include "../cl_language.h"
@@ -428,20 +429,23 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 	uiAction_t* left = action->d.nonTerminal.left;
 	uiCallContext_t newContext;
 	const value_t* callProperty = nullptr;
+	value_t luaMethod;
 	const char* path = left->d.terminal.d1.constString;
+
+	// clear luaMethod structure before using it
+	memset(&luaMethod, 0, sizeof(luaMethod));
 
 	if (left->type == EA_VALUE_PATHPROPERTY || left->type == EA_VALUE_PATHNODE)
 		path = left->d.terminal.d1.constString;
 	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION || left->type == EA_VALUE_PATHNODE_WITHINJECTION)
 		path = UI_GenInjectedString(left->d.terminal.d1.constString, false, context);
-	UI_ReadNodePath(path, context->source, context->tagNode, &callNode, &callProperty);
 
-	if (callNode == nullptr) {
+	UI_ReadNodePath(path, context->source, context->tagNode, &callNode, &callProperty, &luaMethod);
+	if ((callNode == nullptr) && (!luaMethod.type)) {
 		Com_Printf("UI_ExecuteCallAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, UI_GetPath(context->source));
 		return;
 	}
-
-	if (callProperty != nullptr && callProperty->type != V_UI_ACTION && callProperty->type != V_UI_NODEMETHOD) {
+	if (callProperty != nullptr && callProperty->type != V_UI_ACTION && callProperty->type != V_UI_NODEMETHOD && callProperty->type != V_UI_NODEMETHOD_LUA) {
 		Com_Printf("UI_ExecuteCallAction: Call operand %d unsupported. (%s)\n", callProperty->type, UI_GetPath(callNode));
 		return;
 	}
@@ -478,13 +482,19 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 		}
 	}
 
-	if (callProperty == nullptr || callProperty->type == V_UI_ACTION) {
+	if (luaMethod.type == V_UI_NODEMETHOD_LUA) {
+		UI_ExecuteLuaMethod(callNode, luaMethod.ofs, newContext.params, newContext.paramNumber);
+		Mem_Free(const_cast<char*>(luaMethod.string));
+	}
+	else if (callProperty == nullptr || callProperty->type == V_UI_ACTION) {
 		uiAction_t const* const actionsRef = callProperty ? Com_GetValue<uiAction_t*>(callNode, callProperty) : callNode->onClick;
 		UI_ExecuteActions(actionsRef, &newContext);
-	} else if (callProperty->type == V_UI_NODEMETHOD) {
+	}
+	else if (callProperty->type == V_UI_NODEMETHOD) {
 		uiNodeMethod_t func = (uiNodeMethod_t) callProperty->ofs;
 		func(callNode, &newContext);
-	} else {
+	}
+	else {
 		/* unreachable, already checked few line before */
 		assert(false);
 	}
@@ -685,7 +695,7 @@ static void UI_ExecuteActions (const uiAction_t* firstAction, uiCallContext_t* c
 {
 	static int callnumber = 0;
 	if (callnumber++ > 20) {
-		Com_Printf("UI_ExecuteActions: Break possible infinite recursion\n");
+		Com_Printf("UI_ExecuteActions: Break possible infinite recursion, source [%s]\n", UI_GetPath(context->source));
 		return;
 	}
 	for (const uiAction_t* action = firstAction; action && !context->breakLoop; action = action->next) {
@@ -817,6 +827,8 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void* data)
  */
 void UI_AddListener (uiNode_t* node, const value_t* property, const uiNode_t* functionNode)
 {
+	/* all nodes are now created in a dynamic way, so this check is removed */
+	/*
 	if (node->dynamic) {
 		Com_Printf("UI_AddListener: '%s' is a dynamic node. We can't listen it.\n", UI_GetPath(node));
 		return;
@@ -825,6 +837,7 @@ void UI_AddListener (uiNode_t* node, const value_t* property, const uiNode_t* fu
 		Com_Printf("UI_AddListener: '%s' is a dynamic node. It can't be a listener callback.\n", UI_GetPath(functionNode));
 		return;
 	}
+	*/
 
 	/* create the call action */
 	uiAction_t* const action = Mem_PoolAllocType(uiAction_t, ui_sysPool);

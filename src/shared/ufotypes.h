@@ -41,12 +41,39 @@ typedef vec_t vec3_t[3];
 typedef vec_t vec4_t[4];
 typedef vec_t vec5_t[5];
 
+/* structures that can be mapped to vector arrays since they have the same size. */
+typedef struct vec2_struct_s {
+	vec_t a1, a2;
+} vec2_struct_t;
+typedef struct vec3_struct_s {
+	vec_t a1, a2, a3;
+} vec3_struct_t;
+typedef struct vec4_struct_s {
+	vec_t a1, a2, a3, a4;
+} vec4_struct_t;
+typedef struct vec5_struct_s {
+	vec_t a1, a2, a3, a4, a5;
+} vec5_struct_t;
+
 typedef byte pos_t;
 typedef pos_t pos3_t[3];
 typedef pos_t pos4_t[4];
 
+/* structures that can be mapped to position arrays since they have the same size. */
+typedef struct pos3_struct_s {
+	pos_t a1, a2, a3;
+} pos3_struct_t;
+typedef struct pos4_struct_s {
+	pos_t a1, a2, a3, a4;
+} pos4_struct_t;
+
 typedef int ipos_t;
 typedef ipos_t ipos3_t[3];
+
+/* structures that can be mapped to integer position arrays since they have the same size. */
+typedef struct ipos3_struct_s {
+	ipos_t a1, a2, a3;
+} ipos3_struct_t;
 
 typedef int32_t actorSizeEnum_t;
 

@@ -133,10 +133,11 @@ window campaign extends cgame_download
 			color		"0 0 0 0.9"
 			onClick		{ call *node:root.toggle_cmp_new }
 			}
+			/*
 			func disable {
 				*node:parent@bgcolor = "0.4 0.515 0.5 0.25"
 				*node:parent@color = "1 1 1 0.5"
-			}
+			}*/
 		}
 
 		MainMenuTab btn_save
@@ -154,10 +155,11 @@ window campaign extends cgame_download
 			string		"_LOAD"
 			onClick		{ call *node:root.toggle_cmp_load }
 			}
+			/*
 			func enable {
 				*node:parent@bgcolor = "0.4 0.515 0.5 1"
 				*node:parent@color = "0 0 0 0.9"
-			}
+			}*/
 		}
 
 		MainMenuTab btn_download

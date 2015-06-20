@@ -40,6 +40,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_keys.h"
 #include "../../input/cl_input.h"
 
+#include "../../../common/scripts_lua.h"
+
 typedef enum {
 	ZONE_NONE = -1,
 	ZONE_TOPRIGHT_CORNER,
@@ -348,6 +350,7 @@ void UI_RegisterEditorNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "editor";
 	behaviour->manager = UINodePtr(new uiEditorNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiEditorNode_t *");
 
 	/* start edition mode */
 	UI_RegisterNodeMethod(behaviour, "start", UI_EditorNodeStart);

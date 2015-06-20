@@ -30,11 +30,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_internal.h"
 #include "../ui_render.h"
 #include "../ui_sprite.h"
+#include "../ui_lua.h"
 #include "ui_node_window.h"
 #include "ui_node_panel.h"
 #include "ui_node_abstractnode.h"
 
 #include "../../client.h" /* gettext _() */
+#include "../../../common/scripts_lua.h"
 
 #define EXTRADATA_TYPE windowExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -47,6 +49,19 @@ static const int CONTROLS_PADDING = 18;
 
 static const vec4_t modalBackground = {0, 0, 0, 0.6};
 static const vec4_t anamorphicBorder = {0, 0, 0, 1};
+
+static const char* WINDOW_FONT_BIG = "f_big";
+
+static const char* WINDOW_CLOSE_BUTTON_NAME = "close_window_button";
+static const char* WINDOW_DRAG_BUTTON_NAME = "move_window_button";
+
+/**
+ * @brief set background sprite
+ */
+void UI_Window_SetBackgroundByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, windowExtraData_t).background = sprite;
+}
 
 /**
  * @brief Get a node from child index
@@ -149,6 +164,14 @@ void uiWindowNode::draw (uiNode_t* node)
 		UI_DrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->box.size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text);
 }
 
+void uiWindowNode::initNode(uiNode_t* node) {
+	uiLocatedNode::initNode(node);
+	EXTRADATA(node).lua_onWindowOpened = LUA_NOREF;
+	EXTRADATA(node).lua_onWindowClosed = LUA_NOREF;
+	EXTRADATA(node).lua_onWindowActivate = LUA_NOREF;
+	EXTRADATA(node).lua_onScriptLoaded = LUA_NOREF;
+}
+
 void uiWindowNode::doLayout (uiNode_t* node)
 {
 	if (!node->invalidated)
@@ -170,6 +193,17 @@ void uiWindowNode::doLayout (uiNode_t* node)
 		node->box.pos[1] = (int) ((viddef.virtualHeight - node->box.size[1]) / 2);
 	}
 
+	/* reposition the close button */
+	if (EXTRADATA(node).closeButton) {
+		uiNode_t* control = UI_FindNode(node, WINDOW_CLOSE_BUTTON_NAME);
+		control->box.pos[0] = node->box.size[0] - CONTROLS_PADDING - control->box.size[0];
+	}
+	/* resize the dragw button */
+	if (EXTRADATA(node).dragButton) {
+		uiNode_t* control = UI_FindNode(node, WINDOW_DRAG_BUTTON_NAME);
+		control->box.size[0] = node->box.size[0];
+	}
+
 	/** @todo check and fix here window outside the screen */
 
 	if (EXTRADATA(node).starLayout) {
@@ -188,8 +222,12 @@ void uiWindowNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 	uiLocatedNode::onWindowOpened(node, nullptr);
 
 	/* script callback */
-	if (EXTRADATA(node).onWindowOpened)
+	if (EXTRADATA(node).onWindowOpened) {
 		UI_ExecuteEventActionsEx(node, EXTRADATA(node).onWindowOpened, params);
+	}
+	if (EXTRADATA(node).lua_onWindowOpened != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, EXTRADATA(node).lua_onWindowOpened);
+	}
 
 	UI_Invalidate(node);
 }
@@ -202,8 +240,12 @@ void uiWindowNode::onWindowClosed (uiNode_t* node)
 	uiLocatedNode::onWindowClosed(node);
 
 	/* script callback */
-	if (EXTRADATA(node).onWindowClosed)
+	if (EXTRADATA(node).onWindowClosed) {
 		UI_ExecuteEventActions(node, EXTRADATA(node).onWindowClosed);
+	}
+	if (EXTRADATA(node).lua_onWindowClosed != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, EXTRADATA(node).lua_onWindowClosed);
+	}
 }
 
 /**
@@ -218,6 +260,13 @@ void uiWindowNode::onWindowActivate (uiNode_t* node)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onWindowActivate);
 }
 
+void uiWindowNode::onSizeChanged(uiNode_t* node) {
+	uiLocatedNode::onWindowActivate(node);
+
+	/* check for fullscreen window */
+	UI_Window_FlagFullscreen(node);
+}
+
 /**
  * @brief Called at the begin of the load from script
  */
@@ -225,8 +274,76 @@ void uiWindowNode::onLoading (uiNode_t* node)
 {
 	node->box.size[0] = VID_NORM_WIDTH;
 	node->box.size[1] = VID_NORM_HEIGHT;
-	node->font = "f_big";
+	node->font = const_cast<char*>(WINDOW_FONT_BIG);
 	node->padding = 5;
+}
+
+/**
+ * @brief Create/remove close button on window.
+ * @note Creates a onClick event handler, should be refactored.
+ */
+void UI_Window_SetCloseButton (uiNode_t* node, bool value) {
+	if (value) {
+		uiNode_t* control = UI_AllocNode(WINDOW_CLOSE_BUTTON_NAME, "button", node->dynamic);
+		const int positionFromRight = CONTROLS_PADDING;
+		static const char* closeCommand = "ui_close <path:root>;";
+
+		control->root = node;
+		UI_NodeSetProperty(control, UI_GetPropertyFromBehaviour(control->behaviour, "icon"), "icons/system_close");
+		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
+		control->box.size[0] = CONTROLS_IMAGE_DIMENSIONS;
+		control->box.size[1] = CONTROLS_IMAGE_DIMENSIONS;
+		control->box.pos[0] = node->box.size[0] - positionFromRight - control->box.size[0];
+		control->box.pos[1] = CONTROLS_PADDING;
+		control->tooltip = _("Close the window");
+		control->onClick = UI_AllocStaticCommandAction(closeCommand);
+		UI_AppendNode(node, control);
+	}
+	else {
+		// drop the close node
+		uiNode_t* control = UI_FindNode(node, WINDOW_CLOSE_BUTTON_NAME);
+		if (control) {
+			UI_RemoveNode (node, control);
+		}
+	}
+	EXTRADATA(node).closeButton = value;
+}
+
+/**
+ * @brief Create/remove drag button.
+ */
+void UI_Window_SetDragButton (uiNode_t* node, bool value) {
+	if (value) {
+		// create the drag node
+		uiNode_t* control = UI_AllocNode(WINDOW_DRAG_BUTTON_NAME, "controls", node->dynamic);
+		control->root = node;
+		control->box.size[0] = node->box.size[0];
+		control->box.size[1] = TOP_HEIGHT;
+		control->box.pos[0] = 0;
+		control->box.pos[1] = 0;
+		control->tooltip = _("Drag to move window");
+		/* if there is a close button already on this windown, then insert the drag button before the close
+		   button; this is needed so the drag button is "below" the close button; if we don't do this, the
+		   drag button recieves input events for the close button first making the close button no longer
+		   working */
+		uiNode_t* close = UI_FindNode(node, WINDOW_CLOSE_BUTTON_NAME);
+		if (close != nullptr) {
+			// get the previous node of close
+			close = UI_GetPrevNode(close);
+			UI_InsertNode(node, close, control);
+		}
+		else {
+			UI_AppendNode(node, control);
+		}
+	}
+	else {
+		// drop the drag node
+		uiNode_t* control = UI_FindNode(node, WINDOW_DRAG_BUTTON_NAME);
+		if (control) {
+			UI_RemoveNode (node, control);
+		}
+	}
+	EXTRADATA(node).dragButton = value;
 }
 
 /**
@@ -234,45 +351,27 @@ void uiWindowNode::onLoading (uiNode_t* node)
  */
 void uiWindowNode::onLoaded (uiNode_t* node)
 {
-	/* create a drag zone, if it is requested */
-	if (EXTRADATA(node).dragButton) {
-		uiNode_t* control = UI_AllocNode("move_window_button", "controls", node->dynamic);
-		control->root = node;
-		control->box.size[0] = node->box.size[0];
-		control->box.size[1] = TOP_HEIGHT;
-		control->box.pos[0] = 0;
-		control->box.pos[1] = 0;
-		control->tooltip = _("Drag to move window");
-		UI_AppendNode(node, control);
-	}
-
-	/* create a close button, if it is requested */
-	if (EXTRADATA(node).closeButton) {
-		uiNode_t* button = UI_AllocNode("close_window_button", "button", node->dynamic);
-		const int positionFromRight = CONTROLS_PADDING;
-		static const char* closeCommand = "ui_close <path:root>;";
-
-		button->root = node;
-		UI_NodeSetProperty(button, UI_GetPropertyFromBehaviour(button->behaviour, "icon"), "icons/system_close");
-		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
-		button->box.size[0] = CONTROLS_IMAGE_DIMENSIONS;
-		button->box.size[1] = CONTROLS_IMAGE_DIMENSIONS;
-		button->box.pos[0] = node->box.size[0] - positionFromRight - button->box.size[0];
-		button->box.pos[1] = CONTROLS_PADDING;
-		button->tooltip = _("Close the window");
-		button->onClick = UI_AllocStaticCommandAction(closeCommand);
-		UI_AppendNode(node, button);
-	}
-
-	EXTRADATA(node).isFullScreen = node->box.size[0] == VID_NORM_WIDTH
-			&& node->box.size[1] == VID_NORM_HEIGHT;
+	/* note: the order here is important, first the drag button, then the close button otherwise the drag button
+	   will be over the close button and the close button will no longer recieve input events */
+	UI_Window_SetDragButton(node, EXTRADATA(node).dragButton);
+	UI_Window_SetCloseButton (node, EXTRADATA(node).closeButton);
+	UI_Window_FlagFullscreen(node);
 
 	if (EXTRADATA(node).starLayout)
 		UI_Invalidate(node);
 }
 
+/**
+ * @brief If the node size equals the full screen size, flag the node as isFullscreen, so it
+ * is displayed properly.
+ */
+void UI_Window_FlagFullscreen(uiNode_t* node) {
+	EXTRADATA(node).isFullScreen = (node->box.size[0] == VID_NORM_WIDTH) && (node->box.size[1] == VID_NORM_HEIGHT);
+}
+
 void uiWindowNode::clone (const uiNode_t* source, uiNode_t* clone)
 {
+	uiLocatedNode::clone(source, clone);
 	/* clean up index */
 	EXTRADATA(clone).index = nullptr;
 	OBJZERO(EXTRADATA(clone).index_hash);
@@ -349,6 +448,7 @@ void UI_RegisterWindowNode (uiBehaviour_t* behaviour)
 	behaviour->name = "window";
 	behaviour->manager = UINodePtr(new uiWindowNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiWindowNode_t *");
 
 	/* In windows where notify messages appear (like e.g. the video options window when you have to restart the game until
 	 * the settings take effects) you can define the position of those messages with this option. */

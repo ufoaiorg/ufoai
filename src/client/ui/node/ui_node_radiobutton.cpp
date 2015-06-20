@@ -41,8 +41,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_behaviour.h"
 #include "../ui_input.h"
 #include "../ui_render.h"
+#include "../ui_lua.h"
+
 #include "ui_node_radiobutton.h"
 #include "ui_node_abstractnode.h"
+
+#include "../../../common/scripts_lua.h"
 
 #define EXTRADATA_TYPE radioButtonExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -136,8 +140,12 @@ void uiRadioButtonNode::onActivate (uiNode_t* node)
 	} else {
 		Cvar_Set(cvarName, "%s", EXTRADATA(node).string);
 	}
-	if (node->onChange)
+	if (node->onChange) {
 		UI_ExecuteEventActions(node, node->onChange);
+	}
+	if (node->lua_onChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onChange);
+	}
 }
 
 /**
@@ -145,17 +153,49 @@ void uiRadioButtonNode::onActivate (uiNode_t* node)
  */
 void uiRadioButtonNode::onLeftClick (uiNode_t* node, int x, int y)
 {
-	if (node->onClick)
+	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
+	}
+	if (node->lua_onClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onClick, x, y);
+	}
 
 	onActivate(node);
 }
+
+void UI_RadioButton_SetValue (uiNode_t* node, const char* value) {
+
+	/* This is a special case: we have a situation where the node already has a value reference
+	   (either being float or cvar). We now want to replace this value reference by a new cvar. So we first
+	   need to free the existing reference, then create new cvar reference (just a string starting with
+	   '*cvar' and store it. */
+	Mem_Free(*(void**)(EXTRADATA(node).string));
+	*(void**)EXTRADATA(node).string= Mem_StrDup(value);
+	uiRadioButtonNode* b=static_cast<uiRadioButtonNode*>(node->behaviour->manager.get());
+	b->onActivate(node);
+}
+
+void UI_RadioButton_SetValue (uiNode_t* node, float value) {
+	EXTRADATA(node).value = value;
+	uiRadioButtonNode* b=static_cast<uiRadioButtonNode*>(node->behaviour->manager.get());
+	b->onActivate(node);
+}
+
+void UI_RadioButton_SetBackgroundByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	EXTRADATA(node).background = sprite;
+}
+
+void UI_RadioButton_SetIconByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	EXTRADATA(node).icon = sprite;}
 
 void UI_RegisterRadioButtonNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "radiobutton";
 	behaviour->manager = UINodePtr(new uiRadioButtonNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiRadioButtonNode_t *");
 
 	/* Numerical value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */
 	UI_RegisterExtradataNodeProperty(behaviour, "value", V_FLOAT, EXTRADATA_TYPE, value);

@@ -38,25 +38,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_input.h"
 #include "../../input/cl_keys.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE spinnerExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
-
-enum spinnerMode_t {
-	/**
-	 * Normal mode. The upper side of the node increase the value
-	 * and the lower side of the node decrease the value
-	 */
-	NORMAL,
-	/**
-	 * Only increase mode. The whole node increase the value.
-	 */
-	ONLY_INCREASE,
-	/**
-	 * Only decrease mode. The whole node decrease the value.
-	 */
-	ONLY_DECREASE
-};
 
 static bool capturedDownButton;
 static uiTimer_t* capturedTimer = nullptr;
@@ -99,11 +85,11 @@ static void UI_SpinnerNodeRepeat (uiNode_t* node, uiTimer_t* timer)
 bool uiSpinnerNode::isPositionIncrease(uiNode_t* node, int x, int y)
 {
 	switch ((spinnerMode_t)EXTRADATA(node).mode) {
-	case ONLY_INCREASE:
+	case SPINNER_ONLY_INCREASE:
 		return true;
-	case ONLY_DECREASE:
+	case SPINNER_ONLY_DECREASE:
 		return false;
-	case NORMAL:
+	case SPINNER_NORMAL:
 		if (EXTRADATA(node).horizontal)
 			return x > node->box.size[0] * 0.5;
 		return y < node->box.size[1] * 0.5;
@@ -235,12 +221,29 @@ void uiSpinnerNode::onLoading (uiNode_t* node)
 	uiAbstractValueNode::onLoading(node);
 }
 
+void UI_Spinner_SetBackgroundByName(uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, spinnerExtraData_t).background = sprite;
+}
+
+void UI_Spinner_SetBottomIconByName(uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, spinnerExtraData_t).bottomIcon = sprite;
+}
+
+void UI_Spinner_SetTopIconByName(uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, spinnerExtraData_t).topIcon = sprite;
+}
+
+
 void UI_RegisterSpinnerNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "spinner";
 	behaviour->extends = "abstractvalue";
 	behaviour->manager = UINodePtr(new uiSpinnerNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiSpinnerNode_t *");
 
 	/**
 	 * @brief Background used to display the spinner. It is displayed in the center of the node.
@@ -275,7 +278,7 @@ void UI_RegisterSpinnerNode (uiBehaviour_t* behaviour)
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "inverted", V_BOOL, EXTRADATA_TYPE, inverted);
 
-	Com_RegisterConstInt("SPINNER_NORMAL", NORMAL);
-	Com_RegisterConstInt("SPINNER_ONLY_INC", ONLY_INCREASE);
-	Com_RegisterConstInt("SPINNER_ONLY_DEC", ONLY_DECREASE);
+	Com_RegisterConstInt("SPINNER_NORMAL", SPINNER_NORMAL);
+	Com_RegisterConstInt("SPINNER_ONLY_INC", SPINNER_ONLY_INCREASE);
+	Com_RegisterConstInt("SPINNER_ONLY_DEC", SPINNER_ONLY_DECREASE);
 }

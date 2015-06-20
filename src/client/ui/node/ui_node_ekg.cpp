@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE ekgExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
@@ -40,7 +42,7 @@ void uiEkgNode::draw (uiNode_t* node)
 	vec2_t nodepos;
 	const image_t* image;
 
-	const char* imageName = UI_GetReferenceString(node, EXTRADATA(node).super.source);
+	const char* imageName = UI_GetReferenceString(node, node->image);
 	if (Q_strnull(imageName))
 		return;
 
@@ -115,6 +117,7 @@ void UI_RegisterEKGNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "image";
 	behaviour->manager = UINodePtr(new uiEkgNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiEKGNode_t *");
 
 	/* The speed that the wrap texture is scrollend with */
 	UI_RegisterExtradataNodeProperty(behaviour, "scrollspeed", V_FLOAT, ekgExtraData_t, scrollSpeed);

@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_input.h"
 #include "../ui_render.h"
+#include "../ui_lua.h"
+
 #include "ui_node_baseinventory.h"
 #include "ui_node_model.h"
 #include "ui_node_container.h"
@@ -44,6 +46,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cgame/cl_game.h"
 #include "../../input/cl_keys.h"
 #include "../../cl_inventory.h"
+
+#include "../../../common/scripts_lua.h"
 
 #define EXTRADATA_TYPE baseInventoryExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -211,6 +215,9 @@ static void UI_BaseInventoryNodeUpdateScroll (uiNode_t* node)
 {
 	if (EXTRADATA(node).onViewChange) {
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+	}
+	else if (EXTRADATA(node).lua_onViewChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript (node, EXTRADATA(node).lua_onViewChange);
 	}
 }
 
@@ -427,6 +434,11 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t* node, const objDef_t* highlight
 
 	if (updateScroll)
 		UI_BaseInventoryNodeUpdateScroll(node);
+}
+
+void uiBaseInventoryNode::initNode(uiNode_t* node) {
+	uiContainerNode::initNode(node);
+	EXTRADATA(node).lua_onViewChange = LUA_NOREF;
 }
 
 /**
@@ -667,6 +679,9 @@ void uiBaseInventoryNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 			if (EXTRADATA(node).super.onSelect) {
 				UI_ExecuteEventActions(node, EXTRADATA(node).super.onSelect);
 			}
+			if (EXTRADATA(node).super.lua_onSelect != LUA_NOREF) {
+				UI_ExecuteLuaEventScript(node, EXTRADATA(node).super.lua_onSelect);
+			}
 		}
 		break;
 	}
@@ -755,6 +770,7 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "container";
 	behaviour->manager = UINodePtr(new uiBaseInventoryNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBaseInventoryNode_t *");
 
 	/* Display/hide weapons. */
 	UI_RegisterExtradataNodeProperty(behaviour, "displayweapon", V_BOOL, baseInventoryExtraData_t, displayWeapon);

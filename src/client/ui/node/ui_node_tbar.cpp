@@ -26,15 +26,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_behaviour.h"
 #include "../ui_render.h"
+#include "../ui_actions.h"
 #include "ui_node_tbar.h"
 #include "ui_node_abstractvalue.h"
 #include "ui_node_abstractnode.h"
+
+#include "../../../common/scripts_lua.h"
 
 #define EXTRADATA_TYPE tbarExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 #define TEXTURE_WIDTH 250.0
+
+extern memPool_t* ui_dynStringPool;
 
 void uiTBarNode::draw (uiNode_t* node)
 {
@@ -72,12 +77,18 @@ void uiTBarNode::draw (uiNode_t* node)
 		shx, EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], ref);
 }
 
+void UI_TBar_SetImage(uiNode_t* node, const char* name) {
+	UI_FreeStringProperty(node->image);
+	node->image = Mem_PoolStrDup(name, ui_dynStringPool, 0);
+}
+
 void UI_RegisterTBarNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
 	behaviour->manager = UINodePtr(new uiTBarNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTBarNode_t *");
 
 	/* Image to use. Each behaviour use it like they want.
 	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)

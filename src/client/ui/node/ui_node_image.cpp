@@ -45,6 +45,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE imageExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -59,8 +61,8 @@ void uiImageNode::onLoaded (uiNode_t* node)
 		if (EXTRADATA(node).texl[0] != 0 || EXTRADATA(node).texh[0]) {
 			node->box.size[0] = EXTRADATA(node).texh[0] - EXTRADATA(node).texl[0];
 			node->box.size[1] = EXTRADATA(node).texh[1] - EXTRADATA(node).texl[1];
-		} else if (EXTRADATA(node).source) {
-			const image_t* image = UI_LoadImage(EXTRADATA(node).source);
+		} else if (node->image) {
+			const image_t* image = UI_LoadImage(node->image);
 			if (image) {
 				node->box.size[0] = image->width;
 				node->box.size[1] = image->height;
@@ -126,7 +128,7 @@ void uiImageNode::draw (uiNode_t* node)
 	vec2_t imagepos;
 	vec2_t nodesize;
 
-	const char* imageName = UI_GetReferenceString(node, EXTRADATA(node).source);
+	const char* imageName = UI_GetReferenceString(node, node->image);
 	if (Q_strnull(imageName))
 		return;
 
@@ -198,6 +200,7 @@ void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 	behaviour->name = "image";
 	behaviour->manager = UINodePtr(new uiImageNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiImageNode_t *");
 
 	/* Do not change the image ratio. The image will be proportionally stretched. */
 	UI_RegisterExtradataNodeProperty(behaviour, "preventratio", V_BOOL, EXTRADATA_TYPE, preventRatio);
@@ -212,5 +215,6 @@ void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 	UI_RegisterExtradataNodeProperty(behaviour, "texl", V_POS, EXTRADATA_TYPE, texl);
 
 	/* Source of the image */
-	UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, EXTRADATA_TYPE, source);
+	//UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, EXTRADATA_TYPE, image);
+	UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);
 }
