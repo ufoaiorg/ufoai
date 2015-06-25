@@ -499,11 +499,11 @@ static short Com_GetAircraftIdNum (aircraftType_t type, const char* idString)
 	return AIRCRAFT_NONE;
 }
 
-static void Com_GetAircraftIdStr (aircraftType_t type, short idNum, char* outStr)
+static void Com_GetAircraftIdStr (aircraftType_t type, short idNum, char* outStr, const size_t size)
 {
 	const char* uDef = Com_GetAircraftDef(type, idNum);
 	if (uDef)
-		sprintf(outStr, "craft_%s_%s", craftTypeIds[type], uDef);
+		Com_sprintf(outStr, size, "craft_%s_%s", craftTypeIds[type], uDef);
 	else
 		outStr[0] = 0;
 }
@@ -520,11 +520,11 @@ static short Com_GetCrashedAircraftIdNum (aircraftType_t type, const char* idStr
 	return AIRCRAFT_NONE;
 }
 
-static void Com_GetCrashedAircraftIdStr (aircraftType_t type, short idNum, char* outStr)
+static void Com_GetCrashedAircraftIdStr (aircraftType_t type, short idNum, char* outStr, const size_t size)
 {
 	const char* uDef = Com_GetAircraftDef(type, idNum);
 	if (uDef)
-		sprintf(outStr, "craft_%s_%s", craftTypeIds[type + CRAFT_MAX], uDef);
+		Com_sprintf(outStr, size, "craft_%s_%s", craftTypeIds[type + CRAFT_MAX], uDef);
 	else
 		outStr[0] = 0;
 }
@@ -1227,14 +1227,14 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 		}
 
 	case V_UFO:
-		Com_GetAircraftIdStr(CRAFT_UFO, *(const ufoType_t*) b, valuestr);
+		Com_GetAircraftIdStr(CRAFT_UFO, *(const ufoType_t*) b, valuestr, sizeof(valuestr));
 		if (valuestr[0])
 			return valuestr;
 		else
 			Sys_Error("Unknown ufo type: '%i'", *(const ufoType_t*) b);
 
 	case V_UFOCRASHED:
-		Com_GetCrashedAircraftIdStr(CRAFT_UFO, *(const ufoType_t*) b, valuestr);
+		Com_GetCrashedAircraftIdStr(CRAFT_UFO, *(const ufoType_t*) b, valuestr, sizeof(valuestr));
 		if (valuestr[0])
 			return valuestr;
 		else
