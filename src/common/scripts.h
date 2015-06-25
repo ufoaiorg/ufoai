@@ -145,12 +145,11 @@ typedef enum {
 
 typedef short ufoType_t;
 #define UFO_MAX 12
-#if 0
-#define UFO_NONE -1
-#else
-#define UFO_NONE UFO_MAX
-#endif
-
+#define DROP_MAX 3
+#define INTER_MAX 5
+#define AIRCRAFT_MAX (DROP_MAX + INTER_MAX)
+#define AIRCRAFT_NONE -1
+#define UFO_NONE AIRCRAFT_NONE
 extern const char* const align_names[];
 extern const char* const blend_names[];
 extern const char* const style_names[];
