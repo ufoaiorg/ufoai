@@ -28,19 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct csi_s;
 
 /** @todo doesn't belong here, but AIRCRAFTTYPE_MAX is needed for the equipment definitions */
-typedef enum {
-	DROPSHIP_FIREBIRD,
-	DROPSHIP_HERAKLES,
-	DROPSHIP_RAPTOR,
-
-	INTERCEPTOR_STILETTO,
-	INTERCEPTOR_SARACEN,
-	INTERCEPTOR_DRAGON,
-	INTERCEPTOR_STARCHASER,
-	INTERCEPTOR_STINGRAY,
-
-	AIRCRAFTTYPE_MAX
-} humanAircraftType_t;
+typedef short humanAircraftType_t;
+#define DROPSHIP_MAX 8
+#define INTERCEPTOR_MAX 12
+#define AIRCRAFTTYPE_MAX (DROPSHIP_MAX + INTERCEPTOR_MAX)
 
 /* this is the absolute max for now */
 #define MAX_OBJDEFS		144

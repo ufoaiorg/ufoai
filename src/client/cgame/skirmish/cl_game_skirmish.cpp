@@ -28,8 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_game_skirmish.h"
 #include "../../ui/ui_data.h"
 
-#define DROPSHIP_MAX INTERCEPTOR_STILETTO
-
 static cvar_t* cl_equip;
 static const cgame_import_t* cgi;
 
@@ -306,7 +304,8 @@ static void GAME_InitMenuOptions (void)
 	}
 	cgi->UI_RegisterOption(OPTION_UFOS, ufoOptions);
 
-	for (int i = 0; i < DROPSHIP_MAX; i++) {
+	const int maxDropShips = cgi->Com_GetDropShipIdsNum();
+	for (int i = 0; i < maxDropShips; i++) {
 		const char* shortName = cgi->Com_DropShipTypeToShortName((humanAircraftType_t)i);
 		cgi->UI_AddOption(&aircraftOptions, shortName, shortName, GAME_SK_GetRandomMapAssemblyNameForCraft(shortName));
 	}

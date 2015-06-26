@@ -452,7 +452,8 @@ bool BS_SaveXML (xmlNode_t* parent)
 			cgi->XML_AddBoolValue(snode, SAVE_MARKET_AUTOSELL, market->autosell[i]);
 		}
 	}
-	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
+	const int maxAircraft = cgi->Com_GetHumanAircraftIdsNum();
+	for (i = 0; i < maxAircraft; i++) {
 		if (market->bidAircraft[i] > 0 || market->askAircraft[i] > 0) {
 			xmlNode_t* snode = cgi->XML_AddNode(node, SAVE_MARKET_AIRCRAFT);
 			const char* shortName = cgi->Com_DropShipTypeToShortName((humanAircraftType_t)i);
@@ -539,7 +540,8 @@ void BS_InitMarket (const campaign_t* campaign)
 		}
 	}
 
-	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
+	const int maxAircraft = cgi->Com_GetHumanAircraftIdsNum();
+	for (i = 0; i < maxAircraft; i++) {
 		const char* name = cgi->Com_DropShipTypeToShortName((humanAircraftType_t)i);
 		const aircraft_t* aircraft = AIR_GetAircraft(name);
 		if (market->askAircraft[i] == 0) {
@@ -607,7 +609,8 @@ void CP_CampaignRunMarket (campaign_t* campaign)
 		}
 	}
 
-	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
+	const int maxAircraft = cgi->Com_GetHumanAircraftIdsNum();
+	for (i = 0; i < maxAircraft; i++) {
 		const humanAircraftType_t type = (humanAircraftType_t)i;
 		const char* aircraftID = cgi->Com_DropShipTypeToShortName(type);
 		const aircraft_t* aircraft = AIR_GetAircraft(aircraftID);
