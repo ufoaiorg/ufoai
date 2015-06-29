@@ -376,7 +376,7 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 		if (mission->category == INTERESTCATEGORY_RESCUE) {
 			cgi->Cvar_Set("rm_crashed", "%s", cgi->Com_GetRandomMapAssemblyNameForCrashedCraft(mission->data.aircraft->id));
 		}
-		if (!cgi->LIST_IsEmpty(mission->mapDef->aircraft))
+		if (cgi->LIST_ContainsString(mission->mapDef->aircraft, aircraft->id))
 			cgi->Cvar_Set("rm_drop", "%s", cgi->Com_GetRandomMapAssemblyNameForCraft(aircraft->id));
 	}
 }
