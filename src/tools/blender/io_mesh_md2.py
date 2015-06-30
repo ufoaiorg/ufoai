@@ -981,7 +981,7 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 										items=typesExportSkinNames,)
 
 	fCopyTextureSxS = BoolProperty(name="Copy texture(s) next to .md2",
-									description="Try to copy testures to md2 directory (won't overwrite files)",
+									description="Try to copy textures to md2 directory (won't overwrite files)",
 									default=False)
 
 	def __init__(self):
