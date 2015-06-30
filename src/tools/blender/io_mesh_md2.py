@@ -311,6 +311,10 @@ class MD2:
 		mesh = self.object.data
 
 		self.skinWidth, self.skinHeight, skins = Util.getSkins(mesh, self.options.eTextureNameMethod)
+		if self.skinWidth < 1:
+			self.skinWidth = 64
+		if self.skinHeight < 1:
+			self.skinHeight = 64
 		self.numSkins = len(skins)
 		self.numVerts = len(mesh.vertices)
 		self.numUV, uvList, uvDict = self.buildTexCoord()
