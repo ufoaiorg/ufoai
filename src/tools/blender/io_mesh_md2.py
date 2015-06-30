@@ -410,9 +410,6 @@ class MD2:
 			del uvDict
 
 			if self.options.fExportAnimation:
-				min = None
-				max = None
-
 				timeLineMarkers = []
 				for marker in bpy.context.scene.timeline_markers:
 					timeLineMarkers.append(marker)
