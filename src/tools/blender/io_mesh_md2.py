@@ -895,13 +895,24 @@ class Util:
 
 	@staticmethod
 	def loadImage(imagePath, filePath):
-		image = load_image(imagePath, os.path.dirname(imagePath), recursive=False)
+		# Handle ufoai skin name format
+		fileName = os.path.basename(imagePath)
+		if imagePath[0] == '.':
+			for ext in ['.png', '.jpg', '.jpeg']:
+				fileName = imagePath[1:] + ext
+				if os.path.isfile(os.path.join(os.path.dirname(imagePath), fileName)):
+					break
+				elif os.path.isfile(os.path.join(os.path.dirname(filePath), fileName)):
+					break
+			else:
+				fileName = imagePath[1:]
+		image = load_image(fileName, os.path.dirname(imagePath), recursive=False)
 		if image is not None:
 			return image
-		image = load_image(imagePath, os.path.dirname(filePath), recursive=False)
+		image = load_image(fileName, os.path.dirname(filePath), recursive=False)
 		if image is not None:
 			return image
-		return load_image(imagePath, os.path.dirname(filePath), recursive=False, place_holder=True)
+		return load_image(fileName, os.path.dirname(filePath), recursive=False, place_holder=True)
 
 	@staticmethod
 	def asciiz(s):
