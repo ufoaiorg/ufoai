@@ -244,6 +244,9 @@ class MD2:
 			material = bpy.data.materials.new(self.name)
 			for skin in self.skins:
 				skinImg = Util.loadImage(skin, self.filePath)
+				if skinImg == None:
+					skinImg = bpy.data.images.new(skin, self.skinWidth, self.skinHeight)
+				skinImg.name = skin
 				skinImg.mapping = 'UV'
 				skinTex = bpy.data.textures.new(self.name + skin, type='IMAGE')
 				skinTex.image = skinImg
@@ -912,7 +915,7 @@ class Util:
 		image = load_image(fileName, os.path.dirname(filePath), recursive=False)
 		if image is not None:
 			return image
-		return load_image(fileName, os.path.dirname(filePath), recursive=False, place_holder=True)
+		return None
 
 	@staticmethod
 	def asciiz(s):
