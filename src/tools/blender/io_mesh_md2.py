@@ -767,11 +767,6 @@ class MD2:
 		return numCommands
 
 class Util:
-	@staticmethod
-	def pickName():
-		name = "_MD2Obj_" + str(random.random())
-		return name[0:20]
-
 	# deletes an object from Blender (remove + unlink)
 	@staticmethod
 	def deleteObject(object):
@@ -780,7 +775,7 @@ class Util:
 
 	# duplicates the given object and returns it
 	@staticmethod
-	def duplicateObject(object, name):
+	def duplicateObject(object):
 		# backup the current object selection and current active object
 		selObjects = bpy.context.selected_objects[:]
 		actObject = bpy.context.active_object
@@ -796,9 +791,6 @@ class Util:
 		# the duplicated object is automatically selected
 		copyObj = bpy.context.selected_objects[0]
 
-		# rename the object with the given name
-		copyObj.name = name
-
 		# select all objects which have been previously selected and make active the previous active object
 		bpy.context.scene.objects.active = actObject
 		for obj in selObjects:
@@ -807,7 +799,10 @@ class Util:
 		return copyObj
 
 	@staticmethod
-	def applyModifiers(object, possibleNewName):
+	def applyModifiers(object):
+		if len(object.modifiers) == 0:
+			return object
+
 		# backup the current object selection and current active object
 		selObjects = bpy.context.selected_objects[:]
 		actObject = bpy.context.active_object
@@ -837,12 +832,9 @@ class Util:
 		for obj in selObjects:
 			obj.select = True
 
-		if modifiedObj.name == object.name:
-			# no modifier applied.
+		if len(object.modifiers) == len(modifiedObj.modifiers):
+			deleteObject(modifiedObj)
 			return object
-
-		# modifiers were applied:
-		modifiedObj.name = possibleNewName
 
 		return modifiedObj
 
@@ -855,21 +847,15 @@ class Util:
 		bpy.context.scene.objects.active = object
 
 		try:
-			bpy.ops.object.modifier_add(type='TRIANGULATE')
-			for i, modifier in enumerate(object.modifiers):
-				if modifier.type == 'TRIANGULATE':
-					for _ in range(i):
-						bpy.ops.object.modifier_move_up(modifier=modifier.name)
-					bpy.ops.object.modifier_apply(modifier=modifier.name)
-					break;
+			modifier = object.modifiers.new('Triangulate-Export','TRIANGULATE')
+			bpy.ops.object.modifier_apply(modifier=modifier.name)
+
 		except:
 			bpy.ops.object.mode_set(mode='EDIT', toggle=False)
 			bpy.ops.mesh.select_all(action='SELECT')
-			# Beauty causes Blender 2.66 to freeze sometimes
-			bpy.ops.mesh.quads_convert_to_tris(use_beauty=False)
+			bpy.ops.mesh.quads_convert_to_tris()
 			bpy.ops.object.mode_set(mode='OBJECT', toggle=False)
 
-		mesh.update(calc_tessface=True)
 		return mesh
 
 	@staticmethod
@@ -938,23 +924,24 @@ class ObjectInfo:
 
 			self.skinWidth, self.skinHeight, self.skins = Util.getSkins(mesh, 'DATANAME')
 
-			tmpObjectName = Util.pickName()
 			try:
 				# apply the modifiers
-				object = Util.applyModifiers(object, tmpObjectName)
+				object = Util.applyModifiers(object)
 
-				if self.triang:
-					if object.name != tmpObjectName: # not yet copied: do it now.
-						object = Util.duplicateObject(object, tmpObjectName)
-					mesh = Util.triangulateMesh(object)
+				faces = len(mesh.polygons)
+				if object.name == originalObject.name: # not yet copied: do it now.
+					object = Util.duplicateObject(object)
+				mesh = Util.triangulateMesh(object)
+				self.triang = faces != len(mesh.polygons)
 
+				mesh.update(calc_tessface=True)
 				self.status = (str(len(mesh.vertices)) + " vertices", str(len(mesh.tessfaces)) + " faces")
 				self.faces = len(mesh.tessfaces)
 				self.vertices = len(mesh.vertices)
 				self.isUnwrapped = len(mesh.tessface_uv_textures) > 0
 
 			finally:
-				if object.name == tmpObjectName:
+				if object.name != originalObject.name:
 					originalObject.select = True
 					bpy.context.scene.objects.active = originalObject
 					Util.deleteObject(object)
@@ -1011,14 +998,15 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 			raise NameError("There are too many frames (%i), at most %i are supported in md2" % (info.frames, MD2_MAX_FRAMES))
 
 		# different name each time or we can't unlink it later
-		tmpObjectName = Util.pickName()
 
-		object = Util.applyModifiers(object, tmpObjectName)
+		object = Util.applyModifiers(object)
 
 		if self.info.triang:
-			if object.name != tmpObjectName: # not yet copied: do it now.
-				object = Util.duplicateObject(object, tmpObjectName)
-			mesh = Util.triangulateMesh(object)
+			if object.name == originalObject.name: # not yet copied: do it now.
+				object = Util.duplicateObject(object)
+			Util.triangulateMesh(object)
+
+		object.data.update(calc_tessface=True)
 
 		# save the current frame to reset it after export
 		if self.fExportAnimation:
@@ -1029,7 +1017,7 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 			md2.setObject(object)
 			md2.write(filePath)
 		finally:
-			if object.name == tmpObjectName:
+			if object.name != originalObject.name:
 				originalObject.select = True
 				bpy.context.scene.objects.active = originalObject
 				Util.deleteObject(object)
