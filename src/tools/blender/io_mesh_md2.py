@@ -237,27 +237,6 @@ class MD2:
 		print("Creating mesh", end='')
 		# Create the mesh
 		mesh = bpy.data.meshes.new(self.name)
-		mesh.tessface_uv_textures.new()
-
-		# Skins
-		if self.numSkins > 0:
-			material = bpy.data.materials.new(self.name)
-			for skin in self.skins:
-				skinImg = Util.loadImage(skin, self.filePath)
-				if skinImg == None:
-					skinImg = bpy.data.images.new(skin, self.skinWidth, self.skinHeight)
-				skinImg.name = skin
-				skinImg.mapping = 'UV'
-				skinTex = bpy.data.textures.new(self.name + skin, type='IMAGE')
-				skinTex.image = skinImg
-				matTex = material.texture_slots.add()
-				matTex.texture = skinTex
-				matTex.texture_coords = 'UV'
-				matTex.use_map_color_diffuse = True
-				matTex.use_map_alpha = True
-				matTex.uv_layer = mesh.tessface_uv_textures[0].name
-			mesh.materials.append(material)
-		print('.', end='')
 
 		# Prepare vertices and faces
 		mesh.vertices.add(self.numVerts)
@@ -271,6 +250,27 @@ class MD2:
 
 		# Tris
 		mesh.tessfaces.foreach_set("vertices_raw", unpack_face_list([face[0] for face in self.tris]))
+		print('.', end='')
+
+		# Skins
+		mesh.tessface_uv_textures.new()
+		if self.numSkins > 0:
+			material = bpy.data.materials.new(self.name)
+			for skin in self.skins:
+				skinImg = Util.loadImage(skin, self.filePath)
+				if skinImg == None:
+					skinImg = bpy.data.images.new(os.path.join(self.filePath, skin), self.skinWidth, self.skinHeight)
+				skinImg.mapping = 'UV'
+				skinImg.name = skin
+				skinTex = bpy.data.textures.new(self.name + skin, type='IMAGE')
+				skinTex.image = skinImg
+				matTex = material.texture_slots.add()
+				matTex.texture = skinTex
+				matTex.texture_coords = 'UV'
+				matTex.use_map_color_diffuse = True
+				matTex.use_map_alpha = True
+				matTex.uv_layer = mesh.tessface_uv_textures[0].name
+			mesh.materials.append(material)
 		print('.', end='')
 
 		# UV
