@@ -291,7 +291,7 @@ class MD2:
 		print("Done")
 
 		# Animate
-		if self.options.fImportAnimation:
+		if self.options.fImportAnimation and self.numFrames > 1:
 			for i, frame in enumerate(self.frames):
 				progressStatus = i / self.numFrames * 100
 				#bpy.context.scene.frame_set(i + 1)
@@ -412,7 +412,7 @@ class MD2:
 				file.write(data) # uv index
 			del uvDict
 
-			if self.options.fExportAnimation:
+			if self.options.fExportAnimation and self.numFrames > 1:
 				timeLineMarkers = []
 				for marker in bpy.context.scene.timeline_markers:
 					timeLineMarkers.append(marker)
