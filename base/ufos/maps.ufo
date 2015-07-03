@@ -1070,13 +1070,10 @@ mapdef gate
 	)
 }
 
-/* Splitted the forest_nature_large mapdef into parts _a and _b,
-   to see if the tests fail a certain assembly. */
-
-mapdef forest_nature_large_a
+mapdef forest_nature_large
 {
 	map			"+forest"
-	params		("nature_large_a")
+	params		("nature_large_a" "nature_large_b")
 	description	"_Forest"
 	size		"large"
 	maxaliens	30
@@ -1121,110 +1118,10 @@ mapdef forest_nature_large_a
 	)
 }
 
-mapdef forest_nature_large_b
+mapdef forest_nature_medium
 {
 	map			"+forest"
-	params		("nature_large_b")
-	description	"_Forest"
-	size		"large"
-	maxaliens	30
-
-	multiplayer		true
-	teams			1
-	gametypes
-	(
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_crash_bomber
-		craft_crash_corrupter
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-		"wasted"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"nopopulation"
-	)
-}
-
-/* Splitted the forest_nature_medium mapdef into parts _a and _b,
-   to see if the spawnpoints test fails a certain assembly. */
-
-mapdef forest_nature_medium_a
-{
-	map			"+forest"
-	params		("nature_medium_a")
-	description	"_Forest"
-	size		"medium"
-	maxaliens	16
-
-	multiplayer		true
-	teams			1
-	gametypes
-	(
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	)
-
-	ufos
-	(
-		craft_crash_supply
-		craft_crash_gunboat
-		craft_crash_harvester
-	)
-
-	terrains
-	(
-		"grass"
-		"mountain"
-		"wasted"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"nopopulation"
-	)
-}
-
-mapdef forest_nature_medium_b
-{
-	map			"+forest"
-	params		("nature_medium_b")
+	params		("nature_medium_a" "nature_medium_b")
 	description	"_Forest"
 	size		"medium"
 	maxaliens	16

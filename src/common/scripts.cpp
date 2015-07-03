@@ -448,65 +448,142 @@ void* Com_AlignPtr (const void* memory, valueTypes_t type)
 	return ALIGN_PTR(memory, align);
 }
 
+typedef enum {
+	CRAFT_DROP,
+	CRAFT_INTER,
+	CRAFT_UFO,
+	CRAFT_MAX
+} aircraftType_t;
+
+static const char* const craftTypeIds[CRAFT_MAX * 2] = {
+		"drop",
+		"inter",
+		"ufo",
+		/* For crashed aircraft names */
+		"crash_drop",
+		"crash_inter",
+		"crash"
+};
+
 /**
- * @brief Ufoai uses two types of ids for ufos: the string is used for references in the scripts,
- * the numeric/enum type in the code. This table and the following functions convert these ids
+ * @brief Ufoai uses two types of ids for aircraft: the string is used for references in the scripts,
+ * the numeric/enum type in the code. This tables and the following functions convert these ids
  */
 static const char* ufoIdsTable[UFO_MAX];
-static short ufoIdsNum = 0;
+static const char* dropIdsTable[DROPSHIP_MAX];
+static const char* interIdsTable[INTERCEPTOR_MAX];
+static const char** const aircraftIdsTable[CRAFT_MAX] = {
+		dropIdsTable,
+		interIdsTable,
+		ufoIdsTable
+};
+static short aircraftIdsNum[CRAFT_MAX];
 
-static const char* Com_GetUfoDef (ufoType_t idNum)
+static const char* Com_GetAircraftDef (aircraftType_t type, short idNum)
 {
-	if (idNum >= 0 && idNum < ufoIdsNum) {
-		return ufoIdsTable[idNum];
+	if (idNum >= 0 && idNum < aircraftIdsNum[type]) {
+		return aircraftIdsTable[type][idNum];
 	}
 	return nullptr;
 }
 
-static ufoType_t Com_GetUfoIdNum (const char* idString)
+static short Com_GetAircraftIdNum (aircraftType_t type, const char* idString)
 {
-	if (!strncmp(idString, "craft_ufo_", 10)) {
-		for (int i = 0; i < ufoIdsNum; i++)
-			if (Q_streq(idString + 10, ufoIdsTable[i]))
+	const char* const id = Q_strstart(idString, va("craft_%s_", craftTypeIds[type]));
+	if (!Q_strnull(id)) {
+		for (int i = 0; i < aircraftIdsNum[type]; i++)
+			if (Q_streq(id, aircraftIdsTable[type][i]))
 				return i;
 	}
 
-	return UFO_NONE;
+	return AIRCRAFT_NONE;
 }
 
-static void Com_GetUfoIdStr (ufoType_t idNum, char* outStr)
+static void Com_GetAircraftIdStr (aircraftType_t type, short idNum, char* outStr, const size_t size)
 {
-	const char* uDef = Com_GetUfoDef(idNum);
+	const char* uDef = Com_GetAircraftDef(type, idNum);
 	if (uDef)
-		sprintf(outStr, "craft_ufo_%s", uDef);
+		Com_sprintf(outStr, size, "craft_%s_%s", craftTypeIds[type], uDef);
 	else
 		outStr[0] = 0;
+}
+
+static short Com_GetCrashedAircraftIdNum (aircraftType_t type, const char* idString)
+{
+	const char* const id = Q_strstart(idString, va("craft_%s_",craftTypeIds[type + CRAFT_MAX]));
+	if (!Q_strnull(id)) {
+		for (int i = 0; i < aircraftIdsNum[type]; i++)
+			if (Q_streq(id, aircraftIdsTable[type][i]))
+				return i;
+	}
+
+	return AIRCRAFT_NONE;
+}
+
+static void Com_GetCrashedAircraftIdStr (aircraftType_t type, short idNum, char* outStr, const size_t size)
+{
+	const char* uDef = Com_GetAircraftDef(type, idNum);
+	if (uDef)
+		Com_sprintf(outStr, size, "craft_%s_%s", craftTypeIds[type + CRAFT_MAX], uDef);
+	else
+		outStr[0] = 0;
+}
+
+static ufoType_t Com_GetUfoIdNum (const char* idString)
+{
+	return Com_GetAircraftIdNum(CRAFT_UFO, idString);
 }
 
 static ufoType_t Com_GetCrashedUfoIdNum (const char* idString)
 {
-	if (!strncmp(idString, "craft_crash_", 12)) {
-		for (int i = 0; i < ufoIdsNum; i++)
-			if (Q_streq(idString + 12, ufoIdsTable[i]))
-				return i;
-	}
-
-	return UFO_NONE;
+	return Com_GetCrashedAircraftIdNum(CRAFT_UFO, idString);
 }
 
-static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr)
+static void Com_GetUfoIdStr (ufoType_t idNum, char* outStr, const size_t size)
 {
-	const char* uDef = Com_GetUfoDef(idNum);
-	if (uDef)
-		sprintf(outStr, "craft_crash_%s", uDef);
-	else
-		outStr[0] = 0;
+	Com_GetAircraftIdStr(CRAFT_UFO, idNum, outStr, size);
 }
 
-/* @todo Get rid of this somehow */
+static void Com_GetCrashedUfoIdStr (ufoType_t idNum, char* outStr, const size_t size)
+{
+	Com_GetCrashedAircraftIdStr(CRAFT_UFO, idNum, outStr, size);
+}
+
+static short Com_GetHumanCraftIdNum (const char* idString)
+{
+	short idNum = Com_GetAircraftIdNum(CRAFT_DROP, idString);
+	if (idNum != AIRCRAFT_NONE)
+		return idNum;
+
+	idNum = Com_GetAircraftIdNum(CRAFT_INTER, idString);
+	if (idNum != AIRCRAFT_NONE)
+		return idNum + aircraftIdsNum[CRAFT_DROP];
+
+	return AIRCRAFT_NONE;
+}
+
+static void Com_GetHumanCraftIdStr (short idNum, char* outStr, const size_t size)
+{
+	if (idNum < aircraftIdsNum[CRAFT_DROP])
+		Com_GetAircraftIdStr(CRAFT_DROP, idNum, outStr, size);
+	else
+		Com_GetAircraftIdStr(CRAFT_INTER, idNum - aircraftIdsNum[CRAFT_DROP], outStr, size);
+}
+
+/* @todo Get rid of these somehow */
 short Com_GetUfoIdsNum (void)
 {
-	return ufoIdsNum;
+	return aircraftIdsNum[CRAFT_UFO];
+}
+
+short Com_GetDropShipIdsNum (void)
+{
+	return aircraftIdsNum[CRAFT_DROP];
+}
+
+short Com_GetHumanAircraftIdsNum (void)
+{
+	return aircraftIdsNum[CRAFT_DROP] + aircraftIdsNum[CRAFT_INTER];
 }
 
 /**
@@ -515,7 +592,14 @@ short Com_GetUfoIdsNum (void)
  */
 static void Com_ParseAircraftNames (const char* const name, const char** text)
 {
-	if (!Q_streq(name, "ufoids")) {
+	aircraftType_t craftType = CRAFT_MAX;
+	for (int i = 0; i < CRAFT_MAX; ++i)
+		if (Q_streq(name, va("%sids", craftTypeIds[i]))) {
+			craftType = static_cast<aircraftType_t>(i);
+			break;
+		}
+
+	if (craftType == CRAFT_MAX) {
 		Com_Printf("Com_ParseAircraftNames: Unknown aircraft name type '%s' ignored\n", name);
 		return;
 	}
@@ -526,6 +610,21 @@ static void Com_ParseAircraftNames (const char* const name, const char** text)
 		return;
 	}
 
+	short maxIds = 0;
+	switch (craftType) {
+	case CRAFT_DROP:
+		maxIds = DROPSHIP_MAX;
+		break;
+	case CRAFT_INTER:
+		maxIds = INTERCEPTOR_MAX;
+		break;
+	case CRAFT_UFO:
+		maxIds = UFO_MAX;
+		break;
+	default:
+		Com_Printf("Com_ParseAircraftNames: Unknown aircraft type '%s' without max ids ignored\n", name);
+		return;
+	}
 	const char* const errhead = "Com_ParseAircraftNames: Unexpected end of file (name type ";
 	do {
 		/* get the name type */
@@ -534,15 +633,15 @@ static void Com_ParseAircraftNames (const char* const name, const char** text)
 			break;
 		if (*token == '}')
 			break;
-		if (ufoIdsNum >= UFO_MAX) {
+		if (aircraftIdsNum[craftType] >= maxIds) {
 			Com_Printf("Com_ParseAircraftNames: Too many aircraft ids for type '%s', '%s' ignored!\n", name, token);
 			continue;
 		}
-		if (Com_GetUfoIdNum(va("craft_ufo_%s", token)) != UFO_NONE) {
+		if (Com_GetAircraftIdNum(craftType, va("craft_%s_%s", craftTypeIds[craftType], token)) != AIRCRAFT_NONE) {
 			Com_Printf("Com_ParseAircraftNames: Aircraft with same name found '%s', second ignored\n", token);
 			continue;
 		}
-		ufoIdsTable[ufoIdsNum++] = Mem_StrDup(token);
+		aircraftIdsTable[craftType][aircraftIdsNum[craftType]++] = Mem_StrDup(token);
 	} while (*text);
 }
 
@@ -566,6 +665,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 	byte* b = (byte*) base + ofs;
 	*writtenBytes = 0;
 	ufoType_t ufoType = UFO_NONE;
+	humanAircraftType_t craftType = AIRCRAFT_NONE;
 
 #ifdef DEBUG
 	if (b != Com_AlignPtr(b, type))
@@ -632,30 +732,17 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 		break;
 
 	case V_AIRCRAFTTYPE:
-		if (Q_streq(token, "craft_drop_firebird"))
-			*(humanAircraftType_t*) b = DROPSHIP_FIREBIRD;
-		else if (Q_streq(token, "craft_drop_herakles"))
-			*(humanAircraftType_t*) b = DROPSHIP_HERAKLES;
-		else if (Q_streq(token, "craft_drop_raptor"))
-			*(humanAircraftType_t*) b = DROPSHIP_RAPTOR;
-		else if (Q_streq(token, "craft_inter_stiletto"))
-			*(humanAircraftType_t*) b = INTERCEPTOR_STILETTO;
-		else if (Q_streq(token, "craft_inter_saracen"))
-			*(humanAircraftType_t*) b = INTERCEPTOR_SARACEN;
-		else if (Q_streq(token, "craft_inter_dragon"))
-			*(humanAircraftType_t*) b = INTERCEPTOR_DRAGON;
-		else if (Q_streq(token, "craft_inter_starchaser"))
-			*(humanAircraftType_t*) b = INTERCEPTOR_STARCHASER;
-		else if (Q_streq(token, "craft_inter_stingray"))
-			*(humanAircraftType_t*) b = INTERCEPTOR_STINGRAY;
+		craftType = Com_GetHumanCraftIdNum(token);
+		if (craftType != AIRCRAFT_NONE)
+			*(humanAircraftType_t*) b = craftType;
 		else
-			Sys_Error("Unknown aircrafttype type: '%s'", token);
+			Sys_Error("Unknown aircraft type: '%s'", token);
 		*writtenBytes = sizeof(humanAircraftType_t);
 		break;
 
 	case V_UFO:
 		ufoType = Com_GetUfoIdNum(token);
-		if (ufoType != UFO_NONE)
+		if (ufoType != AIRCRAFT_NONE)
 			*(ufoType_t*) b = ufoType;
 		else
 			Sys_Error("Unknown ufo type: '%s'", token);
@@ -664,7 +751,7 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 
 	case V_UFOCRASHED:
 		ufoType = Com_GetCrashedUfoIdNum(token);
-		if (ufoType != UFO_NONE)
+		if (ufoType != AIRCRAFT_NONE)
 			*(ufoType_t*) b = ufoType;
 		else
 			Sys_Error("Unknown ufo type: '%s'", token);
@@ -939,6 +1026,7 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 {
 	int len;
 	ufoType_t ufoType = UFO_NONE;
+	humanAircraftType_t craftType = AIRCRAFT_NONE;
 
 	byte* b = (byte*) base + ofs;
 
@@ -989,29 +1077,16 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 		return sizeof(int);
 
 	case V_AIRCRAFTTYPE:
-		if (Q_streq((const char*)set, "craft_drop_firebird"))
-			*(humanAircraftType_t*) b = DROPSHIP_FIREBIRD;
-		else if (Q_streq((const char*)set, "craft_drop_herakles"))
-			*(humanAircraftType_t*) b = DROPSHIP_HERAKLES;
-		else if (Q_streq((const char*)set, "craft_drop_raptor"))
-			*(humanAircraftType_t*) b = DROPSHIP_RAPTOR;
-		else if (Q_streq((const char*)set, "craft_inter_stiletto"))
-			*(humanAircraftType_t*) b = INTERCEPTOR_STILETTO;
-		else if (Q_streq((const char*)set, "craft_inter_saracen"))
-			*(humanAircraftType_t*) b = INTERCEPTOR_SARACEN;
-		else if (Q_streq((const char*)set, "craft_inter_dragon"))
-			*(humanAircraftType_t*) b = INTERCEPTOR_DRAGON;
-		else if (Q_streq((const char*)set, "craft_inter_starchaser"))
-			*(humanAircraftType_t*) b = INTERCEPTOR_STARCHASER;
-		else if (Q_streq((const char*)set, "craft_inter_stingray"))
-			*(humanAircraftType_t*) b = INTERCEPTOR_STINGRAY;
+		craftType = Com_GetHumanCraftIdNum((const char*)set);
+		if (craftType != AIRCRAFT_NONE)
+			*(humanAircraftType_t*) b = craftType;
 		else
-			Sys_Error("Unknown aircrafttype type: '%s'", (const char*)set);
+			Sys_Error("Unknown aircraft type: '%s'", (const char*)set);
 		return sizeof(humanAircraftType_t);
 
 	case V_UFO:
 		ufoType = Com_GetUfoIdNum((const char*)set);
-		if (ufoType != UFO_NONE)
+		if (ufoType != AIRCRAFT_NONE)
 			*(ufoType_t*) b = ufoType;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char*)set);
@@ -1019,7 +1094,7 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 
 	case V_UFOCRASHED:
 		ufoType = Com_GetCrashedUfoIdNum((const char*)set);
-		if (ufoType != UFO_NONE)
+		if (ufoType != AIRCRAFT_NONE)
 			*(ufoType_t*) b = ufoType;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char*)set);
@@ -1157,36 +1232,21 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 		}
 
 	case V_AIRCRAFTTYPE:
-		switch (*(const humanAircraftType_t*) b) {
-		case DROPSHIP_FIREBIRD:
-			return "craft_drop_firebird";
-		case DROPSHIP_HERAKLES:
-			return "craft_drop_herakles";
-		case DROPSHIP_RAPTOR:
-			return "craft_drop_raptor";
-		case INTERCEPTOR_STILETTO:
-			return "craft_inter_stiletto";
-		case INTERCEPTOR_SARACEN:
-			return "craft_inter_saracen";
-		case INTERCEPTOR_DRAGON:
-			return "craft_inter_dragon";
-		case INTERCEPTOR_STARCHASER:
-			return "craft_inter_starchaser";
-		case INTERCEPTOR_STINGRAY:
-			return "craft_inter_stingray";
-		default:
-			Sys_Error("Unknown aircrafttype type: '%i'", *(const humanAircraftType_t*) b);
-		}
+		Com_GetHumanCraftIdStr(*(const humanAircraftType_t*) b, valuestr, sizeof(valuestr));
+		if (valuestr[0])
+			return valuestr;
+		else
+			Sys_Error("Unknown aircraft type: '%i'", *(const humanAircraftType_t*) b);
 
 	case V_UFO:
-		Com_GetUfoIdStr(*(const ufoType_t*) b, valuestr);
+		Com_GetUfoIdStr(*(const ufoType_t*) b, valuestr, sizeof(valuestr));
 		if (valuestr[0])
 			return valuestr;
 		else
 			Sys_Error("Unknown ufo type: '%i'", *(const ufoType_t*) b);
 
 	case V_UFOCRASHED:
-		Com_GetCrashedUfoIdStr(*(const ufoType_t*) b, valuestr);
+		Com_GetCrashedUfoIdStr(*(const ufoType_t*) b, valuestr, sizeof(valuestr));
 		if (valuestr[0])
 			return valuestr;
 		else
@@ -3589,9 +3649,11 @@ void Com_ParseScripts (bool onlyServer)
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStunElectro = csi.damStunGas = NONE;
 	csi.damSmoke = csi.damIncendiary = NONE;
 
-	/* Reset ufo ids */
+	/* Reset aircraft ids */
+	OBJZERO(dropIdsTable);
+	OBJZERO(interIdsTable);
 	OBJZERO(ufoIdsTable);
-	ufoIdsNum = 0;
+	OBJZERO(aircraftIdsNum);
 
 	/* pre-stage parsing */
 	Com_Printf("%i script files\n", FS_BuildFileList("ufos/*.ufo"));

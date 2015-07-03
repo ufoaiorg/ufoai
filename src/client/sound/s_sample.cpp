@@ -153,6 +153,7 @@ void S_FreeSamples (void)
 	}
 
 	OBJZERO(sampleHash);
+	OBJZERO(sampleIndex);
 }
 
 /**

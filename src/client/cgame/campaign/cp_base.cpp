@@ -1233,7 +1233,7 @@ void B_SetName (base_t* base, const char* name)
  * @param[in] pos Position (on Geoscape) the base built at
  * @param[in] name The name of the new base, this string might already be in utf-8
  */
-base_t* B_Build (const campaign_t* campaign, const vec2_t pos, const char* name)
+base_t* B_Build (const campaign_t* campaign, const vec2_t pos, const char* name, bool fillBase)
 {
 	if (!campaign)
 		cgi->Com_Error(ERR_DROP, "You can only build a base in an active campaign");
@@ -1259,7 +1259,7 @@ base_t* B_Build (const campaign_t* campaign, const vec2_t pos, const char* name)
 	}
 
 	/* setup for first base */
-	if (ccs.campaignStats.basesBuilt == 0) {
+	if (ccs.campaignStats.basesBuilt == 0 || fillBase) {
 		if (campaign->firstBaseTemplate[0] == '\0')
 			cgi->Com_Error(ERR_DROP, "No base template for setting up the first base given");
 		B_BuildFromTemplate(base, campaign->firstBaseTemplate, true);

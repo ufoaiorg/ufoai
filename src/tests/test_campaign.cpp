@@ -136,14 +136,13 @@ static installation_t* CreateInstallation (const char* name, const vec2_t pos)
 	return installation;
 }
 
-static base_t* CreateBase (const char* name, const vec2_t pos)
+static base_t* CreateBase (const char* name, const vec2_t pos, bool fillBase = false)
 {
 	const campaign_t* campaign = GetCampaign();
-	base_t* base;
 
 	RS_InitTree(campaign, false);
 	E_InitialEmployees(campaign);
-	base = B_Build(campaign, pos, name);
+	base_t* base = B_Build(campaign, pos, name, fillBase);
 
 	/* First base */
 	if (ccs.campaignStats.basesBuilt == 1)
@@ -368,23 +367,15 @@ TEST_F(CampaignTest, testTransferItem)
 	const campaign_t* campaign = GetCampaign();
 	const vec2_t pos = {0, 0};
 	const vec2_t posTarget = {51, 0};
-	base_t* base, *targetBase;
 	transfer_t tr;
-	const objDef_t* od;
-	transfer_t* transfer;
 
-	base = CreateBase("unittesttransferitem", pos);
+	base_t* base = CreateBase("unittesttransferitem", pos);
 	ASSERT_TRUE(nullptr != base);
-	/**
-	 * @todo make sure that we get all buildings in our second base, too.
-	 * B_SetUpFirstBase is not enough! We need to create it from the template.
-	 * This is needed for starting a transfer.
-	 */
-	targetBase = CreateBase("unittesttransferitemtargetbase", posTarget);
+	base_t* targetBase = CreateBase("unittesttransferitemtargetbase", posTarget, true);
 	ASSERT_TRUE(nullptr != targetBase);
 	B_SetUpFirstBase(campaign, targetBase);
 
-	od = INVSH_GetItemByID("assault");
+	const objDef_t* od = INVSH_GetItemByID("assault");
 	ASSERT_TRUE(nullptr != od);
 
 	OBJZERO(tr);
@@ -392,7 +383,7 @@ TEST_F(CampaignTest, testTransferItem)
 	tr.destBase = targetBase;
 	tr.itemAmount[od->idx]++;
 
-	transfer = TR_TransferStart(base, tr);
+	transfer_t* transfer = TR_TransferStart(base, tr);
 	ASSERT_TRUE(nullptr != transfer);
 
 	ASSERT_EQ(LIST_Count(ccs.transfers), 1);

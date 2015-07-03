@@ -96,6 +96,22 @@ aircraftnames ufoids
 	"mothership"
 }
 
+aircraftnames dropids
+{
+	"firebird"
+	"herakles"
+	"raptor"
+}
+
+aircraftnames interids
+{
+	"stiletto"
+	"saracen"
+	"dragon"
+	"starchaser"
+	"stingray"
+}
+
 //
 // AIRCRAFT
 //

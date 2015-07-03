@@ -144,13 +144,9 @@ typedef enum {
 } fade_t;
 
 typedef short ufoType_t;
-#define UFO_MAX 12
-#if 0
-#define UFO_NONE -1
-#else
-#define UFO_NONE UFO_MAX
-#endif
-
+#define UFO_MAX 16
+#define AIRCRAFT_NONE -1
+#define UFO_NONE AIRCRAFT_NONE
 extern const char* const align_names[];
 extern const char* const blend_names[];
 extern const char* const style_names[];
@@ -254,6 +250,8 @@ ufoType_t Com_UFOShortNameToID(const char* token);
 const char* Com_UFOTypeToShortName(ufoType_t type);
 const char* Com_UFOCrashedTypeToShortName(ufoType_t type);
 short Com_GetUfoIdsNum(void);
+short Com_GetDropShipIdsNum(void);
+short Com_GetHumanAircraftIdsNum(void);
 int Com_GetScriptChecksum(void);
 void Com_Shutdown(void);
 
