@@ -33,7 +33,7 @@ bl_info = {
 	"name": "Quake2 MD2 format",
 	"description": "Importer and exporter for Quake2 file format (.md2)",
 	"author": "DarkRain, based on the work of Bob Holcomb/Sebastian Lieberknecht/Dao Nguyen/Bernd Meyer/Damien Thebault/Erwan Mathieu/Takehiko Nawata",
-	"version": (1, 0),
+	"version": (1, 1),
 	"blender": (2, 63, 0),
 	"location": "File > Import/Export > Quake2 MD2",
 	"warning": "", # used for warning icon and text in addons panel
