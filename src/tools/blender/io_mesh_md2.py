@@ -232,6 +232,7 @@ class MD2:
 
 	def setObject(self, object):
 		self.object = object
+		self.mesh = self.object.to_mesh(bpy.context.scene, True, 'PREVIEW')
 
 	def makeObject(self):
 		print("Creating mesh", end='')
@@ -308,20 +309,20 @@ class MD2:
 					mesh.shape_keys.key_blocks[i].keyframe_insert("value", frame=i)
 				print("Animating - progress: %3i%%\r" % int(progressStatus), end='')
 			print("Animating - progress: 100%.")
+
+		bpy.context.scene.update()
 		print("Model imported")
 
 	def write(self, filePath):
-		mesh = self.object.data
-
-		self.skinWidth, self.skinHeight, skins = Util.getSkins(mesh, self.options.eTextureNameMethod)
+		self.skinWidth, self.skinHeight, skins = Util.getSkins(self.mesh, self.options.eTextureNameMethod)
 		if self.skinWidth < 1:
 			self.skinWidth = 64
 		if self.skinHeight < 1:
 			self.skinHeight = 64
 		self.numSkins = len(skins)
-		self.numVerts = len(mesh.vertices)
+		self.numVerts = len(self.mesh.vertices)
 		self.numUV, uvList, uvDict = self.buildTexCoord()
-		self.numTris = len(mesh.tessfaces)
+		self.numTris = len(self.mesh.tessfaces)
 
 		if self.options.fSkipGLCommands:
 			self.numGLCmds = 0
@@ -395,7 +396,7 @@ class MD2:
 				file.write(data) # uv
 			del uvList
 
-			for face in mesh.tessfaces:
+			for face in self.mesh.tessfaces:
 				# 0,2,1 for good cw/ccw
 				data = struct.pack("<3H",
 									face.vertices[0],
@@ -403,7 +404,7 @@ class MD2:
 									face.vertices[1]
 									)
 				file.write(data) # vert index
-				uvs = mesh.tessface_uv_textures.active.data[face.index].uv
+				uvs = self.mesh.tessface_uv_textures.active.data[face.index].uv
 				data = struct.pack("<3H",
 									uvDict[(uvs[0][0], uvs[0][1])],
 									uvDict[(uvs[2][0], uvs[2][1])],
@@ -613,7 +614,7 @@ class MD2:
 
 	def buildTexCoord(self):
 		# Create an UV coord dictionary to avoid duplicate entries and save space
-		meshTextureFaces = self.object.data.tessface_uv_textures.active.data
+		meshTextureFaces = self.mesh.tessface_uv_textures.active.data
 		uvList = []
 		uvDict = {}
 		uvCount = 0
@@ -626,37 +627,36 @@ class MD2:
 		return uvCount, uvList, uvDict
 
 	def findStripLength(self, startTri, startVert):
-		mesh = self.object.data
-		meshTextureFaces = mesh.tessface_uv_textures.active.data
-		numFaces = len(mesh.tessfaces)
+		meshTextureFaces = self.mesh.tessface_uv_textures.active.data
+		numFaces = len(self.mesh.tessfaces)
 
 		self.cmdVerts = []
 		self.cmdTris = []
 		self.cmdUV = []
 		self.used[startTri] = 2
 
-		self.cmdVerts.append(mesh.tessfaces[startTri].vertices_raw[startVert % 3])
-		self.cmdVerts.append(mesh.tessfaces[startTri].vertices_raw[(startVert + 2) % 3])
-		self.cmdVerts.append(mesh.tessfaces[startTri].vertices_raw[(startVert + 1) % 3])
+		self.cmdVerts.append(self.mesh.tessfaces[startTri].vertices_raw[startVert % 3])
+		self.cmdVerts.append(self.mesh.tessfaces[startTri].vertices_raw[(startVert + 2) % 3])
+		self.cmdVerts.append(self.mesh.tessfaces[startTri].vertices_raw[(startVert + 1) % 3])
 		self.cmdUV.append(meshTextureFaces[startTri].uv[startVert %3])
 		self.cmdUV.append(meshTextureFaces[startTri].uv[(startVert + 2) % 3])
 		self.cmdUV.append(meshTextureFaces[startTri].uv[(startVert + 1) % 3])
 
 		stripCount = 1
 		self.cmdTris.append(startTri)
-		m1 = mesh.tessfaces[startTri].vertices_raw[(startVert + 2) % 3]
-		m2 = mesh.tessfaces[startTri].vertices_raw[(startVert + 1) % 3]
+		m1 = self.mesh.tessfaces[startTri].vertices_raw[(startVert + 2) % 3]
+		m2 = self.mesh.tessfaces[startTri].vertices_raw[(startVert + 1) % 3]
 
 		for triCounter in range(startTri + 1, numFaces):
 			for k in range(3):
-				if(mesh.tessfaces[triCounter].vertices_raw[k] == m1) and (mesh.tessfaces[triCounter].vertices_raw[(k + 1) % 3] == m2):
+				if(self.mesh.tessfaces[triCounter].vertices_raw[k] == m1) and (self.mesh.tessfaces[triCounter].vertices_raw[(k + 1) % 3] == m2):
 					if(self.used[triCounter] == 0):
 						if(stripCount % 2 == 1):  #is this an odd tri
-							m1 = mesh.tessfaces[triCounter].vertices_raw[(k + 2) % 3]
+							m1 = self.mesh.tessfaces[triCounter].vertices_raw[(k + 2) % 3]
 						else:
-							m2=mesh.tessfaces[triCounter].vertices_raw[(k + 2) % 3]
+							m2 = self.mesh.tessfaces[triCounter].vertices_raw[(k + 2) % 3]
 
-						self.cmdVerts.append(mesh.tessfaces[triCounter].vertices_raw[(k + 2) % 3])
+						self.cmdVerts.append(self.mesh.tessfaces[triCounter].vertices_raw[(k + 2) % 3])
 						self.cmdUV.append(meshTextureFaces[triCounter].uv[(k + 2) % 3])
 						stripCount += 1
 						self.cmdTris.append(triCounter)
@@ -672,33 +672,32 @@ class MD2:
 		return stripCount
 
 	def findFanLength(self, startTri, startVert):
-		mesh = self.object.data
-		meshTextureFaces = mesh.tessface_uv_textures.active.data
-		numFaces = len(mesh.tessfaces)
+		meshTextureFaces = self.mesh.tessface_uv_textures.active.data
+		numFaces = len(self.mesh.tessfaces)
 
 		self.cmdVerts = []
 		self.cmdTris = []
 		self.cmdUV = []
 		self.used[startTri] = 2
 
-		self.cmdVerts.append(mesh.tessfaces[startTri].vertices_raw[startVert % 3])
-		self.cmdVerts.append(mesh.tessfaces[startTri].vertices_raw[(startVert + 2) % 3])
-		self.cmdVerts.append(mesh.tessfaces[startTri].vertices_raw[(startVert + 1) % 3])
+		self.cmdVerts.append(self.mesh.tessfaces[startTri].vertices_raw[startVert % 3])
+		self.cmdVerts.append(self.mesh.tessfaces[startTri].vertices_raw[(startVert + 2) % 3])
+		self.cmdVerts.append(self.mesh.tessfaces[startTri].vertices_raw[(startVert + 1) % 3])
 		self.cmdUV.append(meshTextureFaces[startTri].uv[startVert % 3])
 		self.cmdUV.append(meshTextureFaces[startTri].uv[(startVert + 2) % 3])
 		self.cmdUV.append(meshTextureFaces[startTri].uv[(startVert + 1) % 3])
 
 		fanCount = 1
 		self.cmdTris.append(startTri)
-		m2 = mesh.tessfaces[startTri].vertices_raw[(startVert) % 3]
-		m1 = mesh.tessfaces[startTri].vertices_raw[(startVert + 1) % 3]
+		m2 = self.mesh.tessfaces[startTri].vertices_raw[(startVert) % 3]
+		m1 = self.mesh.tessfaces[startTri].vertices_raw[(startVert + 1) % 3]
 
 		for triCounter in range(startTri + 1, numFaces):
 			for k in range(3):
-				if (mesh.tessfaces[triCounter].vertices_raw[k] == m1) and (mesh.tessfaces[triCounter].vertices_raw[(k + 1) % 3] == m2):
+				if (self.mesh.tessfaces[triCounter].vertices_raw[k] == m1) and (self.mesh.tessfaces[triCounter].vertices_raw[(k + 1) % 3] == m2):
 					if(self.used[triCounter] == 0):
-						m1 = mesh.tessfaces[triCounter].vertices_raw[(k + 2) % 3]
-						self.cmdVerts.append(mesh.tessfaces[triCounter].vertices_raw[(k + 2) % 3])
+						m1 = self.mesh.tessfaces[triCounter].vertices_raw[(k + 2) % 3]
+						self.cmdVerts.append(self.mesh.tessfaces[triCounter].vertices_raw[(k + 2) % 3])
 						self.cmdUV.append(meshTextureFaces[triCounter].uv[(k + 2) % 3])
 						fanCount += 1
 						self.cmdTris.append(triCounter)
@@ -714,7 +713,7 @@ class MD2:
 		return fanCount
 
 	def buildGLcommands(self):
-		numFaces = len(self.object.data.tessfaces)
+		numFaces = len(self.mesh.tessfaces)
 		self.used = [0] * numFaces
 		numCommands = 0
 		self.glCmdList = []
@@ -803,60 +802,18 @@ class Util:
 		if len(object.modifiers) == 0:
 			return object
 
-		# backup the current object selection and current active object
-		selObjects = bpy.context.selected_objects[:]
-		actObject = bpy.context.active_object
-
-		# deselect all selected objects
-		bpy.ops.object.select_all(action='DESELECT')
-		# select the object which we want to apply modifiers to
-		object.select = True
-
-		# duplicate the selected object
-		bpy.ops.object.duplicate()
-
-		# the duplicated object is automatically selected
-		modifiedObj = bpy.context.selected_objects[0]
-
-		# now apply all modifiers except the Armature modifier...
-		for modifier in modifiedObj.modifiers:
-			if modifier.type == 'ARMATURE':
-				# these must stay for the animation
-				continue
-
-			# all others can be applied.
-			bpy.ops.object.modifier_apply(modifier=modifier.name)
-
-		# select all objects which have been previously selected and make active the previous active object
-		bpy.context.scene.objects.active = actObject
-		for obj in selObjects:
-			obj.select = True
-
-		if len(object.modifiers) == len(modifiedObj.modifiers):
-			deleteObject(modifiedObj)
-			return object
+		modifier = object.modifiers.new('Triangulate-Export','TRIANGULATE')
+		mesh = object.to_mesh(bpy.context.scene, True, 'PREVIEW')
+		modifiedObj = bpy.data.objects.new(mesh.name, mesh)
+		bpy.context.scene.objects.link(modifiedObj)
+		object.modifiers.remove(modifier)
 
 		return modifiedObj
 
 	# returns the mesh of the object and return object.data (mesh)
 	@staticmethod
 	def triangulateMesh(object):
-		mesh = object.data
-
-		# make the object the active object!
-		bpy.context.scene.objects.active = object
-
-		try:
-			modifier = object.modifiers.new('Triangulate-Export','TRIANGULATE')
-			bpy.ops.object.modifier_apply(modifier=modifier.name)
-
-		except:
-			bpy.ops.object.mode_set(mode='EDIT', toggle=False)
-			bpy.ops.mesh.select_all(action='SELECT')
-			bpy.ops.mesh.quads_convert_to_tris()
-			bpy.ops.object.mode_set(mode='OBJECT', toggle=False)
-
-		return mesh
+		modifier = object.modifiers.new('Triangulate-Export','TRIANGULATE')
 
 	@staticmethod
 	def getSkins(mesh, method):
@@ -911,7 +868,6 @@ class Util:
 
 class ObjectInfo:
 	def __init__(self, object):
-		self.triang = True
 		self.vertices = -1
 		self.faces = 0
 		self.status = ('','')
@@ -927,12 +883,7 @@ class ObjectInfo:
 			try:
 				# apply the modifiers
 				object = Util.applyModifiers(object)
-
-				faces = len(mesh.polygons)
-				if object.name == originalObject.name: # not yet copied: do it now.
-					object = Util.duplicateObject(object)
-				mesh = Util.triangulateMesh(object)
-				self.triang = faces != len(mesh.polygons)
+				mesh = object.data
 
 				mesh.update(calc_tessface=True)
 				self.status = (str(len(mesh.vertices)) + " vertices", str(len(mesh.tessfaces)) + " faces")
@@ -995,16 +946,10 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 		originalObject = object
 
 		if self.info.frames > MD2_MAX_FRAMES and self.fExportAnimation:
-			raise NameError("There are too many frames (%i), at most %i are supported in md2" % (info.frames, MD2_MAX_FRAMES))
+			raise RuntimeError("There are too many frames (%i), at most %i are supported in md2" % (info.frames, MD2_MAX_FRAMES))
 
-		# different name each time or we can't unlink it later
-
-		object = Util.applyModifiers(object)
-
-		if self.info.triang:
-			if object.name == originalObject.name: # not yet copied: do it now.
-				object = Util.duplicateObject(object)
-			Util.triangulateMesh(object)
+		object = Util.duplicateObject(object)
+		Util.triangulateMesh(object)
 
 		object.data.update(calc_tessface=True)
 
