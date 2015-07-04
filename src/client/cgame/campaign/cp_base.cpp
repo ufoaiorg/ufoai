@@ -1171,7 +1171,7 @@ void B_SetUpFirstBase (const campaign_t* campaign, base_t* base)
 	/* Add aircraft to the first base */
 	LIST_Foreach(campaign->initialCraft, const char, aircraftName) {
 		const aircraft_t* tempAircraft = AIR_GetAircraft(aircraftName);
-		if (tempAircraft->type == AIRCRAFT_TRANSPORTER && CAP_GetFreeCapacity(base, CAP_AIRCRAFT_BIG)) {
+		if (tempAircraft->size == AIRCRAFT_LARGE && CAP_GetFreeCapacity(base, CAP_AIRCRAFT_BIG)) {
 			const equipDef_t* equipDef = cgi->INV_GetEquipmentDefinitionByID(campaign->soldierEquipment);
 			aircraft_t* aircraft = AIR_NewAircraft(base, tempAircraft);
 			CP_UpdateCredits(ccs.credits - tempAircraft->price);
@@ -1184,7 +1184,7 @@ void B_SetUpFirstBase (const campaign_t* campaign, base_t* base)
 			B_InitialEquipment(aircraft, equipDef);
 			continue;
 		}
-		if (tempAircraft->type == AIRCRAFT_INTERCEPTOR && CAP_GetFreeCapacity(base, CAP_AIRCRAFT_SMALL)) {
+		if (tempAircraft->size == AIRCRAFT_SMALL && CAP_GetFreeCapacity(base, CAP_AIRCRAFT_SMALL)) {
 			aircraft_t* aircraft = AIR_NewAircraft(base, tempAircraft);
 			CP_UpdateCredits(ccs.credits - tempAircraft->price);
 			if (!E_HireEmployeeByType(base, EMPL_PILOT))
