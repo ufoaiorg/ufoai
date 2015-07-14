@@ -145,14 +145,11 @@ static void UI_Restart_f (void)
 		names.push_back(std::string(ui_global.windowStack[i]->name));
 	}
 
-	Com_Printf("--> in UI_Restart_f\n");
-
 	UI_Shutdown();
 	CLMN_Shutdown();
 	R_FontShutdown();
 	UI_Init();
 	R_FontInit();
-	Com_Printf("UI_Restart\n");
 	Com_Printf("%i ui script files\n", FS_BuildFileList("ufos/ui/*.ufo"));
 	FS_NextScriptHeader(nullptr, nullptr, nullptr);
 	const char* type, *name, *text;
@@ -306,7 +303,6 @@ void UI_Init (void)
 	ui_global.adata    = Mem_PoolAllocTypeN(byte, ui_global.adataize, ui_sysPool);
 	ui_global.curadata = ui_global.adata;
 
-	// note: initialize the lua framework before registering the actual behaviour classes
 	UI_InitLua();
 	UI_InitData();
 	UI_InitNodes();
