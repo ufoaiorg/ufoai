@@ -268,7 +268,7 @@ component BaseLayoutMini extends baselayout
 	padding			1
 	onMouseEnter	{ *node:this@color = "0.56 0.81 0.76 1" }
 	onMouseLeave	{ *node:this@color = "0.56 0.81 0.76 0.5" }
-	onClick			{ cmd "ui_pop; mn_base_select <baseid>;" }
+	onClick			{ cmd "base_select_s <baseid> <node:root.base_container.wnd_name@string>;" }
 }
 --]]
 local BaseLayoutMini = ufo.create_component("baselayout", "BaseLayoutMini", nil)
@@ -284,7 +284,7 @@ BaseLayoutMini.on_mouseleave = function (sender)
 		sender:set_color(0.56, 0.81, 0.76, 0.5)
 	end
 BaseLayoutMini.on_click = function (sender)
-		ufo.cmd(string.format("ui_pop; mn_base_select %s;", tostring(sender:basedid())))
+		ufo.cmd(string.format("base_select_s %s %s;", tostring(sender:baseid()), tostring(sender:root():child("base_container"):child("wnd_name"):as_string())))
 	end
 
 --[[
@@ -452,7 +452,7 @@ component HospitalItem extends panel {
 		ghost			true
 	}
 	string type {
-		pos			"530 8"
+		pos			"550 8"
 		size		"100 15"
 		color		"0.56 0.81 0.76 1"
 		font		"f_verysmall"
@@ -462,21 +462,56 @@ component HospitalItem extends panel {
 	}
 
 	panel wounds {
-		pos 	"310 0"
-		size	"28 28"
-		ghost		true
+		{
+			pos 	"310 0"
+			size	"80 28"
+			ghost		true
+		}
+		// TODO: use image instead of button — when it works with packed icons
+		button wound_humanoid_head {
+			pos			"0 6"
+			size		"16 16"
+			invis		true
+		}
+		button wound_humanoid_torso {
+			pos			"19 6"
+			size		"16 16"
+			invis		true
+		}
+		button wound_humanoid_arms {
+			pos			"38 6"
+			size		"16 16"
+			invis		true
+		}
+		button wound_humanoid_legs {
+			pos			"57 6"
+			size		"16 16"
+			invis		true
+		}
+		button wound_default_body {
+			pos			"0 6"
+			size		"16 16"
+			invis		true
+		}
 	}
 
 	container implant {
-		pos "340 0"
+		pos "390 0"
 		border			"1"
 		bordercolor		"0.56 0.81 0.76 1"
 	}
 
 	image icon {
-		pos 	"460 0"
+		pos 	"510 0"
 		size	"28 28"
 		ghost		true
+	}
+
+	image assigned {
+		pos		"1 2"
+		size	"24 24"
+		src		"icons/icon_aircraftsml"
+		invis	true
 	}
 }
 --]]
@@ -508,7 +543,7 @@ HospitalItem_name:set_longlines(ufo.LONGLINES_PRETTYCHOP)
 HospitalItem_name:set_contentalign(ufo.ALIGN_CL)
 HospitalItem_name:set_ghost(true)
 local HospitalItem_type = ufo.create_string(HospitalItem, "type", nil)
-HospitalItem_type:set_pos(530, 8)
+HospitalItem_type:set_pos(550, 8)
 HospitalItem_type:set_size(100, 15)
 HospitalItem_type:set_color(0.56, 0.81, 0.76, 1)
 HospitalItem_type:set_font("f_verysmall")
@@ -517,16 +552,41 @@ HospitalItem_type:set_padding(0)
 HospitalItem_type:set_ghost(true)
 local HospitalItem_wounds = ufo.create_panel(HospitalItem, "wounds", nil)
 HospitalItem_wounds:set_pos(310, 0)
-HospitalItem_wounds:set_size(28, 28)
+HospitalItem_wounds:set_size(80, 28)
 HospitalItem_wounds:set_ghost(true)
+local HospitalItem_wounds_wound_humanoid_head = ufo.create_button(HospitalItem_wounds, "wound_humanoid_head", nil)
+HospitalItem_wounds_wound_humanoid_head:set_pos(0, 6)
+HospitalItem_wounds_wound_humanoid_head:set_size(16, 16)
+HospitalItem_wounds_wound_humanoid_head:set_invisible(true)
+local HospitalItem_wounds_wound_humanoid_torso = ufo.create_button(HospitalItem_wounds, "wound_humanoid_torso", nil)
+HospitalItem_wounds_wound_humanoid_torso:set_pos(19, 6)
+HospitalItem_wounds_wound_humanoid_torso:set_size(16, 16)
+HospitalItem_wounds_wound_humanoid_torso:set_invisible(true)
+local HospitalItem_wounds_wound_humanoid_arms = ufo.create_button(HospitalItem_wounds, "wound_humanoid_arms", nil)
+HospitalItem_wounds_wound_humanoid_arms:set_pos(38, 6)
+HospitalItem_wounds_wound_humanoid_arms:set_size(16, 16)
+HospitalItem_wounds_wound_humanoid_arms:set_invisible(true)
+local HospitalItem_wounds_wound_humanoid_legs = ufo.create_button(HospitalItem_wounds, "wound_humanoid_legs", nil)
+HospitalItem_wounds_wound_humanoid_legs:set_pos(57, 6)
+HospitalItem_wounds_wound_humanoid_legs:set_size(16, 16)
+HospitalItem_wounds_wound_humanoid_legs:set_invisible(true)
+local HospitalItem_wounds_wound_default_body = ufo.create_button(HospitalItem_wounds, "wound_default_body", nil)
+HospitalItem_wounds_wound_default_body:set_pos(0, 6)
+HospitalItem_wounds_wound_default_body:set_size(16, 16)
+HospitalItem_wounds_wound_default_body:set_invisible(true)
 local HospitalItem_implant = ufo.create_container(HospitalItem, "implant", nil)
-HospitalItem_implant:set_pos(340, 0)
+HospitalItem_implant:set_pos(390, 0)
 HospitalItem_implant:set_bordersize(1)
 HospitalItem_implant:set_bordercolor(0.56, 0.81, 0.76, 1)
 local HospitalItem_icon = ufo.create_image(HospitalItem, "icon", nil)
-HospitalItem_icon:set_pos(460, 0)
+HospitalItem_icon:set_pos(510, 0)
 HospitalItem_icon:set_size(28, 28)
 HospitalItem_icon:set_ghost(true)
+local HospitalItem_assigned = ufo.create_image(HospitalItem, "assigned", nil)
+HospitalItem_assigned:set_pos(1, 1)
+HospitalItem_assigned:set_size(24, 24)
+HospitalItem_assigned:set_source("icons/icon_aircraftsml")
+HospitalItem_assigned:set_invisible(true)
 
 --[[
 // Research item (items researched in base)
@@ -1090,6 +1150,7 @@ component BaseContainerPanel extends panel
 		border			"2"
 		bordercolor		"0.56 0.81 0.76 1"
 	}
+	data wnd_name { string "" }
 
 	// @TODO: make next/prev base btns work
 	button prev
@@ -1098,9 +1159,9 @@ component BaseContainerPanel extends panel
 		tooltip			"_Previous base"
 		pos				"90 6"
 		size			"18	18"
-		onClick			{ cmd "ui_pop; mn_base_prev;" }
-		onWheelUp		{ cmd "ui_pop; mn_base_next;" }
-		onWheelDown		{ cmd "ui_pop; mn_base_prev;" }
+		onClick			{ cmd "base_prev_s <node:parent.wnd_name@string>;" }
+		onWheelUp		{ cmd "base_next_s <node:parent.wnd_name@string>;" }
+		onWheelDown		{ cmd "base_prev_s <node:parent.wnd_name@string>;" }
 	}
 	button next
 	{
@@ -1108,9 +1169,9 @@ component BaseContainerPanel extends panel
 		tooltip			"_Next base"
 		pos				"115 6"
 		size			"18	18"
-		onClick			{ cmd "ui_pop; mn_base_next;" }
-		onWheelUp		{ cmd "ui_pop; mn_base_next;" }
-		onWheelDown		{ cmd "ui_pop; mn_base_prev;" }
+		onClick			{ cmd "base_next_s <node:parent.wnd_name@string>;" }
+		onWheelUp		{ cmd "base_next_s <node:parent.wnd_name@string>;" }
+		onWheelDown		{ cmd "base_prev_s <node:parent.wnd_name@string>;" }
 	}
 	// Base name
 	textentry name
@@ -1192,19 +1253,20 @@ BaseContainerPanel:set_pos(5, 5)
 BaseContainerPanel:set_size(723, 758)
 BaseContainerPanel:set_bordersize(2)
 BaseContainerPanel:set_bordercolor(0.56, 0.81, 0.76, 1)
+local BaseContainerPanel_wnd_name = ufo.create_data(BaseContainerPanel, "wnd_name", nil)
 local BaseContainerPanel_prev = ufo.create_button(BaseContainerPanel, "prev", nil)
 BaseContainerPanel_prev:set_icon("icons/windowprev")
 BaseContainerPanel_prev:set_tooltip("_Previous base")
 BaseContainerPanel_prev:set_pos(90, 6)
 BaseContainerPanel_prev:set_size(18, 18)
 BaseContainerPanel_prev.on_click = function (sender)
-		ufo.cmd("ui_pop; mn_base_prev;")
+		ufo.cmd(string.format("base_prev_s %s", sender:parent():child("wnd_name"):as_string()))
 	end
 BaseContainerPanel_prev.on_wheelup = function (sender)
-		ufo.cmd("ui_pop; mn_base_next;")
+		ufo.cmd(string.format("base_next_s %s", sender:parent():child("wnd_name"):as_string()))
 	end
 BaseContainerPanel_prev.on_wheeldown = function (sender)
-		ufo.cmd("ui_pop; mn_base_prev;")
+		ufo.cmd(string.format("base_prev_s %s", sender:parent():child("wnd_name"):as_string()))
 	end
 local BaseContainerPanel_next = ufo.create_button(BaseContainerPanel, "next", nil)
 BaseContainerPanel_next:set_icon("icons/windownext")
@@ -1212,13 +1274,13 @@ BaseContainerPanel_next:set_tooltip("_Next base")
 BaseContainerPanel_next:set_pos(115, 6)
 BaseContainerPanel_next:set_size(18, 18)
 BaseContainerPanel_next.on_click = function (sender)
-		ufo.cmd("ui_pop; mn_base_next;")
+		ufo.cmd(string.format("base_next_s %s", sender:parent():child("wnd_name"):as_string()))
 	end
 BaseContainerPanel_next.on_wheelup = function (sender)
-		ufo.cmd("ui_pop; mn_base_next;")
+		ufo.cmd(string.format("base_next_s %s", sender:parent():child("wnd_name"):as_string()))
 	end
 BaseContainerPanel_next.on_wheeldown = function (sender)
-		ufo.cmd("ui_pop; mn_base_prev;")
+		ufo.cmd(string.format("base_prev_s %s", sender:parent():child("wnd_name"):as_string()))
 	end
 local BaseContainerPanel_name = ufo.create_textentry(BaseContainerPanel, "name", nil)
 BaseContainerPanel_name:set_text("*cvar:mn_base_title")
