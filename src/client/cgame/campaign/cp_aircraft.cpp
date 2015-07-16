@@ -1040,8 +1040,10 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 		case AIR_MISSION:
 			/* Aircraft reached its mission */
 			assert(aircraft->mission);
-			aircraft->mission->active = true;
 			aircraft->status = AIR_DROP;
+			/* Fall thru */
+		case AIR_DROP:
+			aircraft->mission->active = true;
 			GEO_SetMissionAircraft(aircraft);
 			GEO_SelectMission(aircraft->mission);
 			GEO_SetInterceptorAircraft(aircraft);
@@ -2276,7 +2278,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t* p, const aircraft_t* const aircraft,
 		cgi->XML_AddInt(node, SAVE_AIRCRAFT_DETECTIONIDX, aircraft->detectionIdx);
 		cgi->XML_AddDate(node, SAVE_AIRCRAFT_LASTSPOTTED_DATE, aircraft->lastSpotted.day, aircraft->lastSpotted.sec);
 	} else {
-		if (aircraft->status == AIR_MISSION) {
+		if (aircraft->status == AIR_MISSION || aircraft->status == AIR_DROP) {
 			assert(aircraft->mission);
 			cgi->XML_AddString(node, SAVE_AIRCRAFT_MISSIONID, aircraft->mission->id);
 		}
@@ -2667,8 +2669,12 @@ static bool AIR_PostLoadInitMissions (void)
 
 	/* PHALANX aircraft */
 	AIR_Foreach(aircraft) {
-		if (Q_strnull(aircraft->missionID))
+		if (Q_strnull(aircraft->missionID)) {
+			/* Save compatibility (03/Jul/2015) */
+			if (aircraft->status == AIR_DROP)
+				aircraft->status = AIR_IDLE;
 			continue;
+		}
 		aircraft->mission = CP_GetMissionByID(aircraft->missionID);
 		if (!aircraft->mission) {
 			Com_Printf("Aircraft %s (idx: %i) is linked to an invalid mission: %s\n", aircraft->name, aircraft->idx, aircraft->missionID);

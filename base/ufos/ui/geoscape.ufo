@@ -68,7 +68,7 @@ window geoscape
 	}
 
 	confunc clean_geoscape_object {
-		call *node:root.messages.dock@removeAllChild
+		call *node:root.messages.messagesystem.message@removeAllChild
 	}
 
 	/**
@@ -80,10 +80,10 @@ window geoscape
 	confunc add_geoscape_object
 	{
 		call *node:root.messages.dock@createChild ( "<1><2>" , "cmpGeoscapeDocklet" )
-		*node:root.messages.dock.<1><2>.type@string = <1>
-		*node:root.messages.dock.<1><2>.id@string = <2>
-		*node:root.messages.dock.<1><2>.siteModel@src = <3>
-		*node:root.messages.dock.<1><2>.message@string = <4>
+		*node:root.messages.messagesystem.message.<1><2>.type@string = <1>
+		*node:root.messages.messagesystem.message.<1><2>.id@string = <2>
+		*node:root.messages.messagesystem.message.<1><2>.siteModel@src = <3>
+		*node:root.messages.messagesystem.message.<1><2>.message@string = <4>
 	}
 
 	confunc messagesystem_changemode
@@ -730,24 +730,6 @@ window geoscape
 					*node:parent.scroll@current = <viewpos>
 					*node:parent.scroll@viewsize = <viewsize>
 				}
-			}
-		}
-
-		panel dock {
-			{
-				pos				"0 0"
-				size			"300 768"
-				align			LAYOUTALIGN_LEFT
-				layout			LAYOUT_PACK
-				ghost			true
-				padding			10
-				layoutmargin	10
-			}
-
-			// @todo This produces an error whenever we do a dock@removeAllChild (can't delete static node)
-			panel bottomMargin {
-				align		LAYOUTALIGN_BOTTOM
-				size		"280 30"
 			}
 		}
 	}
