@@ -8,9 +8,9 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="..\..\ufomodel" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="..\..\" />
-				<Option object_output=".objs\ufomodel" />
+				<Option output="../../ufomodel" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../" />
+				<Option object_output=".objs/ufomodel" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
@@ -30,13 +30,14 @@
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="..\..\ufomodel" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="..\..\" />
-				<Option object_output=".objs\ufomodel" />
+				<Option output="../../ufomodel" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../" />
+				<Option object_output=".objs/ufomodel" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option parameters="-skincheck" />
-				<Option host_application="..\..\ufomodel" />
+				<Option host_application="../../ufomodel" />
+				<Option run_host_application_in_terminal="0" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-pg" />
@@ -56,13 +57,13 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-I../../src/libs" />
 			<Add option="-Wcast-align" />
 			<Add option="-Winline" />
 			<Add option="-Wmissing-declarations" />
 			<Add option="-pedantic" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
+			<Add option="-I../../src/libs" />
 			<Add option="-ggdb" />
 			<Add option="-Wcast-qual" />
 			<Add option="-Wpointer-arith" />
@@ -79,43 +80,43 @@
 		</Compiler>
 		<Linker>
 			<Add library="SDL" />
-			<Add library="z" />
 			<Add library="jpeg" />
 			<Add library="png" />
+			<Add library="z" />
 		</Linker>
-		<Unit filename="..\..\src\client\renderer\r_model.cpp" />
-		<Unit filename="..\..\src\client\renderer\r_model_alias.cpp" />
-		<Unit filename="..\..\src\client\renderer\r_model_md2.cpp" />
-		<Unit filename="..\..\src\client\renderer\r_model_md3.cpp" />
-		<Unit filename="..\..\src\client\renderer\r_model_obj.cpp" />
-		<Unit filename="..\..\src\common\files.cpp" />
-		<Unit filename="..\..\src\common\ioapi.cpp" />
-		<Unit filename="..\..\src\common\ioapi.h" />
-		<Unit filename="..\..\src\common\list.cpp" />
-		<Unit filename="..\..\src\common\mem.cpp" />
-		<Unit filename="..\..\src\common\mem.h" />
-		<Unit filename="..\..\src\common\unzip.cpp" />
-		<Unit filename="..\..\src\common\unzip.h" />
-		<Unit filename="..\..\src\ports\windows\win_shared.cpp" />
-		<Unit filename="..\..\src\shared\aabb.cpp" />
-		<Unit filename="..\..\src\shared\aabb.h" />
-		<Unit filename="..\..\src\shared\byte.cpp" />
-		<Unit filename="..\..\src\shared\byte.h" />
-		<Unit filename="..\..\src\shared\defines.h" />
-		<Unit filename="..\..\src\shared\images.cpp" />
-		<Unit filename="..\..\src\shared\images.h" />
-		<Unit filename="..\..\src\shared\mathlib.cpp" />
-		<Unit filename="..\..\src\shared\mathlib.h" />
-		<Unit filename="..\..\src\shared\parse.cpp" />
-		<Unit filename="..\..\src\shared\parse.h" />
-		<Unit filename="..\..\src\shared\shared.cpp" />
-		<Unit filename="..\..\src\shared\shared.h" />
-		<Unit filename="..\..\src\shared\typedefs.h" />
-		<Unit filename="..\..\src\shared\utf8.cpp" />
-		<Unit filename="..\..\src\shared\utf8.h" />
-		<Unit filename="..\..\src\shared\vector.h" />
-		<Unit filename="..\..\src\tools\ufomodel\md2.cpp" />
-		<Unit filename="..\..\src\tools\ufomodel\ufomodel.cpp" />
+		<Unit filename="../../src/client/renderer/r_model.cpp" />
+		<Unit filename="../../src/client/renderer/r_model_alias.cpp" />
+		<Unit filename="../../src/client/renderer/r_model_md2.cpp" />
+		<Unit filename="../../src/client/renderer/r_model_md3.cpp" />
+		<Unit filename="../../src/client/renderer/r_model_obj.cpp" />
+		<Unit filename="../../src/common/files.cpp" />
+		<Unit filename="../../src/common/ioapi.cpp" />
+		<Unit filename="../../src/common/ioapi.h" />
+		<Unit filename="../../src/common/list.cpp" />
+		<Unit filename="../../src/common/mem.cpp" />
+		<Unit filename="../../src/common/mem.h" />
+		<Unit filename="../../src/common/unzip.cpp" />
+		<Unit filename="../../src/common/unzip.h" />
+		<Unit filename="../../src/ports/windows/win_shared.cpp" />
+		<Unit filename="../../src/shared/aabb.cpp" />
+		<Unit filename="../../src/shared/aabb.h" />
+		<Unit filename="../../src/shared/byte.cpp" />
+		<Unit filename="../../src/shared/byte.h" />
+		<Unit filename="../../src/shared/defines.h" />
+		<Unit filename="../../src/shared/images.cpp" />
+		<Unit filename="../../src/shared/images.h" />
+		<Unit filename="../../src/shared/mathlib.cpp" />
+		<Unit filename="../../src/shared/mathlib.h" />
+		<Unit filename="../../src/shared/parse.cpp" />
+		<Unit filename="../../src/shared/parse.h" />
+		<Unit filename="../../src/shared/shared.cpp" />
+		<Unit filename="../../src/shared/shared.h" />
+		<Unit filename="../../src/shared/typedefs.h" />
+		<Unit filename="../../src/shared/utf8.cpp" />
+		<Unit filename="../../src/shared/utf8.h" />
+		<Unit filename="../../src/shared/vector.h" />
+		<Unit filename="../../src/tools/ufomodel/md2.cpp" />
+		<Unit filename="../../src/tools/ufomodel/ufomodel.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

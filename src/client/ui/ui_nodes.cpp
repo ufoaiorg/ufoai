@@ -416,6 +416,10 @@ uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t* newWindow, bool recursiv
 {
 	uiNode_t* newNode = UI_AllocNodeWithoutNew(nullptr, UI_Node_GetWidgetName(node), isDynamic);
 
+	if (newName && Q_streq(newName, "base_container")) {
+		Com_Printf("stop here!\n");
+	}
+
 	/* clone all data */
 	memcpy(newNode, node, UI_Node_GetMemorySize(node));
 	newNode->dynamic = isDynamic;
