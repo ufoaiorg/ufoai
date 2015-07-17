@@ -72,7 +72,8 @@ bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
 	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
 	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 1, 0, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("UI_ExecuteLuaEventScript\n");
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
 	return true;
@@ -90,11 +91,13 @@ bool UI_ExecuteLuaEventScript_ReturnBool (uiNode_t* node, LUA_EVENT event, bool 
 	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
 	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 1, 1, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("UI_ExecuteLuaEventScript_ReturnBool\n");
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
     if (!lua_isboolean(CL_GetLuaState(), -1)) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", node->name, node->behaviour->name);
+		Com_Printf("UI_ExecuteLuaEventScript_ReturnBool\n");
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", UI_GetPath(node), node->behaviour->name);
 		return false;
     }
     result = lua_toboolean(CL_GetLuaState(), -1);
@@ -116,7 +119,8 @@ bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y)
 	lua_pushinteger(CL_GetLuaState(), x); /* push x on lua stack */
 	lua_pushinteger(CL_GetLuaState(), y); /* push y on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("UI_ExecuteLuaEventScript_XY\n");
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
 	return true;
@@ -137,7 +141,8 @@ bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int
 	lua_pushinteger(CL_GetLuaState(), dx); /* push dx on lua stack */
 	lua_pushinteger(CL_GetLuaState(), dy); /* push dy on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("UI_ExecuteLuaEventScript_DxDy\n");
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
 	return true;
@@ -158,7 +163,8 @@ bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int
 	lua_pushinteger(CL_GetLuaState(), key); /* push key on lua stack */
 	lua_pushinteger(CL_GetLuaState(), unicode); /* push unicode on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("UI_ExecuteLuaEventScript_Key\n");
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
 	return true;
@@ -176,11 +182,12 @@ bool UI_ExecuteLuaEventScript_DragDrop (uiNode_t* node, LUA_EVENT event, bool &r
 	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
 	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 1, 1, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("UI_ExecuteLuaEventScript_DragDrop\n");
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
     if (!lua_isboolean(CL_GetLuaState(), -1)) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", node->name, node->behaviour->name);
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", UI_GetPath(node), node->behaviour->name);
 		return false;
     }
     result = lua_toboolean(CL_GetLuaState(), -1);
@@ -203,11 +210,12 @@ bool UI_ExecuteLuaEventScript_DragDrop_XY (uiNode_t* node, LUA_EVENT event, int 
 	lua_pushinteger(CL_GetLuaState(), x); /* push x to lua stack */
 	lua_pushinteger(CL_GetLuaState(), y); /* push y to lua stack */
 	if (lua_pcall (CL_GetLuaState(), 3, 1, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("UI_ExecuteLuaEventScript_DragDrop_XY\n");
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
     if (!lua_isboolean(CL_GetLuaState(), -1)) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", node->name, node->behaviour->name);
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", UI_GetPath(node), node->behaviour->name);
 		return false;
     }
     result = lua_toboolean(CL_GetLuaState(), -1);
@@ -228,11 +236,12 @@ bool UI_ExecuteLuaEventScript_DragDrop_IsDropped (uiNode_t* node, LUA_EVENT even
 	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	lua_pushboolean(CL_GetLuaState(), isDropped); /* push isDropped to lua stack */
 	if (lua_pcall (CL_GetLuaState(), 2, 1, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("UI_ExecuteLuaEventScript_DragDrop_IsDropped\n");
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
     if (!lua_isboolean(CL_GetLuaState(), -1)) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", node->name, node->behaviour->name);
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", UI_GetPath(node), node->behaviour->name);
 		return false;
     }
     result = lua_toboolean(CL_GetLuaState(), -1);
@@ -261,8 +270,9 @@ bool UI_ExecuteLuaMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params
 		const char* value=const_cast<const char*> ((char*)LIST_GetByIdx(params, i));
 		lua_pushstring(CL_GetLuaState(), value);
 	}
-	if (lua_pcall (CL_GetLuaState(), 1, 0, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+	if (lua_pcall (CL_GetLuaState(), nparams + 1, 0, 0) != 0) {
+		Com_Printf("UI_ExecuteLuaMethod\n");
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
 	return true;
@@ -311,7 +321,8 @@ bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn) {
 	}
 	/* execute the confunc */
 	if (lua_pcall (CL_GetLuaState(), Cmd_Argc(), 0, 0) != 0) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", node->name, node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("UI_ExecuteLuaConFunc\n");
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
 	};
 	return true;
