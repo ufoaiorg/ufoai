@@ -55,13 +55,13 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-I../../src/libs" />
 			<Add option="-Wcast-align" />
 			<Add option="-Winline" />
 			<Add option="-Wmissing-declarations" />
 			<Add option="-pedantic" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
+			<Add option="-I../../src/libs" />
 			<Add option="-ggdb" />
 			<Add option="-Wcast-qual" />
 			<Add option="-Wpointer-arith" />
@@ -78,9 +78,9 @@
 		</Compiler>
 		<Linker>
 			<Add library="SDL" />
-			<Add library="z" />
 			<Add library="jpeg" />
 			<Add library="png" />
+			<Add library="z" />
 		</Linker>
 		<Unit filename="../../src/common/bspslicer.cpp" />
 		<Unit filename="../../src/common/bspslicer.h" />
