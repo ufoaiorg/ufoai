@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "test_shared.h"
 #include "../client/cl_video.h" /* vid_imagePool */
+#include "../client/cl_lua.h"
 #include "../client/ui/ui_internal.h"
 #include "../client/renderer/r_state.h" /* r_state */
 
@@ -32,6 +33,7 @@ class UILevel2Test: public ::testing::Test {
 protected:
 	static void SetUpTestCase() {
 		TEST_Init();
+		CL_InitLua();
 		UI_Init();
 
 		vid_imagePool = Mem_CreatePool("Vid: Image system");

@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "test_shared.h"
 #include "../client/client.h"
 #include "../client/cl_shared.h"
+#include "../client/cl_lua.h"
 #include "../client/renderer/r_state.h"
 #include "../client/ui/ui_main.h"
 #include "../common/routing.h"
@@ -49,6 +50,7 @@ protected:
 
 		r_state.active_texunit = &r_state.texunits[0];
 		R_FontInit();
+		CL_InitLua();
 		UI_Init();
 
 		OBJZERO(cls);
