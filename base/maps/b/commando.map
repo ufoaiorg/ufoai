@@ -2366,3 +2366,13 @@
 "team" "1"
 "angle" "180"
 }
+// entity 74
+{
+"classname" "misc_mission"
+"origin" "256 256 96"
+"spawnflags" "254"
+"team" "7"
+"radius" "128"
+"time" "3"
+"particle" "green_smoke"
+}

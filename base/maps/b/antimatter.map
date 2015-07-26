@@ -2126,3 +2126,13 @@
 ( 824 512 4 ) ( 760 512 4 ) ( 824 512 132 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
 }
 }
+// entity 33
+{
+"classname" "misc_mission"
+"origin" "80 432 96"
+"spawnflags" "254"
+"team" "7"
+"radius" "64"
+"time" "3"
+"particle" "green_smoke"
+}
