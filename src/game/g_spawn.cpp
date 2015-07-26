@@ -90,7 +90,7 @@ static const spawn_t spawns[] = {
 	{"misc_model", SP_misc_model},
 	{"misc_particle", SP_dummy},
 	{"misc_mission", SP_misc_mission},
-	{"misc_mission_aliens", SP_misc_mission_aliens},
+	{"misc_mission_alien", SP_misc_mission_aliens},
 	{"info_player_start", SP_player_start},
 	{"info_human_start", SP_human_start},
 	{"info_alien_start", SP_alien_start},
