@@ -221,7 +221,7 @@ void G_MissionThink (Edict* self)
 		if (chain->link != nullptr) {
 			Edict* particle = G_GetEdictFromPos(chain->pos, ET_PARTICLE);
 			if (particle != nullptr) {
-				G_AppearPerishEvent(PM_ALL, false, *particle, nullptr);
+				G_AppearPerishEvent(G_VisToPM(particle->visflags), false, *particle, nullptr);
 				G_FreeEdict(particle);
 			}
 			chain->link = nullptr;
