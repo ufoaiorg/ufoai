@@ -103,6 +103,24 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 	return true;
 }
 
+void G_MissionReset (Edict* self, Edict* activator)
+{
+	/* Don't reset the mission timer for 'bring item' missions G_MissionThink will handle that */
+	if (!self->owner() || !self->owner()->time || self->owner()->item)
+		return;
+	linkedList_t* touched = self->touchedList;
+	while (touched) {
+		const Edict* const ent = static_cast<const Edict* const>(touched->data);
+		if (self->owner()->isSameTeamAs(ent) && !(G_IsDead(ent) || ent == activator)) {
+			return;
+		}
+		touched = touched->next;
+	}
+	/* All team actors are gone, reset counter */
+	gi.BroadcastPrintf(PRINT_HUD, _("Target zone is unoccupied!"));
+	self->owner()->count = 0;
+}
+
 /**
  * @brief Mission trigger destroy function
  */

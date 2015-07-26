@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void G_MissionAddVictoryMessage(const char* message);
 bool G_MissionTouch(Edict* self, Edict* activator);
+void G_MissionReset(Edict* self, Edict* activator);
 bool G_MissionDestroy(Edict* self);
 bool G_MissionUse(Edict* self, Edict* activator);
 void G_MissionThink(Edict* self);
