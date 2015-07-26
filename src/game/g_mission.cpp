@@ -55,20 +55,21 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 	switch (self->owner()->getTeam()) {
 	case TEAM_ALIEN:
 		if (G_IsAlien(activator)) {
-			if (!self->count) {
-				self->count = level.actualRound;
+			if (!self->owner()->count) {
+				self->owner()->count = level.actualRound;
 				gi.BroadcastPrintf(PRINT_HUD, _("Aliens entered target zone!"));
 			}
 			return true;
 		} else {
 			/* reset king of the hill counter */
-			self->count = 0;
+			self->owner()->count = 0;
 		}
+		break;
 	/* general case that also works for multiplayer teams */
 	default:
 		if (!activator->isSameTeamAs(self->owner())) {
 			/* reset king of the hill counter */
-			self->count = 0;
+			self->owner()->count = 0;
 			return false;
 		}
 		if (self->owner()->count)
