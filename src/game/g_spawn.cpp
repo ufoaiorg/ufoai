@@ -798,8 +798,8 @@ static void SP_misc_mission (Edict* ent)
 	if (ent->radius <= GRID_WIDTH) {
 		ent->radius = GRID_WIDTH * 3;
 	}
-	ent->absBox.setMaxs(ent->radius, ent->radius, PLAYER_STAND);
-	ent->absBox.setMins(-ent->radius, -ent->radius, PLAYER_MIN);
+	ent->entBox.setMaxs(ent->radius, ent->radius, PLAYER_STAND);
+	ent->entBox.setMins(-ent->radius, -ent->radius, PLAYER_MIN);
 
 	if (G_ValidMessage(ent))
 		G_MissionAddVictoryMessage(ent->message);
@@ -828,8 +828,8 @@ static void SP_misc_mission_aliens (Edict* ent)
 	ent->think = G_MissionThink;
 	ent->nextthink = 1;
 
-	ent->absBox.setMaxs(PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
-	ent->absBox.setMins(-(PLAYER_WIDTH * 3), -(PLAYER_WIDTH * 3), PLAYER_MIN);
+	ent->entBox.setMaxs(PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
+	ent->entBox.setMins(-(PLAYER_WIDTH * 3), -(PLAYER_WIDTH * 3), PLAYER_MIN);
 
 	/* spawn the trigger entity */
 	Edict* other = G_TriggerSpawn(ent);
