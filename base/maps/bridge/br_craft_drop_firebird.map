@@ -8411,3 +8411,26 @@
 "origin" "400 208 30"
 "angle" "-45"
 }
+// entity 104
+{
+"classname" "misc_mission"
+"origin" "448 288 32"
+"spawnflags" "255"
+"team" "7"
+"time" "3"
+"radius" "288"
+}
+// entity 105
+{
+"classname" "misc_item"
+"origin" "528 272 26"
+"spawnflags" "1"
+"item" "bomb1"
+}
+// entity 106
+{
+"classname" "misc_item"
+"origin" "528 304 26"
+"spawnflags" "1"
+"item" "bomb1"
+}

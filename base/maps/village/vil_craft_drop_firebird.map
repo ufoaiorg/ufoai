@@ -2356,3 +2356,26 @@
 ( 681.9203 603.8959 16 ) ( 681.9203 601.0675 14 ) ( 681.9203 601.0675 16 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 }
 }
+// entity 33
+{
+"classname" "misc_mission"
+"origin" "384 384 32"
+"spawnflags" "255"
+"team" "7"
+"time" "3"
+"radius" "288"
+}
+// entity 34
+{
+"classname" "misc_item"
+"origin" "304 400 26"
+"spawnflags" "1"
+"item" "bomb1"
+}
+// entity 35
+{
+"classname" "misc_item"
+"origin" "304 368 26"
+"spawnflags" "1"
+"item" "bomb1"
+}

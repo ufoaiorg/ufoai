@@ -2621,3 +2621,26 @@
 "modelscale_vec" "1.5 1.5 1.25"
 "angles" "0 -90 0"
 }
+// entity 44
+{
+"classname" "misc_mission"
+"origin" "352 352 96"
+"spawnflags" "254"
+"team" "7"
+"time" "3"
+"radius" "288"
+}
+// entity 45
+{
+"classname" "misc_item"
+"origin" "272 368 90"
+"spawnflags" "2"
+"item" "bomb1"
+}
+// entity 46
+{
+"classname" "misc_item"
+"origin" "272 336 90"
+"spawnflags" "2"
+"item" "bomb1"
+}
