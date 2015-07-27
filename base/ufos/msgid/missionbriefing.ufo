@@ -8,7 +8,7 @@ msgid mission_briefing_fueldump {
 	text "_The aliens have barricaded themselves inside this fuel dump. Find a bomb nearby to destroy the gate and gain entry."
 }
 msgid victory_condition_fueldump {
-	text "_Kill all the aliens or hold the point in the fuel depot for some time."
+	text "_Kill all the aliens before they are able to blow up the depot."
 }
 msgid mission_briefing_alienbase {
 	text "_We've located an entry point to the alien base, which appears to be a large facility built below ground. Once your men have dropped down the entry shaft you'll need to clear out the alien presence so that our analysts can investigate the technology on-site."
