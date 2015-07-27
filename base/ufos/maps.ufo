@@ -2451,6 +2451,9 @@ mapdef mansion_huge
 	hwclass			3
 	maxaliens		30
 
+	missionbriefing		"*msgid:mission_briefing_mansion"
+	victorycondition	"*msgid:victory_condition_mansion"
+
 	multiplayer		true
 	teams			4
 	gametypes
@@ -2504,6 +2507,9 @@ mapdef mansion_medium
 	description		"_Mansion"
 	maxaliens		18
 
+	missionbriefing		"*msgid:mission_briefing_mansion"
+	victorycondition	"*msgid:victory_condition_mansion"
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -2550,6 +2556,9 @@ mapdef mansion_small
 	params			("small")
 	description		"_Mansion"
 	maxaliens		15
+
+	missionbriefing		"*msgid:mission_briefing_mansion"
+	victorycondition	"*msgid:victory_condition_mansion"
 
 	multiplayer		true
 	teams			2
