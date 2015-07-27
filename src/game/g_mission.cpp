@@ -201,6 +201,20 @@ void G_MissionThink (Edict* self)
 				}
 			}
 			if (chain->time) {
+				/* Check the target zone is still occupied (last defender might have died) */
+				if (chain->child()) {
+					int numTouched = 0;
+					linkedList_t* touched = chain->child()->touchedList;
+					while (touched) {
+						const Edict* const ent = static_cast<const Edict* const>(touched->data);
+						if (chain->isSameTeamAs(ent) && !G_IsDead(ent))
+							++numTouched;
+						touched = touched->next;
+					}
+					/* No one occupies the target anymore */
+					if (numTouched < 1)
+						chain->count = 0;
+				}
 				const int endTime = level.actualRound - chain->count;
 				const int spawnIndex = (self->getTeam() + level.teamOfs) % MAX_TEAMS;
 				const int currentIndex = (level.activeTeam + level.teamOfs) % MAX_TEAMS;
