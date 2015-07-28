@@ -520,6 +520,35 @@ tileset minaret_11 "0 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
 
+assembly mosque
+{
+size "7 6"
+title "_Oriental mosque"
+fix +house_a		"1 5"
+fix +house_b		"2 3"
+fix +house_d		"1 3"
+fix +house_h		"4 4"
+fix +mosque			"3 2"
+fix +shed_a			"5 2"
+fix +stand_a		"3 5"
++house_h			"0 1"
++house_i			"0 1"
++house_k			"0 1"
++house_l			"0 1"
++house_m			"0 1"
++minaret01			"0 1"
++stand_b			"0 1"
++stand_c			"0 1"
++stand_d			"0 1"
++stand_e			"0 1"
++trees_a			"0 3"
++trees_b			"0 3"
++well				"0 1"
+tileset minaret_11	"0 1"
+tileset stand		"0 5"
+fix *rm_drop +craft_drop_firebird	"0 0"
+}
+
 // test assemblies -------------------------------------------------*
 
 // *** Test-Maps ***

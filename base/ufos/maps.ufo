@@ -2683,6 +2683,45 @@ mapdef oriental_medium
 	)
 }
 
+mapdef oriental_mosque
+{
+	map				"+oriental"
+	params			("mosque")
+	description		"_Middle Eastern Suburb"
+	maxaliens		9
+
+	civilianteam	middle
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"desert"
+	)
+
+	cultures
+	(
+		"oriental"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef oriental_small
 {
 	map				"+oriental"
