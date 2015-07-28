@@ -584,17 +584,17 @@ base/maps/oriental/or_craft_ufo_fighter.map | GNU General Public License 2.0 or 
 base/maps/oriental/or_craft_ufo_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | ufo_gunboat prefab
 base/maps/oriental/or_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_craft_ufo_scout.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_house_a.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_house_b.map | GNU General Public License 2.0 or later
+base/maps/oriental/or_house_a.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
+base/maps/oriental/or_house_b.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
 base/maps/oriental/or_house_c.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_house_d.map | GNU General Public License 2.0 or later
+base/maps/oriental/or_house_d.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
 base/maps/oriental/or_house_e.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_f.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_g.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_house_h.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_mosque.map | GNU General Public License 2.0 or later
+base/maps/oriental/or_house_h.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
+base/maps/oriental/or_mosque.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
 base/maps/oriental/or_shed_a.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_stand_a.map | GNU General Public License 2.0 or later
+base/maps/oriental/or_stand_a.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
 base/maps/oriental/or_stand_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_trees_a.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_trees_b.map | GNU General Public License 2.0 or later
