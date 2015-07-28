@@ -599,7 +599,6 @@ base/maps/oriental/or_stand_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_trees_a.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_trees_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_well.map | GNU General Public License 2.0 or later
-base/maps/oriental_mosque/om_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/pipes_const.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/resort.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/rivertown.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3435,9 +3434,6 @@ base/pics/maps/shots/office_3.jpg | GNU General Public License 2.0 or later | Ma
 base/pics/maps/shots/oriental.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/oriental_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/oriental_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/oriental_mosque.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/oriental_mosque_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/oriental_mosque_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/pipes_const.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/pipes_const_2.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/pipes_const_3.jpg | GNU General Public License 2.0 or later | MCR

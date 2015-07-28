@@ -4436,56 +4436,6 @@ mapdef military_convoy
 	)
 }
 
-// ORIENTAL_MOSQUE MAP //
-
-mapdef oriental_mosque
-{
-	map				"+oriental_mosque"
-	params			("standard")
-	description		"_Middle Eastern Suburb"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		20
-
-	civilianteam	middle
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"desert"
-	)
-
-	cultures
-	(
-		"oriental"
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-		"urban"
-	)
-}
-
 /////////////////////////
 // SHELTER RANDOM MAPS //
 /////////////////////////
