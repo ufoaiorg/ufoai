@@ -463,35 +463,6 @@ entity misc_mission {
 	}
 }
 
-entity misc_mission_alien {
-	description	"Defines the alien mission target"
-	color		"0.1 0.6 0.3"
-	size		"-16 -16 -16 16 16 16"
-	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
-	optional {
-		particle	"Display a particle"
-		time		"If set the entity has to be occupied x rounds to win the mission"
-		radius		"If the entity has to be occupied this defines the radius that is needed"
-		health		"If set the entity has to be destroyed to win the mission - otherwise it just has to be reached (see time)"
-		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
-		target		"The target that is triggered once the round time was hit - target trigger must have targetname set"
-		message		"A message that is show when the mission is completed"
-		targetname	"The id of this entity"
-	}
-
-	mandatory {
-		origin	"position"
-	}
-
-	type {
-		origin	"V_FLOAT 3"
-	}
-
-	default {
-		spawnflags	"255"
-	}
-}
-
 entity func_door {
 	color		"0 .5 .8"
 	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 opened reverse"

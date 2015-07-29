@@ -70,7 +70,6 @@ static void SP_civilian_target(Edict* ent);
 static void SP_misc_model(Edict* ent);
 static void SP_misc_item(Edict* ent);
 static void SP_misc_mission(Edict* ent);
-static void SP_misc_mission_aliens(Edict* ent);
 static void SP_misc_message(Edict* ent);
 static void SP_misc_smoke(Edict* ent);
 static void SP_misc_fire(Edict* ent);
@@ -90,7 +89,6 @@ static const spawn_t spawns[] = {
 	{"misc_model", SP_misc_model},
 	{"misc_particle", SP_dummy},
 	{"misc_mission", SP_misc_mission},
-	{"misc_mission_alien", SP_misc_mission_aliens},
 	{"info_player_start", SP_player_start},
 	{"info_human_start", SP_human_start},
 	{"info_alien_start", SP_alien_start},
@@ -810,32 +808,6 @@ static void SP_misc_mission (Edict* ent)
 	other->reset = G_MissionReset;
 	if (ent->target)
 		ent->use = G_MissionUse;
-	ent->setChild(other);
-
-	gi.LinkEdict(ent);
-}
-
-/**
- * @brief Initializes the alien mission entity
- */
-static void SP_misc_mission_aliens (Edict* ent)
-{
-	ent->classname = "mission";
-	ent->type = ET_MISSION;
-	ent->setTeam(TEAM_ALIEN);
-	ent->solid = SOLID_BBOX;
-
-	/* think function values */
-	ent->think = G_MissionThink;
-	ent->nextthink = 1;
-
-	ent->entBox.setMaxs(UNIT_SIZE * 3, UNIT_SIZE * 3, PLAYER_STAND);
-	ent->entBox.setMins(-(UNIT_SIZE * 3), -(UNIT_SIZE * 3), PLAYER_MIN);
-
-	/* spawn the trigger entity */
-	Edict* other = G_TriggerSpawn(ent);
-	other->setTouch(G_MissionTouch);
-	other->reset = G_MissionReset;
 	ent->setChild(other);
 
 	gi.LinkEdict(ent);

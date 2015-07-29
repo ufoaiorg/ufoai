@@ -49,7 +49,6 @@ LevelFilter::LevelFilter () :
 	_classNameList.push_back("func_breakable");
 	_classNameList.push_back("misc_item");
 	_classNameList.push_back("misc_mission");
-	_classNameList.push_back("misc_mission_alien");
 	_classNameList.push_back("misc_model");
 	_classNameList.push_back("misc_sound");
 	_classNameList.push_back("misc_particle");
