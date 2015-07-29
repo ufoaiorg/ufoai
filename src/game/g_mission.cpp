@@ -224,9 +224,6 @@ void G_MissionThink (Edict* self)
 						(endTime == level.actualRound && spawnIndex <= currentIndex))
 					return;
 			}
-			/* not destroyed yet */
-			if ((chain->flags & FL_DESTROYABLE) && chain->HP)
-				return;
 		}
 		chain = chain->groupChain;
 	}

@@ -778,12 +778,7 @@ static void SP_misc_mission (Edict* ent)
 
 	ent->solid = SOLID_BBOX;
 
-	if (ent->HP) {
-		ent->flags |= FL_DESTROYABLE;
-		ent->destroy = G_MissionDestroy;
-	}
-
-	if (!ent->HP && !ent->time && !ent->target) {
+	if (!ent->time && !ent->target) {
 		G_FreeEdict(ent);
 		gi.DPrintf("misc_mission given with no objective\n");
 		return;

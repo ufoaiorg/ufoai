@@ -439,7 +439,6 @@ entity misc_mission {
 		item		"Item that must be placed here to trigger the target (e.g. a bomb that will blast the target entity, valid bombs are e.g. bomb1 and bomb2)"
 		time		"If set the entity has to be occupied x rounds to win the mission"
 		radius		"If the entity has to be occupied this defines the radius that is needed. The value is given in world units. This means that one grid tile is 32 units."
-		health		"If set the entity has to be destroyed to win the mission - otherwise it just has to be reached (see time)"
 		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
 		target		"The target that is triggered once the round time was hit - target trigger must have targetname set"
 		message		"A message that is show when the mission is completed"
