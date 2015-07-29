@@ -52,55 +52,43 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 	if (!self->owner())
 		return false;
 
-	switch (self->owner()->getTeam()) {
-	case TEAM_ALIEN:
-		if (G_IsAlien(activator)) {
-			if (!self->owner()->count) {
-				self->owner()->count = level.actualRound;
-				gi.BroadcastPrintf(PRINT_HUD, _("Aliens entered target zone!"));
-			}
-			return true;
-		} else {
-			/* reset king of the hill counter */
-			self->owner()->count = 0;
-		}
-		break;
-	/* general case that also works for multiplayer teams */
-	default:
-		if (!activator->isSameTeamAs(self->owner())) {
-			/* reset king of the hill counter */
-			self->owner()->count = 0;
-			return false;
-		}
-		if (self->owner()->count)
-			return false;
+	if (!G_IsLivingActor(activator))
+		return false;
+	Actor* actor = makeActor(activator);
 
-		self->owner()->count = level.actualRound;
-		if (!self->owner()->item) {
-			gi.BroadcastPrintf(PRINT_HUD, _("Target zone is occupied!"));
-			return true;
-		}
-
-		/* search the item in the activator's inventory */
-		/* ignore items linked from any temp container the actor must have this in his hands */
-		const Container* cont = nullptr;
-		while ((cont = activator->chr.inv.getNextCont(cont))) {
-			Item* item = nullptr;
-			while ((item = cont->getNextItem(item))) {
-				const objDef_t* od = item->def();
-				/* check whether we found the searched item in the actor's inventory */
-				if (!Q_streq(od->id, self->owner()->item))
-					continue;
-
-				/* drop the weapon - even if out of TUs */
-				G_ActorInvMove(makeActor(activator), cont->def(), item, INVDEF(CID_FLOOR), NONE, NONE, false);
-				gi.BroadcastPrintf(PRINT_HUD, _("Item was placed."));
-				self->owner()->count = level.actualRound;
-				return true;
-			}
-		}
-		break;
+	if (!activator->isSameTeamAs(self->owner())) {
+		/* reset king of the hill counter */
+		self->owner()->count = 0;
+		return false;
 	}
+	if (self->owner()->count)
+		return false;
+
+	self->owner()->count = level.actualRound;
+	if (!self->owner()->item) {
+		gi.BroadcastPrintf(PRINT_HUD, _("Target zone is occupied!"));
+		return true;
+	}
+
+	/* search the item in the activator's inventory */
+	/* ignore items linked from any temp container the actor must have this in his hands */
+	const Container* cont = nullptr;
+	while ((cont = actor->chr.inv.getNextCont(cont))) {
+		Item* item = nullptr;
+		while ((item = cont->getNextItem(item))) {
+			const objDef_t* od = item->def();
+			/* check whether we found the searched item in the actor's inventory */
+			if (!Q_streq(od->id, self->owner()->item))
+				continue;
+
+			/* drop the weapon - even if out of TUs */
+			G_ActorInvMove(actor, cont->def(), item, INVDEF(CID_FLOOR), NONE, NONE, false);
+			gi.BroadcastPrintf(PRINT_HUD, _("Item was placed."));
+			self->owner()->count = level.actualRound;
+			return true;
+		}
+	}
+
 	return true;
 }
 

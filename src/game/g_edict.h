@@ -297,6 +297,7 @@ public:
 
 	/*
 	 * Check if given actor is an enemy.
+	 * Note: Also used by misc_mission to check if an opponent controls the target.
 	 */
 	bool isOpponent (const Actor* actor) const;
 	/*==================
