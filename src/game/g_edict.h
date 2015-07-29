@@ -295,6 +295,10 @@ public:
 		return VectorCompare(cmpPos, this->pos);
 	}
 
+	/*
+	 * Check if given actor is an enemy.
+	 */
+	bool isOpponent (const Actor* actor) const;
 	/*==================
 	 *	manipulators
 	 *==================*/

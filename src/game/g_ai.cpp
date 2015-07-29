@@ -920,41 +920,6 @@ static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const
 }
 
 /**
- * @brief Check if given actors are enemies.
- * @param[in] actor The actor that makes the check.
- * @param[in] check The actor which is a possible opponent.
- * @returns @c true if enemies. @c false otherwise
- * @todo Should we really know if the other actor is controlled by the other team (STATE_XVI)?
- * aliens would of course know if an actor is infected (becomes part of the hive mind), but humans?
- */
-static inline bool AI_IsOpponent (const Actor* actor, const Edict* check)
-{
-	const bool entControlled = G_IsState(actor, STATE_XVI);
-	const bool checkControlled = G_IsState(check, STATE_XVI);
-	if (check->isSameTeamAs(actor))
-		return entControlled ? !checkControlled : checkControlled;
-
-	bool opponent = true;
-	switch (actor->getTeam()) {
-	/* Aliens: hostile to everyone */
-	case TEAM_ALIEN:
-		opponent = !checkControlled;
-		break;
-	/* Civilians: Only hostile to aliens */
-	case TEAM_CIVILIAN:
-		opponent = G_IsAlien(check) || checkControlled;
-		break;
-	/* PHALANX and MP teams: Hostile to aliens and rival teams
-	 * (under AI control while under panic/rage or when g_aihumans is non-zero) */
-	default:
-		opponent = !G_IsCivilian(check) || checkControlled;
-		break;
-	}
-
-	return entControlled ? !opponent : opponent;
-}
-
-/**
  * @brief Check if @c actor perceives @c target as hostile.
  * @note Takes lose of sanity in consideration.
  * @param[in] actor The actor that checks for hostiles.
@@ -969,7 +934,7 @@ bool AI_IsHostile (const Actor* actor, const Edict* target)
 	if (actor->isInsane())
 		return true;
 
-	if (!AI_IsOpponent(actor, target))
+	if (!target->isOpponent(actor))
 		return false;
 
 	/* don't shoot civs in multiplayer */
