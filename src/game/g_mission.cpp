@@ -58,6 +58,8 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 
 	if (self->owner()->isOpponent(actor)) {
 		/* reset king of the hill counter */
+		gi.BroadcastPrintf(PRINT_HUD, _("Team %i has entered team %i's target zone!"),
+				actor->getTeam(), self->owner()->getTeam());
 		self->owner()->count = 0;
 		return false;
 	}
@@ -67,7 +69,8 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 	if (self->owner()->isSameTeamAs(actor)) {
 		self->owner()->count = level.actualRound;
 		if (!self->owner()->item) {
-			gi.BroadcastPrintf(PRINT_HUD, _("Target zone is occupied!"));
+			gi.BroadcastPrintf(PRINT_HUD, _("Team %i has occupied its target zone!"),
+					actor->getTeam());
 			return true;
 		}
 	}
