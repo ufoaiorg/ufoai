@@ -2,6 +2,7 @@ SO_EXT                    = so
 SO_LDFLAGS                = -shared -Wl,-z,defs
 SO_CFLAGS                 = -fpic
 SO_LIBS                  := -ldl
+PANDORA                  := 1
 
 OPENGL_LIBS              ?= -lGLES_CM -lEGL
 
