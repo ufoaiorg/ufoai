@@ -227,6 +227,7 @@ void G_MissionThink (Edict* self)
 
 	/* store team before the edict is released */
 	const int team = self->getTeam();
+	const bool endMission = self->target == nullptr;
 	chain = self->groupMaster;
 	if (!chain)
 		chain = self;
@@ -267,5 +268,6 @@ void G_MissionThink (Edict* self)
 		if (ent->type == ET_MISSION && ent->getTeam() == team)
 			return;
 
-	G_MatchEndTrigger(team, 10);
+	if (endMission)
+		G_MatchEndTrigger(team, 10);
 }
