@@ -221,8 +221,7 @@ void G_MissionThink (Edict* self)
 		chain = chain->groupChain;
 	}
 
-	if (self->use)
-		self->use(self, nullptr);
+	G_UseEdict(self, nullptr);
 
 	/* store team before the edict is released */
 	const int team = self->getTeam();
