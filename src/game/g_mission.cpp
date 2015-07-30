@@ -57,10 +57,12 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 	Actor* actor = makeActor(activator);
 
 	if (self->owner()->isOpponent(actor)) {
-		/* reset king of the hill counter */
-		gi.BroadcastPrintf(PRINT_HUD, _("Team %i has entered team %i's target zone!"),
-				actor->getTeam(), self->owner()->getTeam());
-		self->owner()->count = 0;
+		if (!self->owner()->item) {
+			/* reset king of the hill counter */
+			gi.BroadcastPrintf(PRINT_HUD, _("Team %i has entered team %i's target zone!"),
+					actor->getTeam(), self->owner()->getTeam());
+			self->owner()->count = 0;
+		}
 		return false;
 	}
 	if (self->owner()->count)
