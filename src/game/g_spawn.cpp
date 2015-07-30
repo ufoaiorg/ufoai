@@ -788,7 +788,7 @@ static void SP_misc_mission (Edict* ent)
 	ent->think = G_MissionThink;
 	ent->nextthink = 1;
 
-	if (ent->radius <= UNIT_SIZE) {
+	if (ent->radius < 1) {
 		ent->radius = UNIT_SIZE * 3;
 	}
 	ent->entBox.setMaxs(ent->radius, ent->radius, PLAYER_STAND);
