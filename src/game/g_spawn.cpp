@@ -778,7 +778,7 @@ static void SP_misc_mission (Edict* ent)
 
 	ent->solid = SOLID_BBOX;
 
-	if (!ent->time && !ent->target) {
+	if (!ent->time && !ent->target && !ent->item) {
 		G_FreeEdict(ent);
 		gi.DPrintf("misc_mission given with no objective\n");
 		return;
