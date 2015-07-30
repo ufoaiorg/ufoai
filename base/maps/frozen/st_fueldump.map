@@ -6679,6 +6679,7 @@
 "item" "bomb1"
 "time" "2"
 "spawnflags" "255"
+"radius" "1"
 }
 // entity 13
 {
@@ -6719,7 +6720,7 @@
 {
 "classname" "misc_mission"
 "origin" "800 384 36"
-"spawnflags" "254"
+"spawnflags" "255"
 "particle" "green_smoke"
 "time" "10"
 "team" "7"
