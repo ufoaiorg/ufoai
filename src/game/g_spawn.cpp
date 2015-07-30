@@ -801,8 +801,12 @@ static void SP_misc_mission (Edict* ent)
 	Edict* other = G_TriggerSpawn(ent);
 	other->setTouch(G_MissionTouch);
 	other->reset = G_MissionReset;
-	if (ent->target)
+	if (ent->target) {
 		ent->use = G_MissionUse;
+		/* Bomb/key/etc target will be freed when used - don't group it! */
+		if (ent->item)
+			ent->group = nullptr;
+	}
 	ent->setChild(other);
 
 	gi.LinkEdict(ent);
