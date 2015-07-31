@@ -776,8 +776,6 @@ static void SP_misc_mission (Edict* ent)
 	if (!ent->getTeam())
 		ent->setTeam(TEAM_PHALANX);
 
-	ent->solid = SOLID_BBOX;
-
 	if (!ent->time && !ent->target && !ent->item) {
 		G_FreeEdict(ent);
 		gi.DPrintf("misc_mission given with no objective\n");
