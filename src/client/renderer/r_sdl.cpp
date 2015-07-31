@@ -246,7 +246,7 @@ bool R_InitGraphics (const viddefContext_t* context)
 		const char* error = SDL_GetError();
 		Com_Printf("E: SDL_CreateWindow failed: %s\n", error);
 		SDL_ClearError();
-		return -1;
+		return false;
 	}
 
 	cls.context = SDL_GL_CreateContext(cls.window);
