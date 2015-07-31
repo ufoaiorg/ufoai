@@ -396,7 +396,7 @@ bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef
 bool AI_CheckUsingDoor (const Edict* ent, const Edict* door)
 {
 	/* don't try to use the door in every case */
-	if (frand() < 0.3)
+	if (frand() < 0.3f)
 		return false;
 
 	/* not in the view frustum - don't use the door while not seeing it */
