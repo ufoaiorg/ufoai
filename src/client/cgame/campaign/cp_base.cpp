@@ -807,6 +807,9 @@ bool B_BuildingDestroy (building_t* building)
 		return false;
 	}
 
+	/* liquidation rate gives back percentage of the worth of a building when it's recycled. Making replacing buildings more practical */
+	CP_UpdateCredits(ccs.credits + building->fixCosts * ccs.curCampaign->liquidationRate);
+
 	const buildingType_t buildingType = building->buildingType;
 	const building_t* buildingTemplate = building->tpl;
 	const bool runDisableCommand = building->buildingStatus == B_STATUS_WORKING;

@@ -365,6 +365,7 @@ static const value_t campaign_vals[] = {
 	{"researchrate", V_FLOAT, offsetof(campaign_t, researchRate), MEMBER_SIZEOF(campaign_t, researchRate)},
 	{"producerate", V_FLOAT, offsetof(campaign_t, produceRate), MEMBER_SIZEOF(campaign_t, produceRate)},
 	{"healingrate", V_FLOAT, offsetof(campaign_t, healingRate), MEMBER_SIZEOF(campaign_t, healingRate)},
+	{"liquidationrate", V_FLOAT, offsetof(campaign_t, liquidationRate), MEMBER_SIZEOF(campaign_t, liquidationRate)},
 	{"uforeductionrate", V_FLOAT, offsetof(campaign_t, ufoReductionRate), MEMBER_SIZEOF(campaign_t, ufoReductionRate)},
 	{"initialinterest", V_INT, offsetof(campaign_t, initialInterest), MEMBER_SIZEOF(campaign_t, initialInterest)},
 	{"employeerate", V_FLOAT, offsetof(campaign_t, employeeRate), MEMBER_SIZEOF(campaign_t, employeeRate)},
@@ -412,6 +413,7 @@ static void CP_ParseCampaign (const char* name, const char** text)
 	cp->researchRate = 0.8f;
 	cp->produceRate = 1.0f;
 	cp->healingRate = 1.0f;
+	cp->liquidationRate = 0.0f;
 	cp->ufoReductionRate = NON_OCCURRENCE_PROBABILITY;
 	cp->initialInterest = INITIAL_OVERALL_INTEREST;
 	cp->employeeRate = 1.0f;
