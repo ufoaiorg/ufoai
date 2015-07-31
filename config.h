@@ -11,7 +11,9 @@
 #ifndef __IPHONEOS__
 #ifndef __FREEBSD__
 #ifndef __OPENBSD__
+#ifndef PANDORA
 #error The target platform was not found.  Please add to config.h.
+#endif
 #endif
 #endif
 #endif
@@ -58,4 +60,8 @@
 
 #ifdef __OPENBSD__
 #include "openbsd-config.h"
+#endif
+
+#ifdef PANDORA
+#include "openpandora-config.h"
 #endif

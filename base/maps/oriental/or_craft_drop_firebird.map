@@ -2577,3 +2577,26 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "targetname" "misc_model20"
 }
+// entity 34
+{
+"classname" "misc_mission"
+"origin" "352 256 32"
+"spawnflags" "255"
+"team" "7"
+"time" "3"
+"radius" "288"
+}
+// entity 35
+{
+"classname" "misc_item"
+"origin" "432 240 26"
+"spawnflags" "1"
+"item" "bomb1"
+}
+// entity 36
+{
+"classname" "misc_item"
+"origin" "432 272 26"
+"spawnflags" "1"
+"item" "bomb1"
+}

@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_match.h"
 #include "g_spawn.h"
 #include "g_utils.h"
+#include "g_health.h"
 
 /**
  * @brief Checks whether the activator of this trigger_touch was already recognized
@@ -230,7 +231,7 @@ bool Touch_HurtTrigger (Edict* self, Edict* activator)
 	} else if (shock) {
 		/** @todo Handle dazed via trigger_hurt */
 	} else {
-		G_TakeDamage(actor, damage);
+		G_DamageActor(actor, damage, nullptr);
 	}
 	/* Play hurt sound unless this is shock damage -- it doesn't do anything
 	 * because we don't actually handle it above yet */

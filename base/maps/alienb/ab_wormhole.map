@@ -4196,3 +4196,13 @@
 "volume" "1.0"
 "attenuation" "2.0"
 }
+// entity 42
+{
+"classname" "misc_mission"
+"origin" "256 256 96"
+"spawnflags" "254"
+"team" "1"
+"radius" "192"
+"time" "3"
+"particle" "green_smoke"
+}

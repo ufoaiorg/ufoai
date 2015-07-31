@@ -113,7 +113,7 @@ $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
 	\
 	$(LUA_SRCS)
 
-ifneq ($(findstring $(TARGET_OS), openbsd netbsd freebsd linux),)
+ifneq ($(findstring $(TARGET_OS), openbsd netbsd freebsd linux openpandora),)
 	$(TARGET)_SRCS += \
 		ports/linux/linux_main.cpp \
 		ports/unix/unix_console.cpp \
