@@ -561,30 +561,3 @@ tileset minaret_11	"0 1"
 tileset stand		"0 5"
 fix *rm_drop +craft_drop_firebird	"0 0"
 }
-
-// test assemblies -------------------------------------------------*
-
-// *** Test-Maps ***
-
-// short-range weapon-testing :-)
-//assembly test
-//{
-//size "3 3"
-//+well "0 2"
-//+trees_a "0 2"
-//+stand_a "0 2"
-//+stand_b "0 2"
-//*rm_drop +craft_drop_firebird "1 1"
-//}
-
-//assembly tiny
-//{
-//size "3 3"
-//+house_a "0 1"
-//+house_d "0 1"
-//+well "0 2"
-//+trees_a "0 2"
-//+stand_a "0 2"
-//+stand_b "0 2"
-//*rm_drop +craft_drop_firebird "1 1"
-//}
