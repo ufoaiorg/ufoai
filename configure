@@ -347,7 +347,6 @@ usage() {
 	echo " --with-embedded-lua5.1     use the copy of lua bundled with the source"
 	echo " --with-embedded-mxml       use the copy of mxml bundled with the source"
 	echo " --with-embedded-libcurl    use the copy of curl bundled with the source"
-	echo " --with-embedded-sdl2       use the copy of SDL bundled with the source"
 	echo " --with-embedded-SDL2_mixer use the copy of SDL_mixer bundled with the source"
 	echo " --with-embedded-SDL2_ttf   use the copy of SDL_ttf bundled with the source"
 	echo
