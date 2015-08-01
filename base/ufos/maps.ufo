@@ -5139,53 +5139,6 @@ mapdef office
 	)
 }
 
-// ORIENTAL MAP //
-
-mapdef oriental
-{
-	map				"oriental"
-	description		"_Middle Eastern Suburb"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		14
-
-	civilianteam	middle
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"desert"
-	)
-
-	cultures
-	(
-		"oriental"
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-		"urban"
-	)
-}
-
 // PIPES_CONST MAP //
 
 mapdef pipes_const
