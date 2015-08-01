@@ -539,23 +539,23 @@ do
 		actor_info_body:set_pos(60, 18)
 		actor_info_body:set_size(200, 290)
 		actor_info_body:set_origin(0, -40, 0)
-	end
-	do
-		local actor_info_head = ufo.create_model(actor_info, "head", nil)
-		actor_info_head:set_model("*cvar:mn_head")
-		actor_info_head:set_skin("*cvar:mn_head_skin")
-		actor_info_head:set_tag("tag_head")
-		actor_info_head:set_scale(1, 1, 1)
-	end
-	do
-		local actor_info_right_weapon = ufo.create_model(actor_info, "right_weapon", nil)
-		actor_info_right_weapon:set_model("*cvar:mn_rweapon")
-		actor_info_right_weapon:set_tag("tag_rweapon")
-	end
-	do
-		local actor_info_left_weapon = ufo.create_model(actor_info, "left_weapon", nil)
-		actor_info_left_weapon:set_model("*cvar:mn_lweapon")
-		actor_info_left_weapon:set_tag("tag_lweapon")
+		do
+			local actor_info_head = ufo.create_model(actor_info_body, "head", nil)
+			actor_info_head:set_model("*cvar:mn_head")
+			actor_info_head:set_skin("*cvar:mn_head_skin")
+			actor_info_head:set_tag("tag_head")
+			actor_info_head:set_scale(1, 1, 1)
+		end
+		do
+			local actor_info_right_weapon = ufo.create_model(actor_info_body, "right_weapon", nil)
+			actor_info_right_weapon:set_model("*cvar:mn_rweapon")
+			actor_info_right_weapon:set_tag("tag_rweapon")
+		end
+		do
+			local actor_info_left_weapon = ufo.create_model(actor_info_body, "left_weapon", nil)
+			actor_info_left_weapon:set_model("*cvar:mn_lweapon")
+			actor_info_left_weapon:set_tag("tag_lweapon")
+		end
 	end
 	do
 		local actor_info_rank_lbl = ufo.create_string(actor_info, "rank_lbl", nil)
