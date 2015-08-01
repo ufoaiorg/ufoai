@@ -2603,6 +2603,46 @@ mapdef mansion_small
 // ORIENTAL RANDOM MAPS //
 //////////////////////////
 
+// ORIENTAL MAP //
+
+mapdef oriental
+{
+	map				"+oriental"
+	params			("oriental")
+	description		"_Middle Eastern Suburb"
+	maxaliens		14
+	civilianteam	middle
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"desert"
+	)
+
+	cultures
+	(
+		"oriental"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
+}
+
 mapdef oriental_large
 {
 	map				"+oriental"
