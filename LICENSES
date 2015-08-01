@@ -592,6 +592,7 @@ base/maps/oriental/or_house_e.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_f.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_g.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_h.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
+base/maps/oriental/or_house_o.map | GNU General Public License 2.0 or later | | from /base/maps/oriental.map by Martin Gerhardy
 base/maps/oriental/or_mosque.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
 base/maps/oriental/or_shed_a.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_stand_a.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
