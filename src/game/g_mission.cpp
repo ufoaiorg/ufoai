@@ -54,8 +54,8 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 
 	if (!G_IsLivingActor(activator))
 		return false;
-	Actor* actor = makeActor(activator);
 
+	Actor* actor = makeActor(activator);
 	if (self->owner()->isOpponent(actor)) {
 		if (!self->owner()->item) {
 			/* reset king of the hill counter */
@@ -96,7 +96,7 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 		}
 	}
 
-	return true;
+	return false;
 }
 
 void G_MissionReset (Edict* self, Edict* activator)
