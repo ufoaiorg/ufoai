@@ -5695,6 +5695,15 @@ mapdef baseattack
 	missionbriefing		"*msgid:mission_briefing_baseattack"
 }
 
+mapdef base_mission_test
+{
+	map				"+baseattack"
+	params			("test")
+	description		"Test misc_mission"
+	maxaliens		10
+	campaign	false
+}
+
 ////////////////////////
 // RESCUE RANDOM MAPS //
 ////////////////////////

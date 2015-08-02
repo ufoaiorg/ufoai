@@ -243,3 +243,13 @@ assembly random
 	+base_empty			"0 20"
 	+empty				"0 2"
 }
+
+assembly test
+{
+	size "2 6"
+	title "_Home"
+	grid	"2 2"
+	+commando			"1 1"
+	+powerplant			"1 1"
+	+antimatter			"1 1"
+}
