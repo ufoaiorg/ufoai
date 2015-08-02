@@ -69,3 +69,37 @@
 ( 824 512 4 ) ( 760 512 4 ) ( 824 512 132 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
 }
 }
+// entity 2
+{
+"classname" "info_alien_start"
+"origin" "144 432 156"
+"angle" "90"
+}
+// entity 3
+{
+"classname" "info_alien_start"
+"origin" "176 336 156"
+}
+// entity 4
+{
+"classname" "info_alien_start"
+"origin" "400 112 156"
+"angle" "-90"
+}
+// entity 5
+{
+"classname" "info_alien_start"
+"origin" "368 240 156"
+"angle" "180"
+}
+// entity 6
+{
+"classname" "info_alien_start"
+"origin" "432 432 156"
+}
+// entity 7
+{
+"classname" "info_alien_start"
+"origin" "80 144 156"
+"angle" "180"
+}
