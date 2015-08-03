@@ -5700,7 +5700,7 @@ mapdef base_mission_test
 	map				"+baseattack"
 	params			("test")
 	description		"Test misc_mission"
-	maxaliens		10
+	maxaliens		6
 	campaign	false
 }
 
