@@ -771,6 +771,7 @@ static void SP_misc_mission (Edict* ent)
 {
 	ent->classname = "misc_mission";
 	ent->type = ET_MISSION;
+	ent->solid = SOLID_TRIGGER;
 
 	/* maybe this was set to something else for multiplayer */
 	if (!ent->getTeam())
@@ -795,17 +796,14 @@ static void SP_misc_mission (Edict* ent)
 	if (G_ValidMessage(ent))
 		G_MissionAddVictoryMessage(ent->message);
 
-	/* spawn the trigger entity */
-	Edict* other = G_TriggerSpawn(ent);
-	other->setTouch(G_MissionTouch);
-	other->reset = G_MissionReset;
+	ent->setTouch(G_MissionTouch);
+	ent->reset = G_MissionReset;
 	if (ent->target) {
 		ent->use = G_MissionUse;
 		/* Bomb/key/etc target will be freed when used - don't group it! */
 		if (ent->item)
 			ent->group = nullptr;
 	}
-	ent->setChild(other);
 
 	gi.LinkEdict(ent);
 }

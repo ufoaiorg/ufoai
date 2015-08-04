@@ -49,28 +49,25 @@ void G_MissionAddVictoryMessage (const char* message)
  */
 bool G_MissionTouch (Edict* self, Edict* activator)
 {
-	if (!self->owner())
-		return false;
-
 	if (!G_IsLivingActor(activator))
 		return false;
 
 	Actor* actor = makeActor(activator);
-	if (self->owner()->isOpponent(actor)) {
-		if (!self->owner()->item) {
+	if (self->isOpponent(actor)) {
+		if (!self->item) {
 			/* reset king of the hill counter */
 			gi.BroadcastPrintf(PRINT_HUD, _("Team %i has entered team %i's target zone!"),
-					actor->getTeam(), self->owner()->getTeam());
-			self->owner()->count = 0;
+					actor->getTeam(), self->getTeam());
+			self->count = 0;
 		}
 		return false;
 	}
-	if (self->owner()->count)
+	if (self->count)
 		return false;
 
-	if (self->owner()->isSameTeamAs(actor)) {
-		self->owner()->count = level.actualRound;
-		if (!self->owner()->item) {
+	if (self->isSameTeamAs(actor)) {
+		self->count = level.actualRound;
+		if (!self->item) {
 			gi.BroadcastPrintf(PRINT_HUD, _("Team %i has occupied its target zone!"),
 					actor->getTeam());
 			return true;
@@ -85,13 +82,13 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 		while ((item = cont->getNextItem(item))) {
 			const objDef_t* od = item->def();
 			/* check whether we found the searched item in the actor's inventory */
-			if (!Q_streq(od->id, self->owner()->item))
+			if (!Q_streq(od->id, self->item))
 				continue;
 
 			/* drop the weapon - even if out of TUs */
 			G_ActorInvMove(actor, cont->def(), item, INVDEF(CID_FLOOR), NONE, NONE, false);
 			gi.BroadcastPrintf(PRINT_HUD, _("Item was placed."));
-			self->owner()->count = level.actualRound;
+			self->count = level.actualRound;
 			return true;
 		}
 	}
@@ -102,19 +99,19 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 void G_MissionReset (Edict* self, Edict* activator)
 {
 	/* Don't reset the mission timer for 'bring item' missions G_MissionThink will handle that */
-	if (!self->owner() || !self->owner()->time || self->owner()->item)
+	if (!self->time || self->item)
 		return;
 	linkedList_t* touched = self->touchedList;
 	while (touched) {
 		const Edict* const ent = static_cast<const Edict* const>(touched->data);
-		if (self->owner()->isSameTeamAs(ent) && !(G_IsDead(ent) || ent == activator)) {
+		if (self->isSameTeamAs(ent) && !(G_IsDead(ent) || ent == activator)) {
 			return;
 		}
 		touched = touched->next;
 	}
 	/* All team actors are gone, reset counter */
 	gi.BroadcastPrintf(PRINT_HUD, _("Target zone is unoccupied!"));
-	self->owner()->count = 0;
+	self->count = 0;
 }
 
 /**
@@ -197,9 +194,9 @@ void G_MissionThink (Edict* self)
 			}
 			if (chain->time) {
 				/* Check that the target zone is still occupied (last defender might have died) */
-				if (chain->child() && !chain->item) {
+				if (!chain->item) {
 					int numTouched = 0;
-					linkedList_t* touched = chain->child()->touchedList;
+					linkedList_t* touched = chain->touchedList;
 					while (touched) {
 						const Edict* const ent = static_cast<const Edict* const>(touched->data);
 						if (chain->isSameTeamAs(ent) && !G_IsDead(ent))
@@ -253,9 +250,6 @@ void G_MissionThink (Edict* self)
 		}
 
 		Edict* ent = chain->groupChain;
-		/* free the trigger */
-		if (chain->child())
-			G_FreeEdict(chain->child());
 		/* free the group chain */
 		G_FreeEdict(chain);
 		chain = ent;
