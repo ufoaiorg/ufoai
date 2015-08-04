@@ -220,11 +220,11 @@ void G_MissionThink (Edict* self)
 		chain = chain->groupChain;
 	}
 
+	const bool endMission = self->target == nullptr;
 	G_UseEdict(self, nullptr);
 
 	/* store team before the edict is released */
 	const int team = self->getTeam();
-	const bool endMission = self->target == nullptr;
 	chain = self->groupMaster;
 	if (!chain)
 		chain = self;
