@@ -232,6 +232,11 @@ bool R_InitGraphics (const viddefContext_t* context)
 	}
 
 #if SDL_VERSION_ATLEAST(2,0,0)
+#ifdef GL_VERSION_ES_CM_1_0
+	/* Be sure to request GLES1 as we use GLES2 incompatible calls */
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
+#endif
 	/* valid values are between -1 and 1 */
 	const int i = std::min(1, std::max(-1, context->swapinterval));
 	Com_Printf("I: set swap control to %i\n", i);
