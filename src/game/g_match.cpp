@@ -253,7 +253,7 @@ static void G_MatchSendResults (int team, bool nextmap)
 bool G_MatchDoEnd (void)
 {
 	/* check for intermission */
-	if (level.intermissionTime > 0.0 && level.time > level.intermissionTime) {
+	if (level.intermissionTime > 0.0f && level.time > level.intermissionTime) {
 		G_PrintStats("End of game - Team %i is the winner", level.winningTeam);
 		G_MatchSendResults(level.winningTeam, level.nextMapSwitch);
 
@@ -264,7 +264,7 @@ bool G_MatchDoEnd (void)
 			gi.AddCommandString("%s\n", level.mapEndCommand);
 		}
 
-		level.intermissionTime = 0.0;
+		level.intermissionTime = 0.0f;
 		level.winningTeam = 0;
 		return true;
 	}
@@ -279,7 +279,7 @@ bool G_MatchDoEnd (void)
  */
 void G_MatchEndCheck (void)
 {
-	if (level.intermissionTime > 0.0) /* already decided */
+	if (level.intermissionTime > 0.0f) /* already decided */
 		return;
 
 	if (!level.numplayers) {
@@ -306,7 +306,7 @@ void G_MatchEndCheck (void)
 	/** @todo < 2 does not work when we count civilians */
 	/* prepare for sending results */
 	if (activeTeams < 2) {
-		const int timeGap = (level.activeTeam == TEAM_ALIEN ? 10.0 : 3.0);
+		const int timeGap = (level.activeTeam == TEAM_ALIEN ? 10 : 3);
 		G_MatchEndTrigger(activeTeams == 1 ? last : 0, timeGap);
 	}
 }
@@ -319,7 +319,7 @@ void G_MatchEndCheck (void)
  */
 bool G_MatchIsRunning (void)
 {
-	if (level.intermissionTime > 0.0)
+	if (level.intermissionTime > 0.0f)
 		return false;
 	return (level.activeTeam != TEAM_NO_ACTIVE);
 }
