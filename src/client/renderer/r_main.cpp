@@ -847,7 +847,7 @@ static void R_InitExtensions (void)
 		if( *versionNumbers )
 			sscanf(versionNumbers, "%d.%d", &r_config.glVersionMajor, &r_config.glVersionMinor);
 	}
-	Com_Printf("OpenGL version detected: %d.%d", r_config.glVersionMajor, r_config.glVersionMinor);
+	Com_Printf("OpenGL version detected: %d.%d\n", r_config.glVersionMajor, r_config.glVersionMinor);
 
 	/* multitexture */
 	qglActiveTexture = nullptr;
