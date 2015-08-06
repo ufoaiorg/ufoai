@@ -147,6 +147,17 @@ bool G_MissionUse (Edict* self, Edict* activator)
 	return true;
 }
 
+static bool G_MissionIsTouched (Edict* self) {
+	linkedList_t* touched = self->touchedList;
+	while (touched) {
+		const Edict* const ent = static_cast<const Edict* const>(touched->data);
+		if (self->isSameTeamAs(ent) && !G_IsDead(ent))
+			return true;
+		touched = touched->next;
+	}
+	return false;
+}
+
 /**
  * @note Think functions are only executed when the match is running
  * or in other word, the game has started
@@ -194,17 +205,7 @@ void G_MissionThink (Edict* self)
 			}
 			if (chain->time) {
 				/* Check that the target zone is still occupied (last defender might have died) */
-				if (!chain->item) {
-					int numTouched = 0;
-					linkedList_t* touched = chain->touchedList;
-					while (touched) {
-						const Edict* const ent = static_cast<const Edict* const>(touched->data);
-						if (chain->isSameTeamAs(ent) && !G_IsDead(ent))
-							++numTouched;
-						touched = touched->next;
-					}
-					/* No one occupies the target anymore */
-					if (numTouched < 1)
+				if (!chain->item && !G_MissionIsTouched(chain)) {
 						chain->count = 0;
 				}
 				const int endTime = level.actualRound - chain->count;
@@ -214,6 +215,10 @@ void G_MissionThink (Edict* self)
 				 * been occupied long enough */
 				if (!chain->count || endTime < chain->time ||
 						(endTime == chain->time && spawnIndex < currentIndex))
+					return;
+			}
+			if (chain->target && !chain->time && !chain->item) {
+				if (!G_MissionIsTouched(chain))
 					return;
 			}
 		}
@@ -254,14 +259,7 @@ void G_MissionThink (Edict* self)
 		G_FreeEdict(chain);
 		chain = ent;
 	}
-	self = nullptr;
-
-	/* still active mission edicts left */
-	Edict* ent = nullptr;
-	while ((ent = G_EdictsGetNextInUse(ent)))
-		if (ent->type == ET_MISSION && ent->getTeam() == team)
-			return;
 
 	if (endMission)
-		G_MatchEndTrigger(team, 10);
+		G_MatchEndTrigger(team, level.activeTeam == TEAM_ALIEN ? 10 : 3);
 }
