@@ -299,11 +299,11 @@ bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn) {
 			@todo The entire passing of commands to/from should be rewritten to allow for typed arguments
 		*/
 		const char* s = Cmd_Argv(i);
-		char* p = const_cast<char*>(s);
+		char* p = nullptr;
 		// is it an integer?
 		errno = 0;
 		int val_i = strtol(s, &p, 10);
-		if (!errno) {
+		if (!errno && *p == '\0') {
 			// push argument as integer
 			lua_pushinteger(CL_GetLuaState(), val_i);
 		}
@@ -311,7 +311,7 @@ bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn) {
 			// is it a float?
 			errno = 0;
 			float val_f = strtof(s, &p);
-			if (!errno) {
+			if (!errno && *p == '\0') {
 				// push argument as float
 				lua_pushnumber(CL_GetLuaState(), val_f);
 			}
