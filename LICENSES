@@ -571,7 +571,6 @@ base/maps/military_convoy/mc_main.map | GNU General Public License 2.0 or later 
 base/maps/mine.map | GNU General Public License 2.0 or later
 base/maps/neighbourhood.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/office.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/oriental.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/oriental.ump | GNU General Public License 2.0 or later
 base/maps/oriental/or_craft_crash_fighter.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_craft_crash_scout.map | GNU General Public License 2.0 or later
@@ -592,6 +591,7 @@ base/maps/oriental/or_house_e.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_f.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_g.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_h.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
+base/maps/oriental/or_house_o.map | GNU General Public License 2.0 or later | | from /base/maps/oriental.map by Martin Gerhardy
 base/maps/oriental/or_mosque.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
 base/maps/oriental/or_shed_a.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_stand_a.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler

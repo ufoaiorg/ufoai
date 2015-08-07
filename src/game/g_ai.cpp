@@ -1325,12 +1325,12 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
  * @param[in] to The target position.
  * @return @c true if found a suitable position, @c false otherwise
  */
-bool AI_FindMissionLocation (Actor* actor, const pos3_t to, int tus)
+bool AI_FindMissionLocation (Actor* actor, const pos3_t to, int tus, int radius)
 {
 	int bestDist = ROUTING_NOT_REACHABLE;
 	pos3_t bestPos = {to[0], to[1], to[2]};
 
-	AiAreaSearch searchArea(to, HOLD_DIST, true);
+	AiAreaSearch searchArea(to, radius, true);
 	while (searchArea.getNext(actor->pos)) {
 		const pos_t length = G_ActorMoveLength(actor, level.pathingMap, actor->pos, true);
 		/* Can't walk there */
@@ -1342,7 +1342,7 @@ bool AI_FindMissionLocation (Actor* actor, const pos3_t to, int tus)
 
 		const int distX = std::abs(actor->pos[0] - to[0]);
 		const int distY = std::abs(actor->pos[1] - to[1]);
-		const int dist = distX + distY + std::max(distX, distY);
+		const int dist = std::max(distX, distY);
 		if (dist < bestDist) {
 			bestDist = dist;
 			VectorCopy(actor->pos, bestPos);
@@ -1416,13 +1416,17 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 		Edict* mission = nullptr;
 		while ((mission = G_EdictsGetNextInUse(mission))) {
 			if (mission->type == ET_MISSION) {
-				if (!AI_FindMissionLocation(actor, mission->pos, actor->getUsableTUs()))
+				const int radius = mission->radius / (UNIT_SIZE + 1);
+				if (!AI_FindMissionLocation(actor, mission->pos, actor->getUsableTUs(), radius  + HOLD_DIST))
 					continue;
+				const int distX = std::abs(actor->pos[0] - mission->pos[0]);
+				const int distY = std::abs(actor->pos[1] - mission->pos[1]);
+				const int dists = std::max(distX, distY);
 				if (player.getTeam() == mission->getTeam()) {
-					actionScore = SCORE_MISSION_TARGET;
+					actionScore = SCORE_MISSION_TARGET / ((dists > radius) + 1);
 				} else {
 					/* try to prevent the phalanx from reaching their mission target */
-					actionScore = SCORE_MISSION_OPPONENT_TARGET;
+					actionScore = SCORE_MISSION_OPPONENT_TARGET / ((dists > radius) + 1);
 				}
 
 				actor->calcOrigin();

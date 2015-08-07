@@ -1620,7 +1620,7 @@ void CP_SpawnNewMissions (void)
 		 * Note: This is a function over css.overallInterest. It looks like this:
 		 * http://www.wolframalpha.com/input/?i=Plot%5B40%2B%285-40%29%2A%28%28x-1000%29%2F%2820-1000%29%29%5E2%2C+%7Bx%2C+0%2C+1100%7D%5D
 		 */
-		int newMissionNum = (int) (MAXIMUM_MISSIONS_PER_CYCLE + (MINIMUM_MISSIONS_PER_CYCLE - MAXIMUM_MISSIONS_PER_CYCLE) * pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST) / (ccs.curCampaign->initialInterest - FINAL_OVERALL_INTEREST)), 2));
+		int newMissionNum = (int) (ccs.curCampaign->maxMissions + (ccs.curCampaign->minMissions - ccs.curCampaign->maxMissions) * pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST) / (ccs.curCampaign->initialInterest - FINAL_OVERALL_INTEREST)), 2));
 		Com_DPrintf(DEBUG_CLIENT, "interest = %d, new missions = %d\n", ccs.overallInterest, newMissionNum);
 		for (int i = 0; i < newMissionNum; i++) {
 			if (frand() > nonOccurrence) {
