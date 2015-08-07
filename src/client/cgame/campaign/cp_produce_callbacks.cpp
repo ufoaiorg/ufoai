@@ -266,7 +266,7 @@ static void PR_ItemProductionInfo (const base_t* base, const objDef_t* od, int r
 		const technology_t* tech = RS_GetTechForItem(od);
 
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(od->name));
-		Q_strcat(productionInfo, sizeof(productionInfo), _("Cost per item\t%i c\n"), PR_GetPrice(od));
+		Q_strcat(productionInfo, sizeof(productionInfo), _("Cost per item\t%i c\n"), PR_GetPrice(od->productionCost));
 		Q_strcat(productionInfo, sizeof(productionInfo), _("Production time\t%ih\n"), remainingHours);
 		Q_strcat(productionInfo, sizeof(productionInfo), _("Item size\t%i\n"), od->size);
 		cgi->Cvar_Set("mn_item", "%s", od->id);
@@ -322,7 +322,7 @@ static void PR_AircraftInfo (const base_t* base, const aircraft_t* aircraftTempl
 	static char productionInfo[512];
 
 	Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraftTemplate->name));
-	Q_strcat(productionInfo, sizeof(productionInfo), _("Production costs\t%i c\n"), PR_GetPrice(aircraftTemplate));
+	Q_strcat(productionInfo, sizeof(productionInfo), _("Production costs\t%i c\n"), PR_GetPrice(aircraftTemplate->productionCost));
 	Q_strcat(productionInfo, sizeof(productionInfo), _("Production time\t%ih\n"), remainingHours);
 	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	cgi->Cvar_Set("mn_item", "%s", aircraftTemplate->id);
