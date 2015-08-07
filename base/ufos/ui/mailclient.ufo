@@ -214,6 +214,26 @@ do
 						mails:set_viewpos(sender:current())
 					end
 				end
+
+				do
+					local add_mail = ufo.create_confunc(mailclient, "add_mail", nil)
+					add_mail.on_click = function(sender, index, headline, icon, state, date)
+							local mail = ufo.create_control(mails, "mailheader", "mail" .. index, nil)
+							mail:child("icon"):set_source(icon)
+							mail:child("header"):child("index"):set_value(index)
+							mail:child("header"):child("headline"):set_text(headline)
+							mail:child("header"):child("date"):set_text(date)
+							if (state == "0") then
+								mail:child("header"):set_backgroundcolor(0.56, 0.81, 0.76, 0.6)
+							end
+						end
+				end
+				do
+					local clear_mails = ufo.create_confunc(mailclient, "clear_mails", nil)
+					clear_mails.on_click = function(sender)
+							mails:remove_children()
+						end
+				end
 			end
 		end
 	end
@@ -223,27 +243,6 @@ do
 		geoscape_button.on_click = function(sender)
 		ufo.cmd("ui_pop;")
 		end
-	end
-
-	do
-		local add_mail = ufo.create_confunc(mailclient, "add_mail", nil)
-		add_mail.on_click = function(sender, index, headline, icon, state, date)
-				local mail = ufo.create_control(mails, "mailheader", "mail" .. index, nil)
-				mail:child("icon"):set_source(icon)
-				mail:child("header"):child("index"):set_value(index)
-				mail:child("header"):child("headline"):set_text(headline)
-				mail:child("header"):child("date"):set_text(date)
-				if (state == "0") then
-					mail:child("header"):set_backgroundcolor(0.56, 0.81, 0.76, 0.6)
-				end
-			end
-	end
-
-	do
-		local clear_mails = ufo.create_confunc(mailclient, "clear_mails", nil)
-		clear_mails.on_click = function(sender)
-				mailclient:child("maillist"):child("mainBody"):child("mails"):remove_children()
-			end
 	end
 
 	mailclient.on_windowopened = function(sender)
