@@ -143,7 +143,9 @@ void DoRouting (void)
 	/* wpMaxs is on a 32 boundary. This causes VecToPos to calculate a pos *above* wpMAxs. We have to compensate. */
 	wpMaxs[0]--;
 	wpMaxs[1]--;
-	wpMaxs[2]--;
+	/* Note that VecToPos already caps the z value to PATHFINDING_HEIGHT - 1 */
+	if (tileBox.maxs[2] < UNIT_HEIGHT * (PATHFINDING_HEIGHT - 1))
+		wpMaxs[2]--;
 
 	/* Verify the world extents are not lopsided. */
 	assert(wpMins[0] <= wpMaxs[0]);

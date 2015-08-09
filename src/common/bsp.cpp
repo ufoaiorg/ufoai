@@ -822,7 +822,7 @@ static void CMod_RerouteMap (mapTiles_t* mapTiles, mapData_t* mapData)
 							mapTiles->getTilesAt(dx ,dy, toTile1, toTile2, toTile3);
 
 							int minZ = 0;
-							int maxZ = PATHFINDING_HEIGHT - 1;
+							int maxZ = PATHFINDING_HEIGHT;
 							if (fromTile1 == toTile1) {			/* same tile */
 								if (fromTile2 && toTile2) {		/* and there are stacked tiles */
 									if (fromTile2 == toTile2) {	/* the stacked tiles are also the same */
