@@ -21,7 +21,7 @@
 //	soldierequipment - the randomly assigned equipment percentages that each soldier gets based on values in equipment_missions.ufo. (i.e. phalanx_initial)
 //	market - the prestocked number of items of each type that are available in the market at the start of the game found in equipment.ufo. (i.e. campaign_initial_market)
 //	asymptotic_market - the post-stocked number of items of technology that hasn't been discovered yet in equipment.ufo. (i.e. campaign_asymptotic_market)
-//	credits - the starting number of creates available for a given campaign level for the player to work with to buy all equipment.
+//	credits - the starting number of credits available for a given campaign level for the player to work with to buy all equipment.
 //	map - the map to be used for the geoscape. (i.e. map_earth)
 //	visible - is this campaign visible in the start-up campaign menu or not. Should be a boolean true if it's playable. (i.e. true)
 //	events - the list of events to be triggered as a part of the alien interest level found in events.ufo. (i.e. main)
@@ -46,9 +46,9 @@
 //		worker_rankbonus - bonus to salary for each worker as they gain levels (levels not supported now, so this is always zero).
 //		scientist_base - base salary for each scientist on your team.
 //		scientist_rankbonus - bonus to salary for each scientist as they gain levels (levels not supported now, so this is always zero).
-//		pilot_base 1500 - base salary for each pilot on your team.
+//		pilot_base - base salary for each pilot on your team.
 //		pilot_rankbonus - bonus to salary for each pilot as they gain levels (levels not supported now, so this is always zero).
-//		robot_base 7500 - base monthly maintenance cost for each UGV on your team.
+//		robot_base - base monthly maintenance cost for each UGV on your team.
 //		robot_rankbonus - base monthly maintenance cost increase because of UGV level (levels not supported now, so this is always zero).
 //		aircraft_factor - part of the equation used to calculate the monthly maintenance costs for aircraft.
 //		aircraft_divisor - part of the equation used to calculate the monthly maintenance costs for aircraft
