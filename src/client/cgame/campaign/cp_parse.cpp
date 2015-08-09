@@ -367,7 +367,7 @@ static const value_t campaign_vals[] = {
 	{"healingrate", V_FLOAT, offsetof(campaign_t, healingRate), MEMBER_SIZEOF(campaign_t, healingRate)},
 	{"liquidationrate", V_FLOAT, offsetof(campaign_t, liquidationRate), MEMBER_SIZEOF(campaign_t, liquidationRate)},
 	{"componentrate", V_INT, offsetof(campaign_t, componentRate), MEMBER_SIZEOF(campaign_t, componentRate)},
-	{"minnmissions", V_INT, offsetof(campaign_t, minMissions), MEMBER_SIZEOF(campaign_t, minMissions)},
+	{"minmissions", V_INT, offsetof(campaign_t, minMissions), MEMBER_SIZEOF(campaign_t, minMissions)},
 	{"maxmissions", V_INT, offsetof(campaign_t, maxMissions), MEMBER_SIZEOF(campaign_t, maxMissions)},
 	{"uforeductionrate", V_FLOAT, offsetof(campaign_t, ufoReductionRate), MEMBER_SIZEOF(campaign_t, ufoReductionRate)},
 	{"initialinterest", V_INT, offsetof(campaign_t, initialInterest), MEMBER_SIZEOF(campaign_t, initialInterest)},
