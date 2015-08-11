@@ -254,30 +254,31 @@ void R_UploadTexture (const unsigned* data, int width, int height, image_t* imag
 {
 	unsigned* scaled = nullptr;
 	int scaledWidth, scaledHeight;
-#ifdef GL_VERSION_ES_CM_1_0
-	GLint texFormat = GL_RGB;
-#else
-	GLint texFormat = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
-#endif
-	int i;
-	const byte* scan;
 	const bool mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
 	const bool clamp = R_IsClampedImageType(image->type);
+#ifdef GL_VERSION_ES_CM_1_0
+	/*
+	 * According to https://www.khronos.org/opengles/sdk/1.1/docs/man/glTexImage2D.xml
+	 * this *must* match the data format, which *always* is RGBA.
+	 */
+	GLint texFormat = GL_RGBA;
+	/** @todo Should we strip the alpha from data if not needed and upload as RGB? Memory might be a concern here. */
+#else
+	GLint texFormat = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
+	int i;
+	const byte* scan;
 
 	/* scan the texture for any non-255 alpha */
 	int c = width * height;
 	/* set scan to the first alpha byte */
 	for (i = 0, scan = ((const byte*) data) + 3; i < c; i++, scan += 4) {
 		if (*scan != 255) {
-#ifdef GL_VERSION_ES_CM_1_0
-			texFormat = GL_RGBA;
-#else
 			texFormat = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
-#endif
 			image->has_alpha = true;
 			break;
 		}
 	}
+#endif
 
 	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
 
