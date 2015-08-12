@@ -141,7 +141,7 @@ static void _hash_free (void* p) {
  * @note The algorithm is based on Fowler-Noll-Vo.
  */
 static HASH_INDEX default_hash(const void* key, int len) {
-    unsigned char* p = (unsigned char*) key;
+    const unsigned char* p = (const unsigned char*) key;
     unsigned int h = 2166136261u;
     int i;
 
