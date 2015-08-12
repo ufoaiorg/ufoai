@@ -1288,9 +1288,9 @@ char* FS_NextScriptHeader (const char* files, const char** name, const char** te
 				/* copy filename to header */
 				Q_strncpyz(headerName, (const char*)lFile->data, sizeof(headerName));
 				*name = headerName;
-				return "lua";
+				static char luaType[] = "lua";
+				return luaType;
 			}
-
 		} else if (!lBuffer)
 			break;
 	}

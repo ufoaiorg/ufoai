@@ -445,11 +445,11 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 	/* check the name */
 	if (!UI_TokenIsName(name, false)) {
 		Com_Printf("UI_CreateControl: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
-		return false;
+		return nullptr;
 	}
 	if (UI_TokenIsReserved(name)) {
 		Com_Printf("UI_CreateControl: \"%s\" is a reserved token, we can't call a node with it\n", name);
-		return false;
+		return nullptr;
 	}
 
 	/* test if node already exists (inside the parent subtree) */
@@ -523,11 +523,11 @@ uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* su
 	/* check the name */
 	if (!UI_TokenIsName(name, false)) {
 		Com_Printf("UI_CreateComponent: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
-		return false;
+		return nullptr;
 	}
 	if (UI_TokenIsReserved(name)) {
 		Com_Printf("UI_CreateComponent: \"%s\" is a reserved token, we can't call a node with it\n", name);
-		return false;
+		return nullptr;
 	}
 
 	/* get the type of behaviour */
