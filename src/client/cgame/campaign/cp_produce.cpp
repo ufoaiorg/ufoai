@@ -386,10 +386,10 @@ static bool PR_CheckFrame (base_t* base, production_t* prod)
 
 	if (PR_IsItem(prod)) {
 		const objDef_t* od = prod->data.data.item;
-		price = PR_GetPrice(od);
+		price = PR_GetPrice(od->productionCost);
 	} else if (PR_IsAircraft(prod)) {
 		const aircraft_t* aircraft = prod->data.data.aircraft;
-		price = PR_GetPrice(aircraft);
+		price = PR_GetPrice(aircraft->productionCost);
 	}
 
 	/* Not enough money */
@@ -421,11 +421,11 @@ static void PR_FinishProduction (base_t* base, production_t* prod)
 	prod->amount--;
 
 	if (PR_IsItem(prod)) {
-		CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.item));
+		CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.item->productionCost));
 		/* Now add it to equipment and update capacity. */
 		B_AddToStorage(base, prod->data.data.item, 1);
 	} else if (PR_IsAircraft(prod)) {
-		CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.aircraft));
+		CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.aircraft->productionCost));
 		/* Now add new aircraft. */
 		AIR_NewAircraft(base, prod->data.data.aircraft);
 	}
@@ -655,7 +655,17 @@ base_t* PR_ProductionBase (const production_t* production)
 	}
 	return nullptr;
 }
-
+/**
+ * @brief Used in production costs (to allow reducing prices below 1x).
+ * @param[in] production cost being modified
+ * @return price modified by the component rate in campaign.ufo
+ */
+int PR_GetPrice (const int productionCost)
+{
+	int price;
+	price = productionCost * ccs.curCampaign->componentRate;
+	return price;
+}
 /**
  * @brief Save callback for savegames in XML Format
  * @param[out] p XML Node structure, where we write the information to

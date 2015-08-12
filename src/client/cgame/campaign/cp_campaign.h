@@ -353,7 +353,8 @@ typedef struct campaign_s {
 	float produceRate;			/**< higher number = faster production */
 	float researchRate;			/**< specifies the number of research hours that a single scientist produces in a single hour of game time */
 	float healingRate;			/**< the hospital healing rate */
-	float liquidationRate;                  /**< amount of original price of a building returned when it's removed from base due to recycling */
+	float liquidationRate;			/**< amount of original price of a building returned when it's removed from base due to recycling */
+	float componentRate;			/**< Component cost percentage to build an object in the workshop */
 	int minMissions;			/**< Minimum Missions per Interest Level */
 	int maxMissions;			/**< Maximum Missions per Interest Level */
 	float ufoReductionRate;		/**< is used in the equation which spawns UFOs to determine the probability that a UFO will not be spawned.

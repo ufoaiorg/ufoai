@@ -252,22 +252,20 @@ inline static bool R_IsClampedImageType (imagetype_t type)
  */
 void R_UploadTexture (const unsigned* data, int width, int height, image_t* image)
 {
-	unsigned* scaled = nullptr;
-	int scaledWidth, scaledHeight;
+	const bool mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
+	const bool clamp = R_IsClampedImageType(image->type);
 #ifdef GL_VERSION_ES_CM_1_0
 	GLint texFormat = GL_RGB;
 #else
 	GLint texFormat = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 #endif
-	int i;
-	const byte* scan;
-	const bool mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
-	const bool clamp = R_IsClampedImageType(image->type);
 
 	/* scan the texture for any non-255 alpha */
-	int c = width * height;
+	int i;
+	const byte* scan;
+	const int c = width * height;
 	/* set scan to the first alpha byte */
-	for (i = 0, scan = ((const byte*) data) + 3; i < c; i++, scan += 4) {
+	for (i = 0, scan = ((const byte*) data) + 3; i < c; ++i, scan += 4) {
 		if (*scan != 255) {
 #ifdef GL_VERSION_ES_CM_1_0
 			texFormat = GL_RGBA;
@@ -279,11 +277,13 @@ void R_UploadTexture (const unsigned* data, int width, int height, image_t* imag
 		}
 	}
 
+	int scaledWidth, scaledHeight;
 	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
 
 	image->upload_width = scaledWidth;	/* after power of 2 and scales */
 	image->upload_height = scaledHeight;
 
+	unsigned* tmpBuff = nullptr;
 	/* some images need very little attention (pics, fonts, etc..) */
 	if (!mipmap && scaledWidth == width && scaledHeight == height) {
 		/* no mipmapping for these images to save memory */
@@ -300,9 +300,28 @@ void R_UploadTexture (const unsigned* data, int width, int height, image_t* imag
 	}
 
 	if (scaledWidth != width || scaledHeight != height) {  /* whereas others need to be scaled */
-		scaled = Mem_PoolAllocTypeN(unsigned, scaledWidth * scaledHeight, vid_imagePool);
-		R_ScaleTexture(data, width, height, scaled, scaledWidth, scaledHeight);
+		tmpBuff = Mem_PoolAllocTypeN(unsigned, scaledWidth * scaledHeight, vid_imagePool);
+		R_ScaleTexture(data, width, height, tmpBuff, scaledWidth, scaledHeight);
 	}
+
+#ifdef GL_VERSION_ES_CM_1_0
+	/*
+	 * According to https://www.khronos.org/opengles/sdk/1.1/docs/man/glTexImage2D.xml
+	 * texture format *must* match the data format, which we *always* read as RGBA,
+	 * so we need to strip the alpha if we want to upload as RGB, and we want: memory *is*
+	 * usually a concern on an ES.
+	 */
+	if (texFormat == GL_RGB) {
+		scan = ((const byte *)(tmpBuff ? tmpBuff : data));
+		if (!tmpBuff)
+			tmpBuff = Mem_PoolAllocTypeN(unsigned, scaledWidth * scaledHeight, vid_imagePool);
+
+		const int count = scaledWidth * scaledHeight;
+		for (i = 0; i < count; ++i, scan += 4) {
+			memmove(((byte*) tmpBuff) + i * 3, scan, 3);
+		}
+	}
+#endif
 
 	/* and mipmapped */
 	if (mipmap) {
@@ -336,11 +355,16 @@ void R_UploadTexture (const unsigned* data, int width, int height, image_t* imag
 		R_CheckError();
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, texFormat, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled ? scaled : data);
+#ifdef GL_VERSION_ES_CM_1_0
+	const GLenum bFormat = texFormat;
+#else
+	const GLenum bFormat = GL_RGBA;
+#endif
+	glTexImage2D(GL_TEXTURE_2D, 0, texFormat, scaledWidth, scaledHeight, 0, bFormat, GL_UNSIGNED_BYTE, tmpBuff ? tmpBuff : data);
 	R_CheckError();
 
-	if (scaled)
-		Mem_Free(scaled);
+	if (tmpBuff)
+		Mem_Free(tmpBuff);
 }
 
 /**

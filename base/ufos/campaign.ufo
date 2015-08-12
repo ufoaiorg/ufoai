@@ -1,3 +1,70 @@
+//=========================================================================
+// Campaign definitions
+//=========================================================================
+//	campaign
+//
+//	name - campaign name always starts with an underscore and can have spaces after that because it's displayed on start screen (i.e. _Very Hard Campaign)
+//	text - campaign text is located in the msgid directory with the name campaign.ufo. (i.e. "*msgid:veryhard_campaign_txt")
+//	team - which side this campaign is for, currently there are only two valid choices phalanx and alien, but alien campaigns aren't implemented yet.
+//	soldiers - the number of starting soldiers that are available to be selected from the Hire and Fire screen (found by clicking on the living quarters).
+//	scientists - the number of starting scientists that are available to be selected from the Hire and Fire screen.
+//	workers - the number of starting workers that are available to selected from the Hire and Fire screen.
+//	pilots - the number of starting pilots that are available to selected from Hire and Fire screen.
+//	ugvs - the number of starting ugvs that are available to select from Hire and Fire screen. (not implemented yet)
+//	difficulty - this is the difficulty number valid values are from -4 to 4, this is the cvar used in the code to modify the difficulty of the game.
+//	minhappiness - the lowest level of happiness that is allowed before the nations of the world decide to close down the Phalanx project.
+//	maxdebts - the largest amount of debt that a player can accumulate before the nations of the world close down the Phalanx project.
+//	xvirate - the highest rate of XVI infection allowed before the nations of the world close down the Phalanx project.
+//	firstbase - the basetemplate value that will used to set-up the players first base based on the layout of that name in the basemanagement.ufo. (i.e. balanced)
+//	researched - the list of starting technologies that have been researched when the player starts the game based on researched_list.ufo. (i.e. rslist_phalanx)
+//	equipment - the pre-purchased equipment list for players for this campaign based on equipment.ufo. (i.e. campaign_player)
+//	soldierequipment - the randomly assigned equipment percentages that each soldier gets based on values in equipment_missions.ufo. (i.e. phalanx_initial)
+//	market - the prestocked number of items of each type that are available in the market at the start of the game found in equipment.ufo. (i.e. campaign_initial_market)
+//	asymptotic_market - the post-stocked number of items of technology that hasn't been discovered yet in equipment.ufo. (i.e. campaign_asymptotic_market)
+//	credits - the starting number of credits available for a given campaign level for the player to work with to buy all equipment.
+//	map - the map to be used for the geoscape. (i.e. map_earth)
+//	visible - is this campaign visible in the start-up campaign menu or not. Should be a boolean true if it's playable. (i.e. true)
+//	events - the list of events to be triggered as a part of the alien interest level found in events.ufo. (i.e. main)
+//	researchrate - the percentage modifier of the research value of each scientist working in the labs.
+//	uforeductionrate - the likelihood that an available UFO mission that is detected will actually occur within the time period.
+//	healingrate - the rate of hit point recovery for soldiers in the base hospital receiving treatment.
+//	producerate - the percentage of workers required to complete a single man hour of work in the workshop, because of vacation, sleep, eating, etc. (default: 10 workers)
+//	liquidationrate - the percentage of the value of a building that is returned upon it's destruction. ( default: 0)
+//	componentrate - the percentage of the cost to produce an item, based off of building it in the workshop rather than buying it. (default: 1)
+//	employeerate - multiplier for the number of employees received from the nations of the world at the end of the month.
+//	minmissions - minimum number of missions before the next interest level is reached, this includes suppressed missions based on uforeductionrate. (default: 5)
+//	maxmissions - maximum number of missions before the next interest level is reached, this includes suppressed missions based on uforeductionrate. (default: 17)
+//	initialinterest - the starting interest level of the aliens in the game, which determines the types of missions and aliens that appear on missions.
+//	alienbaseinterest - the interest level that has to be achieved to make the aliens create an Earth base.
+//	date - the game starting date
+//	basecost - the price that each base costs to just get the starting entry point added to it and all the cleared space underground.
+//	---------------------------------------------------------------------
+//	salary {}
+//		soldier_base - base salary for each soldier on your team.
+//		soldier_rankbonus - bonus to salary for each soldier as they gain each level of rank.
+//		worker_base - base salary for each worker on your team.
+//		worker_rankbonus - bonus to salary for each worker as they gain levels (levels not supported now, so this is always zero).
+//		scientist_base - base salary for each scientist on your team.
+//		scientist_rankbonus - bonus to salary for each scientist as they gain levels (levels not supported now, so this is always zero).
+//		pilot_base - base salary for each pilot on your team.
+//		pilot_rankbonus - bonus to salary for each pilot as they gain levels (levels not supported now, so this is always zero).
+//		robot_base - base monthly maintenance cost for each UGV on your team.
+//		robot_rankbonus - base monthly maintenance cost increase because of UGV level (levels not supported now, so this is always zero).
+//		aircraft_factor - part of the equation used to calculate the monthly maintenance costs for aircraft.
+//		aircraft_divisor - part of the equation used to calculate the monthly maintenance costs for aircraft
+//		base_upkeep - monthly maintenance cost per each individual base beyond the actual buildings of the base.
+//		admin_initial - monthly fee to allow for the administration of the employees of Phalanx.
+//		admin_soldier - monthly fee per soldier in Phalanx.
+//		admin_worker - monthly fee per worker in Phalanx.
+//		admin_scientist - monthly fee per scientist in Phalanx.
+//		admin_pilot - monthly fee per pilot in Phalanx.
+//		admin_robot - monthly fee per robot in Phalanx.
+//		debt_interest - the interest rate for all debts that Phalanx has acquired.
+//	---------------------------------------------------------------------
+//	aircraft - initial aircraft for a given campaign.
+//
+//=========================================================================
+
 campaign veryhard
 {
 	name				"_Very Hard Campaign"

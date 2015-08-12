@@ -366,7 +366,8 @@ static const value_t campaign_vals[] = {
 	{"producerate", V_FLOAT, offsetof(campaign_t, produceRate), MEMBER_SIZEOF(campaign_t, produceRate)},
 	{"healingrate", V_FLOAT, offsetof(campaign_t, healingRate), MEMBER_SIZEOF(campaign_t, healingRate)},
 	{"liquidationrate", V_FLOAT, offsetof(campaign_t, liquidationRate), MEMBER_SIZEOF(campaign_t, liquidationRate)},
-	{"minnmissions", V_INT, offsetof(campaign_t, minMissions), MEMBER_SIZEOF(campaign_t, minMissions)},
+	{"componentrate", V_INT, offsetof(campaign_t, componentRate), MEMBER_SIZEOF(campaign_t, componentRate)},
+	{"minmissions", V_INT, offsetof(campaign_t, minMissions), MEMBER_SIZEOF(campaign_t, minMissions)},
 	{"maxmissions", V_INT, offsetof(campaign_t, maxMissions), MEMBER_SIZEOF(campaign_t, maxMissions)},
 	{"uforeductionrate", V_FLOAT, offsetof(campaign_t, ufoReductionRate), MEMBER_SIZEOF(campaign_t, ufoReductionRate)},
 	{"initialinterest", V_INT, offsetof(campaign_t, initialInterest), MEMBER_SIZEOF(campaign_t, initialInterest)},
@@ -416,6 +417,7 @@ static void CP_ParseCampaign (const char* name, const char** text)
 	cp->produceRate = 1.0f;
 	cp->healingRate = 1.0f;
 	cp->liquidationRate = 0.0f;
+	cp->componentRate = 1.0f;
 	cp->maxMissions = 17;
 	cp->minMissions = 5;
 	cp->ufoReductionRate = NON_OCCURRENCE_PROBABILITY;
