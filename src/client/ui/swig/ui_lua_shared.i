@@ -1292,6 +1292,8 @@ struct uiWindowNode_t: uiNode_t {
 	void set_dragbutton (bool value) { UI_Window_SetDragButton($self, value); };
 	void set_closebutton (bool value) { UI_Window_SetCloseButton($self, value); };
 	void set_starlayout (bool value) { UI_EXTRADATA($self, windowExtraData_t).starLayout = value; };
+	void set_preventtypingescape (bool value) { UI_EXTRADATA($self, windowExtraData_t).preventTypingEscape = value; };
+	void set_noticepos(float x, float y) { Vector2Set(UI_EXTRADATA($self, windowExtraData_t).noticePos, x, y); };
 
 	%rename (on_windowopened) lua_onWindowOpened;
 	%rename (on_windowclosed) lua_onWindowClosed;

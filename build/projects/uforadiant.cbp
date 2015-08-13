@@ -74,8 +74,8 @@
 					<Add library="libglib-2.0" />
 					<Add library="gobject-2.0" />
 					<Add library="gthread-2.0" />
-					<Add library="libxml2" />
 					<Add library="pango-1.0" />
+					<Add library="libxml2" />
 					<Add library="opengl32" />
 					<Add library="user32" />
 					<Add library="gdi32" />
@@ -115,25 +115,24 @@
 			<Add option="-Wreturn-type" />
 			<Add option="-Wwrite-strings" />
 			<Add option="-Wno-variadic-macros" />
+			<Add option="-D_WIN32" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add directory="../../src/tools/radiant/libs" />
 			<Add directory="../../src/tools/radiant/include" />
 			<Add directory="../../src/libs/picomodel" />
-			<Add directory="$(#gtk.include)" />
-			<Add directory="$(#gtk.include)/gtk-2.0" />
-			<Add directory="$(#gtk.include)/glib-2.0" />
-			<Add directory="$(#gtk.include)/cairo" />
-			<Add directory="$(#gtk.include)/pango-1.0" />
-			<Add directory="$(#gtk.include)/gdk-pixbuf-2.0" />
-			<Add directory="$(#gtk.include)/atk-1.0" />
-			<Add directory="$(#gtk.lib)/glib-2.0/include" />
-			<Add directory="$(#gtk.lib)/gtk-2.0/include" />
-			<Add directory="$(#gtkgl)" />
+			<Add directory="Z:/_Development/Tools/MinGW/include/glib-2.0" />
+			<Add directory="Z:/_Development/Tools/MinGW/include/gtk-2.0" />
+			<Add directory="Z:/_Development/Tools/MinGW/include/gtkglext-1.0" />
+			<Add directory="Z:/_Development/Tools/MinGW/include/gtkglext-1.0/gdk" />
+			<Add directory="Z:/_Development/Tools/MinGW/include/gtksourceview-2.0" />
+			<Add directory="Z:/_Development/Tools/MinGW/include/libxml2" />
+			<Add directory="Z:/_Development/Tools/MinGW/include/cairo" />
+			<Add directory="Z:/_Development/Tools/MinGW/include/pango-1.0" />
+			<Add directory="Z:/_Development/Tools/MinGW/include/atk-1.0" />
 		</Compiler>
 		<Linker>
 			<Add library="libjpeg" />
-			<Add directory="$(#gtk.lib)" />
 		</Linker>
 		<Unit filename="../../src/libs/picomodel/picointernal.c">
 			<Option compilerVar="CC" />
@@ -395,7 +394,6 @@
 		<Unit filename="../../src/tools/radiant/libs/xmlutil/Node.h" />
 		<Unit filename="../../src/tools/radiant/libs/xmlutil/XPathException.h" />
 		<Unit filename="../../src/tools/radiant/radiant/brush/Brush.cpp" />
-		<Unit filename="../../src/tools/radiant/radiant/brush/Brush.h" />
 		<Unit filename="../../src/tools/radiant/radiant/brush/Brush.h" />
 		<Unit filename="../../src/tools/radiant/radiant/brush/BrushClipPlane.cpp" />
 		<Unit filename="../../src/tools/radiant/radiant/brush/BrushClipPlane.h" />

@@ -246,7 +246,8 @@ static gpointer exec_run_remainder (gpointer data)
 
 static void exec_cmd_delete (ExecCmd *e)
 {
-	g_mutex_clear(&e->state_mutex);
+	//g_mutex_clear(&e->state_mutex);
+	g_mutex_free(e->state_mutex);
 	g_ptr_array_free(e->args, TRUE);
 	g_free(e->working_dir);
 }
@@ -256,7 +257,8 @@ ExecCmd* exec_cmd_new (Exec **exec)
 	ExecCmd *e = g_new0(ExecCmd, 1);
 	e->args = g_ptr_array_new();
 	e->state = RUNNING;
-	g_mutex_init(&e->state_mutex);
+	//g_mutex_init(&e->state_mutex);
+	e->state_mutex = g_mutex_new();
 	e->exec = *exec;
 	e->parse_progress = FALSE;
 	(*exec)->cmds = g_list_append((*exec)->cmds, e);
@@ -327,19 +329,19 @@ void exec_cmd_update_arg (ExecCmd *e, const gchar* arg_start, const gchar* forma
 ExecState exec_cmd_get_state (ExecCmd *e)
 {
 	g_return_val_if_fail(e != NULL, FAILED);
-	g_mutex_lock(&e->state_mutex);
+	g_mutex_lock(e->state_mutex);
 	ExecState ret = e->state;
-	g_mutex_unlock(&e->state_mutex);
+	g_mutex_unlock(e->state_mutex);
 	return ret;
 }
 
 ExecState exec_cmd_set_state (ExecCmd *e, ExecState state)
 {
-	g_mutex_lock(&e->state_mutex);
+	g_mutex_lock(e->state_mutex);
 	if (e->state != CANCELLED)
 		e->state = state;
 	ExecState ret = e->state;
-	g_mutex_unlock(&e->state_mutex);
+	g_mutex_unlock(e->state_mutex);
 	return ret;
 }
 
@@ -384,7 +386,8 @@ void exec_run (Exec *ex)
 			e->lib_proc(e, NULL);
 		else if (piped != NULL) {
 			pipe(child_child_pipe);
-			thread = g_thread_new(ex->process_title, exec_run_remainder, (gpointer) piped);
+			//thread = g_thread_new(ex->process_title, exec_run_remainder, (gpointer) piped);
+			thread = g_thread_create(exec_run_remainder, e, false, NULL);
 			exec_spawn_process(e, exec_stdin_setup_func);
 			close(child_child_pipe[0]);
 			close(child_child_pipe[1]);
