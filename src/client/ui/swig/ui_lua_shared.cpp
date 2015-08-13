@@ -3220,6 +3220,8 @@ SWIGINTERN void uiWindowNode_t_set_fill(uiWindowNode_t *self,bool value){ UI_EXT
 SWIGINTERN void uiWindowNode_t_set_dragbutton(uiWindowNode_t *self,bool value){ UI_Window_SetDragButton(self, value); }
 SWIGINTERN void uiWindowNode_t_set_closebutton(uiWindowNode_t *self,bool value){ UI_Window_SetCloseButton(self, value); }
 SWIGINTERN void uiWindowNode_t_set_starlayout(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).starLayout = value; }
+SWIGINTERN void uiWindowNode_t_set_preventtypingescape(uiWindowNode_t *self,bool value){ UI_EXTRADATA(self, windowExtraData_t).preventTypingEscape = value; }
+SWIGINTERN void uiWindowNode_t_set_noticepos(uiWindowNode_t *self,float x,float y){ Vector2Set(UI_EXTRADATA(self, windowExtraData_t).noticePos, x, y); }
 
 static LUA_EVENT uiWindowNode_t_lua_onWindowOpened_get(uiWindowNode_t* node) {
 	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowOpened;
@@ -16179,6 +16181,61 @@ fail:
 }
 
 
+static int _wrap_uiWindow_set_preventtypingescape(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("uiWindowNode_t::set_preventtypingescape",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindowNode_t::set_preventtypingescape",1,"uiWindowNode_t *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("uiWindowNode_t::set_preventtypingescape",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindowNode_t,0))){
+    SWIG_fail_ptr("uiWindow_set_preventtypingescape",1,SWIGTYPE_p_uiWindowNode_t);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  uiWindowNode_t_set_preventtypingescape(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiWindow_set_noticepos(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
+  float arg2 ;
+  float arg3 ;
+  
+  SWIG_check_num_args("uiWindowNode_t::set_noticepos",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindowNode_t::set_noticepos",1,"uiWindowNode_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiWindowNode_t::set_noticepos",2,"float");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("uiWindowNode_t::set_noticepos",3,"float");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindowNode_t,0))){
+    SWIG_fail_ptr("uiWindow_set_noticepos",1,SWIGTYPE_p_uiWindowNode_t);
+  }
+  
+  arg2 = (float)lua_tonumber(L, 2);
+  arg3 = (float)lua_tonumber(L, 3);
+  uiWindowNode_t_set_noticepos(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiWindow_on_windowopened_set(lua_State* L) {
   int SWIG_arg = 0;
   uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
@@ -16334,6 +16391,8 @@ static swig_lua_method swig_uiWindow_methods[]= {
     { "set_dragbutton", _wrap_uiWindow_set_dragbutton},
     { "set_closebutton", _wrap_uiWindow_set_closebutton},
     { "set_starlayout", _wrap_uiWindow_set_starlayout},
+    { "set_preventtypingescape", _wrap_uiWindow_set_preventtypingescape},
+    { "set_noticepos", _wrap_uiWindow_set_noticepos},
     {0,0}
 };
 static swig_lua_method swig_uiWindow_meta[] = {
