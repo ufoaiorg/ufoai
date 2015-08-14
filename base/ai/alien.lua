@@ -249,7 +249,8 @@ function aila.wander ()
 	if search_rad < 1 then
 		search_rad =  (aila.tustouse() + 1) / 2
 	end
-	local next_pos = ai.positionwander(aila.param.move, search_rad, ai.actor():pos(), aila.tustouse())
+	local next_move = aila.param.move ~= "hide" and aila.param.move ~= "herd" and aila.param.move or "rand"
+	local next_pos = ai.positionwander(next_move, search_rad, ai.actor():pos(), aila.tustouse())
 	if next_pos then
 		next_pos:goto()
 	end
@@ -504,7 +505,7 @@ function aila.phase_three ()
 		else
 			local targets = aila.findtargets("sight", "~civilian", "dist")
 			if #targets > 0 then
-				targets[1]:face()
+				targets[1]:pos():face()
 			end
 		end
 		ai.reactionfire("enable")

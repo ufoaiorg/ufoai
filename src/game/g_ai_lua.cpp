@@ -1776,7 +1776,11 @@ static int AIL_positionmission (lua_State* L)
 
 	pos3_t oldPos;
 	VectorCopy(AIL_ent->pos, oldPos);
-	if (AI_FindMissionLocation(AIL_ent, *target, tus))
+	int radius = 3;
+	const Edict* const mission = G_GetEdictFromPos(*target, ET_MISSION);
+	if (mission)
+		radius = mission->radius;
+	if (AI_FindMissionLocation(AIL_ent, *target, tus, radius))
 		lua_pushpos3(L, &AIL_ent->pos);
 	else
 		lua_pushboolean(L, 0);
