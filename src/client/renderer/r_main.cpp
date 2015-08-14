@@ -306,8 +306,9 @@ void R_RenderFrame (void)
 	R_Setup3D();
 
 	/* activate wire mode */
-	if (r_wire->integer)
+	if (r_wire->integer) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		int tile;
@@ -419,8 +420,9 @@ void R_RenderFrame (void)
 	R_EnableBlend(false);
 
 	/* leave wire mode again */
-	if (r_wire->integer)
+	if (r_wire->integer) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
 
 	R_DrawBloom();
 
@@ -847,7 +849,7 @@ static void R_InitExtensions (void)
 		if( *versionNumbers )
 			sscanf(versionNumbers, "%d.%d", &r_config.glVersionMajor, &r_config.glVersionMinor);
 	}
-	Com_Printf("OpenGL version detected: %d.%d", r_config.glVersionMajor, r_config.glVersionMinor);
+	Com_Printf("OpenGL version detected: %d.%d\n", r_config.glVersionMajor, r_config.glVersionMinor);
 
 	/* multitexture */
 	qglActiveTexture = nullptr;

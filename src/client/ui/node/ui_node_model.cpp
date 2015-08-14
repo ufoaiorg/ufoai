@@ -114,7 +114,7 @@ void uiModelNode::doLayout (uiNode_t* node) {
 	if (EXTRADATA(node).tag == nullptr && (node->box.size[0] == 0 || node->box.size[1] == 0)) {
 		Com_Printf("UI_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", UI_GetPath(node));
 	}
-};
+}
 
 void uiModelNode::draw (uiNode_t* node)
 {

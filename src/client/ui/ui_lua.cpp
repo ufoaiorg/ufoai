@@ -299,11 +299,11 @@ bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn) {
 			@todo The entire passing of commands to/from should be rewritten to allow for typed arguments
 		*/
 		const char* s = Cmd_Argv(i);
-		char* p = const_cast<char*>(s);
+		char* p = nullptr;
 		// is it an integer?
 		errno = 0;
 		int val_i = strtol(s, &p, 10);
-		if (!errno) {
+		if (!errno && *p == '\0') {
 			// push argument as integer
 			lua_pushinteger(CL_GetLuaState(), val_i);
 		}
@@ -311,7 +311,7 @@ bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn) {
 			// is it a float?
 			errno = 0;
 			float val_f = strtof(s, &p);
-			if (!errno) {
+			if (!errno && *p == '\0') {
 				// push argument as float
 				lua_pushnumber(CL_GetLuaState(), val_f);
 			}
@@ -445,11 +445,11 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 	/* check the name */
 	if (!UI_TokenIsName(name, false)) {
 		Com_Printf("UI_CreateControl: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
-		return false;
+		return nullptr;
 	}
 	if (UI_TokenIsReserved(name)) {
 		Com_Printf("UI_CreateControl: \"%s\" is a reserved token, we can't call a node with it\n", name);
-		return false;
+		return nullptr;
 	}
 
 	/* test if node already exists (inside the parent subtree) */
@@ -523,11 +523,11 @@ uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* su
 	/* check the name */
 	if (!UI_TokenIsName(name, false)) {
 		Com_Printf("UI_CreateComponent: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
-		return false;
+		return nullptr;
 	}
 	if (UI_TokenIsReserved(name)) {
 		Com_Printf("UI_CreateComponent: \"%s\" is a reserved token, we can't call a node with it\n", name);
-		return false;
+		return nullptr;
 	}
 
 	/* get the type of behaviour */

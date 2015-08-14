@@ -8,7 +8,7 @@ msgid mission_briefing_fueldump {
 	text "_The aliens have barricaded themselves inside this fuel dump. Find a bomb nearby to destroy the gate and gain entry."
 }
 msgid victory_condition_fueldump {
-	text "_Kill all the aliens or hold the point in the fuel depot for some time."
+	text "_Kill all the aliens before they are able to blow up the depot."
 }
 msgid mission_briefing_alienbase {
 	text "_We've located an entry point to the alien base, which appears to be a large facility built below ground. Once your men have dropped down the entry shaft you'll need to clear out the alien presence so that our analysts can investigate the technology on-site."
@@ -21,4 +21,10 @@ msgid mission_briefing_crashsite {
 }
 msgid mission_briefing_baseattack {
 	text "_The aliens penetrated your base defenses and are inside the compound. Rally the soldiers on site to eliminate the threat. Security cameras placed around the base will help you track their locations as long as a soldier remains inside the camera room of the Command Centre."
+}
+msgid mission_briefing_mansion {
+	text "_There is a large area to cover, so local forces will join our counterattack. Your main objective in this mission is to protect the civilians caught in the main building. There is a shelter hidden within, our hope is people managed to get there."
+}
+msgid victory_condition_mansion {
+	text "_Secure the area in front of the panic room entrance until reinforcements arrive."
 }

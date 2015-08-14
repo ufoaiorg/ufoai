@@ -106,7 +106,7 @@ GAME RELATED TRACING
 
 
 int RT_CheckCell(mapTiles_t* mapTiles, Routing& routing, const int actorSize, const int x, const int y, const int z, const char** list);
-void RT_UpdateConnectionColumn(mapTiles_t* mapTiles, Routing& routing, const int actorSize, const int x, const int y, const int dir, const char** list = nullptr, const int minZ = 0, const int maxZ = PATHFINDING_HEIGHT - 1);
+void RT_UpdateConnectionColumn(mapTiles_t* mapTiles, Routing& routing, const int actorSize, const int x, const int y, const int dir, const char** list = nullptr, const int minZ = 0, const int maxZ = PATHFINDING_HEIGHT);
 bool RT_AllCellsBelowAreFilled(const Routing& routing, const int actorSize, const pos3_t pos);
 void RT_GetMapSize(mapTiles_t* mapTiles, AABB& mapBox);
 bool RT_CanActorStandHere(const Routing& routing, const int actorSize, const pos3_t pos);

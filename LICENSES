@@ -571,7 +571,6 @@ base/maps/military_convoy/mc_main.map | GNU General Public License 2.0 or later 
 base/maps/mine.map | GNU General Public License 2.0 or later
 base/maps/neighbourhood.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/office.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/oriental.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/oriental.ump | GNU General Public License 2.0 or later
 base/maps/oriental/or_craft_crash_fighter.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_craft_crash_scout.map | GNU General Public License 2.0 or later
@@ -584,22 +583,22 @@ base/maps/oriental/or_craft_ufo_fighter.map | GNU General Public License 2.0 or 
 base/maps/oriental/or_craft_ufo_gunboat.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | ufo_gunboat prefab
 base/maps/oriental/or_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_craft_ufo_scout.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_house_a.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_house_b.map | GNU General Public License 2.0 or later
+base/maps/oriental/or_house_a.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
+base/maps/oriental/or_house_b.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
 base/maps/oriental/or_house_c.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_house_d.map | GNU General Public License 2.0 or later
+base/maps/oriental/or_house_d.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
 base/maps/oriental/or_house_e.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_f.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_house_g.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_house_h.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_mosque.map | GNU General Public License 2.0 or later
+base/maps/oriental/or_house_h.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
+base/maps/oriental/or_house_o.map | GNU General Public License 2.0 or later | | from /base/maps/oriental.map by Martin Gerhardy
+base/maps/oriental/or_mosque.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
 base/maps/oriental/or_shed_a.map | GNU General Public License 2.0 or later
-base/maps/oriental/or_stand_a.map | GNU General Public License 2.0 or later
+base/maps/oriental/or_stand_a.map | GNU General Public License 2.0 or later | | from maps/oriental_mosque.map by "SparX" Beyeler
 base/maps/oriental/or_stand_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_trees_a.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_trees_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_well.map | GNU General Public License 2.0 or later
-base/maps/oriental_mosque/om_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/pipes_const.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/resort.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/rivertown.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3435,9 +3434,6 @@ base/pics/maps/shots/office_3.jpg | GNU General Public License 2.0 or later | Ma
 base/pics/maps/shots/oriental.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/oriental_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/oriental_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/oriental_mosque.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/oriental_mosque_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/oriental_mosque_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/pipes_const.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/pipes_const_2.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/pipes_const_3.jpg | GNU General Public License 2.0 or later | MCR

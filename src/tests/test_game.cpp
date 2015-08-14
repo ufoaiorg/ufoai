@@ -104,7 +104,7 @@ TEST_F(GameTest, SpawnAndConnect)
 		cnt++;
 	}
 
-	ASSERT_EQ(cnt, 45);
+	ASSERT_EQ(cnt, 43);
 
 	FS_FreeFile(buf);
 }

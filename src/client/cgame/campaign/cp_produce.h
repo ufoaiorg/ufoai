@@ -83,12 +83,6 @@ typedef struct production_s
 #define PR_GetProgress(prod)	((double)(prod)->frame / (prod)->totalFrames)
 #define PR_IsReady(prod)		((prod)->frame > (prod)->totalFrames)
 
-/** @brief Used in production costs (to allow reducing prices below 1x). */
-#define PRODUCE_FACTOR 1
-#define PRODUCE_DIVISOR 1
-
-#define PR_GetPrice(item)			((item)->productionCost * PRODUCE_FACTOR / PRODUCE_DIVISOR)
-
 /**
  * @brief A production queue. Lists all items to be produced.
  * @sa production_t
@@ -100,6 +94,8 @@ typedef struct production_queue_s
 } production_queue_t;
 
 #define PR_GetProductionForBase(base) (&((base)->productions))
+
+int PR_GetPrice(const int productionCost);
 
 void PR_ProductionInit(void);
 void PR_ProductionRun(void);

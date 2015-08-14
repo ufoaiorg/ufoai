@@ -4,19 +4,19 @@
 // brush 0
 {
 ( 308 128 2 ) ( 308 -128 2 ) ( 52 128 2 ) tex_streets/2lnh 0 128 0 0.25 0.25
-( 516 128 250 ) ( 260 128 250 ) ( 516 128 -6 ) tex_common/nodraw -0 0 0 0.25 0.25
+( 516 128 250 ) ( 260 128 250 ) ( 516 128 -6 ) tex_common/nodraw 0 0 0 0.25 0.25
 ( 512 128 256 ) ( 512 128 0 ) ( 512 -128 256 ) tex_streets/base 0 896 0 0.25 0.25
 ( 0 -128 0 ) ( 256 -128 0 ) ( 0 128 0 ) tex_common/nodraw 0 128 0 0.25 0.25
-( 256 32 0 ) ( 256 32 256 ) ( 512 32 0 ) tex_common/nodraw -0 0 0 0.25 0.25
+( 256 32 0 ) ( 256 32 256 ) ( 512 32 0 ) tex_common/nodraw 0 0 0 0.25 0.25
 ( 0 -128 0 ) ( 0 128 0 ) ( 0 -128 256 ) tex_streets/base 0 896 0 0.25 0.25
 }
 // brush 1
 {
 ( 308 224 2 ) ( 308 -32 2 ) ( 52 224 2 ) tex_streets/2lnh 0 896 0 0.25 0.25
-( 516 224 252 ) ( 260 224 252 ) ( 516 224 -4 ) tex_common/nodraw -0 0 0 0.25 0.25
+( 516 224 252 ) ( 260 224 252 ) ( 516 224 -4 ) tex_common/nodraw 0 0 0 0.25 0.25
 ( 512 224 256 ) ( 512 224 0 ) ( 512 -32 256 ) tex_streets/base 0 896 0 0.25 0.25
 ( 0 -32 0 ) ( 256 -32 0 ) ( 0 224 0 ) tex_common/nodraw 0 896 0 0.25 0.25
-( 256 128 -2 ) ( 256 128 254 ) ( 512 128 -2 ) tex_common/nodraw -0 0 0 0.25 0.25
+( 256 128 -2 ) ( 256 128 254 ) ( 512 128 -2 ) tex_common/nodraw 0 0 0 0.25 0.25
 ( 0 -32 0 ) ( 0 224 0 ) ( 0 -32 256 ) tex_streets/base 0 896 0 0.25 0.25
 }
 // brush 2
@@ -25,13 +25,13 @@
 ( 264 256 8 ) ( 40 256 8 ) ( 264 256 -24 ) tex_buildings/floor013 0 0 0 0.25 0.25
 ( 512 256 32 ) ( 512 256 0 ) ( 512 224 32 ) tex_buildings/floor013 128 0 0 0.25 0.25
 ( 32 224 0 ) ( 256 224 0 ) ( 32 256 0 ) tex_common/nodraw 0 0 0 0.125 0.125
-( 288 224 -4 ) ( 288 224 28 ) ( 512 224 -4 ) tex_buildings/floor013 -0 0 0 0.25 0.25
+( 288 224 -4 ) ( 288 224 28 ) ( 512 224 -4 ) tex_buildings/floor013 0 0 0 0.25 0.25
 ( 0 224 0 ) ( 0 256 0 ) ( 0 224 32 ) tex_buildings/floor013 128 0 0 0.25 0.25
 }
 // brush 3
 {
 ( 264 32 4 ) ( 264 0 4 ) ( 40 32 4 ) tex_buildings/floor013 0 0 0 0.25 0.25
-( 520 32 4 ) ( 296 32 4 ) ( 520 32 -28 ) tex_buildings/floor013 -0 0 0 0.25 0.25
+( 520 32 4 ) ( 296 32 4 ) ( 520 32 -28 ) tex_buildings/floor013 0 0 0 0.25 0.25
 ( 512 32 32 ) ( 512 32 0 ) ( 512 0 32 ) tex_buildings/floor013 0 0 0 0.25 0.25
 ( 32 0 0 ) ( 256 0 0 ) ( 32 32 0 ) tex_common/nodraw 0 0 0 0.125 0.125
 ( 32 0 0 ) ( 32 0 32 ) ( 256 0 0 ) tex_buildings/floor013 0 0 0 0.25 0.25
@@ -1269,4 +1269,27 @@
 "origin" "448 32 28"
 "team" "1"
 "angle" "-45"
+}
+// entity 26
+{
+"classname" "misc_mission"
+"origin" "288 128 32"
+"spawnflags" "255"
+"team" "7"
+"time" "3"
+"radius" "288"
+}
+// entity 27
+{
+"classname" "misc_item"
+"origin" "208 144 26"
+"spawnflags" "1"
+"item" "bomb1"
+}
+// entity 28
+{
+"classname" "misc_item"
+"origin" "208 112 26"
+"spawnflags" "1"
+"item" "bomb1"
 }

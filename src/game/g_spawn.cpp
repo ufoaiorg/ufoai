@@ -70,7 +70,6 @@ static void SP_civilian_target(Edict* ent);
 static void SP_misc_model(Edict* ent);
 static void SP_misc_item(Edict* ent);
 static void SP_misc_mission(Edict* ent);
-static void SP_misc_mission_aliens(Edict* ent);
 static void SP_misc_message(Edict* ent);
 static void SP_misc_smoke(Edict* ent);
 static void SP_misc_fire(Edict* ent);
@@ -90,7 +89,6 @@ static const spawn_t spawns[] = {
 	{"misc_model", SP_misc_model},
 	{"misc_particle", SP_dummy},
 	{"misc_mission", SP_misc_mission},
-	{"misc_mission_aliens", SP_misc_mission_aliens},
 	{"info_player_start", SP_player_start},
 	{"info_human_start", SP_human_start},
 	{"info_alien_start", SP_alien_start},
@@ -773,19 +771,13 @@ static void SP_misc_mission (Edict* ent)
 {
 	ent->classname = "misc_mission";
 	ent->type = ET_MISSION;
+	ent->solid = SOLID_TRIGGER;
 
 	/* maybe this was set to something else for multiplayer */
 	if (!ent->getTeam())
 		ent->setTeam(TEAM_PHALANX);
 
-	ent->solid = SOLID_BBOX;
-
-	if (ent->HP) {
-		ent->flags |= FL_DESTROYABLE;
-		ent->destroy = G_MissionDestroy;
-	}
-
-	if (!ent->HP && !ent->time && !ent->target) {
+	if (!ent->time && !ent->target && !ent->item) {
 		G_FreeEdict(ent);
 		gi.DPrintf("misc_mission given with no objective\n");
 		return;
@@ -795,46 +787,23 @@ static void SP_misc_mission (Edict* ent)
 	ent->think = G_MissionThink;
 	ent->nextthink = 1;
 
-	if (ent->radius <= GRID_WIDTH) {
-		ent->radius = GRID_WIDTH * 3;
+	if (ent->radius < 1) {
+		ent->radius = UNIT_SIZE * 3;
 	}
-	ent->absBox.setMaxs(ent->radius, ent->radius, PLAYER_STAND);
-	ent->absBox.setMins(-ent->radius, -ent->radius, PLAYER_MIN);
+	ent->entBox.setMaxs(ent->radius, ent->radius, PLAYER_STAND);
+	ent->entBox.setMins(-ent->radius, -ent->radius, PLAYER_MIN);
 
 	if (G_ValidMessage(ent))
 		G_MissionAddVictoryMessage(ent->message);
 
-	/* spawn the trigger entity */
-	Edict* other = G_TriggerSpawn(ent);
-	other->setTouch(G_MissionTouch);
-	if (ent->target)
+	ent->setTouch(G_MissionTouch);
+	ent->reset = G_MissionReset;
+	if (ent->target) {
 		ent->use = G_MissionUse;
-	ent->setChild(other);
-
-	gi.LinkEdict(ent);
-}
-
-/**
- * @brief Initializes the alien mission entity
- */
-static void SP_misc_mission_aliens (Edict* ent)
-{
-	ent->classname = "mission";
-	ent->type = ET_MISSION;
-	ent->setTeam(TEAM_ALIEN);
-	ent->solid = SOLID_BBOX;
-
-	/* think function values */
-	ent->think = G_MissionThink;
-	ent->nextthink = 1;
-
-	ent->absBox.setMaxs(PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
-	ent->absBox.setMins(-(PLAYER_WIDTH * 3), -(PLAYER_WIDTH * 3), PLAYER_MIN);
-
-	/* spawn the trigger entity */
-	Edict* other = G_TriggerSpawn(ent);
-	other->setTouch(G_MissionTouch);
-	ent->setChild(other);
+		/* Bomb/key/etc target will be freed when used - don't group it! */
+		if (ent->item)
+			ent->group = nullptr;
+	}
 
 	gi.LinkEdict(ent);
 }

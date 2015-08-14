@@ -1,29 +1,40 @@
 --!usr/bin/lua
 
-local downloadentry = ufo.create_component("panel", "downloadentry", nil)
-downloadentry:set_pos(240, 135)
-downloadentry:set_size(250, 34)
-downloadentry:set_layout(ufo.LAYOUT_LEFT_RIGHT_FLOW)
-downloadentry:set_layoutmargin(1)
-local downloadentry_download = ufo.create_control(downloadentry, "TextBtn", "download", nil)
-downloadentry_download:set_pos(0, 0)
-downloadentry_download:set_size(190, 34)
-downloadentry_download:set_text("")
-downloadentry_download.on_click = function(sender)
-		ufo.cmd(string.format("web_downloadcgame %d %s %d;", downloadentry:child("category"):as_integer(), downloadentry:child("filename"):as_string(), downloadentry:child("userid"):as_integer()))
+do
+	local downloadentry = ufo.create_component("panel", "downloadentry", nil)
+	downloadentry:set_pos(240, 135)
+	downloadentry:set_size(250, 34)
+	downloadentry:set_layout(ufo.LAYOUT_LEFT_RIGHT_FLOW)
+	downloadentry:set_layoutmargin(1)
+	do
+		local downloadentry_download = ufo.create_control(downloadentry, "TextBtn", "download", nil)
+		downloadentry_download:set_pos(0, 0)
+		downloadentry_download:set_size(190, 34)
+		downloadentry_download:set_text("")
+		downloadentry_download.on_click = function(sender)
+				ufo.cmd(string.format("web_downloadcgame %d %s %d;", downloadentry:child("category"):as_integer(), downloadentry:child("filename"):as_string(), downloadentry:child("userid"):as_integer()))
+			end
 	end
-local downloadentry_delete = ufo.create_control(downloadentry, "button", "delete", nil)
-downloadentry_delete:set_size(34, 34)
-downloadentry_delete:set_icon("icons/delete")
-downloadentry_delete:set_tooltip("_Remove this file from the server")
-downloadentry_delete.on_click = function(sender)
-		ufo.cmd(string.format("web_deletecgame %d %s;", downloadentry:child("category"):as_integer(), downloadentry:child("filename"):as_string()))
+	do
+		local downloadentry_delete = ufo.create_control(downloadentry, "button", "delete", nil)
+		downloadentry_delete:set_size(34, 34)
+		downloadentry_delete:set_icon("icons/delete")
+		downloadentry_delete:set_tooltip("_Remove this file from the server")
+		downloadentry_delete.on_click = function(sender)
+				ufo.cmd(string.format("web_deletecgame %d %s;", downloadentry:child("category"):as_integer(), downloadentry:child("filename"):as_string()))
+			end
 	end
 
-local downloadentry_category = ufo.create_control(downloadentry, "data", "category", nil)
-downloadentry_category:set_value(0)
-local downloadentry_filename = ufo.create_control(downloadentry, "data", "filename", nil)
-downloadentry_filename:set_value("")
-local downloadentry_userid = ufo.create_control(downloadentry, "data", "userid", nil)
-downloadentry_userid:set_value(0)
-
+	do
+		local downloadentry_category = ufo.create_control(downloadentry, "data", "category", nil)
+		downloadentry_category:set_value(0)
+	end
+	do
+		local downloadentry_filename = ufo.create_control(downloadentry, "data", "filename", nil)
+		downloadentry_filename:set_value("")
+	end
+	do
+		local downloadentry_userid = ufo.create_control(downloadentry, "data", "userid", nil)
+		downloadentry_userid:set_value(0)
+	end
+end

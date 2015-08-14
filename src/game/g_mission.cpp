@@ -49,58 +49,69 @@ void G_MissionAddVictoryMessage (const char* message)
  */
 bool G_MissionTouch (Edict* self, Edict* activator)
 {
-	if (!self->owner())
+	if (!G_IsLivingActor(activator))
 		return false;
 
-	switch (self->owner()->getTeam()) {
-	case TEAM_ALIEN:
-		if (G_IsAlien(activator)) {
-			if (!self->count) {
-				self->count = level.actualRound;
-				gi.BroadcastPrintf(PRINT_HUD, _("Aliens entered target zone!"));
-			}
-			return true;
-		} else {
+	Actor* actor = makeActor(activator);
+	if (self->isOpponent(actor)) {
+		if (!self->item) {
 			/* reset king of the hill counter */
+			gi.BroadcastPrintf(PRINT_HUD, _("Team %i has entered team %i's target zone!"),
+					actor->getTeam(), self->getTeam());
 			self->count = 0;
 		}
-	/* general case that also works for multiplayer teams */
-	default:
-		if (!activator->isSameTeamAs(self->owner())) {
-			/* reset king of the hill counter */
-			self->count = 0;
-			return false;
-		}
-		if (self->owner()->count)
-			return false;
-
-		self->owner()->count = level.actualRound;
-		if (!self->owner()->item) {
-			gi.BroadcastPrintf(PRINT_HUD, _("Target zone is occupied!"));
-			return true;
-		}
-
-		/* search the item in the activator's inventory */
-		/* ignore items linked from any temp container the actor must have this in his hands */
-		const Container* cont = nullptr;
-		while ((cont = activator->chr.inv.getNextCont(cont))) {
-			Item* item = nullptr;
-			while ((item = cont->getNextItem(item))) {
-				const objDef_t* od = item->def();
-				/* check whether we found the searched item in the actor's inventory */
-				if (!Q_streq(od->id, self->owner()->item))
-					continue;
-
-				/* drop the weapon - even if out of TUs */
-				G_ActorInvMove(makeActor(activator), cont->def(), item, INVDEF(CID_FLOOR), NONE, NONE, false);
-				gi.BroadcastPrintf(PRINT_HUD, _("Item was placed."));
-				self->owner()->count = level.actualRound;
-				return true;
-			}
-		}
-		break;
+		return false;
 	}
-	return true;
+	if (self->count)
+		return false;
+
+	if (self->isSameTeamAs(actor)) {
+		self->count = level.actualRound;
+		if (!self->item) {
+			gi.BroadcastPrintf(PRINT_HUD, _("Team %i has occupied its target zone!"),
+					actor->getTeam());
+			return true;
+		}
+	}
+
+	/* search the item in the activator's inventory */
+	/* ignore items linked from any temp container the actor must have this in his hands */
+	const Container* cont = nullptr;
+	while ((cont = actor->chr.inv.getNextCont(cont))) {
+		Item* item = nullptr;
+		while ((item = cont->getNextItem(item))) {
+			const objDef_t* od = item->def();
+			/* check whether we found the searched item in the actor's inventory */
+			if (!Q_streq(od->id, self->item))
+				continue;
+
+			/* drop the weapon - even if out of TUs */
+			G_ActorInvMove(actor, cont->def(), item, INVDEF(CID_FLOOR), NONE, NONE, false);
+			gi.BroadcastPrintf(PRINT_HUD, _("Item was placed."));
+			self->count = level.actualRound;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void G_MissionReset (Edict* self, Edict* activator)
+{
+	/* Don't reset the mission timer for 'bring item' missions G_MissionThink will handle that */
+	if (!self->time || self->item)
+		return;
+	linkedList_t* touched = self->touchedList;
+	while (touched) {
+		const Edict* const ent = static_cast<const Edict* const>(touched->data);
+		if (self->isSameTeamAs(ent) && !(G_IsDead(ent) || ent == activator)) {
+			return;
+		}
+		touched = touched->next;
+	}
+	/* All team actors are gone, reset counter */
+	gi.BroadcastPrintf(PRINT_HUD, _("Target zone is unoccupied!"));
+	self->count = 0;
 }
 
 /**
@@ -134,6 +145,17 @@ bool G_MissionUse (Edict* self, Edict* activator)
 		target->use(target, activator);
 
 	return true;
+}
+
+static bool G_MissionIsTouched (Edict* self) {
+	linkedList_t* touched = self->touchedList;
+	while (touched) {
+		const Edict* const ent = static_cast<const Edict* const>(touched->data);
+		if (self->isSameTeamAs(ent) && !G_IsDead(ent))
+			return true;
+		touched = touched->next;
+	}
+	return false;
 }
 
 /**
@@ -182,24 +204,29 @@ void G_MissionThink (Edict* self)
 				}
 			}
 			if (chain->time) {
+				/* Check that the target zone is still occupied (last defender might have died) */
+				if (!chain->item && !G_MissionIsTouched(chain)) {
+						chain->count = 0;
+				}
 				const int endTime = level.actualRound - chain->count;
-				const int spawnIndex = (self->getTeam() + level.teamOfs) % MAX_TEAMS;
+				const int spawnIndex = (chain->getTeam() + level.teamOfs) % MAX_TEAMS;
 				const int currentIndex = (level.activeTeam + level.teamOfs) % MAX_TEAMS;
 				/* not every edict in the group chain has
 				 * been occupied long enough */
 				if (!chain->count || endTime < chain->time ||
-						(endTime == level.actualRound && spawnIndex <= currentIndex))
+						(endTime == chain->time && spawnIndex < currentIndex))
 					return;
 			}
-			/* not destroyed yet */
-			if ((chain->flags & FL_DESTROYABLE) && chain->HP)
-				return;
+			if (chain->target && !chain->time && !chain->item) {
+				if (!G_MissionIsTouched(chain))
+					return;
+			}
 		}
 		chain = chain->groupChain;
 	}
 
-	if (self->use)
-		self->use(self, nullptr);
+	const bool endMission = self->target == nullptr;
+	G_UseEdict(self, nullptr);
 
 	/* store team before the edict is released */
 	const int team = self->getTeam();
@@ -221,27 +248,18 @@ void G_MissionThink (Edict* self)
 		if (chain->link != nullptr) {
 			Edict* particle = G_GetEdictFromPos(chain->pos, ET_PARTICLE);
 			if (particle != nullptr) {
-				G_AppearPerishEvent(PM_ALL, false, *particle, nullptr);
+				G_AppearPerishEvent(G_VisToPM(particle->visflags), false, *particle, nullptr);
 				G_FreeEdict(particle);
 			}
 			chain->link = nullptr;
 		}
 
 		Edict* ent = chain->groupChain;
-		/* free the trigger */
-		if (chain->child())
-			G_FreeEdict(chain->child());
 		/* free the group chain */
 		G_FreeEdict(chain);
 		chain = ent;
 	}
-	self = nullptr;
 
-	/* still active mission edicts left */
-	Edict* ent = nullptr;
-	while ((ent = G_EdictsGetNextInUse(ent)))
-		if (ent->type == ET_MISSION && ent->getTeam() == team)
-			return;
-
-	G_MatchEndTrigger(team, 10);
+	if (endMission)
+		G_MatchEndTrigger(team, level.activeTeam == TEAM_ALIEN ? 10 : 3);
 }

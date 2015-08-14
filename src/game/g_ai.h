@@ -100,7 +100,7 @@ float AI_CalcShotDamage(Actor* actor, const Actor* target, const fireDef_t* fd, 
 bool AI_TryToReloadWeapon(Actor* actor, containerIndex_t containerID);
 bool AI_IsHostile(const Actor* actor, const Edict* target);
 const invDef_t* AI_SearchGrenade(const Actor* actor, Item** ip);
-bool AI_FindMissionLocation(Actor* actor, const pos3_t to, int tus);
+bool AI_FindMissionLocation(Actor* actor, const pos3_t to, int tus, int radius = 0);
 bool AI_CheckPosition(const Actor* const ent, const pos3_t pos);
 bool AI_HideNeeded(const Actor* actor);
 

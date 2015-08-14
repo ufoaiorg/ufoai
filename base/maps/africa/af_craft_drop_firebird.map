@@ -3,12 +3,12 @@
 "classname" "worldspawn"
 // brush 0
 {
- ( 784 768 4 ) ( 784 0 4 ) ( 16 768 4 ) tex_nature/desert004 0 0 0 0.25 0.25 0 0 0
- ( 768 512 256 ) ( 0 512 256 ) ( 768 512 0 ) tex_nature/desert004 0 0 0 0.25 0.25 0 0 0
- ( 768 768 256 ) ( 768 768 0 ) ( 768 0 256 ) tex_nature/desert004 0 0 0 0.25 0.25 0 0 0
+( 784 768 4 ) ( 784 0 4 ) ( 16 768 4 ) tex_nature/desert004 0 0 0 0.25 0.25 0 0 0
+( 768 512 256 ) ( 0 512 256 ) ( 768 512 0 ) tex_nature/desert004 0 0 0 0.25 0.25 0 0 0
+( 768 768 256 ) ( 768 768 0 ) ( 768 0 256 ) tex_nature/desert004 0 0 0 0.25 0.25 0 0 0
 ( 0 0 0 ) ( 768 0 0 ) ( 0 768 0 ) tex_common/nodraw 0 0 0 0.25 0.25 0 0 0
- ( 0 0 0 ) ( 0 0 256 ) ( 768 0 0 ) tex_nature/desert004 0 0 0 0.25 0.25 0 0 0
- ( 0 0 0 ) ( 0 768 0 ) ( 0 0 256 ) tex_nature/desert004 0 0 0 0.25 0.25 0 0 0
+( 0 0 0 ) ( 0 0 256 ) ( 768 0 0 ) tex_nature/desert004 0 0 0 0.25 0.25 0 0 0
+( 0 0 0 ) ( 0 768 0 ) ( 0 0 256 ) tex_nature/desert004 0 0 0 0.25 0.25 0 0 0
 }
 // brush 1
 {
@@ -1289,4 +1289,27 @@
 "team" "1"
 "origin" "464 336 32"
 "angle" "135"
+}
+// entity 33
+{
+"classname" "misc_mission"
+"origin" "416 256 32"
+"spawnflags" "255"
+"team" "7"
+"time" "3"
+"radius" "288"
+}
+// entity 34
+{
+"classname" "misc_item"
+"origin" "336 272 26"
+"spawnflags" "1"
+"item" "bomb1"
+}
+// entity 35
+{
+"classname" "misc_item"
+"origin" "336 240 26"
+"spawnflags" "1"
+"item" "bomb1"
 }

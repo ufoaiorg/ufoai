@@ -263,6 +263,7 @@ void Weather::render (void)
 
 	GLfloat prtPos[3 * 4 * Weather::MAX_PARTICLES];
 	GLfloat prtTexcoord[2 * 4 * Weather::MAX_PARTICLES];
+	GLushort prtIndex[3 * 2 * Weather::MAX_PARTICLES];
 	size_t prtCount = 0;
 	//const float splashTimeScale = 0.001f / splashTime; /* from msec to 1/sec units, so division is done only once per frame */
 	/** @todo shadowcasting at least for the sunlight */
@@ -301,6 +302,7 @@ void Weather::render (void)
 		/* construct a particle geometry; */
 		GLfloat *pos = &prtPos[3 * 4 * prtCount];
 		GLfloat *texcoord = &prtTexcoord[2 * 4 * prtCount];
+		GLushort *idx = &prtIndex[3 * 2 * prtCount];
 
 		/** @todo actually rotate billboard in the correct position */
 		pos[0] = x - dx; pos[1] = y - dy; pos[2] = z + dz * 2;
@@ -312,6 +314,9 @@ void Weather::render (void)
 		texcoord[2] = 1.0f; texcoord[3] = 0; /* upper right vertex */
 		texcoord[4] = 1.0f; texcoord[5] = 1.0f; /* bottom right vertex */
 		texcoord[6] = 0; texcoord[7] = 1.0f; /* bottom left vertex */
+
+		idx[0] = 4 * prtCount; idx[1] = 4 * prtCount + 1; idx[2] = 4 * prtCount + 2;
+		idx[3] = 4 * prtCount + 2; idx[4] = 4 * prtCount + 3; idx[5] = 4 * prtCount;
 
 		prtCount++;
 	}
@@ -325,7 +330,7 @@ void Weather::render (void)
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, prtPos);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, prtTexcoord);
 	R_EnableBlend(true);
-	glDrawArrays(GL_QUADS, 0, prtCount);
+	glDrawElements(GL_TRIANGLES, prtCount * 3 * 2, GL_UNSIGNED_SHORT, prtIndex);
 	R_EnableBlend(false);
 	R_ResetArrayState();
 	R_Color(nullptr);

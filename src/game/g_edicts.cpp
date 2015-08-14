@@ -335,3 +335,37 @@ Actor* makeActor (Edict* ent)
 	Sys_Error("Unexpected non-Actor Edict found.");
 	return nullptr;
 }
+
+/**
+ * @brief Check if given actor is an enemy.
+ * @param[in] actor The actor that makes the check.
+ * @returns @c true if enemies. @c false otherwise
+ * @todo Should we really know if the other actor is controlled by the other team (STATE_XVI)?
+ * aliens would of course know if an actor is infected (becomes part of the hive mind), but humans?
+ */
+bool Edict::isOpponent (const Actor* actor) const
+{
+	const bool actControlled = actor->isState(STATE_XVI);
+	const bool selfControlled = G_IsState(this, STATE_XVI);
+	if (actor->isSameTeamAs(this))
+		return selfControlled ? !actControlled : actControlled;
+
+	bool opponent = true;
+	switch (this->getTeam()) {
+	/* Aliens: hostile to everyone */
+	case TEAM_ALIEN:
+		opponent = !actControlled;
+		break;
+	/* Civilians: Only hostile to aliens */
+	case TEAM_CIVILIAN:
+		opponent = G_IsAlien(actor) || actControlled;
+		break;
+	/* PHALANX and MP teams: Hostile to aliens and rival teams
+	 * (under AI control while under panic/rage or when g_aihumans is non-zero) */
+	default:
+		opponent = !G_IsCivilian(actor) || actControlled;
+		break;
+	}
+
+	return selfControlled ? !opponent : opponent;
+}

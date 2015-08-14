@@ -123,13 +123,6 @@ struct campaign_s;
 #define EARLY_UFO_RUSH_INTEREST 			50
 
 /**
- * @brief The minimum and maximum amount of missions per mission cycle.
- * @note some of the missions can be non-occurrence missions.
- */
-#define MINIMUM_MISSIONS_PER_CYCLE 			5
-#define MAXIMUM_MISSIONS_PER_CYCLE 			17
-
-/**
  * @brief The probability that any new alien mission will be a non-occurrence mission.
  */
 #define NON_OCCURRENCE_PROBABILITY 			0.75
@@ -360,6 +353,10 @@ typedef struct campaign_s {
 	float produceRate;			/**< higher number = faster production */
 	float researchRate;			/**< specifies the number of research hours that a single scientist produces in a single hour of game time */
 	float healingRate;			/**< the hospital healing rate */
+	float liquidationRate;			/**< amount of original price of a building returned when it's removed from base due to recycling */
+	float componentRate;			/**< Component cost percentage to build an object in the workshop */
+	int minMissions;			/**< Minimum Missions per Interest Level */
+	int maxMissions;			/**< Maximum Missions per Interest Level */
 	float ufoReductionRate;		/**< is used in the equation which spawns UFOs to determine the probability that a UFO will not be spawned.
 								 * It works like this: the game says: 10 UFOs can be spawned in this cycle. For each UFO it picks a number between 0.0 and 1.0.
 								 * If the number is higher than ufoReductionRate, it is spawned. Otherwise it is not. So higher numbers lead to fewer UFOs. */

@@ -2451,6 +2451,9 @@ mapdef mansion_huge
 	hwclass			3
 	maxaliens		30
 
+	missionbriefing		"*msgid:mission_briefing_mansion"
+	victorycondition	"*msgid:victory_condition_mansion"
+
 	multiplayer		true
 	teams			4
 	gametypes
@@ -2504,6 +2507,9 @@ mapdef mansion_medium
 	description		"_Mansion"
 	maxaliens		18
 
+	missionbriefing		"*msgid:mission_briefing_mansion"
+	victorycondition	"*msgid:victory_condition_mansion"
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -2551,6 +2557,9 @@ mapdef mansion_small
 	description		"_Mansion"
 	maxaliens		15
 
+	missionbriefing		"*msgid:mission_briefing_mansion"
+	victorycondition	"*msgid:victory_condition_mansion"
+
 	multiplayer		true
 	teams			2
 	gametypes
@@ -2593,6 +2602,46 @@ mapdef mansion_small
 //////////////////////////
 // ORIENTAL RANDOM MAPS //
 //////////////////////////
+
+// ORIENTAL MAP //
+
+mapdef oriental
+{
+	map				"+oriental"
+	params			("oriental")
+	description		"_Middle Eastern Suburb"
+	maxaliens		14
+	civilianteam	middle
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"desert"
+	)
+
+	cultures
+	(
+		"oriental"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
+}
 
 mapdef oriental_large
 {
@@ -2671,6 +2720,45 @@ mapdef oriental_medium
 		"urban"
 		"suburban"
 		"village"
+	)
+}
+
+mapdef oriental_mosque
+{
+	map				"+oriental"
+	params			("mosque")
+	description		"_Middle Eastern Suburb"
+	maxaliens		9
+
+	civilianteam	middle
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"desert"
+	)
+
+	cultures
+	(
+		"oriental"
+	)
+
+	populations
+	(
+		"village"
+		"suburban"
+		"urban"
 	)
 }
 
@@ -4427,56 +4515,6 @@ mapdef military_convoy
 	)
 }
 
-// ORIENTAL_MOSQUE MAP //
-
-mapdef oriental_mosque
-{
-	map				"+oriental_mosque"
-	params			("standard")
-	description		"_Middle Eastern Suburb"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		20
-
-	civilianteam	middle
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"desert"
-	)
-
-	cultures
-	(
-		"oriental"
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-		"urban"
-	)
-}
-
 /////////////////////////
 // SHELTER RANDOM MAPS //
 /////////////////////////
@@ -5141,53 +5179,6 @@ mapdef office
 	)
 }
 
-// ORIENTAL MAP //
-
-mapdef oriental
-{
-	map				"oriental"
-	description		"_Middle Eastern Suburb"
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		coop2
-		coop3
-		coop4
-	)
-	maxaliens		14
-
-	civilianteam	middle
-
-	aircraft
-	(
-		// any
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"desert"
-	)
-
-	cultures
-	(
-		"oriental"
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-		"urban"
-	)
-}
-
 // PIPES_CONST MAP //
 
 mapdef pipes_const
@@ -5702,6 +5693,15 @@ mapdef baseattack
 	description	"_PHALANX Base Under Attack"
 	maxaliens	16
 	missionbriefing		"*msgid:mission_briefing_baseattack"
+}
+
+mapdef base_mission_test
+{
+	map				"+baseattack"
+	params			("test")
+	description		"Test misc_mission"
+	maxaliens		6
+	campaign	false
 }
 
 ////////////////////////

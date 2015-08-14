@@ -116,7 +116,9 @@ $(TARGET)_SRCS_TMP      = $(subst $(SRCDIR)/,, \
 	\
 	$(CURL_SRCS) \
 	\
-	$(GTEST_SRCS)
+	$(GTEST_SRCS) \
+	\
+	$(LUA_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS_TMP += \

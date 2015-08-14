@@ -1510,3 +1510,26 @@
 "origin" "464 592 32"
 "angle" "135"
 }
+// entity 33
+{
+"classname" "misc_mission"
+"origin" "416 512 32"
+"spawnflags" "255"
+"team" "7"
+"time" "3"
+"radius" "288"
+}
+// entity 34
+{
+"classname" "misc_item"
+"origin" "336 528 26"
+"spawnflags" "1"
+"item" "bomb1"
+}
+// entity 35
+{
+"classname" "misc_item"
+"origin" "336 496 26"
+"spawnflags" "1"
+"item" "bomb1"
+}

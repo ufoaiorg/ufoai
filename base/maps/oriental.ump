@@ -288,6 +288,15 @@ tile +house_n
 0		0		0		0
 }
 
+// or_house_o - Small square house, 2 rooms, wash machines
+tile +house_o
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
 // market stands ---------------------------------------------------*
 
 // or_stand_a - Fruitstand
@@ -453,6 +462,7 @@ title "_Oriental large"
 +house_l "0 1"
 +house_m "0 1"
 +house_n "0 1"
++house_o "0 1"
 +mosque "0 1"
 tileset shed "0 3"
 tileset stand "0 21"
@@ -481,6 +491,7 @@ title "_Oriental large"
 +house_l "0 1"
 +house_m "0 1"
 +house_n "0 1"
++house_o "0 1"
 +mosque "1 1"
 tileset shed "1 3"
 tileset stand "0 21"
@@ -509,6 +520,7 @@ title "_Oriental medium"
 +house_k "0 1"
 +house_m "0 1"
 +house_n "0 1"
++house_o "0 1"
 tileset shed "0 1"
 tileset stand "0 21"
 +mosque "0 1"
@@ -520,29 +532,63 @@ tileset minaret_11 "0 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
 
-// test assemblies -------------------------------------------------*
+assembly mosque
+{
+size "7 6"
+title "_Oriental mosque"
+fix +house_a		"1 5"
+fix +house_b		"2 3"
+fix +house_d		"1 3"
+fix +house_h		"4 4"
+fix +mosque			"3 2"
+fix +shed_a			"5 2"
+fix +stand_a		"3 5"
++house_h			"0 1"
++house_i			"0 1"
++house_k			"0 1"
++house_l			"0 1"
++house_m			"0 1"
++house_o			"0 1"
++minaret01			"0 1"
++stand_b			"0 1"
++stand_c			"0 1"
++stand_d			"0 1"
++stand_e			"0 1"
++trees_a			"0 3"
++trees_b			"0 3"
++well				"0 1"
+tileset minaret_11	"0 1"
+tileset stand		"0 5"
+fix *rm_drop +craft_drop_firebird	"0 0"
+}
 
-// *** Test-Maps ***
-
-// short-range weapon-testing :-)
-//assembly test
-//{
-//size "3 3"
-//+well "0 2"
-//+trees_a "0 2"
-//+stand_a "0 2"
-//+stand_b "0 2"
-//*rm_drop +craft_drop_firebird "1 1"
-//}
-
-//assembly tiny
-//{
-//size "3 3"
-//+house_a "0 1"
-//+house_d "0 1"
-//+well "0 2"
-//+trees_a "0 2"
-//+stand_a "0 2"
-//+stand_b "0 2"
-//*rm_drop +craft_drop_firebird "1 1"
-//}
+assembly oriental
+{
+size "8 6"
+title "_Oriental housing"
+fix +house_a		"4 1"
+fix +house_b		"3 4"
+fix +house_c		"5 0"
+fix +house_d		"0 5"
+fix +house_d		"7 3"
+fix +house_e		"6 4"
+fix +house_f		"2 0"
+fix +house_g		"2 5"
+fix +house_o		"0 0"
+fix +shed_a			"4 3"
+fix +stand_a		"4 0"
+fix +stand_b		"1 1"
+fix +stand_b		"3 2"
+fix +stand_b		"7 0"
+fix +well			"5 5"
++house_l			"0 1"
++house_m			"0 1"
++house_n			"0 1"
++stand_c			"0 1"
++stand_d			"0 1"
++stand_e			"0 1"
++trees_a			"0 5"
++trees_b			"0 5"
+tileset minaret_11	"0 2"
+*rm_drop +craft_drop_firebird	"1 1"
+}

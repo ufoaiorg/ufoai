@@ -396,7 +396,7 @@ bool AI_FighterCheckShoot (const Actor* actor, const Edict* check, const fireDef
 bool AI_CheckUsingDoor (const Edict* ent, const Edict* door)
 {
 	/* don't try to use the door in every case */
-	if (frand() < 0.3)
+	if (frand() < 0.3f)
 		return false;
 
 	/* not in the view frustum - don't use the door while not seeing it */
@@ -920,41 +920,6 @@ static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const
 }
 
 /**
- * @brief Check if given actors are enemies.
- * @param[in] actor The actor that makes the check.
- * @param[in] check The actor which is a possible opponent.
- * @returns @c true if enemies. @c false otherwise
- * @todo Should we really know if the other actor is controlled by the other team (STATE_XVI)?
- * aliens would of course know if an actor is infected (becomes part of the hive mind), but humans?
- */
-static inline bool AI_IsOpponent (const Actor* actor, const Edict* check)
-{
-	const bool entControlled = G_IsState(actor, STATE_XVI);
-	const bool checkControlled = G_IsState(check, STATE_XVI);
-	if (check->isSameTeamAs(actor))
-		return entControlled ? !checkControlled : checkControlled;
-
-	bool opponent = true;
-	switch (actor->getTeam()) {
-	/* Aliens: hostile to everyone */
-	case TEAM_ALIEN:
-		opponent = !checkControlled;
-		break;
-	/* Civilians: Only hostile to aliens */
-	case TEAM_CIVILIAN:
-		opponent = G_IsAlien(check) || checkControlled;
-		break;
-	/* PHALANX and MP teams: Hostile to aliens and rival teams
-	 * (under AI control while under panic/rage or when g_aihumans is non-zero) */
-	default:
-		opponent = !G_IsCivilian(check) || checkControlled;
-		break;
-	}
-
-	return entControlled ? !opponent : opponent;
-}
-
-/**
  * @brief Check if @c actor perceives @c target as hostile.
  * @note Takes lose of sanity in consideration.
  * @param[in] actor The actor that checks for hostiles.
@@ -969,7 +934,7 @@ bool AI_IsHostile (const Actor* actor, const Edict* target)
 	if (actor->isInsane())
 		return true;
 
-	if (!AI_IsOpponent(actor, target))
+	if (!target->isOpponent(actor))
 		return false;
 
 	/* don't shoot civs in multiplayer */
@@ -1360,12 +1325,12 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
  * @param[in] to The target position.
  * @return @c true if found a suitable position, @c false otherwise
  */
-bool AI_FindMissionLocation (Actor* actor, const pos3_t to, int tus)
+bool AI_FindMissionLocation (Actor* actor, const pos3_t to, int tus, int radius)
 {
 	int bestDist = ROUTING_NOT_REACHABLE;
 	pos3_t bestPos = {to[0], to[1], to[2]};
 
-	AiAreaSearch searchArea(to, HOLD_DIST, true);
+	AiAreaSearch searchArea(to, radius, true);
 	while (searchArea.getNext(actor->pos)) {
 		const pos_t length = G_ActorMoveLength(actor, level.pathingMap, actor->pos, true);
 		/* Can't walk there */
@@ -1377,7 +1342,7 @@ bool AI_FindMissionLocation (Actor* actor, const pos3_t to, int tus)
 
 		const int distX = std::abs(actor->pos[0] - to[0]);
 		const int distY = std::abs(actor->pos[1] - to[1]);
-		const int dist = distX + distY + std::max(distX, distY);
+		const int dist = std::max(distX, distY);
 		if (dist < bestDist) {
 			bestDist = dist;
 			VectorCopy(actor->pos, bestPos);
@@ -1451,13 +1416,17 @@ static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiActi
 		Edict* mission = nullptr;
 		while ((mission = G_EdictsGetNextInUse(mission))) {
 			if (mission->type == ET_MISSION) {
-				if (!AI_FindMissionLocation(actor, mission->pos, actor->getUsableTUs()))
+				const int radius = mission->radius / (UNIT_SIZE + 1);
+				if (!AI_FindMissionLocation(actor, mission->pos, actor->getUsableTUs(), radius  + HOLD_DIST))
 					continue;
+				const int distX = std::abs(actor->pos[0] - mission->pos[0]);
+				const int distY = std::abs(actor->pos[1] - mission->pos[1]);
+				const int dists = std::max(distX, distY);
 				if (player.getTeam() == mission->getTeam()) {
-					actionScore = SCORE_MISSION_TARGET;
+					actionScore = SCORE_MISSION_TARGET / ((dists > radius) + 1);
 				} else {
 					/* try to prevent the phalanx from reaching their mission target */
-					actionScore = SCORE_MISSION_OPPONENT_TARGET;
+					actionScore = SCORE_MISSION_OPPONENT_TARGET / ((dists > radius) + 1);
 				}
 
 				actor->calcOrigin();

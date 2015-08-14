@@ -1070,3 +1070,26 @@
 ( 448 128 0 ) ( 448 256 0 ) ( 448 128 96 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
 }
 }
+// entity 32
+{
+"classname" "misc_mission"
+"origin" "480 288 32"
+"spawnflags" "255"
+"team" "7"
+"time" "3"
+"radius" "288"
+}
+// entity 33
+{
+"classname" "misc_item"
+"origin" "400 304 26"
+"spawnflags" "1"
+"item" "bomb1"
+}
+// entity 34
+{
+"classname" "misc_item"
+"origin" "400 272 26"
+"spawnflags" "1"
+"item" "bomb1"
+}

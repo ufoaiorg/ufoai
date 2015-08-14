@@ -80,8 +80,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	TU_FLYING_MOVING_FACTOR	2	/**< The factor the normal movement is multiplied when flying */
 
 /* Move/Routing values */
-#define MAX_ROUTE			32
-#define	MAX_ROUTE_TUS		50
+#define MAX_ROUTE_TUS		(ROUTING_NOT_REACHABLE - 1)
+#define MAX_ROUTE			(MAX_ROUTE_TUS / TU_MOVE_STRAIGHT + 1)
 
 /* door states */
 #define	STATE_OPENED		0
