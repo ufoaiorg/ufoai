@@ -114,5 +114,7 @@ typedef struct {
 	uiSprite_t* background;
 } panelExtraData_t;
 
+void UI_Panel_SetBackgroundByName(uiNode_t* node, const char* name);
+
 void UI_RegisterPanelNode(uiBehaviour_t* behaviour);
 void UI_StarLayout(uiNode_t* node);

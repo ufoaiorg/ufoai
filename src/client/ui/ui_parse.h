@@ -43,6 +43,9 @@ vec4_t* UI_AllocStaticColor(int count) __attribute__ ((warn_unused_result));
 struct uiAction_s* UI_AllocStaticAction(void) __attribute__ ((warn_unused_result));
 bool UI_InitRawActionValue(struct uiAction_s* action, uiNode_t* node, const struct value_s* property, const char* string);
 
+bool UI_TokenIsReserved (const char* name);
+bool UI_TokenIsName (const char* name, bool isQuoted);
+
 /* main special type */
 /** @todo we should split/flag parse type (type need only 1 lex; and other) */
 #define	V_UI_MASK			0x8F00			/**< Mask for all UI bits */
@@ -56,6 +59,7 @@ bool UI_InitRawActionValue(struct uiAction_s* action, uiNode_t* node, const stru
 #define V_UI_CVAR			(V_UI + 0x0100) /**< Property is a CVAR string (mix this flag with base type, see bellow) */
 #define V_UI_REF			(V_UI + 0x0200) /**< Property is a ref into a value (mix this flag with base type, see bellow) */
 #define V_UI_NODEMETHOD		(V_UI + 0x0400) /**< Property is a function */
+#define V_UI_NODEMETHOD_LUA	(V_UI + 0x0800) /**< Properti is a lua based function */
 
 /* alias */
 #define V_UI_ALIGN			V_INT

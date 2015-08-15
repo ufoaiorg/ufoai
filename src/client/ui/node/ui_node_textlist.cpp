@@ -29,12 +29,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_render.h"
 #include "../ui_data.h"
+#include "../ui_lua.h"
+
 #include "ui_node_text.h"
 #include "ui_node_textlist.h"
 #include "ui_node_abstractnode.h"
 
 #include "../../client.h"
 #include "../../../shared/parse.h"
+
+#include "../../../common/scripts_lua.h"
 
 #define EXTRADATA(node) UI_EXTRADATA(node, textExtraData_t)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, textExtraData_t)
@@ -185,12 +189,20 @@ void uiTextListNode::onLeftClick (uiNode_t* node, int x, int y)
 	if (line != EXTRADATA(node).textLineSelected) {
 		EXTRADATA(node).textLineSelected = line;
 		EXTRADATA(node).textSelected = UI_TextNodeGetSelectedText(node, line);
-		if (node->onChange)
+		if (node->onChange) {
 			UI_ExecuteEventActions(node, node->onChange);
+		}
+		if (node->lua_onChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript(node, node->lua_onChange);
+		}
 	}
 
-	if (node->onClick)
+	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
+	}
+	if (node->lua_onClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onClick, x, y);
+	}
 }
 
 /**
@@ -207,12 +219,20 @@ void uiTextListNode::onRightClick (uiNode_t* node, int x, int y)
 	if (line != EXTRADATA(node).textLineSelected) {
 		EXTRADATA(node).textLineSelected = line;
 		EXTRADATA(node).textSelected = UI_TextNodeGetSelectedText(node, line);
-		if (node->onChange)
+		if (node->onChange) {
 			UI_ExecuteEventActions(node, node->onChange);
+		}
+		if (node->lua_onChange != LUA_NOREF) {
+			UI_ExecuteLuaEventScript(node, node->lua_onChange);
+		}
 	}
 
-	if (node->onRightClick)
+	if (node->onRightClick) {
 		UI_ExecuteEventActions(node, node->onRightClick);
+	}
+	if (node->lua_onRightClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onRightClick);
+	}
 }
 
 void uiTextListNode::onLoading (uiNode_t* node)
@@ -229,4 +249,5 @@ void UI_RegisterTextListNode (uiBehaviour_t* behaviour)
 	behaviour->name = "textlist";
 	behaviour->extends = "text";
 	behaviour->manager = UINodePtr(new uiTextListNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTextListNode_t *");
 }

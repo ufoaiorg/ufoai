@@ -25,10 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_main.h"
 #include "../ui_parse.h"
 #include "../ui_behaviour.h"
+#include "../ui_sprite.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_option.h"
 
 #include "../../client.h" /* gettext _() */
+
+#include "../../../common/scripts_lua.h"
 
 /**
  * Allow to check if a node is an option without string check
@@ -128,11 +131,25 @@ uiNode_t* UI_AllocOptionNode (const char* name, const char* label, const char* v
 	return option;
 }
 
+void UI_Option_SetLabel (uiNode_t* node, const char* text) {
+	Q_strncpyz(OPTIONEXTRADATA(node).label, text, sizeof(OPTIONEXTRADATA(node).label));
+}
+
+void UI_Option_SetValue (uiNode_t* node, const char* text) {
+	Q_strncpyz(OPTIONEXTRADATA(node).value, text, sizeof(OPTIONEXTRADATA(node).value));
+}
+
+void UI_Option_SetIconByName (uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	OPTIONEXTRADATA(node).icon = sprite;
+}
+
 void UI_RegisterOptionNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "option";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = UINodePtr(new uiOptionNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiOptionNode_t *");
 
 	/**
 	 * Displayed text

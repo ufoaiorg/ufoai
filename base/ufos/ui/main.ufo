@@ -1,372 +1,391 @@
-// ==================
-// MAIN MENU
-// ==================
+--!usr/bin/lua
 
-window main
-{
-	{
-		background		"ui/main_bg"
-	}
+--[[
+	first create the node structure
+--]]
+do
+	wndMain = ufo.create_window ("main", nil)
+	wndMain:set_background ("ui/main_bg")
+	do
+		local game_addmode_singleplayer = ufo.create_control(wndMain, "confunc", "game_addmode_singleplayer", nil)
+				game_addmode_singleplayer.on_click = function(sender)
+			end
+	end
 
-	string title {
-		string			"_UFO: ALIEN INVASION"
-		size			"500 50"
-		pos				"262 50"
-		font			"f_title"
-		color			"0.59 0.78 0.56 1"
-		contentalign	ALIGN_CC
-	}
+	do
+		local lbTitle = ufo.create_string (wndMain, "lbTitle", nil)
+		lbTitle:set_text("_UFO: ALIEN INVASION")
+		lbTitle:set_pos(262, 50)
+		lbTitle:set_size(500, 50)
+		lbTitle:set_font("f_title")
+		lbTitle:set_color(0.59, 0.78, 0.56, 1.0)
+		lbTitle:set_contentalign(ufo.ALIGN_CC)
+	end
 
-	/**
-	 * @brief Adds cgame games to the main menu (like skirmish and campaign)
-	 * @param <1> window id
-	 * @param <2> name
-	 */
-	confunc game_addmode_singleplayer
-	{
-	}
+	do
+		local btnFacebook = ufo.create_button(wndMain, "btnFacebook", nil)
+		btnFacebook:set_text("_Facebook")
+		btnFacebook:set_tooltip("_Like us on facebook")
+		btnFacebook:set_pos(10, 720)
+		btnFacebook:set_size(80, 20)
+		btnFacebook:set_color(0.0, 0.5, 0.0, 1.0)
+		btnFacebook:set_selectcolor(1.0, 1.0, 1.0, 1.0)
+		btnFacebook:set_padding (0)
+		btnFacebook.on_click = function (sender)
+				ufo.cmd ("cl_openurl http://www.facebook.com/ufoai/;")
+			end
+	end
 
-	button facebook
-	{
-		pos			"10 720"
-		string		"_Facebook"
-		tooltip		"_Like us on facebook"
-		size		"80 20"
-		color		"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		padding		0
-		onClick		{ cmd "cl_openurl http://www.facebook.com/ufoai/;" }
-	}
+	do
+		local btnTwitter = ufo.create_button(wndMain, "btnTwitter", nil)
+		btnTwitter:set_text("_Twitter")
+		btnTwitter:set_tooltip("_Follow u on twitter")
+		btnTwitter:set_pos(100, 720)
+		btnTwitter:set_size(70, 20)
+		btnTwitter:set_color(0.0, 0.5, 0.0, 1.0)
+		btnTwitter:set_selectcolor(1.0, 1.0, 1.0, 1.0)
+		btnTwitter:set_padding (0)
+		btnTwitter.on_click = function (sender)
+				ufo.cmd ("cl_openurl http://www.twitter.com/ufoai/;")
+			end
+	end
 
-	button twitter
-	{
-		pos			"100 720"
-		string		"_Twitter"
-		tooltip		"_Follow us on twitter"
-		size		"70 20"
-		color		"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		padding		0
-		onClick		{ cmd "cl_openurl http://www.twitter.com/ufoai/;" }
-	}
+	do
+		local pnlButtons = ufo.create_panel (wndMain, "pnlButtons", nil)
+		pnlButtons:set_pos(312, 250)
+		pnlButtons:set_size (400, 400)
+		pnlButtons:set_layout (ufo.LAYOUT_TOP_DOWN_FLOW)
+		pnlButtons:set_layoutmargin (15)
 
-	panel buttons {
-		{
-			pos			"312 250"
-			size		"400 400"
-			layout		LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	15
-		}
-		MainMenuBtn btn_campaign {
-			string		"_CAMPAIGN"
-			onClick	{
-				cmd "ui_push campaign;"
-			}
-		}
-		MainMenuBtn btn_skirmish {
-			string		"_SKIRMISH"
-			onClick {
-				cmd "ui_push skirmish;"
-			}
-		}
-		MainMenuBtn btn_multiplayer {
-			string		"_MULTIPLAYER"
-			onClick {
-				cmd "ui_push multiplayer;"
-			}
-		}
-		MainMenu2Btn btn_options {
-			string		"_OPTIONS"
-			onClick {
-				cmd "ui_push options;"
-			}
-		}
-		MainMenu2Btn btn_tutorials {
-			string	"_TUTORIALS"
-			onClick	{
-				cmd "ui_push tutorials;"
-			}
-		}
-		MainMenu2Btn btn_credits {
-			string	"_DEVELOPERS"
-			onClick {
-				cmd "seq_start developers;"
-			}
-		}
-		MainMenuExitBtn btn_exit {
-			string	"_EXIT"
-			onClick {
-				cmd "quit;"
-			}
-		}
-	}
+		do
+			local btnCampaign = ufo.create_button (pnlButtons, "btnCampaign", "MainMenuBtn")
+			btnCampaign:set_text ("_CAMPAIGN")
+			btnCampaign.on_click = function (sender)
+					ufo.cmd "ui_push campaign;"
+				end
+		end
 
-	string version {
-		string	*cvar:version
-		pos		"10 744"
-		size	"1004 20"
-	}
+		do
+			local btnSkirmish = ufo.create_button (pnlButtons, "btnSkirmish", "MainMenuBtn")
+			btnSkirmish:set_text ("_SKIRMISH")
+			btnSkirmish.on_click = function (sender)
+					ufo.cmd "ui_push skirmish;"
+				end
+		end
 
-	// Fuzzy screen effect (see assets.ufo)
-	fuzzyScreen overlay { }
+		do
+			local btnMultiplayer = ufo.create_button (pnlButtons, "btnMultiplayer", "MainMenuBtn")
+			btnMultiplayer:set_text ("_MULTIPLAYER")
+			btnMultiplayer.on_click = function (sender)
+					ufo.cmd "ui_push multiplayer;"
+				end
+		end
 
-	func onWindowOpened
-	{
-		cmd "music_change main;"
-		// TODO: activate this again
-		//cmd "ui_push_child popup_tipoftheday main;"
-		cmd "check_cvars;"
-		if ( *cvar:cl_introshown != 1 ) {
-			cmd "ui_push intro;"
-			*cvar:cl_introshown = 1
-		}
-	}
-}
+		do
+			local btnOptions = ufo.create_button (pnlButtons, "btnOptions", "MainMenu2Btn")
+			btnOptions:set_text ("_OPTIONS")
+			btnOptions.on_click = function (sender)
+					ufo.cmd ("ui_push options;")
+				end
+		end
 
-// ==================
-// CVAR CHECK MENU
-// ==================
+		do
+			local btnTutorials = ufo.create_button (pnlButtons, "btnTutorials", "MainMenu2Btn")
+			btnTutorials:set_text ("_TUTORIALS")
+			btnTutorials.on_click = function (sender)
+					ufo.cmd ("ui_push tutorials;")
+				end
+		end
 
-window checkcvars extends ipopup
-{
-	{
-		pos			"124 192"
-		size		"777 368"
-		modal		true
-		bgcolor		"0 0 0 0.9"
-	}
+		do
+			local btnCredits = ufo.create_button (pnlButtons, "btnCredits", "MainMenu2Btn")
+			btnCredits:set_text ("_DEVELOPERS")
+			btnCredits.on_click = function (sender)
+					ufo.cmd ("seq_start developers;")
+				end
+		end
 
-	string title {
-		width		"777"
-		string		"_Initial settings"
-	}
+		do
+			local btnExit = ufo.create_button (pnlButtons, "btnExit", "MainMenuExitBtn")
+			btnExit:set_text ("_EXIT")
+			btnExit.on_click = function (sender)
+					ufo.cmd ("quit;")
+				end
+		end
+	end
 
-	string name_label
-	{
-		string		"_User Information"
-		pos			"26 48"
-		size		"300 30"
-		font		"f_normal"
-	}
+	do
+		local lbVersion = ufo.create_string (wndMain, "lbVersion", nil)
+		lbVersion:set_text ("*cvar:version")
+		lbVersion:set_pos (10, 744)
+		lbVersion:set_size (1004, 20)
+	end
 
-	// ===================
-	// NAME
-	// ===================
-	string current_name
-	{
-		string		"_Name:"
-		pos			"41 88"
-		size		"300 20"
-		color		"1 1 1 1"
-	}
-	TextEntry slot_name
-	{
-		string		*cvar:cl_name
-		font		"f_verysmall"
-		pos			"170 82"
-		size		"185 34"
-	}
+	function load ()
+		return wndMain
+	end
 
-	// ===================
-	// BARS
-	// ===================
-	string volume_str
-	{
-		string		"_Volume Control"
-		pos			"26 168"
-		size		"300 30"
-		font		"f_normal"
-	}
-	string effects_str
-	{
-		string		"_Effects:"
-		pos			"41 198"
-		size		"150 20"
-	}
-	bar effects_bar
-	{
-		current		*cvar:snd_volume
-		pos			"170 208"
-		size		"238 6"
-		color		"0.582 0.808 0.758 1"
-		bordercolor	"0.582 0.808 0.758 1"
-		border		"1"
-		max			1.0
-	}
-	string music_str
-	{
-		string		"_Music:"
-		pos			"41 223"
-		size		"150 20"
-	}
-	bar music_bar
-	{
-		current		*cvar:snd_music_volume
-		pos			"170 233"
-		size		"238 6"
-		color		"0.582 0.808 0.758 1"
-		border		"1"
-		bordercolor	"0.582 0.808 0.758 1"
-		max			128
-	}
+	-- register callbacks
+	ufo.register_onload (load)
 
-	// ===================
-	// LANGUAGE
-	// ===================
-	string language_str
-	{
-		string		"_Language"
-		pos			"410 48"
-		size		"300 30"
-		font		"f_normal"
-	}
-	string language_str2
-	{
-		string		"_Language:"
-		pos			"425 82"
-		size		"108 20"
-	}
-	optionlist select_language
-	{
-		pos				"531 78"
-		font			"f_language"
-		cvar			*cvar:s_language
-		background		"ui/panel"
-		size			"155 226"
-		color			"1 1 1 0.5"
-		selectcolor		"1 1 1 0.9"
-		padding			6
-		contentalign	ALIGN_CC
-		dataid			OPTION_LANGUAGES
-		onViewChange {
-			*node:root.select_language_scroll@current = <viewpos>
-			*node:root.select_language_scroll@fullsize = <fullsize>
-			*node:root.select_language_scroll@viewsize = <viewsize>
-		}
-	}
+	do
+		local overlay = ufo.create_control(wndMain, "fuzzyScreen", "overlay", nil)
+	end
 
-	vscrollbar select_language_scroll {
-		image			"ui/scrollbar_v"
-		pos				"692 78"
-		height			"226"
-		current			0
-		viewsize		8
-		fullsize		21
-		onChange {
-			*node:root.select_language@viewpos = <current>
-		}
-	}
+	wndMain.on_windowopened = function (sender)
+			ufo.cmd("music_change main;")
+			-- @TODO: activate this again
+			-- ufo.cmd("ui_push_child popup_tipoftheday main;")
+			ufo.cmd("check_cvars;")
+			if (ufo.getvar("cl_introshown"):as_integer() ~= 1) then
+				ufo.cmd("ui_push intro;")
+				ufo.getvar("cl_introshown"):set_value(1)
+			end
+		end
+end
 
-	// ===================
-	// VALIDATION
-	// ===================
+--[[
+ - ==================
+ - CVAR CHECK MENU
+ - ==================
+--]]
+do
+	local checkcvars = ufo.create_window("checkcvars", "ipopup")
+	checkcvars:set_modal(true)
+	checkcvars:set_pos(124, 192)
+	checkcvars:set_size(777, 368)
+	checkcvars:set_backgroundcolor(0, 0, 0, 0.9)
+	checkcvars:child("title"):set_text("_Initial settings")
+	checkcvars:child("title"):set_size(777, 30)
+	do
+		local name_label = ufo.create_control(checkcvars, "string", "name_label", nil)
+		name_label:set_text("_User Information")
+		name_label:set_pos(26, 48)
+		name_label:set_size(300, 30)
+		name_label:set_font("f_normal")
+	end
 
-	string message
-	{
-		string		"_You have to set the playername and hit the 'OK' button:"
-		pos			"41 338"
-		size		"500 40"
-		color		"1 1 1 0.5"
-	}
+	--[[
+	 - ===================
+	 - NAME
+	 - ===================
+	--]]
+	do
+		local current_name = ufo.create_control(checkcvars, "string", "current_name", nil)
+		current_name:set_text("_Name:")
+		current_name:set_pos(41, 88)
+		current_name:set_size(300, 20)
+		current_name:set_color(1, 1, 1, 1)
+	end
+	do
+		local slot_name = ufo.create_control(checkcvars, "TextEntry", "slot_name", nil)
+		slot_name:set_text("*cvar:cl_name")
+		slot_name:set_font("f_verysmall")
+		slot_name:set_pos(170, 82)
+		slot_name:set_size(185, 34)
+	end
 
-	MainMenuBtn bt_ok
-	{
-		string		"_OK"
-		tooltip		"_Save settings"
-		pos			"597 338"
-		width		"180"
-		onClick		{ cmd "ui_pop; saveconfig config.cfg;" }
-	}
+	--[[
+	 - ===================
+	 - BARS
+	 - ===================
+	--]]
+	do
+		local volume_str = ufo.create_control(checkcvars, "string", "volume_str", nil)
+		volume_str:set_text("_Volume Control")
+		volume_str:set_pos(26, 168)
+		volume_str:set_size(300, 30)
+		volume_str:set_font("f_normal")
+	end
+	do
+		local effects_str = ufo.create_control(checkcvars, "string", "effects_str", nil)
+		effects_str:set_text("_Effects:")
+		effects_str:set_pos(41, 198)
+		effects_str:set_size(150, 20)
+	end
+	do
+		local effects_bar = ufo.create_control(checkcvars, "bar", "effects_bar", nil)
+		effects_bar:set_value("*cvar:snd_volume")
+		effects_bar:set_pos(170, 208)
+		effects_bar:set_size(238, 6)
+		effects_bar:set_color(0.582, 0.808, 0.758, 1)
+		effects_bar:set_bordercolor(0.582, 0.808, 0.758, 1)
+		effects_bar:set_bordersize(1)
+		effects_bar:set_max(1.0)
+	end
+	do
+		local music_str = ufo.create_control(checkcvars, "string", "music_str", nil)
+		music_str:set_text("_Music:")
+		music_str:set_pos(41, 223)
+		music_str:set_size(150, 20)
+	end
+	do
+		local music_bar = ufo.create_control(checkcvars, "bar", "music_bar", nil)
+		music_bar:set_value("*cvar:snd_music_volume")
+		music_bar:set_pos(170, 233)
+		music_bar:set_size(238, 6)
+		music_bar:set_color(0.582, 0.808, 0.758, 1)
+		music_bar:set_bordersize(1)
+		music_bar:set_bordercolor(0.582, 0.808, 0.758, 1)
+		music_bar:set_max(128)
+	end
 
-	fuzzyScreen overlay { }
+	--[[
+	 - ===================
+	 - LANGUAGE
+	 - ===================
+	--]]
+	do
+		local language_str = ufo.create_control(checkcvars, "string", "language_str", nil)
+		language_str:set_text("_Language")
+		language_str:set_pos(410, 48)
+		language_str:set_size(300, 30)
+		language_str:set_font("f_normal")
+	end
+	do
+		local language_str2 = ufo.create_control(checkcvars, "string", "language_str2", nil)
+		language_str2:set_text("_Language:")
+		language_str2:set_pos(425, 82)
+		language_str2:set_size(108, 20)
+	end
+	do
+		local select_language = ufo.create_control(checkcvars, "optionlist", "select_language", nil)
+		select_language:set_pos(531, 78)
+		select_language:set_font("f_language")
+		select_language:set_background("ui/panel")
+		select_language:set_size(155, 226)
+		select_language:set_color(1, 1, 1, 0.5)
+		select_language:set_selectcolor(1, 1, 1, 0.9)
+		select_language:set_padding(6)
+		select_language:set_contentalign(ufo.ALIGN_CC)
+		select_language:set_dataid(ufo.OPTION_LANGUAGES)
+		select_language:set_cvar("*cvar:s_language")
+		select_language.on_viewchange = function (sender)
+				sender:root():child("select_language_scroll"):set_current(sender:current())
+				sender:root():child("select_language_scroll"):set_fullsize(sender:fullsize())
+				sender:root():child("select_language_scroll"):set_viewsize(sender:viewsize())
+			end
+	end
+	do
+		local select_language_scroll = ufo.create_control(checkcvars, "vscrollbar", "select_language_scroll", nil)
+		select_language_scroll:set_image("ui/scrollbar_v")
+		select_language_scroll:set_pos(692, 78)
+		select_language_scroll:set_height(226)
+		select_language_scroll:set_current(0)
+		select_language_scroll:set_viewsize(8)
+		select_language_scroll:set_fullsize(21)
+		select_language_scroll.on_change = function (sender)
+				sender:root():child("select_language"):set_current(sender:current())
+			end
+	end
 
-	// check again - maybe the user has forgotton something
-	func onWindowClosed
-	{
-		cmd "check_cvars;"
-	}
-}
+	--[[
+	 - ===================
+	 - VALIDATION
+	 - ===================
+	--]]
+	do
+		local message = ufo.create_control(checkcvars, "string", "message", nil)
+		message:set_text("_You have to set the playername and hit the 'OK' button:")
+		message:set_pos(41, 338)
+		message:set_size(500, 40)
+		message:set_color(1, 1, 1, 0.5)
+	end
+	do
+		local btn_ok = ufo.create_control(checkcvars, "MainMenuBtn", "btn_ok", nil)
+		btn_ok:set_text("_OK")
+		btn_ok:set_tooltip("_Save settings")
+		btn_ok:set_pos(597, 338)
+		btn_ok:set_size(180, 30)
+		btn_ok.on_click = function(sender)
+				ufo.cmd("ui_pop; saveconfig config.cfg;")
+			end
+	end
+	do
+		local overlay = ufo.create_control(checkcvars, "fuzzyScreen", "overlay", nil)
+	end
+	-- check again - maybe the user has forgotton something
+	checkcvars.on_windowclosed = function(sender)
+			ufo.cmd("check_cvars;")
+		end
+end
 
-// ==================
-// TIP OF THE DAY
-// ==================
-window popup_tipoftheday extends ipopup
-{
-	{
-		pos			"38 456"
-		size		"496 218"
-		closebutton	true
-		bgcolor		"0 0 0 0.9"
-	}
-
-	string title {
-		width		"496"
-		string		"_Tip of the day"
-	}
-
-	CheckBox activate
-	{
-		current		*cvar:cl_showTipOfTheDay
-		pos			"36 194"
-		size		"20 18"
-		onChange		{ cmd "check_nexttip;" }
-	}
-	string activate_string
-	{
-		string		"_Show tip of the day"
-		pos			"58 194"
-		size		"200 25"
-		font		"f_small"
-		onClick		{
-			call *node:root.activate@toggle
-		}
-	}
-
-	text popup_tipoftheday_text
-	{
-		pos			"26 58"
-		size		"444 120"
-		lineheight	20
-		tabwidth	150
-		dataid		TEXT_TIPOFTHEDAY
-		rows		6
-	}
-
-	MainMenuBtn bt_next
-	{
-		string		"_Next"
-		tooltip		"_Next tip"
-		width		"176"
-		pos			"320 188"
-		font		"f_menu"
-		onClick		{
-			if ( *cvar:cl_showTipOfTheDay == 1 ) {
-				cmd "tipoftheday;"
-			} else {
-				cmd "ui_close popup_tipoftheday;"
-			}
-		}
-	}
-
-	fuzzyScreen overlay { }
-
-	confunc check_nexttip
-	{
-		if ( *cvar:cl_showTipOfTheDay == 1 ) {
-			*node:root.bt_next@string = "_Next"
-			*node:root.bt_next@tooltip = "_Next tip"
-		} else {
-			*node:root.bt_next@string = "_Close"
-			*node:root.bt_next@tooltip = "_Close window"
-		}
-	}
-
-	func onWindowOpened
-	{
-		if ( *cvar:cl_showTipOfTheDay == 1 ) {
-			cmd "tipoftheday random; check_nexttip;"
-		} else {
-			cmd "ui_close popup_tipoftheday;"
-		}
-	}
-}
+--[[
+ - ==================
+ - TIP OF THE DAY
+ - ==================
+--]]
+do
+	local popup_tipoftheday = ufo.create_window("popup_tipoftheday", "ipopup")
+	popup_tipoftheday:set_pos(505, 560)
+	popup_tipoftheday:set_size(506, 190)
+	popup_tipoftheday:set_closebutton(true)
+	popup_tipoftheday:set_backgroundcolor(0, 0, 0, 0.9)
+	popup_tipoftheday:child("title"):set_width(496)
+	popup_tipoftheday:child("title"):set_text("_Tip of the day")
+	do
+		local activate = ufo.create_control(popup_tipoftheday, "CheckBox", "activate", nil)
+		activate:set_value("*cvar:cl_showTipOfTheDay")
+		activate:set_pos(36, 170)
+		activate:set_size(20, 18)
+		activate.on_change = function(sender)
+				ufo.cmd("check_nexttip;")
+			end
+	end
+	do
+		local activate_string = ufo.create_control(popup_tipoftheday, "string", "activate_string", nil)
+		activate_string:set_text("_Show tip of the day")
+		activate_string:set_pos(58, 166)
+		activate_string:set_size(200, 25)
+		activate_string:set_font("f_small")
+		activate_string.on_click = function(sender)
+				sender:root():child("activate"):toggle()
+			end
+	end
+	do
+		local popup_tipoftheday_text = ufo.create_control(popup_tipoftheday, "text", "popup_tipoftheday_text", nil)
+		popup_tipoftheday_text:set_pos(26, 48)
+		popup_tipoftheday_text:set_size(444, 100)
+		popup_tipoftheday_text:set_lineheight(20)
+		popup_tipoftheday_text:set_tabwidth(150)
+		popup_tipoftheday_text:set_dataid(ufo.TEXT_TIPOFTHEDAY)
+		popup_tipoftheday_text:set_viewsize(6)
+	end
+	do
+		local bt_next = ufo.create_control(popup_tipoftheday, "MainMenuBtn", "bt_next", nil)
+		bt_next:set_text("_Next")
+		bt_next:set_tooltip("_Next tip")
+		bt_next:set_width(176)
+		bt_next:set_pos(319, 160)
+		bt_next:set_font("f_menu")
+		bt_next.on_click = function(sender)
+				if ( ufo.getvar("cl_showTipOfTheDay"):as_integer() == 1 ) then
+					ufo.cmd("tipoftheday;")
+				else
+					ufo.cmd("ui_close popup_tipoftheday;")
+				end
+			end
+	end
+	do
+		local overlay = ufo.create_control(popup_tipoftheday, "fuzzyScreen", "overlay", nil)
+	end
+	do
+		local check_nexttip = ufo.create_control(popup_tipoftheday, "confunc", "check_nexttip", nil)
+		check_nexttip.on_click = function(sender)
+				if ( ufo.getvar("cl_showTipOfTheDay"):as_integer() == 1 ) then
+					sender:root():child("bt_next"):set_text("_Next")
+					sender:root():child("bt_next"):set_tooltip("_Next tip")
+				else
+					sender:root():child("bt_next"):set_text("_Close")
+					sender:root():child("bt_next"):set_tooltip("_Close window")
+				end
+			end
+	end
+	popup_tipoftheday.on_windowopened = function(sender)
+			if ( ufo.getvar("cl_showTipOfTheDay"):as_integer() == 1 ) then
+				ufo.cmd("tipoftheday random; check_nexttip;")
+			else
+				ufo.cmd("ui_close popup_tipoftheday;")
+			end
+		end
+end

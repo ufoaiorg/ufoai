@@ -43,6 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_mesh_anim.h"
 #include "../../renderer/r_model.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE modelExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
@@ -74,6 +76,43 @@ static void UI_ListUIModels_f (void)
 		const uiModel_t* m = &ui_global.models[i];
 		const char* need = m->next != nullptr ? m->next->id : "none";
 		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", m->id, m->model, need);
+	}
+}
+
+void UI_Model_SetModelSource (uiNode_t* node, const char* modelName) {
+	UI_FreeStringProperty(const_cast<char*>(UI_EXTRADATA(node, modelExtraData_t).model));
+	UI_EXTRADATA(node, modelExtraData_t).model = Mem_PoolStrDup(modelName, ui_dynStringPool, 0);
+}
+
+void UI_Model_SetSkinSource (uiNode_t* node, const char* skinName) {
+	UI_FreeStringProperty(const_cast<char*>(UI_EXTRADATA(node, modelExtraData_t).skin));
+	UI_EXTRADATA(node, modelExtraData_t).skin = Mem_PoolStrDup(skinName, ui_dynStringPool, 0);
+}
+
+void UI_Model_SetAnimationSource (uiNode_t* node, const char* animName) {
+	UI_FreeStringProperty(const_cast<char*>(UI_EXTRADATA(node, modelExtraData_t).animation));
+	UI_EXTRADATA(node, modelExtraData_t).animation = Mem_PoolStrDup(animName, ui_dynStringPool, 0);
+}
+
+void UI_Model_SetTagSource (uiNode_t* node, const char* tagName) {
+	UI_FreeStringProperty(const_cast<char*>(UI_EXTRADATA(node, modelExtraData_t).tag));
+	UI_EXTRADATA(node, modelExtraData_t).tag = Mem_PoolStrDup(tagName, ui_dynStringPool, 0);
+}
+
+void uiModelNode::doLayout (uiNode_t* node) {
+	uiLocatedNode::doLayout(node);
+	/* a tag without but not a submodel */
+	if (EXTRADATA(node).tag != nullptr && node->behaviour != node->parent->behaviour) {
+		Com_Printf("UI_ModelNodeLoaded: '%s' use a tag but is not a submodel. Tag removed.\n", UI_GetPath(node));
+		EXTRADATA(node).tag = nullptr;
+	}
+
+	if (EXTRADATA(node).oldRefValue == nullptr)
+		EXTRADATA(node).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
+
+	/* no tag but no size */
+	if (EXTRADATA(node).tag == nullptr && (node->box.size[0] == 0 || node->box.size[1] == 0)) {
+		Com_Printf("UI_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", UI_GetPath(node));
 	}
 }
 
@@ -468,7 +507,7 @@ void uiModelNode::clone (const uiNode_t* source, uiNode_t* clone)
 		EXTRADATA(clone).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
 }
 
-void uiModelNode::newNode (uiNode_t* node)
+void uiModelNode::initNodeDynamic (uiNode_t* node)
 {
 	EXTRADATA(node).oldRefValue = Mem_PoolAllocTypeN(char, MAX_OLDREFVALUE, ui_dynPool);
 	EXTRADATA(node).oldRefValue[0] = '\0';
@@ -476,25 +515,14 @@ void uiModelNode::newNode (uiNode_t* node)
 
 void uiModelNode::deleteNode (uiNode_t* node)
 {
+	uiNode::deleteNode(node);
 	Mem_Free(EXTRADATA(node).oldRefValue);
 	EXTRADATA(node).oldRefValue = nullptr;
 }
 
 void uiModelNode::onLoaded (uiNode_t* node)
 {
-	/* a tag without but not a submodel */
-	if (EXTRADATA(node).tag != nullptr && node->behaviour != node->parent->behaviour) {
-		Com_Printf("UI_ModelNodeLoaded: '%s' use a tag but is not a submodel. Tag removed.\n", UI_GetPath(node));
-		EXTRADATA(node).tag = nullptr;
-	}
-
-	if (EXTRADATA(node).oldRefValue == nullptr)
-		EXTRADATA(node).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
-
-	/* no tag but no size */
-	if (EXTRADATA(node).tag == nullptr && (node->box.size[0] == 0 || node->box.size[1] == 0)) {
-		Com_Printf("UI_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", UI_GetPath(node));
-	}
+	/* checks moved to doLayout */
 }
 
 void UI_RegisterModelNode (uiBehaviour_t* behaviour)
@@ -504,6 +532,7 @@ void UI_RegisterModelNode (uiBehaviour_t* behaviour)
 	behaviour->drawItselfChild = true;
 	behaviour->manager = UINodePtr(new uiModelNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiModelNode_t *");
 
 	/* Both. Name of the animation for the model */
 	UI_RegisterExtradataNodeProperty(behaviour, "anim", V_CVAR_OR_STRING, modelExtraData_t, animation);

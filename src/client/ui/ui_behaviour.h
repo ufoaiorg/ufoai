@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct value_s;
 struct uiBehaviour_t;
 struct uiNode_t;
+struct hashTable_s;
 
 /**
  * @brief node behaviour, how a node work
@@ -52,6 +53,9 @@ struct uiBehaviour_t {
 	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
 	intptr_t extraDataSize;			/**< Size of the extra data used (it come from "u" attribute) @note use intptr_t because we use the virtual inheritance function (see virtualFunctions) */
 	uiBehaviour_t* super;			/**< link to the extended node */
+
+	void* lua_SWIG_typeinfo;		/**< pointer to a swig_type_info structure, set during initialization */
+	hashTable_s* nodeMethods;		/**< hash map for storing lua defined node functions */
 #ifdef DEBUG
 	int count;						/**< number of node allocated */
 #endif
@@ -128,7 +132,20 @@ const struct value_s* UI_RegisterNodeMethod(uiBehaviour_t* behaviour, const char
 const struct value_s* UI_GetPropertyFromBehaviour(const uiBehaviour_t* behaviour, const char* name) __attribute__ ((warn_unused_result));
 
 /**
- * @brief Initialize a node behaviour memory, after registration, and before unsing it.
+ * @brief Return a property or lua based method from a node, node behaviour or inherited behaviour.
+ * @return A local property or lua method, else nullptr if not found.
+ * @note Important: in case of a lua method, free the allocated .string value holding the method name!!!
+ */
+const value_t* UI_GetPropertyOrLuaMethod(const uiNode_t* node, const char* name, value_t *out);
+
+/**
+ * @brief Initialize a node behaviour memory, after registration, and before using it.
  * @param behaviour Behaviour to initialize
  */
 void UI_InitializeNodeBehaviour(uiBehaviour_t* behaviour);
+
+void UI_AddBehaviourMethod (uiBehaviour_t* behaviour, const char* name, LUA_METHOD fcn);
+bool UI_HasBehaviourMethod (uiBehaviour_t* behaviour, const char* name);
+bool UI_GetBehaviourMethod (const uiBehaviour_t* behaviour, const char* name, LUA_METHOD &fcn);
+
+

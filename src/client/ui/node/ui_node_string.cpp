@@ -53,6 +53,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_string.h"
 #include "ui_node_abstractnode.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE stringExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -124,6 +126,7 @@ void UI_RegisterStringNode (uiBehaviour_t* behaviour)
 	behaviour->name = "string";
 	behaviour->manager = UINodePtr(new uiStringNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiStringNode_t *");
 
 	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.
 	 * It can be LONGLINES_WRAP, LONGLINES_CHOP, LONGLINES_PRETTYCHOP

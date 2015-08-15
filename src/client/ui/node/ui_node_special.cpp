@@ -27,9 +27,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_actions.h"
 #include "../ui_behaviour.h"
+#include "../ui_lua.h"
 #include "ui_node_window.h"
 #include "ui_node_special.h"
 #include "ui_node_abstractnode.h"
+
+#include "../../../common/scripts_lua.h"
 
 /**
  * @brief Call after the script initialized the node
@@ -54,12 +57,14 @@ void UI_RegisterFuncNode (uiBehaviour_t* behaviour)
 	behaviour->isVirtual = true;
 	behaviour->isFunction = true;
 	behaviour->manager = UINodePtr(new uiFuncNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiFuncNode_t *");
 }
 
 void UI_RegisterNullNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "";
 	behaviour->isVirtual = true;
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiNullNode_t *");
 }
 
 /**
@@ -70,7 +75,12 @@ static void UI_ConfuncCommand_f (void)
 	uiNode_t* node = static_cast<uiNode_t*>(Cmd_Userdata());
 	assert(node);
 	assert(UI_NodeInstanceOf(node, "confunc"));
-	UI_ExecuteConFuncActions(node, node->onClick);
+	if (node->onClick != nullptr) {
+		UI_ExecuteConFuncActions(node, node->onClick);
+	}
+	else if (node->lua_onClick != LUA_NOREF) {
+		UI_ExecuteLuaConFunc (node, node->lua_onClick);
+	}
 }
 
 /**
@@ -116,6 +126,7 @@ void uiConFuncNode::onLoaded (uiNode_t* node)
 
 void uiConFuncNode::clone (const uiNode_t* source, uiNode_t* clone)
 {
+	uiNode::clone(source, clone);
 	onLoaded(clone);
 }
 
@@ -149,6 +160,7 @@ void UI_RegisterConFuncNode (uiBehaviour_t* behaviour)
 	behaviour->isVirtual = true;
 	behaviour->isFunction = true;
 	behaviour->manager = UINodePtr(new uiConFuncNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiConFuncNode_t *");
 }
 
 static void UI_CvarListenerNodeCallback (const char* cvarName, const char* oldValue, const char* newValue, void* data)
@@ -212,11 +224,13 @@ void uiCvarNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 
 void uiCvarNode::deleteNode (uiNode_t* node)
 {
+	uiNode::deleteNode(node);
 	onWindowClosed(node);
 }
 
 void uiCvarNode::clone (const uiNode_t* source, uiNode_t* clone)
 {
+	uiNode::clone(source, clone);
 	UI_CvarListenerNodeBind(clone);
 }
 
@@ -231,6 +245,8 @@ void UI_RegisterCvarFuncNode (uiBehaviour_t* behaviour)
 	behaviour->isVirtual = true;
 	behaviour->isFunction = true;
 	behaviour->manager = UINodePtr(new uiCvarNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiCvarListenerNode_t *");
+
 	/* Force to bind the node to the cvar */
 	UI_RegisterNodeMethod(behaviour, "forceBind", UI_CvarListenerNodeForceBind);
 }

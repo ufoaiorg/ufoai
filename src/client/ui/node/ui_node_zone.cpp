@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../input/cl_keys.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE zoneExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
@@ -93,6 +95,7 @@ void UI_RegisterZoneNode (uiBehaviour_t* behaviour)
 	behaviour->name = "zone";
 	behaviour->manager = UINodePtr(new uiZoneNode());
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiZoneNode_t *");
 
 	/* If true, the <code>onclick</code> call back is called more than one time if the user does not release the button. */
 	UI_RegisterExtradataNodeProperty(behaviour, "repeat", V_BOOL, zoneExtraData_t, repeat);

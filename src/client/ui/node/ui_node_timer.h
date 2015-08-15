@@ -45,6 +45,7 @@ struct timerExtraData_t {
 	int timeOut;					/**< ms value until calling onTimeOut (see cl.time) */
 	int lastTime;					/**< when a window was pushed this value is set to cl.time */
 	struct uiAction_s* onTimeOut;	/**< Call when the own timer of the window out */
+    LUA_EVENT lua_onEvent; 			/**< references the event in lua: on_event (node, x, y) */
 };
 
 void UI_RegisterTimerNode(uiBehaviour_t* behaviour);

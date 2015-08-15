@@ -26,6 +26,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ui_node_abstractvalue.h"
 
+enum spinnerMode_t {
+	/**
+	 * Normal mode. The upper side of the node increase the value
+	 * and the lower side of the node decrease the value
+	 */
+	SPINNER_NORMAL,
+	/**
+	 * Only increase mode. The whole node increase the value.
+	 */
+	SPINNER_ONLY_INCREASE,
+	/**
+	 * Only decrease mode. The whole node decrease the value.
+	 */
+	SPINNER_ONLY_DECREASE
+};
+
 class uiSpinnerNode : public uiAbstractValueNode {
 	void draw(uiNode_t* node) override;
 	void onLoading(uiNode_t* node) override;
@@ -52,3 +68,8 @@ struct spinnerExtraData_t {
 };
 
 void UI_RegisterSpinnerNode(uiBehaviour_t* behaviour);
+
+void UI_Spinner_SetBackgroundByName(uiNode_t* node, const char* name);
+void UI_Spinner_SetBottomIconByName(uiNode_t* node, const char* name);
+void UI_Spinner_SetTopIconByName(uiNode_t* node, const char* name);
+

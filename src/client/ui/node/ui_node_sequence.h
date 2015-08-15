@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cinematic/cl_sequence.h"
 
 class uiSequenceNode : public uiLocatedNode {
+	void initNode(uiNode_t* node) override;
 	void draw(uiNode_t* node) override;
 	void onLeftClick(uiNode_t* node, int x, int y) override;
 	void onWindowOpened(uiNode_t* node, linkedList_t* params) override;
@@ -43,7 +44,10 @@ typedef struct {
 
 	/** Called when the sequence end */
 	struct uiAction_s* onEnd;
+	LUA_EVENT lua_onEnd; 		/**< references the event in lua: on_end(node) */
 
 	/** Link to the current sequence context, else nullptr */
 	pSequenceContext_t context;
 } sequenceExtraData_t;
+
+void UI_Sequence_SetSource(uiNode_t* node, const char* name);

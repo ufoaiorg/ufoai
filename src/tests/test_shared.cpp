@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "test_shared.h"
 #include "../client/cl_renderer.h"
+#include "../client/cl_lua.h"
 #include "../client/battlescape/cl_particle.h"
 #include "../client/ui/ui_main.h"
 #include <stdio.h>
@@ -37,6 +38,7 @@ void TEST_Shutdown (void)
 	SV_Shutdown("test shutdown", false);
 	FS_Shutdown();
 	UI_Shutdown();
+	CL_ShutdownLua();
 	Cmd_Shutdown();
 	developer = nullptr;
 	Cvar_Shutdown();

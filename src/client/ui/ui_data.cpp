@@ -423,12 +423,35 @@ static uiNode_t* UI_FindOptionAtIndex (int index, uiNode_t* option, uiOptionIter
  * @endcode
  * @todo Rework that code, we should split "Init" and "AtIndex"
  */
-uiNode_t* UI_InitOptionIteratorAtIndex (int index, uiNode_t* option, uiOptionIterator_t* iterator)
+uiNode_t* UI_InitOptionIteratorAtIndex(int index, uiNode_t* option, uiOptionIterator_t* iterator) {
+	return UI_InitOptionIteratorAtIndex(index, option, iterator, true, true);
+}
+
+/**
+ * @brief Init an option iterator at an index
+ * @note invis option are skipped, and child are counted
+ * @param[in] index Requested index (0 is the first option)
+ * @param[in] option First element of options (it can be a tree)
+ * @param[in] skipCollapsed Set to true to skip collapsed nodes in the iteration.
+ * @param[in] skipInvisible Set to true to skip invisible nodes in the iteration.
+ * @param[out] iterator Initialised iterator
+ * @return the first option element found (current position of the iterator)
+ * @code
+ * uiOptionIterator_t iterator;
+ * UI_InitOptionIteratorAtIndex(index, firstOption, &iterator);	// also return the option
+ * while (iterator.option) {
+ *     ...
+ *     UI_OptionIteratorNextOption(&iterator);	// also return the option
+ * }
+ * @endcode
+ * @todo Rework that code, we should split "Init" and "AtIndex"
+ */
+uiNode_t* UI_InitOptionIteratorAtIndex (int index, uiNode_t* option, uiOptionIterator_t* iterator, bool skipCollapsed, bool skipInvisible)
 {
 	assert(option == nullptr || option->behaviour == ui_optionBehaviour);
 	OBJZERO(*iterator);
-	iterator->skipCollapsed = true;
-	iterator->skipInvisible = true;
+	iterator->skipCollapsed = skipCollapsed;
+	iterator->skipInvisible = skipInvisible;
 	return UI_FindOptionAtIndex(index, option, iterator);
 }
 

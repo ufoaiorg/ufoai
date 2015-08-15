@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_sound.h"
 #include "../cl_menu.h"
 #include "node/ui_node_abstractnode.h"
+#include "ui_lua.h"
 #include <vector>
 #include <string>
 
@@ -173,6 +174,8 @@ static void UI_Restart_f (void)
 			UI_ParseUIModel(name, &text);
 		else if (Q_streq(type, "sprite"))
 			UI_ParseSprite(name, &text);
+		else if (Q_streq(type, "lua"))
+			UI_ParseAndLoadLuaScript(name, &text);
 	}
 
 	CLMN_Init();
@@ -236,6 +239,7 @@ void UI_Shutdown (void)
 			}
 		}
 	}
+	UI_ShutdownLua();
 	UI_FontShutdown();
 	UI_ResetInput();
 	UI_ResetTimers();
@@ -299,6 +303,7 @@ void UI_Init (void)
 	ui_global.adata    = Mem_PoolAllocTypeN(byte, ui_global.adataize, ui_sysPool);
 	ui_global.curadata = ui_global.adata;
 
+	UI_InitLua();
 	UI_InitData();
 	UI_InitNodes();
 	UI_InitWindows();

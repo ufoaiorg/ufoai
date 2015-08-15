@@ -34,12 +34,22 @@ struct uiNode_t;
 
 class uiAbstractScrollableNode : public uiLocatedNode {
 public:
+	/** call to initialize the node structure and extradata structure */
+	void initNode(uiNode_t* node) override;
+
 	/**
 	 * @todo remove it, use property listener
 	 */
 	bool isSizeChange(uiNode_t* node);
 	bool scrollY(uiNode_t* node, int offset);
 	bool setScrollY(uiNode_t* node, int viewPos, int viewSize, int fullSize);
+
+	void pageUp (uiNode_t* node);
+	void pageDown (uiNode_t* node);
+	void moveUp (uiNode_t* node);
+	void moveDown (uiNode_t* node);
+	void moveHome (uiNode_t* node);
+	void moveEnd (uiNode_t* node);
 };
 
 /**
@@ -70,6 +80,8 @@ typedef struct {
 	uiScroll_t scrollY;
 
 	struct uiAction_s* onViewChange;	/**< called when view change (number of elements...) */
+	LUA_EVENT lua_onViewChange; 		/**< references the event in lua: on_viewchange (node) */
+
 } abstractScrollableExtraData_t;
 
 void UI_RegisterAbstractScrollableNode(uiBehaviour_t* behaviour);

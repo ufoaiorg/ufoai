@@ -3723,8 +3723,9 @@ void Com_ParseScripts (bool onlyServer)
 		Com_Printf("%i ui script files\n", FS_BuildFileList("ufos/ui/*.ufo"));
 		FS_NextScriptHeader(nullptr, nullptr, nullptr);
 		text = nullptr;
-		while ((type = FS_NextScriptHeader("ufos/ui/*.ufo", &name, &text)) != nullptr)
+		while ((type = FS_NextScriptHeader("ufos/ui/*.ufo", &name, &text)) != nullptr) {
 			CL_ParseClientData(type, name, &text);
+		}
 	}
 
 	Com_Printf("Shared Client/Server Info loaded\n");

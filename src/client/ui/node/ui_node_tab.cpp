@@ -40,6 +40,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_language.h"
 #include "../../input/cl_input.h"
 
+#include "../../../common/scripts_lua.h"
+
 #define EXTRADATA_TYPE abstractOptionExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -121,7 +123,7 @@ void uiTabNode::onLeftClick (uiNode_t* node, int x, int y)
 {
 	uiNode_t* option;
 
-	if (UI_AbstractOptionGetCurrentValue(node) == nullptr)
+	if (UI_AbstractOption_GetCurrentValue(node) == nullptr)
 		return;
 
 	option = UI_TabNodeTabAtPosition(node, x, y);
@@ -133,14 +135,14 @@ void uiTabNode::onLeftClick (uiNode_t* node, int x, int y)
 
 	/* only execute the click stuff if the selectbox is active */
 	if (node->state)
-		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOption_SetCurrentValue(node, OPTIONEXTRADATA(option).value);
 
 	UI_PlaySound("click1");
 }
 
 void uiTabNode::draw (uiNode_t* node)
 {
-	const char* ref = UI_AbstractOptionGetCurrentValue(node);
+	const char* ref = UI_AbstractOption_GetCurrentValue(node);
 	if (ref == nullptr)
 		return;
 
@@ -277,4 +279,5 @@ void UI_RegisterTabNode (uiBehaviour_t* behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->manager = UINodePtr(new uiTabNode());
 	behaviour->drawItselfChild = true;
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiTabNode_t *");
 }

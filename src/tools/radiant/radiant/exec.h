@@ -38,7 +38,7 @@ typedef struct
 		GPid pid;
 		gint exit_code;
 		ExecState state;
-		GMutex state_mutex;
+		GMutex *state_mutex;
 		ExecFunc lib_proc;
 		ExecFunc pre_proc;
 		ExecFunc read_proc; /**< read the output of the process from stdout */

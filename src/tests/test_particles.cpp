@@ -25,6 +25,7 @@
 
 #include "test_shared.h"
 #include "../client/client.h"
+#include "../client/cl_lua.h"
 #include "../client/battlescape/cl_particle.h"
 #include "../client/renderer/r_state.h"
 #include "../client/ui/ui_main.h"
@@ -40,6 +41,7 @@ protected:
 
 		r_state.active_texunit = &r_state.texunits[0];
 		R_FontInit();
+		CL_InitLua();
 		UI_Init();
 
 		OBJZERO(cls);

@@ -1281,6 +1281,16 @@ char* FS_NextScriptHeader (const char* files, const char** name, const char** te
 				continue;
 			}
 			*text = (char*)lBuffer;
+
+			/* test if the contents of this file starts with the string "--!usr/bin/lua", if yes, the
+			   file is a lua script file and should be returned immediately with type set to "lua" */
+			if (Q_strneq (*text, "--!usr/bin/lua", 14)) {
+				/* copy filename to header */
+				Q_strncpyz(headerName, (const char*)lFile->data, sizeof(headerName));
+				*name = headerName;
+				static char luaType[] = "lua";
+				return luaType;
+			}
 		} else if (!lBuffer)
 			break;
 	}

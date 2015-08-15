@@ -79,7 +79,7 @@ static char const* const reservedTokens[] = {
 	nullptr
 };
 
-static bool UI_TokenIsReserved (const char* name)
+bool UI_TokenIsReserved (const char* name)
 {
 	char const* const* token = reservedTokens;
 	while (*token) {
@@ -123,7 +123,7 @@ static bool UI_TokenIsValue (const char* name, bool isQuoted)
 	return false;
 }
 
-static bool UI_TokenIsName (const char* name, bool isQuoted)
+bool UI_TokenIsName (const char* name, bool isQuoted)
 {
 	assert(name);
 	if (isQuoted)
@@ -1100,24 +1100,21 @@ static uiNode_t* UI_ParseNode (uiNode_t* parent, const char** text, const char**
 		}
 		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s\n", UI_GetPath(node));
 
+	}
 	/* else initialize a component */
-	} else if (component) {
-		node = UI_CloneNode(component, nullptr, true, *token, false);
+	else if (component) {
+		node = UI_CloneNode(component, nullptr, true, *token, true);
 		if (parent) {
-			if (parent->root)
-				UI_UpdateRoot(node, parent->root);
+			UI_AppendNode(parent, node);
+			UI_UpdateRoot(node, parent->root);
+		}
+	}
+	/* else initialize a new node */
+	else {
+		node = UI_AllocNode(*token, behaviour->name, true);
+		if (parent) {
 			UI_AppendNode(parent, node);
 		}
-
-	/* else initialize a new node */
-	} else {
-		node = UI_AllocNode(*token, behaviour->name, false);
-		node->parent = parent;
-		if (parent)
-			node->root = parent->root;
-		/** @todo move it into caller */
-		if (parent)
-			UI_AppendNode(parent, node);
 	}
 
 	/* get body */
@@ -1301,7 +1298,8 @@ bool UI_ParseComponent (const char* type, const char* name, const char** text)
 	if (behaviour) {
 		/* initialize a new node from behaviour */
 		component = UI_AllocNode(name, behaviour->name, false);
-	} else {
+	}
+	else {
 		const uiNode_t* inheritedComponent = UI_GetComponent(token);
 		if (inheritedComponent) {
 			/* initialize from a component */
@@ -1358,9 +1356,11 @@ bool UI_ParseWindow (const char* type, const char* name, const char** text)
 	}
 
 	/* search for windows with same name */
-	for (i = 0; i < ui_global.numWindows; i++)
-		if (!strncmp(name, ui_global.windows[i]->name, sizeof(ui_global.windows[i]->name)))
+	for (i = 0; i < ui_global.numWindows; i++) {
+		if (Q_streq(name, ui_global.windows[i]->name)) {
 			break;
+		}
+	}
 
 	if (i < ui_global.numWindows) {
 		Com_Printf("UI_ParseWindow: %s \"%s\" with same name found, second ignored\n", type, name);
@@ -1381,10 +1381,10 @@ bool UI_ParseWindow (const char* type, const char* name, const char** text)
 		superWindow = UI_GetWindow(token);
 		if (superWindow == nullptr)
 			Sys_Error("Could not get the super window \"%s\"", token);
-		window = UI_CloneNode(superWindow, nullptr, true, name, false);
+		window = UI_CloneNode(superWindow, nullptr, true, name, true);
 		token = Com_Parse(text);
 	} else {
-		window = UI_AllocNode(name, type, false);
+		window = UI_AllocNode(name, type, true);
 		window->root = window;
 	}
 
@@ -1426,6 +1426,12 @@ const char* UI_GetReferenceString (const uiNode_t* const node, const char* ref)
 	Sys_Error("UI_GetReferenceString: unknown reference %s", token);
 }
 
+/**
+ * @brief Returns the value of the reference variable.
+ * @note A reference variable is either a pointer to a float or a pointer to a string. In case of
+ * a pointer to a string, a Cvar name is expected, starting with "*cvar".
+ * @sa uiAbstractValueNode
+ */
 float UI_GetReferenceFloat (const uiNode_t* const node, const void* ref)
 {
 	if (!ref)

@@ -31,12 +31,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_input.h"
 #include "../ui_render.h"
+#include "../ui_lua.h"
+
 #include "ui_node_abstractnode.h"
 #include "ui_node_abstractscrollbar.h"
 #include "ui_node_vscrollbar.h"
 
 #include "../../input/cl_input.h"
 #include "../../input/cl_keys.h"
+
+#include "../../../common/scripts_lua.h"
 
 static const int TILE_WIDTH = 32;
 static const int TILE_HEIGHT = 18;
@@ -84,40 +88,13 @@ static int UI_VScrollbarNodeGetElement (uiNode_t* node, int description[5], int 
 	return -1;
 }
 
-/**
- * @brief Set the position of the scrollbar to a value
- */
-static void UI_VScrollbarNodeSet (uiNode_t* node, int value)
-{
-	int pos = value;
-
-	if (pos < 0) {
-		pos = 0;
-	} else if (pos > EXTRADATA(node).fullsize - EXTRADATA(node).viewsize) {
-		pos = EXTRADATA(node).fullsize - EXTRADATA(node).viewsize;
-	}
-	if (pos < 0)
-		pos = 0;
-
-	/* nothing change */
-	if (EXTRADATA(node).pos == pos)
-		return;
-
-	/* update status */
-	EXTRADATA(node).pos = pos;
-
-	/* fire change event */
-	if (node->onChange) {
-		UI_ExecuteEventActions(node, node->onChange);
-	}
-}
 
 /**
  * @brief Translate the position to a value
  */
 static inline void UI_VScrollbarNodeDiff (uiNode_t* node, int value)
 {
-	UI_VScrollbarNodeSet(node, EXTRADATA(node).pos + value);
+	UI_AbstractScrollbarNodeSet(node, EXTRADATA(node).pos + value);
 }
 
 static inline void UI_VScrollbarNodeAction(uiNode_t* node, int hoveredElement, bool allowCapture);
@@ -235,7 +212,7 @@ bool uiVScrollbarNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 		return false;
 	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize)
 		return false;
-	UI_VScrollbarNodeSet(node, EXTRADATA(node).pos + deltaY);
+	UI_AbstractScrollbarNodeSet(node, EXTRADATA(node).pos + deltaY);
 	return true;
 }
 
@@ -256,7 +233,7 @@ void uiVScrollbarNode::onCapturedMouseMove (uiNode_t* node, int x, int y)
 	/* compute pos projection */
 	const int pos = oldPos + (((float)y * (float)posSize) / (float)graphicSize);
 
-	UI_VScrollbarNodeSet(node, pos);
+	UI_AbstractScrollbarNodeSet(node, pos);
 }
 
 /**
@@ -392,9 +369,10 @@ void UI_RegisterVScrollbarNode (uiBehaviour_t* behaviour)
 	behaviour->name = "vscrollbar";
 	behaviour->extends = "abstractscrollbar";
 	behaviour->manager = UINodePtr(new uiVScrollbarNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiVScrollBarNode_t *");
 
 	/* Image to use. Each behaviour use it like they want.
-	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
+	 * @todo use V_REF_OR_STRING when its possible ('image' is never a cvar)
 	 */
 	UI_RegisterNodeProperty(behaviour, "image", V_CVAR_OR_STRING, uiNode_t, image);
 }

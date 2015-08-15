@@ -36,7 +36,8 @@ public:
 };
 
 typedef struct imageExtraData_s {
-	const char* source;
+	/* now using the image field of the uiNode_t structure */
+	//const char* source;
 	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
 	vec2_t texl;				/**< upper left texture coordinates */
 	bool preventRatio;

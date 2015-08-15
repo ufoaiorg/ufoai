@@ -28,8 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_draw.h"
 #include "../ui_data.h"
+#include "../ui_lua.h"
+
 #include "ui_node_abstractoption.h"
 #include "ui_node_abstractnode.h"
+
+#include "../../../common/scripts_lua.h"
 
 #define EXTRADATA_TYPE abstractOptionExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -37,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Sort options by alphabet
  */
-void UI_OptionNodeSortOptions (uiNode_t* node)
+void UI_AbstractOption_SortOptions (uiNode_t* node)
 {
 	uiNode_t* option;
 	assert(UI_Node_IsOptionContainer(node));
@@ -51,27 +55,38 @@ void UI_OptionNodeSortOptions (uiNode_t* node)
 	node->lastChild = option;
 }
 
-const char* UI_AbstractOptionGetCurrentValue (uiNode_t* node)
+const char* UI_AbstractOption_GetCurrentValue (uiNode_t* node)
 {
 	/* no cvar given? */
 	if (!EXTRADATA(node).cvar || !*EXTRADATA(node).cvar) {
-		Com_Printf("UI_AbstractOptionGetCurrentValue: node '%s' doesn't have a valid cvar assigned\n", UI_GetPath(node));
+		Com_Printf("UI_AbstractOptionGetCurrentValue: node [%s] doesn't have a valid cvar assigned\n", UI_GetPath(node));
 		return nullptr;
 	}
 
 	/* not a cvar? */
-	if (!Q_strstart(EXTRADATA(node).cvar, "*cvar:"))
+	if (!Q_strstart(EXTRADATA(node).cvar, "*cvar:")) {
+		Com_Printf("UI_AbstractOptionGetCurrentValue: in node [%s], the name [%s] is not a value cvar\n", UI_GetPath(node), EXTRADATA(node).cvar);
 		return nullptr;
+	}
 
 	return UI_GetReferenceString(node, EXTRADATA(node).cvar);
 }
 
-void UI_AbstractOptionSetCurrentValue(uiNode_t* node, const char* value)
+void UI_AbstractOption_SetCurrentValue(uiNode_t* node, const char* value)
 {
 	const char* cvarName = &EXTRADATA(node).cvar[6];
 	Cvar_Set(cvarName, "%s", value);
-	if (node->onChange)
+	if (node->onChange) {
 		UI_ExecuteEventActions(node, node->onChange);
+	}
+	if (node->lua_onChange != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onChange);
+	}
+}
+
+void uiAbstractOptionNode::initNode(uiNode_t* node) {
+	uiLocatedNode::initNode(node);
+	EXTRADATA(node).lua_onViewChange = LUA_NOREF;
 }
 
 void uiAbstractOptionNode::doLayout (uiNode_t* node)
@@ -97,7 +112,7 @@ void uiAbstractOptionNode::doLayout (uiNode_t* node)
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t* node)
+uiNode_t* UI_AbstractOption_GetFirstOption (uiNode_t* node)
 {
 	if (node->firstChild && node->firstChild->behaviour == ui_optionBehaviour) {
 		return node->firstChild;
@@ -138,6 +153,61 @@ int uiAbstractOptionNode::getCellHeight (uiNode_t* node)
 	return 1;
 }
 
+int UI_AbstractOption_GetDataId (uiNode_t* node) {
+	return EXTRADATA(node).dataId;
+}
+
+int UI_AbstractOption_GetCount (uiNode_t* node) {
+	return EXTRADATA(node).count;
+}
+
+const char* UI_AbstractOption_GetCvar (uiNode_t* node) {
+	return EXTRADATA(node).cvar;
+}
+
+void UI_AbstractOption_SetDataId (uiNode_t* node, int id) {
+	EXTRADATA(node).dataId = id;
+}
+
+void UI_AbstractOption_SetDataIdByName (uiNode_t* node, const char* name) {
+	EXTRADATA(node).dataId = UI_GetDataIDByName(name);
+}
+
+void UI_AbstractOption_SetCvar (uiNode_t* node, const char* name) {
+	cvar_t* var = Cvar_Get(name);
+	EXTRADATA(node).cvar = var->name;
+}
+
+void UI_AbstractOption_SetBackgroundByName(uiNode_t* node, const char* name) {
+	uiSprite_t* sprite = UI_GetSpriteByName(name);
+	UI_EXTRADATA(node, abstractOptionExtraData_t).background = sprite;
+}
+
+int UI_AbstractOption_Scroll_Current (uiNode_t* node) {
+	return EXTRADATA(node).scrollY.viewPos;
+}
+
+void UI_AbstractOption_Scroll_SetCurrent (uiNode_t* node, int pos) {
+	EXTRADATA(node).scrollY.move(pos);
+}
+
+void UI_AbstractOption_Scroll_SetViewSize (uiNode_t* node, int size) {
+	EXTRADATA(node).scrollY.set(-1, size, -1);
+}
+
+void UI_AbstractOption_Scroll_SetFullSize (uiNode_t* node, int size) {
+	EXTRADATA(node).scrollY.set(-1, -1, size);
+}
+
+int UI_AbstractOption_Scroll_ViewSize (uiNode_t* node) {
+	return EXTRADATA(node).scrollY.viewSize;
+}
+
+int UI_AbstractOption_Scroll_FullSize (uiNode_t* node) {
+	return EXTRADATA(node).scrollY.fullSize;
+}
+
+
 void UI_RegisterAbstractOptionNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "abstractoption";
@@ -145,6 +215,7 @@ void UI_RegisterAbstractOptionNode (uiBehaviour_t* behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->drawItselfChild = true;
 	behaviour->manager = UINodePtr(new uiAbstractOptionNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractOptionNode_t *");
 
 	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
 	UI_RegisterExtradataNodeProperty(behaviour, "dataid", V_UI_DATAID, EXTRADATA_TYPE, dataId);

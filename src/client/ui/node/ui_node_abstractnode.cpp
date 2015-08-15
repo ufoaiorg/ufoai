@@ -30,6 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_components.h"
 #include "../ui_parse.h"
 #include "../ui_sound.h"
+#include "../ui_lua.h"
+
+#include "../../../common/hashtable.h"
+#include "../../../common/scripts_lua.h"
 
 #ifdef DEBUG
 /**
@@ -101,12 +105,56 @@ static void UI_NodeSetProperty_f (void)
 }
 #endif
 
+void uiNode::onLoading(uiNode_t* node) {
+}
+
+void uiNode::initNode(uiNode_t* node) {
+	/* initialize lua events */
+	node->lua_onClick = LUA_NOREF;
+	node->lua_onRightClick = LUA_NOREF;
+	node->lua_onMiddleClick = LUA_NOREF;
+	node->lua_onWheel = LUA_NOREF;
+	node->lua_onWheelDown = LUA_NOREF;
+	node->lua_onWheelUp = LUA_NOREF;
+	node->lua_onFocusGained = LUA_NOREF;
+	node->lua_onFocusLost = LUA_NOREF;
+	node->lua_onKeyPressed = LUA_NOREF;
+	node->lua_onKeyReleased = LUA_NOREF;
+	node->lua_onActivate = LUA_NOREF;
+	node->lua_onLoaded = LUA_NOREF;
+	node->lua_onMouseEnter = LUA_NOREF;
+	node->lua_onMouseLeave = LUA_NOREF;
+	node->lua_onChange = LUA_NOREF;
+	node->lua_onVisibleWhen = LUA_NOREF;
+
+	node->lua_onDragDropEnter = LUA_NOREF;
+	node->lua_onDragDropLeave = LUA_NOREF;
+	node->lua_onDragDropMove = LUA_NOREF;
+	node->lua_onDragDropDrop = LUA_NOREF;
+	node->lua_onDragDropFinished = LUA_NOREF;
+}
+
+void uiNode::initNodeDynamic(uiNode_t* node) {
+}
+
+void uiNode::clone(uiNode_t const* source, uiNode_t* clone) {
+}
+
+void uiNode::deleteNode(uiNode_t* node) {
+	if (node->nodeMethods) HASH_DeleteTable(&(node->nodeMethods));
+}
+
 /**
  * Mouse enter on the node (a child node is part of the node)
  */
 void uiLocatedNode::onMouseEnter(uiNode_t* node)
 {
-	UI_ExecuteEventActions(node, node->onMouseEnter);
+	if (node->onMouseEnter != nullptr) {
+		UI_ExecuteEventActions(node, node->onMouseEnter);
+	}
+	if (node->lua_onMouseEnter != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onMouseEnter);
+	}
 }
 
 /**
@@ -114,40 +162,69 @@ void uiLocatedNode::onMouseEnter(uiNode_t* node)
  */
 void uiLocatedNode::onMouseLeave(uiNode_t* node)
 {
-	UI_ExecuteEventActions(node, node->onMouseLeave);
+	if (node->onMouseLeave != nullptr) {
+		UI_ExecuteEventActions(node, node->onMouseLeave);
+	}
+	if (node->lua_onMouseLeave != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onMouseLeave);
+	}
 }
 
 bool uiLocatedNode::onDndEnter (uiNode_t* node)
 {
+	if (!node->dragdrop) return false;
+
+	if (node->lua_onDragDropEnter != LUA_NOREF) {
+		bool result;
+		UI_ExecuteLuaEventScript_DragDrop (node, node->lua_onDragDropEnter, result);
+		return result;
+	}
 	return false;
 }
 
 bool uiLocatedNode::onDndMove (uiNode_t* node, int x, int y)
 {
+	if (!node->dragdrop) return true;
+
+	if (node->lua_onDragDropMove != LUA_NOREF) {
+		bool result;
+		UI_ExecuteLuaEventScript_DragDrop_XY (node, node->lua_onDragDropMove, x, y, result);
+		return result;
+	}
 	return true;
 }
 
 void uiLocatedNode::onDndLeave (uiNode_t* node)
 {
+	if (!node->dragdrop) return;
+
+	if (node->lua_onDragDropLeave != LUA_NOREF) {
+		bool result;
+		UI_ExecuteLuaEventScript_DragDrop (node, node->lua_onDragDropLeave, result);
+	}
 }
 
 bool uiLocatedNode::onDndDrop (uiNode_t* node, int x, int y)
 {
+	if (!node->dragdrop) return true;
+
+	if (node->lua_onDragDropDrop != LUA_NOREF) {
+		bool result;
+		UI_ExecuteLuaEventScript_DragDrop_XY (node, node->lua_onDragDropDrop, x, y, result);
+		return result;
+	}
 	return true;
 }
 
-bool uiLocatedNode::onDndFinished (uiNode_t* node, bool isDroped)
+bool uiLocatedNode::onDndFinished (uiNode_t* node, bool isDropped)
 {
-	return isDroped;
-}
+	if (!node->dragdrop) return isDropped;
 
-/**
- * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
- */
-void uiNode::onActivate (uiNode_t* node)
-{
-	if (node->onClick)
-		UI_ExecuteEventActions(node, node->onClick);
+	if (node->lua_onDragDropFinished != LUA_NOREF) {
+		bool result;
+		UI_ExecuteLuaEventScript_DragDrop_IsDropped (node, node->lua_onDragDropFinished, isDropped, result);
+	}
+	return isDropped;
 }
 
 /**
@@ -168,7 +245,7 @@ void uiLocatedNode::doLayout (uiNode_t* node)
 void uiNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 {
 	for (uiNode_t* child = node->firstChild; child; child = child->next) {
-		UI_Node_WindowOpened(child, nullptr);
+		UI_Node_WindowOpened(child, params);
 	}
 }
 
@@ -285,16 +362,19 @@ static void UI_AbstractNodeCallDeleteTimed (uiNode_t* node, const uiCallContext_
 
 bool uiLocatedNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 {
-	if (node->onWheelUp && deltaY < 0) {
-		UI_ExecuteEventActions(node, node->onWheelUp);
+	if (deltaY < 0) {
+		if (node->onWheelUp != nullptr) UI_ExecuteEventActions(node, node->onWheelUp);
+		if (node->lua_onWheelUp != LUA_NOREF) UI_ExecuteLuaEventScript_DxDy (node, node->lua_onWheelUp, deltaX, deltaY);
 		return true;
 	}
-	if (node->onWheelDown && deltaY > 0) {
-		UI_ExecuteEventActions(node, node->onWheelDown);
+	if (deltaY > 0) {
+		if (node->onWheelDown != nullptr) UI_ExecuteEventActions(node, node->onWheelDown);
+		if (node->lua_onWheelDown != LUA_NOREF) UI_ExecuteLuaEventScript_DxDy (node, node->lua_onWheelDown, deltaX, deltaY);
 		return true;
 	}
-	if (node->onWheel && deltaY != 0) {
-		UI_ExecuteEventActions(node, node->onWheel);
+	if (deltaY != 0) {
+		if (node->onWheel != nullptr) UI_ExecuteEventActions(node, node->onWheel);
+		if (node->lua_onWheel != LUA_NOREF) UI_ExecuteLuaEventScript_DxDy (node, node->lua_onWheel, deltaX, deltaY);
 		return true;
 	}
 	return false;
@@ -311,12 +391,20 @@ void uiLocatedNode::onLeftClick (uiNode_t* node, int x, int y)
 		UI_ExecuteEventActions(node, node->onClick);
 		UI_PlaySound("click1");
 	}
+	else if (node->lua_onClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onClick, x, y);
+		UI_PlaySound("click1");
+	}
 }
 
 void uiLocatedNode::onRightClick (uiNode_t* node, int x, int y)
 {
 	if (node->onRightClick != nullptr) {
 		UI_ExecuteEventActions(node, node->onRightClick);
+		UI_PlaySound("click1");
+	}
+	else if (node->lua_onRightClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onRightClick, x, y);
 		UI_PlaySound("click1");
 	}
 }
@@ -327,6 +415,58 @@ void uiLocatedNode::onMiddleClick (uiNode_t* node, int x, int y)
 		UI_ExecuteEventActions(node, node->onMiddleClick);
 		UI_PlaySound("click1");
 	}
+	else if (node->lua_onMiddleClick != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_XY(node, node->lua_onMiddleClick, x, y);
+		UI_PlaySound("click1");
+	}
+}
+
+void uiNode::onLoaded(uiNode_t* node) {
+	if (node->lua_onLoaded != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onLoaded);
+	}
+}
+
+/**
+ * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
+ * @todo The old implementation calls onClick when activated. This is odd and should be replaced by
+ * a correct onActivate event handler.
+ */
+void uiNode::onActivate(uiNode_t* node) {
+	if (node->onClick) {
+		UI_ExecuteEventActions(node, node->onClick);
+	}
+	if (node->lua_onActivate != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onActivate);
+	}
+}
+
+void uiLocatedNode::onFocusGained(uiNode_t* node) {
+	if (node->lua_onFocusGained != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onFocusGained);
+	}
+}
+
+void uiLocatedNode::onFocusLost(uiNode_t* node) {
+	if (node->lua_onFocusLost != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, node->lua_onFocusLost);
+	}
+}
+
+bool uiLocatedNode::onKeyPressed(uiNode_t* node, unsigned int key, unsigned short unicode) {
+	if (node->lua_onKeyPressed != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_Key(node, node->lua_onKeyPressed, key, unicode);
+		return true;
+	}
+	return false;
+}
+
+bool uiLocatedNode::onKeyReleased(uiNode_t* node, unsigned int key, unsigned short unicode) {
+	if (node->lua_onKeyReleased != LUA_NOREF) {
+		UI_ExecuteLuaEventScript_Key(node, node->lua_onKeyReleased, key, unicode);
+		return true;
+	}
+	return false;
 }
 
 void UI_RegisterAbstractNode (uiBehaviour_t* behaviour)
@@ -334,6 +474,7 @@ void UI_RegisterAbstractNode (uiBehaviour_t* behaviour)
 	behaviour->name = "abstractnode";
 	behaviour->isAbstract = true;
 	behaviour->manager = UINodePtr(new uiLocatedNode());
+	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiNode_t *");
 
 	/* Top-left position of the node */
 	UI_RegisterNodeProperty(behaviour, "pos", V_POS, uiNode_t, box.pos);
