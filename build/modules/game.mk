@@ -17,10 +17,7 @@ ifeq ($(DEBUG),1)
 endif
 
 $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
-	$(wildcard $(SRCDIR)/game/g_*.cpp) ) \
-	\
-	$(LUA_SRCS)
-
+	$(wildcard $(SRCDIR)/game/g_*.cpp) )
 ifneq ($(HARD_LINKED_GAME),1)
 	$(TARGET)_SRCS += shared/mathlib.cpp \
 		shared/aabb.cpp \
@@ -32,7 +29,9 @@ ifneq ($(HARD_LINKED_GAME),1)
 		game/q_shared.cpp \
 		game/chr_shared.cpp \
 		game/inv_shared.cpp \
-		game/inventory.cpp
+		game/inventory.cpp  \
+		\
+		$(LUA_SRCS)
 else
 	$(TARGET)_IGNORE := yes
 endif
