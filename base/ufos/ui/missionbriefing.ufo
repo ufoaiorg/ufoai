@@ -11,8 +11,7 @@ do
 	mission_briefing:set_fill(true)
 	mission_briefing:set_starlayout(true)
 	mission_briefing:set_modal(true)
-	--@TODO: uncomment line below when preventtypingescape is implemented
-	--mission_briefing:set_preventtypingescape(true)
+	mission_briefing:set_preventtypingescape(true)
 	do
 		local mission_briefing_background = ufo.create_control(mission_briefing, "image", "background", nil)
 		mission_briefing_background:set_source("background/maploading")
