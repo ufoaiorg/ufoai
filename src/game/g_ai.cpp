@@ -998,6 +998,83 @@ static bool AI_IsHandForForShootTypeFree (shoot_types_t shootType, Actor* actor)
 }
 
 /**
+ * @brief Searches the map for mission edicts and try to get there
+ * @sa AI_PrepBestAction
+ * @note The routing table is still valid, so we can still use
+ * gi.MoveLength for the given edict here
+ */
+static int AI_CheckForMissionTargets (Actor* actor)
+{
+	int bestActionScore = AI_ACTION_NOTHING_FOUND;
+	int actionScore = 0;
+
+	if (G_IsCivilian(actor)) {
+		Edict* checkPoint = nullptr;
+		int i = 0;
+		/* find waypoints in a closer distance - if civilians are not close enough, let them walk
+		 * around until they came close */
+		for (checkPoint = level.ai_waypointList; checkPoint != nullptr; checkPoint = checkPoint->groupChain) {
+			if (!checkPoint->inuse)
+				continue;
+
+			/* the lower the count value - the nearer the final target */
+			if (checkPoint->count < actor->count) {
+				if (VectorDist(actor->origin, checkPoint->origin) <= WAYPOINT_CIV_DIST) {
+					const int actorTUs = actor->getUsableTUs();
+					const int length = actorTUs - G_ActorMoveLength(actor, level.pathingMap, actor->pos, true);
+					i++;
+
+					/* test for time and distance */
+					actionScore = SCORE_MISSION_TARGET + length;
+
+					actor->calcOrigin();
+					/* Don't walk to enemy ambush */
+					Actor* check = nullptr;
+					while ((check = G_EdictsGetNextLivingActorOfTeam(check, TEAM_ALIEN))) {
+						const float dist = VectorDist(actor->origin, check->origin);
+						/* @todo add visibility check here? */
+						if (dist < RUN_AWAY_DIST)
+							actionScore -= SCORE_RUN_AWAY;
+					}
+					if (actionScore > bestActionScore) {
+						bestActionScore = actionScore;
+						actor->count = checkPoint->count;
+					}
+				}
+			}
+		}
+		/* reset the count value for this civilian to restart the search */
+		if (!i)
+			actor->count = 100;
+	} else if (G_IsAlien(actor)) {
+		/* search for a mission edict */
+		Edict* mission = nullptr;
+		while ((mission = G_EdictsGetNextInUse(mission))) {
+			if (mission->type != ET_MISSION)
+				continue;
+			if (mission->pos[2] != actor->pos[2])
+				continue;
+			const int radius = mission->radius / (UNIT_SIZE + 1);
+			const int distX = std::abs(actor->pos[0] - mission->pos[0]);
+			const int distY = std::abs(actor->pos[1] - mission->pos[1]);
+			const int dists = std::max(distX, distY);
+			if (actor->getTeam() == mission->getTeam()) {
+				actionScore = SCORE_MISSION_TARGET / (dists > radius ? dists - radius : 1);
+			} else {
+				/* try to prevent the phalanx from reaching their mission target */
+				actionScore = SCORE_MISSION_OPPONENT_TARGET / (dists > radius ? dists - radius : 1);
+			}
+
+			if (actionScore > bestActionScore) {
+				bestActionScore = actionScore;
+			}
+		}
+	}
+
+	return bestActionScore > AI_ACTION_NOTHING_FOUND ? bestActionScore : 0;
+}
+
+/**
  * @sa AI_ActorThink
  * @todo fill z_align values
  * @todo optimize this
@@ -1116,6 +1193,9 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 		/* if no target available let them wander around until they find one */
 		bestActionScore += SCORE_RANDOM * frand();
 	}
+
+	/* Reward getting to mission objectives */
+	bestActionScore += AI_CheckForMissionTargets(actor);
 
 	/* penalize herding */
 	if (!actor->isRaged()) {
@@ -1238,6 +1318,9 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 	if (!AI_CheckPosition(actor, actor->pos))
 		bestActionScore -= SCORE_NOSAFE_POSITION_PENALTY;
 
+	/* Approach waypoints */
+	bestActionScore += AI_CheckForMissionTargets(actor);
+
 	/* add laziness */
 	if (actor->getTus())
 		bestActionScore += SCORE_CIV_LAZINESS * tu / actor->getTus();
@@ -1355,108 +1438,6 @@ bool AI_FindMissionLocation (Actor* actor, const pos3_t to, int tus, int radius)
 }
 
 /**
- * @brief Searches the map for mission edicts and try to get there
- * @sa AI_PrepBestAction
- * @note The routing table is still valid, so we can still use
- * gi.MoveLength for the given edict here
- */
-static int AI_CheckForMissionTargets (const Player& player, Actor* actor, AiAction* aia)
-{
-	int bestActionScore = AI_ACTION_NOTHING_FOUND;
-	int actionScore;
-
-	/* reset any previous given action set */
-	aia->reset();
-
-	if (G_IsCivilian(actor)) {
-		Edict* checkPoint = nullptr;
-		int i = 0;
-		/* find waypoints in a closer distance - if civilians are not close enough, let them walk
-		 * around until they came close */
-		for (checkPoint = level.ai_waypointList; checkPoint != nullptr; checkPoint = checkPoint->groupChain) {
-			if (!checkPoint->inuse)
-				continue;
-
-			/* the lower the count value - the nearer the final target */
-			if (checkPoint->count < actor->count) {
-				if (VectorDist(actor->origin, checkPoint->origin) <= WAYPOINT_CIV_DIST) {
-					const int actorTUs = actor->getUsableTUs();
-					if (!AI_FindMissionLocation(actor, checkPoint->pos, actorTUs))
-						continue;
-
-					const int length = actorTUs - G_ActorMoveLength(actor, level.pathingMap, actor->pos, true);
-					i++;
-
-					/* test for time and distance */
-					actionScore = SCORE_MISSION_TARGET + length;
-
-					actor->calcOrigin();
-					/* Don't walk to enemy ambush */
-					Actor* check = nullptr;
-					while ((check = G_EdictsGetNextLivingActorOfTeam(check, TEAM_ALIEN))) {
-						const float dist = VectorDist(actor->origin, check->origin);
-						/* @todo add visibility check here? */
-						if (dist < RUN_AWAY_DIST)
-							actionScore -= SCORE_RUN_AWAY;
-					}
-					if (actionScore > bestActionScore) {
-						bestActionScore = actionScore;
-						actor->count = checkPoint->count;
-						VectorCopy(actor->pos, aia->to);
-						VectorCopy(actor->pos, aia->stop);
-					}
-				}
-			}
-		}
-		/* reset the count value for this civilian to restart the search */
-		if (!i)
-			actor->count = 100;
-	} else if (G_IsAlien(actor)) {
-		/* search for a mission edict */
-		Edict* mission = nullptr;
-		while ((mission = G_EdictsGetNextInUse(mission))) {
-			if (mission->type == ET_MISSION) {
-				const int radius = mission->radius / (UNIT_SIZE + 1);
-				if (!AI_FindMissionLocation(actor, mission->pos, actor->getUsableTUs(), radius  + HOLD_DIST))
-					continue;
-				const int distX = std::abs(actor->pos[0] - mission->pos[0]);
-				const int distY = std::abs(actor->pos[1] - mission->pos[1]);
-				const int dists = std::max(distX, distY);
-				if (player.getTeam() == mission->getTeam()) {
-					actionScore = SCORE_MISSION_TARGET / ((dists > radius) + 1);
-				} else {
-					/* try to prevent the phalanx from reaching their mission target */
-					actionScore = SCORE_MISSION_OPPONENT_TARGET / ((dists > radius) + 1);
-				}
-
-				actor->calcOrigin();
-				/* Don't cluster everybody in the same place */
-				Actor* check = nullptr;
-				while ((check = G_EdictsGetNextLivingActor(check))) {
-					const float dist = VectorDist(actor->origin, check->origin);
-					if (dist < MISSION_HOLD_DIST) {
-						if (check->isSameTeamAs(actor))
-							actionScore -= SCORE_MISSION_HOLD;
-						else
-							/* @todo add a visibility check here? */
-							actionScore += SCORE_MISSION_HOLD;
-					}
-				}
-
-				if (actionScore > bestActionScore) {
-					bestActionScore = actionScore;
-					VectorCopy(actor->pos, aia->to);
-					VectorCopy(actor->pos, aia->stop);
-					aia->target = mission;
-				}
-			}
-		}
-	}
-
-	return bestActionScore;
-}
-
-/**
  * @brief Attempts to find the best action for an alien. Moves the alien
  * into the starting position for that action and returns the action.
  * @param[in] player The AI player
@@ -1502,12 +1483,6 @@ static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 			bestAia = aia;
 			best = bestActionScore;
 		}
-	}
-
-	bestActionScore = AI_CheckForMissionTargets(player, actor, &aia);
-	if (bestActionScore > best) {
-		bestAia = aia;
-		best = bestActionScore;
 	}
 
 	VectorCopy(oldPos, actor->pos);
