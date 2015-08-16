@@ -104,7 +104,9 @@ endif
 
 ifeq ($(HARD_LINKED_GAME),1)
 	$(TARGET)_SRCS     += $(game_SRCS) \
-		game/inventory.cpp
+		game/inventory.cpp \
+		\
+		$(LUA_SRCS)
 else
 	$(TARGET)_DEPS     := game
 endif
