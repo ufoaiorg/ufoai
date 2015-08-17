@@ -11,6 +11,7 @@ component cmpGeoscapeDocklet extends panel {
 
 	image bg {
 		src				"geoscape/docklet_bg"
+		pos				"0 1"
 		size			"280 60"
 		onMouseEnter	{ *node:this@src = "geoscape/docklet_bg_hovered" }
 		onMouseLeave	{ *node:this@src = "geoscape/docklet_bg" }
@@ -32,16 +33,10 @@ component cmpGeoscapeDocklet extends panel {
 	}
 
 	/** store the id to find the object */
-	string type {
-		size	"0 0"
-		invis	true
-	}
+	data type { }
 
 	/** store the id to find the object */
-	string id {
-		size	"0 0"
-		invis	true
-	}
+	data id { }
 }
 
 // ================
@@ -68,7 +63,7 @@ window geoscape
 	}
 
 	confunc clean_geoscape_object {
-		call *node:root.messages.messagesystem.message@removeAllChild
+		call *node:root.messages.dock@removeAllChild
 	}
 
 	/**
@@ -80,10 +75,10 @@ window geoscape
 	confunc add_geoscape_object
 	{
 		call *node:root.messages.dock@createChild ( "<1><2>" , "cmpGeoscapeDocklet" )
-		*node:root.messages.messagesystem.message.<1><2>.type@string = <1>
-		*node:root.messages.messagesystem.message.<1><2>.id@string = <2>
-		*node:root.messages.messagesystem.message.<1><2>.siteModel@src = <3>
-		*node:root.messages.messagesystem.message.<1><2>.message@string = <4>
+		*node:root.messages.dock.<1><2>.type@string = <1>
+		*node:root.messages.dock.<1><2>.id@string = <2>
+		*node:root.messages.dock.<1><2>.siteModel@src = <3>
+		*node:root.messages.dock.<1><2>.message@string = <4>
 	}
 
 	confunc messagesystem_changemode
@@ -730,6 +725,18 @@ window geoscape
 					*node:parent.scroll@current = <viewpos>
 					*node:parent.scroll@viewsize = <viewsize>
 				}
+			}
+		}
+
+		panel dock {
+			{
+				pos				"0 0"
+				size			"301 768"
+				align			LAYOUTALIGN_LEFT
+				layout			LAYOUT_PACK
+				ghost			true
+				padding			10
+				layoutmargin	10
 			}
 		}
 	}
