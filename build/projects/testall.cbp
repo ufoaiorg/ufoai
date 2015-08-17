@@ -369,6 +369,7 @@
 		<Unit filename="../../src/client/ui/node/ui_node_vscrollbar.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_window.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_zone.cpp" />
+		<Unit filename="../../src/client/ui/swig/ui_lua_shared.cpp" />
 		<Unit filename="../../src/client/ui/ui_actions.cpp" />
 		<Unit filename="../../src/client/ui/ui_behaviour.cpp" />
 		<Unit filename="../../src/client/ui/ui_components.cpp" />
@@ -403,6 +404,8 @@
 		<Unit filename="../../src/common/dbuffer.cpp" />
 		<Unit filename="../../src/common/files.cpp" />
 		<Unit filename="../../src/common/grid.cpp" />
+		<Unit filename="../../src/common/hashtable.cpp" />
+		<Unit filename="../../src/common/hashtable.h" />
 		<Unit filename="../../src/common/http.cpp" />
 		<Unit filename="../../src/common/ioapi.cpp" />
 		<Unit filename="../../src/common/list.cpp" />
@@ -416,6 +419,8 @@
 		<Unit filename="../../src/common/routing.cpp" />
 		<Unit filename="../../src/common/scripts.cpp" />
 		<Unit filename="../../src/common/scripts.h" />
+		<Unit filename="../../src/common/scripts_lua.cpp" />
+		<Unit filename="../../src/common/scripts_lua.h" />
 		<Unit filename="../../src/common/sha1.cpp" />
 		<Unit filename="../../src/common/sha2.cpp" />
 		<Unit filename="../../src/common/tracing.cpp" />
