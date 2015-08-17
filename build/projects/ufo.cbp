@@ -107,9 +107,6 @@
 			<Add library="theora" />
 			<Add library="xvidcore" />
 		</Linker>
-		<ExtraCommands>
-			<Add before="swig -c++ -lua -external-runtime ..\..\src\common\swig_lua_runtime.h" />
-		</ExtraCommands>
 		<Unit filename="../../base/autoexec.cfg" />
 		<Unit filename="../../base/dedicated.cfg" />
 		<Unit filename="../../base/default.cfg" />
