@@ -270,6 +270,8 @@
 		<Unit filename="../../src/client/cl_inventory_callbacks.cpp" />
 		<Unit filename="../../src/client/cl_irc.cpp" />
 		<Unit filename="../../src/client/cl_language.cpp" />
+		<Unit filename="../../src/client/cl_lua.cpp" />
+		<Unit filename="../../src/client/cl_lua.h" />
 		<Unit filename="../../src/client/cl_main.cpp" />
 		<Unit filename="../../src/client/cl_menu.cpp" />
 		<Unit filename="../../src/client/cl_screen.cpp" />
@@ -379,6 +381,8 @@
 		<Unit filename="../../src/client/ui/ui_expression.cpp" />
 		<Unit filename="../../src/client/ui/ui_font.cpp" />
 		<Unit filename="../../src/client/ui/ui_input.cpp" />
+		<Unit filename="../../src/client/ui/ui_lua.cpp" />
+		<Unit filename="../../src/client/ui/ui_lua.h" />
 		<Unit filename="../../src/client/ui/ui_main.cpp" />
 		<Unit filename="../../src/client/ui/ui_node.cpp" />
 		<Unit filename="../../src/client/ui/ui_nodes.cpp" />
