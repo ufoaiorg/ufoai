@@ -243,6 +243,15 @@ inline static bool R_IsClampedImageType (imagetype_t type)
 	return type == it_pic || type == it_worldrelated;
 }
 
+#ifdef GL_VERSION_ES_CM_1_0
+inline static void R_StripAlpha (const unsigned* data, unsigned* buffer, const unsigned count)
+{
+	for (unsigned i = 0; i < count; ++i, ++data) {
+		memmove(((byte*)buffer) + i * 3, (const byte*)data, 3);
+	}
+}
+#endif
+
 /**
  * @brief Uploads the opengl texture to the server
  * @param[in] data Must be in RGBA format
@@ -295,7 +304,20 @@ void R_UploadTexture (const unsigned* data, int width, int height, image_t* imag
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 			R_CheckError();
 		}
-		glTexImage2D(GL_TEXTURE_2D, 0, texFormat, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+#ifdef GL_VERSION_ES_CM_1_0
+		/* Strip alpha, see comments below */
+		if (texFormat == GL_RGB) {
+			const int count = scaledWidth * scaledHeight;
+			tmpBuff = Mem_PoolAllocTypeN(unsigned, count, vid_imagePool);
+			R_StripAlpha(data, tmpBuff, count);
+		}
+		GLenum bFormat = texFormat;
+#else
+		GLenum bFormat = GL_RGBA;
+#endif
+		glTexImage2D(GL_TEXTURE_2D, 0, texFormat, scaledWidth, scaledHeight, 0, bFormat, GL_UNSIGNED_BYTE, tmpBuff ? tmpBuff : data);
+		if (tmpBuff)
+			Mem_Free(tmpBuff);
 		return;
 	}
 
@@ -312,14 +334,10 @@ void R_UploadTexture (const unsigned* data, int width, int height, image_t* imag
 	 * usually a concern on an ES.
 	 */
 	if (texFormat == GL_RGB) {
-		scan = ((const byte *)(tmpBuff ? tmpBuff : data));
-		if (!tmpBuff)
-			tmpBuff = Mem_PoolAllocTypeN(unsigned, scaledWidth * scaledHeight, vid_imagePool);
-
 		const int count = scaledWidth * scaledHeight;
-		for (i = 0; i < count; ++i, scan += 4) {
-			memmove(((byte*) tmpBuff) + i * 3, scan, 3);
-		}
+		if (!tmpBuff)
+			tmpBuff = Mem_PoolAllocTypeN(unsigned, count, vid_imagePool);
+		R_StripAlpha(c == count ? data : tmpBuff, tmpBuff, count);
 	}
 #endif
 
