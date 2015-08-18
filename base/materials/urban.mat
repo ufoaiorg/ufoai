@@ -42,18 +42,6 @@
 
 /* disable doubled entry
 {
-	material tex_base/vent_round2
-	{
-		texture tex_base/fan
-		blend GL_SRC_ALPHA GL_ONE
-		rotate 1.0
-		lightmap
-	}
-}
-*/
-
-/* disable doubled entry
-{
 	material tex_nature/grass001
 	hardness 0.2
 	specular 0.2
@@ -128,14 +116,17 @@
 	}
 }
 
-/* ventilators on first and third level */
+/* Rotating fan blades */
 {
 	material tex_base/vent_round2
+	bump 1.0
+	parallax 1.0
+	specular 1.0
+	hardness 1.0
 	{
-		texture tex_base/fan
-		blend GL_SRC_ALPHA GL_ONE
-		rotate 2.0
-		lightmap
+		texture tex_base/vent_round2_a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		anim 6 48
 	}
 }
 
