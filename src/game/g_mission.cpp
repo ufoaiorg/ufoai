@@ -116,14 +116,6 @@ void G_MissionReset (Edict* self, Edict* activator)
 }
 
 /**
- * @brief Mission trigger destroy function
- */
-bool G_MissionDestroy (Edict* self)
-{
-	return true;
-}
-
-/**
  * @brief Mission trigger use function
  */
 bool G_MissionUse (Edict* self, Edict* activator)
