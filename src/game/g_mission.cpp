@@ -109,8 +109,9 @@ void G_MissionReset (Edict* self, Edict* activator)
 		}
 		touched = touched->next;
 	}
+	if (activator->getTeam() == self->getTeam())
+		gi.BroadcastPrintf(PRINT_HUD, _("Target zone is unoccupied!"));
 	/* All team actors are gone, reset counter */
-	gi.BroadcastPrintf(PRINT_HUD, _("Target zone is unoccupied!"));
 	self->count = 0;
 }
 
