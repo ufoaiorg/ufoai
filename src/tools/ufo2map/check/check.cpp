@@ -1170,7 +1170,7 @@ void CheckNodraws (void)
 									VectorCopy(intersection, intersections[numIntsct]);
 									numIntsct++;
 									if (numIntsct >= CH_COMP_NDR_EDGE_INTSCT_BUF) {
-										Check_Printf(VERB_LESS, false, -1, -1, "warning: CheckNodraws: buffer too small");
+										Check_Printf(VERB_LESS, false, -1, -1, "warning: CheckNodraws: buffer too small\n");
 										return;
 									}
 								}
