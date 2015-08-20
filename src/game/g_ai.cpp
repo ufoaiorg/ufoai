@@ -1003,11 +1003,14 @@ static bool AI_IsHandForForShootTypeFree (shoot_types_t shootType, Actor* actor)
  * @note The routing table is still valid, so we can still use
  * gi.MoveLength for the given edict here
  */
-static int AI_CheckForMissionTargets (Actor* actor)
+static int AI_CheckForMissionTargets (Actor* actor, const pos3_t pos)
 {
 	int bestActionScore = AI_ACTION_NOTHING_FOUND;
 	int actionScore = 0;
+	pos3_t oldPos;
 
+	VectorCopy(pos, oldPos);
+	actor->setOrigin(pos);
 	if (G_IsCivilian(actor)) {
 		Edict* checkPoint = nullptr;
 		int i = 0;
@@ -1027,7 +1030,6 @@ static int AI_CheckForMissionTargets (Actor* actor)
 					/* test for time and distance */
 					actionScore = SCORE_MISSION_TARGET + length;
 
-					actor->calcOrigin();
 					/* Don't walk to enemy ambush */
 					Actor* check = nullptr;
 					while ((check = G_EdictsGetNextLivingActorOfTeam(check, TEAM_ALIEN))) {
@@ -1071,6 +1073,7 @@ static int AI_CheckForMissionTargets (Actor* actor)
 		}
 	}
 
+	actor->setOrigin(oldPos);
 	return bestActionScore > AI_ACTION_NOTHING_FOUND ? bestActionScore : 0;
 }
 
@@ -1081,18 +1084,34 @@ static int AI_CheckForMissionTargets (Actor* actor)
  */
 static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction* aia)
 {
-	const pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
+	pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
 	int tu = actor->getUsableTUs() - move;
-
-	/* test for time */
-	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
-		return AI_ACTION_NOTHING_FOUND;
 
 	/* set basic parameters */
 	aia->reset();
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
-	actor->setOrigin(to);
+
+	/* test for time */
+	if (tu < 0 || move == ROUTING_NOT_REACHABLE) {
+		byte crouchingState = actor->isCrouched() ? 1 : 0;
+		pos3_t pos;
+		VectorCopy(to, pos);
+		int dvec;
+		/* Can't get to intended destination, find how far in that direction we can go. */
+		while ((dvec = gi.MoveNext(level.pathingMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+			int len =  G_ActorMoveLength(actor, level.pathingMap, pos, true);
+			if (len != ROUTING_NOT_REACHABLE && actor->getUsableTUs() - len >= 0) {
+				move = len;
+				tu = actor->getUsableTUs() - move;
+				VectorCopy(pos, aia->to);
+				VectorCopy(pos, aia->stop);
+				break;
+			}
+			PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
+		}
+	}
+	actor->setOrigin(aia->to);
 
 	/* pre-find a grenade */
 	Item* grenade = nullptr;
@@ -1105,7 +1124,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	Actor* check = nullptr;
 
 	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (check->isSamePosAs(to) || !AI_IsHostile(actor, check))
+		if (check->isSamePosAs(aia->to) || !AI_IsHostile(actor, check))
 			continue;
 
 		if (!G_IsVisibleForTeam(check, actor->getTeam()) && G_ActorVis(actor, check, true) < ACTOR_VIS_10)
@@ -1137,7 +1156,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	}
 
 	/* Try not to stand in dangerous terrain (eg. fireField) */
-	if (!AI_CheckPosition(actor, actor->pos))
+	if (!AI_CheckPosition(actor, aia->to))
 		bestActionScore -= SCORE_NOSAFE_POSITION_PENALTY;
 
 	if (!actor->isRaged()) {
@@ -1156,9 +1175,9 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 			 * and only then firing at him */
 			bestActionScore += std::max(SCORE_CLOSE_IN - move, 0);
 
-			if (!AI_FindHidingLocation(hidingTeam, actor, to, tu)) {
+			if (!AI_FindHidingLocation(hidingTeam, actor, aia->to, tu)) {
 				/* nothing found */
-				actor->setOrigin(to);
+				actor->setOrigin(aia->to);
 			} else {
 				/* found a hiding spot */
 				VectorCopy(actor->pos, aia->stop);
@@ -1177,7 +1196,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 
 	if (aia->target) {
 		const float dist = VectorDist(actor->origin, aia->target->origin);
-		bestActionScore += SCORE_CLOSE_IN * (1.0 - dist / CLOSE_IN_DIST);
+		bestActionScore += SCORE_CLOSE_IN * (1.0f - dist / CLOSE_IN_DIST);
 	} else if (actor->isRaged()) {
 		/* reward closing in */
 		float minDist = CLOSE_IN_DIST;
@@ -1195,7 +1214,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	}
 
 	/* Reward getting to mission objectives */
-	bestActionScore += AI_CheckForMissionTargets(actor);
+	bestActionScore += AI_CheckForMissionTargets(actor, to);
 
 	/* penalize herding */
 	if (!actor->isRaged()) {
@@ -1319,7 +1338,7 @@ static float AI_CivilianCalcActionScore (Actor* actor, const pos3_t to, AiAction
 		bestActionScore -= SCORE_NOSAFE_POSITION_PENALTY;
 
 	/* Approach waypoints */
-	bestActionScore += AI_CheckForMissionTargets(actor);
+	bestActionScore += AI_CheckForMissionTargets(actor, actor->pos);
 
 	/* add laziness */
 	if (actor->getTus())
