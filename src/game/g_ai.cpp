@@ -1470,7 +1470,7 @@ static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
-	const int dist = (actor->getUsableTUs() + 1) / 2;
+	const int dist = MAX_ROUTE;
 
 	/* search best action */
 	pos3_t oldPos;
