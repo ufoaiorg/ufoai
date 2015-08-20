@@ -1214,7 +1214,8 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	}
 
 	/* Reward getting to mission objectives */
-	bestActionScore += AI_CheckForMissionTargets(actor, to);
+	if (!actor->isRaged())
+		bestActionScore += AI_CheckForMissionTargets(actor, to);
 
 	/* penalize herding */
 	if (!actor->isRaged()) {
