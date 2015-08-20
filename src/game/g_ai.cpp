@@ -876,6 +876,10 @@ static void AI_FindBestFiredef (AiAction* aia, Actor* actor, Actor* check, const
 			if (dmg < check->HP * SCORE_DAMAGE_WORTH_FACTOR)
 				continue;
 
+			/* Reaction fire malus */
+			if (!actor->isInsane() && check->isReaction() && G_ActorVis(check, actor, true) > ACTOR_VIS_0)
+				dmg -= SCORE_REACTION_FEAR_FACTOR;
+
 			/* civilian malus */
 			if (G_IsCivilian(check) && !actor->isRaged())
 				dmg *= SCORE_CIV_FACTOR;
