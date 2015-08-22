@@ -724,7 +724,8 @@ item bomb1
 	size		15
 	notonmarket	true
 	thrown		true
-	is_misc	true
+	is_misc		true
+	virtual		true
 	weight		4000
 }
 
@@ -746,7 +747,8 @@ item bomb2
 	notonmarket	true
 	size		15
 	thrown		true
-	is_misc	true
+	is_misc		true
+	virtual		true
 	weight		4000
 }
 */
