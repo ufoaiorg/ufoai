@@ -1089,6 +1089,9 @@ static int AI_CheckForMissionTargets (Actor* actor, const pos3_t pos)
 static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction* aia)
 {
 	pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
+	if (move == ROUTING_NOT_REACHABLE)
+		return AI_ACTION_NOTHING_FOUND;
+
 	int tu = actor->getUsableTUs() - move;
 
 	/* set basic parameters */
@@ -1097,7 +1100,7 @@ static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction*
 	VectorCopy(to, aia->stop);
 
 	/* test for time */
-	if (tu < 0 || move == ROUTING_NOT_REACHABLE) {
+	if (tu < 0) {
 		byte crouchingState = actor->isCrouched() ? 1 : 0;
 		pos3_t pos;
 		VectorCopy(to, pos);
