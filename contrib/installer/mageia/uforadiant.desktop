@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=UFORadiant
+GenericName=UFORadiant
+Comment=Map Editor for UFO: Alien Invasion
+Comment[de_DE]=Map Editor für UFO: Alien Invasion
+Exec=/usr/games/uforadiant
+Icon=uforadiant
+Terminal=false
+StartupNotify=false
+Type=Application
+Categories=Game;StrategyGame;

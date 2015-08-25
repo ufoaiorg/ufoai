@@ -1,0 +1,9 @@
+[Desktop Entry]
+Categories=Game;StrategyGame;
+Name=UFO: ALIEN INVASION
+Type=Application
+Terminal=false
+Exec=ufo +set fs_i18ndir /usr/share/locale
+Icon=ufoai.png
+Comment=Turn based tactical strategy game, similar to the X-Com games.
+Encoding=UTF-8
