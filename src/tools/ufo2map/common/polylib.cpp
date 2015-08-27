@@ -459,7 +459,7 @@ static void SnapWeldVector (const vec3_t a, const vec3_t b, vec3_t out)
 			out[i] = b[i];
 
 		/* use nearest */
-		else if (fabs(ai - a[i]) < fabs(bi < b[i]))
+		else if (fabs(ai - a[i]) < fabs(bi - b[i]))
 			out[i] = a[i];
 		else
 			out[i] = b[i];

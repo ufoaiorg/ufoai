@@ -31,6 +31,7 @@
 
 #ifdef _WIN32
 
+# include <windows.h>
 # include <wtypes.h>
 
 #elif defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__) || defined (__OpenBSD__)

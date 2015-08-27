@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#include "../shared/cxx.h"
 #include "../common/list.h"
 #include <stdio.h>
 

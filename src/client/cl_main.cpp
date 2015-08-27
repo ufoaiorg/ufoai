@@ -1181,7 +1181,12 @@ void CL_Init (void)
 	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
 	/* i18n through gettext */
 	setlocale(LC_ALL, "C");
+
+// MSVC 2013 do not accept LC_MESSAGES
+#ifndef _MSC_VER
 	setlocale(LC_MESSAGES, "");
+#endif
+
 	/* use system locale dir if we can't find in gamedir */
 	if (fs_i18ndir->string[0] != '\0')
 		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));

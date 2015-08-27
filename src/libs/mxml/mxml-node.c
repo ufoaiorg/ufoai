@@ -41,6 +41,9 @@
 #include "config.h"
 #include "mxml.h"
 
+#ifdef _MSC_VER
+# define snprintf _snprintf
+#endif
 
 /*
  * Local functions...

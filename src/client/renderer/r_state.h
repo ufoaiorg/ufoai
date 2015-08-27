@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#include "../../shared/cxx.h"
+
 #include "r_program.h"
 #include "r_material.h"
 #include "r_framebuffer.h"

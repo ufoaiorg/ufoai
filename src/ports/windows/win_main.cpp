@@ -86,9 +86,17 @@ static void FixWorkingDirectory (void)
 	SetCurrentDirectory(curDir);
 }
 
+#ifdef _MSC_VER
+int main(int argc, char *argv[])
+#else
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE, LPSTR, int)
+#endif
 {
+#ifdef _MSC_VER
+	global_hInstance = GetModuleHandle(NULL);
+#else
 	global_hInstance = hInstance;
+#endif
 
 	Sys_ConsoleInit();
 

@@ -125,7 +125,7 @@
 		<Unit filename="../../src/game/game.h" />
 		<Unit filename="../../src/game/inv_shared.cpp" />
 		<Unit filename="../../src/game/q_shared.cpp" />
-		<Unit filename="../../src/ports/windows/ufo.rc">
+		<Unit filename="../../src/ports/windows/ufoded.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="../../src/ports/windows/win_backtrace.cpp" />
