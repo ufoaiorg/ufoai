@@ -437,7 +437,7 @@ do
 		skillbars_snp:set_pos(0, 60)
 		skillbars_snp:child("label"):set_text("_Sniper")
 		skillbars_snp:child("valuebar"):set_value("*cvar:mn_vsnp")
-		skillbars_snp:child("valuebar"):set_value("*cvar:mn_vsnpi")
+		skillbars_snp:child("initbar"):set_value("*cvar:mn_vsnpi")
 		skillbars_snp:child("valuenum"):set_text("*cvar:mn_tsnp")
 	end
 	do
