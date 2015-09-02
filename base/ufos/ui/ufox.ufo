@@ -1,0 +1,147 @@
+--!usr/bin/lua
+
+--[[
+  - The table ufox holds generic functions for use on the lua side. Currently the following functions can be found here:
+  
+  * build (data, parent)	Build a hierarchy of ui nodes based on the supplied data and add them to parent.
+  * build_window (data)		Build a window including child nodes based on the supplied data.
+  * build_component (data)	Build a component including child nodes based on the supplied data.
+
+--]]
+
+-- ufox is the namespace of lua extensions to the ufo api
+ufox = {}
+
+--[[
+	Assumes the data is a hierarchy of tables. Each table defining a ui node. The hierarchy defines a parent-child relation.
+	Builds each node from the data.
+--]]
+function ufox.build (data, parent)
+	-- make sure we have a table 
+	if (type(data) == "table") then
+		if (data.class ~= nil) and (data.name ~= nil) then
+			-- create the node using the values of name & class specified
+			local ui_node = ufo.create_control (parent, data.class, data.name, data.super)
+			-- iterate all the other properties in the table
+			for k, v in pairs(data) do
+				if (k ~= "class") and (k ~= "name") then
+					-- if it is again a table with a _type and _name field, then the table is a child node of the current node
+					if (type(v) == "table") and (v.class ~= nil) and (v.name ~= nil) then
+						-- recurse call
+						ufox.build(v, ui_node)
+					elseif (type(v) == "function") then
+					    -- set the event handler directly
+						ui_node[k] = v
+					else
+						-- now translate key to a property set function
+						local fn_set = string.format("set_%s", tostring(k))
+						if (type(v) == "table") then
+							-- multiple value argument: should be a table of values
+							ui_node[fn_set](ui_node, unpack(v))
+						else
+							-- single value argument: should be a single value
+							ui_node[fn_set](ui_node, v)
+						end
+					end
+				end
+			end		
+			-- return the control
+			return ui_node
+		else
+			ufo.print("[ufox.build] ERROR: fields class and name expected but not found\n")
+		end
+	end
+	return nil
+end
+
+--[[
+	Assumes the data is a hierarchy of tables. The top table defines a window, other tables lower in the hierarchy define child nodes. The hierarchy itself defines the 
+	parent-child relation.
+--]]
+function ufox.build_window (data)
+	-- make sure we have a table 
+	if (type(data) == "table") then
+		if (data.class ~= nil) and (data.name ~= nil) then
+			-- check if the class is a window
+			if (data.class ~= "window") then
+				ufo.print("[ufox.build_window] WARNING: a window node is being requested but the top level class is not set to 'window'\n")
+			end
+			-- create the node using the values of name & super specified (class is "window" implicitly)
+			local ui_window = ufo.create_window (data.name, data.super)
+			-- iterate all the other properties in the table
+			for k, v in pairs(data) do
+				if (k ~= "class") and (k ~= "name") then
+					-- if it is again a table with a _type and _name field, then the table is a child node of the current node
+					if (type(v) == "table") and (v.class ~= nil) and (v.name ~= nil) then
+						-- recurse call
+						ufox.build(v, ui_window)
+					elseif (type(v) == "function") then
+					    -- set the event handler directly
+						ui_window[k] = v
+					else
+						-- now translate key to a property set function
+						local fn_set = string.format("set_%s", tostring(k))
+						if (type(v) == "table") then
+							-- multiple value argument: should be a table of values
+							ui_window[fn_set](ui_window, unpack(v))
+						else
+							-- single value argument: should be a single value
+							ui_window[fn_set](ui_window, v)
+						end
+					end
+				end
+			end		
+			-- return the control
+			return ui_window
+		else
+			ufo.print("[ufox.build_window] ERROR: fields class and name expected but not found\n")
+		end
+	end
+	return nil
+end
+
+--[[
+	Assumes the data is a hierarchy of tables. The top table defines a component, other tables lower in the hierarchy define child nodes. The hierarchy itself defines the 
+	parent-child relation.
+--]]
+function ufox.build_component (data)
+	-- make sure we have a table 
+	if (type(data) == "table") then
+		if (data.class ~= nil) and (data.name ~= nil) then
+			-- check if the class is a window
+			if (data.class == "window") then
+				ufo.print("[ufox.build_window] WARNING: a component node is being requested but the top level class is set to 'window'\n")
+			end
+			-- create the node using the values of name & class specified
+			local ui_component = ufo.create_component (data.class, data.name, data.super)
+			-- iterate all the other properties in the table
+			for k, v in pairs(data) do
+				if (k ~= "class") and (k ~= "name") then
+					-- if it is again a table with a _type and _name field, then the table is a child node of the current node
+					if (type(v) == "table") and (v.class ~= nil) and (v.name ~= nil) then
+						-- recurse call
+						ufox.build(v, ui_component)
+					elseif (type(v) == "function") then
+					    -- set the event handler directly
+						ui_component[k] = v
+					else
+						-- now translate key to a property set function
+						local fn_set = string.format("set_%s", tostring(k))
+						if (type(v) == "table") then
+							-- multiple value argument: should be a table of values
+							ui_component[fn_set](ui_component, unpack(v))
+						else
+							-- single value argument: should be a single value
+							ui_component[fn_set](ui_component, v)
+						end
+					end
+				end
+			end		
+			-- return the control
+			return ui_component
+		else
+			ufo.print("[ufox.build_window] ERROR: fields class and name expected but not found\n")
+		end
+	end
+	return nil
+end
