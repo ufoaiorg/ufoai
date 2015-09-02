@@ -53,7 +53,7 @@ static int CL_UfoModuleLoader (lua_State* L) {
 
 	/* initialize */
 	memset(module, 0, sizeof(module));
-	Q_strncpyz (module, name, sizeof(module));
+	Com_sprintf(module, sizeof(module), "ufos/ui/%s", name);
 	memset(errmsg, 0, sizeof(errmsg));
 
 	/* find the module using ufo's filesystem */
