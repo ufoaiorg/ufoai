@@ -539,7 +539,7 @@ bool G_ActorInvMove (Actor* actor, const invDef_t* fromContType, Item* fItem, co
 
 	/* "get floor ready" - searching for existing floor-edict */
 	Edict* floor = G_GetFloorItems(actor);
-	bool newFloor;
+	bool newFloor = false;
 	if (toContType->isFloorDef() && !floor) {
 		/* We are moving to the floor, but no existing edict for this floor-tile found -> create new one */
 		floor = G_SpawnFloor(actor->pos);
@@ -548,9 +548,6 @@ bool G_ActorInvMove (Actor* actor, const invDef_t* fromContType, Item* fItem, co
 		/* We are moving from the floor, but no existing edict for this floor-tile found -> this should never be the case. */
 		gi.DPrintf("G_ClientInvMove: No source-floor found.\n");
 		return false;
-	} else {
-		/* There already exists an edict for this floor-tile. */
-		newFloor = false;
 	}
 
 	/* search for space */
@@ -582,6 +579,10 @@ bool G_ActorInvMove (Actor* actor, const invDef_t* fromContType, Item* fItem, co
 		return false;
 	case IA_NOTIME:
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not enough TUs!"));
+		/* New floor was created, inventory move was aborted, delete empty the floor */
+		if (newFloor) {
+			G_FreeEdict(floor);
+		}
 		return false;
 	case IA_NORELOAD:
 		G_ClientPrintf(player, PRINT_HUD,
