@@ -367,4 +367,8 @@ typedef struct game_export_s {
 	int maxplayersperteam;
 } game_export_t;
 
+#ifdef _MSC_VER
+extern "C" __declspec(dllexport) game_export_t* GetGameAPI(game_import_t* import);
+#else
 extern "C" game_export_t* GetGameAPI(game_import_t* import);
+#endif

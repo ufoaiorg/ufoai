@@ -80,7 +80,7 @@ ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 		ports/windows/win_console.cpp \
 		ports/windows/win_shared.cpp \
 		ports/windows/win_main.cpp \
-		ports/windows/ufo.rc
+		ports/windows/ufoded.rc
 endif
 
 ifeq ($(TARGET_OS),darwin)

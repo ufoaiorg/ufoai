@@ -33,9 +33,19 @@
 #	define override
 #endif
 
-#if __cplusplus < 201103L
-#ifndef nullptr
-/* not typesafe as the real nullptr from c++11 */
-#define nullptr 0
+#ifndef __GNUC__
+# define __attribute__(x)
 #endif
+
+#ifdef _MSC_VER
+# define snprintf _snprintf
+# define __func__   __FUNCTION__
+# define __PRETTY_FUNCTION__   __FUNCSIG__
+#else
+# if __cplusplus < 201103L
+#  ifndef nullptr
+/* not typesafe as the real nullptr from c++11 */
+#   define nullptr 0
+#  endif
+# endif
 #endif

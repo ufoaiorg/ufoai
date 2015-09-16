@@ -27,7 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../ports/system.h"
 #include "../../shared/thread.h"
 
+#ifndef _MSC_VER
 #include <unistd.h>
+#endif
 
 renderer_threadstate_t r_threadstate;
 

@@ -34,7 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ports/system.h"
 #include "../shared/defines.h"
 #include "../shared/parse.h"
+#ifndef _MSC_VER
 #include <unistd.h>
+#endif
 
 /** counter for opened files - used to check against missing close calls */
 static int fs_openedFiles;

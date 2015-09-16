@@ -80,7 +80,7 @@ typedef struct cgame_export_s {
 
 	void (EXPORT* MapDraw) (geoscapeData_t* data);
 	void (EXPORT* MapDrawMarkers) (const uiNode_t* node);
-	void (EXPORT* MapClick) (const uiNode_t* node, int x, int y, const vec2_t pos);
+	bool (EXPORT* MapClick) (const uiNode_t* node, int x, int y, const vec2_t pos);
 } cgame_export_t;
 
 typedef struct cgameType_s {

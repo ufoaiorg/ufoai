@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern void GEO_Draw(geoscapeData_t* data);
 extern void GEO_DrawMarkers(const uiNode_t* node);
-extern void GEO_Click(const uiNode_t* node, int x, int y, const vec2_t pos);
+extern bool GEO_Click(const uiNode_t* node, int x, int y, const vec2_t pos);
 
 CGAME_HARD_LINKED_FUNCTIONS
 
