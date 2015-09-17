@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/sharedptr.h"
 #include <stdarg.h>
 
+#include "../shared/cxx.h"
 void Cbuf_Init(void);
 void Cbuf_Shutdown(void);
 void Cbuf_AddText(const char* format, ...) __attribute__((format(__printf__, 1, 2)));

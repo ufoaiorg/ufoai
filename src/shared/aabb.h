@@ -24,13 +24,14 @@ Copyright (C) 2002-2015 UFO: Alien Invasion.
 
 #pragma once
 
+#include "cxx.h"
 #include "ufotypes.h"
 #include "vector.h"
 #include "line.h"
 #include "byte.h"
 #include "defines.h"	/* for MAX_WORLD_WIDTH */
 #include <algorithm>
-#include "stdio.h"
+#include <stdio.h>
 
 /**
  * @brief Axis-aligned bounding box
