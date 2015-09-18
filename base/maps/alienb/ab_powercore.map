@@ -8742,4 +8742,5 @@
 "radius" "192"
 "time" "3"
 "particle" "green_smoke"
+"group" "alienbase"
 }
