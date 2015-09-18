@@ -2706,6 +2706,8 @@ base/models/weapons/shotgun2/shotgun.md2 | Creative Commons Attribution-Share Al
 base/models/weapons/shotgun2/shotgun.tag | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/weapons/shotgun2/shotgun_clip.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
 base/models/weapons/shotgun2/shotgun_clip.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
+base/models/weapons/shotgun2/shotgun_ep_clip.md2 | Creative Commons Attribution-Share Alike 3.0 | Holger 'ShipIt' Gellrich | derived from base/models/weapons/shotgun2/shotgun_clip.md2 by Werner Höhrer (hoehrer)
+base/models/weapons/shotgun2/shotgun_ep_clip.png | Creative Commons Attribution-Share Alike 3.0 | Holger 'ShipIt' Gellrich | derived from base/models/weapons/shotgun2/shotgun_clip.jpg by Werner Höhrer (hoehrer)
 base/models/weapons/shotgun2/shotgun_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/models/weapons/shotgunmicro/shotgunmicro.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)

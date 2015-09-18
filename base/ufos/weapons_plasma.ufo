@@ -369,6 +369,7 @@ item plasblaster_ammo
 // =======================
 // ENCASED PLASMA ROUNDS
 // =======================
+
 item encased_plasma_assault_ammo
 {
 	name			"_Assault Rifle EP Magazine"
@@ -637,6 +638,51 @@ item encased_plasma_sniper_ammo
 			reaction	true
 			throughwall 1
 			shotorg		"2 7"
+		}
+	}
+}
+
+item encased_plasma_shotgun_ammo
+{
+	name			"_Shotgun EP Slugs"
+	model			"weapons/shotgun2/shotgun_ep_clip"
+	type			"ammo"
+	animationindex	0
+	shape			"0 0 1 2"
+	center			"0 0 0"
+	scale			2.0
+	price			1000
+	size			5
+	is_primary		true
+	dmgtype			"normal"
+	weight			600
+
+	weapon_mod
+	{
+		weapon shotgun2
+		firedef
+		{
+			name				"_Snap Shot"
+			skill				"close"
+			projtl				bullet
+			impact				bulletImpact
+			hitbody				null
+			firesnd				"weapons/bullet-shotgun"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
+			sndonce				true
+			speed				3000
+			spread				"3 3"
+			crouch				0.9
+			range				20
+			shots				1
+			ammo				1
+			delaybetweenshots	0
+			time				8
+			damage				"160 20"
+			dmgweight			"plasma_pierce"
+			reaction			true
+			shotorg				"3.5 7.5"
 		}
 	}
 }

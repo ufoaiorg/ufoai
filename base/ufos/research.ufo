@@ -2146,7 +2146,7 @@ tech rs_weapon_encased_plasma_assault_ammo
 
 	require_for_production
 	{
-	    item (alienmaterials 5)
+		item (alienmaterials 5)
 	}
 
 	provides	encased_plasma_assault_ammo
@@ -2173,7 +2173,7 @@ tech rs_weapon_encased_plasma_mg_ammo
 
 	require_for_production
 	{
-	    item (alienmaterials 5)
+		item (alienmaterials 5)
 	}
 
 	provides	encased_plasma_mg_ammo
@@ -2200,10 +2200,37 @@ tech rs_weapon_encased_plasma_sniper_ammo
 
 	require_for_production
 	{
-	    item (alienmaterials 5)
+		item (alienmaterials 5)
 	}
 
 	provides	encased_plasma_sniper_ammo
+	time	0
+	producetime	30
+}
+
+tech rs_weapon_encased_plasma_shotgun_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:encased_plasma_txt"
+	}
+	pre_description {
+		default "*msgid:encased_plasma_pre_txt"
+	}
+
+	require_AND
+	{
+		tech rs_weapon_encased_plasma
+	}
+
+	require_for_production
+	{
+		item (alienmaterials 5)
+	}
+
+	provides	encased_plasma_shotgun_ammo
 	time	0
 	producetime	30
 }
