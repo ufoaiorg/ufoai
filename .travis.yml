@@ -75,7 +75,7 @@ addons:
 #    - libsdl2-mixer-dev
 
 script:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then mkdir build-$TRAVIS_OS_NAME && cd build-$TRAVIS_OS_NAME && ./configure && make -j 4 && cd .. && ./testall; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./configure && make -j 4 && ./testall; fi
 
 #notifications:
 #  email:
