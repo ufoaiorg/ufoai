@@ -8,8 +8,19 @@ branches:
   only:
   - master
 clone_depth: 10
+install:
+# download dependencies
+  - ps: |
+      $file = "C:\deps.zip"
+      $urlDeps = "http://sourceforge.net/projects/ufoai/files/UFO_AI%202.x/2.5/ufoai-deps.zip"
+      Write-Host "Downloading deps"
+      appveyor DownloadFile $urlDeps -FileName $file
+      Write-Host "Unzip deps"
+      7z x -oC:\ $file > $null
+  - set UFOAI_DEPS=C:\ufoai-deps
 before_build:
-  - cmake -G "Visual Studio 12"
+# UFORADIANT cannot be built with MSVC because we don't have the required GTK libraries. We turn off UFOAI_BUILD_UFORADIANT
+  - cmake -G "Visual Studio 12" -DUFOAI_BUILD_GAME=ON -DUFOAI_BUILD_UFO2MAP=ON -DUFOAI_BUILD_UFODED=ON -DUFOAI_BUILD_UFO=ON -DUFOAI_BUILD_UFOMODEL=ON -DUFOAI_BUILD_UFOSLICER=ON -DUFOAI_BUILD_UFORADIANT=OFF -DUFOAI_BUILD_UFOTESTALL=ON
 build:
   parallel: true
   project: ufoai.sln
