@@ -1,27 +1,88 @@
+os:
+  - linux
+
+sudo: false
+
 language:
   - cpp
 
 compiler:
   - gcc
-  - clang
 
-os:
-  - linux
+addons:
+  apt:
+    packages:
+    - libgtest-dev
+    - liblua5.2-dev
+    - zlib1g-dev
+    - g++-5
+    - gcc-5
+    - clang
+    - libc6:i386
+    - lua5.1
+    - libdbus-1-dev
+    - build-essential
+    - mercurial
+    - make
+    - cmake
+    - autoconf
+    - automake
+    - libtool
+    - libasound2-dev
+    - libpulse-dev
+    - libaudio-dev
+    - libx11-dev
+    - libxext-dev
+    - libxrandr-dev
+    - libxcursor-dev
+    - libxi-dev
+    - libxinerama-dev
+    - libxxf86vm-dev
+    - libxss-dev
+    - libgl1-mesa-dev
+    - libesd0-dev
+    - libdbus-1-dev
+    - libudev-dev
+    - libgles1-mesa-dev
+    - libgles2-mesa-dev
+    - libegl1-mesa-dev
+    - libibus-1.0-dev
+    - libsdl1.2-dev
+    - libsdl-ttf2.0-dev
+    - libvorbis-dev
+    - zlib1g-dev
+    - gettext
+    - libtheora-dev
+    - libjpeg-dev
+    - libpng12-dev
+    - libcurl4-openssl-dev
+    - libsdl-mixer1.2-dev
+    - libxml2-dev
+    - libopenal-dev
+    - p7zip-full
+    - binutils-dev
+    - libxvidcore-dev
+    - libmxml-dev
+    - libiberty-dev
+    sources:
+    - ubuntu-toolchain-r-test
+    - zoogie-sdl2-snapshots
+
+# currently disabled, because sdl2 ppa is not yet available
+#    - libsdl2-dev
+#    - libsdl2-net-dev
+#    - libsdl2-image-dev
+#    - libsdl2-mixer-dev
 
 script:
-  - git checkout -f; git clean -fdx && ./configure && make -j 2 && ./testall
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./configure && make -j 4 && ./testall; fi
 
-notifications:
-  email: true
-
-before_install:
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
+#notifications:
+#  email:
 
 install:
-  - sudo apt-get install -qq g++-4.8
-  - sudo apt-get install -qq libc6:i386
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
-  - sudo apt-get install -qq libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev  libxxf86vm-dev libxss-dev libgl1-mesa-dev libesd0-dev libdbus-1-dev libudev-dev libgles1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev
-  - sudo apt-get install -qq libvorbis-dev libtheora-dev
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-5"; fi
+  - gem install xcpretty
+  - gem install xcpretty-travis-formatter
 
+cache: apt

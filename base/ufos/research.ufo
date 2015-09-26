@@ -2613,6 +2613,7 @@ tech rs_weapon_stungren
 		from	"*msgid:mail_from_dr_connor"
 		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	"icons/mail_tech"
 	}
 
@@ -2621,6 +2622,7 @@ tech rs_weapon_stungren
 		from	"*msgid:mail_from_dr_connor"
 		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	"icons/mail_tech"
 	}
 
@@ -2660,6 +2662,7 @@ tech rs_weapon_stungren_alien
 		from	"*msgid:mail_from_paul_navarre"
 		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	"icons/mail_tech"
 	}
 
@@ -2668,6 +2671,7 @@ tech rs_weapon_stungren_alien
 		from	"*msgid:mail_from_paul_navarre"
 		to		"*msgid:mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	"icons/mail_tech"
 	}
 

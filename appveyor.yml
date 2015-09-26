@@ -1,0 +1,22 @@
+os:
+  - Windows Server 2012 R2
+#  - MinGW
+configuration: Release
+environment:
+  NSIS_ROOT: C:\nsis
+branches:
+  only:
+  - master
+clone_depth: 10
+before_build:
+  - cmake -G "Visual Studio 12"
+build:
+  parallel: true
+  project: ufoai.sln
+#  verbosity: detailed
+test_script:
+#  - testall.exe
+  - cinst nsis -y -installArgs /D=%NSIS_ROOT%
+#artifacts:
+#  - path: contrib/installer/windows/*.exe
+#    name: NSIS Installer
