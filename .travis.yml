@@ -1,5 +1,6 @@
 os:
   - linux
+#  - osx
 
 language:
   - cpp
@@ -85,6 +86,7 @@ before_install:
 script:
 # On Linux, we turn on all the projects
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then cmake -DUFOAI_BUILD_GAME=ON -DUFOAI_BUILD_UFO2MAP=ON -DUFOAI_BUILD_UFODED=ON -DUFOAI_BUILD_UFO=ON -DUFOAI_BUILD_UFOMODEL=ON -DUFOAI_BUILD_UFOSLICER=ON -DUFOAI_BUILD_UFORADIANT=ON -DUFOAI_BUILD_UFOTESTALL=ON && make; fi
+#  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then cmake -G Xcode && xcodebuild -list -project ufoai.xcodeproj && xcodebuild -project ufoai.xcodeproj -target ALL_BUILD | xcpretty -f `xcpretty-travis-formatter`; fi
 
 #notifications:
 #  email:
