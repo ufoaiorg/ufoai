@@ -62,6 +62,7 @@ find_path(GTK_INCLUDE_DIR_GLIBCONFIG NAMES glibconfig.h
    /opt/gnome/include
    /opt/gnome/lib/glib/include
    /usr/lib/i386-linux-gnu/glib-2.0/include/
+   /usr/lib/x86_64-linux-gnu/glib-2.0/include/
 )
 
 # gdkconfig.h may be in a different directory than gtk/glib
@@ -75,6 +76,7 @@ find_path(GTK_INCLUDE_DIR_GDKCONFIG NAMES gdkconfig.h
    /opt/gnome/include
    /opt/gnome/lib/glib/include
    /usr/lib/i386-linux-gnu/gtk-2.0/include
+   /usr/lib/x86_64-linux-gnu/gtk-2.0/include
 )
 
 # gdkglext-config.h may be in a different directory than gtk/glib
@@ -265,4 +267,7 @@ if(GTK_INCLUDE_DIR_GTK
       ${GTK_LIBRARY_PANGO}
       ${GTK_LIBRARY_XML2}
    )
+   message(STATUS "GTK found")
+else()
+   message(FATAL_ERROR "Couldn't find GTK !!")
 endif()
