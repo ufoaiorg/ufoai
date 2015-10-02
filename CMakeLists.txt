@@ -180,7 +180,7 @@ if(UFOAI_BUILD_UFO2MAP OR
       UFOAI_BUILD_UFOSLICER OR
       UFOAI_BUILD_UFORADIANT OR
       UFOAI_BUILD_UFOTESTALL)
-   find_package(ZLIB)
+   find_package(zlib)
 endif()
 
 ###############################################################################
