@@ -21,6 +21,16 @@ set(CMAKE_MODULE_PATH
    ${CMAKE_SOURCE_DIR}/cmake/modules
 )
 
+if (NOT CMAKE_TOOLCHAIN_FILE)
+   if (WIN32)
+      include(${ROOT_DIR}/cmake/toolchains/windows-toolchain.cmake)
+   elseif (APPLE)
+      include(${ROOT_DIR}/cmake/toolchains/darwin-toolchain.cmake)
+   else()
+      include(${ROOT_DIR}/cmake/toolchains/linux-toolchain.cmake)
+   endif()
+endif()
+
 if(NOT CMAKE_BUILD_TYPE)
    message(STATUS "CMake build type is not set, defaulting to 'RelWithDebInfo'")
    set(CMAKE_BUILD_TYPE "RelWithDebInfo")
