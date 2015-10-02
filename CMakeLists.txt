@@ -109,7 +109,7 @@ set(CMAKE_PREFIX_PATH ${UFOAI_DEP_SEARCH_PATH} ${CMAKE_PREFIX_PATH})
 if(UFOAI_BUILD_UFODED OR
       UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFOTESTALL)
-   find_package(CURL)
+   find_package(curl)
 endif()
 
 if(UFOAI_BUILD_UFORADIANT)
@@ -121,17 +121,17 @@ if(UFOAI_BUILD_UFO2MAP OR
       UFOAI_BUILD_UFOMODEL OR
       UFOAI_BUILD_UFOSLICER OR
       UFOAI_BUILD_UFOTESTALL)
-   find_package(JPEG)
+   find_package(jpeg)
 endif()
 
 if(UFOAI_BUILD_UFO)
-   find_package(LibIntl)
+   find_package(intl)
 endif()
 
 if(UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFORADIANT OR
       UFOAI_BUILD_UFOTESTALL)
-   find_package(OGG)
+   find_package(ogg)
 endif()
 
 if(UFOAI_BUILD_UFORADIANT)
@@ -143,7 +143,7 @@ if(UFOAI_BUILD_UFO2MAP OR
       UFOAI_BUILD_UFOMODEL OR
       UFOAI_BUILD_UFOSLICER OR
       UFOAI_BUILD_UFOTESTALL)
-   find_package(PNG)
+   find_package(png)
 endif()
 
 if(UFOAI_BUILD_GAME OR
@@ -170,7 +170,7 @@ endif()
 if(UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFORADIANT OR
       UFOAI_BUILD_UFOTESTALL)
-   find_package(VORBIS)
+   find_package(vorbis)
 endif()
 
 if(UFOAI_BUILD_UFO2MAP OR
