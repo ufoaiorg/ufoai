@@ -2107,9 +2107,10 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${ZLIB_LIBRARIES}
    )
 
+   find_package(OpenGL)
    if(WIN32)
       target_link_libraries(${UFOAI_PROJECT_UFOTESTALL}
-         opengl32
+         ${OPENGL_LIBRARIES}
          imm32
          ${INTL_LIBRARIES}
          version
@@ -2118,7 +2119,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       )
    elseif(UNIX)
       target_link_libraries(${UFOAI_PROJECT_UFOTESTALL}
-         GL
+         ${OPENGL_LIBRARIES}
          rt
       )
    endif()
