@@ -36,15 +36,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	follow the following convenction:
 	- an event node->E will get a lua event node.E for reading and writing.
 
-    Depending on the event, the signature can vary, however all events will have a first argument named
-    'sender' wich is set to the instance the event belongs to.
+	Depending on the event, the signature can vary, however all events will have a first argument named
+	'sender' wich is set to the instance the event belongs to.
 */
 
 /* expose everything in lua using a single table 'ufo' */
 %module ufo
 
 %{
-/* disable al casting warnings (enabled at the bottom line of this file) */
+/* disable all casting warnings (enabled at the bottom line of this file) */
 #pragma GCC diagnostic ignored "-Wcast-qual"
 
 /* common client stuff */
@@ -177,7 +177,7 @@ typedef uiNode_t uiZoneNode_t;
    with the typemap for converting return values that specify uiNode_t*.
 */
 void* UI_SWIG_TypeQuery (const char* name) {
-	swig_type_info* info=SWIG_TypeQuery(name);
+	swig_type_info* info = SWIG_TypeQuery(name);
 	if (!info) {
 		info = SWIG_TypeQuery("uiNode_t *");
 	}
@@ -219,8 +219,7 @@ const char* UI_SWIG_NodeTypeName (void* node) {
 	if ($1) {
 		swig_type_info* info=(swig_type_info*)$1->behaviour->lua_SWIG_typeinfo;
 		SWIG_NewPointerObj(L, $1, info, 0); SWIG_arg++;
-	}
-	else {
+	} else {
 		SWIG_NewPointerObj(L, nullptr, nullptr, 0); SWIG_arg++;
 	}
 };
@@ -484,7 +483,7 @@ struct cvar_t {
 	int as_integer () { return $self->integer; };
 
 	void set_value (float number) { Cvar_SetValue($self->name, number);  };
-	void set_value (const char* text) { Cvar_Set($self->name, text); };
+	void set_value (const char* text) { Cvar_Set($self->name, "%s", text); };
 };
 
 %rename (findvar) Cvar_FindVar;
@@ -514,37 +513,37 @@ struct invDef_t {
 struct uiNode_t {
 	/* events */
 	%rename (on_click) lua_onClick;
-    %rename (on_rightclick) lua_onRightClick;
-    %rename (on_middleclick) lua_onMiddleClick;
-    LUA_EVENT lua_onClick; /**< references the event in lua: on_click (node, x, y) */
-    LUA_EVENT lua_onRightClick; /**< references the event in lua: on_rightclick (node, x, y) */
-    LUA_EVENT lua_onMiddleClick; /**< references the event in lua: on_middleclick (node, x, y) */
+	%rename (on_rightclick) lua_onRightClick;
+	%rename (on_middleclick) lua_onMiddleClick;
+	LUA_EVENT lua_onClick; /**< references the event in lua: on_click (node, x, y) */
+	LUA_EVENT lua_onRightClick; /**< references the event in lua: on_rightclick (node, x, y) */
+	LUA_EVENT lua_onMiddleClick; /**< references the event in lua: on_middleclick (node, x, y) */
 	%rename (on_wheelup) lua_onWheelUp;
 	%rename (on_wheeldown) lua_onWheelDown;
 	%rename (on_wheel) lua_onWheel;
-    LUA_EVENT lua_onWheelUp; /**< references the event in lua: on_wheelup (node, dx, dy) */
-    LUA_EVENT lua_onWheelDown; /**< references the event in lua: on_wheeldown (node, dx, dy) */
-    LUA_EVENT lua_onWheel; /**< references the event in lua: on_wheel (node, dx, dy) */
-    %rename (on_focusgained) lua_onFocusGained;
-    %rename (on_focuslost) lua_onFocusLost;
-    %rename (on_keypressed) lua_onKeyPressed;
-    %rename (on_keyreleased) lua_onKeyReleased;
-    LUA_EVENT lua_onFocusGained; /**< references the event in lua: on_focusgained (node) */
-    LUA_EVENT lua_onFocusLost; /**< references the event in lua: on_focuslost (node) */
-    LUA_EVENT lua_onKeyPressed; /**< references the event in lua: on_keypressed (node, key, unicode) */
-    LUA_EVENT lua_onKeyReleased; /**< references the event in lua: on_keyreleased (node, key, unicode) */
+	LUA_EVENT lua_onWheelUp; /**< references the event in lua: on_wheelup (node, dx, dy) */
+	LUA_EVENT lua_onWheelDown; /**< references the event in lua: on_wheeldown (node, dx, dy) */
+	LUA_EVENT lua_onWheel; /**< references the event in lua: on_wheel (node, dx, dy) */
+	%rename (on_focusgained) lua_onFocusGained;
+	%rename (on_focuslost) lua_onFocusLost;
+	%rename (on_keypressed) lua_onKeyPressed;
+	%rename (on_keyreleased) lua_onKeyReleased;
+	LUA_EVENT lua_onFocusGained; /**< references the event in lua: on_focusgained (node) */
+	LUA_EVENT lua_onFocusLost; /**< references the event in lua: on_focuslost (node) */
+	LUA_EVENT lua_onKeyPressed; /**< references the event in lua: on_keypressed (node, key, unicode) */
+	LUA_EVENT lua_onKeyReleased; /**< references the event in lua: on_keyreleased (node, key, unicode) */
 	%rename (on_loaded) lua_onLoaded;
 	%rename (on_activate) lua_onActivate;
-    LUA_EVENT lua_onLoaded; /**< references the event in lua: on_loaded (node) */
-    LUA_EVENT lua_onActivate; /**< references the event in lua: on_activate (node) */
-    %rename (on_mouseenter) lua_onMouseEnter;
-    %rename (on_mouseleave) lua_onMouseLeave;
-    LUA_EVENT lua_onMouseEnter; /**< references the event in lua: on_mouseenter (node) */
-    LUA_EVENT lua_onMouseLeave; /**< references the event in lua: on_mouseleave (node) */
-    %rename (on_change) lua_onChange;
-    LUA_EVENT lua_onChange; /**< references the event in lua: on_change (node) */
-    %rename (on_visiblewhen) lua_onVisibleWhen;
-    LUA_EVENT lua_onVisibleWhen; /**< references the event in lua: on_visible (node) */
+	LUA_EVENT lua_onLoaded; /**< references the event in lua: on_loaded (node) */
+	LUA_EVENT lua_onActivate; /**< references the event in lua: on_activate (node) */
+	%rename (on_mouseenter) lua_onMouseEnter;
+	%rename (on_mouseleave) lua_onMouseLeave;
+	LUA_EVENT lua_onMouseEnter; /**< references the event in lua: on_mouseenter (node) */
+	LUA_EVENT lua_onMouseLeave; /**< references the event in lua: on_mouseleave (node) */
+	%rename (on_change) lua_onChange;
+	LUA_EVENT lua_onChange; /**< references the event in lua: on_change (node) */
+	%rename (on_visiblewhen) lua_onVisibleWhen;
+	LUA_EVENT lua_onVisibleWhen; /**< references the event in lua: on_visible (node) */
 };
 %extend uiNode_t {
 	bool is_window () { return UI_Node_IsWindow($self); };
@@ -638,7 +637,7 @@ struct uiAbstractOptionNode_t: uiNode_t {
 };
 %extend uiAbstractOptionNode_t {
 	int dataid () { return UI_AbstractOption_GetDataId($self); };
-    int count () { return UI_AbstractOption_GetCount($self); };
+	int count () { return UI_AbstractOption_GetCount($self); };
 	const char* cvar () { return UI_AbstractOption_GetCvar($self); };
 
 	int current () { return UI_AbstractOption_Scroll_Current($self); };
@@ -689,7 +688,7 @@ struct uiAbstractScrollableNode_t: uiNode_t {
 	void set_fullsize (int size) { dynamic_cast<uiAbstractScrollableNode*>($self->behaviour->manager.get())->setScrollY($self, -1, -1, size); };
 
 	%rename (on_viewchange) lua_onViewChange;
-	LUA_EVENT lua_onViewChange; 		/**< references the event in lua: on_viewchange (node) */
+	LUA_EVENT lua_onViewChange;		/**< references the event in lua: on_viewchange (node) */
 };
 /*
 	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
@@ -815,11 +814,10 @@ struct uiConFuncNode_t: uiNode_t {
 struct uiContainerNode_t: uiNode_t {
 };
 %extend uiContainerNode_t {
-
 	int selectedid () { return UI_EXTRADATA($self, containerExtraData_t).lastSelectedId; };
 
 	%rename (on_select) lua_onSelect;
-    LUA_EVENT lua_onSelect; /**< references the event in lua: on_select(node) */
+	LUA_EVENT lua_onSelect; /**< references the event in lua: on_select(node) */
 };
 /*
 	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
@@ -838,7 +836,6 @@ static void uiContainerNode_t_lua_onSelect_set(uiContainerNode_t* node, LUA_EVEN
 struct uiBaseInventoryNode_t: uiContainerNode_t {
 };
 %extend uiBaseInventoryNode_t {
-
 	int filtertype () { return UI_EXTRADATA($self, baseInventoryExtraData_t).filterEquipType; };
 	int columns () { return UI_EXTRADATA($self, baseInventoryExtraData_t).columns; };
 
@@ -866,7 +863,7 @@ struct uiBaseInventoryNode_t: uiContainerNode_t {
 	void set_fullsize (int size) { UI_EXTRADATA($self, baseInventoryExtraData_t).scrollY.fullSize = size; };
 
 	%rename (on_viewchange) lua_onViewChange;
-	LUA_EVENT lua_onViewChange; 		/**< references the event in lua: on_viewchange (node) */
+	LUA_EVENT lua_onViewChange;		/**< references the event in lua: on_viewchange (node) */
 };
 /*
 	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
@@ -1038,7 +1035,6 @@ struct uiPanelNode_t: uiAbstractScrollableNode_t {
 	void set_layoutcolumns (int value) { UI_EXTRADATA($self, panelExtraData_t).layoutColumns = value; };
 	void set_wheelscrollable (bool value) { UI_EXTRADATA($self, panelExtraData_t).wheelScrollable = value; };
 	void set_background (const char* name) { UI_Panel_SetBackgroundByName($self, name); };
-
 };
 
 %rename (uiRadar) uiRadarNode_t;
@@ -1089,7 +1085,7 @@ struct uiSequenceNode_t: uiNode_t {
 
 	void set_source (const char* name) { UI_Sequence_SetSource($self, name); };
 
-	LUA_EVENT lua_onEnd; 		/**< references the event in lua: on_end(node) */
+	LUA_EVENT lua_onEnd;		/**< references the event in lua: on_end(node) */
 };
 /*
 	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
@@ -1185,7 +1181,7 @@ struct uiTextEntryNode_t: uiNode_t {
 	void set_background (const char* name) { UI_TextEntry_SetBackgroundByName($self, name); };
 
 	%rename (on_textabort) lua_onTextEntryAbort;
-    LUA_EVENT lua_onTextEntryAbort; /**< references the event in lua: on_textabort(node) */
+	LUA_EVENT lua_onTextEntryAbort; /**< references the event in lua: on_textabort(node) */
 };
 /*
 	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
@@ -1221,7 +1217,7 @@ struct uiTimerNode_t: uiNode_t {
 
 	void set_timeout (int value) { UI_EXTRADATA($self, timerExtraData_t).timeOut = value; };
 
-    LUA_EVENT lua_onEvent; 			/**< references the event in lua: on_event (node, x, y) */
+	LUA_EVENT lua_onEvent;			/**< references the event in lua: on_event (node, x, y) */
 };
 /*
 	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
@@ -1245,7 +1241,7 @@ struct uiVideoNode_t: uiNode_t {
 	void set_nosound (bool value) { UI_EXTRADATA($self, videoExtraData_t).nosound = value; };
 	void set_source (const char* name) { UI_Video_SetSource($self, name); };
 
-	LUA_EVENT lua_onEnd; 		/**< references the event in lua: on_end(node) */
+	LUA_EVENT lua_onEnd;		/**< references the event in lua: on_end(node) */
 };
 /*
 	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
@@ -1297,8 +1293,8 @@ struct uiWindowNode_t: uiNode_t {
 
 	%rename (on_windowopened) lua_onWindowOpened;
 	%rename (on_windowclosed) lua_onWindowClosed;
-    LUA_EVENT lua_onWindowOpened; /**< references the event in lua: on_loaded (node) */
-    LUA_EVENT lua_onWindowClosed; /**< references the event in lua: on_activate (node) */
+	LUA_EVENT lua_onWindowOpened; /**< references the event in lua: on_loaded (node) */
+	LUA_EVENT lua_onWindowClosed; /**< references the event in lua: on_activate (node) */
 };
 /*
 	SWIG allows us to extend a class with properties, provided we supply the get/set wrappers. This is used here
