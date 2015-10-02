@@ -1,7 +1,6 @@
 os:
   - linux
-
-sudo: false
+#  - osx
 
 language:
   - cpp
@@ -64,6 +63,8 @@ addons:
     - libxvidcore-dev
     - libmxml-dev
     - libiberty-dev
+    - libglib2.0-dev
+    - libgtk2.0-dev
     sources:
     - ubuntu-toolchain-r-test
     - zoogie-sdl2-snapshots
@@ -74,8 +75,18 @@ addons:
 #    - libsdl2-image-dev
 #    - libsdl2-mixer-dev
 
+before_install:
+# We need a more up to date version of cmake to use macros like "target_compile_definitions"
+  - sudo add-apt-repository ppa:kubuntu-ppa/backports -y
+  - sudo apt-get update -qq
+  - sudo apt-get install --only-upgrade cmake
+# Following packages are not available and need to be downloaded here
+  - sudo apt-get install libgtkglext1-dev libgtksourceview2.0-dev
+
 script:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then ./configure && make -j 4 && ./testall; fi
+# On Linux, we turn on all the projects
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then cmake -DUFOAI_BUILD_GAME=ON -DUFOAI_BUILD_UFO2MAP=ON -DUFOAI_BUILD_UFODED=ON -DUFOAI_BUILD_UFO=ON -DUFOAI_BUILD_UFOMODEL=ON -DUFOAI_BUILD_UFOSLICER=ON -DUFOAI_BUILD_UFORADIANT=ON -DUFOAI_BUILD_UFOTESTALL=ON && make; fi
+#  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then cmake -G Xcode && xcodebuild -list -project ufoai.xcodeproj && xcodebuild -project ufoai.xcodeproj -target ALL_BUILD | xcpretty -f `xcpretty-travis-formatter`; fi
 
 #notifications:
 #  email:
