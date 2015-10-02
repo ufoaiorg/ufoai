@@ -39,6 +39,7 @@ endif()
 set(UFOAI_SRC "${CMAKE_SOURCE_DIR}/src")
 
 # For some reason, when building against win xp, WINVER and _WIN32_WINNT needs to be defined
+# TODO: should go into toolchain file
 if(WIN32 AND CMAKE_SYSTEM_VERSION)
    set(win_ver ${CMAKE_SYSTEM_VERSION})
    string(REPLACE "." "" win_ver ${win_ver})
@@ -53,6 +54,7 @@ endif()
 
 # MSVC2013 conflicts std::min/std::max by including minwindef.h. To avoid that, we can define NOMINMAX
 if(WIN32 AND MSVC)
+   # TODO: should go into toolchain file
    add_definitions(-DNOMINMAX)
 endif()
 
@@ -116,6 +118,8 @@ message(STATUS "Search path dependencies: ${UFOAI_DEP_SEARCH_PATH}")
 set(CMAKE_PREFIX_PATH ${UFOAI_DEP_SEARCH_PATH} ${CMAKE_PREFIX_PATH})
 
 ## Packages
+find_package(OpenGL)
+
 if(UFOAI_BUILD_UFODED OR
       UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFOTESTALL)
@@ -237,6 +241,7 @@ if(UFOAI_BUILD_GAME)
       ${UFOAI_SRC}/game/inventory.cpp
       ${UFOAI_SRC}/game/q_shared.cpp
 
+      # TODO: support system wide lua installation
       ${UFOAI_SRC}/libs/lua/lapi.c
       ${UFOAI_SRC}/libs/lua/lauxlib.c
       ${UFOAI_SRC}/libs/lua/lbaselib.c
@@ -392,6 +397,7 @@ if(UFOAI_BUILD_UFO2MAP)
       PRIVATE ${ZLIB_INCLUDE_DIRS}
    )
 
+   # TODO: should be part of the toolchain file
    if(MINGW)
       target_link_libraries(${UFOAI_PROJECT_UFO2MAP}
          mingw32
@@ -406,6 +412,7 @@ if(UFOAI_BUILD_UFO2MAP)
       ${ZLIB_LIBRARIES}
    )
 
+   # TODO: should be part of the toolchain file
    if(WIN32)
       target_link_libraries(${UFOAI_PROJECT_UFO2MAP}
          imm32
@@ -521,6 +528,7 @@ if(UFOAI_BUILD_UFODED)
    endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
 
    # since we embed our manifest, we should not generate a default one
+   # TODO: should be part of the ufo_add_executable macro
    if(WIN32 AND MSVC)
       set_target_properties(${UFOAI_PROJECT_UFODED} PROPERTIES LINK_FLAGS "/MANIFEST:NO")
    endif()
@@ -543,6 +551,7 @@ if(UFOAI_BUILD_UFODED)
       ${ZLIB_LIBRARIES}
    )
 
+   # TODO: should be part of the toolchain file
    if(WIN32)
       target_link_libraries(${UFOAI_PROJECT_UFODED}
          imm32
@@ -884,6 +893,7 @@ if(UFOAI_BUILD_UFO)
       ${UFOAI_SRC}/shared/stringhunk.cpp
       ${UFOAI_SRC}/shared/utf8.cpp
 
+      # TODO: support system wide lua
       ${UFOAI_SRC}/libs/lua/lapi.c
       ${UFOAI_SRC}/libs/lua/lauxlib.c
       ${UFOAI_SRC}/libs/lua/lbaselib.c
@@ -976,6 +986,7 @@ if(UFOAI_BUILD_UFO)
    endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
 
    # since we embed our manifest, we should not generate a default one
+   # TODO: should be part of the ufo_add_executable macro
    if(WIN32 AND MSVC)
       set_target_properties(${UFOAI_PROJECT_UFO} PROPERTIES LINK_FLAGS "/MANIFEST:NO")
    endif()
@@ -1023,16 +1034,17 @@ if(UFOAI_BUILD_UFO)
       ${ZLIB_LIBRARIES}
    )
 
+   # TODO: should be part of the toolchain file
    if(WIN32 AND MSVC)
       target_link_libraries(${UFOAI_PROJECT_UFO}
-         opengl32
+         ${OPENGL_LIBRARIES}
          ${INTL_LIBRARIES}
          winmm
          Ws2_32
       )
    elseif(WIN32)
       target_link_libraries(${UFOAI_PROJECT_UFO}
-         opengl32
+         ${OPENGL_LIBRARIES}
          imm32
          ${INTL_LIBRARIES}
          version
@@ -1041,7 +1053,7 @@ if(UFOAI_BUILD_UFO)
       )
    elseif(UNIX)
       target_link_libraries(${UFOAI_PROJECT_UFO}
-         GL
+         ${OPENGL_LIBRARIES}
          rt
       )
    endif()
@@ -1123,6 +1135,7 @@ if(UFOAI_BUILD_UFOMODEL)
       PRIVATE ${ZLIB_INCLUDE_DIRS}
    )
 
+   # TODO: should be part of the toolchain file
    if(MINGW)
       target_link_libraries(${UFOAI_PROJECT_UFOMODEL}
          mingw32
@@ -1137,6 +1150,7 @@ if(UFOAI_BUILD_UFOMODEL)
       ${ZLIB_LIBRARIES}
    )
 
+   # TODO: should be part of the toolchain file
    if(WIN32)
       target_link_libraries(${UFOAI_PROJECT_UFOMODEL}
          imm32
@@ -1217,6 +1231,7 @@ if(UFOAI_BUILD_UFOSLICER)
       PRIVATE ${ZLIB_INCLUDE_DIRS}
    )
 
+   # TODO: should be part of the toolchain file
    if(MINGW)
       target_link_libraries(${UFOAI_PROJECT_UFOSLICER}
          mingw32
@@ -1231,6 +1246,7 @@ if(UFOAI_BUILD_UFOSLICER)
       ${ZLIB_LIBRARIES}
    )
 
+   # TODO: should be part of the toolchain file
    if(WIN32)
       target_link_libraries(${UFOAI_PROJECT_UFOSLICER}
          imm32
@@ -1540,6 +1556,7 @@ if(UFOAI_BUILD_UFORADIANT)
       ${UFOAI_SRC}/tools/radiant/radiant/xyview/XYWnd.cpp
       ${UFOAI_SRC}/tools/radiant/radiant/xyview/grid/Grid.cpp
 
+      # TODO support system wide picomodel
       ${UFOAI_SRC}/libs/picomodel/picointernal.c
       ${UFOAI_SRC}/libs/picomodel/picomodel.c
       ${UFOAI_SRC}/libs/picomodel/picomodules.c
@@ -1596,9 +1613,10 @@ if(UFOAI_BUILD_UFORADIANT)
       ${ZLIB_LIBRARIES}
    )
 
+   # TODO: should be part of the toolchain file
    if(WIN32)
       target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
-         opengl32
+         ${OPENGL_LIBRARIES}
          imm32
          ${INTL_LIBRARIES}
          version
@@ -1606,7 +1624,7 @@ if(UFOAI_BUILD_UFORADIANT)
       )
    elseif(UNIX)
       target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
-         GL
+         ${OPENGL_LIBRARIES}
          X11
          dl
          rt
@@ -2097,6 +2115,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       PRIVATE ${ZLIB_INCLUDE_DIRS}
    )
 
+   # TODO: should be part of the toolchain file
    if(MINGW)
       target_link_libraries(${UFOAI_PROJECT_UFOTESTALL}
          mingw32
@@ -2117,7 +2136,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${ZLIB_LIBRARIES}
    )
 
-   find_package(OpenGL)
+   # TODO: should be part of the toolchain file
    if(WIN32)
       target_link_libraries(${UFOAI_PROJECT_UFOTESTALL}
          ${OPENGL_LIBRARIES}
