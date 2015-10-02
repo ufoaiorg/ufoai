@@ -171,6 +171,7 @@ if(UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFORADIANT OR
       UFOAI_BUILD_UFOTESTALL)
    find_package(vorbis)
+   find_package(vorbisfile)
 endif()
 
 if(UFOAI_BUILD_UFO2MAP OR
@@ -984,10 +985,11 @@ if(UFOAI_BUILD_UFO)
       PRIVATE ${SDLTTF_INCLUDE_DIR}
       PRIVATE ${CURL_INCLUDE_DIR}
       PRIVATE ${VORBIS_INCLUDE_DIR}
+      PRIVATE ${VORBISFILE_INCLUDE_DIR}
       PRIVATE ${OGG_INCLUDE_DIR}
       PRIVATE ${JPEG_INCLUDE_DIR}
       PRIVATE ${PNG_INCLUDE_DIRS}
-      PRIVATE ${LIBINTL_INCLUDE_DIR}
+      PRIVATE ${INTL_INCLUDE_DIR}
       PRIVATE ${ZLIB_INCLUDE_DIRS}
    )
 
@@ -1004,6 +1006,7 @@ if(UFOAI_BUILD_UFO)
       ${SDL_TTF_LIBRARIES}
       ${CURL_LIBRARIES}
       ${VORBIS_LIBRARY}
+      ${VORBISFILE_LIBRARY}
       ${OGG_LIBRARIES}
       ${JPEG_LIBRARIES}
       ${PNG_LIBRARIES}
@@ -1013,7 +1016,7 @@ if(UFOAI_BUILD_UFO)
    if(WIN32 AND MSVC)
       target_link_libraries(${UFOAI_PROJECT_UFO}
          opengl32
-         ${LIBINTL_LIBRARIES}
+         ${INTL_LIBRARIES}
          winmm
          Ws2_32
       )
@@ -1021,7 +1024,7 @@ if(UFOAI_BUILD_UFO)
       target_link_libraries(${UFOAI_PROJECT_UFO}
          opengl32
          imm32
-         ${LIBINTL_LIBRARIES}
+         ${INTL_LIBRARIES}
          version
          winmm
          Ws2_32
@@ -1565,14 +1568,16 @@ if(UFOAI_BUILD_UFORADIANT)
       PRIVATE ${GTK_INCLUDE_DIRS}
       PRIVATE ${OPENAL_INCLUDE_DIR}
       PRIVATE ${VORBIS_INCLUDE_DIR}
+      PRIVATE ${VORBISFILE_INCLUDE_DIR}
       PRIVATE ${OGG_INCLUDE_DIR}
-      PRIVATE ${LIBINTL_INCLUDE_DIR}
+      PRIVATE ${INTL_INCLUDE_DIR}
       PRIVATE ${ZLIB_INCLUDE_DIRS}
    )
 
    target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
       ${GTK_LIBRARIES}
       ${VORBIS_LIBRARY_FILE}
+      ${VORBISFILE_LIBRARY_FILE}
       ${VORBIS_LIBRARY}
       ${OGG_LIBRARIES}
       ${OPENAL_LIBRARIES}
@@ -1585,7 +1590,7 @@ if(UFOAI_BUILD_UFORADIANT)
       target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
          opengl32
          imm32
-         ${LIBINTL_LIBRARIES}
+         ${INTL_LIBRARIES}
          version
          winmm
       )
@@ -2074,10 +2079,11 @@ if(UFOAI_BUILD_UFOTESTALL)
       PRIVATE ${SDLTTF_INCLUDE_DIR}
       PRIVATE ${CURL_INCLUDE_DIR}
       PRIVATE ${VORBIS_INCLUDE_DIR}
+      PRIVATE ${VORBISFILE_INCLUDE_DIR}
       PRIVATE ${OGG_INCLUDE_DIR}
       PRIVATE ${JPEG_INCLUDE_DIR}
       PRIVATE ${PNG_INCLUDE_DIRS}
-      PRIVATE ${LIBINTL_INCLUDE_DIR}
+      PRIVATE ${INTL_INCLUDE_DIR}
       PRIVATE ${ZLIB_INCLUDE_DIRS}
    )
 
@@ -2094,6 +2100,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${SDL_TTF_LIBRARIES}
       ${CURL_LIBRARIES}
       ${VORBIS_LIBRARY}
+      ${VORBISFILE_LIBRARY}
       ${OGG_LIBRARIES}
       ${JPEG_LIBRARIES}
       ${PNG_LIBRARIES}
@@ -2104,7 +2111,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       target_link_libraries(${UFOAI_PROJECT_UFOTESTALL}
          opengl32
          imm32
-         ${LIBINTL_LIBRARIES}
+         ${INTL_LIBRARIES}
          version
          winmm
          Ws2_32
