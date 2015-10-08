@@ -15315,7 +15315,7 @@
 // entity 220
 {
 "classname" "func_breakable"
-"spawnflags" "255"
+"spawnflags" "240"
 "material" "3"
 // brush 0
 {
