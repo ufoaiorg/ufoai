@@ -213,7 +213,7 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 		base->numLasers++;
 		break;
 	default:
-		Com_Printf("BDEF_AddBattery: unknown type of base defence system.\n");
+		Com_Printf("BDEF_AddBattery: unknown type of air defence system.\n");
 	}
 }
 
@@ -271,7 +271,7 @@ void BDEF_RemoveBattery (base_t* base, basedefenceType_t basedefType, int idx)
 		AII_InitialiseSlot(&base->lasers[base->numLasers].slot, nullptr, base, nullptr, AC_ITEM_BASE_LASER);
 		break;
 	default:
-		Com_Printf("BDEF_RemoveBattery_f: unknown type of base defence system.\n");
+		Com_Printf("BDEF_RemoveBattery_f: unknown type of air defence system.\n");
 	}
 }
 
