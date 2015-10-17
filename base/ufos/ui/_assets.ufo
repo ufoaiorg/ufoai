@@ -297,6 +297,7 @@ do
 		ObjectInfo_info:set_size(450, 147)
 		do
 			local ObjectInfo_info_description = ufo.create_text(ObjectInfo_info, "description", nil)
+			local ObjectInfo_info_descriptionscroll = ufo.create_vscrollbar(ObjectInfo_info, "description_scroll", nil)
 			ObjectInfo_info_description:set_dataid(ufo.TEXT_ITEMDESCRIPTION)
 			ObjectInfo_info_description:set_pos(30, 10)
 			ObjectInfo_info_description:set_size(420, 135)
@@ -312,9 +313,7 @@ do
 			ObjectInfo_info_description.on_wheel = function (sender)
 					ObjectInfo_info_descriptionscroll:set_current(sender:viewpos())
 				end
-		end
-		do
-			local ObjectInfo_info_descriptionscroll = ufo.create_vscrollbar(ObjectInfo_info, "description_scroll", nil)
+
 			ObjectInfo_info_descriptionscroll:set_image("ui/scrollbar_v")
 			ObjectInfo_info_descriptionscroll:set_pos(430, 10)
 			ObjectInfo_info_descriptionscroll:set_height(135)

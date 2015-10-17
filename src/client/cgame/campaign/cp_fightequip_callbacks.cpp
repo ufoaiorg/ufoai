@@ -364,16 +364,17 @@ static void AIM_AircraftEquipMenuUpdate (void)
 		if (!slot->installationTime) {
 			Q_strcat(smallbuffer1, sizeof(smallbuffer1), _("This item is functional.\n"));
 		} else if (slot->installationTime > 0) {
-			Q_strcat(smallbuffer1, sizeof(smallbuffer1), _("This item will be installed in %i hours.\n"),
-				slot->installationTime);
+			Q_strcat(smallbuffer1, sizeof(smallbuffer1), ngettext("This item will be installed in %i hour.\n",
+					"This item will be installed in %i hours.\n", slot->installationTime), slot->installationTime);
 		} else if (slot->nextItem) {
-			Q_strcat(smallbuffer1, sizeof(smallbuffer1), _("%s will be removed in %i hours.\n"), _(itemTech->name),
-				- slot->installationTime);
-			Q_strcat(smallbuffer1, sizeof(smallbuffer1), _("%s will be installed in %i hours.\n"), _(nextItemTech->name),
-				slot->nextItem->craftitem.installationTime - slot->installationTime);
+			Q_strcat(smallbuffer1, sizeof(smallbuffer1), ngettext("%s will be removed in %i hour.\n", "%s will be removed in %i hours.\n",
+					-slot->installationTime), _(itemTech->name), -slot->installationTime);
+			Q_strcat(smallbuffer1, sizeof(smallbuffer1), ngettext("%s will be installed in %i hour.\n",
+					"%s will be installed in %i hours.\n", slot->nextItem->craftitem.installationTime - slot->installationTime),
+					_(nextItemTech->name), slot->nextItem->craftitem.installationTime - slot->installationTime);
 		} else {
-			Q_strcat(smallbuffer1, sizeof(smallbuffer1), _("This item will be removed in %i hours.\n"),
-				-slot->installationTime);
+			Q_strcat(smallbuffer1, sizeof(smallbuffer1), ngettext("This item will be removed in %i hour.\n",
+					"This item will be removed in %i hours.\n", -slot->installationTime), -slot->installationTime);
 		}
 	}
 	cgi->UI_RegisterText(TEXT_AIREQUIP_1, smallbuffer1);

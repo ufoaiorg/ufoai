@@ -259,7 +259,7 @@ void UP_AircraftItemDescription (const objDef_t* item)
 				break;
 		case AC_ITEM_BASE_MISSILE:
 		case AC_ITEM_BASE_LASER:
-				Q_strcat(itemText, sizeof(itemText), _("Weapon for base defence system\n"));
+				Q_strcat(itemText, sizeof(itemText), _("Weapon for air defence system\n"));
 				break;
 		case AC_ITEM_AMMO:
 				ammo = item;

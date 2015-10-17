@@ -108,7 +108,7 @@ void SCR_DrawLoadingScreen (bool string, int percent)
 		/* Not used with gettext because it would make removing it too easy. */
 		UI_DrawString("f_menubig", ALIGN_UC,
 			(int)(viddef.virtualWidth / 2), 30,
-			0, viddef.virtualWidth, 50, "Download this game for free at http://ufoai.sf.net");
+			0, viddef.virtualWidth, 50, "Download this free game at http://ufoai.sf.net");
 	}
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, percent);
 
