@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void G_MissionAddVictoryMessage (const char* message)
 {
-	gi.ConfigString(CS_VICTORY_CONDITIONS, "%s", message);
+	gi.ConfigString(CS_VICTORY_CONDITIONS, "%s\n", message);
 }
 
 /**
@@ -246,6 +246,12 @@ void G_MissionThink (Edict* self)
 			}
 			chain->link = nullptr;
 		}
+
+		/* Display mission message */
+		const char* msg = chain->message;
+		if (msg[0] == '_')
+			++msg;
+		gi.BroadcastPrintf(PRINT_HUD, "%s", msg);
 
 		Edict* ent = chain->groupChain;
 		/* free the group chain */
