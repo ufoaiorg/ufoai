@@ -114,22 +114,22 @@ typedef struct oc_theora_state          oc_theora_state;
 #define OC_MODE_INTER_NOMV     (0)
 /*Encoded with no motion compensated prediction.*/
 #define OC_MODE_INTRA          (1)
-/*Encoded difference from the previous frame offset by the given motion 
+/*Encoded difference from the previous frame offset by the given motion
   vector.*/
 #define OC_MODE_INTER_MV       (2)
-/*Encoded difference from the previous frame offset by the last coded motion 
+/*Encoded difference from the previous frame offset by the last coded motion
   vector.*/
 #define OC_MODE_INTER_MV_LAST  (3)
-/*Encoded difference from the previous frame offset by the second to last 
+/*Encoded difference from the previous frame offset by the second to last
   coded motion vector.*/
 #define OC_MODE_INTER_MV_LAST2 (4)
-/*Encoded difference from the same macro block in the previous golden 
+/*Encoded difference from the same macro block in the previous golden
   frame.*/
 #define OC_MODE_GOLDEN_NOMV    (5)
-/*Encoded difference from the previous golden frame offset by the given motion 
+/*Encoded difference from the previous golden frame offset by the given motion
   vector.*/
 #define OC_MODE_GOLDEN_MV      (6)
-/*Encoded difference from the previous frame offset by the individual motion 
+/*Encoded difference from the previous frame offset by the individual motion
   vectors given for each block.*/
 #define OC_MODE_INTER_MV_FOUR  (7)
 /*The number of (coded) modes.*/
@@ -285,7 +285,7 @@ struct oc_base_opt_vtable{
    const ptrdiff_t *_fragis,ptrdiff_t _nfragis,
    int _dst_frame,int _src_frame,int _pli);
   void (*state_loop_filter_frag_rows)(const oc_theora_state *_state,
-   int _bv[256],int _refi,int _pli,int _fragy0,int _fragy_end);  
+   int _bv[256],int _refi,int _pli,int _fragy0,int _fragy_end);
   void (*restore_fpu)(void);
 };
 

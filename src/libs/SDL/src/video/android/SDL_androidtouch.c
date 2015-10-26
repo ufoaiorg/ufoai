@@ -94,7 +94,7 @@ void Android_OnTouch(int touch_device_id_in, int pointer_finger_id_in, int actio
             /* Non primary pointer down */
             SDL_SendTouch(touchDeviceId, fingerId, SDL_TRUE, x, y, p);
             break;
-            
+
         case ACTION_MOVE:
             if (!pointerFingerID) {
                 Android_GetWindowCoordinates(x, y, &window_x, &window_y);
@@ -104,7 +104,7 @@ void Android_OnTouch(int touch_device_id_in, int pointer_finger_id_in, int actio
             }
             SDL_SendTouchMotion(touchDeviceId, fingerId, x, y, p);
             break;
-            
+
         case ACTION_UP:
             /* Primary pointer up */
             /* send mouse up */
@@ -114,7 +114,7 @@ void Android_OnTouch(int touch_device_id_in, int pointer_finger_id_in, int actio
             /* Non primary pointer up */
             SDL_SendTouch(touchDeviceId, fingerId, SDL_FALSE, x, y, p);
             break;
-            
+
         default:
             break;
     }

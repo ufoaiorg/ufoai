@@ -26,8 +26,8 @@
 #include "SDL_opengles.h"
 #include "../SDL_sysrender.h"
 
-/* To prevent unnecessary window recreation, 
- * these should match the defaults selected in SDL_GL_ResetAttributes 
+/* To prevent unnecessary window recreation,
+ * these should match the defaults selected in SDL_GL_ResetAttributes
  */
 
 #define RENDERER_CONTEXT_MAJOR 1
@@ -204,7 +204,7 @@ static int GLES_LoadFunctions(GLES_RenderData * data)
 #define SDL_PROC_OES(ret,func,params) \
     do { \
         data->func = SDL_GL_GetProcAddress(#func); \
-    } while ( 0 );    
+    } while ( 0 );
 #endif /* _SDL_NOGETPROCADDR_ */
 
 #include "SDL_glesfuncs.h"
@@ -491,7 +491,7 @@ GLES_CreateTexture(SDL_Renderer * renderer, SDL_Texture * texture)
         }
     }
 
-    
+
     if (texture->access == SDL_TEXTUREACCESS_TARGET) {
         if (!renderdata->GL_OES_framebuffer_object_supported) {
             SDL_free(data);
@@ -501,7 +501,7 @@ GLES_CreateTexture(SDL_Renderer * renderer, SDL_Texture * texture)
     } else {
         data->fbo = NULL;
     }
-    
+
 
     renderdata->glGetError();
     renderdata->glEnable(GL_TEXTURE_2D);
@@ -537,7 +537,7 @@ GLES_CreateTexture(SDL_Renderer * renderer, SDL_Texture * texture)
         SDL_free(data);
         return GLES_SetError("glTexImage2D()", result);
     }
-    
+
     texture->driverdata = data;
     return 0;
 }
@@ -634,7 +634,7 @@ GLES_SetRenderTarget(SDL_Renderer * renderer, SDL_Texture * texture)
     GLenum status;
 
     GLES_ActivateRenderer(renderer);
-    
+
     if (!data->GL_OES_framebuffer_object_supported) {
         return SDL_SetError("Can't enable render target support in this renderer");
     }

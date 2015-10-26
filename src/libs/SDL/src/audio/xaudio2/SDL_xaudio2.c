@@ -61,7 +61,7 @@
 /* WinRT always has access to the .the XAudio 2 SDK */
 #  define SDL_XAUDIO2_HAS_SDK
 #else
-/* XAudio2 exists as of the March 2008 DirectX SDK 
+/* XAudio2 exists as of the March 2008 DirectX SDK
    The XAudio2 implementation available in the Windows 8 SDK targets Windows 8 and newer.
    If you want to build SDL with XAudio2 support you should install the DirectX SDK.
  */

@@ -77,13 +77,13 @@ NACL_GLES_CreateContext(_THIS, SDL_Window * window)
     /* 64 seems nice. */
     Sint32 attribs[64];
     int i = 0;
-    
+
     if (_this->gl_config.share_with_current_context) {
         share_context = (PP_Resource) SDL_GL_GetCurrentContext();
     }
 
     /* FIXME: Some ATTRIBS from PP_Graphics3DAttrib are not set here */
-    
+
     attribs[i++] = PP_GRAPHICS3DATTRIB_WIDTH;
     attribs[i++] = window->w;
     attribs[i++] = PP_GRAPHICS3DATTRIB_HEIGHT;
@@ -94,44 +94,44 @@ NACL_GLES_CreateContext(_THIS, SDL_Window * window)
     attribs[i++] = _this->gl_config.green_size;
     attribs[i++] = PP_GRAPHICS3DATTRIB_BLUE_SIZE;
     attribs[i++] = _this->gl_config.blue_size;
-    
+
     if (_this->gl_config.alpha_size) {
         attribs[i++] = PP_GRAPHICS3DATTRIB_ALPHA_SIZE;
         attribs[i++] = _this->gl_config.alpha_size;
     }
-    
+
     /*if (_this->gl_config.buffer_size) {
         attribs[i++] = EGL_BUFFER_SIZE;
         attribs[i++] = _this->gl_config.buffer_size;
     }*/
-    
+
     attribs[i++] = PP_GRAPHICS3DATTRIB_DEPTH_SIZE;
     attribs[i++] = _this->gl_config.depth_size;
-    
+
     if (_this->gl_config.stencil_size) {
         attribs[i++] = PP_GRAPHICS3DATTRIB_STENCIL_SIZE;
         attribs[i++] = _this->gl_config.stencil_size;
     }
-    
+
     if (_this->gl_config.multisamplebuffers) {
         attribs[i++] = PP_GRAPHICS3DATTRIB_SAMPLE_BUFFERS;
         attribs[i++] = _this->gl_config.multisamplebuffers;
     }
-    
+
     if (_this->gl_config.multisamplesamples) {
         attribs[i++] = PP_GRAPHICS3DATTRIB_SAMPLES;
         attribs[i++] = _this->gl_config.multisamplesamples;
     }
-       
+
     attribs[i++] = PP_GRAPHICS3DATTRIB_NONE;
-    
+
     context = driverdata->ppb_graphics->Create(driverdata->instance, share_context, attribs);
 
     if (context) {
         /* We need to make the context current, otherwise nothing works */
         SDL_GL_MakeCurrent(window, (SDL_GLContext) context);
     }
-    
+
     return (SDL_GLContext) context;
 }
 

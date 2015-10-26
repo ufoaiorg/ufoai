@@ -28,8 +28,8 @@
 #include "../../video/SDL_blit.h"
 #include "SDL_shaders_gles2.h"
 
-/* To prevent unnecessary window recreation, 
- * these should match the defaults selected in SDL_GL_ResetAttributes 
+/* To prevent unnecessary window recreation,
+ * these should match the defaults selected in SDL_GL_ResetAttributes
  */
 #define RENDERER_CONTEXT_MAJOR 2
 #define RENDERER_CONTEXT_MINOR 0
@@ -1180,7 +1180,7 @@ GLES2_RenderClear(SDL_Renderer * renderer)
        /* Select the color to clear with */
        g = renderer->g;
        a = renderer->a;
-   
+
        if (renderer->target &&
             (renderer->target->format == SDL_PIXELFORMAT_ARGB8888 ||
              renderer->target->format == SDL_PIXELFORMAT_RGB888)) {
@@ -1888,7 +1888,7 @@ GLES2_CreateRenderer(SDL_Window *window, Uint32 flags)
     windowFlags = SDL_GetWindowFlags(window);
     if (!(windowFlags & SDL_WINDOW_OPENGL) ||
         profile_mask != SDL_GL_CONTEXT_PROFILE_ES || major != RENDERER_CONTEXT_MAJOR || minor != RENDERER_CONTEXT_MINOR) {
-        
+
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, RENDERER_CONTEXT_MAJOR);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, RENDERER_CONTEXT_MINOR);

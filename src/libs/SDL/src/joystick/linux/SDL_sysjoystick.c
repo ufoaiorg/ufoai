@@ -145,21 +145,21 @@ void joystick_udev_callback(SDL_UDEV_deviceevent udev_type, int udev_class, cons
     if (devpath == NULL || !(udev_class & SDL_UDEV_DEVICE_JOYSTICK)) {
         return;
     }
-    
+
     switch( udev_type )
     {
         case SDL_UDEV_DEVICEADDED:
             MaybeAddDevice(devpath);
             break;
-            
+
         case SDL_UDEV_DEVICEREMOVED:
             MaybeRemoveDevice(devpath);
             break;
-            
+
         default:
             break;
     }
-    
+
 }
 #endif /* SDL_USE_LIBUDEV */
 
@@ -345,7 +345,7 @@ JoystickInitWithUdev(void)
         SDL_UDEV_Quit();
         return SDL_SetError("Could not set up joystick <-> udev callback");
     }
-    
+
     /* Force a scan to build the initial device list */
     SDL_UDEV_Scan();
 
@@ -389,7 +389,7 @@ void SDL_SYS_JoystickDetect()
 #if SDL_USE_LIBUDEV
     SDL_UDEV_Poll();
 #endif
-    
+
 }
 
 SDL_bool SDL_SYS_JoystickNeedsPolling()
@@ -397,7 +397,7 @@ SDL_bool SDL_SYS_JoystickNeedsPolling()
 #if SDL_USE_LIBUDEV
     return SDL_TRUE;
 #endif
-    
+
     return SDL_FALSE;
 }
 

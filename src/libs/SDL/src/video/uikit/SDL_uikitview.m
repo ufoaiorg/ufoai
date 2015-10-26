@@ -230,7 +230,7 @@ void _uikit_keyboard_init() ;
     /* add the UITextField (hidden) to our view */
     [self addSubview: textField];
     [textField release];
-    
+
     _uikit_keyboard_init();
 }
 
@@ -367,7 +367,7 @@ void _uikit_keyboard_update() {
     if (!data) { return; }
     SDL_uikitview *view = data->view;
     if (!view) { return; }
-    
+
     SDL_Rect r = view.textInputRect;
     int height = view.keyboardHeight;
     int offsetx = 0;
@@ -405,7 +405,7 @@ void _uikit_keyboard_set_height(int height) {
     if (view == nil) {
         return ;
     }
-    
+
     view.keyboardHeight = height;
     _uikit_keyboard_update();
 }
@@ -446,7 +446,7 @@ UIKit_SetTextInputRect(_THIS, SDL_Rect *rect)
         SDL_InvalidParamError("rect");
         return;
     }
-    
+
     SDL_uikitview *view = getWindowView(SDL_GetFocusWindow());
     if (view == nil) {
         return ;

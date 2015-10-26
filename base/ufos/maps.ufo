@@ -1029,7 +1029,7 @@ mapdef eaglenest
 		coop3
 		coop4
 	)
-	
+
 	aircraft
 	(
 		craft_drop_firebird

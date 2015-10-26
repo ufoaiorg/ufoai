@@ -59,8 +59,8 @@ typedef struct {
 
     struct xkb_context *xkb_context;
     struct SDL_WaylandInput *input;
-    
-#ifdef SDL_VIDEO_DRIVER_WAYLAND_QT_TOUCH    
+
+#ifdef SDL_VIDEO_DRIVER_WAYLAND_QT_TOUCH
     struct SDL_WaylandTouch *touch;
     struct qt_surface_extension *surface_extension;
     struct qt_windowmanager *windowmanager;

@@ -52,10 +52,10 @@ typedef struct SDL_VideoData {
   const PPB_MouseInputEvent *ppb_mouse_input_event;
   const PPB_WheelInputEvent *ppb_wheel_input_event;
   const PPB_TouchInputEvent *ppb_touch_input_event;
-      
+
   PP_Resource message_loop;
   PP_Instance instance;
-  
+
   /* FIXME: Check threading issues...otherwise use a hardcoded _this->context across all threads */
   /* PP_Resource context; */
 

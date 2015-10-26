@@ -31,7 +31,7 @@ libtheora 1.1beta1 (2009 August 5)
 
  - Support for two-pass encoding
  - Performance optimization of both encoder and decoder
- - Encoder supports dynamic adjustment of quality and 
+ - Encoder supports dynamic adjustment of quality and
    bitrate targets
  - Encoder is generally more configurable, and all
    rate control modes perform better
@@ -151,7 +151,7 @@ libtheora 1.0alpha6 (2006 May 30)
  * Improve robustness against invalid input
  * General warning cleanup
  * The offset_y member now means what every application thought it meant
-   (offset from the top). This will mean some old files (those with a 
+   (offset from the top). This will mean some old files (those with a
    non-centered image created with a buggy encoder) will display differently.
 
 libtheora 1.0alpha5 (2005 August 20)
@@ -174,14 +174,14 @@ libtheora 1.0alpha4 (2004 December 15)
  * first draft of the Theora I Format Specification
  * API documentation generated from theora.h with Doxygen
  * fix a double-update bug in the motion analysis
- * apply the loop filter before filling motion vector border 
+ * apply the loop filter before filling motion vector border
    in the reference frame
  * new utility functions:
    - theora_packet_isheader(),
    - theora_packet_iskeyframe()
    - theora_granule_frame()
  * optional support for building without floating point
- * optional support for building without encode support 
+ * optional support for building without encode support
  * various build and packaging fixes
  * pkg-config support
  * SymbianOS build support
@@ -217,7 +217,7 @@ libtheora 1.0alpha2 (2003 June 9)
    - add a field for marking the colorspace to the info header
    - add crop parameters for non-multiple-of-16 frame sizes
    - add a second vorbiscomment-style metadata header
- * API changes to handle multiple headers with a single 
+ * API changes to handle multiple headers with a single
    theora_decode_header() call, like libvorbis
  * code cleanup and minor fixes
  * new dump_video code example/utility

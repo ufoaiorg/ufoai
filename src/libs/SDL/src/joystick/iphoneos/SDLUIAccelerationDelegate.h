@@ -28,7 +28,7 @@
 	UIAccelerationValue x, y, z;
 	BOOL isRunning;
 	BOOL hasNewData;
-	
+
 }
 
 +(SDLUIAccelerationDelegate *)sharedDelegate;

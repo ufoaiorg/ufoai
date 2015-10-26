@@ -376,11 +376,11 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     SDL_SetKeyboardFocus(data->window);
                 }
                 WIN_UpdateClipCursor(data->window);
-                
+
                 GetCursorPos(&cursorPos);
                 ScreenToClient(hwnd, &cursorPos);
                 SDL_SendMouseMotion(data->window, 0, 0, cursorPos.x, cursorPos.y);
-                
+
                 WIN_CheckAsyncMouseRelease(data);
 
                 /*
@@ -702,7 +702,7 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             RECT rect;
             int x, y;
             int w, h;
-            
+
             if (data->in_border_change) {
                 break;
             }

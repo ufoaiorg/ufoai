@@ -441,9 +441,9 @@ int SDLTest_RunSuites(SDLTest_TestSuiteReference *testSuites[], const char *user
 
 	/* Pre-allocate an array for tracking failed tests (potentially all test cases) */
 	failedTests = (SDLTest_TestCaseReference **)SDL_malloc(totalNumberOfTests * sizeof(SDLTest_TestCaseReference *));
-	if (failedTests == NULL) {	
+	if (failedTests == NULL) {
 	   SDLTest_LogError("Unable to allocate cache for failed tests");
-           SDL_Error(SDL_ENOMEM);	   
+           SDL_Error(SDL_ENOMEM);
            return -1;
 	}
 

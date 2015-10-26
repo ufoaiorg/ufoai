@@ -32,8 +32,8 @@
 void android_egl_context_backup();
 void android_egl_context_restore();
 
-void 
-android_egl_context_restore() 
+void
+android_egl_context_restore()
 {
     SDL_Event event;
     SDL_WindowData *data = (SDL_WindowData *) Android_Window->driverdata;
@@ -46,8 +46,8 @@ android_egl_context_restore()
     }
 }
 
-void 
-android_egl_context_backup() 
+void
+android_egl_context_backup()
 {
     /* Keep a copy of the EGL Context so we can try to restore it when we resume */
     SDL_WindowData *data = (SDL_WindowData *) Android_Window->driverdata;
@@ -80,7 +80,7 @@ Android_PumpEvents(_THIS)
         if(SDL_SemTryWait(Android_ResumeSem) == 0) {
 #endif
             isPaused = 0;
-            
+
             /* Restore the GL Context from here, as this operation is thread dependent */
             if (!SDL_HasEvent(SDL_QUIT)) {
                 android_egl_context_restore();
@@ -90,7 +90,7 @@ Android_PumpEvents(_THIS)
     else {
 #if SDL_ANDROID_BLOCK_ON_PAUSE
         if( isPausing || SDL_SemTryWait(Android_PauseSem) == 0 ) {
-            /* We've been signaled to pause, but before we block ourselves, 
+            /* We've been signaled to pause, but before we block ourselves,
             we need to make sure that certain key events have reached the app */
             if (SDL_HasEvent(SDL_WINDOWEVENT) || SDL_HasEvent(SDL_APP_WILLENTERBACKGROUND) || SDL_HasEvent(SDL_APP_DIDENTERBACKGROUND) ) {
                 isPausing = 1;

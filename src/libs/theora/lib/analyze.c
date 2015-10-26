@@ -42,7 +42,7 @@ typedef struct oc_mode_choice        oc_mode_choice;
   This is the inverse of the equivalent table OC_MODE_ALPHABETS in the
    decoder.*/
 static const unsigned char OC_MODE_RANKS[7][OC_NMODES]={
-  /*Last MV dominates.*/ 
+  /*Last MV dominates.*/
   /*L P M N I G GM 4*/
   {3,4,2,0,1,5,6,7},
   /*L P N M I G GM 4*/

@@ -206,7 +206,7 @@ WIN_VideoQuit(_THIS)
 #define D3D_DEBUG_INFO
 #include <d3d9.h>
 
-SDL_bool 
+SDL_bool
 D3D_LoadDLL(void **pD3DDLL, IDirect3D9 **pDirect3D9Interface)
 {
     *pD3DDLL = SDL_LoadObject("D3D9.DLL");

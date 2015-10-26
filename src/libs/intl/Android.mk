@@ -8,7 +8,7 @@ APP_SUBDIRS := src
 
 # Add more subdirs here, like src/subdir1 src/subdir2
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/src $(LOCAL_PATH)/include 
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/src $(LOCAL_PATH)/include
 LOCAL_CFLAGS := -Os -DBUILDING_LIBINTL -DBUILDING_DLL \
                 -DIN_LIBINTL -DENABLE_RELOCATABLE=1 -DIN_LIBRARY \
                 -Dset_relocation_prefix=libintl_set_relocation_prefix \

@@ -133,7 +133,7 @@ double
 SDL_fabs(double x)
 {
 #if defined(HAVE_FABS)
-    return fabs(x); 
+    return fabs(x);
 #else
     return SDL_uclibc_fabs(x);
 #endif /* HAVE_FABS */
@@ -191,7 +191,7 @@ SDL_sin(double x)
 #endif /* HAVE_SIN */
 }
 
-float 
+float
 SDL_sinf(float x)
 {
 #ifdef HAVE_SINF
@@ -283,7 +283,7 @@ void * memcpy ( void * destination, const void * source, size_t num )
     const Uint8 *src = (const Uint8 *)source;
     Uint8 *dst = (Uint8 *)destination;
     size_t i;
-    
+
     /* All WIN64 architectures have SSE, right? */
     if (!((uintptr_t) src & 15) && !((uintptr_t) dst & 15)) {
         __m128 values[4];

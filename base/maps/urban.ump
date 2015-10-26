@@ -165,7 +165,7 @@ tile +filler_3x1_a
 }
 
 // Dummy tiles -----------------------------------------------------*
-/* The initial idea of this was to just fill some empty room at the 
+/* The initial idea of this was to just fill some empty room at the
    border of the map with "blockers" .
    Not sure if this will work, though.*/
 

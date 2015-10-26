@@ -53,7 +53,7 @@ int BE_SetClipboardText(_THIS, const char *text) {
 
 char *BE_GetClipboardText(_THIS) {
 	BMessage *clip = NULL;
-	const char *text = NULL;	
+	const char *text = NULL;
 	ssize_t length;
 	char *result;
 	if(be_clipboard->Lock()) {
@@ -65,8 +65,8 @@ char *BE_GetClipboardText(_THIS) {
 			be_clipboard->Unlock();
 		}
 		be_clipboard->Unlock();
-	} 
-	
+	}
+
 	if (!text) {
 		result = SDL_strdup("");
 	} else {
@@ -74,7 +74,7 @@ char *BE_GetClipboardText(_THIS) {
 		result = (char*)SDL_calloc(1, sizeof(char*)*length);
 		SDL_strlcpy(result, text, length);
 	}
-	
+
 	return result;
 }
 
@@ -84,7 +84,7 @@ SDL_bool BE_HasClipboardText(_THIS) {
 	if (text) {
 		result = text[0] != '\0' ? SDL_TRUE : SDL_FALSE;
 		SDL_free(text);
-	} 
+	}
 	return result;
 }
 

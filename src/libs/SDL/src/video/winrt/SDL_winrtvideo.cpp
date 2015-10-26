@@ -371,7 +371,7 @@ WINRT_CreateWindow(_THIS, SDL_Window * window)
      */
     SDL_SetMouseFocus(window);
     SDL_SetKeyboardFocus(window);
- 
+
     /* Make sure the WinRT app's IFramworkView can post events on
        behalf of SDL:
     */

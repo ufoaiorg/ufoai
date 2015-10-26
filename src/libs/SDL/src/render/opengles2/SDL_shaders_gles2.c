@@ -814,7 +814,7 @@ const GLES2_Shader *GLES2_GetShader(GLES2_ShaderType type, SDL_BlendMode blendMo
         default:
             return NULL;
     }
-    
+
     case GLES2_SHADER_FRAGMENT_TEXTURE_YUV_SRC:
     {
         return &GLES2_FragmentShader_TextureYUVSrc;

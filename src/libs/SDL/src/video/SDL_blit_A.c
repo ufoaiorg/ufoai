@@ -367,14 +367,14 @@ BlitRGBtoRGBPixelAlphaMMX(SDL_BlitInfo * info)
 			mm_alpha = _mm_or_si64(mm_alpha2, *(__m64 *) & multmask);	/* 0F0A0A0A -> mm_alpha */
 			mm_alpha2 = _mm_xor_si64(mm_alpha2, *(__m64 *) & multmask2);	/* 255 - mm_alpha -> mm_alpha */
 
-			/* blend */		    
+			/* blend */
 			src1 = _mm_mullo_pi16(src1, mm_alpha);
 			src1 = _mm_srli_pi16(src1, 8);
 			dst1 = _mm_mullo_pi16(dst1, mm_alpha2);
 			dst1 = _mm_srli_pi16(dst1, 8);
 			dst1 = _mm_add_pi16(src1, dst1);
 			dst1 = _mm_packs_pu16(dst1, mm_zero);
-			
+
 			*dstp = _mm_cvtsi64_si32(dst1); /* dst1 -> pixel */
 		}
 		++srcp;
@@ -560,14 +560,14 @@ BlitRGBtoRGBPixelAlphaMMX3DNOW(SDL_BlitInfo * info)
 			mm_alpha2 = _mm_xor_si64(mm_alpha2, *(__m64 *) & multmask2);	/* 255 - mm_alpha -> mm_alpha */
 
 
-			/* blend */		    
+			/* blend */
 			src1 = _mm_mullo_pi16(src1, mm_alpha);
 			src1 = _mm_srli_pi16(src1, 8);
 			dst1 = _mm_mullo_pi16(dst1, mm_alpha2);
 			dst1 = _mm_srli_pi16(dst1, 8);
 			dst1 = _mm_add_pi16(src1, dst1);
 			dst1 = _mm_packs_pu16(dst1, mm_zero);
-			
+
 			*dstp = _mm_cvtsi64_si32(dst1); /* dst1 -> pixel */
 		}
 		++srcp;
@@ -924,7 +924,7 @@ Blit555to555SurfaceAlphaMMX(SDL_BlitInfo * info)
 				dst2 = _mm_and_si64(dst2, rmask); /* dst2 & MASKRED -> dst2 */
 
 				mm_res = dst2; /* RED -> mm_res */
-				
+
 				/* green -- process the bits in place */
 				src2 = src1;
 				src2 = _mm_and_si64(src2, gmask); /* src & MASKGREEN -> src2 */
@@ -1069,7 +1069,7 @@ BlitARGBto565PixelAlpha(SDL_BlitInfo * info)
 		   compositioning used (>>8 instead of /255) doesn't handle
 		   it correctly. Also special-case alpha=0 for speed?
 		   Benchmark this! */
-		if(alpha) {   
+		if(alpha) {
 		  if(alpha == (SDL_ALPHA_OPAQUE >> 3)) {
 		    *dstp = (Uint16)((s >> 8 & 0xf800) + (s >> 5 & 0x7e0) + (s >> 3  & 0x1f));
 		  } else {
@@ -1116,7 +1116,7 @@ BlitARGBto555PixelAlpha(SDL_BlitInfo * info)
 		   compositioning used (>>8 instead of /255) doesn't handle
 		   it correctly. Also special-case alpha=0 for speed?
 		   Benchmark this! */
-		if(alpha) {   
+		if(alpha) {
 		  if(alpha == (SDL_ALPHA_OPAQUE >> 3)) {
 		    *dstp = (Uint16)((s >> 9 & 0x7c00) + (s >> 6 & 0x3e0) + (s >> 3  & 0x1f));
 		  } else {

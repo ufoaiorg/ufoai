@@ -42,7 +42,7 @@ typedef struct {
 
 #ifdef SDL_VIDEO_DRIVER_WAYLAND_QT_TOUCH
     struct qt_extended_surface *extended_surface;
-#endif /* SDL_VIDEO_DRIVER_WAYLAND_QT_TOUCH */    
+#endif /* SDL_VIDEO_DRIVER_WAYLAND_QT_TOUCH */
 } SDL_WindowData;
 
 extern void Wayland_ShowWindow(_THIS, SDL_Window *window);

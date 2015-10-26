@@ -55,7 +55,7 @@ extern DECLSPEC int SDLCALL SDL_Direct3D9GetAdapterIndex( int displayIndex );
 typedef struct IDirect3DDevice9 IDirect3DDevice9;
 extern DECLSPEC IDirect3DDevice9* SDLCALL SDL_RenderGetD3D9Device(SDL_Renderer * renderer);
 
-/* Returns the DXGI Adapter and Output indices for the specified display index. 
+/* Returns the DXGI Adapter and Output indices for the specified display index.
    These can be passed to EnumAdapters and EnumOutputs respectively to get the objects
    required to create a DX10 or DX11 device and swap chain.
  */
@@ -187,8 +187,8 @@ extern DECLSPEC const char * SDLCALL SDL_WinRTGetFSPathUTF8(SDL_WinRT_Path pathT
  *  Required for RWOps on Native Client
  */
 /* @{ */
-extern DECLSPEC int SDLCALL SDL_NaClMount(const char* source, const char* target, 
-                                        const char* filesystemtype, 
+extern DECLSPEC int SDLCALL SDL_NaClMount(const char* source, const char* target,
+                                        const char* filesystemtype,
                                         unsigned long mountflags, const void *data);
 
 extern DECLSPEC int SDLCALL SDL_NaClUmount(const char *target);

@@ -30,7 +30,7 @@
 
 int
 X11_GLES_LoadLibrary(_THIS, const char *path) {
-        
+
     SDL_VideoData *data = (SDL_VideoData *) _this->driverdata;
 
     /* If the profile requested is not GL ES, switch over to X11_GL functions  */
@@ -51,14 +51,14 @@ X11_GLES_LoadLibrary(_THIS, const char *path) {
         return SDL_SetError("SDL not configured with OpenGL/GLX support");
         #endif
     }
-    
+
     return SDL_EGL_LoadLibrary(_this, path, (NativeDisplayType) data->display);
 }
 
 XVisualInfo *
 X11_GLES_GetVisual(_THIS, Display * display, int screen)
 {
-   
+
     XVisualInfo *egl_visualinfo = NULL;
     EGLint visual_id;
     XVisualInfo vi_in;

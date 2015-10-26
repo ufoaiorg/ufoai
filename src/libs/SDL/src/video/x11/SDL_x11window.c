@@ -369,8 +369,8 @@ X11_CreateWindow(_THIS, SDL_Window * window)
         XVisualInfo *vinfo = NULL;
 
 #if SDL_VIDEO_OPENGL_EGL
-        if (_this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES 
-#if SDL_VIDEO_OPENGL_GLX            
+        if (_this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES
+#if SDL_VIDEO_OPENGL_GLX
             && ( !_this->gl_data || ! _this->gl_data->HAS_GLX_EXT_create_context_es2_profile )
 #endif
         ) {
@@ -556,13 +556,13 @@ X11_CreateWindow(_THIS, SDL_Window * window)
     windowdata = (SDL_WindowData *) window->driverdata;
 
 #if SDL_VIDEO_OPENGL_ES || SDL_VIDEO_OPENGL_ES2
-    if ((window->flags & SDL_WINDOW_OPENGL) && 
+    if ((window->flags & SDL_WINDOW_OPENGL) &&
         _this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES
-#if SDL_VIDEO_OPENGL_GLX            
+#if SDL_VIDEO_OPENGL_GLX
         && ( !_this->gl_data || ! _this->gl_data->HAS_GLX_EXT_create_context_es2_profile )
-#endif  
+#endif
     ) {
-#if SDL_VIDEO_OPENGL_EGL  
+#if SDL_VIDEO_OPENGL_EGL
         if (!_this->egl_data) {
             X11_XDestroyWindow(display, w);
             return -1;
@@ -580,7 +580,7 @@ X11_CreateWindow(_THIS, SDL_Window * window)
 #endif /* SDL_VIDEO_OPENGL_EGL */
     }
 #endif
-    
+
 
 #ifdef X_HAVE_UTF8_STRING
     if (SDL_X11_HAVE_UTF8 && windowdata->ic) {

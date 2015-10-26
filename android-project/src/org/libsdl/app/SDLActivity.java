@@ -194,7 +194,7 @@ public class SDLActivity extends Activity {
 	 * This method is called by SDL if SDL did not handle a message itself. This
 	 * happens if a received message contains an unsupported command. Method can
 	 * be overwritten to handle Messages in a different class.
-	 * 
+	 *
 	 * @param command
 	 *            the command of the message.
 	 * @param param
@@ -678,7 +678,7 @@ class SDLMain implements Runnable {
 /**
  * SDLSurface. This is what we draw on, so we need to know when it's created in
  * order to do anything useful.
- * 
+ *
  * Because of this, that's where we set up the SDL thread
  */
 class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
