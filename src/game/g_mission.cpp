@@ -40,6 +40,10 @@ void G_MissionAddVictoryMessage (const char* message)
 	gi.ConfigString(CS_VICTORY_CONDITIONS, "%s\n", message);
 }
 
+static inline const char* G_MissionGetTeamString (const int team) {
+	return (team == TEAM_PHALANX ? "PHALANX" : (team == TEAM_ALIEN ? "Alien" : va("Team %i", team)));
+}
+
 /**
  * @brief Mission trigger
  * @todo use level.nextmap to spawn another map when every living actor has touched the mission trigger
@@ -53,15 +57,13 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 		return false;
 
 	Actor* actor = makeActor(activator);
-	const char* actorTeam = (actor->getTeam() == TEAM_PHALANX ? "PHALANX"
-			: (actor->getTeam() == TEAM_ALIEN ? "Aliens" : va("Team %i", actor->getTeam())));
+	const char* const actorTeam = G_MissionGetTeamString(actor->getTeam());
 	if (!G_IsCivilian(actor) && self->isOpponent(actor)) {
 		if (!self->item && self->count) {
 			if (self->targetname) {
 				gi.BroadcastPrintf(PRINT_HUD, _("%s forces have reached the %s!"), actorTeam, self->targetname);
 			} else {
-				const char* teamName = (self->getTeam() == TEAM_PHALANX ? "PHALANX"
-						: (self->getTeam() == TEAM_ALIEN ? "Aliens" : va("Team %i", self->getTeam())));
+				const char* const teamName = G_MissionGetTeamString(self->getTeam());
 				gi.BroadcastPrintf(PRINT_HUD, _("%s forces have entered %s's target zone!"),
 						actorTeam, teamName);
 			}
@@ -126,8 +128,7 @@ void G_MissionReset (Edict* self, Edict* activator)
 		touched = touched->next;
 	}
 	if (activator->getTeam() == self->getTeam()) {
-		const char* actTeam = (activator->getTeam() == TEAM_PHALANX ? "PHALANX"
-				: (activator->getTeam() == TEAM_ALIEN ? "Aliens" : va("Team %i", activator->getTeam())));
+		const char* const actTeam = G_MissionGetTeamString(activator->getTeam());
 		if (self->targetname)
 			gi.BroadcastPrintf(PRINT_HUD, _("The %s forces have left the %s!"), actTeam, self->targetname);
 		else
