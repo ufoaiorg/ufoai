@@ -566,6 +566,7 @@ struct uiNode_t {
 	const char* text () { return UI_Node_GetText($self); };
 	const char* font () { return $self->font; };
 	const char* image () { return $self->image; };
+	const char* path () { return UI_GetPath($self); };
 	int contentalign () { return $self->contentAlign; };
 	int layoutalign () { return $self->align; };
 	float flashspeed () { return $self->flashSpeed; };
