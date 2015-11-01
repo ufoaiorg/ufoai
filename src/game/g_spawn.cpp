@@ -44,7 +44,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define FFL_SPAWNTEMP		1
 #define FFL_NOSPAWN			2
 
-#define G_ValidMessage(ent)		((ent)->message && ((ent)->message[0] == '_' || strstr((ent)->message, "*msgid:") != nullptr))
 #define G_ValidDescription(ent)	((ent)->description && ((ent)->description[0] == '_' || strstr((ent)->description, "*msgid:") != nullptr))
 
 /**
@@ -899,12 +898,14 @@ static bool Message_Use (Edict* self, Edict* activator)
 	if (!activator || !G_IsActor(activator)) {
 		return false;
 	} else {
-		Player& player = activator->getPlayer();
-		const char* msg = self->message;
-		/* remove gettext marker */
-		if (msg[0] == '_')
-			msg++;
-		G_ClientPrintf(player, PRINT_HUD, "%s", msg);
+		if (G_ValidMessage(self)) {
+			Player& player = activator->getPlayer();
+			const char* msg = self->message;
+			/* remove gettext marker */
+			if (msg[0] == '_')
+				msg++;
+			G_ClientPrintf(player, PRINT_HUD, "%s", msg);
+		}
 
 		if (self->spawnflags & 1)
 			G_FreeEdict(self);

@@ -271,10 +271,12 @@ void G_MissionThink (Edict* self)
 		}
 
 		/* Display mission message */
-		const char* msg = chain->message;
-		if (msg[0] == '_')
-			++msg;
-		gi.BroadcastPrintf(PRINT_HUD, "%s", msg);
+		if (G_ValidMessage(chain)) {
+			const char* msg = chain->message;
+			if (msg[0] == '_')
+				++msg;
+			gi.BroadcastPrintf(PRINT_HUD, "%s", msg);
+		}
 
 		Edict* ent = chain->groupChain;
 		/* free the group chain */
