@@ -16,7 +16,7 @@
  ********************************************************************/
 
 /**\mainpage
- * 
+ *
  * \section intro Introduction
  *
  * This is the documentation for <tt>libtheora</tt> C API.
@@ -32,14 +32,14 @@
  *
  * \subsection Organization
  *
- * The functions documented here are actually subdivided into three 
+ * The functions documented here are actually subdivided into three
  * separate libraries:
  * - <tt>libtheoraenc</tt> contains the encoder interface,
  *   described in \ref encfuncs.
  * - <tt>libtheoradec</tt> contains the decoder interface and
  *   routines shared with the encoder.
  *   You must also link to this if you link to <tt>libtheoraenc</tt>.
- *   The routines in this library are described in \ref decfuncs and 
+ *   The routines in this library are described in \ref decfuncs and
  *   \ref basefuncs.
  * - <tt>libtheora</tt> contains the \ref oldfuncs.
  *
@@ -168,7 +168,7 @@ typedef struct{
 typedef th_img_plane th_ycbcr_buffer[3];
 
 /**Theora bitstream information.
- * This contains the basic playback parameters for a stream, and corresponds to 
+ * This contains the basic playback parameters for a stream, and corresponds to
  *  the initial 'info' header packet.
  * To initialize an encoder, the application fills in this structure and
  *  passes it to th_encode_alloc().

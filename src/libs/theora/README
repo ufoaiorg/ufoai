@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------
-             The Xiph.org Foundation's libtheora 1.1 
+             The Xiph.org Foundation's libtheora 1.1
 -------------------------------------------------------------------------
 
 *** What is Theora?
@@ -21,7 +21,7 @@ be decoded by either release.
 
 Theora's main site is www.theora.org.  Theora and related libraries
 can be gotten from www.theora.org or the main Xiph.Org site at
-www.xiph.org.  Development source is kept in an open subversion 
+www.xiph.org.  Development source is kept in an open subversion
 repository, see http://theora.org/svn/ for instructions.
 
 -------------------------------------------------------------------------
@@ -72,7 +72,7 @@ There is also an experimental scons build.
 
 The sample encoder takes raw video in YUV4MPEG2 format, as used by
 lavtools, mjpeg-tools and other packages. The encoder expects audio,
-if any, in a separate wave WAV file. Try 'encoder_example -h' for a 
+if any, in a separate wave WAV file. Try 'encoder_example -h' for a
 complete list of options.
 
 An easy way to get raw video and audio files is to use MPlayer as an
@@ -81,7 +81,7 @@ wav file named audiodump.wav and a YUV video file in the correct
 format for encoder_example as stream.yuv.  Be careful when exporting
 video alone; MPlayer may drop frames to 'keep up' with the audio
 timer.  The example encoder can't properly synchronize input audio and
-video file that aren't in sync to begin with.  
+video file that aren't in sync to begin with.
 
 The encoder will also take video or audio on stdin if '-' is specified
 as the input file name.
@@ -96,9 +96,9 @@ audio alone, video alone or video with audio.
 
 *** What other tools are available?
 
-The programs in the examples directory are intended as tutorial source 
-for developers using the library. As such they sacrifice features and 
-robustness in the interests of comprehension and should not be 
+The programs in the examples directory are intended as tutorial source
+for developers using the library. As such they sacrifice features and
+robustness in the interests of comprehension and should not be
 considered serious applications.
 
 If you're wanting to just use theora, consider the programs linked
@@ -114,7 +114,7 @@ Troubleshooting the build process
 
 encoder_internal.h:664: parse error before `ogg_uint16_t'
 
-This means you have version of libogg prior to 1.1. A *complete* new Ogg 
+This means you have version of libogg prior to 1.1. A *complete* new Ogg
 install, libs and headers is needed.
 
 Also be sure that there aren't multiple copies of Ogg installed in

@@ -31,7 +31,7 @@ int
 NACL_CreateWindow(_THIS, SDL_Window * window)
 {
     SDL_VideoData *driverdata = (SDL_VideoData *) _this->driverdata;
-    
+
     if (driverdata->window) {
         SDL_SetError("NaCl only supports one window");
         return -1;
@@ -48,9 +48,9 @@ NACL_CreateWindow(_THIS, SDL_Window * window)
     window->flags |= SDL_WINDOW_FULLSCREEN;     /* window is always fullscreen */
     window->flags &= ~SDL_WINDOW_HIDDEN;
     window->flags |= SDL_WINDOW_SHOWN;          /* only one window on NaCl */
-    window->flags |= SDL_WINDOW_INPUT_FOCUS;    /* always has input focus */    
+    window->flags |= SDL_WINDOW_INPUT_FOCUS;    /* always has input focus */
     window->flags |= SDL_WINDOW_OPENGL;
-  
+
     return 0;
 }
 

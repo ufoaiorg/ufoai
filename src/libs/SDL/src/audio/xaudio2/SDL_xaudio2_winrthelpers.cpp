@@ -43,7 +43,7 @@ extern "C" HRESULT __cdecl IXAudio2_GetDeviceCount(IXAudio2 * ixa2, UINT32 * dev
     while (operation->Status != Windows::Foundation::AsyncStatus::Completed)
     {
     }
- 
+
     DeviceInformationCollection^ devices = operation->GetResults();
     *devcount = devices->Size;
     return S_OK;
@@ -72,7 +72,7 @@ extern "C" HRESULT IXAudio2_GetDeviceDetails(IXAudio2 * unused, UINT32 index, XA
     while (operation->Status != Windows::Foundation::AsyncStatus::Completed)
     {
     }
- 
+
     DeviceInformationCollection^ devices = operation->GetResults();
     if (index >= devices->Size)
     {

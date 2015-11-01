@@ -37,7 +37,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void G_MissionAddVictoryMessage (const char* message)
 {
-	gi.ConfigString(CS_VICTORY_CONDITIONS, "%s", message);
+	gi.ConfigString(CS_VICTORY_CONDITIONS, "%s\n", message);
+}
+
+static inline const char* G_MissionGetTeamString (const int team) {
+	return (team == TEAM_PHALANX ? "PHALANX" : (team == TEAM_ALIEN ? "Alien" : va("Team %i", team)));
 }
 
 /**
@@ -53,11 +57,18 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 		return false;
 
 	Actor* actor = makeActor(activator);
-	if (self->isOpponent(actor)) {
+	const char* const actorTeam = G_MissionGetTeamString(actor->getTeam());
+	if (!G_IsCivilian(actor) && self->isOpponent(actor)) {
 		if (!self->item && self->count) {
+			if (self->targetname) {
+				gi.BroadcastPrintf(PRINT_HUD, _("%s forces have reached the %s!"), actorTeam, self->targetname);
+			} else {
+				const char* const teamName = G_MissionGetTeamString(self->getTeam());
+				gi.BroadcastPrintf(PRINT_HUD, _("%s forces have entered %s's target zone!"),
+						actorTeam, teamName);
+			}
+
 			/* reset king of the hill counter */
-			gi.BroadcastPrintf(PRINT_HUD, _("Team %i has entered team %i's target zone!"),
-					actor->getTeam(), self->getTeam());
 			self->count = 0;
 		}
 		return false;
@@ -68,8 +79,11 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 	if (self->isSameTeamAs(actor)) {
 		self->count = level.actualRound;
 		if (!self->item) {
-			gi.BroadcastPrintf(PRINT_HUD, _("Team %i has occupied its target zone!"),
-					actor->getTeam());
+			if (self->targetname) {
+				gi.BroadcastPrintf(PRINT_HUD, _("%s forces have reached the %s!"), actorTeam, self->targetname);
+			} else {
+				gi.BroadcastPrintf(PRINT_HUD, _("%s forces have occupied their target zone!"), actorTeam);
+			}
 			return true;
 		}
 	}
@@ -87,7 +101,11 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 
 			/* drop the weapon - even if out of TUs */
 			G_ActorInvMove(actor, cont->def(), item, INVDEF(CID_FLOOR), NONE, NONE, false);
-			gi.BroadcastPrintf(PRINT_HUD, _("Item was placed."));
+			if (self->targetname) {
+				gi.BroadcastPrintf(PRINT_HUD, _("The %s was placed at the %s."), item->def()->name, self->targetname);
+			} else {
+				gi.BroadcastPrintf(PRINT_HUD, _("The %s was placed."), item->def()->name);
+			}
 			self->count = level.actualRound;
 			return true;
 		}
@@ -109,8 +127,13 @@ void G_MissionReset (Edict* self, Edict* activator)
 		}
 		touched = touched->next;
 	}
-	if (activator->getTeam() == self->getTeam())
-		gi.BroadcastPrintf(PRINT_HUD, _("Target zone is unoccupied!"));
+	if (activator->getTeam() == self->getTeam()) {
+		const char* const actTeam = G_MissionGetTeamString(activator->getTeam());
+		if (self->targetname)
+			gi.BroadcastPrintf(PRINT_HUD, _("The %s forces have left the %s!"), actTeam, self->targetname);
+		else
+			gi.BroadcastPrintf(PRINT_HUD, _("The %s forces have left their target zone!"), actTeam);
+	}
 	/* All team actors are gone, reset counter */
 	self->count = 0;
 }
@@ -246,6 +269,12 @@ void G_MissionThink (Edict* self)
 			}
 			chain->link = nullptr;
 		}
+
+		/* Display mission message */
+		const char* msg = chain->message;
+		if (msg[0] == '_')
+			++msg;
+		gi.BroadcastPrintf(PRINT_HUD, "%s", msg);
 
 		Edict* ent = chain->groupChain;
 		/* free the group chain */

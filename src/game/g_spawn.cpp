@@ -45,6 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define FFL_NOSPAWN			2
 
 #define G_ValidMessage(ent)		((ent)->message && ((ent)->message[0] == '_' || strstr((ent)->message, "*msgid:") != nullptr))
+#define G_ValidDescription(ent)	((ent)->description && ((ent)->description[0] == '_' || strstr((ent)->description, "*msgid:") != nullptr))
 
 /**
  * @brief this is only used to hold entity field values that can be set from
@@ -228,6 +229,8 @@ static void ED_ParseField (const char* key, const char* value, Edict* ent)
 		ent->angle = kvp.asFloat();
 	else if (kvp.isKey("message"))
 		ent->message = ED_NewString(value);
+	else if (kvp.isKey("desc"))
+		ent->description = ED_NewString(value);
 
 	else if (kvp.isKey("norandomspawn"))
 		spawnTemp.noRandomSpawn = kvp.asInt();
@@ -793,8 +796,8 @@ static void SP_misc_mission (Edict* ent)
 	ent->entBox.setMaxs(ent->radius, ent->radius, PLAYER_STAND);
 	ent->entBox.setMins(-ent->radius, -ent->radius, PLAYER_MIN);
 
-	if (G_ValidMessage(ent))
-		G_MissionAddVictoryMessage(ent->message);
+	if (G_ValidDescription(ent))
+		G_MissionAddVictoryMessage(ent->description);
 
 	ent->setTouch(G_MissionTouch);
 	ent->reset = G_MissionReset;

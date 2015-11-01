@@ -164,8 +164,8 @@ SDL_GetPerformanceFrequency(void)
         freq /= mach_base_info.numer;
         return freq;
 #endif
-    } 
-        
+    }
+
     return 1000000;
 }
 

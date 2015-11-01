@@ -1497,7 +1497,7 @@ Cocoa_DestroyWindow(_THIS, SDL_Window * window)
 
         NSArray *contexts = [[data->nscontexts copy] autorelease];
         for (SDLOpenGLContext *context in contexts) {
-            /* Calling setWindow:NULL causes the context to remove itself from the context list. */            
+            /* Calling setWindow:NULL causes the context to remove itself from the context list. */
             [context setWindow:NULL];
         }
         [data->nscontexts release];

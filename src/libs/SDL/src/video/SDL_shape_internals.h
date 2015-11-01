@@ -50,7 +50,7 @@ typedef struct {
 	SDL_ShapeKind kind;
 	SDL_ShapeUnion data;
 } SDL_ShapeTree;
-	
+
 typedef void(*SDL_TraversalFunction)(SDL_ShapeTree*,void*);
 
 extern void SDL_CalculateShapeBitmap(SDL_WindowShapeMode mode,SDL_Surface *shape,Uint8* bitmap,Uint8 ppb);

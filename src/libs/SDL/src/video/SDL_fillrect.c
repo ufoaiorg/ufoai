@@ -135,7 +135,7 @@ SDL_FillRect1(Uint8 * pixels, int pitch, Uint32 color, int w, int h)
 {
     int n;
     Uint8 *p = NULL;
-    
+
     while (h--) {
         n = w;
         p = pixels;
@@ -174,7 +174,7 @@ SDL_FillRect2(Uint8 * pixels, int pitch, Uint32 color, int w, int h)
 {
     int n;
     Uint16 *p = NULL;
-    
+
     while (h--) {
         n = w;
         p = (Uint16 *) pixels;
@@ -224,7 +224,7 @@ SDL_FillRect4(Uint8 * pixels, int pitch, Uint32 color, int w, int h)
     }
 }
 
-/* 
+/*
  * This function performs a fast fill of the given rectangle with 'color'
  */
 int

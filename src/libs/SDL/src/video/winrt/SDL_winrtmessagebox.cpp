@@ -50,7 +50,7 @@ WINRT_ShowMessageBox(const SDL_MessageBoxData *messageboxdata, int *buttonid)
     /* Sadly, Windows Phone 8 doesn't include the MessageDialog class that
      * Windows 8.x/RT does, even though MSDN's reference documentation for
      * Windows Phone 8 mentions it.
-     * 
+     *
      * The .NET runtime on Windows Phone 8 does, however, include a
      * MessageBox class.  Perhaps this could be called, somehow?
      */

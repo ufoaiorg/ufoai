@@ -24,7 +24,7 @@
 
 #include "../../SDL_internal.h"
 
-/* We can't include wayland-client.h here 
+/* We can't include wayland-client.h here
  * but we need some structs from it
  */
 struct wl_interface;
@@ -56,7 +56,7 @@ void SDL_WAYLAND_UnloadSymbols(void);
 #undef SDL_WAYLAND_MODULE
 #undef SDL_WAYLAND_SYM
 #undef SDL_WAYLAND_INTERFACE
- 
+
 
 #ifdef __cplusplus
 }

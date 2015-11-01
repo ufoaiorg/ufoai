@@ -41,7 +41,7 @@ static int
 get_bits (int in, int begin, int end)
 {
     int mask = (1 << (end - begin + 1)) - 1;
-    
+
     return (in >> begin) & mask;
 }
 
@@ -57,14 +57,14 @@ static int
 decode_vendor_and_product_identification (const uchar *edid, MonitorInfo *info)
 {
     int is_model_year;
-    
+
     /* Manufacturer Code */
     info->manufacturer_code[0]  = get_bits (edid[0x08], 2, 6);
     info->manufacturer_code[1]  = get_bits (edid[0x08], 0, 1) << 3;
     info->manufacturer_code[1] |= get_bits (edid[0x09], 5, 7);
     info->manufacturer_code[2]  = get_bits (edid[0x09], 0, 4);
     info->manufacturer_code[3]  = '\0';
-    
+
     info->manufacturer_code[0] += 'A' - 1;
     info->manufacturer_code[1] += 'A' - 1;
     info->manufacturer_code[2] += 'A' - 1;
@@ -126,7 +126,7 @@ decode_display_parameters (const uchar *edid, MonitorInfo *info)
     if (info->is_digital)
     {
 	int bits;
-	
+
 	static const int bit_depth[8] =
 	{
 	    -1, 6, 8, 10, 12, 14, 16, -1
@@ -141,7 +141,7 @@ decode_display_parameters (const uchar *edid, MonitorInfo *info)
 	info->digital.bits_per_primary = bit_depth[bits];
 
 	bits = get_bits (edid[0x14], 0, 3);
-	
+
 	if (bits <= 5)
 	    info->digital.interface = interfaces[bits];
 	else
@@ -150,7 +150,7 @@ decode_display_parameters (const uchar *edid, MonitorInfo *info)
     else
     {
 	int bits = get_bits (edid[0x14], 5, 6);
-	
+
 	static const double levels[][3] =
 	{
 	    { 0.7,   0.3,    1.0 },
@@ -182,7 +182,7 @@ decode_display_parameters (const uchar *edid, MonitorInfo *info)
     else if (edid[0x16] == 0)
     {
 	info->width_mm = -1;
-	info->height_mm = -1; 
+	info->height_mm = -1;
 	info->aspect_ratio = 100.0 / (edid[0x15] + 99);
     }
     else if (edid[0x15] == 0)
@@ -270,7 +270,7 @@ decode_color_characteristics (const uchar *edid, MonitorInfo *info)
 static int
 decode_established_timings (const uchar *edid, MonitorInfo *info)
 {
-    static const Timing established[][8] = 
+    static const Timing established[][8] =
     {
 	{
 	    { 800, 600, 60 },
@@ -324,7 +324,7 @@ static int
 decode_standard_timings (const uchar *edid, MonitorInfo *info)
 {
     int i;
-    
+
     for (i = 0; i < 8; i++)
     {
 	int first = edid[0x26 + 2 * i];
@@ -348,7 +348,7 @@ decode_standard_timings (const uchar *edid, MonitorInfo *info)
 	    info->standard[i].frequency = get_bits (second, 0, 5) + 60;
 	}
     }
-    
+
     return TRUE;
 }
 
@@ -424,7 +424,7 @@ decode_detailed_timing (const uchar *timing,
 	TWO_WAY_RIGHT_ON_EVEN, TWO_WAY_LEFT_ON_EVEN,
 	FOUR_WAY_INTERLEAVED, SIDE_BY_SIDE
     };
-    
+
     detailed->pixel_clock = (timing[0x00] | timing[0x01] << 8) * 10000;
     detailed->h_addr = timing[0x02] | ((timing[0x04] & 0xf0) << 4);
     detailed->h_blank = timing[0x03] | ((timing[0x04] & 0x0f) << 8);
@@ -481,9 +481,9 @@ decode_descriptors (const uchar *edid, MonitorInfo *info)
 {
     int i;
     int timing_idx;
-    
+
     timing_idx = 0;
-    
+
     for (i = 0; i < 4; ++i)
     {
 	int index = 0x36 + i * 18;
@@ -523,7 +523,7 @@ decode_edid (const uchar *edid)
     MonitorInfo *info = calloc (1, sizeof (MonitorInfo));
 
     decode_check_sum (edid, info);
-    
+
     if (!decode_header (edid) ||
         !decode_vendor_and_product_identification (edid, info) ||
         !decode_edid_version (edid, info) ||
@@ -535,7 +535,7 @@ decode_edid (const uchar *edid)
         free(info);
 	return NULL;
     }
-    
+
     return info;
 }
 
@@ -550,30 +550,30 @@ dump_monitor_info (MonitorInfo *info)
 {
     char *s;
     int i;
-    
+
     printf ("Checksum: %d (%s)\n",
 	    info->checksum, info->checksum? "incorrect" : "correct");
     printf ("Manufacturer Code: %s\n", info->manufacturer_code);
     printf ("Product Code: 0x%x\n", info->product_code);
     printf ("Serial Number: %u\n", info->serial_number);
-    
+
     if (info->production_week != -1)
 	printf ("Production Week: %d\n", info->production_week);
     else
 	printf ("Production Week: unspecified\n");
-    
+
     if (info->production_year != -1)
 	printf ("Production Year: %d\n", info->production_year);
     else
 	printf ("Production Year: unspecified\n");
-    
+
     if (info->model_year != -1)
 	printf ("Model Year: %d\n", info->model_year);
     else
 	printf ("Model Year: unspecified\n");
-    
+
     printf ("EDID revision: %d.%d\n", info->major_version, info->minor_version);
-    
+
     printf ("Display is %s\n", info->is_digital? "digital" : "analog");
     if (info->is_digital)
     {
@@ -582,7 +582,7 @@ dump_monitor_info (MonitorInfo *info)
 	    printf ("Bits Per Primary: %d\n", info->digital.bits_per_primary);
 	else
 	    printf ("Bits Per Primary: undefined\n");
-	
+
 	switch (info->digital.interface)
 	{
 	case DVI: interface = "DVI"; break;
@@ -594,7 +594,7 @@ dump_monitor_info (MonitorInfo *info)
 	default: interface = "unknown"; break;
 	}
 	printf ("Interface: %s\n", interface);
-	
+
 	printf ("RGB 4:4:4: %s\n", yesno (info->digital.rgb444));
 	printf ("YCrCb 4:4:4: %s\n", yesno (info->digital.ycrcb444));
 	printf ("YCrCb 4:2:2: %s\n", yesno (info->digital.ycrcb422));
@@ -604,7 +604,7 @@ dump_monitor_info (MonitorInfo *info)
 	printf ("Video Signal Level: %f\n", info->analog.video_signal_level);
 	printf ("Sync Signal Level: %f\n", info->analog.sync_signal_level);
 	printf ("Total Signal Level: %f\n", info->analog.total_signal_level);
-	
+
 	printf ("Blank to Black: %s\n",
 		yesno (info->analog.blank_to_black));
 	printf ("Separate HV Sync: %s\n",
@@ -613,7 +613,7 @@ dump_monitor_info (MonitorInfo *info)
 		yesno (info->analog.composite_sync_on_h));
 	printf ("Serration on VSync: %s\n",
 		yesno (info->analog.serration_on_vsync));
-	
+
 	switch (info->analog.color_type)
 	{
 	case UNDEFINED_COLOR: s = "undefined"; break;
@@ -622,39 +622,39 @@ dump_monitor_info (MonitorInfo *info)
 	case OTHER_COLOR: s = "other color"; break;
 	default: s = "unknown"; break;
 	};
-	
+
 	printf ("Color: %s\n", s);
     }
-    
+
     if (info->width_mm == -1)
 	printf ("Width: undefined\n");
     else
 	printf ("Width: %d mm\n", info->width_mm);
-    
+
     if (info->height_mm == -1)
 	printf ("Height: undefined\n");
     else
 	printf ("Height: %d mm\n", info->height_mm);
-    
+
     if (info->aspect_ratio > 0)
 	printf ("Aspect Ratio: %f\n", info->aspect_ratio);
     else
 	printf ("Aspect Ratio: undefined\n");
-    
+
     if (info->gamma >= 0)
 	printf ("Gamma: %f\n", info->gamma);
     else
 	printf ("Gamma: undefined\n");
-    
+
     printf ("Standby: %s\n", yesno (info->standby));
     printf ("Suspend: %s\n", yesno (info->suspend));
     printf ("Active Off: %s\n", yesno (info->active_off));
-    
+
     printf ("SRGB is Standard: %s\n", yesno (info->srgb_is_standard));
     printf ("Preferred Timing Includes Native: %s\n",
 	    yesno (info->preferred_timing_includes_native));
     printf ("Continuous Frequency: %s\n", yesno (info->continuous_frequency));
-    
+
     printf ("Red X: %f\n", info->red_x);
     printf ("Red Y: %f\n", info->red_y);
     printf ("Green X: %f\n", info->green_x);
@@ -663,38 +663,38 @@ dump_monitor_info (MonitorInfo *info)
     printf ("Blue Y: %f\n", info->blue_y);
     printf ("White X: %f\n", info->white_x);
     printf ("White Y: %f\n", info->white_y);
-    
+
     printf ("Established Timings:\n");
-    
+
     for (i = 0; i < 24; ++i)
     {
 	Timing *timing = &(info->established[i]);
-	
+
 	if (timing->frequency == 0)
 	    break;
-	
+
 	printf ("  %d x %d @ %d Hz\n",
 		timing->width, timing->height, timing->frequency);
-	
+
     }
-    
+
     printf ("Standard Timings:\n");
     for (i = 0; i < 8; ++i)
     {
 	Timing *timing = &(info->standard[i]);
-	
+
 	if (timing->frequency == 0)
 	    break;
-	
+
 	printf ("  %d x %d @ %d Hz\n",
 		timing->width, timing->height, timing->frequency);
     }
-    
+
     for (i = 0; i < info->n_detailed_timings; ++i)
     {
 	DetailedTiming *timing = &(info->detailed_timings[i]);
 	const char *s;
-	
+
 	printf ("Timing%s: \n",
 		(i == 0 && info->preferred_timing_includes_native)?
 		" (Preferred)" : "");
@@ -723,7 +723,7 @@ dump_monitor_info (MonitorInfo *info)
 	case SIDE_BY_SIDE:          s = "Side-by-Side"; break;
 	}
 	printf ("  Stereo: %s\n", s);
-	
+
 	if (timing->digital_sync)
 	{
 	    printf ("  Digital Sync:\n");
@@ -743,7 +743,7 @@ dump_monitor_info (MonitorInfo *info)
 			timing->analog.sync_on_green));
 	}
     }
-    
+
     printf ("Detailed Product information:\n");
     printf ("  Product Name: %s\n", info->dsc_product_name);
     printf ("  Serial Number: %s\n", info->dsc_serial_number);

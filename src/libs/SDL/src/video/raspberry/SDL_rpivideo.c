@@ -181,10 +181,10 @@ RPI_VideoInit(_THIS)
 
     SDL_AddVideoDisplay(&display);
 
-#ifdef SDL_INPUT_LINUXEV    
+#ifdef SDL_INPUT_LINUXEV
     SDL_EVDEV_Init();
-#endif    
-    
+#endif
+
     RPI_InitMouse(_this);
 
     return 1;
@@ -193,9 +193,9 @@ RPI_VideoInit(_THIS)
 void
 RPI_VideoQuit(_THIS)
 {
-#ifdef SDL_INPUT_LINUXEV    
+#ifdef SDL_INPUT_LINUXEV
     SDL_EVDEV_Quit();
-#endif    
+#endif
 }
 
 void
@@ -223,8 +223,8 @@ RPI_CreateWindow(_THIS, SDL_Window * window)
     DISPMANX_UPDATE_HANDLE_T dispman_update;
 
     /* Disable alpha, otherwise the app looks composed with whatever dispman is showing (X11, console,etc) */
-    dispman_alpha.flags = DISPMANX_FLAGS_ALPHA_FIXED_ALL_PIXELS; 
-    dispman_alpha.opacity = 0xFF; 
+    dispman_alpha.flags = DISPMANX_FLAGS_ALPHA_FIXED_ALL_PIXELS;
+    dispman_alpha.opacity = 0xFF;
     dispman_alpha.mask = 0;
 
     /* Allocate window internal data */
@@ -258,7 +258,7 @@ RPI_CreateWindow(_THIS, SDL_Window * window)
     wdata->dispman_window.width = window->w;
     wdata->dispman_window.height = window->h;
     vc_dispmanx_update_submit_sync( dispman_update );
-    
+
     if (!_this->egl_data) {
         if (SDL_GL_LoadLibrary(NULL) < 0) {
             return -1;
@@ -272,7 +272,7 @@ RPI_CreateWindow(_THIS, SDL_Window * window)
 
     /* Setup driver data for this window */
     window->driverdata = wdata;
-    
+
     /* One window, it always has focus */
     SDL_SetMouseFocus(window);
     SDL_SetKeyboardFocus(window);
@@ -285,7 +285,7 @@ void
 RPI_DestroyWindow(_THIS, SDL_Window * window)
 {
     SDL_WindowData *data;
-        
+
     if(window->driverdata) {
         data = (SDL_WindowData *) window->driverdata;
         if (data->egl_surface != EGL_NO_SURFACE) {

@@ -26,17 +26,17 @@
 
 /* SDL_RWops on NACL are implemented using nacl_io, and require mount points
  * to be established before actual file operations are performed
- * 
+ *
  * Ref: https://developers.google.com/native-client/dev/devguide/coding/nacl_io
  */
 
-int 
-SDL_NaClMount(const char* source, const char* target, const char* filesystemtype, 
+int
+SDL_NaClMount(const char* source, const char* target, const char* filesystemtype,
           unsigned long mountflags, const void *data) {
     return mount(source, target, filesystemtype, mountflags, data);
 }
 
-int 
+int
 SDL_NaClUmount(const char *target) {
     return umount(target);
 }

@@ -31,41 +31,44 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_produce_callbacks.h"
 #include "save/save_produce.h"
 
-/** @brief Default amount of workers, the produceTime for technologies is defined. */
-/** @note producetime for technology entries is the time for PRODUCE_WORKERS amount of workers. */
-static const int PRODUCE_WORKERS = 10;
-
 /**
- * @brief Calculates the total frame count (minutes) needed for producing an item
+ * @brief Calculates the total frame count (minutes) needed for producing an item for a single worker
  * @param[in] base Pointer to the base the production happen
  * @param[in] prodData Pointer to the productionData structure
  */
 static int PR_CalculateTotalFrames (const base_t* base, const productionData_t* prodData)
 {
+	double time;
+	if (PR_IsProductionData(prodData)) {
+		const technology_t* tech = PR_GetTech(prodData);
+		time = tech->produceTime;
+	} else {
+		const storedUFO_t* storedUFO = prodData->data.ufo;
+		time = storedUFO->comp->time;
+		/* Production is 4 times longer when installation is on Antipodes
+		 * Penalty starts when distance is greater than 45 degrees */
+		time *= std::max(1.0, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0);
+	}
+	/* Calculate the time needed for production of the item for our amount of workers. */
+	time *= MINUTES_PER_HOUR * ccs.curCampaign->produceRate;
+
+	/* Don't allow to return a time of less than 1 (you still need at least 1 minute to produce an item). */
+	return std::max(1.0, time) + 1;
+}
+
+/**
+ * @brief Returns the numer of workers available to produce an item
+ * @param[in] base Pointer to the base the production happen
+ */
+int PR_WorkersAvailable (const base_t* base)
+{
+	assert(base);
 	/* Check how many workers hired in this base. */
 	const signed int allWorkers = E_CountHired(base, EMPL_WORKER);
 	/* We will not use more workers than workspace capacity in this base. */
 	const signed int maxWorkers = std::min(allWorkers, CAP_GetMax(base, CAP_WORKSPACE));
 
-	double timeDefault;
-	if (PR_IsProductionData(prodData)) {
-		const technology_t* tech = PR_GetTech(prodData);
-		/* This is the default production time for PRODUCE_WORKERS workers. */
-		timeDefault = tech->produceTime;
-	} else {
-		const storedUFO_t* storedUFO = prodData->data.ufo;
-		/* This is the default disassemble time for PRODUCE_WORKERS workers. */
-		timeDefault = storedUFO->comp->time;
-		/* Production is 4 times longer when installation is on Antipodes
-		 * Penalty starts when distance is greater than 45 degrees */
-		timeDefault *= std::max(1.0, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0);
-	}
-	/* Calculate the time needed for production of the item for our amount of workers. */
-	const float rate = PRODUCE_WORKERS / ccs.curCampaign->produceRate;
-	double const timeScaled = timeDefault * (MINUTES_PER_HOUR * rate) / std::max(1, maxWorkers);
-
-	/* Don't allow to return a time of less than 1 (you still need at least 1 minute to produce an item). */
-	return std::max(1.0, timeScaled) + 1;
+	return maxWorkers;
 }
 
 /**
@@ -75,7 +78,8 @@ static int PR_CalculateTotalFrames (const base_t* base, const productionData_t* 
 int PR_GetRemainingMinutes (const production_t* prod)
 {
 	assert(prod);
-	return prod->totalFrames - prod->frame;
+	const base_t *base = PR_ProductionBase(prod);
+	return (prod->totalFrames - prod->frame) / std::max(1, PR_WorkersAvailable(base));
 }
 
 /**
@@ -566,12 +570,11 @@ void PR_ProductionRun (void)
 			continue;
 
 		production_t* prod = &q->items[0];
-		prod->totalFrames = PR_CalculateTotalFrames(base, &prod->data);
 
 		if (!PR_CheckFrame(base, prod))
 			return;
 
-		prod->frame++;
+		prod->frame += PR_WorkersAvailable(base);
 
 		/* If Production/Disassembly is not finished yet, we're done, check next base */
 		if (!PR_IsReady(prod))
@@ -764,6 +767,8 @@ bool PR_LoadXML (xmlNode_t* p)
 				Com_Printf("PR_LoadXML: Production is not an item an aircraft nor a disassembly\n");
 				continue;
 			}
+
+			prod->totalFrames = PR_CalculateTotalFrames(base, &prod->data);
 
 			pq->numItems++;
 		}

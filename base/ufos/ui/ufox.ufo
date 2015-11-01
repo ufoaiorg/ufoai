@@ -2,7 +2,7 @@
 
 --[[
   - The table ufox holds generic functions for use on the lua side. Currently the following functions can be found here:
-  
+
   * build (data, parent)	Build a hierarchy of ui nodes based on the supplied data and add them to parent.
   * build_window (data)		Build a window including child nodes based on the supplied data.
   * build_component (data)	Build a component including child nodes based on the supplied data.
@@ -17,7 +17,7 @@ ufox = {}
 	Builds each node from the data.
 --]]
 function ufox.build (data, parent)
-	-- make sure we have a table 
+	-- make sure we have a table
 	if (type(data) == "table") then
 		if (data.class ~= nil) and (data.name ~= nil) then
 			-- create the node using the values of name & class specified
@@ -44,7 +44,7 @@ function ufox.build (data, parent)
 						end
 					end
 				end
-			end		
+			end
 			-- return the control
 			return ui_node
 		else
@@ -55,11 +55,11 @@ function ufox.build (data, parent)
 end
 
 --[[
-	Assumes the data is a hierarchy of tables. The top table defines a window, other tables lower in the hierarchy define child nodes. The hierarchy itself defines the 
+	Assumes the data is a hierarchy of tables. The top table defines a window, other tables lower in the hierarchy define child nodes. The hierarchy itself defines the
 	parent-child relation.
 --]]
 function ufox.build_window (data)
-	-- make sure we have a table 
+	-- make sure we have a table
 	if (type(data) == "table") then
 		if (data.class ~= nil) and (data.name ~= nil) then
 			-- check if the class is a window
@@ -90,7 +90,7 @@ function ufox.build_window (data)
 						end
 					end
 				end
-			end		
+			end
 			-- return the control
 			return ui_window
 		else
@@ -101,11 +101,11 @@ function ufox.build_window (data)
 end
 
 --[[
-	Assumes the data is a hierarchy of tables. The top table defines a component, other tables lower in the hierarchy define child nodes. The hierarchy itself defines the 
+	Assumes the data is a hierarchy of tables. The top table defines a component, other tables lower in the hierarchy define child nodes. The hierarchy itself defines the
 	parent-child relation.
 --]]
 function ufox.build_component (data)
-	-- make sure we have a table 
+	-- make sure we have a table
 	if (type(data) == "table") then
 		if (data.class ~= nil) and (data.name ~= nil) then
 			-- check if the class is a window
@@ -136,7 +136,7 @@ function ufox.build_component (data)
 						end
 					end
 				end
-			end		
+			end
 			-- return the control
 			return ui_component
 		else

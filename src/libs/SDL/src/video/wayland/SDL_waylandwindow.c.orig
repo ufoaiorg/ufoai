@@ -158,7 +158,7 @@ int Wayland_CreateWindow(_THIS, SDL_Window *window)
     wl_surface_set_user_data(data->surface, data);
     data->shell_surface = wl_shell_get_shell_surface(c->shell,
                                                      data->surface);
-#ifdef SDL_VIDEO_DRIVER_WAYLAND_QT_TOUCH    
+#ifdef SDL_VIDEO_DRIVER_WAYLAND_QT_TOUCH
     if (c->surface_extension) {
         data->extended_surface = qt_surface_extension_get_extended_surface(
                 c->surface_extension, data->surface);
@@ -169,7 +169,7 @@ int Wayland_CreateWindow(_THIS, SDL_Window *window)
 
     /* Create the GLES window surface */
     data->egl_surface = SDL_EGL_CreateSurface(_this, (NativeWindowType) data->egl_window);
-    
+
     if (data->egl_surface == EGL_NO_SURFACE) {
         SDL_SetError("failed to create a window surface");
         return -1;

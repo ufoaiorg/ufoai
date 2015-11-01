@@ -58,7 +58,7 @@ extern "C" {
  *
  * \param[in] _buf #th_quant_info
  * \retval TH_EFAULT \a _enc_ctx is <tt>NULL</tt>.
- * \retval TH_EINVAL Encoding has already begun, \a _buf is 
+ * \retval TH_EINVAL Encoding has already begun, \a _buf is
  *                    <tt>NULL</tt> and \a _buf_sz is not zero,
  *                    or \a _buf is non-<tt>NULL</tt> and
  *                    \a _buf_sz is not <tt>sizeof(#th_quant_info)</tt>.

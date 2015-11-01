@@ -2,7 +2,7 @@
 // Prospectorcamp
 // *********************************
 
-base solarplant/sp_  
+base solarplant/sp_
 
 // d= craft square
 // a= main square
@@ -16,7 +16,7 @@ base solarplant/sp_
 
 tile +craft_drop_firebird
 {
-6 6 
+6 6
 0		a		a		a		a		0
 f		+d		+d		+d		+d		g
 f		+d		+d		+d		+d		g
@@ -49,7 +49,7 @@ f		+d		+d		+d		+d		g
 
 tile +main
 {
-6 6 
+6 6
 0		d		d		d		d		0
 w		+a		+a		+a		+a		e
 w		+a		+a		+a		+a		e
@@ -60,7 +60,7 @@ w		+a		+a		+a		+a		e
 
 tile +west
 {
-6 6 
+6 6
 0		f		f		f		f		0
 a		+w		+w		+w		+w		a
 a		+w		+w		+w		+w		a
@@ -109,7 +109,7 @@ size		"12 8"		//Size in RMA (256x256) tiles
 grid		"4 4"		//All pieces are multiple of 4 x 4 (in this case they are exactly 4x4)
 +east		"1 1"
 +main		"1 1"
-+northwest	"1 1" 
++northwest	"1 1"
 +northeast	"1 1"
 +west		"1 1"
 *rm_drop +craft_drop_firebird	"1 1"

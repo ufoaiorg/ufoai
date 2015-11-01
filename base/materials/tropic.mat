@@ -1,4 +1,15 @@
 {
+	material tex_nature/jungle002
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 1.0
+	{
+		lightmap
+	}
+}
+
+{
 	material tex_nature/water_dark
 	{
 		envmap 0

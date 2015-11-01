@@ -97,7 +97,7 @@ CPU_haveCPUID(void)
     : "%eax", "%ecx"
     );
 #elif defined(__GNUC__) && defined(__x86_64__)
-/* Technically, if this is being compiled under __x86_64__ then it has 
+/* Technically, if this is being compiled under __x86_64__ then it has
    CPUid by definition.  But it's nice to be able to prove it.  :)      */
     __asm__ (
 "        pushfq                      # Get original EFLAGS             \n"
@@ -679,7 +679,7 @@ SDL_GetSystemRAM(void)
 #endif /* __FreeBSD__ || __FreeBSD_kernel__ */
             Uint64 memsize = 0;
             size_t len = sizeof(memsize);
-            
+
             if (sysctl(mib, 2, &memsize, &len, NULL, 0) == 0) {
                 SDL_SystemRAM = (int)(memsize / (1024*1024));
             }
