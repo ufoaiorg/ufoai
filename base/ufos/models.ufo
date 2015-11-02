@@ -201,8 +201,7 @@ menu_model drop_herakles_pod2
 }
 menu_model drop_herakles
 {
-	model	"aircraft/drop_herakles/herakles_carryall"
-	need	drop_herakles_pod2
+	model	"aircraft/drop_herakles/herakles_menu"
 }
 menu_model drop_herakles_solo_flying
 {
