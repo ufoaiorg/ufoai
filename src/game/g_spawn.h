@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+#define G_ValidMessage(ent)		((ent)->message && ((ent)->message[0] == '_' || strstr((ent)->message, "*msgid:") != nullptr))
+
 void G_SpawnEntities(const char* mapname, bool day, const char* entities);
 Edict* G_Spawn(const char* classname = nullptr);
 void G_SpawnSmokeField(const vec3_t vec, const char* particle, int rounds, int damage, vec_t radius);

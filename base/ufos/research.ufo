@@ -3773,7 +3773,7 @@ tech rs_craft_drop_herakles
 	time	14000
 	producetime	3500
 
-	model		drop_herakles
+	model		drop_herakles_flying
 }
 
 tech rs_craft_drop_raptor

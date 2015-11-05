@@ -213,8 +213,7 @@ menu_model drop_herakles_pod_flying
 }
 menu_model drop_herakles_flying
 {
-	model	"aircraft/drop_herakles/herakles_carryall"
-	need	drop_herakles_pod_flying
+	model	"aircraft/drop_herakles/herakles_menu"
 }
 
 // ============== Raptor Dropship =========================
