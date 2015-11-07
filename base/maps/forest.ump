@@ -390,7 +390,7 @@ fix +nature_22		"0 11"	// 1x2
 fix +nature_22		"3 6"	// 1x2
 +nature_11			"0 1"	// 1x1
 +nature_12			"0 1"	// 1x1
-+nature_23			"1 1"	// 2x1
++nature_23			"0 1"	// 2x1
 *rm_drop +craft_drop_firebird	"1 1"
 }
 
