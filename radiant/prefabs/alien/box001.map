@@ -1,8 +1,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"randomspawn" "1"
-"maxlevel" "5"
 // brush 0
 {
 ( 32 32 36 ) ( 32 0 36 ) ( 0 32 36 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
@@ -12,24 +10,6 @@
 ( 0 0 4 ) ( 0 0 36 ) ( 32 0 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
 ( 0 0 4 ) ( 0 32 4 ) ( 0 0 36 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
 }
-// brush 1
-{
-( 32 32 36 ) ( 32 0 36 ) ( 0 32 36 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
-( 32 32 36 ) ( 0 32 36 ) ( 32 32 4 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
-( 32 32 36 ) ( 32 32 4 ) ( 32 0 36 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
-( 0 0 0 ) ( 32 0 0 ) ( 0 32 0 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
-( 0 0 4 ) ( 0 0 36 ) ( 32 0 4 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
-( 0 0 68 ) ( 0 32 68 ) ( 0 0 100 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
-}
-// brush 2
-{
-( 32 32 36 ) ( 32 0 36 ) ( 0 32 36 ) tex_common/lightclip 0 0 0 0.25 0.25 524288 0 0
-( 32 32 68 ) ( 0 32 68 ) ( 32 32 4 ) tex_common/lightclip 0 0 0 0.25 0.25 524288 0 0
-( 32 32 68 ) ( 32 32 4 ) ( 32 0 68 ) tex_common/lightclip 0 0 0 0.25 0.25 524288 0 0
-( 0 0 4 ) ( 32 0 4 ) ( 0 32 4 ) tex_common/lightclip 0 0 0 0.25 0.25 524288 0 0
-( 0 0 4 ) ( 0 0 68 ) ( 32 0 4 ) tex_common/lightclip 0 0 0 0.25 0.25 524288 0 0
-( 0 0 4 ) ( 0 32 4 ) ( 0 0 68 ) tex_common/lightclip 0 0 0 0.25 0.25 524288 0 0
-}
 }
 // entity 1
 {
@@ -38,4 +18,26 @@
 "origin" "16 16 4"
 "spawnflags" "255"
 "skin" "0"
+}
+// entity 2
+{
+"classname" "func_group"
+// brush 0
+{
+( 32 32 36 ) ( 32 0 36 ) ( 0 32 36 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 32 32 36 ) ( 0 32 36 ) ( 32 32 4 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 32 32 36 ) ( 32 32 4 ) ( 32 0 36 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 0 0 0 ) ( 32 0 0 ) ( 0 32 0 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 0 0 4 ) ( 0 0 36 ) ( 32 0 4 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 0 0 68 ) ( 0 32 68 ) ( 0 0 100 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+}
+// brush 1
+{
+( 32 32 36 ) ( 32 0 36 ) ( 0 32 36 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 32 32 68 ) ( 0 32 68 ) ( 32 32 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 32 32 68 ) ( 32 32 4 ) ( 32 0 68 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 0 0 4 ) ( 32 0 4 ) ( 0 32 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 0 0 4 ) ( 0 0 68 ) ( 32 0 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 0 0 4 ) ( 0 32 4 ) ( 0 0 68 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+}
 }
