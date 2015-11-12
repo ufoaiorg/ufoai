@@ -528,8 +528,12 @@ TEST_F(GameTest, CountSpawnpointsStatic)
 	mapCount = 0;
 	const mapDef_t* md;
 	MapDef_Foreach(md) {
+		/* Exlude RMA maps. */
 		if (md->mapTheme[0] == '+')
 			continue;
+		/* Exclude .baseattack. */
+		if (md->mapTheme[0] == '.')
+			return;
 		testCountSpawnpointsForMap(md);
 	}
 	std::cout << "[          ] Static maps tested: " << mapCount << std::endl;
