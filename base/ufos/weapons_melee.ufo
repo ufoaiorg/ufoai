@@ -167,7 +167,7 @@ item stunrod
 			hitbody		null
 			firesnd		"weapons/electro-taser"
 			speed		0
-			range		1.5
+			range		2
 			shots		1
 			ammo		1
 			time		7
@@ -186,7 +186,7 @@ item stunrod
 			hitbody				null
 			firesnd				"weapons/electro-taserdouble"
 			speed				0
-			range				1.5
+			range				2
 			shots				2
 			ammo				2
 			delaybetweenshots	5

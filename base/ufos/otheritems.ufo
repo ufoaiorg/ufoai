@@ -50,7 +50,7 @@ item bloodspider_weapon
 			hitbody		null
 			firesnd		"aliens/bloodspider/attack"
 			speed		0
-			range		2
+			range		1.5
 			shots		1 //FIXME
 			time		12 //FIXME
 			damage		"55 10" //FIXME
@@ -86,7 +86,7 @@ item bloodspider_adv_weapon
 			hitbody		null
 			firesnd		"aliens/bloodspider/attack"
 			speed		0
-			range		2
+			range		1.5
 			shots		1 //FIXME
 			time		10 //FIXME
 			damage		"150 10" //FIXME
