@@ -1022,7 +1022,7 @@ mapdef eaglenest
 	maxaliens		5
 
 	multiplayer		true
-	teams			1
+	teams			2
 	gametypes
 	(
 		coop2
@@ -1070,7 +1070,7 @@ mapdef gate
 	maxaliens		9
 
 	multiplayer		true
-	teams			1
+	teams			2
 	gametypes
 	(
 		coop2
@@ -1118,7 +1118,7 @@ mapdef forest_nature_large
 	maxaliens	30
 
 	multiplayer		true
-	teams			1
+	teams			2
 	gametypes
 	(
 		coop2
@@ -1166,7 +1166,7 @@ mapdef forest_nature_medium
 	maxaliens	16
 
 	multiplayer		true
-	teams			1
+	teams			2
 	gametypes
 	(
 		coop2
@@ -1215,7 +1215,7 @@ mapdef forest_nature_small
 	maxaliens	6
 
 	multiplayer		true
-	teams			1
+	teams			2
 	gametypes
 	(
 		coop2
@@ -1262,7 +1262,7 @@ mapdef small_house
 	maxaliens		8
 
 	multiplayer		true
-	teams			1
+	teams			2
 	gametypes
 	(
 		coop2

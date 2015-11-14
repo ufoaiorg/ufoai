@@ -56,12 +56,12 @@ protected:
 		TEST_Shutdown();
 	}
 
-	void testCountSpawnpointsForMap(unsigned int seed, const mapDef_t *md);
-	void testCountSpawnpointsForMapWithAssembly(unsigned int seed, const mapDef_t *md, const char *asmName);
-	void testCountSpawnpointsForMapWithAssemblyAndAircraft(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft);
-	void testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo);
-	void testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo);
-	void testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo);
+	void testCountSpawnpointsForMap(const mapDef_t *md);
+	void testCountSpawnpointsForMapWithAssembly(const mapDef_t *md, const char *asmName);
+	void testCountSpawnpointsForMapWithAssemblyAndAircraft(const mapDef_t *md, const char *asmName, const char *aircraft);
+	void testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo);
+	void testCountSpawnpointsForMapInSingleplayerMode(const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo);
+	void testCountSpawnpointsForMapInMultiplayerMode(const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo);
 	int testCountSpawnpointsGetNumteamValueForAircraft(const char *aircraft);
 	int testCountSpawnpointsGetNumteamValueForUFO(const char *ufo);
 	int testCountSpawnpointsGetNum2x2ValueForAircraft(const char *aircraft);
@@ -177,33 +177,39 @@ int GameTest::testCountSpawnpointsGetNumteamValueForUFO(const char *ufo)
 	}
 }
 
-void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
+void GameTest::testCountSpawnpointsForMapInMultiplayerMode(const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
 {
-	/* Make gtest report back the seed number along with any other message. */
-	SCOPED_TRACE(va("seed: %u", seed));
-
 	if (LIST_IsEmpty(md->gameTypes)) {
 		ADD_FAILURE() << "Error: Multiplayer enabled, but no gametypes defined in mapdef " << md->id;
+		Com_Printf("CountSpawnpoints - error: Multiplayer enabled, but no gametypes defined in mapdef.\n");
 		return;
 	}
 	/* Set initial values. */
-	Cvar_Set("sv_maxsoldiersperteam", "128");
-	Cvar_Set("ai_multiplayeraliens", "128");
-	Cvar_Set("ai_numcivilians", "128");
-
 	/* Load map in multiplayer mode. */
 	Cvar_Set("sv_maxclients", DOUBLEQUOTE(MAX_CLIENTS));
-	Com_Printf("CountSpawnpoints - loading map: seed %i mode multiplayer mapdef %s map %s assembly %s dropship %s ufo %s\n", seed, md->id, md->mapTheme, asmName, aircraft, ufo);
+	/* It seems, because of reaction-fire limitations we cannot spawn more than 128 actors total. */
+	Cvar_Set("sv_maxsoldiersperteam", "12");
+	Cvar_Set("ai_multiplayeraliens", "64");
+	Cvar_Set("ai_numcivilians", "16");
+
+	Com_Printf("CountSpawnpoints - loading map: mode multiplayer mapdef %s map %s assembly %s dropship %s ufo %s\n", md->id, md->mapTheme, asmName, aircraft, ufo);
+	long time = Sys_Milliseconds();
+
 	try {
-		SV_Map(true, md->mapTheme, asmName, false);
+		SV_Map(true, md->mapTheme, asmName, true);
 	} catch (comDrop_t&) {
 		ADD_FAILURE() << "Error: Failed to load assembly " << asmName << " from mapdef " << md->id << ", map "
 			<< md->mapTheme << " aircraft: " << aircraft << ", ufo: " << ufo << " => multiplayer mode.";
+			Com_Printf("CountSpawnpoints - error: Multiplayer enabled, but no gametypes defined in mapdef.\n");
+		Com_Printf("CountSpawnpoints - error: Failed to load map.\n");
+		SV_ShutdownGameProgs();
 		return;
 	}
 
+	time = Sys_Milliseconds() - time;
+	Com_Printf("CountSpawnpoints - result: %li ms\n", time);
+	SV_ShutdownGameProgs();
 	mapCount++;
-	const int spawnCivs = static_cast<int>(level.num_spawnpoints[TEAM_CIVILIAN]);
 
 	/* Print report to log. */
 	Com_Printf("CountSpawnpoints - map: mode multiplayer\n");
@@ -212,7 +218,6 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, co
 	Com_Printf("CountSpawnpoints - map: assembly %s\n", asmName);
 	Com_Printf("CountSpawnpoints - map: aircraft %s \n", aircraft);
 	Com_Printf("CountSpawnpoints - map: ufo %s\n", ufo);
-	Com_Printf("CountSpawnpoints - count spawnpoints: civilian %i\n", spawnCivs);
 
 	/* Check if one of the gametypes available in the mapdef defines a coop mode,
 	   in which case we will need aliens on the map. */
@@ -224,6 +229,11 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, co
 	   by the value of sv_maxsoldiersperteam given in the gametype def. */
 	int minMP = 0;
 
+	/* Count spawnpoints for TEAM_CIVILIAN. */
+	const int spawnCivs = static_cast<int>(level.num_spawnpoints[TEAM_CIVILIAN]);
+	Com_Printf("CountSpawnpoints - count spawnpoints: civilian %i\n", spawnCivs);
+
+	/* Find the highest numbers for alien and player spawnpoints needed in the map. */
 	LIST_Foreach(md->gameTypes, const char, gameType) {
 		for (int i = 0; i < csi.numGTs; i++) {
 			const gametype_t* gt = &csi.gts[i];
@@ -239,33 +249,8 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, co
 			}
 		}
 	}
-#if 0
-	LIST_Foreach(md->gameTypes, const char, gameType) {
-		/* For every mp gametype given in the mapdef ... */
-		for (int i = 0; i < csi.numGTs; i++) {
-			/* ... loop through the gametype defs to find the matching one. */
-			const gametype_t* gt = &csi.gts[i];
-			if (!Q_streq(gt->id, gameType))
-				continue;
-			/* Found the corresponding gametype def. */
-			const cvarlist_t* list = gt->cvars;
-			for (int j = 0; j < gt->num_cvars; j++, list++) {
-				/* Loop through the gametype def and check for relevant keys. */
-				if (Q_streq(list->name, "sv_ai")) {
-					/* Set coop, if required. */
-					coop = std::max(coop, atoi(list->value));
-				} else if (Q_streq(list->name, "sv_maxsoldiersperteam")) {
-					/* Set minMP to the highest required value. */
-					minMP = std::max(minMP, atoi(list->value));
-				}
-			}
-			break;
-		}
-	}
 
-	coop = 1;
-	minMP = 12;
-#endif
+	/* If the mapdef does not define a coop mode, we do not need aliens. */
 	if (coop)
 		minAliens = std::min(md->maxAliens, testCountSpawnpointsGetNumteamValueForUFO(ufo));
 
@@ -274,6 +259,7 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, co
 	for (int currTeamNum = startTeam; currTeamNum < startTeam + md->teams; ++currTeamNum) {
 		if (currTeamNum > TEAM_MAX_HUMAN) {
 			ADD_FAILURE() << "Error: Mapdef " << md->id << " has too many teams set.";
+			Com_Printf("CountSpawnpoints - error: Too many teams set.\n");
 			break;
 		}
 		const int spawnTeam = static_cast<int>(level.num_spawnpoints[currTeamNum]);
@@ -299,28 +285,34 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(unsigned int seed, co
 		if (spawnAliens < minAliens)
 			Com_Printf("CountSpawnpoints - error: missing spawnpoints - alien needs/found %i/%i\n", minAliens, spawnAliens);
 	}
+
+	SV_ShutdownGameProgs();
 }
 
-void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
+void GameTest::testCountSpawnpointsForMapInSingleplayerMode(const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
 {
-	/* Make the test report back the seed number along with any other message. */
-	SCOPED_TRACE(va("seed: %u", seed));
-
-	Cvar_Set("sv_maxsoldiersperteam", "128");
-	Cvar_Set("ai_singleplayeraliens", "128");
-	Cvar_Set("ai_numcivilians", "128");
-
+	/* Set initial values. */
 	/* load singleplayer map */
 	Cvar_Set("sv_maxclients", "1");
-	Com_Printf("CountSpawnpoints - loading map: seed %i mode singleplayer mapdef %s map %s assembly %s dropship %s ufo %s\n", seed, md->id, md->mapTheme, asmName, aircraft, ufo);
+	/* It seems, because of reaction-fire limitations we cannot spawn more than 128 actors total. */
+	Cvar_Set("sv_maxsoldiersperteam", "12");
+	Cvar_Set("ai_singleplayeraliens", "64");
+	Cvar_Set("ai_numcivilians", "16");
+
+	Com_Printf("CountSpawnpoints - loading map: mode singleplayer mapdef %s map %s assembly %s dropship %s ufo %s\n", md->id, md->mapTheme, asmName, aircraft, ufo);
+	long time = Sys_Milliseconds();
+
 	try {
-		SV_Map(true, md->mapTheme, asmName, false);
+		SV_Map(true, md->mapTheme, asmName, true);
 	} catch (comDrop_t&) {
 		ADD_FAILURE() << "Error: Failed to load assembly " << asmName << " from mapdef " << md->id << ", map "
 			<< md->mapTheme << " aircraft: " << aircraft << ", ufo: " << ufo << " => singleplayer mode.";
+			Com_Printf("CountSpawnpoints - error: Failed to load map.\n");
+		SV_ShutdownGameProgs();
 		return;
 	}
-
+	time = Sys_Milliseconds() - time;
+	Com_Printf("CountSpawnpoints - result: %li ms\n", time);
 	mapCount++;
 
 	/* This is the max number of aliens the UFO can bring to the battlefield. */
@@ -389,121 +381,199 @@ void GameTest::testCountSpawnpointsForMapInSingleplayerMode(unsigned int seed, c
 			Com_Printf("CountSpawnpoints - error: mapdef parameter - maxaliens needs/found %i/%i\n", numteamUFO, md->maxAliens);
 		}
 	}
+
+	SV_ShutdownGameProgs();
 }
 
-void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
+void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(const mapDef_t *md, const char *asmName, const char *aircraft, const char *ufo)
 {
 	/* The ufocrash map is a special one. The mapdef should not define single- nor
 	multiplayer mode. It uses one assembly for each ufo defined in the mapdef,
 	where the assembly name is equal the name of the UFO. */
 	if (Q_streq(md->id, "ufocrash")) {
-		testCountSpawnpointsForMapInSingleplayerMode(seed, md, ufo, aircraft, ufo);
+		testCountSpawnpointsForMapInSingleplayerMode(md, ufo, aircraft, ufo);
 		return;
 	}
-	if (md->singleplayer || md->campaign)
-		testCountSpawnpointsForMapInSingleplayerMode(seed, md, asmName, aircraft, ufo);
 
-	if (md->multiplayer)
-		testCountSpawnpointsForMapInMultiplayerMode(seed, md, asmName, aircraft, ufo);
+	/* Check if we are manually testing a certain gamemode. */
+	if (TEST_ExistsProperty("mode")) {
+		const char *mode = TEST_GetStringProperty("mode");
+		if (Q_streq(mode, "sp")) {
+			if (md->singleplayer || md->campaign) {
+				testCountSpawnpointsForMapInSingleplayerMode(md, asmName, aircraft, ufo);
+			} else {
+				Com_Printf("CountSpawnpoints - error: Gamemode not defined in mapdef: %s\n", mode);
+				ADD_FAILURE() << "Error: Gamemode not defined in mapdef: " << mode;
+			}
+		} else if (Q_streq(mode, "mp")) {
+			if (md->multiplayer) {
+				testCountSpawnpointsForMapInMultiplayerMode(md, asmName, aircraft, ufo);
+			} else {
+				Com_Printf("CountSpawnpoints - error: Gamemode not defined in mapdef: %s\n", mode);
+				ADD_FAILURE() << "Error: Gamemode not defined in mapdef: " << mode;
+			}
+		} else {
+			Com_Printf("CountSpawnpoints - error: Not a valid gamemode: %s\n", mode);
+			ADD_FAILURE() << "Error: Not a valid gamemode: " << mode;
+		}
+	} else {
+		/* Test every gamemode defined in the mapdef. */
+		if (md->singleplayer || md->campaign) {
+			testCountSpawnpointsForMapInSingleplayerMode(md, asmName, aircraft, ufo);
+		}
+		if (md->multiplayer) {
+			testCountSpawnpointsForMapInMultiplayerMode(md, asmName, aircraft, ufo);
+		}
+	}
 }
 
-void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraft(unsigned int seed, const mapDef_t *md, const char *asmName, const char *aircraft)
+void GameTest::testCountSpawnpointsForMapWithAssemblyAndAircraft(const mapDef_t *md, const char *asmName, const char *aircraft)
 {
-	if (LIST_IsEmpty(md->ufos)) {
-		/* The mapdef defines no UFOs */
+	/* Check if we are manually testing a certain UFO type. */
+	if (TEST_ExistsProperty("ufo")) {
+		const char *ufo = TEST_GetStringProperty("ufo");
+		int tested = 0;
+		LIST_Foreach(md->ufos, const char, s) {
+			if (Q_streq(ufo, s)) {
+				Cvar_Set("rm_ufo", "%s", Com_GetRandomMapAssemblyNameForCraft(ufo));
+				std::cout << "[          ] ufo: " << ufo << std::endl;
+				testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(md, asmName, aircraft, ufo);
+				tested += 1;
+			}
+		}
+		if (tested < 1) {
+			Com_Printf("CountSpawnpoints - error: Not a valid UFO id: %s\n", ufo);
+			ADD_FAILURE() << "Error: Not a valid ufo id: " << ufo;
+		}
+	} else if (LIST_IsEmpty(md->ufos)) {
+		/* The mapdef defines no UFOs. */
 		Cvar_Set("rm_ufo", "");
-		testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(seed, md, asmName, aircraft, nullptr);
+		testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(md, asmName, aircraft, nullptr);
 	} else {
+		/* Test every UFO defined in the mapdef. */
 		LIST_Foreach(md->ufos, const char, ufo) {
 			Cvar_Set("rm_ufo", "%s", Com_GetRandomMapAssemblyNameForCraft(ufo));
-			testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(seed, md, asmName, aircraft, ufo);
+			testCountSpawnpointsForMapWithAssemblyAndAircraftAndUfo(md, asmName, aircraft, ufo);
 		}
 	}
 }
 
-void GameTest::testCountSpawnpointsForMapWithAssembly(unsigned int seed, const mapDef_t *md, const char *asmName)
+void GameTest::testCountSpawnpointsForMapWithAssembly(const mapDef_t *md, const char *asmName)
 {
-	if (LIST_IsEmpty(md->aircraft)) {
+	/* Check if we are manually testing a certain aircraft. */
+	if (TEST_ExistsProperty("aircraft")) {
+		const char *aircraft = TEST_GetStringProperty("aircraft");
+		int tested = 0;
+		LIST_Foreach(md->aircraft, const char, s) {
+			if (Q_streq(aircraft, s)) {
+				Cvar_Set("rm_drop", "%s", Com_GetRandomMapAssemblyNameForCraft(aircraft));
+				std::cout << "[          ] aircraft: " << aircraft << std::endl;
+				testCountSpawnpointsForMapWithAssemblyAndAircraft(md, asmName, aircraft);
+				tested += 1;
+			}
+		}
+		if (tested < 1) {
+			Com_Printf("CountSpawnpoints - error: Not a valid aircraft id: %s\n", aircraft);
+			ADD_FAILURE() << "Error: Not a valid aircraft id: " << aircraft;
+		}
+	} else if (LIST_IsEmpty(md->aircraft)) {
 		/* There is no aircraft defined in the mapdef. */
 		Cvar_Set("rm_drop", "");
-		testCountSpawnpointsForMapWithAssemblyAndAircraft(seed, md, asmName, nullptr);
+		testCountSpawnpointsForMapWithAssemblyAndAircraft(md, asmName, nullptr);
 	} else {
+		/* Testing every aircraft defined in the mapdef. */
 		LIST_Foreach(md->aircraft, const char, aircraft) {
 			Cvar_Set("rm_drop", "%s", Com_GetRandomMapAssemblyNameForCraft(aircraft));
-			testCountSpawnpointsForMapWithAssemblyAndAircraft(seed, md, asmName, aircraft);
+			testCountSpawnpointsForMapWithAssemblyAndAircraft(md, asmName, aircraft);
 		}
 	}
 }
 
-void GameTest::testCountSpawnpointsForMap(unsigned int seed, const mapDef_t *md)
+void GameTest::testCountSpawnpointsForMap(const mapDef_t *md)
 {
-	if (md->mapTheme[0] == '.')
-		return;
+	Com_Printf("\nCountSpawnpoints - test start: mapdef %s\n", md->id);
 
-	/* Check if we are only testing a certain mapdef. */
-	char* filterId;
-	if (TEST_ExistsProperty("mapdef-id")){
-		filterId = strdup(TEST_GetStringProperty("mapdef-id"));
-		if (filterId && !Q_streq(filterId, md->id)) {
-			return;
+	/* Check if we are manually testing a certain assembly. */
+	if (TEST_ExistsProperty("assembly")) {
+		const char *asmName = TEST_GetStringProperty("assembly");
+		int tested = 0;
+		LIST_Foreach(md->params, const char, s) {
+			if (Q_streq(asmName, s)) {
+				std::cout << "[          ] testing mapdef: " << md->id << ", assembly: "
+				<< asmName << std::endl;
+				testCountSpawnpointsForMapWithAssembly(md, asmName);
+				tested += 1;
+			}
 		}
-	}
-
-	Com_Printf("\nCountSpawnpoints - test start: mapdef %s %s\n", md->mapTheme, md->id);
-	/* Calling std::cout also prevents the test from timing out on buildbot. */
-	if (LIST_IsEmpty(md->params)) {
+		if (tested < 1) {
+			Com_Printf("CountSpawnpoints - error: Not a valid assembly: %s\n", asmName);
+			ADD_FAILURE() << "Error: Not a valid assembly: " << asmName;
+		}
+	} else if (LIST_IsEmpty(md->params)) {
+		/* This is for static maps. */
 		std::cout << "[          ] testing mapdef: " << md->id << std::endl;
-		testCountSpawnpointsForMapWithAssembly(seed, md, nullptr);
+		testCountSpawnpointsForMapWithAssembly(md, nullptr);
 	} else {
+		/* This is for RMA. */
 		LIST_Foreach(md->params, const char, asmName) {
 			std::cout << "[          ] testing mapdef: " << md->id << ", assembly: "
 				<< asmName << std::endl;
-			testCountSpawnpointsForMapWithAssembly(seed, md, asmName);
+			testCountSpawnpointsForMapWithAssembly(md, asmName);
 		}
 	}
 }
 
 TEST_F(GameTest, CountSpawnpointsStatic)
 {
-	/* use a known seed to reproduce an error */
-	unsigned int seed;
-	if (TEST_ExistsProperty("mapdef-seed")) {
-		seed = TEST_GetLongProperty("mapdef-seed");
-	} else {
-		seed = (unsigned int) time(nullptr);
-	}
-	srand(seed);
-
 	mapCount = 0;
 	const mapDef_t* md;
 	MapDef_Foreach(md) {
+		/* Exlude RMA maps. */
 		if (md->mapTheme[0] == '+')
 			continue;
-		testCountSpawnpointsForMap(seed, md);
+		/* Exclude .baseattack. */
+		if (md->mapTheme[0] == '.')
+			return;
+		testCountSpawnpointsForMap(md);
 	}
-	Com_Printf("CountSpawnpoints - maps tested: RMA %i\n", mapCount);
+	std::cout << "[          ] Static maps tested: " << mapCount << std::endl;
+	Com_Printf("CountSpawnpoints - static maps tested: %i\n", mapCount);
 }
 
 TEST_F(GameTest, CountSpawnpointsRMA)
 {
-	/* use a known seed to reproduce an error */
-	unsigned int seed;
-	if (TEST_ExistsProperty("mapdef-seed")) {
-		seed = TEST_GetLongProperty("mapdef-seed");
-	} else {
-		seed = (unsigned int) time(nullptr);
-	}
-	srand(seed);
-
 	mapCount = 0;
 	const mapDef_t* md;
-	MapDef_Foreach(md) {
-		if (md->mapTheme[0] != '+')
-			continue;
 
-		testCountSpawnpointsForMap(seed, md);
+	/* Check if we are manually testing a certain mapdef. */
+	if (TEST_ExistsProperty("mapdef-id")) {
+		const char* mapdefId = TEST_GetStringProperty("mapdef-id");
+		int tested = 0;
+		MapDef_Foreach(md) {
+			if (Q_streq(md->id, mapdefId)) {
+				testCountSpawnpointsForMap(md);
+				tested += 1;
+			}
+		}
+		if (tested < 1) {
+			Com_Printf("CountSpawnpoints - error: Not a valid mapdef: %s\n", mapdefId);
+			ADD_FAILURE() << "Error: Not a valid mapdef: " << mapdefId;
+		}
+	} else {
+		MapDef_Foreach(md) {
+			/* Exlude static maps. */
+			if (md->mapTheme[0] != '+')
+				continue;
+			/* Exclude .baseattack. */
+			if (md->mapTheme[0] == '.')
+				return;
+
+			testCountSpawnpointsForMap(md);
+		}
 	}
-	Com_Printf("CountSpawnpoints - maps tested: RMA %i\n", mapCount);
+	Com_Printf("CountSpawnpoints - RMA combinations tested: RMA %i\n", mapCount);
+	std::cout << "[          ] RMA combinations tested: " << mapCount << std::endl;
+	SV_ShutdownGameProgs();
 }
 
 TEST_F(GameTest, DoorTrigger)

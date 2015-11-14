@@ -366,6 +366,11 @@ tile +nature_33
 
 // tilesets --------------------------------------------------------*
 
+tileset big {
+	+nature_01		// 4x4
+	+nature_02		// 4x4
+}
+
 tileset bigz {
 	+nature_01		// 4x4
 	+nature_02		// 4x4
@@ -467,7 +472,7 @@ size "16 10"
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 5"	// 3x3
 tileset bigz	"1 1"
-*rm_ufo +craft_crash_bomber	"1 1"
+*rm_ufo +craft_crash_bomber		"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
@@ -475,20 +480,19 @@ assembly nature_medium_a
 {
 title "_Forest"
 size "10 12"
-+nature_01		"1 3"	// 4x4
-+nature_02		"1 3"	// 4x4
 +nature_03		"0 3"	// 4x3
 +nature_11		"0 6"	// 1x1
 +nature_12		"0 6"	// 1x1
 +nature_20		"0 6"	// 2x2
 +nature_21		"0 1"	// 1x2
-+nature_22		"0 2"	// 1x2
-+nature_23		"0 2"	// 2x1
++nature_22		"0 6"	// 1x2
++nature_23		"0 6"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 9"	// 3x3
-*rm_ufo +craft_crash_supply		"1 1"
-*rm_drop +craft_drop_herakles	"1 1"
+tileset big		"2 6"
+fix *rm_ufo +craft_crash_supply		"6 0"
+*rm_drop +craft_drop_herakles		"1 1"
 }
 
 assembly nature_medium_b

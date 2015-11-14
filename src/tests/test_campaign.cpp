@@ -552,7 +552,7 @@ TEST_F(CampaignTest, testProductionItem)
 	ASSERT_TRUE(nullptr != prod);
 	tech = RS_GetTechForItem(od);
 	n = PR_GetRemainingMinutes(prod);
-	i = tech->produceTime;
+	i = tech->produceTime / PR_WorkersAvailable(base);
 	ASSERT_EQ(i, PR_GetRemainingHours(prod));
 	for (i = 0; i < n; i++) {
 		PR_ProductionRun();
@@ -600,7 +600,7 @@ TEST_F(CampaignTest, testProductionAircraft)
 	ASSERT_TRUE(nullptr != prod);
 
 	n = PR_GetRemainingMinutes(prod);
-	i = aircraft->tech->produceTime;
+	i = aircraft->tech->produceTime / PR_WorkersAvailable(base);
 	ASSERT_EQ(i, PR_GetRemainingHours(prod));
 	for (i = 0; i < n; i++) {
 		PR_ProductionRun();
@@ -649,7 +649,7 @@ TEST_F(CampaignTest, testDisassembly)
 
 	old = CAP_GetCurrent(base, CAP_ITEMS);
 	n = PR_GetRemainingMinutes(prod);
-	i = storedUFO->comp->time;
+	i = storedUFO->comp->time / PR_WorkersAvailable(base);
 	ASSERT_EQ(i, PR_GetRemainingHours(prod));
 	for (i = 0; i < n; i++) {
 		PR_ProductionRun();
