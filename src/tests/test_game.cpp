@@ -266,7 +266,7 @@ void GameTest::testCountSpawnpointsForMapInMultiplayerMode(const mapDef_t *md, c
 		/* Make gtest report back in case there are not enough spawnpoints available for the team. */
 		EXPECT_GE(spawnTeam, minMP) << "Error: Assembly " << asmName << " from mapdef " << md->id << ", map " << md->mapTheme
 			<< "(aircraft: " << aircraft << ", ufo: " << ufo << ") in multiplayer mode: Only " << spawnTeam
-			<< " spawnpoints for team " << currTeamNum << " but " << minMP << "expected.";
+			<< " spawnpoints for team " << currTeamNum << " but " << minMP << " expected.";
 		/* Log the result. */
 		Com_Printf("CountSpawnpoints - count spawnpoints: player team/needs/found %i/%i/%i\n", currTeamNum, minMP, spawnTeam);
 		if (spawnTeam < minMP)
