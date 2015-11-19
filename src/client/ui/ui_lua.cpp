@@ -510,7 +510,7 @@ void UI_PrintNodeTree (uiNode_t* node, int level) {
 	for(uiNode_t* child=node->firstChild; child; child=child->next) {
 		UI_PrintNodeTree(child, level + 1);
 	}
-	delete indent;
+	delete[] indent;
 }
 
 const char* UI_Node_TypeOf(uiNode_t* node) {
