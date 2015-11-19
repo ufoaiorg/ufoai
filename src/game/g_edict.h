@@ -176,9 +176,8 @@ public:
 
 	bool active;				/** only used by camera */
 
-
 	/*==================
-	 *		ctors
+	 * ctors
 	 *==================*/
 	inline void init (int idx) {
 		OBJZERO(*this);
@@ -186,7 +185,7 @@ public:
 		chr.inv.init();
 	}
 	/*==================
-	 *		setters
+	 * setters
 	 *==================*/
 	inline void setPlayerNum(int num) {
 		pnum = num;
@@ -218,24 +217,23 @@ public:
 	inline void resetFloor () {
 		chr.inv.setFloorContainer(nullptr);
 	}
-/**
- * @brief Calculate the edict's origin vector from it's grid position
- */
+	/**
+	 * @brief Calculate the edict's origin vector from it's grid position
+	 */
 	inline void calcOrigin () {
 		gi.GridPosToVec(fieldSize, pos, origin);
 	}
-/**
- * @brief Set the edict's pos and origin vector to the given grid position
- * @param newPos The new grid position
- */
+	/**
+	 * @brief Set the edict's pos and origin vector to the given grid position
+	 * @param newPos The new grid position
+	 */
 	inline void setOrigin (const pos3_t newPos) {
 		VectorCopy(newPos, pos);
 		calcOrigin();
 	}
 
-
 	/*==================
-	 *		getters
+	 * getters
 	 *==================*/
 	inline int getIdNum() const {
 		return number;
@@ -279,7 +277,7 @@ public:
 		return team;
 	}
 	/*==================
-	 *		checkers
+	 * checkers
 	 *==================*/
 	inline bool isSameAs (const Edict* other) const {
 		return this->getIdNum() == other->getIdNum();
@@ -287,11 +285,11 @@ public:
 	inline bool isSameTeamAs (const Edict* other) const {
 		return this->getTeam() == other->getTeam();
 	}
-/**
- * @brief Check whether the edict is on the given position
- * @param cmpPos The grid position to compare to
- * @return true if positions are equal
- */
+	/**
+	 * @brief Check whether the edict is on the given position
+	 * @param cmpPos The grid position to compare to
+	 * @return true if positions are equal
+	 */
 	inline bool isSamePosAs (const pos3_t cmpPos) {
 		return VectorCompare(cmpPos, this->pos);
 	}
@@ -302,11 +300,11 @@ public:
 	 */
 	bool isOpponent (const Actor* actor) const;
 	/*==================
-	 *	manipulators
+	 * manipulators
 	 *==================*/
 
 	/*
-	 *	A set of unsorted functions that are to be moved to class Actor later
+	 * A set of unsorted functions that are to be moved to class Actor later
 	 */
 	inline void setStun(int stu) {
 		_STUN = stu;
@@ -338,10 +336,10 @@ public:
 	inline bool callTouch(Edict* activator) {
 		return _touch(this, activator);
 	}
-/**
- * @brief Calculates the amount of all currently reserved TUs
- * @return The amount of reserved TUs for reaction, shooting and crouching
- */
+	/**
+	 * @brief Calculates the amount of all currently reserved TUs
+	 * @return The amount of reserved TUs for reaction, shooting and crouching
+	 */
 	inline int getReservedTUs () const {
 		const chrReservations_t* res = &chr.reservedTus;
 		return res->reaction + res->shot + res->crouch;
@@ -402,31 +400,30 @@ public:
 	inline void setHead(unsigned int head_) {
 		head = head_;
 	}
-/**
- * @brief Calculates the amount of usable TUs. This is without the reserved TUs.
- * @return The amount of usable TUs for the given actor edict
- */
+	/**
+	 * @brief Calculates the amount of usable TUs. This is without the reserved TUs.
+	 * @return The amount of usable TUs for the given actor edict
+	 */
 	inline int getUsableTUs () const {
 		return getTus() - getReservedTUs();
 	}
-/**
- * @brief Checks whether the given actor is currently standing in a rescue zone
- * @return @c true if the actor is standing in a rescue zone, @c false otherwise.
- */
+	/**
+	 * @brief Checks whether the given actor is currently standing in a rescue zone
+	 * @return @c true if the actor is standing in a rescue zone, @c false otherwise.
+	 */
 	inline bool isInRescueZone () const {
 		return inRescueZone;
 	}
-/**
- * @brief Set the rescue zone flag
- * @param[in] inRescueZone_ @c true if the actor is in the rescue zone, @c false otherwise
- */
+	/**
+	 * @brief Set the rescue zone flag
+	 * @param[in] inRescueZone_ @c true if the actor is in the rescue zone, @c false otherwise
+	 */
 	inline void setInRescueZone (bool inRescueZone_) {
 		if (inRescueZone_ == isInRescueZone())
 			return;
 
 		inRescueZone = inRescueZone_;
 	}
-
 };
 
 Actor* makeActor (Edict* ent);
