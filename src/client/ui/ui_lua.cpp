@@ -68,14 +68,15 @@ void UI_ShutdownLua (void) {
  * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender)
  */
-bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
-	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
-	if (lua_pcall (CL_GetLuaState(), 1, 0, 0) != 0) {
+bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event)
+{
+	lua_rawgeti(CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	SWIG_NewPointerObj(CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+	if (lua_pcall(CL_GetLuaState(), 1, 0, 0) != 0) {
 		Com_Printf("UI_ExecuteLuaEventScript\n");
 		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
-	};
+	}
 	return true;
 }
 
@@ -87,20 +88,21 @@ bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event) {
  * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender) and must return a boolean value
  */
-bool UI_ExecuteLuaEventScript_ReturnBool (uiNode_t* node, LUA_EVENT event, bool &result) {
+bool UI_ExecuteLuaEventScript_ReturnBool (uiNode_t* node, LUA_EVENT event, bool &result)
+{
 	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
 	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	if (lua_pcall (CL_GetLuaState(), 1, 1, 0) != 0) {
 		Com_Printf("UI_ExecuteLuaEventScript_ReturnBool\n");
 		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
-	};
-    if (!lua_isboolean(CL_GetLuaState(), -1)) {
+	}
+	if (!lua_isboolean(CL_GetLuaState(), -1)) {
 		Com_Printf("UI_ExecuteLuaEventScript_ReturnBool\n");
 		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", UI_GetPath(node), node->behaviour->name);
 		return false;
-    }
-    result = lua_toboolean(CL_GetLuaState(), -1);
+	}
+	result = lua_toboolean(CL_GetLuaState(), -1);
 	return true;
 }
 
@@ -113,16 +115,17 @@ bool UI_ExecuteLuaEventScript_ReturnBool (uiNode_t* node, LUA_EVENT event, bool 
  * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender, x, y)
  */
-bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y) {
-	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y)
+{
+	lua_rawgeti(CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	SWIG_NewPointerObj(CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	lua_pushinteger(CL_GetLuaState(), x); /* push x on lua stack */
 	lua_pushinteger(CL_GetLuaState(), y); /* push y on lua stack */
-	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
+	if (lua_pcall(CL_GetLuaState(), 3, 0, 0) != 0) {
 		Com_Printf("UI_ExecuteLuaEventScript_XY\n");
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
-	};
+	}
 	return true;
 }
 
@@ -135,16 +138,17 @@ bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y)
  * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender, dx, dy)
  */
-bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int dy) {
-	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int dy)
+{
+	lua_rawgeti(CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	SWIG_NewPointerObj(CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	lua_pushinteger(CL_GetLuaState(), dx); /* push dx on lua stack */
 	lua_pushinteger(CL_GetLuaState(), dy); /* push dy on lua stack */
-	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
+	if (lua_pcall(CL_GetLuaState(), 3, 0, 0) != 0) {
 		Com_Printf("UI_ExecuteLuaEventScript_DxDy\n");
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
-	};
+	}
 	return true;
 }
 
@@ -157,16 +161,17 @@ bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int
  * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender, key, unicode)
  */
-bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int key, unsigned short unicode) {
-	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int key, unsigned short unicode)
+{
+	lua_rawgeti(CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	SWIG_NewPointerObj(CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	lua_pushinteger(CL_GetLuaState(), key); /* push key on lua stack */
 	lua_pushinteger(CL_GetLuaState(), unicode); /* push unicode on lua stack */
-	if (lua_pcall (CL_GetLuaState(), 3, 0, 0) != 0) {
+	if (lua_pcall(CL_GetLuaState(), 3, 0, 0) != 0) {
 		Com_Printf("UI_ExecuteLuaEventScript_Key\n");
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
-	};
+	}
 	return true;
 }
 
@@ -178,19 +183,20 @@ bool UI_ExecuteLuaEventScript_Key (uiNode_t* node, LUA_EVENT event, unsigned int
  * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender) and should return a boolean
  */
-bool UI_ExecuteLuaEventScript_DragDrop (uiNode_t* node, LUA_EVENT event, bool &result) {
-	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
-	if (lua_pcall (CL_GetLuaState(), 1, 1, 0) != 0) {
+bool UI_ExecuteLuaEventScript_DragDrop (uiNode_t* node, LUA_EVENT event, bool &result)
+{
+	lua_rawgeti(CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	SWIG_NewPointerObj(CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+	if (lua_pcall(CL_GetLuaState(), 1, 1, 0) != 0) {
 		Com_Printf("UI_ExecuteLuaEventScript_DragDrop\n");
 		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
-	};
-    if (!lua_isboolean(CL_GetLuaState(), -1)) {
+	}
+	if (!lua_isboolean(CL_GetLuaState(), -1)) {
 		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", UI_GetPath(node), node->behaviour->name);
 		return false;
-    }
-    result = lua_toboolean(CL_GetLuaState(), -1);
+	}
+	result = lua_toboolean(CL_GetLuaState(), -1);
 	return true;
 }
 
@@ -204,21 +210,22 @@ bool UI_ExecuteLuaEventScript_DragDrop (uiNode_t* node, LUA_EVENT event, bool &r
  * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender, x, y) and should return a boolean
  */
-bool UI_ExecuteLuaEventScript_DragDrop_XY (uiNode_t* node, LUA_EVENT event, int x, int y, bool &result) {
-	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+bool UI_ExecuteLuaEventScript_DragDrop_XY (uiNode_t* node, LUA_EVENT event, int x, int y, bool &result)
+{
+	lua_rawgeti(CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	SWIG_NewPointerObj(CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	lua_pushinteger(CL_GetLuaState(), x); /* push x to lua stack */
 	lua_pushinteger(CL_GetLuaState(), y); /* push y to lua stack */
-	if (lua_pcall (CL_GetLuaState(), 3, 1, 0) != 0) {
+	if (lua_pcall(CL_GetLuaState(), 3, 1, 0) != 0) {
 		Com_Printf("UI_ExecuteLuaEventScript_DragDrop_XY\n");
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
-	};
-    if (!lua_isboolean(CL_GetLuaState(), -1)) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", UI_GetPath(node), node->behaviour->name);
+	}
+	if (!lua_isboolean(CL_GetLuaState(), -1)) {
+		Com_Printf("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", UI_GetPath(node), node->behaviour->name);
 		return false;
-    }
-    result = lua_toboolean(CL_GetLuaState(), -1);
+	}
+	result = lua_toboolean(CL_GetLuaState(), -1);
 	return true;
 }
 
@@ -231,24 +238,23 @@ bool UI_ExecuteLuaEventScript_DragDrop_XY (uiNode_t* node, LUA_EVENT event, int 
  * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender, isDropped) and should return a boolean
  */
-bool UI_ExecuteLuaEventScript_DragDrop_IsDropped (uiNode_t* node, LUA_EVENT event, bool isDropped, bool &result) {
-	lua_rawgeti (CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
-	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+bool UI_ExecuteLuaEventScript_DragDrop_IsDropped (uiNode_t* node, LUA_EVENT event, bool isDropped, bool &result)
+{
+	lua_rawgeti(CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	SWIG_NewPointerObj(CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	lua_pushboolean(CL_GetLuaState(), isDropped); /* push isDropped to lua stack */
-	if (lua_pcall (CL_GetLuaState(), 2, 1, 0) != 0) {
+	if (lua_pcall(CL_GetLuaState(), 2, 1, 0) != 0) {
 		Com_Printf("UI_ExecuteLuaEventScript_DragDrop_IsDropped\n");
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
-	};
-    if (!lua_isboolean(CL_GetLuaState(), -1)) {
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", UI_GetPath(node), node->behaviour->name);
+	}
+	if (!lua_isboolean(CL_GetLuaState(), -1)) {
+		Com_Printf("lua error(0) [node=%s, behaviour=%s]: expecting a boolean as return value\n", UI_GetPath(node), node->behaviour->name);
 		return false;
-    }
-    result = lua_toboolean(CL_GetLuaState(), -1);
+	}
+	result = lua_toboolean(CL_GetLuaState(), -1);
 	return true;
 }
-
-
 
 /**
  * @brief Executes a lua based method defined on the behaviour class of a node.
@@ -261,20 +267,21 @@ bool UI_ExecuteLuaEventScript_DragDrop_IsDropped (uiNode_t* node, LUA_EVENT even
  * for the function is actually nparams + 1.
  * @note All parameters are send to lua as strings.
 */
-bool UI_ExecuteLuaMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params, int nparams) {
-	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, fcn); /* push event function on lua stack */
-	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+bool UI_ExecuteLuaMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params, int nparams)
+{
+	lua_rawgeti(CL_GetLuaState(), LUA_REGISTRYINDEX, fcn); /* push event function on lua stack */
+	SWIG_NewPointerObj(CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	/* push parameters on stack -> note: all the parameters are pushed as strings, since this is the only
-	   parameter type the old-style script can handle */
-	for(int i=0; i<nparams; i++) {
-		const char* value=const_cast<const char*> ((char*)LIST_GetByIdx(params, i));
+	 * parameter type the old-style script can handle */
+	for (int i = 0; i < nparams; i++) {
+		const char* value = const_cast<const char*>((char*)LIST_GetByIdx(params, i));
 		lua_pushstring(CL_GetLuaState(), value);
 	}
-	if (lua_pcall (CL_GetLuaState(), nparams + 1, 0, 0) != 0) {
+	if (lua_pcall(CL_GetLuaState(), nparams + 1, 0, 0) != 0) {
 		Com_Printf("UI_ExecuteLuaMethod\n");
-		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		Com_Printf("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
-	};
+	}
 	return true;
 }
 
@@ -288,16 +295,17 @@ bool UI_ExecuteLuaMethod (uiNode_t* node, LUA_FUNCTION fcn, linkedList_t* params
  * @note Parameters are read from cmd.
  * @note All parameters are send to lua as strings.
 */
-bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn) {
-	lua_rawgeti (CL_GetLuaState (), LUA_REGISTRYINDEX, fcn); /* push event function on lua stack */
-	SWIG_NewPointerObj (CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn)
+{
+	lua_rawgeti(CL_GetLuaState(), LUA_REGISTRYINDEX, fcn); /* push event function on lua stack */
+	SWIG_NewPointerObj(CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	/* read parameters from cmd and push them on the stack; first parameter is skipped, since this is the
-	   function name; all parameters are strings */
-	for(int i=1; i < Cmd_Argc(); i++) {
-		/*
-			Preparse the commandline arguments to test if it is an intenger, float or string.
-			@todo The entire passing of commands to/from should be rewritten to allow for typed arguments
-		*/
+	 * function name; all parameters are strings */
+	for (int i = 1; i < Cmd_Argc(); i++) {
+		/**
+		 * Preparse the commandline arguments to test if it is an intenger, float or string.
+		 * @todo The entire passing of commands to/from should be rewritten to allow for typed arguments
+		 */
 		const char* s = Cmd_Argv(i);
 		char* p = nullptr;
 		// is it an integer?
@@ -306,27 +314,25 @@ bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn) {
 		if (!errno && *p == '\0') {
 			// push argument as integer
 			lua_pushinteger(CL_GetLuaState(), val_i);
-		}
-		else {
+		} else {
 			// is it a float?
 			errno = 0;
 			float val_f = strtof(s, &p);
 			if (!errno && *p == '\0') {
 				// push argument as float
 				lua_pushnumber(CL_GetLuaState(), val_f);
-			}
-			else {
+			} else {
 				// else consider it a string
 				lua_pushstring(CL_GetLuaState(), Cmd_Argv(i));
 			}
 		}
 	}
 	/* execute the confunc */
-	if (lua_pcall (CL_GetLuaState(), Cmd_Argc(), 0, 0) != 0) {
+	if (lua_pcall(CL_GetLuaState(), Cmd_Argc(), 0, 0) != 0) {
 		Com_Printf("UI_ExecuteLuaConFunc\n");
 		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
 		return false;
-	};
+	}
 	return true;
 }
 
@@ -337,21 +343,21 @@ bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn) {
  * @return True if the operation succeeds, false otherwise.
  * @note The signature of the method in lua is: function(sender)
 */
-bool UI_ExecuteLuaMethod_ByName (uiNode_t* node, const char* name, linkedList_t* params, int nparams) {
+bool UI_ExecuteLuaMethod_ByName (uiNode_t* node, const char* name, linkedList_t* params, int nparams)
+{
 	LUA_FUNCTION fn;
 	if (UI_GetNodeMethod(node, name, fn)) {
 		return UI_ExecuteLuaMethod(node, fn, params, nparams);
 	}
-	else {
-		Com_Printf("UI_ExecuteNodeMethod_ByName: calling undefined method %s on node %s\n", name, node->name);
-	}
+	Com_Printf("UI_ExecuteNodeMethod_ByName: calling undefined method %s on node %s\n", name, node->name);
 	return false;
 }
 
 /**
  * @brief Register global lua callback function called after loading the module.
  */
-void UI_RegisterHandler_OnLoad (LUA_FUNCTION fcn) {
+void UI_RegisterHandler_OnLoad (LUA_FUNCTION fcn)
+{
 	CL_RegisterCallback(ui_scriptname, fcn);
 }
 
@@ -359,7 +365,8 @@ void UI_RegisterHandler_OnLoad (LUA_FUNCTION fcn) {
  * @brief Call the registered callback handler. This stub primarily exists should the signature of the
  * call change in the future. CL_ExecuteCallback only supports a callback with no arguments.
  */
-void UI_CallHandler_OnLoad (lua_State* L, const char* key) {
+void UI_CallHandler_OnLoad (lua_State* L, const char* key)
+{
 	CL_ExecuteCallback(L, key);
 }
 
@@ -372,29 +379,29 @@ void UI_CallHandler_OnLoad (lua_State* L, const char* key) {
  * @return True if parsing was succesful, false otherwise.
  * @note All parsed lua files will be added to the lua state.
  */
-bool UI_ParseAndLoadLuaScript (const char* name, const char** text) {
+bool UI_ParseAndLoadLuaScript (const char* name, const char** text)
+{
 	/* determine the length of the string buffer */
-	int ntext = strlen (*text);
+	int ntext = strlen(*text);
 	/* signal lua file found */
-	Com_Printf ("UI_ParseAndLoadLuaScript: %s\n", name);
+	Com_Printf("UI_ParseAndLoadLuaScript: %s\n", name);
 	/* load the contents of the lua file */
 	if (luaL_loadbuffer(CL_GetLuaState(), *text, ntext, name) == 0) {
 		/* set the script name for calls to the registration functions */
 		Q_strncpyz (ui_scriptname, name, sizeof(ui_scriptname));
 		/* the script is loaded, now execute it; this will trigger any register_XXXX functions to be
-		   called by the lua script */
+		 * called by the lua script */
 		if (lua_pcall(CL_GetLuaState(), 0, LUA_MULTRET, 0) != 0) {
-			Com_Printf ("lua error: %s\n", lua_tostring(CL_GetLuaState(), -1));
+			Com_Printf("lua error: %s\n", lua_tostring(CL_GetLuaState(), -1));
 		}
 		else {
 			/* at this point the lua file is loaded and callbacks are registered (on the stack),
 			   now call the onLoad if it exists */
 			UI_CallHandler_OnLoad (CL_GetLuaState(), name);
 		}
-		ui_scriptname[0]='\0';
-	}
-	else {
-        Com_Error(0, "lua load error: %s\n", lua_tostring(CL_GetLuaState(), -1));
+		ui_scriptname[0] = '\0';
+	} else {
+		Com_Error(0, "lua load error: %s\n", lua_tostring(CL_GetLuaState(), -1));
 	}
 	/* reset the content pointer, this will force the cached content to be released
 	   FS_NextScriptHeader. */
@@ -471,8 +478,7 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 			return nullptr;
 		}
 		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s\n", UI_GetPath(node));
-	}
-	else {
+	} else {
 		/* clone using super */
 		if (node_super) {
 			node = UI_CloneNode(node_super, nullptr, true, name, true);
@@ -500,20 +506,24 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 	return node;
 }
 
-void UI_PrintNodeTree (uiNode_t* node, int level) {
+void UI_PrintNodeTree (uiNode_t* node, int level)
+{
 	int i;
-	char* indent = new char[level+1];
-	for(i=0; i<level; i++) indent[i] = '\t';
-	indent[i] = 0x00;
+	char* indent = new char[level + 1];
+	for (i = 0; i < level; i++) {
+		indent[i] = '\t';
+	}
+	indent[i] = '\0';
 
 	Com_Printf("%s[%s]\n", indent, node->name);
-	for(uiNode_t* child=node->firstChild; child; child=child->next) {
+	for (uiNode_t* child = node->firstChild; child; child = child->next) {
 		UI_PrintNodeTree(child, level + 1);
 	}
 	delete[] indent;
 }
 
-const char* UI_Node_TypeOf(uiNode_t* node) {
+const char* UI_Node_TypeOf(uiNode_t* node)
+{
 	if (node) {
 		return node->behaviour->name;
 	}
@@ -659,4 +669,3 @@ uiNode_t* UI_CreateWindow (const char* type, const char* name, const char* super
 
 	return window;
 }
-
