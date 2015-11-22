@@ -98,7 +98,7 @@ int PR_GetRemainingHours (const production_t* prod)
  */
 int PR_GetProductionHours (const base_t* base, const productionData_t* prodData)
 {
-	return round(PR_CalculateTotalFrames(base, prodData) / (double)MINUTES_PER_HOUR);
+	return round(PR_CalculateTotalFrames(base, prodData) / std::max(1, PR_WorkersAvailable(base)) / (double)MINUTES_PER_HOUR);
 }
 
 /**
