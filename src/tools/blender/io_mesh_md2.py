@@ -432,6 +432,14 @@ class MD2:
 						else:
 							markerFrame = timeLineMarkers[i].frame
 
+				# calculate shared bounding box
+				if self.options.fUseSharedBoundingBox:
+					self.bbox_min = None
+					self.bbox_max = None
+					for frame in range(bpy.context.scene.frame_start, bpy.context.scene.frame_end + 1):
+						bpy.context.scene.frame_set(frame)
+						self.calcSharedBBox()
+
 				for frame in range(bpy.context.scene.frame_start, bpy.context.scene.frame_end + 1):
 					frameIdx = frame - bpy.context.scene.frame_start + 1
 					#Display the progress status of the export in the console
@@ -450,6 +458,10 @@ class MD2:
 
 					self.outFrame(file, name + str(frameIdx))
 			else:
+				if self.options.fUseSharedBoundingBox:
+					self.bbox_min = None
+					self.bbox_max = None
+					self.calcSharedBBox()
 				self.outFrame(file)
 
 			# gl commands
@@ -545,13 +557,12 @@ class MD2:
 			inFile.close()
 		print("Done")
 
-	def outFrame(self, file, frameName = "frame"):
+	def calcSharedBBox(self):
 		mesh = self.object.to_mesh(bpy.context.scene, True, 'PREVIEW')
 
 		mesh.transform(self.object.matrix_world)
 		mesh.transform(Matrix.Rotation(pi / 2, 4, 'Z'))
 
-		###### compute the bounding box ###############
 		min = [mesh.vertices[0].co[0],
 			   mesh.vertices[0].co[1],
 			   mesh.vertices[0].co[2]]
@@ -565,7 +576,42 @@ class MD2:
 					min[i] = vert.co[i]
 				if vert.co[i] > max[i]:
 					max[i] = vert.co[i]
-		########################################
+
+		if self.bbox_min == None:
+			self.bbox_min = [min[0], min[1], min[2]]
+			self.bbox_max = [max[0], max[1], max[2]]
+		else:
+			for i in range(3):
+				if self.bbox_min[i] > min[i]:
+					self.bbox_min[i] = min[i]
+				if self.bbox_max[i] < max[i]:
+					self.bbox_max[i] = max[i]
+
+	def outFrame(self, file, frameName = "frame"):
+		mesh = self.object.to_mesh(bpy.context.scene, True, 'PREVIEW')
+
+		mesh.transform(self.object.matrix_world)
+		mesh.transform(Matrix.Rotation(pi / 2, 4, 'Z'))
+
+		if not self.options.fUseSharedBoundingBox:
+			###### compute the bounding box ###############
+			min = [mesh.vertices[0].co[0],
+				   mesh.vertices[0].co[1],
+				   mesh.vertices[0].co[2]]
+			max = [mesh.vertices[0].co[0],
+				   mesh.vertices[0].co[1],
+				   mesh.vertices[0].co[2]]
+
+			for vert in mesh.vertices:
+				for i in range(3):
+					if vert.co[i] < min[i]:
+						min[i] = vert.co[i]
+					if vert.co[i] > max[i]:
+						max[i] = vert.co[i]
+			########################################
+		else:
+			min = self.bbox_min
+			max = self.bbox_max
 
 		# BL: some caching to speed it up:
 		# -> sd_ gets the vertices between [0 and 255]
@@ -923,6 +969,10 @@ class Export_MD2(bpy.types.Operator, ExportHelper):
 
 	fCopyTextureSxS = BoolProperty(name="Copy texture(s) next to .md2",
 									description="Try to copy textures to md2 directory (won't overwrite files)",
+									default=False)
+
+	fUseSharedBoundingBox = BoolProperty(name="Use shared bounding box across frames",
+									description="Calculate a shared bounding box from all frames (used to avoid wobbling in static vertices but wastes resolution)",
 									default=False)
 
 	def __init__(self):
