@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_game.h"
 #include "../../ui/ui_dataids.h"
 #include "cp_campaign.h"
+#include "cp_character.h"
 #include "cp_geoscape.h"
 #include "cp_ufo.h"
 #include "cp_alienbase.h"
@@ -1126,11 +1127,11 @@ void CP_MissionEnd (const campaign_t* campaign, mission_t* mission, const battle
 	CP_CheckLostCondition(campaign);
 
 	/* update the character stats */
-	CP_UpdateCharacterData(ccs.updateCharacters);
+	CHAR_UpdateData(ccs.updateCharacters);
 	cgi->LIST_Delete(&ccs.updateCharacters);
 
 	/* update stats */
-	CP_UpdateCharacterStats(base, aircraft);
+	CHAR_UpdateStats(base, aircraft);
 
 	E_Foreach(EMPL_SOLDIER, employee) {
 		if (AIR_IsEmployeeInAircraft(employee, aircraft))

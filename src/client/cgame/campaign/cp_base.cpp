@@ -951,6 +951,8 @@ void B_Destroy (base_t* base)
 	OBJZERO(base->storage);
 	CAP_SetCurrent(base, CAP_ITEMS, 0);
 
+	base->alienInterest = 0;
+
 	/** @todo Destroy the base. For this we need to check all the dependencies and references.
 	 * Should be only done after putting bases into a linkedList
 	 */

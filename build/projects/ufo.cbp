@@ -379,6 +379,8 @@
 		<Unit filename="../../src/client/cgame/campaign/cp_capacity.h" />
 		<Unit filename="../../src/client/cgame/campaign/cp_cgame_callbacks.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_cgame_callbacks.h" />
+		<Unit filename="../../src/client/cgame/campaign/cp_character.cpp" />
+		<Unit filename="../../src/client/cgame/campaign/cp_character.h" />
 		<Unit filename="../../src/client/cgame/campaign/cp_employee.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_employee.h" />
 		<Unit filename="../../src/client/cgame/campaign/cp_employee_callbacks.cpp" />
