@@ -20,6 +20,17 @@ install:
       appveyor DownloadFile $urlDeps -FileName $file
       Write-Host "Unzip deps"
       7z x -oC:\ $file > $null
+      Write-Host "Uninstalling previous CMake ..." -ForegroundColor Cyan
+      "`"${env:ProgramFiles(x86)}\CMake\Uninstall.exe`" /S" | out-file ".\uninstall-cmake.cmd" -Encoding ASCII
+      & .\uninstall-cmake.cmd
+      Write-Host "Installing CMake..." -ForegroundColor Cyan
+      $exePath = "$($env:USERPROFILE)\cmake-3.3.2-win32-x86.exe"
+      Write-Host "Downloading..."
+      (New-Object Net.WebClient).DownloadFile('https://cmake.org/files/v3.3/cmake-3.3.2-win32-x86.exe', $exePath)
+      Write-Host "Installing..."
+      cmd /c start /wait $exePath /S
+      cmake --version
+      Write-Host "CMake installed" -ForegroundColor Green
   - set UFOAI_DEPS=C:\ufoai-deps
 # For MinGW, we need to overwrite PATH or cmake will complain about sh.exe being present on the PATH
   - if "%generator%" == "mingw" (set "PATH=c:\mingw\bin;C:\Program Files (x86)\CMake\bin;C:\ProgramData\chocolatey\bin;C:\Chocolatey\bin")
