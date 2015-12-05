@@ -47,9 +47,9 @@ static int G_GetEarnedExperience (abilityskills_t skill, Edict* ent)
 
 	switch (skill) {
 	case ABILITY_POWER: {
-		const float weight = chr->scoreMission->carriedWeight / WEIGHT_FACTOR / level.actualRound;
+		const float weight = chr->scoreMission->carriedWeight / level.actualRound;
 		const float penalty = GET_ENCUMBRANCE_PENALTY(weight, chr->score.skills[ABILITY_POWER]);
-		experience = 50 * (weight / chr->score.skills[ABILITY_POWER]) / penalty;
+		experience = 50 * (weight / WEIGHT_FACTOR / chr->score.skills[ABILITY_POWER]) / penalty;
 		break;
 	}
 	case ABILITY_ACCURACY:

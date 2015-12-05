@@ -82,6 +82,7 @@ before_install:
   - sudo apt-get install --only-upgrade cmake
 # Following packages are not available and need to be downloaded here
   - sudo apt-get install libgtkglext1-dev libgtksourceview2.0-dev
+  - rvm install 2.0.0
 
 script:
 # On Linux, we turn on all the projects
