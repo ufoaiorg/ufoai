@@ -2730,9 +2730,9 @@
 // entity 38
 {
 "classname" "misc_mission"
-"origin" "112 464 160"
+"origin" "112 496 160"
 "spawnflags" "252"
-"radius" "96"
+"radius" "32"
 "time" "2"
 "team" "7"
 "target" "wallbreak_powerplant"
