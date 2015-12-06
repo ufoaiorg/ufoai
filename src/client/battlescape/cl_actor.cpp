@@ -1520,8 +1520,12 @@ bool CL_AddActor (le_t* le, entity_t* ent)
 	const bool hasTagHead = R_GetTagIndexByName(le->model1, "tag_head") != -1;
 
 	if (LE_IsStunned(le)) {
-		if (!le->ptl)
-			le->ptl = CL_ParticleSpawn("stunnedactor", 0, le->origin);
+		if (!le->ptl) {
+			int levelflags = 0;
+			for (int i = le->pos[2]; i < PATHFINDING_HEIGHT; ++i)
+				levelflags |= (1 << i);
+			le->ptl = CL_ParticleSpawn("stunnedactor", levelflags, le->origin);
+		}
 	} else if (!LE_IsDead(le)) {
 		/* add the weapons to the actor's hands */
 		const bool addLeftHandWeapon = CL_AddActorWeapon(le->left);
