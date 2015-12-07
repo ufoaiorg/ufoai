@@ -1326,12 +1326,16 @@ base/models/geoscape/ufocrash.md2 | GNU General Public License 2.0 or later | Wi
 base/models/geoscape/ufocrash.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufoyard.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufoyard.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/abrams/abrams.md2 | GNU General Public License 2.0 or later | feanix | converted from abrams.obj
 base/models/objects/abrams/abrams.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams.png | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_bottom.md2 | GNU General Public License 2.0 or later | feanix | converted from abrams_bottom.obj
 base/models/objects/abrams/abrams_bottom.obj | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_gun.md2 | GNU General Public License 2.0 or later | feanix | converted from abrams_gun.obj
 base/models/objects/abrams/abrams_gun.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_nm.png | GNU General Public License 2.0 or later | feanix;MCR
 base/models/objects/abrams/abrams_sm.png | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_turret.md2 | GNU General Public License 2.0 or later | feanix | converted from abrams_turret.obj
 base/models/objects/abrams/abrams_turret.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/aircraft/airplane/airplane_1.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/airplane/airplane_2.png | GNU General Public License 2.0 or later | Willem Sitters
