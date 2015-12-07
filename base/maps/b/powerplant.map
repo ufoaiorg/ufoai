@@ -2726,6 +2726,8 @@
 "radius" "192"
 "time" "3"
 "particle" "green_smoke"
+"message" "Aliens managed to blow up the power plant."
+"desc" "Powerplant core"
 }
 // entity 38
 {
@@ -2737,6 +2739,8 @@
 "team" "7"
 "target" "wallbreak_powerplant"
 "particle" "green_smoke"
+"message" "Aliens broke the wall of the powerplant building."
+"desc" "Powerplant wallbreak"
 }
 // entity 39
 {
