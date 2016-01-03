@@ -22,9 +22,13 @@ function ufox.build (data, parent)
 		if (data.class ~= nil) and (data.name ~= nil) then
 			-- create the node using the values of name & class specified
 			local ui_node = ufo.create_control (parent, data.class, data.name, data.super)
+			if (not ui_node) then
+				ufo.print(string.format('[ufox.build] ERROR: Could not create ui node "%s"', data.name))
+				return nil
+			end
 			-- iterate all the other properties in the table
 			for k, v in pairs(data) do
-				if (k ~= "class") and (k ~= "name") then
+				if (k ~= "class") and (k ~= "name") and (k ~= "super") then
 					-- if it is again a table with a _type and _name field, then the table is a child node of the current node
 					if (type(v) == "table") and (v.class ~= nil) and (v.name ~= nil) then
 						-- recurse call
@@ -35,7 +39,9 @@ function ufox.build (data, parent)
 					else
 						-- now translate key to a property set function
 						local fn_set = string.format("set_%s", tostring(k))
-						if (type(v) == "table") then
+						if (ui_node[fn_set] == nil) then
+							ufo.print(string.format('[ufox.build] WARNING: Unrecognized property: "%s" ignored (%s)', tostring(k), ui_node:path()))
+						elseif (type(v) == "table") then
 							-- multiple value argument: should be a table of values
 							ui_node[fn_set](ui_node, unpack(v))
 						else
@@ -68,9 +74,13 @@ function ufox.build_window (data)
 			end
 			-- create the node using the values of name & super specified (class is "window" implicitly)
 			local ui_window = ufo.create_window (data.name, data.super)
+			if (not ui_window) then
+				ufo.print(string.format('[ufox.build_window] ERROR: Could not create window "%s"', data.name))
+				return nil
+			end
 			-- iterate all the other properties in the table
 			for k, v in pairs(data) do
-				if (k ~= "class") and (k ~= "name") then
+				if (k ~= "class") and (k ~= "name") and (k ~= "super") then
 					-- if it is again a table with a _type and _name field, then the table is a child node of the current node
 					if (type(v) == "table") and (v.class ~= nil) and (v.name ~= nil) then
 						-- recurse call
@@ -81,7 +91,9 @@ function ufox.build_window (data)
 					else
 						-- now translate key to a property set function
 						local fn_set = string.format("set_%s", tostring(k))
-						if (type(v) == "table") then
+						if (ui_window[fn_set] == nil) then
+							ufo.print(1, string.format('[ufox.build_window] WARNING: Unrecognized property: "%s" ignored (%s)', tostring(k), ui_node:path()))
+						elseif (type(v) == "table") then
 							-- multiple value argument: should be a table of values
 							ui_window[fn_set](ui_window, unpack(v))
 						else
@@ -110,13 +122,17 @@ function ufox.build_component (data)
 		if (data.class ~= nil) and (data.name ~= nil) then
 			-- check if the class is a window
 			if (data.class == "window") then
-				ufo.print("[ufox.build_window] WARNING: a component node is being requested but the top level class is set to 'window'\n")
+				ufo.print("[ufox.build_component] WARNING: a component node is being requested but the top level class is set to 'window'\n")
 			end
 			-- create the node using the values of name & class specified
 			local ui_component = ufo.create_component (data.class, data.name, data.super)
+			if (not ui_component) then
+				ufo.print(string.format('[ufox.build_component] ERROR: Could not create component "%s"', data.name))
+				return nil
+			end
 			-- iterate all the other properties in the table
 			for k, v in pairs(data) do
-				if (k ~= "class") and (k ~= "name") then
+				if (k ~= "class") and (k ~= "name") and (k ~= "super") then
 					-- if it is again a table with a _type and _name field, then the table is a child node of the current node
 					if (type(v) == "table") and (v.class ~= nil) and (v.name ~= nil) then
 						-- recurse call
@@ -127,7 +143,9 @@ function ufox.build_component (data)
 					else
 						-- now translate key to a property set function
 						local fn_set = string.format("set_%s", tostring(k))
-						if (type(v) == "table") then
+						if (ui_component[fn_set] == nil) then
+							ufo.print(string.format('[ufox.build_component] WARNING: Unrecognized property: "%s" ignored (%s)', tostring(k), ui_node:path()))
+						elseif (type(v) == "table") then
 							-- multiple value argument: should be a table of values
 							ui_component[fn_set](ui_component, unpack(v))
 						else
@@ -140,7 +158,7 @@ function ufox.build_component (data)
 			-- return the control
 			return ui_component
 		else
-			ufo.print("[ufox.build_window] ERROR: fields class and name expected but not found\n")
+			ufo.print("[ufox.build_component] ERROR: fields class and name expected but not found\n")
 		end
 	end
 	return nil
