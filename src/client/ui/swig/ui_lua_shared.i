@@ -566,7 +566,6 @@ struct uiNode_t {
 	const char* text () { return UI_Node_GetText($self); };
 	const char* font () { return $self->font; };
 	const char* image () { return $self->image; };
-	const char* path () { return UI_GetPath($self); };
 	int contentalign () { return $self->contentAlign; };
 	int layoutalign () { return $self->align; };
 	float flashspeed () { return $self->flashSpeed; };
@@ -1564,6 +1563,8 @@ uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* su
 void UI_PopWindow (bool all);
 %rename (push_window) UI_PushWindow;
 uiNode_t* UI_PushWindow (const char* name, const char* parentName, linkedList_t* params);
+%rename (get_window) UI_GetWindow;
+uiNode_t* UI_GetWindow(const char* name);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose generic node functions
