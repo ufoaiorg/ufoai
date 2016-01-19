@@ -1,0 +1,32 @@
+
+component test_inheritedconfunc_component extends panel {
+	{
+		bgcolor		"0 1 0 0.5"
+		size		"50 20"
+	}
+
+	string text {
+		size		"80 50"
+		string		""
+	}
+
+	confunc test_inheritedconfunc_call {
+			*node:test_inheritedconfunc.testDefault@color = "0 1 0 1"
+	}
+}
+
+component test_inheritedconfunc_component_ufo extends panel {
+	{
+		bgcolor		"0 1 0 0.5"
+		size		"50 20"
+	}
+
+	string text {
+		size		"80 50"
+		string		""
+	}
+
+	confunc test_inheritedconfunc_call_ufo {
+			*node:test_inheritedconfunc_lua.testDefault@color = "0 1 0 1"
+	}
+}
