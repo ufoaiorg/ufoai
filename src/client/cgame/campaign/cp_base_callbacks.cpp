@@ -594,6 +594,16 @@ static void B_MarkBuildingDestroy (building_t* building)
 	if (building->buildingStatus == B_STATUS_WORKING) {
 		const bool hasMoreBases = B_GetCount() > 1;
 		switch (building->buildingType) {
+		case B_ALIEN_CONTAINMENT:
+			if (CAP_GetFreeCapacity(base, cap) < building->capacity) {
+				cgi->UI_PopupButton(_("Destroy Alien Containment"), _("If you destroy this building, you will also kill the aliens inside.\nAre you sure you want to destroy this building?"),
+					"ui_pop;ui_push aliencont;", _("Containment"), _("Go to the Alien Containment without destroying building"),
+					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					hasMoreBases ? "ui_pop;ui_push transfer;" : nullptr, hasMoreBases ? _("Transfer") : nullptr,
+					_("Go to transfer menu without destroying the building"));
+				return;
+			}
+			break;
 		case B_HANGAR:
 		case B_SMALL_HANGAR:
 			if (CAP_GetFreeCapacity(base, cap) <= 0) {

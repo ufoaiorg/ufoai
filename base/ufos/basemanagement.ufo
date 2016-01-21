@@ -43,6 +43,7 @@ building building_aliencontainment
 	tech			rs_building_aliencontainment
 	size			"2 1"
 	capacity		10
+	ondestroy		"aliencont_killexceeding"
 }
 
 building building_entrance

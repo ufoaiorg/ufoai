@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] teamDef Pointer to the alien Team Definition
  * @param[in] isDead If the alien to calculate for is dead
  */
-int AlienContainment::getCapacityNeedForAlien(const teamDef_t* teamDef, const bool isDead) const
+int AlienContainment::getCapacityNeedForAlien(const teamDef_t* teamDef, const bool isDead)
 {
 	return 1;
 }
