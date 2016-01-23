@@ -454,30 +454,42 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 
 	/* test if node already exists (inside the parent subtree) */
 	/* Already existing node should only come from inherited node, we should not have 2 definitions of the same node into the same window. */
-	if (parent) {
+	if (parent)
 		node = UI_GetNode(parent, name);
-		if (node) {
+
+	/* reuse a node */
+	if (node) {
+		if (!node->super) {
 			Com_Printf("UI_CreateControl: trying to create duplicate node [%s]\n", UI_GetPath(node));
 			return nullptr;
 		}
+		const uiBehaviour_t* test = (behaviour != nullptr) ? behaviour : (inherited_control != nullptr) ? inherited_control->behaviour : nullptr;
+		if (node->behaviour != test) {
+			Com_Printf("UI_CreateControl: we can't change node type (node \"%s\")\n", UI_GetPath(node));
+			return nullptr;
+		}
+		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s\n", UI_GetPath(node));
 	}
-
-	/* clone using super */
-	if (node_super) {
-		node = UI_CloneNode(node_super, nullptr, true, name, true);
-	}
-	/* else try creating a clone of the component */
-	else if (inherited_control) {
-		/* initialize from a component */
-		node = UI_CloneNode(inherited_control, nullptr, true, name, true);
-	}
-	/* else initialize a new node */
 	else {
-		node = UI_AllocNode(name, behaviour->name, true);
-	}
+		/* clone using super */
+		if (node_super) {
+			node = UI_CloneNode(node_super, nullptr, true, name, true);
+		}
+		/* else try creating a clone of the component */
+		else if (inherited_control) {
+			/* initialize from a component */
+			node = UI_CloneNode(inherited_control, nullptr, true, name, true);
+		}
+		/* else initialize a new node */
+		else {
+			node = UI_AllocNode(name, behaviour->name, true);
+		}
 
-	if (parent) {
-		UI_AppendNode(parent, node);
+		if (parent) {
+			UI_AppendNode(parent, node);
+			if (node_super || inherited_control)
+				UI_UpdateRoot(node, parent->root);
+		}
 	}
 
 	/* call onload (properties are set from lua) */

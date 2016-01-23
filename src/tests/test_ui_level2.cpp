@@ -219,7 +219,10 @@ TEST_F(UILevel2Test, Components)
  */
 TEST_F(UILevel2Test, InheritedConfunc)
 {
+	TEST_ParseScript("ufos/uitest/_test_inheritedconfunc.ufo");
+	TEST_ParseScript("ufos/uitest/_test_inheritedconfunc_lua.ufo");
 	UFO_ExecuteTestWindow("test_inheritedconfunc");
+	UFO_ExecuteTestWindow("test_inheritedconfunc_lua");
 }
 
 /**

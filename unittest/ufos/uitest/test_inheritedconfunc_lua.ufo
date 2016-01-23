@@ -1,0 +1,236 @@
+--!usr/bin/lua
+require("ufox.ufo")
+
+test_inheritedconfunc_popup_push_llua = {
+	name = "test_inheritedconfunc_popup_push_llua",
+	class = "window",
+	pos = {50, 50},
+	size = {50, 50},
+	backgroundcolor = {0, 0, 0, 1},
+
+	foo = {
+		name = "foo",
+		class = "test_inheritedconfunc_component_lua",
+		pos = {10, 220},
+		size = {10, 10},
+
+		-- this confunc is only called when his window is into the stack
+		-- here the popup is pushed
+		test_inheritedconfunc_call_lua = {
+			name = "test_inheritedconfunc_call_lua",
+			class = "confunc",
+			on_click = function (sender)
+				ufo.get_window("test_inheritedconfunc_lua"):child("testCalled_lua"):set_color(0, 1, 0, 1)
+			end
+		}
+	}
+}
+ufox.build_window(test_inheritedconfunc_popup_push_llua)
+
+test_inheritedconfunc_popup_push_lufo = {
+	name = "test_inheritedconfunc_popup_push_lufo",
+	class = "window",
+	pos = {50, 150},
+	size = {50, 50},
+	backgroundcolor = {0, 0, 0, 1},
+
+	foo = {
+		name = "foo",
+		class = "test_inheritedconfunc_component",
+		pos = {10, 220},
+		size = {10, 10},
+
+		-- this confunc is only called when his window is into the stack
+		-- here the popup is pushed
+		test_inheritedconfunc_call = {
+			name = "test_inheritedconfunc_call",
+			class = "confunc",
+			on_click = function (sender)
+				ufo.get_window("test_inheritedconfunc_lua"):child("testCalled"):set_color(0, 1, 0, 1)
+			end
+		}
+	}
+}
+ufox.build_window(test_inheritedconfunc_popup_push_lufo)
+
+test_inheritedconfunc_popup_notpush_llua = {
+	name = "test_inheritedconfunc_popup_notpush_llua",
+	class = "window",
+	pos = {50, 50},
+	size = {50, 50},
+	backgroundcolor = {0, 0, 0, 1},
+
+	foo = {
+		name = "foo",
+		class = "test_inheritedconfunc_component_lua",
+		pos = {10, 220},
+
+		-- this confunc is only called when his window is into the stack
+		-- here the popup is NOT pushed
+		test_inheritedconfunc_call_lua = {
+			name = "test_inheritedconfunc_call_lua",
+			class = "confunc",
+			on_click = function (sender)
+				ufo.get_window("test_inheritedconfunc_lua"):child("testUncalled_lua"):set_color(1, 0, 0, 1)
+			end
+		}
+	}
+}
+ufox.build_window(test_inheritedconfunc_popup_notpush_llua)
+
+test_inheritedconfunc_popup_notpush_lufo = {
+	name = "test_inheritedconfunc_popup_notpush_lufo",
+	class = "window",
+	pos = {50, 150},
+	size = {50, 50},
+	backgroundcolor = {0, 0, 0, 1},
+
+	foo = {
+		name = "foo",
+		class = "test_inheritedconfunc_component",
+		pos = {10, 220},
+
+		-- this confunc is only called when his window is into the stack
+		-- here the popup is NOT pushed
+		test_inheritedconfunc_call = {
+			name = "test_inheritedconfunc_call",
+			class = "confunc",
+			on_click = function (sender)
+				ufo.get_window("test_inheritedconfunc_lua"):child("testUncalled"):set_color(1, 0, 0, 1)
+			end
+		}
+	}
+}
+ufox.build_window(test_inheritedconfunc_popup_notpush_lufo)
+
+test_inheritedconfunc_lua = {
+	name = "test_inheritedconfunc_lua",
+	class = "window",
+	size = {300, 200},
+	backgroundcolor = {0, 0, 0, 1},
+
+	testDefault_lua = {
+		name = "testDefault_lua",
+		class = "string",
+		pos = {200, 60},
+		text = "t1_l",
+		color = {1, 0, 0, 1}
+	},
+
+	testOverwrited_lua = {
+		name = "testOverwrited_lua",
+		class = "string",
+		pos = {200, 70},
+		text = "t2_l",
+		color = {1, 0, 0, 1}
+	},
+
+	testCalled_lua = {
+		name = "testCalled_lua",
+		class = "string",
+		pos = {200, 80},
+		text = "t3_l",
+		color = {1, 0, 0, 1}
+	},
+
+	testUncalled_lua = {
+		name = "testUncalled_lua",
+		class = "string",
+		pos = {200, 90},
+		text = "t4_l",
+		-- nothing should edit it, else it is an error
+		color = {0, 1, 0, 1}
+	},
+
+	testDefault_ufo = {
+		name = "testDefault",
+		class = "string",
+		pos = {250, 60},
+		text = "t1_u",
+		color = {1, 0, 0, 1}
+	},
+
+	testOverwrited_ufo = {
+		name = "testOverwrited",
+		class = "string",
+		pos = {250, 70},
+		text = "t2_u",
+		color = {1, 0, 0, 1}
+	},
+
+	testCalled_ufo = {
+		name = "testCalled",
+		class = "string",
+		pos = {250, 80},
+		text = "t3_u",
+		color = {1, 0, 0, 1}
+	},
+
+	testUncalled_ufo = {
+		name = "testUncalled",
+		class = "string",
+		pos = {250, 90},
+		text = "t4_u",
+		-- nothing should edit it, else it is an error
+		color = {0, 1, 0, 1}
+	},
+
+	-- all this tree component the extends listen same confunc
+
+	foo1 = {
+		name = "foo1",
+		class = "test_inheritedconfunc_component_lua",
+		pos = {10, 10}
+	},
+
+	foo2 = {
+		name = "foo2",
+		class = "test_inheritedconfunc_component_ufo",
+		pos = {10, 50}
+	},
+
+	foo3 = {
+		name = "foo3",
+		class = "test_inheritedconfunc_component_lua",
+		pos = {10, 100},
+		-- we can override it
+		test_inheritedconfunc_call_lua = {
+			name = "test_inheritedconfunc_call_lua",
+			class = "confunc",
+			on_click = function (sender)
+				ufo.get_window("test_inheritedconfunc_lua"):child("testOverwrited_lua"):set_color(0, 1, 0, 1)
+			end
+		}
+	},
+
+	foo4 = {
+		name = "foo4",
+		class = "test_inheritedconfunc_component",
+		pos = {10, 150},
+		-- we can override it
+		test_inheritedconfunc_call = {
+			name = "test_inheritedconfunc_call",
+			class = "confunc",
+			on_click = function (sender)
+				ufo.get_window("test_inheritedconfunc_lua"):child("testOverwrited"):set_color(0, 1, 0, 1)
+			end
+		}
+	},
+
+	test_inheritedconfunc_firecall_lua = {
+		name = "test_inheritedconfunc_firecall_lua",
+		class = "confunc",
+		on_click = function (sender)
+			ufo.cmd("test_inheritedconfunc_call_lua;")
+			ufo.cmd("test_inheritedconfunc_call;")
+			ufo.cmd("test_inheritedconfunc_call_ufo;")
+		end
+	},
+
+	on_windowopened = function (sender)
+		ufo.cmd("ui_push test_inheritedconfunc_popup_push_llua;")
+		ufo.cmd("ui_push test_inheritedconfunc_popup_push_lufo;")
+		ufo.cmd("test_inheritedconfunc_firecall_lua;")
+	end
+}
+ufox.build_window(test_inheritedconfunc_lua)

@@ -40,10 +40,10 @@ class AlienContainment : public AlienCargo {
 		virtual bool add (const char* teamId, int alive, int dead);
 
 		static bool isLifeSupported (const teamDef_t* team);
+		static int getCapacityNeedForAlien (const teamDef_t* teamDef, const bool isDead);
 
 		AlienContainment (capacities_t* aliveCapacity, capacities_t* deadCapacity);
 		virtual ~AlienContainment (void);
 	private:
 		void resetCurrentCapacities (void);
-		int getCapacityNeedForAlien (const teamDef_t* teamDef, const bool isDead) const;
 };
