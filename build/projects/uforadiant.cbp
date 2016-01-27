@@ -121,15 +121,6 @@
 			<Add directory="../../src/tools/radiant/libs" />
 			<Add directory="../../src/tools/radiant/include" />
 			<Add directory="../../src/libs/picomodel" />
-			<Add directory="Z:/_Development/Tools/MinGW/include/glib-2.0" />
-			<Add directory="Z:/_Development/Tools/MinGW/include/gtk-2.0" />
-			<Add directory="Z:/_Development/Tools/MinGW/include/gtkglext-1.0" />
-			<Add directory="Z:/_Development/Tools/MinGW/include/gtkglext-1.0/gdk" />
-			<Add directory="Z:/_Development/Tools/MinGW/include/gtksourceview-2.0" />
-			<Add directory="Z:/_Development/Tools/MinGW/include/libxml2" />
-			<Add directory="Z:/_Development/Tools/MinGW/include/cairo" />
-			<Add directory="Z:/_Development/Tools/MinGW/include/pango-1.0" />
-			<Add directory="Z:/_Development/Tools/MinGW/include/atk-1.0" />
 		</Compiler>
 		<Linker>
 			<Add library="libjpeg" />
