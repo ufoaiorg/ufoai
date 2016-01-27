@@ -737,7 +737,9 @@
 		<Unit filename="../../src/client/ui/node/ui_node_window.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_zone.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_zone.h" />
-		<Unit filename="../../src/client/ui/swig/ui_lua_shared.cpp" />
+		<Unit filename="../../src/client/ui/swig/ui_lua_shared.i">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="../../src/client/ui/ui_actions.cpp" />
 		<Unit filename="../../src/client/ui/ui_actions.h" />
 		<Unit filename="../../src/client/ui/ui_behaviour.cpp" />

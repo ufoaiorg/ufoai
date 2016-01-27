@@ -56,7 +56,6 @@
 			<Add option="-pedantic" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
-			<Add option="-I../../src/libs" />
 			<Add option="-ggdb" />
 			<Add option="-Wcast-qual" />
 			<Add option="-Wpointer-arith" />
@@ -70,6 +69,8 @@
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_MAP" />
+			<Add directory="../../src/libs" />
+			<Add directory="../../src/libs/SDL" />
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
