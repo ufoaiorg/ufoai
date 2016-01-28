@@ -167,8 +167,6 @@ do
 			end
 	}
 
-	dir_table(tree, "")
-	
 	-- create the window from the tree structure
 	window = ufox.build_window (tree)
 	
