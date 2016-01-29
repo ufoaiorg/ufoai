@@ -12,11 +12,11 @@ do
 		class = "window",
 		name = "main",
 		background = "ui/main_bg",
-		
+
 		{
 			class = "string",
 			name = "title",
-			
+
 			text = "_UFO: ALIEN INVASION",
 			pos = { 262, 50 },
 			size = { 500, 50 },
@@ -24,11 +24,11 @@ do
 			color = { 0.59, 0.78, 0.56, 1.0 },
 			contentalign = ufo.ALIGN_CC
 		},
-		
+
 		{
 			class = "button",
 			name = "facebook",
-			
+
 			text = "_Facebook",
 			tooltip = "_Like us on facebook",
 			pos = { 10, 720 },
@@ -40,11 +40,11 @@ do
 					ufo.cmd("cl_openurl http://www.facebook.com/ufoai/;")
 				end
 		},
-		
+
 		{
 			class = "button",
 			name = "twitter",
-			
+
 			text = "_Twitter",
 			tooltip = "_Follow us on twitter",
 			pos = { 100, 720 },
@@ -56,105 +56,105 @@ do
 					ufo.cmd("cl_openurl http://www.twitter.com/ufoai/;")
 				end
 		},
-		
+
 		{
 			class = "panel",
 			name = "buttons",
-			
+
 			pos = { 312, 250 },
 			size = { 400, 400 },
 			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
 			layoutmargin = 15,
-			
+
 			{
 				class = "button",
 				name = "campaign",
 				super = "MainMenuBtn",
-				
+
 				text = "_CAMPAIGN",
 				on_click = function (sender)
 						ufo.cmd("ui_push campaign;")
 					end
 			},
-			
+
 			{
 				class = "button",
 				name = "skirmish",
 				super = "MainMenuBtn",
-				
+
 				text = "_SKIRMISH",
 				on_click = function (sender)
 						ufo.cmd("ui_push skirmish;")
 					end
 			},
-			
+
 			{
 				class = "button",
 				name = "multiplayer",
 				super = "MainMenuBtn",
-				
+
 				text = "_MULTIPLAYER",
 				on_click = function (sender)
 						ufo.cmd("ui_push multiplayer;")
 					end
 			},
-			
+
 			{
 				class = "button",
 				name = "options",
 				super = "MainMenu2Btn",
-				
+
 				text = "_OPTIONS",
 				on_click = function (sender)
 						ufo.cmd("ui_push options;")
-					end				
+					end
 			},
-			
+
 			{
 				class = "button",
 				name = "tutorials",
 				super = "MainMenu2Btn",
-				
+
 				text = "_TUTORIALS",
 				on_click = function (sender)
 						ufo.cmd("ui_push tutorials;")
 					end
 			},
-			
+
 			{
 				class = "button",
 				name = "credits",
 				super = "MainMenu2Btn",
-				
+
 				text = "_DEVELOPERS",
 				on_click = function (sender)
 						ufo.cmd("quit;")
 					end
 			}
 		},
-		
+
 		{
 			class = "string",
 			name = "version",
-			
+
 			text = "*cvar:version",
 			pos = { 10, 744 },
 			size = { 1004, 20 }
 		},
-		
+
 		{
 			class = "fuzzyScreen",
 			name = "overlay"
 		},
-	
+
 		game_addmode_singleplayer = {
 			class = "confunc",
 			name = "game_addmode_singleplayer",
-			
+
 			on_click = function(sender)
-				end			
+				end
 		},
-		
+
 		on_windowopened = function (sender)
 				ufo.cmd("music_change_main;")
 				-- @TODO: activate this again
@@ -169,7 +169,7 @@ do
 
 	-- create the window from the tree structure
 	window = ufox.build_window (tree)
-	
+
 end
 
 --[[
@@ -182,18 +182,18 @@ do
 		class = "window",
 		name = "checkcvars",
 		super = "ipopup",
-		
+
 		modal = true,
 		pos = { 124, 192 },
 		size = { 777, 368 },
 		backgroundcolor = { 0, 0, 0, 0.9 },
-		
+
 		{
 			name = "title",
 			text = "_Initial settings",
 			size = { 777, 30 }
 		},
-	
+
 		--[[
 		 - ===================
 		 - USER INFORMATION
@@ -202,33 +202,33 @@ do
 		{
 			class = "string",
 			name = "userinfo_str",
-			
+
 			text = "_User information",
 			pos = { 26, 48 },
 			size = { 300, 30 },
 			font = "f_normal"
 		},
-		
+
 		{
 			class = "string",
 			name = "name_str",
-			
+
 			text = "_Name:",
 			pos = { 41, 88 },
 			size = { 300, 20 },
 			color = { 1, 1, 1, 1 }
 		},
-		
+
 		{
 			class = "TextEntry",
 			name = "name_slot",
-			
+
 			text = "*cvar:cl_name",
 			font = "f_verysmall",
 			pos = { 170, 82 },
 			size = { 185, 34 }
 		},
-		
+
 		--[[
 		 - ===================
 		 - VOLUME SETTINGS
@@ -237,26 +237,26 @@ do
 		{
 			class = "string",
 			name = "volume_str",
-			
+
 			text = "_Volume Control",
 			pos = { 26, 168 },
 			size = { 300, 30 },
 			font = "f_normal"
 		},
-		
+
 		{
 			class = "string",
 			name = "effects_str",
-			
+
 			text = "_Effects:",
 			pos = { 41, 198 },
-			size = { 150, 20 }			
+			size = { 150, 20 }
 		},
-		
+
 		{
 			class = "bar",
 			name = "effects_bar",
-			
+
 			value = "*cvar:snd_volume",
 			pos = { 170, 208 },
 			size = { 238, 6 },
@@ -265,29 +265,29 @@ do
 			bordersize = 1,
 			max = 1.0
 		},
-		
+
 		{
 			class = "string",
 			name = "music_str",
-			
+
 			text = "_Music:",
 			pos = { 41, 223 },
 			size = { 150, 20 }
 		},
-		
+
 		{
 			class = "bar",
 			name = "music_bar",
-			
+
 			value = "*cvar:snd_music_volume",
 			pos = { 170, 233 },
 			size = { 238, 6 },
 			color = { 0.582, 0.808, 0.758, 1 },
 			bordercolor = { 0.582, 0.808, 0.758, 1 },
 			bordersize = 1,
-			max = 128.0			
+			max = 128.0
 		},
-		
+
 		--[[
 		 - ===================
 		 - LANGUAGE
@@ -296,26 +296,26 @@ do
 		{
 			class = "string",
 			name = "language_settings",
-			
+
 			text = "_Language",
 			pos = { 410, 48 },
 			size = { 300, 30 },
 			font = "f_normal"
 		},
-		
+
 		{
 			class = "string",
 			name = "language_str",
-			
+
 			text = "_Language:",
 			pos = { 425, 82 },
 			size = { 108, 20 }
 		},
-		
+
 		{
 			class = "optionlist",
 			name = "language_select",
-			
+
 			pos = { 531, 78 },
 			size = { 155, 226 },
 			font = "f_language",
@@ -332,11 +332,11 @@ do
 					sender:root():child("language_select_scroll"):set_viewsize(sender:viewsize())
 				end
 		},
-		
+
 		{
 			class = "vscrollbar",
 			name = "language_select_scroll",
-			
+
 			pos = { 692, 78 },
 			height = 226,
 			viewsize = 8,
@@ -347,7 +347,7 @@ do
 					sender:root():child("language_select"):set_current(sender:current())
 				end
 		},
-		
+
 		--[[
 		 - ===================
 		 - VALIDATION
@@ -356,36 +356,36 @@ do
 		{
 			class = "string",
 			name = "message",
-			
+
 			text = "_You have to set the playername and hit the 'OK' button:",
 			pos = { 41, 338 },
 			size = { 500, 40 },
 			color = { 1, 1, 1, 0.5 }
 		},
-		
+
 		{
 			class = "MainMenuBtn",
 			name = "ok",
-			
+
 			text = "_OK",
 			tooltip = "_Save settings",
 			pos = { 597, 338 },
-			size = { 180, 30 },			
+			size = { 180, 30 },
 			on_click = function (sender)
 					ufo.cmd("ui_pop; saveconfig config.cfg;")
 				end
 		},
-		
+
 		{
 			class = "fuzzyScreen",
 			name = "overlay"
 		},
-		
+
 		on_windowclosed = function (sender)
 				ufo.cmd("check_cvars;")
 			end
 	}
-	
+
 	-- create the window from the tree structure
 	checkcvars = ufox.build_window (tree)
 end
@@ -400,18 +400,18 @@ do
 		class = "window",
 		name = "tipoftheday",
 		super = "ipopup",
-		
+
 		pos = { 505, 560 },
 		size = { 506, 190 },
 		closebutton = true,
 		backgroundcolor = { 0, 0, 0, 0.9 },
-		
+
 		{
 			name = "title",
 			width = 496,
 			text = "_Tip of the day"
 		},
-		
+
 		{
 			class = "string",
 			name = "activate_str",
@@ -423,7 +423,7 @@ do
 					sender:root():child("activate"):toggle()
 				end
 		},
-		
+
 		{
 			class = "CheckBox",
 			name = "activate",
@@ -434,7 +434,7 @@ do
 					ufo.cmd("do_nexttip;")
 				end
 		},
-		
+
 		{
 			class = "text",
 			name = "tipoftheday_text",
@@ -445,7 +445,7 @@ do
 			dataid = ufo.TEXT_TIPOFTHEDAY,
 			viewsize = 6
 		},
-		
+
 		{
 			class = "MainMenuBtn",
 			name = "nexttip",
@@ -459,10 +459,10 @@ do
 						ufo.cmd("tipoftheday;")
 					else
 						ufo.cmd("ui_close tipoftheday;")
-					end				
+					end
 				end
 		},
-		
+
 		{
 			class = "confunc",
 			name = "do_nexttip",
@@ -473,15 +473,15 @@ do
 					else
 						sender:root():child("nexttip"):set_text("_Close")
 						sender:root():child("nexttip"):set_tooltip("_Close window")
-					end					
+					end
 				end
 		},
-		
+
 		{
 			class = "fuzzyScreen",
 			name = "overlay"
 		},
-		
+
 		on_windowopened = function (sender)
 				if ( ufo.getvar("cl_showTipOfTheDay"):as_integer() == 1 ) then
 					ufo.cmd("tipoftheday random; do_nexttip;")
@@ -490,6 +490,6 @@ do
 				end
 			end
 	}
-	
+
 	tipoftheday = ufox.build_window (tree)
 end

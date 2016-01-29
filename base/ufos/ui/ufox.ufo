@@ -6,7 +6,7 @@
   * build (data, parent)	Build a hierarchy of ui nodes based on the supplied data and add them to parent.
   * build_window (data)		Build a window including child nodes based on the supplied data.
   * build_component (data)	Build a component including child nodes based on the supplied data.
-  
+
   For examples, see the online wiki page!!!
 --]]
 
@@ -39,14 +39,14 @@ function ufox.build_properties (data, parent, ui_node)
 				elseif (type(v) == "function") then
 					-- set the event handler directly
 					ui_node[k] = v
-				-- in every other case, the value specified should be set directly 
+				-- in every other case, the value specified should be set directly
 				else
 					-- translate key to a property set function
 					local fn_set = string.format("set_%s", tostring(k))
 					if (ui_node[fn_set] == nil) then
 						ufo.print(string.format('[ufox.build] WARNING: Unrecognized property: "%s" ignored (%s)', tostring(k), ui_node:path()))
 					else
-						if (type(v) == "table") then 
+						if (type(v) == "table") then
 							-- multiple value argument: should be a table of values
 							ui_node[fn_set](ui_node, unpack(v))
 						else
