@@ -128,6 +128,17 @@ do
 
 				text = "_DEVELOPERS",
 				on_click = function (sender)
+						ufo.cmd ("seq_start developers;")
+					end
+			},
+
+			{
+				class = "button",
+				name = "exit",
+				super = "MainMenuExitBtn",
+
+				text = "_EXIT",
+				on_click = function (sender)
 						ufo.cmd("quit;")
 					end
 			}
