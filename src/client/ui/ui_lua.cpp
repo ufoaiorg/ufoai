@@ -346,7 +346,7 @@ bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn)
 			if (!errno && *p == '\0') {
 				// push argument as float
 				lua_pushnumber(CL_GetLuaState(), val_f);
-			} /*else TODO: shouldn't this be a real else? */ {
+			} else {
 				// else consider it a string
 				lua_pushstring(CL_GetLuaState(), s);
 			}
