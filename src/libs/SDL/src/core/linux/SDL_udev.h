@@ -70,7 +70,7 @@ typedef struct SDL_UDEV_PrivateData
     struct udev_monitor *udev_mon;
     int ref_count;
     SDL_UDEV_CallbackList *first, *last;
-    
+
     /* Function pointers */
     const char *(*udev_device_get_action)(struct udev_device *);
     const char *(*udev_device_get_devnode)(struct udev_device *);

@@ -259,7 +259,7 @@ WINRT_ProcessWindowSizeChange()
 #endif
         }
     }
-    
+
     // Finally, free the 'driverdata' field of the old 'desktop_mode'.
     if (oldDisplayMode.driverdata) {
         SDL_free(oldDisplayMode.driverdata);
@@ -328,13 +328,13 @@ void SDL_WinRTApp::SetWindow(CoreWindow^ window)
         window->Bounds.Height);
 #endif
 
-    window->SizeChanged += 
+    window->SizeChanged +=
         ref new TypedEventHandler<CoreWindow^, WindowSizeChangedEventArgs^>(this, &SDL_WinRTApp::OnWindowSizeChanged);
 
     window->VisibilityChanged +=
         ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &SDL_WinRTApp::OnVisibilityChanged);
 
-    window->Closed += 
+    window->Closed +=
         ref new TypedEventHandler<CoreWindow^, CoreWindowEventArgs^>(this, &SDL_WinRTApp::OnWindowClosed);
 
 #if WINAPI_FAMILY != WINAPI_FAMILY_PHONE_APP
@@ -428,7 +428,7 @@ bool SDL_WinRTApp::ShouldWaitForAppResumeEvents()
     if (m_windowVisible) {
         return false;
     }
-    
+
     /* Don't wait until the window-hide events finish processing.
      * Do note that if an app-suspend event is sent (as indicated
      * by SDL_APP_WILLENTERBACKGROUND and SDL_APP_DIDENTERBACKGROUND

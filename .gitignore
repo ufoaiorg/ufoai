@@ -50,3 +50,5 @@ stderr.txt
 *.layout
 Thumbs.db
 *.swp
+/CMakeFiles
+/CMakeCache.txt

@@ -43,8 +43,6 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-I../../src/libs" />
-			<Add option="-I../../src/libs/lua" />
 			<Add option="-Wcast-align" />
 			<Add option="-Winline" />
 			<Add option="-Wmissing-declarations" />
@@ -64,6 +62,9 @@
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_UFO" />
+			<Add directory="../../src/libs" />
+			<Add directory="../../src/libs/lua" />
+			<Add directory="../../src/libs/SDL/include" />
 		</Compiler>
 		<Unit filename="../../base/ai/alien.lua" />
 		<Unit filename="../../base/ai/civilian.lua" />

@@ -26,6 +26,7 @@
 #include "../../ui/ui_dataids.h"
 #include "cp_cgame_callbacks.h"
 #include "cp_campaign.h"
+#include "cp_character.h"
 #include "cp_missions.h"
 #include "cp_mission_triggers.h"
 #include "cp_team.h"
@@ -37,7 +38,7 @@ const cgame_import_t* cgi;
 
 /**
  * @sa CL_ParseResults
- * @sa CP_ParseCharacterData
+ * @sa CHAR_ParseData
  * @sa CL_GameAbort_f
  */
 static void GAME_CP_Results_f (void)
@@ -211,7 +212,7 @@ void GAME_CP_Results (dbuffer* msg, int winner, int* numSpawned, int* numAlive, 
 	aircraft_t* aircraft = GEO_GetMissionAircraft();
 	battleParam_t* bp = &ccs.battleParameters;
 
-	CP_ParseCharacterData(msg, &ccs.updateCharacters);
+	CHAR_ParseData(msg, &ccs.updateCharacters);
 
 	ownSurvived = ownKilled = ownStunned = 0;
 	aliensSurvived = aliensKilled = aliensStunned = 0;

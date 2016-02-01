@@ -214,7 +214,7 @@ X11_Xinput2SelectTouch(_THIS, SDL_Window *window)
     XIEventMask eventmask;
     unsigned char mask[3] = { 0,0,0 };
     SDL_WindowData *window_data = NULL;
-    
+
     if (!X11_Xinput2IsMultitouchSupported()) {
         return;
     }

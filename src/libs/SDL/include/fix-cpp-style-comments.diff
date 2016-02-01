@@ -31,4 +31,4 @@ diff -r 239ce872e8d4 include/SDL_mouse.h
 +    SDL_SYSTEM_CURSOR_HAND,      /**< Hand */
      SDL_NUM_SYSTEM_CURSORS
  } SDL_SystemCursor;
- 
+

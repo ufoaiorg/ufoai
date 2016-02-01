@@ -11,8 +11,6 @@
 // x: do not define +x, it is used to force placing tiles at the border of the map
 //
 // TODO	tiles 1x2, 2x1, 1x3 and 3x1 are missing
-// TODO	the brook tile misses its furnishing
-// TODO	the brook tile should not cut the map that many ways, just vertical would be better
 
 base forest/fr_
 
@@ -164,6 +162,28 @@ tile +gate
 0		+a		+a		+a		+a		+a		+a		0
 0		+a		+a		+a		+a		+a		+a		0
 0		x		x		x		x		x		x		0
+}
+
+// military convoy map ---------------------------------------------*
+
+tile +convoy
+{
+12 15
+0		x		x		x		x		x		x		x		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		+a		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		+a		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		+a		0		0		0		0
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		x
+0		+a		+a		+a		+a		+a		+a		+a		+a		+a		+a		x
+0		x		x		x		x		x		x		x		x		x		x		0
 }
 
 // small house map -------------------------------------------------*
@@ -346,6 +366,11 @@ tile +nature_33
 
 // tilesets --------------------------------------------------------*
 
+tileset big {
+	+nature_01		// 4x4
+	+nature_02		// 4x4
+}
+
 tileset bigz {
 	+nature_01		// 4x4
 	+nature_02		// 4x4
@@ -353,6 +378,26 @@ tileset bigz {
 }
 
 // map assemblies --------------------------------------------------*
+
+assembly convoy
+{
+title "_Military convoy"
+size "14 13"
+fix +convoy			"4 0"	// 10x13
+fix +nature_01		"0 7"	// 4x4
+fix +nature_02		"0 3"	// 4x4
+fix +nature_03		"0 0"	// 4x3
+fix +nature_30		"1 11"	// 3x2
+fix +nature_11		"0 3"	// 1x1
+fix +nature_11		"0 10"	// 1x1
+fix +nature_12		"1 11"	// 1x1
+fix +nature_22		"0 11"	// 1x2
+fix +nature_22		"3 6"	// 1x2
++nature_11			"0 1"	// 1x1
++nature_12			"0 1"	// 1x1
++nature_23			"0 1"	// 2x1
+*rm_drop +craft_drop_firebird	"1 1"
+}
 
 assembly eaglenest
 {
@@ -427,7 +472,7 @@ size "16 10"
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 5"	// 3x3
 tileset bigz	"1 1"
-*rm_ufo +craft_crash_bomber	"1 1"
+*rm_ufo +craft_crash_bomber		"1 1"
 *rm_drop +craft_drop_herakles	"1 1"
 }
 
@@ -435,20 +480,19 @@ assembly nature_medium_a
 {
 title "_Forest"
 size "10 12"
-+nature_01		"1 3"	// 4x4
-+nature_02		"1 3"	// 4x4
 +nature_03		"0 3"	// 4x3
 +nature_11		"0 6"	// 1x1
 +nature_12		"0 6"	// 1x1
 +nature_20		"0 6"	// 2x2
 +nature_21		"0 1"	// 1x2
-+nature_22		"0 2"	// 1x2
-+nature_23		"0 2"	// 2x1
++nature_22		"0 6"	// 1x2
++nature_23		"0 6"	// 2x1
 +nature_30		"0 5"	// 3x2
 +nature_31		"0 5"	// 2x3
 +nature_33		"0 9"	// 3x3
-*rm_ufo +craft_crash_supply		"1 1"
-*rm_drop +craft_drop_herakles	"1 1"
+tileset big		"2 6"
+fix *rm_ufo +craft_crash_supply		"6 0"
+*rm_drop +craft_drop_herakles		"1 1"
 }
 
 assembly nature_medium_b
@@ -558,6 +602,7 @@ size "9 9"
 
 +eaglenest		"0 1"	// 5x6		eaglenest.map
 +gate			"0 1"	// 6x4		gate.map
++convoy			"0 1"	// 10x13	military_convoy.map
 +brook_h1		"0 1"	// 1x1		river horizontal
 +brook_v1		"0 1"	// 1x1		river vertical
 +h5				"0 1"	// 2x2		house with green roof (currently unused)

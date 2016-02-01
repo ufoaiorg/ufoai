@@ -301,8 +301,8 @@ static void TR_FillAliens (const base_t* srcBase, const base_t* destBase)
 	LIST_Foreach(list, alienCargo_t, item) {
 		const int srcDead = item->dead;
 		const int srcAlive = item->alive;
-		const int dstDead = (destBase->alienContainment) ? destBase->alienContainment->getAlive(item->teamDef) : 0;
-		const int dstAlive = (destBase->alienContainment) ? destBase->alienContainment->getDead(item->teamDef) : 0;
+		const int dstDead = (destBase->alienContainment) ? destBase->alienContainment->getDead(item->teamDef) : 0;
+		const int dstAlive = (destBase->alienContainment) ? destBase->alienContainment->getAlive(item->teamDef) : 0;
 		const int transferDead = (tr.alienCargo) ? tr.alienCargo->getDead(item->teamDef) : 0;
 		const int transferAlive = (tr.alienCargo) ? tr.alienCargo->getAlive(item->teamDef) : 0;
 

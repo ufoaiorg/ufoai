@@ -12,7 +12,7 @@ window hospital
 	BaseContainerPanel base_container {
 		// Hospital panel
 		panel mainBody {
-			//{ size "715 534" }	
+			//{ size "715 534" }
 			// Title bar
 			panel header {
 				{}

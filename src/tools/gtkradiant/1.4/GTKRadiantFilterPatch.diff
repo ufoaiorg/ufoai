@@ -3,7 +3,7 @@ Index: radiant/filters.cpp
 --- radiant/filters.cpp	(revision 70)
 +++ radiant/filters.cpp	(working copy)
 @@ -165,6 +165,16 @@
- 
+
  void Filters_constructMenu(GtkMenu* menu_in_menu)
  {
 +  create_check_menu_item_with_mnemonic(menu_in_menu, "StepOn", "FilterStepOn");
@@ -22,7 +22,7 @@ Index: radiant/filters.cpp
 @@ -212,24 +222,34 @@
  {
    GlobalPreferenceSystem().registerPreference("SI_Exclude", SizeImportStringCaller(g_filters_globals.exclude), SizeExportStringCaller(g_filters_globals.exclude));
- 
+
 -  add_filter_command(EXCLUDE_WORLD, "FilterWorldBrushes", Accelerator('1', (GdkModifierType)GDK_MOD1_MASK));
 -  add_filter_command(EXCLUDE_ENT, "FilterEntities", Accelerator('2', (GdkModifierType)GDK_MOD1_MASK));
 +  add_filter_command(EXCLUDE_STEPON, "FilterStepOn", Accelerator('S', (GdkModifierType)GDK_MOD1_MASK));
@@ -70,9 +70,9 @@ Index: radiant/brushmanip.cpp
 +++ radiant/brushmanip.cpp	(working copy)
 @@ -138,7 +138,7 @@
    planepts[2][axis] = mins[axis];
- 
+
    brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
-- 
+-
 +
    for (std::size_t i=0 ; i<sides ; ++i)
    {
@@ -80,7 +80,7 @@ Index: radiant/brushmanip.cpp
 @@ -869,6 +869,19 @@
    }
  };
- 
+
 +class filter_face_level : public FaceFilter
 +{
 +  int m_contents;
@@ -101,27 +101,27 @@ Index: radiant/brushmanip.cpp
      bool filtered;
      Brush_forEachFace(brush, FaceFilterAny(m_filter, filtered));
      return filtered;
--  }   
+-  }
 +  }
  };
- 
+
  class FaceFilterAll
 @@ -947,7 +960,7 @@
      bool filtered;
      Brush_forEachFace(brush, FaceFilterAll(m_filter, filtered));
      return filtered;
--  }   
+-  }
 +  }
  };
- 
- 
+
+
 @@ -999,7 +1012,34 @@
  filter_face_contents g_filter_face_detail(CONTENTS_DETAIL);
  filter_brush_all_faces g_filter_brush_detail(&g_filter_face_detail);
- 
+
 +filter_face_level g_filter_face_level1(CONTENTS_LEVEL1);
 +filter_brush_all_faces g_filter_brush_level1(&g_filter_face_level1);
- 
+
 +filter_face_level g_filter_face_level2(CONTENTS_LEVEL2);
 +filter_brush_all_faces g_filter_brush_level2(&g_filter_face_level2);
 +
@@ -164,13 +164,13 @@ Index: radiant/brushmanip.cpp
 +  add_brush_filter(g_filter_brush_level8, EXCLUDE_LEVEL8);
 +  add_brush_filter(g_filter_brush_stepon, EXCLUDE_STEPON);
  }
- 
+
  #if 0
 @@ -1146,7 +1195,7 @@
      test_normal(normalise(1, 1, 0));
      test_normal(normalise(1, 0, 1));
      test_normal(normalise(0, 1, 1));
--    
+-
 +
      test_normal(normalise(10000, 10000, 10000));
      test_normal(normalise(10000, 10000, 10001));
@@ -180,9 +180,9 @@ Index: radiant/brush.h
 --- radiant/brush.h	(revision 70)
 +++ radiant/brush.h	(working copy)
 @@ -67,6 +67,16 @@
- 
+
  #define CONTENTS_DETAIL 0x8000000
- 
+
 +// ufo:ai
 +#define CONTENTS_LEVEL8 0x8000
 +#define CONTENTS_LEVEL7 0x4000
@@ -193,14 +193,14 @@ Index: radiant/brush.h
 +#define CONTENTS_LEVEL2 0x0200
 +#define CONTENTS_LEVEL1 0x0100
 +#define CONTENTS_STEPON 0x40000000
- 
+
  enum EBrushType
  {
 @@ -1208,7 +1218,7 @@
      m_observer->planeChanged();
    }
- 
--  /// \brief Reverts the transformable state of the brush to identity. 
+
+-  /// \brief Reverts the transformable state of the brush to identity.
 +  /// \brief Reverts the transformable state of the brush to identity.
    void revertTransform()
    {
@@ -208,17 +208,17 @@ Index: radiant/brush.h
 @@ -1710,7 +1720,7 @@
    mutable bool m_transformChanged; // transform evaluation required
    // ----
- 
--public:  
+
+-public:
 +public:
    STRING_CONSTANT(Name, "Brush");
- 
+
    Callback m_lightsChanged;
 @@ -2275,7 +2285,7 @@
        {
          const Face& clip = *m_faces[i];
- 
--        if(plane3_equal(clip.plane3(), plane) 
+
+-        if(plane3_equal(clip.plane3(), plane)
 +        if(plane3_equal(clip.plane3(), plane)
            || !plane3_valid(clip.plane3()) || !plane_unique(i)
            || plane3_opposing(plane, clip.plane3()))
@@ -227,7 +227,7 @@ Index: radiant/brush.h
      for (std::size_t i = 0;  i < m_faces.size(); ++i)
      {
        Winding& degen = m_faces[i]->getWinding();
--      
+-
 +
        if(degen.numpoints == 2)
        {
@@ -236,13 +236,13 @@ Index: radiant/brush.h
        m_points.push_back(pointvertex_for_windingpoint(point, colour_selected));
      }
    };
--  
+-
 +
    void iterate_selected(RenderablePointVector& points) const
    {
      SelectedComponents_foreach(RenderablePointVectorPushBack(points));
    }
--  
+-
 +
    bool intersectVolume(const VolumeTest& volume, const Matrix4& localToWorld) const
    {
@@ -251,13 +251,13 @@ Index: radiant/brush.h
    void renderCommon(Renderer& renderer, const VolumeTest& volume) const
    {
      bool componentMode = GlobalSelectionSystem().Mode() == SelectionSystem::eComponent;
--    
+-
 +
      if(componentMode && isSelected())
      {
        renderComponents(renderer, volume);
      }
--    
+-
 +
      if(parentSelected())
      {
@@ -280,5 +280,5 @@ Index: include/ifilter.h
 +   EXCLUDE_LEVEL8           = 0x08000000,
 +   EXCLUDE_STEPON           = 0x10000000
  };
- 
+
  class Filter

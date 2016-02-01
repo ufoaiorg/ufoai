@@ -36,7 +36,7 @@ typedef struct
     EGLSurface egl_surface;
     EGLContext egl_context; /* We use this to preserve the context when losing focus */
     ANativeWindow* native_window;
-    
+
 } SDL_WindowData;
 
 #endif /* _SDL_androidwindow_h */

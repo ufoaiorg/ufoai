@@ -2774,7 +2774,7 @@
 "classname" "misc_particle"
 "particle" "smokefield"
 "origin" "960 376 140"
-"spawnflags" "255"
+"spawnflags" "254"
 }
 // entity 48
 {

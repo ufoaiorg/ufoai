@@ -588,7 +588,6 @@ short Com_GetHumanAircraftIdsNum (void)
 
 /**
  * @brief Parse the aircraft names from the scripts
- * @note UFOs only until we have gotten rid of the enum humanAircraftType_t
  */
 static void Com_ParseAircraftNames (const char* const name, const char** text)
 {
@@ -606,7 +605,7 @@ static void Com_ParseAircraftNames (const char* const name, const char** text)
 
 	const char* token = Com_Parse(text);
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseActorNames: names def \"%s\" without body ignored\n", name);
+		Com_Printf("Com_ParseAircraftNames: names def \"%s\" without body ignored\n", name);
 		return;
 	}
 

@@ -1,0 +1,48 @@
+--!usr/bin/lua
+require("ufox.ufo")
+
+test_inheritedconfunc_component_lua = {
+	name = "test_inheritedconfunc_component_lua",
+	class = "panel",
+	backgroundcolor = {0, 1, 0, 0.5},
+	size = {50, 20},
+
+	text = {
+		name = "text",
+		class = "string",
+		size = {80, 50},
+		text = ""
+	},
+
+	test_inheritedconfunc_call_lua = {
+		name = "test_inheritedconfunc_call_lua",
+		class = "confunc",
+		on_click = function (sender)
+			ufo.get_window("test_inheritedconfunc_lua"):child("testDefault_lua"):set_color(0, 1, 0, 1)
+		end
+	}
+}
+ufox.build_component(test_inheritedconfunc_component_lua)
+
+test_inheritedconfunc_component_luau = {
+	name = "test_inheritedconfunc_component_luau",
+	class = "panel",
+	backgroundcolor = {0, 1, 0, 0.5},
+	size = {50, 20},
+
+	text = {
+		name = "text",
+		class = "string",
+		size = {80, 50},
+		text = ""
+	},
+
+	test_inheritedconfunc_call_luau = {
+		name = "test_inheritedconfunc_call_luau",
+		class = "confunc",
+		on_click = function (sender)
+			ufo.get_window("test_inheritedconfunc"):child("testDefault_lua"):set_color(0, 1, 0, 1)
+		end
+	}
+}
+ufox.build_component(test_inheritedconfunc_component_luau)

@@ -1,20 +1,3 @@
-
-component test_inheritedconfunc_component extends panel {
-	{
-		bgcolor		"0 1 0 0.5"
-		size		"50 20"
-	}
-
-	string text {
-		size		"80 50"
-		string		""
-	}
-
-	confunc test_inheritedconfunc_call {
-			*node:test_inheritedconfunc.testDefault@color = "0 1 0 1"
-	}
-}
-
 window test_inheritedconfunc_popup_push {
 	{
 		pos			"50 50"
@@ -29,6 +12,24 @@ window test_inheritedconfunc_popup_push {
 		// here the popup is pushed
 		confunc test_inheritedconfunc_call {
 			*node:test_inheritedconfunc.testCalled@color = "0 1 0 1"
+		}
+	}
+}
+
+window test_inheritedconfunc_popup_push_ulua {
+	{
+		pos			"50 150"
+		size		"50 50"
+		bgcolor		"0 0 0 1"
+	}
+
+	test_inheritedconfunc_component_lua foo {
+		{ pos "10 220" size "10 10"}
+
+		// this confunc is only called when his window is into the stack
+		// here the popup is pushed
+		confunc test_inheritedconfunc_call_lua {
+			*node:test_inheritedconfunc.testCalled_lua@color = "0 1 0 1"
 		}
 	}
 }
@@ -51,30 +52,75 @@ window test_inheritedconfunc_popup_notpush {
 	}
 }
 
+window test_inheritedconfunc_popup_notpush_ulua {
+	{
+		pos			"50 150"
+		size		"50 50"
+		bgcolor		"0 0 0 1"
+	}
+
+	test_inheritedconfunc_component_lua foo {
+		{ pos "10 220"}
+
+		// this confunc is only called when his window is into the stack
+		// here the popup is NOT pushed
+		confunc test_inheritedconfunc_call_lua {
+			*node:test_inheritedconfunc.testUncalled_lua@color = "1 0 0 1"
+		}
+	}
+}
+
 window test_inheritedconfunc {
 	{
-		size		"220 200"
+		size		"300 200"
 		bgcolor		"0 0 0 1"
 	}
 
 	string testDefault {
 		pos		"200 60"
-		string	"t1"
+		string	"t1_u"
+		color	"1 0 0 1"
 	}
 
 	string testOverwrited {
 		pos		"200 70"
-		string	"t2"
+		string	"t2_u"
+		color	"1 0 0 1"
 	}
 
 	string testCalled {
 		pos		"200 80"
-		string	"t3"
+		string	"t3_u"
+		color	"1 0 0 1"
 	}
 
 	string testUncalled {
 		pos		"200 90"
-		string	"t4"
+		string	"t4_u"
+		color	"0 1 0 1"	// <-- nothing should edit it, else it is an error
+	}
+
+	string testDefault_lua {
+		pos		"250 60"
+		string	"t1_l"
+		color	"1 0 0 1"
+	}
+
+	string testOverwrited_lua {
+		pos		"250 70"
+		string	"t2_l"
+		color	"1 0 0 1"
+	}
+
+	string testCalled_lua {
+		pos		"250 80"
+		string	"t3_l"
+		color	"1 0 0 1"
+	}
+
+	string testUncalled_lua {
+		pos		"250 90"
+		string	"t4_l"
 		color	"0 1 0 1"	// <-- nothing should edit it, else it is an error
 	}
 
@@ -82,20 +128,33 @@ window test_inheritedconfunc {
 
 	test_inheritedconfunc_component foo1 { pos "10 10" }
 
-	test_inheritedconfunc_component foo2 {
-		{ pos "10 50" }
+	test_inheritedconfunc_component_luau foo2 { pos "10 50" }
+
+	test_inheritedconfunc_component foo3 {
+		{ pos "10 100" }
 		// we can override it
 		confunc test_inheritedconfunc_call {
 			*node:test_inheritedconfunc.testOverwrited@color = "0 1 0 1"
 		}
 	}
 
+	test_inheritedconfunc_component_lua foo4 {
+		{ pos "10 150" }
+		// we can override it
+		confunc test_inheritedconfunc_call_lua {
+			*node:test_inheritedconfunc.testOverwrited_lua@color = "0 1 0 1"
+		}
+	}
+
 	confunc test_inheritedconfunc_firecall {
 		cmd "test_inheritedconfunc_call;"
+		cmd "test_inheritedconfunc_call_lua;"
+		cmd "test_inheritedconfunc_call_luau;"
 	}
 
 	func onWindowOpened {
 		cmd "ui_push test_inheritedconfunc_popup_push"
+		cmd "ui_push test_inheritedconfunc_popup_push_ulua"
 		cmd "test_inheritedconfunc_firecall;"
 	}
 }

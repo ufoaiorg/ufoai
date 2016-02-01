@@ -488,7 +488,10 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 	}
 	else if (callProperty == nullptr || callProperty->type == V_UI_ACTION) {
 		uiAction_t const* const actionsRef = callProperty ? Com_GetValue<uiAction_t*>(callNode, callProperty) : callNode->onClick;
-		UI_ExecuteActions(actionsRef, &newContext);
+		if (actionsRef)
+			UI_ExecuteActions(actionsRef, &newContext);
+		if (callNode->lua_onClick != LUA_NOREF)
+			UI_ExecuteLuaMethod(callNode, callNode->lua_onClick, newContext.params, newContext.paramNumber);
 	}
 	else if (callProperty->type == V_UI_NODEMETHOD) {
 		uiNodeMethod_t func = (uiNodeMethod_t) callProperty->ofs;

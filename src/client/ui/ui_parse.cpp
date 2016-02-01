@@ -1191,7 +1191,7 @@ bool UI_ParseUIModel (const char* name, const char** text)
 					Sys_Error("UI_ParseUIModel: second 'need' token found in model %s", name);
 				model->next = UI_GetUIModel(token);
 				 if (!model->next)
-					Com_Printf("Could not find UI model %s", token);
+					Com_Printf("Could not find UI model %s\n", token);
 			}
 		} else {
 			token = Com_EParse(text, errhead, name);

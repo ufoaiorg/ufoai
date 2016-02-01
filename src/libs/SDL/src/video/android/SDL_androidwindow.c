@@ -34,11 +34,11 @@ int
 Android_CreateWindow(_THIS, SDL_Window * window)
 {
     SDL_WindowData *data;
-    
+
     if (Android_Window) {
         return SDL_SetError("Android only supports one window");
     }
-    
+
     Android_PauseSem = SDL_CreateSemaphore(0);
     Android_ResumeSem = SDL_CreateSemaphore(0);
 
@@ -57,19 +57,19 @@ Android_CreateWindow(_THIS, SDL_Window * window)
     /* One window, it always has focus */
     SDL_SetMouseFocus(window);
     SDL_SetKeyboardFocus(window);
-    
+
     data = (SDL_WindowData *) SDL_calloc(1, sizeof(*data));
     if (!data) {
         return SDL_OutOfMemory();
     }
-    
+
     data->native_window = Android_JNI_GetNativeWindow();
-    
+
     if (!data->native_window) {
         SDL_free(data);
         return SDL_SetError("Could not fetch native window");
     }
-    
+
     data->egl_surface = SDL_EGL_CreateSurface(_this, (NativeWindowType) data->native_window);
 
     if (data->egl_surface == EGL_NO_SURFACE) {
@@ -80,7 +80,7 @@ Android_CreateWindow(_THIS, SDL_Window * window)
 
     window->driverdata = data;
     Android_Window = window;
-    
+
     return 0;
 }
 
@@ -94,14 +94,14 @@ void
 Android_DestroyWindow(_THIS, SDL_Window * window)
 {
     SDL_WindowData *data;
-    
+
     if (window == Android_Window) {
         Android_Window = NULL;
         if (Android_PauseSem) SDL_DestroySemaphore(Android_PauseSem);
         if (Android_ResumeSem) SDL_DestroySemaphore(Android_ResumeSem);
         Android_PauseSem = NULL;
         Android_ResumeSem = NULL;
-        
+
         if(window->driverdata) {
             data = (SDL_WindowData *) window->driverdata;
             if (data->egl_surface != EGL_NO_SURFACE) {

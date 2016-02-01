@@ -83,7 +83,7 @@ struct MonitorInfo
     char		manufacturer_code[4];
     int			product_code;
     unsigned int	serial_number;
-    
+
     int			production_week;	/* -1 if not specified */
     int			production_year;	/* -1 if not specified */
     int			model_year;		/* -1 if not specified */
@@ -92,7 +92,7 @@ struct MonitorInfo
     int			minor_version;
 
     int			is_digital;
-    
+
     union
     {
 	struct
@@ -145,12 +145,12 @@ struct MonitorInfo
 
     Timing		established[24];	/* Terminated by 0x0x0 */
     Timing		standard[8];
-    
+
     int			n_detailed_timings;
     DetailedTiming	detailed_timings[4];	/* If monitor has a preferred
 						 * mode, it is the first one
 						 * (whether it has, is
-						 * determined by the 
+						 * determined by the
 						 * preferred_timing_includes
 						 * bit.
 						 */

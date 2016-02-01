@@ -28,7 +28,7 @@ else
 LOCAL_SRC_FILES += jidctint.c jidctfst.S
 endif
 
-LOCAL_CFLAGS += -DAVOID_TABLES 
+LOCAL_CFLAGS += -DAVOID_TABLES
 LOCAL_CFLAGS += -O3 -fstrict-aliasing -fprefetch-loop-arrays
 #LOCAL_CFLAGS += -march=armv6j
 

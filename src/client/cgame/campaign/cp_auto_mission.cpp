@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_inventory.h"
 #include "cp_auto_mission.h"
 #include "cp_campaign.h"
+#include "cp_character.h"
 #include "cp_geoscape.h"
 #include "cp_missions.h"
 #include "cp_mission_triggers.h"
@@ -830,7 +831,7 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t* battle, str
 
 		chrScoreGlobal_t* score = &chr->score;
 		for (int expCount = 0; expCount < ABILITY_NUM_TYPES; expCount++) {
-			const int maxXP = CP_CharacterGetMaxExperiencePerMission(static_cast<abilityskills_t>(expCount));
+			const int maxXP = CHAR_GetMaxExperiencePerMission(static_cast<abilityskills_t>(expCount));
 			const int gainedXP = std::min(maxXP, static_cast<int>(battleExperience * ABILITY_AWARD_SCALE * frand()));
 			score->experience[expCount] += gainedXP;
 			cgi->Com_DPrintf(DEBUG_CLIENT, "AM_UpdateSurivorsAfterBattle: Soldier %s earned %d experience points in skill #%d (total experience: %d).\n",
@@ -838,20 +839,20 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t* battle, str
 		}
 
 		for (int expCount = ABILITY_NUM_TYPES; expCount < SKILL_NUM_TYPES; expCount++) {
-			const int maxXP = CP_CharacterGetMaxExperiencePerMission(static_cast<abilityskills_t>(expCount));
+			const int maxXP = CHAR_GetMaxExperiencePerMission(static_cast<abilityskills_t>(expCount));
 			const int gainedXP = std::min(maxXP, static_cast<int>(battleExperience * SKILL_AWARD_SCALE * frand()));
 			score->experience[expCount] += gainedXP;
 			cgi->Com_DPrintf(DEBUG_CLIENT, "AM_UpdateSurivorsAfterBattle: Soldier %s earned %d experience points in skill #%d (total experience: %d).\n",
 						chr->name, gainedXP, expCount, chr->score.experience[expCount]);
 		}
 		/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
-		const int maxXP = CP_CharacterGetMaxExperiencePerMission(SKILL_NUM_TYPES);
+		const int maxXP = CHAR_GetMaxExperiencePerMission(SKILL_NUM_TYPES);
 		const int gainedXP = std::min(maxXP, static_cast<int>(battleExperience * ABILITY_AWARD_SCALE * frand()));
 		score->experience[SKILL_NUM_TYPES] += gainedXP;
 		cgi->Com_DPrintf(DEBUG_CLIENT, "AM_UpdateSurivorsAfterBattle: Soldier %s earned %d experience points in skill #%d (total experience: %d).\n",
 					chr->name, gainedXP, SKILL_NUM_TYPES, chr->score.experience[SKILL_NUM_TYPES]);
 
-		CP_UpdateCharacterSkills(chr);
+		CHAR_UpdateSkills(chr);
 	}
 }
 

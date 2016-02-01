@@ -128,6 +128,7 @@ public:
 	const char* particle;
 	const char* nextmap;
 	const char* message;		/**< misc_message */
+	const char* description;	/**< misc_mission */
 	const char* noise;			/**< sounds - e.g. for func_door */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
 	camera_edict_data_t camera;

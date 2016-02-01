@@ -975,6 +975,45 @@ mapdef farm2
 // FOREST RANDOM MAPS //
 ////////////////////////
 
+mapdef military_convoy
+{
+	map				"+forest"
+	params			("convoy")
+	description		"_Military Convoy Ambush Site"
+	civilianteam	armysoldier
+	maxaliens		15
+
+	aircraft
+	(
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+	)
+
+	ufos
+	(
+		// any
+	)
+
+	terrains
+	(
+		"mountain"
+		"grass"
+	)
+
+	cultures
+	(
+		//any
+	)
+
+	populations
+	(
+		"nopopulation"
+		"rural"
+		"village"
+	)
+}
+
 mapdef eaglenest
 {
 	map				"+forest"
@@ -990,7 +1029,7 @@ mapdef eaglenest
 		coop3
 		coop4
 	)
-	
+
 	aircraft
 	(
 		craft_drop_firebird
@@ -1079,12 +1118,13 @@ mapdef forest_nature_large
 	maxaliens	30
 
 	multiplayer		true
-	teams			1
+	teams			2
 	gametypes
 	(
-		coop2
-		coop3
-		coop4
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
 	)
 
 	aircraft
@@ -1127,12 +1167,13 @@ mapdef forest_nature_medium
 	maxaliens	16
 
 	multiplayer		true
-	teams			1
+	teams			2
 	gametypes
 	(
-		coop2
-		coop3
-		coop4
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
 	)
 
 	aircraft
@@ -1176,12 +1217,13 @@ mapdef forest_nature_small
 	maxaliens	6
 
 	multiplayer		true
-	teams			1
+	teams			2
 	gametypes
 	(
-		coop2
-		coop3
-		coop4
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
 	)
 
 	aircraft
@@ -4460,58 +4502,6 @@ mapdef japan_default
 	(
 		"village"
 		"suburban"
-	)
-}
-
-/////////////////////////////////
-// MILITARY_CONVOY RANDOM MAPS //
-/////////////////////////////////
-
-mapdef military_convoy
-{
-	map				"+military_convoy"
-	params			("default")
-	description		"_Military Convoy Ambush Site"
-	civilianteam	armysoldier
-	maxaliens		12
-
-	multiplayer		true
-	teams			2
-	gametypes (
-		fight1on1
-		fight2on2
-		fight3on3
-		fight4on4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"mountain"
-		"grass"
-	)
-
-	cultures
-	(
-		//any
-	)
-
-	populations
-	(
-		"nopopulation"
-		"rural"
-		"village"
 	)
 }
 

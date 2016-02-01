@@ -78,7 +78,7 @@ static void UI_ConfuncCommand_f (void)
 	if (node->onClick != nullptr) {
 		UI_ExecuteConFuncActions(node, node->onClick);
 	}
-	else if (node->lua_onClick != LUA_NOREF) {
+	if (node->lua_onClick != LUA_NOREF) {
 		UI_ExecuteLuaConFunc (node, node->lua_onClick);
 	}
 }

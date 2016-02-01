@@ -90,7 +90,7 @@ BE_CreateDevice(int devindex)
     device->CreateWindowFramebuffer = BE_CreateWindowFramebuffer;
     device->UpdateWindowFramebuffer = BE_UpdateWindowFramebuffer;
     device->DestroyWindowFramebuffer = BE_DestroyWindowFramebuffer;
-    
+
     device->shape_driver.CreateShaper = NULL;
     device->shape_driver.SetWindowShape = NULL;
     device->shape_driver.ResizeWindowShape = NULL;
@@ -136,14 +136,14 @@ int BE_VideoInit(_THIS)
 	if (SDL_InitBeApp() < 0) {
 		return -1;
 	}
-	
+
 	/* Initialize video modes */
 	BE_InitModes(_this);
 
 	/* Init the keymap */
 	BE_InitOSKeymap();
-	
-	
+
+
 #if SDL_VIDEO_OPENGL
         /* testgl application doesn't load library, just tries to load symbols */
         /* is it correct? if so we have to load library here */

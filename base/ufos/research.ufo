@@ -86,7 +86,6 @@
 //	time
 //		Time the research needs to be finished. The values are given in "hours", but....
 //		Consider that this value doesn't reflect _real_ time, but it will depend on the number of scientists working on the item.
-//		The time given is the time needed for 10 workers, so the actual time needed for x workers is time * 10 / workers.
 //		If time is set to 0 the tech will be marked as researched as soon as all requirements are fulfilled (or there are none to begin with).
 //		If time is set to -1 the tech is not researchable at all. Only use this for multiplayer stuff (research status is forced there).
 //		[Default] 0
@@ -280,7 +279,7 @@ tech rs_baselaser
 	time	1000
 	provides baselaser
 	model		"objects/laserturret/laserturret"
-	producetime	150
+	producetime	1500
 }
 
 tech rs_baselaser_ammo
@@ -719,7 +718,7 @@ tech rs_weapon_pistol
 
 	provides	pistol
 	time	0
-	producetime	40
+	producetime	400
 }
 
 tech rs_weapon_pistol_ammo
@@ -739,7 +738,7 @@ tech rs_weapon_pistol_ammo
 
 	provides	pistol_ammo
 	time	0
-	producetime	12
+	producetime	120
 }
 
 // Machine Pistol
@@ -760,7 +759,7 @@ tech rs_weapon_pistol2
 
 	provides	pistol2
 	time	0
-	producetime	60
+	producetime	600
 }
 
 tech rs_weapon_pistol2_ammo
@@ -780,7 +779,7 @@ tech rs_weapon_pistol2_ammo
 
 	provides	pistol2_ammo
 	time	0
-	producetime	12
+	producetime	120
 }
 
 tech rs_weapon_vhs
@@ -815,7 +814,7 @@ tech rs_weapon_assault
 	}
 	provides	assault
 	time	0
-	producetime	90
+	producetime	900
 }
 
 tech rs_weapon_assault_ammo
@@ -834,7 +833,7 @@ tech rs_weapon_assault_ammo
 	}
 	provides	assault_ammo
 	time	0
-	producetime	12
+	producetime	120
 }
 
 tech rs_weapon_machinegun
@@ -852,7 +851,7 @@ tech rs_weapon_machinegun
 	}
 	provides	machinegun
 	time	0
-	producetime	90
+	producetime	900
 }
 
 tech rs_weapon_machinegun_ammo
@@ -871,7 +870,7 @@ tech rs_weapon_machinegun_ammo
 	}
 	provides	machinegun_ammo
 	time	0
-	producetime	12
+	producetime	120
 }
 
 tech rs_weapon_rpg
@@ -890,7 +889,7 @@ tech rs_weapon_rpg
 
 	provides	rpg
 	time	0
-	producetime	120
+	producetime	1200
 }
 
 tech rs_weapon_rpg_ammo
@@ -910,7 +909,7 @@ tech rs_weapon_rpg_ammo
 
 	provides	rpg_ammo
 	time	0
-	producetime	24
+	producetime	240
 }
 
 tech rs_weapon_rpg_incendiary_ammo
@@ -930,7 +929,7 @@ tech rs_weapon_rpg_incendiary_ammo
 
 	provides	rpg_incendiary_ammo
 	time	0
-	producetime	30
+	producetime	300
 }
 
 tech rs_weapon_rpg_hybrid_ammo
@@ -972,7 +971,7 @@ tech rs_weapon_rpg_hybrid_ammo
 
 	provides	rpg_hybrid_ammo
 	time	3000
-	producetime	30
+	producetime	300
 }
 
 tech rs_weapon_xaw95
@@ -1128,7 +1127,7 @@ tech rs_weapon_bolterrifle
 	}
 	provides	bolterrifle
 	time	6000
-	producetime	50
+	producetime	500
 }
 
 tech rs_weapon_bolterrifle_ammo
@@ -1146,7 +1145,7 @@ tech rs_weapon_bolterrifle_ammo
 	}
 	provides	bolterrifle_ammo
 	time	0
-	producetime	15
+	producetime	150
 }
 
 tech rs_weapon_bolterrifle_am_ammo
@@ -1193,7 +1192,7 @@ tech rs_weapon_bolterrifle_am_ammo
 
 	provides	bolterrifle_am_ammo
 	time	5000
-	producetime	30
+	producetime	300
 }
 
 tech rs_weapon_combatknife
@@ -1212,7 +1211,7 @@ tech rs_weapon_combatknife
 	}
 	provides	knife
 	time	0
-	producetime	12
+	producetime	120
 }
 
 tech rs_weapon_monoknife
@@ -1259,7 +1258,7 @@ tech rs_weapon_monoknife
 
 	provides	knifemono
 	time	750
-	producetime	50
+	producetime	500
 }
 
 tech rs_weapon_flamer
@@ -1278,7 +1277,7 @@ tech rs_weapon_flamer
 	}
 	provides	flamer
 	time	0
-	producetime	120
+	producetime	1200
 }
 
 tech rs_weapon_flamer_ammo
@@ -1297,7 +1296,7 @@ tech rs_weapon_flamer_ammo
 	}
 	provides	flamer_ammo
 	time	0
-	producetime	24
+	producetime	240
 }
 
 tech rs_weapon_flashbang
@@ -1316,7 +1315,7 @@ tech rs_weapon_flashbang
 	}
 	provides	flashbang
 	time	0
-	producetime	12
+	producetime	120
 }
 
 tech rs_weapon_fraggren
@@ -1335,7 +1334,7 @@ tech rs_weapon_fraggren
 	}
 	provides	fraggrenade
 	time	0
-	producetime	12
+	producetime	120
 }
 
 tech rs_weapon_incgren
@@ -1354,7 +1353,7 @@ tech rs_weapon_incgren
 	}
 	provides	incgrenade
 	time	0
-	producetime	20
+	producetime	200
 }
 
 tech rs_weapon_grenl
@@ -1372,7 +1371,7 @@ tech rs_weapon_grenl
 	}
 	provides	grenl
 	time	0
-	producetime	120
+	producetime	1200
 }
 
 tech rs_weapon_grenl_ammo
@@ -1391,7 +1390,7 @@ tech rs_weapon_grenl_ammo
 	}
 	provides	grenl_ammo
 	time	0
-	producetime	20
+	producetime	200
 }
 
 tech rs_weapon_grenl_fle_ammo
@@ -1410,7 +1409,7 @@ tech rs_weapon_grenl_fle_ammo
 	}
 	provides	grenl_fle_ammo
 	time	0
-	producetime	14
+	producetime	140
 }
 
 tech rs_weapon_grenl_incendiary_ammo
@@ -1429,7 +1428,7 @@ tech rs_weapon_grenl_incendiary_ammo
 	}
 	provides	grenl_incendiary_ammo
 	time	0
-	producetime	30
+	producetime	300
 }
 
 tech rs_weapon_grenl_plasma_ammo
@@ -1474,7 +1473,7 @@ tech rs_weapon_grenl_plasma_ammo
 	}
 	provides	grenl_plasma_ammo
 	time	2000
-	producetime	15
+	producetime	150
 }
 
 tech rs_irgoggles
@@ -1493,7 +1492,7 @@ tech rs_irgoggles
 	}
 	provides	irgoggles
 	time	0
-	producetime	80
+	producetime	800
 }
 
 tech rs_weapon_kerrblade
@@ -1573,7 +1572,7 @@ tech rs_weapon_laserpistol
 	}
 	provides	laserpistol
 	time	1000
-	producetime	40
+	producetime	400
 }
 
 tech rs_weapon_laserrifle
@@ -1612,7 +1611,7 @@ tech rs_weapon_laserrifle
 	}
 	provides	laserrifle
 	time	2000
-	producetime	50
+	producetime	500
 }
 
 tech rs_weapon_heavylaser
@@ -1651,7 +1650,7 @@ tech rs_weapon_heavylaser
 	}
 	provides	heavylaser
 	time	2000
-	producetime	80
+	producetime	800
 }
 
 tech rs_weapon_electrolaser
@@ -1692,7 +1691,7 @@ tech rs_weapon_electrolaser
 	}
 	provides	electrolaser
 	time	1000
-	producetime	60
+	producetime	600
 }
 
 // Generic laser ammo
@@ -1733,7 +1732,7 @@ tech rs_weapon_laserammo
 	}
 	provides	laser_ammo
 	time		750
-	producetime	15
+	producetime	150
 }
 
 tech rs_weapon_laserammo_stun
@@ -1770,7 +1769,7 @@ tech rs_weapon_laserammo_stun
 	}
 	provides	laser_ammo_stun
 	time		0
-	producetime	15
+	producetime	150
 }
 
 tech rs_medikit
@@ -1788,7 +1787,7 @@ tech rs_medikit
 	}
 	provides	medikit
 	time	0
-	producetime	60
+	producetime	600
 }
 
 tech rs_weapon_plasatomizer
@@ -1833,7 +1832,7 @@ tech rs_weapon_plasatomizer
 
 	provides	plaspistol
 	time	1500
-	producetime	35
+	producetime	350
 }
 
 tech rs_weapon_plasatomizer_ammo
@@ -1857,7 +1856,7 @@ tech rs_weapon_plasatomizer_ammo
 
 	provides	plaspistol_ammo
 	time	0
-	producetime	15
+	producetime	150
 }
 
 tech rs_weapon_plasblaster
@@ -1902,7 +1901,7 @@ tech rs_weapon_plasblaster
 
 	provides	plasblaster
 	time	3000
-	producetime	60
+	producetime	600
 }
 
 tech rs_weapon_plasblaster_ammo
@@ -1926,7 +1925,7 @@ tech rs_weapon_plasblaster_ammo
 
 	provides	plasblaster_ammo
 	time	0
-	producetime	15
+	producetime	150
 }
 
 tech rs_weapon_plasblade
@@ -1972,7 +1971,7 @@ tech rs_weapon_plasblade
 
 	provides	plasblade
 	time	4000
-	producetime	100
+	producetime	1000
 }
 
 tech rs_weapon_plasmagren
@@ -2017,7 +2016,7 @@ tech rs_weapon_plasmagren
 
 	provides	plasmagrenade
 	time	1000
-	producetime	50
+	producetime	500
 }
 
 tech rs_weapon_plasrifle
@@ -2062,7 +2061,7 @@ tech rs_weapon_plasrifle
 
 	provides	plasrifle
 	time	3000
-	producetime	45
+	producetime	450
 }
 
 tech rs_weapon_plasrifle_ammo
@@ -2086,7 +2085,7 @@ tech rs_weapon_plasrifle_ammo
 
 	provides	plasrifle_ammo
 	time	0
-	producetime	15
+	producetime	150
 }
 
 tech rs_weapon_encased_plasma
@@ -2151,7 +2150,7 @@ tech rs_weapon_encased_plasma_assault_ammo
 
 	provides	encased_plasma_assault_ammo
 	time	0
-	producetime	30
+	producetime	300
 }
 
 tech rs_weapon_encased_plasma_mg_ammo
@@ -2178,7 +2177,7 @@ tech rs_weapon_encased_plasma_mg_ammo
 
 	provides	encased_plasma_mg_ammo
 	time	0
-	producetime	30
+	producetime	300
 }
 
 tech rs_weapon_encased_plasma_sniper_ammo
@@ -2205,7 +2204,7 @@ tech rs_weapon_encased_plasma_sniper_ammo
 
 	provides	encased_plasma_sniper_ammo
 	time	0
-	producetime	30
+	producetime	300
 }
 
 tech rs_weapon_encased_plasma_shotgun_ammo
@@ -2232,7 +2231,7 @@ tech rs_weapon_encased_plasma_shotgun_ammo
 
 	provides	encased_plasma_shotgun_ammo
 	time	0
-	producetime	30
+	producetime	300
 }
 
 tech rs_weapon_needlergun
@@ -2277,7 +2276,7 @@ tech rs_weapon_needlergun
 
 	provides	needlergun
 	time		10000
-	producetime	100
+	producetime	1000
 }
 
 tech rs_weapon_needlerheavy
@@ -2322,7 +2321,7 @@ tech rs_weapon_needlerheavy
 
 	provides	needlerheavy
 	time	5000
-	producetime	150
+	producetime	1500
 }
 
 tech rs_weapon_needlergun_ammo
@@ -2347,7 +2346,7 @@ tech rs_weapon_needlergun_ammo
 
 	provides	needlergun_ammo
 	time		0
-	producetime	30
+	producetime	300
 }
 
 tech rs_weapon_coilgun
@@ -2391,7 +2390,7 @@ tech rs_weapon_coilgun
 
 	provides	coilgun
 	time		4000
-	producetime	100
+	producetime	1000
 }
 
 tech rs_weapon_coilgun_ammo
@@ -2414,7 +2413,7 @@ tech rs_weapon_coilgun_ammo
 
 	provides	coilgun_ammo
 	time		0
-	producetime	20
+	producetime	200
 }
 
 tech rs_weapon_shotgun2
@@ -2434,7 +2433,7 @@ tech rs_weapon_shotgun2
 
 	provides	shotgun2
 	time		0
-	producetime	140
+	producetime	1400
 }
 
 tech rs_weapon_shotgun2_slug_ammo
@@ -2454,7 +2453,7 @@ tech rs_weapon_shotgun2_slug_ammo
 
 	provides	shotgun2_slug_ammo
 	time		0
-	producetime	18
+	producetime	180
 }
 
 tech rs_weapon_shotgun_micro
@@ -2474,7 +2473,7 @@ tech rs_weapon_shotgun_micro
 
 	provides	shotgun_micro
 	time		0
-	producetime	80
+	producetime	800
 }
 
 tech rs_weapon_shotgun_micro_ammo
@@ -2494,7 +2493,7 @@ tech rs_weapon_shotgun_micro_ammo
 
 	provides	shotgun_micro_ammo
 	time		0
-	producetime	12
+	producetime	120
 }
 
 tech rs_weapon_smg
@@ -2513,7 +2512,7 @@ tech rs_weapon_smg
 
 	provides	smg
 	time		0
-	producetime	120
+	producetime	1200
 }
 
 tech rs_weapon_smg_ammo
@@ -2533,7 +2532,7 @@ tech rs_weapon_smg_ammo
 
 	provides	smg_ammo
 	time		0
-	producetime	12
+	producetime	120
 }
 
 tech rs_weapon_smokegren
@@ -2552,7 +2551,7 @@ tech rs_weapon_smokegren
 
 	provides	smokegrenade
 	time		0
-	producetime	20
+	producetime	200
 }
 
 tech rs_weapon_sniper
@@ -2571,7 +2570,7 @@ tech rs_weapon_sniper
 
 	provides	sniper
 	time		0
-	producetime	120
+	producetime	1200
 }
 
 tech rs_weapon_sniper_ammo
@@ -2591,7 +2590,7 @@ tech rs_weapon_sniper_ammo
 
 	provides	sniper_ammo
 	time		0
-	producetime	12
+	producetime	120
 }
 
 // Just for searching: uses "anti alien gas"
@@ -2640,7 +2639,7 @@ tech rs_weapon_stungren
 
 	provides	stungrenade
 	time		750
-	producetime	30
+	producetime	300
 //	image		"techs/anti_alien_gas"
 }
 
@@ -2728,7 +2727,7 @@ tech rs_weapon_stunrod
 
 	provides	stunrod
 	time		1500
-	producetime	50
+	producetime	500
 }
 
 tech rs_weapon_pbeampistol
@@ -2773,7 +2772,7 @@ tech rs_weapon_pbeampistol
 
 	provides	pbeampistol
 	time		5000
-	producetime	140
+	producetime	1400
 }
 
 tech rs_weapon_pbeampistol_ammo
@@ -2837,7 +2836,7 @@ tech rs_weapon_pbeamcannon
 
 	provides	pbeamcannon
 	time		6000
-	producetime	200
+	producetime	2000
 }
 
 tech rs_weapon_pbeamcannon_ammo
@@ -2901,7 +2900,7 @@ tech rs_weapon_pbeamrifle
 
 	provides	pbeamrifle
 	time		6000
-	producetime	180
+	producetime	1800
 }
 
 tech rs_weapon_pbeamrifle_ammo
@@ -2980,7 +2979,7 @@ tech rs_combat_armour
 
 	provides	armour_light
 	time		0
-	producetime	72
+	producetime	720
 }
 
 tech rs_nano_armour
@@ -3018,7 +3017,7 @@ tech rs_nano_armour
 
 	provides	armour_medium
 	time		6000
-	producetime	150
+	producetime	1500
 }
 
 tech rs_power_armour
@@ -3057,7 +3056,7 @@ tech rs_power_armour
 	provides	armour_power
 
 	time		6000
-	producetime	300
+	producetime	3000
 }
 
 tech rs_alien_body_armour
@@ -3735,7 +3734,7 @@ tech rs_craft_drop_firebird
 
 	provides	craft_drop_firebird
 	time	0
-	producetime	300
+	producetime	3000
 
 	model		drop_firebird
 }
@@ -3772,9 +3771,9 @@ tech rs_craft_drop_herakles
 
 	provides	craft_drop_herakles
 	time	14000
-	producetime	350
+	producetime	3500
 
-	model		drop_herakles
+	model		drop_herakles_flying
 }
 
 tech rs_craft_drop_raptor
@@ -3821,7 +3820,7 @@ tech rs_craft_drop_raptor
 
 	provides	craft_drop_raptor
 	time	14000
-	producetime	500
+	producetime	5000
 
 	model		drop_raptor
 }
@@ -3837,7 +3836,7 @@ tech rs_craft_inter_stiletto
 
 	provides	craft_inter_stiletto
 	time	0
-	producetime	300
+	producetime	3000
 
 	model		inter_stiletto
 }
@@ -3853,7 +3852,7 @@ tech rs_craft_inter_saracen
 
 	provides	craft_inter_saracen
 	time	0
-	producetime	300
+	producetime	3000
 
 	model		inter_saracen
 }
@@ -3892,7 +3891,7 @@ tech rs_craft_inter_dragon
 		tech rs_craft_alien_detection
 	}
 	time	14000
-	producetime	400
+	producetime	4000
 
 	require_for_production
 	{
@@ -3940,7 +3939,7 @@ tech rs_craft_inter_starchaser
 		tech rs_craft_alien_propulsion_adv
 	}
 	time	14000
-	producetime	500
+	producetime	5000
 
 	require_for_production
 	{
@@ -3999,7 +3998,7 @@ tech rs_craft_inter_stingray
 
 
 	time	14000
-	producetime	600
+	producetime	6000
 
 	model		inter_stingray
 }
@@ -4812,7 +4811,7 @@ tech rs_ugv_phoenix
 
 	provides	ugv_phoenix
 	time	0
-	producetime	400
+	producetime	4000
 }
 
 // UGV with wheels
@@ -4832,7 +4831,7 @@ tech rs_ugv_ares_w
 
 	provides	ugv_ares_w
 	time	0
-	producetime	200
+	producetime	2000
 }
 
 tech rs_ugv_chaingun
@@ -4851,7 +4850,7 @@ tech rs_ugv_chaingun
 */
 	provides	ugv_chaingun
 	time	0
-	producetime	50	// Not really needed since this should (at least in the beginning) be produced with the tank itself.
+	producetime	500	// Not really needed since this should (at least in the beginning) be produced with the tank itself.
 }
 
 tech rs_ugv_chaingun_belt
@@ -4870,7 +4869,7 @@ tech rs_ugv_chaingun_belt
 */
 	provides	ugv_chaingun_belt
 	time	0
-	producetime	10	// @todo fixme
+	producetime	100	// @todo fixme
 }
 
 tech rs_ugv_weapon_autocannon
@@ -4888,7 +4887,7 @@ tech rs_ugv_weapon_autocannon
 
 	provides	ugv_weapon_autocannon
 	time	0
-	producetime	50
+	producetime	500
 }
 
 //========================
@@ -4907,7 +4906,7 @@ tech rs_base_AA51_launcher
 
 	provides	base_AA51_launcher
 	time		0
-	producetime	150
+	producetime	1500
 
 	model			"objects/samlauncher/samlauncher"
 }
@@ -4938,7 +4937,7 @@ tech rs_craft_el_raven
 
 	provides	craft_el_raven
 	time		0
-	producetime	100
+	producetime	1000
 
 	model	"aircraft/craft_item_raven_ecm/ecm"
 }
@@ -4955,7 +4954,7 @@ tech rs_craft_shield_polymer
 
 	provides	craft_shield_polymer
 	time		0
-	producetime	140
+	producetime	1400
 
 	model	"aircraft/craft_arm_poly/polymer"
 }
@@ -4997,7 +4996,7 @@ tech rs_craft_shield_plating
 	}
 
 	time		3000
-	producetime	200
+	producetime	2000
 
 	model	"aircraft/craft_arm_plate/plating"
 }
@@ -5041,7 +5040,7 @@ tech rs_craft_shield_polymer_alien
 	}
 
 	time		8000
-	producetime	400
+	producetime	4000
 
 	model	"aircraft/craft_arm_poly_alien/polymer_alien"
 }
@@ -5232,7 +5231,7 @@ tech rs_craft_weapon_alc
 
 	provides	craft_weapon_alc
 	time		1000
-	producetime	90
+	producetime	900
 
 	model		"aircraft/craft_weapon_alc/alc"
 }
@@ -5259,7 +5258,7 @@ tech rs_craft_weapon_shiva
 
 	provides	craft_weapon_shiva
 	time		0
-	producetime	100
+	producetime	1000
 
 	model		"aircraft/craft_weapon_shiva/shiva"
 }
@@ -5280,7 +5279,7 @@ tech rs_craft_ammo_shiva_1
 		tech rs_craft_weapon_shiva
 	}
 	time		0
-	producetime	10 //Assuming a full magazine.
+	producetime	100 //Assuming a full magazine.
 
 	model				"aircraft/craft_weapon_shiva/ammo_api"
 }
@@ -5301,7 +5300,7 @@ tech rs_craft_ammo_shiva_2
 		tech rs_craft_weapon_shiva
 	}
 	time		0
-	producetime	10 //Assuming a full magazine.
+	producetime	100 //Assuming a full magazine.
 
 	model				"aircraft/craft_weapon_shiva/ammo_hei"
 }
@@ -5318,7 +5317,7 @@ tech rs_craft_weapon_sparrowhawk
 
 	provides	craft_weapon_sparrowhawk
 	time		0
-	producetime	100
+	producetime	1000
 
 	model		"aircraft/craft_weapon_sparrow/sparrowhawk_rack"
 }
@@ -5339,7 +5338,7 @@ tech rs_craft_ammo_sparrowhawk
 		tech rs_craft_weapon_sparrowhawk
 	}
 	time		0
-	producetime	40 //10 per missile.
+	producetime	400 //10 per missile.
 
 	model		"aircraft/craft_weapon_sparrow/sparrowhawk"
 }
@@ -5356,7 +5355,7 @@ tech rs_craft_weapon_tr20
 
 	provides	craft_weapon_tr20
 	time		0
-	producetime	100
+	producetime	1000
 
 	model		"aircraft/craft_weapon_tr20/tr20"
 }
@@ -5377,7 +5376,7 @@ tech rs_craft_ammo_tr20
 		tech rs_craft_weapon_tr20
 	}
 	time		0
-	producetime	24 //Assuming a full 128-rocket batch! // TODO: 152 pcs?
+	producetime	240 //Assuming a full 128-rocket batch! // TODO: 152 pcs?
 
 	model		"aircraft/craft_weapon_tr20/tr20_rocket"
 }
@@ -5424,7 +5423,7 @@ tech rs_craft_weapon_particle
 	}
 
 	time		4000
-	producetime	80
+	producetime	800
 
 	model		"aircraft/craft_weapon_particle/pbw"
 }
@@ -5481,7 +5480,7 @@ tech rs_craft_weapon_alien_launcher
 	}
 
 	time		12000
-	producetime	100
+	producetime	1000
 
 	model		"aircraft/craft_weapon_launcher/alien_launcher"
 }
@@ -5530,7 +5529,7 @@ tech rs_craft_ammo_am_missile
 	}
 
 	time		5000
-	producetime	60
+	producetime	600
 
 	model		"aircraft/craft_weapon_antim/antimatter"
 }
@@ -5578,7 +5577,7 @@ tech rs_craft_ammo_hybrid_missile
 	}
 
 	time		5000
-	producetime	40
+	producetime	400
 
 	model		"aircraft/craft_weapon_hybrid/hybrid"
 }
@@ -5594,7 +5593,7 @@ tech rs_craft_el_targeting
 
 	provides	craft_el_targeting
 	time		0
-	producetime	180
+	producetime	1800
 
 	model		"aircraft/craft_item_target/craft_item_target"
 }
@@ -5610,7 +5609,7 @@ tech rs_craft_el_fuelpod
 
 	provides	craft_el_fuelpod
 	time		0
-	producetime	80
+	producetime	800
 
 	model		"aircraft/craft_item_fuel/fuel"
 }
@@ -5646,7 +5645,7 @@ tech rs_craft_el_alien_ew
 
 	provides	craft_el_alien_ew
 	time		3000
-	producetime	200
+	producetime	2000
 
 	model	"aircraft/craft_item_ew_alien/ew_alien"
 }

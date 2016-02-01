@@ -50,7 +50,7 @@ WIN_GLES_LoadLibrary(_THIS, const char *path) {
         return SDL_SetError("SDL not configured with OpenGL/WGL support");
 #endif
     }
-    
+
     if (_this->egl_data == NULL) {
         return SDL_EGL_LoadLibrary(_this, NULL, EGL_DEFAULT_DISPLAY);
     }
@@ -112,7 +112,7 @@ WIN_GLES_SetupWindow(_THIS, SDL_Window * window)
             return -1;
         }
     }
-  
+
     /* Create the GLES window surface */
     windowdata->egl_surface = SDL_EGL_CreateSurface(_this, (NativeWindowType)windowdata->hwnd);
 
@@ -120,7 +120,7 @@ WIN_GLES_SetupWindow(_THIS, SDL_Window * window)
         return SDL_SetError("Could not create GLES window surface");
     }
 
-    return WIN_GLES_MakeCurrent(_this, current_win, current_ctx);    
+    return WIN_GLES_MakeCurrent(_this, current_win, current_ctx);
 }
 
 int

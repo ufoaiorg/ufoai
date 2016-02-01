@@ -563,7 +563,7 @@ tile +house_07
 
 // housing ---------------------------------------------------------*
 
-// house tiles are not connected to a street tile, 
+// house tiles are not connected to a street tile,
 // and must not be larger than 3x3 map tiles
 
 tile +house_01

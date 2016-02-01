@@ -26,23 +26,21 @@ tile +bld_laboratory
 
 tile +bld_office_a
 {
-6 5
-0		0		0		0		0		0
-0		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		0
-0		+a		+a		+a		+a		0
-0		0		0		0		0		0
+5 4
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
 }
 
 tile +bld_office_b
 {
-5 6
-0		0		0		0		0
-0		+a		+a		+a		0
-0		+a		+a		+a		0
-0		+a		+a		+a		0
-0		+a		+a		+a		0
-0		0		0		0		0
+4 5
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
 }
 
 tile +city_disco
@@ -165,7 +163,7 @@ tile +filler_3x1_a
 }
 
 // Dummy tiles -----------------------------------------------------*
-/* The initial idea of this was to just fill some empty room at the 
+/* The initial idea of this was to just fill some empty room at the
    border of the map with "blockers" .
    Not sure if this will work, though.*/
 
@@ -480,6 +478,33 @@ title "_Urban"
 tileset main		"1 1"
 +bld_office_a		"0 1"
 +bld_office_b		"0 1"
++city_disco			"0 1"
++community_centre	"0 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+// test assemblies -------------------------------------------------*
+
+assembly test
+{
+size "9 9"
+title "_Urban"
++dummy_ne			"0 1"
++dummy_nw			"0 1"
++dummy_se			"0 1"
++dummy_sw			"0 1"
++dummy_e			"0 10"
++dummy_n			"0 10"
++dummy_s			"0 10"
++dummy_w			"0 10"
++dummy_centre		"0 4"
++filler_a			"0 3"
++filler_b			"0 1"
++filler_c			"0 1"
++filler_3x1_a		"0 1"
+tileset main		"1 1"
++bld_office_a		"1 1"
++bld_office_b		"1 1"
 +city_disco			"0 1"
 +community_centre	"0 1"
 *rm_drop +craft_drop_firebird "1 1"

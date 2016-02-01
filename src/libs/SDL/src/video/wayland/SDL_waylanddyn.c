@@ -106,10 +106,10 @@ SDL_WAYLAND_UnloadSymbols(void)
     /* Don't actually unload if more than one module is using the libs... */
     if (wayland_load_refcount > 0) {
         if (--wayland_load_refcount == 0) {
-#ifdef SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC            
+#ifdef SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC
             int i;
 #endif
-            
+
             /* set all the function pointers to NULL. */
 #define SDL_WAYLAND_MODULE(modname) SDL_WAYLAND_HAVE_##modname = 0;
 #define SDL_WAYLAND_SYM(rc,fn,params) WAYLAND_##fn = NULL;

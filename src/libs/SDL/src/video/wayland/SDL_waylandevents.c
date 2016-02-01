@@ -86,7 +86,7 @@ pointer_handle_enter(void *data, struct wl_pointer *pointer,
         /* enter event for a window we've just destroyed */
         return;
     }
-    
+
     /* This handler will be called twice in Wayland 1.4
      * Once for the window surface which has valid user data
      * and again for the mouse cursor surface which does not have valid user data
@@ -94,7 +94,7 @@ pointer_handle_enter(void *data, struct wl_pointer *pointer,
      */
 
     window = (SDL_WindowData *)wl_surface_get_user_data(surface);
-    
+
     if (window) {
         input->pointer_focus = window;
         SDL_SetMouseFocus(window->sdlwindow);
@@ -134,7 +134,7 @@ pointer_handle_button(void *data, struct wl_pointer *pointer, uint32_t serial,
     SDL_WindowData *window = input->pointer_focus;
     enum wl_pointer_button_state state = state_w;
     uint32_t sdl_button;
-    
+
     if  (input->pointer_focus) {
         switch (button) {
             case BTN_LEFT:

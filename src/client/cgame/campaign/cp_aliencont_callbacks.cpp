@@ -132,10 +132,48 @@ static void AC_KillOne_f (void)
 	cgi->Cmd_ExecuteString("ui_aliencont_init");
 }
 
+/**
+ * @brief Kill aliens over a certain capacity
+ */
+static void AC_KillExceeding_f (void)
+{
+	base_t* base;
+	const int argc = cgi->Cmd_Argc();
+
+	if (argc < 2) {
+		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+	base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (!base)
+		return;
+	if (!base->alienContainment)
+		return;
+
+	const int limit = CAP_GetMax(base, CAP_ALIENS);
+	int aliens = CAP_GetCurrent(base, CAP_ALIENS);
+	if (aliens <= limit)
+		return;
+
+	/* Kill aliens */
+	linkedList_t* list = base->alienContainment->list();
+	LIST_Foreach(list, alienCargo_t, item) {
+		const int alienSize = base->alienContainment->getCapacityNeedForAlien(item->teamDef, false);
+		int substract = std::min(int(ceil(1.0f * (aliens - limit) / alienSize)), int(item->alive * alienSize));
+
+		base->alienContainment->add(item->teamDef, -1 * substract, substract);
+		aliens = CAP_GetCurrent(base, CAP_ALIENS);
+		if (aliens <= limit)
+			break;
+	}
+	cgi->LIST_Delete(&list);
+}
+
 static const cmdList_t alienContCallbacks[] = {
 	{"ui_aliencont_init", AC_Init_f, "Init function for alien containment menu"},
 	{"ui_aliencont_killall", AC_KillAll_f, "Kills all aliens in current base"},
 	{"ui_aliencont_killone", AC_KillOne_f, "Kills one alien of a given type"},
+	{"aliencont_killexceeding", AC_KillExceeding_f, "Kills aliens that exceed a certain base capacity"},
 	{nullptr, nullptr, nullptr}
 };
 void AC_InitCallbacks (void)

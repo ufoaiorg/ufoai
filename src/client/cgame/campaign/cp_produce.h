@@ -115,6 +115,7 @@ void PR_UpdateProductionCap(struct base_s* base, int workerChange = 0);
 void PR_UpdateRequiredItemsInBasestorage(struct base_s* base, int amount, const requirements_t* reqs);
 int PR_RequirementsMet(int amount, const requirements_t* reqs, struct base_s* base);
 
+int PR_WorkersAvailable(const struct base_s* base);
 int PR_GetRemainingMinutes(const production_t* prod);
 int PR_GetRemainingHours(const production_t* prod);
 int PR_GetProductionHours(const struct base_s* base, const productionData_t* prodData);

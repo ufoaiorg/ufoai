@@ -216,11 +216,11 @@ X11_GL_LoadLibrary(_THIS, const char *path)
 
     /* Initialize extensions */
     X11_GL_InitExtensions(_this);
-    
-    /* If we need a GL ES context and there's no  
-     * GLX_EXT_create_context_es2_profile extension, switch over to X11_GLES functions  
+
+    /* If we need a GL ES context and there's no
+     * GLX_EXT_create_context_es2_profile extension, switch over to X11_GLES functions
      */
-    if (_this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES && 
+    if (_this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES &&
         ! _this->gl_data->HAS_GLX_EXT_create_context_es2_profile ) {
 #if SDL_VIDEO_OPENGL_EGL
         X11_GL_UnloadLibrary(_this);
@@ -382,7 +382,7 @@ X11_GL_InitExtensions(_THIS)
     if (HasExtension("GLX_EXT_visual_info", extensions)) {
         _this->gl_data->HAS_GLX_EXT_visual_info = SDL_TRUE;
     }
-    
+
     /* Check for GLX_EXT_create_context_es2_profile */
     if (HasExtension("GLX_EXT_create_context_es2_profile", extensions)) {
         _this->gl_data->HAS_GLX_EXT_create_context_es2_profile = SDL_TRUE;

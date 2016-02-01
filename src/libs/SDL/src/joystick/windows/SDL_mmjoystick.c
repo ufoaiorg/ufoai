@@ -33,8 +33,8 @@
 #include "../SDL_sysjoystick.h"
 #include "../SDL_joystick_c.h"
 
-#ifdef REGSTR_VAL_JOYOEMNAME 
-#undef REGSTR_VAL_JOYOEMNAME 
+#ifdef REGSTR_VAL_JOYOEMNAME
+#undef REGSTR_VAL_JOYOEMNAME
 #endif
 #define REGSTR_VAL_JOYOEMNAME "OEMName"
 

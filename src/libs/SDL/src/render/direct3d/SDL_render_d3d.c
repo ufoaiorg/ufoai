@@ -687,7 +687,7 @@ D3D_CreateRenderer(SDL_Window * window, Uint32 flags)
                 float4 RGBAColor : SV_Target;
            };
 
-           PS_OUTPUT YUV420( VS_OUTPUT In ) 
+           PS_OUTPUT YUV420( VS_OUTPUT In )
            {
                const float3 offset = {-0.0625, -0.5, -0.5};
                const float3 Rcoeff = {1.164,  0.000,  1.596};
@@ -1742,7 +1742,7 @@ D3D_RenderCopyEx(SDL_Renderer * renderer, SDL_Texture * texture,
 
         D3D_UpdateTextureScaleMode(data, texturedata, 1);
         D3D_UpdateTextureScaleMode(data, texturedata, 2);
-        
+
         if (D3D_BindTextureRep(data->device, &texturedata->utexture, 1) < 0) {
             return -1;
         }

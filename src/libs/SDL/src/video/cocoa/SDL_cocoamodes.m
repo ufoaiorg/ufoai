@@ -354,7 +354,7 @@ Cocoa_SwitchMode(_THIS, CGDirectDisplayID display, const void *mode)
     if (IS_SNOW_LEOPARD_OR_LATER(_this)) {
         return CGDisplaySetDisplayMode(display, (CGDisplayModeRef) mode, NULL);
     }
- 
+
     #if MAC_OS_X_VERSION_MIN_REQUIRED < 1060
     if (!IS_SNOW_LEOPARD_OR_LATER(_this)) {
         return CGDisplaySwitchToMode(display, (CFDictionaryRef) mode);

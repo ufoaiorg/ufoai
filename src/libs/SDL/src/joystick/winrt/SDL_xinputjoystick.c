@@ -196,7 +196,7 @@ void SDL_SYS_JoystickDetect()
 #if !SDL_EVENTS_DISABLED
             SDL_zero(event);
             event.type = SDL_JOYDEVICEADDED;
-                
+
             if (SDL_GetEventState(event.type) == SDL_ENABLE) {
                 event.jdevice.which = i;
                 if ((SDL_EventOK == NULL)
@@ -216,7 +216,7 @@ void SDL_SYS_JoystickDetect()
 #if !SDL_EVENTS_DISABLED
             SDL_zero(event);
             event.type = SDL_JOYDEVICEREMOVED;
-                
+
             if (SDL_GetEventState(event.type) == SDL_ENABLE) {
                 event.jdevice.which = i; //joystick->hwdata->userIndex;
                 if ((SDL_EventOK == NULL)
@@ -417,7 +417,7 @@ SDL_SYS_JoystickUpdate(SDL_Joystick * joystick)
     joystick->hwdata->isDeviceConnected = SDL_TRUE;
 
     // only fire events if the data changed from last time
-    if ( joystick->hwdata->XInputState.dwPacketNumber != 0 
+    if ( joystick->hwdata->XInputState.dwPacketNumber != 0
         && joystick->hwdata->XInputState.dwPacketNumber != prevXInputState.dwPacketNumber )
     {
         XINPUT_STATE *pXInputState = &joystick->hwdata->XInputState;

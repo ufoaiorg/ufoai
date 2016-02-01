@@ -96,10 +96,10 @@ SDL_MIR_UnloadSymbols(void)
     /* Don't actually unload if more than one module is using the libs... */
     if (mir_load_refcount > 0) {
         if (--mir_load_refcount == 0) {
-#ifdef SDL_VIDEO_DRIVER_MIR_DYNAMIC            
+#ifdef SDL_VIDEO_DRIVER_MIR_DYNAMIC
             int i;
 #endif
-            
+
             /* set all the function pointers to NULL. */
 #define SDL_MIR_MODULE(modname) SDL_MIR_HAVE_##modname = 0;
 #define SDL_MIR_SYM(rc,fn,params) MIR_##fn = NULL;

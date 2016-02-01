@@ -597,12 +597,12 @@ SDL_GameControllerAddMappingsFromRW(SDL_RWops * rw, int freerw)
     int controllers = 0;
     char *buf, *line, *line_end, *tmp, *comma, line_platform[64];
     size_t db_size, platform_len;
-    
+
     if (rw == NULL) {
         return SDL_SetError("Invalid RWops");
     }
     db_size = (size_t)SDL_RWsize(rw);
-    
+
     buf = (char *)SDL_malloc(db_size + 1);
     if (buf == NULL) {
         if (freerw) {
@@ -610,7 +610,7 @@ SDL_GameControllerAddMappingsFromRW(SDL_RWops * rw, int freerw)
         }
         return SDL_SetError("Could allocate space to not read DB into memory");
     }
-    
+
     if (SDL_RWread(rw, buf, db_size, 1) != 1) {
         if (freerw) {
             SDL_RWclose(rw);
@@ -618,14 +618,14 @@ SDL_GameControllerAddMappingsFromRW(SDL_RWops * rw, int freerw)
         SDL_free(buf);
         return SDL_SetError("Could not read DB");
     }
-    
+
     if (freerw) {
         SDL_RWclose(rw);
     }
-    
+
     buf[db_size] = '\0';
     line = buf;
-    
+
     while (line < buf + db_size) {
         line_end = SDL_strchr(line, '\n');
         if (line_end != NULL) {
@@ -633,7 +633,7 @@ SDL_GameControllerAddMappingsFromRW(SDL_RWops * rw, int freerw)
         } else {
             line_end = buf + db_size;
         }
-        
+
         /* Extract and verify the platform */
         tmp = SDL_strstr(line, SDL_CONTROLLER_PLATFORM_FIELD);
         if (tmp != NULL) {
@@ -650,7 +650,7 @@ SDL_GameControllerAddMappingsFromRW(SDL_RWops * rw, int freerw)
                 }
             }
         }
-        
+
         line = line_end + 1;
     }
 

@@ -28,7 +28,7 @@ android_$(NAME)_SRCS := $(addprefix $(SRC_PATH_JNI_SRC)/,$($(NAME)_SRCS))
 
 LOCAL_SRC_FILES   := $(LIBS_PATH_JNI_SRC)/SDL/src/main/android/SDL_android_main.c \
 	$(android_$(NAME)_SRCS)
-	
+
 LOCAL_CFLAGS += $($(NAME)_CFLAGS) -fexceptions
 
 LOCAL_C_INCLUDES :=

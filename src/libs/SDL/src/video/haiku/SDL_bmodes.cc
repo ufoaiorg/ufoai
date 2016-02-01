@@ -78,7 +78,7 @@ static float get_refresh_rate(display_mode &mode) {
 void _SpoutModeData(display_mode *bmode) {
 	printf("BMode:\n");
 	printf("\tw,h = (%i,%i)\n", bmode->virtual_width, bmode->virtual_height);
-	printf("\th,v = (%i,%i)\n", bmode->h_display_start, 
+	printf("\th,v = (%i,%i)\n", bmode->h_display_start,
 			bmode->v_display_start);
 	if(bmode->flags) {
 		printf("\tFlags:\n");
@@ -188,7 +188,7 @@ int32 BE_BPPToSDLPxFormat(int32 bpp) {
 
 	/* May never get here, but safer and needed to shut up compiler */
 	SDL_SetError("Invalid bpp value");
-	return 0;       
+	return 0;
 }
 
 static void _BDisplayModeToSdlDisplayMode(display_mode *bmode,
@@ -201,7 +201,7 @@ static void _BDisplayModeToSdlDisplayMode(display_mode *bmode,
 	SDL_DisplayModeData *data = (SDL_DisplayModeData*)SDL_calloc(1,
 		sizeof(SDL_DisplayModeData));
 	data->bmode = bmode;
-	
+
 	mode->driverdata = data;
 
 #else
@@ -223,11 +223,11 @@ static void _AddDisplay(BScreen *screen) {
 	screen->GetMode(bmode);
 
 	_BDisplayModeToSdlDisplayMode(bmode, mode);
-	
+
 	SDL_zero(display);
 	display.desktop_mode = *mode;
 	display.current_mode = *mode;
-	
+
 	SDL_AddVideoDisplay(&display);
 }
 
@@ -269,11 +269,11 @@ void BE_GetDisplayModes(_THIS, SDL_VideoDisplay *display) {
 	display_mode this_bmode;
 	display_mode *bmodes;
 	uint32 count, i;
-	
+
 	/* Get graphics-hardware supported modes */
 	bscreen.GetModeList(&bmodes, &count);
 	bscreen.GetMode(&this_bmode);
-	
+
 	for(i = 0; i < count; ++i) {
 		// FIXME: Apparently there are errors with colorspace changes
 		if (bmodes[i].space == this_bmode.space) {
@@ -312,9 +312,9 @@ int BE_SetDisplayMode(_THIS, SDL_VideoDisplay *display, SDL_DisplayMode *mode){
 	if(bscreen.SetMode(bmode) != B_OK) {
 		return SDL_SetError("Bad video mode\n");
 	}
-	
+
 	free(bmode_list);
-	
+
 #if SDL_VIDEO_OPENGL
 	/* FIXME: Is there some way to reboot the OpenGL context?  This doesn't
 	   help */

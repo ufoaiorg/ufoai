@@ -270,6 +270,7 @@ base/maps/ferry.map | GNU General Public License 2.0 or later
 base/maps/fighter_crash.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/forest.ump | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_brook_v1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
+base/maps/forest/fr_convoy.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based on base/maps/military_convoy/mc_main.map by Martin Gerhardy and Maciej Wierzbicki
 base/maps/forest/fr_craft_crash_bomber.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
 base/maps/forest/fr_craft_crash_corrupter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
 base/maps/forest/fr_craft_crash_fighter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | based upon the original forest theme by Kostia "Kildor" Romanov
@@ -563,11 +564,6 @@ base/maps/mansion1.ump | GNU General Public License 2.0 or later | Holger 'ShipI
 base/maps/mansion1/m1_craft_drop_firebird.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/mansion1/m1_craft_drop_herakles.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/mansion1/m1_craft_drop_raptor.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
-base/maps/military_convoy.ump | GNU General Public License 2.0 or later
-base/maps/military_convoy/mc_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy   Maciej Wierzbicki
-base/maps/military_convoy/mc_craft_drop_herakles.map | GNU General Public License 2.0 or later
-base/maps/military_convoy/mc_craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/military_convoy/mc_main.map | GNU General Public License 2.0 or later | Martin Gerhardy   Maciej Wierzbicki
 base/maps/mine.map | GNU General Public License 2.0 or later
 base/maps/neighbourhood.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/office.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -1330,12 +1326,16 @@ base/models/geoscape/ufocrash.md2 | GNU General Public License 2.0 or later | Wi
 base/models/geoscape/ufocrash.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufoyard.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufoyard.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/abrams/abrams.md2 | GNU General Public License 2.0 or later | feanix | converted from abrams.obj
 base/models/objects/abrams/abrams.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams.png | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_bottom.md2 | GNU General Public License 2.0 or later | feanix | converted from abrams_bottom.obj
 base/models/objects/abrams/abrams_bottom.obj | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_gun.md2 | GNU General Public License 2.0 or later | feanix | converted from abrams_gun.obj
 base/models/objects/abrams/abrams_gun.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_nm.png | GNU General Public License 2.0 or later | feanix;MCR
 base/models/objects/abrams/abrams_sm.png | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_turret.md2 | GNU General Public License 2.0 or later | feanix | converted from abrams_turret.obj
 base/models/objects/abrams/abrams_turret.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/aircraft/airplane/airplane_1.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/airplane/airplane_2.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -3421,9 +3421,6 @@ base/pics/maps/shots/mansion1_3.png | GNU General Public License 2.0 or later | 
 base/pics/maps/shots/mansion_2.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/mansion_3.png | GNU General Public License 2.0 or later | Duke
 base/pics/maps/shots/map_ico_overlay.png | GNU General Public License 2.0 or later | cooler_sk
-base/pics/maps/shots/military_convoy.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/military_convoy_2.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/military_convoy_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/mine.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/mine_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/mine_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -6332,6 +6329,7 @@ base/textures/tex_nature/ice003_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_nature/icefloor.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/jungle001.png | Public Domain | Nobiax, Nate Wright
 base/textures/tex_nature/jungle002.png | Public Domain | Nobiax, MCR
+base/textures/tex_nature/jungle002_nm.png | Public Domain | Holger "ShipIt" Gellrich
 base/textures/tex_nature/jungle002_sm.png | Public Domain | Nobiax
 base/textures/tex_nature/leaves1.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_nature/leaves2.png | GNU General Public License 2.0 |  | OpenArena

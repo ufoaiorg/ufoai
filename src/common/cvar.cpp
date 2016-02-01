@@ -84,6 +84,13 @@ cvar_t* Cvar_GetFirst (void)
 }
 
 
+/**
+ * @brief Check that the Cvar identifier name doesn't contain a backslash, a double quote or a semi-colon.
+ * @param s The string (holding the name of the Cvar to check).
+ * @return True if the name is considered valid.
+ * @todo This allows for Cvar identifier names containing spaces. This is probably unwanted so best to
+ * extent the check with whitespace.
+*/
 static bool Cvar_InfoValidate (const char* s)
 {
 	return s[strcspn(s, "\\\";")] == '\0';

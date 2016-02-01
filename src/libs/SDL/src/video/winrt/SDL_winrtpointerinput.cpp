@@ -295,7 +295,7 @@ void WINRT_ProcessPointerReleasedEvent(SDL_Window *window, Windows::UI::Input::P
             }
             WINRT_LeftFingerDown = 0;
         }
-    
+
         SDL_SendTouch(
             WINRT_TouchID,
             (SDL_FingerID) pointerPoint->PointerId,
@@ -347,7 +347,7 @@ WINRT_ProcessMouseMovedEvent(SDL_Window * window, Windows::Devices::Input::Mouse
     // http://msdn.microsoft.com/en-us/library/windows/apps/windows.devices.input.mouseeventargs.mousedelta ),
     // does not seem to indicate (to me) that its values should be so large.  It
     // says that its values should be a "change in screen location".  I could
-    // be misinterpreting this, however a post on MSDN from a Microsoft engineer (see: 
+    // be misinterpreting this, however a post on MSDN from a Microsoft engineer (see:
     // http://social.msdn.microsoft.com/Forums/en-US/winappswithnativecode/thread/09a9868e-95bb-4858-ba1a-cb4d2c298d62 ),
     // indicates that these values are in DIPs, which is the same unit used
     // by CoreWindow's PointerMoved events (via the Position field in its CurrentPoint

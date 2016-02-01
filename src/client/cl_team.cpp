@@ -186,7 +186,7 @@ const char* CL_ActorGetSkillString (const int skill)
 	case 6:
 		return _("Highly Proficient");
 	case 7:
-		return _("Excellent");
+		return _("Exceptional");
 	case 8:
 		return _("Outstanding");
 	case 9:

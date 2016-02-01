@@ -29423,7 +29423,7 @@ msgstr "경기관총 탄창"
 msgid "5-Round Burst"
 msgstr "5점사"
 
-# Keep in mind that "Riot" here is not a unique noun. (i.e. Not a "name")  It is indicative of the weapon's real-world historical origin of usage in riot control by authorities. 
+# Keep in mind that "Riot" here is not a unique noun. (i.e. Not a "name")  It is indicative of the weapon's real-world historical origin of usage in riot control by authorities.
 # That said, the lack of any similar usage on a contrasting weapon (ex. Combat Shotgun) should justify a dictative naming for the gun. If any other such shotgun comes along, however, renaming should be required.
 #: ../base/ufos/weapons_human.ufo:820
 msgid "Riot Shotgun"

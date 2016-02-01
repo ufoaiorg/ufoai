@@ -1009,7 +1009,7 @@ void G_ReactionFirePreShot (const Actor* target, const int fdTime)
 		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 			const int entTUs = G_ReactionFireGetTUsForItem(shooter, target);
 			/* indicates an RF weapon is there */
-			if (entTUs <= 1)
+			if (entTUs < 1)
 				continue;
 			if (!rft.hasExpired(shooter, target, fdTime))
 				continue;
@@ -1018,7 +1018,7 @@ void G_ReactionFirePreShot (const Actor* target, const int fdTime)
 				continue;
 			}
 			repeat = true;
-			rft.advance(shooter, fdTime);
+			rft.advance(shooter, entTUs);
 		}
 	}
 }

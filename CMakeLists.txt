@@ -625,6 +625,7 @@ if(UFOAI_BUILD_UFO)
       ${UFOAI_SRC}/client/cgame/campaign/cp_campaign.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_capacity.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_cgame_callbacks.cpp
+      ${UFOAI_SRC}/client/cgame/campaign/cp_character.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_employee.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_employee_callbacks.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_event.cpp
@@ -1680,6 +1681,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${UFOAI_SRC}/client/cgame/campaign/cp_campaign.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_capacity.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_cgame_callbacks.cpp
+      ${UFOAI_SRC}/client/cgame/campaign/cp_character.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_employee.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_employee_callbacks.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_event.cpp

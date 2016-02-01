@@ -5,17 +5,17 @@ Ralph Giles
 Timothy B. Terriberry
 Monty
 	- Ongoing development
-	
+
 Dan B. Miller
 	- Pre alpha3 development
-	
+
 Rudolf Marek
 Wim Tayman
 Dan Lenski
 Nils Pipenbrinck
 Monty
 	- MMX optimized functions
-	
+
 Aaron Colwell
 Thomas Vander Stichele
 Jan Gerber
@@ -24,7 +24,7 @@ Cristian Adam
 Sebastian Pippin
 Simon Hosie
 	- Bug fixes, enhancements, build systems.
-	
+
 Mauricio Piacentini
 	- Original win32 projects and example ports
 	- VP3->Theora transcoder
