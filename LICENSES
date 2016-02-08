@@ -886,6 +886,7 @@ base/models/aircraft/drop_herakles/herakles_int_gm.png | GNU General Public Lice
 base/models/aircraft/drop_herakles/herakles_int_sm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/drop_herakles/herakles_int_top.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles_int_top.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/drop_herakles/herakles_menu.md2 | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | modification of Herakles model by Willem Sitters
 base/models/aircraft/drop_herakles/herakles_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR | data_source/models/sitters/craft_drop_herakles/dropship_normal.bmp
 base/models/aircraft/drop_herakles/herakles_pod.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles_pod_back.md2 | GNU General Public License 2.0 or later | Willem Sitters
