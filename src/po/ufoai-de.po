@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-25 22:12+0200\n"
-"PO-Revision-Date: 2015-01-20 22:49+0100\n"
+"PO-Revision-Date: 2015-11-08 23:23+0100\n"
 "Last-Translator: Tamás Fehérvári <geever@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -21947,7 +21947,7 @@ msgstr "Mittelmäßig"
 
 #: client/cl_team.cpp:181
 msgid "Average"
-msgstr "Durchschnittlich"
+msgstr "Durchschn."
 
 #: client/cl_team.cpp:183
 msgid "Competent"
