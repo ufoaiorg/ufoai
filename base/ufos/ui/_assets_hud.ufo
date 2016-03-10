@@ -169,7 +169,7 @@ component WorldLevel extends panel
 component cmpWound extends panel
 {
 	{
-		size		"180 14"
+		size		"180 16"
 	}
 
 	button wound_icon {

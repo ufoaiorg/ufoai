@@ -259,14 +259,14 @@ local inv_stats_hud = ufox.build_window({
 	{
 		name = "actor_wounds",
 		class = "confunc",
-		on_click = function (sender, id, severity, tooltip)
+		on_click = function (sender, id, severity, text, tooltip)
 			local node = ufo.create_control(sender:root():child("wounds"), "cmpWound", string.format("wound_%s", id), nil)
 			if (severity > 0) then
 				node:child("wound_icon"):set_icon(string.format("icons/%s_wound", id))
 			else
-				node:child("wound_icon")set_icon(string.format("icons/%s_wound_treated", id))
+				node:child("wound_icon"):set_icon(string.format("icons/%s_wound_treated", id))
 			end
-			node:child("wound_string"):set_text(tooltip)
+			node:child("wound_string"):set_text(text)
 			node:set_tooltip(tooltip)
 		end
 	},

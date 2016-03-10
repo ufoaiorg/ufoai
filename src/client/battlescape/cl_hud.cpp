@@ -1254,17 +1254,17 @@ static const char* HUD_GetPenaltyString (const int type)
 {
 	switch (type) {
 	case MODIFIER_ACCURACY:
-		return _("accuracy");
+		return _("- Reduced accuracy");
 	case MODIFIER_SHOOTING:
-		return _("shooting speed");
+		return _("- Reduced shooting speed");
 	case MODIFIER_MOVEMENT:
-		return _("movement speed");
+		return _("- Reduced movement speed");
 	case MODIFIER_SIGHT:
-		return _("sight range");
+		return _("- Reduced sight range");
 	case MODIFIER_REACTION:
-		return _("reaction speed");
+		return _("- Reduced reaction speed");
 	case MODIFIER_TU:
-		return _("TU");
+		return _("- Reduced TUs");
 	default:
 		return "";
 	}
@@ -1289,13 +1289,22 @@ static void HUD_ActorWoundData_f (void)
 			const int bleeding = wounds->woundLevel[bodyPart] * (wounds->woundLevel[bodyPart] > woundThreshold
 								 ? bodyData->bleedingFactor(bodyPart) : 0);
 			char text[256];
+			const char* label;
 
-			Com_sprintf(text, lengthof(text), CHRSH_IsTeamDefRobot(selActor->teamDef) ?
-					_("Damaged %s (deterioration: %i)\n") : _("Wounded %s (bleeding: %i)\n"), _(bodyData->name(bodyPart)), bleeding);
+			const bool isRobot = CHRSH_IsTeamDefRobot(selActor->teamDef);
+			if (bleeding)
+				label = va(isRobot ? _("%s: deteriorating (%i)\n") : _("%s: bleeding (%i)\n"), _(bodyData->name(bodyPart)), bleeding);
+			else
+				label = va(bleeding ? _("%s: damaged\n") : _("%s: wounded\n"), _(bodyData->name(bodyPart)));
+
+			Q_strncpyz(text, label, sizeof(text));
+			if (bleeding)
+				Q_strcat(text, lengthof(text), _("- HP loss per turn: %i\n"), bleeding);
 			for (int penalty = MODIFIER_ACCURACY; penalty < MODIFIER_MAX; penalty++)
 				if (bodyData->penalty(bodyPart, static_cast<modifier_types_t>(penalty)) != 0)
-					Q_strcat(text, lengthof(text), _("- Reduced %s\n"), HUD_GetPenaltyString(penalty));
-			UI_ExecuteConfunc("actor_wounds %s %i \"%s\"", bodyData->id(bodyPart), bleeding, text);
+					Q_strcat(text, lengthof(text), "%s\n", HUD_GetPenaltyString(penalty));
+
+			UI_ExecuteConfunc("actor_wounds %s %i \"%s\" \"%s\"", bodyData->id(bodyPart), bleeding, label, text);
 		}
 	}
 }
