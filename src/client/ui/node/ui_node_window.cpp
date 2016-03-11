@@ -44,8 +44,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define TOP_HEIGHT 46
 
-static const int CONTROLS_IMAGE_DIMENSIONS = 25;
-static const int CONTROLS_PADDING = 18;
+static const int CONTROLS_IMAGE_DIMENSIONS = 16;
+static const int CONTROLS_PADDING = 8;
 
 static const vec4_t modalBackground = {0, 0, 0, 0.6};
 static const vec4_t anamorphicBorder = {0, 0, 0, 1};
