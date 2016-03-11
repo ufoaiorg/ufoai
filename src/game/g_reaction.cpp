@@ -839,9 +839,9 @@ bool ReactionFire::shoot (Actor* shooter, const pos3_t at, shoot_types_t type, f
 
 	/* calculate the mock values - e.g. how many friendly units we would hit
 	 * when opening the reaction fire */
-	const int minhit = maxShots / 3;
 	const int ff = mock.friendCount + (G_IsAlien(shooter) ? 0 : mock.civilian);
-	if (ff <= maxff && mock.enemyCount >= minhit)
+	const int hits = shooter->isInsane() ? ff + mock.enemyCount : mock.enemyCount;
+	if (ff <= maxff && hits > 0)
 		return G_ClientShoot(player, shooter, at, type, firemode, nullptr, false, 0);
 
 	return false;
