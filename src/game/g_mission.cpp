@@ -41,7 +41,7 @@ void G_MissionAddVictoryMessage (const char* message)
 }
 
 static inline const char* G_MissionGetTeamString (const int team) {
-	return (team == TEAM_PHALANX ? "PHALANX" : (team == TEAM_ALIEN ? "Alien" : va("Team %i", team)));
+	return (team == TEAM_PHALANX ? "PHALANX" : (team == TEAM_ALIEN ? "Alien" : va("Team %i's", team)));
 }
 
 /**
@@ -242,7 +242,6 @@ void G_MissionThink (Edict* self)
 	}
 
 	const bool endMission = self->target == nullptr;
-	G_UseEdict(self, nullptr);
 
 	/* store team before the edict is released */
 	const int team = self->getTeam();
@@ -250,32 +249,35 @@ void G_MissionThink (Edict* self)
 	if (!chain)
 		chain = self;
 	while (chain) {
-		if (chain->item != nullptr) {
-			Edict* item = G_GetEdictFromPos(chain->pos, ET_ITEM);
-			if (item != nullptr) {
-				if (!G_InventoryRemoveItemByID(chain->item, item, CID_FLOOR)) {
-					Com_Printf("Could not remove item '%s' from floor edict %i\n", chain->item, item->getIdNum());
-				} else if (!item->getFloor()) {
-					G_EventPerish(*item);
-					G_FreeEdict(item);
+		if (chain->type == ET_MISSION) {
+			G_UseEdict(chain, nullptr);
+			if (chain->item != nullptr) {
+				Edict* item = G_GetEdictFromPos(chain->pos, ET_ITEM);
+				if (item != nullptr) {
+					if (!G_InventoryRemoveItemByID(chain->item, item, CID_FLOOR)) {
+						Com_Printf("Could not remove item '%s' from floor edict %i\n", chain->item, item->getIdNum());
+					} else if (!item->getFloor()) {
+						G_EventPerish(*item);
+						G_FreeEdict(item);
+					}
 				}
 			}
-		}
-		if (chain->link != nullptr) {
-			Edict* particle = G_GetEdictFromPos(chain->pos, ET_PARTICLE);
-			if (particle != nullptr) {
-				G_AppearPerishEvent(G_VisToPM(particle->visflags), false, *particle, nullptr);
-				G_FreeEdict(particle);
+			if (chain->link != nullptr) {
+				Edict* particle = G_GetEdictFromPos(chain->pos, ET_PARTICLE);
+				if (particle != nullptr) {
+					G_AppearPerishEvent(G_VisToPM(particle->visflags), false, *particle, nullptr);
+					G_FreeEdict(particle);
+				}
+				chain->link = nullptr;
 			}
-			chain->link = nullptr;
-		}
 
-		/* Display mission message */
-		if (G_ValidMessage(chain)) {
-			const char* msg = chain->message;
-			if (msg[0] == '_')
-				++msg;
-			gi.BroadcastPrintf(PRINT_HUD, "%s", msg);
+			/* Display mission message */
+			if (G_ValidMessage(chain)) {
+				const char* msg = chain->message;
+				if (msg[0] == '_')
+					++msg;
+				gi.BroadcastPrintf(PRINT_HUD, "%s", msg);
+			}
 		}
 
 		Edict* ent = chain->groupChain;
