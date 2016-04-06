@@ -171,202 +171,104 @@
 }
 // entity 6
 {
-"classname" "info_human_start"
-"origin" "496 432 124"
-"angle" "90"
-}
-// entity 7
-{
-"classname" "info_human_start"
-"origin" "560 432 124"
-"angle" "90"
-}
-// entity 8
-{
-"classname" "info_human_start"
-"origin" "560 368 124"
-"angle" "90"
-}
-// entity 9
-{
-"classname" "info_human_start"
-"origin" "496 368 124"
-"angle" "90"
-}
-// entity 10
-{
-"classname" "info_human_start"
-"origin" "560 400 124"
-"angle" "90"
-}
-// entity 11
-{
-"classname" "info_human_start"
-"origin" "496 400 124"
-"angle" "90"
-}
-// entity 12
-{
-"classname" "info_human_start"
-"origin" "560 336 124"
-"angle" "90"
-}
-// entity 13
-{
-"classname" "info_human_start"
-"origin" "496 336 124"
-"angle" "90"
-}
-// entity 14
-{
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/seats.md2"
 "origin" "527 352 126"
 "spawnflags" "6"
 "angles" "0 -90 0"
 }
-// entity 15
-{
-"classname" "info_human_start"
-"origin" "560 304 124"
-"angle" "90"
-}
-// entity 16
-{
-"classname" "info_human_start"
-"origin" "496 304 124"
-"angle" "90"
-}
-// entity 17
-{
-"classname" "info_human_start"
-"origin" "560 272 124"
-"angle" "90"
-}
-// entity 18
-{
-"classname" "info_human_start"
-"origin" "496 272 124"
-"angle" "90"
-}
-// entity 19
+// entity 7
 {
 "classname" "info_2x2_start"
 "origin" "512 192 124"
 "team" "1"
 "angle" "90"
 }
-// entity 20
-{
-"classname" "info_2x2_start"
-"origin" "480 544 124"
-"team" "1"
-"angle" "90"
-}
-// entity 21
-{
-"classname" "info_2x2_start"
-"origin" "576 544 124"
-"team" "1"
-"angle" "90"
-}
-// entity 22
-{
-"classname" "info_human_start"
-"origin" "496 464 124"
-"angle" "90"
-}
-// entity 23
-{
-"classname" "info_human_start"
-"origin" "560 464 124"
-"angle" "90"
-}
-// entity 24
+// entity 8
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "560 464 124"
 "angle" "90"
 }
-// entity 25
+// entity 9
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "496 464 124"
 "angle" "90"
 }
-// entity 26
+// entity 10
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "560 432 124"
 "angle" "90"
 }
-// entity 27
+// entity 11
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "496 432 124"
 "angle" "90"
 }
-// entity 28
+// entity 12
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "560 400 124"
 "angle" "90"
 }
-// entity 29
+// entity 13
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "496 400 124"
 "angle" "90"
 }
-// entity 30
+// entity 14
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "560 304 124"
 "angle" "90"
 }
-// entity 31
+// entity 15
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "496 304 124"
 "angle" "90"
 }
-// entity 32
+// entity 16
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "560 368 124"
 "angle" "90"
 }
-// entity 33
+// entity 17
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "496 368 124"
 "angle" "90"
 }
-// entity 34
+// entity 18
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "560 336 124"
 "angle" "90"
 }
-// entity 35
+// entity 19
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "496 336 124"
 "angle" "90"
 }
-// entity 36
+// entity 20
 {
 "classname" "misc_model"
 "origin" "532 351 122"
@@ -374,7 +276,7 @@
 "spawnflags" "248"
 "angles" "0 90 0"
 }
-// entity 37
+// entity 21
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/herakles_int.md2"
@@ -382,7 +284,7 @@
 "spawnflags" "254"
 "angles" "0 90 0"
 }
-// entity 38
+// entity 22
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/herakles_int_top.md2"
@@ -390,7 +292,7 @@
 "spawnflags" "252"
 "angles" "0 90 0"
 }
-// entity 39
+// entity 23
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/seats.md2"
@@ -398,7 +300,7 @@
 "spawnflags" "6"
 "angles" "0 90 0"
 }
-// entity 40
+// entity 24
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/herakles_pod_back.md2"
@@ -407,7 +309,7 @@
 "modelscale_vec" "1 0.95 1"
 "angles" "0 90 0"
 }
-// entity 41
+// entity 25
 {
 "classname" "trigger_rescue"
 "team" "1"
@@ -422,55 +324,55 @@
 ( 448 709 79 ) ( 448 709 75 ) ( 448 718 72 ) tex_common/trigger 0 0 0 0.25 0.25 65024 0 0
 }
 }
-// entity 42
+// entity 26
 {
 "classname" "info_human_start"
 "origin" "496 432 128"
 "angle" "90"
 }
-// entity 43
+// entity 27
 {
 "classname" "info_human_start"
 "origin" "560 432 128"
 "angle" "90"
 }
-// entity 44
+// entity 28
 {
 "classname" "info_human_start"
 "origin" "560 368 128"
 "angle" "90"
 }
-// entity 45
+// entity 29
 {
 "classname" "info_human_start"
 "origin" "496 368 128"
 "angle" "90"
 }
-// entity 46
+// entity 30
 {
 "classname" "info_human_start"
 "origin" "560 400 128"
 "angle" "90"
 }
-// entity 47
+// entity 31
 {
 "classname" "info_human_start"
 "origin" "496 400 128"
 "angle" "90"
 }
-// entity 48
+// entity 32
 {
 "classname" "info_human_start"
 "origin" "560 336 128"
 "angle" "90"
 }
-// entity 49
+// entity 33
 {
 "classname" "info_human_start"
 "origin" "496 336 128"
 "angle" "90"
 }
-// entity 50
+// entity 34
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/seats.md2"
@@ -478,148 +380,45 @@
 "spawnflags" "6"
 "angles" "0 -90 0"
 }
-// entity 51
+// entity 35
 {
 "classname" "info_human_start"
 "origin" "560 304 128"
 "angle" "90"
 }
-// entity 52
+// entity 36
 {
 "classname" "info_human_start"
 "origin" "496 304 128"
 "angle" "90"
 }
-// entity 53
-{
-"classname" "info_human_start"
-"origin" "560 272 128"
-"angle" "90"
-}
-// entity 54
-{
-"classname" "info_human_start"
-"origin" "496 272 128"
-"angle" "90"
-}
-// entity 55
-{
-"classname" "info_2x2_start"
-"origin" "512 192 128"
-"team" "1"
-"angle" "90"
-}
-// entity 56
+// entity 37
 {
 "classname" "info_2x2_start"
 "origin" "480 544 128"
 "team" "1"
 "angle" "90"
 }
-// entity 57
+// entity 38
 {
 "classname" "info_2x2_start"
 "origin" "576 544 128"
 "team" "1"
 "angle" "90"
 }
-// entity 58
+// entity 39
 {
 "classname" "info_human_start"
 "origin" "496 464 128"
 "angle" "90"
 }
-// entity 59
+// entity 40
 {
 "classname" "info_human_start"
 "origin" "560 464 128"
 "angle" "90"
 }
-// entity 60
-{
-"classname" "info_player_start"
-"team" "1"
-"origin" "560 464 128"
-"angle" "90"
-}
-// entity 61
-{
-"classname" "info_player_start"
-"team" "1"
-"origin" "496 464 128"
-"angle" "90"
-}
-// entity 62
-{
-"classname" "info_player_start"
-"team" "1"
-"origin" "560 432 128"
-"angle" "90"
-}
-// entity 63
-{
-"classname" "info_player_start"
-"team" "1"
-"origin" "496 432 128"
-"angle" "90"
-}
-// entity 64
-{
-"classname" "info_player_start"
-"team" "1"
-"origin" "560 400 128"
-"angle" "90"
-}
-// entity 65
-{
-"classname" "info_player_start"
-"team" "1"
-"origin" "496 400 128"
-"angle" "90"
-}
-// entity 66
-{
-"classname" "info_player_start"
-"team" "1"
-"origin" "560 304 128"
-"angle" "90"
-}
-// entity 67
-{
-"classname" "info_player_start"
-"team" "1"
-"origin" "496 304 128"
-"angle" "90"
-}
-// entity 68
-{
-"classname" "info_player_start"
-"team" "1"
-"origin" "560 368 128"
-"angle" "90"
-}
-// entity 69
-{
-"classname" "info_player_start"
-"team" "1"
-"origin" "496 368 128"
-"angle" "90"
-}
-// entity 70
-{
-"classname" "info_player_start"
-"team" "1"
-"origin" "560 336 128"
-"angle" "90"
-}
-// entity 71
-{
-"classname" "info_player_start"
-"team" "1"
-"origin" "496 336 128"
-"angle" "90"
-}
-// entity 72
+// entity 41
 {
 "classname" "misc_mission"
 "origin" "512 384 132"
@@ -628,21 +427,21 @@
 "time" "3"
 "radius" "320"
 }
-// entity 73
+// entity 42
 {
 "classname" "misc_item"
 "origin" "496 176 126"
 "spawnflags" "2"
 "item" "bomb1"
 }
-// entity 74
+// entity 43
 {
 "classname" "misc_item"
 "origin" "528 176 126"
 "spawnflags" "2"
 "item" "bomb1"
 }
-// entity 75
+// entity 44
 {
 "classname" "func_group"
 // brush 0
@@ -1407,7 +1206,7 @@
 ( 448 709 79 ) ( 448 709 75 ) ( 448 718 72 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
 }
 }
-// entity 76
+// entity 45
 {
 "classname" "func_group"
 // brush 0
@@ -1837,7 +1636,7 @@
 ( 530 133 132 ) ( 626 133 176 ) ( 626 130 176 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
 }
 }
-// entity 77
+// entity 46
 {
 "classname" "misc_model"
 "origin" "532 351 126"
@@ -1845,7 +1644,7 @@
 "spawnflags" "248"
 "angles" "0 90 0"
 }
-// entity 78
+// entity 47
 {
 "classname" "func_group"
 // brush 0
@@ -2277,7 +2076,7 @@
 ( 813 438 126 ) ( 830 431 126 ) ( 813 438 164 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
 }
 }
-// entity 79
+// entity 48
 {
 "classname" "func_group"
 // brush 0
