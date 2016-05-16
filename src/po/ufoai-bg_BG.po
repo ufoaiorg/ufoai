@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2016-05-16 22:45+0200\n"
-"PO-Revision-Date: 2016-04-20 17:26+0300\n"
-"Last-Translator: Borislav Vladimirov Boyadzhiev <bboyadzhiev@gmail.com>\n"
+"PO-Revision-Date: 2016-05-16 22:57+0100\n"
+"Last-Translator: Tamás Fehérvári <geever@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: bg_BG\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #: ../base/maps/africa.ump:639 ../base/maps/africa.ump:673
 #: ../base/maps/africa.ump:705 ../base/maps/africa.ump:737
@@ -2557,17 +2557,17 @@ msgstr "НЛО-Транспорт"
 #: ../base/ufos/fonts.ufo:53 ../base/ufos/fonts.ufo:77
 #: ../base/ufos/fonts.ufo:83
 msgid "media/orbitron-bold.ttf"
-msgstr ""
+msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/fonts.ufo:17 ../base/ufos/fonts.ufo:29
 #: ../base/ufos/fonts.ufo:41 ../base/ufos/fonts.ufo:59
 #: ../base/ufos/fonts.ufo:71
 msgid "media/orbitron-medium.ttf"
-msgstr ""
+msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/fonts.ufo:65
 msgid "media/orbitron-light.ttf"
-msgstr ""
+msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/fonts.ufo:89
 msgid "media/languages.ttf"
@@ -2580,9 +2580,8 @@ msgstr "media/languages.ttf"
 #: ../base/ufos/fonts.ufo:146 ../base/ufos/fonts.ufo:152
 #: ../base/ufos/fonts.ufo:158 ../base/ufos/fonts.ufo:164
 #: ../base/ufos/fonts.ufo:170
-#, fuzzy
 msgid "media/JuraDemiBold.ttf"
-msgstr "media/languages.ttf"
+msgstr "media/JuraDemiBold.ttf"
 
 #: ../base/ufos/gamemodes.ufo:16 ../base/ufos/ui/stats.ufo:91
 msgid "Campaign"
