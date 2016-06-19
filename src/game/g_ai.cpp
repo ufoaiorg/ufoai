@@ -1088,36 +1088,19 @@ static int AI_CheckForMissionTargets (Actor* actor, const pos3_t pos)
  */
 static float AI_FighterCalcActionScore (Actor* actor, const pos3_t to, AiAction* aia)
 {
-	pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
+	const pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
 	if (move == ROUTING_NOT_REACHABLE)
 		return AI_ACTION_NOTHING_FOUND;
 
 	int tu = actor->getUsableTUs() - move;
+	/* test for time */
+	if (tu < 0)
+		return AI_ACTION_NOTHING_FOUND;
 
 	/* set basic parameters */
 	aia->reset();
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
-
-	/* test for time */
-	if (tu < 0) {
-		byte crouchingState = actor->isCrouched() ? 1 : 0;
-		pos3_t pos;
-		VectorCopy(to, pos);
-		int dvec;
-		/* Can't get to intended destination, find how far in that direction we can go. */
-		while ((dvec = gi.MoveNext(level.pathingMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
-			int len =  G_ActorMoveLength(actor, level.pathingMap, pos, true);
-			if (len != ROUTING_NOT_REACHABLE && actor->getUsableTUs() - len >= 0) {
-				move = len;
-				tu = actor->getUsableTUs() - move;
-				VectorCopy(pos, aia->to);
-				VectorCopy(pos, aia->stop);
-				break;
-			}
-			PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
-		}
-	}
 	actor->setOrigin(aia->to);
 
 	/* pre-find a grenade */
@@ -1473,12 +1456,13 @@ bool AI_FindMissionLocation (Actor* actor, const pos3_t to, int tus, int radius)
 static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 {
 	/* calculate move table */
-	G_MoveCalc(0, actor, actor->pos, actor->getUsableTUs());
+	const int maxTU = actor->getUsableTUs();
+	G_MoveCalc(0, actor, actor->pos, maxTU);
 	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
 	gi.MoveStore(level.pathingMap);
 
 	/* set borders */
-	const int dist = MAX_ROUTE;
+	const int dist = (maxTU + 1) / TU_MOVE_STRAIGHT;
 
 	/* search best action */
 	pos3_t oldPos;
@@ -1496,7 +1480,7 @@ static AiAction AI_PrepBestAction (const Player& player, Actor* actor)
 		const pos_t move = G_ActorMoveLength(actor, level.pathingMap, to, true);
 		if (move >= ROUTING_NOT_REACHABLE)
 			continue;
-		if (move > actor->getUsableTUs())
+		if (move > maxTU)
 			continue;
 
 		if (G_IsCivilian(actor))
