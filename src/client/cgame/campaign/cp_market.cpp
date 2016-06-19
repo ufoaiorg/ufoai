@@ -238,7 +238,11 @@ bool BS_BuyAircraft (const aircraft_t* aircraftTemplate, base_t* base)
 	if (!aircraftTemplate)
 		cgi->Com_Error(ERR_DROP, "BS_BuyAircraft: No aircraft template given.");
 
-	int price = BS_GetAircraftBuyingPrice(aircraftTemplate);
+	const int amount = BS_GetAircraftOnMarket(aircraftTemplate);
+	if (amount <= 0)
+		return false;
+
+	const int price = BS_GetAircraftBuyingPrice(aircraftTemplate);
 	if (ccs.credits < price)
 		return false;
 
