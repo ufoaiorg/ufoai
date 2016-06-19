@@ -431,6 +431,8 @@ static void BS_FillMarket_f (void)
 				continue;
 			if (!RS_IsResearched_ptr(aircraft->tech))
 				continue;
+			if (BS_GetAircraftOnMarket(aircraft) <= 0)
+				continue;
 			cgi->UI_ExecuteConfunc("ui_market_add \"%s\" \"%s\" 0 %d %d %d - -", aircraft->id, _(aircraft->tech->name), BS_GetAircraftOnMarket(aircraft), BS_GetAircraftBuyingPrice(aircraft), BS_GetAircraftSellingPrice(aircraft));
 		}
 		break;
