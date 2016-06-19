@@ -606,7 +606,7 @@ item encased_plasma_sniper_ammo
 			speed		3600
 			spread		"2.5 2.5"
 			crouch		0.85
-			range		100
+			range		150
 			shots		1
 			ammo		1
 			time		15
@@ -629,7 +629,7 @@ item encased_plasma_sniper_ammo
 			speed		3600
 			spread		"0.85 0.85"
 			crouch		0.6
-			range		100
+			range		150
 			shots		1
 			ammo		1
 			time		20

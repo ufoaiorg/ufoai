@@ -407,7 +407,7 @@ item sniper_ammo
 			speed		3600
 			spread		"2.5 2.5"
 			crouch		0.85
-			range		100
+			range		150
 			shots		1
 			ammo		1
 			time		15
@@ -430,7 +430,7 @@ item sniper_ammo
 			speed		3600
 			spread		"0.85 0.85"
 			crouch		0.6
-			range		100
+			range		150
 			shots		1
 			ammo		1
 			time		20
@@ -500,7 +500,7 @@ item coilgun_ammo
 			speed		2000
 			spread		"2.5 2.5"
 			crouch		0.85
-			range		100
+			range		250
 			shots		1
 			ammo		1
 			time		16
@@ -523,7 +523,7 @@ item coilgun_ammo
 			speed		2000
 			spread		"0.55 0.55"
 			crouch		0.6
-			range		100
+			range		250
 			shots		1
 			ammo		1
 			time		24
@@ -1827,7 +1827,7 @@ item bolterrifle_ammo
 			speed		2000
 			spread		"2.5 2.5"
 			crouch		0.85
-			range		100
+			range		200
 			shots		1
 			ammo		1
 			time		18
@@ -1851,7 +1851,7 @@ item bolterrifle_ammo
 			speed				2000
 			spread				"0.55 0.55"
 			crouch				0.6
-			range				100
+			range				200
 			shots				1
 			ammo				1
 			time				24
@@ -1897,7 +1897,7 @@ item bolterrifle_am_ammo
 			speed		2000
 			spread		"2.5 2.5"
 			crouch		0.85
-			range		100
+			range		200
 			shots		1
 			ammo		1
 			time		18
@@ -1921,7 +1921,7 @@ item bolterrifle_am_ammo
 			speed				2000
 			spread				"0.55 0.55"
 			crouch				0.6
-			range				100
+			range				200
 			shots				1
 			ammo				1
 			time				24
