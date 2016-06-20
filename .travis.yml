@@ -62,14 +62,13 @@ addons:
     - binutils-dev
     - libxvidcore-dev
     - libmxml-dev
-    - libiberty-dev
     - libglib2.0-dev
     - libgtk2.0-dev
     sources:
     - ubuntu-toolchain-r-test
-    - zoogie-sdl2-snapshots
 
-# currently disabled, because sdl2 ppa is not yet available
+# currently disabled - not yet available
+#    - libiberty-dev
 #    - libsdl2-dev
 #    - libsdl2-net-dev
 #    - libsdl2-image-dev
