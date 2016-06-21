@@ -101,9 +101,10 @@ static bool Destroy_Breakable (Edict* self)
 		linkedList_t* list = trigger->touchedList;
 		while (list) {
 			linkedList_t* next = list->next;
-			G_TriggerRemoveFromList(trigger, static_cast<Edict*>(list->data));
+			Edict* activator = static_cast<Edict*>(list->data);
+			G_TriggerRemoveFromList(trigger, activator);
 			if (trigger->reset != nullptr)
-				trigger->reset(trigger, static_cast<Edict*>(list->data));
+				trigger->reset(trigger, activator);
 			list = next;
 		}
 		G_FreeEdict(trigger);

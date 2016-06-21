@@ -97,7 +97,7 @@ bool G_TriggerRemoveFromList (Edict* self, Edict* activator)
 			G_MemFree(entry);
 			return true;
 		}
-		*list = entry->next;
+		list = &entry->next;
 	}
 
 	return false;
