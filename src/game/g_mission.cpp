@@ -41,13 +41,12 @@ void G_MissionAddVictoryMessage (const char* message)
 }
 
 static inline const char* G_MissionGetTeamString (const int team) {
-	return (team == TEAM_PHALANX ? "PHALANX" : (team == TEAM_ALIEN ? "Alien" : va("Team %i's", team)));
+	return (team == TEAM_PHALANX ? "PHALANX" : (team == TEAM_ALIEN ? "The alien" : va("Team %i's", team)));
 }
 
 /**
  * @brief Mission trigger
  * @todo use level.nextmap to spawn another map when every living actor has touched the mission trigger
- * @todo use level.actualRound to determine the 'King of the Hill' time
  * @note Don't set a client action here - otherwise the movement event might
  * be corrupted
  */
@@ -61,10 +60,10 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 	if (!G_IsCivilian(actor) && self->isOpponent(actor)) {
 		if (!self->item && self->count) {
 			if (self->targetname) {
-				gi.BroadcastPrintf(PRINT_HUD, _("%s forces have reached the %s!"), actorTeam, self->targetname);
+				gi.BroadcastPrintf(PRINT_HUD, _("%s forces are attacking the %s!"), actorTeam, self->targetname);
 			} else {
 				const char* const teamName = G_MissionGetTeamString(self->getTeam());
-				gi.BroadcastPrintf(PRINT_HUD, _("%s forces have entered %s's target zone!"),
+				gi.BroadcastPrintf(PRINT_HUD, _("%s forces are attacking %s's target zone!"),
 						actorTeam, teamName);
 			}
 
