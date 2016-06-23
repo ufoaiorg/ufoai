@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-16 22:45+0200\n"
+"POT-Creation-Date: 2016-06-23 12:17-0500\n"
 "PO-Revision-Date: 2014-08-02 23:01+0200\n"
 "Last-Translator: Igor Gritsenko <xenomorph@thoradin.no-ip.org>\n"
 "Language-Team: \n"
@@ -24758,69 +24758,69 @@ msgstr "Плазма и ручной гранатомёт"
 
 #: ../base/ufos/research.ufo:1500
 msgid "Alien Artifact - Kerrblade"
-msgstr "Артифакт - Керр-клинок"
+msgstr "Керр-клинок (артефакт)"
 
 #: ../base/ufos/research.ufo:1795 ../base/ufos/research.ufo:1840
 msgid "Alien Artifact - Plasma Pistol"
-msgstr "Артифакт - Плазменный пистолет"
+msgstr "Плазмопистолет (артефакт)"
 
 #: ../base/ufos/research.ufo:1864 ../base/ufos/research.ufo:1909
 msgid "Alien Artifact - Plasma Blaster"
-msgstr "Артифакт - Плазменный бластер"
+msgstr "Плазмобластер (артефакт)"
 
 #: ../base/ufos/research.ufo:1933
 msgid "Alien Artifact - Plasma Blade"
-msgstr "Артифакт - Плазменный меч"
+msgstr "Плазмомеч (артефакт)"
 
 #: ../base/ufos/research.ufo:1979
 msgid "Alien Artifact - Plasma Grenade"
-msgstr "Артифакт - Плазменная граната"
+msgstr "Плазмо-граната (артефакт)"
 
 #: ../base/ufos/research.ufo:2024 ../base/ufos/research.ufo:2069
 msgid "Alien Artifact - Plasma Rifle"
-msgstr "Артифакт - Плазменная винтовка"
+msgstr "Плазморужьё (артефакт)"
 
 #: ../base/ufos/research.ufo:2093
 msgid "Encased Plasma Rounds"
-msgstr "Плазменные патроны"
+msgstr "Заряды плазмы"
 
 #: ../base/ufos/research.ufo:2239 ../base/ufos/research.ufo:2329
 #: ../base/ufos/weapons_aliens.ufo:6
 msgid "Needler Gun"
-msgstr "Игольник"
+msgstr "Иглострел"
 
 #: ../base/ufos/research.ufo:2284 ../base/ufos/weapons_aliens.ufo:28
 msgid "Heavy Needler Gun"
-msgstr "Тяжёлый Игольник"
+msgstr "Тяжёлый Иглострел"
 
 #: ../base/ufos/research.ufo:2367 ../base/ufos/research.ufo:2375
 #: ../base/ufos/weapons_human.ufo:452
 msgid "Coilgun"
-msgstr "Индукционная винтовка"
+msgstr "Гауссовка"
 
 #: ../base/ufos/research.ufo:2599
 msgid "Anti-Alien Gas"
-msgstr "Ксенобиологический токсин"
+msgstr "Газ против инопланетян"
 
 #: ../base/ufos/research.ufo:2648
 msgid "Alien Anti-Human Gas"
-msgstr "Противочеловеческий газ пришельцев"
+msgstr "Газ против людей"
 
 #: ../base/ufos/research.ufo:2735 ../base/ufos/research.ufo:2780
 msgid "Alien Artifact - Particle Beam Pistol"
-msgstr "Артифакт - Пучковой пистолет"
+msgstr "Лучевой пистолет (артефакт)"
 
 #: ../base/ufos/research.ufo:2799 ../base/ufos/research.ufo:2844
 msgid "Alien Artifact - Particle Beam Cannon"
-msgstr "Артифакт - Пучковая пушка"
+msgstr "Лучевая пушка (артефакт)"
 
 #: ../base/ufos/research.ufo:2863 ../base/ufos/research.ufo:2908
 msgid "Alien Artifact - Particle Beam Rifle"
-msgstr "Артифакт - Пучковая винтовка"
+msgstr "Лучевая винтовка (артефакт)"
 
 #: ../base/ufos/research.ufo:2928
 msgid "Man-Portable Particle Beams"
-msgstr "Портативные пучковые излучатели"
+msgstr "Носимое лучевое вооружение"
 
 #: ../base/ufos/research.ufo:3143
 msgid "Blast Damage Type"
@@ -24852,7 +24852,7 @@ msgstr "Тип повреждения: парализация"
 
 #: ../base/ufos/research.ufo:3247
 msgid "Particle Beam Damage Type"
-msgstr "Тип повреждения: пучком частиц"
+msgstr "Тип повреждения: лучевое"
 
 #: ../base/ufos/research.ufo:3265
 msgid "Accuracy Attribute"
@@ -24868,7 +24868,7 @@ msgstr "Умение: Ближний бой"
 
 #: ../base/ufos/research.ufo:3304
 msgid "High-Explosives Proficiency"
-msgstr "Умение: Взрывное дело"
+msgstr "Умение: Взрывные"
 
 #: ../base/ufos/research.ufo:3317
 msgid "Mind Attribute"
@@ -25946,7 +25946,7 @@ msgstr "Н/Д"
 
 #: ../base/ufos/ui/_assets_base.ufo:485
 msgid "An artifact or prerequisite is missing for this topic"
-msgstr "Для данной темы исследования отсутствует артифакт или предпосылка"
+msgstr "Для данной темы исследования отсутствует артефакт или предпосылка"
 
 #: ../base/ufos/ui/_assets_base.ufo:493
 msgid "Expand/Collapse"
@@ -26123,8 +26123,7 @@ msgstr "Статус:"
 msgid "Team:"
 msgstr "Отряд:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:90
-#: ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:90 ../base/ufos/ui/aircraft_equip.ufo:109
 #: ../base/ufos/ui/aircraft_equip.ufo:128
 #: ../base/ufos/ui/aircraft_equip.ufo:147
 #: ../base/ufos/ui/aircraft_equip.ufo:166
@@ -26351,8 +26350,8 @@ msgstr "Сводка по базе"
 
 #: ../base/ufos/ui/bases.ufo:118 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654
-#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:460
+#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
+#: ../base/ufos/ui/transfer.ufo:460
 #: client/cgame/campaign/cp_base_callbacks.cpp:602
 #: client/cgame/campaign/cp_base_callbacks.cpp:613
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
@@ -26642,13 +26641,11 @@ msgstr "Автоматически закончить миссию"
 msgid "This kind of mission cannot be done automatically"
 msgstr "Этот тип миссий не может быть пройден автоматически"
 
-#: ../base/ufos/ui/geoscape.ufo:897
-#: ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
 msgid "Cost:"
 msgstr "Стоимость:"
 
-#: ../base/ufos/ui/geoscape.ufo:952
-#: ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build"
 msgstr "Построить"
 
@@ -26690,8 +26687,7 @@ msgid "Select aircraft"
 msgstr "Выберите самолёт"
 
 #: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642
-#: ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
 msgid "ETA:"
 msgstr "РВП:"
 
@@ -28267,8 +28263,7 @@ msgstr "Место"
 
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892
-#: ../base/ufos/ui/transfer.ufo:370
+#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:370
 msgid "free"
 msgstr "свободно"
 
@@ -28805,9 +28800,9 @@ msgstr "Очередь х3"
 #: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
 #: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
 #: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
-#: ../base/ufos/weapons_multiplayer.ufo:318
-#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:439
-#: ../base/ufos/weapons_plasma.ufo:529 ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_multiplayer.ufo:318 ../base/ufos/weapons_plasma.ufo:203
+#: ../base/ufos/weapons_plasma.ufo:439 ../base/ufos/weapons_plasma.ufo:529
+#: ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr "Очередь"
 
@@ -28835,8 +28830,8 @@ msgid "5-Shot Burst"
 msgstr "Очередь в пять патронов"
 
 #: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
-#: ../base/ufos/weapons_multiplayer.ufo:342
-#: ../base/ufos/weapons_plasma.ufo:553 ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_multiplayer.ufo:342 ../base/ufos/weapons_plasma.ufo:553
+#: ../base/ufos/weapons_ugv.ufo:135
 msgid "Full-Auto Sweep"
 msgstr "Очередь на подавление"
 
@@ -32245,7 +32240,7 @@ msgstr ""
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:150
 msgid "No free UFO yard available."
-msgstr "Нет свободных хранилищь НЛО."
+msgstr "Нет свободных хранилищ НЛО."
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:193
 #, c-format
@@ -33007,37 +33002,42 @@ msgstr "Невозможно выполнить действие — цель в
 msgid "Can't perform action - not enough ammo!"
 msgstr "Нельзя совершить действие — недостаточно боеприпасов!"
 
-#: game/g_mission.cpp:64 game/g_mission.cpp:83
+#: game/g_mission.cpp:63
+#, c-format
+msgid "%s forces are attacking the %s!"
+msgstr ""
+
+#: game/g_mission.cpp:66
+#, c-format
+msgid "%s forces are attacking %s's target zone!"
+msgstr ""
+
+#: game/g_mission.cpp:82
 #, c-format
 msgid "%s forces have reached the %s!"
 msgstr ""
 
-#: game/g_mission.cpp:67
-#, fuzzy, c-format
-msgid "%s forces have entered %s's target zone!"
-msgstr "Пришельцы достигли зоны назначения!"
-
-#: game/g_mission.cpp:85
+#: game/g_mission.cpp:84
 #, c-format
 msgid "%s forces have occupied their target zone!"
 msgstr ""
 
-#: game/g_mission.cpp:105
+#: game/g_mission.cpp:104
 #, fuzzy, c-format
 msgid "The %s was placed at the %s."
 msgstr "Десантный транспорт достиг места крушения."
 
-#: game/g_mission.cpp:107
+#: game/g_mission.cpp:106
 #, fuzzy, c-format
 msgid "The %s was placed."
 msgstr "Предмет помещён."
 
-#: game/g_mission.cpp:133
+#: game/g_mission.cpp:132
 #, c-format
 msgid "The %s forces have left the %s!"
 msgstr ""
 
-#: game/g_mission.cpp:135
+#: game/g_mission.cpp:134
 #, c-format
 msgid "The %s forces have left their target zone!"
 msgstr ""
@@ -33193,6 +33193,9 @@ msgstr "Сделать скриншот"
 
 #~ msgid "Excellent"
 #~ msgstr "Отлично"
+
+#~ msgid "Aliens entered target zone!"
+#~ msgstr "Пришельцы достигли зоны назначения!"
 
 #~ msgid "Target zone is occupied!"
 #~ msgstr "Зона назначения достигнута!"
