@@ -63,7 +63,7 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 				gi.BroadcastPrintf(PRINT_HUD, _("%s forces are attacking the %s!"), actorTeam, self->targetname);
 			} else {
 				const char* const teamName = G_MissionGetTeamString(self->getTeam());
-				gi.BroadcastPrintf(PRINT_HUD, _("%s forces are attacking %s's target zone!"),
+				gi.BroadcastPrintf(PRINT_HUD, _("%s forces are attacking %s target zone!"),
 						actorTeam, teamName);
 			}
 
@@ -129,9 +129,9 @@ void G_MissionReset (Edict* self, Edict* activator)
 	if (activator->getTeam() == self->getTeam()) {
 		const char* const actTeam = G_MissionGetTeamString(activator->getTeam());
 		if (self->targetname)
-			gi.BroadcastPrintf(PRINT_HUD, _("The %s forces have left the %s!"), actTeam, self->targetname);
+			gi.BroadcastPrintf(PRINT_HUD, _("%s forces have left the %s!"), actTeam, self->targetname);
 		else
-			gi.BroadcastPrintf(PRINT_HUD, _("The %s forces have left their target zone!"), actTeam);
+			gi.BroadcastPrintf(PRINT_HUD, _("%s forces have left their target zone!"), actTeam);
 	}
 	/* All team actors are gone, reset counter */
 	self->count = 0;
