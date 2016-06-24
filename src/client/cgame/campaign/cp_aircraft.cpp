@@ -271,8 +271,10 @@ static void AII_CarriedItems (const Inventory* soldierInventory)
 		for (item = cont->_invList; item; item = item->getNext()) {
 			const objDef_t* itemType = item->def();
 			technology_t* tech = RS_GetTechForItem(itemType);
-			ed->numItems[itemType->idx]++;
 			RS_MarkCollected(tech);
+			if (item->def()->isVirtual)
+				continue;
+			ed->numItems[itemType->idx]++;
 
 			if (!itemType->isReloadable() || item->getAmmoLeft() == 0)
 				continue;
