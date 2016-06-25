@@ -373,6 +373,8 @@ static void INV_UpdateActorLoad_f (void)
 
 	const Container* cont = nullptr;
 	while ((cont = chr->inv.getNextCont(cont))) {
+		if (cont->def()->temp)
+			continue;
 		for (Item* invList = cont->_invList, *next; invList; invList = next) {
 			next = invList->getNext();
 			const fireDef_t* fireDef = invList->getFiredefs();
