@@ -210,7 +210,7 @@ void G_EventStartShoot (const Edict& ent, teammask_t teamMask, shoot_types_t sho
 }
 
 /**
- * @brief Start the shooting event
+ * @brief Ends the shooting event
  * @param ent The entity that starts the shooting
  * @param teamMask the vis mask of the teams to determine the clients from this event is send to
  */

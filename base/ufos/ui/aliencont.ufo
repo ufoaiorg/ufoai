@@ -53,7 +53,7 @@ component cmpAlienContainment extends panel {
 	zone kill_zone		{
 		pos			"317 11"
 		size		"40 40"
-		tooltip		"_Kill this alien"
+		tooltip		"_Kill one alien"
 		invis		true
 		onClick {
 			cmd "ui_aliencont_killone <node:parent.tech_id@string>;"
@@ -306,7 +306,7 @@ window aliencont
 			*node:root.base_container.mainBody.bt_alc_killaliens@disabled = false
 
 			*node:root.base_container.mainBody.ac.species.alien_<1>.icon@icon = "icons/alien_kill"
-			*node:root.base_container.mainBody.ac.species.alien_<1>.icon@tooltip = "_Kill this alien"
+			*node:root.base_container.mainBody.ac.species.alien_<1>.icon@tooltip = "_Kill one alien"
 			*node:root.base_container.mainBody.ac.species.alien_<1>.kill_zone@invis = false
 			*node:root.base_container.mainBody.ac.species.alien_<1>.autopsy_zone@invis = true
 		} else {
