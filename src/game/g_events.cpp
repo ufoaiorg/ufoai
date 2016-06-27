@@ -226,13 +226,15 @@ void G_EventEndShoot (const Edict &ent, teammask_t teamMask)
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
  */
-void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstShoot)
+void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstShoot, const vec3_t impact, int flags)
 {
 	G_EventAdd(~G_VisToPM(teamMask), EV_ACTOR_SHOOT_HIDDEN, -1);
 	gi.WriteByte(firstShoot);
 	gi.WriteShort(fd->obj->idx);
 	gi.WriteByte(fd->weapFdsIdx);
 	gi.WriteByte(fd->fdIdx);
+	gi.WritePos(impact);
+	gi.WriteByte(flags);
 	G_EventEnd();
 }
 
@@ -243,7 +245,7 @@ void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstSho
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
  * @param shootType The type of the shoot
- * @param flags Define some flags in a bitmask: @c SF_BODY, @c SF_IMPACT, @c SF_BOUNCING and @c SF_BOUNCING
+ * @param flags Define some flags in a bitmask: @c SF_BODY, @c SF_IMPACT, @c SF_BOUNCING and @c SF_BOUNCED
  * @param trace The trace what was used to determine whether this shot has hit something
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot

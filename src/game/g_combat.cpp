@@ -841,8 +841,11 @@ static void G_ShootGrenade (const Player& player, Actor* shooter, const fireDef_
 			}
 
 			/* send */
-			if (!mock)
+			if (!mock) {
 				G_EventThrow(mask, fd, dt, flags, last, startV);
+				/* send shot sound to the others */
+				G_EventShootHidden(mask, fd, false, impact, flags);
+			}
 
 			flags |= SF_BOUNCED;
 
@@ -1039,7 +1042,7 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
 			G_EventShoot(*ent, mask, fd, firstShot, shootType, flags, &tr, tracefrom, impact);
 
 			/* send shot sound to the others */
-			G_EventShootHidden(mask, fd, false);
+			G_EventShootHidden(mask, fd, false, impact, flags);
 
 			if (firstShot && G_FireAffectedSurface(tr.surface, fd)) {
 				vec3_t origin;
@@ -1335,7 +1338,7 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 		G_EventStartShoot(*actor, mask, shootType, at);
 
 		/* send shot sound to the others */
-		G_EventShootHidden(mask, fd, true);
+		G_EventShootHidden(mask, fd, true, actor->origin, 0);
 
 		/* State info so we can check if an item was already removed. */
 		bool itemAlreadyRemoved = false;

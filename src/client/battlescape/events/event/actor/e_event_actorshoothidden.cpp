@@ -34,19 +34,21 @@ int CL_ActorShootHiddenTime (const eventRegister_t* self, dbuffer* msg, eventTim
 	int objIdx;
 	weaponFireDefIndex_t weapFdsIdx;
 	fireDefIndex_t fireDefIndex;
+	vec3_t impact;
+	int flags;
 
-	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fireDefIndex);
+	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fireDefIndex, &impact, &flags);
 
 	const int eventTime = first ? eventTiming->nextTime : eventTiming->shootTime;
 	const objDef_t* obj = INVSH_GetItemByIDX(objIdx);
 	if (first) {
-		eventTiming->nextTime += 500;
+		eventTiming->nextTime = CL_GetNextTime(self, eventTiming, eventTiming->nextTime + 500);
 		eventTiming->impactTime = eventTiming->shootTime = eventTiming->nextTime;
 	} else {
 		const fireDef_t* fd = FIRESH_GetFiredef(obj, weapFdsIdx, fireDefIndex);
 		/* impact right away - we don't see it at all
 		 * bouncing is not needed here, too (we still don't see it) */
-		eventTiming->impactTime = eventTiming->shootTime;
+		eventTiming->impactTime = eventTiming->shootTime + 500;
 		eventTiming->nextTime = CL_GetNextTime(self, eventTiming, eventTiming->shootTime + 1400);
 		if (fd->delayBetweenShots > 0.0)
 			eventTiming->shootTime += 1000 / fd->delayBetweenShots;
@@ -66,8 +68,10 @@ void CL_ActorShootHidden (const eventRegister_t* self, dbuffer* msg)
 	int objIdx;
 	weaponFireDefIndex_t weapFdsIdx;
 	fireDefIndex_t fdIdx;
+	vec3_t impact;
+	int flags;
 
-	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fdIdx);
+	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fdIdx, &impact, &flags);
 
 	/* get the fire def */
 	const objDef_t* obj = INVSH_GetItemByIDX(objIdx);
@@ -75,5 +79,17 @@ void CL_ActorShootHidden (const eventRegister_t* self, dbuffer* msg)
 
 	/* start the sound */
 	if ((first || !fd->soundOnce) && fd->fireSound != nullptr)
-		S_StartLocalSample(fd->fireSound, SND_VOLUME_WEAPONS);
+		S_LoadAndPlaySample(fd->fireSound, impact, fd->fireAttenuation, SND_VOLUME_WEAPONS);
+	if (!first) {
+		const char* sound = nullptr;
+		if (flags & SF_BODY)
+			sound = fd->hitBodySound;
+		else if ((flags & SF_IMPACT) || (fd->splrad && !fd->bounce))
+			sound = fd->impactSound;
+		else if (flags & SF_BOUNCING)
+				sound = fd->bounceSound;
+
+		if (Q_strvalid(sound))
+			S_LoadAndPlaySample(sound, impact, fd->impactAttenuation, SND_VOLUME_WEAPONS);
+	}
 }
