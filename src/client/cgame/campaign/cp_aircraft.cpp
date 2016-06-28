@@ -365,7 +365,7 @@ const char* AIR_AircraftStatusToName (const aircraft_t* aircraft)
 	case AIR_NONE:
 		return _("Nothing - should not be displayed");
 	case AIR_HOME:
-		return _("at home base");
+		return va(_("at %s"), aircraft->homebase->name);
 	case AIR_REFUEL:
 		return _("refuelling");
 	case AIR_IDLE:
