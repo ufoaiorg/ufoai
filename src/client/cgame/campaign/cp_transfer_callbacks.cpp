@@ -881,8 +881,7 @@ static void TR_DestinationCapacityList_f (void)
 			continue;
 		/* - Items and Antimatter */
 		TR_CountItemSizeInArray(transfer->itemAmount, currentCap);
-		/* - Employee */
-		TR_CountEmployeeInListArray(transfer->employees, currentCap);
+		/* - Employees in transit assinged to base already */
 		/* - Aliens */
 		currentCap[CAP_ALIENS] += (transfer->alienCargo) ? transfer->alienCargo->getAlive() : 0;
 		/* - Aircraft in transit are already assigned to their hangar! */
