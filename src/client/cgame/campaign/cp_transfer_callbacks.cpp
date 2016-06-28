@@ -885,8 +885,7 @@ static void TR_DestinationCapacityList_f (void)
 		TR_CountEmployeeInListArray(transfer->employees, currentCap);
 		/* - Aliens */
 		currentCap[CAP_ALIENS] += (transfer->alienCargo) ? transfer->alienCargo->getAlive() : 0;
-		/* - Aircraft */
-		TR_CountAircraftInList(transfer->aircraft, currentCap);
+		/* - Aircraft in transit are already assigned to their hangar! */
 	}
 
 	/* Count capacity need of the current transfer plan */
