@@ -679,6 +679,7 @@ do
 	BaseContainerPanel:set_bordercolor(0.56, 0.81, 0.76, 1)
 	do
 		local BaseContainerPanel_wnd_name = ufo.create_data(BaseContainerPanel, "wnd_name", nil)
+		BaseContainerPanel_wnd_name:set_value("")
 	end
 	do
 		local BaseContainerPanel_prev = ufo.create_button(BaseContainerPanel, "prev", nil)
