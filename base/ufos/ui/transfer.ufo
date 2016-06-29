@@ -132,16 +132,7 @@ window transfer
 					size	"714 39"
 					cvar	*cvar:mn_itemtype
 					onChange	{
-						cmd "ui_trans_fill <cvar:mn_itemtype>;"
-						if ( *cvar:mn_itemtype eq "item" ) {
-							*cvar:mn_itemtype_name = "_Equipment"
-						} elif ( *cvar:mn_itemtype eq "employee" ) {
-							*cvar:mn_itemtype_name = "_Employees"
-						} elif ( *cvar:mn_itemtype eq "alien" ) {
-							*cvar:mn_itemtype_name = "_Aliens"
-						} elif ( *cvar:mn_itemtype eq "aircraft" ) {
-							*cvar:mn_itemtype_name = "_Aircraft"
-						}
+						cmd "ui_trans_fill <cvar:mn_itemtype>;ui_translist_updateheader;"
 					}
 				}
 				option item {
@@ -252,6 +243,18 @@ window transfer
 						*node:parent.translist.trans_<1>.spinner@invis = true
 					} else {
 						*node:parent.translist.trans_<1>.spinner@invis = false
+					}
+				}
+
+				confunc ui_translist_updateheader {
+					if ( *cvar:mn_itemtype eq "item" ) {
+						*cvar:mn_itemtype_name = "_Equipment"
+					} elif ( *cvar:mn_itemtype eq "employee" ) {
+						*cvar:mn_itemtype_name = "_Employees"
+					} elif ( *cvar:mn_itemtype eq "alien" ) {
+						*cvar:mn_itemtype_name = "_Aliens"
+					} elif ( *cvar:mn_itemtype eq "aircraft" ) {
+						*cvar:mn_itemtype_name = "_Aircraft"
 					}
 				}
 			}
@@ -484,10 +487,7 @@ window transfer
 
 
 	func onWindowOpened {
-		cmd "trans_init;"
-		if ( *cvar:mn_itemtype_name eq "" ) {
-			*cvar:mn_itemtype_name = "_Equipment"
-		}
+		cmd "trans_init;ui_translist_updateheader;"
 	}
 
 	func onWindowClosed {
