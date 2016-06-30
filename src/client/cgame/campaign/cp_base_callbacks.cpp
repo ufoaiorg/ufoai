@@ -306,13 +306,13 @@ static void B_BaseInit_f (void)
 		else
 			cgi->UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("Buy or produce at least one aircraft first."));
 	} else {
-		cgi->UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("No Hangar functional in base."));
+		cgi->UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("No Hangar operating at this base."));
 	}
 
 	if (BS_BuySellAllowed(base))
 		cgi->UI_ExecuteConfunc("update_basebutton buysell false \"%s\"", _("Buy/Sell equipment, aircraft and UGV"));
 	else
-		cgi->UI_ExecuteConfunc("update_basebutton buysell true \"%s\"", va(_("No %s functional in base."), _("Storage")));
+		cgi->UI_ExecuteConfunc("update_basebutton buysell true \"%s\"", _("No Storage operating at this base."));
 
 	if (B_GetCount() > 1)
 		cgi->UI_ExecuteConfunc("update_basebutton transfer false \"%s\"", _("Transfer equipment, vehicles, aliens and employees to other bases"));
@@ -322,27 +322,27 @@ static void B_BaseInit_f (void)
 	if (RS_ResearchAllowed(base))
 		cgi->UI_ExecuteConfunc("update_basebutton research false \"%s\"", _("Research new technology"));
 	else
-		cgi->UI_ExecuteConfunc("update_basebutton research true \"%s\"", va(_("No %s functional in base."), _("Laboratory")));
+		cgi->UI_ExecuteConfunc("update_basebutton research true \"%s\"", _("No Laboratory operating at this base."));
 
 	if (PR_ProductionAllowed(base))
 		cgi->UI_ExecuteConfunc("update_basebutton production false \"%s\"", _("Produce equipment, aircraft and UGV"));
 	else
-		cgi->UI_ExecuteConfunc("update_basebutton production true \"%s\"", va(_("No %s functional in base."), _("Workshop")));
+		cgi->UI_ExecuteConfunc("update_basebutton production true \"%s\"", _("No Workshop operating at this base."));
 
 	if (E_HireAllowed(base))
 		cgi->UI_ExecuteConfunc("update_basebutton hire false \"%s\"", _("Hire or dismiss employees"));
 	else
-		cgi->UI_ExecuteConfunc("update_basebutton hire true \"%s\"", va(_("No %s functional in base."), _("Living Quarters")));
+		cgi->UI_ExecuteConfunc("update_basebutton hire true \"%s\"", _("No Living Quarters operating at this base."));
 
 	if (AC_ContainmentAllowed(base))
 		cgi->UI_ExecuteConfunc("update_basebutton containment false \"%s\"", _("Manage captured aliens"));
 	else
-		cgi->UI_ExecuteConfunc("update_basebutton containment true \"%s\"", va(_("No %s functional in base."), _("Containment")));
+		cgi->UI_ExecuteConfunc("update_basebutton containment true \"%s\"", _("No Containment operating at this base."));
 
 	if (HOS_HospitalAllowed(base))
 		cgi->UI_ExecuteConfunc("update_basebutton hospital false \"%s\"", _("Treat wounded soldiers and perform implant surgery"));
 	else
-		cgi->UI_ExecuteConfunc("update_basebutton hospital true \"%s\"", va(_("No %s functional in base."), _("Hospital")));
+		cgi->UI_ExecuteConfunc("update_basebutton hospital true \"%s\"", _("No Hospital operating at this in base."));
 
 	/*
 	 * Gather data on current/max space for living quarters, storage, lab and workshop
