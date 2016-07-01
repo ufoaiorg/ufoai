@@ -525,7 +525,7 @@ window popup_ufoyards extends ipopup {
 		}
 
 		string buildtime_label {
-			string		"_Time to build:"
+			string		"_Time to completion:"
 			pos			"150 130"
 			size		"200 20"
 			invis		true

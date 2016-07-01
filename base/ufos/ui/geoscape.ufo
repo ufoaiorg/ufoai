@@ -997,7 +997,7 @@ window popup_installationstatus extends ipopup
 
 	string buildtime_label
 	{
-		string		"_Time to build:"
+		string		"_Time to completion:"
 		pos			"25 110"
 		size		"120 20"
 	}

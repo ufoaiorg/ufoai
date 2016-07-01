@@ -338,7 +338,7 @@ window basedefence extends ipopup
 
 		string buildtime_label
 		{
-			string		"_Time to build:"
+			string		"_Time to completion:"
 			pos			"50 175"
 			size		"250 20"
 		}

@@ -258,7 +258,7 @@ static void INS_FillTypes_f (void)
 				continue;
 			if (tpl->tech == nullptr || RS_IsResearched_ptr(tpl->tech)) {
 				cgi->UI_ExecuteConfunc("installationtype_add \"%s\" \"%s\" \"%s\" \"%d c\"", tpl->id, _(tpl->name),
-					(tpl->buildTime > 0) ? va("%d %s", tpl->buildTime, ngettext("day", "days", tpl->buildTime)) : "-", tpl->cost);
+					(tpl->buildTime > 0) ? va(ngettext("%d day", "%d days", tpl->buildTime), tpl->buildTime) : "-", tpl->cost);
 			}
 		}
 	}
