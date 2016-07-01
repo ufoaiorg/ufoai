@@ -480,7 +480,7 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 					const float remaining = B_GetConstructionTimeRemain(building);
 					const int time = std::max(0, (int)ceilf(remaining));
 					const char* text = va(ngettext("%d day left", "%d days left", time), time);
-					cgi->UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, text);
+					cgi->UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + h * (building ? building->size[1] : 1) - overlap - 20, text);
 					break;
 				}
 				default:
