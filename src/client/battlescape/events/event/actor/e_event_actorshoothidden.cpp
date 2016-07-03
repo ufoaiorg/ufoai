@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../../client.h"
+#include "../../../cl_actor.h"
 #include "e_event_actorshoothidden.h"
 
 /**
@@ -30,19 +31,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 int CL_ActorShootHiddenTime (const eventRegister_t* self, dbuffer* msg, eventTiming_t* eventTiming)
 {
+	int dummy;
 	int first;
 	int objIdx;
 	weaponFireDefIndex_t weapFdsIdx;
 	fireDefIndex_t fireDefIndex;
 	vec3_t impact;
-	int flags;
 
-	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fireDefIndex, &impact, &flags);
+	NET_ReadFormat(msg, self->formatString, &dummy, &first, &objIdx, &weapFdsIdx, &fireDefIndex, &impact, &dummy);
 
 	const int eventTime = first ? eventTiming->nextTime : eventTiming->shootTime;
 	const objDef_t* obj = INVSH_GetItemByIDX(objIdx);
 	if (first) {
-		eventTiming->nextTime = CL_GetNextTime(self, eventTiming, eventTiming->nextTime + 500);
+		eventTiming->nextTime = CL_GetNextTime(self, eventTiming, eventTiming->nextTime + 900);
 		eventTiming->impactTime = eventTiming->shootTime = eventTiming->nextTime;
 	} else {
 		const fireDef_t* fd = FIRESH_GetFiredef(obj, weapFdsIdx, fireDefIndex);
@@ -64,6 +65,7 @@ int CL_ActorShootHiddenTime (const eventRegister_t* self, dbuffer* msg, eventTim
  */
 void CL_ActorShootHidden (const eventRegister_t* self, dbuffer* msg)
 {
+	int targetEntNo;
 	int first;
 	int objIdx;
 	weaponFireDefIndex_t weapFdsIdx;
@@ -71,7 +73,17 @@ void CL_ActorShootHidden (const eventRegister_t* self, dbuffer* msg)
 	vec3_t impact;
 	int flags;
 
-	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fdIdx, &impact, &flags);
+	NET_ReadFormat(msg, self->formatString, &targetEntNo, &first, &objIdx, &weapFdsIdx, &fdIdx, &impact, &flags);
+
+	/* target le */
+	const le_t* leTarget;
+	if (targetEntNo != SKIP_LOCAL_ENTITY) {
+		leTarget = LE_Get(targetEntNo);
+		if (!leTarget)
+			LE_NotFoundError(targetEntNo);
+	} else {
+		leTarget = nullptr;
+	}
 
 	/* get the fire def */
 	const objDef_t* obj = INVSH_GetItemByIDX(objIdx);
@@ -91,5 +103,7 @@ void CL_ActorShootHidden (const eventRegister_t* self, dbuffer* msg)
 
 		if (Q_strvalid(sound))
 			S_LoadAndPlaySample(sound, impact, fd->impactAttenuation, SND_VOLUME_WEAPONS);
+		if (leTarget)
+			CL_ActorPlaySound(leTarget, SND_HURT);
 	}
 }

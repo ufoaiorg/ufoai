@@ -119,7 +119,7 @@ const eventRegister_t events[] = {
 
 	{E(EV_ACTOR_START_SHOOT), "sbgg", CL_ActorStartShoot, CL_ActorStartShootTime, nullptr},
 	{E(EV_ACTOR_SHOOT), "ssbsbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime, nullptr}, /**< @sa NET_WriteDir */
-	{E(EV_ACTOR_SHOOT_HIDDEN), "bsbbpb", CL_ActorShootHidden, CL_ActorShootHiddenTime, nullptr},
+	{E(EV_ACTOR_SHOOT_HIDDEN), "sbsbbpb", CL_ActorShootHidden, CL_ActorShootHiddenTime, nullptr},
 	{E(EV_ACTOR_THROW), "ssbbbpp", CL_ActorDoThrow, CL_ActorDoThrowTime, nullptr},
 	{E(EV_ACTOR_END_SHOOT), "s", CL_ActorEndShoot, CL_ActorEndShootTime, CL_CheckDefault},
 

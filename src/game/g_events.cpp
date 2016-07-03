@@ -226,9 +226,13 @@ void G_EventEndShoot (const Edict &ent, teammask_t teamMask)
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
  */
-void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstShoot, const vec3_t impact, int flags)
+void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstShoot, const vec3_t impact, int flags, const Edict* targetEdict)
 {
 	G_EventAdd(~G_VisToPM(teamMask), EV_ACTOR_SHOOT_HIDDEN, -1);
+	if (targetEdict && G_IsBreakable(targetEdict))
+		gi.WriteShort(targetEdict->getIdNum());
+	else
+		gi.WriteShort(SKIP_LOCAL_ENTITY);
 	gi.WriteByte(firstShoot);
 	gi.WriteShort(fd->obj->idx);
 	gi.WriteByte(fd->weapFdsIdx);
