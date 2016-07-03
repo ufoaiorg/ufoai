@@ -51,7 +51,7 @@ int CL_ActorShootHiddenTime (const eventRegister_t* self, dbuffer* msg, eventTim
 		 * bouncing is not needed here, too (we still don't see it) */
 		eventTiming->impactTime = eventTiming->shootTime + 500;
 		eventTiming->nextTime = CL_GetNextTime(self, eventTiming, eventTiming->shootTime + 1400);
-		if (fd->delayBetweenShots > 0.0)
+		if (fd->delayBetweenShots > 0.0f)
 			eventTiming->shootTime += 1000 / fd->delayBetweenShots;
 	}
 	eventTiming->parsedDeath = false;
@@ -101,7 +101,7 @@ void CL_ActorShootHidden (const eventRegister_t* self, dbuffer* msg)
 		else if (flags & SF_BOUNCING)
 				sound = fd->bounceSound;
 
-		if (Q_strvalid(sound))
+		if (Q_strvalid(sound) && !CL_OutsideMap(impact, 0.0f))
 			S_LoadAndPlaySample(sound, impact, fd->impactAttenuation, SND_VOLUME_WEAPONS);
 		if (leTarget)
 			CL_ActorPlaySound(leTarget, SND_HURT);
