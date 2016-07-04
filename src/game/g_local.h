@@ -236,7 +236,6 @@ extern cvar_t* g_difficulty;
 
 /* g_camera */
 void G_InitCamera(Edict* ent, camera_type_t cameraType, float angle, bool rotate);
-Edict* G_SpawnCamera(const vec3_t origin, int team, camera_type_t cameraType);
 
 /* g_cmds.c */
 void G_ClientCommand(Player& player);

@@ -83,16 +83,3 @@ void G_InitCamera (Edict* ent, camera_type_t cameraType, float angle, bool rotat
 		G_FreeEdict(ent);
 	}
 }
-
-Edict* G_SpawnCamera (const vec3_t origin, int team, camera_type_t cameraType)
-{
-	Edict* ent = G_Spawn();
-	VectorCopy(origin, ent->origin);
-	ent->setTeam(team);
-
-	G_InitCamera(ent, cameraType, 0, true);
-
-	G_CheckVis(ent);
-
-	return ent;
-}
