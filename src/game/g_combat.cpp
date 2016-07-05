@@ -170,7 +170,6 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
  */
 static void G_ShotMorale (const Actor* shooter, const fireDef_t* fd, const vec3_t from, const Item* weapon, const vec3_t impact)
 {
-#if 0
 	/* Skip not detectable shoots */
 	if (weapon->def()->dmgtype == gi.csi->damLaser || fd->irgoggles)
 		return;
@@ -212,7 +211,6 @@ static void G_ShotMorale (const Actor* shooter, const fireDef_t* fd, const vec3_
 			gi.DPrintf("Suppressing: %s\n", check->chr.name);
 		}
 	}
-#endif
 }
 
 /**
