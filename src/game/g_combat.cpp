@@ -1374,14 +1374,15 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 
 	/* Fire all shots. */
 	vec3_t impact;
-	for (int i = 0; i < shots; i++)
+	for (int i = 0; i < shots; ++i) {
 		if (fd->gravity) {
 			G_ShootGrenade(player, actor, fd, shotOrigin, at, mask, weapon, mock, z_align, impact);
 		} else {
 			G_ShootSingle(actor, fd, shotOrigin, at, mask, weapon, mock, z_align, i, shootType, impact);
-			if (mor_panic->integer)
-				G_ShotMorale(actor, fd, shotOrigin, weapon, impact);
 		}
+		if (!mock && mor_panic->integer)
+			G_ShotMorale(actor, fd, shotOrigin, weapon, impact);
+	}
 
 	if (!mock) {
 		const bool smoke = fd->obj->dmgtype == gi.csi->damSmoke;
