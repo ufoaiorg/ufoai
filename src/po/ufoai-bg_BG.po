@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-16 22:45+0200\n"
+"POT-Creation-Date: 2016-07-05 22:44-0500\n"
 "PO-Revision-Date: 2016-05-16 22:57+0100\n"
 "Last-Translator: Tamás Fehérvári <geever@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -213,14 +213,12 @@ msgstr "Стадион"
 
 #: ../base/maps/urban.ump:380 ../base/ufos/basemanagement.ufo:201
 #: ../base/ufos/maps.ufo:3324 ../base/ufos/ui/research.ufo:350
-#: client/cgame/campaign/cp_base_callbacks.cpp:325
 msgid "Laboratory"
 msgstr "Лаборатория"
 
 #: ../base/maps/urban.ump:401 ../base/ufos/basemanagement.ufo:216
 #: ../base/ufos/maps.ufo:3276 ../base/ufos/ui/bases.ufo:406
 #: ../base/ufos/ui/hospital.ufo:21
-#: client/cgame/campaign/cp_base_callbacks.cpp:345
 msgid "Hospital"
 msgstr "Болница"
 
@@ -581,7 +579,6 @@ msgstr "Вход"
 
 #: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:313
 #: ../base/ufos/ui/production.ufo:248
-#: client/cgame/campaign/cp_base_callbacks.cpp:315
 msgid "Storage"
 msgstr "Склад"
 
@@ -594,7 +591,6 @@ msgid "Command Centre"
 msgstr "Команден център"
 
 #: ../base/ufos/basemanagement.ufo:110 ../base/ufos/ui/hire.ufo:347
-#: client/cgame/campaign/cp_base_callbacks.cpp:335
 msgid "Living Quarters"
 msgstr "Квартири"
 
@@ -609,7 +605,6 @@ msgid "Interceptor Hangar"
 msgstr "Хангар на изтребител"
 
 #: ../base/ufos/basemanagement.ufo:153 ../base/ufos/ui/production.ufo:272
-#: client/cgame/campaign/cp_base_callbacks.cpp:330
 msgid "Workshop"
 msgstr "Работилница"
 
@@ -4616,7 +4611,7 @@ msgid ""
 "twice its size. As near as we can tell it was designed for the role of heavy "
 "fighter/interceptor, and it fulfills that role magnificently.\n"
 "\n"
-"The UFO is armed with two particle beam weapons as well as -- very "
+"The UFO is armed with three particle beam weapons as well as -- very "
 "interestingly -- two additional modular hardpoints of a design almost "
 "identical to the weapon hardpoints on our own aircraft. Even more "
 "interesting is the Gunboat's armour, an improvement over the standard skin "
@@ -23859,7 +23854,7 @@ msgstr "История"
 #: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:142
 #: ../base/ufos/ui/bases.ufo:313 ../base/ufos/ui/geoscape.ufo:1387
 #: ../base/ufos/ui/market.ufo:154 ../base/ufos/ui/production.ufo:76
-#: ../base/ufos/ui/transfer.ufo:143 ../base/ufos/ui/transfer.ufo:163
+#: ../base/ufos/ui/transfer.ufo:154 ../base/ufos/ui/transfer.ufo:257
 #: client/cgame/campaign/cp_geoscape.cpp:309
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:805
 msgid "Aircraft"
@@ -23880,8 +23875,8 @@ msgstr "Отчети от проучвания"
 #: ../base/ufos/research.ufo:116 ../base/ufos/ui/_assets_squad.ufo:498
 #: ../base/ufos/ui/aircraft.ufo:156 ../base/ufos/ui/aircraft_equip.ufo:61
 #: ../base/ufos/ui/equipment.ufo:59 ../base/ufos/ui/hud_default.ufo:261
-#: ../base/ufos/ui/market.ufo:121 ../base/ufos/ui/transfer.ufo:137
-#: ../base/ufos/ui/transfer.ufo:148 ../base/ufos/ui/transfer.ufo:489
+#: ../base/ufos/ui/market.ufo:121 ../base/ufos/ui/transfer.ufo:139
+#: ../base/ufos/ui/transfer.ufo:251
 msgid "Equipment"
 msgstr "Екипировка"
 
@@ -25195,17 +25190,17 @@ msgstr "Разгъни/Свий"
 msgid "Lock current stock level"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_base.ufo:686
+#: ../base/ufos/ui/_assets_base.ufo:687
 #, fuzzy
 msgid "Previous base"
 msgstr "Предишна база"
 
-#: ../base/ufos/ui/_assets_base.ufo:702
+#: ../base/ufos/ui/_assets_base.ufo:703
 #, fuzzy
 msgid "Next base"
 msgstr "Следваща база"
 
-#: ../base/ufos/ui/_assets_base.ufo:773 ../base/ufos/ui/_menu.ufo:88
+#: ../base/ufos/ui/_assets_base.ufo:774 ../base/ufos/ui/_menu.ufo:88
 #, fuzzy
 msgid "Back to base"
 msgstr "Обратно в базата"
@@ -25250,7 +25245,7 @@ msgid "Dropship"
 msgstr "Десантен транспорт:"
 
 #: ../base/ufos/ui/_assets_map.ufo:237
-#: client/cgame/campaign/cp_aircraft.cpp:477
+#: client/cgame/campaign/cp_aircraft.cpp:479
 #: client/cgame/campaign/cp_ufo.cpp:248 client/cgame/campaign/cp_ufo.cpp:249
 msgid "UFO"
 msgstr "НЛО"
@@ -25377,8 +25372,7 @@ msgstr "Статус:"
 msgid "Team:"
 msgstr "Отбор:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:90
-#: ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:90 ../base/ufos/ui/aircraft_equip.ufo:109
 #: ../base/ufos/ui/aircraft_equip.ufo:128
 #: ../base/ufos/ui/aircraft_equip.ufo:147
 #: ../base/ufos/ui/aircraft_equip.ufo:166
@@ -25459,7 +25453,8 @@ msgid "No soldiers assigned"
 msgstr "Няма назначени войници"
 
 #: ../base/ufos/ui/aliencont.ufo:56 ../base/ufos/ui/aliencont.ufo:309
-msgid "Kill this alien"
+#, fuzzy
+msgid "Kill one alien"
 msgstr "Убий този извънземен"
 
 #: ../base/ufos/ui/aliencont.ufo:75
@@ -25551,11 +25546,11 @@ msgstr "Име:"
 msgid "Targetted UFO:"
 msgstr "Прицелено НЛО:"
 
-#: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:909
-#: ../base/ufos/ui/geoscape.ufo:1000
+#: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:1000
 #: ../base/ufos/ui/popup_installations.ufo:528
-msgid "Time to build:"
-msgstr "Време за завършване:"
+#, fuzzy
+msgid "Time to completion:"
+msgstr "Разреши компресия на текстурите."
 
 #: ../base/ufos/ui/basedefence.ufo:354
 msgid "Autofire"
@@ -25608,8 +25603,8 @@ msgstr "Отчет на базата"
 
 #: ../base/ufos/ui/bases.ufo:118 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654
-#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:460
+#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
+#: ../base/ufos/ui/transfer.ufo:463
 #: client/cgame/campaign/cp_base_callbacks.cpp:602
 #: client/cgame/campaign/cp_base_callbacks.cpp:613
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
@@ -25904,13 +25899,15 @@ msgstr "Автоматично завърши мисията"
 msgid "This kind of mission cannot be done automatically"
 msgstr "Този тип мисия не може да се довърши автоматично"
 
-#: ../base/ufos/ui/geoscape.ufo:897
-#: ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
 msgid "Cost:"
 msgstr "Цена:"
 
-#: ../base/ufos/ui/geoscape.ufo:952
-#: ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:909
+msgid "Time to build:"
+msgstr "Време за завършване:"
+
+#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build"
 msgstr "Създай"
 
@@ -25952,8 +25949,7 @@ msgid "Select aircraft"
 msgstr "Избери самолет"
 
 #: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642
-#: ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
 msgid "ETA:"
 msgstr "ETA:"
 
@@ -27626,8 +27622,7 @@ msgstr "Капацитет"
 
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892
-#: ../base/ufos/ui/transfer.ufo:370
+#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
 msgid "free"
 msgstr "свободно"
 
@@ -27833,8 +27828,8 @@ msgstr "Бази"
 msgid "Installations"
 msgstr "Съоръжения"
 
-#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:139
-#: ../base/ufos/ui/transfer.ufo:153
+#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:144
+#: ../base/ufos/ui/transfer.ufo:253
 msgid "Employees"
 msgstr "Служители"
 
@@ -27926,63 +27921,63 @@ msgstr "Генерирай нов отбор от избрания вид"
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 msgstr "Добави/премахни артикула към товара, задръж SHIFT за бързо товарене."
 
-#: ../base/ufos/ui/transfer.ufo:141 ../base/ufos/ui/transfer.ufo:158
+#: ../base/ufos/ui/transfer.ufo:149 ../base/ufos/ui/transfer.ufo:255
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:145
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:793
 msgid "Aliens"
 msgstr "Извънземни"
 
-#: ../base/ufos/ui/transfer.ufo:190
+#: ../base/ufos/ui/transfer.ufo:181
 msgid "From"
 msgstr "От"
 
-#: ../base/ufos/ui/transfer.ufo:197
+#: ../base/ufos/ui/transfer.ufo:188
 msgid "To"
 msgstr "До"
 
-#: ../base/ufos/ui/transfer.ufo:279
+#: ../base/ufos/ui/transfer.ufo:282
 msgid "Cargo"
 msgstr "Товарен"
 
-#: ../base/ufos/ui/transfer.ufo:288
+#: ../base/ufos/ui/transfer.ufo:291
 #: client/cgame/campaign/cp_base_callbacks.cpp:838
 msgid "Amount"
 msgstr "Количество"
 
-#: ../base/ufos/ui/transfer.ufo:342
+#: ../base/ufos/ui/transfer.ufo:345
 msgid "Destination base"
 msgstr "Дестинация"
 
-#: ../base/ufos/ui/transfer.ufo:362
+#: ../base/ufos/ui/transfer.ufo:365
 msgid "Building"
 msgstr "Сграда"
 
-#: ../base/ufos/ui/transfer.ufo:386
+#: ../base/ufos/ui/transfer.ufo:389
 msgid "all space"
 msgstr "цялото пространство"
 
-#: ../base/ufos/ui/transfer.ufo:415
+#: ../base/ufos/ui/transfer.ufo:418
 #, fuzzy
 msgid "Capacity overload"
 msgstr "Превишаване на капацитета"
 
-#: ../base/ufos/ui/transfer.ufo:434 ../base/ufos/ui/transfer.ufo:461
+#: ../base/ufos/ui/transfer.ufo:437 ../base/ufos/ui/transfer.ufo:464
 msgid "Start the transfer"
 msgstr "Започни трансфера"
 
-#: ../base/ufos/ui/transfer.ufo:448
+#: ../base/ufos/ui/transfer.ufo:451
 msgid "List"
 msgstr "Покажи"
 
-#: ../base/ufos/ui/transfer.ufo:449
+#: ../base/ufos/ui/transfer.ufo:452
 msgid "List active transfers"
 msgstr "Покажи активните трансфери"
 
-#: ../base/ufos/ui/transfer.ufo:475
+#: ../base/ufos/ui/transfer.ufo:478
 msgid "Clear"
 msgstr "Премахни"
 
-#: ../base/ufos/ui/transfer.ufo:476
+#: ../base/ufos/ui/transfer.ufo:479
 msgid "Clear cargo"
 msgstr "Премахни товара"
 
@@ -28170,9 +28165,9 @@ msgstr "3-кратен изстрел"
 #: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
 #: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
 #: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
-#: ../base/ufos/weapons_multiplayer.ufo:318
-#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:439
-#: ../base/ufos/weapons_plasma.ufo:529 ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_multiplayer.ufo:318 ../base/ufos/weapons_plasma.ufo:203
+#: ../base/ufos/weapons_plasma.ufo:439 ../base/ufos/weapons_plasma.ufo:529
+#: ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr "Автоматичен"
 
@@ -28200,8 +28195,8 @@ msgid "5-Shot Burst"
 msgstr "5-кратен изстрел"
 
 #: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
-#: ../base/ufos/weapons_multiplayer.ufo:342
-#: ../base/ufos/weapons_plasma.ufo:553 ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_multiplayer.ufo:342 ../base/ufos/weapons_plasma.ufo:553
+#: ../base/ufos/weapons_ugv.ufo:135
 msgid "Full-Auto Sweep"
 msgstr "Автом. обстрел"
 
@@ -28568,7 +28563,7 @@ msgid "This soldier can not carry anything else."
 msgstr "Този войник не може да носи повече."
 
 #: client/battlescape/cl_actor.cpp:1016 client/battlescape/cl_hud.cpp:1353
-#: client/cl_inventory.cpp:74 client/cl_inventory_callbacks.cpp:395
+#: client/cl_inventory.cpp:74 client/cl_inventory_callbacks.cpp:397
 msgid "Warning"
 msgstr "Внимание"
 
@@ -28862,7 +28857,7 @@ msgstr "%s заредени\n"
 msgid "- HP loss per turn: %i\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1344 client/cl_inventory_callbacks.cpp:387
+#: client/battlescape/cl_hud.cpp:1344 client/cl_inventory_callbacks.cpp:389
 msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
@@ -28870,11 +28865,11 @@ msgstr ""
 "Този войник вече няма достатъчно TUs за да използва следната екипировка\"\n"
 "\n"
 
-#: client/battlescape/cl_hud.cpp:1357 client/cl_inventory_callbacks.cpp:399
+#: client/battlescape/cl_hud.cpp:1357 client/cl_inventory_callbacks.cpp:401
 msgid "Kg"
 msgstr "kg"
 
-#: client/battlescape/cl_hud.cpp:1358 client/cl_inventory_callbacks.cpp:401
+#: client/battlescape/cl_hud.cpp:1358 client/cl_inventory_callbacks.cpp:403
 msgid "TU:"
 msgstr "TU:"
 
@@ -28888,11 +28883,11 @@ msgid "Can't perform action - no item in hand!"
 msgstr "Действието невъзможно - няма нищо в ръката!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:89
-#: client/battlescape/cl_hud_callbacks.cpp:264 game/g_combat.cpp:1237
+#: client/battlescape/cl_hud_callbacks.cpp:264 game/g_combat.cpp:1240
 msgid "Can't perform action - no ammo!"
 msgstr "Действието невъзможно - няма амуниции!"
 
-#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1229
+#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1232
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr "Действието невъзможно - оръжието се използва с две ръце"
 
@@ -29075,75 +29070,76 @@ msgstr "%s бе ранен"
 msgid "Your round started!"
 msgstr "Ти си на ход!"
 
-#: client/cgame/campaign/cp_aircraft.cpp:360
+#: client/cgame/campaign/cp_aircraft.cpp:362
 msgid "ON RED ALERT"
 msgstr "ЧЕРВЕНА ТРЕВОГА"
 
-#: client/cgame/campaign/cp_aircraft.cpp:364
+#: client/cgame/campaign/cp_aircraft.cpp:366
 msgid "Nothing - should not be displayed"
 msgstr "Нищо - не трябва да бъде показвано"
 
-#: client/cgame/campaign/cp_aircraft.cpp:366
-msgid "at home base"
-msgstr "в базата"
-
 #: client/cgame/campaign/cp_aircraft.cpp:368
+#, fuzzy, c-format
+msgid "at %s"
+msgstr "%s (в %s)"
+
+#: client/cgame/campaign/cp_aircraft.cpp:370
 msgid "refuelling"
 msgstr "презарежда"
 
-#: client/cgame/campaign/cp_aircraft.cpp:370
+#: client/cgame/campaign/cp_aircraft.cpp:372
 msgid "idle"
 msgstr "незаети"
 
-#: client/cgame/campaign/cp_aircraft.cpp:372
+#: client/cgame/campaign/cp_aircraft.cpp:374
 msgid "in transit"
 msgstr "в превоз"
 
-#: client/cgame/campaign/cp_aircraft.cpp:374
+#: client/cgame/campaign/cp_aircraft.cpp:376
 msgid "enroute to mission"
 msgstr "на път за мисия"
 
-#: client/cgame/campaign/cp_aircraft.cpp:376
+#: client/cgame/campaign/cp_aircraft.cpp:378
 msgid "pursuing a UFO"
 msgstr "преследва НЛО"
 
-#: client/cgame/campaign/cp_aircraft.cpp:378
+#: client/cgame/campaign/cp_aircraft.cpp:380
 msgid "ready to drop soldiers"
 msgstr "готов да спусне войниците"
 
-#: client/cgame/campaign/cp_aircraft.cpp:380
+#: client/cgame/campaign/cp_aircraft.cpp:382
 msgid "intercepting a UFO"
 msgstr "пресреща НЛО"
 
-#: client/cgame/campaign/cp_aircraft.cpp:382
+#: client/cgame/campaign/cp_aircraft.cpp:384
 msgid "enroute to new home base"
 msgstr "на път за нова база"
 
-#: client/cgame/campaign/cp_aircraft.cpp:384
+#: client/cgame/campaign/cp_aircraft.cpp:386
 msgid "returning to base"
 msgstr "връща се в базата"
 
-#: client/cgame/campaign/cp_aircraft.cpp:473
+#: client/cgame/campaign/cp_aircraft.cpp:475
 msgid "Interceptor"
 msgstr "Изтребител"
 
-#: client/cgame/campaign/cp_aircraft.cpp:475
+#: client/cgame/campaign/cp_aircraft.cpp:477
 msgid "Transporter"
 msgstr "Транспортер"
 
-#: client/cgame/campaign/cp_aircraft.cpp:720
+#: client/cgame/campaign/cp_aircraft.cpp:722
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr "Нов (%s) е готов в база %s"
 
-#: client/cgame/campaign/cp_aircraft.cpp:721
-#: client/cgame/campaign/cp_aircraft.cpp:1061
-#: client/cgame/campaign/cp_aircraft.cpp:1102
-#: client/cgame/campaign/cp_aircraft.cpp:1118
-#: client/cgame/campaign/cp_aircraft.cpp:1159
-#: client/cgame/campaign/cp_aircraft.cpp:1215
-#: client/cgame/campaign/cp_aircraft.cpp:1238
-#: client/cgame/campaign/cp_aircraft.cpp:1992
+#: client/cgame/campaign/cp_aircraft.cpp:723
+#: client/cgame/campaign/cp_aircraft.cpp:1063
+#: client/cgame/campaign/cp_aircraft.cpp:1104
+#: client/cgame/campaign/cp_aircraft.cpp:1120
+#: client/cgame/campaign/cp_aircraft.cpp:1161
+#: client/cgame/campaign/cp_aircraft.cpp:1217
+#: client/cgame/campaign/cp_aircraft.cpp:1240
+#: client/cgame/campaign/cp_aircraft.cpp:1994
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:93
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:101
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:109
@@ -29197,55 +29193,55 @@ msgstr "Нов (%s) е готов в база %s"
 msgid "Notice"
 msgstr "Забележка"
 
-#: client/cgame/campaign/cp_aircraft.cpp:791
+#: client/cgame/campaign/cp_aircraft.cpp:793
 msgid "No operational hangars at that base."
 msgstr "Няма работещи хангари в тази база."
 
-#: client/cgame/campaign/cp_aircraft.cpp:795
+#: client/cgame/campaign/cp_aircraft.cpp:797
 msgid "No free hangars at that base."
 msgstr "Няма свободни хангари в тази база"
 
-#: client/cgame/campaign/cp_aircraft.cpp:798
+#: client/cgame/campaign/cp_aircraft.cpp:800
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Недостатъчно свободно място в квартирите в базата."
 
-#: client/cgame/campaign/cp_aircraft.cpp:801
+#: client/cgame/campaign/cp_aircraft.cpp:803
 msgid "Insufficient storage space at that base."
 msgstr "Недостатъчно място в складовете на базата."
 
-#: client/cgame/campaign/cp_aircraft.cpp:805
+#: client/cgame/campaign/cp_aircraft.cpp:807
 msgid "That base is beyond this aircraft's range."
 msgstr "Тази база е извън обсега на самолета."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1060
+#: client/cgame/campaign/cp_aircraft.cpp:1062
 #, c-format
 msgid "Craft %s has returned to %s."
 msgstr "%s се завърна в база %s."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1101
+#: client/cgame/campaign/cp_aircraft.cpp:1103
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr "%s не успя да бъде напълно зареден в %s. Няма достатъчно антиматерия."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1117
+#: client/cgame/campaign/cp_aircraft.cpp:1119
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "%s се презареди в база %s."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1159
+#: client/cgame/campaign/cp_aircraft.cpp:1161
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "Горивото на %s свършва и трябва да се върне в базата."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1215
+#: client/cgame/campaign/cp_aircraft.cpp:1217
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Първо наеми един или повече войници в този самолет."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1238
+#: client/cgame/campaign/cp_aircraft.cpp:1240
 msgid "Insufficient fuel."
 msgstr "Недостатъчно гориво."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1992
+#: client/cgame/campaign/cp_aircraft.cpp:1994
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "%s няма достатъчно гориво за да преследва НЛО: връща се в %s."
@@ -29527,22 +29523,18 @@ msgid "Buy or produce at least one aircraft first."
 msgstr "Първо купи упи или произведи поне един самолет."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:309
-msgid "No Hangar functional in base."
-msgstr "В тази база няма хангар."
+#, fuzzy
+msgid "No Hangar operating at this base."
+msgstr "В тази база няма хангар.\n"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:313
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "Купи/Продай екипировка, самолет и СНМ"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:315
-#: client/cgame/campaign/cp_base_callbacks.cpp:325
-#: client/cgame/campaign/cp_base_callbacks.cpp:330
-#: client/cgame/campaign/cp_base_callbacks.cpp:335
-#: client/cgame/campaign/cp_base_callbacks.cpp:340
-#: client/cgame/campaign/cp_base_callbacks.cpp:345
-#, c-format
-msgid "No %s functional in base."
-msgstr "Няма функциониращ %s в базата."
+#, fuzzy
+msgid "No Storage operating at this base."
+msgstr "В тази база няма Склад.\n"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:318
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
@@ -29556,26 +29548,46 @@ msgstr "За да прехвърляш екипировка или персон�
 msgid "Research new technology"
 msgstr "Изследвай нова технология"
 
+#: client/cgame/campaign/cp_base_callbacks.cpp:325
+#, fuzzy
+msgid "No Laboratory operating at this base."
+msgstr "Няма работещи хангари в тази база."
+
 #: client/cgame/campaign/cp_base_callbacks.cpp:328
 msgid "Produce equipment, aircraft and UGV"
 msgstr "Произведи екипировка, самолет и СНМ"
 
+#: client/cgame/campaign/cp_base_callbacks.cpp:330
+#, fuzzy
+msgid "No Workshop operating at this base."
+msgstr "Няма работещи хангари в тази база."
+
 #: client/cgame/campaign/cp_base_callbacks.cpp:333
 msgid "Hire or dismiss employees"
 msgstr "Наеми или уволни служители"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:335
+#, fuzzy
+msgid "No Living Quarters operating at this base."
+msgstr "В тази база няма Квартири.\n"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:338
 msgid "Manage captured aliens"
 msgstr "Управление на заловените извънземни."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:340
-#: client/cgame/campaign/cp_base_callbacks.cpp:600
-msgid "Containment"
-msgstr "Извънземни"
+#, fuzzy
+msgid "No Containment operating at this base."
+msgstr "В тази база няма Изолатор.\n"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:343
 msgid "Treat wounded soldiers and perform implant surgery"
 msgstr "Лекува ранени бойци и извършва имплантираща хирургия"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:345
+#, fuzzy
+msgid "No Hospital operating at this in base."
+msgstr "Няма работещи хангари в тази база."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:575
 msgid "Base is under attack, you can't destroy buildings!"
@@ -29610,6 +29622,10 @@ msgid ""
 msgstr ""
 "Ако разрушиш този хангар, ще премахнеш и самолета в него.\n"
 "Със сигурност ли искаш да премахнеш хангара?"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:600
+msgid "Containment"
+msgstr "Извънземни"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:600
 #, fuzzy
@@ -30268,6 +30284,7 @@ msgstr "Съоръжението - завършено"
 
 #: client/cgame/campaign/cp_installation_callbacks.cpp:65
 #: client/cgame/campaign/cp_installation_callbacks.cpp:230
+#: client/cgame/campaign/cp_installation_callbacks.cpp:261
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -30309,12 +30326,6 @@ msgstr "Забрави"
 #, c-format
 msgid "Condition: %3.0f%%"
 msgstr "Състояние: %3.0f%%"
-
-#: client/cgame/campaign/cp_installation_callbacks.cpp:261
-msgid "day"
-msgid_plural "days"
-msgstr[0] "ден"
-msgstr[1] "дни"
 
 #: client/cgame/campaign/cp_mapfightequip.cpp:335
 #, c-format
@@ -32007,7 +32018,7 @@ msgstr "Действие:\t%s\n"
 msgid "Unknown - not useable"
 msgstr "Непозната технология - неизползваемо"
 
-#: client/cl_inventory_callbacks.cpp:400
+#: client/cl_inventory_callbacks.cpp:402
 #, fuzzy
 msgid "Warning!"
 msgstr "Внимание"
@@ -32338,56 +32349,61 @@ msgstr ""
 msgid "Can't perform action - impossible throw!"
 msgstr "Действието невъзможно - неосъществимо хвърляне!"
 
-#: game/g_combat.cpp:1195
+#: game/g_combat.cpp:1198
 msgid "Can't perform action - object not activatable!"
 msgstr "Действието невъзможно - обекта не може да се активира!"
 
-#: game/g_combat.cpp:1221
+#: game/g_combat.cpp:1224
 msgid "Can't perform action - target is not wounded!"
 msgstr "Действието невъзможно - целта е извън обхват!"
 
-#: game/g_combat.cpp:1246
+#: game/g_combat.cpp:1249
 msgid "Can't perform action - target out of range!"
 msgstr "Действието невъзможно - целта е извън обхват!"
 
-#: game/g_combat.cpp:1292
+#: game/g_combat.cpp:1295
 msgid "Can't perform action - not enough ammo!"
 msgstr "Действието невъзможно - няма достатъчно амуниции!"
 
-#: game/g_mission.cpp:64 game/g_mission.cpp:83
+#: game/g_mission.cpp:63
 #, c-format
-msgid "%s forces have reached the %s!"
+msgid "%s forces are attacking the %s!"
 msgstr ""
 
-#: game/g_mission.cpp:67
+#: game/g_mission.cpp:66
 #, fuzzy, c-format
-msgid "%s forces have entered %s's target zone!"
+msgid "%s forces are attacking %s target zone!"
 msgstr "Извънземните навлязоха в целева зона!"
 
-#: game/g_mission.cpp:85
+#: game/g_mission.cpp:90
+#, fuzzy, c-format
+msgid "%s forces have occupied the %s!"
+msgstr "Извънземните навлязоха в целева зона!"
+
+#: game/g_mission.cpp:92
 #, c-format
 msgid "%s forces have occupied their target zone!"
 msgstr ""
 
-#: game/g_mission.cpp:105
+#: game/g_mission.cpp:112
 #, fuzzy, c-format
 msgid "The %s was placed at the %s."
 msgstr "Десантния транспорт пристигна на мястото на катастрофата."
 
-#: game/g_mission.cpp:107
+#: game/g_mission.cpp:114
 #, fuzzy, c-format
 msgid "The %s was placed."
 msgstr "Екипировката поставена"
 
-#: game/g_mission.cpp:133
-#, c-format
-msgid "The %s forces have left the %s!"
-msgstr ""
+#: game/g_mission.cpp:140
+#, fuzzy, c-format
+msgid "%s forces have left the %s!"
+msgstr "Извънземните навлязоха в целева зона!"
 
-#: game/g_mission.cpp:135
-#, c-format
-msgid "The %s forces have left their target zone!"
-msgstr ""
+#: game/g_mission.cpp:142
+#, fuzzy, c-format
+msgid "%s forces have left their target zone!"
+msgstr "Извънземните навлязоха в целева зона!"
 
 #: game/g_morale.cpp:40
 #, c-format
@@ -32468,6 +32484,20 @@ msgstr "извънземен"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Направи снимка"
+
+#~ msgid "at home base"
+#~ msgstr "в базата"
+
+#~ msgid "No Hangar functional in base."
+#~ msgstr "В тази база няма хангар."
+
+#~ msgid "No %s functional in base."
+#~ msgstr "Няма функциониращ %s в базата."
+
+#~ msgid "day"
+#~ msgid_plural "days"
+#~ msgstr[0] "ден"
+#~ msgstr[1] "дни"
 
 #~ msgid "Eaglenest"
 #~ msgstr "Орлово грнздо"
@@ -35316,20 +35346,11 @@ msgstr "Направи снимка"
 #~ msgid "You can transfer equipment - this base has a Storage.\n"
 #~ msgstr "Може да извършиш трансфера - базата има Склад.\n"
 
-#~ msgid "No Storage in this base.\n"
-#~ msgstr "В тази база няма Склад.\n"
-
 #~ msgid "You can transfer employees - this base has Living Quarters.\n"
 #~ msgstr "Може да прехвърлиш служители - тази база има Квартири.\n"
 
-#~ msgid "No Living Quarters in this base.\n"
-#~ msgstr "В тази база няма Квартири.\n"
-
 #~ msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 #~ msgstr "Може да прехвърлиш извънземни - тази база има Изолатор.\n"
-
-#~ msgid "No Alien Containment in this base.\n"
-#~ msgstr "В тази база няма Изолатор.\n"
 
 #~ msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 #~ msgstr "Може да прехвърлиш антиматерия - базара има хранилище.\n"
@@ -35345,9 +35366,6 @@ msgstr "Направи снимка"
 #~ "Centre.\n"
 #~ msgstr ""
 #~ "Трансфера на самолета е невъзможен - тази база няма Команден център.\n"
-
-#~ msgid "No Hangar in this base.\n"
-#~ msgstr "В тази база няма хангар.\n"
 
 #~ msgid "No power supplies in this base.\n"
 #~ msgstr "В тази база няма захранване.\n"
@@ -38473,9 +38491,6 @@ msgstr "Направи снимка"
 
 #~ msgid "Slot %i:\t%s (%s)"
 #~ msgstr "Позиция %i:\t%s (%s)"
-
-#~ msgid "%s (at %s)"
-#~ msgstr "%s (в %s)"
 
 #~ msgid "%s - disassembly\n"
 #~ msgstr "%s - състав\n"

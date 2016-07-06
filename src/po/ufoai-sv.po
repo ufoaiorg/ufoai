@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-16 22:45+0200\n"
+"POT-Creation-Date: 2016-07-05 22:44-0500\n"
 "PO-Revision-Date: 2011-03-06 12:23+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -235,14 +235,12 @@ msgstr "Stadium"
 
 #: ../base/maps/urban.ump:380 ../base/ufos/basemanagement.ufo:201
 #: ../base/ufos/maps.ufo:3324 ../base/ufos/ui/research.ufo:350
-#: client/cgame/campaign/cp_base_callbacks.cpp:325
 msgid "Laboratory"
 msgstr "Laboratorium"
 
 #: ../base/maps/urban.ump:401 ../base/ufos/basemanagement.ufo:216
 #: ../base/ufos/maps.ufo:3276 ../base/ufos/ui/bases.ufo:406
 #: ../base/ufos/ui/hospital.ufo:21
-#: client/cgame/campaign/cp_base_callbacks.cpp:345
 msgid "Hospital"
 msgstr "Sjukhus"
 
@@ -628,7 +626,6 @@ msgstr "Ingång"
 
 #: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:313
 #: ../base/ufos/ui/production.ufo:248
-#: client/cgame/campaign/cp_base_callbacks.cpp:315
 msgid "Storage"
 msgstr "Lager"
 
@@ -641,7 +638,6 @@ msgid "Command Centre"
 msgstr "Kommandocentral"
 
 #: ../base/ufos/basemanagement.ufo:110 ../base/ufos/ui/hire.ufo:347
-#: client/cgame/campaign/cp_base_callbacks.cpp:335
 msgid "Living Quarters"
 msgstr "Bostäder"
 
@@ -658,7 +654,6 @@ msgid "Interceptor Hangar"
 msgstr "Jagare"
 
 #: ../base/ufos/basemanagement.ufo:153 ../base/ufos/ui/production.ufo:272
-#: client/cgame/campaign/cp_base_callbacks.cpp:330
 msgid "Workshop"
 msgstr "Verkstad"
 
@@ -4834,7 +4829,7 @@ msgid ""
 "twice its size. As near as we can tell it was designed for the role of heavy "
 "fighter/interceptor, and it fulfills that role magnificently.\n"
 "\n"
-"The UFO is armed with two particle beam weapons as well as -- very "
+"The UFO is armed with three particle beam weapons as well as -- very "
 "interestingly -- two additional modular hardpoints of a design almost "
 "identical to the weapon hardpoints on our own aircraft. Even more "
 "interesting is the Gunboat's armour, an improvement over the standard skin "
@@ -24022,7 +24017,7 @@ msgstr "Bakgrund"
 #: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:142
 #: ../base/ufos/ui/bases.ufo:313 ../base/ufos/ui/geoscape.ufo:1387
 #: ../base/ufos/ui/market.ufo:154 ../base/ufos/ui/production.ufo:76
-#: ../base/ufos/ui/transfer.ufo:143 ../base/ufos/ui/transfer.ufo:163
+#: ../base/ufos/ui/transfer.ufo:154 ../base/ufos/ui/transfer.ufo:257
 #: client/cgame/campaign/cp_geoscape.cpp:309
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:805
 msgid "Aircraft"
@@ -24044,8 +24039,8 @@ msgstr "Forskningsrapporter"
 #: ../base/ufos/research.ufo:116 ../base/ufos/ui/_assets_squad.ufo:498
 #: ../base/ufos/ui/aircraft.ufo:156 ../base/ufos/ui/aircraft_equip.ufo:61
 #: ../base/ufos/ui/equipment.ufo:59 ../base/ufos/ui/hud_default.ufo:261
-#: ../base/ufos/ui/market.ufo:121 ../base/ufos/ui/transfer.ufo:137
-#: ../base/ufos/ui/transfer.ufo:148 ../base/ufos/ui/transfer.ufo:489
+#: ../base/ufos/ui/market.ufo:121 ../base/ufos/ui/transfer.ufo:139
+#: ../base/ufos/ui/transfer.ufo:251
 msgid "Equipment"
 msgstr "Utrustning"
 
@@ -25386,17 +25381,17 @@ msgstr ""
 msgid "Lock current stock level"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_base.ufo:686
+#: ../base/ufos/ui/_assets_base.ufo:687
 #, fuzzy
 msgid "Previous base"
 msgstr "Föregående bas"
 
-#: ../base/ufos/ui/_assets_base.ufo:702
+#: ../base/ufos/ui/_assets_base.ufo:703
 #, fuzzy
 msgid "Next base"
 msgstr "Nästa bas"
 
-#: ../base/ufos/ui/_assets_base.ufo:773 ../base/ufos/ui/_menu.ufo:88
+#: ../base/ufos/ui/_assets_base.ufo:774 ../base/ufos/ui/_menu.ufo:88
 #, fuzzy
 msgid "Back to base"
 msgstr "Tillbaka till basen"
@@ -25541,7 +25536,7 @@ msgstr ""
 "Weapon capacity: 1 Medium hardpoint (nose)"
 
 #: ../base/ufos/ui/_assets_map.ufo:237
-#: client/cgame/campaign/cp_aircraft.cpp:477
+#: client/cgame/campaign/cp_aircraft.cpp:479
 #: client/cgame/campaign/cp_ufo.cpp:248 client/cgame/campaign/cp_ufo.cpp:249
 msgid "UFO"
 msgstr "UFO"
@@ -25670,8 +25665,7 @@ msgstr "Status:"
 msgid "Team:"
 msgstr "Grupp:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:90
-#: ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:90 ../base/ufos/ui/aircraft_equip.ufo:109
 #: ../base/ufos/ui/aircraft_equip.ufo:128
 #: ../base/ufos/ui/aircraft_equip.ufo:147
 #: ../base/ufos/ui/aircraft_equip.ufo:166
@@ -25756,7 +25750,8 @@ msgid "No soldiers assigned"
 msgstr "Ingen sköld tilldelad"
 
 #: ../base/ufos/ui/aliencont.ufo:56 ../base/ufos/ui/aliencont.ufo:309
-msgid "Kill this alien"
+#, fuzzy
+msgid "Kill one alien"
 msgstr "Döda denna utomjording"
 
 #: ../base/ufos/ui/aliencont.ufo:75
@@ -25854,11 +25849,11 @@ msgstr "Namn:"
 msgid "Targetted UFO:"
 msgstr ""
 
-#: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:909
-#: ../base/ufos/ui/geoscape.ufo:1000
+#: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:1000
 #: ../base/ufos/ui/popup_installations.ufo:528
-msgid "Time to build:"
-msgstr "Tid att bygga:"
+#, fuzzy
+msgid "Time to completion:"
+msgstr "Aktivera texturkomprimering."
 
 #: ../base/ufos/ui/basedefence.ufo:354
 #, fuzzy
@@ -25912,8 +25907,8 @@ msgstr "Sammandrag"
 
 #: ../base/ufos/ui/bases.ufo:118 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654
-#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:460
+#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
+#: ../base/ufos/ui/transfer.ufo:463
 #: client/cgame/campaign/cp_base_callbacks.cpp:602
 #: client/cgame/campaign/cp_base_callbacks.cpp:613
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
@@ -26219,13 +26214,15 @@ msgstr "Avsluta uppdraget automatiskt"
 msgid "This kind of mission cannot be done automatically"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:897
-#: ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
 msgid "Cost:"
 msgstr "Kostnad:"
 
-#: ../base/ufos/ui/geoscape.ufo:952
-#: ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:909
+msgid "Time to build:"
+msgstr "Tid att bygga:"
+
+#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build"
 msgstr "Bygg"
 
@@ -26269,8 +26266,7 @@ msgid "Select aircraft"
 msgstr "Välj farkost"
 
 #: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642
-#: ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
 #, fuzzy
 msgid "ETA:"
 msgstr "Åtgärd:\t%s\n"
@@ -27974,8 +27970,7 @@ msgstr "Kapacitet"
 
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892
-#: ../base/ufos/ui/transfer.ufo:370
+#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
 msgid "free"
 msgstr ""
 
@@ -28197,8 +28192,8 @@ msgstr "Baser"
 msgid "Installations"
 msgstr "Installationer"
 
-#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:139
-#: ../base/ufos/ui/transfer.ufo:153
+#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:144
+#: ../base/ufos/ui/transfer.ufo:253
 msgid "Employees"
 msgstr "Anställda"
 
@@ -28301,72 +28296,72 @@ msgstr "Updatera GUI med det markerade objektet"
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 msgstr "Välj bas att överföra till"
 
-#: ../base/ufos/ui/transfer.ufo:141 ../base/ufos/ui/transfer.ufo:158
+#: ../base/ufos/ui/transfer.ufo:149 ../base/ufos/ui/transfer.ufo:255
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:145
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:793
 msgid "Aliens"
 msgstr "Utomjordingar"
 
-#: ../base/ufos/ui/transfer.ufo:190
+#: ../base/ufos/ui/transfer.ufo:181
 #, fuzzy
 msgid "From"
 msgstr "Dimma:"
 
-#: ../base/ufos/ui/transfer.ufo:197
+#: ../base/ufos/ui/transfer.ufo:188
 #, fuzzy
 msgid "To"
 msgstr "Åtgärd:\t%s\n"
 
-#: ../base/ufos/ui/transfer.ufo:279
+#: ../base/ufos/ui/transfer.ufo:282
 #, fuzzy
 msgid "Cargo"
 msgstr "Fargo"
 
-#: ../base/ufos/ui/transfer.ufo:288
+#: ../base/ufos/ui/transfer.ufo:291
 #: client/cgame/campaign/cp_base_callbacks.cpp:838
 #, fuzzy
 msgid "Amount"
 msgstr "Mängd"
 
-#: ../base/ufos/ui/transfer.ufo:342
+#: ../base/ufos/ui/transfer.ufo:345
 #, fuzzy
 msgid "Destination base"
 msgstr "Aktuell bas:"
 
-#: ../base/ufos/ui/transfer.ufo:362
+#: ../base/ufos/ui/transfer.ufo:365
 #, fuzzy
 msgid "Building"
 msgstr "Byggnader"
 
-#: ../base/ufos/ui/transfer.ufo:386
+#: ../base/ufos/ui/transfer.ufo:389
 #, fuzzy
 msgid "all space"
 msgstr "Återkalla"
 
-#: ../base/ufos/ui/transfer.ufo:415
+#: ../base/ufos/ui/transfer.ufo:418
 #, fuzzy
 msgid "Capacity overload"
 msgstr "Kapacitet"
 
-#: ../base/ufos/ui/transfer.ufo:434 ../base/ufos/ui/transfer.ufo:461
+#: ../base/ufos/ui/transfer.ufo:437 ../base/ufos/ui/transfer.ufo:464
 msgid "Start the transfer"
 msgstr "Starta överföringen"
 
-#: ../base/ufos/ui/transfer.ufo:448
+#: ../base/ufos/ui/transfer.ufo:451
 #, fuzzy
 msgid "List"
 msgstr "Lt"
 
-#: ../base/ufos/ui/transfer.ufo:449
+#: ../base/ufos/ui/transfer.ufo:452
 #, fuzzy
 msgid "List active transfers"
 msgstr "Starta överföringen"
 
-#: ../base/ufos/ui/transfer.ufo:475
+#: ../base/ufos/ui/transfer.ufo:478
 msgid "Clear"
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:476
+#: ../base/ufos/ui/transfer.ufo:479
 msgid "Clear cargo"
 msgstr ""
 
@@ -28566,9 +28561,9 @@ msgstr "3-skottssalva"
 #: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
 #: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
 #: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
-#: ../base/ufos/weapons_multiplayer.ufo:318
-#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:439
-#: ../base/ufos/weapons_plasma.ufo:529 ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_multiplayer.ufo:318 ../base/ufos/weapons_plasma.ufo:203
+#: ../base/ufos/weapons_plasma.ufo:439 ../base/ufos/weapons_plasma.ufo:529
+#: ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr "Helautomatisk"
 
@@ -28596,8 +28591,8 @@ msgid "5-Shot Burst"
 msgstr "5-skottssalva"
 
 #: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
-#: ../base/ufos/weapons_multiplayer.ufo:342
-#: ../base/ufos/weapons_plasma.ufo:553 ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_multiplayer.ufo:342 ../base/ufos/weapons_plasma.ufo:553
+#: ../base/ufos/weapons_ugv.ufo:135
 #, fuzzy
 msgid "Full-Auto Sweep"
 msgstr "Helautomatisk"
@@ -28989,7 +28984,7 @@ msgid "This soldier can not carry anything else."
 msgstr ""
 
 #: client/battlescape/cl_actor.cpp:1016 client/battlescape/cl_hud.cpp:1353
-#: client/cl_inventory.cpp:74 client/cl_inventory_callbacks.cpp:395
+#: client/cl_inventory.cpp:74 client/cl_inventory_callbacks.cpp:397
 #, fuzzy
 msgid "Warning"
 msgstr "Nanning"
@@ -29298,17 +29293,17 @@ msgstr "%s laddat\n"
 msgid "- HP loss per turn: %i\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1344 client/cl_inventory_callbacks.cpp:387
+#: client/battlescape/cl_hud.cpp:1344 client/cl_inventory_callbacks.cpp:389
 msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1357 client/cl_inventory_callbacks.cpp:399
+#: client/battlescape/cl_hud.cpp:1357 client/cl_inventory_callbacks.cpp:401
 msgid "Kg"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1358 client/cl_inventory_callbacks.cpp:401
+#: client/battlescape/cl_hud.cpp:1358 client/cl_inventory_callbacks.cpp:403
 #, fuzzy
 msgid "TU:"
 msgstr "Åtgärd:\t%s\n"
@@ -29324,12 +29319,12 @@ msgid "Can't perform action - no item in hand!"
 msgstr "Kan inte genomföra handlingen - inte en soldat!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:89
-#: client/battlescape/cl_hud_callbacks.cpp:264 game/g_combat.cpp:1237
+#: client/battlescape/cl_hud_callbacks.cpp:264 game/g_combat.cpp:1240
 #, fuzzy
 msgid "Can't perform action - no ammo!"
 msgstr "Kan inte genomföra handlingen - slut på ammunition!\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1229
+#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1232
 #, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr "Kan inte genomföra handlingen - vapnet kan inte avfyras med en hand!\n"
@@ -29546,83 +29541,83 @@ msgstr "%s har blivit befordrad till %s.\n"
 msgid "Your round started!"
 msgstr "Din omgång har börjat!\n"
 
-#: client/cgame/campaign/cp_aircraft.cpp:360
+#: client/cgame/campaign/cp_aircraft.cpp:362
 msgid "ON RED ALERT"
 msgstr "I BEREDSKAP"
 
-#: client/cgame/campaign/cp_aircraft.cpp:364
+#: client/cgame/campaign/cp_aircraft.cpp:366
 msgid "Nothing - should not be displayed"
 msgstr "Ingenting - ska inte visas"
 
-#: client/cgame/campaign/cp_aircraft.cpp:366
-#, fuzzy
-msgid "at home base"
-msgstr "Vid hembasen"
-
 #: client/cgame/campaign/cp_aircraft.cpp:368
+#, fuzzy, c-format
+msgid "at %s"
+msgstr "%s (%s)\n"
+
+#: client/cgame/campaign/cp_aircraft.cpp:370
 #, fuzzy
 msgid "refuelling"
 msgstr "Tankar"
 
-#: client/cgame/campaign/cp_aircraft.cpp:370
+#: client/cgame/campaign/cp_aircraft.cpp:372
 msgid "idle"
 msgstr "inaktiv"
 
-#: client/cgame/campaign/cp_aircraft.cpp:372
+#: client/cgame/campaign/cp_aircraft.cpp:374
 #, fuzzy
 msgid "in transit"
 msgstr "Flyger"
 
-#: client/cgame/campaign/cp_aircraft.cpp:374
+#: client/cgame/campaign/cp_aircraft.cpp:376
 #, fuzzy
 msgid "enroute to mission"
 msgstr "Automatiskt uppdrag"
 
-#: client/cgame/campaign/cp_aircraft.cpp:376
+#: client/cgame/campaign/cp_aircraft.cpp:378
 #, fuzzy
 msgid "pursuing a UFO"
 msgstr "Jagar ett UFO"
 
-#: client/cgame/campaign/cp_aircraft.cpp:378
+#: client/cgame/campaign/cp_aircraft.cpp:380
 #, fuzzy
 msgid "ready to drop soldiers"
 msgstr "Byt namn på din soldat"
 
-#: client/cgame/campaign/cp_aircraft.cpp:380
+#: client/cgame/campaign/cp_aircraft.cpp:382
 #, fuzzy
 msgid "intercepting a UFO"
 msgstr "Jagar"
 
-#: client/cgame/campaign/cp_aircraft.cpp:382
+#: client/cgame/campaign/cp_aircraft.cpp:384
 msgid "enroute to new home base"
 msgstr "på väg till nya hembasen"
 
-#: client/cgame/campaign/cp_aircraft.cpp:384
+#: client/cgame/campaign/cp_aircraft.cpp:386
 #, fuzzy
 msgid "returning to base"
 msgstr "Aktuell bas:"
 
-#: client/cgame/campaign/cp_aircraft.cpp:473
+#: client/cgame/campaign/cp_aircraft.cpp:475
 msgid "Interceptor"
 msgstr "Jagare"
 
-#: client/cgame/campaign/cp_aircraft.cpp:475
+#: client/cgame/campaign/cp_aircraft.cpp:477
 msgid "Transporter"
 msgstr "Transportör"
 
-#: client/cgame/campaign/cp_aircraft.cpp:720
+#: client/cgame/campaign/cp_aircraft.cpp:722
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr "En ny %s är färdig om %s"
 
-#: client/cgame/campaign/cp_aircraft.cpp:721
-#: client/cgame/campaign/cp_aircraft.cpp:1061
-#: client/cgame/campaign/cp_aircraft.cpp:1102
-#: client/cgame/campaign/cp_aircraft.cpp:1118
-#: client/cgame/campaign/cp_aircraft.cpp:1159
-#: client/cgame/campaign/cp_aircraft.cpp:1215
-#: client/cgame/campaign/cp_aircraft.cpp:1238
-#: client/cgame/campaign/cp_aircraft.cpp:1992
+#: client/cgame/campaign/cp_aircraft.cpp:723
+#: client/cgame/campaign/cp_aircraft.cpp:1063
+#: client/cgame/campaign/cp_aircraft.cpp:1104
+#: client/cgame/campaign/cp_aircraft.cpp:1120
+#: client/cgame/campaign/cp_aircraft.cpp:1161
+#: client/cgame/campaign/cp_aircraft.cpp:1217
+#: client/cgame/campaign/cp_aircraft.cpp:1240
+#: client/cgame/campaign/cp_aircraft.cpp:1994
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:93
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:101
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:109
@@ -29676,57 +29671,57 @@ msgstr "En ny %s är färdig om %s"
 msgid "Notice"
 msgstr "Notera"
 
-#: client/cgame/campaign/cp_aircraft.cpp:791
+#: client/cgame/campaign/cp_aircraft.cpp:793
 #, fuzzy
 msgid "No operational hangars at that base."
 msgstr "Inga hangarer i den här basen."
 
-#: client/cgame/campaign/cp_aircraft.cpp:795
+#: client/cgame/campaign/cp_aircraft.cpp:797
 #, fuzzy
 msgid "No free hangars at that base."
 msgstr "Inga hangarer i den här basen."
 
-#: client/cgame/campaign/cp_aircraft.cpp:798
+#: client/cgame/campaign/cp_aircraft.cpp:800
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Inte tillräckligt med ledigt personalutrymme på basen."
 
-#: client/cgame/campaign/cp_aircraft.cpp:801
+#: client/cgame/campaign/cp_aircraft.cpp:803
 msgid "Insufficient storage space at that base."
 msgstr "Inte tillräckligt med lagringsutrymme på basen."
 
-#: client/cgame/campaign/cp_aircraft.cpp:805
+#: client/cgame/campaign/cp_aircraft.cpp:807
 msgid "That base is beyond this aircraft's range."
 msgstr "Basen är utanför flygplanets räckvidd."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1060
+#: client/cgame/campaign/cp_aircraft.cpp:1062
 #, fuzzy, c-format
 msgid "Craft %s has returned to %s."
 msgstr "Din landare har dåligt med bränsle och återvänder till basen"
 
-#: client/cgame/campaign/cp_aircraft.cpp:1101
+#: client/cgame/campaign/cp_aircraft.cpp:1103
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:1117
+#: client/cgame/campaign/cp_aircraft.cpp:1119
 #, fuzzy, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Din landare har dåligt med bränsle och återvänder till basen"
 
-#: client/cgame/campaign/cp_aircraft.cpp:1159
+#: client/cgame/campaign/cp_aircraft.cpp:1161
 #, fuzzy, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "Din landare har dåligt med bränsle och återvänder till basen"
 
-#: client/cgame/campaign/cp_aircraft.cpp:1215
+#: client/cgame/campaign/cp_aircraft.cpp:1217
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Lägg till en eller mera soldater till detta flygplan först."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1238
+#: client/cgame/campaign/cp_aircraft.cpp:1240
 msgid "Insufficient fuel."
 msgstr "Otillräckligt med bränsle."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1992
+#: client/cgame/campaign/cp_aircraft.cpp:1994
 #, fuzzy, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "Din landare har dåligt med bränsle och återvänder till basen"
@@ -30024,7 +30019,7 @@ msgstr "Köp eller producera en ny farkost"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:309
 #, fuzzy
-msgid "No Hangar functional in base."
+msgid "No Hangar operating at this base."
 msgstr "Ingen hangar i den här basen.\n"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:313
@@ -30033,14 +30028,9 @@ msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "Köp/sälj utrustning"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:315
-#: client/cgame/campaign/cp_base_callbacks.cpp:325
-#: client/cgame/campaign/cp_base_callbacks.cpp:330
-#: client/cgame/campaign/cp_base_callbacks.cpp:335
-#: client/cgame/campaign/cp_base_callbacks.cpp:340
-#: client/cgame/campaign/cp_base_callbacks.cpp:345
-#, fuzzy, c-format
-msgid "No %s functional in base."
-msgstr "Ingen lagerbyggnad i den här basen."
+#, fuzzy
+msgid "No Storage operating at this base."
+msgstr "Ingen lagerbyggnad i den här basen.\n"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:318
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
@@ -30055,15 +30045,30 @@ msgstr "Överför utrustning eller personal"
 msgid "Research new technology"
 msgstr "Forska fram ny teknologi"
 
+#: client/cgame/campaign/cp_base_callbacks.cpp:325
+#, fuzzy
+msgid "No Laboratory operating at this base."
+msgstr "Inga hangarer i den här basen."
+
 #: client/cgame/campaign/cp_base_callbacks.cpp:328
 #, fuzzy
 msgid "Produce equipment, aircraft and UGV"
 msgstr "Producera farkost"
 
+#: client/cgame/campaign/cp_base_callbacks.cpp:330
+#, fuzzy
+msgid "No Workshop operating at this base."
+msgstr "Inga hangarer i den här basen."
+
 #: client/cgame/campaign/cp_base_callbacks.cpp:333
 #, fuzzy
 msgid "Hire or dismiss employees"
 msgstr "Anställ folk"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:335
+#, fuzzy
+msgid "No Living Quarters operating at this base."
+msgstr "Det finns inga bostäder i den här basen.\n"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:338
 #, fuzzy
@@ -30071,13 +30076,18 @@ msgid "Manage captured aliens"
 msgstr "Du har fångat nya utomjordingar."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:340
-#: client/cgame/campaign/cp_base_callbacks.cpp:600
-msgid "Containment"
-msgstr "Förvaring"
+#, fuzzy
+msgid "No Containment operating at this base."
+msgstr "Ingen förvaring för utomjordingar finns i den här basen.\n"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:343
 msgid "Treat wounded soldiers and perform implant surgery"
 msgstr ""
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:345
+#, fuzzy
+msgid "No Hospital operating at this in base."
+msgstr "Ingen lagerbyggnad i den här basen."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:575
 #, fuzzy
@@ -30110,6 +30120,10 @@ msgid ""
 "If you destroy this building, you will also kill the aliens inside.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:600
+msgid "Containment"
+msgstr "Förvaring"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:600
 #, fuzzy
@@ -30774,6 +30788,7 @@ msgstr "Nation"
 
 #: client/cgame/campaign/cp_installation_callbacks.cpp:65
 #: client/cgame/campaign/cp_installation_callbacks.cpp:230
+#: client/cgame/campaign/cp_installation_callbacks.cpp:261
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -30818,12 +30833,6 @@ msgstr "Glöm det"
 #, c-format
 msgid "Condition: %3.0f%%"
 msgstr ""
-
-#: client/cgame/campaign/cp_installation_callbacks.cpp:261
-msgid "day"
-msgid_plural "days"
-msgstr[0] "dygn"
-msgstr[1] "dygn"
 
 #: client/cgame/campaign/cp_mapfightequip.cpp:335
 #, fuzzy, c-format
@@ -32554,7 +32563,7 @@ msgstr "Åtgärd:\t%s\n"
 msgid "Unknown - not useable"
 msgstr "Okänd teknologi möjlig att forska på"
 
-#: client/cl_inventory_callbacks.cpp:400
+#: client/cl_inventory_callbacks.cpp:402
 #, fuzzy
 msgid "Warning!"
 msgstr "Nanning"
@@ -32913,60 +32922,65 @@ msgstr ""
 msgid "Can't perform action - impossible throw!"
 msgstr "Kan inte genomföra handlingen - omöjligt kast!\n"
 
-#: game/g_combat.cpp:1195
+#: game/g_combat.cpp:1198
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr "Kan inte genomföra handlingen - objektet är inte aktiverbart!\n"
 
-#: game/g_combat.cpp:1221
+#: game/g_combat.cpp:1224
 #, fuzzy
 msgid "Can't perform action - target is not wounded!"
 msgstr "Kan inte genomföra handlingen - inte en soldat!\n"
 
-#: game/g_combat.cpp:1246
+#: game/g_combat.cpp:1249
 #, fuzzy
 msgid "Can't perform action - target out of range!"
 msgstr "Kan inte genomföra handlingen - inte en soldat!\n"
 
-#: game/g_combat.cpp:1292
+#: game/g_combat.cpp:1295
 #, fuzzy
 msgid "Can't perform action - not enough ammo!"
 msgstr "Kan inte genomföra handlingen - inte tillräckligt med ammunition!\n"
 
-#: game/g_mission.cpp:64 game/g_mission.cpp:83
+#: game/g_mission.cpp:63
 #, c-format
-msgid "%s forces have reached the %s!"
+msgid "%s forces are attacking the %s!"
 msgstr ""
 
-#: game/g_mission.cpp:67
+#: game/g_mission.cpp:66
 #, fuzzy, c-format
-msgid "%s forces have entered %s's target zone!"
+msgid "%s forces are attacking %s target zone!"
 msgstr "Utomjordingar gick in i målzonen\n"
 
-#: game/g_mission.cpp:85
+#: game/g_mission.cpp:90
+#, fuzzy, c-format
+msgid "%s forces have occupied the %s!"
+msgstr "Utomjordingar gick in i målzonen\n"
+
+#: game/g_mission.cpp:92
 #, c-format
 msgid "%s forces have occupied their target zone!"
 msgstr ""
 
-#: game/g_mission.cpp:105
+#: game/g_mission.cpp:112
 #, fuzzy, c-format
 msgid "The %s was placed at the %s."
 msgstr "%s överfördes till %s."
 
-#: game/g_mission.cpp:107
+#: game/g_mission.cpp:114
 #, fuzzy, c-format
 msgid "The %s was placed."
 msgstr "%i objekt såldes."
 
-#: game/g_mission.cpp:133
-#, c-format
-msgid "The %s forces have left the %s!"
-msgstr ""
+#: game/g_mission.cpp:140
+#, fuzzy, c-format
+msgid "%s forces have left the %s!"
+msgstr "Utomjordingar gick in i målzonen\n"
 
-#: game/g_mission.cpp:135
-#, c-format
-msgid "The %s forces have left their target zone!"
-msgstr ""
+#: game/g_mission.cpp:142
+#, fuzzy, c-format
+msgid "%s forces have left their target zone!"
+msgstr "Utomjordingar gick in i målzonen\n"
 
 #: game/g_morale.cpp:40
 #, fuzzy, c-format
@@ -33058,6 +33072,23 @@ msgstr "utomjordisk"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Ta en skärmbild"
+
+#, fuzzy
+#~ msgid "at home base"
+#~ msgstr "Vid hembasen"
+
+#, fuzzy
+#~ msgid "No Hangar functional in base."
+#~ msgstr "Ingen hangar i den här basen.\n"
+
+#, fuzzy
+#~ msgid "No %s functional in base."
+#~ msgstr "Ingen lagerbyggnad i den här basen."
+
+#~ msgid "day"
+#~ msgid_plural "days"
+#~ msgstr[0] "dygn"
+#~ msgstr[1] "dygn"
 
 #~ msgid "Eaglenest"
 #~ msgstr "Örnnäste"
@@ -35329,21 +35360,12 @@ msgstr "Ta en skärmbild"
 #~ msgid "You can transfer equipment - this base has a Storage.\n"
 #~ msgstr "Du kan överföra utrustning - den här basen har en lagerbyggnad.\n"
 
-#~ msgid "No Storage in this base.\n"
-#~ msgstr "Ingen lagerbyggnad i den här basen.\n"
-
 #~ msgid "You can transfer employees - this base has Living Quarters.\n"
 #~ msgstr "Du kan överföra anställda - den här basen har bostäder.\n"
-
-#~ msgid "No Living Quarters in this base.\n"
-#~ msgstr "Det finns inga bostäder i den här basen.\n"
 
 #~ msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 #~ msgstr ""
 #~ "Du kan överföra utomjordingar - den här basen har utomjordisk förvaring.\n"
-
-#~ msgid "No Alien Containment in this base.\n"
-#~ msgstr "Ingen förvaring för utomjordingar finns i den här basen.\n"
 
 #~ msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 #~ msgstr ""
@@ -35361,9 +35383,6 @@ msgstr "Ta en skärmbild"
 #~ msgstr ""
 #~ "Överföring av farkost är inte möjlig - den här basen har ingen "
 #~ "kommandocentral.\n"
-
-#~ msgid "No Hangar in this base.\n"
-#~ msgstr "Ingen hangar i den här basen.\n"
 
 #~ msgid "No power supplies in this base.\n"
 #~ msgstr "Ingen strömförsörjning i den här basen.\n"
@@ -37633,10 +37652,6 @@ msgstr "Ta en skärmbild"
 #~ msgid "Slot %i:\t%s (%s)"
 #~ msgstr "Plats %i:\t%s\n"
 
-#, fuzzy
-#~ msgid "%s (at %s)"
-#~ msgstr "%s (%s)\n"
-
 #~ msgid "%s - disassembly\n"
 #~ msgstr "%s - nedmontering\n"
 
@@ -38582,10 +38597,6 @@ msgstr "Ta en skärmbild"
 #, fuzzy
 #~ msgid "No power supplies in this base"
 #~ msgstr "Ingen strömförsörjning i den här basen."
-
-#, fuzzy
-#~ msgid "No storage in this base"
-#~ msgstr "Ingen lagerbyggnad i den här basen."
 
 #~ msgid "Show aircraft"
 #~ msgstr "Visa farkost"

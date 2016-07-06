@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-16 22:45+0200\n"
+"POT-Creation-Date: 2016-07-05 22:44-0500\n"
 "PO-Revision-Date: 2010-05-26 14:49+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: UFO: Alien Invasion JP\n"
@@ -225,14 +225,12 @@ msgstr "Stadium"
 
 #: ../base/maps/urban.ump:380 ../base/ufos/basemanagement.ufo:201
 #: ../base/ufos/maps.ufo:3324 ../base/ufos/ui/research.ufo:350
-#: client/cgame/campaign/cp_base_callbacks.cpp:325
 msgid "Laboratory"
 msgstr "研究所"
 
 #: ../base/maps/urban.ump:401 ../base/ufos/basemanagement.ufo:216
 #: ../base/ufos/maps.ufo:3276 ../base/ufos/ui/bases.ufo:406
 #: ../base/ufos/ui/hospital.ufo:21
-#: client/cgame/campaign/cp_base_callbacks.cpp:345
 msgid "Hospital"
 msgstr "医療施設"
 
@@ -601,7 +599,6 @@ msgstr "入り口"
 
 #: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:313
 #: ../base/ufos/ui/production.ufo:248
-#: client/cgame/campaign/cp_base_callbacks.cpp:315
 msgid "Storage"
 msgstr "倉庫"
 
@@ -614,7 +611,6 @@ msgid "Command Centre"
 msgstr "司令室"
 
 #: ../base/ufos/basemanagement.ufo:110 ../base/ufos/ui/hire.ufo:347
-#: client/cgame/campaign/cp_base_callbacks.cpp:335
 msgid "Living Quarters"
 msgstr "居住区"
 
@@ -630,7 +626,6 @@ msgid "Interceptor Hangar"
 msgstr "迎撃機"
 
 #: ../base/ufos/basemanagement.ufo:153 ../base/ufos/ui/production.ufo:272
-#: client/cgame/campaign/cp_base_callbacks.cpp:330
 msgid "Workshop"
 msgstr "工房"
 
@@ -4827,7 +4822,7 @@ msgid ""
 "twice its size. As near as we can tell it was designed for the role of heavy "
 "fighter/interceptor, and it fulfills that role magnificently.\n"
 "\n"
-"The UFO is armed with two particle beam weapons as well as -- very "
+"The UFO is armed with three particle beam weapons as well as -- very "
 "interestingly -- two additional modular hardpoints of a design almost "
 "identical to the weapon hardpoints on our own aircraft. Even more "
 "interesting is the Gunboat's armour, an improvement over the standard skin "
@@ -23308,7 +23303,7 @@ msgstr "世界背景"
 #: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:142
 #: ../base/ufos/ui/bases.ufo:313 ../base/ufos/ui/geoscape.ufo:1387
 #: ../base/ufos/ui/market.ufo:154 ../base/ufos/ui/production.ufo:76
-#: ../base/ufos/ui/transfer.ufo:143 ../base/ufos/ui/transfer.ufo:163
+#: ../base/ufos/ui/transfer.ufo:154 ../base/ufos/ui/transfer.ufo:257
 #: client/cgame/campaign/cp_geoscape.cpp:309
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:805
 msgid "Aircraft"
@@ -23330,8 +23325,8 @@ msgstr "研究報告"
 #: ../base/ufos/research.ufo:116 ../base/ufos/ui/_assets_squad.ufo:498
 #: ../base/ufos/ui/aircraft.ufo:156 ../base/ufos/ui/aircraft_equip.ufo:61
 #: ../base/ufos/ui/equipment.ufo:59 ../base/ufos/ui/hud_default.ufo:261
-#: ../base/ufos/ui/market.ufo:121 ../base/ufos/ui/transfer.ufo:137
-#: ../base/ufos/ui/transfer.ufo:148 ../base/ufos/ui/transfer.ufo:489
+#: ../base/ufos/ui/market.ufo:121 ../base/ufos/ui/transfer.ufo:139
+#: ../base/ufos/ui/transfer.ufo:251
 msgid "Equipment"
 msgstr "装備"
 
@@ -24730,17 +24725,17 @@ msgstr ""
 msgid "Lock current stock level"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_base.ufo:686
+#: ../base/ufos/ui/_assets_base.ufo:687
 #, fuzzy
 msgid "Previous base"
 msgstr "前の基地に戻る"
 
-#: ../base/ufos/ui/_assets_base.ufo:702
+#: ../base/ufos/ui/_assets_base.ufo:703
 #, fuzzy
 msgid "Next base"
 msgstr "次の基地に移る"
 
-#: ../base/ufos/ui/_assets_base.ufo:773 ../base/ufos/ui/_menu.ufo:88
+#: ../base/ufos/ui/_assets_base.ufo:774 ../base/ufos/ui/_menu.ufo:88
 #, fuzzy
 msgid "Back to base"
 msgstr "基地へ戻ります"
@@ -24783,7 +24778,7 @@ msgid "Dropship"
 msgstr ""
 
 #: ../base/ufos/ui/_assets_map.ufo:237
-#: client/cgame/campaign/cp_aircraft.cpp:477
+#: client/cgame/campaign/cp_aircraft.cpp:479
 #: client/cgame/campaign/cp_ufo.cpp:248 client/cgame/campaign/cp_ufo.cpp:249
 msgid "UFO"
 msgstr "UFO"
@@ -24914,8 +24909,7 @@ msgstr "状態:"
 msgid "Team:"
 msgstr "Team"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:90
-#: ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:90 ../base/ufos/ui/aircraft_equip.ufo:109
 #: ../base/ufos/ui/aircraft_equip.ufo:128
 #: ../base/ufos/ui/aircraft_equip.ufo:147
 #: ../base/ufos/ui/aircraft_equip.ufo:166
@@ -25000,7 +24994,8 @@ msgid "No soldiers assigned"
 msgstr "何も装備されていません\n"
 
 #: ../base/ufos/ui/aliencont.ufo:56 ../base/ufos/ui/aliencont.ufo:309
-msgid "Kill this alien"
+#, fuzzy
+msgid "Kill one alien"
 msgstr "このエイリアンを処刑します"
 
 #: ../base/ufos/ui/aliencont.ufo:75
@@ -25098,11 +25093,11 @@ msgstr "名前:"
 msgid "Targetted UFO:"
 msgstr ""
 
-#: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:909
-#: ../base/ufos/ui/geoscape.ufo:1000
+#: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:1000
 #: ../base/ufos/ui/popup_installations.ufo:528
-msgid "Time to build:"
-msgstr "完成予定:"
+#, fuzzy
+msgid "Time to completion:"
+msgstr "テクスチャ圧縮:"
 
 #: ../base/ufos/ui/basedefence.ufo:354
 #, fuzzy
@@ -25156,8 +25151,8 @@ msgstr ""
 
 #: ../base/ufos/ui/bases.ufo:118 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654
-#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:460
+#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
+#: ../base/ufos/ui/transfer.ufo:463
 #: client/cgame/campaign/cp_base_callbacks.cpp:602
 #: client/cgame/campaign/cp_base_callbacks.cpp:613
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
@@ -25456,13 +25451,15 @@ msgstr "自動的に戦闘を行ないます"
 msgid "This kind of mission cannot be done automatically"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:897
-#: ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
 msgid "Cost:"
 msgstr "費用:"
 
-#: ../base/ufos/ui/geoscape.ufo:952
-#: ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:909
+msgid "Time to build:"
+msgstr "完成予定:"
+
+#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build"
 msgstr "Build"
 
@@ -25506,8 +25503,7 @@ msgid "Select aircraft"
 msgstr "航空機の選択"
 
 #: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642
-#: ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
 msgid "ETA:"
 msgstr "ETA:"
 
@@ -27208,8 +27204,7 @@ msgstr "最大収容人数"
 
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892
-#: ../base/ufos/ui/transfer.ufo:370
+#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
 msgid "free"
 msgstr ""
 
@@ -27429,8 +27424,8 @@ msgstr "基地"
 msgid "Installations"
 msgstr "施設"
 
-#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:139
-#: ../base/ufos/ui/transfer.ufo:153
+#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:144
+#: ../base/ufos/ui/transfer.ufo:253
 msgid "Employees"
 msgstr "人員"
 
@@ -27533,69 +27528,69 @@ msgstr "新しいチームを作成します"
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:141 ../base/ufos/ui/transfer.ufo:158
+#: ../base/ufos/ui/transfer.ufo:149 ../base/ufos/ui/transfer.ufo:255
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:145
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:793
 msgid "Aliens"
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:190
+#: ../base/ufos/ui/transfer.ufo:181
 msgid "From"
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:197
+#: ../base/ufos/ui/transfer.ufo:188
 #, fuzzy
 msgid "To"
 msgstr "ETA:"
 
-#: ../base/ufos/ui/transfer.ufo:279
+#: ../base/ufos/ui/transfer.ufo:282
 msgid "Cargo"
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:288
+#: ../base/ufos/ui/transfer.ufo:291
 #: client/cgame/campaign/cp_base_callbacks.cpp:838
 #, fuzzy
 msgid "Amount"
 msgstr "量"
 
-#: ../base/ufos/ui/transfer.ufo:342
+#: ../base/ufos/ui/transfer.ufo:345
 #, fuzzy
 msgid "Destination base"
 msgstr "施設を破壊します"
 
-#: ../base/ufos/ui/transfer.ufo:362
+#: ../base/ufos/ui/transfer.ufo:365
 #, fuzzy
 msgid "Building"
 msgstr "Buildings"
 
-#: ../base/ufos/ui/transfer.ufo:386
+#: ../base/ufos/ui/transfer.ufo:389
 #, fuzzy
 msgid "all space"
 msgstr "航空機を帰還させます"
 
-#: ../base/ufos/ui/transfer.ufo:415
+#: ../base/ufos/ui/transfer.ufo:418
 #, fuzzy
 msgid "Capacity overload"
 msgstr "最大収容人数"
 
-#: ../base/ufos/ui/transfer.ufo:434 ../base/ufos/ui/transfer.ufo:461
+#: ../base/ufos/ui/transfer.ufo:437 ../base/ufos/ui/transfer.ufo:464
 msgid "Start the transfer"
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:448
+#: ../base/ufos/ui/transfer.ufo:451
 #, fuzzy
 msgid "List"
 msgstr "Lt"
 
-#: ../base/ufos/ui/transfer.ufo:449
+#: ../base/ufos/ui/transfer.ufo:452
 msgid "List active transfers"
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:475
+#: ../base/ufos/ui/transfer.ufo:478
 msgid "Clear"
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:476
+#: ../base/ufos/ui/transfer.ufo:479
 msgid "Clear cargo"
 msgstr ""
 
@@ -27790,9 +27785,9 @@ msgstr ""
 #: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
 #: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
 #: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
-#: ../base/ufos/weapons_multiplayer.ufo:318
-#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:439
-#: ../base/ufos/weapons_plasma.ufo:529 ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_multiplayer.ufo:318 ../base/ufos/weapons_plasma.ufo:203
+#: ../base/ufos/weapons_plasma.ufo:439 ../base/ufos/weapons_plasma.ufo:529
+#: ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr ""
 
@@ -27820,8 +27815,8 @@ msgid "5-Shot Burst"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
-#: ../base/ufos/weapons_multiplayer.ufo:342
-#: ../base/ufos/weapons_plasma.ufo:553 ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_multiplayer.ufo:342 ../base/ufos/weapons_plasma.ufo:553
+#: ../base/ufos/weapons_ugv.ufo:135
 msgid "Full-Auto Sweep"
 msgstr ""
 
@@ -28195,7 +28190,7 @@ msgid "This soldier can not carry anything else."
 msgstr ""
 
 #: client/battlescape/cl_actor.cpp:1016 client/battlescape/cl_hud.cpp:1353
-#: client/cl_inventory.cpp:74 client/cl_inventory_callbacks.cpp:395
+#: client/cl_inventory.cpp:74 client/cl_inventory_callbacks.cpp:397
 #, fuzzy
 msgid "Warning"
 msgstr "国"
@@ -28481,17 +28476,17 @@ msgstr "装填弾薬: %s\n"
 msgid "- HP loss per turn: %i\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1344 client/cl_inventory_callbacks.cpp:387
+#: client/battlescape/cl_hud.cpp:1344 client/cl_inventory_callbacks.cpp:389
 msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1357 client/cl_inventory_callbacks.cpp:399
+#: client/battlescape/cl_hud.cpp:1357 client/cl_inventory_callbacks.cpp:401
 msgid "Kg"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1358 client/cl_inventory_callbacks.cpp:401
+#: client/battlescape/cl_hud.cpp:1358 client/cl_inventory_callbacks.cpp:403
 #, fuzzy
 msgid "TU:"
 msgstr "ETA:"
@@ -28510,14 +28505,14 @@ msgstr ""
 "TU が不足しています\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:89
-#: client/battlescape/cl_hud_callbacks.cpp:264 game/g_combat.cpp:1237
+#: client/battlescape/cl_hud_callbacks.cpp:264 game/g_combat.cpp:1240
 #, fuzzy
 msgid "Can't perform action - no ammo!"
 msgstr ""
 "行動は不可能です:\n"
 "TU が不足しています\n"
 
-#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1229
+#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1232
 #, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr ""
@@ -28732,75 +28727,76 @@ msgstr "%s は %s に昇進しました\n"
 msgid "Your round started!"
 msgstr "あなたのラウンドです！\n"
 
-#: client/cgame/campaign/cp_aircraft.cpp:360
+#: client/cgame/campaign/cp_aircraft.cpp:362
 msgid "ON RED ALERT"
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:364
+#: client/cgame/campaign/cp_aircraft.cpp:366
 msgid "Nothing - should not be displayed"
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:366
-msgid "at home base"
-msgstr "基地で待機中"
-
 #: client/cgame/campaign/cp_aircraft.cpp:368
+#, fuzzy, c-format
+msgid "at %s"
+msgstr "Pilots"
+
+#: client/cgame/campaign/cp_aircraft.cpp:370
 msgid "refuelling"
 msgstr "整備中"
 
-#: client/cgame/campaign/cp_aircraft.cpp:370
+#: client/cgame/campaign/cp_aircraft.cpp:372
 msgid "idle"
 msgstr "待機中"
 
-#: client/cgame/campaign/cp_aircraft.cpp:372
+#: client/cgame/campaign/cp_aircraft.cpp:374
 msgid "in transit"
 msgstr "移動中"
 
-#: client/cgame/campaign/cp_aircraft.cpp:374
+#: client/cgame/campaign/cp_aircraft.cpp:376
 msgid "enroute to mission"
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:376
+#: client/cgame/campaign/cp_aircraft.cpp:378
 msgid "pursuing a UFO"
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:378
+#: client/cgame/campaign/cp_aircraft.cpp:380
 msgid "ready to drop soldiers"
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:380
+#: client/cgame/campaign/cp_aircraft.cpp:382
 msgid "intercepting a UFO"
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:382
+#: client/cgame/campaign/cp_aircraft.cpp:384
 msgid "enroute to new home base"
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:384
+#: client/cgame/campaign/cp_aircraft.cpp:386
 msgid "returning to base"
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:473
+#: client/cgame/campaign/cp_aircraft.cpp:475
 msgid "Interceptor"
 msgstr "迎撃機"
 
-#: client/cgame/campaign/cp_aircraft.cpp:475
+#: client/cgame/campaign/cp_aircraft.cpp:477
 msgid "Transporter"
 msgstr "輸送機"
 
-#: client/cgame/campaign/cp_aircraft.cpp:720
+#: client/cgame/campaign/cp_aircraft.cpp:722
 #, fuzzy, c-format
 msgid "A new %s is ready in %s"
 msgstr "新しい航空機 (%s) の準備が基地 %s で完了しました"
 
-#: client/cgame/campaign/cp_aircraft.cpp:721
-#: client/cgame/campaign/cp_aircraft.cpp:1061
-#: client/cgame/campaign/cp_aircraft.cpp:1102
-#: client/cgame/campaign/cp_aircraft.cpp:1118
-#: client/cgame/campaign/cp_aircraft.cpp:1159
-#: client/cgame/campaign/cp_aircraft.cpp:1215
-#: client/cgame/campaign/cp_aircraft.cpp:1238
-#: client/cgame/campaign/cp_aircraft.cpp:1992
+#: client/cgame/campaign/cp_aircraft.cpp:723
+#: client/cgame/campaign/cp_aircraft.cpp:1063
+#: client/cgame/campaign/cp_aircraft.cpp:1104
+#: client/cgame/campaign/cp_aircraft.cpp:1120
+#: client/cgame/campaign/cp_aircraft.cpp:1161
+#: client/cgame/campaign/cp_aircraft.cpp:1217
+#: client/cgame/campaign/cp_aircraft.cpp:1240
+#: client/cgame/campaign/cp_aircraft.cpp:1994
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:93
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:101
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:109
@@ -28854,55 +28850,55 @@ msgstr "新しい航空機 (%s) の準備が基地 %s で完了しました"
 msgid "Notice"
 msgstr "Notice"
 
-#: client/cgame/campaign/cp_aircraft.cpp:791
+#: client/cgame/campaign/cp_aircraft.cpp:793
 msgid "No operational hangars at that base."
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:795
+#: client/cgame/campaign/cp_aircraft.cpp:797
 msgid "No free hangars at that base."
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:798
+#: client/cgame/campaign/cp_aircraft.cpp:800
 msgid "Insufficient free crew quarter space at that base."
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:801
+#: client/cgame/campaign/cp_aircraft.cpp:803
 msgid "Insufficient storage space at that base."
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:805
+#: client/cgame/campaign/cp_aircraft.cpp:807
 msgid "That base is beyond this aircraft's range."
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:1060
+#: client/cgame/campaign/cp_aircraft.cpp:1062
 #, fuzzy, c-format
 msgid "Craft %s has returned to %s."
 msgstr "%s は %s に昇進しました\n"
 
-#: client/cgame/campaign/cp_aircraft.cpp:1101
+#: client/cgame/campaign/cp_aircraft.cpp:1103
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:1117
+#: client/cgame/campaign/cp_aircraft.cpp:1119
 #, fuzzy, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "%s は %s に昇進しました\n"
 
-#: client/cgame/campaign/cp_aircraft.cpp:1159
+#: client/cgame/campaign/cp_aircraft.cpp:1161
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:1215
+#: client/cgame/campaign/cp_aircraft.cpp:1217
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:1238
+#: client/cgame/campaign/cp_aircraft.cpp:1240
 msgid "Insufficient fuel."
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:1992
+#: client/cgame/campaign/cp_aircraft.cpp:1994
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr ""
@@ -29179,7 +29175,7 @@ msgid "Buy or produce at least one aircraft first."
 msgstr ""
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:309
-msgid "No Hangar functional in base."
+msgid "No Hangar operating at this base."
 msgstr ""
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:313
@@ -29188,13 +29184,7 @@ msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "装備の売買を行ないます"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:315
-#: client/cgame/campaign/cp_base_callbacks.cpp:325
-#: client/cgame/campaign/cp_base_callbacks.cpp:330
-#: client/cgame/campaign/cp_base_callbacks.cpp:335
-#: client/cgame/campaign/cp_base_callbacks.cpp:340
-#: client/cgame/campaign/cp_base_callbacks.cpp:345
-#, c-format
-msgid "No %s functional in base."
+msgid "No Storage operating at this base."
 msgstr ""
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:318
@@ -29210,27 +29200,42 @@ msgstr "装備や人員を移動します"
 msgid "Research new technology"
 msgstr "新しいテクノロジーを研究します"
 
+#: client/cgame/campaign/cp_base_callbacks.cpp:325
+msgid "No Laboratory operating at this base."
+msgstr ""
+
 #: client/cgame/campaign/cp_base_callbacks.cpp:328
 #, fuzzy
 msgid "Produce equipment, aircraft and UGV"
 msgstr "新しい装備を生産します"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:330
+msgid "No Workshop operating at this base."
+msgstr ""
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:333
 #, fuzzy
 msgid "Hire or dismiss employees"
 msgstr "Hire employees"
 
+#: client/cgame/campaign/cp_base_callbacks.cpp:335
+msgid "No Living Quarters operating at this base."
+msgstr ""
+
 #: client/cgame/campaign/cp_base_callbacks.cpp:338
 msgid "Manage captured aliens"
 msgstr ""
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:340
-#: client/cgame/campaign/cp_base_callbacks.cpp:600
-msgid "Containment"
-msgstr "Containment"
+msgid "No Containment operating at this base."
+msgstr ""
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:343
 msgid "Treat wounded soldiers and perform implant surgery"
+msgstr ""
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:345
+msgid "No Hospital operating at this in base."
 msgstr ""
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:575
@@ -29261,6 +29266,10 @@ msgid ""
 "If you destroy this building, you will also kill the aliens inside.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:600
+msgid "Containment"
+msgstr "Containment"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:600
 msgid "Go to the Alien Containment without destroying building"
@@ -29883,6 +29892,7 @@ msgstr ""
 
 #: client/cgame/campaign/cp_installation_callbacks.cpp:65
 #: client/cgame/campaign/cp_installation_callbacks.cpp:230
+#: client/cgame/campaign/cp_installation_callbacks.cpp:261
 #, fuzzy, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -29923,12 +29933,6 @@ msgstr "キャンセルする"
 #, c-format
 msgid "Condition: %3.0f%%"
 msgstr ""
-
-#: client/cgame/campaign/cp_installation_callbacks.cpp:261
-msgid "day"
-msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
 
 #: client/cgame/campaign/cp_mapfightequip.cpp:335
 #, c-format
@@ -31597,7 +31601,7 @@ msgstr ""
 msgid "Unknown - not useable"
 msgstr "未知のアイテム - 研究が必要です"
 
-#: client/cl_inventory_callbacks.cpp:400
+#: client/cl_inventory_callbacks.cpp:402
 #, fuzzy
 msgid "Warning!"
 msgstr "国"
@@ -31964,67 +31968,72 @@ msgstr ""
 "行動は不可能です:\n"
 "TU が不足しています\n"
 
-#: game/g_combat.cpp:1195
+#: game/g_combat.cpp:1198
 #, fuzzy
 msgid "Can't perform action - object not activatable!"
 msgstr ""
 "行動は不可能です:\n"
 "TU が不足しています\n"
 
-#: game/g_combat.cpp:1221
+#: game/g_combat.cpp:1224
 #, fuzzy
 msgid "Can't perform action - target is not wounded!"
 msgstr ""
 "行動は不可能です:\n"
 "TU が不足しています\n"
 
-#: game/g_combat.cpp:1246
+#: game/g_combat.cpp:1249
 #, fuzzy
 msgid "Can't perform action - target out of range!"
 msgstr ""
 "行動は不可能です:\n"
 "TU が不足しています\n"
 
-#: game/g_combat.cpp:1292
+#: game/g_combat.cpp:1295
 #, fuzzy
 msgid "Can't perform action - not enough ammo!"
 msgstr ""
 "行動は不可能です:\n"
 "TU が不足しています\n"
 
-#: game/g_mission.cpp:64 game/g_mission.cpp:83
+#: game/g_mission.cpp:63
 #, c-format
-msgid "%s forces have reached the %s!"
+msgid "%s forces are attacking the %s!"
 msgstr ""
 
-#: game/g_mission.cpp:67
+#: game/g_mission.cpp:66
 #, c-format
-msgid "%s forces have entered %s's target zone!"
+msgid "%s forces are attacking %s target zone!"
 msgstr ""
 
-#: game/g_mission.cpp:85
+#: game/g_mission.cpp:90
+#, c-format
+msgid "%s forces have occupied the %s!"
+msgstr ""
+
+#: game/g_mission.cpp:92
 #, c-format
 msgid "%s forces have occupied their target zone!"
 msgstr ""
 
-#: game/g_mission.cpp:105
+#: game/g_mission.cpp:112
 #, fuzzy, c-format
 msgid "The %s was placed at the %s."
 msgstr "%s は %s に昇進しました\n"
 
-#: game/g_mission.cpp:107
+#: game/g_mission.cpp:114
 #, fuzzy, c-format
 msgid "The %s was placed."
 msgstr "アイテムが選択されていません"
 
-#: game/g_mission.cpp:133
+#: game/g_mission.cpp:140
 #, c-format
-msgid "The %s forces have left the %s!"
+msgid "%s forces have left the %s!"
 msgstr ""
 
-#: game/g_mission.cpp:135
+#: game/g_mission.cpp:142
 #, c-format
-msgid "The %s forces have left their target zone!"
+msgid "%s forces have left their target zone!"
 msgstr ""
 
 #: game/g_morale.cpp:40
@@ -32116,6 +32125,9 @@ msgstr ""
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "スクリーンショット撮影"
+
+#~ msgid "at home base"
+#~ msgstr "基地で待機中"
 
 #~ msgid "Eaglenest"
 #~ msgstr "Eaglenest"
@@ -33400,10 +33412,6 @@ msgstr "スクリーンショット撮影"
 #, fuzzy
 #~ msgid "Civilians killed by Aliens"
 #~ msgstr "エイリアンに殺害された市民の数\t%i\n"
-
-#, fuzzy
-#~ msgid "Pilot %s"
-#~ msgstr "Pilots"
 
 #~ msgid "Loading Map [%s]"
 #~ msgstr "マップのロード中 [%s]"

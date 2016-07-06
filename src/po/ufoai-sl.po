@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-16 22:45+0200\n"
+"POT-Creation-Date: 2016-07-05 22:44-0500\n"
 "PO-Revision-Date: 2013-01-24 14:59+0100\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: inzenir <simon.cedula@guest.arnes.si>\n"
@@ -224,14 +224,12 @@ msgstr "Stadion"
 
 #: ../base/maps/urban.ump:380 ../base/ufos/basemanagement.ufo:201
 #: ../base/ufos/maps.ufo:3324 ../base/ufos/ui/research.ufo:350
-#: client/cgame/campaign/cp_base_callbacks.cpp:325
 msgid "Laboratory"
 msgstr "Laboratorij"
 
 #: ../base/maps/urban.ump:401 ../base/ufos/basemanagement.ufo:216
 #: ../base/ufos/maps.ufo:3276 ../base/ufos/ui/bases.ufo:406
 #: ../base/ufos/ui/hospital.ufo:21
-#: client/cgame/campaign/cp_base_callbacks.cpp:345
 msgid "Hospital"
 msgstr "Bolnišnica"
 
@@ -597,7 +595,6 @@ msgstr "Vhod"
 
 #: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:313
 #: ../base/ufos/ui/production.ufo:248
-#: client/cgame/campaign/cp_base_callbacks.cpp:315
 msgid "Storage"
 msgstr "Skladišče"
 
@@ -610,7 +607,6 @@ msgid "Command Centre"
 msgstr "Komandno središče"
 
 #: ../base/ufos/basemanagement.ufo:110 ../base/ufos/ui/hire.ufo:347
-#: client/cgame/campaign/cp_base_callbacks.cpp:335
 msgid "Living Quarters"
 msgstr "Življenski prostor"
 
@@ -625,7 +621,6 @@ msgid "Interceptor Hangar"
 msgstr "Hangar za prestrezna plovila"
 
 #: ../base/ufos/basemanagement.ufo:153 ../base/ufos/ui/production.ufo:272
-#: client/cgame/campaign/cp_base_callbacks.cpp:330
 msgid "Workshop"
 msgstr "Delavnica"
 
@@ -4670,7 +4665,7 @@ msgid ""
 "twice its size. As near as we can tell it was designed for the role of heavy "
 "fighter/interceptor, and it fulfills that role magnificently.\n"
 "\n"
-"The UFO is armed with two particle beam weapons as well as -- very "
+"The UFO is armed with three particle beam weapons as well as -- very "
 "interestingly -- two additional modular hardpoints of a design almost "
 "identical to the weapon hardpoints on our own aircraft. Even more "
 "interesting is the Gunboat's armour, an improvement over the standard skin "
@@ -23191,7 +23186,7 @@ msgstr "Ozadje"
 #: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:142
 #: ../base/ufos/ui/bases.ufo:313 ../base/ufos/ui/geoscape.ufo:1387
 #: ../base/ufos/ui/market.ufo:154 ../base/ufos/ui/production.ufo:76
-#: ../base/ufos/ui/transfer.ufo:143 ../base/ufos/ui/transfer.ufo:163
+#: ../base/ufos/ui/transfer.ufo:154 ../base/ufos/ui/transfer.ufo:257
 #: client/cgame/campaign/cp_geoscape.cpp:309
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:805
 msgid "Aircraft"
@@ -23213,8 +23208,8 @@ msgstr "Poročila raziskav"
 #: ../base/ufos/research.ufo:116 ../base/ufos/ui/_assets_squad.ufo:498
 #: ../base/ufos/ui/aircraft.ufo:156 ../base/ufos/ui/aircraft_equip.ufo:61
 #: ../base/ufos/ui/equipment.ufo:59 ../base/ufos/ui/hud_default.ufo:261
-#: ../base/ufos/ui/market.ufo:121 ../base/ufos/ui/transfer.ufo:137
-#: ../base/ufos/ui/transfer.ufo:148 ../base/ufos/ui/transfer.ufo:489
+#: ../base/ufos/ui/market.ufo:121 ../base/ufos/ui/transfer.ufo:139
+#: ../base/ufos/ui/transfer.ufo:251
 msgid "Equipment"
 msgstr "Oprema"
 
@@ -24449,17 +24444,17 @@ msgstr ""
 msgid "Lock current stock level"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_base.ufo:686
+#: ../base/ufos/ui/_assets_base.ufo:687
 #, fuzzy
 msgid "Previous base"
 msgstr "Prejšnji vnos"
 
-#: ../base/ufos/ui/_assets_base.ufo:702
+#: ../base/ufos/ui/_assets_base.ufo:703
 #, fuzzy
 msgid "Next base"
 msgstr "Nova baza"
 
-#: ../base/ufos/ui/_assets_base.ufo:773 ../base/ufos/ui/_menu.ufo:88
+#: ../base/ufos/ui/_assets_base.ufo:774 ../base/ufos/ui/_menu.ufo:88
 #, fuzzy
 msgid "Back to base"
 msgstr "Nazaj na zemljevid baze"
@@ -24503,7 +24498,7 @@ msgid "Dropship"
 msgstr "Transportna ladja:"
 
 #: ../base/ufos/ui/_assets_map.ufo:237
-#: client/cgame/campaign/cp_aircraft.cpp:477
+#: client/cgame/campaign/cp_aircraft.cpp:479
 #: client/cgame/campaign/cp_ufo.cpp:248 client/cgame/campaign/cp_ufo.cpp:249
 msgid "UFO"
 msgstr "NLP"
@@ -24631,8 +24626,7 @@ msgstr "Stanje:"
 msgid "Team:"
 msgstr "Ekipa:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:90
-#: ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:90 ../base/ufos/ui/aircraft_equip.ufo:109
 #: ../base/ufos/ui/aircraft_equip.ufo:128
 #: ../base/ufos/ui/aircraft_equip.ufo:147
 #: ../base/ufos/ui/aircraft_equip.ufo:166
@@ -24713,7 +24707,8 @@ msgid "No soldiers assigned"
 msgstr "Vojak ni dodeljen"
 
 #: ../base/ufos/ui/aliencont.ufo:56 ../base/ufos/ui/aliencont.ufo:309
-msgid "Kill this alien"
+#, fuzzy
+msgid "Kill one alien"
 msgstr "Ubij tega nezemljana"
 
 #: ../base/ufos/ui/aliencont.ufo:75
@@ -24806,11 +24801,11 @@ msgstr "Ime:"
 msgid "Targetted UFO:"
 msgstr "Naciljan NLP:"
 
-#: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:909
-#: ../base/ufos/ui/geoscape.ufo:1000
+#: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:1000
 #: ../base/ufos/ui/popup_installations.ufo:528
-msgid "Time to build:"
-msgstr "Čas izdelave:"
+#, fuzzy
+msgid "Time to completion:"
+msgstr "Stiskanje tekstur:"
 
 #: ../base/ufos/ui/basedefence.ufo:354
 msgid "Autofire"
@@ -24863,8 +24858,8 @@ msgstr "Informacije Baze"
 
 #: ../base/ufos/ui/bases.ufo:118 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654
-#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:460
+#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
+#: ../base/ufos/ui/transfer.ufo:463
 #: client/cgame/campaign/cp_base_callbacks.cpp:602
 #: client/cgame/campaign/cp_base_callbacks.cpp:613
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
@@ -25162,13 +25157,15 @@ msgstr "Samodejno končaj nalogo"
 msgid "This kind of mission cannot be done automatically"
 msgstr "Ta tip misije ni mogoče narediti samodejno"
 
-#: ../base/ufos/ui/geoscape.ufo:897
-#: ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
 msgid "Cost:"
 msgstr "Stroški:"
 
-#: ../base/ufos/ui/geoscape.ufo:952
-#: ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:909
+msgid "Time to build:"
+msgstr "Čas izdelave:"
+
+#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build"
 msgstr "Zgradi "
 
@@ -25210,8 +25207,7 @@ msgid "Select aircraft"
 msgstr "Izberi plovilo"
 
 #: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642
-#: ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
 msgid "ETA:"
 msgstr "ETA:"
 
@@ -26865,8 +26861,7 @@ msgstr "Kapacitete:"
 
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892
-#: ../base/ufos/ui/transfer.ufo:370
+#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
 msgid "free"
 msgstr "prosto"
 
@@ -27073,8 +27068,8 @@ msgstr "Baze"
 msgid "Installations"
 msgstr "Zgradbe"
 
-#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:139
-#: ../base/ufos/ui/transfer.ufo:153
+#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:144
+#: ../base/ufos/ui/transfer.ufo:253
 msgid "Employees"
 msgstr "Zaposleni"
 
@@ -27169,66 +27164,66 @@ msgstr "Ustvari novo naključno ekipo"
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:141 ../base/ufos/ui/transfer.ufo:158
+#: ../base/ufos/ui/transfer.ufo:149 ../base/ufos/ui/transfer.ufo:255
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:145
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:793
 msgid "Aliens"
 msgstr "Nezemljani"
 
-#: ../base/ufos/ui/transfer.ufo:190
+#: ../base/ufos/ui/transfer.ufo:181
 #, fuzzy
 msgid "From"
 msgstr "Od:"
 
-#: ../base/ufos/ui/transfer.ufo:197
+#: ../base/ufos/ui/transfer.ufo:188
 #, fuzzy
 msgid "To"
 msgstr "Za:"
 
-#: ../base/ufos/ui/transfer.ufo:279
+#: ../base/ufos/ui/transfer.ufo:282
 msgid "Cargo"
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:288
+#: ../base/ufos/ui/transfer.ufo:291
 #: client/cgame/campaign/cp_base_callbacks.cpp:838
 #, fuzzy
 msgid "Amount"
 msgstr "Samodejno "
 
-#: ../base/ufos/ui/transfer.ufo:342
+#: ../base/ufos/ui/transfer.ufo:345
 msgid "Destination base"
 msgstr "Ciljna baza"
 
-#: ../base/ufos/ui/transfer.ufo:362
+#: ../base/ufos/ui/transfer.ufo:365
 msgid "Building"
 msgstr "Zgradba"
 
-#: ../base/ufos/ui/transfer.ufo:386
+#: ../base/ufos/ui/transfer.ufo:389
 msgid "all space"
 msgstr "ves prostor"
 
-#: ../base/ufos/ui/transfer.ufo:415
+#: ../base/ufos/ui/transfer.ufo:418
 #, fuzzy
 msgid "Capacity overload"
 msgstr "Kapacitete:"
 
-#: ../base/ufos/ui/transfer.ufo:434 ../base/ufos/ui/transfer.ufo:461
+#: ../base/ufos/ui/transfer.ufo:437 ../base/ufos/ui/transfer.ufo:464
 msgid "Start the transfer"
 msgstr "Prični s prenosom:"
 
-#: ../base/ufos/ui/transfer.ufo:448
+#: ../base/ufos/ui/transfer.ufo:451
 msgid "List"
 msgstr "Seznam"
 
-#: ../base/ufos/ui/transfer.ufo:449
+#: ../base/ufos/ui/transfer.ufo:452
 msgid "List active transfers"
 msgstr "Seznam aktivnih prenosov"
 
-#: ../base/ufos/ui/transfer.ufo:475
+#: ../base/ufos/ui/transfer.ufo:478
 msgid "Clear"
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:476
+#: ../base/ufos/ui/transfer.ufo:479
 msgid "Clear cargo"
 msgstr ""
 
@@ -27416,9 +27411,9 @@ msgstr "3-vrstni rafal"
 #: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
 #: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
 #: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
-#: ../base/ufos/weapons_multiplayer.ufo:318
-#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:439
-#: ../base/ufos/weapons_plasma.ufo:529 ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_multiplayer.ufo:318 ../base/ufos/weapons_plasma.ufo:203
+#: ../base/ufos/weapons_plasma.ufo:439 ../base/ufos/weapons_plasma.ufo:529
+#: ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr "Avtomatsko"
 
@@ -27446,8 +27441,8 @@ msgid "5-Shot Burst"
 msgstr "5-trelni rafal"
 
 #: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
-#: ../base/ufos/weapons_multiplayer.ufo:342
-#: ../base/ufos/weapons_plasma.ufo:553 ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_multiplayer.ufo:342 ../base/ufos/weapons_plasma.ufo:553
+#: ../base/ufos/weapons_ugv.ufo:135
 msgid "Full-Auto Sweep"
 msgstr "Avtomatsko - zamah"
 
@@ -27817,7 +27812,7 @@ msgid "This soldier can not carry anything else."
 msgstr ""
 
 #: client/battlescape/cl_actor.cpp:1016 client/battlescape/cl_hud.cpp:1353
-#: client/cl_inventory.cpp:74 client/cl_inventory_callbacks.cpp:395
+#: client/cl_inventory.cpp:74 client/cl_inventory_callbacks.cpp:397
 #, fuzzy
 msgid "Warning"
 msgstr "Nanning"
@@ -28103,17 +28098,17 @@ msgstr "%s naloženo\n"
 msgid "- HP loss per turn: %i\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1344 client/cl_inventory_callbacks.cpp:387
+#: client/battlescape/cl_hud.cpp:1344 client/cl_inventory_callbacks.cpp:389
 msgid ""
 "This soldier no longer has enough TUs to use the following items:\n"
 "\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1357 client/cl_inventory_callbacks.cpp:399
+#: client/battlescape/cl_hud.cpp:1357 client/cl_inventory_callbacks.cpp:401
 msgid "Kg"
 msgstr ""
 
-#: client/battlescape/cl_hud.cpp:1358 client/cl_inventory_callbacks.cpp:401
+#: client/battlescape/cl_hud.cpp:1358 client/cl_inventory_callbacks.cpp:403
 msgid "TU:"
 msgstr "TU:"
 
@@ -28127,11 +28122,11 @@ msgid "Can't perform action - no item in hand!"
 msgstr "Ne morem izvesti dejanja - prazna roka!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:89
-#: client/battlescape/cl_hud_callbacks.cpp:264 game/g_combat.cpp:1237
+#: client/battlescape/cl_hud_callbacks.cpp:264 game/g_combat.cpp:1240
 msgid "Can't perform action - no ammo!"
 msgstr "Nemorem izvesti dejanja - ni dovolj streliva!"
 
-#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1229
+#: client/battlescape/cl_hud_callbacks.cpp:94 game/g_combat.cpp:1232
 msgid "Can't perform action - weapon cannot be fired one handed!"
 msgstr "Ne morem izvesti dejanja - orožje ne more biti uporabljeno enoročno."
 
@@ -28315,75 +28310,76 @@ msgstr "%s je bil ranjen!"
 msgid "Your round started!"
 msgstr "Ti si na vrsti!"
 
-#: client/cgame/campaign/cp_aircraft.cpp:360
+#: client/cgame/campaign/cp_aircraft.cpp:362
 msgid "ON RED ALERT"
 msgstr "RDEČI ALARM"
 
-#: client/cgame/campaign/cp_aircraft.cpp:364
+#: client/cgame/campaign/cp_aircraft.cpp:366
 msgid "Nothing - should not be displayed"
 msgstr "Nič - naj ne bi bilo prikazano"
 
-#: client/cgame/campaign/cp_aircraft.cpp:366
-msgid "at home base"
-msgstr "v domači bazi"
-
 #: client/cgame/campaign/cp_aircraft.cpp:368
+#, fuzzy, c-format
+msgid "at %s"
+msgstr "Baza\t%s\n"
+
+#: client/cgame/campaign/cp_aircraft.cpp:370
 msgid "refuelling"
 msgstr "polnjenje"
 
-#: client/cgame/campaign/cp_aircraft.cpp:370
+#: client/cgame/campaign/cp_aircraft.cpp:372
 msgid "idle"
 msgstr "mirovanje"
 
-#: client/cgame/campaign/cp_aircraft.cpp:372
+#: client/cgame/campaign/cp_aircraft.cpp:374
 msgid "in transit"
 msgstr "v prenosu"
 
-#: client/cgame/campaign/cp_aircraft.cpp:374
+#: client/cgame/campaign/cp_aircraft.cpp:376
 msgid "enroute to mission"
 msgstr "Odprava na misijo"
 
-#: client/cgame/campaign/cp_aircraft.cpp:376
+#: client/cgame/campaign/cp_aircraft.cpp:378
 msgid "pursuing a UFO"
 msgstr "zasledujem NLP"
 
-#: client/cgame/campaign/cp_aircraft.cpp:378
+#: client/cgame/campaign/cp_aircraft.cpp:380
 msgid "ready to drop soldiers"
 msgstr "pripravljen spustiti vojake"
 
-#: client/cgame/campaign/cp_aircraft.cpp:380
+#: client/cgame/campaign/cp_aircraft.cpp:382
 msgid "intercepting a UFO"
 msgstr "prestrezanje NLP"
 
-#: client/cgame/campaign/cp_aircraft.cpp:382
+#: client/cgame/campaign/cp_aircraft.cpp:384
 msgid "enroute to new home base"
 msgstr "pojdi v novo bazo"
 
-#: client/cgame/campaign/cp_aircraft.cpp:384
+#: client/cgame/campaign/cp_aircraft.cpp:386
 msgid "returning to base"
 msgstr "vrnitev v bazo"
 
-#: client/cgame/campaign/cp_aircraft.cpp:473
+#: client/cgame/campaign/cp_aircraft.cpp:475
 msgid "Interceptor"
 msgstr "Prestreznik"
 
-#: client/cgame/campaign/cp_aircraft.cpp:475
+#: client/cgame/campaign/cp_aircraft.cpp:477
 msgid "Transporter"
 msgstr "Transporter"
 
-#: client/cgame/campaign/cp_aircraft.cpp:720
+#: client/cgame/campaign/cp_aircraft.cpp:722
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr "Nov %s je pripravljen v %s"
 
-#: client/cgame/campaign/cp_aircraft.cpp:721
-#: client/cgame/campaign/cp_aircraft.cpp:1061
-#: client/cgame/campaign/cp_aircraft.cpp:1102
-#: client/cgame/campaign/cp_aircraft.cpp:1118
-#: client/cgame/campaign/cp_aircraft.cpp:1159
-#: client/cgame/campaign/cp_aircraft.cpp:1215
-#: client/cgame/campaign/cp_aircraft.cpp:1238
-#: client/cgame/campaign/cp_aircraft.cpp:1992
+#: client/cgame/campaign/cp_aircraft.cpp:723
+#: client/cgame/campaign/cp_aircraft.cpp:1063
+#: client/cgame/campaign/cp_aircraft.cpp:1104
+#: client/cgame/campaign/cp_aircraft.cpp:1120
+#: client/cgame/campaign/cp_aircraft.cpp:1161
+#: client/cgame/campaign/cp_aircraft.cpp:1217
+#: client/cgame/campaign/cp_aircraft.cpp:1240
+#: client/cgame/campaign/cp_aircraft.cpp:1994
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:93
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:101
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:109
@@ -28437,55 +28433,55 @@ msgstr "Nov %s je pripravljen v %s"
 msgid "Notice"
 msgstr "Obvestilo"
 
-#: client/cgame/campaign/cp_aircraft.cpp:791
+#: client/cgame/campaign/cp_aircraft.cpp:793
 msgid "No operational hangars at that base."
 msgstr "Ni operativnega hangarja v tisti bazi."
 
-#: client/cgame/campaign/cp_aircraft.cpp:795
+#: client/cgame/campaign/cp_aircraft.cpp:797
 msgid "No free hangars at that base."
 msgstr "Ni prostih hangarjev v tisti bazi."
 
-#: client/cgame/campaign/cp_aircraft.cpp:798
+#: client/cgame/campaign/cp_aircraft.cpp:800
 msgid "Insufficient free crew quarter space at that base."
 msgstr "V bazi je premalo prostih mest za posadko."
 
-#: client/cgame/campaign/cp_aircraft.cpp:801
+#: client/cgame/campaign/cp_aircraft.cpp:803
 msgid "Insufficient storage space at that base."
 msgstr "Premalo skladiščnega prostroa v tej bazi."
 
-#: client/cgame/campaign/cp_aircraft.cpp:805
+#: client/cgame/campaign/cp_aircraft.cpp:807
 msgid "That base is beyond this aircraft's range."
 msgstr "Ta baza he predaleč za plovilo."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1060
+#: client/cgame/campaign/cp_aircraft.cpp:1062
 #, c-format
 msgid "Craft %s has returned to %s."
 msgstr "Plovilo %s se je vrnilo v%s."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1101
+#: client/cgame/campaign/cp_aircraft.cpp:1103
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
-#: client/cgame/campaign/cp_aircraft.cpp:1117
+#: client/cgame/campaign/cp_aircraft.cpp:1119
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Plovilo %s se je napolnilo v %s."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1159
+#: client/cgame/campaign/cp_aircraft.cpp:1161
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "Plovilo %s ima malo goriva in se mora vrniti v bazo."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1215
+#: client/cgame/campaign/cp_aircraft.cpp:1217
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Najprej dodeli enega ali več vojakov."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1238
+#: client/cgame/campaign/cp_aircraft.cpp:1240
 msgid "Insufficient fuel."
 msgstr "Premalo goriva."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1992
+#: client/cgame/campaign/cp_aircraft.cpp:1994
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "Plovilo %s ima premalo goriva za prestrezanje NLP: vrni se v %s."
@@ -28769,22 +28765,18 @@ msgid "Buy or produce at least one aircraft first."
 msgstr "Kupi ali proizvedi najmanj eno plovilo najprej."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:309
-msgid "No Hangar functional in base."
-msgstr "V bazi ni operativnih Hangarjev."
+#, fuzzy
+msgid "No Hangar operating at this base."
+msgstr "Prosti laboratoriji v bazi: %i"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:313
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "Kupi/Prodaj opremo, plovilo in UGV"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:315
-#: client/cgame/campaign/cp_base_callbacks.cpp:325
-#: client/cgame/campaign/cp_base_callbacks.cpp:330
-#: client/cgame/campaign/cp_base_callbacks.cpp:335
-#: client/cgame/campaign/cp_base_callbacks.cpp:340
-#: client/cgame/campaign/cp_base_callbacks.cpp:345
-#, c-format
-msgid "No %s functional in base."
-msgstr "Ni %s operativno v bazi."
+#, fuzzy
+msgid "No Storage operating at this base."
+msgstr "Prosti laboratoriji v bazi: %i"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:318
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
@@ -28798,26 +28790,46 @@ msgstr "Zgradni vsaj drugo bazro za prenos opreme ali osebja"
 msgid "Research new technology"
 msgstr "Razišči novo tehnologijo"
 
+#: client/cgame/campaign/cp_base_callbacks.cpp:325
+#, fuzzy
+msgid "No Laboratory operating at this base."
+msgstr "Ni operativnega hangarja v tisti bazi."
+
 #: client/cgame/campaign/cp_base_callbacks.cpp:328
 msgid "Produce equipment, aircraft and UGV"
 msgstr "Proizvedi opremo, plovilo in UGV"
 
+#: client/cgame/campaign/cp_base_callbacks.cpp:330
+#, fuzzy
+msgid "No Workshop operating at this base."
+msgstr "Ni operativnega hangarja v tisti bazi."
+
 #: client/cgame/campaign/cp_base_callbacks.cpp:333
 msgid "Hire or dismiss employees"
 msgstr "Najemi ali odpusti zaposlene"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:335
+#, fuzzy
+msgid "No Living Quarters operating at this base."
+msgstr "Ime baze"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:338
 msgid "Manage captured aliens"
 msgstr "Zavaruj prijete nezemljane"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:340
-#: client/cgame/campaign/cp_base_callbacks.cpp:600
-msgid "Containment"
-msgstr "Pripor"
+#, fuzzy
+msgid "No Containment operating at this base."
+msgstr "Prosti laboratoriji v bazi: %i"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:343
 msgid "Treat wounded soldiers and perform implant surgery"
 msgstr "Obravnavaj ranjenega vojaka in izvedi operacijo implantata"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:345
+#, fuzzy
+msgid "No Hospital operating at this in base."
+msgstr "Prosti laboratoriji v bazi: %i"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:575
 msgid "Base is under attack, you can't destroy buildings!"
@@ -28847,6 +28859,10 @@ msgid ""
 "If you destroy this building, you will also kill the aliens inside.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:600
+msgid "Containment"
+msgstr "Pripor"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:600
 #, fuzzy
@@ -29497,6 +29513,7 @@ msgstr "Objekt zgrajen"
 
 #: client/cgame/campaign/cp_installation_callbacks.cpp:65
 #: client/cgame/campaign/cp_installation_callbacks.cpp:230
+#: client/cgame/campaign/cp_installation_callbacks.cpp:261
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -29540,14 +29557,6 @@ msgstr "Pozabi"
 #, c-format
 msgid "Condition: %3.0f%%"
 msgstr "Stanje: %3.0f%%"
-
-#: client/cgame/campaign/cp_installation_callbacks.cpp:261
-msgid "day"
-msgid_plural "days"
-msgstr[0] "dan"
-msgstr[1] "dan"
-msgstr[2] "dan"
-msgstr[3] "dan"
 
 #: client/cgame/campaign/cp_mapfightequip.cpp:335
 #, c-format
@@ -31213,7 +31222,7 @@ msgstr "Dejanje:\t%s\n"
 msgid "Unknown - not useable"
 msgstr "Nezano - ni mogoče uporabiti"
 
-#: client/cl_inventory_callbacks.cpp:400
+#: client/cl_inventory_callbacks.cpp:402
 #, fuzzy
 msgid "Warning!"
 msgstr "Nanning"
@@ -31550,57 +31559,62 @@ msgstr ""
 msgid "Can't perform action - impossible throw!"
 msgstr "Nemorem izvesti dejanja - nemogoč met!"
 
-#: game/g_combat.cpp:1195
+#: game/g_combat.cpp:1198
 msgid "Can't perform action - object not activatable!"
 msgstr "Nemorem izvesti dejanja - objekta ni mogoče aktivirati!"
 
-#: game/g_combat.cpp:1221
+#: game/g_combat.cpp:1224
 #, fuzzy
 msgid "Can't perform action - target is not wounded!"
 msgstr "Nemorem izvesti dejanja - tarča izven dosega!"
 
-#: game/g_combat.cpp:1246
+#: game/g_combat.cpp:1249
 msgid "Can't perform action - target out of range!"
 msgstr "Nemorem izvesti dejanja - tarča izven dosega!"
 
-#: game/g_combat.cpp:1292
+#: game/g_combat.cpp:1295
 msgid "Can't perform action - not enough ammo!"
 msgstr "Nemorem izvesti dejanja - ni dovolj nabojev!"
 
-#: game/g_mission.cpp:64 game/g_mission.cpp:83
+#: game/g_mission.cpp:63
 #, c-format
-msgid "%s forces have reached the %s!"
+msgid "%s forces are attacking the %s!"
 msgstr ""
 
-#: game/g_mission.cpp:67
+#: game/g_mission.cpp:66
 #, fuzzy, c-format
-msgid "%s forces have entered %s's target zone!"
+msgid "%s forces are attacking %s target zone!"
 msgstr "Nezemljani so vstopili v tarčno cono!"
 
-#: game/g_mission.cpp:85
+#: game/g_mission.cpp:90
+#, fuzzy, c-format
+msgid "%s forces have occupied the %s!"
+msgstr "Nezemljani so vstopili v tarčno cono!"
+
+#: game/g_mission.cpp:92
 #, c-format
 msgid "%s forces have occupied their target zone!"
 msgstr ""
 
-#: game/g_mission.cpp:105
+#: game/g_mission.cpp:112
 #, fuzzy, c-format
 msgid "The %s was placed at the %s."
 msgstr "%s je bil transportiran v %s."
 
-#: game/g_mission.cpp:107
+#: game/g_mission.cpp:114
 #, fuzzy, c-format
 msgid "The %s was placed."
 msgstr "Predmet je bil odložen"
 
-#: game/g_mission.cpp:133
-#, c-format
-msgid "The %s forces have left the %s!"
-msgstr ""
+#: game/g_mission.cpp:140
+#, fuzzy, c-format
+msgid "%s forces have left the %s!"
+msgstr "Nezemljani so vstopili v tarčno cono!"
 
-#: game/g_mission.cpp:135
-#, c-format
-msgid "The %s forces have left their target zone!"
-msgstr ""
+#: game/g_mission.cpp:142
+#, fuzzy, c-format
+msgid "%s forces have left their target zone!"
+msgstr "Nezemljani so vstopili v tarčno cono!"
 
 #: game/g_morale.cpp:40
 #, c-format
@@ -31681,6 +31695,22 @@ msgstr "Nezemljan"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Zajemi sliko zaslona"
+
+#~ msgid "at home base"
+#~ msgstr "v domači bazi"
+
+#~ msgid "No Hangar functional in base."
+#~ msgstr "V bazi ni operativnih Hangarjev."
+
+#~ msgid "No %s functional in base."
+#~ msgstr "Ni %s operativno v bazi."
+
+#~ msgid "day"
+#~ msgid_plural "days"
+#~ msgstr[0] "dan"
+#~ msgstr[1] "dan"
+#~ msgstr[2] "dan"
+#~ msgstr[3] "dan"
 
 #~ msgid "Eaglenest"
 #~ msgstr "Orje gnezdo"
@@ -33863,20 +33893,8 @@ msgstr "Zajemi sliko zaslona"
 #~ msgstr "Nezemeljska aktivnost"
 
 #, fuzzy
-#~ msgid "No Storage in this base.\n"
-#~ msgstr "Prosti laboratoriji v bazi: %i"
-
-#, fuzzy
-#~ msgid "No Living Quarters in this base.\n"
-#~ msgstr "Ime baze"
-
-#, fuzzy
 #~ msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 #~ msgstr "Nezemeljska aktivnost"
-
-#, fuzzy
-#~ msgid "No Alien Containment in this base.\n"
-#~ msgstr "Prosti laboratoriji v bazi: %i"
 
 #, fuzzy
 #~ msgid "No Antimatter Storage in this base.\n"
@@ -33891,10 +33909,6 @@ msgstr "Zajemi sliko zaslona"
 #~ "Aircraft transfer not possible - this base does not have a Command "
 #~ "Centre.\n"
 #~ msgstr "Nezemeljska aktivnost"
-
-#, fuzzy
-#~ msgid "No Hangar in this base.\n"
-#~ msgstr "Prosti laboratoriji v bazi: %i"
 
 #, fuzzy
 #~ msgid "No power supplies in this base.\n"
@@ -35312,10 +35326,6 @@ msgstr "Zajemi sliko zaslona"
 #~ msgid "Slot %i:\t%s (%s)"
 #~ msgstr "Ščit:\t%s\n"
 
-#, fuzzy
-#~ msgid "%s (at %s)"
-#~ msgstr "Baza\t%s\n"
-
 #~ msgid "  * %i x\t%s\n"
 #~ msgstr "  * %i x\t%s\n"
 
@@ -35863,10 +35873,6 @@ msgstr "Zajemi sliko zaslona"
 
 #, fuzzy
 #~ msgid "No power supplies in this base"
-#~ msgstr "Prosti laboratoriji v bazi: %i"
-
-#, fuzzy
-#~ msgid "No storage in this base"
 #~ msgstr "Prosti laboratoriji v bazi: %i"
 
 #, fuzzy
