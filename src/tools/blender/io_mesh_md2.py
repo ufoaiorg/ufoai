@@ -616,12 +616,15 @@ class MD2:
 		# BL: some caching to speed it up:
 		# -> sd_ gets the vertices between [0 and 255]
 		#    which is our important quantization.
-		sdx = (max[0] - min[0]) / 255.0
-		sdy = (max[1] - min[1]) / 255.0
-		sdz = (max[2] - min[2]) / 255.0
-		isdx = 255.0 / (max[0] - min[0])
-		isdy = 255.0 / (max[1] - min[1])
-		isdz = 255.0 / (max[2] - min[2])
+		dx = max[0] - min[0] if max[0] - min[0] != 0.0 else 1.0
+		dy = max[1] - min[1] if max[1] - min[1] != 0.0 else 1.0
+		dz = max[2] - min[2] if max[2] - min[2] != 0.0 else 1.0
+		sdx = dx / 255.0
+		sdy = dy / 255.0
+		sdz = dz / 255.0
+		isdx = 255.0 / dx
+		isdy = 255.0 / dy
+		isdz = 255.0 / dz
 
 		# note about the scale: self.object.scale is already applied via matrix_world
 		data = struct.pack("<6f16s",
