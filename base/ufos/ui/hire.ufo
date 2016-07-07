@@ -225,7 +225,7 @@ window employees
 
 				// Ugly, but this is needed to prevent the call from being executed before employee_select is
 				confunc set_healthbar_color {
-					call *node:root.actorhealth.hp.setColour
+					call *node:root.actorhealth.hp.update_healthcolor
 				}
 
 				panel employee_list

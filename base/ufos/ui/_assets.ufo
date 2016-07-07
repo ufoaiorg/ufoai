@@ -467,15 +467,15 @@ do
 		healthbar_hp:child("valuebar"):set_max("*cvar:mn_vhpmax")
 		healthbar_hp:child("valuenum"):set_text("*cvar:mn_thp")
 		healthbar_hp.update_healthcolor = function (sender)
-				local current = sender:parent():current()
-				local max = sender:parent():max()
+				local current = sender:child("valuebar"):value()
+				local max = sender:child("valuebar"):max()
 				local ratio = (current / max)
 				if (ratio <= 0.33) then
-					sender:parent():child("valuebar"):set_color(1, 0, 0, 1)
+					sender:child("valuebar"):set_color(1, 0, 0, 1)
 				elseif (ratio <= 0.75) then
-					sender:parent():child("valuebar"):set_color(1, 0.874, 0, 1)
+					sender:child("valuebar"):set_color(1, 0.874, 0, 1)
 				else
-					sender:parent():child("valuebar"):set_color(0.1875, 0.65625, 0.164, 1)
+					sender:child("valuebar"):set_color(0.1875, 0.65625, 0.164, 1)
 				end
 			end
 	end
