@@ -435,7 +435,7 @@ void LET_StartIdle (le_t* le)
 {
 	/* hidden actors don't have models assigned, thus we can not change the
 	 * animation for any model */
-	if (le->type != ET_ACTORHIDDEN) {
+	if (!LE_IsInvisible(le)) {
 		if (LE_IsDead(le))
 			R_AnimChange(&le->as, le->model1, va("dead%i", LE_GetAnimationIndexForDeath(le)));
 		else if (LE_IsPanicked(le))

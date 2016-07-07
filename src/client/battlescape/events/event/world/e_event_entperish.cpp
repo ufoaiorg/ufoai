@@ -66,6 +66,8 @@ void CL_EntPerish (const eventRegister_t* self, dbuffer* msg)
 			CL_ParticleFree(le->ptl);
 			le->ptl = nullptr;
 		}
+		/* Clear anim data to prevent actor "jumping" to new animation when it reappears, or worse animation issues. */
+		OBJZERO(le->as);
 		break;
 #ifdef DEBUG
 	case ET_ACTORHIDDEN:
