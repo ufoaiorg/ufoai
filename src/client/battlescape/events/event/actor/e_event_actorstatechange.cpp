@@ -61,6 +61,7 @@ void CL_ActorStateChange (const eventRegister_t* self, dbuffer* msg)
 		LE_SetThink(le, nullptr);
 		le->aabb.setMaxs(player_dead_maxs);
 		CL_ActorRemoveFromTeamList(le);
+		CL_ActorPlaySound(le, SND_DEATH);
 		return;
 	} else {
 		le->state = state;
