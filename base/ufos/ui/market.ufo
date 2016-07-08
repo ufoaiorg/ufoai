@@ -267,7 +267,8 @@ window market  {
 					 * <1> item id
 					 */
 					confunc ui_market_select {
-						if ( *node:parent.selected@string ne "" ) {
+						if (( *node:parent.selected@string ne "" )
+								and (exists *node:parent.<cvar:ui_market_category>.item_<node:parent.selected@string>)) {
 							*node:parent.<cvar:ui_market_category>.item_<node:parent.selected@string>.name@color = "0.56 0.81 0.76 0.7"
 						}
 						*node:parent.selected@string = <1>
