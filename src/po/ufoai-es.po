@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2016-07-05 22:44-0500\n"
-"PO-Revision-Date: 2016-06-24 12:17-0600\n"
+"PO-Revision-Date: 2016-07-09 21:37-0600\n"
 "Last-Translator: DarkRain <dark.rain@zoho.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -4772,7 +4772,6 @@ msgstr ""
 "Cte. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:390
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here "
 "is my summary for your review.\n"
@@ -4823,8 +4822,8 @@ msgstr ""
 "doble de su tamaño. Hasta donde sabemos fue diseñado para funcionar como un "
 "caza interceptor pesado, y cumple muy bien con ese papel.\n"
 "\n"
-"El OVNI está armado con dos rayos de partículas así como -algo muy "
-"interesante- de dos soportes modulares de un diseño casi idéntico al usado "
+"El OVNI está armado con tres rayos de partículas así como -algo muy "
+"interesante- con dos soportes modulares de un diseño casi idéntico al usado "
 "en nuestras propias naves. Aun más interesante es el blindaje del Cañonero, "
 "una mejora del recubrimiento de materiales alienígenas que observamos en la "
 "primera oleada de invasores OVNI. Este nuevo blindaje está compuesto de "
@@ -26603,9 +26602,8 @@ msgid "No soldiers assigned"
 msgstr "No tiene soldados asignados"
 
 #: ../base/ufos/ui/aliencont.ufo:56 ../base/ufos/ui/aliencont.ufo:309
-#, fuzzy
 msgid "Kill one alien"
-msgstr "Asesinar a este alienígena"
+msgstr "Asesinar a un alienígena"
 
 #: ../base/ufos/ui/aliencont.ufo:75
 msgid "Start autopsy"
@@ -26695,9 +26693,8 @@ msgstr "OVNI Objetivo:"
 
 #: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:1000
 #: ../base/ufos/ui/popup_installations.ufo:528
-#, fuzzy
 msgid "Time to completion:"
-msgstr "Compresión de texturas"
+msgstr "Tiempo restante:"
 
 #: ../base/ufos/ui/basedefence.ufo:354
 msgid "Autofire"
@@ -30118,11 +30115,9 @@ msgid "Nothing - should not be displayed"
 msgstr "Nada - No debería ser mostrado"
 
 #: client/cgame/campaign/cp_aircraft.cpp:368
-#, fuzzy, c-format
+#, c-format
 msgid "at %s"
-msgstr ""
-"IP\t%s\n"
-"\n"
+msgstr "en %s"
 
 #: client/cgame/campaign/cp_aircraft.cpp:370
 msgid "refuelling"
@@ -30574,18 +30569,16 @@ msgid "Buy or produce at least one aircraft first."
 msgstr "Primero compra o produce al menos una aeronave."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:309
-#, fuzzy
 msgid "No Hangar operating at this base."
-msgstr "No hay un Hangar en esta base.\n"
+msgstr "No hay Hangares operativos en esta base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:313
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "Comprar y Vender equipamiento, aeronaves y VTNT"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:315
-#, fuzzy
 msgid "No Storage operating at this base."
-msgstr "No hay Almacenes en esta base.\n"
+msgstr "No hay Almacenes operantivos en esta base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:318
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
@@ -30600,45 +30593,40 @@ msgid "Research new technology"
 msgstr "Investigar nueva tecnología"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:325
-#, fuzzy
 msgid "No Laboratory operating at this base."
-msgstr "No hay hangares funcionando en esa base."
+msgstr "No hay Laboratorios operativos en esa base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:328
 msgid "Produce equipment, aircraft and UGV"
 msgstr "Producir equipamiento, aeronaves y VTNT"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:330
-#, fuzzy
 msgid "No Workshop operating at this base."
-msgstr "No hay hangares funcionando en esa base."
+msgstr "No hay Talleres operativos en esa base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:333
 msgid "Hire or dismiss employees"
 msgstr "Contratar o despedir empleados"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:335
-#, fuzzy
 msgid "No Living Quarters operating at this base."
-msgstr "No hay Alojamientos en esta Base.\n"
+msgstr "No hay Alojamientos operativos en esta Base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:338
 msgid "Manage captured aliens"
 msgstr "Administrar los alienígenas capturados"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:340
-#, fuzzy
 msgid "No Containment operating at this base."
-msgstr "No hay una Celda para Alienígenas en esta base.\n"
+msgstr "No hay una Celda para Alienígenas operativa en esta base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:343
 msgid "Treat wounded soldiers and perform implant surgery"
 msgstr "Tratar a los soldados heridos y realizar implantes quirúrgicos"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:345
-#, fuzzy
 msgid "No Hospital operating at this in base."
-msgstr "No se construyeron edificios en la base inicial"
+msgstr "No un Hospital operativo en esta base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:575
 msgid "Base is under attack, you can't destroy buildings!"
@@ -33428,19 +33416,19 @@ msgid "Can't perform action - not enough ammo!"
 msgstr "No se puede efectuar la acción - ¡No hay municiones suficientes!"
 
 #: game/g_mission.cpp:63
-#, fuzzy, c-format
+#, c-format
 msgid "%s forces are attacking the %s!"
-msgstr "¡Las fuerzas de %s han llegado a %s!"
+msgstr "¡Las fuerzas %s están atacando el objetivo: %s!"
 
 #: game/g_mission.cpp:66
-#, fuzzy, c-format
+#, c-format
 msgid "%s forces are attacking %s target zone!"
-msgstr "¡Las fuerzas de %s han entrado a la zona objetivo de %s!"
+msgstr "¡Las fuerzas %s han entrado a la zona objetivo %s!"
 
 #: game/g_mission.cpp:90
-#, fuzzy, c-format
+#, c-format
 msgid "%s forces have occupied the %s!"
-msgstr "¡Las fuerzas de %s han llegado a %s!"
+msgstr "¡Las fuerzas %s han ocupado el objetivo: %s!"
 
 #: game/g_mission.cpp:92
 #, c-format
@@ -33458,14 +33446,14 @@ msgid "The %s was placed."
 msgstr "\"%s\" se ha puesto."
 
 #: game/g_mission.cpp:140
-#, fuzzy, c-format
+#, c-format
 msgid "%s forces have left the %s!"
-msgstr "¡Las fuerzas de %s han dejado %s!"
+msgstr "¡Las fuerzas %s han dejado %s!"
 
 #: game/g_mission.cpp:142
-#, fuzzy, c-format
+#, c-format
 msgid "%s forces have left their target zone!"
-msgstr "¡Las fuerzas de %s han dejado su zona de objetivo!"
+msgstr "¡Las fuerzas %s han dejado su zona de objetivo!"
 
 #: game/g_morale.cpp:40
 #, c-format
