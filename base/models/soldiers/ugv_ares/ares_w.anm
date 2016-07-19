@@ -2,11 +2,11 @@
 // name				start	end		fps
 
 death1				22	34	20
-dead1				34	34	0
+dead1				34	34	20
 death2				22	34	20
-dead2				34	34	0
+dead2				34	34	20
 death3				22	34	20
-dead3				34	34	0
+dead3				34	34	20
 
 stand0				0	0	1
 walk0				2	20	40	// The complete animation is really "1 21 40" but this "skips" too  much.
