@@ -56,12 +56,13 @@ void CL_ActorStateChange (const eventRegister_t* self, dbuffer* msg)
 
 	/* killed by the server: no animation is played, etc. */
 	if ((state & STATE_DEAD) && LE_IsLivingActor(le)) {
+		if ((state & STATE_STUN) != (le->state & STATE_STUN))
+			CL_ActorPlaySound(le, SND_DEATH);
 		le->state = state;
 		le->resetFloor();
 		LE_SetThink(le, nullptr);
 		le->aabb.setMaxs(player_dead_maxs);
 		CL_ActorRemoveFromTeamList(le);
-		CL_ActorPlaySound(le, SND_DEATH);
 		return;
 	} else {
 		le->state = state;
