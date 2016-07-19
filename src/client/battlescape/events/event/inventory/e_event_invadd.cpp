@@ -63,7 +63,7 @@ int CL_InvAddTime (const struct eventRegister_s* self, dbuffer* msg, eventTiming
 			/** @todo but if the dying actor didn't have any item in its inventory this event won't be sent,
 			 * the next unrelated EV_INV_ADD event might be badly scheduled */
 			eventTiming->parsedDeath = false;
-			return eventTiming->impactTime + 400;
+			return eventTiming->impactTime + 1400;
 		} else if (eventTiming->impactTime > cl.time) { /* item thrown on the ground */
 			return eventTiming->impactTime + 75;
 		}

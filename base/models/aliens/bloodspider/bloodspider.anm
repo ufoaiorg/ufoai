@@ -38,6 +38,6 @@ death1				56	83	22
 death2				84	95	22
 death3				56	83	22
 
-dead1				83	83	0
-dead2				95	95	0
-dead3				83	83	0
+dead1				83	83	22
+dead2				95	95	22
+dead3				83	83	22
