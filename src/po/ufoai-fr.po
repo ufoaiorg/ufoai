@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2016-07-05 22:44-0500\n"
-"PO-Revision-Date: 2013-10-29 16:01+0100\n"
-"Last-Translator: Damyen <djacquot8CHEZfreePOINTfr>\n"
+"PO-Revision-Date: 2016-07-24 15:41+0100\n"
+"Last-Translator: Damien\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ../\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../base/maps/africa.ump:639 ../base/maps/africa.ump:673
 #: ../base/maps/africa.ump:705 ../base/maps/africa.ump:737
@@ -33,7 +33,7 @@ msgstr "Pont"
 
 #: ../base/maps/bridge.ump:111 ../base/ufos/maps.ufo:5469
 msgid "Bridge (MP)"
-msgstr "Pont (Mj)"
+msgstr "Pont (MJ)"
 
 #: ../base/maps/cemetery.ump:222
 msgid "Small cemetery"
@@ -158,14 +158,12 @@ msgid "Oriental medium"
 msgstr "Oriental moyen"
 
 #: ../base/maps/oriental.ump:538
-#, fuzzy
 msgid "Oriental mosque"
-msgstr "Oriental moyen"
+msgstr "Mosquée orientale"
 
 #: ../base/maps/oriental.ump:568
-#, fuzzy
 msgid "Oriental housing"
-msgstr "Oriental grand"
+msgstr "Habitat oriental"
 
 #: ../base/maps/rescue.ump:12 ../base/maps/rescue.ump:35
 #: ../base/maps/rescue.ump:55 ../base/maps/rescue.ump:75
@@ -201,7 +199,7 @@ msgstr "Discothèque"
 
 #: ../base/maps/urban.ump:318 ../base/ufos/maps.ufo:3179
 msgid "Clinic"
-msgstr ""
+msgstr "Clinique"
 
 #: ../base/maps/urban.ump:338 ../base/ufos/maps.ufo:3228
 msgid "Community Centre"
@@ -240,13 +238,12 @@ msgid "Bungalow"
 msgstr "Bungalow"
 
 #: ../base/maps/village.ump:835
-#, fuzzy
 msgid "Bungalow2"
-msgstr "Bungalow"
+msgstr "Bungalow2"
 
 #: ../base/maps/village.ump:857
 msgid "England"
-msgstr ""
+msgstr "Angleterre"
 
 #: ../base/maps/village.ump:877 ../base/ufos/maps.ufo:3707
 msgid "Estate"
@@ -259,14 +256,12 @@ msgid "Village"
 msgstr "Village"
 
 #: ../base/maps/village.ump:1042
-#, fuzzy
 msgid "Fighter crash"
-msgstr "Chasseur O"
+msgstr "Chasseur écrasé"
 
 #: ../base/maps/village.ump:1059
-#, fuzzy
 msgid "Small street"
-msgstr "Petite maison"
+msgstr "Petite rue"
 
 #: ../base/ufos/aircraftmanagement.ufo:134
 msgid "Firebird-class Dropship"
@@ -1121,14 +1116,13 @@ msgstr "Douglas"
 
 #: ../base/ufos/cities.ufo:711
 msgid "Dresden"
-msgstr ""
+msgstr "Dresde"
 
 #: ../base/ufos/cities.ufo:717
 msgid "Dublin"
 msgstr "Dublin"
 
 #: ../base/ufos/cities.ufo:723
-#, fuzzy
 msgid "Duesseldorf"
 msgstr "Düsseldorf"
 
@@ -2554,17 +2548,17 @@ msgstr "OVNI - Transport"
 #: ../base/ufos/fonts.ufo:53 ../base/ufos/fonts.ufo:77
 #: ../base/ufos/fonts.ufo:83
 msgid "media/orbitron-bold.ttf"
-msgstr ""
+msgstr "media/orbitron-bold.ttf"
 
 #: ../base/ufos/fonts.ufo:17 ../base/ufos/fonts.ufo:29
 #: ../base/ufos/fonts.ufo:41 ../base/ufos/fonts.ufo:59
 #: ../base/ufos/fonts.ufo:71
 msgid "media/orbitron-medium.ttf"
-msgstr ""
+msgstr "media/orbitron-medium.ttf"
 
 #: ../base/ufos/fonts.ufo:65
 msgid "media/orbitron-light.ttf"
-msgstr ""
+msgstr "media/orbitron-light.ttf"
 
 #: ../base/ufos/fonts.ufo:89
 msgid "media/languages.ttf"
@@ -2577,9 +2571,8 @@ msgstr "media/languages.ttf"
 #: ../base/ufos/fonts.ufo:146 ../base/ufos/fonts.ufo:152
 #: ../base/ufos/fonts.ufo:158 ../base/ufos/fonts.ufo:164
 #: ../base/ufos/fonts.ufo:170
-#, fuzzy
 msgid "media/JuraDemiBold.ttf"
-msgstr "media/languages.ttf"
+msgstr "media/JuraDemiBold.ttf"
 
 #: ../base/ufos/gamemodes.ufo:16 ../base/ufos/ui/stats.ufo:91
 msgid "Campaign"
@@ -2930,7 +2923,6 @@ msgid "Basketball Stadium"
 msgstr "Stade de basket"
 
 #: ../base/ufos/maps.ufo:3468
-#, fuzzy
 msgid "Office complex"
 msgstr "Ensemble de bureaux"
 
@@ -2949,9 +2941,8 @@ msgid "Suburban City"
 msgstr "Banlieue"
 
 #: ../base/ufos/maps.ufo:3934
-#, fuzzy
 msgid "Crash Site"
-msgstr "Site de crash OVNI"
+msgstr "Lieu du crash"
 
 #: ../base/ufos/maps.ufo:3981
 msgid "Small Suburban Street"
@@ -3048,7 +3039,7 @@ msgstr "Ensemble de bureaux"
 
 #: ../base/ufos/maps.ufo:5177
 msgid "Sewage Pipe Construction"
-msgstr "Système d'égouts"
+msgstr "Égouts en construction"
 
 #: ../base/ufos/maps.ufo:5222
 msgid "Luxurious Resort"
@@ -3068,7 +3059,7 @@ msgstr "Zone sauvage"
 
 #: ../base/ufos/maps.ufo:5489 ../base/ufos/maps.ufo:5515
 msgid "City High-Rise (MP)"
-msgstr "Grandes tours (Mj)"
+msgstr "Grandes tours (MJ)"
 
 #: ../base/ufos/maps.ufo:5543
 msgid "Frozen Industrial Site (Coop)"
@@ -3076,21 +3067,19 @@ msgstr "Site industriel en zone glaciale (coop.)"
 
 #: ../base/ufos/maps.ufo:5561
 msgid "Frozen Industrial Site (MP)"
-msgstr "Site industriel en zone glaciale (Mj)"
+msgstr "Site industriel en zone glaciale (MJ)"
 
 #: ../base/ufos/maps.ufo:5584
 msgid "A container harbour."
 msgstr "Un port de containers."
 
 #: ../base/ufos/maps.ufo:5613
-#, fuzzy
 msgid "Village MP (2)"
-msgstr "Village (Mj, 2 contre 2)"
+msgstr "Village MJ (2)"
 
 #: ../base/ufos/maps.ufo:5632
-#, fuzzy
 msgid "Village MP (3)"
-msgstr "Village (Mj, 2 contre 2)"
+msgstr "Village MJ (3)"
 
 #: ../base/ufos/maps.ufo:5662
 msgid "Alien Base"
@@ -3136,8 +3125,8 @@ msgstr[1] "Pilotes"
 #: ../base/ufos/team_names.ufo:669 client/cgame/campaign/cp_employee.cpp:188
 msgid "UGV"
 msgid_plural "UGVs"
-msgstr[0] "VTSP"
-msgstr[1] "VTSP"
+msgstr[0] "VTSC"
+msgstr[1] "VTSC"
 
 #: ../base/ufos/medals.ufo:57 ../base/ufos/team_humans.ufo:295
 #: client/cgame/campaign/cp_employee.cpp:184
@@ -3520,7 +3509,7 @@ msgstr ""
 "\n"
 "Le Raptor peut emporter jusqu'à 10 personnes, mais elles devront être "
 "attachées pour résister aux changements de pression qui surviennent durant "
-"les combats aériens. Les soldats sortent en-dessous de l'appareil, qui est "
+"les combats aériens. Les soldats sortent en dessous de l'appareil, qui est "
 "surélevé à cause d'un train d'atterrissage inhabituellement grand ; "
 "autrement dit, la coque de l'appareil ne pourra pas couvrir la sortie des "
 "combattants.\n"
@@ -3714,7 +3703,7 @@ msgstr ""
 "loin devant beaucoup d'autres avions de chasse, qui ne dépassent pas la "
 "vitesse du son en régime de croisière.\n"
 "\n"
-"Une fois en l'air, il peut sautiller comme un lièvre et s'avère impitoyable "
+"Une fois en l'air, il peut virevolter comme un lièvre et s'avère impitoyable "
 "entre les mains d'un pilote expérimenté. Il a ainsi pu tourner autour de son "
 "hangar en 6 secondes tout en gardant la cible dans son viseur. Il peut faire "
 "un looping complet en trois dixièmes de secondes et verrouiller un appareil "
@@ -4007,13 +3996,12 @@ msgstr ""
 "centre, dans la gueule si vous préférez, ce qui nous a donné l'idée de "
 "l'appeler le Dragon.\n"
 "\n"
-"Le principal inconvénient du Dragon est que, comme les OVNI, il requiert de "
-"l'antimatière comme carburant. Nous n’avions pas le choix étant donné le "
-"poids du fuselage. Tant que notre approvisionnement en antimatière sera "
-"faible, il se peut qu'il ne faille exclusivement la réserver qu'à notre "
-"flotte aérienne. C'est pourquoi nous devons faire attention à son "
-"utilisation, chaque cas devra être mûrement réfléchi en fonction de la "
-"situation.\n"
+"Le principal inconvénient du Dragon est que, comme les OVNI, il consomme de "
+"l'antimatière pour voler. Le poids du fuselage ne nous a pas laissé le "
+"choix. Tant que notre approvisionnement en antimatière sera faible, il se "
+"peut qu'il ne faille exclusivement la réserver qu'à notre flotte aérienne. "
+"C'est pourquoi nous devons faire attention à son utilisation, chaque cas "
+"devra être mûrement réfléchi en fonction de la situation.\n"
 "\n"
 "Notez que si le Dragon est techniquement capable de se propulser en orbite, "
 "il ne possède aucune capacité spatiale et ne doit pas dépasser la "
@@ -4061,9 +4049,9 @@ msgstr ""
 "\n"
 "Le programme nécessitera énormément de temps de recherche, de personnel, et "
 "de matériaux... mais, comme toujours, nous avons plus à gagner qu'à perdre. "
-"Commandant, ce projet pourrait aboutir sur un vaste regain d'espoir envers "
-"notre cause. Je vous prie de nous indiquer au plus vite quand vous voulez "
-"que nous nous mettions au travail.\n"
+"Commandant, ce projet pourrait insuffler un vaste espoir envers notre cause. "
+"Je vous prie de nous indiquer au plus vite quand vous voulez que nous nous "
+"mettions au travail.\n"
 "\n"
 "Cdt Navarre"
 
@@ -4695,7 +4683,7 @@ msgstr ""
 "\n"
 "Ce vaisseau représente un très grand danger étant donné la taille de son "
 "équipage : comparé aux autres appareils ennemis, il semble spécifiquement "
-"adapté pour faire débarquer une grande force d'intervention au sol .\n"
+"adapté pour faire débarquer une grande force d'intervention au sol.\n"
 "\n"
 "Commandant, les vaisseaux de ce type doivent absolument être détruits de "
 "façon prioritaire. Nous devons les arrêter quel qu'en soit le cout.\n"
@@ -4731,8 +4719,8 @@ msgstr ""
 "interne ne nous ont fourni que des hypothèses sur ses fonctions supposées.\n"
 "\n"
 "L'essentiel de l'équipement nous est déjà familier, avec notamment des "
-"containers pour stocker de biomasse vivante ou morte. Mais cet OVNI possède "
-"aussi beaucoup d'autres éléments qui laissent mon équipe dans "
+"containers pour stocker de la biomasse vivante ou morte. Mais cet OVNI "
+"possède aussi beaucoup d'autres éléments qui laissent mon équipe dans "
 "l'expectative : il y a des alcôves mystérieuses, connectées à des réservoirs "
 "pleins de sang humain, et dotées de boutons étranges qui ne ressemblent à "
 "rien de ce que nous avions déjà vu ; il y a aussi de nombreux bras robotisés "
@@ -4743,12 +4731,11 @@ msgstr ""
 "\n"
 "Je pense que nous devrions sérieusement analyser cette chose au plus vite, "
 "Commandant. Il y a quelque chose d'extrêmement dérangeant là-dedans, et je "
-"vais avoir du mal à fermer l'œil tant que je ne saurais pas quoi.\n"
+"vais avoir du mal à fermer l'œil tant que je ne saurai pas quoi.\n"
 "\n"
 "Cdt Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:390
-#, fuzzy
 msgid ""
 "Commander, my team and I have just finished another UFO report for you. Here "
 "is my summary for your review.\n"
@@ -4796,15 +4783,15 @@ msgstr ""
 "\n"
 "Nous avons baptisé cet OVNI la « Canonnière », et ce nom révèle bien ses "
 "fonctions. Ses armes et son blindage surclassent ceux des OVNI deux fois "
-"plus gros. Nous pouvons seulement dire que ce vaisseau a été conçu comme de "
+"plus gros. Nous supposons que ce vaisseau a probablement été conçu comme de "
 "chasseur lourd, et qu'il remplit ce rôle à merveille.\n"
 "\n"
-"L'OVNI est armé de deux armes à faisceau de particules et, fait très "
+"L'OVNI est armé de trois armes à faisceau de particules et, fait très "
 "intéressant, de deux points d'emport modulaires d'une conception presque "
 "identique à ceux de nos propres avions. Le blindage est encore plus "
 "intéressant : les matériaux de la coque semblent avoir été améliorés par "
 "rapport à ceux que nous avons vus sur la première vague d'OVNI. Ce nouveau "
-"blindage est un mille-feuilles composé de couches de matériaux aliens et de "
+"blindage est un mille-feuille composé de couches de matériaux aliens et de "
 "couches de substances destinées arrêter les projectiles qui pénétreraient. "
 "Le principe de base est assez simple, mais les nouveaux composés présentent "
 "des propriétés que nous ne sommes pas sûrs de comprendre pleinement. Je vais "
@@ -4813,10 +4800,10 @@ msgstr ""
 "\n"
 "Le fuselage est conçu comme celui d'un vaisseau spatial, mais certaines "
 "adaptations y ont été apportés pour faciliter les manœuvres dans "
-"l'atmosphère. Il possède des ailes générant une poussée, contrairement aux "
+"l'atmosphère. Il possède des ailes générant une portance, contrairement aux "
 "petites ailes en forme de griffes qui ne permettaient de rester en vol que "
 "grâce à la puissance de la propulsion. En outre, des volets mobiles et des "
-"stabilisateurs présents sur les ailes, un peu comme sur les avions humain, "
+"stabilisateurs présents sur les ailes, un peu comme sur les avions humains, "
 "permettent à l'appareil d'utiliser correctement le flux d'air : il peut "
 "faire des virages plus serrés, avoir un angle d'attaque plus étroit, et "
 "s'élever considérablement plus vite que les autres OVNI qui n'utilisent que "
@@ -4824,15 +4811,15 @@ msgstr ""
 "\n"
 "Dans l'ensemble, la canonnière est rapide, maniable, et incroyablement "
 "dangereuse. Elle semble supérieure à tous les autres OVNI observés "
-"auparavant : plus rapide, plus résistant, mieux armé et plus agile. Le seul "
-"point positif pour nous est que, par rapport aux aéronefs plus petits, il "
-"faut trois ou quatre fois plus de matériaux pour construire une canonnière "
-"et qu'elle consomme deux fois plus de carburant ; il est donc peu probable "
-"d'en croiser un grand nombre. Ma seule inquiétude est qu'ils n'auront pas "
-"forcement besoin de beaucoup de ces appareils pour nous faire mordre la "
-"poussière. Une extrême prudence est conseillée, Commandant, et je recommande "
-"de consacrer rapidement du temps et de l'argent afin mettre à niveau notre "
-"flotte.\n"
+"auparavant : plus rapide, plus résistante, mieux armée et plus agile. Le "
+"seul point positif pour nous est que, par rapport aux aéronefs plus petits, "
+"il faut trois ou quatre fois plus de matériaux pour construire une "
+"canonnière et qu'elle consomme deux fois plus de carburant ; il est donc peu "
+"probable d'en croiser un grand nombre. Ma seule inquiétude est qu'ils "
+"n'auront pas forcement besoin de beaucoup de ces appareils pour nous faire "
+"mordre la poussière. Une extrême prudence est conseillée, Commandant, et je "
+"recommande de consacrer rapidement du temps et de l'argent afin mettre à "
+"niveau notre flotte.\n"
 "\n"
 "Cdt Navarre"
 
@@ -4865,9 +4852,9 @@ msgstr ""
 "Depuis que nous avons découvert leur autre chasseur, il s'agit du premier "
 "modèle indubitablement construit pour le combat. Ce qui est encore plus "
 "inquiétant, c'est qu'il possède certaines nouvelles caractéristiques "
-"susceptibles de rendre plus adapté au vol atmosphérique. Je crois que nous "
-"devrions y jeter un coup d'œil immédiatement, vu qu'il pourrait signaler un "
-"changement important de la stratégie des aliens.\n"
+"susceptibles de le rendre plus adapté au vol atmosphérique. Je crois que "
+"nous devrions y jeter un coup d'œil immédiatement, vu qu'il pourrait "
+"signaler un changement important de la stratégie des aliens.\n"
 "\n"
 "Nous sommes prêts à démonter l'engin quand vous le souhaiterez, mais une "
 "évaluation correcte de ses capacités nous demandera pas mal de fonds et de "
@@ -4933,7 +4920,7 @@ msgstr ""
 "\n"
 "Ce vaisseau, que nous avons surnommé la « Moissonneuse », semble "
 "spécifiquement conçu pour atterrir sur une planète et déployer le personnel "
-"« chargé de la récolte » . Il est équipé d'un train d'atterrissage puissant "
+"« chargé de la récolte ». Il est équipé d'un train d'atterrissage puissant "
 "et massif, et de propulseurs spéciaux situés dans le ventre de l'OVNI qui "
 "lui confèrent une capacité DAV (Décollage et Atterrissage Vertical). Une "
 "fois que l'équipage a rassemblé assez de captifs, de cadavres, ou de "
@@ -5232,7 +5219,7 @@ msgstr ""
 "notamment leurs ordinateurs de visée.\n"
 "\n"
 "Ce dispositif de guerre électronique comprend de quoi saturer une ou "
-"plusieurs fréquences du spectre électromagnétique, et de quoi projetter une "
+"plusieurs fréquences du spectre électromagnétique, et de quoi projeter une "
 "bouffée de chaleur à plusieurs mètres du vaisseau, ce qui leurre les sondes "
 "des capteurs infrarouges des missiles (qui perdent donc leur vraie cible). "
 "Enfin, quand elle le juge utile, l'IA peut déployer de quoi émuler presque "
@@ -5642,11 +5629,11 @@ msgstr ""
 "informations saisies sont correctes, le système peut tracer une route entre "
 "deux points en quelques secondes ; il peut aussi recalculer cette route si "
 "l'on utilise des filtres comme « Au plus rapide » , « Au plus court » , « Au "
-"moins dangereux », et ainsi de suite. Ces filtres peuvent personnalisés à "
-"volonté jusqu'à obtenir le chemin désiré. Le système prend même en compte le "
-"paramètre « Plus vite que la lumière », ce qui semble confirmer que les "
+"moins dangereux », et ainsi de suite. Ces filtres peuvent être personnalisés "
+"à volonté jusqu'à obtenir le chemin désiré. Le système prend même en compte "
+"le paramètre « Plus vite que la lumière », ce qui semble confirmer que les "
 "aliens maitrisent les technologies permettant de dépasser la vitesse lumière "
-"(Propulsion SupraLuminique, ou PSL)\n"
+"(Propulsion supraluminique, ou PSL)\n"
 "\n"
 "Le seul problème, c'est que le système requiert une carte stellaire pour "
 "calculer des trajectoires précises vers des destinations hors de portée des "
@@ -5658,7 +5645,7 @@ msgstr ""
 "À la place de cette insaisissable carte stellaire, nous avons découvert que "
 "l'unité de navigation contient énormément de détails sur la Terre et le "
 "Système solaire : cartes des planètes et des lunes, analyses au spectromètre "
-"de chaque corps de la ceinture d'astéroïde et de la lointaine ceinture de "
+"de chaque corps de la ceinture d'astéroïdes et de la lointaine ceinture de "
 "Kuiper, et orbites de tous les corps dans le Système solaire avec des "
 "prévisions à plusieurs centaines d'années… Nous doutons que ces informations "
 "nous soient d'une quelconque utilité, mais cela renforcera les connaissances "
@@ -6219,7 +6206,7 @@ msgstr ""
 "et nous avons sélectionné la meilleure.\n"
 "\n"
 "Le SHIVA est un canon rotatif à quatre tubes, utilisant des balles 20 mm FML "
-"(Fusil Mitrailleur Lourd). Le rechargement de l'arme n'est pas alimenté par "
+"(Fusil-Mitrailleur Lourd). Le rechargement de l'arme n'est pas alimenté par "
 "son recul, mais par un petit moteur électrique externe, très performant, "
 "d'une puissance de 20 chevaux, permettant au SHIVA de tirer avec précision à "
 "une cadence de 6000 balles par minutes.\n"
@@ -6902,7 +6889,7 @@ msgstr ""
 "\n"
 "Aucun."
 
-# Traduction déjà présente desc. du lance-roquette TR-20 non reprise
+# Traduction déjà présente dans la description du lance-roquette TR-20 non reprise
 #: ../base/ufos/msgid/aircraftitems.ufo:546
 msgid ""
 "Technical Specifications: TR-20 Rocket\n"
@@ -6987,11 +6974,11 @@ msgstr ""
 "La roquette TR-20 est une flèche en plastique, très petite et très rapide, "
 "moulée autour d'un tube d'uranium appauvri. Elle est stabilisée par des "
 "ailettes et propulsée par un petit moteur à combustible solide bon marché. "
-"Celui-ci est en fait un modèle civil utilisé par les amateurs de fusées, "
-"capable de monter jusqu'à huit kilomètres, et donc capable d'envoyer une "
-"roquette dans un avion de chasse et de le traverser.\n"
+"Ce dernier est un modèle civil utilisé par les amateurs de fusées, capable "
+"de monter jusqu'à huit kilomètres de haut, et donc capable d'envoyer une "
+"roquette dans un avion de chasse.\n"
 "\n"
-"À cause de son poids, la portée maximum d'une roquette TR-20 est de 4 "
+"À cause de son poids, la portée maximale d'une roquette TR-20 est de 4 "
 "kilomètres ; au-delà, elle arrive à court de carburant et perd sa "
 "puissance.\n"
 "\n"
@@ -8878,7 +8865,7 @@ msgstr ""
 "Mon équipe vient de finir l'analyse de la créature extraterrestre que nous "
 "avons ramenée.\n"
 "\n"
-"Nous avons nommé cet alien « Hovernet de combat », pour bien souligner "
+"Nous avons nommé cet alien « Aérobot de combat », pour bien souligner "
 "l'orientation offensive des améliorations techniques. Notez aussi qu'un "
 "petit amas de biomasse, ressemblant à un « cerveau », contrôle toute la "
 "machine.\n"
@@ -9401,12 +9388,12 @@ msgstr ""
 "Commandant, voici un rapport complet sur l'armure corporelle alienne.\n"
 "\n"
 "Nous avons eu la surprise de découvrir que l'armure alienne est constituée "
-"exclusivement de plastiques et de carbone, sans composés métalliques. En "
-"fait, elle est principalement faite d'un élément que l'homme connait déjà "
-"bien : les nanotubes de carbone. Il s'agit de molécules de carbone "
-"cylindriques extrêmement résistantes (et d'ailleurs l'un des matériaux les "
-"plus résistants que nous connaissions). Ils sont relativement peu utilisés "
-"sur Terre à cause de leur cout prohibitif. Aucun processus de fabrication de "
+"exclusivement de plastiques et de carbone, sans composés métalliques. Elle "
+"est principalement faite d'un élément que l'homme connait déjà bien : les "
+"nanotubes de carbone. Il s'agit de molécules de carbone cylindriques "
+"extrêmement résistantes (et d'ailleurs l'un des matériaux les plus "
+"résistants que nous connaissions). Ils sont relativement peu utilisés sur "
+"Terre à cause de leur cout prohibitif. Aucun processus de fabrication de "
 "masse ne permet d'en baisser le prix, ce qui limite leur usage aux "
 "programmes disposant de très gros budgets, comme l'aéronautique ou "
 "l'exploration spatiale.\n"
@@ -11856,10 +11843,9 @@ msgid ""
 "for those who have managed to beat the Hard campaign and still feel the need "
 "to further punish themselves."
 msgstr ""
-"Dans cette version extrêmement difficile de la campagne standard, toutes les "
-"chances seront contre vous : vous ne recevrez que quelques recrues, les "
-"différentes nations seront extrêmement exigeantes, les aliens seront sans "
-"pitié.\n"
+"Dans cette version extrêmement difficile de la campagne standard, tout sera "
+"contre vous : vous ne recevrez que quelques recrues, les différentes nations "
+"seront extrêmement exigeantes, les aliens seront sans pitié.\n"
 "\n"
 "Le niveau très difficile est recommandé pour les joueurs qui sont parvenus à "
 "terminer la campagne en mode difficile et éprouvent encore le besoin de se "
@@ -11880,7 +11866,7 @@ msgstr ""
 "satisfaire, la recherche sera plus lente et plus exigeante, et les aliens "
 "seront plus forts.\n"
 "\n"
-"Le niveau de difficulté difficile est recommandé pour les joueurs experts."
+"Le niveau difficile est recommandé pour les joueurs experts."
 
 #: ../base/ufos/msgid/campaigns.ufo:16
 msgid ""
@@ -11899,8 +11885,8 @@ msgstr ""
 "intègre plusieurs éléments aléatoires associés à une forte trame narrative.\n"
 "\n"
 "Cette campagne est disponible en plusieurs niveaux de difficulté. Cette "
-"option représente le niveau de difficulté standard, recommandé pour les "
-"nouveaux joueurs qui apprécient les défis."
+"option représente le niveau standard, recommandé pour les nouveaux joueurs "
+"qui apprécient les défis."
 
 #: ../base/ufos/msgid/campaigns.ufo:22
 msgid ""
@@ -11916,8 +11902,8 @@ msgstr ""
 "seront moins résistants et les apparitions d'OVNI moins fréquentes ; en "
 "outre, vous recevrez davantage de recrues pour compenser les pertes.\n"
 "\n"
-"Le niveau de difficulté facile est proposé aux nouveaux joueurs qui "
-"préfèrent découvrir le jeu plus calmement que dans la campagne standard."
+"Le niveau facile est proposé aux nouveaux joueurs qui préfèrent découvrir le "
+"jeu plus calmement que dans la campagne standard."
 
 #: ../base/ufos/msgid/campaigns.ufo:28
 msgid ""
@@ -11932,8 +11918,8 @@ msgstr ""
 "seront plus puissantes, les aliens moins dangereux, et vos pertes devraient "
 "rester peu nombreuses.\n"
 "\n"
-"Le niveau de difficulté très facile est proposé aux nouveaux joueurs qui "
-"veulent simplement tester les possibilités de UFO: AI."
+"Le niveau très facile est proposé aux nouveaux joueurs qui veulent "
+"simplement tester les possibilités de UFO: AI."
 
 #: ../base/ufos/msgid/campaigns.ufo:32
 msgid ""
@@ -11979,7 +11965,7 @@ msgstr ""
 "l'amélioration considérable des conditions sanitaires dans le tiers monde. "
 "Les actions terroristes ont même presque disparu suite à la Deuxième Guerre "
 "froide, dont les atrocités ont gravé tous les esprits, du nord de l'Amérique "
-"aux terres ravagées du subcontinent indien. La lutte des classes s'est "
+"aux terres ravagées du sous-continent indien. La lutte des classes s'est "
 "dorénavant déplacée sur le champ politique, puisque la qualité de vie ne "
 "cesse de s'améliorer, même dans les zones les plus misérables de la Terre, "
 "et puisque les états sont désormais équitablement représentés aux Nations "
@@ -11991,7 +11977,7 @@ msgstr ""
 
 #: ../base/ufos/msgid/campaigntexts.ufo:10
 msgid "To many people on Earth, it seems like things are going all right."
-msgstr "Pour la plupart des gens, la vie semble avoir repris un cours normal."
+msgstr "Pour la plupart des gens, la vie s'écoule normalement."
 
 #: ../base/ufos/msgid/campaigntexts.ufo:14
 msgid ""
@@ -12485,7 +12471,7 @@ msgstr ""
 "Les grenades étourdissantes n'enlèvent des UT que si elles sont utilisées "
 "correctement : elles doivent exploser près de la cible, dans son champ de "
 "vision. Une unité affectée par une de ces grenades perdra toutes les UT qui "
-"lui restaient et n'en récupèrera pas lors de son prochain tour.\n"
+"lui restaient et n'en récupérera pas lors de son prochain tour.\n"
 "\n"
 "Les flammes blessent légèrement les unités qui traversent les zones en train "
 "de bruler."
@@ -12789,9 +12775,9 @@ msgstr ""
 "Ne contactez que les utilisateurs qui se présentent via le client du jeu.\n"
 "\n"
 "Il est interdit :\n"
-"- de spammer ;\n"
-"- de s'exprimer vulgairement ;\n"
-"- d'utiliser une autre langue que l'anglais ;\n"
+"- de spammer,\n"
+"- de s'exprimer vulgairement,\n"
+"- d'utiliser une autre langue que l'anglais,\n"
 "- d'être impatient (une personne peut répondre après plusieurs minutes).\n"
 "\n"
 "Vous pouvez fermer cette fenêtre ou y revenir en appuyant sur F10, même en "
@@ -12930,6 +12916,7 @@ msgstr ""
 "\n"
 "Dr Connor"
 
+# XO = executive officer -> commandant en second = C2
 #: ../base/ufos/msgid/mails.ufo:44
 msgid ""
 "XO Abel S. Howard, Command & Control, PHALANX, Atlantic Operations Command"
@@ -12972,9 +12959,8 @@ msgstr ""
 "pour détruire la porte et entrez."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:11
-#, fuzzy
 msgid "Kill all the aliens before they are able to blow up the depot."
-msgstr "Tuer tous les aliens pour sécuriser la base."
+msgstr "Tuer tous les aliens avant qu'ils ne fassent exploser le dépôt."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:14
 msgid ""
@@ -13017,12 +13003,18 @@ msgid ""
 "the main building. There is a shelter hidden within, our hope is people "
 "managed to get there."
 msgstr ""
+"L'aire à couvrir est très étendue : des forces locales vont donc se joindre "
+"à notre contre-attaque. Votre objectif premier est de protéger les civils "
+"coincés dans le bâtiment principal ; nous espérons que ces gens auront pu "
+"trouver refuge dans l'abri secret qui se trouve à l'intérieur."
 
 #: ../base/ufos/msgid/missionbriefing.ufo:29
 msgid ""
 "Secure the area in front of the panic room entrance until reinforcements "
 "arrive."
 msgstr ""
+"Sécuriser la zone en face de l'entrée de la pièce de survie jusqu'à ce que "
+"les renforts arrivent."
 
 #: ../base/ufos/msgid/news.ufo:16
 msgid ""
@@ -14838,7 +14830,7 @@ msgstr ""
 "Dans une expérience, un individu alien a reçu une boite de nourriture "
 "scellée par une serrure à deux chiffres. Le sujet a mis six heures pour "
 "trouver la bonne combinaison par essais et erreurs. Ceci place le Q.I. de "
-"l'alien bien en-dessous de la plupart des grands mammifères terrestres ; "
+"l'alien bien en dessous de la plupart des grands mammifères terrestres ; "
 "cependant, quand d'autres sujets ont reçu la même tâche, avec exactement la "
 "même serrure, tous ont entré immédiatement la bonne combinaison dès la "
 "première tentative, sans avoir assisté aux essais du premier spécimen. Nous "
@@ -14854,10 +14846,9 @@ msgstr ""
 "ils ne semblent pas communiquer par la parole ou les gestes ; rien de "
 "compréhensible par nous en tout cas. La communication par phéromones n'a "
 "provoqué que des réactions physiques simples. La grande disparité biologique "
-"entre les espèces aliennes provoque crée également certains problèmes "
-"d'isolement et de communication : veuillez vous référer aux rapports "
-"d'autopsie pour plus de détails sur la physiologie individuelle de chaque "
-"extraterrestre.\n"
+"entre les espèces aliennes provoque également certains problèmes d'isolement "
+"et de communication : veuillez vous référer aux rapports d'autopsie pour "
+"plus de détails sur la physiologie individuelle de chaque extraterrestre.\n"
 "\n"
 "Néanmoins, je crois que nous faisons des progrès, quoique lentement. La "
 "communication est certainement possible. Nos études confirment que tous les "
@@ -15357,8 +15348,8 @@ msgstr ""
 "de ces bases, et la meilleure méthode reste d'en capturer une. Nous devrions "
 "éliminer tous les aliens sur place et, une fois la zone sécurisée, récupérer "
 "ce qui peut nous servir, puis intégralement détruire l'installation. Cela "
-"devrait porter un coup majeur aux opérations ennemies tout en réduisant, et "
-"peut-être stopper, la propagation de l'IVX dans cette zone.\n"
+"devrait porter un coup majeur aux opérations ennemies tout en réduisant, "
+"voire en stoppant, la propagation de l'IVX dans cette zone.\n"
 "\n"
 "Cette mission sera bien évidemment très dangereuse : la base est au cœur de "
 "l'infection et toute la zone nous est hostile.\n"
@@ -15599,7 +15590,7 @@ msgstr ""
 "\n"
 "Malheureusement, si je puis dire, nous n’avons pas trouvé la moindre trace "
 "de flotte alienne cachée dans notre système planétaire. Nous avons été "
-"tellement consciencieux que nous nous portons garant des résultats. Et si "
+"tellement consciencieux que nous nous portons garants des résultats. Et si "
 "toute certitude absolue demeure impossible, je vous annonce sans crainte "
 "que :\n"
 "\n"
@@ -16342,7 +16333,7 @@ msgstr ""
 "personnes infectées ainsi que son taux de propagation devient de plus en "
 "plus pressant. C’est certainement plus facile à dire qu’à faire, mais cela "
 "pourrait se révéler aussi important que de trouver un remède. Nous ne "
-"pourront soigner personne si nous sommes incapables de déterminer qui est "
+"pourrons soigner personne si nous sommes incapables de déterminer qui est "
 "malade.\n"
 "\n"
 "Je propose de recenser, à long terme, toutes les personnes de la planète "
@@ -16951,7 +16942,7 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"Spécifications techniques : mitrailleuse MG12\n"
+"Spécifications techniques : fusil-mitrailleur MG12\n"
 "\n"
 "NIVEAU DE CONFIDENTIALITÉ JAUNE\n"
 "\n"
@@ -16969,60 +16960,60 @@ msgstr ""
 "Considérations générales\n"
 "\n"
 "Le SA-3000 GPG britannique (General-Purpose Gun), plus connu comme le Great "
-"British Gun, est une mitrailleuse à chargeurs tambour qui a été en service "
-"dans le monde entier durant 16 ans. Déployée pour la première fois en 2068, "
-"elle a été rapidement reconnu comme étant une mitrailleuse polyvalente, "
+"British Gun, est un fusil-mitrailleur à chargeurs tambour qui a été en "
+"service dans le monde entier durant 16 ans. Déployé pour la première fois en "
+"2068, il a été rapidement reconnu comme étant une arme polyvalente, "
 "utilisable tant par l'infanterie légère qu'à bord des hélicoptères de "
-"support, capable de tirer aussi bien appuyée contre le flanc d'un soldat que "
-"positionnée sur un bipied ou un point de montage.\n"
+"support, capable de tirer aussi bien appuyé contre le flanc d'un soldat que "
+"positionné sur un bipied ou un point de montage.\n"
 "\n"
-"Le modèle d'infanterie de la GPG est une arme à feu extrêmement polyvalente "
-"et fiable. Contrairement à la plupart des mitrailleuses, la GPG possède de "
-"gros chargeurs tambour nécessitant moins de place que des munitions à la "
+"Le modèle d'infanterie de la GPG est extrêmement polyvalent et fiable. "
+"Contrairement à la plupart des fusils-mitrailleurs, le GPG possède de gros "
+"chargeurs tambour nécessitant moins de place que des munitions à la "
 "ceinture. Cela limite la cadence de tir et l'endurance des chargeurs, mais "
-"c'est aussi la raison de sa polyvalence. Le rechargement de la GPG est aussi "
+"c'est aussi la raison de sa polyvalence. Le rechargement du GPG est aussi "
 "rapide que celui d'un fusil d'assaut, et les tambours contiennent 100 balles "
-"chacun. Cela permet à la GPG d'être quasiment utilisée comme un fusil "
-"d'assaut lourd. Les chargeurs sont volumineux mais assez petits et légers "
-"pour qu'un soldat puisse en transporter plusieurs lors des batailles.\n"
+"chacun. Cela permet au GPG d'être utilisé quasiment comme un fusil d'assaut "
+"lourd. Les chargeurs sont volumineux mais assez petits et légers pour qu'un "
+"soldat puisse en transporter plusieurs lors des batailles.\n"
 "\n"
 "Le fusil contient étonnamment peu de composants électroniques : il y a "
 "seulement un puissant compensateur de recul et un système d'absorption de "
-"chocs. Cela améliore la précision, supérieure à celle de mitrailleuses plus "
-"vieilles, mais cela n'en fera jamais un fusil de précision. La conception "
-"solide et simple de son mécanisme fait de la GPG une arme très fiable. Elle "
-"a admirablement prouvé son efficacité à Mumbai, fournissant un tir offensif "
-"efficace et très mobile, capable éventuellement de retenir des escadrons "
-"entiers d’aliens si le terrain le permet.\n"
+"chocs. Cela améliore la précision, supérieure à celle des fusils-"
+"mitrailleurs plus anciens, mais cela n'en fera jamais un fusil de précision. "
+"La conception solide et simple de son mécanisme fait du GPG une arme très "
+"fiable. Il a admirablement prouvé son efficacité à Mumbai, fournissant un "
+"tir offensif efficace et très mobile, capable éventuellement de retenir des "
+"escadrons entiers d’aliens si le terrain le permet.\n"
 "\n"
-"La GPG tire les très courantes munitions de 4,7 mm, aussi utilisées pour "
-"notre fusil d'assaut AR-80. Malheureusement, les chargeurs de la GPG ne sont "
-"pas interchangeables avec notre fusil d'assaut, qui utilise un système "
-"différent.\n"
+"Le GPG tire les très courantes munitions de 4,7 mm, aussi utilisées pour "
+"notre fusil d'assaut AR-80. Malheureusement, les chargeurs du GPG ne sont "
+"pas interchangeables avec ceux de notre fusil d'assaut, qui utilise un "
+"système différent.\n"
 "\n"
-"Nous pensons que la GPG est la meilleure candidate pour notre arsenal dans "
-"la catégorie des mitrailleuses. Nos troupes peuvent compter sur cette arme "
-"pour délivrer un déluge de feu où et quand elles en auront le plus besoin.\n"
+"Nous pensons que le GPG est le meilleur candidat pour notre arsenal dans la "
+"catégorie des fusils-mitrailleurs. Nos troupes peuvent compter sur cette "
+"arme pour délivrer un déluge de feu où et quand elles en auront le plus "
+"besoin.\n"
 "\n"
-"La classification PHALANX de cette mitrailleuse est MG12.\n"
+"La classification PHALANX de ce fusil-mitrailleur est MG12.\n"
 "\n"
 "\n"
 "Doctrine recommandée\n"
 "\n"
-"La MG12 sera un outil extrêmement utile pour le contrôle du champ de "
-"bataille. Elle permettra de mettre en place de solides points d'appui "
-"mobiles à partir desquels attaquer les positions aliennes, ou pourra assurer "
-"des tirs d’attaque ou de diversion efficaces quelle que soit la distance, ou "
-"encore pourra être utilisée comme une puissante arme d'assaut de moyenne "
+"Le MG12 sera un outil extrêmement utile pour le contrôle du champ de "
+"bataille. Il permettra de mettre en place de solides points d'appui mobiles "
+"à partir desquels attaquer les positions aliennes, ou pourra assurer des "
+"tirs d’attaque ou de diversion efficaces quelle que soit la distance, ou "
+"encore pourra être utilisé comme une puissante arme d'assaut de moyenne "
 "portée.\n"
 "\n"
-"Elle devrait être une candidate de premier choix pour tout soldat ayant "
-"suivi un entrainement aux armes lourdes.\n"
+"Il devrait retenir l'attention de tout soldat entrainé aux armes lourdes.\n"
 "\n"
 "\n"
 "Addenda\n"
 "\n"
-"None."
+"Aucun."
 
 #: ../base/ufos/msgid/tips.ufo:8
 msgid ""
@@ -17189,7 +17180,7 @@ msgstr ""
 "fonctionnement.\n"
 "\n"
 "Dans la chambre de combustion, l'éthylène est chauffé dans du trifluorure "
-"d'azote. Cette réaction produit des radicaux de fluor excités, qui sont "
+"d'azote. Cette réaction produit des radicaux de fluor excité, qui sont "
 "ensuite mis en contact avec un mélange gazeux d'hélium et de deutérium. Le "
 "deutérium réagit avec le fluor, produisant des molécules excitées de "
 "fluorure de deutérium. Lors de leur retour à l'état non excité, il y a une "
@@ -17512,16 +17503,16 @@ msgstr ""
 "Considérations générales\n"
 "\n"
 "Ce chargeur contient 12 balles TT (Tokarev) de 7,62 x 25 mm, pour pistolet. "
-"Elles y empilées sur une seule colonne, ce qui est classique. Bien que de "
-"conception ancienne, les balles ont été récemment renforcées avec de l'acier "
-"et du tungstène pour supporter la très forte déflagration due à la poudre ; "
-"ces nouveaux modèles sont donc prêts à servir. Les balles ont un excellent "
-"facteur de pénétration, qui leur permet de traverser les armures lourdes à "
-"courte portée, mais elles ont tendance à peu se fragmenter et à peu se "
-"disperser : il faut donc toucher directement un organe vital ou une artère "
-"principale pour neutraliser un ennemi. Par ailleurs, la poudre à très haute "
-"vélocité cause un recul impressionnant : la plupart des gens devraient tenir "
-"l'arme à 2 mains plutôt que de risquer de se casser un poignet.\n"
+"Elles y sont empilées sur une seule colonne, ce qui est classique. Bien que "
+"de conception ancienne, les balles ont été récemment renforcées avec de "
+"l'acier et du tungstène pour supporter la très forte déflagration due à la "
+"poudre ; ces nouveaux modèles sont donc prêts à servir. Les balles ont un "
+"excellent facteur de pénétration, qui leur permet de traverser les armures "
+"lourdes à courte portée, mais elles ont tendance à peu se fragmenter et à "
+"peu se disperser : il faut donc toucher directement un organe vital ou une "
+"artère principale pour neutraliser un ennemi. Par ailleurs, la poudre à très "
+"haute vélocité cause un recul impressionnant : la plupart des gens devraient "
+"tenir l'arme à 2 mains plutôt que de risquer de se casser un poignet.\n"
 "\n"
 "Le chargeur est conçu pour le pistolet P-12.\n"
 "\n"
@@ -17910,14 +17901,14 @@ msgstr ""
 "\n"
 "Le FA-80 devrait être notre arme standard pour les combats à moyenne portée. "
 "Il dispose d'une impressionnante puissance de feu et est mortel sur des "
-"distances beaucoup plus importantes que n'importe quel pistolet ou pistolet "
+"distances beaucoup plus importantes que n'importe quel pistolet ou pistolet-"
 "mitrailleur.\n"
 "\n"
 "Cependant, il ne faut pas imaginer que c'est l'arme absolue. Un panel "
 "d'armes diversifié est nécessaire pour affronter différentes situations. "
 "Même si le fusil d'assaut est une bonne arme à courte portée, sa "
 "manipulation est lente dans des espaces restreints, et il ne vaut alors pas "
-"un pistolet mitrailleur ou un fusil à pompe ; ces derniers sont bien plus "
+"un pistolet-mitrailleur ou un fusil à pompe ; ces derniers sont bien plus "
 "performants à bout portant. Une visite d'immeuble devrait être menée avec "
 "des armes à courte portée, tandis que des soldats équipés de fusils "
 "assureront la sécurité du périmètre ou participeront à une seconde vague "
@@ -18091,7 +18082,7 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"Spécifications techniques : mitrailleuse MG12\n"
+"Spécifications techniques : fusil-mitrailleur MG12\n"
 "\n"
 "NIVEAU DE CONFIDENTIALITÉ JAUNE\n"
 "\n"
@@ -18109,54 +18100,55 @@ msgstr ""
 "Considérations générales\n"
 "\n"
 "Le SA-3000 GPG britannique (General-Purpose Gun), plus connu comme le Great "
-"British Gun, est une mitrailleuse à chargeurs tambour qui a été en service "
-"dans le monde entier durant 16 ans. Déployée pour la première fois en 2068, "
-"elle a été rapidement reconnu comme étant une mitrailleuse polyvalente, "
-"utilisable tant par l'infanterie légère qu'à bord des hélicoptères de "
-"support, capable de tirer aussi bien appuyée contre le flanc d'un soldat que "
-"positionnée sur un bipied ou un point de montage.\n"
+"British Gun, est un fusil-mitrailleur à chargeurs tambour qui a été en "
+"service dans le monde entier durant 16 ans. Déployé pour la première fois en "
+"2068, il a été rapidement reconnu comme étant un fusil-mitrailleur "
+"polyvalent, utilisable tant par l'infanterie légère qu'à bord des "
+"hélicoptères de support, capable de tirer aussi bien appuyé contre le flanc "
+"d'un soldat que positionné sur un bipied ou un point de montage.\n"
 "\n"
-"La version infanterie de la GPG est une arme à feu extrêmement polyvalente "
-"et fiable. Contrairement à la plupart des mitrailleuses, la GPG possède de "
-"gros chargeurs tambour nécessitant moins de place que des munitions à la "
+"La version infanterie du GPG est une arme à feu extrêmement polyvalente et "
+"fiable. Contrairement à la plupart des fusils-mitrailleurs, le GPG possède "
+"de gros chargeurs tambour nécessitant moins de place que des munitions à la "
 "ceinture. Cela limite la cadence de tir et l'endurance des chargeurs, mais "
-"c'est aussi la raison de sa polyvalence. Le rechargement de la GPG est aussi "
+"c'est aussi la raison de sa polyvalence. Le rechargement du GPG est aussi "
 "rapide que celui d'un fusil d'assaut, et les tambours contiennent 100 balles "
-"chacun. Cela permet à la GPG d'être utilisée presque comme un fusil d'assaut "
+"chacun. Cela permet au GPG d'être utilisé presque comme un fusil d'assaut "
 "lourd. Les chargeurs sont volumineux mais assez petits et légers pour qu'un "
 "soldat standard puisse en transporter plusieurs lors des batailles.\n"
 "\n"
 "Le fusil contient étonnamment peu de composants électroniques : il n'y a "
 "qu'un puissant compensateur de recul et un système d'absorption de chocs. "
-"Cela contribue à améliorer la précision, supérieure à celle de mitrailleuses "
-"plus vieilles (mais ce ne remplacera jamais un fusil de précision). La "
-"conception solide et simple de son mécanisme fait de la GPG une arme très "
-"fiable. Elle a admirablement prouvé son efficacité à Mumbai, fournissant un "
-"tir offensif efficace et très mobile, capable éventuellement de retenir des "
-"escadrons entiers d’aliens si le terrain le permet.\n"
+"Cela contribue à améliorer la précision, supérieure à celle de fusils-"
+"mitrailleurs plus anciens (mais ce ne remplacera jamais un fusil de "
+"précision). La conception solide et simple de son mécanisme fait du GPG une "
+"arme très fiable. Il a admirablement prouvé son efficacité à Mumbai, "
+"fournissant un tir offensif efficace et très mobile, capable éventuellement "
+"de retenir des escadrons entiers d’aliens si le terrain le permet.\n"
 "\n"
-"La GPG tire la très courante munition de 4,7 mm, aussi utilisée pour notre "
-"fusil d'assaut AR-80. Malheureusement, les chargeurs de la GPG ne sont pas "
+"Le GPG tire la très courante munition de 4,7 mm, aussi utilisée pour notre "
+"fusil d'assaut AR-80. Malheureusement, les chargeurs du GPG ne sont pas "
 "interchangeables avec notre fusil d'assaut, qui utilise un système "
 "différent.\n"
 "\n"
-"Nous pensons que la GPG est la meilleure candidate pour notre arsenal dans "
-"la catégorie des mitrailleuses. Nos troupes peuvent compter sur cette arme "
-"pour délivrer un déluge de feu où et quand elles en auront le plus besoin.\n"
+"Nous pensons que le GPG est le meilleur candidat pour notre arsenal dans la "
+"catégorie des fusils-mitrailleurs. Nos troupes peuvent compter sur cette "
+"arme pour délivrer un déluge de feu où et quand elles en auront le plus "
+"besoin.\n"
 "\n"
-"La classification PHALANX de cette mitrailleuse est MG12.\n"
+"La classification PHALANX de ce fusil-mitrailleur est MG12.\n"
 "\n"
 "\n"
 "Doctrine recommandée\n"
 "\n"
-"La MG12 sera un outil extrêmement utile pour le contrôle du champ de "
-"bataille. Le grand volume de munitions qu'elle peut peut cracher permettra "
+"Le MG12 sera un outil extrêmement utile pour le contrôle du champ de "
+"bataille. Le grand volume de munitions qu'il peut peut cracher permettra "
 "d'abattre un ennemi puissant ou toucher des cibles éloignées prises sous le "
 "feu de l'arme.\n"
 "\n"
 "Addenda\n"
 "\n"
-"None."
+"Aucun."
 
 #: ../base/ufos/msgid/weapons.ufo:342
 msgid ""
@@ -18200,7 +18192,7 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"Spécifications techniques : chargeur pour mitrailleuse\n"
+"Spécifications techniques : chargeur pour fusil-mitrailleur\n"
 "\n"
 "NIVEAU DE CONFIDENTIALITÉ JAUNE\n"
 "\n"
@@ -18217,9 +18209,9 @@ msgstr ""
 "\n"
 "Considérations générales\n"
 "\n"
-"Ce tambour de mitrailleuse contient 100 balles perforantes de 4,7 x 33 mm. "
-"Contrairement aux chargeurs des fusils, les balles sont ici liées par une "
-"longue bande plutôt qu'empilées sur un ressort. La bande est faite d'un "
+"Ce tambour de fusil-mitrailleur contient 100 balles perforantes de 4,7 x 33 "
+"mm. Contrairement aux chargeurs des fusils, les balles sont ici liées par "
+"une longue bande plutôt qu'empilées sur un ressort. La bande est faite d'un "
 "plastique spécial qui se désintègre à l'air libre.\n"
 "\n"
 "Les balles sont faites de tungstène perforant, et enchâssées dans leur "
@@ -18227,14 +18219,14 @@ msgstr ""
 "performantes contre plusieurs types d'ennemis, à courte comme à moyenne "
 "portée.\n"
 "\n"
-"Le chargeur est conçu pour la mitrailleuse MG12.\n"
+"Le chargeur est conçu pour le fusil-mitrailleur MG12.\n"
 "\n"
 "\n"
 "Doctrine recommandée\n"
 "\n"
-"Tout soldat armé d'une mitrailleuse devrait emporter au moins un chargeur "
-"supplémentaire lorsqu'il part sur le terrain. Il n'est pas recommandé "
-"d'envoyer nos troupes au combat sans tambour de rechange.\n"
+"Tout soldat armé d'un fusil-mitrailleur devrait emporter au moins un "
+"chargeur supplémentaire lorsqu'il part sur le terrain. Il n'est pas "
+"recommandé d'envoyer nos troupes au combat sans tambour de rechange.\n"
 "\n"
 "\n"
 "Addenda\n"
@@ -18631,7 +18623,7 @@ msgstr ""
 "Nous nous sommes inspirés des nouveaux missiles pour avion, tout en étant "
 "contraints de fortement réduire la charge utile pour qu'un soldat puisse "
 "emporter ces projectiles. Et nous voici donc avec la plus puissante roquette "
-"explosive que nos experts ait pu concevoir.\n"
+"explosive que nos experts aient pu concevoir.\n"
 "\n"
 "L'enveloppe est faite en matériaux aliens qui se fragmentent lors de "
 "l'explosion, dont le souffle projette les morceaux à une vitesse telle "
@@ -21198,7 +21190,7 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Command, nous avons terminé un prototype d'électrolaser et les plans de "
+"Commandant, nous avons terminé un prototype d'électrolaser et les plans de "
 "production sont prêts. Nous pouvons maintenant l'utiliser en combat. Comme "
 "toujours, en voici les spécifications et les recommandations d'usage.\n"
 "\n"
@@ -21270,10 +21262,10 @@ msgstr ""
 "intéresser. Veuillez considérer attentivement ce qui suit.\n"
 "\n"
 "Vous savez que, dès la proposition du Dr Connor, j'ai toujours redouté les "
-"dangers liés à l’utilisation du bâton assommant. Faire courir de très très "
-"gros risques à nos soldats afin de capturer des spécimens vivants ne me "
-"parait pas forcément indiqué. C'est pourquoi, à la division d'ingénierie, "
-"nous avons étudié des alternatives... et nous voici prêts à vous faire une "
+"dangers liés à l’utilisation du bâton assommant. Faire courir de très gros "
+"risques à nos soldats afin de capturer des spécimens vivants ne me parait "
+"pas forcément indiqué. C'est pourquoi, à la division d'ingénierie, nous "
+"avons étudié des alternatives... et nous voici prêts à vous faire une "
 "proposition technologiquement viable et efficace en combat.\n"
 "\n"
 "Je voudrais combiner les effets du bâton assommant avec nos dernières "
@@ -21736,7 +21728,7 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Commandant, nous avons enfin récupéré une arme à plasma alien. Inutile de "
+"Commandant, nous avons enfin récupéré une arme à plasma alienne. Inutile de "
 "vous dire à quel point cette découverte est importante ! L'armement alien "
 "est très avancé, puissant et mortel. Pour le contrer, nous devons en "
 "comprendre le fonctionnement afin de mieux pouvoir nous armer et nous "
@@ -21901,9 +21893,9 @@ msgstr ""
 "implications. Étant donné le pragmatisme habituel des aliens envers leur "
 "propre vie, j'ai peur qu'ils n'utilisent des kamikazes prêts à se sacrifier "
 "pour tuer l'un des nôtres. Ni PHALANX ni l'humanité ne peuvent se permettre "
-"de perdre un homme pour un alien. Et même si ce rapport était de 10 pour 1, "
-"je ne parierais pas sur nos chances. Après tout, qui sait combien ils "
-"sont ?\n"
+"de perdre un homme pour un extraterrestre. Et même si ce rapport était de 10 "
+"pour 1, je ne parierais pas sur nos chances. Après tout, qui sait combien "
+"ils sont ?\n"
 "\n"
 "J'aurais souhaité que personne n'invente cette maudite arme. Je n'aime pas "
 "la direction que prend cette guerre.\n"
@@ -22128,7 +22120,6 @@ msgstr ""
 "Cdt Navarre"
 
 #: ../base/ufos/msgid/weapons.ufo:1415
-#, fuzzy
 msgid ""
 "Commander, we've finished drawing up the specs for the Encased Plasma Ammo. "
 "We've got design documents in place for your engineers to build new ammo "
@@ -22154,8 +22145,8 @@ msgid ""
 msgstr ""
 "Commandant, nous avons fini les spécifications des munitions plasma "
 "chemisées (PC). Nous avons faits des plans pour que nos ingénieurs puissent "
-"produire des munitions pour le fusils d'assaut, la mitrailleuse, et le fusil "
-"de précision SR-1.\n"
+"produire des munitions pour le fusil d'assaut, le fusil-mitrailleur, le "
+"fusil à pompe, et le fusil de précision SR-1.\n"
 "\n"
 "Les munitions plasma chemisées ont la forme qui convient à un fusil "
 "traditionnel : un petit cœur de plasma, une pointe qui se fragmente à "
@@ -22200,7 +22191,7 @@ msgstr ""
 "munition élaborée qui pourrait rétablir le pouvoir d'arrêt de nos armes "
 "classiques.\n"
 "\n"
-"Comme vous le savez, l'armure des aliens que nous affrontons au combat est "
+"Comme vous le savez, l'armure des aliens que nous affrontons est "
 "spécialement adaptée contre les tirs au plasma, qui provoquent des dégâts en "
 "faisant fondre ce qu'ils touchent. Les équipements extraterrestres sont donc "
 "prévus pour résister à la chaleur le temps que le plasma refroidisse. Le "
@@ -22208,10 +22199,10 @@ msgstr ""
 "emprisonner la chaleur et à la retourner contre sa cible.\n"
 "\n"
 "Nous pouvons faire la même chose, à une échelle beaucoup plus réduite, avec "
-"les munitions de nos fusils d'assaut ou de précision, et nos mitrailleuses. "
-"Laissez-nous le temps de nous occuper des détails, Commandant, et je jure "
-"que nous vous présenterons bientôt de quoi joliment améliorer nos capacités "
-"opérationnelles.\n"
+"les munitions de nos fusils d'assaut ou de précision, et nos fusils-"
+"mitrailleurs. Laissez-nous le temps de nous occuper des détails, Commandant, "
+"et je jure que nous vous présenterons bientôt de quoi joliment améliorer nos "
+"capacités opérationnelles.\n"
 "\n"
 "Cdt Navarre"
 
@@ -22264,8 +22255,8 @@ msgstr ""
 "description technique associée à un bilan de ses capacités offensives.\n"
 "\n"
 "Comme cela est mentionné dans le compte rendu préliminaire, le lance-"
-"aiguille est une sorte de fusil, très inhabituel cependant. Comme une "
-"mitrailleuse, il est conçu pour submerger une cible sous les projectiles, "
+"aiguille est une sorte de fusil, très inhabituel cependant. Comme le fusil-"
+"mitrailleur, il est conçu pour submerger une cible sous les projectiles, "
 "mais ce concept est encore poussé plus loin. Il vomit des milliers et des "
 "milliers d'aiguilles ultra-rapides en acier siliconé pouvant facilement "
 "transpercer une cible.\n"
@@ -22293,7 +22284,7 @@ msgstr ""
 "si j'arrive à en tirer quelque chose de concret.\n"
 "\n"
 "L'arme est très lourde, et cela peut nuire à l'efficacité tactique. Mais, vu "
-"sa puissance, je suis sûr que certains de nos gars troquerons sans regret "
+"sa puissance, je suis sûr que certains de nos gars troqueront sans regret "
 "quelques petites choses contre un lance-aiguille.\n"
 "\n"
 "Montée sur bipied et avec un bon stock de munitions, l'arme représente une "
@@ -22376,7 +22367,7 @@ msgstr ""
 "J'aimerais ajouter une dernière chose. Nous pensons que ce fusil a été "
 "développé très récemment, peut-être même ces derniers mois seulement. La "
 "conception semble de certains composants semble presque bâclée. Il est clair "
-"que cette arme devait être mise à disposition de leurs combattant dans de "
+"que cette arme devait être mise à disposition de leurs combattants dans de "
 "très brefs délais. Cela nous fait donc penser qu'ils sont en train de mettre "
 "au point d'autres types d'armes, et pas seulement en train de déployer des "
 "troupes plus aguerries. En gros, nous sommes lancés dans une course aux "
@@ -22445,7 +22436,7 @@ msgstr ""
 "implique que l'énergie cinétique du projectile ne représentait même pas 2 % "
 "de l'énergie totale produite pour tirer. Même avec les avancées "
 "technologiques modernes, le rendement stagnait en-deçà de 10 %. Tandis que "
-"le lance aiguilles alien atteint un rendement de 70 % ! Il nous faudrait des "
+"le lance-aiguilles alien atteint un rendement de 70 % ! Il nous faudrait des "
 "années pour arriver à ces performances, mais nous avons quand même développé "
 "un canon pratique et efficace.\n"
 "\n"
@@ -22503,7 +22494,7 @@ msgstr ""
 "voir le jour. Je vous propose un nouveau projet de recherche : un canon "
 "électromagnétique qui servirait de fusil de précision.\n"
 "\n"
-"Le lance aiguilles est une arme terrible, mais il y a des avantages "
+"Le lance-aiguilles est une arme terrible, mais il y a des avantages "
 "indéniables à ne tirer qu'une seul balle plutôt qu'une nuée de fléchettes : "
 "plus grande stabilité en vol, capacité de perforation supérieure, et surtout "
 "puissance d'arrêt supérieure. Si nous préconisons aux snipers de tuer en un "
@@ -22563,7 +22554,7 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"Spécifications techniques : chargeur de munitions à sabot\n"
+"Spécifications techniques : munitions à sabot\n"
 "\n"
 "NIVEAU DE CONFIDENTIALITÉ JAUNE\n"
 "\n"
@@ -22734,7 +22725,7 @@ msgstr ""
 "sa deuxième crosse aussitôt que l'arme est dégainée, permettant un tir "
 "précis et immédiat si nécessaire.\n"
 "\n"
-"L'arme est chambrée pour du 12 mm classique de fusil à pompe . Le chargeur "
+"L'arme est chambrée pour du 12 mm classique de fusil à pompe. Le chargeur "
 "contient 7 cartouches et ressemble à celui d'un pistolet ; il est placé dans "
 "la crosse, ce qui le rend beaucoup plus rapide à recharger que le fusil à "
 "pompe CRC-212. Cependant, seules les munitions courtes peuvent entrer dans "
@@ -22760,7 +22751,7 @@ msgstr ""
 "\n"
 "Malgré sa taille relativement importante et même s'il n'a pas été conçu pour "
 "cela, le M9 pourra servir d'arme de secours : il fait plus de dégâts qu'un "
-"pistolet P-12 et est plus précis qu'un pistolet mitrailleur CRC-8. Cela en "
+"pistolet P-12 et est plus précis qu'un pistolet-mitrailleur CRC-8. Cela en "
 "fait un bon choix pour les tireurs de précision.\n"
 "\n"
 "\n"
@@ -22942,7 +22933,7 @@ msgid ""
 "Despite good penetration against organics, this weapon performs very poorly "
 "against robotic targets."
 msgstr ""
-"Spécifications techniques : pistolet mitrailleur CRC-8\n"
+"Spécifications techniques : pistolet-mitrailleur CRC-8\n"
 "\n"
 "NIVEAU DE CONFIDENTIALITÉ JAUNE\n"
 "\n"
@@ -22966,7 +22957,7 @@ msgstr ""
 "programme Excalibur, nous avons choisi plusieurs armes hautement "
 "performantes dans la section combat rapproché.\n"
 "\n"
-"Conçu et produit en Chine continentale, le pistolet mitrailleur Ohm 55 est "
+"Conçu et produit en Chine continentale, le pistolet-mitrailleur Ohm 55 est "
 "l'une des armes les plus terrifiantes héritées de la Deuxième Guerre froide. "
 "Le premier prototype date de 2035, et fut créé par des scientifiques du "
 "gouvernement communiste chinois. À la fin de la guerre, seuls quelques "
@@ -22980,7 +22971,7 @@ msgstr ""
 "aluminium, qui peuvent déchirer le kevlar comme du papier et se fragmentent "
 "brutalement en arrivant dans les chairs ou les os. Même les fibres "
 "balistiques modernes ne peuvent stopper ces balles si elles sont tirées à "
-"moins de 12 mètres. L’Ohm 55 a dominé le domaine des pistolets mitrailleurs "
+"moins de 12 mètres. L’Ohm 55 a dominé le domaine des pistolets-mitrailleurs "
 "ces cinquante dernières années, et continuera probablement à le faire durant "
 "la prochaine décennie.\n"
 "\n"
@@ -22991,7 +22982,7 @@ msgstr ""
 "sur la gâchette. Cependant, après 50 ans d'utilisation à travers le monde, "
 "ces défauts restent les seuls connus du Ohm 55.\n"
 "\n"
-"La classification PHALANX de ce pistolet mitrailleur est CRC-8.\n"
+"La classification PHALANX de ce pistolet-mitrailleur est CRC-8.\n"
 "\n"
 "\n"
 "Doctrine recommandée\n"
@@ -23054,7 +23045,7 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"Spécifications techniques : chargeur de pistolet mitrailleur\n"
+"Spécifications techniques : chargeur de pistolet-mitrailleur\n"
 "\n"
 "NIVEAU DE CONFIDENTIALITÉ JAUNE\n"
 "\n"
@@ -23077,12 +23068,12 @@ msgstr ""
 "Leur construction classique est compensée par la cadence impressionnante du "
 "CRC-8 en mode automatique.\n"
 "\n"
-"Ce chargeur est destiné au pistolet mitrailleur CRC-8.\n"
+"Ce chargeur est destiné au pistolet-mitrailleur CRC-8.\n"
 "\n"
 "\n"
 "Doctrine recommandée\n"
 "\n"
-"Tout soldat armé d'un pistolet mitrailleur devrait emporter au moins un "
+"Tout soldat armé d'un pistolet-mitrailleur devrait emporter au moins un "
 "chargeur supplémentaire. Il n'est pas recommandé d'envoyer nos troupes au "
 "combat sans chargeur de rechange.\n"
 "\n"
@@ -23326,7 +23317,7 @@ msgstr ""
 "de l'un de rares fusils de précision développé après 2040 sans configuration "
 "bullpup (les dispositifs « bullpup » sont ceux pour lesquels le chargeur et "
 "le mécanisme de l'arme sont situés derrière la crosse afin de réduire la "
-"longueur totale de l'arme). Il tire des cartouches massives FML (Fusil "
+"longueur totale de l'arme). Il tire des cartouches massives FML (Fusil-"
 "Mitrailleur Lourd) 20 mm, placées dans des chargeurs de 8 balles qui peuvent "
 "peser jusqu'à un kilogramme. La culasse retardée par piston est équipée d'un "
 "système complexe de dispersion des gaz qui réduit le recul de l'arme à un "
@@ -23432,7 +23423,7 @@ msgstr ""
 "\n"
 "Considérations générales\n"
 "\n"
-"Ce chargeur contient 8 balles du type PML (Pistolet Mitrailleur Lourd) 20 x "
+"Ce chargeur contient 8 balles du type PML (Pistolet-Mitrailleur Lourd) 20 x "
 "140 mm. Ces balles sont empilées en une seule colonne, et leur poids rend le "
 "chargeur très lourd (jusqu'à un kilogramme). Les balles, d'excellente "
 "facture, sont destinées uniquement aux fusils de précision lourds. Elles "
@@ -23614,7 +23605,7 @@ msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:1883
 msgid "stungren_alien_txt"
-msgstr ""
+msgstr "stungren_alien_txt"
 
 #: ../base/ufos/msgid/weapons.ufo:1909
 msgid ""
@@ -23846,7 +23837,7 @@ msgstr ""
 "Commandant, j'ai déterminé les caractéristiques de la nouvelle arme des "
 "aliens, et il y a de quoi être inquiet.\n"
 "\n"
-"Nous avons toujours soupçonné qu'un vrai effort militaire alien pouvait "
+"Nous avons toujours soupçonné qu'un véritable effort militaire alien pouvait "
 "faire mieux que de simples armes à plasma et des épées Kerr. Et là, ils nous "
 "prouvent que nous avions raison. Cet armement à faisceau de particules est "
 "extrêmement avancé et représente un bond significatif par rapport aux armes "
@@ -23857,7 +23848,7 @@ msgstr ""
 "flux de particules accélérées à des vitesses presque égales à celle de la "
 "lumière, ainsi porteur d'une énergie cinétique fantastique. Jusqu'à présent, "
 "nous n'avions vu cette technologie utilisée qu'avec les armes embarquées des "
-"grands OVNI. mMalheureusement, ils l'utilisent maintenant aussi au sol.\n"
+"grands OVNI. Malheureusement, ils l'utilisent maintenant aussi au sol.\n"
 "\n"
 "Le pistolet lui-même est de conception simple : une coquille couvre une "
 "série d'aimants et de lentilles électrostatiques, qui concentrent un "
@@ -24309,7 +24300,7 @@ msgstr "Poignarder"
 
 #: ../base/ufos/otheritems.ufo:101
 msgid "Hovernet Plasma Weapon"
-msgstr "Arme à plasma d'Hovernet"
+msgstr "Arme à plasma d'aérobot"
 
 #: ../base/ufos/otheritems.ufo:122
 msgid "Single Shot"
@@ -24317,7 +24308,7 @@ msgstr "Coup par coup"
 
 #: ../base/ufos/otheritems.ufo:147
 msgid "Combat Hovernet Plasma Weapon"
-msgstr "Arme à plasma d'Hovernet de combat"
+msgstr "Arme à plasma d'aérobot de combat"
 
 #: ../base/ufos/otheritems.ufo:168 ../base/ufos/weapons_plasma.ufo:67
 msgid "Burst"
@@ -24325,7 +24316,7 @@ msgstr "Rafale"
 
 #: ../base/ufos/research.ufo:33
 msgid "gettext_text2"
-msgstr ""
+msgstr "gettext_text2"
 
 #: ../base/ufos/research.ufo:108
 msgid "Basic Concepts (Campaign)"
@@ -24640,19 +24631,19 @@ msgstr "Autopsie - Shevaar"
 
 #: ../base/ufos/research.ufo:4686
 msgid "Alien Autopsy - Hovernet"
-msgstr "Autopsie - Hovernet"
+msgstr "Autopsie - Aérobot"
 
 #: ../base/ufos/research.ufo:4742
 msgid "Alien Autopsy - Combat Hovernet"
-msgstr "Autopsie - Hovernet de combat"
+msgstr "Autopsie - Aérobot de combat"
 
 #: ../base/ufos/research.ufo:4804 ../base/ufos/team_humans.ufo:344
 msgid "Phoenix UGV"
-msgstr "VTSP Phénix"
+msgstr "VTSC Phénix"
 
 #: ../base/ufos/research.ufo:4824 ../base/ufos/team_humans.ufo:401
 msgid "Ares W (UGV)"
-msgstr "VTSP Arès"
+msgstr "VTSC Arès"
 
 #: ../base/ufos/research.ufo:4932
 msgid "'Raven' ECM Unit"
@@ -24720,7 +24711,7 @@ msgstr "Stimulant musculaire"
 
 #: ../base/ufos/seq_credits.ufo:30 ../base/ufos/ui/main.ufo:20
 msgid "UFO: ALIEN INVASION"
-msgstr ""
+msgstr "UFO: ALIEN INVASION"
 
 #: ../base/ufos/seq_credits.ufo:45
 msgid "http://www.ufoai.org"
@@ -24776,11 +24767,11 @@ msgstr "Holger Gellrich (ShipIt)"
 
 #: ../base/ufos/seq_credits.ufo:178
 msgid "Igor Gritsenko (Internecivus)"
-msgstr ""
+msgstr "Igor Gritsenko (Internecivus)"
 
 #: ../base/ufos/seq_credits.ufo:188
 msgid "cooler_sk"
-msgstr ""
+msgstr "cooler_sk"
 
 #: ../base/ufos/seq_credits.ufo:202
 msgid "Other contributors"
@@ -24860,7 +24851,7 @@ msgstr "La communauté et tous ceux qui nous ont soutenus"
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:161
 msgid "GAMEPLAY"
-msgstr ""
+msgstr "GAMEPLAY"
 
 #: ../base/ufos/seq_tutorials.ufo:35
 msgid "Some notes about the gameplay"
@@ -24896,7 +24887,7 @@ msgstr "Accélérer le temps jusqu'à l'apparition de la première mission alien
 
 #: ../base/ufos/seq_tutorials.ufo:254
 msgid "Select the mission (doubleclick) and choose aircraft from list"
-msgstr "Sélectionner la mission (double-clic) et choisir un avion de la liste"
+msgstr "Choisir la mission (double-clic), puis un avion de la liste"
 
 #: ../base/ufos/seq_tutorials.ufo:273
 msgid "Hit the start or auto-mission button to fight the aliens"
@@ -24909,7 +24900,7 @@ msgstr "Pour plus d'information, regardez le tutoriel de mission tactique"
 
 #: ../base/ufos/seq_tutorials.ufo:326
 msgid "TACTICAL MISSION"
-msgstr ""
+msgstr "MISSION TACTIQUE"
 
 #: ../base/ufos/seq_tutorials.ufo:344
 msgid "Tactical mission tutorial"
@@ -24939,7 +24930,7 @@ msgstr "Ou avec les touches 1 à 8 ou Tab"
 
 #: ../base/ufos/seq_tutorials.ufo:475
 msgid "Physical stats"
-msgstr "Statistiques physiques du soldat"
+msgstr "Statistiques physiques"
 
 #: ../base/ufos/seq_tutorials.ufo:497
 msgid "Stats bars: movement, health and morale"
@@ -24991,7 +24982,7 @@ msgstr "Fin du tour"
 
 #: ../base/ufos/seq_tutorials.ufo:774
 msgid "HOW TO PLAY SKIRMISH"
-msgstr ""
+msgstr "MODE ESCARMOUCHE"
 
 #: ../base/ufos/seq_tutorials.ufo:788
 msgid "Skirmish tutorial"
@@ -25055,7 +25046,7 @@ msgstr "Retournez au menu principal"
 
 #: ../base/ufos/seq_tutorials.ufo:1046
 msgid "HOW TO PLAY MULTIPLAYER"
-msgstr ""
+msgstr "MODE MUTIJOUEUR"
 
 #: ../base/ufos/seq_tutorials.ufo:1061 ../base/ufos/ui/multiplayer.ufo:910
 msgid ""
@@ -25105,11 +25096,11 @@ msgstr "Araignée sanguinaire de combat"
 
 #: ../base/ufos/team_aliens.ufo:395
 msgid "Hovernet"
-msgstr "Hovernet"
+msgstr "Aérobot"
 
 #: ../base/ufos/team_aliens.ufo:467
 msgid "Combat Hovernet"
-msgstr "Hovernet de combat"
+msgstr "Aérobot de combat"
 
 #: ../base/ufos/team_humans.ufo:54
 msgid "Phalanx"
@@ -25142,7 +25133,7 @@ msgstr "Tête"
 #: ../base/ufos/tips.ufo:4
 msgid "Use the [Shift] key to aim higher or lower at your target."
 msgstr ""
-"Utilisez la touche Shift pour viser au-dessus ou en-dessous de votre cible."
+"Utilisez la touche Maj pour viser au-dessus ou en dessous de votre cible."
 
 #: ../base/ufos/tips.ufo:5
 msgid ""
@@ -25564,9 +25555,8 @@ msgstr ""
 
 #: ../base/ufos/ui/_assets.ufo:42 ../base/ufos/ui/_assets_base.ufo:377
 #: ../base/ufos/ui/_assets_base.ufo:557
-#, fuzzy
 msgid "View UFOPaedia entry"
-msgstr "Regarder l'article de l'OVNIpédia"
+msgstr "Voir l'article de l'OVNIpédia"
 
 #: ../base/ufos/ui/_assets.ufo:124 ../base/ufos/ui/hud_phone.ufo:157
 #: client/cgame/campaign/cp_installation_callbacks.cpp:194
@@ -25580,9 +25570,8 @@ msgid "Close this dialogue"
 msgstr "Fermer cette fenêtre"
 
 #: ../base/ufos/ui/_assets.ufo:380 ../base/ufos/ui/inv_stat.ufo:107
-#, fuzzy
 msgid "Strength"
-msgstr "Force :"
+msgstr "Force"
 
 #: ../base/ufos/ui/_assets.ufo:388 ../base/ufos/ui/inv_stat.ufo:115
 msgid "Speed"
@@ -25594,19 +25583,17 @@ msgid "Accuracy"
 msgstr "Précision"
 
 #: ../base/ufos/ui/_assets.ufo:404 ../base/ufos/ui/inv_stat.ufo:131
-#, fuzzy
 msgid "Mind"
-msgstr "Esprit :"
+msgstr "Esprit"
 
+# L'anglais nécessite une abréviation car Close Quarter Battle est trop long. L'abréger en CR ne parait pas utile.
 #: ../base/ufos/ui/_assets.ufo:420 ../base/ufos/ui/inv_stat.ufo:147
 msgid "CQB"
-msgstr ""
+msgstr "Cmb. rapproché"
 
-# Compétence abrégée pour pouvoir être affiché entièrement.
 #: ../base/ufos/ui/_assets.ufo:421
-#, fuzzy
 msgid "Close Quarters Battle"
-msgstr "Cmbt rapproché"
+msgstr "Combat rapproché"
 
 # Compétence abrégée pour pouvoir être affiché entièrement.
 #: ../base/ufos/ui/_assets.ufo:429 ../base/ufos/ui/inv_stat.ufo:155
@@ -25630,9 +25617,8 @@ msgid "Health"
 msgstr "Santé"
 
 #: ../base/ufos/ui/_assets.ufo:465
-#, fuzzy
 msgid "Healthpoints"
-msgstr "Santé"
+msgstr "Points de santé"
 
 #: ../base/ufos/ui/_assets.ufo:492
 msgid "Missions Performed:"
@@ -25643,19 +25629,16 @@ msgid "Enemies Killed:"
 msgstr "Ennemis tués :"
 
 #: ../base/ufos/ui/_assets.ufo:581
-#, fuzzy
 msgid "Piloting"
-msgstr "Pilotage :"
+msgstr "Pilotage"
 
 #: ../base/ufos/ui/_assets.ufo:588
-#, fuzzy
 msgid "Targeting"
-msgstr "Visée :"
+msgstr "Visée"
 
 #: ../base/ufos/ui/_assets.ufo:595
-#, fuzzy
 msgid "Evading"
-msgstr "Esquive :"
+msgstr "Esquive"
 
 #: ../base/ufos/ui/_assets_base.ufo:10
 msgid "Back"
@@ -25663,11 +25646,11 @@ msgstr "Retour"
 
 #: ../base/ufos/ui/_assets_base.ufo:418
 msgid "Stop researching this project"
-msgstr "Arrêter ce projet."
+msgstr "Arrêter ce projet"
 
 #: ../base/ufos/ui/_assets_base.ufo:429
 msgid "Assign all free scientists on this project"
-msgstr "Assigner tous le scientifiques disponibles à ce projet"
+msgstr "Assigner tous les scientifiques disponibles à ce projet"
 
 #: ../base/ufos/ui/_assets_base.ufo:440
 msgid "Assign less scientists on this project"
@@ -25678,9 +25661,8 @@ msgid "Assign more scientists on this project"
 msgstr "Assigner plus de scientifiques à ce projet"
 
 #: ../base/ufos/ui/_assets_base.ufo:470
-#, fuzzy
 msgid "Currently in research on another base"
-msgstr "Cet objet est actuellement étudié dans une autre base."
+msgstr "En cours d'études dans une autre base"
 
 #: ../base/ufos/ui/_assets_base.ufo:484
 msgid "N/A"
@@ -25696,42 +25678,35 @@ msgstr "Développer ou réduire"
 
 #: ../base/ufos/ui/_assets_base.ufo:614
 msgid "Lock current stock level"
-msgstr ""
+msgstr "Figer les stocks au niveau actuel"
 
 #: ../base/ufos/ui/_assets_base.ufo:687
-#, fuzzy
 msgid "Previous base"
-msgstr "Base précédente "
+msgstr "Base précédente"
 
 #: ../base/ufos/ui/_assets_base.ufo:703
-#, fuzzy
 msgid "Next base"
 msgstr "Base suivante"
 
 #: ../base/ufos/ui/_assets_base.ufo:774 ../base/ufos/ui/_menu.ufo:88
-#, fuzzy
 msgid "Back to base"
-msgstr "Retour à la vue de la base"
+msgstr "Retour à la base"
 
 #: ../base/ufos/ui/_assets_hud.ufo:107
-#, fuzzy
 msgid "current level"
-msgstr "Valeur actuelle."
+msgstr "étage actuel"
 
 #: ../base/ufos/ui/_assets_hud.ufo:126
-#, fuzzy
 msgid "raise the level"
-msgstr "Génération de ce niveau"
+msgstr "étage supérieur"
 
 #: ../base/ufos/ui/_assets_hud.ufo:135
-#, fuzzy
 msgid "lower the level"
-msgstr "Génération de ce niveau"
+msgstr "étage inférieur"
 
 #: ../base/ufos/ui/_assets_map.ufo:36
-#, fuzzy
 msgid "Time of day"
-msgstr "Astuce du jour"
+msgstr "Moment de la journée"
 
 #: ../base/ufos/ui/_assets_map.ufo:99
 msgid "Enemies"
@@ -25739,17 +25714,15 @@ msgstr "Ennemis"
 
 #: ../base/ufos/ui/_assets_map.ufo:103
 msgid "The maximum number of enemies you could face"
-msgstr ""
+msgstr "Le nombre maximum d'ennemis que vous pourriez affronter"
 
 #: ../base/ufos/ui/_assets_map.ufo:167
-#, fuzzy
 msgid "Alien rush"
-msgstr "Vagues d'aliens :"
+msgstr "Ruée d'aliens"
 
 #: ../base/ufos/ui/_assets_map.ufo:192
-#, fuzzy
 msgid "Dropship"
-msgstr "Transport :"
+msgstr "Transport"
 
 #: ../base/ufos/ui/_assets_map.ufo:237
 #: client/cgame/campaign/cp_aircraft.cpp:479
@@ -25758,63 +25731,58 @@ msgid "UFO"
 msgstr "OVNI"
 
 #: ../base/ufos/ui/_assets_squad.ufo:49
-#, fuzzy
 msgid "Enemy weapons"
-msgstr "Armes lourdes"
+msgstr "Armes ennemies"
 
 #: ../base/ufos/ui/_assets_squad.ufo:102 ../base/ufos/ui/_assets_squad.ufo:481
 msgid "Squad"
-msgstr ""
+msgstr "Escouade"
 
 #: ../base/ufos/ui/_assets_squad.ufo:140
-#, fuzzy
 msgid "Max Soldiers"
-msgstr "Max. soldats :"
+msgstr "Max. soldats"
 
 #: ../base/ufos/ui/_assets_squad.ufo:222
-#, fuzzy
 msgid "Max UGVs"
-msgstr "VTSP Triax"
+msgstr "Max. VTSC"
 
 #: ../base/ufos/ui/_assets_squad.ufo:299
-#, fuzzy
 msgid "Selected squad name here"
-msgstr "Défense sélectionnée"
+msgstr "Nom de l'escouade sélectionnée"
 
 #: ../base/ufos/ui/_assets_squad.ufo:313 ../base/ufos/ui/campaign.ufo:147
 #: ../base/ufos/ui/campaign.ufo:654
 msgid "SAVE"
-msgstr ""
+msgstr "SAUVEGARDER"
 
 #: ../base/ufos/ui/_assets_squad.ufo:324
 msgid "EQUIP"
-msgstr ""
+msgstr "ÉQUIPER"
 
 #: ../base/ufos/ui/_assets_squad.ufo:352
-#, fuzzy
 msgid "Squad settings"
-msgstr "Options sonores"
+msgstr "Paramétrage escouade"
 
 #: ../base/ufos/ui/_assets_squad.ufo:359
 msgid "DEFAULT"
-msgstr ""
+msgstr "PAR DÉFAUT"
 
 #: ../base/ufos/ui/_assets_squad.ufo:370
 msgid "CUSTOM"
-msgstr ""
+msgstr "PERSONNALISER"
 
 #: ../base/ufos/ui/_assets_squad.ufo:433 ../base/ufos/ui/campaign.ufo:131
 msgid "NEW"
-msgstr ""
+msgstr "NOUVEAU"
 
 #: ../base/ufos/ui/_assets_squad.ufo:449 ../base/ufos/ui/campaign.ufo:155
 #: ../base/ufos/ui/campaign.ufo:640
 msgid "LOAD"
-msgstr ""
+msgstr "CHARGER"
 
 #: ../base/ufos/ui/_assets_squad.ufo:541 ../base/ufos/ui/multiplayer.ufo:203
 msgid "CREATE"
-msgstr ""
+msgstr "CRÉER"
 
 #: ../base/ufos/ui/_assets_squad.ufo:636 ../base/ufos/ui/multiplayer.ufo:58
 msgid "Currently loaded"
@@ -25857,9 +25825,8 @@ msgid "Add/remove soldier to the team"
 msgstr "Ajouter ou retirer un soldat"
 
 #: ../base/ufos/ui/aircraft.ufo:161
-#, fuzzy
 msgid "Soldiers & Pilots"
-msgstr "Compétences des soldats"
+msgstr "Soldats et pilotes"
 
 #: ../base/ufos/ui/aircraft.ufo:187
 msgid "Rename aircraft"
@@ -25879,7 +25846,8 @@ msgstr "Statut :"
 msgid "Team:"
 msgstr "Équipe :"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:90 ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:90
+#: ../base/ufos/ui/aircraft_equip.ufo:109
 #: ../base/ufos/ui/aircraft_equip.ufo:128
 #: ../base/ufos/ui/aircraft_equip.ufo:147
 #: ../base/ufos/ui/aircraft_equip.ufo:166
@@ -25887,7 +25855,7 @@ msgstr "Équipe :"
 #: ../base/ufos/ui/aircraft_equip.ufo:204
 #: ../base/ufos/ui/aircraft_equip.ufo:223
 msgid "Select this slot"
-msgstr "Sélectionner cet emplacement"
+msgstr "Choisir cet emplacement"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:286
 msgid "Available equipment:"
@@ -25927,7 +25895,7 @@ msgstr "Retirer cet objet"
 #: ../base/ufos/ui/aircraft_equip.ufo:434
 #: ../base/ufos/ui/aircraft_equip.ufo:473
 msgid "Select this zone"
-msgstr "Sélectionner cette zone"
+msgstr "Choisir cette zone"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:443
 msgid "Current item in slot"
@@ -25960,28 +25928,24 @@ msgid "No soldiers assigned"
 msgstr "Aucun soldat n'est affecté"
 
 #: ../base/ufos/ui/aliencont.ufo:56 ../base/ufos/ui/aliencont.ufo:309
-#, fuzzy
 msgid "Kill one alien"
-msgstr "Tuer cet alien"
+msgstr "Tuer un alien"
 
 #: ../base/ufos/ui/aliencont.ufo:75
 msgid "Start autopsy"
 msgstr "Commencer l'autopsie"
 
 #: ../base/ufos/ui/aliencont.ufo:171
-#, fuzzy
 msgid "Race"
-msgstr "Race :"
+msgstr "Race"
 
 #: ../base/ufos/ui/aliencont.ufo:179
-#, fuzzy
 msgid "Alive"
-msgstr "Vivants :"
+msgstr "Vivants"
 
 #: ../base/ufos/ui/aliencont.ufo:187
-#, fuzzy
 msgid "Dead"
-msgstr "Morts :"
+msgstr "Morts"
 
 #: ../base/ufos/ui/aliencont.ufo:196
 msgid "Kill all aliens in this base"
@@ -26055,9 +26019,8 @@ msgstr "OVNI ciblé :"
 
 #: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:1000
 #: ../base/ufos/ui/popup_installations.ufo:528
-#, fuzzy
 msgid "Time to completion:"
-msgstr "Activer la compression des textures."
+msgstr "Délai de réalisation :"
 
 #: ../base/ufos/ui/basedefence.ufo:354
 msgid "Autofire"
@@ -26098,7 +26061,7 @@ msgstr "Scientifiques"
 
 #: ../base/ufos/ui/bases.ufo:71
 msgid "Engineers"
-msgstr ""
+msgstr "Ingénieurs"
 
 #: ../base/ufos/ui/bases.ufo:89 ../base/ufos/ui/hire.ufo:84
 msgid "Pilots"
@@ -26110,8 +26073,8 @@ msgstr "Vue d'ensemble"
 
 #: ../base/ufos/ui/bases.ufo:118 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
-#: ../base/ufos/ui/transfer.ufo:463
+#: ../base/ufos/ui/popup_installations.ufo:654
+#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:463
 #: client/cgame/campaign/cp_base_callbacks.cpp:602
 #: client/cgame/campaign/cp_base_callbacks.cpp:613
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
@@ -26120,7 +26083,6 @@ msgid "Transfer"
 msgstr "Transférer"
 
 #: ../base/ufos/ui/bases.ufo:129
-#, fuzzy
 msgid "UFOpedia"
 msgstr "OVNIpédia"
 
@@ -26129,9 +26091,8 @@ msgid "Options"
 msgstr "Options"
 
 #: ../base/ufos/ui/bases.ufo:164
-#, fuzzy
 msgid "Facilities"
-msgstr "Bâtiments de la base"
+msgstr "Bâtiments"
 
 #: ../base/ufos/ui/bases.ufo:210 ../base/ufos/ui/geoscape.ufo:539
 #: client/cgame/campaign/cp_ufopedia.cpp:113
@@ -26149,24 +26110,23 @@ msgid "Upload"
 msgstr "Téléverser"
 
 #: ../base/ufos/ui/campaign.ufo:50 ../base/ufos/ui/campaign.ufo:103
-#, fuzzy
 msgid "Delete this savegame"
-msgstr "Effacer cette équipe"
+msgstr "Effacer cette sauvegarde"
 
 #: ../base/ufos/ui/campaign.ufo:168 ../base/ufos/ui/multiplayer.ufo:702
 #: ../base/ufos/ui/skirmish.ufo:175
 msgid "DOWNLOAD"
-msgstr ""
+msgstr "TÉLÉCHARGER"
 
 #: ../base/ufos/ui/campaign.ufo:176 ../base/ufos/ui/skirmish.ufo:186
 msgid "BEGIN"
-msgstr ""
+msgstr "COMMENCER"
 
 #: ../base/ufos/ui/campaign.ufo:198 ../base/ufos/ui/campaign.ufo:933
 #: ../base/ufos/ui/multiplayer.ufo:901 ../base/ufos/ui/skirmish.ufo:197
 #: ../base/ufos/ui/tutorials.ufo:70
 msgid "BACK"
-msgstr ""
+msgstr "RETOUR"
 
 #: ../base/ufos/ui/campaign.ufo:355 ../base/ufos/ui/multiplayer.ufo:1065
 #: ../base/ufos/ui/skirmish.ufo:369
@@ -26176,7 +26136,7 @@ msgstr "Aucun fichier n'a encore été chargé"
 #: ../base/ufos/ui/campaign.ufo:426 ../base/ufos/ui/campaign.ufo:440
 #: ../base/ufos/ui/campaign.ufo:456
 msgid "Click here to save game"
-msgstr ""
+msgstr "Cliquer ici pour sauvegarder la partie"
 
 #: ../base/ufos/ui/campaign.ufo:624 ../base/ufos/ui/missionmenu.ufo:33
 msgid "Leave this menu and continue playing."
@@ -26184,16 +26144,16 @@ msgstr "Sortir de ce menu et continuer à jouer"
 
 #: ../base/ufos/ui/campaign.ufo:626 ../base/ufos/ui/missionmenu.ufo:32
 msgid "CONTINUE"
-msgstr ""
+msgstr "CONTINUER"
 
 #: ../base/ufos/ui/campaign.ufo:659 ../base/ufos/ui/main.ufo:107
 #: ../base/ufos/ui/missionmenu.ufo:43
 msgid "OPTIONS"
-msgstr ""
+msgstr "OPTIONS"
 
 #: ../base/ufos/ui/campaign.ufo:670 ../base/ufos/ui/main.ufo:140
 msgid "EXIT"
-msgstr ""
+msgstr "SORTIR"
 
 #: ../base/ufos/ui/campaign.ufo:709
 msgid "Reload campaign"
@@ -26219,13 +26179,12 @@ msgid "Click to continue"
 msgstr "Cliquer pour continuer"
 
 #: ../base/ufos/ui/campaign.ufo:829
-#, fuzzy
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Merci d'avoir joué à UFO: Alien Invasion"
 
 #: ../base/ufos/ui/campaign.ufo:911
 msgid "EXIT CAMPAIGN CONFIRMATION"
-msgstr ""
+msgstr "CONFIRMATION DE SORTIE DE CAMPAGNE"
 
 #: ../base/ufos/ui/campaign.ufo:916
 msgid "You will lose all your campaign progress."
@@ -26233,7 +26192,7 @@ msgstr "Vous perdrez tout depuis la dernière sauvegarde."
 
 #: ../base/ufos/ui/campaign.ufo:925
 msgid "QUIT"
-msgstr ""
+msgstr "QUITTER"
 
 #: ../base/ufos/ui/cgame.ufo:22
 msgid "Remove this file from the server"
@@ -26245,14 +26204,12 @@ msgid "Rename your unit"
 msgstr "Renommer votre unité"
 
 #: ../base/ufos/ui/equipment.ufo:185 ../base/ufos/ui/inv_stat.ufo:331
-#, fuzzy
 msgid "Next soldier"
-msgstr "soldat"
+msgstr "Soldat suivant"
 
 #: ../base/ufos/ui/equipment.ufo:193 ../base/ufos/ui/inv_stat.ufo:340
-#, fuzzy
 msgid "Previous soldier"
-msgstr "Base précédente "
+msgstr "Soldat précédent"
 
 #: ../base/ufos/ui/equipment.ufo:250 ../base/ufos/ui/inv_stat.ufo:81
 msgid "0/0 Kg"
@@ -26406,7 +26363,8 @@ msgstr "Terminer automatiquement la mission"
 msgid "This kind of mission cannot be done automatically"
 msgstr "Ce genre de mission ne peut être terminé automatiquement"
 
-#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897
+#: ../base/ufos/ui/popup_installations.ufo:184
 msgid "Cost:"
 msgstr "Cout :"
 
@@ -26414,7 +26372,8 @@ msgstr "Cout :"
 msgid "Time to build:"
 msgstr "Délai de construction :"
 
-#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:952
+#: ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build"
 msgstr "Construire"
 
@@ -26453,16 +26412,17 @@ msgstr "Site pour missiles sol-air :"
 
 #: ../base/ufos/ui/geoscape.ufo:1248
 msgid "Select aircraft"
-msgstr "Sélectionner appareil"
+msgstr "Choisir appareil"
 
 #: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/popup_installations.ufo:642
+#: ../base/ufos/ui/transfer.ufo:601
 msgid "ETA:"
 msgstr "HAP :"
 
 #: ../base/ufos/ui/geoscape.ufo:1315
 msgid "Select item"
-msgstr "Choisir un élément"
+msgstr "Choisir élément"
 
 #: ../base/ufos/ui/geoscape.ufo:1321
 msgid "Type:"
@@ -26493,9 +26453,8 @@ msgid "3D"
 msgstr "3D"
 
 #: ../base/ufos/ui/hire.ufo:57
-#, fuzzy
 msgid "Hire and Fire"
-msgstr "Recruter/Licencier"
+msgstr "Recruter ou Licencier"
 
 #: ../base/ufos/ui/hire.ufo:89
 msgid "Workers"
@@ -26534,18 +26493,16 @@ msgid "Healthy"
 msgstr "En bonne santé"
 
 #: ../base/ufos/ui/hud_.ufo:42
-#, fuzzy
 msgid "Use this firemode for reaction fire"
-msgstr "Cochez pour utiliser ce mode de tir en tir réflexe"
+msgstr "Utiliser ce mode de tir pour le tir réflexe"
 
 #: ../base/ufos/ui/hud_default.ufo:38
 msgid "Default"
-msgstr ""
+msgstr "Par défaut"
 
 #: ../base/ufos/ui/hud_default.ufo:286
-#, fuzzy
 msgid "Stats"
-msgstr "Statut :"
+msgstr "Stats"
 
 #: ../base/ufos/ui/hud_default.ufo:311
 msgid "Headgear"
@@ -26557,54 +26514,46 @@ msgid "Toggle reaction fire."
 msgstr "Activer ou désactiver le tir réflexe."
 
 #: ../base/ufos/ui/hud_default.ufo:387
-#, fuzzy
 msgid "Stand"
-msgstr "Stanley"
+msgstr "Se lever"
 
 #: ../base/ufos/ui/hud_default.ufo:407
-#, fuzzy
 msgid "Crouch"
-msgstr "Marcher accroupi"
+msgstr "S'accroupir"
 
 #: ../base/ufos/ui/hud_default.ufo:419
-#, fuzzy
 msgid "Crouched"
-msgstr "UT réservées pour s'accroupir"
+msgstr "Accroupi"
 
 #: ../base/ufos/ui/hud_default.ufo:447
-#, fuzzy
 msgid "Standing"
-msgstr "Incroyable"
+msgstr "Debout"
 
 #: ../base/ufos/ui/hud_default.ufo:624
-#, fuzzy
 msgid "View other hand"
-msgstr "Choisissez un autre HUD"
+msgstr "Voir l'autre main"
 
 #: ../base/ufos/ui/hud_default.ufo:744
 msgid "Hide squad"
-msgstr ""
+msgstr "Cacher escouade"
 
 #: ../base/ufos/ui/hud_default.ufo:887
-#, fuzzy
 msgid "Show squad"
-msgstr "Contrôles"
+msgstr "Afficher escouade"
 
 #: ../base/ufos/ui/hud_default.ufo:950
-#, fuzzy
 msgid "Jump to alien"
-msgstr "Italien"
+msgstr "Passer à l'alien"
 
 #: ../base/ufos/ui/hud_default.ufo:978
 msgid "Jump to civilian"
-msgstr ""
+msgstr "Passer au civil"
 
 #: ../base/ufos/ui/hud_default.ufo:982
 msgid "*"
-msgstr ""
+msgstr "*"
 
 #: ../base/ufos/ui/hud_default.ufo:1024
-#, fuzzy
 msgid "End Turn"
 msgstr "Fin du tour"
 
@@ -26625,13 +26574,12 @@ msgid "Target acquired"
 msgstr "Cible acquise"
 
 #: ../base/ufos/ui/hud_default.ufo:1216
-#, fuzzy
 msgid "Aborting fire!"
-msgstr "Pas de tir réflexe"
+msgstr "Cessez le feu !"
 
 #: ../base/ufos/ui/hud_default.ufo:1274
 msgid "Please wait"
-msgstr "Patientez..."
+msgstr "Un instant..."
 
 #: ../base/ufos/ui/hud_default.ufo:1314
 msgid "Hide rescue zone"
@@ -26856,32 +26804,31 @@ msgstr "Suivez-nous sur Twitter"
 
 #: ../base/ufos/ui/main.ufo:74
 msgid "CAMPAIGN"
-msgstr ""
+msgstr "CAMPAGNE"
 
 #: ../base/ufos/ui/main.ufo:85
 msgid "SKIRMISH"
-msgstr ""
+msgstr "ESCARMOUCHE"
 
 #: ../base/ufos/ui/main.ufo:96
 msgid "MULTIPLAYER"
-msgstr ""
+msgstr "MULTIJOUEUR"
 
 #: ../base/ufos/ui/main.ufo:118 ../base/ufos/ui/tutorials.ufo:12
 msgid "TUTORIALS"
-msgstr ""
+msgstr "TUTORIELS"
 
 #: ../base/ufos/ui/main.ufo:129
 msgid "DEVELOPERS"
-msgstr ""
+msgstr "DÉVELOPPEURS"
 
 #: ../base/ufos/ui/main.ufo:204
 msgid "Initial settings"
 msgstr "Réglages initiaux"
 
 #: ../base/ufos/ui/main.ufo:217
-#, fuzzy
 msgid "User information"
-msgstr "Information sur l'utilisateur"
+msgstr "Information utilisateur"
 
 #: ../base/ufos/ui/main.ufo:252
 msgid "Volume Control"
@@ -26889,7 +26836,7 @@ msgstr "Contrôle du volume "
 
 #: ../base/ufos/ui/main.ufo:262
 msgid "Effects:"
-msgstr "Effets sonores :"
+msgstr "Effets :"
 
 #: ../base/ufos/ui/main.ufo:284
 msgid "Music:"
@@ -26944,43 +26891,36 @@ msgid "Base"
 msgstr "Base"
 
 #: ../base/ufos/ui/market.ufo:88
-#, fuzzy
 msgid "Primary Weapons"
 msgstr "Armes principales"
 
 #: ../base/ufos/ui/market.ufo:99
-#, fuzzy
 msgid "Secondary Weapons"
 msgstr "Armes secondaires"
 
 #: ../base/ufos/ui/market.ufo:110
-#, fuzzy
 msgid "Heavy Weapons"
-msgstr "Armes lourdes :"
+msgstr "Armes lourdes"
 
 #: ../base/ufos/ui/market.ufo:143
-#, fuzzy
 msgid "Aircraft Equipment"
-msgstr "Équipement complémentaire"
+msgstr "Équipements des aéronefs"
 
 #: ../base/ufos/ui/market.ufo:165
-#, fuzzy
 msgid "Implants"
-msgstr "Implant"
+msgstr "Implants"
 
 #: ../base/ufos/ui/market.ufo:176
-#, fuzzy
 msgid "Other Items"
-msgstr "Autres"
+msgstr "Autres objets"
 
 #: ../base/ufos/ui/market.ufo:187
 msgid "Unmanned Ground Vehicles"
-msgstr ""
+msgstr "Véhicules Terrestres Sans Conducteur"
 
 #: ../base/ufos/ui/market.ufo:328
-#, fuzzy
 msgid "Transactions"
-msgstr "Mission de transport"
+msgstr "Transactions"
 
 #: ../base/ufos/ui/material_editor.ufo:12
 msgid "Material editor"
@@ -27141,19 +27081,19 @@ msgstr "Démarrer la partie"
 
 #: ../base/ufos/ui/missionmenu.ufo:61 ../base/ufos/ui/multiplayer.ufo:379
 msgid "LOBBY"
-msgstr ""
+msgstr "SALON"
 
 #: ../base/ufos/ui/missionmenu.ufo:62
 msgid "ABORT GAME"
-msgstr ""
+msgstr "ABANDONNER PARTIE"
 
 #: ../base/ufos/ui/missionmenu.ufo:70
 msgid "RESTART MISSION"
-msgstr ""
+msgstr "RECOMMENCER MISSION"
 
 #: ../base/ufos/ui/missionmenu.ufo:71
 msgid "ABORT MISSION"
-msgstr ""
+msgstr "ABANDONNER MISSION"
 
 #: ../base/ufos/ui/multiplayer.ufo:8
 msgid "Connect to this server"
@@ -27165,11 +27105,11 @@ msgstr "Effacer ce marque-page"
 
 #: ../base/ufos/ui/multiplayer.ufo:194
 msgid "JOIN"
-msgstr ""
+msgstr "REJOINDRE"
 
 #: ../base/ufos/ui/multiplayer.ufo:212
 msgid "TEAM"
-msgstr ""
+msgstr "ÉQUIPE"
 
 #: ../base/ufos/ui/multiplayer.ufo:228
 msgid "Gametype:"
@@ -27189,7 +27129,7 @@ msgstr "Sauvegarde de l'équipe actuelle"
 
 #: ../base/ufos/ui/multiplayer.ufo:325
 msgid "SAVE TEAM"
-msgstr ""
+msgstr "SAUVEGARDER ÉQUIPE"
 
 #: ../base/ufos/ui/multiplayer.ufo:345
 msgid "Bookmarks"
@@ -27217,7 +27157,7 @@ msgstr "Utiliser le moral :"
 
 #: ../base/ufos/ui/multiplayer.ufo:486
 msgid "Alien rush:"
-msgstr "Vagues d'aliens :"
+msgstr "Ruée d'aliens :"
 
 #: ../base/ufos/ui/multiplayer.ufo:489
 msgid "Enemies respawn when killed."
@@ -27254,7 +27194,7 @@ msgstr "Max. joueurs humains par équipe :"
 
 #: ../base/ufos/ui/multiplayer.ufo:609
 msgid "Max. AI actors:"
-msgstr "Max. d'acteurs IA :"
+msgstr "Max. acteurs IA :"
 
 #: ../base/ufos/ui/multiplayer.ufo:610
 msgid "Max AI actors for teamplay mode"
@@ -27265,14 +27205,12 @@ msgid "Round time limit in seconds:"
 msgstr "Durée limite d'un tour en seconde :"
 
 #: ../base/ufos/ui/multiplayer.ufo:658
-#, fuzzy
 msgid "START SERVER"
-msgstr "RESERVE"
+msgstr "LANCER LE SERVEUR"
 
 #: ../base/ufos/ui/multiplayer.ufo:679
-#, fuzzy
 msgid "Teams"
-msgstr "Équipe"
+msgstr "Équipes"
 
 #: ../base/ufos/ui/multiplayer.ufo:696
 msgid "Download new teams"
@@ -27284,19 +27222,19 @@ msgstr "Créer une nouvelle équipe"
 
 #: ../base/ufos/ui/multiplayer.ufo:714
 msgid "GENERATE"
-msgstr ""
+msgstr "GÉNÉRER"
 
 #: ../base/ufos/ui/multiplayer.ufo:765
 msgid "Close web panel"
-msgstr ""
+msgstr "Fermer le panneau web"
 
 #: ../base/ufos/ui/multiplayer.ufo:766
 msgid "CLOSE"
-msgstr ""
+msgstr "FERMER"
 
 #: ../base/ufos/ui/multiplayer.ufo:781
 msgid "REFRESH"
-msgstr ""
+msgstr "RAFRAICHIR"
 
 #: ../base/ufos/ui/multiplayer.ufo:788
 msgid "Serverfilter:"
@@ -27304,7 +27242,7 @@ msgstr "Filtre de serveur :"
 
 #: ../base/ufos/ui/multiplayer.ufo:870
 msgid "CONNECT"
-msgstr ""
+msgstr "SE CONNECTER"
 
 #: ../base/ufos/ui/multiplayer.ufo:881
 msgid "Connect to IP"
@@ -27375,14 +27313,12 @@ msgid "Remote Admin Control"
 msgstr "Contrôle administrateur distant"
 
 #: ../base/ufos/ui/multiplayer.ufo:1509
-#, fuzzy
 msgid "Server Info"
-msgstr "Info. sur le serveur"
+msgstr "Info. serveur"
 
 #: ../base/ufos/ui/multiplayer.ufo:1576
-#, fuzzy
 msgid "Map screenshots"
-msgstr "Faire une capture d'écran"
+msgstr "Copie d'écran de carte"
 
 #: ../base/ufos/ui/multiplayer.ufo:1650
 msgid "Userlist"
@@ -27424,7 +27360,7 @@ msgstr "Invitation de jeu"
 
 #: ../base/ufos/ui/multiplayer.ufo:1812
 msgid "Server info"
-msgstr "Info. sur le serveur"
+msgstr "Info. serveur"
 
 #: ../base/ufos/ui/multiplayer.ufo:1813
 msgid "Show server information"
@@ -27440,640 +27376,567 @@ msgid ""
 "connect button to connect to the server"
 msgstr ""
 "Vous avez reçu une invitation pour participer à un jeu multijoueur. Appuyez "
-"sur le bouton 'Se connecter' pour vous connecter au serveur"
+"sur le bouton « Se connecter » pour vous connecter au serveur"
 
 #: ../base/ufos/ui/options.ufo:111
 msgid "GENERAL"
-msgstr ""
+msgstr "GÉNÉRAL"
 
 #: ../base/ufos/ui/options.ufo:125
 msgid "VIDEO"
-msgstr ""
+msgstr "VIDÉO"
 
 #: ../base/ufos/ui/options.ufo:137
 msgid "SOUND"
-msgstr ""
+msgstr "SON"
 
 #: ../base/ufos/ui/options.ufo:149
 msgid "KEYS"
-msgstr ""
+msgstr "CLAVIER"
 
 #: ../base/ufos/ui/options.ufo:174 ../base/ufos/ui/options.ufo:2453
 #: ../base/ufos/ui/options.ufo:2591
 msgid "DONE"
-msgstr ""
+msgstr "OK"
 
 #: ../base/ufos/ui/options.ufo:223
 msgid "Language Settings"
 msgstr "Langue du jeu"
 
 #: ../base/ufos/ui/options.ufo:271
-#, fuzzy
 msgid "Tooltips"
-msgstr "Infobulles (menu) :"
+msgstr "Infobulles"
 
 #: ../base/ufos/ui/options.ufo:297
-#, fuzzy
 msgid "Cursor tooltips"
-msgstr "Astuces à la souris :"
+msgstr "Infobulles à la souris"
 
 #: ../base/ufos/ui/options.ufo:323
-#, fuzzy
 msgid "Main menu tips"
-msgstr "Options du menu"
+msgstr "Conseils de jeu au menu principal"
 
 #: ../base/ufos/ui/options.ufo:349
-#, fuzzy
 msgid "Pre-cache menu models"
-msgstr "Modèles en pré-cache :"
+msgstr "Modèles de menu en pré-cache"
 
 #: ../base/ufos/ui/options.ufo:350
 msgid "Increases speed of game menus"
-msgstr ""
+msgstr "Augmente la vitesse des menus du jeu"
 
 #: ../base/ufos/ui/options.ufo:370
 msgid "Geoscape Options"
 msgstr "Options de la géosphère"
 
 #: ../base/ufos/ui/options.ufo:391
-#, fuzzy
 msgid "3D geoscape"
-msgstr "Géosphère en 3D :"
+msgstr "Géosphère en 3D"
 
 #: ../base/ufos/ui/options.ufo:392
 msgid "View the geoscape as a 3D globe"
-msgstr ""
+msgstr "Voir la géosphère comme un globe en 3D"
 
 #: ../base/ufos/ui/options.ufo:418
-#, fuzzy
 msgid "Camera zoom"
-msgstr "Caméra"
+msgstr "Zoom de la caméra"
 
 #: ../base/ufos/ui/options.ufo:426 ../base/ufos/ui/options.ufo:1654
 #: ../base/ufos/ui/options.ufo:1786
-#, fuzzy
 msgid "Min"
-msgstr "Milan"
+msgstr "Min"
 
 #: ../base/ufos/ui/options.ufo:469
-#, fuzzy
 msgid "1.0"
-msgstr "1,00"
+msgstr "1,0"
 
 #: ../base/ufos/ui/options.ufo:476 ../base/ufos/ui/options.ufo:1713
 #: ../base/ufos/ui/options.ufo:1844
-#, fuzzy
 msgid "Max"
-msgstr "Cdt"
+msgstr "Max"
 
 #: ../base/ufos/ui/options.ufo:492
-#, fuzzy
 msgid "2"
-msgstr "2D"
+msgstr "2"
 
 #: ../base/ufos/ui/options.ufo:497
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../base/ufos/ui/options.ufo:502
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: ../base/ufos/ui/options.ufo:507
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #: ../base/ufos/ui/options.ufo:512
-#, fuzzy
 msgid "10"
-msgstr "1,00"
+msgstr "10"
 
 #: ../base/ufos/ui/options.ufo:517
 msgid "12"
-msgstr ""
+msgstr "12"
 
 #: ../base/ufos/ui/options.ufo:535
 msgid "Display FPS"
-msgstr ""
+msgstr "Afficher FPS"
 
 #: ../base/ufos/ui/options.ufo:536
-#, fuzzy
 msgid "Display the number of frames rendered per second"
-msgstr ""
-"Afficher le nombre d'images par seconde (ou FPS : Frames Per Second) rendues "
-"à l'écran."
+msgstr "Afficher le nombre d'images par seconde"
 
 #: ../base/ufos/ui/options.ufo:562
-#, fuzzy
 msgid "Skip Intro Video"
-msgstr "Cacher la séquence d'introduction :"
+msgstr "Passer l'introduction vidéo"
 
 #: ../base/ufos/ui/options.ufo:563
-#, fuzzy
 msgid "Don't play the video when loading the game."
-msgstr "Ne pas lancer le film d'introduction au démarrage du jeu."
+msgstr "Ne pas lancer la vidéo au chargement du jeu."
 
 #: ../base/ufos/ui/options.ufo:600
-#, fuzzy
 msgid "Resolution"
-msgstr "Résolution :"
+msgstr "Résolution"
 
 #: ../base/ufos/ui/options.ufo:608
-#, fuzzy
 msgid "Ratio"
-msgstr "Nation"
+msgstr "Ratio"
 
 #: ../base/ufos/ui/options.ufo:618
-#, fuzzy
 msgid "Display resolutions in this ratio"
-msgstr "Afficher seulement les résolutions utilisant ce ratio."
+msgstr "Afficher les résolutions dans ce ratio"
 
 #: ../base/ufos/ui/options.ufo:656
 msgid "Others"
 msgstr "Autres"
 
 #: ../base/ufos/ui/options.ufo:682
-#, fuzzy
 msgid "Fullscreen"
-msgstr "Plein écran :"
+msgstr "Plein écran"
 
 #: ../base/ufos/ui/options.ufo:683
 msgid "View the game in fullscreen instead of windowed mode"
-msgstr ""
+msgstr "Voir le jeu en plein écran plutôt qu'en mode fenêtré"
 
 #: ../base/ufos/ui/options.ufo:709
-#, fuzzy
 msgid "Stretch screen"
-msgstr "Étirer"
+msgstr "Étirer l'écran"
 
 #: ../base/ufos/ui/options.ufo:710
-#, fuzzy
 msgid "Stretch screen to fit monitors with 4:3 ratio"
-msgstr "Étirer l'écran jusqu'à un ratio 4:3."
+msgstr "Étirer l'écran pour s'adapter aux écrans 4:3"
 
 #: ../base/ufos/ui/options.ufo:736
-#, fuzzy
 msgid "Gamma / Brightness"
-msgstr "Luminosité:"
+msgstr "Gamma / Luminosité"
 
 #: ../base/ufos/ui/options.ufo:767
-#, fuzzy
 msgid "Geoscape sunlight"
-msgstr "Options de la géosphère"
+msgstr "Ensoleillement de la géosphère"
 
 #: ../base/ufos/ui/options.ufo:768
 msgid "Brightness of sunlight on the geoscape"
-msgstr ""
+msgstr "Éclat de la lumière du soleil sur la géosphère"
 
 #: ../base/ufos/ui/options.ufo:800
-#, fuzzy
 msgid "Screenshot format"
-msgstr "Format des fichiers :"
+msgstr "Copies d'écran au format"
 
 #: ../base/ufos/ui/options.ufo:801
-#, fuzzy
 msgid "The file format screenshots will be saved in"
-msgstr "La touche par défaut pour les captures d'écran est F12."
+msgstr "Les copies d'écran seront sauvées au format"
 
 #: ../base/ufos/ui/options.ufo:848
-#, fuzzy
 msgid "Screenshot quality"
-msgstr "Format des fichiers :"
+msgstr "Qualité des copies d'écran"
 
 #: ../base/ufos/ui/options.ufo:890
-#, fuzzy
 msgid "Video quality"
-msgstr "Faible qualité"
+msgstr "Qualité vidéo"
 
 #: ../base/ufos/ui/options.ufo:896
-#, fuzzy
 msgid "Default video configuration settings"
-msgstr "Changer la configurations de toutes les notifications"
+msgstr "Configuration vidéo par défaut"
 
 #: ../base/ufos/ui/options.ufo:908
 msgid "LOW"
-msgstr ""
+msgstr "BAS"
 
 #: ../base/ufos/ui/options.ufo:920
 msgid "MEDIUM"
-msgstr ""
+msgstr "MOYEN"
 
 #: ../base/ufos/ui/options.ufo:932
 msgid "HIGH"
-msgstr ""
+msgstr "HAUT"
 
 #: ../base/ufos/ui/options.ufo:958
-#, fuzzy
 msgid "Shaders"
-msgstr "Shaders GLSL :"
+msgstr "Nuanceurs (shaders)"
 
 #: ../base/ufos/ui/options.ufo:959
-#, fuzzy
 msgid "Enhanced visual techniques like post-processing effects"
-msgstr "Active les effets de post-traitement des shaders."
+msgstr "Techniques visuelles avancées comme les effets de post-traitement"
 
 #: ../base/ufos/ui/options.ufo:986
-#, fuzzy
 msgid "Post-processing effects"
-msgstr "Effets de post-traitement des shaders :"
+msgstr "Effets de post-traitement"
 
 #: ../base/ufos/ui/options.ufo:987
 msgid "Effects like light bloom and reflected light"
-msgstr ""
+msgstr "Effets comme les reflets et le flou lumineux (bloom)"
 
 #: ../base/ufos/ui/options.ufo:1005 ../base/ufos/ui/options.ufo:2481
-#, fuzzy
 msgid "Advanced OpenGL options"
-msgstr "Options audio avancées"
+msgstr "Options OpenGL avancées"
 
 #: ../base/ufos/ui/options.ufo:1027
-#, fuzzy
 msgid "Real-time lighting effects"
-msgstr "Activer l'éclairage en temps réel."
+msgstr "Effets d'éclairage en temps réel"
 
 #: ../base/ufos/ui/options.ufo:1056
 msgid "Max dynamic lights"
-msgstr ""
+msgstr "Max. lumières dynamiques"
 
 #: ../base/ufos/ui/options.ufo:1057
-#, fuzzy
 msgid "Set available hardware-accelerated dynamic lights"
-msgstr "Modifier le nombre maximum d'éclairages accélérés par le matériel."
+msgstr "Définir les éclairages dynamiques accélérés par le matériel"
 
 #: ../base/ufos/ui/options.ufo:1096
-#, fuzzy
 msgid "Bumpmapping / Normalmapping"
-msgstr "Compression des textures :"
+msgstr "Bumpmapping / Normalmapping"
 
 #: ../base/ufos/ui/options.ufo:1135
 msgid "Environmental effects"
-msgstr ""
+msgstr "Effets ambiants"
 
 #: ../base/ufos/ui/options.ufo:1143
-#, fuzzy
 msgid "Coronas"
-msgstr "Couronnes :"
+msgstr "Couronnes"
 
 #: ../base/ufos/ui/options.ufo:1144
 msgid "Lighting effect"
-msgstr ""
+msgstr "Éclairage"
 
 #: ../base/ufos/ui/options.ufo:1162
-#, fuzzy
 msgid "Fog"
-msgstr "Brouillard :"
+msgstr "Brouillard"
 
 #: ../base/ufos/ui/options.ufo:1163
-#, fuzzy
 msgid "Fades distant objects on the battlescape"
-msgstr "Centrer les objets sur la carte"
+msgstr "Atténuer les éléments lointains en mission"
 
 #: ../base/ufos/ui/options.ufo:1181
-#, fuzzy
 msgid "Weather"
-msgstr "Autre"
+msgstr "Météo"
 
 #: ../base/ufos/ui/options.ufo:1182
-#, fuzzy
 msgid "Rain and snow on the battlescape"
-msgstr "Revenir à la mission."
+msgstr "Neige et pluie durant les missions"
 
 #: ../base/ufos/ui/options.ufo:1200
-#, fuzzy
 msgid "Flares"
-msgstr "Reflets lumineux :"
+msgstr "Halos"
 
 #: ../base/ufos/ui/options.ufo:1201
-#, fuzzy
 msgid "Light reflections"
-msgstr "Sélection de l'équipement"
+msgstr "Reflets lumineux"
 
 #: ../base/ufos/ui/options.ufo:1219
-#, fuzzy
 msgid "Materials"
-msgstr "Matériaux aliens"
+msgstr "Matériaux"
 
 #: ../base/ufos/ui/options.ufo:1220
 msgid "Texture animations, blending and other effects"
-msgstr ""
+msgstr "Animations des textures, fusion (blending) et autres effets"
 
 #: ../base/ufos/ui/options.ufo:1249
-#, fuzzy
 msgid "Video performance"
-msgstr "Missions accomplies :"
+msgstr "Performance vidéo"
 
 #: ../base/ufos/ui/options.ufo:1257
-#, fuzzy
 msgid "Advanced Video Options"
-msgstr "Options audio avancées"
+msgstr "Options vidéo avancées"
 
 #: ../base/ufos/ui/options.ufo:1290
-#, fuzzy
 msgid "Enable audio"
-msgstr "Activer le son :"
+msgstr "Activer le son"
 
 #: ../base/ufos/ui/options.ufo:1317
 msgid "Music volume"
-msgstr ""
+msgstr "Volume de la musique"
 
 #: ../base/ufos/ui/options.ufo:1349
-#, fuzzy
 msgid "Enable music"
-msgstr "Activer le son :"
+msgstr "Activer la musique"
 
 #: ../base/ufos/ui/options.ufo:1376
-#, fuzzy
 msgid "Sound effects"
-msgstr "Effets sonores :"
+msgstr "Effets sonores"
 
 #: ../base/ufos/ui/options.ufo:1408
-#, fuzzy
 msgid "Menu sounds"
-msgstr "Sons des menus :"
+msgstr "Menus sonores"
 
 #: ../base/ufos/ui/options.ufo:1435
-#, fuzzy
 msgid "Audio sample rate"
-msgstr "Taux d'échantillonnage sonore :"
+msgstr "Taux d'échantillonnage sonore"
 
 #: ../base/ufos/ui/options.ufo:1436
 msgid "Higher sample rates provide better audio quality"
-msgstr ""
+msgstr "Des taux d'échantillonnage élevés augmentent la qualité audio"
 
 #: ../base/ufos/ui/options.ufo:1451
 msgid "11025 kHz"
-msgstr ""
+msgstr "11025 kHz"
 
 #: ../base/ufos/ui/options.ufo:1456
 msgid "22050 kHz"
-msgstr ""
+msgstr "22050 kHz"
 
 #: ../base/ufos/ui/options.ufo:1461
 msgid "44100 kHz"
-msgstr ""
+msgstr "44100 kHz"
 
 #: ../base/ufos/ui/options.ufo:1466
 msgid "48000 kHz"
-msgstr ""
+msgstr "48000 kHz"
 
 #: ../base/ufos/ui/options.ufo:1473
-#, fuzzy
 msgid "Apply Sample Rate"
-msgstr "Taux d'échantillonnage sonore :"
+msgstr "Appliquer le taux d'échantillonnage"
 
 #: ../base/ufos/ui/options.ufo:1527
-#, fuzzy
 msgid "Battlescape view configuration"
-msgstr "Options de caméra en mission"
+msgstr "Options visuelles en mission"
 
 #: ../base/ufos/ui/options.ufo:1545
-#, fuzzy
 msgid "Scroll speed"
-msgstr "Vitesse de défilement :"
+msgstr "Vitesse de défilement"
 
 #: ../base/ufos/ui/options.ufo:1578
-#, fuzzy
 msgid "Rotation speed"
-msgstr "Vitesse de rotation :"
+msgstr "Vitesse de rotation"
 
 #: ../base/ufos/ui/options.ufo:1611
 msgid "Inertia"
-msgstr ""
+msgstr "Inertie"
 
 #: ../base/ufos/ui/options.ufo:1612
 msgid "Higher values will cause the camera to stop more gradually"
-msgstr ""
+msgstr "Des valeurs élevées feront s'arrêter la caméra plus progressivement"
 
 #: ../base/ufos/ui/options.ufo:1645
 msgid "Pitch"
-msgstr ""
+msgstr "Pitch"
 
 #: ../base/ufos/ui/options.ufo:1655
 msgid "Maps optimized for values above 10"
-msgstr ""
+msgstr "Cartes optimisées pour des valeurs supérieures à 10"
 
 #: ../base/ufos/ui/options.ufo:1714
 msgid "Values above 90 will result in inverted views"
-msgstr ""
+msgstr "Des valeurs supérieures à 90 inverseront les vues"
 
 #: ../base/ufos/ui/options.ufo:1777
-#, fuzzy
 msgid "Zoom constraints"
-msgstr "Zoomer"
+msgstr "Contraintes du zoom"
 
 #: ../base/ufos/ui/options.ufo:1907
-#, fuzzy
 msgid "Zoom speed"
-msgstr "rapidité de tir"
+msgstr "Vitesse du zoom"
 
 #: ../base/ufos/ui/options.ufo:1940
-#, fuzzy
 msgid "Center view"
-msgstr "Recentrer la vue :"
+msgstr "Centrer la vue"
 
 #: ../base/ufos/ui/options.ufo:1967
-#, fuzzy
 msgid "Isometric view"
-msgstr "Mode isométrique :"
+msgstr "Vue isométrique"
 
 #: ../base/ufos/ui/options.ufo:1968
 msgid "3D rendering without perspective for an old-school look"
-msgstr ""
+msgstr "Rendu 3D sans perspective pour un aspect à l'ancienne"
 
 #: ../base/ufos/ui/options.ufo:1999
-#, fuzzy
 msgid "Battlescape gameplay options"
-msgstr "Options de jeu en mission :"
+msgstr "Options de jeu en mission"
 
 #: ../base/ufos/ui/options.ufo:2017
-#, fuzzy
 msgid "Actor speed"
-msgstr "Vitesse des perso. :"
+msgstr "Vitesse des personnages"
 
 #: ../base/ufos/ui/options.ufo:2049
-#, fuzzy
 msgid "Confirm actions"
-msgstr "Confirmer les actions :"
+msgstr "Confirmer les actions"
 
 #: ../base/ufos/ui/options.ufo:2050
-#, fuzzy
 msgid "Confirm your actions on the battlefield before committing"
-msgstr "Confirmation nécessaire avant de se déplacer"
+msgstr "Confirmer ses actions avant de les réaliser en combat"
 
 #: ../base/ufos/ui/options.ufo:2065
 msgid "Never"
-msgstr ""
+msgstr "Jamais"
 
 #: ../base/ufos/ui/options.ufo:2069
-#, fuzzy
 msgid "When moving"
-msgstr "En suppression"
+msgstr "Pendant le déplacement"
 
 #: ../base/ufos/ui/options.ufo:2073
 msgid "Always"
-msgstr ""
+msgstr "Toujours"
 
 #: ../base/ufos/ui/options.ufo:2091
 msgid "Stand when moving"
-msgstr ""
+msgstr "Se lever pour se déplacer"
 
 #: ../base/ufos/ui/options.ufo:2092
-#, fuzzy
 msgid ""
 "Soldiers will automatically stand when ordered to move while they are "
 "crouched"
 msgstr ""
-"« Automatiquement se déplacer debout » oblige vos soldats à se mettre debout "
-"quand ils reçoivent un ordre de déplacement et qu'ils sont accroupis."
+"Les soldats accroupis se mettront automatiquement debout lorsqu'ils devront "
+"se déplacer."
 
 #: ../base/ufos/ui/options.ufo:2119
-#, fuzzy
 msgid "Battlescape interface"
-msgstr "Mission tactique"
+msgstr "Interface de mission"
 
 #: ../base/ufos/ui/options.ufo:2169
-#, fuzzy
 msgid "Advanced Video options"
-msgstr "Options audio avancées"
+msgstr "Options vidéo avancées"
 
 #: ../base/ufos/ui/options.ufo:2190
-#, fuzzy
 msgid "Max texture resolution"
-msgstr "Résolution des textures :"
+msgstr "Résolution max. des textures"
 
 #: ../base/ufos/ui/options.ufo:2204 ../base/ufos/ui/options.ufo:2399
 msgid "256"
-msgstr ""
+msgstr "256"
 
 #: ../base/ufos/ui/options.ufo:2208 ../base/ufos/ui/options.ufo:2403
 msgid "512"
-msgstr ""
+msgstr "512"
 
 #: ../base/ufos/ui/options.ufo:2212 ../base/ufos/ui/options.ufo:2407
 msgid "1024"
-msgstr ""
+msgstr "1024"
 
 #: ../base/ufos/ui/options.ufo:2216 ../base/ufos/ui/options.ufo:2411
 msgid "2048"
-msgstr ""
+msgstr "2048"
 
 #: ../base/ufos/ui/options.ufo:2220
 msgid "4096"
-msgstr ""
+msgstr "4096"
 
 #: ../base/ufos/ui/options.ufo:2224
 msgid "8192"
-msgstr ""
+msgstr "8192"
 
 #: ../base/ufos/ui/options.ufo:2242
-#, fuzzy
 msgid "Texture filtering"
-msgstr "Réglages des textures"
+msgstr "Filtrage des textures"
 
 #: ../base/ufos/ui/options.ufo:2256
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:214
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:617
 #: client/cgame/campaign/cp_ufopedia.cpp:206 client/input/cl_joystick.cpp:280
 msgid "None"
-msgstr "Aucun(e)"
+msgstr "Aucun"
 
 #: ../base/ufos/ui/options.ufo:2260
 msgid "Bilinear only"
-msgstr ""
+msgstr "Bilinéaire seulement"
 
 #: ../base/ufos/ui/options.ufo:2264
-#, fuzzy
 msgid "Mipmaps only"
-msgstr "Avant déplacement"
+msgstr "Mipmaps seulement"
 
 #: ../base/ufos/ui/options.ufo:2268
-#, fuzzy
 msgid "Bilinear and mipmaps"
-msgstr "Filtre bilinéaire, MIP mapping activé"
+msgstr "Bilinéaire et mipmaps"
 
 #: ../base/ufos/ui/options.ufo:2272
-#, fuzzy
 msgid "Trilinear and mipmaps"
-msgstr "Filtre trilinéaire, MIP mapping activé"
+msgstr "Trilinéaire et mipmaps"
 
 #: ../base/ufos/ui/options.ufo:2276
-#, fuzzy
 msgid "Bi-/trilinear and mipmaps"
-msgstr "Filtre bilinéaire, MIP mapping activé"
+msgstr "Bi-/trilinéaire et mipmaps"
 
 #: ../base/ufos/ui/options.ufo:2294
-#, fuzzy
 msgid "Texture compression"
-msgstr "Activer la compression des textures."
+msgstr "Textures compressées"
 
 #: ../base/ufos/ui/options.ufo:2295
 msgid "Improves memory performance but reduces visual quality"
-msgstr ""
+msgstr "Améliore la performance de la mémoire, mais réduit la qualité visuelle"
 
+# LOD = Level Of Detail. Avec le contexte, l'usage du verbe niveler semble plus approprié
 #: ../base/ufos/ui/options.ufo:2321
 msgid "LOD"
-msgstr ""
+msgstr "Niveler les détails"
 
 #: ../base/ufos/ui/options.ufo:2322
 msgid "Reduce distant texture sizes for better performance"
 msgstr ""
+"Réduit les tailles des textures distantes pour de meilleures performances"
 
 #: ../base/ufos/ui/options.ufo:2348
 msgid "Anisotropic filtering"
-msgstr ""
+msgstr "Filtrage anisotropique"
 
 #: ../base/ufos/ui/options.ufo:2349
 msgid "Distant textures appear sharper at higher resolutions"
 msgstr ""
+"Les textures distantes paraissent plus précises à de hautes résolutions"
 
+# Auparavant : lightmap traduit par "bloc d'éclairage"
 #: ../base/ufos/ui/options.ufo:2384
-#, fuzzy
 msgid "Lightmap size"
-msgstr "Taille des blocs d'éclairage :"
+msgstr "Taille de lightmap"
 
 #: ../base/ufos/ui/options.ufo:2385
 msgid "High resolution creates smoother shadows"
-msgstr ""
+msgstr "Une haute résolution génère des ombres plus homogènes"
 
 #: ../base/ufos/ui/options.ufo:2429
-#, fuzzy
 msgid "Lightmap brightness"
-msgstr "Poids léger"
+msgstr "Luminosité de lightmap"
 
 #: ../base/ufos/ui/options.ufo:2502
-#, fuzzy
 msgid "Vertex Buffers"
-msgstr "Tampons de vecteurs :"
+msgstr "Tampons de vertex"
 
 #: ../base/ufos/ui/options.ufo:2528
-#, fuzzy
 msgid "Multisample Buffers"
-msgstr "Tampons multi-échantillons / intervalle :"
+msgstr "Tampons multi-échantillons"
 
 #: ../base/ufos/ui/options.ufo:2529
 msgid "Antialias GL primitives (more buffers create smoother edges)"
 msgstr ""
+"Primitives GL anti-alias (des tampons supplémentaires génèrent des bords "
+"plus doux)"
 
 #: ../base/ufos/ui/options.ufo:2564
-#, fuzzy
 msgid "Swap Interval"
-msgstr "Intervalle du Swap :"
+msgstr "Intervalle du swap"
 
 #: ../base/ufos/ui/options.ufo:2565
 msgid "Higher values will typically provide better results"
-msgstr ""
+msgstr "Des valeurs élevées produiront de meilleurs résultats"
 
 #: ../base/ufos/ui/options.ufo:2660
 msgid "MENU"
-msgstr ""
+msgstr "MENU"
 
 #: ../base/ufos/ui/options.ufo:2661
 msgid "GLOBAL"
-msgstr ""
+msgstr "GLOBAL"
 
 #: ../base/ufos/ui/options.ufo:2662
 msgid "BATTLESCAPE"
-msgstr ""
+msgstr "BATTLESCAPE"
 
 #: ../base/ufos/ui/popup_baseattack.ufo:41
 msgid "Assemble Team"
@@ -28135,7 +27998,8 @@ msgstr "Espace"
 
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
+#: ../base/ufos/ui/popup_installations.ufo:892
+#: ../base/ufos/ui/transfer.ufo:373
 msgid "free"
 msgstr "libre"
 
@@ -28214,7 +28078,6 @@ msgid "disassembling"
 msgstr "en cours de démontage"
 
 #: ../base/ufos/ui/popup_installations.ufo:843
-#, fuzzy
 msgid "transferring"
 msgstr "en transfert"
 
@@ -28233,7 +28096,7 @@ msgstr "Équip. app."
 
 #: ../base/ufos/ui/production.ufo:80
 msgid "UGV items"
-msgstr "Équip. VTSP"
+msgstr "Équip. VTSC"
 
 #: ../base/ufos/ui/production.ufo:84
 msgid "Other"
@@ -28245,14 +28108,12 @@ msgid "Disassembly"
 msgstr "Démontage"
 
 #: ../base/ufos/ui/production.ufo:110
-#, fuzzy
 msgid "Item"
-msgstr "Objets"
+msgstr "Objet"
 
 #: ../base/ufos/ui/production.ufo:117
-#, fuzzy
 msgid "Stored"
-msgstr "Stock"
+msgstr "En stock"
 
 #: ../base/ufos/ui/production.ufo:335 ../base/ufos/ui/production.ufo:345
 msgid "Change the production amount"
@@ -28276,38 +28137,35 @@ msgstr "Diminuer la priorité"
 
 #: ../base/ufos/ui/production.ufo:417
 msgid "Requirements"
-msgstr "Prérequis :"
+msgstr "Prérequis"
 
 #: ../base/ufos/ui/research.ufo:33
 msgid "Topics"
 msgstr "Projets"
 
 #: ../base/ufos/ui/research.ufo:59
-#, fuzzy
 msgid "idle scientists"
-msgstr "Rectruter des scientifiques"
+msgstr "scientifiques inactifs"
 
 #: ../base/ufos/ui/research.ufo:169
-#, fuzzy
 msgid "Scientists hired"
-msgstr "Scientifiques"
+msgstr "Scientifiques recrutés"
 
 #: ../base/ufos/ui/research.ufo:194
 msgid "HIRE"
-msgstr ""
+msgstr "RECRUTER"
 
 #: ../base/ufos/ui/research.ufo:204
 msgid "FIRE"
-msgstr ""
+msgstr "LICENCIER"
 
 #: ../base/ufos/ui/research.ufo:227
-#, fuzzy
 msgid "Laboratory space"
-msgstr "Laboratoire"
+msgstr "Espace laboratoire"
 
 #: ../base/ufos/ui/research.ufo:252
 msgid "BUILD LAB"
-msgstr ""
+msgstr "BÂTIR LABO"
 
 #: ../base/ufos/ui/skirmish.ufo:60
 msgid "<1>"
@@ -28315,11 +28173,11 @@ msgstr "<1>"
 
 #: ../base/ufos/ui/skirmish.ufo:153
 msgid "MAP"
-msgstr ""
+msgstr "CARTE"
 
 #: ../base/ufos/ui/skirmish.ufo:164
 msgid "SQUAD"
-msgstr ""
+msgstr "ESCOUADE"
 
 #: ../base/ufos/ui/stats.ufo:47
 msgid "Costs"
@@ -28330,9 +28188,8 @@ msgid "Nations"
 msgstr "Nations"
 
 #: ../base/ufos/ui/stats.ufo:77
-#, fuzzy
 msgid "Click on a nation for its funding graph"
-msgstr "Cliquer pour les graphes des finances :"
+msgstr "Cliquer sur une nation pour voir son graphique financier"
 
 #: ../base/ufos/ui/stats.ufo:129
 msgid "Bases"
@@ -28377,19 +28234,19 @@ msgstr "Éditeur de nœud"
 
 #: ../base/ufos/ui/sys_editor.ufo:30
 msgid "Capture a node"
-msgstr "Capture un nœud"
+msgstr "Capturer un nœud"
 
 #: ../base/ufos/ui/sys_editor.ufo:42
 msgid "Select parent node"
-msgstr "Sélectionner le nœud père"
+msgstr "Choisir le nœud père"
 
 #: ../base/ufos/ui/sys_editor.ufo:54
 msgid "Select first child node"
-msgstr "Sélectionner le premier nœud fils"
+msgstr "Choisir le premier nœud fils"
 
 #: ../base/ufos/ui/sys_editor.ufo:66
 msgid "Select next node"
-msgstr "Sélectionner le nœud suivant"
+msgstr "Choisir le nœud suivant"
 
 #: ../base/ufos/ui/sys_editor.ufo:79
 msgid "Extract window"
@@ -28397,7 +28254,7 @@ msgstr "Extraire une fenêtre"
 
 #: ../base/ufos/ui/sys_editor.ufo:80
 msgid "Extract the window of the last/current selected node"
-msgstr "Extraire la fenêtre du nœud courant, ou du dernier sélectionné"
+msgstr "Extraire la fenêtre du nœud courant / du dernier sélectionné"
 
 #: ../base/ufos/ui/sys_editor.ufo:93
 msgid "Current window:"
@@ -28417,7 +28274,7 @@ msgstr "Sauvegardez votre équipe"
 
 #: ../base/ufos/ui/team.ufo:133 ../base/ufos/ui/team.ufo:136
 msgid "Save"
-msgstr "Sauver"
+msgstr "Sauvegarder"
 
 #: ../base/ufos/ui/team.ufo:158
 msgid "Generate a team"
@@ -28434,7 +28291,7 @@ msgstr "Créer une équipe avec la race sélectionnée"
 #: ../base/ufos/ui/transfer.ufo:34
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 msgstr ""
-"Ajouter ou enlever l'objet du cargo ; appuyer sur Shift pour aller plus vite."
+"Ajouter ou enlever l'objet au cargo ; appuyer sur MAJ pour aller plus vite."
 
 #: ../base/ufos/ui/transfer.ufo:149 ../base/ufos/ui/transfer.ufo:255
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:145
@@ -28472,9 +28329,8 @@ msgid "all space"
 msgstr "total"
 
 #: ../base/ufos/ui/transfer.ufo:418
-#, fuzzy
 msgid "Capacity overload"
-msgstr "Surcharge de capacité\";"
+msgstr "Capacité dépassée"
 
 #: ../base/ufos/ui/transfer.ufo:437 ../base/ufos/ui/transfer.ufo:464
 msgid "Start the transfer"
@@ -28679,9 +28535,9 @@ msgstr "Rafale de 3 coups"
 #: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
 #: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
 #: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
-#: ../base/ufos/weapons_multiplayer.ufo:318 ../base/ufos/weapons_plasma.ufo:203
-#: ../base/ufos/weapons_plasma.ufo:439 ../base/ufos/weapons_plasma.ufo:529
-#: ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_multiplayer.ufo:318
+#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:439
+#: ../base/ufos/weapons_plasma.ufo:529 ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr "Rafale libre"
 
@@ -28698,19 +28554,19 @@ msgstr "Tir visé"
 
 #: ../base/ufos/weapons_human.ufo:239
 msgid "Machine Gun"
-msgstr "Mitrailleuse"
+msgstr "Fusil-mitrailleur"
 
 #: ../base/ufos/weapons_human.ufo:262
 msgid "Machine Gun Magazine"
-msgstr "Chargeur de mitrailleuse"
+msgstr "Chargeur de fusil-mitrailleur"
 
 #: ../base/ufos/weapons_human.ufo:281 ../base/ufos/weapons_plasma.ufo:505
 msgid "5-Shot Burst"
 msgstr "Rafale de 5 balles"
 
 #: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
-#: ../base/ufos/weapons_multiplayer.ufo:342 ../base/ufos/weapons_plasma.ufo:553
-#: ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_multiplayer.ufo:342
+#: ../base/ufos/weapons_plasma.ufo:553 ../base/ufos/weapons_ugv.ufo:135
 msgid "Full-Auto Sweep"
 msgstr "Rafale libre dispersée"
 
@@ -28744,11 +28600,11 @@ msgstr "Chargeur de PA 4,2 mm"
 
 #: ../base/ufos/weapons_human.ufo:749
 msgid "Submachine Gun"
-msgstr "Pistolet mitrailleur"
+msgstr "Pistolet-mitrailleur"
 
 #: ../base/ufos/weapons_human.ufo:770
 msgid "SMG Magazine"
-msgstr "Chargeur de pistolet mitrailleur"
+msgstr "Chargeur de pistolet-mitrailleur"
 
 #: ../base/ufos/weapons_human.ufo:788 ../base/ufos/weapons_multiplayer.ufo:52
 msgid "5-Round Burst"
@@ -28760,7 +28616,7 @@ msgstr "Fusil à pompe"
 
 #: ../base/ufos/weapons_human.ufo:864
 msgid "Saboted Slugs"
-msgstr "Chargeur de munitions à sabot"
+msgstr "Munitions à sabot"
 
 #: ../base/ufos/weapons_human.ufo:912
 msgid "Micro Shotgun"
@@ -29027,24 +28883,23 @@ msgstr "Chargeur PC de fusil d'assaut"
 
 #: ../base/ufos/weapons_plasma.ufo:486
 msgid "Machine Gun EP Magazine"
-msgstr "Chargeur PC de mitrailleuse"
+msgstr "Chargeur PC de fusil-mitrailleur"
 
 #: ../base/ufos/weapons_plasma.ufo:580
 msgid "Sniper Rifle EP Magazine"
 msgstr "Chargeur PC de fusil de précision"
 
 #: ../base/ufos/weapons_plasma.ufo:647
-#, fuzzy
 msgid "Shotgun EP Slugs"
-msgstr "Chargeur de munitions à sabot"
+msgstr "Munitions PC de fusil de combat rapproché"
 
 #: ../base/ufos/weapons_ugv.ufo:22
 msgid "ugv_ares_w"
-msgstr "Véhicule Terrestre Sans Pilote Arès"
+msgstr "Véhicule Terrestre Sans Conducteur Arès"
 
 #: ../base/ufos/weapons_ugv.ufo:31
 msgid "ugv_phoenix"
-msgstr "Véhicule Terrestre Sans Pilote Phénix"
+msgstr "Véhicule Terrestre Sans Conducteur Phénix"
 
 #: ../base/ufos/weapons_ugv.ufo:44
 msgid "Chaingun"
@@ -29095,7 +28950,7 @@ msgstr "Passer à l'être vivant précédant"
 
 #: client/battlescape/cl_actor.cpp:2529
 msgid "Select an actor from list"
-msgstr "Sélectionner un personnage de la liste"
+msgstr "Choisir un personnage de la liste"
 
 #: client/battlescape/cl_actor.cpp:2530
 msgid "Update an actor"
@@ -29131,7 +28986,7 @@ msgstr "Passer à l'alien visible précédent."
 
 #: client/battlescape/cl_hud.cpp:103 client/battlescape/cl_hud.cpp:106
 msgid "Crouch walk"
-msgstr "Marcher accroupi"
+msgstr "Avancer accroupi"
 
 #: client/battlescape/cl_hud.cpp:104
 msgid "Autostand"
@@ -29317,60 +29172,53 @@ msgstr ""
 "- restantes : %i\n"
 
 #: client/battlescape/cl_hud.cpp:1257
-#, fuzzy
 msgid "- Reduced accuracy"
-msgstr "- Réduit %s\n"
+msgstr "- Précision réduite"
 
 #: client/battlescape/cl_hud.cpp:1259
-#, fuzzy
 msgid "- Reduced shooting speed"
-msgstr "rapidité de tir"
+msgstr "- Rapidité de tir réduite"
 
 #: client/battlescape/cl_hud.cpp:1261
-#, fuzzy
 msgid "- Reduced movement speed"
-msgstr "rapidité de mouvement"
+msgstr "- Rapidité de mouvement réduite"
 
 #: client/battlescape/cl_hud.cpp:1263
-#, fuzzy
 msgid "- Reduced sight range"
-msgstr "portée de vue"
+msgstr "- Portée de vue réduite"
 
 #: client/battlescape/cl_hud.cpp:1265
-#, fuzzy
 msgid "- Reduced reaction speed"
-msgstr "rapidité de réaction"
+msgstr "- Rapidité de réaction réduite"
 
 #: client/battlescape/cl_hud.cpp:1267
-#, fuzzy
 msgid "- Reduced TUs"
-msgstr "- Réduit %s\n"
+msgstr "- UT réduites"
 
-# Attention : actuellement (10 2013), le mot "saignement" est trop long pour s'afficher correctement
 #: client/battlescape/cl_hud.cpp:1296
-#, fuzzy, c-format
+#, c-format
 msgid "%s: bleeding (%i)\n"
-msgstr "Blessé %s (saigne : %i)\n"
+msgstr "%s : hémorragie (%i)\n"
 
 #: client/battlescape/cl_hud.cpp:1296
-#, fuzzy, c-format
+#, c-format
 msgid "%s: deteriorating (%i)\n"
-msgstr "Endommagé %s (détérioration : %i)\n"
+msgstr "%s : détérioration (%i)\n"
 
 #: client/battlescape/cl_hud.cpp:1298
-#, fuzzy, c-format
+#, c-format
 msgid "%s: damaged\n"
-msgstr "Dégâts :\t%i\n"
+msgstr "%s : endommagé\n"
 
 #: client/battlescape/cl_hud.cpp:1298
-#, fuzzy, c-format
+#, c-format
 msgid "%s: wounded\n"
-msgstr "%s chargé\n"
+msgstr "%s : blessé\n"
 
 #: client/battlescape/cl_hud.cpp:1302
 #, c-format
 msgid "- HP loss per turn: %i\n"
-msgstr ""
+msgstr "- Santé perdue par tour : %i\n"
 
 #: client/battlescape/cl_hud.cpp:1344 client/cl_inventory_callbacks.cpp:389
 msgid ""
@@ -29499,7 +29347,7 @@ msgstr "%s est mort(e) !\n"
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:100
 #, c-format
 msgid "%s was killed\n"
-msgstr "%s a été tué\n"
+msgstr "%s a été tué(e)\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:109
 msgid "A civilian was stunned."
@@ -29592,9 +29440,9 @@ msgid "Nothing - should not be displayed"
 msgstr "Rien - ne devrait pas être affiché"
 
 #: client/cgame/campaign/cp_aircraft.cpp:368
-#, fuzzy, c-format
+#, c-format
 msgid "at %s"
-msgstr "%s (à %s)"
+msgstr "à %s"
 
 #: client/cgame/campaign/cp_aircraft.cpp:370
 msgid "refuelling"
@@ -29857,9 +29705,8 @@ msgid "Pilot killed in action"
 msgstr "Pilote tué en mission"
 
 #: client/cgame/campaign/cp_airfight.cpp:534
-#, fuzzy
 msgid "A PHALANX craft has been destroyed"
-msgstr "Site de crash, appareil PHALANX"
+msgstr "Un appareil PHALANX a été détruit"
 
 #: client/cgame/campaign/cp_aliencont.cpp:103
 msgid "You can't hold live aliens yet. Aliens died."
@@ -30045,20 +29892,16 @@ msgid "Buy or produce at least one aircraft first."
 msgstr "Vous devez d'abord acheter ou produire un appareil."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:309
-#, fuzzy
 msgid "No Hangar operating at this base."
-msgstr "Pas de hangar dans cette base.\n"
+msgstr "Pas de hangar opérationnel dans cette base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:313
 msgid "Buy/Sell equipment, aircraft and UGV"
-msgstr ""
-"Acheter ou vendre de l'équipement, des aéronefs, des VTSC (Véhicules "
-"Terrestres Sans Conducteur)"
+msgstr "Acheter ou vendre de l'équipement, un aéronef, un VTSC"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:315
-#, fuzzy
 msgid "No Storage operating at this base."
-msgstr "Pas d'entrepôt dans cette base.\n"
+msgstr "Pas d'entrepôt opérationnel dans cette base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:318
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
@@ -30077,47 +29920,40 @@ msgid "Research new technology"
 msgstr "Rechercher une nouvelle technologie"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:325
-#, fuzzy
 msgid "No Laboratory operating at this base."
-msgstr "Pas de hangar opérationnel dans cette base."
+msgstr "Pas de laboratoire opérationnel dans cette base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:328
 msgid "Produce equipment, aircraft and UGV"
-msgstr ""
-"Produire une pièce d'équipement, un aéronef, un VTSC (Véhicule Terrestre "
-"Sans Conducteur)"
+msgstr "Produire de l'équipement, un aéronef, un VTSC"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:330
-#, fuzzy
 msgid "No Workshop operating at this base."
-msgstr "Pas de hangar opérationnel dans cette base."
+msgstr "Pas d'atelier opérationnel dans cette base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:333
 msgid "Hire or dismiss employees"
 msgstr "Recruter ou renvoyer du personnel"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:335
-#, fuzzy
 msgid "No Living Quarters operating at this base."
-msgstr "Pas de quartiers d'habitation dans cette base.\n"
+msgstr "Pas de quartiers d'habitation opérationnels dans cette base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:338
 msgid "Manage captured aliens"
 msgstr "Gérer les prisonniers"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:340
-#, fuzzy
 msgid "No Containment operating at this base."
-msgstr "Pas d'unité de détention dans cette base.\n"
+msgstr "Pas d'unité de détention opérationnelle dans cette base."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:343
 msgid "Treat wounded soldiers and perform implant surgery"
 msgstr "Soigner les soldats blessés et greffer des implants"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:345
-#, fuzzy
 msgid "No Hospital operating at this in base."
-msgstr "Pas d'entrepôt dans cette base"
+msgstr "Pas d'hôpital opérationnel dans cette base"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:575
 msgid "Base is under attack, you can't destroy buildings!"
@@ -30140,28 +29976,25 @@ msgstr ""
 "d'autres bâtiments."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:599
-#, fuzzy
 msgid "Destroy Alien Containment"
-msgstr "Unité de détention"
+msgstr "Détruire unité de détention"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:599
-#, fuzzy
 msgid ""
 "If you destroy this building, you will also kill the aliens inside.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
-"En détruisant ce hangar, vous détruirez également l'appareil qu'il "
-"contient.\n"
-"Voulez-vous vraiment détruire ce bâtiment ?"
+"En détruisant ce bâtiment, vous tuerez aussi les aliens qui sont à "
+"l'intérieur.\n"
+"Voulez-vous vraiment démolir ce bâtiment ?"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:600
 msgid "Containment"
 msgstr "Unité de détention"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:600
-#, fuzzy
 msgid "Go to the Alien Containment without destroying building"
-msgstr "Aller licencier sans détruire le bâtiment"
+msgstr "Aller à l'unité de détention sans détruire le bâtiment"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:601
 #: client/cgame/campaign/cp_base_callbacks.cpp:612
@@ -30191,10 +30024,9 @@ msgstr ""
 "contient.\n"
 "Voulez-vous vraiment détruire ce bâtiment ?"
 
-# Texte du bouton affiché lors de la destruction d'un hangar (si risque de destruction d'un appareil) : doit être court ; reprend le libellé utilisé pour le menu de la base
 #: client/cgame/campaign/cp_base_callbacks.cpp:611
 msgid "Go to hangar"
-msgstr "Appareils"
+msgstr "Aller au hangar"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:611
 msgid "Go to hangar without destroying building"
@@ -30270,10 +30102,10 @@ msgid_plural ""
 "Please wait to enter."
 msgstr[0] ""
 "La construction du bâtiment sera terminée dans %i jour.\n"
-"Veuillez attendre avant d'entrer."
+"Veuillez patienter avant d'entrer."
 msgstr[1] ""
 "La construction du bâtiment sera terminée dans %i jours.\n"
-"Veuillez attendre avant d'entrer."
+"Veuillez patienter avant d'entrer."
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:781
 #, c-format
@@ -30637,32 +30469,32 @@ msgid "This item is functional.\n"
 msgstr "Cet objet fonctionne.\n"
 
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:367
-#, fuzzy, c-format
+#, c-format
 msgid "This item will be installed in %i hour.\n"
 msgid_plural "This item will be installed in %i hours.\n"
-msgstr[0] "Cet objet sera installé dans %i heures.\n"
+msgstr[0] "Cet objet sera installé dans %i heure.\n"
 msgstr[1] "Cet objet sera installé dans %i heures.\n"
 
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:370
-#, fuzzy, c-format
+#, c-format
 msgid "%s will be removed in %i hour.\n"
 msgid_plural "%s will be removed in %i hours.\n"
-msgstr[0] "%s sera retiré(e) dans %i heures.\n"
+msgstr[0] "%s sera retiré(e) dans %i heure.\n"
 msgstr[1] "%s sera retiré(e) dans %i heures.\n"
 
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:372
-#, fuzzy, c-format
+#, c-format
 msgid "%s will be installed in %i hour.\n"
 msgid_plural "%s will be installed in %i hours.\n"
-msgstr[0] "%s sera installé(e) dans %i heures.\n"
+msgstr[0] "%s sera installé(e) dans %i heure.\n"
 msgstr[1] "%s sera installé(e) dans %i heures.\n"
 
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:376
-#, fuzzy, c-format
+#, c-format
 msgid "This item will be removed in %i hour.\n"
 msgid_plural "This item will be removed in %i hours.\n"
-msgstr[0] "Cet élément sera retiré dans %i heures.\n"
-msgstr[1] "Cet élément sera retiré dans %i heures.\n"
+msgstr[0] "Cet objet sera retiré dans %i heure.\n"
+msgstr[1] "Cet objet sera retiré dans %i heures.\n"
 
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:386
 msgid "No ammo assigned to this weapon."
@@ -30988,7 +30820,7 @@ msgstr ""
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:383
 msgid "UGV is away from home"
-msgstr "VTSP absent de la base"
+msgstr "VTSC absent de la base"
 
 #: client/cgame/campaign/cp_market_callbacks.cpp:426
 msgid "Aircraft is away from home"
@@ -31639,7 +31471,7 @@ msgstr "Sauvegarde rapide"
 
 #: client/cgame/campaign/cp_save.cpp:580
 msgid "Campaign was successfully saved."
-msgstr "La campagne a été sauvée avec succès."
+msgstr "La campagne a bien été sauvée."
 
 #: client/cgame/campaign/cp_save.cpp:580
 msgid "Quicksave"
@@ -31651,7 +31483,7 @@ msgstr "Campagne chargée"
 
 #: client/cgame/campaign/cp_save.cpp:600
 msgid "Quicksave campaign was successfully loaded."
-msgstr "La sauvegarde rapide a été chargée avec succès."
+msgstr "La sauvegarde rapide a bien été chargée."
 
 #: client/cgame/campaign/cp_statistics.cpp:48
 #, c-format
@@ -31746,9 +31578,8 @@ msgstr ""
 "Infection Virale eXtraterrestre actuelle : %i%%"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:226
-#, fuzzy
 msgid "No more employees can be assigned to this aircraft"
-msgstr "Aucun autre soldat ne peut être affecté à cet appareil"
+msgstr "Aucun autre employé ne peut être affecté à cet appareil"
 
 #: client/cgame/campaign/cp_team_callbacks.cpp:237
 msgid "Employee is assigned to another aircraft"
@@ -31942,9 +31773,8 @@ msgid "Maximum speed"
 msgstr "Vitesse maximale"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:142
-#, fuzzy
 msgid "Evasion"
-msgstr "Résidence"
+msgstr "Esquive"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:144
 msgid "Aircraft damage"
@@ -31989,9 +31819,8 @@ msgid "Weight:\t%s\n"
 msgstr "Poids :\t%s\n"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:262
-#, fuzzy
 msgid "Weapon for air defence system\n"
-msgstr "Arme pour système de défense de la base\n"
+msgstr "Arme pour système de défense aérienne\n"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:282
 #, c-format
@@ -32025,7 +31854,7 @@ msgstr "%s :\t%i %%\n"
 #: client/cgame/campaign/cp_ufopedia.cpp:403
 #: client/cgame/campaign/cp_ufopedia.cpp:405
 msgid "Unknown - need to research this"
-msgstr "Inconnu - Nécessite une recherche"
+msgstr "Inconnu - recherche nécessaire"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:333
 #: client/cgame/campaign/cp_ufopedia.cpp:338
@@ -32059,11 +31888,11 @@ msgstr ""
 
 #: client/cgame/campaign/cp_ufopedia.cpp:526
 msgid "Proposal: "
-msgstr "Proposition :"
+msgstr "Proposition : "
 
 #: client/cgame/campaign/cp_ufopedia.cpp:529
 msgid "Re: "
-msgstr "Re :"
+msgstr "Re : "
 
 #: client/cgame/campaign/cp_ufopedia.cpp:543
 #, c-format
@@ -32102,9 +31931,9 @@ msgid "Re: %s"
 msgstr "Re : %s"
 
 #: client/cgame/campaign/cp_uforecovery.cpp:56
-#, fuzzy, c-format
+#, c-format
 msgid "%s was transferred to %s."
-msgstr "%s a été transféré à %s."
+msgstr "%s a été transféré(e) à %s."
 
 #: client/cgame/campaign/cp_uforecovery.cpp:59
 msgid "UFO Recovered"
@@ -32158,7 +31987,7 @@ msgstr "Rapatriement des OVNI"
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:462
 #, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
-msgstr "%s, rapatrié(e) de %s, a été vendu(e) à la nation %s pour %i crédits."
+msgstr "%s, rapatrié(e) de %s, vendu(e) à la nation %s pour %i crédits."
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:467
 #, c-format
@@ -32217,7 +32046,7 @@ msgstr "Tirer"
 #: client/cgame/cl_game_team.cpp:304
 msgid "Error saving team. Nothing to save yet."
 msgstr ""
-"Erreur lors de la sauvegarde de l'équipe. Rien à sauver pour l'instant."
+"Erreur lors de la sauvegarde de l'équipe. Rien à sauvegarder pour l'instant."
 
 #: client/cgame/cl_game_team.cpp:310
 msgid "New Team"
@@ -32458,7 +32287,7 @@ msgstr "Poids :\t%g kg\n"
 
 #: client/cl_inventory_callbacks.cpp:140
 msgid "^BDamage type:\tProtection:\n"
-msgstr "^BType de dégâts\tProtection\n"
+msgstr "^BType de dégâts :\tProtection :\n"
 
 #: client/cl_inventory_callbacks.cpp:153
 #, c-format
@@ -32515,31 +32344,31 @@ msgstr "Arme"
 
 #: client/cl_inventory_callbacks.cpp:197 po/OTHER_STRINGS:5
 msgid "No"
-msgstr "Jamais"
+msgstr "Non"
 
 #: client/cl_inventory_callbacks.cpp:197
-#, fuzzy, c-format
+#, c-format
 msgid "Permanent:\t%s\n"
-msgstr "Équipement :\t%s\n"
+msgstr "Permanent :\t%s\n"
 
 #: client/cl_inventory_callbacks.cpp:197 po/OTHER_STRINGS:4
 msgid "Yes"
-msgstr "Toujours"
+msgstr "Oui"
 
 #: client/cl_inventory_callbacks.cpp:198
-#, fuzzy, c-format
+#, c-format
 msgid "Duration:\t%i\n"
-msgstr "Action :\t%s\n"
+msgstr "Durée :\t%i\n"
 
 #: client/cl_inventory_callbacks.cpp:199
-#, fuzzy, c-format
+#, c-format
 msgid "Period:\t%i\n"
-msgstr "Energie:\t%i\n"
+msgstr "Délai :\t%i\n"
 
 #: client/cl_inventory_callbacks.cpp:201
-#, fuzzy, c-format
+#, c-format
 msgid "Price:\t%i c\n"
-msgstr "Dette :\t%i c\n"
+msgstr "Prix :\t%i c\n"
 
 #: client/cl_inventory_callbacks.cpp:203
 #, c-format
@@ -32561,9 +32390,8 @@ msgid "Unknown - not useable"
 msgstr "Inconnu(e) - non utilisable"
 
 #: client/cl_inventory_callbacks.cpp:402
-#, fuzzy
 msgid "Warning!"
-msgstr "Attention"
+msgstr "Attention !"
 
 #: client/cl_irc.cpp:1424
 msgid "Server closed connection"
@@ -32678,9 +32506,8 @@ msgid "Highly Proficient"
 msgstr "Très bon"
 
 #: client/cl_team.cpp:189
-#, fuzzy
 msgid "Exceptional"
-msgstr "Interception"
+msgstr "Exceptionnel"
 
 #: client/cl_team.cpp:191
 msgid "Outstanding"
@@ -32776,7 +32603,7 @@ msgstr "Roulette de la souris vers le bas"
 
 #: client/input/cl_input.cpp:1244
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
-msgstr "Sélectionner objet. Marcher vers. En mode tir : tirer, etc."
+msgstr "Choisir objets / Marcher vers / En mode tir : tirer, etc."
 
 #: client/input/cl_input.cpp:1246
 msgid "Rotate Battlescape/In fire mode, cancel action"
@@ -32888,7 +32715,7 @@ msgstr ""
 
 #: game/g_combat.cpp:733
 msgid "Can't perform action - impossible throw!"
-msgstr "Action impossible - lancé impossible !"
+msgstr "Action impossible - lancer impossible !"
 
 #: game/g_combat.cpp:1198
 msgid "Can't perform action - object not activatable!"
@@ -32896,55 +32723,55 @@ msgstr "Action impossible - l'objet ne peut être actionné !"
 
 #: game/g_combat.cpp:1224
 msgid "Can't perform action - target is not wounded!"
-msgstr "Action impossible - cible est hors de portée !"
+msgstr "Action impossible - cible indemne !"
 
 #: game/g_combat.cpp:1249
 msgid "Can't perform action - target out of range!"
-msgstr "Action impossible - la cible est hors de portée !"
+msgstr "Action impossible - cible hors de portée !"
 
 #: game/g_combat.cpp:1295
 msgid "Can't perform action - not enough ammo!"
-msgstr "Action impossible - pas assez de munitions!"
+msgstr "Action impossible - pas assez de munitions !"
 
 #: game/g_mission.cpp:63
 #, c-format
 msgid "%s forces are attacking the %s!"
-msgstr ""
+msgstr "%s forces sont en train d'attaquer le (la) %s !"
 
 #: game/g_mission.cpp:66
-#, fuzzy, c-format
+#, c-format
 msgid "%s forces are attacking %s target zone!"
-msgstr "Les aliens sont entrés dans la zone cible."
+msgstr "%s forces sont en train d'attaquer %s zone cible !"
 
 #: game/g_mission.cpp:90
-#, fuzzy, c-format
+#, c-format
 msgid "%s forces have occupied the %s!"
-msgstr "Les aliens sont entrés dans la zone cible."
+msgstr "%s forces ont occupé le (la) %s !"
 
 #: game/g_mission.cpp:92
 #, c-format
 msgid "%s forces have occupied their target zone!"
-msgstr ""
+msgstr "%s forces ont occupé leur zone cible !"
 
 #: game/g_mission.cpp:112
-#, fuzzy, c-format
+#, c-format
 msgid "The %s was placed at the %s."
-msgstr "Le transport a rejoint la zone de crash."
+msgstr "Le (la) %s est en place au (à la) %s."
 
 #: game/g_mission.cpp:114
-#, fuzzy, c-format
+#, c-format
 msgid "The %s was placed."
-msgstr "L'objet a été placé."
+msgstr "Le (la) %s est en place."
 
 #: game/g_mission.cpp:140
-#, fuzzy, c-format
+#, c-format
 msgid "%s forces have left the %s!"
-msgstr "Les aliens sont entrés dans la zone cible."
+msgstr "%s forces ont quitté le (la) %s !"
 
 #: game/g_mission.cpp:142
-#, fuzzy, c-format
+#, c-format
 msgid "%s forces have left their target zone!"
-msgstr "Les aliens sont entrés dans la zone cible."
+msgstr "%s forces ont quitté leur zone cible !"
 
 #: game/g_morale.cpp:40
 #, c-format
@@ -32954,7 +32781,7 @@ msgstr "%s panique !"
 #: game/g_morale.cpp:101
 #, c-format
 msgid "%s is on a rampage!"
-msgstr "%s agit comme un sauvage !"
+msgstr "%s se déchaine !"
 
 #: game/g_morale.cpp:104
 #, c-format
@@ -33004,7 +32831,7 @@ msgstr "Plus que 15 secondes avant la fin du tour."
 
 #: game/g_round.cpp:77
 msgid "Current active team hit the max round time."
-msgstr "L'équipe en train de jouer a atteint le temps limite du tour."
+msgstr "L'équipe en train de jouer a atteint la durée maximale du tour."
 
 #: game/g_trigger.cpp:136
 msgid "Switching map!"
@@ -33024,7 +32851,7 @@ msgstr "alien"
 
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
-msgstr "Faire une capture d'écran"
+msgstr "Faire une copie d'écran"
 
 #~ msgid "at home base"
 #~ msgstr "à la base"
