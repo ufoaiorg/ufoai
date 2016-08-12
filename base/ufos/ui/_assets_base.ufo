@@ -594,7 +594,7 @@ do
 		MarketItem_buy.on_mouseleave = function (sender)
 				sender:set_topicon("icons/arrowtext_lft")
 			end
-		MarketItem_buy.on_click = function (sender)
+		MarketItem_buy.on_change = function (sender)
 				ufo.cmd(string.format("ui_market_buy \"%s\" %s;", sender:parent():child("id"):as_string(), tostring(sender:lastdiff())))
 				ufo.cmd(string.format("ui_market_fill %s;", ufo.findvar("ui_market_category"):as_string()))
 				ufo.cmd(string.format("ui_market_select \"%s\";", sender:parent():child("id"):as_string()))
