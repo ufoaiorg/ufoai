@@ -352,6 +352,7 @@ window market  {
 	// ==================
 
 	func onWindowOpened {
+		cmd "ui_market_clear;"
 		if (<cvar:ui_market_category> ne "") {
 			cmd "ui_market_fill <cvar:ui_market_category>;"
 		}
