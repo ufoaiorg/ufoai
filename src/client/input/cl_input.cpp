@@ -72,7 +72,6 @@ static struct {
 
 static int keyq_head = 0;
 static int keyq_tail = 0;
-static unsigned int lastDown = 0;
 
 static cvar_t* in_debug;
 cvar_t* cl_isometric;
@@ -630,7 +629,7 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
  */
 static bool IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 {
-	bool special = true;
+	bool translated = true;
 	switch (keycode) {
 	case SDLK_PAGEUP:
 		*ascii = K_PGUP;
@@ -638,33 +637,43 @@ static bool IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 #if SDL_VERSION_ATLEAST(2,0,0)
 	case SDLK_KP_0:
 		*ascii = K_KP_INS;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP_1:
 		*ascii = K_KP_END;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP_2:
 		*ascii = K_KP_DOWNARROW;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP_3:
 		*ascii = K_KP_PGDN;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP_4:
 		*ascii = K_KP_LEFTARROW;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP_5:
 		*ascii = K_KP_5;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP_6:
 		*ascii = K_KP_RIGHTARROW;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP_7:
 		*ascii = K_KP_HOME;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP_8:
 		*ascii = K_KP_UPARROW;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP_9:
 		*ascii = K_KP_PGUP;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_PRINTSCREEN:
 		*ascii = K_PRINT;
@@ -675,33 +684,43 @@ static bool IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 #else
 	case SDLK_KP0:
 		*ascii = K_KP_INS;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP1:
 		*ascii = K_KP_END;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP2:
 		*ascii = K_KP_DOWNARROW;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP3:
 		*ascii = K_KP_PGDN;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP4:
 		*ascii = K_KP_LEFTARROW;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP5:
 		*ascii = K_KP_5;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP6:
 		*ascii = K_KP_RIGHTARROW;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP7:
 		*ascii = K_KP_HOME;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP8:
 		*ascii = K_KP_UPARROW;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP9:
 		*ascii = K_KP_PGUP;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_LSUPER:
 	case SDLK_RSUPER:
@@ -809,6 +828,7 @@ static bool IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 		break;
 	case SDLK_KP_PERIOD:
 		*ascii = K_KP_DEL;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_DELETE:
 		*ascii = K_DEL;
@@ -833,15 +853,19 @@ static bool IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 		break;
 	case SDLK_KP_PLUS:
 		*ascii = K_KP_PLUS;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP_MINUS:
 		*ascii = K_KP_MINUS;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP_DIVIDE:
 		*ascii = K_KP_SLASH;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_KP_MULTIPLY:
 		*ascii = K_KP_MULTIPLY;
+		translated = !Key_IsNumlock();
 		break;
 	case SDLK_MODE:
 		*ascii = K_MODE;
@@ -868,14 +892,14 @@ static bool IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 		*ascii = K_SPACE;
 		break;
 	default:
-		special = false;
+		translated = false;
 		if (UTF8_encoded_len(keycode) == 1 && isprint(keycode))
 			*ascii = keycode;
 		else
 			*ascii = 0;
 		break;
 	}
-	return special;
+	return translated;
 }
 
 void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, bool keyDown)
@@ -980,15 +1004,8 @@ void IN_Frame (void)
 				}
 				unicode = characterUnicode;
 				IN_TranslateKey(characterUnicode, &key);
-				/** @todo Fix numpad handling */
-				/* Don't send the key events if they come from the numpad: the navigation key events
-				 * are already sent with the SDL_KEYDOWN/UP events, this will prevents entering
-				 * numbers with the numpad, but the key bindings rely on the K_KP_* navigation
-				 * keys being sent. */
-				if ((!isdigit(key) && key != '.') || lastDown < K_KP_INS || lastDown > K_KP_DEL) {
-					IN_EventEnqueue(key, unicode, true);
-					IN_EventEnqueue(key, unicode, false);
-				}
+				IN_EventEnqueue(key, unicode, true);
+				IN_EventEnqueue(key, unicode, false);
 			}
 			break;
 		}
@@ -1092,7 +1109,6 @@ void IN_Frame (void)
 			IN_TranslateKey(event.key.keysym.sym, &key);
 			IN_EventEnqueue(key, unicode, true);
 #endif
-			lastDown = key;
 			break;
 
 		case SDL_KEYUP:

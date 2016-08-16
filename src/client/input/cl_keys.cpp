@@ -218,6 +218,10 @@ bool Key_IsDown (unsigned int key)
 	return keyDown[key];
 }
 
+bool Key_IsNumlock (void)
+{
+		return (SDL_GetModState() & KMOD_NUM) == KMOD_NUM;
+}
 /*
 ==============================================================================
 LINE TYPING INTO THE CONSOLE
@@ -283,7 +287,7 @@ static void Key_Console (int key, int unicode)
 		return;
 	}
 	/* delete char on cursor */
-	if (key == K_DEL) {
+	if (key == K_DEL || key == K_KP_DEL) {
 		if (keyLinePos < strlen(keyLines[editLine]))
 			strcpy(keyLines[editLine] + keyLinePos, keyLines[editLine] + keyLinePos + 1);
 		return;
@@ -319,7 +323,7 @@ static void Key_Console (int key, int unicode)
 		return;
 	}
 
-	if (key == K_LEFTARROW) {  /* move cursor left */
+	if (key == K_LEFTARROW || key == K_KP_LEFTARROW) {  /* move cursor left */
 		if (keyDown[K_CTRL]) { /* by a whole word */
 			while (keyLinePos > 1 && keyLines[editLine][keyLinePos - 1] == ' ')
 				keyLinePos--;  /* get off current word */
@@ -331,7 +335,7 @@ static void Key_Console (int key, int unicode)
 		if (keyLinePos > 1)  /* or just a char. */
 			keyLinePos--;
 		return;
-	} else if (key == K_RIGHTARROW) {  /* move cursor right */
+	} else if (key == K_RIGHTARROW || key == K_KP_RIGHTARROW) {  /* move cursor right */
 		int i;
 		if ((i = strlen(keyLines[editLine])) == keyLinePos)
 			return; /* no character to get */
@@ -349,7 +353,7 @@ static void Key_Console (int key, int unicode)
 	}
 
 	/* toggle insert mode */
-	if (key == K_INS) {
+	if (key == K_INS || key == K_KP_INS) {
 		keyInsert ^= 1;
 		return;
 	}

@@ -197,6 +197,7 @@ extern char* menuKeyBindings[K_KEY_SIZE];
 extern char* battleKeyBindings[K_KEY_SIZE];
 
 bool Key_IsDown(unsigned int key);
+bool Key_IsNumlock(void);
 void Key_SetDest(keydest_t key_dest);
 void Key_Event(unsigned int key, unsigned short unicode, bool down, unsigned time);
 void Key_Init(void);
