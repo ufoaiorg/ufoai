@@ -620,7 +620,7 @@ static void GAME_SaveInventory (xmlNode_t* p, const Inventory* inv)
  * @param[out] y Vertical coordinate of the item in the container
  * @sa GAME_SaveItem
  */
-static void GAME_LoadItem (xmlNode_t* n, Item* item, containerIndex_t* container, int* x, int* y)
+static bool GAME_LoadItem (xmlNode_t* n, Item* item, containerIndex_t* container, int* x, int* y)
 {
 	const char* itemID = XML_GetString(n, SAVE_INVENTORY_WEAPONID);
 	const char* contID = XML_GetString(n, SAVE_INVENTORY_CONTAINER);
@@ -635,10 +635,14 @@ static void GAME_LoadItem (xmlNode_t* n, Item* item, containerIndex_t* container
 	}
 	if (i >= CID_MAX) {
 		Com_Printf("Invalid container id '%s'\n", contID);
+		return false;
 	}
 	*container = i;
 
 	item->setDef(INVSH_GetItemByID(itemID));
+	if (item->def() == nullptr) {
+		return false;
+	}
 	*x = XML_GetInt(n, SAVE_INVENTORY_X, 0);
 	*y = XML_GetInt(n, SAVE_INVENTORY_Y, 0);
 	item->rotated = XML_GetInt(n, SAVE_INVENTORY_ROTATED, 0);
@@ -655,6 +659,8 @@ static void GAME_LoadItem (xmlNode_t* n, Item* item, containerIndex_t* container
 	} else if (!item->isReloadable()) {
 		item->setAmmoDef(item->def());
 	}
+
+	return true;
 }
 
 /**
@@ -676,6 +682,9 @@ static void GAME_LoadInventory (xmlNode_t* p, Inventory* inv, int maxLoad)
 		int x, y;
 
 		GAME_LoadItem(s, &item, &container, &x, &y);
+		if (item.def() == nullptr)
+			continue;
+
 		if (INVDEF(container)->temp)
 			Com_Error(ERR_DROP, "GAME_LoadInventory failed, tried to add '%s' to a temp container %i", item.def()->id, container);
 		/* ignore the overload for now */
