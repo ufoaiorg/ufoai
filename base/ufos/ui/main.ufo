@@ -167,7 +167,7 @@ do
 		},
 
 		on_windowopened = function (sender)
-				ufo.cmd("music_change_main;")
+				ufo.cmd("music_change main;")
 				-- @TODO: activate this again
 				-- ufo.cmd("ui_push_child popup_tipoftheday main;")
 				ufo.cmd("check_cvars;")
