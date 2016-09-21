@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2016-07-05 22:44-0500\n"
-"PO-Revision-Date: 2012-09-23 15:26+0100\n"
-"Last-Translator: MageRG\n"
+"PO-Revision-Date: 2016-09-21 20:26+0100\n"
+"Last-Translator: Tamás Fehérvári <geever@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.1.6\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #: ../base/maps/africa.ump:639 ../base/maps/africa.ump:673
 #: ../base/maps/africa.ump:705 ../base/maps/africa.ump:737
@@ -578,9 +578,8 @@ msgstr "Közepes idegen páncél"
 
 #: ../base/ufos/basemanagement.ufo:35 ../base/ufos/ui/aliencont.ufo:158
 #: ../base/ufos/ui/aliencont.ufo:347 ../base/ufos/ui/bases.ufo:395
-#, fuzzy
 msgid "Alien Containment"
-msgstr "Idegen tároló"
+msgstr "Idegentároló"
 
 #: ../base/ufos/basemanagement.ufo:51
 msgid "Entrance"
@@ -601,19 +600,17 @@ msgstr "Parancsnoki központ"
 
 #: ../base/ufos/basemanagement.ufo:110 ../base/ufos/ui/hire.ufo:347
 msgid "Living Quarters"
-msgstr "Lakó negyed"
+msgstr "Lakónegyed"
 
 #: ../base/ufos/basemanagement.ufo:123 ../base/ufos/ui/aircraft.ufo:263
 #: ../base/ufos/ui/production.ufo:264
-#, fuzzy
 msgid "Dropship Hangar"
-msgstr "Hangár lerombolása"
+msgstr "Csapatszállító-hangár"
 
 #: ../base/ufos/basemanagement.ufo:139 ../base/ufos/ui/aircraft.ufo:271
 #: ../base/ufos/ui/production.ufo:256
-#, fuzzy
 msgid "Interceptor Hangar"
-msgstr "Elfogó"
+msgstr "Elfogóhangár"
 
 #: ../base/ufos/basemanagement.ufo:153 ../base/ufos/ui/production.ufo:272
 msgid "Workshop"
@@ -1137,7 +1134,6 @@ msgid "Dublin"
 msgstr "Dublin"
 
 #: ../base/ufos/cities.ufo:723
-#, fuzzy
 msgid "Duesseldorf"
 msgstr "Düsseldorf"
 
@@ -2564,17 +2560,17 @@ msgstr "UFÓ-Hordozó"
 #: ../base/ufos/fonts.ufo:53 ../base/ufos/fonts.ufo:77
 #: ../base/ufos/fonts.ufo:83
 msgid "media/orbitron-bold.ttf"
-msgstr ""
+msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/fonts.ufo:17 ../base/ufos/fonts.ufo:29
 #: ../base/ufos/fonts.ufo:41 ../base/ufos/fonts.ufo:59
 #: ../base/ufos/fonts.ufo:71
 msgid "media/orbitron-medium.ttf"
-msgstr ""
+msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/fonts.ufo:65
 msgid "media/orbitron-light.ttf"
-msgstr ""
+msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/fonts.ufo:89
 msgid "media/languages.ttf"
@@ -20708,11 +20704,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:6002 ../base/ufos/weapons_implants.ufo:4
 msgid "Amphetamine Implant"
-msgstr ""
+msgstr "Amfetamin-adagoló beültetés"
 
 #: ../base/ufos/research.ufo:6026 ../base/ufos/weapons_implants.ufo:47
 msgid "Muscle Stimulant"
-msgstr ""
+msgstr "Izom stimluláló beültetés"
 
 #: ../base/ufos/seq_credits.ufo:30 ../base/ufos/ui/main.ufo:20
 msgid "UFO: ALIEN INVASION"
@@ -20724,19 +20720,16 @@ msgid "http://www.ufoai.org"
 msgstr "http://ufoai.sf.net"
 
 #: ../base/ufos/seq_credits.ufo:57
-#, fuzzy
 msgid "Project lead"
-msgstr "Projekt vezető"
+msgstr "Projektvezető"
 
 #: ../base/ufos/seq_credits.ufo:67
-#, fuzzy
 msgid "Martin Gerhardy (mattn)"
-msgstr "Martin Gerhardy (mattn/tlh2000)"
+msgstr "Martin Gerhardy (mattn)"
 
 #: ../base/ufos/seq_credits.ufo:78
-#, fuzzy
 msgid "Team members"
-msgstr "Csapattagok:"
+msgstr "Csapattagok"
 
 #: ../base/ufos/seq_credits.ufo:88
 msgid "aDuke"
@@ -20791,9 +20784,8 @@ msgid "Bas Fournier (BTAxis)"
 msgstr "Bas Fournier (BTAxis)"
 
 #: ../base/ufos/seq_credits.ufo:222
-#, fuzzy
 msgid "Werner Hohrer (Hoehrer)"
-msgstr "Werner Hoehrer (hoehrer)"
+msgstr "Werner Hoehrer (Hoehrer)"
 
 #: ../base/ufos/seq_credits.ufo:232
 msgid "Kostia Romanov (Kildor)"
@@ -20816,23 +20808,20 @@ msgid "Ryan A. Span. (Winter)"
 msgstr "Ryan A. Span. (Winter)"
 
 #: ../base/ufos/seq_credits.ufo:282
-#, fuzzy
 msgid "Maciej Wierzbicki (Zenerka)"
-msgstr "Maciej Wierzbicki (Zenerka/Voovoos)"
+msgstr "Maciej Wierzbicki (Zenerka)"
 
 #: ../base/ufos/seq_credits.ufo:296
-#, fuzzy
 msgid "Original team"
-msgstr "Eredeti"
+msgstr "Eredeti csapat"
 
 #: ../base/ufos/seq_credits.ufo:306
 msgid "Herby"
 msgstr "Herby"
 
 #: ../base/ufos/seq_credits.ufo:316
-#, fuzzy
 msgid "SparXX"
-msgstr "SparX"
+msgstr "SparXX"
 
 #: ../base/ufos/seq_credits.ufo:326
 msgid "Rastaman"
@@ -20847,9 +20836,8 @@ msgid "Vanethian"
 msgstr "Vanethian"
 
 #: ../base/ufos/seq_credits.ufo:360
-#, fuzzy
 msgid "Special thanks to"
-msgstr "Külön köszönet:"
+msgstr "Külön köszönet"
 
 #: ../base/ufos/seq_credits.ufo:370
 msgid "id Software for the Quake 2 engine"
@@ -20860,9 +20848,8 @@ msgid "NineX for hosting us"
 msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:390
-#, fuzzy
 msgid "To the community and everyone who supported us"
-msgstr "Mindenkinek aki támogatott minket"
+msgstr "A közösségnek és minden támogatónknak"
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:161
 msgid "GAMEPLAY"
@@ -21492,7 +21479,7 @@ msgstr ""
 #: ../base/ufos/ui/_assets.ufo:42 ../base/ufos/ui/_assets_base.ufo:377
 #: ../base/ufos/ui/_assets_base.ufo:557
 msgid "View UFOPaedia entry"
-msgstr ""
+msgstr "UFÓPédia cikk megtekintése"
 
 #: ../base/ufos/ui/_assets.ufo:124 ../base/ufos/ui/hud_phone.ufo:157
 #: client/cgame/campaign/cp_installation_callbacks.cpp:194
@@ -21628,19 +21615,16 @@ msgid "Lock current stock level"
 msgstr ""
 
 #: ../base/ufos/ui/_assets_base.ufo:687
-#, fuzzy
 msgid "Previous base"
-msgstr "Előző"
+msgstr "Előző bázis"
 
 #: ../base/ufos/ui/_assets_base.ufo:703
-#, fuzzy
 msgid "Next base"
-msgstr "Új bázis"
+msgstr "Következő bázis"
 
 #: ../base/ufos/ui/_assets_base.ufo:774 ../base/ufos/ui/_menu.ufo:88
-#, fuzzy
 msgid "Back to base"
-msgstr "Vissza a bázisnézethez"
+msgstr "Vissza a bázishoz"
 
 #: ../base/ufos/ui/_assets_hud.ufo:107
 #, fuzzy
@@ -21712,7 +21696,7 @@ msgstr "Kiválasztott védelem:"
 #: ../base/ufos/ui/_assets_squad.ufo:313 ../base/ufos/ui/campaign.ufo:147
 #: ../base/ufos/ui/campaign.ufo:654
 msgid "SAVE"
-msgstr ""
+msgstr "MENTÉS"
 
 #: ../base/ufos/ui/_assets_squad.ufo:324
 msgid "EQUIP"
@@ -21733,12 +21717,12 @@ msgstr ""
 
 #: ../base/ufos/ui/_assets_squad.ufo:433 ../base/ufos/ui/campaign.ufo:131
 msgid "NEW"
-msgstr ""
+msgstr "ÚJ"
 
 #: ../base/ufos/ui/_assets_squad.ufo:449 ../base/ufos/ui/campaign.ufo:155
 #: ../base/ufos/ui/campaign.ufo:640
 msgid "LOAD"
-msgstr ""
+msgstr "BETÖLTÉS"
 
 #: ../base/ufos/ui/_assets_squad.ufo:541 ../base/ufos/ui/multiplayer.ufo:203
 msgid "CREATE"
@@ -21808,7 +21792,8 @@ msgstr "Állapot:"
 msgid "Team:"
 msgstr "Csapat:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:90 ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:90
+#: ../base/ufos/ui/aircraft_equip.ufo:109
 #: ../base/ufos/ui/aircraft_equip.ufo:128
 #: ../base/ufos/ui/aircraft_equip.ufo:147
 #: ../base/ufos/ui/aircraft_equip.ufo:166
@@ -21898,19 +21883,16 @@ msgid "Start autopsy"
 msgstr "Boncolás"
 
 #: ../base/ufos/ui/aliencont.ufo:171
-#, fuzzy
 msgid "Race"
-msgstr "Faj:"
+msgstr "Faj"
 
 #: ../base/ufos/ui/aliencont.ufo:179
-#, fuzzy
 msgid "Alive"
-msgstr "Élő:"
+msgstr "Élő"
 
 #: ../base/ufos/ui/aliencont.ufo:187
-#, fuzzy
 msgid "Dead"
-msgstr "Halott:"
+msgstr "Halott"
 
 #: ../base/ufos/ui/aliencont.ufo:196
 msgid "Kill all aliens in this base"
@@ -22028,7 +22010,7 @@ msgstr "Tudósok"
 
 #: ../base/ufos/ui/bases.ufo:71
 msgid "Engineers"
-msgstr ""
+msgstr "Mérnökök"
 
 #: ../base/ufos/ui/bases.ufo:89 ../base/ufos/ui/hire.ufo:84
 msgid "Pilots"
@@ -22040,8 +22022,8 @@ msgstr "Bázis összegzés"
 
 #: ../base/ufos/ui/bases.ufo:118 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
-#: ../base/ufos/ui/transfer.ufo:463
+#: ../base/ufos/ui/popup_installations.ufo:654
+#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:463
 #: client/cgame/campaign/cp_base_callbacks.cpp:602
 #: client/cgame/campaign/cp_base_callbacks.cpp:613
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
@@ -22050,7 +22032,6 @@ msgid "Transfer"
 msgstr "Átcsoportosítás"
 
 #: ../base/ufos/ui/bases.ufo:129
-#, fuzzy
 msgid "UFOpedia"
 msgstr "UFÓpédia"
 
@@ -22059,9 +22040,8 @@ msgid "Options"
 msgstr "Beállítások"
 
 #: ../base/ufos/ui/bases.ufo:164
-#, fuzzy
 msgid "Facilities"
-msgstr "Bázis épületek"
+msgstr "Épületek"
 
 #: ../base/ufos/ui/bases.ufo:210 ../base/ufos/ui/geoscape.ufo:539
 #: client/cgame/campaign/cp_ufopedia.cpp:113
@@ -22072,7 +22052,7 @@ msgstr "UFÓpédia"
 #: ../base/ufos/ui/bases.ufo:344 ../base/ufos/ui/market.ufo:31
 #: ../base/ufos/ui/market.ufo:57
 msgid "Market"
-msgstr ""
+msgstr "Piactér"
 
 #: ../base/ufos/ui/campaign.ufo:42 ../base/ufos/ui/campaign.ufo:95
 #, fuzzy
@@ -22087,17 +22067,17 @@ msgstr "Könyvjelző törlése"
 #: ../base/ufos/ui/campaign.ufo:168 ../base/ufos/ui/multiplayer.ufo:702
 #: ../base/ufos/ui/skirmish.ufo:175
 msgid "DOWNLOAD"
-msgstr ""
+msgstr "LETÖLTÉS"
 
 #: ../base/ufos/ui/campaign.ufo:176 ../base/ufos/ui/skirmish.ufo:186
 msgid "BEGIN"
-msgstr ""
+msgstr "INDÍTÁS"
 
 #: ../base/ufos/ui/campaign.ufo:198 ../base/ufos/ui/campaign.ufo:933
 #: ../base/ufos/ui/multiplayer.ufo:901 ../base/ufos/ui/skirmish.ufo:197
 #: ../base/ufos/ui/tutorials.ufo:70
 msgid "BACK"
-msgstr ""
+msgstr "VISSZA"
 
 #: ../base/ufos/ui/campaign.ufo:355 ../base/ufos/ui/multiplayer.ufo:1065
 #: ../base/ufos/ui/skirmish.ufo:369
@@ -22111,20 +22091,20 @@ msgstr ""
 
 #: ../base/ufos/ui/campaign.ufo:624 ../base/ufos/ui/missionmenu.ufo:33
 msgid "Leave this menu and continue playing."
-msgstr ""
+msgstr "Visszatérés a játékhoz."
 
 #: ../base/ufos/ui/campaign.ufo:626 ../base/ufos/ui/missionmenu.ufo:32
 msgid "CONTINUE"
-msgstr ""
+msgstr "FOLYTATÁS"
 
 #: ../base/ufos/ui/campaign.ufo:659 ../base/ufos/ui/main.ufo:107
 #: ../base/ufos/ui/missionmenu.ufo:43
 msgid "OPTIONS"
-msgstr ""
+msgstr "BEÁLLÍTÁSOK"
 
 #: ../base/ufos/ui/campaign.ufo:670 ../base/ufos/ui/main.ufo:140
 msgid "EXIT"
-msgstr ""
+msgstr "KILÉPÉS"
 
 #: ../base/ufos/ui/campaign.ufo:709
 msgid "Reload campaign"
@@ -22220,7 +22200,7 @@ msgstr "Idő állj"
 
 #: ../base/ufos/ui/geoscape.ufo:220
 msgid "Time lapse: 5 seconds"
-msgstr "Időt 5 másodpercre"
+msgstr "Időzítés: 5 másodperc"
 
 #: ../base/ufos/ui/geoscape.ufo:232
 msgid "Time lapse: 5 minutes"
@@ -22294,7 +22274,7 @@ msgstr "XVI térkép"
 
 #: ../base/ufos/ui/geoscape.ufo:641
 msgid "Center objects on the map"
-msgstr ""
+msgstr "Fókuszálás objektumokra"
 
 #: ../base/ufos/ui/geoscape.ufo:653
 msgid "Go to Options"
@@ -22338,7 +22318,8 @@ msgstr "Küldetés automatikus végrehajtása"
 msgid "This kind of mission cannot be done automatically"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897
+#: ../base/ufos/ui/popup_installations.ufo:184
 msgid "Cost:"
 msgstr "Ár:"
 
@@ -22346,7 +22327,8 @@ msgstr "Ár:"
 msgid "Time to build:"
 msgstr "Megépül:"
 
-#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:952
+#: ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build"
 msgstr "Építés"
 
@@ -22388,7 +22370,8 @@ msgid "Select aircraft"
 msgstr "Repülő választása"
 
 #: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/popup_installations.ufo:642
+#: ../base/ufos/ui/transfer.ufo:601
 msgid "ETA:"
 msgstr "Érkezés:"
 
@@ -22769,11 +22752,11 @@ msgstr "Az összes üzenet olvasottként való megjelölése"
 
 #: ../base/ufos/ui/main.ufo:32
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: ../base/ufos/ui/main.ufo:33
 msgid "Like us on facebook"
-msgstr ""
+msgstr "Lájkolj minket Facebook-on!"
 
 #: ../base/ufos/ui/main.ufo:48
 #, fuzzy
@@ -22782,27 +22765,27 @@ msgstr "Sitters"
 
 #: ../base/ufos/ui/main.ufo:49
 msgid "Follow us on twitter"
-msgstr ""
+msgstr "Kövess minket twitteren!"
 
 #: ../base/ufos/ui/main.ufo:74
 msgid "CAMPAIGN"
-msgstr ""
+msgstr "HADJÁRAT MÓD"
 
 #: ../base/ufos/ui/main.ufo:85
 msgid "SKIRMISH"
-msgstr ""
+msgstr "CSATA MÓD"
 
 #: ../base/ufos/ui/main.ufo:96
 msgid "MULTIPLAYER"
-msgstr ""
+msgstr "TÖBBJÁTÉKOS MÓD"
 
 #: ../base/ufos/ui/main.ufo:118 ../base/ufos/ui/tutorials.ufo:12
 msgid "TUTORIALS"
-msgstr ""
+msgstr "OKTATÁS"
 
 #: ../base/ufos/ui/main.ufo:129
 msgid "DEVELOPERS"
-msgstr ""
+msgstr "FEJLESZTŐK"
 
 #: ../base/ufos/ui/main.ufo:204
 msgid "Initial settings"
@@ -23035,6 +23018,8 @@ msgid ""
 "Enable or disable messages being displayed for all notification types.\n"
 "Left click enables all notifications, right click disables."
 msgstr ""
+"felbukkanó üzenetek engedélyezése (bal klikk) vagy tiltása (jobb klikk) "
+"minden üzenet típusra"
 
 #: ../base/ufos/ui/messageoptions.ufo:89
 msgid ""
@@ -23042,12 +23027,16 @@ msgid ""
 "Pause can't be enabled without notification\n"
 "Left click enables pause for all, right click disables."
 msgstr ""
+"a játék megállításának engedélyezése (bal klikk) vagy tiltása (jobb klikk) "
+"minden üzenet típusra"
 
 #: ../base/ufos/ui/messageoptions.ufo:100
 msgid ""
 "Enable or disable sounds being played for all notification types.\n"
 "Left click enables all sounds, right click disables."
 msgstr ""
+"hangjelzés engedélyezése (bal klikk) vagy tiltása (jobb klikk) minden üzenet "
+"típusra"
 
 #: ../base/ufos/ui/missionbriefing.ufo:59
 #, fuzzy
@@ -23369,28 +23358,28 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:111
 msgid "GENERAL"
-msgstr ""
+msgstr "ÁLTALÁNOS"
 
 #: ../base/ufos/ui/options.ufo:125
 msgid "VIDEO"
-msgstr ""
+msgstr "VIDEÓ"
 
 #: ../base/ufos/ui/options.ufo:137
 msgid "SOUND"
-msgstr ""
+msgstr "HANG"
 
 #: ../base/ufos/ui/options.ufo:149
 msgid "KEYS"
-msgstr ""
+msgstr "GOMBOK"
 
 #: ../base/ufos/ui/options.ufo:174 ../base/ufos/ui/options.ufo:2453
 #: ../base/ufos/ui/options.ufo:2591
 msgid "DONE"
-msgstr ""
+msgstr "KÉSZ"
 
 #: ../base/ufos/ui/options.ufo:223
 msgid "Language Settings"
-msgstr ""
+msgstr "Nyelv:"
 
 #: ../base/ufos/ui/options.ufo:271
 msgid "Tooltips"
@@ -23440,7 +23429,7 @@ msgstr "Milánó"
 
 #: ../base/ufos/ui/options.ufo:469
 msgid "1.0"
-msgstr ""
+msgstr "1,0"
 
 #: ../base/ufos/ui/options.ufo:476 ../base/ufos/ui/options.ufo:1713
 #: ../base/ufos/ui/options.ufo:1844
@@ -24020,7 +24009,8 @@ msgstr "Bázis kapacitás:"
 
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
+#: ../base/ufos/ui/popup_installations.ufo:892
+#: ../base/ufos/ui/transfer.ufo:373
 msgid "free"
 msgstr ""
 
@@ -24130,14 +24120,12 @@ msgid "Disassembly"
 msgstr "Szétszerelés"
 
 #: ../base/ufos/ui/production.ufo:110
-#, fuzzy
 msgid "Item"
-msgstr "Elemek"
+msgstr "Elem"
 
 #: ../base/ufos/ui/production.ufo:117
-#, fuzzy
 msgid "Stored"
-msgstr "Raktár"
+msgstr "Tárolt"
 
 #: ../base/ufos/ui/production.ufo:335 ../base/ufos/ui/production.ufo:345
 msgid "Change the production amount"
@@ -24440,12 +24428,11 @@ msgstr "Következő tüzelésimód"
 
 #: ../base/ufos/ui/web.ufo:8 ../base/ufos/ui/web.ufo:46
 msgid "Login"
-msgstr ""
+msgstr "Belépés"
 
 #: ../base/ufos/ui/web.ufo:26
-#, fuzzy
 msgid "Password"
-msgstr "Jelszó:"
+msgstr "Jelszó"
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -24570,9 +24557,9 @@ msgstr "3 lövéses sorozat"
 #: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
 #: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
 #: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
-#: ../base/ufos/weapons_multiplayer.ufo:318 ../base/ufos/weapons_plasma.ufo:203
-#: ../base/ufos/weapons_plasma.ufo:439 ../base/ufos/weapons_plasma.ufo:529
-#: ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_multiplayer.ufo:318
+#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:439
+#: ../base/ufos/weapons_plasma.ufo:529 ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr ""
 
@@ -24600,8 +24587,8 @@ msgid "5-Shot Burst"
 msgstr "5 lövéses sorozat"
 
 #: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
-#: ../base/ufos/weapons_multiplayer.ufo:342 ../base/ufos/weapons_plasma.ufo:553
-#: ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_multiplayer.ufo:342
+#: ../base/ufos/weapons_plasma.ufo:553 ../base/ufos/weapons_ugv.ufo:135
 msgid "Full-Auto Sweep"
 msgstr ""
 
@@ -26836,7 +26823,7 @@ msgstr "repülő nem tankolható újra"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:40
 msgid "aircraft_arrivedhome"
-msgstr ""
+msgstr "repülő hazatért"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:41
 msgid "installation_build_started"
@@ -26924,12 +26911,11 @@ msgstr "UFÓ támad"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:62
 msgid "base_attack"
-msgstr "Bázistámadás"
+msgstr "bázistámadás"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:63
-#, fuzzy
 msgid "building_finished"
-msgstr "gyártás befejeződött"
+msgstr "építkezés befejeződött"
 
 #: client/cgame/campaign/cp_messages.cpp:43
 #, c-format
@@ -27709,11 +27695,11 @@ msgstr ""
 
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:797
 msgid "alive"
-msgstr ""
+msgstr "élő"
 
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:799
 msgid "dead"
-msgstr ""
+msgstr "halott"
 
 #: client/cgame/campaign/cp_ufo.cpp:495
 #, c-format
@@ -28619,7 +28605,7 @@ msgstr "Ablak bezárása"
 
 #: client/ui/node/ui_node_window.cpp:324
 msgid "Drag to move window"
-msgstr ""
+msgstr "Ablak mozgatása \"fogd és vidd\" módon"
 
 #: client/ui/ui_tooltip.cpp:95 client/ui/ui_tooltip.cpp:100
 #, c-format
