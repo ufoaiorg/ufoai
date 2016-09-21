@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-07-05 22:44-0500\n"
+"POT-Creation-Date: 2016-09-21 20:29+0200\n"
 "PO-Revision-Date: 2013-10-21 11:32-0500\n"
 "Last-Translator: Danny Kim <danny.kim.us@gmail.com>\n"
 "Language-Team: UFO: Alien Invasion KR\n"
@@ -578,7 +578,7 @@ msgstr "외계인 수용시설"
 msgid "Entrance"
 msgstr "출입구"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:313
+#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:314
 #: ../base/ufos/ui/production.ufo:248
 msgid "Storage"
 msgstr "창고"
@@ -26306,7 +26306,8 @@ msgstr "상태:"
 msgid "Team:"
 msgstr "팀:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:90 ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:90
+#: ../base/ufos/ui/aircraft_equip.ufo:109
 #: ../base/ufos/ui/aircraft_equip.ufo:128
 #: ../base/ufos/ui/aircraft_equip.ufo:147
 #: ../base/ufos/ui/aircraft_equip.ufo:166
@@ -26537,8 +26538,8 @@ msgstr "기지 정보"
 
 #: ../base/ufos/ui/bases.ufo:118 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
-#: ../base/ufos/ui/transfer.ufo:463
+#: ../base/ufos/ui/popup_installations.ufo:654
+#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:463
 #: client/cgame/campaign/cp_base_callbacks.cpp:602
 #: client/cgame/campaign/cp_base_callbacks.cpp:613
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
@@ -26832,7 +26833,8 @@ msgstr "부관에게 작전권을 위임합니다. (자동 전투 수행)"
 msgid "This kind of mission cannot be done automatically"
 msgstr "이런 종류의 임무는 자동 진행이 되지 않습니다"
 
-#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897
+#: ../base/ufos/ui/popup_installations.ufo:184
 msgid "Cost:"
 msgstr "비용:"
 
@@ -26840,7 +26842,8 @@ msgstr "비용:"
 msgid "Time to build:"
 msgstr "건설시간:"
 
-#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:952
+#: ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build"
 msgstr "건설"
 
@@ -26882,7 +26885,8 @@ msgid "Select aircraft"
 msgstr "항공기 선택"
 
 #: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/popup_installations.ufo:642
+#: ../base/ufos/ui/transfer.ufo:601
 msgid "ETA:"
 msgstr "ETA:"
 
@@ -27402,7 +27406,7 @@ msgstr "기타"
 msgid "Unmanned Ground Vehicles"
 msgstr ""
 
-#: ../base/ufos/ui/market.ufo:328
+#: ../base/ufos/ui/market.ufo:329
 #, fuzzy
 msgid "Transactions"
 msgstr "건설물"
@@ -28551,7 +28555,8 @@ msgstr "최대 수용치"
 # Needs context.
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
+#: ../base/ufos/ui/popup_installations.ufo:892
+#: ../base/ufos/ui/transfer.ufo:373
 msgid "free"
 msgstr "무료"
 
@@ -29104,9 +29109,9 @@ msgstr "3점사"
 #: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
 #: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
 #: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
-#: ../base/ufos/weapons_multiplayer.ufo:318 ../base/ufos/weapons_plasma.ufo:203
-#: ../base/ufos/weapons_plasma.ufo:439 ../base/ufos/weapons_plasma.ufo:529
-#: ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_multiplayer.ufo:318
+#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:439
+#: ../base/ufos/weapons_plasma.ufo:529 ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr "완자동사격"
 
@@ -29134,8 +29139,8 @@ msgid "5-Shot Burst"
 msgstr "5점사"
 
 #: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
-#: ../base/ufos/weapons_multiplayer.ufo:342 ../base/ufos/weapons_plasma.ufo:553
-#: ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_multiplayer.ufo:342
+#: ../base/ufos/weapons_plasma.ufo:553 ../base/ufos/weapons_ugv.ufo:135
 msgid "Full-Auto Sweep"
 msgstr "전자동 난사"
 
@@ -31303,19 +31308,19 @@ msgstr "%s 이 %s 에서 설치되어 있다 성공적으로 철거되었습니�
 msgid "%s was successfully removed from %s."
 msgstr "%s가 %s에서 성공적으로 제거되었습니다."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1286
+#: client/cgame/campaign/cp_mapfightequip.cpp:1287
 msgid "Light weight"
 msgstr "경량"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1289
+#: client/cgame/campaign/cp_mapfightequip.cpp:1290
 msgid "Medium weight"
 msgstr "중경량"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1292
+#: client/cgame/campaign/cp_mapfightequip.cpp:1293
 msgid "Heavy weight"
 msgstr "중량"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1295
+#: client/cgame/campaign/cp_mapfightequip.cpp:1296
 msgid "Unknown weight"
 msgstr "무게를 알 수 없음"
 
@@ -33092,107 +33097,107 @@ msgstr "대단함"
 msgid "Superhuman"
 msgstr "초인적"
 
-#: client/input/cl_input.cpp:1205
+#: client/input/cl_input.cpp:1221
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "전술화면의 시점을 시계 반대방향으로 회전"
 
-#: client/input/cl_input.cpp:1207
+#: client/input/cl_input.cpp:1223
 msgid "Rotate battlescape camera clockwise"
 msgstr "전술화면의 시점을 시계 방향으로 회전"
 
-#: client/input/cl_input.cpp:1209
+#: client/input/cl_input.cpp:1225
 msgid "Tilt battlescape camera up"
 msgstr "전술화면의 시점높이를 상승"
 
-#: client/input/cl_input.cpp:1211
+#: client/input/cl_input.cpp:1227
 msgid "Tilt battlescape camera down"
 msgstr "전술화면의 시점높이를 하강"
 
-#: client/input/cl_input.cpp:1213
+#: client/input/cl_input.cpp:1229
 msgid "Move battlescape camera"
 msgstr "전술화면의 시점을 이동"
 
-#: client/input/cl_input.cpp:1215
+#: client/input/cl_input.cpp:1231
 msgid "Move battlescape camera left"
 msgstr "전술화면의 시점을 왼쪽으로 이동"
 
-#: client/input/cl_input.cpp:1217
+#: client/input/cl_input.cpp:1233
 msgid "Move battlescape camera top left"
 msgstr "전술화면의 시점을 왼쪽 위로 이동"
 
-#: client/input/cl_input.cpp:1219
+#: client/input/cl_input.cpp:1235
 msgid "Move battlescape camera bottom left"
 msgstr "전술화면의 시점을 왼쪽 아래로 이동"
 
-#: client/input/cl_input.cpp:1221
+#: client/input/cl_input.cpp:1237
 msgid "Move battlescape camera right"
 msgstr "전술화면의 시점을 오른쪽으로 이동"
 
-#: client/input/cl_input.cpp:1223
+#: client/input/cl_input.cpp:1239
 msgid "Move battlescape camera top right"
 msgstr "전술화면의 시점을 오른쪽 위로 이동"
 
-#: client/input/cl_input.cpp:1225
+#: client/input/cl_input.cpp:1241
 msgid "Move battlescape camera bottom right"
 msgstr "전술화면의 시점을 오른쪽 아래로 이동"
 
-#: client/input/cl_input.cpp:1227
+#: client/input/cl_input.cpp:1243
 msgid "Move battlescape camera forward"
 msgstr "전술화면의 시점을 앞으로 이동"
 
-#: client/input/cl_input.cpp:1229
+#: client/input/cl_input.cpp:1245
 msgid "Move battlescape camera backward"
 msgstr "전술화면의 시점을 뒤로 이동"
 
-#: client/input/cl_input.cpp:1231 client/input/cl_input.cpp:1255
+#: client/input/cl_input.cpp:1247 client/input/cl_input.cpp:1271
 msgid "Zoom in"
 msgstr "확대"
 
-#: client/input/cl_input.cpp:1233 client/input/cl_input.cpp:1256
+#: client/input/cl_input.cpp:1249 client/input/cl_input.cpp:1272
 msgid "Zoom out"
 msgstr "축소"
 
-#: client/input/cl_input.cpp:1236
+#: client/input/cl_input.cpp:1252
 msgid "Left mouse button click (menu)"
 msgstr "마우스 왼쪽 버튼 클릭(메뉴)"
 
-#: client/input/cl_input.cpp:1238
+#: client/input/cl_input.cpp:1254
 msgid "Middle mouse button click (menu)"
 msgstr "마우스 휠 버튼 클릭(메뉴)"
 
-#: client/input/cl_input.cpp:1240
+#: client/input/cl_input.cpp:1256
 msgid "Right mouse button click (menu)"
 msgstr "마우스 오른쪽 버튼 클릭(메뉴)"
 
-#: client/input/cl_input.cpp:1242
+#: client/input/cl_input.cpp:1258
 msgid "Mouse wheel up"
 msgstr "마우스 휠 위로"
 
-#: client/input/cl_input.cpp:1243
+#: client/input/cl_input.cpp:1259
 msgid "Mouse wheel down"
 msgstr "마우스 휠 내리기"
 
-#: client/input/cl_input.cpp:1244
+#: client/input/cl_input.cpp:1260
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "오브젝트/이동목표/공격방법 선택, 공격 그 외"
 
-#: client/input/cl_input.cpp:1246
+#: client/input/cl_input.cpp:1262
 msgid "Rotate Battlescape/In fire mode, cancel action"
 msgstr "전장 돌려보기 / 사격 모드에서는 행동 취소"
 
-#: client/input/cl_input.cpp:1248
+#: client/input/cl_input.cpp:1264
 msgid "Turn soldier toward mouse pointer"
 msgstr "마우스포인터의 방향으로 전투원를 보게 한다"
 
-#: client/input/cl_input.cpp:1250
+#: client/input/cl_input.cpp:1266
 msgid "Toggles the hud radar mode"
 msgstr "HUD 레이더 사용 토글"
 
-#: client/input/cl_input.cpp:1253
+#: client/input/cl_input.cpp:1269
 msgid "Slice through terrain at a higher level"
 msgstr "지형표시 고도레벨을 증가"
 
-#: client/input/cl_input.cpp:1254
+#: client/input/cl_input.cpp:1270
 msgid "Slice through terrain at a lower level"
 msgstr "지형표시 고도레벨을 감소"
 

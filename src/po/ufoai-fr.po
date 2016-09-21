@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-07-05 22:44-0500\n"
+"POT-Creation-Date: 2016-09-21 20:29+0200\n"
 "PO-Revision-Date: 2016-09-18 20:38+0100\n"
 "Last-Translator: Damien\n"
 "Language-Team: \n"
@@ -576,7 +576,7 @@ msgstr "Unité de détention"
 msgid "Entrance"
 msgstr "Entrée"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:313
+#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:314
 #: ../base/ufos/ui/production.ufo:248
 msgid "Storage"
 msgstr "Entrepôt"
@@ -26928,7 +26928,7 @@ msgstr "Autres"
 msgid "Unmanned Ground Vehicles"
 msgstr "Véhicules Terrestres Sans Conducteur"
 
-#: ../base/ufos/ui/market.ufo:328
+#: ../base/ufos/ui/market.ufo:329
 msgid "Transactions"
 msgstr "Transactions"
 
@@ -30751,19 +30751,19 @@ msgstr "%s : désinstallé(e) de %s."
 msgid "%s was successfully removed from %s."
 msgstr "%s : désinstallé(e) (%s)."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1286
+#: client/cgame/campaign/cp_mapfightequip.cpp:1287
 msgid "Light weight"
 msgstr "Poids léger"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1289
+#: client/cgame/campaign/cp_mapfightequip.cpp:1290
 msgid "Medium weight"
 msgstr "Poids moyen"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1292
+#: client/cgame/campaign/cp_mapfightequip.cpp:1293
 msgid "Heavy weight"
 msgstr "Poids lourd"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1295
+#: client/cgame/campaign/cp_mapfightequip.cpp:1296
 msgid "Unknown weight"
 msgstr "Poids inconnu"
 
@@ -32530,107 +32530,107 @@ msgstr "Magistral"
 msgid "Superhuman"
 msgstr "Surhumain"
 
-#: client/input/cl_input.cpp:1205
+#: client/input/cl_input.cpp:1221
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Pivoter la caméra dans le sens anti-horaire"
 
-#: client/input/cl_input.cpp:1207
+#: client/input/cl_input.cpp:1223
 msgid "Rotate battlescape camera clockwise"
 msgstr "Pivoter la caméra dans le sens horaire"
 
-#: client/input/cl_input.cpp:1209
+#: client/input/cl_input.cpp:1225
 msgid "Tilt battlescape camera up"
 msgstr "Lever la caméra"
 
-#: client/input/cl_input.cpp:1211
+#: client/input/cl_input.cpp:1227
 msgid "Tilt battlescape camera down"
 msgstr "Baisser la caméra"
 
-#: client/input/cl_input.cpp:1213
+#: client/input/cl_input.cpp:1229
 msgid "Move battlescape camera"
 msgstr "Déplacer la caméra"
 
-#: client/input/cl_input.cpp:1215
+#: client/input/cl_input.cpp:1231
 msgid "Move battlescape camera left"
 msgstr "Caméra à gauche"
 
-#: client/input/cl_input.cpp:1217
+#: client/input/cl_input.cpp:1233
 msgid "Move battlescape camera top left"
 msgstr "Caméra en haut à gauche"
 
-#: client/input/cl_input.cpp:1219
+#: client/input/cl_input.cpp:1235
 msgid "Move battlescape camera bottom left"
 msgstr "Caméra en bas à gauche"
 
-#: client/input/cl_input.cpp:1221
+#: client/input/cl_input.cpp:1237
 msgid "Move battlescape camera right"
 msgstr "Caméra à droite"
 
-#: client/input/cl_input.cpp:1223
+#: client/input/cl_input.cpp:1239
 msgid "Move battlescape camera top right"
 msgstr "Caméra en haut à droite"
 
-#: client/input/cl_input.cpp:1225
+#: client/input/cl_input.cpp:1241
 msgid "Move battlescape camera bottom right"
 msgstr "Caméra en bas à droite"
 
-#: client/input/cl_input.cpp:1227
+#: client/input/cl_input.cpp:1243
 msgid "Move battlescape camera forward"
 msgstr "Caméra vers l'avant"
 
-#: client/input/cl_input.cpp:1229
+#: client/input/cl_input.cpp:1245
 msgid "Move battlescape camera backward"
 msgstr "Caméra vers l'arrière"
 
-#: client/input/cl_input.cpp:1231 client/input/cl_input.cpp:1255
+#: client/input/cl_input.cpp:1247 client/input/cl_input.cpp:1271
 msgid "Zoom in"
 msgstr "Zoomer"
 
-#: client/input/cl_input.cpp:1233 client/input/cl_input.cpp:1256
+#: client/input/cl_input.cpp:1249 client/input/cl_input.cpp:1272
 msgid "Zoom out"
 msgstr "Dézoomer"
 
-#: client/input/cl_input.cpp:1236
+#: client/input/cl_input.cpp:1252
 msgid "Left mouse button click (menu)"
 msgstr "Clic gauche de la souris (menu)"
 
-#: client/input/cl_input.cpp:1238
+#: client/input/cl_input.cpp:1254
 msgid "Middle mouse button click (menu)"
 msgstr "Clic bouton du milieu de la souris (menu)"
 
-#: client/input/cl_input.cpp:1240
+#: client/input/cl_input.cpp:1256
 msgid "Right mouse button click (menu)"
 msgstr "Clic droit de la souris (menu)"
 
-#: client/input/cl_input.cpp:1242
+#: client/input/cl_input.cpp:1258
 msgid "Mouse wheel up"
 msgstr "Molette de la souris vers le haut"
 
-#: client/input/cl_input.cpp:1243
+#: client/input/cl_input.cpp:1259
 msgid "Mouse wheel down"
 msgstr "Molette de la souris vers le bas"
 
-#: client/input/cl_input.cpp:1244
+#: client/input/cl_input.cpp:1260
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Choisir objets, marcher vers, tirer (en mode tir), etc."
 
-#: client/input/cl_input.cpp:1246
+#: client/input/cl_input.cpp:1262
 msgid "Rotate Battlescape/In fire mode, cancel action"
 msgstr "Pivoter la caméra (mission), annuler (en mode tir)"
 
-#: client/input/cl_input.cpp:1248
+#: client/input/cl_input.cpp:1264
 msgid "Turn soldier toward mouse pointer"
 msgstr "Pivoter le soldat vers le curseur"
 
-#: client/input/cl_input.cpp:1250
+#: client/input/cl_input.cpp:1266
 msgid "Toggles the hud radar mode"
 msgstr "Afficher / cacher le radar"
 
-#: client/input/cl_input.cpp:1253
+#: client/input/cl_input.cpp:1269
 msgid "Slice through terrain at a higher level"
 msgstr "Voir le terrain à un niveau plus haut"
 
-#: client/input/cl_input.cpp:1254
+#: client/input/cl_input.cpp:1270
 msgid "Slice through terrain at a lower level"
 msgstr "Voir le terrain à un niveau plus bas"
 

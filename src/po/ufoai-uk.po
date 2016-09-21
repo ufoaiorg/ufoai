@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-07-05 22:44-0500\n"
+"POT-Creation-Date: 2016-09-21 20:29+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Igor Gritsenko <xenomorph@thoradin.no-ip.org>\n"
 "Language-Team:  <ufoai-developer@lists.sourceforge.net>\n"
@@ -580,7 +580,7 @@ msgstr "Ізолятор для прибульців"
 msgid "Entrance"
 msgstr "Вхід"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:313
+#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:314
 #: ../base/ufos/ui/production.ufo:248
 msgid "Storage"
 msgstr "Склад"
@@ -25684,7 +25684,8 @@ msgstr "Стан:"
 msgid "Team:"
 msgstr "Команда:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:90 ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:90
+#: ../base/ufos/ui/aircraft_equip.ufo:109
 #: ../base/ufos/ui/aircraft_equip.ufo:128
 #: ../base/ufos/ui/aircraft_equip.ufo:147
 #: ../base/ufos/ui/aircraft_equip.ufo:166
@@ -25912,8 +25913,8 @@ msgstr "Резюме бази"
 
 #: ../base/ufos/ui/bases.ufo:118 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
-#: ../base/ufos/ui/transfer.ufo:463
+#: ../base/ufos/ui/popup_installations.ufo:654
+#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:463
 #: client/cgame/campaign/cp_base_callbacks.cpp:602
 #: client/cgame/campaign/cp_base_callbacks.cpp:613
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
@@ -26204,7 +26205,8 @@ msgstr "Автоматично розрахувати й завершити мі
 msgid "This kind of mission cannot be done automatically"
 msgstr "Такий тип місії неможливо виконати автоматично"
 
-#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897
+#: ../base/ufos/ui/popup_installations.ufo:184
 msgid "Cost:"
 msgstr "Вартість:"
 
@@ -26212,7 +26214,8 @@ msgstr "Вартість:"
 msgid "Time to build:"
 msgstr "Термін:"
 
-#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:952
+#: ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build"
 msgstr "Будувати"
 
@@ -26254,7 +26257,8 @@ msgid "Select aircraft"
 msgstr "Виберіть авіасудно"
 
 #: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/popup_installations.ufo:642
+#: ../base/ufos/ui/transfer.ufo:601
 msgid "ETA:"
 msgstr "РТП:"
 
@@ -26757,7 +26761,7 @@ msgstr "Інші предмети"
 msgid "Unmanned Ground Vehicles"
 msgstr "Безпілотні наземні транспортні засоби"
 
-#: ../base/ufos/ui/market.ufo:328
+#: ../base/ufos/ui/market.ufo:329
 msgid "Transactions"
 msgstr "Транзакції"
 
@@ -27832,7 +27836,8 @@ msgstr "Вміст"
 
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
+#: ../base/ufos/ui/popup_installations.ufo:892
+#: ../base/ufos/ui/transfer.ufo:373
 msgid "free"
 msgstr "вільно"
 
@@ -28369,9 +28374,9 @@ msgstr "Черга х 3 постріли"
 #: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
 #: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
 #: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
-#: ../base/ufos/weapons_multiplayer.ufo:318 ../base/ufos/weapons_plasma.ufo:203
-#: ../base/ufos/weapons_plasma.ufo:439 ../base/ufos/weapons_plasma.ufo:529
-#: ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_multiplayer.ufo:318
+#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:439
+#: ../base/ufos/weapons_plasma.ufo:529 ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr "Автоматичний"
 
@@ -28399,8 +28404,8 @@ msgid "5-Shot Burst"
 msgstr "Черга x 5 пострілів"
 
 #: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
-#: ../base/ufos/weapons_multiplayer.ufo:342 ../base/ufos/weapons_plasma.ufo:553
-#: ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_multiplayer.ufo:342
+#: ../base/ufos/weapons_plasma.ufo:553 ../base/ufos/weapons_ugv.ufo:135
 msgid "Full-Auto Sweep"
 msgstr "Розчистити чергою"
 
@@ -30599,19 +30604,19 @@ msgstr "%s демонтовано з об'єкту %s."
 msgid "%s was successfully removed from %s."
 msgstr "%s успішно знято з %s."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1286
+#: client/cgame/campaign/cp_mapfightequip.cpp:1287
 msgid "Light weight"
 msgstr "Мала вага"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1289
+#: client/cgame/campaign/cp_mapfightequip.cpp:1290
 msgid "Medium weight"
 msgstr "Середня вага"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1292
+#: client/cgame/campaign/cp_mapfightequip.cpp:1293
 msgid "Heavy weight"
 msgstr "Велика вага"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1295
+#: client/cgame/campaign/cp_mapfightequip.cpp:1296
 msgid "Unknown weight"
 msgstr "Вага невідома"
 
@@ -32382,107 +32387,107 @@ msgstr "Вражаюче"
 msgid "Superhuman"
 msgstr "Винятково"
 
-#: client/input/cl_input.cpp:1205
+#: client/input/cl_input.cpp:1221
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Обертати камеру на полі бою проти годинникової стрілки"
 
-#: client/input/cl_input.cpp:1207
+#: client/input/cl_input.cpp:1223
 msgid "Rotate battlescape camera clockwise"
 msgstr "Обертати камеру на полі бою за годинниковою стрілкою"
 
-#: client/input/cl_input.cpp:1209
+#: client/input/cl_input.cpp:1225
 msgid "Tilt battlescape camera up"
 msgstr "Нахилити камеру на полі бою вверх"
 
-#: client/input/cl_input.cpp:1211
+#: client/input/cl_input.cpp:1227
 msgid "Tilt battlescape camera down"
 msgstr "Нахилити камеру на полі бою вниз"
 
-#: client/input/cl_input.cpp:1213
+#: client/input/cl_input.cpp:1229
 msgid "Move battlescape camera"
 msgstr "Перемістити камеру на полі бою"
 
-#: client/input/cl_input.cpp:1215
+#: client/input/cl_input.cpp:1231
 msgid "Move battlescape camera left"
 msgstr "Перемістити камеру на полі бою вліво"
 
-#: client/input/cl_input.cpp:1217
+#: client/input/cl_input.cpp:1233
 msgid "Move battlescape camera top left"
 msgstr "Перемістити камеру на полі бою вліво і доверху"
 
-#: client/input/cl_input.cpp:1219
+#: client/input/cl_input.cpp:1235
 msgid "Move battlescape camera bottom left"
 msgstr "Перемістити камеру на полі бою вліво і донизу"
 
-#: client/input/cl_input.cpp:1221
+#: client/input/cl_input.cpp:1237
 msgid "Move battlescape camera right"
 msgstr "Перемістити камеру на полі бою вправо"
 
-#: client/input/cl_input.cpp:1223
+#: client/input/cl_input.cpp:1239
 msgid "Move battlescape camera top right"
 msgstr "Перемістити камеру на полі бою вправо і доверху"
 
-#: client/input/cl_input.cpp:1225
+#: client/input/cl_input.cpp:1241
 msgid "Move battlescape camera bottom right"
 msgstr "Перемістити камеру на полі бою вправо і донизу"
 
-#: client/input/cl_input.cpp:1227
+#: client/input/cl_input.cpp:1243
 msgid "Move battlescape camera forward"
 msgstr "Перемістити камеру на полі бою вперед"
 
-#: client/input/cl_input.cpp:1229
+#: client/input/cl_input.cpp:1245
 msgid "Move battlescape camera backward"
 msgstr "Перемістити камеру на полі бою назад"
 
-#: client/input/cl_input.cpp:1231 client/input/cl_input.cpp:1255
+#: client/input/cl_input.cpp:1247 client/input/cl_input.cpp:1271
 msgid "Zoom in"
 msgstr "Наблизити"
 
-#: client/input/cl_input.cpp:1233 client/input/cl_input.cpp:1256
+#: client/input/cl_input.cpp:1249 client/input/cl_input.cpp:1272
 msgid "Zoom out"
 msgstr "Віддалити"
 
-#: client/input/cl_input.cpp:1236
+#: client/input/cl_input.cpp:1252
 msgid "Left mouse button click (menu)"
 msgstr "Клік лівою клавішею миші (меню)"
 
-#: client/input/cl_input.cpp:1238
+#: client/input/cl_input.cpp:1254
 msgid "Middle mouse button click (menu)"
 msgstr "Клік середньою клавішею миші (меню)"
 
-#: client/input/cl_input.cpp:1240
+#: client/input/cl_input.cpp:1256
 msgid "Right mouse button click (menu)"
 msgstr "Клік правою клавішею миші (меню)"
 
-#: client/input/cl_input.cpp:1242
+#: client/input/cl_input.cpp:1258
 msgid "Mouse wheel up"
 msgstr "Коліщатко миші вверх"
 
-#: client/input/cl_input.cpp:1243
+#: client/input/cl_input.cpp:1259
 msgid "Mouse wheel down"
 msgstr "Коліщатко миші вниз"
 
-#: client/input/cl_input.cpp:1244
+#: client/input/cl_input.cpp:1260
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Вибрати об'єкти/Іти у квадрат/В режимі вогню, стріляти і т.д."
 
-#: client/input/cl_input.cpp:1246
+#: client/input/cl_input.cpp:1262
 msgid "Rotate Battlescape/In fire mode, cancel action"
 msgstr "Повернути поле бою/В режимі вогню, скасувати дію"
 
-#: client/input/cl_input.cpp:1248
+#: client/input/cl_input.cpp:1264
 msgid "Turn soldier toward mouse pointer"
 msgstr "Повернути бійця до вказівника миші"
 
-#: client/input/cl_input.cpp:1250
+#: client/input/cl_input.cpp:1266
 msgid "Toggles the hud radar mode"
 msgstr "Перемкнути режим відображення радару"
 
-#: client/input/cl_input.cpp:1253
+#: client/input/cl_input.cpp:1269
 msgid "Slice through terrain at a higher level"
 msgstr "Перемкнути відображення рівня карти вверх"
 
-#: client/input/cl_input.cpp:1254
+#: client/input/cl_input.cpp:1270
 msgid "Slice through terrain at a lower level"
 msgstr "Перемкнути відображення рівня карти вниз"
 

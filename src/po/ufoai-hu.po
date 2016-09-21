@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-07-05 22:44-0500\n"
+"POT-Creation-Date: 2016-09-21 20:29+0200\n"
 "PO-Revision-Date: 2016-09-21 20:26+0100\n"
 "Last-Translator: Tamás Fehérvári <geever@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -585,7 +585,7 @@ msgstr "Idegentároló"
 msgid "Entrance"
 msgstr "Bejárat"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:313
+#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:314
 #: ../base/ufos/ui/production.ufo:248
 msgid "Storage"
 msgstr "Raktár"
@@ -22890,7 +22890,7 @@ msgstr "Egyebek"
 msgid "Unmanned Ground Vehicles"
 msgstr ""
 
-#: ../base/ufos/ui/market.ufo:328
+#: ../base/ufos/ui/market.ufo:329
 #, fuzzy
 msgid "Transactions"
 msgstr "Állomások"
@@ -26721,19 +26721,19 @@ msgstr "%s sikeresen el lett távolítva %s állomásról."
 msgid "%s was successfully removed from %s."
 msgstr "%s leszerelve a(z) %s bázisról."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1286
+#: client/cgame/campaign/cp_mapfightequip.cpp:1287
 msgid "Light weight"
 msgstr "Könnyű"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1289
+#: client/cgame/campaign/cp_mapfightequip.cpp:1290
 msgid "Medium weight"
 msgstr "Közepes súlyú"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1292
+#: client/cgame/campaign/cp_mapfightequip.cpp:1293
 msgid "Heavy weight"
 msgstr "Nehéz"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1295
+#: client/cgame/campaign/cp_mapfightequip.cpp:1296
 msgid "Unknown weight"
 msgstr "Ismeretlen súlyú"
 
@@ -28475,107 +28475,107 @@ msgstr ""
 msgid "Superhuman"
 msgstr "Szuperhős"
 
-#: client/input/cl_input.cpp:1205
+#: client/input/cl_input.cpp:1221
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Kamera forgatása az óramutató járásával szembe"
 
-#: client/input/cl_input.cpp:1207
+#: client/input/cl_input.cpp:1223
 msgid "Rotate battlescape camera clockwise"
 msgstr "Kamera forgatása az óramutató járása szerint"
 
-#: client/input/cl_input.cpp:1209
+#: client/input/cl_input.cpp:1225
 msgid "Tilt battlescape camera up"
 msgstr "Kamera felfelé billentése"
 
-#: client/input/cl_input.cpp:1211
+#: client/input/cl_input.cpp:1227
 msgid "Tilt battlescape camera down"
 msgstr "Kamera lefelé billentése"
 
-#: client/input/cl_input.cpp:1213
+#: client/input/cl_input.cpp:1229
 msgid "Move battlescape camera"
 msgstr "Kamera mozgatása."
 
-#: client/input/cl_input.cpp:1215
+#: client/input/cl_input.cpp:1231
 msgid "Move battlescape camera left"
 msgstr "Kamera mozgatása balra"
 
-#: client/input/cl_input.cpp:1217
+#: client/input/cl_input.cpp:1233
 msgid "Move battlescape camera top left"
 msgstr ""
 
-#: client/input/cl_input.cpp:1219
+#: client/input/cl_input.cpp:1235
 msgid "Move battlescape camera bottom left"
 msgstr ""
 
-#: client/input/cl_input.cpp:1221
+#: client/input/cl_input.cpp:1237
 msgid "Move battlescape camera right"
 msgstr "Kamera mozgatása jobbra"
 
-#: client/input/cl_input.cpp:1223
+#: client/input/cl_input.cpp:1239
 msgid "Move battlescape camera top right"
 msgstr ""
 
-#: client/input/cl_input.cpp:1225
+#: client/input/cl_input.cpp:1241
 msgid "Move battlescape camera bottom right"
 msgstr ""
 
-#: client/input/cl_input.cpp:1227
+#: client/input/cl_input.cpp:1243
 msgid "Move battlescape camera forward"
 msgstr "Kamera mozgatása előre"
 
-#: client/input/cl_input.cpp:1229
+#: client/input/cl_input.cpp:1245
 msgid "Move battlescape camera backward"
 msgstr "Kamera mozgatása hátra"
 
-#: client/input/cl_input.cpp:1231 client/input/cl_input.cpp:1255
+#: client/input/cl_input.cpp:1247 client/input/cl_input.cpp:1271
 msgid "Zoom in"
 msgstr "Nagyítás"
 
-#: client/input/cl_input.cpp:1233 client/input/cl_input.cpp:1256
+#: client/input/cl_input.cpp:1249 client/input/cl_input.cpp:1272
 msgid "Zoom out"
 msgstr "Kicsinyítés"
 
-#: client/input/cl_input.cpp:1236
+#: client/input/cl_input.cpp:1252
 msgid "Left mouse button click (menu)"
 msgstr "Bal egérgomb kattintás (menü)"
 
-#: client/input/cl_input.cpp:1238
+#: client/input/cl_input.cpp:1254
 msgid "Middle mouse button click (menu)"
 msgstr "Középső egérgomb kattintás (menü)"
 
-#: client/input/cl_input.cpp:1240
+#: client/input/cl_input.cpp:1256
 msgid "Right mouse button click (menu)"
 msgstr "Jobb egérgomb kattintás (menü)"
 
-#: client/input/cl_input.cpp:1242
+#: client/input/cl_input.cpp:1258
 msgid "Mouse wheel up"
 msgstr ""
 
-#: client/input/cl_input.cpp:1243
+#: client/input/cl_input.cpp:1259
 msgid "Mouse wheel down"
 msgstr ""
 
-#: client/input/cl_input.cpp:1244
+#: client/input/cl_input.cpp:1260
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr ""
 
-#: client/input/cl_input.cpp:1246
+#: client/input/cl_input.cpp:1262
 msgid "Rotate Battlescape/In fire mode, cancel action"
 msgstr ""
 
-#: client/input/cl_input.cpp:1248
+#: client/input/cl_input.cpp:1264
 msgid "Turn soldier toward mouse pointer"
 msgstr ""
 
-#: client/input/cl_input.cpp:1250
+#: client/input/cl_input.cpp:1266
 msgid "Toggles the hud radar mode"
 msgstr "HUD radar mód"
 
-#: client/input/cl_input.cpp:1253
+#: client/input/cl_input.cpp:1269
 msgid "Slice through terrain at a higher level"
 msgstr ""
 
-#: client/input/cl_input.cpp:1254
+#: client/input/cl_input.cpp:1270
 msgid "Slice through terrain at a lower level"
 msgstr ""
 

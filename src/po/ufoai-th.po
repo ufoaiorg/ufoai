@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion Thai v1.0\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-07-05 22:44-0500\n"
+"POT-Creation-Date: 2016-09-21 20:29+0200\n"
 "PO-Revision-Date: 2010-12-08 21:32+0530\n"
 "Last-Translator: Phakphum Visetnut <shellingford47@gmail.com>\n"
 "Language-Team: Sophont <mickey@metawire.com>\n"
@@ -634,7 +634,7 @@ msgstr "เขตกักกันมนุษย์ต่างดาว"
 msgid "Entrance"
 msgstr "ทางเข้า"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:313
+#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:314
 #: ../base/ufos/ui/production.ufo:248
 msgid "Storage"
 msgstr "ห้องเก็บของ"
@@ -25138,7 +25138,8 @@ msgstr "สถานะ:"
 msgid "Team:"
 msgstr "ทีม"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:90 ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:90
+#: ../base/ufos/ui/aircraft_equip.ufo:109
 #: ../base/ufos/ui/aircraft_equip.ufo:128
 #: ../base/ufos/ui/aircraft_equip.ufo:147
 #: ../base/ufos/ui/aircraft_equip.ufo:166
@@ -25379,8 +25380,8 @@ msgstr "สรุปข้อมูลฐาน"
 
 #: ../base/ufos/ui/bases.ufo:118 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
-#: ../base/ufos/ui/transfer.ufo:463
+#: ../base/ufos/ui/popup_installations.ufo:654
+#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:463
 #: client/cgame/campaign/cp_base_callbacks.cpp:602
 #: client/cgame/campaign/cp_base_callbacks.cpp:613
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
@@ -25683,7 +25684,8 @@ msgstr "ทำภารกิจนี้อัตโนมัติ"
 msgid "This kind of mission cannot be done automatically"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897
+#: ../base/ufos/ui/popup_installations.ufo:184
 msgid "Cost:"
 msgstr "ราคา:"
 
@@ -25692,7 +25694,8 @@ msgstr "ราคา:"
 msgid "Time to build:"
 msgstr "%i วันในการสร้าง\n"
 
-#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:952
+#: ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build"
 msgstr "สร้าง"
 
@@ -25738,7 +25741,8 @@ msgid "Select aircraft"
 msgstr "เลือกยาน"
 
 #: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/popup_installations.ufo:642
+#: ../base/ufos/ui/transfer.ufo:601
 msgid "ETA:"
 msgstr "เวลาถึงที่หมายโดยประมาณ:"
 
@@ -26291,7 +26295,7 @@ msgstr "เข้า"
 msgid "Unmanned Ground Vehicles"
 msgstr ""
 
-#: ../base/ufos/ui/market.ufo:328
+#: ../base/ufos/ui/market.ufo:329
 #, fuzzy
 msgid "Transactions"
 msgstr "ประเทศ"
@@ -27450,7 +27454,8 @@ msgstr "ความจุ"
 
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
+#: ../base/ufos/ui/popup_installations.ufo:892
+#: ../base/ufos/ui/transfer.ufo:373
 msgid "free"
 msgstr ""
 
@@ -28048,9 +28053,9 @@ msgstr "ยิง 3 ชุด"
 #: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
 #: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
 #: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
-#: ../base/ufos/weapons_multiplayer.ufo:318 ../base/ufos/weapons_plasma.ufo:203
-#: ../base/ufos/weapons_plasma.ufo:439 ../base/ufos/weapons_plasma.ufo:529
-#: ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_multiplayer.ufo:318
+#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:439
+#: ../base/ufos/weapons_plasma.ufo:529 ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr "อัตโนมัติ"
 
@@ -28079,8 +28084,8 @@ msgid "5-Shot Burst"
 msgstr "ยิงรัว"
 
 #: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
-#: ../base/ufos/weapons_multiplayer.ufo:342 ../base/ufos/weapons_plasma.ufo:553
-#: ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_multiplayer.ufo:342
+#: ../base/ufos/weapons_plasma.ufo:553 ../base/ufos/weapons_ugv.ufo:135
 #, fuzzy
 msgid "Full-Auto Sweep"
 msgstr "อัตโนมัติ"
@@ -30311,21 +30316,21 @@ msgstr ""
 msgid "%s was successfully removed from %s."
 msgstr ""
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1286
+#: client/cgame/campaign/cp_mapfightequip.cpp:1287
 msgid "Light weight"
 msgstr ""
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1289
+#: client/cgame/campaign/cp_mapfightequip.cpp:1290
 #, fuzzy
 msgid "Medium weight"
 msgstr "เสนารักษ์"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1292
+#: client/cgame/campaign/cp_mapfightequip.cpp:1293
 #, fuzzy
 msgid "Heavy weight"
 msgstr "Heavy Laser"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1295
+#: client/cgame/campaign/cp_mapfightequip.cpp:1296
 #, fuzzy
 msgid "Unknown weight"
 msgstr "ไม่ทราบทักษะอาวุธ"
@@ -32200,115 +32205,115 @@ msgstr "บีบภาพผิวนอก:"
 msgid "Superhuman"
 msgstr "เกินมนุษย์"
 
-#: client/input/cl_input.cpp:1205
+#: client/input/cl_input.cpp:1221
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "เปลี่ยนมุมกล้องในสนามรบแบบทวนเข็มนาฬิกา"
 
-#: client/input/cl_input.cpp:1207
+#: client/input/cl_input.cpp:1223
 msgid "Rotate battlescape camera clockwise"
 msgstr "เปลี่ยนมุมกล้องในสนามรบตามเข็มนาฬิกา"
 
-#: client/input/cl_input.cpp:1209
+#: client/input/cl_input.cpp:1225
 msgid "Tilt battlescape camera up"
 msgstr "เอียงมุมกล้องในสนามรบขึ้น"
 
-#: client/input/cl_input.cpp:1211
+#: client/input/cl_input.cpp:1227
 msgid "Tilt battlescape camera down"
 msgstr "เอียงมุมกล้องในสนามรบลง"
 
-#: client/input/cl_input.cpp:1213
+#: client/input/cl_input.cpp:1229
 #, fuzzy
 msgid "Move battlescape camera"
 msgstr "เลื่อนกล้องสนามรบไปทางซ้าย"
 
-#: client/input/cl_input.cpp:1215
+#: client/input/cl_input.cpp:1231
 msgid "Move battlescape camera left"
 msgstr "เลื่อนกล้องสนามรบไปทางซ้าย"
 
-#: client/input/cl_input.cpp:1217
+#: client/input/cl_input.cpp:1233
 #, fuzzy
 msgid "Move battlescape camera top left"
 msgstr "เลื่อนกล้องสนามรบไปทางซ้าย"
 
-#: client/input/cl_input.cpp:1219
+#: client/input/cl_input.cpp:1235
 #, fuzzy
 msgid "Move battlescape camera bottom left"
 msgstr "เลื่อนกล้องสนามรบไปทางซ้าย"
 
-#: client/input/cl_input.cpp:1221
+#: client/input/cl_input.cpp:1237
 msgid "Move battlescape camera right"
 msgstr "เลื่อนกล้องสนามรบไปทางขวา"
 
-#: client/input/cl_input.cpp:1223
+#: client/input/cl_input.cpp:1239
 #, fuzzy
 msgid "Move battlescape camera top right"
 msgstr "เลื่อนกล้องสนามรบไปทางขวา"
 
-#: client/input/cl_input.cpp:1225
+#: client/input/cl_input.cpp:1241
 #, fuzzy
 msgid "Move battlescape camera bottom right"
 msgstr "เลื่อนกล้องสนามรบไปทางขวา"
 
-#: client/input/cl_input.cpp:1227
+#: client/input/cl_input.cpp:1243
 msgid "Move battlescape camera forward"
 msgstr "เลื่อนกล้องสนามรบไปข้างหน้า"
 
-#: client/input/cl_input.cpp:1229
+#: client/input/cl_input.cpp:1245
 msgid "Move battlescape camera backward"
 msgstr "เลื่อนกล้องสนามรบไปข้างหลัง"
 
-#: client/input/cl_input.cpp:1231 client/input/cl_input.cpp:1255
+#: client/input/cl_input.cpp:1247 client/input/cl_input.cpp:1271
 msgid "Zoom in"
 msgstr "ซูมเข้า"
 
-#: client/input/cl_input.cpp:1233 client/input/cl_input.cpp:1256
+#: client/input/cl_input.cpp:1249 client/input/cl_input.cpp:1272
 msgid "Zoom out"
 msgstr "ซูมออก"
 
-#: client/input/cl_input.cpp:1236
+#: client/input/cl_input.cpp:1252
 msgid "Left mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.cpp:1238
+#: client/input/cl_input.cpp:1254
 msgid "Middle mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.cpp:1240
+#: client/input/cl_input.cpp:1256
 msgid "Right mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.cpp:1242
+#: client/input/cl_input.cpp:1258
 msgid "Mouse wheel up"
 msgstr ""
 
-#: client/input/cl_input.cpp:1243
+#: client/input/cl_input.cpp:1259
 #, fuzzy
 msgid "Mouse wheel down"
 msgstr "ปิดกรอบนี้"
 
-#: client/input/cl_input.cpp:1244
+#: client/input/cl_input.cpp:1260
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "เลือก / เดินไปที่จุด / ในโหมดยิงให้ยิง ฯลฯ"
 
-#: client/input/cl_input.cpp:1246
+#: client/input/cl_input.cpp:1262
 #, fuzzy
 msgid "Rotate Battlescape/In fire mode, cancel action"
 msgstr "เดินไปที่จุด/ในโหมดยิง ให้ยกเลิกการกระทำ"
 
-#: client/input/cl_input.cpp:1248
+#: client/input/cl_input.cpp:1264
 msgid "Turn soldier toward mouse pointer"
 msgstr "หันทหารไปยังลูกศร"
 
-#: client/input/cl_input.cpp:1250
+#: client/input/cl_input.cpp:1266
 #, fuzzy
 msgid "Toggles the hud radar mode"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/input/cl_input.cpp:1253
+#: client/input/cl_input.cpp:1269
 msgid "Slice through terrain at a higher level"
 msgstr "มองผ่านพื้นไปขั้นสูงกว่า"
 
-#: client/input/cl_input.cpp:1254
+#: client/input/cl_input.cpp:1270
 msgid "Slice through terrain at a lower level"
 msgstr "มองผ่านพื้นไปขั้นต่ำกว่า"
 
