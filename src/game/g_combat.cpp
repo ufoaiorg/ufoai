@@ -208,7 +208,6 @@ static void G_ShotMorale (const Actor* shooter, const fireDef_t* fd, const vec3_
 		if (VectorLengthSqr(vec1) <= morDist * morDist) {
 			/* @todo Add a visibility check here? */
 			G_Morale(ML_SHOOT, check, shooter, fd->damage[0]);
-			gi.DPrintf("Suppressing: %s\n", check->chr.name);
 		}
 	}
 }
