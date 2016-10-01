@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2016-09-21 20:29+0200\n"
-"PO-Revision-Date: 2016-09-21 20:26+0100\n"
+"PO-Revision-Date: 2016-10-02 22:46+0100\n"
 "Last-Translator: Tamás Fehérvári <geever@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: hu\n"
@@ -38,9 +38,8 @@ msgid "Small cemetery"
 msgstr "Kis temető"
 
 #: ../base/maps/city3.ump:332
-#, fuzzy
 msgid "The outskirt of a big city."
-msgstr "Kórház a város szélén."
+msgstr "Egy metropolisz külvárosa"
 
 #: ../base/maps/construction.ump:64
 msgid "Construction"
@@ -68,9 +67,8 @@ msgstr "Katonai konvoj"
 #: ../base/maps/forest.ump:542 ../base/maps/forest.ump:564
 #: ../base/maps/forest.ump:586 ../base/ufos/maps.ufo:1116
 #: ../base/ufos/maps.ufo:1165 ../base/ufos/maps.ufo:1215
-#, fuzzy
 msgid "Forest"
-msgstr "Raktár"
+msgstr "RaktárErdő"
 
 #: ../base/maps/forest.ump:424 ../base/ufos/maps.ufo:1069
 msgid "Secret Depot"
@@ -119,9 +117,8 @@ msgstr "Jég"
 #: ../base/maps/industrial.ump:554 ../base/maps/industrial.ump:579
 #: ../base/ufos/maps.ufo:2178 ../base/ufos/maps.ufo:2232
 #: ../base/ufos/maps.ufo:2287 ../base/ufos/maps.ufo:2341
-#, fuzzy
 msgid "Industrial Site"
-msgstr "Gyárnegyed."
+msgstr "Gyárnegyed"
 
 #: ../base/maps/industrial.ump:439 ../base/maps/industrial.ump:469
 #: ../base/maps/industrial.ump:499
@@ -20733,23 +20730,23 @@ msgstr "Csapattagok"
 
 #: ../base/ufos/seq_credits.ufo:88
 msgid "aDuke"
-msgstr ""
+msgstr "aDuke"
 
 #: ../base/ufos/seq_credits.ufo:98
 msgid "Alexander Tishin (Sandro)"
-msgstr ""
+msgstr "Alexander Tishin (Sandro)"
 
 #: ../base/ufos/seq_credits.ufo:108
 msgid "bayo"
-msgstr ""
+msgstr "bayo"
 
 #: ../base/ufos/seq_credits.ufo:118
 msgid "Christian Hoffmann (crystan)"
-msgstr ""
+msgstr "Christian Hoffmann (crystan)"
 
 #: ../base/ufos/seq_credits.ufo:128
 msgid "DarkRain"
-msgstr ""
+msgstr "DarkRain"
 
 #: ../base/ufos/seq_credits.ufo:138
 msgid "Tamas Fehervari (geever)"
@@ -20757,27 +20754,27 @@ msgstr "Fehérvári Tamás (geever)"
 
 #: ../base/ufos/seq_credits.ufo:148
 msgid "Nate Wright (H-Hour)"
-msgstr ""
+msgstr "Nate Wright (H-Hour)"
 
 #: ../base/ufos/seq_credits.ufo:158
 msgid "Pawel Michalkiewicz"
-msgstr ""
+msgstr "Pawel Michalkiewicz"
 
 #: ../base/ufos/seq_credits.ufo:168
 msgid "Holger Gellrich (ShipIt)"
-msgstr ""
+msgstr "Holger Gellrich (ShipIt)"
 
 #: ../base/ufos/seq_credits.ufo:178
 msgid "Igor Gritsenko (Internecivus)"
-msgstr ""
+msgstr "Igor Gritsenko (Internecivus)"
 
 #: ../base/ufos/seq_credits.ufo:188
 msgid "cooler_sk"
-msgstr ""
+msgstr "cooler_sk"
 
 #: ../base/ufos/seq_credits.ufo:202
 msgid "Other contributors"
-msgstr ""
+msgstr "Közreműködtek továbbá"
 
 #: ../base/ufos/seq_credits.ufo:212
 msgid "Bas Fournier (BTAxis)"
@@ -20793,7 +20790,7 @@ msgstr "Kostia Romanov (Kildor)"
 
 #: ../base/ufos/seq_credits.ufo:242
 msgid "Olivier Alloschery (Kracken)"
-msgstr ""
+msgstr "Olivier Alloschery (Kracken)"
 
 #: ../base/ufos/seq_credits.ufo:252
 msgid "Forest Hale (LordHavoc)"
@@ -20801,7 +20798,7 @@ msgstr "Forest Hale (LordHavoc)"
 
 #: ../base/ufos/seq_credits.ufo:262
 msgid "Christoph Mallon (Tron)"
-msgstr ""
+msgstr "Christoph Mallon (Tron)"
 
 #: ../base/ufos/seq_credits.ufo:272
 msgid "Ryan A. Span. (Winter)"
@@ -20841,11 +20838,11 @@ msgstr "Külön köszönet"
 
 #: ../base/ufos/seq_credits.ufo:370
 msgid "id Software for the Quake 2 engine"
-msgstr ""
+msgstr "Az id Software-nek a Quake 2 grafikus motorért"
 
 #: ../base/ufos/seq_credits.ufo:380
 msgid "NineX for hosting us"
-msgstr ""
+msgstr "NineX-nek a Webhosztingért"
 
 #: ../base/ufos/seq_credits.ufo:390
 msgid "To the community and everyone who supported us"
@@ -22167,7 +22164,7 @@ msgstr "Előző"
 
 #: ../base/ufos/ui/equipment.ufo:250 ../base/ufos/ui/inv_stat.ufo:81
 msgid "0/0 Kg"
-msgstr ""
+msgstr "0/0 Kg"
 
 #: ../base/ufos/ui/equipment.ufo:319
 msgid "Remove all"
@@ -22514,7 +22511,7 @@ msgstr ""
 
 #: ../base/ufos/ui/hud_default.ufo:982
 msgid "*"
-msgstr ""
+msgstr "*"
 
 #: ../base/ufos/ui/hud_default.ufo:1024
 #, fuzzy
@@ -22917,11 +22914,11 @@ msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:241
 msgid "+"
-msgstr ""
+msgstr "+"
 
 #: ../base/ufos/ui/material_editor.ufo:252
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: ../base/ufos/ui/material_editor.ufo:277
 #: ../base/ufos/ui/material_editor.ufo:380
@@ -23370,7 +23367,7 @@ msgstr "HANG"
 
 #: ../base/ufos/ui/options.ufo:149
 msgid "KEYS"
-msgstr "GOMBOK"
+msgstr "BILLENTYŰK"
 
 #: ../base/ufos/ui/options.ufo:174 ../base/ufos/ui/options.ufo:2453
 #: ../base/ufos/ui/options.ufo:2591
@@ -23390,42 +23387,37 @@ msgid "Cursor tooltips"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:323
-#, fuzzy
 msgid "Main menu tips"
-msgstr "Menü beállítások"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:349
-#, fuzzy
 msgid "Pre-cache menu models"
-msgstr "Modellek gyorstárazása:"
+msgstr "Modellek gyorstárazása"
 
 #: ../base/ufos/ui/options.ufo:350
 msgid "Increases speed of game menus"
-msgstr ""
+msgstr "Gyorsítja a menük megjelenítését"
 
 #: ../base/ufos/ui/options.ufo:370
 msgid "Geoscape Options"
-msgstr ""
+msgstr "Földgömb nézet beállításai"
 
 #: ../base/ufos/ui/options.ufo:391
-#, fuzzy
 msgid "3D geoscape"
-msgstr "3D Földgömb:"
+msgstr "3D Földgömb"
 
 #: ../base/ufos/ui/options.ufo:392
 msgid "View the geoscape as a 3D globe"
-msgstr ""
+msgstr "A Föld megjelenítése 3Ds gömbént"
 
 #: ../base/ufos/ui/options.ufo:418
-#, fuzzy
 msgid "Camera zoom"
-msgstr "Kamera"
+msgstr "Kamera nagyítás"
 
 #: ../base/ufos/ui/options.ufo:426 ../base/ufos/ui/options.ufo:1654
 #: ../base/ufos/ui/options.ufo:1786
-#, fuzzy
 msgid "Min"
-msgstr "Milánó"
+msgstr "Min"
 
 #: ../base/ufos/ui/options.ufo:469
 msgid "1.0"
@@ -23433,118 +23425,108 @@ msgstr "1,0"
 
 #: ../base/ufos/ui/options.ufo:476 ../base/ufos/ui/options.ufo:1713
 #: ../base/ufos/ui/options.ufo:1844
-#, fuzzy
 msgid "Max"
-msgstr "Őrngy"
+msgstr "Max"
 
 #: ../base/ufos/ui/options.ufo:492
-#, fuzzy
 msgid "2"
-msgstr "2D"
+msgstr "2"
 
 #: ../base/ufos/ui/options.ufo:497
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../base/ufos/ui/options.ufo:502
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: ../base/ufos/ui/options.ufo:507
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #: ../base/ufos/ui/options.ufo:512
 msgid "10"
-msgstr ""
+msgstr "10"
 
 #: ../base/ufos/ui/options.ufo:517
 msgid "12"
-msgstr ""
+msgstr "12"
 
 #: ../base/ufos/ui/options.ufo:535
 msgid "Display FPS"
-msgstr ""
+msgstr "FPS megjelenítése"
 
 #: ../base/ufos/ui/options.ufo:536
 msgid "Display the number of frames rendered per second"
-msgstr ""
+msgstr "Képkocka per másodperc statisztika megjelenítése"
 
 #: ../base/ufos/ui/options.ufo:562
 msgid "Skip Intro Video"
-msgstr ""
+msgstr "Intró videó átugrása"
 
 #: ../base/ufos/ui/options.ufo:563
-#, fuzzy
 msgid "Don't play the video when loading the game."
-msgstr "Ne induljon el a bevezető mozi a játék indulásakor."
+msgstr "Videó lejátszásának tiltása indításkor."
 
 #: ../base/ufos/ui/options.ufo:600
-#, fuzzy
 msgid "Resolution"
-msgstr "Felbontás:"
+msgstr "Felbontás"
 
 #: ../base/ufos/ui/options.ufo:608
-#, fuzzy
 msgid "Ratio"
-msgstr "Nemzet"
+msgstr "Arány"
 
 #: ../base/ufos/ui/options.ufo:618
 msgid "Display resolutions in this ratio"
-msgstr ""
+msgstr "Képernyőfelbontások szűrése képarány szerint"
 
 #: ../base/ufos/ui/options.ufo:656
 msgid "Others"
 msgstr "Egyebek"
 
 #: ../base/ufos/ui/options.ufo:682
-#, fuzzy
 msgid "Fullscreen"
-msgstr "Teljes képernyő:"
+msgstr "Teljes képernyő"
 
 #: ../base/ufos/ui/options.ufo:683
 msgid "View the game in fullscreen instead of windowed mode"
-msgstr ""
+msgstr "A játék megjelenítés teljes képernyőn ablak helyett"
 
 #: ../base/ufos/ui/options.ufo:709
 msgid "Stretch screen"
-msgstr ""
+msgstr "Kép széthúzása"
 
 #: ../base/ufos/ui/options.ufo:710
 msgid "Stretch screen to fit monitors with 4:3 ratio"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:736
-#, fuzzy
 msgid "Gamma / Brightness"
-msgstr "Fényesség:"
+msgstr "Gamma / Fényesség"
 
 #: ../base/ufos/ui/options.ufo:767
-#, fuzzy
 msgid "Geoscape sunlight"
-msgstr "Hadjárat beállítások"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:768
 msgid "Brightness of sunlight on the geoscape"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:800
-#, fuzzy
 msgid "Screenshot format"
-msgstr "Képernyőkép beállítások"
+msgstr "Képernyőkép formátum"
 
 #: ../base/ufos/ui/options.ufo:801
 msgid "The file format screenshots will be saved in"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:848
-#, fuzzy
 msgid "Screenshot quality"
-msgstr "Képernyőkép beállítások"
+msgstr "Képernyőkép minőség"
 
 #: ../base/ufos/ui/options.ufo:890
 msgid "Video quality"
-msgstr ""
+msgstr "Megjelenítés minősége"
 
 #: ../base/ufos/ui/options.ufo:896
 msgid "Default video configuration settings"
@@ -23552,41 +23534,39 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:908
 msgid "LOW"
-msgstr ""
+msgstr "ALACSONY"
 
 #: ../base/ufos/ui/options.ufo:920
 msgid "MEDIUM"
-msgstr ""
+msgstr "KÖZEPES"
 
 #: ../base/ufos/ui/options.ufo:932
 msgid "HIGH"
-msgstr ""
+msgstr "MAGAS"
 
 #: ../base/ufos/ui/options.ufo:958
 msgid "Shaders"
-msgstr ""
+msgstr "Shader-ek"
 
 #: ../base/ufos/ui/options.ufo:959
 msgid "Enhanced visual techniques like post-processing effects"
-msgstr ""
+msgstr "Továbbfeljesztett vizuális effektek bekapcsolása"
 
 #: ../base/ufos/ui/options.ufo:986
 msgid "Post-processing effects"
-msgstr ""
+msgstr "Képi utómunka"
 
 #: ../base/ufos/ui/options.ufo:987
 msgid "Effects like light bloom and reflected light"
-msgstr ""
+msgstr "Fényhatások, mint ragyogás vagy visszatükröződő fény"
 
 #: ../base/ufos/ui/options.ufo:1005 ../base/ufos/ui/options.ufo:2481
-#, fuzzy
 msgid "Advanced OpenGL options"
-msgstr "Idegen hajtómű"
+msgstr "OpenGL beállítások"
 
 #: ../base/ufos/ui/options.ufo:1027
-#, fuzzy
 msgid "Real-time lighting effects"
-msgstr "Valósidejű fényhatások / max. dinamikus fény:"
+msgstr "Valósidejű fényhatások"
 
 #: ../base/ufos/ui/options.ufo:1056
 msgid "Max dynamic lights"
@@ -23606,7 +23586,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1143
 msgid "Coronas"
-msgstr ""
+msgstr "korona"
 
 #: ../base/ufos/ui/options.ufo:1144
 msgid "Lighting effect"
@@ -23614,7 +23594,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1162
 msgid "Fog"
-msgstr ""
+msgstr "Köd"
 
 #: ../base/ufos/ui/options.ufo:1163
 #, fuzzy
@@ -23637,7 +23617,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1201
 msgid "Light reflections"
-msgstr ""
+msgstr "fényvisszaverődések"
 
 #: ../base/ufos/ui/options.ufo:1219
 #, fuzzy
@@ -23691,19 +23671,19 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1451
 msgid "11025 kHz"
-msgstr ""
+msgstr "11025 kHz"
 
 #: ../base/ufos/ui/options.ufo:1456
 msgid "22050 kHz"
-msgstr ""
+msgstr "22050 kHz"
 
 #: ../base/ufos/ui/options.ufo:1461
 msgid "44100 kHz"
-msgstr ""
+msgstr "44100 kHz"
 
 #: ../base/ufos/ui/options.ufo:1466
 msgid "48000 kHz"
-msgstr ""
+msgstr "48000 kHz"
 
 #: ../base/ufos/ui/options.ufo:1473
 msgid "Apply Sample Rate"
@@ -23825,27 +23805,27 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:2204 ../base/ufos/ui/options.ufo:2399
 msgid "256"
-msgstr ""
+msgstr "256"
 
 #: ../base/ufos/ui/options.ufo:2208 ../base/ufos/ui/options.ufo:2403
 msgid "512"
-msgstr ""
+msgstr "512"
 
 #: ../base/ufos/ui/options.ufo:2212 ../base/ufos/ui/options.ufo:2407
 msgid "1024"
-msgstr ""
+msgstr "1024"
 
 #: ../base/ufos/ui/options.ufo:2216 ../base/ufos/ui/options.ufo:2411
 msgid "2048"
-msgstr ""
+msgstr "2048"
 
 #: ../base/ufos/ui/options.ufo:2220
 msgid "4096"
-msgstr ""
+msgstr "4096"
 
 #: ../base/ufos/ui/options.ufo:2224
 msgid "8192"
-msgstr ""
+msgstr "8192"
 
 #: ../base/ufos/ui/options.ufo:2242
 #, fuzzy
@@ -24184,7 +24164,7 @@ msgstr ""
 
 #: ../base/ufos/ui/skirmish.ufo:60
 msgid "<1>"
-msgstr ""
+msgstr "<1>"
 
 #: ../base/ufos/ui/skirmish.ufo:153
 msgid "MAP"
@@ -25244,7 +25224,7 @@ msgstr ""
 
 #: client/battlescape/cl_hud.cpp:1357 client/cl_inventory_callbacks.cpp:401
 msgid "Kg"
-msgstr ""
+msgstr "Kg"
 
 #: client/battlescape/cl_hud.cpp:1358 client/cl_inventory_callbacks.cpp:403
 msgid "TU:"
