@@ -606,7 +606,7 @@ window options
 				string ratio_label
 				{
 					string		"_Ratio"
-					pos			"200 5"
+					pos			"180 5"
 					size		"40 20"
 					font		"f_verysmall_bold"
 					color		"1 1 1 0.5"
@@ -615,11 +615,13 @@ window options
 				selectbox select_ratio
 				{
 					{
-						tooltip		"_Display resolutions in this ratio"
-						cvar		*cvar:mn_vidratio
-						pos			"250 5"
-						size		"80 20"
-						onChange {	cmd "cl_setratiofilter <cvar:mn_vidratio>"	}
+						tooltip			"_Display resolutions in this ratio"
+						cvar			*cvar:mn_vidratio
+						pos				"230 5"
+						size			"100 20"
+						onChange {
+							cmd "cl_setratiofilter <cvar:mn_vidratio>"
+						}
 					}
 					option all
 					{

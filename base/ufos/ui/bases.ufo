@@ -51,12 +51,13 @@ window bases
 		{
 			{
 				pos		"0 705"
-				size	"440 48"
+				size	"490 48"
+				layout	LAYOUT_LEFT_RIGHT_FLOW
 			}
 			EmployeeCount scientists
 			{
 				{
-					pos		"0 0"
+					tooltip	"_Scientists"
 					onClick { cmd "ui_push employees 1;" }
 				}
 				string label { string "_Scientists" }
@@ -65,7 +66,7 @@ window bases
 			EmployeeCount workers
 			{
 				{
-					pos		"110 0"
+					tooltip	"_Engineers"
 					onClick { cmd "ui_push employees 2;" }
 				}
 				string label { string "_Engineers" }
@@ -74,7 +75,7 @@ window bases
 			EmployeeCount soldiers
 			{
 				{
-					pos		"220 0"
+					tooltip	"_Soldiers"
 					onClick { cmd "ui_push employees 0;" }
 				}
 				string label { string "_Soldiers" }
@@ -83,8 +84,8 @@ window bases
 			EmployeeCount pilots
 			{
 				{
-					pos		"330 0"
-					onClick		{ cmd "ui_push employees 3;" }
+					tooltip	"_Pilots"
+					onClick	{ cmd "ui_push employees 3;" }
 				}
 				string label { string "_Pilots" }
 				button icon { icon "icons/head_pilot" }
@@ -95,36 +96,23 @@ window bases
 		panel buttons
 		{
 			{
-				pos		"450 705"
-				size	"323 48"
+				pos		"495 705"
+				size	"224 48"
+				layout	LAYOUT_LEFT_RIGHT_FLOW
 			}
-			button basesummary
+			button options
 			{
-				pos		"220 0"
-				size	"48 48"
-				icon		"icons/stats"
-				tooltip		"_Base Summary"
+				size	"56 48"
+				icon		"icons/options"
+				tooltip		"_Options"
 				background	"icons/circle0"
 				onMouseEnter	{ *node:this@background = "icons/circle" }
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
-				onClick			{ cmd "ui_push basesummary;" }
-			}
-			//Intentionally left out the underscores to not bother the translators
-			button transfers
-			{
-				pos		"165 0"
-				size	"48 48"
-				icon		"icons/transfer"
-				tooltip		"_Transfer"
-				background	"icons/circle0"
-				onMouseEnter	{ *node:this@background = "icons/circle" }
-				onMouseLeave	{ *node:this@background = "icons/circle0" }
-				onClick			{ cmd "ui_push transfer;" }
+				onClick			{ cmd "ui_push options;" }
 			}
 			button ufopaedia
 			{
-				pos		"110 0"
-				size	"48 48"
+				size	"56 48"
 				icon		"icons/info"
 				tooltip		"_UFOpedia"
 				background	"icons/circle0"
@@ -132,16 +120,25 @@ window bases
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
 				onClick			{ cmd "ui_push ufopedia;" }
 			}
-			button options
+			button transfers
 			{
-				pos		"55 0"
-				size	"48 48"
-				icon		"icons/options"
-				tooltip		"_Options"
+				size	"56 48"
+				icon		"icons/transfer"
+				tooltip		"_Transfer"
 				background	"icons/circle0"
 				onMouseEnter	{ *node:this@background = "icons/circle" }
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
-				onClick			{ cmd "ui_push options;" }
+				onClick			{ cmd "ui_push transfer;" }
+			}
+			button basesummary
+			{
+				size	"56 48"
+				icon		"icons/stats"
+				tooltip		"_Base Summary"
+				background	"icons/circle0"
+				onMouseEnter	{ *node:this@background = "icons/circle" }
+				onMouseLeave	{ *node:this@background = "icons/circle0" }
+				onClick			{ cmd "ui_push basesummary;" }
 			}
 		}
 

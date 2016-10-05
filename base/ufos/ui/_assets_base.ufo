@@ -217,7 +217,7 @@ end
 -- Employee count
 do
 	local EmployeeCount = ufo.create_component("panel", "EmployeeCount", nil)
-	EmployeeCount:set_size(110, 48)
+	EmployeeCount:set_size(122, 48)
 	do
 		local EmployeeCount_icon = ufo.create_button(EmployeeCount, "icon", nil)
 		EmployeeCount_icon:set_pos(0, 0)
@@ -227,14 +227,14 @@ do
 	do
 		local EmployeeCount_data = ufo.create_string(EmployeeCount, "data", nil)
 		EmployeeCount_data:set_pos(36, 0)
-		EmployeeCount_data:set_size(74, 48)
+		EmployeeCount_data:set_size(86, 48)
 		EmployeeCount_data:set_color(0.56, 0.81, 0.76, 1)
 		EmployeeCount_data:set_ghost(true)
 	end
 	do
 		local EmployeeCount_label = ufo.create_string(EmployeeCount, "label", nil)
-		EmployeeCount_label:set_pos(36, 27)
-		EmployeeCount_label:set_size(74, 17)
+		EmployeeCount_label:set_pos(30, 27)
+		EmployeeCount_label:set_size(86, 17)
 		EmployeeCount_label:set_color(0.56, 0.81, 0.76, 1)
 		EmployeeCount_label:set_font("f_verysmall")
 		EmployeeCount_label:set_contentalign(ufo.ALIGN_UL)
