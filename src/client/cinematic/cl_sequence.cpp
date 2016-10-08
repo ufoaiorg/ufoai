@@ -97,10 +97,10 @@ typedef struct seqEnt_s {
 typedef struct seq2D_s {
 	bool inuse;			/**< still in use in this sequence? or already deactivated? */
 	char name[MAX_VAR];		/**< the script id for this object */
-	char* text;				/**< a placeholder for gettext (V_TRANSLATION_STRING) */
+	char* text;			/**< a placeholder for gettext (V_TRANSLATION_STRING) */
 	char font[MAX_VAR];		/**< the font to use in case this is a text object */
-	char image[MAX_VAR];	/**< the image to render */
-	vec2_t pos;				/**< the position of the 2d obj */
+	char image[MAX_VAR];		/**< the image to render */
+	vec2_t pos;			/**< the position of the 2d obj */
 	vec2_t speed;			/**< how fast the 2d obj will change (fade, scale, ...) */
 	vec2_t size;			/**< the size of the 2d obj */
 	vec2_t enlarge;			/**< enlarge in x and y direction */
@@ -108,8 +108,10 @@ typedef struct seq2D_s {
 	vec4_t fade;			/**< the fade color */
 	vec4_t bgcolor;			/**< background color of the box define by @c pos, @c size */
 	align_t align;			/**< the alignment of the 2d obj */
-	bool inBackground;	/**< If true, display the object under the 3D objects */
-	bool relativePos;	/**< useful for translations when sentence length may differ */
+	vec4_t bordercolor;		/**< 2d obj border color */
+	int border;			/**< border width */
+	bool inBackground;		/**< If true, display the object under the 3D objects */
+	bool relativePos;		/**< useful for translations when sentence length may differ */
 } seq2D_t;
 
 #define MAX_SEQCMDS		768
@@ -203,6 +205,8 @@ static const value_t seq2D_vals[] = {
 	{"color", V_COLOR, offsetof(seq2D_t, color), MEMBER_SIZEOF(seq2D_t, color)},
 	{"fade", V_COLOR, offsetof(seq2D_t, fade), MEMBER_SIZEOF(seq2D_t, fade)},
 	{"align", V_ALIGN, offsetof(seq2D_t, align), MEMBER_SIZEOF(seq2D_t, align)},
+	{"bordercolor", V_COLOR, offsetof(seq2D_t, bordercolor), MEMBER_SIZEOF(seq2D_t, bordercolor)},
+	{"border", V_INT, offsetof(seq2D_t, border), MEMBER_SIZEOF(seq2D_t, border)},
 	{"inbackground", V_BOOL, offsetof(seq2D_t, inBackground), MEMBER_SIZEOF(seq2D_t, inBackground)},
 	{"relative", V_BOOL, offsetof(seq2D_t, relativePos), MEMBER_SIZEOF(seq2D_t, relativePos)},
 	{nullptr, V_NULL, 0, 0}
@@ -395,6 +399,10 @@ static void SEQ_Render2D (sequenceContext_t* context, bool backgroundObjects)
 		/* bgcolor can be overlay */
 		if (s2d->bgcolor[3] > 0.0)
 			R_DrawFill(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], s2d->bgcolor);
+
+		/* border */
+		if (s2d->border > 0 && s2d->bordercolor[3] > 0.0)
+			R_DrawRect(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], s2d->bordercolor, s2d->border, 0xFFFF);
 
 		/* render */
 		R_Color(s2d->color);
