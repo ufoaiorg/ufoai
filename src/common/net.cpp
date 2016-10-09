@@ -1000,6 +1000,9 @@ bool SV_Start (const char* node, const char* service, stream_callback_func* func
 	if (service) {
 		struct addrinfo* res = NET_GetAddrinfoForNode(node, service);
 
+		if (!res)
+			return false;
+
 		server_socket = NET_DoStartServer(res);
 		if (server_socket == INVALID_SOCKET) {
 			Com_Printf("Failed to start server on %s:%s\n", node ? node : "*", service);
