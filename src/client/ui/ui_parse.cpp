@@ -1443,8 +1443,6 @@ float UI_GetReferenceFloat (const uiNode_t* const node, const void* ref)
 		if (char const* const cvar = Q_strstart(token, "cvar:")) {
 			return Cvar_GetValue(cvar);
 		}
-
-		Sys_Error("UI_GetReferenceFloat: unknown reference '%s' from node '%s'", token, node->name);
 	}
 
 	/* just get the data */
