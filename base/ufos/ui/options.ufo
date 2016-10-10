@@ -108,7 +108,9 @@ window options
 		MainMenuTab opts_general_btn
 		{
 			pos 		"0 0"
+			size		"200 30"
 			string		"_GENERAL"
+			tooltip		"_GENERAL"
 			bgcolor		"0.4 0.515 0.5 1"
 			color		"0 0 0 0.9"
 			onClick		{
@@ -121,8 +123,10 @@ window options
 
 		MainMenuTab opts_video_btn
 		{
-			pos 		"135 0"
+			pos 		"210 0"
+			size		"190 30"
 			string		"_VIDEO"
+			tooltip		"_VIDEO"
 			onClick		{
 				call *node:parent.hidepanels
 				*node:parent.opts_video@invis = false
@@ -133,8 +137,10 @@ window options
 
 		MainMenuTab opts_sound_btn
 		{
-			pos 		"270 0"
+			pos 		"410 0"
+			size		"190 30"
 			string		"_SOUND"
+			tooltip		"_SOUND"
 			onClick		{
 				call *node:root.opts_windows.hidepanels
 				*node:parent.opts_sound@invis = false
@@ -145,8 +151,10 @@ window options
 
 		MainMenuTab opts_keys_btn
 		{
-			pos 		"405 0"
+			pos 		"610 0"
+			size		"200 30"
 			string		"_KEYS"
+			tooltip		"_KEYS"
 			onClick		{
 				call *node:root.opts_windows.hidepanels
 				*node:parent.opts_keys@invis = false
@@ -157,8 +165,10 @@ window options
 
 		MainMenuTab opts_gameplay_btn
 		{
-			pos 		"540 0"
+			pos 		"820 0"
+			size		"200 30"
 			string		"_GAMEPLAY"
+			tooltip		"_GAMEPLAY"
 			onClick		{
 				call *node:root.opts_windows.hidepanels
 				*node:parent.opts_gameplay@invis = false
@@ -172,6 +182,7 @@ window options
 			size 			"250 30"
 			pos 			"774 405"
 			string			"_DONE"
+			tooltip			"_DONE"
 			onClick			{ cmd "ui_pop;" }
 		}
 
@@ -390,8 +401,8 @@ window options
 				{
 					string		"_3D geoscape"
 					tooltip		"_View the geoscape as a 3D globe"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"450 20"
 					color		"1 1 1 0.5"
 				}
 
@@ -408,35 +419,45 @@ window options
 			{
 				{
 					pos		"512 70"
-					size	"512 30"
-					onMouseEnter 	{ *node:this.geo_camera_zoom_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.geo_camera_zoom_label@color = "1 1 1 0.5" }
-				}
-
-				string geo_camera_zoom_label
-				{
-					string		"_Camera zoom"
-					pos			"5 5"
-					size		"200 20"
-					color		"1 1 1 0.5"
+					size		"512 60"
+					onMouseEnter	{ *node:this.geo_camera_zoom_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.geo_camera_zoom_label@color = "1 1 1 0.5" }
 				}
 
 				string geo_camera_zoom_min_label
 				{
 					string		"_Min"
-					pos			"260 5"
-					size		"40 20"
+					pos		"345 5"
+					size		"80 20"
 					font		"f_verysmall_bold"
 					color		"1 1 1 0.5"
-					contentalign	ALIGN_CR
+					contentalign	ALIGN_CC
+				}
+
+				string geo_camera_zoom_max_label
+				{
+					string		"_Max"
+					pos		"425 5"
+					size		"80 20"
+					font		"f_verysmall_bold"
+					color		"1 1 1 0.5"
+					contentalign	ALIGN_CC
+				}
+
+				string geo_camera_zoom_label
+				{
+					string		"_Camera zoom"
+					pos		"5 30"
+					size		"340 20"
+					color		"1 1 1 0.5"
 				}
 
 				selectbox geo_camera_zoom_min
 				{
 					{
-						cvar			*cvar:cl_mapzoommin
-						pos				"305 5"
-						size			"60 20"
+						cvar		*cvar:cl_mapzoommin
+						pos		"355 30"
+						size		"60 20"
 						contentalign	ALIGN_CL
 					}
 					option geocamzoom_min00
@@ -471,20 +492,11 @@ window options
 					}
 				}
 
-				string geo_camera_zoom_max_label
-				{
-					string		"_Max"
-					pos			"405 5"
-					size		"40 20"
-					font		"f_verysmall_bold"
-					color		"1 1 1 0.5"
-				}
-
 				selectbox geocamzoom_max
 				{
 					{
 						cvar		*cvar:cl_mapzoommax
-						pos			"440 5"
+						pos		"440 30"
 						size		"50 20"
 					}
 					option geocamzoom_max20
@@ -534,15 +546,15 @@ window options
 				{
 					string		"_Display FPS"
 					tooltip		"_Display the number of frames rendered per second"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"450 20"
 					color		"1 1 1 0.5"
 				}
 
 				CheckBox show_fps_opt
 				{
 					current		*cvar:cl_fps
-					pos			"472 6"
+					pos		"472 6"
 					size		"20 18"
 				}
 			}
@@ -553,23 +565,23 @@ window options
 				{
 					pos		"512 230"
 					size	"512 30"
-					onMouseEnter 	{ *node:this.intro_video_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.intro_video_label@color = "1 1 1 0.5" }
+					onMouseEnter	{ *node:this.intro_video_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.intro_video_label@color = "1 1 1 0.5" }
 				}
 
 				string intro_video_label
 				{
 					string		"_Skip Intro Video"
 					tooltip		"_Don't play the video when loading the game."
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"450 20"
 					color		"1 1 1 0.5"
 				}
 
 				CheckBox intro_video_opt
 				{
 					current		*cvar:cl_introshown
-					pos			"472 6"
+					pos		"472 6"
 					size		"20 18"
 				}
 			}
@@ -606,8 +618,8 @@ window options
 				string ratio_label
 				{
 					string		"_Ratio"
-					pos			"180 5"
-					size		"40 20"
+					pos		"175 5"
+					size		"50 20"
 					font		"f_verysmall_bold"
 					color		"1 1 1 0.5"
 				}
@@ -674,24 +686,24 @@ window options
 			{
 				{
 					pos		"0 30"
-					size	"512 30"
-					onMouseEnter 	{ *node:this.fullscreen_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.fullscreen_label@color = "1 1 1 0.5" }
+					size		"512 30"
+					onMouseEnter	{ *node:this.fullscreen_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.fullscreen_label@color = "1 1 1 0.5" }
 				}
 
 				string fullscreen_label
 				{
 					string		"_Fullscreen"
 					tooltip		"_View the game in fullscreen instead of windowed mode"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"450 20"
 					color		"1 1 1 0.5"
 				}
 
 				CheckBox fullscreen_opt
 				{
 					current		*cvar:vid_fullscreen
-					pos			"472 6"
+					pos		"472 6"
 					size		"20 18"
 				}
 			}
@@ -701,24 +713,24 @@ window options
 			{
 				{
 					pos		"0 60"
-					size	"512 30"
-					onMouseEnter 	{ *node:this.stretch_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.stretch_label@color = "1 1 1 0.5" }
+					size		"512 30"
+					onMouseEnter	{ *node:this.stretch_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.stretch_label@color = "1 1 1 0.5" }
 				}
 
 				string stretch_label
 				{
 					string		"_Stretch screen"
 					tooltip		"_Stretch screen to fit monitors with 4:3 ratio"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"450 20"
 					color		"1 1 1 0.5"
 				}
 
 				CheckBox stretch_opt
 				{
 					current		*cvar:vid_stretch
-					pos			"472 6"
+					pos		"472 6"
 					size		"20 18"
 				}
 			}
@@ -728,16 +740,16 @@ window options
 			{
 				{
 					pos		"0 90"
-					size	"512 30"
-					onMouseEnter 	{ *node:this.gamma_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.gamma_label@color = "1 1 1 0.5" }
+					size		"512 30"
+					onMouseEnter	{ *node:this.gamma_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.gamma_label@color = "1 1 1 0.5" }
 				}
 
 				string gamma_label
 				{
 					string		"_Gamma / Brightness"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"220 20"
 					color		"1 1 1 0.5"
 				}
 
@@ -759,31 +771,31 @@ window options
 			{
 				{
 					pos		"0 120"
-					size	"512 30"
-					onMouseEnter 	{ *node:this.geo_sun_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.geo_sun_label@color = "1 1 1 0.5" }
+					size		"512 30"
+					onMouseEnter	{ *node:this.geo_sun_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.geo_sun_label@color = "1 1 1 0.5" }
 				}
 
 				string geo_sun_label
 				{
 					string		"_Geoscape sunlight"
 					tooltip		"_Brightness of sunlight on the geoscape"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"220 20"
 					color		"1 1 1 0.5"
 				}
 
 				bar geo_sun_bar
 				{
 					current		*cvar:cl_3dmapAmbient
-					pos			"237 11"
+					pos		"237 11"
 					size		"251 8"
 					color		"0.582 0.808 0.758 1"
 					border		"1"
 					bordercolor	"0.582 0.808 0.758 1"
-					min			-1
-					max			3
-					onClick		{ }
+					min		-1
+					max		3
+					onClick { }
 				}
 			}
 
@@ -792,17 +804,17 @@ window options
 			{
 				{
 					pos		"0 150"
-					size	"512 60"
-					onMouseEnter 	{ *node:this.screenshot_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.screenshot_label@color = "1 1 1 0.5" }
+					size		"512 60"
+					onMouseEnter	{ *node:this.screenshot_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.screenshot_label@color = "1 1 1 0.5" }
 				}
 
 				string screenshot_label
 				{
 					string		"_Screenshot format"
 					tooltip		"_The file format screenshots will be saved in"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"350 20"
 					color		"1 1 1 0.5"
 				}
 
@@ -810,7 +822,7 @@ window options
 				{
 					{
 						cvar		*cvar:r_screenshot_format
-						pos			"367 5"
+						pos		"367 5"
 						size		"125 20"
 						onChange	{
 							call *node:root.opts_windows.opts_video.hide_screenshot_quality
@@ -839,31 +851,31 @@ window options
 			{
 				{
 					pos		"0 210"
-					size	"512 30"
-					invis	true
-					onMouseEnter 	{ *node:this.screenshot_quality_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.screenshot_quality_label@color = "1 1 1 0.5" }
+					size		"512 30"
+					invis		true
+					onMouseEnter	{ *node:this.screenshot_quality_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.screenshot_quality_label@color = "1 1 1 0.5" }
 				}
 
 				string screenshot_quality_label
 				{
 					string		"_Screenshot quality"
 					font		"f_verysmall_bold"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"220 20"
 					color		"1 1 1 0.5"
 				}
 
 				bar screenshot_quality_bar
 				{
 					current		*cvar:r_screenshot_jpeg_quality
-					pos			"237 11"
+					pos		"237 11"
 					size		"251 8"
 					color		"0.582 0.808 0.758 1"
 					border		"1"
 					bordercolor	"0.582 0.808 0.758 1"
-					max			100
-					onClick		{ }
+					max		100
+					onClick { }
 				}
 			}
 
@@ -881,22 +893,22 @@ window options
 			{
 				{
 					pos		"5 275"
-					size	"487 100"
+					size		"487 100"
 					bgcolor		"0 0 0 0.5"
-					onMouseEnter 	{ *node:this.video_auto_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.video_auto_label@color = "1 1 1 0.5" }
+					onMouseEnter	{ *node:this.video_auto_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.video_auto_label@color = "1 1 1 0.5" }
 				}
 
 				string video_auto_label
 				{
 					string		"_Video quality"
-					pos			"5 10"
+					pos		"5 10"
 					size		"482 30"
 				}
 				string video_auto_desc
 				{
 					string		"_Default video configuration settings"
-					pos			"5 30"
+					pos		"5 30"
 					size		"492 15"
 					font		"f_verysmall"
 					color		"1 1 1 0.5"
@@ -959,15 +971,15 @@ window options
 				{
 					string		"_Shaders"
 					tooltip		"_Enhanced visual techniques like post-processing effects"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"400 20"
 					color		"1 1 1 0.5"
 				}
 
 				CheckBox shaders_opt
 				{
 					current		*cvar:r_programs
-					pos			"472 6"
+					pos		"472 6"
 					size		"20 18"
 					onClick		{ call *node:root.toggle_shaders_opts }
 				}
@@ -987,8 +999,8 @@ window options
 					{
 						string		"_Post-processing effects"
 						tooltip		"_Effects like light bloom and reflected light"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 5"
+						size		"400 20"
 						font		"f_verysmall_bold"
 						color		"1 1 1 0.5"
 					}
@@ -996,7 +1008,7 @@ window options
 					CheckBox postprocessing_opt
 					{
 						current		*cvar:r_postprocess
-						pos			"472 6"
+						pos		"472 6"
 						size		"20 18"
 					}
 				}
@@ -1005,8 +1017,8 @@ window options
 				MainMenu2Btn opengl_adv_btn
 				{
 					string			"_Advanced OpenGL options"
-					pos				"300 65"
-					size			"192 20"
+					pos			"250 65"
+					size			"242 20"
 					invis			true
 					font			"f_verysmall_bold"
 					selectcolor		"0 0 0 0.9"
@@ -1018,7 +1030,7 @@ window options
 			panel light_realtime
 			{
 				{
-					pos			"512 90"
+					pos		"512 90"
 					size		"512 90"
 					onMouseEnter 	{ *node:this.light_realtime_label@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this.light_realtime_label@color = "1 1 1 0.5" }
@@ -1027,17 +1039,17 @@ window options
 				string light_realtime_label
 				{
 					string		"_Real-time lighting effects"
-					pos			"5 5"
-					size		"250 20"
+					pos		"5 5"
+					size		"450 20"
 					color		"1 1 1 0.5"
 				}
 
 				CheckBox light_realtime_opt
 				{
 					current		*cvar:r_lights
-					pos			"472 6"
+					pos		"472 6"
 					size		"20 18"
-					onClick		{
+					onClick {
 						call *node:root.opts_windows.opts_video.light_realtime.toggle_realtime_lighting_opts
 					}
 				}
@@ -1058,26 +1070,26 @@ window options
 						string		"_Max dynamic lights"
 						tooltip		"_Set available hardware-accelerated dynamic lights"
 						font		"f_verysmall_bold"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 5"
+						size		"430 20"
 						color		"1 1 1 0.5"
 					}
 
 					string dynamiclights_value
 					{
 						string		*cvar:r_dynamic_lights
-						pos			"452 5"
+						pos		"452 5"
 						size		"40 20"
 					}
 
 					Spinner dynamiclights_change
 					{
 						current		*cvar:r_dynamic_lights
-						pos			"472 6"
+						pos		"472 6"
 						width		20
 						height		25
-						min			0
-						max			8
+						min		0
+						max		8
 						delta		1
 					}
 				}
@@ -1098,14 +1110,14 @@ window options
 						string		"_Bumpmapping / Normalmapping"
 						font		"f_verysmall_bold"
 						pos			"5 5"
-						size		"250 20"
+						size		"450 20"
 						color		"1 1 1 0.5"
 					}
 
 					CheckBox light_bumpmapping_opt
 					{
 						current		*cvar:r_bumpmap
-						pos			"472 6"
+						pos		"472 6"
 						size		"20 18"
 					}
 				}
@@ -1126,17 +1138,17 @@ window options
 			panel env_effects
 			{
 				{
-					pos			"512 210"
-					size		"512 60"
-					onMouseEnter 	{ *node:this.env_effects_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.env_effects_label@color = "1 1 1 0.5" }
+					pos		"512 210"
+					size		"512 90"
+					onMouseEnter	{ *node:this.env_effects_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.env_effects_label@color = "1 1 1 0.5" }
 				}
 
 				string env_effects_label
 				{
 					string		"_Environmental effects"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"450 20"
 					color		"1 1 1 0.5"
 				}
 
@@ -1146,8 +1158,8 @@ window options
 					tooltip		"_Lighting effect"
 					font		"f_verysmall_bold"
 					contentalign	ALIGN_CR
-					pos			"190 5"
-					size		"75 20"
+					pos		"0 30"
+					size		"130 20"
 					color		"1 1 1 0.5"
 					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
@@ -1155,64 +1167,7 @@ window options
 				CheckBox env_effects_coronas_opt
 				{
 					current		*cvar:r_coronas
-					pos			"270 6"
-					size		"20 18"
-				}
-
-				string env_effects_fog_label
-				{
-					string		"_Fog"
-					tooltip		"_Fades distant objects on the battlescape"
-					font		"f_verysmall_bold"
-					contentalign	ALIGN_CR
-					pos			"290 5"
-					size		"75 20"
-					color		"1 1 1 0.5"
-					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
-				}
-				CheckBox env_effects_fog_opt
-				{
-					current		*cvar:r_fog
-					pos			"370 6"
-					size		"20 18"
-				}
-
-				string env_effects_weather_label
-				{
-					string		"_Weather"
-					tooltip		"_Rain and snow on the battlescape"
-					font		"f_verysmall_bold"
-					contentalign	ALIGN_CR
-					pos			"390 5"
-					size		"75 20"
-					color		"1 1 1 0.5"
-					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
-				}
-				CheckBox env_effects_weather_opt
-				{
-					current		*cvar:cl_particleweather
-					pos			"472 6"
-					size		"20 18"
-				}
-
-				string env_effects_flares_label
-				{
-					string		"_Flares"
-					tooltip		"_Light reflections"
-					font		"f_verysmall_bold"
-					contentalign	ALIGN_CR
-					pos			"390 35"
-					size		"75 20"
-					color		"1 1 1 0.5"
-					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
-				}
-				CheckBox env_effects_flares_opt
-				{
-					current		*cvar:r_flares
-					pos			"472 36"
+					pos		"140 35"
 					size		"20 18"
 				}
 
@@ -1222,8 +1177,8 @@ window options
 					tooltip		"_Texture animations, blending and other effects"
 					font		"f_verysmall_bold"
 					contentalign	ALIGN_CR
-					pos			"290 35"
-					size		"75 20"
+					pos		"170 35"
+					size		"130 20"
 					color		"1 1 1 0.5"
 					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
@@ -1231,37 +1186,87 @@ window options
 				CheckBox env_effects_materials_opt
 				{
 					current		*cvar:r_materials
-					pos			"370 36"
+					pos		"310 36"
 					size		"20 18"
 				}
+
+				string env_effects_flares_label
+				{
+					string		"_Flares"
+					tooltip		"_Light reflections"
+					font		"f_verysmall_bold"
+					contentalign	ALIGN_CR
+					pos		"340 35"
+					size		"130 20"
+					color		"1 1 1 0.5"
+					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+				}
+				CheckBox env_effects_flares_opt
+				{
+					current		*cvar:r_flares
+					pos		"480 36"
+					size		"20 18"
+				}
+
+				string env_effects_fog_label
+				{
+					string		"_Fog"
+					tooltip		"_Fades distant objects on the battlescape"
+					font		"f_verysmall_bold"
+					contentalign	ALIGN_CR
+					pos		"0 55"
+					size		"130 20"
+					color		"1 1 1 0.5"
+					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+				}
+				CheckBox env_effects_fog_opt
+				{
+					current		*cvar:r_fog
+					pos		"140 55"
+					size		"20 18"
+				}
+
+				string env_effects_weather_label
+				{
+					string		"_Weather"
+					tooltip		"_Rain and snow on the battlescape"
+					font		"f_verysmall_bold"
+					contentalign	ALIGN_CR
+					pos		"170 55"
+					size		"130 20"
+					color		"1 1 1 0.5"
+					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+				}
+				CheckBox env_effects_weather_opt
+				{
+					current		*cvar:cl_particleweather
+					pos		"310 55"
+					size		"20 18"
+				}
+
 			}
 
 			// Advanced Video Options Button
 			panel video_adv_line
 			{
 				{
-					pos			"512 285"
+					pos		"512 305"
 					size		"512 30"
-					onMouseEnter 	{ *node:this.video_adv_line_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.video_adv_line_label@color = "1 1 1 0.5" }
-				}
-
-				string video_adv_line_label
-				{
-					string		"_Video performance"
-					pos			"5 5"
-					size		"200 20"
-					color		"1 1 1 0.5"
+					onMouseEnter	{ *node:this.video_adv_line_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.video_adv_line_label@color = "1 1 1 0.5" }
 				}
 
 				MainMenu2Btn video_adv_line_btn
 				{
-					string			"_Advanced Video Options"
-					pos				"300 5"
-					size			"192 20"
-					font			"f_verysmall_bold"
-					selectcolor		"0 0 0 0.9"
-					onClick			{ call *node:root.toggle_panel("video_adv", 1) }
+					string		"_Advanced Video Options"
+					pos		"250 5"
+					size		"242 20"
+					font		"f_verysmall_bold"
+					selectcolor	"0 0 0 0.9"
+					onClick		{ call *node:root.toggle_panel("video_adv", 1) }
 				}
 			}
 		}
@@ -1282,23 +1287,23 @@ window options
 			{
 				{
 					pos		"0 0"
-					size	"512 30"
-					onMouseEnter 	{ *node:this.audio_toggle_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.audio_toggle_label@color = "1 1 1 0.5" }
+					size		"512 30"
+					onMouseEnter	{ *node:this.audio_toggle_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.audio_toggle_label@color = "1 1 1 0.5" }
 				}
 
 				string audio_toggle_label
 				{
 					string		"_Enable audio"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"450 20"
 					color		"1 1 1 0.5"
 				}
 
 				CheckBox audio_toggle_opt
 				{
 					current		*cvar:snd_init
-					pos			"472 6"
+					pos		"472 6"
 					size		"20 18"
 				}
 			}
@@ -1308,30 +1313,30 @@ window options
 			{
 				{
 					pos		"0 30"
-					size	"512 30"
-					onMouseEnter 	{ *node:this.audio_music_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.audio_music_label@color = "1 1 1 0.5" }
+					size		"512 30"
+					onMouseEnter	{ *node:this.audio_music_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.audio_music_label@color = "1 1 1 0.5" }
 					visiblewhen		"*cvar:snd_init"
 				}
 
 				string audio_music_label
 				{
 					string		"_Music volume"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"220 20"
 					color		"1 1 1 0.5"
 				}
 
 				bar audio_music_bar
 				{
 					current		*cvar:snd_music_volume
-					pos			"237 11"
+					pos		"237 11"
 					size		"251 8"
 					color		"0.582 0.808 0.758 1"
 					border		"1"
 					bordercolor	"0.582 0.808 0.758 1"
-					max			128
-					onClick		{ }
+					max		128
+					onClick { }
 				}
 			}
 
@@ -1340,24 +1345,24 @@ window options
 			{
 				{
 					pos		"0 60"
-					size	"512 30"
-					onMouseEnter 	{ *node:this.audio_music_toggle_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.audio_music_toggle_label@color = "1 1 1 0.5" }
-					visiblewhen		"*cvar:snd_init"
+					size		"512 30"
+					onMouseEnter	{ *node:this.audio_music_toggle_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.audio_music_toggle_label@color = "1 1 1 0.5" }
+					visiblewhen	"*cvar:snd_init"
 				}
 
 				string audio_music_toggle_label
 				{
 					string		"_Enable music"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"450 20"
 					color		"1 1 1 0.5"
 				}
 
 				CheckBox audio_music_toggle_opt
 				{
 					current		*cvar:snd_music_play
-					pos			"472 6"
+					pos		"472 6"
 					size		"20 18"
 				}
 			}
@@ -1367,30 +1372,30 @@ window options
 			{
 				{
 					pos		"0 90"
-					size	"512 30"
-					onMouseEnter 	{ *node:this.audio_effects_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.audio_effects_label@color = "1 1 1 0.5" }
-					visiblewhen		"*cvar:snd_init"
+					size		"512 30"
+					onMouseEnter	{ *node:this.audio_effects_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.audio_effects_label@color = "1 1 1 0.5" }
+					visiblewhen	"*cvar:snd_init"
 				}
 
 				string audio_effects_label
 				{
 					string		"_Sound effects"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"220 20"
 					color		"1 1 1 0.5"
 				}
 
 				bar audio_effects_bar
 				{
 					current		*cvar:snd_volume
-					pos			"237 11"
+					pos		"237 11"
 					size		"251 8"
 					color		"0.582 0.808 0.758 1"
 					border		"1"
 					bordercolor	"0.582 0.808 0.758 1"
-					max			1.0
-					onClick		{ }
+					max		1.0
+					onClick { }
 				}
 			}
 
@@ -1399,24 +1404,24 @@ window options
 			{
 				{
 					pos		"0 120"
-					size	"512 30"
-					onMouseEnter 	{ *node:this.audio_menu_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.audio_menu_label@color = "1 1 1 0.5" }
-					visiblewhen		"*cvar:snd_init"
+					size		"512 30"
+					onMouseEnter	{ *node:this.audio_menu_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.audio_menu_label@color = "1 1 1 0.5" }
+					visiblewhen	"*cvar:snd_init"
 				}
 
 				string audio_menu_label
 				{
 					string		"_Menu sounds"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"450 20"
 					color		"1 1 1 0.5"
 				}
 
 				CheckBox audio_menu_opt
 				{
 					current		*cvar:ui_sounds
-					pos			"472 6"
+					pos		"472 6"
 					size		"20 18"
 				}
 			}
@@ -1426,18 +1431,18 @@ window options
 			{
 				{
 					pos		"0 180"
-					size	"512 60"
-					onMouseEnter 	{ *node:this.audio_sample_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.audio_sample_label@color = "1 1 1 0.5" }
-					visiblewhen		"*cvar:snd_init"
+					size		"512 60"
+					onMouseEnter	{ *node:this.audio_sample_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.audio_sample_label@color = "1 1 1 0.5" }
+					visiblewhen	"*cvar:snd_init"
 				}
 
 				string audio_sample_label
 				{
 					string		"_Audio sample rate"
 					tooltip		"_Higher sample rates provide better audio quality"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"350 20"
 					color		"1 1 1 0.5"
 				}
 
@@ -1473,8 +1478,8 @@ window options
 				MainMenu2Btn video_adv_line_btn
 				{
 					string			"_Apply Sample Rate"
-					pos				"300 35"
-					size			"192 20"
+					pos			"230 35"
+					size			"262 20"
 					font			"f_verysmall_bold"
 					selectcolor		"0 0 0 0.9"
 					onClick			{ cmd "snd_restart;" }
@@ -1519,16 +1524,16 @@ window options
 			{
 				{
 					pos		"0 0"
-					size	"512 270"
-					onMouseEnter 	{ *node:this.battle_camera_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.battle_camera_label@color = "1 1 1 0.5" }
+					size		"512 270"
+					onMouseEnter	{ *node:this.battle_camera_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.battle_camera_label@color = "1 1 1 0.5" }
 				}
 
 				string battle_camera_label
 				{
 					string		"_Battlescape view configuration"
-					pos			"5 5"
-					size		"300 20"
+					pos		"5 5"
+					size		"492 20"
 					color		"1 1 1 0.5"
 				}
 
@@ -1537,16 +1542,16 @@ window options
 				{
 					{
 						pos		"0 30"
-						size	"512 30"
-						onMouseEnter 	{ *node:this.camera_speed_label@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this.camera_speed_label@color = "1 1 1 0.5" }
+						size		"512 30"
+						onMouseEnter	{ *node:this.camera_speed_label@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this.camera_speed_label@color = "1 1 1 0.5" }
 					}
 
 					string camera_speed_label
 					{
 						string		"_Scroll speed"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 5"
+						size		"230 20"
 						font		"f_verysmall_bold"
 						color		"1 1 1 0.5"
 					}
@@ -1554,14 +1559,14 @@ window options
 					bar camera_speed_bar
 					{
 						current		*cvar:cl_cammovespeed
-						pos			"237 11"
+						pos		"247 11"
 						size		"251 8"
 						color		"0.582 0.808 0.758 1"
 						border		"1"
 						bordercolor	"0.582 0.808 0.758 1"
-						min			5
-						max			3000
-						onClick		{ }
+						min		5
+						max		3000
+						onClick { }
 					}
 				}
 
@@ -1570,16 +1575,16 @@ window options
 				{
 					{
 						pos		"0 60"
-						size	"512 30"
-						onMouseEnter 	{ *node:this.camera_rot_speed_label@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this.camera_rot_speed_label@color = "1 1 1 0.5" }
+						size		"512 30"
+						onMouseEnter	{ *node:this.camera_rot_speed_label@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this.camera_rot_speed_label@color = "1 1 1 0.5" }
 					}
 
 					string camera_rot_speed_label
 					{
 						string		"_Rotation speed"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 5"
+						size		"230 20"
 						font		"f_verysmall_bold"
 						color		"1 1 1 0.5"
 					}
@@ -1587,13 +1592,13 @@ window options
 					bar camera_rot_speed_bar
 					{
 						current		*cvar:cl_camrotspeed
-						pos			"237 11"
+						pos		"247 11"
 						size		"251 8"
 						color		"0.582 0.808 0.758 1"
 						border		"1"
 						bordercolor	"0.582 0.808 0.758 1"
-						min			5
-						max			1000
+						min		5
+						max		1000
 						onClick		{ }
 					}
 				}
@@ -1603,17 +1608,17 @@ window options
 				{
 					{
 						pos		"0 90"
-						size	"512 30"
-						onMouseEnter 	{ *node:this.camera_dec_speed_label@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this.camera_dec_speed_label@color = "1 1 1 0.5" }
+						size		"512 30"
+						onMouseEnter	{ *node:this.camera_dec_speed_label@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this.camera_dec_speed_label@color = "1 1 1 0.5" }
 					}
 
 					string camera_dec_speed_label
 					{
 						string		"_Inertia"
 						tooltip		"_Higher values will cause the camera to stop more gradually"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 5"
+						size		"230 20"
 						font		"f_verysmall_bold"
 						color		"1 1 1 0.5"
 					}
@@ -1621,7 +1626,7 @@ window options
 					bar camera_dec_speed_bar
 					{
 						current		*cvar:cl_cammoveaccel
-						pos			"237 11"
+						pos		"247 11"
 						size		"251 8"
 						color		"0.582 0.808 0.758 1"
 						border		"1"
@@ -1637,38 +1642,51 @@ window options
 				{
 					{
 						pos		"0 120"
-						size	"512 30"
-						onMouseEnter 	{ *node:this.camera_pitch_label@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this.camera_pitch_label@color = "1 1 1 0.5" }
+						size		"512 60"
+						onMouseEnter	{ *node:this.camera_pitch_label@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this.camera_pitch_label@color = "1 1 1 0.5" }
+					}
+
+					string camera_pitch_min_label
+					{
+						string		"_Min"
+						tooltip		"_Maps optimized for values above 10"
+						pos		"335 5"
+						size		"80 20"
+						font		"f_verysmall_bold"
+						contentalign	ALIGN_CR
+						color		"1 1 1 0.5"
+						onMouseEnter	{ *node:this@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this@color = "1 1 1 0.5" }
+					}
+
+					string camera_pitch_max_label
+					{
+						string		"_Max"
+						tooltip		"_Values above 90 will result in inverted views"
+						pos		"415 5"
+						size		"80 20"
+						font		"f_verysmall_bold"
+						contentalign	ALIGN_CR
+						color		"1 1 1 0.5"
+						onMouseEnter	{ *node:this@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this@color = "1 1 1 0.5" }
 					}
 
 					string camera_pitch_label
 					{
 						string		"_Pitch"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 30"
+						size		"330 20"
 						font		"f_verysmall_bold"
 						color		"1 1 1 0.5"
-					}
-
-					string camera_pitch_min_label
-					{
-						string			"_Min"
-						tooltip			"_Maps optimized for values above 10"
-						pos				"260 5"
-						size			"40 20"
-						font			"f_verysmall_bold"
-						contentalign	ALIGN_CR
-						color			"1 1 1 0.5"
-						onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
 					}
 
 					selectbox camera_pitch_min_opt
 					{
 						{
 							cvar		*cvar:cl_campitchmin
-							pos			"300 5"
+							pos		"345 30"
 							size		"70 20"
 							contentalign	ALIGN_CR
 						}
@@ -1710,24 +1728,11 @@ window options
 						}
 					}
 
-					string camera_pitch_max_label
-					{
-						string			"_Max"
-						tooltip			"_Values above 90 will result in inverted views"
-						pos				"382 5"
-						size			"40 20"
-						font			"f_verysmall_bold"
-						contentalign	ALIGN_CR
-						color			"1 1 1 0.5"
-						onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
-					}
-
 					selectbox camera_pitch_max_opt
 					{
 						{
 							cvar		*cvar:cl_campitchmax
-							pos			"422 5"
+							pos		"430 30"
 							size		"70 20"
 						}
 						option plus45degrees
@@ -1768,38 +1773,51 @@ window options
 				panel camera_zoom
 				{
 					{
-						pos		"0 150"
-						size	"512 30"
-						onMouseEnter 	{ *node:this.camera_zoom_label@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this.camera_zoom_label@color = "1 1 1 0.5" }
+						pos		"0 180"
+						size		"512 60"
+						onMouseEnter	{ *node:this.camera_zoom_label@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this.camera_zoom_label@color = "1 1 1 0.5" }
+					}
+
+					string camera_zoom_min_label
+					{
+						string		"_Min"
+						pos		"335 5"
+						size		"80 20"
+						font		"f_verysmall_bold"
+						contentalign	ALIGN_CR
+						color		"1 1 1 0.5"
+						onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+						onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+					}
+
+
+					string camera_zoom_max_label
+					{
+						string		"_Max"
+						pos		"415 5"
+						size		"80 20"
+						font		"f_verysmall_bold"
+						contentalign	ALIGN_CR
+						color		"1 1 1 0.5"
+						onMouseEnter	{ *node:this@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this@color = "1 1 1 0.5" }
 					}
 
 					string camera_zoom_label
 					{
 						string		"_Zoom constraints"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 30"
+						size		"330 20"
 						font		"f_verysmall_bold"
 						color		"1 1 1 0.5"
-					}
-
-					string camera_zoom_min_label
-					{
-						string			"_Min"
-						pos				"260 5"
-						size			"40 20"
-						font			"f_verysmall_bold"
-						contentalign	ALIGN_CR
-						color			"1 1 1 0.5"
-						onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
 					}
 
 					selectbox camera_zoom_min_opt
 					{
 						{
 							cvar		*cvar:cl_camzoommin
-							pos			"300 5"
+							pos		"345 30"
 							size		"70 20"
 							contentalign	ALIGN_CR
 						}
@@ -1841,23 +1859,11 @@ window options
 						}
 					}
 
-					string camera_zoom_max_label
-					{
-						string			"_Max"
-						pos				"382 5"
-						size			"40 20"
-						font			"f_verysmall_bold"
-						contentalign	ALIGN_CR
-						color			"1 1 1 0.5"
-						onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
-					}
-
 					selectbox camera_zoom_max_opt
 					{
 						{
 							cvar		*cvar:cl_camzoommax
-							pos			"422 5"
+							pos		"430 30"
 							size		"70 20"
 						}
 						option zoom_max200
@@ -1898,17 +1904,17 @@ window options
 				panel camera_zoom_speed
 				{
 					{
-						pos		"0 180"
-						size	"512 30"
-						onMouseEnter 	{ *node:this.camera_zoom_speed_label@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this.camera_zoom_speed_label@color = "1 1 1 0.5" }
+						pos		"0 240"
+						size		"512 30"
+						onMouseEnter	{ *node:this.camera_zoom_speed_label@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this.camera_zoom_speed_label@color = "1 1 1 0.5" }
 					}
 
 					string camera_zoom_speed_label
 					{
 						string		"_Zoom speed"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 5"
+						size		"230 20"
 						font		"f_verysmall_bold"
 						color		"1 1 1 0.5"
 					}
@@ -1916,14 +1922,14 @@ window options
 					bar camera_zoom_speed_bar
 					{
 						current		*cvar:cl_camzoomquant
-						pos			"237 11"
+						pos		"247 11"
 						size		"251 8"
 						color		"0.582 0.808 0.758 1"
 						border		"1"
 						bordercolor	"0.582 0.808 0.758 1"
-						min			0
-						max			0.30
-						onClick		{ }
+						min		0
+						max		0.30
+						onClick { }
 					}
 				}
 
@@ -1931,18 +1937,18 @@ window options
 				panel camera_center
 				{
 					{
-						pos		"0 210"
-						size	"512 30"
-						onMouseEnter 	{ *node:this.camera_center_label@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this.camera_center_label@color = "1 1 1 0.5" }
+						pos		"0 270"
+						size		"512 30"
+						onMouseEnter	{ *node:this.camera_center_label@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this.camera_center_label@color = "1 1 1 0.5" }
 					}
 
 					string camera_center_label
 					{
 						string		"_Center view"
 						font		"f_verysmall_bold"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 5"
+						size		"450 20"
 						color		"1 1 1 0.5"
 					}
 
@@ -1958,7 +1964,7 @@ window options
 				panel camera_iso
 				{
 					{
-						pos		"0 240"
+						pos		"0 300"
 						size	"512 30"
 						onMouseEnter 	{ *node:this.camera_iso_label@color = "1 1 1 0.9" }
 						onMouseLeave 	{ *node:this.camera_iso_label@color = "1 1 1 0.5" }
@@ -1977,7 +1983,7 @@ window options
 					CheckBox camera_iso_opt
 					{
 						current		*cvar:r_isometric
-						pos			"472 6"
+						pos		"472 6"
 						size		"20 18"
 					}
 				}
@@ -1991,16 +1997,16 @@ window options
 			{
 				{
 					pos		"512 0"
-					size	"512 150"
-					onMouseEnter 	{ *node:this.battle_gameplay_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.battle_gameplay_label@color = "1 1 1 0.5" }
+					size		"512 150"
+					onMouseEnter	{ *node:this.battle_gameplay_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.battle_gameplay_label@color = "1 1 1 0.5" }
 				}
 
 				string battle_gameplay_label
 				{
 					string		"_Battlescape gameplay options"
-					pos			"5 5"
-					size		"300 20"
+					pos		"5 5"
+					size		"492 20"
 					color		"1 1 1 0.5"
 				}
 
@@ -2009,30 +2015,30 @@ window options
 				{
 					{
 						pos		"0 30"
-						size	"512 30"
-						onMouseEnter 	{ *node:this.battle_actor_speed_label@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this.battle_actor_speed_label@color = "1 1 1 0.5" }
+						size		"512 30"
+						onMouseEnter	{ *node:this.battle_actor_speed_label@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this.battle_actor_speed_label@color = "1 1 1 0.5" }
 					}
 
 					string battle_actor_speed_label
 					{
 						string		"_Actor speed"
 						font		"f_verysmall_bold"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 5"
+						size		"220 20"
 						color		"1 1 1 0.5"
 					}
 
 					bar battle_actor_speed_bar
 					{
 						current		*cvar:g_actorspeed
-						pos			"237 11"
+						pos		"237 11"
 						size		"251 8"
 						color		"0.582 0.808 0.758 1"
 						border		"1"
 						bordercolor	"0.582 0.808 0.758 1"
-						max			9
-						onClick		{ }
+						max		9
+						onClick { }
 					}
 				}
 
@@ -2051,8 +2057,8 @@ window options
 						string		"_Confirm actions"
 						tooltip		"_Confirm your actions on the battlefield before committing"
 						font		"f_verysmall_bold"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 5"
+						size		"300 20"
 						color		"1 1 1 0.5"
 					}
 
@@ -2060,8 +2066,8 @@ window options
 					{
 						{
 							cvar		*cvar:confirm_actions
-							pos			"342 5"
-							size		"150 20"
+							pos		"312 5"
+							size		"180 20"
 						}
 						option confirm_value {
 							label	"_Never"
@@ -2083,9 +2089,9 @@ window options
 				{
 					{
 						pos		"0 90"
-						size	"512 30"
-						onMouseEnter 	{ *node:this.battle_autostand_label@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this.battle_autostand_label@color = "1 1 1 0.5" }
+						size		"512 30"
+						onMouseEnter	{ *node:this.battle_autostand_label@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this.battle_autostand_label@color = "1 1 1 0.5" }
 					}
 
 					string battle_autostand_label
@@ -2093,15 +2099,15 @@ window options
 						string		"_Stand when moving"
 						tooltip		"_Soldiers will automatically stand when ordered to move while they are crouched"
 						font		"f_verysmall_bold"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 5"
+						size		"450 20"
 						color		"1 1 1 0.5"
 					}
 
 					CheckBox battle_autostand_opt
 					{
 						current		*cvar:cl_autostand
-						pos			"472 6"
+						pos		"472 6"
 						size		"20 18"
 					}
 				}
@@ -2111,24 +2117,24 @@ window options
 				{
 					{
 						pos		"0 120"
-						size	"512 30"
-						onMouseEnter 	{ *node:this.battle_hud_label@color = "1 1 1 0.9" }
-						onMouseLeave 	{ *node:this.battle_hud_label@color = "1 1 1 0.5" }
+						size		"512 30"
+						onMouseEnter	{ *node:this.battle_hud_label@color = "1 1 1 0.9" }
+						onMouseLeave	{ *node:this.battle_hud_label@color = "1 1 1 0.5" }
 					}
 
 					string battle_hud_label
 					{
 						string		"_Battlescape interface"
 						font		"f_verysmall_bold"
-						pos			"5 5"
-						size		"200 20"
+						pos		"5 5"
+						size		"280 20"
 						color		"1 1 1 0.5"
 					}
 
 					selectbox battle_hud_opt
 					{
 						cvar		*cvar:cl_hud
-						pos			"312 5"
+						pos		"312 5"
 						size		"180 20"
 					}
 					/**
@@ -2474,7 +2480,7 @@ window options
 		panel opengl_adv_opts
 		{
 			{
-				pos			"256 256"
+				pos		"256 256"
 				size		"512 256"
 				bgcolor		"0.4 0.52 0.5 0.4"
 			}
@@ -2494,23 +2500,23 @@ window options
 			{
 				{
 					pos		"10 70"
-					size	"492 30"
-					onMouseEnter 	{ *node:this.vertexbuffers_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.vertexbuffers_label@color = "1 1 1 0.5" }
+					size		"492 30"
+					onMouseEnter	{ *node:this.vertexbuffers_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.vertexbuffers_label@color = "1 1 1 0.5" }
 				}
 
 				string vertexbuffers_label
 				{
 					string		"_Vertex Buffers"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"430 20"
 					color		"1 1 1 0.5"
 				}
 
 				CheckBox vertexbuffers_opt
 				{
 					current		*cvar:r_vertexbuffers
-					pos			"472 6"
+					pos		"470 6"
 					size		"20 18"
 				}
 			}
@@ -2519,34 +2525,34 @@ window options
 			panel multisamplebuffers
 			{
 				{
-					pos			"10 100"
+					pos		"10 100"
 					size		"492 30"
-					onMouseEnter 	{ *node:this.multisamplebuffers_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.multisamplebuffers_label@color = "1 1 1 0.5" }
+					onMouseEnter	{ *node:this.multisamplebuffers_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.multisamplebuffers_label@color = "1 1 1 0.5" }
 				}
 
 				string multisamplebuffers_label
 				{
 					string		"_Multisample Buffers"
 					tooltip		"_Antialias GL primitives (more buffers create smoother edges)"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"430 20"
 					color		"1 1 1 0.5"
 				}
 
 				string multisamplebuffers_value
 				{
 					string		*cvar:r_multisample
-					pos			"452 5"
+					pos		"452 5"
 					size		"40 20"
 				}
 
 				Spinner multisamplebuffers_change
 				{
 					current		*cvar:r_multisample
-					pos			"472 6"
-					min			0
-					max			4
+					pos		"472 6"
+					min		0
+					max		4
 					delta		1
 				}
 			}
@@ -2555,34 +2561,34 @@ window options
 			panel swapinterval
 			{
 				{
-					pos			"10 130"
+					pos		"10 130"
 					size		"492 30"
-					onMouseEnter 	{ *node:this.swapinterval_label@color = "1 1 1 0.9" }
-					onMouseLeave 	{ *node:this.swapinterval_label@color = "1 1 1 0.5" }
+					onMouseEnter	{ *node:this.swapinterval_label@color = "1 1 1 0.9" }
+					onMouseLeave	{ *node:this.swapinterval_label@color = "1 1 1 0.5" }
 				}
 
 				string swapinterval_label
 				{
 					string		"_Swap Interval"
 					tooltip		"_Higher values will typically provide better results"
-					pos			"5 5"
-					size		"200 20"
+					pos		"5 5"
+					size		"430 20"
 					color		"1 1 1 0.5"
 				}
 
 				string swapinterval_value
 				{
 					string		*cvar:r_swapinterval
-					pos			"452 5"
+					pos		"452 5"
 					size		"40 20"
 				}
 
 				Spinner swapinterval_change
 				{
 					current		*cvar:r_swapinterval
-					pos			"472 6"
-					min			0
-					max			2
+					pos		"472 6"
+					min		0
+					max		2
 					delta		1
 				}
 			}

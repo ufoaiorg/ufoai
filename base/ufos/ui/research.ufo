@@ -344,7 +344,7 @@ window research extends BaseMgmtWindow
 	// Laboratory count
 	BuildingSpace laboratoy
 	{
-		{ pos "739 5" }
+		{ pos "739 25" }
 
 		button smlicon { icon	"icons/building_lab" }
 		string label { string	"_Laboratory" }

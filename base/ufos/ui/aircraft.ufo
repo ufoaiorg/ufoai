@@ -257,7 +257,7 @@ window iaircraft
 
 	BuildingSpace dropship
 	{
-		{ pos "739 0" }
+		{ pos "739 25" }
 
 		button smlicon { icon	"icons/building_hangar" }
 		string label { string	"_Dropship Hangar" }
@@ -265,7 +265,7 @@ window iaircraft
 	}
 	BuildingSpace intercept
 	{
-		{ pos "739 25" }
+		{ pos "739 50" }
 
 		button smlicon { icon	"icons/building_intercept" }
 		string label { string	"_Interceptor Hangar" }

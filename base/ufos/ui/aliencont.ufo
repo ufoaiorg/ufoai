@@ -341,7 +341,7 @@ window aliencont
 	// Aliencontainment count
 	BuildingSpace Aliencontainment
 	{
-		{ pos "739 0" }
+		{ pos "739 25" }
 
 		button smlicon { icon	"icons/building_aliencontainment" }
 		string label { string	"_Alien Containment" }
