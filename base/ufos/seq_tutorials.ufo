@@ -1,392 +1,1940 @@
-tutorial gameplay
+// ==============================================
+// This basic tutorial presents the main screens of the game
+// ==============================================
+tutorial introduction
 {
-	name		"_GAMEPLAY"
-	sequence	tut_gameplay
+	name		"_INTRODUCTION"
+	sequence	tut_introduction
 }
 
-sequence tut_gameplay
+sequence tut_introduction
 {
-	music 		"Crystan-Tutorial"
-	// ==============================================
-	// precache the screenshots
-	precache pics (
-		"tutorial/gameplay1a"
-		"tutorial/gameplay1b"
-		"tutorial/gameplay1c"
-		"tutorial/gameplay2a"
-		"tutorial/gameplay2b"
-		"tutorial/gameplay2c"
-		"tutorial/gameplay3a"
-		"tutorial/gameplay4a"
-		"tutorial/gameplay4b"
-		"tutorial/gameplay4c"
-		"tutorial/gameplay5a"
-		"tutorial/gameplay5b"
-		"tutorial/gameplay5c"
-		"tutorial/gameplay6a"
-		"tutorial/gameplay6b"
-		"tutorial/gameplay7a"
-		"tutorial/gameplay8a"
-		"tutorial/gameplay8b"
-	)
-
-	obj2d gameplay_welcome
+	// =============== INIT. ========================
+	// "Click to continue" message
+	obj2d clic_to_continue
 	{
-		text	"_Some notes about the gameplay"
-		pos		"512 0"
-		align	"uc"
-		color	"0 0.6 0 1"
-		speed	"0 10"
-		font	"f_big"
-	}
-	obj2d gameplay_continue_txt
-	{
-		text	"_Click to exit"
-		pos		"512 750"
-		align	"uc"
-		color	"0 0.6 0 1"
+		text	"_Left-click to continue. 'Esc' to exit"
 		font	"f_small"
+		color	"0.5 1 1 0.5"
+		pos		"512 750"
+		align	uc
 	}
-	wait 4
-	obj2d gameplay_welcome { speed "0 0" }
 
-// ========================================
-
-	obj2d gameplay_txt1
+	// Title
+	obj2d intro_title
 	{
-		text	"_Set up a base"
-		pos		"512 100"
-		align	"uc"
-		color	"1 1 1 1"
+		text	"_Introduction"
 		font	"f_big"
+		color	"0.5 1 1 0.5"
+		pos		"512 0"
+		align	uc
+		speed	"0 10"
 	}
+	wait 2
+
+	obj2d intro_title { speed	"0 0" }
 	wait 1
 
-	obj2d gameplay_pic1a
-	{
-		image	"pics/tutorial/gameplay1a"
-		align	"ul"
-		pos		"64 140"
-	}
-	wait 2
-	obj2d gameplay_pic1b
-	{
-		image	"pics/tutorial/gameplay1b"
-		align	"ul"
-		pos		"384 140"
-	}
-	wait 2
-	obj2d gameplay_pic1c
-	{
-		image	"pics/tutorial/gameplay1c"
-		align	"ul"
-		pos		"704 140"
-	}
-	wait 4
-	rem gameplay_pic1a
-	wait 0.5
-	rem gameplay_pic1b
-	wait 0.5
-	rem gameplay_pic1c
-	wait 0.5
+	// Music
+	music "Crystan-Tutorial"
 
-	obj2d gameplay_txt2
+	// precaching screenshots
+	precache pics (
+		"tutorial/introBattlescape"
+		"tutorial/introCampaignAircraft"
+		"tutorial/introCampaignBase"
+		"tutorial/introCampaignFunding"
+		"tutorial/introCampaignResearch"
+		"tutorial/introCampaignSoldiers"
+		"tutorial/introCampaignStatistics"
+		"tutorial/introCampaignWorkshop"
+		"tutorial/introGeoscape"
+		"tutorial/introMultiplayer"
+		"tutorial/introSkirmish"
+	)
+	
+	// ================ TUTORIAL ====================
+	// Battlescape and geoscape
+	obj2d intro_geoscape_battlescape_txt
 	{
-		text	"_Hire employees: scientists, soldiers"
-		pos		"512 125"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
+		text		"_UFO:Alien Invasion is divided into 2 main views: the battlescape and the geoscape."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
 	}
-	wait 2
-	obj2d gameplay_pic2a
-	{
-		image	"pics/tutorial/gameplay2a"
-		align	"ul"
-		pos		"64 165"
-	}
-	wait 2
-	obj2d gameplay_pic2b
-	{
-		image	"pics/tutorial/gameplay2b"
-		align	"ul"
-		pos		"384 165"
-	}
-	wait 2
-	obj2d gameplay_pic2c
-	{
-		image	"pics/tutorial/gameplay2c"
-		align	"ul"
-		pos		"704 165"
-	}
-	wait 4
-	rem gameplay_pic2a
-	wait 0.5
-	rem gameplay_pic2b
-	wait 0.5
-	rem gameplay_pic2c
-	wait 0.5
+	wait 8
 
-	obj2d gameplay_txt3
-	{
-		text	"_Start some research"
-		pos		"512 150"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
+	rem intro_geoscape_battlescape_txt
 	wait 1
-	obj2d gameplay_pic3a
-	{
-		image	"pics/tutorial/gameplay3a"
-		align	"ul"
-		pos		"384 190"
-	}
-	wait 4
-	rem gameplay_pic3a
-	wait 0.5
 
-	obj2d gameplay_txt4
+	obj2d intro_battlescape_txt
 	{
-		text	"_Buy weapons and equipment"
-		pos		"512 175"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
+		text		"_The battlescape is a turn-based view used to battle against opponents during campaigns, or skirmish, or multiplayer games."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
 	}
+	obj2d intro_battlescape_img
+	{
+		image		"pics/tutorial/introBattlescape"
+		pos			"60 30"
+		relative	true
+	}
+	wait 10
+
+	rem intro_battlescape_img
+	rem intro_battlescape_txt
 	wait 1
-	obj2d gameplay_pic4a
-	{
-		image	"pics/tutorial/gameplay4a"
-		align	"ul"
-		pos		"64 215"
-	}
-	wait 2
-	obj2d gameplay_pic4b
-	{
-		image	"pics/tutorial/gameplay4b"
-		align	"ul"
-		pos		"384 215"
-	}
-	wait 2
-	obj2d gameplay_pic4c
-	{
-		image	"pics/tutorial/gameplay4c"
-		align	"ul"
-		pos		"704 215"
-	}
-	wait 4
-	rem gameplay_pic4a
-	wait 0.5
-	rem gameplay_pic4b
-	wait 0.5
-	rem gameplay_pic4c
-	wait 0.5
 
-	obj2d gameplay_txt5
+	obj2d intro_geoscape_txt
 	{
-		text	"_Equip your aircraft with soldiers and weapons"
-		pos		"512 200"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
+		text		"_The geoscape is a real-time view used to follow the scenario that unfolds during campaigns."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
 	}
-	wait 2
-	obj2d gameplay_pic5a
+	obj2d intro_geoscape_img
 	{
-		image	"pics/tutorial/gameplay5a"
-		align	"ul"
-		pos		"64 240"
+		image		"pics/tutorial/introGeoscape"
+		pos			"60 30"
+		relative 	true
 	}
-	wait 2
-	obj2d gameplay_pic5b
-	{
-		image	"pics/tutorial/gameplay5b"
-		align	"ul"
-		pos		"384 240"
-	}
-	wait 2
-	obj2d gameplay_pic5c
-	{
-		image	"pics/tutorial/gameplay5c"
-		align	"ul"
-		pos		"704 240"
-	}
-	wait 4
-	rem gameplay_pic5a
-	wait 0.5
-	rem gameplay_pic5b
-	wait 0.5
-	rem gameplay_pic5c
-	wait 0.5
+	wait 10
 
-//%%
-	obj2d gameplay_txt6
-	{
-		text	"_Speed up time on geoscape until the first alien mission appears"
-		pos		"512 225"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 2
-	obj2d gameplay_pic6a
-	{
-		image	"pics/tutorial/gameplay6a"
-		align	"ul"
-		pos		"172 265"
-	}
-	wait 2
-	obj2d gameplay_pic6b
-	{
-		image	"pics/tutorial/gameplay6b"
-		align	"ul"
-		pos		"600 265"
-	}
-	wait 4
-	rem gameplay_pic6a
-	wait 0.5
-	rem gameplay_pic6b
-	wait 0.5
+	rem intro_geoscape_img
+	rem intro_geoscape_txt
+	wait 1
 
-	obj2d gameplay_txt7
+	// Campaign mode
+	obj2d intro_campaign_txt
 	{
-		text	"_Select the mission (doubleclick) and choose aircraft from list"
-		pos		"512 250"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
+		text		"_During campaigns, you have to manage bases, aircraft, soldiers, scientists, and engineers. You will need money to win: monitor statistics, and funding carefully."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
 	}
-	wait 2
-	obj2d gameplay_pic7a
+	obj2d intro_campaign_base_img
 	{
-		image	"pics/tutorial/gameplay7a"
-		align	"ul"
-		pos		"384 290"
+		image		"pics/tutorial/introCampaignBase"
+		pos			"60 30"
+		relative 	true
 	}
-	wait 4
-	rem gameplay_pic7a
-	wait 0.5
+	wait 12
 
-	obj2d gameplay_txt8
-	{
-		text	"_Hit the start or auto-mission button to fight the aliens"
-		pos		"512 275"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 2
-	obj2d gameplay_pic8a
-	{
-		image	"pics/tutorial/gameplay8a"
-		align	"ul"
-		pos		"172 315"
-	}
-	wait 2
-	obj2d gameplay_pic8b
-	{
-		image	"pics/tutorial/gameplay8b"
-		align	"ul"
-		pos		"600 315"
-	}
-	wait 4
+	rem intro_campaign_base_img
+	wait 1
 
-
-	obj2d gameplay_txt9
+	obj2d intro_campaign_aircraft_img
 	{
-		text	"_For further instructions watch the tactical mission tutorial"
-		pos	"512 550"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
+		image		"pics/tutorial/introCampaignAircraft"
+		pos			"60 30"
+		relative 	true
 	}
+	wait 6
+
+	rem intro_campaign_aircraft_img
+	wait 1
+
+	obj2d intro_campaign_soldiers_img
+	{
+		image		"pics/tutorial/introCampaignSoldiers"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 6
+
+	rem intro_campaign_soldiers_img
+	wait 1
+
+	obj2d intro_campaign_scientists_img
+	{
+		image		"pics/tutorial/introCampaignResearch"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 6
+
+	rem intro_campaign_scientists_img
+	wait 1
+
+	obj2d intro_campaign_engineers_img
+	{
+		image		"pics/tutorial/introCampaignWorkshop"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 6
+
+	rem intro_campaign_engineers_img
+	wait 1
+
+	obj2d intro_campaign_statistics_img
+	{
+		image		"pics/tutorial/introCampaignStatistics"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 6
+
+	rem intro_campaign_statistics_img
+	wait 1
+
+	obj2d intro_campaign_funding_img
+	{
+		image		"pics/tutorial/introCampaignFunding"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 6
+
+	rem intro_campaign_funding_img
+	rem intro_campaign_txt
+	wait 1
+
+	// Skirmish
+	obj2d intro_skirmish_txt
+	{
+		text		"_Skirmish mode allows you to battle on a chosen map: your squad (Phalanx, or aliens) against another squad controlled by the computer."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d intro_skirmish_img
+	{
+		image		"pics/tutorial/introSkirmish"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 10
+
+	rem intro_skirmish_img
+	rem intro_skirmish_txt
+	wait 1
+
+	// Multiplayer mode	
+	obj2d intro_multiplayer_txt
+	{
+		text		"_Multiplayer mode allows you to battle on a chosen map: your squad (Phalanx, or aliens) against, or with, other squads controlled by human players. Start a server if you want to host a game, or connect to the lobby to wait for an active server."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d intro_multiplayer_img
+	{
+		image		"pics/tutorial/introMultiplayer"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 16
+
+	rem intro_multiplayer_img
+	rem intro_multiplayer_txt
+	wait 1
+
+	// =============== END OF TUTORIAL ==============	
+	rem intro_title
 	music "van_theme"
-	wait 300
+	wait 2
 
-	rem gameplay_pic8a
-	rem gameplay_pic8b
-	rem gameplay_txt9
-	rem gameplay_txt8
-	rem gameplay_txt7
-	rem gameplay_txt6
-	rem gameplay_txt5
-	rem gameplay_txt4
-	rem gameplay_txt3
-	rem gameplay_txt2
-	rem gameplay_txt1
-	rem gameplay_continue_txt
-	rem gameplay_welcome
+	obj2d the_end
+	{
+		text	"_The end"
+		pos		"512 0"
+		align	uc
+		color	"0.5 1 1 0.5"
+		font	"f_big"
+		speed	"0 10"
+	}
+	wait 4
+
+	obj2d the_end { speed	"0 0" }
+	wait 1
+
+	rem the_end
+	rem clic_to_continue
 }
 
 // ==============================================
-
-tutorial tacticalmission
+// This tutorial presents the Earth view of the geoscape
+// ==============================================
+tutorial campaign_part1
 {
-	name	"_TACTICAL MISSION"
-	sequence	tut_tacticalmission
+	name		"_CAMPAIGNS: PART 1"
+	sequence	tut_campaign_part1
 }
 
-sequence tut_tacticalmission
+sequence tut_campaign_part1
 {
-	music 		"Crystan-Tutorial"
-	// ==============================================
-	// just precaching the background image
+	// =============== INIT. ========================
+	// "Click to continue" message
+	obj2d clic_to_continue
+	{
+		text	"_Left-click to continue. 'Esc' to exit"
+		font	"f_small"
+		color	"0.5 1 1 0.5"
+		pos		"512 750"
+		align	uc
+	}
+
+	// Title
+	obj2d campaign1_title
+	{
+		text	"_Campaigns: part 1"
+		pos		"512 0"
+		align	uc
+		color	"0.5 1 1 0.5"
+		font	"f_big"
+		speed	"0 10"
+	}
+	wait 2
+
+	obj2d campaign1_title { speed	"0 0" }
+	wait 1
+
+	// Music
+	music "azrael1"
+
+	// precaching the screenshots
 	precache pics (
-		"tutorial/tactical1"
+		"tutorial/campaign1AirCombat"
+		"tutorial/campaign1AirDefence"
+		"tutorial/campaign1DisplayExample"
+		"tutorial/campaign1DisplayOptions
+		"tutorial/campaign1Funding"
+		"tutorial/campaign1Installations"
+		"tutorial/campaign1MailclientAndUFOpaedia"
+		"tutorial/campaign1Mails"
+		"tutorial/campaign1Messages"
+		"tutorial/campaign1MissionSelection"
+		"tutorial/campaign1MissionStart"
+		"tutorial/campaign1Statistics"
+		"tutorial/campaign1StatisticsMenu"
+		"tutorial/campaign1TimeFlow"
 	)
 
-
-	// ==============================================
-	// welcome message
-	obj2d tactical_welcome
+	// ================ TUTORIAL ====================
+	// Foreword
+	obj2d campaign1_installations_txt
 	{
-		text	"_Tactical mission tutorial"
-		pos	"512 0"
-		align	"uc"
-		color	"0 0.6 0 1"
-		speed	"0 40"
+		text		"_During campaigns, you will often use the view of the geoscape that shows Earth. You create your installations there: bases to increase your strength, radar towers to expand your vision, SAM sites to protect yourself, and UFO yards to store UFOs."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_installations_img
+	{
+		image		"pics/tutorial/campaign1Installations"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_installations_img
+	rem campaign1_installations_txt
+	wait 1
+
+	// Time flow
+	obj2d campaign1_time_flow_txt
+	{
+		text	"_You can speed up time until events occur: installations built on Earth, spotted or crashed UFOs, completed researches, refueled aircraft, and so on. Many things can happen in a short time..."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_time_flow_img
+	{
+		image		"pics/tutorial/campaign1TimeFlow"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_time_flow_img
+	rem campaign1_time_flow_txt
+	wait 1
+
+	// Pause and messages
+	obj2d geoscape_messages_txt
+	{
+		text	"_Events are logged in a list at the top of the geosphere, and may automatically pause the game. You can change the default settings with the 'Message settings' button, and you can change the size of the list by pressing the button on the left of date and time."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_messages_img
+	{
+		image		"pics/tutorial/campaign1Messages"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_messages_img
+	rem geoscape_messages_txt
+	wait 1
+
+	// Display and options
+	obj2d campaign1_display_options_txt
+	{
+		text		"_You can rotate the globe, or jump to different places on the planet. You can change game options. And filters allow you to see nations' borders, or radars' ranges."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_display_options_img
+	{
+		image		"pics/tutorial/campaign1DisplayOptions"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_display_options_img
+	rem campaign1_display_options_txt
+	wait 1
+
+	obj2d campaign1_display_example_txt
+	{
+		text		"_For example, with some filters on..."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_display_example_img
+	{
+		image		"pics/tutorial/campaign1DisplayExample"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 10
+
+	rem campaign1_display_example_img
+	rem campaign1_display_example_txt
+	wait 1
+
+	// UFOpedia, mailclient
+	obj2d campaign1_ufopaedia_mailclient_txt
+	{
+		text		"_Most of the information is recorded into a database called UFOpaedia: it describes nearly everything you meet during the game. A mailclient stores the mails that feed the UFOpaedia, and enhance storytelling."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_ufopaedia_mailclient_img
+	{
+		image		"pics/tutorial/campaign1MailclientAndUFOpaedia"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_ufopaedia_mailclient_img
+	rem campaign1_ufopaedia_mailclient_txt
+	wait 1
+
+	obj2d campaign1_mails_txt
+	{
+		text		"_Mails often pop into the mailbox when new elements arise, for example after scientific breakthroughs or after missions."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_mails_img
+	{
+		image		"pics/tutorial/campaign1Mails"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_mails_img
+	rem campaign1_mails_txt
+	wait 1
+
+	// Air defence
+	obj2d campaign1_air_defence_txt
+	{
+		text		"_Shooting down UFOs with air-defence is a common way to get missions. Either use your ground defences, or your aircraft: double-click on an enemy aircraft, and pick one of your interceptor from the list."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_air_defence_img
+	{
+		image		"pics/tutorial/campaign1AirDefence"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_air_defence_img
+	rem campaign1_air_defence_txt
+	wait 1
+
+	obj2d campaign1_air_combat_txt
+	{
+		text		"_The red circles show weapons' ranges; the thin red line leads to the interception's area. To change your orders: click on your aircraft, and pick one order in the list, or click somewhere on the map. The game automatically manages fuel for you."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_air_combat_img
+	{
+		image		"pics/tutorial/campaign1AirCombat"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_air_combat_img
+	rem campaign1_air_combat_txt
+	wait 1
+
+	// Mission picking
+	obj2d campaign1_mission_selection_txt
+	{
+		text		"_To select missions, double-click on a mission site, and pick one of your transport aircraft from the list. Watch carefully the ETA (Estimated Time of Arrival), which is the time needed to reach the site, and to come back to base."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_mission_selection_img
+	{
+		image		"pics/tutorial/campaign1MissionSelection"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_mission_selection_img
+	rem campaign1_mission_selection_txt
+	wait 1
+	
+	obj2d campaign1_mission_start_txt
+	{
+		text		"_When your aircraft reaches the place you selected, hit 'Enter' to fight on the battlescape, or press 'Auto mission' to automatically solve the battle. Be careful: 'Auto mission' may lead to terrible results if you underestimate enemy forces."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_mission_start_img
+	{
+		image		"pics/tutorial/campaign1MissionStart"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_mission_start_img
+	rem campaign1_mission_start_txt
+	wait 1	
+
+	// Fundings
+	obj2d campaign1_statistics_menu_txt
+	{
+		text		"_The more you achieve missions, the better your statistics, the greater the happiness of nations, and... the higher your funding. Ignoring, or (worse) loosing missions, greatly damages your reputation."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_statistics_menu_img
+	{
+		image		"pics/tutorial/campaign1StatisticsMenu"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_statistics_menu_img
+	rem campaign1_statistics_menu_txt
+	wait 1
+
+	obj2d campaign1_statistics_txt
+	{
+		text		"_Statistics show how many missions you won or lost, how many installations you own, how many employees work for you, how much you spent, and how much the nations gave to you. You can have a closer look to this by clicking on nations' names."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_statistics_img
+	{
+		image		"pics/tutorial/campaign1Statistics"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_statistics_img
+	rem campaign1_statistics_txt
+	wait 1
+
+	obj2d campaign1_funding_txt
+	{
+		text		"_The amount you receive increases if nations feel certain that you care about alien invasion on their territories; it decreases if you fail to protect their population, and land. Decreasing funding is a serious clue that you missed something..."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign1_funding_img
+	{
+		image		"pics/tutorial/campaign1Funding"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign1_funding_img
+	rem campaign1_funding_txt
+	wait 1	
+
+	// =============== END OF TUTORIAL ==============	
+	rem campaign1_title
+	music "van_theme"
+	wait 1
+
+	obj2d the_end
+	{
+		text	"_The end"
+		pos		"512 0"
+		align	uc
+		color	"0.5 1 1 0.5"
 		font	"f_big"
+		speed	"0 10"
 	}
 	wait 4
-	obj2d tactical_welcome { speed	"0 0" }
+
+	obj2d the_end { speed	"0 0" }
+	wait 1
+
+	rem the_end
+	rem clic_to_continue
+}
+
+// ==============================================
+// This tutorial focuses on base management
+// ==============================================
+tutorial campaign_part_2
+{
+	name		"_CAMPAIGNS: PART 2"
+	sequence	tut_campaign_part2
+}
+
+sequence tut_campaign_part2
+{
+	// =============== INIT. ========================
+	// "Click to continue" message
+	obj2d clic_to_continue
+	{
+		text	"_Left-click to continue. 'Esc' to exit"
+		font	"f_small"
+		color	"0.5 1 1 0.5"
+		pos		"512 750"
+		align	uc
+	}
+
+	// Title
+	obj2d campaign2_title
+	{
+		text	"_Campaigns: part 2"
+		pos		"512 0"
+		align	uc
+		color	"0.5 1 1 0.5"
+		font	"f_big"
+		speed	"0 10"
+	}
 	wait 2
-	rem tactical_welcome
 
+	obj2d campaign2_title { speed	"0 0" }
+	wait 1
 
-	// ==============================================
+	// Music
+	music "Marine02"
+
+	// precaching the screenshots
+	precache pics (
+		"tutorial/campaign2AircraftCrew"
+		"tutorial/campaign2AircraftEquipment"
+		"tutorial/campaign2AlienContainment"
+		"tutorial/campaign2Base1"
+		"tutorial/campaign2Base2"
+		"tutorial/campaign2Base2Facilites"
+		"tutorial/campaign2BaseGUIBottom"
+		"tutorial/campaign2BaseGUIRight"
+		"tutorial/campaign2BaseGUITop"
+		"tutorial/campaign2BuildingHomeBase"
+		"tutorial/campaign2HireFire"
+		"tutorial/campaign2Hospital"
+		"tutorial/campaign2Market"
+		"tutorial/campaign2Research1"
+		"tutorial/campaign2Research2"
+		"tutorial/campaign2Soldiers"
+		"tutorial/campaign2SurfaceAccess"
+		"tutorial/campaign2VideoSurveillance"
+		"tutorial/campaign2Workshop"
+	)
+
+	// ================ TUTORIAL ====================
+	// Building Home base
+	obj2d campaign2_first_base_txt
+	{
+		text		"_A campaign begins after you have built your home base. Remember that aliens are prone to attack highly populated areas."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_first_base_img
+	{
+		image		"pics/tutorial/campaign2BuildingHomeBase"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 14
+
+	rem campaign2_first_base_img
+	rem campaign2_first_base_txt
+	wait 1
+
+	// Layouts of bases
+	obj2d campaign2_base_1_layout_txt
+	{
+		text		"_The first base comes with facilities, employees, equipment, aircraft, and money. Amounts depend on the level of difficulty of the campaign."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_base_1_layout_img
+	{
+		image		"pics/tutorial/campaign2Base1"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 14
+
+	rem campaign2_base_1_layout_img
+	rem campaign2_base_1_layout_txt
+	wait 1
+
+	obj2d campaign2_base_n_layout_txt
+	{
+		text		"_Other bases start with an entrance only, and few indestructible rocks that hinder development. Just pick facilities in the list to begin building in empty spaces. One power plant, and one command centre are mandatory to make a base operational."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_base_n_layout_img
+	{
+		image		"pics/tutorial/campaign2Base2"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 14
+
+	rem campaign2_base_n_layout_img
+	obj2d campaign2_base_n_facilities_img
+	{
+		image		"pics/tutorial/campaign2Base2Facilites"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 14
+
+	rem campaign2_base_n_facilities_img
+	rem campaign2_base_n_layout_txt
+	wait 1
+
+	// Facilities with surface access
+	obj2d campaign2_surface_access_txt
+	{
+		text		"_When arranging your bases, remember that some facilities have direct access to surface: the entrance, the dropship hangar, the radar (but not the advanced radar), and the workshop. During battles, enemies can come from there; or you can try to flank them."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_surface_access_img
+	{
+		image		"pics/tutorial/campaign2SurfaceAccess"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_surface_access_img
+	rem campaign2_surface_access_txt
+	wait 1
+
+	// First steps with the graphical user interface
+	obj2d campaign2_GUI_top_txt
+	{
+		text		"_Using the interface is easy. Top of the screen: to go back to the geosphere, click on the globe (or hit 'Esc'); to rename a base, click on its name; to switch between bases, use arrows, or the tiny squares sketching in your bases."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_GUI_top_img
+	{
+		image		"pics/tutorial/campaign2BaseGUITop"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_GUI_top_img
+	rem campaign2_GUI_top_txt
+	wait 1
+
+	obj2d campaign2_GUI_right_txt
+	{
+		text		"_Menu on the right and central view: to enter buildings, click on icons or on silhouettes, or click on the facilities of the base (right-click to destroy them). Notice the short overviews about facilities, research, and production."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_GUI_right_img
+	{
+		image		"pics/tutorial/campaign2BaseGUIRight"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_GUI_right_img
+	rem campaign2_GUI_right_txt
+	wait 1
+
+	obj2d campaign2_GUI_bottom_txt
+	{
+		text		"_Bottom of the screen: click on employees' summary to access the 'Hire and fire' window; click on buttons to access game options, or UFOpaedia, or the 'Transfer' window, or detailed statistics about the current base."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_GUI_bottom_img
+	{
+		image		"pics/tutorial/campaign2BaseGUIBottom"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_GUI_bottom_img
+	rem campaign2_GUI_bottom_txt
+	wait 1
+
+	// Recruitement
+	obj2d campaign2_hire_and_fire_txt
+	{
+		text		"_The 1st of every month, nations propose some candidates: while in a base, use checkboxes near names to hire or to fire them; note that soldiers and pilots are not all equally gifted. All employees stay in living quarters and come without any equipment."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_hire_and_fire_img
+	{
+		image		"pics/tutorial/campaign2HireFire"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_hire_and_fire_img
+	rem campaign2_hire_and_fire_txt
+	wait 1
+
+	// Market
+	obj2d campaign2_market_txt
+	{
+		text		"_The market permits you to buy or to sell items: horizontal tabs sort items by types; use arrows to buy or to sell objects, and check the summary at the bottom of the screen to get quick information about them. Keep unknown items until research was done."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_market_img
+	{
+		image		"pics/tutorial/campaign2Market"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_market_img
+	rem campaign2_market_txt
+	wait 1
+
+	// Production
+	obj2d campaign2_workshop_txt
+	{
+		text		"_The workshop is to manufacture items that can't be bought, and to disassemble UFOs to recycle their components. Engineers gather automatically to assemble the first element in the production waiting list till required quantities are done; then they shift to their second task; and so on."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_workshop_img
+	{
+		image		"pics/tutorial/campaign2Workshop"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_workshop_img
+	rem campaign2_workshop_txt
+	wait 1
+
+	// Research
+	obj2d campaign2_research_1_txt
+	{
+		text		"_Research is one of the key to victory. Thus, you have to hire scientists, and to build laboratories, and then to assign your employees on research projects. Research starts with few matters..."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_research_1_img
+	{
+		image		"pics/tutorial/campaign2Research1"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_research_1_img
+	rem campaign2_research_1_txt
+	wait 1
+
+	obj2d campaign2_research_2_txt
+	{
+		text		"_But topics increase quickly while you play, and some proposals are only available after you discovered their prerequisites. Studying alien species, alien artifacts, and alien UFOs is of vital importance."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_research_2_img
+	{
+		image		"pics/tutorial/campaign2Research2"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_research_2_img
+	rem campaign2_research_2_txt
+	wait 1
+
+	// Alien containment
+	obj2d campaign2_alien_containment_txt
+	{
+		text		"_The alien containment allows research on aliens, dead or alive. One alien containment should be enough to study nearly all the creatures you will meet; if you need space, build another one, or kill some prisoners."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_alien_containment_img
+	{
+		image		"pics/tutorial/campaign2AlienContainment"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_alien_containment_img
+	rem campaign2_alien_containment_txt
+	wait 1
+
+	// Aircraft
+	obj2d campaign2_aircraft_equipment_txt
+	{
+		text		"_Use dropships to drop soldiers to their missions, and interceptor planes to intercept enemy aircraft. Equip their slots to improve their performances, and choose their crews."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}	
+	obj2d campaign2_aircraft_equipment_img
+	{
+		image		"pics/tutorial/campaign2AircraftEquipment"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_aircraft_equipment_img
+	rem campaign2_aircraft_equipment_txt
+	wait 1
+
+	obj2d campaign2_aircraft_crew_txt
+	{
+		text		"_Use checkboxes near names to select a pilot, and soldiers to perform missions. Check the equipment of your aircraft, and soldiers, before lifting off."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_aircraft_crew_img
+	{
+		image		"pics/tutorial/campaign2AircraftCrew"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_aircraft_crew_img
+	rem campaign2_aircraft_crew_txt
+	wait 1
+
+	// Soldiers
+	obj2d campaign2_soldiers_txt
+	{
+		text		"_Soldiers must be equipped before battles: hands, belt, holster, headgear, or backpack. Drag-and-drop to equip a soldier, or right-click on unused items. To remove ammunition from an equipped weapon, right-click on it. Check equipment's properties at the bottom of the screen."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_soldiers_img
+	{
+		image		"pics/tutorial/campaign2Soldiers"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_soldiers_img
+	rem campaign2_soldiers_txt
+	wait 1
+
+	obj2d campaign2_video_surveillance_txt
+	{
+		text		"_When defending a base, place a soldier in the command centre's video surveillance room. He will use the security cameras to locate enemies inside and outside the facilities of the base."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_video_surveillance_img
+	{
+		image		"pics/tutorial/campaign2VideoSurveillance"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem campaign2_video_surveillance_img
+	rem campaign2_video_surveillance_txt
+	wait 1
+
+	// Hospital
+	obj2d campaign2_hospital_txt
+	{
+		text		"_Wounded soldiers heal faster if there is a hospital in the base."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d campaign2_hospital_img
+	{
+		image		"pics/tutorial/campaign2Hospital"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 16
+
+	rem campaign2_hospital_img
+	rem campaign2_hospital_txt
+	wait 1
+
+	// =============== END OF TUTORIAL ==============	
+	rem campaign2_title
+	music "van_theme"
+	wait 1
+
+	obj2d the_end
+	{
+		text	"_The end"
+		pos		"512 0"
+		align	uc
+		color	"0.5 1 1 0.5"
+		font	"f_big"
+		speed	"0 10"
+	}
+	wait 4
+
+	obj2d the_end { speed	"0 0" }
+	wait 1
+
+	rem the_end
+	rem clic_to_continue
+}
+
+// ==============================================
+// This tutorial presents the way of handling tactical battles, whatever the game mode (campaigns, skirmish, multiplayer)
+// ==============================================
+tutorial tactical_battle
+{
+	name		"_TACTICAL BATTLES"
+	sequence	tut_tactical_battle
+}
+
+sequence tut_tactical_battle
+{
+	// =============== INIT. ========================
+	// "Click to continue" message
+	obj2d clic_to_continue
+	{
+		text	"_Left-click to continue. 'Esc' to exit"
+		font	"f_small"
+		color	"0.5 1 1 0.5"
+		pos		"512 750"
+		align	uc
+	}
+
+	// Title
+	obj2d battle_title
+	{
+		text	"_Tactical battles"
+		pos		"512 0"
+		align	uc
+		color	"0.5 1 1 0.5"
+		font	"f_big"
+		speed	"0 10"
+	}
+	wait 2
+
+	obj2d battle_title { speed	"0 0" }
+	wait 1
+
+	// Music
+	music "dawn"
+
+	// precaching screenshots
+	precache pics (
+		"tutorial/battleEquipment"
+		"tutorial/battleFireAndSmoke"
+		"tutorial/battleGUIColors"
+		"tutorial/battleGUIRight"
+		"tutorial/battleGUISoldiersActions"
+		"tutorial/battleGUISoldiersInfo"
+		"tutorial/battleGUITop"
+		"tutorial/battleHealing"
+		"tutorial/battleIRGoggles"
+		"tutorial/battleMainMenu"
+		"tutorial/battleMaps"
+		"tutorial/battleReactionFireIntro"
+		"tutorial/battleReactionFire"
+		"tutorial/battleWeapons"
+	)
+
+	// ================ TUTORIAL ====================
+	// Foreword	
+	obj2d battle_foreword_txt
+	{
+		text		"_Tactical battles are at the core of UFO: Alien Invasion, in campaign, skirmish, or multiplayer games. Saving during combats is impossible, because choices and actions have to matter. Think first!"
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_foreword_img
+	{
+		image		"pics/tutorial/battleMainMenu"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 14
+
+	rem battle_foreword_img
+	rem battle_foreword_txt
+	wait 1
+
+	// Maps
+	obj2d battle_maps_txt
+	{
+		text		"_Battles take place on very different maps, which trigger close combat situations, or long range shootings; moreover, combats occur during day or night time. Equip your soldier consequently, and expect for the unexpected."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_maps_img
+	{
+		image		"pics/tutorial/battleMaps"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 24
+
+	rem battle_maps_img
+	rem battle_maps_txt
+	wait 1
+
+	// Equipment
+	obj2d battle_equipment_txt
+	{
+		text		"_Equip your soldiers according to their skills and abilities, and don't overload them. Drag-and-drop to equip a soldier, or right-click on unused items; to remove ammunition from an equipped weapon, right-click on the weapon. Check equipment's properties at the bottom of the screen."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_equipment_img
+	{
+		image		"pics/tutorial/battleEquipment"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem battle_equipment_img
+	rem battle_equipment_txt
+	wait 1
+	
+	obj2d battle_weapons_txt
+	{
+		text		"_Primary weapons are of most common use. Heavy weapons deal heavy damages, but are cumbersome, and slow to operate. Secondary weapons prove useful when soldiers lack strength to carry a full equipment, or when they need a single-handed weapon to react quickly."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_weapons_img
+	{
+		image		"pics/tutorial/battleWeapons"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem battle_weapons_img
+	rem battle_weapons_txt
+	wait 1
+
+	obj2d battle_IRgoggles_txt
+	{
+		text		"_As a rule, scout before shooting. Use IR goggles to see through obstacles (walls, floors, smoke, etc.) at close range. Note that some weapons, like sniper weapons, fire powerful shots that partially pierce through materials."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_IRgoggles_img
+	{
+		image		"pics/tutorial/battleIRGoggles"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem battle_IRgoggles_img
+	rem battle_IRgoggles_txt
+	wait 1
+
+	obj2d battle_grenades_txt
+	{
+		text		"_Offensive grenades are useful for indirect fire. Flasbangs stun enemies during one turn (the grenade must explode just in front of them). Smoke grenades cover your troops. Incendiary grenades deal damages, and block strategic passages. Smoke and fire last few rounds."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_grenades_img
+	{
+		image		"pics/tutorial/battleFireAndSmoke"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem battle_grenades_img
+	rem battle_grenades_txt
+	wait 1
+
+	obj2d battle_protection_txt
+	{
+		text		"_Use medikits to heal wounded, or fainted, or panicked soldiers: wounded soldiers often bleed, and die if uncured; stunned soldiers faint when stunning level reaches their max. current health points; panicked soldiers act randomly. Equip armours to increase survival rate."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_protection_img
+	{
+		image		"pics/tutorial/battleHealing"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem battle_protection_img
+	rem battle_protection_txt
+	wait 1
+
+	// Battlescape
+	obj2d battle_GUI_top_txt
+	{
+		text		"_Using the battlescape interface is easy, with mouse, or shortcuts (in the 'Options' menu). Top of the screen: total of spotted enemies, and level view."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_GUI_top_img
+	{
+		image		"pics/tutorial/battleGUITop"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem battle_GUI_top_img
+	rem battle_GUI_top_txt
+	wait 1
+
+	obj2d battle_GUI_colors_txt
+	{
+		text		"_Red highlights hostile forces. Green highlights your troops. Yellow highlights civilians (whom you have to protect during campaigns)."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_GUI_colors_img
+	{
+		image		"pics/tutorial/battleGUIColors"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem battle_GUI_colors_img
+	rem battle_GUI_colors_txt
+	wait 1
+
+	obj2d battle_GUI_right_txt
+	{
+		text		"_Buttons on the right, top-down order: end turn, options, abort mission, radar, and rescue zone. Use radar to check what people are facing. Try to bring your soldiers back to the rescue zone before aborting missions, or they will be lost."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_GUI_right_img
+	{
+		image		"pics/tutorial/battleGUIRight"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem battle_GUI_right_img
+	rem battle_GUI_right_txt
+	wait 1
+
+	obj2d battle_GUI_soldiers_info_txt
+	{
+		text		"_Bottom of the screen: a squad bar allows quick selection of soldiers; use the arrow to hide or to display the squad bar, and use filters to view current health, time units, or morale of your troops. Time units are spent when firing, moving, crouching, and so on. No time units, no actions."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_GUI_soldiers_info_img
+	{
+		image		"pics/tutorial/battleGUISoldiersInfo"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 30
+
+	rem battle_GUI_soldiers_info_img
+	rem battle_GUI_soldiers_info_txt
+	wait 1
+
+	obj2d battle_GUI_soldiers_actions_txt
+	{
+		text		"_Use buttons to open inventory, to view current soldier stats, to use headgear, to toggle reaction fire on/off, to stand, to crouch. Click on the rectangle showing weapon in hands to open the firemodes menu (with needed time units and ammunition), or to reload your weapon."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_GUI_soldiers_actions_img
+	{
+		image		"pics/tutorial/battleGUISoldiersActions"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem battle_GUI_soldiers_actions_img
+	rem battle_GUI_soldiers_actions_txt
+	wait 1
+
+	// reaction fire
+	obj2d battle_reaction_fire_intro_txt
+	{
+		text		"_'Reaction fire' is a way to fire in reaction to foes' visible actions. When a weapon allows reaction fire, each one of its firemodes can be set as the default reaction fire mode. To enable reaction fire, a fighter must have time units left, and you must set the reaction fire on."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_reaction_fire_intro_img
+	{
+		image		"pics/tutorial/battleReactionFireIntro"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem battle_reaction_fire_intro_img
+	rem battle_reaction_fire_intro_txt
+	wait 1
+
+	obj2d battle_reaction_fire_txt
+	{
+		text		"_Reaction fire is triggered when any fighter sees, without any interruption, a hostile unit spending more time units than the number of time units required to fire. Concentrate reaction fires for a better covering. And check the radar to avoid opponents' reaction fire."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d battle_reaction_fire_img
+	{
+		image		"pics/tutorial/battleReactionFire"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem battle_reaction_fire_img
+	rem battle_reaction_fire_txt
+	wait 1
+
+	// =============== END OF TUTORIAL ==============	
+	rem battle_title
+	music "van_theme"
+	wait 1
+
+	obj2d the_end
+	{
+		text	"_The end"
+		pos		"512 0"
+		align	uc
+		color	"0.5 1 1 0.5"
+		font	"f_big"
+		speed	"0 10"
+	}
+	wait 4
+
+	obj2d the_end { speed	"0 0" }
+	wait 1
+
+	rem the_end
+	rem clic_to_continue
+}
+
+// ==============================================
+// This tutorial tells how to start a skirmish battle
+// ==============================================
+tutorial skirmish
+{
+	name "_SKIRMISH GAMES"
+	sequence tut_skirmish
+}
+
+sequence tut_skirmish
+{
+	// =============== INIT. ========================
+	// "Click to continue" message
+	obj2d clic_to_continue
+	{
+		text	"_Left-click to continue. 'Esc' to exit"
+		font	"f_small"
+		color	"0.5 1 1 0.5"
+		pos		"512 750"
+		align	uc
+	}
+	
+	// Title
+	obj2d skirmish_title
+	{
+		text	"_Skirmish games"
+		pos		"512 0"
+		align	uc
+		color	"0.5 1 1 0.5"
+		font	"f_big"
+		speed	"0 10"
+	}
+	wait 2
+
+	obj2d skirmish_title { speed	"0 0" }
+	wait 1
+
+	// Music
+	music "David01"
+
+	// precaching the screenshots
+	precache pics (
+		"tutorial/skirmishDefaultSquad"
+		"tutorial/skirmishDownload"
+		"tutorial/skirmishGenerateCustomSquad"
+		"tutorial/skirmishLoadCustomSquad"
+		"tutorial/skirmishMapSettings"
+	)
+
+	// ================ TUTORIAL ====================
+	obj2d skirmish_foreword_txt
+	{
+		text		"_Skirmish games are quickly set battles where a player confronts a squad controlled by the computer."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	wait 8
+
+	rem skirmish_foreword_txt
+	wait 1
+
+	// Map settings
+	obj2d skirmish_map_settings_txt
+	{
+		text		"_First, define the battle environment: map, time of the day (day or night), number of opponents, and aircraft on the map (if any). Should the 'Alien rush' option be checked, the game would keep spawning aliens until you lose, or quit (to win, kill all the aliens before ending your turn)."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d skirmish_map_settings_img
+	{
+		image		"pics/tutorial/skirmishMapSettings"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem skirmish_map_settings_img
+	rem skirmish_map_settings_txt
+	wait 1
+
+	// Player's squad settings
+	obj2d skirmish_default_squad_txt
+	{
+		text		"_Next, build your squad. Use the default settings for a quick start: select an equipment profile for your opponent; select your side; limit the size of your squad if you want to. And begin the game."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d skirmish_default_squad_img
+	{
+		image		"pics/tutorial/skirmishDefaultSquad"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem skirmish_default_squad_img
+	rem skirmish_default_squad_txt
+	wait 1
+
+	obj2d skirmish_custom_squad_txt
+	{
+		text		"_If defaults don't suit you, customize a new squad: after selecting your side, select your equipment profile; create your squad, and equip your troops with the equipment allowed by the equipment profile. Optionally, save your squad for further battles. And begin the game."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d skirmish_generate_custom_squad_img
+	{
+		image		"pics/tutorial/skirmishGenerateCustomSquad"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 16
+
+	rem skirmish_generate_custom_squad_img
+	wait 1
+
+	obj2d skirmish_load_custom_squad_img
+	{
+		image		"pics/tutorial/skirmishLoadCustomSquad"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 14
+
+	rem skirmish_load_custom_squad_img
+	rem skirmish_custom_squad_txt
+	wait 1
+
+	// Download squad
+	obj2d skirmish_download_txt
+	{
+		text		"_You can also download squads from the UFO: Alien Invasion's server. To connect, use the same account you use to log in to the official forum of the game (http://ufoai.org/forum)."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d skirmish_download_img
+	{
+		image		"pics/tutorial/skirmishDownload"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 16
+
+	rem skirmish_download_txt
+	rem skirmish_download_img
+	wait 1
+
+	// =============== END OF TUTORIAL ==============	
+	rem skirmish_title
+	music "van_theme"
+	wait 1
+
+	obj2d the_end
+	{
+		text	"_The end"
+		pos		"512 0"
+		align	uc
+		color	"0.5 1 1 0.5"
+		font	"f_big"
+		speed	"0 10"
+	}
+	wait 4
+
+	obj2d the_end { speed	"0 0" }
+	wait 1
+
+	rem the_end
+	rem clic_to_continue
+}
+
+// ==============================================
+// This tutorial tells how to start a multiplayer battle
+// ==============================================
+tutorial multiplayer
+{
+	name	"_MULTIPLAYER GAMES"
+	sequence	tut_multiplayer
+}
+
+sequence tut_multiplayer
+{
+	// =============== INIT. ========================
+	// "Click to continue" message
+	obj2d clic_to_continue
+	{
+		text	"_Left-click to continue. 'Esc' to exit"
+		font	"f_small"
+		color	"0.5 1 1 0.5"
+		pos		"512 750"
+		align	uc
+	}
+
+	// Title
+	obj2d multiplayer_title
+	{
+		text	"_Multiplayer games"
+		pos		"512 0"
+		align	uc
+		color	"0.5 1 1 0.5"
+		font	"f_big"
+		speed	"0 10"
+	}
+	wait 2
+
+	obj2d multiplayer_title { speed	"0 0" }
+	wait 1
+
+	// Music
+	music "MarineAlienRaid"
+
+	// precaching the screenshots
+	precache pics (
+		"tutorial/multiplayerBattlescapeServerSettings"
+		"tutorial/multiplayerConnectToLobby"
+		"tutorial/multiplayerConnectToServerInfo"
+		"tutorial/multiplayerCreateServer"
+		"tutorial/multiplayerDownload"
+		"tutorial/multiplayerGenerateSquad"
+		"tutorial/multiplayerLoadSquad"
+		"tutorial/multiplayerServerInfo"
+	)
+
+	// ================ TUTORIAL ====================
+	// Foreword
+	obj2d multiplayer_foreword_txt
+	{
+		text		"_Multiplayer games are battles where a player confronts other human players, or cooperates with them. Multiplayer games are possible only when administrators configure servers to host games, and common players join those servers (of course, administrators can play the game they are hosting). In any case, you must have a connection with other computers (Internet, LAN), and you have to open the TCP port 27910 in your firewall settings."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	wait 24
+
+	rem multiplayer_foreword_txt
+	wait 1
+	
+	// Team
+	obj2d multiplayer_squad_txt
+	{
+		text		"_First, generate a team. Then, select a side from the list, and equip your troops. Optionally, save your squad for further battles. Warning: if server settings include some 'Max. soldiers' limit, currently loaded soldiers will be selected in a top-down order from the list."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d multiplayer_generate_squad_img
+	{
+		image		"pics/tutorial/multiplayerGenerateSquad"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 14
+
+	rem multiplayer_generate_squad_img
+	wait 1
+
+	obj2d multiplayer_load_squad_img
+	{
+		image		"pics/tutorial/multiplayerLoadSquad"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 14
+
+	rem multiplayer_load_squad_img
+	rem multiplayer_squad_txt
+	wait 1
+	
+	obj2d multiplayer_download_txt
+	{
+		text		"_You can also download squads from the UFO: Alien Invasion's server. To connect, use the same account you use to log in to the official forum of the game (http://ufoai.org/forum)."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d multiplayer_download_img
+	{
+		image		"pics/tutorial/multiplayerDownload"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem multiplayer_download_txt
+	rem multiplayer_download_img
+	wait 1
+
+	// Lobby
+	obj2d multiplayer_connect_to_lobby_txt
+	{
+		text		"_As a common player, join to search for servers. If none, connect to the lobby, which is a direct chat access to the #ufoai channel on irc.freenode.net, and wait for invitations. You still can play singleplayer while waiting."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}	
+	obj2d multiplayer_connect_to_lobby_img
+	{
+		image		"pics/tutorial/multiplayerConnectToLobby"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem multiplayer_connect_to_lobby_img
+	rem multiplayer_connect_to_lobby_txt
+	wait 1
+
+	// Connecting to a server
+	obj2d multiplayer_connect_to_server_info_txt
+	{
+		text		"_When a server is available, connect to check its settings: either pick one from the list of public, or dedicated, servers listed by our master server; or type an IP address to reach a private server."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d multiplayer_connect_to_server_info_img
+	{
+		image		"pics/tutorial/multiplayerConnectToServerInfo"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem multiplayer_connect_to_server_info_img
+	rem multiplayer_connect_to_server_info_txt
+	wait 1
+
+	obj2d multiplayer_server_info_txt
+	{
+		text		"_Server information details data about the server: map, game version, userlist, etc. Your version of the game has to match the version of the server. If you're happy with it, bookmark the server to quickly access it later, and connect to the game to start playing."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d multiplayer_server_info_img
+	{
+		image		"pics/tutorial/multiplayerServerInfo"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem multiplayer_server_info_img
+	rem multiplayer_server_info_txt
+	wait 1
+
+	// Server settings
+	obj2d multiplayer_create_server_txt
+	{
+		text		"_As a server's administrator, create a server to host a game on your computer: define the battle environment (map, time of the day, etc.); set a 'RCON-password' for remote control of the server by administrators, and consider setting a 'Server-Password' for players trying to join."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d multiplayer_create_server_img
+	{
+		image		"pics/tutorial/multiplayerCreateServer"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem multiplayer_create_server_img
+	rem multiplayer_create_server_txt
+	wait 1
+
+	obj2d multiplayer_battlescape_server_settings_txt
+	{
+		text		"_Once your server has been started, you reach a battlescape view. You still can set some options there: max soldiers, and round time limit (recommended). Start the game when you feel ready (when all players check the 'Are you ready?' checkbox, the game starts automatically)."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	obj2d multiplayer_battlescape_server_settings_img
+	{
+		image		"pics/tutorial/multiplayerBattlescapeServerSettings"
+		pos			"60 30"
+		relative 	true
+	}
+	wait 20
+
+	rem multiplayer_battlescape_server_settings_img
+	rem multiplayer_battlescape_server_settings_txt
+	wait 1
+
+	// Remote console control
+	obj2d multiplayer_rcon_txt
+	{
+		text		"_As an administrator, you may use the remote console to change settings from a connected client, restart maps, or change gametypes. To access console, check shortcuts in the 'Options' menu. In the console, type 'rcon <command> <parameter>' to execute rcon commands; use 'cmdlist' to get the list of commands, and 'cvarlist' to get the list of variables for dynamic configuration of the engine."
+		font		"f_normal"
+		pos			"0 15"
+		align		ul
+		relative	true
+	}
+	wait 20
+
+	rem multiplayer_rcon_txt
+	wait 1
+
+	// =============== END OF TUTORIAL ==============	
+	rem multiplayer_title
+	music "van_theme"
+	wait 1
+
+	obj2d the_end
+	{
+		text	"_The end"
+		pos		"512 0"
+		align	uc
+		color	"0.5 1 1 0.5"
+		font	"f_big"
+		speed	"0 10"
+	}
+	wait 4
+
+	obj2d the_end { speed	"0 0" }
+	wait 1
+	
+	rem the_end
+	rem clic_to_continue
+}
+
+/* REMINDER: other method for tutorials = single image + dark background for text + hovers to highlight img.
+
 	// background image
 	obj2d tactical_bg
 	{
 		image	"pics/tutorial/tactical1"
-		align	"ul"
 		pos	"0 0"
 	}
 	// dark background for text
 	obj2d text_bg
 	{
 		pos	"60 360"
-		align	"lc"
+		align	lc
 		size	"904 50"
 		bgcolor	"0 0 0 0.7"
 		color	"1 1 1 1"
 	}
 
-
-	// ==============================================
 	// switch level
 	obj2d level_hover
 	{
 		pos	"0 125"
 		size	"40 340"
-		align	"ul"
+		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d switch_level_text
 	{
-		text	"_Switch view level via left mouseclick"
+		text	"_"
 		pos	"512 370"
-		align	"uc"
+		align	uc
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -394,709 +1942,4 @@ sequence tut_tacticalmission
 	rem level_hover
 	rem switch_level_text
 
-	obj2d switch_level_text2
-	{
-		text	"_You can also use the cursor keys to switch the levels"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem switch_level_text2
-
-
-	// ==============================================
-	// current soldier
-	obj2d current_soldier_hover
-	{
-		pos	"7 7"
-		size	"393 88"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d current_soldier_text
-	{
-		text	"_The selected soldier"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem current_soldier_hover
-	rem current_soldier_text
-
-
-	// ==============================================
-	// switch soldier
-	obj2d soldier_hover
-	{
-		pos	"415 0"
-		size	"265 55"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d switch_soldier_text
-	{
-		text	"_Select soldiers via click"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem soldier_hover
-	rem switch_soldier_text
-
-	obj2d switch_soldier_text2
-	{
-		text	"_Or via the keys 1-8 or Tab"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem switch_soldier_text2
-
-
-	// ==============================================
-	// soldier stats
-	obj2d stats_hover
-	{
-		pos	"985 266"
-		size	"34 76"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d stats_text
-	{
-		text	"_Physical stats"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem stats_hover
-	rem stats_text
-
-
-	// ==============================================
-	// stats bars
-	obj2d bars_hover
-	{
-		pos	"374 657"
-		size	"366 50"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d bars_text
-	{
-		text	"_Stats bars: movement, health and morale"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem bars_hover
-	rem bars_text
-
-
-	// ==============================================
-	// inventory
-	obj2d inventory_hover
-	{
-		pos	"985 377"
-		size	"34 73"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d inventory_text
-	{
-		text	"_Inventory"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem inventory_hover
-	rem inventory_text
-
-
-	// ==============================================
-	// weapon
-	obj2d weapon_hover1
-	{
-		pos	"7 624"
-		size	"159 87"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d weapon_hover2
-	{
-		pos	"373 698"
-		size	"367 50"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d weapon_text
-	{
-		text	"_Weapon in right hand"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem weapon_hover1
-	rem weapon_hover2
-	rem weapon_text
-
-
-	// ==============================================
-	// ammo remaining
-	obj2d ammo_hover
-	{
-		pos	"7 720"
-		size	"88 35"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d ammo_text
-	{
-		text	"_Shots remaining"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem ammo_hover
-	rem ammo_text
-
-
-	// ==============================================
-	// reload
-	obj2d reload_hover
-	{
-		pos	"100 720"
-		size	"65 35"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d reload_hover2
-	{
-		pos	"855 720"
-		size	"65 35"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d reload_text
-	{
-		//text	"_Reload"
-		text	"_Reload weapon"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem reload_hover
-	rem reload_hover2
-	rem reload_text
-
-
-	// ==============================================
-	// primary attack
-	obj2d primary_attack_hover
-	{
-		pos	"175 650"
-		size	"75 50"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d primary_attack_hover2
-	{
-		pos	"775 650"
-		size	"75 50"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d primary_attack_text
-	{
-		text	"_Primary attack"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem primary_attack_hover
-	rem primary_attack_hover2
-	rem primary_attack_text
-
-
-	// ==============================================
-	// secondary attack
-	obj2d secondary_attack_hover
-	{
-		pos	"175 710"
-		size	"75 50"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d secondary_attack_hover2
-	{
-		pos	"775 710"
-		size	"75 50"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d secondary_attack_text
-	{
-		text	"_Secondary attack"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem secondary_attack_hover
-	rem secondary_attack_hover2
-	rem secondary_attack_text
-
-
-	// ==============================================
-	// reaction shots
-	obj2d reaction_hover
-	{
-		pos	"302 685"
-		size	"52 32"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d reaction_text
-	{
-		text	"_Turn reaction-fire on or off"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem reaction_hover
-	rem reaction_text
-
-
-	// ==============================================
-	// kneel / stand up
-	obj2d crouch_hover
-	{
-		pos	"302 724"
-		size	"52 35"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d crouch_text
-	{
-		text	"_Crouch (kneel down) or stand up"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem crouch_hover
-	rem crouch_text
-
-
-	// ==============================================
-	// visible aliens
-	obj2d visible_aliens_hover
-	{
-		pos	"807 0"
-		size	"57 55"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d switch_visible_aliens_text
-	{
-		text	"_Cycle through visible enemies"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem visible_aliens_hover
-	rem switch_visible_aliens_text
-
-
-	// ==============================================
-	// end round
-	obj2d end_round_hover
-	{
-		pos	"950 0"
-		size	"62 55"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d switch_end_round_text
-	{
-		text	"_End round"
-		pos	"512 370"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	music "van_theme"
-	wait 5
-	rem end_round_hover
-	rem switch_end_round_text
-	music "van_theme"
-
-	// ==============================================
-	// end of tutorial - remove background, too
-	rem tactical_bg
-	rem text_bg
-}
-
-
-// ==============================================
-
-
-tutorial skirmish
-{
-	name "_HOW TO PLAY SKIRMISH"
-	sequence tut_skirmish
-}
-
-sequence tut_skirmish
-{
-	music 		"Crystan-Tutorial"
-	// ==============================================
-	// precaching screenshot
-	precache pics (
-		"tutorial/skirmish1"
-	)
-	obj2d skirmish_welcome
-	{
-		text	"_Skirmish tutorial"
-		pos	"512 0"
-		align	"uc"
-		color	"0 0.6 0 1"
-		speed	"0 40"
-		font	"f_big"
-	}
-	wait 4
-	obj2d skirmish_welcome { speed "0 0" }
-	obj2d skirmish_about
-	{
-		text	"_Skirmish is type of fast game."
-		pos	"512 250"
-		align	"lc"
-		color	"0 0.6 0 1"
-		font	"f_big"
-	}
-	wait 2
-	rem skirmish_welcome
-	rem skirmish_about
-
-
-	// ==============================================
-	// background image
-	obj2d skirmish_bg
-	{
-		image	"pics/tutorial/skirmish1"
-		align	"ul"
-		pos	"0 0"
-	}
-	// dark background for text
-	obj2d text_bg
- {
-		pos	"50 375"
-		size	"300 250"
-		bgcolor	"0 0.3 0 0.7"
-		color	"1 1 1 1"
-	}
-
-	// ==============================================
-	// equipment
-	obj2d equipment_hover
-	{
-		pos	"480 210"
-		size	"310 35"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d equipment_text
-	{
-		text	"_Equipment selection"
-		pos	"205 380"
-		size	"290 250"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem equipment_text
-	rem equipment_hover
-
-	obj2d day_hover
-	{
-		pos	"790 245"
-		size	"145 25"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-
-	obj2d day_text
-	{
-		text	"_Day or night version of map to play"
-		pos	"205 380"
-		size	"290 250"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem day_hover
-	rem day_text
-
-	obj2d aliens_hover
-	{
-		pos	"790 270"
-		size	"145 25"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-
-	obj2d aliens_text
-	{
-		text	"_How many aliens will fight versus you"
-		pos	"205 380"
-		size	"290 250"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem aliens_hover
-	rem aliens_text
-
-	obj2d team_hover
-	{
-		pos	"725 300"
-		size	"210 20"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-
-	obj2d team_text
-	{
-		text	"_Select your team"
-		pos	"205 380"
-		size	"290 250"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem team_hover
-	rem team_text
-
-	obj2d _hover
-	{
-		pos	"725 325"
-		size	"210 20"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-
-	obj2d _text
-	{
-		text	"_Select UFO to secure \n(if possible for current map)"
-		pos	"205 380"
-		size	"290 250"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem _hover
-	rem _text
-
-	obj2d _hover
-	{
-		pos	"725 350"
-		size	"210 20"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-
-	obj2d _text
-	{
-		text	"_Select dropship\n(if possible for current map)"
-		pos	"205 380"
-		size	"290 250"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem _hover
-	rem _text
-
-	obj2d _hover
-	{
-		pos	"480 530"
-		size	"310 35"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-
-	obj2d _text
-	{
-		text	"_Select map to play"
-		pos	"205 380"
-		size	"290 250"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 5
-	rem _hover
-	rem _text
-
-	obj2d and_text
-	{
-		text	"_And..."
-		pos	"205 380"
-		size	"290 50"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 2
-	obj2d _hover
-	{
-		pos	"90 80"
-		size	"260 70"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d start_text
-	{
-		text	"_Start the game!"
-		pos	"205 400"
-		size	"290 200"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 3
-	rem _hover
-	wait 2
-	obj2d or_text
-	{
-		text	"_Or..."
-		pos	"205 450"
-		size	"290 50"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	wait 2
-	rem and_text
-	rem start_text
-	obj2d _hover
-	{
-		pos	"90 200"
-		size	"260 70"
-		align	"ul"
-		bgcolor	"1 0 0 0.6"
-	}
-	obj2d exit_text
-	{
-		text	"_Exit to main menu"
-		pos	"205 500"
-		size	"290 150"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_big"
-	}
-	music "van_theme"
-	wait 5
-	rem or_text
-	rem exit_text
-	rem skirmish_bg
-	rem text_bg
-
-
-}
-
-// ==============================================
-
-tutorial multiplayer
-{
-	name	"_HOW TO PLAY MULTIPLAYER"
-	sequence	tut_multiplayer
-}
-
-sequence tut_multiplayer
-{
-	music 		"Crystan-Tutorial"
-	// ==============================================
-	// just precaching the background image
-	precache pics (
-		"tutorial/multiplayer1"
-	)
-
-	obj2d port_text
-	{
-		text	"_Make sure that you've opened the TCP port 27910 in your firewall settings"
-		pos	"512 10"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_normal"
-	}
-
-	obj2d lobby_text
-	{
-		text	"_You should connect to the lobby and wait for invitations or start your own server"
-		pos	"512 40"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_normal"
-	}
-
-	obj2d lobby2_text
-	{
-		text	"_While you are connected to the lobby you can play singleplayer until someone invites you"
-		pos	"512 70"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_normal"
-	}
-
-	obj2d timeout_text
-	{
-		text	"_As a server admin you should consider setting a round time limit."
-		pos	"512 100"
-		align	"uc"
-		color	"1 1 1 1"
-		font	"f_normal"
-	}
-
-	music "van_theme"
-	wait 20
-
-	rem timeout_text
-	rem lobby_text
-	rem lobby2_text
-	rem port_text
-}
+END OF REMINDER */
