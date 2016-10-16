@@ -1604,7 +1604,7 @@ sequence tut_skirmish
 	// Download squad
 	obj2d skirmish_download_txt
 	{
-		text		"_You can also download squads from the UFO: Alien Invasion's server. To connect, use the same account you use to log in to the official forum of the game (http://ufoai.org/forum)."
+		text		"_You can also download squads from the UFO: Alien Invasion's server you previously uploaded. To connect, use the same account you use to log in to the official forum of the game (http://ufoai.org/forum)."
 		font		"f_normal"
 		pos			"0 15"
 		align		ul
@@ -1746,7 +1746,7 @@ sequence tut_multiplayer
 	
 	obj2d multiplayer_download_txt
 	{
-		text		"_You can also download squads from the UFO: Alien Invasion's server. To connect, use the same account you use to log in to the official forum of the game (http://ufoai.org/forum)."
+		text		"_You can also download squads from the UFO: Alien Invasion's server you previously uploaded. To connect, use the same account you use to log in to the official forum of the game (http://ufoai.org/forum)."
 		font		"f_normal"
 		pos			"0 15"
 		align		ul
@@ -1767,7 +1767,7 @@ sequence tut_multiplayer
 	// Lobby
 	obj2d multiplayer_connect_to_lobby_txt
 	{
-		text		"_As a common player, join to search for servers. If none, connect to the lobby, which is a direct chat access to the #ufoai channel on irc.freenode.net, and wait for invitations. You still can play singleplayer while waiting."
+		text		"_As a common player, join to search for servers. If none, connect to the lobby and wait for invitations. You still can play singleplayer while waiting."
 		font		"f_normal"
 		pos			"0 15"
 		align		ul

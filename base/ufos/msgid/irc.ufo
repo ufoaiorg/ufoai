@@ -15,7 +15,7 @@ You can also send messages to players directly into the game when you add the na
 If a player sends you a message, it will appear in a popup window.
 
 If you want to host a game, make sure, that TCP port 27910 is opened in your firewall.
-If you want to join the channel with a regular IRC client, connect to irc.freenode.net and join #ufoai
+If you want to join the channel with a regular IRC client, connect to irc.freenode.net and join #ufoai-gamer
 
 For help with setting up multiplayer games, see http://ufoai.org/wiki/index.php/Multiplayer"
 }
