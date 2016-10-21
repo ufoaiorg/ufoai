@@ -107,33 +107,32 @@ window game_team_edit extends equipment
 window game_team_save_popup extends ipopup
 {
 	{
-		pos			"264 262"
+		pos		"264 262"
 		size		"360 120"
 		closebutton	true
 		modal		true
 	}
 	string title
 	{
-		width		"360"
 		string		"_Save your team"
+		width		"360"
 	}
 
 	TextEntry name
 	{
-		font		"f_verysmall"
-		pos			"50 53"
-		size		"256 34"
 		string		*cvar:mn_teamname
+		pos		"50 53"
+		size		"256 34"
+		font		"f_verysmall"
 	}
 
 	MainMenuBtn save
 	{
+		string		"_Save"
 		pos			"0 90"
 		size		"360 30"
-		string		"_Save"
-		onClick		{ cmd "game_saveteam \"<node:root.name@string>\";ui_pop;game_teamcomments;" }
-		font	"f_menusmall"
-		string	"_Save"
+		font		"f_menusmall"
+		onClick { cmd "game_saveteam \"<node:root.name@string>\";ui_pop;game_teamcomments;" }
 	}
 
 	fuzzyScreen overlay { }
@@ -146,35 +145,31 @@ window game_team_save_popup extends ipopup
 window game_team_new_popup extends ipopup
 {
 	{
-		pos			"256 256"
-		size		"256 120"
+		pos		"256 256"
+		size		"320 120"
 		closebutton	true
 		modal		true
 	}
 
-	string title
-	{
-		width		"360"
+	string title {
 		string		"_Generate a team"
+		width		"360"
 	}
 
-	selectbox team_box
-	{
-		color			"0.6 0.6 0.6 0.3"
-		cvar			*cvar:cl_teamdef
-		dataid			OPTION_TEAMDEFS
-		pos				"13 53"
-		size			"230 34"
+	selectbox team_box {
+		cvar		*cvar:cl_teamdef
+		dataid		OPTION_TEAMDEFS
+		pos		"13 53"
+		size		"294 34"
+		color		"0.6 0.6 0.6 0.3"
 	}
 
-	MainMenuBtn button_new
-	{
-		pos			"0 90"
-		size		"256 30"
+	MainMenuBtn button_new {
 		string		"_Generate Team"
 		tooltip		"_Generate a new team with the selected race"
+		pos		"0 90"
+		size		"320 30"
 		onClick		{ cmd "game_autoteam *cvar:cl_equip;ui_pop; ui_push game_team_edit;" }
-		string		"_Generate Team"
 	}
 
 	fuzzyScreen overlay { }

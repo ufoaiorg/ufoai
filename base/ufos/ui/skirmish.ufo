@@ -14,7 +14,7 @@ component cmpMapPreviewButton extends radiobutton
 {
 	{
 		icon		"icons/map_prev"
-		size		"132 140"
+		size		"155 140"
 		cvar		"*cvar:mn_svmapid"
 		stringValue	" "
 		padding		10
@@ -24,33 +24,33 @@ component cmpMapPreviewButton extends radiobutton
 	}
 
 	image preview {
-		pos		"2 2"
-		size	"128 96"
+		pos		"13 2"
+		size		"128 96"
 		src		""
-		ghost	true
+		ghost		true
 	}
 
 	image frameOverlay {
-		pos		"2 2"
-		size	"128 96"
+		pos		"13 2"
+		size		"128 96"
 		src		"maps/shots/map_ico_overlay"
-		ghost	true
+		ghost		true
 	}
 
 	string name {
-		string			""
+		string		""
 		contentalign	ALIGN_CC
-		font			"f_verysmall"
-		pos				"8 101"
-		size			"110 32"
-		ghost			true
+		font		"f_verysmall"
+		pos		"2 101"
+		size		"151 32"
+		ghost		true
 	}
 
 	string id {
-		invis	true
-		string	""
+		string		""
 		pos		"14 96"
-		size	"100 32"
+		size		"130 32"
+		invis		true
 	}
 
 	// @param <1> name of the map
@@ -80,17 +80,17 @@ window skirmish extends cgame_download
 	{
 		{
 			size		"504 435"
-			pos			"0 90"
+			pos		"0 90"
 			bgcolor		"0.4 0.52 0.5 0.2"
 		}
 
 		panel maplist {
-			pos				"0 0"
-			size			"504 435"
-			layout			LAYOUT_COLUMN
+			pos		"0 0"
+			size		"504 435"
+			layout		LAYOUT_COLUMN
 			layoutColumns	3
 			layoutMargin	5
-			padding			5
+			padding		5
 
 			onViewChange {
 				*node:root.sk_map_sel.maplist_scroll@fullsize = <fullsize>
@@ -129,7 +129,7 @@ window skirmish extends cgame_download
 
 		vscrollbar maplist_scroll {
 			image		"ui/scrollbar_v"
-			pos			"484 0"
+			pos		"484 0"
 			height		"435"
 			onChange	{ *node:root.sk_map_sel.maplist@viewpos = <current> }
 		}
@@ -249,8 +249,8 @@ window skirmish extends cgame_download
 		panel sk_squad_opts
 		{
 			{
-				pos			"0 50"
-				size		"510 320"
+				pos		"0 40"
+				size		"510 350"
 			}
 
 			EnemyEquip enemy_equip
@@ -263,7 +263,7 @@ window skirmish extends cgame_download
 			PlayerSquad player_squad
 			{
 				{
-					pos		"0 40"
+					pos		"0 80"
 				}
 			}
 		}
@@ -272,7 +272,7 @@ window skirmish extends cgame_download
 		{
 			{
 				pos				"0 50"
-				size			"510 320"
+				size			"510 350"
 				layout			LAYOUT_TOP_DOWN_FLOW
 				layoutMargin	5
 				invis			true

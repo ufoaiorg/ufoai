@@ -190,18 +190,17 @@ component SelDropship extends panel
 	string dropships_str
 	{
 		string		"_Dropship"
-		pos			"0 10"
+		pos		"0 10"
 		size		"200 20"
 		color 		"1 1 1 0.5"
-		ghost		true
 	}
 	selectbox dropships_box
 	{
-		pos			"265 10"
-		size		"220 20"
-		color		"1 1 1 0.5"
 		cvar		*cvar:rm_drop
 		dataid		OPTION_DROPSHIPS
+		pos		"220 10"
+		size		"265 20"
+		color		"1 1 1 0.5"
 	}
 
 	/**
@@ -235,17 +234,17 @@ component SelUFO extends panel
 	string ufos_str
 	{
 		string		"_UFO"
-		pos			"0 10"
-		size		"200 20"
+		pos		"0 10"
+		size		"215 20"
 		color		"1 1 1 0.5"
 	}
 	selectbox ufos_box
 	{
-		pos			"265 10"
-		size		"220 20"
-		color		"1 1 1 0.5"
 		cvar		*cvar:rm_ufo
 		dataid		OPTION_UFOS
+		pos		"220 10"
+		size		"265 20"
+		color		"1 1 1 0.5"
 	}
 	/**
 	 * Hide ufo selection if map does not support it.
