@@ -29,39 +29,44 @@ window research extends BaseMgmtWindow
 				string	""
 			}
 
+			// Unassigned scientists panel
+			panel idle_scientists {
+				{
+					pos	"470 35"
+					size	"240 45"
+				}
+
+				button idle_scientists_icon {
+					icon	"icons/head_scientist"
+					pos	"5 3"
+					size	"40 40"
+				}
+
+				string idle_scientists_count {
+					string	"0"
+					pos	"50 5"
+					size	"185 20"
+					font	"f_small_bold"
+					color	"0.56 0.81 0.76 1"
+					contentalign	ALIGN_CL
+				}
+
+				string idle_scientists_label {
+					string	"_idle scientists"
+					pos	"50 22"
+					size	"185 20"
+					font	"f_verysmall"
+					color	"0.56 0.81 0.76 1"
+					contentalign	ALIGN_CL
+				}
+			}
+
 			string topics {
 				string	"_Topics"
 				pos		"45 62"
 				size	"365 25"
 				font	"f_verysmall"
 				color	"0.56 0.81 0.76 1"
-			}
-
-			// Unassigned scientists
-			button idle_scientists
-			{
-				icon	"icons/head_scientist"
-				pos		"522 40"
-				size	"48 48"
-				ghost	true
-			}
-			string idle_scientists_count
-			{
-				string	"0"
-				pos		"560 49"
-				size	"100 25"
-				font	"f_small_bold"
-				color	"0.56 0.81 0.76 1"
-				contentalign	ALIGN_CL
-			}
-			string idle_scientists_label
-			{
-				string	"_idle scientists"
-				pos		"560 62"
-				size	"100 23"
-				font	"f_verysmall"
-				color	"0.56 0.81 0.76 1"
-				contentalign	ALIGN_CL
 			}
 
 			// List of research techs
@@ -189,21 +194,21 @@ window research extends BaseMgmtWindow
 					max			1
 					ghost		true
 				}
-				MainMenu3Btn hire
+				MainMenuExitBtn fire
 				{
-					string			"_HIRE"
-					pos				"250 42"
-					size			"75 26"
+					string			"_FIRE"
+					pos			"43 42"
+					size			"125 26"
 					font			"f_small_bold"
 					color			"0 0 0 0.9"
 					selectcolor		"0 0 0 1"
 					onClick			{ cmd "ui_push employees 1;" }
 				}
-				MainMenuExitBtn fire
+				MainMenu3Btn hire
 				{
-					string			"_FIRE"
-					pos				"165 42"
-					size			"75 26"
+					string			"_HIRE"
+					pos			"200 42"
+					size			"125 26"
 					font			"f_small_bold"
 					color			"0 0 0 0.9"
 					selectcolor		"0 0 0 1"
@@ -362,7 +367,7 @@ window research extends BaseMgmtWindow
 	 * @param <4> labspace all
 	 */
 	confunc ui_research_update_caps {
-		*node:root.base_container.mainBody.idle_scientists_count@string = "<1>"
+		*node:root.base_container.mainBody.idle_scientists.idle_scientists_count@string = "<1>"
 		*node:root.base_container.base_stats.scientists.data_bar@current = (<2> - <1>)
 		*node:root.base_container.base_stats.scientists.data_bar@max = <2>
 		*node:root.base_container.base_stats.lab_space.data_bar@current = (<4> - <3>)
