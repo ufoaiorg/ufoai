@@ -1030,6 +1030,11 @@ if(UFOAI_BUILD_UFO)
          GL
          rt
       )
+      if(CMAKE_SYSTEM_NAME MATCHES "BSD")
+         target_link_libraries(${UFOAI_PROJECT_UFO}
+            intl
+      )
+      endif()
    endif()
 endif()
 
