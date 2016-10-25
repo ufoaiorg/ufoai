@@ -14,6 +14,10 @@ ifeq (,$(findstring clang,$(CXX)))
 endif
 $(TARGET)_LDFLAGS  += -lm $(PNG_LIBS) $(JPEG_LIBS) -lz $(SDL_LIBS)
 
+ifneq ($(findstring $(TARGET_OS), openbsd netbsd freebsd),)
+    $(TARGET)_LDFLAGS += -lexecinfo
+endif
+
 ifeq ($(SSE),1)
    $(TARGET)_CFLAGS := $(filter-out -ffloat-store,$($(TARGET)_CFLAGS))
 endif

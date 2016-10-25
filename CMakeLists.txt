@@ -120,6 +120,8 @@ if(UFOAI_BUILD_UFO2MAP OR
       UFOAI_BUILD_UFOSLICER OR
       UFOAI_BUILD_UFOTESTALL)
    find_package(JPEG)
+   find_package(X11)
+   find_package(OpenGL)
 endif()
 
 if(UFOAI_BUILD_UFO)
@@ -400,6 +402,11 @@ if(UFOAI_BUILD_UFO2MAP)
          winmm
       )
    endif()
+   if(CMAKE_SYSTEM_NAME MATCHES "BSD")
+     target_link_libraries(${UFOAI_PROJECT_UFO2MAP}
+        execinfo
+   )
+   endif()
 endif()
 
 ###############################################################################
@@ -538,6 +545,11 @@ if(UFOAI_BUILD_UFODED)
          Ws2_32
          wldap32
          rtm
+      )
+   endif()
+   if(CMAKE_SYSTEM_NAME MATCHES "BSD")
+      target_link_libraries(${UFOAI_PROJECT_UFODED}
+        execinfo
       )
    endif()
 endif()
@@ -988,6 +1000,7 @@ if(UFOAI_BUILD_UFO)
       PRIVATE ${PNG_INCLUDE_DIRS}
       PRIVATE ${LIBINTL_INCLUDE_DIR}
       PRIVATE ${ZLIB_INCLUDE_DIRS}
+      PRIVATE ${OPENGL_INCLUDE_DIR}
    )
 
    if(MINGW)
@@ -1007,6 +1020,7 @@ if(UFOAI_BUILD_UFO)
       ${JPEG_LIBRARIES}
       ${PNG_LIBRARIES}
       ${ZLIB_LIBRARIES}
+      ${OPENGL_LIBRARY}
    )
 
    if(WIN32 AND MSVC)
@@ -1028,12 +1042,16 @@ if(UFOAI_BUILD_UFO)
    elseif(UNIX)
       target_link_libraries(${UFOAI_PROJECT_UFO}
          GL
-         rt
       )
+      if(NOT CMAKE_SYSTEM_NAME MATCHES "OpenBSD")
+         target_link_libraries(${UFOAI_PROJECT_UFO}
+            rt
+         )
+      endif()
       if(CMAKE_SYSTEM_NAME MATCHES "BSD")
          target_link_libraries(${UFOAI_PROJECT_UFO}
             intl
-      )
+         )
       endif()
    endif()
 endif()
@@ -1135,6 +1153,11 @@ if(UFOAI_BUILD_UFOMODEL)
          winmm
       )
    endif()
+   if(CMAKE_SYSTEM_NAME MATCHES "BSD")
+      target_link_libraries(${UFOAI_PROJECT_UFOMODEL}
+        execinfo
+      )
+   endif()
 endif()
 
 ###############################################################################
@@ -1227,6 +1250,11 @@ if(UFOAI_BUILD_UFOSLICER)
          imm32
          version
          winmm
+      )
+   endif()
+   if(CMAKE_SYSTEM_NAME MATCHES "BSD")
+      target_link_libraries(${UFOAI_PROJECT_UFOSLICER}
+        execinfo
       )
    endif()
 endif()
@@ -1597,9 +1625,17 @@ if(UFOAI_BUILD_UFORADIANT)
       target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
          GL
          X11
-         dl
-         rt
       )
+      if(NOT CMAKE_SYSTEM_NAME MATCHES "OpenBSD")
+          target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
+             rt
+          )
+      endif()
+      if(CMAKE_SYSTEM_NAME MATCHES "BSD")
+          target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
+             dl
+          )
+      endif()
    endif()
 endif()
 
@@ -2084,6 +2120,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       PRIVATE ${PNG_INCLUDE_DIRS}
       PRIVATE ${LIBINTL_INCLUDE_DIR}
       PRIVATE ${ZLIB_INCLUDE_DIRS}
+      PRIVATE ${X11_INCLUDE_DIR}
    )
 
    if(MINGW)
@@ -2103,6 +2140,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${JPEG_LIBRARIES}
       ${PNG_LIBRARIES}
       ${ZLIB_LIBRARIES}
+      ${X11_LIBRARIES}
    )
 
    if(WIN32)
@@ -2117,7 +2155,11 @@ if(UFOAI_BUILD_UFOTESTALL)
    elseif(UNIX)
       target_link_libraries(${UFOAI_PROJECT_UFOTESTALL}
          GL
-         rt
       )
+      if(NOT CMAKE_SYSTEM_NAME MATCHES "OpenBSD")
+          target_link_libraries(${UFOAI_PROJECT_UFOTESTALL}
+             rt
+          )
+      endif()
    endif()
 endif()

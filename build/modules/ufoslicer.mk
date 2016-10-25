@@ -11,6 +11,10 @@ $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
 $(TARGET)_CFLAGS   += -DCOMPILE_MAP $(SDL_CFLAGS) $(PNG_CFLAGS) $(JPEG_CFLAGS)
 $(TARGET)_LDFLAGS  += $(PNG_LIBS) $(JPEG_LIBS) -lm -lz $(SDL_LIBS)
 
+ifneq ($(findstring $(TARGET_OS), openbsd netbsd freebsd),)
+	$(TARGET)_LDFLAGS += -lexecinfo
+endif
+
 $(TARGET)_SRCS      = \
 	tools/ufoslicer.cpp \
 	\

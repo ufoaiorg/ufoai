@@ -11,6 +11,10 @@ $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
 $(TARGET)_CFLAGS   += -DCOMPILE_UFO -DDEDICATED_ONLY $(BFD_CFLAGS) $(INTL_CFLAGS) $(SDL_CFLAGS) $(CURL_CFLAGS) $(LUA_CFLAGS)
 $(TARGET)_LDFLAGS  += $(BFD_LIBS) $(INTL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(SO_LIBS) $(LUA_LIBS) -lz -lm
 
+ifneq ($(findstring $(TARGET_OS), openbsd netbsd freebsd),)
+	$(TARGET)_LDFLAGS += -lexecinfo
+endif
+
 $(TARGET)_SRCS      = \
 	common/cmd.cpp \
 	common/http.cpp \
