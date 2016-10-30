@@ -704,7 +704,7 @@ static void Irc_Client_CmdRplWhoisuser (const char* params, const char* trailing
 	unsigned int i = 0;
 
 	/* parse params "<nick> <user> <host> * :<real name>" */
-	strcpy(buf, params);
+	Q_strncpyz(buf, params, IRC_SEND_BUF_SIZE);
 	for (char* p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
@@ -728,7 +728,7 @@ static void Irc_Client_CmdRplWhoisserver (const char* params, const char* traili
 	unsigned int i = 0;
 
 	/* parse params "<nick> <server> :<server info>" */
-	strcpy(buf, params);
+	Q_strncpyz(buf, params, IRC_SEND_BUF_SIZE);
 	for (char* p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
@@ -749,7 +749,7 @@ static void Irc_Client_CmdRplWhoisaccount (const char* params, const char* trail
 	unsigned int i = 0;
 
 	/* parse params "<nick> <account> :is logged in as" */
-	strcpy(buf, params);
+	Q_strncpyz(buf, params, IRC_SEND_BUF_SIZE);
 	for (char* p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
@@ -770,7 +770,7 @@ static void Irc_Client_CmdRplWhoisidle (const char* params, const char* trailing
 	unsigned int i = 0;
 
 	/* parse params "<nick> <integer> :seconds idle" */
-	strcpy(buf, params);
+	Q_strncpyz(buf, params, IRC_SEND_BUF_SIZE);
 	for (char* p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 1:
@@ -791,7 +791,7 @@ static void Irc_Client_CmdRplWhoreply (const char* params, const char* trailing)
 	unsigned int i = 0;
 
 	/* parse params "<channel> <user> <host> <server> <nick> <H|G>[*][@|+] :<hopcount> <real name>" */
-	strcpy(buf, params);
+	Q_strncpyz(buf, params, IRC_SEND_BUF_SIZE);
 	for (char* p = strtok(buf, " "); p; p = strtok(nullptr, " "), ++i) {
 		switch (i) {
 		case 0:
@@ -867,7 +867,7 @@ static void Irc_Client_CmdKick (const char* prefix, const char* params, const ch
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
 	Irc_ParseName(prefix, nick, sizeof(nick), &p);
-	strcpy(buf, params);
+	Q_strncpyz(buf, params, IRC_SEND_BUF_SIZE);
 	const char* channel = strtok(buf, " ");
 	const char* victim = strtok(nullptr, " ");
 	if (Q_streq(victim, irc_nick->string)) {
@@ -915,7 +915,7 @@ static void Irc_Client_CmdPrivmsg (const char* prefix, const char* params, const
 	if (emph)
 		memcpy(nick, prefix, emph - prefix);
 	else
-		strcpy(nick, prefix);
+		Q_strncpyz(nick, prefix, MAX_VAR);
 
 	if (ctcp) {
 		if (Q_streq(trailing + 1, "VERSION" IRC_CTCP_MARKER_STR)) {
