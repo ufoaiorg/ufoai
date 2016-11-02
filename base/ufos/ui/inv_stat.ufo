@@ -1,5 +1,8 @@
 --!usr/bin/lua
-require("ufox.ufo")
+
+if (ufox == nil) then
+	require("ufox.ufo")
+end
 
 --[[
  - Inventory and stats window

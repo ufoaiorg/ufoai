@@ -664,7 +664,7 @@ window campaign_main extends campaign
 				if ( *cvar:mn_fastexit == 1 ) {
 					cmd "game_exit;"
 				} else {
-					cmd "ui_push popup_exit_confirmation;"
+					cmd "ui_push popup_exit_campaign;"
 				}
 			}
 			string	"_EXIT"
@@ -890,50 +890,4 @@ window endgame
 	func onWindowOpened {
 		cmd "music_stop;snd_music Crystan-WinGame;"
 	}
-}
-
-// ========================
-// POPUP EXIT CONFIRMATION
-// ========================
-window popup_exit_confirmation extends ipopup
-{
-	{
-		bgcolor		"0.0784 0.1019 0.1019 1.0"
-		pos			"256 256"
-		size		"512 256"
-		dragbutton	true
-		closebutton	true
-	}
-
-	string title
-	{
-		width		"512"
-		string		"_EXIT CAMPAIGN CONFIRMATION"
-	}
-
-	string exit_confirmation_label
-	{
-		string		"_You will lose all your campaign progress."
-		pos			"26 58"
-		size		"450 60"
-	}
-
-	MainMenuExitBtn btn_back
-	{
-		size 	"180 30"
-		pos 	"332 226"
-		string	"_QUIT"
-		onClick	{ cmd "ui_pop;game_exit;" }
-	}
-
-	MainMenu2Btn bt_dontquit
-	{
-		size 	"180 30"
-		pos		"140 226"
-		string	"_BACK"
-		onClick	{ cmd "ui_pop;" }
-	}
-
-	// Fuzzy screen effect (see assets.ufo)
-	fuzzyScreen overlay { }
 }
