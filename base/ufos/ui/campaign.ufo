@@ -588,106 +588,34 @@ window campaign extends cgame_download
 	func onWindowOpened
 	{
 		cmd "set sel_load_slot 0;game_setmode;cp_getcampaigns;cp_getdescription <cvar:cp_campaign>;game_comments;"
-		call *node:root.toggle_cmp_load
-	}
 
-	// Fuzzy screen effect (see assets.ufo)
-	fuzzyScreen overlay { }
-}
-
-window campaign_main extends campaign
-{
-	{
-		//background	"ui/main_bg"
-		fill		true
-		starlayout	true
-		bgcolor		"0 0 0 0.5"
-	}
-
-	panel buttons
-	{
-		{
-			size			"400 700"
-			align			LAYOUTALIGN_TOP
-			layout			LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	15
-			contentalign	LAYOUTALIGN_MIDDLE
-		}
-		panel spacer
-		{
-			{
-				size	"0 235"
-			}
-		}
-		MainMenuBtn continue
-		{
-			tooltip	"_Leave this menu and continue playing."
-			onClick	{ cmd "ui_pop;" }
-			string	"_CONTINUE"
-		}
-		MainMenu2Btn load
-		{
-			onClick	{
-				*node:root.cmp_sel@invis = false
+		if ( paramCount < 1 ) {
+			*node:root.cmp_sel.btn_new@invis = false
+			*node:root.cmp_sel.btn_save@invis = true
+			*node:root.cmp_sel.btn_load@invis = false
+			*node:root.cmp_sel.btn_download@invis = false
+			*node:root.cmp_sel.btn_begin@invis = false
+			call *node:root.toggle_cmp_load
+		} else {
+			if ( "<1>" eq "load" ) {
 				*node:root.cmp_sel.btn_new@invis = true
 				*node:root.cmp_sel.btn_save@invis = true
 				*node:root.cmp_sel.btn_load@invis = false
 				*node:root.cmp_sel.btn_download@invis = true
-				*node:root.buttons@invis = true
 				*node:root.cmp_sel.btn_begin@invis = false
 				call *node:root.toggle_cmp_load
 			}
-			string	"_LOAD"
-		}
-		MainMenu2Btn save
-		{
-			onClick	{
-				*node:root.cmp_sel@invis = false
+			if ( "<1>" eq "save" ) {
 				*node:root.cmp_sel.btn_new@invis = true
 				*node:root.cmp_sel.btn_save@invis = false
 				*node:root.cmp_sel.btn_load@invis = true
 				*node:root.cmp_sel.btn_download@invis = true
-				*node:root.buttons@invis = true
 				*node:root.cmp_sel.btn_begin@invis = true
 				call *node:root.toggle_cmp_save
 			}
-			string	"_SAVE"
-		}
-		MainMenu2Btn options
-		{
-			onClick	{ cmd "ui_push options;" }
-			string	"_OPTIONS"
-		}
-		MainMenuExitBtn exit
-		{
-			onClick {
-				if ( *cvar:mn_fastexit == 1 ) {
-					cmd "game_exit;"
-				} else {
-					cmd "ui_push popup_exit_campaign;"
-				}
-			}
-			string	"_EXIT"
 		}
 	}
 
-	func onWindowActivate
-	{
-		*node:root.cmp_sel@invis = true
-		*node:root.cmp_sel.btn_new@invis = true
-		*node:root.cmp_sel.btn_save@invis = true
-		*node:root.cmp_sel.btn_load@invis = true
-		*node:root.cmp_sel.btn_load@pos = "0 0"
-		*node:root.cmp_sel.btn_download@invis = true
-		*node:root.cmp_sel.btn_back@onClick = {
-			*node:root.cmp_sel@invis = true
-			*node:root.buttons@invis = false
-		}
-	}
-
-	func onWindowClosed
-	{
-		*node:root.cmp_sel@invis = true
-		*node:root.buttons@invis = false
-	}
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
 }
