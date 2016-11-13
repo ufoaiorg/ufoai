@@ -810,6 +810,7 @@ void NAT_HandleBudget (const campaign_t* campaign)
 	}
 
 	for (int i = 0; i < MAX_EMPL; i++) {
+		int count = 0;
 		cost = 0;
 		E_Foreach(i, employee) {
 			if (!employee->isHired())
@@ -817,13 +818,14 @@ void NAT_HandleBudget (const campaign_t* campaign)
 			const rank_t* rank = CL_GetRankByIdx(employee->chr.score.rank);
 			cost += CP_GetSalaryBaseEmployee(salary, employee->getType())
 					+ rank->level * CP_GetSalaryRankBonusEmployee(salary, employee->getType());
+			count++;
 		}
 		totalExpenditure += cost;
 
 		if (cost == 0)
 			continue;
 
-		Com_sprintf(message, sizeof(message), _("Paid %i credits to: %s"), cost, E_GetEmployeeString((employeeType_t)i, 1));
+		Com_sprintf(message, sizeof(message), _("Paid %i credits to: %s"), cost, E_GetEmployeeString((employeeType_t)i, count));
 		MS_AddNewMessage(_("Notice"), message);
 	}
 
