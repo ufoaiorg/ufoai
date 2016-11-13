@@ -167,7 +167,7 @@ static void HUD_ToggleCrouchReservation_f (void)
 	if (CL_ActorReservedTUs(actor, RES_CROUCH) >= TU_CROUCH) {
 		/* Reset reserved TUs to 0 */
 		CL_ActorReserveTUs(actor, RES_CROUCH, 0);
-		HUD_DisplayMessage(_("Disabled automatic crouching/standing up."));
+		HUD_DisplayMessage(_("Disabled crouching/standing up TUs reservation."));
 	} else {
 		/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
 		CL_ActorReserveTUs(actor, RES_CROUCH, TU_CROUCH);
