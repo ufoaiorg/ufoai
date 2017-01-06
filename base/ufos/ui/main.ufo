@@ -18,8 +18,8 @@ do
 			name = "title",
 
 			text = "_UFO: ALIEN INVASION",
-			pos = { 262, 50 },
-			size = { 500, 50 },
+			pos = { 0, 50 },
+			size = { 1024, 50 },
 			font = "f_title",
 			color = { 0.59, 0.78, 0.56, 1.0 },
 			contentalign = ufo.ALIGN_CC
