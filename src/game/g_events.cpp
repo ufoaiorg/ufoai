@@ -341,12 +341,9 @@ void G_EventParticleSpawn (playermask_t playerMask, const char* name, int levelF
 
 void G_EventActorFall (const Edict& ent)
 {
-	G_EventAdd(G_VisToPM(ent.visflags), EV_ACTOR_MOVE, ent.getIdNum());
-	gi.WriteByte(1);
-	gi.WriteByte(ent.pos[0]);
-	gi.WriteByte(ent.pos[1]);
-	gi.WriteByte(ent.pos[2]);
-	gi.WriteByte(makeDV(DIRECTION_FALL, ent.pos[2]));
+	G_EventAdd(PM_ALL, EV_ACTOR_MOVE, ent.getIdNum());
+	gi.WriteByte(0);
+	gi.WriteShort(makeDV(DIRECTION_FALL, ent.pos[2]));
 	gi.WriteShort(GRAVITY);
 	gi.WriteShort(0);
 	G_EventEnd();
