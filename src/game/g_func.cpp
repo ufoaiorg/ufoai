@@ -45,13 +45,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static bool Touch_Breakable (Edict* self, Edict* activator)
 {
-	/* not yet broken */
-	if (self->HP != 0)
-		return false;
-
 	/** @todo check that the actor is standing upon the breakable */
 	if (G_IsActor(activator))
-		G_ActorFall(activator);
+		G_TriggerAddToList(self, activator);
 
 	return false;
 }
@@ -93,6 +89,7 @@ static bool Destroy_Breakable (Edict* self)
 		G_SpawnParticle(origin, self->spawnflags, self->particle);
 
 	G_TouchEdicts(self, 10.0f);
+	linkedList_t* touchedList = self->touchedList;
 
 	/* destroy the door trigger */
 	if (self->child()) {
@@ -118,6 +115,14 @@ static bool Destroy_Breakable (Edict* self)
 	GridBox rerouteOldBox;
 	rerouteOldBox.set(oldAABB);
 	G_RecalcRouting(model, rerouteOldBox);
+
+	LIST_Foreach(touchedList, Edict, activator) {
+		Com_Printf("Touching edict: %i\n", activator->number);
+		if (G_IsActor(activator)) {
+			Com_Printf("Calling fall for: %s\n", activator->chr.name);
+			G_ActorFall(activator);
+		}
+	}
 
 	return true;
 }
