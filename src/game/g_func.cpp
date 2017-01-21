@@ -117,11 +117,8 @@ static bool Destroy_Breakable (Edict* self)
 	G_RecalcRouting(model, rerouteOldBox);
 
 	LIST_Foreach(touchedList, Edict, activator) {
-		Com_Printf("Touching edict: %i\n", activator->number);
-		if (G_IsActor(activator)) {
-			Com_Printf("Calling fall for: %s\n", activator->chr.name);
+		if (G_IsActor(activator))
 			G_ActorFall(activator);
-		}
 	}
 
 	return true;
