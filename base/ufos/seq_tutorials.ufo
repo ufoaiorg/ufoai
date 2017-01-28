@@ -682,6 +682,9 @@ sequence tut_campaign_part2
 		"tutorial/campaign2BaseGUIRight"
 		"tutorial/campaign2BaseGUITop"
 		"tutorial/campaign2BuildingHomeBase"
+	)
+
+	precache pics (
 		"tutorial/campaign2HireFire"
 		"tutorial/campaign2Hospital"
 		"tutorial/campaign2Market"
