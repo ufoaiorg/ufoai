@@ -927,7 +927,7 @@ void CL_ParseSequence (const char* name, const char** text)
 				return;
 
 			if (numSeqCmds >= MAX_SEQCMDS)
-				Com_Error(ERR_FATAL, "Too many sequence commands for %s", name);
+				Com_Error(ERR_FATAL, "Too many sequence commands for %s\n", name);
 
 			/* init seqCmd */
 			if (seqCmds == nullptr)
@@ -950,7 +950,7 @@ void CL_ParseSequence (const char* name, const char** text)
 				data = &sc->data[0];
 				while (depth) {
 					if (maxLength <= 0) {
-						Com_Printf("Too much data for sequence %s", sc->name);
+						Com_Printf("Too much data for sequence %s\n", sc->name);
 						break;
 					}
 					token = Com_EParse(text, errhead, name);
