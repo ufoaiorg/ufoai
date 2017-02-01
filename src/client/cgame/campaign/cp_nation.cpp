@@ -485,6 +485,9 @@ static int usedFundPtslist = 0;
 static screenPoint_t colorLinePts[MAX_NATIONS][2];
 static int usedColPtslists = 0;
 
+/**
+ * @todo Remove this? Replaced by nation->color (from nations.ufo), in CL_NationDrawStats() and CL_NationStatsUpdate_f()
+ */
 static const vec4_t graphColors[MAX_NATIONS] = {
 	{1.0, 0.5, 0.5, 1.0},
 	{0.5, 1.0, 0.5, 1.0},
@@ -585,7 +588,7 @@ static void CL_NationDrawStats (const nation_t* nation, uiNode_t* node, lineStri
 		cgi->Cvar_Set("mn_nat_symbol", "nations/%s", nation->id);
 		Vector4Copy(graphColorSelected, funding->color);
 	} else {
-		Vector4Copy(graphColors[color], funding->color);
+		Vector4Copy(nation->color, funding->color);
 	}
 
 	usedFundPtslist++;
@@ -639,7 +642,7 @@ static void CL_NationStatsUpdate_f (void)
 			if (i == selectedNation) {
 				Vector4Copy(graphColorSelected, color->color);
 			} else {
-				Vector4Copy(graphColors[i], color->color);
+				Vector4Copy(nation->color, color->color);
 			}
 
 			usedColPtslists++;
