@@ -62,5 +62,5 @@ void UI_RegisterDataNode (uiBehaviour_t* behaviour)
 	UI_RegisterExtradataNodeProperty(behaviour, "number", V_FLOAT, EXTRADATA_TYPE, number);
 
 	/* Store a integer number into the node. */
-	UI_RegisterExtradataNodeProperty(behaviour, "integer", V_INT, EXTRADATA_TYPE, number);
+	UI_RegisterExtradataNodeProperty(behaviour, "integer", V_INT, EXTRADATA_TYPE, integer);
 }
