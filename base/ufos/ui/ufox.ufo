@@ -44,7 +44,7 @@ function ufox.build_properties (data, parent, ui_node)
 					-- translate key to a property set function
 					local fn_set = string.format("set_%s", tostring(k))
 					if (ui_node[fn_set] == nil) then
-						ufo.print(string.format('[ufox.build] WARNING: Unrecognized property: "%s" ignored (%s)', tostring(k), ui_node:path()))
+						ufo.print(string.format('[ufox.build] WARNING: Unrecognized property: "%s" ignored (%s)\n', tostring(k), ufo.nodepath(ui_node)))
 					else
 						if (type(v) == "table") then
 							-- multiple value argument: should be a table of values
