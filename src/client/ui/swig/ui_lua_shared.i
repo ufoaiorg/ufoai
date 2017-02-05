@@ -1605,7 +1605,7 @@ void Com_Error(int code, const char* fmt);
 /* expose information functions */
 %rename (nodetree) UI_PrintNodeTree;
 void UI_PrintNodeTree (uiNode_t* node);
-%rename (nodepath) %UI_GetPath;
+%rename (nodepath) UI_GetPath;
 const char* UI_GetPath(const uiNode_t* node);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
