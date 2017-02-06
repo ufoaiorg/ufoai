@@ -1346,7 +1346,7 @@ window hud_default extends hud
 		// Input soldier information squad selection
 		*cvar:i = 0;
 		while ( *cvar:i < 12 ) {
-			*node:root.soldier.squad.sld<cvar:i>@num = <cvar:i>
+			*node:root.soldier.squad.sld<cvar:i>.number@integer = <cvar:i>
 			*node:root.soldier.squad.sld<cvar:i>.head@src = *cvar:mn_head<cvar:i>
 			*node:root.soldier.squad.sld<cvar:i>.head@skin = *cvar:mn_head_skin<cvar:i>
 			*node:root.soldier.squad.sld<cvar:i>.health@max = *cvar:mn_hpmax<cvar:i>
