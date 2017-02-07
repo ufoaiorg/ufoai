@@ -485,19 +485,6 @@ static int usedFundPtslist = 0;
 static screenPoint_t colorLinePts[MAX_NATIONS][2];
 static int usedColPtslists = 0;
 
-/**
- * @todo Remove this? Replaced by nation->color (from nations.ufo), in CL_NationDrawStats() and CL_NationStatsUpdate_f()
- */
-static const vec4_t graphColors[MAX_NATIONS] = {
-	{1.0, 0.5, 0.5, 1.0},
-	{0.5, 1.0, 0.5, 1.0},
-	{0.5, 0.5, 1.0, 1.0},
-	{1.0, 0.0, 0.0, 1.0},
-	{0.0, 1.0, 0.0, 1.0},
-	{0.0, 0.0, 1.0, 1.0},
-	{1.0, 1.0, 0.0, 1.0},
-	{0.0, 1.0, 1.0, 1.0}
-};
 static const vec4_t graphColorSelected = {1, 1, 1, 1};
 
 /**
