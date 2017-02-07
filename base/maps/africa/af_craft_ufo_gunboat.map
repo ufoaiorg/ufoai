@@ -2426,10 +2426,10 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "244 487 64"
+"origin" "780 697 64"
 "model" "models/aircraft/craft_weapon_particle/pbw.md2"
 "skin" "0"
-"angles" "1.00179e-005 -90 -180"
+"angles" "1.00179e-005 90 -180"
 "modelscale_vec" "2.75 2.75 2.75"
 }
 // entity 14
@@ -2483,10 +2483,10 @@
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "780 487 64.0001"
+"origin" "244 697 64.0001"
 "model" "models/aircraft/craft_weapon_particle/pbw.md2"
 "skin" "0"
-"angles" "1.00179e-005 -90 -180"
+"angles" "1.00179e-005 90 -180"
 "modelscale_vec" "2.75 2.75 2.75"
 }
 // entity 22
