@@ -437,11 +437,11 @@ entity misc_mission {
 	optional {
 		particle	"The particle to display"
 		item		"Item that must be placed here to trigger the target (e.g. a bomb that will blast the target entity, valid bombs are e.g. bomb1 and bomb2)"
-		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
-		target		"The target that is triggered once the round time was hit - target trigger must have targetname set"
-		message		"A message that is shown when the mission is completed"
-		targetname	"The name of this mission target"
-		desc		"The description of this mission target"
+		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match."
+		target		"The target that is triggered once the round time was hit - target trigger must have targetname set."
+		message		"A message that is shown when the mission is completed."
+		targetname	"The name of this mission target."
+		desc		"The description of this mission target."
 	}
 
 	mandatory {
@@ -461,7 +461,7 @@ entity misc_mission {
 
 	default {
 		spawnflags	"255"
-		radius		"1"
+		radius		"3"
 		team		"1"
 		time		"1"
 	}
