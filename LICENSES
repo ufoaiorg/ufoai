@@ -490,6 +490,7 @@ base/maps/industrial/ind_fr15_2x1.map | GNU General Public License 2.0 or later 
 base/maps/industrial/ind_fr16_5x1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/ind_fr17_2x2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | /base/maps/frozen/st_i02.map
 base/maps/industrial/ind_gasstation_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | derived from city_industry.map by Martin Gerhardy
+base/maps/industrial/ind_office.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | derived from base/maps/transport/tra_main.map
 base/maps/industrial/ind_spedition_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | derived from /spedition/sp_main.map by Martin Gerhardy
 base/maps/industrial/ind_storage_01.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | derived from city_industry.map by Martin Gerhardy
 base/maps/industrial/ind_transport.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich | /base/maps/transport/tra_main.map

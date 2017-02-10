@@ -188,6 +188,18 @@ tile +factory_01
 0		0		0		0		0
 }
 
+tile +office
+	// office building, A(10), C(4)
+{
+5 6
+0		0		0		0		0
+0		+a		+a		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		0		0
+0		0		0		0		0
+}
+
 tile +spedition_01
 {
 8 6
@@ -372,6 +384,7 @@ tile +fr17_2x2 //A(5)
 
 tileset buildings {
 	+factory_01		// 3x2
+	+office			// 3x4
 	+transport		// 3x6
 	+spedition_01	// 6x4
 	}
@@ -457,6 +470,7 @@ size "10 8"
 +ditch_01		"0 1"	// 4x1
 +factory_01		"0 1"	// 3x2
 +gasstation_01	"0 1"	// 2x3
++office			"0 1"	// 3x4
 +spedition_01	"0 1"	// 6x4
 +storage_01		"0 1"	// 2x2
 +transport		"0 1"	// 3x6
@@ -487,6 +501,7 @@ size "8 8"
 +ditch_01		"0 1"	// 4x1
 +factory_01		"0 1"	// 3x2
 +gasstation_01	"0 1"	// 2x3
++office			"0 1"	// 3x4
 +spedition_01	"0 1"	// 6x4
 +storage_01		"0 1"	// 2x2
 +transport		"0 1"	// 3x6
@@ -516,6 +531,7 @@ size "6 7"
 +fr17_2x2		"0 1"	// 2x2
 +ditch_01		"0 1"	// 4x1
 +gasstation_01	"0 1"	// 2x3
++office			"0 1"	// 3x4
 +storage_01		"0 1"	// 2x2
 tileset buildings	"1 1"
 *rm_drop +craft_drop_firebird	"1 1"
@@ -544,6 +560,7 @@ size "6 6"
 +fr17_2x2		"0 1"	// 2x2
 +ditch_01		"0 1"	// 4x1
 +gasstation_01	"0 1"	// 2x3
++office			"0 1"	// 3x4
 +storage_01		"0 1"	// 2x2
 tileset buildings	"1 1"
 *rm_drop +craft_drop_firebird	"1 1"
