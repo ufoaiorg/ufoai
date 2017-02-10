@@ -1,3 +1,4 @@
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -362,4 +363,13 @@
 ( 48 32 -64 ) ( 48 16 -64 ) ( 48 32 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
 ( 16 32 64 ) ( 16 16 -64 ) ( 16 32 -64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
 }
+}
+// entity 4
+{
+"classname" "misc_sound"
+"origin" "32.75 14.375 48"
+"noise" "ambience/alien_engine"
+"attenuation" "2.8"
+"volume" "0.4"
+"spawnflags" "255"
 }
