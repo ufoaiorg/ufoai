@@ -76,16 +76,16 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 		return false;
 
 	if (self->isSameTeamAs(actor)) {
-		self->count = level.actualRound;
 		if (!self->item) {
 			linkedList_t* touched = self->touchedList;
 			while (touched) {
 				const Edict* const ent = static_cast<const Edict* const>(touched->data);
-				if (!self->isSameTeamAs(ent) && !G_IsDead(ent)) {
-					return true;
+				if (!self->isSameTeamAs(ent) && !G_IsCivilian(ent) && !G_IsDead(ent)) {
+					return false;
 				}
 				touched = touched->next;
 			}
+			self->count = level.actualRound;
 			if (self->targetname) {
 				gi.BroadcastPrintf(PRINT_HUD, _("%s forces have occupied the %s!"), actorTeam, self->targetname);
 			} else {
