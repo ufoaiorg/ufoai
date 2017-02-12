@@ -257,7 +257,6 @@ void G_MissionThink (Edict* self)
 		chain = self;
 	while (chain) {
 		if (chain->type == ET_MISSION) {
-			G_UseEdict(chain, nullptr);
 			if (chain->item != nullptr) {
 				Edict* item = G_GetEdictFromPos(chain->pos, ET_ITEM);
 				if (item != nullptr) {
@@ -288,8 +287,9 @@ void G_MissionThink (Edict* self)
 		}
 
 		Edict* ent = chain->groupChain;
-		/* free the group chain */
-		G_FreeEdict(chain);
+		/* free the group chain (G_MissionUse() will free the edict if it fails) */
+		if (G_UseEdict(chain, nullptr))
+			G_FreeEdict(chain);
 		chain = ent;
 	}
 
