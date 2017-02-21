@@ -1,1240 +1,1419 @@
-// ======================
-// NEW HUD UNNAMED SO FAR
-// ======================
+--!usr/bin/lua
 
-/*
- * @TODO
- * - No ammo models/bar because cvars don't exist
- * - Some way to see which ammo is loaded
- * - Currently selected firemode name on weapon panel
- * - Second weapon panel
- * -- Reload button disappears when full, but it would
- *	be great to have full/not-full/empty icons
- * -- Need to figure out grenades, and sometimes pistols
- *	they say can't be fired two-handed, and reload btn
- *	doesn't appear. Try to figure out when this happens.
- * - Fire weapon seems off: sometimes no line of fire is drawn
- * - Soldier models don't always update
- * - Inventory/Stats windows
- * -- Turn it into panel?
- * - Chat windows, and other MP-specific needs
- * - Message panel (log lines use old style)
- * - Show keys
- * - Level selection needs up/down arrows
- * - Tooltips: look for UI_DrawTooltip
- * - Rescue zone button
- */
+if (ufox == nil) then
+	require("ufox.ufo")
+end
 
-window hud_default extends hud
-{
+-- ===============
+-- DEFAULT UI2 HUD
+-- ===============
+
+--[[
+ - @TODO
+ - * No ammo models/bar because cvars don't exist
+ - * Some way to see which ammo is loaded
+ - * Currently selected firemode name on weapon panel
+ - * Second weapon panel
+ - ** Reload button disappears when full, but it would
+ -	be great to have full/not-full/empty icons
+ - ** Need to figure out grenades, and sometimes pistols
+ -	they say can't be fired two-handed, and reload btn
+ -	doesn't appear. Try to figure out when this happens.
+ - * Fire weapon seems off: sometimes no line of fire is drawn
+ - * Soldier models don't always update
+ - * Inventory/Stats windows
+ - ** Turn it into panel?
+ - * Chat windows, and other MP-specific needs
+ - * Message panel (log lines use old style)
+ - * Show keys
+ - * Level selection needs up/down arrows
+ - * Tooltips: look for UI_DrawTooltip
+ - * Rescue zone button
+--]]
+
+local hud_default_window = ufox.build_window{
+	class = "window",
+	name = "hud_default",
+	super = "hud",
+	fill = true,
+	starlayout = true,
+	noticepos = {512, 50},
+
 	{
-		fill		true
-		starlayout	true
-		noticepos	"512 50"
-	}
+		class = "battlescape",
+		name = "render",
+		pos = {0, 0},
+		size = {1024, 768},
+		layoutalign = ufo.LAYOUTALIGN_FILL
+	},
 
-	func onScriptLoaded {
-		// Add the window to the list of HUDs
-		cmd "add_hud_name <path:root> \"_Default\""
-	}
-
-	battlescape render
+	-- ============================
+	-- reaction fire tracking panel
+	-- parameter to display the panel
+	-- ============================
 	{
-		pos			"0 0"
-		size		"1024 768"
-		align		LAYOUTALIGN_FILL
-	}
+		class = "panel",
+		name = "reactions",
+		pos = {122, 62},
+		size = {210, 500},
+		layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+		layoutmargin = 4,
+		ghost = true
+	},
 
-	// ============================
-	// reaction fire tracking panel
-	// parameter to display the panel
-	// ============================
-	panel reactions
+	-- ==============
+	-- SOLDIERS PANEL
+	-- ==============
 	{
-		{
-			pos		"122 62"
-			size		"210 500"
-			layout		LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	4
-			ghost		true
-		}
-	}
+		class = "panel",
+		name = "soldier",
+		pos = {0, 418},
+		size = {1024, 220},
+		layoutalign = ufo.LAYOUTALIGN_BOTTOMLEFT,
+		ghost = true,
 
-	// ==============
-	// SOLDIERS PANEL
-	// ==============
-	panel soldier
+		{
+			class = "panel",
+			name = "soldier_opts",
+			pos = {10, 130},
+			size = {780, 76},
+--			backgroundcolor = {0.38, 0.48, 0.36, 0.5},
+			backgroundcolor = {0, 0.15, 0.1, 0.7},
+			bordercolor = {0.58, 0.81, 0.758, 0.7},
+			bordersize = 2,
+			on_mouseenter = function (this)
+				this:set_backgroundcolor(0, 0.21, 0.158, 0.7)
+			end,
+			on_mouseleave = function (this)
+				this:set_backgroundcolor(0, 0.15, 0.1, 0.7)
+			end,
+
+			-- Soldier name
+			{
+				class = "string",
+				name = "sel_soldier_name",
+				text = "*cvar:mn_name",
+				pos = {105, 6},
+				size = {300, 15},
+				font = "f_small_bold",
+				color = {0.56, 0.81, 0.76, 1},
+				longlines = ufo.LONGLINES_CHOP,
+				contentalign = ufo.ALIGN_CL,
+				ghost = true
+			},
+
+			-- Soldier status bars
+			{
+				class = "panel",
+				name = "soldier_status",
+				pos = {105, 18},
+				size = {355, 60}, -- 420
+				ghost = true,
+
+				-- Health bar
+				{
+					class = "texture",
+					name = "health_bg",
+					pos = {0, 5},
+					size = {300, 10},
+					source = "ui/bar_bg",
+					ghost = true
+				},
+				{
+					class = "bar",
+					name = "health",
+					pos = {0, 5},
+					size = {300, 10},
+					color = {0.1875, 0.65625, 0.164, 1},
+					value = "*cvar:mn_hp",
+					max = "*cvar:mn_hpmax",
+					disabled = true,
+					nohover = true
+				},
+				{
+					class = "bar",
+					name = "stun",
+					pos = {0, 6},
+					size = {300, 8},
+					color = {0.3, 0.3, 0.3, 0.9},
+					value = "*cvar:mn_stun",
+					max = "*cvar:mn_hpmax",
+					disabled = true,
+					nohover = true
+				},
+				{
+					class = "string",
+					name = "health_count",
+					text = "*cvar:mn_hp",
+					pos = {305, 4},
+					size = {30, 12},
+					font = "f_verysmall_bold",
+					color = {0.56, 0.81, 0.76, 0.5},
+					contentalign = ufo.ALIGN_CL
+				},
+				{
+					class = "button",
+					name = "health_icon",
+					icon = "icons/healthsml0",
+					pos = {335, 0},
+					size = {18, 19},
+				},
+
+				-- Time units bar
+				{
+					class = "texture",
+					name = "tu_bg",
+					pos = {0, 22},
+					size = {300, 10},
+					source = "ui/bar_bg",
+					ghost = true
+				},
+				{
+					class = "bar",
+					name = "tu",
+					pos = {0, 22},
+					size = {300, 10},
+					color = {0.582, 0.808, 0.758, 1},
+					value = "*cvar:mn_tu",
+					max = "*cvar:mn_tumax",
+					disabled = true,
+					nohover = true
+				},
+				{
+					class = "bar",
+					name = "tureserved",
+					pos = {0, 23},
+					size = {300, 8},
+					color = {0, 0, 0, 0.3},
+					value = "*cvar:mn_tureserved",
+					max = "*cvar:mn_tumax",
+					disabled = true,
+					nohover = true
+				},
+				{
+					class = "string",
+					name = "tu_count",
+					text = "*cvar:mn_tu",
+					pos = {305, 21},
+					size = {30, 12},
+					font = "f_verysmall_bold",
+					color = {0.56, 0.81, 0.76, 0.5},
+					contentalign = ufo.ALIGN_CL
+				},
+				{
+					class = "button",
+					name = "tu_icon",
+					icon = "icons/tusml0",
+					pos = {335, 17},
+					size = {18, 19}
+				},
+
+				-- Morale bar
+				{
+					class = "texture",
+					name = "morale_bg",
+					pos = {0, 39},
+					size = {300, 10},
+					source = "ui/bar_bg",
+					ghost = true
+				},
+				{
+					class = "bar",
+					name = "morale",
+					pos = {0, 39},
+					size = {300, 10},
+					color = {0.825, 0.92, 0.437, 1},
+					value = "*cvar:mn_morale",
+					max = "*cvar:mn_moralemax",
+					disabled = true,
+					nohover = true
+				},
+				{
+					class = "string",
+					name = "morale_count",
+					text = "*cvar:mn_morale",
+					pos = {305, 38},
+					size = {30, 12},
+					font = "f_verysmall_bold",
+					color = {0.56, 0.81, 0.76, 0.5},
+					contentalign = ufo.ALIGN_CL
+				},
+				{
+					class = "button",
+					name = "morale_icon",
+					icon = "icons/moralesml0",
+					pos = {335, 34},
+					size = {18, 19}
+				}
+			},
+
+			-- Soldier buttons
+			-- @TODO: inventory button should stay "on" when window is open
+			-- @TODO: stats button should stay "on" when window is open
+			{
+				class = "panel",
+				name = "soldier_buttons",
+				pos = {470, 13},
+				size = {310, 50},
+				ghost = true,
+
+				-- Inventory button
+				{
+					class = "CircleBtn",
+					name = "inventory_bg",
+					pos = {0, 0},
+
+					{
+						class = "button",
+						name = "icon",
+						icon = "icons/inv0",
+						background = "icons/circle0",
+						pos = {0, 0},
+						size = {48, 48},
+						tooltip = "_Equipment",
+						on_click = function (this)
+							-- ufo.cmd("toggle_button inventory_bg inv;")
+							ufo.cmd("show_hide_inv_stats;")
+						end,
+						on_mouseenter = function (this)
+							this:set_icon("icons/inv")
+						end,
+						on_mouseleave = function (this)
+							this:set_icon("icons/inv0")
+						end
+					}
+				},
+				-- Soldier stats button
+				{
+					class = "CircleBtn",
+					name = "stats_bg",
+					pos = {55, 0},
+
+					{
+						class = "button",
+						name = "icon",
+						icon = "icons/stats0",
+						background = "icons/circle0",
+						pos = {0, 0},
+						size = {48, 48},
+						tooltip = "_Stats",
+						on_click = function (this)
+							-- ufo.cmd("toggle_button stats_bg stats;")
+							ufo.cmd("show_hide_inv_stats;")
+						end,
+						on_mouseenter = function (this)
+							this:set_icon("icons/stats")
+						end,
+						on_mouseleave = function (this)
+							this:set_icon("icons/stats0")
+						end
+					}
+				},
+				-- Headgear button
+				{
+					class = "CircleBtn",
+					name = "headgear_bg",
+					pos = {110, 0},
+
+					{
+						class = "button",
+						name = "icon",
+						icon = "icons/headgear0",
+						background = "icons/circle0",
+						pos = {0, 0},
+						size = {48, 48},
+						tooltip = "_Headgear",
+						on_mouseenter =  function (this)
+							this:set_icon("icons/headgear")
+						end,
+						on_mouseleave = function (this)
+							this:set_icon("icons/headgear0")
+						end,
+						on_click = function (this)
+							ufo.cmd("actor_useheadgear;")
+						end
+					},
+
+					{
+						class = "CircleBtnDisabled",
+						name = "headgear_d",
+						pos = {0, 0}
+					},
+				},
+
+				-- Reaction fire button
+				{
+					class = "CircleBtn",
+					name = "reaction",
+					pos = {165, 0},
+
+					{
+						class = "button",
+						name = "icon_on",
+						icon = "icons/reactionon0",
+						background = "icons/circle",
+						pos = {0, 0},
+						size = {48, 48},
+						invisible = true,
+						tooltip = "_Toggle reaction fire.",
+						on_mouseenter = function (this)
+							this:set_icon("icons/reactionon")
+						end,
+						on_mouseleave = function (this)
+							this:set_icon("icons/reactionon0")
+						end,
+						on_click = function (this)
+							ufo.cmd("deselect_reaction; hud_togglereaction;")
+						end
+					},
+
+					{
+						class = "button",
+						name = "icon_off",
+						icon = "icons/reactionoff0",
+						background = "icons/circle0",
+						pos = {0, 0},
+						size = {48, 48},
+						tooltip = "_Toggle reaction fire.",
+						on_mouseenter = function (this)
+							this:set_icon("icons/reactionoff")
+						end,
+						on_mouseleave = function (this)
+							this:set_icon("icons/reactionoff0")
+						end,
+						on_click = function (this)
+							ufo.cmd("startreaction; hud_togglereaction;")
+						end
+					},
+
+					-- Disable icon over reaction button
+					{
+						class = "button",
+						name = "reaction_d",
+						pos = {0, 0},
+						size = {48, 48},
+						icon = "icons/circle_disabled0",
+						invisible = true
+					}
+				},
+
+				-- Stand button when not selected
+				{
+					class = "CircleBtn",
+					name = "stand_off",
+					pos = {220, 0},
+
+					{
+						class = "button",
+						name = "icon",
+						icon = "icons/stand0",
+						background = "icons/circle0",
+						pos = {0, 0},
+						size = {48, 48},
+						tooltip = "_Stand",
+						on_click = function (this)
+							ufo.cmd("actor_standcrouch;")
+						end,
+						on_mouseenter = function (this)
+							this:set_icon("icons/stand")
+						end,
+						on_mouseleave = function (this)
+							this:set_icon("icons/stand0")
+						end
+					}
+				},
+
+				-- Crouch button when not selected
+				{
+					class = "CircleBtn",
+					name = "crouch_off",
+					pos = {250, 0},
+
+					{
+						class = "button",
+						name = "icon",
+						icon = "icons/crouch0",
+						background = "icons/circle0",
+						pos = {0, 0},
+						size = {48, 48},
+						tooltip = "_Crouch",
+						on_click = function (this)
+							ufo.cmd("actor_standcrouch;")
+						end,
+						on_mouseenter = function (this)
+							this:set_icon("icons/crouch")
+						end,
+						on_mouseleavenode = function (this)
+							this:set_icon("icons/crouch0")
+						end
+					}
+				},
+
+				-- Crouch button when selected
+				{
+					class = "CircleBtn",
+					name = "crouch",
+					pos = {250, 0},
+					tooltip = "_Crouched",
+					invisible = true,
+
+					{
+						class = "button",
+						name = "icon",
+						icon = "icons/crouch",
+						background = "icons/circle",
+						pos = {0, 0},
+						size = {48, 48},
+						ghost = true
+					}
+				},
+
+				-- Disable icon over crouch button
+				{
+					class = "button",
+					name = "crouch_d",
+					pos = {250, 0},
+					size = {48, 48},
+					icon = "icons/circle_disabled0",
+					invisible = true
+				},
+
+				-- Stand button when selected
+				{
+					class = "CircleBtn",
+					name = "stand",
+					pos = {220, 0},
+					tooltip = "_Standing",
+					invisible = false,
+
+					{
+						class = "button",
+						name = "icon",
+						icon = "icons/stand",
+						background = "icons/circle",
+						pos = {0, 0},
+						size = {48, 48},
+						ghost = true
+					}
+				},
+
+				-- Disable icon over stand button
+				{
+					class = "button",
+					name = "stand_d",
+					pos = {220, 0},
+					size = {48, 48},
+					icon = "icons/circle_disabled0",
+					invisible = true
+				},
+			}
+		},
+
+		-- Right-hand weapon panel
+		-- @TODO implement firemode selection
+		-- @TODO add button to show left-hand weapon panel
+		{
+			class = "panel",
+			name = "weapon",
+			pos = {800, 130},
+			size = {206, 76},
+--			backgroundcolor = {0.38, 0.48, 0.36, 0.5},
+			backgroundcolor = {0, 0.15, 0.1, 0.7},
+			bordercolor = {0.58, 0.81, 0.758, 0.7},
+			bordersize = 2,
+			on_click = function (this)
+				ufo.cmd("hud_fireweapon r 0;")
+			end,
+			on_mouseenter = function (this)
+				this:set_backgroundcolor(0, 0.21, 0.158, 0.7)
+			end,
+			on_mouseleave = function (this)
+				this:set_backgroundcolor(0, 0.15, 0.1, 0.7)
+			end,
+			{
+				class = "container",
+				name = "right",
+				pos = {10, 10},
+			},
+			{
+				class = "container",
+				name = "left",
+				invisible = true,
+				pos = {10, 10}
+			},
+			--[[
+			{
+				class = "string",
+				name = "fmode_label",
+				text = "*cvar:fm_selected",
+				pos = {5, 60},
+				size = {196, 10},
+				font = "f_small_bold",
+				color = {0.58, 0.81, 0.758, 1},
+				contentalign = ufo.ALIGN_CR
+				longlines = ufo.LONGLINES_CHOP
+				ghost = true
+			},
+			--]]
+			{
+				class = "button",
+				name = "fire_r",
+				pos = {5, 5},
+				size = {35, 35},
+				invisible = false,
+				icon = "icons/fire0",
+				on_click = function (this)
+					ufo.cmd("ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.soldier.weapon LAYOUTALIGN_TOPLEFT;")
+				end,
+				on_mouseenter = function (this)
+					this:set_icon("icons/fire")
+				end,
+				on_mouseleave = function (this)
+					this:set_icon("icons/fire0")
+				end
+			},
+			{
+				class = "button",
+				name = "fire_l",
+				pos = {5, 5},
+				size = {35, 35},
+				invisible = true,
+				icon = "icons/fire0",
+				on_click = function (this)
+					ufo.cmd("ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.soldier.weapon LAYOUTALIGN_TOPLEFT;")
+				end,
+				on_mouseenter = function (this)
+					this:set_icon("icons/fire")
+				end,
+				on_mouseleave = function (this)
+					this:set_icon("icons/fire0")
+				end
+			},
+			{
+				class = "button",
+				name = "reload_r",
+				pos = {173, 5},
+				size = {28, 23},
+				invisible = false,
+				icon = "icons/reload0",
+				on_mouseenter = function (this)
+					this:set_icon("icons/reload")
+					ufo.cmd("hud_remainingtus reload_r 1;")
+				end,
+				on_mouseleave = function (this)
+					this:set_icon("icons/reload0")
+					ufo.cmd("hud_remainingtus reload_r 0;")
+				end,
+				on_click = function (this)
+					ufo.cmd("hud_reloadright;")
+				end
+			},
+			{
+				class = "button",
+				name = "reload_r_disabled",
+				pos = {173, 5},
+				size = {28, 23},
+				invisible = true,
+				icon = "icons/reload_disabled",
+				on_click = function (this)
+					ufo.cmd("hud_reloadright;")
+				end
+			},
+			{
+				class = "button",
+				name = "reload_l",
+				pos = {173, 5},
+				size = {28, 23},
+				invisible = true,
+				icon = "icons/reload0",
+				on_mouseenter = function (this)
+					this:set_icon("icons/reload")
+					ufo.cmd("hud_remainingtus reload_l 1;")
+				end,
+				on_mouseleave = function (this)
+					this:set_icon("icons/reload0")
+					ufo.cmd("hud_remainingtus reload_l 1;")
+				end,
+				on_click = function (this)
+					ufo.cmd("hud_reloadleft;")
+				end
+			},
+			{
+				class = "button",
+				name = "reload_l_disabled",
+				pos = {173, 5},
+				size = {28, 23},
+				invisible = true,
+				icon = "icons/reload_disabled",
+				on_click = function (this)
+					ufo.cmd("hud_reloadleft;")
+				end
+			},
+			{
+				class = "string",
+				name = "ammo_count",
+				text = "*cvar:mn_ammoright",
+				pos = {130, 18},
+				size = {40, 10},
+				font = "f_small_bold",
+				color = {0.58, 0.81, 0.758, 1},
+				contentalign = ufo.ALIGN_CR,
+				ghost = true
+			},
+			{
+				class = "model",
+				name = "oweapon",
+				model = "*cvar:mn_lweapon",
+				angles = {-15, 170, 90},
+				scale = {1.8, 1.8, 1.8},
+				tooltip = "_View other hand",
+				pos = {130, 33},
+				size = {72, 39},
+				backgroundcolor = {0, 0.1, 0, 0.5},
+				bordersize = 2,
+				bordercolor = {0.527, 0.6, 0.21, 1},
+				on_mouseenter = function (this)
+					this:set_backgroundcolor(0, 0.1, 0, 0.9)
+					this:set_bordercolor(0.824, 0.917, 0.437, 1)
+				end,
+				on_mouseleave = function (this)
+					this:set_backgroundcolor(0, 0.1, 0, 0.5)
+					this:set_bordercolor(0.527, 0.6, 0.21, 1)
+				end,
+				on_click = function (this)
+					this:root():child("soldier"):child("weapon"):switchhands()
+				end
+			},
+
+			-- Displays oweapon only if another weapon exists
+			{
+				class = "confunc",
+				name = "show_oweapon",
+				on_click = function (this)
+					if ufo.findvar("sldcurhand" .. ufo.findvar("cl_selected"):as_string()):as_string() == "r" then
+						if ufo.findvar("mn_lweapon"):as_string() == "" then
+							this:parent():child("oweapon"):set_invisible(true)
+						else 
+							this:parent():child("oweapon"):set_invisible(false)
+						end
+						this:parent():show_rhand()
+					else 
+						if ufo.findvar("mn_rweapon"):as_string() == "" then
+							this:parent():child("oweapon"):set_invisible(true)
+						else
+							this:parent():child("oweapon"):set_invisible(false)
+						end
+						this:parent():show_lhand()
+					end
+				end
+			},
+			show_lhand = function (this)
+				this:child("right"):set_invisible(true)
+				this:child("left"):set_invisible(false)
+				this:child("fire_r"):set_invisible(true)
+				this:child("fire_l"):set_invisible(false)
+				this:child("reload_r"):set_invisible(true)
+				this:child("reload_r_disabled"):set_invisible(true)
+				this:child("oweapon"):set_model("*cvar:mn_rweapon")
+				this:child("ammo_count"):set_text("*cvar:mn_ammoleft")
+			end,
+			show_rhand = function (this)
+				this:child("right"):set_invisible(false)
+				this:child("left"):set_invisible(true)
+				this:child("fire_r"):set_invisible(false)
+				this:child("fire_l"):set_invisible(true)
+				this:child("reload_l"):set_invisible(true)
+				this:child("reload_l_disabled"):set_invisible(true)
+				this:child("oweapon"):set_model("*cvar:mn_lweapon")
+				this:child("ammo_count"):set_text("*cvar:mn_ammoright")
+			end,
+			switchhands = function (this)
+				local cvar = ufo.findvar("sldcurhand" .. ufo.findvar("cl_selected"):as_string())
+				if cvar:as_string() == "r" then
+					cvar:set_value("l")
+					this:parent():show_lhand()
+				else
+					cvar:set_falue("r")
+					this:parent():show_rhand()
+				end
+			end
+		},
+
+		-- Soldier selection
+		{
+			class = "panel",
+			name = "squad",
+			pos = {105, 56},
+			size = {565, 68},
+			invisible = false,
+			ghost = true,
+			{
+				class = "button",
+				name = "squadtoggle",
+				icon = "icons/windowprev",
+				tooltip = "_Hide squad",
+				pos = {10, 0},
+				size = {18, 18},
+				on_click = function (this)
+					this:root():child("soldier"):child("squadtoggle"):set_invisible(false)
+					this:parent():set_invisible(true)
+				end
+			},
+			{
+				class = "button",
+				name = "health_btn",
+				pos = {34, 0},
+				size = {18, 19},
+				icon = "icons/healthsml",
+				on_mouseenter = function (this)
+					this:set_icon("icons/healthsml")
+				end,
+				on_mouseleave = function (this)
+					ufo.cmd("squad_hoveroff health;")
+				end,
+				on_click = function(this)
+					ufo.cmd("sel_squad_panel health;")
+				end
+			},
+			{
+				class = "button",
+				name = "tu_btn",
+				pos = {54, 0},
+				size = {18, 19},
+				icon = "icons/tusml0",
+				on_mouseenter = function (this)
+					this:set_icon("icons/tusml")
+				end,
+				on_mouseleave = function (this)
+					ufo.cmd("squad_hoveroff tu;")
+				end,
+				on_click = function (this)
+					ufo.cmd("sel_squad_panel tu;")
+				end
+			},
+			{
+				class = "button",
+				name = "morale_btn",
+				pos = {74, 0},
+				size = {18, 19},
+				icon = "icons/moralesml0",
+				on_mouseenter = function (this)
+					this:set_icon("icons/moralesml")
+				end,
+				on_mouseleave = function (this)
+					ufo.cmd("squad_hoveroff morale;")
+				end,
+				on_click = function (this)
+					ufo.cmd("sel_squad_panel morale;")
+				end
+			},
+
+			-- Select which attribute to show on squad panel
+			-- param1 = attribute
+			{
+				class = "confunc",
+				name = "sel_squad_panel",
+				on_click = function (this, attribute)
+					-- Set a cvar with the currently selected option
+					ufo.findvar("squad_bar"):set_value(attribute)
+
+					-- Update the bars with the new selection and highlight
+					-- the correct button
+					local attributes = {"health", "tu", "morale"}
+					for k, v in pairs(attributes) do
+						if v == attribute then
+							this:parent():child(v .. "_btn"):set_icon("icons/" .. v .. "sml")
+						else
+							this:parent():child(v .. "_btn"):set_icon("icons/" .. v .. "sml0")
+						end
+						for i = 0, 11 do
+							this:parent():child("sld" .. i):child(v):set_invisible(v ~= attribute)
+						end
+					end
+				end
+			},
+
+			-- Stop mouseover effect from turning off the button
+			-- selecting which attribute is display in soldier squad panel
+			-- param1 = attribute to check
+			{
+				class = "confunc",
+				name = "squad_hoveroff",
+				on_click = function (this, attribute)
+					if ufo.findvar("squad_bar"):as_string() ~= attribute then
+						this:parent():child(attribute .. "_btn"):set_icon("icons/" .. attribute .. "sml0")
+					end
+				end
+			}
+		},
+
+		-- Squad panel toggle button
+		{
+			class = "button",
+			name = "squadtoggle",
+			icon = "icons/windownext",
+			tooltip = "_Show squad",
+			pos = {115, 106},
+			size = {18, 18},
+			invisible = true,
+			on_click = function (this)
+				this:parent():child("squad"):set_invisible(false)
+				this:set_invisible(true)
+			end
+		},
+
+		-- Soldier model
+		{
+			class = "model",
+			name = "sel_soldier_model",
+			model = "*cvar:mn_body",
+			skin = "*cvar:mn_body_skin",
+			animation = "*cvar:mn_anim",
+			angles = {0, 80, 90},
+			pos = {-20, 0},
+			size = {160, 220},
+			scale = {5, 5, 5},
+			ghost = true,
+			{
+				class = "model",
+				name = "sel_soldier_head",
+				model = "*cvar:mn_head",
+				skin = "*cvar:mn_head_skin",
+				tag = "tag_head"
+			},
+			{
+				class = "model",
+				name = "sel_soldier_rweapon",
+				model = "*cvar:mn_rweapon",
+				tag = "tag_rweapon"
+			},
+			{
+				class = "model",
+				name = "sel_soldier_lweapon",
+				model = "*cvar:mn_lweapon",
+				tag = "tag_lweapon"
+			}
+		}
+	},
+
+	-- Alien and civilian counts; Level selection
 	{
+		class = "panel",
+		name = "battle_info",
+		pos = {0, 0},
+		size = {512, 50},
+		layoutalign = ufo.LAYOUTALIGN_TOPLEFT,
+		ghost = true,
 		{
-			pos			"0 418"
-			size		"1024 220"
-			align		LAYOUTALIGN_BOTTOMLEFT
-			ghost		true
-		}
-
-		panel soldier_opts
+			class = "panel",
+			name = "alien_count",
+			pos = {10, 10},
+			size = {80, 25},
+			ghost = true,
+			{
+				class = "button",
+				name = "alienhead",
+				pos = {5, 3},
+				size = {17, 19},
+				icon = "icons/alienhead",
+				tooltip = "_Jump to alien",
+				on_click = function (this)
+					ufo.cmd("nextalien;")
+				end
+			},
+			{
+				class = "string",
+				name = "aliencount",
+				text = "*cvar:mn_numaliensspotted",
+				pos = {27, 3},
+				size = {50, 25},
+				font = "f_normal_bold",
+				color = {0.56, 0.81, 0.76, 1},
+				longlines = ufo.LONGLINES_CHOP,
+				contentalign = ufo.ALIGN_CL,
+				ghost = true,
+			}
+		},
+		--[[ @TODO: add civilian count when we have a cvar
 		{
+			class = "panel",
+			name = civ_count,
+			pos = {10, 40},
+			size = {100, 25},
+			ghost = true,
 			{
-				pos			"10 130"
-				size		"780 76"
-//				bgcolor		"0.38 0.48 0.36 0.5"
-				bgcolor		"0 0.15 0.1 0.7"
-				bordercolor	"0.58 0.81 0.758 0.7"
-				border		"2"
-				onMouseEnter	{
-					*node:this@bgcolor = "0 0.21 0.158 0.7"
-				}
-				onMouseLeave	{
-					*node:this@bgcolor = "0 0.15 0.1 0.7"
-				}
-			}
-
-			// Soldier name
-			string sel_soldier_name
+				class = "button",
+				name = "civhead",
+				pos = {5, 3},
+				size = {17, 19},
+				icon = "icons/civhead",
+				tooltip = "_Jump to civilian"
+			},
 			{
-				string			*cvar:mn_name
-				pos				"105 6"
-				size			"300 15"
-				font			"f_small_bold"
-				color			"0.56 0.81 0.76 1"
-				longlines		LONGLINES_CHOP
-				contentalign	ALIGN_CL
-				ghost			true
+				class = "string",
+				name = civcount,
+				string = "_*",
+				pos = {27, 3},
+				size = {50, 25},
+				font = "f_normal_bold",
+				color = {0.56, 0.81, 0.76, 1},
+				longlines = ufo.LONGLINES_CHOP,
+				contentalign = ufo.ALIGN_CL,
+				ghost = true
 			}
-
-			// Soldier status bars
-			panel soldier_status
-			{
-				{
-					pos		"105 18"
-					size	"355 60" // 420
-					ghost	true
-				}
-
-				// Health bar
-				texture health_bg
-				{
-					pos			"0 5"
-					size		"300 10"
-					src			"ui/bar_bg"
-					ghost		true
-				}
-				bar health
-				{
-					pos			"0 5"
-					size		"300 10"
-					color		".1875 .65625 .164 1"
-					current		*cvar:mn_hp
-					max			*cvar:mn_hpmax
-					disabled	true
-					nohover		true
-				}
-				bar stun
-				{
-					pos			"0 6"
-					size		"300 8"
-					color		".3 .3 .3 .9"
-					current		*cvar:mn_stun
-					max			*cvar:mn_hpmax
-					disabled	true
-					nohover		true
-				}
-				string health_count
-				{
-					string			*cvar:mn_hp
-					pos				"305 4"
-					size			"30	12"
-					font			"f_verysmall_bold"
-					color			"0.56 0.81 0.76 0.5"
-					contentalign	ALIGN_CL
-				}
-				button health_icon
-				{
-					icon			"icons/healthsml0"
-					pos				"335 0"
-					size			"18	19"
-				}
-
-				// Time units bar
-				texture tu_bg
-				{
-					pos			"0 22"
-					size		"300 10"
-					src			"ui/bar_bg"
-					ghost		true
-				}
-				bar tu
-				{
-					pos			"0 22"
-					size		"300 10"
-					color		".582 .808 .758 1"
-					current		*cvar:mn_tu
-					max			*cvar:mn_tumax
-					disabled	true
-					nohover		true
-				}
-				bar tureserved
-				{
-					pos			"0 23"
-					size		"300 8"
-					color		"0 0 0 .3"
-					current		*cvar:mn_tureserved
-					max			*cvar:mn_tumax
-					disabled	true
-					nohover		true
-				}
-				string tu_count
-				{
-					string			*cvar:mn_tu
-					pos				"305 21"
-					size			"30	12"
-					font			"f_verysmall_bold"
-					color			"0.56 0.81 0.76 0.5"
-					contentalign	ALIGN_CL
-				}
-				button tu_icon
-				{
-					icon			"icons/tusml0"
-					pos				"335 17"
-					size			"18	19"
-				}
-
-				// Morale bar
-				texture morale_bg
-				{
-					pos			"0 39"
-					size		"300 10"
-					src			"ui/bar_bg"
-					ghost		true
-				}
-				bar morale
-				{
-					pos			"0 39"
-					size		"300 10"
-					color		".825 .92 .437 1"
-					current		*cvar:mn_morale
-					max			*cvar:mn_moralemax
-					disabled	true
-					nohover		true
-				}
-				string morale_count
-				{
-					string			*cvar:mn_morale
-					pos				"305 38"
-					size			"30	12"
-					font			"f_verysmall_bold"
-					color			"0.56 0.81 0.76 0.5"
-					contentalign	ALIGN_CL
-				}
-				button morale_icon
-				{
-					icon			"icons/moralesml0"
-					pos				"335 34"
-					size			"18	19"
-				}
-			}
-
-			// Soldier buttons
-			// @TODO: inventory button should stay "on" when window is open
-			// @TODO: stats button should stay "on" when window is open
-			panel soldier_buttons
-			{
-				{
-					pos			"470 13"
-					size		"310 50"
-					ghost		true
-				}
-
-				// Inventory button
-				CircleBtn inventory_bg
-				{
-					{
-						pos			"0 0"
-					}
-
-					button icon
-					{
-						icon		"icons/inv0"
-						background	"icons/circle0"
-						pos			"0 0"
-						size		"48 48"
-						tooltip		"_Equipment"
-						onClick		{
-									//cmd "toggle_button inventory_bg inv;"
-									cmd "show_inventory;"
-								}
-						onMouseEnter	{ *node:this@icon = "icons/inv" }
-						onMouseLeave	{ *node:this@icon = "icons/inv0" }
-					}
-				}
-
-				confunc show_inventory { cmd "show_hide_inv_stats;" }
-
-				// Soldier stats button
-				CircleBtn stats_bg
-				{
-					{
-						pos			"55 0"
-					}
-
-					button icon
-					{
-						icon		"icons/stats0"
-						background	"icons/circle0"
-						pos			"0 0"
-						size		"48 48"
-						tooltip		"_Stats"
-						onClick		{
-									//cmd "toggle_button stats_bg stats;"
-									cmd "show_physdat;"
-								}
-						onMouseEnter	{ *node:this@icon = "icons/stats" }
-						onMouseLeave	{ *node:this@icon = "icons/stats0"	}
-					}
-				}
-
-				confunc show_physdat { cmd "show_hide_inv_stats;" }
-
-				// Headgear button
-				CircleBtn headgear_bg
-				{
-					{
-						pos		"110 0"
-					}
-
-					button icon
-					{
-						icon		"icons/headgear0"
-						background	"icons/circle0"
-						pos			"0 0"
-						size		"48 48"
-						tooltip		"_Headgear"
-						onMouseEnter	{ *node:this@icon = "icons/headgear" }
-						onMouseLeave	{ *node:this@icon = "icons/headgear0" }
-						onClick	{ cmd "actor_useheadgear;" }
-					}
-
-					CircleBtnDisabled headgear_d
-					{
-						pos			"0 0"
-					}
-
-					confunc deselect_headgear
-					{
-						*node:parent.headgear_d@invis = true
-					}
-					confunc disable_headgear
-					{
-						*node:parent.headgear_d@invis = false
-					}
-				}
-
-				// Reaction fire button
-				CircleBtn reaction
-				{
-					{
-						pos			"165 0"
-					}
-
-					button icon_on
-					{
-						icon		"icons/reactionon0"
-						background	"icons/circle"
-						pos			"0 0"
-						size		"48 48"
-						invis		true
-						tooltip			"_Toggle reaction fire."
-						onMouseEnter	{ *node:this@icon = "icons/reactionon" }
-						onMouseLeave	{ *node:this@icon = "icons/reactionon0" }
-						onClick		{ cmd "deselect_reaction; hud_togglereaction;" }
-					}
-
-					button icon_off
-					{
-						icon		"icons/reactionoff0"
-						background	"icons/circle0"
-						pos			"0 0"
-						size		"48 48"
-						tooltip			"_Toggle reaction fire."
-						onMouseEnter	{ *node:this@icon = "icons/reactionoff" }
-						onMouseLeave	{ *node:this@icon = "icons/reactionoff0" }
-						onClick		{ cmd "startreaction; hud_togglereaction;" }
-					}
-
-					// Disable icon over reaction button
-					button reaction_d
-					{
-						pos			"0 0"
-						size		"48 48"
-						icon		"icons/circle_disabled0"
-						invis		true
-					}
-				}
-
-				// Stand button when not selected
-				CircleBtn stand_off
-				{
-					{
-						pos			"220 0"
-					}
-
-					button icon
-					{
-						icon		"icons/stand0"
-						background	"icons/circle0"
-						pos			"0 0"
-						size		"48 48"
-						tooltip		"_Stand"
-						onClick		{ cmd "actor_standcrouch;" }
-						onMouseEnter	{ *node:this@icon = "icons/stand" }
-						onMouseLeave	{ *node:this@icon = "icons/stand0"	}
-					}
-				}
-
-				// Crouch button when not selected
-				CircleBtn crouch_off
-				{
-					{
-						pos			"250 0"
-					}
-
-					button icon
-					{
-						icon		"icons/crouch0"
-						background	"icons/circle0"
-						pos			"0 0"
-						size		"48 48"
-						tooltip		"_Crouch"
-						onClick		{ cmd "actor_standcrouch;" }
-						onMouseEnter	{ *node:this@icon = "icons/crouch" }
-						onMouseLeave	{ *node:this@icon = "icons/crouch0"	}
-					}
-				}
-
-				// Crouch button when selected
-				CircleBtn crouch
-				{
-					{
-						pos			"250 0"
-						tooltip		"_Crouched"
-						invis		true
-					}
-
-					button icon
-					{
-						icon		"icons/crouch"
-						background	"icons/circle"
-						pos			"0 0"
-						size		"48 48"
-						ghost		true
-					}
-				}
-
-				// Disable icon over crouch button
-				button crouch_d
-				{
-					pos			"250 0"
-					size		"48 48"
-					icon		"icons/circle_disabled0"
-					invis		true
-				}
-
-				// Stand button when selected
-				CircleBtn stand
-				{
-					{
-						pos			"220 0"
-						tooltip		"_Standing"
-						invis		false
-					}
-
-					button icon
-					{
-						icon		"icons/stand"
-						background	"icons/circle"
-						pos			"0 0"
-						size		"48 48"
-						ghost		true
-					}
-				}
-
-				// Disable icon over stand button
-				button stand_d
-				{
-					pos			"220 0"
-					size		"48 48"
-					icon		"icons/circle_disabled0"
-					invis		true
-				}
-
-				// Sets the proper display for the stand/crouch buttons
-				confunc deselect_stand
-				{
-					*node:parent.stand@invis = false
-					*node:parent.crouch@invis = true
-					*node:parent.stand_d@invis = true
-					*node:parent.crouch_d@invis = true
-				}
-				confunc deselect_crouch
-				{
-					*node:parent.stand@invis = true
-					*node:parent.crouch@invis = false
-					*node:parent.stand_d@invis = true
-					*node:parent.crouch_d@invis = true
-				}
-				// Disables the stand/crouch buttons when no TUs remain
-				confunc disable_stand
-				{
-					*node:parent.stand@invis = false
-					*node:parent.crouch@invis = false
-					*node:parent.stand_d@invis = false
-					*node:parent.crouch_d@invis = false
-				}
-				confunc disable_crouch
-				{
-					*node:parent.stand@invis = false
-					*node:parent.crouch@invis = false
-					*node:parent.stand_d@invis = false
-					*node:parent.crouch_d@invis = false
-				}
-			}
-		}
-
-		// Right-hand weapon panel
-		// @TODO implement firemode selection
-		// @TODO add button to show left-hand weapon panel
-		panel weapon
+		},
+		--]]
 		{
-			{
-				pos			"800 130"
-				size		"206 76"
-//				bgcolor		"0.38 0.48 0.36 0.5"
-				bgcolor		"0 0.15 0.1 0.7"
-				bordercolor	"0.58 0.81 0.758 0.7"
-				border		"2"
-				onClick			{ cmd "hud_fireweapon r 0;" }
-				onMouseEnter	{ *node:this@bgcolor = "0 0.21 0.158 0.7" }
-				onMouseLeave	{ *node:this@bgcolor = "0 0.15 0.1 0.7"	}
-			}
-			container right
-			{
-				pos		"10 10"
-			}
-			container left
-			{
-				invis	true
-				pos		"10 10"
-			}
-			/*
-			string fmode_label
-			{
-				string 			*cvar:fm_selected
-				pos				"5 60"
-				size			"196 10"
-				font			"f_small_bold"
-				color			"0.58 0.81 0.758 1"
-				contentalign	ALIGN_CR
-				longlines		LONGLINES_CHOP
-				ghost			true
-			}
-			*/
-			button fire_r
-			{
-				pos		"5 5"
-				size	"35 35"
-				invis	false
-				icon	"icons/fire0"
-				onClick			{ cmd "ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.soldier.weapon LAYOUTALIGN_TOPLEFT;" }
-				onMouseEnter	{ *node:this@icon = "icons/fire" }
-				onMouseLeave	{ *node:this@icon = "icons/fire0" }
-			}
-			button fire_l
-			{
-				pos		"5 5"
-				size	"35 35"
-				invis	true
-				icon	"icons/fire0"
-				onClick			{ cmd "ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMLEFT hud_default.soldier.weapon LAYOUTALIGN_TOPLEFT;" }
-				onMouseEnter	{ *node:this@icon = "icons/fire" }
-				onMouseLeave	{ *node:this@icon = "icons/fire0" }
-			}
-			button reload_r
-			{
-				pos				"173 5"
-				size			"28 23"
-				invis			false
-				icon			"icons/reload0"
-				onMouseEnter	{
-					*node:this@icon = "icons/reload"
-					cmd "hud_remainingtus reload_r 1;"
-				}
-				onMouseLeave	{
-					*node:this@icon = "icons/reload0"
-					cmd "hud_remainingtus reload_r 0;"
-				}
-				onClick			{ cmd "hud_reloadright;" }
-			}
-			button reload_r_disabled
-			{
-				pos				"173 5"
-				size			"28 23"
-				invis			true
-				icon			"icons/reload_disabled"
-				onClick			{ cmd "hud_reloadright;" }
-			}
-			button reload_l
-			{
-				pos				"173 5"
-				size			"28 23"
-				invis			true
-				icon			"icons/reload0"
-				onMouseEnter {
-					*node:this@icon = "icons/reload"
-					cmd "hud_remainingtus reload_l 1;"
-				}
-				onMouseLeave {
-					*node:this@icon = "icons/reload0"
-					cmd "hud_remainingtus reload_l 1;"
-				}
-				onClick			{ cmd "hud_reloadleft;" }
-			}
-			button reload_l_disabled
-			{
-				pos				"173 5"
-				size			"28 23"
-				invis			true
-				icon			"icons/reload_disabled"
-				onClick			{ cmd "hud_reloadleft;" }
-			}
-			string ammo_count
-			{
-				string			*cvar:mn_ammoright
-				pos				"130 18"
-				size			"40 10"
-				font			"f_small_bold"
-				color			"0.58 0.81 0.758 1"
-				contentalign	ALIGN_CR
-				ghost			true
-			}
-			model oweapon
-			{
-				src			*cvar:mn_lweapon
-				angles		"-15 170 90"
-				scale		"1.8 1.8 1.8"
-				tooltip		"_View other hand"
-				pos			"130 33"
-				size 		"72 39"
-				bgcolor			"0 0.1 0 0.5"
-				border			"2"
-				bordercolor		"0.527 0.6 0.21 1"
-				onMouseEnter	{
-					*node:this@bgcolor = "0 0.1 0 0.9"
-					*node:this@bordercolor = "0.824 0.917 0.437 1"
-				}
-				onMouseLeave	{
-					*node:this@bgcolor = "0 0.1 0 0.5"
-					*node:this@bordercolor = "0.527 0.6 0.21 1"
-				}
-				onClick			{ call *node:root.soldier.weapon.switchhands }
-			}
-
-			// Displays oweapon only if another weapon exists
-			confunc show_oweapon
-			{
-				if (*cvar:sldcurhand<cvar:cl_selected> eq "r") {
-					if (*cvar:mn_lweapon eq "") {
-						*node:parent.oweapon@invis = true
-					} else {
-						*node:parent.oweapon@invis = false
-					}
-				call *node:parent.show_rhand
-				} else {
-					if (*cvar:mn_rweapon eq "") {
-						*node:parent.oweapon@invis = true
-					} else {
-						*node:parent.oweapon@invis = false
-					}
-				call *node:parent.show_lhand
-				}
-			}
-			func show_lhand {
-					*node:parent.right@invis = true
-					*node:parent.left@invis = false
-					*node:parent.fire_r@invis = true
-					*node:parent.fire_l@invis = false
-					*node:parent.reload_r@invis = true
-					*node:parent.reload_r_disabled@invis = true
-					*node:parent.oweapon@src = *cvar:mn_rweapon
-					*node:parent.ammo_count@string = *cvar:mn_ammoleft
-
-			}
-			func show_rhand {
-					*node:parent.right@invis = false
-					*node:parent.left@invis = true
-					*node:parent.fire_r@invis = false
-					*node:parent.fire_l@invis = true
-					*node:parent.reload_l@invis = true
-					*node:parent.reload_l_disabled@invis = true
-					*node:parent.oweapon@src = *cvar:mn_lweapon
-					*node:parent.ammo_count@string = *cvar:mn_ammoright
-
-			}
-			func switchhands
-			{
-				if (*cvar:sldcurhand<cvar:cl_selected> eq "r") {
-					*cvar:sldcurhand<cvar:cl_selected> = "l"
-					call *node:parent.show_lhand
-				} else {
-					*cvar:sldcurhand<cvar:cl_selected> = "r"
-					call *node:parent.show_rhand
-				}
-			}
-			confunc deselect_primaryleft
-			{
-				*node:parent.fire_l@invis = false
-			}
-			confunc deselect_primaryright
-			{
-				*node:parent.fire_r@invis = false
-			}
-			confunc deselect_reloadleft
-			{
-				if (*cvar:sldcurhand<cvar:cl_selected> eq "l") {
-					*node:parent.reload_l@invis = false
-					*node:parent.reload_l_disabled@invis = true
-				}
-			}
-			confunc deselect_reloadright
-			{
-				if (*cvar:sldcurhand<cvar:cl_selected> eq "r") {
-					*node:parent.reload_r@invis = false
-					*node:parent.reload_r_disabled@invis = true
-				}
-			}
-			confunc disable_primaryleft { *node:parent.fire_l@invis = true }
-			confunc disable_primaryright { *node:parent.fire_r@invis = true }
-			confunc disable_reloadleft
-			{
-				if (*cvar:sldcurhand<cvar:cl_selected> eq "l") {
-					*node:parent.reload_l@invis = true
-					*node:parent.reload_l_disabled@invis = false
-				}
-			}
-			confunc disable_reloadright
-			{
-				if (*cvar:sldcurhand<cvar:cl_selected> eq "r") {
-					*node:parent.reload_r@invis = true
-					*node:parent.reload_r_disabled@invis = false
-				}
-			}
+			class = "WorldLevel",
+			name = "level",
+			pos = {90, 10},
 		}
+	},
 
-		// Soldier selection
-		panel squad
-		{
-			{
-				pos			"105 56"
-				size		"565 68"
-				invis		false
-				ghost		true
-			}
-			button squadtoggle
-			{
-				icon		"icons/windowprev"
-				tooltip		"_Hide squad"
-				pos			"10 0"
-				size		"18 18"
-				onClick			{
-					*node:root.soldier.squadtoggle@invis = false
-					*node:parent@invis = true
-				}
-			}
-			button health_btn
-			{
-				pos		"34 0"
-				size	"18 19"
-				icon	"icons/healthsml"
-				onMouseEnter	{ *node:this@icon = "icons/healthsml" }
-				onMouseLeave	{ cmd "squad_hoveroff health;" }
-				onClick			{ cmd "sel_squad_panel health;" }
-			}
-			button tu_btn
-			{
-				pos		"54 0"
-				size	"18 19"
-				icon	"icons/tusml0"
-				onMouseEnter	{ *node:this@icon = "icons/tusml" }
-				onMouseLeave	{ cmd "squad_hoveroff tu;" }
-				onClick			{ cmd "sel_squad_panel tu;" }
-			}
-			button morale_btn
-			{
-				pos		"74 0"
-				size	"18 19"
-				icon	"icons/moralesml0"
-				onMouseEnter	{ *node:this@icon = "icons/moralesml" }
-				onMouseLeave	{ cmd "squad_hoveroff morale;" }
-				onClick			{ cmd "sel_squad_panel morale;" }
-			}
-
-			// Select which attribute to show on squad panel
-			// param1 = attribute
-			confunc sel_squad_panel
-			{
-				// Set a cvar with the currently selected option
-				*cvar:squad_bar = <1>
-
-				// Remove any selected buttons
-				*node:parent.health_btn@icon = "icons/healthsml0"
-				*node:parent.tu_btn@icon = "icons/tusml0"
-				*node:parent.morale_btn@icon = "icons/moralesml0"
-
-				// Update the bars with the new selection and highlight
-				// the correct button
-				*cvar:i = 0;
-				if (param1 eq "health") {
-					*node:parent.health_btn@icon = "icons/healthsml"
-					while ( *cvar:i < 12 ) {
-						*node:parent.sld<cvar:i>.health@invis = false
-						*node:parent.sld<cvar:i>.tu@invis = true
-						*node:parent.sld<cvar:i>.morale@invis = true
-						*cvar:i = ( *cvar:i + 1 )
-					}
-				} elif (param1 eq "tu") {
-					*node:parent.tu_btn@icon = "icons/tusml"
-					while ( *cvar:i < 12 ) {
-						*node:parent.sld<cvar:i>.health@invis = true
-						*node:parent.sld<cvar:i>.tu@invis = false
-						*node:parent.sld<cvar:i>.morale@invis = true
-						*cvar:i = ( *cvar:i + 1 )
-					}
-				} else {
-					*node:parent.morale_btn@icon = "icons/moralesml"
-					while ( *cvar:i < 12 ) {
-						*node:parent.sld<cvar:i>.health@invis = true
-						*node:parent.sld<cvar:i>.tu@invis = true
-						*node:parent.sld<cvar:i>.morale@invis = false
-						*cvar:i = ( *cvar:i + 1 )
-					}
-				}
-				delete *cvar:i
-			}
-
-			// Stop mouseover effect from turning off the button
-			// selecting which attribute is display in soldier squad panel
-			// param1 = attribute to check
-			confunc squad_hoveroff
-			{
-				if (*cvar:squad_bar ne param1) {
-					*node:parent.<1>_btn@icon = "icons/<1>sml0"
-				}
-			}
-
-			// Soldiers
-			SoldierSelect sld0
-			{
-				pos "12 22"
-			}
-			SoldierSelect sld1
-			{
-				pos "58 22"
-			}
-			SoldierSelect sld2
-			{
-				pos "104 22"
-			}
-			SoldierSelect sld3
-			{
-				pos "150 22"
-			}
-			SoldierSelect sld4
-			{
-				pos "196 22"
-			}
-			SoldierSelect sld5
-			{
-				pos "242 22"
-			}
-			SoldierSelect sld6
-			{
-				pos "288 22"
-			}
-			SoldierSelect sld7
-			{
-				pos "334 22"
-			}
-			SoldierSelect sld8
-			{
-				pos "380 22"
-			}
-			SoldierSelect sld9
-			{
-				pos "426 22"
-			}
-			SoldierSelect sld10
-			{
-				pos "472 22"
-			}
-			SoldierSelect sld11
-			{
-				pos "518 22"
-			}
-		}
-		// Squad panel toggle button
-		button squadtoggle
-		{
-			icon		"icons/windownext"
-			tooltip		"_Show squad"
-			pos			"115 106"
-			size		"18 18"
-			invis		true
-			onClick			{
-				*node:parent.squad@invis = false
-				*node:this@invis = true
-			}
-		}
-
-		// Soldier model
-		model sel_soldier_model
-		{
-			{
-				src			*cvar:mn_body
-				skin		*cvar:mn_body_skin
-				anim		*cvar:mn_anim
-				angles		"0 80 90"
-				pos			"-20 0"
-				size		"160 220"
-				scale		"5 5 5"
-				ghost		true
-			}
-			model sel_soldier_head
-			{
-				src			*cvar:mn_head
-				skin		*cvar:mn_head_skin
-				tag			"tag_head"
-			}
-			model sel_soldier_rweapon
-			{
-				src			*cvar:mn_rweapon
-				tag			"tag_rweapon"
-			}
-			model sel_soldier_lweapon
-			{
-				src			*cvar:mn_lweapon
-				tag			"tag_lweapon"
-			}
-		}
-	}
-
-	// Alien and civilian counts; Level selection
-	panel battle_info
+	-- End turn, options, abort mission, radar
 	{
-		{
-			pos			"0 0"
-			size		"512 50"
-			align		LAYOUTALIGN_TOPLEFT
-			ghost		true
-		}
-		panel alien_count
-		{
-			{
-				pos			"10 10"
-				size		"80 25"
-				ghost		true
-			}
-			button alienhead
-			{
-				pos		"5 3"
-				size	"17 19"
-				icon	"icons/alienhead"
-				tooltip	"_Jump to alien"
-				onClick	{ cmd "nextalien;" }
-			}
-			string aliencount
-			{
-				string			*cvar:mn_numaliensspotted
-				pos				"27 3"
-				size			"50 25"
-				font			"f_normal_bold"
-				color			"0.56 0.81 0.76 1"
-				longlines		LONGLINES_CHOP
-				contentalign	ALIGN_CL
-				ghost			true
-			}
-		}
-		/* @TODO: add civilian count when we have a cvar
-		panel civ_count
-		{
-			{
-				pos			"10 40"
-				size		"100 25"
-				ghost		true
-			}
-			button civhead
-			{
-				pos		"5 3"
-				size	"17 19"
-				icon	"icons/civhead"
-				tooltip	"_Jump to civilian"
-			}
-			string civcount
-			{
-				string			"_*"
-				pos				"27 3"
-				size			"50 25"
-				font			"f_normal_bold"
-				color			"0.56 0.81 0.76 1"
-				longlines		LONGLINES_CHOP
-				contentalign	ALIGN_CL
-				ghost			true
-			}
-		}
-		*/
-		WorldLevel level
-		{
-			{
-				pos			"90 10"
-			}
-		}
-	}
+		class = "panel",
+		name = "game_controls",
+		pos = {0, 0},
+		size = {200, 500},
+		layoutalign = ufo.LAYOUTALIGN_TOPRIGHT,
+		ghost = true,
 
-	// End turn, options, abort mission, radar
-	panel game_controls
+		-- End turn button
+		{
+			class = "CircleBtn",
+			name = "end_turn",
+			pos = {145, 5},
+
+			{
+				class = "button",
+				name = "icon",
+				icon = "icons/dblarrowrgt0",
+				background = "icons/circle0",
+				pos = {0, 0},
+				size = {48, 48},
+				tooltip = "_End Turn",
+				on_click = function (this)
+					ufo.cmd "nextround;"
+				end,
+				on_mouseenter = function (this)
+					this:set_icon("icons/dblarrowrgt")
+				end,
+				onmouseleave = function (this)
+					this:set_icon("icons/dblarrowrgt0")
+				end
+			},
+		},
+
+		-- Options button
+		{
+			class = "CircleBtn",
+			name = "options",
+			pos = {145, 60},
+
+			{
+				class = "button",
+				name = "icon",
+				icon = "icons/options0",
+				background = "icons/circle0",
+				pos = {0, 0},
+				size = {48, 48},
+				tooltip = "_Options",
+				on_click = function (this)
+					ufo.cmd("ui_push options;")
+				end,
+				on_mouseEnter = function (this)
+					this:set_icon("icons/options")
+				end,
+				on_mouseleave = function (this)
+					this:set_icon("icons/options0")
+				end
+			},
+		},
+
+		-- Abort button
+		{
+			class = "CircleBtn",
+			name = "abort",
+			pos = {145, 115},
+
+			{
+				class = "button",
+				name = "icon",
+				icon = "icons/abortmission0",
+				background = "icons/circle0",
+				pos = {0, 0},
+				size = {48, 48},
+				tooltip = {"_Abort"},
+				on_click = function (this)
+					ufo.cmd("ui_push missionoptions;")
+				end,
+				on_mouseenter = function (this)
+					this:set_icon("icons/abortmission")
+				end,
+				on_mouseleave = function (this)
+					this:set_icon("icons/abortmission0")
+				end
+			}
+		},
+
+		-- Radar button
+		{
+			class = "CircleBtn",
+			name = "radar",
+			pos = {145, 170},
+
+			{
+				class = "button",
+				name = "icon",
+				icon = "icons/radar0",
+				background = "icons/circle0",
+				pos = {0, 0},
+				size = {48, 48},
+				tooltip = "_Radar",
+				on_click = function (this)
+					ufo.cmd("ui_push radar;")
+				end,
+				on_mouseenter = function (this)
+					this:set_icon("icons/radar")
+				end,
+				on_mouseleave = function (this)
+					this:set_icon("icons/radar0")
+				end
+			}
+		},
+		-- Show rescue button
+		{
+			class = "CircleBtn",
+			name = "show_rescue",
+			pos = {145, 225},
+
+			{
+				class = "button",
+				name = "icon",
+				icon = "icons/rescue0",
+				background = "icons/circle0",
+				pos = {0, 0},
+				size = {48, 48},
+				tooltip = "_Show rescue zone",
+				on_click = function (this)
+					ufo.cmd("toggle_rescuezone;")
+				end,
+				on_mouseenter = function (this)
+					this:set_icon("icons/rescue")
+				end,
+				on_mouseleave = function (this)
+					this:set_icon("icons/rescue0")
+				end
+			}
+		},
+
+		-- Chat window
+		-- @TODO: Add button to show chat
+		-- @TODO: Make it appear on MP-only
+	},
+
+	-- ==========================
+	-- Reaction fire panel events
+	-- ==========================
+
+	--[[
+	 - @brief Adds a new possible target to the list of reaction fire targets for the given shooter
+	 - @param <1> shooter entity number
+	 - @param <2> target entity number
+	 - @param <3> shooter head model
+	 - @param <4> shooter head skin
+	 - @param <5> boolean whether shooter is a robot
+	 - @param <6> TUs left until rf is triggered
+	 - @param <7> Out of range = 1, in range = 0
+	 - @param <8> Name of the selected firedef of the shooter
+	 --]]
 	{
-		{
-			pos			"0 0"
-			size		"200 500"
-			align		LAYOUTALIGN_TOPRIGHT
-			ghost		true
-		}
+		class = "confunc",
+		name = "reactionfire_addtarget",
+		on_click = function (this, shooter, target, head, skin, robot, tus, outOfRange, fireDef)
+			local node = this:root():child("reactions"):child(string.format("rf-%i-%i", shooter, target))
+			if not node then
+				node = ufo.create_control(this:root():child("reactions"), "ReactionFireShooter", string.format("rf-%i-%i", shooter, target), nil)
+			end
+			node:child("head_shooter"):set_model(head)
+			node:child("head_shooter"):set_skin(skin)
+			if robot == 1 then
+				-- top down view for robots - sideview of the body isn't very nice
+				node:child("head_shooter"):set_angles(0, 60, 90)
+			end
 
-		// End turn button
-		CircleBtn end_turn
-		{
-			{
-				pos			"145 5"
-			}
+			if outOfRange == 1 then
+				-- Target is out of range
+				node:child("timeremaining"):set_color(0.65, 0.13, 0, 1)
+				node:child("rfnotice"):set_text("_Target out of range")
+			else
+				if tus <= 0 then
+					-- Turn the panel red if the unit is ready to fire
+					node:set_backgroundcolor(0.65, 0.13, 0, 1)
+					node:child("rfnotice"):set_text("_Target acquired")
+				elseif tus < 5 then
+					-- Turn the bar yellow if the unit is nearing fire capability
+					node:child("timeremaining"):set_color(0.83, 0.92, 0.44, 1)
+				else
+					-- Otherwise the bar should be blue
+					node:child("timeremaining"):set_color(0.1, 0.1, 0.7, 1)
+				end
+				node:child("rfnotice"):set_text(string.format("%s (%i TUs)", fireDef, tus))
+			end
+			node:child("timeremaining"):set_max(tus)
+		end
+	},
 
-			button icon
-			{
-				icon		"icons/dblarrowrgt0"
-				background	"icons/circle0"
-				pos			"0 0"
-				size		"48 48"
-				tooltip		"_End Turn"
-				onClick			{ cmd "nextround;" }
-				onMouseEnter	{ *node:this@icon = "icons/dblarrowrgt" }
-				onMouseLeave	{ *node:this@icon = "icons/dblarrowrgt0"	}
-			}
-		}
-
-		// Options button
-		CircleBtn options
-		{
-			{
-				pos			"145 60"
-			}
-
-			button icon
-			{
-				icon		"icons/options0"
-				background	"icons/circle0"
-				pos			"0 0"
-				size		"48 48"
-				tooltip		"_Options"
-				onClick			{ cmd "ui_push options;" }
-				onMouseEnter	{ *node:this@icon = "icons/options" }
-				onMouseLeave	{ *node:this@icon = "icons/options0"	}
-			}
-		}
-
-		// Abort button
-		CircleBtn abort
-		{
-			{
-				pos			"145 115"
-			}
-
-			button icon
-			{
-				icon		"icons/abortmission0"
-				background	"icons/circle0"
-				pos			"0 0"
-				size		"48 48"
-				tooltip		"_Abort"
-				onClick		{ cmd "ui_push missionoptions;" }
-				onMouseEnter	{ *node:this@icon = "icons/abortmission" }
-				onMouseLeave	{ *node:this@icon = "icons/abortmission0"	}
-			}
-		}
-
-		// Radar button
-		CircleBtn radar
-		{
-			{
-				pos			"145 170"
-			}
-
-			button icon
-			{
-				icon		"icons/radar0"
-				background	"icons/circle0"
-				pos			"0 0"
-				size		"48 48"
-				tooltip		"_Radar"
-				onClick	{ cmd "ui_push radar;" }
-				onMouseEnter	{ *node:this@icon = "icons/radar" }
-				onMouseLeave	{ *node:this@icon = "icons/radar0"	}
-			}
-		}
-		// Show rescue button
-		CircleBtn show_rescue
-		{
-			{
-				pos			"145 225"
-			}
-
-			button icon
-			{
-				icon		"icons/rescue0"
-				background	"icons/circle0"
-				pos			"0 0"
-				size		"48 48"
-				tooltip		"_Show rescue zone"
-				onClick			{ cmd "toggle_rescuezone;" }
-				onMouseEnter	{ *node:this@icon = "icons/rescue" }
-				onMouseLeave	{ *node:this@icon = "icons/rescue0"	}
-			}
-		}
-
-		// Chat window
-		// @TODO: Add button to show chat
-		// @TODO: To make it appear on MP-only, use: visiblewhen	"*cvar:sv_maxclients >= 2"
-	}
-
-	// ==========================
-	// Reaction fire panel events
-	// ==========================
-
-	/**
-	 * @brief Adds a new possible target to the list of reaction fire targets for the given shooter
-	 * @param <1> shooter entity number
-	 * @param <2> target entity number
-	 * @param <3> shooter head model
-	 * @param <4> shooter head skin
-	 * @param <5> boolean whether shooter is a robot
-	 * @param <6> TUs left until rf is triggered
-	 * @param <7> Out of range = 1, in range = 0
-	 * @param <8> Name of the selected firedef of the shooter
-	 */
-	confunc reactionfire_addtarget {
-		if (not exists *node:root.reactions.rf-<1>-<2>) {
-			call *node:root.reactions@createChild("rf-<1>-<2>", "ReactionFireShooter")
-		}
-		*node:root.reactions.rf-<1>-<2>.head_shooter@src = "<3>"
-		*node:root.reactions.rf-<1>-<2>.head_shooter@skin = "<4>"
-		if ( <5> == 1 ) {
-			// top down view for robots - sideview of the body isn't very nice
-			*node:root.reactions.rf-<1>-<2>.head_shooter@angles = "0 60 90"
-		}
-
-		if ( <7> == 1 ) {
-			// Target is out of range
-			*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.65 0.13 0 1"
-			*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Target out of range"
-		} else {
-			if ( <6> <= 0 ) {
-				// Turn the panel red if the unit is ready to fire
-				*node:root.reactions.rf-<1>-<2>@bgcolor = "0.65 0.13 0 1"
-				*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Target acquired"
-			} elif ( <6> < 5 ) {
-				// Turn the bar yellow if the unit is nearing fire capability
-				*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.83 0.92 0.44 1"
-			} else {
-				// Otherwise the bar should be blue
-				*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.1 0.1 0.7 1"
-			}
-			*node:root.reactions.rf-<1>-<2>.rfnotice@string = "<8> (<6> TUs)"
-		}
-		*node:root.reactions.rf-<1>-<2>.timeremaining@max = <6>
-	}
-
-	/**
-	 * @brief The target is no longer in the reaction fire scope of the shooter
-	 * @param <1> shooter entity number
-	 * @param <2> target entity number
-	 */
-	confunc reactionfire_removetarget {
-		//call *node:root.reactions.rf-<1>-<2>@deletetimed(1500)
-		if (exists *node:root.reactions.rf-<1>-<2>) {
-			call *node:root.reactions.rf-<1>-<2>@delete
-		}
-	}
-
-	/**
-	 * @brief Called when the amount of TUs that are needed to trigger the reaction fire changed.
-	 * This might e.g. happen if the target is moving in front of the shooter.
-	 * @param <1> shooter entity number
-	 * @param <2> target entity number
-	 * @param <3> TUs left until rf is triggered
-	 * @param <4> Out of range = 1, in range = 0
-	 */
-	confunc reactionfire_updatetarget {
-		if (exists *node:root.reactions.rf-<1>-<2>) {
-			*node:root.reactions.rf-<1>-<2>.timeremaining@current = (*node:root.reactions.rf-<1>-<2>.timeremaining@max - <3>)
-
-			if ( <4> == 1 ) {
-				// Target is out of range
-				*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.65 0.13 0 1"
-				*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Target out of range"
-			} else {
-				if ( <3> <= 0 ) {
-					// Turn the panel red if the unit is ready to fire
-					*node:root.reactions.rf-<1>-<2>@bgcolor = "0.65 0.13 0 1"
-					*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Target acquired"
-				} elif ( <3> < 5 ) {
-					// Turn the bar yellow if the unit is nearing fire capability
-					*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.83 0.92 0.44 1"
-				} else {
-					// Otherwise the bar should be blue
-					*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.1 0.1 0.7 1"
-				}
-			}
-		}
-	}
-
-	/**
-	 * @brief Called when the reaction fire has been aborted.
-	 * This might e.g. happen if the chance to hit the target is too low.
-	 * @param <1> shooter entity number
-	 * @param <2> target entity number
-	 */
-	confunc reactionfire_shotaborted {
-		if (exists *node:root.reactions.rf-<1>-<2>) {
-			*node:root.reactions.rf-<1>-<2>@bgcolor = "0.65 0.13 0 1"
-			*node:root.reactions.rf-<1>-<2>.timeremaining@color = "0.65 0.13 0 1"
-			*node:root.reactions.rf-<1>-<2>.rfnotice@string = "_Aborting fire!"
-		}
-	}
-
-	// Resets the reaction fire button when new soldier is selected
-	confunc startreaction
+	--[[
+	 - @brief The target is no longer in the reaction fire scope of the shooter
+	 - @param <1> shooter entity number
+	 - @param <2> target entity number
+	 --]]
 	{
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_off@invis = true
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_on@invis = false
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.reaction_d@invis = true
-	}
-	confunc deselect_reaction
-	{
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_off@invis = false
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.icon_on@invis = true
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.reaction_d@invis = true
-	}
-	confunc disable_reaction
-	{
-		*node:parent.soldier.soldier_opts.soldier_buttons.reaction.reaction_d@invis = false
-	}
+		class = "confunc",
+		name = "reactionfire_removetarget",
+		on_click = function (this, shooter, target)
+			local node = this:root():child("reactions"):child(string.format("rf-%i-%i", shooter, target))
+			if node then
+				-- node:delete_timed(1500)
+				node:delete_node()
+			end
+		end
+	},
 
+	--[[
+	 - @brief Called when the amount of TUs that are needed to trigger the reaction fire changed.
+	 - This might e.g. happen if the target is moving in front of the shooter.
+	 - @param <1> shooter entity number
+	 - @param <2> target entity number
+	 - @param <3> TUs left until rf is triggered
+	 - @param <4> Out of range = 1, in range = 0
+	 --]]
+	{
+		class = "confunc",
+		name = "reactionfire_updatetarget",
+		on_click = function (this, shooter, target, tus, outOfRange)
+			local node = this:root():child("reactions"):child(string.format("rf-%i-%i", shooter, target))
+			if node then
+				node:child("timeremaining"):set_value(node:child("timeremaining"):max() - tus)
+
+				if outOfRange == 1 then
+					-- Target is out of range
+					node:child("timeremaining"):set_color(0.65, 0.13, 0, 1)
+					node:child("rfnotice"):set_text("_Target out of range")
+				else
+					if tus <= 0 then
+						-- Turn the panel red if the unit is ready to fire
+						node:set_backgroundcolor(0.65, 0.13, 0, 1)
+						node:child("rfnotice"):set_text("_Target acquired")
+					elseif tus < 5 then
+						-- Turn the bar yellow if the unit is nearing fire capability
+						node:child("timeremaining"):set_color(0.83, 0.92, 0.44, 1)
+					else
+						-- Otherwise the bar should be blue
+						node:child("timeremaining"):set_color(0.1, 0.1, 0.7, 1)
+					end
+				end
+			end
+		end
+	},
+
+	--[[
+	 - @brief Called when the reaction fire has been aborted.
+	 - This might e.g. happen if the chance to hit the target is too low.
+	 - @param <1> shooter entity number
+	 - @param <2> target entity number
+	 --]]
+	{
+		class = "confunc",
+		name = "reactionfire_shotaborted",
+		on_click = function (this, shooter, target)
+			local node = this:root():child("reactions"):child(string.format("rf-%i-%i", shooter, target))
+			if node then
+				node:set_backgroundcolor(0.65, 0.13, 0, 1)
+				node:child("timeremaining"):set_color(0.65, 0.13, 0, 1)
+				node:child("rfnotice"):set_text("_Aborting fire!")
+			end
+		end
+	},
+
+	-- Resets the reaction fire button when new soldier is selected
+	{
+		class = "confunc",
+		name = "startreaction",
+		on_click = function (this)
+			local node = this:parent():child("soldier"):child("soldier_opts"):child("soldier_buttons"):child("reaction")
+			node:child("icon_off"):set_invisible(true)
+			node:child("icon_on"):set_invisible(false)
+			node:child("reaction_d"):set_invisible(true)
+		end
+	},
+	{
+		class = "confunc",
+		name = "deselect_reaction",
+		on_click = function (this)
+			local node = this:parent():child("soldier"):child("soldier_opts"):child("soldier_buttons"):child("reaction")
+			node:child("icon_off"):set_invisible(false)
+			node:child("icon_on"):set_invisible(true)
+			node:child("reaction_d"):set_invisible(true)
+		end
+	},
+	{
+		class = "confunc",
+		name = "disable_reaction",
+		on_click = function (this)
+			this:parent():child("soldier"):child("soldier_opts"):child("soldier_buttons"):child("reaction"):child("reaction_d"):set_invisible(false)
+		end
+	},
+
+	{
+		class = "confunc",
+		name = "deselect_headgear",
+		on_click = function (this)
+			this:root():child("soldier"):child("soldier_opts"):child("soldier_buttons"):child("headgear_bg"):child("headgear_d"):set_invisible(true)
+		end
+	},
+	{
+		class = "confunc",
+		name = "disable_headgear",
+		on_click = function (this)
+			this:root():child("soldier"):child("soldier_opts"):child("soldier_buttons"):child("headgear_bg"):child("headgear_d"):set_invisible(false)
+		end
+	},
+
+	-- Sets the proper display for the stand/crouch buttons
+	{
+		class = "confunc",
+		name = "deselect_stand",
+		on_click = function (this)
+			local node = this:root():child("soldier"):child("soldier_opts"):child("soldier_buttons")
+			node:child("stand"):set_invisible(false)
+			node:child("crouch"):set_invisible(true)
+			node:child("stand_d"):set_invisible(true)
+			node:child("crouch_d"):set_invisible(true)
+		end
+	},
+	{
+		class = "confunc",
+		name = "deselect_crouch",
+		on_click = function (this)
+			local node = this:root():child("soldier"):child("soldier_opts"):child("soldier_buttons")
+			node:child("stand"):set_invisible(true)
+			node:child("crouch"):set_invisible(false)
+			node:child("stand_d"):set_invisible(true)
+			node:child("crouch_d"):set_invisible(true)
+		end
+	},
+	-- Disables the stand/crouch buttons when no TUs remain
+	{
+		class = "confunc",
+		name = "disable_stand",
+		on_click =  function (this)
+			local node = this:root():child("soldier"):child("soldier_opts"):child("soldier_buttons")
+			node:child("stand"):set_invisible(false)
+			node:child("crouch"):set_invisible(false)
+			node:child("stand_d"):set_invisible(false)
+			node:child("crouch_d"):set_invisible(false)
+		end
+	},
+	{
+		class = "confunc",
+		name = "disable_crouch",
+		on_click = function (this)
+			local node = this:root():child("soldier"):child("soldier_opts"):child("soldier_buttons")
+			node:child("stand"):set_invisible(false)
+			node:child("crouch"):set_invisible(false)
+			node:child("stand_d"):set_invisible(false)
+			node:child("crouch_d"):set_invisible(false)
+		end
+	},
+
+	{
+		class = "confunc",
+		name = "deselect_primaryleft",
+		on_click = function (this)
+			this:root():child("soldier"):child("weapon"):child("fire_l"):set_invisible(false)
+		end
+	},
+	{
+		class = "confunc",
+		name = "deselect_primaryright",
+		on_click = function (this)
+			this:root():child("soldier"):child("weapon"):child("fire_r"):set_invisible(false)
+		end
+	},
+	{
+		class = "confunc",
+		name = "deselect_reloadleft",
+		on_click = function (this)
+			if ufo.findvar("sldcurhand" .. ufo.findvar("cl_selected"):as_string()):as_string() == "l" then
+				this:root():child("soldier"):child("weapon"):child("reload_l"):set_invisible(false)
+				this:root():child("soldier"):child("weapon"):child("reload_l_disabled"):set_invisible(true)
+			end
+		end
+	},
+	{
+		class = "confunc",
+		name = "deselect_reloadright",
+		on_click = function (this)
+			if ufo.findvar("sldcurhand" .. ufo.findvar("cl_selected"):as_string()):as_string() == "r" then
+				this:root():child("soldier"):child("weapon"):child("reload_r"):set_invisible(false)
+				this:root():child("soldier"):child("weapon"):child("reload_r_disabled"):set_invisible(true)
+			end
+		end
+	},
+	{
+		class = "confunc",
+		name = "disable_primaryleft",
+		on_click = function (this)
+			 this:root():child("soldier"):child("weapon"):child("fire_l"):set_invisible(true)
+		end
+	},
+	{
+		class = "confunc",
+		name = "disable_primaryright",
+		on_click = function (this)
+			this:root():child("soldier"):child("weapon"):child("fire_r"):set_invisible(true)
+		end
+	},
+	{
+		class = "confunc",
+		name = "disable_reloadleft",
+		on_click = function (this)
+			if ufo.findvar("sldcurhand" .. ufo.findvar("cl_selected"):as_string()):as_string() == l then
+				this:root():child("soldier"):child("weapon"):child("reload_l"):set_invisible(true)
+				this:root():child("soldier"):child("weapon"):child("reload_l_disabled"):set_invisible(false)
+			end
+		end
+	},
+	{
+		class = "confunc",
+		name = "disable_reloadright",
+		on_click = function (this)
+			if ufo.findvar("sldcurhand" .. ufo.findvar("cl_selected"):as_string()):as_string() == "r" then
+				this:root():child("soldier"):child("weapon"):child("reload_r"):set_invisible(true)
+				this:root():child("soldier"):child("weapon"):child("reload_r_disabled"):set_invisible(false)
+			end
+		end
+	},
+	{
+		class = "confunc",
+		name = "show_inventory",
+		on_click = function (sender)
+			ufo.cmd("show_hide_inv_stats;")
+		end
+	},
+
+	{
+		class = "confunc",
+		name = "show_physdat",
+		on_click = function (sender)
+			ufo.cmd("show_hide_inv_stats;")
+		end
+	},
+
+	--[[
 	// Handles turning a button "on" when clicked
 	// param1 = path to node from parent
 	// param2 = icon image
@@ -1248,130 +1427,214 @@ window hud_default extends hud
 			*node:parent.soldier.soldier_opts.soldier_buttons.<1>.icon@background = "icons/circle0"
 		}
 	}
+	--]]
 
-	// Select the soldier from the squad selection
-	confunc hudselect
+	-- Select the soldier from the squad selection
 	{
-		*cvar:i = 0;
-		while ( *cvar:i < 12 ) {
-			*node:root.soldier.squad.sld<cvar:i>@bordercolor = "0.527 0.6 0.21 1"
-			*cvar:i = ( *cvar:i + 1 )
-		}
-		delete *cvar:i
-		*node:root.soldier.squad.sld<1>@bordercolor = "0.824 0.917 0.437 1"
-		cmd "show_oweapon;"
-	}
+		class = "confunc",
+		name = "hudselect",
+		on_click = function (this, number)
+			local node = this:root():child("soldier"):child("squad")
+			for i = 0, 11 do
+				node:child("sld" .. i):set_bordercolor(0.527, 0.6, 0.21, 1)
+			end
+			node:child("sld" .. number):set_bordercolor(0.824, 0.917, 0.437, 1)
+			ufo.cmd("show_oweapon;")
+		end
+	},
 
-	confunc huddisable {
-		cmd "updateactorvalues <1> \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\";"
-		*node:root.soldier.squad.sld<1>@bgcolor = "0 0.1 0 0.7"
-		*node:root.soldier.squad.sld<1>@onMouseEnter = { }
-		*node:root.soldier.squad.sld<1>@onMouseLeave = { }
-	}
-
-	string overlay
 	{
-		string  "_Please wait"
-		color   "1 0 0 1"
-		font	"f_verybig_bold"
-		ghost   true
-		pos			 "0 0"
-		size	"1024 768"
-		contentalign	ALIGN_UC
-	}
+		class = "confunc",
+		name = "huddisable",
+		on_click = function (this, number)
+			ufo.cmd('updateactorvalues ' .. number .. ' "" "0" "0" "1" "0" "1" "0" "1" "";')
+			local node = this:root():child ("soldier"):child("squad"):child("sld" .. number)
+			node:set_backgroundcolor(1, 0, 0, 0.1)
+			node:set_ghost(true)
+			node.on_mouseenter = function (sender) end
+			node.on_mouseleave = function (sender) end
+			node:child("bar_bg"):set_invisible(true)
+		end
+	},
 
-	// ==================
-	// round events
-	// ==================
-	confunc startround
 	{
-		call *node:root.reactions@removeAllChild
-		*node:root.overlay@invis = true
-	}
-	confunc endround
+		class = "confunc",
+		name = "hudenable",
+		on_click = function (this, number)
+			local node = this:root():child ("soldier"):child("squad"):child("sld" .. number)
+			node:set_invisible(false)
+			node:set_ghost(false)
+			node:set_backgroundcolor(0, 0.1, 0, 0.7)
+			node.on_mouseenter = function (sender)
+				node:set_backgroundcolor(0, 0, 0, 0.7)
+			end
+			node.on_mouseleave = function (sender)
+				sender:set_backgroundcolor(0, 0.1, 0, 0.7)
+			end
+			node:child("bar_bg"):set_invisible(false)
+		end
+	},
+
 	{
-		*node:root.overlay@invis = false
-		cmd "hud_movemode;"
-	}
+		class = "string",
+		name = "overlay",
+		text = "_Please wait",
+		color = {1, 0, 0, 1},
+		font = "f_verybig_bold",
+		ghost = true,
+		pos = {0, 0},
+		size = {1024, 768},
+		contentalign = ufo.ALIGN_UC
+	},
 
-	//This is called when a rescuezone is available in the given map
-	confunc enable_rescuezone
+	-- ==================
+	-- round events
+	-- ==================
 	{
-		*node:root.game_controls.show_rescue@invis = false
-	}
-
-	//This is called when no rescuezone is available in the given map
-	confunc disable_rescuezone
+		class = "confunc",
+		name = "startround",
+		on_click = function (this)
+			this:root():child("reactions"):remove_children()
+			this:root():child("overlay"):set_invisible(true)
+		end
+	},
 	{
-		*node:root.game_controls.show_rescue@invis = true
-	}
+		class = "confunc",
+		name = "endround",
+		on_click = function (this)
+			this:root():child("overlay"):set_invisible(false)
+			ufo.cmd("hud_movemode;")
+		end
+	},
 
-	//This is called by the button to show or hide the rescue zone
-	confunc toggle_rescuezone
+	-- This is called when a rescuezone is available in the given map
 	{
-		if (*cvar:cl_map_draw_rescue_zone eq 0) {
-			*cvar:cl_map_draw_rescue_zone = 2
-			*node:root.game_controls.show_rescue.icon@tooltip = "_Hide rescue zone"
-		} else {
-			*cvar:cl_map_draw_rescue_zone = 0
-			*node:root.game_controls.show_rescue.icon@tooltip = "_Show rescue zone"
-		}
-	}
+		class = "confunc",
+		name = "enable_rescuezone",
+		on_click = function (this)
+			this:root():child("game_controls"):child("show_rescue"):set_invisible(false)
+		end
+	},
 
-	confunc updateLevelStatus {
-		if (<1> == 1) {
-			cmd "lvlchange 0;"
-		}
-	}
-
-	confunc updateactorstatus {
-		if ( <2> eq "bleeding" ) {
-			if ( <3> != 0 ) {
-				*node:root.soldier.squad.sld<1>@bgcolor = "0.7 0.1 0 0.7"
-				*node:root.soldier.squad.sld<1>@onMouseEnter = { *node:this@bgcolor = "0.9 0 0 1" }
-				*node:root.soldier.squad.sld<1>@onMouseLeave = { *node:this@bgcolor = "0.7 0.1 0 0.7" }
-			} else {
-				*node:root.soldier.squad.sld<1>@bgcolor = "0 0.1 0 0.7"
-				*node:root.soldier.squad.sld<1>@onMouseEnter = { *node:this@bgcolor = "0 0 0 1" }
-				*node:root.soldier.squad.sld<1>@onMouseLeave = { *node:this@bgcolor = "0 0.1 0 0.7" }
-			}
-		}
-	}
-
-	func onWindowOpened
+	-- This is called when no rescuezone is available in the given map
 	{
-		cmd "music_change battlescape;"
-		call *node:root.reactions@removeAllChild
+		class = "confunc",
+		name = "disable_rescuezone",
+		on_click = function (this)
+			this:root():child("game_controls"):child("show_rescue"):set_invisible(true)
+		end
+	},
 
-		// Input soldier information squad selection
-		*cvar:i = 0;
-		while ( *cvar:i < 12 ) {
-			*node:root.soldier.squad.sld<cvar:i>.number@integer = <cvar:i>
-			*node:root.soldier.squad.sld<cvar:i>.head@src = *cvar:mn_head<cvar:i>
-			*node:root.soldier.squad.sld<cvar:i>.head@skin = *cvar:mn_head_skin<cvar:i>
-			*node:root.soldier.squad.sld<cvar:i>.health@max = *cvar:mn_hpmax<cvar:i>
-			*node:root.soldier.squad.sld<cvar:i>.health@current = *cvar:mn_hp<cvar:i>
-			*node:root.soldier.squad.sld<cvar:i>.tu@max = *cvar:mn_tumax<cvar:i>
-			*node:root.soldier.squad.sld<cvar:i>.tu@current = *cvar:mn_tu<cvar:i>
-			*node:root.soldier.squad.sld<cvar:i>.morale@max = *cvar:mn_moralemax<cvar:i>
-			*node:root.soldier.squad.sld<cvar:i>.morale@current = *cvar:mn_morale<cvar:i>
-			*cvar:sldcurhand<cvar:i> = "r"
-			*cvar:i = ( *cvar:i + 1 )
-		}
-		delete *cvar:i
+	-- This is called by the button to show or hide the rescue zone
+	{
+		class = "confunc",
+		name = "toggle_rescuezone",
+		on_click = function (this)
+			local cvar = ufo.findvar("cl_map_draw_rescue_zone")
+			local node = this:root():child("game_controls"):child("show_rescue"):child("icon")
+			if cvar:as_integer() == 0 then
+				cvar:set_value(2)
+				node:set_tooltip("_Hide rescue zone")
+			else
+				cvar:set_value(0)
+				node:set_tooltip("_Show rescue zone")
+			end
+		end
+	},
 
-		// Select the current soldier and update the squad selection
-		cmd "hudselect 0;"
+	{
+		class = "confunc",
+		name = "updateLevelStatus",
+		on_click = function (this, number)
+			if number == 1 then
+				ufo.cmd("lvlchange 0;")
+			end
+		end
+	},
 
-		// Sets the attribute displayed in the squad panel bars
-		*cvar:squad_bar = "health"
+	{
+		class = "confunc",
+		name = "updateactorstatus",
+		on_click = function (this, number, status, value)
+			if status == "bleeding" then
+				local node = this:root():child("soldier"):child("squad"):child("sld" .. number)
+				if value > 0 then
+					node:set_backgroundcolor(0.7, 0.1, 0, 0.7)
+					node.on_mouseenter = function (sender)
+						sender:set_backgroundcolor(0.9, 0, 0, 1)
+					end
+					node.on_mouseleave = function (sender)
+						sender:set_backgroundcolor(0.7, 0.1, 0, 0.7)
+					end
+				else
+					node:set_backgroundcolor(0, 0.1, 0, 0.7)
+					node.on_mouseenter = function (sender)
+						sender:set_backgroundcolor(0, 0, 0, 1)
+					end
+					node.on_mouseleave = function (sender)
+						sender:set_backgroundcolor(0, 0.1, 0, 0.7)
+					end
+				end
+			end
+		end
+	},
 
-		// Hide the rescue zone on startup
-		*cvar:cl_map_draw_rescue_zone = 0
+	on_windowopened = function (this)
+		ufo.cmd("music_change battlescape;")
+		this:root():child("reactions"):remove_children()
 
-		// Notices when the weapon has changed and calls the confunc that
-		// shows or hides the otherweapon
-		cmd "ui_addcvarlistener mn_lweapon show_oweapon;"
-		cmd "ui_addcvarlistener mn_rweapon show_oweapon;"
-	}
+		-- Input soldier information squad selection
+		for i = 0, 11 do
+			ufox.build({
+				class = "SoldierSelect",
+				name = "sld" .. i,
+				pos = {i * 46 + 12, 22},
+				{
+					name = "number",
+					value = i
+				},
+				{
+					name = "head",
+					model = "*cvar:mn_head" .. i,
+					skin = "*cvar:mn_head_skin" .. i
+				},
+				{
+					name = "health",
+					max = "*cvar:mn_hpmax" .. i,
+					value = "*cvar:mn_hp" .. i
+				},
+				{
+					name = "tu",
+					max = "*cvar:mn_tumax" .. i,
+					value = "*cvar:mn_tu" .. i
+				},
+				{
+					name = "morale",
+					max = "*cvar:mn_moralemax" .. i,
+					value = "*cvar:mn_morale" .. i
+				},
+			}, this:root():child("soldier"):child("squad"))
+			ufo.getvar("sldcurhand" .. i):set_value("r")
+		end
+
+		-- Select the current soldier and update the squad selection
+		ufo.cmd("hudselect 0;")
+
+		-- Sets the attribute displayed in the squad panel bars
+		ufo.getvar("squad_bar"):set_value("health")
+
+		-- Hide the rescue zone on startup
+		ufo.findvar("cl_map_draw_rescue_zone"):set_value(0)
+
+		-- Notices when the weapon has changed and calls the confunc that
+		-- shows or hides the otherweapon
+		ufo.cmd("ui_addcvarlistener mn_lweapon show_oweapon;")
+		ufo.cmd("ui_addcvarlistener mn_rweapon show_oweapon;")
+	end
 }
+
+function onScriptLoaded ()
+	-- Add the window to the list of HUDs
+	ufo.cmd('add_hud_name ' .. ufo.nodepath(hud_default_window) .. ' "_Default"')
+end
+ufo.register_onload (onScriptLoaded)

@@ -50,6 +50,7 @@ ufox.build_component({
 	backgroundcolor = {0, 0.1, 0, 0.7},
 	bordersize = 2,
 	bordercolor = {0.527, 0.6, 0.21, 1},
+	invisible = true,
 
 	on_mouseenter = function (this)
 		this:set_backgroundcolor(0, 0, 0, 1)
@@ -58,7 +59,7 @@ ufox.build_component({
 		this:set_backgroundcolor(0, 0.1, 0, 0.7)
 	end,
 	on_click = function (this)
-		ufo.cmd(string.format("actor_select %s;", this:child("number"):as_integer()))
+		ufo.cmd("actor_select " .. this:child("number"):as_integer() .. ";")
 	end,
 
 	{
@@ -210,8 +211,7 @@ ufox.build_component({
 	},
 
 	{
-		class = "string",
-		super = "smallstring",
+		class = "smallstring",
 		name = "wound_string",
 		pos = {20, 0},
 		longlines = ufo.LONGLINES_CHOP,
