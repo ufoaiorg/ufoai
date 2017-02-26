@@ -733,7 +733,7 @@ local hud_default_window = ufox.build_window{
 					cvar:set_value("l")
 					this:parent():show_lhand()
 				else
-					cvar:set_falue("r")
+					cvar:set_value("r")
 					this:parent():show_rhand()
 				end
 			end
