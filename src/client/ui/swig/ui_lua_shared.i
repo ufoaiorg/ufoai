@@ -1304,6 +1304,7 @@ struct uiWindowNode_t: uiNode_t {
 	void set_starlayout (bool value) { UI_EXTRADATA($self, windowExtraData_t).starLayout = value; };
 	void set_preventtypingescape (bool value) { UI_EXTRADATA($self, windowExtraData_t).preventTypingEscape = value; };
 	void set_noticepos(float x, float y) { Vector2Set(UI_EXTRADATA($self, windowExtraData_t).noticePos, x, y); };
+	void set_dropdown (bool value) { UI_EXTRADATA($self, windowExtraData_t).dropdown = value; };
 
 	%rename (on_windowopened) lua_onWindowOpened;
 	%rename (on_windowclosed) lua_onWindowClosed;
