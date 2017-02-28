@@ -731,10 +731,10 @@ local hud_default_window = ufox.build_window{
 				local cvar = ufo.findvar("sldcurhand" .. ufo.findvar("cl_selected"):as_string())
 				if cvar:as_string() == "r" then
 					cvar:set_value("l")
-					this:parent():show_lhand()
+					this:show_lhand()
 				else
 					cvar:set_value("r")
-					this:parent():show_rhand()
+					this:show_rhand()
 				end
 			end
 		},
