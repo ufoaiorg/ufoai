@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-17 19:58+0200\n"
+"POT-Creation-Date: 2017-02-28 21:54-0600\n"
 "PO-Revision-Date: 2011-03-06 12:23+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -127,16 +127,16 @@ msgstr ""
 msgid "Ice"
 msgstr "Incheon"
 
-#: ../base/maps/industrial.ump:420 ../base/maps/industrial.ump:527
-#: ../base/maps/industrial.ump:554 ../base/maps/industrial.ump:579
+#: ../base/maps/industrial.ump:443 ../base/maps/industrial.ump:556
+#: ../base/maps/industrial.ump:585 ../base/maps/industrial.ump:610
 #: ../base/ufos/maps.ufo:2178 ../base/ufos/maps.ufo:2232
 #: ../base/ufos/maps.ufo:2287 ../base/ufos/maps.ufo:2341
 #, fuzzy
 msgid "Industrial Site"
 msgstr "Industriellt tema."
 
-#: ../base/maps/industrial.ump:439 ../base/maps/industrial.ump:469
-#: ../base/maps/industrial.ump:499
+#: ../base/maps/industrial.ump:462 ../base/maps/industrial.ump:494
+#: ../base/maps/industrial.ump:526
 #, fuzzy
 msgid "UFO Landed"
 msgstr "UFOpedia"
@@ -197,11 +197,6 @@ msgstr "Räddningsuppdrag"
 msgid "Spedition"
 msgstr "Alternativ"
 
-#: ../base/maps/transport.ump:71
-#, fuzzy
-msgid "Transport"
-msgstr "Transportörer:"
-
 #: ../base/maps/tropic.ump:359 ../base/maps/tropic.ump:398
 #, fuzzy
 msgid "Tropical UFO"
@@ -234,7 +229,7 @@ msgid "Stadium"
 msgstr "Stadium"
 
 #: ../base/maps/urban.ump:380 ../base/ufos/basemanagement.ufo:201
-#: ../base/ufos/maps.ufo:3324 ../base/ufos/ui/research.ufo:350
+#: ../base/ufos/maps.ufo:3324 ../base/ufos/ui/research.ufo:355
 msgid "Laboratory"
 msgstr "Laboratorium"
 
@@ -624,7 +619,7 @@ msgstr "Utomjordisk förvaringsfacilitet"
 msgid "Entrance"
 msgstr "Ingång"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:314
+#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:316
 #: ../base/ufos/ui/production.ufo:248
 msgid "Storage"
 msgstr "Lager"
@@ -657,7 +652,7 @@ msgstr "Jagare"
 msgid "Workshop"
 msgstr "Verkstad"
 
-#: ../base/ufos/basemanagement.ufo:169 ../base/ufos/ui/hud_default.ufo:1084
+#: ../base/ufos/basemanagement.ufo:169 ../base/ufos/ui/hud_default.ufo:1073
 #: ../base/ufos/ui/radar.ufo:21
 msgid "Radar"
 msgstr "Radar"
@@ -24036,9 +24031,9 @@ msgstr "Installationer"
 msgid "Research Reports"
 msgstr "Forskningsrapporter"
 
-#: ../base/ufos/research.ufo:116 ../base/ufos/ui/_assets_squad.ufo:498
+#: ../base/ufos/research.ufo:116 ../base/ufos/ui/_assets_squad.ufo:490
 #: ../base/ufos/ui/aircraft.ufo:156 ../base/ufos/ui/aircraft_equip.ufo:61
-#: ../base/ufos/ui/equipment.ufo:59 ../base/ufos/ui/hud_default.ufo:261
+#: ../base/ufos/ui/equipment.ufo:59 ../base/ufos/ui/hud_default.ufo:273
 #: ../base/ufos/ui/market.ufo:121 ../base/ufos/ui/transfer.ufo:139
 #: ../base/ufos/ui/transfer.ufo:251
 msgid "Equipment"
@@ -24648,8 +24643,8 @@ msgid "INTRODUCTION"
 msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:16 ../base/ufos/seq_tutorials.ufo:278
-#: ../base/ufos/seq_tutorials.ufo:648 ../base/ufos/seq_tutorials.ufo:1116
-#: ../base/ufos/seq_tutorials.ufo:1483 ../base/ufos/seq_tutorials.ufo:1663
+#: ../base/ufos/seq_tutorials.ufo:648 ../base/ufos/seq_tutorials.ufo:1119
+#: ../base/ufos/seq_tutorials.ufo:1486 ../base/ufos/seq_tutorials.ufo:1666
 msgid "Left-click to continue. 'Esc' to exit"
 msgstr ""
 
@@ -24698,8 +24693,8 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:247 ../base/ufos/seq_tutorials.ufo:617
-#: ../base/ufos/seq_tutorials.ufo:1085 ../base/ufos/seq_tutorials.ufo:1452
-#: ../base/ufos/seq_tutorials.ufo:1632 ../base/ufos/seq_tutorials.ufo:1891
+#: ../base/ufos/seq_tutorials.ufo:1088 ../base/ufos/seq_tutorials.ufo:1455
+#: ../base/ufos/seq_tutorials.ufo:1635 ../base/ufos/seq_tutorials.ufo:1894
 #, fuzzy
 msgid "The end"
 msgstr "Utomjordingarnas tankesätt"
@@ -24823,19 +24818,19 @@ msgstr ""
 msgid "Campaigns: part 2"
 msgstr "Kampanj"
 
-#: ../base/ufos/seq_tutorials.ufo:700
+#: ../base/ufos/seq_tutorials.ufo:703
 msgid ""
 "A campaign begins after you have built your home base. Remember that aliens "
 "are prone to attack highly populated areas."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:721
+#: ../base/ufos/seq_tutorials.ufo:724
 msgid ""
 "The first base comes with facilities, employees, equipment, aircraft, and "
 "money. Amounts depend on the level of difficulty of the campaign."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:741
+#: ../base/ufos/seq_tutorials.ufo:744
 msgid ""
 "Other bases start with an entrance only, and few indestructible rocks that "
 "hinder development. Just pick facilities in the list to begin building in "
@@ -24843,7 +24838,7 @@ msgid ""
 "a base operational."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:771
+#: ../base/ufos/seq_tutorials.ufo:774
 msgid ""
 "When arranging your bases, remember that some facilities have direct access "
 "to surface: the entrance, the dropship hangar, the radar (but not the "
@@ -24851,7 +24846,7 @@ msgid ""
 "there; or you can try to flank them."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:792
+#: ../base/ufos/seq_tutorials.ufo:795
 msgid ""
 "Using the interface is easy. Top of the screen: to go back to the geosphere, "
 "click on the globe (or hit 'Esc'); to rename a base, click on its name; to "
@@ -24859,21 +24854,21 @@ msgid ""
 "bases."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:812
+#: ../base/ufos/seq_tutorials.ufo:815
 msgid ""
 "Menu on the right and central view: to enter buildings, click on icons or on "
 "silhouettes, or click on the facilities of the base (right-click to destroy "
 "them). Notice the short overviews about facilities, research, and production."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:832
+#: ../base/ufos/seq_tutorials.ufo:835
 msgid ""
 "Bottom of the screen: click on employees' summary to access the 'Hire and "
 "fire' window; click on buttons to access game options, or UFOpaedia, or the "
 "'Transfer' window, or detailed statistics about the current base."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:853
+#: ../base/ufos/seq_tutorials.ufo:856
 msgid ""
 "The 1st of every month, nations propose some candidates: while in a base, "
 "use checkboxes near names to hire or to fire them; note that soldiers and "
@@ -24881,7 +24876,7 @@ msgid ""
 "come without any equipment."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:874
+#: ../base/ufos/seq_tutorials.ufo:877
 msgid ""
 "The market permits you to buy or to sell items: horizontal tabs sort items "
 "by types; use arrows to buy or to sell objects, and check the summary at the "
@@ -24889,7 +24884,7 @@ msgid ""
 "until research was done."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:895
+#: ../base/ufos/seq_tutorials.ufo:898
 msgid ""
 "The workshop is to manufacture items that can't be bought, and to "
 "disassemble UFOs to recycle their components. Engineers gather automatically "
@@ -24897,42 +24892,42 @@ msgid ""
 "quantities are done; then they shift to their second task; and so on."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:916
+#: ../base/ufos/seq_tutorials.ufo:919
 msgid ""
 "Research is one of the key to victory. Thus, you have to hire scientists, "
 "and to build laboratories, and then to assign your employees on research "
 "projects. Research starts with few matters..."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:936
+#: ../base/ufos/seq_tutorials.ufo:939
 msgid ""
 "But topics increase quickly while you play, and some proposals are only "
 "available after you discovered their prerequisites. Studying alien species, "
 "alien artifacts, and alien UFOs is of vital importance."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:957
+#: ../base/ufos/seq_tutorials.ufo:960
 msgid ""
 "The alien containment allows research on aliens, dead or alive. One alien "
 "containment should be enough to study nearly all the creatures you will "
 "meet; if you need space, build another one, or kill some prisoners."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:978
+#: ../base/ufos/seq_tutorials.ufo:981
 msgid ""
 "Use dropships to drop soldiers to their missions, and interceptor planes to "
 "intercept enemy aircraft. Equip their slots to improve their performances, "
 "and choose their crews."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:998
+#: ../base/ufos/seq_tutorials.ufo:1001
 msgid ""
 "Use checkboxes near names to select a pilot, and soldiers to perform "
 "missions. Check the equipment of your aircraft, and soldiers, before lifting "
 "off."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1019
+#: ../base/ufos/seq_tutorials.ufo:1022
 msgid ""
 "Soldiers must be equipped before battles: hands, belt, holster, headgear, or "
 "backpack. Drag-and-drop to equip a soldier, or right-click on unused items. "
@@ -24940,41 +24935,41 @@ msgid ""
 "equipment's properties at the bottom of the screen."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1039
+#: ../base/ufos/seq_tutorials.ufo:1042
 msgid ""
 "When defending a base, place a soldier in the command centre's video "
 "surveillance room. He will use the security cameras to locate enemies inside "
 "and outside the facilities of the base."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1060
+#: ../base/ufos/seq_tutorials.ufo:1063
 msgid "Wounded soldiers heal faster if there is a hospital in the base."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1106
+#: ../base/ufos/seq_tutorials.ufo:1109
 msgid "TACTICAL BATTLES"
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1126
+#: ../base/ufos/seq_tutorials.ufo:1129
 #, fuzzy
 msgid "Tactical battles"
 msgstr "Taktiskt uppdrag"
 
-#: ../base/ufos/seq_tutorials.ufo:1163
+#: ../base/ufos/seq_tutorials.ufo:1166
 msgid ""
 "Tactical battles are at the core of UFO: Alien Invasion, in campaign, "
 "skirmish, or multiplayer games. Saving during combats is impossible, because "
 "choices and actions have to matter. Think first!"
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1184
+#: ../base/ufos/seq_tutorials.ufo:1187
 msgid ""
 "Battles take place on very different maps, which trigger close combat "
 "situations, or long range shootings; moreover, combats occur during day or "
 "night time. Equip your soldier consequently, and expect for the unexpected."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1205
+#: ../base/ufos/seq_tutorials.ufo:1208
 msgid ""
 "Equip your soldiers according to their skills and abilities, and don't "
 "overload them. Drag-and-drop to equip a soldier, or right-click on unused "
@@ -24982,7 +24977,7 @@ msgid ""
 "weapon. Check equipment's properties at the bottom of the screen."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1225
+#: ../base/ufos/seq_tutorials.ufo:1228
 msgid ""
 "Primary weapons are of most common use. Heavy weapons deal heavy damages, "
 "but are cumbersome, and slow to operate. Secondary weapons prove useful when "
@@ -24990,14 +24985,14 @@ msgid ""
 "handed weapon to react quickly."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1245
+#: ../base/ufos/seq_tutorials.ufo:1248
 msgid ""
 "As a rule, scout before shooting. Use IR goggles to see through obstacles "
 "(walls, floors, smoke, etc.) at close range. Note that some weapons, like "
 "sniper weapons, fire powerful shots that partially pierce through materials."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1265
+#: ../base/ufos/seq_tutorials.ufo:1268
 msgid ""
 "Offensive grenades are useful for indirect fire. Flasbangs stun enemies "
 "during one turn (the grenade must explode just in front of them). Smoke "
@@ -25005,7 +25000,7 @@ msgid ""
 "strategic passages. Smoke and fire last few rounds."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1285
+#: ../base/ufos/seq_tutorials.ufo:1288
 msgid ""
 "Use medikits to heal wounded, or fainted, or panicked soldiers: wounded "
 "soldiers often bleed, and die if uncured; stunned soldiers faint when "
@@ -25013,19 +25008,19 @@ msgid ""
 "act randomly. Equip armours to increase survival rate."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1306
+#: ../base/ufos/seq_tutorials.ufo:1309
 msgid ""
 "Using the battlescape interface is easy, with mouse, or shortcuts (in the "
 "'Options' menu). Top of the screen: total of spotted enemies, and level view."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1326
+#: ../base/ufos/seq_tutorials.ufo:1329
 msgid ""
 "Red highlights hostile forces. Green highlights your troops. Yellow "
 "highlights civilians (whom you have to protect during campaigns)."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1346
+#: ../base/ufos/seq_tutorials.ufo:1349
 msgid ""
 "Buttons on the right, top-down order: end turn, options, abort mission, "
 "radar, and rescue zone. Use radar to check what people are facing. Try to "
@@ -25033,7 +25028,7 @@ msgid ""
 "they will be lost."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1366
+#: ../base/ufos/seq_tutorials.ufo:1369
 msgid ""
 "Bottom of the screen: a squad bar allows quick selection of soldiers; use "
 "the arrow to hide or to display the squad bar, and use filters to view "
@@ -25041,7 +25036,7 @@ msgid ""
 "when firing, moving, crouching, and so on. No time units, no actions."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1386
+#: ../base/ufos/seq_tutorials.ufo:1389
 msgid ""
 "Use buttons to open inventory, to view current soldier stats, to use "
 "headgear, to toggle reaction fire on/off, to stand, to crouch. Click on the "
@@ -25049,7 +25044,7 @@ msgid ""
 "time units and ammunition), or to reload your weapon."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1407
+#: ../base/ufos/seq_tutorials.ufo:1410
 msgid ""
 "'Reaction fire' is a way to fire in reaction to foes' visible actions. When "
 "a weapon allows reaction fire, each one of its firemodes can be set as the "
@@ -25057,7 +25052,7 @@ msgid ""
 "time units left, and you must set the reaction fire on."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1427
+#: ../base/ufos/seq_tutorials.ufo:1430
 msgid ""
 "Reaction fire is triggered when any fighter sees, without any interruption, "
 "a hostile unit spending more time units than the number of time units "
@@ -25065,22 +25060,22 @@ msgid ""
 "check the radar to avoid opponents' reaction fire."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1473
+#: ../base/ufos/seq_tutorials.ufo:1476
 msgid "SKIRMISH GAMES"
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1493
+#: ../base/ufos/seq_tutorials.ufo:1496
 #, fuzzy
 msgid "Skirmish games"
 msgstr "Sammandrabbning"
 
-#: ../base/ufos/seq_tutorials.ufo:1520
+#: ../base/ufos/seq_tutorials.ufo:1523
 msgid ""
 "Skirmish games are quickly set battles where a player confronts a squad "
 "controlled by the computer."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1534
+#: ../base/ufos/seq_tutorials.ufo:1537
 msgid ""
 "First, define the battle environment: map, time of the day (day or night), "
 "number of opponents, and aircraft on the map (if any). Should the 'Alien "
@@ -25088,14 +25083,14 @@ msgid ""
 "or quit (to win, kill all the aliens before ending your turn)."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1555
+#: ../base/ufos/seq_tutorials.ufo:1558
 msgid ""
 "Next, build your squad. Use the default settings for a quick start: select "
 "an equipment profile for your opponent; select your side; limit the size of "
 "your squad if you want to. And begin the game."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1575
+#: ../base/ufos/seq_tutorials.ufo:1578
 msgid ""
 "If defaults don't suit you, customize a new squad: after selecting your "
 "side, select your equipment profile; create your squad, and equip your "
@@ -25103,23 +25098,23 @@ msgid ""
 "your squad for further battles. And begin the game."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1607 ../base/ufos/seq_tutorials.ufo:1749
+#: ../base/ufos/seq_tutorials.ufo:1610 ../base/ufos/seq_tutorials.ufo:1752
 msgid ""
 "You can also download squads from the UFO: Alien Invasion's server you "
 "previously uploaded. To connect, use the same account you use to log in to "
 "the official forum of the game (http://ufoai.org/forum)."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1653
+#: ../base/ufos/seq_tutorials.ufo:1656
 msgid "MULTIPLAYER GAMES"
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1673
+#: ../base/ufos/seq_tutorials.ufo:1676
 #, fuzzy
 msgid "Multiplayer games"
 msgstr "Flera spelare"
 
-#: ../base/ufos/seq_tutorials.ufo:1704
+#: ../base/ufos/seq_tutorials.ufo:1707
 msgid ""
 "Multiplayer games are battles where a player confronts other human players, "
 "or cooperates with them. Multiplayer games are possible only when "
@@ -25130,7 +25125,7 @@ msgid ""
 "settings."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1718
+#: ../base/ufos/seq_tutorials.ufo:1721
 msgid ""
 "First, generate a team. Then, select a side from the list, and equip your "
 "troops. Optionally, save your squad for further battles. Warning: if server "
@@ -25138,21 +25133,21 @@ msgid ""
 "be selected in a top-down order from the list."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1770
+#: ../base/ufos/seq_tutorials.ufo:1773
 msgid ""
 "As a common player, join to search for servers. If none, connect to the "
 "lobby and wait for invitations. You still can play singleplayer while "
 "waiting."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1791
+#: ../base/ufos/seq_tutorials.ufo:1794
 msgid ""
 "When a server is available, connect to check its settings: either pick one "
 "from the list of public, or dedicated, servers listed by our master server; "
 "or type an IP address to reach a private server."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1811
+#: ../base/ufos/seq_tutorials.ufo:1814
 msgid ""
 "Server information details data about the server: map, game version, "
 "userlist, etc. Your version of the game has to match the version of the "
@@ -25160,7 +25155,7 @@ msgid ""
 "later, and connect to the game to start playing."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1832
+#: ../base/ufos/seq_tutorials.ufo:1835
 msgid ""
 "As a server's administrator, create a server to host a game on your "
 "computer: define the battle environment (map, time of the day, etc.); set a "
@@ -25168,7 +25163,7 @@ msgid ""
 "consider setting a 'Server-Password' for players trying to join."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1852
+#: ../base/ufos/seq_tutorials.ufo:1855
 msgid ""
 "Once your server has been started, you reach a battlescape view. You still "
 "can set some options there: max soldiers, and round time limit "
@@ -25176,7 +25171,7 @@ msgid ""
 "the 'Are you ready?' checkbox, the game starts automatically)."
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1873
+#: ../base/ufos/seq_tutorials.ufo:1876
 msgid ""
 "As an administrator, you may use the remote console to change settings from "
 "a connected client, restart maps, or change gametypes. To access console, "
@@ -25584,26 +25579,26 @@ msgstr "Avbryt"
 msgid "Close this dialogue"
 msgstr "Stäng den här dialogen"
 
-#: ../base/ufos/ui/_assets.ufo:380 ../base/ufos/ui/inv_stat.ufo:107
+#: ../base/ufos/ui/_assets.ufo:380 ../base/ufos/ui/inv_stat.ufo:110
 #, fuzzy
 msgid "Strength"
 msgstr "Styrka:"
 
-#: ../base/ufos/ui/_assets.ufo:388 ../base/ufos/ui/inv_stat.ufo:115
+#: ../base/ufos/ui/_assets.ufo:388 ../base/ufos/ui/inv_stat.ufo:118
 msgid "Speed"
 msgstr "Hastighet"
 
-#: ../base/ufos/ui/_assets.ufo:396 ../base/ufos/ui/inv_stat.ufo:123
+#: ../base/ufos/ui/_assets.ufo:396 ../base/ufos/ui/inv_stat.ufo:126
 #: client/cgame/campaign/cp_ufopedia.cpp:146
 msgid "Accuracy"
 msgstr "Precision"
 
-#: ../base/ufos/ui/_assets.ufo:404 ../base/ufos/ui/inv_stat.ufo:131
+#: ../base/ufos/ui/_assets.ufo:404 ../base/ufos/ui/inv_stat.ufo:134
 #, fuzzy
 msgid "Mind"
 msgstr "Psyke:"
 
-#: ../base/ufos/ui/_assets.ufo:420 ../base/ufos/ui/inv_stat.ufo:147
+#: ../base/ufos/ui/_assets.ufo:420 ../base/ufos/ui/inv_stat.ufo:150
 msgid "CQB"
 msgstr ""
 
@@ -25612,18 +25607,18 @@ msgstr ""
 msgid "Close Quarters Battle"
 msgstr "Inte tillräckligt många bostäder"
 
-#: ../base/ufos/ui/_assets.ufo:429 ../base/ufos/ui/inv_stat.ufo:155
+#: ../base/ufos/ui/_assets.ufo:429 ../base/ufos/ui/inv_stat.ufo:158
 #: client/cl_inventory_callbacks.cpp:50
 #, fuzzy
 msgid "Assault"
 msgstr "Automatkarbin"
 
-#: ../base/ufos/ui/_assets.ufo:437 ../base/ufos/ui/inv_stat.ufo:163
+#: ../base/ufos/ui/_assets.ufo:437 ../base/ufos/ui/inv_stat.ufo:166
 #: client/cl_inventory_callbacks.cpp:52
 msgid "Sniper"
 msgstr "Krypskytt"
 
-#: ../base/ufos/ui/_assets.ufo:445 ../base/ufos/ui/inv_stat.ufo:171
+#: ../base/ufos/ui/_assets.ufo:445 ../base/ufos/ui/inv_stat.ufo:174
 #: client/cl_inventory_callbacks.cpp:54
 #, fuzzy
 msgid "Explosives"
@@ -25722,16 +25717,16 @@ msgstr "Nästa bas"
 msgid "Back to base"
 msgstr "Tillbaka till basen"
 
-#: ../base/ufos/ui/_assets_hud.ufo:107
+#: ../base/ufos/ui/_assets_hud.ufo:136
 #, fuzzy
 msgid "current level"
 msgstr "Aktuellt värde."
 
-#: ../base/ufos/ui/_assets_hud.ufo:126
+#: ../base/ufos/ui/_assets_hud.ufo:157
 msgid "raise the level"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_hud.ufo:135
+#: ../base/ufos/ui/_assets_hud.ufo:169
 #, fuzzy
 msgid "lower the level"
 msgstr "Inled slaget"
@@ -25861,7 +25856,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Medium hardpoint (nose)"
 
-#: ../base/ufos/ui/_assets_map.ufo:237
+#: ../base/ufos/ui/_assets_map.ufo:236
 #: client/cgame/campaign/cp_aircraft.cpp:479
 #: client/cgame/campaign/cp_ufo.cpp:248 client/cgame/campaign/cp_ufo.cpp:249
 msgid "UFO"
@@ -25872,61 +25867,61 @@ msgstr "UFO"
 msgid "Enemy weapons"
 msgstr "Tunga vapen:"
 
-#: ../base/ufos/ui/_assets_squad.ufo:102 ../base/ufos/ui/_assets_squad.ufo:481
+#: ../base/ufos/ui/_assets_squad.ufo:99 ../base/ufos/ui/_assets_squad.ufo:474
 msgid "Squad"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:140
+#: ../base/ufos/ui/_assets_squad.ufo:138
 #, fuzzy
 msgid "Max Soldiers"
 msgstr "Max. soldater:\t%i\n"
 
-#: ../base/ufos/ui/_assets_squad.ufo:222
+#: ../base/ufos/ui/_assets_squad.ufo:220
 #, fuzzy
 msgid "Max UGVs"
 msgstr "Triax UGV"
 
-#: ../base/ufos/ui/_assets_squad.ufo:299
+#: ../base/ufos/ui/_assets_squad.ufo:297
 #, fuzzy
 msgid "Selected squad name here"
 msgstr "Valt försvar:"
 
-#: ../base/ufos/ui/_assets_squad.ufo:313 ../base/ufos/ui/campaign.ufo:147
-#: ../base/ufos/ui/campaign.ufo:654
+#: ../base/ufos/ui/_assets_squad.ufo:311 ../base/ufos/ui/campaign.ufo:147
+#: ../base/ufos/ui/campaign_main.ufo:49
 msgid "SAVE"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:324
+#: ../base/ufos/ui/_assets_squad.ufo:322
 msgid "EQUIP"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:352
+#: ../base/ufos/ui/_assets_squad.ufo:350
 #, fuzzy
 msgid "Squad settings"
 msgstr "Ljudinställningar."
 
-#: ../base/ufos/ui/_assets_squad.ufo:359
+#: ../base/ufos/ui/_assets_squad.ufo:357
 msgid "DEFAULT"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:370
+#: ../base/ufos/ui/_assets_squad.ufo:368
 msgid "CUSTOM"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:433 ../base/ufos/ui/campaign.ufo:131
+#: ../base/ufos/ui/_assets_squad.ufo:430 ../base/ufos/ui/campaign.ufo:131
 msgid "NEW"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:449 ../base/ufos/ui/campaign.ufo:155
-#: ../base/ufos/ui/campaign.ufo:640
+#: ../base/ufos/ui/_assets_squad.ufo:446 ../base/ufos/ui/campaign.ufo:155
+#: ../base/ufos/ui/campaign_main.ufo:38
 msgid "LOAD"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:541 ../base/ufos/ui/multiplayer.ufo:203
+#: ../base/ufos/ui/_assets_squad.ufo:530 ../base/ufos/ui/multiplayer.ufo:203
 msgid "CREATE"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:636 ../base/ufos/ui/multiplayer.ufo:58
+#: ../base/ufos/ui/_assets_squad.ufo:625 ../base/ufos/ui/multiplayer.ufo:58
 #, fuzzy
 msgid "Currently loaded"
 msgstr "Aktuell laddning:"
@@ -25991,8 +25986,7 @@ msgstr "Status:"
 msgid "Team:"
 msgstr "Grupp:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:90
-#: ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:90 ../base/ufos/ui/aircraft_equip.ufo:109
 #: ../base/ufos/ui/aircraft_equip.ufo:128
 #: ../base/ufos/ui/aircraft_equip.ufo:147
 #: ../base/ufos/ui/aircraft_equip.ufo:166
@@ -26208,7 +26202,7 @@ msgid "Destroy installation"
 msgstr "Förstör installation"
 
 #: ../base/ufos/ui/basedefence.ufo:378 ../base/ufos/ui/geoscape.ufo:1013
-#: ../base/ufos/ui/inv_stat.ufo:322 ../base/ufos/ui/main.ufo:485
+#: ../base/ufos/ui/inv_stat.ufo:325 ../base/ufos/ui/main.ufo:485
 #: ../base/ufos/ui/popup_baseattack.ufo:159
 #: ../base/ufos/ui/popup_capacity.ufo:77
 #: ../base/ufos/ui/popup_installations.ufo:130 ../base/ufos/ui/radar.ufo:36
@@ -26230,7 +26224,7 @@ msgstr ""
 msgid "Pilots"
 msgstr "Piloter"
 
-#: ../base/ufos/ui/bases.ufo:107 ../base/ufos/ui/hud_default.ufo:1044
+#: ../base/ufos/ui/bases.ufo:107 ../base/ufos/ui/hud_default.ufo:1021
 msgid "Options"
 msgstr "Alternativ"
 
@@ -26241,8 +26235,8 @@ msgstr "UFOpedia"
 
 #: ../base/ufos/ui/bases.ufo:127 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654
-#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:463
+#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
+#: ../base/ufos/ui/transfer.ufo:463
 #: client/cgame/campaign/cp_base_callbacks.cpp:602
 #: client/cgame/campaign/cp_base_callbacks.cpp:613
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
@@ -26289,8 +26283,8 @@ msgstr ""
 msgid "BEGIN"
 msgstr ""
 
-#: ../base/ufos/ui/campaign.ufo:198 ../base/ufos/ui/campaign.ufo:933
-#: ../base/ufos/ui/multiplayer.ufo:901 ../base/ufos/ui/skirmish.ufo:197
+#: ../base/ufos/ui/campaign.ufo:198 ../base/ufos/ui/multiplayer.ufo:901
+#: ../base/ufos/ui/popup_exitcampaign.ufo:41 ../base/ufos/ui/skirmish.ufo:197
 #: ../base/ufos/ui/tutorials.ufo:70
 msgid "BACK"
 msgstr ""
@@ -26306,63 +26300,22 @@ msgstr "Ingen partikel laddad"
 msgid "Click here to save game"
 msgstr ""
 
-#: ../base/ufos/ui/campaign.ufo:624 ../base/ufos/ui/missionmenu.ufo:33
+#: ../base/ufos/ui/campaign_main.ufo:27 ../base/ufos/ui/missionmenu.ufo:32
+msgid "CONTINUE"
+msgstr ""
+
+#: ../base/ufos/ui/campaign_main.ufo:28 ../base/ufos/ui/missionmenu.ufo:33
 #, fuzzy
 msgid "Leave this menu and continue playing."
 msgstr "Läs in senaste sparade spelet eller fortsätt spela"
 
-#: ../base/ufos/ui/campaign.ufo:626 ../base/ufos/ui/missionmenu.ufo:32
-msgid "CONTINUE"
-msgstr ""
-
-#: ../base/ufos/ui/campaign.ufo:659 ../base/ufos/ui/main.ufo:107
+#: ../base/ufos/ui/campaign_main.ufo:60 ../base/ufos/ui/main.ufo:107
 #: ../base/ufos/ui/missionmenu.ufo:43
 msgid "OPTIONS"
 msgstr ""
 
-#: ../base/ufos/ui/campaign.ufo:670 ../base/ufos/ui/main.ufo:140
+#: ../base/ufos/ui/campaign_main.ufo:70 ../base/ufos/ui/main.ufo:140
 msgid "EXIT"
-msgstr ""
-
-#: ../base/ufos/ui/campaign.ufo:709
-msgid "Reload campaign"
-msgstr "Läs om kampanj"
-
-#: ../base/ufos/ui/campaign.ufo:715
-msgid ""
-"Are you sure that you really want to reload the last automatically saved "
-"campaign state?"
-msgstr ""
-"Är du säker på att du verkligen vill läsa in den senaste automatiskt sparade "
-"kampanjen?"
-
-#: ../base/ufos/ui/campaign.ufo:723
-msgid "Load"
-msgstr "Läs in"
-
-#: ../base/ufos/ui/campaign.ufo:753
-msgid "You've lost the game"
-msgstr "Du förlorade spelet"
-
-#: ../base/ufos/ui/campaign.ufo:763 ../base/ufos/ui/campaign.ufo:839
-msgid "Click to continue"
-msgstr "Klicka för att fortsätta"
-
-#: ../base/ufos/ui/campaign.ufo:829
-#, fuzzy
-msgid "Thank you for playing UFO:Alien Invasion"
-msgstr "Tack för att du spelar UFO:Alien Invasion"
-
-#: ../base/ufos/ui/campaign.ufo:911
-msgid "EXIT CAMPAIGN CONFIRMATION"
-msgstr ""
-
-#: ../base/ufos/ui/campaign.ufo:916
-msgid "You will lose all your campaign progress."
-msgstr ""
-
-#: ../base/ufos/ui/campaign.ufo:925
-msgid "QUIT"
 msgstr ""
 
 #: ../base/ufos/ui/cgame.ufo:22
@@ -26370,23 +26323,42 @@ msgstr ""
 msgid "Remove this file from the server"
 msgstr "Välj en soldat från listan"
 
+#: ../base/ufos/ui/endgame.ufo:42
+msgid "Click to continue"
+msgstr "Klicka för att fortsätta"
+
+#: ../base/ufos/ui/endgame.ufo:63 ../base/ufos/ui/endgame.ufo:86
+#: ../base/ufos/ui/endgame.ufo:87
+#, fuzzy
+msgid "scrollbar"
+msgstr "Rulla uppåt"
+
+#: ../base/ufos/ui/endgame.ufo:112
+#, fuzzy
+msgid "Thank you for playing UFO:Alien Invasion"
+msgstr "Tack för att du spelar UFO:Alien Invasion"
+
+#: ../base/ufos/ui/endgame.ufo:116
+msgid "You've lost the game"
+msgstr "Du förlorade spelet"
+
 #: ../base/ufos/ui/equipment.ufo:157 ../base/ufos/ui/hire.ufo:200
 #: ../base/ufos/ui/hire.ufo:292
 #, fuzzy
 msgid "Rename your unit"
 msgstr "Byt namn på din bas"
 
-#: ../base/ufos/ui/equipment.ufo:185 ../base/ufos/ui/inv_stat.ufo:331
+#: ../base/ufos/ui/equipment.ufo:185 ../base/ufos/ui/inv_stat.ufo:334
 #, fuzzy
 msgid "Next soldier"
 msgstr "soldat"
 
-#: ../base/ufos/ui/equipment.ufo:193 ../base/ufos/ui/inv_stat.ufo:340
+#: ../base/ufos/ui/equipment.ufo:193 ../base/ufos/ui/inv_stat.ufo:343
 #, fuzzy
 msgid "Previous soldier"
 msgstr "Föregående bas"
 
-#: ../base/ufos/ui/equipment.ufo:250 ../base/ufos/ui/inv_stat.ufo:81
+#: ../base/ufos/ui/equipment.ufo:250 ../base/ufos/ui/inv_stat.ufo:84
 msgid "0/0 Kg"
 msgstr ""
 
@@ -26543,8 +26515,7 @@ msgstr "Avsluta uppdraget automatiskt"
 msgid "This kind of mission cannot be done automatically"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:897
-#: ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
 msgid "Cost:"
 msgstr "Kostnad:"
 
@@ -26552,8 +26523,7 @@ msgstr "Kostnad:"
 msgid "Time to build:"
 msgstr "Tid att bygga:"
 
-#: ../base/ufos/ui/geoscape.ufo:952
-#: ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build"
 msgstr "Bygg"
 
@@ -26597,8 +26567,7 @@ msgid "Select aircraft"
 msgstr "Välj farkost"
 
 #: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642
-#: ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
 #, fuzzy
 msgid "ETA:"
 msgstr "Åtgärd:\t%s\n"
@@ -26679,114 +26648,123 @@ msgstr "Kraftigt skadad"
 msgid "Healthy"
 msgstr "Hälsa"
 
-#: ../base/ufos/ui/hud_.ufo:42
+#: ../base/ufos/ui/hud_.ufo:50
 #, fuzzy
 msgid "Use this firemode for reaction fire"
 msgstr "Kryssa för att använda eldgivingsläget för reaktiva skott."
 
-#: ../base/ufos/ui/hud_default.ufo:38
-msgid "Default"
+#: ../base/ufos/ui/hud_.ufo:325
+msgid "tt"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:286
+#: ../base/ufos/ui/hud_default.ufo:299
 #, fuzzy
 msgid "Stats"
 msgstr "Status:"
 
-#: ../base/ufos/ui/hud_default.ufo:311
+#: ../base/ufos/ui/hud_default.ufo:325
 #, fuzzy
 msgid "Headgear"
 msgstr "Radar"
 
-#: ../base/ufos/ui/hud_default.ufo:346 ../base/ufos/ui/hud_default.ufo:358
+#: ../base/ufos/ui/hud_default.ufo:358 ../base/ufos/ui/hud_default.ufo:377
 #: client/battlescape/cl_hud_callbacks.cpp:348
 #, fuzzy
 msgid "Toggle reaction fire."
 msgstr "Växla reaktiv eldgivning"
 
-#: ../base/ufos/ui/hud_default.ufo:387
+#: ../base/ufos/ui/hud_default.ufo:413
 #, fuzzy
 msgid "Stand"
 msgstr "Stanley"
 
-#: ../base/ufos/ui/hud_default.ufo:407
+#: ../base/ufos/ui/hud_default.ufo:439
 #, fuzzy
 msgid "Crouch"
 msgstr "Gå hopkrupen"
 
-#: ../base/ufos/ui/hud_default.ufo:419
+#: ../base/ufos/ui/hud_default.ufo:457
 #, fuzzy
 msgid "Crouched"
 msgstr "Gå hopkrupen"
 
-#: ../base/ufos/ui/hud_default.ufo:447
+#: ../base/ufos/ui/hud_default.ufo:486
 #, fuzzy
 msgid "Standing"
 msgstr "Enastående"
 
-#: ../base/ufos/ui/hud_default.ufo:624
+#: ../base/ufos/ui/hud_default.ufo:669
 msgid "View other hand"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:744
+#: ../base/ufos/ui/hud_default.ufo:754
 msgid "Hide squad"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:887
+#: ../base/ufos/ui/hud_default.ufo:825 ../base/ufos/ui/hud_default.ufo:827
+#: ../base/ufos/ui/hud_default.ufo:844
+msgid "btn"
+msgstr ""
+
+#: ../base/ufos/ui/hud_default.ufo:855
 #, fuzzy
 msgid "Show squad"
 msgstr "Visa tangenter"
 
-#: ../base/ufos/ui/hud_default.ufo:950
+#: ../base/ufos/ui/hud_default.ufo:919
 #, fuzzy
 msgid "Jump to alien"
 msgstr "Italienska"
 
-#: ../base/ufos/ui/hud_default.ufo:978
+#: ../base/ufos/ui/hud_default.ufo:950
 msgid "Jump to civilian"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:982
+#: ../base/ufos/ui/hud_default.ufo:955
 msgid "*"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:1024
+#: ../base/ufos/ui/hud_default.ufo:995
 #, fuzzy
 msgid "End Turn"
 msgstr "Avsluta omgången"
 
-#: ../base/ufos/ui/hud_default.ufo:1064
+#: ../base/ufos/ui/hud_default.ufo:1047
 msgid "Abort"
 msgstr "Avbryt"
 
-#: ../base/ufos/ui/hud_default.ufo:1103 ../base/ufos/ui/hud_default.ufo:1317
+#: ../base/ufos/ui/hud_default.ufo:1098 ../base/ufos/ui/hud_default.ufo:1540
 #, fuzzy
 msgid "Show rescue zone"
 msgstr "Välj den här zonen"
 
-#: ../base/ufos/ui/hud_default.ufo:1144 ../base/ufos/ui/hud_default.ufo:1189
+#: ../base/ufos/ui/hud_default.ufo:1149 ../base/ufos/ui/hud_default.ufo:1204
 #, fuzzy
 msgid "Target out of range"
 msgstr "Sikta på marken"
 
-#: ../base/ufos/ui/hud_default.ufo:1149 ../base/ufos/ui/hud_default.ufo:1194
+#: ../base/ufos/ui/hud_default.ufo:1154 ../base/ufos/ui/hud_default.ufo:1209
 #, fuzzy
 msgid "Target acquired"
 msgstr "Målzonen är upptagen\n"
 
-#: ../base/ufos/ui/hud_default.ufo:1216
+#: ../base/ufos/ui/hud_default.ufo:1236
 #, fuzzy
 msgid "Aborting fire!"
 msgstr "Ingen reaktiv eldgivning"
 
-#: ../base/ufos/ui/hud_default.ufo:1274
+#: ../base/ufos/ui/hud_default.ufo:1481
 msgid "Please wait"
 msgstr "Vänta"
 
-#: ../base/ufos/ui/hud_default.ufo:1314
+#: ../base/ufos/ui/hud_default.ufo:1537
 #, fuzzy
 msgid "Hide rescue zone"
 msgstr "Utomjordingar gick in i målzonen\n"
+
+#: ../base/ufos/ui/hud_default.ufo:1638
+msgid "Default"
+msgstr ""
 
 #: ../base/ufos/ui/hud_genradar.ufo:53
 #, fuzzy
@@ -26833,11 +26811,11 @@ msgstr ""
 msgid "Phone HUD"
 msgstr ""
 
-#: ../base/ufos/ui/inv_stat.ufo:203 ../base/ufos/ui/stats.ufo:110
+#: ../base/ufos/ui/inv_stat.ufo:206 ../base/ufos/ui/stats.ufo:110
 msgid "Missions"
 msgstr "Uppdrag"
 
-#: ../base/ufos/ui/inv_stat.ufo:212
+#: ../base/ufos/ui/inv_stat.ufo:215
 #: client/cgame/campaign/cp_mission_callbacks.cpp:118
 #, fuzzy
 msgid "Aliens killed"
@@ -27146,7 +27124,7 @@ msgstr "Övrigt"
 msgid "Unmanned Ground Vehicles"
 msgstr ""
 
-#: ../base/ufos/ui/market.ufo:329
+#: ../base/ufos/ui/market.ufo:331
 #, fuzzy
 msgid "Transactions"
 msgstr "Transportuppdrag"
@@ -28310,8 +28288,7 @@ msgstr "Kapacitet"
 
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892
-#: ../base/ufos/ui/transfer.ufo:373
+#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
 msgid "free"
 msgstr ""
 
@@ -28323,6 +28300,18 @@ msgstr "alla"
 #, fuzzy
 msgid "Go to base"
 msgstr "På väg tillbaka till basen"
+
+#: ../base/ufos/ui/popup_exitcampaign.ufo:25
+msgid "EXIT CAMPAIGN CONFIRMATION"
+msgstr ""
+
+#: ../base/ufos/ui/popup_exitcampaign.ufo:33
+msgid "You will lose all your campaign progress."
+msgstr ""
+
+#: ../base/ufos/ui/popup_exitcampaign.ufo:53
+msgid "QUIT"
+msgstr ""
 
 #: ../base/ufos/ui/popup_installations.ufo:60
 msgid "New installation"
@@ -28413,6 +28402,22 @@ msgstr "Lager"
 msgid "unknown"
 msgstr "Okänd"
 
+#: ../base/ufos/ui/popup_quickload.ufo:23
+msgid "Reload campaign"
+msgstr "Läs om kampanj"
+
+#: ../base/ufos/ui/popup_quickload.ufo:32
+msgid ""
+"Are you sure that you really want to reload the last automatically saved "
+"campaign state?"
+msgstr ""
+"Är du säker på att du verkligen vill läsa in den senaste automatiskt sparade "
+"kampanjen?"
+
+#: ../base/ufos/ui/popup_quickload.ufo:40
+msgid "Load"
+msgstr "Läs in"
+
 #: ../base/ufos/ui/production.ufo:72
 #, fuzzy
 msgid "Craft items"
@@ -28469,34 +28474,34 @@ msgstr "Minska prioritet"
 msgid "Requirements"
 msgstr "Inga krav"
 
-#: ../base/ufos/ui/research.ufo:33
-msgid "Topics"
-msgstr ""
-
-#: ../base/ufos/ui/research.ufo:59
+#: ../base/ufos/ui/research.ufo:55
 #, fuzzy
 msgid "idle scientists"
 msgstr "Anställ forskare"
 
-#: ../base/ufos/ui/research.ufo:169
+#: ../base/ufos/ui/research.ufo:65
+msgid "Topics"
+msgstr ""
+
+#: ../base/ufos/ui/research.ufo:174
 #, fuzzy
 msgid "Scientists hired"
 msgstr "Forskare"
 
-#: ../base/ufos/ui/research.ufo:194
-msgid "HIRE"
-msgstr ""
-
-#: ../base/ufos/ui/research.ufo:204
+#: ../base/ufos/ui/research.ufo:199
 msgid "FIRE"
 msgstr ""
 
-#: ../base/ufos/ui/research.ufo:227
+#: ../base/ufos/ui/research.ufo:209
+msgid "HIRE"
+msgstr ""
+
+#: ../base/ufos/ui/research.ufo:232
 #, fuzzy
 msgid "Laboratory space"
 msgstr "Laboratorium"
 
-#: ../base/ufos/ui/research.ufo:252
+#: ../base/ufos/ui/research.ufo:257
 msgid "BUILD LAB"
 msgstr ""
 
@@ -28609,25 +28614,25 @@ msgstr "Aktuell laddning:"
 msgid "Done"
 msgstr "Klar"
 
-#: ../base/ufos/ui/team.ufo:118
+#: ../base/ufos/ui/team.ufo:117
 msgid "Save your team"
 msgstr "Spara din grupp"
 
-#: ../base/ufos/ui/team.ufo:133 ../base/ufos/ui/team.ufo:136
+#: ../base/ufos/ui/team.ufo:131
 msgid "Save"
 msgstr "Spara"
 
-#: ../base/ufos/ui/team.ufo:158
+#: ../base/ufos/ui/team.ufo:155
 #, fuzzy
 msgid "Generate a team"
 msgstr "Generera en ny slumpmässig grupp"
 
-#: ../base/ufos/ui/team.ufo:174 ../base/ufos/ui/team.ufo:177
+#: ../base/ufos/ui/team.ufo:168
 #, fuzzy
 msgid "Generate Team"
 msgstr "Aktuellt lag"
 
-#: ../base/ufos/ui/team.ufo:175
+#: ../base/ufos/ui/team.ufo:169
 #, fuzzy
 msgid "Generate a new team with the selected race"
 msgstr "Updatera GUI med det markerade objektet"
@@ -28902,9 +28907,9 @@ msgstr "3-skottssalva"
 #: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
 #: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
 #: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
-#: ../base/ufos/weapons_multiplayer.ufo:318
-#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:439
-#: ../base/ufos/weapons_plasma.ufo:529 ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_multiplayer.ufo:318 ../base/ufos/weapons_plasma.ufo:203
+#: ../base/ufos/weapons_plasma.ufo:439 ../base/ufos/weapons_plasma.ufo:529
+#: ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr "Helautomatisk"
 
@@ -28932,8 +28937,8 @@ msgid "5-Shot Burst"
 msgstr "5-skottssalva"
 
 #: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
-#: ../base/ufos/weapons_multiplayer.ufo:342
-#: ../base/ufos/weapons_plasma.ufo:553 ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_multiplayer.ufo:342 ../base/ufos/weapons_plasma.ufo:553
+#: ../base/ufos/weapons_ugv.ufo:135
 #, fuzzy
 msgid "Full-Auto Sweep"
 msgstr "Helautomatisk"
@@ -29678,7 +29683,7 @@ msgstr "Kan inte genomföra åtgärd - inte tillräckligt med TE!\n"
 
 #: client/battlescape/cl_hud_callbacks.cpp:170
 #, fuzzy
-msgid "Disabled automatic crouching/standing up."
+msgid "Disabled crouching/standing up TUs reservation."
 msgstr "Reservera %i TEs för att huka/ställa dig upp."
 
 #: client/battlescape/cl_hud_callbacks.cpp:174
@@ -29997,12 +30002,12 @@ msgstr "En ny %s är färdig om %s"
 #: client/cgame/campaign/cp_mission_callbacks.cpp:63
 #: client/cgame/campaign/cp_missions.cpp:738
 #: client/cgame/campaign/cp_missions.cpp:1080
-#: client/cgame/campaign/cp_nation.cpp:809
-#: client/cgame/campaign/cp_nation.cpp:827
-#: client/cgame/campaign/cp_nation.cpp:840
-#: client/cgame/campaign/cp_nation.cpp:849
+#: client/cgame/campaign/cp_nation.cpp:799
+#: client/cgame/campaign/cp_nation.cpp:819
+#: client/cgame/campaign/cp_nation.cpp:832
+#: client/cgame/campaign/cp_nation.cpp:841
+#: client/cgame/campaign/cp_nation.cpp:847
 #: client/cgame/campaign/cp_nation.cpp:855
-#: client/cgame/campaign/cp_nation.cpp:863
 #: client/cgame/campaign/cp_popup.cpp:480
 #: client/cgame/campaign/cp_produce.cpp:403
 #: client/cgame/campaign/cp_ufo.cpp:495 client/cgame/campaign/cp_ufo.cpp:943
@@ -30638,8 +30643,8 @@ msgid "^BAliens\n"
 msgstr "^BUtomjordingar\n"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:998
-#: client/cgame/campaign/cp_campaign.cpp:561
-#: client/cgame/campaign/cp_nation.cpp:628
+#: client/cgame/campaign/cp_campaign.cpp:558
+#: client/cgame/campaign/cp_nation.cpp:618
 #, c-format
 msgid "%i c"
 msgstr "%i c"
@@ -30680,17 +30685,17 @@ msgstr "Inget försvar av den här typen i den här basen\n"
 msgid "No defence of this type in this base"
 msgstr "Inget försvar av den här typen i den här basen\n"
 
-#: client/cgame/campaign/cp_campaign.cpp:227
+#: client/cgame/campaign/cp_campaign.cpp:224
 msgid "You've gone too far into debt."
 msgstr "Du har dragit på dig alldeles för stora skulder."
 
-#: client/cgame/campaign/cp_campaign.cpp:235
+#: client/cgame/campaign/cp_campaign.cpp:232
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr ""
 "Du har förlorat dina baser och har inte tillräckligt med pengar för att "
 "bygga nya."
 
-#: client/cgame/campaign/cp_campaign.cpp:241
+#: client/cgame/campaign/cp_campaign.cpp:238
 msgid ""
 "You have failed in your charter to protect Earth. Our home and our people "
 "have fallen to the alien infection. Only a handful of people on Earth remain "
@@ -30705,7 +30710,7 @@ msgstr ""
 "längre fungera som en funktionell enhet. Ingenting kan stoppa "
 "utomjordingarna eller deras totala seger."
 
-#: client/cgame/campaign/cp_campaign.cpp:260
+#: client/cgame/campaign/cp_campaign.cpp:257
 #, fuzzy
 msgid ""
 "Under your command, PHALANX operations have consistently failed to protect "
@@ -30779,28 +30784,28 @@ msgstr ""
 "%s\n"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:153
-#: client/cgame/campaign/cp_nation.cpp:805
+#: client/cgame/campaign/cp_nation.cpp:795
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldat"
 msgstr[1] "soldater"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:154
-#: client/cgame/campaign/cp_nation.cpp:804
+#: client/cgame/campaign/cp_nation.cpp:794
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "forskare"
 msgstr[1] "forskare"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:155
-#: client/cgame/campaign/cp_nation.cpp:807
+#: client/cgame/campaign/cp_nation.cpp:797
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "arbetare"
 msgstr[1] "arbetare"
 
 #: client/cgame/campaign/cp_cgame_callbacks.cpp:156
-#: client/cgame/campaign/cp_nation.cpp:806
+#: client/cgame/campaign/cp_nation.cpp:796
 #, fuzzy
 msgid "pilot"
 msgid_plural "pilots"
@@ -31622,38 +31627,38 @@ msgstr ""
 msgid "Nation changed happiness"
 msgstr ""
 
-#: client/cgame/campaign/cp_nation.cpp:802
+#: client/cgame/campaign/cp_nation.cpp:792
 #, fuzzy, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Fick %i %s, %i %s, %i %s, %i %s, och %i %s från nationen %s (%s)"
 
-#: client/cgame/campaign/cp_nation.cpp:803
+#: client/cgame/campaign/cp_nation.cpp:793
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "peng"
 msgstr[1] "pengar"
 
-#: client/cgame/campaign/cp_nation.cpp:826
+#: client/cgame/campaign/cp_nation.cpp:818
 #, fuzzy, c-format
 msgid "Paid %i credits to: %s"
 msgstr "Betalade %i pengar till sjukvårdare"
 
-#: client/cgame/campaign/cp_nation.cpp:839
+#: client/cgame/campaign/cp_nation.cpp:831
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Betalade %i pengar för farkost"
 
-#: client/cgame/campaign/cp_nation.cpp:848
+#: client/cgame/campaign/cp_nation.cpp:840
 #, fuzzy, c-format
 msgid "Paid %i credits for upkeep of %s"
 msgstr "Betalade %i pengar för underhåll av basen %s"
 
-#: client/cgame/campaign/cp_nation.cpp:853
+#: client/cgame/campaign/cp_nation.cpp:845
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Betalade %i pengar för administrativa kostnader."
 
-#: client/cgame/campaign/cp_nation.cpp:861
+#: client/cgame/campaign/cp_nation.cpp:853
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Betalade %i pengar i skuldränta."
@@ -33413,6 +33418,10 @@ msgstr "utomjordisk"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Ta en skärmbild"
+
+#, fuzzy
+#~ msgid "Transport"
+#~ msgstr "Transportörer:"
 
 #~ msgid "Some notes about the gameplay"
 #~ msgstr "Några noteringar för spelet"
