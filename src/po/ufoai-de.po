@@ -4,17 +4,17 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2017-02-28 21:54-0600\n"
-"PO-Revision-Date: 2015-11-08 23:23+0100\n"
-"Last-Translator: Tamás Fehérvári <geever@users.sourceforge.net>\n"
+"PO-Revision-Date: 2016-09-17 19:12+0200\n"
+"Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: ../\n"
+"X-Poedit-Basepath: ..\n"
 
 #: ../base/maps/africa.ump:639 ../base/maps/africa.ump:673
 #: ../base/maps/africa.ump:705 ../base/maps/africa.ump:737
@@ -190,7 +190,7 @@ msgstr "Tropisch, Drogen"
 
 #: ../base/maps/tropic.ump:437
 msgid "Tropical river"
-msgstr "Tropischer Fluss"
+msgstr "Tropisch, Fluss"
 
 #: ../base/maps/urban.ump:297 ../base/ufos/maps.ufo:3131
 msgid "Urban Disco"
@@ -230,7 +230,7 @@ msgstr "Turm"
 #: ../base/maps/urban.ump:464 ../base/maps/urban.ump:491
 #: ../base/ufos/maps.ufo:3516 ../base/ufos/skins.ufo:19
 msgid "Urban"
-msgstr "Städtisch"
+msgstr "Stadt"
 
 #: ../base/maps/village.ump:813 ../base/ufos/maps.ufo:3569
 msgid "Bungalow"
@@ -291,7 +291,7 @@ msgstr "Raptor"
 
 #: ../base/ufos/aircraftmanagement.ufo:272
 msgid "Stiletto-class Interceptor"
-msgstr "Abfangjäger Stiletto-Klasse"
+msgstr "Stiletto-Klasse Abfangjäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:273
 msgid "Stiletto I"
@@ -299,7 +299,7 @@ msgstr "Stiletto I"
 
 #: ../base/ufos/aircraftmanagement.ufo:323
 msgid "Saracen-class Interceptor"
-msgstr "Abfangjäger Sarazen-Klasse"
+msgstr "Sarazen-Klasse Abfangjäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:324
 msgid "Saracen I"
@@ -307,7 +307,7 @@ msgstr "Sarazene I"
 
 #: ../base/ufos/aircraftmanagement.ufo:370
 msgid "Dragon Interceptor"
-msgstr "Abfangjäger Dragon-Klasse"
+msgstr "Dragon - Abfangjäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:371
 msgid "Dragon"
@@ -315,7 +315,7 @@ msgstr "Dragon"
 
 #: ../base/ufos/aircraftmanagement.ufo:417
 msgid "Starchaser-class Interceptor"
-msgstr "Abfangjäger Starchaser-Klasse"
+msgstr "Starchaser-Klasse Abfangjäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:418
 msgid "Starchaser"
@@ -323,7 +323,7 @@ msgstr "Starchaser"
 
 #: ../base/ufos/aircraftmanagement.ufo:469
 msgid "Stingray Interceptor"
-msgstr "Abfangjäger Stingray-Klasse "
+msgstr "Stingray - Abfangjäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:470
 msgid "Stingray"
@@ -507,7 +507,7 @@ msgstr "AA51 Raketenwerfer"
 
 #: ../base/ufos/aircraftmanagement.ufo:1330 ../base/ufos/research.ufo:248
 msgid "Base-Defence Laser Turret"
-msgstr "Basisverteidigungs Laserturm"
+msgstr "Lasergeschütz"
 
 #: ../base/ufos/armour.ufo:22
 msgid "normal"
@@ -559,7 +559,7 @@ msgstr "Energierüstung"
 
 #: ../base/ufos/armour.ufo:258
 msgid "Alien Body Armour"
-msgstr "Außerirdische Körperrüstung"
+msgstr "Körperrüstung eines Außerirdischen"
 
 #: ../base/ufos/armour.ufo:322
 msgid "Medium Alien Armour"
@@ -616,15 +616,15 @@ msgstr "Fortgeschrittenes Radar"
 
 #: ../base/ufos/basemanagement.ufo:231 ../base/ufos/research.ufo:3636
 msgid "Antimatter Storage"
-msgstr "Antimaterielager"
+msgstr "Antimaterie-Lager"
 
 #: ../base/ufos/basemanagement.ufo:246
 msgid "Laser Battery"
-msgstr "Laserbatterie"
+msgstr "Lasergeschütze"
 
 #: ../base/ufos/basemanagement.ufo:265
 msgid "Missile Battery"
-msgstr "Raketenbatterie"
+msgstr "Raketengeschütze"
 
 #: ../base/ufos/campaign.ufo:70
 msgid "Very Hard Campaign"
@@ -2533,7 +2533,7 @@ msgstr "Memo: Luftabwehrstellung"
 
 #: ../base/ufos/events.ufo:74
 msgid "Alien died"
-msgstr "Außerirdischer ist gestorben"
+msgstr "Alien ist gestorben"
 
 #: ../base/ufos/events.ufo:84
 msgid "Alien Base Discovered"
@@ -2829,7 +2829,7 @@ msgstr "Afrikanisches Dorf"
 #: ../base/ufos/maps.ufo:317 ../base/ufos/maps.ufo:366
 #: ../base/ufos/maps.ufo:416
 msgid "African Desert"
-msgstr "Afrikanische Wüste"
+msgstr "Afrikanisches Einöde"
 
 #: ../base/ufos/maps.ufo:470
 msgid "Coastal Crash Site"
@@ -2842,7 +2842,7 @@ msgstr "Stadtrand"
 #: ../base/ufos/maps.ufo:594 ../base/ufos/maps.ufo:681
 #: ../base/ufos/maps.ufo:730
 msgid "Country Desert"
-msgstr "Wüste"
+msgstr "Ländliche Einöde"
 
 #: ../base/ufos/maps.ufo:637
 msgid "Some houses in the desert."
@@ -2867,7 +2867,7 @@ msgstr "Kleines Haus"
 
 #: ../base/ufos/maps.ufo:1310
 msgid "Fuel Depot"
-msgstr "Tanklager"
+msgstr "Zusatztank"
 
 #: ../base/ufos/maps.ufo:1356 ../base/ufos/maps.ufo:1408
 #: ../base/ufos/maps.ufo:1462 ../base/ufos/maps.ufo:1514
@@ -2878,7 +2878,7 @@ msgstr "Schnee"
 
 #: ../base/ufos/maps.ufo:1563
 msgid "Snowy Logging Site"
-msgstr "Verschneites Sägewerk"
+msgstr "Verschneite Holzverarbeitung"
 
 #: ../base/ufos/maps.ufo:1859 ../base/ufos/maps.ufo:1909
 #: ../base/ufos/maps.ufo:1957
@@ -2934,13 +2934,13 @@ msgstr "Haus"
 
 #: ../base/ufos/maps.ufo:3661
 msgid "Small Village"
-msgstr "Kleines Dorf"
+msgstr "Ein kleines Dorf."
 
 #: ../base/ufos/maps.ufo:3752 ../base/ufos/maps.ufo:3798
 #: ../base/ufos/maps.ufo:3843 ../base/ufos/maps.ufo:3888
 #: ../base/ufos/maps.ufo:5371
 msgid "Suburban City"
-msgstr "Vorstadt"
+msgstr "Ein vorstädtischer Bezirk"
 
 #: ../base/ufos/maps.ufo:3934
 #, fuzzy
@@ -2974,7 +2974,7 @@ msgstr "Baustelle"
 
 #: ../base/ufos/maps.ufo:4322
 msgid "Tropical Jungle Estate"
-msgstr "Tropisches Dschungelanwesen"
+msgstr "Tropischer Dschungel - Anwesen"
 
 #: ../base/ufos/maps.ufo:4370
 msgid "Gas Station"
@@ -3002,7 +3002,7 @@ msgstr "Militärbunker"
 
 #: ../base/ufos/maps.ufo:4710
 msgid "Rural Village"
-msgstr "Ländliches Dorf"
+msgstr "Ein kleines ländliches Dorf."
 
 #: ../base/ufos/maps.ufo:4749
 msgid "Corrupter UFO Crash Site"
@@ -3022,7 +3022,7 @@ msgstr "Fähre"
 
 #: ../base/ufos/maps.ufo:4942
 msgid "Fighter UFO Crash Site"
-msgstr "Jäger-UFO Absturzstelle"
+msgstr "UFO Absturzstelle"
 
 #: ../base/ufos/maps.ufo:4988
 msgid "Port"
@@ -3034,7 +3034,7 @@ msgstr "Alte Mine"
 
 #: ../base/ufos/maps.ufo:5087
 msgid "Residential Neighbourhood"
-msgstr "Nachbarschaft"
+msgstr "Nachbarschaft."
 
 #: ../base/ufos/maps.ufo:5131
 msgid "Office Complex"
@@ -3042,7 +3042,7 @@ msgstr "Bürokomplex"
 
 #: ../base/ufos/maps.ufo:5177
 msgid "Sewage Pipe Construction"
-msgstr "Abwasserkanal Baustelle"
+msgstr "Abwasserrohr Baustelle"
 
 #: ../base/ufos/maps.ufo:5222
 msgid "Luxurious Resort"
@@ -3092,7 +3092,7 @@ msgstr "Außerirdische Basis"
 
 #: ../base/ufos/maps.ufo:5704
 msgid "PHALANX Craft Crash Site"
-msgstr "PHALANX Flugzeug-Absturzstelle"
+msgstr "PHALANX Absturzstelle"
 
 #: ../base/ufos/maps.ufo:5733
 msgid "Training Zone: Alpha"
@@ -3140,7 +3140,7 @@ msgstr[1] "Arbeiter"
 
 #: ../base/ufos/medals.ufo:66
 msgid "Rifleman"
-msgstr "Schütze"
+msgstr "Soldat"
 
 #: ../base/ufos/medals.ufo:67
 msgid "Rfn"
@@ -3235,6 +3235,7 @@ msgid "Col"
 msgstr "O"
 
 #: ../base/ufos/msgid/aircraft.ufo:40
+#, fuzzy
 msgid ""
 "Aircraft Evaluation -- Firebird-class Dropship\n"
 "\n"
@@ -5771,6 +5772,7 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:200
+#, fuzzy
 msgid ""
 "Commander, I'm happy to report the success of our alien propulsion program. "
 "We've cracked the mysteries of the alien engine set-up and we finally "
@@ -5845,17 +5847,20 @@ msgstr ""
 "zur Unterstützung der Elektrizitätsversorgung an Bord verwendet.\"\n"
 "\n"
 "Bei diesem Projekt haben wir viel darüber gelernt wie diese Triebwerke "
-"konstruiert sind, wie man sie kontrolliert und wie wir sie in neuen "
-"Flugzeugdesigns nutzen können. Ich muss Sie jedoch warnen, die Herstellung "
-"wird sehr teuer sein. Die Kombination aus der komplizierten Verwendung "
-"außerirdischer Materialien, den empfindlichen elektromagnetischen Teilen und "
-"dem auf flüssigem Stickstoff basierenden Kühlsystem reizt in allen Bereichen "
-"das Limit unserer Produktionsfähigkeit aus.\n"
+"konstruiert sind, wie man sie kontrolliert und wie wir unsere bestehende "
+"Flugzeugflotte damit nachrüsten können. Wir sollten jetzt in der Lage sein, "
+"die Triebwerke nachzubauen und sie bei allen erdenklichen Anwendungen "
+"einzusetzen. Ich muss Sie jedoch warnen, die Herstellung wird sehr teuer "
+"sein. Die Kombination aus der komplizierten Verwendung außerirdischer "
+"Materialien, den empfindlichen elektromagnetischen Teilen und dem auf "
+"flüssigem Stickstoff basierenden Kühlsystem reizt in allen Bereichen das "
+"Limit unserer Produktionsfähigkeit aus.\n"
 "\n"
 "Es könnte weitere Forschung zur Lagerung und Kontrolle von Antimaterie nötig "
 "sein. Die Triebwerksaufrüstungen sind jedoch abgeschlossene Bauteile -- "
 "eigentlich nur ein außerirdisches Triebwerk mit Adaptern für menschliche "
-"Technik.\n"
+"Technik. Wir sollten mit der Umrüstung beginnen können, sobald wir genügend "
+"Treibstoff haben, um unsere Luftflotte am Himmel zu halten.\n"
 "\n"
 "Wie ich zuvor erwähnt habe, ist der Leistungsunterschied zwischen unseren "
 "Flüssigkeitstriebwerken und diesen Materie-Antimaterie-Antrieben "
@@ -6008,6 +6013,7 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:250
+#, fuzzy
 msgid ""
 "The project on alien detection is complete, Commander. We now have a full "
 "understanding of the machinery, its controls, and the modifications needed "
@@ -6105,6 +6111,11 @@ msgstr ""
 "Flugzeuginstrumente liegen, um die Überlebenschance unserer Abfangjäger zu "
 "erhöhen.\n"
 "\n"
+"Natürlich sind nicht die kurzfristigen Anwendungen die wichtigsten. Diese "
+"Detektoren sind unverzichtbar in zukünftigen PHALANX-Raumschiffen. Im "
+"Weltraum, wo es keine Unterstützung durch Bodenradar gibt, werden wir die "
+"zusätzliche Leistung dringend brauchen.\n"
+"\n"
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:260
@@ -6141,6 +6152,7 @@ msgstr ""
 "Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraftitems.ufo:274
+#, fuzzy
 msgid ""
 "Commander, I've just finished my report on our latest laser program. We've "
 "successfully prototyped the new Aerial Laser Cannon and are ready to put it "
@@ -6174,16 +6186,26 @@ msgstr ""
 "\n"
 "Wir haben unser Forschungsziel erreicht: Einen stabilen Dauerstrichlaser, "
 "betrieben mit Deuterium-Fluorid und im Megawatt Leistungsbereich zu "
-"entwickeln. Die Genauigkeit ist ausgezeichnet. Sie wird nur durch "
-"gegnerische EGM (elektronische Gegenmaßnahmen) beeinträchtigt. Der "
-"Laserstrahl breitet sich geradlinig und mit Lichtgeschwindigkeit aus, so "
-"dass es tatsächlich schwer fallen dürfte, damit das Ziel zu verfehlen.\n"
+"entwickeln, welcher in der Lage ist, UFOs noch in 5 Kilometer Entfernung zu "
+"treffen. Die Genauigkeit ist unabhängig von der Zielentfernung "
+"ausgezeichnet. Sie wird nur durch gegnerische EGM (elektronische "
+"Gegenmaßnahmen) beeinträchtigt. Der Laserstrahl breitet sich geradlinig und "
+"mit Lichtgeschwindigkeit aus, so dass es tatsächlich schwer fallen dürfte, "
+"damit das Ziel zu verfehlen.\n"
 "\n"
 "Leider bereitet uns die atmosphärisch bedingte Streuung des Laserstrahles "
 "noch Probleme, d.h. die Intensität des Lasers fällt noch merklich mit der "
-"zurückgelegten Strecke ab. Der Flugzeug-Laser ist bestens dafür geeignet, "
-"den Gegner mit einer Wand aus Laserstrahlen einzudecken, sofern der Pilot "
-"nahe genug herankommt.\n"
+"zurückgelegten Strecke ab. Bei der maximalen Reichweite von 5 Kilometern "
+"dauert es 32 Sekunden, bis der Laserstrahl ein Loch in die Hülle des UFOs "
+"gebrannt hat. Allerdings haben wir während des Gefechts selten soviel Zeit, "
+"um ein UFO abzuschießen. Die optimale Einsatzreichweite eines mit diesem "
+"Lasertyp ausgestattetem Abfangjägers liegt zwischen zwei und drei Kilometern "
+"und stellt einen Kompromiss zwischen Schadenspotential der Laserbewaffnung "
+"und dem von den UFOs ausgehendem Gefahrenpotential dar. Der "
+"durchschnittliche Schaden pro Sekunde bewegt sich leicht unter dem eines "
+"SHIVA Drehgeschützes, aber die Reichweite ist um 1,5 Kilometer höher. Mehr "
+"als jede andere unserer Waffen eignet sich der Laser dazu, eine für den "
+"Gegner undurchdringliche Feuerwand einzurichten.\n"
 "\n"
 "Der Flugzeuglaser besitzt ein integriertes Deuterium-Fluorid-Magazin, das es "
 "ihm erlaubt bis zu 30 Minuten durchgängig zu feuern. Da Deuterium und "
@@ -6192,8 +6214,12 @@ msgstr ""
 "unserem Lagern aufbewahren.\n"
 "\n"
 "Natürlich liegt der Einsatz dieser Waffe in Ihrem Zuständigkeitsbereich, "
-"aber ich empfehle, die SHIVA-Drehgeschütze durch die neuen Laser zu "
-"ersetzen.\n"
+"aber ich empfehle die SHIVA-Drehgeschütze durch die neuen Laser zu ersetzen, "
+"solange es sich nicht um speziell für den Nahkampf konzipierten Flieger "
+"handelt. Alles was schwerfälliger als ein UFO ist, wird Probleme haben "
+"dieses mit SHIVAs unter Feuer zu nehmen. Laserbewaffnung sollte sich dazu "
+"deutlich geeigneter herausstellen, bei nur wenig geringerer "
+"Gesamtfeuerdauer.\n"
 "\n"
 "Cdr. Navarre"
 
@@ -7495,8 +7521,8 @@ msgstr ""
 "Antimaterieantrieb, der in den außerirdischen Geschossen verwandt wird, "
 "verloren. Diese Projektile sind nicht ganz so stark, aber wir sollten sie in "
 "großer Stückzahl fertigen können. Und täuschen Sie sich nicht, dies ist die "
-"stärkste Luft-Luft-Waffe, die wir inunserem Arsenal neben den "
-"Antimaterieraketen haben.\n"
+"stärkste Luft-Luft-Waffe, die wir inunserem Arsenal neben den Antimaterie "
+"Raketen haben.\n"
 "\n"
 "Lassen Sie uns diese Raketen produzieren, Herr Kommandant, und wieder die "
 "Initiative ergreifen.\n"
@@ -8727,8 +8753,8 @@ msgstr ""
 "den Knochenwirbeln liegen drei Organe, die anscheinend infrarote Strahlung "
 "erfassen können. Diese scheint der Shevaar anstelle von Augen zu benutzen. "
 "Wir schätzen, dass die Empfindlichkeit dieser Organe vergleichbar mit der "
-"eines Menschen beim Tragen einer PHALANX-Standard-Infrarotbrille ist. Aus "
-"der Autopsie und unserer Analyse der Schlachtfeldaufnahmen schließen wir das "
+"eines Menschen bei tragen einer PHALANX-standard Infrarotbrille ist.Aus der "
+"Autopsie und unserer Analyse der Schlachtfeldaufnahmen schließen wir das "
 "folgende:\n"
 "\n"
 "- Der Shevaar sieht im Infrarotbereich. Das macht es schwer, sich zu "
@@ -8895,7 +8921,7 @@ msgstr ""
 "den Knochenwirbeln liegen drei Organe, die anscheinend infrarote Strahlung "
 "erfassen können. Diese scheint der Shevaar anstelle von Augen zu benutzen. "
 "Wir schätzen, dass die Empfindlichkeit dieser Organe vergleichbar mit der "
-"eines Menschen beim Tragen einer PHALANX-Standard-Infrarotbrille ist.\n"
+"eines Menschen bei tragen einer PHALANX-standard Infrarotbrille ist.\n"
 "\n"
 "Aus der Autopsie und unserer Analyse der Schlachtfeldaufnahmen schließen wir "
 "das folgende:\n"
@@ -9898,7 +9924,7 @@ msgstr ""
 "Mit den mannigfaltigen Mängeln unserer BLRn (Boden-Luft-Raketen) gegen "
 "außerirdische Technologie, brauche Ich Ihnen all die Vorteile von einem "
 "direkt feuernden Laserverteidigungssystem nicht zu erklären. Es wird kein "
-"kompletter Ersatz für unsere Raketengeschütze sein. Es ist jedoch definitiv "
+"kompletter Ersatz für unsere Raketenschächte sein. Es ist jedoch definitiv "
 "ein Pfad, der es wert ist erforscht zu werden, um unsere Basen vor den "
 "Angriffen der Außerirdischen besser zu schützen.\n"
 "\n"
@@ -12132,7 +12158,7 @@ msgid ""
 "much like the World Wars were to the children of the late 20th."
 msgstr ""
 "Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut "
-"sich einer Zeit des relativen Friedens. Die gewalttätigen Anfänge des 21. "
+"sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. "
 "Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so "
 "weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten "
 "Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, "
@@ -12245,8 +12271,8 @@ msgid ""
 msgstr ""
 "Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung "
 "wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr "
-"bestehende Anti-Außerirdischen-Behörde der früheren Vereinigten Staaten -- "
-"PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die "
+"bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- "
+"entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die "
 "Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen "
 "Umständen zu sichern."
 
@@ -12586,22 +12612,21 @@ msgid ""
 "to recover once they've returned to the base. Build a hospital facility to "
 "greatly increase their recovery times."
 msgstr ""
-"Unsere Soldaten können verwundet werden, wenn sie durch feindlichen Beschuß "
-"verletzt werden. Diese Wunden können ihre Schußgenauigkeit, die "
-"Schußgeschwindigkeit und die Bewegungsgeschwindigkeit beeinflussen. "
-"Verletzungen vermindern jede Runde die Gesundheit eines Soldaten und können "
-"zum Tod führen, wenn sie nicht mit einem Medikit behandelt werden. Ein "
-"PHALANX Trupp sollte genügend Medikits zur Stabilisierung von Wunden im "
-"Kampf mitnehmen.\n"
+"Unsere Soldaten können Wunden bekommen, wenn sie durch Feindfeuer verletzt "
+"werden. Diese Wunden können ihre Treffergenauigkeit, Feuer- und "
+"Bewegungsgeschwindigkeit beeinträchtigen. Verletzungen verringern in jedem "
+"Zug die Gesundheit des Soldaten und können zum Tod führen, wenn sie nicht "
+"mit einem Medikit behandelt werden. Ein PHALANX-Trupp sollte reichlich "
+"Medikits mitbringen, um Wunden stabilisieren zu können.\n"
 "\n"
-"Anhang\n"
+"Zusatz\n"
 "\n"
-"Wunden können im Statistikfenster des Charakters verfolgt werden. Ein "
-"Medikit kann Wunden heilen, damit ein Soldat auf dem Schlachtfeld nicht an "
-"seinen Wunden stirbt, aber es kann nur ein kleines bißchen Gesundheit "
-"wiederherstellen. Soldaten brauchen Zeit um zu genesen, wenn sie zur Basis "
-"zurückgekehrt sind. Baue ein Hospital um die Genesungszeit deutlich zu "
-"verkürzen."
+"Wunden können im Personenstatusfenster verfolgt werden. Ein Medikit kann die "
+"Wunden versogen, um zu verhindern, dass ein Soldat auf dem Schlachtfeld an "
+"seinen Wunden stirbt, aber es stellt nur einen kleinen Teil der Gesundheit "
+"wieder her. Sobald die Soldaten in die Basis zurückgekehrt sind, benötigen "
+"sie Zeit zum Erholen. Baue ein Krankenstation, um ihre Erholungszeiten stark "
+"zu erhöhen."
 
 #: ../base/ufos/msgid/concepts.ufo:103
 msgid ""
@@ -12638,40 +12663,41 @@ msgid ""
 "Incendiary fields cause a small amount of damage to units which pass through "
 "them."
 msgstr ""
-"Die Außerirdischen verwenden auf dem Schlachtfeld schlagkräftige Waffen mit "
-"tödlichem Effekt. Ein Schußwechsel mit ihnen auf offenem Terrain ist ein "
-"sicherer Weg, schnell getötet zu werden, daher sollten PHALANX Soldaten "
-"geschickt mit unterstützender Ausrüstung umgehen können, um die "
-"außerirdischen Kräfte auf dem Schlachtfeld zu besiegen.\n"
+"Die Aliens setzen starke Waffen mit tödlicher Wirkung auf dem Schlachtfeld "
+"ein. Sie in einen Schusswechsel auf offenem Terrain zu verwickeln ist ein "
+"sicherer Weg schnell getötet zu werden, weshalb PHALANX Soldaten im Umgang "
+"mit  zusätzlicher Ausrüstung erfahren sein müssen, um die extrateristische "
+"Kräfte auf dem Schlachtfeld zu besiegen.\n"
 "\n"
-"PHALANX Soldaten sollte sich mit Rauchgranaten ausrüsten um ihre Positionen "
-"zu verbergen, wenn sie im Sichtfeld der außerirdischen Kräfte sind. "
-"Brandgranaten und Raketen können Feuerfelder entfachen, die die "
-"außerirdischen Kräfte vernichten, bevor sie in Reichweite unserer Soldaten "
-"kommen. Und Blendgranaten können genutzt werden, um eine außerirdische "
-"Einheit kurzzeitig auszuschalten.\n"
+"PHALANX Soldaten sollten sich mit Rauchgranaten ausrüsten, um ihre "
+"Positionen in Blickrichtung zu den Alienkräften zu verbergen. Brandgranaten "
+"und -raketen können Feuerfelder legen, die die Alienkräfte verletzen ehe sie "
+"in die Reichweite von unseren Soldaten kommen. Und Blendgranaten können "
+"benutzt werden, um vorübergehend eine Alieneinheit kampfunfähig zu machen.\n"
 "\n"
-"Sollte ein Soldat von Angesicht zu Angesicht mit einem Außerirdischen kommen "
-"und diesen nicht niedermachen ohne von tödlichem Reaktionsfeuer getroffen zu "
-"werden, sollten indirekte Waffen wie Granaten -- von Hand oder einem "
-"Granatwerfer abgeschlossen -- aus einer sicheren Position zur "
-"Feindvernichtung genutzt werden.\n"
+"Falls ein Soldat mit einem Alien konfrontiert wird und nicht imstande ist "
+"ihn ohne totbringendem Reaktionsfeuer niederzustrecken, dann sollten "
+"indirekte Waffen wie Granaten -- geworfen durch Hand oder einen Granatwerfer "
+"-- aus einer sicheren Position benutzt werden, um den Feind zu töten.\n"
 "\n"
-"Wir werden immer konventionelle Waffen auf dem Schlachtfeld benötigen, aber "
-"defensiv eingesetzte unterstützende Waffen werden der Schlüssel sein, um die "
-"Dominanz der außerirdischen Technologie auf dem Schlachtfeld zu überwinden.\n"
+"Wir werden immer konventionelle Schusswaffen auf dem Schlachtfeld brauchen, "
+"aber defensiv eingesetzte zusätzliche Bewaffnung wird entscheidend sein, "
+"damit wir der Dominanz der Alientechnologie auf dem Schlachtfeld Herr "
+"werden.\n"
 "\n"
-"Anhang\n"
+"Zusatz\n"
 "\n"
-"Rauchwolken versperren die Sichtlinien auf dem Schlachtfeld.\n"
+"Rauchwolken blockieren die Sichtlinie auf dem Schlachtfeld.\n"
 "\n"
-"Effektiv eingesetzte Blendgranaten rauben Zeiteinheiten. Eine Einheit die "
-"von einer Blendgranate getroffen wird, verliert alle Zeit, die sie hatte, "
-"als die Blendgranate explodiert ist und erhält in der nächsten Runde keine "
-"neuen Zeiteinheiten. Blendgranaten wirken nur, wenn sie nah am Ziel und in "
-"dessen Sichtfeld explodieren.\n"
+"Blendgranaten werden Zeiteinheiten entfernen, wenn sie effektiv eingesetzt "
+"werden. Eine Einheit, auf die eine Blendgranate eingewirkt hat, wird alle "
+"Zeiteinheiten, die sie zum Zeitpunkt der Explosion der Blendgrante hatte, "
+"verlieren und wärend des nächsten Zuges keine Zeiteinheiten bekommen. "
+"Blendgranaten sind nur effektiv, wenn sie nah am Ziel und und in seinem "
+"Blickfeld explodieren.\n"
 "\n"
-"Brandfelder versuchen etwas Schaden an den Einheiten, die hindurchlaufen."
+"Feuerfelder verursachen einen kleinen Schadenswert an den Einheiten, die sie "
+"durchqueren. "
 
 #: ../base/ufos/msgid/installations.ufo:34
 msgid ""
@@ -12720,55 +12746,6 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"Entwurf -- Radarturm\n"
-"\n"
-"KLASSIFIZIERUNGSSTUFE SCHWARZ\n"
-"\n"
-"PHALANX außerirdische Reaktionseinheit\n"
-"\n"
-"Konstruktionsinhalt, Freigabe Sigma -- Nur für den Kommandanten\n"
-"\n"
-"Gespeichert: 18. März 2084\n"
-"\n"
-"Von: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches "
-"Operationskommando\n"
-"\n"
-"\n"
-"\n"
-"Überblick\n"
-"\n"
-"Ergänzend zu den Entwürfen für die Radareinrichtung einer Basis, die ich "
-"vorhin eingereicht habe, möchte ich diese Entwürfe für eine kleinere "
-"Einrichtung für außerhalb einreichen. Unsere Einrichtungen in der Basis "
-"werden nie die ganze Erde abdecken, daher müssen wir einige dieser "
-"Radartürme bauen, um die Lücken in unserer Abdeckung zu schließen.\n"
-"\n"
-"Die Entwürfe enthalten Details zur Konstruktion einer kleineren Einrichtung. "
-"Das bedeutet, das jeder Turm nur eine kleine Reichweite hat, aber sie können "
-"schnell und günstig erbaut werden, um unsere operationalen Möglichkeiten zu "
-"verbessern.\n"
-"\n"
-"\n"
-"Empfohlener Einsatz\n"
-"\n"
-"Der Radarturm hat verglichen mit den Einrichtungen, die wir für die PHALANX "
-"Basen entwickelt haben, eine begrenzte Reichweite, aber sie können schnell "
-"und in großer Anzahl gebaut werden um die Radarabdeckung weltweit "
-"auszudehnen.\n"
-"\n"
-"Wir sollten soviel wie möglich von der Erde abdecken, aber ein UFO zu "
-"entdecken, das wir nicht abschießen können, ist bedeutungslos. Wir sollten "
-"unsere Konstruktionen zuerst auf Zonen innerhalb der Reichweite unserer "
-"Abfangjäger konzentrieren.\n"
-"\n"
-"Die Tarnung der Türme ist nicht sehr effektiv. Außerirdische Flugzeuge "
-"können das aktive Scannen entdecken und die Türme zerstören, wenn sie sie "
-"gefunden haben.\n"
-"\n"
-"\n"
-"Anhang\n"
-"\n"
-"Keiner."
 
 #: ../base/ufos/msgid/installations.ufo:68
 msgid ""
@@ -12815,49 +12792,6 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"Entwurf -- UFO Lager\n"
-"\n"
-"KLASSIFIZIERUNGSSTUFE SCHWARZ\n"
-"\n"
-"PHALANX außerirdische Reaktionseinheit\n"
-"\n"
-"Konstruktionsinhalt, Freigabe Sigma -- Nur für den Kommandanten\n"
-"\n"
-"Gespeichert: 17. März 2084\n"
-"\n"
-"Von: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches "
-"Operationskommando\n"
-"\n"
-"\n"
-"\n"
-"Überblick\n"
-"\n"
-"Um diesen Krieg zu überleben, benötigt es mehr als UFOs zu entdecken und "
-"abzuschießen. Wir müssen diese Flugzeuge bergen und ein wirksames "
-"Forschungsprogramm starten, das die außerirdische Technologie erforscht, um "
-"sie auf unsere eigenen Flugzeuge zu übertragen.\n"
-"\n"
-"Um dies zu tun, brauchen wir eine geeignete Lagermöglichkeit -- eine die zu "
-"groß für unsere Basen ist. Bitte prüfen Sie die angehängten Entwürfe, die "
-"Pläne zur sicheren Lagerung und Tarnung von allen außerirdischen Flugzeugen, "
-"die wir bergen könnten, skizzieren. Wir könnten geborgene Flugzeuge dorthin "
-"transportieren und die notwendige Forschung durchführen.\n"
-"\n"
-"\n"
-"Empfohlener Einsatz\n"
-"\n"
-"UFOs, die in einem UFO Lager aufbewahrt werden können von jeder PHALANX "
-"Basis mit entsprehenden Einrichtungen erforscht und auseinandergenommen "
-"werden, aber diese Aktivitäten dauern umso länger, je weiter das UFO Lager "
-"von der Basis entfernt ist. UFO Lager sollten nahe der Basen gebaut werden, "
-"die den Zugang benötigen.\n"
-"\n"
-"UFOs können zwischen verschiedenen UFO Lagern transportiert werden.\n"
-"\n"
-"\n"
-"Anhang\n"
-"\n"
-"Keiner."
 
 #: ../base/ufos/msgid/installations.ufo:100
 msgid ""
@@ -12899,7 +12833,7 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"Entwurf -- Luftabwehr Stellung\n"
+"Baupläne -- Luftabwehr Stellung\n"
 "\n"
 "KLASSIFIZIERUNGSSTUFE SCHWARZ\n"
 "\n"
@@ -13126,7 +13060,7 @@ msgid ""
 "installation on Earth. This installation represents a serious threat to "
 "PHALANX and to humanity at large, we must take it out ASAP."
 msgstr ""
-"Kommandant, unsere Agenten haben eine große außerirdische Basis auf der Erde "
+"Kommandant, unsere Agenten haben eine große Alien-Basis auf der Erde "
 "lokalisiert. Diese Basis stellt eine ernste Bedrohung gegen PHALANX und die "
 "Menschheit dar, wir müssen uns so schnell wie möglich darum kümmern."
 
@@ -16344,8 +16278,8 @@ msgstr ""
 "\n"
 "Sie müssen das sofort lesen. Mit Ihrer Genehmigung haben wir verschiedene "
 "Autopsien an den lebenden Gefangenen durchgeführt, welche wir auf unserer "
-"Mission gegen die Sympathisanten der Außerirdischen gefangen genommen haben. "
-"Die Ergebnisse sind alarmierend.\n"
+"Mission gegen die Sympathisanten der Außerirdischen, gefangen genommen "
+"haben. Die Ergebnisse sind alarmierend.\n"
 "\n"
 "Können Sie sich noch an den Bericht über das erste lebende außerirdische "
 "Exemplar erinnern, das wir gefangen haben? Wie Sie vielleicht noch wissen, "
@@ -16365,7 +16299,7 @@ msgstr ""
 "Schwarmverstand unterwirft.\n"
 "\n"
 "Dieses Zeug gibt bei der menschlichen Rasse den Ton an. Es sieht danach aus, "
-"dass es keinen IQ oder physisches Potential bevorzugt. Wir wissen noch nicht "
+"dass keinen IQ oder physisches Potential bevorzugt. Wir wissen noch nicht "
 "wie die Infektion genau verläuft, aber nur ein paar dieser Organismen im "
 "Blutkreislauf reichen aus, um das Opfer zu infizieren und komplett zu "
 "unterwerfen. Selbst unsere eigenen Mitarbeiter sind nicht dagegen immun, wie "
@@ -17031,7 +16965,7 @@ msgstr ""
 "rudimentären Besatzung aus freiwilligen Soldaten und Zivilisten.\n"
 "\n"
 "2) Wir haben nur eine Handvoll Waffenplattformen im Weltall, und keine davon "
-"ist geeignet, außerirdische Fluggeräte zu beschädigen. Die Außerirdischen "
+"sind geeignet, außerirdische Fluggeräte zu beschädigen. Die Außerirdischen "
 "haben die Fähigkeit, jegliche menschlichen Bemühungen im Sonnensystem sofort "
 "zu vernichten.\n"
 "\n"
@@ -18403,7 +18337,7 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"Technische Spezifikationen: Sturmgewehrmagazin\n"
+"Technische Spezifikationen: Sturmgewehrmunition\n"
 "\n"
 "KLASSIFIZIERUNGSSTUFE GELB\n"
 "\n"
@@ -18428,8 +18362,7 @@ msgstr ""
 "Bei kurzer und mittlerer Reichweite erzielen sie bei mehreren Gegnertypen "
 "gute Ergebnisse.\n"
 "\n"
-"Dieses Magazin ist dazu gedacht, in ein AR-80 Sturmgewehr geladen zu "
-"werden.\n"
+"Dieses Magazin gehört zum AR-80 Sturmgewehr.\n"
 "\n"
 "\n"
 "Empfohlener Einsatz\n"
@@ -18591,7 +18524,7 @@ msgstr ""
 "\n"
 "Wir denken das das GPG der beste Kandidat für ein Maschinengewehr in unserem "
 "Arsenal ist. Unsere Truppen können sich darauf verlassen, dass dieses Gewehr "
-"dort Feuerstützung gewährt, wo diese am dringendsten benötigt wird.\n"
+"dort Schussunterstützung geben kann wo diese am dringendsten benötigt wird.\n"
 "\n"
 "Für den Einsatz in PHALANX erhält dieses Maschinengewehr die Bezeichnung "
 "MG12.\n"
@@ -19435,9 +19368,9 @@ msgstr ""
 "Geschwindigkeit aufbauen kann.\n"
 "\n"
 "Glücklicherweise haben wir einen Weg gefunden, um diese Problem zu umgehen "
-"-- nach einigen Schüssen laden wir einfach neue Schienen in die Waffe.\n"
+"-- nach einer Reihe Schüsse laden wir einfach neue Schienen in die Waffe.\n"
 "\n"
-"Das Konzept des Ladens der gesamten Munition mit dem Lauf ist schon seit "
+"Das Konzept des Ladens des gesamten Magazins in den Lauf ist schon seit "
 "einiger Zeit vorhanden. Bis jetzt wurde es nur bei konventionellen "
 "Feuerwaffen angewendet, aber wir haben ein neues Konzept entwickelt; kleine, "
 "individuell geladene und isolierte Schienen, die bereits mit allen Patronen "
@@ -20800,7 +20733,7 @@ msgstr ""
 "hat eine beeindruckende Auswahl von passenden Patronen im weitverbreiteten "
 "25mm-Kaliber.\n"
 "\n"
-"Der RA6 enthält bis zu 6 Granaten, welche einzeln in einem einfachen, "
+"Der RA6 enthält bis zu 9 Granaten, welche einzeln in einem einfachen, "
 "rotierenden Zylinder geladen sind. Der Zylinder ist an der Spitze "
 "aufklappbar, damit er nachgeladen werden kann. Die Granaten einzeln "
 "nachzuladen ist ein langsamer und quälender Prozess, hat sich aber als beste "
@@ -20932,7 +20865,7 @@ msgstr ""
 "\n"
 "Überblick\n"
 "\n"
-"Dies ist ein Magazin mit 6 25mm HIT-Granaten (hochimpulsthermisch). Sie "
+"Dies ist ein Magazin mit 9,25mm HIT-Granaten (hochimpulsthermisch). Sie "
 "werden durch einen Funkenzünder abgeschossen, der sich im Lauf befindet. "
 "Diese Granaten sind sogenannte Brennstoff-Luft-Munition, die den Sauerstoff "
 "in der Atmosphäre nutzen, um eine Explosion zu erzeugen, anstatt ein "
@@ -20946,7 +20879,7 @@ msgstr ""
 "Empfohlener Einsatz\n"
 "\n"
 "Alle Soldaten, die mit einem Granatwerfer bewaffnet sind, sollten mindestens "
-"ein Ersatzmagazin mitnehmen, wenn sie in den Kampfeinsatz gehen. Es ist "
+"eine Ersatzgranate mitnehmen, wenn sie in den Kampfeinsatz gehen. Es ist "
 "nicht ratsam, unsere Truppen ohne ausreichende Munition in den Kampf zu "
 "schicken.\n"
 "\n"
@@ -21011,7 +20944,7 @@ msgstr ""
 "\n"
 "Überblick\n"
 "\n"
-"Dies ist ein Magazin mit 6 25mm HIT-Granaten (hochimpulsthermisch). Sie "
+"Dies ist ein Magazin mit 9,25mm HIT-Granaten (hochimpulsthermisch). Sie "
 "werden durch einen Funkenzünder abgeschossen, der sich im Lauf befindet. "
 "Diese Granaten sind sogenannte Brennstoff-Luft-Munition, die den Sauerstoff "
 "in der Atmosphäre nutzen, um eine Explosion zu erzeugen, anstatt ein "
@@ -21025,7 +20958,7 @@ msgstr ""
 "Empfohlener Einsatz\n"
 "\n"
 "Alle Soldaten, die mit einem Granatwerfer bewaffnet sind, sollten mindestens "
-"eine Ersatzmagazin mitnehmen, wenn sie in den Kampfeinsatz gehen. Es ist "
+"eine Ersatzgranate mitnehmen, wenn sie in den Kampfeinsatz gehen. Es ist "
 "nicht ratsam, unsere Truppen ohne ausreichende Munition in den Kampf zu "
 "schicken.\n"
 "\n"
@@ -21108,7 +21041,7 @@ msgstr ""
 "Empfohlener Einsatz\n"
 "\n"
 "Alle Soldaten, die mit einem Granatwerfer bewaffnet sind, sollten mindestens "
-"ein Ersatzmagazin mitnehmen, wenn sie in den Kampfeinsatz gehen. Es ist "
+"eine Ersatzgranate mitnehmen, wenn sie in den Kampfeinsatz gehen. Es ist "
 "nicht ratsam, unsere Truppen ohne ausreichende Munition in den Kampf zu "
 "schicken.\n"
 "\n"
@@ -21148,12 +21081,12 @@ msgid ""
 msgstr ""
 "Herr Kommandant, wir haben die Tests und die Prototypphase unserer neuen "
 "25mm Plasmagranaten beendet. Wir sind bereit, sie der Massenproduktion und "
-"dem vollen Feldeinsatz zu übergeben.\n"
+"dem vollen Einsatz zu übergeben.\n"
 "\n"
 "Für dieses Projekt hatten wir Zugang zu allen erforderlichen Technologien. "
 "Wir haben sehr wenige Änderungen an dem Grundkonzept der Granate "
 "vorgenommen. Die einzige wirkliche Herausforderung war die ausreichende "
-"Verkleinerung des komplexen Aufbaus, um ihn in eine standardmäßige 25mm-"
+"Verkleinerung des komplexen Aufbaus, um ihn in eine standardmäßige 25-mm-"
 "Hülle zu packen. Wir mussten die Stärke der Plasmagranate etwas "
 "zurückschrauben, um das zu schaffen -- der Wasserstoffkern unserer neuen 25-"
 "mm-Hülle ist ein wenig kleiner und gibt daher weniger Plasma als die "
@@ -21168,8 +21101,8 @@ msgstr ""
 "\n"
 "Die Erhöhung der Feuerkraft, die unsere Grenadiere erfahren haben, ist "
 "beängstigend. Schießen Sie eine Reihe dieser Granaten in eine belebte Straße "
-"und nichts wird übrig bleiben. Sie werden eine wertvolle Ergänzung für unser "
-"Arsenal sein.\n"
+"und das Einzige, was übrig bleibt, ist Asche. Sie werden ein wertvoller "
+"Zusatz für unser Arsenal sein.\n"
 "\n"
 "Cdr. Navarre"
 
@@ -21626,7 +21559,7 @@ msgstr ""
 "kann für mehrere Minuten ununterbrochen feuern, ohne nachgeladen werden zu "
 "müssen.\n"
 "\n"
-"Wir brauchen immer mindestens eine D-F Kasette, um die Laserpistole zu laden "
+"Wir brauchen immer mindestens eine D-F-Patrone, um die Laserpistole zu laden "
 "und zu benutzen. Die Ingenieure in der Werkstatt haben die "
 "Konstruktionspläne der Laserpistole und es kann sofort mit der Produktion "
 "begonnen werden.\n"
@@ -21743,7 +21676,7 @@ msgstr ""
 "harmlosen Licht, also werden wir vorsichtig sein müssen, wie wir Rauch- oder "
 "Brandwaffen einsetzen.\n"
 "\n"
-"Wir haben das Gewehr so entwickelt, dass es die normalen D-F Kasetten "
+"Wir haben das Gewehr so entwickelt, dass es die normalen D-F-Patronen "
 "benutzen kann, die wir gebaut haben, um unsere Laserwaffen zu betreiben. Das "
 "gibt dem Gewehr ungefähr zwei Minuten Dauerfeuer, bevor eine neue Patrone "
 "eingesetzt werden muss. Die Patronen können ausgestoßen und auf dem Boden "
@@ -22828,7 +22761,7 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Herr Kommandant, hier ist mein Bericht über das außerirdische Plasmagewehr.\n"
+"Herr Kommandant, hier ist mein Bericht über das Plasmagewehr.\n"
 "\n"
 "Im Grunde ist das Plasmagewehr wenig mehr als eine vergrößerte Version der "
 "Plasmapistole. Wie Ihnen aber jeder Waffennarr sagen wird, Pistolen sind "
@@ -23171,9 +23104,9 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Kommandant, wir konnten eine neue außerirdische Waffe bergen. Es scheint "
-"eine größere Version des Nadlers zu sein. Bitte lassen sie meine Männer so "
-"früh wie möglich einen Blick darauf werfen.\n"
+"Kommandant, wir konnten einen neue Alien-Waffe bergen. Es scheint eine "
+"größere Version des Nadlers zu sein. Bitte lassen sie meine Männer so früh "
+"wie möglich einen Blick darauf werfen.\n"
 "\n"
 "Cdr. Navarre"
 
@@ -23528,7 +23461,7 @@ msgstr ""
 "Messerreichweite statt. Für das Excalibur Programm haben wir einige "
 "leistungsstarke Waffen für unser Nahkampfpaket ausgewählt.\n"
 "\n"
-"Die 425 Blesk ist eine Miniaturschrotflinte aus der Tschechischen Republik "
+"Die 25 Blesk ist eine Miniaturschrotflinte aus der Tschechischen Republik "
 "und wird von Antiterror- und militärischen Erkundungseinheiten auf der "
 "ganzen Welt benutzt. Sie ist beliebt für ihre geringen Ausmaße, "
 "Beweglichkeit, leichtgewichtige Konstruktion und der guten Benutzbarkeit im "
@@ -24199,7 +24132,7 @@ msgstr ""
 "Scharfschützengewehre, gebaut nach 2040, die keine Bullpupkonfiguration "
 "haben (wo das Magazin und der Lauf hinter dem Griff sind, um die Gesamtlänge "
 "zu verkürzen). Es verschießt massive 20 mm SMG (schweres Maschinen Gewehr) "
-"Geschosse, die aus einem 8-Schuss-Magazin kommen, welches bis zu einem "
+"Geschosse, die aus einem 5-Schuss-Magazin kommen, welches bis zu einem "
 "Kilogramm pro Stück wiegen kann. Der kolbenverzögerte, massefreie Verschluss "
 "ist mit einem komplexen Gaszerstreuungssystem ausgestattet, welches den "
 "gefühlten Rückschlag der Waffe auf die Stufe normaler Jagdgewehre bringt. "
@@ -24210,7 +24143,7 @@ msgstr ""
 "Scharfschützengewehren ist der extrem kurze Lauf und das geringe Gewicht, "
 "außerdem ist es das einzige Gewehr in seiner Klasse, das 20mm-SMG-Munition "
 "abfeuern kann. Dies ist möglich durch einen einzigartig verstärkten "
-"Verschluss und einen speziellen Lauf, der fast komplett aus einer Wolfram-"
+"Verschluss und einem speziellen Lauf, der fast komplett aus einer Wolfram-"
 "Titanlegierung gefertigt ist, was es nun ermöglicht, der Kraft von "
 "Hochgeschwindigkeitsmunition zu widerstehen. Auf Grund seines kurzen Laufes, "
 "der für den Stadtkampf konstruiert wurde, hat das LWRS nur eine Reichweite "
@@ -24243,7 +24176,7 @@ msgstr ""
 "Munition und könnte einem das Leben kosten.\n"
 "\n"
 "Alle Scharfschützen sollen als Sicherheit mit mindestens einer Zweitwaffe "
-"wie die P-12 , CRC-8 Maschinenpistole oder ein Messer mit sich tragen. "
+"wie die P-12 , CRC-8-Maschinenpistole oder ein Messer mit sich tragen. "
 "Sollten Außerirdische einen Scharfschützen im Nahkampf bedrohen, so sollte "
 "er sofort seine Zweitwaffe ziehen. Unter keinen Umständen sollte er eine S-1 "
 "benutzen um seinen Angreifer im Nahkampf damit abzuwehren. Die S-1 ist eine "
@@ -24298,7 +24231,7 @@ msgid ""
 "\n"
 "None."
 msgstr ""
-"Technische Spezifikationen: Scharfschützengewehrmagazin\n"
+"Technische Spezifikationen: Scharfschützengewehrmunition\n"
 "\n"
 "KLASSIFIZIERUNGSSTUFE GELB\n"
 "\n"
@@ -24500,7 +24433,7 @@ msgstr ""
 
 #: ../base/ufos/msgid/weapons.ufo:1883
 msgid "stungren_alien_txt"
-msgstr "Noch nicht implementiert"
+msgstr "<TODO>"
 
 #: ../base/ufos/msgid/weapons.ufo:1909
 #, fuzzy
@@ -24837,8 +24770,8 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
-"Herr Kommandant, wir haben die Arbeit an dieser großen verdammten Kanone "
-"beendet, die wir zurückgebracht haben.\n"
+"Herr Kommandant, wir haben die Arbeit an dieser großen Kanone beendet, die "
+"wir zurückgebracht haben.\n"
 "\n"
 "Diese Partikelstrahlwaffe ist sehr fortschrittlich, einen Quantensprung über "
 "den Plasmawaffen, und so sehr miniaturisiert, dass wir keinerlei Möglichkeit "
@@ -24937,7 +24870,7 @@ msgid ""
 msgstr ""
 "Herr Kommandant, wir haben alle Informationen aus diesem neuen Gewehr "
 "rausgeholt, die wir rausholen konnten. Ich fürchte, es sind mehr schlechte "
-"Nachrichten.\n"
+"als gute Nachrichten.\n"
 "\n"
 "Wir haben immer gemutmaßt, dass eine wirkliche Armee der Außerirdischen mehr "
 "als nur Plasmawaffen und Kerrklingen ins Feld führen würde. Nun haben sie "
@@ -25396,7 +25329,7 @@ msgstr "Außerirdische Basis"
 
 #: ../base/ufos/research.ufo:583
 msgid "The Universal Serum"
-msgstr "Das Universalserum"
+msgstr "Das Antiserum"
 
 #: ../base/ufos/research.ufo:622
 msgid "Alien Origins"
@@ -25478,15 +25411,15 @@ msgstr "Außerirdisches Anti-Menschen Gas"
 
 #: ../base/ufos/research.ufo:2735 ../base/ufos/research.ufo:2780
 msgid "Alien Artifact - Particle Beam Pistol"
-msgstr "Außerirdisches Artefakt - Partikelstrahlpistole"
+msgstr "Außerirdische Artefakt - Partikelstrahlpistole"
 
 #: ../base/ufos/research.ufo:2799 ../base/ufos/research.ufo:2844
 msgid "Alien Artifact - Particle Beam Cannon"
-msgstr "Außerirdisches Artefakt - Partikelstrahlkanone"
+msgstr "Außerirdischen Artefakt - Partikelstrahlkanone"
 
 #: ../base/ufos/research.ufo:2863 ../base/ufos/research.ufo:2908
 msgid "Alien Artifact - Particle Beam Rifle"
-msgstr "Außerirdisches Artefakt - Partikelstrahlgewehr"
+msgstr "Außerirdischen Artefakt - Partikelstrahlgewehr"
 
 #: ../base/ufos/research.ufo:2928
 msgid "Man-Portable Particle Beams"
@@ -26814,7 +26747,7 @@ msgid ""
 "Never risk your soldier's life just to capture an alien alive. There will be "
 "other occasions."
 msgstr ""
-"Riskieren Sie niemals das Leben eines Soldaten, nur um einen Außerirdischen "
+"Riskieren Sie niemals das Leben eines Soldaten, nur um ein Alien "
 "gefangenzunehmen. Es wird sich eine bessere Möglichkeit ergeben."
 
 #: ../base/ufos/tips.ufo:55
@@ -26885,7 +26818,6 @@ msgstr "Nahkampf"
 
 #: ../base/ufos/ui/_assets.ufo:429 ../base/ufos/ui/inv_stat.ufo:158
 #: client/cl_inventory_callbacks.cpp:50
-#, fuzzy
 msgid "Assault"
 msgstr "Sturmgewehr"
 
@@ -27285,7 +27217,7 @@ msgstr "Laserabwehr"
 
 #: ../base/ufos/ui/basedefence.ufo:111
 msgid "Weapon slots"
-msgstr "Waffenschächte"
+msgstr "Waffenslots"
 
 #: ../base/ufos/ui/basedefence.ufo:162
 msgid "Add"
@@ -27293,7 +27225,7 @@ msgstr "Hinzufügen"
 
 #: ../base/ufos/ui/basedefence.ufo:163
 msgid "Equip the selected slot with this weapon"
-msgstr "Aktiven Schacht mit dieser Waffe bestücken"
+msgstr "Aktiven Slot mit dieser Waffe bestücken"
 
 #: ../base/ufos/ui/basedefence.ufo:173
 msgid "Remove"
@@ -27331,7 +27263,7 @@ msgstr "Anvisiertes UFO:"
 #: ../base/ufos/ui/popup_installations.ufo:528
 #, fuzzy
 msgid "Time to completion:"
-msgstr "Texturkompression einschalten"
+msgstr "Bauzeit:"
 
 #: ../base/ufos/ui/basedefence.ufo:354
 msgid "Autofire"
@@ -27514,7 +27446,7 @@ msgstr "0/0 Kg"
 
 #: ../base/ufos/ui/equipment.ufo:319
 msgid "Remove all"
-msgstr "Alles entfernen"
+msgstr "Alle entfernen"
 
 #: ../base/ufos/ui/equipment.ufo:397 ../base/ufos/ui/production.ufo:42
 msgid "Primary"
@@ -27531,7 +27463,7 @@ msgstr "Schwer"
 
 #: ../base/ufos/ui/equipment.ufo:412 ../base/ufos/ui/production.ufo:54
 msgid "Misc"
-msgstr "Sonstiges"
+msgstr "Ausrüstung"
 
 #: ../base/ufos/ui/geoscape.ufo:148
 msgid "Open up messages"
@@ -27803,7 +27735,7 @@ msgstr "Status:"
 
 #: ../base/ufos/ui/hud_default.ufo:325
 msgid "Headgear"
-msgstr "Kopfausrüstung"
+msgstr "Kopf"
 
 #: ../base/ufos/ui/hud_default.ufo:358 ../base/ufos/ui/hud_default.ufo:377
 #: client/battlescape/cl_hud_callbacks.cpp:348
@@ -28322,7 +28254,7 @@ msgstr "Strecken"
 
 #: ../base/ufos/ui/material_editor.ufo:659
 msgid "Pulse"
-msgstr "Pulsfeuer"
+msgstr "Puls-Feuer"
 
 #: ../base/ufos/ui/material_editor.ufo:663
 msgid "Scroll"
@@ -28330,7 +28262,7 @@ msgstr "Bildlauf"
 
 #: ../base/ufos/ui/material_editor.ufo:667
 msgid "Rotate"
-msgstr "Rotieren"
+msgstr "Rotatieren"
 
 #: ../base/ufos/ui/material_editor.ufo:671
 msgid "Scale"
@@ -28647,7 +28579,7 @@ msgstr "Starte das Spiel - auch wenn noch nicht alle Teams bereit sind"
 
 #: ../base/ufos/ui/multiplayer.ufo:1403
 msgid "Remote Admin Control"
-msgstr ""
+msgstr "Admin Fernbedienung"
 
 #: ../base/ufos/ui/multiplayer.ufo:1509
 #, fuzzy
@@ -29361,7 +29293,7 @@ msgstr "Basis wird angegriffen"
 
 #: ../base/ufos/ui/popup_baseattack.ufo:240
 msgid "Kill aliens in container"
-msgstr "Töte alle Außerirdischen in Quarantänestation"
+msgstr "Töte alle Außerirdischen in Isolationskammer"
 
 #: ../base/ufos/ui/popup_baseattack.ufo:247
 #: ../base/ufos/ui/popup_baseattack.ufo:254
@@ -29606,7 +29538,7 @@ msgstr ""
 
 #: ../base/ufos/ui/skirmish.ufo:60
 msgid "<1>"
-msgstr "<1>"
+msgstr ""
 
 #: ../base/ufos/ui/skirmish.ufo:153
 msgid "MAP"
@@ -29724,7 +29656,7 @@ msgstr "Team generieren"
 
 #: ../base/ufos/ui/team.ufo:169
 msgid "Generate a new team with the selected race"
-msgstr "Generiere ein Team mit der gewählten Rasse"
+msgstr "Generiere ein neues Team mit der ausgewählten Rasse"
 
 #: ../base/ufos/ui/transfer.ufo:34
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
@@ -29784,7 +29716,7 @@ msgstr "Aktive Transfers anzeigen"
 
 #: ../base/ufos/ui/transfer.ufo:478
 msgid "Clear"
-msgstr "Löschen"
+msgstr ""
 
 #: ../base/ufos/ui/transfer.ufo:479
 msgid "Clear cargo"
@@ -29872,7 +29804,7 @@ msgstr "Infrarotbrille"
 
 #: ../base/ufos/weapons.ufo:103
 msgid "Scan"
-msgstr "Scannen"
+msgstr "Scanner"
 
 #: ../base/ufos/weapons.ufo:113 ../base/ufos/weapons_melee.ufo:45
 #: ../base/ufos/weapons_melee.ufo:111
@@ -29911,7 +29843,7 @@ msgstr "Gasgranate"
 
 #: ../base/ufos/weapons.ufo:465
 msgid "Alien Gas Grenade"
-msgstr "Außerirdische Gasgranate"
+msgstr "außerirdische Gasgranate"
 
 #: ../base/ufos/weapons.ufo:550
 msgid "Incendiary grenade"
@@ -29927,7 +29859,7 @@ msgstr "Bombe"
 
 #: ../base/ufos/weapons_aliens.ufo:50
 msgid "Needler Gun Magazine"
-msgstr "Nadlermagazin"
+msgstr "Nadler Magazin"
 
 #: ../base/ufos/weapons_aliens.ufo:68 ../base/ufos/weapons_aliens.ufo:146
 msgid "Short Burst"
@@ -30154,7 +30086,7 @@ msgstr "Schwerer Laser"
 
 #: ../base/ufos/weapons_laser.ufo:83
 msgid "D-F Cartridge"
-msgstr "D-F Kasette"
+msgstr "D-F Patrone"
 
 #: ../base/ufos/weapons_laser.ufo:101 ../base/ufos/weapons_laser.ufo:149
 #: ../base/ufos/weapons_laser.ufo:199
@@ -30172,7 +30104,7 @@ msgstr "Elektrolaser"
 
 #: ../base/ufos/weapons_laser.ufo:270
 msgid "D-F Cartridge Stun"
-msgstr "D-F Betäubungskasette"
+msgstr "D-F Betäubungspatrone"
 
 #: ../base/ufos/weapons_laser.ufo:288
 msgid "Stun Shot"
@@ -30224,7 +30156,7 @@ msgstr "Minigun"
 
 #: ../base/ufos/weapons_multiplayer.ufo:33
 msgid "Minigun Magazine"
-msgstr "Minigunmagazin"
+msgstr "Minigun Magazine"
 
 #: ../base/ufos/weapons_multiplayer.ufo:133
 msgid "Shotgun"
@@ -30336,8 +30268,9 @@ msgid "ugv_ares_w"
 msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 
 #: ../base/ufos/weapons_ugv.ufo:31
+#, fuzzy
 msgid "ugv_phoenix"
-msgstr "Noch nicht implementiert"
+msgstr "<TODO>"
 
 #: ../base/ufos/weapons_ugv.ufo:44
 msgid "Chaingun"
@@ -30345,7 +30278,7 @@ msgstr "Maschinenkanone"
 
 #: ../base/ufos/weapons_ugv.ufo:66
 msgid "Chaingun Belt"
-msgstr "Maschinenkanonen Gurt"
+msgstr "Maschinengewehr Gurt"
 
 #: ../base/ufos/weapons_ugv.ufo:84
 msgid "25-Round Burst"
@@ -30811,15 +30744,15 @@ msgstr "Ein Zivilist wurde getötet."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:117
 msgid "An alien was stunned."
-msgstr "Ein Außerirdischer wurde betäubt."
+msgstr "Ein Alien wurde betäubt."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:119
 msgid "An alien has died."
-msgstr "Ein Außerirdischer starb."
+msgstr "Ein Alien wurde getötet."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:121
 msgid "An alien was killed."
-msgstr "Ein Außerirdischer wurde getötet."
+msgstr "Ein Alien wurde getötet."
 
 #: client/battlescape/events/event/actor/e_event_actordie.cpp:125
 msgid "A soldier was stunned."
@@ -30859,7 +30792,7 @@ msgstr "Ein Zivilist ist wieder bei Sinnen."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:75
 msgid "An alien was revitalised."
-msgstr "Ein Außerirdischer ist wieder bei Sinnen."
+msgstr "Ein Alien ist wieder bei Sinnen."
 
 #: client/battlescape/events/event/actor/e_event_actorrevitalised.cpp:78
 msgid "A soldier was revitalised."
@@ -31156,7 +31089,7 @@ msgstr "Pilot im Einsatz getötet"
 #: client/cgame/campaign/cp_airfight.cpp:534
 #, fuzzy
 msgid "A PHALANX craft has been destroyed"
-msgstr "PHALANX Flugzeug-Absturzstelle"
+msgstr "PHALANX Absturzstelle"
 
 #: client/cgame/campaign/cp_aliencont.cpp:103
 msgid "You can't hold live aliens yet. Aliens died."
@@ -31972,7 +31905,7 @@ msgstr "Kein Gegenstand ausgewählt."
 
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:527
 msgid "You can't equip an alien technology."
-msgstr "Sie können sich nicht mit außerirdischer Technologie ausrüsten."
+msgstr "Sie können sich nicht mit Alien-Technologie ausrüsten."
 
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:530
 msgid "Technology requested is not yet completed."
@@ -32382,7 +32315,7 @@ msgstr "Transfer des Ausseridischen verschoben"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:58
 msgid "transfer_uforecovery_finished"
-msgstr "Überführung UFO Bergung beendet"
+msgstr "Überführung_UFO Bergung_beendet"
 
 #: client/cgame/campaign/cp_messageoptions.cpp:59
 msgid "ufo_spotted"
@@ -32419,7 +32352,7 @@ msgstr "Außerirdische gefangen"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:120
 msgid "Alien survivors"
-msgstr "Überlebende Außerirdische"
+msgstr "überlebende Aliens"
 
 #: client/cgame/campaign/cp_mission_callbacks.cpp:123
 msgid "PHALANX soldiers killed in action"
@@ -32469,7 +32402,7 @@ msgid "Alien terror"
 msgstr "Außerirdischer Terror"
 
 #: client/cgame/campaign/cp_missions.cpp:468
-#, fuzzy, c-format
+#, c-format
 msgid "Base attacked: %s"
 msgstr "Basenangriff: %s"
 
@@ -32485,18 +32418,18 @@ msgid "Alien base in %s"
 msgstr "Außerirdische Basis in %s"
 
 #: client/cgame/campaign/cp_missions.cpp:487
-#, fuzzy, c-format
+#, c-format
 msgid "Landed %s"
 msgstr "Gelandet %s"
 
 #: client/cgame/campaign/cp_missions.cpp:492
 #, c-format
 msgid "Alien activity in %s"
-msgstr "Außerirdische Aktivitäten gemeldet in %s"
+msgstr "Alienaktivitäten gemeldet -- %s"
 
 #: client/cgame/campaign/cp_missions.cpp:494
 msgid "Alien activity"
-msgstr "Außerirdische Aktivitäten"
+msgstr "Ortung von Außerirdischen"
 
 #: client/cgame/campaign/cp_missions.cpp:705
 #, c-format
@@ -32510,11 +32443,11 @@ msgstr ""
 #: client/cgame/campaign/cp_missions.cpp:709
 #, c-format
 msgid "Alien activity has been detected in %s."
-msgstr "Außerirdische Aktivitäten wurden gemeldet in: '%s'."
+msgstr "Alien Aktivitäten wurden gemeldet in: '%s'."
 
 #: client/cgame/campaign/cp_missions.cpp:711
 msgid "Alien activity has been detected."
-msgstr "Außerirdische Aktivitäten wurden gemeldet."
+msgstr "Außerirdische Aktivitäten wurden gemeldet in: '%s'."
 
 #: client/cgame/campaign/cp_missions.cpp:1078
 #, c-format
@@ -33563,7 +33496,7 @@ msgstr "überlebende Teammitglieder\t%i"
 
 #: client/cgame/multiplayer/mp_callbacks.cpp:212
 msgid "Select a free team or your coop team"
-msgstr "Wähle ein freies Team oder dein Coop-Team"
+msgstr "Wähle ein freies Team oder ein Coop-Team"
 
 #: client/cgame/multiplayer/mp_callbacks.cpp:220
 #, c-format
@@ -33595,7 +33528,7 @@ msgstr ""
 #: client/cgame/multiplayer/mp_serverlist.cpp:314
 #, c-format
 msgid "Map:\t%s\n"
-msgstr "Karte:\t%s\n"
+msgstr "Map:\t%s\n"
 
 #: client/cgame/multiplayer/mp_serverlist.cpp:319
 #, c-format
@@ -33893,7 +33826,7 @@ msgstr "Dieser Server benötigt ein Passwort"
 
 #: client/cl_main.cpp:416
 msgid "This server is full."
-msgstr "Dieser Server ist voll"
+msgstr "Dieser Server ist "
 
 #: client/cl_main.cpp:419
 msgid "You are banned on this server."
@@ -33909,11 +33842,11 @@ msgstr "Auf dem Server ist eine andere Version dieses Spiels."
 
 #: client/cl_main.cpp:428
 msgid "Bad rcon password"
-msgstr "Schlechtes rcon-Passwort"
+msgstr "Schlechtes rcon Passwort"
 
 #: client/cl_main.cpp:428
 msgid "The rcon password you specified was wrong."
-msgstr "Das von dir definierte rcon-Passwort war falsch."
+msgstr "Dein angegebenes rcon Passwort war falsch."
 
 #: client/cl_main.cpp:431
 msgid "The server refused the connection."
@@ -33960,7 +33893,7 @@ msgstr "Mittelmäßig"
 
 #: client/cl_team.cpp:179
 msgid "Average"
-msgstr "Durchschn."
+msgstr "Durchschnittlich"
 
 #: client/cl_team.cpp:181
 msgid "Competent"
@@ -34215,14 +34148,14 @@ msgid "%s forces are attacking the %s!"
 msgstr ""
 
 #: game/g_mission.cpp:66
-#, fuzzy, c-format
+#, c-format
 msgid "%s forces are attacking %s target zone!"
-msgstr "Aliens haben Zielbereich betreten!"
+msgstr ""
 
 #: game/g_mission.cpp:90
-#, fuzzy, c-format
+#, c-format
 msgid "%s forces have occupied the %s!"
-msgstr "Aliens haben Zielbereich betreten!"
+msgstr ""
 
 #: game/g_mission.cpp:92
 #, c-format
@@ -34240,9 +34173,9 @@ msgid "The %s was placed."
 msgstr "Gegenstand wurde platziert."
 
 #: game/g_mission.cpp:140
-#, fuzzy, c-format
+#, c-format
 msgid "%s forces have left the %s!"
-msgstr "Aliens haben Zielbereich betreten!"
+msgstr ""
 
 #: game/g_mission.cpp:142
 #, fuzzy, c-format
@@ -34257,7 +34190,7 @@ msgstr "%s ist panisch!"
 #: game/g_morale.cpp:101
 #, c-format
 msgid "%s is on a rampage!"
-msgstr "%s randaliert!"
+msgstr "%s randaliert."
 
 #: game/g_morale.cpp:104
 #, c-format
@@ -34311,7 +34244,7 @@ msgstr "Die maximale Rundenzeit wurde erreicht."
 
 #: game/g_trigger.cpp:136
 msgid "Switching map!"
-msgstr "Wechsele die Karte!"
+msgstr "Wechsele die Map!"
 
 #: game/g_trigger.cpp:165
 msgid "You are now ready to switch the map."
@@ -34323,14 +34256,40 @@ msgstr "Mensch"
 
 #: po/OTHER_STRINGS:3
 msgid "alien"
-msgstr "Außerirdischer"
+msgstr "Alien"
 
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Screenshot speichern"
 
+#~ msgid "Eaglenest"
+#~ msgstr "Adlernest"
+
+#~ msgid "Little forest"
+#~ msgstr "Kleiner Wald"
+
+#~ msgid "Little bungalo in forest"
+#~ msgstr "Ein kleiner Bungalow im Wald"
+
 #~ msgid "Transport"
 #~ msgstr "Transport"
+
+#~ msgid "Bomber in the City"
+#~ msgstr "Bomber in der Innenstadt"
+
+#~ msgid "media/DejaVuSans.ttf"
+#~ msgstr "media/DejaVuSans.ttf"
+
+#~ msgid "Crashed Scout"
+#~ msgstr "Abgestürzter Kundschafter"
+
+#~ msgid ""
+#~ "Kill all the aliens or hold the point in the fuel depot for some time."
+#~ msgstr ""
+#~ "Töte alle Aliens oder halte einen Bereich im Treibstofflager einige Zeit."
+
+#~ msgid "Gameplay"
+#~ msgstr "Spielablauf"
 
 #~ msgid "Some notes about the gameplay"
 #~ msgstr "Bemerkungen zum Spielablauf"
@@ -34415,19 +34374,19 @@ msgstr "Screenshot speichern"
 #~ msgstr "Ducken oder aufstehen"
 
 #~ msgid "Cycle through visible enemies"
-#~ msgstr "Zum nächsten gesichteten Feind wechseln"
+#~ msgstr "Zum nächsten gesichteten Alien wechseln"
 
 #~ msgid "End round"
 #~ msgstr "Runde beenden"
+
+#~ msgid "How to play skirmish"
+#~ msgstr "Anleitung für Einzelgefecht"
 
 #~ msgid "Skirmish tutorial"
 #~ msgstr "Einzelgefecht Tutorial"
 
 #~ msgid "Skirmish is type of fast game."
 #~ msgstr "Das Einzelgefecht ist ein schnelles Spiel."
-
-#~ msgid "Equipment selection"
-#~ msgstr "Auswahl der Ausrüstung"
 
 #~ msgid "Day or night version of map to play"
 #~ msgstr "Tag- oder Nachtversion der zu spielenden Karte"
@@ -34467,6 +34426,9 @@ msgstr "Screenshot speichern"
 #~ msgid "Exit to main menu"
 #~ msgstr "Zurück zum Hauptmenü"
 
+#~ msgid "How to play multiplayer"
+#~ msgstr "Mehrspielermodus Anleitung"
+
 #~ msgid ""
 #~ "You should connect to the lobby and wait for invitations or start your "
 #~ "own server"
@@ -34485,56 +34447,6 @@ msgstr "Screenshot speichern"
 #~ msgstr ""
 #~ "Als Administrator eines Servers sollten Sie in Erwägung ziehen die "
 #~ "Beschränkung für die Rundenzeit zu setzen."
-
-#, fuzzy
-#~ msgid "Video performance"
-#~ msgstr "Einsätze absolviert:"
-
-#~ msgid "at home base"
-#~ msgstr "in der Heimatbasis"
-
-#~ msgid "No Hangar functional in base."
-#~ msgstr "Kein funktionierender Hangar in dieser Basis."
-
-#~ msgid "No %s functional in base."
-#~ msgstr "%s in dieser Basis nicht funktionsfähig."
-
-#~ msgid "day"
-#~ msgid_plural "days"
-#~ msgstr[0] "Tag"
-#~ msgstr[1] "Tage"
-
-#~ msgid "Eaglenest"
-#~ msgstr "Adlernest"
-
-#~ msgid "Little forest"
-#~ msgstr "Kleiner Wald"
-
-#~ msgid "Little bungalo in forest"
-#~ msgstr "Ein kleiner Bungalow im Wald"
-
-#~ msgid "Bomber in the City"
-#~ msgstr "Bomber in der Innenstadt"
-
-#~ msgid "media/DejaVuSans.ttf"
-#~ msgstr "media/DejaVuSans.ttf"
-
-#~ msgid "Crashed Scout"
-#~ msgstr "Abgestürzter Kundschafter"
-
-#~ msgid ""
-#~ "Kill all the aliens or hold the point in the fuel depot for some time."
-#~ msgstr ""
-#~ "Töte alle Aliens oder halte einen Bereich im Treibstofflager einige Zeit."
-
-#~ msgid "Gameplay"
-#~ msgstr "Spielablauf"
-
-#~ msgid "How to play skirmish"
-#~ msgstr "Anleitung für Einzelgefecht"
-
-#~ msgid "How to play multiplayer"
-#~ msgstr "Mehrspielermodus Anleitung"
 
 #~ msgid "Preview:"
 #~ msgstr "Vorschau:"
@@ -34584,6 +34496,9 @@ msgstr "Screenshot speichern"
 #~ msgid "High-Explosives:"
 #~ msgstr "Explosivwaffen:"
 
+#~ msgid "Missions performed:"
+#~ msgstr "Einsätze absolviert:"
+
 #~ msgid "Civilians killed:"
 #~ msgstr "Zivilisten getötet:"
 
@@ -34600,7 +34515,7 @@ msgstr "Screenshot speichern"
 #~ msgstr "Zurück zum Geoscape"
 
 #~ msgid "Build base facilities"
-#~ msgstr "Baue Baseneinrichtungen"
+#~ msgstr "Baue Gebäude"
 
 #~ msgid "Buy/Sell"
 #~ msgstr "Kaufen/Verkaufen"
@@ -35089,8 +35004,9 @@ msgstr "Screenshot speichern"
 #~ msgid "Also known as bumpmapping."
 #~ msgstr "Auch bekannt als Reliefzuordnung."
 
+#, fuzzy
 #~ msgid "Enable normal-/bumpmapping."
-#~ msgstr "Aktiviere Normal-/Bumpmapping"
+#~ msgstr "Aktiviere Reliefzuordnung."
 
 #~ msgid "Amount of light emitting from the sun and shining on the earth."
 #~ msgstr "Wert des Lichtes, was von der Sonne auf die Erde strahlt."
@@ -35414,11 +35330,25 @@ msgstr "Screenshot speichern"
 #~ msgid "TU"
 #~ msgstr "ZE"
 
+#~ msgid "at home base"
+#~ msgstr "in der Heimatbasis"
+
 #~ msgid ""
 #~ "%s does not have Antimatter Storage Facility. %i units of antimatter got "
 #~ "removed."
 #~ msgstr ""
 #~ "%s hat kein Antimaterielager. %i Einheiten Antimaterie gingen verloren."
+
+#~ msgid "No Hangar functional in base."
+#~ msgstr "Kein funktionierender Hangar in dieser Basis."
+
+#~ msgid "No %s functional in base."
+#~ msgstr "%s in dieser Basis nicht funktionsfähig."
+
+#~ msgid "day"
+#~ msgid_plural "days"
+#~ msgstr[0] "Tag"
+#~ msgstr[1] "Tage"
 
 #~ msgid ""
 #~ "%s %s is assigned to aircraft and cannot be\n"
