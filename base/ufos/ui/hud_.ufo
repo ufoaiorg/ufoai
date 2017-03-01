@@ -433,10 +433,6 @@ local firemode_left = ufox.build_window {
 		layoutmargin = 18
 	},
 
-	on_windowopened = function (this)
-		ufo.cmd("hud_listfiremodes firemode_listener l;")
-	end,
-
 	--[[
 	 - @brief The reaction fire mode was changed
 	 - @note no parameters
@@ -447,8 +443,14 @@ local firemode_left = ufox.build_window {
 		on_click = function (this)
 			ufo.cmd("hud_listfiremodes firemode_listener l;")
 		end
-	}
+	},
+	on_windowopened = function (this)
+		ufo.cmd("hud_listfiremodes firemode_listener l;")
+		ufo.cmd("ui_addcvarlistener cl_selected reactionfire_updated;")
+	end,
+	on_windowclosed = function (this) ufo.cmd("ui_removecvarlistener cl_selected reactionfire_updated;") end
 }
+
 local firemode_right = ufox.build_window {
 	class = "window",
 	name = "firemode_right",
@@ -474,10 +476,6 @@ local firemode_right = ufox.build_window {
 		layoutmargin = 18
 	},
 
-	on_windowopened = function (this)
-		ufo.cmd("hud_listfiremodes firemode_listener r;")
-	end,
-
 	--[[
 	 - @brief The reaction fire mode was changed
 	 - @note no parameters
@@ -488,7 +486,13 @@ local firemode_right = ufox.build_window {
 		on_click = function (this)
 			ufo.cmd( "hud_listfiremodes firemode_listener r;")
 		end
-	}
+	},
+
+	on_windowopened = function (this)
+		ufo.cmd("hud_listfiremodes firemode_listener r;")
+		ufo.cmd("ui_addcvarlistener cl_selected reactionfire_updated;")
+	end,
+	on_windowclosed = function (this) ufo.cmd("ui_removecvarlistener cl_selected reactionfire_updated;") end
 }
 
 local i
