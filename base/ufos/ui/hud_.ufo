@@ -49,7 +49,7 @@ ufox.build_component {
 		icon = "icons/firemodesml0",
 		tooltip = "_Use this firemode for reaction fire",
 		on_click = function (this)
-			ufo.cmd(string.format("hud_selectreactionfiremode %s %s;", this:parent():child("hand"):as_string(), this:parent():child("index"):as_string()))
+			ufo.cmd(string.format("hud_selectreactionfiremode %s %i;", this:parent():child("hand"):as_string(), this:parent():child("index"):as_integer()))
 		end
 	},
 	{
@@ -118,7 +118,7 @@ ufox.build_component {
 	init = function (this, id, hand, index, reaction, status, name, tus, shots, tooltip)
 		this:child("actionid"):set_value(id)
 		this:child("hand"):set_value(hand)
-		this:child("index"):set_value(tostring(index))
+		this:child("index"):set_value(tonumber(index))
 
 		this:child("name"):set_text(name)
 		this:child("tu"):set_text(tus)
