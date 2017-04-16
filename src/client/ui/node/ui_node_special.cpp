@@ -131,6 +131,21 @@ void uiConFuncNode::clone (const uiNode_t* source, uiNode_t* clone)
 }
 
 /**
+ * @brief Cleanup tasks on removing a console function
+ * @param node The node to delete.
+ */
+void uiConFuncNode::deleteNode (uiNode_t* node)
+{
+	onWindowClosed(node);
+	if (Cmd_Exists(node->name)) {
+		uiNode_t* userData = (uiNode_t*)Cmd_GetUserdata(node->name);
+		if (userData && userData == node)
+			Cmd_RemoveCommand(node->name);
+	}
+	uiNode::deleteNode(node);
+}
+
+/**
  * @brief Callback every time the parent window is opened (pushed into the active window stack)
  */
 void uiConFuncNode::onWindowOpened (uiNode_t* node, linkedList_t* params)

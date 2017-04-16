@@ -31,6 +31,7 @@ class uiConFuncNode : public uiNode {
 	void onWindowOpened(uiNode_t* node, linkedList_t* params) override;
 	void onWindowClosed(uiNode_t* node) override;
 	void clone(uiNode_t const* source, uiNode_t* clone) override;
+	void deleteNode(uiNode_t* node) override;
 };
 
 class uiFuncNode : public uiNode {
