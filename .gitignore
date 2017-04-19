@@ -6,6 +6,7 @@
 /*.dmg
 /.cproject
 /.project
+/*.komodoproject
 /*-config.h
 /config.mk
 /debug-*/
