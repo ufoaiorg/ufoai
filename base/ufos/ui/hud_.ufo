@@ -1,8 +1,7 @@
 --!usr/bin/lua
 
-if (ufox == nil) then
-	require("ufox.ufo")
-end
+require("ufox.lua")
+
 
 -- ==================
 -- HUD INTERFACE
@@ -336,7 +335,7 @@ ufox.build_window {
 	{
 		class = "confunc",
 		name = "clean_firemode_entries",
-		on_click = function (this) 
+		on_click = function (this)
 			this:root():child("firemodes"):child("dock"):remove_children()
 		end
 	},
@@ -372,7 +371,7 @@ ufox.build_window {
 		name = "firemodes",
 		layout = ufo.LAYOUT_PACK,
 		size = {1024, 768},
-	
+
 		{
 			class = "panel",
 			name = "dock",

@@ -1,6 +1,7 @@
 --!usr/bin/lua
 
-require "ufox.ufo"
+require "ufox.lua"
+
 
 --[[
  - ==================

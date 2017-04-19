@@ -1,8 +1,7 @@
 --!usr/bin/lua
 
-if (ufox == nil) then
-	require("ufox.ufo")
-end
+require("ufox.lua")
+
 
 --[[
  - @brief Constructs EndGame screen (player won the campaign)

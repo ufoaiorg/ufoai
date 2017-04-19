@@ -1,8 +1,7 @@
 --!usr/bin/lua
 
-if (ufox == nil) then
-	require("ufox.ufo")
-end
+require("ufox.lua")
+
 
 -- ===============
 -- DEFAULT UI2 HUD
@@ -693,11 +692,11 @@ local hud_default_window = ufox.build_window{
 					if ufo.findvar("sldcurhand" .. ufo.findvar("cl_selected"):as_string()):as_string() == "r" then
 						if ufo.findvar("mn_lweapon"):as_string() == "" then
 							this:parent():child("oweapon"):set_invisible(true)
-						else 
+						else
 							this:parent():child("oweapon"):set_invisible(false)
 						end
 						this:parent():show_rhand()
-					else 
+					else
 						if ufo.findvar("mn_rweapon"):as_string() == "" then
 							this:parent():child("oweapon"):set_invisible(true)
 						else
