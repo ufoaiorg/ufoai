@@ -226,7 +226,7 @@ void uiWindowNode::onWindowOpened (uiNode_t* node, linkedList_t* params)
 		UI_ExecuteEventActionsEx(node, EXTRADATA(node).onWindowOpened, params);
 	}
 	if (EXTRADATA(node).lua_onWindowOpened != LUA_NOREF) {
-		UI_ExecuteLuaEventScript(node, EXTRADATA(node).lua_onWindowOpened);
+		UI_ExecuteLuaEventScript_ParamList(node, EXTRADATA(node).lua_onWindowOpened, params);
 	}
 
 	UI_Invalidate(node);

@@ -42,6 +42,7 @@ void UI_CallHandler_OnLoad (lua_State* L, const char* key);
 /* lua script functions */
 bool UI_ParseAndLoadLuaScript (const char* name, const char** text);
 bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event);
+bool UI_ExecuteLuaEventScript_ParamList (uiNode_t* node, LUA_EVENT event, linkedList_t* params);
 bool UI_ExecuteLuaEventScript_ReturnBool (uiNode_t* node, LUA_EVENT event, bool &result);
 bool UI_ExecuteLuaEventScript_XY (uiNode_t* node, LUA_EVENT event, int x, int y);
 bool UI_ExecuteLuaEventScript_DxDy (uiNode_t* node, LUA_EVENT event, int dx, int dy);

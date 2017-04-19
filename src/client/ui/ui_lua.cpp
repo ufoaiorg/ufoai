@@ -81,6 +81,31 @@ bool UI_ExecuteLuaEventScript (uiNode_t* node, LUA_EVENT event)
 }
 
 /**
+ * @brief Executes a lua event handler with string parameter list.
+ * @param[in] node The node the event handler is associated with.
+ * @param[in] event The event to execute.
+ * @param[in] params LinkedLst of strings
+ * @return True if the operation succeeds, false otherwise.
+ * @note The signature of the event handler in lua is: onevent(sender, ...)
+ */
+bool UI_ExecuteLuaEventScript_ParamList (uiNode_t* node, LUA_EVENT event, linkedList_t* params)
+{
+	lua_rawgeti(CL_GetLuaState(), LUA_REGISTRYINDEX, event); /* push event function on lua stack */
+	SWIG_NewPointerObj(CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
+	int nparams = 0;
+	LIST_Foreach(params, char, parameter) {
+		lua_pushstring(CL_GetLuaState(), parameter);
+		nparams++;
+	}
+	if (lua_pcall(CL_GetLuaState(), nparams + 1, 0, 0) != 0) {
+		Com_Printf("UI_ExecuteLuaEventScript\n");
+		Com_Printf ("lua error(0) [node=%s, behaviour=%s]: %s\n", UI_GetPath(node), node->behaviour->name, lua_tostring(CL_GetLuaState(), -1));
+		return false;
+	}
+	return true;
+}
+
+/**
  * @brief Executes a lua event handler and returns the result as a boolean.
  * @param[in] node The node the event handler is associated with.
  * @param[in] event The event to execute.
