@@ -81,8 +81,12 @@ window market  {
 					{
 						{
 							onClick {
-								*cvar:ui_market_category = "primary"
-								cmd "ui_market_fill primary;"
+								if ( *cvar:ui_market_category eq "primary" ) {
+									*cvar:ui_market_category = ""
+								} else {
+									*cvar:ui_market_category = "primary"
+								}
+								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
 							}
 						}
 						string name { string "_Primary Weapons" }
@@ -92,8 +96,12 @@ window market  {
 					{
 						{
 							onClick {
-								*cvar:ui_market_category = "secondary"
-								cmd "ui_market_fill secondary;"
+								if ( *cvar:ui_market_category eq "secondary" ) {
+									*cvar:ui_market_category = ""
+								} else {
+									*cvar:ui_market_category = "secondary"
+								}
+								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
 							}
 						}
 						string name { string "_Secondary Weapons" }
@@ -103,8 +111,12 @@ window market  {
 					{
 						{
 							onClick {
-								*cvar:ui_market_category = "heavy"
-								cmd "ui_market_fill heavy;"
+								if ( *cvar:ui_market_category eq "heavy" ) {
+									*cvar:ui_market_category = ""
+								} else {
+									*cvar:ui_market_category = "heavy"
+								}
+								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
 							}
 						}
 						string name { string "_Heavy Weapons" }
@@ -114,8 +126,12 @@ window market  {
 					{
 						{
 							onClick {
-								*cvar:ui_market_category = "misc"
-								cmd "ui_market_fill misc;"
+								if ( *cvar:ui_market_category eq "misc" ) {
+									*cvar:ui_market_category = ""
+								} else {
+									*cvar:ui_market_category = "misc"
+								}
+								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
 							}
 						}
 						string name { string "_Equipment" }
@@ -125,8 +141,12 @@ window market  {
 					{
 						{
 							onClick {
-								*cvar:ui_market_category = "armour"
-								cmd "ui_market_fill armour;"
+								if ( *cvar:ui_market_category eq "armour" ) {
+									*cvar:ui_market_category = ""
+								} else {
+									*cvar:ui_market_category = "armour"
+								}
+								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
 							}
 						}
 						string name { string "_Armour" }
@@ -136,8 +156,12 @@ window market  {
 					{
 						{
 							onClick {
-								*cvar:ui_market_category = "craftitem"
-								cmd "ui_market_fill craftitem;"
+								if ( *cvar:ui_market_category eq "craftitem" ) {
+									*cvar:ui_market_category = ""
+								} else {
+									*cvar:ui_market_category = "craftitem"
+								}
+								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
 							}
 						}
 						string name { string "_Aircraft Equipment" }
@@ -147,8 +171,12 @@ window market  {
 					{
 						{
 							onClick {
-								*cvar:ui_market_category = "aircraft"
-								cmd "ui_market_fill aircraft;"
+								if ( *cvar:ui_market_category eq "aircraft" ) {
+									*cvar:ui_market_category = ""
+								} else {
+									*cvar:ui_market_category = "aircraft"
+								}
+								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
 							}
 						}
 						string name { string "_Aircraft" }
@@ -158,8 +186,12 @@ window market  {
 					{
 						{
 							onClick {
-								*cvar:ui_market_category = "implant"
-								cmd "ui_market_fill implant;"
+								if ( *cvar:ui_market_category eq "implant" ) {
+									*cvar:ui_market_category = ""
+								} else {
+									*cvar:ui_market_category = "implant"
+								}
+								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
 							}
 						}
 						string name { string "_Implants" }
@@ -169,8 +201,12 @@ window market  {
 					{
 						{
 							onClick {
-								*cvar:ui_market_category = "dummy"
-								cmd "ui_market_fill dummy;"
+								if ( *cvar:ui_market_category eq "dummy" ) {
+									*cvar:ui_market_category = ""
+								} else {
+									*cvar:ui_market_category = "dummy"
+								}
+								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
 							}
 						}
 						string name { string "_Other Items" }
@@ -180,8 +216,12 @@ window market  {
 					{
 						{
 							onClick {
-								*cvar:ui_market_category = "ugvitem"
-								cmd "ui_market_fill ugvitem;"
+								if ( *cvar:ui_market_category eq "ugvitem" ) {
+									*cvar:ui_market_category = ""
+								} else {
+									*cvar:ui_market_category = "ugvitem"
+								}
+								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
 							}
 						}
 						string name { string "_Unmanned Ground Vehicles" }
@@ -230,37 +270,40 @@ window market  {
 					 * <8> tooltip for disabled entries, "-" otherwise
 					 */
 					confunc ui_market_add {
-						//cmd "echo <cvar:ui_market_category>"
-						call *node:parent.<cvar:ui_market_category>@createChild("item_<1>", "MarketItem")
+						if ( *cvar:ui_market_category ne "" ) {
 
-						// Temporary implementation for layout
-						*node:parent.<cvar:ui_market_category>.item_<1>.id@string = <1>
-						*node:parent.<cvar:ui_market_category>.item_<1>.name@string = <2>
-						*node:parent.<cvar:ui_market_category>.item_<1>.base@string = <3>
-						*node:parent.<cvar:ui_market_category>.item_<1>.market@string = <4>
-						*node:parent.<cvar:ui_market_category>.item_<1>.buy_price@string = "<5>c"
-						*node:parent.<cvar:ui_market_category>.item_<1>.buy@tooltip = "Purchase for <5> credits each"
-						*node:parent.<cvar:ui_market_category>.item_<1>.sell_price@string = "<6>c"
-						*node:parent.<cvar:ui_market_category>.item_<1>.sell@tooltip = "Sell for <6> credits each"
+							//cmd "echo <cvar:ui_market_category>"
+							call *node:parent.<cvar:ui_market_category>@createChild("item_<1>", "MarketItem")
 
-						// Set buy/sell spinners
-						*node:parent.<cvar:ui_market_category>.item_<1>.buy@min = 0
-						*node:parent.<cvar:ui_market_category>.item_<1>.buy@current = <3>
-						*node:parent.<cvar:ui_market_category>.item_<1>.buy@max = ( <3> + <4> )
-						*node:parent.<cvar:ui_market_category>.item_<1>.sell@min = 0
-						*node:parent.<cvar:ui_market_category>.item_<1>.sell@current = <3>
-						*node:parent.<cvar:ui_market_category>.item_<1>.sell@max = ( <3> + <4> )
+							// Temporary implementation for layout
+							*node:parent.<cvar:ui_market_category>.item_<1>.id@string = <1>
+							*node:parent.<cvar:ui_market_category>.item_<1>.name@string = <2>
+							*node:parent.<cvar:ui_market_category>.item_<1>.base@string = <3>
+							*node:parent.<cvar:ui_market_category>.item_<1>.market@string = <4>
+							*node:parent.<cvar:ui_market_category>.item_<1>.buy_price@string = "<5>c"
+							*node:parent.<cvar:ui_market_category>.item_<1>.buy@tooltip = "Purchase for <5> credits each"
+							*node:parent.<cvar:ui_market_category>.item_<1>.sell_price@string = "<6>c"
+							*node:parent.<cvar:ui_market_category>.item_<1>.sell@tooltip = "Sell for <6> credits each"
 
-						// Set autosell
-						if ( param7 eq "-" ) {
-							*node:parent.<cvar:ui_market_category>.item_<1>.autosell@invis = true
-						} else {
-							*node:parent.<cvar:ui_market_category>.item_<1>.autosell@current = <7>
+							// Set buy/sell spinners
+							*node:parent.<cvar:ui_market_category>.item_<1>.buy@min = 0
+							*node:parent.<cvar:ui_market_category>.item_<1>.buy@current = <3>
+							*node:parent.<cvar:ui_market_category>.item_<1>.buy@max = ( <3> + <4> )
+							*node:parent.<cvar:ui_market_category>.item_<1>.sell@min = 0
+							*node:parent.<cvar:ui_market_category>.item_<1>.sell@current = <3>
+							*node:parent.<cvar:ui_market_category>.item_<1>.sell@max = ( <3> + <4> )
+
+							// Set autosell
+							if ( param7 eq "-" ) {
+								*node:parent.<cvar:ui_market_category>.item_<1>.autosell@invis = true
+							} else {
+								*node:parent.<cvar:ui_market_category>.item_<1>.autosell@current = <7>
+							}
+
+							// Increase height of category panel
+							*node:parent.category_height@integer = ( *node:parent.category_height@integer + 30 )
+							*node:parent.<cvar:ui_market_category>@size = "713 <node:parent.category_height@integer>"
 						}
-
-						// Increase height of category panel
-						*node:parent.category_height@integer = ( *node:parent.category_height@integer + 30 )
-						*node:parent.<cvar:ui_market_category>@size = "713 <node:parent.category_height@integer>"
 					}
 					/*
 					 * @brief Select an item from the list
