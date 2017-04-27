@@ -1,5 +1,6 @@
 --!usr/bin/lua
-require("ufox.ufo")
+
+require("ufox.lua")
 
 test_inheritedconfunc_popup_push_llua = {
 	name = "test_inheritedconfunc_popup_push_llua",
