@@ -3,6 +3,7 @@
 --[[
 -- @file
 -- @brief LUA extensions to the UI API
+-- @note Only generic functions should be here any specific implementation (like new nodes) should be separated
 --]]
 
 --[[

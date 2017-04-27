@@ -441,6 +441,8 @@
 		<Unit filename="../../src/client/cgame/campaign/cp_research_callbacks.h" />
 		<Unit filename="../../src/client/cgame/campaign/cp_save.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_save.h" />
+		<Unit filename="../../src/client/cgame/campaign/cp_save_callbacks.cpp" />
+		<Unit filename="../../src/client/cgame/campaign/cp_save_callbacks.h" />
 		<Unit filename="../../src/client/cgame/campaign/cp_statistics.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_statistics.h" />
 		<Unit filename="../../src/client/cgame/campaign/cp_team.cpp" />

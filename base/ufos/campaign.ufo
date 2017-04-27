@@ -186,6 +186,7 @@ campaign hard
 campaign main
 {
 	name			"_Standard Campaign"
+	default			true
 	text			"*msgid:standard_campaign_txt"
 	team			"phalanx"
 	soldiers		16

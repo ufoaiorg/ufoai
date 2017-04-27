@@ -319,14 +319,15 @@ typedef struct salary_s {
 
 /** campaign definition */
 typedef struct campaign_s {
-	int idx;					/**< own index in global campaign array */
+	int idx;				/**< own index in global campaign array */
 	char id[MAX_VAR];			/**< id of the campaign */
 	char name[MAX_VAR];			/**< name of the campaign */
-	int team;					/**< what team can play this campaign */
-	char researched[MAX_VAR];	/**< name of the researched tech list to use on campaign start */
-	char soldierEquipment[MAX_VAR];	/**< name of the equipment list that is used to equip soldiers on crafts that are added to the first base */
-	char equipment[MAX_VAR];	/**< name of the equipment list to use on campaign start */
-	char market[MAX_VAR];		/**< name of the market list containing initial items on market */
+	bool defaultCampaign;			/**< if this is the default campaign */
+	int team;				/**< what team can play this campaign */
+	char researched[MAX_VAR];		/**< name of the researched tech list to use on campaign start */
+	char soldierEquipment[MAX_VAR];		/**< name of the equipment list that is used to equip soldiers on crafts that are added to the first base */
+	char equipment[MAX_VAR];		/**< name of the equipment list to use on campaign start */
+	char market[MAX_VAR];			/**< name of the market list containing initial items on market */
 	char asymptoticMarket[MAX_VAR];		/**< name of the market list containing items on market at the end of the game */
 	const equipDef_t* marketDef;		/**< market definition for this campaign (how many items on the market) containing initial items */
 	const equipDef_t* asymptoticMarketDef;	/**< market definition for this campaign (how many items on the market) containing finale items */
@@ -335,14 +336,14 @@ typedef struct campaign_s {
 	int soldiers;				/**< start with x soldiers */
 	int scientists;				/**< start with x scientists */
 	int workers;				/**< start with x workers */
-	int pilots;					/**< start with x pilots */
-	int ugvs;					/**< start with x ugvs (robots) */
+	int pilots;				/**< start with x pilots */
+	int ugvs;				/**< start with x ugvs (robots) */
 	int credits;				/**< start with x credits */
 	int num;
-	signed int difficulty;		/**< difficulty level -4 - 4 */
+	signed int difficulty;			/**< difficulty level -4 - 4 */
 	float minhappiness;			/**< minimum value of mean happiness before the game is lost */
-	int negativeCreditsUntilLost;	/**< bankrupt - negative credits until you've lost the game */
-	int maxAllowedXVIRateUntilLost;	/**< 0 - 100 - the average rate of XVI over all nations before you've lost the game */
+	int negativeCreditsUntilLost;		/**< bankrupt - negative credits until you've lost the game */
+	int maxAllowedXVIRateUntilLost;		/**< 0 - 100 - the average rate of XVI over all nations before you've lost the game */
 	bool visible;				/**< visible in campaign menu? */
 	date_t date;				/**< starting date for this campaign */
 	int basecost;				/**< base building cost for empty base */
@@ -357,13 +358,13 @@ typedef struct campaign_s {
 	float componentRate;			/**< Component cost percentage to build an object in the workshop */
 	int minMissions;			/**< Minimum Missions per Interest Level */
 	int maxMissions;			/**< Maximum Missions per Interest Level */
-	float ufoReductionRate;		/**< is used in the equation which spawns UFOs to determine the probability that a UFO will not be spawned.
-								 * It works like this: the game says: 10 UFOs can be spawned in this cycle. For each UFO it picks a number between 0.0 and 1.0.
-								 * If the number is higher than ufoReductionRate, it is spawned. Otherwise it is not. So higher numbers lead to fewer UFOs. */
+	float ufoReductionRate;			/**< is used in the equation which spawns UFOs to determine the probability that a UFO will not be spawned.
+							 * It works like this: the game says: 10 UFOs can be spawned in this cycle. For each UFO it picks a number between 0.0 and 1.0.
+							 * If the number is higher than ufoReductionRate, it is spawned. Otherwise it is not. So higher numbers lead to fewer UFOs. */
 	float employeeRate;			/**< Easier difficulties could offer more monthly recruits and harder difficulties less */
 	int initialInterest;
-	int alienBaseInterest;		/**< the alien interest level at which aliens begin trying to build bases. */
-	linkedList_t* initialCraft;	/**< List of aircraft the player starts the campaign with */
+	int alienBaseInterest;			/**< the alien interest level at which aliens begin trying to build bases. */
+	linkedList_t* initialCraft;		/**< List of aircraft the player starts the campaign with */
 } campaign_t;
 
 int CP_GetSalaryBaseEmployee(const salary_t* salary, employeeType_t type);

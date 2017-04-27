@@ -2,7 +2,6 @@
 
 require "ufox.lua"
 
-
 --[[
  - ==================
  - MAIN WINDOW
@@ -74,8 +73,8 @@ do
 
 				text = "_CAMPAIGN",
 				on_click = function (sender)
-						ufo.cmd("ui_push campaign;")
-					end
+					ufo.cmd("game_setmode campaign; ui_push campaign;")
+				end
 			},
 
 			{
@@ -85,8 +84,8 @@ do
 
 				text = "_SKIRMISH",
 				on_click = function (sender)
-						ufo.cmd("ui_push skirmish;")
-					end
+					ufo.cmd("game_setmode skirmish; ui_push skirmish;")
+				end
 			},
 
 			{
@@ -96,8 +95,8 @@ do
 
 				text = "_MULTIPLAYER",
 				on_click = function (sender)
-						ufo.cmd("ui_push multiplayer;")
-					end
+					ufo.cmd("game_setmode multiplayer; ui_push multiplayer;")
+				end
 			},
 
 			{
@@ -107,8 +106,8 @@ do
 
 				text = "_OPTIONS",
 				on_click = function (sender)
-						ufo.cmd("ui_push options;")
-					end
+					ufo.cmd("ui_push options;")
+				end
 			},
 
 			{
@@ -118,8 +117,8 @@ do
 
 				text = "_TUTORIALS",
 				on_click = function (sender)
-						ufo.cmd("ui_push tutorials;")
-					end
+					ufo.cmd("ui_push tutorials;")
+				end
 			},
 
 			{
@@ -129,8 +128,8 @@ do
 
 				text = "_DEVELOPERS",
 				on_click = function (sender)
-						ufo.cmd ("seq_start developers;")
-					end
+					ufo.cmd ("seq_start developers;")
+				end
 			},
 
 			{
@@ -140,8 +139,8 @@ do
 
 				text = "_EXIT",
 				on_click = function (sender)
-						ufo.cmd("quit;")
-					end
+					ufo.cmd("quit;")
+				end
 			}
 		},
 
@@ -164,24 +163,23 @@ do
 			name = "game_addmode_singleplayer",
 
 			on_click = function(sender)
-				end
+			end
 		},
 
 		on_windowopened = function (sender)
-				ufo.cmd("music_change main;")
-				-- @TODO: activate this again
-				-- ufo.cmd("ui_push_child popup_tipoftheday main;")
-				ufo.cmd("check_cvars;")
-				if (ufo.getvar("cl_introshown"):as_integer() ~= 1) then
-					ufo.cmd("ui_push intro;")
-					ufo.getvar("cl_introshown"):set_value(1)
-				end
+			ufo.cmd("music_change main;")
+			-- @TODO: activate this again
+			-- ufo.cmd("ui_push_child popup_tipoftheday main;")
+			ufo.cmd("check_cvars;")
+			if (ufo.getvar("cl_introshown"):as_integer() ~= 1) then
+				ufo.cmd("ui_push intro;")
+				ufo.getvar("cl_introshown"):set_value(1)
 			end
+		end
 	}
 
 	-- create the window from the tree structure
 	window = ufox.build_window (tree)
-
 end
 
 --[[

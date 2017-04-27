@@ -33,6 +33,7 @@
 #include "cp_geoscape.h"
 #include "../../battlescape/cl_hud.h"
 #include "cp_mission_callbacks.h"
+#include "cp_save_callbacks.h"
 
 const cgame_import_t* cgi;
 
@@ -101,15 +102,12 @@ static inline const char* CP_ToDifficultyName (const int difficulty)
  */
 static void GAME_CP_GetCampaigns_f (void)
 {
-	uiNode_t* campaignOption = nullptr;
-
+	cgi->UI_ExecuteConfunc("ui_clear_campaigns");
 	for (int i = 0; i < ccs.numCampaigns; i++) {
 		const campaign_t* c = &ccs.campaigns[i];
 		if (c->visible)
-			cgi->UI_AddOption(&campaignOption, "", va("_%s", c->name), c->id);
+			cgi->UI_ExecuteConfunc("ui_add_campaign %s \"%s\" \"%s\"", c->id, c->name, c->defaultCampaign ? "default" : "");
 	}
-
-	cgi->UI_RegisterOption(OPTION_CAMPAIGN_LIST, campaignOption);
 }
 
 #define MAXCAMPAIGNTEXT 4096
@@ -669,10 +667,13 @@ void GAME_CP_InitStartup (void)
 	/* reset campaign data */
 	CP_ResetCampaignData();
 	CP_ParseCampaignData();
+
+	SAV_InitCallbacks();
 }
 
 void GAME_CP_Shutdown (void)
 {
+	SAV_ShutdownCallbacks();
 	cgi->Cmd_TableRemoveList(cgameCallbacks);
 
 	CP_Shutdown();

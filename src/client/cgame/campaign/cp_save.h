@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2015 UFO: Alien Invasion.
+Copyright (C) 2002-2017 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -24,14 +24,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#include <zlib.h>
 #include "../../../common/msg.h"
 #include "../../../common/xml.h"
 
-#define FOREACH_XMLNODE(var, node, name) \
-	for (xmlNode_t* var = cgi->XML_GetNode((node), name); var; var = cgi->XML_GetNextNode(var, node, name))
 
 #define MAX_SAVESUBSYSTEMS 32
 #define SAVE_FILE_VERSION 4
+#define SAVEGAME_EXTENSION "savx"
+
+typedef struct saveFileHeader_s {
+	uint32_t version;		/**< which savegame version */
+	uint32_t compressed;		/**< is this file compressed via zlib */
+	uint32_t subsystems;		/**< amount of subsystems that were saved in this savegame */
+	uint32_t dummy[13];		/**< maybe we have to extend this later */
+	char gameVersion[16];		/**< game version that was used to save this file */
+	char name[32];			/**< savefile name */
+	char gameDate[32];		/**< internal game date */
+	char realDate[32];		/**< real datestring when the user saved this game */
+	uint32_t xmlSize;
+} saveFileHeader_t;
 
 typedef struct saveSubsystems_s {
 	const char* name;
@@ -39,7 +51,8 @@ typedef struct saveSubsystems_s {
 	bool (*load) (xmlNode_t* parent);	/**< return false if loading failed */
 } saveSubsystems_t;
 
-#include <zlib.h>
+#define FOREACH_XMLNODE(var, node, name) \
+	for (xmlNode_t* var = cgi->XML_GetNode((node), name); var; var = cgi->XML_GetNextNode(var, node, name))
 
 void SAV_Init(void);
 bool SAV_AddSubsystem(saveSubsystems_t* subsystem);
@@ -89,5 +102,7 @@ bool B_PostLoadInit(void);
 bool AIR_PostLoadInit(void);
 bool PR_PostLoadInit(void);
 
+bool SAV_LoadHeader(const char* filename, saveFileHeader_t* header);
 bool SAV_GameLoad(const char* file, const char** error);
-void SAV_GameDelete_f(void);
+bool SAV_GameSaveAllowed(char** error);
+bool SAV_GameSave(const char* filename, const char* comment, char** error);

@@ -232,6 +232,7 @@
 		<Unit filename="../../src/client/cgame/campaign/cp_research.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_research_callbacks.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_save.cpp" />
+		<Unit filename="../../src/client/cgame/campaign/cp_save_callbacks.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_statistics.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_team.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_team_callbacks.cpp" />

@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2015 UFO: Alien Invasion.
+Copyright (C) 2002-2017 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -27,29 +27,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_save.h"
 #include "cp_time.h"
-#include "cp_popup.h"
 #include "cp_xvi.h" /* CP_UpdateXVIMapButton */
 #include "save/save.h"
-#include "missions/cp_mission_baseattack.h"
-
-#define SAVEGAME_EXTENSION "savx"
-
-typedef struct saveFileHeader_s {
-	uint32_t version;			/**< which savegame version */
-	uint32_t compressed;		/**< is this file compressed via zlib */
-	uint32_t subsystems;		/**< amount of subsystems that were saved in this savegame */
-	uint32_t dummy[13];			/**< maybe we have to extend this later */
-	char gameVersion[16];		/**< game version that was used to save this file */
-	char name[32];				/**< savefile name */
-	char gameDate[32];			/**< internal game date */
-	char realDate[32];			/**< real datestring when the user saved this game */
-	uint32_t xmlSize;
-} saveFileHeader_t;
 
 static saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 static int saveSubsystemsAmount;
 static cvar_t* save_compressed;
-static cvar_t* cl_lastsave;
 
 /**
  * @brief Perform actions after loading a game for single player campaign
@@ -123,6 +106,44 @@ static bool SAV_VerifyHeader (saveFileHeader_t const * const header)
 }
 
 /**
+ * @brief Loads and verifies a savegame header
+ * @param[in] filename Name of the file to load header from (without path and extension)
+ * @param[out] header Pointer to the header structure to fill
+ * @return @c true on success @c false on failure
+ */
+bool SAV_LoadHeader (const char* filename, saveFileHeader_t* header)
+{
+	assert(filename);
+	assert(header);
+
+	char path[MAX_OSPATH];
+	cgi->GetRelativeSavePath(path, sizeof(path));
+	Q_strcat(path, sizeof(path), "%s.%s", filename, SAVEGAME_EXTENSION);
+	ScopedFile f;
+	cgi->FS_OpenFile(path, &f, FILE_READ);
+	if (!f) {
+		cgi->Com_Printf("Couldn't open file '%s'\n", filename);
+		return false;
+	}
+
+	if (cgi->FS_Read(header, sizeof(saveFileHeader_t), &f) != sizeof(saveFileHeader_t)) {
+		cgi->Com_Printf("Warning: Could not read %lu bytes from savefile %s.%s\n", sizeof(saveFileHeader_t), filename, SAVEGAME_EXTENSION);
+		return false;
+	}
+
+	header->compressed = LittleLong(header->compressed);
+	header->version = LittleLong(header->version);
+	header->xmlSize = LittleLong(header->xmlSize);
+
+	if (!SAV_VerifyHeader(header)) {
+		cgi->Com_Printf("The Header of the savegame '%s.%s' is corrupted.\n", filename, SAVEGAME_EXTENSION);
+		return false;
+	}
+
+	return true;
+}
+
+/**
  * @brief Loads the given savegame from an xml File.
  * @return true on load success false on failures
  * @param[in] file The Filename to load from (without extension)
@@ -132,7 +153,6 @@ bool SAV_GameLoad (const char* file, const char** error)
 {
 	char filename[MAX_OSPATH];
 
-	/* open file */
 	cgi->GetRelativeSavePath(filename, sizeof(filename));
 	Q_strcat(filename, sizeof(filename), "%s.%s", file, SAVEGAME_EXTENSION);
 	ScopedFile f;
@@ -164,10 +184,10 @@ bool SAV_GameLoad (const char* file, const char** error)
 	}
 
 	Com_Printf("Loading savegame\n"
-			"...version: %i\n"
-			"...game version: %s\n"
-			"...xml Size: %i, compressed? %c\n",
-			header.version, header.gameVersion, header.xmlSize, header.compressed ? 'y' : 'n');
+		"...version: %i\n"
+		"...game version: %s\n"
+		"...xml Size: %i, compressed? %c\n",
+		header.version, header.gameVersion, header.xmlSize, header.compressed ? 'y' : 'n');
 
 	xmlNode_t* topNode;
 	if (header.compressed) {
@@ -242,22 +262,38 @@ bool SAV_GameLoad (const char* file, const char** error)
 }
 
 /**
+ * @brief Determines if saving is allowed
+ */
+bool SAV_GameSaveAllowed (char** error = nullptr)
+{
+	if (!CP_IsRunning()) {
+		if (error)
+			*error = _("Saving is not possible: Campaign is not active.");
+		return false;
+	}
+	if (cgi->CL_OnBattlescape()) {
+		if (error)
+			*error = _("Saving is not possible: Cannot save the Battlescape.");
+		return false;
+	}
+	if (!B_AtLeastOneExists()) {
+		if (error)
+			*error = _("Saving is not possible: No base is built.");
+		return false;
+	}
+	return true;
+}
+
+/**
  * @brief This is a savegame function which stores the game in xml-Format.
  * @param[in] filename The Filename to save to (without extension)
  * @param[in] comment Description of the savegame
  * @param[out] error On failure an errormessage may be set.
  */
-static bool SAV_GameSave (const char* filename, const char* comment, char** error)
+bool SAV_GameSave (const char* filename, const char* comment, char** error)
 {
-	if (!CP_IsRunning()) {
-		*error = _("No campaign active.");
-		Com_Printf("Error: No campaign active.\n");
-		return false;
-	}
-
-	if (!B_AtLeastOneExists()) {
-		*error = _("Nothing to save yet.");
-		Com_Printf("Error: Nothing to save yet.\n");
+	if (!SAV_GameSaveAllowed(error)) {
+		Com_Printf(*error);
 		return false;
 	}
 
@@ -351,182 +387,6 @@ static bool SAV_GameSave (const char* filename, const char* comment, char** erro
 }
 
 /**
- * @brief Console command binding for save function
- * @sa SAV_GameSave
- * @note called via 'game_save' command
- */
-static void SAV_GameSave_f (void)
-{
-	/* get argument */
-	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <filename> <comment|*cvar>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	if (!CP_IsRunning()) {
-		Com_Printf("No running game - no saving...\n");
-		return;
-	}
-
-	/* get comment */
-	char comment[MAX_VAR] = "";
-	if (cgi->Cmd_Argc() > 2) {
-		const char* arg = cgi->Cmd_Argv(2);
-		Q_strncpyz(comment, arg, sizeof(comment));
-	}
-
-	char* error = nullptr;
-	const bool result = SAV_GameSave(cgi->Cmd_Argv(1), comment, &error);
-	if (result)
-		return;
-
-	if (error)
-		CP_Popup(_("Note"), "%s\n%s", _("Error saving game."), error);
-	else
-		CP_Popup(_("Note"), "%s\n%s", "%s\n", _("Error saving game."));
-}
-
-/**
- * @brief Removes savegame file
- */
-void SAV_GameDelete_f (void)
-{
-	if (cgi->Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <filename>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-	const char* savegame = cgi->Cmd_Argv(1);
-	char buf[MAX_OSPATH];
-
-	cgi->GetAbsoluteSavePath(buf, sizeof(buf));
-	Q_strcat(buf, sizeof(buf), "%s.%s", savegame, SAVEGAME_EXTENSION);
-
-	cgi->FS_RemoveFile(buf);
-}
-
-/**
- * @brief Init menu cvar for one savegame slot given by actual index.
- * @param[in] idx the savegame slot to retrieve gamecomment for
- * @sa SAV_GameReadGameComments_f
- */
-static void SAV_GameReadGameComment (const int idx)
-{
-	char filename[MAX_OSPATH];
-	cgi->GetRelativeSavePath(filename, sizeof(filename));
-	Q_strcat(filename, sizeof(filename), "slot%i.%s", idx, SAVEGAME_EXTENSION);
-
-	ScopedFile f;
-	cgi->FS_OpenFile(filename, &f, FILE_READ);
-	if (!f) {
-		cgi->UI_ExecuteConfunc("update_game_info %i \"\" \"\" \"\" \"\"", idx);
-		return;
-	}
-
-	saveFileHeader_t header;
-	if (cgi->FS_Read(&header, sizeof(header), &f) != sizeof(header))
-		Com_Printf("Warning: Savefile header may be corrupted\n");
-
-	header.compressed = LittleLong(header.compressed);
-	header.version = LittleLong(header.version);
-	header.xmlSize = LittleLong(header.xmlSize);
-	header.subsystems = LittleLong(header.subsystems);
-
-	const char* basename = Com_SkipPath(filename);
-	if (!SAV_VerifyHeader(&header)) {
-		Com_Printf("Savegame header for slot%d is corrupted!\n", idx);
-		return;
-	}
-
-	cgi->UI_ExecuteConfunc("update_game_info %i \"%s\" \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate, basename);
-}
-
-/**
- * @brief Console commands to read the comments from savegames
- * @note The comment is the part of the savegame header that you type in at saving
- * for reidentifying the savegame
- * @sa SAV_GameLoad_f
- * @sa SAV_GameLoad
- * @sa SAV_GameSaveNameCleanup_f
- * @sa SAV_GameReadGameComment
- */
-static void SAV_GameReadGameComments_f (void)
-{
-	if (cgi->Cmd_Argc() < 1) {
-		Com_Printf("usage: %s {id}\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	if (cgi->Cmd_Argc() == 2) {
-		int idx = atoi(cgi->Cmd_Argv(1));
-		SAV_GameReadGameComment(idx);
-	} else {
-		/* read all game comments */
-		for (int i = 0; i < 8; i++) {
-			SAV_GameReadGameComment(i);
-		}
-	}
-}
-
-/**
- * @brief Console command to load a savegame
- * @sa SAV_GameLoad
- */
-static void SAV_GameLoad_f (void)
-{
-	const char* error = nullptr;
-
-	/* get argument */
-	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <filename>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	/* Check if savegame exists */
-	char buf[MAX_OSPATH];
-	cgi->GetRelativeSavePath(buf, sizeof(buf));
-	if (cgi->FS_CheckFile("%s%s.%s", buf, cgi->Cmd_Argv(1), SAVEGAME_EXTENSION) <= 0) {
-		Com_Printf("savegame file '%s' doesn't exist or an empty file\n", cgi->Cmd_Argv(1));
-		return;
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "load file '%s'\n", cgi->Cmd_Argv(1));
-
-	/* load and go to map */
-	if (!SAV_GameLoad(cgi->Cmd_Argv(1), &error)) {
-		cgi->Cbuf_Execute(); /* wipe outstanding campaign commands */
-		cgi->UI_Popup(_("Error"), "%s\n%s", _("Error loading game."), error ? error : "");
-		cgi->Cmd_ExecuteString("game_exit");
-	}
-}
-
-/**
- * @brief Loads the last saved game
- * @note At saving the archive cvar cl_lastsave was set to the latest savegame
- * @sa SAV_GameLoad
- */
-static void SAV_GameContinue_f (void)
-{
-	const char* error = nullptr;
-
-	if (cgi->CL_OnBattlescape()) {
-		cgi->UI_PopWindow(false);
-		return;
-	}
-
-	if (!CP_IsRunning()) {
-		/* try to load the last saved campaign */
-		if (!SAV_GameLoad(cl_lastsave->string, &error)) {
-			cgi->Cbuf_Execute(); /* wipe outstanding campaign commands */
-			cgi->UI_Popup(_("Error"), "%s\n%s", _("Error loading game."), error ? error : "");
-			cgi->Cmd_ExecuteString("game_exit");
-		}
-	} else {
-		/* just continue the current running game */
-		cgi->UI_PopWindow(false);
-	}
-}
-
-/**
  * @brief Adds a subsystem to the saveSubsystems array
  * @note The order is _not_ important
  * @sa SAV_Init
@@ -543,63 +403,6 @@ bool SAV_AddSubsystem (saveSubsystems_t* subsystem)
 
 	Com_Printf("added %s subsystem\n", subsystem->name);
 	return true;
-}
-
-/**
- * @brief Checks whether there is a quicksave file and opens the quickload menu if there is one
- * @note This does not work while we are in the battlescape
- */
-static void SAV_GameQuickLoadInit_f (void)
-{
-	if (cgi->CL_OnBattlescape()) {
-		return;
-	}
-
-	char buf[MAX_OSPATH];
-	cgi->GetRelativeSavePath(buf, sizeof(buf));
-	if (cgi->FS_CheckFile("%sslotquick.%s", buf, SAVEGAME_EXTENSION) > 0) {
-		cgi->UI_PushWindow("quickload");
-	}
-}
-
-/**
- * @brief Saves to the quick save slot
- */
-static void SAV_GameQuickSave_f (void)
-{
-	if (!CP_IsRunning())
-		return;
-	if (cgi->CL_OnBattlescape())
-		return;
-
-	char* error = nullptr;
-	bool result = SAV_GameSave("slotquick", _("QuickSave"), &error);
-	if (!result)
-		Com_Printf("Error saving the xml game: %s\n", error ? error : "");
-	else
-		MS_AddNewMessage(_("Quicksave"), _("Campaign was successfully saved."), MSG_INFO);
-}
-
-/**
- * @brief Loads the quick save slot
- * @sa SAV_GameQuickSave_f
- */
-static void SAV_GameQuickLoad_f (void)
-{
-	const char* error = nullptr;
-
-	if (cgi->CL_OnBattlescape()) {
-		Com_Printf("Could not load the campaign while you are on the battlefield\n");
-		return;
-	}
-
-	if (!SAV_GameLoad("slotquick", &error)) {
-		cgi->Cbuf_Execute(); /* wipe outstanding campaign commands */
-		CP_Popup(_("Error"), "%s\n%s", _("Error loading game."), error ? error : "");
-	} else {
-		MS_AddNewMessage(_("Campaign loaded"), _("Quicksave campaign was successfully loaded."), MSG_INFO);
-		CP_CheckBaseAttacks();
-	}
 }
 
 /**
@@ -659,15 +462,5 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&mso_subsystemXML);
 	SAV_AddSubsystem(&event_subsystemXML);
 
-	/* Check whether there is a quicksave at all */
-	cgi->Cmd_AddCommand("game_quickloadinit", SAV_GameQuickLoadInit_f, "Load the game from the quick save slot.");
-	cgi->Cmd_AddCommand("game_quicksave", SAV_GameQuickSave_f, "Save to the quick save slot.");
-	cgi->Cmd_AddCommand("game_quickload", SAV_GameQuickLoad_f, "Load the game from the quick save slot.");
-	cgi->Cmd_AddCommand("game_save", SAV_GameSave_f, "Saves to a given filename");
-	cgi->Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");
-	cgi->Cmd_AddCommand("game_delete", SAV_GameDelete_f, "Deletes a given filename");
-	cgi->Cmd_AddCommand("game_comments", SAV_GameReadGameComments_f, "Loads the savegame names");
-	cgi->Cmd_AddCommand("game_continue", SAV_GameContinue_f, "Continue with the last saved game");
 	save_compressed = cgi->Cvar_Get("save_compressed", "1", CVAR_ARCHIVE, "Save the savefiles compressed if set to 1");
-	cl_lastsave = cgi->Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 }
