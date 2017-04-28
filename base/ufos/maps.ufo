@@ -4603,55 +4603,6 @@ mapdef solarplant
 	)
 }
 
-///////////////////////////
-// TRANSPORT RANDOM MAPS //
-///////////////////////////
-
-mapdef transport
-{
-	map				"+transport"
-	params			("default")
-	description		"_Warehouse"
-	maxaliens		8
-
-	multiplayer		true
-	teams			1
-	gametypes (
-		coop2
-		coop3
-		coop4
-	)
-
-	aircraft
-	(
-		craft_drop_firebird
-		craft_drop_herakles
-		craft_drop_raptor
-	)
-
-	ufos
-	(
-		// any
-	)
-
-	terrains
-	(
-		"cold"
-		"grass"
-	)
-
-	cultures
-	(
-		// any
-	)
-
-	populations
-	(
-		"village"
-		"suburban"
-	)
-}
-
 // STATIC/FIXED MAPS //
 // ================= //
 
