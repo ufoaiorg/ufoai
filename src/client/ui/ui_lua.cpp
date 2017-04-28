@@ -326,32 +326,9 @@ bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn)
 	SWIG_NewPointerObj(CL_GetLuaState(), node, static_cast<swig_type_info*>(node->behaviour->lua_SWIG_typeinfo), 0); /* push sender on lua stack */
 	/* read parameters from cmd and push them on the stack; first parameter is skipped, since this is the
 	 * function name; all parameters are strings */
-	for (int i = 1; i < Cmd_Argc(); i++) {
-		/**
-		 * Preparse the commandline arguments to test if it is an intenger, float or string.
-		 * @todo The entire passing of commands to/from should be rewritten to allow for typed arguments
-		 */
-		const char* s = Cmd_Argv(i);
-		char* p = nullptr;
-		// is it an integer?
-		errno = 0;
-		int val_i = strtol(s, &p, 10);
-		if (!errno && p != s && *p == '\0') {
-			// push argument as integer
-			lua_pushinteger(CL_GetLuaState(), val_i);
-		} else {
-			// is it a float?
-			errno = 0;
-			float val_f = strtof(s, &p);
-			if (!errno && p != s && *p == '\0') {
-				// push argument as float
-				lua_pushnumber(CL_GetLuaState(), val_f);
-			} else {
-				// else consider it a string
-				lua_pushstring(CL_GetLuaState(), Cmd_Argv(i));
-			}
-		}
-	}
+	for (int i = 1; i < Cmd_Argc(); i++)
+		lua_pushstring(CL_GetLuaState(), Cmd_Argv(i));
+
 	/* execute the confunc */
 	if (lua_pcall(CL_GetLuaState(), Cmd_Argc(), 0, 0) != 0) {
 		Com_Printf("UI_ExecuteLuaConFunc\n");
