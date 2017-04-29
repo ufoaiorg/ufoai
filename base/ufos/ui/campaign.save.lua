@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 if (campaign.save == nil) then
 
 require("ufox.lua")
+require("campaign.listsaves.lua")
 
 campaign.save = {
 	register = function (rootNode, tabset)
@@ -43,166 +44,6 @@ campaign.save = {
 					class = "panel",
 					pos = {0, 35},
 					size = {1024, 400},
-
-					{
-						name = "selected_savegame",
-						class = "data",
-						text = ""
-					},
-
-					{
-						name = "savegame_list",
-						class = "panel",
-						pos = {10, 40},
-						size = {450, 320},
-						layout = ufo.LAYOUT_TOP_DOWN_FLOW,
-						layoutmargin = 5,
-						wheelscrollable = true,
-						backgroundcolor = {0, 0, 0, 0.5},
-
-						clear = function (sender)
-							sender:remove_children()
-						end,
-
-						add = function (sender, idx, title, gamedate, realdate, filename)
-							if (idx == nil) then
-								return
-							end
-
-							local node = ufox.build({
-								name = "slot_" .. idx,
-								class = "panel",
-								size = {450, 35},
-								tooltip = "_Saved at: " .. realdate,
-
-								on_click = function (sender)
-									sender:parent():select(sender:name())
-								end,
-
-								{
-									name = "id",
-									class = "data",
-									text = filename,
-								},
-
-								{
-									name = "title",
-									class = "string",
-									pos = {0, 0},
-									size = {450, 20},
-									text = title,
-									color = {1, 1, 1, 0.5},
-									ghost = true,
-								},
-
-								{
-									name = "gamedate",
-									class = "string",
-									pos = {0, 25},
-									size = {450, 10},
-									text = gamedate,
-									color = {1, 1, 1, 0.5},
-									font = "f_verysmall",
-									contentalign = ufo.ALIGN_CR,
-									ghost = true,
-								},
-
-								{
-									name = "savedate",
-									class = "data",
-									text = realdate
-								},
-							}, sender);
-						end,
-
-						select = function (sender, save)
-							local selected = sender:parent():child("selected_savegame")
-							-- deselect
-							if (save == nil) then
-								selected:set_text("")
-								sender:parent():child("savegame_info"):set_invisible(true)
-								return
-							end
-
-							-- selected savegame not found
-							local savegame = sender:child(save)
-							if (savegame == nil) then
-								return
-							end
-
-							if ((selected:text() ~= nil) and selected:text() ~= "") then
-								local previous_selection = sender:child(selected:text())
-								previous_selection:child("title"):set_color(1, 1, 1, 0.5)
-							end
-
-							savegame:child("title"):set_color(1, 1, 1, 1)
-							selected:set_text(savegame:name())
-
-							local savegame_info = sender:parent():child("savegame_info")
-							if (savegame_info ~= nil) then
-								local filename = savegame:child("id"):text()
-								savegame_info:child("gamedate"):set_text(savegame:child("gamedate"):text())
-								savegame_info:child("savedate"):set_text(savegame:child("savedate"):text())
-								if (filename == "") then
-									savegame_info:child("delete"):set_disabled(true)
-									ufo.cmd("set savegame_filename \"noname\";")
-									ufo.cmd("set savegame_title \"no name\";")
-								else
-									savegame_info:child("delete"):set_disabled(false)
-									ufo.cmd("set savegame_filename \"" .. filename:gsub(".savx", "") .. "\";")
-									ufo.cmd("set savegame_title \"" .. savegame:child("title"):text() .. "\";")
-								end
-								savegame_info:set_invisible(false)
-							end
-						end,
-
-						on_viewchange = function (sender)
-							local scrollbar = sender:parent():child("savegame_list_scrollbar")
-							scrollbar:set_fullsize(sender:fullsize())
-							scrollbar:set_current(sender:viewpos())
-							scrollbar:set_viewsize(sender:viewsize())
-						end,
-
-						on_wheel = function (sender)
-							local scrollbar = sender:parent():child("savegame_list_scrollbar")
-							scrollbar:set_current(sender:viewpos())
-						end
-					},
-
-					{
-						name = "savegame_list_scrollbar",
-						class = "vscrollbar",
-						image = "ui/scrollbar_v",
-						pos = {465, 40},
-						height = 320,
-						current = 0,
-						viewsize = 16,
-						fullsize = 0,
-						autoshowscroll = true,
-
-						on_change = function (sender)
-							local panel = sender:parent():child("savegame_list")
-							panel:set_viewpos(sender:current())
-						end
-					},
-
-					{
-						name = "ui_clear_savegames",
-						class = "confunc",
-						on_click = function (sender, idx, title, gamedate, realdate, filename)
-							sender:parent():child("savegame_list"):clear()
-						end
-					},
-					{
-						name = "ui_add_savegame",
-						class = "confunc",
-						on_click = function (sender, idx, title, gamedate, realdate, filename)
-							if (filename == "") then
-								title = "_--- new save ---"
-							end
-							sender:parent():child("savegame_list"):add(idx, title, gamedate, realdate, filename)
-						end
-					},
 
 					{
 						name = "savegame_info",
@@ -302,9 +143,11 @@ campaign.save = {
 
 							on_click = function (sender)
 								local tab = sender:parent():parent()
-								local selected = tab:child("selected_savegame")
-								local savegame = tab:child("savegame_list"):child(selected:text()):child("id")
-								ufo.cmd(string.format("game_delete \"%s\";", savegame:text():gsub(".savx", "")))
+								local filename = ufo.getvar("savegame_filename")
+								if (filename == nil) then
+									return
+								end
+								ufo.cmd(string.format("game_delete \"%s\";", filename:as_string()))
 								tab:parent():child("tabset"):child(tab:name()):deselect()
 								tab:parent():child("tabset"):child(tab:name()):select()
 							end
@@ -328,9 +171,11 @@ campaign.save = {
 							end,
 
 							on_click = function (sender)
-								local selected = sender:parent():parent():child("selected_savegame")
-								local savegame = sender:parent():parent():child("savegame_list"):child(selected:text()):child("id")
-								ufo.cmd("web_uploadcgame 0 \"" .. savegame:text():gsub(".savx", "") .. "\"")
+								local filename = ufo.getvar("savegame_filename")
+								if (filename == nil) then
+									return
+								end
+								ufo.cmd(string.format("web_uploadcgame 0 \"%s\";", filename:as_string()))
 							end
 						},
 						{
@@ -349,16 +194,23 @@ campaign.save = {
 							end,
 
 							on_click = function (sender)
-								local filename = ufo.findvar("savegame_filename"):as_string()
-								local title = ufo.findvar("savegame_title"):as_string()
-								ufo.cmd(string.format("game_save \"%s\" \"%s\";", filename, title))
 								local tab = sender:parent():parent()
+								local filename = ufo.getvar("savegame_filename")
+								if (filename == nil) then
+									return
+								end
+								local title = ufo.getvar("savegame_title")
+								if (title == nil) then
+									return
+								end
+								ufo.cmd(string.format("game_save \"%s\" \"%s\";", filename:as_string(), title:as_string()))
 								tab:parent():child("tabset"):child(tab:name()):deselect()
 								tab:parent():child("tabset"):child(tab:name()):select()
 							end
 						},
 					},
 				}, rootNode)
+				campaign.listsaves(tab)
 			end,
 
 			select = function (sender)
@@ -372,8 +224,8 @@ campaign.save = {
 				else
 					tab = sender:create(sender:name(), rootNode)
 				end
-				-- (re-)load savegames
 
+				-- (re-)load savegames
 				ufo.cmd(
 					"ui_clear_savegames;" ..
 					"ui_add_savegame new \"\" \"\" \"\" \"\";" ..

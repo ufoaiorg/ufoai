@@ -3,7 +3,6 @@
 require("ufox.lua")
 require("ufox.maintabset.lua")
 
-
 campaign = {}
 require("campaign.new.lua")
 require("campaign.load.lua")
