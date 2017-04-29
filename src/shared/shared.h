@@ -91,7 +91,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 const char* Com_SkipPath(const char* pathname);
 void Com_ReplaceFilename(const char* fileName, const char* name, char* path, size_t size);
-void Com_StripExtensionInPlace(char* filename);
 void Com_StripExtension(const char* in, char* out, size_t size);
 void Com_FilePath(const char* in, char* out, size_t size);
 const char* Com_GetExtension(const char* path);

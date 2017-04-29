@@ -42,26 +42,24 @@ static void SAV_ListSafeGames_f (void)
 		return;
 	}
 
-	char directory[MAX_OSPATH];
-	cgi->GetAbsoluteSavePath(directory, sizeof(directory));
+	char pathMask[MAX_OSPATH];
+	cgi->GetRelativeSavePath(pathMask, sizeof(pathMask));
+	Q_strcat(pathMask, sizeof(pathMask), "/*.savx");
 
-	int fileCount = 0;
-	char** fileList = FS_ListFiles(va("%s/*.savx", directory), &fileCount, 0, 0);
-	if (fileList != nullptr) {
+	cgi->FS_BuildFileList(pathMask);
+	const char* path;
+	int idx = 0;
+	while ((path = cgi->FS_NextFileFromFileList(pathMask)) != nullptr) {
+		char fileName[MAX_OSPATH];
 		saveFileHeader_t header;
+		Com_StripExtension(path, fileName, sizeof(fileName));
+		const char *basename = Com_SkipPath(fileName);
 
-		for (int i = 0; i < fileCount - 1; i++) {
-			Com_StripExtensionInPlace(fileList[i]);
-			const char *basename = Com_SkipPath(fileList[i]);
-
-			if (SAV_LoadHeader(basename, &header))
-				cgi->UI_ExecuteConfunc("ui_add_savegame %i \"%s\" \"%s\" \"%s\" \"%s\"", i,
-					header.name, header.gameDate, header.realDate, basename);
-
-			Mem_Free(fileList[i]);
-		}
-		Mem_Free(fileList);
+		if (SAV_LoadHeader(basename, &header))
+			cgi->UI_ExecuteConfunc("ui_add_savegame %i \"%s\" \"%s\" \"%s\" \"%s\"", idx++,
+				header.name, header.gameDate, header.realDate, basename);
 	}
+	cgi->FS_NextFileFromFileList(nullptr);
 }
 
 

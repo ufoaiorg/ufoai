@@ -252,18 +252,6 @@ void Com_ReplaceFilename (const char* inputPath, const char* expectedFileName, c
 /**
  * @brief Removes the file extension from a filename
  * @sa Com_SkipPath
- * @param[in,out] filename The filename to modify
- */
-void Com_StripExtensionInPlace (char* filename)
-{
-	char* last = strrchr(filename, '.');
-	if (last)
-		*last = '\0';
-}
-
-/**
- * @brief Removes the file extension from a filename
- * @sa Com_SkipPath
  * @param[in] in The incoming filename
  * @param[out] out The stripped filename
  * @param[in] size The size of the output buffer
@@ -273,7 +261,7 @@ void Com_StripExtension (const char* in, char* out, const size_t size)
 	char* out_ext = nullptr;
 	int i = 1;
 
-	while (*in && i < size) {
+	while (in && *in && i < size) {
 		*out++ = *in++;
 		i++;
 
