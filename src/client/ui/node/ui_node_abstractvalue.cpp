@@ -142,8 +142,8 @@ float uiAbstractValueNode::getFactorFloat (const uiNode_t* node)
 	return EXTRADATACONST(node).shiftIncreaseFactor;
 }
 
-float uiAbstractValueNode::getLastDiff (uiNode_t const* node) {
-	return EXTRADATA(node).lastdiff;
+float uiAbstractValueNode::getLastDiff (const uiNode_t* node) {
+	return EXTRADATACONST(node).lastdiff;
 }
 
 float uiAbstractValueNode::getShiftIncreaseFactor (uiNode_t* const node) {
