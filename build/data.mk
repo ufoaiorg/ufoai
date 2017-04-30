@@ -56,7 +56,7 @@ define $(BASE_DIR)/0shaders.pk3
 endef
 
 define $(BASE_DIR)/0ufos.pk3
-	-r ufos/*.ufo
+	-r ufos/*.ufo ufos/ui/*.lua
 endef
 
 define $(BASE_DIR)/0materials.pk3
