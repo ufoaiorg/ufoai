@@ -1131,34 +1131,34 @@ local hud_default_window = ufox.build_window{
 		class = "confunc",
 		name = "reactionfire_addtarget",
 		on_click = function (this, shooter, target, head, skin, robot, tus, outOfRange, fireDef)
-			local node = this:root():child("reactions"):child(string.format("rf_%i_%i", shooter, target))
+			local node = this:root():child("reactions"):child(string.format("rf_%s_%s", shooter, target))
 			if not node then
-				node = ufo.create_control(this:root():child("reactions"), "ReactionFireShooter", string.format("rf_%i_%i", shooter, target), nil)
+				node = ufo.create_control(this:root():child("reactions"), "ReactionFireShooter", string.format("rf_%s_%s", shooter, target), nil)
 			end
 			node:child("head_shooter"):set_model(head)
 			node:child("head_shooter"):set_skin(skin)
-			if robot == 1 then
+			if robot == "1" then
 				-- top down view for robots - sideview of the body isn't very nice
 				node:child("head_shooter"):set_angles(0, 60, 90)
 			end
 
-			if outOfRange == 1 then
+			if outOfRange == "1" then
 				-- Target is out of range
 				node:child("timeremaining"):set_color(0.65, 0.13, 0, 1)
 				node:child("rfnotice"):set_text("_Target out of range")
 			else
-				if tus <= 0 then
+				if tonumber(tus) <= 0 then
 					-- Turn the panel red if the unit is ready to fire
 					node:set_backgroundcolor(0.65, 0.13, 0, 1)
 					node:child("rfnotice"):set_text("_Target acquired")
-				elseif tus < 5 then
+				elseif tonumber(tus) < 5 then
 					-- Turn the bar yellow if the unit is nearing fire capability
 					node:child("timeremaining"):set_color(0.83, 0.92, 0.44, 1)
 				else
 					-- Otherwise the bar should be blue
 					node:child("timeremaining"):set_color(0.1, 0.1, 0.7, 1)
 				end
-				node:child("rfnotice"):set_text(string.format("%s (%i TUs)", fireDef, tus))
+				node:child("rfnotice"):set_text(string.format("%s (%s TUs)", fireDef, tus))
 			end
 			node:child("timeremaining"):set_max(tus)
 		end
@@ -1173,7 +1173,7 @@ local hud_default_window = ufox.build_window{
 		class = "confunc",
 		name = "reactionfire_removetarget",
 		on_click = function (this, shooter, target)
-			local node = this:root():child("reactions"):child(string.format("rf_%i_%i", shooter, target))
+			local node = this:root():child("reactions"):child(string.format("rf_%s_%s", shooter, target))
 			if node then
 				-- node:delete_timed(1500)
 				node:delete_node()
@@ -1193,20 +1193,20 @@ local hud_default_window = ufox.build_window{
 		class = "confunc",
 		name = "reactionfire_updatetarget",
 		on_click = function (this, shooter, target, tus, outOfRange)
-			local node = this:root():child("reactions"):child(string.format("rf_%i_%i", shooter, target))
+			local node = this:root():child("reactions"):child(string.format("rf_%s_%s", shooter, target))
 			if node then
-				node:child("timeremaining"):set_value(node:child("timeremaining"):max() - tus)
+				node:child("timeremaining"):set_value(node:child("timeremaining"):max() - tonumber(tus))
 
-				if outOfRange == 1 then
+				if outOfRange == "1" then
 					-- Target is out of range
 					node:child("timeremaining"):set_color(0.65, 0.13, 0, 1)
 					node:child("rfnotice"):set_text("_Target out of range")
 				else
-					if tus <= 0 then
+					if tonumber(tus) <= 0 then
 						-- Turn the panel red if the unit is ready to fire
 						node:set_backgroundcolor(0.65, 0.13, 0, 1)
 						node:child("rfnotice"):set_text("_Target acquired")
-					elseif tus < 5 then
+					elseif tonumber(tus) < 5 then
 						-- Turn the bar yellow if the unit is nearing fire capability
 						node:child("timeremaining"):set_color(0.83, 0.92, 0.44, 1)
 					else
@@ -1228,7 +1228,7 @@ local hud_default_window = ufox.build_window{
 		class = "confunc",
 		name = "reactionfire_shotaborted",
 		on_click = function (this, shooter, target)
-			local node = this:root():child("reactions"):child(string.format("rf_%i_%i", shooter, target))
+			local node = this:root():child("reactions"):child(string.format("rf_%s_%s", shooter, target))
 			if node then
 				node:set_backgroundcolor(0.65, 0.13, 0, 1)
 				node:child("timeremaining"):set_color(0.65, 0.13, 0, 1)
@@ -1545,7 +1545,7 @@ local hud_default_window = ufox.build_window{
 		class = "confunc",
 		name = "updateLevelStatus",
 		on_click = function (this, number)
-			if number == 1 then
+			if number == "1" then
 				ufo.cmd("lvlchange 0;")
 			end
 		end
@@ -1557,7 +1557,7 @@ local hud_default_window = ufox.build_window{
 		on_click = function (this, number, status, value)
 			if status == "bleeding" then
 				local node = this:root():child("soldier"):child("squad"):child("sld" .. number)
-				if value > 0 then
+				if tonumber(value) > 0 then
 					node:set_backgroundcolor(0.7, 0.1, 0, 0.7)
 					node.on_mouseenter = function (sender)
 						sender:set_backgroundcolor(0.9, 0, 0, 1)

@@ -239,14 +239,14 @@ local inv_stats_hud = ufox.build_window({
 		on_click = function (sender, text, tooltip, penalty, warnings)
 			sender:root():child("bt_load"):set_text(text)
 			sender:root():child("bt_load"):set_tooltip(tooltip)
-			if (penalty > 0) then
+			if (tonumber(penalty) > 0) then
 				sender:root():child("bt_load"):set_color(0, 1, 0, 1)
-			elseif (penalty < 0) then
+			elseif (tonumber(penalty) < 0) then
 				sender:root():child("bt_load"):set_color(1, 1, 0, 1)
 			else
 				sender:root():child("bt_load"):set_color(0.56, 0.81, 0.76, 1)
 			end
-			if (warnings > 0) then
+			if (tonumber(warnings) > 0) then
 				sender:root():child("bt_load"):set_flashing(true)
 			else
 				sender:root():child("bt_load"):set_flashing(false)
@@ -263,7 +263,7 @@ local inv_stats_hud = ufox.build_window({
 		class = "confunc",
 		on_click = function (sender, id, severity, text, tooltip)
 			local node = ufo.create_control(sender:root():child("wounds"), "cmpWound", string.format("wound_%s", id), nil)
-			if (severity > 0) then
+			if (tonumber(severity) > 0) then
 				node:child("wound_icon"):set_icon(string.format("icons/%s_wound", id))
 			else
 				node:child("wound_icon"):set_icon(string.format("icons/%s_wound_treated", id))
