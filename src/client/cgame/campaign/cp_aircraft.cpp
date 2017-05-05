@@ -679,10 +679,16 @@ aircraft_t* AIR_Add (base_t* base, const aircraft_t* aircraftTemplate)
  * @return @c true if the aircraft was removed, @c false otherwise
  * @sa AIR_Add
  */
-bool AIR_Delete (base_t* base, const aircraft_t* aircraft)
+bool AIR_Delete (base_t* base, aircraft_t* aircraft)
 {
 	const baseCapacities_t capType = AIR_GetCapacityByAircraftWeight(aircraft);
 	const bool crashed = (aircraft->status == AIR_CRASHED);
+
+	if (aircraft->alienCargo != nullptr) {
+		delete aircraft->alienCargo;
+		aircraft->alienCargo = nullptr;
+	}
+
 	if (cgi->LIST_Remove(&ccs.aircraft, (const void*)aircraft)) {
 		if (base && capType != MAX_CAP && !crashed)
 			CAP_AddCurrent(base, capType, -1);
@@ -916,11 +922,6 @@ void AIR_DeleteAircraft (aircraft_t* aircraft)
 
 	if (base->aircraftCurrent == aircraft)
 		base->aircraftCurrent = nullptr;
-
-	if (aircraft->alienCargo != nullptr) {
-		delete aircraft->alienCargo;
-		aircraft->alienCargo = nullptr;
-	}
 
 	AIR_Delete(base, aircraft);
 

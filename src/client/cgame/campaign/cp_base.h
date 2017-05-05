@@ -170,6 +170,7 @@ base_t* B_GetFoundedBaseByIDX(int baseIdx);
 int B_GetCount(void);
 void B_SelectBase(const base_t* base);
 void B_Destroy(base_t* base);
+void B_Delete(base_t* base);
 void B_SetName(base_t* base, const char* name);
 
 base_t* B_GetFirstUnfoundedBase(void);

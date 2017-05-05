@@ -424,113 +424,114 @@ void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
 
 	UP_GetUnreadMails();
 
-	if (ccs.timer >= 1.0) {
-		/* calculate new date */
-		int currentsecond = ccs.date.sec;
-		int currentday = ccs.date.day;
-		const int currentinterval = currentsecond % DETECTION_INTERVAL;
-		int dt = DETECTION_INTERVAL - currentinterval;
-		dateLong_t date, oldDate;
-		const int timer = (int)floor(ccs.timer);
-		const int checks = (currentinterval + timer) / DETECTION_INTERVAL;
+	if (ccs.timer < 1.0)
+		return;
 
-		CP_DateConvertLong(&ccs.date, &oldDate);
+	/* calculate new date */
+	int currentsecond = ccs.date.sec;
+	int currentday = ccs.date.day;
+	const int currentinterval = currentsecond % DETECTION_INTERVAL;
+	int dt = DETECTION_INTERVAL - currentinterval;
+	dateLong_t date, oldDate;
+	const int timer = (int)floor(ccs.timer);
+	const int checks = (currentinterval + timer) / DETECTION_INTERVAL;
 
-		int currenthour = currentsecond / SECONDS_PER_HOUR;
-		int currentmin = currentsecond / SECONDS_PER_MINUTE;
+	CP_DateConvertLong(&ccs.date, &oldDate);
 
-		/* Execute every actions that needs to be independent of time speed : every DETECTION_INTERVAL
-		 *	- Run UFOs and craft at least every DETECTION_INTERVAL. If detection occurred, break.
-		 *	- Check if any new mission is detected
-		 *	- Update stealth value of phalanx bases and installations ; alien bases */
-		for (int i = 0; i < checks; i++) {
-			ccs.timer -= dt;
-			currentsecond += dt;
-			CP_AdvanceTimeBySeconds(dt);
-			CP_CampaignFunctionPeriodicCall(campaign, dt, false);
+	int currenthour = currentsecond / SECONDS_PER_HOUR;
+	int currentmin = currentsecond / SECONDS_PER_MINUTE;
 
-			/* if something stopped time, we must stop here the loop */
-			if (CP_IsTimeStopped()) {
-				ccs.timer = 0.0f;
-				break;
-			}
-			dt = DETECTION_INTERVAL;
-		}
-
-		dt = timer;
-
-		CP_AdvanceTimeBySeconds(dt);
-		currentsecond += dt;
+	/* Execute every actions that needs to be independent of time speed : every DETECTION_INTERVAL
+	 *	- Run UFOs and craft at least every DETECTION_INTERVAL. If detection occurred, break.
+	 *	- Check if any new mission is detected
+	 *	- Update stealth value of phalanx bases and installations ; alien bases */
+	for (int i = 0; i < checks; i++) {
 		ccs.timer -= dt;
+		currentsecond += dt;
+		CP_AdvanceTimeBySeconds(dt);
+		CP_CampaignFunctionPeriodicCall(campaign, dt, false);
 
-		/* compute minutely events  */
-		/* (this may run multiple times if the time stepping is > 1 minute at a time) */
-		const int newmin = currentsecond / SECONDS_PER_MINUTE;
-		while (currentmin < newmin) {
-			currentmin++;
-			PR_ProductionRun();
-			B_UpdateBaseData();
+		/* if something stopped time, we must stop here the loop */
+		if (CP_IsTimeStopped()) {
+			ccs.timer = 0.0f;
+			break;
 		}
-
-		/* compute hourly events  */
-		/* (this may run multiple times if the time stepping is > 1 hour at a time) */
-		const int newhour = currentsecond / SECONDS_PER_HOUR;
-		while (currenthour < newhour) {
-			currenthour++;
-			RS_ResearchRun();
-			UR_ProcessActive();
-			AII_UpdateInstallationDelay();
-			AII_RepairAircraft();
-			TR_TransferRun();
-			INT_IncreaseAlienInterest(campaign);
-		}
-
-		/* daily events */
-		for (int i = currentday; i < ccs.date.day; i++) {
-			/* every day */
-			INS_UpdateInstallationData();
-			HOS_HospitalRun();
-			ccs.missionSpawnCallback();
-			CP_SpreadXVI();
-			NAT_UpdateHappinessForAllNations(campaign->minhappiness);
-			AB_BaseSearchedByNations();
-			CP_CampaignRunMarket(campaign);
-			CP_CheckCampaignEvents(campaign);
-			CP_ReduceXVIEverywhere();
-			/* should be executed after all daily event that could
-			 * change XVI overlay */
-			CP_UpdateNationXVIInfection();
-			CP_TriggerEvent(NEW_DAY);
-		}
-
-		if (dt > 0) {
-			/* check for campaign events
-			 * aircraft and UFO already moved during radar detection (see above),
-			 * just make them move the missing part -- if any */
-			CP_CampaignFunctionPeriodicCall(campaign, dt, true);
-		}
-
-		CP_CheckMissionEnd(campaign);
-		CP_CheckLostCondition(campaign);
-		/* Check if there is a base attack mission */
-		CP_CheckBaseAttacks();
-		/* check if any stores are full */
-		CAP_CheckOverflow();
-		BDEF_AutoSelectTarget();
-
-		CP_DateConvertLong(&ccs.date, &date);
-		/* every new month we have to handle the budget */
-		if (CP_IsBudgetDue(&oldDate, &date) && ccs.paid && B_AtLeastOneExists()) {
-			NAT_BackupMonthlyData();
-			NAT_HandleBudget(campaign);
-			ccs.paid = false;
-		} else if (date.day > 1)
-			ccs.paid = true;
-
-		CP_UpdateXVIMapButton();
-		/* set time cvars */
-		CP_UpdateTime();
+		dt = DETECTION_INTERVAL;
 	}
+
+	dt = timer;
+
+	CP_AdvanceTimeBySeconds(dt);
+	currentsecond += dt;
+	ccs.timer -= dt;
+
+	/* compute minutely events  */
+	/* (this may run multiple times if the time stepping is > 1 minute at a time) */
+	const int newmin = currentsecond / SECONDS_PER_MINUTE;
+	while (currentmin < newmin) {
+		currentmin++;
+		PR_ProductionRun();
+		B_UpdateBaseData();
+	}
+
+	/* compute hourly events  */
+	/* (this may run multiple times if the time stepping is > 1 hour at a time) */
+	const int newhour = currentsecond / SECONDS_PER_HOUR;
+	while (currenthour < newhour) {
+		currenthour++;
+		RS_ResearchRun();
+		UR_ProcessActive();
+		AII_UpdateInstallationDelay();
+		AII_RepairAircraft();
+		TR_TransferRun();
+		INT_IncreaseAlienInterest(campaign);
+	}
+
+	/* daily events */
+	for (int i = currentday; i < ccs.date.day; i++) {
+		/* every day */
+		INS_UpdateInstallationData();
+		HOS_HospitalRun();
+		ccs.missionSpawnCallback();
+		CP_SpreadXVI();
+		NAT_UpdateHappinessForAllNations(campaign->minhappiness);
+		AB_BaseSearchedByNations();
+		CP_CampaignRunMarket(campaign);
+		CP_CheckCampaignEvents(campaign);
+		CP_ReduceXVIEverywhere();
+		/* should be executed after all daily event that could
+		 * change XVI overlay */
+		CP_UpdateNationXVIInfection();
+		CP_TriggerEvent(NEW_DAY);
+	}
+
+	if (dt > 0) {
+		/* check for campaign events
+		 * aircraft and UFO already moved during radar detection (see above),
+		 * just make them move the missing part -- if any */
+		CP_CampaignFunctionPeriodicCall(campaign, dt, true);
+	}
+
+	CP_CheckMissionEnd(campaign);
+	CP_CheckLostCondition(campaign);
+	/* Check if there is a base attack mission */
+	CP_CheckBaseAttacks();
+	/* check if any stores are full */
+	CAP_CheckOverflow();
+	BDEF_AutoSelectTarget();
+
+	CP_DateConvertLong(&ccs.date, &date);
+	/* every new month we have to handle the budget */
+	if (CP_IsBudgetDue(&oldDate, &date) && ccs.paid && B_AtLeastOneExists()) {
+		NAT_BackupMonthlyData();
+		NAT_HandleBudget(campaign);
+		ccs.paid = false;
+	} else if (date.day > 1)
+		ccs.paid = true;
+
+	CP_UpdateXVIMapButton();
+	/* set time cvars */
+	CP_UpdateTime();
 }
 
 /**
@@ -1069,6 +1070,15 @@ void CP_ResetCampaignData (void)
 
 	/* cleanup dynamic mails */
 	CP_FreeDynamicEventMail();
+
+	AIR_Foreach(aircraft) {
+		AIR_Delete(nullptr, aircraft);
+	}
+
+	base_t* base = nullptr;
+	while((base = B_GetNext(base)) != nullptr) {
+		B_Delete(base);
+	}
 
 	cgi->FreePool(cp_campaignPool);
 

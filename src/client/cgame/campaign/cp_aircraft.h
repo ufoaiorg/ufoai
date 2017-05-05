@@ -237,7 +237,7 @@ void AIR_ListCraftIndexes_f(void);
 #define AIR_Foreach(var) LIST_Foreach(ccs.aircraft, aircraft_t, var)
 
 aircraft_t* AIR_Add(struct base_s* base, const aircraft_t* aircraftTemplate);
-bool AIR_Delete(struct base_s* base, const aircraft_t* aircraft);
+bool AIR_Delete(struct base_s* base, aircraft_t* aircraft);
 
 #define AIR_ForeachFromBase(var, base) \
 	AIR_Foreach(var) \

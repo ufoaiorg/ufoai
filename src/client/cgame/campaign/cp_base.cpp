@@ -918,6 +918,21 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t* base)
 }
 
 /**
+ * @brief Resets a base structure
+ * @param[in,out] base Pointer to base to be deleted.
+ * @TODO A lot more could be extracted here from B_Destroy
+ */
+void B_Delete (base_t* base)
+{
+	assert(base);
+
+	if (base->alienContainment != nullptr) {
+		delete base->alienContainment;
+		base->alienContainment = nullptr;
+	}
+}
+
+/**
  * @brief Destroy a base.
  * @param[in,out] base Pointer to base to be destroyed.
  * @note If you want to sell items or unhire employees, you should do it before
@@ -943,11 +958,6 @@ void B_Destroy (base_t* base)
 		AIR_DeleteAircraft(aircraft);
 	}
 
-	if (base->alienContainment != nullptr) {
-		delete base->alienContainment;
-		base->alienContainment = nullptr;
-	}
-
 	OBJZERO(base->storage);
 	CAP_SetCurrent(base, CAP_ITEMS, 0);
 
@@ -956,6 +966,7 @@ void B_Destroy (base_t* base)
 	/** @todo Destroy the base. For this we need to check all the dependencies and references.
 	 * Should be only done after putting bases into a linkedList
 	 */
+	B_Delete(base);
 }
 
 #ifdef DEBUG
