@@ -1754,6 +1754,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${UFOAI_SRC}/client/cgame/campaign/cp_research.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_research_callbacks.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_save.cpp
+      ${UFOAI_SRC}/client/cgame/campaign/cp_save_callbacks.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_statistics.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_team.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_team_callbacks.cpp
