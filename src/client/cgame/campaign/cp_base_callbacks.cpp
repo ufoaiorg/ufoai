@@ -348,6 +348,7 @@ static void B_BaseInit_f (void)
 	 * Gather data on current/max space for living quarters, storage, lab and workshop
 	 * clear_bld_space ensures 0/0 data for facilities which may not exist in base
 	 */
+	cgi->UI_ResetData(TEXT_BUILDING_INFO);
 	cgi->UI_ExecuteConfunc("clear_bld_space");
 	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t* b = &ccs.buildingTemplates[i];
@@ -436,6 +437,7 @@ static void B_BuildingSpace_f (void)
 		return;
 
 	// Clear existing entries from the UI panel
+	cgi->UI_ResetData(TEXT_BUILDING_INFO);
 	cgi->UI_ExecuteConfunc("clear_bld_space");
 	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t* b = &ccs.buildingTemplates[i];

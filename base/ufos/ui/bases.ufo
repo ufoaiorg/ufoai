@@ -495,6 +495,8 @@ window bases
 			// Show capacity for just main base buildings
 			cmd "base_init;"
 		}
+		*cvar:mn_building_status = ""
+		*cvar:mn_building_image = ""
 
 		// Hide/show the other base sections
 		call *node:parent.sections.setOthersInvis(<1>)
