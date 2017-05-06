@@ -1054,7 +1054,8 @@ void AII_RepairAircraft (void)
 			if (!AIR_IsAircraftInBase(aircraft))
 				continue;
 			const int REPAIR_PER_HOUR = std::max(1, int(round(aircraft->stats[AIR_STATS_DAMAGE] / 100))); /**< Number of damage points repaired per hour: 1% of aircraft max damage value */
-			cgi->Com_Printf("Repair per hour: %s %d, %d / %d\n", aircraft->name, REPAIR_PER_HOUR, aircraft->damage, aircraft->stats[AIR_STATS_DAMAGE]);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "Repair per hour: %s %d, %d / %d\n",
+				aircraft->name, REPAIR_PER_HOUR, aircraft->damage, aircraft->stats[AIR_STATS_DAMAGE]);
 			aircraft->damage = std::min(aircraft->damage + REPAIR_PER_HOUR, aircraft->stats[AIR_STATS_DAMAGE]);
 		}
 	}
