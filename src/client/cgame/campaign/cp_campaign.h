@@ -392,32 +392,32 @@ typedef void (*missionResultFunction_t) (const missionResults_t* results);
  */
 typedef struct ccs_s {
 	equipDef_t eMission;					/**< this is a copy of the base storage we are starting a mission from. This is needed because
-											 * we don't want to "waste" items on a retry. */
-	market_t eMarket;						/**< Prices, evolution and number of items on market */
+								 * we don't want to "waste" items on a retry. */
+	market_t eMarket;					/**< Prices, evolution and number of items on market */
 
 	linkedList_t* missions;					/**< Missions spawned (visible on geoscape or not) */
 
-	battleParam_t battleParameters;			/**< Structure used to remember every parameter used during last battle */
+	battleParam_t battleParameters;				/**< Structure used to remember every parameter used during last battle */
 
-	int lastInterestIncreaseDelay;			/**< How many hours since last increase of alien overall interest */
+	int lastInterestIncreaseDelay;				/**< How many hours since last increase of alien overall interest */
 	int overallInterest;					/**< overall interest of aliens: how far is the player in the campaign */
-	int interest[INTERESTCATEGORY_MAX];		/**< interest of aliens: determine which actions aliens will undertake */
-	int lastMissionSpawnedDelay;			/**< How many days since last mission has been spawned */
+	int interest[INTERESTCATEGORY_MAX];			/**< interest of aliens: determine which actions aliens will undertake */
+	int lastMissionSpawnedDelay;				/**< How many days since last mission has been spawned */
 
-	int credits;							/**< actual credits amount */
+	int credits;						/**< actual credits amount */
 	int civiliansKilled;					/**< how many civilians were killed already */
-	int aliensKilled;						/**< how many aliens were killed already */
-	date_t date;							/**< current date */
-	bool startXVI;							/**< the aliens are starting to spread XVI */
+	int aliensKilled;					/**< how many aliens were killed already */
+	date_t date;						/**< current date */
+	bool startXVI;						/**< the aliens are starting to spread XVI */
 	float timer;
 	float frametime;
 
 	struct {
 		mission_t* selectedMission;			/**< Currently selected mission on geoscape */
-		aircraft_t* selectedAircraft;		/**< Currently selected aircraft on geoscape */
+		aircraft_t* selectedAircraft;			/**< Currently selected aircraft on geoscape */
 		aircraft_t* selectedUFO;			/**< Currently selected UFO on geoscape */
-		aircraft_t* interceptAircraft;		/**< selected aircraft for interceptions */
-		aircraft_t* missionAircraft;		/**< aircraft pointer for mission handling */
+		aircraft_t* interceptAircraft;			/**< selected aircraft for interceptions */
+		aircraft_t* missionAircraft;			/**< aircraft pointer for mission handling */
 	} geoscape;
 
 	/* == misc == */
@@ -487,9 +487,9 @@ typedef struct ccs_s {
 	linkedList_t* storedUFOs;
 
 	/* Alien Team Package used during battle */
-	alienTeamCategory_t alienCategories[ALIENCATEGORY_MAX];	/**< different alien team available
-															* that will be used in mission */
-	int numAlienCategories;		/** number of alien team categories defined */
+	alienTeamCategory_t alienCategories[ALIENCATEGORY_MAX];		/**< different alien team available
+									 * that will be used in mission */
+	int numAlienCategories;						/** number of alien team categories defined */
 
 	/* == ufopedia == */
 	/* A list of all UFOpaedia chapters. */
@@ -501,8 +501,8 @@ typedef struct ccs_s {
 	eventMail_t eventMails[MAX_EVENTMAILS];	/**< holds all event mails (cl_event.c) */
 	int numEventMails;	/**< how many eventmails (script-id: mail) parsed */
 
-	campaignEvents_t campaignEvents[MAX_CAMPAIGNS];	/**< holds all campaign events (cl_event.c) */
-	int numCampaignEventDefinitions;	/**< how many event definitions (script-id: events) parsed */
+	campaignEvents_t campaignEvents[MAX_CAMPAIGNS];			/**< holds all campaign events (cl_event.c) */
+	int numCampaignEventDefinitions;				/**< how many event definitions (script-id: events) parsed */
 
 	campaignTriggerEvent_t campaignTriggerEvents[MAX_CAMPAIGN_TRIGGER_EVENTS];
 	int numCampaignTriggerEvents;

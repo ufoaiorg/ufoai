@@ -1042,7 +1042,7 @@ static void UP_OpenMail_f (void)
 			if (!mail.from)
 				continue;
 			CP_DateConvertLong(&m->pedia->researchedDate, &date);
-			Com_sprintf(headline, sizeof(headline), _("Re: %s"), _(m->pedia->mail[TECHMAIL_PRE].subject));
+			Com_sprintf(headline, sizeof(headline), _("Re: %s"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject));
 			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"), date.year, Date_GetMonthName(date.month - 1), date.day);
 			icon = mail.icon;
 			read = mail.read;
