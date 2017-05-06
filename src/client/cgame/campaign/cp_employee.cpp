@@ -627,57 +627,6 @@ void E_DeleteAllEmployees (base_t* base)
 }
 
 /**
- * @brief Recreates all the employees for a particular employee type in the global list.
- * But it does not overwrite any employees already hired.
- * @param[in] type The type of the employee list to process.
- * @param[in] excludeUnhappyNations True if a nation is unhappy then they wont
- * send any pilots, false if happiness of nations in not considered.
- * @sa CP_NationHandleBudget
- */
-int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const bool excludeUnhappyNations)
-{
-	const nation_t* happyNations[MAX_NATIONS];
-	int numHappyNations = 0;
-	int idx, nationIdx, cnt;
-
-	happyNations[0] = nullptr;
-	/* get a list of nations,  if excludeHappyNations is true then also exclude
-	 * unhappy nations (unhappy nation: happiness <= 0) from the list */
-	for (idx = 0; idx < ccs.numNations; idx++) {
-		const nation_t* nation = NAT_GetNationByIDX(idx);
-		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
-		if (stats->happiness > 0 || !excludeUnhappyNations) {
-			happyNations[numHappyNations] = nation;
-			numHappyNations++;
-		}
-	}
-
-	if (!numHappyNations)
-		return 0;
-
-	idx = 0;
-	/* Fill the global data employee list with employees, evenly distributed
-	 * between nations in the happyNations list */
-	E_Foreach(type, employee) {
-		/* we don't want to overwrite employees that have already been hired */
-		if (!employee->isHired()) {
-			E_DeleteEmployee(employee);
-			idx++;
-		}
-	}
-
-	nationIdx = 0;
-	cnt = 0;
-	while (idx-- > 0) {
-		if (E_CreateEmployee(type, happyNations[nationIdx], nullptr) != nullptr)
-			cnt++;
-		nationIdx = (nationIdx + 1) % numHappyNations;
-	}
-
-	return cnt;
-}
-
-/**
  * @brief Counts hired employees of a given type in a given base
  * @param[in] base The base where we count (@c nullptr to count all).
  * @param[in] type The type of employee to search.

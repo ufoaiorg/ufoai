@@ -137,8 +137,6 @@ bool E_HireEmployeeByType(base_t* base, employeeType_t type);
 bool E_HireRobot(base_t* base, const struct ugv_s* ugvType);
 bool E_UnhireEmployee(Employee* employee);
 
-int E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const bool excludeUnhappyNations);
-
 employeeType_t E_GetEmployeeType(const char* type);
 extern const char* E_GetEmployeeString(employeeType_t type, int n);
 

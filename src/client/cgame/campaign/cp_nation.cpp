@@ -749,10 +749,6 @@ void NAT_HandleBudget (const campaign_t* campaign)
 	int initialCredits = ccs.credits;
 	const salary_t* salary = &campaign->salaries;
 
-	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
-	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
-	E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, true);
-
 	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t* nation = NAT_GetNationByIDX(i);
 		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);

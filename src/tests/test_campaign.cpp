@@ -265,17 +265,6 @@ TEST_F(CampaignTest, testEmployeeHandling)
 	}
 
 	{
-		Employee* e = E_CreateEmployee(EMPL_PILOT, nullptr, nullptr);
-		int cnt;
-		ASSERT_TRUE(nullptr != e);
-		cnt = E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, false);
-		ASSERT_EQ(cnt, 1);
-		e = E_GetUnhired(EMPL_PILOT);
-		ASSERT_TRUE(nullptr != e);
-		ASSERT_TRUE(E_DeleteEmployee(e));
-	}
-
-	{
 		const ugv_t* ugvType = Com_GetUGVByID("ugv_ares_w");
 		Employee* e = E_CreateEmployee(EMPL_ROBOT, nullptr, ugvType);
 		ASSERT_TRUE(nullptr != e);
