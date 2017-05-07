@@ -648,9 +648,6 @@ const fireDef_t* Item::getFastestFireDef () const
  */
 const objDef_t* Item::getReactionFireWeaponType () const
 {
-	if (!this)
-		return nullptr;
-
 	if (def()) {
 		const fireDef_t* fd = getFiredefs();
 		if (fd && fd->reaction)
@@ -1018,9 +1015,9 @@ Item* Inventory::findInContainer (const containerIndex_t contId, const Item* con
  */
 bool Inventory::holdsReactionFireWeapon () const
 {
-	if (getRightHandContainer()->getReactionFireWeaponType())
+	if (getRightHandContainer() != nullptr && getRightHandContainer()->getReactionFireWeaponType())
 		return true;
-	if (getLeftHandContainer()->getReactionFireWeaponType())
+	if (getLeftHandContainer() != nullptr && getLeftHandContainer()->getReactionFireWeaponType())
 		return true;
 	return false;
 }
