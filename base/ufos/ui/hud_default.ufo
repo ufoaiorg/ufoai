@@ -918,6 +918,15 @@ local hud_default_window = ufox.build_window{
 				tooltip = "_Jump to alien",
 				on_click = function (this)
 					ufo.cmd("nextalien;")
+				end,
+				on_rightclick = function (this)
+					ufo.cmd("prevalien;")
+				end,
+				on_wheelup = function (this)
+					ufo.cmd("nextalien;")
+				end,
+				on_wheeldown = function (this)
+					ufo.cmd("nextalien;")
 				end
 			},
 			{
