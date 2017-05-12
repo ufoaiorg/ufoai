@@ -223,7 +223,10 @@ const char* CL_ConvertSoundFromEvent (char* sound, size_t size)
 	if (sound[length] != '+')
 		return sound;
 
-	/* Otherwise first we need check how many files we can choose from (if any)  */
+	/* Otherwise we are going to replace the '+' with a random number */
+	sound[length] = '\0';
+
+	/* First we need check how many files we can choose from (if any)  */
 	int i;
 	for (i = 0; i < 99; i++)
 		if (FS_CheckFile("sounds/%s%02i", sound, i + 1) == -1)
@@ -231,7 +234,6 @@ const char* CL_ConvertSoundFromEvent (char* sound, size_t size)
 
 	/* Knowing that we can now choose a random one */
 	if (i > 0) {
-		sound[length] = '\0';
 		Q_strcat(sound, size, "%02i", rand() % i + 1);
 		return sound;
 	}
