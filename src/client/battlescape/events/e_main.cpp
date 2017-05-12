@@ -218,13 +218,19 @@ int CL_GetNextTime (const eventRegister_t* event, eventTiming_t* eventTiming, in
  */
 const char* CL_ConvertSoundFromEvent (char* sound, size_t size)
 {
+	/* Plain file name? Just return it unchanged */
 	const size_t length = strlen(sound) - 1;
 	if (sound[length] != '+')
 		return sound;
 
-	for (int i = 1; i <= 99; i++) {
-		if (!FS_CheckFile("sounds/%s%02i", sound, i) == -1)
-			continue;
+	/* Otherwise first we need check how many files we can choose from (if any)  */
+	int i;
+	for (i = 0; i < 99; i++)
+		if (FS_CheckFile("sounds/%s%02i", sound, i + 1) == -1)
+			break;
+
+	/* Knowing that we can now choose a random one */
+	if (i > 0) {
 		sound[length] = '\0';
 		Q_strcat(sound, size, "%02i", rand() % i + 1);
 		return sound;
