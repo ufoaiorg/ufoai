@@ -94,6 +94,7 @@ const cgame_export_t* GetCGameCampaignAPI (const cgame_import_t* import)
 	e.HandleBaseClick = GAME_CP_HandleBaseClick;
 	e.DrawBase = GAME_CP_DrawBase;
 	e.DrawBaseLayout = GAME_CP_DrawBaseLayout;
+	e.DrawBaseLayoutTooltip = GAME_CP_DrawBaseLayoutTooltip;
 	e.DrawBaseTooltip = GAME_CP_DrawBaseTooltip;
 	e.GetTeamDef = GAME_CP_GetTeamDef;
 	e.MapDraw = GEO_Draw;

@@ -44,6 +44,7 @@ protected:
 class uiBaseLayoutNode : public uiAbstractBaseNode {
 public:
 	void draw(uiNode_t* node) override;
+	void drawTooltip(const uiNode_t* node, int x, int y) const override;
 	void onLoading(uiNode_t* node) override;
 };
 

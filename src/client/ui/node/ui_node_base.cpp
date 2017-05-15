@@ -60,6 +60,16 @@ void uiAbstractBaseNode::onLoaded (uiNode_t* node)
 }
 
 /**
+ * @brief Custom tooltip for baseayout
+ * @param[in] node Node we request to draw tooltip
+ * @param[in] x,y Position of the mouse
+ */
+void uiBaseLayoutNode::drawTooltip (const uiNode_t* node, int x, int y) const
+{
+	GAME_DrawBaseLayoutTooltip(EXTRADATACONST(node).baseid, x, y);
+}
+
+/**
  * @brief Draw a small square with the layout of the given base
  */
 void uiBaseLayoutNode::draw (uiNode_t* node)

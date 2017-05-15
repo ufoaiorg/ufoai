@@ -1717,6 +1717,19 @@ void GAME_DrawBaseLayout (int baseIdx, int x, int y, int totalMarge, int w, int 
 		list->DrawBaseLayout(baseIdx, x, y, totalMarge, w, h, padding, bgcolor, color);
 }
 
+/**
+ * @brief Cgame callback to draw tooltip for baselayout UI node
+ * @param[in] BaseIdx Numeric index of the base
+ * @param[in] x Horizontal screen position
+ * @param[in] y Vertical screen position
+ */
+void GAME_DrawBaseLayoutTooltip (int baseIdx, int x, int y)
+{
+	const cgame_export_t* list = GAME_GetCurrentType();
+	if (list && list->DrawBaseLayoutTooltip != nullptr)
+		list->DrawBaseLayoutTooltip(baseIdx, x, y);
+}
+
 void GAME_HandleBaseClick (int baseIdx, int key, int col, int row)
 {
 	const cgame_export_t* list = GAME_GetCurrentType();

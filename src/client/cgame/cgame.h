@@ -69,6 +69,7 @@ typedef struct cgame_export_s {
 	void (EXPORT* HandleBaseClick) (int baseIdx, int key, int col, int row);
 	void (EXPORT* DrawBase) (int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap);
 	void (EXPORT* DrawBaseLayout) (int baseIdx, int x, int y, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color);
+	void (EXPORT* DrawBaseLayoutTooltip) (int baseIdx, int x, int y);
 	void (EXPORT* DrawBaseTooltip) (int baseIdx, int x, int y, int col, int row);
 	void (EXPORT* EndRoundAnnounce) (int playerNum, int team);
 	void (EXPORT* StartBattlescape) (bool isTeamPlay);

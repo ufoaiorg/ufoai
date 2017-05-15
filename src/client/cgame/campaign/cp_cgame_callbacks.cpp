@@ -390,6 +390,25 @@ void GAME_CP_Frame (float secondsSinceLastFrame)
 	CP_CampaignRun(ccs.curCampaign, secondsSinceLastFrame);
 }
 
+/**
+ * @brief Draws basename as tooltip for baselayout widget
+ * @param[in] baseIdx Numeric index of the base to show
+ * @param[in] x Horizontal screen cordinate
+ * @param[in] y Vertical screen cordinate
+ */
+void GAME_CP_DrawBaseLayoutTooltip (int baseIdx, int x, int y)
+{
+	const base_t* base = B_GetBaseByIDX(baseIdx);
+
+	if (baseIdx < 0 || baseIdx > MAX_BASES)
+		base = B_GetCurrentSelectedBase();
+
+	if (!base->founded)
+		return;
+
+	cgi->UI_DrawTooltip(base->name, x, y, 250);
+}
+
 void GAME_CP_DrawBaseLayout (int baseIdx, int x1, int y1, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color)
 {
 	const base_t* base = B_GetBaseByIDX(baseIdx);

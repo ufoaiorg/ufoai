@@ -74,6 +74,7 @@ void GAME_HandleBaseClick(int baseIdx, int key, int row, int col);
 void GAME_DrawBase(int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap);
 void GAME_DrawBaseTooltip(int baseIdx, int x, int y, int col, int row);
 void GAME_DrawBaseLayout(int baseIdx, int x, int y, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color);
+void GAME_DrawBaseLayoutTooltip(int baseIdx, int x, int y);
 const char* GAME_GetModelForItem(const objDef_t* od, struct uiModel_s** menuModel);
 const mapDef_t* GAME_GetCurrentSelectedMap(void);
 void GAME_SwitchCurrentSelectedMap(int step);

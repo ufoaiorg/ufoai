@@ -46,3 +46,4 @@ void GAME_CP_HandleBaseClick(int baseIdx, int key, int col, int row);
 void GAME_CP_DrawBase(int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap);
 void GAME_CP_DrawBaseTooltip(int baseIdx, int x, int y, int col, int row);
 void GAME_CP_DrawBaseLayout(int baseIdx, int x, int y, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color);
+void GAME_CP_DrawBaseLayoutTooltip(int baseIdx, int x, int y);
