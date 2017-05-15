@@ -106,7 +106,7 @@ static void B_SelectBase_f (void)
 	}
 	baseID = atoi(cgi->Cmd_Argv(1));
 	/* check against MAX_BASES here! - only -1 will create a new base
-	 * if we would check against ccs.numBases here, a click on the base summary
+	 * if we would check against ccs.numBases here, a click on the base selector
 	 * base nodes would try to select unfounded bases */
 	if (baseID >= 0 && baseID < MAX_BASES) {
 		const base_t* base = B_GetFoundedBaseByIDX(baseID);
@@ -817,136 +817,6 @@ static void B_CheckBuildingStatusForMenu_f (void)
 	}
 }
 
-/** BaseSummary Callbacks: */
-
-/**
- * @brief Base Summary menu init function.
- * @note Should be called whenever the Base Summary menu gets active.
- */
-static void BaseSummary_Init (const base_t* base)
-{
-	/* Init base switcher */
-	cgi->UI_ExecuteConfunc("bsum_clear_bases");
-	base_t* otherBase = NULL;
-	while ((otherBase = B_GetNext(otherBase))) {
-		cgi->UI_ExecuteConfunc("bsum_add_base %d %d", otherBase->idx, (otherBase == base ? 1 : 0));
-	}
-
-	int i;
-	/* Main */
-	cgi->UI_ExecuteConfunc("bsum_main_clearlines");
-	int line = 0;
-
-	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%s\" \"%s\" %d", line++, _("Buildings"), _("Capacity"), _("Amount"), 1);
-	bool anyBuilding = false;
-	for (i = 0; i < ccs.numBuildingTemplates; i++) {
-		const building_t* b = &ccs.buildingTemplates[i];
-
-		/* only show already researched buildings */
-		if (!RS_IsResearched_ptr(b->tech))
-			continue;
-		const baseCapacities_t cap = B_GetCapacityFromBuildingType(b->buildingType);
-		if (cap == MAX_CAP)
-			continue;
-		if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType))
-			continue;
-
-		cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%i/%i\" \"%d\" %d", line++, _(b->name),
-			CAP_GetCurrent(base, cap), CAP_GetMax(base, cap),
-			B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType), 0);
-		anyBuilding = true;
-	}
-	if (!anyBuilding)
-		cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"\" \"\" %d", line++, _("No report"), 0);
-	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"\" \"\" \"\" 0", line++);
-
-	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%s\" \"%s\" %d", line++, _("Production"), _("Quantity"), _("Percent"), 1);
-	const production_queue_t* queue = PR_GetProductionForBase(base);
-	if (queue->numItems > 0) {
-		for (i = 0; i < queue->numItems; i++) {
-			const production_t* production = &queue->items[i];
-			const char* name = PR_GetName(&production->data);
-			cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%d\" \"%.2f%%\" %d", line++, name,
-				production->amount, PR_GetProgress(production) * 100, 0);
-		}
-	} else {
-		cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"\" \"\" %d", line++, _("Nothing"), 0);
-	}
-	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"\" \"\" \"\" 0", line++);
-
-	cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%s\" \"%s\" %d", line++, _("Research"), _("Scientists"), _("Percent"), 1);
-	bool anyResearch = false;
-	for (i = 0; i < ccs.numTechnologies; i++) {
-		const technology_t* tech = RS_GetTechByIDX(i);
-		if (tech->base == base && (tech->statusResearch == RS_RUNNING || tech->statusResearch == RS_PAUSED)) {
-			cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"%d\" \"%.2f%%\" %d", line++, _(tech->name),
-				tech->scientists, (1.0f - tech->time / tech->overallTime) * 100, 0);
-			anyResearch = true;
-		}
-	}
-	if (!anyResearch)
-		cgi->UI_ExecuteConfunc("bsum_main_addline %d \"%s\" \"\" \"\" %d", line++, _("Nothing"), 0);
-
-	static char textInfoBuffer[1024];
-	textInfoBuffer[0] = 0;
-
-	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), _("^BAircraft\n"));
-	for (i = 0; i <= MAX_HUMAN_AIRCRAFT_TYPE; i++) {
-		const aircraftType_t airType = (aircraftType_t)i;
-		const int count = AIR_CountTypeInBase(base, airType);
-		if (count == 0)
-			continue;
-		Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\t%s:\t\t\t\t%i\n", AIR_GetAircraftString(airType),
-			count);
-	}
-	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\n");
-
-	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), _("^BEmployees\n"));
-	for (i = 0; i < MAX_EMPL; i++) {
-		const employeeType_t emplType = (employeeType_t)i;
-		const int cnt = E_CountHired(base, emplType);
-		if (cnt == 0)
-			continue;
-		const char* desc = E_GetEmployeeString(emplType, cnt);
-		Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\t%s:\t\t\t\t%i\n", desc, cnt);
-	}
-	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\n");
-
-	Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), _("^BAliens\n"));
-	if (base->alienContainment) {
-		linkedList_t* list = base->alienContainment->list();
-		LIST_Foreach(list, alienCargo_t, item) {
-			Q_strcat(textInfoBuffer, sizeof(textInfoBuffer), "\t%s:\t\t\t\t%i/%i\n",
-				_(item->teamDef->name), item->alive, item->dead);
-		}
-		cgi->LIST_Delete(&list);
-	}
-	cgi->UI_RegisterText(TEXT_STANDARD, textInfoBuffer);
-}
-
-/**
- * @brief Open menu for basesummary.
- */
-static void BaseSummary_SelectBase_f (void)
-{
-	const base_t* base;
-
-	if (cgi->Cmd_Argc() >= 2) {
-		const int i = atoi(cgi->Cmd_Argv(1));
-		base = B_GetFoundedBaseByIDX(i);
-		if (base == nullptr) {
-			Com_Printf("Invalid base index given (%i).\n", i);
-			return;
-		}
-	} else {
-		base = B_GetCurrentSelectedBase();
-	}
-
-	if (base != nullptr) {
-		BaseSummary_Init(base);
-	}
-}
-
 /**
  * @brief Makes a mapshot - called by basemapshot script command
  * @note Load a basemap and execute 'basemapshot' in console
@@ -988,7 +858,6 @@ static const cmdList_t baseCallbacks[] = {
 	{"check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button"},
 	{"buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode"},
 	{"reset_building_current", B_ResetBuildingCurrent_f, nullptr},
-	{"basesummary_selectbase", BaseSummary_SelectBase_f, "Opens Base Statistics menu in base"},
 	{nullptr, nullptr, nullptr}
 };
 

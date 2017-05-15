@@ -2,7 +2,6 @@
  * @TODO:
  *   See here: http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=commit;h=6f98e6620c75363f51b7e736052ac80f9ac50b7a
  * - Production
- * - Base summary
  * - Add injured soldiers to employee count list
  * - Icons for UFOPaedia, kill alien (aliencontainment)
  * LATER IMPROVEMENTS:
@@ -92,11 +91,11 @@ window bases
 			}
 		}
 
-		// Base summary, transfers, options, UFOpaedia
+		// Transfers, options, UFOpaedia
 		panel buttons
 		{
 			{
-				pos		"495 705"
+				pos	"551 705"
 				size	"224 48"
 				layout	LAYOUT_LEFT_RIGHT_FLOW
 			}
@@ -129,16 +128,6 @@ window bases
 				onMouseEnter	{ *node:this@background = "icons/circle" }
 				onMouseLeave	{ *node:this@background = "icons/circle0" }
 				onClick			{ cmd "ui_push transfer;" }
-			}
-			button basesummary
-			{
-				size	"56 48"
-				icon		"icons/stats"
-				tooltip		"_Base Summary"
-				background	"icons/circle0"
-				onMouseEnter	{ *node:this@background = "icons/circle" }
-				onMouseLeave	{ *node:this@background = "icons/circle0" }
-				onClick			{ cmd "ui_push basesummary;" }
 			}
 		}
 
