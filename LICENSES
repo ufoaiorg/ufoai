@@ -658,11 +658,6 @@ base/maps/solarplant/sp_northeast.map | GNU General Public License 2.0 or later 
 base/maps/solarplant/sp_northwest.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
 base/maps/solarplant/sp_west.map | GNU General Public License 2.0 or later | Davide "Deadman" Amato
 base/maps/subway.map | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/maps/transport.ump | GNU General Public License 2.0 or later
-base/maps/transport/tra_craft_drop_firebird.map | GNU General Public License 2.0 or later
-base/maps/transport/tra_craft_drop_herakles.map | GNU General Public License 2.0 or later
-base/maps/transport/tra_craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/transport/tra_main.map | GNU General Public License 2.0 or later
 base/maps/tropic.ump | GNU General Public License 2.0 or later
 base/maps/tropic/tr_craft_crash_fighter.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_craft_crash_scout.map | GNU General Public License 2.0 or later
@@ -2826,24 +2821,12 @@ base/pics/armour/ortnok_medium.png | GNU General Public License 2.0
 base/pics/armour/power.png | GNU General Public License 2.0 | Pawel Michalkiewicz
 base/pics/armour/taman_light.png | GNU General Public License 2.0
 base/pics/armour/taman_medium.png | GNU General Public License 2.0
-base/pics/background/base_bg.jpg | GNU General Public License 2.0 or later
 base/pics/background/conback.jpg | GNU General Public License 2.0
 base/pics/background/dev_bg.png | GNU General Public License 2.0 or later | cooler_sk
-base/pics/background/equipment_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/game_team_edit_bg.png | GNU General Public License 2.0 or later
-base/pics/background/irc_bg.jpg | GNU General Public License 2.0 or later
 base/pics/background/loading.png | GNU General Public License 2.0 | kOba
 base/pics/background/losegame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/lost_bg.png | GNU General Public License 2.0 or later
-base/pics/background/mail_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/mailclient_bg.png | GNU General Public License 2.0 or later
-base/pics/background/main_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/maploading.png | GNU General Public License 2.0 or later | RaXaR | http://ufoai.org/forum/index.php?topic=873.msg8627#msg8627
-base/pics/background/multiplayer_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/options_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/skirmish2.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/skirmish_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/background/stats_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/won_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/banks/button_blue.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -3466,9 +3449,6 @@ base/pics/maps/shots/training_a_3.jpg | GNU General Public License 2.0 or later 
 base/pics/maps/shots/training_b.jpg | GNU General Public License 2.0 or later | UFOAI team
 base/pics/maps/shots/training_b_2.png | GNU General Public License 2.0 or later | UFOAI team
 base/pics/maps/shots/training_b_3.png | GNU General Public License 2.0 or later | UFOAI team
-base/pics/maps/shots/transport.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/transport_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/transport_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/tropic.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/tropic_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/tropic_3.jpg | GNU General Public License 2.0 or later
