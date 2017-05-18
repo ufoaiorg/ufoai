@@ -1612,6 +1612,7 @@ if(UFOAI_BUILD_UFORADIANT)
       ${JPEG_LIBRARIES}
       ${PNG_LIBRARIES}
       ${ZLIB_LIBRARIES}
+      ${CMAKE_DL_LIBS}
    )
 
    if(WIN32)
@@ -1630,11 +1631,6 @@ if(UFOAI_BUILD_UFORADIANT)
       if(NOT CMAKE_SYSTEM_NAME MATCHES "OpenBSD")
           target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
              rt
-          )
-      endif()
-      if(CMAKE_SYSTEM_NAME MATCHES "BSD")
-          target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
-             dl
           )
       endif()
    endif()
