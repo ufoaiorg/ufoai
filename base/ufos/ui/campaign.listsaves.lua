@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 if (campaign.listsaves == nil) then
 
 require("ufox.lua")
+require("campaign.saveinfo.lua")
 
 campaign.listsaves = function (rootNode)
 	local ui = ufox.build({
@@ -110,39 +111,23 @@ campaign.listsaves = function (rootNode)
 
 			select = function (sender, save)
 				local selected = sender:parent():child("selected_savegame")
+
 				-- deselect
+				campaign.saveinfo.close(rootNode)
 				if (save == nil) then
 					selected:set_text("")
-					sender:parent():parent():child("savegame_info"):set_invisible(true)
 					return
 				end
-				local savegame = sender:child(save)
-
 				if ((selected:text() ~= nil) and selected:text() ~= "") then
 					local previous_selection = sender:child(selected:text())
 					previous_selection:child("title"):set_color(1, 1, 1, 0.5)
 				end
 
+				-- select
+				local savegame = sender:child(save)
 				savegame:child("title"):set_color(1, 1, 1, 1)
 				selected:set_text(savegame:name())
-
-				local savegame_info = sender:parent():parent():child("savegame_info")
-				if (savegame_info ~= nil) then
-					local filename = savegame:child("id"):text()
-					savegame_info:child("gamedate"):set_text(savegame:child("gamedate"):text())
-					savegame_info:child("savedate"):set_text(savegame:child("savedate"):text())
-					if (filename == "") then
-						savegame_info:child("delete"):set_disabled(true)
-						local timestamp = os.date("%Y%m%d-%H%M%S")
-						ufo.getvar("savegame_filename"):set_value(timestamp)
-						ufo.getvar("savegame_title"):set_value("no name")
-					else
-						savegame_info:child("delete"):set_disabled(false)
-						ufo.getvar("savegame_filename"):set_value(filename)
-						ufo.getvar("savegame_title"):set_value(savegame:child("title"):text())
-					end
-					savegame_info:set_invisible(false)
-				end
+				campaign.saveinfo.open(rootNode, savegame, rootNode:name())
 			end,
 
 			on_viewchange = function (sender)
