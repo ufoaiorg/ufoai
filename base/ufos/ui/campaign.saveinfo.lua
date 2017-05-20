@@ -30,6 +30,69 @@ if (campaign.saveinfo == nil) then
 require("ufox.lua")
 
 campaign.saveinfo = {
+	--[[
+	-- @brief Checks if savegame filaname is valid and update controls
+	-- @param[in, out] sender Savegame filename node
+	--]]
+	check_savegame_filename = function (sender)
+		local filename = ufo.getvar("savegame_filename")
+		if (filename == nil) then
+			return
+		end
+
+		local delete_button = sender:parent():child("delete")
+		if (delete_button ~= nil) then
+			local savelist = sender:parent():parent():find("savegame_list")
+			if (savelist ~= nil and savelist:search(filename:as_string()) == nil) then
+				delete_button:set_tooltip("_File doesn't exists")
+				delete_button:set_disabled(true)
+			else
+				delete_button:set_tooltip("")
+				delete_button:set_disabled(false)
+			end
+		end
+
+		local save_button = sender:parent():child("save")
+		if (save_button ~= nil) then
+			if (string.match(filename:as_string(), "^[a-zA-Z0-9_-]+$") == nil) then
+				sender:set_bordersize(2)
+				sender:set_tooltip("_File name must be constructed from alphanumeric characters, hypens and underscores")
+				save_button:set_disabled(true)
+			else
+				sender:set_bordersize(0)
+				sender:set_tooltip("")
+				save_button:set_disabled(false)
+			end
+		end
+	end,
+
+	--[[
+	-- @brief Checks if savegame title is valid and update controls
+	-- @param[in, out] sender Savegame title node
+	--]]
+	check_savegame_title = function (sender)
+		local title = ufo.getvar("savegame_title")
+		if (title == nil) then
+			return
+		end
+
+		local save_button = sender:parent():child("save")
+		if (save_button == nil) then
+			return
+		end
+
+		if (title:as_string():len() == 0) then
+			sender:set_bordersize(2)
+			sender:set_tooltip("_Title cannot not be empty")
+			save_button:set_disabled(true)
+			return
+		end
+
+		sender:set_tooltip("")
+		sender:set_bordersize(0)
+		save_button:set_disabled(false)
+	end,
+
 	open = function (rootNode, savegame, mode)
 		local title = savegame:child("title"):text()
 		ufo.getvar("savegame_title", title):set_value(title)
@@ -75,6 +138,10 @@ campaign.saveinfo = {
 				size = {315, 20},
 				color = {1, 1, 1, 0.5},
 				backgroundcolor = node_background,
+				bordercolor = {1, 0, 0, 1},
+				bordersize = 0,
+
+				on_keyreleased = campaign.saveinfo.check_savegame_filename,
 			},
 
 			{
@@ -94,6 +161,10 @@ campaign.saveinfo = {
 				size = {315, 20},
 				color = {1, 1, 1, 0.5},
 				backgroundcolor = node_background,
+				bordercolor = {1, 0, 0, 1},
+				bordersize = 0,
+
+				on_keyreleased = campaign.saveinfo.check_savegame_title,
 			},
 
 			{
@@ -144,9 +215,15 @@ campaign.saveinfo = {
 				disabled = true,
 
 				on_mouseenter = function (sender)
+					if (sender:is_disabled()) then
+						return
+					end
 					sender:set_backgroundcolor(0.59, 0.78, 0.56, 1)
 				end,
 				on_mouseleave = function (sender)
+					if (sender:is_disabled()) then
+						return
+					end
 					sender:set_backgroundcolor(0.38, 0.48, 0.36, 1)
 				end,
 
@@ -169,9 +246,15 @@ campaign.saveinfo = {
 				disabled = (not exists),
 
 				on_mouseenter = function (sender)
+					if (sender:is_disabled()) then
+						return
+					end
 					sender:set_backgroundcolor(0.59, 0.78, 0.56, 1)
 				end,
 				on_mouseleave = function (sender)
+					if (sender:is_disabled()) then
+						return
+					end
 					sender:set_backgroundcolor(0.38, 0.48, 0.36, 1)
 				end,
 
@@ -201,9 +284,15 @@ campaign.saveinfo = {
 				backgroundcolor = {0.38, 0.48, 0.36, 1},
 
 				on_mouseenter = function (sender)
+					if (sender:is_disabled()) then
+						return
+					end
 					sender:set_backgroundcolor(0.59, 0.78, 0.56, 1)
 				end,
 				on_mouseleave = function (sender)
+					if (sender:is_disabled()) then
+						return
+					end
 					sender:set_backgroundcolor(0.38, 0.48, 0.36, 1)
 				end,
 
@@ -221,6 +310,8 @@ campaign.saveinfo = {
 					tab:parent():child("tabset"):child(tab:name()):deselect()
 				end
 			}, saveinfo)
+			campaign.saveinfo.check_savegame_filename(saveinfo:child("filename"))
+			campaign.saveinfo.check_savegame_title(saveinfo:child("title"))
 		else
 			local begin_button = ufox.build({
 				name = "begin",

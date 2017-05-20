@@ -90,6 +90,7 @@ do
 	MainMenu3Btn:set_font ("f_normal_bold")
 	MainMenu3Btn:set_color (1, 1, 1, 0.9)
 	MainMenu3Btn:set_selectcolor (0, 0, 0, 0.9)
+	MainMenu3Btn:set_disabledcolor(0.23, 0.23, 0.23, 1)
 	MainMenu3Btn:set_backgroundcolor (0.38, 0.48, 0.36, 0.9)
 	MainMenu3Btn:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
 	MainMenu3Btn:set_contentalign (ufo.ALIGN_CC)

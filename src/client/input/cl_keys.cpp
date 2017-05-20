@@ -829,6 +829,15 @@ void Key_SetDest (keydest_t keyDest)
 }
 
 /**
+ * @brief Returns true if the Key is a mouse event
+ * @param[in] key Key code
+ */
+static bool Key_IsMouseButton (unsigned int key)
+{
+	return key >= K_MOUSE1 && key <= K_MOUSE5;
+}
+
+/**
  * @brief Called by the system between frames for both key up and key down events
  * @note Should NOT be called during an interrupt!
  * @sa Key_Message
@@ -839,7 +848,7 @@ void Key_Event (unsigned int key, unsigned short unicode, bool down, unsigned ti
 	if (key >= K_KEY_SIZE)
 		return;
 
-	if (cls.keyDest == key_game) {
+	if (cls.keyDest == key_game && !Key_IsMouseButton(key)) {
 		if (down && UI_KeyPressed(key, unicode))
 			return;
 		else if (!down && UI_KeyRelease(key, unicode))

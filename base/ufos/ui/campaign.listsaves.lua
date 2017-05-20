@@ -53,6 +53,22 @@ campaign.listsaves = function (rootNode)
 			wheelscrollable = true,
 			backgroundcolor = {0, 0, 0, 0.5},
 
+			search = function (sender, filename)
+				if (filename == nil or filename == "") then
+					return
+				end
+
+				local save = sender:first()
+				while (save ~= nil) do
+					if (save:child("id"):text() == filename) then
+						return save
+					end
+					save = save:next()
+				end
+
+				return nil
+			end,
+
 			clear = function (sender)
 				sender:remove_children()
 			end,
