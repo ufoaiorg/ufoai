@@ -335,7 +335,6 @@ campaign.saveinfo = {
 						return
 					end
 					ufo.cmd(string.format("game_load \"%s\";", filename:as_string()))
-					tab:parent():child("tabset"):child(tab:name()):deselect()
 				end
 			}, saveinfo)
 		end

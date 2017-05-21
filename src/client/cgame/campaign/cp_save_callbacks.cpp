@@ -90,8 +90,9 @@ static void SAV_GameLoad_f (void)
 	/* load and go to map */
 	if (!SAV_GameLoad(cgi->Cmd_Argv(1), &error)) {
 		cgi->Cbuf_Execute(); /* wipe outstanding campaign commands */
-		cgi->UI_Popup(_("Error"), "%s\n%s", _("Error loading game."), error ? error : "");
 		cgi->Cmd_ExecuteString("game_exit");
+		cgi->Cmd_ExecuteString("game_setmode campaign");
+		cgi->UI_Popup(_("Error"), "%s\n%s", _("Error loading game."), error ? error : "");
 	}
 }
 

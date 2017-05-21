@@ -967,11 +967,11 @@ void CP_CampaignInit (campaign_t* campaign, bool load)
 
 	CP_XVIInit();
 
-	cgi->UI_InitStack("geoscape", "campaign_main");
-
 	if (load) {
 		return;
 	}
+
+	cgi->UI_InitStack("geoscape", "campaign_main");
 
 	CL_EventAddMail("prolog");
 

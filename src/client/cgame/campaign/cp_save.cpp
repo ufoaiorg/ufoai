@@ -257,7 +257,7 @@ bool SAV_GameLoad (const char* file, const char** error)
 	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
 			filename, header.compressed ? "compressed" : "");
 
-	cgi->UI_InitStack("geoscape", nullptr);
+	cgi->UI_InitStack("geoscape", "campaign_main");
 	return true;
 }
 
