@@ -1,223 +1,271 @@
 --!usr/bin/lua
 
+require("ufox.lua")
+
 --[[
  - ==============================
  - Reusable components for the UI
  - ==============================
 --]]
 do
-	local smallstring = ufo.create_component ("string", "smallstring", nil)
-	smallstring:set_font("f_verysmall")
-	smallstring:set_color(0.56, 0.81, 0.76, 1.0)
+	local smallstring = ufox.build_component({
+		name = "smallstring",
+		class = "string",
+		font = "f_verysmall",
+		color = {0.56, 0.81, 0.76, 1.0},
+	})
 end
 
 --[[
  - Fuzzy screen effect
 --]]
 do
-	local fuzzyScreen = ufo.create_component("texture", "fuzzyScreen", nil)
-	fuzzyScreen:set_pos(0, 0)
-	fuzzyScreen:set_size(2048, 1536)
-	fuzzyScreen:set_source("ui/screen")
-	fuzzyScreen:set_ghost(true)
+	local fuzzyScreen = ufox.build_component({
+		name = "fuzzyScreen",
+		class = "texture",
+		pos = {0, 0},
+		size = {2048, 1536},
+		source = "ui/screen",
+		ghost = true,
+	})
 end
 
 --[[
  - Toolbar for main menus
  - @TODO: Currently, the player can jump from battlescape to
- -			options, then use this to jump to the main menu
- -			and launch another mission. Before implementing
- -			this idea, need to prevent this from happening.
+ -	options, then use this to jump to the main menu
+ -	and launch another mission. Before implementing
+ -	this idea, need to prevent this from happening.
 --]]
 do
-	local MainMenuToolbar = ufo.create_component("panel", "MainMenuToolbar", nil)
-	MainMenuToolbar:set_pos(0, 0)
-	MainMenuToolbar:set_size(1024, 20)
+	local MainMenuToolbar = ufox.build_component({
+		name = "MainMenuToolbar",
+		class = "panel",
+		pos = {0, 0},
+		size = {1024, 20},
+	})
 end
 
 do
-	local UFOpediaBtn = ufo.create_component("button", "UFOpediaBtn", nil)
-	UFOpediaBtn:set_size(16, 16)
-	UFOpediaBtn:set_icon("icons/windowinfo")
-	UFOpediaBtn:set_tooltip("_View UFOPaedia entry")
-	UFOpediaBtn:set_padding(0)
-	UFOpediaBtn.on_click = function (sender)
-			ufo.cmd ("ui_push ufopedia;")
-		end
+	local UFOpediaBtn = ufox.build_component({
+		name = "UFOpediaBtn",
+		class = "button",
+		size = {16, 16},
+		icon = "icons/windowinfo",
+		tooltip = "_View UFOPaedia entry",
+		padding = 0,
+
+		on_click = function (sender)
+			ufo.cmd("ui_push ufopedia;")
+		end,
+	})
 end
 
 --[[
  - Main button templates. Can be resized as needed
 --]]
 do
-	local MainMenuBtn = ufo.create_component("button", "MainMenuBtn", nil)
-	MainMenuBtn:set_pos (0, 0)
-	MainMenuBtn:set_size (400, 30)
-	MainMenuBtn:set_font ("f_normal_bold")
-	MainMenuBtn:set_color (0.065, 0.065, 0.065, 1)
-	MainMenuBtn:set_backgroundcolor (0.4, 0.52, 0.5, 1)
-	MainMenuBtn:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
-	MainMenuBtn:set_contentalign (ufo.ALIGN_CC)
-	MainMenuBtn.on_mouseenter = function (sender)
-			sender:set_backgroundcolor (0.58, 0.81, 0.76, 1)
-		end
-	MainMenuBtn.on_mouseleave = function (sender)
-			sender:set_backgroundcolor (0.4, 0.52, 0.5, 1)
-		end
+	local MainMenuBtn = ufox.build_component({
+		name = "MainMenuBtn",
+		class = "button",
+		pos = {0, 0},
+		size = {400, 30},
+		font = "f_normal_bold",
+		color = {0.065, 0.065, 0.065, 1},
+		backgroundcolor = {0.4, 0.52, 0.5, 1},
+		layoutalign = ufo.LAYOUTALIGN_MIDDLE,		-- @TODO Confirm that this make nothing and can be removed
+		contentalign = ufo.ALIGN_CC,
+
+		on_mouseenter = function (sender)
+			sender:set_backgroundcolor(0.58, 0.81, 0.76, 1)
+		end,
+		on_mouseleave = function (sender)
+			sender:set_backgroundcolor(0.4, 0.52, 0.5, 1)
+		end,
+	})
 end
 
 do
-	local MainMenu2Btn = ufo.create_component ("button", "MainMenu2Btn", nil)
-	MainMenu2Btn:set_pos (0, 0)
-	MainMenu2Btn:set_size (400, 30)
-	MainMenu2Btn:set_font ("f_normal_bold")
-	MainMenu2Btn:set_color (0.065, 0.065, 0.065, 1)
-	MainMenu2Btn:set_backgroundcolor (0.53, 0.61, 0.21, 1)
-	MainMenu2Btn:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
-	MainMenu2Btn:set_contentalign (ufo.ALIGN_CC)
-	MainMenu2Btn.on_mouseenter = function (sender)
-			sender:set_backgroundcolor (0.82, 0.92, 0.44, 1)
-		end
-	MainMenu2Btn.on_mouseleave = function (sender)
-			sender:set_backgroundcolor (0.53, 0.61, 0.21, 1)
-		end
+	local MainMenu2Btn = ufox.build_component({
+		name = "MainMenu2Btn",
+		class = "button",
+		super = "MainMenuBtn",
+		backgroundcolor = {0.53, 0.61, 0.21, 1},
+
+		on_mouseenter = function (sender)
+			sender:set_backgroundcolor(0.82, 0.92, 0.44, 1)
+		end,
+		on_mouseleave = function (sender)
+			sender:set_backgroundcolor(0.53, 0.61, 0.21, 1)
+		end,
+	})
 end
 
 do
-	local MainMenu3Btn = ufo.create_component ("button", "MainMenu3Btn", nil)
-	MainMenu3Btn:set_pos (0, 0)
-	MainMenu3Btn:set_size (400, 30)
-	MainMenu3Btn:set_font ("f_normal_bold")
-	MainMenu3Btn:set_color (1, 1, 1, 0.9)
-	MainMenu3Btn:set_selectcolor (0, 0, 0, 0.9)
-	MainMenu3Btn:set_disabledcolor(0.23, 0.23, 0.23, 1)
-	MainMenu3Btn:set_backgroundcolor (0.38, 0.48, 0.36, 0.9)
-	MainMenu3Btn:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
-	MainMenu3Btn:set_contentalign (ufo.ALIGN_CC)
-	MainMenu3Btn.on_mouseenter = function (sender)
-			sender:set_backgroundcolor (0.88, 0.20, 0.075, 1)
-		end
-	MainMenu3Btn.on_mouseleave = function (sender)
-			sender:set_backgroundcolor (0.38, 0.48, 0.36, 0.9)
-		end
+	local MainMenu3Btn = ufox.build_component({
+		name = "MainMenu3Btn",
+		class = "button",
+		super = "MainMenuBtn",
+		color = {1, 1, 1, 0.9},
+		selectcolor = {0, 0, 0, 0.9},
+		backgroundcolor = {0.38, 0.48, 0.36, 0.9},
+		disabledcolor = {0.23, 0.23, 0.23, 1},
+
+		on_mouseenter = function (sender)
+			sender:set_backgroundcolor(0.88, 0.20, 0.075, 1)
+		end,
+		on_mouseleave = function (sender)
+			sender:set_backgroundcolor(0.38, 0.48, 0.36, 0.9)
+		end,
+	})
 end
 
 do
-	local MainMenuExitBtn = ufo.create_component ("button", "MainMenuExitBtn", nil)
-	MainMenuExitBtn:set_pos (0, 0)
-	MainMenuExitBtn:set_size (400, 30)
-	MainMenuExitBtn:set_font ("f_normal_bold")
-	MainMenuExitBtn:set_color (1, 0.68, 0.61, 1)
-	MainMenuExitBtn:set_selectcolor(1, 0.68, 0.61, 1)
-	MainMenuExitBtn:set_backgroundcolor(0.65, 0.13, 0, 1)
-	MainMenuExitBtn:set_layoutalign (ufo.LAYOUTALIGN_MIDDLE)
-	MainMenuExitBtn:set_contentalign (ufo.ALIGN_CC)
-	MainMenuExitBtn.on_mouseenter = function (sender)
-			sender:set_backgroundcolor (0.88, 0.20, 0.075, 1)
-		end
-	MainMenuExitBtn.on_mouseleave = function (sender)
-			sender:set_backgroundcolor (0.65, 0.13, 0, 1)
-		end
+	local MainMenuExitBtn = ufox.build_component({
+		name = "MainMenuExitBtn",
+		class = "button",
+		super = "MainMenuBtn",
+		color = {1, 0.68, 0.61, 1},
+		selectcolor = {1, 0.68, 0.61, 1},
+		backgroundcolor = {0.65, 0.13, 0, 1},
+
+		on_mouseenter = function (sender)
+			sender:set_backgroundcolor(0.88, 0.20, 0.075, 1)
+		end,
+		on_mouseleave = function (sender)
+			sender:set_backgroundcolor(0.65, 0.13, 0, 1)
+		end,
+	})
 end
 
 do
-	local MainMenuCancelBtn = ufo.create_component ("button", "MainMenuCancelBtn", "MainMenu2Btn")
-	MainMenuCancelBtn:set_text ("_Cancel")
-	MainMenuCancelBtn:set_tooltip ("_Close this dialogue")
+	local MainMenuCancelBtn = ufox.build_component({
+		name = "MainMenuCancelBtn",
+		class = "button",
+		super = "MainMenu2Btn",
+		text = "_Cancel",
+		tooltip = "_Close this dialogue",
+	})
 end
 
 do
-	local MainMenuTab = ufo.create_component ("button", "MainMenuTab", nil)
-	MainMenuTab:set_size(125, 30)
-	MainMenuTab:set_font("f_small_bold")
-	MainMenuTab:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
-	MainMenuTab:set_color(1, 1, 1, 0.5)
-	function MainMenuTab.enable (sender)
-		local parent = sender:parent()
-		parent:set_backgroundcolor(0.4, 0.515, 0.5, 1)
-		parent:set_color(0, 0, 0, 0.9)
-	end
-	function MainMenuTab.disable (sender)
-		local parent=sender:parent()
-		parent:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
-		parent:set_color(1, 1, 1, 0.5)
-	end
+	local MainMenuTab = ufox.build_component({
+		name = "MainMenuTab",
+		class = "button",
+		size = {125, 30},
+		font = "f_small_bold",
+		backgroundcolor = {0.4, 0.515, 0.5, 0.25},
+		color = {1, 1, 1, 0.5},
+
+		enable = function (sender)
+			local parent = sender:parent()
+			parent:set_backgroundcolor(0.4, 0.515, 0.5, 1)
+			parent:set_color(0, 0, 0, 0.9)
+		end,
+		disable = function (sender)
+			local parent = sender:parent()
+			parent:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
+			parent:set_color(1, 1, 1, 0.5)
+		end,
+	})
 end
 
 --[[
  - Simple text button, left aligned. Light color.
 --]]
 do
-	local TextBtn = ufo.create_component ("button", "TextBtn", nil)
-	TextBtn:set_size (250, 20)
-	TextBtn:set_color (1, 1, 1, 0.5)
-	TextBtn:set_contentalign (ufo.ALIGN_CL)
+	local TextBtn = ufox.build_component({
+		name = "TextBtn",
+		class = "button",
+		size = {250, 20},
+		color = {1, 1, 1, 0.5},
+		contentalign = ufo.ALIGN_CL,
+	})
 end
 
 do
-	local TextEntry = ufo.create_component ("textentry", "TextEntry", nil)
-	TextEntry:set_background ("ui/textentry")
-	TextEntry:set_color (1, 1, 1, 0.5)
-	TextEntry:set_selectcolor (1, 1, 1, 0.9)
-	TextEntry:set_contentalign (ufo.ALIGN_CL)
-	TextEntry:set_padding (8)
+	local TextEntry = ufox.build_component({
+		name = "TextEntry",
+		class = "textentry",
+		background = "ui/textentry",
+		color = {1, 1, 1, 0.5},
+		selectcolor = {1, 1, 1, 0.9},
+		contentalign = ufo.ALIGN_CL,
+		padding = 8,
+	})
 end
 
 --[[
  - Stats bar
  - @TODO: should change color (red/yellow/green) depending
- - on how good the value is.
+ -        on how good the value is.
 --]]
-	do
-	local StatBar = ufo.create_component("panel", "StatBar", nil)
-	StatBar:set_size(180, 25)
-	do
-		local StatBar_label = ufo.create_control(StatBar, "smallstring", "label", nil)
-		StatBar_label:set_pos(-3, 0)
-		StatBar_label:set_size(80, 15)
-		StatBar_label:set_longlines(ufo.LONGLINES_CHOP)
-		StatBar_label:set_contentalign(ufo.ALIGN_UL)
-	end
-	do
-		local StatBar_texture = ufo.create_texture (StatBar, "bg", nil)
-		StatBar_texture:set_pos(0, 14)
-		StatBar_texture:set_size(180, 10)
-		StatBar_texture:set_source("ui/bar_bg")
-	end
-	do
-		local StatBar_valuebar = ufo.create_bar (StatBar, "valuebar", nil)
-		StatBar_valuebar:set_pos(0, 14)
-		StatBar_valuebar:set_size(180, 10)
-		StatBar_valuebar:set_color(0.1875, 0.65625, 0.164, 0.8)
-		StatBar_valuebar:set_range(0, 100)
-		StatBar_valuebar:set_disabled(true)
-		StatBar_valuebar:set_nohover(true)
-	end
-	-- shows initial values
-	do
-		local StatBar_initbar = ufo.create_bar (StatBar, "initbar", nil)
-		StatBar_initbar:set_pos(0, 14)
-		StatBar_initbar:set_size(180, 10)
-		StatBar_initbar:set_color(0.1875, 0.65625, 0.164, 1)
-		StatBar_initbar:set_range(0, 100)
-		StatBar_initbar:set_disabled(true)
-		StatBar_initbar:set_nohover(true)
-	end
-	do
-		local StatBar_valuenum = ufo.create_control(StatBar, "smallstring", "valuenum", nil)
-		StatBar_valuenum:set_pos(90, 0)
-		StatBar_valuenum:set_size(90, 0)
-		StatBar_valuenum:set_longlines(ufo.LONGLINES_CHOP)
-		StatBar_valuenum:set_contentalign(ufo.ALIGN_UR)
-	end
+do
+	local StatBar = ufox.build_component({
+		name = "StatBar",
+		class = "panel",
+		size = {180, 25},
+
+		{
+			name = "label",
+			class = "smallstring",
+			pos = {-3, 0},
+			size = {80, 15},
+			longlines = ufo.LONGLINES_CHOP,
+			contentalign = ufo.ALIGN_UL,
+		},
+
+		{
+			name = "bg",
+			class = "texture",
+			pos = {0, 14},
+			size = {180, 10},
+			source = "ui/bar_bg",
+		},
+
+		{
+			name = "valuebar",
+			class = "bar",
+			pos = {0, 14},
+			size = {180, 10},
+			color = {0.1875, 0.65625, 0.164, 0.8},
+			range = {0, 100},
+			disabled = true,
+			nohover = true,
+		},
+
+		-- shows initial values
+		{
+			name = "initbar",
+			class = "bar",
+			pos = {0, 14},
+			size = {180, 10},
+			color = {0.1875, 0.65625, 0.164, 1},
+			range = {0, 100},
+			disabled = true,
+			nohover = true,
+		},
+
+		{
+			name = "valuenum",
+			class = "smallstring",
+			pos = {90, 0},
+			size = {90, 0},
+			longlines = ufo.LONGLINES_CHOP,
+			contentalign = ufo.ALIGN_UR,
+		},
+	})
 end
 
 do
-	local CheckBox = ufo.create_component ("checkbox", "CheckBox", nil)
-	CheckBox:set_iconchecked ("icons/checkbox_checked")
-	CheckBox:set_iconunchecked ("icons/checkbox_unchecked")
-	CheckBox:set_iconunknown ("icons/checkbox_indeterminate")
-	CheckBox:set_size (20, 20)
+	local CheckBox = ufox.build_component({
+		name = "CheckBox",
+		class = "checkbox",
+		size = {20, 20},
+		iconchecked = "icons/checkbox_checked",
+		iconunchecked = "icons/checkbox_unchecked",
+		iconunknown = "icons/checkbox_indeterminate",
+	})
 end
 
 --[[
@@ -225,145 +273,212 @@ end
  - Used in market, soldier equipping, etc.
 --]]
 do
-	local ObjectInfo = ufo.create_component ("panel", "ObjectInfo", nil)
-	ObjectInfo:set_size(715, 180)
-	ObjectInfo:set_bordersize(2)
-	ObjectInfo:set_bordercolor (0.527, 0.6, 0.21, 1)
-	-- Object titles
-	do
-		local ObjectInfo_header = ufo.create_panel (ObjectInfo, "header", nil)
-		ObjectInfo_header:set_pos (1, 1)
-		ObjectInfo_header:set_size(713, 32)
-		ObjectInfo_header:set_backgroundcolor (0.527, 0.6, 0.21, 0.2)
-		do
-			local ObjectInfo_header_ufopedia = ufo.create_control (ObjectInfo_header, "UFOpediaBtn", "ufopedia", nil)
-			ObjectInfo_header_ufopedia:set_pos (10, 9)
-			ObjectInfo_header_ufopedia.on_click = function (sender)
-					ufo.cmd ("ui_market_openpedia;")
+	local ObjectInfo = ufox.build_component({
+		name = "ObjectInfo",
+		class = "panel",
+		size = {715, 180},
+		bordersize = 2,
+		bordercolor = {0.527, 0.6, 0.21, 1},
+
+		{
+			name = "header",
+			class = "panel",
+			pos = {1, 1},
+			size = {713, 32},
+			backgroundcolor = {0.527, 0.6, 0.21, 0.2},
+
+			{
+				name = "ufopedia",
+				class = "UFOpediaBtn",
+				pos = {10, 9},
+
+				on_click = function (sender)
+					ufo.cmd("ui_market_openpedia;")
 				end
-		end
-		do
-			ObjectInfo_header_title = ufo.create_string (ObjectInfo_header, "title", nil)
-			ObjectInfo_header_title:set_pos (30, 1)
-			ObjectInfo_header_title:set_size (670, 32)
-			ObjectInfo_header_title:set_text ("*cvar:mn_itemname")
-			ObjectInfo_header_title:set_contentalign(ufo.ALIGN_CL)
-			ObjectInfo_header_title:set_color(0.56, 0.81, 0.76, 1)
-		end
-	end
-	-- Model and weapon/firemode panel
-	do
-		local ObjectInfo_display = ufo.create_panel (ObjectInfo, "display", nil)
-		ObjectInfo_display:set_pos (450, 33)
-		ObjectInfo_display:set_size (265, 147)
-		do
-			local ObjectInfo_display_item = ufo.create_item (ObjectInfo_display, "object_model", nil)
-			ObjectInfo_display_item:set_model ("*cvar:mn_item")
-			ObjectInfo_display_item:set_pos (0, 0)
-			ObjectInfo_display_item:set_size (265, 147)
-			ObjectInfo_display_item:set_angles (0, 180, 90)
-			ObjectInfo_display_item:set_autoscale (true)
-		end
-		do
-			local ObjectInfo_display_objectweapon = ufo.create_string (ObjectInfo_display, "object_weapon", nil)
-			ObjectInfo_display_objectweapon:set_text("*cvar:mn_linkname")
-			ObjectInfo_display_objectweapon:set_pos(0, 114)
-			ObjectInfo_display_objectweapon:set_size(130, 32)
-			ObjectInfo_display_objectweapon:set_color(0.56, 0.81, 0.76, 0.7)
-			ObjectInfo_display_objectweapon:set_backgroundcolor(0, 0, 0, 0.5)
-			ObjectInfo_display_objectweapon:set_font("f_small")
-			ObjectInfo_display_objectweapon:set_contentalign (ufo.ALIGN_CC)
-			ObjectInfo_display_objectweapon.on_click = function (sender)
+			},
+
+			{
+				name = "title",
+				class = "string",
+				pos = {30, 1},
+				size = {670, 32},
+				text = "*cvar:mn_itemname",
+				contentalign = ufo.ALIGN_CL,
+				color = {0.56, 0.81, 0.76, 1}
+			},
+		},
+
+		-- Model and weapon/firemode panel
+		{
+			name = "display",
+			class = "panel",
+			pos = {450, 33},
+			size = {265, 147},
+
+			{
+				name = "object_model",
+				class = "item",
+				model = "*cvar:mn_item",
+				pos = {0, 0},
+				size = {265, 147},
+				angles = {0, 180, 90},
+				autoscale = true,
+			},
+
+			{
+				name = "object_weapon",
+				class = "string",
+				text = "*cvar:mn_linkname",
+				pos = {0, 114},
+				size = {130, 32},
+				color = {0.56, 0.81, 0.76, 0.7},
+				backgroundcolor = {0, 0, 0, 0.5},
+				font = "f_small",
+				contentalign = ufo.ALIGN_CC,
+
+				on_click = function (sender)
 					ufo.cmd("mn_increaseitem;")
 				end
-		end
-		do
-			local ObjectInfo_display_objectfiremode = ufo.create_string (ObjectInfo_display, "object_firemode", nil)
-			ObjectInfo_display_objectfiremode:set_text("*cvar:mn_firemodename")
-			ObjectInfo_display_objectfiremode:set_pos(134, 114)
-			ObjectInfo_display_objectfiremode:set_size(130, 32)
-			ObjectInfo_display_objectfiremode:set_color(0.56, 0.81, 0.76, 0.7)
-			ObjectInfo_display_objectfiremode:set_backgroundcolor(0, 0, 0, 0.5)
-			ObjectInfo_display_objectfiremode:set_font("f_small")
-			ObjectInfo_display_objectfiremode:set_contentalign(ufo.ALIGN_CC)
-			ObjectInfo_display_objectfiremode.on_click = function (sender)
+			},
+
+			{
+				name = "object_firemode",
+				class = "string",
+				text = "*cvar:mn_firemodename",
+				pos = {134, 114},
+				size = {130, 32},
+				color = {0.56, 0.81, 0.76, 0.7},
+				backgroundcolor = {0, 0, 0, 0.5},
+				font = "f_small",
+				contentalign = ufo.ALIGN_CC,
+
+				on_click = function (sender)
 					ufo.cmd("mn_increasefiremode;")
 				end
-		end
-	end
-	-- Object info and stats
-	do
-		local ObjectInfo_info = ufo.create_panel(ObjectInfo, "info", nil)
-		ObjectInfo_info:set_pos(0, 33)
-		ObjectInfo_info:set_size(450, 147)
-		do
-			local ObjectInfo_info_description = ufo.create_text(ObjectInfo_info, "description", nil)
-			local ObjectInfo_info_descriptionscroll = ufo.create_vscrollbar(ObjectInfo_info, "description_scroll", nil)
-			ObjectInfo_info_description:set_dataid(ufo.TEXT_ITEMDESCRIPTION)
-			ObjectInfo_info_description:set_pos(30, 10)
-			ObjectInfo_info_description:set_size(420, 135)
-			ObjectInfo_info_description:set_viewsize(9)
-			ObjectInfo_info_description:set_lineheight(15)
-			ObjectInfo_info_description:set_tabwidth(168)
-			ObjectInfo_info_description:set_color(0.56, 0.81, 0.76, 1)
-			ObjectInfo_info_description:set_font("f_verysmall")
-			ObjectInfo_info_description.on_viewchange = function (sender)
-					ObjectInfo_info_descriptionscroll:set_fullsize(sender:fullsize())
-					ObjectInfo_info_descriptionscroll:set_current(sender:viewpos())
-				end
-			ObjectInfo_info_description.on_wheel = function (sender)
-					ObjectInfo_info_descriptionscroll:set_current(sender:viewpos())
-				end
+			},
+		},
 
-			ObjectInfo_info_descriptionscroll:set_image("ui/scrollbar_v")
-			ObjectInfo_info_descriptionscroll:set_pos(430, 10)
-			ObjectInfo_info_descriptionscroll:set_height(135)
-			ObjectInfo_info_descriptionscroll:set_current(0)
-			ObjectInfo_info_descriptionscroll:set_viewsize(9)
-			ObjectInfo_info_descriptionscroll:set_fullsize(9)
-			ObjectInfo_info_descriptionscroll:set_autoshowscroll(true)
-			ObjectInfo_info_descriptionscroll.on_change = function (sender)
-					ObjectInfo_info_description:set_viewpos(sender:current())
+		-- Object info and stats
+		{
+			name = "info",
+			class = "panel",
+			pos = {0, 33},
+			size = {450, 147},
+
+			{
+				name = "description",
+				class = "text",
+				dataid = ufo.TEXT_ITEMDESCRIPTION,
+				pos = {30, 10},
+				size = {420, 135},
+				viewsize = 9,
+				lineheight = 15,
+				tabwidth = 168,
+				color = {0.56, 0.81, 0.76, 1},
+				font = "f_verysmall",
+
+				on_viewchange = function (sender)
+					local scrollbar = sender:parent():child("description_scroll")
+					if (scrollbar == nil) then
+						return
+					end
+					scrollbar:set_fullsize(sender:fullsize())
+					scrollbar:set_current(sender:viewpos())
+				end,
+				on_wheel = function (sender)
+					local scrollbar = sender:parent():child("description_scroll")
+					if (scrollbar == nil) then
+						return
+					end
+					scrollbar:set_current(sender:viewpos())
 				end
-		end
-	end
+			},
+
+			{
+				name = "description_scroll",
+				class = "vscrollbar",
+				image = "ui/scrollbar_v",
+				pos = {430, 10},
+				height = 135,
+				current = 0,
+				viewsize = 9,
+				fullsize = 9,
+				autoshowscroll = true,
+
+				on_change = function (sender)
+					local text = sender:parent():child("description")
+					if (text == nil) then
+						return
+					end
+					text:set_viewpos(sender:current())
+				end,
+			},
+		},
+	})
 end
 
 do
-	local Spinner = ufo.create_component("spinner", "Spinner", nil)
-	Spinner:set_topicon("ui/spinner_up")
-	Spinner:set_bottomicon("ui/spinner_down")
-	Spinner:set_size(15, 19)
+	local Spinner = ufox.build_component({
+		name = "Spinner",
+		class = "spinner",
+		size = {15, 19},
+		topicon = "ui/spinner_up",
+		bottomicon = "ui/spinner_down",
+	})
 end
 
 -- Common style for all popups
 do
-	local ipopup = ufo.create_window("ipopup", nil)
-	ipopup:set_backgroundcolor (0, 0, 0, 0.6)
-	ipopup:set_bordersize (2)
-	ipopup:set_bordercolor(0.56, 0.81, 0.76, 1)
-	ipopup:set_dragbutton(true)
-	do
-		local ipopup_title = ufo.create_string(ipopup, "title", nil)
-		ipopup_title:set_pos(0, 0)
-		ipopup_title:set_size(512, 30)
-		ipopup_title:set_text("")
-		ipopup_title:set_contentalign(ufo.ALIGN_CL)
-		ipopup_title:set_font("f_small_bold")
-		ipopup_title:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
-		ipopup_title:set_color(0.56, 0.81, 0.76, 1)
-	end
+	local ipopup = ufox.build_window({
+		name = "ipopup",
+		class = "window",
+		backgroundcolor = {0, 0, 0, 0.6},
+		bordercolor = {0.56, 0.81, 0.76, 1},
+		bordersize = 2,
+		dragbutton = true,
+
+		{
+			name = "title",
+			class = "string",
+			pos = {0, 0},
+			size = {512, 30},
+			text = "",
+			contentalign = ufo.ALIGN_CL,
+			font = "f_small_bold",
+			backgroundcolor = {0.4, 0.515, 0.5, 0.25},
+			color = {0.56, 0.81, 0.76, 1},
+		},
+	})
 end
 
 -- StatBar was designed for hud, in equipment we need a wider bar
 do
-	local StatBarWide = ufo.create_component("StatBar", "StatBarWide", nil)
-	StatBarWide:set_size(250, 25)
-	StatBarWide:child("label"):set_size (100, 15)
-	StatBarWide:child("bg"):set_size(250, 10)
-	StatBarWide:child("valuebar"):set_size(250, 10)
-	StatBarWide:child("initbar"):set_size(250, 10)
-	StatBarWide:child("valuenum"):set_size (160, 0)
+	local StatBarWide = ufox.build_component({
+		name = "StatBarWide",
+		class = "StatBar",
+		size = {250, 25},
+
+		{
+			name = "label",
+			size = {100, 10},
+		},
+		{
+			name = "bg",
+			size = {250, 10},
+		},
+		{
+			name = "valuebar",
+			size = {250, 10},
+		},
+		{
+			name = "initbar",
+			size = {250, 10},
+		},
+		{
+			name = "valuenum",
+			size = {160, 10},
+		},
+	})
 end
 
 --[[
@@ -371,103 +486,229 @@ end
  - @TODO: Remove "mediocre" dsc text. Look at CL_ActorGetSkillString, cl_team.c
 --]]
 do
-	local abilities = ufo.create_component("panel", "abilities", nil)
-	abilities:set_pos(740, 100)
-	abilities:set_size(250, 120)
-	abilities:set_ghost(true)
-	do
-		local abilities_strength = ufo.create_control(abilities, "StatBarWide", "strength", nil)
-		abilities_strength:set_pos(0, 0)
-		abilities_strength:child("label"):set_text("_Strength")
-		abilities_strength:child("valuebar"):set_value("*cvar:mn_vpwr")
-		abilities_strength:child("initbar"):set_value("*cvar:mn_vpwri")
-		abilities_strength:child("valuenum"):set_text("*cvar:mn_tpwr")
-	end
-	do
-		local abilities_speed = ufo.create_control(abilities, "StatBarWide", "speed", nil)
-		abilities_speed:set_pos(0, 30)
-		abilities_speed:child("label"):set_text("_Speed")
-		abilities_speed:child("valuebar"):set_value("*cvar:mn_vspd")
-		abilities_speed:child("initbar"):set_value("*cvar:mn_vspdi")
-		abilities_speed:child("valuenum"):set_text("*cvar:mn_tspd")
-	end
-	do
-		local abilities_accuracy = ufo.create_control(abilities, "StatBarWide", "accuracy", nil)
-		abilities_accuracy:set_pos(0, 60)
-		abilities_accuracy:child("label"):set_text("_Accuracy")
-		abilities_accuracy:child("valuebar"):set_value("*cvar:mn_vacc")
-		abilities_accuracy:child("initbar"):set_value("*cvar:mn_vacci")
-		abilities_accuracy:child("valuenum"):set_text("*cvar:mn_tacc")
-	end
-	do
-		local abilities_mind = ufo.create_control(abilities, "StatBarWide", "mind", nil)
-		abilities_mind:set_pos(0, 90)
-		abilities_mind:child("label"):set_text("_Mind")
-		abilities_mind:child("valuebar"):set_value("*cvar:mn_vmnd")
-		abilities_mind:child("initbar"):set_value("*cvar:mn_vmndi")
-		abilities_mind:child("valuenum"):set_text("*cvar:mn_tmnd")
-	end
+	local abilities = ufox.build_component({
+		name = "abilities",
+		class = "panel",
+		pos = {740, 100},
+		size = {250, 120},
+		ghost = true,
+
+		{
+			name = "strength",
+			class = "StatBarWide",
+			pos = {0, 0},
+
+			{
+				name = "label",
+				text = "_Strength",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vpwr",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vpwri",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tpwr",
+			},
+		},
+
+		{
+			name = "speed",
+			class = "StatBarWide",
+			pos = {0, 30},
+
+			{
+				name = "label",
+				text = "_Speed",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vspd",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vspdi",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tspd",
+			},
+		},
+
+		{
+			name = "accuracy",
+			class = "StatBarWide",
+			pos = {0, 60},
+
+			{
+				name = "label",
+				text = "_Accuracy",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vacc",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vacci",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tacc",
+			},
+		},
+
+		{
+			name = "mind",
+			class = "StatBarWide",
+			pos = {0, 90},
+
+			{
+				name = "label",
+				text = "_Mind",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vmnd",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vmndi",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tmnd",
+			},
+		},
+	})
 end
 
 -- Skillbars panel
 do
-	local skillbars = ufo.create_component("panel", "skillbars", nil)
-	skillbars:set_pos(740, 220)
-	skillbars:set_size(250, 120)
-	skillbars:set_ghost(true)
-	do
-		local skillbars_cls = ufo.create_control (skillbars, "StatBarWide", "cls", nil)
-		skillbars_cls:set_pos(0, 0)
-		skillbars_cls:child("label"):set_text("_CQB")
-		skillbars_cls:child("label"):set_tooltip("_Close Quarters Battle")
-		skillbars_cls:child("valuebar"):set_value("*cvar:mn_vcls")
-		skillbars_cls:child("initbar"):set_value("*cvar:mn_vclsi")
-		skillbars_cls:child("valuenum"):set_text("*cvar:mn_tcls")
-	end
-	do
-		local skillbars_ass = ufo.create_control (skillbars, "StatBarWide", "ass", nil)
-		skillbars_ass:set_pos(0, 30)
-		skillbars_ass:child("label"):set_text("_Assault")
-		skillbars_ass:child("valuebar"):set_value("*cvar:mn_vass")
-		skillbars_ass:child("initbar"):set_value("*cvar:mn_vassi")
-		skillbars_ass:child("valuenum"):set_text("*cvar:mn_tass")
-	end
-	do
-		local skillbars_snp = ufo.create_control (skillbars, "StatBarWide", "snp", nil)
-		skillbars_snp:set_pos(0, 60)
-		skillbars_snp:child("label"):set_text("_Sniper")
-		skillbars_snp:child("valuebar"):set_value("*cvar:mn_vsnp")
-		skillbars_snp:child("initbar"):set_value("*cvar:mn_vsnpi")
-		skillbars_snp:child("valuenum"):set_text("*cvar:mn_tsnp")
-	end
-	do
-		local skillbars_exp = ufo.create_control (skillbars, "StatBarWide", "exp", nil)
-		skillbars_exp:set_pos(0, 90)
-		skillbars_exp:child("label"):set_text("_Explosives")
-		skillbars_exp:child("valuebar"):set_value("*cvar:mn_vexp")
-		skillbars_exp:child("initbar"):set_value("*cvar:mn_vexpi")
-		skillbars_exp:child("valuenum"):set_text("*cvar:mn_texp")
-	end
+	local abilities = ufox.build_component({
+		name = "skillbars",
+		class = "panel",
+		pos = {740, 100},
+		size = {250, 120},
+		ghost = true,
+
+		{
+			name = "cls",
+			class = "StatBarWide",
+			pos = {0, 0},
+
+			{
+				name = "label",
+				text = "_CQB",
+				tooltip = "_Close Quarters Battle",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vcls",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vclsi",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tcls",
+			},
+		},
+
+		{
+			name = "ass",
+			class = "StatBarWide",
+			pos = {0, 30},
+
+			{
+				name = "label",
+				text = "_Assault",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vass",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vassi",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tass",
+			},
+		},
+
+		{
+			name = "snp",
+			class = "StatBarWide",
+			pos = {0, 60},
+
+			{
+				name = "label",
+				text = "_Sniper",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vsnp",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vsnpi",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tsnp",
+			},
+		},
+
+		{
+			name = "exp",
+			class = "StatBarWide",
+			pos = {0, 90},
+
+			{
+				name = "label",
+				text = "_Explosives",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vexp",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vexpi",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_texp",
+			},
+		},
+	})
 end
 
 -- Health panel
 do
-	local healthbar = ufo.create_component("panel", "healthbar", nil)
-	healthbar:set_pos(740, 340)
-	healthbar:set_size(250, 30)
-	healthbar:set_ghost(true)
-	healthbar.on_visiblewhen = function (sender)
+	local abilities = ufox.build_component({
+		name = "healthbar",
+		class = "panel",
+		pos = {740, 340},
+		size = {250, 30},
+		ghost = true,
+		on_visiblewhen = function (sender)
 			return (ufo.getvar("mn_show_employee"):as_integer() <= 2)
-		end
-	do
-		local healthbar_hp = ufo.create_control(healthbar, "StatBarWide", "hp", nil)
-		healthbar_hp:set_pos(0, 0)
-		healthbar_hp:child("label"):set_text("_Health")
-		healthbar_hp:child("label"):set_tooltip("_Healthpoints")
-		healthbar_hp:child("valuebar"):set_value("*cvar:mn_vhp")
-		healthbar_hp:child("valuebar"):set_max("*cvar:mn_vhpmax")
-		healthbar_hp:child("valuenum"):set_text("*cvar:mn_thp")
-		healthbar_hp.update_healthcolor = function (sender)
+		end,
+
+		{
+			name = "hp",
+			class = "StatBarWide",
+			pos = {0, 0},
+
+			update_healthcolor = function (sender)
 				local current = sender:child("valuebar"):value()
 				local max = sender:child("valuebar"):max()
 				local ratio = (current / max)
@@ -478,40 +719,66 @@ do
 				else
 					sender:child("valuebar"):set_color(0.1875, 0.65625, 0.164, 1)
 				end
-			end
-	end
+			end,
+
+			{
+				name = "label",
+				text = "_Health",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vhp",
+				max = "*cvar:mn_vhpmax",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_thp",
+			},
+		},
+	})
 end
 
 do
-	local SoldierInfo = ufo.create_component("panel", "SoldierInfo", nil)
-	SoldierInfo:set_pos(10, 253)
-	SoldierInfo:set_size(240, 40)
-	do
-		local SoldierInfo_missions_lbl = ufo.create_control (SoldierInfo, "smallstring", "missions_lbl", nil)
-		SoldierInfo_missions_lbl:set_pos(0, 0)
-		SoldierInfo_missions_lbl:set_size(180, 20)
-		SoldierInfo_missions_lbl:set_text("_Missions Performed:")
-	end
-	do
-		local SoldierInfo_missions_val = ufo.create_control(SoldierInfo, "smallstring", "missions_val", nil)
-		SoldierInfo_missions_val:set_pos(160, 0)
-		SoldierInfo_missions_val:set_size(80, 20)
-		SoldierInfo_missions_val:set_text("*cvar:mn_chrmis")
-		SoldierInfo_missions_val:set_contentalign(ufo.ALIGN_UR)
-	end
-	do
-		local SoldierInfo_kills_lbl = ufo.create_control(SoldierInfo, "smallstring", "kills_lbl", nil)
-		SoldierInfo_kills_lbl:set_pos(0, 20)
-		SoldierInfo_kills_lbl:set_size(180, 20)
-		SoldierInfo_kills_lbl:set_text("_Enemies Killed:")
-	end
-	do
-		local SoldierInfo_kills_val = ufo.create_control(SoldierInfo, "smallstring", "kills_val", nil)
-		SoldierInfo_kills_val:set_pos(160, 20)
-		SoldierInfo_kills_val:set_size(80, 20)
-		SoldierInfo_kills_val:set_text("*cvar:mn_chrkillalien")
-		SoldierInfo_kills_val:set_contentalign(ufo.ALIGN_UR)
-	end
+	local SoldierInfo = ufox.build_component({
+		name = "SoldierInfo",
+		class = "panel",
+		pos = {10, 253},
+		size = {240, 40},
+
+		{
+			name =  "missions_lbl",
+			class = "smallstring",
+			pos = {0, 0},
+			size = {180, 20},
+			text = "_Missions Performed:",
+		},
+
+		{
+			name =  "missions_val",
+			class = "smallstring",
+			pos = {160, 0},
+			size = {80, 20},
+			text = "*cvar:mn_chrmis",
+			contentalign = ufo.ALIGN_UR,
+		},
+
+		{
+			name =  "kills_lbl",
+			class = "smallstring",
+			pos = {0, 20},
+			size = {180, 20},
+			text = "_Enemies Killed:",
+		},
+
+		{
+			name =  "kills_val",
+			class = "smallstring",
+			pos = {160, 20},
+			size = {80, 20},
+			text = "*cvar:mn_chrkillalien",
+			contentalign = ufo.ALIGN_UR,
+		},
+	})
 end
 
 --[[
@@ -520,81 +787,138 @@ end
  - ==================
 --]]
 do
-	local actor_info = ufo.create_component("panel", "actor_info", nil)
-	actor_info:set_pos(731, 420)
-	actor_info:set_size(290, 349)
-	do
-		local actor_info_rank_img = ufo.create_image(actor_info, "rank_img", nil)
-		actor_info_rank_img:set_image("*cvar:mn_chrrank_img")
-		actor_info_rank_img:set_pos(10, 25)
-		actor_info_rank_img:set_size(110, 110)
-	end
-	do
-		local actor_info_body = ufo.create_model(actor_info, "body", nil)
-		actor_info_body:set_model("*cvar:mn_body")
-		actor_info_body:set_skin("*cvar:mn_body_skin")
-		actor_info_body:set_animation("stand2")
-		actor_info_body:set_angles(0, 70, 90)
-		actor_info_body:set_scale(5.1, 5.1, 5.1)
-		actor_info_body:set_pos(60, 18)
-		actor_info_body:set_size(200, 290)
-		actor_info_body:set_origin(0, -40, 0)
-		do
-			local actor_info_head = ufo.create_model(actor_info_body, "head", nil)
-			actor_info_head:set_model("*cvar:mn_head")
-			actor_info_head:set_skin("*cvar:mn_head_skin")
-			actor_info_head:set_tag("tag_head")
-			actor_info_head:set_scale(1, 1, 1)
-		end
-		do
-			local actor_info_right_weapon = ufo.create_model(actor_info_body, "right_weapon", nil)
-			actor_info_right_weapon:set_model("*cvar:mn_rweapon")
-			actor_info_right_weapon:set_tag("tag_rweapon")
-		end
-		do
-			local actor_info_left_weapon = ufo.create_model(actor_info_body, "left_weapon", nil)
-			actor_info_left_weapon:set_model("*cvar:mn_lweapon")
-			actor_info_left_weapon:set_tag("tag_lweapon")
-		end
-	end
-	do
-		local actor_info_rank_lbl = ufo.create_string(actor_info, "rank_lbl", nil)
-		actor_info_rank_lbl:set_text("*cvar:mn_chrrank")
-		actor_info_rank_lbl:set_pos(10, 283)
-		actor_info_rank_lbl:set_size(200, 20)
-	end
-	do
-		local actor_info_soldier_info = ufo.create_control(actor_info, "SoldierInfo", "soldier_info", nil)
-		actor_info_soldier_info:set_pos(10, 253)
-		actor_info_soldier_info:set_size(285, 40)
-	end
+	local actor_info = ufox.build_component({
+		name = "actor_info",
+		class = "panel",
+		pos = {731, 420},
+		size = {290, 349},
+
+		{
+			name = "rank_img",
+			class = "image",
+			pos = {10, 25},
+			size = {110, 110},
+			image = "*cvar:mn_chrrank_img",
+		},
+
+		{
+			name = "body",
+			class = "model",
+			pos = {60, 18},
+			size = {200, 290},
+			model = "*cvar:mn_body",
+			skin = "*cvar:mn_body_skin",
+			animation = "stand2",
+			origin = {0, -40, 0},
+			angles = {0, 70, 90},
+			scale = {5.1, 5.1, 5.1},
+
+			{
+				name = "head",
+				class = "model",
+				model = "*cvar:mn_head",
+				skin = "*cvar:mn_head_skin",
+				tag = "tag_head",
+				scale = {1, 1, 1}
+			},
+
+
+			{
+				name = "right_weapon",
+				class = "model",
+				model = "*cvar:mn_rweapon",
+				tag = "tag_rweapon",
+			},
+
+			{
+				name = "left_weapon",
+				class = "model",
+				model = "*cvar:mn_lweapon",
+				tag = "tag_lweapon",
+			},
+		},
+
+		{
+			name = "rank_lbl",
+			class = "string",
+			pos = {10, 283},
+			size = {200, 20},
+			text = "*cvar:mn_chrrank",
+		},
+
+		{
+			name = "soldier_info",
+			class = "SoldierInfo",
+			pos = {10, 253},
+			size = {285, 40},
+		},
+	})
 end
 
 -- Pilot Skills panel
 do
-	local skillspilot = ufo.create_component("panel", "skillspilot", nil)
-	skillspilot:set_pos(740, 250)
-	skillspilot:set_size(250, 155)
-	skillspilot:set_ghost(true)
-	do
-		local skillspilot_pil = ufo.create_control(skillspilot, "StatBarWide", "pil", nil)
-		skillspilot_pil:set_pos(0, 0)
-		skillspilot_pil:child("label"):set_text("_Piloting")
-		skillspilot_pil:child("valuebar"):set_value("*cvar:mn_vpil")
-		skillspilot_pil:child("valuenum"):set_text("*cvar:mn_tpil")
-	end
-	do
-		local skillspilot_tar = ufo.create_control(skillspilot, "StatBarWide", "tar", nil)
-		skillspilot_tar:set_pos(0, 30)
-		skillspilot_tar:child("label"):set_text("_Targeting")
-		skillspilot_tar:child("valuebar"):set_value("*cvar:mn_vtar")
-		skillspilot_tar:child("valuenum"):set_text("*cvar:mn_ttar")
-	end
-	do
-		local skillspilot_evad = ufo.create_control(skillspilot, "StatBarWide", "evad", nil)
-		skillspilot_evad:set_pos(0, 60)
-		skillspilot_evad:child("label"):set_text("_Evading")
-		skillspilot_evad:child("valuebar"):set_value("*cvar:mn_vevad")
-		skillspilot_evad:child("valuenum"):set_text("*cvar:mn_tevad")
-	end
+	local abilities = ufox.build_component({
+		name = "skillspilot",
+		class = "panel",
+		pos = {740, 250},
+		size = {250, 155},
+		ghost = true,
+
+		{
+			name = "pil",
+			class = "StatBarWide",
+			pos = {0, 0},
+
+			{
+				name = "label",
+				text = "_Piloting",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vpil",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tpil",
+			},
+		},
+
+		{
+			name = "tar",
+			class = "StatBarWide",
+			pos = {0, 30},
+
+			{
+				name = "label",
+				text = "_Targeting",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vtar",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_ttar",
+			},
+		},
+
+		{
+			name = "evad",
+			class = "StatBarWide",
+			pos = {0, 60},
+
+			{
+				name = "label",
+				text = "_Evading",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vevad",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tevad",
+			},
+		},
+	})
 end
