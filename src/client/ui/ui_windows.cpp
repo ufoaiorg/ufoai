@@ -691,6 +691,11 @@ static void UI_DebugTree_f (void)
 
 	const char* window = Cmd_Argv(1);
 	const uiNode_t* node = UI_GetWindow(window);
+	if (node == nullptr) {
+		Com_Printf("No window by name '%s' exists\n", window);
+		return;
+	}
+
 	UI_DebugTree(node, 0);
 }
 
