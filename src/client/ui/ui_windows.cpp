@@ -711,6 +711,17 @@ static void UI_Popup_f (void)
 	UI_Popup(header, body);
 }
 
+/**
+ * @brief Debug function to list all UI windows
+ */
+static void UI_DebugListWindows_f (void)
+{
+	for (int i = 0; i < ui_global.numWindows; i++) {
+		const uiNode_t* const window = ui_global.windows[i];
+		Com_Printf("%3d. %s\n", i, window->name);
+	}
+}
+
 void UI_InitWindows (void)
 {
 	ui_sys_main = Cvar_Get("ui_sys_main", "", 0, "This is the main window id that is at the very first window stack - also see ui_sys_active");
@@ -725,6 +736,7 @@ void UI_InitWindows (void)
 	Cmd_AddCommand("ui_close", UI_CloseWindow_f, "Close a window");
 	Cmd_AddCommand("ui_initstack", UI_InitStack_f, "Initialize the window stack with a main and an option window.");
 	Cmd_AddCommand("ui_tree", UI_DebugTree_f, "Display a tree of nodes from a window into the console.");
+	Cmd_AddCommand("ui_listwindows", UI_DebugListWindows_f, "List all UI windows exist into the console.");
 	Cmd_AddCommand("ui_popup", UI_Popup_f, "Shows a popup window");
 	Cmd_AddParamCompleteFunction("ui_tree", UI_CompleteWithWindow);
 }
