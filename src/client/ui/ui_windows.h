@@ -46,6 +46,7 @@ bool UI_IsWindowOnStack(const char* name);
 bool UI_IsMouseOnWindow(void);
 void UI_InvalidateStack(void);
 void UI_InsertWindow(uiNode_t* window);
+void UI_RemoveWindow(uiNode_t* window);
 void UI_MoveWindowOnTop(uiNode_t* window);
 
 /* deprecated */

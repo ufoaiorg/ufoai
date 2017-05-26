@@ -637,6 +637,28 @@ void UI_InsertWindow (uiNode_t* window)
 }
 
 /**
+ * @brief Removes a window from the list of all windows
+ * @param[in] window Pointer to the window node to remove
+ * @note Leaves no gap, keeps sorting
+ */
+void UI_RemoveWindow (uiNode_t* window)
+{
+	if (window == nullptr)
+		return;
+
+	int pos;
+	for (pos = 0; pos < ui_global.numWindows; pos++) {
+		const uiNode_t* node = ui_global.windows[pos];
+		if (window == node)
+			break;
+	}
+	if (pos == ui_global.numWindows)
+		return;
+
+	REMOVE_ELEM(ui_global.windows, pos, ui_global.numWindows);
+}
+
+/**
  * @brief Finish windows initialization
  * @note private function
  */

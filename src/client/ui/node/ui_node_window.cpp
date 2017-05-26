@@ -172,6 +172,16 @@ void uiWindowNode::initNode(uiNode_t* node) {
 	EXTRADATA(node).lua_onScriptLoaded = LUA_NOREF;
 }
 
+/**
+ * @brief Actions to do on deleting the node
+ * @param[in, out] Pointer to the node to destroy
+ */
+void uiWindowNode::deleteNode (uiNode_t* node)
+{
+	uiNode::deleteNode(node);
+	UI_RemoveWindow(node);
+}
+
 void uiWindowNode::doLayout (uiNode_t* node)
 {
 	if (!node->invalidated)
