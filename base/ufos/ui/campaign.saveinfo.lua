@@ -40,10 +40,12 @@ campaign.saveinfo = {
 			return
 		end
 
+		local savelist = sender:parent():parent():find("savegame_list")
+		local save_exists = (savelist ~= nil and savelist:search(filename:as_string()) ~= nil)
+
 		local delete_button = sender:parent():child("delete")
 		if (delete_button ~= nil) then
-			local savelist = sender:parent():parent():find("savegame_list")
-			if (savelist ~= nil and savelist:search(filename:as_string()) == nil) then
+			if (not save_exists) then
 				delete_button:set_tooltip("_File doesn't exists")
 				delete_button:set_disabled(true)
 			else
@@ -267,15 +269,35 @@ campaign.saveinfo = {
 					if (filename == nil) then
 						return
 					end
-					ufo.cmd(string.format("game_delete \"%s\";", filename:as_string()))
-					tab:parent():child("tabset"):child(tab:name()):deselect()
-					tab:parent():child("tabset"):child(tab:name()):select()
-				end
+
+					local popup = ufox.build_confirmpopup("popup_deletesave", {
+						{
+							name = "title",
+							text = "_Delete saved game",
+						},
+						{
+							name = "description",
+							text = "_Do you really want to detete this saved game?",
+						},
+						{
+							name = "confirm",
+							text = "_Delete",
+
+							on_click = function (sender)
+								ufo.cmd(string.format("game_delete \"%s\";", filename:as_string()))
+								tab:parent():child("tabset"):child(tab:name()):deselect()
+								tab:parent():child("tabset"):child(tab:name()):select()
+								ufo.pop_window(false)
+							end,
+						},
+					})
+					ufo.push_window(popup:name(), nil, nil)
+				end,
 			}
 		}, rootNode)
 
 		if (mode == "save") then
-			local begin_button = ufox.build({
+			local save_button = ufox.build({
 				name = "save",
 				class = "MainMenu3Btn",
 				text = "_SAVE",
@@ -306,8 +328,36 @@ campaign.saveinfo = {
 					if (title == nil or title == "") then
 						return
 					end
-					ufo.cmd(string.format("game_save \"%s\" \"%s\";", filename:as_string(), title:as_string()))
-					tab:parent():child("tabset"):child(tab:name()):deselect()
+
+					local delete_button = sender:parent():child("delete")
+					if (delete_button:is_disabled() == false) then
+						local popup = ufox.build_confirmpopup("popup_overwritesave", {
+							{
+								name = "title",
+								text = "_Overwrite saved game",
+							},
+							{
+								name = "description",
+								text = "_Do you really want to overwrite this saved game?",
+							},
+							{
+								name = "confirm",
+								text = "_Overwrite",
+
+								on_click = function (sender)
+									ufo.cmd(string.format("game_save \"%s\" \"%s\";", filename:as_string(), title:as_string()))
+									tab:parent():child("tabset"):child(tab:name()):deselect()
+									tab:parent():child("tabset"):child(tab:name()):select()
+									ufo.pop_window(false)
+								end,
+							},
+						})
+						ufo.push_window(popup:name(), nil, nil)
+					else
+						ufo.cmd(string.format("game_save \"%s\" \"%s\";", filename:as_string(), title:as_string()))
+						tab:parent():child("tabset"):child(tab:name()):deselect()
+						tab:parent():child("tabset"):child(tab:name()):select()
+					end
 				end
 			}, saveinfo)
 			campaign.saveinfo.check_savegame_filename(saveinfo:child("filename"))
