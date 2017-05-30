@@ -592,7 +592,7 @@ do
 	local abilities = ufox.build_component({
 		name = "skillbars",
 		class = "panel",
-		pos = {740, 100},
+		pos = {740, 220},
 		size = {250, 120},
 		ghost = true,
 
