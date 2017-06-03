@@ -1,76 +1,97 @@
 --!usr/bin/lua
 
---[[
- - ==================
- - MISSION OPTIONS MENU
- - ==================
---]]
+require("ufox.lua")
+
 do
-	local missionoptions = ufo.create_window("missionoptions", nil)
-	missionoptions:set_fill(true)
-	missionoptions:set_starlayout(true)
-	missionoptions:set_backgroundcolor(0, 0, 0, 0.5)
-	missionoptions:set_background("ui/main_bg")
-	do
-		local missionoptions_version = ufo.create_control(missionoptions, "string", "version", nil)
-		missionoptions_version:set_text("*cvar:version")
-		missionoptions_version:set_pos(10, 744)
-	end
-	do
-		local missionoptions_buttons = ufo.create_control(missionoptions, "panel", "buttons", nil)
-		missionoptions_buttons:set_size(400, 700)
-		missionoptions_buttons:set_layoutalign(ufo.LAYOUTALIGN_TOP)
-		missionoptions_buttons:set_layout(ufo.LAYOUT_TOP_DOWN_FLOW)
-		missionoptions_buttons:set_layoutmargin(15)
-		missionoptions_buttons:set_contentalign(ufo.LAYOUTALIGN_MIDDLE)
-		do
-			local missionoptions_buttons_spacer = ufo.create_control(missionoptions_buttons, "panel", "spacer", nil)
-			missionoptions_buttons_spacer:set_size(0, 235)
-		end
-		do
-			local missionoptions_buttons_continue = ufo.create_control(missionoptions_buttons, "MainMenuBtn", "continue", nil)
-			missionoptions_buttons_continue:set_text("_CONTINUE")
-			missionoptions_buttons_continue:set_tooltip("_Leave this menu and continue playing.")
-			missionoptions_buttons_continue.on_click = function(sender)
-					ufo.cmd("ui_pop;")
-				end
-		end
-		do
-			local missionoptions_buttons_restartOrIRC = ufo.create_control(missionoptions_buttons, "MainMenu2Btn", "restartorirc", nil)
-		end
-		do
-			local missionoptions_buttons_options = ufo.create_control(missionoptions_buttons, "MainMenu2Btn", "options", nil)
-			missionoptions_buttons_options:set_text("_OPTIONS")
-			missionoptions_buttons_options.on_click = function(sender)
-					ufo.cmd("ui_push options;")
-				end
-		end
-		do
-			local missionoptions_buttons_abort = ufo.create_control(missionoptions_buttons, "MainMenuExitBtn", "abort", nil)
-		end
-	end
+	local missionoptions = ufox.build_window({
+		name = "missionoptions",
+		class = "window",
+		fill = true,
+		starlayout = true,
+		background = "ui/main_bg",
+		backgroundcolor = {0, 0, 0, 0.5},
 
-	missionoptions.on_windowopened = function(sender)
-			if (ufo.getvar("gamemode"):as_string() == "multiplayer") then
-					sender:root():child("buttons"):child("restartorirc").on_click = function(sender)
-							ufo.cmd("ui_push irc;")
-					end
-					sender:root():child("buttons"):child("abort").on_click = function(sender)
-							ufo.cmd("game_exit;")
-					end
-					sender:root():child("buttons"):child("restartorirc"):set_text("_LOBBY")
-					sender:root():child("buttons"):child("abort"):set_text("_ABORT GAME")
-				else
-					sender:root():child("buttons"):child("restartorirc").on_click = function(sender)
-							ufo.cmd("game_go;")
-					end
-					sender:root():child("buttons"):child("abort").on_click = function(sender)
-							ufo.cmd("game_abort;")
-					end
-					sender:root():child("buttons"):child("restartorirc"):set_text("_RESTART MISSION")
-					sender:root():child("buttons"):child("abort"):set_text("_ABORT MISSION")
-
+		on_windowopened = function (sender)
+			-- @TODO it is very bad practice to use 1 button to two completely different feature
+			local gamemode = ufo.getvar("gamemode"):as_string()
+			if (gamemode == "multiplayer") then
+				sender:child("buttons"):child("restartorirc").on_click = function (sender)
+					ufo.push_window("irc", nil)
+				end
+				sender:child("buttons"):child("abort").on_click = function (sender)
+					ufo.cmd("game_exit;")
+				end
+				sender:root():child("buttons"):child("restartorirc"):set_text("_LOBBY")
+				sender:root():child("buttons"):child("abort"):set_text("_ABORT GAME")
+			else
+				sender:child("buttons"):child("restartorirc").on_click = function(sender)
+					ufo.cmd("game_go;")
+				end
+				sender:child("buttons"):child("abort").on_click = function(sender)
+					ufo.cmd("game_abort;")
+				end
+				sender:child("buttons"):child("restartorirc"):set_text("_RESTART MISSION")
+				sender:child("buttons"):child("abort"):set_text("_ABORT MISSION")
 			end
-		end
-	local overlay = ufo.create_control(missionoptions, "fuzzyScreen", "overlay", nil)
+		end,
+
+		{
+			name = "version",
+			class = "string",
+			text = "*cvar:version",
+			pos = {10, 744},
+		},
+
+		{
+			name = "buttons",
+			class = "panel",
+			size = {400, 700},
+			layoutalign = ufo.LAYOUTALIGN_TOP,
+			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+			layoutmargin = 15,
+			contentalign = ufo.LAYOUTALIGN_MIDDLE,
+
+			{
+				name = "spacer",
+				class = "panel",
+				size = {0, 235},
+			},
+
+			{
+				name = "continue",
+				class = "MainMenuBtn",
+				text = "_CONTINUE",
+				tooltip = "_Leave this menu and continue playing.",
+
+				on_click = function (sender)
+					ufo.pop_window(false)
+				end,
+			},
+
+			{
+				name = "restartorirc",
+				class = "MainMenu2Btn",
+			},
+
+			{
+				name = "options",
+				class = "MainMenu2Btn",
+				text = "_OPTIONS",
+
+				on_click = function (sender)
+					ufo.push_window("options", nil, nil)
+				end
+			},
+
+			{
+				name = "abort",
+				class = "MainMenuExitBtn",
+			},
+		},
+
+		{
+			name =  "overlay",
+			class = "fuzzyScreen",
+		},
+	})
 end
