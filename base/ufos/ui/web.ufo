@@ -1,69 +1,100 @@
 --!usr/bin/lua
+
+require("ufox.lua")
+
 do
-	local webauth = ufo.create_window("webauth", "ipopup")
-	webauth:set_pos(264, 262)
-	webauth:set_size(400, 210)
-	webauth:set_closebutton(true)
-	webauth:set_modal(true)
-	webauth:child("title"):set_text("_Login")
-	webauth:child("title"):set_width(400)
-	do
-		local webusernamestr = ufo.create_control(webauth, "string", "webusernamestr", nil)
-		webusernamestr:set_text ("_Name")
-		webusernamestr:set_pos(20, 60)
-		webusernamestr:set_size(175, 34)
-		webusernamestr:set_contentalign(ufo.ALIGN_CL)
-	end
-	do
-		local webusername = ufo.create_control(webauth, "TextEntry", "webusername", nil)
-		webusername:set_text("*cvar:web_username")
-		webusername:set_font("f_verysmall")
-		webusername:set_pos(200, 60)
-		webusername:set_size(180, 34)
-	end
-	do
-		local webpasswordstr = ufo.create_control(webauth, "string", "webpasswordstr", nil)
-		webpasswordstr:set_text ("_Password")
-		webpasswordstr:set_pos(20, 110)
-		webpasswordstr:set_size(175, 34)
-		webpasswordstr:set_contentalign(ufo.ALIGN_CL)
-	end
-	do
-		local webpassword = ufo.create_control(webauth, "TextEntry", "webpassword", nil)
-		webpassword:set_text("*cvar:web_password")
-		webpassword:set_font("f_verysmall")
-		webpassword:set_pos(200, 110)
-		webpassword:set_size(180, 34)
-		webpassword:set_password(true)
-		webpassword.on_change = function(sender)
-			-- TODO: encrypt me
-			end
-	end
-	do
-		local login = ufo.create_control(webauth, "MainMenuBtn", "login", nil)
-		login:set_pos(0, 180)
-		login:set_size(400, 30)
-		login:set_text("_Login")
-		login:set_font("f_menusmall")
-		login.on_click = function(sender)
-				ufo.cmd(string.format("web_auth %s %s;", ufo.getvar("web_username"):as_string(), ufo.getvar("web_password"):as_string()))
-			end
-	end
-	webauth.on_windowopened = function (sender)
+	local webauth = ufox.build_window({
+		name = "webauth",
+		class = "window",
+		super = "ipopup",
+		pos = {264, 262},
+		size = {400, 210},
+		closebutton = true,
+		modal = true,
+
+		on_windowopened = function (sender)
 			-- it's encrypted, so it has no value any longer in this dialog
 			ufo.getvar("web_password"):set_value("")
-		end
-	do
-		local web_authsuccessful = ufo.create_control(webauth, "confunc", "web_authsuccessful", nil)
-		web_authsuccessful.on_click = function(sender)
-				ufo.cmd("echo \"Authentication successful\";ui_pop;")
+		end,
+
+		{
+			name = "title",
+			text = "_Login",
+			width = 400,
+		},
+
+		{
+			name = "webusernamestr",
+			class = "string",
+			text = "_Name",
+			pos = {20, 60},
+			size = {175, 34},
+			contentalign = ufo.ALIGN_CL,
+		},
+
+		{
+			name = "webusername",
+			class = "TextEntry",
+			text = "*cvar:web_username",
+			font = "f_verysmall",
+			pos = {200, 60},
+			size = {180, 34},
+		},
+
+		{
+			name = "webpasswordstr",
+			class = "string",
+			text = "_Password",
+			pos = {20, 110},
+			size = {175, 34},
+			contentalign = ufo.ALIGN_CL,
+		},
+
+		{
+			name = "webpassword",
+			class = "TextEntry",
+			text = "*cvar:web_password",
+			font = "f_verysmall",
+			pos = {200, 110},
+			size = {180, 34},
+			password = true,
+
+			on_change = function(sender)
+				-- TODO: encrypt me
+			end,
+		},
+
+		{
+			name = "login",
+			class = "MainMenuBtn",
+			text = "_Login",
+			pos = {0, 180},
+			size = {400, 30},
+			font = "f_menusmall",
+
+			on_click = function(sender)
+				ufo.cmd(string.format("web_auth %s %s;", ufo.getvar("web_username"):as_string(), ufo.getvar("web_password"):as_string()))
+			end,
+		},
+
+		{
+			name = "web_authsuccessful",
+			class = "confunc",
+
+			on_click = function(sender)
 				ufo.getvar("web_password"):set_value("")
-			end
-	end
-	do
-		local web_authfailed = ufo.create_control(webauth, "confunc", "web_authfailed", nil)
-		web_authfailed.on_click = function(sender)
-				ufo.cmd("echo \"Authentication failed\";")
-			end
-	end
+				ufo.print(string.format("Authentication successful\n"))
+				ufo.pop_window(false)
+			end,
+		},
+
+		{
+			name = "web_authfailed",
+			class = "confunc",
+
+			on_click = function(sender)
+				ufo.print(string.format("Authentication failed\n"))
+			end,
+		},
+	})
 end
