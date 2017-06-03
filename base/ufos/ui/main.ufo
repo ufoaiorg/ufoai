@@ -9,14 +9,13 @@ require "ufox.lua"
 --]]
 do
 	tree = {
-		class = "window",
 		name = "main",
+		class = "window",
 		background = "ui/main_bg",
 
 		{
-			class = "string",
 			name = "title",
-
+			class = "string",
 			text = "_UFO: ALIEN INVASION",
 			pos = { 0, 50 },
 			size = { 1024, 50 },
@@ -26,51 +25,43 @@ do
 		},
 
 		{
-			class = "button",
 			name = "facebook",
-
+			class = "MainMenuBtn",
 			text = "_Facebook",
 			tooltip = "_Like us on facebook",
-			pos = { 10, 720 },
-			size = { 80, 20 },
-			color = { 0.0, 0.5, 0.0, 1.0 },
-			selectcolor = { 1.0, 1.0, 1.0, 1.0 },
-			padding = 0,
+			pos = {10, 690},
+			size = {160, 20},
+
 			on_click = function (sender)
-					ufo.cmd("cl_openurl http://www.facebook.com/ufoai/;")
-				end
+				ufo.cmd("cl_openurl http://www.facebook.com/ufoai/;")
+			end,
 		},
 
 		{
-			class = "button",
 			name = "twitter",
-
+			class = "MainMenuBtn",
 			text = "_Twitter",
 			tooltip = "_Follow us on twitter",
-			pos = { 100, 720 },
-			size = { 70, 20 },
-			color = { 0.0, 0.5, 0.0, 1.0 },
-			selectcolor = { 1.0, 1.0, 1.0, 1.0 },
-			padding = 0,
+			pos = {10, 720},
+			size = {160, 20},
+
 			on_click = function (sender)
-					ufo.cmd("cl_openurl http://www.twitter.com/ufoai/;")
-				end
+				ufo.cmd("cl_openurl http://www.twitter.com/ufoai/;")
+			end,
 		},
 
 		{
-			class = "panel",
 			name = "buttons",
-
+			class = "panel",
 			pos = { 312, 250 },
 			size = { 400, 400 },
 			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
 			layoutmargin = 15,
 
 			{
-				class = "button",
 				name = "campaign",
+				class = "button",
 				super = "MainMenuBtn",
-
 				text = "_CAMPAIGN",
 				on_click = function (sender)
 					ufo.cmd("game_setmode campaign; ui_push campaign;")
@@ -78,10 +69,9 @@ do
 			},
 
 			{
-				class = "button",
 				name = "skirmish",
+				class = "button",
 				super = "MainMenuBtn",
-
 				text = "_SKIRMISH",
 				on_click = function (sender)
 					ufo.cmd("game_setmode skirmish; ui_push skirmish;")
@@ -89,8 +79,8 @@ do
 			},
 
 			{
-				class = "button",
 				name = "multiplayer",
+				class = "button",
 				super = "MainMenuBtn",
 
 				text = "_MULTIPLAYER",
@@ -100,8 +90,8 @@ do
 			},
 
 			{
-				class = "button",
 				name = "options",
+				class = "button",
 				super = "MainMenu2Btn",
 
 				text = "_OPTIONS",
@@ -111,8 +101,8 @@ do
 			},
 
 			{
-				class = "button",
 				name = "tutorials",
+				class = "button",
 				super = "MainMenu2Btn",
 
 				text = "_TUTORIALS",
@@ -122,8 +112,8 @@ do
 			},
 
 			{
-				class = "button",
 				name = "credits",
+				class = "button",
 				super = "MainMenu2Btn",
 
 				text = "_DEVELOPERS",
@@ -133,8 +123,8 @@ do
 			},
 
 			{
-				class = "button",
 				name = "exit",
+				class = "button",
 				super = "MainMenuExitBtn",
 
 				text = "_EXIT",
@@ -145,9 +135,8 @@ do
 		},
 
 		{
-			class = "string",
 			name = "version",
-
+			class = "string",
 			text = "*cvar:version",
 			pos = { 10, 744 },
 			size = { 1004, 20 }
