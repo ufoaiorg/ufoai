@@ -11,7 +11,7 @@ class SAVX extends FileType {
 		# 32 - char name[32]
 		# 32 - char gameDate[32]
 		# 32 - char realDate[32]
-		parent::__construct ( $filename, 176, "V1version/V1compressed/V1subsystems/V13dummy/a16gameversion/a32name/a32gamedate/a32realdate" );
+		parent::__construct ( $filename, 176, "V1version/V1compressed/V1subsystems/V13dummy/Z16gameversion/Z32name/Z32gamedate/Z32realdate" );
 	}
 
 	public function getVersion() {
