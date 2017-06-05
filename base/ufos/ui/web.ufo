@@ -58,10 +58,6 @@ do
 			pos = {200, 110},
 			size = {180, 34},
 			password = true,
-
-			on_change = function(sender)
-				-- TODO: encrypt me
-			end,
 		},
 
 		{
@@ -82,7 +78,6 @@ do
 			class = "confunc",
 
 			on_click = function(sender)
-				ufo.getvar("web_password"):set_value("")
 				ufo.print(string.format("Authentication successful\n"))
 				ufo.pop_window(false)
 			end,
