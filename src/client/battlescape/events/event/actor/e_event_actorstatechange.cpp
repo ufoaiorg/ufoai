@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../ui/ui_main.h"
 #include "../../../cl_localentity.h"
 #include "../../../cl_actor.h"
+#include "../../../cl_hud.h"
 #include "e_event_actorstatechange.h"
 
 void CL_ActorStateChange (const eventRegister_t* self, dbuffer* msg)
@@ -64,17 +65,36 @@ void CL_ActorStateChange (const eventRegister_t* self, dbuffer* msg)
 		le->aabb.setMaxs(player_dead_maxs);
 		CL_ActorRemoveFromTeamList(le);
 		return;
-	} else {
-		le->state = state;
-		LE_SetThink(le, LET_StartIdle);
 	}
 
-	/* save those states that the actor should also carry over to other missions */
 	character_t* chr = CL_ActorGetChr(le);
-	if (!chr)
-		return;
+	if (chr) { /* Print some informative messages */
+		if (le->team == cls.team) {
+			if ((state & STATE_DAZED) && !LE_IsDazed(le))
+				HUD_DisplayMessage(va(_("%s is dazed!\nEnemy used flashbang!"), chr->name));
 
-	chr->state = (le->state & STATE_REACTION);
+			if ((state & STATE_PANIC) && !LE_IsPanicked(le))
+				HUD_DisplayMessage(va(_("%s panics!"), chr->name));
+
+			if ((state & STATE_RAGE) && !LE_IsRaged(le)) {
+				if ((state & STATE_INSANE)) {
+					HUD_DisplayMessage(va(_("%s is consumed by mad rage!"), chr->name));
+				} else {
+					HUD_DisplayMessage(va(_("%s is on a rampage!"), chr->name));
+				}
+			}
+
+			if ((state & STATE_SHAKEN) && !LE_IsShaken(le))
+				HUD_DisplayMessage(va(_("%s is currently shaken."), chr->name));
+		}
+	}
+
+	le->state = state;
+	LE_SetThink(le, LET_StartIdle);
+
+	/* save those states that the actor should also carry over to other missions */
+	if (chr)
+		chr->state = (le->state & STATE_REACTION);
 
 	/* state change may have affected move length */
 	CL_ActorConditionalMoveCalc(le);

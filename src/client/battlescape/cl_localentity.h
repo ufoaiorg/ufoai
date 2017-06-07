@@ -255,7 +255,11 @@ int LE_ActorGetStepTime(const le_t* le, const pos3_t pos, const pos3_t oldPos, c
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
 #define LE_IsDead(le)		((le)->state & STATE_DEAD)
 #define LE_IsPanicked(le)	((le)->state & STATE_PANIC)
+#define LE_IsRaged(le)		((le)->state & STATE_RAGE)
+#define LE_IsInsane(le)		((le)->state & STATE_INSANE)
+#define LE_IsShaken(le)		((le)->state & STATE_SHAKEN)
 #define LE_IsCrouched(le)	((le)->state & STATE_CROUCHED)
+#define LE_IsDazed(le)		((le)->state & STATE_DAZED)
 
 #define LE_IsInvisible(le)	((le)->flags & LE_INVISIBLE)
 #define LE_IsSelected(le)	((le)->flags & LE_SELECTED)

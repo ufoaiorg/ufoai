@@ -470,7 +470,7 @@ static bool G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* att
 				G_SendStats(*victim);
 				/* entity is dazed */
 				victim->setDazed();
-				G_ClientPrintf(victim->getPlayer(), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!"));
+				G_EventSendState(G_VisToPM(victim->visflags), *victim);
 				return !mock;
 			} else {
 				return false;

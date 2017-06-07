@@ -37,7 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void G_MoralePanic (Actor* actor)
 {
-	G_ClientPrintf(actor->getPlayer(), PRINT_HUD, _("%s panics!"), actor->chr.name);
 	G_PrintStats("%s panics (entnum %i).", actor->chr.name, actor->getIdNum());
 	/* drop items in hands */
 	if (actor->isInsane() && actor->chr.teamDef->weapons) {
@@ -98,10 +97,8 @@ static void G_MoraleRage (Actor* actor)
 {
 	actor->setRaged();
 	if (!actor->isInsane()) {
-		gi.BroadcastPrintf(PRINT_HUD, _("%s is on a rampage!"), actor->chr.name);
 		G_PrintStats("%s is on a rampage (entnum %i).", actor->chr.name, actor->getIdNum());
 	} else {
-		gi.BroadcastPrintf(PRINT_HUD, _("%s is consumed by mad rage!"), actor->chr.name);
 		G_PrintStats("%s is consumed by mad rage (entnum %i).", actor->chr.name, actor->getIdNum());
 	}
 	G_EventSendState(G_VisToPM(actor->visflags), *actor);
@@ -185,8 +182,6 @@ void G_MoraleBehaviour (int team)
 				actor->setShaken();
 				G_ClientStateChange(actor->getPlayer(), actor, STATE_REACTION, false);
 				G_EventSendState(G_VisToPM(actor->visflags), *actor);
-				G_ClientPrintf(actor->getPlayer(), PRINT_HUD, _("%s is currently shaken."),
-						actor->chr.name);
 				G_PrintStats("%s is shaken (entnum %i).", actor->chr.name, actor->getIdNum());
 			}
 		} else {
