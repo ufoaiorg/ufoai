@@ -141,15 +141,17 @@ static const char* UP_AircraftStatToName (int stat)
 	case AIR_STATS_ECM:
 		return _("Evasion");
 	case AIR_STATS_DAMAGE:
-		return _("Aircraft damage");
+		return _("Hull strength");
 	case AIR_STATS_ACCURACY:
 		return _("Accuracy");
 	case AIR_STATS_FUELSIZE:
 		return _("Fuel size");
 	case AIR_STATS_WRANGE:
 		return _("Weapon range");
+	case AIR_STATS_ANTIMATTER:
+		return _("Antimatter need");
 	default:
-		return _("Unknown weapon skill");
+		return _("Unknown");
 	}
 }
 
@@ -328,6 +330,10 @@ void UP_AircraftDescription (const technology_t* tech)
 		const aircraft_t* aircraft = AIR_GetAircraft(tech->provides);
 		for (int i = 0; i < AIR_STATS_MAX; i++) {
 			switch (i) {
+			case AIR_STATS_DAMAGE:
+				Q_strcat(upBuffer, sizeof(upBuffer), _("%s:\t%i\n"), UP_AircraftStatToName(i),
+					AIR_AircraftMenuStatsValues(aircraft->stats[i], i));
+				break;
 			case AIR_STATS_SPEED:
 				/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
 				Q_strcat(upBuffer, sizeof(upBuffer), _("%s:\t%i km/h\n"), UP_AircraftStatToName(i),
@@ -346,6 +352,12 @@ void UP_AircraftDescription (const technology_t* tech)
 				Q_strcat(upBuffer, sizeof(upBuffer), _("%s:\t%i\n"), UP_AircraftStatToName(i),
 					AIR_AircraftMenuStatsValues(aircraft->stats[i], i));
 				break;
+			case AIR_STATS_ANTIMATTER:
+				if (aircraft->stats[i] <= 0)
+					break;
+				Q_strcat(upBuffer, sizeof(upBuffer), _("%s:\t%i\n"), UP_AircraftStatToName(i),
+					AIR_AircraftMenuStatsValues(aircraft->stats[i], i));
+				break;
 			default:
 				break;
 			}
@@ -354,12 +366,18 @@ void UP_AircraftDescription (const technology_t* tech)
 		const baseCapacities_t cap = AIR_GetCapacityByAircraftWeight(aircraft);
 		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(cap);
 		const building_t* building = B_GetBuildingTemplateByType(buildingType);
-
 		Q_strcat(upBuffer, sizeof(upBuffer), _("Required Hangar:\t%s\n"), _(building->name));
+
 		/* @note: while MAX_ACTIVETEAM limits the number of soldiers on a craft
 		 * there is no use to show this in case of an UFO (would be misleading): */
 		if (!AIR_IsUFO(aircraft))
 			Q_strcat(upBuffer, sizeof(upBuffer), _("Max. soldiers:\t%i\n"), aircraft->maxTeamSize);
+
+		/* Weapon/equipment slots */
+		Q_strcat(upBuffer, sizeof(upBuffer), _("Equipment slots:\t%i %s, %i %s\n"),
+			aircraft->maxWeapons, _("weapon"),
+			aircraft->maxElectronics, _("electronics")
+		);
 	} else if (RS_Collected_(tech)) {
 		/** @todo Display crippled info and pre-research text here */
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
