@@ -73,6 +73,7 @@ do
 		font = "f_normal_bold",
 		color = {0.065, 0.065, 0.065, 1},
 		backgroundcolor = {0.4, 0.52, 0.5, 1},
+		disabledcolor = {0.23, 0.23, 0.23, 1},
 		layoutalign = ufo.LAYOUTALIGN_MIDDLE,		-- @TODO Confirm that this make nothing and can be removed
 		contentalign = ufo.ALIGN_CC,
 
@@ -91,6 +92,7 @@ do
 		class = "button",
 		super = "MainMenuBtn",
 		backgroundcolor = {0.53, 0.61, 0.21, 1},
+		disabledcolor = {0.23, 0.23, 0.23, 1},
 
 		on_mouseenter = function (sender)
 			sender:set_backgroundcolor(0.82, 0.92, 0.44, 1)
