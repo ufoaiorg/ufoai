@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-#define TOP_HEIGHT 46
+#define TOP_HEIGHT 30
 
 static const int CONTROLS_IMAGE_DIMENSIONS = 16;
 static const int CONTROLS_PADDING = 8;
