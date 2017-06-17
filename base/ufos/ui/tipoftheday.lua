@@ -36,7 +36,7 @@ tipoftheday.build = function ()
 		name = "tipoftheday",
 		super = "ipopup",
 
-		pos = {425, 550},
+		pos = {518, 578},
 		size = {506, 190},
 		closebutton = true,
 		dragbutton = true,
