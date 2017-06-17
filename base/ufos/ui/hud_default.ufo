@@ -1643,6 +1643,6 @@ local hud_default_window = ufox.build_window{
 
 function onScriptLoaded ()
 	-- Add the window to the list of HUDs
-	ufo.cmd('add_hud_name ' .. ufo.nodepath(hud_default_window) .. ' "_Default"')
+	ufo.cmd(string.format("add_hud_name %s '%s';", ufo.nodepath(hud_default_window), "_Default"))
 end
 ufo.register_onload (onScriptLoaded)

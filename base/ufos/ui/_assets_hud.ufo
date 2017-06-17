@@ -58,7 +58,7 @@ ufox.build_component({
 		this:set_backgroundcolor(0, 0.1, 0, 0.7)
 	end,
 	on_click = function (this)
-		ufo.cmd("actor_select " .. this:child("number"):as_integer() .. ";")
+		ufo.cmd(string.format("actor_select %i;", this:child("number"):as_integer()))
 	end,
 
 	{

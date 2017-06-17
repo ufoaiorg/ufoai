@@ -24,12 +24,18 @@ ufox.build_component {
 	bordercolor = {0.58, 0.81, 0.758, 0.7},
 	bordersize = 2,
 	layoutalign = ufo.LAYOUTALIGN_BOTTOM,
-	on_mouseenter = function (this) this:set_backgroundcolor(0, 0.21, 0.158, 0.7) end,
-	on_mouseleave = function (this) this:set_backgroundcolor(0, 0.15, 0.1, 0.7) end,
-	on_rightclick = function (this) ufo.cmd("ui_close " .. ufo.nodepath(this:root()) .. ";") end,
-	on_click = function (this)
-		ufo.cmd("ui_close " .. ufo.nodepath(this:root()) .. ";")
-		ufo.cmd("hud_executeaction " .. this:child("actionid"):as_string() .. ";")
+	on_mouseenter = function (sender)
+		sender:set_backgroundcolor(0, 0.21, 0.158, 0.7)
+	end,
+	on_mouseleave = function (sender)
+		sender:set_backgroundcolor(0, 0.15, 0.1, 0.7)
+	end,
+	on_rightclick = function (sender)
+		ufo.cmd(string.format("ui_close %s;", ufo.nodepath(sender:root())))
+	end,
+	on_click = function (sender)
+		ufo.cmd(string.format("ui_close %s;", ufo.nodepath(sender:root())))
+		ufo.cmd(string.format("hud_executeaction %s;", sender:child("actionid"):as_string()))
 	end,
 	{
 		class = "string",
@@ -47,8 +53,8 @@ ufox.build_component {
 		size = {15, 15},
 		icon = "icons/firemodesml0",
 		tooltip = "_Use this firemode for reaction fire",
-		on_click = function (this)
-			ufo.cmd(string.format("hud_selectreactionfiremode %s %i;", this:parent():child("hand"):as_string(), this:parent():child("index"):as_integer()))
+		on_click = function (sender)
+			ufo.cmd(string.format("hud_selectreactionfiremode %s %i;", sender:parent():child("hand"):as_string(), sender:parent():child("index"):as_integer()))
 		end
 	},
 	{
@@ -114,35 +120,35 @@ ufox.build_component {
 	 - @param<8> shots (string)
 	 - @param<9> tooltip
 	--]]
-	init = function (this, id, hand, index, reaction, status, name, tus, shots, tooltip)
-		this:child("actionid"):set_value(id)
-		this:child("hand"):set_value(hand)
-		this:child("index"):set_value(tonumber(index))
+	init = function (sender, id, hand, index, reaction, status, name, tus, shots, tooltip)
+		sender:child("actionid"):set_value(id)
+		sender:child("hand"):set_value(hand)
+		sender:child("index"):set_value(tonumber(index))
 
-		this:child("name"):set_text(name)
-		this:child("tu"):set_text(tus)
-		this:child("shot"):set_text(shots)
-		this:child("tu"):set_tooltip(tooltip)
+		sender:child("name"):set_text(name)
+		sender:child("tu"):set_text(tus)
+		sender:child("shot"):set_text(shots)
+		sender:child("tu"):set_tooltip(tooltip)
 
 		if tonumber(status) == 1 then
-			this:child("name"):set_color(0.58, 0.81, 0.758, 0.7)
+			sender:child("name"):set_color(0.58, 0.81, 0.758, 0.7)
 		else
-			this:child("name"):set_color(0.58, 0.81, 0.758, 0.3)
+			sender:child("name"):set_color(0.58, 0.81, 0.758, 0.3)
 		end
 
 		if tonumber(reaction) == 0 then
-			this:child("fm_res"):set_invisible(true)
+			sender:child("fm_res"):set_invisible(true)
 		end
 	end,
 
 	--[[
 	 - @param<1> activate (1=activate, 0=deactivate)
 	--]]
-	init_reaction = function (this, activate)
+	init_reaction = function (sender, activate)
 		if tonumber(activate) == 1 then
-			this:child("fm_res"):set_icon("icons/firemodesml")
+			sender:child("fm_res"):set_icon("icons/firemodesml")
 		else
-			this:child("fm_res"):set_icon("icons/firemodesml0")
+			sender:child("fm_res"):set_icon("icons/firemodesml0")
 		end
 	end
 }
@@ -203,7 +209,7 @@ ufox.build_window {
 	{
 		class = "confunc",
 		name = "huddisable",
-		on_click = function (this, number) ufo.cmd('updateactorvalues ' .. number .. ' "" "0" "1" "0" "1" "0" "1" "0" "";') end
+		on_click = function (sender, number) ufo.cmd('updateactorvalues ' .. number .. ' "" "0" "1" "0" "1" "0" "1" "0" "";') end
 	},
 
 	{ class = "confunc", name = "deselect_primaryleft", on_click = dummy },
@@ -276,20 +282,20 @@ ufox.build_window {
 	{
 		class = "confunc",
 		name = "show_hide_inventory",
-		action = function (this)
+		action = function (sender)
 			ufo.cmd("show_inventory;")
 		end,
-		on_activate = function (this) this:action() end,
-		on_click = function (this) this:action() end
+		on_activate = function (sender) sender:action() end,
+		on_click = function (sender) sender:action() end
 	},
 	{
 		class = "confunc",
 		name = "show_hide_physdat",
-		action = function (this)
+		action = function (sender)
 			ufo.cmd("show_physdat;")
 		end,
-		on_activate = function (this) this:action() end,
-		on_click = function (this) this:action() end
+		on_activate = function (sender) sender:action() end,
+		on_click = function (sender) sender:action() end
 	},
 
 	{ class = "confunc", name = "show_inventory", on_click = dummy },
@@ -311,7 +317,7 @@ ufox.build_window {
 	{
 		class = "confunc",
 		name = "updateactorvalues",
-		on_click = function (this, id, model, skin, hp, hpmax, tu, tumax, morale, mormax, stun, tooltip)
+		on_click = function (sender, id, model, skin, hp, hpmax, tu, tumax, morale, mormax, stun, tooltip)
 			ufo.getvar("mn_head" .. id):set_value(model)
 			ufo.getvar("mn_head_skin" .. id):set_value(skin)
 			ufo.getvar("mn_hp" .. id):set_value(hp)
@@ -335,8 +341,8 @@ ufox.build_window {
 	{
 		class = "confunc",
 		name = "clean_firemode_entries",
-		on_click = function (this)
-			this:root():child("firemodes"):child("dock"):remove_children()
+		on_click = function (sender)
+			sender:root():child("firemodes"):child("dock"):remove_children()
 		end
 	},
 
@@ -353,7 +359,7 @@ ufox.build_window {
 	{
 		class = "confunc",
 		name = "add_firemode_entry",
-		on_click = function (this, hand, firedef, name, tu, shots, reaction, status, selected)
+		on_click = function (sender, hand, firedef, name, tu, shots, reaction, status, selected)
 			ufox.build({
 				name = hand .. firedef,
 				class = "cmpFiremodeEntry",
@@ -362,7 +368,7 @@ ufox.build_window {
 				{ name = "name", text = name },
 				{ name = "tu", text = tu },
 				{ name = "shot", text = shots }
-			}, this:root():child("firemodes"):child("dock"))
+			}, sender:root():child("firemodes"):child("dock"))
 		end
 	},
 
@@ -439,15 +445,15 @@ local firemode_left = ufox.build_window {
 	{
 		class = "confunc",
 		name = "reactionfire_updated",
-		on_click = function (this)
+		on_click = function (sender)
 			ufo.cmd("hud_listfiremodes firemode_listener l;")
 		end
 	},
-	on_windowopened = function (this)
+	on_windowopened = function (sender)
 		ufo.cmd("hud_listfiremodes firemode_listener l;")
 		ufo.cmd("ui_addcvarlistener cl_selected reactionfire_updated;")
 	end,
-	on_windowclosed = function (this) ufo.cmd("ui_removecvarlistener cl_selected reactionfire_updated;") end
+	on_windowclosed = function (sender) ufo.cmd("ui_removecvarlistener cl_selected reactionfire_updated;") end
 }
 
 local firemode_right = ufox.build_window {
@@ -482,23 +488,23 @@ local firemode_right = ufox.build_window {
 	{
 		class = "confunc",
 		name = "reactionfire_updated",
-		on_click = function (this)
+		on_click = function (sender)
 			ufo.cmd( "hud_listfiremodes firemode_listener r;")
 		end
 	},
 
-	on_windowopened = function (this)
+	on_windowopened = function (sender)
 		ufo.cmd("hud_listfiremodes firemode_listener r;")
 		ufo.cmd("ui_addcvarlistener cl_selected reactionfire_updated;")
 	end,
-	on_windowclosed = function (this) ufo.cmd("ui_removecvarlistener cl_selected reactionfire_updated;") end
+	on_windowclosed = function (sender) ufo.cmd("ui_removecvarlistener cl_selected reactionfire_updated;") end
 }
 
 local i
 ufox.build_window {
 	class = "window",
 	name = "hud_general",
-	hide_firemodes = function (this)
+	hide_firemodes = function (sender)
 		firemode_left:child("elements"):remove_children()
 		firemode_right:child("elements"):remove_children()
 	end,
@@ -506,9 +512,9 @@ ufox.build_window {
 	{
 		class = "confunc",
 		name = "firemode_listener",
-		on_click = function (this, command, id, side, index, reaction, status, name, tu, ammo, tooltip)
+		on_click = function (sender, command, id, side, index, reaction, status, name, tu, ammo, tooltip)
 			if command == "begin" then
-				this:parent():hide_firemodes()
+				sender:parent():hide_firemodes()
 			elseif command == "firemode" then
 				if side == "l" then
 					local node = firemode_left:child("elements")

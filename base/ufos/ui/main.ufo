@@ -2,11 +2,6 @@
 
 require "ufox.lua"
 
---[[
- - ==================
- - MAIN WINDOW
- - ==================
---]]
 do
 	tree = {
 		name = "main",
@@ -21,7 +16,7 @@ do
 			size = { 1024, 50 },
 			font = "f_title",
 			color = { 0.59, 0.78, 0.56, 1.0 },
-			contentalign = ufo.ALIGN_CC
+			contentalign = ufo.ALIGN_CC,
 		},
 
 		{
@@ -63,9 +58,10 @@ do
 				class = "button",
 				super = "MainMenuBtn",
 				text = "_CAMPAIGN",
+
 				on_click = function (sender)
 					ufo.cmd("game_setmode campaign; ui_push campaign;")
-				end
+				end,
 			},
 
 			{
@@ -73,65 +69,66 @@ do
 				class = "button",
 				super = "MainMenuBtn",
 				text = "_SKIRMISH",
+
 				on_click = function (sender)
 					ufo.cmd("game_setmode skirmish; ui_push skirmish;")
-				end
+				end,
 			},
 
 			{
 				name = "multiplayer",
 				class = "button",
 				super = "MainMenuBtn",
-
 				text = "_MULTIPLAYER",
+
 				on_click = function (sender)
 					ufo.cmd("game_setmode multiplayer; ui_push multiplayer;")
-				end
+				end,
 			},
 
 			{
 				name = "options",
 				class = "button",
 				super = "MainMenu2Btn",
-
 				text = "_OPTIONS",
+
 				on_click = function (sender)
 					ufo.cmd("ui_push options;")
-				end
+				end,
 			},
 
 			{
 				name = "tutorials",
 				class = "button",
 				super = "MainMenu2Btn",
-
 				text = "_TUTORIALS",
+
 				on_click = function (sender)
 					ufo.cmd("ui_push tutorials;")
-				end
+				end,
 			},
 
 			{
 				name = "credits",
 				class = "button",
 				super = "MainMenu2Btn",
-
 				text = "_DEVELOPERS",
+
 				on_click = function (sender)
 					ufo.cmd ("seq_start developers;")
-				end
+				end,
 			},
 
 			{
 				name = "exit",
 				class = "button",
 				super = "MainMenuExitBtn",
-
 				text = "_EXIT",
+
 				on_click = function (sender)
 					ufo.cmd("quit;")
-				end
-			}
+				end,
+			},
 		},
 
 		{
@@ -151,8 +148,8 @@ do
 			class = "confunc",
 			name = "game_addmode_singleplayer",
 
-			on_click = function(sender)
-			end
+			on_click = function (sender)
+			end,
 		},
 
 		on_windowopened = function (sender)
