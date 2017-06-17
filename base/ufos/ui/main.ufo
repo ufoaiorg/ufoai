@@ -1,9 +1,11 @@
 --!usr/bin/lua
 
 require "ufox.lua"
+require "initialsettings.lua"
+require "tipoftheday.lua"
 
 do
-	tree = {
+	local window = ufox.build_window({
 		name = "main",
 		class = "window",
 		background = "ui/main_bg",
@@ -154,338 +156,26 @@ do
 
 		on_windowopened = function (sender)
 			ufo.cmd("music_change main;")
-			-- @TODO: activate this again
-			-- ufo.cmd("ui_push_child popup_tipoftheday main;")
-			ufo.cmd("check_cvars;")
+
+			-- "initial settings" popup
+			if (not initialsettings.check()) then
+				local settings = initialsettings.build()
+				ufo.push_window(settings:name(), nil, nil)
+			end
+
+			-- "tip of the day" popup
+			if (ufo.getvar("cl_showTipOfTheDay"):as_integer() == 1) then
+				ufo.cmd("tipoftheday random; do_nexttip;")
+				local tips = tipoftheday.build()
+				ufo.push_window(tips:name(), sender:name(), nil)
+			else
+				ufo.cmd("ui_close tipoftheday;")
+			end
+
 			if (ufo.getvar("cl_introshown"):as_integer() ~= 1) then
 				ufo.cmd("ui_push intro;")
 				ufo.getvar("cl_introshown"):set_value(1)
 			end
 		end
-	}
-
-	-- create the window from the tree structure
-	window = ufox.build_window (tree)
-end
-
---[[
- - ==================
- - CVAR CHECK MENU
- - ==================
---]]
-do
-	tree = {
-		class = "window",
-		name = "checkcvars",
-		super = "ipopup",
-
-		modal = true,
-		pos = { 124, 192 },
-		size = { 777, 368 },
-		backgroundcolor = { 0, 0, 0, 0.9 },
-
-		{
-			name = "title",
-			text = "_Initial settings",
-			size = { 777, 30 }
-		},
-
-		--[[
-		 - ===================
-		 - USER INFORMATION
-		 - ===================
-		--]]
-		{
-			class = "string",
-			name = "userinfo_str",
-
-			text = "_User information",
-			pos = { 26, 48 },
-			size = { 300, 30 },
-			font = "f_normal"
-		},
-
-		{
-			class = "string",
-			name = "name_str",
-
-			text = "_Name:",
-			pos = { 41, 88 },
-			size = { 300, 20 },
-			color = { 1, 1, 1, 1 }
-		},
-
-		{
-			class = "TextEntry",
-			name = "name_slot",
-
-			text = "*cvar:cl_name",
-			font = "f_verysmall",
-			pos = { 170, 82 },
-			size = { 185, 34 }
-		},
-
-		--[[
-		 - ===================
-		 - VOLUME SETTINGS
-		 - ===================
-		--]]
-		{
-			class = "string",
-			name = "volume_str",
-
-			text = "_Volume Control",
-			pos = { 26, 168 },
-			size = { 300, 30 },
-			font = "f_normal"
-		},
-
-		{
-			class = "string",
-			name = "effects_str",
-
-			text = "_Effects:",
-			pos = { 41, 198 },
-			size = { 150, 20 }
-		},
-
-		{
-			class = "bar",
-			name = "effects_bar",
-
-			value = "*cvar:snd_volume",
-			pos = { 170, 208 },
-			size = { 238, 6 },
-			color = { 0.582, 0.808, 0.758, 1 },
-			bordercolor = { 0.582, 0.808, 0.758, 1 },
-			bordersize = 1,
-			max = 1.0
-		},
-
-		{
-			class = "string",
-			name = "music_str",
-
-			text = "_Music:",
-			pos = { 41, 223 },
-			size = { 150, 20 }
-		},
-
-		{
-			class = "bar",
-			name = "music_bar",
-
-			value = "*cvar:snd_music_volume",
-			pos = { 170, 233 },
-			size = { 238, 6 },
-			color = { 0.582, 0.808, 0.758, 1 },
-			bordercolor = { 0.582, 0.808, 0.758, 1 },
-			bordersize = 1,
-			max = 128.0
-		},
-
-		--[[
-		 - ===================
-		 - LANGUAGE
-		 - ===================
-		--]]
-		{
-			class = "string",
-			name = "language_settings",
-
-			text = "_Language",
-			pos = { 410, 48 },
-			size = { 300, 30 },
-			font = "f_normal"
-		},
-
-		{
-			class = "string",
-			name = "language_str",
-
-			text = "_Language:",
-			pos = { 425, 82 },
-			size = { 108, 20 }
-		},
-
-		{
-			class = "optionlist",
-			name = "language_select",
-
-			pos = { 531, 78 },
-			size = { 155, 226 },
-			font = "f_language",
-			background = "ui/panel",
-			color = { 1, 1, 1, 0.5 },
-			selectcolor = { 1, 1, 1, 0.9 },
-			padding = 6,
-			contentalign = ufo.ALIGN_CC,
-			dataid = ufo.OPTION_LANGUAGES,
-			cvar = "*cvar:s_language",
-			on_viewchange = function (sender)
-					sender:root():child("language_select_scroll"):set_current(sender:current())
-					sender:root():child("language_select_scroll"):set_fullsize(sender:fullsize())
-					sender:root():child("language_select_scroll"):set_viewsize(sender:viewsize())
-				end
-		},
-
-		{
-			class = "vscrollbar",
-			name = "language_select_scroll",
-
-			pos = { 692, 78 },
-			height = 226,
-			viewsize = 8,
-			fullsize = 21,
-			current = 0,
-			image = "ui/scrollbar_v",
-			on_change = function (sender)
-					sender:root():child("language_select"):set_current(sender:current())
-				end
-		},
-
-		--[[
-		 - ===================
-		 - VALIDATION
-		 - ===================
-		--]]
-		{
-			class = "string",
-			name = "message",
-
-			text = "_You have to set the playername and hit the 'OK' button:",
-			pos = { 41, 338 },
-			size = { 500, 40 },
-			color = { 1, 1, 1, 0.5 }
-		},
-
-		{
-			class = "MainMenuBtn",
-			name = "ok",
-
-			text = "_OK",
-			tooltip = "_Save settings",
-			pos = { 597, 338 },
-			size = { 180, 30 },
-			on_click = function (sender)
-					ufo.cmd("ui_pop; saveconfig config.cfg;")
-				end
-		},
-
-		{
-			class = "fuzzyScreen",
-			name = "overlay"
-		},
-
-		on_windowclosed = function (sender)
-				ufo.cmd("check_cvars;")
-			end
-	}
-
-	-- create the window from the tree structure
-	checkcvars = ufox.build_window (tree)
-end
-
---[[
- - ==================
- - TIP OF THE DAY
- - ==================
---]]
-do
-	tree = {
-		class = "window",
-		name = "tipoftheday",
-		super = "ipopup",
-
-		pos = { 505, 560 },
-		size = { 506, 190 },
-		closebutton = true,
-		backgroundcolor = { 0, 0, 0, 0.9 },
-
-		{
-			name = "title",
-			width = 496,
-			text = "_Tip of the day"
-		},
-
-		{
-			class = "string",
-			name = "activate_str",
-			text = "_Show tip of the day",
-			pos = { 58, 166 },
-			size = { 200, 25 },
-			font = "f_small",
-			on_click = function (sender)
-					sender:root():child("activate"):toggle()
-				end
-		},
-
-		{
-			class = "CheckBox",
-			name = "activate",
-			value = "*cvar:cl_showTipOfTheDay",
-			pos = { 36, 170 },
-			size = { 20, 18 },
-			on_change = function (sender)
-					ufo.cmd("do_nexttip;")
-				end
-		},
-
-		{
-			class = "text",
-			name = "tipoftheday_text",
-			pos = { 26, 48 },
-			size = { 444, 100 },
-			lineheight = 20,
-			tabwidth = 150,
-			dataid = ufo.TEXT_TIPOFTHEDAY,
-			viewsize = 6
-		},
-
-		{
-			class = "MainMenuBtn",
-			name = "nexttip",
-			text = "_Next",
-			tooltip = "_Next tip",
-			width = 176,
-			pos = { 319, 160 },
-			font = "f_menu",
-			on_click = function (sender)
-					if ( ufo.getvar("cl_showTipOfTheDay"):as_integer() == 1 ) then
-						ufo.cmd("tipoftheday;")
-					else
-						ufo.cmd("ui_close tipoftheday;")
-					end
-				end
-		},
-
-		{
-			class = "confunc",
-			name = "do_nexttip",
-			on_click = function (sender)
-					if ( ufo.getvar("cl_showTipOfTheDay"):as_integer() == 1 ) then
-						sender:root():child("nexttip"):set_text("_Next")
-						sender:root():child("nexttip"):set_tooltip("_Next tip")
-					else
-						sender:root():child("nexttip"):set_text("_Close")
-						sender:root():child("nexttip"):set_tooltip("_Close window")
-					end
-				end
-		},
-
-		{
-			class = "fuzzyScreen",
-			name = "overlay"
-		},
-
-		on_windowopened = function (sender)
-				if ( ufo.getvar("cl_showTipOfTheDay"):as_integer() == 1 ) then
-					ufo.cmd("tipoftheday random; do_nexttip;")
-				else
-					ufo.cmd("ui_close popup_tipoftheday;")
-				end
-			end
-	}
-
-	tipoftheday = ufox.build_window (tree)
+	})
 end

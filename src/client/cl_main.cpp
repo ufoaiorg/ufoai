@@ -812,28 +812,6 @@ bool CL_ParseClientData (const char* type, const char* name, const char** text)
 	return true;
 }
 
-/** @brief Cvars for initial check (popup at first start) */
-static cvarList_t checkcvar[] = {
-	{"cl_name", nullptr},
-	{"s_language", nullptr},
-
-	{nullptr, nullptr}
-};
-/**
- * @brief Check cvars for some initial values that should/must be set
- */
-static void CL_CheckCvars_f (void)
-{
-	for (cvarList_t* c = checkcvar; c->name != nullptr; c++) {
-		cvar_t* var = Cvar_Get(c->name);
-		if (var->string[0] == '\0') {
-			Com_Printf("%s has no value\n", var->name);
-			UI_PushWindow("checkcvars");
-			break;
-		}
-	}
-}
-
 /**
  * @brief Print the configstrings to game console
  * @sa SV_PrintConfigStrings_f
@@ -902,7 +880,6 @@ static void CL_InitLocal (void)
 	cl_leshowinvis = Cvar_Get("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entities as null models");
 
 	/* register our commands */
-	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
 	Cmd_AddCommand("targetalign", CL_ActorTargetAlign_f, N_("Target your shot to the ground"));
 
 	Cmd_AddCommand("cl_setratiofilter", CL_SetRatioFilter_f, "Filter the resolution screen list with a ratio");
