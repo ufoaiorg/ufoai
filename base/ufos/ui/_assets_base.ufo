@@ -705,7 +705,7 @@ do
 		end,
 
 		on_click = function (sender)
-			ufo.cmd(string.format("ui_market_select %s;", sender:child("id"):as_string()))
+			ufo.cmd(string.format("ui_market_select %q;", sender:child("id"):as_string()))
 		end,
 
 		{
@@ -729,7 +729,7 @@ do
 			size = {18, 18},
 
 			on_click = function (sender)
-				ufo.cmd(string.format("ui_market_showinfo \"%s\";", sender:parent():child("id"):as_string()))
+				ufo.cmd(string.format("ui_market_showinfo %q;", sender:parent():child("id"):as_string()))
 				ufo.cmd("ui_market_openpedia;")
 			end,
 		},
@@ -773,7 +773,8 @@ do
 				sender:set_topicon("icons/arrowtext_lft")
 			end,
 
-			on_change = function (sender)
+			activate = function (sender)
+				-- ufo.print(string.format("Change: min: %i current: %i max: %i delta: %i lastdiff: %i\n", sender:min(), sender:value(), sender:max(), sender:delta(), sender:lastdiff()))
 				ufo.cmd(string.format("ui_market_buy \"%s\" %s;", sender:parent():child("id"):as_string(), tostring(sender:lastdiff())))
 				ufo.cmd(string.format("ui_market_fill %s;", ufo.findvar("ui_market_category"):as_string()))
 				ufo.cmd(string.format("ui_market_select \"%s\";", sender:parent():child("id"):as_string()))
@@ -835,7 +836,8 @@ do
 				sender:set_topicon("icons/arrowtext_rgt")
 			end,
 
-			on_change = function (sender)
+			activate = function (sender)
+				-- ufo.print(string.format("Change: min: %i current: %i max: %i delta: %i lastdiff: %i\n", sender:min(), sender:value(), sender:max(), sender:delta(), sender:lastdiff()))
 				ufo.cmd(string.format("ui_market_buy \"%s\" %s;", sender:parent():child("id"):as_string(), tostring(sender:lastdiff())))
 				ufo.cmd(string.format("ui_market_fill %s;", ufo.findvar("ui_market_category"):as_string()))
 				ufo.cmd(string.format("ui_market_select \"%s\";", sender:parent():child("id"):as_string()))

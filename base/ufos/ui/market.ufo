@@ -1,407 +1,575 @@
-// ==================
-// MARKET MENU
-// ==================
+--!usr/bin/lua
 
-component FoldingList extends panel
-{
-}
+require("ufox.lua")
 
-/*
- * @TODO
- * - Make autosell button work properly
- */
-window market  {
-	{
-		fill		true
-	}
+-- @TODO this was a blind 1 to 1 conversion, the code can be simplified a lot
+-- @TODO Make autosell button work properly
+do
+	local window = ufox.build_window({
+		name = "market",
+		class = "window",
+		fill = true,
 
-	// Base name and container panel
-	BaseContainerPanel base_container
-	{
-		// Market panel
-		panel mainBody
 		{
-			{ size "715 534" }
-			// Title bar
-			panel header
+			name = "base_container",
+			class = "BaseContainerPanel",
+
 			{
-				{}
-				string title
+				name = "mainBody",
+				class = "panel",
+				size = {715, 534},
+
 				{
-					string			"_Market"
-				}
-			}
-			FoldingList flist
+					name = "header",
+					class = "panel",
+
+					{
+						name = "title",
+						class = "string",
+						text = "_Market",
+					}
+				},
+
+				{
+					name = "flist",
+					class = "panel",
+					pos = {1, 40},
+					size = {713, 532},
+
+					-- Market list headings (base / market)
+					{
+						name = "list_header",
+						class = "panel",
+						pos = {1, 1},
+						size = {713, 32},
+
+						{
+							name = "base",
+							class = "string",
+							text = "_Base",
+							pos = {320, 0},
+							size = {80, 32},
+							color = {0.56, 0.81, 0.76, 1},
+							contentalign = ufo.ALIGN_CR,
+						},
+
+						{
+							name = "market",
+							class = "string",
+							text = "_Market",
+							pos = {586, 0},
+							size = {100, 32},
+							color = {0.56, 0.81, 0.76, 1},
+							contentalign = ufo.ALIGN_CL,
+						},
+					},
+
+					{
+						name = "list",
+						class = "panel",
+						pos = {1, 30},
+						size = {713, 503},
+						layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+						layoutmargin = 2,
+
+						on_viewchange = function (sender)
+							sender:parent():child("list_scroll"):set_current(sender:viewpos())
+							sender:parent():child("list_scroll"):set_fullsize(sender:fullsize())
+							sender:parent():child("list_scroll"):set_viewsize(sender:viewsize())
+						end,
+
+						{
+							name = "selected",
+							class = "data",
+							value = "",
+						},
+
+						{
+							name = "category_height",
+							class = "data",
+							value = 30,
+						},
+
+						{
+							name = "primary_label",
+							class = "MarketCategory",
+
+							on_click = function (sender)
+								local category = ufo.getvar("ui_market_category")
+								if (category:as_string() == "primary") then
+									category:set_value("")
+								else
+									category:set_value("primary")
+								end
+								ufo.cmd(string.format("ui_market_fill %q;", category:as_string()))
+							end,
+
+							{
+								name = "name",
+								class = "string",
+								text = "_Primary Weapons",
+							},
+						},
+
+						{
+							name = "primary",
+							class = "MarketList",
+						},
+
+						{
+							name = "secondary_label",
+							class = "MarketCategory",
+
+							on_click = function (sender)
+								local category = ufo.getvar("ui_market_category")
+								if (category:as_string() == "secondary") then
+									category:set_value("")
+								else
+									category:set_value("secondary")
+								end
+								ufo.cmd(string.format("ui_market_fill %q;", category:as_string()))
+							end,
+
+							{
+								name = "name",
+								class = "string",
+								text = "_Secondary Weapons",
+							},
+						},
+
+						{
+							name = "secondary",
+							class = "MarketList",
+						},
+
+						{
+							name = "heavy_label",
+							class = "MarketCategory",
+
+							on_click = function (sender)
+								local category = ufo.getvar("ui_market_category")
+								if (category:as_string() == "heavy") then
+									category:set_value("")
+								else
+									category:set_value("heavy")
+								end
+								ufo.cmd(string.format("ui_market_fill %q;", category:as_string()))
+							end,
+
+							{
+								name = "name",
+								class = "string",
+								text = "_Heavy Weapons",
+							},
+						},
+
+						{
+							name = "heavy",
+							class = "MarketList",
+						},
+
+						{
+							name = "misc_label",
+							class = "MarketCategory",
+
+							on_click = function (sender)
+								local category = ufo.getvar("ui_market_category")
+								if (category:as_string() == "misc") then
+									category:set_value("")
+								else
+									category:set_value("misc")
+								end
+								ufo.cmd(string.format("ui_market_fill %q;", category:as_string()))
+							end,
+
+							{
+								name = "name",
+								class = "string",
+								text = "_Equipment",
+							},
+						},
+
+						{
+							name = "misc",
+							class = "MarketList",
+						},
+
+						{
+							name = "armour_label",
+							class = "MarketCategory",
+
+							on_click = function (sender)
+								local category = ufo.getvar("ui_market_category")
+								if (category:as_string() == "armour") then
+									category:set_value("")
+								else
+									category:set_value("armour")
+								end
+								ufo.cmd(string.format("ui_market_fill %q;", category:as_string()))
+							end,
+
+							{
+								name = "name",
+								class = "string",
+								text = "_Armour",
+							},
+						},
+
+						{
+							name = "armour",
+							class = "MarketList",
+						},
+
+						{
+							name = "craftitem_label",
+							class = "MarketCategory",
+
+							on_click = function (sender)
+								local category = ufo.getvar("ui_market_category")
+								if (category:as_string() == "craftitem") then
+									category:set_value("")
+								else
+									category:set_value("craftitem")
+								end
+								ufo.cmd(string.format("ui_market_fill %q;", category:as_string()))
+							end,
+
+							{
+								name = "name",
+								class = "string",
+								text = "_Aircraft Equipment",
+							},
+						},
+
+						{
+							name = "craftitem",
+							class = "MarketList",
+						},
+
+						{
+							name = "aircraft_label",
+							class = "MarketCategory",
+
+							on_click = function (sender)
+								local category = ufo.getvar("ui_market_category")
+								if (category:as_string() == "aircraft") then
+									category:set_value("")
+								else
+									category:set_value("aircraft")
+								end
+								ufo.cmd(string.format("ui_market_fill %q;", category:as_string()))
+							end,
+
+							{
+								name = "name",
+								class = "string",
+								text = "_Aircraft",
+							},
+						},
+
+						{
+							name = "aircraft",
+							class = "MarketList",
+						},
+
+						{
+							name = "craftitem",
+							class = "MarketList",
+						},
+
+						{
+							name = "implant_label",
+							class = "MarketCategory",
+
+							on_click = function (sender)
+								local category = ufo.getvar("ui_market_category")
+								if (category:as_string() == "implant") then
+									category:set_value("")
+								else
+									category:set_value("implant")
+								end
+								ufo.cmd(string.format("ui_market_fill %q;", category:as_string()))
+							end,
+
+							{
+								name = "name",
+								class = "string",
+								text = "_Implants",
+							},
+						},
+
+						{
+							name = "implant",
+							class = "MarketList",
+						},
+
+						{
+							name = "dummy_label",
+							class = "MarketCategory",
+
+							on_click = function (sender)
+								local category = ufo.getvar("ui_market_category")
+								if (category:as_string() == "dummy") then
+									category:set_value("")
+								else
+									category:set_value("dummy")
+								end
+								ufo.cmd(string.format("ui_market_fill %q;", category:as_string()))
+							end,
+
+							{
+								name = "name",
+								class = "string",
+								text = "_Other Items",
+							},
+						},
+
+						{
+							name = "dummy",
+							class = "MarketList",
+						},
+
+						{
+							name = "ugvitem_label",
+							class = "MarketCategory",
+
+							on_click = function (sender)
+								local category = ufo.getvar("ui_market_category")
+								if (category:as_string() == "ugvitem") then
+									category:set_value("")
+								else
+									category:set_value("ugvitem")
+								end
+								ufo.cmd(string.format("ui_market_fill %q;", category:as_string()))
+							end,
+
+							{
+								name = "name",
+								class = "string",
+								text = "_Unmanned Ground Vehicles",
+							},
+						},
+
+						{
+							name = "ugvitem",
+							class = "MarketList",
+						},
+
+						--[[
+						-- @brief Confunc to clear the market list
+						--]]
+						{
+							name = "ui_market_clear",
+							class = "confunc",
+
+							on_click = function (sender)
+								-- Reset stored height integer
+								sender:parent():child("category_height"):set_value(0)
+
+								-- Empty and reset height for all categories
+								sender:parent():child("primary"):remove_children()
+								sender:parent():child("primary"):set_size(713, 0)
+								sender:parent():child("secondary"):remove_children()
+								sender:parent():child("secondary"):set_size(713, 0)
+								sender:parent():child("heavy"):remove_children()
+								sender:parent():child("heavy"):set_size(713, 0)
+								sender:parent():child("misc"):remove_children()
+								sender:parent():child("misc"):set_size(713, 0)
+								sender:parent():child("armour"):remove_children()
+								sender:parent():child("armour"):set_size(713, 0)
+								sender:parent():child("craftitem"):remove_children()
+								sender:parent():child("craftitem"):set_size(713, 0)
+								sender:parent():child("aircraft"):remove_children()
+								sender:parent():child("aircraft"):set_size(713, 0)
+								sender:parent():child("implant"):remove_children()
+								sender:parent():child("implant"):set_size(713, 0)
+								sender:parent():child("dummy"):remove_children()
+								sender:parent():child("dummy"):set_size(713, 0)
+								sender:parent():child("ugvitem"):remove_children()
+								sender:parent():child("ugvitem"):set_size(713, 0)
+							end,
+						},
+
+						--[[
+						-- @brief Confunc to add the item to market's itemlist
+						-- @param refid Reference ID
+						-- @param itemname Item Name
+						-- @param base_count Number of items on the base
+						-- @param market_count Number of items on the market
+						-- @param buyprice Buy price
+						-- @param sellprice Sell price
+						-- @param autosell Auto-sell items (0: off, 1: on, -: not available)
+						-- @param tooltip Tooltip for disabled entries, "-" otherwise
+						--]]
+						{
+							name = "ui_market_add",
+							class = "confunc",
+
+							on_click = function (sender, refid, itemname, base_count, market_count, buyprice, sellprice, autosell, tooltip)
+								local category = ufo.getvar("ui_market_category")
+								if (category == nil or category:as_string() == "") then
+									return
+								end
+								local autosell_value = autosell
+								if (autosell == '-') then
+									autosell_value = 0
+								end
+
+								local category_list = sender:parent():child(category:as_string())
+								local item = ufox.build({
+									name = "item_" .. refid,
+									class = "MarketItem",
+
+									{
+										name = "id",
+										value = refid,
+									},
+
+									{
+										name = "name",
+										text = itemname,
+									},
+
+									{
+										name = "base",
+										text = base_count,
+									},
+
+									{
+										name = "market",
+										text = market_count,
+									},
+
+									{
+										name = "buy_price",
+										text = buyprice .. "c",
+									},
+
+									{
+										name = "sell_price",
+										text = sellprice .. "c",
+									},
+
+									{
+										name = "buy",
+										min = 0,
+										max = base_count + market_count,
+										value = base_count,
+										tooltip = string.format("_Purchase for %i credits each", buyprice),
+									},
+
+									{
+										name = "sell",
+										min = 0,
+										max = base_count + market_count,
+										value = base_count,
+										tooltip = string.format("_Sell for %i credits each", sellprice),
+									},
+
+									{
+										name = "autosell",
+										invisible = (autosell == "-"),
+										value = 0 + autosell_value,
+									}
+								}, category_list)
+								item:child("buy").on_change = item:child("buy").activate
+								item:child("sell").on_change = item:child("buy").activate
+
+								sender:parent():child("category_height"):set_value(sender:parent():child("category_height"):as_integer() + 30)
+								category_list:set_height(sender:parent():child("category_height"):as_integer())
+							end,
+						},
+
+						--[[
+						- @brief Select an item from the list
+						- @param id Item id
+						--]]
+						{
+							name = "ui_market_select",
+							class = "confunc",
+
+							on_click = function (sender, id)
+								local selected = sender:parent():child("selected")
+								local category = ufo.getvar("ui_market_category"):as_string()
+								local selected_item = sender:parent():child(category):child("item_" .. selected:as_string())
+
+								if (selected:as_string() ~= "" and selected_item ~= nil) then
+									selected_item:child("name"):set_color(0.56, 0.81, 0.76, 0.7)
+								end
+
+								selected:set_value(id)
+								selected_item = sender:parent():child(category):child("item_" .. selected:as_string())
+
+								if (selected:as_string() ~= "" and selected_item ~= nil) then
+									selected_item:child("name"):set_color(0.56, 0.81, 0.76, 1)
+									ufo.cmd(string.format("ui_market_showinfo %q;", id))
+								end
+							end,
+						},
+					},
+
+					{
+						name = "list_scroll",
+						class = "vscrollbar",
+						image = "ui/scrollbar_v",
+						pos = {697, 32},
+						height = 459,
+						current = 0,
+						viewsize = 8,
+						fullsize = 22,
+						autoshowscroll = true,
+
+						on_change = function (sender)
+							sender:parent():child("list"):set_viewpos(sender:current())
+						end,
+					},
+				},
+			},
+
 			{
-				{
-					pos			"1 40"
-					size		"713 532"
-				}
-				// Market list headings (base / market)
-				panel list_header
-				{
-					{
-						pos			"1 1"
-						size		"713 32"
-					}
-					string base
-					{
-						string			"_Base"
-						pos				"320 0"
-						size			"80 32"
-						color			"0.56 0.81 0.76 1"
-						contentalign	ALIGN_CR
-					}
-					string market
-					{
-						string			"_Market"
-						pos				"586 0"
-						size			"100 32"
-						color			"0.56 0.81 0.76 1"
-						contentalign	ALIGN_CL
-					}
-				}
-				// Market items list
-				panel list
-				{
-					{
-						pos				"1 30"
-						size			"713 503"
-						layout			LAYOUT_TOP_DOWN_FLOW
-						layoutMargin	2
-						onViewChange	{
-							*node:parent.list_scroll@current = <viewpos>
-							*node:parent.list_scroll@fullsize = <fullsize>
-							*node:parent.list_scroll@viewsize = <viewsize>
-						}
-					}
-					data selected { string "" }
-					data category_height { integer 30 }
-					MarketCategory primary_label
-					{
-						{
-							onClick {
-								if ( *cvar:ui_market_category eq "primary" ) {
-									*cvar:ui_market_category = ""
-								} else {
-									*cvar:ui_market_category = "primary"
-								}
-								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
-							}
-						}
-						string name { string "_Primary Weapons" }
-					}
-					MarketList primary { }
-					MarketCategory secondary_label
-					{
-						{
-							onClick {
-								if ( *cvar:ui_market_category eq "secondary" ) {
-									*cvar:ui_market_category = ""
-								} else {
-									*cvar:ui_market_category = "secondary"
-								}
-								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
-							}
-						}
-						string name { string "_Secondary Weapons" }
-					}
-					MarketList secondary { }
-					MarketCategory heavy_label
-					{
-						{
-							onClick {
-								if ( *cvar:ui_market_category eq "heavy" ) {
-									*cvar:ui_market_category = ""
-								} else {
-									*cvar:ui_market_category = "heavy"
-								}
-								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
-							}
-						}
-						string name { string "_Heavy Weapons" }
-					}
-					MarketList heavy { }
-					MarketCategory misc_label
-					{
-						{
-							onClick {
-								if ( *cvar:ui_market_category eq "misc" ) {
-									*cvar:ui_market_category = ""
-								} else {
-									*cvar:ui_market_category = "misc"
-								}
-								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
-							}
-						}
-						string name { string "_Equipment" }
-					}
-					MarketList misc { }
-					MarketCategory armour_label
-					{
-						{
-							onClick {
-								if ( *cvar:ui_market_category eq "armour" ) {
-									*cvar:ui_market_category = ""
-								} else {
-									*cvar:ui_market_category = "armour"
-								}
-								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
-							}
-						}
-						string name { string "_Armour" }
-					}
-					MarketList armour { }
-					MarketCategory craftitem_label
-					{
-						{
-							onClick {
-								if ( *cvar:ui_market_category eq "craftitem" ) {
-									*cvar:ui_market_category = ""
-								} else {
-									*cvar:ui_market_category = "craftitem"
-								}
-								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
-							}
-						}
-						string name { string "_Aircraft Equipment" }
-					}
-					MarketList craftitem { }
-					MarketCategory aircraft_label
-					{
-						{
-							onClick {
-								if ( *cvar:ui_market_category eq "aircraft" ) {
-									*cvar:ui_market_category = ""
-								} else {
-									*cvar:ui_market_category = "aircraft"
-								}
-								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
-							}
-						}
-						string name { string "_Aircraft" }
-					}
-					MarketList aircraft { }
-					MarketCategory implant_label
-					{
-						{
-							onClick {
-								if ( *cvar:ui_market_category eq "implant" ) {
-									*cvar:ui_market_category = ""
-								} else {
-									*cvar:ui_market_category = "implant"
-								}
-								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
-							}
-						}
-						string name { string "_Implants" }
-					}
-					MarketList implant { }
-					MarketCategory dummy_label
-					{
-						{
-							onClick {
-								if ( *cvar:ui_market_category eq "dummy" ) {
-									*cvar:ui_market_category = ""
-								} else {
-									*cvar:ui_market_category = "dummy"
-								}
-								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
-							}
-						}
-						string name { string "_Other Items" }
-					}
-					MarketList dummy { }
-					MarketCategory ugvitem_label
-					{
-						{
-							onClick {
-								if ( *cvar:ui_market_category eq "ugvitem" ) {
-									*cvar:ui_market_category = ""
-								} else {
-									*cvar:ui_market_category = "ugvitem"
-								}
-								cmd "ui_market_fill \"<cvar:ui_market_category>\";"
-							}
-						}
-						string name { string "_Unmanned Ground Vehicles" }
-					}
-					MarketList ugvitem { }
+				name = "details",
+				class = "ObjectInfo",
+				pos = {4, 574},
+				bordersize = 2,
+				bordercolor = {0.527, 0.6, 0.21, 1},
+			},
 
-					/*
-					 * @brief Confunc to clear the market list
-					 */
-					confunc ui_market_clear {
-						// Reset stored height integer
-						*node:parent.category_height@integer = 0
-
-						// Empty and reset height for all categories
-						call *node:parent.primary@removeAllchild
-						*node:parent.primary@size = "713 0"
-						call *node:parent.secondary@removeAllchild
-						*node:parent.secondary@size = "713 0"
-						call *node:parent.heavy@removeAllchild
-						*node:parent.heavy@size = "713 0"
-						call *node:parent.misc@removeAllchild
-						*node:parent.misc@size = "713 0"
-						call *node:parent.armour@removeAllchild
-						*node:parent.armour@size = "713 0"
-						call *node:parent.craftitem@removeAllchild
-						*node:parent.craftitem@size = "713 0"
-						call *node:parent.aircraft@removeAllchild
-						*node:parent.aircraft@size = "713 0"
-						call *node:parent.implant@removeAllchild
-						*node:parent.implant@size = "713 0"
-						call *node:parent.dummy@removeAllchild
-						*node:parent.dummy@size = "713 0"
-						call *node:parent.ugvitem@removeAllchild
-						*node:parent.ugvitem@size = "713 0"
-					}
-
-					/*
-					 * @brief Confunc to add the item to market's itemlist
-					 * <1> reference id
-					 * <2> name
-					 * <3> count at base
-					 * <4> count on market
-					 * <5> buy price
-					 * <6> sell price
-					 * <7> autosell (0: off, 1: on, -: not available"
-					 * <8> tooltip for disabled entries, "-" otherwise
-					 */
-					confunc ui_market_add {
-						if ( *cvar:ui_market_category ne "" ) {
-
-							//cmd "echo <cvar:ui_market_category>"
-							call *node:parent.<cvar:ui_market_category>@createChild("item_<1>", "MarketItem")
-
-							// Temporary implementation for layout
-							*node:parent.<cvar:ui_market_category>.item_<1>.id@string = <1>
-							*node:parent.<cvar:ui_market_category>.item_<1>.name@string = <2>
-							*node:parent.<cvar:ui_market_category>.item_<1>.base@string = <3>
-							*node:parent.<cvar:ui_market_category>.item_<1>.market@string = <4>
-							*node:parent.<cvar:ui_market_category>.item_<1>.buy_price@string = "<5>c"
-							*node:parent.<cvar:ui_market_category>.item_<1>.buy@tooltip = "Purchase for <5> credits each"
-							*node:parent.<cvar:ui_market_category>.item_<1>.sell_price@string = "<6>c"
-							*node:parent.<cvar:ui_market_category>.item_<1>.sell@tooltip = "Sell for <6> credits each"
-
-							// Set buy/sell spinners
-							*node:parent.<cvar:ui_market_category>.item_<1>.buy@min = 0
-							*node:parent.<cvar:ui_market_category>.item_<1>.buy@current = <3>
-							*node:parent.<cvar:ui_market_category>.item_<1>.buy@max = ( <3> + <4> )
-							*node:parent.<cvar:ui_market_category>.item_<1>.sell@min = 0
-							*node:parent.<cvar:ui_market_category>.item_<1>.sell@current = <3>
-							*node:parent.<cvar:ui_market_category>.item_<1>.sell@max = ( <3> + <4> )
-
-							// Set autosell
-							if ( param7 eq "-" ) {
-								*node:parent.<cvar:ui_market_category>.item_<1>.autosell@invis = true
-							} else {
-								*node:parent.<cvar:ui_market_category>.item_<1>.autosell@current = <7>
-							}
-
-							// Increase height of category panel
-							*node:parent.category_height@integer = ( *node:parent.category_height@integer + 30 )
-							*node:parent.<cvar:ui_market_category>@size = "713 <node:parent.category_height@integer>"
-						}
-					}
-					/*
-					 * @brief Select an item from the list
-					 * <1> item id
-					 */
-					confunc ui_market_select {
-						*cvar:tempselected = "item_<node:parent.selected@string>"
-						if (( *node:parent.selected@string ne "" )
-								and (exists *node:parent.<cvar:ui_market_category>.<cvar:tempselected>)) {
-							*node:parent.<cvar:ui_market_category>.item_<node:parent.selected@string>.name@color = "0.56 0.81 0.76 0.7"
-						}
-						*node:parent.selected@string = <1>
-						if ( *node:parent.selected@string ne "" ) {
-							*node:parent.<cvar:ui_market_category>.item_<node:parent.selected@string>.name@color = "0.56 0.81 0.76 1"
-							cmd "ui_market_showinfo <1>;"
-						}
-						delete *cvar:tempselected
-					}
-				}
-				vscrollbar list_scroll {
-					image			"ui/scrollbar_v"
-					pos				"697 32"
-					height			"459"
-					current			0
-					viewsize		8
-					fullsize		22
-					hidewhenunused	true
-					onChange		{
-						*node:parent.list@viewpos = <current>
-					}
-				}
-			}
-		}
-		// Object description panel
-		ObjectInfo details
-		{
 			{
-				pos				"4 574"
-				border			"2"
-				bordercolor		"0.527 0.6 0.21 1"
-			}
-		}
+				name = "wnd_name",
+				class = "data",
+				value = "buysell",
+			},
+		},
 
-		data wnd_name { string "buysell" }
-	}
-
-	// Storage count
-	BuildingSpace storage
-	{
-		{ pos "739 0" }
-
-		button smlicon { icon	"icons/building_storage" }
-		string label { string	"_Storage" }
-		button alert { invis true }
-	}
-
-	// Shopping cart / confirm transaction window
-	panel transaction
-	{
 		{
-			pos		"739 35"
-			size	"280 728"
-			border			"2"
-			bordercolor		"0.56 0.81 0.76 1"
-		}
-		string label
+			name = "geoscape_button",
+			class = "Geoscape",
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+				ufo.pop_window(false)
+			end
+		},
+
 		{
-			string			"_Transactions"
-			pos				"1 1"
-			size			"278 727"
-			contentalign	ALIGN_CC
-			color			"0.56 0.81 0.76 1"
-			bgcolor			"0.56 0.81 0.76 0.3"
-		}
-	}
+			name = "ui_market_update_caps",
+			class = "confunc",
 
-	// Back to geoscape
-	Geoscape geoscape_button
-	{
-		onClick			{ cmd "ui_pop; ui_pop;" }
-	}
+			on_click = function (sender)
+			end,
+		},
 
-	confunc ui_market_update_caps {
-	}
+		{
+			class = "fuzzyScreen",
+			name = "overlay"
+		},
 
-	// Fuzzy screen effect (see assets.ufo)
-	fuzzyScreen overlay { }
-
-	// ==================
-	// init
-	// ==================
-
-	func onWindowOpened {
-		cmd "ui_market_clear;"
-		if (<cvar:ui_market_category> ne "") {
-			cmd "ui_market_fill <cvar:ui_market_category>;"
-		}
-	}
-
-	func onWindowClosed { }
-}
+		on_windowopened = function (sender)
+			local category = ufo.getvar("ui_market_category")
+			ufo.cmd("ui_market_clear;")
+			if (category:as_string() ~= "") then
+				ufo.cmd(string.format("ui_market_fill %s;", category:as_string()))
+			end
+		end,
+	})
+end

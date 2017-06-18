@@ -131,7 +131,7 @@ static void BS_Buy_f (void)
 	if (cgi->Cmd_Argc() >= 4)
 		base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(3)));
 
-	if (char const* const rest = Q_strstart(itemid, "aircraft-")) {
+	if (char const* const rest = Q_strstart(itemid, "aircraft_")) {
 		/* aircraft sell - with aircraft golbal idx */
 		int idx = atoi(rest);
 		aircraft_t* aircraft = AIR_AircraftGetFromIDX(idx);
@@ -293,7 +293,7 @@ static void BS_ShowInfo_f (void)
 
 	itemid = cgi->Cmd_Argv(1);
 
-	if (char const* const rest = Q_strstart(itemid, "aircraft-")) {
+	if (char const* const rest = Q_strstart(itemid, "aircraft_")) {
 		/* PHALANX aircraft - with aircraft golbal idx */
 		int idx = atoi(rest);
 		aircraft = AIR_AircraftGetFromIDX(idx);
@@ -423,7 +423,7 @@ static void BS_FillMarket_f (void)
 	}
 	case FILTER_AIRCRAFT: {
 		AIR_ForeachFromBase(aircraft, base) {
-			cgi->UI_ExecuteConfunc("ui_market_add \"aircraft-%d\" \"%s\" 1 0 0 %d - \"%s\"", aircraft->idx, aircraft->name, BS_GetAircraftSellingPrice(aircraft), AIR_IsAircraftInBase(aircraft) ? "-" : _("Aircraft is away from home"));
+			cgi->UI_ExecuteConfunc("ui_market_add \"aircraft_%d\" \"%s\" 1 0 0 %d - \"%s\"", aircraft->idx, aircraft->name, BS_GetAircraftSellingPrice(aircraft), AIR_IsAircraftInBase(aircraft) ? "-" : _("Aircraft is away from home"));
 		}
 		for (int i = 0; i < ccs.numAircraftTemplates; i++) {
 			const aircraft_t* aircraft = &ccs.aircraftTemplates[i];

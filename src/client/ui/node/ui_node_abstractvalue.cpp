@@ -156,7 +156,7 @@ void uiAbstractValueNode::setRange(uiNode_t* node, float min, float max)
 		UI_InitCvarOrFloat((float**)&EXTRADATA(node).min, min);
 	}
 	else {
-        setMin(node, min);
+		setMin(node, min);
 	}
 	if (EXTRADATA(node).max == nullptr) {
 		UI_InitCvarOrFloat((float**)&EXTRADATA(node).max, max);
