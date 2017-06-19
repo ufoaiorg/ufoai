@@ -1,6 +1,7 @@
 --!usr/bin/lua
 
-require("ufox.lua")
+require "ufox.lua"
+require "market.components.lua"
 
 -- @TODO this was a blind 1 to 1 conversion, the code can be simplified a lot
 -- @TODO Make autosell button work properly
