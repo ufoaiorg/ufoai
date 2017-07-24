@@ -1076,7 +1076,7 @@ struct uiRowsNode_t: uiNode_t {
 };
 
 %rename (uiSelectBox) uiSelectBoxNode_t;
-struct uiSelectBoxNode_t: uiNode_t {
+struct uiSelectBoxNode_t: uiAbstractOptionNode_t {
 };
 %extend uiSelectBoxNode_t {
 };
