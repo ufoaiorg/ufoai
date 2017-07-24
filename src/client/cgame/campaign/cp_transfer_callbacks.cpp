@@ -137,10 +137,10 @@ static void TR_CargoList (void)
 			LIST_Foreach(tr.employees[emplType], Employee, employee) {
 				if (emplType == EMPL_SOLDIER) {
 					const rank_t* rank = CL_GetRankByIdx(employee->chr.score.rank);
-					cgi->UI_ExecuteConfunc("ui_cargolist_add \"ucn:%d\" \"%s %s %s\" %d", employee->chr.ucn,
+					cgi->UI_ExecuteConfunc("ui_cargolist_add \"ucn_%d\" \"%s %s %s\" %d", employee->chr.ucn,
 						E_GetEmployeeString((employeeType_t)emplType, 1), _(rank->shortname), employee->chr.name, 1);
 				} else {
-					cgi->UI_ExecuteConfunc("ui_cargolist_add \"ucn:%d\" \"%s %s\" %d", employee->chr.ucn,
+					cgi->UI_ExecuteConfunc("ui_cargolist_add \"ucn_%d\" \"%s %s\" %d", employee->chr.ucn,
 						E_GetEmployeeString((employeeType_t)emplType, 1), employee->chr.name, 1);
 				}
 			}
@@ -167,16 +167,16 @@ static void TR_CargoList (void)
 		linkedList_t* cargo = tr.alienCargo->list();
 		LIST_Foreach(cargo, alienCargo_t, item) {
 			if (item->dead > 0)
-				cgi->UI_ExecuteConfunc("ui_cargolist_add \"dead:%s\" \"%s\" %d", item->teamDef->id, va(_("Corpse of %s"), _(item->teamDef->name)), item->dead);
+				cgi->UI_ExecuteConfunc("ui_cargolist_add \"dead_%s\" \"%s\" %d", item->teamDef->id, va(_("Corpse of %s"), _(item->teamDef->name)), item->dead);
 			if (item->alive > 0)
-				cgi->UI_ExecuteConfunc("ui_cargolist_add \"alive:%s\" \"%s\" %d", item->teamDef->id, va(_("Alive %s"), _(item->teamDef->name)), item->alive);
+				cgi->UI_ExecuteConfunc("ui_cargolist_add \"alive_%s\" \"%s\" %d", item->teamDef->id, va(_("Alive %s"), _(item->teamDef->name)), item->alive);
 		}
 		cgi->LIST_Delete(&cargo);
 	}
 
 	/* Show all aircraft. */
 	LIST_Foreach(tr.aircraft, aircraft_t, aircraft) {
-		cgi->UI_ExecuteConfunc("ui_cargolist_add \"aircraft:%d\" \"%s\" %d", aircraft->idx, va(_("Aircraft %s"), aircraft->name), 1);
+		cgi->UI_ExecuteConfunc("ui_cargolist_add \"aircraft_%d\" \"%s\" %d", aircraft->idx, va(_("Aircraft %s"), aircraft->name), 1);
 	}
 }
 
@@ -259,7 +259,7 @@ static void TR_FillEmployees (const base_t* srcBase, const base_t* destBase)
 					Com_sprintf(str, sizeof(str), "%s %s", E_GetEmployeeString(emplType, 1), employee->chr.name);
 				}
 
-				cgi->UI_ExecuteConfunc("ui_translist_add \"ucn:%d\" \"%s\" %d %d %d %d %d", employee->chr.ucn,
+				cgi->UI_ExecuteConfunc("ui_translist_add \"ucn_%d\" \"%s\" %d %d %d %d %d", employee->chr.ucn,
 					str, -1, -1, -1, -1, -1);
 			}
 			break;
@@ -309,13 +309,13 @@ static void TR_FillAliens (const base_t* srcBase, const base_t* destBase)
 		if (srcDead > 0 || transferDead > 0) {
 			char str[128];
 			Com_sprintf(str, sizeof(str), _("Corpse of %s"), _(item->teamDef->name));
-			cgi->UI_ExecuteConfunc("ui_translist_add \"dead:%s\" \"%s\" %d %d %d %d %d",
+			cgi->UI_ExecuteConfunc("ui_translist_add \"dead_%s\" \"%s\" %d %d %d %d %d",
 				item->teamDef->id, str, srcDead - transferDead, dstDead, 0, transferDead, srcDead);
 		}
 		if (srcAlive > 0 || transferAlive > 0) {
 			char str[128];
 			Com_sprintf(str, sizeof(str), _("Alive %s"), _(item->teamDef->name));
-			cgi->UI_ExecuteConfunc("ui_translist_add \"alive:%s\" \"%s\" %d %d %d %d %d",
+			cgi->UI_ExecuteConfunc("ui_translist_add \"alive_%s\" \"%s\" %d %d %d %d %d",
 				item->teamDef->id, str, srcAlive - transferAlive, dstAlive,	0, transferAlive, srcAlive);
 		}
 	}
@@ -337,7 +337,7 @@ static void TR_FillAircraft (const base_t* srcBase, const base_t* destBase)
 		if (cgi->LIST_GetPointer(tr.aircraft, aircraft))
 			continue;
 
-		cgi->UI_ExecuteConfunc("ui_translist_add \"aircraft:%d\" \"%s\" %d %d %d %d %d",
+		cgi->UI_ExecuteConfunc("ui_translist_add \"aircraft_%d\" \"%s\" %d %d %d %d %d",
 			aircraft->idx, aircraft->name, -1, -1, -1, -1, -1);
 	}
 }
@@ -413,7 +413,7 @@ static void TR_Add_f (void)
 	int amount = atoi(cgi->Cmd_Argv(2));
 	Q_strncpyz(itemId, cgi->Cmd_Argv(1), sizeof(itemId));
 
-	if (Q_strstart(itemId, "aircraft:")) {
+	if (Q_strstart(itemId, "aircraft_")) {
 		aircraft_t* aircraft = AIR_AircraftGetFromIDX(atoi(itemId + 9));
 		if (!aircraft)
 			return;
@@ -426,11 +426,11 @@ static void TR_Add_f (void)
 
 			/* Add pilot */
 			if (aircraft->pilot)
-				cgi->Cmd_ExecuteString("ui_trans_add ucn:%d 1", aircraft->pilot->chr.ucn);
+				cgi->Cmd_ExecuteString("ui_trans_add ucn_%d 1", aircraft->pilot->chr.ucn);
 
 			/* Add soldiers */
 			LIST_Foreach(aircraft->acTeam, Employee, employee) {
-				cgi->Cmd_ExecuteString("ui_trans_add ucn:%d 1", employee->chr.ucn);
+				cgi->Cmd_ExecuteString("ui_trans_add ucn_%d 1", employee->chr.ucn);
 			}
 		} else if (amount < 0) {
 			/* Remove aircraft */
@@ -438,14 +438,14 @@ static void TR_Add_f (void)
 
 			/* Remove pilot */
 			if (aircraft->pilot)
-				cgi->Cmd_ExecuteString("ui_trans_add ucn:%d -1", aircraft->pilot->chr.ucn);
+				cgi->Cmd_ExecuteString("ui_trans_add ucn_%d -1", aircraft->pilot->chr.ucn);
 
 			/* Remove soldiers */
 			LIST_Foreach(aircraft->acTeam, Employee, employee) {
-				cgi->Cmd_ExecuteString("ui_trans_add ucn:%d -1", employee->chr.ucn);
+				cgi->Cmd_ExecuteString("ui_trans_add ucn_%d -1", employee->chr.ucn);
 			}
 		}
-	} else if (Q_strstart(itemId, "ucn:")) {
+	} else if (Q_strstart(itemId, "ucn_")) {
 		Employee* employee = E_GetEmployeeFromChrUCN(atoi(itemId + 4));
 		if (!employee)
 			return;
@@ -540,7 +540,7 @@ static void TR_Add_f (void)
 					amount++;
 			}
 		}
-	} else if (Q_strstart(itemId, "alive:")) {
+	} else if (Q_strstart(itemId, "alive_")) {
 		if (tr.alienCargo == nullptr)
 			tr.alienCargo = new AlienCargo();
 		if (tr.alienCargo == nullptr)
@@ -559,7 +559,7 @@ static void TR_Add_f (void)
 			if (amount != 0)
 				tr.alienCargo->add(teamDef, amount, 0);
 		}
-	} else if (Q_strstart(itemId, "dead:")) {
+	} else if (Q_strstart(itemId, "dead_")) {
 		if (tr.alienCargo == nullptr)
 			tr.alienCargo = new AlienCargo();
 		if (tr.alienCargo == nullptr)
@@ -783,7 +783,7 @@ static void TR_List_f (void)
 					if (employee->getUGV()) {
 						/** @todo: add ugv listing when they're implemented */
 					} else {
-						cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.employee", va("ucn%i", employee->chr.ucn), va("%s %s", E_GetEmployeeString(employee->getType(), 1), employee->chr.name));
+						cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.employee", va("ucn_%i", employee->chr.ucn), va("%s %s", E_GetEmployeeString(employee->getType(), 1), employee->chr.name));
 					}
 				}
 			}

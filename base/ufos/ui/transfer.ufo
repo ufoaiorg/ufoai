@@ -1,729 +1,721 @@
-// ==================
-// TRANSFER MENU
-// ==================
-component cmp_t_storage extends panel {
-	{
-		size			"260 20"
-		bgcolor			"0.56 0.81 0.76 0.1"
-		onClick {
-			cmd "ui_trans_add <node:this.id@string> 1;"
-		}
-		onRClick {
-			cmd "ui_trans_add <node:this.id@string> -1;"
-		}
-	}
+--!usr/bin/lua
 
-	data id {
-	}
+require("ufox.lua")
 
-	string name {
-		pos				"0 0"
-		size			"285 20"
-		color			"0.56 0.81 0.76 1"
-		ghost			true
-		contentalign	ALIGN_CL
-	}
-	string src_store {
-		pos				"250 0"
-		size			"100 20"
-		color			"0.56 0.81 0.76 1"
-		contentalign	ALIGN_CR
-		ghost			true
-	}
-	Spinner spinner {
-		tooltip				"_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
-		pos					"352 0"
-		size			"   20 20"
-		shiftincreasefactor	100.0
-		onChange {
-			cmd "ui_trans_add <node:parent.id@string> <lastdiff>;"
-		}
-	}
-	string dst_store {
-		pos				"375 0"
-		size			"100 20"
-		color			"0.56 0.81 0.76 1"
-		contentalign	ALIGN_CR
-		ghost			true
-	}
-}
+do
+	local storage = ufox.build_component({
+		name = "transfer_storage",
+		class = "panel",
+		size = {260, 20},
+		backgroundcolor = {0.56, 0.81, 0.76, 0.1},
 
-component cmp_t_cargo extends panel {
-	{
-		size		"368 20"
-		onClick {
-			cmd "ui_trans_add <node:this.id@string> -1;"
-		}
-	}
+		on_click = function (sender)
+		ufo.print(string.format("click\n"))
+			ufo.cmd(string.format("ui_trans_add %q %d;", sender:child("id"):as_string(), 1))
+		end,
 
-	data id {
-	}
-	string name {
-		pos				"0 0"
-		size			"270 20"
-		color			"0.56 0.81 0.76 1"
-		ghost			true
-		contentalign	ALIGN_CL
-	}
-	string amount {
-		pos				"248 0"
-		size			"100 20"
-		color			"0.56 0.81 0.76 1"
-		contentalign	ALIGN_CR
-		ghost			true
-	}
-}
+		on_rightclick = function (sender)
+			ufo.cmd(string.format("ui_trans_add %q %d;", sender:child("id"):as_string(), -1))
+		end,
 
-component cmp_t_capacity extends panel {
-	{
-		size		"285 20"
-	}
-	string name {
-		pos			"0 0"
-		size		"150 20"
-		font			"f_verysmall"
-		contentalign	ALIGN_CL
-	}
-	string free {
-		pos			"150 0"
-		size		"60 20"
-		font			"f_verysmall"
-		contentalign	ALIGN_CR
-	}
-	string separator {
-		string		"/"
-		pos			"210 0"
-		size		"20 20"
-		font			"f_verysmall"
-		contentalign	ALIGN_CC
-	}
-	string max {
-		pos			"230 0"
-		size		"60 20"
-		font			"f_verysmall"
-		contentalign	ALIGN_CR
-	}
-}
+		{
+			name = "id",
+			class = "data",
+		},
 
-window transfer
-{
-	// Base name and container panel
-	BaseContainerPanel base_container {
-		// Transfer panel
-		panel mainBody {
-			{ size "715 534" }
+		{
+			name = "name",
+			class = "string",
+			pos = {0, 0},
+			size = {285, 20},
+			color = {0.56, 0.81, 0.76, 1},
+			ghost = true,
+			contentalign = ufo.ALIGN_CL,
+		},
 
-			// Title bar
-			panel header {
-				{ }
-				string title {
-					string			"_Transfer"
-				}
-			}
+		{
+			name = "src_store",
+			class = "string",
+			pos = {250, 0},
+			size = {100, 20},
+			color = {0.56, 0.81, 0.76, 1},
+			contentalign = ufo.ALIGN_CR,
+			ghost = true,
+		},
 
-			panel tab_background {
-				pos		"10 30"
-				size	"700 50"
-			}
+		{
+			name = "spinner",
+			class = "Spinner",
+			tooltip = "_Add/Remove item to transfer cargo, hold SHIFT for speed increase.",
+			pos = {352, 0},
+			size = {20, 20},
+			shiftmultiplier = 100.0,
+		},
 
-			tab trans_navigation {
+		{
+			name = "dst_store",
+			class = "string",
+			pos = {375, 0},
+			size = {100, 20},
+			color = {0.56, 0.81, 0.76, 1},
+			contentalign = ufo.ALIGN_CR,
+			ghost = true,
+		},
+	})
+
+	local cargo = ufox.build_component({
+		name = "transfer_cargo",
+		class = "panel",
+		size = {368, 20},
+
+		on_click = function (sender)
+			ufo.cmd(string.format("ui_trans_add %s %d;", sender:child("id"):as_string(), -1))
+		end,
+
+		{
+			name = "id",
+			class = "data",
+		},
+
+		{
+			name = "name",
+			class = "string",
+			pos = {0, 0},
+			size = {270, 20},
+			color = {0.56, 0.81, 0.76, 1},
+			ghost = true,
+			contentalign = ufo.ALIGN_CL,
+		},
+
+		{
+			name = "amount",
+			class = "string",
+			pos = {248, 0},
+			size = {100, 20},
+			color = {0.56, 0.81, 0.76, 1},
+			contentalign = ufo.ALIGN_CR,
+			ghost = true,
+		},
+	})
+
+	local capacity = ufox.build_component({
+		name = "transfer_capacity",
+		class = "panel",
+		size = {285, 20},
+
+		{
+			name = "name",
+			class = "string",
+			pos = {0, 0},
+			size = {150, 20},
+			font = "f_verysmall",
+			contentalign = ufo.ALIGN_CL,
+		},
+
+		{
+			name = "free",
+			class = "string",
+			pos = {150, 0},
+			size = {60, 20},
+			font = "f_verysmall",
+			contentalign = ufo.ALIGN_CR,
+		},
+
+		{
+			name = "separator",
+			class = "string",
+			text = "/",
+			pos = {210, 0},
+			size = {20, 20},
+			font = "f_verysmall",
+			contentalign = ufo.ALIGN_CC,
+		},
+
+		{
+			name = "max",
+			class = "string",
+			pos = {230, 0},
+			size = {60, 20},
+			font = "f_verysmall",
+			contentalign = ufo.ALIGN_CR,
+		},
+	})
+
+	local transfer = ufox.build_window({
+		name = "transfer",
+		class = "window",
+
+		{
+			name = "base_container",
+			class = "BaseContainerPanel",
+
+			{
+				name = "mainBody",
+				class = "panel",
+				size = {715, 534},
+
 				{
-					pos		"1 30"
-					size	"714 39"
-					cvar	*cvar:mn_itemtype
-					onChange	{
-						cmd "ui_trans_fill <cvar:mn_itemtype>;ui_translist_updateheader;"
-					}
-				}
-				option item {
-					label	"_Equipment"
-					value	"item"
-					icon	"icons/tab_equipment"
-				}
-				option employee {
-					label	"_Employees"
-					value	"employee"
-					icon	"icons/tab_employees"
-				}
-				option alien {
-					label	"_Aliens"
-					value	"alien"
-					icon	"icons/tab_aliens"
-				}
-				option aircraft {
-					label	"_Aircraft"
-					value	"aircraft"
-					icon	"icons/tab_aircraft"
-				}
-			}
+					name = "header",
+					class = "panel",
 
-			panel itemlist {
+					{
+						name = "title",
+						class = "string",
+						text = "_Transfer",
+					},
+				},
+
 				{
-					pos			"12 80"
-					size		"552 450"
-				}
+					name = "tab_background",
+					class = "panel",
+					pos = {10, 30},
+					size = {700, 50},
+				},
 
-				rows lines {
-					pos			"16 16"
-					size		"520 40"
-					lineheight	20
-				}
+				{
+					name = "trans_navigation",
+					class = "tab",
+					pos = {1, 30},
+					size = {714, 39},
+					cvar = "*cvar:mn_itemtype",
 
-				string title_name {
-					string		*cvar:mn_itemtype_name
-					pos			"25 0"
-					size		"250 20"
-					contentalign	ALIGN_CL
-					font		"f_small_bold"
-				}
+					on_change = function (sender)
+						local item_type = ufo.getvar("mn_itemtype")
+						if (item_type == nil) then
+							return
+						end
+						ufo.cmd(string.format("ui_trans_fill %s;", item_type:as_string()))
+						ufo.cmd("ui_translist_updateheader;")
+					end,
 
-				string title_src_store {
-					string		"_From"
-					pos			"275 0"
-					size		"100 20"
-					contentalign	ALIGN_CR
-					font		"f_small_bold"
-				}
-				string dst_store {
-					string		"_To"
-					pos			"400 0"
-					size		"100 20"
-					contentalign	ALIGN_CR
-					font		"f_small_bold"
-				}
+					{
+						name = "item",
+						class = "option",
+						label ="_Equipment",
+						value = "item",
+						icon = "icons/tab_equipment",
+					},
+					{
+						name = "employee",
+						class = "option",
+						label ="_Employees",
+						value = "employee",
+						icon = "icons/tab_employees",
+					},
+					{
+						name = "alien",
+						class = "option",
+						label ="_Aliens",
+						value = "alien",
+						icon = "icons/tab_aliens",
+					},
+					{
+						name = "aircraft",
+						class = "option",
+						label ="_Aircraft",
+						value = "aircraft",
+						icon = "icons/tab_aircraft",
+					},
+				},
 
-				panel translist {
-					pos				"25 30"
-					size			"475 416"
-					layout			LAYOUT_TOP_DOWN_FLOW
-					layoutMargin	2
-					wheelscrollable	true
+				{
+					name = "itemlist",
+					class = "panel",
+					pos = {12, 80},
+					size = {552, 450},
 
-					onViewChange {
-						*node:parent.translist_scroll@fullsize = <fullsize>
-						*node:parent.translist_scroll@current = <viewpos>
-						*node:parent.translist_scroll@viewsize = <viewsize>
-					}
-				}
-				vscrollbar translist_scroll {
-					image		"ui/scrollbar_v"
-					pos			"510 30"
-					height		"416"
-					hidewhenunused	true
-					onChange	{
-						*node:parent.translist@viewpos = <current>
-					}
-				}
+					{
+						name = "lines",
+						class = "rows",
+						pos = {16, 16},
+						size = {520, 40},
+						lineheight = 20,
+					},
 
-				confunc ui_translist_clear {
-					call *node:parent.translist@removeAllchild
-				}
+					{
+						name = "title_name",
+						class = "string",
+						text = "*cvar:mn_itemtype_name",
+						pos = {25, 0},
+						size = {250, 20},
+						contentalign = ufo.ALIGN_CL,
+						font = "f_small_bold",
+					},
 
-				confunc ui_translist_add {
-					call *node:parent.translist@createChild("trans_<1>", "cmp_t_storage")
+					{
+						name = "title_src_store",
+						class = "string",
+						text = "_From",
+						pos = {275, 0},
+						size = {100, 20},
+						contentalign = ufo.ALIGN_CR,
+						font = "f_small_bold",
+					},
 
-					*node:parent.translist.trans_<1>.id@string = <1>
-					*node:parent.translist.trans_<1>.name@string = <2>
-					*node:parent.translist.trans_<1>.src_store@string = <3>
-					if ( *node:parent.translist.trans_<1>.src_store@string eq "-1" ) {
-						*node:parent.translist.trans_<1>.src_store@invis = true
-					} else {
-						*node:parent.translist.trans_<1>.src_store@invis = false
-					}
-					*node:parent.translist.trans_<1>.dst_store@string = <4>
-					if ( *node:parent.translist.trans_<1>.dst_store@string eq "-1" ) {
-						*node:parent.translist.trans_<1>.dst_store@invis = true
-					} else {
-						*node:parent.translist.trans_<1>.dst_store@invis = false
-					}
-					*node:parent.translist.trans_<1>.spinner@min = <5>
-					*node:parent.translist.trans_<1>.spinner@current = <6>
-					*node:parent.translist.trans_<1>.spinner@max = <7>
-					if ( *node:parent.translist.trans_<1>.spinner@max == -1 ) {
-						*node:parent.translist.trans_<1>.spinner@invis = true
-					} else {
-						*node:parent.translist.trans_<1>.spinner@invis = false
-					}
-				}
+					{
+						name = "dst_store",
+						class = "string",
+						text = "_To",
+						pos = {400, 0},
+						size = {100, 20},
+						contentalign = ufo.ALIGN_CR,
+						font = "f_small_bold",
+					},
 
-				confunc ui_translist_updateheader {
-					if ( *cvar:mn_itemtype eq "item" ) {
-						*cvar:mn_itemtype_name = "_Equipment"
-					} elif ( *cvar:mn_itemtype eq "employee" ) {
-						*cvar:mn_itemtype_name = "_Employees"
-					} elif ( *cvar:mn_itemtype eq "alien" ) {
-						*cvar:mn_itemtype_name = "_Aliens"
-					} elif ( *cvar:mn_itemtype eq "aircraft" ) {
-						*cvar:mn_itemtype_name = "_Aircraft"
-					}
-				}
-			}
-		}
-	}
+					{
+						name = "translist",
+						class = "panel",
+						pos = {25, 30},
+						size = {475, 416},
+						layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+						layoutmargin = 2,
+						wheelscrollable = true,
 
+						on_viewchange = function (sender)
+							local scrollbar = sender:parent():child("translist_scroll")
+							if (scrollbar == nil) then
+								return
+							end
+							scrollbar:set_fullsize(sender:fullsize())
+							scrollbar:set_current(sender:viewpos())
+							scrollbar:set_viewsize(sender:viewsize())
+						end
+					},
+					{
+						name = "translist_scroll",
+						class = "vscrollbar",
+						image = "ui/scrollbar_v",
+						pos = {510, 30},
+						height = 416,
+						autoshowscroll = true,
 
+						on_change = function (sender)
+							local list = sender:parent():child("translist")
+							if (list == nil) then
+								return
+							end
+							list:set_viewpos(sender:current())
+						end,
+					},
 
-	/**
-	 * @brief Cargolist
-	 */
-	panel transfer_cargolist {
+					--[[
+					-- @brief Empties the transfer list
+					--]]
+					{
+						name = "ui_translist_clear",
+						class = "confunc",
+
+						on_click = function (sender)
+							sender:parent():child("translist"):remove_children()
+						end,
+					},
+
+					--[[
+					-- @brief Adds an item to the transferlist
+					-- @param itemid Item identifier
+					-- @param itemname (Translatable) Item name
+					-- @param source_amount Amount of items on the source base
+					-- @param dest_amount Amount of items on the destination base
+					-- @param minvalue Minimun transfer amount value (based on source and destination stock)
+					-- @param maxvalue Maximum transfer amount value (based on source and destination stock)
+					-- @param currentvalue Current transfer amount value (based on source and destination stock)
+					--]]
+					{
+						name = "ui_translist_add",
+						class = "confunc",
+
+						on_click = function (sender, itemid, itemname, source_amount, dest_amount, minvalue, currentvalue, maxvalue)
+							local record = ufox.build({
+								name = "trans_" .. itemid,
+								class = "transfer_storage",
+
+								{ name = "id", value = itemid },
+								{ name = "name", text = itemname },
+								{ name = "src_store", text = source_amount, invisible = (source_amount == "-1") },
+								{ name = "dst_store", text = dest_amount, invisible = (dest_amount == "-1") },
+								{ name = "spinner", min = minvalue, max = maxvalue, value = currentvalue, invisible = (maxvalue == "-1") },
+							}, sender:parent():child("translist"))
+
+							record:child("spinner").on_change = function (sender)
+								ufo.cmd(string.format("ui_trans_add %q %d;", sender:parent():child("id"):as_string(), sender:lastdiff()))
+							end
+						end,
+					},
+
+					--[[
+					-- @brief Update category title
+					--]]
+					{
+						name = "ui_translist_updateheader",
+						class = "confunc",
+
+						on_click = function (sender)
+							local categoryid = ufo.getvar("mn_itemtype")
+							local categoryname = ufo.getvar("mn_itemtype_name")
+
+							if (categoryid:as_string() == "item") then
+								categoryname:set_value("_Equipment")
+							elseif (categoryid:as_string() == "employee") then
+								categoryname:set_value("_Employees")
+							elseif (categoryid:as_string() == "alien") then
+								categoryname:set_value("_Aliens")
+							elseif (categoryid:as_string() == "aircraft") then
+								categoryname:set_value("_Aircraft")
+							end
+						end,
+					},
+				},
+			},
+		},
+
 		{
-			pos		"20 570"
-			size	"420 190"
-		}
+			name = "transfer_cargolist",
+			class = "panel",
+			pos = {20, 570},
+			size = {420, 190},
 
-/*		rows lines_transfer_cargolist {
-			pos			"16 16"
-			size		"388 145"
-			lineheight	20
-		}
-*/
-		string title_name {
-			string			"_Cargo"
-			pos				"26 16"
-			size			"268 20"
-			contentalign	ALIGN_CL
-			font			"f_small_bold"
-			color			"0.7 0.7 0.7 1"
-		}
+			{
+				name = "title_name",
+				class = "string",
+				text = "_Cargo",
+				pos = {26, 16},
+				size = {268, 20},
+				contentalign = ufo.ALIGN_CL,
+				font = "f_small_bold",
+				color = {0.7, 0.7, 0.7, 1},
+			},
 
-		string title_amount {
-			string			"_Amount"
-			pos				"275 16"
-			size			"100 20"
-			contentalign	ALIGN_CR
-			font			"f_small_bold"
-			color			"0.7 0.7 0.7 1"
-		}
+			{
+				name = "title_amount",
+				class = "string",
+				text = 	"_Amount",
+				pos = {275, 16},
+				size = {100, 20},
+				contentalign = ufo.ALIGN_CR,
+				font ="f_small_bold",
+				color = {0.7, 0.7, 0.7, 1},
+			},
 
-		panel cargolist {
-			pos				"26 36"
-			size			"358 135"
-			layout			LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	2
-			wheelscrollable	true
+			{
+				name = "cargolist",
+				class = "panel",
+				pos = {26, 36},
+				size = {358, 135},
+				layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+				layoutmargin = 2,
+				wheelscrollable = true,
 
-			onViewChange {
-				*node:parent.cargolist_scroll@fullsize = <fullsize>
-				*node:parent.cargolist_scroll@current = <viewpos>
-				*node:parent.cargolist_scroll@viewsize = <viewsize>
-			}
-		}
-		vscrollbar cargolist_scroll {
-			image			"ui/scrollbar_v"
-			pos				"384 36"
-			height			"135"
-			hidewhenunused	true
-			onChange	{
-				*node:parent.cargolist@viewpos = <current>
-			}
-		}
+				on_viewchange = function (sender)
+					local scrollbar = sender:parent():child("cargolist_scroll")
+					if (scrollbar == nil) then
+						return
+					end
+					scrollbar:set_fullsize(sender:fullsize())
+					scrollbar:set_current(sender:viewpos())
+					scrollbar:set_viewsize(sender:viewsize())
+				end,
+			},
+			{
+				name = "cargolist_scroll",
+				class = "vscrollbar",
+				image = "ui/scrollbar_v",
+				pos = {384, 36},
+				height = 135,
+				autoshowscroll = true,
 
-		confunc ui_cargolist_clear {
-			call *node:parent.cargolist@removeAllchild
-		}
+				on_change = function (sender)
+					local list = sender:parent():child("cargolist")
+					if (list == nil) then
+						return
+					end
+					list:set_viewpos(sender:current())
+				end,
+			},
 
-		confunc ui_cargolist_add {
-			call *node:parent.cargolist@createChild("cargo_<1>", "cmp_t_cargo")
+			--[[
+			-- @brief Clears cargo list
+			--]]
+			{
+				name = "ui_cargolist_clear",
+				class = "confunc",
 
-			*node:parent.cargolist.cargo_<1>.id@string = <1>
-			*node:parent.cargolist.cargo_<1>.name@string = <2>
-			*node:parent.cargolist.cargo_<1>.amount@string = <3>
-		}
-	}
+				on_click = function (sender)
+					sender:parent():child("cargolist"):remove_children()
+				end,
+			},
 
-	// ==================
-	// change target base
-	// ==================
-	panel infopanel {
+			--[[
+			-- @brief Adds an item to the cargo list
+			-- @param itemid Item identifier
+			-- @param itemname (Translatable) Item name
+			-- @param amount Amount of items
+			--]]
+			{
+				name = "ui_cargolist_add",
+				class = "confunc",
+
+				on_click = function (sender, itemid, itemname, amount)
+					local record = ufox.build({
+						name = "cargo_" .. itemid,
+						class = "transfer_cargo",
+
+						{ name = "id", text = itemid },
+						{ name = "name", text = itemname },
+						{ name = "amount", text = amount },
+					}, sender:parent():child("cargolist"))
+				end,
+			},
+		},
+
 		{
-			pos			"726 160"
-			size		"295 260"
-		}
+			name = "infopanel",
+			class = "panel",
+			pos = {726, 160},
+			size = {295, 260},
 
-		string s_current_base {
-			string			"_Destination base"
-			pos				"0 22"
-			size			"280 20"
-			contentalign	ALIGN_UC
-			color			"0.7 0.7 0.7 1"
-			font			"f_small_bold"
-		}
+			{
+				name = "s_current_base",
+				class = "string",
+				text = "_Destination base",
+				pos = {0, 22},
+				size = {280, 20},
+				contentalign = ufo.ALIGN_UC,
+				color = {0.7, 0.7, 0.7, 1},
+				font = "f_small_bold",
+			},
 
-		selectbox destination_base 	{
-			cvar		*cvar:mn_trans_base_id
-			pos			"5 45"
-			size		"288 20"
-			dataid		OPTION_BASELIST
-			onChange {
-				cmd "trans_selectbase <cvar:mn_trans_base_id>;"
-				cmd "ui_trans_fill <cvar:mn_itemtype>;"
-			}
-		}
+			{
+				name = "destination_base",
+				class = "selectbox",
+				cvar = "*cvar:mn_trans_base_id",
+				pos = {5, 45},
+				size = {288, 20},
+				dataid = ufo.OPTION_BASELIST,
 
-		string s_cap_building {
-			string			"_Building"
-			pos				"5 90"
-			size			"150 20"
-			contentalign	ALIGN_UL
-			color			"0.7 0.7 0.7 1"
-			font			"f_verysmall"
-		}
-		string s_cap_freespace {
-			string			"_free"
-			pos				"145 90"
-			size			"70 20"
-			contentalign	ALIGN_UR
-			color			"0.7 0.7 0.7 1"
-			font			"f_verysmall"
-		}
-		string s_cap_per {
-			string			"/"
-			pos				"215 90"
-			size			"20 20"
-			contentalign	ALIGN_UC
-			color			"0.7 0.7 0.7 1"
-			font			"f_verysmall"
-		}
-		string s_cap_allspace {
-			string			"_all space"
-			pos				"225 90"
-			size			"70 20"
-			contentalign	ALIGN_UR
-			color			"0.7 0.7 0.7 1"
-			font			"f_verysmall"
-		}
-		panel capacities {
-			pos				"5 115"
-			size			"290 125"
-			color			"0.56 0.81 0.76 1"
-			layout			LAYOUT_TOP_DOWN_FLOW
-		}
+				on_change = function (sender)
+					local baseid = ufo.getvar("mn_trans_base_id")
+					local category = ufo.getvar("mn_itemtype")
+					if (baseid == nil or category == nil) then
+						return
+					end
 
-		confunc ui_t_capacities_clear {
-			call *node:parent.capacities@removeAllchild
-			cmd "trans_disable enable;"
-		}
-		confunc ui_t_capacities_add {
-			call *node:parent.capacities@createChild("cap_<1>", "cmp_t_capacity")
+					ufo.cmd(string.format("trans_selectbase %s;", baseid:as_string()))
+					ufo.cmd(string.format("ui_trans_fill %q;", category:as_string()))
+				end,
+			},
 
-			*node:parent.capacities.cap_<1>.name@string = <2>
-			*node:parent.capacities.cap_<1>.free@string = ( <4> - <3> )
-			*node:parent.capacities.cap_<1>.max@string = <4>
+			{
+				name = "s_cap_building",
+				class = "string",
+				text = "_Building",
+				pos = {5, 90},
+				size = {150, 20},
+				contentalign = ufo.ALIGN_UL,
+				color = {0.7, 0.7, 0.7, 1},
+				font = "f_verysmall",
+			},
 
-			if ( <3> > <4>) {
-				*node:parent.capacities.cap_<1>.name@color = "1 0 0 1"
-				*node:parent.capacities.cap_<1>.free@color = "1 0 0 1"
-				*node:parent.capacities.cap_<1>.max@color = "1 0 0 1"
-				cmd "trans_disable disable \"_Capacity overload\";"
-			} else {
-				*node:parent.capacities.cap_<1>.name@color = "0.56 0.81 0.76 1"
-				*node:parent.capacities.cap_<1>.free@color = "0.56 0.81 0.76 1"
-				*node:parent.capacities.cap_<1>.max@color = "0.56 0.81 0.76 1"
-			}
-		}
+			{
+				name = "s_cap_freespace",
+				class = "string",
+				text = "_free",
+				pos = {145, 90},
+				size = {70, 20},
+				contentalign = ufo.ALIGN_UR,
+				color = {0.7, 0.7, 0.7, 1},
+				font = "f_verysmall",
+			},
 
-	}
+			{
+				name = "s_cap_per",
+				class = "string",
+				text = "/",
+				pos = {215, 90},
+				size = {20, 20},
+				contentalign = ufo.ALIGN_UC,
+				color = {0.7, 0.7, 0.7, 1},
+				font = "f_verysmall",
+			},
 
-	data transfer_denied {
-		integer 		0
-	}
+			{
+				name = "s_cap_allspace",
+				class = "string",
+				text = "_all space",
+				pos = {225, 90},
+				size = {70, 20},
+				contentalign = ufo.ALIGN_UR,
+				color = {0.7, 0.7, 0.7, 1},
+				font = "f_verysmall",
+			},
 
-	confunc trans_disable {
-		if ( <1> eq "enable" ) {
-			*node:root.transfer_denied@integer = 0
-			*node:root.bt_starttrans@color = "0 0 0 0.9"
-			*node:root.bt_starttrans@selectcolor = "0 0 0 1"
-			*node:root.bt_starttrans@tooltip = "_Start the transfer"
-		} elif ( <1> eq "disable" ) {
-			*node:root.transfer_denied@integer = 1
-			*node:root.bt_starttrans@color = "1 0 0 0.6"
-			*node:root.bt_starttrans@selectcolor = "1 0 0 0.6"
-			*node:root.bt_starttrans@tooltip = "<2>"
-		}
-	}
+			{
+				name = "capacities",
+				class = "panel",
+				pos = {5, 115},
+				size = {290, 125},
+				color = {0.56, 0.81, 0.76, 1},
+				layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+			},
 
-	// ==================
-	// buttons
-	// ==================
-	MainMenuBtn bt_translist
-	{
-		string		"_List"
-		tooltip		"_List active transfers"
-		pos			"760 610"
-		size		"198 30"
-		font		"f_small_bold"
-		color		"0 0 0 0.9"
-		selectcolor	"0 0 0 1"
-		onClick		{ cmd "ui_push popup_transferlist;" }
-	}
+			--[[
+			-- @brief Empties the storage capacity listing
+			--]]
+			{
+				name = "ui_t_capacities_clear",
+				class = "confunc",
 
-	MainMenuBtn bt_starttrans
-	{
-		string		"_Transfer"
-		tooltip		"_Start the transfer"
-		pos			"760 660"
-		size		"198 30"
-		font		"f_small_bold"
-		color		"0 0 0 0.9"
-		selectcolor	"0 0 0 1"
-		onClick	{
-			if ( *node:root.transfer_denied@integer == 0 ) {
-				cmd "trans_start;"
-			}
-		}
-	}
+				on_click = function (sender)
+					sender:parent():child("capacities"):remove_children()
+					ufo.cmd("trans_disable enable;")
+				end,
+			},
 
-	MainMenuBtn bt_emptycraftstorage {
-		string		"_Clear"
-		tooltip		"_Clear cargo"
-		pos			"760 710"
-		size		"198 30"
-		font		"f_small_bold"
-		color		"0 0 0 0.9"
-		selectcolor	"0 0 0 1"
-		onClick		{ cmd "trans_emptyairstorage;" }
-	}
+			--[[
+			-- @brief Adds an entry to the storage capacity listing
+			-- @param building_id Scripted identifier of the building/storage type
+			-- @param building_name Translatable name of the building/storage type
+			-- @param current_use Number of storage units that are currently in use
+			-- @param max_capacity Maximum number of storage units that can be used
+			--]]
+			{
+				name = "ui_t_capacities_add",
+				class = "confunc",
 
+				on_click = function (sender, building_id, building_name, current_use, max_capacity)
+					local storage = ufox.build({
+						name = "cap_" .. building_id,
+						class = "transfer_capacity",
 
-	func onWindowOpened {
-		cmd "trans_init;ui_translist_updateheader;"
-	}
+						{ name = "name", class = "string", text = building_name },
+						{ name = "free", class = "string", text = max_capacity - current_use },
+						{ name = "max",  class = "string", text = max_capacity },
+					}, sender:parent():child("capacities"))
 
-	func onWindowClosed {
-		cmd "trans_close;"
-		// Call base_init so storage data can be updated
-		cmd "base_init;"
-	}
+					if (current_use + 0 > max_capacity + 0) then
+						ufo.cmd(string.format("trans_disable %q %q;", "disable", "_Capacity overload"))
+						storage:child("name"):set_color(1, 0, 0, 1)
+						storage:child("free"):set_color(1, 0, 0, 1)
+						storage:child("max"):set_color(1, 0, 0, 1)
+					else
+						storage:child("name"):set_color(0.56, 0.81, 0.76, 1)
+						storage:child("free"):set_color(0.56, 0.81, 0.76, 1)
+						storage:child("max"):set_color(0.56, 0.81, 0.76, 1)
+					end
+				end,
+			},
+		},
 
-	// Back to geoscape
-	Geoscape geoscape_button {
-		onClick {
-			cmd "ui_pop; ui_pop;"
-		}
-	}
-
-	// Fuzzy screen effect (see assets.ufo)
-	fuzzyScreen overlay { }
-}
-
-// ===============================
-// POPUP TRANSFER BASE SELECT LIST
-// ===============================
-window popup_transferbaselist extends ipopup
-{
-	{
-		pos			"256 256"
-		size		"512 256"
-	}
-
-	string title
-	{
-		width		"256"
-		string		"_Select base to transfer to"
-	}
-
-	string info
-	{
-		string		"_Choose a base to host alien bodies:"
-		pos			"26 58"
-		size		"450 30"
-	}
-
-	optionlist trans_baselist
-	{
-		cvar		*cvar:tr_base
-		dataid		OPTION_BASELIST
-		pos			"26 101"
-		size		"450 112"
-		onChange	{ cmd "trans_baselist_click <cvar:tr_base>;" }
-		onRClick	{ cmd "ui_pop; aircraft_return;" }
-	}
-
-	MainMenuCancelBtn bt_cancel
-	{
-		size		"180 30"
-		pos			"332 226"
-		onClick		{ cmd "ui_pop; aircraft_return;" }
-	}
-
-	fuzzyScreen overlay { }
-
-	func onWindowOpened {
-		*cvar:tr_base = -1
-	}
-
-}
-
-// ===================
-// POPUP TRANSFER LIST
-// ===================
-
-component trListEntry extends panel
-{
-	{
-		size		"472 150"
-		ghost		true
-		border		1
-		bordercolor	"0.527 0.6 0.21 1"
-		ghost		true
-	}
-
-	string tr_from {
-		string		"_From:"
-		pos			"0 0"
-		size		"75 20"
-		font		"f_small_bold"
-		ghost		true
-	}
-	string tr_srcbase {
-		pos			"80 0"
-		size		"150 25"
-		font		"f_small"
-		ghost		true
-	}
-
-	string tr_to {
-		string		"_To:"
-		pos			"235 0"
-		size		"75 20"
-		font		"f_small_bold"
-		ghost		true
-	}
-	string tr_destbase {
-		pos			"315 0"
-		size		"150 25"
-		font		"f_small"
-		ghost		true
-	}
-
-	string tr_eta {
-		string		"_ETA:"
-		pos			"235 25"
-		size		"75 20"
-		font		"f_small_bold"
-		ghost		true
-	}
-	string tr_arrive {
-		pos			"315 25"
-		size		"150 25"
-		font		"f_small"
-		ghost		true
-	}
-
-	optiontree tr_cargo {
 		{
-			cvar		*cvar:none
-			pos			"0 50"
-			size		"472 100"
-			color		"0.56 0.81 0.76 1"
-			selectcolor	"0.56 0.81 0.76 1"
-			lineHeight	18
+			name = "transfer_denied",
+			class = "data",
+			value = 0,
+		},
 
-			// event mimic missing dynamic nodesize feature
-			onViewchange	{
-				*node:this@height = ((<fullsize> * <lineHeight>) + (<padding> * 2))
-				*node:parent@height = (((<fullsize> * <lineHeight>) + (<padding> * 2)) + <top>)
-			}
+		--[[
+		-- @brief Enable/disable transfer
+		-- @param status Enable or disable
+		-- @param tooltip Tooltip to show on Start button
+		--]]
+		{
+			name = "trans_disable",
+			class = "confunc",
 
-			// events mimic "ghost-wheel" functionality
-			onWheelUp {
-				*cvar:wheelpos = (*node:root.tr_list@viewpos - 1)
-				if (*cvar:wheelpos < 0) {
-					*cvar:wheelpos = 0
-				}
+			on_click = function (sender, status, tooltip)
+				sender:root():child("transfer_denied"):set_value(status == "enable" and 0 or 1)
+				local start = sender:root():child("bt_starttrans")
 
-				*node:root.tr_list@viewpos = <cvar:wheelpos>
-				*node:root.tr_list_scroll@current = <cvar:wheelpos>
-				delete *cvar:wheelpos
-			}
-			onWheelDown {
-				*cvar:wheelpos = (*node:root.tr_list@viewpos + 1)
-				if (*cvar:wheelpos > (*node:root.tr_list@fullsize - *node:root.tr_list@viewsize)) {
-					*cvar:wheelpos = (*node:root.tr_list@fullsize - *node:root.tr_list@viewsize)
-				}
+				if (status == "enable") then
+					start:set_color(0, 0, 0, 0.9)
+					start:set_selectcolor(0, 0, 0, 1)
+					start:set_tooltip("_Start the transfer")
+				else
+					start:set_color(1, 0, 0, 0.6)
+					start:set_selectcolor(1, 0, 0, 0.6)
+					start:set_tooltip(tooltip)
+				end
+			end,
+		},
 
-				*node:root.tr_list@viewpos = <cvar:wheelpos>
-				*node:root.tr_list_scroll@current = <cvar:wheelpos>
-				delete *cvar:wheelpos
-			}
-		}
-	}
-}
+		{
+			name = "bt_translist",
+			class = "MainMenuBtn",
+			text = "_List",
+			tooltip = "_List active transfers",
+			pos = {760, 610},
+			size = {198, 30},
+			font = "f_small_bold",
+			color = {0, 0, 0, 0.9},
+			selectcolor = {0, 0, 0, 1},
 
-window popup_transferlist extends ipopup
-{
-	{
-		pos			"256 96"
-		size		"512 512"
-		color		"0.56 0.81 0.76 1"
-		modal		true
-	}
+			on_click = function (sender)
+				ufo.push_window("popup_transferlist", nil, nil)
+			end,
+		},
 
-	string title
-	{
-		width		"512"
-		string		"_Actual transfers"
-	}
+		{
+			name = "bt_starttrans",
+			class = "MainMenuBtn",
+			text = "_Transfer",
+			tooltip = "_Start the transfer",
+			pos = {760, 660},
+			size = {198, 30},
+			font = "f_small_bold",
+			color = {0, 0, 0, 0.9},
+			selectcolor = {0, 0, 0, 1},
 
-	panel tr_list {
-		pos				"13 58"
-		size			"478 414"
-		color			"0.56 0.81 0.76 1"
-		layout			LAYOUT_TOP_DOWN_FLOW
-		wheelscrollable	true
+			on_click = function (sender)
+				if (sender:root():child("transfer_denied"):as_integer() == 0) then
+					ufo.cmd("trans_start;")
+				end
+			end,
+		},
 
-		onViewChange	{
-			*node:parent.tr_list_scroll@fullsize = <fullsize>
-			*node:parent.tr_list_scroll@current = <viewpos>
-			*node:parent.tr_list_scroll@viewsize = <viewsize>
-		}
-	}
-	vscrollbar tr_list_scroll {
-		image		"ui/scrollbar_v"
-		pos			"494 58"
-		height		"414"
-		hidewhenunused	true
-		onChange	{
-			*node:parent.tr_list@viewpos = <current>
-		}
-	}
+		{
+			name = "bt_emptycraftstorage",
+			class = "MainMenuBtn",
+			text = "_Clear",
+			tooltip = "_Clear cargo",
+			pos = {760, 710},
+			size = {198, 30},
+			font = "f_small_bold",
+			color = {0, 0, 0, 0.9},
+			selectcolor = {0, 0, 0, 1},
 
-	MainMenuBtn tr_close
-	{
-		string		"_Close"
-		pos			"332 482"
-		size		"180 30"
-		onClick		{ cmd "ui_pop;" }
-	}
+			on_click = function (sender)
+				ufo.cmd("trans_emptyairstorage;")
+			end,
+		},
 
-	confunc tr_listclear {
-		call *node:root.tr_list@removeAllChild
-	}
+		{
+			name = "geoscape_button",
+			class = "Geoscape",
 
-	confunc tr_listaddtransfer {
-		call *node:root.tr_list@createChild("trans<1>", "trListEntry")
-		*node:root.tr_list.trans<1>.tr_srcbase@string = <2>
-		*node:root.tr_list.trans<1>.tr_destbase@string = <3>
-		*node:root.tr_list.trans<1>.tr_arrive@string = <4>
-	}
+			on_click = function (sender)
+				ufo.pop_window(false) -- transfer screen
+				ufo.pop_window(false) -- base screen
+			end,
+		},
 
-	confunc tr_listaddcargo {
-		call *node:root.tr_list.trans<1>.<2>@createChild("<3>", "option")
-		*node:root.tr_list.trans<1>.<2>.<3>@label = "<4>"
-		*node:root.tr_list.trans<1>.<2>.<3>@collapsed = true
-	}
+		{
+			name = "overlay",
+			class = "fuzzyScreen",
+		},
 
-	func onWindowOpened
-	{
-		cmd "trans_list;"
-	}
+		on_windowopened = function (sender)
+			ufo.cmd("trans_init;")
+--[[			local item_type = ufo.getvar("mn_itemtype")
+			if (item_type == nil) then
+				return
+			end
+			ufo.cmd(string.format("ui_trans_fill %q;", item_type:as_string()))
+			--]]
+			ufo.cmd("ui_translist_updateheader;")
+		end,
 
-	func onWindowClosed {
-		call *node:root.tr_listclear
-	}
-
-	// Fuzzy screen effect (see assets.ufo)
-	fuzzyScreen overlay { }
-
-}
+		on_windowclosed = function (sender)
+			ufo.cmd("trans_close;")
+			-- Call base_init so storage data can be updated
+			ufo.cmd("base_init;")
+		end,
+	})
+end

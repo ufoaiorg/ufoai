@@ -1,0 +1,167 @@
+component trListEntry extends panel
+{
+	{
+		size		"472 150"
+		ghost		true
+		border		1
+		bordercolor	"0.527 0.6 0.21 1"
+		ghost		true
+	}
+
+	string tr_from {
+		string		"_From:"
+		pos			"0 0"
+		size		"75 20"
+		font		"f_small_bold"
+		ghost		true
+	}
+	string tr_srcbase {
+		pos			"80 0"
+		size		"150 25"
+		font		"f_small"
+		ghost		true
+	}
+
+	string tr_to {
+		string		"_To:"
+		pos			"235 0"
+		size		"75 20"
+		font		"f_small_bold"
+		ghost		true
+	}
+	string tr_destbase {
+		pos			"315 0"
+		size		"150 25"
+		font		"f_small"
+		ghost		true
+	}
+
+	string tr_eta {
+		string		"_ETA:"
+		pos			"235 25"
+		size		"75 20"
+		font		"f_small_bold"
+		ghost		true
+	}
+	string tr_arrive {
+		pos			"315 25"
+		size		"150 25"
+		font		"f_small"
+		ghost		true
+	}
+
+	optiontree tr_cargo {
+		{
+			cvar		*cvar:none
+			pos			"0 50"
+			size		"472 100"
+			color		"0.56 0.81 0.76 1"
+			selectcolor	"0.56 0.81 0.76 1"
+			lineHeight	18
+
+			// event mimic missing dynamic nodesize feature
+			onViewchange	{
+				*node:this@height = ((<fullsize> * <lineHeight>) + (<padding> * 2))
+				*node:parent@height = (((<fullsize> * <lineHeight>) + (<padding> * 2)) + <top>)
+			}
+
+			// events mimic "ghost-wheel" functionality
+			onWheelUp {
+				*cvar:wheelpos = (*node:root.tr_list@viewpos - 1)
+				if (*cvar:wheelpos < 0) {
+					*cvar:wheelpos = 0
+				}
+
+				*node:root.tr_list@viewpos = <cvar:wheelpos>
+				*node:root.tr_list_scroll@current = <cvar:wheelpos>
+				delete *cvar:wheelpos
+			}
+			onWheelDown {
+				*cvar:wheelpos = (*node:root.tr_list@viewpos + 1)
+				if (*cvar:wheelpos > (*node:root.tr_list@fullsize - *node:root.tr_list@viewsize)) {
+					*cvar:wheelpos = (*node:root.tr_list@fullsize - *node:root.tr_list@viewsize)
+				}
+
+				*node:root.tr_list@viewpos = <cvar:wheelpos>
+				*node:root.tr_list_scroll@current = <cvar:wheelpos>
+				delete *cvar:wheelpos
+			}
+		}
+	}
+}
+
+window popup_transferlist extends ipopup
+{
+	{
+		pos			"256 96"
+		size		"512 512"
+		color		"0.56 0.81 0.76 1"
+		modal		true
+	}
+
+	string title
+	{
+		width		"512"
+		string		"_Actual transfers"
+	}
+
+	panel tr_list {
+		pos				"13 58"
+		size			"478 414"
+		color			"0.56 0.81 0.76 1"
+		layout			LAYOUT_TOP_DOWN_FLOW
+		wheelscrollable	true
+
+		onViewChange	{
+			*node:parent.tr_list_scroll@fullsize = <fullsize>
+			*node:parent.tr_list_scroll@current = <viewpos>
+			*node:parent.tr_list_scroll@viewsize = <viewsize>
+		}
+	}
+	vscrollbar tr_list_scroll {
+		image		"ui/scrollbar_v"
+		pos			"494 58"
+		height		"414"
+		hidewhenunused	true
+		onChange	{
+			*node:parent.tr_list@viewpos = <current>
+		}
+	}
+
+	MainMenuBtn tr_close
+	{
+		string		"_Close"
+		pos			"332 482"
+		size		"180 30"
+		onClick		{ cmd "ui_pop;" }
+	}
+
+	confunc tr_listclear {
+		call *node:root.tr_list@removeAllChild
+	}
+
+	confunc tr_listaddtransfer {
+		call *node:root.tr_list@createChild("trans<1>", "trListEntry")
+		*node:root.tr_list.trans<1>.tr_srcbase@string = <2>
+		*node:root.tr_list.trans<1>.tr_destbase@string = <3>
+		*node:root.tr_list.trans<1>.tr_arrive@string = <4>
+	}
+
+	confunc tr_listaddcargo {
+		call *node:root.tr_list.trans<1>.<2>@createChild("<3>", "option")
+		*node:root.tr_list.trans<1>.<2>.<3>@label = "<4>"
+		*node:root.tr_list.trans<1>.<2>.<3>@collapsed = true
+	}
+
+	func onWindowOpened
+	{
+		cmd "trans_list;"
+	}
+
+	func onWindowClosed {
+		call *node:root.tr_listclear
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
+}
