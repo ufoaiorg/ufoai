@@ -1,167 +1,260 @@
-component trListEntry extends panel
-{
-	{
-		size		"472 150"
-		ghost		true
-		border		1
-		bordercolor	"0.527 0.6 0.21 1"
-		ghost		true
-	}
+--!usr/bin/lua
 
-	string tr_from {
-		string		"_From:"
-		pos			"0 0"
-		size		"75 20"
-		font		"f_small_bold"
-		ghost		true
-	}
-	string tr_srcbase {
-		pos			"80 0"
-		size		"150 25"
-		font		"f_small"
-		ghost		true
-	}
+require("ufox.lua")
 
-	string tr_to {
-		string		"_To:"
-		pos			"235 0"
-		size		"75 20"
-		font		"f_small_bold"
-		ghost		true
-	}
-	string tr_destbase {
-		pos			"315 0"
-		size		"150 25"
-		font		"f_small"
-		ghost		true
-	}
+do
+	local listEntry = ufox.build_component({
+		name = "trListEntry",
+		class = "panel",
+		size = {472, 150},
+		bordersize = 1,
+		bordercolor = {0.527, 0.6, 0.21, 1},
+		ghost = true,
 
-	string tr_eta {
-		string		"_ETA:"
-		pos			"235 25"
-		size		"75 20"
-		font		"f_small_bold"
-		ghost		true
-	}
-	string tr_arrive {
-		pos			"315 25"
-		size		"150 25"
-		font		"f_small"
-		ghost		true
-	}
-
-	optiontree tr_cargo {
 		{
-			cvar		*cvar:none
-			pos			"0 50"
-			size		"472 100"
-			color		"0.56 0.81 0.76 1"
-			selectcolor	"0.56 0.81 0.76 1"
-			lineHeight	18
+			name = "tr_from",
+			class = "string",
+			text = "_From:",
+			pos = {0, 0},
+			size = {75, 20},
+			font = "f_small_bold",
+			ghost = true,
+		},
 
-			// event mimic missing dynamic nodesize feature
-			onViewchange	{
-				*node:this@height = ((<fullsize> * <lineHeight>) + (<padding> * 2))
-				*node:parent@height = (((<fullsize> * <lineHeight>) + (<padding> * 2)) + <top>)
-			}
+		{
+			name = "tr_srcbase",
+			class = "string",
+			pos = {80, 0},
+			size = {150, 25},
+			font = "f_small",
+			ghost = true,
+		},
 
-			// events mimic "ghost-wheel" functionality
-			onWheelUp {
-				*cvar:wheelpos = (*node:root.tr_list@viewpos - 1)
-				if (*cvar:wheelpos < 0) {
-					*cvar:wheelpos = 0
-				}
+		{
+			name = "tr_to",
+			class = "string",
+			text = "_To:",
+			pos = {235, 0},
+			size = {75, 20},
+			font = "f_small_bold",
+			ghost =true,
+		},
 
-				*node:root.tr_list@viewpos = <cvar:wheelpos>
-				*node:root.tr_list_scroll@current = <cvar:wheelpos>
-				delete *cvar:wheelpos
-			}
-			onWheelDown {
-				*cvar:wheelpos = (*node:root.tr_list@viewpos + 1)
-				if (*cvar:wheelpos > (*node:root.tr_list@fullsize - *node:root.tr_list@viewsize)) {
-					*cvar:wheelpos = (*node:root.tr_list@fullsize - *node:root.tr_list@viewsize)
-				}
+		{
+			name = "tr_destbase",
+			class = "string",
+			pos = {315, 0},
+			size = {150, 25},
+			font = "f_small",
+			ghost = true,
+		},
 
-				*node:root.tr_list@viewpos = <cvar:wheelpos>
-				*node:root.tr_list_scroll@current = <cvar:wheelpos>
-				delete *cvar:wheelpos
-			}
-		}
-	}
-}
+		{
+			name = "tr_eta",
+			class = "string",
+			text = "_ETA:",
+			pos = {235, 25},
+			size = {75, 20},
+			font = "f_small_bold",
+			ghost = true,
+		},
 
-window popup_transferlist extends ipopup
-{
-	{
-		pos			"256 96"
-		size		"512 512"
-		color		"0.56 0.81 0.76 1"
-		modal		true
-	}
+		{
+			name = "tr_arrive",
+			class = "string",
+			pos = {315, 25},
+			size = {150, 25},
+			font = "f_small",
+			ghost = true,
+		},
 
-	string title
-	{
-		width		"512"
-		string		"_Actual transfers"
-	}
+		{
+			name = "tr_cargo",
+			class = "optiontree",
+			cvar = "*cvar:none",
+			pos = {0, 50},
+			size = {472, 100},
+			color = {0.56, 0.81, 0.76, 1},
+			selectcolor = {0.56, 0.81, 0.76, 1},
+			lineheight = 18,
 
-	panel tr_list {
-		pos				"13 58"
-		size			"478 414"
-		color			"0.56 0.81 0.76 1"
-		layout			LAYOUT_TOP_DOWN_FLOW
-		wheelscrollable	true
+			-- event mimic missing dynamic nodesize feature
+			on_viewchange = function (sender)
+				sender:set_height((sender:fullsize() * sender:lineheight()) + (sender:padding() * 2))
+				sender:parent():set_height((sender:fullsize() * sender:lineheight()) + (sender:padding() * 2) + sender:top())
+			end,
 
-		onViewChange	{
-			*node:parent.tr_list_scroll@fullsize = <fullsize>
-			*node:parent.tr_list_scroll@current = <viewpos>
-			*node:parent.tr_list_scroll@viewsize = <viewsize>
-		}
-	}
-	vscrollbar tr_list_scroll {
-		image		"ui/scrollbar_v"
-		pos			"494 58"
-		height		"414"
-		hidewhenunused	true
-		onChange	{
-			*node:parent.tr_list@viewpos = <current>
-		}
-	}
+			-- events mimic "ghost-wheel" functionality
+			on_wheelup = function (sender)
+				local list = sender:root():child("tr_list")
+				local wheelpos = list:viewpos() - 1
+				if (wheelpos < 0) then
+					wheelpos = 0
+				end
 
-	MainMenuBtn tr_close
-	{
-		string		"_Close"
-		pos			"332 482"
-		size		"180 30"
-		onClick		{ cmd "ui_pop;" }
-	}
+				list:set_viewpos(wheelpos)
+				sender:root():child("tr_list_scroll"):set_current(wheelpos)
+			end,
 
-	confunc tr_listclear {
-		call *node:root.tr_list@removeAllChild
-	}
+			on_wheeldown = function (sender)
+				local list = sender:root():child("tr_list")
+				local wheelpos = list:viewpos() + 1
+				if (wheelpos > list:fullsize() + list:viewsize()) then
+					wheelpos = list:fullsize() + list:viewsize()
+				end
 
-	confunc tr_listaddtransfer {
-		call *node:root.tr_list@createChild("trans<1>", "trListEntry")
-		*node:root.tr_list.trans<1>.tr_srcbase@string = <2>
-		*node:root.tr_list.trans<1>.tr_destbase@string = <3>
-		*node:root.tr_list.trans<1>.tr_arrive@string = <4>
-	}
+				sender:root():child("tr_list"):set_viewpos(wheelpos)
+				sender:root():child("tr_list_scroll"):set_current(wheelpos)
+			end,
+		},
+	})
 
-	confunc tr_listaddcargo {
-		call *node:root.tr_list.trans<1>.<2>@createChild("<3>", "option")
-		*node:root.tr_list.trans<1>.<2>.<3>@label = "<4>"
-		*node:root.tr_list.trans<1>.<2>.<3>@collapsed = true
-	}
+	local transferlist = ufox.build_window({
+		name = "popup_transferlist",
+		class = "window",
+		super = "ipopup",
+		pos = {256, 96},
+		size = {512, 512},
+		color = {0.56, 0.81, 0.76, 1},
+		modal = true,
 
-	func onWindowOpened
-	{
-		cmd "trans_list;"
-	}
+		{
+			name = "title",
+			class = "string",
+			width = 512,
+			text = "_Actual transfers",
+		},
 
-	func onWindowClosed {
-		call *node:root.tr_listclear
-	}
+		{
+			name = "tr_list",
+			class = "panel",
+			pos = {13, 58},
+			size = {478, 414},
+			color = {0.56, 0.81, 0.76, 1},
+			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+			wheelscrollable	= true,
 
-	// Fuzzy screen effect (see assets.ufo)
-	fuzzyScreen overlay { }
-}
+			on_viewchange = function (sender)
+				local scrollbar = sender:parent():child("tr_list_scroll")
+				if (scrollbar == nil) then
+					return
+				end
+				scrollbar:set_fullsize(sender:fullsize())
+				scrollbar:set_current(sender:viewpos())
+				scrollbar:set_viewsize(sender:viewsize())
+			end,
+		},
+		{
+			name = "tr_list_scroll",
+			class = "vscrollbar",
+			image = "ui/scrollbar_v",
+			pos = {494, 58},
+			height = 414,
+			autoshowscroll = true,
+
+			on_change = function (sender)
+				local list = sender:parent():child("tr_list")
+				if (list == nil) then
+					return
+				end
+				list:set_viewpos(sender:current())
+			end,
+		},
+
+		{
+			name = "tr_close",
+			class = "MainMenuBtn",
+			text = "_Close",
+			pos = {332, 482},
+			size = {180, 30},
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+			end,
+		},
+
+		--[[
+		-- @brief Clears transfer list
+		--]]
+		{
+			name = "tr_listclear",
+			class = "confunc",
+
+			on_click = function (sender)
+				sender:root():child("tr_list"):remove_children()
+			end,
+		},
+
+		--[[
+		-- @brief Adds A transfer to the list
+		-- @param transfer_id Numeric identifier of the transfer
+		-- @param src_base Source base name
+		-- @param dst_base Destination base name
+		-- @param eta Estimated Time of Arrival
+		--]]
+		{
+			name = "tr_listaddtransfer",
+			class = "confunc",
+
+			on_click = function (sender, transfer_id, src_base, dst_base, eta)
+				local transfer = ufox.build({
+					name = "trans_" .. transfer_id,
+					class = "trListEntry",
+
+					{ name = "tr_srcbase",  text = src_base },
+					{ name = "tr_destbase", text = dst_base },
+					{ name = "tr_arrive",   text = eta },
+				}, sender:root():child("tr_list"))
+			end,
+		},
+
+		--[[
+		-- @brief Add a cargo entry to a transfer in the list
+		-- @param transfer_id Numeric identifier of the transfer
+		-- @param path Relative node path where entry need to be added
+		-- @param entry_id Category or item identifier
+		-- @param entry_label Category name or item count & name
+		-- @note This confunc is used to create a category like "Items"
+		--       and also individual entries, like "12 Shiva API ammo"
+		--]]
+		{
+			name = "tr_listaddcargo",
+			class = "confunc",
+
+			on_click = function (sender, transfer_id, path, entry_id, entry_label)
+				local transfer = sender:root():child("tr_list"):child("trans_" .. transfer_id)
+				if (transfer == nil) then
+					return
+				end
+
+				local parent = transfer
+				for nodename in string.gmatch(path, "[^.]+") do
+					parent = parent:child(nodename)
+					if (parent == nil) then
+						return
+					end
+				end
+
+				local entry = ufox.build({
+					name = entry_id,
+					class = "option",
+					label = entry_label,
+					collapsed = true,
+				}, parent)
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen",
+		},
+
+		on_windowopened = function (sender)
+			ufo.cmd("trans_list;")
+		end,
+
+		on_windowclosed = function (sender)
+			ufo.cmd("tr_listclear")
+		end,
+	})
+end

@@ -770,7 +770,7 @@ static void TR_List_f (void)
 				if (transfer->itemAmount[od->idx] <= 0)
 					continue;
 
-				cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.items" ,od->id, va("%i %s", transfer->itemAmount[od->idx], _(od->name)));
+				cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.items", od->id, va("%i %s", transfer->itemAmount[od->idx], _(od->name)));
 			}
 		}
 		/* Employee */
