@@ -157,7 +157,7 @@ void CAP_CheckOverflow (void)
 					const buildingType_t bldgType = B_GetBuildingTypeByCapacity((baseCapacities_t)i);
 					const building_t* bldg = B_GetBuildingTemplateByType(bldgType);
 					CP_GameTimeStop();
-					cgi->Cmd_ExecuteString("ui_push popup_cap_overload base %d \"%s\" \"%s\" %d %d",
+					cgi->Cmd_ExecuteString("ui_push popup_cap_overload %d \"%s\" \"%s\" %d %d",
 						base->idx, base->name, _(bldg->name), cap->max - cap->cur, cap->max);
 				}
 				break;
