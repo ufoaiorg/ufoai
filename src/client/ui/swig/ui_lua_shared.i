@@ -639,6 +639,8 @@ struct uiAbstractOptionNode_t: uiNode_t {
 %extend uiAbstractOptionNode_t {
 	int dataid () { return UI_AbstractOption_GetDataId($self); };
 	int count () { return UI_AbstractOption_GetCount($self); };
+	int lineheight () { return UI_EXTRADATA($self, abstractOptionExtraData_t).lineHeight; };
+
 	const char* cvar () { return UI_AbstractOption_GetCvar($self); };
 
 	int current () { return UI_AbstractOption_Scroll_Current($self); };
@@ -647,6 +649,7 @@ struct uiAbstractOptionNode_t: uiNode_t {
 
 	void set_dataid (int id) { UI_AbstractOption_SetDataId($self, id); };
 	void set_cvar (const char* name) { UI_AbstractOption_SetCvar ($self, name); };
+	void set_lineheight (int value) { UI_EXTRADATA($self, abstractOptionExtraData_t).lineHeight = value; };
 	void set_background (const char* name) { UI_AbstractOption_SetBackgroundByName($self, name); };
 
 	void set_current (int pos) { UI_AbstractOption_Scroll_SetCurrent($self, pos); };

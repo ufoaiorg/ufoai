@@ -2946,12 +2946,14 @@ SWIGINTERN void uiNode_t_add_classmethod(uiNode_t *self,char const *name,LUA_MET
 SWIGINTERN void uiNode_t_add_nodemethod(uiNode_t *self,char const *name,LUA_METHOD fcn){ UI_AddNodeMethod(self, name, fcn); }
 SWIGINTERN int uiAbstractOptionNode_t_dataid(uiAbstractOptionNode_t *self){ return UI_AbstractOption_GetDataId(self); }
 SWIGINTERN int uiAbstractOptionNode_t_count(uiAbstractOptionNode_t *self){ return UI_AbstractOption_GetCount(self); }
+SWIGINTERN int uiAbstractOptionNode_t_lineheight(uiAbstractOptionNode_t *self){ return UI_EXTRADATA(self, abstractOptionExtraData_t).lineHeight; }
 SWIGINTERN char const *uiAbstractOptionNode_t_cvar(uiAbstractOptionNode_t *self){ return UI_AbstractOption_GetCvar(self); }
 SWIGINTERN int uiAbstractOptionNode_t_current(uiAbstractOptionNode_t *self){ return UI_AbstractOption_Scroll_Current(self); }
 SWIGINTERN int uiAbstractOptionNode_t_viewsize(uiAbstractOptionNode_t *self){ return UI_AbstractOption_Scroll_ViewSize(self); }
 SWIGINTERN int uiAbstractOptionNode_t_fullsize(uiAbstractOptionNode_t *self){ return UI_AbstractOption_Scroll_FullSize(self); }
 SWIGINTERN void uiAbstractOptionNode_t_set_dataid(uiAbstractOptionNode_t *self,int id){ UI_AbstractOption_SetDataId(self, id); }
 SWIGINTERN void uiAbstractOptionNode_t_set_cvar(uiAbstractOptionNode_t *self,char const *name){ UI_AbstractOption_SetCvar (self, name); }
+SWIGINTERN void uiAbstractOptionNode_t_set_lineheight(uiAbstractOptionNode_t *self,int value){ UI_EXTRADATA(self, abstractOptionExtraData_t).lineHeight = value; }
 SWIGINTERN void uiAbstractOptionNode_t_set_background(uiAbstractOptionNode_t *self,char const *name){ UI_AbstractOption_SetBackgroundByName(self, name); }
 SWIGINTERN void uiAbstractOptionNode_t_set_current(uiAbstractOptionNode_t *self,int pos){ UI_AbstractOption_Scroll_SetCurrent(self, pos); }
 SWIGINTERN void uiAbstractOptionNode_t_set_viewsize(uiAbstractOptionNode_t *self,int size){ UI_AbstractOption_Scroll_SetViewSize(self, size); }
@@ -6797,6 +6799,30 @@ fail:
 }
 
 
+static int _wrap_uiAbstractOptionNode_lineheight(lua_State* L) {
+  int SWIG_arg = 0;
+  uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
+  int result;
+
+  SWIG_check_num_args("uiAbstractOptionNode_t::lineheight",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::lineheight",1,"uiAbstractOptionNode_t *");
+
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
+    SWIG_fail_ptr("uiAbstractOptionNode_lineheight",1,SWIGTYPE_p_uiAbstractOptionNode_t);
+  }
+
+  result = (int)uiAbstractOptionNode_t_lineheight(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+
+  if(0) SWIG_fail;
+
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiAbstractOptionNode_cvar(lua_State* L) {
   int SWIG_arg = 0;
   uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
@@ -6934,6 +6960,32 @@ static int _wrap_uiAbstractOptionNode_set_cvar(lua_State* L) {
 
   arg2 = (char *)lua_tostring(L, 2);
   uiAbstractOptionNode_t_set_cvar(arg1,(char const *)arg2);
+
+  return SWIG_arg;
+
+  if(0) SWIG_fail;
+
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiAbstractOptionNode_set_lineheight(lua_State* L) {
+  int SWIG_arg = 0;
+  uiAbstractOptionNode_t *arg1 = (uiAbstractOptionNode_t *) 0 ;
+  int arg2 ;
+
+  SWIG_check_num_args("uiAbstractOptionNode_t::set_lineheight",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiAbstractOptionNode_t::set_lineheight",1,"uiAbstractOptionNode_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiAbstractOptionNode_t::set_lineheight",2,"int");
+
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiAbstractOptionNode_t,0))){
+    SWIG_fail_ptr("uiAbstractOptionNode_set_lineheight",1,SWIGTYPE_p_uiAbstractOptionNode_t);
+  }
+
+  arg2 = (int)lua_tonumber(L, 2);
+  uiAbstractOptionNode_t_set_lineheight(arg1,arg2);
 
   return SWIG_arg;
 
@@ -7139,12 +7191,14 @@ static swig_lua_attribute swig_uiAbstractOptionNode_attributes[] = {
 static swig_lua_method swig_uiAbstractOptionNode_methods[]= {
     { "dataid", _wrap_uiAbstractOptionNode_dataid},
     { "count", _wrap_uiAbstractOptionNode_count},
+    { "lineheight", _wrap_uiAbstractOptionNode_lineheight},
     { "cvar", _wrap_uiAbstractOptionNode_cvar},
     { "current", _wrap_uiAbstractOptionNode_current},
     { "viewsize", _wrap_uiAbstractOptionNode_viewsize},
     { "fullsize", _wrap_uiAbstractOptionNode_fullsize},
     { "set_dataid", _wrap_uiAbstractOptionNode_set_dataid},
     { "set_cvar", _wrap_uiAbstractOptionNode_set_cvar},
+    { "set_lineheight", _wrap_uiAbstractOptionNode_set_lineheight},
     { "set_background", _wrap_uiAbstractOptionNode_set_background},
     { "set_current", _wrap_uiAbstractOptionNode_set_current},
     { "set_viewsize", _wrap_uiAbstractOptionNode_set_viewsize},
