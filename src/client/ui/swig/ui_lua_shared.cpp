@@ -3201,6 +3201,8 @@ SWIGINTERN int uiTextEntryNode_t_cursorposition(uiTextEntryNode_t *self){ return
 SWIGINTERN void uiTextEntryNode_t_set_password(uiTextEntryNode_t *self,bool value){ UI_EXTRADATA(self, textEntryExtraData_s).isPassword = value; }
 SWIGINTERN void uiTextEntryNode_t_set_clickoutabort(uiTextEntryNode_t *self,bool value){ UI_EXTRADATA(self, textEntryExtraData_s).clickOutAbort = value; }
 SWIGINTERN void uiTextEntryNode_t_set_background(uiTextEntryNode_t *self,char const *name){ UI_TextEntry_SetBackgroundByName(self, name); }
+SWIGINTERN void uiTextEntryNode_t_focus(uiTextEntryNode_t *self){ UI_TextEntryNodeFocus(self, nullptr); }
+SWIGINTERN void uiTextEntryNode_t_unfocus(uiTextEntryNode_t *self){ UI_TextEntryNodeUnFocus(self, nullptr); }
 
 static LUA_EVENT uiTextEntryNode_t_lua_onTextEntryAbort_get(uiTextEntryNode_t* node)
 {
@@ -15181,6 +15183,52 @@ fail:
 }
 
 
+static int _wrap_uiTextEntry_focus(lua_State* L) {
+  int SWIG_arg = 0;
+  uiTextEntryNode_t *arg1 = (uiTextEntryNode_t *) 0 ;
+
+  SWIG_check_num_args("uiTextEntryNode_t::focus",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiTextEntryNode_t::focus",1,"uiTextEntryNode_t *");
+
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiTextEntryNode_t,0))){
+    SWIG_fail_ptr("uiTextEntry_focus",1,SWIGTYPE_p_uiTextEntryNode_t);
+  }
+
+  uiTextEntryNode_t_focus(arg1);
+
+  return SWIG_arg;
+
+  if(0) SWIG_fail;
+
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiTextEntry_unfocus(lua_State* L) {
+  int SWIG_arg = 0;
+  uiTextEntryNode_t *arg1 = (uiTextEntryNode_t *) 0 ;
+
+  SWIG_check_num_args("uiTextEntryNode_t::unfocus",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiTextEntryNode_t::unfocus",1,"uiTextEntryNode_t *");
+
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiTextEntryNode_t,0))){
+    SWIG_fail_ptr("uiTextEntry_unfocus",1,SWIGTYPE_p_uiTextEntryNode_t);
+  }
+
+  uiTextEntryNode_t_unfocus(arg1);
+
+  return SWIG_arg;
+
+  if(0) SWIG_fail;
+
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiTextEntry_on_textabort_set(lua_State* L) {
   int SWIG_arg = 0;
   uiTextEntryNode_t *arg1 = (uiTextEntryNode_t *) 0 ;
@@ -15275,6 +15323,8 @@ static swig_lua_method swig_uiTextEntry_methods[]= {
     { "set_password", _wrap_uiTextEntry_set_password},
     { "set_clickoutabort", _wrap_uiTextEntry_set_clickoutabort},
     { "set_background", _wrap_uiTextEntry_set_background},
+    { "focus", _wrap_uiTextEntry_focus},
+    { "unfocus", _wrap_uiTextEntry_unfocus},
     {0,0}
 };
 static swig_lua_method swig_uiTextEntry_meta[] = {

@@ -35,7 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_behaviour.h"
 #include "../ui_input.h"
-#include "../ui_actions.h"
 #include "../ui_render.h"
 #include "../ui_sprite.h"
 #include "../ui_lua.h"
@@ -122,7 +121,7 @@ static void UI_TextEntryNodeAbortEdition (uiNode_t* node)
  * @brief force edition of a textentry node
  * @note the textentry must be on the active window
  */
-static void UI_TextEntryNodeFocus (uiNode_t* node, const uiCallContext_t* context)
+void UI_TextEntryNodeFocus (uiNode_t* node, const uiCallContext_t* context)
 {
 	/* remove the focus to show changes */
 	if (!UI_HasFocus(node)) {
@@ -134,7 +133,7 @@ static void UI_TextEntryNodeFocus (uiNode_t* node, const uiCallContext_t* contex
  * @brief force exit the edit mode of a textentry node
  * @note the textentry must be on the active window
  */
-static void UI_TextEntryNodeUnFocus (uiNode_t* node, const uiCallContext_t* context)
+void UI_TextEntryNodeUnFocus (uiNode_t* node, const uiCallContext_t* context)
 {
 	/* remove the focus to show changes */
 	if (UI_HasFocus(node)) {

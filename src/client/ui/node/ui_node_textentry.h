@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "../ui_nodes.h"
+#include "../ui_actions.h"
 
 class uiTextEntryNode : public uiLocatedNode {
 	void onLoading(uiNode_t* node) override;
@@ -46,6 +47,9 @@ typedef struct textEntryExtraData_s {
 	uiSprite_t* background;	/**< Sprite used as a background */
 	LUA_EVENT lua_onTextEntryAbort; /**< references the event in lua: on_textabort(node) */
 } textEntryExtraData_t;
+
+void UI_TextEntryNodeFocus(uiNode_t* node, const uiCallContext_t* context);
+void UI_TextEntryNodeUnFocus(uiNode_t* node, const uiCallContext_t* context);
 
 void UI_RegisterTextEntryNode(uiBehaviour_t* behaviour);
 void UI_TextEntry_SetBackgroundByName (uiNode_t* node, const char* name);

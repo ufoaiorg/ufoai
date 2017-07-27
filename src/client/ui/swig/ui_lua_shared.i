@@ -1189,6 +1189,9 @@ struct uiTextEntryNode_t: uiNode_t {
 	void set_clickoutabort (bool value) { UI_EXTRADATA($self, textEntryExtraData_s).clickOutAbort = value; };
 	void set_background (const char* name) { UI_TextEntry_SetBackgroundByName($self, name); };
 
+	void focus () { UI_TextEntryNodeFocus($self, nullptr); };
+	void unfocus () { UI_TextEntryNodeUnFocus($self, nullptr); };
+
 	%rename (on_textabort) lua_onTextEntryAbort;
 	LUA_EVENT lua_onTextEntryAbort; /**< references the event in lua: on_textabort(node) */
 };
