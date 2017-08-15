@@ -3,17 +3,17 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2017-02-28 21:54-0600\n"
-"PO-Revision-Date: 2016-08-22 15:34-0600\n"
-"Last-Translator: DarkRain <dark.rain@zoho.com>\n"
+"PO-Revision-Date: 2017-08-15 12:48-0500\n"
+"Last-Translator: DarkRain <darkrainx@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.5\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: ../\n"
+"X-Poedit-Basepath: ..\n"
 
 #: ../base/maps/africa.ump:639 ../base/maps/africa.ump:673
 #: ../base/maps/africa.ump:705 ../base/maps/africa.ump:737
@@ -12977,7 +12977,6 @@ msgstr ""
 "Ninguno."
 
 #: ../base/ufos/msgid/irc.ufo:20
-#, fuzzy
 msgid ""
 "Welcome to the UFO: Alien Invasion multiplayer lobby.\n"
 "If you are searching for players, make sure to stay connected.\n"
@@ -13009,7 +13008,8 @@ msgstr ""
 "¡NO todos los usuarios en la lista son jugadores!\n"
 "Busca a los usuarios que se anuncian con el cliente del juego.\n"
 "\n"
-"Esta PROHIBIDO:- El Spam.\n"
+"Esta PROHIBIDO:\n"
+"- El Spam.\n"
 "- Usar lenguaje inapropiado.\n"
 "- Usar un idioma distinto del inglés.\n"
 "- Ser impaciente. Podría tomar varios minutos para que alguien responda.\n"
@@ -13023,7 +13023,7 @@ msgstr ""
 "Si quieres ser el anfitrión de un juego, asegurate de que el puerto TCP "
 "27910 está abierto en tu cortafuegos.\n"
 "Si te quieres unir al canal con un cliente IRC regular, conectate a irc."
-"freenode.net y unete a #ufoai\n"
+"freenode.net y unete a #ufoai-gamer\n"
 "\n"
 "Si necesitas ayuda con el modo multijugador, va a http://ufoai.org/wiki/"
 "index.php/Multiplayer"
@@ -25525,36 +25525,41 @@ msgstr "A la comunidad y a todos los que nos han dado su apoyo"
 
 #: ../base/ufos/seq_tutorials.ufo:6
 msgid "INTRODUCTION"
-msgstr ""
+msgstr "Introducción"
 
 #: ../base/ufos/seq_tutorials.ufo:16 ../base/ufos/seq_tutorials.ufo:278
 #: ../base/ufos/seq_tutorials.ufo:648 ../base/ufos/seq_tutorials.ufo:1119
 #: ../base/ufos/seq_tutorials.ufo:1486 ../base/ufos/seq_tutorials.ufo:1666
 msgid "Left-click to continue. 'Esc' to exit"
-msgstr ""
+msgstr "Click para continuar. 'Esc' para salir."
 
 #: ../base/ufos/seq_tutorials.ufo:26
-#, fuzzy
 msgid "Introduction"
-msgstr "Producción"
+msgstr "Introducción"
 
 #: ../base/ufos/seq_tutorials.ufo:60
 msgid ""
 "UFO:Alien Invasion is divided into 2 main views: the battlescape and the "
 "geoscape."
 msgstr ""
+"UFO: Alien Invasion está dividido en 2 vistas principales: La vista de "
+"combate y el mapamundi."
 
 #: ../base/ufos/seq_tutorials.ufo:73
 msgid ""
 "The battlescape is a turn-based view used to battle against opponents during "
 "campaigns, or skirmish, or multiplayer games."
 msgstr ""
+"La vista de combate es un modo basado en turnos usado para enfrentar a los "
+"oponentes durante las campañas, tiroteos u juegos multijugador."
 
 #: ../base/ufos/seq_tutorials.ufo:93
 msgid ""
 "The geoscape is a real-time view used to follow the scenario that unfolds "
 "during campaigns."
 msgstr ""
+"El mapamundi es la vista en tiempo real usada para seguir los eventos que se "
+"desarrollan durante las campañas."
 
 #: ../base/ufos/seq_tutorials.ufo:114
 msgid ""
@@ -25562,12 +25567,17 @@ msgid ""
 "and engineers. You will need money to win: monitor statistics, and funding "
 "carefully."
 msgstr ""
+"Durante las campañas, tienes que administrar bases, aeronaves, soldados, "
+"científicos e ingenieros. Necesitaras dinero para conseguir la victoria: "
+"Monitorea cuidadosamente las estadisticas y el financiamiento."
 
 #: ../base/ufos/seq_tutorials.ufo:201
 msgid ""
 "Skirmish mode allows you to battle on a chosen map: your squad (Phalanx, or "
 "aliens) against another squad controlled by the computer."
 msgstr ""
+"El modo tiroteo te permite combatir en un mapa de tu elección: Tu escuadrón "
+"(PHALANX o alienígenas) contra otro escuadrón controlado por la computadora."
 
 #: ../base/ufos/seq_tutorials.ufo:222
 msgid ""
@@ -25576,23 +25586,25 @@ msgid ""
 "a server if you want to host a game, or connect to the lobby to wait for an "
 "active server."
 msgstr ""
+"El modo multijugador te permite combatir en un mapa de tu elección: (PHALANX "
+"o alienígenas) en contra de, o en conjunto con, otros escuadrones "
+"controlados por jugadores humanos. Inicia un servidor si quieres ser el "
+"anfitrión de un juego, o conectate al lobby para esperar que un servidor "
+"activo esté disponible."
 
 #: ../base/ufos/seq_tutorials.ufo:247 ../base/ufos/seq_tutorials.ufo:617
 #: ../base/ufos/seq_tutorials.ufo:1088 ../base/ufos/seq_tutorials.ufo:1455
 #: ../base/ufos/seq_tutorials.ufo:1635 ../base/ufos/seq_tutorials.ufo:1894
-#, fuzzy
 msgid "The end"
-msgstr "La Mente Alienígena"
+msgstr "Fin"
 
 #: ../base/ufos/seq_tutorials.ufo:268
-#, fuzzy
 msgid "CAMPAIGNS: PART 1"
-msgstr "CAMPAÑA"
+msgstr "Campañas: Parte 1"
 
 #: ../base/ufos/seq_tutorials.ufo:288
-#, fuzzy
 msgid "Campaigns: part 1"
-msgstr "Inicio de la Campaña"
+msgstr "Campañas: Parte 1"
 
 #: ../base/ufos/seq_tutorials.ufo:325
 msgid ""
@@ -25601,6 +25613,10 @@ msgid ""
 "radar towers to expand your vision, SAM sites to protect yourself, and UFO "
 "yards to store UFOs."
 msgstr ""
+"Durante las campañas a menudo utilizaras la vista del mapamundi que muestra "
+"la Tierra. Aquí es donde creas tus instalaciones: Bases para aumentar tu "
+"poder, torres de radar para ampliar tu visión, sitios MTA para protegerte, y "
+"almacenes para OVNI donde almacenar los OVNI capturados."
 
 #: ../base/ufos/seq_tutorials.ufo:346
 msgid ""
@@ -25608,6 +25624,10 @@ msgid ""
 "spotted or crashed UFOs, completed researches, refueled aircraft, and so on. "
 "Many things can happen in a short time..."
 msgstr ""
+"Puedes acelerar el tiempo hasta que ocurran algún evento: Instalaciones "
+"construidas en la Tierra, OVNI detectados o derribados, proyectos de "
+"investigación completados, aeronaves re-abastecidas y así por el estilo. "
+"Muchas cosas pueden pasar en un corto tiempo..."
 
 #: ../base/ufos/seq_tutorials.ufo:367
 msgid ""
@@ -25616,6 +25636,10 @@ msgid ""
 "'Message settings' button, and you can change the size of the list by "
 "pressing the button on the left of date and time."
 msgstr ""
+"Los evento se registran en luna lista por encima del mapa terrestre y pueden "
+"pausar automáticamente el juego. Puedes cambiar las opciones por defecto con "
+"el botón 'Notificaciones' y puedes cambiar el tamaño de la lista presionando "
+"el botón a la izquierda de la fecha y hora."
 
 #: ../base/ufos/seq_tutorials.ufo:388
 msgid ""
@@ -25623,10 +25647,13 @@ msgid ""
 "change game options. And filters allow you to see nations' borders, or "
 "radars' ranges."
 msgstr ""
+"Puedes mover el mapa o saltar a las diferentes partes del planeta. Puedes "
+"cambiar las opciones. También hay filtros que te permiten ver las fronteras "
+"de las naciones o el alcance de los radares."
 
 #: ../base/ufos/seq_tutorials.ufo:408
 msgid "For example, with some filters on..."
-msgstr ""
+msgstr "Un ejemplo con algunos filtros activados..."
 
 #: ../base/ufos/seq_tutorials.ufo:429
 msgid ""
@@ -25634,12 +25661,19 @@ msgid ""
 "describes nearly everything you meet during the game. A mailclient stores "
 "the mails that feed the UFOpaedia, and enhance storytelling."
 msgstr ""
+"La mayor parte de la información se registra en una base de datos llamada la "
+"OVNIpedia: Esta describe casi cualquier cosa que puedas encontrar durante el "
+"juego. Un cliente de correo almacena los correos que alimentan a la "
+"OVNIpedia y desarrollan la historia."
 
 #: ../base/ufos/seq_tutorials.ufo:449
 msgid ""
 "Mails often pop into the mailbox when new elements arise, for example after "
 "scientific breakthroughs or after missions."
 msgstr ""
+"Nuevos mensajes a menudo aparecen en la bandeja de correo cuando surgen "
+"nuevos elementos, por ejemplo tras nuevos descubrimientos científicos o "
+"después de alguna misión."
 
 #: ../base/ufos/seq_tutorials.ufo:470
 msgid ""
@@ -25647,6 +25681,10 @@ msgid ""
 "use your ground defences, or your aircraft: double-click on an enemy "
 "aircraft, and pick one of your interceptor from the list."
 msgstr ""
+"Derribar OVNI con tus defensas antiaéreas es una forma habitual de obtener "
+"nuevas misiones. Puedes usar tus baterías terrestres o tus aeronaves: Haz "
+"doble click en una nave enemiga y selecciona uno de tus interceptores de la "
+"lista."
 
 #: ../base/ufos/seq_tutorials.ufo:490
 msgid ""
@@ -25655,6 +25693,10 @@ msgid ""
 "one order in the list, or click somewhere on the map. The game automatically "
 "manages fuel for you."
 msgstr ""
+"Los círculos rojos muestran el alcance de las armas; la delgada linea roja "
+"señala la ruta de intercepción. Para cambiar tus ordenes haz click en tu "
+"aeronave y selecciona una orden de la lista, o haz click en algún lugar del "
+"mapa. El juego administrara el combustible automáticamente."
 
 #: ../base/ufos/seq_tutorials.ufo:511
 msgid ""
@@ -25663,6 +25705,10 @@ msgid ""
 "Arrival), which is the time needed to reach the site, and to come back to "
 "base."
 msgstr ""
+"Para seleccionar una misión haz doble-click en su ubicación en el mapa y "
+"selecciona un transporte de la lista. Observa cuidadosamente el tiempo "
+"estimado de viaje, que es el tiempo necesario para llegar al sitio de la "
+"misión."
 
 #: ../base/ufos/seq_tutorials.ufo:531
 msgid ""
@@ -25671,6 +25717,10 @@ msgid ""
 "Be careful: 'Auto mission' may lead to terrible results if you underestimate "
 "enemy forces."
 msgstr ""
+"Cuando tu aeronave llegue a la ubicación seleccionada, selecciona 'Entrar' "
+"para luchar en la vista de combate o presiona en 'Auto Misión' para resolver "
+"automáticamente el combate. Ten cuidado 'Auto Misión' puede tener terribles "
+"resultados si subestimas las fuerzas enemigas."
 
 #: ../base/ufos/seq_tutorials.ufo:552
 msgid ""
@@ -25678,6 +25728,9 @@ msgid ""
 "happiness of nations, and... the higher your funding. Ignoring, or (worse) "
 "loosing missions, greatly damages your reputation."
 msgstr ""
+"Mientras mas misiones completes mejores serán tus estadisticas, tendrás "
+"mayor aprobación de las naciones y... mayor financiamiento. Ignorar o — peor "
+"aún — fallar las misiones daña seriamente tu reputación."
 
 #: ../base/ufos/seq_tutorials.ufo:572
 msgid ""
@@ -25686,6 +25739,10 @@ msgid ""
 "the nations gave to you. You can have a closer look to this by clicking on "
 "nations' names."
 msgstr ""
+"Las estadificas muestran cuantas misiones has ganado o perdido, cuantas "
+"instalaciones tienes, cuantos empleados trabajan para ti, cuales son tus "
+"gastos y cuanto financiamiento te dan las naciones. Puedes ver un reporte "
+"mas detallado haciendo click en los nombres de las naciones."
 
 #: ../base/ufos/seq_tutorials.ufo:592
 msgid ""
@@ -25694,28 +25751,35 @@ msgid ""
 "their population, and land. Decreasing funding is a serious clue that you "
 "missed something..."
 msgstr ""
+"La cantidad que recibes aumenta si las naciones se sienten seguras de que te "
+"harás cargo de las invasiones alienígenas en sus territorios; se reduce si "
+"fallas en proteger su gente y su tierra. Una reducción en el financiamiento "
+"es una clara señal de que has fallado en algo."
 
 #: ../base/ufos/seq_tutorials.ufo:638
-#, fuzzy
 msgid "CAMPAIGNS: PART 2"
-msgstr "CAMPAÑA"
+msgstr "Campañas: Parte 2"
 
 #: ../base/ufos/seq_tutorials.ufo:658
-#, fuzzy
 msgid "Campaigns: part 2"
-msgstr "Inicio de la Campaña"
+msgstr "Campañas: Parte 2"
 
 #: ../base/ufos/seq_tutorials.ufo:703
 msgid ""
 "A campaign begins after you have built your home base. Remember that aliens "
 "are prone to attack highly populated areas."
 msgstr ""
+"Una campaña comienza luego de que hayas construido tu cuartel general. "
+"Recuerda que los alienígenas son propensos a atacar áreas densamente "
+"pobladas."
 
 #: ../base/ufos/seq_tutorials.ufo:724
 msgid ""
 "The first base comes with facilities, employees, equipment, aircraft, and "
 "money. Amounts depend on the level of difficulty of the campaign."
 msgstr ""
+"La primera base incluye instalaciones, empleados, equipo, aeronaves y "
+"dinero. Las cantidades dependen del nivel de dificultad de la campaña."
 
 #: ../base/ufos/seq_tutorials.ufo:744
 msgid ""
@@ -25724,6 +25788,11 @@ msgid ""
 "empty spaces. One power plant, and one command centre are mandatory to make "
 "a base operational."
 msgstr ""
+"Otras bases comienzan solamente con la entrada, y algunas rocas "
+"indestructibles que limitan su desarrollo. Solamente elige instalaciones de "
+"la lista para comenzar a construir en los espacios vacíos. Una planta de "
+"energía y un centro de comando son obligatorios para que una base sea "
+"operativa."
 
 #: ../base/ufos/seq_tutorials.ufo:774
 msgid ""
@@ -25732,6 +25801,10 @@ msgid ""
 "advanced radar), and the workshop. During battles, enemies can come from "
 "there; or you can try to flank them."
 msgstr ""
+"Al planear tus bases recuerda que algunas instalaciones tienen acceso "
+"directo a la superficie: la entrada, el hangar para transportes, el radar "
+"(pero no el radar avanzado), y el taller. Durante los combates los enemigos "
+"pueden utilizar estas entradas; o puedes usarlas para flanquearlos."
 
 #: ../base/ufos/seq_tutorials.ufo:795
 msgid ""
@@ -25740,6 +25813,10 @@ msgid ""
 "switch between bases, use arrows, or the tiny squares sketching in your "
 "bases."
 msgstr ""
+"Usar la interfaz es sencillo. Parte superior: para regresar al mapa haz "
+"click en el globo terráqueo (o usa la tecla 'Esc'); para renombrar una base, "
+"haz click en su nombre; para ir a otra base usa las flechas o los pequeños "
+"diagramas de tus bases."
 
 #: ../base/ufos/seq_tutorials.ufo:815
 msgid ""
@@ -25747,6 +25824,10 @@ msgid ""
 "silhouettes, or click on the facilities of the base (right-click to destroy "
 "them). Notice the short overviews about facilities, research, and production."
 msgstr ""
+"Menú de la derecha y vista central: para entra a una instalación haz click "
+"en los íconos o siluetas, o haz click en las instalaciones de la base (click "
+"derecho para destruirlas). Toma nota de las reseñas sobre las instalaciones, "
+"investigación y producción."
 
 #: ../base/ufos/seq_tutorials.ufo:835
 msgid ""
@@ -25754,6 +25835,10 @@ msgid ""
 "fire' window; click on buttons to access game options, or UFOpaedia, or the "
 "'Transfer' window, or detailed statistics about the current base."
 msgstr ""
+"Parte inferior: haz click en el resumen de empleados para acceder a la "
+"ventana de contrataciones; haz click en los botones para acceder a las "
+"opciones del juego, la OVNIpedia, la ventana de transferencias o las "
+"estadisticas detallada de la base actual."
 
 #: ../base/ufos/seq_tutorials.ufo:856
 msgid ""
@@ -25762,6 +25847,10 @@ msgid ""
 "pilots are not all equally gifted. All employees stay in living quarters and "
 "come without any equipment."
 msgstr ""
+"El primero de cada mes las naciones proponen nuevos candidatos: dentro de la "
+"base usa las casillas de verificación para contratarlos o despedirlos; "
+"recuerda que no todos los soldados y pilotos están igualmente cualificados. "
+"Todos los empleados viven en las barracas y comienzan sin ningún equipo."
 
 #: ../base/ufos/seq_tutorials.ufo:877
 msgid ""
@@ -25770,6 +25859,11 @@ msgid ""
 "bottom of the screen to get quick information about them. Keep unknown items "
 "until research was done."
 msgstr ""
+"El mercado te permite comprar o vender artículos: las barras horizontales "
+"separan los artículos por tipos; usa las flechas para comprar o vender "
+"objetos, y verifica el resumen en la parte inferior para obtener rápidamente "
+"información sobre ellos. Quedate con los artículos desconocidos hasta que se "
+"haya completado la investigación."
 
 #: ../base/ufos/seq_tutorials.ufo:898
 msgid ""
@@ -25778,6 +25872,11 @@ msgid ""
 "to assemble the first element in the production waiting list till required "
 "quantities are done; then they shift to their second task; and so on."
 msgstr ""
+"El taller es para fabricar artículos que no se pueden comprar en el mercado, "
+"y para desmantelar OVNI para reciclar sus componentes. Los ingenieros se "
+"reúnen automáticamente para trabajar en el primer elemento de la lista de "
+"espera de producción hasta completar la cantidad especificada, entonces "
+"pasan al siguiente proyecto y así sucesivamente."
 
 #: ../base/ufos/seq_tutorials.ufo:919
 msgid ""
@@ -25785,6 +25884,9 @@ msgid ""
 "and to build laboratories, and then to assign your employees on research "
 "projects. Research starts with few matters..."
 msgstr ""
+"La investigación es una clave para la victoria. Así que tienes que contratar "
+"científicos y construir laboratorios, y entonces asignar a tus empleados a "
+"proyectos de investigación. La investigación comienza con unos pocos temas..."
 
 #: ../base/ufos/seq_tutorials.ufo:939
 msgid ""
@@ -25792,6 +25894,10 @@ msgid ""
 "available after you discovered their prerequisites. Studying alien species, "
 "alien artifacts, and alien UFOs is of vital importance."
 msgstr ""
+"Pero los temas aumentas rápidamente mientras juegas y algunas propuestas "
+"solo están disponibles una vez que descubres sus requisitos previos. "
+"Estudiar las especies alienígenas, sus artefactos y OVNI es de vital "
+"importancia."
 
 #: ../base/ufos/seq_tutorials.ufo:960
 msgid ""
@@ -25799,6 +25905,10 @@ msgid ""
 "containment should be enough to study nearly all the creatures you will "
 "meet; if you need space, build another one, or kill some prisoners."
 msgstr ""
+"La celda para alienígenas permite la investigación de los alienígenas, vivos "
+"o muertos. Una celda debería ser suficiente para estudiar prácticamente "
+"todas las criaturas que encuentres; si necesitas espacio construye otro, o "
+"destruye algunos prisioneros."
 
 #: ../base/ufos/seq_tutorials.ufo:981
 msgid ""
@@ -25806,6 +25916,9 @@ msgid ""
 "intercept enemy aircraft. Equip their slots to improve their performances, "
 "and choose their crews."
 msgstr ""
+"Usa los transportes para llevar a los soldados a sus misiones y los "
+"interceptores para combatir las naves enemigas. Equípalos para mejorar su "
+"desempeño y selecciona sus tripulaciones."
 
 #: ../base/ufos/seq_tutorials.ufo:1001
 msgid ""
@@ -25813,6 +25926,9 @@ msgid ""
 "missions. Check the equipment of your aircraft, and soldiers, before lifting "
 "off."
 msgstr ""
+"Usa las casillas de verificación junto a sus nombres para seleccionar un "
+"piloto y soldados para las misiones. Verifica el equipamiento de la nave y "
+"los soldados antes de despegar."
 
 #: ../base/ufos/seq_tutorials.ufo:1022
 msgid ""
@@ -25821,31 +25937,34 @@ msgid ""
 "To remove ammunition from an equipped weapon, right-click on it. Check "
 "equipment's properties at the bottom of the screen."
 msgstr ""
+"Los soldados deben ser equipados antes de los combates: manos, cinturón, "
+"pistolera, cabeza o mochila. Arrastra y suelta para equipar a un soldado o "
+"haz click derecho en artículos disponibles. Para remover las municiones de "
+"un arma equipada haz click derecho en esta. Verifica las propiedades de cada "
+"articulo en la parte inferior de la pantalla."
 
 #: ../base/ufos/seq_tutorials.ufo:1042
-#, fuzzy
 msgid ""
 "When defending a base, place a soldier in the command centre's video "
 "surveillance room. He will use the security cameras to locate enemies inside "
 "and outside the facilities of the base."
 msgstr ""
-"Durante los ataques a tu base, coloca un soldado de reserva en el cuarto de "
-"circuito cerrado en el Centro de Comando. Tu soldado será capaz de utilizar "
-"las cámaras de seguridad alrededor de la base para localizar a los enemigos."
+"Durante los ataques a tu base, coloca un soldado en el cuarto de circuito "
+"cerrado en el Centro de Comando. Tu soldado será capaz de utilizar las "
+"cámaras de seguridad alrededor de la base para localizar a los enemigos "
+"dentro y fuera de tu base."
 
 #: ../base/ufos/seq_tutorials.ufo:1063
 msgid "Wounded soldiers heal faster if there is a hospital in the base."
-msgstr ""
+msgstr "Los soldados heridos sanan más rápido si hay un hospital en la base."
 
 #: ../base/ufos/seq_tutorials.ufo:1109
-#, fuzzy
 msgid "TACTICAL BATTLES"
-msgstr "MISIÓN TÁCTICA"
+msgstr "Combates Tácticos"
 
 #: ../base/ufos/seq_tutorials.ufo:1129
-#, fuzzy
 msgid "Tactical battles"
-msgstr "Misión táctica"
+msgstr "Combates Tácticos"
 
 #: ../base/ufos/seq_tutorials.ufo:1166
 msgid ""
@@ -25853,6 +25972,10 @@ msgid ""
 "skirmish, or multiplayer games. Saving during combats is impossible, because "
 "choices and actions have to matter. Think first!"
 msgstr ""
+"Los combates tácticos son el núcleo de UFO: Alien Invasion, ya sea en "
+"campaña, tiroteo o juego multijugador. Guardar la partida durante los "
+"combates es imposible ya que las decisiones y acciones deben importar. "
+"¡Piensa primero!"
 
 #: ../base/ufos/seq_tutorials.ufo:1187
 msgid ""
@@ -25860,6 +25983,10 @@ msgid ""
 "situations, or long range shootings; moreover, combats occur during day or "
 "night time. Equip your soldier consequently, and expect for the unexpected."
 msgstr ""
+"Los combates tienen lugar en mapas muy distintos, lo que puede resultar en "
+"situaciones de combate en espacios cerrados o en tiroteos a larga distancia; "
+"más aún, los combates pueden ocurrir durante el día o la noche. Equipa a tus "
+"soldados consecuentemente, y preparate para lo inesperado."
 
 #: ../base/ufos/seq_tutorials.ufo:1208
 msgid ""
@@ -25868,6 +25995,11 @@ msgid ""
 "items; to remove ammunition from an equipped weapon, right-click on the "
 "weapon. Check equipment's properties at the bottom of the screen."
 msgstr ""
+"Equipa a tus soldados de acuerdo a sus habilidades y no los sobrecargues. "
+"Arrastra y suelta para equipar a un soldado o haz click derecho en artículos "
+"disponibles. Para remover las municiones de un arma equipada haz click "
+"derecho en esta. Verifica las propiedades de cada articulo en la parte "
+"inferior de la pantalla."
 
 #: ../base/ufos/seq_tutorials.ufo:1228
 msgid ""
@@ -25876,6 +26008,11 @@ msgid ""
 "soldiers lack strength to carry a full equipment, or when they need a single-"
 "handed weapon to react quickly."
 msgstr ""
+"Las armas primaria son las de uso más común. Las armas pesadas causan mucho "
+"daño, pero son lentas y difíciles de operar. Las armas secundarias resultan "
+"útiles cuando los soldados carecen de la fuerza necesaria para llevar un "
+"equipamiento completo, o cuando requieren de un arma de mano para reaccionar "
+"rápidamente."
 
 #: ../base/ufos/seq_tutorials.ufo:1248
 msgid ""
@@ -25883,6 +26020,11 @@ msgid ""
 "(walls, floors, smoke, etc.) at close range. Note that some weapons, like "
 "sniper weapons, fire powerful shots that partially pierce through materials."
 msgstr ""
+"Como regla, explora antes de disparar. Usa los Lentes Infrarrojos para ver a "
+"través de obstáculos (muros, pisos, humo, etc.) a corta distancia. Ten en "
+"cuenta que algunas armas, tal como las arma de francotirador, realizan "
+"poderosos disparos capaces de perforar parcialmente a través de los "
+"obstaculos."
 
 #: ../base/ufos/seq_tutorials.ufo:1268
 msgid ""
@@ -25891,6 +26033,11 @@ msgid ""
 "grenades cover your troops. Incendiary grenades deal damages, and block "
 "strategic passages. Smoke and fire last few rounds."
 msgstr ""
+"Las granadas ofensivas son útiles para realizar tiros indirectos. Las "
+"granadas aturdidoras paralizan a los enemigos por un turno (la granada debe "
+"explotar justo delante de ellos). Las granadas de humo cubren a tus tropas. "
+"Las granadas incendiarias causan daño u bloquean pasos estratégicos. El humo "
+"y el fuego duran algunos turnos."
 
 #: ../base/ufos/seq_tutorials.ufo:1288
 msgid ""
@@ -25899,18 +26046,30 @@ msgid ""
 "stunning level reaches their max. current health points; panicked soldiers "
 "act randomly. Equip armours to increase survival rate."
 msgstr ""
+"Usa los kits médicos para tratar a los soldados heridos, inconscientes o que "
+"han entrado en pánico: los soldados heridos pierden sangre a menudo, y "
+"mueren si no reciben tratamiento; los soldados paralizados perderán el "
+"conocimiento cuando su nivel de parálisis sobrepase sus puntos de salud "
+"actuales; los soldados en pánico actúan al azar. Equipa armaduras para "
+"aumentar las probabilidades de supervivencia."
 
 #: ../base/ufos/seq_tutorials.ufo:1309
 msgid ""
 "Using the battlescape interface is easy, with mouse, or shortcuts (in the "
 "'Options' menu). Top of the screen: total of spotted enemies, and level view."
 msgstr ""
+"Usar la interfaz de combate es sencillo, con el ratón o los atajos (en el "
+"menú de 'Opciones'). Parte superior: Total de enemigos a la vista y vista "
+"del nivel"
 
 #: ../base/ufos/seq_tutorials.ufo:1329
 msgid ""
 "Red highlights hostile forces. Green highlights your troops. Yellow "
 "highlights civilians (whom you have to protect during campaigns)."
 msgstr ""
+"El rojo señala las fuerzas enemigas. El verde señala a tus tropas. El "
+"amarillos señala a los civiles (a quienes debes proteger durante las "
+"campañas)."
 
 #: ../base/ufos/seq_tutorials.ufo:1349
 msgid ""
@@ -25919,6 +26078,10 @@ msgid ""
 "bring your soldiers back to the rescue zone before aborting missions, or "
 "they will be lost."
 msgstr ""
+"Botones de la derecha, en orden descendente: Terminar el turno, opciones, "
+"abortar la misión, radar y zona de rescate. Usa el radar para verificar que "
+"es lo que miran las unidades. Trata de llevar a tus soldados de vuelta a la "
+"zona de rescate antes de abortar una misión o los perderás."
 
 #: ../base/ufos/seq_tutorials.ufo:1369
 msgid ""
@@ -25927,6 +26090,11 @@ msgid ""
 "current health, time units, or morale of your troops. Time units are spent "
 "when firing, moving, crouching, and so on. No time units, no actions."
 msgstr ""
+"Parte inferior: La barra de escuadrón permite seleccionar soldados "
+"rápidamente; usa las flechas para ocultar o mostrar la barra de escuadrón, y "
+"usa los filtros para mostrar la salud, las unidades de tiempo o la moral de "
+"tus tropas. Las unidades de tiempo se consumen al disparar, moverse, "
+"arrodillarse, y así por el estilo. Sin unidades de tiempo no se puede actuar."
 
 #: ../base/ufos/seq_tutorials.ufo:1389
 msgid ""
@@ -25935,6 +26103,11 @@ msgid ""
 "rectangle showing weapon in hands to open the firemodes menu (with needed "
 "time units and ammunition), or to reload your weapon."
 msgstr ""
+"Usa los botones para abrir el inventario, ver las estadisticas del soldado, "
+"usar el equipo, activar o desactivar el disparo de reacción y cambiar de "
+"postura. Haz click en el rectángulo que muestra las armas equipadas para "
+"abrir el menú de modos de disparo (que muestra las unidades de tiempo y "
+"munición necesarias) o para recargar el arma."
 
 #: ../base/ufos/seq_tutorials.ufo:1410
 msgid ""
@@ -25943,6 +26116,12 @@ msgid ""
 "default reaction fire mode. To enable reaction fire, a fighter must have "
 "time units left, and you must set the reaction fire on."
 msgstr ""
+"El 'disparo de reacción' es una forma de disparar en respuesta a las "
+"acciones visibles del enemigo. Cuando un arma permite el disparo de "
+"reacción, uno de sus modos de disparo puede ser elegido como el modo de "
+"reacción por defecto. Para realizar un disparo de reacción un combatiente "
+"debe contar con unidades de tiempo disponibles y se debe activar el disparo "
+"de reacción."
 
 #: ../base/ufos/seq_tutorials.ufo:1430
 msgid ""
@@ -25951,22 +26130,27 @@ msgid ""
 "required to fire. Concentrate reaction fires for a better covering. And "
 "check the radar to avoid opponents' reaction fire."
 msgstr ""
+"El disparo de reacción se realiza cuando un combatiente ve, sin interrupción "
+"alguna, a una unidad hostil consumir mas unidades de tiempo que la cantidad "
+"de unidades de tiempo necesarias para realizar su disparo. Concentra los "
+"disparos de reacción para una mejor cobertura. Y verifica el radar para "
+"evitar los disparos de reacción del oponente."
 
 #: ../base/ufos/seq_tutorials.ufo:1476
-#, fuzzy
 msgid "SKIRMISH GAMES"
-msgstr "TIROTEO"
+msgstr "Tiroteos"
 
 #: ../base/ufos/seq_tutorials.ufo:1496
-#, fuzzy
 msgid "Skirmish games"
-msgstr "Tiroteo"
+msgstr "Tiroteos"
 
 #: ../base/ufos/seq_tutorials.ufo:1523
 msgid ""
 "Skirmish games are quickly set battles where a player confronts a squad "
 "controlled by the computer."
 msgstr ""
+"El modo 'tiroteo' es un juego rápido donde el jugador se enfrenta a un "
+"escuadrón controlado por el ordenador."
 
 #: ../base/ufos/seq_tutorials.ufo:1537
 msgid ""
@@ -25975,6 +26159,11 @@ msgid ""
 "rush' option be checked, the game would keep spawning aliens until you lose, "
 "or quit (to win, kill all the aliens before ending your turn)."
 msgstr ""
+"Primero define el ambiente del combate: el mapa, momento del día (día o "
+"noche), número de oponentes, y (en su caso) las naves en el mapa. Si se "
+"elige la opción 'Invasión alienígena' el juego seguirá generando alienígenas "
+"hasta que pierdas o abandones el juego (para ganar elimina a todos los "
+"alienígenas antes de terminar tu turno)."
 
 #: ../base/ufos/seq_tutorials.ufo:1558
 msgid ""
@@ -25982,6 +26171,9 @@ msgid ""
 "an equipment profile for your opponent; select your side; limit the size of "
 "your squad if you want to. And begin the game."
 msgstr ""
+"En seguida crea tu escuadrón. Usa las opciones por defecto para un juego "
+"rápido: selecciona un perfil de equipamiento para tu oponente; selecciona tu "
+"bando; limita el tamaño de tu escuadrón si lo deseas. Y comienza el juego."
 
 #: ../base/ufos/seq_tutorials.ufo:1578
 msgid ""
@@ -25990,6 +26182,11 @@ msgid ""
 "troops with the equipment allowed by the equipment profile. Optionally, save "
 "your squad for further battles. And begin the game."
 msgstr ""
+"Si las opciones por defecto no te agradan personaliza tu escuadrón: Después "
+"de seleccionar tu bando, selecciona tu perfil de equipamiento; crea tu "
+"escuadrón y equipa tus tropas con el equipo permitido por el perfil "
+"seleccionado. Opcionalmente puedes guardar tu escuadrón para futuros "
+"combates. Entonces comienza el juego."
 
 #: ../base/ufos/seq_tutorials.ufo:1610 ../base/ufos/seq_tutorials.ufo:1752
 msgid ""
@@ -25997,16 +26194,17 @@ msgid ""
 "previously uploaded. To connect, use the same account you use to log in to "
 "the official forum of the game (http://ufoai.org/forum)."
 msgstr ""
+"También puedes descargar escuadrones que hayas subido previamente al "
+"servidor de UFO: Alien Invasion. Para conectarte utiliza la misma cuenta que "
+"usas para acceder al foro del juego (http://ufoai.org/forum)."
 
 #: ../base/ufos/seq_tutorials.ufo:1656
-#, fuzzy
 msgid "MULTIPLAYER GAMES"
-msgstr "MULTIJUGADOR"
+msgstr "Juegos multijugador"
 
 #: ../base/ufos/seq_tutorials.ufo:1676
-#, fuzzy
 msgid "Multiplayer games"
-msgstr "Multijugador"
+msgstr "Juegos multijugador"
 
 #: ../base/ufos/seq_tutorials.ufo:1707
 msgid ""
@@ -26018,6 +26216,13 @@ msgid ""
 "(Internet, LAN), and you have to open the TCP port 27910 in your firewall "
 "settings."
 msgstr ""
+"En el modo multijugador un jugador se enfrenta a otros jugadores humanos, o "
+"coopera con ellos. Los juegos multijugador son posibles solo cuando un "
+"administrador configura un servidor como anfitrión y otros jugadores se une "
+"a el (por supuesto los administradores pueden unirse al juego del que son "
+"anfitriones). En cualquier caso necesitas una conexión a otra(s) "
+"computadora(s) (internet, red local), y necesitas abrir el puerto TCP 27910 "
+"en la configuración de tu cortafuegos."
 
 #: ../base/ufos/seq_tutorials.ufo:1721
 msgid ""
@@ -26026,6 +26231,11 @@ msgid ""
 "settings include some 'Max. soldiers' limit, currently loaded soldiers will "
 "be selected in a top-down order from the list."
 msgstr ""
+"Primero genera un equipo. Entonces selecciona un bando de la lista y equipa "
+"tus tropas. Opcionalmente, guarda tu escuadrón para futuros combates. "
+"Cuidado: si las opciones del servidor incluyen un limite de soldados, se "
+"seleccionara a los soldados utilizados comenzando con los primeros de la "
+"lista."
 
 #: ../base/ufos/seq_tutorials.ufo:1773
 msgid ""
@@ -26033,6 +26243,9 @@ msgid ""
 "lobby and wait for invitations. You still can play singleplayer while "
 "waiting."
 msgstr ""
+"Como jugador, únete para buscar servidores. Si no hay ninguno, conectate al "
+"lobby y espera una invitación. Aún puedes jugar en modo de un solo jugador "
+"mientras esperas."
 
 #: ../base/ufos/seq_tutorials.ufo:1794
 msgid ""
@@ -26040,6 +26253,10 @@ msgid ""
 "from the list of public, or dedicated, servers listed by our master server; "
 "or type an IP address to reach a private server."
 msgstr ""
+"Cuando un servidor esté disponible, conectate para ver su configuración: "
+"puedes elegir uno de la lista de servidores públicos o dedicados mantenida "
+"por nuestro servidor maestro; o puedes usar una dirección IP para conectarte "
+"a un servidor privado."
 
 #: ../base/ufos/seq_tutorials.ufo:1814
 msgid ""
@@ -26048,6 +26265,10 @@ msgid ""
 "server. If you're happy with it, bookmark the server to quickly access it "
 "later, and connect to the game to start playing."
 msgstr ""
+"La información sobre el servidor muestra detalles sobre este: mapa, versión "
+"del juego, lista de usuarios, etc. Tu versión del juego tiene que ser igual "
+"a la del servidor. Si te gusta, puedes añadirlo a los marcadores para "
+"acceder rápidamente mas adelante, y conectarte para comenzar el juego."
 
 #: ../base/ufos/seq_tutorials.ufo:1835
 msgid ""
@@ -26056,6 +26277,11 @@ msgid ""
 "'RCON-password' for remote control of the server by administrators, and "
 "consider setting a 'Server-Password' for players trying to join."
 msgstr ""
+"Como administrador, crea un servidor para ser anfitrión de un juego en tu "
+"ordenador: define el ambiente de combate (mapa, momento del día, etc.); "
+"configura una 'clave RCON' para el control remoto del servidor por los "
+"administradores, y considera configurar una 'clave del servidor' para los "
+"jugadores que intentan unirse."
 
 #: ../base/ufos/seq_tutorials.ufo:1855
 msgid ""
@@ -26064,6 +26290,11 @@ msgid ""
 "(recommended). Start the game when you feel ready (when all players check "
 "the 'Are you ready?' checkbox, the game starts automatically)."
 msgstr ""
+"Una vez iniciado tu servidor, podrás ver la vista de combate. Aún puedes "
+"cambiar algunas opciones aquí: máximo de soldados y el tiempo limite por "
+"turno (recomendado) Inicia el juego cuando estés listo (cuando todos los "
+"jugadores han seleccionado la casilla '¿Estás listo?' el juego comienza "
+"automáticamente)."
 
 #: ../base/ufos/seq_tutorials.ufo:1876
 msgid ""
@@ -26074,6 +26305,12 @@ msgid ""
 "commands, and 'cvarlist' to get the list of variables for dynamic "
 "configuration of the engine."
 msgstr ""
+"Como administrador, puedes usar la consola para cambiar la configuración "
+"desde un cliente conectado, reiniciar el mapa o cambiar el tipo de juego. "
+"Para acceder a la consola mira los atajos en el menú de 'Opciones'. En la "
+"consola escribe 'rcon <comando> <parametros>' para ejecutar comandos "
+"remotos; usa 'cmdlist' para ver una lista de comandos y 'cvarlist' para ver "
+"una lista de variables para la configuración dinámica del motor del juego."
 
 #: ../base/ufos/team_aliens.ufo:10
 msgid "Taman"
@@ -26384,7 +26621,7 @@ msgid ""
 "You can create your own maps or customize your campaigns. Learn more at "
 "ufoai.org."
 msgstr ""
-"Puede crear tus propios mapas o personalizar tus campañas. Aprende más en "
+"Puedes crear tus propios mapas o personalizar tus campañas. Aprende más en "
 "ufoai.org."
 
 #: ../base/ufos/tips.ufo:36
@@ -27164,7 +27401,7 @@ msgstr "Clic para continuar"
 #: ../base/ufos/ui/endgame.ufo:87
 #, fuzzy
 msgid "scrollbar"
-msgstr "Desplazmiento"
+msgstr "scrollbar"
 
 #: ../base/ufos/ui/endgame.ufo:112
 msgid "Thank you for playing UFO:Alien Invasion"
@@ -27470,8 +27707,9 @@ msgid "Use this firemode for reaction fire"
 msgstr "Utilizar este modo de disparo para el disparo de reacción"
 
 #: ../base/ufos/ui/hud_.ufo:325
+#, fuzzy
 msgid "tt"
-msgstr ""
+msgstr "tt"
 
 #: ../base/ufos/ui/hud_default.ufo:299
 msgid "Stats"
@@ -27512,8 +27750,9 @@ msgstr "Ocultar el escuadrón"
 
 #: ../base/ufos/ui/hud_default.ufo:825 ../base/ufos/ui/hud_default.ufo:827
 #: ../base/ufos/ui/hud_default.ufo:844
+#, fuzzy
 msgid "btn"
-msgstr ""
+msgstr "btn"
 
 #: ../base/ufos/ui/hud_default.ufo:855
 msgid "Show squad"
@@ -30282,9 +30521,8 @@ msgid "Can't perform action - not enough TUs!"
 msgstr "No se puede efectuar la acción - ¡No hay suficientes UT!"
 
 #: client/battlescape/cl_hud_callbacks.cpp:170
-#, fuzzy
 msgid "Disabled crouching/standing up TUs reservation."
-msgstr "Se desactivó el agacharse/levantarse automáticamente."
+msgstr "Se desactivó el reservar UT para agacharse/levantarse."
 
 #: client/battlescape/cl_hud_callbacks.cpp:174
 #, c-format
