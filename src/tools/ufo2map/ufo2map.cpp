@@ -311,6 +311,8 @@ static void U2M_Parameter (int argc, char** argv)
 			config.nocsg = true;
 		} else if (Q_streq(argv[i], "-gamedir")) {
 			Q_strncpyz(config.gamedir, argv[i + 1], sizeof(config.gamedir));
+			// just in case, convert any OS-path seperators to UFO-path separaters
+			FS_NormPath(config.gamedir);
 			Verb_Printf(VERB_LESS, "additional gamedir = %s\n", config.gamedir);
 			i++;
 		} else if (Q_streq(argv[i], "-noshare")) {
@@ -574,10 +576,27 @@ int main (int argc, char** argv)
 	Verb_Printf(VERB_NORMAL, "path: '%s'\n", argv[argc - 1]);
 
 	FS_InitFilesystem(false);
-	if (config.gamedir[0] != '\0')
+	if (config.gamedir[0] != '\0') {
 		FS_AddGameDirectory(config.gamedir, true);
-
+	}
+	// get the filename and remove the file extension for further use
 	Com_StripExtension(argv[argc - 1], mapFilename, sizeof(mapFilename));
+	if (config.gamedir[0] != '\0'){
+		/*
+		  in situations were you design a map, you usually want to keep these files outside the main game installation;
+		  so if -gamedir is used and the map-file specified starts with the gamedir, make the mapfile relative to
+		  gamedir so the FS-functions will find it
+		*/
+		const char *p = Q_strstart(mapFilename, config.gamedir);
+		if (p != NULL) {
+			// yes, the file specified starts with the gamedir path
+			// drop it
+			Q_strreplace(mapFilename, config.gamedir, "", mapFilename, sizeof(mapFilename));
+			// Q_strreplace(mapFilename, config.gamedir, "", mapFilenameRel, sizeof(mapFilenameRel));
+			// Q_strncpyz(mapFilename, mapFilenameRel, sizeof(mapFilename));
+		}
+	}
+	// create seperate filenames for the .map and .bsp filess
 	strncpy(baseFilename, mapFilename, sizeof(baseFilename) - 1);
 	strncpy(bspFilename, mapFilename, sizeof(bspFilename) - 1);
 	Com_DefaultExtension(mapFilename, sizeof(mapFilename), ".map");
