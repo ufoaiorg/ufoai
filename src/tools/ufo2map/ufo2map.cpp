@@ -546,6 +546,7 @@ void PrintMapName (void)
 
 int main (int argc, char** argv)
 {
+	char normMapFile[MAX_OSPATH];
 	char bspFilename[MAX_OSPATH];
 	double begin, start, end;
 	long size = 0;
@@ -573,24 +574,30 @@ int main (int argc, char** argv)
 
 	start = time(nullptr);
 
-	Verb_Printf(VERB_NORMAL, "path: '%s'\n", argv[argc - 1]);
+	// copy the map filename
+	Q_strncpyz(normMapFile, argv[argc-1], sizeof(normMapFile));
+	FS_NormPath(normMapFile);
+	Verb_Printf(VERB_NORMAL, "path: '%s'\n", normMapFile);
 
 	FS_InitFilesystem(false);
 	if (config.gamedir[0] != '\0') {
 		FS_AddGameDirectory(config.gamedir, true);
 	}
 	// get the filename and remove the file extension for further use
-	Com_StripExtension(argv[argc - 1], mapFilename, sizeof(mapFilename));
+	Com_StripExtension(normMapFile, mapFilename, sizeof(mapFilename));
 	if (config.gamedir[0] != '\0'){
 		/*
 		  in situations were you design a map, you usually want to keep these files outside the main game installation;
 		  so if -gamedir is used and the map-file specified starts with the gamedir, make the mapfile relative to
 		  gamedir so the FS-functions will find it
+
+		  Note: we have a case issue here on windows where you can differ in case between the path in --gamedir
+		  and the path to the map-file.
 		*/
 		const char *p = Q_strstart(mapFilename, config.gamedir);
 		if (p != NULL) {
 			// yes, the file specified starts with the gamedir path
-			// drop it
+			// drop it so it becomes relative to the gamedir
 			Q_strreplace(mapFilename, config.gamedir, "", mapFilename, sizeof(mapFilename));
 			// Q_strreplace(mapFilename, config.gamedir, "", mapFilenameRel, sizeof(mapFilenameRel));
 			// Q_strncpyz(mapFilename, mapFilenameRel, sizeof(mapFilename));
