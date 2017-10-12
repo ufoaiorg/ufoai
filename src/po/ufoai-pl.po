@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2017-02-28 21:54-0600\n"
-"PO-Revision-Date: 2015-04-22 12:18+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2017-08-22 20:03+0100\n"
+"Last-Translator:  <malyb52@gmail.com>\n"
 "Language-Team:  <radius75@interia.pl>\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
@@ -198,7 +198,7 @@ msgstr "Miejska dyskoteka"
 
 #: ../base/maps/urban.ump:318 ../base/ufos/maps.ufo:3179
 msgid "Clinic"
-msgstr ""
+msgstr "Klinika"
 
 #: ../base/maps/urban.ump:338 ../base/ufos/maps.ufo:3228
 msgid "Community Centre"
@@ -243,7 +243,7 @@ msgstr "Bungalow"
 
 #: ../base/maps/village.ump:857
 msgid "England"
-msgstr ""
+msgstr "Anglia"
 
 #: ../base/maps/village.ump:877 ../base/ufos/maps.ufo:3707
 msgid "Estate"
@@ -1116,7 +1116,7 @@ msgstr "Douglas"
 
 #: ../base/ufos/cities.ufo:711
 msgid "Dresden"
-msgstr ""
+msgstr "Drezno"
 
 #: ../base/ufos/cities.ufo:717
 msgid "Dublin"
@@ -2549,17 +2549,17 @@ msgstr "UFO - Krążownik"
 #: ../base/ufos/fonts.ufo:53 ../base/ufos/fonts.ufo:77
 #: ../base/ufos/fonts.ufo:83
 msgid "media/orbitron-bold.ttf"
-msgstr ""
+msgstr "media/orbitron-bold.ttf"
 
 #: ../base/ufos/fonts.ufo:17 ../base/ufos/fonts.ufo:29
 #: ../base/ufos/fonts.ufo:41 ../base/ufos/fonts.ufo:59
 #: ../base/ufos/fonts.ufo:71
 msgid "media/orbitron-medium.ttf"
-msgstr ""
+msgstr "media/orbitron-medium.ttf"
 
 #: ../base/ufos/fonts.ufo:65
 msgid "media/orbitron-light.ttf"
-msgstr ""
+msgstr "media/orbitron-light.ttf"
 
 #: ../base/ufos/fonts.ufo:89
 msgid "media/languages.ttf"
@@ -3507,6 +3507,31 @@ msgid ""
 "\n"
 "Cdr. Navarre"
 msgstr ""
+"Dowódco, załączyłem plany naszego nowego transportowca bojowego klasy "
+"Raptor\n"
+"\n"
+"Ten statek wykorzystuje wszystko, czego nauczyliśmy się dostosowując obce "
+"technologie do naszych myśliwców, a także naszą, analizując sposób w jaki "
+"Korweta mieści dużą grupę obcych na UFO, zaprojektowane z myślą o przewadze "
+"w atmosferze. Pokryliśmy go warstwami obcych materiałów, zapewniając "
+"imponującą odporność na materiały wybuchowe. Nie wytrzyma starć podobnych do "
+"tych, z którymi nasze myśliwce mierzą się przechwytując najpotężniejsze UFO, "
+"ale może ścigać i zniszczyć lekkie UFO. Aby ułatwić takie bitwy, "
+"zaprojektowaliśmy różne punkty mocowania: średniego uzbrojenia dla każdego "
+"skrzydła i lekkiego uzbrojenia dla dziobu.\n"
+"\n"
+"Raptor może bezpiecznie pomieścić do 10 żołnierzy w kadłubie, ale muszą być "
+"przymocowani, aby wytrzymać przeciążenia podczas walki powietrznej. "
+"Żołnierze wychodzą spodem pojazdu, który posiadając niezwykle wysokie "
+"podwozie, nie będzie zdatny do wykorzystania jako osłony gdy wyląduje.\n"
+"\n"
+"Jest to pierwszy transportowiec wykorzystujący silniki obcych, więc upewnij "
+"się, że masz zapas antymaterii w magazynie, aby móc go zatankować. Niech "
+"nasi pracownicy zbudują jednego z nich w każdej z naszych najbardziej "
+"zatłoczonych baz. To pozwoli innym samolotom skoncentrować się na bardziej "
+"wymagających przeciwnikach. \n"
+"\n"
+"Cdr. Navarre"
 
 #: ../base/ufos/msgid/aircraft.ufo:86
 msgid ""
@@ -24360,7 +24385,7 @@ msgstr "Stymulant mięśniowy"
 
 #: ../base/ufos/seq_credits.ufo:30 ../base/ufos/ui/main.ufo:20
 msgid "UFO: ALIEN INVASION"
-msgstr ""
+msgstr "UFO: ALIEN INVASION"
 
 #: ../base/ufos/seq_credits.ufo:45
 msgid "http://www.ufoai.org"
@@ -24500,13 +24525,13 @@ msgstr "Dla społeczności i każdego kto nas wspierał"
 
 #: ../base/ufos/seq_tutorials.ufo:6
 msgid "INTRODUCTION"
-msgstr ""
+msgstr "WPROWADZENIE"
 
 #: ../base/ufos/seq_tutorials.ufo:16 ../base/ufos/seq_tutorials.ufo:278
 #: ../base/ufos/seq_tutorials.ufo:648 ../base/ufos/seq_tutorials.ufo:1119
 #: ../base/ufos/seq_tutorials.ufo:1486 ../base/ufos/seq_tutorials.ufo:1666
 msgid "Left-click to continue. 'Esc' to exit"
-msgstr ""
+msgstr "Kliknij lewy aby kontynuować. 'Esc' aby wyjść"
 
 #: ../base/ufos/seq_tutorials.ufo:26
 #, fuzzy
@@ -25559,7 +25584,7 @@ msgstr "Umysł:"
 
 #: ../base/ufos/ui/_assets.ufo:420 ../base/ufos/ui/inv_stat.ufo:150
 msgid "CQB"
-msgstr ""
+msgstr "Walka wręcz"
 
 #: ../base/ufos/ui/_assets.ufo:421
 #, fuzzy
@@ -25644,7 +25669,7 @@ msgstr "Brak"
 
 #: ../base/ufos/ui/_assets_base.ufo:485
 msgid "An artifact or prerequisite is missing for this topic"
-msgstr ""
+msgstr "Artefakt lub w"
 
 #: ../base/ufos/ui/_assets_base.ufo:493
 msgid "Expand/Collapse"
@@ -25652,7 +25677,7 @@ msgstr "Rozwiń/Zwiń"
 
 #: ../base/ufos/ui/_assets_base.ufo:614
 msgid "Lock current stock level"
-msgstr ""
+msgstr "Zablokuj ilość na obecnym poziomie"
 
 #: ../base/ufos/ui/_assets_base.ufo:687
 #, fuzzy
@@ -25721,7 +25746,7 @@ msgstr "Broń ciężka"
 
 #: ../base/ufos/ui/_assets_squad.ufo:99 ../base/ufos/ui/_assets_squad.ufo:474
 msgid "Squad"
-msgstr ""
+msgstr "Drużyna"
 
 #: ../base/ufos/ui/_assets_squad.ufo:138
 #, fuzzy
@@ -25741,11 +25766,11 @@ msgstr "Wybrany system obrony:"
 #: ../base/ufos/ui/_assets_squad.ufo:311 ../base/ufos/ui/campaign.ufo:147
 #: ../base/ufos/ui/campaign_main.ufo:49
 msgid "SAVE"
-msgstr ""
+msgstr "ZAPISZ"
 
 #: ../base/ufos/ui/_assets_squad.ufo:322
 msgid "EQUIP"
-msgstr ""
+msgstr "WYPOSAŻ"
 
 #: ../base/ufos/ui/_assets_squad.ufo:350
 #, fuzzy
@@ -25754,24 +25779,24 @@ msgstr "Ustawienia dźwięku"
 
 #: ../base/ufos/ui/_assets_squad.ufo:357
 msgid "DEFAULT"
-msgstr ""
+msgstr "DOMYŚLNE"
 
 #: ../base/ufos/ui/_assets_squad.ufo:368
 msgid "CUSTOM"
-msgstr ""
+msgstr "WŁASNA"
 
 #: ../base/ufos/ui/_assets_squad.ufo:430 ../base/ufos/ui/campaign.ufo:131
 msgid "NEW"
-msgstr ""
+msgstr "NOWA"
 
 #: ../base/ufos/ui/_assets_squad.ufo:446 ../base/ufos/ui/campaign.ufo:155
 #: ../base/ufos/ui/campaign_main.ufo:38
 msgid "LOAD"
-msgstr ""
+msgstr "WCZYTAJ"
 
 #: ../base/ufos/ui/_assets_squad.ufo:530 ../base/ufos/ui/multiplayer.ufo:203
 msgid "CREATE"
-msgstr ""
+msgstr "STWÓRZ"
 
 #: ../base/ufos/ui/_assets_squad.ufo:625 ../base/ufos/ui/multiplayer.ufo:58
 msgid "Currently loaded"
@@ -25836,7 +25861,8 @@ msgstr "Status:"
 msgid "Team:"
 msgstr "Drużyna:"
 
-#: ../base/ufos/ui/aircraft_equip.ufo:90 ../base/ufos/ui/aircraft_equip.ufo:109
+#: ../base/ufos/ui/aircraft_equip.ufo:90
+#: ../base/ufos/ui/aircraft_equip.ufo:109
 #: ../base/ufos/ui/aircraft_equip.ufo:128
 #: ../base/ufos/ui/aircraft_equip.ufo:147
 #: ../base/ufos/ui/aircraft_equip.ufo:166
@@ -26056,7 +26082,7 @@ msgstr "Naukowcy"
 
 #: ../base/ufos/ui/bases.ufo:69 ../base/ufos/ui/bases.ufo:72
 msgid "Engineers"
-msgstr ""
+msgstr "Technicy"
 
 #: ../base/ufos/ui/bases.ufo:87 ../base/ufos/ui/bases.ufo:90
 #: ../base/ufos/ui/hire.ufo:84
@@ -26074,8 +26100,8 @@ msgstr "UFOpedia"
 
 #: ../base/ufos/ui/bases.ufo:127 ../base/ufos/ui/popup_installations.ufo:310
 #: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
-#: ../base/ufos/ui/transfer.ufo:463
+#: ../base/ufos/ui/popup_installations.ufo:654
+#: ../base/ufos/ui/transfer.ufo:120 ../base/ufos/ui/transfer.ufo:463
 #: client/cgame/campaign/cp_base_callbacks.cpp:602
 #: client/cgame/campaign/cp_base_callbacks.cpp:613
 #: client/cgame/campaign/cp_base_callbacks.cpp:623
@@ -26104,8 +26130,9 @@ msgid "Market"
 msgstr "Sklep"
 
 #: ../base/ufos/ui/campaign.ufo:42 ../base/ufos/ui/campaign.ufo:95
+#, fuzzy
 msgid "Upload"
-msgstr "Wczytaj"
+msgstr "Wyślij"
 
 #: ../base/ufos/ui/campaign.ufo:50 ../base/ufos/ui/campaign.ufo:103
 #, fuzzy
@@ -26115,17 +26142,17 @@ msgstr "Usuń drużynę"
 #: ../base/ufos/ui/campaign.ufo:168 ../base/ufos/ui/multiplayer.ufo:702
 #: ../base/ufos/ui/skirmish.ufo:175
 msgid "DOWNLOAD"
-msgstr ""
+msgstr "POBIERZ"
 
 #: ../base/ufos/ui/campaign.ufo:176 ../base/ufos/ui/skirmish.ufo:186
 msgid "BEGIN"
-msgstr ""
+msgstr "ROZPOCZNIJ"
 
 #: ../base/ufos/ui/campaign.ufo:198 ../base/ufos/ui/multiplayer.ufo:901
 #: ../base/ufos/ui/popup_exitcampaign.ufo:41 ../base/ufos/ui/skirmish.ufo:197
 #: ../base/ufos/ui/tutorials.ufo:70
 msgid "BACK"
-msgstr ""
+msgstr "POWRÓT"
 
 #: ../base/ufos/ui/campaign.ufo:355 ../base/ufos/ui/multiplayer.ufo:1065
 #: ../base/ufos/ui/skirmish.ufo:369
@@ -26135,11 +26162,11 @@ msgstr "Brak wysłanych plików "
 #: ../base/ufos/ui/campaign.ufo:426 ../base/ufos/ui/campaign.ufo:440
 #: ../base/ufos/ui/campaign.ufo:456
 msgid "Click here to save game"
-msgstr ""
+msgstr "Zapisz grę"
 
 #: ../base/ufos/ui/campaign_main.ufo:27 ../base/ufos/ui/missionmenu.ufo:32
 msgid "CONTINUE"
-msgstr ""
+msgstr "kONTYNUUJ"
 
 #: ../base/ufos/ui/campaign_main.ufo:28 ../base/ufos/ui/missionmenu.ufo:33
 msgid "Leave this menu and continue playing."
@@ -26148,11 +26175,11 @@ msgstr "Opuść to menu i kontynuuj grę."
 #: ../base/ufos/ui/campaign_main.ufo:60 ../base/ufos/ui/main.ufo:107
 #: ../base/ufos/ui/missionmenu.ufo:43
 msgid "OPTIONS"
-msgstr ""
+msgstr "OPCJE"
 
 #: ../base/ufos/ui/campaign_main.ufo:70 ../base/ufos/ui/main.ufo:140
 msgid "EXIT"
-msgstr ""
+msgstr "WYJDŹ"
 
 #: ../base/ufos/ui/cgame.ufo:22
 msgid "Remove this file from the server"
@@ -26344,7 +26371,8 @@ msgstr "Wykonaj misję automatycznie"
 msgid "This kind of mission cannot be done automatically"
 msgstr "Ten rodzaj misji nie moze być zakończony automatycznie"
 
-#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897
+#: ../base/ufos/ui/popup_installations.ufo:184
 msgid "Cost:"
 msgstr "Koszt:"
 
@@ -26352,7 +26380,8 @@ msgstr "Koszt:"
 msgid "Time to build:"
 msgstr "Czas budowy:"
 
-#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:952
+#: ../base/ufos/ui/popup_installations.ufo:196
 msgid "Build"
 msgstr "Zbuduj"
 
@@ -26394,7 +26423,8 @@ msgid "Select aircraft"
 msgstr "Wybierz statek powietrzny"
 
 #: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/popup_installations.ufo:642
+#: ../base/ufos/ui/transfer.ufo:601
 msgid "ETA:"
 msgstr "Czas do celu:"
 
@@ -26582,7 +26612,7 @@ msgstr "Ukryj strefę ewakuacji"
 
 #: ../base/ufos/ui/hud_default.ufo:1638
 msgid "Default"
-msgstr ""
+msgstr "Domyślne"
 
 #: ../base/ufos/ui/hud_genradar.ufo:53
 msgid "Reinit"
@@ -26807,23 +26837,23 @@ msgstr "Dołącz do nas na twiterze:"
 
 #: ../base/ufos/ui/main.ufo:74
 msgid "CAMPAIGN"
-msgstr ""
+msgstr "KAMPANIA"
 
 #: ../base/ufos/ui/main.ufo:85
 msgid "SKIRMISH"
-msgstr ""
+msgstr "POTYCZKA"
 
 #: ../base/ufos/ui/main.ufo:96
 msgid "MULTIPLAYER"
-msgstr ""
+msgstr "WIELOOSOBOWA"
 
 #: ../base/ufos/ui/main.ufo:118 ../base/ufos/ui/tutorials.ufo:12
 msgid "TUTORIALS"
-msgstr ""
+msgstr "SAMOUCZKI"
 
 #: ../base/ufos/ui/main.ufo:129
 msgid "DEVELOPERS"
-msgstr ""
+msgstr "TWÓRCY"
 
 #: ../base/ufos/ui/main.ufo:204
 msgid "Initial settings"
@@ -26925,8 +26955,9 @@ msgid "Other Items"
 msgstr "Inne"
 
 #: ../base/ufos/ui/market.ufo:187
+#, fuzzy
 msgid "Unmanned Ground Vehicles"
-msgstr ""
+msgstr "Beznazwowe Pojazdy Naziemne"
 
 #: ../base/ufos/ui/market.ufo:331
 #, fuzzy
@@ -27095,15 +27126,15 @@ msgstr ""
 
 #: ../base/ufos/ui/missionmenu.ufo:62
 msgid "ABORT GAME"
-msgstr ""
+msgstr "PRZERWIJ GRĘ"
 
 #: ../base/ufos/ui/missionmenu.ufo:70
 msgid "RESTART MISSION"
-msgstr ""
+msgstr "ZRESTARTUJ MISJĘ"
 
 #: ../base/ufos/ui/missionmenu.ufo:71
 msgid "ABORT MISSION"
-msgstr ""
+msgstr "PRZERWIJ GRĘ"
 
 #: ../base/ufos/ui/multiplayer.ufo:8
 msgid "Connect to this server"
@@ -27115,11 +27146,11 @@ msgstr "Usuń ten wpis"
 
 #: ../base/ufos/ui/multiplayer.ufo:194
 msgid "JOIN"
-msgstr ""
+msgstr "DOŁĄCZ"
 
 #: ../base/ufos/ui/multiplayer.ufo:212
 msgid "TEAM"
-msgstr ""
+msgstr "DRUŻYNA"
 
 #: ../base/ufos/ui/multiplayer.ufo:228
 msgid "Gametype:"
@@ -27233,7 +27264,7 @@ msgstr "Wygeneruj nową drużynę"
 
 #: ../base/ufos/ui/multiplayer.ufo:714
 msgid "GENERATE"
-msgstr ""
+msgstr "WYGENERUJ"
 
 #: ../base/ufos/ui/multiplayer.ufo:765
 msgid "Close web panel"
@@ -27241,11 +27272,11 @@ msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:766
 msgid "CLOSE"
-msgstr ""
+msgstr "ZAMKNIJ"
 
 #: ../base/ufos/ui/multiplayer.ufo:781
 msgid "REFRESH"
-msgstr ""
+msgstr "ODŚWIERZ"
 
 #: ../base/ufos/ui/multiplayer.ufo:788
 msgid "Serverfilter:"
@@ -27253,7 +27284,7 @@ msgstr "Filtr:"
 
 #: ../base/ufos/ui/multiplayer.ufo:870
 msgid "CONNECT"
-msgstr ""
+msgstr "POŁĄCZ"
 
 #: ../base/ufos/ui/multiplayer.ufo:881
 msgid "Connect to IP"
@@ -27400,28 +27431,28 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:112 ../base/ufos/ui/options.ufo:113
 msgid "GENERAL"
-msgstr ""
+msgstr "OGÓLNE"
 
 #: ../base/ufos/ui/options.ufo:128 ../base/ufos/ui/options.ufo:129
 msgid "VIDEO"
-msgstr ""
+msgstr "GRAFIKA"
 
 #: ../base/ufos/ui/options.ufo:142 ../base/ufos/ui/options.ufo:143
 msgid "SOUND"
-msgstr ""
+msgstr "DŹWIĘK"
 
 #: ../base/ufos/ui/options.ufo:156 ../base/ufos/ui/options.ufo:157
 msgid "KEYS"
-msgstr ""
+msgstr "KLAWISZE"
 
 #: ../base/ufos/ui/options.ufo:170 ../base/ufos/ui/options.ufo:171
 msgid "GAMEPLAY"
-msgstr ""
+msgstr "ROZGRYWKA"
 
 #: ../base/ufos/ui/options.ufo:184 ../base/ufos/ui/options.ufo:185
 #: ../base/ufos/ui/options.ufo:2461 ../base/ufos/ui/options.ufo:2599
 msgid "DONE"
-msgstr ""
+msgstr "OK"
 
 #: ../base/ufos/ui/options.ufo:234
 msgid "Language Settings"
@@ -27449,7 +27480,7 @@ msgstr "Ładowanie modeli z wyprzedzeniem:"
 
 #: ../base/ufos/ui/options.ufo:361
 msgid "Increases speed of game menus"
-msgstr ""
+msgstr "Zwiększa prędkość menu gry"
 
 #: ../base/ufos/ui/options.ufo:381
 msgid "Geoscape Options"
@@ -27462,7 +27493,7 @@ msgstr "Widok 3D globu:"
 
 #: ../base/ufos/ui/options.ufo:403
 msgid "View the geoscape as a 3D globe"
-msgstr ""
+msgstr "Zmień widok globu na trójwymiarowy"
 
 #: ../base/ufos/ui/options.ufo:429 ../base/ufos/ui/options.ufo:1652
 #: ../base/ufos/ui/options.ufo:1784
@@ -27514,7 +27545,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:547
 msgid "Display FPS"
-msgstr ""
+msgstr "Pokaż FPS"
 
 #: ../base/ufos/ui/options.ufo:548
 #, fuzzy
@@ -27557,7 +27588,7 @@ msgstr "Tryb pełnoekranowy:"
 
 #: ../base/ufos/ui/options.ufo:697
 msgid "View the game in fullscreen instead of windowed mode"
-msgstr ""
+msgstr "Włącz pełny ekran"
 
 #: ../base/ufos/ui/options.ufo:723
 #, fuzzy
@@ -27581,7 +27612,7 @@ msgstr "Opcje podglądu planety"
 
 #: ../base/ufos/ui/options.ufo:782
 msgid "Brightness of sunlight on the geoscape"
-msgstr ""
+msgstr "Jasność światła słonecznego w widoku globu"
 
 #: ../base/ufos/ui/options.ufo:814
 #, fuzzy
@@ -27605,19 +27636,19 @@ msgstr "Niska jakość"
 
 #: ../base/ufos/ui/options.ufo:910
 msgid "Default video configuration settings"
-msgstr ""
+msgstr "Przywróć domyślne ustawienia grafiki"
 
 #: ../base/ufos/ui/options.ufo:922
 msgid "LOW"
-msgstr ""
+msgstr "NISKIE"
 
 #: ../base/ufos/ui/options.ufo:934
 msgid "MEDIUM"
-msgstr ""
+msgstr "ŚREDNIE"
 
 #: ../base/ufos/ui/options.ufo:946
 msgid "HIGH"
-msgstr ""
+msgstr "WYSOKIE"
 
 #: ../base/ufos/ui/options.ufo:972
 #, fuzzy
@@ -27636,7 +27667,7 @@ msgstr "Pod-procesorowe cieniowanie:"
 
 #: ../base/ufos/ui/options.ufo:1001
 msgid "Effects like light bloom and reflected light"
-msgstr ""
+msgstr "Efekty tj. rozmycie i odbicia światła"
 
 #: ../base/ufos/ui/options.ufo:1019 ../base/ufos/ui/options.ufo:2489
 #, fuzzy
@@ -27645,11 +27676,11 @@ msgstr "Zaawansowane Opcje Dźwięku"
 
 #: ../base/ufos/ui/options.ufo:1041
 msgid "Real-time lighting effects"
-msgstr ""
+msgstr "Efekty oświetlenia czasu rzeczywistego"
 
 #: ../base/ufos/ui/options.ufo:1070
 msgid "Max dynamic lights"
-msgstr ""
+msgstr "Maksymalna ilość świateł dynamicznych"
 
 #: ../base/ufos/ui/options.ufo:1071
 #, fuzzy
@@ -27665,7 +27696,7 @@ msgstr "Kompresja tekstur:"
 
 #: ../base/ufos/ui/options.ufo:1149
 msgid "Environmental effects"
-msgstr ""
+msgstr "Efekty środowiska"
 
 #: ../base/ufos/ui/options.ufo:1157
 #, fuzzy
@@ -27674,7 +27705,7 @@ msgstr "Kontrast:"
 
 #: ../base/ufos/ui/options.ufo:1158
 msgid "Lighting effect"
-msgstr ""
+msgstr "Efekty oświetlenia"
 
 #: ../base/ufos/ui/options.ufo:1176
 #, fuzzy
@@ -27683,7 +27714,7 @@ msgstr "Materiały obcych"
 
 #: ../base/ufos/ui/options.ufo:1177
 msgid "Texture animations, blending and other effects"
-msgstr ""
+msgstr "Animacje tekstur mieszanie i inne efekty"
 
 #: ../base/ufos/ui/options.ufo:1195
 #, fuzzy
@@ -27727,7 +27758,7 @@ msgstr "Włącz Dźwięk:"
 
 #: ../base/ufos/ui/options.ufo:1324
 msgid "Music volume"
-msgstr ""
+msgstr "Głośność muzyki"
 
 #: ../base/ufos/ui/options.ufo:1356
 #, fuzzy
@@ -27751,23 +27782,23 @@ msgstr "Próbkowanie Audio:"
 
 #: ../base/ufos/ui/options.ufo:1443
 msgid "Higher sample rates provide better audio quality"
-msgstr ""
+msgstr "Większa wartość sampli zapewnia lepszą jakość audio"
 
 #: ../base/ufos/ui/options.ufo:1458
 msgid "11025 kHz"
-msgstr ""
+msgstr "11025 kHz"
 
 #: ../base/ufos/ui/options.ufo:1463
 msgid "22050 kHz"
-msgstr ""
+msgstr "22050 kHz"
 
 #: ../base/ufos/ui/options.ufo:1468
 msgid "44100 kHz"
-msgstr ""
+msgstr "44100 kHz"
 
 #: ../base/ufos/ui/options.ufo:1473
 msgid "48000 kHz"
-msgstr ""
+msgstr "48000 kHz"
 
 #: ../base/ufos/ui/options.ufo:1480
 #, fuzzy
@@ -27855,7 +27886,7 @@ msgstr "Wymagane potwierdzenie przed poruszaniem"
 
 #: ../base/ufos/ui/options.ufo:2073
 msgid "Never"
-msgstr ""
+msgstr "Nigdy"
 
 #: ../base/ufos/ui/options.ufo:2077
 #, fuzzy
@@ -27864,11 +27895,11 @@ msgstr "Usuwanie"
 
 #: ../base/ufos/ui/options.ufo:2081
 msgid "Always"
-msgstr ""
+msgstr "Zawsze"
 
 #: ../base/ufos/ui/options.ufo:2099
 msgid "Stand when moving"
-msgstr ""
+msgstr "Wstawanie podczas ruchu"
 
 #: ../base/ufos/ui/options.ufo:2100
 #, fuzzy
@@ -27896,27 +27927,27 @@ msgstr "Limit rozdzielczości tekstur:"
 
 #: ../base/ufos/ui/options.ufo:2212 ../base/ufos/ui/options.ufo:2407
 msgid "256"
-msgstr ""
+msgstr "256"
 
 #: ../base/ufos/ui/options.ufo:2216 ../base/ufos/ui/options.ufo:2411
 msgid "512"
-msgstr ""
+msgstr "512"
 
 #: ../base/ufos/ui/options.ufo:2220 ../base/ufos/ui/options.ufo:2415
 msgid "1024"
-msgstr ""
+msgstr "1024"
 
 #: ../base/ufos/ui/options.ufo:2224 ../base/ufos/ui/options.ufo:2419
 msgid "2048"
-msgstr ""
+msgstr "2048"
 
 #: ../base/ufos/ui/options.ufo:2228
 msgid "4096"
-msgstr ""
+msgstr "4096"
 
 #: ../base/ufos/ui/options.ufo:2232
 msgid "8192"
-msgstr ""
+msgstr "8192"
 
 #: ../base/ufos/ui/options.ufo:2250
 #, fuzzy
@@ -27973,7 +28004,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:2356
 msgid "Anisotropic filtering"
-msgstr ""
+msgstr "Filtrowanie anizotropowe"
 
 #: ../base/ufos/ui/options.ufo:2357
 msgid "Distant textures appear sharper at higher resolutions"
@@ -28013,7 +28044,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:2573
 msgid "Higher values will typically provide better results"
-msgstr ""
+msgstr "Wyższe wartości zwykle zapewniają lepsze rezultaty"
 
 #: ../base/ufos/ui/options.ufo:2668
 msgid "MENU"
@@ -28021,11 +28052,11 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:2669
 msgid "GLOBAL"
-msgstr ""
+msgstr "GLOBALNE"
 
 #: ../base/ufos/ui/options.ufo:2670
 msgid "BATTLESCAPE"
-msgstr ""
+msgstr "POLE BITWY"
 
 #: ../base/ufos/ui/popup_baseattack.ufo:41
 msgid "Assemble Team"
@@ -28084,7 +28115,8 @@ msgstr "Pojemność"
 
 #: ../base/ufos/ui/popup_capacity.ufo:44
 #: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
+#: ../base/ufos/ui/popup_installations.ufo:892
+#: ../base/ufos/ui/transfer.ufo:373
 msgid "free"
 msgstr "Wolny"
 
@@ -28098,7 +28130,7 @@ msgstr "Wraca do bazy"
 
 #: ../base/ufos/ui/popup_exitcampaign.ufo:25
 msgid "EXIT CAMPAIGN CONFIRMATION"
-msgstr ""
+msgstr "POTWIERDZENIE OPUSZCZENIA KAMPANII"
 
 #: ../base/ufos/ui/popup_exitcampaign.ufo:33
 msgid "You will lose all your campaign progress."
@@ -28106,7 +28138,7 @@ msgstr "Utracisz cały swój postęp w kampanii."
 
 #: ../base/ufos/ui/popup_exitcampaign.ufo:53
 msgid "QUIT"
-msgstr ""
+msgstr "WYJŚCIE"
 
 #: ../base/ufos/ui/popup_installations.ufo:60
 msgid "New installation"
@@ -28269,11 +28301,11 @@ msgstr "Naukowcy"
 
 #: ../base/ufos/ui/research.ufo:199
 msgid "FIRE"
-msgstr ""
+msgstr "ZWOLNIJ"
 
 #: ../base/ufos/ui/research.ufo:209
 msgid "HIRE"
-msgstr ""
+msgstr "ZATRUDNIJ"
 
 #: ../base/ufos/ui/research.ufo:232
 #, fuzzy
@@ -28282,7 +28314,7 @@ msgstr "Laboratorium"
 
 #: ../base/ufos/ui/research.ufo:257
 msgid "BUILD LAB"
-msgstr ""
+msgstr "ZBUDUJ LABORATORIUM"
 
 #: ../base/ufos/ui/skirmish.ufo:60
 msgid "<1>"
@@ -28290,11 +28322,11 @@ msgstr "<1>"
 
 #: ../base/ufos/ui/skirmish.ufo:153
 msgid "MAP"
-msgstr ""
+msgstr "MAPA"
 
 #: ../base/ufos/ui/skirmish.ufo:164
 msgid "SQUAD"
-msgstr ""
+msgstr "DRUŻYNA"
 
 #: ../base/ufos/ui/stats.ufo:47
 msgid "Costs"
@@ -28653,9 +28685,9 @@ msgstr "Seria 3 pocisków"
 #: ../base/ufos/weapons_human.ufo:92 ../base/ufos/weapons_human.ufo:188
 #: ../base/ufos/weapons_human.ufo:305 ../base/ufos/weapons_human.ufo:719
 #: ../base/ufos/weapons_human.ufo:812 ../base/ufos/weapons_multiplayer.ufo:77
-#: ../base/ufos/weapons_multiplayer.ufo:318 ../base/ufos/weapons_plasma.ufo:203
-#: ../base/ufos/weapons_plasma.ufo:439 ../base/ufos/weapons_plasma.ufo:529
-#: ../base/ufos/weapons_ugv.ufo:109
+#: ../base/ufos/weapons_multiplayer.ufo:318
+#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_plasma.ufo:439
+#: ../base/ufos/weapons_plasma.ufo:529 ../base/ufos/weapons_ugv.ufo:109
 msgid "Full-Auto"
 msgstr "Automatyczny"
 
@@ -28683,8 +28715,8 @@ msgid "5-Shot Burst"
 msgstr "Seria 5 strzałów"
 
 #: ../base/ufos/weapons_human.ufo:329 ../base/ufos/weapons_multiplayer.ufo:101
-#: ../base/ufos/weapons_multiplayer.ufo:342 ../base/ufos/weapons_plasma.ufo:553
-#: ../base/ufos/weapons_ugv.ufo:135
+#: ../base/ufos/weapons_multiplayer.ufo:342
+#: ../base/ufos/weapons_plasma.ufo:553 ../base/ufos/weapons_ugv.ufo:135
 msgid "Full-Auto Sweep"
 msgstr "Automatyczny (Łuk)"
 
@@ -29342,7 +29374,7 @@ msgstr "%s załadowane\n"
 #: client/battlescape/cl_hud.cpp:1302
 #, c-format
 msgid "- HP loss per turn: %i\n"
-msgstr ""
+msgstr "-utrata zdrowia na turę: %i\n"
 
 #: client/battlescape/cl_hud.cpp:1344 client/cl_inventory_callbacks.cpp:389
 msgid ""
@@ -32866,9 +32898,9 @@ msgid "Can't perform action - not enough ammo!"
 msgstr "Nie można wykonać - zbyt mało amunicji!"
 
 #: game/g_mission.cpp:63
-#, c-format
+#, fuzzy, c-format
 msgid "%s forces are attacking the %s!"
-msgstr ""
+msgstr "Siły %s atakują %s!"
 
 #: game/g_mission.cpp:66
 #, fuzzy, c-format
@@ -32881,9 +32913,9 @@ msgid "%s forces have occupied the %s!"
 msgstr "Obcy wkroczyli do wyznaczonej strefy!"
 
 #: game/g_mission.cpp:92
-#, c-format
+#, fuzzy, c-format
 msgid "%s forces have occupied their target zone!"
-msgstr ""
+msgstr "Siły %s zajęły swoją strefę-cel!"
 
 #: game/g_mission.cpp:112
 #, fuzzy, c-format
