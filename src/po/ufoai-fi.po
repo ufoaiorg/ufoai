@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-02-28 21:54-0600\n"
+"POT-Creation-Date: 2017-10-12 13:21-0500\n"
 "PO-Revision-Date: 2016-09-21 21:24+0100\n"
 "Last-Translator: Tamás Fehérvári <geever@users.sourceforge.net>\n"
 "Language-Team: Finnish\n"
@@ -36,7 +36,7 @@ msgstr "Kotitukikohta"
 msgid "Bridge"
 msgstr "Silta"
 
-#: ../base/maps/bridge.ump:111 ../base/ufos/maps.ufo:5469
+#: ../base/maps/bridge.ump:111 ../base/ufos/maps.ufo:5420
 #, fuzzy
 msgid "Bridge (MP)"
 msgstr "Silta"
@@ -229,7 +229,7 @@ msgid "Laboratory"
 msgstr "Laboratorio"
 
 #: ../base/maps/urban.ump:401 ../base/ufos/basemanagement.ufo:216
-#: ../base/ufos/maps.ufo:3276 ../base/ufos/ui/bases.ufo:403
+#: ../base/ufos/maps.ufo:3276 ../base/ufos/ui/bases.ufo:392
 #: ../base/ufos/ui/hospital.ufo:21
 msgid "Hospital"
 msgstr "Sairaala"
@@ -589,7 +589,7 @@ msgid "Medium Alien Armour"
 msgstr "Kehittynyt Alien panssari"
 
 #: ../base/ufos/basemanagement.ufo:35 ../base/ufos/ui/aliencont.ufo:158
-#: ../base/ufos/ui/aliencont.ufo:347 ../base/ufos/ui/bases.ufo:392
+#: ../base/ufos/ui/aliencont.ufo:347 ../base/ufos/ui/bases.ufo:381
 #, fuzzy
 msgid "Alien Containment"
 msgstr "Alien säilytystila"
@@ -598,8 +598,7 @@ msgstr "Alien säilytystila"
 msgid "Entrance"
 msgstr "Sisäänkäynti"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:316
-#: ../base/ufos/ui/production.ufo:248
+#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/production.ufo:248
 msgid "Storage"
 msgstr "Varasto"
 
@@ -631,7 +630,7 @@ msgstr "Torjuntahävittäjä"
 msgid "Workshop"
 msgstr "Työpaja"
 
-#: ../base/ufos/basemanagement.ufo:169 ../base/ufos/ui/hud_default.ufo:1073
+#: ../base/ufos/basemanagement.ufo:169 ../base/ufos/ui/hud_default.ufo:1081
 #: ../base/ufos/ui/radar.ufo:21
 msgid "Radar"
 msgstr "Tutka"
@@ -664,15 +663,15 @@ msgstr "Vaikea kampanja"
 msgid "Standard Campaign"
 msgstr "Normaali kampanja"
 
-#: ../base/ufos/campaign.ufo:247
+#: ../base/ufos/campaign.ufo:248
 msgid "Easy Campaign"
 msgstr "Helppo kampanja"
 
-#: ../base/ufos/campaign.ufo:305
+#: ../base/ufos/campaign.ufo:306
 msgid "Very Easy Campaign"
 msgstr "Erittäin helppo kampanja"
 
-#: ../base/ufos/campaign.ufo:364
+#: ../base/ufos/campaign.ufo:365
 msgid "Play the aliens"
 msgstr "Pelaa alieneilla"
 
@@ -2987,7 +2986,7 @@ msgstr "Pieni kylä Englannissa."
 
 #: ../base/ufos/maps.ufo:3752 ../base/ufos/maps.ufo:3798
 #: ../base/ufos/maps.ufo:3843 ../base/ufos/maps.ufo:3888
-#: ../base/ufos/maps.ufo:5371
+#: ../base/ufos/maps.ufo:5322
 #, fuzzy
 msgid "Suburban City"
 msgstr "Esikaupunkien alueella."
@@ -3007,7 +3006,7 @@ msgid "Village 2"
 msgstr "Suuri alue"
 
 #: ../base/ufos/maps.ufo:4118 ../base/ufos/maps.ufo:4153
-#: ../base/ufos/maps.ufo:5683
+#: ../base/ufos/maps.ufo:5634
 #, fuzzy
 msgid "PHALANX Base Under Attack"
 msgstr "Tukikohtaan hyökätään."
@@ -3050,124 +3049,120 @@ msgid "Solar Power Plant"
 msgstr "Voimalaitos"
 
 #: ../base/ufos/maps.ufo:4614
-msgid "Warehouse"
-msgstr ""
-
-#: ../base/ufos/maps.ufo:4663
 #, fuzzy
 msgid "Military Bunker"
 msgstr "Sotilas saattue"
 
-#: ../base/ufos/maps.ufo:4710
+#: ../base/ufos/maps.ufo:4661
 #, fuzzy
 msgid "Rural Village"
 msgstr "Pieni kylä Englannissa."
 
-#: ../base/ufos/maps.ufo:4749
+#: ../base/ufos/maps.ufo:4700
 #, fuzzy
 msgid "Corrupter UFO Crash Site"
 msgstr "UFO:n putoamis alue"
 
-#: ../base/ufos/maps.ufo:4794
+#: ../base/ufos/maps.ufo:4745
 msgid "Hydroelectric Dam"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4844
+#: ../base/ufos/maps.ufo:4795
 msgid "Archaeological Dig"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4894
+#: ../base/ufos/maps.ufo:4845
 #, fuzzy
 msgid "Ferry"
 msgstr "Lautta."
 
-#: ../base/ufos/maps.ufo:4942
+#: ../base/ufos/maps.ufo:4893
 #, fuzzy
 msgid "Fighter UFO Crash Site"
 msgstr "UFO:n putoamis alue"
 
-#: ../base/ufos/maps.ufo:4988
+#: ../base/ufos/maps.ufo:4939
 #, fuzzy
 msgid "Port"
 msgstr "Portland"
 
-#: ../base/ufos/maps.ufo:5034
+#: ../base/ufos/maps.ufo:4985
 msgid "Old Mine"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5087
+#: ../base/ufos/maps.ufo:5038
 msgid "Residential Neighbourhood"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5131
+#: ../base/ufos/maps.ufo:5082
 msgid "Office Complex"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5177
+#: ../base/ufos/maps.ufo:5128
 #, fuzzy
 msgid "Sewage Pipe Construction"
 msgstr "Maanalainen putkityömaa."
 
-#: ../base/ufos/maps.ufo:5222
+#: ../base/ufos/maps.ufo:5173
 #, fuzzy
 msgid "Luxurious Resort"
 msgstr "Ylellinen matkakohde."
 
-#: ../base/ufos/maps.ufo:5271
+#: ../base/ufos/maps.ufo:5222
 #, fuzzy
 msgid "Old Town Center"
 msgstr "Komentokeskus"
 
 # Saturaatio, kyllästyminen
-#: ../base/ufos/maps.ufo:5324
+#: ../base/ufos/maps.ufo:5275
 #, fuzzy
 msgid "Subway Station"
 msgstr "Saturaatio:"
 
-#: ../base/ufos/maps.ufo:5417
+#: ../base/ufos/maps.ufo:5368
 msgid "Wilderness"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5489 ../base/ufos/maps.ufo:5515
+#: ../base/ufos/maps.ufo:5440 ../base/ufos/maps.ufo:5466
 msgid "City High-Rise (MP)"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5543
+#: ../base/ufos/maps.ufo:5494
 msgid "Frozen Industrial Site (Coop)"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5561
+#: ../base/ufos/maps.ufo:5512
 msgid "Frozen Industrial Site (MP)"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5584
+#: ../base/ufos/maps.ufo:5535
 #, fuzzy
 msgid "A container harbour."
 msgstr "Paikallinen satama."
 
-#: ../base/ufos/maps.ufo:5613
+#: ../base/ufos/maps.ufo:5564
 #, fuzzy
 msgid "Village MP (2)"
 msgstr "Suuri alue"
 
-#: ../base/ufos/maps.ufo:5632
+#: ../base/ufos/maps.ufo:5583
 #, fuzzy
 msgid "Village MP (3)"
 msgstr "Suuri alue"
 
-#: ../base/ufos/maps.ufo:5662
+#: ../base/ufos/maps.ufo:5613
 msgid "Alien Base"
 msgstr "Alien tukikohta"
 
-#: ../base/ufos/maps.ufo:5704
+#: ../base/ufos/maps.ufo:5655
 msgid "PHALANX Craft Crash Site"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5733
+#: ../base/ufos/maps.ufo:5684
 msgid "Training Zone: Alpha"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:5749
+#: ../base/ufos/maps.ufo:5700
 msgid "Training Zone: Bravo"
 msgstr ""
 
@@ -23194,9 +23189,9 @@ msgid "Background"
 msgstr "Historia"
 
 #: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:142
-#: ../base/ufos/ui/bases.ufo:310 ../base/ufos/ui/geoscape.ufo:1387
-#: ../base/ufos/ui/market.ufo:154 ../base/ufos/ui/production.ufo:76
-#: ../base/ufos/ui/transfer.ufo:154 ../base/ufos/ui/transfer.ufo:257
+#: ../base/ufos/ui/bases.ufo:299 ../base/ufos/ui/geoscape.ufo:1387
+#: ../base/ufos/ui/market.ufo:267 ../base/ufos/ui/production.ufo:76
+#: ../base/ufos/ui/transfer.ufo:215 ../base/ufos/ui/transfer.ufo:363
 #: client/cgame/campaign/cp_geoscape.cpp:309
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:805
 msgid "Aircraft"
@@ -23217,9 +23212,9 @@ msgstr "Tutkimustulokset"
 
 #: ../base/ufos/research.ufo:116 ../base/ufos/ui/_assets_squad.ufo:490
 #: ../base/ufos/ui/aircraft.ufo:156 ../base/ufos/ui/aircraft_equip.ufo:61
-#: ../base/ufos/ui/equipment.ufo:59 ../base/ufos/ui/hud_default.ufo:273
-#: ../base/ufos/ui/market.ufo:121 ../base/ufos/ui/transfer.ufo:139
-#: ../base/ufos/ui/transfer.ufo:251
+#: ../base/ufos/ui/equipment.ufo:59 ../base/ufos/ui/hud_default.ufo:272
+#: ../base/ufos/ui/market.ufo:189 ../base/ufos/ui/transfer.ufo:194
+#: ../base/ufos/ui/transfer.ufo:357
 msgid "Equipment"
 msgstr "Varusteet"
 
@@ -23235,15 +23230,13 @@ msgstr "Ruumiinavaus ja tarkkailu"
 msgid "The Alien Threat"
 msgstr "Alieneiden Uhka"
 
-#: ../base/ufos/research.ufo:129 ../base/ufos/ui/bases.ufo:350
+#: ../base/ufos/research.ufo:129 ../base/ufos/ui/bases.ufo:339
 #: ../base/ufos/ui/research.ufo:24
-#: client/cgame/campaign/cp_base_callbacks.cpp:875
 msgid "Research"
 msgstr "Tutkimus"
 
-#: ../base/ufos/research.ufo:137 ../base/ufos/ui/bases.ufo:371
+#: ../base/ufos/research.ufo:137 ../base/ufos/ui/bases.ufo:360
 #: ../base/ufos/ui/production.ufo:24 ../base/ufos/ui/production.ufo:124
-#: client/cgame/campaign/cp_base_callbacks.cpp:861
 msgid "Production"
 msgstr "Tuotanto"
 
@@ -23662,7 +23655,7 @@ msgstr ""
 msgid "Muscle Stimulant"
 msgstr "Implantit"
 
-#: ../base/ufos/seq_credits.ufo:30 ../base/ufos/ui/main.ufo:20
+#: ../base/ufos/seq_credits.ufo:30 ../base/ufos/ui/main.ufo:16
 msgid "UFO: ALIEN INVASION"
 msgstr ""
 
@@ -24813,98 +24806,92 @@ msgid ""
 "cameras around the base to locate enemies."
 msgstr ""
 
-#: ../base/ufos/ui/_assets.ufo:42 ../base/ufos/ui/_assets_base.ufo:377
-#: ../base/ufos/ui/_assets_base.ufo:557
+#: ../base/ufos/ui/_assets.ufo:55 ../base/ufos/ui/_assets_base.ufo:494
 #, fuzzy
 msgid "View UFOPaedia entry"
 msgstr "Tarkista UFOpedia"
 
-#: ../base/ufos/ui/_assets.ufo:124 ../base/ufos/ui/hud_phone.ufo:157
+#: ../base/ufos/ui/_assets.ufo:148 ../base/ufos/ui/hud_phone.ufo:157
 #: client/cgame/campaign/cp_installation_callbacks.cpp:194
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:565
 msgid "Cancel"
 msgstr "Peruuta"
 
-#: ../base/ufos/ui/_assets.ufo:125 ../base/ufos/ui/sys_popup.ufo:52
+#: ../base/ufos/ui/_assets.ufo:149 ../base/ufos/ui/sys_popup.ufo:52
 #: ../base/ufos/ui/sys_popup.ufo:115
 msgid "Close this dialogue"
 msgstr "Sulje tämä dialogi"
 
-#: ../base/ufos/ui/_assets.ufo:380 ../base/ufos/ui/inv_stat.ufo:110
+#: ../base/ufos/ui/_assets.ufo:505 ../base/ufos/ui/inv_stat.ufo:109
 #, fuzzy
 msgid "Strength"
 msgstr "Kestävyys:"
 
-#: ../base/ufos/ui/_assets.ufo:388 ../base/ufos/ui/inv_stat.ufo:118
+#: ../base/ufos/ui/_assets.ufo:528 ../base/ufos/ui/inv_stat.ufo:117
 #, fuzzy
 msgid "Speed"
 msgstr "Nopeus:"
 
-#: ../base/ufos/ui/_assets.ufo:396 ../base/ufos/ui/inv_stat.ufo:126
+#: ../base/ufos/ui/_assets.ufo:551 ../base/ufos/ui/inv_stat.ufo:125
 #: client/cgame/campaign/cp_ufopedia.cpp:146
 msgid "Accuracy"
 msgstr "Tarkkuus"
 
-#: ../base/ufos/ui/_assets.ufo:404 ../base/ufos/ui/inv_stat.ufo:134
+#: ../base/ufos/ui/_assets.ufo:574 ../base/ufos/ui/inv_stat.ufo:133
 #, fuzzy
 msgid "Mind"
 msgstr "Mielenhallinta:"
 
-#: ../base/ufos/ui/_assets.ufo:420 ../base/ufos/ui/inv_stat.ufo:150
+#: ../base/ufos/ui/_assets.ufo:608 ../base/ufos/ui/inv_stat.ufo:149
 msgid "CQB"
 msgstr ""
 
-#: ../base/ufos/ui/_assets.ufo:421
+#: ../base/ufos/ui/_assets.ufo:609
 #, fuzzy
 msgid "Close Quarters Battle"
 msgstr "Ei tarpeeksi asuinhuoneistoja"
 
-#: ../base/ufos/ui/_assets.ufo:429 ../base/ufos/ui/inv_stat.ufo:158
+#: ../base/ufos/ui/_assets.ufo:632 ../base/ufos/ui/inv_stat.ufo:157
 #: client/cl_inventory_callbacks.cpp:50
 #, fuzzy
 msgid "Assault"
 msgstr "Rynnäkkökivääri"
 
-#: ../base/ufos/ui/_assets.ufo:437 ../base/ufos/ui/inv_stat.ufo:166
+#: ../base/ufos/ui/_assets.ufo:655 ../base/ufos/ui/inv_stat.ufo:165
 #: client/cl_inventory_callbacks.cpp:52
 #, fuzzy
 msgid "Sniper"
 msgstr "Tarkkuuskivääri"
 
-#: ../base/ufos/ui/_assets.ufo:445 ../base/ufos/ui/inv_stat.ufo:174
+#: ../base/ufos/ui/_assets.ufo:678 ../base/ufos/ui/inv_stat.ufo:173
 #: client/cl_inventory_callbacks.cpp:54
 #, fuzzy
 msgid "Explosives"
 msgstr "Räjähdysaineet:"
 
-#: ../base/ufos/ui/_assets.ufo:464
+#: ../base/ufos/ui/_assets.ufo:728
 msgid "Health"
 msgstr "Terveys"
 
-#: ../base/ufos/ui/_assets.ufo:465
-#, fuzzy
-msgid "Healthpoints"
-msgstr "Terveys"
-
-#: ../base/ufos/ui/_assets.ufo:492
+#: ../base/ufos/ui/_assets.ufo:755
 msgid "Missions Performed:"
 msgstr "Suoritettuja tehtäviä:"
 
-#: ../base/ufos/ui/_assets.ufo:505
+#: ../base/ufos/ui/_assets.ufo:772
 msgid "Enemies Killed:"
 msgstr "Tapettuja vihollisia:"
 
-#: ../base/ufos/ui/_assets.ufo:581
+#: ../base/ufos/ui/_assets.ufo:876
 #, fuzzy
 msgid "Piloting"
 msgstr "Suodatus:"
 
-#: ../base/ufos/ui/_assets.ufo:588
+#: ../base/ufos/ui/_assets.ufo:895
 #, fuzzy
 msgid "Targeting"
 msgstr "Tähtäys Tietokone"
 
-#: ../base/ufos/ui/_assets.ufo:595
+#: ../base/ufos/ui/_assets.ufo:914
 #, fuzzy
 msgid "Evading"
 msgstr "Ladataan peliä"
@@ -24913,73 +24900,69 @@ msgstr "Ladataan peliä"
 msgid "Back"
 msgstr "Takaisin"
 
-#: ../base/ufos/ui/_assets_base.ufo:418
+#: ../base/ufos/ui/_assets_base.ufo:546
 #, fuzzy
 msgid "Stop researching this project"
 msgstr "Tutkimus ehdotuksia ei ole tälle hankkeelle."
 
-#: ../base/ufos/ui/_assets_base.ufo:429
+#: ../base/ufos/ui/_assets_base.ufo:560
 #, fuzzy
 msgid "Assign all free scientists on this project"
 msgstr "Tutkijoita käytettävissä tässä tukikohdassa: %i"
 
-#: ../base/ufos/ui/_assets_base.ufo:440
+#: ../base/ufos/ui/_assets_base.ufo:574
 #, fuzzy
 msgid "Assign less scientists on this project"
 msgstr "Tutkijoita käytettävissä tässä tukikohdassa: %i"
 
-#: ../base/ufos/ui/_assets_base.ufo:451
+#: ../base/ufos/ui/_assets_base.ufo:588
 #, fuzzy
 msgid "Assign more scientists on this project"
 msgstr "Tutkijoita käytettävissä tässä tukikohdassa: %i"
 
-#: ../base/ufos/ui/_assets_base.ufo:470
+#: ../base/ufos/ui/_assets_base.ufo:612
 #, fuzzy
 msgid "Currently in research on another base"
 msgstr "Tämä tavara on tutkittavana toisessa tukikohdassa."
 
-#: ../base/ufos/ui/_assets_base.ufo:484
+#: ../base/ufos/ui/_assets_base.ufo:629
 msgid "N/A"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_base.ufo:485
+#: ../base/ufos/ui/_assets_base.ufo:630
 msgid "An artifact or prerequisite is missing for this topic"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_base.ufo:493
+#: ../base/ufos/ui/_assets_base.ufo:640
 msgid "Expand/Collapse"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_base.ufo:614
-msgid "Lock current stock level"
-msgstr ""
-
-#: ../base/ufos/ui/_assets_base.ufo:687
+#: ../base/ufos/ui/_assets_base.ufo:671
 #, fuzzy
 msgid "Previous base"
 msgstr "Edellinen tukikohta"
 
-#: ../base/ufos/ui/_assets_base.ufo:703
+#: ../base/ufos/ui/_assets_base.ufo:692
 #, fuzzy
 msgid "Next base"
 msgstr "Seuraava tukikohta"
 
-#: ../base/ufos/ui/_assets_base.ufo:774 ../base/ufos/ui/_menu.ufo:88
+#: ../base/ufos/ui/_assets_base.ufo:777 ../base/ufos/ui/_menu.ufo:88
 #, fuzzy
 msgid "Back to base"
 msgstr "Takaisin tukikohtanäkymään"
 
-#: ../base/ufos/ui/_assets_hud.ufo:136
+#: ../base/ufos/ui/_assets_hud.ufo:135
 #, fuzzy
 msgid "current level"
 msgstr "Nykyinen arvo."
 
-#: ../base/ufos/ui/_assets_hud.ufo:157
+#: ../base/ufos/ui/_assets_hud.ufo:156
 #, fuzzy
 msgid "raise the level"
 msgstr "Tiedotus tällä tasolla"
 
-#: ../base/ufos/ui/_assets_hud.ufo:169
+#: ../base/ufos/ui/_assets_hud.ufo:168
 #, fuzzy
 msgid "lower the level"
 msgstr "Tiedotus tällä tasolla"
@@ -25039,8 +25022,7 @@ msgstr "UGV:t"
 msgid "Selected squad name here"
 msgstr "Valitse puolustus:"
 
-#: ../base/ufos/ui/_assets_squad.ufo:311 ../base/ufos/ui/campaign.ufo:147
-#: ../base/ufos/ui/campaign_main.ufo:49
+#: ../base/ufos/ui/_assets_squad.ufo:311 ../base/ufos/ui/campaign_main.ufo:47
 msgid "SAVE"
 msgstr ""
 
@@ -25061,20 +25043,19 @@ msgstr ""
 msgid "CUSTOM"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:430 ../base/ufos/ui/campaign.ufo:131
+#: ../base/ufos/ui/_assets_squad.ufo:430
 msgid "NEW"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:446 ../base/ufos/ui/campaign.ufo:155
-#: ../base/ufos/ui/campaign_main.ufo:38
+#: ../base/ufos/ui/_assets_squad.ufo:446 ../base/ufos/ui/campaign_main.ufo:36
 msgid "LOAD"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:530 ../base/ufos/ui/multiplayer.ufo:203
+#: ../base/ufos/ui/_assets_squad.ufo:530 ../base/ufos/ui/multiplayer.ufo:245
 msgid "CREATE"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:625 ../base/ufos/ui/multiplayer.ufo:58
+#: ../base/ufos/ui/_assets_squad.ufo:625 ../base/ufos/ui/multiplayer.ufo:100
 #, fuzzy
 msgid "Currently loaded"
 msgstr "Nykyinen solmu:"
@@ -25091,7 +25072,7 @@ msgstr "Organisaation varallisuus"
 msgid "Name of this base"
 msgstr "Tukikohdan nimi"
 
-#: ../base/ufos/ui/_menu.ufo:127 ../base/ufos/ui/popup_installations.ufo:173
+#: ../base/ufos/ui/_menu.ufo:127 ../base/ufos/ui/popup_installations.ufo:250
 msgid "Rename your base"
 msgstr "Nimeä tukikohta"
 
@@ -25130,8 +25111,7 @@ msgid "Health:"
 msgstr "Terveys:"
 
 #: ../base/ufos/ui/aircraft.ufo:239 ../base/ufos/ui/geoscape.ufo:1114
-#: ../base/ufos/ui/geoscape.ufo:1260
-#: ../base/ufos/ui/popup_installations.ufo:618
+#: ../base/ufos/ui/geoscape.ufo:1260 ../base/ufos/ui/ufoyard.ufo:404
 msgid "Status:"
 msgstr "Tila:"
 
@@ -25164,7 +25144,7 @@ msgid "Ammo"
 msgstr "Panokset"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:319 ../base/ufos/ui/equipment.ufo:417
-#: ../base/ufos/ui/market.ufo:132 ../base/ufos/ui/production.ufo:58
+#: ../base/ufos/ui/market.ufo:215 ../base/ufos/ui/production.ufo:58
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:138
 #: client/cgame/campaign/cp_ufopedia.cpp:140
 msgid "Armour"
@@ -25197,8 +25177,8 @@ msgstr "Nykyinen tavara paikassa"
 msgid "Ammo fitting this weapon"
 msgstr "Asenna ammukset tähän aseeseen"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:25 ../base/ufos/ui/bases.ufo:78
-#: ../base/ufos/ui/bases.ufo:81 ../base/ufos/ui/bases.ufo:332
+#: ../base/ufos/ui/aircraft_soldiers.ufo:25 ../base/ufos/ui/bases.ufo:77
+#: ../base/ufos/ui/bases.ufo:80 ../base/ufos/ui/bases.ufo:321
 #: ../base/ufos/ui/hire.ufo:79
 msgid "Soldiers"
 msgstr "Sotilaat"
@@ -25257,9 +25237,8 @@ msgstr "AutoNouse"
 msgid "Equip Defence Weapons"
 msgstr "Varusta puolustus aseilla"
 
-#: ../base/ufos/ui/basedefence.ufo:32
-#: ../base/ufos/ui/popup_installations.ufo:458
-#: client/cgame/campaign/cp_base.cpp:2065
+#: ../base/ufos/ui/basedefence.ufo:32 ../base/ufos/ui/ufoyard.ufo:244
+#: client/cgame/campaign/cp_base.cpp:2076
 msgid "Information"
 msgstr "Tiedot"
 
@@ -25306,8 +25285,7 @@ msgstr "Pinta ilmapuolustus"
 #: ../base/ufos/ui/basedefence.ufo:311 ../base/ufos/ui/geoscape.ufo:881
 #: ../base/ufos/ui/geoscape.ufo:983 ../base/ufos/ui/geoscape.ufo:1253
 #: ../base/ufos/ui/geoscape.ufo:1329 ../base/ufos/ui/irc.ufo:237
-#: ../base/ufos/ui/main.ufo:227 ../base/ufos/ui/popup_installations.ufo:159
-#: ../base/ufos/ui/popup_installations.ufo:488
+#: ../base/ufos/ui/popup_installations.ufo:232 ../base/ufos/ui/ufoyard.ufo:274
 msgid "Name:"
 msgstr "Nimi:"
 
@@ -25316,7 +25294,7 @@ msgid "Targetted UFO:"
 msgstr "UFO tähtäimessä:"
 
 #: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:1000
-#: ../base/ufos/ui/popup_installations.ufo:528
+#: ../base/ufos/ui/ufoyard.ufo:314
 #, fuzzy
 msgid "Time to completion:"
 msgstr "Salli tekstuuri pakkaus."
@@ -25326,137 +25304,101 @@ msgid "Autofire"
 msgstr "Automaattinen tulitus"
 
 #: ../base/ufos/ui/basedefence.ufo:369 ../base/ufos/ui/geoscape.ufo:1030
-#: ../base/ufos/ui/popup_installations.ufo:572
-#: ../base/ufos/ui/popup_installations.ufo:672
-#: client/cgame/campaign/cp_base_callbacks.cpp:601
-#: client/cgame/campaign/cp_base_callbacks.cpp:612
-#: client/cgame/campaign/cp_base_callbacks.cpp:622
-#: client/cgame/campaign/cp_base_callbacks.cpp:632
-#: client/cgame/campaign/cp_base_callbacks.cpp:645
+#: ../base/ufos/ui/ufoyard.ufo:358 ../base/ufos/ui/ufoyard.ufo:458
+#: client/cgame/campaign/cp_base_callbacks.cpp:603
+#: client/cgame/campaign/cp_base_callbacks.cpp:614
+#: client/cgame/campaign/cp_base_callbacks.cpp:624
+#: client/cgame/campaign/cp_base_callbacks.cpp:634
+#: client/cgame/campaign/cp_base_callbacks.cpp:647
 #: client/cgame/campaign/cp_installation_callbacks.cpp:193
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:564
 msgid "Destroy"
 msgstr "Tuhoa"
 
 #: ../base/ufos/ui/basedefence.ufo:370 ../base/ufos/ui/geoscape.ufo:1031
-#: ../base/ufos/ui/popup_installations.ufo:573
+#: ../base/ufos/ui/ufoyard.ufo:359
 #: client/cgame/campaign/cp_installation_callbacks.cpp:193
 msgid "Destroy installation"
 msgstr "Tuhoa rakennus"
 
 #: ../base/ufos/ui/basedefence.ufo:378 ../base/ufos/ui/geoscape.ufo:1013
-#: ../base/ufos/ui/inv_stat.ufo:325 ../base/ufos/ui/main.ufo:485
-#: ../base/ufos/ui/popup_baseattack.ufo:159
-#: ../base/ufos/ui/popup_capacity.ufo:77
-#: ../base/ufos/ui/popup_installations.ufo:130 ../base/ufos/ui/radar.ufo:36
-#: ../base/ufos/ui/transfer.ufo:694
+#: ../base/ufos/ui/inv_stat.ufo:324 ../base/ufos/ui/popup_baseattack.ufo:159
+#: ../base/ufos/ui/popup_capacity.ufo:112
+#: ../base/ufos/ui/popup_installations.ufo:191
+#: ../base/ufos/ui/popup_transferlist.ufo:167 ../base/ufos/ui/radar.ufo:36
 msgid "Close"
 msgstr "Sulje"
 
-#: ../base/ufos/ui/bases.ufo:60 ../base/ufos/ui/bases.ufo:63
-#: ../base/ufos/ui/hire.ufo:94 client/cgame/campaign/cp_base_callbacks.cpp:875
+#: ../base/ufos/ui/bases.ufo:59 ../base/ufos/ui/bases.ufo:62
+#: ../base/ufos/ui/hire.ufo:94
 msgid "Scientists"
 msgstr "Tutkijat"
 
-#: ../base/ufos/ui/bases.ufo:69 ../base/ufos/ui/bases.ufo:72
+#: ../base/ufos/ui/bases.ufo:68 ../base/ufos/ui/bases.ufo:71
 msgid "Engineers"
 msgstr ""
 
-#: ../base/ufos/ui/bases.ufo:87 ../base/ufos/ui/bases.ufo:90
+#: ../base/ufos/ui/bases.ufo:86 ../base/ufos/ui/bases.ufo:89
 #: ../base/ufos/ui/hire.ufo:84
 msgid "Pilots"
 msgstr "Lentäjät"
 
-#: ../base/ufos/ui/bases.ufo:107 ../base/ufos/ui/hud_default.ufo:1021
+#: ../base/ufos/ui/bases.ufo:106 ../base/ufos/ui/hud_default.ufo:1029
 msgid "Options"
 msgstr "Asetukset"
 
-#: ../base/ufos/ui/bases.ufo:117
+#: ../base/ufos/ui/bases.ufo:116
 #, fuzzy
 msgid "UFOpedia"
 msgstr "UFOpedia"
 
-#: ../base/ufos/ui/bases.ufo:127 ../base/ufos/ui/popup_installations.ufo:310
-#: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
-#: ../base/ufos/ui/transfer.ufo:463
-#: client/cgame/campaign/cp_base_callbacks.cpp:602
-#: client/cgame/campaign/cp_base_callbacks.cpp:613
-#: client/cgame/campaign/cp_base_callbacks.cpp:623
-#: client/cgame/campaign/cp_base_callbacks.cpp:633
+#: ../base/ufos/ui/bases.ufo:126 ../base/ufos/ui/transfer.ufo:164
+#: ../base/ufos/ui/transfer.ufo:658 ../base/ufos/ui/ufoyard.ufo:96
+#: ../base/ufos/ui/ufoyard.ufo:248 ../base/ufos/ui/ufoyard.ufo:440
+#: client/cgame/campaign/cp_base_callbacks.cpp:604
+#: client/cgame/campaign/cp_base_callbacks.cpp:615
+#: client/cgame/campaign/cp_base_callbacks.cpp:625
+#: client/cgame/campaign/cp_base_callbacks.cpp:635
 msgid "Transfer"
 msgstr "Siirrä"
 
-#: ../base/ufos/ui/bases.ufo:137
-msgid "Base Summary"
-msgstr "Tukikohdan Yhteenveto"
-
-#: ../base/ufos/ui/bases.ufo:161
+#: ../base/ufos/ui/bases.ufo:150
 #, fuzzy
 msgid "Facilities"
 msgstr "Tukikohdan Rakennukset"
 
-#: ../base/ufos/ui/bases.ufo:207 ../base/ufos/ui/geoscape.ufo:539
+#: ../base/ufos/ui/bases.ufo:196 ../base/ufos/ui/geoscape.ufo:539
 #: client/cgame/campaign/cp_ufopedia.cpp:113
-#: client/cgame/campaign/cp_ufopedia.cpp:842
+#: client/cgame/campaign/cp_ufopedia.cpp:860
 msgid "UFOpaedia"
 msgstr "UFOpedia"
 
-#: ../base/ufos/ui/bases.ufo:341 ../base/ufos/ui/market.ufo:31
-#: ../base/ufos/ui/market.ufo:57
+#: ../base/ufos/ui/bases.ufo:330 ../base/ufos/ui/market.ufo:30
+#: ../base/ufos/ui/market.ufo:60
 msgid "Market"
 msgstr ""
 
-#: ../base/ufos/ui/campaign.ufo:42 ../base/ufos/ui/campaign.ufo:95
-#, fuzzy
-msgid "Upload"
-msgstr "Uudelleenlataus"
-
-#: ../base/ufos/ui/campaign.ufo:50 ../base/ufos/ui/campaign.ufo:103
-#, fuzzy
-msgid "Delete this savegame"
-msgstr "Poista tämä kirjanmerkki"
-
-#: ../base/ufos/ui/campaign.ufo:168 ../base/ufos/ui/multiplayer.ufo:702
-#: ../base/ufos/ui/skirmish.ufo:175
-msgid "DOWNLOAD"
-msgstr ""
-
-#: ../base/ufos/ui/campaign.ufo:176 ../base/ufos/ui/skirmish.ufo:186
-msgid "BEGIN"
-msgstr ""
-
-#: ../base/ufos/ui/campaign.ufo:198 ../base/ufos/ui/multiplayer.ufo:901
-#: ../base/ufos/ui/popup_exitcampaign.ufo:41 ../base/ufos/ui/skirmish.ufo:197
+#: ../base/ufos/ui/campaign.ufo:59 ../base/ufos/ui/multiplayer.ufo:943
+#: ../base/ufos/ui/popup_exitcampaign.ufo:40 ../base/ufos/ui/skirmish.ufo:197
 #: ../base/ufos/ui/tutorials.ufo:70
 msgid "BACK"
 msgstr ""
 
-#: ../base/ufos/ui/campaign.ufo:355 ../base/ufos/ui/multiplayer.ufo:1065
-#: ../base/ufos/ui/skirmish.ufo:369
-msgid "No files uploaded yet"
-msgstr ""
-
-#: ../base/ufos/ui/campaign.ufo:426 ../base/ufos/ui/campaign.ufo:440
-#: ../base/ufos/ui/campaign.ufo:456
-msgid "Click here to save game"
-msgstr ""
-
-#: ../base/ufos/ui/campaign_main.ufo:27 ../base/ufos/ui/missionmenu.ufo:32
+#: ../base/ufos/ui/campaign_main.ufo:25 ../base/ufos/ui/missionmenu.ufo:121
 msgid "CONTINUE"
 msgstr ""
 
-#: ../base/ufos/ui/campaign_main.ufo:28 ../base/ufos/ui/missionmenu.ufo:33
+#: ../base/ufos/ui/campaign_main.ufo:26 ../base/ufos/ui/missionmenu.ufo:122
 #, fuzzy
 msgid "Leave this menu and continue playing."
 msgstr "Lataa viimeisin tallennettu peli tai jatka pelaamista"
 
-#: ../base/ufos/ui/campaign_main.ufo:60 ../base/ufos/ui/main.ufo:107
-#: ../base/ufos/ui/missionmenu.ufo:43
+#: ../base/ufos/ui/campaign_main.ufo:58 ../base/ufos/ui/main.ufo:95
+#: ../base/ufos/ui/missionmenu.ufo:137
 msgid "OPTIONS"
 msgstr ""
 
-#: ../base/ufos/ui/campaign_main.ufo:70 ../base/ufos/ui/main.ufo:140
+#: ../base/ufos/ui/campaign_main.ufo:68 ../base/ufos/ui/main.ufo:128
 msgid "EXIT"
 msgstr ""
 
@@ -25465,22 +25407,22 @@ msgstr ""
 msgid "Remove this file from the server"
 msgstr "Poista sotilas tästä aluksesta"
 
-#: ../base/ufos/ui/endgame.ufo:42
+#: ../base/ufos/ui/endgame.ufo:41
 msgid "Click to continue"
 msgstr "Napsauta jatkaaksesi"
 
-#: ../base/ufos/ui/endgame.ufo:63 ../base/ufos/ui/endgame.ufo:86
-#: ../base/ufos/ui/endgame.ufo:87
+#: ../base/ufos/ui/endgame.ufo:62 ../base/ufos/ui/endgame.ufo:85
+#: ../base/ufos/ui/endgame.ufo:86
 #, fuzzy
 msgid "scrollbar"
 msgstr "Rullaus"
 
-#: ../base/ufos/ui/endgame.ufo:112
+#: ../base/ufos/ui/endgame.ufo:111
 #, fuzzy
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Kiitos kun pelasit UFO:Alien Invasion peliä"
 
-#: ../base/ufos/ui/endgame.ufo:116
+#: ../base/ufos/ui/endgame.ufo:115
 msgid "You've lost the game"
 msgstr "Hävisit pelin"
 
@@ -25489,17 +25431,17 @@ msgstr "Hävisit pelin"
 msgid "Rename your unit"
 msgstr "Uudelleennimeä yksikkö"
 
-#: ../base/ufos/ui/equipment.ufo:185 ../base/ufos/ui/inv_stat.ufo:334
+#: ../base/ufos/ui/equipment.ufo:185 ../base/ufos/ui/inv_stat.ufo:333
 #, fuzzy
 msgid "Next soldier"
 msgstr "sotilas"
 
-#: ../base/ufos/ui/equipment.ufo:193 ../base/ufos/ui/inv_stat.ufo:343
+#: ../base/ufos/ui/equipment.ufo:193 ../base/ufos/ui/inv_stat.ufo:342
 #, fuzzy
 msgid "Previous soldier"
 msgstr "Edellinen tukikohta"
 
-#: ../base/ufos/ui/equipment.ufo:250 ../base/ufos/ui/inv_stat.ufo:84
+#: ../base/ufos/ui/equipment.ufo:250 ../base/ufos/ui/inv_stat.ufo:83
 msgid "0/0 Kg"
 msgstr ""
 
@@ -25653,7 +25595,7 @@ msgstr "Lopeta automaattisesti tehtävä"
 msgid "This kind of mission cannot be done automatically"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:264
 msgid "Cost:"
 msgstr "Hinta:"
 
@@ -25661,7 +25603,7 @@ msgstr "Hinta:"
 msgid "Time to build:"
 msgstr "Rakennusaika:"
 
-#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:281
 msgid "Build"
 msgstr "Perusta"
 
@@ -25690,7 +25632,7 @@ msgid "SAM defence"
 msgstr "Ilmatorjunta puolustus"
 
 #: ../base/ufos/ui/geoscape.ufo:1121 ../base/ufos/ui/geoscape.ufo:1267
-#: ../base/ufos/ui/popup_capacity.ufo:26
+#: ../base/ufos/ui/popup_capacity.ufo:40
 msgid "Base:"
 msgstr "Tukikohta:"
 
@@ -25702,8 +25644,8 @@ msgstr "Pinta-ilma ohjus paikka:"
 msgid "Select aircraft"
 msgstr "Valitse lentokone"
 
-#: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/geoscape.ufo:1274 ../base/ufos/ui/popup_transferlist.ufo:55
+#: ../base/ufos/ui/ufoyard.ufo:428
 msgid "ETA:"
 msgstr "ETA:"
 
@@ -25784,121 +25726,122 @@ msgstr "Pahasti haavoittunut"
 msgid "Healthy"
 msgstr "Terveys"
 
-#: ../base/ufos/ui/hud_.ufo:50
+#: ../base/ufos/ui/hud_.ufo:55
 #, fuzzy
 msgid "Use this firemode for reaction fire"
 msgstr "Tarkista tulitila käyttääksesi tätä reagointiaikaa "
 
-#: ../base/ufos/ui/hud_.ufo:325
+#: ../base/ufos/ui/hud_.ufo:330
 msgid "tt"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:299
+#: ../base/ufos/ui/hud_default.ufo:298
 #, fuzzy
 msgid "Stats"
 msgstr "Tila:"
 
-#: ../base/ufos/ui/hud_default.ufo:325
+#: ../base/ufos/ui/hud_default.ufo:324
 msgid "Headgear"
 msgstr "Kasvosuojus"
 
-#: ../base/ufos/ui/hud_default.ufo:358 ../base/ufos/ui/hud_default.ufo:377
+#: ../base/ufos/ui/hud_default.ufo:357 ../base/ufos/ui/hud_default.ufo:376
 #: client/battlescape/cl_hud_callbacks.cpp:348
 #, fuzzy
 msgid "Toggle reaction fire."
 msgstr "Vaihda reagointitilaa"
 
-#: ../base/ufos/ui/hud_default.ufo:413
+#: ../base/ufos/ui/hud_default.ufo:412
 #, fuzzy
 msgid "Stand"
 msgstr "Stanley"
 
-#: ../base/ufos/ui/hud_default.ufo:439
+#: ../base/ufos/ui/hud_default.ufo:438
 #, fuzzy
 msgid "Crouch"
 msgstr "Kävele kyyryssä"
 
-#: ../base/ufos/ui/hud_default.ufo:457
+#: ../base/ufos/ui/hud_default.ufo:456
 #, fuzzy
 msgid "Crouched"
 msgstr "TU varattu"
 
-#: ../base/ufos/ui/hud_default.ufo:486
+#: ../base/ufos/ui/hud_default.ufo:485
 #, fuzzy
 msgid "Standing"
 msgstr "Erinomainen"
 
-#: ../base/ufos/ui/hud_default.ufo:669
+#: ../base/ufos/ui/hud_default.ufo:668
 msgid "View other hand"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:754
+#: ../base/ufos/ui/hud_default.ufo:753
 msgid "Hide squad"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:825 ../base/ufos/ui/hud_default.ufo:827
-#: ../base/ufos/ui/hud_default.ufo:844
+#: ../base/ufos/ui/hud_default.ufo:824 ../base/ufos/ui/hud_default.ufo:826
+#: ../base/ufos/ui/hud_default.ufo:843
 msgid "btn"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:855
+#: ../base/ufos/ui/hud_default.ufo:854
 #, fuzzy
 msgid "Show squad"
 msgstr "Näytä näppäimet"
 
-#: ../base/ufos/ui/hud_default.ufo:919
+#: ../base/ufos/ui/hud_default.ufo:918
 #, fuzzy
 msgid "Jump to alien"
 msgstr "Italien"
 
-#: ../base/ufos/ui/hud_default.ufo:950
+#: ../base/ufos/ui/hud_default.ufo:958
 msgid "Jump to civilian"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:955
+#: ../base/ufos/ui/hud_default.ufo:963
 msgid "*"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:995
+#: ../base/ufos/ui/hud_default.ufo:1003
 #, fuzzy
 msgid "End Turn"
 msgstr "Vuoron loppu"
 
-#: ../base/ufos/ui/hud_default.ufo:1047
+#: ../base/ufos/ui/hud_default.ufo:1055 ../base/ufos/ui/missionmenu.ufo:36
+#: ../base/ufos/ui/missionmenu.ufo:83
 msgid "Abort"
 msgstr "Keskeytä"
 
-#: ../base/ufos/ui/hud_default.ufo:1098 ../base/ufos/ui/hud_default.ufo:1540
+#: ../base/ufos/ui/hud_default.ufo:1106 ../base/ufos/ui/hud_default.ufo:1548
 #, fuzzy
 msgid "Show rescue zone"
 msgstr "Sotilas poistui pelastusalueelta\n"
 
-#: ../base/ufos/ui/hud_default.ufo:1149 ../base/ufos/ui/hud_default.ufo:1204
+#: ../base/ufos/ui/hud_default.ufo:1157 ../base/ufos/ui/hud_default.ufo:1212
 #, fuzzy
 msgid "Target out of range"
 msgstr "Kohdista ammunta maahan"
 
-#: ../base/ufos/ui/hud_default.ufo:1154 ../base/ufos/ui/hud_default.ufo:1209
+#: ../base/ufos/ui/hud_default.ufo:1162 ../base/ufos/ui/hud_default.ufo:1217
 #, fuzzy
 msgid "Target acquired"
 msgstr "Valittu alue on miehitetty\n"
 
-#: ../base/ufos/ui/hud_default.ufo:1236
+#: ../base/ufos/ui/hud_default.ufo:1244
 #, fuzzy
 msgid "Aborting fire!"
 msgstr "Ei reaktio laukauksia"
 
-#: ../base/ufos/ui/hud_default.ufo:1481
+#: ../base/ufos/ui/hud_default.ufo:1489
 #, fuzzy
 msgid "Please wait"
 msgstr "Tyytyväinen"
 
-#: ../base/ufos/ui/hud_default.ufo:1537
+#: ../base/ufos/ui/hud_default.ufo:1545
 #, fuzzy
 msgid "Hide rescue zone"
 msgstr "Sotilas saapui pelastusalueelle\n"
 
-#: ../base/ufos/ui/hud_default.ufo:1638
+#: ../base/ufos/ui/hud_default.ufo:1646
 msgid "Default"
 msgstr ""
 
@@ -25944,17 +25887,17 @@ msgstr ""
 msgid "Phone HUD"
 msgstr ""
 
-#: ../base/ufos/ui/inv_stat.ufo:206 ../base/ufos/ui/stats.ufo:110
+#: ../base/ufos/ui/inv_stat.ufo:205 ../base/ufos/ui/stats.ufo:110
 msgid "Missions"
 msgstr "Tehtäviä"
 
-#: ../base/ufos/ui/inv_stat.ufo:215
+#: ../base/ufos/ui/inv_stat.ufo:214
 #: client/cgame/campaign/cp_mission_callbacks.cpp:118
 #, fuzzy
 msgid "Aliens killed"
 msgstr "Alieneita tapettu\t%i\n"
 
-#: ../base/ufos/ui/irc.ufo:23 ../base/ufos/ui/multiplayer.ufo:1825
+#: ../base/ufos/ui/irc.ufo:23 ../base/ufos/ui/multiplayer.ufo:1867
 msgid "Lobby"
 msgstr "Aula"
 
@@ -25998,7 +25941,7 @@ msgstr "Ei yhteyttä"
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr "Et ole yhteydessä aulaan. Haluatko että yhdistetään?"
 
-#: ../base/ufos/ui/irc.ufo:295 ../base/ufos/ui/multiplayer.ufo:1704
+#: ../base/ufos/ui/irc.ufo:295 ../base/ufos/ui/multiplayer.ufo:1746
 msgid "Connect"
 msgstr "Yhdistä"
 
@@ -26099,7 +26042,7 @@ msgstr "Lajittele kansakunnat kanssakäymisen mukaan"
 msgid "Selected nation:"
 msgstr "Valitse kansakunta:"
 
-#: ../base/ufos/ui/lostwon.ufo:437 ../base/ufos/ui/popup_installations.ufo:467
+#: ../base/ufos/ui/lostwon.ufo:437 ../base/ufos/ui/ufoyard.ufo:253
 msgid "Sell"
 msgstr "Myy"
 
@@ -26111,150 +26054,92 @@ msgstr "Aloita UFO:n myynti prosessi"
 msgid "Mark all messages read"
 msgstr "Merkkaa kaikki viestit luetuksi"
 
-#: ../base/ufos/ui/main.ufo:32
+#: ../base/ufos/ui/main.ufo:27
 msgid "Facebook"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:33
+#: ../base/ufos/ui/main.ufo:28
 msgid "Like us on facebook"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:48
+#: ../base/ufos/ui/main.ufo:40
 #, fuzzy
 msgid "Twitter"
 msgstr "Sitters"
 
-#: ../base/ufos/ui/main.ufo:49
+#: ../base/ufos/ui/main.ufo:41
 msgid "Follow us on twitter"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:74
+#: ../base/ufos/ui/main.ufo:62
 msgid "CAMPAIGN"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:85
+#: ../base/ufos/ui/main.ufo:73
 msgid "SKIRMISH"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:96
+#: ../base/ufos/ui/main.ufo:84
 msgid "MULTIPLAYER"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:118 ../base/ufos/ui/tutorials.ufo:12
+#: ../base/ufos/ui/main.ufo:106 ../base/ufos/ui/tutorials.ufo:12
 msgid "TUTORIALS"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:129
+#: ../base/ufos/ui/main.ufo:117
 msgid "DEVELOPERS"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:204
-msgid "Initial settings"
-msgstr "Alku asetukset"
-
-#: ../base/ufos/ui/main.ufo:217
-#, fuzzy
-msgid "User information"
-msgstr "Käyttäjän tiedot"
-
-#: ../base/ufos/ui/main.ufo:252
-msgid "Volume Control"
-msgstr "Äänenvoimakkuuden hallinta"
-
-#: ../base/ufos/ui/main.ufo:262
-msgid "Effects:"
-msgstr "Tehosteet:"
-
-#: ../base/ufos/ui/main.ufo:284
-msgid "Music:"
-msgstr "Musiikki:"
-
-#: ../base/ufos/ui/main.ufo:311
-msgid "Language"
-msgstr "Kieli"
-
-#: ../base/ufos/ui/main.ufo:321
-msgid "Language:"
-msgstr "Kieli:"
-
-#: ../base/ufos/ui/main.ufo:371
-msgid "You have to set the playername and hit the 'OK' button:"
-msgstr "Sinun tulee asettaa palaajan nimesi ja painaa 'OK'-painiketta:"
-
-#: ../base/ufos/ui/main.ufo:381 ../base/ufos/ui/multiplayer.ufo:1774
-#: ../base/ufos/ui/sys_popup.ufo:51 ../base/ufos/ui/sys_popup.ufo:114
-msgid "OK"
-msgstr "OK"
-
-#: ../base/ufos/ui/main.ufo:382
-msgid "Save settings"
-msgstr "Tallenna asetukset"
-
-#: ../base/ufos/ui/main.ufo:423
-msgid "Tip of the day"
-msgstr "Päivän vinkki"
-
-#: ../base/ufos/ui/main.ufo:429
-msgid "Show tip of the day"
-msgstr "Näytä päivän vinkki"
-
-#: ../base/ufos/ui/main.ufo:463 ../base/ufos/ui/main.ufo:482
-msgid "Next"
-msgstr "Seuraava"
-
-#: ../base/ufos/ui/main.ufo:464 ../base/ufos/ui/main.ufo:483
-msgid "Next tip"
-msgstr "Seuraava vihje"
-
-#: ../base/ufos/ui/main.ufo:486
-msgid "Close window"
-msgstr "Sulje ikkuna"
-
-#: ../base/ufos/ui/market.ufo:49
+#: ../base/ufos/ui/market.ufo:50
 #: client/cgame/campaign/cp_base_callbacks.cpp:223
 #: client/cgame/campaign/cp_geoscape.cpp:316
 #: client/cgame/campaign/cp_installation_callbacks.cpp:268
 msgid "Base"
 msgstr "Tukikohta"
 
-#: ../base/ufos/ui/market.ufo:88
+#: ../base/ufos/ui/market.ufo:111
 #, fuzzy
 msgid "Primary Weapons"
 msgstr "Pääaseet"
 
-#: ../base/ufos/ui/market.ufo:99
+#: ../base/ufos/ui/market.ufo:137
 #, fuzzy
 msgid "Secondary Weapons"
 msgstr "Vara-aseet"
 
-#: ../base/ufos/ui/market.ufo:110
+#: ../base/ufos/ui/market.ufo:163
 #, fuzzy
 msgid "Heavy Weapons"
 msgstr "Raskaat aseet:"
 
-#: ../base/ufos/ui/market.ufo:143
+#: ../base/ufos/ui/market.ufo:241
 #, fuzzy
 msgid "Aircraft Equipment"
 msgstr "%s ylimääräiset tarvikkeet\n"
 
-#: ../base/ufos/ui/market.ufo:165
+#: ../base/ufos/ui/market.ufo:298
 #, fuzzy
 msgid "Implants"
 msgstr "Implantit"
 
-#: ../base/ufos/ui/market.ufo:176
+#: ../base/ufos/ui/market.ufo:324
 #, fuzzy
 msgid "Other Items"
 msgstr "Muut"
 
-#: ../base/ufos/ui/market.ufo:187
+#: ../base/ufos/ui/market.ufo:350
 msgid "Unmanned Ground Vehicles"
 msgstr ""
 
-#: ../base/ufos/ui/market.ufo:331
+#: ../base/ufos/ui/market.ufo:459
+msgid "Purchase for %i credits each"
+msgstr ""
+
+#: ../base/ufos/ui/market.ufo:467
 #, fuzzy
-msgid "Transactions"
-msgstr "Rakennukset"
+msgid "Sell for %i credits each"
+msgstr "%i tuote myytiin %i krediitillä."
 
 #: ../base/ufos/ui/material_editor.ufo:12
 msgid "Material editor"
@@ -26415,314 +26300,372 @@ msgstr "Aloita Peli"
 msgid "Start the match"
 msgstr "Aloita peli!"
 
-#: ../base/ufos/ui/missionmenu.ufo:61 ../base/ufos/ui/multiplayer.ufo:379
+#: ../base/ufos/ui/missionmenu.ufo:19 ../base/ufos/ui/multiplayer.ufo:421
 msgid "LOBBY"
 msgstr ""
 
-#: ../base/ufos/ui/missionmenu.ufo:62
+#: ../base/ufos/ui/missionmenu.ufo:23
 msgid "ABORT GAME"
 msgstr ""
 
-#: ../base/ufos/ui/missionmenu.ufo:70
+#: ../base/ufos/ui/missionmenu.ufo:28
+#, fuzzy
+msgid "Abort game"
+msgstr "Keskeytä Peli"
+
+#: ../base/ufos/ui/missionmenu.ufo:32
+#, fuzzy
+msgid "Do you really want to abort this game?"
+msgstr "Haluatko varmasti tuhota tämän rakennuksen?"
+
+#: ../base/ufos/ui/missionmenu.ufo:47
 msgid "RESTART MISSION"
 msgstr ""
 
-#: ../base/ufos/ui/missionmenu.ufo:71
+#: ../base/ufos/ui/missionmenu.ufo:52
+#, fuzzy
+msgid "Restart mission"
+msgstr "Yritä uudelleen tätä tehtävää"
+
+#: ../base/ufos/ui/missionmenu.ufo:56
+#, fuzzy
+msgid "Do you really want to restart this mission? You will lose all progress."
+msgstr "Haluatko varmasti tuhota tämän rakennuksen?"
+
+#: ../base/ufos/ui/missionmenu.ufo:60
+#, fuzzy
+msgid "Restart"
+msgstr "Pakota aloitus"
+
+#: ../base/ufos/ui/missionmenu.ufo:70
 msgid "ABORT MISSION"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:8
+#: ../base/ufos/ui/missionmenu.ufo:75
+#, fuzzy
+msgid "Abort mission"
+msgstr "Automaattinen Tehtävä"
+
+#: ../base/ufos/ui/missionmenu.ufo:79
+#, fuzzy
+msgid "Do you really want to abort this mission?"
+msgstr "Haluatko varmasti tuhota tämän rakennuksen?"
+
+#: ../base/ufos/ui/multiplayer.ufo:34
+#, fuzzy
+msgid "Upload"
+msgstr "Uudelleenlataus"
+
+#: ../base/ufos/ui/multiplayer.ufo:42
+#, fuzzy
+msgid "Delete this savegame"
+msgstr "Poista tämä kirjanmerkki"
+
+#: ../base/ufos/ui/multiplayer.ufo:50
 msgid "Connect to this server"
 msgstr "Yhdistä tälle palvelimelle"
 
-#: ../base/ufos/ui/multiplayer.ufo:12
+#: ../base/ufos/ui/multiplayer.ufo:54
 msgid "Delete this bookmark"
 msgstr "Poista tämä kirjanmerkki"
 
-#: ../base/ufos/ui/multiplayer.ufo:194
+#: ../base/ufos/ui/multiplayer.ufo:236
 msgid "JOIN"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:212
+#: ../base/ufos/ui/multiplayer.ufo:254
 msgid "TEAM"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:228
+#: ../base/ufos/ui/multiplayer.ufo:270
 msgid "Gametype:"
 msgstr "Pelityyppi:"
 
-#: ../base/ufos/ui/multiplayer.ufo:248
+#: ../base/ufos/ui/multiplayer.ufo:290
 msgid "Teamplay:"
 msgstr "Joukkuepeli:"
 
-#: ../base/ufos/ui/multiplayer.ufo:268
+#: ../base/ufos/ui/multiplayer.ufo:310
 msgid "Allowed gametype:"
 msgstr "Sallitut pelityypit:"
 
-#: ../base/ufos/ui/multiplayer.ufo:320
+#: ../base/ufos/ui/multiplayer.ufo:362
 msgid "Save the current team"
 msgstr "Tallenna valittu joukkue"
 
-#: ../base/ufos/ui/multiplayer.ufo:325
+#: ../base/ufos/ui/multiplayer.ufo:367
 msgid "SAVE TEAM"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:345
+#: ../base/ufos/ui/multiplayer.ufo:387
 msgid "Bookmarks"
 msgstr "Kirjanmerkit"
 
-#: ../base/ufos/ui/multiplayer.ufo:403
+#: ../base/ufos/ui/multiplayer.ufo:445
 msgid "Hostname:"
 msgstr "Isäntänimi:"
 
-#: ../base/ufos/ui/multiplayer.ufo:418
+#: ../base/ufos/ui/multiplayer.ufo:460
 msgid "Make this server public:"
 msgstr "Tee tästä julkinen palvelin:"
 
-#: ../base/ufos/ui/multiplayer.ufo:435
+#: ../base/ufos/ui/multiplayer.ufo:477
 msgid "Server-Password:"
 msgstr "Palvelimen-Salasana:"
 
-#: ../base/ufos/ui/multiplayer.ufo:453 ../base/ufos/ui/multiplayer.ufo:1409
+#: ../base/ufos/ui/multiplayer.ufo:495 ../base/ufos/ui/multiplayer.ufo:1451
 msgid "RCON-Password:"
 msgstr "RCON-Salasana:"
 
-#: ../base/ufos/ui/multiplayer.ufo:471
+#: ../base/ufos/ui/multiplayer.ufo:513
 msgid "Enable morale states:"
 msgstr "Ota käyttöön moraali tilat:"
 
-#: ../base/ufos/ui/multiplayer.ufo:486
+#: ../base/ufos/ui/multiplayer.ufo:528
 #, fuzzy
 msgid "Alien rush:"
 msgstr "Alienit"
 
-#: ../base/ufos/ui/multiplayer.ufo:489
+#: ../base/ufos/ui/multiplayer.ufo:531
 #, fuzzy
 msgid "Enemies respawn when killed."
 msgstr "Vihollisia kuollut:"
 
-#: ../base/ufos/ui/multiplayer.ufo:505
+#: ../base/ufos/ui/multiplayer.ufo:547
 msgid "Max. clients:"
 msgstr "Maks. yhteydet:"
 
-#: ../base/ufos/ui/multiplayer.ufo:506
+#: ../base/ufos/ui/multiplayer.ufo:548
 msgid "Sets the max allowed clients to connect"
 msgstr "Aseta maks. hyväksytyille asiakkaiden yhteyksille"
 
-#: ../base/ufos/ui/multiplayer.ufo:531 ../base/ufos/ui/multiplayer.ufo:1309
+#: ../base/ufos/ui/multiplayer.ufo:573 ../base/ufos/ui/multiplayer.ufo:1351
 msgid "Max. soldiers per team:"
 msgstr "Maks. sotilaita joukkueella:"
 
-#: ../base/ufos/ui/multiplayer.ufo:532 ../base/ufos/ui/multiplayer.ufo:1310
-#: ../base/ufos/ui/multiplayer.ufo:1360
+#: ../base/ufos/ui/multiplayer.ufo:574 ../base/ufos/ui/multiplayer.ufo:1352
+#: ../base/ufos/ui/multiplayer.ufo:1402
 msgid "Sets the max allowed soldiers per team"
 msgstr "Aseta sallittu maks. määrä sotilaita joukkueelle"
 
-#: ../base/ufos/ui/multiplayer.ufo:557 ../base/ufos/ui/multiplayer.ufo:1334
+#: ../base/ufos/ui/multiplayer.ufo:599 ../base/ufos/ui/multiplayer.ufo:1376
 msgid "Max. soldiers per player:"
 msgstr "Maks. sotilaita pelaajalla:"
 
-#: ../base/ufos/ui/multiplayer.ufo:558 ../base/ufos/ui/multiplayer.ufo:1335
+#: ../base/ufos/ui/multiplayer.ufo:600 ../base/ufos/ui/multiplayer.ufo:1377
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "Aseta sallittu maks. määrä sotilaita pelaajalle joukkuepelissä"
 
-#: ../base/ufos/ui/multiplayer.ufo:584
+#: ../base/ufos/ui/multiplayer.ufo:626
 msgid "Max. human players per team:"
 msgstr "Maks. ihmispelaajia joukkueessa:"
 
-#: ../base/ufos/ui/multiplayer.ufo:609
+#: ../base/ufos/ui/multiplayer.ufo:651
 msgid "Max. AI actors:"
 msgstr "Maks. tekoäly hahmoja:"
 
-#: ../base/ufos/ui/multiplayer.ufo:610
+#: ../base/ufos/ui/multiplayer.ufo:652
 msgid "Max AI actors for teamplay mode"
 msgstr "Maks. tekoäly hahmoja joukkuepeli moodissa"
 
-#: ../base/ufos/ui/multiplayer.ufo:636
+#: ../base/ufos/ui/multiplayer.ufo:678
 msgid "Round time limit in seconds:"
 msgstr "Kierroksien määräaika sekunneissa:"
 
-#: ../base/ufos/ui/multiplayer.ufo:658
+#: ../base/ufos/ui/multiplayer.ufo:700
 msgid "START SERVER"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:679
+#: ../base/ufos/ui/multiplayer.ufo:721
 #, fuzzy
 msgid "Teams"
 msgstr "Tiimi"
 
-#: ../base/ufos/ui/multiplayer.ufo:696
+#: ../base/ufos/ui/multiplayer.ufo:738
 #, fuzzy
 msgid "Download new teams"
 msgstr "Ladataan [%s]"
 
-#: ../base/ufos/ui/multiplayer.ufo:713
+#: ../base/ufos/ui/multiplayer.ufo:744 ../base/ufos/ui/skirmish.ufo:175
+msgid "DOWNLOAD"
+msgstr ""
+
+#: ../base/ufos/ui/multiplayer.ufo:755
 #, fuzzy
 msgid "Generate New Team"
 msgstr "Luo uusi satunnainen joukkue"
 
-#: ../base/ufos/ui/multiplayer.ufo:714
+#: ../base/ufos/ui/multiplayer.ufo:756
 msgid "GENERATE"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:765
+#: ../base/ufos/ui/multiplayer.ufo:807
 msgid "Close web panel"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:766
+#: ../base/ufos/ui/multiplayer.ufo:808
 msgid "CLOSE"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:781
+#: ../base/ufos/ui/multiplayer.ufo:823
 msgid "REFRESH"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:788
+#: ../base/ufos/ui/multiplayer.ufo:830
 msgid "Serverfilter:"
 msgstr "Palvelinsuodatin:"
 
-#: ../base/ufos/ui/multiplayer.ufo:870
+#: ../base/ufos/ui/multiplayer.ufo:912
 msgid "CONNECT"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:881
+#: ../base/ufos/ui/multiplayer.ufo:923
 msgid "Connect to IP"
 msgstr "Yhdistä IP osoitteeseen"
 
-#: ../base/ufos/ui/multiplayer.ufo:910
+#: ../base/ufos/ui/multiplayer.ufo:952
 msgid ""
 "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr "Varmista, että olet avannut TCP-portin 27910 palomuurin asetuksista"
 
-#: ../base/ufos/ui/multiplayer.ufo:1001 ../base/ufos/ui/options.ufo:640
+#: ../base/ufos/ui/multiplayer.ufo:1043 ../base/ufos/ui/options.ufo:640
 msgid "All"
 msgstr "Kaikki"
 
-#: ../base/ufos/ui/multiplayer.ufo:1003
+#: ../base/ufos/ui/multiplayer.ufo:1045
 msgid "Free"
 msgstr "Vapaa"
 
-#: ../base/ufos/ui/multiplayer.ufo:1005
+#: ../base/ufos/ui/multiplayer.ufo:1047
 msgid "Playing"
 msgstr "Pelaamassa"
 
-#: ../base/ufos/ui/multiplayer.ufo:1007
+#: ../base/ufos/ui/multiplayer.ufo:1049
 msgid "Invalid"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1171
+#: ../base/ufos/ui/multiplayer.ufo:1107 ../base/ufos/ui/skirmish.ufo:369
+msgid "No files uploaded yet"
+msgstr ""
+
+#: ../base/ufos/ui/multiplayer.ufo:1213
 msgid "Players connected"
 msgstr "Pelaajia yhdistetty"
 
-#: ../base/ufos/ui/multiplayer.ufo:1220
+#: ../base/ufos/ui/multiplayer.ufo:1262
 msgid "Team selection"
 msgstr "Valitse joukkue"
 
-#: ../base/ufos/ui/multiplayer.ufo:1237
+#: ../base/ufos/ui/multiplayer.ufo:1279
 msgid "Team preference:"
 msgstr "Joukkueen asetus:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1253
+#: ../base/ufos/ui/multiplayer.ufo:1295
 msgid "Next free team"
 msgstr "Näytä seuraava joukkue"
 
-#: ../base/ufos/ui/multiplayer.ufo:1266
+#: ../base/ufos/ui/multiplayer.ufo:1308
 msgid "Previous free team"
 msgstr "Näytä edellinen joukkue"
 
-#: ../base/ufos/ui/multiplayer.ufo:1278 ../base/ufos/ui/multiplayer.ufo:1287
+#: ../base/ufos/ui/multiplayer.ufo:1320 ../base/ufos/ui/multiplayer.ufo:1329
 msgid "Finish the teamselection and start the game"
 msgstr "Lopeta joukkueen valitseminen ja aloita peli"
 
-#: ../base/ufos/ui/multiplayer.ufo:1286
+#: ../base/ufos/ui/multiplayer.ufo:1328
 msgid "Are you ready?"
 msgstr "Oletko valmis?"
 
-#: ../base/ufos/ui/multiplayer.ufo:1303
+#: ../base/ufos/ui/multiplayer.ufo:1345
 msgid "Admin control"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1359
+#: ../base/ufos/ui/multiplayer.ufo:1401
 #, fuzzy
 msgid "Round time limit:"
 msgstr "Kierroksien määräaika sekunneissa:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1384
+#: ../base/ufos/ui/multiplayer.ufo:1426
 msgid "Force start"
 msgstr "Pakota aloitus"
 
-#: ../base/ufos/ui/multiplayer.ufo:1385
+#: ../base/ufos/ui/multiplayer.ufo:1427
 #, fuzzy
 msgid "Launch the game before all teams are ready"
 msgstr ""
 "Aloita peli, vaikka kaikki joukkueet eivät ole valmiita tai eivät ole "
 "yhdistäneet"
 
-#: ../base/ufos/ui/multiplayer.ufo:1403
+#: ../base/ufos/ui/multiplayer.ufo:1445
 msgid "Remote Admin Control"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1509
+#: ../base/ufos/ui/multiplayer.ufo:1551
 #, fuzzy
 msgid "Server Info"
 msgstr "Palvelimen tiedot"
 
-#: ../base/ufos/ui/multiplayer.ufo:1576
+#: ../base/ufos/ui/multiplayer.ufo:1618
 #, fuzzy
 msgid "Map screenshots"
 msgstr "Ota kuvakaappaus"
 
-#: ../base/ufos/ui/multiplayer.ufo:1650
+#: ../base/ufos/ui/multiplayer.ufo:1692
 msgid "Userlist"
 msgstr "Käyttäjälista"
 
-#: ../base/ufos/ui/multiplayer.ufo:1668 ../base/ufos/ui/options.ufo:210
-#: ../base/ufos/ui/web.ufo:12
+#: ../base/ufos/ui/multiplayer.ufo:1710 ../base/ufos/ui/options.ufo:210
+#: ../base/ufos/ui/web.ufo:29
 msgid "Name"
 msgstr "Nimi"
 
-#: ../base/ufos/ui/multiplayer.ufo:1678
+#: ../base/ufos/ui/multiplayer.ufo:1720
 #: ../base/ufos/ui/popup_baseattack.ufo:279
 msgid "Team"
 msgstr "Tiimi"
 
-#: ../base/ufos/ui/multiplayer.ufo:1712
+#: ../base/ufos/ui/multiplayer.ufo:1754
 msgid "Bookmark"
 msgstr "Kirjanmerkki"
 
-#: ../base/ufos/ui/multiplayer.ufo:1713
+#: ../base/ufos/ui/multiplayer.ufo:1755
 msgid "Add server to bookmarks"
 msgstr "Lisää palvelimen kirjanmerkki"
 
-#: ../base/ufos/ui/multiplayer.ufo:1723
+#: ../base/ufos/ui/multiplayer.ufo:1765
 msgid "Leave Serverbrowser"
 msgstr "Poistu Palvelinselaimesta"
 
-#: ../base/ufos/ui/multiplayer.ufo:1751
+#: ../base/ufos/ui/multiplayer.ufo:1793
 msgid "Enter server password"
 msgstr "Anna palvelimen salasana"
 
-#: ../base/ufos/ui/multiplayer.ufo:1759
+#: ../base/ufos/ui/multiplayer.ufo:1801
 msgid "Password:"
 msgstr "Salasana:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1797
+#: ../base/ufos/ui/multiplayer.ufo:1816 ../base/ufos/ui/sys_popup.ufo:51
+#: ../base/ufos/ui/sys_popup.ufo:114
+msgid "OK"
+msgstr "OK"
+
+#: ../base/ufos/ui/multiplayer.ufo:1839
 msgid "Game invitation"
 msgstr "Pelin kutsut"
 
-#: ../base/ufos/ui/multiplayer.ufo:1812
+#: ../base/ufos/ui/multiplayer.ufo:1854
 msgid "Server info"
 msgstr "Palvelimen tiedot"
 
-#: ../base/ufos/ui/multiplayer.ufo:1813
+#: ../base/ufos/ui/multiplayer.ufo:1855
 msgid "Show server information"
 msgstr "Näytä palvelimen tiedot"
 
-#: ../base/ufos/ui/multiplayer.ufo:1826
+#: ../base/ufos/ui/multiplayer.ufo:1868
 msgid "Go into the lobby"
 msgstr "Mene aulaan"
 
-#: ../base/ufos/ui/multiplayer.ufo:1835
+#: ../base/ufos/ui/multiplayer.ufo:1877
 msgid ""
 "You received a invitation to take part of a multiplayer game. Hit the "
 "connect button to connect to the server"
@@ -27257,7 +27200,7 @@ msgstr "Tekstuuri Asetukset"
 #: ../base/ufos/ui/options.ufo:2264
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:214
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:617
-#: client/cgame/campaign/cp_ufopedia.cpp:206 client/input/cl_joystick.cpp:280
+#: client/cgame/campaign/cp_ufopedia.cpp:208 client/input/cl_joystick.cpp:280
 msgid "None"
 msgstr "Tyhjä"
 
@@ -27402,143 +27345,76 @@ msgstr "Kokoa joukkue ensimmäisenä"
 msgid "Assemble a team first"
 msgstr "Kokoa joukkue ensimmäisenä"
 
-#: ../base/ufos/ui/popup_capacity.ufo:10
+#: ../base/ufos/ui/popup_capacity.ufo:18
 #, fuzzy
 msgid "Capacity Exceeded"
 msgstr "Kapasiteetti"
 
-#: ../base/ufos/ui/popup_capacity.ufo:14
+#: ../base/ufos/ui/popup_capacity.ufo:25
 msgid ""
 "There is no more room for goods/personel at this base. Free up some space."
 msgstr ""
 
-#: ../base/ufos/ui/popup_capacity.ufo:37
-#: client/cgame/campaign/cp_base_callbacks.cpp:838
+#: ../base/ufos/ui/popup_capacity.ufo:56
 #, fuzzy
 msgid "Capacity"
 msgstr "Kapasiteetti"
 
-#: ../base/ufos/ui/popup_capacity.ufo:44
-#: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
+#: ../base/ufos/ui/popup_capacity.ufo:66 ../base/ufos/ui/transfer.ufo:521
+#: ../base/ufos/ui/ufoyard.ufo:77 ../base/ufos/ui/ufoyard.ufo:678
 msgid "free"
 msgstr ""
 
-#: ../base/ufos/ui/popup_capacity.ufo:51
+#: ../base/ufos/ui/popup_capacity.ufo:76
 msgid "all"
 msgstr "kaikki"
 
-#: ../base/ufos/ui/popup_capacity.ufo:85
+#: ../base/ufos/ui/popup_capacity.ufo:124
 #, fuzzy
 msgid "Go to base"
 msgstr "Mene Varastoon"
 
-#: ../base/ufos/ui/popup_exitcampaign.ufo:25
+#: ../base/ufos/ui/popup_exitcampaign.ufo:24
 msgid "EXIT CAMPAIGN CONFIRMATION"
 msgstr ""
 
-#: ../base/ufos/ui/popup_exitcampaign.ufo:33
+#: ../base/ufos/ui/popup_exitcampaign.ufo:32
 msgid "You will lose all your campaign progress."
 msgstr ""
 
-#: ../base/ufos/ui/popup_exitcampaign.ufo:53
+#: ../base/ufos/ui/popup_exitcampaign.ufo:52
 msgid "QUIT"
 msgstr ""
 
-#: ../base/ufos/ui/popup_installations.ufo:60
+#: ../base/ufos/ui/popup_installations.ufo:80
 msgid "New installation"
 msgstr "Uusi rakennus"
 
-#: ../base/ufos/ui/popup_installations.ufo:65
+#: ../base/ufos/ui/popup_installations.ufo:87
 msgid "Type"
 msgstr "Tyyppi"
 
-#: ../base/ufos/ui/popup_installations.ufo:72
+#: ../base/ufos/ui/popup_installations.ufo:96
 msgid "Build Time"
 msgstr "Rakennusaika"
 
-#: ../base/ufos/ui/popup_installations.ufo:80
+#: ../base/ufos/ui/popup_installations.ufo:106
 msgid "Cost"
 msgstr "Hinta"
 
-#: ../base/ufos/ui/popup_installations.ufo:154
+#: ../base/ufos/ui/popup_installations.ufo:225
 msgid "New base"
 msgstr "Uusi tukikohta"
 
-#: ../base/ufos/ui/popup_installations.ufo:197
+#: ../base/ufos/ui/popup_installations.ufo:282
 msgid "Build the base"
 msgstr "Perusta tukikohta"
 
-#: ../base/ufos/ui/popup_installations.ufo:358
-#, fuzzy
-msgid "UFO Yards"
-msgstr "UFO-telakka"
-
-#: ../base/ufos/ui/popup_installations.ufo:505
-#, fuzzy
-msgid "Rename Installation"
-msgstr "Uudelleennimeä rakennus"
-
-#: ../base/ufos/ui/popup_installations.ufo:516
-#: ../base/ufos/ui/popup_installations.ufo:630
-#, fuzzy
-msgid "Location:"
-msgstr "Kansakunta:"
-
-#: ../base/ufos/ui/popup_installations.ufo:542
-#, fuzzy
-msgid "Capacity:"
-msgstr "Kapasiteetti"
-
-#: ../base/ufos/ui/popup_installations.ufo:554
-msgid "Free Space:"
-msgstr ""
-
-#: ../base/ufos/ui/popup_installations.ufo:566
-#: ../base/ufos/ui/popup_installations.ufo:666
-#, fuzzy
-msgid "Confirm destroying"
-msgstr "Hyväksy Tehtävät:"
-
-#: ../base/ufos/ui/popup_installations.ufo:606
-#, fuzzy
-msgid "Condition:"
-msgstr "Hyväksy Tehtävät:"
-
-#: ../base/ufos/ui/popup_installations.ufo:655
-#, fuzzy
-msgid "Transfer UFO"
-msgstr "Siirrä"
-
-#: ../base/ufos/ui/popup_installations.ufo:673
-msgid "Destroy UFO"
-msgstr "Tuhoa ufo"
-
-#: ../base/ufos/ui/popup_installations.ufo:837
-#, fuzzy
-msgid "disassembling"
-msgstr "Tuotanto"
-
-#: ../base/ufos/ui/popup_installations.ufo:843
-#, fuzzy
-msgid "transferring"
-msgstr "siirrä"
-
-#: ../base/ufos/ui/popup_installations.ufo:849
-#, fuzzy
-msgid "stored"
-msgstr "Varastot"
-
-#: ../base/ufos/ui/popup_installations.ufo:855
-#, fuzzy
-msgid "unknown"
-msgstr "Tuntematon"
-
-#: ../base/ufos/ui/popup_quickload.ufo:23
+#: ../base/ufos/ui/popup_quickload.ufo:22
 msgid "Reload campaign"
 msgstr "Uudelleen lataa kampanja"
 
-#: ../base/ufos/ui/popup_quickload.ufo:32
+#: ../base/ufos/ui/popup_quickload.ufo:31
 msgid ""
 "Are you sure that you really want to reload the last automatically saved "
 "campaign state?"
@@ -27546,9 +27422,24 @@ msgstr ""
 "Oletko varma että haluat ladata uudelleen viimeksi automaattisesti "
 "tallennetun kampanjan tilan?"
 
-#: ../base/ufos/ui/popup_quickload.ufo:40
+#: ../base/ufos/ui/popup_quickload.ufo:39
 msgid "Load"
 msgstr "Lataa"
+
+#: ../base/ufos/ui/popup_transferlist.ufo:17
+#, fuzzy
+msgid "From:"
+msgstr "Sumu:"
+
+#: ../base/ufos/ui/popup_transferlist.ufo:36
+#, fuzzy
+msgid "To:"
+msgstr "T:"
+
+#: ../base/ufos/ui/popup_transferlist.ufo:125
+#, fuzzy
+msgid "Actual transfers"
+msgstr "siirrä"
 
 #: ../base/ufos/ui/production.ufo:72
 msgid "Craft items"
@@ -27646,6 +27537,10 @@ msgstr ""
 msgid "SQUAD"
 msgstr ""
 
+#: ../base/ufos/ui/skirmish.ufo:186
+msgid "BEGIN"
+msgstr ""
+
 #: ../base/ufos/ui/stats.ufo:47
 msgid "Costs"
 msgstr "Menot"
@@ -27667,8 +27562,8 @@ msgstr "Tukikohtia"
 msgid "Installations"
 msgstr "Rakennukset"
 
-#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:144
-#: ../base/ufos/ui/transfer.ufo:253
+#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:201
+#: ../base/ufos/ui/transfer.ufo:359
 msgid "Employees"
 msgstr "Henkilöstö"
 
@@ -27759,100 +27654,76 @@ msgstr "Luo uusi satunnainen joukkue"
 msgid "Generate a new team with the selected race"
 msgstr "Päivitä GUI valitulla kohteella"
 
-#: ../base/ufos/ui/transfer.ufo:34
+#: ../base/ufos/ui/transfer.ufo:49
 #, fuzzy
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 msgstr "Lisää/Poista tuotteita siirto lastista"
 
-#: ../base/ufos/ui/transfer.ufo:149 ../base/ufos/ui/transfer.ufo:255
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:145
+#: ../base/ufos/ui/transfer.ufo:208 ../base/ufos/ui/transfer.ufo:361
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:143
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:793
 msgid "Aliens"
 msgstr "Alienit"
 
-#: ../base/ufos/ui/transfer.ufo:181
+#: ../base/ufos/ui/transfer.ufo:248
 #, fuzzy
 msgid "From"
 msgstr "Sumu:"
 
-#: ../base/ufos/ui/transfer.ufo:188
+#: ../base/ufos/ui/transfer.ufo:258
 #, fuzzy
 msgid "To"
 msgstr "T:"
 
-#: ../base/ufos/ui/transfer.ufo:282
+#: ../base/ufos/ui/transfer.ufo:380
 msgid "Cargo"
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:291
-#: client/cgame/campaign/cp_base_callbacks.cpp:838
+#: ../base/ufos/ui/transfer.ufo:391
 #, fuzzy
 msgid "Amount"
 msgstr "Summa"
 
-#: ../base/ufos/ui/transfer.ufo:345
+#: ../base/ufos/ui/transfer.ufo:479
 msgid "Destination base"
 msgstr "Kohde tukikohdasta"
 
-#: ../base/ufos/ui/transfer.ufo:365
+#: ../base/ufos/ui/transfer.ufo:510
 #, fuzzy
 msgid "Building"
 msgstr "Rakennukset"
 
-#: ../base/ufos/ui/transfer.ufo:389
+#: ../base/ufos/ui/transfer.ufo:543
 #, fuzzy
 msgid "all space"
 msgstr "Kutsu takaisin"
 
-#: ../base/ufos/ui/transfer.ufo:418
+#: ../base/ufos/ui/transfer.ufo:595
 #, fuzzy
 msgid "Capacity overload"
 msgstr "Kapasiteetti"
 
-#: ../base/ufos/ui/transfer.ufo:437 ../base/ufos/ui/transfer.ufo:464
+#: ../base/ufos/ui/transfer.ufo:630 ../base/ufos/ui/transfer.ufo:659
 msgid "Start the transfer"
 msgstr "Aloita siirto"
 
-#: ../base/ufos/ui/transfer.ufo:451
+#: ../base/ufos/ui/transfer.ufo:642
 #, fuzzy
 msgid "List"
 msgstr "Luut"
 
-#: ../base/ufos/ui/transfer.ufo:452
+#: ../base/ufos/ui/transfer.ufo:643
 #, fuzzy
 msgid "List active transfers"
 msgstr "Aloita siirto"
 
-#: ../base/ufos/ui/transfer.ufo:478
+#: ../base/ufos/ui/transfer.ufo:676
 msgid "Clear"
 msgstr ""
 
-#: ../base/ufos/ui/transfer.ufo:479
+#: ../base/ufos/ui/transfer.ufo:677
 msgid "Clear cargo"
 msgstr ""
-
-#: ../base/ufos/ui/transfer.ufo:523
-msgid "Select base to transfer to"
-msgstr "Valitse tukikohta minne siirretään"
-
-#: ../base/ufos/ui/transfer.ufo:528
-msgid "Choose a base to host alien bodies:"
-msgstr "Valitse tukikohta alieneiden kehoille:"
-
-#: ../base/ufos/ui/transfer.ufo:573
-#, fuzzy
-msgid "From:"
-msgstr "Sumu:"
-
-#: ../base/ufos/ui/transfer.ufo:587
-#, fuzzy
-msgid "To:"
-msgstr "T:"
-
-#: ../base/ufos/ui/transfer.ufo:666
-#, fuzzy
-msgid "Actual transfers"
-msgstr "siirrä"
 
 #: ../base/ufos/ui/ufopedia.ufo:95
 msgid "Pre-Research Report"
@@ -27887,11 +27758,74 @@ msgstr "Edellinen tulitila"
 msgid "Next firemode"
 msgstr "Seuraava tulitila"
 
-#: ../base/ufos/ui/web.ufo:8 ../base/ufos/ui/web.ufo:46
+#: ../base/ufos/ui/ufoyard.ufo:144
+#, fuzzy
+msgid "UFO Yards"
+msgstr "UFO-telakka"
+
+#: ../base/ufos/ui/ufoyard.ufo:291
+#, fuzzy
+msgid "Rename Installation"
+msgstr "Uudelleennimeä rakennus"
+
+#: ../base/ufos/ui/ufoyard.ufo:302 ../base/ufos/ui/ufoyard.ufo:416
+#, fuzzy
+msgid "Location:"
+msgstr "Kansakunta:"
+
+#: ../base/ufos/ui/ufoyard.ufo:328
+#, fuzzy
+msgid "Capacity:"
+msgstr "Kapasiteetti"
+
+#: ../base/ufos/ui/ufoyard.ufo:340
+msgid "Free Space:"
+msgstr ""
+
+#: ../base/ufos/ui/ufoyard.ufo:352 ../base/ufos/ui/ufoyard.ufo:452
+#, fuzzy
+msgid "Confirm destroying"
+msgstr "Hyväksy Tehtävät:"
+
+#: ../base/ufos/ui/ufoyard.ufo:392
+#, fuzzy
+msgid "Condition:"
+msgstr "Hyväksy Tehtävät:"
+
+#: ../base/ufos/ui/ufoyard.ufo:441
+#, fuzzy
+msgid "Transfer UFO"
+msgstr "Siirrä"
+
+#: ../base/ufos/ui/ufoyard.ufo:459
+msgid "Destroy UFO"
+msgstr "Tuhoa ufo"
+
+#: ../base/ufos/ui/ufoyard.ufo:623
+#, fuzzy
+msgid "disassembling"
+msgstr "Tuotanto"
+
+#: ../base/ufos/ui/ufoyard.ufo:629
+#, fuzzy
+msgid "transferring"
+msgstr "siirrä"
+
+#: ../base/ufos/ui/ufoyard.ufo:635
+#, fuzzy
+msgid "stored"
+msgstr "Varastot"
+
+#: ../base/ufos/ui/ufoyard.ufo:641
+#, fuzzy
+msgid "unknown"
+msgstr "Tuntematon"
+
+#: ../base/ufos/ui/web.ufo:22 ../base/ufos/ui/web.ufo:66
 msgid "Login"
 msgstr ""
 
-#: ../base/ufos/ui/web.ufo:26
+#: ../base/ufos/ui/web.ufo:47
 #, fuzzy
 msgid "Password"
 msgstr "Salasana:"
@@ -28972,6 +28906,35 @@ msgstr "Sotilas on kuollut.\n"
 msgid "A member of team %i was revitalised."
 msgstr "Henkilö joukkueesta %i on kuollut.\n"
 
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:74
+#, fuzzy, c-format
+msgid ""
+"%s is dazed!\n"
+"Enemy used flashbang!"
+msgstr ""
+"Sotilas on päästään pyörällä!\n"
+"Vihollinen on käyttänyt sokaisukranaattia!\n"
+
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:77
+#, fuzzy, c-format
+msgid "%s panics!"
+msgstr "%s panikoi!\n"
+
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:81
+#, fuzzy, c-format
+msgid "%s is consumed by mad rage!"
+msgstr "%s on kuluttaa hullun raivolla!\n"
+
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:83
+#, fuzzy, c-format
+msgid "%s is on a rampage!"
+msgstr "%s riehuu.\n"
+
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:88
+#, fuzzy, c-format
+msgid "%s is currently shaken."
+msgstr "%s ravistellaan.\n"
+
 #: client/battlescape/events/event/actor/e_event_actorwound.cpp:60
 #, fuzzy, c-format
 msgid "%s has been wounded"
@@ -29039,19 +29002,19 @@ msgstr "Torjuntahävittäjä"
 msgid "Transporter"
 msgstr "Siirrä"
 
-#: client/cgame/campaign/cp_aircraft.cpp:722
+#: client/cgame/campaign/cp_aircraft.cpp:728
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr "Uusi %s on valmis %s"
 
-#: client/cgame/campaign/cp_aircraft.cpp:723
-#: client/cgame/campaign/cp_aircraft.cpp:1063
-#: client/cgame/campaign/cp_aircraft.cpp:1104
-#: client/cgame/campaign/cp_aircraft.cpp:1120
-#: client/cgame/campaign/cp_aircraft.cpp:1161
-#: client/cgame/campaign/cp_aircraft.cpp:1217
-#: client/cgame/campaign/cp_aircraft.cpp:1240
-#: client/cgame/campaign/cp_aircraft.cpp:1994
+#: client/cgame/campaign/cp_aircraft.cpp:729
+#: client/cgame/campaign/cp_aircraft.cpp:1064
+#: client/cgame/campaign/cp_aircraft.cpp:1105
+#: client/cgame/campaign/cp_aircraft.cpp:1121
+#: client/cgame/campaign/cp_aircraft.cpp:1162
+#: client/cgame/campaign/cp_aircraft.cpp:1218
+#: client/cgame/campaign/cp_aircraft.cpp:1241
+#: client/cgame/campaign/cp_aircraft.cpp:1995
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:93
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:101
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:109
@@ -29063,23 +29026,23 @@ msgstr "Uusi %s on valmis %s"
 #: client/cgame/campaign/cp_auto_mission.cpp:744
 #: client/cgame/campaign/cp_auto_mission.cpp:747
 #: client/cgame/campaign/cp_auto_mission.cpp:800
-#: client/cgame/campaign/cp_base.cpp:1342
-#: client/cgame/campaign/cp_base.cpp:1392
-#: client/cgame/campaign/cp_base.cpp:2280
+#: client/cgame/campaign/cp_base.cpp:1353
+#: client/cgame/campaign/cp_base.cpp:1403
+#: client/cgame/campaign/cp_base.cpp:2291
 #: client/cgame/campaign/cp_base_callbacks.cpp:70
 #: client/cgame/campaign/cp_base_callbacks.cpp:201
 #: client/cgame/campaign/cp_base_callbacks.cpp:248
-#: client/cgame/campaign/cp_base_callbacks.cpp:575
-#: client/cgame/campaign/cp_base_callbacks.cpp:590
-#: client/cgame/campaign/cp_base_callbacks.cpp:745
-#: client/cgame/campaign/cp_base_callbacks.cpp:751
-#: client/cgame/campaign/cp_base_callbacks.cpp:771
-#: client/cgame/campaign/cp_base_callbacks.cpp:781
-#: client/cgame/campaign/cp_base_callbacks.cpp:791
-#: client/cgame/campaign/cp_base_callbacks.cpp:797
-#: client/cgame/campaign/cp_base_callbacks.cpp:804
-#: client/cgame/campaign/cp_base_callbacks.cpp:808
-#: client/cgame/campaign/cp_base_callbacks.cpp:813
+#: client/cgame/campaign/cp_base_callbacks.cpp:577
+#: client/cgame/campaign/cp_base_callbacks.cpp:592
+#: client/cgame/campaign/cp_base_callbacks.cpp:747
+#: client/cgame/campaign/cp_base_callbacks.cpp:753
+#: client/cgame/campaign/cp_base_callbacks.cpp:773
+#: client/cgame/campaign/cp_base_callbacks.cpp:783
+#: client/cgame/campaign/cp_base_callbacks.cpp:793
+#: client/cgame/campaign/cp_base_callbacks.cpp:799
+#: client/cgame/campaign/cp_base_callbacks.cpp:806
+#: client/cgame/campaign/cp_base_callbacks.cpp:810
+#: client/cgame/campaign/cp_base_callbacks.cpp:815
 #: client/cgame/campaign/cp_installation_callbacks.cpp:128
 #: client/cgame/campaign/cp_mapfightequip.cpp:344
 #: client/cgame/campaign/cp_mapfightequip.cpp:363
@@ -29090,12 +29053,12 @@ msgstr "Uusi %s on valmis %s"
 #: client/cgame/campaign/cp_mission_callbacks.cpp:63
 #: client/cgame/campaign/cp_missions.cpp:738
 #: client/cgame/campaign/cp_missions.cpp:1080
-#: client/cgame/campaign/cp_nation.cpp:799
-#: client/cgame/campaign/cp_nation.cpp:819
-#: client/cgame/campaign/cp_nation.cpp:832
-#: client/cgame/campaign/cp_nation.cpp:841
-#: client/cgame/campaign/cp_nation.cpp:847
-#: client/cgame/campaign/cp_nation.cpp:855
+#: client/cgame/campaign/cp_nation.cpp:795
+#: client/cgame/campaign/cp_nation.cpp:815
+#: client/cgame/campaign/cp_nation.cpp:828
+#: client/cgame/campaign/cp_nation.cpp:837
+#: client/cgame/campaign/cp_nation.cpp:843
+#: client/cgame/campaign/cp_nation.cpp:851
 #: client/cgame/campaign/cp_popup.cpp:480
 #: client/cgame/campaign/cp_produce.cpp:403
 #: client/cgame/campaign/cp_ufo.cpp:495 client/cgame/campaign/cp_ufo.cpp:943
@@ -29105,57 +29068,57 @@ msgstr "Uusi %s on valmis %s"
 msgid "Notice"
 msgstr "Huomautus"
 
-#: client/cgame/campaign/cp_aircraft.cpp:793
+#: client/cgame/campaign/cp_aircraft.cpp:799
 msgid "No operational hangars at that base."
 msgstr "Ei käytössä olevia lentokonehalleja tässä tukikohdassa."
 
-#: client/cgame/campaign/cp_aircraft.cpp:797
+#: client/cgame/campaign/cp_aircraft.cpp:803
 msgid "No free hangars at that base."
 msgstr "Ei vapaita lentokonehalleja tässä tukikohdassa."
 
-#: client/cgame/campaign/cp_aircraft.cpp:800
+#: client/cgame/campaign/cp_aircraft.cpp:806
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Riittämättömästi vapaata miehistötilaa tukikohdassa."
 
-#: client/cgame/campaign/cp_aircraft.cpp:803
+#: client/cgame/campaign/cp_aircraft.cpp:809
 msgid "Insufficient storage space at that base."
 msgstr "Liian vähän Varasto tilaa tukikohdassa."
 
-#: client/cgame/campaign/cp_aircraft.cpp:807
+#: client/cgame/campaign/cp_aircraft.cpp:813
 msgid "That base is beyond this aircraft's range."
 msgstr "Tämä tukikohta on liian kaukana tälle lentokoneelle."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1062
+#: client/cgame/campaign/cp_aircraft.cpp:1063
 #, fuzzy, c-format
 msgid "Craft %s has returned to %s."
 msgstr "Alus %s on tankattu %s."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1103
+#: client/cgame/campaign/cp_aircraft.cpp:1104
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 "Alusta %s ei voida onnistuneesti tankata %s. Liian vähän antimateriaalia."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1119
+#: client/cgame/campaign/cp_aircraft.cpp:1120
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Alus %s on tankattu %s."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1161
+#: client/cgame/campaign/cp_aircraft.cpp:1162
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr ""
 "Aluksella %s on liian vähän polttoainetta ja sen on palattava tukikohtaan."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1217
+#: client/cgame/campaign/cp_aircraft.cpp:1218
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Valitse yksi tai useampi sotilas tähän lentokoneeseen ensimmäisenä."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1240
+#: client/cgame/campaign/cp_aircraft.cpp:1241
 msgid "Insufficient fuel."
 msgstr "Polttoainetta liian vähän."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1994
+#: client/cgame/campaign/cp_aircraft.cpp:1995
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr ""
@@ -29201,7 +29164,7 @@ msgid "Fuel:\t%i/%i\n"
 msgstr "Polttoaine:\t%i/%i\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:192
-#: client/cgame/campaign/cp_ufopedia.cpp:342
+#: client/cgame/campaign/cp_ufopedia.cpp:348
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "Toimintamatka:\t%i km\n"
@@ -29299,66 +29262,66 @@ msgstr "Sinä hävisit taistelun"
 msgid "Collected alien bodies"
 msgstr "Kerätyt alienin kehot"
 
-#: client/cgame/campaign/cp_base.cpp:998
+#: client/cgame/campaign/cp_base.cpp:1009
 msgid "Not set"
 msgstr "Ei asetettu"
 
-#: client/cgame/campaign/cp_base.cpp:1004
+#: client/cgame/campaign/cp_base.cpp:1015
 #, c-format
 msgid "Already %i in base"
 msgstr "Tukikohdassa jo %i kappaletta"
 
-#: client/cgame/campaign/cp_base.cpp:1011
+#: client/cgame/campaign/cp_base.cpp:1022
 msgid "Construction finished"
 msgstr "Rakennus valmis"
 
-#: client/cgame/campaign/cp_base.cpp:1015
+#: client/cgame/campaign/cp_base.cpp:1026
 msgid "Working 100%"
 msgstr "Työskentelee 100%"
 
-#: client/cgame/campaign/cp_base.cpp:1019
+#: client/cgame/campaign/cp_base.cpp:1030
 #, fuzzy, c-format
 msgid "Not operational, depends on %s"
 msgstr "Ei toiminnassa, riippuu"
 
-#: client/cgame/campaign/cp_base.cpp:1023
+#: client/cgame/campaign/cp_base.cpp:1034
 msgid "Down"
 msgstr "Alas"
 
-#: client/cgame/campaign/cp_base.cpp:1342
+#: client/cgame/campaign/cp_base.cpp:1353
 msgid "Not enough credits to build this\n"
 msgstr "Liian vähän rahaa rakentaaksesi tätä\n"
 
-#: client/cgame/campaign/cp_base.cpp:1392
+#: client/cgame/campaign/cp_base.cpp:1403
 #, fuzzy
 msgid "You must build next to existing buildings."
 msgstr "Mene osta/myy valikkoon tuhoamatta rakennusta"
 
-#: client/cgame/campaign/cp_base.cpp:1446
+#: client/cgame/campaign/cp_base.cpp:1457
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Maksaa:\t%i k\n"
 
-#: client/cgame/campaign/cp_base.cpp:1449
+#: client/cgame/campaign/cp_base.cpp:1460
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "Rakennus kestää %i:n päivän\n"
 msgstr[1] "Rakennus kestää %i päivää\n"
 
-#: client/cgame/campaign/cp_base.cpp:1452
-#: client/cgame/campaign/cp_ufopedia.cpp:209
+#: client/cgame/campaign/cp_base.cpp:1463
+#: client/cgame/campaign/cp_ufopedia.cpp:211
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Käyttökulut:\t%i k\n"
 
-#: client/cgame/campaign/cp_base.cpp:1455
-#: client/cgame/campaign/cp_ufopedia.cpp:206
+#: client/cgame/campaign/cp_base.cpp:1466
+#: client/cgame/campaign/cp_ufopedia.cpp:208
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Tarvitsee:\t%s\n"
 
-#: client/cgame/campaign/cp_base.cpp:2053
+#: client/cgame/campaign/cp_base.cpp:2064
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an "
 "aircraft\n"
@@ -29366,41 +29329,42 @@ msgstr ""
 "Ei lentokonetta tässä tukikohdassa - Ensin sinun täytyy ostaa tai siirtää "
 "lentokone tänne\n"
 
-#: client/cgame/campaign/cp_base.cpp:2053
-#: client/cgame/campaign/cp_base.cpp:2055
+#: client/cgame/campaign/cp_base.cpp:2064
+#: client/cgame/campaign/cp_base.cpp:2066
 #: client/cgame/campaign/cp_market_callbacks.cpp:170
 #: client/cgame/campaign/cp_market_callbacks.cpp:175
 #: client/cgame/campaign/cp_market_callbacks.cpp:180
-#: client/cgame/campaign/cp_save.cpp:384 client/cgame/campaign/cp_save.cpp:386
+#: client/cgame/campaign/cp_save_callbacks.cpp:152
+#: client/cgame/campaign/cp_save_callbacks.cpp:154
 #: client/cgame/cl_game_team.cpp:304 client/cgame/cl_game_team.cpp:314
 #: client/cgame/cl_game_team.cpp:319
 msgid "Note"
 msgstr "Muistiinpano"
 
-#: client/cgame/campaign/cp_base.cpp:2055
+#: client/cgame/campaign/cp_base.cpp:2066
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr ""
 "Ei lentokonetta tässä tukikohdassa - Ensin sinun täytyy ostaa lentokone\n"
 
-#: client/cgame/campaign/cp_base.cpp:2065
+#: client/cgame/campaign/cp_base.cpp:2076
 msgid "Antimatter (current/max):"
 msgstr "Antimateriaali (nykyinen/maks.)"
 
-#: client/cgame/campaign/cp_base.cpp:2231
+#: client/cgame/campaign/cp_base.cpp:2242
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Rakennuksen %s valmistus tuli valmiiksi. %s"
 
-#: client/cgame/campaign/cp_base.cpp:2232
+#: client/cgame/campaign/cp_base.cpp:2243
 msgid "Building finished"
 msgstr "Rakennus valmis"
 
-#: client/cgame/campaign/cp_base.cpp:2278
+#: client/cgame/campaign/cp_base.cpp:2289
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "Myymällä %s olet kerännyt %i rahaa."
 
-#: client/cgame/campaign/cp_base.cpp:2279
+#: client/cgame/campaign/cp_base.cpp:2290
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -29520,30 +29484,30 @@ msgstr "Käsittele haavoittuneita sotilaita ja anna implantin leikkauksessa."
 msgid "No Hospital operating at this in base."
 msgstr "Ei varastoa tässä tukikohdassa"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:575
+#: client/cgame/campaign/cp_base_callbacks.cpp:577
 msgid "Base is under attack, you can't destroy buildings!"
 msgstr "Tukikohtaan on hyökätty, joten et voi tuhota rakennuksia!"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:585
+#: client/cgame/campaign/cp_base_callbacks.cpp:587
 msgid "Destroy Entrance"
 msgstr "Tuhoa Sisääntulo"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:585
+#: client/cgame/campaign/cp_base_callbacks.cpp:587
 msgid "You can't destroy the entrance of the base!"
 msgstr "Et voi tuhota sisäänkäyntiä tukikohdassa."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:590
+#: client/cgame/campaign/cp_base_callbacks.cpp:592
 msgid ""
 "You can't destroy this building! It is the only connection to other "
 "buildings!"
 msgstr ""
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:599
+#: client/cgame/campaign/cp_base_callbacks.cpp:601
 #, fuzzy
 msgid "Destroy Alien Containment"
 msgstr "Alien säilytystila"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:599
+#: client/cgame/campaign/cp_base_callbacks.cpp:601
 #, fuzzy
 msgid ""
 "If you destroy this building, you will also kill the aliens inside.\n"
@@ -29553,35 +29517,35 @@ msgstr ""
 "lentokoneet.\n"
 "Oletko varma että haluat tuhota tämän rakennuksen?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:600
+#: client/cgame/campaign/cp_base_callbacks.cpp:602
 msgid "Containment"
 msgstr "Eristämistoimenpide"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:600
+#: client/cgame/campaign/cp_base_callbacks.cpp:602
 #, fuzzy
 msgid "Go to the Alien Containment without destroying building"
 msgstr "Mene valikkoon ja palkkaa työntekijöitä tuhoamatta rakennusta"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:601
-#: client/cgame/campaign/cp_base_callbacks.cpp:612
-#: client/cgame/campaign/cp_base_callbacks.cpp:622
-#: client/cgame/campaign/cp_base_callbacks.cpp:632
-#: client/cgame/campaign/cp_base_callbacks.cpp:645
-msgid "Destroy the building"
-msgstr "Tuhoa rakennus"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:603
 #: client/cgame/campaign/cp_base_callbacks.cpp:614
 #: client/cgame/campaign/cp_base_callbacks.cpp:624
 #: client/cgame/campaign/cp_base_callbacks.cpp:634
+#: client/cgame/campaign/cp_base_callbacks.cpp:647
+msgid "Destroy the building"
+msgstr "Tuhoa rakennus"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:605
+#: client/cgame/campaign/cp_base_callbacks.cpp:616
+#: client/cgame/campaign/cp_base_callbacks.cpp:626
+#: client/cgame/campaign/cp_base_callbacks.cpp:636
 msgid "Go to transfer menu without destroying the building"
 msgstr "Mene siirtovalikkoon tuhoamatta rakennusta"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:610
+#: client/cgame/campaign/cp_base_callbacks.cpp:612
 msgid "Destroy Hangar"
 msgstr "Tuhoa Lentokonehalli"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:610
+#: client/cgame/campaign/cp_base_callbacks.cpp:612
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
@@ -29590,19 +29554,19 @@ msgstr ""
 "lentokoneet.\n"
 "Oletko varma että haluat tuhota tämän rakennuksen?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:611
+#: client/cgame/campaign/cp_base_callbacks.cpp:613
 msgid "Go to hangar"
 msgstr "Mene lentokonehalliin"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:611
+#: client/cgame/campaign/cp_base_callbacks.cpp:613
 msgid "Go to hangar without destroying building"
 msgstr "Mene lentokonehalliin tuhoamatta rakennusta"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:620
+#: client/cgame/campaign/cp_base_callbacks.cpp:622
 msgid "Destroy Quarter"
 msgstr "Tuhoa Alue"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:620
+#: client/cgame/campaign/cp_base_callbacks.cpp:622
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
@@ -29610,19 +29574,19 @@ msgstr ""
 "Jos tuhoat tämän asuinhuoneiston sinä tapat sen sisällä olevat työlaiset.\n"
 "Oletko varma että haluat tuhota tämän rakennuksen?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:621
+#: client/cgame/campaign/cp_base_callbacks.cpp:623
 msgid "Dismiss"
 msgstr "Poistu"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:621
+#: client/cgame/campaign/cp_base_callbacks.cpp:623
 msgid "Go to hiring menu without destroying building"
 msgstr "Mene valikkoon ja palkkaa työntekijöitä tuhoamatta rakennusta"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:630
+#: client/cgame/campaign/cp_base_callbacks.cpp:632
 msgid "Destroy Storage"
 msgstr "Tuhoa Varasto"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:630
+#: client/cgame/campaign/cp_base_callbacks.cpp:632
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
@@ -29630,33 +29594,33 @@ msgstr ""
 "Jos tuhoat tämän varaston, kaikki tavarat sen sisällä tuhotaan.\n"
 "Oletko varma että haluat tuhota tämän rakennuksen?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:631
+#: client/cgame/campaign/cp_base_callbacks.cpp:633
 msgid "Go to buy/sell menu without destroying building"
 msgstr "Mene osta/myy valikkoon tuhoamatta rakennusta"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:631
+#: client/cgame/campaign/cp_base_callbacks.cpp:633
 msgid "Go to storage"
 msgstr "Mene Varastoon"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:643
+#: client/cgame/campaign/cp_base_callbacks.cpp:645
 msgid "Are you sure you want to destroy this building?"
 msgstr "Haluatko varmasti tuhota tämän rakennuksen?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:643
+#: client/cgame/campaign/cp_base_callbacks.cpp:645
 msgid "Destroy building"
 msgstr "Tuhoa rakennus"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:745
+#: client/cgame/campaign/cp_base_callbacks.cpp:747
 msgid "Base is under attack, you can't access this building !"
 msgstr "Tukikohta on uhattuna, et voi käyttää tätä rakennusta !"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:751
+#: client/cgame/campaign/cp_base_callbacks.cpp:753
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr ""
 "Sinulla pitää olla vähintään yksi lentokonehalli (ja sen riippuvuudet) "
 "käyttääksesi lentokonetta."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:771
+#: client/cgame/campaign/cp_base_callbacks.cpp:773
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -29671,18 +29635,18 @@ msgstr[1] ""
 "Rakennus valmistuu %i päivässä.\n"
 "Ole hyvä ja odota niin pääset sisään."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:781
+#: client/cgame/campaign/cp_base_callbacks.cpp:783
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Sinun pitää rakentaa %s jotta rakennus %s olisi toimiva."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:791
+#: client/cgame/campaign/cp_base_callbacks.cpp:793
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr ""
 "Rakennus %s ei ole vielä valmis ja sitä tarvitaan rakennuksen %s käyttöön."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:797
+#: client/cgame/campaign/cp_base_callbacks.cpp:799
 #, c-format
 msgid ""
 "Make sure that the dependencies of building %s (%s) are operational, so that "
@@ -29691,54 +29655,19 @@ msgstr ""
 "Varmista, että %s riippuvuudet (%s) ovat toiminnassa, niin että %s voidaan "
 "käyttää."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:804
-#: client/cgame/campaign/cp_base_callbacks.cpp:808
+#: client/cgame/campaign/cp_base_callbacks.cpp:806
+#: client/cgame/campaign/cp_base_callbacks.cpp:810
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "Sinun täytyy palkata %s käyttääksesi rakennusta %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:813
+#: client/cgame/campaign/cp_base_callbacks.cpp:815
 #, c-format
 msgid "Build a %s first."
 msgstr "Rakenna %s ensin."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:838
-msgid "Buildings"
-msgstr "Rakennukset"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:858
-msgid "No report"
-msgstr ""
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:861
-#: client/cgame/campaign/cp_base_callbacks.cpp:875
-msgid "Percent"
-msgstr ""
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:861
-msgid "Quantity"
-msgstr ""
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:871
-#: client/cgame/campaign/cp_base_callbacks.cpp:886
-#, fuzzy
-msgid "Nothing"
-msgstr "Ei mitään\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:891
-msgid "^BAircraft\n"
-msgstr "^BLentokone\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:902
-msgid "^BEmployees\n"
-msgstr "^BHenkilöstö\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:913
-msgid "^BAliens\n"
-msgstr "^BAlienit\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:998
-#: client/cgame/campaign/cp_campaign.cpp:558
+#: client/cgame/campaign/cp_base_callbacks.cpp:869
+#: client/cgame/campaign/cp_campaign.cpp:559
 #: client/cgame/campaign/cp_nation.cpp:618
 #, c-format
 msgid "%i c"
@@ -29814,39 +29743,39 @@ msgstr ""
 "kansoista jokainen yrittää itsenäisinä taistella alieneita vastaan, ja "
 "lopulta kaatuvat yksitellen."
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:79
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:80
 msgid "Chicken-hearted"
 msgstr "Pelkureille"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:81
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:82
 msgid "Very Easy"
 msgstr "Erittäin helppo"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:84
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:85
 msgid "Easy"
 msgstr "Helppo"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:86
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:87
 msgid "Normal"
 msgstr "Normaali"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:89
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:90
 msgid "Hard"
 msgstr "Vaikea"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:91
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:92
 msgid "Very Hard"
 msgstr "Erittäin vaikea"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:93
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:94
 msgid "Insane"
 msgstr "Järjetön"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:143
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:141
 msgid "Human"
 msgstr "Ihminen"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:148
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:146
 #, fuzzy, c-format
 msgid ""
 "%s\n"
@@ -29869,50 +29798,50 @@ msgstr ""
 "Suurimmat sallitut velat: %ic\n"
 "%s\n"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:153
-#: client/cgame/campaign/cp_nation.cpp:795
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:151
+#: client/cgame/campaign/cp_nation.cpp:791
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "sotilas"
 msgstr[1] "sotilasta"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:154
-#: client/cgame/campaign/cp_nation.cpp:794
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:152
+#: client/cgame/campaign/cp_nation.cpp:790
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "tutkija"
 msgstr[1] "tutkijaa"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:155
-#: client/cgame/campaign/cp_nation.cpp:797
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:153
+#: client/cgame/campaign/cp_nation.cpp:793
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "työläinen"
 msgstr[1] "työläistä"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:156
-#: client/cgame/campaign/cp_nation.cpp:796
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:154
+#: client/cgame/campaign/cp_nation.cpp:792
 #, fuzzy
 msgid "pilot"
 msgid_plural "pilots"
 msgstr[0] "Lentäjä"
 msgstr[1] "Lentäjä"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:428
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:445
 #, fuzzy, c-format
 msgid ""
 "%s\n"
 "not operational, depends on %s"
 msgstr "ei ole toiminnassa, riippuu"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:482
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:499
 #, fuzzy, c-format
 msgid "%d day left"
 msgid_plural "%d days left"
 msgstr[0] "%i päivä jäljellä"
 msgstr[1] "%i päivää jäljellä"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:619
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:636
 #, c-format
 msgid "Rank: %s"
 msgstr "Arvo: %s"
@@ -29965,13 +29894,13 @@ msgstr "Et pysty palkkaamaan henkilökuntaa"
 
 #: client/cgame/campaign/cp_event.cpp:533
 #: client/cgame/campaign/cp_messages.cpp:314
-#: client/cgame/campaign/cp_save.cpp:280 client/cgame/campaign/cp_save.cpp:303
+#: client/cgame/campaign/cp_save.cpp:316 client/cgame/campaign/cp_save.cpp:339
 #: client/cgame/campaign/cp_time.cpp:117
-#: client/cgame/campaign/cp_ufopedia.cpp:504
-#: client/cgame/campaign/cp_ufopedia.cpp:509
-#: client/cgame/campaign/cp_ufopedia.cpp:1035
-#: client/cgame/campaign/cp_ufopedia.cpp:1046
-#: client/cgame/campaign/cp_ufopedia.cpp:1062
+#: client/cgame/campaign/cp_ufopedia.cpp:522
+#: client/cgame/campaign/cp_ufopedia.cpp:527
+#: client/cgame/campaign/cp_ufopedia.cpp:1053
+#: client/cgame/campaign/cp_ufopedia.cpp:1064
+#: client/cgame/campaign/cp_ufopedia.cpp:1080
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -30014,6 +29943,7 @@ msgstr ""
 
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:145
 #: client/cgame/campaign/cp_geoscape.cpp:1491
+#: client/cgame/campaign/cp_ufopedia.cpp:154
 msgid "Unknown"
 msgstr "Tuntematon"
 
@@ -30304,19 +30234,19 @@ msgstr "%s on onnistuneesti poistettu rakennuksesta %s"
 msgid "%s was successfully removed from %s."
 msgstr "%s on onnistuneesti poistettu %s."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1287
+#: client/cgame/campaign/cp_mapfightequip.cpp:1288
 msgid "Light weight"
 msgstr "kevyt"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1290
+#: client/cgame/campaign/cp_mapfightequip.cpp:1291
 msgid "Medium weight"
 msgstr "keskikokoinen"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1293
+#: client/cgame/campaign/cp_mapfightequip.cpp:1294
 msgid "Heavy weight"
 msgstr "raskas"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1296
+#: client/cgame/campaign/cp_mapfightequip.cpp:1297
 msgid "Unknown weight"
 msgstr "tuntematon"
 
@@ -30714,38 +30644,38 @@ msgstr "Kansakunta %s on %s ja on tyytymätön kampanjaan."
 msgid "Nation changed happiness"
 msgstr "Kansakunta muutti tyytyväisyyttä"
 
-#: client/cgame/campaign/cp_nation.cpp:792
+#: client/cgame/campaign/cp_nation.cpp:788
 #, fuzzy, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Kokemukset %i %s, %i %s, %i %s, ja %i %s kansakunnalta %s (%s)"
 
-#: client/cgame/campaign/cp_nation.cpp:793
+#: client/cgame/campaign/cp_nation.cpp:789
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "raha"
 msgstr[1] "rahat"
 
-#: client/cgame/campaign/cp_nation.cpp:818
+#: client/cgame/campaign/cp_nation.cpp:814
 #, c-format
 msgid "Paid %i credits to: %s"
 msgstr "Maksettu %i krediittiä: %s"
 
-#: client/cgame/campaign/cp_nation.cpp:831
+#: client/cgame/campaign/cp_nation.cpp:827
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Maksettu %i krediittiä lentokoneesta"
 
-#: client/cgame/campaign/cp_nation.cpp:840
+#: client/cgame/campaign/cp_nation.cpp:836
 #, c-format
 msgid "Paid %i credits for upkeep of %s"
 msgstr "Maksettu %i krediittiä ylläpidosta %s"
 
-#: client/cgame/campaign/cp_nation.cpp:845
+#: client/cgame/campaign/cp_nation.cpp:841
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Maksettu %i krediittiä hallinnollisiin yleiskuluihin."
 
-#: client/cgame/campaign/cp_nation.cpp:853
+#: client/cgame/campaign/cp_nation.cpp:849
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Maksettu %i krediittejä velan koroista."
@@ -31013,61 +30943,68 @@ msgstr "Ei kuvausta saatavissa."
 msgid "No research proposal available."
 msgstr "Tutkimusehdotuksia ei ole saatavilla"
 
-#: client/cgame/campaign/cp_save.cpp:183
+#: client/cgame/campaign/cp_save.cpp:203
 msgid "Error decompressing data"
 msgstr "Virhe materiaalin purkamisessa."
 
-#: client/cgame/campaign/cp_save.cpp:253
-msgid "No campaign active."
-msgstr "Ei aktiivista kampanjaa."
+#: client/cgame/campaign/cp_save.cpp:271
+msgid "Saving is not possible: Campaign is not active."
+msgstr ""
 
-#: client/cgame/campaign/cp_save.cpp:259
-msgid "Nothing to save yet."
-msgstr "Mitään ei ole tallennettu vielä."
+#: client/cgame/campaign/cp_save.cpp:276
+msgid "Saving is not possible: Cannot save the Battlescape."
+msgstr ""
 
-#: client/cgame/campaign/cp_save.cpp:314
+#: client/cgame/campaign/cp_save.cpp:281
+msgid "Saving is not possible: No base is built."
+msgstr ""
+
+#: client/cgame/campaign/cp_save.cpp:350
 msgid "Could not allocate enough memory to save this game"
 msgstr "Ei riittävästi muistia pelin tallentamiseen."
 
-#: client/cgame/campaign/cp_save.cpp:337
+#: client/cgame/campaign/cp_save.cpp:373
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr ""
 "Muistivirhe tallenna-peli datan kompressoinnissa - set save_compressed cvar 0"
 
-#: client/cgame/campaign/cp_save.cpp:384 client/cgame/campaign/cp_save.cpp:386
-msgid "Error saving game."
-msgstr "Pelin tallentaminen ei onnistunut."
-
-#: client/cgame/campaign/cp_save.cpp:497 client/cgame/campaign/cp_save.cpp:520
-#: client/cgame/campaign/cp_save.cpp:598
+#: client/cgame/campaign/cp_save_callbacks.cpp:95
+#: client/cgame/campaign/cp_save_callbacks.cpp:117
+#: client/cgame/campaign/cp_save_callbacks.cpp:225
 #: client/cgame/multiplayer/mp_callbacks.cpp:64 client/cl_irc.cpp:1201
 #: client/cl_irc.cpp:1424 client/cl_main.cpp:561 client/cl_main.cpp:565
 #: client/cl_main.cpp:590
 msgid "Error"
 msgstr "Virhe"
 
-#: client/cgame/campaign/cp_save.cpp:497 client/cgame/campaign/cp_save.cpp:520
-#: client/cgame/campaign/cp_save.cpp:598
+#: client/cgame/campaign/cp_save_callbacks.cpp:95
+#: client/cgame/campaign/cp_save_callbacks.cpp:117
+#: client/cgame/campaign/cp_save_callbacks.cpp:225
 msgid "Error loading game."
 msgstr "Pelin lataaminen ei onnistunut."
 
-#: client/cgame/campaign/cp_save.cpp:576
+#: client/cgame/campaign/cp_save_callbacks.cpp:152
+#: client/cgame/campaign/cp_save_callbacks.cpp:154
+msgid "Error saving game."
+msgstr "Pelin tallentaminen ei onnistunut."
+
+#: client/cgame/campaign/cp_save_callbacks.cpp:203
 msgid "QuickSave"
 msgstr "Pikatallennus"
 
-#: client/cgame/campaign/cp_save.cpp:580
+#: client/cgame/campaign/cp_save_callbacks.cpp:207
 msgid "Campaign was successfully saved."
 msgstr "Kampanja on onnistuneesti talletettu."
 
-#: client/cgame/campaign/cp_save.cpp:580
+#: client/cgame/campaign/cp_save_callbacks.cpp:207
 msgid "Quicksave"
 msgstr "Pikatallennus"
 
-#: client/cgame/campaign/cp_save.cpp:600
+#: client/cgame/campaign/cp_save_callbacks.cpp:227
 msgid "Campaign loaded"
 msgstr "Kampanja ladattu"
 
-#: client/cgame/campaign/cp_save.cpp:600
+#: client/cgame/campaign/cp_save_callbacks.cpp:227
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Pikatallennus kampanja on onnistuneesti ladattu."
 
@@ -31371,8 +31308,9 @@ msgid "Evasion"
 msgstr "Tehtäviä"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:144
-msgid "Aircraft damage"
-msgstr "Lentokoneen vahingot"
+#, fuzzy
+msgid "Hull strength"
+msgstr "Kestävyys:"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:148
 msgid "Fuel size"
@@ -31383,96 +31321,113 @@ msgid "Weapon range"
 msgstr "Aseen kantomatka"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:152
-#: client/cl_inventory_callbacks.cpp:56
-msgid "Unknown weapon skill"
-msgstr "Aseen taito tuntematon"
+#, fuzzy
+msgid "Antimatter need"
+msgstr "Antimateriaali"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:171
+#: client/cgame/campaign/cp_ufopedia.cpp:173
 msgid "No requirements"
 msgstr "Ei esivaatimuksia"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:204
+#: client/cgame/campaign/cp_ufopedia.cpp:206
 msgid "Error - could not find building"
 msgstr "Virhe - rakennusta ei löytynyt"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:207
+#: client/cgame/campaign/cp_ufopedia.cpp:209
 #, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
 msgstr[0] "Rakennusaika:\t%i päivä\n"
 msgstr[1] "Rakennusaika:\t%i päivää\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:208
+#: client/cgame/campaign/cp_ufopedia.cpp:210
 #, c-format
 msgid "Cost:\t%i c\n"
 msgstr "Hinta:\t%i k\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:258
+#: client/cgame/campaign/cp_ufopedia.cpp:260
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "Paino:\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:262
+#: client/cgame/campaign/cp_ufopedia.cpp:264
 #, fuzzy
 msgid "Weapon for air defence system\n"
 msgstr "Ase tukikohdan puolusjärjestelmään\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:282
+#: client/cgame/campaign/cp_ufopedia.cpp:284
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "Ammus:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:284
+#: client/cgame/campaign/cp_ufopedia.cpp:286
 #: client/cl_inventory_callbacks.cpp:183
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "Vahinko:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:285
+#: client/cgame/campaign/cp_ufopedia.cpp:287
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "Latausaika:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:302
+#: client/cgame/campaign/cp_ufopedia.cpp:304
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:304
+#: client/cgame/campaign/cp_ufopedia.cpp:306
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:307
-#: client/cgame/campaign/cp_ufopedia.cpp:365
-#: client/cgame/campaign/cp_ufopedia.cpp:367
-#: client/cgame/campaign/cp_ufopedia.cpp:403
-#: client/cgame/campaign/cp_ufopedia.cpp:405
+#: client/cgame/campaign/cp_ufopedia.cpp:309
+#: client/cgame/campaign/cp_ufopedia.cpp:383
+#: client/cgame/campaign/cp_ufopedia.cpp:385
+#: client/cgame/campaign/cp_ufopedia.cpp:421
+#: client/cgame/campaign/cp_ufopedia.cpp:423
 msgid "Unknown - need to research this"
 msgstr "Tuntematon - tämä pitää tutkia"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:333
-#: client/cgame/campaign/cp_ufopedia.cpp:338
-#, c-format
-msgid "%s:\t%i km/h\n"
-msgstr "%s:\t%i km/h\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:346
+#: client/cgame/campaign/cp_ufopedia.cpp:334
+#: client/cgame/campaign/cp_ufopedia.cpp:352
+#: client/cgame/campaign/cp_ufopedia.cpp:358
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:358
+#: client/cgame/campaign/cp_ufopedia.cpp:339
+#: client/cgame/campaign/cp_ufopedia.cpp:344
+#, c-format
+msgid "%s:\t%i km/h\n"
+msgstr "%s:\t%i km/h\n"
+
+#: client/cgame/campaign/cp_ufopedia.cpp:369
 #, c-format
 msgid "Required Hangar:\t%s\n"
 msgstr ""
 
-#: client/cgame/campaign/cp_ufopedia.cpp:362
+#: client/cgame/campaign/cp_ufopedia.cpp:374
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "Maks. sotilaat:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:400
+#: client/cgame/campaign/cp_ufopedia.cpp:377
+#, fuzzy, c-format
+msgid "Equipment slots:\t%i %s, %i %s\n"
+msgstr "Varustus:\t%s"
+
+#: client/cgame/campaign/cp_ufopedia.cpp:378
+#, fuzzy
+msgid "weapon"
+msgstr "Ase"
+
+#: client/cgame/campaign/cp_ufopedia.cpp:379
+#, fuzzy
+msgid "electronics"
+msgstr "Elektroniikka:\t%i / %i"
+
+#: client/cgame/campaign/cp_ufopedia.cpp:418
 #, c-format
 msgid ""
 "%s\n"
@@ -31481,15 +31436,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:526
+#: client/cgame/campaign/cp_ufopedia.cpp:544
 msgid "Proposal: "
 msgstr "Ehdotus: "
 
-#: client/cgame/campaign/cp_ufopedia.cpp:529
+#: client/cgame/campaign/cp_ufopedia.cpp:547
 msgid "Re: "
 msgstr "Re:"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:543
+#: client/cgame/campaign/cp_ufopedia.cpp:561
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -31500,27 +31455,27 @@ msgstr ""
 "VASTAANOTTAJA: %s\n"
 "PÄIVÄYS: %s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:615
+#: client/cgame/campaign/cp_ufopedia.cpp:633
 #, fuzzy, c-format
 msgid "UFOpaedia: %s (complete)"
 msgstr "UFOpedia"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:668
-#: client/cgame/campaign/cp_ufopedia.cpp:677
+#: client/cgame/campaign/cp_ufopedia.cpp:686
+#: client/cgame/campaign/cp_ufopedia.cpp:695
 #, fuzzy, c-format
 msgid "UFOpaedia: %s"
 msgstr "UFOpedia"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:674
+#: client/cgame/campaign/cp_ufopedia.cpp:692
 msgid "No pre-research description available."
 msgstr "Ei ennakko-tutkimuksen kuvausta saatavilla."
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1034
+#: client/cgame/campaign/cp_ufopedia.cpp:1052
 #, fuzzy, c-format
 msgid "Proposal: %s"
 msgstr "Ehdotus: "
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1045
+#: client/cgame/campaign/cp_ufopedia.cpp:1063
 #, fuzzy, c-format
 msgid "Re: %s"
 msgstr "Re:"
@@ -31874,6 +31829,10 @@ msgstr ""
 msgid "Close quarters"
 msgstr "Ei tarpeeksi asuinhuoneistoja"
 
+#: client/cl_inventory_callbacks.cpp:56
+msgid "Unknown weapon skill"
+msgstr "Aseen taito tuntematon"
+
 #: client/cl_inventory_callbacks.cpp:137
 #, c-format
 msgid "Size:\t%i\n"
@@ -32069,16 +32028,16 @@ msgstr "Scripti tiedostot eivät ole samoja."
 msgid "Local map version differs from server"
 msgstr "Paikallisen kartan versio on ei kuin palvelimella"
 
-#: client/cl_main.cpp:906
+#: client/cl_main.cpp:883
 msgid "Target your shot to the ground"
 msgstr "Kohdista ammunta maahan"
 
-#: client/cl_main.cpp:1156
+#: client/cl_main.cpp:1133
 #, fuzzy
 msgid "This change requires a restart!"
 msgstr "Tämä muutos vaatii uudelleenkäynnistyksen"
 
-#: client/cl_main.cpp:1161
+#: client/cl_main.cpp:1138
 #, fuzzy
 msgid "This change might require a restart."
 msgstr "Tämä muutos saattaa vaatia uudelleenkäynnistyksen"
@@ -32265,11 +32224,11 @@ msgstr "Käytettävissä:\n"
 msgid "In: %i Out: %i"
 msgstr "Sisään: %i Ulos: %i"
 
-#: client/ui/node/ui_node_window.cpp:298
+#: client/ui/node/ui_node_window.cpp:308
 msgid "Close the window"
 msgstr "Sulje ikkuna"
 
-#: client/ui/node/ui_node_window.cpp:324
+#: client/ui/node/ui_node_window.cpp:334
 msgid "Drag to move window"
 msgstr "Vedä toiseen ikkunaan"
 
@@ -32338,15 +32297,6 @@ msgstr "Et voi puhua vielä %d sekuntiin\n"
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr "Huutosuojaus: Et voi puhua %d sekuntiin.\n"
 
-#: game/g_combat.cpp:473
-#, fuzzy
-msgid ""
-"Soldier is dazed!\n"
-"Enemy used flashbang!"
-msgstr ""
-"Sotilas on päästään pyörällä!\n"
-"Vihollinen on käyttänyt sokaisukranaattia!\n"
-
 #: game/g_combat.cpp:730
 #, fuzzy
 msgid "Can't perform action - impossible throw!"
@@ -32411,26 +32361,6 @@ msgstr "Alienit tulivat alueelle\n"
 #, fuzzy, c-format
 msgid "%s forces have left their target zone!"
 msgstr "Alienit tulivat alueelle\n"
-
-#: game/g_morale.cpp:40
-#, fuzzy, c-format
-msgid "%s panics!"
-msgstr "%s panikoi!\n"
-
-#: game/g_morale.cpp:101
-#, fuzzy, c-format
-msgid "%s is on a rampage!"
-msgstr "%s riehuu.\n"
-
-#: game/g_morale.cpp:104
-#, fuzzy, c-format
-msgid "%s is consumed by mad rage!"
-msgstr "%s on kuluttaa hullun raivolla!\n"
-
-#: game/g_morale.cpp:188
-#, fuzzy, c-format
-msgid "%s is currently shaken."
-msgstr "%s ravistellaan.\n"
 
 #: game/g_reaction.cpp:642
 #, fuzzy
@@ -32502,6 +32432,91 @@ msgstr "alien"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Ota kuvakaappaus"
+
+#, fuzzy
+#~ msgid "Healthpoints"
+#~ msgstr "Terveys"
+
+#~ msgid "Base Summary"
+#~ msgstr "Tukikohdan Yhteenveto"
+
+#~ msgid "Initial settings"
+#~ msgstr "Alku asetukset"
+
+#, fuzzy
+#~ msgid "User information"
+#~ msgstr "Käyttäjän tiedot"
+
+#~ msgid "Volume Control"
+#~ msgstr "Äänenvoimakkuuden hallinta"
+
+#~ msgid "Effects:"
+#~ msgstr "Tehosteet:"
+
+#~ msgid "Music:"
+#~ msgstr "Musiikki:"
+
+#~ msgid "Language"
+#~ msgstr "Kieli"
+
+#~ msgid "Language:"
+#~ msgstr "Kieli:"
+
+#~ msgid "You have to set the playername and hit the 'OK' button:"
+#~ msgstr "Sinun tulee asettaa palaajan nimesi ja painaa 'OK'-painiketta:"
+
+#~ msgid "Save settings"
+#~ msgstr "Tallenna asetukset"
+
+#~ msgid "Tip of the day"
+#~ msgstr "Päivän vinkki"
+
+#~ msgid "Show tip of the day"
+#~ msgstr "Näytä päivän vinkki"
+
+#~ msgid "Next"
+#~ msgstr "Seuraava"
+
+#~ msgid "Next tip"
+#~ msgstr "Seuraava vihje"
+
+#~ msgid "Close window"
+#~ msgstr "Sulje ikkuna"
+
+#, fuzzy
+#~ msgid "Transactions"
+#~ msgstr "Rakennukset"
+
+#~ msgid "Select base to transfer to"
+#~ msgstr "Valitse tukikohta minne siirretään"
+
+#~ msgid "Choose a base to host alien bodies:"
+#~ msgstr "Valitse tukikohta alieneiden kehoille:"
+
+#~ msgid "Buildings"
+#~ msgstr "Rakennukset"
+
+#, fuzzy
+#~ msgid "Nothing"
+#~ msgstr "Ei mitään\n"
+
+#~ msgid "^BAircraft\n"
+#~ msgstr "^BLentokone\n"
+
+#~ msgid "^BEmployees\n"
+#~ msgstr "^BHenkilöstö\n"
+
+#~ msgid "^BAliens\n"
+#~ msgstr "^BAlienit\n"
+
+#~ msgid "No campaign active."
+#~ msgstr "Ei aktiivista kampanjaa."
+
+#~ msgid "Nothing to save yet."
+#~ msgstr "Mitään ei ole tallennettu vielä."
+
+#~ msgid "Aircraft damage"
+#~ msgstr "Lentokoneen vahingot"
 
 #~ msgid "Transport"
 #~ msgstr "Kuljetusalus"
@@ -32961,9 +32976,6 @@ msgstr "Ota kuvakaappaus"
 
 #~ msgid "Start server"
 #~ msgstr "Aloita palvelin"
-
-#~ msgid "Abort Game"
-#~ msgstr "Keskeytä Peli"
 
 #, fuzzy
 #~ msgid "Overall game settings"
@@ -33720,11 +33732,6 @@ msgstr "Ota kuvakaappaus"
 
 #~ msgid "Not enough storage space in %s. %s"
 #~ msgstr "Ei tarpeeksi varastointitilaa %s. %s"
-
-#~ msgid "%i item was sold for %i credits."
-#~ msgid_plural "%i items were sold for %i credits."
-#~ msgstr[0] "%i tuote myytiin %i krediitillä."
-#~ msgstr[1] "%i tuotteet myytiin %i krediitillä."
 
 #, fuzzy
 #~ msgid "Add/Remove scientist"
@@ -37569,9 +37576,6 @@ msgstr "Ota kuvakaappaus"
 
 #~ msgid "Selected aircraft"
 #~ msgstr "Valitse lentokone"
-
-#~ msgid "Equipment:\t%s"
-#~ msgstr "Varustus:\t%s"
 
 #~ msgid "Shield"
 #~ msgstr "Panssari:\t%s\n"

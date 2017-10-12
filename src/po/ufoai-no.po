@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-02-28 21:54-0600\n"
+"POT-Creation-Date: 2017-10-12 13:21-0500\n"
 "PO-Revision-Date: 2015-08-26 01:01+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmal\n"
@@ -44,7 +44,7 @@ msgstr "Hjem"
 msgid "Bridge"
 msgstr "Bro"
 
-#: ../base/maps/bridge.ump:111 ../base/ufos/maps.ufo:5469
+#: ../base/maps/bridge.ump:111 ../base/ufos/maps.ufo:5420
 msgid "Bridge (MP)"
 msgstr "Bro (MP)"
 
@@ -227,7 +227,7 @@ msgid "Laboratory"
 msgstr "Laboratorium"
 
 #: ../base/maps/urban.ump:401 ../base/ufos/basemanagement.ufo:216
-#: ../base/ufos/maps.ufo:3276 ../base/ufos/ui/bases.ufo:403
+#: ../base/ufos/maps.ufo:3276 ../base/ufos/ui/bases.ufo:392
 #: ../base/ufos/ui/hospital.ufo:21
 msgid "Hospital"
 msgstr "sykehus"
@@ -580,7 +580,7 @@ msgstr "Medium romvesenarmering"
 
 # Opbevaringsrum til rumvæsener er for langt.
 #: ../base/ufos/basemanagement.ufo:35 ../base/ufos/ui/aliencont.ufo:158
-#: ../base/ufos/ui/aliencont.ufo:347 ../base/ufos/ui/bases.ufo:392
+#: ../base/ufos/ui/aliencont.ufo:347 ../base/ufos/ui/bases.ufo:381
 msgid "Alien Containment"
 msgstr "Forvaringsrom for romvesener"
 
@@ -588,8 +588,7 @@ msgstr "Forvaringsrom for romvesener"
 msgid "Entrance"
 msgstr "Inngang"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:316
-#: ../base/ufos/ui/production.ufo:248
+#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/production.ufo:248
 msgid "Storage"
 msgstr "Lagerrom"
 
@@ -621,7 +620,7 @@ msgstr "Jagerflyhangar"
 msgid "Workshop"
 msgstr "Verksted"
 
-#: ../base/ufos/basemanagement.ufo:169 ../base/ufos/ui/hud_default.ufo:1073
+#: ../base/ufos/basemanagement.ufo:169 ../base/ufos/ui/hud_default.ufo:1081
 #: ../base/ufos/ui/radar.ufo:21
 msgid "Radar"
 msgstr "Radar"
@@ -654,15 +653,15 @@ msgstr "Vanskelig kampanje"
 msgid "Standard Campaign"
 msgstr "Standardkampagne"
 
-#: ../base/ufos/campaign.ufo:247
+#: ../base/ufos/campaign.ufo:248
 msgid "Easy Campaign"
 msgstr "Lett kampagne"
 
-#: ../base/ufos/campaign.ufo:305
+#: ../base/ufos/campaign.ufo:306
 msgid "Very Easy Campaign"
 msgstr "Veldig lett kampanje"
 
-#: ../base/ufos/campaign.ufo:364
+#: ../base/ufos/campaign.ufo:365
 msgid "Play the aliens"
 msgstr "Spill som romvesen"
 
@@ -2955,7 +2954,7 @@ msgstr "Liten landsby."
 
 #: ../base/ufos/maps.ufo:3752 ../base/ufos/maps.ufo:3798
 #: ../base/ufos/maps.ufo:3843 ../base/ufos/maps.ufo:3888
-#: ../base/ufos/maps.ufo:5371
+#: ../base/ufos/maps.ufo:5322
 msgid "Suburban City"
 msgstr "Forstadsby"
 
@@ -2973,7 +2972,7 @@ msgid "Village 2"
 msgstr "Landsby 2"
 
 #: ../base/ufos/maps.ufo:4118 ../base/ufos/maps.ufo:4153
-#: ../base/ufos/maps.ufo:5683
+#: ../base/ufos/maps.ufo:5634
 msgid "PHALANX Base Under Attack"
 msgstr "Falanks-basen blir angrepet"
 
@@ -3010,112 +3009,108 @@ msgid "Solar Power Plant"
 msgstr "Solkraftverk"
 
 #: ../base/ufos/maps.ufo:4614
-msgid "Warehouse"
-msgstr "Varehus"
-
-#: ../base/ufos/maps.ufo:4663
 msgid "Military Bunker"
 msgstr "Militærbunker"
 
-#: ../base/ufos/maps.ufo:4710
+#: ../base/ufos/maps.ufo:4661
 msgid "Rural Village"
 msgstr "Landsby."
 
-#: ../base/ufos/maps.ufo:4749
+#: ../base/ufos/maps.ufo:4700
 msgid "Corrupter UFO Crash Site"
 msgstr "Ufo-krasjsted"
 
-#: ../base/ufos/maps.ufo:4794
+#: ../base/ufos/maps.ufo:4745
 msgid "Hydroelectric Dam"
 msgstr "Demning (Vannkraft)"
 
-#: ../base/ufos/maps.ufo:4844
+#: ../base/ufos/maps.ufo:4795
 msgid "Archaeological Dig"
 msgstr "Arkeologisk utgraving"
 
-#: ../base/ufos/maps.ufo:4894
+#: ../base/ufos/maps.ufo:4845
 msgid "Ferry"
 msgstr "Ferge"
 
-#: ../base/ufos/maps.ufo:4942
+#: ../base/ufos/maps.ufo:4893
 msgid "Fighter UFO Crash Site"
 msgstr "Ufo-krasjsted"
 
-#: ../base/ufos/maps.ufo:4988
+#: ../base/ufos/maps.ufo:4939
 msgid "Port"
 msgstr "Havn"
 
-#: ../base/ufos/maps.ufo:5034
+#: ../base/ufos/maps.ufo:4985
 msgid "Old Mine"
 msgstr "Gammel gruve"
 
-#: ../base/ufos/maps.ufo:5087
+#: ../base/ufos/maps.ufo:5038
 msgid "Residential Neighbourhood"
 msgstr "Nabolag"
 
-#: ../base/ufos/maps.ufo:5131
+#: ../base/ufos/maps.ufo:5082
 msgid "Office Complex"
 msgstr "Kontorkompleks"
 
-#: ../base/ufos/maps.ufo:5177
+#: ../base/ufos/maps.ufo:5128
 msgid "Sewage Pipe Construction"
 msgstr "Avløpsrørkonstruksjon"
 
-#: ../base/ufos/maps.ufo:5222
+#: ../base/ufos/maps.ufo:5173
 msgid "Luxurious Resort"
 msgstr "Luksuriøst feriested."
 
-#: ../base/ufos/maps.ufo:5271
+#: ../base/ufos/maps.ufo:5222
 msgid "Old Town Center"
 msgstr "Gammelt bysentrum"
 
-#: ../base/ufos/maps.ufo:5324
+#: ../base/ufos/maps.ufo:5275
 msgid "Subway Station"
 msgstr "T-banestasjon"
 
-#: ../base/ufos/maps.ufo:5417
+#: ../base/ufos/maps.ufo:5368
 msgid "Wilderness"
 msgstr "Ødemark"
 
-#: ../base/ufos/maps.ufo:5489 ../base/ufos/maps.ufo:5515
+#: ../base/ufos/maps.ufo:5440 ../base/ufos/maps.ufo:5466
 msgid "City High-Rise (MP)"
 msgstr "City High-Rise (MP)"
 
-#: ../base/ufos/maps.ufo:5543
+#: ../base/ufos/maps.ufo:5494
 msgid "Frozen Industrial Site (Coop)"
 msgstr "Frossent industriområde (Coop)"
 
-#: ../base/ufos/maps.ufo:5561
+#: ../base/ufos/maps.ufo:5512
 msgid "Frozen Industrial Site (MP)"
 msgstr "Frossent industriområde (MP)"
 
-#: ../base/ufos/maps.ufo:5584
+#: ../base/ufos/maps.ufo:5535
 msgid "A container harbour."
 msgstr "En containerhavn."
 
-#: ../base/ufos/maps.ufo:5613
+#: ../base/ufos/maps.ufo:5564
 #, fuzzy
 msgid "Village MP (2)"
 msgstr "Landsby MP (2v2)"
 
-#: ../base/ufos/maps.ufo:5632
+#: ../base/ufos/maps.ufo:5583
 #, fuzzy
 msgid "Village MP (3)"
 msgstr "Landsby MP (2v2)"
 
-#: ../base/ufos/maps.ufo:5662
+#: ../base/ufos/maps.ufo:5613
 msgid "Alien Base"
 msgstr "Romvesen-base"
 
-#: ../base/ufos/maps.ufo:5704
+#: ../base/ufos/maps.ufo:5655
 msgid "PHALANX Craft Crash Site"
 msgstr "Falanks krasjsted"
 
-#: ../base/ufos/maps.ufo:5733
+#: ../base/ufos/maps.ufo:5684
 msgid "Training Zone: Alpha"
 msgstr "Treningssted: Alpha."
 
-#: ../base/ufos/maps.ufo:5749
+#: ../base/ufos/maps.ufo:5700
 msgid "Training Zone: Bravo"
 msgstr "Treningssted: Bravo."
 
@@ -16589,9 +16584,9 @@ msgid "Background"
 msgstr "Bakgrunn"
 
 #: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:142
-#: ../base/ufos/ui/bases.ufo:310 ../base/ufos/ui/geoscape.ufo:1387
-#: ../base/ufos/ui/market.ufo:154 ../base/ufos/ui/production.ufo:76
-#: ../base/ufos/ui/transfer.ufo:154 ../base/ufos/ui/transfer.ufo:257
+#: ../base/ufos/ui/bases.ufo:299 ../base/ufos/ui/geoscape.ufo:1387
+#: ../base/ufos/ui/market.ufo:267 ../base/ufos/ui/production.ufo:76
+#: ../base/ufos/ui/transfer.ufo:215 ../base/ufos/ui/transfer.ufo:363
 #: client/cgame/campaign/cp_geoscape.cpp:309
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:805
 msgid "Aircraft"
@@ -16611,9 +16606,9 @@ msgstr "Forskningsrapporter"
 
 #: ../base/ufos/research.ufo:116 ../base/ufos/ui/_assets_squad.ufo:490
 #: ../base/ufos/ui/aircraft.ufo:156 ../base/ufos/ui/aircraft_equip.ufo:61
-#: ../base/ufos/ui/equipment.ufo:59 ../base/ufos/ui/hud_default.ufo:273
-#: ../base/ufos/ui/market.ufo:121 ../base/ufos/ui/transfer.ufo:139
-#: ../base/ufos/ui/transfer.ufo:251
+#: ../base/ufos/ui/equipment.ufo:59 ../base/ufos/ui/hud_default.ufo:272
+#: ../base/ufos/ui/market.ufo:189 ../base/ufos/ui/transfer.ufo:194
+#: ../base/ufos/ui/transfer.ufo:357
 msgid "Equipment"
 msgstr "Utstyr"
 
@@ -16629,15 +16624,13 @@ msgstr "Obduksjoner & observasjon"
 msgid "The Alien Threat"
 msgstr "Trusselen fra rommet"
 
-#: ../base/ufos/research.ufo:129 ../base/ufos/ui/bases.ufo:350
+#: ../base/ufos/research.ufo:129 ../base/ufos/ui/bases.ufo:339
 #: ../base/ufos/ui/research.ufo:24
-#: client/cgame/campaign/cp_base_callbacks.cpp:875
 msgid "Research"
 msgstr "Forskning"
 
-#: ../base/ufos/research.ufo:137 ../base/ufos/ui/bases.ufo:371
+#: ../base/ufos/research.ufo:137 ../base/ufos/ui/bases.ufo:360
 #: ../base/ufos/ui/production.ufo:24 ../base/ufos/ui/production.ufo:124
-#: client/cgame/campaign/cp_base_callbacks.cpp:861
 msgid "Production"
 msgstr "Produksjon"
 
@@ -16963,7 +16956,7 @@ msgstr "AmfetaminImplantat"
 msgid "Muscle Stimulant"
 msgstr "Muskelstimulerende"
 
-#: ../base/ufos/seq_credits.ufo:30 ../base/ufos/ui/main.ufo:20
+#: ../base/ufos/seq_credits.ufo:30 ../base/ufos/ui/main.ufo:16
 msgid "UFO: ALIEN INVASION"
 msgstr ""
 
@@ -18113,94 +18106,88 @@ msgstr ""
 "overvåkingskameraer rundt basen for å finne fiender."
 
 # #ufopedia
-#: ../base/ufos/ui/_assets.ufo:42 ../base/ufos/ui/_assets_base.ufo:377
-#: ../base/ufos/ui/_assets_base.ufo:557
+#: ../base/ufos/ui/_assets.ufo:55 ../base/ufos/ui/_assets_base.ufo:494
 #, fuzzy
 msgid "View UFOPaedia entry"
 msgstr "Tjek Ufopædi indhold"
 
-#: ../base/ufos/ui/_assets.ufo:124 ../base/ufos/ui/hud_phone.ufo:157
+#: ../base/ufos/ui/_assets.ufo:148 ../base/ufos/ui/hud_phone.ufo:157
 #: client/cgame/campaign/cp_installation_callbacks.cpp:194
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:565
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: ../base/ufos/ui/_assets.ufo:125 ../base/ufos/ui/sys_popup.ufo:52
+#: ../base/ufos/ui/_assets.ufo:149 ../base/ufos/ui/sys_popup.ufo:52
 #: ../base/ufos/ui/sys_popup.ufo:115
 msgid "Close this dialogue"
 msgstr "Lukk denne dialogen"
 
-#: ../base/ufos/ui/_assets.ufo:380 ../base/ufos/ui/inv_stat.ufo:110
+#: ../base/ufos/ui/_assets.ufo:505 ../base/ufos/ui/inv_stat.ufo:109
 #, fuzzy
 msgid "Strength"
 msgstr "Styrke:"
 
-#: ../base/ufos/ui/_assets.ufo:388 ../base/ufos/ui/inv_stat.ufo:118
+#: ../base/ufos/ui/_assets.ufo:528 ../base/ufos/ui/inv_stat.ufo:117
 msgid "Speed"
 msgstr "Fart"
 
-#: ../base/ufos/ui/_assets.ufo:396 ../base/ufos/ui/inv_stat.ufo:126
+#: ../base/ufos/ui/_assets.ufo:551 ../base/ufos/ui/inv_stat.ufo:125
 #: client/cgame/campaign/cp_ufopedia.cpp:146
 msgid "Accuracy"
 msgstr "Nøyaktighet"
 
-#: ../base/ufos/ui/_assets.ufo:404 ../base/ufos/ui/inv_stat.ufo:134
+#: ../base/ufos/ui/_assets.ufo:574 ../base/ufos/ui/inv_stat.ufo:133
 #, fuzzy
 msgid "Mind"
 msgstr "Sinn:"
 
-#: ../base/ufos/ui/_assets.ufo:420 ../base/ufos/ui/inv_stat.ufo:150
+#: ../base/ufos/ui/_assets.ufo:608 ../base/ufos/ui/inv_stat.ufo:149
 msgid "CQB"
 msgstr ""
 
-#: ../base/ufos/ui/_assets.ufo:421
+#: ../base/ufos/ui/_assets.ufo:609
 #, fuzzy
 msgid "Close Quarters Battle"
 msgstr "Nært hold"
 
-#: ../base/ufos/ui/_assets.ufo:429 ../base/ufos/ui/inv_stat.ufo:158
+#: ../base/ufos/ui/_assets.ufo:632 ../base/ufos/ui/inv_stat.ufo:157
 #: client/cl_inventory_callbacks.cpp:50
 msgid "Assault"
 msgstr "Angrep"
 
-#: ../base/ufos/ui/_assets.ufo:437 ../base/ufos/ui/inv_stat.ufo:166
+#: ../base/ufos/ui/_assets.ufo:655 ../base/ufos/ui/inv_stat.ufo:165
 #: client/cl_inventory_callbacks.cpp:52
 msgid "Sniper"
 msgstr "Snigskytte"
 
-#: ../base/ufos/ui/_assets.ufo:445 ../base/ufos/ui/inv_stat.ufo:174
+#: ../base/ufos/ui/_assets.ufo:678 ../base/ufos/ui/inv_stat.ufo:173
 #: client/cl_inventory_callbacks.cpp:54
 msgid "Explosives"
 msgstr "Eksplosiver"
 
-#: ../base/ufos/ui/_assets.ufo:464
+#: ../base/ufos/ui/_assets.ufo:728
 msgid "Health"
 msgstr "Helse"
 
-#: ../base/ufos/ui/_assets.ufo:465
-#, fuzzy
-msgid "Healthpoints"
-msgstr "Helse"
-
-#: ../base/ufos/ui/_assets.ufo:492
+#: ../base/ufos/ui/_assets.ufo:755
 msgid "Missions Performed:"
 msgstr "Utførte oppdrag:"
 
-#: ../base/ufos/ui/_assets.ufo:505
+#: ../base/ufos/ui/_assets.ufo:772
 msgid "Enemies Killed:"
 msgstr "Fiender drept:"
 
-#: ../base/ufos/ui/_assets.ufo:581
+#: ../base/ufos/ui/_assets.ufo:876
 #, fuzzy
 msgid "Piloting"
 msgstr "Navigering:"
 
-#: ../base/ufos/ui/_assets.ufo:588
+#: ../base/ufos/ui/_assets.ufo:895
 #, fuzzy
 msgid "Targeting"
 msgstr "Målrettet:"
 
-#: ../base/ufos/ui/_assets.ufo:595
+#: ../base/ufos/ui/_assets.ufo:914
 #, fuzzy
 msgid "Evading"
 msgstr "Unnviker:"
@@ -18209,70 +18196,66 @@ msgstr "Unnviker:"
 msgid "Back"
 msgstr "Tilbake"
 
-#: ../base/ufos/ui/_assets_base.ufo:418
+#: ../base/ufos/ui/_assets_base.ufo:546
 msgid "Stop researching this project"
 msgstr "Stans forskning på dette prosjektet."
 
-#: ../base/ufos/ui/_assets_base.ufo:429
+#: ../base/ufos/ui/_assets_base.ufo:560
 msgid "Assign all free scientists on this project"
 msgstr "Tildel alle ledige forskere til dette prosjektet"
 
-#: ../base/ufos/ui/_assets_base.ufo:440
+#: ../base/ufos/ui/_assets_base.ufo:574
 msgid "Assign less scientists on this project"
 msgstr "Tildel færre forskere til dette prosjektet"
 
-#: ../base/ufos/ui/_assets_base.ufo:451
+#: ../base/ufos/ui/_assets_base.ufo:588
 msgid "Assign more scientists on this project"
 msgstr "Tildel flere forskere til dette prosjektet"
 
-#: ../base/ufos/ui/_assets_base.ufo:470
+#: ../base/ufos/ui/_assets_base.ufo:612
 #, fuzzy
 msgid "Currently in research on another base"
 msgstr "Dette utstyret er for tiden et forskningsobjekt på en annen base."
 
-#: ../base/ufos/ui/_assets_base.ufo:484
+#: ../base/ufos/ui/_assets_base.ufo:629
 msgid "N/A"
 msgstr "–"
 
-#: ../base/ufos/ui/_assets_base.ufo:485
+#: ../base/ufos/ui/_assets_base.ufo:630
 msgid "An artifact or prerequisite is missing for this topic"
 msgstr "En gjenstand eller forutsetning mangler for dette emnet"
 
-#: ../base/ufos/ui/_assets_base.ufo:493
+#: ../base/ufos/ui/_assets_base.ufo:640
 msgid "Expand/Collapse"
 msgstr "Utvid/skjul"
 
-#: ../base/ufos/ui/_assets_base.ufo:614
-msgid "Lock current stock level"
-msgstr ""
-
-#: ../base/ufos/ui/_assets_base.ufo:687
+#: ../base/ufos/ui/_assets_base.ufo:671
 #, fuzzy
 msgid "Previous base"
 msgstr "Forrige base"
 
-#: ../base/ufos/ui/_assets_base.ufo:703
+#: ../base/ufos/ui/_assets_base.ufo:692
 #, fuzzy
 msgid "Next base"
 msgstr "Neste base"
 
-#: ../base/ufos/ui/_assets_base.ufo:774 ../base/ufos/ui/_menu.ufo:88
+#: ../base/ufos/ui/_assets_base.ufo:777 ../base/ufos/ui/_menu.ufo:88
 #, fuzzy
 msgid "Back to base"
 msgstr "Tilbake til baseoversikt"
 
 # # in game
-#: ../base/ufos/ui/_assets_hud.ufo:136
+#: ../base/ufos/ui/_assets_hud.ufo:135
 #, fuzzy
 msgid "current level"
 msgstr "Nåværende team"
 
-#: ../base/ufos/ui/_assets_hud.ufo:157
+#: ../base/ufos/ui/_assets_hud.ufo:156
 #, fuzzy
 msgid "raise the level"
 msgstr "Gen dette nivået"
 
-#: ../base/ufos/ui/_assets_hud.ufo:169
+#: ../base/ufos/ui/_assets_hud.ufo:168
 #, fuzzy
 msgid "lower the level"
 msgstr "Gen dette nivået"
@@ -18331,8 +18314,7 @@ msgstr "UGVs:"
 msgid "Selected squad name here"
 msgstr "Valgt forsvar:"
 
-#: ../base/ufos/ui/_assets_squad.ufo:311 ../base/ufos/ui/campaign.ufo:147
-#: ../base/ufos/ui/campaign_main.ufo:49
+#: ../base/ufos/ui/_assets_squad.ufo:311 ../base/ufos/ui/campaign_main.ufo:47
 msgid "SAVE"
 msgstr ""
 
@@ -18353,21 +18335,20 @@ msgstr ""
 msgid "CUSTOM"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:430 ../base/ufos/ui/campaign.ufo:131
+#: ../base/ufos/ui/_assets_squad.ufo:430
 msgid "NEW"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:446 ../base/ufos/ui/campaign.ufo:155
-#: ../base/ufos/ui/campaign_main.ufo:38
+#: ../base/ufos/ui/_assets_squad.ufo:446 ../base/ufos/ui/campaign_main.ufo:36
 msgid "LOAD"
 msgstr ""
 
-#: ../base/ufos/ui/_assets_squad.ufo:530 ../base/ufos/ui/multiplayer.ufo:203
+#: ../base/ufos/ui/_assets_squad.ufo:530 ../base/ufos/ui/multiplayer.ufo:245
 msgid "CREATE"
 msgstr ""
 
 # # in game
-#: ../base/ufos/ui/_assets_squad.ufo:625 ../base/ufos/ui/multiplayer.ufo:58
+#: ../base/ufos/ui/_assets_squad.ufo:625 ../base/ufos/ui/multiplayer.ufo:100
 msgid "Currently loaded"
 msgstr "lastet inn for øyeblikket"
 
@@ -18383,7 +18364,7 @@ msgstr "Organisasjonshovedstad"
 msgid "Name of this base"
 msgstr "Navnet på basen"
 
-#: ../base/ufos/ui/_menu.ufo:127 ../base/ufos/ui/popup_installations.ufo:173
+#: ../base/ufos/ui/_menu.ufo:127 ../base/ufos/ui/popup_installations.ufo:250
 msgid "Rename your base"
 msgstr "Endre basenavn"
 
@@ -18421,8 +18402,7 @@ msgid "Health:"
 msgstr "Helse:"
 
 #: ../base/ufos/ui/aircraft.ufo:239 ../base/ufos/ui/geoscape.ufo:1114
-#: ../base/ufos/ui/geoscape.ufo:1260
-#: ../base/ufos/ui/popup_installations.ufo:618
+#: ../base/ufos/ui/geoscape.ufo:1260 ../base/ufos/ui/ufoyard.ufo:404
 msgid "Status:"
 msgstr "Status:"
 
@@ -18455,7 +18435,7 @@ msgid "Ammo"
 msgstr "Ammo"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:319 ../base/ufos/ui/equipment.ufo:417
-#: ../base/ufos/ui/market.ufo:132 ../base/ufos/ui/production.ufo:58
+#: ../base/ufos/ui/market.ufo:215 ../base/ufos/ui/production.ufo:58
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:138
 #: client/cgame/campaign/cp_ufopedia.cpp:140
 msgid "Armour"
@@ -18489,8 +18469,8 @@ msgstr "Nåværende utstyr i holder"
 msgid "Ammo fitting this weapon"
 msgstr "Ammo passende til dette våpen"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:25 ../base/ufos/ui/bases.ufo:78
-#: ../base/ufos/ui/bases.ufo:81 ../base/ufos/ui/bases.ufo:332
+#: ../base/ufos/ui/aircraft_soldiers.ufo:25 ../base/ufos/ui/bases.ufo:77
+#: ../base/ufos/ui/bases.ufo:80 ../base/ufos/ui/bases.ufo:321
 #: ../base/ufos/ui/hire.ufo:79
 msgid "Soldiers"
 msgstr "Soldater"
@@ -18548,9 +18528,8 @@ msgstr "Obduksjon"
 msgid "Equip Defence Weapons"
 msgstr "Utstyr forsvarsvåpen"
 
-#: ../base/ufos/ui/basedefence.ufo:32
-#: ../base/ufos/ui/popup_installations.ufo:458
-#: client/cgame/campaign/cp_base.cpp:2065
+#: ../base/ufos/ui/basedefence.ufo:32 ../base/ufos/ui/ufoyard.ufo:244
+#: client/cgame/campaign/cp_base.cpp:2076
 msgid "Information"
 msgstr "Informasjon"
 
@@ -18597,8 +18576,7 @@ msgstr "Bakke til luftforsvar"
 #: ../base/ufos/ui/basedefence.ufo:311 ../base/ufos/ui/geoscape.ufo:881
 #: ../base/ufos/ui/geoscape.ufo:983 ../base/ufos/ui/geoscape.ufo:1253
 #: ../base/ufos/ui/geoscape.ufo:1329 ../base/ufos/ui/irc.ufo:237
-#: ../base/ufos/ui/main.ufo:227 ../base/ufos/ui/popup_installations.ufo:159
-#: ../base/ufos/ui/popup_installations.ufo:488
+#: ../base/ufos/ui/popup_installations.ufo:232 ../base/ufos/ui/ufoyard.ufo:274
 msgid "Name:"
 msgstr "Navn:"
 
@@ -18607,7 +18585,7 @@ msgid "Targetted UFO:"
 msgstr "Innsiktet UFO:"
 
 #: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:1000
-#: ../base/ufos/ui/popup_installations.ufo:528
+#: ../base/ufos/ui/ufoyard.ufo:314
 #, fuzzy
 msgid "Time to completion:"
 msgstr "Teksturkompresjon:"
@@ -18617,137 +18595,102 @@ msgid "Autofire"
 msgstr "Autoild"
 
 #: ../base/ufos/ui/basedefence.ufo:369 ../base/ufos/ui/geoscape.ufo:1030
-#: ../base/ufos/ui/popup_installations.ufo:572
-#: ../base/ufos/ui/popup_installations.ufo:672
-#: client/cgame/campaign/cp_base_callbacks.cpp:601
-#: client/cgame/campaign/cp_base_callbacks.cpp:612
-#: client/cgame/campaign/cp_base_callbacks.cpp:622
-#: client/cgame/campaign/cp_base_callbacks.cpp:632
-#: client/cgame/campaign/cp_base_callbacks.cpp:645
+#: ../base/ufos/ui/ufoyard.ufo:358 ../base/ufos/ui/ufoyard.ufo:458
+#: client/cgame/campaign/cp_base_callbacks.cpp:603
+#: client/cgame/campaign/cp_base_callbacks.cpp:614
+#: client/cgame/campaign/cp_base_callbacks.cpp:624
+#: client/cgame/campaign/cp_base_callbacks.cpp:634
+#: client/cgame/campaign/cp_base_callbacks.cpp:647
 #: client/cgame/campaign/cp_installation_callbacks.cpp:193
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:564
 msgid "Destroy"
 msgstr "Ødelegg"
 
 #: ../base/ufos/ui/basedefence.ufo:370 ../base/ufos/ui/geoscape.ufo:1031
-#: ../base/ufos/ui/popup_installations.ufo:573
+#: ../base/ufos/ui/ufoyard.ufo:359
 #: client/cgame/campaign/cp_installation_callbacks.cpp:193
 msgid "Destroy installation"
 msgstr "Ødelegg bygning"
 
 #: ../base/ufos/ui/basedefence.ufo:378 ../base/ufos/ui/geoscape.ufo:1013
-#: ../base/ufos/ui/inv_stat.ufo:325 ../base/ufos/ui/main.ufo:485
-#: ../base/ufos/ui/popup_baseattack.ufo:159
-#: ../base/ufos/ui/popup_capacity.ufo:77
-#: ../base/ufos/ui/popup_installations.ufo:130 ../base/ufos/ui/radar.ufo:36
-#: ../base/ufos/ui/transfer.ufo:694
+#: ../base/ufos/ui/inv_stat.ufo:324 ../base/ufos/ui/popup_baseattack.ufo:159
+#: ../base/ufos/ui/popup_capacity.ufo:112
+#: ../base/ufos/ui/popup_installations.ufo:191
+#: ../base/ufos/ui/popup_transferlist.ufo:167 ../base/ufos/ui/radar.ufo:36
 msgid "Close"
 msgstr "Lukk"
 
-#: ../base/ufos/ui/bases.ufo:60 ../base/ufos/ui/bases.ufo:63
-#: ../base/ufos/ui/hire.ufo:94 client/cgame/campaign/cp_base_callbacks.cpp:875
+#: ../base/ufos/ui/bases.ufo:59 ../base/ufos/ui/bases.ufo:62
+#: ../base/ufos/ui/hire.ufo:94
 msgid "Scientists"
 msgstr "Vitenskapsmenn"
 
-#: ../base/ufos/ui/bases.ufo:69 ../base/ufos/ui/bases.ufo:72
+#: ../base/ufos/ui/bases.ufo:68 ../base/ufos/ui/bases.ufo:71
 msgid "Engineers"
 msgstr ""
 
-#: ../base/ufos/ui/bases.ufo:87 ../base/ufos/ui/bases.ufo:90
+#: ../base/ufos/ui/bases.ufo:86 ../base/ufos/ui/bases.ufo:89
 #: ../base/ufos/ui/hire.ufo:84
 msgid "Pilots"
 msgstr "Piloter"
 
-#: ../base/ufos/ui/bases.ufo:107 ../base/ufos/ui/hud_default.ufo:1021
+#: ../base/ufos/ui/bases.ufo:106 ../base/ufos/ui/hud_default.ufo:1029
 msgid "Options"
 msgstr "innstillnger"
 
 # #ufopedia
-#: ../base/ufos/ui/bases.ufo:117
+#: ../base/ufos/ui/bases.ufo:116
 #, fuzzy
 msgid "UFOpedia"
 msgstr "Ufopedia"
 
-#: ../base/ufos/ui/bases.ufo:127 ../base/ufos/ui/popup_installations.ufo:310
-#: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
-#: ../base/ufos/ui/transfer.ufo:463
-#: client/cgame/campaign/cp_base_callbacks.cpp:602
-#: client/cgame/campaign/cp_base_callbacks.cpp:613
-#: client/cgame/campaign/cp_base_callbacks.cpp:623
-#: client/cgame/campaign/cp_base_callbacks.cpp:633
+#: ../base/ufos/ui/bases.ufo:126 ../base/ufos/ui/transfer.ufo:164
+#: ../base/ufos/ui/transfer.ufo:658 ../base/ufos/ui/ufoyard.ufo:96
+#: ../base/ufos/ui/ufoyard.ufo:248 ../base/ufos/ui/ufoyard.ufo:440
+#: client/cgame/campaign/cp_base_callbacks.cpp:604
+#: client/cgame/campaign/cp_base_callbacks.cpp:615
+#: client/cgame/campaign/cp_base_callbacks.cpp:625
+#: client/cgame/campaign/cp_base_callbacks.cpp:635
 msgid "Transfer"
 msgstr "Overfør"
 
-#: ../base/ufos/ui/bases.ufo:137
-msgid "Base Summary"
-msgstr "Basesammendrag"
-
-#: ../base/ufos/ui/bases.ufo:161
+#: ../base/ufos/ui/bases.ufo:150
 #, fuzzy
 msgid "Facilities"
 msgstr "Bygninger"
 
 # #ufopedia
-#: ../base/ufos/ui/bases.ufo:207 ../base/ufos/ui/geoscape.ufo:539
+#: ../base/ufos/ui/bases.ufo:196 ../base/ufos/ui/geoscape.ufo:539
 #: client/cgame/campaign/cp_ufopedia.cpp:113
-#: client/cgame/campaign/cp_ufopedia.cpp:842
+#: client/cgame/campaign/cp_ufopedia.cpp:860
 msgid "UFOpaedia"
 msgstr "Ufopedia"
 
-#: ../base/ufos/ui/bases.ufo:341 ../base/ufos/ui/market.ufo:31
-#: ../base/ufos/ui/market.ufo:57
+#: ../base/ufos/ui/bases.ufo:330 ../base/ufos/ui/market.ufo:30
+#: ../base/ufos/ui/market.ufo:60
 msgid "Market"
 msgstr "Marked"
 
-#: ../base/ufos/ui/campaign.ufo:42 ../base/ufos/ui/campaign.ufo:95
-msgid "Upload"
-msgstr "Opplasting"
-
-#: ../base/ufos/ui/campaign.ufo:50 ../base/ufos/ui/campaign.ufo:103
-#, fuzzy
-msgid "Delete this savegame"
-msgstr "Slett dette teamet"
-
-#: ../base/ufos/ui/campaign.ufo:168 ../base/ufos/ui/multiplayer.ufo:702
-#: ../base/ufos/ui/skirmish.ufo:175
-msgid "DOWNLOAD"
-msgstr ""
-
-#: ../base/ufos/ui/campaign.ufo:176 ../base/ufos/ui/skirmish.ufo:186
-msgid "BEGIN"
-msgstr ""
-
-#: ../base/ufos/ui/campaign.ufo:198 ../base/ufos/ui/multiplayer.ufo:901
-#: ../base/ufos/ui/popup_exitcampaign.ufo:41 ../base/ufos/ui/skirmish.ufo:197
+#: ../base/ufos/ui/campaign.ufo:59 ../base/ufos/ui/multiplayer.ufo:943
+#: ../base/ufos/ui/popup_exitcampaign.ufo:40 ../base/ufos/ui/skirmish.ufo:197
 #: ../base/ufos/ui/tutorials.ufo:70
 msgid "BACK"
 msgstr ""
 
-#: ../base/ufos/ui/campaign.ufo:355 ../base/ufos/ui/multiplayer.ufo:1065
-#: ../base/ufos/ui/skirmish.ufo:369
-msgid "No files uploaded yet"
-msgstr "Ingen filer lastet opp enda"
-
-#: ../base/ufos/ui/campaign.ufo:426 ../base/ufos/ui/campaign.ufo:440
-#: ../base/ufos/ui/campaign.ufo:456
-msgid "Click here to save game"
-msgstr ""
-
-#: ../base/ufos/ui/campaign_main.ufo:27 ../base/ufos/ui/missionmenu.ufo:32
+#: ../base/ufos/ui/campaign_main.ufo:25 ../base/ufos/ui/missionmenu.ufo:121
 msgid "CONTINUE"
 msgstr ""
 
-#: ../base/ufos/ui/campaign_main.ufo:28 ../base/ufos/ui/missionmenu.ufo:33
+#: ../base/ufos/ui/campaign_main.ufo:26 ../base/ufos/ui/missionmenu.ufo:122
 msgid "Leave this menu and continue playing."
 msgstr "Forlat denne menyen og fortsette å spille."
 
-#: ../base/ufos/ui/campaign_main.ufo:60 ../base/ufos/ui/main.ufo:107
-#: ../base/ufos/ui/missionmenu.ufo:43
+#: ../base/ufos/ui/campaign_main.ufo:58 ../base/ufos/ui/main.ufo:95
+#: ../base/ufos/ui/missionmenu.ufo:137
 msgid "OPTIONS"
 msgstr ""
 
-#: ../base/ufos/ui/campaign_main.ufo:70 ../base/ufos/ui/main.ufo:140
+#: ../base/ufos/ui/campaign_main.ufo:68 ../base/ufos/ui/main.ufo:128
 msgid "EXIT"
 msgstr ""
 
@@ -18755,22 +18698,22 @@ msgstr ""
 msgid "Remove this file from the server"
 msgstr "Fjern denne filen fra serveren"
 
-#: ../base/ufos/ui/endgame.ufo:42
+#: ../base/ufos/ui/endgame.ufo:41
 msgid "Click to continue"
 msgstr "Klikk for å fortsette"
 
-#: ../base/ufos/ui/endgame.ufo:63 ../base/ufos/ui/endgame.ufo:86
-#: ../base/ufos/ui/endgame.ufo:87
+#: ../base/ufos/ui/endgame.ufo:62 ../base/ufos/ui/endgame.ufo:85
+#: ../base/ufos/ui/endgame.ufo:86
 #, fuzzy
 msgid "scrollbar"
 msgstr "Rull"
 
-#: ../base/ufos/ui/endgame.ufo:112
+#: ../base/ufos/ui/endgame.ufo:111
 #, fuzzy
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Takk for at du spiller UFO: Alien Invasion"
 
-#: ../base/ufos/ui/endgame.ufo:116
+#: ../base/ufos/ui/endgame.ufo:115
 msgid "You've lost the game"
 msgstr "Du tapte spillet"
 
@@ -18779,17 +18722,17 @@ msgstr "Du tapte spillet"
 msgid "Rename your unit"
 msgstr "Nytt navn på enhet"
 
-#: ../base/ufos/ui/equipment.ufo:185 ../base/ufos/ui/inv_stat.ufo:334
+#: ../base/ufos/ui/equipment.ufo:185 ../base/ufos/ui/inv_stat.ufo:333
 #, fuzzy
 msgid "Next soldier"
 msgstr "soldat"
 
-#: ../base/ufos/ui/equipment.ufo:193 ../base/ufos/ui/inv_stat.ufo:343
+#: ../base/ufos/ui/equipment.ufo:193 ../base/ufos/ui/inv_stat.ufo:342
 #, fuzzy
 msgid "Previous soldier"
 msgstr "Forrige base"
 
-#: ../base/ufos/ui/equipment.ufo:250 ../base/ufos/ui/inv_stat.ufo:84
+#: ../base/ufos/ui/equipment.ufo:250 ../base/ufos/ui/inv_stat.ufo:83
 msgid "0/0 Kg"
 msgstr "0/0 Kg"
 
@@ -18941,7 +18884,7 @@ msgstr "Automatisk fullført oppdrag"
 msgid "This kind of mission cannot be done automatically"
 msgstr "Denne type oppdrag kan ikke utføres automatisk"
 
-#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:264
 msgid "Cost:"
 msgstr "Pris:"
 
@@ -18949,7 +18892,7 @@ msgstr "Pris:"
 msgid "Time to build:"
 msgstr "Byggetid:"
 
-#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:281
 msgid "Build"
 msgstr "Bygg"
 
@@ -18978,7 +18921,7 @@ msgid "SAM defence"
 msgstr "SAM-forsvar"
 
 #: ../base/ufos/ui/geoscape.ufo:1121 ../base/ufos/ui/geoscape.ufo:1267
-#: ../base/ufos/ui/popup_capacity.ufo:26
+#: ../base/ufos/ui/popup_capacity.ufo:40
 msgid "Base:"
 msgstr "Base:"
 
@@ -18990,8 +18933,8 @@ msgstr "Bakke-til-luftmissil site:"
 msgid "Select aircraft"
 msgstr "Velg fly"
 
-#: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/geoscape.ufo:1274 ../base/ufos/ui/popup_transferlist.ufo:55
+#: ../base/ufos/ui/ufoyard.ufo:428
 msgid "ETA:"
 msgstr "ETA:"
 
@@ -19068,115 +19011,116 @@ msgstr "Hardt såret"
 msgid "Healthy"
 msgstr "Sunn"
 
-#: ../base/ufos/ui/hud_.ufo:50
+#: ../base/ufos/ui/hud_.ufo:55
 #, fuzzy
 msgid "Use this firemode for reaction fire"
 msgstr "Kryss av for bruk av denne metoden for reaksjonsild."
 
-#: ../base/ufos/ui/hud_.ufo:325
+#: ../base/ufos/ui/hud_.ufo:330
 msgid "tt"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:299
+#: ../base/ufos/ui/hud_default.ufo:298
 #, fuzzy
 msgid "Stats"
 msgstr "Status:"
 
-#: ../base/ufos/ui/hud_default.ufo:325
+#: ../base/ufos/ui/hud_default.ufo:324
 msgid "Headgear"
 msgstr "Hodeutstyr"
 
-#: ../base/ufos/ui/hud_default.ufo:358 ../base/ufos/ui/hud_default.ufo:377
+#: ../base/ufos/ui/hud_default.ufo:357 ../base/ufos/ui/hud_default.ufo:376
 #: client/battlescape/cl_hud_callbacks.cpp:348
 msgid "Toggle reaction fire."
 msgstr "Skift reaksjonsild"
 
-#: ../base/ufos/ui/hud_default.ufo:413
+#: ../base/ufos/ui/hud_default.ufo:412
 #, fuzzy
 msgid "Stand"
 msgstr "Stanley"
 
-#: ../base/ufos/ui/hud_default.ufo:439
+#: ../base/ufos/ui/hud_default.ufo:438
 #, fuzzy
 msgid "Crouch"
 msgstr "Krypgang"
 
-#: ../base/ufos/ui/hud_default.ufo:457
+#: ../base/ufos/ui/hud_default.ufo:456
 #, fuzzy
 msgid "Crouched"
 msgstr "Huk reservert"
 
-#: ../base/ufos/ui/hud_default.ufo:486
+#: ../base/ufos/ui/hud_default.ufo:485
 #, fuzzy
 msgid "Standing"
 msgstr "Enestående"
 
-#: ../base/ufos/ui/hud_default.ufo:669
+#: ../base/ufos/ui/hud_default.ufo:668
 msgid "View other hand"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:754
+#: ../base/ufos/ui/hud_default.ufo:753
 msgid "Hide squad"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:825 ../base/ufos/ui/hud_default.ufo:827
-#: ../base/ufos/ui/hud_default.ufo:844
+#: ../base/ufos/ui/hud_default.ufo:824 ../base/ufos/ui/hud_default.ufo:826
+#: ../base/ufos/ui/hud_default.ufo:843
 msgid "btn"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:855
+#: ../base/ufos/ui/hud_default.ufo:854
 #, fuzzy
 msgid "Show squad"
 msgstr "Vis taster"
 
-#: ../base/ufos/ui/hud_default.ufo:919
+#: ../base/ufos/ui/hud_default.ufo:918
 #, fuzzy
 msgid "Jump to alien"
 msgstr "Italiensk"
 
-#: ../base/ufos/ui/hud_default.ufo:950
+#: ../base/ufos/ui/hud_default.ufo:958
 msgid "Jump to civilian"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:955
+#: ../base/ufos/ui/hud_default.ufo:963
 msgid "*"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:995
+#: ../base/ufos/ui/hud_default.ufo:1003
 #, fuzzy
 msgid "End Turn"
 msgstr "Avslutt runden"
 
-#: ../base/ufos/ui/hud_default.ufo:1047
+#: ../base/ufos/ui/hud_default.ufo:1055 ../base/ufos/ui/missionmenu.ufo:36
+#: ../base/ufos/ui/missionmenu.ufo:83
 msgid "Abort"
 msgstr "Avbryt"
 
-#: ../base/ufos/ui/hud_default.ufo:1098 ../base/ufos/ui/hud_default.ufo:1540
+#: ../base/ufos/ui/hud_default.ufo:1106 ../base/ufos/ui/hud_default.ufo:1548
 msgid "Show rescue zone"
 msgstr "Vis redningssone"
 
-#: ../base/ufos/ui/hud_default.ufo:1149 ../base/ufos/ui/hud_default.ufo:1204
+#: ../base/ufos/ui/hud_default.ufo:1157 ../base/ufos/ui/hud_default.ufo:1212
 msgid "Target out of range"
 msgstr "Målet er utenfor rekkevidde"
 
-#: ../base/ufos/ui/hud_default.ufo:1154 ../base/ufos/ui/hud_default.ufo:1209
+#: ../base/ufos/ui/hud_default.ufo:1162 ../base/ufos/ui/hud_default.ufo:1217
 msgid "Target acquired"
 msgstr "Området er okkupert"
 
-#: ../base/ufos/ui/hud_default.ufo:1236
+#: ../base/ufos/ui/hud_default.ufo:1244
 #, fuzzy
 msgid "Aborting fire!"
 msgstr "Ingen reaktionsild"
 
-#: ../base/ufos/ui/hud_default.ufo:1481
+#: ../base/ufos/ui/hud_default.ufo:1489
 msgid "Please wait"
 msgstr "Vennligst vent"
 
-#: ../base/ufos/ui/hud_default.ufo:1537
+#: ../base/ufos/ui/hud_default.ufo:1545
 msgid "Hide rescue zone"
 msgstr "Skjul redningssonen"
 
-#: ../base/ufos/ui/hud_default.ufo:1638
+#: ../base/ufos/ui/hud_default.ufo:1646
 msgid "Default"
 msgstr ""
 
@@ -19220,16 +19164,16 @@ msgstr "ikke mer ammo"
 msgid "Phone HUD"
 msgstr "Telefon-HUD"
 
-#: ../base/ufos/ui/inv_stat.ufo:206 ../base/ufos/ui/stats.ufo:110
+#: ../base/ufos/ui/inv_stat.ufo:205 ../base/ufos/ui/stats.ufo:110
 msgid "Missions"
 msgstr "Oppdrag"
 
-#: ../base/ufos/ui/inv_stat.ufo:215
+#: ../base/ufos/ui/inv_stat.ufo:214
 #: client/cgame/campaign/cp_mission_callbacks.cpp:118
 msgid "Aliens killed"
 msgstr "Romvesener drept"
 
-#: ../base/ufos/ui/irc.ufo:23 ../base/ufos/ui/multiplayer.ufo:1825
+#: ../base/ufos/ui/irc.ufo:23 ../base/ufos/ui/multiplayer.ufo:1867
 msgid "Lobby"
 msgstr "Vestibyle"
 
@@ -19273,7 +19217,7 @@ msgstr "Ikke tilkoblet"
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr "Du er ikke tilkoblet vestibylen. Vil du koble til?"
 
-#: ../base/ufos/ui/irc.ufo:295 ../base/ufos/ui/multiplayer.ufo:1704
+#: ../base/ufos/ui/irc.ufo:295 ../base/ufos/ui/multiplayer.ufo:1746
 msgid "Connect"
 msgstr "Koble til"
 
@@ -19373,7 +19317,7 @@ msgstr "Sorter nasjoner etter tilknytning"
 msgid "Selected nation:"
 msgstr "Valgt nasjon:"
 
-#: ../base/ufos/ui/lostwon.ufo:437 ../base/ufos/ui/popup_installations.ufo:467
+#: ../base/ufos/ui/lostwon.ufo:437 ../base/ufos/ui/ufoyard.ufo:253
 msgid "Sell"
 msgstr "Selg"
 
@@ -19385,149 +19329,91 @@ msgstr "Begynn ufo-salgsprosess"
 msgid "Mark all messages read"
 msgstr "&Merk alle meldingene som lest"
 
-#: ../base/ufos/ui/main.ufo:32
+#: ../base/ufos/ui/main.ufo:27
 msgid "Facebook"
 msgstr "Facebook"
 
-#: ../base/ufos/ui/main.ufo:33
+#: ../base/ufos/ui/main.ufo:28
 msgid "Like us on facebook"
 msgstr "Lik oss på facebook"
 
-#: ../base/ufos/ui/main.ufo:48
+#: ../base/ufos/ui/main.ufo:40
 msgid "Twitter"
 msgstr "Twitter"
 
-#: ../base/ufos/ui/main.ufo:49
+#: ../base/ufos/ui/main.ufo:41
 msgid "Follow us on twitter"
 msgstr "Følg oss på twitter"
 
-#: ../base/ufos/ui/main.ufo:74
+#: ../base/ufos/ui/main.ufo:62
 msgid "CAMPAIGN"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:85
+#: ../base/ufos/ui/main.ufo:73
 msgid "SKIRMISH"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:96
+#: ../base/ufos/ui/main.ufo:84
 msgid "MULTIPLAYER"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:118 ../base/ufos/ui/tutorials.ufo:12
+#: ../base/ufos/ui/main.ufo:106 ../base/ufos/ui/tutorials.ufo:12
 msgid "TUTORIALS"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:129
+#: ../base/ufos/ui/main.ufo:117
 msgid "DEVELOPERS"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:204
-msgid "Initial settings"
-msgstr "Opprinnelige innstillinger"
-
-#: ../base/ufos/ui/main.ufo:217
-#, fuzzy
-msgid "User information"
-msgstr "Brukerinformasjon"
-
-#: ../base/ufos/ui/main.ufo:252
-msgid "Volume Control"
-msgstr "Lydstyrke"
-
-#: ../base/ufos/ui/main.ufo:262
-msgid "Effects:"
-msgstr "Effekter:"
-
-#: ../base/ufos/ui/main.ufo:284
-msgid "Music:"
-msgstr "Musikk:"
-
-#: ../base/ufos/ui/main.ufo:311
-msgid "Language"
-msgstr "Språk"
-
-#: ../base/ufos/ui/main.ufo:321
-msgid "Language:"
-msgstr "Språk:"
-
-#: ../base/ufos/ui/main.ufo:371
-msgid "You have to set the playername and hit the 'OK' button:"
-msgstr "Du må skrive spillernavnet og trykke på OK-knappen:"
-
-#: ../base/ufos/ui/main.ufo:381 ../base/ufos/ui/multiplayer.ufo:1774
-#: ../base/ufos/ui/sys_popup.ufo:51 ../base/ufos/ui/sys_popup.ufo:114
-msgid "OK"
-msgstr "Ok"
-
-#: ../base/ufos/ui/main.ufo:382
-msgid "Save settings"
-msgstr "Lagre innstillinger"
-
-#: ../base/ufos/ui/main.ufo:423
-msgid "Tip of the day"
-msgstr "Dagens tips"
-
-#: ../base/ufos/ui/main.ufo:429
-msgid "Show tip of the day"
-msgstr "Vis dagens tips"
-
-#: ../base/ufos/ui/main.ufo:463 ../base/ufos/ui/main.ufo:482
-msgid "Next"
-msgstr "Neste"
-
-#: ../base/ufos/ui/main.ufo:464 ../base/ufos/ui/main.ufo:483
-msgid "Next tip"
-msgstr "Neste tips"
-
-#: ../base/ufos/ui/main.ufo:486
-msgid "Close window"
-msgstr "Lukk vinduet"
-
-#: ../base/ufos/ui/market.ufo:49
+#: ../base/ufos/ui/market.ufo:50
 #: client/cgame/campaign/cp_base_callbacks.cpp:223
 #: client/cgame/campaign/cp_geoscape.cpp:316
 #: client/cgame/campaign/cp_installation_callbacks.cpp:268
 msgid "Base"
 msgstr "Base"
 
-#: ../base/ufos/ui/market.ufo:88
+#: ../base/ufos/ui/market.ufo:111
 #, fuzzy
 msgid "Primary Weapons"
 msgstr "Vis primære våpen"
 
-#: ../base/ufos/ui/market.ufo:99
+#: ../base/ufos/ui/market.ufo:137
 #, fuzzy
 msgid "Secondary Weapons"
 msgstr "Vis kun sekundære våpen"
 
-#: ../base/ufos/ui/market.ufo:110
+#: ../base/ufos/ui/market.ufo:163
 #, fuzzy
 msgid "Heavy Weapons"
 msgstr "Tunge våpen:"
 
-#: ../base/ufos/ui/market.ufo:143
+#: ../base/ufos/ui/market.ufo:241
 #, fuzzy
 msgid "Aircraft Equipment"
 msgstr "Ekstrautstyr"
 
-#: ../base/ufos/ui/market.ufo:165
+#: ../base/ufos/ui/market.ufo:298
 #, fuzzy
 msgid "Implants"
 msgstr "Implantat"
 
-#: ../base/ufos/ui/market.ufo:176
+#: ../base/ufos/ui/market.ufo:324
 #, fuzzy
 msgid "Other Items"
 msgstr "Andre"
 
-#: ../base/ufos/ui/market.ufo:187
+#: ../base/ufos/ui/market.ufo:350
 msgid "Unmanned Ground Vehicles"
 msgstr ""
 
-#: ../base/ufos/ui/market.ufo:331
+#: ../base/ufos/ui/market.ufo:459
+msgid "Purchase for %i credits each"
+msgstr ""
+
+#: ../base/ufos/ui/market.ufo:467
 #, fuzzy
-msgid "Transactions"
-msgstr "Installasjoner"
+msgid "Sell for %i credits each"
+msgstr "%i element ble solgt for %i."
 
 #: ../base/ufos/ui/material_editor.ufo:12
 msgid "Material editor"
@@ -19686,307 +19572,364 @@ msgstr "Start"
 msgid "Start the match"
 msgstr "Start spillet"
 
-#: ../base/ufos/ui/missionmenu.ufo:61 ../base/ufos/ui/multiplayer.ufo:379
+#: ../base/ufos/ui/missionmenu.ufo:19 ../base/ufos/ui/multiplayer.ufo:421
 msgid "LOBBY"
 msgstr ""
 
-#: ../base/ufos/ui/missionmenu.ufo:62
+#: ../base/ufos/ui/missionmenu.ufo:23
 msgid "ABORT GAME"
 msgstr ""
 
-#: ../base/ufos/ui/missionmenu.ufo:70
+#: ../base/ufos/ui/missionmenu.ufo:28
+#, fuzzy
+msgid "Abort game"
+msgstr "Avbryt spill"
+
+#: ../base/ufos/ui/missionmenu.ufo:32
+#, fuzzy
+msgid "Do you really want to abort this game?"
+msgstr "Er du sikker på at du ønsker å destruere den lagrede ufo-en?"
+
+#: ../base/ufos/ui/missionmenu.ufo:47
 msgid "RESTART MISSION"
 msgstr ""
 
-#: ../base/ufos/ui/missionmenu.ufo:71
+#: ../base/ufos/ui/missionmenu.ufo:52
+#, fuzzy
+msgid "Restart mission"
+msgstr "Spill dette oppdraget igjen"
+
+#: ../base/ufos/ui/missionmenu.ufo:56
+#, fuzzy
+msgid "Do you really want to restart this mission? You will lose all progress."
+msgstr "Er du sikker på at du ønsker å ødelegge denne installasjonen?"
+
+#: ../base/ufos/ui/missionmenu.ufo:60
+#, fuzzy
+msgid "Restart"
+msgstr "Tving start"
+
+#: ../base/ufos/ui/missionmenu.ufo:70
 msgid "ABORT MISSION"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:8
+#: ../base/ufos/ui/missionmenu.ufo:75
+#, fuzzy
+msgid "Abort mission"
+msgstr "Autooppdrag"
+
+#: ../base/ufos/ui/missionmenu.ufo:79
+#, fuzzy
+msgid "Do you really want to abort this mission?"
+msgstr "Er du sikker på at du ønsker å ødelegge denne installasjonen?"
+
+#: ../base/ufos/ui/multiplayer.ufo:34
+msgid "Upload"
+msgstr "Opplasting"
+
+#: ../base/ufos/ui/multiplayer.ufo:42
+#, fuzzy
+msgid "Delete this savegame"
+msgstr "Slett dette teamet"
+
+#: ../base/ufos/ui/multiplayer.ufo:50
 msgid "Connect to this server"
 msgstr "Koble til serveren"
 
-#: ../base/ufos/ui/multiplayer.ufo:12
+#: ../base/ufos/ui/multiplayer.ufo:54
 msgid "Delete this bookmark"
 msgstr "Slett dette bokmerket"
 
-#: ../base/ufos/ui/multiplayer.ufo:194
+#: ../base/ufos/ui/multiplayer.ufo:236
 msgid "JOIN"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:212
+#: ../base/ufos/ui/multiplayer.ufo:254
 msgid "TEAM"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:228
+#: ../base/ufos/ui/multiplayer.ufo:270
 msgid "Gametype:"
 msgstr "Spilltype:"
 
-#: ../base/ufos/ui/multiplayer.ufo:248
+#: ../base/ufos/ui/multiplayer.ufo:290
 msgid "Teamplay:"
 msgstr "Lagspill:"
 
-#: ../base/ufos/ui/multiplayer.ufo:268
+#: ../base/ufos/ui/multiplayer.ufo:310
 msgid "Allowed gametype:"
 msgstr "Tillatt spilltype:"
 
-#: ../base/ufos/ui/multiplayer.ufo:320
+#: ../base/ufos/ui/multiplayer.ufo:362
 msgid "Save the current team"
 msgstr "Lagre nåværende team"
 
-#: ../base/ufos/ui/multiplayer.ufo:325
+#: ../base/ufos/ui/multiplayer.ufo:367
 msgid "SAVE TEAM"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:345
+#: ../base/ufos/ui/multiplayer.ufo:387
 msgid "Bookmarks"
 msgstr "Bokmerker"
 
-#: ../base/ufos/ui/multiplayer.ufo:403
+#: ../base/ufos/ui/multiplayer.ufo:445
 msgid "Hostname:"
 msgstr "Vertsnavn:"
 
-#: ../base/ufos/ui/multiplayer.ufo:418
+#: ../base/ufos/ui/multiplayer.ufo:460
 msgid "Make this server public:"
 msgstr "Offentliggjør serveren:"
 
-#: ../base/ufos/ui/multiplayer.ufo:435
+#: ../base/ufos/ui/multiplayer.ufo:477
 msgid "Server-Password:"
 msgstr "Serverpassord:"
 
-#: ../base/ufos/ui/multiplayer.ufo:453 ../base/ufos/ui/multiplayer.ufo:1409
+#: ../base/ufos/ui/multiplayer.ufo:495 ../base/ufos/ui/multiplayer.ufo:1451
 msgid "RCON-Password:"
 msgstr "RCON-passord:"
 
-#: ../base/ufos/ui/multiplayer.ufo:471
+#: ../base/ufos/ui/multiplayer.ufo:513
 msgid "Enable morale states:"
 msgstr "Aktiver moralstatus:"
 
-#: ../base/ufos/ui/multiplayer.ufo:486
+#: ../base/ufos/ui/multiplayer.ufo:528
 msgid "Alien rush:"
 msgstr "Fremmed rush:"
 
-#: ../base/ufos/ui/multiplayer.ufo:489
+#: ../base/ufos/ui/multiplayer.ufo:531
 msgid "Enemies respawn when killed."
 msgstr "Fiender gjenopplives når det er drept."
 
-#: ../base/ufos/ui/multiplayer.ufo:505
+#: ../base/ufos/ui/multiplayer.ufo:547
 msgid "Max. clients:"
 msgstr "Maks klienter:"
 
-#: ../base/ufos/ui/multiplayer.ufo:506
+#: ../base/ufos/ui/multiplayer.ufo:548
 msgid "Sets the max allowed clients to connect"
 msgstr "Setter maks antall klienter som kan koble til"
 
-#: ../base/ufos/ui/multiplayer.ufo:531 ../base/ufos/ui/multiplayer.ufo:1309
+#: ../base/ufos/ui/multiplayer.ufo:573 ../base/ufos/ui/multiplayer.ufo:1351
 msgid "Max. soldiers per team:"
 msgstr "Maks soldater per lag:"
 
-#: ../base/ufos/ui/multiplayer.ufo:532 ../base/ufos/ui/multiplayer.ufo:1310
-#: ../base/ufos/ui/multiplayer.ufo:1360
+#: ../base/ufos/ui/multiplayer.ufo:574 ../base/ufos/ui/multiplayer.ufo:1352
+#: ../base/ufos/ui/multiplayer.ufo:1402
 msgid "Sets the max allowed soldiers per team"
 msgstr "Setter maks tillatte soldater per lag"
 
-#: ../base/ufos/ui/multiplayer.ufo:557 ../base/ufos/ui/multiplayer.ufo:1334
+#: ../base/ufos/ui/multiplayer.ufo:599 ../base/ufos/ui/multiplayer.ufo:1376
 msgid "Max. soldiers per player:"
 msgstr "Maks soldater per spiller:"
 
-#: ../base/ufos/ui/multiplayer.ufo:558 ../base/ufos/ui/multiplayer.ufo:1335
+#: ../base/ufos/ui/multiplayer.ufo:600 ../base/ufos/ui/multiplayer.ufo:1377
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "Setter maks antall tillatte soldater per spiller i lagspill"
 
-#: ../base/ufos/ui/multiplayer.ufo:584
+#: ../base/ufos/ui/multiplayer.ufo:626
 msgid "Max. human players per team:"
 msgstr "Maks spillere per lag:"
 
-#: ../base/ufos/ui/multiplayer.ufo:609
+#: ../base/ufos/ui/multiplayer.ufo:651
 msgid "Max. AI actors:"
 msgstr "Maks AI-spillere:"
 
-#: ../base/ufos/ui/multiplayer.ufo:610
+#: ../base/ufos/ui/multiplayer.ufo:652
 msgid "Max AI actors for teamplay mode"
 msgstr "Maks AI-spillere i lagspill"
 
-#: ../base/ufos/ui/multiplayer.ufo:636
+#: ../base/ufos/ui/multiplayer.ufo:678
 msgid "Round time limit in seconds:"
 msgstr "Rundetidsgrensen i sekunder:"
 
-#: ../base/ufos/ui/multiplayer.ufo:658
+#: ../base/ufos/ui/multiplayer.ufo:700
 #, fuzzy
 msgid "START SERVER"
 msgstr "RESERVERT"
 
-#: ../base/ufos/ui/multiplayer.ufo:679
+#: ../base/ufos/ui/multiplayer.ufo:721
 #, fuzzy
 msgid "Teams"
 msgstr "Lag"
 
-#: ../base/ufos/ui/multiplayer.ufo:696
+#: ../base/ufos/ui/multiplayer.ufo:738
 msgid "Download new teams"
 msgstr "Last ned nye team"
 
-#: ../base/ufos/ui/multiplayer.ufo:713
+#: ../base/ufos/ui/multiplayer.ufo:744 ../base/ufos/ui/skirmish.ufo:175
+msgid "DOWNLOAD"
+msgstr ""
+
+#: ../base/ufos/ui/multiplayer.ufo:755
 msgid "Generate New Team"
 msgstr "Generer nytt team"
 
-#: ../base/ufos/ui/multiplayer.ufo:714
+#: ../base/ufos/ui/multiplayer.ufo:756
 msgid "GENERATE"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:765
+#: ../base/ufos/ui/multiplayer.ufo:807
 msgid "Close web panel"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:766
+#: ../base/ufos/ui/multiplayer.ufo:808
 msgid "CLOSE"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:781
+#: ../base/ufos/ui/multiplayer.ufo:823
 msgid "REFRESH"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:788
+#: ../base/ufos/ui/multiplayer.ufo:830
 msgid "Serverfilter:"
 msgstr "Serverfilter:"
 
-#: ../base/ufos/ui/multiplayer.ufo:870
+#: ../base/ufos/ui/multiplayer.ufo:912
 msgid "CONNECT"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:881
+#: ../base/ufos/ui/multiplayer.ufo:923
 msgid "Connect to IP"
 msgstr "Koble til IP"
 
-#: ../base/ufos/ui/multiplayer.ufo:910
+#: ../base/ufos/ui/multiplayer.ufo:952
 msgid ""
 "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr "Sørg for at du har åpnet TCP-port 27910 i brannmuren din."
 
-#: ../base/ufos/ui/multiplayer.ufo:1001 ../base/ufos/ui/options.ufo:640
+#: ../base/ufos/ui/multiplayer.ufo:1043 ../base/ufos/ui/options.ufo:640
 msgid "All"
 msgstr "Alle"
 
-#: ../base/ufos/ui/multiplayer.ufo:1003
+#: ../base/ufos/ui/multiplayer.ufo:1045
 msgid "Free"
 msgstr "Ledig"
 
-#: ../base/ufos/ui/multiplayer.ufo:1005
+#: ../base/ufos/ui/multiplayer.ufo:1047
 msgid "Playing"
 msgstr "Spiller"
 
-#: ../base/ufos/ui/multiplayer.ufo:1007
+#: ../base/ufos/ui/multiplayer.ufo:1049
 msgid "Invalid"
 msgstr "Ugyldig"
 
-#: ../base/ufos/ui/multiplayer.ufo:1171
+#: ../base/ufos/ui/multiplayer.ufo:1107 ../base/ufos/ui/skirmish.ufo:369
+msgid "No files uploaded yet"
+msgstr "Ingen filer lastet opp enda"
+
+#: ../base/ufos/ui/multiplayer.ufo:1213
 msgid "Players connected"
 msgstr "Tilkoblede spillere"
 
-#: ../base/ufos/ui/multiplayer.ufo:1220
+#: ../base/ufos/ui/multiplayer.ufo:1262
 msgid "Team selection"
 msgstr "Lagutvelgelse"
 
-#: ../base/ufos/ui/multiplayer.ufo:1237
+#: ../base/ufos/ui/multiplayer.ufo:1279
 msgid "Team preference:"
 msgstr "Laginnstillinger:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1253
+#: ../base/ufos/ui/multiplayer.ufo:1295
 msgid "Next free team"
 msgstr "Neste ledige lag"
 
-#: ../base/ufos/ui/multiplayer.ufo:1266
+#: ../base/ufos/ui/multiplayer.ufo:1308
 msgid "Previous free team"
 msgstr "Forrige ledige lag"
 
-#: ../base/ufos/ui/multiplayer.ufo:1278 ../base/ufos/ui/multiplayer.ufo:1287
+#: ../base/ufos/ui/multiplayer.ufo:1320 ../base/ufos/ui/multiplayer.ufo:1329
 msgid "Finish the teamselection and start the game"
 msgstr "Avslutt lagutvelgelsen og begynn spillet"
 
-#: ../base/ufos/ui/multiplayer.ufo:1286
+#: ../base/ufos/ui/multiplayer.ufo:1328
 msgid "Are you ready?"
 msgstr "Er du klar?"
 
-#: ../base/ufos/ui/multiplayer.ufo:1303
+#: ../base/ufos/ui/multiplayer.ufo:1345
 msgid "Admin control"
 msgstr "Administrasjonskontroll"
 
-#: ../base/ufos/ui/multiplayer.ufo:1359
+#: ../base/ufos/ui/multiplayer.ufo:1401
 msgid "Round time limit:"
 msgstr "Rundetidsgrense:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1384
+#: ../base/ufos/ui/multiplayer.ufo:1426
 msgid "Force start"
 msgstr "Tving start"
 
-#: ../base/ufos/ui/multiplayer.ufo:1385
+#: ../base/ufos/ui/multiplayer.ufo:1427
 msgid "Launch the game before all teams are ready"
 msgstr "Start spillet før alle team er klare"
 
-#: ../base/ufos/ui/multiplayer.ufo:1403
+#: ../base/ufos/ui/multiplayer.ufo:1445
 msgid "Remote Admin Control"
 msgstr "Ekstern administrasjonskontroll"
 
-#: ../base/ufos/ui/multiplayer.ufo:1509
+#: ../base/ufos/ui/multiplayer.ufo:1551
 #, fuzzy
 msgid "Server Info"
 msgstr "Serverinfo"
 
-#: ../base/ufos/ui/multiplayer.ufo:1576
+#: ../base/ufos/ui/multiplayer.ufo:1618
 #, fuzzy
 msgid "Map screenshots"
 msgstr "Ta et skjermdump"
 
-#: ../base/ufos/ui/multiplayer.ufo:1650
+#: ../base/ufos/ui/multiplayer.ufo:1692
 msgid "Userlist"
 msgstr "Brukerliste"
 
-#: ../base/ufos/ui/multiplayer.ufo:1668 ../base/ufos/ui/options.ufo:210
-#: ../base/ufos/ui/web.ufo:12
+#: ../base/ufos/ui/multiplayer.ufo:1710 ../base/ufos/ui/options.ufo:210
+#: ../base/ufos/ui/web.ufo:29
 msgid "Name"
 msgstr "Navn"
 
-#: ../base/ufos/ui/multiplayer.ufo:1678
+#: ../base/ufos/ui/multiplayer.ufo:1720
 #: ../base/ufos/ui/popup_baseattack.ufo:279
 msgid "Team"
 msgstr "Lag"
 
-#: ../base/ufos/ui/multiplayer.ufo:1712
+#: ../base/ufos/ui/multiplayer.ufo:1754
 msgid "Bookmark"
 msgstr "Bokmerke"
 
-#: ../base/ufos/ui/multiplayer.ufo:1713
+#: ../base/ufos/ui/multiplayer.ufo:1755
 msgid "Add server to bookmarks"
 msgstr "Legg server til bokmerker"
 
-#: ../base/ufos/ui/multiplayer.ufo:1723
+#: ../base/ufos/ui/multiplayer.ufo:1765
 msgid "Leave Serverbrowser"
 msgstr "Avslutt servernettleser"
 
-#: ../base/ufos/ui/multiplayer.ufo:1751
+#: ../base/ufos/ui/multiplayer.ufo:1793
 msgid "Enter server password"
 msgstr "Skriv serverpassord"
 
-#: ../base/ufos/ui/multiplayer.ufo:1759
+#: ../base/ufos/ui/multiplayer.ufo:1801
 msgid "Password:"
 msgstr "Passord:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1797
+#: ../base/ufos/ui/multiplayer.ufo:1816 ../base/ufos/ui/sys_popup.ufo:51
+#: ../base/ufos/ui/sys_popup.ufo:114
+msgid "OK"
+msgstr "Ok"
+
+#: ../base/ufos/ui/multiplayer.ufo:1839
 msgid "Game invitation"
 msgstr "Spillinvitasjon"
 
-#: ../base/ufos/ui/multiplayer.ufo:1812
+#: ../base/ufos/ui/multiplayer.ufo:1854
 msgid "Server info"
 msgstr "Serverinfo"
 
-#: ../base/ufos/ui/multiplayer.ufo:1813
+#: ../base/ufos/ui/multiplayer.ufo:1855
 msgid "Show server information"
 msgstr "Vis serverinformasjon"
 
-#: ../base/ufos/ui/multiplayer.ufo:1826
+#: ../base/ufos/ui/multiplayer.ufo:1868
 msgid "Go into the lobby"
 msgstr "Gå inn i vestibylen"
 
-#: ../base/ufos/ui/multiplayer.ufo:1835
+#: ../base/ufos/ui/multiplayer.ufo:1877
 msgid ""
 "You received a invitation to take part of a multiplayer game. Hit the "
 "connect button to connect to the server"
@@ -20522,7 +20465,7 @@ msgstr "TeksturInnstillinger"
 #: ../base/ufos/ui/options.ufo:2264
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:214
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:617
-#: client/cgame/campaign/cp_ufopedia.cpp:206 client/input/cl_joystick.cpp:280
+#: client/cgame/campaign/cp_ufopedia.cpp:208 client/input/cl_joystick.cpp:280
 msgid "None"
 msgstr "Ingen"
 
@@ -20663,140 +20606,95 @@ msgstr "Samle et forsvarsteam"
 msgid "Assemble a team first"
 msgstr "Samle et lag først"
 
-#: ../base/ufos/ui/popup_capacity.ufo:10
+#: ../base/ufos/ui/popup_capacity.ufo:18
 msgid "Capacity Exceeded"
 msgstr "Overskredet kapasiteten"
 
-#: ../base/ufos/ui/popup_capacity.ufo:14
+#: ../base/ufos/ui/popup_capacity.ufo:25
 msgid ""
 "There is no more room for goods/personel at this base. Free up some space."
 msgstr ""
 "Det er ikke mer plass til varer/personell på denne basen. Frigjør litt plass"
 
-#: ../base/ufos/ui/popup_capacity.ufo:37
-#: client/cgame/campaign/cp_base_callbacks.cpp:838
+#: ../base/ufos/ui/popup_capacity.ufo:56
 msgid "Capacity"
 msgstr "Kapasitet"
 
-#: ../base/ufos/ui/popup_capacity.ufo:44
-#: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
+#: ../base/ufos/ui/popup_capacity.ufo:66 ../base/ufos/ui/transfer.ufo:521
+#: ../base/ufos/ui/ufoyard.ufo:77 ../base/ufos/ui/ufoyard.ufo:678
 msgid "free"
 msgstr "ledig"
 
-#: ../base/ufos/ui/popup_capacity.ufo:51
+#: ../base/ufos/ui/popup_capacity.ufo:76
 msgid "all"
 msgstr "alle"
 
-#: ../base/ufos/ui/popup_capacity.ufo:85
+#: ../base/ufos/ui/popup_capacity.ufo:124
 msgid "Go to base"
 msgstr "Gå til basen"
 
-#: ../base/ufos/ui/popup_exitcampaign.ufo:25
+#: ../base/ufos/ui/popup_exitcampaign.ufo:24
 msgid "EXIT CAMPAIGN CONFIRMATION"
 msgstr ""
 
-#: ../base/ufos/ui/popup_exitcampaign.ufo:33
+#: ../base/ufos/ui/popup_exitcampaign.ufo:32
 msgid "You will lose all your campaign progress."
 msgstr "Du vil miste all kampanjefremgang."
 
-#: ../base/ufos/ui/popup_exitcampaign.ufo:53
+#: ../base/ufos/ui/popup_exitcampaign.ufo:52
 msgid "QUIT"
 msgstr ""
 
-#: ../base/ufos/ui/popup_installations.ufo:60
+#: ../base/ufos/ui/popup_installations.ufo:80
 msgid "New installation"
 msgstr "Ny installasjon"
 
-#: ../base/ufos/ui/popup_installations.ufo:65
+#: ../base/ufos/ui/popup_installations.ufo:87
 msgid "Type"
 msgstr "Type"
 
-#: ../base/ufos/ui/popup_installations.ufo:72
+#: ../base/ufos/ui/popup_installations.ufo:96
 msgid "Build Time"
 msgstr "Byggetid"
 
-#: ../base/ufos/ui/popup_installations.ufo:80
+#: ../base/ufos/ui/popup_installations.ufo:106
 msgid "Cost"
 msgstr "Kostnad"
 
-#: ../base/ufos/ui/popup_installations.ufo:154
+#: ../base/ufos/ui/popup_installations.ufo:225
 msgid "New base"
 msgstr "Ny base"
 
-#: ../base/ufos/ui/popup_installations.ufo:197
+#: ../base/ufos/ui/popup_installations.ufo:282
 msgid "Build the base"
 msgstr "Bygg basen"
 
-#: ../base/ufos/ui/popup_installations.ufo:358
-msgid "UFO Yards"
-msgstr "Ufo-verft"
-
-#: ../base/ufos/ui/popup_installations.ufo:505
-msgid "Rename Installation"
-msgstr "Nytt navn på Installasjon"
-
-#: ../base/ufos/ui/popup_installations.ufo:516
-#: ../base/ufos/ui/popup_installations.ufo:630
-msgid "Location:"
-msgstr "Sted:"
-
-#: ../base/ufos/ui/popup_installations.ufo:542
-msgid "Capacity:"
-msgstr "Kapasitet:"
-
-#: ../base/ufos/ui/popup_installations.ufo:554
-msgid "Free Space:"
-msgstr "Ledig plass:"
-
-#: ../base/ufos/ui/popup_installations.ufo:566
-#: ../base/ufos/ui/popup_installations.ufo:666
-msgid "Confirm destroying"
-msgstr "Bekreft destruering "
-
-#: ../base/ufos/ui/popup_installations.ufo:606
-msgid "Condition:"
-msgstr "Betingelse:"
-
-#: ../base/ufos/ui/popup_installations.ufo:655
-msgid "Transfer UFO"
-msgstr "Overfør ufo"
-
-#: ../base/ufos/ui/popup_installations.ufo:673
-msgid "Destroy UFO"
-msgstr "Ødelegg ufo"
-
-#: ../base/ufos/ui/popup_installations.ufo:837
-msgid "disassembling"
-msgstr "demonterer"
-
-#: ../base/ufos/ui/popup_installations.ufo:843
-#, fuzzy
-msgid "transferring"
-msgstr "overfører"
-
-#: ../base/ufos/ui/popup_installations.ufo:849
-msgid "stored"
-msgstr "lagret"
-
-#: ../base/ufos/ui/popup_installations.ufo:855
-msgid "unknown"
-msgstr "ukjent"
-
-#: ../base/ufos/ui/popup_quickload.ufo:23
+#: ../base/ufos/ui/popup_quickload.ufo:22
 msgid "Reload campaign"
 msgstr "Reload kampanje"
 
-#: ../base/ufos/ui/popup_quickload.ufo:32
+#: ../base/ufos/ui/popup_quickload.ufo:31
 msgid ""
 "Are you sure that you really want to reload the last automatically saved "
 "campaign state?"
 msgstr ""
 "Er du sikker på å du ønsker å hente den siste automatisk lagrede kampanjen?"
 
-#: ../base/ufos/ui/popup_quickload.ufo:40
+#: ../base/ufos/ui/popup_quickload.ufo:39
 msgid "Load"
 msgstr "Last inn"
+
+#: ../base/ufos/ui/popup_transferlist.ufo:17
+msgid "From:"
+msgstr "Fra:"
+
+#: ../base/ufos/ui/popup_transferlist.ufo:36
+msgid "To:"
+msgstr "Til:"
+
+#: ../base/ufos/ui/popup_transferlist.ufo:125
+msgid "Actual transfers"
+msgstr "Faktiske overføringer"
 
 #: ../base/ufos/ui/production.ufo:72
 msgid "Craft items"
@@ -20892,6 +20790,10 @@ msgstr ""
 msgid "SQUAD"
 msgstr ""
 
+#: ../base/ufos/ui/skirmish.ufo:186
+msgid "BEGIN"
+msgstr ""
+
 #: ../base/ufos/ui/stats.ufo:47
 msgid "Costs"
 msgstr "Priser"
@@ -20913,8 +20815,8 @@ msgstr "Baser"
 msgid "Installations"
 msgstr "Installasjoner"
 
-#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:144
-#: ../base/ufos/ui/transfer.ufo:253
+#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:201
+#: ../base/ufos/ui/transfer.ufo:359
 msgid "Employees"
 msgstr "Ansatte"
 
@@ -21005,91 +20907,70 @@ msgstr "Generer team"
 msgid "Generate a new team with the selected race"
 msgstr "Generer et nytt tema med valgt rase"
 
-#: ../base/ufos/ui/transfer.ufo:34
+#: ../base/ufos/ui/transfer.ufo:49
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 msgstr ""
 "Legg til/fjern element for å overføre last, holder ned SHIFT for å øke "
 "hastigheten."
 
-#: ../base/ufos/ui/transfer.ufo:149 ../base/ufos/ui/transfer.ufo:255
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:145
+#: ../base/ufos/ui/transfer.ufo:208 ../base/ufos/ui/transfer.ufo:361
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:143
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:793
 msgid "Aliens"
 msgstr "romvesener"
 
-#: ../base/ufos/ui/transfer.ufo:181
+#: ../base/ufos/ui/transfer.ufo:248
 msgid "From"
 msgstr "Fra"
 
-#: ../base/ufos/ui/transfer.ufo:188
+#: ../base/ufos/ui/transfer.ufo:258
 msgid "To"
 msgstr "Til"
 
-#: ../base/ufos/ui/transfer.ufo:282
+#: ../base/ufos/ui/transfer.ufo:380
 msgid "Cargo"
 msgstr "Last"
 
-#: ../base/ufos/ui/transfer.ufo:291
-#: client/cgame/campaign/cp_base_callbacks.cpp:838
+#: ../base/ufos/ui/transfer.ufo:391
 msgid "Amount"
 msgstr "Mengde"
 
-#: ../base/ufos/ui/transfer.ufo:345
+#: ../base/ufos/ui/transfer.ufo:479
 msgid "Destination base"
 msgstr "Destinasjonsbase"
 
-#: ../base/ufos/ui/transfer.ufo:365
+#: ../base/ufos/ui/transfer.ufo:510
 msgid "Building"
 msgstr "Byggninger"
 
-#: ../base/ufos/ui/transfer.ufo:389
+#: ../base/ufos/ui/transfer.ufo:543
 msgid "all space"
 msgstr "all plass"
 
-#: ../base/ufos/ui/transfer.ufo:418
+#: ../base/ufos/ui/transfer.ufo:595
 #, fuzzy
 msgid "Capacity overload"
 msgstr "Overbelastning\";"
 
-#: ../base/ufos/ui/transfer.ufo:437 ../base/ufos/ui/transfer.ufo:464
+#: ../base/ufos/ui/transfer.ufo:630 ../base/ufos/ui/transfer.ufo:659
 msgid "Start the transfer"
 msgstr "Begynn overføring"
 
-#: ../base/ufos/ui/transfer.ufo:451
+#: ../base/ufos/ui/transfer.ufo:642
 msgid "List"
 msgstr "List"
 
-#: ../base/ufos/ui/transfer.ufo:452
+#: ../base/ufos/ui/transfer.ufo:643
 msgid "List active transfers"
 msgstr "Vis aktive overføringer"
 
-#: ../base/ufos/ui/transfer.ufo:478
+#: ../base/ufos/ui/transfer.ufo:676
 msgid "Clear"
 msgstr "Tøm"
 
-#: ../base/ufos/ui/transfer.ufo:479
+#: ../base/ufos/ui/transfer.ufo:677
 msgid "Clear cargo"
 msgstr "Tøm last"
-
-#: ../base/ufos/ui/transfer.ufo:523
-msgid "Select base to transfer to"
-msgstr "Velg basen det skal overføres til"
-
-#: ../base/ufos/ui/transfer.ufo:528
-msgid "Choose a base to host alien bodies:"
-msgstr "Velg en base hvor romvesenkroppen skal oppbevares:"
-
-#: ../base/ufos/ui/transfer.ufo:573
-msgid "From:"
-msgstr "Fra:"
-
-#: ../base/ufos/ui/transfer.ufo:587
-msgid "To:"
-msgstr "Til:"
-
-#: ../base/ufos/ui/transfer.ufo:666
-msgid "Actual transfers"
-msgstr "Faktiske overføringer"
 
 #: ../base/ufos/ui/ufopedia.ufo:95
 msgid "Pre-Research Report"
@@ -21123,11 +21004,64 @@ msgstr "Tidligere ildinnstilling"
 msgid "Next firemode"
 msgstr "Neste ildinnstilling"
 
-#: ../base/ufos/ui/web.ufo:8 ../base/ufos/ui/web.ufo:46
+#: ../base/ufos/ui/ufoyard.ufo:144
+msgid "UFO Yards"
+msgstr "Ufo-verft"
+
+#: ../base/ufos/ui/ufoyard.ufo:291
+msgid "Rename Installation"
+msgstr "Nytt navn på Installasjon"
+
+#: ../base/ufos/ui/ufoyard.ufo:302 ../base/ufos/ui/ufoyard.ufo:416
+msgid "Location:"
+msgstr "Sted:"
+
+#: ../base/ufos/ui/ufoyard.ufo:328
+msgid "Capacity:"
+msgstr "Kapasitet:"
+
+#: ../base/ufos/ui/ufoyard.ufo:340
+msgid "Free Space:"
+msgstr "Ledig plass:"
+
+#: ../base/ufos/ui/ufoyard.ufo:352 ../base/ufos/ui/ufoyard.ufo:452
+msgid "Confirm destroying"
+msgstr "Bekreft destruering "
+
+#: ../base/ufos/ui/ufoyard.ufo:392
+msgid "Condition:"
+msgstr "Betingelse:"
+
+#: ../base/ufos/ui/ufoyard.ufo:441
+msgid "Transfer UFO"
+msgstr "Overfør ufo"
+
+#: ../base/ufos/ui/ufoyard.ufo:459
+msgid "Destroy UFO"
+msgstr "Ødelegg ufo"
+
+#: ../base/ufos/ui/ufoyard.ufo:623
+msgid "disassembling"
+msgstr "demonterer"
+
+#: ../base/ufos/ui/ufoyard.ufo:629
+#, fuzzy
+msgid "transferring"
+msgstr "overfører"
+
+#: ../base/ufos/ui/ufoyard.ufo:635
+msgid "stored"
+msgstr "lagret"
+
+#: ../base/ufos/ui/ufoyard.ufo:641
+msgid "unknown"
+msgstr "ukjent"
+
+#: ../base/ufos/ui/web.ufo:22 ../base/ufos/ui/web.ufo:66
 msgid "Login"
 msgstr "Logg inn"
 
-#: ../base/ufos/ui/web.ufo:26
+#: ../base/ufos/ui/web.ufo:47
 msgid "Password"
 msgstr "Passord:"
 
@@ -22149,6 +22083,35 @@ msgstr "En soldat ble revitalisert."
 msgid "A member of team %i was revitalised."
 msgstr "Et medlem av gruppen %i ble revitalisert."
 
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:74
+#, fuzzy, c-format
+msgid ""
+"%s is dazed!\n"
+"Enemy used flashbang!"
+msgstr ""
+"Soldaten er omtåket!\n"
+"Fienden brukte flashbang!"
+
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:77
+#, c-format
+msgid "%s panics!"
+msgstr "%s har panikk!"
+
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:81
+#, c-format
+msgid "%s is consumed by mad rage!"
+msgstr "%s er oppslukt av raseri!"
+
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:83
+#, c-format
+msgid "%s is on a rampage!"
+msgstr "%s går beserk!"
+
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:88
+#, c-format
+msgid "%s is currently shaken."
+msgstr "%s er rystet."
+
 #: client/battlescape/events/event/actor/e_event_actorwound.cpp:60
 #, c-format
 msgid "%s has been wounded"
@@ -22219,19 +22182,19 @@ msgstr "Jagerfly"
 msgid "Transporter"
 msgstr "Transportfly:"
 
-#: client/cgame/campaign/cp_aircraft.cpp:722
+#: client/cgame/campaign/cp_aircraft.cpp:728
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr "En ny %s er allerede i %s"
 
-#: client/cgame/campaign/cp_aircraft.cpp:723
-#: client/cgame/campaign/cp_aircraft.cpp:1063
-#: client/cgame/campaign/cp_aircraft.cpp:1104
-#: client/cgame/campaign/cp_aircraft.cpp:1120
-#: client/cgame/campaign/cp_aircraft.cpp:1161
-#: client/cgame/campaign/cp_aircraft.cpp:1217
-#: client/cgame/campaign/cp_aircraft.cpp:1240
-#: client/cgame/campaign/cp_aircraft.cpp:1994
+#: client/cgame/campaign/cp_aircraft.cpp:729
+#: client/cgame/campaign/cp_aircraft.cpp:1064
+#: client/cgame/campaign/cp_aircraft.cpp:1105
+#: client/cgame/campaign/cp_aircraft.cpp:1121
+#: client/cgame/campaign/cp_aircraft.cpp:1162
+#: client/cgame/campaign/cp_aircraft.cpp:1218
+#: client/cgame/campaign/cp_aircraft.cpp:1241
+#: client/cgame/campaign/cp_aircraft.cpp:1995
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:93
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:101
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:109
@@ -22243,23 +22206,23 @@ msgstr "En ny %s er allerede i %s"
 #: client/cgame/campaign/cp_auto_mission.cpp:744
 #: client/cgame/campaign/cp_auto_mission.cpp:747
 #: client/cgame/campaign/cp_auto_mission.cpp:800
-#: client/cgame/campaign/cp_base.cpp:1342
-#: client/cgame/campaign/cp_base.cpp:1392
-#: client/cgame/campaign/cp_base.cpp:2280
+#: client/cgame/campaign/cp_base.cpp:1353
+#: client/cgame/campaign/cp_base.cpp:1403
+#: client/cgame/campaign/cp_base.cpp:2291
 #: client/cgame/campaign/cp_base_callbacks.cpp:70
 #: client/cgame/campaign/cp_base_callbacks.cpp:201
 #: client/cgame/campaign/cp_base_callbacks.cpp:248
-#: client/cgame/campaign/cp_base_callbacks.cpp:575
-#: client/cgame/campaign/cp_base_callbacks.cpp:590
-#: client/cgame/campaign/cp_base_callbacks.cpp:745
-#: client/cgame/campaign/cp_base_callbacks.cpp:751
-#: client/cgame/campaign/cp_base_callbacks.cpp:771
-#: client/cgame/campaign/cp_base_callbacks.cpp:781
-#: client/cgame/campaign/cp_base_callbacks.cpp:791
-#: client/cgame/campaign/cp_base_callbacks.cpp:797
-#: client/cgame/campaign/cp_base_callbacks.cpp:804
-#: client/cgame/campaign/cp_base_callbacks.cpp:808
-#: client/cgame/campaign/cp_base_callbacks.cpp:813
+#: client/cgame/campaign/cp_base_callbacks.cpp:577
+#: client/cgame/campaign/cp_base_callbacks.cpp:592
+#: client/cgame/campaign/cp_base_callbacks.cpp:747
+#: client/cgame/campaign/cp_base_callbacks.cpp:753
+#: client/cgame/campaign/cp_base_callbacks.cpp:773
+#: client/cgame/campaign/cp_base_callbacks.cpp:783
+#: client/cgame/campaign/cp_base_callbacks.cpp:793
+#: client/cgame/campaign/cp_base_callbacks.cpp:799
+#: client/cgame/campaign/cp_base_callbacks.cpp:806
+#: client/cgame/campaign/cp_base_callbacks.cpp:810
+#: client/cgame/campaign/cp_base_callbacks.cpp:815
 #: client/cgame/campaign/cp_installation_callbacks.cpp:128
 #: client/cgame/campaign/cp_mapfightequip.cpp:344
 #: client/cgame/campaign/cp_mapfightequip.cpp:363
@@ -22270,12 +22233,12 @@ msgstr "En ny %s er allerede i %s"
 #: client/cgame/campaign/cp_mission_callbacks.cpp:63
 #: client/cgame/campaign/cp_missions.cpp:738
 #: client/cgame/campaign/cp_missions.cpp:1080
-#: client/cgame/campaign/cp_nation.cpp:799
-#: client/cgame/campaign/cp_nation.cpp:819
-#: client/cgame/campaign/cp_nation.cpp:832
-#: client/cgame/campaign/cp_nation.cpp:841
-#: client/cgame/campaign/cp_nation.cpp:847
-#: client/cgame/campaign/cp_nation.cpp:855
+#: client/cgame/campaign/cp_nation.cpp:795
+#: client/cgame/campaign/cp_nation.cpp:815
+#: client/cgame/campaign/cp_nation.cpp:828
+#: client/cgame/campaign/cp_nation.cpp:837
+#: client/cgame/campaign/cp_nation.cpp:843
+#: client/cgame/campaign/cp_nation.cpp:851
 #: client/cgame/campaign/cp_popup.cpp:480
 #: client/cgame/campaign/cp_produce.cpp:403
 #: client/cgame/campaign/cp_ufo.cpp:495 client/cgame/campaign/cp_ufo.cpp:943
@@ -22285,55 +22248,55 @@ msgstr "En ny %s er allerede i %s"
 msgid "Notice"
 msgstr "Meddelelse"
 
-#: client/cgame/campaign/cp_aircraft.cpp:793
+#: client/cgame/campaign/cp_aircraft.cpp:799
 msgid "No operational hangars at that base."
 msgstr "Ingen operative hangarer på denne basen."
 
-#: client/cgame/campaign/cp_aircraft.cpp:797
+#: client/cgame/campaign/cp_aircraft.cpp:803
 msgid "No free hangars at that base."
 msgstr "Ingen ledige hangarer på denne basen."
 
-#: client/cgame/campaign/cp_aircraft.cpp:800
+#: client/cgame/campaign/cp_aircraft.cpp:806
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Utilstrekkelig ledig mannskapskvartalplass på den basen."
 
-#: client/cgame/campaign/cp_aircraft.cpp:803
+#: client/cgame/campaign/cp_aircraft.cpp:809
 msgid "Insufficient storage space at that base."
 msgstr "Utilstrekkelig lagringsplass på den basen."
 
-#: client/cgame/campaign/cp_aircraft.cpp:807
+#: client/cgame/campaign/cp_aircraft.cpp:813
 msgid "That base is beyond this aircraft's range."
 msgstr "Den basen er utenfor dette flyets rekkevidde."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1062
+#: client/cgame/campaign/cp_aircraft.cpp:1063
 #, c-format
 msgid "Craft %s has returned to %s."
 msgstr "Fartøyet %s har returnert til %s."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1103
+#: client/cgame/campaign/cp_aircraft.cpp:1104
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr "Flyet %s kunne ikke bli helt tanket opp på %s. Ikke nok antimaterie."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1119
+#: client/cgame/campaign/cp_aircraft.cpp:1120
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Flyet %s har fylt drivstoff i %s."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1161
+#: client/cgame/campaign/cp_aircraft.cpp:1162
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "Flyet %s har lite drivstoff og returnerer til basen."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1217
+#: client/cgame/campaign/cp_aircraft.cpp:1218
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Tildel en eller flere soldater til dette flyet først."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1240
+#: client/cgame/campaign/cp_aircraft.cpp:1241
 msgid "Insufficient fuel."
 msgstr "Utilstrekkelig drifstoff"
 
-#: client/cgame/campaign/cp_aircraft.cpp:1994
+#: client/cgame/campaign/cp_aircraft.cpp:1995
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr ""
@@ -22378,7 +22341,7 @@ msgid "Fuel:\t%i/%i\n"
 msgstr "Drivstoff:\t%i/%i\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:192
-#: client/cgame/campaign/cp_ufopedia.cpp:342
+#: client/cgame/campaign/cp_ufopedia.cpp:348
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "Operativ rekkevidde:\t%i km\n"
@@ -22470,104 +22433,105 @@ msgstr "Du tapte slaget"
 msgid "Collected alien bodies"
 msgstr "Innsamlede romvesenkropper"
 
-#: client/cgame/campaign/cp_base.cpp:998
+#: client/cgame/campaign/cp_base.cpp:1009
 msgid "Not set"
 msgstr "Ikke angitt"
 
-#: client/cgame/campaign/cp_base.cpp:1004
+#: client/cgame/campaign/cp_base.cpp:1015
 #, c-format
 msgid "Already %i in base"
 msgstr "Allerede %i på base"
 
-#: client/cgame/campaign/cp_base.cpp:1011
+#: client/cgame/campaign/cp_base.cpp:1022
 msgid "Construction finished"
 msgstr "Bygning ferdig"
 
-#: client/cgame/campaign/cp_base.cpp:1015
+#: client/cgame/campaign/cp_base.cpp:1026
 msgid "Working 100%"
 msgstr "Arbeider 100%"
 
-#: client/cgame/campaign/cp_base.cpp:1019
+#: client/cgame/campaign/cp_base.cpp:1030
 #, c-format
 msgid "Not operational, depends on %s"
 msgstr "Ikke operativ, avhenger av %s"
 
-#: client/cgame/campaign/cp_base.cpp:1023
+#: client/cgame/campaign/cp_base.cpp:1034
 msgid "Down"
 msgstr "Ned"
 
-#: client/cgame/campaign/cp_base.cpp:1342
+#: client/cgame/campaign/cp_base.cpp:1353
 msgid "Not enough credits to build this\n"
 msgstr "Ikke nok kreditt til å bygge dette\n"
 
-#: client/cgame/campaign/cp_base.cpp:1392
+#: client/cgame/campaign/cp_base.cpp:1403
 msgid "You must build next to existing buildings."
 msgstr "Du må bygge ved siden av eksisterende bygninger"
 
-#: client/cgame/campaign/cp_base.cpp:1446
+#: client/cgame/campaign/cp_base.cpp:1457
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Pris:\t%i kr\n"
 
-#: client/cgame/campaign/cp_base.cpp:1449
+#: client/cgame/campaign/cp_base.cpp:1460
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "% dag igjen å bygge\n"
 msgstr[1] "% dager igjen å bygge\n"
 
-#: client/cgame/campaign/cp_base.cpp:1452
-#: client/cgame/campaign/cp_ufopedia.cpp:209
+#: client/cgame/campaign/cp_base.cpp:1463
+#: client/cgame/campaign/cp_ufopedia.cpp:211
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Løpende kostnader:\t%i kr\n"
 
-#: client/cgame/campaign/cp_base.cpp:1455
-#: client/cgame/campaign/cp_ufopedia.cpp:206
+#: client/cgame/campaign/cp_base.cpp:1466
+#: client/cgame/campaign/cp_ufopedia.cpp:208
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Behov:\t%s\n"
 
-#: client/cgame/campaign/cp_base.cpp:2053
+#: client/cgame/campaign/cp_base.cpp:2064
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an "
 "aircraft\n"
 msgstr "Ingen fly på denne basen - Du må først kjøpe eller overføre et fly\n"
 
-#: client/cgame/campaign/cp_base.cpp:2053
-#: client/cgame/campaign/cp_base.cpp:2055
+#: client/cgame/campaign/cp_base.cpp:2064
+#: client/cgame/campaign/cp_base.cpp:2066
 #: client/cgame/campaign/cp_market_callbacks.cpp:170
 #: client/cgame/campaign/cp_market_callbacks.cpp:175
 #: client/cgame/campaign/cp_market_callbacks.cpp:180
-#: client/cgame/campaign/cp_save.cpp:384 client/cgame/campaign/cp_save.cpp:386
+#: client/cgame/campaign/cp_save_callbacks.cpp:152
+#: client/cgame/campaign/cp_save_callbacks.cpp:154
 #: client/cgame/cl_game_team.cpp:304 client/cgame/cl_game_team.cpp:314
 #: client/cgame/cl_game_team.cpp:319
 msgid "Note"
 msgstr "Merk"
 
-#: client/cgame/campaign/cp_base.cpp:2055
+#: client/cgame/campaign/cp_base.cpp:2066
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Ingen fly på denne basen - Du må først kjøpe et fly\n"
 
-#: client/cgame/campaign/cp_base.cpp:2065
+#: client/cgame/campaign/cp_base.cpp:2076
 msgid "Antimatter (current/max):"
 msgstr "Antimaterie (Nåværende/maks):"
 
-#: client/cgame/campaign/cp_base.cpp:2231
+#: client/cgame/campaign/cp_base.cpp:2242
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Konstruksjon av %s  i %s er ferdig."
 
-#: client/cgame/campaign/cp_base.cpp:2232
+#: client/cgame/campaign/cp_base.cpp:2243
 msgid "Building finished"
 msgstr "Bygning ferdig"
 
-#: client/cgame/campaign/cp_base.cpp:2278
+#: client/cgame/campaign/cp_base.cpp:2289
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "Ved salg av %s fikk du %i kr."
 
-#: client/cgame/campaign/cp_base.cpp:2279
+#: client/cgame/campaign/cp_base.cpp:2290
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -22681,19 +22645,19 @@ msgstr "Behandle sårede soldater og utføre implantatkirurgi"
 msgid "No Hospital operating at this in base."
 msgstr "Ingen operative hangarer på denne basen."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:575
+#: client/cgame/campaign/cp_base_callbacks.cpp:577
 msgid "Base is under attack, you can't destroy buildings!"
 msgstr "Basen er under angrep, du kan ikke ødelegge bygninger!"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:585
+#: client/cgame/campaign/cp_base_callbacks.cpp:587
 msgid "Destroy Entrance"
 msgstr "Ødelegg inngang"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:585
+#: client/cgame/campaign/cp_base_callbacks.cpp:587
 msgid "You can't destroy the entrance of the base!"
 msgstr "Du kan ikke ødelegge inngangen til basen!"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:590
+#: client/cgame/campaign/cp_base_callbacks.cpp:592
 msgid ""
 "You can't destroy this building! It is the only connection to other "
 "buildings!"
@@ -22702,12 +22666,12 @@ msgstr ""
 "andre bygninger!"
 
 # Opbevaringsrum til rumvæsener er for langt.
-#: client/cgame/campaign/cp_base_callbacks.cpp:599
+#: client/cgame/campaign/cp_base_callbacks.cpp:601
 #, fuzzy
 msgid "Destroy Alien Containment"
 msgstr "Forvaringsrom for romvesener"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:599
+#: client/cgame/campaign/cp_base_callbacks.cpp:601
 #, fuzzy
 msgid ""
 "If you destroy this building, you will also kill the aliens inside.\n"
@@ -22718,35 +22682,35 @@ msgstr ""
 
 # #ufopedia
 # romvesenopbevaringsbeholder
-#: client/cgame/campaign/cp_base_callbacks.cpp:600
+#: client/cgame/campaign/cp_base_callbacks.cpp:602
 msgid "Containment"
 msgstr "Forvaringsrom"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:600
+#: client/cgame/campaign/cp_base_callbacks.cpp:602
 #, fuzzy
 msgid "Go to the Alien Containment without destroying building"
 msgstr "Gå til ansettelsesmenyen uten å ødelegge bygningen"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:601
-#: client/cgame/campaign/cp_base_callbacks.cpp:612
-#: client/cgame/campaign/cp_base_callbacks.cpp:622
-#: client/cgame/campaign/cp_base_callbacks.cpp:632
-#: client/cgame/campaign/cp_base_callbacks.cpp:645
-msgid "Destroy the building"
-msgstr "Ødelegg bygningen"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:603
 #: client/cgame/campaign/cp_base_callbacks.cpp:614
 #: client/cgame/campaign/cp_base_callbacks.cpp:624
 #: client/cgame/campaign/cp_base_callbacks.cpp:634
+#: client/cgame/campaign/cp_base_callbacks.cpp:647
+msgid "Destroy the building"
+msgstr "Ødelegg bygningen"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:605
+#: client/cgame/campaign/cp_base_callbacks.cpp:616
+#: client/cgame/campaign/cp_base_callbacks.cpp:626
+#: client/cgame/campaign/cp_base_callbacks.cpp:636
 msgid "Go to transfer menu without destroying the building"
 msgstr "gå til overføringsmenyen uten å ødelegge bygningen"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:610
+#: client/cgame/campaign/cp_base_callbacks.cpp:612
 msgid "Destroy Hangar"
 msgstr "Ødelegg hangar"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:610
+#: client/cgame/campaign/cp_base_callbacks.cpp:612
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
@@ -22754,19 +22718,19 @@ msgstr ""
 "Hvis du ødelegger denne hangaren vil du også ødelegge flyet på innsiden. \n"
 "Er du sikker på at du vil ødelegge denne bygningen?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:611
+#: client/cgame/campaign/cp_base_callbacks.cpp:613
 msgid "Go to hangar"
 msgstr "Gå til hangaren"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:611
+#: client/cgame/campaign/cp_base_callbacks.cpp:613
 msgid "Go to hangar without destroying building"
 msgstr "Gå til hangar uten å ødelegge bygningen"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:620
+#: client/cgame/campaign/cp_base_callbacks.cpp:622
 msgid "Destroy Quarter"
 msgstr "Ødelegg boligkvarter"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:620
+#: client/cgame/campaign/cp_base_callbacks.cpp:622
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
@@ -22774,19 +22738,19 @@ msgstr ""
 "Hvis du ødelegger denne forlegningen vil alle ansatte inne bli drept. \n"
 "Er du sikker på at du vil ødelegge denne bygningen?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:621
+#: client/cgame/campaign/cp_base_callbacks.cpp:623
 msgid "Dismiss"
 msgstr "Vekk"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:621
+#: client/cgame/campaign/cp_base_callbacks.cpp:623
 msgid "Go to hiring menu without destroying building"
 msgstr "Gå til ansettelsesmenyen uten å ødelegge bygningen"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:630
+#: client/cgame/campaign/cp_base_callbacks.cpp:632
 msgid "Destroy Storage"
 msgstr "Ødelegg lagerrom"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:630
+#: client/cgame/campaign/cp_base_callbacks.cpp:632
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
@@ -22794,31 +22758,31 @@ msgstr ""
 "Hvis du ødelegger dette lageret blir alle elementer på innsiden ødelagt.\n"
 "Er du sikker på at du vil ødelegge denne bygningen?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:631
+#: client/cgame/campaign/cp_base_callbacks.cpp:633
 msgid "Go to buy/sell menu without destroying building"
 msgstr "gå til kjøp/selg uten å ødelegge bygningen"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:631
+#: client/cgame/campaign/cp_base_callbacks.cpp:633
 msgid "Go to storage"
 msgstr "Gå til lagerrom"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:643
+#: client/cgame/campaign/cp_base_callbacks.cpp:645
 msgid "Are you sure you want to destroy this building?"
 msgstr "Er du sikker på at du ønsker å ødelegge denne bygningen?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:643
+#: client/cgame/campaign/cp_base_callbacks.cpp:645
 msgid "Destroy building"
 msgstr "Ødelegg bygning"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:745
+#: client/cgame/campaign/cp_base_callbacks.cpp:747
 msgid "Base is under attack, you can't access this building !"
 msgstr "Basen er under angrep. Du har ikke tilgang til denne bygningen"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:751
+#: client/cgame/campaign/cp_base_callbacks.cpp:753
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Du trenger minst en hangar (og dens avhengigheter) for å bruke flyer."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:771
+#: client/cgame/campaign/cp_base_callbacks.cpp:773
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -22833,19 +22797,19 @@ msgstr[1] ""
 "Konstruksjon av bygningen vil være over om i% dager.\n"
 "Vennligst vent å komme inn."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:781
+#: client/cgame/campaign/cp_base_callbacks.cpp:783
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Du trenger en bygning %s for å gjøre bygningen %s funksjonell."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:791
+#: client/cgame/campaign/cp_base_callbacks.cpp:793
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr ""
 "Bygging av %s er ikke ferdig ennå, og er nødvendig for å kunne bruke bygning "
 "%s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:797
+#: client/cgame/campaign/cp_base_callbacks.cpp:799
 #, c-format
 msgid ""
 "Make sure that the dependencies of building %s (%s) are operational, so that "
@@ -22854,53 +22818,19 @@ msgstr ""
 "Sørg for at avhengighederne for bygning %s (%s) er funksjonsdyktige, slik at "
 "bygning %s kan brukes."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:804
-#: client/cgame/campaign/cp_base_callbacks.cpp:808
+#: client/cgame/campaign/cp_base_callbacks.cpp:806
+#: client/cgame/campaign/cp_base_callbacks.cpp:810
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "Du trenger å rekruttere %s for å bruke bygning %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:813
+#: client/cgame/campaign/cp_base_callbacks.cpp:815
 #, c-format
 msgid "Build a %s first."
 msgstr "Bygg en %s først."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:838
-msgid "Buildings"
-msgstr "Byggninger"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:858
-msgid "No report"
-msgstr "Ingen rapport"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:861
-#: client/cgame/campaign/cp_base_callbacks.cpp:875
-msgid "Percent"
-msgstr "Prosent"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:861
-msgid "Quantity"
-msgstr "Antall"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:871
-#: client/cgame/campaign/cp_base_callbacks.cpp:886
-msgid "Nothing"
-msgstr "Ingenting"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:891
-msgid "^BAircraft\n"
-msgstr "^BFly\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:902
-msgid "^BEmployees\n"
-msgstr "^BAnsatte\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:913
-msgid "^BAliens\n"
-msgstr "^Bromvesener\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:998
-#: client/cgame/campaign/cp_campaign.cpp:558
+#: client/cgame/campaign/cp_base_callbacks.cpp:869
+#: client/cgame/campaign/cp_campaign.cpp:559
 #: client/cgame/campaign/cp_nation.cpp:618
 #, c-format
 msgid "%i c"
@@ -22975,39 +22905,39 @@ msgstr ""
 "gjort. Jordens nasjoner prøver alle å stå alene mot romvesener, og til slutt "
 "faller en etter en."
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:79
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:80
 msgid "Chicken-hearted"
 msgstr "Feig"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:81
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:82
 msgid "Very Easy"
 msgstr "Veldig lett"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:84
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:85
 msgid "Easy"
 msgstr "Lett"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:86
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:87
 msgid "Normal"
 msgstr "Normal"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:89
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:90
 msgid "Hard"
 msgstr "Vanskelig"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:91
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:92
 msgid "Very Hard"
 msgstr "Meget vanskelig"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:93
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:94
 msgid "Insane"
 msgstr "Vanvittig"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:143
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:141
 msgid "Human"
 msgstr "Menneske"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:148
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:146
 #, c-format
 msgid ""
 "%s\n"
@@ -23030,35 +22960,35 @@ msgstr ""
 "Maks tillatt gjeld: %i kr\n"
 "%s\n"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:153
-#: client/cgame/campaign/cp_nation.cpp:795
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:151
+#: client/cgame/campaign/cp_nation.cpp:791
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldat"
 msgstr[1] "soldater"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:154
-#: client/cgame/campaign/cp_nation.cpp:794
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:152
+#: client/cgame/campaign/cp_nation.cpp:790
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "vitenskapsmann"
 msgstr[1] "vitenskapsmenn"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:155
-#: client/cgame/campaign/cp_nation.cpp:797
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:153
+#: client/cgame/campaign/cp_nation.cpp:793
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "arbeider"
 msgstr[1] "arbeidere"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:156
-#: client/cgame/campaign/cp_nation.cpp:796
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:154
+#: client/cgame/campaign/cp_nation.cpp:792
 msgid "pilot"
 msgid_plural "pilots"
 msgstr[0] "pilot"
 msgstr[1] "piloter"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:428
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:445
 #, c-format
 msgid ""
 "%s\n"
@@ -23067,14 +22997,14 @@ msgstr ""
 "%s\n"
 "ikke operativ, avhenger av %s"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:482
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:499
 #, c-format
 msgid "%d day left"
 msgid_plural "%d days left"
 msgstr[0] "%d dag igjen"
 msgstr[1] "%d dager igjen"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:619
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:636
 #, c-format
 msgid "Rank: %s"
 msgstr "Rang: %s"
@@ -23126,13 +23056,13 @@ msgstr "kunne ikke ansette personell"
 
 #: client/cgame/campaign/cp_event.cpp:533
 #: client/cgame/campaign/cp_messages.cpp:314
-#: client/cgame/campaign/cp_save.cpp:280 client/cgame/campaign/cp_save.cpp:303
+#: client/cgame/campaign/cp_save.cpp:316 client/cgame/campaign/cp_save.cpp:339
 #: client/cgame/campaign/cp_time.cpp:117
-#: client/cgame/campaign/cp_ufopedia.cpp:504
-#: client/cgame/campaign/cp_ufopedia.cpp:509
-#: client/cgame/campaign/cp_ufopedia.cpp:1035
-#: client/cgame/campaign/cp_ufopedia.cpp:1046
-#: client/cgame/campaign/cp_ufopedia.cpp:1062
+#: client/cgame/campaign/cp_ufopedia.cpp:522
+#: client/cgame/campaign/cp_ufopedia.cpp:527
+#: client/cgame/campaign/cp_ufopedia.cpp:1053
+#: client/cgame/campaign/cp_ufopedia.cpp:1064
+#: client/cgame/campaign/cp_ufopedia.cpp:1080
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -23175,6 +23105,7 @@ msgstr ""
 
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:145
 #: client/cgame/campaign/cp_geoscape.cpp:1491
+#: client/cgame/campaign/cp_ufopedia.cpp:154
 msgid "Unknown"
 msgstr "Ukjent"
 
@@ -23462,19 +23393,19 @@ msgstr "%s ble fjernet fra installasjonen %s."
 msgid "%s was successfully removed from %s."
 msgstr "%s ble fjernet fra %s."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1287
+#: client/cgame/campaign/cp_mapfightequip.cpp:1288
 msgid "Light weight"
 msgstr "lett vekt"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1290
+#: client/cgame/campaign/cp_mapfightequip.cpp:1291
 msgid "Medium weight"
 msgstr "Medium vekt"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1293
+#: client/cgame/campaign/cp_mapfightequip.cpp:1294
 msgid "Heavy weight"
 msgstr "Tung vekt"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1296
+#: client/cgame/campaign/cp_mapfightequip.cpp:1297
 msgid "Unknown weight"
 msgstr "Ukjent vekt"
 
@@ -23849,38 +23780,38 @@ msgstr ""
 msgid "Nation changed happiness"
 msgstr "Nasjon endret lykken"
 
-#: client/cgame/campaign/cp_nation.cpp:792
+#: client/cgame/campaign/cp_nation.cpp:788
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Oppnådde %i %s, %i %s, %i %s, %i %s, og %i %s fra nasjon %s (%s)"
 
-#: client/cgame/campaign/cp_nation.cpp:793
+#: client/cgame/campaign/cp_nation.cpp:789
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "beløp"
 msgstr[1] "beløp"
 
-#: client/cgame/campaign/cp_nation.cpp:818
+#: client/cgame/campaign/cp_nation.cpp:814
 #, c-format
 msgid "Paid %i credits to: %s"
 msgstr "Betalte %i kr til: %s"
 
-#: client/cgame/campaign/cp_nation.cpp:831
+#: client/cgame/campaign/cp_nation.cpp:827
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Betalt %i kr for flyer"
 
-#: client/cgame/campaign/cp_nation.cpp:840
+#: client/cgame/campaign/cp_nation.cpp:836
 #, c-format
 msgid "Paid %i credits for upkeep of %s"
 msgstr "Betalte %i kr for vedlikehold av %s"
 
-#: client/cgame/campaign/cp_nation.cpp:845
+#: client/cgame/campaign/cp_nation.cpp:841
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Betalt %i kr for administrative omkostninger."
 
-#: client/cgame/campaign/cp_nation.cpp:853
+#: client/cgame/campaign/cp_nation.cpp:849
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Betalt %i kr i renter på gjelden din."
@@ -24148,62 +24079,69 @@ msgstr "Ingen beskrivelse tilgjengelig."
 msgid "No research proposal available."
 msgstr "Ingen forskningsforslag tilgjengelig."
 
-#: client/cgame/campaign/cp_save.cpp:183
+#: client/cgame/campaign/cp_save.cpp:203
 msgid "Error decompressing data"
 msgstr "Feil under datautpakning"
 
-#: client/cgame/campaign/cp_save.cpp:253
-msgid "No campaign active."
-msgstr "Ingen kampanje aktiv."
+#: client/cgame/campaign/cp_save.cpp:271
+msgid "Saving is not possible: Campaign is not active."
+msgstr ""
 
-#: client/cgame/campaign/cp_save.cpp:259
-msgid "Nothing to save yet."
-msgstr "Ingenting å lagre enda."
+#: client/cgame/campaign/cp_save.cpp:276
+msgid "Saving is not possible: Cannot save the Battlescape."
+msgstr ""
 
-#: client/cgame/campaign/cp_save.cpp:314
+#: client/cgame/campaign/cp_save.cpp:281
+msgid "Saving is not possible: No base is built."
+msgstr ""
+
+#: client/cgame/campaign/cp_save.cpp:350
 msgid "Could not allocate enough memory to save this game"
 msgstr "Kunne ikke tildele nok minne til å lagre spillet"
 
-#: client/cgame/campaign/cp_save.cpp:337
+#: client/cgame/campaign/cp_save.cpp:373
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr ""
 "Minnefeil under pakning av \"save-game\" data - sett save_compressed cvar "
 "til 0"
 
-#: client/cgame/campaign/cp_save.cpp:384 client/cgame/campaign/cp_save.cpp:386
-msgid "Error saving game."
-msgstr "Feil ved lagring av spill."
-
-#: client/cgame/campaign/cp_save.cpp:497 client/cgame/campaign/cp_save.cpp:520
-#: client/cgame/campaign/cp_save.cpp:598
+#: client/cgame/campaign/cp_save_callbacks.cpp:95
+#: client/cgame/campaign/cp_save_callbacks.cpp:117
+#: client/cgame/campaign/cp_save_callbacks.cpp:225
 #: client/cgame/multiplayer/mp_callbacks.cpp:64 client/cl_irc.cpp:1201
 #: client/cl_irc.cpp:1424 client/cl_main.cpp:561 client/cl_main.cpp:565
 #: client/cl_main.cpp:590
 msgid "Error"
 msgstr "Feil"
 
-#: client/cgame/campaign/cp_save.cpp:497 client/cgame/campaign/cp_save.cpp:520
-#: client/cgame/campaign/cp_save.cpp:598
+#: client/cgame/campaign/cp_save_callbacks.cpp:95
+#: client/cgame/campaign/cp_save_callbacks.cpp:117
+#: client/cgame/campaign/cp_save_callbacks.cpp:225
 msgid "Error loading game."
 msgstr "Feil ved lasting av spill."
 
-#: client/cgame/campaign/cp_save.cpp:576
+#: client/cgame/campaign/cp_save_callbacks.cpp:152
+#: client/cgame/campaign/cp_save_callbacks.cpp:154
+msgid "Error saving game."
+msgstr "Feil ved lagring av spill."
+
+#: client/cgame/campaign/cp_save_callbacks.cpp:203
 msgid "QuickSave"
 msgstr "Hurtiglagring"
 
-#: client/cgame/campaign/cp_save.cpp:580
+#: client/cgame/campaign/cp_save_callbacks.cpp:207
 msgid "Campaign was successfully saved."
 msgstr "Kampanjen ble lagret"
 
-#: client/cgame/campaign/cp_save.cpp:580
+#: client/cgame/campaign/cp_save_callbacks.cpp:207
 msgid "Quicksave"
 msgstr "Hurtiglagring (Quicksave)"
 
-#: client/cgame/campaign/cp_save.cpp:600
+#: client/cgame/campaign/cp_save_callbacks.cpp:227
 msgid "Campaign loaded"
 msgstr "Kampanje lastet"
 
-#: client/cgame/campaign/cp_save.cpp:600
+#: client/cgame/campaign/cp_save_callbacks.cpp:227
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Hurtiglagringskampanje ble lastet."
 
@@ -24501,8 +24439,9 @@ msgid "Evasion"
 msgstr "Herskapshus"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:144
-msgid "Aircraft damage"
-msgstr "Flyskade"
+#, fuzzy
+msgid "Hull strength"
+msgstr "Styrke:"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:148
 msgid "Fuel size"
@@ -24513,96 +24452,113 @@ msgid "Weapon range"
 msgstr "Skuddlengde"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:152
-#: client/cl_inventory_callbacks.cpp:56
-msgid "Unknown weapon skill"
-msgstr "Ukjent våpenevne"
+#, fuzzy
+msgid "Antimatter need"
+msgstr "Antimaterie"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:171
+#: client/cgame/campaign/cp_ufopedia.cpp:173
 msgid "No requirements"
 msgstr "Ingen krav"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:204
+#: client/cgame/campaign/cp_ufopedia.cpp:206
 msgid "Error - could not find building"
 msgstr "Feil - kunne ikke finne bygning"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:207
+#: client/cgame/campaign/cp_ufopedia.cpp:209
 #, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
 msgstr[0] "Byggetid:\t%i dag\n"
 msgstr[1] "Byggetid:\t%i dager\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:208
+#: client/cgame/campaign/cp_ufopedia.cpp:210
 #, c-format
 msgid "Cost:\t%i c\n"
 msgstr "Pris:\t%i kr\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:258
+#: client/cgame/campaign/cp_ufopedia.cpp:260
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "Vekt:\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:262
+#: client/cgame/campaign/cp_ufopedia.cpp:264
 #, fuzzy
 msgid "Weapon for air defence system\n"
 msgstr "Våpen for baseforsvarssystemer\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:282
+#: client/cgame/campaign/cp_ufopedia.cpp:284
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "Ammo:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:284
+#: client/cgame/campaign/cp_ufopedia.cpp:286
 #: client/cl_inventory_callbacks.cpp:183
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "Skade:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:285
+#: client/cgame/campaign/cp_ufopedia.cpp:287
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "Omlastingstid:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:302
+#: client/cgame/campaign/cp_ufopedia.cpp:304
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:304
+#: client/cgame/campaign/cp_ufopedia.cpp:306
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:307
-#: client/cgame/campaign/cp_ufopedia.cpp:365
-#: client/cgame/campaign/cp_ufopedia.cpp:367
-#: client/cgame/campaign/cp_ufopedia.cpp:403
-#: client/cgame/campaign/cp_ufopedia.cpp:405
+#: client/cgame/campaign/cp_ufopedia.cpp:309
+#: client/cgame/campaign/cp_ufopedia.cpp:383
+#: client/cgame/campaign/cp_ufopedia.cpp:385
+#: client/cgame/campaign/cp_ufopedia.cpp:421
+#: client/cgame/campaign/cp_ufopedia.cpp:423
 msgid "Unknown - need to research this"
 msgstr "Ukjent - du må forske på dette"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:333
-#: client/cgame/campaign/cp_ufopedia.cpp:338
-#, c-format
-msgid "%s:\t%i km/h\n"
-msgstr "%s:\t%i km/h\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:346
+#: client/cgame/campaign/cp_ufopedia.cpp:334
+#: client/cgame/campaign/cp_ufopedia.cpp:352
+#: client/cgame/campaign/cp_ufopedia.cpp:358
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:358
+#: client/cgame/campaign/cp_ufopedia.cpp:339
+#: client/cgame/campaign/cp_ufopedia.cpp:344
+#, c-format
+msgid "%s:\t%i km/h\n"
+msgstr "%s:\t%i km/h\n"
+
+#: client/cgame/campaign/cp_ufopedia.cpp:369
 #, c-format
 msgid "Required Hangar:\t%s\n"
 msgstr "Nødvendig Hangar:\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:362
+#: client/cgame/campaign/cp_ufopedia.cpp:374
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "Maks soldater::\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:400
+#: client/cgame/campaign/cp_ufopedia.cpp:377
+#, c-format
+msgid "Equipment slots:\t%i %s, %i %s\n"
+msgstr ""
+
+#: client/cgame/campaign/cp_ufopedia.cpp:378
+#, fuzzy
+msgid "weapon"
+msgstr "Våpen"
+
+#: client/cgame/campaign/cp_ufopedia.cpp:379
+#, fuzzy
+msgid "electronics"
+msgstr "Elektronikk:\t%i av %i"
+
+#: client/cgame/campaign/cp_ufopedia.cpp:418
 #, c-format
 msgid ""
 "%s\n"
@@ -24611,15 +24567,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:526
+#: client/cgame/campaign/cp_ufopedia.cpp:544
 msgid "Proposal: "
 msgstr "Forslag: "
 
-#: client/cgame/campaign/cp_ufopedia.cpp:529
+#: client/cgame/campaign/cp_ufopedia.cpp:547
 msgid "Re: "
 msgstr "Re: "
 
-#: client/cgame/campaign/cp_ufopedia.cpp:543
+#: client/cgame/campaign/cp_ufopedia.cpp:561
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -24630,28 +24586,28 @@ msgstr ""
 "TIL: %s\n"
 "DATO: %s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:615
+#: client/cgame/campaign/cp_ufopedia.cpp:633
 #, c-format
 msgid "UFOpaedia: %s (complete)"
 msgstr "UFOpaedia: %s (fullført)"
 
 # #ufopedia
-#: client/cgame/campaign/cp_ufopedia.cpp:668
-#: client/cgame/campaign/cp_ufopedia.cpp:677
+#: client/cgame/campaign/cp_ufopedia.cpp:686
+#: client/cgame/campaign/cp_ufopedia.cpp:695
 #, c-format
 msgid "UFOpaedia: %s"
 msgstr "Ufopedia: %s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:674
+#: client/cgame/campaign/cp_ufopedia.cpp:692
 msgid "No pre-research description available."
 msgstr "Ingen tidligere forskningsbeskrivelse tilgjengelig."
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1034
+#: client/cgame/campaign/cp_ufopedia.cpp:1052
 #, c-format
 msgid "Proposal: %s"
 msgstr "Forslag: %s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1045
+#: client/cgame/campaign/cp_ufopedia.cpp:1063
 #, c-format
 msgid "Re: %s"
 msgstr "Re: %s"
@@ -24990,6 +24946,10 @@ msgstr "Vis/skjul ufokonsollen"
 msgid "Close quarters"
 msgstr "Nært hold"
 
+#: client/cl_inventory_callbacks.cpp:56
+msgid "Unknown weapon skill"
+msgstr "Ukjent våpenevne"
+
 #: client/cl_inventory_callbacks.cpp:137
 #, c-format
 msgid "Size:\t%i\n"
@@ -25178,15 +25138,15 @@ msgstr "Skriptfilene er ikke de samme"
 msgid "Local map version differs from server"
 msgstr "Lokal kartversjon er ulik serverens"
 
-#: client/cl_main.cpp:906
+#: client/cl_main.cpp:883
 msgid "Target your shot to the ground"
 msgstr "Målrett skuddet mot bakken"
 
-#: client/cl_main.cpp:1156
+#: client/cl_main.cpp:1133
 msgid "This change requires a restart!"
 msgstr "Denne endringen krever en omstart"
 
-#: client/cl_main.cpp:1161
+#: client/cl_main.cpp:1138
 msgid "This change might require a restart."
 msgstr "Denne endringen kan kreve en omstart"
 
@@ -25364,11 +25324,11 @@ msgstr "Brukbar i:\n"
 msgid "In: %i Out: %i"
 msgstr "Inn: %i Ut: %i"
 
-#: client/ui/node/ui_node_window.cpp:298
+#: client/ui/node/ui_node_window.cpp:308
 msgid "Close the window"
 msgstr "Lukk vinduet"
 
-#: client/ui/node/ui_node_window.cpp:324
+#: client/ui/node/ui_node_window.cpp:334
 msgid "Drag to move window"
 msgstr "Dra for å flytte vinduet"
 
@@ -25425,14 +25385,6 @@ msgstr "Du kan ikke snakke før det er gått enda %d sekunder.\n"
 #, c-format
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr "Flombeskyttelse: Du kan ikke snakke i %d sekunder.\n"
-
-#: game/g_combat.cpp:473
-msgid ""
-"Soldier is dazed!\n"
-"Enemy used flashbang!"
-msgstr ""
-"Soldaten er omtåket!\n"
-"Fienden brukte flashbang!"
 
 #: game/g_combat.cpp:730
 msgid "Can't perform action - impossible throw!"
@@ -25494,26 +25446,6 @@ msgstr "Romvesener inntrådte målområdet!"
 msgid "%s forces have left their target zone!"
 msgstr "Romvesener inntrådte målområdet!"
 
-#: game/g_morale.cpp:40
-#, c-format
-msgid "%s panics!"
-msgstr "%s har panikk!"
-
-#: game/g_morale.cpp:101
-#, c-format
-msgid "%s is on a rampage!"
-msgstr "%s går beserk!"
-
-#: game/g_morale.cpp:104
-#, c-format
-msgid "%s is consumed by mad rage!"
-msgstr "%s er oppslukt av raseri!"
-
-#: game/g_morale.cpp:188
-#, c-format
-msgid "%s is currently shaken."
-msgstr "%s er rystet."
-
 #: game/g_reaction.cpp:642
 msgid "No reaction fire enabled weapon."
 msgstr "Ingen reaksjonsild aktivert for våpenet."
@@ -25573,6 +25505,102 @@ msgstr "romvesen"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Ta et skjermdump"
+
+#~ msgid "Warehouse"
+#~ msgstr "Varehus"
+
+#, fuzzy
+#~ msgid "Healthpoints"
+#~ msgstr "Helse"
+
+#~ msgid "Base Summary"
+#~ msgstr "Basesammendrag"
+
+#~ msgid "Initial settings"
+#~ msgstr "Opprinnelige innstillinger"
+
+#, fuzzy
+#~ msgid "User information"
+#~ msgstr "Brukerinformasjon"
+
+#~ msgid "Volume Control"
+#~ msgstr "Lydstyrke"
+
+#~ msgid "Effects:"
+#~ msgstr "Effekter:"
+
+#~ msgid "Music:"
+#~ msgstr "Musikk:"
+
+#~ msgid "Language"
+#~ msgstr "Språk"
+
+#~ msgid "Language:"
+#~ msgstr "Språk:"
+
+#~ msgid "You have to set the playername and hit the 'OK' button:"
+#~ msgstr "Du må skrive spillernavnet og trykke på OK-knappen:"
+
+#~ msgid "Save settings"
+#~ msgstr "Lagre innstillinger"
+
+#~ msgid "Tip of the day"
+#~ msgstr "Dagens tips"
+
+#~ msgid "Show tip of the day"
+#~ msgstr "Vis dagens tips"
+
+#~ msgid "Next"
+#~ msgstr "Neste"
+
+#~ msgid "Next tip"
+#~ msgstr "Neste tips"
+
+#~ msgid "Close window"
+#~ msgstr "Lukk vinduet"
+
+#, fuzzy
+#~ msgid "Transactions"
+#~ msgstr "Installasjoner"
+
+#~ msgid "Select base to transfer to"
+#~ msgstr "Velg basen det skal overføres til"
+
+#~ msgid "Choose a base to host alien bodies:"
+#~ msgstr "Velg en base hvor romvesenkroppen skal oppbevares:"
+
+#~ msgid "Buildings"
+#~ msgstr "Byggninger"
+
+#~ msgid "No report"
+#~ msgstr "Ingen rapport"
+
+#~ msgid "Percent"
+#~ msgstr "Prosent"
+
+#~ msgid "Quantity"
+#~ msgstr "Antall"
+
+#~ msgid "Nothing"
+#~ msgstr "Ingenting"
+
+#~ msgid "^BAircraft\n"
+#~ msgstr "^BFly\n"
+
+#~ msgid "^BEmployees\n"
+#~ msgstr "^BAnsatte\n"
+
+#~ msgid "^BAliens\n"
+#~ msgstr "^Bromvesener\n"
+
+#~ msgid "No campaign active."
+#~ msgstr "Ingen kampanje aktiv."
+
+#~ msgid "Nothing to save yet."
+#~ msgstr "Ingenting å lagre enda."
+
+#~ msgid "Aircraft damage"
+#~ msgstr "Flyskade"
 
 #~ msgid "Transport"
 #~ msgstr "Transport"
@@ -26051,9 +26079,6 @@ msgstr "Ta et skjermdump"
 
 #~ msgid "Start server"
 #~ msgstr "Start server"
-
-#~ msgid "Abort Game"
-#~ msgstr "Avbryt spill"
 
 #~ msgid "Overall game settings"
 #~ msgstr "Generelle spillinnstillinger"
@@ -26955,11 +26980,6 @@ msgstr "Ta et skjermdump"
 
 #~ msgid "Not enough storage space in %s. %s"
 #~ msgstr "Ikke nok lagerrom i %s. %s"
-
-#~ msgid "%i item was sold for %i credits."
-#~ msgid_plural "%i items were sold for %i credits."
-#~ msgstr[0] "%i element ble solgt for %i."
-#~ msgstr[1] "%i elementer ble solgt for %i."
 
 #~ msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 #~ msgstr "^BBygninger\t\t\t\t\t\tKapasitet\t\t\t\tMengde\n"

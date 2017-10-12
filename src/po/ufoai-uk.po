@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2017-02-28 21:54-0600\n"
+"POT-Creation-Date: 2017-10-12 13:21-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Igor Gritsenko <xenomorph@thoradin.no-ip.org>\n"
 "Language-Team:  <ufoai-developer@lists.sourceforge.net>\n"
@@ -30,7 +30,7 @@ msgstr "ГенШтаб"
 msgid "Bridge"
 msgstr "Міст"
 
-#: ../base/maps/bridge.ump:111 ../base/ufos/maps.ufo:5469
+#: ../base/maps/bridge.ump:111 ../base/ufos/maps.ufo:5420
 msgid "Bridge (MP)"
 msgstr "Міст (Мультиплеєр)"
 
@@ -212,7 +212,7 @@ msgid "Laboratory"
 msgstr "Лабораторія"
 
 #: ../base/maps/urban.ump:401 ../base/ufos/basemanagement.ufo:216
-#: ../base/ufos/maps.ufo:3276 ../base/ufos/ui/bases.ufo:403
+#: ../base/ufos/maps.ufo:3276 ../base/ufos/ui/bases.ufo:392
 #: ../base/ufos/ui/hospital.ufo:21
 msgid "Hospital"
 msgstr "Шпиталь"
@@ -568,7 +568,7 @@ msgid "Medium Alien Armour"
 msgstr "Середній бронежилет прибульців"
 
 #: ../base/ufos/basemanagement.ufo:35 ../base/ufos/ui/aliencont.ufo:158
-#: ../base/ufos/ui/aliencont.ufo:347 ../base/ufos/ui/bases.ufo:392
+#: ../base/ufos/ui/aliencont.ufo:347 ../base/ufos/ui/bases.ufo:381
 msgid "Alien Containment"
 msgstr "Ізолятор для прибульців"
 
@@ -576,8 +576,7 @@ msgstr "Ізолятор для прибульців"
 msgid "Entrance"
 msgstr "Вхід"
 
-#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/market.ufo:316
-#: ../base/ufos/ui/production.ufo:248
+#: ../base/ufos/basemanagement.ufo:65 ../base/ufos/ui/production.ufo:248
 msgid "Storage"
 msgstr "Склад"
 
@@ -607,7 +606,7 @@ msgstr "Ангар перехоплювача"
 msgid "Workshop"
 msgstr "Майстерня"
 
-#: ../base/ufos/basemanagement.ufo:169 ../base/ufos/ui/hud_default.ufo:1073
+#: ../base/ufos/basemanagement.ufo:169 ../base/ufos/ui/hud_default.ufo:1081
 #: ../base/ufos/ui/radar.ufo:21
 msgid "Radar"
 msgstr "Радар"
@@ -640,15 +639,15 @@ msgstr "Важка кампанія"
 msgid "Standard Campaign"
 msgstr "Стандартна кампанія"
 
-#: ../base/ufos/campaign.ufo:247
+#: ../base/ufos/campaign.ufo:248
 msgid "Easy Campaign"
 msgstr "Легка кампанія"
 
-#: ../base/ufos/campaign.ufo:305
+#: ../base/ufos/campaign.ufo:306
 msgid "Very Easy Campaign"
 msgstr "Дуже легка кампанія"
 
-#: ../base/ufos/campaign.ufo:364
+#: ../base/ufos/campaign.ufo:365
 msgid "Play the aliens"
 msgstr "Грати за прибульців"
 
@@ -2938,7 +2937,7 @@ msgstr "Невеличке село"
 
 #: ../base/ufos/maps.ufo:3752 ../base/ufos/maps.ufo:3798
 #: ../base/ufos/maps.ufo:3843 ../base/ufos/maps.ufo:3888
-#: ../base/ufos/maps.ufo:5371
+#: ../base/ufos/maps.ufo:5322
 msgid "Suburban City"
 msgstr "Приміський округ"
 
@@ -2956,7 +2955,7 @@ msgid "Village 2"
 msgstr "Селище 2"
 
 #: ../base/ufos/maps.ufo:4118 ../base/ufos/maps.ufo:4153
-#: ../base/ufos/maps.ufo:5683
+#: ../base/ufos/maps.ufo:5634
 msgid "PHALANX Base Under Attack"
 msgstr "Напад на базу PHALANX"
 
@@ -2993,110 +2992,106 @@ msgid "Solar Power Plant"
 msgstr "Сонячна електростанція"
 
 #: ../base/ufos/maps.ufo:4614
-msgid "Warehouse"
-msgstr "Товарний склад"
-
-#: ../base/ufos/maps.ufo:4663
 msgid "Military Bunker"
 msgstr "Військовий бункер"
 
-#: ../base/ufos/maps.ufo:4710
+#: ../base/ufos/maps.ufo:4661
 msgid "Rural Village"
 msgstr "Невеличке село"
 
-#: ../base/ufos/maps.ufo:4749
+#: ../base/ufos/maps.ufo:4700
 msgid "Corrupter UFO Crash Site"
 msgstr "Місце аварії НЛО Руйнівник"
 
-#: ../base/ufos/maps.ufo:4794
+#: ../base/ufos/maps.ufo:4745
 msgid "Hydroelectric Dam"
 msgstr "Дамба гідроелектростанції"
 
-#: ../base/ufos/maps.ufo:4844
+#: ../base/ufos/maps.ufo:4795
 msgid "Archaeological Dig"
 msgstr "Археологічні розкопки"
 
-#: ../base/ufos/maps.ufo:4894
+#: ../base/ufos/maps.ufo:4845
 msgid "Ferry"
 msgstr "Пором"
 
-#: ../base/ufos/maps.ufo:4942
+#: ../base/ufos/maps.ufo:4893
 msgid "Fighter UFO Crash Site"
 msgstr "Місце аварії НЛО-Винищувача"
 
-#: ../base/ufos/maps.ufo:4988
+#: ../base/ufos/maps.ufo:4939
 msgid "Port"
 msgstr "Порт"
 
-#: ../base/ufos/maps.ufo:5034
+#: ../base/ufos/maps.ufo:4985
 msgid "Old Mine"
 msgstr "Стара шахта"
 
-#: ../base/ufos/maps.ufo:5087
+#: ../base/ufos/maps.ufo:5038
 msgid "Residential Neighbourhood"
 msgstr "Житловий район"
 
-#: ../base/ufos/maps.ufo:5131
+#: ../base/ufos/maps.ufo:5082
 msgid "Office Complex"
 msgstr "Офісний комплекс"
 
-#: ../base/ufos/maps.ufo:5177
+#: ../base/ufos/maps.ufo:5128
 msgid "Sewage Pipe Construction"
 msgstr "Каналізаційні труби"
 
-#: ../base/ufos/maps.ufo:5222
+#: ../base/ufos/maps.ufo:5173
 msgid "Luxurious Resort"
 msgstr "Розкішний курорт"
 
-#: ../base/ufos/maps.ufo:5271
+#: ../base/ufos/maps.ufo:5222
 msgid "Old Town Center"
 msgstr "Центр старого міста"
 
-#: ../base/ufos/maps.ufo:5324
+#: ../base/ufos/maps.ufo:5275
 msgid "Subway Station"
 msgstr "Станція метро"
 
-#: ../base/ufos/maps.ufo:5417
+#: ../base/ufos/maps.ufo:5368
 msgid "Wilderness"
 msgstr "Незаймана природа"
 
-#: ../base/ufos/maps.ufo:5489 ../base/ufos/maps.ufo:5515
+#: ../base/ufos/maps.ufo:5440 ../base/ufos/maps.ufo:5466
 msgid "City High-Rise (MP)"
 msgstr "Міський хмарочос (Мультиплеєр)"
 
-#: ../base/ufos/maps.ufo:5543
+#: ../base/ufos/maps.ufo:5494
 msgid "Frozen Industrial Site (Coop)"
 msgstr "Засніжений проммайданчик (Кооперація)"
 
-#: ../base/ufos/maps.ufo:5561
+#: ../base/ufos/maps.ufo:5512
 msgid "Frozen Industrial Site (MP)"
 msgstr "Засніжений проммайданчик (Мультиплеєр)"
 
-#: ../base/ufos/maps.ufo:5584
+#: ../base/ufos/maps.ufo:5535
 msgid "A container harbour."
 msgstr "Вантажна гавань."
 
-#: ../base/ufos/maps.ufo:5613
+#: ../base/ufos/maps.ufo:5564
 msgid "Village MP (2)"
 msgstr "Селище (Мультиплеєр 2)"
 
-#: ../base/ufos/maps.ufo:5632
+#: ../base/ufos/maps.ufo:5583
 msgid "Village MP (3)"
 msgstr "Селище (Мультиплеєр 3)"
 
-#: ../base/ufos/maps.ufo:5662
+#: ../base/ufos/maps.ufo:5613
 msgid "Alien Base"
 msgstr "База прибульців"
 
-#: ../base/ufos/maps.ufo:5704
+#: ../base/ufos/maps.ufo:5655
 msgid "PHALANX Craft Crash Site"
 msgstr "Місце падіння авіасудна PHALANX"
 
-#: ../base/ufos/maps.ufo:5733
+#: ../base/ufos/maps.ufo:5684
 msgid "Training Zone: Alpha"
 msgstr "Тренувальна зона: Альфа"
 
-#: ../base/ufos/maps.ufo:5749
+#: ../base/ufos/maps.ufo:5700
 msgid "Training Zone: Bravo"
 msgstr "Тренувальна зона: Браво"
 
@@ -24167,9 +24162,9 @@ msgid "Background"
 msgstr "Передісторія"
 
 #: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:142
-#: ../base/ufos/ui/bases.ufo:310 ../base/ufos/ui/geoscape.ufo:1387
-#: ../base/ufos/ui/market.ufo:154 ../base/ufos/ui/production.ufo:76
-#: ../base/ufos/ui/transfer.ufo:154 ../base/ufos/ui/transfer.ufo:257
+#: ../base/ufos/ui/bases.ufo:299 ../base/ufos/ui/geoscape.ufo:1387
+#: ../base/ufos/ui/market.ufo:267 ../base/ufos/ui/production.ufo:76
+#: ../base/ufos/ui/transfer.ufo:215 ../base/ufos/ui/transfer.ufo:363
 #: client/cgame/campaign/cp_geoscape.cpp:309
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:805
 msgid "Aircraft"
@@ -24189,9 +24184,9 @@ msgstr "Результати досліджень"
 
 #: ../base/ufos/research.ufo:116 ../base/ufos/ui/_assets_squad.ufo:490
 #: ../base/ufos/ui/aircraft.ufo:156 ../base/ufos/ui/aircraft_equip.ufo:61
-#: ../base/ufos/ui/equipment.ufo:59 ../base/ufos/ui/hud_default.ufo:273
-#: ../base/ufos/ui/market.ufo:121 ../base/ufos/ui/transfer.ufo:139
-#: ../base/ufos/ui/transfer.ufo:251
+#: ../base/ufos/ui/equipment.ufo:59 ../base/ufos/ui/hud_default.ufo:272
+#: ../base/ufos/ui/market.ufo:189 ../base/ufos/ui/transfer.ufo:194
+#: ../base/ufos/ui/transfer.ufo:357
 msgid "Equipment"
 msgstr "Спорядження"
 
@@ -24207,15 +24202,13 @@ msgstr "Розтини та Спостереження"
 msgid "The Alien Threat"
 msgstr "Загроза прибульців"
 
-#: ../base/ufos/research.ufo:129 ../base/ufos/ui/bases.ufo:350
+#: ../base/ufos/research.ufo:129 ../base/ufos/ui/bases.ufo:339
 #: ../base/ufos/ui/research.ufo:24
-#: client/cgame/campaign/cp_base_callbacks.cpp:875
 msgid "Research"
 msgstr "Дослідження"
 
-#: ../base/ufos/research.ufo:137 ../base/ufos/ui/bases.ufo:371
+#: ../base/ufos/research.ufo:137 ../base/ufos/ui/bases.ufo:360
 #: ../base/ufos/ui/production.ufo:24 ../base/ufos/ui/production.ufo:124
-#: client/cgame/campaign/cp_base_callbacks.cpp:861
 msgid "Production"
 msgstr "Виробництво"
 
@@ -24541,7 +24534,7 @@ msgstr "Амфетаміновий імплантат"
 msgid "Muscle Stimulant"
 msgstr "М'язовий стимулятор"
 
-#: ../base/ufos/seq_credits.ufo:30 ../base/ufos/ui/main.ufo:20
+#: ../base/ufos/seq_credits.ufo:30 ../base/ufos/ui/main.ufo:16
 msgid "UFO: ALIEN INVASION"
 msgstr "UFO: ALIEN INVASION"
 
@@ -25714,87 +25707,82 @@ msgstr ""
 "відеоспостереження Командного Центру. Ваш боєць зможе використовувати камери "
 "системи безпеки для виявлення ворогів."
 
-#: ../base/ufos/ui/_assets.ufo:42 ../base/ufos/ui/_assets_base.ufo:377
-#: ../base/ufos/ui/_assets_base.ufo:557
+#: ../base/ufos/ui/_assets.ufo:55 ../base/ufos/ui/_assets_base.ufo:494
 msgid "View UFOPaedia entry"
 msgstr "Переглянути НЛО-довідник"
 
-#: ../base/ufos/ui/_assets.ufo:124 ../base/ufos/ui/hud_phone.ufo:157
+#: ../base/ufos/ui/_assets.ufo:148 ../base/ufos/ui/hud_phone.ufo:157
 #: client/cgame/campaign/cp_installation_callbacks.cpp:194
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:565
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: ../base/ufos/ui/_assets.ufo:125 ../base/ufos/ui/sys_popup.ufo:52
+#: ../base/ufos/ui/_assets.ufo:149 ../base/ufos/ui/sys_popup.ufo:52
 #: ../base/ufos/ui/sys_popup.ufo:115
 msgid "Close this dialogue"
 msgstr "Закрити цей діалог"
 
-#: ../base/ufos/ui/_assets.ufo:380 ../base/ufos/ui/inv_stat.ufo:110
+#: ../base/ufos/ui/_assets.ufo:505 ../base/ufos/ui/inv_stat.ufo:109
 msgid "Strength"
 msgstr "Сила"
 
-#: ../base/ufos/ui/_assets.ufo:388 ../base/ufos/ui/inv_stat.ufo:118
+#: ../base/ufos/ui/_assets.ufo:528 ../base/ufos/ui/inv_stat.ufo:117
 msgid "Speed"
 msgstr "Швидкість"
 
-#: ../base/ufos/ui/_assets.ufo:396 ../base/ufos/ui/inv_stat.ufo:126
+#: ../base/ufos/ui/_assets.ufo:551 ../base/ufos/ui/inv_stat.ufo:125
 #: client/cgame/campaign/cp_ufopedia.cpp:146
 msgid "Accuracy"
 msgstr "Влучність"
 
-#: ../base/ufos/ui/_assets.ufo:404 ../base/ufos/ui/inv_stat.ufo:134
+#: ../base/ufos/ui/_assets.ufo:574 ../base/ufos/ui/inv_stat.ufo:133
 msgid "Mind"
 msgstr "Інтелект"
 
-#: ../base/ufos/ui/_assets.ufo:420 ../base/ufos/ui/inv_stat.ufo:150
+#: ../base/ufos/ui/_assets.ufo:608 ../base/ufos/ui/inv_stat.ufo:149
 msgid "CQB"
 msgstr "Ближній бій"
 
-#: ../base/ufos/ui/_assets.ufo:421
+#: ../base/ufos/ui/_assets.ufo:609
 msgid "Close Quarters Battle"
 msgstr "Ближній бій"
 
-#: ../base/ufos/ui/_assets.ufo:429 ../base/ufos/ui/inv_stat.ufo:158
+#: ../base/ufos/ui/_assets.ufo:632 ../base/ufos/ui/inv_stat.ufo:157
 #: client/cl_inventory_callbacks.cpp:50
 msgid "Assault"
 msgstr "Штурмовик"
 
-#: ../base/ufos/ui/_assets.ufo:437 ../base/ufos/ui/inv_stat.ufo:166
+#: ../base/ufos/ui/_assets.ufo:655 ../base/ufos/ui/inv_stat.ufo:165
 #: client/cl_inventory_callbacks.cpp:52
 msgid "Sniper"
 msgstr "Снайпер"
 
-#: ../base/ufos/ui/_assets.ufo:445 ../base/ufos/ui/inv_stat.ufo:174
+#: ../base/ufos/ui/_assets.ufo:678 ../base/ufos/ui/inv_stat.ufo:173
 #: client/cl_inventory_callbacks.cpp:54
 msgid "Explosives"
 msgstr "Підривник"
 
-#: ../base/ufos/ui/_assets.ufo:464
+#: ../base/ufos/ui/_assets.ufo:728
 msgid "Health"
 msgstr "Здоров'я"
 
-#: ../base/ufos/ui/_assets.ufo:465
-msgid "Healthpoints"
-msgstr "Очки здоров'я"
-
-#: ../base/ufos/ui/_assets.ufo:492
+#: ../base/ufos/ui/_assets.ufo:755
 msgid "Missions Performed:"
 msgstr "Пройдено місій:"
 
-#: ../base/ufos/ui/_assets.ufo:505
+#: ../base/ufos/ui/_assets.ufo:772
 msgid "Enemies Killed:"
 msgstr "Вбито ворогів:"
 
-#: ../base/ufos/ui/_assets.ufo:581
+#: ../base/ufos/ui/_assets.ufo:876
 msgid "Piloting"
 msgstr "Пілотування"
 
-#: ../base/ufos/ui/_assets.ufo:588
+#: ../base/ufos/ui/_assets.ufo:895
 msgid "Targeting"
 msgstr "Націлювання"
 
-#: ../base/ufos/ui/_assets.ufo:595
+#: ../base/ufos/ui/_assets.ufo:914
 msgid "Evading"
 msgstr "Ухилення"
 
@@ -25802,63 +25790,59 @@ msgstr "Ухилення"
 msgid "Back"
 msgstr "Назад"
 
-#: ../base/ufos/ui/_assets_base.ufo:418
+#: ../base/ufos/ui/_assets_base.ufo:546
 msgid "Stop researching this project"
 msgstr "Перестати досліджувати цей проект"
 
-#: ../base/ufos/ui/_assets_base.ufo:429
+#: ../base/ufos/ui/_assets_base.ufo:560
 msgid "Assign all free scientists on this project"
 msgstr "Назначити всіх вільних науковців на цей проект"
 
-#: ../base/ufos/ui/_assets_base.ufo:440
+#: ../base/ufos/ui/_assets_base.ufo:574
 msgid "Assign less scientists on this project"
 msgstr "Назначити менше науковців на цей проект"
 
-#: ../base/ufos/ui/_assets_base.ufo:451
+#: ../base/ufos/ui/_assets_base.ufo:588
 msgid "Assign more scientists on this project"
 msgstr "Назначити більше науковців на цей проект"
 
-#: ../base/ufos/ui/_assets_base.ufo:470
+#: ../base/ufos/ui/_assets_base.ufo:612
 msgid "Currently in research on another base"
 msgstr "Досліджується на іншій базі"
 
-#: ../base/ufos/ui/_assets_base.ufo:484
+#: ../base/ufos/ui/_assets_base.ufo:629
 msgid "N/A"
 msgstr "Недоступно"
 
-#: ../base/ufos/ui/_assets_base.ufo:485
+#: ../base/ufos/ui/_assets_base.ufo:630
 msgid "An artifact or prerequisite is missing for this topic"
 msgstr "Не вистачає артефакту чи передумови для цієї теми"
 
-#: ../base/ufos/ui/_assets_base.ufo:493
+#: ../base/ufos/ui/_assets_base.ufo:640
 msgid "Expand/Collapse"
 msgstr "Розгорнути/Згорнути"
 
-#: ../base/ufos/ui/_assets_base.ufo:614
-msgid "Lock current stock level"
-msgstr "Зафіксувати поточний рівень товару"
-
-#: ../base/ufos/ui/_assets_base.ufo:687
+#: ../base/ufos/ui/_assets_base.ufo:671
 msgid "Previous base"
 msgstr "Попередня база"
 
-#: ../base/ufos/ui/_assets_base.ufo:703
+#: ../base/ufos/ui/_assets_base.ufo:692
 msgid "Next base"
 msgstr "Наступна база"
 
-#: ../base/ufos/ui/_assets_base.ufo:774 ../base/ufos/ui/_menu.ufo:88
+#: ../base/ufos/ui/_assets_base.ufo:777 ../base/ufos/ui/_menu.ufo:88
 msgid "Back to base"
 msgstr "Повернутися до бази"
 
-#: ../base/ufos/ui/_assets_hud.ufo:136
+#: ../base/ufos/ui/_assets_hud.ufo:135
 msgid "current level"
 msgstr "поточний рівень"
 
-#: ../base/ufos/ui/_assets_hud.ufo:157
+#: ../base/ufos/ui/_assets_hud.ufo:156
 msgid "raise the level"
 msgstr "підняти рівень"
 
-#: ../base/ufos/ui/_assets_hud.ufo:169
+#: ../base/ufos/ui/_assets_hud.ufo:168
 msgid "lower the level"
 msgstr "знизити рівень"
 
@@ -25910,8 +25894,7 @@ msgstr "Макс. БНП"
 msgid "Selected squad name here"
 msgstr "Назва вибраного загону"
 
-#: ../base/ufos/ui/_assets_squad.ufo:311 ../base/ufos/ui/campaign.ufo:147
-#: ../base/ufos/ui/campaign_main.ufo:49
+#: ../base/ufos/ui/_assets_squad.ufo:311 ../base/ufos/ui/campaign_main.ufo:47
 msgid "SAVE"
 msgstr "ЗБЕРЕГТИ"
 
@@ -25931,20 +25914,19 @@ msgstr "ПО ЗАМОВЧУВАННЮ"
 msgid "CUSTOM"
 msgstr "ВЛАСНИЙ"
 
-#: ../base/ufos/ui/_assets_squad.ufo:430 ../base/ufos/ui/campaign.ufo:131
+#: ../base/ufos/ui/_assets_squad.ufo:430
 msgid "NEW"
 msgstr "НОВИЙ"
 
-#: ../base/ufos/ui/_assets_squad.ufo:446 ../base/ufos/ui/campaign.ufo:155
-#: ../base/ufos/ui/campaign_main.ufo:38
+#: ../base/ufos/ui/_assets_squad.ufo:446 ../base/ufos/ui/campaign_main.ufo:36
 msgid "LOAD"
 msgstr "ЗАВАНТАЖИТИ"
 
-#: ../base/ufos/ui/_assets_squad.ufo:530 ../base/ufos/ui/multiplayer.ufo:203
+#: ../base/ufos/ui/_assets_squad.ufo:530 ../base/ufos/ui/multiplayer.ufo:245
 msgid "CREATE"
 msgstr "СТВОРИТИ"
 
-#: ../base/ufos/ui/_assets_squad.ufo:625 ../base/ufos/ui/multiplayer.ufo:58
+#: ../base/ufos/ui/_assets_squad.ufo:625 ../base/ufos/ui/multiplayer.ufo:100
 msgid "Currently loaded"
 msgstr "Завантажено на даний момент"
 
@@ -25960,7 +25942,7 @@ msgstr "Доступні кошти"
 msgid "Name of this base"
 msgstr "Назва бази"
 
-#: ../base/ufos/ui/_menu.ufo:127 ../base/ufos/ui/popup_installations.ufo:173
+#: ../base/ufos/ui/_menu.ufo:127 ../base/ufos/ui/popup_installations.ufo:250
 msgid "Rename your base"
 msgstr "Перейменувати базу"
 
@@ -25997,8 +25979,7 @@ msgid "Health:"
 msgstr "Здоров'я:"
 
 #: ../base/ufos/ui/aircraft.ufo:239 ../base/ufos/ui/geoscape.ufo:1114
-#: ../base/ufos/ui/geoscape.ufo:1260
-#: ../base/ufos/ui/popup_installations.ufo:618
+#: ../base/ufos/ui/geoscape.ufo:1260 ../base/ufos/ui/ufoyard.ufo:404
 msgid "Status:"
 msgstr "Стан:"
 
@@ -26031,7 +26012,7 @@ msgid "Ammo"
 msgstr "Набої"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:319 ../base/ufos/ui/equipment.ufo:417
-#: ../base/ufos/ui/market.ufo:132 ../base/ufos/ui/production.ufo:58
+#: ../base/ufos/ui/market.ufo:215 ../base/ufos/ui/production.ufo:58
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:138
 #: client/cgame/campaign/cp_ufopedia.cpp:140
 msgid "Armour"
@@ -26064,8 +26045,8 @@ msgstr "В цьому відсіку змонтовано"
 msgid "Ammo fitting this weapon"
 msgstr "Набої для цієї зброї"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:25 ../base/ufos/ui/bases.ufo:78
-#: ../base/ufos/ui/bases.ufo:81 ../base/ufos/ui/bases.ufo:332
+#: ../base/ufos/ui/aircraft_soldiers.ufo:25 ../base/ufos/ui/bases.ufo:77
+#: ../base/ufos/ui/bases.ufo:80 ../base/ufos/ui/bases.ufo:321
 #: ../base/ufos/ui/hire.ufo:79
 msgid "Soldiers"
 msgstr "Бійці"
@@ -26120,9 +26101,8 @@ msgstr "Розтин"
 msgid "Equip Defence Weapons"
 msgstr "Спорядити захисну зброю"
 
-#: ../base/ufos/ui/basedefence.ufo:32
-#: ../base/ufos/ui/popup_installations.ufo:458
-#: client/cgame/campaign/cp_base.cpp:2065
+#: ../base/ufos/ui/basedefence.ufo:32 ../base/ufos/ui/ufoyard.ufo:244
+#: client/cgame/campaign/cp_base.cpp:2076
 msgid "Information"
 msgstr "Інформація"
 
@@ -26169,8 +26149,7 @@ msgstr "Захисні системи земля-повітря"
 #: ../base/ufos/ui/basedefence.ufo:311 ../base/ufos/ui/geoscape.ufo:881
 #: ../base/ufos/ui/geoscape.ufo:983 ../base/ufos/ui/geoscape.ufo:1253
 #: ../base/ufos/ui/geoscape.ufo:1329 ../base/ufos/ui/irc.ufo:237
-#: ../base/ufos/ui/main.ufo:227 ../base/ufos/ui/popup_installations.ufo:159
-#: ../base/ufos/ui/popup_installations.ufo:488
+#: ../base/ufos/ui/popup_installations.ufo:232 ../base/ufos/ui/ufoyard.ufo:274
 msgid "Name:"
 msgstr "Ім'я:"
 
@@ -26179,7 +26158,7 @@ msgid "Targetted UFO:"
 msgstr "Вибраний НЛО:"
 
 #: ../base/ufos/ui/basedefence.ufo:341 ../base/ufos/ui/geoscape.ufo:1000
-#: ../base/ufos/ui/popup_installations.ufo:528
+#: ../base/ufos/ui/ufoyard.ufo:314
 #, fuzzy
 msgid "Time to completion:"
 msgstr "Компресія текстур"
@@ -26189,132 +26168,98 @@ msgid "Autofire"
 msgstr "Автовогонь"
 
 #: ../base/ufos/ui/basedefence.ufo:369 ../base/ufos/ui/geoscape.ufo:1030
-#: ../base/ufos/ui/popup_installations.ufo:572
-#: ../base/ufos/ui/popup_installations.ufo:672
-#: client/cgame/campaign/cp_base_callbacks.cpp:601
-#: client/cgame/campaign/cp_base_callbacks.cpp:612
-#: client/cgame/campaign/cp_base_callbacks.cpp:622
-#: client/cgame/campaign/cp_base_callbacks.cpp:632
-#: client/cgame/campaign/cp_base_callbacks.cpp:645
+#: ../base/ufos/ui/ufoyard.ufo:358 ../base/ufos/ui/ufoyard.ufo:458
+#: client/cgame/campaign/cp_base_callbacks.cpp:603
+#: client/cgame/campaign/cp_base_callbacks.cpp:614
+#: client/cgame/campaign/cp_base_callbacks.cpp:624
+#: client/cgame/campaign/cp_base_callbacks.cpp:634
+#: client/cgame/campaign/cp_base_callbacks.cpp:647
 #: client/cgame/campaign/cp_installation_callbacks.cpp:193
 #: client/cgame/campaign/cp_uforecovery_callbacks.cpp:564
 msgid "Destroy"
 msgstr "Ліквідувати"
 
 #: ../base/ufos/ui/basedefence.ufo:370 ../base/ufos/ui/geoscape.ufo:1031
-#: ../base/ufos/ui/popup_installations.ufo:573
+#: ../base/ufos/ui/ufoyard.ufo:359
 #: client/cgame/campaign/cp_installation_callbacks.cpp:193
 msgid "Destroy installation"
 msgstr "Ліквідувати споруду"
 
 #: ../base/ufos/ui/basedefence.ufo:378 ../base/ufos/ui/geoscape.ufo:1013
-#: ../base/ufos/ui/inv_stat.ufo:325 ../base/ufos/ui/main.ufo:485
-#: ../base/ufos/ui/popup_baseattack.ufo:159
-#: ../base/ufos/ui/popup_capacity.ufo:77
-#: ../base/ufos/ui/popup_installations.ufo:130 ../base/ufos/ui/radar.ufo:36
-#: ../base/ufos/ui/transfer.ufo:694
+#: ../base/ufos/ui/inv_stat.ufo:324 ../base/ufos/ui/popup_baseattack.ufo:159
+#: ../base/ufos/ui/popup_capacity.ufo:112
+#: ../base/ufos/ui/popup_installations.ufo:191
+#: ../base/ufos/ui/popup_transferlist.ufo:167 ../base/ufos/ui/radar.ufo:36
 msgid "Close"
 msgstr "Закрити"
 
-#: ../base/ufos/ui/bases.ufo:60 ../base/ufos/ui/bases.ufo:63
-#: ../base/ufos/ui/hire.ufo:94 client/cgame/campaign/cp_base_callbacks.cpp:875
+#: ../base/ufos/ui/bases.ufo:59 ../base/ufos/ui/bases.ufo:62
+#: ../base/ufos/ui/hire.ufo:94
 msgid "Scientists"
 msgstr "Науковці"
 
-#: ../base/ufos/ui/bases.ufo:69 ../base/ufos/ui/bases.ufo:72
+#: ../base/ufos/ui/bases.ufo:68 ../base/ufos/ui/bases.ufo:71
 msgid "Engineers"
 msgstr "Інженери"
 
-#: ../base/ufos/ui/bases.ufo:87 ../base/ufos/ui/bases.ufo:90
+#: ../base/ufos/ui/bases.ufo:86 ../base/ufos/ui/bases.ufo:89
 #: ../base/ufos/ui/hire.ufo:84
 msgid "Pilots"
 msgstr "Пілоти"
 
-#: ../base/ufos/ui/bases.ufo:107 ../base/ufos/ui/hud_default.ufo:1021
+#: ../base/ufos/ui/bases.ufo:106 ../base/ufos/ui/hud_default.ufo:1029
 msgid "Options"
 msgstr "Налаштування"
 
-#: ../base/ufos/ui/bases.ufo:117
+#: ../base/ufos/ui/bases.ufo:116
 msgid "UFOpedia"
 msgstr "НЛО-довідник"
 
-#: ../base/ufos/ui/bases.ufo:127 ../base/ufos/ui/popup_installations.ufo:310
-#: ../base/ufos/ui/popup_installations.ufo:462
-#: ../base/ufos/ui/popup_installations.ufo:654 ../base/ufos/ui/transfer.ufo:120
-#: ../base/ufos/ui/transfer.ufo:463
-#: client/cgame/campaign/cp_base_callbacks.cpp:602
-#: client/cgame/campaign/cp_base_callbacks.cpp:613
-#: client/cgame/campaign/cp_base_callbacks.cpp:623
-#: client/cgame/campaign/cp_base_callbacks.cpp:633
+#: ../base/ufos/ui/bases.ufo:126 ../base/ufos/ui/transfer.ufo:164
+#: ../base/ufos/ui/transfer.ufo:658 ../base/ufos/ui/ufoyard.ufo:96
+#: ../base/ufos/ui/ufoyard.ufo:248 ../base/ufos/ui/ufoyard.ufo:440
+#: client/cgame/campaign/cp_base_callbacks.cpp:604
+#: client/cgame/campaign/cp_base_callbacks.cpp:615
+#: client/cgame/campaign/cp_base_callbacks.cpp:625
+#: client/cgame/campaign/cp_base_callbacks.cpp:635
 msgid "Transfer"
 msgstr "Надіслати"
 
-#: ../base/ufos/ui/bases.ufo:137
-msgid "Base Summary"
-msgstr "Резюме бази"
-
-#: ../base/ufos/ui/bases.ufo:161
+#: ../base/ufos/ui/bases.ufo:150
 msgid "Facilities"
 msgstr "Інфраструктура"
 
-#: ../base/ufos/ui/bases.ufo:207 ../base/ufos/ui/geoscape.ufo:539
+#: ../base/ufos/ui/bases.ufo:196 ../base/ufos/ui/geoscape.ufo:539
 #: client/cgame/campaign/cp_ufopedia.cpp:113
-#: client/cgame/campaign/cp_ufopedia.cpp:842
+#: client/cgame/campaign/cp_ufopedia.cpp:860
 msgid "UFOpaedia"
 msgstr "НЛО-довідник"
 
-#: ../base/ufos/ui/bases.ufo:341 ../base/ufos/ui/market.ufo:31
-#: ../base/ufos/ui/market.ufo:57
+#: ../base/ufos/ui/bases.ufo:330 ../base/ufos/ui/market.ufo:30
+#: ../base/ufos/ui/market.ufo:60
 msgid "Market"
 msgstr "Ринок"
 
-#: ../base/ufos/ui/campaign.ufo:42 ../base/ufos/ui/campaign.ufo:95
-msgid "Upload"
-msgstr "Завантажити на сервер"
-
-#: ../base/ufos/ui/campaign.ufo:50 ../base/ufos/ui/campaign.ufo:103
-msgid "Delete this savegame"
-msgstr "Видалити це збереження"
-
-#: ../base/ufos/ui/campaign.ufo:168 ../base/ufos/ui/multiplayer.ufo:702
-#: ../base/ufos/ui/skirmish.ufo:175
-msgid "DOWNLOAD"
-msgstr "СКАЧАТИ"
-
-#: ../base/ufos/ui/campaign.ufo:176 ../base/ufos/ui/skirmish.ufo:186
-msgid "BEGIN"
-msgstr "ПОЧАТИ"
-
-#: ../base/ufos/ui/campaign.ufo:198 ../base/ufos/ui/multiplayer.ufo:901
-#: ../base/ufos/ui/popup_exitcampaign.ufo:41 ../base/ufos/ui/skirmish.ufo:197
+#: ../base/ufos/ui/campaign.ufo:59 ../base/ufos/ui/multiplayer.ufo:943
+#: ../base/ufos/ui/popup_exitcampaign.ufo:40 ../base/ufos/ui/skirmish.ufo:197
 #: ../base/ufos/ui/tutorials.ufo:70
 msgid "BACK"
 msgstr "НАЗАД"
 
-#: ../base/ufos/ui/campaign.ufo:355 ../base/ufos/ui/multiplayer.ufo:1065
-#: ../base/ufos/ui/skirmish.ufo:369
-msgid "No files uploaded yet"
-msgstr "Жодного файлу не завантажено"
-
-#: ../base/ufos/ui/campaign.ufo:426 ../base/ufos/ui/campaign.ufo:440
-#: ../base/ufos/ui/campaign.ufo:456
-msgid "Click here to save game"
-msgstr "Клацніть сюди для збереження гри"
-
-#: ../base/ufos/ui/campaign_main.ufo:27 ../base/ufos/ui/missionmenu.ufo:32
+#: ../base/ufos/ui/campaign_main.ufo:25 ../base/ufos/ui/missionmenu.ufo:121
 msgid "CONTINUE"
 msgstr "ПРОДОВЖИТИ"
 
-#: ../base/ufos/ui/campaign_main.ufo:28 ../base/ufos/ui/missionmenu.ufo:33
+#: ../base/ufos/ui/campaign_main.ufo:26 ../base/ufos/ui/missionmenu.ufo:122
 msgid "Leave this menu and continue playing."
 msgstr "Покинути меню та продовжити грати"
 
-#: ../base/ufos/ui/campaign_main.ufo:60 ../base/ufos/ui/main.ufo:107
-#: ../base/ufos/ui/missionmenu.ufo:43
+#: ../base/ufos/ui/campaign_main.ufo:58 ../base/ufos/ui/main.ufo:95
+#: ../base/ufos/ui/missionmenu.ufo:137
 msgid "OPTIONS"
 msgstr "ОПЦІЇ"
 
-#: ../base/ufos/ui/campaign_main.ufo:70 ../base/ufos/ui/main.ufo:140
+#: ../base/ufos/ui/campaign_main.ufo:68 ../base/ufos/ui/main.ufo:128
 msgid "EXIT"
 msgstr "ВИХІД"
 
@@ -26322,21 +26267,21 @@ msgstr "ВИХІД"
 msgid "Remove this file from the server"
 msgstr "Видалити цей файл з серверу"
 
-#: ../base/ufos/ui/endgame.ufo:42
+#: ../base/ufos/ui/endgame.ufo:41
 msgid "Click to continue"
 msgstr "Клацніть для продовження"
 
-#: ../base/ufos/ui/endgame.ufo:63 ../base/ufos/ui/endgame.ufo:86
-#: ../base/ufos/ui/endgame.ufo:87
+#: ../base/ufos/ui/endgame.ufo:62 ../base/ufos/ui/endgame.ufo:85
+#: ../base/ufos/ui/endgame.ufo:86
 #, fuzzy
 msgid "scrollbar"
 msgstr "Прокрутка"
 
-#: ../base/ufos/ui/endgame.ufo:112
+#: ../base/ufos/ui/endgame.ufo:111
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Дякуємо, що ви грали в UFO:Alien Invasion"
 
-#: ../base/ufos/ui/endgame.ufo:116
+#: ../base/ufos/ui/endgame.ufo:115
 msgid "You've lost the game"
 msgstr "Ви зазнали поразки"
 
@@ -26345,15 +26290,15 @@ msgstr "Ви зазнали поразки"
 msgid "Rename your unit"
 msgstr "Перейменувати бійця"
 
-#: ../base/ufos/ui/equipment.ufo:185 ../base/ufos/ui/inv_stat.ufo:334
+#: ../base/ufos/ui/equipment.ufo:185 ../base/ufos/ui/inv_stat.ufo:333
 msgid "Next soldier"
 msgstr "Наступний солдат"
 
-#: ../base/ufos/ui/equipment.ufo:193 ../base/ufos/ui/inv_stat.ufo:343
+#: ../base/ufos/ui/equipment.ufo:193 ../base/ufos/ui/inv_stat.ufo:342
 msgid "Previous soldier"
 msgstr "Попередній солдат"
 
-#: ../base/ufos/ui/equipment.ufo:250 ../base/ufos/ui/inv_stat.ufo:84
+#: ../base/ufos/ui/equipment.ufo:250 ../base/ufos/ui/inv_stat.ufo:83
 msgid "0/0 Kg"
 msgstr "0/0 кг"
 
@@ -26506,7 +26451,7 @@ msgstr "Автоматично розрахувати й завершити мі
 msgid "This kind of mission cannot be done automatically"
 msgstr "Такий тип місії неможливо виконати автоматично"
 
-#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:184
+#: ../base/ufos/ui/geoscape.ufo:897 ../base/ufos/ui/popup_installations.ufo:264
 msgid "Cost:"
 msgstr "Вартість:"
 
@@ -26514,7 +26459,7 @@ msgstr "Вартість:"
 msgid "Time to build:"
 msgstr "Термін:"
 
-#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:196
+#: ../base/ufos/ui/geoscape.ufo:952 ../base/ufos/ui/popup_installations.ufo:281
 msgid "Build"
 msgstr "Будувати"
 
@@ -26543,7 +26488,7 @@ msgid "SAM defence"
 msgstr "ППО захист"
 
 #: ../base/ufos/ui/geoscape.ufo:1121 ../base/ufos/ui/geoscape.ufo:1267
-#: ../base/ufos/ui/popup_capacity.ufo:26
+#: ../base/ufos/ui/popup_capacity.ufo:40
 msgid "Base:"
 msgstr "База:"
 
@@ -26555,8 +26500,8 @@ msgstr "Ракетна установка земля-повітря:"
 msgid "Select aircraft"
 msgstr "Виберіть авіасудно"
 
-#: ../base/ufos/ui/geoscape.ufo:1274
-#: ../base/ufos/ui/popup_installations.ufo:642 ../base/ufos/ui/transfer.ufo:601
+#: ../base/ufos/ui/geoscape.ufo:1274 ../base/ufos/ui/popup_transferlist.ufo:55
+#: ../base/ufos/ui/ufoyard.ufo:428
 msgid "ETA:"
 msgstr "РТП:"
 
@@ -26632,105 +26577,106 @@ msgstr "Важкі рани"
 msgid "Healthy"
 msgstr "Здоровий"
 
-#: ../base/ufos/ui/hud_.ufo:50
+#: ../base/ufos/ui/hud_.ufo:55
 msgid "Use this firemode for reaction fire"
 msgstr "Використати цей режим для зустрічного вогню"
 
-#: ../base/ufos/ui/hud_.ufo:325
+#: ../base/ufos/ui/hud_.ufo:330
 msgid "tt"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:299
+#: ../base/ufos/ui/hud_default.ufo:298
 msgid "Stats"
 msgstr "Стан"
 
-#: ../base/ufos/ui/hud_default.ufo:325
+#: ../base/ufos/ui/hud_default.ufo:324
 msgid "Headgear"
 msgstr "Тепловізор"
 
-#: ../base/ufos/ui/hud_default.ufo:358 ../base/ufos/ui/hud_default.ufo:377
+#: ../base/ufos/ui/hud_default.ufo:357 ../base/ufos/ui/hud_default.ufo:376
 #: client/battlescape/cl_hud_callbacks.cpp:348
 msgid "Toggle reaction fire."
 msgstr "Переключення зустрічного вогню."
 
-#: ../base/ufos/ui/hud_default.ufo:413
+#: ../base/ufos/ui/hud_default.ufo:412
 msgid "Stand"
 msgstr "Встати"
 
-#: ../base/ufos/ui/hud_default.ufo:439
+#: ../base/ufos/ui/hud_default.ufo:438
 msgid "Crouch"
 msgstr "Присісти"
 
-#: ../base/ufos/ui/hud_default.ufo:457
+#: ../base/ufos/ui/hud_default.ufo:456
 msgid "Crouched"
 msgstr "Навприсядки"
 
-#: ../base/ufos/ui/hud_default.ufo:486
+#: ../base/ufos/ui/hud_default.ufo:485
 msgid "Standing"
 msgstr "Стоїть"
 
-#: ../base/ufos/ui/hud_default.ufo:669
+#: ../base/ufos/ui/hud_default.ufo:668
 msgid "View other hand"
 msgstr "В іншій руці"
 
-#: ../base/ufos/ui/hud_default.ufo:754
+#: ../base/ufos/ui/hud_default.ufo:753
 msgid "Hide squad"
 msgstr "Сховати загін"
 
-#: ../base/ufos/ui/hud_default.ufo:825 ../base/ufos/ui/hud_default.ufo:827
-#: ../base/ufos/ui/hud_default.ufo:844
+#: ../base/ufos/ui/hud_default.ufo:824 ../base/ufos/ui/hud_default.ufo:826
+#: ../base/ufos/ui/hud_default.ufo:843
 msgid "btn"
 msgstr ""
 
-#: ../base/ufos/ui/hud_default.ufo:855
+#: ../base/ufos/ui/hud_default.ufo:854
 msgid "Show squad"
 msgstr "Показати загін"
 
-#: ../base/ufos/ui/hud_default.ufo:919
+#: ../base/ufos/ui/hud_default.ufo:918
 msgid "Jump to alien"
 msgstr "Перейти до прибульця"
 
-#: ../base/ufos/ui/hud_default.ufo:950
+#: ../base/ufos/ui/hud_default.ufo:958
 msgid "Jump to civilian"
 msgstr "Перейти до цивільного"
 
-#: ../base/ufos/ui/hud_default.ufo:955
+#: ../base/ufos/ui/hud_default.ufo:963
 msgid "*"
 msgstr "*"
 
-#: ../base/ufos/ui/hud_default.ufo:995
+#: ../base/ufos/ui/hud_default.ufo:1003
 msgid "End Turn"
 msgstr "Закінчити хід"
 
-#: ../base/ufos/ui/hud_default.ufo:1047
+#: ../base/ufos/ui/hud_default.ufo:1055 ../base/ufos/ui/missionmenu.ufo:36
+#: ../base/ufos/ui/missionmenu.ufo:83
 msgid "Abort"
 msgstr "Припинити"
 
-#: ../base/ufos/ui/hud_default.ufo:1098 ../base/ufos/ui/hud_default.ufo:1540
+#: ../base/ufos/ui/hud_default.ufo:1106 ../base/ufos/ui/hud_default.ufo:1548
 msgid "Show rescue zone"
 msgstr "Показати зону порятунку"
 
-#: ../base/ufos/ui/hud_default.ufo:1149 ../base/ufos/ui/hud_default.ufo:1204
+#: ../base/ufos/ui/hud_default.ufo:1157 ../base/ufos/ui/hud_default.ufo:1212
 msgid "Target out of range"
 msgstr "Ціль поза межами досягнення"
 
-#: ../base/ufos/ui/hud_default.ufo:1154 ../base/ufos/ui/hud_default.ufo:1209
+#: ../base/ufos/ui/hud_default.ufo:1162 ../base/ufos/ui/hud_default.ufo:1217
 msgid "Target acquired"
 msgstr "Ціль виявлено"
 
-#: ../base/ufos/ui/hud_default.ufo:1236
+#: ../base/ufos/ui/hud_default.ufo:1244
 msgid "Aborting fire!"
 msgstr "Вогонь перервано!"
 
-#: ../base/ufos/ui/hud_default.ufo:1481
+#: ../base/ufos/ui/hud_default.ufo:1489
 msgid "Please wait"
 msgstr "Будь ласка, зачекайте"
 
-#: ../base/ufos/ui/hud_default.ufo:1537
+#: ../base/ufos/ui/hud_default.ufo:1545
 msgid "Hide rescue zone"
 msgstr "Сховати зону порятунку"
 
-#: ../base/ufos/ui/hud_default.ufo:1638
+#: ../base/ufos/ui/hud_default.ufo:1646
 msgid "Default"
 msgstr "Стандартний"
 
@@ -26774,16 +26720,16 @@ msgstr "Не залишилось амуніції"
 msgid "Phone HUD"
 msgstr "Для телефону"
 
-#: ../base/ufos/ui/inv_stat.ufo:206 ../base/ufos/ui/stats.ufo:110
+#: ../base/ufos/ui/inv_stat.ufo:205 ../base/ufos/ui/stats.ufo:110
 msgid "Missions"
 msgstr "Операції"
 
-#: ../base/ufos/ui/inv_stat.ufo:215
+#: ../base/ufos/ui/inv_stat.ufo:214
 #: client/cgame/campaign/cp_mission_callbacks.cpp:118
 msgid "Aliens killed"
 msgstr "Вбито прибульців"
 
-#: ../base/ufos/ui/irc.ufo:23 ../base/ufos/ui/multiplayer.ufo:1825
+#: ../base/ufos/ui/irc.ufo:23 ../base/ufos/ui/multiplayer.ufo:1867
 msgid "Lobby"
 msgstr "Лоббі"
 
@@ -26827,7 +26773,7 @@ msgstr "Нема зв'язку"
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr "Не вдалось з'єднатись із лоббі. Хочете з'єднатись?"
 
-#: ../base/ufos/ui/irc.ufo:295 ../base/ufos/ui/multiplayer.ufo:1704
+#: ../base/ufos/ui/irc.ufo:295 ../base/ufos/ui/multiplayer.ufo:1746
 msgid "Connect"
 msgstr "З'єднати"
 
@@ -26927,7 +26873,7 @@ msgstr "Сортувати держави за ставленням"
 msgid "Selected nation:"
 msgstr "Вибрана держава:"
 
-#: ../base/ufos/ui/lostwon.ufo:437 ../base/ufos/ui/popup_installations.ufo:467
+#: ../base/ufos/ui/lostwon.ufo:437 ../base/ufos/ui/ufoyard.ufo:253
 msgid "Sell"
 msgstr "Продати"
 
@@ -26939,142 +26885,84 @@ msgstr "Розпочати процес продажу НЛО"
 msgid "Mark all messages read"
 msgstr "Помітити усі повідомлення прочитаними"
 
-#: ../base/ufos/ui/main.ufo:32
+#: ../base/ufos/ui/main.ufo:27
 msgid "Facebook"
 msgstr "Facebook"
 
-#: ../base/ufos/ui/main.ufo:33
+#: ../base/ufos/ui/main.ufo:28
 msgid "Like us on facebook"
 msgstr "Поставте лайк на facebook"
 
-#: ../base/ufos/ui/main.ufo:48
+#: ../base/ufos/ui/main.ufo:40
 msgid "Twitter"
 msgstr "Twitter"
 
-#: ../base/ufos/ui/main.ufo:49
+#: ../base/ufos/ui/main.ufo:41
 msgid "Follow us on twitter"
 msgstr "Слідкуйте за нами на twitter"
 
-#: ../base/ufos/ui/main.ufo:74
+#: ../base/ufos/ui/main.ufo:62
 msgid "CAMPAIGN"
 msgstr "КАМПАНІЯ"
 
-#: ../base/ufos/ui/main.ufo:85
+#: ../base/ufos/ui/main.ufo:73
 msgid "SKIRMISH"
 msgstr "СУТИЧКА"
 
-#: ../base/ufos/ui/main.ufo:96
+#: ../base/ufos/ui/main.ufo:84
 msgid "MULTIPLAYER"
 msgstr "МУЛЬТИПЛЕЄР"
 
-#: ../base/ufos/ui/main.ufo:118 ../base/ufos/ui/tutorials.ufo:12
+#: ../base/ufos/ui/main.ufo:106 ../base/ufos/ui/tutorials.ufo:12
 msgid "TUTORIALS"
 msgstr "НАВЧАННЯ"
 
-#: ../base/ufos/ui/main.ufo:129
+#: ../base/ufos/ui/main.ufo:117
 msgid "DEVELOPERS"
 msgstr "РОЗРОБНИКИ"
 
-#: ../base/ufos/ui/main.ufo:204
-msgid "Initial settings"
-msgstr "Початкові налаштування"
-
-#: ../base/ufos/ui/main.ufo:217
-#, fuzzy
-msgid "User information"
-msgstr "Інформація про гравця"
-
-#: ../base/ufos/ui/main.ufo:252
-msgid "Volume Control"
-msgstr "Контроль гучності"
-
-#: ../base/ufos/ui/main.ufo:262
-msgid "Effects:"
-msgstr "Ефекти:"
-
-#: ../base/ufos/ui/main.ufo:284
-msgid "Music:"
-msgstr "Музика:"
-
-#: ../base/ufos/ui/main.ufo:311
-msgid "Language"
-msgstr "Вибір мови"
-
-#: ../base/ufos/ui/main.ufo:321
-msgid "Language:"
-msgstr "Мова:"
-
-#: ../base/ufos/ui/main.ufo:371
-msgid "You have to set the playername and hit the 'OK' button:"
-msgstr "Зазначте ім'я гравця і клацніть на 'OK'"
-
-#: ../base/ufos/ui/main.ufo:381 ../base/ufos/ui/multiplayer.ufo:1774
-#: ../base/ufos/ui/sys_popup.ufo:51 ../base/ufos/ui/sys_popup.ufo:114
-msgid "OK"
-msgstr "OK"
-
-#: ../base/ufos/ui/main.ufo:382
-msgid "Save settings"
-msgstr "Зберегти налаштування"
-
-#: ../base/ufos/ui/main.ufo:423
-msgid "Tip of the day"
-msgstr "Корисна порада"
-
-#: ../base/ufos/ui/main.ufo:429
-msgid "Show tip of the day"
-msgstr "Показувати поради"
-
-#: ../base/ufos/ui/main.ufo:463 ../base/ufos/ui/main.ufo:482
-msgid "Next"
-msgstr "Наступна"
-
-#: ../base/ufos/ui/main.ufo:464 ../base/ufos/ui/main.ufo:483
-msgid "Next tip"
-msgstr "Наступна порада"
-
-#: ../base/ufos/ui/main.ufo:486
-msgid "Close window"
-msgstr "Закрити вікно"
-
-#: ../base/ufos/ui/market.ufo:49
+#: ../base/ufos/ui/market.ufo:50
 #: client/cgame/campaign/cp_base_callbacks.cpp:223
 #: client/cgame/campaign/cp_geoscape.cpp:316
 #: client/cgame/campaign/cp_installation_callbacks.cpp:268
 msgid "Base"
 msgstr "База"
 
-#: ../base/ufos/ui/market.ufo:88
+#: ../base/ufos/ui/market.ufo:111
 msgid "Primary Weapons"
 msgstr "Основна зброя"
 
-#: ../base/ufos/ui/market.ufo:99
+#: ../base/ufos/ui/market.ufo:137
 msgid "Secondary Weapons"
 msgstr "Особиста зброя"
 
-#: ../base/ufos/ui/market.ufo:110
+#: ../base/ufos/ui/market.ufo:163
 msgid "Heavy Weapons"
 msgstr "Важка зброя"
 
-#: ../base/ufos/ui/market.ufo:143
+#: ../base/ufos/ui/market.ufo:241
 msgid "Aircraft Equipment"
 msgstr "Обладнання авіасудна"
 
-#: ../base/ufos/ui/market.ufo:165
+#: ../base/ufos/ui/market.ufo:298
 msgid "Implants"
 msgstr "Імплантати"
 
-#: ../base/ufos/ui/market.ufo:176
+#: ../base/ufos/ui/market.ufo:324
 msgid "Other Items"
 msgstr "Інші предмети"
 
-#: ../base/ufos/ui/market.ufo:187
+#: ../base/ufos/ui/market.ufo:350
 msgid "Unmanned Ground Vehicles"
 msgstr "Безпілотні наземні транспортні засоби"
 
-#: ../base/ufos/ui/market.ufo:331
-msgid "Transactions"
-msgstr "Транзакції"
+#: ../base/ufos/ui/market.ufo:459
+msgid "Purchase for %i credits each"
+msgstr ""
+
+#: ../base/ufos/ui/market.ufo:467
+msgid "Sell for %i credits each"
+msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:12
 msgid "Material editor"
@@ -27232,304 +27120,360 @@ msgstr "Розпочати"
 msgid "Start the match"
 msgstr "Розпочати операцію"
 
-#: ../base/ufos/ui/missionmenu.ufo:61 ../base/ufos/ui/multiplayer.ufo:379
+#: ../base/ufos/ui/missionmenu.ufo:19 ../base/ufos/ui/multiplayer.ufo:421
 msgid "LOBBY"
 msgstr "ЛОББІ"
 
-#: ../base/ufos/ui/missionmenu.ufo:62
+#: ../base/ufos/ui/missionmenu.ufo:23
 msgid "ABORT GAME"
 msgstr "ПЕРЕРВАТИ ГРУ"
 
-#: ../base/ufos/ui/missionmenu.ufo:70
+#: ../base/ufos/ui/missionmenu.ufo:28
+#, fuzzy
+msgid "Abort game"
+msgstr "Припинити"
+
+#: ../base/ufos/ui/missionmenu.ufo:32
+#, fuzzy
+msgid "Do you really want to abort this game?"
+msgstr "Ви справді хочете знищити цей НЛО?"
+
+#: ../base/ufos/ui/missionmenu.ufo:47
 msgid "RESTART MISSION"
 msgstr "ПЕРЕЗАПУСТИТИ МІСІЮ"
 
-#: ../base/ufos/ui/missionmenu.ufo:71
+#: ../base/ufos/ui/missionmenu.ufo:52
+#, fuzzy
+msgid "Restart mission"
+msgstr "Переграти цю місію"
+
+#: ../base/ufos/ui/missionmenu.ufo:56
+#, fuzzy
+msgid "Do you really want to restart this mission? You will lose all progress."
+msgstr "Ви дійсно хочете знищити цей об'єкт?"
+
+#: ../base/ufos/ui/missionmenu.ufo:60
+#, fuzzy
+msgid "Restart"
+msgstr "Примусовий старт"
+
+#: ../base/ufos/ui/missionmenu.ufo:70
 msgid "ABORT MISSION"
 msgstr "ОБІРВАТИ МІСІЮ"
 
-#: ../base/ufos/ui/multiplayer.ufo:8
+#: ../base/ufos/ui/missionmenu.ufo:75
+#, fuzzy
+msgid "Abort mission"
+msgstr "Автобій"
+
+#: ../base/ufos/ui/missionmenu.ufo:79
+#, fuzzy
+msgid "Do you really want to abort this mission?"
+msgstr "Ви дійсно хочете знищити цей об'єкт?"
+
+#: ../base/ufos/ui/multiplayer.ufo:34
+msgid "Upload"
+msgstr "Завантажити на сервер"
+
+#: ../base/ufos/ui/multiplayer.ufo:42
+msgid "Delete this savegame"
+msgstr "Видалити це збереження"
+
+#: ../base/ufos/ui/multiplayer.ufo:50
 msgid "Connect to this server"
 msgstr "З'єднатись із цим сервером"
 
-#: ../base/ufos/ui/multiplayer.ufo:12
+#: ../base/ufos/ui/multiplayer.ufo:54
 msgid "Delete this bookmark"
 msgstr "Видалити цю закладку"
 
-#: ../base/ufos/ui/multiplayer.ufo:194
+#: ../base/ufos/ui/multiplayer.ufo:236
 msgid "JOIN"
 msgstr "ПРИЄДНАТИСЯ"
 
-#: ../base/ufos/ui/multiplayer.ufo:212
+#: ../base/ufos/ui/multiplayer.ufo:254
 msgid "TEAM"
 msgstr "КОМАНДА"
 
-#: ../base/ufos/ui/multiplayer.ufo:228
+#: ../base/ufos/ui/multiplayer.ufo:270
 msgid "Gametype:"
 msgstr "Тип гри:"
 
-#: ../base/ufos/ui/multiplayer.ufo:248
+#: ../base/ufos/ui/multiplayer.ufo:290
 msgid "Teamplay:"
 msgstr "Командна гра:"
 
-#: ../base/ufos/ui/multiplayer.ufo:268
+#: ../base/ufos/ui/multiplayer.ufo:310
 msgid "Allowed gametype:"
 msgstr "Дозволений тип гри:"
 
-#: ../base/ufos/ui/multiplayer.ufo:320
+#: ../base/ufos/ui/multiplayer.ufo:362
 msgid "Save the current team"
 msgstr "Зберегти поточну команду"
 
-#: ../base/ufos/ui/multiplayer.ufo:325
+#: ../base/ufos/ui/multiplayer.ufo:367
 msgid "SAVE TEAM"
 msgstr "ЗБЕРЕГТИ КОМАНДУ"
 
-#: ../base/ufos/ui/multiplayer.ufo:345
+#: ../base/ufos/ui/multiplayer.ufo:387
 msgid "Bookmarks"
 msgstr "Закладки"
 
-#: ../base/ufos/ui/multiplayer.ufo:403
+#: ../base/ufos/ui/multiplayer.ufo:445
 msgid "Hostname:"
 msgstr "Назва серверу:"
 
-#: ../base/ufos/ui/multiplayer.ufo:418
+#: ../base/ufos/ui/multiplayer.ufo:460
 msgid "Make this server public:"
 msgstr "Зробити цей сервер загальнодоступним:"
 
-#: ../base/ufos/ui/multiplayer.ufo:435
+#: ../base/ufos/ui/multiplayer.ufo:477
 msgid "Server-Password:"
 msgstr "Пароль серверу:"
 
-#: ../base/ufos/ui/multiplayer.ufo:453 ../base/ufos/ui/multiplayer.ufo:1409
+#: ../base/ufos/ui/multiplayer.ufo:495 ../base/ufos/ui/multiplayer.ufo:1451
 msgid "RCON-Password:"
 msgstr "RCON-пароль:"
 
-#: ../base/ufos/ui/multiplayer.ufo:471
+#: ../base/ufos/ui/multiplayer.ufo:513
 msgid "Enable morale states:"
 msgstr "Враховувати мораль:"
 
-#: ../base/ufos/ui/multiplayer.ufo:486
+#: ../base/ufos/ui/multiplayer.ufo:528
 msgid "Alien rush:"
 msgstr "Наплив прибульців:"
 
-#: ../base/ufos/ui/multiplayer.ufo:489
+#: ../base/ufos/ui/multiplayer.ufo:531
 msgid "Enemies respawn when killed."
 msgstr "Вороги відроджуються, коли їх вбили."
 
-#: ../base/ufos/ui/multiplayer.ufo:505
+#: ../base/ufos/ui/multiplayer.ufo:547
 msgid "Max. clients:"
 msgstr "Максимум гравців:"
 
-#: ../base/ufos/ui/multiplayer.ufo:506
+#: ../base/ufos/ui/multiplayer.ufo:548
 msgid "Sets the max allowed clients to connect"
 msgstr "Встановлює максимальну кількість гравців для з'єднання"
 
-#: ../base/ufos/ui/multiplayer.ufo:531 ../base/ufos/ui/multiplayer.ufo:1309
+#: ../base/ufos/ui/multiplayer.ufo:573 ../base/ufos/ui/multiplayer.ufo:1351
 msgid "Max. soldiers per team:"
 msgstr "Максимум бійців у команді:"
 
-#: ../base/ufos/ui/multiplayer.ufo:532 ../base/ufos/ui/multiplayer.ufo:1310
-#: ../base/ufos/ui/multiplayer.ufo:1360
+#: ../base/ufos/ui/multiplayer.ufo:574 ../base/ufos/ui/multiplayer.ufo:1352
+#: ../base/ufos/ui/multiplayer.ufo:1402
 msgid "Sets the max allowed soldiers per team"
 msgstr "Встановлює максимальну кількість бійців у команді"
 
-#: ../base/ufos/ui/multiplayer.ufo:557 ../base/ufos/ui/multiplayer.ufo:1334
+#: ../base/ufos/ui/multiplayer.ufo:599 ../base/ufos/ui/multiplayer.ufo:1376
 msgid "Max. soldiers per player:"
 msgstr "Максимум бійців у гравця:"
 
-#: ../base/ufos/ui/multiplayer.ufo:558 ../base/ufos/ui/multiplayer.ufo:1335
+#: ../base/ufos/ui/multiplayer.ufo:600 ../base/ufos/ui/multiplayer.ufo:1377
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "Встановлює максимальну кількість бійців у гравця під час командної гри"
 
-#: ../base/ufos/ui/multiplayer.ufo:584
+#: ../base/ufos/ui/multiplayer.ufo:626
 msgid "Max. human players per team:"
 msgstr "Максимум гравців у команді:"
 
-#: ../base/ufos/ui/multiplayer.ufo:609
+#: ../base/ufos/ui/multiplayer.ufo:651
 msgid "Max. AI actors:"
 msgstr "Макс. комп. персонажів:"
 
-#: ../base/ufos/ui/multiplayer.ufo:610
+#: ../base/ufos/ui/multiplayer.ufo:652
 msgid "Max AI actors for teamplay mode"
 msgstr "Максимум комп'ютерних персонажів для командної гри"
 
-#: ../base/ufos/ui/multiplayer.ufo:636
+#: ../base/ufos/ui/multiplayer.ufo:678
 msgid "Round time limit in seconds:"
 msgstr "Ліміт тривалості ходу в секундах"
 
-#: ../base/ufos/ui/multiplayer.ufo:658
+#: ../base/ufos/ui/multiplayer.ufo:700
 msgid "START SERVER"
 msgstr "ЗАПУСТИТИ СЕРВЕР"
 
-#: ../base/ufos/ui/multiplayer.ufo:679
+#: ../base/ufos/ui/multiplayer.ufo:721
 msgid "Teams"
 msgstr "Команди"
 
-#: ../base/ufos/ui/multiplayer.ufo:696
+#: ../base/ufos/ui/multiplayer.ufo:738
 msgid "Download new teams"
 msgstr "Завантажити нові команди"
 
-#: ../base/ufos/ui/multiplayer.ufo:713
+#: ../base/ufos/ui/multiplayer.ufo:744 ../base/ufos/ui/skirmish.ufo:175
+msgid "DOWNLOAD"
+msgstr "СКАЧАТИ"
+
+#: ../base/ufos/ui/multiplayer.ufo:755
 msgid "Generate New Team"
 msgstr "Згенерувати нову команду"
 
-#: ../base/ufos/ui/multiplayer.ufo:714
+#: ../base/ufos/ui/multiplayer.ufo:756
 msgid "GENERATE"
 msgstr "ЗГЕНЕРУВАТИ"
 
-#: ../base/ufos/ui/multiplayer.ufo:765
+#: ../base/ufos/ui/multiplayer.ufo:807
 msgid "Close web panel"
 msgstr "Закрити веб панель"
 
-#: ../base/ufos/ui/multiplayer.ufo:766
+#: ../base/ufos/ui/multiplayer.ufo:808
 msgid "CLOSE"
 msgstr "ЗАКРИТИ"
 
-#: ../base/ufos/ui/multiplayer.ufo:781
+#: ../base/ufos/ui/multiplayer.ufo:823
 msgid "REFRESH"
 msgstr "ОНОВИТИ"
 
-#: ../base/ufos/ui/multiplayer.ufo:788
+#: ../base/ufos/ui/multiplayer.ufo:830
 msgid "Serverfilter:"
 msgstr "Фільтр:"
 
-#: ../base/ufos/ui/multiplayer.ufo:870
+#: ../base/ufos/ui/multiplayer.ufo:912
 msgid "CONNECT"
 msgstr "ПРИЄДНАТИСЯ"
 
-#: ../base/ufos/ui/multiplayer.ufo:881
+#: ../base/ufos/ui/multiplayer.ufo:923
 msgid "Connect to IP"
 msgstr "З'єднатись з IP"
 
-#: ../base/ufos/ui/multiplayer.ufo:910
+#: ../base/ufos/ui/multiplayer.ufo:952
 msgid ""
 "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr ""
 "Впевніться, що ТСР порт 27910 відкритий в налаштуваннях вашого фаєрволу"
 
-#: ../base/ufos/ui/multiplayer.ufo:1001 ../base/ufos/ui/options.ufo:640
+#: ../base/ufos/ui/multiplayer.ufo:1043 ../base/ufos/ui/options.ufo:640
 msgid "All"
 msgstr "Усі"
 
-#: ../base/ufos/ui/multiplayer.ufo:1003
+#: ../base/ufos/ui/multiplayer.ufo:1045
 msgid "Free"
 msgstr "Вільно"
 
-#: ../base/ufos/ui/multiplayer.ufo:1005
+#: ../base/ufos/ui/multiplayer.ufo:1047
 msgid "Playing"
 msgstr "Грають"
 
-#: ../base/ufos/ui/multiplayer.ufo:1007
+#: ../base/ufos/ui/multiplayer.ufo:1049
 msgid "Invalid"
 msgstr "Недійсний"
 
-#: ../base/ufos/ui/multiplayer.ufo:1171
+#: ../base/ufos/ui/multiplayer.ufo:1107 ../base/ufos/ui/skirmish.ufo:369
+msgid "No files uploaded yet"
+msgstr "Жодного файлу не завантажено"
+
+#: ../base/ufos/ui/multiplayer.ufo:1213
 msgid "Players connected"
 msgstr "З'єднані гравці"
 
-#: ../base/ufos/ui/multiplayer.ufo:1220
+#: ../base/ufos/ui/multiplayer.ufo:1262
 msgid "Team selection"
 msgstr "Вибір команди"
 
-#: ../base/ufos/ui/multiplayer.ufo:1237
+#: ../base/ufos/ui/multiplayer.ufo:1279
 msgid "Team preference:"
 msgstr "Налаштування команди:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1253
+#: ../base/ufos/ui/multiplayer.ufo:1295
 msgid "Next free team"
 msgstr "Наступна вільна команда"
 
-#: ../base/ufos/ui/multiplayer.ufo:1266
+#: ../base/ufos/ui/multiplayer.ufo:1308
 msgid "Previous free team"
 msgstr "Попередня вільна команда"
 
-#: ../base/ufos/ui/multiplayer.ufo:1278 ../base/ufos/ui/multiplayer.ufo:1287
+#: ../base/ufos/ui/multiplayer.ufo:1320 ../base/ufos/ui/multiplayer.ufo:1329
 msgid "Finish the teamselection and start the game"
 msgstr "Завершити вибір команди і розпочати гру"
 
-#: ../base/ufos/ui/multiplayer.ufo:1286
+#: ../base/ufos/ui/multiplayer.ufo:1328
 msgid "Are you ready?"
 msgstr "Ви готові?"
 
-#: ../base/ufos/ui/multiplayer.ufo:1303
+#: ../base/ufos/ui/multiplayer.ufo:1345
 msgid "Admin control"
 msgstr "Налаштування адміністратора"
 
-#: ../base/ufos/ui/multiplayer.ufo:1359
+#: ../base/ufos/ui/multiplayer.ufo:1401
 msgid "Round time limit:"
 msgstr "Ліміт тривалості ходу:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1384
+#: ../base/ufos/ui/multiplayer.ufo:1426
 msgid "Force start"
 msgstr "Примусовий старт"
 
-#: ../base/ufos/ui/multiplayer.ufo:1385
+#: ../base/ufos/ui/multiplayer.ufo:1427
 msgid "Launch the game before all teams are ready"
 msgstr "Старт гри, навіть якщо не всі команди приєднались"
 
-#: ../base/ufos/ui/multiplayer.ufo:1403
+#: ../base/ufos/ui/multiplayer.ufo:1445
 msgid "Remote Admin Control"
 msgstr "Налаштування дистанційного адміністратора"
 
-#: ../base/ufos/ui/multiplayer.ufo:1509
+#: ../base/ufos/ui/multiplayer.ufo:1551
 msgid "Server Info"
 msgstr "Інформація про сервер"
 
-#: ../base/ufos/ui/multiplayer.ufo:1576
+#: ../base/ufos/ui/multiplayer.ufo:1618
 msgid "Map screenshots"
 msgstr "Зображення карти"
 
-#: ../base/ufos/ui/multiplayer.ufo:1650
+#: ../base/ufos/ui/multiplayer.ufo:1692
 msgid "Userlist"
 msgstr "Користувачі"
 
-#: ../base/ufos/ui/multiplayer.ufo:1668 ../base/ufos/ui/options.ufo:210
-#: ../base/ufos/ui/web.ufo:12
+#: ../base/ufos/ui/multiplayer.ufo:1710 ../base/ufos/ui/options.ufo:210
+#: ../base/ufos/ui/web.ufo:29
 msgid "Name"
 msgstr "Ім'я"
 
-#: ../base/ufos/ui/multiplayer.ufo:1678
+#: ../base/ufos/ui/multiplayer.ufo:1720
 #: ../base/ufos/ui/popup_baseattack.ufo:279
 msgid "Team"
 msgstr "Команда"
 
-#: ../base/ufos/ui/multiplayer.ufo:1712
+#: ../base/ufos/ui/multiplayer.ufo:1754
 msgid "Bookmark"
 msgstr "Вибране"
 
-#: ../base/ufos/ui/multiplayer.ufo:1713
+#: ../base/ufos/ui/multiplayer.ufo:1755
 msgid "Add server to bookmarks"
 msgstr "Додати сервер до закладок"
 
-#: ../base/ufos/ui/multiplayer.ufo:1723
+#: ../base/ufos/ui/multiplayer.ufo:1765
 msgid "Leave Serverbrowser"
 msgstr "Припинити огляд серверів"
 
-#: ../base/ufos/ui/multiplayer.ufo:1751
+#: ../base/ufos/ui/multiplayer.ufo:1793
 msgid "Enter server password"
 msgstr "Введіть пароль серверу"
 
-#: ../base/ufos/ui/multiplayer.ufo:1759
+#: ../base/ufos/ui/multiplayer.ufo:1801
 msgid "Password:"
 msgstr "Пароль:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1797
+#: ../base/ufos/ui/multiplayer.ufo:1816 ../base/ufos/ui/sys_popup.ufo:51
+#: ../base/ufos/ui/sys_popup.ufo:114
+msgid "OK"
+msgstr "OK"
+
+#: ../base/ufos/ui/multiplayer.ufo:1839
 msgid "Game invitation"
 msgstr "Запрошення до гри"
 
-#: ../base/ufos/ui/multiplayer.ufo:1812
+#: ../base/ufos/ui/multiplayer.ufo:1854
 msgid "Server info"
 msgstr "Інформація про сервер"
 
-#: ../base/ufos/ui/multiplayer.ufo:1813
+#: ../base/ufos/ui/multiplayer.ufo:1855
 msgid "Show server information"
 msgstr "Показати інформацію про сервер"
 
-#: ../base/ufos/ui/multiplayer.ufo:1826
+#: ../base/ufos/ui/multiplayer.ufo:1868
 msgid "Go into the lobby"
 msgstr "Перейти в лоббі"
 
-#: ../base/ufos/ui/multiplayer.ufo:1835
+#: ../base/ufos/ui/multiplayer.ufo:1877
 msgid ""
 "You received a invitation to take part of a multiplayer game. Hit the "
 "connect button to connect to the server"
@@ -28003,7 +27947,7 @@ msgstr "Фільтрування текстур"
 #: ../base/ufos/ui/options.ufo:2264
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:214
 #: client/cgame/campaign/cp_basedefence_callbacks.cpp:617
-#: client/cgame/campaign/cp_ufopedia.cpp:206 client/input/cl_joystick.cpp:280
+#: client/cgame/campaign/cp_ufopedia.cpp:208 client/input/cl_joystick.cpp:280
 msgid "None"
 msgstr "Немає"
 
@@ -28135,131 +28079,75 @@ msgstr "Сформуйте команду захисту"
 msgid "Assemble a team first"
 msgstr "Насамперед збережіть команду"
 
-#: ../base/ufos/ui/popup_capacity.ufo:10
+#: ../base/ufos/ui/popup_capacity.ufo:18
 msgid "Capacity Exceeded"
 msgstr "Вміст перевищено"
 
-#: ../base/ufos/ui/popup_capacity.ufo:14
+#: ../base/ufos/ui/popup_capacity.ufo:25
 msgid ""
 "There is no more room for goods/personel at this base. Free up some space."
 msgstr ""
 "Більше немає місця для товарів чи персоналу на цій базі. Звільніть трохи "
 "місця."
 
-#: ../base/ufos/ui/popup_capacity.ufo:37
-#: client/cgame/campaign/cp_base_callbacks.cpp:838
+#: ../base/ufos/ui/popup_capacity.ufo:56
 msgid "Capacity"
 msgstr "Вміст"
 
-#: ../base/ufos/ui/popup_capacity.ufo:44
-#: ../base/ufos/ui/popup_installations.ufo:291
-#: ../base/ufos/ui/popup_installations.ufo:892 ../base/ufos/ui/transfer.ufo:373
+#: ../base/ufos/ui/popup_capacity.ufo:66 ../base/ufos/ui/transfer.ufo:521
+#: ../base/ufos/ui/ufoyard.ufo:77 ../base/ufos/ui/ufoyard.ufo:678
 msgid "free"
 msgstr "вільно"
 
-#: ../base/ufos/ui/popup_capacity.ufo:51
+#: ../base/ufos/ui/popup_capacity.ufo:76
 msgid "all"
 msgstr "весь"
 
-#: ../base/ufos/ui/popup_capacity.ufo:85
+#: ../base/ufos/ui/popup_capacity.ufo:124
 msgid "Go to base"
 msgstr "Перейти до бази"
 
-#: ../base/ufos/ui/popup_exitcampaign.ufo:25
+#: ../base/ufos/ui/popup_exitcampaign.ufo:24
 msgid "EXIT CAMPAIGN CONFIRMATION"
 msgstr "ПІДТВЕРДЖЕННЯ ВИХОДУ З КАМПАНІЇ"
 
-#: ../base/ufos/ui/popup_exitcampaign.ufo:33
+#: ../base/ufos/ui/popup_exitcampaign.ufo:32
 msgid "You will lose all your campaign progress."
 msgstr "Ви втратите все, чого досягли в цій кампанії."
 
-#: ../base/ufos/ui/popup_exitcampaign.ufo:53
+#: ../base/ufos/ui/popup_exitcampaign.ufo:52
 msgid "QUIT"
 msgstr "ВИЙТИ"
 
-#: ../base/ufos/ui/popup_installations.ufo:60
+#: ../base/ufos/ui/popup_installations.ufo:80
 msgid "New installation"
 msgstr "Нова споруда"
 
-#: ../base/ufos/ui/popup_installations.ufo:65
+#: ../base/ufos/ui/popup_installations.ufo:87
 msgid "Type"
 msgstr "Тип"
 
-#: ../base/ufos/ui/popup_installations.ufo:72
+#: ../base/ufos/ui/popup_installations.ufo:96
 msgid "Build Time"
 msgstr "Тривалість"
 
-#: ../base/ufos/ui/popup_installations.ufo:80
+#: ../base/ufos/ui/popup_installations.ufo:106
 msgid "Cost"
 msgstr "Вартість"
 
-#: ../base/ufos/ui/popup_installations.ufo:154
+#: ../base/ufos/ui/popup_installations.ufo:225
 msgid "New base"
 msgstr "Нова база"
 
-#: ../base/ufos/ui/popup_installations.ufo:197
+#: ../base/ufos/ui/popup_installations.ufo:282
 msgid "Build the base"
 msgstr "Заснувати базу"
 
-#: ../base/ufos/ui/popup_installations.ufo:358
-msgid "UFO Yards"
-msgstr "Майданчики НЛО"
-
-#: ../base/ufos/ui/popup_installations.ufo:505
-msgid "Rename Installation"
-msgstr "Перейменувати споруду"
-
-#: ../base/ufos/ui/popup_installations.ufo:516
-#: ../base/ufos/ui/popup_installations.ufo:630
-msgid "Location:"
-msgstr "Розташування:"
-
-#: ../base/ufos/ui/popup_installations.ufo:542
-msgid "Capacity:"
-msgstr "Вміст:"
-
-#: ../base/ufos/ui/popup_installations.ufo:554
-msgid "Free Space:"
-msgstr "Вільне місце:"
-
-#: ../base/ufos/ui/popup_installations.ufo:566
-#: ../base/ufos/ui/popup_installations.ufo:666
-msgid "Confirm destroying"
-msgstr "Підтвердження ліквідації"
-
-#: ../base/ufos/ui/popup_installations.ufo:606
-msgid "Condition:"
-msgstr "Стан:"
-
-#: ../base/ufos/ui/popup_installations.ufo:655
-msgid "Transfer UFO"
-msgstr "Транспортувати НЛО"
-
-#: ../base/ufos/ui/popup_installations.ufo:673
-msgid "Destroy UFO"
-msgstr "Знищити НЛО"
-
-#: ../base/ufos/ui/popup_installations.ufo:837
-msgid "disassembling"
-msgstr "демонтаж"
-
-#: ../base/ufos/ui/popup_installations.ufo:843
-msgid "transferring"
-msgstr "транспортування"
-
-#: ../base/ufos/ui/popup_installations.ufo:849
-msgid "stored"
-msgstr "збережено"
-
-#: ../base/ufos/ui/popup_installations.ufo:855
-msgid "unknown"
-msgstr "невідомо"
-
-#: ../base/ufos/ui/popup_quickload.ufo:23
+#: ../base/ufos/ui/popup_quickload.ufo:22
 msgid "Reload campaign"
 msgstr "Перезапуск кампанії"
 
-#: ../base/ufos/ui/popup_quickload.ufo:32
+#: ../base/ufos/ui/popup_quickload.ufo:31
 msgid ""
 "Are you sure that you really want to reload the last automatically saved "
 "campaign state?"
@@ -28267,9 +28155,21 @@ msgstr ""
 "Ви впевнені, що хочете перезавантажити останній автоматично збережений стан "
 "кампанії?"
 
-#: ../base/ufos/ui/popup_quickload.ufo:40
+#: ../base/ufos/ui/popup_quickload.ufo:39
 msgid "Load"
 msgstr "Завантажити"
+
+#: ../base/ufos/ui/popup_transferlist.ufo:17
+msgid "From:"
+msgstr "Від:"
+
+#: ../base/ufos/ui/popup_transferlist.ufo:36
+msgid "To:"
+msgstr "Кому:"
+
+#: ../base/ufos/ui/popup_transferlist.ufo:125
+msgid "Actual transfers"
+msgstr "Актуальні трансфери"
 
 #: ../base/ufos/ui/production.ufo:72
 msgid "Craft items"
@@ -28360,6 +28260,10 @@ msgstr "КАРТА"
 msgid "SQUAD"
 msgstr "ЗАГІН"
 
+#: ../base/ufos/ui/skirmish.ufo:186
+msgid "BEGIN"
+msgstr "ПОЧАТИ"
+
 #: ../base/ufos/ui/stats.ufo:47
 msgid "Costs"
 msgstr "Витрати"
@@ -28381,8 +28285,8 @@ msgstr "Бази"
 msgid "Installations"
 msgstr "Споруди"
 
-#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:144
-#: ../base/ufos/ui/transfer.ufo:253
+#: ../base/ufos/ui/stats.ufo:169 ../base/ufos/ui/transfer.ufo:201
+#: ../base/ufos/ui/transfer.ufo:359
 msgid "Employees"
 msgstr "Персонал"
 
@@ -28470,90 +28374,69 @@ msgstr "Згенерувати команду"
 msgid "Generate a new team with the selected race"
 msgstr "Згенерувати нову команду з вибраної раси"
 
-#: ../base/ufos/ui/transfer.ufo:34
+#: ../base/ufos/ui/transfer.ufo:49
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 msgstr ""
 "Додати/Видалити предмет для передачі, натисніть SHIFT для швидкого "
 "збільшення."
 
-#: ../base/ufos/ui/transfer.ufo:149 ../base/ufos/ui/transfer.ufo:255
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:145
+#: ../base/ufos/ui/transfer.ufo:208 ../base/ufos/ui/transfer.ufo:361
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:143
 #: client/cgame/campaign/cp_transfer_callbacks.cpp:793
 msgid "Aliens"
 msgstr "Прибульці"
 
-#: ../base/ufos/ui/transfer.ufo:181
+#: ../base/ufos/ui/transfer.ufo:248
 msgid "From"
 msgstr "Від"
 
-#: ../base/ufos/ui/transfer.ufo:188
+#: ../base/ufos/ui/transfer.ufo:258
 msgid "To"
 msgstr "Кому"
 
-#: ../base/ufos/ui/transfer.ufo:282
+#: ../base/ufos/ui/transfer.ufo:380
 msgid "Cargo"
 msgstr "Вантаж"
 
-#: ../base/ufos/ui/transfer.ufo:291
-#: client/cgame/campaign/cp_base_callbacks.cpp:838
+#: ../base/ufos/ui/transfer.ufo:391
 msgid "Amount"
 msgstr "Кількість"
 
-#: ../base/ufos/ui/transfer.ufo:345
+#: ../base/ufos/ui/transfer.ufo:479
 msgid "Destination base"
 msgstr "Цільова база"
 
-#: ../base/ufos/ui/transfer.ufo:365
+#: ../base/ufos/ui/transfer.ufo:510
 msgid "Building"
 msgstr "Споруда"
 
-#: ../base/ufos/ui/transfer.ufo:389
+#: ../base/ufos/ui/transfer.ufo:543
 msgid "all space"
 msgstr "все місце"
 
-#: ../base/ufos/ui/transfer.ufo:418
+#: ../base/ufos/ui/transfer.ufo:595
 msgid "Capacity overload"
 msgstr "Перевищення вмісту"
 
-#: ../base/ufos/ui/transfer.ufo:437 ../base/ufos/ui/transfer.ufo:464
+#: ../base/ufos/ui/transfer.ufo:630 ../base/ufos/ui/transfer.ufo:659
 msgid "Start the transfer"
 msgstr "Розпочати транспортування"
 
-#: ../base/ufos/ui/transfer.ufo:451
+#: ../base/ufos/ui/transfer.ufo:642
 msgid "List"
 msgstr "Перелік"
 
-#: ../base/ufos/ui/transfer.ufo:452
+#: ../base/ufos/ui/transfer.ufo:643
 msgid "List active transfers"
 msgstr "Перелік активних трансферів"
 
-#: ../base/ufos/ui/transfer.ufo:478
+#: ../base/ufos/ui/transfer.ufo:676
 msgid "Clear"
 msgstr "Очистити"
 
-#: ../base/ufos/ui/transfer.ufo:479
+#: ../base/ufos/ui/transfer.ufo:677
 msgid "Clear cargo"
 msgstr "Позбутися вантажу"
-
-#: ../base/ufos/ui/transfer.ufo:523
-msgid "Select base to transfer to"
-msgstr "Вибрати цільову базу для транспортування"
-
-#: ../base/ufos/ui/transfer.ufo:528
-msgid "Choose a base to host alien bodies:"
-msgstr "Виберіть базу для розміщення мертвих прибульців:"
-
-#: ../base/ufos/ui/transfer.ufo:573
-msgid "From:"
-msgstr "Від:"
-
-#: ../base/ufos/ui/transfer.ufo:587
-msgid "To:"
-msgstr "Кому:"
-
-#: ../base/ufos/ui/transfer.ufo:666
-msgid "Actual transfers"
-msgstr "Актуальні трансфери"
 
 #: ../base/ufos/ui/ufopedia.ufo:95
 msgid "Pre-Research Report"
@@ -28587,11 +28470,63 @@ msgstr "Попередній режим вогню"
 msgid "Next firemode"
 msgstr "Наступний режим вогню"
 
-#: ../base/ufos/ui/web.ufo:8 ../base/ufos/ui/web.ufo:46
+#: ../base/ufos/ui/ufoyard.ufo:144
+msgid "UFO Yards"
+msgstr "Майданчики НЛО"
+
+#: ../base/ufos/ui/ufoyard.ufo:291
+msgid "Rename Installation"
+msgstr "Перейменувати споруду"
+
+#: ../base/ufos/ui/ufoyard.ufo:302 ../base/ufos/ui/ufoyard.ufo:416
+msgid "Location:"
+msgstr "Розташування:"
+
+#: ../base/ufos/ui/ufoyard.ufo:328
+msgid "Capacity:"
+msgstr "Вміст:"
+
+#: ../base/ufos/ui/ufoyard.ufo:340
+msgid "Free Space:"
+msgstr "Вільне місце:"
+
+#: ../base/ufos/ui/ufoyard.ufo:352 ../base/ufos/ui/ufoyard.ufo:452
+msgid "Confirm destroying"
+msgstr "Підтвердження ліквідації"
+
+#: ../base/ufos/ui/ufoyard.ufo:392
+msgid "Condition:"
+msgstr "Стан:"
+
+#: ../base/ufos/ui/ufoyard.ufo:441
+msgid "Transfer UFO"
+msgstr "Транспортувати НЛО"
+
+#: ../base/ufos/ui/ufoyard.ufo:459
+msgid "Destroy UFO"
+msgstr "Знищити НЛО"
+
+#: ../base/ufos/ui/ufoyard.ufo:623
+msgid "disassembling"
+msgstr "демонтаж"
+
+#: ../base/ufos/ui/ufoyard.ufo:629
+msgid "transferring"
+msgstr "транспортування"
+
+#: ../base/ufos/ui/ufoyard.ufo:635
+msgid "stored"
+msgstr "збережено"
+
+#: ../base/ufos/ui/ufoyard.ufo:641
+msgid "unknown"
+msgstr "невідомо"
+
+#: ../base/ufos/ui/web.ufo:22 ../base/ufos/ui/web.ufo:66
 msgid "Login"
 msgstr "Логін"
 
-#: ../base/ufos/ui/web.ufo:26
+#: ../base/ufos/ui/web.ufo:47
 msgid "Password"
 msgstr "Пароль"
 
@@ -29623,6 +29558,36 @@ msgstr "Бійця реанімовано."
 msgid "A member of team %i was revitalised."
 msgstr "Члена команди %i реанімовано."
 
+# чи офігів )))
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:74
+#, fuzzy, c-format
+msgid ""
+"%s is dazed!\n"
+"Enemy used flashbang!"
+msgstr ""
+"Боєць дезорієнтований!\n"
+"Ворог застосував світло-шумову гранату!"
+
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:77
+#, c-format
+msgid "%s panics!"
+msgstr "%s панікує!"
+
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:81
+#, c-format
+msgid "%s is consumed by mad rage!"
+msgstr "%s розлючений до божевілля!"
+
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:83
+#, c-format
+msgid "%s is on a rampage!"
+msgstr "%s буянить!"
+
+#: client/battlescape/events/event/actor/e_event_actorstatechange.cpp:88
+#, c-format
+msgid "%s is currently shaken."
+msgstr "%s тремтить від страху."
+
 #: client/battlescape/events/event/actor/e_event_actorwound.cpp:60
 #, c-format
 msgid "%s has been wounded"
@@ -29689,19 +29654,19 @@ msgstr "Перехоплювач"
 msgid "Transporter"
 msgstr "Транспорт"
 
-#: client/cgame/campaign/cp_aircraft.cpp:722
+#: client/cgame/campaign/cp_aircraft.cpp:728
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr "Нове авіасудно %s готове на базі %s"
 
-#: client/cgame/campaign/cp_aircraft.cpp:723
-#: client/cgame/campaign/cp_aircraft.cpp:1063
-#: client/cgame/campaign/cp_aircraft.cpp:1104
-#: client/cgame/campaign/cp_aircraft.cpp:1120
-#: client/cgame/campaign/cp_aircraft.cpp:1161
-#: client/cgame/campaign/cp_aircraft.cpp:1217
-#: client/cgame/campaign/cp_aircraft.cpp:1240
-#: client/cgame/campaign/cp_aircraft.cpp:1994
+#: client/cgame/campaign/cp_aircraft.cpp:729
+#: client/cgame/campaign/cp_aircraft.cpp:1064
+#: client/cgame/campaign/cp_aircraft.cpp:1105
+#: client/cgame/campaign/cp_aircraft.cpp:1121
+#: client/cgame/campaign/cp_aircraft.cpp:1162
+#: client/cgame/campaign/cp_aircraft.cpp:1218
+#: client/cgame/campaign/cp_aircraft.cpp:1241
+#: client/cgame/campaign/cp_aircraft.cpp:1995
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:93
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:101
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:109
@@ -29713,23 +29678,23 @@ msgstr "Нове авіасудно %s готове на базі %s"
 #: client/cgame/campaign/cp_auto_mission.cpp:744
 #: client/cgame/campaign/cp_auto_mission.cpp:747
 #: client/cgame/campaign/cp_auto_mission.cpp:800
-#: client/cgame/campaign/cp_base.cpp:1342
-#: client/cgame/campaign/cp_base.cpp:1392
-#: client/cgame/campaign/cp_base.cpp:2280
+#: client/cgame/campaign/cp_base.cpp:1353
+#: client/cgame/campaign/cp_base.cpp:1403
+#: client/cgame/campaign/cp_base.cpp:2291
 #: client/cgame/campaign/cp_base_callbacks.cpp:70
 #: client/cgame/campaign/cp_base_callbacks.cpp:201
 #: client/cgame/campaign/cp_base_callbacks.cpp:248
-#: client/cgame/campaign/cp_base_callbacks.cpp:575
-#: client/cgame/campaign/cp_base_callbacks.cpp:590
-#: client/cgame/campaign/cp_base_callbacks.cpp:745
-#: client/cgame/campaign/cp_base_callbacks.cpp:751
-#: client/cgame/campaign/cp_base_callbacks.cpp:771
-#: client/cgame/campaign/cp_base_callbacks.cpp:781
-#: client/cgame/campaign/cp_base_callbacks.cpp:791
-#: client/cgame/campaign/cp_base_callbacks.cpp:797
-#: client/cgame/campaign/cp_base_callbacks.cpp:804
-#: client/cgame/campaign/cp_base_callbacks.cpp:808
-#: client/cgame/campaign/cp_base_callbacks.cpp:813
+#: client/cgame/campaign/cp_base_callbacks.cpp:577
+#: client/cgame/campaign/cp_base_callbacks.cpp:592
+#: client/cgame/campaign/cp_base_callbacks.cpp:747
+#: client/cgame/campaign/cp_base_callbacks.cpp:753
+#: client/cgame/campaign/cp_base_callbacks.cpp:773
+#: client/cgame/campaign/cp_base_callbacks.cpp:783
+#: client/cgame/campaign/cp_base_callbacks.cpp:793
+#: client/cgame/campaign/cp_base_callbacks.cpp:799
+#: client/cgame/campaign/cp_base_callbacks.cpp:806
+#: client/cgame/campaign/cp_base_callbacks.cpp:810
+#: client/cgame/campaign/cp_base_callbacks.cpp:815
 #: client/cgame/campaign/cp_installation_callbacks.cpp:128
 #: client/cgame/campaign/cp_mapfightequip.cpp:344
 #: client/cgame/campaign/cp_mapfightequip.cpp:363
@@ -29740,12 +29705,12 @@ msgstr "Нове авіасудно %s готове на базі %s"
 #: client/cgame/campaign/cp_mission_callbacks.cpp:63
 #: client/cgame/campaign/cp_missions.cpp:738
 #: client/cgame/campaign/cp_missions.cpp:1080
-#: client/cgame/campaign/cp_nation.cpp:799
-#: client/cgame/campaign/cp_nation.cpp:819
-#: client/cgame/campaign/cp_nation.cpp:832
-#: client/cgame/campaign/cp_nation.cpp:841
-#: client/cgame/campaign/cp_nation.cpp:847
-#: client/cgame/campaign/cp_nation.cpp:855
+#: client/cgame/campaign/cp_nation.cpp:795
+#: client/cgame/campaign/cp_nation.cpp:815
+#: client/cgame/campaign/cp_nation.cpp:828
+#: client/cgame/campaign/cp_nation.cpp:837
+#: client/cgame/campaign/cp_nation.cpp:843
+#: client/cgame/campaign/cp_nation.cpp:851
 #: client/cgame/campaign/cp_popup.cpp:480
 #: client/cgame/campaign/cp_produce.cpp:403
 #: client/cgame/campaign/cp_ufo.cpp:495 client/cgame/campaign/cp_ufo.cpp:943
@@ -29755,55 +29720,55 @@ msgstr "Нове авіасудно %s готове на базі %s"
 msgid "Notice"
 msgstr "Сповіщення"
 
-#: client/cgame/campaign/cp_aircraft.cpp:793
+#: client/cgame/campaign/cp_aircraft.cpp:799
 msgid "No operational hangars at that base."
 msgstr "На цій базі немає працездатних ангарів."
 
-#: client/cgame/campaign/cp_aircraft.cpp:797
+#: client/cgame/campaign/cp_aircraft.cpp:803
 msgid "No free hangars at that base."
 msgstr "На цій базі немає вільних ангарів."
 
-#: client/cgame/campaign/cp_aircraft.cpp:800
+#: client/cgame/campaign/cp_aircraft.cpp:806
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Недостатньо вільних місць в казармах на цій базі."
 
-#: client/cgame/campaign/cp_aircraft.cpp:803
+#: client/cgame/campaign/cp_aircraft.cpp:809
 msgid "Insufficient storage space at that base."
 msgstr "Недостатньо вільного місця на складах цієї бази."
 
-#: client/cgame/campaign/cp_aircraft.cpp:807
+#: client/cgame/campaign/cp_aircraft.cpp:813
 msgid "That base is beyond this aircraft's range."
 msgstr "Ця база поза межами дальності польоту даного авіасудна."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1062
+#: client/cgame/campaign/cp_aircraft.cpp:1063
 #, c-format
 msgid "Craft %s has returned to %s."
 msgstr "Судно %s повернулося до бази %s."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1103
+#: client/cgame/campaign/cp_aircraft.cpp:1104
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr "Судно %s неможливо повністю заправити на базі %s. Немає антиматерії."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1119
+#: client/cgame/campaign/cp_aircraft.cpp:1120
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "Судно %s на базі %s дозаправлено."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1161
+#: client/cgame/campaign/cp_aircraft.cpp:1162
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "У судна %s закінчується пальне, потрібно повернутись на базу."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1217
+#: client/cgame/campaign/cp_aircraft.cpp:1218
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Спочатку призначте хоча б одного бійця до цього авіатранспорту."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1240
+#: client/cgame/campaign/cp_aircraft.cpp:1241
 msgid "Insufficient fuel."
 msgstr "Недостатньо пального."
 
-#: client/cgame/campaign/cp_aircraft.cpp:1994
+#: client/cgame/campaign/cp_aircraft.cpp:1995
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr ""
@@ -29849,7 +29814,7 @@ msgid "Fuel:\t%i/%i\n"
 msgstr "Пальне:\t%i/%i\n"
 
 #: client/cgame/campaign/cp_aircraft_callbacks.cpp:192
-#: client/cgame/campaign/cp_ufopedia.cpp:342
+#: client/cgame/campaign/cp_ufopedia.cpp:348
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "Дальність польоту:\t%i км\n"
@@ -29941,46 +29906,46 @@ msgstr "Ви програли бій"
 msgid "Collected alien bodies"
 msgstr "Зібрано тіла прибульців"
 
-#: client/cgame/campaign/cp_base.cpp:998
+#: client/cgame/campaign/cp_base.cpp:1009
 msgid "Not set"
 msgstr "Не вказано"
 
-#: client/cgame/campaign/cp_base.cpp:1004
+#: client/cgame/campaign/cp_base.cpp:1015
 #, c-format
 msgid "Already %i in base"
 msgstr "%i вже існує на цій базі"
 
-#: client/cgame/campaign/cp_base.cpp:1011
+#: client/cgame/campaign/cp_base.cpp:1022
 msgid "Construction finished"
 msgstr "Спорудження завершено"
 
-#: client/cgame/campaign/cp_base.cpp:1015
+#: client/cgame/campaign/cp_base.cpp:1026
 msgid "Working 100%"
 msgstr "Функціонує на 100%"
 
-#: client/cgame/campaign/cp_base.cpp:1019
+#: client/cgame/campaign/cp_base.cpp:1030
 #, c-format
 msgid "Not operational, depends on %s"
 msgstr "Непрацездатний, залежить від %s"
 
-#: client/cgame/campaign/cp_base.cpp:1023
+#: client/cgame/campaign/cp_base.cpp:1034
 msgid "Down"
 msgstr "Від'єднано"
 
-#: client/cgame/campaign/cp_base.cpp:1342
+#: client/cgame/campaign/cp_base.cpp:1353
 msgid "Not enough credits to build this\n"
 msgstr "Недостатньо коштів, щоб збудувати це\n"
 
-#: client/cgame/campaign/cp_base.cpp:1392
+#: client/cgame/campaign/cp_base.cpp:1403
 msgid "You must build next to existing buildings."
 msgstr "Будувати необхідно поряд з існуючими будівлями."
 
-#: client/cgame/campaign/cp_base.cpp:1446
+#: client/cgame/campaign/cp_base.cpp:1457
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Вартість:\t%i кр\n"
 
-#: client/cgame/campaign/cp_base.cpp:1449
+#: client/cgame/campaign/cp_base.cpp:1460
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
@@ -29988,19 +29953,19 @@ msgstr[0] "%i доба для побудови\n"
 msgstr[1] "%i доби для побудови\n"
 msgstr[2] "%i діб для побудови\n"
 
-#: client/cgame/campaign/cp_base.cpp:1452
-#: client/cgame/campaign/cp_ufopedia.cpp:209
+#: client/cgame/campaign/cp_base.cpp:1463
+#: client/cgame/campaign/cp_ufopedia.cpp:211
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Обслуговування:\t%i кр\n"
 
-#: client/cgame/campaign/cp_base.cpp:1455
-#: client/cgame/campaign/cp_ufopedia.cpp:206
+#: client/cgame/campaign/cp_base.cpp:1466
+#: client/cgame/campaign/cp_ufopedia.cpp:208
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Потреби:\t%s\n"
 
-#: client/cgame/campaign/cp_base.cpp:2053
+#: client/cgame/campaign/cp_base.cpp:2064
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an "
 "aircraft\n"
@@ -30008,40 +29973,41 @@ msgstr ""
 "На цій базі нема авіації. Спочатку ви повинні купити авіасудно чи "
 "переправити його з іншої бази\n"
 
-#: client/cgame/campaign/cp_base.cpp:2053
-#: client/cgame/campaign/cp_base.cpp:2055
+#: client/cgame/campaign/cp_base.cpp:2064
+#: client/cgame/campaign/cp_base.cpp:2066
 #: client/cgame/campaign/cp_market_callbacks.cpp:170
 #: client/cgame/campaign/cp_market_callbacks.cpp:175
 #: client/cgame/campaign/cp_market_callbacks.cpp:180
-#: client/cgame/campaign/cp_save.cpp:384 client/cgame/campaign/cp_save.cpp:386
+#: client/cgame/campaign/cp_save_callbacks.cpp:152
+#: client/cgame/campaign/cp_save_callbacks.cpp:154
 #: client/cgame/cl_game_team.cpp:304 client/cgame/cl_game_team.cpp:314
 #: client/cgame/cl_game_team.cpp:319
 msgid "Note"
 msgstr "Примітка"
 
-#: client/cgame/campaign/cp_base.cpp:2055
+#: client/cgame/campaign/cp_base.cpp:2066
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "На цій базі нема авіації. Спочатку ви повинні купити авіасудно\n"
 
-#: client/cgame/campaign/cp_base.cpp:2065
+#: client/cgame/campaign/cp_base.cpp:2076
 msgid "Antimatter (current/max):"
 msgstr "К-сть антиматерії (у наявності/макс):"
 
-#: client/cgame/campaign/cp_base.cpp:2231
+#: client/cgame/campaign/cp_base.cpp:2242
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Завершено спорудження модуля %s на базі %s."
 
-#: client/cgame/campaign/cp_base.cpp:2232
+#: client/cgame/campaign/cp_base.cpp:2243
 msgid "Building finished"
 msgstr "Будівництво завершене"
 
-#: client/cgame/campaign/cp_base.cpp:2278
+#: client/cgame/campaign/cp_base.cpp:2289
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "За продаж %s отримано %i кр."
 
-#: client/cgame/campaign/cp_base.cpp:2279
+#: client/cgame/campaign/cp_base.cpp:2290
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -30157,31 +30123,31 @@ msgstr "Лікування поранених бійців та вживленн
 msgid "No Hospital operating at this in base."
 msgstr "На цій базі немає працездатних ангарів."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:575
+#: client/cgame/campaign/cp_base_callbacks.cpp:577
 msgid "Base is under attack, you can't destroy buildings!"
 msgstr "Базу атаковано, ви не можете демонтувати споруди!"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:585
+#: client/cgame/campaign/cp_base_callbacks.cpp:587
 msgid "Destroy Entrance"
 msgstr "Ліквідувати Вхід"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:585
+#: client/cgame/campaign/cp_base_callbacks.cpp:587
 msgid "You can't destroy the entrance of the base!"
 msgstr "Ви не можете знищити вхід на базу!"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:590
+#: client/cgame/campaign/cp_base_callbacks.cpp:592
 msgid ""
 "You can't destroy this building! It is the only connection to other "
 "buildings!"
 msgstr ""
 "Ви не можете зруйнувати цю будівлю! Це єдиний зв'язок з іншими будівлями!"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:599
+#: client/cgame/campaign/cp_base_callbacks.cpp:601
 #, fuzzy
 msgid "Destroy Alien Containment"
 msgstr "Ізолятор для прибульців"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:599
+#: client/cgame/campaign/cp_base_callbacks.cpp:601
 #, fuzzy
 msgid ""
 "If you destroy this building, you will also kill the aliens inside.\n"
@@ -30191,35 +30157,35 @@ msgstr ""
 "ньому.\n"
 "Ви впевнені, що хочете це зробити?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:600
+#: client/cgame/campaign/cp_base_callbacks.cpp:602
 msgid "Containment"
 msgstr "Ізолятор"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:600
+#: client/cgame/campaign/cp_base_callbacks.cpp:602
 #, fuzzy
 msgid "Go to the Alien Containment without destroying building"
 msgstr "Перейти в відділ кадрів замість демонтажу споруди"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:601
-#: client/cgame/campaign/cp_base_callbacks.cpp:612
-#: client/cgame/campaign/cp_base_callbacks.cpp:622
-#: client/cgame/campaign/cp_base_callbacks.cpp:632
-#: client/cgame/campaign/cp_base_callbacks.cpp:645
-msgid "Destroy the building"
-msgstr "Ліквідувати цю споруду"
 
 #: client/cgame/campaign/cp_base_callbacks.cpp:603
 #: client/cgame/campaign/cp_base_callbacks.cpp:614
 #: client/cgame/campaign/cp_base_callbacks.cpp:624
 #: client/cgame/campaign/cp_base_callbacks.cpp:634
+#: client/cgame/campaign/cp_base_callbacks.cpp:647
+msgid "Destroy the building"
+msgstr "Ліквідувати цю споруду"
+
+#: client/cgame/campaign/cp_base_callbacks.cpp:605
+#: client/cgame/campaign/cp_base_callbacks.cpp:616
+#: client/cgame/campaign/cp_base_callbacks.cpp:626
+#: client/cgame/campaign/cp_base_callbacks.cpp:636
 msgid "Go to transfer menu without destroying the building"
 msgstr "Перейти в меню переведення замість знищення споруди"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:610
+#: client/cgame/campaign/cp_base_callbacks.cpp:612
 msgid "Destroy Hangar"
 msgstr "Демонтувати Ангар"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:610
+#: client/cgame/campaign/cp_base_callbacks.cpp:612
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
@@ -30228,19 +30194,19 @@ msgstr ""
 "ньому.\n"
 "Ви впевнені, що хочете це зробити?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:611
+#: client/cgame/campaign/cp_base_callbacks.cpp:613
 msgid "Go to hangar"
 msgstr "Перейти в ангар"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:611
+#: client/cgame/campaign/cp_base_callbacks.cpp:613
 msgid "Go to hangar without destroying building"
 msgstr "Перейти в ангар, не демонтуючи споруду"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:620
+#: client/cgame/campaign/cp_base_callbacks.cpp:622
 msgid "Destroy Quarter"
 msgstr "Демонтувати Казарми"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:620
+#: client/cgame/campaign/cp_base_callbacks.cpp:622
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
@@ -30249,19 +30215,19 @@ msgstr ""
 "звільнено.\n"
 "Ви впевнені, що хочете це зробити?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:621
+#: client/cgame/campaign/cp_base_callbacks.cpp:623
 msgid "Dismiss"
 msgstr "Звільнити"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:621
+#: client/cgame/campaign/cp_base_callbacks.cpp:623
 msgid "Go to hiring menu without destroying building"
 msgstr "Перейти в відділ кадрів замість демонтажу споруди"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:630
+#: client/cgame/campaign/cp_base_callbacks.cpp:632
 msgid "Destroy Storage"
 msgstr "Демонтувати Склад"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:630
+#: client/cgame/campaign/cp_base_callbacks.cpp:632
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
@@ -30269,31 +30235,31 @@ msgstr ""
 "Якщо ви демонтуєте цей склад, то весь його вміст буде втрачено.\n"
 "Ви впевнені, що хочете демонтувати цю споруду?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:631
+#: client/cgame/campaign/cp_base_callbacks.cpp:633
 msgid "Go to buy/sell menu without destroying building"
 msgstr "Перейти до меню купівлі/продажу без демонтажу"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:631
+#: client/cgame/campaign/cp_base_callbacks.cpp:633
 msgid "Go to storage"
 msgstr "Перейти до складу"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:643
+#: client/cgame/campaign/cp_base_callbacks.cpp:645
 msgid "Are you sure you want to destroy this building?"
 msgstr "Ви впевнені, що хочете демонтувати цю споруду?"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:643
+#: client/cgame/campaign/cp_base_callbacks.cpp:645
 msgid "Destroy building"
 msgstr "Демонтувати споруду"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:745
+#: client/cgame/campaign/cp_base_callbacks.cpp:747
 msgid "Base is under attack, you can't access this building !"
 msgstr "Базу атаковано, немає доступу до цієї споруди!"
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:751
+#: client/cgame/campaign/cp_base_callbacks.cpp:753
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Вам потрібен ангар для користування авіацією."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:771
+#: client/cgame/campaign/cp_base_callbacks.cpp:773
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -30311,17 +30277,17 @@ msgstr[2] ""
 "Спорудження модуля закінчиться через %i діб.\n"
 "Будь ласка зачекайте."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:781
+#: client/cgame/campaign/cp_base_callbacks.cpp:783
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Потрібно збудувати %s для роботи %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:791
+#: client/cgame/campaign/cp_base_callbacks.cpp:793
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Спорудження %s, необхідне для використання %s, не завершено."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:797
+#: client/cgame/campaign/cp_base_callbacks.cpp:799
 #, c-format
 msgid ""
 "Make sure that the dependencies of building %s (%s) are operational, so that "
@@ -30330,53 +30296,19 @@ msgstr ""
 "Впевніться, що необхідні споруди %s (%s) працездатні, оскільки вони "
 "необхідні для функціювання %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:804
-#: client/cgame/campaign/cp_base_callbacks.cpp:808
+#: client/cgame/campaign/cp_base_callbacks.cpp:806
+#: client/cgame/campaign/cp_base_callbacks.cpp:810
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "Вам необхідно найняти %s для використання споруди %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:813
+#: client/cgame/campaign/cp_base_callbacks.cpp:815
 #, c-format
 msgid "Build a %s first."
 msgstr "Спочатку збудуйте %s."
 
-#: client/cgame/campaign/cp_base_callbacks.cpp:838
-msgid "Buildings"
-msgstr "Споруди"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:858
-msgid "No report"
-msgstr "Нема звіту"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:861
-#: client/cgame/campaign/cp_base_callbacks.cpp:875
-msgid "Percent"
-msgstr "Відсоток"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:861
-msgid "Quantity"
-msgstr "Кількість"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:871
-#: client/cgame/campaign/cp_base_callbacks.cpp:886
-msgid "Nothing"
-msgstr "Нічого"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:891
-msgid "^BAircraft\n"
-msgstr "^BАвіація\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:902
-msgid "^BEmployees\n"
-msgstr "^BПерсонал\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:913
-msgid "^BAliens\n"
-msgstr "^BПрибульці\n"
-
-#: client/cgame/campaign/cp_base_callbacks.cpp:998
-#: client/cgame/campaign/cp_campaign.cpp:558
+#: client/cgame/campaign/cp_base_callbacks.cpp:869
+#: client/cgame/campaign/cp_campaign.cpp:559
 #: client/cgame/campaign/cp_nation.cpp:618
 #, c-format
 msgid "%i c"
@@ -30450,39 +30382,39 @@ msgstr ""
 "робилось, усі народи намагались протистояти прибульцям власними силами, але, "
 "зрештою, потерпіли поразку одні за одними."
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:79
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:80
 msgid "Chicken-hearted"
 msgstr "Дитсадок"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:81
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:82
 msgid "Very Easy"
 msgstr "Дуже легка"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:84
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:85
 msgid "Easy"
 msgstr "Легка"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:86
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:87
 msgid "Normal"
 msgstr "Норма"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:89
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:90
 msgid "Hard"
 msgstr "Важка"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:91
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:92
 msgid "Very Hard"
 msgstr "Дуже важка"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:93
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:94
 msgid "Insane"
 msgstr "Навіжена"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:143
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:141
 msgid "Human"
 msgstr "Люди"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:148
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:146
 #, c-format
 msgid ""
 "%s\n"
@@ -30505,39 +30437,39 @@ msgstr ""
 "Макс. сума заборгованості: %iкр\n"
 "%s\n"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:153
-#: client/cgame/campaign/cp_nation.cpp:795
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:151
+#: client/cgame/campaign/cp_nation.cpp:791
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "боєць"
 msgstr[1] "бійці"
 msgstr[2] "бійців"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:154
-#: client/cgame/campaign/cp_nation.cpp:794
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:152
+#: client/cgame/campaign/cp_nation.cpp:790
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "науковець"
 msgstr[1] "науковці"
 msgstr[2] "науковців"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:155
-#: client/cgame/campaign/cp_nation.cpp:797
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:153
+#: client/cgame/campaign/cp_nation.cpp:793
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "робітник"
 msgstr[1] "робітники"
 msgstr[2] "робітників"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:156
-#: client/cgame/campaign/cp_nation.cpp:796
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:154
+#: client/cgame/campaign/cp_nation.cpp:792
 msgid "pilot"
 msgid_plural "pilots"
 msgstr[0] "пілот"
 msgstr[1] "пілоти"
 msgstr[2] "пілотів"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:428
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:445
 #, c-format
 msgid ""
 "%s\n"
@@ -30546,7 +30478,7 @@ msgstr ""
 "%s\n"
 "непрацездатний, залежить від %s"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:482
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:499
 #, c-format
 msgid "%d day left"
 msgid_plural "%d days left"
@@ -30554,7 +30486,7 @@ msgstr[0] "%d доба залишилась"
 msgstr[1] "%d доби залишилось"
 msgstr[2] "%d діб залишилось"
 
-#: client/cgame/campaign/cp_cgame_callbacks.cpp:619
+#: client/cgame/campaign/cp_cgame_callbacks.cpp:636
 #, c-format
 msgid "Rank: %s"
 msgstr "Звання: %s"
@@ -30607,13 +30539,13 @@ msgstr "Не вдалося найняти працівника"
 
 #: client/cgame/campaign/cp_event.cpp:533
 #: client/cgame/campaign/cp_messages.cpp:314
-#: client/cgame/campaign/cp_save.cpp:280 client/cgame/campaign/cp_save.cpp:303
+#: client/cgame/campaign/cp_save.cpp:316 client/cgame/campaign/cp_save.cpp:339
 #: client/cgame/campaign/cp_time.cpp:117
-#: client/cgame/campaign/cp_ufopedia.cpp:504
-#: client/cgame/campaign/cp_ufopedia.cpp:509
-#: client/cgame/campaign/cp_ufopedia.cpp:1035
-#: client/cgame/campaign/cp_ufopedia.cpp:1046
-#: client/cgame/campaign/cp_ufopedia.cpp:1062
+#: client/cgame/campaign/cp_ufopedia.cpp:522
+#: client/cgame/campaign/cp_ufopedia.cpp:527
+#: client/cgame/campaign/cp_ufopedia.cpp:1053
+#: client/cgame/campaign/cp_ufopedia.cpp:1064
+#: client/cgame/campaign/cp_ufopedia.cpp:1080
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -30656,6 +30588,7 @@ msgstr ""
 
 #: client/cgame/campaign/cp_fightequip_callbacks.cpp:145
 #: client/cgame/campaign/cp_geoscape.cpp:1491
+#: client/cgame/campaign/cp_ufopedia.cpp:154
 msgid "Unknown"
 msgstr "Невідомо"
 
@@ -30949,19 +30882,19 @@ msgstr "%s демонтовано з об'єкту %s."
 msgid "%s was successfully removed from %s."
 msgstr "%s успішно знято з %s."
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1287
+#: client/cgame/campaign/cp_mapfightequip.cpp:1288
 msgid "Light weight"
 msgstr "Мала вага"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1290
+#: client/cgame/campaign/cp_mapfightequip.cpp:1291
 msgid "Medium weight"
 msgstr "Середня вага"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1293
+#: client/cgame/campaign/cp_mapfightequip.cpp:1294
 msgid "Heavy weight"
 msgstr "Велика вага"
 
-#: client/cgame/campaign/cp_mapfightequip.cpp:1296
+#: client/cgame/campaign/cp_mapfightequip.cpp:1297
 msgid "Unknown weight"
 msgstr "Вага невідома"
 
@@ -31336,39 +31269,39 @@ msgstr ""
 msgid "Nation changed happiness"
 msgstr "Держава змінила своє ставлення"
 
-#: client/cgame/campaign/cp_nation.cpp:792
+#: client/cgame/campaign/cp_nation.cpp:788
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Отримано %i %s, %i %s, %i %s, %i %s, та %i %s від уряду %s (%s)"
 
-#: client/cgame/campaign/cp_nation.cpp:793
+#: client/cgame/campaign/cp_nation.cpp:789
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "кредит"
 msgstr[1] "кредити"
 msgstr[2] "кредитів"
 
-#: client/cgame/campaign/cp_nation.cpp:818
+#: client/cgame/campaign/cp_nation.cpp:814
 #, c-format
 msgid "Paid %i credits to: %s"
 msgstr "Сплачено %i кредитів на користь: %s"
 
-#: client/cgame/campaign/cp_nation.cpp:831
+#: client/cgame/campaign/cp_nation.cpp:827
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "%i кредитів витрачено на авіацію"
 
-#: client/cgame/campaign/cp_nation.cpp:840
+#: client/cgame/campaign/cp_nation.cpp:836
 #, c-format
 msgid "Paid %i credits for upkeep of %s"
 msgstr "%i кредитів витрачено на техобслуговування %s"
 
-#: client/cgame/campaign/cp_nation.cpp:845
+#: client/cgame/campaign/cp_nation.cpp:841
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "%i кредитів — адмінвитрати."
 
-#: client/cgame/campaign/cp_nation.cpp:853
+#: client/cgame/campaign/cp_nation.cpp:849
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "%i кр повернуто по боргових зобов'язаннях."
@@ -31637,62 +31570,69 @@ msgstr "Опис відсутній."
 msgid "No research proposal available."
 msgstr "Дослідницькі пропозиції відсутні."
 
-#: client/cgame/campaign/cp_save.cpp:183
+#: client/cgame/campaign/cp_save.cpp:203
 msgid "Error decompressing data"
 msgstr "Помилка при розпаковуванні даних"
 
-#: client/cgame/campaign/cp_save.cpp:253
-msgid "No campaign active."
-msgstr "Немає активної кампанії."
+#: client/cgame/campaign/cp_save.cpp:271
+msgid "Saving is not possible: Campaign is not active."
+msgstr ""
 
-#: client/cgame/campaign/cp_save.cpp:259
-msgid "Nothing to save yet."
-msgstr "Нічого зберігати."
+#: client/cgame/campaign/cp_save.cpp:276
+msgid "Saving is not possible: Cannot save the Battlescape."
+msgstr ""
 
-#: client/cgame/campaign/cp_save.cpp:314
+#: client/cgame/campaign/cp_save.cpp:281
+msgid "Saving is not possible: No base is built."
+msgstr ""
+
+#: client/cgame/campaign/cp_save.cpp:350
 msgid "Could not allocate enough memory to save this game"
 msgstr "Неможливо виділити достатньо пам'яті для збереження гри"
 
-#: client/cgame/campaign/cp_save.cpp:337
+#: client/cgame/campaign/cp_save.cpp:373
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr ""
 "Помилка пам'яті при стисканні даних збереженої гри. Виставте значення "
 "змінної save_compressed в 0"
 
-#: client/cgame/campaign/cp_save.cpp:384 client/cgame/campaign/cp_save.cpp:386
-msgid "Error saving game."
-msgstr "Помилка зберігання гри."
-
-#: client/cgame/campaign/cp_save.cpp:497 client/cgame/campaign/cp_save.cpp:520
-#: client/cgame/campaign/cp_save.cpp:598
+#: client/cgame/campaign/cp_save_callbacks.cpp:95
+#: client/cgame/campaign/cp_save_callbacks.cpp:117
+#: client/cgame/campaign/cp_save_callbacks.cpp:225
 #: client/cgame/multiplayer/mp_callbacks.cpp:64 client/cl_irc.cpp:1201
 #: client/cl_irc.cpp:1424 client/cl_main.cpp:561 client/cl_main.cpp:565
 #: client/cl_main.cpp:590
 msgid "Error"
 msgstr "Помилка"
 
-#: client/cgame/campaign/cp_save.cpp:497 client/cgame/campaign/cp_save.cpp:520
-#: client/cgame/campaign/cp_save.cpp:598
+#: client/cgame/campaign/cp_save_callbacks.cpp:95
+#: client/cgame/campaign/cp_save_callbacks.cpp:117
+#: client/cgame/campaign/cp_save_callbacks.cpp:225
 msgid "Error loading game."
 msgstr "Помилка завантаження гри."
 
-#: client/cgame/campaign/cp_save.cpp:576
+#: client/cgame/campaign/cp_save_callbacks.cpp:152
+#: client/cgame/campaign/cp_save_callbacks.cpp:154
+msgid "Error saving game."
+msgstr "Помилка зберігання гри."
+
+#: client/cgame/campaign/cp_save_callbacks.cpp:203
 msgid "QuickSave"
 msgstr "Швидке збереження"
 
-#: client/cgame/campaign/cp_save.cpp:580
+#: client/cgame/campaign/cp_save_callbacks.cpp:207
 msgid "Campaign was successfully saved."
 msgstr "Кампанія успішно збережена."
 
-#: client/cgame/campaign/cp_save.cpp:580
+#: client/cgame/campaign/cp_save_callbacks.cpp:207
 msgid "Quicksave"
 msgstr "Швидко зберегти"
 
-#: client/cgame/campaign/cp_save.cpp:600
+#: client/cgame/campaign/cp_save_callbacks.cpp:227
 msgid "Campaign loaded"
 msgstr "Кампанія завантажена"
 
-#: client/cgame/campaign/cp_save.cpp:600
+#: client/cgame/campaign/cp_save_callbacks.cpp:227
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Швидке збереження успішно завантажено."
 
@@ -31989,8 +31929,9 @@ msgid "Evasion"
 msgstr "Ухилення"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:144
-msgid "Aircraft damage"
-msgstr "Пошкодження авіасудна"
+#, fuzzy
+msgid "Hull strength"
+msgstr "Сила"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:148
 msgid "Fuel size"
@@ -32001,19 +31942,19 @@ msgid "Weapon range"
 msgstr "Дальність ураження"
 
 #: client/cgame/campaign/cp_ufopedia.cpp:152
-#: client/cl_inventory_callbacks.cpp:56
-msgid "Unknown weapon skill"
-msgstr "Невідоме вміння"
+#, fuzzy
+msgid "Antimatter need"
+msgstr "Антиматерія"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:171
+#: client/cgame/campaign/cp_ufopedia.cpp:173
 msgid "No requirements"
 msgstr "Нічого не потребує"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:204
+#: client/cgame/campaign/cp_ufopedia.cpp:206
 msgid "Error - could not find building"
 msgstr "Помилка — неможливо знайти споруду"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:207
+#: client/cgame/campaign/cp_ufopedia.cpp:209
 #, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
@@ -32021,77 +31962,94 @@ msgstr[0] "Час спорудження:\t%i доба\n"
 msgstr[1] "Час спорудження:\t%i доби\n"
 msgstr[2] "Час спорудження:\t%i діб\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:208
+#: client/cgame/campaign/cp_ufopedia.cpp:210
 #, c-format
 msgid "Cost:\t%i c\n"
 msgstr "Вартість:\t%i кр\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:258
+#: client/cgame/campaign/cp_ufopedia.cpp:260
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "Маса:\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:262
+#: client/cgame/campaign/cp_ufopedia.cpp:264
 #, fuzzy
 msgid "Weapon for air defence system\n"
 msgstr "Зброя для захисних систем бази\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:282
+#: client/cgame/campaign/cp_ufopedia.cpp:284
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "Кількість зарядів:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:284
+#: client/cgame/campaign/cp_ufopedia.cpp:286
 #: client/cl_inventory_callbacks.cpp:183
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "Сила ушкоджень:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:285
+#: client/cgame/campaign/cp_ufopedia.cpp:287
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "Час перезарядки:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:302
+#: client/cgame/campaign/cp_ufopedia.cpp:304
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:304
+#: client/cgame/campaign/cp_ufopedia.cpp:306
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:307
-#: client/cgame/campaign/cp_ufopedia.cpp:365
-#: client/cgame/campaign/cp_ufopedia.cpp:367
-#: client/cgame/campaign/cp_ufopedia.cpp:403
-#: client/cgame/campaign/cp_ufopedia.cpp:405
+#: client/cgame/campaign/cp_ufopedia.cpp:309
+#: client/cgame/campaign/cp_ufopedia.cpp:383
+#: client/cgame/campaign/cp_ufopedia.cpp:385
+#: client/cgame/campaign/cp_ufopedia.cpp:421
+#: client/cgame/campaign/cp_ufopedia.cpp:423
 msgid "Unknown - need to research this"
 msgstr "Невідомо — необхідно це дослідити"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:333
-#: client/cgame/campaign/cp_ufopedia.cpp:338
-#, c-format
-msgid "%s:\t%i km/h\n"
-msgstr "%s:\t%i км/год\n"
-
-#: client/cgame/campaign/cp_ufopedia.cpp:346
+#: client/cgame/campaign/cp_ufopedia.cpp:334
+#: client/cgame/campaign/cp_ufopedia.cpp:352
+#: client/cgame/campaign/cp_ufopedia.cpp:358
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:358
+#: client/cgame/campaign/cp_ufopedia.cpp:339
+#: client/cgame/campaign/cp_ufopedia.cpp:344
+#, c-format
+msgid "%s:\t%i km/h\n"
+msgstr "%s:\t%i км/год\n"
+
+#: client/cgame/campaign/cp_ufopedia.cpp:369
 #, c-format
 msgid "Required Hangar:\t%s\n"
 msgstr "Потрібно ангар:\t%s\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:362
+#: client/cgame/campaign/cp_ufopedia.cpp:374
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "Місць для бійців:\t%i\n"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:400
+#: client/cgame/campaign/cp_ufopedia.cpp:377
+#, c-format
+msgid "Equipment slots:\t%i %s, %i %s\n"
+msgstr ""
+
+#: client/cgame/campaign/cp_ufopedia.cpp:378
+#, fuzzy
+msgid "weapon"
+msgstr "Зброя"
+
+#: client/cgame/campaign/cp_ufopedia.cpp:379
+#, fuzzy
+msgid "electronics"
+msgstr "Електроніка:\t%i із %i"
+
+#: client/cgame/campaign/cp_ufopedia.cpp:418
 #, c-format
 msgid ""
 "%s\n"
@@ -32100,15 +32058,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:526
+#: client/cgame/campaign/cp_ufopedia.cpp:544
 msgid "Proposal: "
 msgstr "Пропозиція: "
 
-#: client/cgame/campaign/cp_ufopedia.cpp:529
+#: client/cgame/campaign/cp_ufopedia.cpp:547
 msgid "Re: "
 msgstr "Відп:"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:543
+#: client/cgame/campaign/cp_ufopedia.cpp:561
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -32119,27 +32077,27 @@ msgstr ""
 "Кому: %s\n"
 "Дата: %s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:615
+#: client/cgame/campaign/cp_ufopedia.cpp:633
 #, c-format
 msgid "UFOpaedia: %s (complete)"
 msgstr "НЛО-довідник: %s (завершено)"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:668
-#: client/cgame/campaign/cp_ufopedia.cpp:677
+#: client/cgame/campaign/cp_ufopedia.cpp:686
+#: client/cgame/campaign/cp_ufopedia.cpp:695
 #, c-format
 msgid "UFOpaedia: %s"
 msgstr "НЛО-довідник: %s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:674
+#: client/cgame/campaign/cp_ufopedia.cpp:692
 msgid "No pre-research description available."
 msgstr "Попередній опис відсутній."
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1034
+#: client/cgame/campaign/cp_ufopedia.cpp:1052
 #, c-format
 msgid "Proposal: %s"
 msgstr "Пропозиція: %s"
 
-#: client/cgame/campaign/cp_ufopedia.cpp:1045
+#: client/cgame/campaign/cp_ufopedia.cpp:1063
 #, c-format
 msgid "Re: %s"
 msgstr "Відп: %s"
@@ -32483,6 +32441,10 @@ msgstr "Показати/сховати консоль."
 msgid "Close quarters"
 msgstr "Ближній бій"
 
+#: client/cl_inventory_callbacks.cpp:56
+msgid "Unknown weapon skill"
+msgstr "Невідоме вміння"
+
 #: client/cl_inventory_callbacks.cpp:137
 #, c-format
 msgid "Size:\t%i\n"
@@ -32670,15 +32632,15 @@ msgstr "Файли скриптів відрізняються"
 msgid "Local map version differs from server"
 msgstr "Локальна версія карти відрізняється від тієї, що на сервері"
 
-#: client/cl_main.cpp:906
+#: client/cl_main.cpp:883
 msgid "Target your shot to the ground"
 msgstr "Вибрати висоту прицілювання"
 
-#: client/cl_main.cpp:1156
+#: client/cl_main.cpp:1133
 msgid "This change requires a restart!"
 msgstr "Ця зміна потребує перезапуску гри!"
 
-#: client/cl_main.cpp:1161
+#: client/cl_main.cpp:1138
 msgid "This change might require a restart."
 msgstr "Для зміни може знадобитися перезапуск гри."
 
@@ -32856,11 +32818,11 @@ msgstr "Використовується у:\n"
 msgid "In: %i Out: %i"
 msgstr "До: %i З: %i"
 
-#: client/ui/node/ui_node_window.cpp:298
+#: client/ui/node/ui_node_window.cpp:308
 msgid "Close the window"
 msgstr "Закрити вікно"
 
-#: client/ui/node/ui_node_window.cpp:324
+#: client/ui/node/ui_node_window.cpp:334
 msgid "Drag to move window"
 msgstr "Потягніть для переміщення вікна"
 
@@ -32915,15 +32877,6 @@ msgstr "Ви не можете розмовляти ще %d секунд\n"
 #, c-format
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr "Захист від флуду: ви не можете розмовляти %d сек.\n"
-
-# чи офігів )))
-#: game/g_combat.cpp:473
-msgid ""
-"Soldier is dazed!\n"
-"Enemy used flashbang!"
-msgstr ""
-"Боєць дезорієнтований!\n"
-"Ворог застосував світло-шумову гранату!"
 
 #: game/g_combat.cpp:730
 msgid "Can't perform action - impossible throw!"
@@ -32985,26 +32938,6 @@ msgstr "Прибульці увійшли в зону призначення!"
 msgid "%s forces have left their target zone!"
 msgstr "Прибульці увійшли в зону призначення!"
 
-#: game/g_morale.cpp:40
-#, c-format
-msgid "%s panics!"
-msgstr "%s панікує!"
-
-#: game/g_morale.cpp:101
-#, c-format
-msgid "%s is on a rampage!"
-msgstr "%s буянить!"
-
-#: game/g_morale.cpp:104
-#, c-format
-msgid "%s is consumed by mad rage!"
-msgstr "%s розлючений до божевілля!"
-
-#: game/g_morale.cpp:188
-#, c-format
-msgid "%s is currently shaken."
-msgstr "%s тремтить від страху."
-
 #: game/g_reaction.cpp:642
 msgid "No reaction fire enabled weapon."
 msgstr "Зброя без режиму зустрічного вогню."
@@ -33064,6 +32997,106 @@ msgstr "прибулець"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Зробити знімок екрану"
+
+#~ msgid "Warehouse"
+#~ msgstr "Товарний склад"
+
+#~ msgid "Healthpoints"
+#~ msgstr "Очки здоров'я"
+
+#~ msgid "Lock current stock level"
+#~ msgstr "Зафіксувати поточний рівень товару"
+
+#~ msgid "Base Summary"
+#~ msgstr "Резюме бази"
+
+#~ msgid "Click here to save game"
+#~ msgstr "Клацніть сюди для збереження гри"
+
+#~ msgid "Initial settings"
+#~ msgstr "Початкові налаштування"
+
+#, fuzzy
+#~ msgid "User information"
+#~ msgstr "Інформація про гравця"
+
+#~ msgid "Volume Control"
+#~ msgstr "Контроль гучності"
+
+#~ msgid "Effects:"
+#~ msgstr "Ефекти:"
+
+#~ msgid "Music:"
+#~ msgstr "Музика:"
+
+#~ msgid "Language"
+#~ msgstr "Вибір мови"
+
+#~ msgid "Language:"
+#~ msgstr "Мова:"
+
+#~ msgid "You have to set the playername and hit the 'OK' button:"
+#~ msgstr "Зазначте ім'я гравця і клацніть на 'OK'"
+
+#~ msgid "Save settings"
+#~ msgstr "Зберегти налаштування"
+
+#~ msgid "Tip of the day"
+#~ msgstr "Корисна порада"
+
+#~ msgid "Show tip of the day"
+#~ msgstr "Показувати поради"
+
+#~ msgid "Next"
+#~ msgstr "Наступна"
+
+#~ msgid "Next tip"
+#~ msgstr "Наступна порада"
+
+#~ msgid "Close window"
+#~ msgstr "Закрити вікно"
+
+#~ msgid "Transactions"
+#~ msgstr "Транзакції"
+
+#~ msgid "Select base to transfer to"
+#~ msgstr "Вибрати цільову базу для транспортування"
+
+#~ msgid "Choose a base to host alien bodies:"
+#~ msgstr "Виберіть базу для розміщення мертвих прибульців:"
+
+#~ msgid "Buildings"
+#~ msgstr "Споруди"
+
+#~ msgid "No report"
+#~ msgstr "Нема звіту"
+
+#~ msgid "Percent"
+#~ msgstr "Відсоток"
+
+#~ msgid "Quantity"
+#~ msgstr "Кількість"
+
+#~ msgid "Nothing"
+#~ msgstr "Нічого"
+
+#~ msgid "^BAircraft\n"
+#~ msgstr "^BАвіація\n"
+
+#~ msgid "^BEmployees\n"
+#~ msgstr "^BПерсонал\n"
+
+#~ msgid "^BAliens\n"
+#~ msgstr "^BПрибульці\n"
+
+#~ msgid "No campaign active."
+#~ msgstr "Немає активної кампанії."
+
+#~ msgid "Nothing to save yet."
+#~ msgstr "Нічого зберігати."
+
+#~ msgid "Aircraft damage"
+#~ msgstr "Пошкодження авіасудна"
 
 #~ msgid "Transport"
 #~ msgstr "Транспортний вузол"

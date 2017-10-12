@@ -5,6 +5,7 @@
 ./client/battlescape/events/event/actor/e_event_actorappear.cpp
 ./client/battlescape/events/event/actor/e_event_actordie.cpp
 ./client/battlescape/events/event/actor/e_event_actorrevitalised.cpp
+./client/battlescape/events/event/actor/e_event_actorstatechange.cpp
 ./client/battlescape/events/event/actor/e_event_actorwound.cpp
 ./client/battlescape/events/event/player/e_event_doendround.cpp
 ./client/cgame/campaign/cp_aircraft_callbacks.cpp
@@ -39,6 +40,7 @@
 ./client/cgame/campaign/cp_produce_callbacks.cpp
 ./client/cgame/campaign/cp_produce.cpp
 ./client/cgame/campaign/cp_research.cpp
+./client/cgame/campaign/cp_save_callbacks.cpp
 ./client/cgame/campaign/cp_save.cpp
 ./client/cgame/campaign/cp_statistics.cpp
 ./client/cgame/campaign/cp_team_callbacks.cpp
@@ -75,7 +77,6 @@
 ./game/g_cmds.cpp
 ./game/g_combat.cpp
 ./game/g_mission.cpp
-./game/g_morale.cpp
 ./game/g_reaction.cpp
 ./game/g_round.cpp
 ./game/g_trigger.cpp
