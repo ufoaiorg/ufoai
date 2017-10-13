@@ -18,8 +18,8 @@ include src/libs/curl/lib/Makefile.inc
 CURL_SRCS                 = $(addprefix libs/curl/lib/,$(CSOURCES))
 endif
 ifdef HAVE_LUA5_1_LUA_H
-LUA_LIBS                 ?= $(call PKG_LIBS,lua5.1)
-LUA_CFLAGS               ?= $(call PKG_CFLAGS,lua5.1)
+LUA_LIBS                 ?= $(call PKG_LIBS,"lua5.1 lua-5.1 lua51 lua")
+LUA_CFLAGS               ?= $(call PKG_CFLAGS,"lua5.1 lua-5.1 lua51 lua")
 LUA_SRCS                  =
 else
 LUA_CFLAGS               ?= -Isrc/libs/lua

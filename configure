@@ -158,9 +158,15 @@ check_header_cc() {
 #include <stdlib.h>
 #include <stdio.h>
 #include <${1}>
+#if defined(LUA_VERSION_NUM) && LUA_VERSION_NUM != 501
+#error Lua version must be 5.1
+#endif
 EOF`
 	if [ -n "${2}" ]; then
-		( echo "$SOURCE" | ${CROSS}${CXX} ${CCFLAGS} ${CXXFLAGS} ${CFLAGS} $(${CROSS}pkg-config --cflags ${2} 2> /dev/null) -o /dev/null -xc++ -c - 2>> config.log ) && echo "1" || echo ""
+		while [ -n "${2}" ]; do
+			( echo "$SOURCE" | ${CROSS}${CXX} ${CCFLAGS} ${CXXFLAGS} ${CFLAGS} $(${CROSS}pkg-config --cflags ${2} 2> /dev/null) -o /dev/null -xc++ -c - 2>> config.log ) && echo "1" && break || echo ""
+			shift
+		done
 	else
 		( echo "$SOURCE" | ${CROSS}${CXX} ${CCFLAGS} ${CXXFLAGS} ${CFLAGS} -o /dev/null -xc++ -c - 2>> config.log ) && echo "1" || echo ""
 	fi
@@ -190,7 +196,7 @@ check_header() {
 	fi
 	if [ "$VALUE" != "no" ]; then
 		if [ "$VALUE" != "internal" ]; then
-			set_var $HAVE `check_header_cc $1 $2`
+			set_var $HAVE `check_header_cc $@`
 			add_to_config_h $HAVE "Found $1" "Could not find $1" $2
 			add_to_makefile_local $HAVE
 		else
@@ -224,7 +230,7 @@ check_header_bundled() {
 		HAVE=HAVE_${PACKAGE}${HEADER}_H
 		set_var $HAVE "internal"
 	fi
-	check_header "${1}" "${2}"
+	check_header $@
 }
 
 check_headers() {
@@ -238,7 +244,7 @@ check_headers() {
 	check_header "zlib.h" "zlib"
 	check_header "png.h" "libpng"
 	check_header_bundled "curl/curl.h" "libcurl"
-	check_header_bundled "lua.h" "lua5.1"
+	check_header_bundled "lua.h" "lua5.1" "lua-5.1" "lua51" "lua"
 	check_header_bundled "mxml.h" "mxml"
 	check_header "SDL.h" "sdl"
 	check_header "SDL_mixer.h" "SDL_mixer"
