@@ -164,11 +164,11 @@ check_header_cc() {
 EOF`
 	if [ -n "${2}" ]; then
 		while [ -n "${2}" ]; do
-			( echo "$SOURCE" | ${CROSS}${CXX} ${CCFLAGS} ${CXXFLAGS} ${CFLAGS} $(${CROSS}pkg-config --cflags ${2} 2> /dev/null) -o /dev/null -xc++ -c - 2>> config.log ) && echo "1" && break || echo ""
+			( echo "$SOURCE" | ${CROSS}${CXX} -DPACKAGE ${CCFLAGS} ${CXXFLAGS} ${CFLAGS} $(${CROSS}pkg-config --cflags ${2} 2> /dev/null) -o /dev/null -xc++ -c - 2>> config.log ) && echo "1" && break || echo ""
 			shift
 		done
 	else
-		( echo "$SOURCE" | ${CROSS}${CXX} ${CCFLAGS} ${CXXFLAGS} ${CFLAGS} -o /dev/null -xc++ -c - 2>> config.log ) && echo "1" || echo ""
+		( echo "$SOURCE" | ${CROSS}${CXX} -DPACKAGE ${CCFLAGS} ${CXXFLAGS} ${CFLAGS} -o /dev/null -xc++ -c - 2>> config.log ) && echo "1" || echo ""
 	fi
 }
 
