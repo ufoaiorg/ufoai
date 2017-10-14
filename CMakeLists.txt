@@ -124,13 +124,10 @@ if(UFOAI_BUILD_UFO2MAP OR
    find_package(OpenGL)
 endif()
 
-if(UFOAI_BUILD_UFO)
-   find_package(LibIntl)
-endif()
-
 if(UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFORADIANT OR
       UFOAI_BUILD_UFOTESTALL)
+   find_package(LibIntl)
    find_package(OGG)
 endif()
 
@@ -1040,6 +1037,10 @@ if(UFOAI_BUILD_UFO)
          winmm
          Ws2_32
       )
+   elseif(APPLE)
+      target_link_libraries(${UFOAI_PROJECT_UFO}
+         ${LIBINTL_LIBRARIES}
+      )
    elseif(UNIX)
       target_link_libraries(${UFOAI_PROJECT_UFO}
          GL
@@ -1051,7 +1052,7 @@ if(UFOAI_BUILD_UFO)
       endif()
       if(CMAKE_SYSTEM_NAME MATCHES "BSD")
          target_link_libraries(${UFOAI_PROJECT_UFO}
-            intl
+            ${LIBINTL_LIBRARIES}
          )
       endif()
    endif()
@@ -1623,6 +1624,10 @@ if(UFOAI_BUILD_UFORADIANT)
          version
          winmm
       )
+   elseif(APPLE)
+      target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
+         ${LIBINTL_LIBRARIES}
+      )
    elseif(UNIX)
       target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
          GL
@@ -2149,6 +2154,10 @@ if(UFOAI_BUILD_UFOTESTALL)
          version
          winmm
          Ws2_32
+      )
+   elseif(APPLE)
+      target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
+         ${LIBINTL_LIBRARIES}
       )
    elseif(UNIX)
       target_link_libraries(${UFOAI_PROJECT_UFOTESTALL}
