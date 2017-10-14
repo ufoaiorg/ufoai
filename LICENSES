@@ -785,25 +785,25 @@ base/maps/village/vil_street_v_04.map | GNU General Public License 2.0 or later 
 base/maps/village/vil_street_v_05.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/village/vil_street_v_06.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/wilderness.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/media/DejaVuSans.ttf | Public Domain | http://dejavu-fonts.org | http://dejavu.sourceforge.net/
-base/media/FreeMono.ttf | GNU General Public License 3.0 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
-base/media/FreeSans.ttf | GNU General Public License 3.0 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
-base/media/FreeSerif.ttf | GNU General Public License 3.0 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
-base/media/JuraBook.ttf | GNU General Public License 3.0 and Open Font License | Daniel Johnson | See README.txt
-base/media/JuraDemiBold.ttf | GNU General Public License 3.0 and Open Font License | Daniel Johnson | See README.txt
-base/media/JuraLight.ttf | GNU General Public License 3.0 and Open Font License | Daniel Johnson | See README.txt
-base/media/JuraMedium.ttf | GNU General Public License 3.0 and Open Font License | Daniel Johnson | See README.txt
-base/media/Loma.ttf | Public Domain | NECTEC, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
-base/media/Norasi.ttf | Public Domain | NECTEC National Font Project, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
-base/media/UnDinaruBold.ttf | GNU General Public License 2.0 |  | http://kldp.net/projects/unfonts/
-base/media/UnGraphicBold.ttf | GNU General Public License 2.0 |  | http://kldp.net/projects/unfonts/
-base/media/languages.ttf | GNU General Public License 2.0 or later | UFOAI team
-base/media/ufofan-black.ttf | Open Font License | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron
-base/media/ufofan-bold.ttf | Open Font License | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron
-base/media/ufofan-light.ttf | Open Font License | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron
-base/media/ufofan-medium.ttf | Open Font License | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron
-base/media/ume-pgo4.ttf | see umefont-readme_license.html | Wada Laboratory, the University of Tokyo; Electronic Font Open Laboratory | http://ume-font.sourceforge.jp
-base/media/wqy-zenhei.ttf | GNU General Public License 2.0 |  | http://sourceforge.net/projects/wqy/
+base/media/DejaVuSans.ttf | Free (Bitstream Vera Derivative) | Bitstream, Inc. Tavmjong Bah. | DejaVu Additions are Public Domain http://dejavu-fonts.org
+base/media/FreeMono.ttf | GNU General Public License 3.0 or later | GNU FreeFont Project | http://savannah.nongnu.org/projects/freefont/
+base/media/FreeSans.ttf | GNU General Public License 3.0 or later | GNU FreeFont Project | http://savannah.nongnu.org/projects/freefont/
+base/media/FreeSerif.ttf | GNU General Public License 3.0 or later | GNU FreeFont Project | http://savannah.nongnu.org/projects/freefont/
+base/media/JuraBook.ttf | Open Font License v1.1 | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
+base/media/JuraDemiBold.ttf | Open Font License v1.1  | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
+base/media/JuraLight.ttf | Open Font License v1.1  | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
+base/media/JuraMedium.ttf | Open Font License v1.1  | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
+base/media/languages.ttf | GNU General Public License 2.0 | UFOAI team | Derivative work from Norasi and wqy-zenhei
+base/media/Loma.ttf | GNU General Public License 2.0 or later with font embedding exception | NECTEC, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
+base/media/Norasi.ttf | GNU General Public License 2.0 or later with font embedding exception | National Font Project, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
+base/media/ufofan-black.ttf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
+base/media/ufofan-bold.ttf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
+base/media/ufofan-light.ttf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
+base/media/ufofan-medium.ttf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
+base/media/ume-pgo4.ttf | Free (See umefont-readme_license.html) | Wada Laboratory, the University of Tokyo; Electronic Font Open Laboratory | http://ume-font.sourceforge.jp
+base/media/UnDinaruBold.ttf | GNU General Public License 2.0 | Koaunghi Un, Won-kyu Park, Jungshik Shin | http://kldp.net/projects/unfonts/
+base/media/UnGraphicBold.ttf | GNU General Public License 2.0 | Koaunghi Un, Won-kyu Park, Jungshik Shin | http://kldp.net/projects/unfonts/
+base/media/wqy-zenhei.ttf | GNU General Public License 2.0 with font embedding exception | Qianqian Fang and The WenQuanYi Project Contributors | http://sourceforge.net/projects/wqy/
 base/models/aircraft/craft_arm_plate/plating.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
 base/models/aircraft/craft_arm_plate/plating.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
 base/models/aircraft/craft_arm_poly/polymer.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
