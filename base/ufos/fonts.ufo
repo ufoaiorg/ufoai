@@ -8,79 +8,79 @@
 
 font f_verysmall_bold
 {
-	font	"_media/orbitron-bold.ttf"
+	font	"_media/ufofan-bold.otf"
 	size	11
 }
 
 font f_verysmall
 {
-	font	"_media/orbitron-medium.ttf"
+	font	"_media/ufofan-medium.otf"
 	size	11
 }
 
 font f_small_bold
 {
-	font	"_media/orbitron-bold.ttf"
+	font	"_media/ufofan-bold.otf"
 	size	14
 }
 
 font f_small
 {
-	font	"_media/orbitron-medium.ttf"
+	font	"_media/ufofan-medium.otf"
 	size	14
 }
 
 font f_normal_bold
 {
-	font	"_media/orbitron-bold.ttf"
+	font	"_media/ufofan-bold.otf"
 	size	18
 }
 
 font f_normal
 {
-	font	"_media/orbitron-medium.ttf"
+	font	"_media/ufofan-medium.otf"
 	size	18
 }
 
 font f_big
 {
-	font	"_media/orbitron-bold.ttf"
+	font	"_media/ufofan-bold.otf"
 	size	20
 }
 
 font f_verybig_bold
 {
-	font	"_media/orbitron-bold.ttf"
+	font	"_media/ufofan-bold.otf"
 	size	30
 }
 
 font f_verybig
 {
-	font	"_media/orbitron-medium.ttf"
+	font	"_media/ufofan-medium.otf"
 	size	30
 }
 
 font f_title
 {
-	font	"_media/orbitron-light.ttf"
+	font	"_media/ufofan-light.otf"
 	size	40
 }
 
 font f_menu
 {
-	font	"_media/orbitron-medium.ttf"
+	font	"_media/ufofan-medium.otf"
 	size	22
 }
 
 font f_menubig
 {
-	font	"_media/orbitron-bold.ttf"
+	font	"_media/ufofan-bold.otf"
 	size	24
 }
 
 font f_menusmall
 {
-	font	"_media/orbitron-bold.ttf"
+	font	"_media/ufofan-bold.otf"
 	size	18
 }
 

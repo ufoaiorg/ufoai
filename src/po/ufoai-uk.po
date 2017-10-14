@@ -2548,17 +2548,17 @@ msgstr "НЛО — «Перевізник»"
 #: ../base/ufos/fonts.ufo:35 ../base/ufos/fonts.ufo:47
 #: ../base/ufos/fonts.ufo:53 ../base/ufos/fonts.ufo:77
 #: ../base/ufos/fonts.ufo:83
-msgid "media/orbitron-bold.ttf"
+msgid "media/ufofan-bold.otf"
 msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/fonts.ufo:17 ../base/ufos/fonts.ufo:29
 #: ../base/ufos/fonts.ufo:41 ../base/ufos/fonts.ufo:59
 #: ../base/ufos/fonts.ufo:71
-msgid "media/orbitron-medium.ttf"
+msgid "media/ufofan-medium.otf"
 msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/fonts.ufo:65
-msgid "media/orbitron-light.ttf"
+msgid "media/ufofan-light.otf"
 msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/fonts.ufo:89
