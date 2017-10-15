@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_overlay.h"
 #include "cp_geoscape.h"
 #include "cp_ufo.h"
+#include "cp_missions.h"
 
 /**
  * used to store the previous configuration of overlay before radar

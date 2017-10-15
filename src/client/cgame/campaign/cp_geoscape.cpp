@@ -99,20 +99,20 @@ static const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
 static const float defaultBaseAngle = -90.0f;	/**< Default angle value for 3D models like bases */
 
 static byte* terrainPic;				/**< this is the terrain mask for separating the climate
-										 * zone and water by different color values */
-static int terrainWidth, terrainHeight;		/**< the width and height for the terrain pic. */
+							 * zone and water by different color values */
+static int terrainWidth, terrainHeight;			/**< the width and height for the terrain pic. */
 
 static byte* culturePic;				/**< this is the mask for separating the culture
-										 * zone and water by different color values */
-static int cultureWidth, cultureHeight;		/**< the width and height for the culture pic. */
+							 * zone and water by different color values */
+static int cultureWidth, cultureHeight;			/**< the width and height for the culture pic. */
 
 static byte* populationPic;				/**< this is the mask for separating the population rate
-										 * zone and water by different color values */
+							 * zone and water by different color values */
 static int populationWidth, populationHeight;		/**< the width and height for the population pic. */
 
 static byte* nationsPic;				/**< this is the nation mask - separated
-										 * by colors given in nations.ufo. */
-static int nationsWidth, nationsHeight;	/**< the width and height for the nation pic. */
+							 * by colors given in nations.ufo. */
+static int nationsWidth, nationsHeight;			/**< the width and height for the nation pic. */
 
 
 /*
@@ -2241,6 +2241,117 @@ bool GEO_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t* terrainTyp
 	}
 
 	return false;
+}
+
+
+/**
+ * @brief Determines a random position on geoscape
+ * @param[out] pos The position that will be overwritten. pos[0] is within -180, +180. pos[1] within -90, +90.
+ * @param[in] noWater True if the position should not be on water
+ * @sa CP_GetRandomPosOnGeoscapeWithParameters
+ * @note The random positions should be roughly uniform thanks to the non-uniform distribution used.
+ * @note This function always returns a value.
+ */
+void CP_GetRandomPosOnGeoscape (vec2_t pos, bool noWater)
+{
+	do {
+		pos[0] = (frand() - 0.5f) * 360.0f;
+		pos[1] = asin((frand() - 0.5f) * 2.0f) * todeg;
+	} while (noWater && MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)));
+
+	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscape: Get random position on geoscape %.2f:%.2f\n", pos[0], pos[1]);
+}
+
+/**
+ * @brief Determines a random position on geoscape that fulfills certain criteria given via parameters
+ * @param[out] pos The position that will be overwritten with the random point fulfilling the criteria. pos[0] is within -180, +180. pos[1] within -90, +90.
+ * @param[in] terrainTypes A linkedList_t containing a list of strings determining the acceptable terrain types (e.g. "grass") May be nullptr.
+ * @param[in] cultureTypes A linkedList_t containing a list of strings determining the acceptable culture types (e.g. "western") May be nullptr.
+ * @param[in] populationTypes A linkedList_t containing a list of strings determining the acceptable population types (e.g. "suburban") May be nullptr.
+ * @param[in] nations A linkedList_t containing a list of strings determining the acceptable nations (e.g. "asia"). May be nullptr
+ * @return true if a location was found, otherwise false
+ * @note There may be no position fitting the parameters. The higher RASTER, the lower the probability to find a position.
+ * @sa LIST_AddString
+ * @sa LIST_Delete
+ * @note When all parameters are nullptr, the algorithm assumes that it does not need to include "water" terrains when determining a random position
+ * @note You should rather use CP_GetRandomPosOnGeoscape if there are no parameters (except water) to choose a random position
+ */
+bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
+{
+	float x, y;
+	int num;
+	int randomNum;
+
+	/* RASTER might reduce amount of tested locations to get a better performance */
+	/* Number of points in latitude and longitude that will be tested. Therefore, the total number of position tried
+	 * will be numPoints * numPoints */
+	const float numPoints = 360.0 / RASTER;
+	/* RASTER is minimizing the amount of locations, so an offset is introduced to enable access to all locations, depending on a random factor */
+	const float offsetX = frand() * RASTER;
+	const float offsetY = -1.0 + frand() * 2.0 / numPoints;
+	vec2_t posT;
+	int hits = 0;
+
+	/* check all locations for suitability in 2 iterations */
+	/* prepare 1st iteration */
+
+	/* ITERATION 1 */
+	for (y = 0; y < numPoints; y++) {
+		const float posY = asin(2.0 * y / numPoints + offsetY) * todeg;	/* Use non-uniform distribution otherwise we favour the poles */
+		for (x = 0; x < numPoints; x++) {
+			const float posX = x * RASTER - 180.0 + offsetX;
+
+			Vector2Set(posT, posX, posY);
+
+			if (GEO_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
+				/* the location given in pos belongs to the terrain, culture, population types and nations
+				 * that are acceptable, so count it */
+				/** @todo - cache the counted hits */
+				hits++;
+			}
+		}
+	}
+
+	/* if there have been no hits, the function failed to find a position */
+	if (hits == 0)
+		return false;
+
+	/* the 2nd iteration goes through the locations again, but does so only until a random point */
+	/* prepare 2nd iteration */
+	randomNum = num = rand() % hits;
+
+	/* ITERATION 2 */
+	for (y = 0; y < numPoints; y++) {
+		const float posY = asin(2.0 * y / numPoints + offsetY) * todeg;
+		for (x = 0; x < numPoints; x++) {
+			const float posX = x * RASTER - 180.0 + offsetX;
+
+			Vector2Set(posT, posX, posY);
+
+			if (GEO_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
+				num--;
+
+				if (num < 1) {
+					Vector2Set(pos, posX, posY);
+					Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
+						pos[0], pos[1], randomNum, hits);
+					return true;
+				}
+			}
+		}
+	}
+
+	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coordinates for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
+		pos[0], pos[1], num, hits);
+
+	/** @todo add EQUAL_EPSILON here? */
+	/* Make sure that position is within bounds */
+	assert(pos[0] >= -180);
+	assert(pos[0] <= 180);
+	assert(pos[1] >= -90);
+	assert(pos[1] <= 90);
+
+	return true;
 }
 
 void GEO_Shutdown (void)

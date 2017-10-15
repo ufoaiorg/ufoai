@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 #include "save/save_market.h"
 
+#define BID_FACTOR 0.9
+
 #define BS_GetMarket() (&ccs.eMarket)
 
 /**

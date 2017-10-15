@@ -27,6 +27,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define KILOMETER_PER_DEGREE	111.2		/* this is the conversion between distance in game (in degree) and km */
 
+/* check for water */
+/* blue value is 64 */
+#define MapIsWater(color)        (color[0] ==   0 && color[1] ==   0 && color[2] ==  64)
+
+/* culture types */
+#define MapIsWestern(color)      (color[0] == 128 && color[1] == 255 && color[2] == 255)
+#define MapIsEastern(color)      (color[0] == 255 && color[1] == 128 && color[2] ==   0)
+#define MapIsOriental(color)     (color[0] == 255 && color[1] ==   0 && color[2] ==   0)
+#define MapIsAfrican(color)      (color[0] == 128 && color[1] == 128 && color[2] == 255)
+
+/* population types */
+#define MapIsUrban(color)        (color[0] == 128 && color[1] == 255 && color[2] == 255)
+#define MapIsSuburban(color)     (color[0] == 255 && color[1] == 128 && color[2] ==   0)
+#define MapIsVillage(color)      (color[0] == 255 && color[1] ==   0 && color[2] ==   0)
+#define MapIsRural(color)        (color[0] == 128 && color[1] == 128 && color[2] == 255)
+#define MapIsNopopulation(color) (color[0] == 128 && color[1] == 255 && color[2] ==   0)
+
+/* RASTER enables a better performance for CP_GetRandomPosOnGeoscapeWithParameters set it to 1-6
+ * the higher the value the better the performance, but the smaller the coverage */
+#define RASTER 2
+
 #define GEO_IsAircraftSelected(aircraft) ((aircraft) == ccs.geoscape.selectedAircraft)
 #define GEO_IsInterceptorSelected(aircraft) ((aircraft) == ccs.geoscape.interceptAircraft)
 #define GEO_IsUFOSelected(ufo) ((ufo) == ccs.geoscape.selectedUFO)
@@ -79,3 +100,6 @@ bool GEO_PositionFitsTCPNTypes(const vec2_t posT, const linkedList_t* terrainTyp
 void GEO_SetOverlay(const char* overlayID, int status);
 void GEO_UpdateGeoscapeDock(void);
 bool GEO_IsRadarOverlayActivated(void);
+
+void CP_GetRandomPosOnGeoscape(vec2_t pos, bool noWater);
+bool CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);

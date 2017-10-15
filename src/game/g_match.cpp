@@ -90,7 +90,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, Edict* ent)
 /**
  * @brief Updates character experience after a mission.
  * @param[in,out] ent Pointer to the character that should get the experience updated
- * @sa CP_UpdateCharacterStats
+ * @sa CHAR_UpdateStats
  * @sa G_UpdateCharacterScore
  * @sa G_UpdateHitScore
  */

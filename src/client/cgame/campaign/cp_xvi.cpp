@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_overlay.h"
 #include "cp_geoscape.h"
 #include "cp_xvi.h"
+#include "cp_missions.h"
 #include "save/save_xvi.h"
 
 /** @brief technology for XVI event */

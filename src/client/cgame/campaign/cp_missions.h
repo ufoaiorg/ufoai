@@ -47,6 +47,8 @@ mission_t* CP_GetMissionByIDSilent(const char* missionId);
 mission_t* CP_GetMissionByID(const char* missionId);
 int MIS_GetIdx(const mission_t* mis);
 mission_t* MIS_GetByIdx(int id);
+mission_t* CP_CreateNewMission(interestCategory_t category, bool beginNow);
+void CP_UFOProceedMission(const struct campaign_s* campaign, struct aircraft_s* ufocraft);
 void CP_MissionRemove(mission_t* mission);
 bool CP_MissionBegin(mission_t* mission);
 bool CP_CheckNewMissionDetectedOnGeoscape(void);
@@ -69,6 +71,9 @@ void CP_MissionIsOverByUFO(aircraft_t* ufocraft);
 void CP_MissionEnd(const campaign_t* campaign, mission_t* mission, const battleParam_t* battleParameters, bool won);
 void CP_MissionEndActions(mission_t* mission, aircraft_t* aircraft, bool won);
 bool CP_ChooseMap(mission_t* mission, const vec2_t pos);
+bool CP_CheckNextStageDestination(const struct campaign_s* campaign, struct aircraft_s* ufo);
+int CP_CountMissionOnGeoscape(void);
+void CP_UpdateMissionVisibleOnGeoscape(void);
 
 void MIS_InitStartup(void);
 void MIS_Shutdown(void);

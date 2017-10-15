@@ -245,7 +245,7 @@ void CHAR_UpdateStats (const base_t* base, const aircraft_t* aircraft)
 			break;
 		}
 	}
-	Com_DPrintf(DEBUG_CLIENT, "CP_UpdateCharacterStats: Done\n");
+	Com_DPrintf(DEBUG_CLIENT, "CHAR_UpdateStats: Done\n");
 }
 
 

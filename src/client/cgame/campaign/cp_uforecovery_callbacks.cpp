@@ -33,6 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_geoscape.h"
 #include "cp_time.h"
 
+#define HAPPINESS_UFO_SALE_GAIN				0.02
+#define HAPPINESS_UFO_SALE_LOSS				0.005
+
 /**
  * @brief Entries on Sell UFO dialog
  */

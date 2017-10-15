@@ -62,6 +62,17 @@ cvar_t* cp_campaign;
 cvar_t* cp_start_employees;
 cvar_t* cp_missiontest;
 
+/* fraction of nation that can be below min happiness before the game is lost */
+#define NATIONBELOWLIMITPERCENTAGE 0.5f
+
+/**
+ * @brief delay between actions that must be executed independently of time scale
+ * @sa RADAR_CheckUFOSensored
+ * @sa UFO_UpdateAlienInterestForAllBasesAndInstallations
+ * @sa AB_UpdateStealthForAllBase
+ */
+const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
+
 /**
  * @brief Checks whether a campaign mode game is running
  */
@@ -144,65 +155,6 @@ void CP_CheckLostCondition (const campaign_t* campaign)
 		CP_EndCampaign(false);
 }
 
-/* Initial fraction of the population in the country where a mission has been lost / won */
-#define XVI_LOST_START_PERCENTAGE	0.20f
-#define XVI_WON_START_PERCENTAGE	0.05f
-
-/**
- * @brief Updates each nation's happiness.
- * Should be called at the completion or expiration of every mission.
- * The nation where the mission took place will be most affected,
- * surrounding nations will be less affected.
- * @todo Scoring should eventually be expanded to include such elements as
- * infected humans and mission objectives other than xenocide.
- */
-void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* affectedNation, const missionResults_t* results)
-{
-	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);
-	const float alienSum = (float) (results->aliensSurvived + results->aliensKilled + results->aliensStunned);
-	float performance;
-	float deltaHappiness = 0.0f;
-	float happinessDivisor = 5.0f;
-
-	/** @todo HACK: This should be handled properly, i.e. civilians should only factor into the scoring
-	 * if the mission objective is actually to save civilians. */
-	if (civilianSum == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CP_HandleNationData: Warning, civilianSum == 0, score for this mission will default to 0.\n");
-		performance = 0.0f;
-	} else {
-		/* Calculate how well the mission went. */
-		float performanceCivilian = (2 * civilianSum - results->civiliansKilled - 2
-				* results->civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
-		/** @todo The score for aliens is always negative or zero currently, but this
-		 * should be dependent on the mission objective.
-		 * In a mission that has a special objective, the amount of killed aliens should
-		 * only serve to increase the score, not reduce the penalty. */
-		float performanceAlien = results->aliensKilled + results->aliensStunned - alienSum;
-		performance = performanceCivilian + performanceAlien;
-	}
-
-	/* Calculate the actual happiness delta. The bigger the mission, the more potential influence. */
-	deltaHappiness = 0.004 * civilianSum + 0.004 * alienSum;
-
-	/* There is a maximum base happiness delta. */
-	if (deltaHappiness > HAPPINESS_MAX_MISSION_IMPACT)
-		deltaHappiness = HAPPINESS_MAX_MISSION_IMPACT;
-
-	for (int i = 0; i < ccs.numNations; i++) {
-		nation_t* nation = NAT_GetNationByIDX(i);
-		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
-		float happinessFactor;
-
-		/* update happiness. */
-		if (nation == affectedNation)
-			happinessFactor = deltaHappiness;
-		else
-			happinessFactor = deltaHappiness / happinessDivisor;
-
-		NAT_SetHappiness(minHappiness, nation, stats->happiness + performance * happinessFactor);
-	}
-}
-
 /**
  * @brief Check for missions that have a timeout defined
  */
@@ -249,14 +201,6 @@ bool CP_OnGeoscape (void)
 {
 	return Q_streq("geoscape", cgi->UI_GetActiveWindowName());
 }
-
-/**
- * @brief delay between actions that must be executed independently of time scale
- * @sa RADAR_CheckUFOSensored
- * @sa UFO_UpdateAlienInterestForAllBasesAndInstallations
- * @sa AB_UpdateStealthForAllBase
- */
-const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
 
 /**
  * @brief Ensure that the day always matches the seconds. If the seconds
@@ -967,116 +911,6 @@ void CP_ResetCampaignData (void)
 	MapDef_ForeachSingleplayerCampaign(md) {
 		md->timesAlreadyUsed = 0;
 	}
-}
-
-/**
- * @brief Determines a random position on geoscape
- * @param[out] pos The position that will be overwritten. pos[0] is within -180, +180. pos[1] within -90, +90.
- * @param[in] noWater True if the position should not be on water
- * @sa CP_GetRandomPosOnGeoscapeWithParameters
- * @note The random positions should be roughly uniform thanks to the non-uniform distribution used.
- * @note This function always returns a value.
- */
-void CP_GetRandomPosOnGeoscape (vec2_t pos, bool noWater)
-{
-	do {
-		pos[0] = (frand() - 0.5f) * 360.0f;
-		pos[1] = asin((frand() - 0.5f) * 2.0f) * todeg;
-	} while (noWater && MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)));
-
-	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscape: Get random position on geoscape %.2f:%.2f\n", pos[0], pos[1]);
-}
-
-/**
- * @brief Determines a random position on geoscape that fulfills certain criteria given via parameters
- * @param[out] pos The position that will be overwritten with the random point fulfilling the criteria. pos[0] is within -180, +180. pos[1] within -90, +90.
- * @param[in] terrainTypes A linkedList_t containing a list of strings determining the acceptable terrain types (e.g. "grass") May be nullptr.
- * @param[in] cultureTypes A linkedList_t containing a list of strings determining the acceptable culture types (e.g. "western") May be nullptr.
- * @param[in] populationTypes A linkedList_t containing a list of strings determining the acceptable population types (e.g. "suburban") May be nullptr.
- * @param[in] nations A linkedList_t containing a list of strings determining the acceptable nations (e.g. "asia"). May be nullptr
- * @return true if a location was found, otherwise false
- * @note There may be no position fitting the parameters. The higher RASTER, the lower the probability to find a position.
- * @sa LIST_AddString
- * @sa LIST_Delete
- * @note When all parameters are nullptr, the algorithm assumes that it does not need to include "water" terrains when determining a random position
- * @note You should rather use CP_GetRandomPosOnGeoscape if there are no parameters (except water) to choose a random position
- */
-bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
-{
-	float x, y;
-	int num;
-	int randomNum;
-
-	/* RASTER might reduce amount of tested locations to get a better performance */
-	/* Number of points in latitude and longitude that will be tested. Therefore, the total number of position tried
-	 * will be numPoints * numPoints */
-	const float numPoints = 360.0 / RASTER;
-	/* RASTER is minimizing the amount of locations, so an offset is introduced to enable access to all locations, depending on a random factor */
-	const float offsetX = frand() * RASTER;
-	const float offsetY = -1.0 + frand() * 2.0 / numPoints;
-	vec2_t posT;
-	int hits = 0;
-
-	/* check all locations for suitability in 2 iterations */
-	/* prepare 1st iteration */
-
-	/* ITERATION 1 */
-	for (y = 0; y < numPoints; y++) {
-		const float posY = asin(2.0 * y / numPoints + offsetY) * todeg;	/* Use non-uniform distribution otherwise we favour the poles */
-		for (x = 0; x < numPoints; x++) {
-			const float posX = x * RASTER - 180.0 + offsetX;
-
-			Vector2Set(posT, posX, posY);
-
-			if (GEO_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
-				/* the location given in pos belongs to the terrain, culture, population types and nations
-				 * that are acceptable, so count it */
-				/** @todo - cache the counted hits */
-				hits++;
-			}
-		}
-	}
-
-	/* if there have been no hits, the function failed to find a position */
-	if (hits == 0)
-		return false;
-
-	/* the 2nd iteration goes through the locations again, but does so only until a random point */
-	/* prepare 2nd iteration */
-	randomNum = num = rand() % hits;
-
-	/* ITERATION 2 */
-	for (y = 0; y < numPoints; y++) {
-		const float posY = asin(2.0 * y / numPoints + offsetY) * todeg;
-		for (x = 0; x < numPoints; x++) {
-			const float posX = x * RASTER - 180.0 + offsetX;
-
-			Vector2Set(posT, posX, posY);
-
-			if (GEO_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
-				num--;
-
-				if (num < 1) {
-					Vector2Set(pos, posX, posY);
-					Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
-						pos[0], pos[1], randomNum, hits);
-					return true;
-				}
-			}
-		}
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coordinates for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
-		pos[0], pos[1], num, hits);
-
-	/** @todo add EQUAL_EPSILON here? */
-	/* Make sure that position is within bounds */
-	assert(pos[0] >= -180);
-	assert(pos[0] <= 180);
-	assert(pos[1] >= -90);
-	assert(pos[1] <= 90);
-
-	return true;
 }
 
 int CP_GetSalaryAdministrative (const salary_t* salary)

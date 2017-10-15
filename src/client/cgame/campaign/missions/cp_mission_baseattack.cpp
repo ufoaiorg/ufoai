@@ -167,8 +167,8 @@ static void CP_BaseAttackPrepareBattle (mission_t* mission)
 	base->aircraftCurrent = &baseAttackFakeAircraft;
 	GEO_SetMissionAircraft(&baseAttackFakeAircraft);
 	/** @todo remove me - this is not needed because we are using the base->aircraftCurrent
-	 * pointer for resolving the aircraft - only CP_GameAutoGo needs this */
-	GEO_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CP_UpdateCharacterStats */
+	 * pointer for resolving the aircraft - only Autocombat needs this */
+	GEO_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CHAR_UpdateStats */
 	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
 
 	static char popupText[1024];

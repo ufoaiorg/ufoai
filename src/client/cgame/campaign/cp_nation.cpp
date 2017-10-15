@@ -33,6 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../ui/ui_main.h" /* ui_node_linechart.h */
 #include "../../ui/node/ui_node_linechart.h" /* lineStrip_t */
 
+/* nation happiness constants */
+#define HAPPINESS_ALIEN_MISSION_LOSS		-0.02
+#define HAPPINESS_MAX_MISSION_IMPACT		0.07
+
 nation_t* NAT_GetNationByIDX (const int index)
 {
 	assert(index >= 0);
@@ -228,6 +232,61 @@ bool NAT_SaveXML (xmlNode_t* p)
 		}
 	}
 	return true;
+}
+
+/**
+ * @brief Updates each nation's happiness.
+ * Should be called at the completion or expiration of every mission.
+ * The nation where the mission took place will be most affected,
+ * surrounding nations will be less affected.
+ * @todo Scoring should eventually be expanded to include such elements as
+ * infected humans and mission objectives other than xenocide.
+ */
+void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* affectedNation, const missionResults_t* results)
+{
+	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);
+	const float alienSum = (float) (results->aliensSurvived + results->aliensKilled + results->aliensStunned);
+	float performance;
+	float deltaHappiness = 0.0f;
+	float happinessDivisor = 5.0f;
+
+	/** @todo HACK: This should be handled properly, i.e. civilians should only factor into the scoring
+	 * if the mission objective is actually to save civilians. */
+	if (civilianSum == 0) {
+		Com_DPrintf(DEBUG_CLIENT, "CP_HandleNationData: Warning, civilianSum == 0, score for this mission will default to 0.\n");
+		performance = 0.0f;
+	} else {
+		/* Calculate how well the mission went. */
+		float performanceCivilian = (2 * civilianSum - results->civiliansKilled - 2
+				* results->civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
+		/** @todo The score for aliens is always negative or zero currently, but this
+		 * should be dependent on the mission objective.
+		 * In a mission that has a special objective, the amount of killed aliens should
+		 * only serve to increase the score, not reduce the penalty. */
+		float performanceAlien = results->aliensKilled + results->aliensStunned - alienSum;
+		performance = performanceCivilian + performanceAlien;
+	}
+
+	/* Calculate the actual happiness delta. The bigger the mission, the more potential influence. */
+	deltaHappiness = 0.004 * civilianSum + 0.004 * alienSum;
+
+	/* There is a maximum base happiness delta. */
+	if (deltaHappiness > HAPPINESS_MAX_MISSION_IMPACT)
+		deltaHappiness = HAPPINESS_MAX_MISSION_IMPACT;
+
+	for (int i = 0; i < ccs.numNations; i++) {
+		nation_t* nation = NAT_GetNationByIDX(i);
+		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
+		float happinessFactor;
+
+		/* update happiness. */
+		if (nation == affectedNation)
+			happinessFactor = deltaHappiness;
+		else
+			happinessFactor = deltaHappiness / happinessDivisor;
+
+		NAT_SetHappiness(minHappiness, nation, stats->happiness + performance * happinessFactor);
+	}
 }
 
 /**

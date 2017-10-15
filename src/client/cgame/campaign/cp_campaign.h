@@ -37,9 +37,6 @@ struct campaign_s;
 
 #define MAX_ASSEMBLIES	16
 
-/* fraction of nation that can be below min happiness before the game is lost */
-#define NATIONBELOWLIMITPERCENTAGE 0.5f
-
 /** @todo rename this after merging with savegame breakage branch and also change the value to -1 */
 #define	BYTES_NONE	0xFF
 
@@ -66,39 +63,10 @@ struct campaign_s;
 #include "cp_market.h"
 #include "cp_statistics.h"
 
-/* check for water */
-/* blue value is 64 */
-#define MapIsWater(color)        (color[0] ==   0 && color[1] ==   0 && color[2] ==  64)
-
-/* culture types */
-#define MapIsWestern(color)      (color[0] == 128 && color[1] == 255 && color[2] == 255)
-#define MapIsEastern(color)      (color[0] == 255 && color[1] == 128 && color[2] ==   0)
-#define MapIsOriental(color)     (color[0] == 255 && color[1] ==   0 && color[2] ==   0)
-#define MapIsAfrican(color)      (color[0] == 128 && color[1] == 128 && color[2] == 255)
-
-/* population types */
-#define MapIsUrban(color)        (color[0] == 128 && color[1] == 255 && color[2] == 255)
-#define MapIsSuburban(color)     (color[0] == 255 && color[1] == 128 && color[2] ==   0)
-#define MapIsVillage(color)      (color[0] == 255 && color[1] ==   0 && color[2] ==   0)
-#define MapIsRural(color)        (color[0] == 128 && color[1] == 128 && color[2] == 255)
-#define MapIsNopopulation(color) (color[0] == 128 && color[1] == 255 && color[2] ==   0)
-
-/* RASTER enables a better performance for CP_GetRandomPosOnGeoscapeWithParameters set it to 1-6
- * the higher the value the better the performance, but the smaller the coverage */
-#define RASTER 2
-
-/* nation happiness constants */
-#define HAPPINESS_SUBVERSION_LOSS			-0.15
-#define HAPPINESS_ALIEN_MISSION_LOSS		-0.02
-#define HAPPINESS_UFO_SALE_GAIN				0.02
-#define HAPPINESS_UFO_SALE_LOSS				0.005
-#define HAPPINESS_MAX_MISSION_IMPACT		0.07
-
 /* Maximum alien groups per alien team category */
 #define MAX_ALIEN_GROUP_PER_CATEGORY	8
 /* Maximum alien team category defined in scripts */
 #define ALIENCATEGORY_MAX	64
-#define BID_FACTOR 0.9
 #define MAX_PROJECTILESONGEOSCAPE 32
 
 /**
@@ -573,31 +541,10 @@ void CP_EndCampaign(bool won);
 void CP_Shutdown(void);
 void CP_ResetCampaignData(void);
 
-/* Mission related functions */
-int CP_CountMissionOnGeoscape(void);
-void CP_UpdateMissionVisibleOnGeoscape(void);
-bool AIR_SendAircraftToMission(aircraft_t* aircraft, mission_t* mission);
-void AIR_AircraftsNotifyMissionRemoved(const mission_t* mission);
-
-void CP_UFOProceedMission(const campaign_t* campaign, aircraft_t* ufocraft);
-mission_t* CP_CreateNewMission(interestCategory_t category, bool beginNow);
 void CP_StartSelectedMission(void);
-
-void CP_HandleNationData(float minHappiness, mission_t* mis, const nation_t* nation, const missionResults_t* results);
-void CP_UpdateCharacterStats(const base_t* base, const aircraft_t* aircraft);
 
 /* Credits management */
 bool CP_CheckCredits (int costs);
 void CP_UpdateCredits(int credits);
-
-/* Other functions */
-bool CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t* ufo);
-
-aircraft_t* AIR_NewAircraft(base_t* base, const aircraft_t* aircraftTemplate);
-
-void CP_GetRandomPosOnGeoscape(vec2_t pos, bool noWater);
-bool CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
-
-void CP_GameAutoGo(mission_t* mission, aircraft_t* aircraft, const campaign_t* campaign, const battleParam_t* battleParameters, missionResults_t* results);
 
 bool CP_OnGeoscape(void);

@@ -28,6 +28,7 @@
 #include "cp_ufo.h"
 #include "cp_aircraft.h"
 #include "cp_mapfightequip.h"
+#include "cp_missions.h"
 
 static const float MAX_DETECTING_RANGE = 25.0f; /**< range to detect and fire at phalanx aircraft */
 

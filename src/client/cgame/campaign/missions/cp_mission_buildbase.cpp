@@ -33,6 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cp_xvi.h"
 #include "../cp_alien_interest.h"
 
+#define HAPPINESS_SUBVERSION_LOSS			-0.15
+
 /**
  * This mission type has no alienbase set
  * @param mission The mission to check

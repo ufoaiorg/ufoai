@@ -236,6 +236,7 @@ void AIR_ListCraftIndexes_f(void);
 #define AIR_IsAircraftOfBase(aircraft, base) ((aircraft)->homebase == (base) && (aircraft)->status != AIR_CRASHED)
 #define AIR_Foreach(var) LIST_Foreach(ccs.aircraft, aircraft_t, var)
 
+aircraft_t* AIR_NewAircraft(struct base_s* base, const aircraft_t* aircraftTemplate);
 aircraft_t* AIR_Add(struct base_s* base, const aircraft_t* aircraftTemplate);
 bool AIR_Delete(struct base_s* base, aircraft_t* aircraft);
 
@@ -272,6 +273,7 @@ bool AIR_AircraftHasEnoughFuel(const aircraft_t* aircraft, const vec2_t destinat
 bool AIR_AircraftHasEnoughFuelOneWay(const aircraft_t* aircraft, const vec2_t destination);
 void AIR_AircraftReturnToBase(aircraft_t* aircraft);
 bool AIR_SendAircraftToMission(aircraft_t* aircraft, struct mission_s* mission);
+void AIR_AircraftsNotifyMissionRemoved(const struct mission_s* mission);
 void AIR_GetDestinationWhilePursuing(const aircraft_t* shooter, const aircraft_t* target, vec2_t dest);
 bool AIR_SendAircraftPursuingUFO(aircraft_t* aircraft, aircraft_t* ufo);
 void AIR_AircraftsNotifyUFORemoved(const aircraft_t* const ufo, bool destroyed);
