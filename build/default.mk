@@ -297,8 +297,10 @@ XVID_CFLAGS              ?=
 XVID_LIBS                ?= -lxvidcore
 endif
 ifdef HAVE_BFD_H
+ifneq ($(HAVE_LIBIBERTY_H)$(HAVE_LIBIBERTY_LIBIBERTY_H),)
 BFD_CFLAGS               ?=
 BFD_LIBS                 ?= -lbfd -liberty
+endif
 endif
 MUMBLE_LIBS              ?=
 MUMBLE_SRCS               = libs/mumble/libmumblelink.c

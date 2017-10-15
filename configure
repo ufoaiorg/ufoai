@@ -238,6 +238,8 @@ check_headers() {
 	check_header "theora/theora.h" "theora"
 	check_header "execinfo.h"
 	check_header "bfd.h"
+	check_header "libiberty.h"
+	check_header "libiberty/libiberty.h"
 	check_header "sys/utsname.h"
 	check_header "link.h"
 	check_header "jpeglib.h"
