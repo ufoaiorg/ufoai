@@ -602,7 +602,6 @@ void AIR_AircraftsNotifyMissionRemoved(const mission_t* mission);
 
 void CP_UFOProceedMission(const campaign_t* campaign, aircraft_t* ufocraft);
 mission_t* CP_CreateNewMission(interestCategory_t category, bool beginNow);
-bool CP_ChooseMap(mission_t* mission, const vec2_t pos);
 void CP_StartSelectedMission(void);
 
 void CP_HandleNationData(float minHappiness, mission_t* mis, const nation_t* nation, const missionResults_t* results);

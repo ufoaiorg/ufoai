@@ -932,6 +932,132 @@ void CP_MissionNotifyInstallationDestroyed (const installation_t* installation)
 ====================================*/
 
 /**
+ * @brief Check if a map may be selected for mission.
+ * @param[in] mission Pointer to the mission where mapDef should be added
+ * @param[in] pos position of the mission (nullptr if the position will be chosen afterwards)
+ * @param[in] md The map description data (what it is suitable for)
+ * @return false if map is not selectable
+ */
+static bool CP_MapIsSelectable (const mission_t* mission, const mapDef_t* md, const vec2_t pos)
+{
+	if (md->storyRelated)
+		return false;
+
+	if (!mission->ufo) {
+		/* a mission without UFO should not use a map with UFO */
+		if (!cgi->LIST_IsEmpty(md->ufos))
+			return false;
+	} else if (!cgi->LIST_IsEmpty(md->ufos)) {
+		/* A mission with UFO should use a map with UFO
+		 * first check that list is not empty */
+		const ufoType_t type = mission->ufo->getUfoType();
+		const char* ufoID;
+
+		if (mission->crashed)
+			ufoID = cgi->Com_UFOCrashedTypeToShortName(type);
+		else
+			ufoID = cgi->Com_UFOTypeToShortName(type);
+
+		if (!cgi->LIST_ContainsString(md->ufos, ufoID))
+			return false;
+	}
+
+	if (pos && !GEO_PositionFitsTCPNTypes(pos, md->terrains, md->cultures, md->populations, nullptr))
+		return false;
+
+	return true;
+}
+
+/**
+ * @brief Choose a map for given mission.
+ * @param[in,out] mission Pointer to the mission where a new map should be added
+ * @param[in] pos position of the mission (nullptr if the position will be chosen afterwards)
+ * @return false if could not set mission
+ */
+bool CP_ChooseMap (mission_t* mission, const vec2_t pos)
+{
+	if (mission->mapDef)
+		return true;
+
+	int countMinimal = 0;	/**< Number of maps fulfilling mission conditions and appeared less often during game. */
+	int minMapDefAppearance = -1;
+	mapDef_t* md = nullptr;
+	MapDef_ForeachSingleplayerCampaign(md) {
+		/* Check if mission fulfill conditions */
+		if (!CP_MapIsSelectable(mission, md, pos))
+			continue;
+
+		if (minMapDefAppearance < 0 || md->timesAlreadyUsed < minMapDefAppearance) {
+			minMapDefAppearance = md->timesAlreadyUsed;
+			countMinimal = 1;
+			continue;
+		}
+		if (md->timesAlreadyUsed > minMapDefAppearance)
+			continue;
+		countMinimal++;
+	}
+
+	if (countMinimal == 0) {
+		/* no map fulfill the conditions */
+		if (mission->category == INTERESTCATEGORY_RESCUE) {
+			/* default map for rescue mission is the rescue random map assembly */
+			mission->mapDef = cgi->Com_GetMapDefinitionByID("rescue");
+			if (!mission->mapDef)
+				cgi->Com_Error(ERR_DROP, "Could not find mapdef: rescue");
+			mission->mapDef->timesAlreadyUsed++;
+			return true;
+		}
+		if (mission->crashed) {
+			/* default map for crashsite mission is the crashsite random map assembly */
+			mission->mapDef = cgi->Com_GetMapDefinitionByID("ufocrash");
+			if (!mission->mapDef)
+				cgi->Com_Error(ERR_DROP, "Could not find mapdef: ufocrash");
+			mission->mapDef->timesAlreadyUsed++;
+			return true;
+		}
+
+		Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
+		Com_Printf("  ufo: %s -- pos: ", mission->ufo ? cgi->Com_UFOTypeToShortName(mission->ufo->getUfoType()) : "none");
+		if (pos)
+			Com_Printf("%s", MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)) ? " (in water) " : "");
+		if (pos)
+			Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
+		else
+			Com_Printf("none\n");
+		return false;
+	}
+
+	/* select a map randomly from the selected */
+	int randomNum = rand() % countMinimal;
+	md = nullptr;
+	MapDef_ForeachSingleplayerCampaign(md) {
+		/* Check if mission fulfill conditions */
+		if (!CP_MapIsSelectable(mission, md, pos))
+			continue;
+		if (md->timesAlreadyUsed > minMapDefAppearance)
+			continue;
+		/* There shouldn't be mission fulfilling conditions used less time than minMissionAppearance */
+		assert(md->timesAlreadyUsed == minMapDefAppearance);
+
+		if (randomNum == 0) {
+			mission->mapDef = md;
+			break;
+		} else {
+			randomNum--;
+		}
+	}
+
+	/* A mission must have been selected */
+	mission->mapDef->timesAlreadyUsed++;
+	if (cp_missiontest->integer)
+		Com_Printf("Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, countMinimal);
+	else
+		Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, countMinimal);
+
+	return true;
+}
+
+/**
  * @brief Determine what action should be performed when a mission stage ends.
  * @param[in] campaign The campaign data structure
  * @param[in] mission Pointer to the mission which stage ended.

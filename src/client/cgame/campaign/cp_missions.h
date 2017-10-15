@@ -68,6 +68,7 @@ void CP_MissionIsOver(mission_t* mission);
 void CP_MissionIsOverByUFO(aircraft_t* ufocraft);
 void CP_MissionEnd(const campaign_t* campaign, mission_t* mission, const battleParam_t* battleParameters, bool won);
 void CP_MissionEndActions(mission_t* mission, aircraft_t* aircraft, bool won);
+bool CP_ChooseMap(mission_t* mission, const vec2_t pos);
 
 void MIS_InitStartup(void);
 void MIS_Shutdown(void);
