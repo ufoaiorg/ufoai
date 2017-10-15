@@ -413,7 +413,6 @@ static inline bool CP_IsBudgetDue (const dateLong_t* oldDate, const dateLong_t* 
  * @brief Called every frame when we are in geoscape view
  * @note Called for node types cgi->UI_MAP and cgi->UI_3DMAP
  * @sa NAT_HandleBudget
- * @sa B_UpdateBaseData
  * @sa AIR_CampaignRun
  */
 void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
@@ -471,7 +470,7 @@ void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
 	while (currentmin < newmin) {
 		currentmin++;
 		PR_ProductionRun();
-		B_UpdateBaseData();
+		B_UpdateBuildingConstructions();
 	}
 
 	/* compute hourly events  */

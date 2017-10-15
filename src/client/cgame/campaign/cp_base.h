@@ -152,7 +152,7 @@ typedef struct baseTemplate_s {
 	int numBuildings;		/**< Number of buildings in this template. */
 } baseTemplate_t;
 
-void B_UpdateBaseData(void);
+void B_UpdateBuildingConstructions(void);
 float B_GetMaxBuildingLevel(const base_t* base, const buildingType_t type);
 void B_ParseBaseTemplate(const char* name, const char** text);
 void B_BaseResetStatus(base_t* const base);

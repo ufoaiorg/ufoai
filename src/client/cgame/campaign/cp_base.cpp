@@ -2227,9 +2227,8 @@ static bool B_CheckBuildingConstruction (building_t* building)
  * @brief Updates base data
  * @sa CP_CampaignRun
  * @note called every "day"
- * @sa AIRFIGHT_ProjectileHitsBase
  */
-void B_UpdateBaseData (void)
+void B_UpdateBuildingConstructions (void)
 {
 	base_t* base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {

@@ -1100,12 +1100,12 @@ TEST_F(CampaignTest, testBuildingConstruction)
 	ASSERT_TRUE(nullptr == building2);
 	/* roll time one day before building finishes */
 	ccs.date.day += building1->buildTime - 1;
-	B_UpdateBaseData();
+	B_UpdateBuildingConstructions();
 	/* building should be under construction */
 	ASSERT_EQ(building1->buildingStatus, B_STATUS_UNDER_CONSTRUCTION);
 	/* step a day */
 	ccs.date.day++;
-	B_UpdateBaseData();
+	B_UpdateBuildingConstructions();
 	/* building should be ready */
 	ASSERT_EQ(building1->buildingStatus, B_STATUS_WORKING);
 
@@ -1123,7 +1123,7 @@ TEST_F(CampaignTest, testBuildingConstruction)
 	ASSERT_FALSE(B_BuildingDestroy(building1));
 	/* build up the second */
 	ccs.date.day += building2->buildTime;
-	B_UpdateBaseData();
+	B_UpdateBuildingConstructions();
 	/* try to destroy the first (should fail) */
 	ASSERT_FALSE(B_BuildingDestroy(building1));
 	/* try to destroy the second (should succeess) */
