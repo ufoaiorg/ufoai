@@ -44,6 +44,7 @@ struct campaign_s;
 #define	BYTES_NONE	0xFF
 
 #include "cp_cgame_callbacks.h"
+#include "cp_alien_interest.h"
 #include "cp_rank.h"
 #include "cp_save.h"
 #include "cp_parse.h"
@@ -143,28 +144,6 @@ typedef enum missionDetectionStatus_s {
 	MISDET_ALWAYS_DETECTED,			/**< Mission is seen on geoscape, whatever it's position */
 	MISDET_MAY_BE_DETECTED			/**< Mission may be seen on geoscape, if a probability test is done */
 } missionDetectionStatus_t;
-
-/** possible campaign interest categories: type of missions that aliens can undertake */
-typedef enum interestCategory_s {
-	INTERESTCATEGORY_NONE,			/**< No mission */
-	INTERESTCATEGORY_RECON,			/**< Aerial recon mission or ground mission (UFO may or not land) */
-	INTERESTCATEGORY_TERROR_ATTACK,	/**< Terror attack */
-	INTERESTCATEGORY_BASE_ATTACK,	/**< Alien attack a phalanx base */
-	INTERESTCATEGORY_BUILDING,		/**< Alien build a new base or subverse governments */
-	INTERESTCATEGORY_SUBVERT,		/**< pseudo mission type for subverse governments */
-	INTERESTCATEGORY_SUPPLY,		/**< Alien supply one of their bases */
-	INTERESTCATEGORY_XVI,			/**< Alien try to spread XVI */
-	INTERESTCATEGORY_INTERCEPT,		/**< Alien try to intercept PHALANX aircraft */
-	INTERESTCATEGORY_INTERCEPTBOMBING,	/**< Alien try to attack PHALANX installation. A subtype of INTERCEPT */
-	INTERESTCATEGORY_HARVEST,		/**< Alien try to harvest */
-	INTERESTCATEGORY_ALIENBASE,		/**< Alien base already built on earth
-									 * @note This is not a mission alien can undertake, but the result of
-									 * INTERESTCATEGORY_BUILDING */
-	INTERESTCATEGORY_UFOCARRIER,	/**< UFO-Carrier is detected */
-	INTERESTCATEGORY_RESCUE,
-
-	INTERESTCATEGORY_MAX
-} interestCategory_t;
 
 /** possible stage for campaign missions (i.e. possible actions for UFO) */
 typedef enum missionStage_s {
