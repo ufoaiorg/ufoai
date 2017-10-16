@@ -30,7 +30,11 @@ ufo_LDFLAGS              += -lws2_32 -lwinmm -lgdi32 -lfreetype -mwindows
 ufoded_LDFLAGS           += -lws2_32 -lwinmm -lgdi32 -mwindows
 testall_LDFLAGS          += -lws2_32 -lwinmm -lgdi32 -lfreetype
 ifdef HAVE_BFD_H
+ifneq ($(HAVE_LIBIBERTY_H)$(HAVE_LIBIBERTY_LIBIBERTY_H),)
     BFD_LIBS             := -lbfd -liberty -limagehlp
+else
+    BFD_LIBS             := -lbfd -limagehlp
+endif
 endif
 ufo2map_LDFLAGS          += -lwinmm
 ufomodel_LDFLAGS         += -lwinmm
