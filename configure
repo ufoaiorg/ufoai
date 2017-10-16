@@ -237,9 +237,11 @@ check_headers() {
 	check_header "xvid.h"
 	check_header "theora/theora.h" "theora"
 	check_header "execinfo.h"
-	check_header "bfd.h"
 	check_header "libiberty.h"
 	check_header "libiberty/libiberty.h"
+	if [ "$HAVE_LIBIBERTY_H" == "1" -o "$HAVE_LIBIBERTY_LIBIBERTY_H" == "1" ]; then
+		check_header "bfd.h"
+	fi
 	check_header "sys/utsname.h"
 	check_header "link.h"
 	check_header "jpeglib.h"
