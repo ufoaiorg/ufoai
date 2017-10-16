@@ -796,10 +796,10 @@ base/media/JuraMedium.ttf | Open Font License v1.1  | Daniel Johnson | Parts cov
 base/media/languages.ttf | GNU General Public License 2.0 | UFOAI team | Derivative work from Norasi and wqy-zenhei
 base/media/Loma.ttf | GNU General Public License 2.0 or later with font embedding exception | NECTEC, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
 base/media/Norasi.ttf | GNU General Public License 2.0 or later with font embedding exception | National Font Project, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
-base/media/ufofan-black.ttf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
-base/media/ufofan-bold.ttf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
-base/media/ufofan-light.ttf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
-base/media/ufofan-medium.ttf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
+base/media/ufofan-black.otf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
+base/media/ufofan-bold.otf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
+base/media/ufofan-light.otf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
+base/media/ufofan-medium.otf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
 base/media/ume-pgo4.ttf | Free (See umefont-readme_license.html) | Wada Laboratory, the University of Tokyo; Electronic Font Open Laboratory | http://ume-font.sourceforge.jp
 base/media/UnDinaruBold.ttf | GNU General Public License 2.0 | Koaunghi Un, Won-kyu Park, Jungshik Shin | http://kldp.net/projects/unfonts/
 base/media/UnGraphicBold.ttf | GNU General Public License 2.0 | Koaunghi Un, Won-kyu Park, Jungshik Shin | http://kldp.net/projects/unfonts/
