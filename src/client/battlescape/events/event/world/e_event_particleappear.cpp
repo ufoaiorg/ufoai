@@ -31,7 +31,7 @@ int CL_ParticleAppearTime (const struct eventRegister_s* self, dbuffer* msg, eve
 {
 	if (eventTiming->parsedShot) {
 		if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
-			return eventTiming->impactTime + 400;
+			return eventTiming->impactTime + 1400;
 		} else if (eventTiming->impactTime > cl.time) { /* item thrown on the ground */
 			return eventTiming->impactTime + 75;
 		}
