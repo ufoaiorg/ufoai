@@ -790,9 +790,9 @@ base/media/FreeMono.ttf | GNU General Public License 3.0 or later | GNU FreeFont
 base/media/FreeSans.ttf | GNU General Public License 3.0 or later | GNU FreeFont Project | http://savannah.nongnu.org/projects/freefont/
 base/media/FreeSerif.ttf | GNU General Public License 3.0 or later | GNU FreeFont Project | http://savannah.nongnu.org/projects/freefont/
 base/media/JuraBook.ttf | Open Font License v1.1 | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
-base/media/JuraDemiBold.ttf | Open Font License v1.1  | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
-base/media/JuraLight.ttf | Open Font License v1.1  | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
-base/media/JuraMedium.ttf | Open Font License v1.1  | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
+base/media/JuraDemiBold.ttf | Open Font License v1.1 | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
+base/media/JuraLight.ttf | Open Font License v1.1 | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
+base/media/JuraMedium.ttf | Open Font License v1.1 | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
 base/media/languages.ttf | GNU General Public License 2.0 | UFOAI team | Derivative work from Norasi and wqy-zenhei
 base/media/Loma.ttf | GNU General Public License 2.0 or later with font embedding exception | NECTEC, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
 base/media/Norasi.ttf | GNU General Public License 2.0 or later with font embedding exception | National Font Project, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
@@ -2838,7 +2838,7 @@ base/pics/banks/checkbox.png | Public Domain | Nate Wright | mods/ui2/pics/banks
 base/pics/banks/checkbox_blue.png | GNU General Public License 2.0 or later | MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/checkbox_green.png | GNU General Public License 2.0 or later | bayo;MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack1.png | GNU General Public License 2.0 or later | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
-base/pics/banks/pack2.png | GNU General Public License 2.0 or later | cooler_sk | based on images from MCR | based on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/banks/pack2.png | GNU General Public License 2.0 or later | cooler_sk | based on images from MCR based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack3.png | GNU General Public License 2.0 or later | Nate Wright | based on pack2.png images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack_hud.png | GNU General Public License 2.0 or later
 base/pics/banks/pack_hud2.png | GNU General Public License 2.0 or later
@@ -3184,8 +3184,8 @@ base/pics/icons/mail_alien.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_artifact.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_event.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_intelligence.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/mail_read.png | GNU General Public License 2.0 or later | Igor Gritsenko | Based on work by Christian "Crystan" Hoffmann | Based on original menu artwork by SparX and Rasta
-base/pics/icons/mail_read_hovered.png | GNU General Public License 2.0 or later | Igor Gritsenko | Based on work by Christian "Crystan" Hoffmann | Based on original menu artwork by SparX and Rasta
+base/pics/icons/mail_read.png | GNU General Public License 2.0 or later | Igor Gritsenko | Based on work by Christian "Crystan" Hoffmann Based on original menu artwork by SparX and Rasta
+base/pics/icons/mail_read_hovered.png | GNU General Public License 2.0 or later | Igor Gritsenko | Based on work by Christian "Crystan" Hoffmann Based on original menu artwork by SparX and Rasta
 base/pics/icons/mail_tech.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_un.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/map_prev.png | Public Domain | Nate Wright | mods/ui2/pics/icons/map_prev.png by Nate Wright
@@ -4571,12 +4571,12 @@ base/textures/tex_buildings/concrete021.png | GNU General Public License 2.0 | W
 base/textures/tex_buildings/concrete022.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete022_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete023.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_buildings/concrete024.png | Creative Commons Attribution-Share Alike 3.0 Unported  | AGF81 | http://agf81.deviantart.com/
-base/textures/tex_buildings/concrete024_nm.png | Creative Commons Attribution-Share Alike 3.0 Unported  | AGF81 | http://agf81.deviantart.com/
-base/textures/tex_buildings/concrete_slabs01.png | Creative Commons Attribution-Share Alike 3.0 Unported  | AGF81 | http://agf81.deviantart.com/
-base/textures/tex_buildings/concrete_slabs01_nm.png | Creative Commons Attribution-Share Alike 3.0 Unported  | AGF81 | http://agf81.deviantart.com/
-base/textures/tex_buildings/concrete_slabs02.png | Creative Commons Attribution-Share Alike 3.0 Unported  | AGF81 | http://agf81.deviantart.com/
-base/textures/tex_buildings/concrete_slabs02_nm.png | Creative Commons Attribution-Share Alike 3.0 Unported  | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/concrete024.png | Creative Commons Attribution-Share Alike 3.0 Unported | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/concrete024_nm.png | Creative Commons Attribution-Share Alike 3.0 Unported | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/concrete_slabs01.png | Creative Commons Attribution-Share Alike 3.0 Unported | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/concrete_slabs01_nm.png | Creative Commons Attribution-Share Alike 3.0 Unported | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/concrete_slabs02.png | Creative Commons Attribution-Share Alike 3.0 Unported | AGF81 | http://agf81.deviantart.com/
+base/textures/tex_buildings/concrete_slabs02_nm.png | Creative Commons Attribution-Share Alike 3.0 Unported | AGF81 | http://agf81.deviantart.com/
 base/textures/tex_buildings/crate_drtyow.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/crate_drtyow_sign.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -6354,7 +6354,7 @@ base/textures/tex_nature/grass_tall_green_a.jpg | GNU General Public License 2.0
 base/textures/tex_nature/grass_tall_green_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_tall_green_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/hedge001.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0  - modified by eleazar
-base/textures/tex_nature/hedge001_nm.png | GNU General Public License 2.0 |  Holger "ShipIt" Gellrich | base/textures/tex_nature/hedge001.jpg
+base/textures/tex_nature/hedge001_nm.png | GNU General Public License 2.0 | Holger "ShipIt" Gellrich | base/textures/tex_nature/hedge001.jpg
 base/textures/tex_nature/ice001.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_nature/ice001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/ice002.png | GNU General Public License 2.0 or later | Nobiax, Nate Wright
@@ -6960,10 +6960,6 @@ base/textures/tex_vehicles/truck_c_mq.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c_mq_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_d.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
-contrib/7th.zip |  | 2002 Iconian Fonts - Daniel Zadorozny - http://www.iconian.com/
-contrib/licenses/resources/grid.png | Public Domain
-contrib/scripts/compile_po.bat |  | Kostia "Kildor" Romanov
-contrib/scripts/update_potfiles_in.bat |  | Kostia "Kildor" Romanov
 radiant/bitmaps/grid_window.png | GNU General Public License 2.0 or later | Nate Wright
 radiant/bitmaps/particle_map.png | GNU General Public License 2.0 or later | Nate Wright
 radiant/bitmaps/particle_weapon.png | GNU General Public License 2.0 or later | Nate Wright
