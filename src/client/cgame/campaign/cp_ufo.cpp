@@ -29,6 +29,7 @@
 #include "cp_aircraft.h"
 #include "cp_mapfightequip.h"
 #include "cp_missions.h"
+#include "cp_ufo_callbacks.h"
 
 static const float MAX_DETECTING_RANGE = 25.0f; /**< range to detect and fire at phalanx aircraft */
 
@@ -995,15 +996,32 @@ bool UFO_IsUFOSeenOnGeoscape (const aircraft_t* ufo)
 	return seen;
 }
 
+static const cmdList_t ufoDebugCallbacks[] = {
+#ifdef DEBUG
+	{"debug_destroyufos", UFO_DestroyUFOs_f, "Destroys all UFOs on the geoscape"},
+	{"debug_listufo", UFO_ListOnGeoscape_f, "Print UFO information to game console"},
+	{"debug_removeufo", UFO_RemoveFromGeoscape_f, "Remove a UFO from geoscape"},
+#endif
+	{nullptr, nullptr, nullptr}
+};
+
 /**
- * @sa UI_InitStartup
+ * @brief Init actions for ufo-subsystem
  */
 void UFO_InitStartup (void)
 {
+	UFO_InitCallbacks();
+	cgi->Cmd_TableAddList(ufoDebugCallbacks);
 #ifdef DEBUG
-	cgi->Cmd_AddCommand("debug_destroyufos", UFO_DestroyUFOs_f, "Destroys all UFOs on the geoscape");
-	cgi->Cmd_AddCommand("debug_listufo", UFO_ListOnGeoscape_f, "Print UFO information to game console");
-	cgi->Cmd_AddCommand("debug_removeufo", UFO_RemoveFromGeoscape_f, "Remove a UFO from geoscape");
 	cgi->Cvar_Get("debug_showufos", "0", CVAR_DEVELOPER, "Show all UFOs on geoscape");
 #endif
+}
+
+/**
+ * @brief Closing actions for ufo-subsystem
+ */
+void UFO_Shutdown (void)
+{
+	UFO_ShutdownCallbacks();
+	cgi->Cmd_TableRemoveList(ufoDebugCallbacks);
 }

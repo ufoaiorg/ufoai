@@ -326,8 +326,7 @@ typedef enum mapAction_s {
 	MA_NEWBASE,				/**< build a new base */
 	MA_NEWINSTALLATION,		/**< build a new installation */
 	MA_INTERCEPT,			/**< intercept */
-	MA_BASEATTACK,			/**< base attacking */
-	MA_UFORADAR				/**< ufos are in our radar */
+	MA_BASEATTACK			/**< base attacking */
 } mapAction_t;
 
 typedef void (*missionSpawnFunction_t) (void);

@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_geoscape.h"
 #include "cp_missions.h"
 #include "cp_auto_mission.h"
+#include "cp_popup.h"
 
 /**
  * @brief Callback function to start automission
@@ -141,9 +142,30 @@ void MIS_InitResultScreen (const missionResults_t* results)
 	cgi->UI_RegisterLinkedListText(TEXT_LIST2, list);
 }
 
+/**
+ * @brief Select mission on Geoscape
+ */
+static void MIS_GeoSelectMission_f (void)
+{
+	if (cgi->Cmd_Argc() < 2) {
+		return;
+	}
+
+	const int index = atoi(cgi->Cmd_Argv(1));
+	mission_t* mission = MIS_GetByIdx(index);
+	if (mission == nullptr)
+		return;
+
+	if (!GEO_IsMissionSelected(mission))
+		GEO_SelectMission(mission);
+	/** @todo Move this popup from cp_popup and rebuild */
+	CL_DisplayPopupInterceptMission(mission);
+}
+
 static const cmdList_t missionCallbacks[] = {
 	{"cp_missionauto_check", AM_Check_f, "Checks whether this mission can be done automatically"},
 	{"cp_mission_autogo", AM_Go_f, "Let the current selection mission be done automatically"},
+	{"geo_mission_select", MIS_GeoSelectMission_f, nullptr},
 	{nullptr, nullptr, nullptr}
 };
 /**

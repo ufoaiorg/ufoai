@@ -826,6 +826,7 @@ void CP_Shutdown (void)
 {
 	if (CP_IsRunning()) {
 		AB_Shutdown();
+		UFO_Shutdown();
 		AIR_Shutdown();
 		INS_Shutdown();
 		INT_Shutdown();

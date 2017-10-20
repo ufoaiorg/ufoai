@@ -1,0 +1,227 @@
+--!usr/bin/lua
+
+--[[
+-- @file
+-- @brief Geoscape popup windows
+--]]
+
+--[[
+Copyright (C) 2002-2017 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+
+do
+	local window = ufox.build_window({
+		name = "popup_geoscape_selection",
+		class = "window",
+		super = "ipopup",
+		pos = {264, 262},
+		size = {496, 218},
+		--modal = true,
+
+		{
+			name = "title",
+			class = "string",
+			width = 496,
+			text = "_Select item",
+		},
+
+		{
+			name = "type_label",
+			class = "string",
+			text = "_Type:",
+			pos = {26, 48},
+			size = {150, 20},
+			font = "f_normal",
+		},
+
+		{
+			name = "name_label",
+			class = "string",
+			text = "_Name:",
+			pos = {176, 48},
+			size = {150, 20},
+			font = "f_normal",
+		},
+
+		{
+			name = "selection_list",
+			class = "panel",
+			pos = {26, 78},
+			size = {440, 100},
+			backgroundcolor = {0, 0, 0, 0.5},
+			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+			layoutmargin = 5,
+
+			clear = function (sender)
+				sender:remove_children()
+			end,
+
+			add = function (sender, object_type, object_id, object_description)
+				local type_name_map = {
+					mission      = "_Missions",
+					base         = "_Base",
+					installation = "_Installation",
+					aircraft     = "_Aircraft",
+					ufo          = "_UFO Sighting",
+				}
+
+				local new_node = ufox.build({
+					name = object_type .. '_' .. object_id,
+					class = "panel",
+					size = {440, 20},
+
+					on_mouseenter = function (sender)
+						sender:child("type_text"):set_color(1, 1, 1, 1)
+						sender:child("description"):set_color(1, 1, 1, 1)
+					end,
+
+					on_mouseleave = function (sender)
+						sender:child("type_text"):set_color(1, 1, 1, 0.5)
+						sender:child("description"):set_color(1, 1, 1, 0.5)
+					end,
+
+					select = function (sender)
+						local object_type = sender:child("type"):as_string()
+						local object_id = sender:child("id"):as_integer()
+
+						if (object_type == "mission") then
+							ufo.pop_window(false)
+							ufo.cmd(string.format("geo_mission_select %q", object_id))
+						elseif (object_type == "base") then
+							ufo.pop_window(false)
+							ufo.cmd(string.format("mn_base_select %q", object_id))
+						elseif (object_type == "installation") then
+							ufo.pop_window(false)
+							ufo.cmd(string.format("mn_installation_select %q", object_id))
+						elseif (object_type == "aircraft") then
+							ufo.pop_window(false)
+							ufo.cmd(string.format("geo_aircraft_select %q", object_id))
+						elseif (object_type == "ufo") then
+							ufo.pop_window(false)
+							ufo.cmd(string.format("geo_ufo_select %q", object_id))
+						end
+					end,
+
+					on_click = function (sender)
+						sender:select()
+					end,
+
+					{
+						name = "type",
+						class = "data",
+						value = object_type,
+					},
+
+					{
+						name = "id",
+						class = "data",
+						value = object_id,
+					},
+
+					{
+						name = "type_text",
+						class = "string",
+						pos = {0, 0},
+						size = {150,20},
+						text = type_name_map[object_type],
+						ghost = true,
+						color = {1, 1, 1, 0.5},
+					},
+
+					{
+						name = "description",
+						class = "string",
+						pos = {150, 0},
+						size = {290, 20},
+						text = object_description,
+						ghost = true,
+						color = {1, 1, 1, 0.5},
+					},
+				}, sender)
+			end,
+
+			on_viewchange = function (sender)
+				local scrollbar = sender:parent():child("selection_list_scrollbar")
+				scrollbar:set_fullsize(sender:fullsize())
+				scrollbar:set_current(sender:viewpos())
+				scrollbar:set_viewsize(sender:viewsize())
+			end,
+		},
+
+		{
+			name = "selection_list_scrollbar",
+			class = "vscrollbar",
+			image = "ui/scrollbar_v",
+			pos = {466, 78},
+			height = 100,
+			current = 0,
+			viewsize = 8,
+			fullsize = 0,
+			autoshowscroll = true,
+
+			on_change = function (sender)
+				local panel = sender:parent():child("selection_list")
+				panel:set_viewpos(sender:current())
+			end
+		},
+
+		{
+			name = "cancel",
+			class = "MainMenuCancelBtn",
+			pos = {316, 188},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.cmd("mn_mapaction_reset;")
+				ufo.pop_window(false);
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+		{
+			name = "ui_clear_geoscape_selection",
+			class = "confunc",
+
+			on_click = function (sender)
+				sender:root():child("selection_list"):clear()
+			end,
+		},
+
+		{
+			name = "ui_add_geoscape_selection",
+			class = "confunc",
+
+			on_click = function (sender, object_type, object_id, object_type_name, object_description)
+				sender:root():child("selection_list"):add(object_type, object_id, object_type_name, object_description)
+			end,
+		},
+
+		on_windowopened = function (sender)
+			local list = sender:child("selection_list")
+			if (list:first() == list:last()) then
+				list:first():select()
+			end
+		end,
+	})
+end

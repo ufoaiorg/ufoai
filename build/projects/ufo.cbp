@@ -457,6 +457,8 @@
 		<Unit filename="../../src/client/cgame/campaign/cp_transfer_callbacks.h" />
 		<Unit filename="../../src/client/cgame/campaign/cp_ufo.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_ufo.h" />
+		<Unit filename="../../src/client/cgame/campaign/cp_ufo_callbacks.cpp" />
+		<Unit filename="../../src/client/cgame/campaign/cp_ufo_callbacks.h" />
 		<Unit filename="../../src/client/cgame/campaign/cp_ufopedia.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_ufopedia.h" />
 		<Unit filename="../../src/client/cgame/campaign/cp_uforecovery.cpp" />

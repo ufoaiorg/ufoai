@@ -273,9 +273,30 @@ static void AIR_ChangeAircraftName_f (void)
 	Q_strncpyz(aircraft->name, newName, sizeof(aircraft->name));
 }
 
+/**
+ * @brief Select aircraft on Geoscape
+ */
+static void AIR_GeoSelectAircraft_f (void)
+{
+	if (cgi->Cmd_Argc() < 2) {
+		return;
+	}
+
+	const int index = atoi(cgi->Cmd_Argv(1));
+	aircraft_t* aircraft = AIR_AircraftGetFromIDX(index);
+	if (aircraft == nullptr)
+		return;
+
+	if (!GEO_IsAircraftSelected(aircraft))
+		GEO_SelectAircraft(aircraft);
+	/** @todo Move this popup from cp_popup and rebuild */
+	CL_DisplayPopupAircraft(aircraft);
+}
+
 static const cmdList_t aircraftCallbacks[] = {
 	{"aircraft_start", AIM_AircraftStart_f, nullptr},
 	{"ui_aircraft_select", AIM_SelectAircraft_f, nullptr},
+	{"geo_aircraft_select", AIR_GeoSelectAircraft_f, nullptr},
 	{"aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase."},
 	{"ui_aircraft_changename", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft."},
 	{"ui_aircraft_fill", AIR_AircraftFillList_f, "Send the data for all the aircraft."},

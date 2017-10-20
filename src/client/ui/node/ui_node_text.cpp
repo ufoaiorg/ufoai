@@ -596,11 +596,7 @@ void UI_RegisterTextNode (uiBehaviour_t* behaviour)
 	/* Text of the current selected line */
 	UI_RegisterExtradataNodeProperty(behaviour, "textselected", V_CVAR_OR_STRING, textExtraData_t, textSelected);
 
-	/* One of the list TEXT_STANDARD, TEXT_LIST, TEXT_UFOPEDIA, TEXT_BUILDINGS,
-	 * TEXT_BUILDING_INFO, TEXT_RESEARCH, TEXT_RESEARCH_INFO, TEXT_POPUP,
-	 * TEXT_POPUP_INFO, TEXT_AIRCRAFT_LIST, TEXT_AIRCRAFT, TEXT_AIRCRAFT_INFO,
-	 * TEXT_MESSAGESYSTEM, TEXT_CAMPAIGN_LIST, TEXT_MULTISELECTION.
-	 * There are more IDs in use - see ui_data.h for an up-to-date list.
+	/* One of the list TEXT_* @sa Tui_data.h for an up-to-date list.
 	 * Display a shared content registered by the client code.
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "dataid", V_UI_DATAID, textExtraData_t, dataID);

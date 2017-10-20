@@ -240,6 +240,7 @@
 		<Unit filename="../../src/client/cgame/campaign/cp_transfer.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_transfer_callbacks.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_ufo.cpp" />
+		<Unit filename="../../src/client/cgame/campaign/cp_ufo_callbacks.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_ufopedia.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_uforecovery.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_uforecovery_callbacks.cpp" />

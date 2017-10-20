@@ -44,46 +44,6 @@ static cvar_t* debug_showInterest;
 #define GLOBE_ROTATE -90
 #define ZOOM_LIMIT	2.5f
 
-/*
-==============================================================
-MULTI SELECTION DEFINITION
-==============================================================
-*/
-
-#define MULTISELECT_MAXSELECT 6	/**< Maximal count of elements that can be selected at once */
-
-/**
- * @brief Types of elements that can be selected on the map
- */
-typedef enum {
-	MULTISELECT_TYPE_BASE,
-	MULTISELECT_TYPE_INSTALLATION,
-	MULTISELECT_TYPE_MISSION,
-	MULTISELECT_TYPE_AIRCRAFT,
-	MULTISELECT_TYPE_UFO,
-	MULTISELECT_TYPE_NONE
-} multiSelectType_t;
-
-
-/**
- * @brief Structure to manage the multi selection
- */
-typedef struct multiSelect_s {
-	int nbSelect;						/**< Count of currently selected elements */
-	multiSelectType_t selectType[MULTISELECT_MAXSELECT];	/**< Type of currently selected elements */
-	int selectId[MULTISELECT_MAXSELECT];	/**< Identifier of currently selected element */
-	char popupText[2048];				/**< Text to display in popup_multi_selection menu */
-} multiSelect_t;
-
-static multiSelect_t multiSelect;	/**< Data to manage the multi selection */
-
-
-/*
-==============================================================
-STATIC DEFINITION
-==============================================================
-*/
-
 /* Functions */
 static bool GEO_IsPositionSelected(const uiNode_t* node, const vec2_t pos, int x, int y);
 
@@ -121,118 +81,6 @@ CLICK ON MAP and MULTI SELECTION FUNCTIONS
 ==============================================================
 */
 
-/**
- * @brief Add an element in the multiselection list
- */
-static void GEO_MultiSelectListAddItem (multiSelectType_t itemType, int itemID,
-	const char* itemDescription, const char* itemName)
-{
-	Q_strcat(multiSelect.popupText, sizeof(multiSelect.popupText), "%s\t%s\n", itemDescription, itemName);
-	multiSelect.selectType[multiSelect.nbSelect] = itemType;
-	multiSelect.selectId[multiSelect.nbSelect] = itemID;
-	multiSelect.nbSelect++;
-}
-
-/**
- * @brief Execute action for 1 element of the multi selection
- * Param cgi->Cmd_Argv(1) is the element selected in the popup_multi_selection menu
- */
-static void GEO_MultiSelectExecuteAction_f (void)
-{
-	int selected, id;
-	aircraft_t* aircraft;
-	bool multiSelection = false;
-
-	if (cgi->Cmd_Argc() < 2) {
-		/* Direct call from code, not from a popup menu */
-		selected = 0;
-	} else {
-		/* Call from a geoscape popup menu (popup_multi_selection) */
-		cgi->UI_PopWindow(false);
-		selected = atoi(cgi->Cmd_Argv(1));
-		multiSelection = true;
-	}
-
-	if (selected < 0 || selected >= multiSelect.nbSelect)
-		return;
-	id = multiSelect.selectId[selected];
-
-	/* Execute action on element */
-	switch (multiSelect.selectType[selected]) {
-	case MULTISELECT_TYPE_BASE:	/* Select a base */
-		if (id >= B_GetCount())
-			break;
-		GEO_ResetAction();
-		B_SelectBase(B_GetFoundedBaseByIDX(id));
-		break;
-	case MULTISELECT_TYPE_INSTALLATION: {
-		/* Select an installation */
-		installation_t* ins = INS_GetByIDX(id);
-		if (ins) {
-			GEO_ResetAction();
-			INS_SelectInstallation(ins);
-		}
-		break;
-	}
-	case MULTISELECT_TYPE_MISSION: {
-		mission_t* mission = GEO_GetSelectedMission();
-		/* Select a mission */
-		if (ccs.mapAction == MA_INTERCEPT && mission && mission == MIS_GetByIdx(id)) {
-			CL_DisplayPopupInterceptMission(mission);
-			return;
-		}
-		mission = GEO_SelectMission(MIS_GetByIdx(id));
-		if (multiSelection) {
-			/* if we come from a multiSelection menu, there is no need to open this popup twice to go to a mission */
-			CL_DisplayPopupInterceptMission(mission);
-			return;
-		}
-		break;
-	}
-	case MULTISELECT_TYPE_AIRCRAFT: /* Selection of an aircraft */
-		aircraft = AIR_AircraftGetFromIDX(id);
-		if (aircraft == nullptr) {
-			Com_DPrintf(DEBUG_CLIENT, "GEO_MultiSelectExecuteAction: selection of an unknown aircraft idx %i\n", id);
-			return;
-		}
-
-		if (GEO_IsAircraftSelected(aircraft)) {
-			/* Selection of an already selected aircraft */
-			CL_DisplayPopupAircraft(aircraft);	/* Display popup_aircraft */
-		} else {
-			/* Selection of an unselected aircraft */
-			GEO_SelectAircraft(aircraft);
-			if (multiSelection)
-				/* if we come from a multiSelection menu, there is no need to open this popup twice to choose an action */
-				CL_DisplayPopupAircraft(aircraft);
-		}
-		break;
-	case MULTISELECT_TYPE_UFO : /* Selection of a UFO */
-		/* Get the ufo selected */
-		if (id < 0 || id >= ccs.numUFOs)
-			return;
-		aircraft = UFO_GetByIDX(id);
-
-		if (GEO_IsUFOSelected(aircraft)) {
-			/* Selection of a already selected ufo */
-			CL_DisplayPopupInterceptUFO(aircraft);
-		} else {
-			/* Selection of a unselected ufo */
-			GEO_SelectUFO(aircraft);
-			if (multiSelection)
-				/* if we come from a multiSelection menu, there is no need to open this popup twice to choose an action */
-				CL_DisplayPopupInterceptUFO(GEO_GetSelectedUFO());
-		}
-		break;
-	case MULTISELECT_TYPE_NONE :	/* Selection of an element that has been removed */
-		break;
-	default:
-		Com_DPrintf(DEBUG_CLIENT, "GEO_MultiSelectExecuteAction: selection of an unknown element type %i\n",
-				multiSelect.selectType[selected]);
-		break;
-	}
-}
-
 bool GEO_IsRadarOverlayActivated (void)
 {
 	return cgi->Cvar_GetInteger("geo_overlay_radar");
@@ -257,9 +105,6 @@ static inline bool GEO_IsXVIOverlayActivated (void)
  */
 bool GEO_Click (const uiNode_t* node, int x, int y, const vec2_t pos)
 {
-	aircraft_t* ufo;
-	base_t* base;
-
 	switch (ccs.mapAction) {
 	case MA_NEWBASE:
 		/* new base construction */
@@ -283,62 +128,65 @@ bool GEO_Click (const uiNode_t* node, int x, int y, const vec2_t pos)
 			return true;
 		}
 		break;
-	case MA_UFORADAR:
-		cgi->UI_PushWindow("popup_intercept_ufo");
-		break;
 	default:
 		break;
 	}
 
 	/* Init data for multi selection */
-	multiSelect.nbSelect = 0;
-	OBJZERO(multiSelect.popupText);
+	cgi->UI_ExecuteConfunc("ui_clear_geoscape_selection");
+	int selection_count = 0;
 	/* Get selected missions */
 	MIS_Foreach(tempMission) {
-		if (multiSelect.nbSelect >= MULTISELECT_MAXSELECT)
-			break;
 		if (tempMission->stage == STAGE_NOT_ACTIVE || !tempMission->onGeoscape)
 			continue;
-		if (tempMission->pos && GEO_IsPositionSelected(node, tempMission->pos, x, y))
-			GEO_MultiSelectListAddItem(MULTISELECT_TYPE_MISSION, MIS_GetIdx(tempMission), _("Mission"), MIS_GetName(tempMission));
+		if (!tempMission->pos || !GEO_IsPositionSelected(node, tempMission->pos, x, y))
+			continue;
+		cgi->UI_ExecuteConfunc("ui_add_geoscape_selection \"%s\" \"%d\" \"%s\"",
+			"mission", MIS_GetIdx(tempMission), MIS_GetName(tempMission));
+		++selection_count;
 	}
 
 	/* Get selected aircraft which belong */
 	AIR_Foreach(aircraft) {
-		if (AIR_IsAircraftOnGeoscape(aircraft) && aircraft->fuel > 0 && GEO_IsPositionSelected(node, aircraft->pos, x, y))
-			GEO_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
+		if (AIR_IsAircraftOnGeoscape(aircraft) && aircraft->fuel > 0 && GEO_IsPositionSelected(node, aircraft->pos, x, y)) {
+			cgi->UI_ExecuteConfunc("ui_add_geoscape_selection \"%s\" \"%d\" \"%s\"",
+				"aircraft", aircraft->idx, aircraft->name);
+			++selection_count;
+		}
 	}
 
 	/* Get selected bases */
-	base = nullptr;
-	while ((base = B_GetNext(base)) != nullptr && multiSelect.nbSelect < MULTISELECT_MAXSELECT) {
-		if (GEO_IsPositionSelected(node, base->pos, x, y))
-			GEO_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, base->idx, _("Base"), base->name);
+	base_t* base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
+		if (!GEO_IsPositionSelected(node, base->pos, x, y))
+			continue;
+		cgi->UI_ExecuteConfunc("ui_add_geoscape_selection \"%s\" \"%d\" \"%s\"",
+			"base", base->idx, base->name);
+		++selection_count;
 	}
 
 	/* Get selected installations */
 	INS_Foreach(installation) {
-		if (multiSelect.nbSelect >= MULTISELECT_MAXSELECT)
-			break;
-		if (GEO_IsPositionSelected(node, installation->pos, x, y))
-			GEO_MultiSelectListAddItem(MULTISELECT_TYPE_INSTALLATION, installation->idx, _("Installation"), installation->name);
+		if (!GEO_IsPositionSelected(node, installation->pos, x, y))
+			continue;
+		cgi->UI_ExecuteConfunc("ui_add_geoscape_selection \"%s\" \"%d\" \"%s\"",
+			"installation", installation->idx, installation->name);
+		++selection_count;
 	}
 
 	/* Get selected ufos */
-	ufo = nullptr;
-	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != nullptr)
-		if (AIR_IsAircraftOnGeoscape(ufo) && GEO_IsPositionSelected(node, ufo->pos, x, y))
-			GEO_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, UFO_GetGeoscapeIDX(ufo), _("UFO Sighting"), UFO_GetName(ufo));
+	aircraft_t* ufo = nullptr;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != nullptr) {
+		if (AIR_IsAircraftOnGeoscape(ufo) && GEO_IsPositionSelected(node, ufo->pos, x, y)) {
+			cgi->UI_ExecuteConfunc("ui_add_geoscape_selection \"%s\" \"%lu\" \"%s\"",
+				"ufo", UFO_GetGeoscapeIDX(ufo), UFO_GetName(ufo));
+			++selection_count;
+		}
+	}
 
-	if (multiSelect.nbSelect == 1) {
-		/* Execute directly action for the only one element selected */
-		cgi->Cmd_ExecuteString("multi_select_click");
-		return true;
-	} else if (multiSelect.nbSelect > 1) {
-		/* Display popup for multi selection */
-		cgi->UI_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
+	if (selection_count > 0) {
 		CP_GameTimeStop();
-		cgi->UI_PushWindow("popup_multi_selection");
+		cgi->UI_PushWindow("popup_geoscape_selection");
 		return true;
 	} else {
 		aircraft_t* aircraft = GEO_GetSelectedAircraft();
@@ -1775,11 +1623,6 @@ void GEO_Draw (geoscapeData_t* data)
 			break;
 		cgi->UI_RegisterText(TEXT_STANDARD, _("Select ufo or mission on map\n"));
 		return;
-	case MA_UFORADAR:
-		if (mission)
-			break;
-		cgi->UI_RegisterText(TEXT_STANDARD, _("UFO in radar range\n"));
-		return;
 	case MA_NONE:
 		break;
 	}
@@ -2465,7 +2308,6 @@ static void GEO_SetOverlay_f (void)
  */
 void GEO_InitStartup (void)
 {
-	cgi->Cmd_AddCommand("multi_select_click", GEO_MultiSelectExecuteAction_f, nullptr);
 	cgi->Cmd_AddCommand("geo_setoverlay", GEO_SetOverlay_f, "Set the geoscape overlay");
 	cgi->Cmd_AddCommand("map_selectobject", GEO_SelectObject_f, "Select an object and center on it");
 	cgi->Cmd_AddCommand("mn_mapaction_reset", GEO_ResetAction, nullptr);

@@ -144,19 +144,6 @@ template <typename T> T SwigValueInit() {
 # define _SCL_SECURE_NO_DEPRECATE
 #endif
 
-/* Deal with Apple's deprecated 'AssertMacros.h' from Carbon-framework */
-#if defined(__APPLE__) && !defined(__ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES)
-# define __ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES 0
-#endif
-
-/* Intel's compiler complains if a variable which was never initialised is
- * cast to void, which is a common idiom which we use to indicate that we
- * are aware a variable isn't used.  So we just silence that warning.
- * See: https://github.com/swig/swig/issues/192 for more discussion.
- */
-#ifdef __INTEL_COMPILER
-# pragma warning disable 592
-#endif
 
 /* -----------------------------------------------------------------------------
  * swigrun.swg
@@ -19477,7 +19464,6 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {SWIG_LUA_CONSTTAB_INT("TEXT_POPUP_INFO", TEXT_POPUP_INFO)},
     {SWIG_LUA_CONSTTAB_INT("TEXT_AIRCRAFT_LIST", TEXT_AIRCRAFT_LIST)},
     {SWIG_LUA_CONSTTAB_INT("TEXT_AIRCRAFT_INFO", TEXT_AIRCRAFT_INFO)},
-    {SWIG_LUA_CONSTTAB_INT("TEXT_MULTISELECTION", TEXT_MULTISELECTION)},
     {SWIG_LUA_CONSTTAB_INT("TEXT_PRODUCTION_LIST", TEXT_PRODUCTION_LIST)},
     {SWIG_LUA_CONSTTAB_INT("TEXT_PRODUCTION_AMOUNT", TEXT_PRODUCTION_AMOUNT)},
     {SWIG_LUA_CONSTTAB_INT("TEXT_PRODUCTION_INFO", TEXT_PRODUCTION_INFO)},
