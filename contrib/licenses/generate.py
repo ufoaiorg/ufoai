@@ -90,7 +90,7 @@ ${stylelink}
 <body class="ufoai">
 <div style="ufoai header">
 <h1>Licenses in UFO:AI (${title})</h1>
-Please note that the information are extracted from <a href="http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=blob;f=LICENSES">LICENSES</a> file.<br />
+Please note that the information are extracted from <a href="https://sourceforge.net/p/ufoai/code/ci/master/tree/LICENSES">LICENSES</a> file.<br />
 Warning: the statics/graphs might be wrong since it would be to expensive to get information if a enrty was a directory in the past or not.
 <br />
 State as in revision ${revision}.
@@ -439,8 +439,8 @@ class Analysis(object):
 
         # name and links
         content['filename'] = meta.fileName
-        content['download_url'] = "http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=blob;f=%s" % meta.fileName
-        content['history_url'] = "http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=history;f=%s" % meta.fileName
+        content['download_url'] = "https://sourceforge.net/p/ufoai/code/ci/master/tree/%s?force=True" % meta.fileName
+        content['history_url'] = "https://sourceforge.net/p/ufoai/code/ci/master/log/?path=%s" % meta.fileName
 
         # author
         copyright = meta.copyright
