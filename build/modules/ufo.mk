@@ -180,7 +180,7 @@ ifeq ($(HARD_LINKED_CGAME),1)
 		$(cgame-skirmish_SRCS) \
 		$(cgame-multiplayer_SRCS)
 else
-	$(TARGET)_DEPS     := \
+	$(TARGET)_DEPS     += \
 		cgame-campaign \
 		cgame-skirmish \
 		cgame-multiplayer
