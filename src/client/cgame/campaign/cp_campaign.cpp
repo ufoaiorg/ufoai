@@ -275,40 +275,50 @@ void CP_CheckLostCondition (const campaign_t* campaign)
 #define XVI_WON_START_PERCENTAGE	0.05f
 
 /**
+ * @brief Calculate the performance of the fulfillment of the main objective of a mission
+ * @return A positive value, depending on the percent of fulfillment for the main goal of the mission
+ * @todo Implement goalAccomplished usage for the different mission types (xenocide, vip rescue, secure a zone...)
+ */
+ static float CP_GetMissionGoalPerformance (const missionResults_t* results)
+ {
+	return results->goalAccomplished * HAPPINESS_MISSION_GOAL_GAIN / 100;
+ }
+
+/**
  * @brief Updates each nation's happiness.
  * Should be called at the completion or expiration of every mission.
  * The nation where the mission took place will be most affected,
  * surrounding nations will be less affected.
- * @todo Scoring should eventually be expanded to include such elements as
- * infected humans and mission objectives other than xenocide.
  */
 void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* affectedNation, const missionResults_t* results)
 {
 	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);
 	const float alienSum = (float) (results->aliensSurvived + results->aliensKilled + results->aliensStunned);
-	float performance;
 	float deltaHappiness = 0.0f;
-	float happinessDivisor = 5.0f;
+	float performance = 0.0f;
+	float performanceMissionGoal = 0.0f;
+	float performanceInfectedHumans = 0.0f;
+	float performanceCivilian = 0.0f;
+	float performanceAlien = 0.0f;
 
-	/** @todo HACK: This should be handled properly, i.e. civilians should only factor into the scoring
-	 * if the mission objective is actually to save civilians. */
-	if (civilianSum == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CP_HandleNationData: Warning, civilianSum == 0, score for this mission will default to 0.\n");
-		performance = 0.0f;
-	} else {
-		/* Calculate how well the mission went. */
-		float performanceCivilian = (2 * civilianSum - results->civiliansKilled - 2
-				* results->civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
-		/** @todo The score for aliens is always negative or zero currently, but this
-		 * should be dependent on the mission objective.
-		 * In a mission that has a special objective, the amount of killed aliens should
-		 * only serve to increase the score, not reduce the penalty. */
-		float performanceAlien = results->aliensKilled + results->aliensStunned - alienSum;
-		performance = performanceCivilian + performanceAlien;
+	/* Main performance score comes from mission goal accomplished */
+	performanceMissionGoal = CP_GetMissionGoalPerformance(results);
+
+	/* Negative performance from infected civilians and soldiers */
+	performanceInfectedHumans = results->infectedHumans * HAPPINESS_INFECTED_HUMANS;
+
+	/* Calculate additional score from saved civilians and killed aliens */
+	if (civilianSum > 0) {
+		performanceCivilian = (2 * civilianSum - results->civiliansKilled - 2
+			* results->civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
 	}
+	performanceAlien = (results->aliensKilled + results->aliensStunned) / alienSum / 2;
+
+	/* Overall performance */
+	performance = performanceMissionGoal + performanceInfectedHumans + performanceCivilian + performanceAlien;
 
 	/* Calculate the actual happiness delta. The bigger the mission, the more potential influence. */
-	deltaHappiness = 0.004 * civilianSum + 0.004 * alienSum;
+	deltaHappiness = HAPPINESS_DELTA_CIVILIAN * civilianSum + HAPPINESS_DELTA_ALIEN * alienSum;
 
 	/* There is a maximum base happiness delta. */
 	if (deltaHappiness > HAPPINESS_MAX_MISSION_IMPACT)
@@ -323,7 +333,7 @@ void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* af
 		if (nation == affectedNation)
 			happinessFactor = deltaHappiness;
 		else
-			happinessFactor = deltaHappiness / happinessDivisor;
+			happinessFactor = deltaHappiness / HAPPINESS_DIVISOR;
 
 		NAT_SetHappiness(minHappiness, nation, stats->happiness + performance * happinessFactor);
 	}

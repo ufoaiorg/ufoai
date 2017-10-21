@@ -87,11 +87,18 @@ struct campaign_s;
 #define RASTER 2
 
 /* nation happiness constants */
+/** @todo should happiness constants become scriptable values? */
 #define HAPPINESS_SUBVERSION_LOSS			-0.15
 #define HAPPINESS_ALIEN_MISSION_LOSS		-0.02
 #define HAPPINESS_UFO_SALE_GAIN				0.02
 #define HAPPINESS_UFO_SALE_LOSS				0.005
 #define HAPPINESS_MAX_MISSION_IMPACT		0.07
+#define HAPPINESS_MISSION_GOAL_GAIN			2.0
+#define HAPPINESS_INFECTED_HUMANS			-0.05
+#define HAPPINESS_DELTA_CIVILIAN			0.004
+#define HAPPINESS_DELTA_ALIEN				0.004
+#define HAPPINESS_DIVISOR					5
+
 
 /* Maximum alien groups per alien team category */
 #define MAX_ALIEN_GROUP_PER_CATEGORY	8
@@ -303,6 +310,8 @@ typedef struct missionResults_s {
 	int civiliansKilled;
 	int civiliansKilledFriendlyFire;
 	int civiliansSurvived;
+	float goalAccomplished;	/**< How much % of the main goal of the mission was accomplished (secure panic room...) */
+	int infectedHumans;		/**< Amount of civilians and soldiers infected by XVI */
 } missionResults_t;
 
 /** salary values for a campaign */
