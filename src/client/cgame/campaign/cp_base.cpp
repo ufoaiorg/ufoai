@@ -1923,8 +1923,6 @@ void B_BaseResetStatus (base_t* const base)
 {
 	assert(base);
 	base->baseStatus = BASE_NOT_USED;
-	if (ccs.mapAction == MA_BASEATTACK)
-		ccs.mapAction = MA_NONE;
 }
 
 #ifdef DEBUG

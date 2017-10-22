@@ -1613,16 +1613,6 @@ void GEO_Draw (geoscapeData_t* data)
 	case MA_NEWINSTALLATION:
 		cgi->UI_RegisterText(TEXT_STANDARD, _("Select the desired location of the new installation on the map.\n"));
 		return;
-	case MA_BASEATTACK:
-		if (mission)
-			break;
-		cgi->UI_RegisterText(TEXT_STANDARD, _("Aliens are attacking our base at this very moment.\n"));
-		return;
-	case MA_INTERCEPT:
-		if (mission)
-			break;
-		cgi->UI_RegisterText(TEXT_STANDARD, _("Select ufo or mission on map\n"));
-		return;
 	case MA_NONE:
 		break;
 	}
@@ -1698,7 +1688,6 @@ mission_t* GEO_SelectMission (mission_t* mission)
 	if (!mission || GEO_IsMissionSelected(mission))
 		return GEO_GetSelectedMission();
 	GEO_ResetAction();
-	ccs.mapAction = MA_INTERCEPT;
 	GEO_SetSelectedMission(mission);
 	return GEO_GetSelectedMission();
 }

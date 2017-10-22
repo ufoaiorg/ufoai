@@ -324,9 +324,7 @@ int CP_GetSalaryUpKeepBase(const salary_t* salary, const base_t* base);
 typedef enum mapAction_s {
 	MA_NONE,
 	MA_NEWBASE,				/**< build a new base */
-	MA_NEWINSTALLATION,		/**< build a new installation */
-	MA_INTERCEPT,			/**< intercept */
-	MA_BASEATTACK			/**< base attacking */
+	MA_NEWINSTALLATION			/**< build a new installation */
 } mapAction_t;
 
 typedef void (*missionSpawnFunction_t) (void);
@@ -367,7 +365,7 @@ typedef struct ccs_s {
 	} geoscape;
 
 	/* == misc == */
-	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
+	/* geoscape actions like: MA_NEWBASE */
 	mapAction_t mapAction;
 
 	/** @todo move into the base node extra data */

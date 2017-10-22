@@ -70,7 +70,6 @@ void CP_BaseAttackMissionIsFailure (mission_t* mission)
 
 		base->aircraftCurrent = AIR_GetFirstFromBase(base);
 	}
-	ccs.mapAction = MA_NONE;
 
 	GEO_SetMissionAircraft(nullptr);
 
@@ -151,7 +150,6 @@ static void CP_BaseAttackPrepareBattle (mission_t* mission)
 
 	GEO_SelectMission(mission);
 	mission->active = true;
-	ccs.mapAction = MA_BASEATTACK;
 	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", mission->id, mission->pos[0], mission->pos[1]);
 
 	/* Fill the fake aircraft */
