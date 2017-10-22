@@ -28,12 +28,12 @@ INTL_LIBS                ?= -lintl
 
 ufo_LDFLAGS              += -lws2_32 -lwinmm -lgdi32 -lfreetype -mwindows
 ufoded_LDFLAGS           += -lws2_32 -lwinmm -lgdi32 -mwindows
-testall_LDFLAGS          += -lws2_32 -lwinmm -lgdi32 -lfreetype
+testall_LDFLAGS          += -lws2_32 -lwinmm -lgdi32 -lfreetype -mconsole
 ifdef HAVE_BFD_H
     BFD_LIBS             := -lbfd -liberty -limagehlp
 endif
-ufo2map_LDFLAGS          += -lwinmm
-ufomodel_LDFLAGS         += -lwinmm
+ufo2map_LDFLAGS          += -lwinmm -mconsole
+ufomodel_LDFLAGS         += -lwinmm -mconsole
 uforadiant_LDFLAGS       += -lglib-2.0 -lgtk-win32-2.0 -lgobject-2.0 -mwindows -static-libgcc -static-libstdc++
-ufoslicer_LDFLAGS        += -lwinmm
-memory_LDFLAGS           += $(INTL_LIBS)
+ufoslicer_LDFLAGS        += -lwinmm -mconsole
+memory_LDFLAGS           += -mconsole $(INTL_LIBS)
