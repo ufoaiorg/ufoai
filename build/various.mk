@@ -6,7 +6,7 @@ ifeq ($(wildcard .git),.git)
 endif
 
 # auto generate icon packs
-resources:
+resources: Makefile.local
 	$(Q)$(PROGRAM_PYTHON) ./src/resources/sprite_pack.py
 
 clean-resources:
@@ -34,7 +34,7 @@ manual-clean:
 deb:
 	$(Q)debuild binary
 
-license-generate:
+license-generate: Makefile.local
 	$(Q)$(PROGRAM_PYTHON) contrib/licenses/generate.py
 
 doxygen:

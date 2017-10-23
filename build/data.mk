@@ -3,7 +3,7 @@ include build/pk3_def.mk
 BASE_DIR = base
 PAK_FILES_OUT = $(addprefix $(BASE_DIR)/,$(PAK_FILES))
 
-pk3: $(PAK_FILES_OUT)
+pk3: $(PAK_FILES_OUT) Makefile.local
 
 clean-pk3:
 	$(Q)rm -f $(PAK_FILES_OUT)
