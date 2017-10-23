@@ -32,41 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_aircraft_callbacks.h"
 #include "../../ui/ui_dataids.h"
 
-/* popup_aircraft display the actions availables for an aircraft */
-
-/** Max items displayed in popup_aircraft */
-#define POPUP_AIRCRAFT_MAX_ITEMS	10
-/** Max size of text displayed in popup_aircraft */
-#define POPUP_AIRCRAFT_MAX_TEXT		2048
-
-/**
- * @brief Enumerate type of actions available for popup_aircraft
- */
-typedef enum {
-	POPUP_AIRCRAFT_ACTION_BACKTOBASE = 1,	/**< Aircraft back to base */
-	POPUP_AIRCRAFT_ACTION_STOP = 2,			/**< Aircraft stops */
-	POPUP_AIRCRAFT_ACTION_MOVETOMISSION = 3,/**< Aircraft move to a mission */
-	POPUP_AIRCRAFT_CHANGE_HOMEBASE = 4,		/**< Change aircraft homebase */
-	POPUP_AIRCRAFT_ACTION_NONE,				/**< Do nothing */
-
-	POPUP_AIRCRAFT_ACTION_MAX
-} popup_aircraft_action_e;
-
-/**
- * @brief Structure to store information about popup_aircraft
- */
-typedef struct popup_aircraft_s {
-	int numItems;			/**< Count of items displayed in popup_aircraft */
-	aircraft_t* aircraft;		/**< Aircraft linked to popup_aircraft */
-	popup_aircraft_action_e itemsAction[POPUP_AIRCRAFT_MAX_ITEMS];	/**< Action type of items */
-	int itemsId[POPUP_AIRCRAFT_MAX_ITEMS];		/**< IDs corresponding to items */
-	char textPopup[POPUP_AIRCRAFT_MAX_TEXT];	/**< Text displayed in popup_aircraft */
-} popup_aircraft_t;
-
-/** @todo Save me
- * why? The popup stuff should be regenerated from the campaign data --mattn */
-static popup_aircraft_t popupAircraft; /**< Data about popup_aircraft */
-
 /* popup_intercept display list of aircraft availables to move to a mission or a UFO */
 
 /** Max aircraft in popup list */
@@ -194,100 +159,6 @@ static void CL_PopupChangeHomebase_f (void)
 
 	cgi->UI_PopWindow(false);
 	CL_DisplayHomebasePopup(aircraft, true);
-}
-
-/*========================================
-POPUP_AIRCRAFT
-========================================*/
-
-/**
- * @brief Display the popup_aircraft
- * @sa CL_DisplayPopupIntercept
- */
-void CL_DisplayPopupAircraft (aircraft_t* aircraft)
-{
-	/* Initialise popup_aircraft datas */
-	if (!aircraft)
-		return;
-	popupAircraft.aircraft = aircraft;
-	popupAircraft.numItems = 0;
-	OBJZERO(popupAircraft.textPopup);
-	cgi->UI_RegisterText(TEXT_POPUP, popupAircraft.textPopup);
-
-	/* Set static datas in popup_aircraft */
-	popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_ACTION_BACKTOBASE;
-	Q_strcat(popupAircraft.textPopup, lengthof(popupAircraft.textPopup), _("Back to base\t%s\n"), aircraft->homebase->name);
-	popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_ACTION_STOP;
-	Q_strcat(popupAircraft.textPopup, lengthof(popupAircraft.textPopup), _("Stop\n"));
-	popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_CHANGE_HOMEBASE;
-	Q_strcat(popupAircraft.textPopup, lengthof(popupAircraft.textPopup), _("Change homebase\n"));
-
-	/* Set missions in popup_aircraft */
-	if (AIR_GetTeamSize(aircraft) > 0) {
-		MIS_Foreach(tempMission) {
-			if (tempMission->stage == STAGE_NOT_ACTIVE || !tempMission->onGeoscape)
-				continue;
-
-			if (tempMission->pos) {
-				popupAircraft.itemsId[popupAircraft.numItems] = MIS_GetIdx(tempMission);
-				popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
-				Q_strcat(popupAircraft.textPopup, lengthof(popupAircraft.textPopup), _("Mission\t%s\n"), MIS_GetName(tempMission));
-			}
-		}
-	}
-
-	/* Display popup_aircraft menu */
-	cgi->UI_PushWindow("popup_aircraft");
-}
-
-/**
- * @brief User just select an item in the popup_aircraft
- */
-static void CL_PopupAircraftClick_f (void)
-{
-	int num;
-	aircraft_t* aircraft;
-	mission_t* mission;
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_PopupAircraftClick\n");
-
-	/* Get num of item selected in list */
-	if (cgi->Cmd_Argc() < 2)
-		return;
-
-	num = atoi(cgi->Cmd_Argv(1));
-	if (num < 0 || num >= popupAircraft.numItems)
-		return;
-
-	cgi->UI_PopWindow(false); /* Close popup */
-
-	/* Get aircraft associated with the popup_aircraft */
-	aircraft = popupAircraft.aircraft;
-	if (aircraft == nullptr)
-		return;
-
-	/* Execute action corresponding to item selected */
-	switch (popupAircraft.itemsAction[num]) {
-	case POPUP_AIRCRAFT_ACTION_BACKTOBASE:	/* Aircraft back to base */
-		AIR_AircraftReturnToBase(aircraft);
-		break;
-	case POPUP_AIRCRAFT_ACTION_STOP:		/* Aircraft stop */
-		aircraft->status = AIR_IDLE;
-		break;
-	case POPUP_AIRCRAFT_CHANGE_HOMEBASE:		/* Change Aircraft homebase */
-		CL_DisplayHomebasePopup(aircraft, true);
-		break;
-	case POPUP_AIRCRAFT_ACTION_MOVETOMISSION:	/* Aircraft move to mission */
-		mission = MIS_GetByIdx(popupAircraft.itemsId[num]);
-		if (mission)
-			AIR_SendAircraftToMission(aircraft, mission);
-		break;
-	case POPUP_AIRCRAFT_ACTION_NONE:
-		break;
-	default:
-		Com_Printf("CL_PopupAircraftClick: type of action unknow %i\n", popupAircraft.itemsAction[num]);
-		break;
-	}
 }
 
 /*========================================
@@ -582,9 +453,6 @@ static void CL_PopupInterceptBaseClick_f (void)
  */
 void CL_PopupInit (void)
 {
-	/* popup_aircraft commands */
-	cgi->Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f, nullptr);
-
 	/* popup_intercept commands */
 	cgi->Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f, nullptr);
 	cgi->Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f, nullptr);
@@ -594,7 +462,6 @@ void CL_PopupInit (void)
 	cgi->Cmd_AddCommand("change_homebase", CL_PopupChangeHomebase_f, nullptr);
 
 	OBJZERO(popupIntercept);
-	OBJZERO(popupAircraft);
 }
 
 /**

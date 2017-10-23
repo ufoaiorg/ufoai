@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_team.h"
 #include "cp_mapfightequip.h"
 #include "cp_popup.h"
+#include "cp_missions.h"
 
 /**
  * @brief Script function for AIR_AircraftReturnToBase
@@ -41,12 +42,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void AIM_AircraftReturnToBase_f (void)
 {
-	base_t* base = B_GetCurrentSelectedBase();
+	aircraft_t* aircraft = nullptr;
 
-	if (base && base->aircraftCurrent) {
-		AIR_AircraftReturnToBase(base->aircraftCurrent);
-		AIR_AircraftSelect(base->aircraftCurrent);
+	if (cgi->Cmd_Argc() >= 2) {
+		const int index = atoi(cgi->Cmd_Argv(1));
+		aircraft = AIR_AircraftGetFromIDX(index);
+	} else {
+		base_t* base = B_GetCurrentSelectedBase();
+		if (base && base->aircraftCurrent)
+			aircraft = base->aircraftCurrent;
 	}
+	if (aircraft == nullptr)
+		return;
+
+	AIR_AircraftReturnToBase(aircraft);
+	AIR_AircraftSelect(aircraft);
 }
 
 /**
@@ -289,8 +299,92 @@ static void AIR_GeoSelectAircraft_f (void)
 
 	if (!GEO_IsAircraftSelected(aircraft))
 		GEO_SelectAircraft(aircraft);
-	/** @todo Move this popup from cp_popup and rebuild */
-	CL_DisplayPopupAircraft(aircraft);
+
+	/** @todo temporary action id should be removed */
+	int action_id = 0;
+	cgi->UI_ExecuteConfunc("ui_clear_aircraft_action");
+	cgi->UI_ExecuteConfunc("ui_add_aircraft_action %i \"%s\" \"%s\"",
+		action_id++, _("Change homebase"), va("ui_aircraft_changehomebase %u;", aircraft->idx));
+	cgi->UI_ExecuteConfunc("ui_add_aircraft_action %i \"%s\" \"%s\"",
+		action_id++, va("%s: %s", _("Back to base"), aircraft->homebase->name), va("aircraft_return %u;", aircraft->idx));
+	cgi->UI_ExecuteConfunc("ui_add_aircraft_action %i \"%s\" \"%s\"",
+		action_id++, _("Stop"), va("ui_aircraft_stop %u;", aircraft->idx));
+
+	if (AIR_GetTeamSize(aircraft) > 0) {
+		MIS_Foreach(tempMission) {
+			if (AIR_GetTeamSize(aircraft) == 0)
+				continue;
+			if (tempMission->stage == STAGE_NOT_ACTIVE || !tempMission->onGeoscape)
+				continue;
+			if (!tempMission->pos)
+				continue;
+			if (!AIR_AircraftHasEnoughFuel(aircraft, tempMission->pos))
+				continue;
+			cgi->UI_ExecuteConfunc("ui_add_aircraft_action %i \"%s\" \"%s\"",
+				action_id++, va("%s: %s", _("Mission"), MIS_GetName(tempMission)),
+				va("ui_aircraft_to_mission %u %u;", aircraft->idx, tempMission->idx));
+		}
+	}
+
+	cgi->UI_PushWindow("popup_aircraft_actions");
+}
+
+/**
+ * @brief Stop aircraft on Geoscape
+ */
+static void AIR_StopAircraft_f (void)
+{
+	if (cgi->Cmd_Argc() < 2) {
+		return;
+	}
+
+	const int index = atoi(cgi->Cmd_Argv(1));
+	aircraft_t* aircraft = AIR_AircraftGetFromIDX(index);
+	if (aircraft == nullptr)
+		return;
+
+	aircraft->status = AIR_IDLE;
+}
+
+
+/**
+ * @brief Show change homebase popup
+ * @todo Temporary callback. Need to rewrite change homebase popup also
+ */
+static void AIR_ShowChangeHomebaseAircraft_f (void)
+{
+	if (cgi->Cmd_Argc() < 2) {
+		return;
+	}
+
+	const int index = atoi(cgi->Cmd_Argv(1));
+	aircraft_t* aircraft = AIR_AircraftGetFromIDX(index);
+	if (aircraft == nullptr)
+		return;
+
+	CL_DisplayHomebasePopup(aircraft, true);
+}
+
+/**
+ * @brief Send aircraft to land on a mission
+ */
+static void AIR_SendAircraftToMission_f (void)
+{
+	if (cgi->Cmd_Argc() < 3) {
+		return;
+	}
+
+	const int aircraftIdx = atoi(cgi->Cmd_Argv(1));
+	aircraft_t* aircraft = AIR_AircraftGetFromIDX(aircraftIdx);
+	if (aircraft == nullptr)
+		return;
+
+	const int missionIdx = atoi(cgi->Cmd_Argv(2));
+	mission_t* mission = MIS_GetByIdx(missionIdx);
+	if (mission == nullptr)
+		return;
+
+	AIR_SendAircraftToMission(aircraft, mission);
 }
 
 static const cmdList_t aircraftCallbacks[] = {
@@ -300,6 +394,9 @@ static const cmdList_t aircraftCallbacks[] = {
 	{"aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase."},
 	{"ui_aircraft_changename", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft."},
 	{"ui_aircraft_fill", AIR_AircraftFillList_f, "Send the data for all the aircraft."},
+	{"ui_aircraft_stop", AIR_StopAircraft_f, "Clears an aircraft order when on the geoscape"},
+	{"ui_aircraft_to_mission", AIR_SendAircraftToMission_f, "Send aircraft to a misison"},
+	{"ui_aircraft_changehomebase", AIR_ShowChangeHomebaseAircraft_f, ""},
 	{nullptr, nullptr, nullptr}
 };
 
