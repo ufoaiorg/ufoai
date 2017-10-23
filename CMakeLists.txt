@@ -673,6 +673,7 @@ if(UFOAI_BUILD_UFO)
       ${UFOAI_SRC}/client/cgame/campaign/cp_transfer.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_transfer_callbacks.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_ufo.cpp
+      ${UFOAI_SRC}/client/cgame/campaign/cp_ufo_callbacks.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_ufopedia.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_uforecovery.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_uforecovery_callbacks.cpp
