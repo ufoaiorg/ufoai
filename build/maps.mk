@@ -29,10 +29,10 @@ maps-ents:
 	$(MAKE) maps UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
 
 # TODO only sync if there were updates on the map files
-maps-sync:
+maps-sync: Makefile.local
 	$(PYTHONBIN) contrib/map-get/update.py
 
-force-maps-sync:
+force-maps-sync: Makefile.local
 	$(PYTHONBIN) contrib/map-get/update.py --reply=yes
 
 clean-maps:

@@ -94,10 +94,11 @@ install: install-pre $(addprefix install-,$(TARGETS))
 .PHONY: strip
 strip: $(addprefix strip-,$(TARGETS))
 
-$(TARGET_OS)-config.h: configure
+$(TARGET_OS)-config.h Makefile.local: configure
 	@echo "restarting configure for $(TARGET_OS)"
 	$(Q)$(CONFIGURE_PREFIX) ./configure $(CONFIGURE_OPTIONS)
-	$(Q)$(MAKE)
+#	Makefile remaking should take care of this
+#	$(Q)$(MAKE) $(MAKECMDGOALS)
 
 define BUILD_RULE
 ifndef $(1)_DISABLE
