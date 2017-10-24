@@ -2307,7 +2307,7 @@ static void B_SellOrAddItems (aircraft_t* aircraft)
 void B_DumpAircraftToHomeBase (aircraft_t* aircraft)
 {
 	/* Don't call cargo functions if aircraft is not a transporter. */
-	if (aircraft->type != AIRCRAFT_TRANSPORTER)
+	if (aircraft->maxTeamSize <= 0)
 		return;
 
 	/* Add aliens to Alien Containment. */

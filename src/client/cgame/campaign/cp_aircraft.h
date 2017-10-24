@@ -50,8 +50,6 @@ typedef enum {
 	AIRCRAFT_UFO
 } aircraftType_t;
 
-#define MAX_HUMAN_AIRCRAFT_TYPE AIRCRAFT_INTERCEPTOR
-
 /** @brief different weight for aircraft items
  * @note values must go from the lightest to the heaviest item */
 typedef enum {
@@ -269,9 +267,7 @@ bool AIR_SendAircraftPursuingUFO(aircraft_t* aircraft, aircraft_t* ufo);
 void AIR_AircraftsUFODisappear(const aircraft_t* const ufo);
 bool AIR_ScriptSanityCheck(void);
 int AIR_AircraftMenuStatsValues(const int value, const int stat);
-int AIR_CountTypeInBase(const struct base_s* base, aircraftType_t aircraftType);
 int AIR_CountInBaseByTemplate(const struct base_s* base, const aircraft_t* aircraftTemplate);
-const char* AIR_GetAircraftString(aircraftType_t aircraftType);
 
 int AIR_GetAircraftWeaponRanges(const aircraftSlot_t* slot, int maxSlot, float* weaponRanges);
 baseCapacities_t AIR_GetHangarCapacityType(const aircraft_t* aircraft);

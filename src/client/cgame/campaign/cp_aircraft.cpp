@@ -436,23 +436,6 @@ bool AIR_IsAircraftOnGeoscape (const aircraft_t* aircraft)
 /**
  * @brief Calculates the amount of aircraft (of the given type) in the selected base
  * @param[in] base The base to count the aircraft in
- * @param[in] aircraftType The type of the aircraft you want
- * @note that this type is just transporter/interceptor/ufo category
- */
-int AIR_CountTypeInBase (const base_t* base, aircraftType_t aircraftType)
-{
-	int count = 0;
-
-	AIR_ForeachFromBase(aircraft, base) {
-		if (aircraft->type == aircraftType)
-			count++;
-	}
-	return count;
-}
-
-/**
- * @brief Calculates the amount of aircraft (of the given type) in the selected base
- * @param[in] base The base to count the aircraft in
  * @param[in] aircraftTemplate The type of the aircraft you want
  */
 int AIR_CountInBaseByTemplate (const base_t* base, const aircraft_t* aircraftTemplate)
@@ -464,22 +447,6 @@ int AIR_CountInBaseByTemplate (const base_t* base, const aircraft_t* aircraftTem
 			count++;
 	}
 	return count;
-}
-
-/**
- * @brief Returns the string that matches the given aircraft type
- */
-const char* AIR_GetAircraftString (aircraftType_t aircraftType)
-{
-	switch (aircraftType) {
-	case AIRCRAFT_INTERCEPTOR:
-		return _("Interceptor");
-	case AIRCRAFT_TRANSPORTER:
-		return _("Transporter");
-	case AIRCRAFT_UFO:
-		return _("UFO");
-	}
-	return "";
 }
 
 /**
