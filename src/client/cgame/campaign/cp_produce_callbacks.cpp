@@ -629,7 +629,7 @@ static void PR_ProductionIncrease_f (void)
 
 		if (PR_IsAircraft(prod)) {
 			/* Don't allow to queue more aircraft if there is no free space. */
-			if (CAP_GetFreeCapacity(base, AIR_GetCapacityByAircraftWeight(prod->data.data.aircraft)) <= 0) {
+			if (CAP_GetFreeCapacity(base, AIR_GetHangarCapacityType(prod->data.data.aircraft)) <= 0) {
 				CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 				cgi->Cvar_SetValue("mn_production_amount", prod->amount);
 				return;
@@ -677,7 +677,7 @@ static void PR_ProductionIncrease_f (void)
 		 *     This info should also be displayed in the item-info.
 		 *  -) can can (if possible) change the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/
 
-		if (PR_IsAircraftData(&selectedData) && CAP_GetFreeCapacity(base, AIR_GetCapacityByAircraftWeight(selectedData.data.aircraft)) <= 0) {
+		if (PR_IsAircraftData(&selectedData) && CAP_GetFreeCapacity(base, AIR_GetHangarCapacityType(selectedData.data.aircraft)) <= 0) {
 			CP_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 			return;
 		}

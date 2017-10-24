@@ -27,19 +27,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_capacity.h"
 #include "cp_radar.h"
 
-class Employee;
-typedef struct technology_s technology_t;
-
 #define MAX_CARGO		32
 #define MAX_AIRCRAFT	64
 #define LINE_MAXSEG 64
 #define LINE_MAXPTS (LINE_MAXSEG + 2)
-#define LINE_DPHI	(M_PI / LINE_MAXSEG)
 
 /** factor to speed up refuelling */
 #define AIRCRAFT_REFUEL_FACTOR 16
-
-#define AIR_IsUFO(aircraft) ((aircraft)->getUfoType() != UFO_NONE)
 
 /** @brief A path on the map described by 2D points */
 typedef struct mapline_s {
@@ -57,12 +51,6 @@ typedef enum {
 } aircraftType_t;
 
 #define MAX_HUMAN_AIRCRAFT_TYPE AIRCRAFT_INTERCEPTOR
-
-/** @brief All different size of aircraft. */
-typedef enum {
-	AIRCRAFT_SMALL = 1,
-	AIRCRAFT_LARGE = 2
-} aircraftSize_t;
 
 /** @brief different weight for aircraft items
  * @note values must go from the lightest to the heaviest item */
@@ -158,7 +146,6 @@ typedef struct aircraft_s {
 	int productionCost;	/**< Production costs of this aircraft type. */
 	int fuel;			/**< Current fuel amount. */
 	int damage;			/**< Current Hit Point of the aircraft */
-	int size;			/**< Size of the aircraft used in capacity calculations. */
 	vec3_t pos;			/**< Current position on the geoscape. @todo change to vec2_t - this is long/lat */
 	vec3_t direction;	/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
 	vec3_t projectedPos;	/**< Projected position of the aircraft (latitude and longitude). */
@@ -169,7 +156,7 @@ typedef struct aircraft_s {
 	int maxTeamSize;	/**< Max amount of soldiers onboard. */
 	linkedList_t* acTeam;	/**< List of employees. i.e. current team for this aircraft */
 
-	Employee* pilot;	/**< Current Pilot assigned to the aircraft. */
+	class Employee* pilot;	/**< Current Pilot assigned to the aircraft. */
 
 	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
 	int maxWeapons;						/**< Total number of weapon slots aboard this aircraft (empty or not) */
@@ -193,7 +180,7 @@ typedef struct aircraft_s {
 	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on
 								 * @note As this is an int, wrange is multiplied by 1000 */
 
-	technology_t* tech;			/**< link to the aircraft tech */
+	struct technology_s* tech;			/**< link to the aircraft tech */
 
 	bool notifySent[MAX_AIR_NOTIFICATIONS];	/* stores if a notification was already sent */
 
@@ -217,58 +204,68 @@ typedef struct aircraft_s {
 	}
 } aircraft_t;
 
-/* script functions */
 
-#ifdef DEBUG
-void AIR_ListAircraft_f(void);
-void AIR_ListAircraftSamples_f(void);
-void AIR_ListCraftIndexes_f(void);
-#endif
-
-#define AIR_IsAircraftOfBase(aircraft, base) ((aircraft)->homebase == (base) && (aircraft)->status != AIR_CRASHED)
+/**
+ * @brief iterates trough all aircraft
+ * @param[out] variable to point to the aircraft structure
+ */
 #define AIR_Foreach(var) LIST_Foreach(ccs.aircraft, aircraft_t, var)
 
-aircraft_t* AIR_NewAircraft(struct base_s* base, const aircraft_t* aircraftTemplate);
-aircraft_t* AIR_Add(struct base_s* base, const aircraft_t* aircraftTemplate);
-bool AIR_Delete(struct base_s* base, aircraft_t* aircraft);
+#define AIR_IsAircraftOfBase(aircraft, base) ((aircraft)->homebase == (base) && (aircraft)->status != AIR_CRASHED)
 
+/**
+ * @brief iterates trough all aircraft from a specific homebase
+ * @param[out] variable to point to the aircraft structure
+ * @param[in] pointer to the homebase structure
+ */
 #define AIR_ForeachFromBase(var, base) \
 	AIR_Foreach(var) \
 		if (!AIR_IsAircraftOfBase(var, (base))) continue; else
 
-#define AIR_ForeachSorted(var, sorter, userdata, sortedlist) LIST_ForeachSorted(ccs.aircraft, aircraft_t, var, sorter, userdata, sortedlist)
+#define AIR_IsUFO(aircraft) ((aircraft)->getUfoType() != UFO_NONE)
+
+
+aircraft_t* AIR_NewAircraft(struct base_s* base, const aircraft_t* aircraftTemplate);
+aircraft_t* AIR_Add(struct base_s* base, const aircraft_t* aircraftTemplate);
+bool AIR_Delete(struct base_s* base, aircraft_t* aircraft);
+void AIR_DeleteAircraft(aircraft_t* aircraft);
+void AIR_DestroyAircraft(aircraft_t* aircraft, bool killPilot = true);
+
+const aircraft_t* AIR_GetAircraftSilent(const char* name);
+const aircraft_t* AIR_GetAircraft(const char* name);
 
 aircraft_t* AIR_GetFirstFromBase(const struct base_s* base);
-
 bool AIR_BaseHasAircraft(const struct base_s* base);
 int AIR_BaseCountAircraft(const struct base_s* base);
 aircraft_t* AIR_GetAircraftFromBaseByIDXSafe(const struct base_s* base, int index);
+
+aircraft_t* AIR_AircraftGetFromIDX(int idx);
+
 const char* AIR_AircraftStatusToName(const aircraft_t* aircraft);
 bool AIR_IsAircraftInBase(const aircraft_t* aircraft);
 bool AIR_IsAircraftOnGeoscape(const aircraft_t* aircraft);
 
-void AIR_DeleteAircraft(aircraft_t* aircraft);
-void AIR_DestroyAircraft(aircraft_t* aircraft, bool killPilot = true);
-
 void AIR_ResetAircraftTeam(aircraft_t* aircraft);
-bool AIR_AddToAircraftTeam(aircraft_t* aircraft, Employee* employee);
-bool AIR_IsInAircraftTeam(const aircraft_t* aircraft, const Employee* employee);
+bool AIR_AddToAircraftTeam(aircraft_t* aircraft, class Employee* employee);
+bool AIR_IsInAircraftTeam(const aircraft_t* aircraft, const class Employee* employee);
 int AIR_GetTeamSize(const aircraft_t* aircraft);
 
 void AIR_CampaignRun(const struct campaign_s* campaign, int dt, bool updateRadarOverlay);
-const aircraft_t* AIR_GetAircraftSilent(const char* name);
-const aircraft_t* AIR_GetAircraft(const char* name);
-aircraft_t* AIR_AircraftGetFromIDX(int idx);
 bool AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
+
 void AIR_ParseAircraft(const char* name, const char** text, bool assignAircraftItems);
+
 bool AIR_AircraftHasEnoughFuel(const aircraft_t* aircraft, const vec2_t destination);
 bool AIR_AircraftHasEnoughFuelOneWay(const aircraft_t* aircraft, const vec2_t destination);
+
 void AIR_AircraftReturnToBase(aircraft_t* aircraft);
 bool AIR_SendAircraftToMission(aircraft_t* aircraft, struct mission_s* mission);
+
 void AIR_AircraftsNotifyMissionRemoved(const struct mission_s* mission);
+void AIR_AircraftsNotifyUFORemoved(const aircraft_t* const ufo, bool destroyed);
+
 void AIR_GetDestinationWhilePursuing(const aircraft_t* shooter, const aircraft_t* target, vec2_t dest);
 bool AIR_SendAircraftPursuingUFO(aircraft_t* aircraft, aircraft_t* ufo);
-void AIR_AircraftsNotifyUFORemoved(const aircraft_t* const ufo, bool destroyed);
 void AIR_AircraftsUFODisappear(const aircraft_t* const ufo);
 bool AIR_ScriptSanityCheck(void);
 int AIR_AircraftMenuStatsValues(const int value, const int stat);
@@ -277,7 +274,7 @@ int AIR_CountInBaseByTemplate(const struct base_s* base, const aircraft_t* aircr
 const char* AIR_GetAircraftString(aircraftType_t aircraftType);
 
 int AIR_GetAircraftWeaponRanges(const aircraftSlot_t* slot, int maxSlot, float* weaponRanges);
-baseCapacities_t AIR_GetCapacityByAircraftWeight(const aircraft_t* aircraft);
+baseCapacities_t AIR_GetHangarCapacityType(const aircraft_t* aircraft);
 
 const char* AIR_CheckMoveIntoNewHomebase(const aircraft_t* aircraft, const struct base_s* base);
 void AIR_MoveAircraftIntoNewHomebase(aircraft_t* aircraft, struct base_s* base);
@@ -285,17 +282,20 @@ void AIR_MoveAircraftIntoNewHomebase(aircraft_t* aircraft, struct base_s* base);
 void AII_CollectItem(aircraft_t* aircraft, const objDef_t* item, int amount);
 void AII_CollectingItems(aircraft_t* aircraft, int won);
 
-bool AIR_SetPilot(aircraft_t* aircraft, Employee* pilot);
+bool AIR_SetPilot(aircraft_t* aircraft, class Employee* pilot);
 Employee* AIR_GetPilot(const aircraft_t* aircraft);
 
 bool AIR_PilotSurvivedCrash(const aircraft_t* aircraft);
 
-void AIR_AutoAddPilotToAircraft(const struct base_s* base, Employee* pilot);
-void AIR_RemovePilotFromAssignedAircraft(const struct base_s* base, const Employee* pilot);
-void AIR_RemoveEmployees(aircraft_t& aircraft);
 bool AIR_AddEmployee(Employee* employee, aircraft_t* aircraft);
+void AIR_RemoveEmployees(aircraft_t& aircraft);
 bool AIR_RemoveEmployee(Employee* employee, aircraft_t* aircraft);
-const aircraft_t* AIR_IsEmployeeInAircraft(const Employee* employee, const aircraft_t* aircraft);
+
+const aircraft_t* AIR_IsEmployeeInAircraft(const class Employee* employee, const aircraft_t* aircraft);
+
+void AIR_AutoAddPilotToAircraft(const struct base_s* base, class Employee* pilot);
+void AIR_RemovePilotFromAssignedAircraft(const struct base_s* base, const class Employee* pilot);
+
 void AIR_MoveEmployeeInventoryIntoStorage(const aircraft_t& aircraft, equipDef_t& equip);
 
 void AIR_AssignInitial(aircraft_t* aircraft);

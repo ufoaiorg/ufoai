@@ -5,7 +5,6 @@
 //
 //	model - Model that is displayed on geoscape. For menu models see the research.ufo file.
 //	numteam - Maximum number of employees aboard.
-//	size - 1 for small aircraft (stored in small hangar), 2 for large aircraft (stored in large hangar)
 //	slot {}	- Any number of entries. Parameters can be the following :
 //		type		- The type of item this slot can contain (See "type "in "craftitem" below)
 //		position	- Slot's position on the aircraft. See cl_aircraft.c for available values.
@@ -138,7 +137,6 @@ aircraft craft_drop_firebird
 	price		20000
 	building	building_hangar
 	numteam		8
-	size		2
 	image		"geoscape/air_dropship"
 
 	radar {
@@ -179,7 +177,6 @@ aircraft craft_drop_herakles
 	price		30000
 	building	building_hangar
 	numteam		12
-	size		2
 	image		"geoscape/air_dropship"
 
 	radar {
@@ -221,7 +218,6 @@ aircraft craft_drop_raptor
 	price		30000
 	building	building_hangar
 	numteam		10
-	size		2
 	image		"geoscape/air_dropship"
 
 	radar {
@@ -274,7 +270,6 @@ aircraft craft_inter_stiletto
 	type		"interceptor"
 	model		"geoscape/inter_stiletto"
 	numteam		0
-	size		1
 	price		20000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
@@ -325,7 +320,6 @@ aircraft craft_inter_saracen
 	type		"interceptor"
 	model		"geoscape/inter_saracen"
 	numteam		0
-	size		1
 	price		30000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
@@ -372,7 +366,6 @@ aircraft craft_inter_dragon
 	type		"interceptor"
 	model		"geoscape/inter_dragon"
 	numteam		0
-	size		1
 	price		40000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
@@ -419,7 +412,6 @@ aircraft craft_inter_starchaser
 	type		"interceptor"
 	model		"geoscape/inter_starchaser"
 	numteam		0
-	size		1
 	price		40000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
@@ -471,7 +463,6 @@ aircraft craft_inter_stingray
 	type		"interceptor"
 	model		"geoscape/inter_stingray"
 	numteam		0
-	size		1
 	price		55000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
@@ -533,7 +524,6 @@ aircraft craft_ufo_scout
 	defaultname	"_Scout U"
 	type		"ufo"
 	model		"geoscape/ufo_scout"
-	size		1
 	numteam		4
 	price		8000
 	image		"geoscape/air_ufo"
@@ -564,7 +554,6 @@ aircraft craft_ufo_fighter
 	defaultname	"_Fighter U"
 	type		"ufo"
 	model		"geoscape/ufo_fighter"
-	size		1
 	numteam		6
 	price		12000
 	image		"geoscape/air_ufo"
@@ -602,7 +591,6 @@ aircraft craft_ufo_harvester
 	defaultname	"_Harvester U"
 	type		"ufo"
 	model		"geoscape/ufo_harvester"
-	size		2
 	numteam		8
 	price		18000
 	image		"geoscape/air_ufo"
@@ -656,7 +644,6 @@ aircraft craft_ufo_corrupter
 	defaultname	"_Corrupter U"
 	type		"ufo"
 	model		"geoscape/ufo_corrupter"
-	size		2
 	numteam		10
 	price		27000
 	image		"geoscape/air_ufo"
@@ -704,7 +691,6 @@ aircraft craft_ufo_supply
 	defaultname	"_Supply U"
 	type		"ufo"
 	model		"geoscape/ufo_supply"
-	size		2
 	numteam		12
 	price		20000
 	image		"geoscape/air_ufo"
@@ -735,7 +721,6 @@ aircraft craft_ufo_gunboat
 	defaultname	"_Gunboat U"
 	type		"ufo"
 	model		"geoscape/ufo_gunboat"
-	size		2
 	numteam		12
 	price		23000
 	image		"geoscape/air_ufo"
@@ -798,7 +783,6 @@ aircraft craft_ufo_bomber
 	defaultname	"_Bomber U"
 	type		"ufo"
 	model		"geoscape/ufo_bomber"
-	size		2
 	numteam		18
 	leader		true
 	price		45000
@@ -867,7 +851,6 @@ aircraft craft_ufo_ripper
 	defaultname	"_Ripper U"
 	type		"ufo"
 	model		"geoscape/ufo_ripper"
-	size		2
 	numteam		14
 	price		30000
 	image		"geoscape/air_ufo"
@@ -924,7 +907,6 @@ aircraft craft_ufo_carrier
 	defaultname	"_Carrier U"
 	type		"ufo"
 	model		"geoscape/ufo_carrier"
-	size		1
 	price		0 //NOTE: This UFO must never be sellable!
 	image		"geoscape/air_ufo"
 	nogeoscape	true
@@ -946,7 +928,6 @@ aircraft craft_ufo_mothership
 	defaultname	"_Mothership U"
 	type		"ufo"
 	model		"geoscape/ufo_mothership"
-	size		1
 	price		0 //This UFO is not recoverable in the first place. It's the final mission!
 	image		"geoscape/air_ufo"
 	nogeoscape	true

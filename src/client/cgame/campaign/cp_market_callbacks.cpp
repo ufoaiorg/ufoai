@@ -181,7 +181,7 @@ static void BS_Buy_f (void)
 			return;
 		}
 		/* Check free space in hangars. */
-		if (CAP_GetFreeCapacity(base, AIR_GetCapacityByAircraftWeight(aircraft)) <= 0) {
+		if (CAP_GetFreeCapacity(base, AIR_GetHangarCapacityType(aircraft)) <= 0) {
 			CP_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
 			return;
 		}

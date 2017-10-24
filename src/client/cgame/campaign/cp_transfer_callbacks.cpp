@@ -851,7 +851,7 @@ static void TR_CountEmployeeInListArray (linkedList_t* employeeListArray[], int 
 static void TR_CountAircraftInList (linkedList_t* aircraftList, int capacity[])
 {
 	LIST_Foreach(aircraftList, aircraft_t, aircraft) {
-		capacity[AIR_GetCapacityByAircraftWeight(aircraft)]++;
+		capacity[AIR_GetHangarCapacityType(aircraft)]++;
 	}
 }
 

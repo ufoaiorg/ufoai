@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_aircraft.h"
 #include "cp_popup.h"
 #include "aliencargo.h"
+#include "cp_building.h"
 
 /**
  * @brief Iterates through the aircraft of a base
@@ -86,7 +87,7 @@ int AIR_BaseCountAircraft (const base_t* base)
  * @note Use with baseIdx as a parameter to display all aircraft in given base.
  * @note called with debug_listaircraft
  */
-void AIR_ListAircraft_f (void)
+static void AIR_ListAircraft_f (void)
 {
 	base_t* base = nullptr;
 
@@ -664,7 +665,7 @@ static void AII_SetAircraftInSlots (aircraft_t* aircraft)
  */
 aircraft_t* AIR_Add (base_t* base, const aircraft_t* aircraftTemplate)
 {
-	const baseCapacities_t capType = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
+	const baseCapacities_t capType = AIR_GetHangarCapacityType(aircraftTemplate);
 	aircraft_t& aircraft = LIST_Add(&ccs.aircraft, *aircraftTemplate);
 	aircraft.homebase = base;
 	if (base && capType != MAX_CAP && aircraft.status != AIR_CRASHED)
@@ -681,7 +682,7 @@ aircraft_t* AIR_Add (base_t* base, const aircraft_t* aircraftTemplate)
  */
 bool AIR_Delete (base_t* base, aircraft_t* aircraft)
 {
-	const baseCapacities_t capType = AIR_GetCapacityByAircraftWeight(aircraft);
+	const baseCapacities_t capType = AIR_GetHangarCapacityType(aircraft);
 	const bool crashed = (aircraft->status == AIR_CRASHED);
 
 	if (aircraft->alienCargo != nullptr) {
@@ -732,8 +733,7 @@ aircraft_t* AIR_NewAircraft (base_t* base, const aircraft_t* aircraftTemplate)
 	RADAR_Initialise(&aircraft->radar, aircraftTemplate->radar.range, aircraftTemplate->radar.trackingRange, 1.0f, false);
 	aircraft->radar.ufoDetectionProbability = aircraftTemplate->radar.ufoDetectionProbability;
 
-	/* Update base capacities. */
-	Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->size);
+	Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s hangar: %s\n", aircraft->tpl->idx, aircraft->id, aircraft->building);
 	Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for %s\n", aircraft->id, aircraft->idx, base->name);
 	if (!base->aircraftCurrent)
 		base->aircraftCurrent = aircraft;
@@ -747,17 +747,16 @@ aircraft_t* AIR_NewAircraft (base_t* base, const aircraft_t* aircraftTemplate)
  * @brief Returns capacity type needed for an aircraft
  * @param[in] aircraft Aircraft to check
  */
-baseCapacities_t AIR_GetCapacityByAircraftWeight (const aircraft_t* aircraft)
+baseCapacities_t AIR_GetHangarCapacityType (const aircraft_t* aircraft)
 {
-	if (!aircraft)
+	if (aircraft == nullptr)
 		return MAX_CAP;
-	switch (aircraft->size) {
-	case AIRCRAFT_SMALL:
-		return CAP_AIRCRAFT_SMALL;
-	case AIRCRAFT_LARGE:
-		return CAP_AIRCRAFT_BIG;
-	}
-	return MAX_CAP;
+
+	building_t* building = B_GetBuildingTemplateSilent(aircraft->building);
+	if (building == nullptr)
+		return MAX_CAP;
+
+	return B_GetCapacityFromBuildingType(building->buildingType);
 }
 
 /**
@@ -793,7 +792,7 @@ static int AIR_GetStorageRoom (const aircraft_t* aircraft)
  */
 const char* AIR_CheckMoveIntoNewHomebase (const aircraft_t* aircraft, const base_t* base)
 {
-	const baseCapacities_t capacity = AIR_GetCapacityByAircraftWeight(aircraft);
+	const baseCapacities_t capacity = AIR_GetHangarCapacityType(aircraft);
 
 	if (!B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(capacity)))
 		return _("No operational hangars at that base.");
@@ -868,7 +867,7 @@ void AIR_MoveAircraftIntoNewHomebase (aircraft_t* aircraft, base_t* base)
 	}
 
 	/* Move aircraft to new base */
-	const baseCapacities_t capacity = AIR_GetCapacityByAircraftWeight(aircraft);
+	const baseCapacities_t capacity = AIR_GetHangarCapacityType(aircraft);
 	CAP_AddCurrent(oldBase, capacity, -1);
 	aircraft->homebase = base;
 	CAP_AddCurrent(base, capacity, 1);
@@ -1300,7 +1299,6 @@ static const value_t aircraft_vals[] = {
 	{"name", V_STRING, offsetof(aircraft_t, name), 0},
 	{"defaultname", V_TRANSLATION_STRING, offsetof(aircraft_t, defaultName), 0},
 	{"numteam", V_INT, offsetof(aircraft_t, maxTeamSize), MEMBER_SIZEOF(aircraft_t, maxTeamSize)},
-	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
 	{"nogeoscape", V_BOOL, offsetof(aircraft_t, notOnGeoscape), MEMBER_SIZEOF(aircraft_t, notOnGeoscape)},
 	{"interestlevel", V_INT, offsetof(aircraft_t, ufoInterestOnGeoscape), MEMBER_SIZEOF(aircraft_t, ufoInterestOnGeoscape)},
 
@@ -1625,13 +1623,10 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 
 	if (aircraftTemplate->productionCost == 0)
 		aircraftTemplate->productionCost = aircraftTemplate->price;
-
-	if (aircraftTemplate->size < AIRCRAFT_SMALL || aircraftTemplate->size > AIRCRAFT_LARGE)
-		Sys_Error("Invalid aircraft size given for '%s'", aircraftTemplate->id);
 }
 
 #ifdef DEBUG
-void AIR_ListCraftIndexes_f (void)
+static void AIR_ListCraftIndexes_f (void)
 {
 	Com_Printf("globalIDX\t(Craftname)\n");
 	AIR_Foreach(aircraft) {
@@ -1642,7 +1637,7 @@ void AIR_ListCraftIndexes_f (void)
 /**
  * @brief Debug function that prints aircraft to game console
  */
-void AIR_ListAircraftSamples_f (void)
+static void AIR_ListAircraftSamples_f (void)
 {
 	int i = 0, max = ccs.numAircraftTemplates;
 	const value_t* vp;
@@ -2744,9 +2739,8 @@ bool AIR_CanIntercept (const aircraft_t* aircraft)
 		return false;
 
 	/* if dependencies of hangar are missing, you can't send aircraft */
-	if (aircraft->size == AIRCRAFT_SMALL && !B_GetBuildingStatus(aircraft->homebase, B_SMALL_HANGAR))
-		return false;
-	if (aircraft->size == AIRCRAFT_LARGE && !B_GetBuildingStatus(aircraft->homebase, B_HANGAR))
+	const building_t* hangar = B_GetBuildingTemplateSilent(aircraft->building);
+	if (!B_GetBuildingStatus(aircraft->homebase, hangar->buildingType))
 		return false;
 
 	/* we need a pilot to intercept */

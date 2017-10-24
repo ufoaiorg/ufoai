@@ -234,7 +234,7 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 
 	/* Aircraft */
 	LIST_Foreach(transData.aircraft, aircraft_t, aircraft) {
-		const baseCapacities_t capacity = AIR_GetCapacityByAircraftWeight(aircraft);
+		const baseCapacities_t capacity = AIR_GetHangarCapacityType(aircraft);
 		aircraft->status = AIR_TRANSFER;
 		aircraft->homebase = transData.destBase;
 

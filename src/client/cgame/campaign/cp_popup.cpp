@@ -174,6 +174,9 @@ static int AIR_SortByDistance (linkedList_t* aircraftEntry1, linkedList_t* aircr
 	return GetDistanceOnGlobe(aircraft1->pos, pos) - GetDistanceOnGlobe(aircraft2->pos, pos);
 }
 
+/** @todo Sorting need to be moved to the UI (Lua) side */
+#define AIR_ForeachSorted(var, sorter, userdata, sortedlist) LIST_ForeachSorted(ccs.aircraft, aircraft_t, var, sorter, userdata, sortedlist)
+
 /**
  * @brief Display the popup_mission
  * @sa CL_DisplayPopupAircraft
