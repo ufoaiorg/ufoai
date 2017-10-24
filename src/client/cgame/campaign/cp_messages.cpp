@@ -134,8 +134,10 @@ uiMessageListNodeMessage_t* MS_AddNewMessage (const char* title, const char* tex
 	MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
 
 	/* they need to be translated already */
-	if (popup)
-		CP_PopupList(mess->title, mess->text);
+	if (popup) {
+		CP_GameTimeStop();
+		CP_Popup(mess->title, "%s", mess->text);
+	}
 
 	if (playSound) {
 		const char* sound = nullptr;

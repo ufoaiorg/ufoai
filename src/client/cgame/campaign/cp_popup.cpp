@@ -465,15 +465,6 @@ void CL_PopupInit (void)
 }
 
 /**
- * @brief Wrapper around @c UI_Popup which also stops the time
- */
-void CP_PopupList (const char* title, const char* text)
-{
-	CP_GameTimeStop();
-	CP_Popup(title, "%s", text);
-}
-
-/**
  * @brief Wrapper around @c UI_Popup
  */
 void CP_Popup (const char* title, const char* text, ...)

@@ -28,5 +28,4 @@ bool CL_DisplayHomebasePopup(aircraft_t* aircraft, bool alwaysDisplay);
 void CL_PopupInit(void);
 void CL_DisplayPopupInterceptUFO(aircraft_t* ufo);
 void CL_DisplayPopupInterceptMission(mission_t* mission);
-void CP_PopupList(const char* title, const char* text);
 void CP_Popup(const char* title, const char* text, ...) __attribute__((format(__printf__,2,3)));
