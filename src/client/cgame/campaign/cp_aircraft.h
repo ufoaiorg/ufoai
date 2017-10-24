@@ -36,11 +36,6 @@ typedef struct technology_s technology_t;
 #define LINE_MAXPTS (LINE_MAXSEG + 2)
 #define LINE_DPHI	(M_PI / LINE_MAXSEG)
 
-/** Invalid aircraft index (global index). */
-#define AIRCRAFT_INVALID -1
-/** Invalid aircraft index in base-list of aircraft. */
-#define AIRCRAFT_INBASE_INVALID -1
-
 /** factor to speed up refuelling */
 #define AIRCRAFT_REFUEL_FACTOR 16
 
@@ -146,12 +141,9 @@ typedef enum aircraftStatus_s {
 
 /** @brief An aircraft with all it's data */
 typedef struct aircraft_s {
-	int idx;			/**< Global index of this aircraft. See also ccs.numAircraft and AIRCRAFT_INVALID
-						 * this index is also updated when AIR_DeleteAircraft was called
-						 * for all the other aircraft.
-						 * For aircraftTemplates[] aircraft this is the index in that array.
-						 * this should be references only with the variable name aircraftIdx
-						 * to let us find references all over the code easier @sa AIR_DeleteAircraft  */
+	int idx;			/**< Global index of this aircraft. See also ccs.numAircraft
+					 * For aircraftTemplates[] aircraft this is the index in that array.
+					 */
 	struct aircraft_s* tpl;	/**< Self-link in aircraft_sample list (i.e. templates). */
 	char* id;			/**< Internal id from script file. */
 	char name[MAX_VAR];	/**< Aircraft name (user can change this). */

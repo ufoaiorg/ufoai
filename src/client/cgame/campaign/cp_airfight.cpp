@@ -33,6 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_airfight.h"
 #include "../../sound/s_main.h"
 
+/** Invalid aircraft index for savegames (global index). */
+#define AIRCRAFT_INVALID -1
+
 /**
  * @brief Remove a projectile from ccs.projectiles
  * @param[in] projectile The projectile to remove
