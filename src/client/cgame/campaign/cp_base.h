@@ -30,23 +30,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_building.h"
 
 #define MAX_BASES 8
-
-#define MAX_BUILDINGS		32
 #define MAX_BASETEMPLATES	5
-
-#define MAX_BATTERY_DAMAGE	50
-#define MAX_BASE_DAMAGE		100
+#define MAX_BUILDINGS		32
 #define MAX_BASE_SLOT		4
-
-/** @todo take the values from scriptfile */
-#define BASEMAP_SIZE_X		778.0
-#define BASEMAP_SIZE_Y		672.0
 
 /* see MAX_TILESTRINGS */
 #define BASE_SIZE		5
 #define MAX_BASEBUILDINGS	BASE_SIZE * BASE_SIZE
-
-#define MAX_EMPLOYEES_IN_BUILDING 64
 
 #define MAX_BLOCKEDFIELDS	4
 #define MIN_BLOCKEDFIELDS	1
@@ -85,7 +75,7 @@ typedef enum {
 
 typedef struct baseBuildingTile_s {
 	building_t* building;	/**< nullptr if free spot */
-	bool	blocked;		/**< true if the tile is usable for buildings otherwise it's false (blocked somehow). */
+	bool blocked;		/**< true if the tile is usable for buildings otherwise it's false (blocked somehow). */
 	/* These are only used for baseTemplates: */
 	int posX;				/**< The x screen coordinate for the building on the basemap. */
 	int posY;				/**< The y screen coordinate for the building on the basemap. */
@@ -101,12 +91,12 @@ typedef struct baseWeapon_s {
 /** @brief A base with all it's data */
 typedef struct base_s {
 	int idx;					/**< Self link. Index in the global base-list. */
-	char name[MAX_VAR];			/**< Name of the base */
+	char name[MAX_VAR];				/**< Name of the base */
 	baseBuildingTile_t map[BASE_SIZE][BASE_SIZE];	/**< The base maps (holds building pointers)
-													 * @todo  maybe integrate BASE_INVALID_SPACE and BASE_FREE_SPACE here? */
+							 * @todo  maybe integrate BASE_INVALID_SPACE and BASE_FREE_SPACE here? */
 
-	bool founded;	/**< already founded? */
-	vec3_t pos;		/**< pos on geoscape */
+	bool founded;					/**< already founded? */
+	vec3_t pos;					/**< pos on geoscape */
 
 	/**
 	 * @note These bools does not say whether there is such building in the

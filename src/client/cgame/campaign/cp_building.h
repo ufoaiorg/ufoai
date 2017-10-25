@@ -25,16 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "../../../shared/shared.h"
-#include "../../../shared/mathlib.h"
 #include "../../../common/common.h"
-
-struct technology_s;
 
 /** @brief All possible building status. */
 typedef enum {
 	B_STATUS_NOT_SET,				/**< not build yet */
-	B_STATUS_UNDER_CONSTRUCTION,	/**< right now under construction */
-	B_STATUS_CONSTRUCTION_FINISHED,	/**< construction finished - no workers assigned */
+	B_STATUS_UNDER_CONSTRUCTION,			/**< right now under construction */
+	B_STATUS_CONSTRUCTION_FINISHED,			/**< construction finished - no workers assigned */
 	/* and building needs workers */
 	B_STATUS_WORKING,				/**< working normal (or workers assigned when needed) */
 	B_STATUS_DOWN					/**< totally damaged */
