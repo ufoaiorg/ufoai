@@ -178,8 +178,7 @@ static void AIR_ListAircraft_f (void)
 		}
 		Com_Printf("\n");
 		Com_Printf("...name %s\n", aircraft->id);
-		Com_Printf("...type %i\n", aircraft->type);
-		Com_Printf("...size %i\n", aircraft->maxTeamSize);
+		Com_Printf("...team size %i\n", aircraft->maxTeamSize);
 		Com_Printf("...fuel %i\n", aircraft->fuel);
 		Com_Printf("...status %s\n", (aircraft->status == AIR_CRASHED) ? "crashed" : AIR_AircraftStatusToName(aircraft));
 		Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
@@ -1534,19 +1533,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 			if (cgi->Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_vals, cp_campaignPool, token))
 				continue;
 
-			if (Q_streq(token, "type")) {
-				token = cgi->Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				if (Q_streq(token, "transporter"))
-					aircraftTemplate->type = AIRCRAFT_TRANSPORTER;
-				else if (Q_streq(token, "interceptor"))
-					aircraftTemplate->type = AIRCRAFT_INTERCEPTOR;
-				else if (Q_streq(token, "ufo")) {
-					aircraftTemplate->type = AIRCRAFT_UFO;
-					aircraftTemplate->setUfoType(cgi->Com_UFOShortNameToID(aircraftTemplate->id));
-				}
-			} else if (Q_streq(token, "slot")) {
+			if (Q_streq(token, "slot")) {
 				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
 					Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
@@ -1587,6 +1574,9 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 			}
 		} /* assignAircraftItems */
 	} while (*text);
+
+	if (aircraftTemplate->building == nullptr)
+		aircraftTemplate->setUfoType(cgi->Com_UFOShortNameToID(aircraftTemplate->id));
 
 	if (aircraftTemplate->productionCost == 0)
 		aircraftTemplate->productionCost = aircraftTemplate->price;
@@ -2744,7 +2734,7 @@ bool AIR_ScriptSanityCheck (void)
 			}
 
 		/* check that every slots has a different location for PHALANX aircraft (not needed for UFOs) */
-		if (a->type != AIRCRAFT_UFO) {
+		if (!AIR_IsUFO(a)) {
 			for (j = 0; j < a->maxWeapons - 1; j++) {
 				const itemPos_t var = a->weapons[j].pos;
 				for (k = j + 1; k < a->maxWeapons; k++)

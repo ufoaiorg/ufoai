@@ -43,13 +43,6 @@ typedef struct mapline_s {
 	vec2_t point[LINE_MAXPTS]; /**< array of 2D points that make up this path */
 } mapline_t;
 
-/** @brief All different types of aircraft. */
-typedef enum {
-	AIRCRAFT_TRANSPORTER,
-	AIRCRAFT_INTERCEPTOR,
-	AIRCRAFT_UFO
-} aircraftType_t;
-
 /** @brief different weight for aircraft items
  * @note values must go from the lightest to the heaviest item */
 typedef enum {
@@ -136,7 +129,6 @@ typedef struct aircraft_s {
 	char* defaultName;	/**< Translatable default name for aircraft. */
 	char* image;		/**< Image on geoscape. */
 	char* model;		/**< Model used on geoscape */
-	aircraftType_t type;/**< Type of aircraft, see aircraftType_t. */
 	ufoType_t ufotype;	/**< Type of UFO, see ufoType_t (UFO_NONE if craft is not a UFO). */
 	aircraftStatus_t status;	/**< Status of this aircraft, see aircraftStatus_t. */
 

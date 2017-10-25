@@ -12,7 +12,7 @@
 //		contains	- technology of the item in the slot at the beginning of the game.
 //		ammo		- Technology of the ammo loading the weapon (only for weapon slots).
 //
-// radar {} - Properties of the aircraft's radar system:
+//	radar {} - Properties of the aircraft's radar system:
 //		range					- Detection range (integer)
 //		trackingrange			- Tracking range (integer), must be greater than Detection range!
 //		detectionprobability	- (optional) Detection probability (float), defaults to 1.0 (100%)
@@ -132,7 +132,6 @@ aircraft craft_drop_firebird
 	}
 	name		"_Firebird-class Dropship"
 	defaultname	"_Firebird D"
-	type		"transporter"
 	model		"geoscape/drop_firebird"
 	price		20000
 	building	building_hangar
@@ -172,7 +171,6 @@ aircraft craft_drop_herakles
 	}
 	name		"_Herakles-class Heavy Lifter"
 	defaultname	"_Herakles D"
-	type		"transporter"
 	model		"geoscape/drop_herakles"
 	price		30000
 	building	building_hangar
@@ -213,7 +211,6 @@ aircraft craft_drop_raptor
 	}
 	name		"_Raptor-class Combat Transport"
 	defaultname	"_Raptor"
-	type		"transporter"
 	model		"geoscape/drop_raptor"
 	price		30000
 	building	building_hangar
@@ -267,7 +264,6 @@ aircraft craft_inter_stiletto
 	}
 	name		"_Stiletto-class Interceptor"
 	defaultname	"_Stiletto I"
-	type		"interceptor"
 	model		"geoscape/inter_stiletto"
 	numteam		0
 	price		20000
@@ -317,7 +313,6 @@ aircraft craft_inter_saracen
 	}
 	name		"_Saracen-class Interceptor"
 	defaultname	"_Saracen I"
-	type		"interceptor"
 	model		"geoscape/inter_saracen"
 	numteam		0
 	price		30000
@@ -363,7 +358,6 @@ aircraft craft_inter_dragon
 	}
 	name		"_Dragon Interceptor"
 	defaultname	"_Dragon"
-	type		"interceptor"
 	model		"geoscape/inter_dragon"
 	numteam		0
 	price		40000
@@ -409,7 +403,6 @@ aircraft craft_inter_starchaser
 	}
 	name		"_Starchaser-class Interceptor"
 	defaultname	"_Starchaser"
-	type		"interceptor"
 	model		"geoscape/inter_starchaser"
 	numteam		0
 	price		40000
@@ -460,7 +453,6 @@ aircraft craft_inter_stingray
 	}
 	name		"_Stingray Interceptor"
 	defaultname	"_Stingray"
-	type		"interceptor"
 	model		"geoscape/inter_stingray"
 	numteam		0
 	price		55000
@@ -522,7 +514,6 @@ aircraft craft_ufo_scout
 	}
 	name		"_UFO - Scout"
 	defaultname	"_Scout U"
-	type		"ufo"
 	model		"geoscape/ufo_scout"
 	numteam		4
 	price		8000
@@ -552,7 +543,6 @@ aircraft craft_ufo_fighter
 	}
 	name		"_UFO - Fighter"
 	defaultname	"_Fighter U"
-	type		"ufo"
 	model		"geoscape/ufo_fighter"
 	numteam		6
 	price		12000
@@ -589,7 +579,6 @@ aircraft craft_ufo_harvester
 	}
 	name		"_UFO - Harvester"
 	defaultname	"_Harvester U"
-	type		"ufo"
 	model		"geoscape/ufo_harvester"
 	numteam		8
 	price		18000
@@ -642,7 +631,6 @@ aircraft craft_ufo_corrupter
 	}
 	name		"_UFO - Corrupter"
 	defaultname	"_Corrupter U"
-	type		"ufo"
 	model		"geoscape/ufo_corrupter"
 	numteam		10
 	price		27000
@@ -689,7 +677,6 @@ aircraft craft_ufo_supply
 	}
 	name		"_UFO - Supply Ship"
 	defaultname	"_Supply U"
-	type		"ufo"
 	model		"geoscape/ufo_supply"
 	numteam		12
 	price		20000
@@ -719,7 +706,6 @@ aircraft craft_ufo_gunboat
 	}
 	name		"_UFO - Gunboat"
 	defaultname	"_Gunboat U"
-	type		"ufo"
 	model		"geoscape/ufo_gunboat"
 	numteam		12
 	price		23000
@@ -781,7 +767,6 @@ aircraft craft_ufo_bomber
 	}
 	name		"_UFO - Bomber"
 	defaultname	"_Bomber U"
-	type		"ufo"
 	model		"geoscape/ufo_bomber"
 	numteam		18
 	leader		true
@@ -849,7 +834,6 @@ aircraft craft_ufo_ripper
 	}
 	name		"_UFO - Ripper"
 	defaultname	"_Ripper U"
-	type		"ufo"
 	model		"geoscape/ufo_ripper"
 	numteam		14
 	price		30000
@@ -905,7 +889,6 @@ aircraft craft_ufo_carrier
 	}
 	name		"_UFO - Carrier"
 	defaultname	"_Carrier U"
-	type		"ufo"
 	model		"geoscape/ufo_carrier"
 	price		0 //NOTE: This UFO must never be sellable!
 	image		"geoscape/air_ufo"
@@ -926,7 +909,6 @@ aircraft craft_ufo_mothership
 	}
 	name		"_UFO - Mothership"
 	defaultname	"_Mothership U"
-	type		"ufo"
 	model		"geoscape/ufo_mothership"
 	price		0 //This UFO is not recoverable in the first place. It's the final mission!
 	image		"geoscape/air_ufo"

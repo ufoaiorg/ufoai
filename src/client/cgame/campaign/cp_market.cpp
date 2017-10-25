@@ -110,7 +110,7 @@ int BS_GetItemBuyingPrice (const objDef_t* od)
  */
 bool BS_AircraftIsOnMarket (const aircraft_t* aircraft)
 {
-	if (aircraft->type == AIRCRAFT_UFO)
+	if (AIR_IsUFO(aircraft))
 		return false;
 	if (aircraft->price == -1)
 		return false;
@@ -141,7 +141,7 @@ static void BS_AddAircraftToMarket (const aircraft_t* aircraft, int amount)
 	const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(aircraft->id);
 	market_t* market = BS_GetMarket();
 	assert(amount >= 0);
-	assert(aircraft->type != AIRCRAFT_UFO);
+	assert(!AIR_IsUFO(aircraft));
 	market->numAircraft[type] += amount;
 }
 
@@ -156,7 +156,7 @@ static void BS_RemoveAircraftFromMarket (const aircraft_t* aircraft, int amount)
 	market_t* market = BS_GetMarket();
 
 	assert(amount >= 0);
-	assert(aircraft->type != AIRCRAFT_UFO);
+	assert(!AIR_IsUFO(aircraft));
 
 	market->numAircraft[type] = std::max(market->numAircraft[type] - amount, 0);
 }
@@ -172,7 +172,7 @@ int BS_GetAircraftSellingPrice (const aircraft_t* aircraft)
 	const market_t* market = BS_GetMarket();
 	int sellPrice = market->bidAircraft[type];
 
-	assert(aircraft->type != AIRCRAFT_UFO);
+	assert(!AIR_IsUFO(aircraft));
 
 	if (aircraft->tpl != aircraft) {
 		int i;
@@ -211,7 +211,7 @@ int BS_GetAircraftBuyingPrice (const aircraft_t* aircraft)
 {
 	const humanAircraftType_t type = cgi->Com_DropShipShortNameToID(aircraft->id);
 	const market_t* market = BS_GetMarket();
-	assert(aircraft->type != AIRCRAFT_UFO);
+	assert(!AIR_IsUFO(aircraft));
 	return market->askAircraft[type];
 }
 

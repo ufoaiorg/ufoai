@@ -698,7 +698,7 @@ const aircraft_t* UFO_GetTemplate (ufoType_t ufoType)
 
 	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++) {
 		const aircraft_t* tpl = &ccs.aircraftTemplates[newUFONum];
-		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->getUfoType())
+		if (AIR_IsUFO(tpl) && ufoType == tpl->getUfoType())
 			break;
 	}
 
@@ -721,7 +721,7 @@ static const aircraft_t* UFO_GetTemplateForGeoscape (ufoType_t ufoType)
 
 	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++) {
 		const aircraft_t* tpl = &ccs.aircraftTemplates[newUFONum];
-		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->getUfoType() && !tpl->notOnGeoscape)
+		if (AIR_IsUFO(tpl) && ufoType == tpl->getUfoType() && !tpl->notOnGeoscape)
 			break;
 	}
 
@@ -750,7 +750,7 @@ aircraft_t* UFO_CreateFromTemplate (const aircraft_t* ufoTemplate)
 		return nullptr;
 
 	/* must be an ufo */
-	assert(ufoTemplate->type == AIRCRAFT_UFO);
+	assert(AIR_IsUFO(ufoTemplate));
 
 	/* get a new free slot */
 	ufo = UFO_GetByIDX(ccs.numUFOs);

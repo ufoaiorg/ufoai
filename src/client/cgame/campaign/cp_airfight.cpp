@@ -300,7 +300,7 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t* shooter, const aircraf
 	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting ECM of target: %f\n", probability);
 
 	/* If shooter is a PHALANX craft, check the targeting skills of the pilot */
-	if (shooter && shooter->type != AIRCRAFT_UFO) {
+	if (shooter && !AIR_IsUFO(shooter)) {
 		if (shooter->pilot) {
 			/**
 			 * Targeting skill increases hit chance for shooter
@@ -315,7 +315,7 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t* shooter, const aircraf
 	}
 
 	/* If target is a PHALANX craft, check the evading skills of the pilot */
-	if (target && target->type != AIRCRAFT_UFO) {
+	if (target && !AIR_IsUFO(target)) {
 		if (target->pilot) {
 			/**
 			 * Evasion skill decreases hit chance for shooter
@@ -371,7 +371,7 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 			if (probability > calculatedProbability)
 				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1]);
 
-			if (shooter->type != AIRCRAFT_UFO) {
+			if (!AIR_IsUFO(shooter)) {
 				/* Maybe UFO is going to shoot back ? */
 				UFO_CheckShootBack(campaign, target, shooter);
 			} else {
@@ -386,7 +386,7 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 		}
 	} else if (slotIdx == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT) {
 		/* no ammo to fire atm (too far or reloading), pursue target */
-		if (shooter->type == AIRCRAFT_UFO) {
+		if (AIR_IsUFO(shooter)) {
 			/** @todo This should be calculated only when target destination changes, or when aircraft speed changes.
 			 *  @sa AIR_GetDestination */
 			UFO_SendPursuingAircraft(shooter, target);
@@ -394,7 +394,7 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 			AIR_SendAircraftPursuingUFO(shooter, target);
 	} else {
 		/* no ammo left, or no weapon, proceed with mission */
-		if (shooter->type == AIRCRAFT_UFO) {
+		if (AIR_IsUFO(shooter)) {
 			shooter->aircraftTarget = nullptr;		/* reset target */
 			CP_UFOProceedMission(campaign, shooter);
 		} else {
@@ -626,7 +626,7 @@ static void AIRFIGHT_ProjectileHits (const campaign_t* campaign, aircraftProject
 		target->damage -= damage;
 		if (target->damage <= 0) {
 			/* Target is destroyed */
-			AIRFIGHT_ActionsAfterAirfight(campaign, projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
+			AIRFIGHT_ActionsAfterAirfight(campaign, projectile->attackingAircraft, target, AIR_IsUFO(target));
 			cgi->S_StartLocalSample("geoscape/combat-explosion", 1.0f);
 		} else {
 			if (projectile->rocket)
@@ -907,8 +907,8 @@ bool AIRFIGHT_SaveXML (xmlNode_t* parent)
 		if (projectile->attackingAircraft) {
 			xmlNode_t* attacking =  cgi->XML_AddNode(node, SAVE_AIRFIGHT_ATTACKINGAIRCRAFT);
 
-			cgi->XML_AddBoolValue(attacking, SAVE_AIRFIGHT_ISUFO, projectile->attackingAircraft->type == AIRCRAFT_UFO);
-			if (projectile->attackingAircraft->type == AIRCRAFT_UFO)
+			cgi->XML_AddBoolValue(attacking, SAVE_AIRFIGHT_ISUFO, AIR_IsUFO(projectile->attackingAircraft));
+			if (AIR_IsUFO(projectile->attackingAircraft))
 				cgi->XML_AddInt(attacking, SAVE_AIRFIGHT_AIRCRAFTIDX, UFO_GetGeoscapeIDX(projectile->attackingAircraft));
 			else
 				cgi->XML_AddInt(attacking, SAVE_AIRFIGHT_AIRCRAFTIDX, projectile->attackingAircraft->idx);
@@ -918,8 +918,8 @@ bool AIRFIGHT_SaveXML (xmlNode_t* parent)
 		if (projectile->aimedAircraft) {
 			xmlNode_t* aimed =  cgi->XML_AddNode(node, SAVE_AIRFIGHT_AIMEDAIRCRAFT);
 
-			cgi->XML_AddBoolValue(aimed, SAVE_AIRFIGHT_ISUFO, projectile->aimedAircraft->type == AIRCRAFT_UFO);
-			if (projectile->aimedAircraft->type == AIRCRAFT_UFO)
+			cgi->XML_AddBoolValue(aimed, SAVE_AIRFIGHT_ISUFO, AIR_IsUFO(projectile->aimedAircraft));
+			if (AIR_IsUFO(projectile->aimedAircraft))
 				cgi->XML_AddInt(aimed, SAVE_AIRFIGHT_AIRCRAFTIDX, UFO_GetGeoscapeIDX(projectile->aimedAircraft));
 			else
 				cgi->XML_AddInt(aimed, SAVE_AIRFIGHT_AIRCRAFTIDX, projectile->aimedAircraft->idx);
