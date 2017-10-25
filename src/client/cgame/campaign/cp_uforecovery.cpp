@@ -437,6 +437,7 @@ static void US_StoreUFO_f (void)
 	}
 
 	/* Get UFO Type */
+	/** @todo use full scripted name and AIR_GetAircraftSilent instead */
 	aircraft_t* ufoType = nullptr;
 	for (int i = 0; i < ccs.numAircraftTemplates; i++) {
 		if (strstr(ccs.aircraftTemplates[i].id, ufoId)) {

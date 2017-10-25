@@ -1315,16 +1315,8 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 	}
 
 	if (!assignAircraftItems) {
-		aircraftTemplate = nullptr;
-		for (i = 0; i < ccs.numAircraftTemplates; i++) {
-			aircraft_t* aircraft = &ccs.aircraftTemplates[i];
-			if (Q_streq(aircraft->id, name)) {
-				aircraftTemplate = aircraft;
-				break;
-			}
-		}
-
-		if (aircraftTemplate) {
+		const aircraft_t* aircraftTemplateCheck = AIR_GetAircraftSilent(name);
+		if (aircraftTemplateCheck) {
 			Com_Printf("AIR_ParseAircraft: Second aircraft with same name found (%s) - second ignored\n", name);
 			return;
 		}
