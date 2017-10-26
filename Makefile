@@ -38,6 +38,8 @@ INSTALL_SCRIPT  ?= $(INSTALL) -m 755
 INSTALL_DIR     ?= $(INSTALL) -d
 INSTALL_MAN     ?= $(INSTALL) -m 444
 INSTALL_DATA    ?= $(INSTALL) -m 444
+UNINSTALL_FILE  ?= rm --interactive=never
+UNINSTALL_DIR   ?= rmdir -p --ignore-fail-on-non-empty
 
 ifeq ($(USE_CCACHE),1)
 CCACHE := ccache
@@ -90,6 +92,9 @@ distclean: clean
 
 .PHONY: install
 install: install-pre $(addprefix install-,$(TARGETS))
+
+.PHONY: uninstall
+uninstall:  uninstall-pre $(addprefix uninstall-,$(TARGETS))
 
 .PHONY: strip
 strip: $(addprefix strip-,$(TARGETS))
@@ -159,6 +164,11 @@ install-$(1): $($(1)_FILE)
 	@echo 'Install $$<'
 	$(Q)$(INSTALL_DIR) $(DESTDIR)$(PKGDATADIR)/$(dir $($(1)_FILE))
 	$(Q)$(INSTALL_PROGRAM) $$< $(DESTDIR)$(PKGDATADIR)/$$<
+
+uninstall-$(1):
+	@echo 'Uninstall $($(1)_FILE)'
+	$(Q)$(UNINSTALL_FILE) $(DESTDIR)$(PKGDATADIR)/$($(1)_FILE)
+	$(Q)$(UNINSTALL_DIR) $(dir $(DESTDIR)$(PKGDATADIR)/$($(1)_FILE))
 
 else
 # if this target is ignored, just do nothing

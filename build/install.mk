@@ -87,3 +87,24 @@ install-pre: pk3 lang
 	$(Q)rm ufoded.sh ufo.sh
 	@echo "Install pk3s"
 	$(Q)$(INSTALL_DATA) base/*.pk3 $(DESTDIR)$(PKGDATADIR)/base
+
+.PHONY: uninstall-pre
+uninstall-pre:
+	@echo "Uninstall locales"
+	$(Q)LCDIR=$(LOCALEDIR); \
+	LCDIR=$${LCDIR:-$(PKGDATADIR)/base/i18n}; \
+	if [ -d $(DESTDIR)$$LCDIR/ ]; then \
+		cd $(DESTDIR)$$LCDIR/; for dir in *; do \
+			$(UNINSTALL_FILE) $(DESTDIR)$$LCDIR/$$dir/LC_MESSAGES/ufoai.mo && \
+			$(UNINSTALL_DIR) $(DESTDIR)$$LCDIR/$$dir/LC_MESSAGES; \
+		done; \
+	fi
+	$(Q)$(UNINSTALL_FILE) $(DESTDIR)$(PKGBINDIR)/ufo
+	$(Q)$(UNINSTALL_FILE) $(DESTDIR)$(PKGBINDIR)/ufoded
+	$(Q)if [ -z "$(uforadiant_DISABLE)" ]; then \
+		$(UNINSTALL_FILE) $(DESTDIR)$(PKGBINDIR)/uforadiant; \
+	fi
+	$(Q)$(UNINSTALL_DIR) $(DESTDIR)$(PKGBINDIR)
+	@echo "Uninstall pk3s"
+	$(Q)$(UNINSTALL_FILE) $(DESTDIR)$(PKGDATADIR)/base/*.pk3
+	$(Q)$(UNINSTALL_DIR) $(DESTDIR)$(PKGDATADIR)/base

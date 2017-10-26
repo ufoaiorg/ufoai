@@ -48,7 +48,7 @@ define $(BASE_DIR)/0videos.pk3
 endef
 
 define $(BASE_DIR)/0media.pk3
-	media/*.ttf
+	media/*.ttf media/*.otf
 endef
 
 define $(BASE_DIR)/0shaders.pk3
