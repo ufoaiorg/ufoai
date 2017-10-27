@@ -810,7 +810,7 @@ static void G_GetTeam (Player& player)
 
 				p = nullptr;
 				/* check if team is in use (only human controlled players) */
-				while ((p = G_PlayerGetNextActiveAI(p))) {
+				while ((p = G_PlayerGetNextActiveHuman(p))) {
 					if (p->getTeam() == i) {
 						Com_DPrintf(DEBUG_GAME, "Team %i is already in use\n", i);
 						/* team already in use */
@@ -827,7 +827,7 @@ static void G_GetTeam (Player& player)
 		if (i < MAX_TEAMS) {
 			/* remove ai player */
 			p = nullptr;
-			while ((p = G_PlayerGetNextActiveHuman(p))) {
+			while ((p = G_PlayerGetNextActiveAI(p))) {
 				if (p->getTeam() == i) {
 					gi.BroadcastPrintf(PRINT_CONSOLE, "Removing ai player...");
 					p->setInUse(false);
