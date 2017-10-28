@@ -124,6 +124,10 @@ TEST_F(MapDefTest, MapDefsMultiplayer)
 		if (filterId && !Q_streq(filterId, md->id))
 			continue;
 
+		/* @todo remove hardcoded gametype id here */
+		if (!LIST_ContainsString(md->gameTypes, "fight"))
+			Cvar_Set("sv_teamplay", "1");
+
 		/* use a known seed to reproduce an error */
 		if (TEST_ExistsProperty("mapdef-seed")) {
 			seed = TEST_GetLongProperty("mapdef-seed");
