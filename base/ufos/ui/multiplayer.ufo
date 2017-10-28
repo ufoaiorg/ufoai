@@ -297,6 +297,7 @@ window multiplayer extends cgame_download
 				current		*cvar:sv_teamplay
 				pos			"204 40"
 				size		"20 18"
+				disabled	true
 			}
 
 			MapOptions mp_maps
