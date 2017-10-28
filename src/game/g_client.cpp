@@ -752,12 +752,13 @@ static void G_GetTeam (Player& player)
 	while ((p = G_PlayerGetNextActiveHuman(p)))
 		playersInGame++;
 
+	const int maxTeam = std::min(sv_maxteams->integer, TEAM_MAX_HUMAN);
 	/* randomly assign a teamnumber in deathmatch games */
 	if (playersInGame <= 1 && G_IsMultiPlayer() && !sv_teamplay->integer) {
 		int spawnCheck[MAX_TEAMS];
 		int spawnSpots = 0;
 		/* skip civilian teams */
-		for (int i = TEAM_PHALANX; i < MAX_TEAMS; i++) {
+		for (int i = TEAM_PHALANX; i <= maxTeam; i++) {
 			spawnCheck[i] = 0;
 			/* check whether there are spawnpoints for this team */
 			if (level.num_spawnpoints[i])
@@ -804,7 +805,7 @@ static void G_GetTeam (Player& player)
 		int i;
 		/* search team */
 		gi.DPrintf("Getting a multiplayer team for %s\n", player.pers.netname);
-		for (i = TEAM_CIVILIAN + 1; i < MAX_TEAMS; i++) {
+		for (i = TEAM_CIVILIAN + 1; i <= maxTeam; i++) {
 			if (level.num_spawnpoints[i]) {
 				bool teamAvailable = true;
 
@@ -824,7 +825,7 @@ static void G_GetTeam (Player& player)
 		}
 
 		/* set the team */
-		if (i < MAX_TEAMS) {
+		if (i <= maxTeam) {
 			/* remove ai player */
 			p = nullptr;
 			while ((p = G_PlayerGetNextActiveAI(p))) {
