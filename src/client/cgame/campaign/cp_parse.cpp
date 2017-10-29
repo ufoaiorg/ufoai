@@ -390,11 +390,7 @@ static void CP_ParseCampaign (const char* name, const char** text)
 	bool drop = false;
 
 	/* search for campaigns with same name */
-	for (i = 0; i < ccs.numCampaigns; i++)
-		if (Q_streq(name, ccs.campaigns[i].id))
-			break;
-
-	if (i < ccs.numCampaigns) {
+	if (CP_GetCampaign(name) != nullptr) {
 		Com_Printf("CP_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
@@ -407,11 +403,8 @@ static void CP_ParseCampaign (const char* name, const char** text)
 	/* initialize the campaign */
 	cp = &ccs.campaigns[ccs.numCampaigns++];
 	OBJZERO(*cp);
-
 	cp->idx = ccs.numCampaigns - 1;
 	Q_strncpyz(cp->id, name, sizeof(cp->id));
-
-	/* some default values */
 	cp->team = TEAM_PHALANX;
 	Q_strncpyz(cp->researched, "researched_human", sizeof(cp->researched));
 	cp->researchRate = 0.8f;
