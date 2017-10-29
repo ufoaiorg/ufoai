@@ -310,7 +310,7 @@ date_t Date_Random (date_t minFrame, date_t maxFrame)
 }
 
 /**
- * @brief Returns the monatname to the given month index
+ * @brief Returns the short monthame to the given month index
  * @param[in] month The month index - [0-11]
  * @return month name as char*
  */

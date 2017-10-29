@@ -43,25 +43,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 /**
- * Status of the node
+ * @brief Status of the node
  */
 enum mapDragMode_t {
-	/**
-	 * No interaction
-	 */
-	MODE_NULL,
-	/**
-	 * Mouse captured to move the 2D geoscape
-	 */
-	MODE_SHIFT2DMAP,
-	/**
-	 * Mouse captured to move the 3D geoscape
-	 */
-	MODE_SHIFT3DMAP,
-	/**
-	 * Mouse captured to zoom on the geoscape
-	 */
-	MODE_ZOOMMAP
+	MODE_NULL,		/**< No interaction */
+	MODE_SHIFT2DMAP,	/**< Mouse captured to move the 2D geoscape */
+	MODE_SHIFT3DMAP,	/**< Mouse captured to move the 3D geoscape */
+	MODE_ZOOMMAP		/**< Mouse captured to zoom on the geoscape */
 };
 
 /**

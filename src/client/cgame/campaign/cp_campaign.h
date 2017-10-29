@@ -365,12 +365,10 @@ typedef struct ccs_s {
 	} geoscape;
 
 	/* == misc == */
-	/* geoscape actions like: MA_NEWBASE */
-	mapAction_t mapAction;
-
-	/** @todo move into the base node extra data */
-	/* BA_NEWBUILDING ... */
-	baseAction_t baseAction;
+	/** @todo eliminate or move into Lua UI scripts */
+	mapAction_t mapAction;					/**< New installation and base building status */
+	baseAction_t baseAction;				/**< Base facility building status */
+	vec2_t newBasePos;					/**< Coordinates to place the new base at (long, lat) */
 
 	/* how fast the game is running */
 	int gameTimeScale;
@@ -379,9 +377,6 @@ typedef struct ccs_s {
 	/* already paid in this month? */
 	bool paid;
 
-	/** Coordinates to place the new base at (long, lat) */
-	vec2_t newBasePos;
-
 	/* == employees == */
 	/* A list of all phalanx employees (soldiers, scientists, workers, etc...) */
 	linkedList_t* employees[MAX_EMPL];
@@ -389,13 +384,11 @@ typedef struct ccs_s {
 	/* == technologies == */
 	/* A list of all research-topics resp. the research-tree. */
 	technology_t technologies[MAX_TECHNOLOGIES];
-	/* Total number of technologies. */
 	int numTechnologies;
 
 	/* == bases == */
 	/* A list of _all_ bases ... even unbuilt ones. */
 	base_t bases[MAX_BASES];
-	/* Total number of built bases (how many are enabled). */
 	int numBases;
 
 	/* a list of all templates for building bases */
@@ -424,15 +417,14 @@ typedef struct ccs_s {
 	linkedList_t* transfers;
 
 	/* UFO components. */
-	int numComponents;
 	components_t components[MAX_ASSEMBLIES];
+	int numComponents;
 
 	/* == stored UFOs == */
 	linkedList_t* storedUFOs;
 
 	/* Alien Team Package used during battle */
-	alienTeamCategory_t alienCategories[ALIENCATEGORY_MAX];		/**< different alien team available
-									 * that will be used in mission */
+	alienTeamCategory_t alienCategories[ALIENCATEGORY_MAX];		/**< different alien team available that will be used in mission */
 	int numAlienCategories;						/** number of alien team categories defined */
 
 	/* == ufopedia == */
