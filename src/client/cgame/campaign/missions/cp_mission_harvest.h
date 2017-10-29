@@ -25,6 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void CP_HarvestMissionNextStage(mission_t* mission);
-void CP_HarvestMissionIsFailure(mission_t* mission);
-void CP_HarvestMissionGo(mission_t* mission);
+void CP_HarvestMissionNextStage(struct mission_s* mission);
+void CP_HarvestMissionIsFailure(struct mission_s* mission);
+void CP_HarvestMissionGo(struct mission_s* mission);

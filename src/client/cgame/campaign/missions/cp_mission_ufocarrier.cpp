@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cp_time.h"
 #include "../cp_xvi.h"
 #include "../cp_alien_interest.h"
+#include "cp_mission_ufocarrier.h"
 
 static mission_t* CP_GetCarrierMission (void)
 {

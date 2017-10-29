@@ -27,9 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern const int STARTING_BASEBUILD_INTEREST;
 
-bool CP_BasemissionIsSubvertingGovernmentMission(const mission_t* mission);
-void CP_BuildBaseMissionNextStage(const campaign_t* campaign, mission_t* mission);
-void CP_BuildBaseMissionIsFailure(mission_t* mission);
-void CP_BuildBaseMissionBaseDestroyed(mission_t* mission);
-void CP_BuildBaseMissionIsSuccess(mission_t* mission);
+bool CP_BasemissionIsSubvertingGovernmentMission(const struct mission_s* mission);
+void CP_BuildBaseMissionNextStage(const campaign_t* campaign, struct mission_s* mission);
+void CP_BuildBaseMissionIsFailure(struct mission_s* mission);
+void CP_BuildBaseMissionBaseDestroyed(struct mission_s* mission);
+void CP_BuildBaseMissionIsSuccess(struct mission_s* mission);
 void CP_BuildBaseMissionOnSpawn(void);

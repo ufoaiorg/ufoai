@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cp_time.h"
 #include "../cp_popup.h"
 #include "../cp_alien_interest.h"
+#include "cp_mission_baseattack.h"
 
 /**
  * @brief This fake aircraft is used to assign soldiers for a base attack mission

@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_nation.h"
 #include "../../ui/ui_main.h" /* ui_node_linechart.h */
 #include "../../ui/node/ui_node_linechart.h" /* lineStrip_t */
+#include "cp_missions.h"
 
 /* nation happiness constants */
 #define HAPPINESS_ALIEN_MISSION_LOSS		-0.02
@@ -81,26 +82,27 @@ void NAT_UpdateHappinessForAllNations (const float minhappiness)
 		/* Difficulty modifier range is [0, 0.02f] */
 
 		/* Some non-water location have no nation */
-		if (nation) {
-			float happinessFactor;
-			const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
-			switch (mission->stage) {
-			case STAGE_TERROR_MISSION:
-			case STAGE_SUBVERT_GOV:
-			case STAGE_RECON_GROUND:
-			case STAGE_SPREAD_XVI:
-			case STAGE_HARVEST:
-				happinessFactor = HAPPINESS_ALIEN_MISSION_LOSS;
-				break;
-			default:
-				/* mission is not active on earth or does not have any influence
-				 * on the nation happiness, skip this mission */
-				continue;
-			}
+		if (!nation)
+			continue;
 
-			NAT_SetHappiness(minhappiness, nation, stats->happiness + happinessFactor);
-			Com_DPrintf(DEBUG_CLIENT, "Happiness of nation %s decreased: %.02f\n", nation->name, stats->happiness);
+		float happinessFactor;
+		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
+		switch (mission->stage) {
+		case STAGE_TERROR_MISSION:
+		case STAGE_SUBVERT_GOV:
+		case STAGE_RECON_GROUND:
+		case STAGE_SPREAD_XVI:
+		case STAGE_HARVEST:
+			happinessFactor = HAPPINESS_ALIEN_MISSION_LOSS;
+			break;
+		default:
+			/* mission is not active on earth or does not have any influence
+			 * on the nation happiness, skip this mission */
+			continue;
 		}
+
+		NAT_SetHappiness(minhappiness, nation, stats->happiness + happinessFactor);
+		Com_DPrintf(DEBUG_CLIENT, "Happiness of nation %s decreased: %.02f\n", nation->name, stats->happiness);
 	}
 }
 

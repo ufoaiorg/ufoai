@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/cgame/campaign/cp_time.h"
 #include "../client/cgame/campaign/cp_alien_interest.h"
 #include "../client/cgame/campaign/cp_auto_mission.h"
+#include "../client/cgame/campaign/missions/cp_mission_intercept.h"
 #include "../shared/parse.h"
 #include "../shared/images.h"
 

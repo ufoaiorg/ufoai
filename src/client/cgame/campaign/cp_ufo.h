@@ -48,7 +48,7 @@ void UFO_CampaignRunUFOs(const campaign_t* campaign, int dt);
 void UFO_UpdateAlienInterestForAllBasesAndInstallations(void);
 void UFO_DetectNewUFO(aircraft_t* ufocraft);
 bool UFO_CampaignCheckEvents(void);
-aircraft_t* UFO_AddToGeoscape(ufoType_t ufotype, const vec2_t destination, mission_t* mission);
+aircraft_t* UFO_AddToGeoscape(ufoType_t ufotype, const vec2_t destination, struct mission_s* mission);
 void UFO_RemoveFromGeoscape(aircraft_t* ufo);
 void UFO_SendToDestination(aircraft_t* ufo, const vec2_t dest);
 bool UFO_SendPursuingAircraft(aircraft_t* ufo, aircraft_t* aircraft);

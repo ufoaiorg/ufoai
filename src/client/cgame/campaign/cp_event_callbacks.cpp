@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_geoscape.h"
 #include "cp_event_callbacks.h"
+#include "cp_missions.h"
 
 /**
  * @note Mission trigger function

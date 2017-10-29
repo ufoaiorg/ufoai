@@ -25,18 +25,97 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-#include "missions/cp_mission_baseattack.h"
-#include "missions/cp_mission_buildbase.h"
-#include "missions/cp_mission_harvest.h"
-#include "missions/cp_mission_intercept.h"
-#include "missions/cp_mission_recon.h"
-#include "missions/cp_mission_rescue.h"
-#include "missions/cp_mission_supply.h"
-#include "missions/cp_mission_terror.h"
-#include "missions/cp_mission_xvi.h"
-#include "missions/cp_mission_ufocarrier.h"
+#include "cp_campaign.h"
 
 extern const int MAX_POS_LOOP;
+
+/** possible stage for campaign missions (i.e. possible actions for UFO) */
+typedef enum missionStage_s {
+	STAGE_NOT_ACTIVE,				/**< mission did not begin yet */
+	STAGE_COME_FROM_ORBIT,			/**< UFO is arriving */
+
+	STAGE_RECON_AIR,				/**< Aerial Recon */
+	STAGE_MISSION_GOTO,				/**< Going to a new position */
+	STAGE_RECON_GROUND,				/**< Ground Recon */
+	STAGE_TERROR_MISSION,			/**< Terror mission */
+	STAGE_BUILD_BASE,				/**< Building a base */
+	STAGE_BASE_ATTACK,				/**< Base attack */
+	STAGE_SUBVERT_GOV,				/**< Subvert government */
+	STAGE_SUPPLY,					/**< Supply already existing base */
+	STAGE_SPREAD_XVI,				/**< Spreading XVI Virus */
+	STAGE_INTERCEPT,				/**< UFO attacks any encountered PHALANX aircraft or attack an installation */
+	STAGE_BASE_DISCOVERED,			/**< PHALANX discovered the base */
+	STAGE_HARVEST,					/**< Harvesting */
+
+	STAGE_RETURN_TO_ORBIT,			/**< UFO is going back to base */
+
+	STAGE_OVER						/**< Mission is over */
+} missionStage_t;
+
+typedef enum {
+	WON, DRAW, LOST
+} missionState_t;
+
+/** @brief Structure with mission info needed to create results summary at menu won. */
+typedef struct missionResults_s {
+	const struct mission_s* mission;
+	missionState_t state;
+	bool recovery;		/**< @c true if player secured a UFO (landed or crashed). */
+	bool crashsite;		/**< @c true if secured UFO was crashed one. */
+	ufoType_t ufotype;		/**< Type of UFO secured during the mission. */
+	float ufoCondition;		/**< How much the UFO is damaged */
+	int itemTypes;			/**< Types of items gathered from a mission. */
+	int itemAmount;			/**< Amount of items (all) gathered from a mission. */
+	int aliensKilled;
+	int aliensStunned;
+	int aliensSurvived;
+	int ownKilled;
+	int ownStunned;
+	int ownKilledFriendlyFire;
+	int ownSurvived;
+	int civiliansKilled;
+	int civiliansKilledFriendlyFire;
+	int civiliansSurvived;
+} missionResults_t;
+
+/** @brief mission definition
+ * @note A mission is different from a map: a mission is the whole set of actions aliens will carry.
+ * For example, coming with a UFO on earth, land, explore earth, and leave with UFO
+ */
+typedef struct mission_s {
+	int idx;				/**< unique id of this mission */
+	char id[MAX_VAR];			/**< script id */
+	mapDef_t* mapDef;			/**< mapDef used for this mission */
+	bool active;				/**< aircraft at place? */
+	union missionData_t {
+		base_t* base;
+		aircraft_t* aircraft;
+		installation_t* installation;
+		alienBase_t* alienBase;
+		city_t* city;
+	} data;					/**< may be related to mission type (like pointer to base attacked, or to alien base) */
+	interestCategory_t category;		/**< The category of the event */
+	missionStage_t stage;			/**< in which stage is this event? */
+	int initialOverallInterest;		/**< The overall interest value when this event has been created */
+	int initialIndividualInterest;		/**< The individual interest value (of type type) when this event has been created */
+	date_t startDate;			/**< Date when the event should start */
+	date_t finalDate;			/**< Date when the event should finish (e.g. for aerial recon)
+						 * if finaleDate.day == 0, then delay is not a limitating factor for next stage */
+	vec2_t pos;				/**< Position of the mission */
+	aircraft_t* ufo;			/**< UFO on geoscape fulfilling the mission (may be nullptr) */
+	bool onGeoscape;			/**< Should the mission be displayed on geoscape */
+	bool crashed;				/**< is UFO crashed ? (only used if mission is spawned from a UFO */
+
+	char onwin[MAX_VAR];			/**< trigger command after you've won a battle, @sa CP_ExecuteMissionTrigger */
+	char onlose[MAX_VAR];			/**< trigger command after you've lost a battle, @sa CP_ExecuteMissionTrigger */
+	bool posAssigned;			/**< is the position of this mission already set? */
+	missionResults_t missionResults;
+} mission_t;
+
+/**
+ * @brief iterates through missions
+ */
+#define MIS_Foreach(var) LIST_Foreach(ccs.missions, mission_t, var)
 
 const char* MIS_GetName(const mission_t* mission);
 

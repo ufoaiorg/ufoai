@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void CP_ReconMissionNextStage(mission_t* mission);
-void CP_ReconMissionLeave(mission_t* mission);
-void CP_ReconMissionGroundGo(mission_t* mission);
-void CP_ReconMissionIsFailure(mission_t* mission);
-void CP_ReconMissionAerial(mission_t* mission);
+void CP_ReconMissionNextStage(struct mission_s* mission);
+void CP_ReconMissionLeave(struct mission_s* mission);
+void CP_ReconMissionGroundGo(struct mission_s* mission);
+void CP_ReconMissionIsFailure(struct mission_s* mission);
+void CP_ReconMissionAerial(struct mission_s* mission);

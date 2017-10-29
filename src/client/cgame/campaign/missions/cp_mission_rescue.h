@@ -24,5 +24,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void CP_EndRescueMission(mission_t* mission, aircraft_t* aircraft, bool won);
-void CP_RescueNextStage(mission_t* mission);
+void CP_EndRescueMission(struct mission_s* mission, aircraft_t* aircraft, bool won);
+void CP_RescueNextStage(struct mission_s* mission);

@@ -320,9 +320,9 @@ void AII_CollectingItems (aircraft_t* aircraft, int won)
 	cgi->CollectItems(aircraft, won, AII_CollectItem_, AII_CollectingAmmo, AII_CarriedItems);
 
 	/* Fill the missionResults array. */
-	ccs.missionResults.itemTypes = aircraft->itemTypes;
+	aircraft->mission->missionResults.itemTypes = aircraft->itemTypes;
 	for (i = 0; i < aircraft->itemTypes; i++)
-		ccs.missionResults.itemAmount += cargo[i].amount;
+		aircraft->mission->missionResults.itemAmount += cargo[i].amount;
 
 #ifdef DEBUG
 	/* Print all of collected items. */

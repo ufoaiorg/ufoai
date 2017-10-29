@@ -27,5 +27,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 bool CL_DisplayHomebasePopup(aircraft_t* aircraft, bool alwaysDisplay);
 void CL_PopupInit(void);
 void CL_DisplayPopupInterceptUFO(aircraft_t* ufo);
-void CL_DisplayPopupInterceptMission(mission_t* mission);
+void CL_DisplayPopupInterceptMission(struct mission_s* mission);
 void CP_Popup(const char* title, const char* text, ...) __attribute__((format(__printf__,2,3)));

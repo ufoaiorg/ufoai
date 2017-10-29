@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_fightequip_callbacks.h"
 #include "cp_mapfightequip.h"
 #include "cp_ufo.h"
+#include "cp_missions.h"
 
 /**
  * @brief returns the itemtype index from a string identifier

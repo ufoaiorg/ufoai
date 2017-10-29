@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void AM_Go_f (void)
 {
 	mission_t* mission = GEO_GetSelectedMission();
-	missionResults_t* results = &ccs.missionResults;
+	missionResults_t* results = &(mission->missionResults);
 	battleParam_t* battleParam = &ccs.battleParameters;
 
 	if (!mission) {

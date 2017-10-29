@@ -39,6 +39,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_missions.h"
 #include "save/save_interest.h"
 #include "cp_mission_callbacks.h"
+#include "missions/cp_mission_baseattack.h"
+#include "missions/cp_mission_buildbase.h"
+#include "missions/cp_mission_harvest.h"
+#include "missions/cp_mission_intercept.h"
+#include "missions/cp_mission_recon.h"
+#include "missions/cp_mission_rescue.h"
+#include "missions/cp_mission_supply.h"
+#include "missions/cp_mission_terror.h"
+#include "missions/cp_mission_xvi.h"
+#include "missions/cp_mission_ufocarrier.h"
+
+/** @brief possible mission detection status */
+typedef enum missionDetectionStatus_s {
+	MISDET_CANT_BE_DETECTED,		/**< Mission can't be seen on geoscape */
+	MISDET_ALWAYS_DETECTED,			/**< Mission is seen on geoscape, whatever it's position */
+	MISDET_MAY_BE_DETECTED			/**< Mission may be seen on geoscape, if a probability test is done */
+} missionDetectionStatus_t;
 
 /** Maximum number of loops to choose a mission position (to avoid infinite loops) */
 const int MAX_POS_LOOP = 10;
@@ -1249,7 +1266,7 @@ void CP_MissionEnd (const campaign_t* campaign, mission_t* mission, const battle
 
 	won ? ccs.campaignStats.missionsWon++ : ccs.campaignStats.missionsLost++;
 
-	CP_HandleNationData(campaign->minhappiness, mission, battleParameters->nation, &ccs.missionResults);
+	CP_HandleNationData(campaign->minhappiness, mission, battleParameters->nation, &(mission->missionResults));
 	CP_CheckLostCondition(campaign);
 
 	/* update the character stats */

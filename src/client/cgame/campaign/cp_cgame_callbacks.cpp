@@ -252,7 +252,7 @@ void GAME_CP_Results (dbuffer* msg, int winner, int* numSpawned, int* numAlive, 
 
 	ccs.aliensKilled += aliensKilled;
 
-	missionResults_t* results = &ccs.missionResults;
+	missionResults_t* results = &(bp->mission->missionResults);
 	results->mission = bp->mission;
 
 	if (nextmap) {

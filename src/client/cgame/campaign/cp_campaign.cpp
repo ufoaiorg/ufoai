@@ -55,6 +55,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_uforecovery.h"
 #include "save/save_campaign.h"
 #include "cp_auto_mission.h"
+#include "missions/cp_mission_baseattack.h"
+#include "missions/cp_mission_ufocarrier.h"
 
 memPool_t* cp_campaignPool;		/**< reset on every game restart */
 ccs_t ccs;
@@ -561,7 +563,7 @@ void CP_StartSelectedMission (void)
 	}
 
 	/* Before we start, we should clear the missionResults array. */
-	OBJZERO(ccs.missionResults);
+	OBJZERO(mis->missionResults);
 
 	/* Various sanity checks. */
 	if (!mis->active) {

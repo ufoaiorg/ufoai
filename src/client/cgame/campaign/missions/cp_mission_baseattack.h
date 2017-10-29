@@ -25,11 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void CP_BaseAttackStartMission(mission_t* mission);
-void CP_BaseAttackMissionLeave(mission_t* mission);
-void CP_BaseAttackMissionIsSuccess(mission_t* mission);
-void CP_BaseAttackMissionIsFailure(mission_t* mission);
+void CP_BaseAttackStartMission(struct mission_s* mission);
+void CP_BaseAttackMissionLeave(struct mission_s* mission);
+void CP_BaseAttackMissionIsSuccess(struct mission_s* mission);
+void CP_BaseAttackMissionIsFailure(struct mission_s* mission);
 void CP_BaseAttackMissionOnSpawn(void);
-void CP_BaseAttackMissionNextStage(mission_t* mission);
-void CP_BaseAttackMissionDestroyBase(mission_t* mission);
+void CP_BaseAttackMissionNextStage(struct mission_s* mission);
+void CP_BaseAttackMissionDestroyBase(struct mission_s* mission);
 void CP_CheckBaseAttacks(void);

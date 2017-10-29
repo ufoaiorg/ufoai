@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 void CP_TerrorMissionOnSpawn(void);
-void CP_TerrorMissionStart(mission_t* mission);
-void CP_TerrorMissionIsFailure(mission_t* mission);
-void CP_TerrorMissionIsSuccess(mission_t* mission);
-void CP_TerrorMissionNextStage(mission_t* mission);
+void CP_TerrorMissionStart(struct mission_s* mission);
+void CP_TerrorMissionIsFailure(struct mission_s* mission);
+void CP_TerrorMissionIsSuccess(struct mission_s* mission);
+void CP_TerrorMissionNextStage(struct mission_s* mission);

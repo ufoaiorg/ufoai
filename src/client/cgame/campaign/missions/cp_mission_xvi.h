@@ -25,6 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void CP_XVIMissionNextStage(mission_t* mission);
-void CP_XVIMissionIsFailure(mission_t* mission);
-void CP_XVIMissionIsSuccess(mission_t* mission);
+void CP_XVIMissionNextStage(struct mission_s* mission);
+void CP_XVIMissionIsFailure(struct mission_s* mission);
+void CP_XVIMissionIsSuccess(struct mission_s* mission);

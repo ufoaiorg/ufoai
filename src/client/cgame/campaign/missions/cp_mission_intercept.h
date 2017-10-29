@@ -25,9 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void CP_InterceptMissionLeave(mission_t* mission, bool destroyed);
-void CP_InterceptNextStage(mission_t* mission);
-void CP_InterceptMissionIsFailure(mission_t* mission);
-void CP_InterceptMissionIsSuccess(mission_t* mission);
-void CP_InterceptGoToInstallation(mission_t* mission);
-void CP_InterceptAircraftMissionSet(mission_t* mission);
+void CP_InterceptMissionLeave(struct mission_s* mission, bool destroyed);
+void CP_InterceptNextStage(struct mission_s* mission);
+void CP_InterceptMissionIsFailure(struct mission_s* mission);
+void CP_InterceptMissionIsSuccess(struct mission_s* mission);
+void CP_InterceptGoToInstallation(struct mission_s* mission);
+void CP_InterceptAircraftMissionSet(struct mission_s* mission);
