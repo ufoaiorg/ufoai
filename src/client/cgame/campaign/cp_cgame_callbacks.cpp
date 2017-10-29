@@ -134,9 +134,6 @@ static void GAME_CP_CampaignDescription_f (void)
 		return;
 	}
 
-	/* Make sure that this campaign is selected */
-	cgi->Cvar_Set("cp_campaign", "%s", campaign->id);
-
 	if (campaign->team == TEAM_PHALANX)
 		racetype = _("Human");
 	else
@@ -172,9 +169,6 @@ static void GAME_CP_Start_f (void)
 		Com_Printf("Invalid Campaign id: %s\n", cgi->Cmd_Argv(1));
 		return;
 	}
-
-	/* Make sure that this campaign is selected */
-	cgi->Cvar_Set("cp_campaign", "%s", campaign->id);
 
 	CP_CampaignInit(campaign, false);
 
@@ -669,6 +663,7 @@ static const cmdList_t cgameCallbacks[] = {
 	{"cp_start", GAME_CP_Start_f, "Start the new campaign"},
 	{nullptr, nullptr, nullptr}
 };
+
 void GAME_CP_InitStartup (void)
 {
 #ifndef HARD_LINKED_CGAME
@@ -678,7 +673,6 @@ void GAME_CP_InitStartup (void)
 
 	CP_InitStartup();
 
-	cp_start_employees = cgi->Cvar_Get("cp_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	/* cvars might have been changed by other gametypes */
 	cgi->Cvar_ForceSet("sv_maxclients", "1");
 	cgi->Cvar_ForceSet("sv_ai", "1");

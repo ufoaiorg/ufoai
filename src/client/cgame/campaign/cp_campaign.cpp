@@ -58,8 +58,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 memPool_t* cp_campaignPool;		/**< reset on every game restart */
 ccs_t ccs;
-cvar_t* cp_campaign;
-cvar_t* cp_start_employees;
 cvar_t* cp_missiontest;
 
 /* fraction of nation that can be below min happiness before the game is lost */

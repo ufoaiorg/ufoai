@@ -68,7 +68,7 @@ static inline void ResetInventoryList (void)
 
 static campaign_t* GetCampaign (void)
 {
-	return CP_GetCampaign(cp_campaign->string);
+	return CP_GetCampaign("main");
 }
 
 class CampaignTest: public ::testing::Test {
@@ -79,7 +79,6 @@ protected:
 
 		cl_genericPool = Mem_CreatePool("Client: Generic");
 		cp_campaignPool = Mem_CreatePool("Client: Local (per game)");
-		cp_campaign = Cvar_Get("cp_campaign", "main");
 		cp_missiontest = Cvar_Get("cp_missiontest", "0");
 		vid_imagePool = Mem_CreatePool("Vid: Image system");
 
