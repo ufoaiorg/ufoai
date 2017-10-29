@@ -124,6 +124,9 @@ static void GAME_MP_StartServer_f (void)
  */
 static void GAME_MP_Results (dbuffer* msg, int winner, int* numSpawned, int* numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
+	/* HACK: Change to the main menu now so cgame shutdown won't kill the results screen by doing it later */
+	cgi->UI_InitStack("main", "");
+
 	linkedList_t* list = nullptr;
 	int enemiesKilled = 0, enemiesStunned = 0;
 	const int team = cgi->GAME_GetCurrentTeam();
