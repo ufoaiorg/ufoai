@@ -53,12 +53,21 @@ ufox.build_component({
 
 	on_mouseenter = function (this)
 		this:set_backgroundcolor(0, 0, 0, 1)
+		this:on_mouseover()
 	end,
 	on_mouseleave = function (this)
 		this:set_backgroundcolor(0, 0.1, 0, 0.7)
+		this:on_mouseout()
 	end,
 	on_click = function (this)
 		ufo.cmd(string.format("actor_select %i;", this:child("number"):as_integer()))
+	end,
+
+	on_mouseover = function (this)
+		this:root():child("soldier"):child("popup_soldier_hovered"):select(this:child("number"):as_integer())
+	end,
+	on_mouseout = function (this)
+		this:root():child("soldier"):child("popup_soldier_hovered"):set_invisible(true)
 	end,
 
 	{

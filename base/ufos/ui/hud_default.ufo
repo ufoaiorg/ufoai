@@ -66,15 +66,15 @@ local hud_default_window = ufox.build_window{
 	{
 		class = "panel",
 		name = "soldier",
-		pos = {0, 418},
-		size = {1024, 220},
+		pos = {0, 378},
+		size = {1024, 260},
 		layoutalign = ufo.LAYOUTALIGN_BOTTOMLEFT,
 		ghost = true,
 
 		{
 			class = "panel",
 			name = "soldier_opts",
-			pos = {10, 130},
+			pos = {10, 175},
 			size = {780, 76},
 --			backgroundcolor = {0.38, 0.48, 0.36, 0.5},
 			backgroundcolor = {0, 0.15, 0.1, 0.7},
@@ -738,11 +738,176 @@ local hud_default_window = ufox.build_window{
 			end
 		},
 
+		{
+			class = "panel",
+			name = "popup_soldier_hovered",
+			pos = {105, 0},
+			size = {585, 300},
+			ghost = true,
+			invisible = true,
+
+			{
+				class = "panel",
+				name = "cursor",
+				pos = {0, 100},
+				size = {47, 68},
+				backgroundcolor = {0, 0.15, 0.1, 0.7}
+			},
+			--[[
+			 - @param index number of the soldier starting from 0
+			--]]
+			select = function (this, index)
+				local tt = ufo.getvar("mn_soldier" .. index .. "_tt"):as_string()
+				local name = tt:match("[^\r\n]+") .. "\n" .. tt:reverse():match("[^\r\n]+"):reverse()
+				this:child("bg"):child("actorname"):set_text(name)
+				this:child("bg"):child("head_bg"):child("head"):set_model("*cvar:mn_head" .. index)
+				this:child("bg"):child("head_bg"):child("head"):set_skin("*cvar:mn_head_skin" .. index)
+				this:child("bg"):child("tus"):set_text("*cvar:mn_tu" .. index)
+				this:child("bg"):child("timeall"):set_value("*cvar:mn_tu" .. index)
+				this:child("bg"):child("timeall"):set_max("*cvar:mn_tumax" .. index)
+				this:child("bg"):child("hp"):set_text("*cvar:mn_hp" .. index)
+				this:child("bg"):child("health"):set_value("*cvar:mn_hp" .. index)
+				this:child("bg"):child("health"):set_max("*cvar:mn_hpmax" .. index)
+				this:child("bg"):child("morale_text"):set_text("*cvar:mn_morale" .. index)
+				this:child("bg"):child("morale"):set_value("*cvar:mn_morale" .. index)
+				this:child("bg"):child("morale"):set_max("*cvar:mn_moralemax" .. index)
+				this:child("cursor"):set_left(46 * index + 9)
+				this:root():child("soldier"):child("popup_soldier_hovered"):set_invisible(false)
+			end,
+
+			{
+				class = "panel",
+				name = "bg",
+				pos = {0, 0},
+				size = {585, 100},
+				backgroundcolor = {0, 0.15, 0.1, 0.7},
+
+				{
+					class = "panel",
+					name = "head_bg",
+					pos = {20, 11},
+					size = {87, 79},
+					backgroundcolor = {0, 0.1, 0, 0.7},
+					bordercolor = {0.527, 0.6, 0.21, 1},
+					bordersize = 2,
+
+					{
+						class = "model",
+						name = "head",
+						angles = {0, 60, 90},
+						autoscale = true,
+						pos = {6, 6},
+						size = {74, 66},
+						origin = {0, 0, 0}
+					}
+				},
+
+				{
+					class = "string",
+					name = "actorname",
+					pos = {150, 0},
+					size = {255, 20},
+					longlines = ufo.LONGLINES_CHOP
+				},
+
+				{
+					class = "string",
+					name = "hp",
+					pos = {105, 35},
+					size = {40, 20},
+					contentalign = ufo.ALIGN_UR
+				},
+				{
+					class = "texture",
+					name = "health_bg",
+					pos = {150, 40},
+					size = {298, 10},
+					source = "ui/bar_bg",
+				},
+
+				{
+					class = "bar",
+					name = "health",
+					pos = {150, 40},
+					size = {298, 10},
+					color = {0.1875, 0.65625, 0.164, 1},
+					readonly = true
+				},
+				{
+					class = "button",
+					name = "health_icon",
+					icon = "icons/healthsml0",
+					pos = {450, 35},
+					size = {18, 19}
+				},
+
+				{
+					class = "string",
+					name = "tus",
+					pos = {105, 50},
+					size = {40, 20},
+					contentalign = ufo.ALIGN_UR
+				},
+				{
+					class = "texture",
+					name = "time_bg",
+					pos = {150, 55},
+					size = {298, 10},
+					source = "ui/bar_bg",
+				},
+				{
+					class = "bar",
+					name = "timeall",
+					pos = {150, 55},
+					size = {298, 10},
+					color = {0.582, 0.808, 0.758, 1},
+					readonly = true
+				},
+				{
+					class = "button",
+					name = "time_icon",
+					icon = "icons/tusml0",
+					pos = {450, 50},
+					size = {18, 19}
+				},
+
+				{
+					class = "string",
+					name = "morale_text",
+					pos = {105, 65},
+					size = {40, 20},
+					contentalign = ufo.ALIGN_UR
+				},
+				{
+					class = "texture",
+					name = "morale_bg",
+					pos = {150, 70},
+					size = {298, 10},
+					source = "ui/bar_bg",
+				},
+				{
+					class = "bar",
+					name = "morale",
+					pos = {150, 70},
+					size = {298, 10},
+					color = {0.825, 0.92, 0.437, 1},
+					readonly = true
+				},
+				{
+					class = "button",
+					name = "morale_icon",
+					icon = "icons/moralesml0",
+					pos = {450, 65},
+					size = {18, 19}
+				}
+			}
+		},
+
 		-- Soldier selection
 		{
 			class = "panel",
 			name = "squad",
-			pos = {105, 56},
+			pos = {105, 101},
 			size = {565, 68},
 			invisible = false,
 			ghost = true,
@@ -869,7 +1034,7 @@ local hud_default_window = ufox.build_window{
 			skin = "*cvar:mn_body_skin",
 			animation = "*cvar:mn_anim",
 			angles = {0, 80, 90},
-			pos = {-20, 0},
+			pos = {-20, 45},
 			size = {160, 220},
 			scale = {5, 5, 5},
 			ghost = true,
@@ -1475,9 +1640,11 @@ local hud_default_window = ufox.build_window{
 			node:set_backgroundcolor(0, 0.1, 0, 0.7)
 			node.on_mouseenter = function (sender)
 				node:set_backgroundcolor(0, 0, 0, 0.7)
+				node:on_mouseover()
 			end
 			node.on_mouseleave = function (sender)
 				sender:set_backgroundcolor(0, 0.1, 0, 0.7)
+				node:on_mouseout()
 			end
 			node:child("bar_bg"):set_invisible(false)
 		end
@@ -1570,17 +1737,21 @@ local hud_default_window = ufox.build_window{
 					node:set_backgroundcolor(0.7, 0.1, 0, 0.7)
 					node.on_mouseenter = function (sender)
 						sender:set_backgroundcolor(0.9, 0, 0, 1)
+						node:on_mouseover()
 					end
 					node.on_mouseleave = function (sender)
 						sender:set_backgroundcolor(0.7, 0.1, 0, 0.7)
+						node:on_mouseout()
 					end
 				else
 					node:set_backgroundcolor(0, 0.1, 0, 0.7)
 					node.on_mouseenter = function (sender)
 						sender:set_backgroundcolor(0, 0, 0, 1)
+						node:on_mouseover()
 					end
 					node.on_mouseleave = function (sender)
 						sender:set_backgroundcolor(0, 0.1, 0, 0.7)
+						node:on_mouseout()
 					end
 				end
 			end
