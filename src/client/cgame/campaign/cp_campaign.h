@@ -27,18 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern memPool_t* cp_campaignPool;
 
-struct aircraft_s;
-struct installation_s;
 class Employee;
-struct ugv_s;
-struct campaign_s;
-
 #define MAX_CAMPAIGNS	16
-
-#define MAX_ASSEMBLIES	16
-
-/** @todo rename this after merging with savegame breakage branch and also change the value to -1 */
-#define	BYTES_NONE	0xFF
 
 #include "cp_cgame_callbacks.h"
 #include "cp_alien_interest.h"
@@ -62,6 +52,8 @@ struct campaign_s;
 #include "cp_alienbase.h"
 #include "cp_market.h"
 #include "cp_statistics.h"
+
+#define MAX_ASSEMBLIES	16
 
 /* Maximum alien groups per alien team category */
 #define MAX_ALIEN_GROUP_PER_CATEGORY	8

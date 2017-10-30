@@ -2119,12 +2119,10 @@ bool MIS_LoadXML (xmlNode_t* parent)
 		case INTERESTCATEGORY_BASE_ATTACK:
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_BASE_ATTACK) {
 				/* Load IDX of base under attack */
-				const int baseidx = cgi->XML_GetInt(node, SAVE_MISSIONS_BASEINDEX, BYTES_NONE);
-				if (baseidx != BYTES_NONE) {
-					base_t* base = B_GetBaseByIDX(baseidx);
-					assert(base);
+				base_t* base = B_GetBaseByIDX(cgi->XML_GetInt(node, SAVE_MISSIONS_BASEINDEX, -1));
+				if (base) {
 					if (mission.stage == STAGE_BASE_ATTACK && !B_IsUnderAttack(base))
-						Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", baseidx, base->name);
+						Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", base->idx, base->name);
 					mission.data.base = base;
 				} else
 					Com_Printf("......warning: Missing BaseIndex\n");
@@ -2132,15 +2130,12 @@ bool MIS_LoadXML (xmlNode_t* parent)
 			break;
 		case INTERESTCATEGORY_INTERCEPT:
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_INTERCEPT) {
-				const int installationIdx = cgi->XML_GetInt(node, SAVE_MISSIONS_INSTALLATIONINDEX, BYTES_NONE);
-				if (installationIdx != BYTES_NONE) {
-					installation_t* installation = INS_GetByIDX(installationIdx);
-					if (installation)
-						mission.data.installation = installation;
-					else {
-						Com_Printf("Mission on non-existent installation\n");
-						continue;
-					}
+				installation_t* installation = INS_GetByIDX(cgi->XML_GetInt(node, SAVE_MISSIONS_INSTALLATIONINDEX, -1));
+				if (installation)
+					mission.data.installation = installation;
+				else {
+					Com_Printf("Mission on non-existent installation\n");
+					continue;
 				}
 			}
 			break;
@@ -2163,14 +2158,13 @@ bool MIS_LoadXML (xmlNode_t* parent)
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
 			{
-				int baseIDX = cgi->XML_GetInt(node, SAVE_MISSIONS_ALIENBASEINDEX, BYTES_NONE);
-				if (baseIDX != BYTES_NONE) {
-					alienBase_t* alienBase = AB_GetByIDX(baseIDX);
+				int baseIdx = cgi->XML_GetInt(node, SAVE_MISSIONS_ALIENBASEINDEX, -1);
+				alienBase_t* alienBase = AB_GetByIDX(baseIdx);
+				if (alienBase)
 					mission.data.alienBase = alienBase;
-				}
 				if (!mission.data.alienBase && !CP_BasemissionIsSubvertingGovernmentMission(&mission) && mission.stage >= STAGE_BUILD_BASE) {
 					Com_Printf("Error loading Alien Base mission (missionidx %i, baseidx: %i, category: %i, stage: %i): no such base\n",
-							mission.idx, baseIDX, mission.category, mission.stage);
+						mission.idx, baseIdx, mission.category, mission.stage);
 					continue;
 				}
 			}

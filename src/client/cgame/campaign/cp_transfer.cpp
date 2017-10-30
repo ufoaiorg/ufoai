@@ -477,12 +477,12 @@ bool TR_LoadXML (xmlNode_t* p)
 
 		OBJZERO(transfer);
 
-		transfer.destBase = B_GetBaseByIDX(cgi->XML_GetInt(s, SAVE_TRANSFER_DESTBASE, BYTES_NONE));
+		transfer.destBase = B_GetBaseByIDX(cgi->XML_GetInt(s, SAVE_TRANSFER_DESTBASE, -1));
 		if (!transfer.destBase) {
 			Com_Printf("Error: Transfer has no destBase set\n");
 			return false;
 		}
-		transfer.srcBase = B_GetBaseByIDX(cgi->XML_GetInt(s, SAVE_TRANSFER_SRCBASE, BYTES_NONE));
+		transfer.srcBase = B_GetBaseByIDX(cgi->XML_GetInt(s, SAVE_TRANSFER_SRCBASE, -1));
 
 		transfer.event.day = cgi->XML_GetInt(s, SAVE_TRANSFER_DAY, 0);
 		transfer.event.sec = cgi->XML_GetInt(s, SAVE_TRANSFER_SEC, 0);
