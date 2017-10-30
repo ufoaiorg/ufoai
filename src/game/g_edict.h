@@ -179,11 +179,7 @@ public:
 	/*==================
 	 * ctors
 	 *==================*/
-	inline void init (int idx) {
-		OBJZERO(*this);
-		number = idx;
-		chr.inv.init();
-	}
+	void init (int idx);
 	/*==================
 	 * setters
 	 *==================*/
@@ -197,8 +193,7 @@ public:
 		_child = child;
 	}
 	inline void nativeReset () {	/* strange name, but there is also a complex function named 'reset' */
-		const int idx = this->number;
-		init(idx);			/* ... preserve the number */
+		init(number);			/* ... preserve the number */
 	}
 	inline void setActive() {
 		active = true;

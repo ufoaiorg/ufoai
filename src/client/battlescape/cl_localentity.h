@@ -197,6 +197,7 @@ typedef struct le_s {
 	{
 		inv.setFloorContainer(nullptr);
 	}
+	void init ();
 } le_t;
 
 #define MAX_LOCALMODELS		1024

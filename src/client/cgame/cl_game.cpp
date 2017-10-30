@@ -1907,7 +1907,8 @@ void GAME_Shutdown (void)
 	OBJZERO(cgameTypes);
 	numCGameTypes = 0;
 	OBJZERO(equipDefStandard);
-	OBJZERO(characters);
+	for (int i = 0; i < lengthof(characters); ++i)
+		characters[1].init();
 
 	Cvar_UnRegisterCvarListener(cvarListener);
 	Cmd_UnRegisterCmdListener(cmdListener);

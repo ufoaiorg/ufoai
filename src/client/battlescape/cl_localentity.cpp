@@ -40,6 +40,50 @@ cvar_t* cl_le_debug;
 cvar_t* cl_trace_debug;
 cvar_t* cl_map_draw_rescue_zone;
 
+void le_t::init ()
+{
+	inuse = false;
+	entnum = angle = dir = TU= maxTU = morale = maxMorale = HP = maxHP = STUN = state = team = pnum = ucn = flags = contents = thinkDelay = 0;
+	positionContents = pathLength = pathPos = stepIndex = startTime = endTime = slidingSpeed = sampleIdx = levelflags = left = right = headgear = 0;
+	gender = 0;
+	alpha = rotationSpeed = attenuation = volume = 0.0f;
+	currentSelectedFiremode = 0;
+	actorMoveLength = 0;
+	clientAction = nullptr;
+	inlineModelName[0] = '\0';
+	modelnum1 = modelnum2 = bodySkin = headSkin = 0;
+	model1 = model2 = nullptr;
+	think = nullptr;
+	stepList = nullptr;
+	particleID = ref1 = ref2 = nullptr;
+	ptl = nullptr;
+	ref3 = nullptr;
+	teamDef = nullptr;
+	fd = nullptr;
+	addFunc = nullptr;
+	type = ET_NULL;
+	actorMode = M_MOVE;
+	aabb = AABB::EMPTY;
+	fieldSize = ACTOR_SIZE_INVALID;
+
+	VectorClear(origin);
+	VectorClear(oldOrigin);
+	VectorClear(pos);
+	VectorClear(oldPos);
+	VectorClear(newPos);
+	VectorClear(angles);
+	VectorClear(mousePendPos);
+	VectorClear(size);
+	OBJZERO(wounds);
+	OBJZERO(dvtab);
+	OBJZERO(pathContents);
+	OBJZERO(speed);
+	OBJZERO(as);
+	OBJZERO(lighting);
+
+	inv.init();
+}
+
 /*===========================================================================
 Local Model (LM) handling
 =========================================================================== */
@@ -1185,7 +1229,7 @@ le_t* LE_Add (int entnum)
 	}
 
 	/* initialize the new LE */
-	OBJZERO(*le);
+	le->init();
 	le->inuse = true;
 	le->entnum = entnum;
 	le->fieldSize = ACTOR_SIZE_NORMAL;

@@ -35,11 +35,15 @@ void character_s::init ()
 {
 	name[0] = path[0] = body[0] = head[0] = '\0';
 	ucn = bodySkin = headSkin = HP = minHP = maxHP = STUN = morale = state = gender = 0;
-	fieldSize = 0;
+	fieldSize = ACTOR_SIZE_INVALID;
 	scoreMission = nullptr;
 	teamDef = nullptr;
 	inv.init();
-	memset(implants, 0, sizeof(implants));
+	RFmode.set(ACTOR_HAND_NOT_SET, 0, nullptr);
+	OBJZERO(wounds);
+	OBJZERO(score);
+	OBJZERO(reservedTus);
+	OBJZERO(implants);
 }
 
 /**

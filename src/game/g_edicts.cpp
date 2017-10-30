@@ -336,6 +336,43 @@ Actor* makeActor (Edict* ent)
 	return nullptr;
 }
 
+void Edict::init (int idx)
+{
+		inuse = inRescueZone = hiding = active = false;
+		linkcount = modelindex = mapNum = contentFlags = TU = HP = _STUN = morale = state = team = pnum = frame = 0;
+		spawnflags = radius = speed = count = time = sounds = dmg = doorState = flags = forbiddenListSize = 0;
+		body = head = 0;
+		visflags = 0;
+		dir = dmgtype = 0;
+		angle = nextthink = 0.0f;
+		solid = SOLID_NOT;
+		type = ET_NULL;
+		material = MAT_GLASS;
+		fieldSize = ACTOR_SIZE_INVALID;
+		entBox = absBox = AABB::EMPTY;
+		_child = _owner = particleLink = clientAction = groupChain = groupMaster = nullptr;
+		link = nullptr;
+		classname = model = target = targetname = item = particle = nextmap = message = description = noise = nullptr;
+		group = nullptr;
+		_touch = nullptr;
+		reset = nullptr;
+		think = nullptr;
+		use = nullptr;
+		destroy = nullptr;
+		touchedList = nullptr;
+		forbiddenListPos = nullptr;
+
+		VectorClear(origin);
+		VectorClear(angles);
+		VectorClear(pos);
+		VectorClear(size);
+		OBJZERO(camera);
+		OBJZERO(moveinfo);
+		OBJZERO(AI);
+
+		number = idx;
+		chr.init();
+}
 /**
  * @brief Check if given actor is an enemy.
  * @param[in] actor The actor that makes the check.
