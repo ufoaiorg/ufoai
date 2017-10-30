@@ -528,21 +528,6 @@ bool TR_LoadXML (xmlNode_t* p)
 			if (transfer.alienCargo == nullptr)
 				cgi->Com_Error(ERR_DROP, "TR_LoadXML: Cannot create AlienCargo object\n");
 			transfer.alienCargo->load(ss);
-		} else {
-			/** @todo Remove: Fallback for compatibility */
-			ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ALIEN);
-			if (ss) {
-				transfer.alienCargo = new AlienCargo();
-				if (transfer.alienCargo == nullptr)
-					cgi->Com_Error(ERR_DROP, "TR_LoadXML: Cannot create AlienCargo object\n");
-				for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_ALIEN)) {
-					const int alive = cgi->XML_GetInt(ss, SAVE_TRANSFER_ALIVEAMOUNT, 0);
-					const int dead  = cgi->XML_GetInt(ss, SAVE_TRANSFER_DEADAMOUNT, 0);
-					const char* id = cgi->XML_GetString(ss, SAVE_TRANSFER_ALIENID);
-					if (!transfer.alienCargo->add(id, alive, dead))
-						Com_Printf("TR_LoadXML: Cannot add aliens to cargo: %s, alive: %d, dead: %d\n", id, alive, dead);
-				}
-			}
 		}
 		/* load employee */
 		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_EMPLOYEE);
