@@ -284,6 +284,9 @@ static void AII_CarriedItems (const Inventory* soldierInventory)
 void AII_CollectingItems (aircraft_t* aircraft, int won)
 {
 	/** @todo Simplify this logic */
+	if (aircraft->itemCargo == nullptr) {
+		aircraft->itemCargo = new ItemCargo();
+	}
 	ItemCargo* previousCargo = new ItemCargo(*aircraft->itemCargo);
 	aircraft->itemCargo->empty();
 	cgi->CollectItems(aircraft, won, AII_CollectItem_, AII_CollectAmmo, AII_CarriedItems);
@@ -2905,6 +2908,10 @@ void AIR_Shutdown (void)
 		if (craft->alienCargo != nullptr) {
 			delete craft->alienCargo;
 			craft->alienCargo = nullptr;
+		}
+		if (craft->itemCargo != nullptr) {
+			delete craft->itemCargo;
+			craft->itemCargo = nullptr;
 		}
 	}
 	cgi->LIST_Delete(&ccs.aircraft);
