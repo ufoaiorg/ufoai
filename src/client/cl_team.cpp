@@ -149,12 +149,12 @@ static void CL_ActorCvars (const character_t* chr)
 	if (weapon)
 		Cvar_Set("mn_rweapon", "%s", weapon->def()->model);
 	else
-		Cvar_Set("mn_rweapon", "");
+		Cvar_Set("mn_rweapon", "%s", "");
 	weapon = chr->inv.getLeftHandContainer();
 	if (weapon)
 		Cvar_Set("mn_lweapon", "%s", weapon->def()->model);
 	else
-		Cvar_Set("mn_lweapon", "");
+		Cvar_Set("mn_lweapon", "%s", "");
 }
 
 /**
@@ -209,8 +209,8 @@ const char* CL_ActorGetSkillString (const int skill)
  */
 static void CL_UGVCvars (const character_t* chr)
 {
-	Cvar_Set("mn_lweapon", "");
-	Cvar_Set("mn_rweapon", "");
+	Cvar_Set("mn_lweapon", "%s", "");
+	Cvar_Set("mn_rweapon", "%s", "");
 	Cvar_Set("mn_vmnd", "0");
 	Cvar_Set("mn_tmnd", "%s (0)", CL_ActorGetSkillString(chr->score.skills[ABILITY_MIND]));
 }

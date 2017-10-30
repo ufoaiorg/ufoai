@@ -73,7 +73,7 @@ extern const pos3_t pos3_origin;
 #define VectorEmpty(a)           (VectorEqual((a), vec3_origin))
 #define Vector2Empty(a)			 (Vector2Equal((a), vec2_origin))
 #define Vector2NotEmpty(a)		    (!Vector2Empty((a)))
-#define Vector4NotEmpty(a)          (VectorNotEmpty(a) || !EQUAL((a)[3],0.0))
+#define Vector4NotEmpty(a)          (VectorNotEmpty(a) || !EQUAL((a)[3],0.0f))
 #define VectorIntZero(a)          ((a)[0] == 0 && (a)[1] == 0 && (a)[2] == 0)
 #define LinearInterpolation(a, b, x, y)   ((y)=(a)[1] + ((((x) - (a)[0]) * ((b)[1] - (a)[1])) / ((b)[0] - (a)[0])))
 #define VectorScale(in,scale,out) ((out)[0] = (in)[0] * (scale),(out)[1] = (in)[1] * (scale),(out)[2] = (in)[2] * (scale))

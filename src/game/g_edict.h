@@ -197,10 +197,8 @@ public:
 		_child = child;
 	}
 	inline void nativeReset () {	/* strange name, but there is also a complex function named 'reset' */
-		int idx = this->number;
-		OBJZERO(*this);				/* zero everything, but ... */
-		chr.inv.init();
-		this->number = idx;			/* ... preserve the number */
+		const int idx = this->number;
+		init(idx);			/* ... preserve the number */
 	}
 	inline void setActive() {
 		active = true;

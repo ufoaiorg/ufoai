@@ -1224,16 +1224,16 @@ static void HUD_UpdateActorCvar (const le_t* actor)
 		Cvar_Set("mn_rweapon", "%s", item->def()->model);
 		Cvar_Set("mn_rweapon_item", "%s", item->def()->id);
 	} else {
-		Cvar_Set("mn_rweapon", "");
-		Cvar_Set("mn_rweapon_item", "");
+		Cvar_Set("mn_rweapon", "%s", "");
+		Cvar_Set("mn_rweapon_item", "%s", "");
 	}
 	if (actor->getLeftHandItem()) {
 		const Item* item = actor->getLeftHandItem();
 		Cvar_Set("mn_lweapon", "%s", item->def()->model);
 		Cvar_Set("mn_lweapon_item", "%s", item->def()->id);
 	} else {
-		Cvar_Set("mn_lweapon", "");
-		Cvar_Set("mn_lweapon_item", "");
+		Cvar_Set("mn_lweapon", "%s", "");
+		Cvar_Set("mn_lweapon_item", "%s", "");
 	}
 
 	/* print ammo */
@@ -1241,13 +1241,13 @@ static void HUD_UpdateActorCvar (const le_t* actor)
 	if (itemRight)
 		Cvar_SetValue("mn_ammoright", itemRight->getAmmoLeft());
 	else
-		Cvar_Set("mn_ammoright", "");
+		Cvar_Set("mn_ammoright", "%s", "");
 
 	const Item* itemLeft = HUD_GetLeftHandWeapon(actor, nullptr);
 	if (itemLeft)
 		Cvar_SetValue("mn_ammoleft", itemLeft->getAmmoLeft());
 	else
-		Cvar_Set("mn_ammoleft", "");
+		Cvar_Set("mn_ammoleft", "%s", "");
 }
 
 static const char* HUD_GetPenaltyString (const int type)
@@ -1444,8 +1444,8 @@ void HUD_Update (void)
 
 	/* force them empty first */
 	Cvar_Set("mn_anim", "stand0");
-	Cvar_Set("mn_rweapon", "");
-	Cvar_Set("mn_lweapon", "");
+	Cvar_Set("mn_rweapon", "%s", "");
+	Cvar_Set("mn_lweapon", "%s", "");
 
 	if (selActor) {
 		HUD_UpdateActor(selActor);

@@ -100,7 +100,9 @@ public:
 	typedef int RefValue;
 	typedef T ValueType;
 	typedef T *PointerType;
+	typedef const T *ConstPointerType;
 	typedef T &ReferenceType;
+	typedef const T &ConstReferenceType;
 
 	SharedPtr () :
 			_refCount(0), _deletion(0), _pointer(0)
@@ -176,12 +178,12 @@ public:
 		return _pointer;
 	}
 
-	inline bool operator< (const PointerType other) const
+	inline bool operator< (ConstPointerType other) const
 	{
 		return *_pointer < *other;
 	}
 
-	inline bool operator< (const ReferenceType other) const
+	inline bool operator< (ConstReferenceType other) const
 	{
 		return *_pointer < other;
 	}

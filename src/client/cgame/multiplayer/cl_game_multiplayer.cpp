@@ -85,8 +85,8 @@ static void GAME_MP_StartServer_f (void)
 	assert(md->mapTheme);
 
 	/** @todo implement different ufo and dropship support for multiplayer, too (see skirmish) */
-	cgi->Cvar_Set("rm_drop", "");
-	cgi->Cvar_Set("rm_ufo", "");
+	cgi->Cvar_Set("rm_drop", "%s", "");
+	cgi->Cvar_Set("rm_ufo", "%s", "");
 	cgi->Cvar_Set("sv_hurtaliens", "0");
 
 	if (md->mapTheme[0] == '+') {

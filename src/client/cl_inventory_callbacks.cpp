@@ -69,12 +69,12 @@ void INV_ItemDescription (const objDef_t* od)
 	static char itemText[UI_MAX_SMALLTEXTLEN];
 
 	currentDisplayedObject = od;
-	Cvar_Set("mn_firemodename", "");
-	Cvar_Set("mn_linkname", "");
+	Cvar_Set("mn_firemodename", "%s", "");
+	Cvar_Set("mn_linkname", "%s", "");
 
 	if (!od) {	/* If nothing selected return */
-		Cvar_Set("mn_itemname", "");
-		Cvar_Set("mn_item", "");
+		Cvar_Set("mn_itemname", "%s", "");
+		Cvar_Set("mn_item", "%s", "");
 		UI_ResetData(TEXT_ITEMDESCRIPTION);
 		itemIndex = fireModeIndex = 0;
 		UI_ExecuteConfunc("itemdesc_view 0 0;");

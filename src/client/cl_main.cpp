@@ -404,7 +404,7 @@ static void CL_ConnectionlessPacket (dbuffer* msg)
 		if (strstr(popupText, REJ_PASSWORD_REQUIRED_OR_INCORRECT)) {
 			UI_PushWindow("serverpassword");
 			if (Q_strvalid(Cvar_GetString("password"))) {
-				Cvar_Set("password", "");
+				Cvar_Set("password", "%s", "");
 				CL_Drop();
 				UI_Popup(_("Connection failure"), _("The password you specified was wrong."));
 			} else {
@@ -424,7 +424,7 @@ static void CL_ConnectionlessPacket (dbuffer* msg)
 			CL_Drop();
 			UI_Popup(_("Connection failure"), _("The server is running a different version of the game."));
 		} else if (strstr(popupText, BAD_RCON_PASSWORD)) {
-			Cvar_Set("rcon_password", "");
+			Cvar_Set("rcon_password", "%s", "");
 			UI_Popup(_("Bad rcon password"), _("The rcon password you specified was wrong."));
 		} else if (strstr(popupText, REJ_CONNECTION_REFUSED)) {
 			CL_Drop();

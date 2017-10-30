@@ -514,8 +514,8 @@ static void GAME_GetEquipment (void)
 void GAME_UpdateTeamMenuParameters_f (void)
 {
 	/* reset description */
-	Cvar_Set("mn_itemname", "");
-	Cvar_Set("mn_item", "");
+	Cvar_Set("mn_itemname", "%s", "");
+	Cvar_Set("mn_item", "%s", "");
 	UI_ResetData(TEXT_STANDARD);
 
 	int i = 0;

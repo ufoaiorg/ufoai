@@ -49,3 +49,7 @@
 #  endif
 # endif
 #endif
+
+#if __cplusplus >= 201103L
+# define register
+#endif

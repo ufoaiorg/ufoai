@@ -199,12 +199,12 @@ vec_t ColorNormalize (const vec3_t in, vec3_t out)
 		max = in[2];
 
 	/* avoid FPE */
-	if (EQUAL(max, 0.0)) {
+	if (EQUAL(max, 0.0f)) {
 		VectorClear(out);
 		return 0;
 	}
 
-	VectorScale(in, 1.0 / max, out);
+	VectorScale(in, 1.0f / max, out);
 
 	return max;
 }
@@ -241,8 +241,8 @@ vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
 	length = DotProduct(v, v);
 	length = sqrt(length);		/** @todo */
 
-	if (!EQUAL(length, 0.0)) {
-		const float ilength = 1.0 / length;
+	if (!EQUAL(length, 0.0f)) {
+		const float ilength = 1.0f / length;
 		out[0] = v[0] * ilength;
 		out[1] = v[1] * ilength;
 		out[2] = v[2] * ilength;
@@ -1019,7 +1019,7 @@ float AngleNormalize180 (float angle)
 void VectorCalcMinsMaxs (const vec3_t center, const vec3_t size, vec3_t mins, vec3_t maxs)
 {
 	for (int i = 0; i < 3; i++) {
-		const vec_t length = abs(size[i]) / 2;
+		const vec_t length = fabsf(size[i]) / 2;
 		mins[i] = center[i] - length;
 		maxs[i] = center[i] + length;
 	}

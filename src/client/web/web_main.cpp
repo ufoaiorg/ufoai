@@ -111,14 +111,14 @@ bool WEB_PutFile (const char* formName, const char* fileName, const char* url, u
 static void WEB_AuthResponse (const char* response, void* userdata)
 {
 	if (response == nullptr) {
-		Cvar_Set("web_password", "");
+		Cvar_Set("web_password", "%s", "");
 		Cvar_Set("web_userid", "0");
 		return;
 	}
 	Com_DPrintf(DEBUG_CLIENT, "response: '%s'\n", response);
 	if (Q_streq(response, "0")) {
 		/* failed */
-		Cvar_Set("web_password", "");
+		Cvar_Set("web_password", "%s", "");
 		Cvar_Set("web_userid", "0");
 	} else {
 		Cvar_Set("web_userid", "%i", atoi(response));
@@ -145,7 +145,7 @@ bool WEB_Auth (const char* username, const char* password)
 	Cvar_Set("web_username", "%s", username);
 	Cvar_Set("web_password", "%s", digest);
 	if (!WEB_GetURL(web_authurl->string, WEB_AuthResponse)) {
-		Cvar_Set("web_password", "");
+		Cvar_Set("web_password", "%s", "");
 		Cvar_Set("web_userid", "0");
 		return false;
 	}
@@ -202,7 +202,7 @@ void WEB_InitStartup (void)
 	if (Q_strvalid(web_password->string)) {
 		Com_Printf("... using username '%s'\n", web_username->string);
 		if (!WEB_GetURL(web_authurl->string, WEB_AuthResponse)) {
-			Cvar_Set("web_password", "");
+			Cvar_Set("web_password", "%s", "");
 		}
 		if (Q_strvalid(web_password->string)) {
 			Com_Printf("... login successful\n");

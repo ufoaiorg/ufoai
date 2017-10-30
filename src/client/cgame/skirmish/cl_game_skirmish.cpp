@@ -228,7 +228,7 @@ static inline void GAME_SK_HideDropships (const linkedList_t* dropships)
 	const bool hide = (dropships == nullptr);
 	if (hide) {
 		cgi->UI_ExecuteConfunc("skirmish_hide_dropships true");
-		cgi->Cvar_Set("rm_drop", "");
+		cgi->Cvar_Set("rm_drop", "%s", "");
 	} else {
 		const char* rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char*)dropships->data);
 		cgi->Cvar_Set("rm_drop", "%s", rma);
@@ -249,7 +249,7 @@ static inline void GAME_SK_HideUFOs (const linkedList_t* ufos)
 	const bool hide = (ufos == nullptr);
 	if (hide) {
 		cgi->UI_ExecuteConfunc("skirmish_hide_ufos true");
-		cgi->Cvar_Set("rm_ufo", "");
+		cgi->Cvar_Set("rm_ufo", "%s", "");
 	} else {
 		const char* rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char*)ufos->data);
 		cgi->Cvar_Set("rm_ufo", "%s", rma);
@@ -258,7 +258,7 @@ static inline void GAME_SK_HideUFOs (const linkedList_t* ufos)
 
 		cgi->UI_ExecuteConfunc("skirmish_hide_ufos false");
 	}
-	cgi->Cvar_Set("rm_crashed", "");
+	cgi->Cvar_Set("rm_crashed", "%s", "");
 }
 
 static const mapDef_t* GAME_SK_MapInfo (int step)
