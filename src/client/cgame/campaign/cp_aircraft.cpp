@@ -189,6 +189,15 @@ static void AIR_ListAircraft_f (void)
 			Com_Printf(".........name: %s (ucn: %i)\n", chr->name, chr->ucn);
 		}
 
+		if (aircraft->itemCargo) {
+			Com_Printf("...itemCargo:\n");
+			linkedList_t* cargo = aircraft->itemCargo->list();
+			LIST_Foreach(cargo, itemCargo_t, item) {
+				Com_Printf("......item: %s amount: %d loose amount: %d\n", item->objDef->id, item->amount, item->looseAmount);
+			}
+			cgi->LIST_Delete(&cargo);
+		}
+
 		if (aircraft->alienCargo) {
 			Com_Printf("...alienCargo:\n");
 			linkedList_t* cargo = aircraft->alienCargo->list();
