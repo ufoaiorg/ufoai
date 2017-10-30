@@ -54,6 +54,10 @@ bool ItemCargo::add(const objDef_t* od, int amount, int looseAmount = 0)
 
 		item->amount += amount;
 		item->looseAmount += looseAmount;
+		if (od->ammo > 0 && item->looseAmount >= od->ammo) {
+			const int magazine = item->looseAmount / od->ammo;
+			this->add(od, magazine, -magazine * od->ammo);
+		}
 
 		if (item->amount == 0 && item->looseAmount == 0)
 			cgi->LIST_Remove(&this->cargo, (void*)item);

@@ -201,23 +201,19 @@ static void AIR_ListAircraft_f (void)
 }
 #endif
 
-static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
-
 /**
  * @brief Count and collect ammo from gun magazine.
  * @param[in] data Pointer to aircraft used in this mission.
  * @param[in] magazine Pointer to Item being magazine.
  */
-static void AII_CollectingAmmo (void* data, const Item* magazine)
+static void AII_CollectAmmo (void* data, const Item* magazine)
 {
 	aircraft_t* aircraft = (aircraft_t*)data;
-	/* Let's add remaining ammo to market. */
-	eTempEq.numItemsLoose[magazine->ammoDef()->idx] += magazine->getAmmoLeft();
-	if (eTempEq.numItemsLoose[magazine->ammoDef()->idx] >= magazine->def()->ammo) {
-		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
-		eTempEq.numItemsLoose[magazine->ammoDef()->idx] -= magazine->def()->ammo;
-		AII_CollectItem(aircraft, magazine->ammoDef(), 1);
-	}
+	if (aircraft == nullptr)
+		return;
+	if (aircraft->itemCargo == nullptr)
+		aircraft->itemCargo = new ItemCargo();
+	aircraft->itemCargo->add(magazine->ammoDef(), 0, magazine->getAmmoLeft());
 }
 
 /**
@@ -289,11 +285,8 @@ void AII_CollectingItems (aircraft_t* aircraft, int won)
 {
 	/** @todo Simplify this logic */
 	ItemCargo* previousCargo = new ItemCargo(*aircraft->itemCargo);
-
 	aircraft->itemCargo->empty();
-	OBJZERO(eTempEq);
-
-	cgi->CollectItems(aircraft, won, AII_CollectItem_, AII_CollectingAmmo, AII_CarriedItems);
+	cgi->CollectItems(aircraft, won, AII_CollectItem_, AII_CollectAmmo, AII_CarriedItems);
 
 	linkedList_t* items = aircraft->itemCargo->list();
 	LIST_Foreach(items, itemCargo_t, item) {
