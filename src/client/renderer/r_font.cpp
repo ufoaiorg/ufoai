@@ -605,7 +605,7 @@ static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCa
 	if (!openGLSurface)
 		return;
 
-	SDL_Rect rect = {0, 0, textSurface->w, textSurface->h};
+	SDL_Rect rect = {0, 0, static_cast<Uint16>(textSurface->w), static_cast<Uint16>(textSurface->h)};
 	if (rect.w > chunk->width)
 		rect.w = chunk->width;
 
