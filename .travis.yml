@@ -10,6 +10,7 @@ language:
 
 compiler:
   - gcc
+  - clang
 
 addons:
   apt:
@@ -19,7 +20,7 @@ addons:
     - zlib1g-dev
     - g++-5
     - gcc-5
-    - clang
+    - clang-5.0
     - libc6:i386
     - lua5.1
     - libdbus-1-dev
@@ -43,7 +44,6 @@ addons:
     - libxss-dev
     - libgl1-mesa-dev
     - libesd0-dev
-    - libdbus-1-dev
     - libudev-dev
     - libgles1-mesa-dev
     - libgles2-mesa-dev
@@ -52,7 +52,6 @@ addons:
     - libsdl2-dev
     - libsdl2-ttf-dev
     - libvorbis-dev
-    - zlib1g-dev
     - gettext
     - libtheora-dev
     - libjpeg-dev
@@ -71,6 +70,7 @@ addons:
     - libgtksourceview2.0-dev
     sources:
     - ubuntu-toolchain-r-test
+    - llvm-toolchain-trusty-5.0
 
 script:
 # On Linux, we turn on all the projects
@@ -80,8 +80,11 @@ script:
 #notifications:
 #  email:
 
+before_install:
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-5" && export CC="gcc-5"; fi
+  - if [ "$CXX" = "clang++" ]; then export CXX="clang++-5.0" && export CC="clang-5.0"; fi
+
 install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-5"; fi
   - gem install xcpretty
   - gem install xcpretty-travis-formatter
 
