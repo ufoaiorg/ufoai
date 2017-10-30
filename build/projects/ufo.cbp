@@ -347,6 +347,8 @@
 		<Unit filename="../../src/client/cgame/campaign/aliencargo.h" />
 		<Unit filename="../../src/client/cgame/campaign/aliencontainment.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/aliencontainment.h" />
+		<Unit filename="../../src/client/cgame/campaign/itemcargo.cpp" />
+		<Unit filename="../../src/client/cgame/campaign/itemcargo.h" />
 		<Unit filename="../../src/client/cgame/campaign/cl_game_campaign.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cl_game_campaign.h" />
 		<Unit filename="../../src/client/cgame/campaign/cp_aircraft.cpp" />

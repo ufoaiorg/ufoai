@@ -182,6 +182,7 @@
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_particlespawn.cpp" />
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_sound.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/aliencargo.cpp" />
+		<Unit filename="../../src/client/cgame/campaign/itemcargo.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/aliencontainment.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cl_game_campaign.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_aircraft.cpp" />

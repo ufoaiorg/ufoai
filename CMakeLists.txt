@@ -617,6 +617,7 @@ if(UFOAI_BUILD_UFO)
       ${UFOAI_SRC}/client/battlescape/events/event/world/e_event_particlespawn.cpp
       ${UFOAI_SRC}/client/battlescape/events/event/world/e_event_sound.cpp
       ${UFOAI_SRC}/client/cgame/campaign/aliencargo.cpp
+      ${UFOAI_SRC}/client/cgame/campaign/itemcargo.cpp
       ${UFOAI_SRC}/client/cgame/campaign/aliencontainment.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cl_game_campaign.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_aircraft.cpp
@@ -1708,6 +1709,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${UFOAI_SRC}/client/battlescape/events/event/world/e_event_particlespawn.cpp
       ${UFOAI_SRC}/client/battlescape/events/event/world/e_event_sound.cpp
       ${UFOAI_SRC}/client/cgame/campaign/aliencargo.cpp
+      ${UFOAI_SRC}/client/cgame/campaign/itemcargo.cpp
       ${UFOAI_SRC}/client/cgame/campaign/aliencontainment.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cl_game_campaign.cpp
       ${UFOAI_SRC}/client/cgame/campaign/cp_aircraft.cpp
