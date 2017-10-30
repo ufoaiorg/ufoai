@@ -163,6 +163,30 @@ linkedList_t* ItemCargo::list(void) const
 }
 
 /**
+ * @brief Count all items in the cargo
+ */
+int ItemCargo::count(void) const
+{
+	int count = 0;
+	LIST_Foreach(this->cargo, itemCargo_t, item) {
+		count += item->amount;
+	}
+	return count;
+}
+
+/**
+ * @brief Calculate size of all items in the cargo
+ */
+int ItemCargo::size(void) const
+{
+	int size = 0;
+	LIST_Foreach(this->cargo, itemCargo_t, item) {
+		size += item->amount * item->objDef->size;
+	}
+	return size;
+}
+
+/**
  * @brief Load item cargo from xml savegame
  * @param[in] root Root xml node to load data from
  */

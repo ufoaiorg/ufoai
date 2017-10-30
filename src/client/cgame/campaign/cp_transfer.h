@@ -33,8 +33,9 @@ typedef struct transfer_s {
 	base_t* srcBase;				/**< Pointer to source base. May be nullptr if transfer comes from a mission (alien body recovery). */
 	date_t event;					/**< When the transfer finish process should start. */
 
-	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item. */
-	class AlienCargo* alienCargo;			/**< Alien cargo */
+	int antimatter;
+	class ItemCargo* itemCargo;
+	class AlienCargo* alienCargo;
 	linkedList_t* employees[MAX_EMPL];
 	linkedList_t* aircraft;
 

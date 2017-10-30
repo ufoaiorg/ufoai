@@ -53,6 +53,9 @@ class ItemCargo {
 		int getLooseAmount (const objDef_t* od) const;
 		linkedList_t* list (void) const;
 
+		int count (void) const;
+		int size (void) const;
+
 		bool load(xmlNode_t* root);
 		bool save(xmlNode_t* root) const;
 

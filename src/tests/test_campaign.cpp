@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/cgame/campaign/cp_time.h"
 #include "../client/cgame/campaign/cp_alien_interest.h"
 #include "../client/cgame/campaign/cp_auto_mission.h"
+#include "../client/cgame/campaign/itemcargo.h"
 #include "../client/cgame/campaign/missions/cp_mission_intercept.h"
 #include "../shared/parse.h"
 #include "../shared/images.h"
@@ -370,9 +371,10 @@ TEST_F(CampaignTest, testTransferItem)
 	ASSERT_TRUE(nullptr != od);
 
 	OBJZERO(tr);
-	tr.itemAmount[od->idx] += 1;
+	tr.itemCargo = new ItemCargo();
+	tr.itemCargo->add(od, 1, 0);
 	tr.destBase = targetBase;
-	tr.itemAmount[od->idx]++;
+	tr.itemCargo->add(od, 1, 0);
 
 	transfer_t* transfer = TR_TransferStart(base, tr);
 	ASSERT_TRUE(nullptr != transfer);
@@ -427,6 +429,8 @@ TEST_F(CampaignTest, testTransferItem)
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(nullptr);
+	delete tr.itemCargo;
+	tr.itemCargo = nullptr;
 
 	base->founded = false;
 }

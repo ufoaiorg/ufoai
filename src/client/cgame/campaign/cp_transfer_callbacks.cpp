@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "aliencargo.h"
 #include "aliencontainment.h"
+#include "itemcargo.h"
 
 /**
  * @brief transfer types
@@ -55,8 +56,9 @@ static char const* const transferTypeIDs[] = {
 };
 CASSERT(lengthof(transferTypeIDs) == TRANS_TYPE_MAX);
 
-/** @todo move this into ccs_t */
+/** @todo move this into ccs_t or somewhere else */
 static transfer_t tr;
+/** @todo move this into Lua UI */
 static transferType_t currentTransferType;
 
 /**
@@ -64,7 +66,10 @@ static transferType_t currentTransferType;
  */
 static void TR_ClearTempCargo (void)
 {
-	OBJZERO(tr.itemAmount);
+	if (tr.itemCargo != nullptr) {
+		delete tr.itemCargo;
+		tr.itemCargo = nullptr;
+	}
 	if (tr.alienCargo != nullptr) {
 		delete tr.alienCargo;
 		tr.alienCargo = nullptr;
@@ -120,15 +125,23 @@ static void TR_CargoList (void)
 	/* reset for every new call */
 	cgi->UI_ExecuteConfunc("ui_cargolist_clear");
 
-	/* Show items. */
-	for (int i = 0; i < cgi->csi->numODs; i++) {
-		const objDef_t* od = INVSH_GetItemByIDX(i);
-		const int amount = tr.itemAmount[i];
-		if (amount > 0)
-			cgi->UI_ExecuteConfunc("ui_cargolist_add \"%s\" \"%s\" %d", od->id, _(od->name), amount);
+	/* Show Antimatter */
+	if (tr.antimatter > 0) {
+		const objDef_t* od = INVSH_GetItemByID(ANTIMATTER_ITEM_ID);
+		cgi->UI_ExecuteConfunc("ui_cargolist_add \"%s\" \"%s\" %d", od->id, _(od->name), tr.antimatter);
 	}
 
-	/* Show employees. */
+	/* Show items */
+	if (tr.itemCargo != nullptr) {
+		linkedList_t* cargo = tr.itemCargo->list();
+		LIST_Foreach(cargo, itemCargo_t, item) {
+			if (item->amount > 0)
+				cgi->UI_ExecuteConfunc("ui_cargolist_add \"dead_%s\" \"%s\" %d", item->objDef->id, _(item->objDef->name), item->amount);
+		}
+		cgi->LIST_Delete(&cargo);
+	}
+
+	/* Show employees */
 	for (int i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
 		switch (emplType) {
@@ -162,7 +175,7 @@ static void TR_CargoList (void)
 		}
 	}
 
-	/* Show aliens. */
+	/* Show aliens */
 	if (tr.alienCargo != nullptr) {
 		linkedList_t* cargo = tr.alienCargo->list();
 		LIST_Foreach(cargo, alienCargo_t, item) {
@@ -174,7 +187,7 @@ static void TR_CargoList (void)
 		cgi->LIST_Delete(&cargo);
 	}
 
-	/* Show all aircraft. */
+	/* Show all aircraft */
 	LIST_Foreach(tr.aircraft, aircraft_t, aircraft) {
 		cgi->UI_ExecuteConfunc("ui_cargolist_add \"aircraft_%d\" \"%s\" %d", aircraft->idx, va(_("Aircraft %s"), aircraft->name), 1);
 	}
@@ -206,13 +219,13 @@ static void TR_FillItems (const base_t* srcBase, const base_t* destBase)
 
 	od = INVSH_GetItemByID(ANTIMATTER_ITEM_ID);
 	if (od) {
-		const int itemCargoAmount = tr.itemAmount[od->idx];
+		const int antiMatterInCargo = tr.antimatter;
 		const int antiMatterInSrcBase = B_AntimatterInBase(srcBase);
 		const int antiMatterInDstBase = B_AntimatterInBase(destBase);
 
-		if (itemCargoAmount || antiMatterInSrcBase) {
+		if (antiMatterInCargo || antiMatterInSrcBase) {
 			cgi->UI_ExecuteConfunc("ui_translist_add \"%s\" \"%s\" %d %d %d %d %d", od->id, _(od->name),
-				antiMatterInSrcBase - itemCargoAmount, antiMatterInDstBase, 0, itemCargoAmount, antiMatterInSrcBase);
+				antiMatterInSrcBase - antiMatterInCargo, antiMatterInDstBase, 0, antiMatterInCargo, antiMatterInSrcBase);
 		}
 	}
 	for (int i = 0; i < cgi->csi->numODs; i++) {
@@ -220,7 +233,7 @@ static void TR_FillItems (const base_t* srcBase, const base_t* destBase)
 		assert(od);
 		if (!B_ItemIsStoredInBaseStorage(od))
 			continue;
-		const int itemCargoAmount = tr.itemAmount[od->idx];
+		const int itemCargoAmount = tr.itemCargo ? tr.itemCargo->getAmount(od) : 0;
 		const int itemInSrcBase = B_ItemInBase(od, srcBase);
 		const int itemInDstBase = B_ItemInBase(od, destBase);
 		if (itemCargoAmount || itemInSrcBase > 0) {
@@ -580,10 +593,7 @@ static void TR_Add_f (void)
 		}
 	} else if (Q_streq(itemId, ANTIMATTER_ITEM_ID)) {
 		/* antimatter */
-		const objDef_t* od = INVSH_GetItemByID(itemId);
-		if (!od)
-			return;
-		const int cargo = tr.itemAmount[od->idx];
+		const int cargo = tr.antimatter;
 		const int store = B_AntimatterInBase(base);
 
 		if (amount >= 0)
@@ -591,7 +601,7 @@ static void TR_Add_f (void)
 		else
 			amount = std::max(amount, -cargo);
 		if (amount != 0)
-			tr.itemAmount[od->idx] += amount;
+			tr.antimatter += amount;
 	} else {
 		/* items */
 		const objDef_t* od = INVSH_GetItemByID(itemId);
@@ -600,14 +610,16 @@ static void TR_Add_f (void)
 		if (!B_ItemIsStoredInBaseStorage(od))
 			return;
 
-		const int cargo = tr.itemAmount[od->idx];
+		if (tr.itemCargo == nullptr)
+			tr.itemCargo = new ItemCargo();
+		const int cargo = tr.itemCargo->getAmount(od);
 		const int store = B_ItemInBase(od, base);
 		if (amount >= 0)
 			amount = std::min(amount, store);
 		else
 			amount = std::max(amount, -cargo);
 		if (amount != 0)
-			tr.itemAmount[od->idx] += amount;
+			tr.itemCargo->add(od, amount, 0);
 	}
 
 	TR_Fill(base, tr.destBase, currentTransferType);
@@ -761,17 +773,22 @@ static void TR_List_f (void)
 
 		cgi->UI_ExecuteConfunc("tr_listaddtransfer %d \"%s\" \"%s\" \"%s\"", ++i, source, transfer->destBase->name, CP_SecondConvert(Date_DateToSeconds(&time)));
 
+		/* Antimatter */
+		if (transfer->antimatter) {
+			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "antimatter", _("Antimatter"));
+			const objDef_t* od = INVSH_GetItemByID(ANTIMATTER_ITEM_ID);
+			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.antimatter", od->id, va("%i %s", transfer->antimatter, _(od->name)));
+		}
 		/* Items */
-		if (transfer->hasItems) {
+		if (transfer->itemCargo != nullptr) {
 			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "items", _("Items"));
-			for (int j = 0; j < cgi->csi->numODs; j++) {
-				const objDef_t* od = INVSH_GetItemByIDX(j);
-
-				if (transfer->itemAmount[od->idx] <= 0)
+			linkedList_t* cargo = transfer->itemCargo->list();
+			LIST_Foreach(cargo, itemCargo_t, item) {
+				if (item->amount <= 0)
 					continue;
-
-				cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.items", od->id, va("%i %s", transfer->itemAmount[od->idx], _(od->name)));
+				cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.items", item->objDef->id, va("%i %s", item->amount, _(item->objDef->name)));
 			}
+			cgi->LIST_Delete(&cargo);
 		}
 		/* Employee */
 		if (transfer->hasEmployees) {
@@ -808,26 +825,6 @@ static void TR_List_f (void)
 				cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aircraft", va("craft%i", aircraft->idx), aircraft->name);
 			}
 		}
-	}
-}
-
-/**
- * @brief Count capacity need of items and antimatter in arrays
- * @param[in] itemAmountArray Array to count items in
- * @param[in,out] capacity Capacity need array to update
- */
-static void TR_CountItemSizeInArray (int itemAmountArray[], int capacity[])
-{
-	for (int i = 0; i < cgi->csi->numODs; i++) {
-		const objDef_t* object = INVSH_GetItemByIDX(i);
-		const int itemCargoAmount = itemAmountArray[i];
-
-		if (itemCargoAmount <= 0)
-			continue;
-		if (Q_streq(object->id, ANTIMATTER_ITEM_ID))
-			capacity[CAP_ANTIMATTER] += itemCargoAmount;
-		else
-			capacity[CAP_ITEMS] += object->size * itemCargoAmount;
 	}
 }
 
@@ -879,8 +876,10 @@ static void TR_DestinationCapacityList_f (void)
 	TR_Foreach(transfer) {
 		if (transfer->destBase != base)
 			continue;
-		/* - Items and Antimatter */
-		TR_CountItemSizeInArray(transfer->itemAmount, currentCap);
+		/* - Antimatter */
+		currentCap[CAP_ANTIMATTER] += transfer->antimatter;
+		/* - Items */
+		currentCap[CAP_ITEMS] += transfer->itemCargo ? transfer->itemCargo->size() : 0;
 		/* - Employees in transit assinged to base already */
 		/* - Aliens */
 		currentCap[CAP_ALIENS] += (transfer->alienCargo) ? transfer->alienCargo->getAlive() : 0;
@@ -888,12 +887,14 @@ static void TR_DestinationCapacityList_f (void)
 	}
 
 	/* Count capacity need of the current transfer plan */
-	/* - Items and Antimatter */
-	TR_CountItemSizeInArray(tr.itemAmount, currentCap);
+	/* - Antimatter */
+	currentCap[CAP_ANTIMATTER] += tr.antimatter;
+	/* - Items */
+	currentCap[CAP_ITEMS] += tr.itemCargo ? tr.itemCargo->size() : 0;
 	/* - Employee */
 	TR_CountEmployeeInListArray(tr.employees, currentCap);
 	/* - Aliens */
-	currentCap[CAP_ALIENS] += (tr.alienCargo) ? tr.alienCargo->getAlive() : 0;
+	currentCap[CAP_ALIENS] += tr.alienCargo ? tr.alienCargo->getAlive() : 0;
 	/* - Aircraft */
 	TR_CountAircraftInList(tr.aircraft, currentCap);
 

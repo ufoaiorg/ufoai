@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_transfer_callbacks.h"
 #include "aliencargo.h"
 #include "aliencontainment.h"
+#include "itemcargo.h"
 
 /**
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
@@ -45,29 +46,31 @@ static void TR_EmptyTransferCargo (base_t* destination, transfer_t* transfer, bo
 {
 	assert(transfer);
 
-	if (transfer->hasItems && success) {	/* Items. */
-		const objDef_t* od = INVSH_GetItemByID(ANTIMATTER_ITEM_ID);
-		int i;
+	/* antimatter */
+	if (transfer->antimatter > 0 && success) {
+		if (B_GetBuildingStatus(destination, B_ANTIMATTER)) {
+			B_AddAntimatter(destination, transfer->antimatter);
+		} else {
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Antimatter Storage, antimatter are removed!"), destination->name);
+			MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, MSG_TRANSFERFINISHED);
+		}
+	}
 
-		/* antimatter */
-		if (transfer->itemAmount[od->idx] > 0) {
-			if (B_GetBuildingStatus(destination, B_ANTIMATTER)) {
-				B_AddAntimatter(destination, transfer->itemAmount[od->idx]);
-			} else {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Antimatter Storage, antimatter are removed!"), destination->name);
-				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, MSG_TRANSFERFINISHED);
+	/* items */
+	if (transfer->itemCargo != nullptr) {
+		if (success) {
+			linkedList_t* cargo = transfer->itemCargo->list();
+			LIST_Foreach(cargo, itemCargo_t, item) {
+				if (item->amount <= 0)
+					continue;
+				if (!B_ItemIsStoredInBaseStorage(item->objDef))
+					continue;
+				B_AddToStorage(destination, item->objDef, item->amount);
 			}
+			cgi->LIST_Delete(&cargo);
 		}
-		/* items */
-		for (i = 0; i < cgi->csi->numODs; i++) {
-			od = INVSH_GetItemByIDX(i);
-
-			if (transfer->itemAmount[od->idx] <= 0)
-				continue;
-			if (!B_ItemIsStoredInBaseStorage(od))
-				continue;
-			B_AddToStorage(destination, od, transfer->itemAmount[od->idx]);
-		}
+		delete transfer->alienCargo;
+		transfer->alienCargo = nullptr;
 	}
 
 	/* Employee */
@@ -183,19 +186,27 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 	transfer.srcBase = srcBase;	/* Source base. */
 
 	int count = 0;
-	for (i = 0; i < cgi->csi->numODs; i++) {	/* Items. */
-		if (transData.itemAmount[i] == 0)
-			continue;
-		if (srcBase != nullptr) {
-			const objDef_t* od = INVSH_GetItemByIDX(i);
-			if (Q_streq(od->id, ANTIMATTER_ITEM_ID))
-				B_AddAntimatter(srcBase, -transData.itemAmount[i]);
-			else
-				B_AddToStorage(srcBase, od, -transData.itemAmount[i]);
+	/* antimatter */
+	if (transData.antimatter > 0) {
+		transfer.antimatter = transData.antimatter;
+		B_AddAntimatter(srcBase, -transData.antimatter);
+		count += transData.antimatter;
+	}
+
+	/* Items */
+	if (transData.itemCargo != nullptr) {
+		transfer.itemCargo = new ItemCargo(*transData.itemCargo);
+
+		linkedList_t* list = transData.itemCargo->list();
+		LIST_Foreach(list, itemCargo_t, item) {
+			if (srcBase == nullptr)
+				continue;
+			if (!B_ItemIsStoredInBaseStorage(item->objDef))
+				continue;
+			B_AddToStorage(srcBase, item->objDef, -item->amount);
+			count += item->amount;
 		}
-		transfer.hasItems = true;
-		transfer.itemAmount[i] = transData.itemAmount[i];
-		count++;
+		cgi->LIST_Delete(&list);
 	}
 
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
@@ -338,14 +349,17 @@ static void TR_ListTransfers_f (void)
 			(transfer->destBase) ? transfer->destBase->name : "(null)",
 			date.year, date.month, date.day, date.hour, date.min, date.sec);
 
+		/* Antimatter */
+		if (transfer->antimatter > 0)
+			Com_Printf("......Antimatter amount: %i\n", transfer->antimatter);
 		/* ItemCargo */
-		if (transfer->hasItems) {
+		if (transfer->alienCargo != nullptr) {
 			Com_Printf("...ItemCargo:\n");
-			for (int j = 0; j < cgi->csi->numODs; j++) {
-				const objDef_t* od = INVSH_GetItemByIDX(j);
-				if (transfer->itemAmount[od->idx])
-					Com_Printf("......%s: %i\n", od->id, transfer->itemAmount[od->idx]);
+			linkedList_t* cargo = transfer->itemCargo->list();
+			LIST_Foreach(cargo, itemCargo_t, item) {
+				Com_Printf("......%s amount: %i\n", item->objDef->id, item->amount);
 			}
+			cgi->LIST_Delete(&cargo);
 		}
 		/* Carried Employees */
 		if (transfer->hasEmployees) {
@@ -417,18 +431,16 @@ bool TR_SaveXML (xmlNode_t* p)
 		 * @sa TR_TransferAlienAfterMissionStart */
 		if (transfer->srcBase)
 			cgi->XML_AddInt(s, SAVE_TRANSFER_SRCBASE, transfer->srcBase->idx);
-		/* save items */
-		if (transfer->hasItems) {
-			for (j = 0; j < MAX_OBJDEFS; j++) {
-				if (transfer->itemAmount[j] > 0) {
-					const objDef_t* od = INVSH_GetItemByIDX(j);
-					xmlNode_t* ss = cgi->XML_AddNode(s, SAVE_TRANSFER_ITEM);
+		/* save antimatter */
+		if (transfer->antimatter > 0) {
 
-					assert(od);
-					cgi->XML_AddString(ss, SAVE_TRANSFER_ITEMID, od->id);
-					cgi->XML_AddInt(ss, SAVE_TRANSFER_AMOUNT, transfer->itemAmount[j]);
-				}
-			}
+		}
+		/* save items */
+		if (transfer->itemCargo != nullptr) {
+			xmlNode_t* itemNode = cgi->XML_AddNode(s, SAVE_TRANSFER_ITEMCARGO);
+			if (!itemNode)
+				return false;
+			transfer->itemCargo->save(itemNode);
 		}
 		/* save aliens */
 		if (transfer->alienCargo != nullptr) {
@@ -488,20 +500,25 @@ bool TR_LoadXML (xmlNode_t* p)
 		transfer.event.sec = cgi->XML_GetInt(s, SAVE_TRANSFER_SEC, 0);
 
 		/* Initializing some variables */
-		transfer.hasItems = false;
 		transfer.hasEmployees = false;
 
 		/* load items */
-		/* If there is at last one element, hasItems is true */
-		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ITEM);
+		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ITEMCARGO);
 		if (ss) {
-			transfer.hasItems = true;
-			for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_ITEM)) {
-				const char* itemId = cgi->XML_GetString(ss, SAVE_TRANSFER_ITEMID);
-				const objDef_t* od = INVSH_GetItemByID(itemId);
-
-				if (od)
-					transfer.itemAmount[od->idx] = cgi->XML_GetInt(ss, SAVE_TRANSFER_AMOUNT, 1);
+			transfer.itemCargo = new ItemCargo();
+			if (transfer.itemCargo == nullptr)
+				cgi->Com_Error(ERR_DROP, "TR_LoadXML: Cannot create ItemCargo object\n");
+			transfer.itemCargo->load(ss);
+		} else {
+			/* If there is at last one element, hasItems is true */
+			ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ITEM);
+			if (ss) {
+				transfer.itemCargo = new ItemCargo();
+				for (; ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_TRANSFER_ITEM)) {
+					const char* itemId = cgi->XML_GetString(ss, SAVE_TRANSFER_ITEMID);
+					int amount = cgi->XML_GetInt(ss, SAVE_TRANSFER_AMOUNT, 1);
+					transfer.itemCargo->add(itemId, amount, 1);
+				}
 			}
 		}
 		/* load aliens */
@@ -576,6 +593,10 @@ void TR_InitStartup (void)
 void TR_Shutdown (void)
 {
 	TR_Foreach(transfer) {
+		if (transfer->itemCargo != nullptr) {
+			delete transfer->itemCargo;
+			transfer->itemCargo = nullptr;
+		}
 		if (transfer->alienCargo != nullptr) {
 			delete transfer->alienCargo;
 			transfer->alienCargo = nullptr;
