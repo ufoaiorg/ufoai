@@ -90,6 +90,22 @@ bool ItemCargo::add(const char* objDefId, int amount, int looseAmount = 0)
 }
 
 /**
+ * @brief Empties the cargo
+ */
+void ItemCargo::empty (void)
+{
+	cgi->LIST_Delete(&(this->cargo));
+}
+
+/**
+ * @brief Checks if the cargo is empty
+ */
+bool ItemCargo::isEmpty (void) const
+{
+	return (this->cargo == nullptr);
+}
+
+/**
  * @brief Returns a cargo item by its object definition
  * @param[in] od Object Definition pointer
  * @return pointer to the itemCargo_t entry or @c if no objDef cargo found

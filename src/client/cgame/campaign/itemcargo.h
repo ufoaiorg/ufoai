@@ -45,10 +45,12 @@ class ItemCargo {
 		virtual bool add (const objDef_t* od, int amount, int looseAmount);
 		virtual bool add (const char* objDefId, int amount, int looseAmount);
 
+		void empty (void);
+		bool isEmpty (void) const;
+
 		itemCargo_t* get (const objDef_t* od) const;
 		int getAmount (const objDef_t* od) const;
 		int getLooseAmount (const objDef_t* od) const;
-
 		linkedList_t* list (void) const;
 
 		bool load(xmlNode_t* root);

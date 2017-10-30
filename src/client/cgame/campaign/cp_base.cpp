@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_ufo.h"
 #include "save/save_base.h"
 #include "aliencontainment.h"
+#include "itemcargo.h"
 
 #define B_GetBuildingByIDX(baseIdx, buildingIdx) (&ccs.buildings[(baseIdx)][(buildingIdx)])
 #define B_GetBuildingIDX(base, building) ((ptrdiff_t)((building) - ccs.buildings[base->idx]))
@@ -2259,31 +2260,32 @@ static void B_SellOrAddItems (aircraft_t* aircraft)
 	base_t* base = aircraft->homebase;
 	assert(base);
 
-	itemsTmp_t* cargo = aircraft->itemcargo;
+	if (aircraft->itemCargo == nullptr)
+		return;
 
-	for (int i = 0; i < aircraft->itemTypes; i++) {
-		const objDef_t* item = cargo[i].item;
-		const int amount = cargo[i].amount;
-		technology_t* tech = RS_GetTechForItem(item);
-		/* If the related technology is NOT researched, don't sell items. */
+	linkedList_t* items = aircraft->itemCargo->list();
+	LIST_Foreach(items, itemCargo_t, item) {
+		technology_t* const tech = RS_GetTechForItem(item->objDef);
+
 		if (!RS_IsResearched_ptr(tech)) {
 			/* Items not researched cannot be thrown out even if not enough space in storage. */
-			B_AddToStorage(base, item, amount);
-			if (amount > 0)
+			B_AddToStorage(base, item->objDef, item->amount);
+			if (item->amount > 0)
 				RS_MarkCollected(tech);
 			continue;
 		} else {
 			/* If the related technology is researched, check the autosell option. */
-			if (ccs.eMarket.autosell[item->idx]) { /* Sell items if autosell is enabled. */
-				BS_SellItem(item, nullptr, amount);
-				gained += BS_GetItemSellingPrice(item) * amount;
-				numitems += amount;
+			if (ccs.eMarket.autosell[item->objDef->idx]) { /* Sell items if autosell is enabled. */
+				BS_SellItem(item->objDef, nullptr, item->amount);
+				gained += BS_GetItemSellingPrice(item->objDef) * item->amount;
+				numitems += item->amount;
 			} else {
-				B_AddToStorage(base, item, amount);
+				B_AddToStorage(base, item->objDef, item->amount);
 			}
 			continue;
 		}
 	}
+	cgi->LIST_Delete(&items);
 
 	if (numitems > 0) {
 		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("By selling %s you gathered %i credits."),
@@ -2291,8 +2293,7 @@ static void B_SellOrAddItems (aircraft_t* aircraft)
 		MS_AddNewMessage(_("Notice"), cp_messageBuffer);
 	}
 
-	/* ship no longer has cargo aboard */
-	aircraft->itemTypes = 0;
+	aircraft->itemCargo->empty();
 
 	/* Mark new technologies researchable. */
 	RS_MarkResearchable(aircraft->homebase);
@@ -2314,9 +2315,6 @@ void B_DumpAircraftToHomeBase (aircraft_t* aircraft)
 	AL_AddAliens(aircraft);
 	/* Sell collected items or add them to storage. */
 	B_SellOrAddItems(aircraft);
-
-	/* Now empty alien/item cargo just in case. */
-	OBJZERO(aircraft->itemcargo);
 }
 
 /**

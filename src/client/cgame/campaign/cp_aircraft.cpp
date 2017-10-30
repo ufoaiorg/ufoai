@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_aircraft.h"
 #include "cp_popup.h"
 #include "aliencargo.h"
+#include "itemcargo.h"
 #include "cp_building.h"
 
 /**
@@ -229,25 +230,11 @@ static void AII_CollectingAmmo (void* data, const Item* magazine)
  */
 void AII_CollectItem (aircraft_t* aircraft, const objDef_t* item, int amount)
 {
-	itemsTmp_t* cargo = aircraft->itemcargo;
-
-	for (int i = 0; i < aircraft->itemTypes; i++) {
-		if (cargo[i].item == item) {
-			Com_DPrintf(DEBUG_CLIENT, "AII_CollectItem: collecting %s (%i) amount %i -> %i\n", item->name, item->idx, cargo[i].amount, cargo[i].amount + amount);
-			cargo[i].amount += amount;
-			return;
-		}
-	}
-
-	if (aircraft->itemTypes >= MAX_CARGO) {
-		Com_Printf("AII_CollectItem: Cannot add item to cargobay it's full!\n");
+	if (aircraft == nullptr)
 		return;
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "AII_CollectItem: adding %s (%i) amount %i\n", item->name, item->idx, amount);
-	cargo[aircraft->itemTypes].item = item;
-	cargo[aircraft->itemTypes].amount = amount;
-	aircraft->itemTypes++;
+	if (aircraft->itemCargo == nullptr)
+		aircraft->itemCargo = new ItemCargo();
+	aircraft->itemCargo->add(item, amount, 0);
 }
 
 static inline void AII_CollectItem_ (void* data, const objDef_t* item, int amount)
@@ -300,51 +287,30 @@ static void AII_CarriedItems (const Inventory* soldierInventory)
  */
 void AII_CollectingItems (aircraft_t* aircraft, int won)
 {
-	int i, j;
-	itemsTmp_t* cargo;
-	itemsTmp_t prevItemCargo[MAX_CARGO];
-	int prevItemTypes;
+	/** @todo Simplify this logic */
+	ItemCargo* previousCargo = new ItemCargo(*aircraft->itemCargo);
 
-	/* Save previous cargo */
-	memcpy(prevItemCargo, aircraft->itemcargo, sizeof(aircraft->itemcargo));
-	prevItemTypes = aircraft->itemTypes;
-	/* Make sure itemcargo is empty. */
-	OBJZERO(aircraft->itemcargo);
-
-	/* Make sure eTempEq is empty as well. */
+	aircraft->itemCargo->empty();
 	OBJZERO(eTempEq);
-
-	cargo = aircraft->itemcargo;
-	aircraft->itemTypes = 0;
 
 	cgi->CollectItems(aircraft, won, AII_CollectItem_, AII_CollectingAmmo, AII_CarriedItems);
 
-	/* Fill the missionResults array. */
-	aircraft->mission->missionResults.itemTypes = aircraft->itemTypes;
-	for (i = 0; i < aircraft->itemTypes; i++)
-		aircraft->mission->missionResults.itemAmount += cargo[i].amount;
-
+	linkedList_t* items = aircraft->itemCargo->list();
+	LIST_Foreach(items, itemCargo_t, item) {
+		aircraft->mission->missionResults.itemTypes++;
+		aircraft->mission->missionResults.itemAmount += item->amount;
 #ifdef DEBUG
-	/* Print all of collected items. */
-	for (i = 0; i < aircraft->itemTypes; i++) {
-		if (cargo[i].amount > 0)
-			Com_DPrintf(DEBUG_CLIENT, "Collected items: idx: %i name: %s amount: %i\n", cargo[i].item->idx, cargo[i].item->name, cargo[i].amount);
-	}
+		if (item->amount > 0)
+			Com_DPrintf(DEBUG_CLIENT, "Collected item: %s amount: %i\n", item->objDef->id, item->amount);
 #endif
-
-	/* Put previous cargo back */
-	for (i = 0; i < prevItemTypes; i++) {
-		for (j = 0; j < aircraft->itemTypes; j++) {
-			if (cargo[j].item == prevItemCargo[i].item) {
-				cargo[j].amount += prevItemCargo[i].amount;
-				break;
-			}
-		}
-		if (j == aircraft->itemTypes) {
-			cargo[j] = prevItemCargo[i];
-			aircraft->itemTypes++;
-		}
 	}
+	cgi->LIST_Delete(&items);
+
+	items = previousCargo->list();
+	LIST_Foreach(items, itemCargo_t, item) {
+		aircraft->itemCargo->add(item->objDef, item->amount, item->looseAmount);
+	}
+	cgi->LIST_Delete(&items);
 }
 
 /**
@@ -2275,12 +2241,11 @@ static bool AIR_SaveAircraftXML (xmlNode_t* p, const aircraft_t* const aircraft,
 		cgi->XML_AddInt(node, SAVE_AIRCRAFT_PILOTUCN, pilot->chr.ucn);
 
 	/* itemcargo */
-	subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_CARGO);
-	for (int j = 0; j < aircraft->itemTypes; j++) {
-		xmlNode_t* ssnode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_ITEM);
-		assert(aircraft->itemcargo[j].item);
-		cgi->XML_AddString(ssnode, SAVE_AIRCRAFT_ITEMID, aircraft->itemcargo[j].item->id);
-		cgi->XML_AddInt(ssnode, SAVE_AIRCRAFT_AMOUNT, aircraft->itemcargo[j].amount);
+	if (aircraft->itemCargo != nullptr) {
+		subnode = cgi->XML_AddNode(node, SAVE_AIRCRAFT_CARGO);
+		if (!subnode)
+			return false;
+		aircraft->itemCargo->save(subnode);
 	}
 
 	/* aliencargo */
@@ -2506,22 +2471,12 @@ static bool AIR_LoadAircraftXML (xmlNode_t* p, aircraft_t* craft)
 
 	/* itemcargo */
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_CARGO);
-	int i;
-	for (i = 0, ssnode = cgi->XML_GetNode(snode, SAVE_AIRCRAFT_ITEM); i < MAX_CARGO && ssnode;
-			i++, ssnode = cgi->XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_ITEM)) {
-		const char* const str = cgi->XML_GetString(ssnode, SAVE_AIRCRAFT_ITEMID);
-		const objDef_t* od = INVSH_GetItemByID(str);
-
-		if (!od) {
-			Com_Printf("AIR_LoadAircraftXML: Could not find aircraftitem '%s'\n", str);
-			i--;
-			continue;
-		}
-
-		craft->itemcargo[i].item = od;
-		craft->itemcargo[i].amount = cgi->XML_GetInt(ssnode, SAVE_AIRCRAFT_AMOUNT, 0);
+	if (snode) {
+		craft->itemCargo = new ItemCargo();
+		if (craft->itemCargo == nullptr)
+			cgi->Com_Error(ERR_DROP, "AIR_LoadAircraftXML: Cannot create ItemCargo object\n");
+		craft->itemCargo->load(snode);
 	}
-	craft->itemTypes = i;
 
 	/* aliencargo */
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_ALIENCARGO);
