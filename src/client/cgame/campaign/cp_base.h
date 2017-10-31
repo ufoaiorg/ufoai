@@ -173,8 +173,6 @@ bool B_AssembleMap(char* maps, size_t mapsLength, char* coords, size_t coordsLen
 #define B_IsTileBlocked(base, x, y) (base)->map[(int)(y)][(int)(x)].blocked
 #define B_GetBuildingAt(base, x, y) (base)->map[(int)(y)][(int)(x)].building
 
-buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
-
 building_t* B_GetNextBuilding(const base_t* base, building_t* lastBuilding);
 building_t* B_GetNextBuildingByType(const base_t* base, building_t* lastBuilding, buildingType_t buildingType);
 void B_BuildingStatus(const building_t* building);
@@ -208,6 +206,7 @@ void B_DumpAircraftToHomeBase(aircraft_t* aircraft);
 /* capacity functions */
 void B_UpdateBaseCapacities(baseCapacities_t cap, base_t* base);
 baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
+buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
 void B_ResetAllStatusAndCapacities(base_t* base, bool firstEnable);
 
 /* antimatter */

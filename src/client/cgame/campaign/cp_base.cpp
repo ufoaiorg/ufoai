@@ -1001,7 +1001,6 @@ static void B_Destroy_f (void)
  * @brief Displays the status of a building for baseview.
  * @note updates the cvar mn_building_status which is used in the building
  * construction menu to display the status of the given building
- * @note also script command function binding for 'building_status'
  */
 void B_BuildingStatus (const building_t* building)
 {

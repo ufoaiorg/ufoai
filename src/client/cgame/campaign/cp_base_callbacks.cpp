@@ -721,21 +721,6 @@ static void B_BuildingDestroy_f (void)
 }
 
 /**
- * @brief Console callback for B_BuildingStatus
- * @sa B_BuildingStatus
- */
-static void B_BuildingStatus_f (void)
-{
-	const base_t* base = B_GetCurrentSelectedBase();
-
-	/* maybe someone called this command before the buildings are parsed?? */
-	if (!base || !base->buildingCurrent)
-		return;
-
-	B_BuildingStatus(base->buildingCurrent);
-}
-
-/**
  * @brief Builds a base map for tactical combat.
  * @sa CP_BaseAttackChooseBase
  */
@@ -755,102 +740,6 @@ static void B_AssembleMap_f (void)
 	char coords[2048];
 	B_AssembleMap(maps, sizeof(maps), coords, sizeof(coords), base);
 	cgi->Cbuf_AddText("map %s \"%s\" \"%s\"\n", (GEO_IsNight(base->pos) ? "night" : "day"), maps, coords);
-}
-
-/**
- * @brief Checks why a button in base menu is disabled, and create a popup to inform player
- */
-static void B_CheckBuildingStatusForMenu_f (void)
-{
-	int num;
-	const char* buildingID;
-	const building_t* building;
-	const base_t* base = B_GetCurrentSelectedBase();
-
-	if (cgi->Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <buildingID>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	buildingID = cgi->Cmd_Argv(1);
-	building = B_GetBuildingTemplate(buildingID);
-
-	if (!building || !base)
-		return;
-
-	/* Maybe base is under attack ? */
-	if (B_IsUnderAttack(base)) {
-		CP_Popup(_("Notice"), _("Base is under attack, you can't access this building !"));
-		return;
-	}
-
-	if (building->buildingType == B_HANGAR) {
-		/* this is an exception because you must have a small or large hangar to enter aircraft menu */
-		CP_Popup(_("Notice"), _("You need at least one Hangar (and its dependencies) to use aircraft."));
-		return;
-	}
-
-	num = B_GetNumberOfBuildingsInBaseByBuildingType(base, building->buildingType);
-	if (num > 0) {
-		int numUnderConstruction;
-		/* maybe all buildings of this type are under construction ? */
-		B_CheckBuildingTypeStatus(base, building->buildingType, B_STATUS_UNDER_CONSTRUCTION, &numUnderConstruction);
-		if (numUnderConstruction == num) {
-			int minDay = 99999;
-			building_t* b = nullptr;
-
-			while ((b = B_GetNextBuildingByType(base, b, building->buildingType))) {
-				if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-					const float remaining = B_GetConstructionTimeRemain(b);
-					minDay = std::min(minDay, (int)std::max(0.0f, remaining));
-				}
-			}
-
-			CP_Popup(_("Notice"), ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.",
-					minDay), minDay);
-			return;
-		}
-
-		if (!B_CheckBuildingDependencesStatus(building)) {
-			const building_t* dependenceBuilding = building->dependsBuilding;
-			assert(building->dependsBuilding);
-			if (B_GetNumberOfBuildingsInBaseByBuildingType(base, dependenceBuilding->buildingType) <= 0) {
-				/* the dependence of the building is not built */
-				CP_Popup(_("Notice"), _("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name));
-				return;
-			} else {
-				/* maybe the dependence of the building is under construction
-				 * note that we can't use B_STATUS_UNDER_CONSTRUCTION here, because this value
-				 * is not use for every building (for exemple Command Centre) */
-				building_t* b = nullptr;
-
-				while ((b = B_GetNextBuildingByType(base, b, dependenceBuilding->buildingType))) {
-					if (!B_IsBuildingBuiltUp(b)) {
-						CP_Popup(_("Notice"), _("Building %s is not finished yet, and is needed to use building %s."),
-								_(dependenceBuilding->name), _(building->name));
-						return;
-					}
-				}
-				/* the dependence is built but doesn't work - must be because of their dependendes */
-				CP_Popup(_("Notice"), _("Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."),
-						_(dependenceBuilding->name), _(dependenceBuilding->dependsBuilding->name), _(building->name));
-				return;
-			}
-		}
-		/* all buildings are OK: employees must be missing */
-		if (building->buildingType == B_WORKSHOP && E_CountHired(base, EMPL_WORKER) <= 0) {
-			CP_Popup(_("Notice"), _("You need to recruit %s to use building %s."),
-					E_GetEmployeeString(EMPL_WORKER, 2), _(building->name));
-			return;
-		} else if (building->buildingType == B_LAB && E_CountHired(base, EMPL_SCIENTIST) <= 0) {
-			CP_Popup(_("Notice"), _("You need to recruit %s to use building %s."),
-					E_GetEmployeeString(EMPL_SCIENTIST, 2), _(building->name));
-			return;
-		}
-	} else {
-		CP_Popup(_("Notice"), _("Build a %s first."), _(building->name));
-		return;
-	}
 }
 
 /**
@@ -887,11 +776,9 @@ static const cmdList_t baseCallbacks[] = {
 	{"base_assemble", B_AssembleMap_f, "Called to assemble the current selected base"},
 	{"base_building_space", B_BuildingSpace_f, "Called to display building capacity in current selected base"},
 	{"building_init", B_BuildingInit_f, nullptr},
-	{"building_status", B_BuildingStatus_f, nullptr},
 	{"building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)"},
 	{"building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed"},
 	{"building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building"},
-	{"check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button"},
 	{"buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode"},
 	{"reset_building_current", B_ResetBuildingCurrent_f, nullptr},
 	{nullptr, nullptr, nullptr}
