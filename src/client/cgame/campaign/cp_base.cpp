@@ -1445,33 +1445,24 @@ building_t* B_SetBuildingByClick (base_t* base, const building_t* buildingTempla
  */
 void B_DrawBuilding (const building_t* building)
 {
-	static char buildingText[MAX_BUILDING_INFO_TEXT_LENGTH];
-
 	/* maybe someone call this command before the buildings are parsed?? */
 	if (!building)
 		return;
 
+	static char buildingText[MAX_BUILDING_INFO_TEXT_LENGTH];
 	buildingText[0] = '\0';
-
 	B_BuildingStatus(building);
-
 	Com_sprintf(buildingText, sizeof(buildingText), "%s\n", _(building->name));
-
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
 		Com_sprintf(buildingText, sizeof(buildingText), _("Costs:\t%i c\n"), building->fixCosts);
-
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION || building->buildingStatus == B_STATUS_NOT_SET)
 		Q_strcat(buildingText, sizeof(buildingText), ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime);
-
 	if (building->varCosts)
 		Q_strcat(buildingText, sizeof(buildingText), _("Running costs:\t%i c\n"), building->varCosts);
-
 	if (building->dependsBuilding)
 		Q_strcat(buildingText, sizeof(buildingText), _("Needs:\t%s\n"), _(building->dependsBuilding->name));
-
 	if (building->name)
 		cgi->Cvar_Set("mn_building_name", "%s", _(building->name));
-
 	if (building->image)
 		cgi->Cvar_Set("mn_building_image", "%s", building->image);
 	else
@@ -2668,7 +2659,7 @@ bool B_LoadXML (xmlNode_t* parent)
 		b->alienInterest = cgi->XML_GetFloat(base, SAVE_BASES_ALIENINTEREST, 0.0);
 		b->aircraftCurrent = nullptr;
 
-		/* building space*/
+		/* building space */
 		xmlNode_t* node = cgi->XML_GetNode(base, SAVE_BASES_BUILDINGSPACE);
 		FOREACH_XMLNODE(snode, node, SAVE_BASES_BUILDING) {
 			/** @todo save it as vec2t if needed, also it's opposite */

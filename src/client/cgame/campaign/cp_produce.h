@@ -69,18 +69,18 @@ typedef struct production_s
 
 #define PR_IsDisassemblyData(data)	((data)->type == PRODUCTION_TYPE_DISASSEMBLY)
 #define PR_IsAircraftData(data)		((data)->type == PRODUCTION_TYPE_AIRCRAFT)
-#define PR_IsItemData(data)			((data)->type == PRODUCTION_TYPE_ITEM)
+#define PR_IsItemData(data)		((data)->type == PRODUCTION_TYPE_ITEM)
 #define PR_IsProductionData(data)	(!PR_IsDisassemblyData(data))
 
 #define PR_IsDisassembly(prod)		(PR_IsDisassemblyData(&(prod)->data))
-#define PR_IsAircraft(prod)			(PR_IsAircraftData(&(prod)->data))
-#define PR_IsItem(prod)				(PR_IsItemData(&(prod)->data))
+#define PR_IsAircraft(prod)		(PR_IsAircraftData(&(prod)->data))
+#define PR_IsItem(prod)			(PR_IsItemData(&(prod)->data))
 #define PR_IsProduction(prod)		(!PR_IsDisassembly(prod))
 
 #define PR_SetData(dataPtr, typeVal, ptr)  do { assert(ptr); (dataPtr)->data.pointer = (ptr); (dataPtr)->type = (typeVal); } while (0);
 #define PR_IsDataValid(dataPtr)	((dataPtr)->data.pointer != nullptr)
 
-#define PR_GetProgress(prod)	((double)(prod)->frame / (prod)->totalFrames)
+#define PR_GetProgress(prod)		((double)(prod)->frame / (prod)->totalFrames)
 #define PR_IsReady(prod)		((prod)->frame > (prod)->totalFrames)
 
 /**
@@ -89,8 +89,8 @@ typedef struct production_s
  */
 typedef struct production_queue_s
 {
-	int				numItems;		/**< The number of items in the queue. */
-	struct production_s	items[MAX_PRODUCTIONS];	/**< Actual production items (in order). */
+	int numItems;					/**< The number of items in the queue. */
+	struct production_s items[MAX_PRODUCTIONS];	/**< Actual production items (in order). */
 } production_queue_t;
 
 #define PR_GetProductionForBase(base) (&((base)->productions))
