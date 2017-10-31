@@ -464,6 +464,41 @@ static void B_BuildingSpace_f (void)
 	}
 }
 
+#define MAX_BUILDING_INFO_TEXT_LENGTH 512
+
+/**
+ * @brief Fills the Building info box with content
+ * @param[in] building The building to describe
+ */
+void B_FillBuildingInfo (const building_t* building)
+{
+	/* maybe someone call this command before the buildings are parsed?? */
+	if (!building)
+		return;
+
+	static char buildingText[MAX_BUILDING_INFO_TEXT_LENGTH];
+	buildingText[0] = '\0';
+	B_BuildingStatus(building);
+	Com_sprintf(buildingText, sizeof(buildingText), "%s\n", _(building->name));
+	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
+		Com_sprintf(buildingText, sizeof(buildingText), _("Costs:\t%i c\n"), building->fixCosts);
+	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION || building->buildingStatus == B_STATUS_NOT_SET)
+		Q_strcat(buildingText, sizeof(buildingText), ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime);
+	if (building->varCosts)
+		Q_strcat(buildingText, sizeof(buildingText), _("Running costs:\t%i c\n"), building->varCosts);
+	if (building->dependsBuilding)
+		Q_strcat(buildingText, sizeof(buildingText), _("Needs:\t%s\n"), _(building->dependsBuilding->name));
+	if (building->name)
+		cgi->Cvar_Set("mn_building_name", "%s", _(building->name));
+	if (building->image)
+		cgi->Cvar_Set("mn_building_image", "%s", building->image);
+	else
+		cgi->Cvar_Set("mn_building_image", "base/empty");
+
+	/* link into menu text array */
+	cgi->UI_RegisterText(TEXT_BUILDING_INFO, buildingText);
+}
+
 /**
  * @brief Update the building-list.
  * @sa B_BuildingInit_f
@@ -494,7 +529,7 @@ static void B_BuildingInit (base_t* base)
 			B_BuildingAddToList(&buildingList, tpl);
 	}
 	if (base->buildingCurrent)
-		B_DrawBuilding(base->buildingCurrent);
+		B_FillBuildingInfo(base->buildingCurrent);
 
 	buildingNumber = cgi->LIST_Count(buildingList);
 	cgi->UI_RegisterLinkedListText(TEXT_BUILDINGS, buildingList);
@@ -555,7 +590,7 @@ static void B_BuildingClick_f (void)
 	}
 
 	base->buildingCurrent = building;
-	B_DrawBuilding(building);
+	B_FillBuildingInfo(building);
 
 	/* Prevent building more if we reached the limit */
 	if (building->maxCount >= 0 && B_GetNumberOfBuildingsInBaseByTemplate(base, building) >= building->maxCount)

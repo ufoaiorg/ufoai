@@ -34,6 +34,7 @@
 #include "../../battlescape/cl_hud.h"
 #include "cp_mission_callbacks.h"
 #include "cp_save_callbacks.h"
+#include "cp_base_callbacks.h"
 
 const cgame_import_t* cgi;
 
@@ -534,7 +535,7 @@ void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 	if (key == K_MOUSE3) {
 		if (entry) {
 			assert(!B_IsTileBlocked(base, col, row));
-			B_DrawBuilding(entry);
+			B_FillBuildingInfo(entry);
 		}
 	} else if (key == K_MOUSE2) {
 		if (entry) {

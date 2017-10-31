@@ -210,10 +210,6 @@ void B_UpdateBaseCapacities(baseCapacities_t cap, base_t* base);
 baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
 void B_ResetAllStatusAndCapacities(base_t* base, bool firstEnable);
 
-/* menu functions */
-void B_BaseMenuInit(const base_t* base);
-void B_DrawBuilding(const building_t* building);
-
 /* antimatter */
 int B_AntimatterInBase(const base_t* base);
 int B_AddAntimatter(base_t* base, int amount);
