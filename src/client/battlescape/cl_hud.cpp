@@ -156,8 +156,9 @@ void HUD_UpdateActorStats (const le_t* le)
 		chr->name, le->HP, le->maxHP, le->TU, (item && item->def()) ? _(item->def()->name) : "");
 
 	const int idx = CL_ActorGetNumber(le);
-	UI_ExecuteConfunc("updateactorvalues %i \"%s\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%s\"",
-			idx, le->model2->name, le->headSkin, le->HP, le->maxHP, le->TU, le->maxTU, le->morale, le->maxMorale, le->STUN, tooltip);
+	const int reservedTUs = CL_ActorReservedTUs(le, RES_ALL_ACTIVE);
+	UI_ExecuteConfunc("updateactorvalues %i \"%s\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%s\"",
+			idx, le->model2->name, le->headSkin, le->HP, le->maxHP, le->TU, le->maxTU, le->morale, le->maxMorale, le->STUN, reservedTUs, tooltip);
 }
 
 /**

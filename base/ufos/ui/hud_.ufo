@@ -302,22 +302,23 @@ ufox.build_window {
 	{ class = "confunc", name = "show_physdat", on_click = dummy },
 
 	--[[
-	 * @param <1> the id of the soldier (starting at 0)
-	 * @param <2> the model path of the head model
-	 * @param <3> the skin for the head model
-	 * @param <4> the hp of the actor
-	 * @param <5> the max hp of the actor
-	 * @param <6> the tus of the actor
-	 * @param <7> the max tus of the actor
-	 * @param <8> the morale of the actor
-	 * @param <9> the max morale of the actor
-	 * @param <10> the stun value of the actor
-	 * @param <11> the tooltip
+	 * @param id the index of the soldier (starting at 0)
+	 * @param model the model path of the head model
+	 * @param skin the skin for the head model
+	 * @param hp the hp of the actor
+	 * @param hpmax the max hp of the actor
+	 * @param tu the tus of the actor
+	 * @param tumax the max tus of the actor
+	 * @param morale the morale of the actor
+	 * @param mormax the max morale of the actor
+	 * @param stun the stun value of the actor
+	 * @param reserved the reserved tus of the actor
+	 * @param tooltip the tooltip
 	--]]
 	{
 		class = "confunc",
 		name = "updateactorvalues",
-		on_click = function (sender, id, model, skin, hp, hpmax, tu, tumax, morale, mormax, stun, tooltip)
+		on_click = function (sender, id, model, skin, hp, hpmax, tu, tumax, morale, mormax, stun, reserved, tooltip)
 			ufo.getvar("mn_head" .. id):set_value(model)
 			ufo.getvar("mn_head_skin" .. id):set_value(skin)
 			ufo.getvar("mn_hp" .. id):set_value(hp)
@@ -327,6 +328,7 @@ ufox.build_window {
 			ufo.getvar("mn_morale" .. id):set_value(morale)
 			ufo.getvar("mn_moralemax" .. id):set_value(mormax)
 			ufo.getvar("mn_stun" .. id):set_value(stun)
+			ufo.getvar("mn_reserved" .. id):set_value(reserved)
 			ufo.getvar("mn_soldier" .. id .. "_tt"):set_value(tooltip)
 		end
 	},

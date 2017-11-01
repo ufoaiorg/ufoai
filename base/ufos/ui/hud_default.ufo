@@ -132,8 +132,8 @@ local hud_default_window = ufox.build_window{
 				{
 					class = "bar",
 					name = "stun",
-					pos = {0, 6},
-					size = {300, 8},
+					pos = {1, 6},
+					size = {398, 8},
 					color = {0.3, 0.3, 0.3, 0.9},
 					value = "*cvar:mn_stun",
 					max = "*cvar:mn_hpmax",
@@ -181,8 +181,8 @@ local hud_default_window = ufox.build_window{
 				{
 					class = "bar",
 					name = "tureserved",
-					pos = {0, 23},
-					size = {300, 8},
+					pos = {1, 23},
+					size = {398, 8},
 					color = {0, 0, 0, 0.3},
 					value = "*cvar:mn_tureserved",
 					max = "*cvar:mn_tumax",
@@ -757,22 +757,27 @@ local hud_default_window = ufox.build_window{
 			 - @param index number of the soldier starting from 0
 			--]]
 			select = function (this, index)
+				local node = this:child("bg")
 				local tt = ufo.getvar("mn_soldier" .. index .. "_tt"):as_string()
 				local name = tt:match("[^\r\n]+") .. "\n" .. tt:reverse():match("[^\r\n]+"):reverse()
-				this:child("bg"):child("actorname"):set_text(name)
-				this:child("bg"):child("head_bg"):child("head"):set_model("*cvar:mn_head" .. index)
-				this:child("bg"):child("head_bg"):child("head"):set_skin("*cvar:mn_head_skin" .. index)
-				this:child("bg"):child("tus"):set_text("*cvar:mn_tu" .. index)
-				this:child("bg"):child("timeall"):set_value("*cvar:mn_tu" .. index)
-				this:child("bg"):child("timeall"):set_max("*cvar:mn_tumax" .. index)
-				this:child("bg"):child("hp"):set_text("*cvar:mn_hp" .. index)
-				this:child("bg"):child("health"):set_value("*cvar:mn_hp" .. index)
-				this:child("bg"):child("health"):set_max("*cvar:mn_hpmax" .. index)
-				this:child("bg"):child("morale_text"):set_text("*cvar:mn_morale" .. index)
-				this:child("bg"):child("morale"):set_value("*cvar:mn_morale" .. index)
-				this:child("bg"):child("morale"):set_max("*cvar:mn_moralemax" .. index)
+				node:child("actorname"):set_text(name)
+				node:child("head_bg"):child("head"):set_model("*cvar:mn_head" .. index)
+				node:child("head_bg"):child("head"):set_skin("*cvar:mn_head_skin" .. index)
+				node:child("hp"):set_text("*cvar:mn_hp" .. index)
+				node:child("health"):set_value("*cvar:mn_hp" .. index)
+				node:child("health"):set_max("*cvar:mn_hpmax" .. index)
+				node:child("stun"):set_value("*cvar:mn_stun" .. index)
+				node:child("stun"):set_max("*cvar:mn_hpmax" .. index)
+				node:child("tus"):set_text("*cvar:mn_tu" .. index)
+				node:child("timeall"):set_value("*cvar:mn_tu" .. index)
+				node:child("timeall"):set_max("*cvar:mn_tumax" .. index)
+				node:child("reserved"):set_value("*cvar:mn_reserved" .. index)
+				node:child("reserved"):set_max("*cvar:mn_tumax" .. index)
+				node:child("morale_text"):set_text("*cvar:mn_morale" .. index)
+				node:child("morale"):set_value("*cvar:mn_morale" .. index)
+				node:child("morale"):set_max("*cvar:mn_moralemax" .. index)
 				this:child("cursor"):set_left(46 * index + 9)
-				this:root():child("soldier"):child("popup_soldier_hovered"):set_invisible(false)
+				this:set_invisible(false)
 			end,
 
 			{
@@ -824,13 +829,20 @@ local hud_default_window = ufox.build_window{
 					size = {298, 10},
 					source = "ui/bar_bg",
 				},
-
 				{
 					class = "bar",
 					name = "health",
 					pos = {150, 40},
 					size = {298, 10},
 					color = {0.1875, 0.65625, 0.164, 1},
+					readonly = true
+				},
+				{
+					class = "bar",
+					name = "stun",
+					pos = {151, 41},
+					size = {296, 8},
+					color = {0.3, 0.3, 0.3, 0.9},
 					readonly = true
 				},
 				{
@@ -861,6 +873,14 @@ local hud_default_window = ufox.build_window{
 					pos = {150, 55},
 					size = {298, 10},
 					color = {0.582, 0.808, 0.758, 1},
+					readonly = true
+				},
+				{
+					class = "bar",
+					name = "reserved",
+					pos = {151, 56},
+					size = {296, 8},
+					color = {0, 0, 0, 0.3},
 					readonly = true
 				},
 				{
