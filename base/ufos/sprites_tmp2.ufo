@@ -47,3 +47,31 @@ sprite ui/spinner_down {
 	clickedtexl "16 32"
 	disabledtexl "48 32"
 }
+
+// small checkbox
+sprite icons/checkbox_unchecked_sml {
+	image "banks/checkbox_sml"
+	size "11 11"
+	texl "0 0"
+	hoveredtexl "0 16"
+	clickedtexl "0 32"
+	disabledtexl "0 48"
+}
+
+sprite icons/checkbox_checked_sml {
+	image "banks/checkbox_sml"
+	size "11 11"
+	texl "16 0"
+	hoveredtexl "16 16"
+	clickedtexl "16 32"
+	disabledtexl "16 48"
+}
+
+sprite icons/checkbox_indeterminate_sml {
+	image "banks/checkbox_sml"
+	size "11 11"
+	texl "32 0"
+	hoveredtexl "32 16"
+	clickedtexl "32 32"
+	disabledtexl "32 48"
+}
