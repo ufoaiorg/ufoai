@@ -180,7 +180,12 @@ if(UFOAI_BUILD_UFO2MAP OR
    find_package(ZLIB)
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+# -std=c++11 is bugged on cygwin/mingw
+if(WIN32 AND MINGW)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+else()
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif()
 
 ###############################################################################
 # game
