@@ -1,663 +1,909 @@
-/*
- * @TODO:
- *   See here: http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=commit;h=6f98e6620c75363f51b7e736052ac80f9ac50b7a
- * - Production
- * - Add injured soldiers to employee count list
- * - Icons for UFOPaedia, kill alien (aliencontainment)
- * LATER IMPROVEMENTS:
- * - Build facility: make building preview appear below each option when clicked
- * - Build facility: make building capacity (+) buttons automatically select that building type
- * - Build facility: Make the add building button turn to a warning if it is
- *   too high/low (low is for antimatter only)
- * - Don't show progress bar in alien containment if alien is already researched
- */
+--!usr/bin/lua
 
-window bases
-{
-	{
-		fill		true
-		onWindowClosed { cmd "trans_emptyairstorage;" }
-	}
+--[[
+-- @file
+-- @brief base view screen
+--]]
 
-	// Left base panel
-	BaseContainerPanel base_container
-	{
-		// no mainBody here
-		panel mainBody
+--[[
+Copyright (C) 2002-2017 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+--[[
+ - @todo A lot of things here could be simplified
+ - @todo Separate the base section code to Lua includes
+ - @todo Finish missing feature OR remove the commented DEAD code
+ - @todo check these old feature requests
+	*   See here: http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=commit;h=6f98e6620c75363f51b7e736052ac80f9ac50b7a
+	* - Production
+	* - Add injured soldiers to employee count list
+	* - Icons for UFOPaedia, kill alien (aliencontainment)
+	* LATER IMPROVEMENTS:
+	* - Build facility: make building preview appear below each option when clicked
+	* - Build facility: make building capacity (+) buttons automatically select that building type
+	* - Build facility: Make the add building button turn to a warning if it is
+	*   too high/low (low is for antimatter only)
+	* - Don't show progress bar in alien containment if alien is already researched
+--]]
+
+require("ufox.lua")
+
+do
+	local baseWindow = ufox.build_window({
+		name = "bases",
+		class = "window",
+		fill = true,
+
+		-- Left base panel
 		{
-			invis true
-		}
+			name = "base_container",
+			class = "BaseContainerPanel",
 
-		// The base map
-		panel base_map_container
+			-- @todo Can we remove this?
+			{
+				name = "mainBody",
+				class = "panel",
+				invisible = true,
+			},
+
+			{
+				name = "base_map_container",
+				class = "panel",
+				pos = {4, 30},
+				size = {715, 670},
+				bordersize = 2,
+				bordercolor = {0.527, 0.6, 0.21, 1},
+
+				{
+					name = "thebasemap",
+					class = "basemap",
+					pos = {1, 1},
+					size = {715, 667},
+				},
+			},
+
+			-- Employee panel
+			-- @TODO: add support for injured soldiers
+			{
+				name = "cur_employees",
+				class = "panel",
+				pos = {0, 705},
+				size = {490, 48},
+				layout = ufo.LAYOUT_LEFT_RIGHT_FLOW,
+
+				{
+					name = "scientists",
+					class = "EmployeeCount",
+					tooltip = "_Scientists",
+
+					{ name = "label", class = "string", text = "_Scientists" },
+					{ name = "icon", class = "button", icon = "icons/head_scientist" },
+
+					on_click = function (sender)
+						-- @TODO ufo.push_window() doesn't support parameters
+						ufo.cmd("ui_push employees 1;")
+					end,
+				},
+				{
+					name = "engineers",
+					class = "EmployeeCount",
+					tooltip = "_Engineers",
+
+					{ name = "label", class = "string", text = "_Engineers" },
+					{ name = "icon", class = "button", icon = "icons/head_worker" },
+
+					on_click = function (sender)
+						-- @TODO ufo.push_window() doesn't support parameters
+						ufo.cmd("ui_push employees 2;")
+					end,
+				},
+				{
+					name = "soldiers",
+					class = "EmployeeCount",
+					tooltip = "_Soldiers",
+
+					{ name = "label", class = "string", text = "_Soldiers" },
+					{ name = "icon", class = "button", icon = "icons/head_soldier" },
+
+					on_click = function (sender)
+						-- @TODO ufo.push_window() doesn't support parameters
+						ufo.cmd("ui_push employees 0;")
+					end,
+				},
+				{
+					name = "pilots",
+					class = "EmployeeCount",
+					tooltip = "_Pilots",
+
+					{ name = "label", class = "string", text = "_Pilots" },
+					{ name = "icon", class = "button", icon = "icons/head_pilot" },
+
+					on_click = function (sender)
+						-- @TODO ufo.push_window() doesn't support parameters
+						ufo.cmd("ui_push employees 3;")
+					end,
+				},
+			},
+
+			-- Transfers, options, UFOpaedia
+			{
+				name = "buttons",
+				class = "panel",
+				pos = {551, 705},
+				size = {224, 48},
+				layout = ufo.LAYOUT_LEFT_RIGHT_FLOW,
+
+				{
+					name = "options",
+					class = "button",
+					size = {56, 48},
+					icon = "icons/options",
+					tooltip = "_Options",
+					background = "icons/circle0",
+
+					on_mouseenter = function (sender)
+						sender:set_background("icons/circle")
+					end,
+					on_mouseleave = function (sender)
+						sender:set_background("icons/circle0")
+					end,
+					on_click = function (sender)
+						ufo.push_window("options", nil, nil)
+					end,
+				},
+				{
+					name = "ufopaedia",
+					class = "button",
+					size = {56, 48},
+					icon = "icons/info",
+					tooltip = "_UFOpedia",
+					background = "icons/circle0",
+
+					on_mouseenter = function (sender)
+						sender:set_background("icons/circle")
+					end,
+					on_mouseleave = function (sender)
+						sender:set_background("icons/circle0")
+					end,
+					on_click = function (sender)
+						ufo.push_window("ufopedia", nil, nil)
+					end,
+				},
+				{
+					name = "transfers",
+					class = "button",
+					size = {56, 48},
+					icon = "icons/transfer",
+					tooltip = "_Transfer",
+					background = "icons/circle0",
+
+					on_mouseenter = function (sender)
+						sender:set_background("icons/circle")
+					end,
+					on_mouseleave = function (sender)
+						sender:set_background("icons/circle0")
+					end,
+					on_click = function (sender)
+						ufo.push_window("transfer", nil, nil)
+					end,
+				},
+			},
+		},
+
+		-- (right) main base sections
 		{
-			{
-				pos				"4 30"
-				size			"715 670"
-				border			"2"
-				bordercolor		"0.527 0.6 0.21 1"
-			}
-			basemap thebasemap
-			{
-				pos				"1 1"
-				size			"715 667"
-			}
-		}
+			name = "sections",
+			class = "panel",
+			pos = {726, 5},
+			size = {298, 758},
+			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+			layoutmargin = 2,
 
-		// Employee panel
-		// @TODO: add support for injured soldiers
-		panel cur_employees
-		{
 			{
-				pos		"0 705"
-				size	"490 48"
-				layout	LAYOUT_LEFT_RIGHT_FLOW
-			}
-			EmployeeCount scientists
-			{
-				{
-					tooltip	"_Scientists"
-					onClick { cmd "ui_push employees 1;" }
-				}
-				string label { string "_Scientists" }
-				button icon { icon "icons/head_scientist" }
-			}
-			EmployeeCount workers
-			{
-				{
-					tooltip	"_Engineers"
-					onClick { cmd "ui_push employees 2;" }
-				}
-				string label { string "_Engineers" }
-				button icon { icon "icons/head_worker" }
-			}
-			EmployeeCount soldiers
-			{
-				{
-					tooltip	"_Soldiers"
-					onClick { cmd "ui_push employees 0;" }
-				}
-				string label { string "_Soldiers" }
-				button icon { icon "icons/head_soldier" }
-			}
-			EmployeeCount pilots
-			{
-				{
-					tooltip	"_Pilots"
-					onClick	{ cmd "ui_push employees 3;" }
-				}
-				string label { string "_Pilots" }
-				button icon { icon "icons/head_pilot" }
-			}
-		}
+				name = "facilities",
+				class = "BaseSection",
 
-		// Transfers, options, UFOpaedia
-		panel buttons
-		{
-			{
-				pos	"551 705"
-				size	"224 48"
-				layout	LAYOUT_LEFT_RIGHT_FLOW
-			}
-			button options
-			{
-				size	"56 48"
-				icon		"icons/options"
-				tooltip		"_Options"
-				background	"icons/circle0"
-				onMouseEnter	{ *node:this@background = "icons/circle" }
-				onMouseLeave	{ *node:this@background = "icons/circle0" }
-				onClick			{ cmd "ui_push options;" }
-			}
-			button ufopaedia
-			{
-				size	"56 48"
-				icon		"icons/info"
-				tooltip		"_UFOpedia"
-				background	"icons/circle0"
-				onMouseEnter	{ *node:this@background = "icons/circle" }
-				onMouseLeave	{ *node:this@background = "icons/circle0" }
-				onClick			{ cmd "ui_push ufopedia;" }
-			}
-			button transfers
-			{
-				size	"56 48"
-				icon		"icons/transfer"
-				tooltip		"_Transfer"
-				background	"icons/circle0"
-				onMouseEnter	{ *node:this@background = "icons/circle" }
-				onMouseLeave	{ *node:this@background = "icons/circle0" }
-				onClick			{ cmd "ui_push transfer;" }
-			}
-		}
+				{ name = "label",  class = "string", text = "_Facilities", },
+				{ name = "icon",   class = "button", icon = "icons/facilities", },
+				{ name = "state",  class = "data",   value = "true", },
+				{ name = "height", class = "data",   value = 48, },
 
-	}
+				on_click = function (sender)
+					ufo.cmd(string.format("show_facility %q", sender:child("state"):as_string()))
+				end,
 
-	// Main base sections
-	panel sections
-	{
-		{
-			pos			"726 5"
-			size		"298 758"
-			layout		LAYOUT_TOP_DOWN_FLOW
-			layoutMargin	2
-		}
-		BaseSection facilities
-		{
-			{
-				onClick		{ cmd "show_facility <node:this.state@string>;" }
-			}
-			string label { string "_Facilities" }
-			button icon { icon "icons/facilities" }
-			data state { string "true" }
-			data height { integer 48 }
-
-			panel bld_panel
-			{
 				{
-					pos 			"0 48"
-					size 			"298 0"
-					layout			LAYOUT_TOP_DOWN_FLOW
-					layoutMargin	0
-				}
-				data height { integer 0 }
+					name = "bld_panel",
+					class = "panel",
+					pos = {0, 48},
+					size = {298, 0},
+					layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+					layoutmargin = 0,
 
-				// Current and maximum building capacity for buildings
-				// Shows living space, production, lab, storage, antimatter storage
-				// OR shows all when facilities tab is clicked on.
-				panel bld_space
-				{
+					{ name = "height", class = "data", value = 0, },
+
+					--[[
+					 - Current and maximum building capacity for buildings
+					 - Shows living space, production, lab, storage, antimatter storage
+					 - OR shows all when facilities tab is clicked on.
+					--]]
 					{
-						size			"298 0"
-						layout			LAYOUT_TOP_DOWN_FLOW
-						layoutMargin	0
-					}
-				}
-				// Preview of currently selected building
-				panel preview
+						name = "bld_space",
+						class = "panel",
+						size = {298, 0},
+						layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+						layoutmargin = 0,
+					},
+
+					-- Preview of currently selected building
+					{
+						name = "preview",
+						class = "panel",
+						size = {298, 185},
+
+						{
+							name = "bld_image",
+							class = "image",
+							image = "*cvar:mn_building_image",
+							keepratio = true,
+							pos = {29, 0},
+							size = {224, 90},
+							contentalign = ufo.ALIGN_UL,
+							ghost = true,
+						},
+
+						{
+							name = "info",
+							class = "text",
+							pos = {29, 100},
+							size = {224, 60},
+							lineheight = 15,
+							tabwidth = 140,
+							font = "f_verysmall",
+							color = {0.56, 0.81, 0.76, 1},
+							dataid = ufo.TEXT_BUILDING_INFO,
+							contentalign = ufo.ALIGN_UL,
+							ghost = true,
+						},
+
+						{
+							name = "status",
+							class = "string",
+							text = "*cvar:mn_building_status",
+							pos = {29, 160},
+							size = {224, 20},
+							font = "f_verysmall",
+							color = {0.56, 0.81, 0.76, 1},
+							contentalign = ufo.ALIGN_UL,
+							ghost = true,
+						},
+
+						on_click = function (sender)
+							ufo.cmd("building_ufopedia;")
+						end,
+					},
+				},
+
+				--[[
+				 - @brief Clear building space indicators in preparation for updating the list
+				--]]
 				{
-					{
-						size		"298 185"
-						onClick		{ cmd "building_ufopedia;" }
-					}
-					image bld_image
-					{
-						src				*cvar:mn_building_image
-						preventratio	true
-						pos				"29 0"
-						size			"224 90"
-						contentalign	ALIGN_UL
-						ghost			true
-					}
-					/*
-					button ufopedia
-					{
-						icon		"icons/bordered_magnifying_glass"
-						tooltip		"_UFOpaedia"
-						pos			"29 74"
-						size		"16 16"
-						ghost		true
-					}
-					*/
-					text info
-					{
-						pos				"29 100"
-						size			"224 60"
-						lineheight		15
-						tabwidth		140
-						font			"f_verysmall"
-						color			"0.56 0.81 0.76 1"
-						dataid			TEXT_BUILDING_INFO
-						rows			4
-						contentalign	ALIGN_UL
-						ghost			true
-					}
-					string status
-					{
-						string			*cvar:mn_building_status
-						pos				"29 160"
-						size			"224 20"
-						font			"f_verysmall"
-						color			"0.56 0.81 0.76 1"
-						contentalign	ALIGN_UL
-						ghost			true
-					}
-				}
-			}
+					name = "clear_bld_space",
+					class = "confunc",
 
-			/**
-			 * @brief Clear building space indicators in preparation for updating the list
-			 */
-			confunc clear_bld_space
-			{
-				call *node:parent.bld_panel.bld_space@removeAllChild
-				*node:parent.bld_panel.bld_space@size = "298 0"
-				*node:parent.bld_panel.bld_space@height = 0
-				*node:parent.bld_panel@size = "298 0"
-				*node:parent.bld_panel.height@integer = 0
-				*node:parent@size = "298 48"
-				*node:parent.height@integer = 48
-			}
+					on_click = function (sender)
+						local panel = sender:parent():child("bld_panel")
+						if (panel == nil) then
+							return
+						end
+						panel:child("bld_space"):remove_children()
+						panel:child("bld_space"):set_size(298, 0)
+						panel:set_size(298, 0)
+						panel:child("height"):set_value(0)
+						sender:parent():set_size(298, 0)
+						sender:parent():child("height"):set_value(0)
+					end,
+				},
 
-			/**
-			 * @brief Passes information on capacity for available buildings
-			 * @param <1> building name
-			 * @param <2> building id (building_lab, building_quarters, building_storage, etc.)
-			 * @param <3> currently used capacity
-			 * @param <4> actual max capacity
-			 * @param <5> number of buildings built of this type
-			 * @param <6> max number of buildings can be built from this type
-			 */
-			confunc show_bld_space
-			{
-				// Set the appropriate size of the panel
-				*node:parent.bld_panel.bld_space@height = (<node:parent.bld_panel.bld_space@height> + 30)
-				*node:parent.bld_panel.bld_space@size = "298 <node:parent.bld_panel.bld_space@height>"
-
-				// If showing a few facilities, don't show building preview panel
-				if (*node:parent.state@string eq "true") {
-					*node:parent.bld_panel.height@integer = <node:parent.bld_panel.bld_space@height>
-				// Show building preview panel for all facilities
-				} else {
-					*node:parent.bld_panel.height@integer = (<node:parent.bld_panel.bld_space@height> + 185)
-				}
-				// Expand parent panels appropriately
-				*node:parent.bld_panel@size = "298 <node:parent.bld_panel.height@integer>"
-				*node:parent.height@integer = (<node:parent.bld_panel.height@integer> + 48)
-				*node:parent@size = "298 <node:parent.height@integer>"
-
-				// Add the capacity bar
-				call *node:parent.bld_panel.bld_space@createChild ( "<2>", "BuildingSpace" )
-				*node:parent.bld_panel.bld_space.<2>.id@string = "<2>"
-				*node:parent.bld_panel.bld_space.<2>.smlicon@icon = "icons/<2>"
-				*node:parent.bld_panel.bld_space.<2>@tooltip = "<1>"
-				*node:parent.bld_panel.bld_space.<2>.label@string = "<1>"
-				*node:parent.bld_panel.bld_space.<2>.data_bar@current = <3>
-				*node:parent.bld_panel.bld_space.<2>.data_bar@max = <4>
-
-				// Only show the capacity string if max isn't 0
-				if (param4 ne 0) {
-					*node:parent.bld_panel.bld_space.<2>.data@string = <3>/<4>
-				} elif (param6 > 0) {
-					// Show current/max number of buildings of a type if limited
-					*node:parent.bld_panel.bld_space.<2>.data@string = <5>/<6>
-				}
-				// Show/Hide "add" building button
-				if (param5 == param6 ) {
-					*node:parent.bld_panel.bld_space.<2>.alert@invis = true
-				} else {
-					*node:parent.bld_panel.bld_space.<2>.alert@invis = false
-				}
-			}
-		}
-
-		BaseSection aircraft
-		{
-			{
-				onClick		{ call *node:this.funcClick }
-			}
-			string label { string "_Aircraft" }
-			button icon { icon "icons/aircraft" }
-			func funcClick { cmd "ui_push aircraft_equip;" }
-
-			// Aircraft added as child nodes to this panel
-			panel aircraft_list
-			{
+				--[[
+				 - @brief Passes information on capacity for available buildings
+				 - @param building_name building name
+				 - @param building_id building id (building_lab, building_quarters, building_storage, etc.)
+				 - @param cap_current currently used capacity
+				 - @param cap_max actual max capacity
+				 - @param build_current number of buildings built of this type
+				 - @param build_max max number of buildings can be built from this type
+				--]]
 				{
-					pos 			"29 48"
-					size 			"250 48"
-					invis			true
-					layout			LAYOUT_COLUMN
-					layoutColumns	5
-					layoutMargin	0
-				}
-			}
-		}
-		BaseSection soldiers
-		{
-			{
-				onClick		{ call *node:this.funcClick }
-			}
-			string label { string "_Soldiers" }
-			button icon { icon "icons/crouch" }
-			func funcClick { cmd "ui_push equipment -1;" }
-		}
-		BaseSection buysell
-		{
-			{
-				onClick		{ call *node:this.funcClick }
-			}
-			string label { string "_Market" }
-			button icon { icon "icons/market" }
-			func funcClick { cmd "ui_push market;" }
-		}
-		BaseSection research
-		{
-			{
-				onClick		{ call *node:this.funcClick }
-			}
-			string label { string "_Research" }
-			button icon { icon "icons/research" }
-			func funcClick { cmd "ui_push research;" }
+					name = "show_bld_space",
+					class = "confunc",
 
-			// Aircraft added as child nodes to this panel
-			panel research_list
+					on_click = function (sender, building_name, building_id, cap_current, cap_max, building_current, building_max)
+						local bld_space = sender:parent():child("bld_panel"):child("bld_space")
+						if (bld_space == nil) then
+							return
+						end
+						-- Set the appropriate size of the panel
+						bld_space:set_height(bld_space:height() + 30)
+						bld_space:set_width(298)
+						if (sender:parent():child("state"):as_string() == "true") then
+							-- If showing a few facilities, don't show building preview panel
+							bld_space:parent():child("height"):set_value(bld_space:height())
+						else
+							-- Show building preview panel for all facilities
+							bld_space:parent():child("height"):set_value(bld_space:height() + 185)
+						end
+						-- Expand parent panels appropriately
+						bld_space:parent():set_size(298, bld_space:parent():child("height"):as_integer())
+						sender:parent():child("height"):set_value(bld_space:parent():child("height"):as_integer() + 48)
+						sender:parent():set_size(298, sender:parent():child("height"):as_integer())
+						-- Add the capacity bar
+						local capacity_string = ""
+						if (cap_max + 0 > 0) then
+							-- Only show the capacity string if max isn't 0
+							capacity_string = cap_current .. "/" .. cap_max
+						elseif (building_max + 0 > 0) then
+							-- Show current/max number of buildings of a type if limited
+							capacity_string = building_current .. "/" .. building_max
+						end
+						local buildingSpace = ufox.build({
+							name = building_id,
+							class = "BuildingSpace",
+							tooltip = building_name,
+
+							{ name = "id",       class = "data",   value = building_id, },
+							{ name = "smlicon",  class = "button", icon = "icons/" .. building_id, },
+							{ name = "label",    class = "string", text = building_name, },
+							{ name = "data",     class = "string", text = capacity_string, },
+							{ name = "data_bar", class = "bar",    value = cap_current, max = cap_max, },
+							-- Show/Hide "add" building button
+							{ name = "alert",    class = "button", invisible = (building_current == building_max), },
+						}, bld_space)
+					end,
+				},
+			},
+
 			{
+				name = "aircraft",
+				class = "BaseSection",
+
+				{ name = "label",  class = "string", text = "_Aircraft", },
+				{ name = "icon",   class = "button", icon = "icons/aircraft", },
+
+				-- Aircraft added as child nodes to this panel
 				{
-					pos 			"29 48"
-					size 			"250 28"
-					layout			LAYOUT_TOP_DOWN_FLOW
-					layoutMargin	0
-					ghost			true
-				}
-			}
-		}
-		BaseSection production
-		{
-			{
-				onClick		{ call *node:this.funcClick }
-			}
-			string label { string "_Production" }
-			button icon { icon "icons/wrench" }
-			func funcClick { cmd "ui_push production;" }
+					name = "aircraft_list",
+					class = "panel",
+					pos = {29, 48},
+					size = {250, 48},
+					invisible = true,
+					layout = ufo.LAYOUT_COLUMN,
+					layoutcolumns = 5,
+					layoutmargin = 0,
+				},
 
-			// Production added as child nodes to this panel
-			panel production_list
+				funcClick = function (sender)
+					ufo.push_window("aircraft_equip", nil, nil)
+				end,
+
+				on_click = function (sender)
+					sender:funcClick()
+				end,
+			},
+
 			{
+				name = "soldiers",
+				class = "BaseSection",
+
+				{ name = "label",  class = "string", text = "_Soldiers", },
+				{ name = "icon",   class = "button", icon = "icons/crouch", },
+
+				funcClick = function (sender)
+					-- @TODO ufo.push_window() doesn't support parameters
+					ufo.cmd("ui_push equipment -1;")
+				end,
+
+				on_click = function (sender)
+					sender:funcClick()
+				end,
+			},
+
+
+			{
+				name = "buysell",
+				class = "BaseSection",
+
+				{ name = "label",  class = "string", text = "_Market", },
+				{ name = "icon",   class = "button", icon = "icons/market", },
+
+				funcClick = function (sender)
+					ufo.push_window("market", nil, nil)
+				end,
+
+				on_click = function (sender)
+					sender:funcClick()
+				end,
+			},
+
+			{
+				name = "research",
+				class = "BaseSection",
+
+				{ name = "label",  class = "string", text = "_Research", },
+				{ name = "icon",   class = "button", icon = "icons/research", },
+
 				{
-					pos 			"29 48"
-					size 			"250 28"
-					layout			LAYOUT_TOP_DOWN_FLOW
-					layoutMargin	0
-					ghost			true
+					name = "research_list",
+					class = "panel",
+					pos = {29, 48},
+					size = {250, 28},
+					layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+					layoutmargin = 0,
+					ghost = true,
+				},
+
+				funcClick = function (sender)
+					ufo.push_window("research", nil, nil)
+				end,
+
+				on_click = function (sender)
+					sender:funcClick()
+				end,
+			},
+
+			{
+				name = "production",
+				class = "BaseSection",
+
+				{ name = "label",  class = "string", text = "_Production", },
+				{ name = "icon",   class = "button", icon = "icons/wrench", },
+
+				-- Production added as child nodes to this panel
+				{
+					name = "production_list",
+					class = "panel",
+					pos = {29, 48},
+					size = {250, 28},
+					layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+					layoutmargin = 0,
+					ghost = true,
+				},
+
+				funcClick = function (sender)
+					ufo.push_window("production", nil, nil)
+				end,
+
+				on_click = function (sender)
+					sender:funcClick()
+				end,
+			},
+
+			{
+				name = "containment",
+				class = "BaseSection",
+
+				{ name = "label",  class = "string", text = "_Alien Containment", },
+				{ name = "icon",   class = "button", icon = "icons/aliens", },
+				{ name = "state",  class = "data",   value = "true", },
+
+				funcClick = function (sender)
+					ufo.push_window("aliencont", nil, nil)
+				end,
+
+				on_click = function (sender)
+					sender:funcClick()
+				end,
+			},
+
+			{
+				name = "hospital",
+				class = "BaseSection",
+
+				{ name = "label",  class = "string", text = "_Hospital", },
+				{ name = "icon",   class = "button", icon = "icons/hos_bed", },
+				{ name = "state",  class = "data",   value = "true", },
+
+				funcClick = function (sender)
+					ufo.push_window("hospital", nil, nil)
+				end,
+
+				on_click = function (sender)
+					sender:funcClick()
+				end,
+			},
+
+			-- Hide/show the other base sections
+			setOthersInvis = function (sender, status)
+				local sections = {
+					"aircraft",
+					"soldiers",
+					"buysell",
+					"research",
+					"production",
+					"containment",
+					"hospital",
 				}
-			}
-		}
-		BaseSection containment
+				for i, section in ipairs (sections) do
+					local node = sender:parent():child(section)
+					if (node ~= nil) then
+						node:set_invisible(status)
+					end
+				end
+			end,
+		},
+
+		-- Back to geoscape
 		{
-			{
-				onClick		{ call *node:this.funcClick }
-			}
-			string label { string "_Alien Containment" }
-			button icon { icon "icons/aliens" }
-			data state { string "true" }
-			func funcClick { cmd "ui_push aliencont;" }
-		}
+			name = "geoscape_button",
+			class = "Geoscape",
 
-		BaseSection hospital
+			on_click = function (sender)
+				ufo.pop_window(false)
+			end,
+		},
+
 		{
-			{
-				onClick		{ call *node:this.funcClick }
-			}
-			string label { string "_Hospital" }
-			button icon { icon "icons/hos_bed" }
-			data state { string "true" }
-			func funcClick { cmd "ui_push hospital;" }
-		}
+			name = "last_section",
+			class = "data",
+			value = "",
+		},
 
-		// Hide/show the other base sections
-		func setOthersInvis
 		{
-			*node:parent.aircraft@invis = <1>
-			*node:parent.soldiers@invis = <1>
-			*node:parent.buysell@invis = <1>
-			*node:parent.research@invis = <1>
-			*node:parent.production@invis = <1>
-			*node:parent.containment@invis = <1>
-			*node:parent.hospital@invis = <1>
-		}
-	}
+			name = "update_basebutton",
+			class = "confunc",
 
-	// Back to geoscape
-	Geoscape geoscape_button {
-		onClick { cmd "ui_pop;" }
-	}
+			--[[
+			 - @brief Used to enable/disable the overall base buttons
+			 - @param button
+			 - @param state
+			 - @param tooltip
+			 - @TODO: handle hospital/transfer
+			 - @TODO: some buttons don't have windows
+			 - @TODO: Check tooltips only show when disabled
+			--]]
+			on_click = function (sender, button, state, tooltip)
+				local section = ""
+				if (button == "hire") then
+					section = sender:parent():child("sections"):child("soldiers")
+				elseif (button == "transfer") then
+					return
+				else
+					section = sender:parent():child("sections"):child(button)
+				end
+				if (section == nil) then
+					return
+				end
 
-	data last_section { string "" }
-	/**
-	 * @brief Used to enable/disable the overall base buttons
-	 * @param <1> button
-	 * @param <2> state
-	 * @param <3> tooltip
-	 * @TODO: handle hospital/transfer
-	 * @TODO: some buttons don't have windows
-	 * @TODO: Check tooltips only show when disabled
-	 */
-	confunc update_basebutton
-	{
-		if (<2> eq "true") {
-			if (<1> eq "hire") {
-				*node:parent.sections.soldiers.bg@bgcolor = "1 1 1 0.2"
-				*node:parent.sections.soldiers@onMouseEnter = { }
-				*node:parent.sections.soldiers@onMouseLeave = { }
-				*node:parent.sections.soldiers@onClick = { }
-				*node:parent.sections.soldiers@tooltip = "<3>"
-				*node:parent.sections.soldiers@disabled = true
-			} elif (<1> eq "transfer") {
-			} else {
-				*node:parent.sections.<1>.bg@bgcolor = "1 1 1 0.2"
-				*node:parent.sections.<1>@onMouseEnter = { }
-				*node:parent.sections.<1>@onMouseLeave = { }
-				*node:parent.sections.<1>@onClick = { }
-				*node:parent.sections.<1>@tooltip = "<3>"
-				*node:parent.sections.<1>@disabled = true
-			}
-		} else {
-			if (<1> eq "hire") {
-				*node:parent.sections.soldiers.bg@bgcolor = "0.527 0.6 0.21 0.2"
-				*node:parent.sections.soldiers@onMouseEnter = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.4" *node:this.icon@background = "icons/circle" }
-				*node:parent.sections.soldiers@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
-				*node:parent.sections.soldiers@onClick = { call *node:this.funcClick }
-				*node:parent.sections.soldiers@tooltip = ""
-				*node:parent.sections.soldiers@disabled = false
-			} elif (<1> eq "transfer") {
-			} else {
-				*node:parent.sections.<1>.bg@bgcolor = "0.527 0.6 0.21 0.2"
-				*node:parent.sections.<1>@onMouseEnter = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.4" *node:this.icon@background = "icons/circle" }
-				*node:parent.sections.<1>@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
-				*node:parent.sections.<1>@tooltip = ""
-				*node:parent.sections.<1>@disabled = false
-				*node:parent.sections.<1>@onClick = { call *node:this.funcClick }
-			}
-		}
-	}
+				if (state == "true") then
+					section.on_mouseenter = function (sender) end
+					section.on_mouseleave = function (sender) end
+					section.on_click = function (sender) end
+					section:set_tooltip(tooltip)
+					section:set_disabled(true)
+					section:child("bg"):set_backgroundcolor(1, 1, 1, 0.2)
+				else
+					section.on_mouseenter = function (sender)
+						sender:child("bg"):set_color(0.527, 0.6, 0.21, 0.4)
+						sender:child("icon"):set_background("icons/circle")
+					end
+					section.on_mouseleave = function (sender)
+						sender:child("bg"):set_color(0.527, 0.6, 0.21, 0.2)
+						sender:child("icon"):set_background("icons/circle0")
+					end
+					section.on_click = function (sender)
+						sender:funcClick()
+					end
+					section:set_tooltip("")
+					section:set_disabled(false)
+					section:child("bg"):set_backgroundcolor(0.527, 0.6, 0.21, 0.2)
+				end
+			end,
+		},
 
-	/**
-	 * @brief Show the facilities panel
-	 * @param <1> true (show) or false (hide)
-	 */
-	confunc show_facility
-	{
-		if (<1> eq "true") {
-			// Show capacity for all base buildings
-			cmd "base_building_space;"
+		{
+			name = "show_facility",
+			class = "confunc",
 
-			// Set the state for subsequent clicks
-			*node:parent.sections.facilities.state@string = "false"
-		} else {
-			// Resets list selection
-			cmd "reset_building_current 0;"
+			--[[
+			 - @brief Show the facilities panel
+			 - @param status @c true (show) or @c false (hide)
+			--]]
+			on_click = function (sender, status)
+				if (status == "true") then
+					-- Show capacity for all base buildings
+					ufo.cmd("base_building_space;")
+					-- Set the state for subsequent clicks
+					sender:parent():child("sections"):child("facilities"):child("state"):set_value("false")
+				else
+					-- Resets list selection
+					ufo.cmd("reset_building_current 0;")
+					-- Set the state/invis for subsequent clicks
+					sender:parent():child("sections"):child("facilities"):child("state"):set_value("true")
+					-- Show capacity for just main base buildings
+					ufo.cmd("base_init;")
+				end
+				ufo.getvar("mn_building_status", ""):set_value("")
+				ufo.getvar("mn_building_image", ""):set_value("")
+				-- Hide/show the other base sections
+				sender:parent():child("sections"):setOthersInvis(status)
+			end,
+		},
 
-			// Set the state/invis for subsequent clicks
-			*node:parent.sections.facilities.state@string = "true"
+		{
+			name = "current_employees",
+			class = "confunc",
 
-			// Show capacity for just main base buildings
-			cmd "base_init;"
-		}
-		*cvar:mn_building_status = ""
-		*cvar:mn_building_image = ""
+			--[[
+			 - @brief Current employees of a particular base
+			 - @param soldiers Number of soldiers
+			 - @param pilots Number of pilots
+			 - @param scientists Number of scientists
+			 - @param engineers Number of engineers
+			--]]
+			on_click = function (sender, soldiers, pilots, scientists, engineers)
+				local employee_container = sender:parent():child("base_container"):child("cur_employees")
+				employee_container:child("soldiers"):child("data"):set_text(soldiers)
+				employee_container:child("pilots"):child("data"):set_text(pilots)
+				employee_container:child("scientists"):child("data"):set_text(scientists)
+				employee_container:child("engineers"):child("data"):set_text(engineers)
+			end,
+		},
 
-		// Hide/show the other base sections
-		call *node:parent.sections.setOthersInvis(<1>)
-	}
+		{
+			name = "restore_base_state",
+			class = "confunc",
 
-	/**
-	 * @brief Current employees of a particular base
-	 * @param <1> number of soldiers
-	 * @param <2> number of pilots
-	 * @param <3> number of scientists
-	 * @param <4> number of workers
-	 */
-	confunc current_employees
-	{
-		*node:parent.base_container.cur_employees.soldiers.data@string = "<1>"
-		*node:parent.base_container.cur_employees.pilots.data@string = "<2>"
-		*node:parent.base_container.cur_employees.scientists.data@string = "<3>"
-		*node:parent.base_container.cur_employees.workers.data@string = "<4>"
-	}
+			on_click = function (sender)
+				if (sender:parent():child("sections"):child("facilities"):child("state"):as_string() == "false") then
+					ufo.cmd("base_building_space;")
+				end
+			end,
+		},
 
-	confunc restore_base_state {
-		if ( *node:parent.sections.facilities.state@string eq "false" ) {
-			cmd "base_building_space;"
-		}
-	}
+		{
+			name = "clear_aircraft",
+			class = "confunc",
 
-	/**
-	 * @brief Clears the list of aircraft in the base view that was filled by @c show_aircraft
-	 */
-	confunc clear_aircraft {
-		*node:root.aircraft_count@integer = 0
-		*node:parent.sections.aircraft@size	= "298 48"
-		*node:parent.sections.aircraft.aircraft_list@invis = true
-		call *node:parent.sections.aircraft.aircraft_list@removeAllChild
-	}
+			--[[
+			 - @brief Clears the list of aircraft in the base view that was filled by @c show_aircraft
+			--]]
+			on_click = function (sender)
+				sender:root():child("aircraft_count"):set_value(0)
+				sender:parent():child("sections"):child("aircraft"):set_size(298, 48)
+				sender:parent():child("sections"):child("aircraft"):child("aircraft_list"):set_invisible(true)
+				sender:parent():child("sections"):child("aircraft"):child("aircraft_list"):remove_children()
+			end,
+		},
 
-	/**
-	 * @brief The amount of aircraft that are currently visibile in the base view
-	 */
-	data aircraft_count
-	{
-		integer 0
-	}
+		--[[
+		 - @brief The amount of aircraft that are currently visibile in the base view
+		--]]
+		{
+			name = "aircraft_count",
+			class = "data",
+			value = 0,
+		},
 
-	/*
-	 * @brief Show the base's aircraft
-	 * @param <1> id global aircraft idx
-	 * @param <2> name
-	 * @param <3> aircraft type
-	 * @param <4> status
-	 * @param <5> aircraft in base?
-	 */
-	confunc show_aircraft
-	{
-		if ( *node:root.aircraft_count@integer < 5 ) {
-			*node:parent.sections.aircraft@size	= "298 96"
-			call *node:parent.sections.aircraft.aircraft_list@createChild("<1>", "AircraftIcon")
-			*node:parent.sections.aircraft.aircraft_list.<1>.icon@tooltip = "<2> (<4>)"
-			if (<5> eq 1) {
-				*node:parent.sections.aircraft.aircraft_list.<1>.icon@icon = "icons/<3>"
-			} else {
-				*node:parent.sections.aircraft.aircraft_list.<1>.icon@icon = "icons/<3>_off"
-			}
-			*node:parent.sections.aircraft.aircraft_list.<1>.aircraft_id@string = <node:root.aircraft_count@integer>
-			*node:parent.sections.aircraft.aircraft_list.<1>.icon@onClick = { cmd "ui_push aircraft_equip \"<node:parent.aircraft_id@string>\";" }
-			*node:parent.sections.aircraft.aircraft_list@invis = false
-			/*
-			THEN ADD THIS TO AIRCRAFT onWindowOpened
-			if (<1> ne "") {
-				*cvar:mn_aircraft_id = <1>
-				cmd "ui_aircraft_select \"<1>\";"
-			}
-			*/
-		}
-		*node:root.aircraft_count@integer = ( *node:root.aircraft_count@integer + 1 )
-	}
+		{
+			name = "show_aircraft",
+			class = "confunc",
 
-	/**
-	 * @brief Show a research item in the base overview (not used in default UI)
-	 * @param <1> id
-	 * @param <2> name
-	 * @param <3> number of scientists working on it
-	 * @param <4> percent complete
-	 */
-	confunc clear_research
-	{
-		*node:parent.sections.research@size	= "298 48"
-		call *node:parent.sections.research.research_list@removeAllChild
-	}
-	confunc show_research
-	{
-		*node:parent.sections.research@size	= "298 80"
-		call *node:parent.sections.research.research_list@createChild("<1>", "ProgressBar")
-		*node:parent.sections.research.research_list.<1>.label@string = _<2>
-		*node:parent.sections.research.research_list.<1>.data_bar@current = <4>
-	}
+			--[[
+			 - @brief Show the base's aircraft
+			 - @param aircraft_idx id global aircraft idx
+			 - @param aircraft_name Name of the aircraft
+			 - @param aircraft_type Aircraft type
+			 - @param aircraft_status aircraft status
+			 - @param aircraft_in_base if the aircraft is in the base
+			--]]
+			on_click = function (sender, aircraft_idx, aircraft_name, aircraft_type, aircraft_status, aircraft_in_base)
+				local aircraft_count = sender:root():child("aircraft_count")
+				aircraft_count:set_value(aircraft_count:as_integer() + 1)
+				-- Can't show more than 5 yet
+				if (aircraft_count:as_integer() > 5) then
+					return
+				end
 
-	/*
-	 * @brief Show the production item closest to completion in the base overview (not used in default UI)
-	 * @param <1> id
-	 * @param <2> name
-	 * @param <3> percent complete
-	 */
-	confunc clear_production
-	{
-		*node:parent.sections.production@size	= "298 48"
-		call *node:parent.sections.production.production_list@removeAllChild
-	}
-	confunc show_production
-	{
-		*node:parent.sections.production@size	= "298 80"
-		call *node:parent.sections.production.production_list@createChild("<1>", "ProgressBar")
-		*node:parent.sections.production.production_list.<1>.label@string = _<2>
-		*node:parent.sections.production.production_list.<1>.data_bar@current = <3>
-	}
+				local section = sender:parent():child("sections"):child("aircraft")
+				local aircraft_icon = "icons/" .. aircraft_type
+				if (aircraft_in_base ~= "1") then
+					aircraft_icon = aircraft_icon .. "_off"
+				end
+				section:set_size(298, 96)
+				local aircraft = ufox.build({
+					name = "aircraft_" .. aircraft_idx,
+					class = "AircraftIcon",
 
-	confunc restore_section
-	{
-		if ((exists *node:parent.sections.<1>) && (*node:parent.sections.<1>@disabled != true)) {
-			call *node:parent.sections.<1>@funcClick
-		} elif ((<1> eq "hire") && (*node:parent.sections.soldiers@disabled != true)) {
-			cmd "ui_push employees <cvar:mn_hiretype>;"
-		}
-	}
+					{ name = "aircraft_id", class = "data", value = (aircraft_count:as_integer() - 1), },
+					{
+						name = "icon",
+						class = "button",
+						tooltip = string.format("%s (%s)", aircraft_name, aircraft_status),
+						icon = aircraft_icon,
 
-	confunc base_next_s
-	{
-		cmd "ui_pop;mn_base_next;"
-		*node:parent.last_section@string = "<1>"
-	}
+						on_click = function (sender)
+							-- @TODO ufo.push_window() doesn't support parameters
+							ufo.cmd(string.format("ui_push aircraft_equip %q;", sender:parent():child("aircraft_id"):as_integer()))
+						end,
+					},
+				}, section:child("aircraft_list"))
 
-	confunc base_prev_s
-	{
-		cmd "ui_pop;mn_base_prev;"
-		*node:parent.last_section@string = "<1>"
-	}
+				section:child("aircraft_list"):set_invisible(false)
+				--[[
+					@todo is this useful? (dead code copied as-is)
+					THEN ADD THIS TO AIRCRAFT onWindowOpened
+					if (<1> ne "") {
+						*cvar:mn_aircraft_id = <1>
+						cmd "ui_aircraft_select \"<1>\";"
+					}
+				--]]
+			end,
+		},
 
-	confunc base_select_s
-	{
-		cmd "ui_pop;mn_base_select <1>;"
-		*node:parent.last_section@string = "<2>"
-	}
+		{
+			name = "clear_research",
+			class = "confunc",
 
-	/**
-	 * @brief Reset base status/display info when the player switches to a new base
-	 * or comes back from another window
-	 */
-	func reset_base
-	{
-		cmd "show_facility false;"
-	}
+			on_click = function (sender)
+				sender:parent():child("sections"):child("research"):set_size(298, 48)
+				sender:parent():child("sections"):child("research"):child("research_list"):remove_children()
+			end,
+		},
 
-	// Fuzzy screen effect (see assets.ufo)
-	fuzzyScreen overlay { }
+		{
+			name = "show_research",
+			class = "confunc",
 
-	func onWindowActivate
-	{
-		call *node:root.onWindowOpened
-	}
+			--[[
+			 - @brief Show a research item in the base overview (not used in default UI)
+			 - @param research_id
+			 - @param research_title
+			 - @param scientists Number of scientists working on it
+			 - @param completition Percent of completition
+			--]]
+			on_click = function (sender, research_id, research_title, scientists, completition)
+				sender:parent():child("sections"):child("research"):set_size(298, 80)
+				local research = ufox.build({
+					name = research_id,
+					class = "ProgressBar",
 
-	func onWindowOpened
-	{
-		// Get the parameters needed for this window
-		cmd "base_init;"
+					{ name = "label",    class = "string", text  = "_" .. research_title, },
+					{ name = "data_bar", class = "bar",    value = completition},
+				}, sender:parent():child("sections"):child("research"):child("research_list"))
+			end,
+		},
 
-		// Close all panels and reset base to default position
-		call *node:root.reset_base
+		{
+			name = "clear_production",
+			class = "confunc",
 
-		// Try to restore the last base section opened
-		if (*node:root.last_section@string ne "") {
-			cmd "restore_section <node:root.last_section@string>;"
-			*node:root.last_section@string = ""
-		}
-	}
-}
+			on_click = function (sender)
+				sender:parent():child("sections"):child("production"):set_size(298, 48)
+				sender:parent():child("sections"):child("production"):child("production_list"):remove_children()
+			end,
+		},
+
+		{
+			name = "show_production",
+			class = "confunc",
+
+			--[[
+			 - @brief Show the production item closest to completion in the base overview (not used in default UI)
+			 - @param production_idx
+			 - @param item_name
+			 - @param completition
+			--]]
+			on_click = function (sender, production_idx, item_name, completition)
+				sender:parent():child("sections"):child("production"):set_size(298, 80)
+				local production = ufox.build({
+					name = "production_" .. production_idx,
+					class = "ProgressBar",
+
+					{ name = "label",    class = "string", text  = "_" .. item_name, },
+					{ name = "data_bar", class = "bar",    value = completition},
+				}, sender:parent():child("sections"):child("production"):child("production_list"))
+			end,
+		},
+
+		{
+			name = "restore_section",
+			class = "confunc",
+
+			on_click = function (sender, section_name)
+				local section = sender:parent():child("sections"):child(section_name)
+				if (section ~= nil and section:is_disabled() ~= true) then
+					section:funcClick()
+				elseif (section_name == "hire" and section:is_disabled() ~= true) then
+					local employee_type = ufo.getvar("mn_hiretype")
+					-- @TODO ufo.push_window() doesn't support parameters
+					ufo.cmd(string.format("ui_push employees %q;", employee_type:as_string()))
+				end
+			end,
+		},
+
+		{
+			name = "base_next_s",
+			class = "confunc",
+
+			on_click = function (sender, last_section)
+				ufo.pop_window(false)
+				ufo.cmd("mn_base_next;")
+				sender:parent():child("last_section"):set_value(last_section)
+			end,
+		},
+
+		{
+			name = "base_prev_s",
+			class = "confunc",
+
+			on_click = function (sender, last_section)
+				ufo.pop_window(false)
+				ufo.cmd("mn_base_prev;")
+				sender:parent():child("last_section"):set_value(last_section)
+			end,
+		},
+
+		{
+			name = "base_select_s",
+			class = "confunc",
+
+			on_click = function (sender, base_idx, last_section)
+				ufo.pop_window(false)
+				ufo.cmd(string.format("mn_base_select %d;", base_idx))
+				sender:parent():child("last_section"):set_value(last_section)
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+		--[[
+		 - @brief Reset base status/display info when the player switches to a new base
+		 -        or comes back from another window
+		--]]
+		reset_base = function (sender)
+			ufo.cmd("show_facility false;")
+		end,
+
+		on_activate = function (sender)
+			sender:root().on_windowopened(sender:root())
+		end,
+
+		on_windowopened = function (sender)
+			-- Get the parameters needed for this window
+			ufo.cmd("base_init;")
+			-- Close all panels and reset base to default position
+			sender:root():reset_base()
+			-- Try to restore the last base section opened
+			local last_section = sender:root():child("last_section")
+			if (last_Section == nil) then
+				return
+			end
+			if (last_section:as_string() ~= "") then
+				ufo.cmd(string.format("restore_section %s;", last_section:as_string()))
+				last_section:set_value("")
+			end
+		end,
+
+		on_windowclosed = function (sender)
+			ufo.cmd("trans_emptyairstorage;")
+		end,
+	})
+end
