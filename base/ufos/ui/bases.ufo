@@ -259,7 +259,7 @@ do
 						{
 							name = "bld_image",
 							class = "image",
-							image = "*cvar:mn_building_image",
+							source = "*cvar:mn_building_image",
 							keepratio = true,
 							pos = {29, 0},
 							size = {224, 90},
