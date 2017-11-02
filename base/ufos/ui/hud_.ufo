@@ -209,7 +209,7 @@ ufox.build_window {
 	{
 		class = "confunc",
 		name = "huddisable",
-		on_click = function (sender, number) ufo.cmd('updateactorvalues ' .. number .. ' "" "0" "1" "0" "1" "0" "1" "0" "";') end
+		on_click = function (sender, number) ufo.cmd('updateactorvalues ' .. number .. ' "" "0" "0" "1" "0" "1" "0" "1" "0" "0" "";') end
 	},
 
 	{ class = "confunc", name = "deselect_primaryleft", on_click = dummy },

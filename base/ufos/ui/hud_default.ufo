@@ -1726,7 +1726,7 @@ local hud_default_window = ufox.build_window{
 		class = "confunc",
 		name = "huddisable",
 		on_click = function (this, number)
-			ufo.cmd('updateactorvalues ' .. number .. ' "" "0" "0" "1" "0" "1" "0" "1" "";')
+			ufo.cmd('updateactorvalues ' .. number .. ' "" "0" "0" "1" "0" "1" "0" "1" "0" "0" "";')
 			local node = this:root():child ("soldier"):child("squad"):child("sld" .. number)
 			node:set_backgroundcolor(1, 0, 0, 0.1)
 			node:set_ghost(true)
