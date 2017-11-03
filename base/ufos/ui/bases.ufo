@@ -413,28 +413,10 @@ do
 				end,
 			},
 
-			{
-				name = "soldiers",
-				class = "BaseSection",
-
-				{ name = "label",  class = "string", text = "_Soldiers", },
-				{ name = "icon",   class = "button", icon = "icons/crouch", },
-
-				funcClick = function (sender)
-					-- @TODO ufo.push_window() doesn't support parameters
-					ufo.cmd("ui_push equipment -1;")
-				end,
-
-				on_click = function (sender)
-					sender:funcClick()
-				end,
-			},
-
 			-- Hide/show the other base sections
 			setOthersInvis = function (sender, status)
 				local sections = {
 					"aircraft",
-					"soldiers",
 				}
 				for i, section in ipairs (sections) do
 					local node = sender:parent():child(section)
@@ -477,7 +459,7 @@ do
 			on_click = function (sender, button, state, tooltip)
 				local section = ""
 				-- new-style sections
-				local sections = {"buysell", "research", "production", "containment", "hospital"}
+				local sections = {"hire", "buysell", "research", "production", "containment", "hospital"}
 				for i, section in ipairs(sections) do
 					if (button == section) then
 						if (state == "true") then
@@ -490,9 +472,7 @@ do
 				end
 
 				-- old-school sections
-				if (button == "hire") then
-					section = sender:parent():child("sections"):child("soldiers")
-				elseif (button == "transfer") then
+				if (button == "transfer") then
 					return
 				else
 					section = sender:parent():child("sections"):child(button)
@@ -736,11 +716,13 @@ do
 		end,
 
 		generate_sections = function (sender, base_idx)
-			local sections = {"buysell", "research", "production", "containment", "hospital"}
+			local sections = {"hire", "buysell", "research", "production", "containment", "hospital"}
 			for i, section in ipairs(sections) do
 				require(string.format("base.%s.lua", section))
 				base[section].register(sender:root():child("sections"), tonumber(base_idx))
 			end
+			-- Get the parameters needed for this window
+			ufo.cmd("base_init;")
 		end,
 
 		on_windowactivate = function (sender)
@@ -756,11 +738,8 @@ do
 			-- generate base sections
 			sender:root().generate_sections(sender:root(), sender:root():child("base_idx"):as_string())
 
-			-- Get the parameters needed for this window
-			ufo.cmd("base_init;")
 			-- Close all panels and reset base to default position
 			sender:root():reset_base()
-
 
 			-- Try to restore the last base section opened
 			local last_section = sender:root():child("last_section")
