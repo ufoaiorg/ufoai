@@ -1311,8 +1311,10 @@ struct uiWindowNode_t: uiNode_t {
 	void set_dropdown (bool value) { UI_EXTRADATA($self, windowExtraData_t).dropdown = value; };
 
 	%rename (on_windowopened) lua_onWindowOpened;
+	%rename (on_windowactivate) lua_onWindowActivate;
 	%rename (on_windowclosed) lua_onWindowClosed;
 	LUA_EVENT lua_onWindowOpened; /**< references the event in lua: on_loaded (node) */
+	LUA_EVENT lua_onWindowActivate; /**< references the event in lua: on_windowactivated (node) */
 	LUA_EVENT lua_onWindowClosed; /**< references the event in lua: on_activate (node) */
 };
 /*
@@ -1325,6 +1327,12 @@ static LUA_EVENT uiWindowNode_t_lua_onWindowOpened_get(uiWindowNode_t* node) {
 }
 static void uiWindowNode_t_lua_onWindowOpened_set (uiWindowNode_t* node, LUA_EVENT fn) {
 	UI_EXTRADATA(node, windowExtraData_t).lua_onWindowOpened = fn;
+}
+static LUA_EVENT uiWindowNode_t_lua_onWindowActivate_get(uiWindowNode_t* node) {
+	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowActivate;
+}
+static void uiWindowNode_t_lua_onWindowActivate_set (uiWindowNode_t* node, LUA_EVENT fn) {
+	UI_EXTRADATA(node, windowExtraData_t).lua_onWindowActivate = fn;
 }
 static LUA_EVENT uiWindowNode_t_lua_onWindowClosed_get(uiWindowNode_t* node) {
 	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowClosed;

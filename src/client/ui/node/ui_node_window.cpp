@@ -266,8 +266,12 @@ void uiWindowNode::onWindowActivate (uiNode_t* node)
 	uiLocatedNode::onWindowActivate(node);
 
 	/* script callback */
-	if (EXTRADATA(node).onWindowActivate)
+	if (EXTRADATA(node).onWindowActivate) {
 		UI_ExecuteEventActions(node, EXTRADATA(node).onWindowActivate);
+	}
+	if (EXTRADATA(node).lua_onWindowActivate != LUA_NOREF) {
+		UI_ExecuteLuaEventScript(node, EXTRADATA(node).lua_onWindowActivate);
+	}
 }
 
 void uiWindowNode::onSizeChanged(uiNode_t* node) {

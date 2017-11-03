@@ -3251,6 +3251,12 @@ static LUA_EVENT uiWindowNode_t_lua_onWindowOpened_get(uiWindowNode_t* node) {
 static void uiWindowNode_t_lua_onWindowOpened_set (uiWindowNode_t* node, LUA_EVENT fn) {
 	UI_EXTRADATA(node, windowExtraData_t).lua_onWindowOpened = fn;
 }
+static LUA_EVENT uiWindowNode_t_lua_onWindowActivate_get(uiWindowNode_t* node) {
+	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowActivate;
+}
+static void uiWindowNode_t_lua_onWindowActivate_set (uiWindowNode_t* node, LUA_EVENT fn) {
+	UI_EXTRADATA(node, windowExtraData_t).lua_onWindowActivate = fn;
+}
 static LUA_EVENT uiWindowNode_t_lua_onWindowClosed_get(uiWindowNode_t* node) {
 	return UI_EXTRADATA(node, windowExtraData_t).lua_onWindowClosed;
 }
@@ -16430,6 +16436,60 @@ fail:
 }
 
 
+static int _wrap_uiWindow_on_windowactivate_set(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
+  LUA_EVENT arg2 ;
+
+  SWIG_check_num_args("uiWindowNode_t::lua_onWindowActivate",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindowNode_t::lua_onWindowActivate",1,"uiWindowNode_t *");
+
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindowNode_t,0))){
+    SWIG_fail_ptr("uiWindow_on_windowactivate_set",1,SWIGTYPE_p_uiWindowNode_t);
+  }
+
+  {
+    arg2 = (LUA_EVENT)luaL_ref (L, LUA_REGISTRYINDEX);
+  }
+  uiWindowNode_t_lua_onWindowActivate_set(arg1,arg2);
+
+  return SWIG_arg;
+
+  if(0) SWIG_fail;
+
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiWindow_on_windowactivate_get(lua_State* L) {
+  int SWIG_arg = 0;
+  uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
+  LUA_EVENT result;
+
+  SWIG_check_num_args("uiWindowNode_t::lua_onWindowActivate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiWindowNode_t::lua_onWindowActivate",1,"uiWindowNode_t *");
+
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiWindowNode_t,0))){
+    SWIG_fail_ptr("uiWindow_on_windowactivate_get",1,SWIGTYPE_p_uiWindowNode_t);
+  }
+
+  result = uiWindowNode_t_lua_onWindowActivate_get(arg1);
+  {
+    LUA_EVENT * resultptr = new LUA_EVENT((const LUA_EVENT &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_LUA_EVENT,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+
+  if(0) SWIG_fail;
+
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiWindow_on_windowclosed_set(lua_State* L) {
   int SWIG_arg = 0;
   uiWindowNode_t *arg1 = (uiWindowNode_t *) 0 ;
@@ -16515,6 +16575,7 @@ static int _proxy__wrap_new_uiWindow(lua_State *L) {
 }
 static swig_lua_attribute swig_uiWindow_attributes[] = {
     { "on_windowopened", _wrap_uiWindow_on_windowopened_get, _wrap_uiWindow_on_windowopened_set },
+    { "on_windowactivate", _wrap_uiWindow_on_windowactivate_get, _wrap_uiWindow_on_windowactivate_set },
     { "on_windowclosed", _wrap_uiWindow_on_windowclosed_get, _wrap_uiWindow_on_windowclosed_set },
     {0,0,0}
 };
