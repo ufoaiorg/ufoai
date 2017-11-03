@@ -412,16 +412,6 @@ static void B_BaseInit_f (void)
 			cgi->UI_ExecuteConfunc("show_research %s \"%s\" %i %3.0f", closestTech->id, closestTech->name, closestTech->scientists, finished);
 	}
 
-	/* Get the production item closest to completion in the base if it exists */
-	cgi->UI_ExecuteConfunc("clear_production");
-	if (PR_ProductionAllowed(base)) {
-		const production_queue_t* queue = PR_GetProductionForBase(base);
-		if (queue->numItems > 0) {
-			const production_t* production = &queue->items[0];
-			cgi->UI_ExecuteConfunc("show_production %i \"%s\" %3.0f", production->idx, PR_GetName(&production->data), PR_GetProgress(production) * 100);
-		}
-	}
-
 	cgi->UI_ExecuteConfunc("restore_base_state");
 }
 

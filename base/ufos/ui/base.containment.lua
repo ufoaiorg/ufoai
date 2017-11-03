@@ -36,9 +36,9 @@ require("ufox.lua")
 require("base.section.lua")
 
 base.containment = {
-	register = function (root_node)
-		local hospital = base.build_section(root_node, "containment", "_Alien Containment", "icons/aliens")
-		hospital:child("header").on_click = function (sender)
+	register = function (root_node, base_idx)
+		local section = base.build_section(root_node, "containment", "_Alien Containment", "icons/aliens")
+		section:child("header").on_click = function (sender)
 			ufo.push_window("aliencont", nil, nil)
 		end
 	end,

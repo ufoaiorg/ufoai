@@ -50,6 +50,12 @@ do
 		class = "window",
 		fill = true,
 
+		{
+			name = "base_idx",
+			class = "data",
+			text = "",
+		},
+
 		-- Left base panel
 		{
 			name = "base_container",
@@ -467,33 +473,6 @@ do
 				end,
 			},
 
-			{
-				name = "production",
-				class = "BaseSection",
-
-				{ name = "label",  class = "string", text = "_Production", },
-				{ name = "icon",   class = "button", icon = "icons/wrench", },
-
-				-- Production added as child nodes to this panel
-				{
-					name = "production_list",
-					class = "panel",
-					pos = {29, 48},
-					size = {250, 28},
-					layout = ufo.LAYOUT_TOP_DOWN_FLOW,
-					layoutmargin = 0,
-					ghost = true,
-				},
-
-				funcClick = function (sender)
-					ufo.push_window("production", nil, nil)
-				end,
-
-				on_click = function (sender)
-					sender:funcClick()
-				end,
-			},
-
 			-- Hide/show the other base sections
 			setOthersInvis = function (sender, status)
 				local sections = {
@@ -501,7 +480,6 @@ do
 					"soldiers",
 					"buysell",
 					"research",
-					"production",
 				}
 				for i, section in ipairs (sections) do
 					local node = sender:parent():child(section)
@@ -544,7 +522,7 @@ do
 			on_click = function (sender, button, state, tooltip)
 				local section = ""
 				-- new-style sections
-				local sections = {"containment", "hospital"}
+				local sections = {"production", "containment", "hospital"}
 				for i, section in ipairs(sections) do
 					if (button == section) then
 						if (state == "true") then
@@ -768,38 +746,6 @@ do
 		},
 
 		{
-			name = "clear_production",
-			class = "confunc",
-
-			on_click = function (sender)
-				sender:parent():child("sections"):child("production"):set_size(298, 48)
-				sender:parent():child("sections"):child("production"):child("production_list"):remove_children()
-			end,
-		},
-
-		{
-			name = "show_production",
-			class = "confunc",
-
-			--[[
-			 - @brief Show the production item closest to completion in the base overview (not used in default UI)
-			 - @param production_idx
-			 - @param item_name
-			 - @param completition
-			--]]
-			on_click = function (sender, production_idx, item_name, completition)
-				sender:parent():child("sections"):child("production"):set_size(298, 80)
-				local production = ufox.build({
-					name = "production_" .. production_idx,
-					class = "ProgressBar",
-
-					{ name = "label",    class = "string", text  = "_" .. item_name, },
-					{ name = "data_bar", class = "bar",    value = completition},
-				}, sender:parent():child("sections"):child("production"):child("production_list"))
-			end,
-		},
-
-		{
 			name = "restore_section",
 			class = "confunc",
 
@@ -867,21 +813,32 @@ do
 			ufo.cmd("show_facility false;")
 		end,
 
-		on_activate = function (sender)
-			sender:root().on_windowopened(sender:root())
+		generate_sections = function (sender, base_idx)
+			local sections = {"production", "containment", "hospital"}
+			for i, section in ipairs(sections) do
+				require(string.format("base.%s.lua", section))
+				base[section].register(sender:root():child("sections"), tonumber(base_idx))
+			end
 		end,
 
-		on_windowopened = function (sender)
+		on_windowactivate = function (sender)
+			sender:root().generate_sections(sender:root(), sender:root():child("base_idx"):as_string())
+		end,
+
+		on_windowopened = function (sender, base_idx)
+			if (base_idx == nil or base_idx == "") then
+				ufo.print(string.format("UI bases: Missing base_idx parameter!\n"))
+				ufo.pop_window(false)
+			end
+			sender:root():child("base_idx"):set_text(base_idx)
+			-- generate base sections
+			sender:root().generate_sections(sender:root(), sender:root():child("base_idx"):as_string())
+
 			-- Get the parameters needed for this window
 			ufo.cmd("base_init;")
 			-- Close all panels and reset base to default position
 			sender:root():reset_base()
 
-			local sections = {"containment", "hospital"}
-			for i, section in ipairs(sections) do
-				require(string.format("base.%s.lua", section))
-				base[section].register(sender:root():child("sections"))
-			end
 
 			-- Try to restore the last base section opened
 			local last_section = sender:root():child("last_section")

@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 #include "cp_produce.h"
 #include "cp_produce_callbacks.h"
+#include "cp_base.h"
 
 /**
  * Holds the current active production category/filter type.
@@ -832,6 +833,30 @@ static void PR_ProductionDown_f (void)
 	PR_UpdateProductionList(base);
 }
 
+/**
+ * @brief Show active production item in Base sections
+ */
+static void PR_ShowActiveProduction_f (void)
+{
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <base_idx>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+	const base_t* const base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (base == nullptr) {
+		Com_Printf("PR_ShowActiveProduction_f: Invalid base_idx!\n");
+		return;
+	}
+	/* Get the production item closest to completion in the base if it exists */
+	if (!PR_ProductionAllowed(base))
+		return;
+	const production_queue_t* const queue = PR_GetProductionForBase(base);
+	if (queue->numItems <= 0)
+		return;
+	const production_t* const production = &queue->items[0];
+	cgi->UI_ExecuteConfunc("show_production %i \"%s\" %3.0f", production->idx, PR_GetName(&production->data), PR_GetProgress(production) * 100);
+}
+
 static const cmdList_t productionCallbacks[] = {
 	{"prod_init", PR_ProductionList_f, nullptr},
 	{"prod_type", PR_ProductionType_f, nullptr},
@@ -843,6 +868,7 @@ static const cmdList_t productionCallbacks[] = {
 	{"prod_stop", PR_ProductionStop_f, "Stop production"},
 	{"prodlist_rclick", PR_ProductionListRightClick_f, nullptr},
 	{"prodlist_click", PR_ProductionListClick_f, nullptr},
+	{"prod_show_active", PR_ShowActiveProduction_f, "Show the active production item and it's status"},
 	{nullptr, nullptr, nullptr}
 };
 void PR_InitCallbacks (void)
