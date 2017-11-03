@@ -42,6 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --]]
 
 require("ufox.lua")
+base = {}
 
 do
 	local baseWindow = ufox.build_window({
@@ -493,40 +494,6 @@ do
 				end,
 			},
 
-			{
-				name = "containment",
-				class = "BaseSection",
-
-				{ name = "label",  class = "string", text = "_Alien Containment", },
-				{ name = "icon",   class = "button", icon = "icons/aliens", },
-				{ name = "state",  class = "data",   value = "true", },
-
-				funcClick = function (sender)
-					ufo.push_window("aliencont", nil, nil)
-				end,
-
-				on_click = function (sender)
-					sender:funcClick()
-				end,
-			},
-
-			{
-				name = "hospital",
-				class = "BaseSection",
-
-				{ name = "label",  class = "string", text = "_Hospital", },
-				{ name = "icon",   class = "button", icon = "icons/hos_bed", },
-				{ name = "state",  class = "data",   value = "true", },
-
-				funcClick = function (sender)
-					ufo.push_window("hospital", nil, nil)
-				end,
-
-				on_click = function (sender)
-					sender:funcClick()
-				end,
-			},
-
 			-- Hide/show the other base sections
 			setOthersInvis = function (sender, status)
 				local sections = {
@@ -535,8 +502,6 @@ do
 					"buysell",
 					"research",
 					"production",
-					"containment",
-					"hospital",
 				}
 				for i, section in ipairs (sections) do
 					local node = sender:parent():child(section)
@@ -578,6 +543,20 @@ do
 			--]]
 			on_click = function (sender, button, state, tooltip)
 				local section = ""
+				-- new-style sections
+				local sections = {"containment", "hospital"}
+				for i, section in ipairs(sections) do
+					if (button == section) then
+						if (state == "true") then
+							sender:root():child("sections"):child(section):disable(tooltip)
+						else
+							sender:root():child("sections"):child(section):enable(tooltip)
+						end
+						return
+					end
+				end
+
+				-- old-school sections
 				if (button == "hire") then
 					section = sender:parent():child("sections"):child("soldiers")
 				elseif (button == "transfer") then
@@ -585,7 +564,7 @@ do
 				else
 					section = sender:parent():child("sections"):child(button)
 				end
-				if (section == nil) then
+				if (section == nil or section == "") then
 					return
 				end
 
@@ -841,9 +820,9 @@ do
 			class = "confunc",
 
 			on_click = function (sender, last_section)
+				sender:parent():child("last_section"):set_value(last_section)
 				ufo.pop_window(false)
 				ufo.cmd("mn_base_next;")
-				sender:parent():child("last_section"):set_value(last_section)
 			end,
 		},
 
@@ -852,9 +831,9 @@ do
 			class = "confunc",
 
 			on_click = function (sender, last_section)
+				sender:parent():child("last_section"):set_value(last_section)
 				ufo.pop_window(false)
 				ufo.cmd("mn_base_prev;")
-				sender:parent():child("last_section"):set_value(last_section)
 			end,
 		},
 
@@ -863,9 +842,9 @@ do
 			class = "confunc",
 
 			on_click = function (sender, base_idx, last_section)
+				sender:parent():child("last_section"):set_value(last_section)
 				ufo.pop_window(false)
 				ufo.cmd(string.format("mn_base_select %d;", base_idx))
-				sender:parent():child("last_section"):set_value(last_section)
 			end,
 		},
 
@@ -891,6 +870,13 @@ do
 			ufo.cmd("base_init;")
 			-- Close all panels and reset base to default position
 			sender:root():reset_base()
+
+			local sections = {"containment", "hospital"}
+			for i, section in ipairs(sections) do
+				require(string.format("base.%s.lua", section))
+				base[section].register(sender:root():child("sections"))
+			end
+
 			-- Try to restore the last base section opened
 			local last_section = sender:root():child("last_section")
 			if (last_Section == nil) then
@@ -904,6 +890,7 @@ do
 
 		on_windowclosed = function (sender)
 			ufo.cmd("trans_emptyairstorage;")
+			-- sender:root():child("sections"):remove_children()
 		end,
 	})
 end
