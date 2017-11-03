@@ -430,30 +430,11 @@ do
 				end,
 			},
 
-
-			{
-				name = "buysell",
-				class = "BaseSection",
-
-				{ name = "label",  class = "string", text = "_Market", },
-				{ name = "icon",   class = "button", icon = "icons/market", },
-
-				funcClick = function (sender)
-					ufo.push_window("market", nil, nil)
-				end,
-
-				on_click = function (sender)
-					sender:funcClick()
-				end,
-			},
-
 			-- Hide/show the other base sections
 			setOthersInvis = function (sender, status)
 				local sections = {
 					"aircraft",
 					"soldiers",
-					"buysell",
-					"research",
 				}
 				for i, section in ipairs (sections) do
 					local node = sender:parent():child(section)
@@ -496,7 +477,7 @@ do
 			on_click = function (sender, button, state, tooltip)
 				local section = ""
 				-- new-style sections
-				local sections = {"research", "production", "containment", "hospital"}
+				local sections = {"buysell", "research", "production", "containment", "hospital"}
 				for i, section in ipairs(sections) do
 					if (button == section) then
 						if (state == "true") then
@@ -755,7 +736,7 @@ do
 		end,
 
 		generate_sections = function (sender, base_idx)
-			local sections = {"research", "production", "containment", "hospital"}
+			local sections = {"buysell", "research", "production", "containment", "hospital"}
 			for i, section in ipairs(sections) do
 				require(string.format("base.%s.lua", section))
 				base[section].register(sender:root():child("sections"), tonumber(base_idx))

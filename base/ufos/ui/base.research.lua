@@ -42,7 +42,7 @@ base.research = {
 			class = "confunc",
 
 			--[[
-			 - @brief Show a research item in the base overview (not used in default UI)
+			 - @brief Show a research item in the base overview
 			 - @param research_id
 			 - @param research_title
 			 - @param scientists Number of scientists working on it
