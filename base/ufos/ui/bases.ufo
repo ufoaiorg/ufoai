@@ -820,7 +820,9 @@ do
 			class = "confunc",
 
 			on_click = function (sender, last_section)
-				sender:parent():child("last_section"):set_value(last_section)
+				if (last_section ~= nil) then
+					sender:parent():child("last_section"):set_value(last_section)
+				end
 				ufo.pop_window(false)
 				ufo.cmd("mn_base_next;")
 			end,
@@ -831,7 +833,9 @@ do
 			class = "confunc",
 
 			on_click = function (sender, last_section)
-				sender:parent():child("last_section"):set_value(last_section)
+				if (last_section ~= nil) then
+					sender:parent():child("last_section"):set_value(last_section)
+				end
 				ufo.pop_window(false)
 				ufo.cmd("mn_base_prev;")
 			end,
@@ -842,7 +846,9 @@ do
 			class = "confunc",
 
 			on_click = function (sender, base_idx, last_section)
-				sender:parent():child("last_section"):set_value(last_section)
+				if (last_section ~= nil) then
+					sender:parent():child("last_section"):set_value(last_section)
+				end
 				ufo.pop_window(false)
 				ufo.cmd(string.format("mn_base_select %d;", base_idx))
 			end,
