@@ -447,32 +447,6 @@ do
 				end,
 			},
 
-			{
-				name = "research",
-				class = "BaseSection",
-
-				{ name = "label",  class = "string", text = "_Research", },
-				{ name = "icon",   class = "button", icon = "icons/research", },
-
-				{
-					name = "research_list",
-					class = "panel",
-					pos = {29, 48},
-					size = {250, 28},
-					layout = ufo.LAYOUT_TOP_DOWN_FLOW,
-					layoutmargin = 0,
-					ghost = true,
-				},
-
-				funcClick = function (sender)
-					ufo.push_window("research", nil, nil)
-				end,
-
-				on_click = function (sender)
-					sender:funcClick()
-				end,
-			},
-
 			-- Hide/show the other base sections
 			setOthersInvis = function (sender, status)
 				local sections = {
@@ -522,7 +496,7 @@ do
 			on_click = function (sender, button, state, tooltip)
 				local section = ""
 				-- new-style sections
-				local sections = {"production", "containment", "hospital"}
+				local sections = {"research", "production", "containment", "hospital"}
 				for i, section in ipairs(sections) do
 					if (button == section) then
 						if (state == "true") then
@@ -713,39 +687,6 @@ do
 		},
 
 		{
-			name = "clear_research",
-			class = "confunc",
-
-			on_click = function (sender)
-				sender:parent():child("sections"):child("research"):set_size(298, 48)
-				sender:parent():child("sections"):child("research"):child("research_list"):remove_children()
-			end,
-		},
-
-		{
-			name = "show_research",
-			class = "confunc",
-
-			--[[
-			 - @brief Show a research item in the base overview (not used in default UI)
-			 - @param research_id
-			 - @param research_title
-			 - @param scientists Number of scientists working on it
-			 - @param completition Percent of completition
-			--]]
-			on_click = function (sender, research_id, research_title, scientists, completition)
-				sender:parent():child("sections"):child("research"):set_size(298, 80)
-				local research = ufox.build({
-					name = research_id,
-					class = "ProgressBar",
-
-					{ name = "label",    class = "string", text  = "_" .. research_title, },
-					{ name = "data_bar", class = "bar",    value = completition},
-				}, sender:parent():child("sections"):child("research"):child("research_list"))
-			end,
-		},
-
-		{
 			name = "restore_section",
 			class = "confunc",
 
@@ -814,7 +755,7 @@ do
 		end,
 
 		generate_sections = function (sender, base_idx)
-			local sections = {"production", "containment", "hospital"}
+			local sections = {"research", "production", "containment", "hospital"}
 			for i, section in ipairs(sections) do
 				require(string.format("base.%s.lua", section))
 				base[section].register(sender:root():child("sections"), tonumber(base_idx))

@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_research_callbacks.h"
+#include "cp_base.h"
 
 /**
  * @brief Assign as many scientists to the research project as possible.
@@ -203,12 +204,46 @@ static void RS_FillTechnologyList_f (void)
 	}
 }
 
+/**
+ * @brief Show active research topics in Base sections
+ */
+static void RS_ShowActiveResearch_f (void)
+{
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <base_idx>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+	const base_t* const base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (base == nullptr) {
+		Com_Printf("PR_ShowActiveResearch_f: Invalid base_idx!\n");
+		return;
+	}
+	/* Get the production item closest to completion in the base if it exists */
+	if (!RS_ResearchAllowed(base))
+		return;
+
+	for (int i = 0; i < ccs.numTechnologies; i++) {
+		const technology_t* tech = RS_GetTechByIDX(i);
+		if (!tech)
+			continue;
+		if (tech->base != base)
+			continue;
+		if (tech->statusResearch != RS_RUNNING)
+			continue;
+		if (tech->scientists <= 0)
+			continue;
+		const double completition = (1 - tech->time / tech->overallTime) * 100;
+		cgi->UI_ExecuteConfunc("show_research %s \"%s\" %i %3.0f", tech->id, tech->name, tech->scientists, completition);
+	}
+}
+
 static const cmdList_t research_commands[] = {
 	{"ui_research_fill", RS_FillTechnologyList_f, "Fill research screen with list of researchable technologies"},
 	{"ui_research_getdetails", RS_GetDetails_f, "Show technology image/model in reseach screen"},
 	{"ui_research_stop", RS_Stop_f, "Stops the research"},
 	{"ui_research_change", RS_Change_f, "Change number of scientists working on the research"},
 	{"ui_research_max", RS_Max_f, "Allocates as many scientists on the research as possible"},
+	{"ui_research_show_active", RS_ShowActiveResearch_f, "Show the active research topics and their status"},
 	{nullptr, nullptr, nullptr}
 };
 
