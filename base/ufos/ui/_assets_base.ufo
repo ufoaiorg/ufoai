@@ -215,28 +215,6 @@ do
 	})
 end
 
--- Aircraft image/button
-do
-	local AircraftIcon = ufox.build_component({
-		name = "AircraftIcon",
-		class = "panel",
-		pos = {0, 0},
-		size = {48, 48},
-
-		{
-			name = "icon",
-			class = "button",
-			pos = {0, 0},
-			size = {48, 48},
-		},
-
-		{
-			name = "aircraft_id",
-			class = "data",
-		},
-	})
-end
-
 -- Research/Production
 do
 	local ProgressBar = ufox.build_component({

@@ -387,6 +387,28 @@ static void AIR_SendAircraftToMission_f (void)
 	AIR_SendAircraftToMission(aircraft, mission);
 }
 
+/**
+ * @brief Show aircraft in Base sections
+ */
+static void AIR_ShowAircraft_f (void)
+{
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <base_idx>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+	const base_t* const base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (base == nullptr) {
+		Com_Printf("AIR_ShowAircraft_f: Invalid base_idx!\n");
+		return;
+	}
+	if (!AIR_AircraftAllowed(base))
+		return;
+	int idx_in_base = 0;
+	AIR_ForeachFromBase(aircraft, base) {
+		cgi->UI_ExecuteConfunc("show_aircraft %i \"%s\" \"%s\" \"%s\" %i %i", aircraft->idx, aircraft->name, aircraft->id, AIR_AircraftStatusToName(aircraft), AIR_IsAircraftInBase(aircraft), idx_in_base++);
+	}
+}
+
 static const cmdList_t aircraftCallbacks[] = {
 	{"aircraft_start", AIM_AircraftStart_f, nullptr},
 	{"ui_aircraft_select", AIM_SelectAircraft_f, nullptr},
@@ -397,6 +419,7 @@ static const cmdList_t aircraftCallbacks[] = {
 	{"ui_aircraft_stop", AIR_StopAircraft_f, "Clears an aircraft order when on the geoscape"},
 	{"ui_aircraft_to_mission", AIR_SendAircraftToMission_f, "Send aircraft to a misison"},
 	{"ui_aircraft_changehomebase", AIR_ShowChangeHomebaseAircraft_f, ""},
+	{"ui_show_aircraft", AIR_ShowAircraft_f, "Show aircraft in base sections"},
 	{nullptr, nullptr, nullptr}
 };
 

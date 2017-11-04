@@ -379,16 +379,6 @@ static void B_BaseInit_f (void)
 	 */
 	cgi->UI_ExecuteConfunc("current_employees %i %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_PILOT), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER));
 
-	/*
-	 * List the first five aircraft in the base if they exist
-	 */
-	cgi->UI_ExecuteConfunc("clear_aircraft");
-	if (AIR_AircraftAllowed(base)) {
-		AIR_ForeachFromBase(aircraft, base) {
-			cgi->UI_ExecuteConfunc("show_aircraft %i \"%s\" \"%s\" \"%s\" %i", aircraft->idx, aircraft->name, aircraft->id, AIR_AircraftStatusToName(aircraft), AIR_IsAircraftInBase(aircraft));
-		}
-	}
-
 	cgi->UI_ExecuteConfunc("restore_base_state");
 }
 

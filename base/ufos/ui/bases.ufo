@@ -384,47 +384,6 @@ do
 					end,
 				},
 			},
-
-			{
-				name = "aircraft",
-				class = "BaseSection",
-
-				{ name = "label",  class = "string", text = "_Aircraft", },
-				{ name = "icon",   class = "button", icon = "icons/aircraft", },
-
-				-- Aircraft added as child nodes to this panel
-				{
-					name = "aircraft_list",
-					class = "panel",
-					pos = {29, 48},
-					size = {250, 48},
-					invisible = true,
-					layout = ufo.LAYOUT_COLUMN,
-					layoutcolumns = 5,
-					layoutmargin = 0,
-				},
-
-				funcClick = function (sender)
-					ufo.push_window("aircraft_equip", nil, nil)
-				end,
-
-				on_click = function (sender)
-					sender:funcClick()
-				end,
-			},
-
-			-- Hide/show the other base sections
-			setOthersInvis = function (sender, status)
-				local sections = {
-					"aircraft",
-				}
-				for i, section in ipairs (sections) do
-					local node = sender:parent():child(section)
-					if (node ~= nil) then
-						node:set_invisible(status)
-					end
-				end
-			end,
 		},
 
 		-- Back to geoscape
@@ -459,7 +418,7 @@ do
 			on_click = function (sender, button, state, tooltip)
 				local section = ""
 				-- new-style sections
-				local sections = {"hire", "buysell", "research", "production", "containment", "hospital"}
+				local sections = {"aircraft", "hire", "buysell", "research", "production", "containment", "hospital"}
 				for i, section in ipairs(sections) do
 					if (button == section) then
 						if (state == "true") then
@@ -532,7 +491,6 @@ do
 				ufo.getvar("mn_building_status", ""):set_value("")
 				ufo.getvar("mn_building_image", ""):set_value("")
 				-- Hide/show the other base sections
-				sender:parent():child("sections"):setOthersInvis(status)
 			end,
 		},
 
@@ -564,86 +522,6 @@ do
 				if (sender:parent():child("sections"):child("facilities"):child("state"):as_string() == "false") then
 					ufo.cmd("base_building_space;")
 				end
-			end,
-		},
-
-		{
-			name = "clear_aircraft",
-			class = "confunc",
-
-			--[[
-			 - @brief Clears the list of aircraft in the base view that was filled by @c show_aircraft
-			--]]
-			on_click = function (sender)
-				sender:root():child("aircraft_count"):set_value(0)
-				sender:parent():child("sections"):child("aircraft"):set_size(298, 48)
-				sender:parent():child("sections"):child("aircraft"):child("aircraft_list"):set_invisible(true)
-				sender:parent():child("sections"):child("aircraft"):child("aircraft_list"):remove_children()
-			end,
-		},
-
-		--[[
-		 - @brief The amount of aircraft that are currently visibile in the base view
-		--]]
-		{
-			name = "aircraft_count",
-			class = "data",
-			value = 0,
-		},
-
-		{
-			name = "show_aircraft",
-			class = "confunc",
-
-			--[[
-			 - @brief Show the base's aircraft
-			 - @param aircraft_idx id global aircraft idx
-			 - @param aircraft_name Name of the aircraft
-			 - @param aircraft_type Aircraft type
-			 - @param aircraft_status aircraft status
-			 - @param aircraft_in_base if the aircraft is in the base
-			--]]
-			on_click = function (sender, aircraft_idx, aircraft_name, aircraft_type, aircraft_status, aircraft_in_base)
-				local aircraft_count = sender:root():child("aircraft_count")
-				aircraft_count:set_value(aircraft_count:as_integer() + 1)
-				-- Can't show more than 5 yet
-				if (aircraft_count:as_integer() > 5) then
-					return
-				end
-
-				local section = sender:parent():child("sections"):child("aircraft")
-				local aircraft_icon = "icons/" .. aircraft_type
-				if (aircraft_in_base ~= "1") then
-					aircraft_icon = aircraft_icon .. "_off"
-				end
-				section:set_size(298, 96)
-				local aircraft = ufox.build({
-					name = "aircraft_" .. aircraft_idx,
-					class = "AircraftIcon",
-
-					{ name = "aircraft_id", class = "data", value = (aircraft_count:as_integer() - 1), },
-					{
-						name = "icon",
-						class = "button",
-						tooltip = string.format("%s (%s)", aircraft_name, aircraft_status),
-						icon = aircraft_icon,
-
-						on_click = function (sender)
-							-- @TODO ufo.push_window() doesn't support parameters
-							ufo.cmd(string.format("ui_push aircraft_equip %q;", sender:parent():child("aircraft_id"):as_integer()))
-						end,
-					},
-				}, section:child("aircraft_list"))
-
-				section:child("aircraft_list"):set_invisible(false)
-				--[[
-					@todo is this useful? (dead code copied as-is)
-					THEN ADD THIS TO AIRCRAFT onWindowOpened
-					if (<1> ne "") {
-						*cvar:mn_aircraft_id = <1>
-						cmd "ui_aircraft_select \"<1>\";"
-					}
-				--]]
 			end,
 		},
 
@@ -716,7 +594,7 @@ do
 		end,
 
 		generate_sections = function (sender, base_idx)
-			local sections = {"hire", "buysell", "research", "production", "containment", "hospital"}
+			local sections = {"aircraft", "hire", "buysell", "research", "production", "containment", "hospital"}
 			for i, section in ipairs(sections) do
 				require(string.format("base.%s.lua", section))
 				base[section].register(sender:root():child("sections"), tonumber(base_idx))

@@ -95,7 +95,13 @@ base.build_section = function (root_node, id, title, icon)
 				local height = 0
 				local child = sender:first()
 				while (child ~= nil) do
-					height = height + child:height()
+					if (sender:layout() == ufo.LAYOUT_TOP_DOWN_FLOW) then
+						height = height + child:height()
+					else
+						if (child:height() > height) then
+							height = child:height()
+						end
+					end
 					child = child:next()
 				end
 				sender:set_height(height)
