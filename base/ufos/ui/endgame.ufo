@@ -59,7 +59,7 @@ do
 				end,
 
 				on_viewchange = function (sender)
-					local scrollbar = sender:parent():child(sender:name() .. "_scrollbar")
+					local scrollbar = sender:parent():child(string.format("%s_scrollbar", sender:name()))
 						scrollbar:set_fullsize(sender:fullsize())
 						scrollbar:set_current(sender:viewpos())
 						scrollbar:set_viewsize(sender:viewsize())
@@ -82,8 +82,8 @@ do
 				end,
 
 				on_change = function (sender)
-					local nodename = sender:name():gsub("_scrollbar", "")
-					local node = sender:parent():child("" .. sender:name():gsub("_scrollbar", ""))
+					local nodename = sender:name():gsub("(_scrollbar)", "")
+					local node = sender:parent():child(nodename)
 					node:set_viewpos(sender:current())
 				end,
 			},

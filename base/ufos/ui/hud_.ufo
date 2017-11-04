@@ -329,7 +329,7 @@ ufox.build_window {
 			ufo.getvar("mn_moralemax" .. id):set_value(mormax)
 			ufo.getvar("mn_stun" .. id):set_value(stun)
 			ufo.getvar("mn_reserved" .. id):set_value(reserved)
-			ufo.getvar("mn_soldier" .. id .. "_tt"):set_value(tooltip)
+			ufo.getvar(string.format("mn_soldier%i_tt", id)):set_value(tooltip)
 		end
 	},
 

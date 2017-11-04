@@ -786,7 +786,7 @@ local hud_default_window = ufox.build_window{
 			--]]
 			select = function (this, index)
 				local node = this:child("bg")
-				local tt = ufo.getvar("mn_soldier" .. index .. "_tt"):as_string()
+				local tt = ufo.getvar(string.format("mn_soldier%i_tt", index)):as_string()
 				local name = tt:match("[^\r\n]+") .. "\n" .. tt:reverse():match("[^\r\n]+"):reverse()
 				node:child("actorname"):set_text(name)
 				node:child("head_bg"):child("head"):set_model("*cvar:mn_head" .. index)
@@ -1034,9 +1034,9 @@ local hud_default_window = ufox.build_window{
 					local attributes = {"health", "tu", "morale"}
 					for k, v in pairs(attributes) do
 						if v == attribute then
-							this:parent():child(v .. "_btn"):set_icon("icons/" .. v .. "sml")
+							this:parent():child(string.format("%s_btn", v)):set_icon("icons/" .. v .. "sml")
 						else
-							this:parent():child(v .. "_btn"):set_icon("icons/" .. v .. "sml0")
+							this:parent():child(string.format("%s_btn", v)):set_icon("icons/" .. v .. "sml0")
 						end
 						for i = 0, 11 do
 							this:parent():child("sld" .. i):child(v):set_invisible(v ~= attribute)
@@ -1053,7 +1053,7 @@ local hud_default_window = ufox.build_window{
 				name = "squad_hoveroff",
 				on_click = function (this, attribute)
 					if ufo.findvar("squad_bar"):as_string() ~= attribute then
-						this:parent():child(attribute .. "_btn"):set_icon("icons/" .. attribute .. "sml0")
+						this:parent():child(string.format("%s_btn", attribute)):set_icon("icons/" .. attribute .. "sml0")
 					end
 				end
 			}
