@@ -38,8 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CREATE_NEW_BASE_ID -1
 
 static cvar_t* mn_base_title;
-static building_t* buildingConstructionList[MAX_BUILDINGS];
-static int buildingNumber = 0;
 
 /**
  * @brief onDestroy Callback for Antimatter Storage
@@ -70,25 +68,6 @@ static void B_Destroy_AntimaterStorage_f (void)
 		cgi->UI_PopWindow(false);
 		B_Destroy(base);
 	}
-}
-
-/**
- * @brief Handles the list of constructable buildings.
- * @param[in] buildingList list of buildings to upate
- * @param[in] building Add this building to the construction list
- * @note Called everytime a building was constructed and thus maybe other buildings
- * get available. The content is updated everytime B_BuildingInit is called
- * (i.e everytime the buildings-list is displayed/updated)
- */
-static void B_BuildingAddToList (linkedList_t** buildingList, building_t* building)
-{
-	int count;
-	assert(building);
-	assert(building->name);
-
-	count = cgi->LIST_Count(*buildingList);
-	cgi->LIST_AddPointer(buildingList, _(building->name));
-	buildingConstructionList[count] = building->tpl;
 }
 
 /**
@@ -456,55 +435,6 @@ void B_FillBuildingInfo (const building_t* building)
 }
 
 /**
- * @brief Update the building-list.
- * @sa B_BuildingInit_f
- */
-static void B_BuildingInit (base_t* base)
-{
-	/* maybe someone call this command before the bases are parsed?? */
-	if (!base)
-		return;
-
-	linkedList_t* buildingList = nullptr;
-	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
-		building_t* tpl = &ccs.buildingTemplates[i];
-
-		if (!tpl->mapPart)
-			continue;
-
-		const int numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, tpl);
-		if (tpl->maxCount >= 0 && tpl->maxCount <= numSameBuildings)
-			continue;
-
-		/* skip if limit of BASE_SIZE*BASE_SIZE exceeded */
-		if (numSameBuildings >= BASE_SIZE * BASE_SIZE)
-			continue;
-
-		/* if the building is researched add it to the list */
-		if (RS_IsResearched_ptr(tpl->tech))
-			B_BuildingAddToList(&buildingList, tpl);
-	}
-	if (base->buildingCurrent)
-		B_FillBuildingInfo(base->buildingCurrent);
-
-	buildingNumber = cgi->LIST_Count(buildingList);
-	cgi->UI_RegisterLinkedListText(TEXT_BUILDINGS, buildingList);
-}
-
-/**
- * @brief Script command binding for B_BuildingInit
- */
-static void B_BuildingInit_f (void)
-{
-	base_t* base = B_GetCurrentSelectedBase();
-
-	if (!base)
-		return;
-
-	B_BuildingInit(base);
-}
-
-/**
  * @brief Opens the UFOpedia for the current selected building.
  */
 static void B_BuildingInfoClick_f (void)
@@ -530,19 +460,15 @@ static void B_BuildingClick_f (void)
 		return;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <building_id|building list index>\n", cgi->Cmd_Argv(0));
+		Com_Printf("Usage: %s <building_id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* which building? */
 	building = B_GetBuildingTemplateSilent(cgi->Cmd_Argv(1));
 	if (!building) {
-		int num = atoi(cgi->Cmd_Argv(1));
-		if (num > buildingNumber || num < 0) {
-			Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: max exceeded %i/%i\n", num, buildingNumber);
-			return;
-		}
-		building = buildingConstructionList[num];
+		Com_Printf("Invalid building id\n");
+		return;
 	}
 
 	base->buildingCurrent = building;
@@ -668,9 +594,7 @@ static void B_BuildingDestroy_f (void)
 		/** @todo why not use the local building pointer here - we should
 		 * reduce the access to these 'current' pointers */
 		B_BuildingDestroy(base->buildingCurrent);
-
 		B_ResetBuildingCurrent(base);
-		B_BuildingInit(base);
 	} else {
 		B_MarkBuildingDestroy(building);
 	}
@@ -731,7 +655,6 @@ static const cmdList_t baseCallbacks[] = {
 	{"base_init", B_BaseInit_f, nullptr},
 	{"base_assemble", B_AssembleMap_f, "Called to assemble the current selected base"},
 	{"base_building_space", B_BuildingSpace_f, "Called to display building capacity in current selected base"},
-	{"building_init", B_BuildingInit_f, nullptr},
 	{"building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)"},
 	{"building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed"},
 	{"building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building"},

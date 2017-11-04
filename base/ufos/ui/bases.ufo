@@ -490,7 +490,6 @@ do
 				end
 				ufo.getvar("mn_building_status", ""):set_value("")
 				ufo.getvar("mn_building_image", ""):set_value("")
-				-- Hide/show the other base sections
 			end,
 		},
 

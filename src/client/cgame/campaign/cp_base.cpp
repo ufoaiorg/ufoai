@@ -1427,7 +1427,6 @@ building_t* B_SetBuildingByClick (base_t* base, const building_t* buildingTempla
 			B_BuildingStatus(buildingNew);
 			B_ResetBuildingCurrent(base);
 			cgi->Cmd_ExecuteString("base_init");
-			cgi->Cmd_ExecuteString("building_init");
 			B_FireEvent(buildingNew, base, B_ONCONSTRUCT);
 
 			return buildingNew;
@@ -2174,8 +2173,6 @@ static bool B_CheckBuildingConstruction (building_t* building)
 	B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
 	if (B_FireEvent(building, base, B_ONENABLE))
 		Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onEnable, base->idx);
-
-	cgi->Cmd_ExecuteString("building_init");
 
 	return true;
 }
