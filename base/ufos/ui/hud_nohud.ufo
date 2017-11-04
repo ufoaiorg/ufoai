@@ -26,9 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 require("ufox.lua")
 
-local inv_stats_hud = ufox.build_window{
-	class = "window",
+local inv_stats_hud = ufox.build_window({
 	name = "hud_nohud",
+	class = "window",
 	super = "hud",
 	fill = true,
 	starlayout = true,
@@ -37,18 +37,19 @@ local inv_stats_hud = ufox.build_window{
 	-- render rectangle
 	-- ==================
 	{
-		class = 'battlescape',
-		came = 'render',
-		layoutalign = LAYOUTALIGN_FILL
+		name = "render",
+		class = "battlescape",
+		layoutalign = ufo.LAYOUTALIGN_FILL
 	},
 
 	{
-		class = "confunc",
 		name = "hidehud",
-		on_click = function (this)
-			if ufo.findvar("cl_onbattlescape"):as_integer() == 1 then
-				this:parent():open()
+		class = "confunc",
+
+		on_click = function (sender)
+			if (ufo.findvar("cl_onbattlescape"):as_integer() == 1) then
+				sender:parent():open()
 			end
 		end
-	}
-}
+	},
+})
