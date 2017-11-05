@@ -2,6 +2,8 @@
 // BASE ALIEN CONTAINMENU MENU
 // ============================
 
+// @todo Don't show progress bar in alien containment if alien is already researched (saved from bases.ufo)
+
 // ===========================
 // Aliencontainment Component
 // ===========================

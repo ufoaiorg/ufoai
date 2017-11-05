@@ -38,57 +38,6 @@ do
 	})
 end
 
--- Main panel button for base sections
-do
-	local BaseSection = ufox.build_component({
-		name = "BaseSection",
-		class =  "panel",
-		size = {298, 48},
-
-		on_mouseenter = function (sender)
-			sender:child("bg"):set_backgroundcolor(0.527, 0.6, 0.21, 0.4)
-			sender:child("icon"):set_background("icons/circle")
-		end,
-
-		on_mouseleave = function (sender)
-			sender:child("bg"):set_backgroundcolor(0.527, 0.6, 0.21, 0.2)
-			sender:child("icon"):set_background("icons/circle0")
-		end,
-
-		{
-			name = "bg",
-			class = "panel",
-			pos = {0, 8},
-			size = {298, 32},
-			backgroundcolor = {0.527, 0.6, 0.21, 0.2},
-			ghost = true,
-		},
-
-		{
-			name = "icon",
-			class = "button",
-			pos = {12, 0},
-			size = {48, 48},
-			background = "icons/circle0",
-			ghost = true,
-
-			-- else the button is disabled
-			on_click = function (sender)
-			end,
-		},
-
-		{
-			name = "label",
-			class = "string",
-			pos = {75, 8},
-			size = {170, 32},
-			contentalign = ufo.ALIGN_CL,
-			color = {0.56, 0.81, 0.76, 1},
-			ghost = true,
-		},
-	})
-end
-
 -- Stats bar for building space
 do
 	local BuildingSpace = ufox.build_component({

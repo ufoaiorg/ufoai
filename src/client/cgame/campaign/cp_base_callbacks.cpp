@@ -323,80 +323,18 @@ static void B_BaseInit_f (void)
 	else
 		cgi->UI_ExecuteConfunc("update_basebutton hospital true \"%s\"", _("No Hospital operating at this in base."));
 
-	/*
-	 * Gather data on current/max space for living quarters, storage, lab and workshop
-	 * clear_bld_space ensures 0/0 data for facilities which may not exist in base
-	 */
-	cgi->UI_ResetData(TEXT_BUILDING_INFO);
-	cgi->UI_ExecuteConfunc("clear_bld_space");
-	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
-		const building_t* b = &ccs.buildingTemplates[i];
-
-		/* Check if building matches one of our four types */
-		if (b->buildingType != B_QUARTERS && b->buildingType != B_STORAGE && b->buildingType != B_WORKSHOP && b->buildingType != B_LAB && b->buildingType != B_ANTIMATTER)
+/*		if (b->buildingType != B_QUARTERS
+		 && b->buildingType != B_STORAGE
+		 && b->buildingType != B_WORKSHOP
+		 && b->buildingType != B_LAB
+		 && b->buildingType != B_ANTIMATTER)
 			continue;
-
-		/* only show already researched buildings */
-		if (!RS_IsResearched_ptr(b->tech))
-			continue;
-
-		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
-		if (capType == MAX_CAP)
-			continue;
-
-		const int count = B_GetNumberOfBuildingsInBaseByTemplate(base, b->tpl);
-		if (count < 1)
-			continue;
-
-		const capacities_t& cap = *CAP_Get(base, capType);
-		cgi->UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i %i %i", _(b->name), b->id, cap.cur, cap.max, count, b->tpl->maxCount);
-	}
-
+*/
 	/*
 	 * Get the number of different employees in the base
 	 * @todo: Get the number of injured soldiers if hospital exists
 	 */
 	cgi->UI_ExecuteConfunc("current_employees %i %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_PILOT), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER));
-
-	cgi->UI_ExecuteConfunc("restore_base_state");
-}
-
-/**
- * @brief Update the display of building space for all researched facilities
- * @sa B_BaseInit_f
- */
-static void B_BuildingSpace_f (void)
-{
-	base_t* base = B_GetCurrentSelectedBase();
-
-	if (!base)
-		return;
-
-	// Clear existing entries from the UI panel
-	cgi->UI_ResetData(TEXT_BUILDING_INFO);
-	cgi->UI_ExecuteConfunc("clear_bld_space");
-	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
-		const building_t* b = &ccs.buildingTemplates[i];
-
-		/* skip mandatory buildings (like Entrance) which are built automatically */
-		if (b->mandatory)
-			continue;
-		/* only show already researched buildings */
-		if (!RS_IsResearched_ptr(b->tech))
-			continue;
-
-		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
-		capacities_t cap;
-		if (capType != MAX_CAP)
-			cap = *CAP_Get(base, capType);
-		else
-			OBJZERO(cap);
-
-		assert(b->tpl);
-		const int count = B_GetNumberOfBuildingsInBaseByTemplate(base, b->tpl);
-
-		cgi->UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i %i %i", _(b->name), b->id, cap.cur, cap.max, count, b->tpl->maxCount);
-	}
 }
 
 #define MAX_BUILDING_INFO_TEXT_LENGTH 512
@@ -643,6 +581,44 @@ static void B_MakeBaseMapShot_f (void)
 	cgi->Cmd_ExecuteString("r_screenshot tga");
 }
 
+/**
+ * @brief Update the facilities list
+ */
+static void B_ListBuildings_f (void)
+{
+	if (cgi->Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+	const base_t* const base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (!base)
+		return;
+
+	for (int i = 0; i < ccs.numBuildingTemplates; i++) {
+		const building_t* const building = &ccs.buildingTemplates[i];
+
+		/* skip mandatory buildings (like Entrance) which are built automatically */
+		if (building->mandatory)
+			continue;
+		/* only show already researched buildings */
+		if (!RS_IsResearched_ptr(building->tech))
+			continue;
+
+		const baseCapacities_t capType = B_GetCapacityFromBuildingType(building->buildingType);
+		capacities_t cap;
+		if (capType != MAX_CAP)
+			cap = *CAP_Get(base, capType);
+		else
+			OBJZERO(cap);
+
+		assert(building->tpl);
+		const int count = B_GetNumberOfBuildingsInBaseByTemplate(base, building->tpl);
+
+		cgi->UI_ExecuteConfunc("show_building \"%s\" \"%s\" %i %i %i %i %i", _(building->name),
+			building->id, building->tpl->capacity, cap.cur, cap.max, count, building->tpl->maxCount);
+	}
+}
+
 /** Init/Shutdown functions */
 static const cmdList_t baseCallbacks[] = {
 	{"basemapshot", B_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles"},
@@ -654,12 +630,12 @@ static const cmdList_t baseCallbacks[] = {
 	{"base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name"},
 	{"base_init", B_BaseInit_f, nullptr},
 	{"base_assemble", B_AssembleMap_f, "Called to assemble the current selected base"},
-	{"base_building_space", B_BuildingSpace_f, "Called to display building capacity in current selected base"},
 	{"building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)"},
 	{"building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed"},
 	{"building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building"},
 	{"buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode"},
 	{"reset_building_current", B_ResetBuildingCurrent_f, nullptr},
+	{"ui_list_buildings", B_ListBuildings_f, "Lists buildings built or can be built on a base and their capacities"},
 	{nullptr, nullptr, nullptr}
 };
 
