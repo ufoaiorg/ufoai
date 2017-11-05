@@ -1303,6 +1303,8 @@ base_t* B_Build (const campaign_t* campaign, const vec2_t pos, const char* name,
 
 	ccs.campaignStats.basesBuilt++;
 
+	B_SetCurrentSelectedBase(base);
+
 	return base;
 }
 
