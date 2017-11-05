@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 require("ufox.lua")
 
-local inv_stats_hud = ufox.build_window({
+ufox.build_window({
 	name = "hud_nohud",
 	class = "window",
 	super = "hud",
