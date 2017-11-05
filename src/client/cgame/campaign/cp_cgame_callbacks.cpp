@@ -452,35 +452,30 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 		return;
 	}
 
-	bool used[MAX_BUILDINGS];
-	/* reset the used flag */
-	OBJZERO(used);
-
-	for (int baseRow = 0; baseRow < BASE_SIZE; baseRow++) {
+	for (int baseRow = 0, rowStep = 1; baseRow < BASE_SIZE; baseRow += rowStep) {
 		const char* image = nullptr;
-		for (int baseCol = 0; baseCol < BASE_SIZE; baseCol++) {
+		for (int baseCol = 0, colStep = 1; baseCol < BASE_SIZE; baseCol += colStep) {
 			const vec2_t pos = Vector2FromInt(x + baseCol * w, y + baseRow * (h - overlap));
 			const building_t* building;
 			/* base tile */
 			if (B_IsTileBlocked(base, baseCol, baseRow)) {
 				building = nullptr;
 				image = "base/invalid";
+				colStep = 1;
+				rowStep = 1;
 			} else if (B_GetBuildingAt(base, baseCol, baseRow) == nullptr) {
 				building = nullptr;
 				image = "base/grid";
+				colStep = 1;
+				rowStep = 1;
 			} else {
 				building = B_GetBuildingAt(base, baseCol, baseRow);
 				assert(building);
 
 				if (building->image)
 					image = building->image;
-
-				/* some buildings are drawn with two tiles - e.g. the hangar is no square map tile.
-				 * These buildings have the needs parameter set to the second building part which has
-				 * its own image set, too. We are searching for this second building part here. */
-				if (B_BuildingGetUsed(used, building->idx))
-					continue;
-				B_BuildingSetUsed(used, building->idx);
+				colStep = building->size[0];
+				rowStep = building->size[1];
 			}
 
 			/* draw tile */

@@ -114,19 +114,6 @@ typedef struct building_s {
 	int capacity;					/**< Capacity of this building (used in calculate base capacities). */
 } building_t;
 
-/**
- * @brief Macro sets a building used
- * @param[in] usedArray must be a bool array of the size MAX_BUILDINGS
- * @param[in] buildingIDX Index of building to set used
- */
-#define B_BuildingSetUsed(usedArray, buildingIDX) { (usedArray)[buildingIDX] = true; }
-/**
- * @brief Macro returns if a building is used
- * @param[in] usedArray must be a bool array of the size MAX_BUILDINGS
- * @param[in] buildingIDX Index of building to check
- */
-#define B_BuildingGetUsed(usedArray, buildingIDX) ((usedArray)[buildingIDX])
-
 void B_ParseBuildings(const char* name, const char** text, bool link);
 bool B_BuildingScriptSanityCheck(void);
 
