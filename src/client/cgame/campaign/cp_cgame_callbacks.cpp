@@ -527,12 +527,7 @@ void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 	if (base == nullptr)
 		return;
 	const building_t* entry = base->map[row][col].building;
-	if (key == K_MOUSE3) {
-		if (entry) {
-			assert(!B_IsTileBlocked(base, col, row));
-			B_FillBuildingInfo(entry);
-		}
-	} else if (key == K_MOUSE2) {
+	if (key == K_MOUSE2) {
 		if (entry) {
 			cgi->Cmd_ExecuteString("building_destroy %i %i", base->idx, entry->idx);
 		}

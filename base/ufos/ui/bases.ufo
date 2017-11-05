@@ -25,15 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --]]
 
 --[[
- - @todo A lot of things here could be simplified
- - @todo Separate the base section code to Lua includes
- - @todo check these old feature requests
-	* - Add injured soldiers to employee count list
-	* - Icons for UFOPaedia, kill alien (aliencontainment)
-	* LATER IMPROVEMENTS:
-	* - Build facility: make building preview appear below each option when clicked
-	* - Build facility: make building capacity (+) buttons automatically select that building type
-	* - Build facility: Make the add building button turn to a warning if it is too high/low (low is for antimatter only)
+ - @todo A some things here could be simplified
 --]]
 
 require("ufox.lua")

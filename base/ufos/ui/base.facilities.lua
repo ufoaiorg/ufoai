@@ -24,6 +24,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --]]
 
+--[[
+ - @todo make building preview appear below each option when clicked
+ - @todo Make the add building button turn to a warning if it is too high/low (low is for antimatter only)
+--]]
+
 --header guard
 if (base.facilities == nil) then
 
@@ -35,8 +40,14 @@ base.facilities = {
 		local section = base.build_section(root_node, "facilities", "_Facilities", "icons/facilities")
 		section:child("header").on_click = function (sender)
 			local content_node = sender:parent():child("content")
+			if (content_node:child("building_info") ~= nil) then
+				content_node:child("building_info"):delete_node()
+			end
 			local building = content_node:first()
 			while (building ~= nil) do
+				if (building:child("hide") == nil) then
+					return
+				end
 				if (building:child("hide"):as_string() == "true") then
 					if (building:height() == 0) then
 						building:set_height(30)
@@ -85,7 +96,7 @@ base.facilities = {
 					class = "BuildingSpace",
 					tooltip = building_name,
 
-					{ name = "id",       class = "data",   value = building_id, },
+					{ name = "id",       class = "data",   text = building_id, },
 					{ name = "smlicon",  class = "button", icon = "icons/" .. building_id, },
 					{ name = "label",    class = "string", text = building_name, },
 					{ name = "data",     class = "string", text = capacity_string, },

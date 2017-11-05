@@ -175,7 +175,6 @@ bool B_AssembleMap(char* maps, size_t mapsLength, char* coords, size_t coordsLen
 
 building_t* B_GetNextBuilding(const base_t* base, building_t* lastBuilding);
 building_t* B_GetNextBuildingByType(const base_t* base, building_t* lastBuilding, buildingType_t buildingType);
-void B_BuildingStatus(const building_t* building);
 bool B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int* cnt);
 bool B_GetBuildingStatus(const base_t* const base, const buildingType_t type);
 void B_SetBuildingStatus(base_t* const base, const buildingType_t type, bool newStatus);

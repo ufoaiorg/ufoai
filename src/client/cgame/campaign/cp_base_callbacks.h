@@ -24,7 +24,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-void B_FillBuildingInfo(const building_t* building);
-
 void B_InitCallbacks(void);
 void B_ShutdownCallbacks(void);

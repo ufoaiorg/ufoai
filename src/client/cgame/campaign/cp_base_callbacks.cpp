@@ -337,88 +337,6 @@ static void B_BaseInit_f (void)
 	cgi->UI_ExecuteConfunc("current_employees %i %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_PILOT), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER));
 }
 
-#define MAX_BUILDING_INFO_TEXT_LENGTH 512
-
-/**
- * @brief Fills the Building info box with content
- * @param[in] building The building to describe
- */
-void B_FillBuildingInfo (const building_t* building)
-{
-	/* maybe someone call this command before the buildings are parsed?? */
-	if (!building)
-		return;
-
-	static char buildingText[MAX_BUILDING_INFO_TEXT_LENGTH];
-	buildingText[0] = '\0';
-	B_BuildingStatus(building);
-	Com_sprintf(buildingText, sizeof(buildingText), "%s\n", _(building->name));
-	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
-		Com_sprintf(buildingText, sizeof(buildingText), _("Costs:\t%i c\n"), building->fixCosts);
-	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION || building->buildingStatus == B_STATUS_NOT_SET)
-		Q_strcat(buildingText, sizeof(buildingText), ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime);
-	if (building->varCosts)
-		Q_strcat(buildingText, sizeof(buildingText), _("Running costs:\t%i c\n"), building->varCosts);
-	if (building->dependsBuilding)
-		Q_strcat(buildingText, sizeof(buildingText), _("Needs:\t%s\n"), _(building->dependsBuilding->name));
-	if (building->name)
-		cgi->Cvar_Set("mn_building_name", "%s", _(building->name));
-	if (building->image)
-		cgi->Cvar_Set("mn_building_image", "%s", building->image);
-	else
-		cgi->Cvar_Set("mn_building_image", "base/empty");
-
-	/* link into menu text array */
-	cgi->UI_RegisterText(TEXT_BUILDING_INFO, buildingText);
-}
-
-/**
- * @brief Opens the UFOpedia for the current selected building.
- */
-static void B_BuildingInfoClick_f (void)
-{
-	base_t* base = B_GetCurrentSelectedBase();
-
-	if (!base)
-		return;
-
-	if (base->buildingCurrent)
-		UP_OpenWith(base->buildingCurrent->pedia);
-}
-
-/**
- * @brief Script function for clicking the building list text field.
- */
-static void B_BuildingClick_f (void)
-{
-	building_t* building;
-	base_t* base = B_GetCurrentSelectedBase();
-
-	if (!base)
-		return;
-
-	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <building_id>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	/* which building? */
-	building = B_GetBuildingTemplateSilent(cgi->Cmd_Argv(1));
-	if (!building) {
-		Com_Printf("Invalid building id\n");
-		return;
-	}
-
-	base->buildingCurrent = building;
-	B_FillBuildingInfo(building);
-
-	/* Prevent building more if we reached the limit */
-	if (building->maxCount >= 0 && B_GetNumberOfBuildingsInBaseByTemplate(base, building) >= building->maxCount)
-		return;
-
-	ccs.baseAction = BA_NEWBUILDING;
-}
-
 /**
  * @brief Mark a building for destruction - you only have to confirm it now
  * @param[in] building Pointer to the base to destroy
@@ -582,6 +500,46 @@ static void B_MakeBaseMapShot_f (void)
 }
 
 /**
+ * @brief Script function for clicking the building list text field.
+ */
+static void B_FillBuildingInfo_f (void)
+{
+	if (cgi->Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <baseIDX> <buildingID>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+	base_t* base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (!base) {
+		Com_Printf("Invalid base idx\n");
+		return;
+	}
+	building_t* building = B_GetBuildingTemplateSilent(cgi->Cmd_Argv(2));
+	if (!building) {
+		Com_Printf("Invalid building id\n");
+		return;
+	}
+	/** @todo remove this */
+	base->buildingCurrent = building;
+
+	cgi->UI_ExecuteConfunc("show_buildinginfo %s \"%s\" \"%s\" %i %i %i \"%s\" \"%s\"",
+		building->id,
+		building->name,
+		building->image,
+		building->fixCosts,
+		building->varCosts,
+		building->buildTime,
+		va(ngettext("%i day", "%i days", building->buildTime), building->buildTime),
+		building->dependsBuilding ? building->dependsBuilding->name : ""
+	);
+
+	/* Prevent building more if we reached the limit */
+	if (building->maxCount >= 0 && B_GetNumberOfBuildingsInBaseByTemplate(base, building) >= building->maxCount)
+		return;
+
+	ccs.baseAction = BA_NEWBUILDING;
+}
+
+/**
  * @brief Update the facilities list
  */
 static void B_ListBuildings_f (void)
@@ -632,10 +590,9 @@ static const cmdList_t baseCallbacks[] = {
 	{"base_assemble", B_AssembleMap_f, "Called to assemble the current selected base"},
 	{"building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)"},
 	{"building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed"},
-	{"building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building"},
-	{"buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode"},
 	{"reset_building_current", B_ResetBuildingCurrent_f, nullptr},
 	{"ui_list_buildings", B_ListBuildings_f, "Lists buildings built or can be built on a base and their capacities"},
+	{"ui_show_buildinginfo", B_FillBuildingInfo_f, "Opens the building information window in construction mode"},
 	{nullptr, nullptr, nullptr}
 };
 

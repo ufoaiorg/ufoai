@@ -992,47 +992,6 @@ static void B_Destroy_f (void)
 #endif
 
 /**
- * @brief Displays the status of a building for baseview.
- * @note updates the cvar mn_building_status which is used in the building
- * construction menu to display the status of the given building
- */
-void B_BuildingStatus (const building_t* building)
-{
-	assert(building);
-
-	cgi->Cvar_Set("mn_building_status", _("Not set"));
-
-	switch (building->buildingStatus) {
-	case B_STATUS_NOT_SET: {
-		const int numberOfBuildings = B_GetNumberOfBuildingsInBaseByTemplate(B_GetCurrentSelectedBase(), building->tpl);
-		if (numberOfBuildings >= 0)
-			cgi->Cvar_Set("mn_building_status", _("Already %i in base"), numberOfBuildings);
-		break;
-	}
-	case B_STATUS_UNDER_CONSTRUCTION:
-		cgi->Cvar_Set("mn_building_status", "");
-		break;
-	case B_STATUS_CONSTRUCTION_FINISHED:
-		cgi->Cvar_Set("mn_building_status", _("Construction finished"));
-		break;
-	case B_STATUS_WORKING:
-		if (B_CheckBuildingDependencesStatus(building)) {
-			cgi->Cvar_Set("mn_building_status", "%s", _("Working 100%"));
-		} else {
-			assert(building->dependsBuilding);
-			/** @todo shorten text or provide more space in overview popup */
-			cgi->Cvar_Set("mn_building_status",_("Not operational, depends on %s"), _(building->dependsBuilding->name));
-		}
-		break;
-	case B_STATUS_DOWN:
-		cgi->Cvar_Set("mn_building_status", _("Down"));
-		break;
-	default:
-		break;
-	}
-}
-
-/**
  * @brief Updates base status for particular buildings as well as capacities.
  * @param[in,out] building Pointer to building.
  * @param[in] status Enum of buildingStatus_t which is status of given building.
@@ -1420,7 +1379,6 @@ building_t* B_SetBuildingByClick (base_t* base, const building_t* buildingTempla
 			/* Update number of buildings on the base. */
 			ccs.numBuildings[base->idx]++;
 
-			B_BuildingStatus(buildingNew);
 			B_ResetBuildingCurrent(base);
 			cgi->Cmd_ExecuteString("base_init");
 			B_FireEvent(buildingNew, base, B_ONCONSTRUCT);
