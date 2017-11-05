@@ -118,6 +118,7 @@ do
 		},
 
 		finished = function (sender)
+			ufo.cmd("game_exit;")
 			if (sender:child("outcome"):text() == "won") then
 				ufo.cmd("initmainui; seq_start developers;")
 			else

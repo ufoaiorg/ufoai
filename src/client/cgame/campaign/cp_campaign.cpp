@@ -88,9 +88,8 @@ bool CP_IsRunning (void)
 void CP_EndCampaign (bool won)
 {
 	cgi->Cmd_ExecuteString("game_save slotend \"End of game\"");
-	cgi->Cmd_ExecuteString("game_exit");
-	cgi->UI_ExecuteConfunc(va("ui_set_endgame %s", won ? "won" : "lose"));
-	cgi->Cmd_ExecuteString("ui_initstack endgame");
+	cgi->Cbuf_AddText(va("ui_set_endgame %s;", won ? "won" : "lose"));
+	cgi->Cbuf_AddText("ui_initstack endgame;");
 
 	cgi->Com_Drop();
 }
