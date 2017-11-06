@@ -312,6 +312,8 @@ static void INS_SelectType_f (void)
 
 	INS_SetInstallationTitle(tpl->type);
 	cgi->Cvar_Set("mn_installation_type", "%s", tpl->id);
+	cgi->Cvar_Set("mn_installation_cost", "%d", tpl->cost);
+	cgi->Cvar_Set("mn_installation_timetobuild", "%d", tpl->buildTime);
 }
 
 static const cmdList_t installationCallbacks[] = {

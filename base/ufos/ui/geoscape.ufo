@@ -900,20 +900,21 @@ window popup_newinstallation extends ipopup
 	}
 	string cost
 	{
-		pos			"150 90"
+		string		*cvar:mn_installation_cost
+		pos		"150 90"
 		size		"150 20"
 	}
 
 	string buildtime_label
 	{
 		string		"_Time to build:"
-		pos			"25 110"
+		pos		"25 110"
 		size		"120 20"
 	}
 	string buildtime
 	{
 		string		*cvar:mn_installation_timetobuild
-		pos			"150 110"
+		pos		"150 110"
 		size		"150 20"
 	}
 
