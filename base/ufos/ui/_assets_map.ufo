@@ -318,7 +318,6 @@ component cmpMapSlot extends panel
 	}
 }
 
-
 // ========================
 // PANEL: Map settings
 // (time of day, enemy count, dropship and UFO options)

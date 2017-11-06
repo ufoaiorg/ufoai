@@ -298,8 +298,6 @@ window research extends BaseMgmtWindow
 
 		// Intended to update values for an item, called with ui_research_fill
 		confunc research_updateitem { }
-
-		data wnd_name { string "research" }
 	}
 
 	// Research item display panel

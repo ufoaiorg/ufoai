@@ -6,9 +6,7 @@ window production
 	{
 		fill		true
 	}
-/*	cmpBaseHeader baseHeader {
-	}
-*/
+
 	BaseContainerPanel base_container
 	{
 		// Production panel
@@ -235,8 +233,6 @@ window production
 			}
 
 		}
-
-		data wnd_name { string "production" }
 	}
 
 	// Basinfo count

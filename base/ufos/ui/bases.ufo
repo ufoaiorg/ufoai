@@ -275,36 +275,6 @@ do
 		},
 
 		{
-			name = "base_next_s",
-			class = "confunc",
-
-			on_click = function (sender, last_section)
-				ufo.pop_window(false)
-				ufo.cmd("mn_base_next;")
-			end,
-		},
-
-		{
-			name = "base_prev_s",
-			class = "confunc",
-
-			on_click = function (sender, last_section)
-				ufo.pop_window(false)
-				ufo.cmd("mn_base_prev;")
-			end,
-		},
-
-		{
-			name = "base_select_s",
-			class = "confunc",
-
-			on_click = function (sender, base_idx, last_section)
-				ufo.pop_window(false)
-				ufo.cmd(string.format("mn_base_select %d;", base_idx))
-			end,
-		},
-
-		{
 			name = "overlay",
 			class = "fuzzyScreen"
 		},
@@ -329,7 +299,6 @@ do
 				ufo.pop_window(false)
 			end
 			sender:root():child("base_idx"):set_text(base_idx)
-			-- generate base sections
 			sender:root().generate_sections(sender:root(), sender:root():child("base_idx"):as_string())
 		end,
 

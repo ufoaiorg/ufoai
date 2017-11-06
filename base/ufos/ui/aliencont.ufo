@@ -241,8 +241,6 @@ window aliencont
 				}
 			}
 		}
-
-		data wnd_name { string "containment" }
 	}
 
 	/**

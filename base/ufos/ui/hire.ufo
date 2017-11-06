@@ -271,8 +271,6 @@ window employees
 				}
 			}
 		}
-
-		data wnd_name { string "hire" }
 	}
 
 	actor_info local

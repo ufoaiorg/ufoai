@@ -161,10 +161,7 @@ do
 		end,
 
 		on_click = function (sender)
-			ufo.cmd(string.format("base_select_s %s %s;",
-				tostring(sender:baseid()),
-				tostring(sender:root():child("base_container"):child("wnd_name"):as_string())
-			))
+			ufo.cmd(string.format("mn_base_select %d;", tonumber(sender:baseid())))
 		end,
 	})
 end
@@ -590,61 +587,13 @@ do
 		bordersize = 2,
 		bordercolor = {0.56, 0.81, 0.76, 1},
 
-		{
-			name = "wnd_name",
-			class = "data",
-			value = "",
-		},
-
-		{
-			name = "prev",
-			class = "button",
-			icon = "icons/windowprev",
-			tooltip = "_Previous base",
-			pos = {90, 6},
-			size = {18, 18},
-
-			on_click = function (sender)
-				ufo.cmd(string.format("base_prev_s %s;", sender:parent():child("wnd_name"):as_string()))
-			end,
-
-			on_wheelup = function (sender)
-				ufo.cmd(string.format("base_next_s %s;", sender:parent():child("wnd_name"):as_string()))
-			end,
-
-			on_wheeldown = function (sender)
-				ufo.cmd(string.format("base_prev_s %s;", sender:parent():child("wnd_name"):as_string()))
-			end,
-		},
-
-		{
-			name = "next",
-			class = "button",
-			icon = "icons/windownext",
-			tooltip = "_Next base",
-			pos = {115, 6},
-			size = {18, 18},
-
-			on_click = function (sender)
-				ufo.cmd(string.format("base_next_s %s;", sender:parent():child("wnd_name"):as_string()))
-			end,
-
-			on_wheelup = function (sender)
-				ufo.cmd(string.format("base_next_s %s;", sender:parent():child("wnd_name"):as_string()))
-			end,
-
-			on_wheeldown = function (sender)
-				ufo.cmd(string.format("base_prev_s %s;", sender:parent():child("wnd_name"):as_string()))
-			end,
-		},
-
 		-- Base name
 		{
 			name = "name",
 			class = "textentry",
 			text = "*cvar:mn_base_title",
-			pos = {135, 0},
-			size = {465, 32},
+			pos = {75, 0},
+			size = {360, 32},
 			font = "f_small_bold",
 			color = {0.56, 0.81, 0.76, 1},
 			contentalign = ufo.ALIGN_CL,

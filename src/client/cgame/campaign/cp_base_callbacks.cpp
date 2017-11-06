@@ -98,59 +98,6 @@ static void B_SelectBase_f (void)
 }
 
 /**
- * @brief Cycles to the next base.
- * @sa B_PrevBase
- * @sa B_SelectBase_f
- */
-static void B_NextBase_f (void)
-{
-	base_t* base = B_GetCurrentSelectedBase();
-
-	if (!base)
-		return;
-
-	base = B_GetNext(base);
-	/* if it was the last base, select the first */
-	if (!base)
-		base = B_GetNext(nullptr);
-	if (base)
-		B_SelectBase(base);
-}
-
-/**
- * @brief Cycles to the previous base.
- * @sa B_NextBase
- * @sa B_SelectBase_f
- * @todo This should not rely on base->idx!
- */
-static void B_PrevBase_f (void)
-{
-	const base_t* currentBase = B_GetCurrentSelectedBase();
-	const base_t* prevBase;
-	base_t* base;
-
-	if (!currentBase)
-		return;
-
-	prevBase = nullptr;
-	base = nullptr;
-	while ((base = B_GetNext(base)) != nullptr) {
-		if (base == currentBase)
-			break;
-		prevBase = base;
-	}
-	/* if it was the first base, select the last */
-	if (!prevBase) {
-		while ((base = B_GetNext(base)) != nullptr) {
-			prevBase = base;
-		}
-	}
-
-	if (prevBase)
-		B_SelectBase(prevBase);
-}
-
-/**
  * @brief Sets the title of the base to a cvar to prepare the rename menu.
  */
 static void B_SetBaseTitle_f (void)
@@ -323,13 +270,6 @@ static void B_BaseInit_f (void)
 	else
 		cgi->UI_ExecuteConfunc("update_basebutton hospital true \"%s\"", _("No Hospital operating at this in base."));
 
-/*		if (b->buildingType != B_QUARTERS
-		 && b->buildingType != B_STORAGE
-		 && b->buildingType != B_WORKSHOP
-		 && b->buildingType != B_LAB
-		 && b->buildingType != B_ANTIMATTER)
-			continue;
-*/
 	/*
 	 * Get the number of different employees in the base
 	 * @todo: Get the number of injured soldiers if hospital exists
@@ -580,8 +520,6 @@ static void B_ListBuildings_f (void)
 /** Init/Shutdown functions */
 static const cmdList_t baseCallbacks[] = {
 	{"basemapshot", B_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles"},
-	{"mn_base_prev", B_PrevBase_f, "Go to the previous base"},
-	{"mn_base_next", B_NextBase_f, "Go to the next base"},
 	{"mn_base_select", B_SelectBase_f, "Select a founded base by index"},
 	{"mn_base_build", B_BuildBase_f, nullptr},
 	{"mn_set_base_title", B_SetBaseTitle_f, nullptr},

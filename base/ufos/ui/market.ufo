@@ -534,12 +534,6 @@ do
 				bordersize = 2,
 				bordercolor = {0.527, 0.6, 0.21, 1},
 			},
-
-			{
-				name = "wnd_name",
-				class = "data",
-				value = "buysell",
-			},
 		},
 
 		{
