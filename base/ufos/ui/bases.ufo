@@ -207,6 +207,16 @@ do
 			size = {298, 758},
 			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
 			layoutmargin = 2,
+
+			generate = function (sender, base_idx)
+				local sections = {"facilities", "aircraft", "hire", "buysell", "research", "production", "containment", "hospital"}
+				for i, section in ipairs(sections) do
+					require(string.format("base.%s.lua", section))
+					base[section].register(sender, tonumber(base_idx))
+				end
+				-- Get the parameters needed for this window
+				ufo.cmd("base_init;")
+			end,
 		},
 
 		-- Back to geoscape
@@ -279,18 +289,8 @@ do
 			class = "fuzzyScreen"
 		},
 
-		generate_sections = function (sender, base_idx)
-			local sections = {"facilities", "aircraft", "hire", "buysell", "research", "production", "containment", "hospital"}
-			for i, section in ipairs(sections) do
-				require(string.format("base.%s.lua", section))
-				base[section].register(sender:root():child("sections"), tonumber(base_idx))
-			end
-			-- Get the parameters needed for this window
-			ufo.cmd("base_init;")
-		end,
-
 		on_windowactivate = function (sender)
-			sender:root().generate_sections(sender:root(), sender:root():child("base_idx"):as_string())
+			sender:root():child("sections"):generate(sender:root():child("base_idx"):as_string())
 		end,
 
 		on_windowopened = function (sender, base_idx)
@@ -299,7 +299,7 @@ do
 				ufo.pop_window(false)
 			end
 			sender:root():child("base_idx"):set_text(base_idx)
-			sender:root().generate_sections(sender:root(), sender:root():child("base_idx"):as_string())
+			sender:root():child("sections"):generate(sender:root():child("base_idx"):as_string())
 		end,
 
 		on_windowclosed = function (sender)
