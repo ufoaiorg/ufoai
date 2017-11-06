@@ -388,12 +388,12 @@ static bool CP_LoadMapDefStatXML (xmlNode_t* parent)
 		mapDef_t* map;
 
 		if (s[0] == '\0') {
-			Com_Printf("Warning: MapDef with no id in xml!\n");
+			cgi->Com_Printf("Warning: MapDef with no id in xml!\n");
 			continue;
 		}
 		map = cgi->Com_GetMapDefinitionByID(s);
 		if (!map) {
-			Com_Printf("Warning: No MapDef with id '%s'!\n", s);
+			cgi->Com_Printf("Warning: No MapDef with id '%s'!\n", s);
 			continue;
 		}
 		map->timesAlreadyUsed = cgi->XML_GetInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, 0);
@@ -416,17 +416,17 @@ bool CP_LoadXML (xmlNode_t* parent)
 
 	campaignNode = cgi->XML_GetNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 	if (!campaignNode) {
-		Com_Printf("Did not find campaign entry in xml!\n");
+		cgi->Com_Printf("Did not find campaign entry in xml!\n");
 		return false;
 	}
 	if (!(name = cgi->XML_GetString(campaignNode, SAVE_CAMPAIGN_ID))) {
-		Com_Printf("couldn't locate campaign name in savegame\n");
+		cgi->Com_Printf("couldn't locate campaign name in savegame\n");
 		return false;
 	}
 
 	campaign = CP_GetCampaign(name);
 	if (!campaign) {
-		Com_Printf("......campaign \"%s\" doesn't exist.\n", name);
+		cgi->Com_Printf("......campaign \"%s\" doesn't exist.\n", name);
 		return false;
 	}
 
@@ -446,7 +446,7 @@ bool CP_LoadXML (xmlNode_t* parent)
 	ccs.civiliansKilled = cgi->XML_GetInt(campaignNode, SAVE_CAMPAIGN_CIVILIANSKILLED, 0);
 	ccs.aliensKilled = cgi->XML_GetInt(campaignNode, SAVE_CAMPAIGN_ALIENSKILLED, 0);
 
-	Com_DPrintf(DEBUG_CLIENT, "CP_LoadXML: Getting position\n");
+	cgi->Com_DPrintf(DEBUG_CLIENT, "CP_LoadXML: Getting position\n");
 
 	/* read map view */
 	mapNode = cgi->XML_GetNode(campaignNode, SAVE_CAMPAIGN_MAP);
@@ -546,7 +546,7 @@ void CP_StartSelectedMission (void)
 	battleParam_t* battleParam = &ccs.battleParameters;
 
 	if (!aircraft) {
-		Com_Printf("CP_StartSelectedMission: No mission aircraft\n");
+		cgi->Com_Printf("CP_StartSelectedMission: No mission aircraft\n");
 		return;
 	}
 
@@ -557,7 +557,7 @@ void CP_StartSelectedMission (void)
 
 	mis = GEO_GetSelectedMission();
 	if (!mis) {
-		Com_Printf("CP_StartSelectedMission: No mission selected\n");
+		cgi->Com_Printf("CP_StartSelectedMission: No mission selected\n");
 		return;
 	}
 
@@ -566,11 +566,11 @@ void CP_StartSelectedMission (void)
 
 	/* Various sanity checks. */
 	if (!mis->active) {
-		Com_Printf("CP_StartSelectedMission: Dropship not near landing zone: mis->active: %i\n", mis->active);
+		cgi->Com_Printf("CP_StartSelectedMission: Dropship not near landing zone: mis->active: %i\n", mis->active);
 		return;
 	}
 	if (AIR_GetTeamSize(aircraft) == 0) {
-		Com_Printf("CP_StartSelectedMission: No team in dropship.\n");
+		cgi->Com_Printf("CP_StartSelectedMission: No team in dropship.\n");
 		return;
 	}
 
@@ -595,20 +595,20 @@ void CP_StartSelectedMission (void)
 static void CP_DebugShowItems_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	int i = atoi(cgi->Cmd_Argv(1));
 	if (i >= B_GetCount()) {
-		Com_Printf("invalid baseID (%s)\n", cgi->Cmd_Argv(1));
+		cgi->Com_Printf("invalid baseID (%s)\n", cgi->Cmd_Argv(1));
 		return;
 	}
 	base_t* base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < cgi->csi->numODs; i++) {
 		const objDef_t* obj = INVSH_GetItemByIDX(i);
-		Com_Printf("%i. %s: %i\n", i, obj->id, B_ItemInBase(obj, base));
+		cgi->Com_Printf("%i. %s: %i\n", i, obj->id, B_ItemInBase(obj, base));
 	}
 }
 
@@ -621,7 +621,7 @@ static void CP_DebugShowItems_f (void)
 static void CP_DebugAddItem_f (void)
 {
 	if (cgi->Cmd_Argc() < 4) {
-		Com_Printf("Usage: %s <baseID> <itemid> <count>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <baseID> <itemid> <count>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -630,7 +630,7 @@ static void CP_DebugAddItem_f (void)
 	const int count = atoi(cgi->Cmd_Argv(3));
 
 	if (!base) {
-		Com_Printf("Invalid base index given\n");
+		cgi->Com_Printf("Invalid base index given\n");
 		return;
 	}
 	if (!obj) {
@@ -639,7 +639,7 @@ static void CP_DebugAddItem_f (void)
 	}
 
 	const int amount = B_AddToStorage(base, obj, count);
-	Com_Printf("%s %s %d\n", base->name, obj->id, amount);
+	cgi->Com_Printf("%s %s %d\n", base->name, obj->id, amount);
 	if (B_ItemInBase(obj, base) > 0) {
 		technology_t* tech = RS_GetTechForItem(obj);
 		RS_MarkCollected(tech);
@@ -655,7 +655,7 @@ static void CP_DebugAddItem_f (void)
 static void CP_DebugAddAntimatter_f (void)
 {
 	if (cgi->Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <baseID> <amount>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <baseID> <amount>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -663,7 +663,7 @@ static void CP_DebugAddAntimatter_f (void)
 	const int amount = atoi(cgi->Cmd_Argv(2));
 
 	if (!base) {
-		Com_Printf("Invalid base index given\n");
+		cgi->Com_Printf("Invalid base index given\n");
 		return;
 	}
 
@@ -868,7 +868,7 @@ campaign_t* CP_GetCampaign (const char* name)
 			break;
 
 	if (i == ccs.numCampaigns) {
-		Com_Printf("CL_GetCampaign: Campaign \"%s\" doesn't exist.\n", name);
+		cgi->Com_Printf("CL_GetCampaign: Campaign \"%s\" doesn't exist.\n", name);
 		return nullptr;
 	}
 	return campaign;

@@ -56,7 +56,7 @@ technology_t** AII_GetCraftitemTechsByType (aircraftItemType_t type)
 		}
 		/* j+1 because last item has to be nullptr */
 		if (j + 1 >= MAX_TECHNOLOGIES) {
-			Com_Printf("AII_GetCraftitemTechsByType: MAX_TECHNOLOGIES limit hit.\n");
+			cgi->Com_Printf("AII_GetCraftitemTechsByType: MAX_TECHNOLOGIES limit hit.\n");
 			break;
 		}
 	}
@@ -188,7 +188,7 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 	switch (basedefType) {
 	case BASEDEF_MISSILE:
 		if (base->numBatteries >= MAX_BASE_SLOT) {
-			Com_Printf("BDEF_AddBattery: too many missile batteries in base\n");
+			cgi->Com_Printf("BDEF_AddBattery: too many missile batteries in base\n");
 			return;
 		}
 		if (base->numBatteries)
@@ -201,7 +201,7 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 		break;
 	case BASEDEF_LASER:
 		if (base->numLasers >= MAX_BASE_SLOT) {
-			Com_Printf("BDEF_AddBattery: too many laser batteries in base\n");
+			cgi->Com_Printf("BDEF_AddBattery: too many laser batteries in base\n");
 			return;
 		}
 		base->lasers[base->numLasers].slot.ammoLeft = AMMO_STATUS_NOT_SET;
@@ -214,7 +214,7 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 		base->numLasers++;
 		break;
 	default:
-		Com_Printf("BDEF_AddBattery: unknown type of air defence system.\n");
+		cgi->Com_Printf("BDEF_AddBattery: unknown type of air defence system.\n");
 	}
 }
 
@@ -272,7 +272,7 @@ void BDEF_RemoveBattery (base_t* base, basedefenceType_t basedefType, int idx)
 		AII_InitialiseSlot(&base->lasers[base->numLasers].slot, nullptr, base, nullptr, AC_ITEM_BASE_LASER);
 		break;
 	default:
-		Com_Printf("BDEF_RemoveBattery_f: unknown type of air defence system.\n");
+		cgi->Com_Printf("BDEF_RemoveBattery_f: unknown type of air defence system.\n");
 	}
 }
 
@@ -359,23 +359,23 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 				/* Only stop time and post a notice, if no new item to install is assigned */
 				if (!slot->item) {
 					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-							_("%s was successfully removed from aircraft %s at %s."),
-							_(olditem->name), aircraft->name, base->name);
+						_("%s was successfully removed from aircraft %s at %s."),
+						_(olditem->name), aircraft->name, base->name);
 					MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED, _("Notice"), cp_messageBuffer);
 				} else {
 					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-							_ ("%s was successfully removed, starting installation of %s into aircraft %s at %s"),
-							_(olditem->name), _(slot->item->name), aircraft->name, base->name);
+						_ ("%s was successfully removed, starting installation of %s into aircraft %s at %s"),
+						_(olditem->name), _(slot->item->name), aircraft->name, base->name);
 					MSO_CheckAddNewMessage(NT_INSTALLATION_REPLACE, _("Notice"), cp_messageBuffer);
 				}
 			} else if (!slot->item) {
 				if (installation) {
 					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-							_("%s was successfully removed from installation %s."),
-							_(olditem->name), installation->name);
+						_("%s was successfully removed from installation %s."),
+						_(olditem->name), installation->name);
 				} else {
 					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("%s was successfully removed from %s."),
-							_(olditem->name), base->name);
+						_(olditem->name), base->name);
 				}
 				MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED, _("Notice"), cp_messageBuffer);
 			}
@@ -653,7 +653,7 @@ bool AII_AddAmmoToSlot (base_t* base, const technology_t* tech, aircraftSlot_t* 
 
 	const objDef_t* ammo = INVSH_GetItemByID(tech->provides);
 	if (!ammo) {
-		Com_Printf("AII_AddAmmoToSlot: Could not add item (%s) to slot\n", tech->provides);
+		cgi->Com_Printf("AII_AddAmmoToSlot: Could not add item (%s) to slot\n", tech->provides);
 		return false;
 	}
 
@@ -673,7 +673,7 @@ bool AII_AddAmmoToSlot (base_t* base, const technology_t* tech, aircraftSlot_t* 
 	 * and base ammo defence are not stored in storage */
 	if (base && ammo->craftitem.type <= AC_ITEM_AMMO) {
 		if (!B_BaseHasItem(base, ammo)) {
-			Com_Printf("AII_AddAmmoToSlot: No more ammo of this type to equip (%s)\n", ammo->id);
+			cgi->Com_Printf("AII_AddAmmoToSlot: No more ammo of this type to equip (%s)\n", ammo->id);
 			return false;
 		}
 	}
@@ -728,7 +728,7 @@ bool AII_AddItemToSlot (base_t* base, const technology_t* tech, aircraftSlot_t* 
 
 	item = INVSH_GetItemByID(tech->provides);
 	if (!item) {
-		Com_Printf("AII_AddItemToSlot: Could not add item (%s) to slot\n", tech->provides);
+		cgi->Com_Printf("AII_AddItemToSlot: Could not add item (%s) to slot\n", tech->provides);
 		return false;
 	}
 
@@ -737,20 +737,20 @@ bool AII_AddItemToSlot (base_t* base, const technology_t* tech, aircraftSlot_t* 
 	/* note that this should never be reached because a slot type should never be an ammo
 	 * , so the test just before should be wrong */
 	if (item->craftitem.type >= AC_ITEM_AMMO) {
-		Com_Printf("AII_AddItemToSlot: Type of the item to install (%s) should be a weapon, a shield, or electronics (no ammo)\n", item->id);
+		cgi->Com_Printf("AII_AddItemToSlot: Type of the item to install (%s) should be a weapon, a shield, or electronics (no ammo)\n", item->id);
 		return false;
 	}
 #endif
 
 	/* Sanity check : the type of the item should be the same than the slot type */
 	if (slot->type != item->craftitem.type) {
-		Com_Printf("AII_AddItemToSlot: Type of the item to install (%s -- %i) doesn't match type of the slot (%i)\n", item->id, item->craftitem.type, slot->type);
+		cgi->Com_Printf("AII_AddItemToSlot: Type of the item to install (%s -- %i) doesn't match type of the slot (%i)\n", item->id, item->craftitem.type, slot->type);
 		return false;
 	}
 
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
 	if (base && !B_BaseHasItem(base, item)) {
-		Com_Printf("AII_AddItemToSlot: No more item of this type to equip (%s)\n", item->id);
+		cgi->Com_Printf("AII_AddItemToSlot: No more item of this type to equip (%s)\n", item->id);
 		return false;
 	}
 
@@ -767,7 +767,7 @@ bool AII_AddItemToSlot (base_t* base, const technology_t* tech, aircraftSlot_t* 
 		if (base)
 			B_AddToStorage(base, item, -1);
 	} else {
-		Com_Printf("AII_AddItemToSlot: Could not add item '%s' to slot %i (slot-size: %i - item-weight: %i)\n",
+		cgi->Com_Printf("AII_AddItemToSlot: Could not add item '%s' to slot %i (slot-size: %i - item-weight: %i)\n",
 			item->id, slot->idx, slot->size, item->size);
 		return false;
 	}

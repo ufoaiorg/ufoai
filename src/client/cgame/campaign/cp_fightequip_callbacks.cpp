@@ -100,7 +100,7 @@ aircraftSlot_t* AII_SelectAircraftSlot (aircraft_t* aircraft, aircraftItemType_t
 		slot = aircraft->weapons + airequipSelectedSlot;
 		break;
 	default:
-		Com_Printf("AII_SelectAircraftSlot: Unknown airequipID: %i\n", type);
+		cgi->Com_Printf("AII_SelectAircraftSlot: Unknown airequipID: %i\n", type);
 		return nullptr;
 	}
 
@@ -568,7 +568,7 @@ static void AIM_AircraftEquipMenuUpdate_f (void)
 {
 	if (cgi->Cmd_Argc() != 2) {
 		if (airequipID == MAX_ACITEMS) {
-			Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
+			cgi->Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 			return;
 		}
 		AIM_CheckAirequipID();
@@ -610,7 +610,7 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 		return;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg> <zone1|zone2|item>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <arg> <zone1|zone2|item>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -641,7 +641,7 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 			}
 		}
 		if (i == aircraft->maxElectronics)
-			Com_Printf("this slot hasn't been found in aircraft electronics slots\n");
+			cgi->Com_Printf("this slot hasn't been found in aircraft electronics slots\n");
 		break;
 	case AC_ITEM_AMMO:
 	case AC_ITEM_WEAPON:
@@ -653,10 +653,10 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 			}
 		}
 		if (i == aircraft->maxWeapons)
-			Com_Printf("this slot hasn't been found in aircraft weapon slots\n");
+			cgi->Com_Printf("this slot hasn't been found in aircraft weapon slots\n");
 		break;
 	default:
-		Com_Printf("AIM_AircraftEquipSlotSelect_f : only weapons and electronics have several slots\n");
+		cgi->Com_Printf("AIM_AircraftEquipSlotSelect_f : only weapons and electronics have several slots\n");
 		break;
 	}
 
@@ -684,7 +684,7 @@ static void AIM_AircraftEquipZoneSelect_f (void)
 		return;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <arg>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -886,7 +886,7 @@ static void AIM_AircraftEquipMenuClick_f (void)
 	int techIdx;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -905,7 +905,7 @@ static void AIM_AircraftItemtypeByName_f (void)
 	const char* name;
 
 	if (cgi->Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <weapon|ammo|armour|item>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <weapon|ammo|armour|item>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -920,7 +920,7 @@ static void AIM_AircraftItemtypeByName_f (void)
 	else if (Q_streq(name, "item"))
 		i = AC_ITEM_ELECTRONICS;
 	else {
-		Com_Printf("AIM_AircraftItemtypeByName_f: Invalid itemtype!\n");
+		cgi->Com_Printf("AIM_AircraftItemtypeByName_f: Invalid itemtype!\n");
 		return;
 	}
 

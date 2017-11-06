@@ -48,7 +48,7 @@ static void B_Destroy_AntimaterStorage_f (void)
 	const float prob = frand();
 
 	if (cgi->Cmd_Argc() < 4) {	/** note: third parameter not used but we must be sure we have probability parameter */
-		Com_Printf("Usage: %s <probability> <baseID> <buildingType>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <probability> <baseID> <buildingType>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -79,7 +79,7 @@ static void B_SelectBase_f (void)
 	int baseID;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	baseID = atoi(cgi->Cmd_Argv(1));
@@ -373,7 +373,7 @@ static void B_BuildingDestroy_f (void)
 	building_t* building;
 
 	if (cgi->Cmd_Argc() < 3) {
-		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID> <buildingID> [confirmed]\n", cgi->Cmd_Argv(0));
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID> <buildingID> [confirmed]\n", cgi->Cmd_Argv(0));
 		return;
 	} else {
 		const int baseID = atoi(cgi->Cmd_Argv(1));
@@ -405,7 +405,7 @@ static void B_AssembleMap_f (void)
 	const base_t* base;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		base = B_GetCurrentSelectedBase();
 	} else {
 		const int baseID = atoi(cgi->Cmd_Argv(1));
@@ -425,7 +425,7 @@ static void B_AssembleMap_f (void)
 static void B_MakeBaseMapShot_f (void)
 {
 	if (!cgi->Com_ServerState()) {
-		Com_Printf("Load the base map before you try to use this function\n");
+		cgi->Com_Printf("Load the base map before you try to use this function\n");
 		return;
 	}
 
@@ -445,17 +445,17 @@ static void B_MakeBaseMapShot_f (void)
 static void B_FillBuildingInfo_f (void)
 {
 	if (cgi->Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <baseIDX> <buildingID>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <baseIDX> <buildingID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	base_t* base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (!base) {
-		Com_Printf("Invalid base idx\n");
+		cgi->Com_Printf("Invalid base idx\n");
 		return;
 	}
 	building_t* building = B_GetBuildingTemplateSilent(cgi->Cmd_Argv(2));
 	if (!building) {
-		Com_Printf("Invalid building id\n");
+		cgi->Com_Printf("Invalid building id\n");
 		return;
 	}
 	/** @todo remove this */
@@ -485,7 +485,7 @@ static void B_FillBuildingInfo_f (void)
 static void B_ListBuildings_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	const base_t* const base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(1)));

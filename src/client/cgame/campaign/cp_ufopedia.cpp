@@ -91,7 +91,7 @@ static void UP_ChangeDisplay (int newDisplay)
 	if (newDisplay < UFOPEDIA_DISPLAYEND && newDisplay >= 0)
 		upDisplay = newDisplay;
 	else
-		Com_Printf("Error in UP_ChangeDisplay (%i)\n", newDisplay);
+		cgi->Com_Printf("Error in UP_ChangeDisplay (%i)\n", newDisplay);
 
 	cgi->Cvar_SetValue("mn_uppreavailable", 0);
 
@@ -763,7 +763,7 @@ static void UP_FindEntry_f (void)
 	technology_t* tech;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <id>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -772,13 +772,13 @@ static void UP_FindEntry_f (void)
 
 	/* maybe we get a call like 'ufopedia ""' */
 	if (id[0] == '\0') {
-		Com_Printf("UP_FindEntry_f: No UFOpaedia entry given as parameter\n");
+		cgi->Com_Printf("UP_FindEntry_f: No UFOpaedia entry given as parameter\n");
 		return;
 	}
 
 	tech = RS_GetTechByID(id);
 	if (!tech) {
-		Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: No UFOpaedia entry found for %s\n", id);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: No UFOpaedia entry found for %s\n", id);
 		return;
 	}
 

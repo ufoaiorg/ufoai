@@ -153,7 +153,7 @@ static void MSO_Init_f (void)
 static void MSO_Toggle_f (void)
 {
 	if (cgi->Cmd_Argc() != 3)
-		Com_Printf("Usage: %s <listId> <pause|notify|sound>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <listId> <pause|notify|sound>\n", cgi->Cmd_Argv(0));
 	else {
 		uiOptionIterator_t iterator;
 		const int listIndex = atoi(cgi->Cmd_Argv(1));
@@ -173,7 +173,7 @@ static void MSO_Toggle_f (void)
 		if (!selectedEntry)
 			return;
 		if (selectedEntry->isCategory) {
-			Com_Printf("Toggle command with selected category entry ignored.\n");
+			cgi->Com_Printf("Toggle command with selected category entry ignored.\n");
 			return;
 		}
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
@@ -181,7 +181,7 @@ static void MSO_Toggle_f (void)
 				break;
 		}
 		if (type == NT_NUM_NOTIFYTYPE) {
-			Com_Printf("Unrecognized messagetype during toggle '%s' ignored\n", selectedEntry->notifyType);
+			cgi->Com_Printf("Unrecognized messagetype during toggle '%s' ignored\n", selectedEntry->notifyType);
 			return;
 		}
 

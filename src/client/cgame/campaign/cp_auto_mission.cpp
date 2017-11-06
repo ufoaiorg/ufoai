@@ -158,12 +158,12 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t* battle, const autoMiss
 	battle->actUnits[teamNum] = unitsAlive;
 
 	if (teamSize == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add soldiers to an auto-mission from an aircraft with no soldiers onboard.\n");
-		Com_DPrintf(DEBUG_CLIENT, "--- Note: Aliens might win this mission by default because they are un-challenged, with no resistance!\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add soldiers to an auto-mission from an aircraft with no soldiers onboard.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "--- Note: Aliens might win this mission by default because they are un-challenged, with no resistance!\n");
 	}
 	if (unitsAlive == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add team to auto battle where all the units on the team are DEAD!\n");
-		Com_DPrintf(DEBUG_CLIENT, "--- Note: This team will LOSE the battle by default.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add team to auto battle where all the units on the team are DEAD!\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "--- Note: This team will LOSE the battle by default.\n");
 	}
 
 	/* NOTE:  For now these are hard-coded to values based upon general campaign difficulty.
@@ -371,7 +371,7 @@ static void AM_CalculateTeamScores (autoMissionBattle_t* battle)
 		cgi->Com_Error(ERR_DROP, "No Active teams detected in Auto Battle!");
 
 	if (totalActiveTeams == 1) {
-		Com_DPrintf(DEBUG_CLIENT, "Note: Only one active team detected, this team will win the auto mission battle by default.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Note: Only one active team detected, this team will win the auto mission battle by default.\n");
 		battle->winningTeam = lastActiveTeam;
 		return;
 	}
@@ -409,10 +409,10 @@ static void AM_CalculateTeamScores (autoMissionBattle_t* battle)
 
 			/* In DEBUG mode, these should help with telling where things are at what time, for bug-hunting purposes. */
 			/* Note (Destructavator):  Is there a better way to implement this?  Is there a set protocol for this type of thing? */
-			Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of healthy units of %f.\n",
-					team, teamRatioHealthyUnits[team]);
-			Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of health values of %f.\n",
-					team, teamRatioHealthTotal[team]);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of healthy units of %f.\n",
+				team, teamRatioHealthyUnits[team]);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of health values of %f.\n",
+				team, teamRatioHealthTotal[team]);
 
 			/** @todo speaking names please */
 			skillAdjCalc = teamRatioHealthyUnits[team] + teamRatioHealthTotal[team];
@@ -426,8 +426,8 @@ static void AM_CalculateTeamScores (autoMissionBattle_t* battle)
 				battle->scoreTeamSkill[team] = ChkDNorm (FpCurveDn (battle->scoreTeamSkill[team], skillAdjCalcAbs) );
 			/* if (skillAdjCalc == exact 0.0), no change to team's skill. */
 
-			Com_DPrintf(DEBUG_CLIENT, "Team %i has adjusted skill rating of %f.\n",
-					team, battle->scoreTeamSkill[team]);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "Team %i has adjusted skill rating of %f.\n",
+				team, battle->scoreTeamSkill[team]);
 		}
 	}
 }
@@ -574,7 +574,7 @@ static bool AM_CheckFire (autoMissionBattle_t* battle, autoUnit_t* currUnit, aut
 		return true;
 
 #if DEBUG
-	Com_Printf("AutoBattle: Team: %d Unit: %d killed Team: %d Unit: %d\n", currUnit->team, currUnit->idx, eUnit->team, eUnit->idx);
+	cgi->Com_Printf("AutoBattle: Team: %d Unit: %d killed Team: %d Unit: %d\n", currUnit->team, currUnit->idx, eUnit->team, eUnit->idx);
 #endif
 	battle->actUnits[eUnit->team]--;
 
@@ -677,9 +677,9 @@ static void AM_DoFight (autoMissionBattle_t* battle)
 	bool combatActive = true;
 
 #ifdef DEBUG
-	Com_Printf("Auto battle started\n");
+	cgi->Com_Printf("Auto battle started\n");
 	for (int teamID = 0; teamID < AUTOMISSION_TEAM_TYPE_MAX; teamID++) {
-		Com_Printf("Team %d Units: %d\n", teamID, battle->nUnits[teamID]);
+		cgi->Com_Printf("Team %d Units: %d\n", teamID, battle->nUnits[teamID]);
 	}
 #endif
 
@@ -706,8 +706,8 @@ static void AM_DoFight (autoMissionBattle_t* battle)
 				if (!AM_IsUnitActive(unit))
 					continue;
 
-				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i has adjusted attack rating of %f.\n",
-						currentUnit, team, battle->scoreTeamSkill[team]);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i has adjusted attack rating of %f.\n",
+					currentUnit, team, battle->scoreTeamSkill[team]);
 
 				aliveUnits++;
 				combatActive = AM_UnitAttackEnemy(battle, unit, effective);
@@ -898,7 +898,7 @@ void AM_Go (mission_t* mission, aircraft_t* aircraft, const campaign_t* campaign
 	assert(aircraft->homebase);
 
 	if (mission && mission->mapDef && mission->mapDef->storyRelated) {
-		Com_Printf("Story-related mission cannot be done via automission\n");
+		cgi->Com_Printf("Story-related mission cannot be done via automission\n");
 		return;
 	}
 

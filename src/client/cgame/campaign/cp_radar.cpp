@@ -151,7 +151,7 @@ static bool RADAR_AddUFO (radar_t* radar, const aircraft_t* ufo)
 {
 #ifdef DEBUG
 	if (RADAR_IsUFOSensored(radar, ufo)) {
-		Com_Printf("RADAR_AddUFO: Aircraft already in radar range\n");
+		cgi->Com_Printf("RADAR_AddUFO: Aircraft already in radar range\n");
 		return false;
 	}
 #endif
@@ -281,14 +281,14 @@ void RADAR_UpdateBaseRadarCoverage_f (void)
 	float level;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseIdx> <buildingType>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <baseIdx> <buildingType>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	baseIdx = atoi(cgi->Cmd_Argv(1));
 
 	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
-		Com_Printf("RADAR_UpdateBaseRadarCoverage_f: %i is outside bounds\n", baseIdx);
+		cgi->Com_Printf("RADAR_UpdateBaseRadarCoverage_f: %i is outside bounds\n", baseIdx);
 		return;
 	}
 

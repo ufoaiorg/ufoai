@@ -151,7 +151,7 @@ static void CP_TerrorMissionGo (mission_t* mission)
 		break;
 	}
 	if (counter >= MAX_POS_LOOP) {
-		Com_DPrintf(DEBUG_CLIENT, "CP_TerrorMissionGo: Could not set position.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "CP_TerrorMissionGo: Could not set position.\n");
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -193,7 +193,7 @@ void CP_TerrorMissionNextStage (mission_t* mission)
 		CP_TerrorMissionIsSuccess(mission);
 		break;
 	default:
-		Com_Printf("CP_TerrorMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		cgi->Com_Printf("CP_TerrorMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
 		CP_MissionRemove(mission);
 		break;
 	}

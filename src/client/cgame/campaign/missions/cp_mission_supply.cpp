@@ -99,7 +99,7 @@ static void CP_SupplySetStayAtBase (mission_t* mission)
 
 	/* Maybe base has been destroyed since mission creation ? */
 	if (!AB_CheckSupplyMissionPossible()) {
-		Com_DPrintf(DEBUG_CLIENT, "No base in game: removing supply mission.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "No base in game: removing supply mission.\n");
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -127,7 +127,7 @@ static void CP_SupplyGoToBase (mission_t* mission)
 
 	/* Maybe base has been destroyed since mission creation ? */
 	if (!AB_CheckSupplyMissionPossible()) {
-		Com_DPrintf(DEBUG_CLIENT, "No base in game: removing supply mission.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "No base in game: removing supply mission.\n");
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -152,20 +152,20 @@ static void CP_SupplyMissionCreate (mission_t* mission)
 
 	/* Maybe base has been destroyed since mission creation ? */
 	if (!AB_CheckSupplyMissionPossible()) {
-		Com_DPrintf(DEBUG_CLIENT, "No base in game: removing supply mission.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "No base in game: removing supply mission.\n");
 		CP_MissionRemove(mission);
 		return;
 	}
 
 	ufoType = CP_MissionChooseUFO(mission);
 	if (ufoType == UFO_NONE) {
-		Com_DPrintf(DEBUG_CLIENT, "Supply mission can't be spawned without UFO: removing supply mission.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Supply mission can't be spawned without UFO: removing supply mission.\n");
 		CP_MissionRemove(mission);
 	} else {
 		CP_MissionDisableTimeLimit(mission);
 		mission->ufo = UFO_AddToGeoscape(ufoType, nullptr, mission);
 		if (!mission->ufo) {
-			Com_Printf("CP_SupplyMissionCreate: Could not add UFO '%s', remove mission\n", cgi->Com_UFOTypeToShortName(ufoType));
+			cgi->Com_Printf("CP_SupplyMissionCreate: Could not add UFO '%s', remove mission\n", cgi->Com_UFOTypeToShortName(ufoType));
 			CP_MissionRemove(mission);
 		}
 	}
@@ -199,7 +199,7 @@ void CP_SupplyMissionNextStage (mission_t* mission)
 		CP_SupplyMissionIsSuccess(mission);
 		break;
 	default:
-		Com_Printf("CP_SupplyMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		cgi->Com_Printf("CP_SupplyMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
 		CP_MissionRemove(mission);
 		break;
 	}

@@ -63,14 +63,14 @@ static bool AIRFIGHT_AddProjectile (const base_t* attackingBase, const installat
 	aircraftProjectile_t* projectile;
 
 	if (ccs.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
-		Com_DPrintf(DEBUG_CLIENT, "Too many projectiles on map\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Too many projectiles on map\n");
 		return false;
 	}
 
 	projectile = &ccs.projectiles[ccs.numProjectiles];
 
 	if (!weaponSlot->ammo) {
-		Com_Printf("AIRFIGHT_AddProjectile: Error - no ammo assigned\n");
+		cgi->Com_Printf("AIRFIGHT_AddProjectile: Error - no ammo assigned\n");
 		return false;
 	}
 
@@ -137,16 +137,16 @@ static bool AIRFIGHT_AddProjectile (const base_t* attackingBase, const installat
 static void AIRFIGHT_ProjectileList_f (void)
 {
 	for (int i = 0; i < ccs.numProjectiles; i++) {
-		Com_Printf("%i. (idx: %i)\n", i, ccs.projectiles[i].idx);
-		Com_Printf("... type '%s'\n", ccs.projectiles[i].aircraftItem->id);
+		cgi->Com_Printf("%i. (idx: %i)\n", i, ccs.projectiles[i].idx);
+		cgi->Com_Printf("... type '%s'\n", ccs.projectiles[i].aircraftItem->id);
 		if (ccs.projectiles[i].attackingAircraft)
-			Com_Printf("... shooting aircraft '%s'\n", ccs.projectiles[i].attackingAircraft->id);
+			cgi->Com_Printf("... shooting aircraft '%s'\n", ccs.projectiles[i].attackingAircraft->id);
 		else
-			Com_Printf("... base is shooting, or shooting aircraft is destroyed\n");
+			cgi->Com_Printf("... base is shooting, or shooting aircraft is destroyed\n");
 		if (ccs.projectiles[i].aimedAircraft)
-			Com_Printf("... aiming aircraft '%s'\n", ccs.projectiles[i].aimedAircraft->id);
+			cgi->Com_Printf("... aiming aircraft '%s'\n", ccs.projectiles[i].aimedAircraft->id);
 		else
-			Com_Printf("... aiming idle target at (%.02f, %.02f)\n",
+			cgi->Com_Printf("... aiming idle target at (%.02f, %.02f)\n",
 				ccs.projectiles[i].idleTarget[0], ccs.projectiles[i].idleTarget[1]);
 	}
 }
@@ -274,30 +274,30 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t* shooter, const aircraf
 	float probability = 0.0f;
 
 	if (!slot->item) {
-		Com_Printf("AIRFIGHT_ProbabilityToHit: no weapon assigned to attacking aircraft\n");
+		cgi->Com_Printf("AIRFIGHT_ProbabilityToHit: no weapon assigned to attacking aircraft\n");
 		return probability;
 	}
 
 	if (!slot->ammo) {
-		Com_Printf("AIRFIGHT_ProbabilityToHit: no ammo in weapon of attacking aircraft\n");
+		cgi->Com_Printf("AIRFIGHT_ProbabilityToHit: no ammo in weapon of attacking aircraft\n");
 		return probability;
 	}
 
 	/* Take Base probability from the ammo of the attacking aircraft */
 	probability = slot->ammo->craftitem.stats[AIR_STATS_ACCURACY];
-	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Base probability: %f\n", probability);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Base probability: %f\n", probability);
 
 	/* Modify this probability by items of the attacking aircraft (stats is in percent) */
 	if (shooter)
 		probability *= shooter->stats[AIR_STATS_ACCURACY] / 100.0f;
 
-	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting items of attacker: %f\n", probability);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting items of attacker: %f\n", probability);
 
 	/* Modify this probability by items of the aimed aircraft (stats is in percent) */
 	if (target)
 		probability /= target->stats[AIR_STATS_ECM] / 100.0f;
 
-	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting ECM of target: %f\n", probability);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting ECM of target: %f\n", probability);
 
 	/* If shooter is a PHALANX craft, check the targeting skills of the pilot */
 	if (shooter && !AIR_IsUFO(shooter)) {
@@ -309,7 +309,7 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t* shooter, const aircraf
 			 */
 			probability += ( ( ( 1.4f - ( shooter->pilot->chr.score.skills[SKILL_TARGETING] / 100.0f ) ) * ( shooter->pilot->chr.score.skills[SKILL_TARGETING] / 100.0f ) ) - 0.2f );
 
-			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting targeting skill of shooter: %f\n",
+			cgi->Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting targeting skill of shooter: %f\n",
 					probability);
 		}
 	}
@@ -324,7 +324,7 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t* shooter, const aircraf
 			 */
 			probability -= ( ( ( 1.4f - ( target->pilot->chr.score.skills[SKILL_EVADING] / 100.0f ) ) * ( target->pilot->chr.score.skills[SKILL_EVADING] / 100.0f ) ) - 0.2f );
 
-			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting evasion skill of target: %f\n",
+			cgi->Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability after accounting evasion skill of target: %f\n",
 					probability);
 		}
 	}
@@ -332,7 +332,7 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t* shooter, const aircraf
 	/* Probability should not exceed 0.95 so there is always a chance to miss */
 	probability = std::min(probability, 0.95f);
 
-	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability to hit: %f\n", probability);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability to hit: %f\n", probability);
 
 	return probability;
 }
@@ -362,11 +362,11 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 		if (AIRFIGHT_AddProjectile(nullptr, nullptr, shooter, target, weaponSlot)) {
 			/* will we miss the target ? */
 			const float probability = frand();
-			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ExecuteActions: %s - Random probability to hit: %f\n", shooter->name, probability);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ExecuteActions: %s - Random probability to hit: %f\n", shooter->name, probability);
 			weaponSlot->delayNextShot = ammo->craftitem.weaponDelay;
 
 			const float calculatedProbability = AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx);
-			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ExecuteActions: %s - Calculated probability to hit: %f\n", shooter->name, calculatedProbability);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ExecuteActions: %s - Calculated probability to hit: %f\n", shooter->name, calculatedProbability);
 
 			if (probability > calculatedProbability)
 				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1]);
@@ -483,7 +483,7 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t* shoo
 		if (!MapIsWater(color)) {
 			CP_SpawnCrashSiteMission(aircraft);
 		} else {
-			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", cgi->csi->terrainDefs.getTerrainName(color), color[0], color[1], color[2]);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", cgi->csi->terrainDefs.getTerrainName(color), color[0], color[1], color[2]);
 			MS_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."));
 			CP_MissionIsOverByUFO(aircraft);
 		}
@@ -948,7 +948,7 @@ bool AIRFIGHT_LoadXML (xmlNode_t* parent)
 		aircraftProjectile_t* projectile = &ccs.projectiles[i];
 
 		if (!tech) {
-			Com_Printf("AIR_Load: Could not get technology of projectile %i\n", i);
+			cgi->Com_Printf("AIR_Load: Could not get technology of projectile %i\n", i);
 			return false;
 		}
 

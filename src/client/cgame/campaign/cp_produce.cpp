@@ -473,7 +473,7 @@ static void PR_FinishDisassembly (base_t* base, production_t* prod)
 	}
 
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."),
-			UFO_TypeToName(ufo->ufoTemplate->getUfoType()), base->name);
+		UFO_TypeToName(ufo->ufoTemplate->getUfoType()), base->name);
 	MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, MSG_PRODUCTION, ufo->ufoTemplate->tech);
 
 	/* Removing UFO will remove the production too */
@@ -721,7 +721,7 @@ bool PR_LoadXML (xmlNode_t* p)
 		production_queue_t* pq;
 
 		if (base == nullptr) {
-			Com_Printf("Invalid production queue index %i\n", baseIDX);
+			cgi->Com_Printf("Invalid production queue index %i\n", baseIDX);
 			continue;
 		}
 
@@ -738,8 +738,8 @@ bool PR_LoadXML (xmlNode_t* p)
 
 			/* amount */
 			if (prod->amount <= 0) {
-				Com_Printf("PR_LoadXML: Production with amount <= 0 dropped (baseidx=%i, production idx=%i).\n",
-						baseIDX, pq->numItems);
+				cgi->Com_Printf("PR_LoadXML: Production with amount <= 0 dropped (baseidx=%i, production idx=%i).\n",
+					baseIDX, pq->numItems);
 				continue;
 			}
 			/* item */
@@ -751,7 +751,7 @@ bool PR_LoadXML (xmlNode_t* p)
 				storedUFO_t* ufo = US_GetStoredUFOByIDX(ufoIDX);
 
 				if (!ufo) {
-					Com_Printf("PR_LoadXML: Could not find ufo idx: %i\n", ufoIDX);
+					cgi->Com_Printf("PR_LoadXML: Could not find ufo idx: %i\n", ufoIDX);
 					continue;
 				}
 
@@ -764,7 +764,7 @@ bool PR_LoadXML (xmlNode_t* p)
 				PR_SetData(&prod->data, PRODUCTION_TYPE_AIRCRAFT, AIR_GetAircraft(s2));
 
 			if (!PR_IsDataValid(&prod->data)) {
-				Com_Printf("PR_LoadXML: Production is not an item an aircraft nor a disassembly\n");
+				cgi->Com_Printf("PR_LoadXML: Production is not an item an aircraft nor a disassembly\n");
 				continue;
 			}
 

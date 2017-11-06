@@ -128,7 +128,7 @@ void BATTLE_Start (mission_t* mission, const battleParam_t* battleParameters)
 		const base_t* base = mission->data.base;
 
 		if (mission->category != INTERESTCATEGORY_BASE_ATTACK)
-			Com_Printf("Baseattack map on non-baseattack mission! (id=%s, category=%d)\n", mission->id, mission->category);
+			cgi->Com_Printf("Baseattack map on non-baseattack mission! (id=%s, category=%d)\n", mission->id, mission->category);
 		/* assemble a random base */
 		if (!base)
 			cgi->Com_Error(ERR_DROP, "Baseattack map without base!");
@@ -252,7 +252,7 @@ static void CP_SetAlienEquipmentByInterest (const mission_t* mission, linkedList
 			availableEquipDef++;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "CP_SetAlienEquipmentByInterest: %i available equipment packs for mission %s\n", availableEquipDef, mission->id);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "CP_SetAlienEquipmentByInterest: %i available equipment packs for mission %s\n", availableEquipDef, mission->id);
 
 	if (!availableEquipDef)
 		cgi->Com_Error(ERR_DROP, "CP_SetAlienEquipmentByInterest: no available alien equipment for mission '%s'", mission->id);
@@ -433,9 +433,9 @@ mission_t* CP_GetMissionByID (const char* missionId)
 	mission_t* mission = CP_GetMissionByIDSilent(missionId);
 
 	if (!missionId)
-		Com_Printf("CP_GetMissionByID: missionId was nullptr!\n");
+		cgi->Com_Printf("CP_GetMissionByID: missionId was nullptr!\n");
 	else if (!mission)
-		Com_Printf("CP_GetMissionByID: Could not find mission %s\n", missionId);
+		cgi->Com_Printf("CP_GetMissionByID: Could not find mission %s\n", missionId);
 
 	return mission;
 }
@@ -596,7 +596,7 @@ const char* MIS_GetModel (const mission_t* mission)
 	if (mission->mapDef->storyRelated && mission->category != INTERESTCATEGORY_ALIENBASE)
 		return "geoscape/icon_story";
 
-	Com_DPrintf(DEBUG_CLIENT, "Mission is %s, %d\n", mission->id, mission->category);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "Mission is %s, %d\n", mission->id, mission->category);
 	switch (mission->category) {
 	case INTERESTCATEGORY_RESCUE:
 		return "geoscape/icon_rescue";
@@ -747,7 +747,7 @@ void CP_MissionAddToGeoscape (mission_t* mission, bool force)
 #ifdef DEBUG
 	/* UFO that spawned this mission should be close of mission */
 	if (mission->ufo && ((fabs(mission->ufo->pos[0] - mission->pos[0]) > 1.0f) || (fabs(mission->ufo->pos[1] - mission->pos[1]) > 1.0f))) {
-		Com_Printf("Error: mission (stage: %s) spawned is not at the same location as UFO\n", CP_MissionStageToName(mission->stage));
+		cgi->Com_Printf("Error: mission (stage: %s) spawned is not at the same location as UFO\n", CP_MissionStageToName(mission->stage));
 	}
 #endif
 
@@ -1033,14 +1033,14 @@ bool CP_ChooseMap (mission_t* mission, const vec2_t pos)
 			return true;
 		}
 
-		Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
-		Com_Printf("  ufo: %s -- pos: ", mission->ufo ? cgi->Com_UFOTypeToShortName(mission->ufo->getUfoType()) : "none");
+		cgi->Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
+		cgi->Com_Printf("  ufo: %s -- pos: ", mission->ufo ? cgi->Com_UFOTypeToShortName(mission->ufo->getUfoType()) : "none");
 		if (pos)
-			Com_Printf("%s", MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)) ? " (in water) " : "");
+			cgi->Com_Printf("%s", MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)) ? " (in water) " : "");
 		if (pos)
-			Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
+			cgi->Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
 		else
-			Com_Printf("none\n");
+			cgi->Com_Printf("none\n");
 		return false;
 	}
 
@@ -1067,9 +1067,9 @@ bool CP_ChooseMap (mission_t* mission, const vec2_t pos)
 	/* A mission must have been selected */
 	mission->mapDef->timesAlreadyUsed++;
 	if (cp_missiontest->integer)
-		Com_Printf("Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, countMinimal);
+		cgi->Com_Printf("Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, countMinimal);
 	else
-		Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, countMinimal);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, countMinimal);
 
 	return true;
 }
@@ -1081,7 +1081,7 @@ bool CP_ChooseMap (mission_t* mission, const vec2_t pos)
  */
 void CP_MissionStageEnd (const campaign_t* campaign, mission_t* mission)
 {
-	Com_DPrintf(DEBUG_CLIENT, "Ending mission category %i, stage %i (time: %i day, %i sec)\n",
+	cgi->Com_DPrintf(DEBUG_CLIENT, "Ending mission category %i, stage %i (time: %i day, %i sec)\n",
 		mission->category, mission->stage, ccs.date.day, ccs.date.sec);
 
 	/* Crash mission is on the map for too long: aliens die or go away. End mission */
@@ -1126,7 +1126,7 @@ void CP_MissionStageEnd (const campaign_t* campaign, mission_t* mission)
 	case INTERESTCATEGORY_ALIENBASE:
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
-		Com_Printf("CP_MissionStageEnd: Invalid type of mission (%i), remove mission '%s'\n", mission->category, mission->id);
+		cgi->Com_Printf("CP_MissionStageEnd: Invalid type of mission (%i), remove mission '%s'\n", mission->category, mission->id);
 		CP_MissionRemove(mission);
 	}
 }
@@ -1188,7 +1188,7 @@ void CP_MissionIsOver (mission_t* mission)
 	case INTERESTCATEGORY_UFOCARRIER:
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
-		Com_Printf("CP_MissionIsOver: Invalid type of mission (%i), remove mission\n", mission->category);
+		cgi->Com_Printf("CP_MissionIsOver: Invalid type of mission (%i), remove mission\n", mission->category);
 		CP_MissionRemove(mission);
 		break;
 	}
@@ -1284,7 +1284,7 @@ void CP_MissionEnd (const campaign_t* campaign, mission_t* mission, const battle
 		if (employee->isHiredInBase(base) && (employee->chr.HP <= 0))
 			E_DeleteEmployee(employee);
 	}
-	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberOfSoldiers);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberOfSoldiers);
 
 	CP_ExecuteMissionTrigger(mission, won);
 	CP_MissionEndActions(mission, aircraft, won);
@@ -1365,7 +1365,7 @@ void CP_SpawnCrashSiteMission (aircraft_t* ufo)
 	/* Reset mapDef. CP_ChooseMap don't overwrite if set */
 	mission->mapDef = nullptr;
 	if (!CP_ChooseMap(mission, ufo->pos)) {
-		Com_Printf("CP_SpawnCrashSiteMission: No map found, remove mission.\n");
+		cgi->Com_Printf("CP_SpawnCrashSiteMission: No map found, remove mission.\n");
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -1435,7 +1435,7 @@ void CP_SpawnRescueMission (aircraft_t* aircraft, aircraft_t* ufo)
 
 	/* Check if ufo was destroyed too */
 	if (!ufo) {
-		Com_Printf("CP_SpawnRescueMission: UFO was also destroyed.\n");
+		cgi->Com_Printf("CP_SpawnRescueMission: UFO was also destroyed.\n");
 		/** @todo find out what to do in this case */
 		AIR_DestroyAircraft(aircraft, pilotSurvived);
 		return;
@@ -1454,7 +1454,7 @@ void CP_SpawnRescueMission (aircraft_t* aircraft, aircraft_t* ufo)
 	/* Reset mapDef. CP_ChooseMap don't overwrite if set */
 	mission->mapDef = nullptr;
 	if (!CP_ChooseMap(mission, aircraft->pos)) {
-		Com_Printf("CP_SpawnRescueMission: Cannot set mapDef for mission %s, removing.\n", mission->id);
+		cgi->Com_Printf("CP_SpawnRescueMission: Cannot set mapDef for mission %s, removing.\n", mission->id);
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -1548,7 +1548,7 @@ bool CP_MissionBegin (mission_t* mission)
 		}
 		mission->ufo = UFO_AddToGeoscape(ufoType, nullptr, mission);
 		if (!mission->ufo) {
-			Com_Printf("CP_MissionBegin: Could not add UFO '%s', remove mission %s\n",
+			cgi->Com_Printf("CP_MissionBegin: Could not add UFO '%s', remove mission %s\n",
 				cgi->Com_UFOTypeToShortName(ufoType), mission->id);
 			CP_MissionRemove(mission);
 			return false;
@@ -1765,7 +1765,7 @@ void CP_SpawnNewMissions (void)
 		 * http://www.wolframalpha.com/input/?i=Plot%5B40%2B%285-40%29%2A%28%28x-1000%29%2F%2820-1000%29%29%5E2%2C+%7Bx%2C+0%2C+1100%7D%5D
 		 */
 		int newMissionNum = (int) (ccs.curCampaign->maxMissions + (ccs.curCampaign->minMissions - ccs.curCampaign->maxMissions) * pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST) / (ccs.curCampaign->initialInterest - FINAL_OVERALL_INTEREST)), 2));
-		Com_DPrintf(DEBUG_CLIENT, "interest = %d, new missions = %d\n", ccs.overallInterest, newMissionNum);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "interest = %d, new missions = %d\n", ccs.overallInterest, newMissionNum);
 		for (int i = 0; i < newMissionNum; i++) {
 			if (frand() > nonOccurrence) {
 				const interestCategory_t type = CP_SelectNewMissionType();
@@ -1806,17 +1806,17 @@ static void MIS_SpawnNewMissions_f (void)
 	int type = 0;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <category> [<type>]\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <category> [<type>]\n", cgi->Cmd_Argv(0));
 		for (int i = INTERESTCATEGORY_RECON; i < INTERESTCATEGORY_MAX; i++) {
 			category = (interestCategory_t)i;
-			Com_Printf("...%i: %s", category, INT_InterestCategoryToName(category));
+			cgi->Com_Printf("...%i: %s", category, INT_InterestCategoryToName(category));
 			if (category == INTERESTCATEGORY_RECON)
-				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>");
+				cgi->Com_Printf(" <0:Random, 1:Aerial, 2:Ground>");
 			else if (category == INTERESTCATEGORY_BUILDING)
-				Com_Printf(" <0:Subverse Government, 1:Build Base>");
+				cgi->Com_Printf(" <0:Subverse Government, 1:Build Base>");
 			else if (category == INTERESTCATEGORY_INTERCEPT)
-				Com_Printf(" <0:Intercept aircraft, 1:Attack installation>");
-			Com_Printf("\n");
+				cgi->Com_Printf(" <0:Intercept aircraft, 1:Attack installation>");
+			cgi->Com_Printf("\n");
 		}
 		return;
 	}
@@ -1836,7 +1836,7 @@ static void MIS_SpawnNewMissions_f (void)
 		AB_SetAlienBasePosition(pos);				/* get base position */
 		base = AB_BuildBase(pos);					/* build base */
 		if (!base) {
-			Com_Printf("CP_BuildBaseSetUpBase: could not create base\n");
+			cgi->Com_Printf("CP_BuildBaseSetUpBase: could not create base\n");
 			return;
 		}
 		CP_SpawnAlienBaseMission(base);				/* make base visible */
@@ -1845,13 +1845,13 @@ static void MIS_SpawnNewMissions_f (void)
 		const base_t* base = B_GetFoundedBaseByIDX(0);
 		aircraft_t* aircraft;
 		if (!base) {
-			Com_Printf("No base yet\n");
+			cgi->Com_Printf("No base yet\n");
 			return;
 		}
 
 		aircraft = AIR_GetFirstFromBase(base);
 		if (!aircraft) {
-			Com_Printf("No aircraft in base\n");
+			cgi->Com_Printf("No aircraft in base\n");
 			return;
 		}
 		CP_SpawnRescueMission(aircraft, nullptr);
@@ -1860,7 +1860,7 @@ static void MIS_SpawnNewMissions_f (void)
 
 	mission_t* mission = CP_CreateNewMission(category, true);
 	if (!mission) {
-		Com_Printf("CP_SpawnNewMissions_f: Could not add mission, abort\n");
+		cgi->Com_Printf("CP_SpawnNewMissions_f: Could not add mission, abort\n");
 		return;
 	}
 
@@ -1894,10 +1894,10 @@ static void MIS_SpawnNewMissions_f (void)
 			}
 			break;
 		default:
-			Com_Printf("Type is not implemented for this category.\n");
+			cgi->Com_Printf("Type is not implemented for this category.\n");
 		}
 	}
-	Com_Printf("Spawned mission with id '%s'\n", mission->id);
+	cgi->Com_Printf("Spawned mission with id '%s'\n", mission->id);
 }
 
 /**
@@ -1908,13 +1908,13 @@ static void MIS_MissionSetMap_f (void)
 	mapDef_t* mapDef;
 	mission_t* mission;
 	if (cgi->Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <missionid> <mapdef>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <missionid> <mapdef>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	mission = CP_GetMissionByID(cgi->Cmd_Argv(1));
 	mapDef = cgi->Com_GetMapDefinitionByID(cgi->Cmd_Argv(2));
 	if (mapDef == nullptr) {
-		Com_Printf("Could not find mapdef for %s\n", cgi->Cmd_Argv(2));
+		cgi->Com_Printf("Could not find mapdef for %s\n", cgi->Cmd_Argv(2));
 		return;
 	}
 	mission->mapDef = mapDef;
@@ -1929,21 +1929,21 @@ static void MIS_MissionList_f (void)
 	bool noMission = true;
 
 	MIS_Foreach(mission) {
-		Com_Printf("mission: '%s'\n", mission->id);
-		Com_Printf("...category %i. '%s' -- stage %i. '%s'\n", mission->category,
+		cgi->Com_Printf("mission: '%s'\n", mission->id);
+		cgi->Com_Printf("...category %i. '%s' -- stage %i. '%s'\n", mission->category,
 			INT_InterestCategoryToName(mission->category), mission->stage, CP_MissionStageToName(mission->stage));
-		Com_Printf("...mapDef: '%s'\n", mission->mapDef ? mission->mapDef->id : "No mapDef defined");
-		Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
+		cgi->Com_Printf("...mapDef: '%s'\n", mission->mapDef ? mission->mapDef->id : "No mapDef defined");
+		cgi->Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
 			mission->startDate.day, mission->startDate.sec, mission->finalDate.day, mission->finalDate.sec);
-		Com_Printf("...pos (%.02f, %.02f)%s -- mission %son Geoscape\n", mission->pos[0], mission->pos[1], mission->posAssigned ? "(assigned Pos)" : "", mission->onGeoscape ? "" : "not ");
+		cgi->Com_Printf("...pos (%.02f, %.02f)%s -- mission %son Geoscape\n", mission->pos[0], mission->pos[1], mission->posAssigned ? "(assigned Pos)" : "", mission->onGeoscape ? "" : "not ");
 		if (mission->ufo)
-			Com_Printf("...UFO: %s (%i/%i)\n", mission->ufo->id, (int) (mission->ufo - ccs.ufos), ccs.numUFOs - 1);
+			cgi->Com_Printf("...UFO: %s (%i/%i)\n", mission->ufo->id, (int) (mission->ufo - ccs.ufos), ccs.numUFOs - 1);
 		else
-			Com_Printf("...UFO: no UFO\n");
+			cgi->Com_Printf("...UFO: no UFO\n");
 		noMission = false;
 	}
 	if (noMission)
-		Com_Printf("No mission currently in game.\n");
+		cgi->Com_Printf("No mission currently in game.\n");
 }
 
 /**
@@ -1957,7 +1957,7 @@ static void MIS_DeleteMissions_f (void)
 	}
 
 	if (ccs.numUFOs != 0) {
-		Com_Printf("CP_DeleteMissions_f: Error, there are still %i UFO in game afer removing all missions. Force removal.\n", ccs.numUFOs);
+		cgi->Com_Printf("CP_DeleteMissions_f: Error, there are still %i UFO in game afer removing all missions. Force removal.\n", ccs.numUFOs);
 		while (ccs.numUFOs)
 			UFO_RemoveFromGeoscape(ccs.ufos);
 	}
@@ -1972,7 +1972,7 @@ static void MIS_DeleteMission_f (void)
 	mission_t* mission;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <missionid>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <missionid>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	mission = CP_GetMissionByID(cgi->Cmd_Argv(1));
@@ -2081,7 +2081,7 @@ bool MIS_LoadXML (xmlNode_t* parent)
 		Q_strncpyz(mission.id, cgi->XML_GetString(node, SAVE_MISSIONS_ID), sizeof(mission.id));
 		mission.idx = cgi->XML_GetInt(node, SAVE_MISSIONS_MISSION_IDX, 0);
 		if (mission.idx <= 0) {
-			Com_Printf("mission has invalid or no index\n");
+			cgi->Com_Printf("mission has invalid or no index\n");
 			continue;
 		}
 
@@ -2089,7 +2089,7 @@ bool MIS_LoadXML (xmlNode_t* parent)
 		if (name && name[0] != '\0') {
 			mission.mapDef = cgi->Com_GetMapDefinitionByID(name);
 			if (!mission.mapDef) {
-				Com_Printf("Warning: mapdef \"%s\" for mission \"%s\" doesn't exist. Removing mission!\n", name, mission.id);
+				cgi->Com_Printf("Warning: mapdef \"%s\" for mission \"%s\" doesn't exist. Removing mission!\n", name, mission.id);
 				continue;
 			}
 		} else {
@@ -2097,12 +2097,12 @@ bool MIS_LoadXML (xmlNode_t* parent)
 		}
 
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_INTERESTCAT_NAMESPACE, categoryId, (int*) &mission.category)) {
-			Com_Printf("Invalid mission category '%s'\n", categoryId);
+			cgi->Com_Printf("Invalid mission category '%s'\n", categoryId);
 			continue;
 		}
 
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_MISSIONSTAGE_NAMESPACE, stageId, (int*) &mission.stage)) {
-			Com_Printf("Invalid mission stage '%s'\n", stageId);
+			cgi->Com_Printf("Invalid mission stage '%s'\n", stageId);
 			continue;
 		}
 
@@ -2122,10 +2122,10 @@ bool MIS_LoadXML (xmlNode_t* parent)
 				base_t* base = B_GetBaseByIDX(cgi->XML_GetInt(node, SAVE_MISSIONS_BASEINDEX, -1));
 				if (base) {
 					if (mission.stage == STAGE_BASE_ATTACK && !B_IsUnderAttack(base))
-						Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", base->idx, base->name);
+						cgi->Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", base->idx, base->name);
 					mission.data.base = base;
 				} else
-					Com_Printf("......warning: Missing BaseIndex\n");
+					cgi->Com_Printf("......warning: Missing BaseIndex\n");
 			}
 			break;
 		case INTERESTCATEGORY_INTERCEPT:
@@ -2134,7 +2134,7 @@ bool MIS_LoadXML (xmlNode_t* parent)
 				if (installation)
 					mission.data.installation = installation;
 				else {
-					Com_Printf("Mission on non-existent installation\n");
+					cgi->Com_Printf("Mission on non-existent installation\n");
 					continue;
 				}
 			}
@@ -2144,7 +2144,7 @@ bool MIS_LoadXML (xmlNode_t* parent)
 				const int aircraftIdx = cgi->XML_GetInt(node, SAVE_MISSIONS_CRASHED_AIRCRAFT, -1);
 				mission.data.aircraft = AIR_AircraftGetFromIDX(aircraftIdx);
 				if (mission.data.aircraft == nullptr) {
-					Com_Printf("Error while loading rescue mission (missionidx %i, aircraftidx: %i, category: %i, stage: %i)\n",
+					cgi->Com_Printf("Error while loading rescue mission (missionidx %i, aircraftidx: %i, category: %i, stage: %i)\n",
 							mission.idx, aircraftIdx, mission.category, mission.stage);
 					continue;
 				}
@@ -2163,7 +2163,7 @@ bool MIS_LoadXML (xmlNode_t* parent)
 				if (alienBase)
 					mission.data.alienBase = alienBase;
 				if (!mission.data.alienBase && !CP_BasemissionIsSubvertingGovernmentMission(&mission) && mission.stage >= STAGE_BUILD_BASE) {
-					Com_Printf("Error loading Alien Base mission (missionidx %i, baseidx: %i, category: %i, stage: %i): no such base\n",
+					cgi->Com_Printf("Error loading Alien Base mission (missionidx %i, baseidx: %i, category: %i, stage: %i): no such base\n",
 						mission.idx, baseIdx, mission.category, mission.stage);
 					continue;
 				}

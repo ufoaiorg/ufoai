@@ -360,7 +360,7 @@ bool BS_SellUGV (Employee* robot)
 
 	if (!robot->unhire()) {
 		/** @todo message - Couldn't fire employee. */
-		Com_DPrintf(DEBUG_CLIENT, "Couldn't sell/fire robot/ugv.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Couldn't sell/fire robot/ugv.\n");
 		return false;
 	}
 
@@ -493,7 +493,7 @@ bool BS_LoadXML (xmlNode_t* parent)
 		const objDef_t* od = INVSH_GetItemByID(s);
 
 		if (!od) {
-			Com_Printf("BS_LoadXML: Could not find item '%s'\n", s);
+			cgi->Com_Printf("BS_LoadXML: Could not find item '%s'\n", s);
 			continue;
 		}
 
@@ -541,7 +541,7 @@ void BS_InitMarket (const campaign_t* campaign)
 			/* the other relevant values were already set above */
 			market->numItems[i] = campaign->marketDef->numItems[i];
 		} else {
-			Com_Printf("BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n",
+			cgi->Com_Printf("BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n",
 					od->id, campaign->id);
 		}
 	}
@@ -562,7 +562,7 @@ void BS_InitMarket (const campaign_t* campaign)
 			/* the other relevant values were already set above */
 			market->numAircraft[i] = campaign->marketDef->numAircraft[i];
 		} else {
-			Com_Printf("BS_InitMarket: Could not add aircraft %s to the market - not marked as researched in campaign %s\n",
+			cgi->Com_Printf("BS_InitMarket: Could not add aircraft %s to the market - not marked as researched in campaign %s\n",
 					aircraft->id, campaign->id);
 		}
 	}

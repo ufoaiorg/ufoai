@@ -52,7 +52,7 @@ installationType_t INS_GetType (const char* type)
 	else if (Q_streq(type, "orbit"))
 		return INSTALLATION_ORBIT;
 
-	Com_Printf("unknown type given '%s'\n", type);
+	cgi->Com_Printf("unknown type given '%s'\n", type);
 	return INSTALLATION_RADAR;
 }
 
@@ -239,7 +239,7 @@ static void INS_FinishInstallation (installation_t* installation)
 	if (!installation->installationTemplate)
 		cgi->Com_Error(ERR_DROP, "INS_FinishInstallation: No Installation template.\n");
 	if (installation->installationStatus != INSTALLATION_UNDER_CONSTRUCTION) {
-		Com_DPrintf(DEBUG_CLIENT, "INS_FinishInstallation: Installation is not being built.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "INS_FinishInstallation: Installation is not being built.\n");
 		return;
 	}
 
@@ -263,22 +263,22 @@ static void INS_FinishInstallation (installation_t* installation)
 static void INS_InstallationList_f (void)
 {
 	INS_Foreach(installation) {
-		Com_Printf("Installation idx %i\n", installation->idx);
-		Com_Printf("Installation name %s\n", installation->name);
-		Com_Printf("Installation pos %.02f:%.02f\n", installation->pos[0], installation->pos[1]);
-		Com_Printf("Installation Alien interest %f\n", installation->alienInterest);
+		cgi->Com_Printf("Installation idx %i\n", installation->idx);
+		cgi->Com_Printf("Installation name %s\n", installation->name);
+		cgi->Com_Printf("Installation pos %.02f:%.02f\n", installation->pos[0], installation->pos[1]);
+		cgi->Com_Printf("Installation Alien interest %f\n", installation->alienInterest);
 
-		Com_Printf("\nInstallation sensorWidth %i\n", installation->radar.range);
-		Com_Printf("\nInstallation trackingWidth %i\n", installation->radar.trackingRange);
-		Com_Printf("Installation numSensoredAircraft %i\n\n", installation->radar.numUFOs);
+		cgi->Com_Printf("\nInstallation sensorWidth %i\n", installation->radar.range);
+		cgi->Com_Printf("\nInstallation trackingWidth %i\n", installation->radar.trackingRange);
+		cgi->Com_Printf("Installation numSensoredAircraft %i\n\n", installation->radar.numUFOs);
 
-		Com_Printf("\nInstallation numBatteries %i\n", installation->numBatteries);
+		cgi->Com_Printf("\nInstallation numBatteries %i\n", installation->numBatteries);
 		/** @todo list batteries */
 
-		Com_Printf("\nInstallation stored UFOs %i/%i\n", installation->ufoCapacity.cur, installation->ufoCapacity.max);
+		cgi->Com_Printf("\nInstallation stored UFOs %i/%i\n", installation->ufoCapacity.cur, installation->ufoCapacity.max);
 		/** @todo list stored Ufos*/
 
-		Com_Printf("\n\n");
+		cgi->Com_Printf("\n\n");
 	}
 }
 
@@ -292,7 +292,7 @@ static void INS_ConstructionFinished_f (void)
 	if (cgi->Cmd_Argc() == 2) {
 		idx = atoi(cgi->Cmd_Argv(1));
 		if (idx < 0) {
-			Com_Printf("Usage: %s [installationIDX]\nWithout parameter it builds up all.\n", cgi->Cmd_Argv(0));
+			cgi->Com_Printf("Usage: %s [installationIDX]\nWithout parameter it builds up all.\n", cgi->Cmd_Argv(0));
 			return;
 		}
 	}
@@ -394,24 +394,24 @@ void INS_ParseInstallations (const char* name, const char** text)
 	/* get id list body */
 	const char* token = Com_Parse(text);
 	if (!*text || *token != '{') {
-		Com_Printf("INS_ParseInstallations: installation \"%s\" without body ignored\n", name);
+		cgi->Com_Printf("INS_ParseInstallations: installation \"%s\" without body ignored\n", name);
 		return;
 	}
 
 	if (!name) {
-		Com_Printf("INS_ParseInstallations: installation name not specified.\n");
+		cgi->Com_Printf("INS_ParseInstallations: installation name not specified.\n");
 		return;
 	}
 
 	if (ccs.numInstallationTemplates >= MAX_INSTALLATION_TEMPLATES) {
-		Com_Printf("INS_ParseInstallations: too many installation templates\n");
+		cgi->Com_Printf("INS_ParseInstallations: too many installation templates\n");
 		ccs.numInstallationTemplates = MAX_INSTALLATION_TEMPLATES;	/* just in case it's bigger. */
 		return;
 	}
 
 	for (int i = 0; i < ccs.numInstallationTemplates; i++) {
 		if (Q_streq(ccs.installationTemplates[i].name, name)) {
-			Com_Printf("INS_ParseInstallations: Second installation with same name found (%s) - second ignored\n", name);
+			cgi->Com_Printf("INS_ParseInstallations: Second installation with same name found (%s) - second ignored\n", name);
 			return;
 		}
 	}
@@ -422,7 +422,7 @@ void INS_ParseInstallations (const char* name, const char** text)
 	installation->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 	installation->type = INSTALLATION_RADAR;
 
-	Com_DPrintf(DEBUG_CLIENT, "...found installation %s\n", installation->id);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "...found installation %s\n", installation->id);
 
 	ccs.numInstallationTemplates++;
 	const char* errhead = "INS_ParseInstallations: unexpected end of file (names ";
@@ -515,20 +515,20 @@ bool INS_LoadXML (xmlNode_t* p)
 		OBJZERO(inst);
 		inst.idx = cgi->XML_GetInt(s, SAVE_INSTALLATION_IDX, -1);
 		if (inst.idx < 0) {
-			Com_Printf("Invalid installation index %i\n", inst.idx);
+			cgi->Com_Printf("Invalid installation index %i\n", inst.idx);
 			success = false;
 			break;
 		}
 		const installationType_t type = INS_GetType(instID);
 		inst.installationTemplate = INS_GetInstallationTemplateByType(type);
 		if (!inst.installationTemplate) {
-			Com_Printf("Could not find installation template '%s'\n", instID);
+			cgi->Com_Printf("Could not find installation template '%s'\n", instID);
 			success = false;
 			break;
 		}
 
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_INSTALLATIONSTATUS_NAMESPACE, instStat, (int*) &inst.installationStatus)) {
-			Com_Printf("Invalid installation status '%s'\n", instStat);
+			cgi->Com_Printf("Invalid installation status '%s'\n", instStat);
 			success = false;
 			break;
 		}
@@ -555,13 +555,13 @@ bool INS_LoadXML (xmlNode_t* p)
 		/* read battery slots */
 		ss = cgi->XML_GetNode(s, SAVE_INSTALLATION_BATTERIES);
 		if (!ss) {
-			Com_Printf("INS_LoadXML: Batteries not defined!\n");
+			cgi->Com_Printf("INS_LoadXML: Batteries not defined!\n");
 			success = false;
 			break;
 		}
 		inst.numBatteries = cgi->XML_GetInt(ss, SAVE_INSTALLATION_NUM, 0);
 		if (inst.numBatteries > inst.installationTemplate->maxBatteries) {
-			Com_Printf("Installation has more batteries than possible, using upper bound\n");
+			cgi->Com_Printf("Installation has more batteries than possible, using upper bound\n");
 			inst.numBatteries = inst.installationTemplate->maxBatteries;
 		}
 

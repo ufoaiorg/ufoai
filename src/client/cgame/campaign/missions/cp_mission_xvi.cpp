@@ -111,7 +111,7 @@ void CP_XVIMissionNextStage (mission_t* mission)
 		CP_XVIMissionIsSuccess(mission);
 		break;
 	default:
-		Com_Printf("CP_XVIMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		cgi->Com_Printf("CP_XVIMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
 		CP_MissionRemove(mission);
 		break;
 	}

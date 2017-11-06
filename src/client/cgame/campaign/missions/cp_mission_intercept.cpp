@@ -176,7 +176,7 @@ void CP_InterceptGoToInstallation (mission_t* mission)
 
 	installation = CP_InterceptChooseInstallation(mission);
 	if (!installation) {
-		Com_Printf("CP_InterceptGoToInstallation: no installation found\n");
+		cgi->Com_Printf("CP_InterceptGoToInstallation: no installation found\n");
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -244,7 +244,7 @@ void CP_InterceptNextStage (mission_t* mission)
 		CP_InterceptMissionIsSuccess(mission);
 		break;
 	default:
-		Com_Printf("CP_InterceptNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		cgi->Com_Printf("CP_InterceptNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
 		CP_MissionRemove(mission);
 		break;
 	}

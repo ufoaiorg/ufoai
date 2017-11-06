@@ -484,7 +484,7 @@ bool B_GetBuildingStatus (const base_t* const base, const buildingType_t buildin
 	if (buildingType < MAX_BUILDING_TYPE)
 		return base->hasBuilding[buildingType];
 
-	Com_Printf("B_GetBuildingStatus: Building-type %i does not exist.\n", buildingType);
+	cgi->Com_Printf("B_GetBuildingStatus: Building-type %i does not exist.\n", buildingType);
 	return false;
 }
 
@@ -498,13 +498,13 @@ bool B_GetBuildingStatus (const base_t* const base, const buildingType_t buildin
 void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType, bool newStatus)
 {
 	if (buildingType == B_MISC) {
-		Com_Printf("B_SetBuildingStatus: No status is associated to B_MISC type of building.\n");
+		cgi->Com_Printf("B_SetBuildingStatus: No status is associated to B_MISC type of building.\n");
 	} else if (buildingType < MAX_BUILDING_TYPE) {
 		assert(base);
 		base->hasBuilding[buildingType] = newStatus;
-		Com_DPrintf(DEBUG_CLIENT, "B_SetBuildingStatus: set status for %i to %i\n", buildingType, newStatus);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "B_SetBuildingStatus: set status for %i to %i\n", buildingType, newStatus);
 	} else {
-		Com_Printf("B_SetBuildingStatus: Type of building %i does not exist\n", buildingType);
+		cgi->Com_Printf("B_SetBuildingStatus: Type of building %i does not exist\n", buildingType);
 	}
 }
 
@@ -575,7 +575,7 @@ static inline void B_AddMap (char* maps, size_t mapsLength, char* coords, size_t
 bool B_AssembleMap (char* maps, size_t mapsLength, char* coords, size_t coordsLength, const base_t* base)
 {
 	if (!base) {
-		Com_Printf("B_AssembleMap: No base to assemble\n");
+		cgi->Com_Printf("B_AssembleMap: No base to assemble\n");
 		return false;
 	}
 
@@ -631,7 +631,7 @@ static bool B_CheckUpdateBuilding (building_t* building)
 		B_SetBuildingStatus(building->base, building->buildingType, false);
 
 	if (B_GetBuildingStatus(building->base, building->buildingType) != oldValue) {
-		Com_DPrintf(DEBUG_CLIENT, "Status of building %s is changed to %i.\n",
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Status of building %s is changed to %i.\n",
 			building->name, B_GetBuildingStatus(building->base, building->buildingType));
 		return true;
 	}
@@ -725,7 +725,7 @@ void B_ResetAllStatusAndCapacities (base_t* base, bool firstEnable)
 
 	assert(base);
 
-	Com_DPrintf(DEBUG_CLIENT, "Reseting base %s:\n", base->name);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "Reseting base %s:\n", base->name);
 
 	/* reset all values of hasBuilding[] */
 	for (int i = 0; i < MAX_BUILDING_TYPE; i++) {
@@ -774,7 +774,7 @@ void B_ResetAllStatusAndCapacities (base_t* base, bool firstEnable)
 	for (int i = 0; i < MAX_CAP; i++) {
 		const baseCapacities_t cap = (baseCapacities_t)i;
 		if (CAP_GetFreeCapacity(base, cap) < 0)
-			Com_Printf("B_ResetAllStatusAndCapacities: Warning, capacity of %i is bigger than maximum capacity\n", i);
+			cgi->Com_Printf("B_ResetAllStatusAndCapacities: Warning, capacity of %i is bigger than maximum capacity\n", i);
 	}
 }
 
@@ -862,10 +862,10 @@ bool B_BuildingDestroy (building_t* building)
 	 * (we do that after base capacity has been updated) */
 	if (runDisableCommand) {
 		if (B_FireEvent(buildingTemplate, base, B_ONDISABLE))
-			Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",	buildingTemplate->onDisable, base->idx, buildingType);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",	buildingTemplate->onDisable, base->idx, buildingType);
 	}
 	if (B_FireEvent(buildingTemplate, base, B_ONDESTROY))
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",	buildingTemplate->onDestroy, base->idx, buildingType);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",	buildingTemplate->onDestroy, base->idx, buildingType);
 
 	CAP_CheckOverflow();
 
@@ -971,19 +971,19 @@ void B_Destroy (base_t* base)
 static void B_Destroy_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseIdx>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <baseIdx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	const int baseIdx = atoi(cgi->Cmd_Argv(1));
 	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
-		Com_Printf("B_Destroy_f: baseIdx %i is outside bounds\n", baseIdx);
+		cgi->Com_Printf("B_Destroy_f: baseIdx %i is outside bounds\n", baseIdx);
 		return;
 	}
 
 	base_t* base = B_GetFoundedBaseByIDX(baseIdx);
 	if (!base) {
-		Com_Printf("B_Destroy_f: Base %i not founded\n", baseIdx);
+		cgi->Com_Printf("B_Destroy_f: Base %i not founded\n", baseIdx);
 		return;
 	}
 
@@ -1042,15 +1042,15 @@ static void B_AddBuildingToBasePos (base_t* base, const building_t* buildingTemp
 	buildingNew->timeStart.day = 0;
 	buildingNew->timeStart.sec = 0;
 	B_UpdateAllBaseBuildingStatus(buildingNew, B_STATUS_WORKING);
-	Com_DPrintf(DEBUG_CLIENT, "Base %i new building: %s at (%.0f:%.0f)\n",
-			base->idx, buildingNew->id, buildingNew->pos[0], buildingNew->pos[1]);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "Base %i new building: %s at (%.0f:%.0f)\n",
+		base->idx, buildingNew->id, buildingNew->pos[0], buildingNew->pos[1]);
 
 	if (hire)
 		E_HireForBuilding(base, buildingNew, -1);
 
 	/* now call the onenable trigger */
 	if (B_FireEvent(buildingNew, base, B_ONENABLE))
-		Com_DPrintf(DEBUG_CLIENT, "B_AddBuildingToBasePos: %s %i;\n", buildingNew->onEnable, base->idx);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "B_AddBuildingToBasePos: %s %i;\n", buildingNew->onEnable, base->idx);
 }
 
 /**
@@ -1275,7 +1275,7 @@ const baseTemplate_t* B_GetBaseTemplate (const char* baseTemplateID)
 		if (Q_streq(ccs.baseTemplates[i].id, baseTemplateID))
 			return &ccs.baseTemplates[i];
 
-	Com_Printf("Base Template %s not found\n", baseTemplateID);
+	cgi->Com_Printf("Base Template %s not found\n", baseTemplateID);
 	return nullptr;
 }
 
@@ -1398,18 +1398,18 @@ building_t* B_SetBuildingByClick (base_t* base, const building_t* buildingTempla
 int B_GetNumberOfBuildingsInBaseByTemplate (const base_t* base, const building_t* tpl)
 {
 	if (!base) {
-		Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: No base given!\n");
+		cgi->Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: No base given!\n");
 		return -1;
 	}
 
 	if (!tpl) {
-		Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: no building-type given!\n");
+		cgi->Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: no building-type given!\n");
 		return -1;
 	}
 
 	/* Check if the template really is one. */
 	if (tpl != tpl->tpl) {
-		Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: No building-type given as parameter. It's probably a normal building!\n");
+		cgi->Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: No building-type given as parameter. It's probably a normal building!\n");
 		return -1;
 	}
 
@@ -1431,12 +1431,12 @@ int B_GetNumberOfBuildingsInBaseByTemplate (const base_t* base, const building_t
 int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t* base, const buildingType_t buildingType)
 {
 	if (!base) {
-		Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: No base given!\n");
+		cgi->Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: No base given!\n");
 		return -1;
 	}
 
 	if (buildingType >= MAX_BUILDING_TYPE) {
-		Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: no sane building-type given!\n");
+		cgi->Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: no sane building-type given!\n");
 		return -1;
 	}
 
@@ -1490,7 +1490,7 @@ void B_ParseBaseTemplate (const char* name, const char** text)
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("B_ParseBaseTemplate: Template \"%s\" without body ignored\n", name);
+		cgi->Com_Printf("B_ParseBaseTemplate: Template \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -1654,7 +1654,7 @@ void B_SelectBase (const base_t* base)
 			ccs.mapAction = MA_NONE;
 		}
 	} else {
-		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
 		ccs.mapAction = MA_NONE;
 		cgi->Cmd_ExecuteString(va("ui_push bases %d", base->idx));
 		B_SetCurrentSelectedBase(base);
@@ -1815,7 +1815,7 @@ static void B_InitialEquipment (aircraft_t* aircraft, const equipDef_t* ed)
 		character_t* chr = &employee->chr;
 
 		/* pack equipment */
-		Com_DPrintf(DEBUG_CLIENT, "B_InitialEquipment: Packing initial equipment for %s.\n", chr->name);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "B_InitialEquipment: Packing initial equipment for %s.\n", chr->name);
 		cgi->INV_EquipActor(chr, ed, nullptr, cgi->GAME_GetChrMaxLoad(chr));
 		cgi->LIST_AddPointer(&chrListTemp, (void*)chr);
 	}
@@ -1847,24 +1847,24 @@ static void B_BuildingList_f (void)
 {
 	base_t* base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
-		Com_Printf("\nBase id %i: %s\n", base->idx, base->name);
+		cgi->Com_Printf("\nBase id %i: %s\n", base->idx, base->name);
 		/** @todo building count should not depend on base->idx. base->idx will not be an array index! */
 		for (int j = 0; j < ccs.numBuildings[base->idx]; j++) {
 			const building_t* building = B_GetBuildingByIDX(base->idx, j);
 
-			Com_Printf("...Building: %s #%i - id: %i\n", building->id,
+			cgi->Com_Printf("...Building: %s #%i - id: %i\n", building->id,
 				B_GetNumberOfBuildingsInBaseByTemplate(base, building->tpl), base->idx);
-			Com_Printf("...image: %s\n", building->image);
-			Com_Printf(".....Status:\n");
+			cgi->Com_Printf("...image: %s\n", building->image);
+			cgi->Com_Printf(".....Status:\n");
 
 			for (int k = 0; k < BASE_SIZE * BASE_SIZE; k++) {
 				if (k > 1 && k % BASE_SIZE == 0)
-					Com_Printf("\n");
-				Com_Printf("%i ", building->buildingStatus);
+					cgi->Com_Printf("\n");
+				cgi->Com_Printf("%i ", building->buildingStatus);
 				if (!building->buildingStatus)
 					break;
 			}
-			Com_Printf("\n");
+			cgi->Com_Printf("\n");
 		}
 	}
 }
@@ -1879,36 +1879,36 @@ static void B_BaseList_f (void)
 	base_t* base = nullptr;
 	while ((base = B_GetNext(base)) != nullptr) {
 		if (!base->founded) {
-			Com_Printf("Base idx %i not founded\n\n", base->idx);
+			cgi->Com_Printf("Base idx %i not founded\n\n", base->idx);
 			continue;
 		}
 
-		Com_Printf("Base idx %i\n", base->idx);
-		Com_Printf("Base name %s\n", base->name);
-		Com_Printf("Base founded %i\n", base->founded);
-		Com_Printf("Base numMissileBattery %i\n", base->numBatteries);
-		Com_Printf("Base numLaserBattery %i\n", base->numLasers);
-		Com_Printf("Base radarRange %i\n", base->radar.range);
-		Com_Printf("Base trackingRange %i\n", base->radar.trackingRange);
-		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUFOs);
-		Com_Printf("Base Alien interest %f\n", base->alienInterest);
-		Com_Printf("Base hasBuilding[]:\n");
-		Com_Printf("Misc  Lab Quar Stor Work Hosp Hang Cont SHgr UHgr SUHg Powr  cgi->Cmd AMtr Entr Miss Lasr  Rdr Team\n");
+		cgi->Com_Printf("Base idx %i\n", base->idx);
+		cgi->Com_Printf("Base name %s\n", base->name);
+		cgi->Com_Printf("Base founded %i\n", base->founded);
+		cgi->Com_Printf("Base numMissileBattery %i\n", base->numBatteries);
+		cgi->Com_Printf("Base numLaserBattery %i\n", base->numLasers);
+		cgi->Com_Printf("Base radarRange %i\n", base->radar.range);
+		cgi->Com_Printf("Base trackingRange %i\n", base->radar.trackingRange);
+		cgi->Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUFOs);
+		cgi->Com_Printf("Base Alien interest %f\n", base->alienInterest);
+		cgi->Com_Printf("Base hasBuilding[]:\n");
+		cgi->Com_Printf("Misc  Lab Quar Stor Work Hosp Hang Cont SHgr UHgr SUHg Powr  cgi->Cmd AMtr Entr Miss Lasr  Rdr Team\n");
 		for (int j = 0; j < MAX_BUILDING_TYPE; j++) {
 			const buildingType_t type = (buildingType_t)j;
-			Com_Printf("  %i  ", B_GetBuildingStatus(base, type));
+			cgi->Com_Printf("  %i  ", B_GetBuildingStatus(base, type));
 		}
-		Com_Printf("\n");
-		Com_Printf("Base pos %.02f:%.02f\n", base->pos[0], base->pos[1]);
-		Com_Printf("Base map:\n");
+		cgi->Com_Printf("\n");
+		cgi->Com_Printf("Base pos %.02f:%.02f\n", base->pos[0], base->pos[1]);
+		cgi->Com_Printf("Base map:\n");
 		for (int row = 0; row < BASE_SIZE; row++) {
 			if (row > 0)
-				Com_Printf("\n");
+				cgi->Com_Printf("\n");
 			for (int col = 0; col < BASE_SIZE; col++)
-				Com_Printf("%2i (%3i: %3i)  ", (base->map[row][col].building ? base->map[row][col].building->idx : -1),
+				cgi->Com_Printf("%2i (%3i: %3i)  ", (base->map[row][col].building ? base->map[row][col].building->idx : -1),
 					base->map[row][col].posX, base->map[row][col].posY);
 		}
-		Com_Printf("\n\n");
+		cgi->Com_Printf("\n\n");
 	}
 }
 #endif
@@ -1999,13 +1999,13 @@ void B_BuildingOpenAfterClick (const building_t* building)
 static void B_PrintCapacities_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	const int baseIdx = atoi(cgi->Cmd_Argv(1));
 	if (baseIdx >= B_GetCount()) {
-		Com_Printf("invalid baseID (%s)\n", cgi->Cmd_Argv(1));
+		cgi->Com_Printf("invalid baseID (%s)\n", cgi->Cmd_Argv(1));
 		return;
 	}
 	base_t* base = B_GetBaseByIDX(baseIdx);
@@ -2013,15 +2013,15 @@ static void B_PrintCapacities_f (void)
 		const baseCapacities_t cap = (baseCapacities_t)i;
 		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(cap);
 		if (buildingType >= MAX_BUILDING_TYPE) {
-			Com_Printf("B_PrintCapacities_f: Could not find building associated with capacity %i\n", i);
+			cgi->Com_Printf("B_PrintCapacities_f: Could not find building associated with capacity %i\n", i);
 			continue;
 		}
 		for (int j = 0; j < ccs.numBuildingTemplates; j++) {
 			if (ccs.buildingTemplates[j].buildingType != buildingType)
 				continue;
 
-			Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
-					ccs.buildingTemplates[j].id, CAP_GetMax(base, i), CAP_GetCurrent(base, cap));
+			cgi->Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
+				ccs.buildingTemplates[j].id, CAP_GetMax(base, i), CAP_GetCurrent(base, cap));
 			break;
 		}
 	}
@@ -2078,7 +2078,7 @@ static void B_CheckCoherency_f (void)
 		const int i = atoi(cgi->Cmd_Argv(1));
 
 		if (i < 0 || i >= B_GetCount()) {
-			Com_Printf("Usage: %s [baseIdx]\nWithout baseIdx the current base is selected.\n", cgi->Cmd_Argv(0));
+			cgi->Com_Printf("Usage: %s [baseIdx]\nWithout baseIdx the current base is selected.\n", cgi->Cmd_Argv(0));
 			return;
 		}
 		base = B_GetFoundedBaseByIDX(i);
@@ -2087,9 +2087,9 @@ static void B_CheckCoherency_f (void)
 	}
 
 	if (base)
-		Com_Printf("Base '%s' (idx:%i) is %scoherent.\n", base->name, base->idx, (B_IsCoherent(base)) ? "" : "not ");
+		cgi->Com_Printf("Base '%s' (idx:%i) is %scoherent.\n", base->name, base->idx, (B_IsCoherent(base)) ? "" : "not ");
 	else
-		Com_Printf("No base selected.\n");
+		cgi->Com_Printf("No base selected.\n");
 }
 #endif
 
@@ -2126,7 +2126,7 @@ static bool B_CheckBuildingConstruction (building_t* building)
 
 	B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
 	if (B_FireEvent(building, base, B_ONENABLE))
-		Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onEnable, base->idx);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onEnable, base->idx);
 
 	return true;
 }
@@ -2146,7 +2146,7 @@ void B_UpdateBuildingConstructions (void)
 				continue;
 
 			Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-					_("Construction of %s building finished in %s."), _(building->name), base->name);
+				_("Construction of %s building finished in %s."), _(building->name), base->name);
 			MSO_CheckAddNewMessage(NT_BUILDING_FINISHED, _("Building finished"), cp_messageBuffer);
 		}
 	}
@@ -2290,11 +2290,11 @@ int B_ItemInBase (const objDef_t* item, const base_t* base)
 void B_UpdateBaseCapacities (baseCapacities_t cap, base_t* base)
 {
 	switch (cap) {
-	case CAP_ALIENS:			/**< Update Aliens capacity in base. */
-	case CAP_EMPLOYEES:			/**< Update employees capacity in base. */
-	case CAP_LABSPACE:			/**< Update laboratory space capacity in base. */
-	case CAP_WORKSPACE:			/**< Update workshop space capacity in base. */
-	case CAP_ITEMS:				/**< Update items capacity in base. */
+	case CAP_ALIENS:		/**< Update Aliens capacity in base. */
+	case CAP_EMPLOYEES:		/**< Update employees capacity in base. */
+	case CAP_LABSPACE:		/**< Update laboratory space capacity in base. */
+	case CAP_WORKSPACE:		/**< Update workshop space capacity in base. */
+	case CAP_ITEMS:			/**< Update items capacity in base. */
 	case CAP_AIRCRAFT_SMALL:	/**< Update aircraft capacity in base. */
 	case CAP_AIRCRAFT_BIG:		/**< Update aircraft capacity in base. */
 	case CAP_ANTIMATTER:		/**< Update antimatter capacity in base. */
@@ -2310,7 +2310,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t* base)
 			const building_t* b = &ccs.buildingTemplates[i];
 			if (b->buildingType == buildingType) {
 				capacity = b->capacity;
-				Com_DPrintf(DEBUG_CLIENT, "Building: %s capacity: %i\n", b->id, capacity);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "Building: %s capacity: %i\n", b->id, capacity);
 				buildingTemplateIDX = i;
 				break;
 			}
@@ -2322,7 +2322,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t* base)
 				CAP_AddMax(base, cap, capacity);
 
 		if (buildingTemplateIDX != -1)
-			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: updated capacity of %s: %i\n",
+			cgi->Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: updated capacity of %s: %i\n",
 				ccs.buildingTemplates[buildingTemplateIDX].id, CAP_GetMax(base, cap));
 
 		if (cap == CAP_ALIENS) {
@@ -2337,7 +2337,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t* base)
 		break;
 	}
 	case MAX_CAP:			/**< Update all capacities in base. */
-		Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: going to update ALL capacities.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: going to update ALL capacities.\n");
 		/* Loop through all capacities and update them. */
 		for (int i = 0; i < cap; i++) {
 			const baseCapacities_t cap = (baseCapacities_t) i;
@@ -2400,7 +2400,7 @@ bool B_SaveXML (xmlNode_t* parent)
 	while ((b = B_GetNext(b)) != nullptr) {
 
 		if (!b->founded) {
-			Com_Printf("B_SaveXML: Base (idx: %i) not founded!\n", b->idx);
+			cgi->Com_Printf("B_SaveXML: Base (idx: %i) not founded!\n", b->idx);
 			return false;
 		}
 
@@ -2520,7 +2520,7 @@ bool B_LoadStorageXML (xmlNode_t* parent, equipDef_t* equip)
 		const char* s = cgi->XML_GetString(node, SAVE_BASES_ODS_ID);
 		const objDef_t* od = INVSH_GetItemByID(s);
 		if (!od) {
-			Com_Printf("B_Load: Could not find item '%s'\n", s);
+			cgi->Com_Printf("B_Load: Could not find item '%s'\n", s);
 			continue;
 		}
 		equip->numItems[od->idx] = cgi->XML_GetInt(node, SAVE_BASES_NUM, 0);
@@ -2540,7 +2540,7 @@ bool B_LoadXML (xmlNode_t* parent)
 
 	bases = cgi->XML_GetNode(parent, "bases");
 	if (!bases) {
-		Com_Printf("Error: Node 'bases' wasn't found in savegame\n");
+		cgi->Com_Printf("Error: Node 'bases' wasn't found in savegame\n");
 		return false;
 	}
 
@@ -2557,14 +2557,14 @@ bool B_LoadXML (xmlNode_t* parent)
 
 		b->idx = cgi->XML_GetInt(base, SAVE_BASES_IDX, -1);
 		if (b->idx < 0) {
-			Com_Printf("Invalid base index %i\n", b->idx);
+			cgi->Com_Printf("Invalid base index %i\n", b->idx);
 			cgi->Com_UnregisterConstList(saveBaseConstants);
 			return false;
 		}
 		b->founded = true;
 		const char* str = cgi->XML_GetString(base, SAVE_BASES_BASESTATUS);
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_BASESTATUS_NAMESPACE, str, (int*) &b->baseStatus)) {
-			Com_Printf("Invalid base status '%s'\n", str);
+			cgi->Com_Printf("Invalid base status '%s'\n", str);
 			cgi->Com_UnregisterConstList(saveBaseConstants);
 			return false;
 		}
@@ -2592,7 +2592,7 @@ bool B_LoadXML (xmlNode_t* parent)
 				tile->building = nullptr;
 			tile->blocked = cgi->XML_GetBool(snode, SAVE_BASES_BLOCKED, false);
 			if (tile->blocked && tile->building != nullptr) {
-				Com_Printf("inconstent base layout found\n");
+				cgi->Com_Printf("inconstent base layout found\n");
 				cgi->Com_UnregisterConstList(saveBaseConstants);
 				return false;
 			}
@@ -2608,14 +2608,14 @@ bool B_LoadXML (xmlNode_t* parent)
 			char buildingType[MAX_VAR];
 
 			if (buildId >= MAX_BUILDINGS) {
-				Com_Printf("building ID is greater than MAX buildings\n");
+				cgi->Com_Printf("building ID is greater than MAX buildings\n");
 				cgi->Com_UnregisterConstList(saveBaseConstants);
 				return false;
 			}
 
 			Q_strncpyz(buildingType, cgi->XML_GetString(snode, SAVE_BASES_BUILDINGTYPE), sizeof(buildingType));
 			if (buildingType[0] == '\0') {
-				Com_Printf("No buildingtype set\n");
+				cgi->Com_Printf("No buildingtype set\n");
 				cgi->Com_UnregisterConstList(saveBaseConstants);
 				return false;
 			}
@@ -2628,7 +2628,7 @@ bool B_LoadXML (xmlNode_t* parent)
 			building = B_GetBuildingByIDX(i, buildId);
 			building->idx = B_GetBuildingIDX(b, building);
 			if (building->idx != buildId) {
-				Com_Printf("building ID doesn't match\n");
+				cgi->Com_Printf("building ID doesn't match\n");
 				cgi->Com_UnregisterConstList(saveBaseConstants);
 				return false;
 			}
@@ -2636,7 +2636,7 @@ bool B_LoadXML (xmlNode_t* parent)
 
 			str = cgi->XML_GetString(snode, SAVE_BASES_BUILDINGSTATUS);
 			if (!cgi->Com_GetConstIntFromNamespace(SAVE_BUILDINGSTATUS_NAMESPACE, str, (int*) &building->buildingStatus)) {
-				Com_Printf("Invalid building status '%s'\n", str);
+				cgi->Com_Printf("Invalid building status '%s'\n", str);
 				cgi->Com_UnregisterConstList(saveBaseConstants);
 				return false;
 			}

@@ -108,7 +108,7 @@ void RS_MarkOneResearchable (technology_t* tech)
 	if (!tech)
 		return;
 
-	Com_DPrintf(DEBUG_CLIENT, "RS_MarkOneResearchable: \"%s\" marked as researchable.\n", tech->id);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "RS_MarkOneResearchable: \"%s\" marked as researchable.\n", tech->id);
 
 	/* Don't do anything for not researchable techs. */
 	if (tech->time == -1)
@@ -156,13 +156,13 @@ bool RS_RequirementsMet (const technology_t* tech, const base_t* base)
 	const requirements_t* requiredOR = &tech->requireOR;	/* a list of OR-related requirements */
 
 	if (!requiredAND && !requiredOR) {
-		Com_Printf("RS_RequirementsMet: No requirement list(s) given as parameter.\n");
+		cgi->Com_Printf("RS_RequirementsMet: No requirement list(s) given as parameter.\n");
 		return false;
 	}
 
 	/* If there are no requirements defined at all we have 'met' them by default. */
 	if (requiredAND->numLinks == 0 && requiredOR->numLinks == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: No requirements set for this tech. They are 'met'.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: No requirements set for this tech. They are 'met'.\n");
 		return true;
 	}
 
@@ -258,7 +258,7 @@ bool RS_RequirementsMet (const technology_t* tech, const base_t* base)
 			if (metOR)
 				break;
 		}
-	Com_DPrintf(DEBUG_CLIENT, "met_AND is %i, met_OR is %i\n", metAND, metOR);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "met_AND is %i, met_OR is %i\n", metAND, metOR);
 
 	return (metAND || metOR);
 }
@@ -344,7 +344,7 @@ void RS_MarkResearchable (const base_t* base, bool init)
 		if (tech->statusResearch == RS_FINISH)
 			continue;
 
-		Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: handling \"%s\".\n", tech->id);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: handling \"%s\".\n", tech->id);
 
 		if (tech->base)
 			base = tech->base;
@@ -354,7 +354,7 @@ void RS_MarkResearchable (const base_t* base, bool init)
 		/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 		/* All requirements are met. */
 		if (RS_RequirementsMet(tech, base)) {
-			Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
 			if (init && tech->time == 0)
 				tech->mailSent = MAILSENT_PROPOSAL;
 			RS_MarkOneResearchable(tech);
@@ -367,12 +367,12 @@ void RS_MarkResearchable (const base_t* base, bool init)
 			if (init)
 				tech->mailSent = MAILSENT_FINISHED;
 			RS_ResearchFinish(tech);
-			Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
 			/* Restart the loop as this may have unlocked new possibilities. */
 			i = -1;
 		}
 	}
-	Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: Done.\n");
+	cgi->Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: Done.\n");
 }
 
 /**
@@ -504,7 +504,7 @@ void RS_InitTree (const campaign_t* campaign, bool load)
 	for (i = 0, tech = ccs.technologies; i < ccs.numTechnologies; i++, tech++) {
 		for (j = 0; j < tech->markResearched.numDefinitions; j++) {
 			if (tech->markResearched.markOnly[j] && Q_streq(tech->markResearched.campaign[j], campaign->researched)) {
-				Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 				RS_ResearchFinish(tech);
 				break;
 			}
@@ -519,15 +519,15 @@ void RS_InitTree (const campaign_t* campaign, bool load)
 		switch (tech->type) {
 		case RS_CRAFTITEM:
 			if (!tech->name)
-				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" A type craftitem needs to have a 'name\txxx' defined.", tech->id);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" A type craftitem needs to have a 'name\txxx' defined.", tech->id);
 			break;
 		case RS_NEWS:
 			if (!tech->name)
-				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" A 'type news' item needs to have a 'name\txxx' defined.", tech->id);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" A 'type news' item needs to have a 'name\txxx' defined.", tech->id);
 			break;
 		case RS_TECH:
 			if (!tech->name)
-				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", tech->id);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", tech->id);
 			break;
 		case RS_WEAPON:
 		case RS_ARMOUR:
@@ -550,7 +550,7 @@ void RS_InitTree (const campaign_t* campaign, bool load)
 			/* No id found in cgi->csi->ods */
 			if (!found) {
 				tech->name = cgi->PoolStrDup(tech->id, cp_campaignPool, 0);
-				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armour (provided=\"%s\") not found. Tech-id used as name.\n",
+				cgi->Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armour (provided=\"%s\") not found. Tech-id used as name.\n",
 						tech->id, tech->provides);
 			}
 			break;
@@ -570,7 +570,7 @@ void RS_InitTree (const campaign_t* campaign, bool load)
 			}
 			if (!found) {
 				tech->name = cgi->PoolStrDup(tech->id, cp_campaignPool, 0);
-				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n",
+				cgi->Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n",
 						tech->id, tech->provides);
 			}
 			break;
@@ -587,14 +587,14 @@ void RS_InitTree (const campaign_t* campaign, bool load)
 						tech->name = cgi->PoolStrDup(aircraftTemplate->name, cp_campaignPool, 0);
 					if (!tech->mdl) {	/* DEBUG testing */
 						tech->mdl = cgi->PoolStrDup(aircraftTemplate->model, cp_campaignPool, 0);
-						Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: aircraft model \"%s\" \n", aircraftTemplate->model);
+						cgi->Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: aircraft model \"%s\" \n", aircraftTemplate->model);
 					}
 					aircraftTemplate->tech = tech;
 					break;
 				}
 			}
 			if (!found)
-				Com_Printf("RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n", tech->id, tech->provides);
+				cgi->Com_Printf("RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n", tech->id, tech->provides);
 			break;
 		case RS_ALIEN:
 			/* does nothing right now */
@@ -623,7 +623,7 @@ void RS_InitTree (const campaign_t* campaign, bool load)
 		}
 
 		if (!tech->image && !tech->mdl)
-			Com_DPrintf(DEBUG_CLIENT, "Tech %s of type %i has no image (%p) and no model (%p) assigned.\n",
+			cgi->Com_DPrintf(DEBUG_CLIENT, "Tech %s of type %i has no image (%p) and no model (%p) assigned.\n",
 					tech->id, tech->type, tech->image, tech->mdl);
 	}
 
@@ -637,7 +637,7 @@ void RS_InitTree (const campaign_t* campaign, bool load)
 		}
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: Technology tree initialised. %i entries found.\n", i);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: Technology tree initialised. %i entries found.\n", i);
 }
 
 /**
@@ -653,7 +653,7 @@ void RS_InitTree (const campaign_t* campaign, bool load)
 void RS_AssignScientist (technology_t* tech, base_t* base, Employee* employee)
 {
 	assert(tech);
-	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
 
 	/* if the tech is already assigned to a base, use that one */
 	if (tech->base)
@@ -665,7 +665,7 @@ void RS_AssignScientist (technology_t* tech, base_t* base, Employee* employee)
 		employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
 	if (!employee) {
 		/* No scientists are free in this base. */
-		Com_DPrintf(DEBUG_CLIENT, "No free scientists in this base (%s) to assign to tech '%s'\n", base->name, tech->id);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "No free scientists in this base (%s) to assign to tech '%s'\n", base->name, tech->id);
 		return;
 	}
 
@@ -761,7 +761,7 @@ void RS_RemoveFiredScientist (base_t* base, Employee* employee)
 static void RS_MarkResearched (technology_t* tech, const base_t* base)
 {
 	RS_ResearchFinish(tech);
-	Com_DPrintf(DEBUG_CLIENT, "Research of \"%s\" finished.\n", tech->id);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "Research of \"%s\" finished.\n", tech->id);
 	RS_MarkResearchable(base);
 }
 
@@ -933,7 +933,7 @@ static const char* RS_TechLinkTypeToName (requirementType_t type)
  */
 static void RS_TechnologyList_f (void)
 {
-	Com_Printf("#techs: %i\n", ccs.numTechnologies);
+	cgi->Com_Printf("#techs: %i\n", ccs.numTechnologies);
 	for (int i = 0; i < ccs.numTechnologies; i++) {
 		int j;
 		technology_t* tech;
@@ -941,50 +941,50 @@ static void RS_TechnologyList_f (void)
 		dateLong_t date;
 
 		tech = RS_GetTechByIDX(i);
-		Com_Printf("Tech: %s\n", tech->id);
-		Com_Printf("... time      -> %.2f\n", tech->time);
-		Com_Printf("... name      -> %s\n", tech->name);
+		cgi->Com_Printf("Tech: %s\n", tech->id);
+		cgi->Com_Printf("... time      -> %.2f\n", tech->time);
+		cgi->Com_Printf("... name      -> %s\n", tech->name);
 		reqs = &tech->requireAND;
-		Com_Printf("... requires ALL  ->");
+		cgi->Com_Printf("... requires ALL  ->");
 		for (j = 0; j < reqs->numLinks; j++)
-			Com_Printf(" %s (%s) %s", reqs->links[j].id, RS_TechLinkTypeToName(reqs->links[j].type), RS_TechReqToName(&reqs->links[j]));
+			cgi->Com_Printf(" %s (%s) %s", reqs->links[j].id, RS_TechLinkTypeToName(reqs->links[j].type), RS_TechReqToName(&reqs->links[j]));
 		reqs = &tech->requireOR;
-		Com_Printf("\n");
-		Com_Printf("... requires ANY  ->");
+		cgi->Com_Printf("\n");
+		cgi->Com_Printf("... requires ANY  ->");
 		for (j = 0; j < reqs->numLinks; j++)
-			Com_Printf(" %s (%s) %s", reqs->links[j].id, RS_TechLinkTypeToName(reqs->links[j].type), RS_TechReqToName(&reqs->links[j]));
-		Com_Printf("\n");
-		Com_Printf("... provides  -> %s", tech->provides);
-		Com_Printf("\n");
+			cgi->Com_Printf(" %s (%s) %s", reqs->links[j].id, RS_TechLinkTypeToName(reqs->links[j].type), RS_TechReqToName(&reqs->links[j]));
+		cgi->Com_Printf("\n");
+		cgi->Com_Printf("... provides  -> %s", tech->provides);
+		cgi->Com_Printf("\n");
 
-		Com_Printf("... type      -> ");
-		Com_Printf("%s\n", RS_TechTypeToName(tech->type));
+		cgi->Com_Printf("... type      -> ");
+		cgi->Com_Printf("%s\n", RS_TechTypeToName(tech->type));
 
-		Com_Printf("... researchable -> %i\n", tech->statusResearchable);
+		cgi->Com_Printf("... researchable -> %i\n", tech->statusResearchable);
 
 		if (tech->statusResearchable) {
 			CP_DateConvertLong(&tech->preResearchedDate, &date);
-			Com_Printf("... researchable date: %02i %02i %i\n", date.day, date.month, date.year);
+			cgi->Com_Printf("... researchable date: %02i %02i %i\n", date.day, date.month, date.year);
 		}
 
-		Com_Printf("... research  -> ");
+		cgi->Com_Printf("... research  -> ");
 		switch (tech->statusResearch) {
 		case RS_NONE:
-			Com_Printf("nothing\n");
+			cgi->Com_Printf("nothing\n");
 			break;
 		case RS_RUNNING:
-			Com_Printf("running\n");
+			cgi->Com_Printf("running\n");
 			break;
 		case RS_PAUSED:
-			Com_Printf("paused\n");
+			cgi->Com_Printf("paused\n");
 			break;
 		case RS_FINISH:
-			Com_Printf("done\n");
+			cgi->Com_Printf("done\n");
 			CP_DateConvertLong(&tech->researchedDate, &date);
-			Com_Printf("... research date: %02i %02i %i\n", date.day, date.month, date.year);
+			cgi->Com_Printf("... research date: %02i %02i %i\n", date.day, date.month, date.year);
 			break;
 		default:
-			Com_Printf("unknown\n");
+			cgi->Com_Printf("unknown\n");
 			break;
 		}
 	}
@@ -998,7 +998,7 @@ static void RS_DebugMarkResearchedAll (void)
 {
 	for (int i = 0; i < ccs.numTechnologies; i++) {
 		technology_t* tech = RS_GetTechByIDX(i);
-		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 		RS_MarkOneResearchable(tech);
 		RS_ResearchFinish(tech);
 		/** @todo Set all "collected" entries in the requirements to the "amount" value. */
@@ -1017,7 +1017,7 @@ static void RS_DebugResearchAll_f (void)
 		technology_t* tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 		if (!tech)
 			return;
-		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 		RS_MarkOneResearchable(tech);
 		RS_ResearchFinish(tech);
 	}
@@ -1032,14 +1032,14 @@ static void RS_DebugResearchableAll_f (void)
 	if (cgi->Cmd_Argc() != 2) {
 		for (int i = 0; i < ccs.numTechnologies; i++) {
 			technology_t* tech = RS_GetTechByIDX(i);
-			Com_Printf("...mark %s as researchable\n", tech->id);
+			cgi->Com_Printf("...mark %s as researchable\n", tech->id);
 			RS_MarkOneResearchable(tech);
 			RS_MarkCollected(tech);
 		}
 	} else {
 		technology_t* tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 		if (tech) {
-			Com_Printf("...mark %s as researchable\n", tech->id);
+			cgi->Com_Printf("...mark %s as researchable\n", tech->id);
 			RS_MarkOneResearchable(tech);
 			RS_MarkCollected(tech);
 		}
@@ -1052,7 +1052,7 @@ static void RS_DebugFinishResearches_f (void)
 		technology_t* tech = RS_GetTechByIDX(i);
 		if (tech->statusResearch == RS_RUNNING) {
 			assert(tech->base);
-			Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 			RS_MarkResearched(tech, tech->base);
 		}
 	}
@@ -1134,20 +1134,20 @@ void RS_ParseTechnologies (const char* name, const char** text)
 {
 	for (int i = 0; i < ccs.numTechnologies; i++) {
 		if (Q_streq(ccs.technologies[i].id, name)) {
-			Com_Printf("RS_ParseTechnologies: Second tech with same name found (%s) - second ignored\n", name);
+			cgi->Com_Printf("RS_ParseTechnologies: Second tech with same name found (%s) - second ignored\n", name);
 			return;
 		}
 	}
 
 	if (ccs.numTechnologies >= MAX_TECHNOLOGIES) {
-		Com_Printf("RS_ParseTechnologies: too many technology entries. limit is %i.\n", MAX_TECHNOLOGIES);
+		cgi->Com_Printf("RS_ParseTechnologies: too many technology entries. limit is %i.\n", MAX_TECHNOLOGIES);
 		return;
 	}
 
 	/* get body */
 	const char* token = Com_Parse(text);
 	if (!*text || *token != '{') {
-		Com_Printf("RS_ParseTechnologies: \"%s\" technology def without body ignored.\n", name);
+		cgi->Com_Printf("RS_ParseTechnologies: \"%s\" technology def without body ignored.\n", name);
 		return;
 	}
 
@@ -1222,7 +1222,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 			else if (Q_streq(token, "logic"))
 				tech->type = RS_LOGIC;
 			else
-				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", name, token);
+				cgi->Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", name, token);
 		} else {
 			if (Q_streq(token, "description") || Q_streq(token, "pre_description")) {
 				/* Parse the available descriptions for this tech */
@@ -1281,7 +1281,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 						descTemp->text[descTemp->numDescriptions] = cgi->PoolStrDup(description, cp_campaignPool, 0);
 						descTemp->numDescriptions++;
 					} else {
-						Com_Printf("skipped description for tech '%s'\n", tech->id);
+						cgi->Com_Printf("skipped description for tech '%s'\n", tech->id);
 					}
 					cgi->LIST_Delete(&list);
 				} while (*text);
@@ -1327,11 +1327,11 @@ void RS_ParseTechnologies (const char* name, const char** text)
 							token = Com_Parse(text);
 							requiredTemp->links[requiredTemp->numLinks].id = cgi->PoolStrDup(token, cp_campaignPool, 0);
 
-							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-tech ('tech' or 'tech_not')- %s\n", requiredTemp->links[requiredTemp->numLinks].id);
+							cgi->Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-tech ('tech' or 'tech_not')- %s\n", requiredTemp->links[requiredTemp->numLinks].id);
 
 							requiredTemp->numLinks++;
 						} else {
-							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
+							cgi->Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else if (Q_streq(token, "item")) {
 						/* Defines what items need to be collected for this item to be researchable. */
@@ -1354,24 +1354,24 @@ void RS_ParseTechnologies (const char* name, const char** text)
 							requiredTemp->links[requiredTemp->numLinks].id = cgi->PoolStrDup(idToken, cp_campaignPool, 0);
 							/* Set requirement-amount of item. */
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(amountToken);
-							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-item - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
+							cgi->Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-item - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							requiredTemp->numLinks++;
 							cgi->LIST_Delete(&list);
 						} else {
-							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
+							cgi->Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else if (Q_streq(token, "alienglobal")) {
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
 							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ALIEN_GLOBAL;
-							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alienglobal - %i\n", requiredTemp->links[requiredTemp->numLinks].amount);
+							cgi->Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alienglobal - %i\n", requiredTemp->links[requiredTemp->numLinks].amount);
 
 							/* Set requirement-amount of item. */
 							token = Com_Parse(text);
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
 							requiredTemp->numLinks++;
 						} else {
-							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
+							cgi->Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else if (Q_streq(token, "alien_dead") || Q_streq(token, "alien")) { /* Does this only check the beginning of the string? */
 						/* Defines what live or dead aliens need to be collected for this item to be researchable. */
@@ -1379,10 +1379,10 @@ void RS_ParseTechnologies (const char* name, const char** text)
 							/* Set requirement-type. */
 							if (Q_streq(token, "alien_dead")) {
 								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ALIEN_DEAD;
-								Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien dead - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
+								cgi->Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien dead - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							} else {
 								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ALIEN;
-								Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien alive - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
+								cgi->Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien alive - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							}
 
 							linkedList_t* list;
@@ -1404,7 +1404,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 							requiredTemp->numLinks++;
 							cgi->LIST_Delete(&list);
 						} else {
-							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
+							cgi->Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else if (Q_streq(token, "ufo")) {
 						/* Defines what ufos need to be collected for this item to be researchable. */
@@ -1427,7 +1427,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 							requiredTemp->links[requiredTemp->numLinks].id = cgi->PoolStrDup(idToken, cp_campaignPool, 0);
 							/* Set requirement-amount of item. */
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(amountToken);
-							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-ufo - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
+							cgi->Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-ufo - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							requiredTemp->numLinks++;
 						}
 					} else if (Q_streq(token, "antimatter")) {
@@ -1438,11 +1438,11 @@ void RS_ParseTechnologies (const char* name, const char** text)
 							/* Set requirement-amount of item. */
 							token = Com_Parse(text);
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
-							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-antimatter - %i\n", requiredTemp->links[requiredTemp->numLinks].amount);
+							cgi->Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-antimatter - %i\n", requiredTemp->links[requiredTemp->numLinks].amount);
 							requiredTemp->numLinks++;
 						}
 					} else {
-						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", name, token);
+						cgi->Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", name, token);
 					}
 				} while (*text);
 			} else if (Q_streq(token, "up_chapter")) {
@@ -1473,7 +1473,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 							break;
 						}
 						if (i == ccs.numChapters)
-							Com_Printf("RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n", name, token);
+							cgi->Com_Printf("RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n", name, token);
 					}
 				}
 			} else if (Q_streq(token, "mail") || Q_streq(token, "mail_pre")) {
@@ -1484,7 +1484,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 				tech->numTechMails++;
 
 				if (tech->numTechMails > TECHMAIL_MAX)
-					Com_Printf("RS_ParseTechnologies: more techmail-entries found than supported. \"%s\"\n",  name);
+					cgi->Com_Printf("RS_ParseTechnologies: more techmail-entries found than supported. \"%s\"\n",  name);
 
 				if (Q_streq(token, "mail_pre")) {
 					mail = &tech->mail[TECHMAIL_PRE];
@@ -1512,7 +1512,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 					mail->model = "characters/navarre";
 			} else {
 				if (!cgi->Com_ParseBlockToken(name, text, tech, valid_tech_vars, cp_campaignPool, token))
-					Com_Printf("RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n", token, name);
+					cgi->Com_Printf("RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n", token, name);
 			}
 		}
 	} while (*text);
@@ -1532,7 +1532,7 @@ void RS_ParseTechnologies (const char* name, const char** text)
 		if (tech->type == RS_WEAPON || tech->type == RS_ARMOUR) {
 			Sys_Error("RS_ParseTechnologies: weapon or armour tech without a provides property");
 		}
-		Com_DPrintf(DEBUG_CLIENT, "tech '%s' doesn't have a provides string\n", tech->id);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "tech '%s' doesn't have a provides string\n", tech->id);
 	}
 
 	/* set the overall reseach time to the one given in the ufo-file. */
@@ -1609,7 +1609,7 @@ technology_t* RS_GetTechByID (const char* id)
 		if (!Q_strcasecmp(id, tech->id))
 			return tech;
 
-	Com_Printf("RS_GetTechByID: Could not find a technology with id \"%s\"\n", id);
+	cgi->Com_Printf("RS_GetTechByID: Could not find a technology with id \"%s\"\n", id);
 	return nullptr;
 }
 
@@ -1631,7 +1631,7 @@ technology_t* RS_GetTechByProvided (const char* idProvided)
 		if (!Q_strcasecmp(idProvided, tech->provides))
 			return tech;
 
-	Com_DPrintf(DEBUG_CLIENT, "RS_GetTechByProvided: %s\n", idProvided);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "RS_GetTechByProvided: %s\n", idProvided);
 	/* if a building, probably needs another building */
 	/* if not a building, catch nullptr where function is called! */
 	return nullptr;
@@ -1674,7 +1674,7 @@ int RS_GetTechIdxByName (const char* name)
 		if (!Q_strcasecmp(name, tech->id))
 			return tech->idx;
 
-	Com_Printf("RS_GetTechIdxByName: Could not find tech '%s'\n", name);
+	cgi->Com_Printf("RS_GetTechIdxByName: Could not find tech '%s'\n", name);
 	return TECH_INVALID;
 }
 
@@ -1779,12 +1779,12 @@ bool RS_LoadXML (xmlNode_t* parent)
 		const char* type = cgi->XML_GetString(snode, SAVE_RESEARCH_STATUSRESEARCH);
 
 		if (!t) {
-			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
+			cgi->Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
 			continue;
 		}
 
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_RESEARCHSTATUS_NAMESPACE, type, (int*) &t->statusResearch)) {
-			Com_Printf("Invalid research status '%s'\n", type);
+			cgi->Com_Printf("Invalid research status '%s'\n", type);
 			success = false;
 			break;
 		}
@@ -1809,13 +1809,13 @@ bool RS_LoadXML (xmlNode_t* parent)
 			if (j < TECHMAIL_MAX)
 				t->mail[j].read = true;
 			else
-				Com_Printf("......your save game contains unknown techmail ids... \n");
+				cgi->Com_Printf("......your save game contains unknown techmail ids... \n");
 		}
 
 #ifdef DEBUG
 		if (t->statusResearch == RS_RUNNING && t->scientists > 0) {
 			if (!t->base) {
-				Com_Printf("No base but research is running and scientists are assigned");
+				cgi->Com_Printf("No base but research is running and scientists are assigned");
 				success = false;
 				break;
 			}
@@ -1850,7 +1850,7 @@ bool RS_ScriptSanityCheck (void)
 	for (i = 0, t = ccs.technologies; i < ccs.numTechnologies; i++, t++) {
 		if (!t->name) {
 			error++;
-			Com_Printf("...... technology '%s' has no name\n", t->id);
+			cgi->Com_Printf("...... technology '%s' has no name\n", t->id);
 		}
 		if (!t->provides) {
 			switch (t->type) {
@@ -1861,7 +1861,7 @@ bool RS_ScriptSanityCheck (void)
 				break;
 			default:
 				error++;
-				Com_Printf("...... technology '%s' doesn't provide anything\n", t->id);
+				cgi->Com_Printf("...... technology '%s' doesn't provide anything\n", t->id);
 				break;
 			}
 		}
@@ -1876,16 +1876,16 @@ bool RS_ScriptSanityCheck (void)
 				break;
 			default:
 				/** @todo error++; Crafts still give errors - are there any definitions missing? */
-				Com_Printf("...... technology '%s' has zero (0) produceTime, is this on purpose?\n", t->id);
+				cgi->Com_Printf("...... technology '%s' has zero (0) produceTime, is this on purpose?\n", t->id);
 				break;
 			}
 		}
 
 		if (t->type != RS_LOGIC && (!t->description.text[0] || t->description.text[0][0] == '_')) {
 			if (!t->description.text[0])
-				Com_Printf("...... technology '%s' has a strange 'description' value '%s'.\n", t->id, t->description.text[0]);
+				cgi->Com_Printf("...... technology '%s' has a strange 'description' value '%s'.\n", t->id, t->description.text[0]);
 			else
-				Com_Printf("...... technology '%s' has no 'description' value.\n", t->id);
+				cgi->Com_Printf("...... technology '%s' has no 'description' value.\n", t->id);
 		}
 	}
 

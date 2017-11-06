@@ -98,7 +98,7 @@ static void HOS_ImplantDetails_f (void)
 	const implantDef_t* def = INVSH_GetImplantForObjDef(od);
 	if (def == nullptr)
 		return;
-	Com_Printf("implant: %s\n", def->id);
+	cgi->Com_Printf("implant: %s\n", def->id);
 }
 
 /**

@@ -96,7 +96,7 @@ static void E_EmployeeList_f (void)
 		return;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <category> <employeeid>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <category> <employeeid>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -194,7 +194,7 @@ static void E_EmployeeDelete_f (void)
 {
 	/* Check syntax. */
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -209,7 +209,7 @@ static void E_EmployeeDelete_f (void)
 	if (employee->isHired()) {
 		if (!employee->unhire()) {
 			cgi->UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
-			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
+			cgi->Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			return;
 		}
 	}
@@ -237,7 +237,7 @@ static void E_EmployeeHire_f (void)
 
 	/* Check syntax. */
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <+num>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <+num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -255,14 +255,14 @@ static void E_EmployeeHire_f (void)
 
 	if (employee->isHired()) {
 		if (!employee->unhire()) {
-			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
+			cgi->Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			cgi->UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 		} else {
 			cgi->UI_ExecuteConfunc("employeehire %i", num);
 		}
 	} else {
 		if (!E_HireEmployee(base, employee)) {
-			Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
+			cgi->Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
 			cgi->UI_DisplayNotice(_("Could not hire employee"), 2000, "employees");
 			cgi->UI_ExecuteConfunc("employeehire %i", num);
 		} else {
@@ -282,7 +282,7 @@ static void E_EmployeeSelect_f (void)
 {
 	/* Check syntax. */
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 

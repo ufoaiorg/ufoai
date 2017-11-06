@@ -110,10 +110,10 @@ void E_HireForBuilding (base_t* base, building_t* building, int num)
 			employeeType = EMPL_SOLDIER;
 			break;
 		case B_MISC:
-			Com_DPrintf(DEBUG_CLIENT, "E_HireForBuilding: Misc building type: %i with employees: %i.\n", building->buildingType, num);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "E_HireForBuilding: Misc building type: %i with employees: %i.\n", building->buildingType, num);
 			return;
 		default:
-			Com_DPrintf(DEBUG_CLIENT, "E_HireForBuilding: Unknown building type: %i.\n", building->buildingType);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "E_HireForBuilding: Unknown building type: %i.\n", building->buildingType);
 			return;
 		}
 		/* don't try to hire more that available - see E_CreateEmployee */
@@ -121,7 +121,7 @@ void E_HireForBuilding (base_t* base, building_t* building, int num)
 		for (;num--;) {
 			assert(base);
 			if (!E_HireEmployeeByType(base, employeeType)) {
-				Com_DPrintf(DEBUG_CLIENT, "E_HireForBuilding: Hiring %i employee(s) of type %i failed.\n", num, employeeType);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "E_HireForBuilding: Hiring %i employee(s) of type %i failed.\n", num, employeeType);
 				return;
 			}
 		}
@@ -260,7 +260,7 @@ Employee* E_GetUnhiredRobot (const ugv_t* ugvType)
 int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedList_t** hiredEmployees)
 {
 	if (type >= MAX_EMPL) {
-		Com_Printf("E_GetHiredEmployees: Unknown EmployeeType: %i\n", type);
+		cgi->Com_Printf("E_GetHiredEmployees: Unknown EmployeeType: %i\n", type);
 		*hiredEmployees = nullptr;
 		return -1;
 	}
@@ -305,7 +305,7 @@ Employee* E_GetHiredRobot (const base_t* const base, const ugv_t* ugvType)
 	cgi->LIST_Delete(&hiredEmployees);
 
 	if (!employee)
-		Com_DPrintf(DEBUG_CLIENT, "Could not get unhired ugv/robot.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Could not get unhired ugv/robot.\n");
 
 	return employee;
 }
@@ -467,7 +467,7 @@ void Employee::unequip ()
 bool Employee::unhire ()
 {
 	if (!isHired() || transfer) {
-		Com_DPrintf(DEBUG_CLIENT, "Could not fire employee\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Could not fire employee\n");
 		return false;
 	}
 
@@ -569,7 +569,7 @@ Employee* E_CreateEmployee (employeeType_t type, const nation_t* nation, const u
 	cgi->CL_GenerateCharacter(&employee.chr, teamDefName);
 	employee.chr.score.rank = CL_GetRankIdx(rank);
 
-	Com_DPrintf(DEBUG_CLIENT, "Generate character for type: %i\n", type);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "Generate character for type: %i\n", type);
 
 	return &LIST_Add(&ccs.employees[type], employee);
 }
@@ -784,10 +784,10 @@ static void E_ListHired_f (void)
 	for (i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t emplType = (employeeType_t)i;
 		E_Foreach(emplType, employee) {
-			Com_Printf("Employee: %s (ucn: %i) %s at %s\n", E_GetEmployeeString(employee->getType(), 1), employee->chr.ucn,
-					employee->chr.name, employee->baseHired->name);
+			cgi->Com_Printf("Employee: %s (ucn: %i) %s at %s\n", E_GetEmployeeString(employee->getType(), 1), employee->chr.ucn,
+				employee->chr.name, employee->baseHired->name);
 			if (employee->getType() != emplType)
-				Com_Printf("Warning: EmployeeType mismatch: %i != %i\n", emplType, employee->getType());
+				cgi->Com_Printf("Warning: EmployeeType mismatch: %i != %i\n", emplType, employee->getType());
 		}
 	}
 }
@@ -916,7 +916,7 @@ bool E_LoadXML (xmlNode_t* p)
 		const char* type = cgi->XML_GetString(snode, SAVE_EMPLOYEE_TYPE);
 
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_EMPLOYEETYPE_NAMESPACE, type, (int*) &emplType)) {
-			Com_Printf("Invalid employee type '%s'\n", type);
+			cgi->Com_Printf("Invalid employee type '%s'\n", type);
 			success = false;
 			break;
 		}
@@ -929,7 +929,7 @@ bool E_LoadXML (xmlNode_t* p)
 			/* nation */
 			const nation_t* nation = NAT_GetNationByID(cgi->XML_GetString(ssnode, SAVE_EMPLOYEE_NATION));
 			if (!nation) {
-				Com_Printf("No nation defined for employee\n");
+				cgi->Com_Printf("No nation defined for employee\n");
 				success = false;
 				break;
 			}
@@ -946,12 +946,12 @@ bool E_LoadXML (xmlNode_t* p)
 			/* Character Data */
 			chrNode = cgi->XML_GetNode(ssnode, SAVE_EMPLOYEE_CHR);
 			if (!chrNode) {
-				Com_Printf("No character definition found for employee\n");
+				cgi->Com_Printf("No character definition found for employee\n");
 				success = false;
 				break;
 			}
 			if (!cgi->GAME_LoadCharacter(chrNode, &e.chr)) {
-				Com_Printf("Error loading character definition for employee\n");
+				cgi->Com_Printf("Error loading character definition for employee\n");
 				success = false;
 				break;
 			}
@@ -960,7 +960,7 @@ bool E_LoadXML (xmlNode_t* p)
 			else
 				lastEmployee[emplType] = LIST_Add(&lastEmployee[emplType], (void*) &e, sizeof(e));
 			if (lastEmployee[emplType] == nullptr) {
-				Com_Printf("Could not add employee to the game\n");
+				cgi->Com_Printf("Could not add employee to the game\n");
 				success = false;
 				break;
 			}

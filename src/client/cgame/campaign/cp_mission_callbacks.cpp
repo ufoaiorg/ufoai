@@ -43,17 +43,17 @@ static void AM_Go_f (void)
 	battleParam_t* battleParam = &ccs.battleParameters;
 
 	if (!mission) {
-		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoGo_f: No update after automission\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoGo_f: No update after automission\n");
 		return;
 	}
 
 	if (GEO_GetMissionAircraft() == nullptr) {
-		Com_Printf("GAME_CP_MissionAutoGo_f: No aircraft at target pos\n");
+		cgi->Com_Printf("GAME_CP_MissionAutoGo_f: No aircraft at target pos\n");
 		return;
 	}
 
 	if (GEO_GetInterceptorAircraft() == nullptr) {
-		Com_Printf("GAME_CP_MissionAutoGo_f: No intercept aircraft given\n");
+		cgi->Com_Printf("GAME_CP_MissionAutoGo_f: No intercept aircraft given\n");
 		return;
 	}
 
@@ -64,7 +64,7 @@ static void AM_Go_f (void)
 			MS_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"));
 			return;
 		} else if (mission->mapDef->storyRelated) {
-			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
+			cgi->Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
 			/* ensure, that the automatic button is no longer visible */
 			cgi->Cvar_Set("cp_mission_autogo_available", "0");
 			return;
@@ -91,15 +91,15 @@ static void AM_Check_f (void)
 	const mission_t* mission = GEO_GetSelectedMission();
 
 	if (!mission || GEO_GetInterceptorAircraft() == nullptr) {
-		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: No update after automission\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: No update after automission\n");
 		return;
 	}
 
 	if (mission->mapDef->storyRelated) {
-		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: story related - auto mission is disabled\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: story related - auto mission is disabled\n");
 		cgi->Cvar_Set("cp_mission_autogo_available", "0");
 	} else {
-		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: auto mission is enabled\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: auto mission is enabled\n");
 		cgi->Cvar_Set("cp_mission_autogo_available", "1");
 	}
 }

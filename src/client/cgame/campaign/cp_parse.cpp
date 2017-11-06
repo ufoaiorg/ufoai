@@ -58,7 +58,7 @@ static interestCategory_t CP_GetAlienMissionTypeByID (const char* type)
 	else if (Q_streq(type, "rescue"))
 		return INTERESTCATEGORY_RESCUE;
 	else {
-		Com_Printf("CP_GetAlienMissionTypeByID: unknown alien mission category '%s'\n", type);
+		cgi->Com_Printf("CP_GetAlienMissionTypeByID: unknown alien mission category '%s'\n", type);
 		return INTERESTCATEGORY_NONE;
 	}
 }
@@ -85,12 +85,12 @@ static void CP_ParseAlienTeam (const char* name, const char** text)
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" without body ignored\n", name);
+		cgi->Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" without body ignored\n", name);
 		return;
 	}
 
 	if (ccs.numAlienCategories >= ALIENCATEGORY_MAX) {
-		Com_Printf("CP_ParseAlienTeam: maximum number of alien team category reached (%i)\n", ALIENCATEGORY_MAX);
+		cgi->Com_Printf("CP_ParseAlienTeam: maximum number of alien team category reached (%i)\n", ALIENCATEGORY_MAX);
 		return;
 	}
 
@@ -99,7 +99,7 @@ static void CP_ParseAlienTeam (const char* name, const char** text)
 		if (Q_streq(name, ccs.alienCategories[i].id))
 			break;
 	if (i < ccs.numAlienCategories) {
-		Com_Printf("CP_ParseAlienTeam: alien category def \"%s\" with same name found, second ignored\n", name);
+		cgi->Com_Printf("CP_ParseAlienTeam: alien category def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
@@ -126,7 +126,7 @@ static void CP_ParseAlienTeam (const char* name, const char** text)
 			for (linkedList_t* element = list; element != nullptr; element = element->next) {
 				alienCategory->missionCategories[alienCategory->numMissionCategories] = CP_GetAlienMissionTypeByID((const char*)element->data);
 				if (alienCategory->missionCategories[alienCategory->numMissionCategories] == INTERESTCATEGORY_NONE)
-					Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" is used with no mission category. It won't be used in game.\n", name);
+					cgi->Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" is used with no mission category. It won't be used in game.\n", name);
 				alienCategory->numMissionCategories++;
 			}
 			cgi->LIST_Delete(&list);
@@ -135,12 +135,12 @@ static void CP_ParseAlienTeam (const char* name, const char** text)
 
 			token = cgi->Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
-				Com_Printf("CP_ParseAlienTeam: alien team \"%s\" has team with no opening brace\n", name);
+				cgi->Com_Printf("CP_ParseAlienTeam: alien team \"%s\" has team with no opening brace\n", name);
 				break;
 			}
 
 			if (alienCategory->numAlienTeamGroups >= MAX_ALIEN_GROUP_PER_CATEGORY) {
-				Com_Printf("CP_ParseAlienTeam: maximum number of alien team reached (%i) in category \"%s\"\n", MAX_ALIEN_GROUP_PER_CATEGORY, name);
+				cgi->Com_Printf("CP_ParseAlienTeam: maximum number of alien team reached (%i) in category \"%s\"\n", MAX_ALIEN_GROUP_PER_CATEGORY, name);
 				break;
 			}
 
@@ -180,13 +180,13 @@ static void CP_ParseAlienTeam (const char* name, const char** text)
 			} while (*text);
 
 			if (group->minAlienCount > group->maxAlienCount) {
-				Com_Printf("CP_ParseAlienTeam: Minimum number of aliens is greater than maximum value! Swapped.\n");
+				cgi->Com_Printf("CP_ParseAlienTeam: Minimum number of aliens is greater than maximum value! Swapped.\n");
 				const int swap = group->minAlienCount;
 				group->minAlienCount = group->maxAlienCount;
 				group->maxAlienCount = swap;
 			}
 		} else {
-			Com_Printf("CP_ParseAlienTeam: unknown token \"%s\" ignored (category %s)\n", token, name);
+			cgi->Com_Printf("CP_ParseAlienTeam: unknown token \"%s\" ignored (category %s)\n", token, name);
 			continue;
 		}
 	} while (*text);
@@ -212,12 +212,12 @@ static void CP_ParseResearchedCampaignItems (const campaign_t* campaign, const c
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CP_ParseResearchedCampaignItems: equipment def \"%s\" without body ignored (%s)\n",
+		cgi->Com_Printf("CP_ParseResearchedCampaignItems: equipment def \"%s\" without body ignored (%s)\n",
 				name, token);
 		return;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "..campaign research list '%s'\n", name);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "..campaign research list '%s'\n", name);
 	do {
 		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text || *token == '}')
@@ -231,13 +231,13 @@ static void CP_ParseResearchedCampaignItems (const campaign_t* campaign, const c
 				tech->markResearched.markOnly[tech->markResearched.numDefinitions] = true;
 				tech->markResearched.campaign[tech->markResearched.numDefinitions] = cgi->PoolStrDup(name, cp_campaignPool, 0);
 				tech->markResearched.numDefinitions++;
-				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", tech->id);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", tech->id);
 				break;
 			}
 		}
 
 		if (i == ccs.numTechnologies)
-			Com_Printf("CP_ParseResearchedCampaignItems: unknown token \"%s\" ignored (tech %s)\n", token, name);
+			cgi->Com_Printf("CP_ParseResearchedCampaignItems: unknown token \"%s\" ignored (tech %s)\n", token, name);
 
 	} while (*text);
 }
@@ -260,16 +260,16 @@ static void CP_ParseResearchableCampaignStates (const campaign_t* campaign, cons
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CP_ParseResearchableCampaignStates: equipment def \"%s\" without body ignored\n", name);
+		cgi->Com_Printf("CP_ParseResearchableCampaignStates: equipment def \"%s\" without body ignored\n", name);
 		return;
 	}
 
 	if (!Q_streq(campaign->researched, name)) {
-		Com_DPrintf(DEBUG_CLIENT, "..don't use '%s' as researchable list\n", name);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "..don't use '%s' as researchable list\n", name);
 		return;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "..campaign researchable list '%s'\n", name);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "..campaign researchable list '%s'\n", name);
 	do {
 		token = cgi->Com_EParse(text, errhead, name);
 		if (!*text || *token == '}')
@@ -284,13 +284,13 @@ static void CP_ParseResearchableCampaignStates (const campaign_t* campaign, cons
 				} else {
 					/** @todo Mark unresearchable */
 				}
-				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", tech->id);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", tech->id);
 				break;
 			}
 		}
 
 		if (i == ccs.numTechnologies)
-			Com_Printf("CP_ParseResearchableCampaignStates: unknown token \"%s\" ignored (tech %s)\n", token, name);
+			cgi->Com_Printf("CP_ParseResearchableCampaignStates: unknown token \"%s\" ignored (tech %s)\n", token, name);
 
 	} while (*text);
 }
@@ -391,12 +391,12 @@ static void CP_ParseCampaign (const char* name, const char** text)
 
 	/* search for campaigns with same name */
 	if (CP_GetCampaign(name) != nullptr) {
-		Com_Printf("CP_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", name);
+		cgi->Com_Printf("CP_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
 	if (ccs.numCampaigns >= MAX_CAMPAIGNS) {
-		Com_Printf("CP_ParseCampaign: Max campaigns reached (%i)\n", MAX_CAMPAIGNS);
+		cgi->Com_Printf("CP_ParseCampaign: Max campaigns reached (%i)\n", MAX_CAMPAIGNS);
 		return;
 	}
 
@@ -423,7 +423,7 @@ static void CP_ParseCampaign (const char* name, const char** text)
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CP_ParseCampaign: campaign def \"%s\" without body ignored\n", name);
+		cgi->Com_Printf("CP_ParseCampaign: campaign def \"%s\" without body ignored\n", name);
 		ccs.numCampaigns--;
 		return;
 	}
@@ -461,7 +461,7 @@ static void CP_ParseCampaign (const char* name, const char** text)
 		} else if (Q_streq(token, "aircraft")) {
 			cgi->Com_ParseList(text, &cp->initialCraft);
 		} else {
-			Com_Printf("CP_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
+			cgi->Com_Printf("CP_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
 			cgi->Com_EParse(text, errhead, name);
 		}
 	} while (*text);
@@ -480,7 +480,7 @@ static void CP_ParseCampaign (const char* name, const char** text)
 	}
 	if (drop || s->aircraftFactor == -1 || s->aircraftDivisor == -1 || s->baseUpkeep == -1
 	 || s->adminInitial == -1 || s->debtInterest == -1) {
-		Com_Printf("CP_ParseCampaign: check salary definition. Campaign def \"%s\" ignored\n", name);
+		cgi->Com_Printf("CP_ParseCampaign: check salary definition. Campaign def \"%s\" ignored\n", name);
 		ccs.numCampaigns--;
 		return;
 	}
@@ -515,11 +515,11 @@ static void CP_ParseComponents (const char* name, const char** text)
 	/* get body */
 	token = Com_Parse(text);
 	if (!*text || *token != '{') {
-		Com_Printf("CP_ParseComponents: \"%s\" components def without body ignored.\n", name);
+		cgi->Com_Printf("CP_ParseComponents: \"%s\" components def without body ignored.\n", name);
 		return;
 	}
 	if (ccs.numComponents >= MAX_ASSEMBLIES) {
-		Com_Printf("CP_ParseComponents: too many technology entries. limit is %i.\n", MAX_ASSEMBLIES);
+		cgi->Com_Printf("CP_ParseComponents: too many technology entries. limit is %i.\n", MAX_ASSEMBLIES);
 		return;
 	}
 
@@ -549,7 +549,7 @@ static void CP_ParseComponents (const char* name, const char** text)
 			Q_strncpyz(comp->assemblyId, token, sizeof(comp->assemblyId));
 			comp->assemblyItem = INVSH_GetItemByIDSilent(comp->assemblyId);
 			if (comp->assemblyItem)
-				Com_DPrintf(DEBUG_CLIENT, "CP_ParseComponents: linked item: %s with components: %s\n", token, comp->assemblyId);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "CP_ParseComponents: linked item: %s with components: %s\n", token, comp->assemblyId);
 		} else if (Q_streq(token, "item")) {
 			/* Defines what items need to be collected for this item to be researchable. */
 			if (comp->numItemtypes < MAX_COMP) {
@@ -580,14 +580,14 @@ static void CP_ParseComponents (const char* name, const char** text)
 					comp->numItemtypes++;
 				}
 			} else {
-				Com_Printf("CP_ParseComponents: \"%s\" Too many 'items' defined. Limit is %i - ignored.\n", name, MAX_COMP);
+				cgi->Com_Printf("CP_ParseComponents: \"%s\" Too many 'items' defined. Limit is %i - ignored.\n", name, MAX_COMP);
 			}
 		} else if (Q_streq(token, "time")) {
 			/* Defines how long disassembly lasts. */
 			token = Com_Parse(text);
 			comp->time = atoi(token);
 		} else {
-			Com_Printf("CP_ParseComponents: Error in \"%s\" - unknown token: \"%s\".\n", name, token);
+			cgi->Com_Printf("CP_ParseComponents: Error in \"%s\" - unknown token: \"%s\".\n", name, token);
 		}
 	} while (*text);
 
@@ -606,7 +606,7 @@ components_t* CP_GetComponentsByItem (const objDef_t* item)
 	for (int i = 0; i < ccs.numComponents; i++) {
 		components_t* comp = &ccs.components[i];
 		if (comp->assemblyItem == item) {
-			Com_DPrintf(DEBUG_CLIENT, "CP_GetComponentsByItem: found components id: %s\n", comp->assemblyId);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "CP_GetComponentsByItem: found components id: %s\n", comp->assemblyId);
 			return comp;
 		}
 	}
@@ -720,18 +720,18 @@ static bool CP_ItemsSanityCheck (void)
 		/* Warn if item has no size set. */
 		if (item->size <= 0 && B_ItemIsStoredInBaseStorage(item)) {
 			result = false;
-			Com_Printf("CP_ItemsSanityCheck: Item %s has zero size set.\n", item->id);
+			cgi->Com_Printf("CP_ItemsSanityCheck: Item %s has zero size set.\n", item->id);
 		}
 
 		/* Warn if no price is set. */
 		if (item->price <= 0 && BS_IsOnMarket(item)) {
 			result = false;
-			Com_Printf("CP_ItemsSanityCheck: Item %s has zero price set.\n", item->id);
+			cgi->Com_Printf("CP_ItemsSanityCheck: Item %s has zero price set.\n", item->id);
 		}
 
 		if (item->price > 0 && !BS_IsOnMarket(item) && !PR_ItemIsProduceable(item)) {
 			result = false;
-			Com_Printf("CP_ItemsSanityCheck: Item %s has a price set though it is neither available on the market and production.\n", item->id);
+			cgi->Com_Printf("CP_ItemsSanityCheck: Item %s has a price set though it is neither available on the market and production.\n", item->id);
 		}
 	}
 
@@ -763,11 +763,11 @@ void CP_ScriptSanityCheck (void)
 {
 	const sanity_functions_t* s;
 
-	Com_Printf("Sanity check for script data\n");
+	cgi->Com_Printf("Sanity check for script data\n");
 	s = sanity_functions;
 	while (s->check) {
 		bool status = s->check();
-		Com_Printf("...%s %s\n", s->name, (status ? "ok" : "failed"));
+		cgi->Com_Printf("...%s %s\n", s->name, (status ? "ok" : "failed"));
 		s++;
 	}
 }
@@ -798,7 +798,7 @@ void CP_ParseCampaignData (void)
 	cgi->FS_NextScriptHeader(nullptr, nullptr, nullptr);
 	text = nullptr;
 
-	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
+	cgi->Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
 	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != nullptr)
 		CP_ParseScriptSecond(type, name, &text);
 	INS_LinkTechnologies();
@@ -819,13 +819,13 @@ void CP_ParseCampaignData (void)
 		campaign->asymptoticMarketDef = cgi->INV_GetEquipmentDefinitionByID(campaign->asymptoticMarket);
 	}
 
-	Com_Printf("Campaign data loaded - size " UFO_SIZE_T " bytes\n", sizeof(ccs));
-	Com_Printf("...techs: %i\n", ccs.numTechnologies);
-	Com_Printf("...buildings: %i\n", ccs.numBuildingTemplates);
-	Com_Printf("...ranks: %i\n", ccs.numRanks);
-	Com_Printf("...nations: %i\n", ccs.numNations);
-	Com_Printf("...cities: %i\n", ccs.numCities);
-	Com_Printf("\n");
+	cgi->Com_Printf("Campaign data loaded - size " UFO_SIZE_T " bytes\n", sizeof(ccs));
+	cgi->Com_Printf("...techs: %i\n", ccs.numTechnologies);
+	cgi->Com_Printf("...buildings: %i\n", ccs.numBuildingTemplates);
+	cgi->Com_Printf("...ranks: %i\n", ccs.numRanks);
+	cgi->Com_Printf("...nations: %i\n", ccs.numNations);
+	cgi->Com_Printf("...cities: %i\n", ccs.numCities);
+	cgi->Com_Printf("\n");
 }
 
 void CP_ReadCampaignData (const campaign_t* campaign)
@@ -836,7 +836,7 @@ void CP_ReadCampaignData (const campaign_t* campaign)
 	cgi->FS_NextScriptHeader(nullptr, nullptr, nullptr);
 	text = nullptr;
 
-	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
+	cgi->Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
 	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != nullptr)
 		CP_ParseScriptCampaignRelated(campaign, type, name, &text);
 

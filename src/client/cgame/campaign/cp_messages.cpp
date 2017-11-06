@@ -274,7 +274,7 @@ bool MS_LoadXML (xmlNode_t* p)
 		uiMessageListNodeMessage_t* mess;
 
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_MESSAGETYPE_NAMESPACE, type, (int*) &mtype)) {
-			Com_Printf("Invalid message type '%s'\n", type);
+			cgi->Com_Printf("Invalid message type '%s'\n", type);
 			continue;
 		}
 

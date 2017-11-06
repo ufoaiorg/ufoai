@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void CP_AddTechAsResearchable_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <tech>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <tech>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -61,7 +61,7 @@ static void CP_AddItemAsCollected_f (void)
 	const objDef_t* item;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <item>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <item>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -76,7 +76,7 @@ static void CP_AddItemAsCollected_f (void)
 	if (item) {
 		technology_t* tech = RS_GetTechForItem(item);
 		base->storage.numItems[item->idx]++;
-		Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);
 		RS_MarkCollected(tech);
 	}
 }
@@ -93,13 +93,13 @@ static void CP_ChangeNationHappiness_f (void)
 	const mission_t* mission = GEO_GetSelectedMission();
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <absolute change value>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <absolute change value>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	change = atof(cgi->Cmd_Argv(1));
 
 	if (!mission) {
-		Com_Printf("No mission selected - could not determine nation to use\n");
+		cgi->Com_Printf("No mission selected - could not determine nation to use\n");
 		return;
 	}
 

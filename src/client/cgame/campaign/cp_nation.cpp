@@ -54,7 +54,7 @@ nation_t* NAT_GetNationByIDX (const int index)
 nation_t* NAT_GetNationByID (const char* nationID)
 {
 	if (!nationID) {
-		Com_Printf("NAT_GetNationByID: nullptr nationID\n");
+		cgi->Com_Printf("NAT_GetNationByID: nullptr nationID\n");
 		return nullptr;
 	}
 	for (int i = 0; i < ccs.numNations; i++) {
@@ -63,7 +63,7 @@ nation_t* NAT_GetNationByID (const char* nationID)
 			return nation;
 	}
 
-	Com_Printf("NAT_GetNationByID: Could not find nation '%s'\n", nationID);
+	cgi->Com_Printf("NAT_GetNationByID: Could not find nation '%s'\n", nationID);
 
 	/* No matching nation found - ERROR */
 	return nullptr;
@@ -102,7 +102,7 @@ void NAT_UpdateHappinessForAllNations (const float minhappiness)
 		}
 
 		NAT_SetHappiness(minhappiness, nation, stats->happiness + happinessFactor);
-		Com_DPrintf(DEBUG_CLIENT, "Happiness of nation %s decreased: %.02f\n", nation->name, stats->happiness);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Happiness of nation %s decreased: %.02f\n", nation->name, stats->happiness);
 	}
 }
 
@@ -255,7 +255,7 @@ void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* af
 	/** @todo HACK: This should be handled properly, i.e. civilians should only factor into the scoring
 	 * if the mission objective is actually to save civilians. */
 	if (civilianSum == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CP_HandleNationData: Warning, civilianSum == 0, score for this mission will default to 0.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "CP_HandleNationData: Warning, civilianSum == 0, score for this mission will default to 0.\n");
 		performance = 0.0f;
 	} else {
 		/* Calculate how well the mission went. */
@@ -357,7 +357,7 @@ static const value_t nation_vals[] = {
 void CL_ParseNations (const char* name, const char** text)
 {
 	if (ccs.numNations >= MAX_NATIONS) {
-		Com_Printf("CL_ParseNations: nation number exceeding maximum number of nations: %i\n", MAX_NATIONS);
+		cgi->Com_Printf("CL_ParseNations: nation number exceeding maximum number of nations: %i\n", MAX_NATIONS);
 		return;
 	}
 
@@ -369,7 +369,7 @@ void CL_ParseNations (const char* name, const char** text)
 			break;
 	}
 	if (i < ccs.numNations) {
-		Com_Printf("CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name);
+		cgi->Com_Printf("CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
@@ -382,7 +382,7 @@ void CL_ParseNations (const char* name, const char** text)
 	if (cgi->Com_ParseBlock(name, text, nation, nation_vals, cp_campaignPool)) {
 		ccs.numNations++;
 
-		Com_DPrintf(DEBUG_CLIENT, "...found nation %s\n", name);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "...found nation %s\n", name);
 		nation->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 	}
 }
@@ -431,7 +431,7 @@ void CITY_Parse (const char* name, const char** text)
 
 	/* search for cities with same name */
 	if (CITY_GetById(name)) {
-		Com_Printf("CITY_Parse: city def \"%s\" with same name found, second ignored\n", name);
+		cgi->Com_Printf("CITY_Parse: city def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
@@ -464,12 +464,12 @@ bool NAT_ScriptSanityCheck (void)
 
 		if (!city->name) {
 			error++;
-			Com_Printf("...... city '%s' has no name\n", city->id);
+			cgi->Com_Printf("...... city '%s' has no name\n", city->id);
 		}
 
 		if (MapIsWater(GEO_GetColor(city->pos, MAPTYPE_TERRAIN, nullptr))) {
 			error++;
-			Com_Printf("...... city '%s' has a position in the water\n", city->id);
+			cgi->Com_Printf("...... city '%s' has a position in the water\n", city->id);
 		}
 
 		numTypes = UFO_GetAvailableUFOsForMission(INTERESTCATEGORY_TERROR_ATTACK, ufoTypes, false);
@@ -502,12 +502,12 @@ bool NAT_ScriptSanityCheck (void)
 
 		if (!cityCanBeUsed) {
 			error++;
-			Com_Printf("...... city '%s' can't be used in game: it has no map fitting parameters\n", city->id);
+			cgi->Com_Printf("...... city '%s' can't be used in game: it has no map fitting parameters\n", city->id);
 			if (parametersFit) {
-				Com_Printf("      (No map fitting");
+				cgi->Com_Printf("      (No map fitting");
 				for (int i = 0 ; i < numTypes; i++)
-					Com_Printf(" %s", cgi->Com_UFOTypeToShortName(ufoTypes[i]));
-				Com_Printf(")\n");
+					cgi->Com_Printf(" %s", cgi->Com_UFOTypeToShortName(ufoTypes[i]));
+				cgi->Com_Printf(")\n");
 			}
 			GEO_PrintParameterStringByPos(city->pos);
 		}
@@ -526,7 +526,7 @@ static void CP_NationStatsClick_f (void)
 	int num;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -740,13 +740,13 @@ static void CL_NationSelect_f (void)
 	int nat;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <nat_idx>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <nat_idx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	nat = atoi(cgi->Cmd_Argv(1));
 	if (nat < 0 || nat >= ccs.numNations) {
-		Com_Printf("Invalid nation index: %is\n",nat);
+		cgi->Com_Printf("Invalid nation index: %is\n",nat);
 		return;
 	}
 
@@ -762,7 +762,7 @@ static void CL_NationSelect_f (void)
 static void NAT_ListCities_f (void)
 {
 	LIST_Foreach(ccs.cities, city_t, city) {
-		Com_Printf("City '%s' -- position (%0.1f, %0.1f)\n", city->id, city->pos[0], city->pos[1]);
+		cgi->Com_Printf("City '%s' -- position (%0.1f, %0.1f)\n", city->id, city->pos[0], city->pos[1]);
 		GEO_PrintParameterStringByPos(city->pos);
 	}
 }
@@ -775,16 +775,16 @@ static void NAT_NationList_f (void)
 {
 	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t* nation = &ccs.nations[i];
-		Com_Printf("Nation ID: %s\n", nation->id);
-		Com_Printf("...max-funding %i c\n", nation->maxFunding);
-		Com_Printf("...happiness %0.2f\n", nation->stats[0].happiness);
-		Com_Printf("...xviInfection %i\n", nation->stats[0].xviInfection);
-		Com_Printf("...max-soldiers %i\n", nation->maxSoldiers);
-		Com_Printf("...max-scientists %i\n", nation->maxScientists);
-		Com_Printf("...max-workers %i\n", nation->maxWorkers);
-		Com_Printf("...max-pilots %i\n", nation->maxPilots);
-		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", nation->color[0], nation->color[1], nation->color[2], nation->color[3]);
-		Com_Printf("...pos x:%.0f y:%.0f\n", nation->pos[0], nation->pos[1]);
+		cgi->Com_Printf("Nation ID: %s\n", nation->id);
+		cgi->Com_Printf("...max-funding %i c\n", nation->maxFunding);
+		cgi->Com_Printf("...happiness %0.2f\n", nation->stats[0].happiness);
+		cgi->Com_Printf("...xviInfection %i\n", nation->stats[0].xviInfection);
+		cgi->Com_Printf("...max-soldiers %i\n", nation->maxSoldiers);
+		cgi->Com_Printf("...max-scientists %i\n", nation->maxScientists);
+		cgi->Com_Printf("...max-workers %i\n", nation->maxWorkers);
+		cgi->Com_Printf("...max-pilots %i\n", nation->maxPilots);
+		cgi->Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", nation->color[0], nation->color[1], nation->color[2], nation->color[3]);
+		cgi->Com_Printf("...pos x:%.0f y:%.0f\n", nation->pos[0], nation->pos[1]);
 	}
 }
 #endif
@@ -847,12 +847,12 @@ void NAT_HandleBudget (const campaign_t* campaign)
 		}
 
 		Com_sprintf(message, sizeof(message), _("Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"),
-					funding, ngettext("credit", "credits", funding),
-					newScientists, ngettext("scientist", "scientists", newScientists),
-					newSoldiers, ngettext("soldier", "soldiers", newSoldiers),
-					newPilots, ngettext("pilot", "pilots", newPilots),
-					newWorkers, ngettext("worker", "workers", newWorkers),
-					_(nation->name), NAT_GetHappinessString(nation));
+			funding, ngettext("credit", "credits", funding),
+			newScientists, ngettext("scientist", "scientists", newScientists),
+			newSoldiers, ngettext("soldier", "soldiers", newSoldiers),
+			newPilots, ngettext("pilot", "pilots", newPilots),
+			newWorkers, ngettext("worker", "workers", newWorkers),
+			_(nation->name), NAT_GetHappinessString(nation));
 		MS_AddNewMessage(_("Notice"), message);
 	}
 

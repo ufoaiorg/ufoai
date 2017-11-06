@@ -135,7 +135,7 @@ static int MSO_ParseOptionType (const char* type)
 	else if (Q_strcaseeq(type, "sound"))
 		return MSO_SOUND;
 
-	Com_Printf("Unrecognized optionstype during set '%s' ignored\n", type);
+	cgi->Com_Printf("Unrecognized optionstype during set '%s' ignored\n", type);
 	return 0;
 }
 
@@ -146,7 +146,7 @@ static int MSO_ParseOptionType (const char* type)
 static void MSO_Set_f (void)
 {
 	if (cgi->Cmd_Argc() != 4) {
-		Com_Printf("Usage: %s <messagetypename> <pause|notify|sound> <0|1>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <messagetypename> <pause|notify|sound> <0|1>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -161,7 +161,7 @@ static void MSO_Set_f (void)
 			break;
 	}
 	if (type == NT_NUM_NOTIFYTYPE) {
-		Com_Printf("Unrecognized messagetype during set '%s' ignored\n", messagetype);
+		cgi->Com_Printf("Unrecognized messagetype during set '%s' ignored\n", messagetype);
 		return;
 	}
 
@@ -176,7 +176,7 @@ static void MSO_Set_f (void)
 static void MSO_SetAll_f (void)
 {
 	if (cgi->Cmd_Argc() != 3) {
-		Com_Printf("Usage: %s <pause|notify|sound> <0|1>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <pause|notify|sound> <0|1>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -262,7 +262,7 @@ bool MSO_LoadXML (xmlNode_t* p)
 
 		/** @todo (menu) check why this message is not shown anywhere in logs*/
 		if (type == NT_NUM_NOTIFYTYPE) {
-			Com_Printf("Unrecognized messagetype '%s' ignored while loading\n", messagetype);
+			cgi->Com_Printf("Unrecognized messagetype '%s' ignored while loading\n", messagetype);
 			continue;
 		}
 		MSO_Set(0, (notify_t)type, MSO_NOTIFY, cgi->XML_GetBool(s, SAVE_MESSAGEOPTIONS_NOTIFY, false), false);
@@ -286,7 +286,7 @@ static int MSO_ParseOption (const char* blockName, const char** text)
 	token = Com_Parse(text);
 
 	if (!*text || *token !='{') {
-		Com_Printf("MSO_ParseOption: settingslist \"%s\" without body ignored\n", blockName);
+		cgi->Com_Printf("MSO_ParseOption: settingslist \"%s\" without body ignored\n", blockName);
 		return -1;
 	}
 
@@ -297,7 +297,7 @@ static int MSO_ParseOption (const char* blockName, const char** text)
 		/* get the msg type*/
 		token = cgi->Com_EParse(text, errhead, blockName);
 		if (!*text) {
-			Com_Printf("MSO_ParseOption: end of file not expected \"%s\"\n", blockName);
+			cgi->Com_Printf("MSO_ParseOption: end of file not expected \"%s\"\n", blockName);
 			return -1;
 		}
 		if (token[0] == '}')
@@ -308,20 +308,20 @@ static int MSO_ParseOption (const char* blockName, const char** text)
 			messageType = MSO_ParseNotifyType(token);
 		} else if (Q_streq(token, "status")) {
 			if (status != nullptr) {
-				Com_Printf("MSO_ParseOption: status already defined. Previous definition ignored.\n");
+				cgi->Com_Printf("MSO_ParseOption: status already defined. Previous definition ignored.\n");
 				cgi->LIST_Delete(&status);
 			} else if (!cgi->Com_ParseList(text, &status)) {
-				Com_Printf("MSO_ParseOption: error while parsing option status.\n");
+				cgi->Com_Printf("MSO_ParseOption: error while parsing option status.\n");
 				return -1;
 			}
 		} else {
-			Com_Printf("MSO_ParseOption: token \"%s\" in \"%s\" not expected.\n", token, blockName);
+			cgi->Com_Printf("MSO_ParseOption: token \"%s\" in \"%s\" not expected.\n", token, blockName);
 			return -1;
 		}
 	} while (*text);
 
 	if (messageType == -1) {
-		Com_Printf("MSO_ParseOption: message option type undefined.\n");
+		cgi->Com_Printf("MSO_ParseOption: message option type undefined.\n");
 		return -1;
 	}
 
@@ -329,7 +329,7 @@ static int MSO_ParseOption (const char* blockName, const char** text)
 		const char* value = (const char*)element->data;
 		const int optionType = MSO_ParseOptionType(value);
 		if (optionType == 0) {
-			Com_Printf("MSO_ParseOption: message option type \"%s\" undefined.\n", value);
+			cgi->Com_Printf("MSO_ParseOption: message option type \"%s\" undefined.\n", value);
 			continue;
 		}
 		MSO_Set(0, (notify_t)messageType, optionType, 1, false);
@@ -356,13 +356,13 @@ static bool MSO_ParseCategory (const char* blockName, const char** text)
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("MSO_ParseCategory: category without body\n");
+		cgi->Com_Printf("MSO_ParseCategory: category without body\n");
 		return false;
 	}
 
 	/* add category */
 	if (ccs.numMsgCategories >= MAX_MESSAGECATEGORIES) {
-		Com_Printf("MSO_ParseCategory: too many messagecategory defs\n");
+		cgi->Com_Printf("MSO_ParseCategory: too many messagecategory defs\n");
 		return false;
 	}
 
@@ -387,7 +387,7 @@ static bool MSO_ParseCategory (const char* blockName, const char** text)
 		/* get entries and add them to category */
 		token = cgi->Com_EParse(text, errhead, blockName);
 		if (!*text) {
-			Com_Printf("MSO_ParseMessageSettings: end of file not expected\n");
+			cgi->Com_Printf("MSO_ParseMessageSettings: end of file not expected\n");
 			return false;
 		}
 		if (token[0] == '}')
@@ -414,7 +414,7 @@ static bool MSO_ParseCategory (const char* blockName, const char** text)
 		} else if (Q_streq(token, "name")) {
 			token = cgi->Com_EParse(text, errhead, blockName);
 			if (!*text) {
-				Com_Printf("MSO_ParseMessageSettings: end of file not expected\n");
+				cgi->Com_Printf("MSO_ParseMessageSettings: end of file not expected\n");
 				return false;
 			}
 			/* skip translation token */
@@ -429,7 +429,7 @@ static bool MSO_ParseCategory (const char* blockName, const char** text)
 	} while (*text);
 
 	if (category->name == nullptr) {
-		Com_Printf("MSO_ParseMessageSettings: category do not have name\n");
+		cgi->Com_Printf("MSO_ParseMessageSettings: category do not have name\n");
 		return false;
 	}
 

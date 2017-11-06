@@ -50,7 +50,7 @@ void CP_AddWeaponAmmo (equipDef_t* ed, Item* item)
 			/* "Recharge" the oneshot weapon. */
 			item->setAmmoLeft(type->ammo);
 			item->setAmmoDef(item->def()); /* Just in case this hasn't been done yet. */
-			Com_DPrintf(DEBUG_CLIENT, "CL_AddWeaponAmmo: oneshot weapon '%s'.\n", type->id);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "CL_AddWeaponAmmo: oneshot weapon '%s'.\n", type->id);
 			return;
 		} else {
 			/* No change, nothing needs to be done to this item. */

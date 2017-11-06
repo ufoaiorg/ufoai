@@ -144,12 +144,12 @@ void CP_ReconMissionGroundGo (mission_t* mission)
 			break;
 		}
 		if (counter >= MAX_POS_LOOP) {
-			Com_Printf("CP_ReconMissionGroundGo: Error, could not set position.\n");
+			cgi->Com_Printf("CP_ReconMissionGroundGo: Error, could not set position.\n");
 			CP_MissionRemove(mission);
 			return;
 		}
 	} else {
-		Com_Printf("CP_ReconMissionGroundGo: No map found, remove mission.\n");
+		cgi->Com_Printf("CP_ReconMissionGroundGo: No map found, remove mission.\n");
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -246,7 +246,7 @@ void CP_ReconMissionNextStage (mission_t* mission)
 		CP_ReconMissionIsSuccess(mission);
 		break;
 	default:
-		Com_Printf("CP_ReconMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		cgi->Com_Printf("CP_ReconMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
 		CP_MissionRemove(mission);
 		break;
 	}

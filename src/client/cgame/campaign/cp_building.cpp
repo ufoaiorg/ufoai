@@ -142,7 +142,7 @@ void B_ParseBuildings (const char* name, const char** text, bool link)
 	/* get id list body */
 	token = Com_Parse(text);
 	if (!*text || *token != '{') {
-		Com_Printf("B_ParseBuildings: building \"%s\" without body ignored\n", name);
+		cgi->Com_Printf("B_ParseBuildings: building \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -152,7 +152,7 @@ void B_ParseBuildings (const char* name, const char** text, bool link)
 	if (!link) {
 		for (int i = 0; i < ccs.numBuildingTemplates; i++) {
 			if (Q_streq(ccs.buildingTemplates[i].id, name)) {
-				Com_Printf("B_ParseBuildings: Second building with same name found (%s) - second ignored\n", name);
+				cgi->Com_Printf("B_ParseBuildings: Second building with same name found (%s) - second ignored\n", name);
 				return;
 			}
 		}
@@ -162,7 +162,7 @@ void B_ParseBuildings (const char* name, const char** text, bool link)
 		OBJZERO(*building);
 		building->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 
-		Com_DPrintf(DEBUG_CLIENT, "...found building %s\n", building->id);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "...found building %s\n", building->id);
 
 		/* set standard values */
 		building->tpl = building;	/* Self-link just in case ... this way we can check if it is a template or not. */
@@ -191,7 +191,7 @@ void B_ParseBuildings (const char* name, const char** text, bool link)
 
 				building->buildingType = B_GetBuildingTypeByBuildingID(token);
 				if (building->buildingType >= MAX_BUILDING_TYPE)
-					Com_Printf("didn't find buildingType '%s'\n", token);
+					cgi->Com_Printf("didn't find buildingType '%s'\n", token);
 			} else {
 				/* no linking yet */
 				if (Q_streq(token, "depends")) {
@@ -200,12 +200,12 @@ void B_ParseBuildings (const char* name, const char** text, bool link)
 						return;
 				} else {
 					if (!cgi->Com_ParseBlockToken(name, text, building, valid_building_vars, cp_campaignPool, token))
-						Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, name);
+						cgi->Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, name);
 				}
 			}
 		} while (*text);
 		if (building->size[0] < 1 || building->size[1] < 1 || building->size[0] >= BASE_SIZE || building->size[1] >= BASE_SIZE) {
-			Com_Printf("B_ParseBuildings: Invalid size for building %s (%i, %i)\n", building->id, (int)building->size[0], (int)building->size[1]);
+			cgi->Com_Printf("B_ParseBuildings: Invalid size for building %s (%i, %i)\n", building->id, (int)building->size[0], (int)building->size[1]);
 			ccs.numBuildingTemplates--;
 		}
 	} else {
@@ -249,18 +249,18 @@ bool B_BuildingScriptSanityCheck (void)
 	for (i = 0, b = ccs.buildingTemplates; i < ccs.numBuildingTemplates; i++, b++) {
 		if (!b->name) {
 			error++;
-			Com_Printf("...... no name for building '%s' given\n", b->id);
+			cgi->Com_Printf("...... no name for building '%s' given\n", b->id);
 		}
 		if (!b->image) {
 			error++;
-			Com_Printf("...... no image for building '%s' given\n", b->id);
+			cgi->Com_Printf("...... no image for building '%s' given\n", b->id);
 		}
 		if (!b->pedia) {
 			error++;
-			Com_Printf("...... no pedia link for building '%s' given\n", b->id);
+			cgi->Com_Printf("...... no pedia link for building '%s' given\n", b->id);
 		} else if (!RS_GetTechByID(b->pedia)) {
 			error++;
-			Com_Printf("...... could not get pedia entry tech (%s) for building '%s'\n", b->pedia, b->id);
+			cgi->Com_Printf("...... could not get pedia entry tech (%s) for building '%s'\n", b->pedia, b->id);
 		}
 	}
 
@@ -294,13 +294,13 @@ building_t* B_GetBuildingTemplateSilent (const char* buildingName)
 building_t* B_GetBuildingTemplate (const char* buildingName)
 {
 	if (!buildingName || buildingName[0] == '\0') {
-		Com_Printf("No, or empty building ID\n");
+		cgi->Com_Printf("No, or empty building ID\n");
 		return nullptr;
 	}
 
 	building_t* buildingTemplate = B_GetBuildingTemplateSilent(buildingName);
 	if (!buildingTemplate)
-		Com_Printf("Building %s not found\n", buildingName);
+		cgi->Com_Printf("Building %s not found\n", buildingName);
 	return buildingTemplate;
 }
 

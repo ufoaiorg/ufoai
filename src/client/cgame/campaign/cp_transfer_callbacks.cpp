@@ -90,7 +90,7 @@ static void TR_TransferStart_f (void)
 	base_t* base = B_GetCurrentSelectedBase();
 
 	if (currentTransferType == TRANS_TYPE_INVALID) {
-		Com_Printf("TR_TransferStart_f: currentTransferType is wrong!\n");
+		cgi->Com_Printf("TR_TransferStart_f: currentTransferType is wrong!\n");
 		return;
 	}
 
@@ -418,7 +418,7 @@ static void TR_Add_f (void)
 	base_t* base = B_GetCurrentSelectedBase();
 
 	if (cgi->Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <itemid> <amount>", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <itemid> <amount>", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -703,7 +703,7 @@ static void TR_SelectBase_f (void)
 	base_t* destbase;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseIdx>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <baseIdx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -859,13 +859,13 @@ static void TR_CountAircraftInList (linkedList_t* aircraftList, int capacity[])
 static void TR_DestinationCapacityList_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <destinationBaseIdx>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <destinationBaseIdx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	base_t* base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (!base) {
-		Com_Printf("Invalid destinationBaseIdx: %s\n", cgi->Cmd_Argv(1));
+		cgi->Com_Printf("Invalid destinationBaseIdx: %s\n", cgi->Cmd_Argv(1));
 		return;
 	}
 

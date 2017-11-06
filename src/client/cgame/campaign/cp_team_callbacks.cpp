@@ -42,7 +42,7 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
 {
 	/* check syntax */
 	if (cgi->Cmd_Argc() < 1 ) {
-		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -81,7 +81,7 @@ static void CP_TEAM_SelectActorByUCN_f (void)
 {
 	/* check syntax */
 	if (cgi->Cmd_Argc() < 1) {
-		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -116,7 +116,7 @@ static void CP_TEAM_DeEquipActor_f (void)
 {
 	/* check syntax */
 	if (cgi->Cmd_Argc() < 1) {
-		Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <ucn>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -156,20 +156,20 @@ static void CP_TeamListDebug_f (void)
 {
 	const aircraft_t* aircraft = GEO_GetSelectedAircraft();
 	if (!aircraft) {
-		Com_Printf("Buy/build an aircraft first.\n");
+		cgi->Com_Printf("Buy/build an aircraft first.\n");
 		return;
 	}
 
 	const base_t* base = aircraft->homebase;
 	if (!base) {
-		Com_Printf("Build and select a base first\n");
+		cgi->Com_Printf("Build and select a base first\n");
 		return;
 	}
 
-	Com_Printf("%i members in the current team", AIR_GetTeamSize(aircraft));
+	cgi->Com_Printf("%i members in the current team", AIR_GetTeamSize(aircraft));
 	for (linkedList_t* list = aircraft->acTeam; list != nullptr; list = list->next) {
 		const Employee* employee = (const Employee*)list->data;
-		Com_Printf("ucn %i - name: %s\n", employee->chr.ucn, employee->chr.name);
+		cgi->Com_Printf("ucn %i - name: %s\n", employee->chr.ucn, employee->chr.name);
 	}
 }
 #endif
@@ -180,7 +180,7 @@ static void CP_TeamListDebug_f (void)
 static void CP_TEAM_FillEmployeeList_f (void)
 {
 	if (cgi->Cmd_Argc() <= 1 ) {
-		Com_Printf("Usage: %s <soldier|pilot> [aircraftIDX]\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <soldier|pilot> [aircraftIDX]\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -189,7 +189,7 @@ static void CP_TEAM_FillEmployeeList_f (void)
 	const employeeType_t employeeType = E_GetEmployeeType(typeId);
 
 	if (employeeType == MAX_EMPL) {
-		Com_Printf("Invalid employeeType: %s\n", typeId);
+		cgi->Com_Printf("Invalid employeeType: %s\n", typeId);
 		return;
 	}
 
@@ -198,7 +198,7 @@ static void CP_TEAM_FillEmployeeList_f (void)
 	if (cgi->Cmd_Argc() > 2 ) {
 		aircraft = AIR_AircraftGetFromIDX(atoi(cgi->Cmd_Argv(2)));
 		if (!aircraft) {
-			Com_Printf("No aircraft exist with global idx %i\n", atoi(cgi->Cmd_Argv(2)));
+			cgi->Com_Printf("No aircraft exist with global idx %i\n", atoi(cgi->Cmd_Argv(2)));
 			return;
 		}
 		base = aircraft->homebase;
@@ -259,7 +259,7 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 		if (idx >= 0) {
 			aircraft = AIR_AircraftGetFromIDX(idx);
 			if (!aircraft) {
-				Com_Printf("No aircraft exist with global idx %i\n", idx);
+				cgi->Com_Printf("No aircraft exist with global idx %i\n", idx);
 				return;
 			}
 			base = aircraft->homebase;
@@ -348,7 +348,7 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
 static void CP_TEAM_ChangeSkin_f (void)
 {
 	if (cgi->Cmd_Argc() < 3 ) {
-		Com_Printf("Usage: %s <ucn> <bodyskinidx>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <ucn> <bodyskinidx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	const int ucn = atoi(cgi->Cmd_Argv(1));
@@ -356,7 +356,7 @@ static void CP_TEAM_ChangeSkin_f (void)
 
 	Employee* soldier = E_GetEmployeeFromChrUCN(ucn);
 	if (soldier == nullptr || !soldier->isSoldier()) {
-		Com_Printf("Invalid soldier UCN: %i\n", ucn);
+		cgi->Com_Printf("Invalid soldier UCN: %i\n", ucn);
 		return;
 	}
 

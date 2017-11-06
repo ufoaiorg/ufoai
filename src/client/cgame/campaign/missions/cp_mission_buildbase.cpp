@@ -147,7 +147,7 @@ static void CP_BuildBaseSetUpBase (mission_t* mission)
 
 	base = AB_BuildBase(mission->pos);
 	if (!base) {
-		Com_DPrintf(DEBUG_CLIENT, "CP_BuildBaseSetUpBase: could not create alien base\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "CP_BuildBaseSetUpBase: could not create alien base\n");
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -271,7 +271,7 @@ void CP_BuildBaseMissionNextStage (const campaign_t* campaign, mission_t* missio
 		CP_BuildBaseMissionIsSuccess(mission);
 		break;
 	default:
-		Com_Printf("CP_BuildBaseMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		cgi->Com_Printf("CP_BuildBaseMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
 		CP_MissionRemove(mission);
 		break;
 	}

@@ -72,13 +72,13 @@ static void BS_SetAutosell_f (void)
 	const technology_t* tech;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <item-id> [0|1]\nWhere second parameter is the state (off/on), if omitted the autosell property will be flipped.\n",
+		cgi->Com_Printf("Usage: %s <item-id> [0|1]\nWhere second parameter is the state (off/on), if omitted the autosell property will be flipped.\n",
 				cgi->Cmd_Argv(0));
 		return;
 	}
 	/* aircraft check */
 	if (AIR_GetAircraftSilent(cgi->Cmd_Argv(1)) != nullptr) {
-		Com_Printf("Aircraft can't be autosold!\n");
+		cgi->Com_Printf("Aircraft can't be autosold!\n");
 		return;
 	}
 	/* items */
@@ -88,17 +88,17 @@ static void BS_SetAutosell_f (void)
 		return;
 	}
 	if (od->isVirtual) {
-		Com_Printf("Item %s is virtual, can't be autosold!\n", od->id);
+		cgi->Com_Printf("Item %s is virtual, can't be autosold!\n", od->id);
 		return;
 	}
 	if (od->notOnMarket) {
-		Com_Printf("Item %s is not on market, can't be autosold!\n", od->id);
+		cgi->Com_Printf("Item %s is not on market, can't be autosold!\n", od->id);
 		return;
 	}
 	tech = RS_GetTechForItem(od);
 	/* Don't allow to enable autosell for items not researched. */
 	if (!RS_IsResearched_ptr(tech)) {
-		Com_Printf("Item %s is not researched, can't be autosold!\n", od->id);
+		cgi->Com_Printf("Item %s is not researched, can't be autosold!\n", od->id);
 		return;
 	}
 	if (cgi->Cmd_Argc() >= 3)
@@ -120,7 +120,7 @@ static void BS_Buy_f (void)
 	const objDef_t* od;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <item-id> <count> [base-idx] \nNegative count means selling. If base index is omitted buys on the currently selected base.\n",
+		cgi->Com_Printf("Usage: %s <item-id> <count> [base-idx] \nNegative count means selling. If base index is omitted buys on the currently selected base.\n",
 				cgi->Cmd_Argv(0));
 		return;
 	}
@@ -137,7 +137,7 @@ static void BS_Buy_f (void)
 		aircraft_t* aircraft = AIR_AircraftGetFromIDX(idx);
 
 		if (!aircraft) {
-			Com_Printf("Invalid aircraft index!\n");
+			cgi->Com_Printf("Invalid aircraft index!\n");
 			return;
 		}
 		AIR_RemoveEmployees(*aircraft);
@@ -151,7 +151,7 @@ static void BS_Buy_f (void)
 		Employee* robot = E_GetEmployeeByTypeFromChrUCN(EMPL_ROBOT, ucn);
 
 		if (!robot) {
-			Com_Printf("Invalid UCN for UGV!\n");
+			cgi->Com_Printf("Invalid UCN for UGV!\n");
 			return;
 		}
 
@@ -160,7 +160,7 @@ static void BS_Buy_f (void)
 	}
 
 	if (!base) {
-		Com_Printf("No/invalid base selected.\n");
+		cgi->Com_Printf("No/invalid base selected.\n");
 		return;
 	}
 
@@ -221,7 +221,7 @@ static void BS_Buy_f (void)
 	}
 
 	if (count == 0) {
-		Com_Printf("Invalid number of items to buy/sell: %s\n", cgi->Cmd_Argv(2));
+		cgi->Com_Printf("Invalid number of items to buy/sell: %s\n", cgi->Cmd_Argv(2));
 		return;
 	}
 
@@ -241,7 +241,7 @@ static void BS_Buy_f (void)
 				return;
 
 			if (price <= 0) {
-				Com_Printf("Item on market with invalid buying price: %s (%d)\n", od->id, BS_GetItemBuyingPrice(od));
+				cgi->Com_Printf("Item on market with invalid buying price: %s (%d)\n", od->id, BS_GetItemBuyingPrice(od));
 				return;
 			}
 			/** @todo warn if player can buy less item due to available credits? */
@@ -253,7 +253,7 @@ static void BS_Buy_f (void)
 			}
 
 			if (od->size <= 0) {
-				Com_Printf("Item on market with invalid size: %s (%d)\n", od->id, od->size);
+				cgi->Com_Printf("Item on market with invalid size: %s (%d)\n", od->id, od->size);
 				return;
 			}
 			count = std::min(count, CAP_GetFreeCapacity(base, CAP_ITEMS) / od->size);
@@ -273,7 +273,7 @@ static void BS_Buy_f (void)
 		}
 		return;
 	}
-	Com_Printf("Invalid item ID\n");
+	cgi->Com_Printf("Invalid item ID\n");
 }
 
 /**
@@ -287,7 +287,7 @@ static void BS_ShowInfo_f (void)
 	const objDef_t* od;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <item-id>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <item-id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -299,7 +299,7 @@ static void BS_ShowInfo_f (void)
 		aircraft = AIR_AircraftGetFromIDX(idx);
 
 		if (!aircraft) {
-			Com_Printf("Invalid aircraft index!\n");
+			cgi->Com_Printf("Invalid aircraft index!\n");
 			return;
 		}
 		/** @todo show specialized info about PHALANX aircraft */
@@ -313,7 +313,7 @@ static void BS_ShowInfo_f (void)
 		Employee* robot = E_GetEmployeeByTypeFromChrUCN(EMPL_ROBOT, ucn);
 
 		if (!robot) {
-			Com_Printf("Invalid UCN for UGV!\n");
+			cgi->Com_Printf("Invalid UCN for UGV!\n");
 			return;
 		}
 
@@ -346,7 +346,7 @@ static void BS_ShowInfo_f (void)
 			cgi->INV_ItemDescription(od);
 		return;
 	}
-	Com_Printf("Invalid item ID\n");
+	cgi->Com_Printf("Invalid item ID\n");
 }
 
 /**
@@ -358,13 +358,13 @@ static void BS_FillMarket_f (void)
 	itemFilterTypes_t type;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <category>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <category>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	if (cgi->Cmd_Argc() >= 3)
 		base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(2)));
 	if (!base) {
-		Com_Printf("No/invalid base selected.\n");
+		cgi->Com_Printf("No/invalid base selected.\n");
 		return;
 	}
 
@@ -450,7 +450,7 @@ static void BS_FillMarket_f (void)
 static void BS_AddMarket_f (void)
 {
 	if (cgi->Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <itemid> <count>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <itemid> <count>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 

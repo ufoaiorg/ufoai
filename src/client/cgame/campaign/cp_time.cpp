@@ -214,7 +214,7 @@ static void CP_SetGameTime (int gameLapseValue)
 void CP_SetGameTime_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <timeid>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <timeid>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	CP_SetGameTime(atoi(cgi->Cmd_Argv(1)));

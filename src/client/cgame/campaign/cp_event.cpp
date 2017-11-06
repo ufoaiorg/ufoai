@@ -94,7 +94,7 @@ void CL_ParseEventMails (const char* name, const char** text)
 	eventMail_t* eventMail;
 
 	if (ccs.numEventMails >= MAX_EVENTMAILS) {
-		Com_Printf("CL_ParseEventMails: mail def \"%s\" with same name found, second ignored\n", name);
+		cgi->Com_Printf("CL_ParseEventMails: mail def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
@@ -102,7 +102,7 @@ void CL_ParseEventMails (const char* name, const char** text)
 	eventMail = &ccs.eventMails[ccs.numEventMails++];
 	OBJZERO(*eventMail);
 
-	Com_DPrintf(DEBUG_CLIENT, "...found eventMail %s\n", name);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "...found eventMail %s\n", name);
 
 	eventMail->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 
@@ -301,7 +301,7 @@ static int CP_CheckTriggerEvent (const char* expression, const void* userdata)
 		return 0;
 	}
 
-	Com_Printf("unknown expression given: '%s'\n", expression);
+	cgi->Com_Printf("unknown expression given: '%s'\n", expression);
 
 	return -1;
 }
@@ -366,7 +366,7 @@ void CP_ParseEventTrigger (const char* name, const char** text)
 	const char* token;
 
 	if (ccs.numCampaignTriggerEvents >= MAX_CAMPAIGN_TRIGGER_EVENTS) {
-		Com_Printf("CP_ParseEventTrigger: max event def limit hit\n");
+		cgi->Com_Printf("CP_ParseEventTrigger: max event def limit hit\n");
 		return;
 	}
 
@@ -375,7 +375,7 @@ void CP_ParseEventTrigger (const char* name, const char** text)
 		return;
 
 	if (!*text || token[0] != '{') {
-		Com_Printf("CP_ParseEventTrigger: event def '%s' without body ignored\n", name);
+		cgi->Com_Printf("CP_ParseEventTrigger: event def '%s' without body ignored\n", name);
 		return;
 	}
 
@@ -383,7 +383,7 @@ void CP_ParseEventTrigger (const char* name, const char** text)
 
 	campaignTriggerEvent_t* event = &ccs.campaignTriggerEvents[ccs.numCampaignTriggerEvents];
 	OBJZERO(*event);
-	Com_DPrintf(DEBUG_CLIENT, "...found event %s\n", name);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "...found event %s\n", name);
 	ccs.numCampaignTriggerEvents++;
 	event->active = true;
 	event->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
@@ -395,7 +395,7 @@ void CP_ParseEventTrigger (const char* name, const char** text)
 		if (*token == '}')
 			break;
 		if (!cgi->Com_ParseBlockToken(name, text, event, event_vals, cp_campaignPool, token)) {
-			Com_Printf("CP_ParseEventTrigger: Ignoring unknown event value '%s'\n", token);
+			cgi->Com_Printf("CP_ParseEventTrigger: Ignoring unknown event value '%s'\n", token);
 		}
 	} while (*text);
 
@@ -456,7 +456,7 @@ void CL_ParseCampaignEvents (const char* name, const char** text)
 	campaignEvents_t* events;
 
 	if (ccs.numCampaignEventDefinitions >= MAX_CAMPAIGNS) {
-		Com_Printf("CL_ParseCampaignEvents: max events def limit hit\n");
+		cgi->Com_Printf("CL_ParseCampaignEvents: max events def limit hit\n");
 		return;
 	}
 
@@ -465,13 +465,13 @@ void CL_ParseCampaignEvents (const char* name, const char** text)
 		return;
 
 	if (!*text || token[0] != '{') {
-		Com_Printf("CL_ParseCampaignEvents: events def '%s' without body ignored\n", name);
+		cgi->Com_Printf("CL_ParseCampaignEvents: events def '%s' without body ignored\n", name);
 		return;
 	}
 
 	events = &ccs.campaignEvents[ccs.numCampaignEventDefinitions];
 	OBJZERO(*events);
-	Com_DPrintf(DEBUG_CLIENT, "...found events %s\n", name);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "...found events %s\n", name);
 	events->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 	ccs.numCampaignEventDefinitions++;
 
@@ -484,7 +484,7 @@ void CL_ParseCampaignEvents (const char* name, const char** text)
 			break;
 
 		if (events->numCampaignEvents >= MAX_CAMPAIGNEVENTS) {
-			Com_Printf("CL_ParseCampaignEvents: max events per event definition limit hit\n");
+			cgi->Com_Printf("CL_ParseCampaignEvents: max events per event definition limit hit\n");
 			return;
 		}
 
@@ -512,7 +512,7 @@ void CL_EventAddMail (const char* eventMailId)
 {
 	eventMail_t* eventMail = CL_GetEventMail(eventMailId);
 	if (!eventMail) {
-		Com_Printf("CL_EventAddMail: Could not find eventmail with id '%s'\n", eventMailId);
+		cgi->Com_Printf("CL_EventAddMail: Could not find eventmail with id '%s'\n", eventMailId);
 		return;
 	}
 
@@ -521,7 +521,7 @@ void CL_EventAddMail (const char* eventMailId)
 	}
 
 	if (!eventMail->from || !eventMail->to || !eventMail->subject || !eventMail->body) {
-		Com_Printf("CL_EventAddMail: mail with id '%s' has incomplete data\n", eventMailId);
+		cgi->Com_Printf("CL_EventAddMail: mail with id '%s' has incomplete data\n", eventMailId);
 		return;
 	}
 
@@ -542,7 +542,7 @@ void CL_EventAddMail (const char* eventMailId)
 		if (m)
 			m->eventMail = eventMail;
 		else
-			Com_Printf("CL_EventAddMail: Could not add message with id: %s\n", eventMailId);
+			cgi->Com_Printf("CL_EventAddMail: Could not add message with id: %s\n", eventMailId);
 	}
 
 	UP_OpenEventMail(eventMailId);
@@ -557,7 +557,7 @@ void CL_EventAddMail (const char* eventMailId)
 void CL_EventAddMail_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <event_mail_id>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <event_mail_id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 

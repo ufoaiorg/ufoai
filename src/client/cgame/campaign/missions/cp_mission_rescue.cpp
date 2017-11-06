@@ -126,7 +126,7 @@ void CP_RescueNextStage (mission_t* mission)
 		CP_MissionRemove(mission);
 		break;
 	default:
-		Com_Printf("CP_RescueNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		cgi->Com_Printf("CP_RescueNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
 		CP_MissionRemove(mission);
 		break;
 	}

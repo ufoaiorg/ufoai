@@ -151,7 +151,7 @@ static void CP_BaseAttackPrepareBattle (mission_t* mission)
 
 	GEO_SelectMission(mission);
 	mission->active = true;
-	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", mission->id, mission->pos[0], mission->pos[1]);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", mission->id, mission->pos[0], mission->pos[1]);
 
 	/* Fill the fake aircraft */
 	OBJZERO(baseAttackFakeAircraft);
@@ -201,7 +201,7 @@ void CP_BaseAttackStartMission (mission_t* mission)
 	 * but we don't need to check that as entrance can't be destroyed */
 	if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, B_COMMAND)) {
 		/** @todo handle command centre properly */
-		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no Command Center: it can't defend itself. Destroy base.\n", base->name);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no Command Center: it can't defend itself. Destroy base.\n", base->name);
 		CP_BaseAttackMissionDestroyBase(mission);
 		return;
 	}
@@ -220,7 +220,7 @@ void CP_BaseAttackStartMission (mission_t* mission)
 		soldiers++;
 	}
 	if (soldiers == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no soldiers at home: it can't defend itself. Destroy base.\n", base->name);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no soldiers at home: it can't defend itself. Destroy base.\n", base->name);
 		CP_BaseAttackMissionDestroyBase(mission);
 		return;
 	}
@@ -286,7 +286,7 @@ static void CP_BaseAttackGoToBase (mission_t* mission)
 
 	base = CP_BaseAttackChooseBase();
 	if (!base) {
-		Com_Printf("CP_BaseAttackGoToBase: no base found\n");
+		cgi->Com_Printf("CP_BaseAttackGoToBase: no base found\n");
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -339,7 +339,7 @@ void CP_BaseAttackMissionNextStage (mission_t* mission)
 		CP_BaseAttackMissionIsSuccess(mission);
 		break;
 	default:
-		Com_Printf("CP_BaseAttackMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		cgi->Com_Printf("CP_BaseAttackMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
 		CP_MissionRemove(mission);
 		break;
 	}

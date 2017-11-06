@@ -146,11 +146,11 @@ static void PR_UpdateProductionList (const base_t* base)
 			if (AIR_IsUFO(aircraftTemplate))
 				continue;
 			if (!aircraftTemplate->tech) {
-				Com_Printf("PR_UpdateProductionList: no technology for craft %s!\n", aircraftTemplate->id);
+				cgi->Com_Printf("PR_UpdateProductionList: no technology for craft %s!\n", aircraftTemplate->id);
 				continue;
 			}
 
-			Com_DPrintf(DEBUG_CLIENT, "air: %s ufotype: %i tech: %s time: %i\n", aircraftTemplate->id,
+			cgi->Com_DPrintf(DEBUG_CLIENT, "air: %s ufotype: %i tech: %s time: %i\n", aircraftTemplate->id,
 					aircraftTemplate->getUfoType(), aircraftTemplate->tech->id, aircraftTemplate->tech->produceTime);
 
 			if (aircraftTemplate->tech->produceTime > 0 && RS_IsResearched_ptr(aircraftTemplate->tech)) {
@@ -403,7 +403,7 @@ static void PR_ProductionListRightClick_f (void)
 
 	/* not enough parameters */
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <arg>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -447,7 +447,7 @@ static void PR_ProductionListRightClick_f (void)
 	}
 #ifdef DEBUG
 	else
-		Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListRightClick_f: Click on spacer %i\n", num);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListRightClick_f: Click on spacer %i\n", num);
 #endif
 }
 
@@ -470,7 +470,7 @@ static void PR_ProductionListClick_f (void)
 
 	/* Break if there are not enough parameters. */
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <arg>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -495,7 +495,7 @@ static void PR_ProductionListClick_f (void)
 		} else if (produceCategory == FILTER_AIRCRAFT) {
 			aircraft_t* aircraftTemplate = (aircraft_t*)cgi->LIST_GetByIdx(productionItemList, idx);
 			if (!aircraftTemplate) {
-				Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
 				return;
 			}
 			/* ufo research definition must not have a tech assigned
@@ -530,7 +530,7 @@ static void PR_ProductionType_f (void)
 	base_t* base = B_GetCurrentSelectedBase();
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <category>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <category>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -775,7 +775,7 @@ static void PR_ProductionChange_f (void)
 		return;
 
 	if (cgi->Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <diff> : change the production amount\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <diff> : change the production amount\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -839,12 +839,12 @@ static void PR_ProductionDown_f (void)
 static void PR_ShowActiveProduction_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <base_idx>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <base_idx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	const base_t* const base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (base == nullptr) {
-		Com_Printf("PR_ShowActiveProduction_f: Invalid base_idx!\n");
+		cgi->Com_Printf("PR_ShowActiveProduction_f: Invalid base_idx!\n");
 		return;
 	}
 	/* Get the production item closest to completion in the base if it exists */

@@ -834,7 +834,7 @@ static void GEO_SelectObject_f (void)
 		return;
 
 	if (cgi->Cmd_Argc() != 3) {
-		Com_Printf("Usage: %s <mission|ufo> <id>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <mission|ufo> <id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -854,7 +854,7 @@ static void GEO_SelectObject_f (void)
 	else if (Q_streq(type, "ufo"))
 		GEO_GetUFOAngle(flatgeoscape, vector, idx);
 	else {
-		Com_Printf("GEO_SelectObject_f: type %s unsupported.", type);
+		cgi->Com_Printf("GEO_SelectObject_f: type %s unsupported.", type);
 		return;
 	}
 	GEO_StartCenter(node);
@@ -1748,7 +1748,7 @@ nation_t* GEO_GetNation (const vec2_t pos)
 	const byte* color = GEO_GetColor(pos, MAPTYPE_NATIONS, nullptr);
 	const vec3_t fcolor = {color[0] / 255.0f, color[1] / 255.0f, color[2] / 255.0f};
 #ifdef PARANOID
-	Com_DPrintf(DEBUG_CLIENT, "GEO_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "GEO_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif
 	for (int i = 0; i < ccs.numNations; i++) {
 		nation_t* nation = NAT_GetNationByIDX(i);
@@ -1757,7 +1757,7 @@ nation_t* GEO_GetNation (const vec2_t pos)
 		if (VectorEqualEpsilon(nation->color, fcolor, 0.02))
 			return nation;
 	}
-	Com_DPrintf(DEBUG_CLIENT, "GEO_GetNation: No nation found at %.0f:%.0f - color: %i:%i:%i\n", pos[0], pos[1], color[0], color[1], color[2]);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "GEO_GetNation: No nation found at %.0f:%.0f - color: %i:%i:%i\n", pos[0], pos[1], color[0], color[1], color[2]);
 	return nullptr;
 }
 
@@ -1882,8 +1882,8 @@ void GEO_PrintParameterStringByPos (const vec2_t pos)
 	const char* cultureType = GEO_GetCultureTypeByPos(pos);
 	const char* populationType = GEO_GetPopulationTypeByPos(pos);
 
-	Com_Printf ("      (Terrain: %s, Culture: %s, Population: %s, Coast: %s)\n",
-			terrainType, cultureType, populationType, coast ? "true" : "false");
+	cgi->Com_Printf("      (Terrain: %s, Culture: %s, Population: %s, Coast: %s)\n",
+		terrainType, cultureType, populationType, coast ? "true" : "false");
 }
 
 /**
@@ -2091,7 +2091,7 @@ void CP_GetRandomPosOnGeoscape (vec2_t pos, bool noWater)
 		pos[1] = asin((frand() - 0.5f) * 2.0f) * todeg;
 	} while (noWater && MapIsWater(GEO_GetColor(pos, MAPTYPE_TERRAIN, nullptr)));
 
-	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscape: Get random position on geoscape %.2f:%.2f\n", pos[0], pos[1]);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscape: Get random position on geoscape %.2f:%.2f\n", pos[0], pos[1]);
 }
 
 /**
@@ -2165,7 +2165,7 @@ bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* te
 
 				if (num < 1) {
 					Vector2Set(pos, posX, posY);
-					Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
+					cgi->Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
 						pos[0], pos[1], randomNum, hits);
 					return true;
 				}
@@ -2173,7 +2173,7 @@ bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* te
 		}
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coordinates for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
+	cgi->Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coordinates for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
 		pos[0], pos[1], num, hits);
 
 	/** @todo add EQUAL_EPSILON here? */
@@ -2279,7 +2279,7 @@ static void GEO_SetOverlay_f (void)
 	int status;
 
 	if (cgi->Cmd_Argc() != 3) {
-		Com_Printf("Usage: %s <nation|xvi|radar> <1|0>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <nation|xvi|radar> <1|0>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 

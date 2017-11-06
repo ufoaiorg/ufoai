@@ -106,7 +106,7 @@ void CHAR_UpdateData (linkedList_t* updateCharacters)
 		Employee* employee = E_GetEmployeeFromChrUCN(c->ucn);
 
 		if (!employee) {
-			Com_Printf("Warning: Could not get character with ucn: %i.\n", c->ucn);
+			cgi->Com_Printf("Warning: Could not get character with ucn: %i.\n", c->ucn);
 			continue;
 		}
 
@@ -125,7 +125,7 @@ void CHAR_UpdateData (linkedList_t* updateCharacters)
 			const int gainedXP = std::min(maxXP, c->chrscore.experience[i] - chr->score.experience[i]);
 			chr->score.experience[i] += gainedXP;
 			cgi->Com_DPrintf(DEBUG_CLIENT, "CP_UpdateCharacterData: Soldier %s earned %d experience points in skill #%d (total experience: %d)\n",
-						chr->name, gainedXP, i, chr->score.experience[SKILL_NUM_TYPES]);
+				chr->name, gainedXP, i, chr->score.experience[SKILL_NUM_TYPES]);
 		}
 
 		CHAR_UpdateSkills(chr);
@@ -245,7 +245,7 @@ void CHAR_UpdateStats (const base_t* base, const aircraft_t* aircraft)
 			break;
 		}
 	}
-	Com_DPrintf(DEBUG_CLIENT, "CHAR_UpdateStats: Done\n");
+	cgi->Com_DPrintf(DEBUG_CLIENT, "CHAR_UpdateStats: Done\n");
 }
 
 

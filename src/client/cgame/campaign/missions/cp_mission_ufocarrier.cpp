@@ -142,7 +142,7 @@ void CP_AttackUFOCarrier_f (void)
 	CP_GetRandomPosOnGeoscape(ufo->pos, true);
 	CP_SpawnCrashSiteMission(ufo);
 	if (mission->mapDef != nullptr) {
-		Com_Printf("spawned mapdef: %s\n", mission->mapDef->id);
+		cgi->Com_Printf("spawned mapdef: %s\n", mission->mapDef->id);
 	}
 #endif
 }

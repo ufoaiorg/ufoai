@@ -664,25 +664,25 @@ static void UFO_DestroyUFOs_f (void)
  */
 static void UFO_ListOnGeoscape_f (void)
 {
-	Com_Printf("There are %i UFOs in game\n", ccs.numUFOs);
+	cgi->Com_Printf("There are %i UFOs in game\n", ccs.numUFOs);
 	for (aircraft_t* ufo = ccs.ufos; ufo < ccs.ufos + ccs.numUFOs; ufo++) {
-		Com_Printf("..%s (%s) - status: %i - pos: %.0f:%0.f\n", ufo->name, ufo->id, ufo->status, ufo->pos[0], ufo->pos[1]);
-		Com_Printf("...route length: %i (current: %i), time: %i, distance: %.2f, speed: %i\n",
+		cgi->Com_Printf("..%s (%s) - status: %i - pos: %.0f:%0.f\n", ufo->name, ufo->id, ufo->status, ufo->pos[0], ufo->pos[1]);
+		cgi->Com_Printf("...route length: %i (current: %i), time: %i, distance: %.2f, speed: %i\n",
 				ufo->route.numPoints, ufo->point, ufo->time, ufo->route.distance, ufo->stats[AIR_STATS_SPEED]);
-		Com_Printf("...linked to mission '%s'\n", ufo->mission ? ufo->mission->id : "no mission");
-		Com_Printf("... UFO is %s and %s\n", ufo->landed ? "landed" : "flying", ufo->detected ? "detected" : "undetected");
-		Com_Printf("... damage: %i\n", ufo->damage);
-		Com_Printf("...%i weapon slots: ", ufo->maxWeapons);
+		cgi->Com_Printf("...linked to mission '%s'\n", ufo->mission ? ufo->mission->id : "no mission");
+		cgi->Com_Printf("... UFO is %s and %s\n", ufo->landed ? "landed" : "flying", ufo->detected ? "detected" : "undetected");
+		cgi->Com_Printf("... damage: %i\n", ufo->damage);
+		cgi->Com_Printf("...%i weapon slots: ", ufo->maxWeapons);
 		for (int k = 0; k < ufo->maxWeapons; k++) {
 			aircraftSlot_t const* const w = &ufo->weapons[k];
 			if (w->item) {
 				char const* const state = w->ammo && w->ammoLeft > 0 ?
 				"(loaded)" : "(unloaded)";
-				Com_Printf("%s %s / ", w->item->id, state);
+				cgi->Com_Printf("%s %s / ", w->item->id, state);
 			} else
-			Com_Printf("empty / ");
+			cgi->Com_Printf("empty / ");
 		}
-		Com_Printf("\n");
+		cgi->Com_Printf("\n");
 	}
 }
 #endif
@@ -819,7 +819,7 @@ void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 	/* Remove ufo from ufos list */
 	const ptrdiff_t num = (ptrdiff_t) (ufo - ccs.ufos);
 
-	Com_DPrintf(DEBUG_CLIENT, "Remove ufo from geoscape: '%s'\n", ufo->id);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "Remove ufo from geoscape: '%s'\n", ufo->id);
 
 	REMOVE_ELEM_ADJUST_IDX(ccs.ufos, num, ccs.numUFOs);
 }

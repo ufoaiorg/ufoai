@@ -125,18 +125,18 @@ static void CL_PopupChangeHomebase_f (void)
 
 	/* If popup is opened, that means an aircraft is selected */
 	if (!aircraft) {
-		Com_Printf("CL_PopupChangeHomebase_f: An aircraft must be selected\n");
+		cgi->Com_Printf("CL_PopupChangeHomebase_f: An aircraft must be selected\n");
 		return;
 	}
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <popupIndex>\tpopupIndex=num in base list\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <popupIndex>\tpopupIndex=num in base list\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	/* read and range check */
 	int selectedPopupIndex = atoi(cgi->Cmd_Argv(1));
-	Com_DPrintf(DEBUG_CLIENT, "CL_PopupHomebaseClick_f (popupNum %i, selectedPopupIndex %i)\n", popupNum, selectedPopupIndex);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "CL_PopupHomebaseClick_f (popupNum %i, selectedPopupIndex %i)\n", popupNum, selectedPopupIndex);
 	if (selectedPopupIndex < 0 || selectedPopupIndex >= popupNum)
 		return;
 
@@ -259,12 +259,12 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 
 			/* Does the aircraft has weapons and ammo ? */
 			if (AIRFIGHT_ChooseWeapon(aircraft->weapons, aircraft->maxWeapons, aircraft->pos, aircraft->pos) == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
-				Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: No useable weapon found in craft '%s' (%i)\n", aircraft->id, aircraft->maxWeapons);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: No useable weapon found in craft '%s' (%i)\n", aircraft->id, aircraft->maxWeapons);
 				continue;
 			}
 			/* now check the aircraft range */
 			if (!AIR_AircraftHasEnoughFuel(aircraft, ufo->pos)) {
-				Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: Target out of reach for craft '%s'\n", aircraft->id);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: Target out of reach for craft '%s'\n", aircraft->id);
 				enoughFuelMarker = "";
 			}
 
@@ -389,7 +389,7 @@ static void CL_PopupInterceptRClick_f (void)
 static void CL_PopupInterceptBaseClick_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\tnum=num in base list\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <num>\tnum=num in base list\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -432,7 +432,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 		 * so 2nd part of the test should be useless in most case */
 		return;
 	} else if (num >= 0) {
-		Com_Printf("CL_PopupInterceptBaseClick_f: Number given in argument (%i) is bigger than number of base in list.\n", num);
+		cgi->Com_Printf("CL_PopupInterceptBaseClick_f: Number given in argument (%i) is bigger than number of base in list.\n", num);
 		return;
 	}
 

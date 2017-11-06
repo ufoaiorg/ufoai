@@ -52,7 +52,7 @@ static void GAME_CP_Results_f (void)
 		return;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <won:true|false> [retry:true|false]\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <won:true|false> [retry:true|false]\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -63,7 +63,7 @@ static void GAME_CP_Results_f (void)
 			CP_StartSelectedMission();
 			return;
 		} else {
-			Com_Printf("Battle cannot be retried!\n");
+			cgi->Com_Printf("Battle cannot be retried!\n");
 		}
 	}
 
@@ -131,7 +131,7 @@ static void GAME_CP_CampaignDescription_f (void)
 	}
 
 	if (!campaign) {
-		Com_Printf("Invalid Campaign id: %s\n", cgi->Cmd_Argv(1));
+		cgi->Com_Printf("Invalid Campaign id: %s\n", cgi->Cmd_Argv(1));
 		return;
 	}
 
@@ -167,7 +167,7 @@ static void GAME_CP_Start_f (void)
 
 	campaign = CP_GetCampaign(cgi->Cmd_Argv(1));
 	if (!campaign) {
-		Com_Printf("Invalid Campaign id: %s\n", cgi->Cmd_Argv(1));
+		cgi->Com_Printf("Invalid Campaign id: %s\n", cgi->Cmd_Argv(1));
 		return;
 	}
 

@@ -138,7 +138,7 @@ void CP_SpawnAlienBaseMission (alienBase_t* alienBase)
 
 	mission = CP_CreateNewMission(INTERESTCATEGORY_ALIENBASE, true);
 	if (!mission) {
-		Com_Printf("CP_SpawnAlienBaseMission: Could not add mission, abort\n");
+		cgi->Com_Printf("CP_SpawnAlienBaseMission: Could not add mission, abort\n");
 		return;
 	}
 
@@ -275,7 +275,7 @@ alienBase_t* AB_ChooseBaseToSupply (void)
 	const int baseCount = AB_GetAlienBaseNumber();
 
 	if (baseCount <= 0) {
-		Com_Printf("AB_ChooseBaseToSupply: no bases exists (basecount: %d)\n", baseCount);
+		cgi->Com_Printf("AB_ChooseBaseToSupply: no bases exists (basecount: %d)\n", baseCount);
 		return nullptr;
 	}
 
@@ -334,13 +334,13 @@ static void AB_AlienBaseDiscovered_f (void)
 static void AB_AlienBaseList_f (void)
 {
 	AB_Foreach(base) {
-		Com_Printf("Alien Base: %i\n", base->idx);
-		Com_Printf("...pos: (%f, %f)\n", base->pos[0], base->pos[1]);
-		Com_Printf("...supply: %i\n", base->supply);
+		cgi->Com_Printf("Alien Base: %i\n", base->idx);
+		cgi->Com_Printf("...pos: (%f, %f)\n", base->pos[0], base->pos[1]);
+		cgi->Com_Printf("...supply: %i\n", base->supply);
 		if (base->stealth < 0)
-			Com_Printf("...base discovered\n");
+			cgi->Com_Printf("...base discovered\n");
 		else
-			Com_Printf("...stealth: %f\n", base->stealth);
+			cgi->Com_Printf("...stealth: %f\n", base->stealth);
 	}
 }
 #endif
@@ -364,11 +364,11 @@ bool AB_LoadXML (xmlNode_t* p)
 
 		base.idx = cgi->XML_GetInt(s, SAVE_ALIENBASE_IDX, -1);
 		if (base.idx < 0) {
-			Com_Printf("Invalid or no IDX defined for Alienbase %d.\n", i);
+			cgi->Com_Printf("Invalid or no IDX defined for Alienbase %d.\n", i);
 			return false;
 		}
 		if (!cgi->XML_GetPos2(s, SAVE_ALIENBASE_POS, base.pos)) {
-			Com_Printf("Position is invalid for Alienbase (idx %d)\n", base.idx);
+			cgi->Com_Printf("Position is invalid for Alienbase (idx %d)\n", base.idx);
 			return false;
 		}
 		base.supply = cgi->XML_GetInt(s, SAVE_ALIENBASE_SUPPLY, 0);

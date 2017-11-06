@@ -94,7 +94,7 @@ static void AIM_AircraftStart_f (void)
 		return;
 
 	if (!base->aircraftCurrent) {
-		Com_DPrintf(DEBUG_CLIENT, "Error - there is no current aircraft in this base\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Error - there is no current aircraft in this base\n");
 		return;
 	}
 
@@ -152,7 +152,7 @@ static int AIR_GetSlotItems (aircraftItemType_t type, const aircraft_t* aircraft
 		max = MAX_AIRCRAFTSLOT;
 		break;
 	default:
-		Com_Printf("AIR_GetSlotItems: Unknown type of slot : %i", type);
+		cgi->Com_Printf("AIR_GetSlotItems: Unknown type of slot : %i", type);
 		return 0;
 	}
 
@@ -393,12 +393,12 @@ static void AIR_SendAircraftToMission_f (void)
 static void AIR_ShowAircraft_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <base_idx>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <base_idx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	const base_t* const base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (base == nullptr) {
-		Com_Printf("AIR_ShowAircraft_f: Invalid base_idx!\n");
+		cgi->Com_Printf("AIR_ShowAircraft_f: Invalid base_idx!\n");
 		return;
 	}
 	if (!AIR_AircraftAllowed(base))

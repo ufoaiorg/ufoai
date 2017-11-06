@@ -68,39 +68,39 @@ static bool SAV_VerifyHeader (saveFileHeader_t const * const header)
 	/*check the length of the string*/
 	len = strlen(header->name);
 	if (len > sizeof(header->name)) {
-		Com_Printf("Name is " UFO_SIZE_T " Bytes long, max is " UFO_SIZE_T "\n", len, sizeof(header->name));
+		cgi->Com_Printf("Name is " UFO_SIZE_T " Bytes long, max is " UFO_SIZE_T "\n", len, sizeof(header->name));
 		return false;
 	}
 	len = strlen(header->gameVersion);
 	if (len > sizeof(header->gameVersion)) {
-		Com_Printf("gameVersion is " UFO_SIZE_T " Bytes long, max is " UFO_SIZE_T "\n", len, sizeof(header->gameVersion));
+		cgi->Com_Printf("gameVersion is " UFO_SIZE_T " Bytes long, max is " UFO_SIZE_T "\n", len, sizeof(header->gameVersion));
 		return false;
 	}
 	len = strlen(header->gameDate);
 	if (len > sizeof(header->gameDate)) {
-		Com_Printf("gameDate is " UFO_SIZE_T " Bytes long, max is " UFO_SIZE_T "\n", len, sizeof(header->gameDate));
+		cgi->Com_Printf("gameDate is " UFO_SIZE_T " Bytes long, max is " UFO_SIZE_T "\n", len, sizeof(header->gameDate));
 		return false;
 	}
 	len = strlen(header->realDate);
 	if (len > sizeof(header->realDate)) {
-		Com_Printf("realDate is " UFO_SIZE_T " Bytes long, max is " UFO_SIZE_T "\n", len, sizeof(header->realDate));
+		cgi->Com_Printf("realDate is " UFO_SIZE_T " Bytes long, max is " UFO_SIZE_T "\n", len, sizeof(header->realDate));
 		return false;
 	}
 	if (header->subsystems != 0 && header->subsystems != saveSubsystemsAmount) {
-		Com_DPrintf(DEBUG_CLIENT, "Savefile has incompatible amount of subsystems\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "Savefile has incompatible amount of subsystems\n");
 	}
 
 	/* saved games should not be bigger than 15MB */
 	if (header->xmlSize > 15 * 1024 * 1024) {
-		Com_Printf("Save size seems to be to large (over 15 MB) %i.\n", header->xmlSize);
+		cgi->Com_Printf("Save size seems to be to large (over 15 MB) %i.\n", header->xmlSize);
 		return false;
 	}
 	if (header->version == 0) {
-		Com_Printf("Version is invalid - must be greater than zero\n");
+		cgi->Com_Printf("Version is invalid - must be greater than zero\n");
 		return false;
 	}
 	if (header->version > SAVE_FILE_VERSION) {
-		Com_Printf("Savefile is newer than the game!\n");
+		cgi->Com_Printf("Savefile is newer than the game!\n");
 	}
 	return true;
 }
@@ -158,15 +158,15 @@ bool SAV_GameLoad (const char* file, const char** error)
 	ScopedFile f;
 	const int clen = cgi->FS_OpenFile(filename, &f, FILE_READ);
 	if (!f) {
-		Com_Printf("Couldn't open file '%s'\n", filename);
+		cgi->Com_Printf("Couldn't open file '%s'\n", filename);
 		*error = "File not found";
 		return false;
 	}
 
 	byte* const cbuf = Mem_PoolAllocTypeN(byte, clen + 1 /* for '\0' if not compressed */, cp_campaignPool);
 	if (cgi->FS_Read(cbuf, clen, &f) != clen)
-		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
-	Com_Printf("Loading savegame xml (size %d)\n", clen);
+		cgi->Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
+	cgi->Com_Printf("Loading savegame xml (size %d)\n", clen);
 
 	saveFileHeader_t header;
 	memcpy(&header, cbuf, sizeof(header));
@@ -177,13 +177,13 @@ bool SAV_GameLoad (const char* file, const char** error)
 	/* doing some header verification */
 	if (!SAV_VerifyHeader(&header)) {
 		/* our header is not valid, we MUST abort loading the game! */
-		Com_Printf("The Header of the savegame '%s.%s' is corrupted. Loading aborted\n", filename, SAVEGAME_EXTENSION);
+		cgi->Com_Printf("The Header of the savegame '%s.%s' is corrupted. Loading aborted\n", filename, SAVEGAME_EXTENSION);
 		cgi->Free(cbuf);
 		*error = "Corrupted header";
 		return false;
 	}
 
-	Com_Printf("Loading savegame\n"
+	cgi->Com_Printf("Loading savegame\n"
 		"...version: %i\n"
 		"...game version: %s\n"
 		"...xml Size: %i, compressed? %c\n",
@@ -201,13 +201,13 @@ bool SAV_GameLoad (const char* file, const char** error)
 		if (res != Z_OK) {
 			cgi->Free(buf);
 			*error = _("Error decompressing data");
-			Com_Printf("Error decompressing data in '%s'.\n", filename);
+			cgi->Com_Printf("Error decompressing data in '%s'.\n", filename);
 			return false;
 		}
 		topNode = cgi->XML_Parse((const char*)buf);
 		if (!topNode) {
 			cgi->Free(buf);
-			Com_Printf("Error: Failure in loading the xml data!\n");
+			cgi->Com_Printf("Error: Failure in loading the xml data!\n");
 			*error = "Corrupted xml data";
 			return false;
 		}
@@ -216,7 +216,7 @@ bool SAV_GameLoad (const char* file, const char** error)
 		topNode = cgi->XML_Parse((const char*)(cbuf + sizeof(header)));
 		cgi->Free(cbuf);
 		if (!topNode) {
-			Com_Printf("Error: Failure in loading the xml data!\n");
+			cgi->Com_Printf("Error: Failure in loading the xml data!\n");
 			*error = "Corrupted xml data";
 			return false;
 		}
@@ -226,35 +226,35 @@ bool SAV_GameLoad (const char* file, const char** error)
 	cgi->GAME_ReloadMode();
 	xmlNode_t* node = cgi->XML_GetNode(topNode, SAVE_ROOTNODE);
 	if (!node) {
-		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
+		cgi->Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
 		mxmlDelete(topNode);
 		*error = "Invalid xml data";
 		return false;
 	}
 
-	Com_Printf("Load '%s' %d subsystems\n", filename, saveSubsystemsAmount);
+	cgi->Com_Printf("Load '%s' %d subsystems\n", filename, saveSubsystemsAmount);
 	for (int i = 0; i < saveSubsystemsAmount; i++) {
 		if (!saveSubsystems[i].load)
 			continue;
-		Com_Printf("...Running subsystem '%s'\n", saveSubsystems[i].name);
+		cgi->Com_Printf("...Running subsystem '%s'\n", saveSubsystems[i].name);
 		if (!saveSubsystems[i].load(node)) {
-			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n",
+			cgi->Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n",
 					saveSubsystems[i].name);
 			*error = va("Could not load subsystem %s", saveSubsystems[i].name);
 			return false;
 		} else
-			Com_Printf("...subsystem '%s' - loaded.\n", saveSubsystems[i].name);
+			cgi->Com_Printf("...subsystem '%s' - loaded.\n", saveSubsystems[i].name);
 	}
 	mxmlDelete(node);
 	mxmlDelete(topNode);
 
 	if (!SAV_GameActionsAfterLoad()) {
-		Com_Printf("Savegame postprocessing returned false - savegame could not be loaded\n");
+		cgi->Com_Printf("Savegame postprocessing returned false - savegame could not be loaded\n");
 		*error = "Postprocessing failed";
 		return false;
 	}
 
-	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
+	cgi->Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
 			filename, header.compressed ? "compressed" : "");
 
 	cgi->UI_InitStack("geoscape", "campaign_main");
@@ -293,7 +293,7 @@ bool SAV_GameSaveAllowed (char** error = nullptr)
 bool SAV_GameSave (const char* filename, const char* comment, char** error)
 {
 	if (!SAV_GameSaveAllowed(error)) {
-		Com_Printf(*error);
+		cgi->Com_Printf(*error);
 		return false;
 	}
 
@@ -317,14 +317,14 @@ bool SAV_GameSave (const char* filename, const char* comment, char** error)
 		date.year, Date_GetMonthName(date.month - 1), date.day);
 	cgi->XML_AddString(node, SAVE_GAMEDATE, message);
 	/* working through all subsystems. perhaps we should redesign it, order is not important anymore */
-	Com_Printf("Calling subsystems\n");
+	cgi->Com_Printf("Calling subsystems\n");
 	for (int i = 0; i < saveSubsystemsAmount; i++) {
 		if (!saveSubsystems[i].save)
 			continue;
 		if (!saveSubsystems[i].save(node))
-			Com_Printf("...subsystem '%s' failed to save the data\n", saveSubsystems[i].name);
+			cgi->Com_Printf("...subsystem '%s' failed to save the data\n", saveSubsystems[i].name);
 		else
-			Com_Printf("...subsystem '%s' - saved\n", saveSubsystems[i].name);
+			cgi->Com_Printf("...subsystem '%s' - saved\n", saveSubsystems[i].name);
 	}
 
 	/* calculate the needed buffer size */
@@ -348,12 +348,12 @@ bool SAV_GameSave (const char* filename, const char* comment, char** error)
 	if (!buf) {
 		mxmlDelete(topNode);
 		*error = _("Could not allocate enough memory to save this game");
-		Com_Printf("Error: Could not allocate enough memory to save this game\n");
+		cgi->Com_Printf("Error: Could not allocate enough memory to save this game\n");
 		return false;
 	}
 	int res = mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
 	mxmlDelete(topNode);
-	Com_Printf("XML Written to buffer (%d Bytes)\n", res);
+	cgi->Com_Printf("XML Written to buffer (%d Bytes)\n", res);
 
 	uLongf bufLen;
 	if (header.compressed)
@@ -371,7 +371,7 @@ bool SAV_GameSave (const char* filename, const char* comment, char** error)
 		if (res != Z_OK) {
 			cgi->Free(fbuf);
 			*error = _("Memory error compressing save-game data - set save_compressed cvar to 0");
-			Com_Printf("Memory error compressing save-game data (%s) (Error: %i)!\n", comment, res);
+			cgi->Com_Printf("Memory error compressing save-game data (%s) (Error: %i)!\n", comment, res);
 			return false;
 		}
 	} else {
@@ -401,7 +401,7 @@ bool SAV_AddSubsystem (saveSubsystems_t* subsystem)
 	saveSubsystems[saveSubsystemsAmount].save = subsystem->save;
 	saveSubsystemsAmount++;
 
-	Com_Printf("added %s subsystem\n", subsystem->name);
+	cgi->Com_Printf("added %s subsystem\n", subsystem->name);
 	return true;
 }
 
@@ -437,7 +437,7 @@ void SAV_Init (void)
 	saveSubsystemsAmount = 0;
 	OBJZERO(saveSubsystems);
 
-	Com_Printf("\n--- save subsystem initialization --\n");
+	cgi->Com_Printf("\n--- save subsystem initialization --\n");
 
 	/* don't mess with the order */
 	SAV_AddSubsystem(&cp_subsystemXML);

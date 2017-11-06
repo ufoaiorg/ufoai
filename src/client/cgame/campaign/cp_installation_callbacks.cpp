@@ -57,7 +57,7 @@ void INS_SelectInstallation (installation_t* installation)
 {
 	const int timetobuild = std::max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
 
-	Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: select installation with id %i\n", installation->idx);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: select installation with id %i\n", installation->idx);
 	ccs.mapAction = MA_NONE;
 	if (installation->installationStatus == INSTALLATION_WORKING) {
 		cgi->Cvar_Set("mn_installation_timetobuild", "-");
@@ -87,7 +87,7 @@ static void INS_BuildInstallation_f (void)
 	const installationTemplate_t* installationTemplate;
 
 	if (cgi->Cmd_Argc() < 1) {
-		Com_Printf("Usage: %s <installationType>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <installationType>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -97,7 +97,7 @@ static void INS_BuildInstallation_f (void)
 
 	installationTemplate = INS_GetInstallationTemplateByID(cgi->Cmd_Argv(1));
 	if (!installationTemplate) {
-		Com_Printf("The installation type %s passed for %s is not valid.\n", cgi->Cmd_Argv(1), cgi->Cmd_Argv(0));
+		cgi->Com_Printf("The installation type %s passed for %s is not valid.\n", cgi->Cmd_Argv(1), cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -140,7 +140,7 @@ static void INS_SelectInstallation_f (void)
 	installation_t* installation;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <installationID>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <installationID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	installationID = atoi(cgi->Cmd_Argv(1));
@@ -179,7 +179,7 @@ static void INS_DestroyInstallation_f (void)
 	} else {
 		installation = INS_GetByIDX(atoi(cgi->Cmd_Argv(1)));
 		if (!installation) {
-			Com_DPrintf(DEBUG_CLIENT, "Installation not founded (idx %i)\n", atoi(cgi->Cmd_Argv(1)));
+			cgi->Com_DPrintf(DEBUG_CLIENT, "Installation not founded (idx %i)\n", atoi(cgi->Cmd_Argv(1)));
 			return;
 		}
 	}
@@ -221,7 +221,7 @@ static void INS_FillUFOYardData_f (void)
 	} else {
 		ins = INS_GetByIDX(atoi(cgi->Cmd_Argv(1)));
 		if (!ins)
-			Com_DPrintf(DEBUG_CLIENT, "Installation not founded (idx %i)\n", atoi(cgi->Cmd_Argv(1)));
+			cgi->Com_DPrintf(DEBUG_CLIENT, "Installation not founded (idx %i)\n", atoi(cgi->Cmd_Argv(1)));
 	}
 
 	if (ins) {
@@ -285,22 +285,22 @@ static void INS_SelectType_f (void)
 
 	const installationTemplate_t* tpl = INS_GetInstallationTemplateByID(id);
 	if (!tpl) {
-		Com_Printf("Invalid installation template\n");
+		cgi->Com_Printf("Invalid installation template\n");
 		return;
 	}
 
 	if (INS_GetCount() >= B_GetInstallationLimit()) {
-		Com_Printf("Maximum number of installations reached\n");
+		cgi->Com_Printf("Maximum number of installations reached\n");
 		return;
 	}
 
 	if (tpl->tech != nullptr && !RS_IsResearched_ptr(tpl->tech)) {
-		Com_Printf("This type of installation is not yet researched\n");
+		cgi->Com_Printf("This type of installation is not yet researched\n");
 		return;
 	}
 
 	if (tpl->once && INS_HasType(tpl->type, INSTALLATION_NOT_USED)) {
-		Com_Printf("Cannot build more of this installation\n");
+		cgi->Com_Printf("Cannot build more of this installation\n");
 		return;
 	}
 

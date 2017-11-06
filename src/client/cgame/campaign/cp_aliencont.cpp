@@ -73,7 +73,7 @@ void AL_AddAliens (aircraft_t* aircraft)
 	if (!aircraft->alienCargo)
 		return;
 	if (!aircraft->homebase) {
-		Com_Printf("AL_AddAliens: Aircraft %s (idx: %d) has no base, alienCargo destroyed\n", aircraft->name, aircraft->idx);
+		cgi->Com_Printf("AL_AddAliens: Aircraft %s (idx: %d) has no base, alienCargo destroyed\n", aircraft->name, aircraft->idx);
 		delete aircraft->alienCargo;
 		aircraft->alienCargo = nullptr;
 		return;
@@ -146,15 +146,15 @@ static void AC_AddOne_f (void)
 	base_t* base = B_GetCurrentSelectedBase();
 
 	if (!base) {
-		Com_Printf("%s: No base selected\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("%s: No base selected\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	if (!base->alienContainment) {
-		Com_Printf("%s: Current base has no alien containment\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("%s: Current base has no alien containment\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <alientype> [dead:true|false]\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <alientype> [dead:true|false]\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	const char* alienName = cgi->Cmd_Argv(1);
@@ -199,7 +199,7 @@ bool AC_LoadXML (xmlNode_t* parent)
 		const int baseIdx = cgi->XML_GetInt(contNode, SAVE_ALIENCONT_BASEIDX, MAX_BASES);
 		base_t* base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base) {
-			Com_Printf("AC_LoadXML: Invalid base idx '%i'\n", baseIdx);
+			cgi->Com_Printf("AC_LoadXML: Invalid base idx '%i'\n", baseIdx);
 			continue;
 		}
 

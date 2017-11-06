@@ -192,7 +192,7 @@ bool STATS_LoadXML (xmlNode_t* parent)
 
 	stats = cgi->XML_GetNode(parent, SAVE_STATS_STATS);
 	if (!stats) {
-		Com_Printf("Did not find stats entry in xml!\n");
+		cgi->Com_Printf("Did not find stats entry in xml!\n");
 		return false;
 	}
 	ccs.campaignStats.missions = cgi->XML_GetInt(stats, SAVE_STATS_MISSIONS, 0);
@@ -233,38 +233,38 @@ static void CP_CampaignStats_f (void)
 	const salary_t* salary;
 
 	if (!CP_IsRunning()) {
-		Com_Printf("No campaign active\n");
+		cgi->Com_Printf("No campaign active\n");
 		return;
 	}
 
 	salary = &campaign->salaries;
 
-	Com_Printf("Campaign id: %s\n", campaign->id);
-	Com_Printf("..research list: %s\n", campaign->researched);
-	Com_Printf("..equipment: %s\n", campaign->equipment);
-	Com_Printf("..team: %i\n", campaign->team);
+	cgi->Com_Printf("Campaign id: %s\n", campaign->id);
+	cgi->Com_Printf("..research list: %s\n", campaign->researched);
+	cgi->Com_Printf("..equipment: %s\n", campaign->equipment);
+	cgi->Com_Printf("..team: %i\n", campaign->team);
 
-	Com_Printf("..salaries:\n");
-	Com_Printf("...soldier_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_SOLDIER));
-	Com_Printf("...soldier_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_SOLDIER));
-	Com_Printf("...worker_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_WORKER));
-	Com_Printf("...worker_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_WORKER));
-	Com_Printf("...scientist_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_SCIENTIST));
-	Com_Printf("...scientist_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_SCIENTIST));
-	Com_Printf("...pilot_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_PILOT));
-	Com_Printf("...pilot_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_PILOT));
-	Com_Printf("...robot_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_ROBOT));
-	Com_Printf("...robot_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_ROBOT));
-	Com_Printf("...aircraft_factor: %i\n", salary->aircraftFactor);
-	Com_Printf("...aircraft_divisor: %i\n", salary->aircraftDivisor);
-	Com_Printf("...base_upkeep: %i\n", salary->baseUpkeep);
-	Com_Printf("...admin_initial: %i\n", salary->adminInitial);
-	Com_Printf("...admin_soldier: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_SOLDIER));
-	Com_Printf("...admin_worker: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_WORKER));
-	Com_Printf("...admin_scientist: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_SCIENTIST));
-	Com_Printf("...admin_pilot: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_PILOT));
-	Com_Printf("...admin_robot: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_ROBOT));
-	Com_Printf("...debt_interest: %.5f\n", salary->debtInterest);
+	cgi->Com_Printf("..salaries:\n");
+	cgi->Com_Printf("...soldier_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_SOLDIER));
+	cgi->Com_Printf("...soldier_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_SOLDIER));
+	cgi->Com_Printf("...worker_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_WORKER));
+	cgi->Com_Printf("...worker_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_WORKER));
+	cgi->Com_Printf("...scientist_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_SCIENTIST));
+	cgi->Com_Printf("...scientist_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_SCIENTIST));
+	cgi->Com_Printf("...pilot_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_PILOT));
+	cgi->Com_Printf("...pilot_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_PILOT));
+	cgi->Com_Printf("...robot_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_ROBOT));
+	cgi->Com_Printf("...robot_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_ROBOT));
+	cgi->Com_Printf("...aircraft_factor: %i\n", salary->aircraftFactor);
+	cgi->Com_Printf("...aircraft_divisor: %i\n", salary->aircraftDivisor);
+	cgi->Com_Printf("...base_upkeep: %i\n", salary->baseUpkeep);
+	cgi->Com_Printf("...admin_initial: %i\n", salary->adminInitial);
+	cgi->Com_Printf("...admin_soldier: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_SOLDIER));
+	cgi->Com_Printf("...admin_worker: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_WORKER));
+	cgi->Com_Printf("...admin_scientist: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_SCIENTIST));
+	cgi->Com_Printf("...admin_pilot: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_PILOT));
+	cgi->Com_Printf("...admin_robot: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_ROBOT));
+	cgi->Com_Printf("...debt_interest: %.5f\n", salary->debtInterest);
 }
 #endif /* DEBUG */
 

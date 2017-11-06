@@ -152,13 +152,13 @@ void CP_HarvestMissionGo (mission_t* mission)
 			break;
 		}
 		if (counter >= MAX_POS_LOOP) {
-			Com_Printf("CP_HarvestMissionGo: Error, could not set position.\n");
+			cgi->Com_Printf("CP_HarvestMissionGo: Error, could not set position.\n");
 			CP_MissionRemove(mission);
 			return;
 		}
 		cgi->LIST_Delete(&nationList);
 	} else {
-		Com_Printf("CP_HarvestMissionGo: No map found, remove mission.\n");
+		cgi->Com_Printf("CP_HarvestMissionGo: No map found, remove mission.\n");
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -200,7 +200,7 @@ void CP_HarvestMissionNextStage (mission_t* mission)
 		CP_HarvestMissionIsSuccess(mission);
 		break;
 	default:
-		Com_Printf("CP_HarvestMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		cgi->Com_Printf("CP_HarvestMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
 		CP_MissionRemove(mission);
 		break;
 	}

@@ -46,7 +46,7 @@ static void AC_Init_f (void)
 	else
 		base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (!base) {
-		Com_Printf("No base selected\n");
+		cgi->Com_Printf("No base selected\n");
 		return;
 	}
 
@@ -113,7 +113,7 @@ static void AC_KillOne_f (void)
 		return;
 
 	if (argc < 2) {
-		Com_Printf("Usage: %s [baseIdx] <techId>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s [baseIdx] <techId>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -141,7 +141,7 @@ static void AC_KillExceeding_f (void)
 	const int argc = cgi->Cmd_Argc();
 
 	if (argc < 2) {
-		Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));

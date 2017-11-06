@@ -40,17 +40,17 @@ static void RS_Max_f (void)
 		return;
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	/* The technology you want to max out. */
 	technology_t* tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 	if (!tech) {
-		Com_Printf("RS_Max_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
+		cgi->Com_Printf("RS_Max_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
 		return;
 	}
 	if (tech->base && tech->base != base) {
-		Com_Printf("RS_Max_f: Tech '%s' is not researched in this base\n", cgi->Cmd_Argv(1));
+		cgi->Com_Printf("RS_Max_f: Tech '%s' is not researched in this base\n", cgi->Cmd_Argv(1));
 		return;
 	}
 
@@ -77,16 +77,16 @@ static void RS_Change_f (void)
 	base_t* base = B_GetCurrentSelectedBase();
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	technology_t* tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 	if (!tech) {
-		Com_Printf("RS_ChangeScientist_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
+		cgi->Com_Printf("RS_ChangeScientist_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
 		return;
 	}
 	if (tech->base && tech->base != base) {
-		Com_Printf("RS_ChangeScientist_f: Tech '%s' is not researched in this base\n", cgi->Cmd_Argv(1));
+		cgi->Com_Printf("RS_ChangeScientist_f: Tech '%s' is not researched in this base\n", cgi->Cmd_Argv(1));
 		return;
 	}
 	const int diff = atoi(cgi->Cmd_Argv(2));
@@ -112,19 +112,19 @@ static void RS_Stop_f (void)
 	const base_t* base = B_GetCurrentSelectedBase();
 
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	technology_t* tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 	if (!tech) {
-		Com_Printf("RS_Stop_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
+		cgi->Com_Printf("RS_Stop_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
 		return;
 	}
 	if (!tech->base) {
 		return;
 	}
 	if (tech->base != base) {
-		Com_Printf("RS_Stop_f: Tech '%s' is not researched in this base\n", cgi->Cmd_Argv(1));
+		cgi->Com_Printf("RS_Stop_f: Tech '%s' is not researched in this base\n", cgi->Cmd_Argv(1));
 		return;
 	}
 
@@ -141,12 +141,12 @@ static void RS_Stop_f (void)
 static void RS_GetDetails_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <tech_id>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	const technology_t* tech = RS_GetTechByID(cgi->Cmd_Argv(1));
 	if (!tech) {
-		Com_Printf("RS_GetDetails_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
+		cgi->Com_Printf("RS_GetDetails_f: Invalid tech '%s'\n", cgi->Cmd_Argv(1));
 		return;
 	}
 	cgi->UI_ExecuteConfunc("ui_research_details \"%s\" \"%s\" \"%s\"", _(tech->name), tech->image ? tech->image : "", tech->mdl ? tech->mdl : "");
@@ -210,12 +210,12 @@ static void RS_FillTechnologyList_f (void)
 static void RS_ShowActiveResearch_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <base_idx>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <base_idx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	const base_t* const base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (base == nullptr) {
-		Com_Printf("PR_ShowActiveResearch_f: Invalid base_idx!\n");
+		cgi->Com_Printf("PR_ShowActiveResearch_f: Invalid base_idx!\n");
 		return;
 	}
 	/* Get the production item closest to completion in the base if it exists */

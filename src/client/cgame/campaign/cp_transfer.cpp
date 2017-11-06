@@ -162,7 +162,7 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 	int i;
 
 	if (!transData.destBase || !srcBase) {
-		Com_Printf("TR_TransferStart: No base selected!\n");
+		cgi->Com_Printf("TR_TransferStart: No base selected!\n");
 		return nullptr;
 	}
 
@@ -326,7 +326,7 @@ static void TR_ListTransfers_f (void)
 	if (cgi->Cmd_Argc() == 2) {
 		transIdx = atoi(cgi->Cmd_Argv(1));
 		if (transIdx < 0 || transIdx > cgi->LIST_Count(ccs.transfers)) {
-			Com_Printf("Usage: %s [transferIDX]\nWithout parameter it lists all.\n", cgi->Cmd_Argv(0));
+			cgi->Com_Printf("Usage: %s [transferIDX]\nWithout parameter it lists all.\n", cgi->Cmd_Argv(0));
 			return;
 		}
 	}
@@ -341,8 +341,8 @@ static void TR_ListTransfers_f (void)
 		/* @todo: we need a strftime feature to make this easier */
 		CP_DateConvertLong(&transfer->event, &date);
 
-		Com_Printf("Transfer #%d\n", i);
-		Com_Printf("...From %d (%s) To %d (%s) Arrival: %04i-%02i-%02i %02i:%02i:%02i\n",
+		cgi->Com_Printf("Transfer #%d\n", i);
+		cgi->Com_Printf("...From %d (%s) To %d (%s) Arrival: %04i-%02i-%02i %02i:%02i:%02i\n",
 			(transfer->srcBase) ? transfer->srcBase->idx : -1,
 			(transfer->srcBase) ? transfer->srcBase->name : "(null)",
 			(transfer->destBase) ? transfer->destBase->idx : -1,
@@ -351,13 +351,13 @@ static void TR_ListTransfers_f (void)
 
 		/* Antimatter */
 		if (transfer->antimatter > 0)
-			Com_Printf("......Antimatter amount: %i\n", transfer->antimatter);
+			cgi->Com_Printf("......Antimatter amount: %i\n", transfer->antimatter);
 		/* ItemCargo */
 		if (transfer->alienCargo != nullptr) {
-			Com_Printf("...ItemCargo:\n");
+			cgi->Com_Printf("...ItemCargo:\n");
 			linkedList_t* cargo = transfer->itemCargo->list();
 			LIST_Foreach(cargo, itemCargo_t, item) {
-				Com_Printf("......%s amount: %i\n", item->objDef->id, item->amount);
+				cgi->Com_Printf("......%s amount: %i\n", item->objDef->id, item->amount);
 			}
 			cgi->LIST_Delete(&cargo);
 		}
@@ -365,40 +365,40 @@ static void TR_ListTransfers_f (void)
 		if (transfer->hasEmployees) {
 			int i;
 
-			Com_Printf("...Carried Employee:\n");
+			cgi->Com_Printf("...Carried Employee:\n");
 			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
 				const employeeType_t emplType = (employeeType_t)i;
 				TR_ForeachEmployee(employee, transfer, emplType) {
 					if (employee->getUGV()) {
 						/** @todo: improve ugv listing when they're implemented */
-						Com_Printf("......ugv: %s [ucn: %i]\n", employee->getUGV()->id, employee->chr.ucn);
+						cgi->Com_Printf("......ugv: %s [ucn: %i]\n", employee->getUGV()->id, employee->chr.ucn);
 					} else {
-						Com_Printf("......%s (%s) / %s [ucn: %i]\n", employee->chr.name,
+						cgi->Com_Printf("......%s (%s) / %s [ucn: %i]\n", employee->chr.name,
 							E_GetEmployeeString(employee->getType(), 1),
 							(employee->getNation()) ? employee->getNation()->id : "(nonation)",
 							employee->chr.ucn);
 						if (!employee->isHired())
-							Com_Printf("Warning: employee^ not hired!\n");
+							cgi->Com_Printf("Warning: employee^ not hired!\n");
 						if (!employee->transfer)
-							Com_Printf("Warning: employee^ not marked as being transferred!\n");
+							cgi->Com_Printf("Warning: employee^ not marked as being transferred!\n");
 					}
 				}
 			}
 		}
 		/* AlienCargo */
 		if (transfer->alienCargo != nullptr) {
-			Com_Printf("...AlienCargo:\n");
+			cgi->Com_Printf("...AlienCargo:\n");
 			linkedList_t* cargo = transfer->alienCargo->list();
 			LIST_Foreach(cargo, alienCargo_t, item) {
-				Com_Printf("......%s alive: %i dead: %i\n", item->teamDef->id, item->alive, item->dead);
+				cgi->Com_Printf("......%s alive: %i dead: %i\n", item->teamDef->id, item->alive, item->dead);
 			}
 			cgi->LIST_Delete(&cargo);
 		}
 		/* Transfered Aircraft */
 		if (!cgi->LIST_IsEmpty(transfer->aircraft)) {
-			Com_Printf("...Transfered Aircraft:\n");
+			cgi->Com_Printf("...Transfered Aircraft:\n");
 			TR_ForeachAircraft(aircraft, transfer) {
-				Com_Printf("......%s [idx: %i]\n", aircraft->id, aircraft->idx);
+				cgi->Com_Printf("......%s [idx: %i]\n", aircraft->id, aircraft->idx);
 			}
 		}
 	}
@@ -423,7 +423,7 @@ bool TR_SaveXML (xmlNode_t* p)
 		cgi->XML_AddInt(s, SAVE_TRANSFER_DAY, transfer->event.day);
 		cgi->XML_AddInt(s, SAVE_TRANSFER_SEC, transfer->event.sec);
 		if (!transfer->destBase) {
-			Com_Printf("Could not save transfer, no destBase is set\n");
+			cgi->Com_Printf("Could not save transfer, no destBase is set\n");
 			return false;
 		}
 		cgi->XML_AddInt(s, SAVE_TRANSFER_DESTBASE, transfer->destBase->idx);
@@ -491,7 +491,7 @@ bool TR_LoadXML (xmlNode_t* p)
 
 		transfer.destBase = B_GetBaseByIDX(cgi->XML_GetInt(s, SAVE_TRANSFER_DESTBASE, -1));
 		if (!transfer.destBase) {
-			Com_Printf("Error: Transfer has no destBase set\n");
+			cgi->Com_Printf("Error: Transfer has no destBase set\n");
 			return false;
 		}
 		transfer.srcBase = B_GetBaseByIDX(cgi->XML_GetInt(s, SAVE_TRANSFER_SRCBASE, -1));
@@ -538,7 +538,7 @@ bool TR_LoadXML (xmlNode_t* p)
 				Employee* empl = E_GetEmployeeFromChrUCN(ucn);
 
 				if (!empl) {
-					Com_Printf("Error: No employee found with UCN: %i\n", ucn);
+					cgi->Com_Printf("Error: No employee found with UCN: %i\n", ucn);
 					return false;
 				}
 

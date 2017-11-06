@@ -100,7 +100,7 @@ static void BDEF_SelectItem_f (void)
 	int itemIDX;
 
 	if (cgi->Cmd_Argc() < 4) {
-		Com_Printf("Usage: %s <type> <slotIDX> <itemIDX>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <type> <slotIDX> <itemIDX>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -109,7 +109,7 @@ static void BDEF_SelectItem_f (void)
 	itemIDX = atoi(cgi->Cmd_Argv(3));
 
 	if (bdefType == MAX_ACITEMS) {
-		Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
+		cgi->Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
 		return;
 	}
 
@@ -135,7 +135,7 @@ static void BDEF_SelectItem_f (void)
 		}
 		UP_AircraftItemDescription((itemTech) ? INVSH_GetItemByIDSilent(itemTech->provides) : nullptr);
 	} else {
-		Com_Printf("BDEF_AddItem_f: Invalid item-space.\n");
+		cgi->Com_Printf("BDEF_AddItem_f: Invalid item-space.\n");
 	}
 }
 
@@ -260,15 +260,15 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 	/* Check that the base or installation has at least 1 battery */
 	if (base) {
 		if (base->numBatteries + base->numLasers < 1) {
-			Com_Printf("BDEF_BaseDefenceMenuUpdate_f: there is no defence battery in this base: you shouldn't be in this function.\n");
+			cgi->Com_Printf("BDEF_BaseDefenceMenuUpdate_f: there is no defence battery in this base: you shouldn't be in this function.\n");
 			return;
 		}
 	} else if (installation) {
 		if (installation->installationStatus != INSTALLATION_WORKING) {
-			Com_Printf("BDEF_BaseDefenceMenuUpdate_f: installation isn't working: you shouldn't be in this function.\n");
+			cgi->Com_Printf("BDEF_BaseDefenceMenuUpdate_f: installation isn't working: you shouldn't be in this function.\n");
 			return;
 		} else if (installation->installationTemplate->maxBatteries < 1) {
-			Com_Printf("BDEF_BaseDefenceMenuUpdate_f: there is no defence battery in this installation: you shouldn't be in this function.\n");
+			cgi->Com_Printf("BDEF_BaseDefenceMenuUpdate_f: there is no defence battery in this installation: you shouldn't be in this function.\n");
 			return;
 		}
 	}
@@ -295,7 +295,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 			BDEF_FillSlotList(base->lasers, base->numActiveLasers, &slotList);
 		}
 	} else {
-		Com_Printf("BDEF_BaseDefenceMenuUpdate_f: unknown bdefType.\n");
+		cgi->Com_Printf("BDEF_BaseDefenceMenuUpdate_f: unknown bdefType.\n");
 		return;
 	}
 	cgi->UI_RegisterLinkedListText(TEXT_BASEDEFENCE_LIST, slotList);
@@ -315,12 +315,12 @@ static void BDEF_AddItem_f (void)
 	int slotIDX;
 
 	if ((!base && !installation) || (base && installation)) {
-		Com_Printf("Exiting early base and installation both true or both false\n");
+		cgi->Com_Printf("Exiting early base and installation both true or both false\n");
 		return;
 	}
 
 	if (cgi->Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <type> <slotIDX>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <type> <slotIDX>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -328,7 +328,7 @@ static void BDEF_AddItem_f (void)
 	slotIDX = atoi(cgi->Cmd_Argv(2));
 
 	if (bdefType == MAX_ACITEMS) {
-		Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
+		cgi->Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
 		return;
 	}
 
@@ -347,7 +347,7 @@ static void BDEF_AddItem_f (void)
 	slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType, slotIDX);
 
 	if (!slot) {
-		Com_Printf("BDEF_AddItem_f: Invalid slot.\n");
+		cgi->Com_Printf("BDEF_AddItem_f: Invalid slot.\n");
 		return;
 	}
 
@@ -407,12 +407,12 @@ static void BDEF_RemoveItem_f (void)
 	int slotIDX;
 
 	if ((!base && !installation) || (base && installation)) {
-		Com_Printf("Exiting early base and install both true or both false\n");
+		cgi->Com_Printf("Exiting early base and install both true or both false\n");
 		return;
 	}
 
 	if (cgi->Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <type> <slotIDX>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <type> <slotIDX>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -420,7 +420,7 @@ static void BDEF_RemoveItem_f (void)
 	slotIDX = atoi(cgi->Cmd_Argv(2));
 
 	if (bdefType == MAX_ACITEMS) {
-		Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
+		cgi->Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
 		return;
 	}
 
@@ -439,7 +439,7 @@ static void BDEF_RemoveItem_f (void)
 	slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType, slotIDX);
 
 	if (!slot) {
-		Com_Printf("BDEF_AddItem_f: Invalid slot.\n");
+		cgi->Com_Printf("BDEF_AddItem_f: Invalid slot.\n");
 		return;
 	}
 
@@ -481,7 +481,7 @@ static void BDEF_RemoveBattery_f (void)
 	base_t* base;
 
 	if (cgi->Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <basedefType> <baseIdx>", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <basedefType> <baseIdx>", cgi->Cmd_Argv(0));
 		return;
 	} else {
 		char type[MAX_VAR];
@@ -500,21 +500,21 @@ static void BDEF_RemoveBattery_f (void)
 
 	/* Check that the baseIdx exists */
 	if (baseIdx < 0 || baseIdx >= B_GetCount()) {
-		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i doesn't exist: there is only %i bases in game.\n",
+		cgi->Com_Printf("BDEF_RemoveBattery_f: baseIdx %i doesn't exist: there is only %i bases in game.\n",
 				baseIdx, B_GetCount());
 		return;
 	}
 
 	base = B_GetFoundedBaseByIDX(baseIdx);
 	if (!base) {
-		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i is not founded.\n", baseIdx);
+		cgi->Com_Printf("BDEF_RemoveBattery_f: baseIdx %i is not founded.\n", baseIdx);
 		return;
 	}
 
 	if (basedefType == BASEDEF_RANDOM) {
 		/* Type of base defence to destroy is randomly selected */
 		if (base->numBatteries <= 0 && base->numLasers <= 0) {
-			Com_Printf("No base defence to destroy\n");
+			cgi->Com_Printf("No base defence to destroy\n");
 			return;
 		} else if (base->numBatteries <= 0) {
 			/* only laser battery is possible */
@@ -542,7 +542,7 @@ static void BDEF_RemoveBattery_f (void)
 			max = base->numLasers;
 			break;
 		default:
-			Com_Printf("BDEF_RemoveBattery_f: base defence type %i doesn't exist.\n", basedefType);
+			cgi->Com_Printf("BDEF_RemoveBattery_f: base defence type %i doesn't exist.\n", basedefType);
 			return;
 		}
 
@@ -557,7 +557,7 @@ static void BDEF_RemoveBattery_f (void)
 			return;
 		} else if (workingNum != max - 1) {
 			/* Should never happen, we only remove building one by one */
-			Com_Printf("BDEF_RemoveBattery_f: Error while checking number of batteries (%i instead of %i) in base '%s'.\n",
+			cgi->Com_Printf("BDEF_RemoveBattery_f: Error while checking number of batteries (%i instead of %i) in base '%s'.\n",
 				workingNum, max, base->name);
 			return;
 		}
@@ -578,7 +578,7 @@ static void BDEF_AddBattery_f (void)
 	const char* type;
 
 	if (cgi->Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <basedefType> <baseIdx>", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <basedefType> <baseIdx>", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -590,13 +590,13 @@ static void BDEF_AddBattery_f (void)
 	else if (Q_streq(type, "random"))
 		basedefType = BASEDEF_RANDOM;
 	else {
-		Com_Printf("BDEF_AddBattery_f: base defence type %s doesn't exist.\n", type);
+		cgi->Com_Printf("BDEF_AddBattery_f: base defence type %s doesn't exist.\n", type);
 		return;
 	}
 
 	base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(2)));
 	if (base == nullptr) {
-		Com_Printf("BDEF_AddBattery_f: Invalid base index given\n");
+		cgi->Com_Printf("BDEF_AddBattery_f: Invalid base index given\n");
 		return;
 	}
 
@@ -629,13 +629,13 @@ static void BDEF_UpdateActiveBattery_f (void)
 	int count;
 
 	if (cgi->Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <basedefType> <baseIdx>", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <basedefType> <baseIdx>", cgi->Cmd_Argv(0));
 		return;
 	}
 
 	base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(2)));
 	if (base == nullptr) {
-		Com_Printf("BDEF_UpdateActiveBattery_f: Invalid base index given\n");
+		cgi->Com_Printf("BDEF_UpdateActiveBattery_f: Invalid base index given\n");
 		return;
 	}
 
@@ -647,7 +647,7 @@ static void BDEF_UpdateActiveBattery_f (void)
 		B_CheckBuildingTypeStatus(base, B_DEFENCE_LASER, B_STATUS_WORKING, &count);
 		base->numActiveLasers = std::min(count, base->numLasers);
 	} else {
-		Com_Printf("BDEF_UpdateActiveBattery_f: base defence type %s doesn't exist.\n", type);
+		cgi->Com_Printf("BDEF_UpdateActiveBattery_f: base defence type %s doesn't exist.\n", type);
 		return;
 	}
 }

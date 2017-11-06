@@ -53,7 +53,7 @@ void INT_ResetAlienInterest (void)
 void INT_ChangeIndividualInterest (float interestFactor, interestCategory_t category)
 {
 	if (category == INTERESTCATEGORY_MAX) {
-		Com_Printf("CP_ChangeIndividualInterest: Unsupported value of category\n");
+		cgi->Com_Printf("CP_ChangeIndividualInterest: Unsupported value of category\n");
 		return;
 	}
 
@@ -143,7 +143,7 @@ bool INT_LoadXML (xmlNode_t* parent)
 		int cat;
 
 		if (!cgi->Com_GetConstInt(categoryId, (int*) &cat)) {
-			Com_Printf("Invalid interest category '%s'\n", categoryId);
+			cgi->Com_Printf("Invalid interest category '%s'\n", categoryId);
 			continue;
 		}
 		ccs.interest[cat]= cgi->XML_GetInt(node, SAVE_INTERESTS_VAL, 0);
@@ -200,10 +200,10 @@ const char* INT_InterestCategoryToName (interestCategory_t category)
  */
 static void INT_AlienInterestList_f (void)
 {
-	Com_Printf("Overall interest: %i\n", ccs.overallInterest);
-	Com_Printf("Individual interest:\n");
+	cgi->Com_Printf("Overall interest: %i\n", ccs.overallInterest);
+	cgi->Com_Printf("Individual interest:\n");
 	for (int i = INTERESTCATEGORY_NONE; i < INTERESTCATEGORY_MAX; i++)
-		Com_Printf("...%i. %s -- %i\n", i, INT_InterestCategoryToName((interestCategory_t)i), ccs.interest[i]);
+		cgi->Com_Printf("...%i. %s -- %i\n", i, INT_InterestCategoryToName((interestCategory_t)i), ccs.interest[i]);
 }
 
 /**
@@ -213,7 +213,7 @@ static void INT_AlienInterestList_f (void)
 static void INT_SetAlienInterest_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <interestlevel>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <interestlevel>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 

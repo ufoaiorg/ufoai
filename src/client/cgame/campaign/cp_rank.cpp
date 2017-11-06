@@ -81,19 +81,19 @@ void CL_ParseRanks (const char* name, const char** text)
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseRanks: rank/medal \"%s\" without body ignored\n", name);
+		cgi->Com_Printf("CL_ParseRanks: rank/medal \"%s\" without body ignored\n", name);
 		return;
 	}
 
 	for (int i = 0; i < ccs.numRanks; i++) {
 		if (Q_streq(name, ccs.ranks[i].name)) {
-			Com_Printf("CL_ParseRanks: Rank with same name '%s' already loaded.\n", name);
+			cgi->Com_Printf("CL_ParseRanks: Rank with same name '%s' already loaded.\n", name);
 			return;
 		}
 	}
 	/* parse ranks */
 	if (ccs.numRanks >= MAX_RANKS) {
-		Com_Printf("CL_ParseRanks: Too many rank descriptions, '%s' ignored.\n", name);
+		cgi->Com_Printf("CL_ParseRanks: Too many rank descriptions, '%s' ignored.\n", name);
 		ccs.numRanks = MAX_RANKS;
 		return;
 	}
@@ -121,7 +121,7 @@ void CL_ParseRanks (const char* name, const char** text)
 			/* error check is performed in E_GetEmployeeType function */
 			rank->type = E_GetEmployeeType(token);
 		} else
-			Com_Printf("CL_ParseRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, name);
+			cgi->Com_Printf("CL_ParseRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, name);
 	} while (*text);
 
 	if (rank->image == nullptr || !strlen(rank->image))

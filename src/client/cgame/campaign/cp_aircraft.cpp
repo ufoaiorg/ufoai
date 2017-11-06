@@ -101,108 +101,108 @@ static void AIR_ListAircraft_f (void)
 		if (base && aircraft->homebase != base)
 			continue;
 
-		Com_Printf("Aircraft %s\n", aircraft->name);
-		Com_Printf("...idx global %i\n", aircraft->idx);
-		Com_Printf("...homebase: %s\n", aircraft->homebase ? aircraft->homebase->name : "NO HOMEBASE");
+		cgi->Com_Printf("Aircraft %s\n", aircraft->name);
+		cgi->Com_Printf("...idx global %i\n", aircraft->idx);
+		cgi->Com_Printf("...homebase: %s\n", aircraft->homebase ? aircraft->homebase->name : "NO HOMEBASE");
 		for (int i = 0; i < aircraft->maxWeapons; i++) {
 			aircraftSlot_t* slot = &aircraft->weapons[i];
 			if (slot->item) {
-				Com_Printf("...weapon slot %i contains %s", i, slot->item->id);
+				cgi->Com_Printf("...weapon slot %i contains %s", i, slot->item->id);
 
 				if (!slot->installationTime) {
-					Com_Printf(" (functional)\n");
+					cgi->Com_Printf(" (functional)\n");
 				} else if (slot->installationTime > 0) {
-					Com_Printf(" (%i hours before installation is finished)\n", slot->installationTime);
+					cgi->Com_Printf(" (%i hours before installation is finished)\n", slot->installationTime);
 				} else {
-					Com_Printf(" (%i hours before removing is finished)\n", slot->installationTime);
+					cgi->Com_Printf(" (%i hours before removing is finished)\n", slot->installationTime);
 				}
 
 				if (slot->ammo) {
 					if (slot->ammoLeft > 1) {
-						Com_Printf("......this weapon is loaded with ammo %s\n", slot->ammo->id);
+						cgi->Com_Printf("......this weapon is loaded with ammo %s\n", slot->ammo->id);
 					} else {
-						Com_Printf("......no more ammo (%s)\n", slot->ammo->id);
+						cgi->Com_Printf("......no more ammo (%s)\n", slot->ammo->id);
 					}
 				} else {
-					Com_Printf("......this weapon isn't loaded with ammo\n");
+					cgi->Com_Printf("......this weapon isn't loaded with ammo\n");
 				}
 			} else {
-				Com_Printf("...weapon slot %i is empty\n", i);
+				cgi->Com_Printf("...weapon slot %i is empty\n", i);
 			}
 		}
 
 		if (aircraft->shield.item) {
-			Com_Printf("...armour slot contains %s", aircraft->shield.item->id);
+			cgi->Com_Printf("...armour slot contains %s", aircraft->shield.item->id);
 			if (!aircraft->shield.installationTime) {
-				Com_Printf(" (functional)\n");
+				cgi->Com_Printf(" (functional)\n");
 			} else if (aircraft->shield.installationTime > 0) {
-				Com_Printf(" (%i hours before installation is finished)\n", aircraft->shield.installationTime);
+				cgi->Com_Printf(" (%i hours before installation is finished)\n", aircraft->shield.installationTime);
 			} else {
-				Com_Printf(" (%i hours before removing is finished)\n", aircraft->shield.installationTime);
+				cgi->Com_Printf(" (%i hours before removing is finished)\n", aircraft->shield.installationTime);
 			}
 		} else {
-			Com_Printf("...armour slot is empty\n");
+			cgi->Com_Printf("...armour slot is empty\n");
 		}
 
 		for (int j = 0; j < aircraft->maxElectronics; j++) {
 			aircraftSlot_t* slot = &aircraft->weapons[j];
 			if (slot->item) {
-				Com_Printf("...electronics slot %i contains %s", j, slot->item->id);
+				cgi->Com_Printf("...electronics slot %i contains %s", j, slot->item->id);
 
 				if (!slot->installationTime) {
-					Com_Printf(" (functional)\n");
+					cgi->Com_Printf(" (functional)\n");
 				} else if (slot->installationTime > 0) {
-					Com_Printf(" (%i hours before installation is finished)\n", slot->installationTime);
+					cgi->Com_Printf(" (%i hours before installation is finished)\n", slot->installationTime);
 				} else {
-					Com_Printf(" (%i hours before removing is finished)\n", slot->installationTime);
+					cgi->Com_Printf(" (%i hours before removing is finished)\n", slot->installationTime);
 				}
 			} else {
-				Com_Printf("...electronics slot %i is empty\n", j);
+				cgi->Com_Printf("...electronics slot %i is empty\n", j);
 			}
 		}
 
 		if (aircraft->pilot) {
 			character_t* chr = &aircraft->pilot->chr;
-			Com_Printf("...pilot: ucn: %i name: %s\n", chr->ucn, chr->name);
+			cgi->Com_Printf("...pilot: ucn: %i name: %s\n", chr->ucn, chr->name);
 		} else {
-			Com_Printf("...no pilot assigned\n");
+			cgi->Com_Printf("...no pilot assigned\n");
 		}
 
-		Com_Printf("...damage: %i\n", aircraft->damage);
-		Com_Printf("...stats: ");
+		cgi->Com_Printf("...damage: %i\n", aircraft->damage);
+		cgi->Com_Printf("...stats: ");
 		for (int k = 0; k < AIR_STATS_MAX; k++) {
 			if (k == AIR_STATS_WRANGE) {
-				Com_Printf("%.2f ", aircraft->stats[k] / 1000.0f);
+				cgi->Com_Printf("%.2f ", aircraft->stats[k] / 1000.0f);
 			} else {
-				Com_Printf("%i ", aircraft->stats[k]);
+				cgi->Com_Printf("%i ", aircraft->stats[k]);
 			}
 		}
-		Com_Printf("\n");
-		Com_Printf("...name %s\n", aircraft->id);
-		Com_Printf("...team size %i\n", aircraft->maxTeamSize);
-		Com_Printf("...fuel %i\n", aircraft->fuel);
-		Com_Printf("...status %s\n", (aircraft->status == AIR_CRASHED) ? "crashed" : AIR_AircraftStatusToName(aircraft));
-		Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
-		Com_Printf("...team: (%i/%i)\n", cgi->LIST_Count(aircraft->acTeam), aircraft->maxTeamSize);
+		cgi->Com_Printf("\n");
+		cgi->Com_Printf("...name %s\n", aircraft->id);
+		cgi->Com_Printf("...team size %i\n", aircraft->maxTeamSize);
+		cgi->Com_Printf("...fuel %i\n", aircraft->fuel);
+		cgi->Com_Printf("...status %s\n", (aircraft->status == AIR_CRASHED) ? "crashed" : AIR_AircraftStatusToName(aircraft));
+		cgi->Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
+		cgi->Com_Printf("...team: (%i/%i)\n", cgi->LIST_Count(aircraft->acTeam), aircraft->maxTeamSize);
 		LIST_Foreach(aircraft->acTeam, Employee, employee) {
 			character_t* chr = &employee->chr;
-			Com_Printf(".........name: %s (ucn: %i)\n", chr->name, chr->ucn);
+			cgi->Com_Printf(".........name: %s (ucn: %i)\n", chr->name, chr->ucn);
 		}
 
 		if (aircraft->itemCargo) {
-			Com_Printf("...itemCargo:\n");
+			cgi->Com_Printf("...itemCargo:\n");
 			linkedList_t* cargo = aircraft->itemCargo->list();
 			LIST_Foreach(cargo, itemCargo_t, item) {
-				Com_Printf("......item: %s amount: %d loose amount: %d\n", item->objDef->id, item->amount, item->looseAmount);
+				cgi->Com_Printf("......item: %s amount: %d loose amount: %d\n", item->objDef->id, item->amount, item->looseAmount);
 			}
 			cgi->LIST_Delete(&cargo);
 		}
 
 		if (aircraft->alienCargo) {
-			Com_Printf("...alienCargo:\n");
+			cgi->Com_Printf("...alienCargo:\n");
 			linkedList_t* cargo = aircraft->alienCargo->list();
 			LIST_Foreach(cargo, alienCargo_t, item) {
-				Com_Printf("......team: %s alive: %d dead: %d\n", item->teamDef->id, item->alive, item->dead);
+				cgi->Com_Printf("......team: %s alive: %d dead: %d\n", item->teamDef->id, item->alive, item->dead);
 			}
 			cgi->LIST_Delete(&cargo);
 		}
@@ -306,7 +306,7 @@ void AII_CollectingItems (aircraft_t* aircraft, int won)
 		aircraft->mission->missionResults.itemAmount += item->amount;
 #ifdef DEBUG
 		if (item->amount > 0)
-			Com_DPrintf(DEBUG_CLIENT, "Collected item: %s amount: %i\n", item->objDef->id, item->amount);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "Collected item: %s amount: %i\n", item->objDef->id, item->amount);
 #endif
 	}
 	cgi->LIST_Delete(&items);
@@ -665,13 +665,13 @@ aircraft_t* AIR_NewAircraft (base_t* base, const aircraft_t* aircraftTemplate)
 
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new %s is ready in %s"), _(aircraft->tpl->name), base->name);
 	MS_AddNewMessage(_("Notice"), cp_messageBuffer);
-	Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 	Vector2Copy(base->pos, aircraft->pos);
 	RADAR_Initialise(&aircraft->radar, aircraftTemplate->radar.range, aircraftTemplate->radar.trackingRange, 1.0f, false);
 	aircraft->radar.ufoDetectionProbability = aircraftTemplate->radar.ufoDetectionProbability;
 
-	Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s hangar: %s\n", aircraft->tpl->idx, aircraft->id, aircraft->building);
-	Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for %s\n", aircraft->id, aircraft->idx, base->name);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s hangar: %s\n", aircraft->tpl->idx, aircraft->id, aircraft->building);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for %s\n", aircraft->id, aircraft->idx, base->name);
 	if (!base->aircraftCurrent)
 		base->aircraftCurrent = aircraft;
 
@@ -789,7 +789,7 @@ void AIR_MoveAircraftIntoNewHomebase (aircraft_t* aircraft, base_t* base)
 	assert(base);
 	assert(base != aircraft->homebase);
 
-	Com_DPrintf(DEBUG_CLIENT, "AIR_MoveAircraftIntoNewHomebase: Change homebase of '%s' to '%s'\n", aircraft->id, base->name);
+	cgi->Com_DPrintf(DEBUG_CLIENT, "AIR_MoveAircraftIntoNewHomebase: Change homebase of '%s' to '%s'\n", aircraft->id, base->name);
 
 	oldBase = aircraft->homebase;
 	assert(oldBase);
@@ -1037,7 +1037,7 @@ static void AIR_Refuel (aircraft_t* aircraft, int deltaTime)
 
 			if (!aircraft->notifySent[AIR_CANNOT_REFUEL]) {
 				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-						_("Craft %s couldn't be completely refueled at %s. Not enough antimatter."), aircraft->name, aircraft->homebase->name);
+					_("Craft %s couldn't be completely refueled at %s. Not enough antimatter."), aircraft->name, aircraft->homebase->name);
 				MSO_CheckAddNewMessage(NT_AIRCRAFT_CANNOTREFUEL, _("Notice"), cp_messageBuffer);
 				aircraft->notifySent[AIR_CANNOT_REFUEL] = true;
 			}
@@ -1053,7 +1053,7 @@ static void AIR_Refuel (aircraft_t* aircraft, int deltaTime)
 		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 		aircraft->status = AIR_HOME;
 		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-				_("Craft %s has refueled at %s."), aircraft->name, aircraft->homebase->name);
+			_("Craft %s has refueled at %s."), aircraft->name, aircraft->homebase->name);
 		MSO_CheckAddNewMessage(NT_AIRCRAFT_REFUELED, _("Notice"), cp_messageBuffer);
 		aircraft->notifySent[AIR_CANNOT_REFUEL] = false;
 	}
@@ -1131,7 +1131,7 @@ aircraft_t* AIR_AircraftGetFromIDX (int aircraftIdx)
 {
 	AIR_Foreach(aircraft) {
 		if (aircraft->idx == aircraftIdx) {
-			Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: aircraft idx: %i\n",	aircraft->idx);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: aircraft idx: %i\n",	aircraft->idx);
 			return aircraft;
 		}
 	}
@@ -1281,14 +1281,14 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 	aircraftItemType_t itemType = MAX_ACITEMS;
 
 	if (ccs.numAircraftTemplates >= MAX_AIRCRAFT) {
-		Com_Printf("AIR_ParseAircraft: too many aircraft definitions; def \"%s\" ignored\n", name);
+		cgi->Com_Printf("AIR_ParseAircraft: too many aircraft definitions; def \"%s\" ignored\n", name);
 		return;
 	}
 
 	if (!assignAircraftItems) {
 		const aircraft_t* aircraftTemplateCheck = AIR_GetAircraftSilent(name);
 		if (aircraftTemplateCheck) {
-			Com_Printf("AIR_ParseAircraft: Second aircraft with same name found (%s) - second ignored\n", name);
+			cgi->Com_Printf("AIR_ParseAircraft: Second aircraft with same name found (%s) - second ignored\n", name);
 			return;
 		}
 
@@ -1296,7 +1296,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 		aircraftTemplate = &ccs.aircraftTemplates[ccs.numAircraftTemplates];
 		OBJZERO(*aircraftTemplate);
 
-		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
 		aircraftTemplate->tpl = aircraftTemplate;
 		aircraftTemplate->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
 		aircraftTemplate->status = AIR_HOME;
@@ -1328,7 +1328,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("AIR_ParseAircraft: aircraft def \"%s\" without body ignored\n", name);
+		cgi->Com_Printf("AIR_ParseAircraft: aircraft def \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -1350,7 +1350,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 		} else if (Q_streq(token, "radar")) {
 			token = cgi->Com_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
-				Com_Printf("AIR_ParseAircraft: Invalid radar value for aircraft: %s\n", name);
+				cgi->Com_Printf("AIR_ParseAircraft: Invalid radar value for aircraft: %s\n", name);
 				return;
 			}
 			do {
@@ -1361,7 +1361,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 					break;
 
 				if (!cgi->Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_radar_vals, cp_campaignPool, token))
-					Com_Printf("AIR_ParseAircraft: Ignoring unknown radar value '%s'\n", token);
+					cgi->Com_Printf("AIR_ParseAircraft: Ignoring unknown radar value '%s'\n", token);
 			} while (*text); /* dummy condition */
 			continue;
 		}
@@ -1374,14 +1374,14 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				Com_DPrintf(DEBUG_CLIENT, "use shield %s for aircraft %s\n", token, aircraftTemplate->id);
+				cgi->Com_DPrintf(DEBUG_CLIENT, "use shield %s for aircraft %s\n", token, aircraftTemplate->id);
 				tech = RS_GetTechByID(token);
 				if (tech)
 					aircraftTemplate->shield.item = INVSH_GetItemByID(tech->provides);
 			} else if (Q_streq(token, "slot")) {
 				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
-					Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
+					cgi->Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
 					return;
 				}
 				do {
@@ -1445,14 +1445,14 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 							switch (itemType) {
 							case AC_ITEM_WEAPON:
 								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].item = INVSH_GetItemByID(tech->provides);
-								Com_DPrintf(DEBUG_CLIENT, "use weapon %s for aircraft %s\n", token, aircraftTemplate->id);
+								cgi->Com_DPrintf(DEBUG_CLIENT, "use weapon %s for aircraft %s\n", token, aircraftTemplate->id);
 								break;
 							case AC_ITEM_ELECTRONICS:
 								aircraftTemplate->electronics[aircraftTemplate->maxElectronics - 1].item = INVSH_GetItemByID(tech->provides);
-								Com_DPrintf(DEBUG_CLIENT, "use electronics %s for aircraft %s\n", token, aircraftTemplate->id);
+								cgi->Com_DPrintf(DEBUG_CLIENT, "use electronics %s for aircraft %s\n", token, aircraftTemplate->id);
 								break;
 							default:
-								Com_Printf("Ignoring item value '%s' due to unknown slot type\n", token);
+								cgi->Com_Printf("Ignoring item value '%s' due to unknown slot type\n", token);
 								break;
 							}
 						}
@@ -1464,9 +1464,9 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 						if (tech) {
 							if (itemType == AC_ITEM_WEAPON) {
 								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].ammo = INVSH_GetItemByID(tech->provides);
-								Com_DPrintf(DEBUG_CLIENT, "use ammo %s for aircraft %s\n", token, aircraftTemplate->id);
+								cgi->Com_DPrintf(DEBUG_CLIENT, "use ammo %s for aircraft %s\n", token, aircraftTemplate->id);
 							} else
-								Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
+								cgi->Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
 						}
 					} else if (Q_streq(token, "size")) {
 						token = cgi->Com_EParse(text, errhead, name);
@@ -1480,11 +1480,11 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 							else if (Q_streq(token, "heavy"))
 								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].size = ITEM_HEAVY;
 							else
-								Com_Printf("Unknown size value for aircraft slot: '%s'\n", token);
+								cgi->Com_Printf("Unknown size value for aircraft slot: '%s'\n", token);
 						} else
-							Com_Printf("Ignoring size parameter '%s' for non-weapon aircraft slots\n", token);
+							cgi->Com_Printf("Ignoring size parameter '%s' for non-weapon aircraft slots\n", token);
 					} else
-						Com_Printf("AIR_ParseAircraft: Ignoring unknown slot value '%s'\n", token);
+						cgi->Com_Printf("AIR_ParseAircraft: Ignoring unknown slot value '%s'\n", token);
 				} while (*text); /* dummy condition */
 			}
 		} else {
@@ -1499,14 +1499,14 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 			if (Q_streq(token, "slot")) {
 				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
-					Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
+					cgi->Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
 					return;
 				}
 				Com_SkipBlock(text);
 			} else if (Q_streq(token, "param")) {
 				token = cgi->Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
-					Com_Printf("AIR_ParseAircraft: Invalid param value for aircraft: %s\n", name);
+					cgi->Com_Printf("AIR_ParseAircraft: Invalid param value for aircraft: %s\n", name);
 					return;
 				}
 				do {
@@ -1528,11 +1528,11 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 							((float) aircraftTemplate->stats[AIR_STATS_SPEED]);
 					} else {
 						if (!cgi->Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_param_vals, cp_campaignPool, token))
-							Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
+							cgi->Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
 					}
 				} while (*text); /* dummy condition */
 			} else {
-				Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
+				cgi->Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
 				cgi->Com_EParse(text, errhead, name);
 			}
 		} /* assignAircraftItems */
@@ -1548,9 +1548,9 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 #ifdef DEBUG
 static void AIR_ListCraftIndexes_f (void)
 {
-	Com_Printf("globalIDX\t(Craftname)\n");
+	cgi->Com_Printf("globalIDX\t(Craftname)\n");
 	AIR_Foreach(aircraft) {
-		Com_Printf("%i\t(%s)\n", aircraft->idx, aircraft->name);
+		cgi->Com_Printf("%i\t(%s)\n", aircraft->idx, aircraft->name);
 	}
 }
 
@@ -1562,7 +1562,7 @@ static void AIR_ListAircraftSamples_f (void)
 	int i = 0, max = ccs.numAircraftTemplates;
 	const value_t* vp;
 
-	Com_Printf("%i aircraft\n", max);
+	cgi->Com_Printf("%i aircraft\n", max);
 	if (cgi->Cmd_Argc() == 2) {
 		max = atoi(cgi->Cmd_Argv(1));
 		if (max >= ccs.numAircraftTemplates || max < 0)
@@ -1571,12 +1571,12 @@ static void AIR_ListAircraftSamples_f (void)
 	}
 	for (; i < max; i++) {
 		aircraft_t* aircraftTemplate = &ccs.aircraftTemplates[i];
-		Com_Printf("aircraft: '%s'\n", aircraftTemplate->id);
+		cgi->Com_Printf("aircraft: '%s'\n", aircraftTemplate->id);
 		for (vp = aircraft_vals; vp->string; vp++) {
-			Com_Printf("..%s: %s\n", vp->string, cgi->Com_ValueToStr(aircraftTemplate, vp->type, vp->ofs));
+			cgi->Com_Printf("..%s: %s\n", vp->string, cgi->Com_ValueToStr(aircraftTemplate, vp->type, vp->ofs));
 		}
 		for (vp = aircraft_param_vals; vp->string; vp++) {
-			Com_Printf("..%s: %s\n", vp->string, cgi->Com_ValueToStr(aircraftTemplate, vp->type, vp->ofs));
+			cgi->Com_Printf("..%s: %s\n", vp->string, cgi->Com_ValueToStr(aircraftTemplate, vp->type, vp->ofs));
 		}
 	}
 }
@@ -1761,7 +1761,7 @@ static float AIR_GetDestinationFindRoot (const float c, const float B, const flo
 			} while  (fBegin * fEnd > 0);
 		} else {
 			/* there's no solution, return default value */
-			Com_DPrintf(DEBUG_CLIENT, "AIR_GetDestinationFindRoot: Did not find solution is range %.2f, %.2f\n", start, MAXIMUM_VALUE_ROOT);
+			cgi->Com_DPrintf(DEBUG_CLIENT, "AIR_GetDestinationFindRoot: Did not find solution is range %.2f, %.2f\n", start, MAXIMUM_VALUE_ROOT);
 			return -10.;
 		}
 	}
@@ -1781,7 +1781,7 @@ static float AIR_GetDestinationFindRoot (const float c, const float B, const flo
 			end = middle;
 			fEnd = fMiddle;
 		} else {
-			Com_DPrintf(DEBUG_CLIENT, "AIR_GetDestinationFindRoot: Error in calculation, one of the value is nan\n");
+			cgi->Com_DPrintf(DEBUG_CLIENT, "AIR_GetDestinationFindRoot: Error in calculation, one of the value is nan\n");
 			return -10.;
 		}
 		middle = (begin + end) / 2.;
@@ -1867,7 +1867,7 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t* shooter, const aircraft_
 		if (fabs(b - speedRatio * a) < .1)
 			break;
 
-		Com_DPrintf(DEBUG_CLIENT, "AIR_GetDestinationWhilePursuing: reject solution: doesn't fit %.2f == %.2f\n", b, speedRatio * a);
+		cgi->Com_DPrintf(DEBUG_CLIENT, "AIR_GetDestinationWhilePursuing: reject solution: doesn't fit %.2f == %.2f\n", b, speedRatio * a);
 	}
 
 	if (a < 0.) {
@@ -1904,7 +1904,7 @@ bool AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 	if (!AIR_AircraftHasEnoughFuel(aircraft, dest)) {
 		/* did not find solution, go directly to target direction if enough fuel */
 		if (AIR_AircraftHasEnoughFuel(aircraft, ufo->pos)) {
-			Com_DPrintf(DEBUG_CLIENT, "AIR_SendAircraftPursuingUFO: not enough fuel to anticipate target movement: go directly to target position\n");
+			cgi->Com_DPrintf(DEBUG_CLIENT, "AIR_SendAircraftPursuingUFO: not enough fuel to anticipate target movement: go directly to target position\n");
 			Vector2Copy(ufo->pos, dest);
 		} else {
 			MS_AddNewMessage(_("Notice"), va(_("Craft %s has not enough fuel to intercept UFO: fly back to %s."), aircraft->name, aircraft->homebase->name));
@@ -2189,7 +2189,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t* p, const aircraft_t* const aircraft,
 	if (isUfo) {
 #ifdef DEBUG
 		if (!aircraft->mission)
-			Com_Printf("Error: UFO '%s'is not linked to any mission\n", aircraft->id);
+			cgi->Com_Printf("Error: UFO '%s'is not linked to any mission\n", aircraft->id);
 #endif
 		cgi->XML_AddString(node, SAVE_AIRCRAFT_MISSIONID, aircraft->mission->id);
 		/** detection id and time */
@@ -2217,7 +2217,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t* p, const aircraft_t* const aircraft,
 #ifdef DEBUG
 		/* UFO HP can be < 0 if the UFO has been destroyed */
 		if (!(isUfo && i == AIR_STATS_DAMAGE) && aircraft->stats[i] < 0)
-			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", aircraft->id, i, aircraft->stats[i]);
+			cgi->Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", aircraft->id, i, aircraft->stats[i]);
 #endif
 		if (aircraft->stats[i] != 0) {
 			xmlNode_t* statNode = cgi->XML_AddNode(subnode, SAVE_AIRCRAFT_AIRSTAT);
@@ -2314,7 +2314,7 @@ static void AIR_LoadAircraftSlotsXML (aircraft_t* aircraft, aircraftSlot_t* slot
 		AII_LoadOneSlotXML(act, &slot[i], weapon);
 	}
 	if (i > max)
-		Com_Printf("Error: Trying to assign more than max (%d) Aircraft Slots (cur is %d)\n", max, i);
+		cgi->Com_Printf("Error: Trying to assign more than max (%d) Aircraft Slots (cur is %d)\n", max, i);
 
 }
 
@@ -2337,7 +2337,7 @@ static bool AIR_LoadRouteXML (xmlNode_t* p, mapline_t* route)
 			actual = cgi->XML_GetNextPos2(actual, snode, SAVE_AIRCRAFT_ROUTE_POINT, route->point[++count]))
 		;
 	if (count > LINE_MAXPTS) {
-		Com_Printf("AIR_Load: number of points (%i) for UFO route exceed maximum value (%i)\n", count, LINE_MAXPTS);
+		cgi->Com_Printf("AIR_Load: number of points (%i) for UFO route exceed maximum value (%i)\n", count, LINE_MAXPTS);
 		return false;
 	}
 	route->numPoints = count;
@@ -2369,7 +2369,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t* p, aircraft_t* craft)
 
 	craft->idx = cgi->XML_GetInt(p, SAVE_AIRCRAFT_IDX, -1);
 	if (craft->idx < 0) {
-		Com_Printf("Invalid (or no) aircraft index %i\n", craft->idx);
+		cgi->Com_Printf("Invalid (or no) aircraft index %i\n", craft->idx);
 		return false;
 	}
 
@@ -2377,7 +2377,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t* p, aircraft_t* craft)
 
 	statusId = cgi->XML_GetString(p, SAVE_AIRCRAFT_STATUS);
 	if (!cgi->Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTATUS_NAMESPACE, statusId, &status)) {
-		Com_Printf("Invalid aircraft status '%s'\n", statusId);
+		cgi->Com_Printf("Invalid aircraft status '%s'\n", statusId);
 		cgi->Com_UnregisterConstList(saveAircraftConstants);
 		return false;
 	}
@@ -2416,7 +2416,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t* p, aircraft_t* craft)
 		int idx;
 
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTAT_NAMESPACE, statId, &idx)) {
-			Com_Printf("Invalid aircraft stat '%s'\n", statId);
+			cgi->Com_Printf("Invalid aircraft stat '%s'\n", statId);
 			cgi->Com_UnregisterConstList(saveAircraftConstants);
 			return false;
 		}
@@ -2424,7 +2424,7 @@ static bool AIR_LoadAircraftXML (xmlNode_t* p, aircraft_t* craft)
 #ifdef DEBUG
 		/* UFO HP can be < 0 if the UFO has been destroyed */
 		if (!(!craft->homebase && idx == AIR_STATS_DAMAGE) && craft->stats[idx] < 0)
-			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", craft->id, idx, craft->stats[idx]);
+			cgi->Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", craft->id, idx, craft->stats[idx]);
 #endif
 	}
 
@@ -2556,8 +2556,8 @@ bool AIR_LoadXML (xmlNode_t* parent)
 	for (i = ccs.numUFOs - 1; i >= 0; i--) {
 		aircraft_t* ufo = UFO_GetByIDX(i);
 		if (ufo->time < 0 || ufo->stats[AIR_STATS_SPEED] <= 0) {
-			Com_Printf("AIR_Load: Found invalid ufo entry - remove it - time: %i - speed: %i\n",
-					ufo->time, ufo->stats[AIR_STATS_SPEED]);
+			cgi->Com_Printf("AIR_Load: Found invalid ufo entry - remove it - time: %i - speed: %i\n",
+				ufo->time, ufo->stats[AIR_STATS_SPEED]);
 			UFO_RemoveFromGeoscape(ufo);
 		}
 	}
@@ -2584,7 +2584,7 @@ static bool AIR_PostLoadInitMissions (void)
 		}
 		aircraft->mission = CP_GetMissionByID(aircraft->missionID);
 		if (!aircraft->mission) {
-			Com_Printf("Aircraft %s (idx: %i) is linked to an invalid mission: %s\n", aircraft->name, aircraft->idx, aircraft->missionID);
+			cgi->Com_Printf("Aircraft %s (idx: %i) is linked to an invalid mission: %s\n", aircraft->name, aircraft->idx, aircraft->missionID);
 			if (aircraft->status == AIR_MISSION)
 				AIR_AircraftReturnToBase(aircraft);
 		}
@@ -2600,13 +2600,13 @@ static bool AIR_PostLoadInitMissions (void)
 	prevUfo = nullptr;
 	while ((ufo = UFO_GetNext(prevUfo)) != nullptr) {
 		if (Q_strnull(ufo->missionID)) {
-			Com_Printf("Warning: %s (idx: %i) has no mission assigned, removing it\n", ufo->name, ufo->idx);
+			cgi->Com_Printf("Warning: %s (idx: %i) has no mission assigned, removing it\n", ufo->name, ufo->idx);
 			UFO_RemoveFromGeoscape(ufo);
 			continue;
 		}
 		ufo->mission = CP_GetMissionByID(ufo->missionID);
 		if (!ufo->mission) {
-			Com_Printf("Warning: %s (idx: %i) is linked to an invalid mission %s, removing it\n", ufo->name, ufo->idx, ufo->missionID);
+			cgi->Com_Printf("Warning: %s (idx: %i) is linked to an invalid mission %s, removing it\n", ufo->name, ufo->idx, ufo->missionID);
 			UFO_RemoveFromGeoscape(ufo);
 			continue;
 		}
@@ -2671,18 +2671,18 @@ bool AIR_ScriptSanityCheck (void)
 	for (i = 0, a = ccs.aircraftTemplates; i < ccs.numAircraftTemplates; i++, a++) {
 		if (a->name[0] == '\0') {
 			error++;
-			Com_Printf("...... aircraft '%s' has no name\n", a->id);
+			cgi->Com_Printf("...... aircraft '%s' has no name\n", a->id);
 		}
 		if (!a->defaultName) {
 			error++;
-			Com_Printf("...... aircraft '%s' has no defaultName\n", a->id);
+			cgi->Com_Printf("...... aircraft '%s' has no defaultName\n", a->id);
 		}
 
 		/* check that every weapons fits slot */
 		for (j = 0; j < a->maxWeapons - 1; j++)
 			if (a->weapons[j].item && AII_GetItemWeightBySize(a->weapons[j].item) > a->weapons[j].size) {
 				error++;
-				Com_Printf("...... aircraft '%s' has an item (%s) too heavy for its slot\n", a->id, a->weapons[j].item->id);
+				cgi->Com_Printf("...... aircraft '%s' has an item (%s) too heavy for its slot\n", a->id, a->weapons[j].item->id);
 			}
 
 		/* check that every slots has a different location for PHALANX aircraft (not needed for UFOs) */
@@ -2692,7 +2692,7 @@ bool AIR_ScriptSanityCheck (void)
 				for (k = j + 1; k < a->maxWeapons; k++)
 					if (var == a->weapons[k].pos) {
 						error++;
-						Com_Printf("...... aircraft '%s' has 2 weapons slots at the same location\n", a->id);
+						cgi->Com_Printf("...... aircraft '%s' has 2 weapons slots at the same location\n", a->id);
 					}
 			}
 			for (j = 0; j < a->maxElectronics - 1; j++) {
@@ -2700,7 +2700,7 @@ bool AIR_ScriptSanityCheck (void)
 				for (k = j + 1; k < a->maxElectronics; k++)
 					if (var == a->electronics[k].pos) {
 						error++;
-						Com_Printf("...... aircraft '%s' has 2 electronics slots at the same location\n", a->id);
+						cgi->Com_Printf("...... aircraft '%s' has 2 electronics slots at the same location\n", a->id);
 					}
 			}
 		}
@@ -2734,13 +2734,13 @@ bool AIR_RemoveEmployee (Employee* employee, aircraft_t* aircraft)
 			return false;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveEmployee: base: %i - aircraft->idx: %i\n",
+	cgi->Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveEmployee: base: %i - aircraft->idx: %i\n",
 		aircraft->homebase ? aircraft->homebase->idx : -1, aircraft->idx);
 
 	if (AIR_GetPilot(aircraft) == employee) {
 #ifdef DEBUG
 		if (employee->getType() != EMPL_PILOT)
-			Com_Printf("Warning: pilot of aircraft %i is not a qualified pilot (ucn: %i)\n", aircraft->idx, employee->chr.ucn);
+			cgi->Com_Printf("Warning: pilot of aircraft %i is not a qualified pilot (ucn: %i)\n", aircraft->idx, employee->chr.ucn);
 #endif
 		return AIR_SetPilot(aircraft, nullptr);
 	}
@@ -2812,7 +2812,7 @@ void AIR_RemoveEmployees (aircraft_t& aircraft)
 void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t& aircraft, equipDef_t& ed)
 {
 	if (AIR_GetTeamSize(&aircraft) == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_MoveEmployeeInventoryIntoStorage: No team to remove equipment from.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "AIR_MoveEmployeeInventoryIntoStorage: No team to remove equipment from.\n");
 		return;
 	}
 
@@ -2871,7 +2871,7 @@ void AIR_AssignInitial (aircraft_t* aircraft)
 	base_t* base;
 
 	if (!aircraft) {
-		Com_Printf("AIR_AssignInitial: No aircraft given\n");
+		cgi->Com_Printf("AIR_AssignInitial: No aircraft given\n");
 		return;
 	}
 

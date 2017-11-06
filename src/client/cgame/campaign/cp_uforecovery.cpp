@@ -98,17 +98,17 @@ storedUFO_t* US_GetStoredUFOByIDX (const int idx)
 storedUFO_t* US_StoreUFO (const aircraft_t* ufoTemplate, installation_t* installation, date_t date, float condition)
 {
 	if (!ufoTemplate) {
-		Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Invalid aircraft (UFO) Template.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Invalid aircraft (UFO) Template.\n");
 		return nullptr;
 	}
 
 	if (!installation) {
-		Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Invalid Installation\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Invalid Installation\n");
 		return nullptr;
 	}
 
 	if (installation->ufoCapacity.cur >= installation->ufoCapacity.max) {
-		Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Installation is full with UFOs.\n");
+		cgi->Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Installation is full with UFOs.\n");
 		return nullptr;
 	}
 
@@ -342,23 +342,23 @@ bool US_LoadXML (xmlNode_t* p)
 		/* ufo->idx */
 		ufo.idx = cgi->XML_GetInt(snode, SAVE_UFORECOVERY_UFOIDX, -1);
 		if (ufo.idx < 0) {
-			Com_Printf("Invalid or no IDX defined for stored UFO.\n");
+			cgi->Com_Printf("Invalid or no IDX defined for stored UFO.\n");
 			continue;
 		}
 		/* ufo->status */
 		if (!cgi->Com_GetConstIntFromNamespace(SAVE_STOREDUFOSTATUS_NAMESPACE, id, &statusIDX)) {
-			Com_Printf("Invalid storedUFOStatus '%s'\n", id);
+			cgi->Com_Printf("Invalid storedUFOStatus '%s'\n", id);
 			continue;
 		}
 		ufo.status = (storedUFOStatus_t)statusIDX;
 		/* ufo->installation */
 		ufo.installation = INS_GetByIDX(cgi->XML_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, -1));
 		if (!ufo.installation) {
-			Com_Printf("UFO has no/invalid installation assigned\n");
+			cgi->Com_Printf("UFO has no/invalid installation assigned\n");
 			continue;
 		}
 		if (ufo.installation->ufoCapacity.cur >= ufo.installation->ufoCapacity.max) {
-			Com_Printf("UFO Yard %i if full!\n", ufo.installation->idx);
+			cgi->Com_Printf("UFO Yard %i if full!\n", ufo.installation->idx);
 			continue;
 		}
 		ufo.installation->ufoCapacity.cur++;
@@ -367,12 +367,12 @@ bool US_LoadXML (xmlNode_t* p)
 		/* ufo->ufoTemplate */
 		ufo.ufoTemplate = AIR_GetAircraft(ufo.id);
 		if (!ufo.ufoTemplate) {
-			Com_Printf("UFO has no/invalid aircraftTemplare assigned\n");
+			cgi->Com_Printf("UFO has no/invalid aircraftTemplare assigned\n");
 			continue;
 		}
 		ufo.comp = CP_GetComponentsByID(ufo.id);
 		if (!ufo.comp) {
-			Com_Printf("UFO has no/invalid components set\n");
+			cgi->Com_Printf("UFO has no/invalid components set\n");
 			continue;
 		}
 		cgi->XML_GetDate(snode, SAVE_UFORECOVERY_DATE, &ufo.arrive.day, &ufo.arrive.sec);
@@ -395,18 +395,18 @@ static void US_ListStoredUFOs_f (void)
 		const base_t* prodBase = PR_ProductionBase(ufo->disassembly);
 		dateLong_t date;
 
-		Com_Printf("IDX: %i\n", ufo->idx);
-		Com_Printf("id: %s\n", ufo->id);
-		Com_Printf("stored at %s\n", (ufo->installation) ? ufo->installation->name : "NOWHERE");
+		cgi->Com_Printf("IDX: %i\n", ufo->idx);
+		cgi->Com_Printf("id: %s\n", ufo->id);
+		cgi->Com_Printf("stored at %s\n", (ufo->installation) ? ufo->installation->name : "NOWHERE");
 
 		CP_DateConvertLong(&(ufo->arrive), &date);
-		Com_Printf("arrived at: %i %s %02i, %02i:%02i\n", date.year,
+		cgi->Com_Printf("arrived at: %i %s %02i, %02i:%02i\n", date.year,
 		Date_GetMonthName(date.month - 1), date.day, date.hour, date.min);
 
 		if (ufo->ufoTemplate->tech->base)
-			Com_Printf("tech being researched at %s\n", ufo->ufoTemplate->tech->base->name);
+			cgi->Com_Printf("tech being researched at %s\n", ufo->ufoTemplate->tech->base->name);
 		if (prodBase)
-			Com_Printf("being disassembled at %s\n", prodBase->name);
+			cgi->Com_Printf("being disassembled at %s\n", prodBase->name);
 	}
 }
 
@@ -418,7 +418,7 @@ static void US_StoreUFO_f (void)
 	char ufoId[MAX_VAR];
 
 	if (cgi->Cmd_Argc() <= 2) {
-		Com_Printf("Usage: %s <ufoType> <installationIdx>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <ufoType> <installationIdx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -427,12 +427,12 @@ static void US_StoreUFO_f (void)
 
 	/* Get The UFO Yard */
 	if (installationIDX < 0) {
-		Com_Printf("US_StoreUFO_f: Invalid Installation index.\n");
+		cgi->Com_Printf("US_StoreUFO_f: Invalid Installation index.\n");
 		return;
 	}
 	installation_t* installation = INS_GetByIDX(installationIDX);
 	if (!installation) {
-		Com_Printf("US_StoreUFO_f: There is no Installation: idx=%i.\n", installationIDX);
+		cgi->Com_Printf("US_StoreUFO_f: There is no Installation: idx=%i.\n", installationIDX);
 		return;
 	}
 
@@ -446,7 +446,7 @@ static void US_StoreUFO_f (void)
 		}
 	}
 	if (ufoType == nullptr) {
-		Com_Printf("US_StoreUFO_f: In valid UFO Id.\n");
+		cgi->Com_Printf("US_StoreUFO_f: In valid UFO Id.\n");
 		return;
 	}
 
@@ -459,13 +459,13 @@ static void US_StoreUFO_f (void)
 static void US_RemoveStoredUFO_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <idx>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <idx>\n", cgi->Cmd_Argv(0));
 		return;
 	} else {
 		const int idx = atoi(cgi->Cmd_Argv(1));
 		storedUFO_t* storedUFO = US_GetStoredUFOByIDX(idx);
 		if (!storedUFO) {
-			Com_Printf("US_RemoveStoredUFO_f: No such ufo index.\n");
+			cgi->Com_Printf("US_RemoveStoredUFO_f: No such ufo index.\n");
 			return;
 		}
 		US_RemoveStoredUFO(storedUFO);
