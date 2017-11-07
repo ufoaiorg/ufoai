@@ -444,7 +444,7 @@ void GAME_CP_DrawBaseTooltip (int baseIdx, int x, int y, int col, int row)
 
 void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap)
 {
-	const base_t* base = B_GetBaseByIDX(baseIdx);
+	base_t* base = B_GetBaseByIDX(baseIdx);
 	if (base == nullptr)
 		base = B_GetCurrentSelectedBase();
 	if (!base) {
@@ -498,12 +498,17 @@ void GAME_CP_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row
 	}
 
 	/* if we are building */
+	/** @todo remove base actions */
 	if (hover && ccs.baseAction == BA_NEWBUILDING) {
 		static const vec4_t white = {1.0f, 1.0f, 1.0f, 0.8f};
 		const building_t* building = base->buildingCurrent;
-		const vec2_t& size = building->size;
-		assert(building);
+		if (building == nullptr) {
+			cgi->Com_Printf("Warning base %d constructing a building but no buildingCurrent is set\n", base->idx);
+			B_ResetBuildingCurrent(base);
+			return;
+		}
 
+		const vec2_t& size = building->size;
 		for (int i = row; i < row + size[1]; i++) {
 			for (int j = col; j < col + size[0]; j++) {
 				if (!B_MapIsCellFree(base, j, i))
