@@ -43,159 +43,144 @@ do
 			text = "",
 		},
 
-		-- Left base panel
 		{
-			name = "base_container",
-			class = "BaseContainerPanel",
+			name = "base_map_container",
+			class = "panel",
+			pos = {9, 35},
+			size = {715, 670},
 
-			-- @todo Can we remove this?
 			{
-				name = "mainBody",
-				class = "panel",
-				invisible = true,
+				name = "thebasemap",
+				class = "basemap",
+				pos = {1, 1},
+				size = {715, 667},
 			},
+		},
+
+		-- Employee panel
+		-- @TODO: add support for injured soldiers
+		{
+			name = "cur_employees",
+			class = "panel",
+			pos = {5, 710},
+			size = {490, 48},
+			layout = ufo.LAYOUT_LEFT_RIGHT_FLOW,
 
 			{
-				name = "base_map_container",
-				class = "panel",
-				pos = {4, 30},
-				size = {715, 670},
-				bordersize = 2,
-				bordercolor = {0.527, 0.6, 0.21, 1},
+				name = "scientists",
+				class = "EmployeeCount",
+				tooltip = "_Scientists",
 
-				{
-					name = "thebasemap",
-					class = "basemap",
-					pos = {1, 1},
-					size = {715, 667},
-				},
+				{ name = "label", class = "string", text = "_Scientists" },
+				{ name = "icon", class = "button", icon = "icons/head_scientist" },
+
+				on_click = function (sender)
+					-- @TODO ufo.push_window() doesn't support parameters
+					ufo.cmd("ui_push employees 1;")
+				end,
 			},
-
-			-- Employee panel
-			-- @TODO: add support for injured soldiers
 			{
-				name = "cur_employees",
-				class = "panel",
-				pos = {0, 705},
-				size = {490, 48},
-				layout = ufo.LAYOUT_LEFT_RIGHT_FLOW,
+				name = "engineers",
+				class = "EmployeeCount",
+				tooltip = "_Engineers",
 
-				{
-					name = "scientists",
-					class = "EmployeeCount",
-					tooltip = "_Scientists",
+				{ name = "label", class = "string", text = "_Engineers" },
+				{ name = "icon", class = "button", icon = "icons/head_worker" },
 
-					{ name = "label", class = "string", text = "_Scientists" },
-					{ name = "icon", class = "button", icon = "icons/head_scientist" },
-
-					on_click = function (sender)
-						-- @TODO ufo.push_window() doesn't support parameters
-						ufo.cmd("ui_push employees 1;")
-					end,
-				},
-				{
-					name = "engineers",
-					class = "EmployeeCount",
-					tooltip = "_Engineers",
-
-					{ name = "label", class = "string", text = "_Engineers" },
-					{ name = "icon", class = "button", icon = "icons/head_worker" },
-
-					on_click = function (sender)
-						-- @TODO ufo.push_window() doesn't support parameters
-						ufo.cmd("ui_push employees 2;")
-					end,
-				},
-				{
-					name = "soldiers",
-					class = "EmployeeCount",
-					tooltip = "_Soldiers",
-
-					{ name = "label", class = "string", text = "_Soldiers" },
-					{ name = "icon", class = "button", icon = "icons/head_soldier" },
-
-					on_click = function (sender)
-						-- @TODO ufo.push_window() doesn't support parameters
-						ufo.cmd("ui_push employees 0;")
-					end,
-				},
-				{
-					name = "pilots",
-					class = "EmployeeCount",
-					tooltip = "_Pilots",
-
-					{ name = "label", class = "string", text = "_Pilots" },
-					{ name = "icon", class = "button", icon = "icons/head_pilot" },
-
-					on_click = function (sender)
-						-- @TODO ufo.push_window() doesn't support parameters
-						ufo.cmd("ui_push employees 3;")
-					end,
-				},
+				on_click = function (sender)
+					-- @TODO ufo.push_window() doesn't support parameters
+					ufo.cmd("ui_push employees 2;")
+				end,
 			},
-
-			-- Transfers, options, UFOpaedia
 			{
-				name = "buttons",
-				class = "panel",
-				pos = {551, 705},
-				size = {224, 48},
-				layout = ufo.LAYOUT_LEFT_RIGHT_FLOW,
+				name = "soldiers",
+				class = "EmployeeCount",
+				tooltip = "_Soldiers",
 
-				{
-					name = "options",
-					class = "button",
-					size = {56, 48},
-					icon = "icons/options",
-					tooltip = "_Options",
-					background = "icons/circle0",
+				{ name = "label", class = "string", text = "_Soldiers" },
+				{ name = "icon", class = "button", icon = "icons/head_soldier" },
 
-					on_mouseenter = function (sender)
-						sender:set_background("icons/circle")
-					end,
-					on_mouseleave = function (sender)
-						sender:set_background("icons/circle0")
-					end,
-					on_click = function (sender)
-						ufo.push_window("options", nil, nil)
-					end,
-				},
-				{
-					name = "ufopaedia",
-					class = "button",
-					size = {56, 48},
-					icon = "icons/info",
-					tooltip = "_UFOpedia",
-					background = "icons/circle0",
+				on_click = function (sender)
+					-- @TODO ufo.push_window() doesn't support parameters
+					ufo.cmd("ui_push employees 0;")
+				end,
+			},
+			{
+				name = "pilots",
+				class = "EmployeeCount",
+				tooltip = "_Pilots",
 
-					on_mouseenter = function (sender)
-						sender:set_background("icons/circle")
-					end,
-					on_mouseleave = function (sender)
-						sender:set_background("icons/circle0")
-					end,
-					on_click = function (sender)
-						ufo.push_window("ufopedia", nil, nil)
-					end,
-				},
-				{
-					name = "transfers",
-					class = "button",
-					size = {56, 48},
-					icon = "icons/transfer",
-					tooltip = "_Transfer",
-					background = "icons/circle0",
+				{ name = "label", class = "string", text = "_Pilots" },
+				{ name = "icon", class = "button", icon = "icons/head_pilot" },
 
-					on_mouseenter = function (sender)
-						sender:set_background("icons/circle")
-					end,
-					on_mouseleave = function (sender)
-						sender:set_background("icons/circle0")
-					end,
-					on_click = function (sender)
-						ufo.push_window("transfer", nil, nil)
-					end,
-				},
+				on_click = function (sender)
+					-- @TODO ufo.push_window() doesn't support parameters
+					ufo.cmd("ui_push employees 3;")
+				end,
+			},
+		},
+
+		-- Transfers, options, UFOpaedia
+		{
+			name = "buttons",
+			class = "panel",
+			pos = {556, 710},
+			size = {224, 48},
+			layout = ufo.LAYOUT_LEFT_RIGHT_FLOW,
+
+			{
+				name = "options",
+				class = "button",
+				size = {56, 48},
+				icon = "icons/options",
+				tooltip = "_Options",
+				background = "icons/circle0",
+
+				on_mouseenter = function (sender)
+					sender:set_background("icons/circle")
+				end,
+				on_mouseleave = function (sender)
+					sender:set_background("icons/circle0")
+				end,
+				on_click = function (sender)
+					ufo.push_window("options", nil, nil)
+				end,
+			},
+			{
+				name = "ufopaedia",
+				class = "button",
+				size = {56, 48},
+				icon = "icons/info",
+				tooltip = "_UFOpedia",
+				background = "icons/circle0",
+
+				on_mouseenter = function (sender)
+					sender:set_background("icons/circle")
+				end,
+				on_mouseleave = function (sender)
+					sender:set_background("icons/circle0")
+				end,
+				on_click = function (sender)
+					ufo.push_window("ufopedia", nil, nil)
+				end,
+			},
+			{
+				name = "transfers",
+				class = "button",
+				size = {56, 48},
+				icon = "icons/transfer",
+				tooltip = "_Transfer",
+				background = "icons/circle0",
+
+				on_mouseenter = function (sender)
+					sender:set_background("icons/circle")
+				end,
+				on_mouseleave = function (sender)
+					sender:set_background("icons/circle0")
+				end,
+				on_click = function (sender)
+					ufo.push_window("transfer", nil, nil)
+				end,
 			},
 		},
 
@@ -276,7 +261,7 @@ do
 			 - @param engineers Number of engineers
 			--]]
 			on_click = function (sender, soldiers, pilots, scientists, engineers)
-				local employee_container = sender:parent():child("base_container"):child("cur_employees")
+				local employee_container = sender:parent():child("cur_employees")
 				employee_container:child("soldiers"):child("data"):set_text(soldiers)
 				employee_container:child("pilots"):child("data"):set_text(pilots)
 				employee_container:child("scientists"):child("data"):set_text(scientists)
@@ -294,11 +279,15 @@ do
 		end,
 
 		on_windowopened = function (sender, base_idx)
+			-- Validate and store base_idx
 			if (base_idx == nil or base_idx == "") then
 				ufo.print(string.format("UI bases: Missing base_idx parameter!\n"))
 				ufo.pop_window(false)
 			end
 			sender:root():child("base_idx"):set_text(base_idx)
+			-- Build window
+			require("base.header.lua")
+			base.build_header(sender, sender:root():child("base_idx"):as_string())
 			sender:root():child("sections"):generate(sender:root():child("base_idx"):as_string())
 		end,
 

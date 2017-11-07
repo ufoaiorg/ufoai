@@ -20,21 +20,6 @@ do
 		on_mouseleave = function (sender)
 			sender:set_background("icons/circlelrg0")
 		end,
-
-		-- @TODO Remove this debug code
-		on_rightclick = function (sender)
-			function iterate(node, tab)
-				local n = node:first()
-				while (n) do
-					ufo.print(string.format("%s child %s : %s\n", tab, n:name(), tostring(n:is_disabled())))
-					iterate (n, tab .. "  ")
-					n = n:next()
-				end
-			end
-			ufo.print("-----------------------------------------\n")
-			local window = sender:root()
-			iterate(window, "")
-		end,
 	})
 end
 
@@ -584,8 +569,6 @@ do
 		class = "panel",
 		pos = {5, 5},
 		size = {723, 758},
-		bordersize = 2,
-		bordercolor = {0.56, 0.81, 0.76, 1},
 
 		-- Base name
 		{
@@ -630,8 +613,6 @@ do
 			class = "panel",
 			pos = {4, 30},
 			size = {715, 534},
-			bordersize = 2,
-			bordercolor = {0.527, 0.6, 0.21, 1},
 
 			-- Title bar
 			{
