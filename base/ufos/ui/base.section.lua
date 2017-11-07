@@ -70,16 +70,24 @@ base.build_section = function (root_node, id, title, icon)
 				if (sender:is_disabled()) then
 					return
 				end
-				sender:child("background_stripe"):set_backgroundcolor(0.527, 0.6, 0.21, 0.4)
-				sender:child("icon"):set_background("icons/circle")
+				if (sender:child("background_stripe") ~= nil) then
+					sender:child("background_stripe"):set_backgroundcolor(0.527, 0.6, 0.21, 0.4)
+				end
+				if (sender:child("icon") ~= nil) then
+					sender:child("icon"):set_background("icons/circle")
+				end
 			end,
 
 			on_mouseleave = function (sender)
 				if (sender:is_disabled()) then
 					return
 				end
-				sender:child("background_stripe"):set_backgroundcolor(0.527, 0.6, 0.21, 0.2)
-				sender:child("icon"):set_background("icons/circle0")
+				if (sender:child("background_stripe") ~= nil) then
+					sender:child("background_stripe"):set_backgroundcolor(0.527, 0.6, 0.21, 0.2)
+				end
+				if (sender:child("icon") ~= nil) then
+					sender:child("icon"):set_background("icons/circle0")
+				end
 			end,
 		},
 
