@@ -1,391 +1,543 @@
-/*
- * @TODO:
- * - Scientists: Need new code in the callbacks to get hired/unhired scientists and to hire/fire them.
- * - Clicking on another base name should take the player to that base (see research_changebase).
- * -- Maybe we need an icon that suggests clicking will switch bases.
- */
+--!usr/bin/lua
 
-window research extends BaseMgmtWindow
-{
-	{
-		fill		true
-	}
-	// Base name and container panel
-	BaseContainerPanel base_container
-	{
-		panel mainBody
+--[[
+-- @file
+-- @brief Research screen
+--]]
+
+--[[
+Copyright (C) 2002-2017 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+--[[
+ - @todo Scientists: Need new code in the callbacks to get hired/unhired scientists and to hire/fire them.
+ - @todo Clicking on another base name should take the player to that base (see research_changebase). Maybe we need an icon that suggests clicking will switch bases.
+--]]
+
+require("ufox.lua")
+base = {}
+
+do
+	local researchWindow = ufox.build_window({
+		name = "research",
+		class = "window",
+		fill = true,
+
 		{
-			{ size "715 584" }
-			panel header
+			name = "mainBody",
+			class = "panel",
+			pos = {9, 35},
+			size = {715, 584},
+
+			-- Title bar
 			{
-				{}
-				string title
+				name = "header",
+				class = "panel",
+				pos = {1, 1},
+				size = {713, 32},
+				backgroundcolor = {0.527, 0.6, 0.21, 0.2},
+
 				{
-					string			"_Research"
-				}
-			}
+					name = "title",
+					class = "string",
+					text = "_Research",
+					pos = {90, 1},
+					size = {593, 32},
+					contentalign =  ufo.ALIGN_CL,
+					color ={0.56, 0.81, 0.76, 1},
+				},
 
-			data selected {
-				string	""
-			}
-
-			// Unassigned scientists panel
-			panel idle_scientists {
 				{
-					pos	"470 35"
-					size	"240 45"
-				}
+					name = "back",
+					class = "button",
+					icon = "icons/system_close",
+					tooltip = "_Back to base",
+					pos = {683, 7},
+					size = {18, 18},
 
-				button idle_scientists_icon {
-					icon	"icons/head_scientist"
-					pos	"5 3"
-					size	"40 40"
-				}
+					on_click = function (sender)
+						ufo.cmd("ui_pop;")
+					end,
+				},
+			},
 
-				string idle_scientists_count {
-					string	"0"
-					pos	"50 5"
-					size	"185 20"
-					font	"f_small_bold"
-					color	"0.56 0.81 0.76 1"
-					contentalign	ALIGN_CL
-				}
-
-				string idle_scientists_label {
-					string	"_idle scientists"
-					pos	"50 22"
-					size	"185 20"
-					font	"f_verysmall"
-					color	"0.56 0.81 0.76 1"
-					contentalign	ALIGN_CL
-				}
-			}
-
-			string topics {
-				string	"_Topics"
-				pos		"45 62"
-				size	"365 25"
-				font	"f_verysmall"
-				color	"0.56 0.81 0.76 1"
-			}
-
-			// List of research techs
-			panel techs {
-				pos				"1 80"
-				size			"713 420"
-				layout			LAYOUT_TOP_DOWN_FLOW
-				layoutMargin	2
-				wheelscrollable	true
-				onViewChange {
-					*node:parent.techs_scroll@fullsize = <fullsize>
-					*node:parent.techs_scroll@current = <viewpos>
-					*node:parent.techs_scroll@viewsize = <viewsize>
-				}
-			}
-			vscrollbar techs_scroll {
-				image		"ui/scrollbar_v"
-				pos			"670 50"
-				height		"480"
-				current		0
-				viewsize	21
-				fullsize	21
-				hidewhenunused true
-				onChange {
-					*node:parent.techs@viewpos = <current>
-				}
-			}
-
-			confunc ui_techlist_clear {
-				call *node:parent.techs@removeAllchild
-			}
-			confunc ui_research_select {
-				if ( *node:parent.selected@string ne "" ) {
-					*node:parent.techs.tech_<node:parent.selected@string>.title@color = "0.56 0.81 0.76 1"
-					*node:parent.techs.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "0.56 0.81 0.76 1"
-				}
-				*node:parent.selected@string = "<1>"
-				*node:parent.techs.tech_<node:parent.selected@string>.title@color = "1 1 1 1"
-				*node:parent.techs.tech_<node:parent.selected@string>.rsrc_control.scientists@color = "1 1 1 1"
-				cmd "ui_research_getdetails <1>;"
-			}
-			/**
-			 * @brief Add research techs to the list for this base
-			 * @param <1> number of item in research tech list
-			 */
-			confunc ui_techlist_add {
-				call *node:parent.techs@createChild("tech_<1>", "ResearchItem")
-
-				*node:parent.techs.tech_<1>.id@string = "<1>"
-				*node:parent.techs.tech_<1>.title@string = "<2>"
-				*node:parent.techs.tech_<1>.status@current = <4>
-
-				if ( <4> > 0 ) {
-					*node:parent.techs.tech_<1>.progress_label@string = "<4>%"
-				}
-
-				if ( paramCount >= 5 ) {
-					if ( "<5>" eq "base" ) {
-						*node:parent.techs.tech_<1>.id@integer = <6>
-						*node:parent.techs.tech_<1>.rsrc_baselink.basename@string = "<7> (<3>)"
-						*node:parent.techs.tech_<1>.rsrc_baselink@invis = false
-						*node:parent.techs.tech_<1>.rsrc_control@invis = true
-					}
-					if ( "<5>" eq "missing" ) {
-						*node:parent.techs.tech_<1>.rsrc_missing@invis = false
-						*node:parent.techs.tech_<1>.rsrc_control@invis = true
-					}
-				} else {
-					*node:parent.techs.tech_<1>.rsrc_control.scientists@string = "<3>"
-					*node:parent.techs.tech_<1>.rsrc_control@invis = false
-				}
-
-				if ( *node:parent.selected@string eq "" ) {
-					call *node:parent.ui_research_select ( "<1>" )
-				}
-			}
-			confunc ui_research_update_topic {
-				*node:parent.techs.tech_<1>.rsrc_control.scientists@string = "<2>"
-			}
-		}
-
-		// Base scientists/lab stats
-		panel base_stats
-		{
 			{
-				pos				"4 629"
-				size			"715 125"
-				border			"2"
-				bordercolor		"0.527 0.6 0.21 1"
-			}
-			panel scientists
+				name = "selected",
+				class = "data",
+				text = "",
+			},
+
 			{
+				name = "idle_scientists",
+				class = "panel",
+				pos = {470, 35},
+				size = {240, 45},
+
 				{
-					pos		"5 0"
-					size	"350 84"
-				}
-				button scientist
+					name = "idle_scientists_icon",
+					class = "button",
+					icon = "icons/head_scientist",
+					pos = {5, 3},
+					size = {40, 40},
+				},
+
 				{
-					icon	"icons/head_scientist"
-					pos		"0 0"
-					size	"48 48"
-				}
-				string scientists_count
+					name = "idle_scientists_count",
+					class = "string",
+					text = "0",
+					pos = {50, 5},
+					size = {185, 20},
+					font = "f_small_bold",
+					color = {0.56, 0.81, 0.76, 1},
+					contentalign = ufo.ALIGN_CL,
+				},
+
 				{
-					string	"_Scientists hired"
-					pos		"40 9"
-					size	"300 25"
-					font	"f_small_bold"
-					color	"0.56 0.81 0.76 1"
-					contentalign	ALIGN_CL
-				}
-				texture data_bg
-				{
-					pos			"43 29"
-					size		"282 8"
-					src			"ui/bar_bg"
-					ghost		true
-				}
-				bar data_bar
-				{
-					pos			"43 29"
-					size		"282 8"
-					color		"0.56 0.81 0.76 1"
-					current		0
-					max			1
-					ghost		true
-				}
-				MainMenuExitBtn fire
-				{
-					string			"_FIRE"
-					pos			"43 42"
-					size			"125 26"
-					font			"f_small_bold"
-					color			"0 0 0 0.9"
-					selectcolor		"0 0 0 1"
-					onClick			{ cmd "ui_push employees 1;" }
-				}
-				MainMenu3Btn hire
-				{
-					string			"_HIRE"
-					pos			"200 42"
-					size			"125 26"
-					font			"f_small_bold"
-					color			"0 0 0 0.9"
-					selectcolor		"0 0 0 1"
-					onClick			{ cmd "ui_push employees 1;" }
-				}
-			}
-			panel lab_space
+					name = "idle_scientists_label",
+					class = "string",
+					text = "_idle scientists",
+					pos = {50, 22},
+					size = {185, 20},
+					font = "f_verysmall",
+					color = {0.56, 0.81, 0.76, 1},
+					contentalign = ufo.ALIGN_CL,
+				},
+			},
+
 			{
-				{
-					pos		"365 0"
-					size	"350 84"
-				}
-				button labs
-				{
-					icon	"icons/research"
-					pos		"0 0"
-					size	"48 48"
-				}
-				string labs_space_current
-				{
-					string	"_Laboratory space"
-					pos		"40 9"
-					size	"200 25"
-					font	"f_small_bold"
-					color	"0.56 0.81 0.76 1"
-					contentalign	ALIGN_CL
-				}
-				texture data_bg
-				{
-					pos			"43 29"
-					size		"282 8"
-					src			"ui/bar_bg"
-					ghost		true
-				}
-				bar data_bar
-				{
-					pos			"43 29"
-					size		"282 8"
-					color		"0.56 0.81 0.76 1"
-					current		0
-					max			1
-					ghost		true
-				}
-				MainMenu3Btn build_lab
-				{
-					string			"_BUILD LAB"
-					pos				"175 42"
-					size			"150 26"
-					font			"f_small_bold"
-					color			"0 0 0 0.9"
-					selectcolor		"0 0 0 1"
-					onClick			{ cmd "ui_pop; build_facility true;" }
-				}
-			}
-		}
+				name = "topics",
+				class = "string",
+				text = "_Topics",
+				pos = {45, 62},
+				size = {365, 25},
+				font = "f_verysmall",
+				color = {0.56, 0.81, 0.76, 1},
+			},
 
-		/**
-		 * @brief Switch to another reserch base
-		 * @param[in] <1> New base id
-		 * @param[in] <2> Selected item row
-		 */
-		confunc research_changebase {
-			cmd "ui_pop;ui_pop;mn_base_select <1>;ui_push research;"
-			cmd "research_select <2>;"
-		}
+			{
+				name = "techs",
+				class = "panel",
+				pos = {1, 80},
+				size = {713, 420},
+				layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+				layoutmargin = 2,
+				wheelscrollable = true,
 
-		// Intended to make an empty line.
-		confunc research_hide { }
+				on_viewChange = function (sender)
+					local scrollbar = sender:parent():child("techs_scroll")
+					if (scrollbar == nil) then
+						return
+					end
+					scrollbar:set_fullsize(sender:fullsize())
+					scrollbar:set_value(sender:viewpos())
+					scrollbar:set_viewsize(sender:viewsize())
+				end,
+			},
+			{
+				name = "techs_scroll",
+				class = "vscrollbar",
+				image = "ui/scrollbar_v",
+				pos = {670, 50},
+				height = 480,
+				current = 0,
+				viewsize = 21,
+				fullsize = 21,
+				autoshowscroll = true,
 
-		// Intended to set number of unassigned scientists in bases.
-		confunc research_baseinfo { }
+				on_change = function (sender)
+					local panel = sender:parent():child("techs")
+					if (panel == nil) then
+						return
+					end
+					panel:set_viewpos(sender:value())
+				end,
+			},
 
-		// Other unused confuncs for items that can't be researched.
-		confunc research_missingitem { }
-		confunc research_missingitemtitle { }
-		confunc research_unresearchableitem { }
-		confunc research_unresearchableitemtitle { }
+			{
+				name = "ui_techlist_clear",
+				class = "confunc",
 
-		// Called on selected item (highlight selected)
-		confunc research_selected { }
+				on_click = function (sender)
+					sender:parent():child("techs"):remove_children()
+				end,
+			},
 
-		// Set in cp_research_callbacks.c to show research status at the moment
-		// Under research, paused, not started yet.
-		confunc research_running { }
-		confunc research_paused { }
-		confunc research_normal { }
+			{
+				name = "ui_research_select",
+				class = "confunc",
 
-		// Intended to update values for an item, called with ui_research_fill
-		confunc research_updateitem { }
-	}
+				on_click = function (sender, selection)
+					local selected = sender:parent():child("selected")
+					local techs = sender:parent():child("techs")
+					if (selected:as_string() ~= "") then
+						techs:child("tech_" .. selected:as_string()):child("title"):set_color(0.56, 0.81, 0.76, 1)
+						techs:child("tech_" .. selected:as_string()):child("rsrc_control"):child("scientists"):set_color(0.56, 0.81, 0.76, 1)
+					end
+					selected:set_text(selection)
+					techs:child("tech_" .. selected:as_string()):child("title"):set_color(1, 1, 1, 1)
+					techs:child("tech_" .. selected:as_string()):child("rsrc_control"):child("scientists"):set_color(1, 1, 1, 1)
+					ufo.cmd(string.format("ui_research_getdetails %q;", selection))
+				end,
+			},
 
-	// Research item display panel
-	panel res_item
-	{
+			--[[
+			 - @brief Add research techs to the list for this base
+			 - @param id Tech Id
+			 - @param title Research title
+			 - @param scientists Number of scientists working on the project
+			 - @param status Research status (completition in percents)
+			 - @param refclass Reference class (@c base - researched on other base, @c missing - missing resources, or empty string)
+			 - @param refid base idx if refclass is @c base
+			 - @param reftitle base name if refclass is @c base
+			--]]
+			{
+				name = "ui_techlist_add",
+				class = "confunc",
+
+				on_click = function (sender, id, title, scientists, status, class, refid, reftitle)
+					local progress_string = ""
+					if (tonumber(status) > 0) then
+						progress_string = status .. "%"
+					end
+					local research = ufox.build({
+						name = "tech_" .. id,
+						class = "ResearchItem",
+
+						{ name = "id",             class = "data",   text = id, },
+						{ name = "title",          class = "string", text = title, },
+						{ name = "status",         class = "bar",    value = tonumber(status), },
+						{ name = "progress_label", class = "string", text = progres_string,},
+						{ name = "ref_id",         class = "data",   text = refid, }
+					}, sender:parent():child("techs"))
+
+					if (class == "base") then
+						research:child("rsrc_baselink"):child("basename"):set_text(string.format("%s (%s)", refname, scientists))
+						research:child("rsrc_baselink"):child("basename"):set_invisible(false)
+						research:child("rsrc_control"):set_invisible(true)
+					elseif (class == "missing") then
+						research:child("rsrc_missing"):set_invisible(false)
+						research:child("rsrc_control"):set_invisible(true)
+					else
+						research:child("rsrc_control"):child("scientists"):set_text(scientists)
+						research:child("rsrc_control"):set_invisible(false)
+					end
+
+					local selected = sender:parent():child("selected")
+					if (selected:as_string() == "") then
+						ufo.cmd(string.format("ui_research_select %q;", id))
+					end
+				end,
+			},
+
+			{
+				name = "ui_research_update_topic",
+				class = "confunc",
+
+				on_click = function (sender, techid, scientists)
+					sender:parent():child("techs"):child("tech_" .. techid):child("rsrc_control"):child("scientists"):set_text(scientists)
+				end,
+			},
+		},
+
 		{
-			pos		"739 0"
-			size	"277 768"
-		}
-		image img
+			name = "base_stats",
+			class = "panel",
+			pos = {4, 629},
+			size = {715, 125},
+			bordersize = 2,
+			bordercolor = {0.527, 0.6, 0.21, 1},
+
+			{
+				name = "scientists",
+				class = "panel",
+				pos = {5, 0},
+				size = {350, 84},
+
+				{
+					name = "scientist",
+					class = "button",
+					icon = "icons/head_scientist",
+					pos = {0, 0},
+					size = {48, 48},
+				},
+				{
+					name = "scientists_count",
+					class = "string",
+					text = "_Scientists hired",
+					pos = {40, 9},
+					size = {300, 25},
+					font = "f_small_bold",
+					color = {0.56, 0.81, 0.76, 1},
+					contentalign = ufo.ALIGN_CL,
+				},
+				{
+					name = "data_bg",
+					class = "texture",
+					pos = {43, 29},
+					size = {282, 8},
+					source = "ui/bar_bg",
+					ghost = true,
+				},
+				{
+					name = "data_bar",
+					class = "bar",
+					pos = {43, 29},
+					size = {282, 8},
+					color = {0.56, 0.81, 0.76, 1},
+					max = 1,
+					value = 0,
+					ghost = true,
+				},
+				{
+					name = "fire",
+					class = "MainMenuExitBtn",
+					text = "_FIRE",
+					pos = {43, 42},
+					size = {125, 26},
+					font = "f_small_bold",
+					color = {0, 0, 0, 0.9},
+					selectcolor = {0, 0, 0, 1},
+
+					on_click = function (sender)
+						ufo.cmd("ui_push employees 1;")
+					end,
+				},
+				{
+					name = "fire",
+					class = "MainMenu3Btn",
+					text = "_HIRE",
+					pos = {200, 42},
+					size = {125, 26},
+					font = "f_small_bold",
+					color = {0, 0, 0, 0.9},
+					selectcolor = {0, 0, 0, 1},
+
+					on_click = function (sender)
+						ufo.cmd("ui_push employees 1;")
+					end,
+				},
+			},
+
+			{
+				name = "lab_space",
+				class = "panel",
+				pos = {365, 0},
+				size = {350, 84},
+
+				{
+					name = "labs",
+					class = "button",
+					icon = "icons/research",
+					pos = {0, 0},
+					size = {48, 48},
+				},
+				{
+					name = "labs_space_current",
+					class = "string",
+					text = "_Laboratory space",
+					pos = {40, 9},
+					size = {200, 25},
+					font = "f_small_bold",
+					color = {0.56, 0.81, 0.76, 1},
+					contentalign = ufo.ALIGN_CL,
+				},
+				{
+					name = "data_bg",
+					class = "texture",
+					pos = {43, 29},
+					size = {282, 8},
+					source = "ui/bar_bg",
+					ghost = true,
+				},
+				{
+					name = "data_bar",
+					class = "bar",
+					pos = {43, 29},
+					size = {282, 8},
+					color = {0.56, 0.81, 0.76, 1},
+					max = 1,
+					value = 0,
+					ghost = true,
+				},
+				{
+					name = "build_lab",
+					class = "MainMenu3Btn",
+					text = "_BUILD LAB",
+					pos = {175, 42},
+					size = {150, 26},
+					font = "f_small_bold",
+					color = {0, 0, 0, 0.9},
+					selectcolor = {0, 0, 0, 1},
+
+					-- @todo build lab from this UI is broken
+					invisible = true,
+					on_click = function (sender)
+					end,
+				},
+			},
+		},
+
+		--[[
+		 - @brief Switch to another reserch base
+		 - @param[in] baseidx New base id
+		 - @param[in] selection Selected item row
+		--]]
 		{
-			pos				"0 80"
-			size			"277 632"
-			preventratio	true
-			contentalign	ALIGN_UC
-		}
-		model mdl
+			name = "research_changebase",
+			class = "confunc",
+
+			on_click = function (sender, baseidx, selection)
+				ufo.cmd(string.format("ui_pop;ui_pop;mn_base_select %s;ui_push research;research_select %s;", baseidx, selection))
+			end,
+		},
+
+		-- Intended to make an empty line.
+		{ name = "research_hide", class = "confunc", on_click = function (sender) end, },
+		-- Intended to set number of unassigned scientists in bases.
+		{ name = "research_baseinfo", class = "confunc", on_click = function (sender) end, },
+		-- Other unused confuncs for items that can't be researched.
+		{ name = "research_missingitem", class = "confunc", on_click = function (sender) end, },
+		{ name = "research_missingitemtitle", class = "confunc", on_click = function (sender) end, },
+		{ name = "research_unresearchableitem", class = "confunc", on_click = function (sender) end, },
+		{ name = "research_unresearchableitemtitle", class = "confunc", on_click = function (sender) end, },
+		-- Called on selected item (highlight selected)
+		{ name = "research_selected", class = "confunc", on_click = function (sender) end, },
+		-- Set in cp_research_callbacks.c to show research status at the moment
+		-- Under research, paused, not started yet.
+		{ name = "research_running", class = "confunc", on_click = function (sender) end, },
+		{ name = "research_paused", class = "confunc", on_click = function (sender) end, },
+		{ name = "research_normal", class = "confunc", on_click = function (sender) end, },
+		-- Intended to update values for an item, called with ui_research_fill
+		{ name = "research_updateitem", class = "confunc", on_click = function (sender) end, },
+
+		-- Research item display panel
 		{
-			angles			"-30 135 45"
-			pos				"0 80"
-			size			"277 277"
-			autoscale		true
-		}
-		string label
+			name = "res_item",
+			class = "panel",
+			pos = {739, 0},
+			size = {277, 768},
+
+			{
+				name = "img",
+				class = "image",
+				pos = {0, 80},
+				size = {277, 632},
+				keepratio = true,
+				contentalign = ufo.ALIGN_UC,
+			},
+			{
+				name = "mdl",
+				class = "model",
+				angles = {-30, 135, 45},
+				pos = {0, 80},
+				size = {277, 277},
+				autoscale = true,
+			},
+			{
+				name = "label",
+				class = "string",
+				pos = {0, 80},
+				size = {277, 30},
+				color = {0.56, 0.81, 0.76, 1},
+				backgroundcolor = {0, 0, 0, 0.6},
+				contentalign = ufo.ALIGN_CC,
+			},
+			{
+				name = "ui_research_details",
+				class = "confunc",
+
+				on_click = function (sender, title, image, model)
+					if (title ~= nil) then
+						sender:parent():child("label"):set_text(title)
+					end
+					if (image ~= nil) then
+						sender:parent():child("img"):set_source(image)
+					end
+					if (model ~= nil) then
+						sender:parent():child("mdl"):set_model(model)
+					end
+				end,
+			},
+		},
+
+		-- Back to geoscape
 		{
-			pos				"0 80"
-			size			"277 30"
-			color			"0.56 0.81 0.76 1"
-			bgcolor			"0 0 0 0.6"
-			contentalign	ALIGN_CC
-		}
-		confunc	ui_research_details
+			name = "geoscape_button",
+			class = "Geoscape",
+
+			on_click = function (sender)
+				ufo.cmd("ui_pop; ui_pop;")
+			end,
+		},
+
 		{
-			*node:parent.label@string = "<1>"
-			*node:parent.img@src = "<2>"
-			*node:parent.mdl@src = "<3>"
-		}
-	}
+			name = "laboratoy",
+			class = "BuildingSpace",
+			pos = {739, 25},
 
-	// Back to geoscape
-	Geoscape geoscape_button {
-		onClick	{
-			cmd "ui_pop; ui_pop;"
-		}
-	}
+			{ name = "smlicon", class = "button", icon = "icons/building_lab", },
+			{ name = "label",   class = "string", text = "_Laboratory", },
+			{ name = "alert",   class = "button", invisible = true, },
+		},
 
-	// Laboratory count
-	BuildingSpace laboratoy
-	{
-		{ pos "739 25" }
+		-- Fuzzy screen effect (see assets.ufo)
+		{
+			name = "overlay",
+			class = "fuzzyScreen",
+		},
 
-		button smlicon { icon	"icons/building_lab" }
-		string label { string	"_Laboratory" }
-		button alert { invis true }
-	}
+		--[[
+		 - @brief Passes information on capacity scientists and laboratory space
+		 - @param free_scientists scientists free
+		 - @param all_scientists scientists all
+		 - @param free_labspace labspace free
+		 - @param all_labspace labspace all
+		--]]
+		{
+			name = "ui_research_update_caps",
+			class = "confunc",
 
-	// Fuzzy screen effect (see assets.ufo)
-	fuzzyScreen overlay { }
+			on_click = function (sender, free_scientists, all_scientists, free_labspace, all_labspace)
+				sender:root():child("mainBody"):child("idle_scientists"):child("idle_scientists_count"):set_text(free_scientists)
+				sender:root():child("base_stats"):child("scientists"):child("data_bar"):set_max(tonumber(all_scientists))
+				sender:root():child("base_stats"):child("scientists"):child("data_bar"):set_value(tonumber(all_scientists) - tonumber(free_scientists))
+				sender:root():child("base_stats"):child("lab_space"):child("data_bar"):set_max(tonumber(all_labspace))
+				sender:root():child("base_stats"):child("lab_space"):child("data_bar"):set_value(tonumber(all_labspace) - tonumber(free_labspace))
+			end,
+		},
 
-	/**
-	 * @brief Passes information on capacity scientists and laboratory space
-	 * @param <1> scientists free
-	 * @param <2> scientists all
-	 * @param <3> labspace free
-	 * @param <4> labspace all
-	 */
-	confunc ui_research_update_caps {
-		*node:root.base_container.mainBody.idle_scientists.idle_scientists_count@string = "<1>"
-		*node:root.base_container.base_stats.scientists.data_bar@current = (<2> - <1>)
-		*node:root.base_container.base_stats.scientists.data_bar@max = <2>
-		*node:root.base_container.base_stats.lab_space.data_bar@current = (<4> - <3>)
-		*node:root.base_container.base_stats.lab_space.data_bar@max = <4>
-	}
+		-- Clear all research items
+		clear_all = function (sender)
+			sender:root():child("mainBody"):child("techs"):remove_children()
+		end,
 
-	// Clear all research items
-	func clear_all
-	{
-		call *node:root.base_container.mainBody.techs@removeAllChild
-	}
+		on_windowopened = function (sender)
+			-- Build window
+			require("base.header.lua")
+			-- we have no baseidx in research screen
+			base.build_header(sender, "")
+			-- Research window bootstrap
+			sender:child("mainBody"):child("selected"):set_text("")
+			ufo.cmd("ui_research_fill;")
+		end,
 
-	func onWindowOpened
-	{
-		*node:root.base_container.mainBody.selected@string = ""
-		cmd "ui_research_fill;"
-	}
-
-	func onWindowClosed
-	{
-		call *node:root.clear_all
-	}
-}
+		on_windowclosed = function (sender)
+			sender:clear_all()
+		end,
+	})
+end

@@ -656,28 +656,3 @@ do
 		}, BaseContainerPanel:child("base_selector"))
 	end
 end
-
-do
-	local BaseMgmtWindow = ufox.build_window({
-		name = "BaseMgmtWindow",
-		class = "window",
-		size = {1024, 768},
-
-		{
-			name = "base_container",
-			class = "BaseContainerPanel",
-		},
-
-		-- Back to geoscape
-		{
-			name = "geoscape_button",
-			class = "Geoscape",
-		},
-
-		-- Fuzzy screen effect (see assets.ufo)
-		{
-			name = "overlay",
-			class = "fuzzyScreen",
-		},
-	})
-end

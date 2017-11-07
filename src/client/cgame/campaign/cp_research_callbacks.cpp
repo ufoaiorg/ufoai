@@ -184,21 +184,25 @@ static void RS_FillTechnologyList_f (void)
 		/* show researches that are running */
 		if (tech->base && tech->scientists > 0) {
 			if (tech->base == base) {
-				cgi->UI_ExecuteConfunc("ui_techlist_add %s \"%s\" %d %d", tech->id, _(tech->name), tech->scientists, percentage);
+				cgi->UI_ExecuteConfunc("ui_techlist_add %s \"%s\" %d %d %s %d \"%s\"",
+					tech->id, _(tech->name), tech->scientists, percentage, "", 0, "");
 			} else {
-				cgi->UI_ExecuteConfunc("ui_techlist_add %s \"%s\" %d %d base %d \"%s\"", tech->id, _(tech->name), tech->scientists,
-					percentage, tech->base->idx, tech->base->name);
+				cgi->UI_ExecuteConfunc("ui_techlist_add %s \"%s\" %d %d base %d \"%s\"",
+					tech->id, _(tech->name), tech->scientists, percentage,
+					tech->base->idx, tech->base->name);
 			}
 			continue;
 		}
 		/* show topics that are researchable on this base */
 		const bool req = RS_RequirementsMet(tech, base);
 		if (tech->statusResearchable && req) {
-			cgi->UI_ExecuteConfunc("ui_techlist_add %s \"%s\" %d %d", tech->id, _(tech->name), tech->scientists, percentage);
+			cgi->UI_ExecuteConfunc("ui_techlist_add %s \"%s\" %d %d %s %d \"%s\"",
+				tech->id, _(tech->name), tech->scientists, percentage, "", 0, "");
 			continue;
 		}
 		if (tech->statusCollected && !req) {
-			cgi->UI_ExecuteConfunc("ui_techlist_add %s \"%s\" %d %d missing", tech->id, _(tech->name), tech->scientists, percentage);
+			cgi->UI_ExecuteConfunc("ui_techlist_add %s \"%s\" %d %d %s %d \"%s\"",
+				tech->id, _(tech->name), tech->scientists, percentage, "missing", 0, "");
 			continue;
 		}
 	}
