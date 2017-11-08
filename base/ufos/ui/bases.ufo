@@ -63,61 +63,57 @@ do
 			name = "cur_employees",
 			class = "panel",
 			pos = {5, 710},
-			size = {490, 48},
+			size = {495, 48},
 			layout = ufo.LAYOUT_LEFT_RIGHT_FLOW,
 
-			{
-				name = "scientists",
-				class = "EmployeeCount",
-				tooltip = "_Scientists",
+			--[[
+			 - @brief Clears the Employee bar
+			--]]
+			clear = function (sender)
+				sender:remove_children()
+			end,
 
-				{ name = "label", class = "string", text = "_Scientists" },
-				{ name = "icon", class = "button", icon = "icons/head_scientist" },
+			--[[
+			 - @brief Adds a link to the Employee bar
+			 - @param id Unique identifier for the UI
+			 - @param image Relative path to the image to show
+			 - @param title Translated name of the button (shown as tooltip)
+			 - @param command Command to run on click
+			--]]
+			add = function (sender, id, image, title, command)
+				local link = ufox.build({
+					name = id,
+					class = "EmployeeCount",
+					tooltip = title,
 
-				on_click = function (sender)
-					-- @TODO ufo.push_window() doesn't support parameters
-					ufo.cmd("ui_push employees 1;")
-				end,
-			},
-			{
-				name = "engineers",
-				class = "EmployeeCount",
-				tooltip = "_Engineers",
+					{ name = "label", class = "string", text = title, },
+					{ name = "icon",  class = "button", icon = image, },
 
-				{ name = "label", class = "string", text = "_Engineers" },
-				{ name = "icon", class = "button", icon = "icons/head_worker" },
+					on_click = function (sender)
+						ufo.cmd(command)
+					end,
+				}, sender)
+			end,
+		},
 
-				on_click = function (sender)
-					-- @TODO ufo.push_window() doesn't support parameters
-					ufo.cmd("ui_push employees 2;")
-				end,
-			},
-			{
-				name = "soldiers",
-				class = "EmployeeCount",
-				tooltip = "_Soldiers",
+		{
+			name = "current_employees",
+			class = "confunc",
 
-				{ name = "label", class = "string", text = "_Soldiers" },
-				{ name = "icon", class = "button", icon = "icons/head_soldier" },
-
-				on_click = function (sender)
-					-- @TODO ufo.push_window() doesn't support parameters
-					ufo.cmd("ui_push employees 0;")
-				end,
-			},
-			{
-				name = "pilots",
-				class = "EmployeeCount",
-				tooltip = "_Pilots",
-
-				{ name = "label", class = "string", text = "_Pilots" },
-				{ name = "icon", class = "button", icon = "icons/head_pilot" },
-
-				on_click = function (sender)
-					-- @TODO ufo.push_window() doesn't support parameters
-					ufo.cmd("ui_push employees 3;")
-				end,
-			},
+			--[[
+			 - @brief Current employees of a particular base
+			 - @param soldiers Number of soldiers
+			 - @param pilots Number of pilots
+			 - @param scientists Number of scientists
+			 - @param engineers Number of engineers
+			--]]
+			on_click = function (sender, soldiers, pilots, scientists, engineers)
+				local employee_container = sender:parent():child("cur_employees")
+				employee_container:child("soldiers"):child("data"):set_text(soldiers)
+				employee_container:child("pilots"):child("data"):set_text(pilots)
+				employee_container:child("scientists"):child("data"):set_text(scientists)
+				employee_container:child("engineers"):child("data"):set_text(engineers)
+			end,
 		},
 
 		-- Transfers, options, UFOpaedia
@@ -134,6 +130,7 @@ do
 			clear = function (sender)
 				sender:remove_children()
 			end,
+
 			--[[
 			 - @brief Adds a link to the "quicklink" bar
 			 - @param id Unique identifier for the UI
@@ -229,26 +226,6 @@ do
 		},
 
 		{
-			name = "current_employees",
-			class = "confunc",
-
-			--[[
-			 - @brief Current employees of a particular base
-			 - @param soldiers Number of soldiers
-			 - @param pilots Number of pilots
-			 - @param scientists Number of scientists
-			 - @param engineers Number of engineers
-			--]]
-			on_click = function (sender, soldiers, pilots, scientists, engineers)
-				local employee_container = sender:parent():child("cur_employees")
-				employee_container:child("soldiers"):child("data"):set_text(soldiers)
-				employee_container:child("pilots"):child("data"):set_text(pilots)
-				employee_container:child("scientists"):child("data"):set_text(scientists)
-				employee_container:child("engineers"):child("data"):set_text(engineers)
-			end,
-		},
-
-		{
 			name = "overlay",
 			class = "fuzzyScreen"
 		},
@@ -268,6 +245,12 @@ do
 			-- / header
 			require("base.header.lua")
 			base.build_header(sender, sender:root():child("base_idx"):as_string())
+			-- / Employee bar
+			sender:root():child("cur_employees"):clear()
+			sender:root():child("cur_employees"):add("scientists", "icons/head_scientist", "_Scientists", "ui_push employees 1;")
+			sender:root():child("cur_employees"):add("engineers",  "icons/head_worker",    "_Engineers",  "ui_push employees 2;")
+			sender:root():child("cur_employees"):add("soldiers",   "icons/head_soldier",   "_Soldiers",   "ui_push employees 0;")
+			sender:root():child("cur_employees"):add("pilots",     "icons/head_pilot",     "_Pilots",     "ui_push employees 3;")
 			-- / "quicklink" buttons
 			sender:root():child("buttons"):clear()
 			sender:root():child("buttons"):add("options",   "icons/options",  "_Options",  "options")
