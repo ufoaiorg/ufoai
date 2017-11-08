@@ -278,13 +278,34 @@ static void B_BaseInit_f (void)
 }
 
 /**
- * @brief Mark a building for destruction - you only have to confirm it now
- * @param[in] building Pointer to the base to destroy
+ * @brief Destroy a base building
+ * @sa B_BuildingDestroy
  */
-static void B_MarkBuildingDestroy (building_t* building)
+static void B_BuildingDestroy_f (void)
 {
-	baseCapacities_t cap;
-	base_t* base = building->base;
+	if (cgi->Cmd_Argc() < 3) {
+		cgi->Com_Printf("Usage: %s <baseIDX> <buildingIDX> [confirmed]\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	base_t* base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (base == nullptr) {
+		cgi->Com_Printf("B_BuildingDestroy_f: Invalid base IDX: %s\n", cgi->Cmd_Argv(1));
+		return;
+	}
+
+	const int buildingIdx = atoi(cgi->Cmd_Argv(2));
+	if (buildingIdx >= ccs.numBuildings[base->idx]) {
+		cgi->Com_Printf("B_BuildingDestroy_f: Invalid building IDX: %s\n", cgi->Cmd_Argv(2));
+		return;
+	}
+	building_t* building = &ccs.buildings[base->idx][buildingIdx];
+
+	if (cgi->Cmd_Argc() == 4 && Q_streq(cgi->Cmd_Argv(3), "confirmed")) {
+		B_BuildingDestroy(building);
+		B_ResetBuildingCurrent(base);
+		return;
+	}
 
 	/* you can't destroy buildings if base is under attack */
 	if (B_IsUnderAttack(base)) {
@@ -292,7 +313,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 		return;
 	}
 
-	cap = B_GetCapacityFromBuildingType(building->buildingType);
+	baseCapacities_t cap = B_GetCapacityFromBuildingType(building->buildingType);
 	/* store the pointer to the building you wanna destroy */
 	base->buildingCurrent = building;
 
@@ -360,40 +381,6 @@ static void B_MarkBuildingDestroy (building_t* building)
 		nullptr, nullptr, nullptr,
 		va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
 		nullptr, nullptr, nullptr);
-}
-
-/**
- * @brief Destroy a base building
- * @sa B_MarkBuildingDestroy
- * @sa B_BuildingDestroy
- */
-static void B_BuildingDestroy_f (void)
-{
-	base_t* base;
-	building_t* building;
-
-	if (cgi->Cmd_Argc() < 3) {
-		cgi->Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID> <buildingID> [confirmed]\n", cgi->Cmd_Argv(0));
-		return;
-	} else {
-		const int baseID = atoi(cgi->Cmd_Argv(1));
-		const int buildingID = atoi(cgi->Cmd_Argv(2));
-		base = B_GetBaseByIDX(baseID);
-		assert(base);
-		building = &ccs.buildings[baseID][buildingID];
-	}
-
-	if (!base || !building)
-		return;
-
-	if (cgi->Cmd_Argc() == 4 && Q_streq(cgi->Cmd_Argv(3), "confirmed")) {
-		/** @todo why not use the local building pointer here - we should
-		 * reduce the access to these 'current' pointers */
-		B_BuildingDestroy(base->buildingCurrent);
-		B_ResetBuildingCurrent(base);
-	} else {
-		B_MarkBuildingDestroy(building);
-	}
 }
 
 /**
