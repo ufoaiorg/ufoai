@@ -128,60 +128,39 @@ do
 			size = {224, 48},
 			layout = ufo.LAYOUT_LEFT_RIGHT_FLOW,
 
-			{
-				name = "options",
-				class = "button",
-				size = {56, 48},
-				icon = "icons/options",
-				tooltip = "_Options",
-				background = "icons/circle0",
+			--[[
+			 - @brief Clears the "quicklink" bar
+			--]]
+			clear = function (sender)
+				sender:remove_children()
+			end,
+			--[[
+			 - @brief Adds a link to the "quicklink" bar
+			 - @param id Unique identifier for the UI
+			 - @param image Relative path to the image to show
+			 - @param title Translated name of the button (shown as tooltip)
+			 - @param window Name of the window left mouse click should open
+			--]]
+			add = function (sender, id, image, title, window)
+				local link = ufox.build({
+					name = id,
+					class = "button",
+					size = {56, 48},
+					icon = image,
+					tooltip = title,
+					background = "icons/circle0",
 
-				on_mouseenter = function (sender)
-					sender:set_background("icons/circle")
-				end,
-				on_mouseleave = function (sender)
-					sender:set_background("icons/circle0")
-				end,
-				on_click = function (sender)
-					ufo.push_window("options", nil, nil)
-				end,
-			},
-			{
-				name = "ufopaedia",
-				class = "button",
-				size = {56, 48},
-				icon = "icons/info",
-				tooltip = "_UFOpedia",
-				background = "icons/circle0",
-
-				on_mouseenter = function (sender)
-					sender:set_background("icons/circle")
-				end,
-				on_mouseleave = function (sender)
-					sender:set_background("icons/circle0")
-				end,
-				on_click = function (sender)
-					ufo.push_window("ufopedia", nil, nil)
-				end,
-			},
-			{
-				name = "transfers",
-				class = "button",
-				size = {56, 48},
-				icon = "icons/transfer",
-				tooltip = "_Transfer",
-				background = "icons/circle0",
-
-				on_mouseenter = function (sender)
-					sender:set_background("icons/circle")
-				end,
-				on_mouseleave = function (sender)
-					sender:set_background("icons/circle0")
-				end,
-				on_click = function (sender)
-					ufo.push_window("transfer", nil, nil)
-				end,
-			},
+					on_mouseenter = function (sender)
+						sender:set_background("icons/circle")
+					end,
+					on_mouseleave = function (sender)
+						sender:set_background("icons/circle0")
+					end,
+					on_click = function (sender)
+						ufo.push_window(window, nil, nil)
+					end,
+				}, sender)
+			end,
 		},
 
 		-- (right) main base sections
@@ -286,8 +265,15 @@ do
 			end
 			sender:root():child("base_idx"):set_text(base_idx)
 			-- Build window
+			-- / header
 			require("base.header.lua")
 			base.build_header(sender, sender:root():child("base_idx"):as_string())
+			-- / "quicklink" buttons
+			sender:root():child("buttons"):clear()
+			sender:root():child("buttons"):add("options",   "icons/options",  "_Options",  "options")
+			sender:root():child("buttons"):add("ufopaedia", "icons/info",     "_UFOpedia", "ufopedia")
+			sender:root():child("buttons"):add("transfers", "icons/transfer", "_Transfer", "transfer")
+			-- / sections
 			sender:root():child("sections"):generate(sender:root():child("base_idx"):as_string())
 		end,
 
