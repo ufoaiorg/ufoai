@@ -1,46 +1,75 @@
-// Radar window
-window radar
-{
+--!usr/bin/lua
+
+--[[
+Copyright (C) 2002-2017 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+
+-- Radar window
+ufox.build_window{
+	class = "window",
+	name = "radar",
+	pos = {256, 30},
+	size = {520, 550},
+	backgroundcolor = {0, 0.15, 0.1, 0.7},
+	bordercolor = {0.58, 0.81, 0.758, 0.7},
+	bordersize = 2,
+	on_mouseenter = function (this)
+		this:set_backgroundcolor(0, 0.21, 0.158, 0.7)
+	end,
+	on_mouseleave = function (this)
+		this:set_backgroundcolor(0, 0.15, 0.1, 0.7)
+	end,
+
 	{
-		pos			"256 30"
-		size		"520 550"
-		bgcolor		"0 0.15 0.1 0.7"
-		bordercolor	"0.58 0.81 0.758 0.7"
-		border		"2"
-		onMouseEnter	{
-			*node:this@bgcolor = "0 0.21 0.158 0.7"
-		}
-		onMouseLeave	{
-			*node:this@bgcolor = "0 0.15 0.1 0.7"
-		}
-	}
-	string label
+		class = "string",
+		name = "label",
+		pos = {10, 0},
+		size = {100, 40},
+		text = "_Radar",
+		font = "f_small_bold",
+		color = {0.56, 0.81, 0.76, 1},
+		longlines = ufo.LONGLINES_CHOP,
+		contentalign = ufo.ALIGN_CL,
+		ghost = true
+	},
 	{
-		pos				"10 0"
-		size			"100 40"
-		string			"_Radar"
-		font			"f_small_bold"
-		color			"0.56 0.81 0.76 1"
-		longlines		LONGLINES_CHOP
-		contentalign	ALIGN_CL
-		ghost			true
-	}
-	controls drag
+		class = "controls",
+		name = "drag",
+		pos = {0, 0},
+		size = {520, 40}
+	},
 	{
-		pos		"0 0"
-		size	"520 40"
-	}
-	button close
+		class = "button",
+		name = "close",
+		icon = "icons/windowclose",
+		tooltip = "_Close",
+		pos = {490, 10},
+		size = {18, 18},
+		on_click = function (this)
+			ufo.pop_window(false)
+		end
+	},
 	{
-		icon			"icons/windowclose"
-		tooltip			"_Close"
-		pos				"490 10"
-		size			"18	18"
-		onClick			{ cmd "ui_pop;" }
-	}
-	radar hudradar
-	{
-		pos	"10 40"
-		size "500 500"
+		class = "radar",
+		name = "hudradar",
+		pos = {10, 40},
+		size = {500, 500}
 	}
 }
