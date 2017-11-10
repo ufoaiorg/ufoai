@@ -70,6 +70,7 @@ void CP_BaseAttackMissionIsFailure (mission_t* mission)
 		cgi->LIST_Delete(&baseAttackFakeAircraft.acTeam);
 
 		base->aircraftCurrent = AIR_GetFirstFromBase(base);
+		baseAttackFakeAircraft.mission = nullptr;
 	}
 
 	GEO_SetMissionAircraft(nullptr);
@@ -130,6 +131,7 @@ void CP_BaseAttackMissionDestroyBase (mission_t* mission)
 
 	/* we really don't want to use the fake aircraft anywhere */
 	GEO_SetMissionAircraft(nullptr);
+	baseAttackFakeAircraft.mission = nullptr;
 
 	/* HACK This hack is only needed until base will be really destroyed
 	 * we must recalculate items in storage because of the items we collected on battlefield */
@@ -161,7 +163,7 @@ static void CP_BaseAttackPrepareBattle (mission_t* mission)
 
 	/* needed to spawn soldiers on map */
 	baseAttackFakeAircraft.maxTeamSize = std::min(MAX_ACTIVETEAM, E_CountByType(EMPL_SOLDIER) + E_CountByType(EMPL_ROBOT));
-
+	baseAttackFakeAircraft.mission = mission;
 
 	base->aircraftCurrent = &baseAttackFakeAircraft;
 	GEO_SetMissionAircraft(&baseAttackFakeAircraft);
