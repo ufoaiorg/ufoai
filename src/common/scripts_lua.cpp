@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "scripts_lua.h"
+#include "../shared/cxx.h"
 
 int Com_LuaIsNilOrTable (lua_State* L, int index) {
 	return (lua_isnil(L, index) || lua_istable(L, index));
