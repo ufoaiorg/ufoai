@@ -283,8 +283,8 @@ static void B_BaseInit_f (void)
  */
 static void B_BuildingDestroy_f (void)
 {
-	if (cgi->Cmd_Argc() < 3) {
-		cgi->Com_Printf("Usage: %s <baseIDX> <buildingIDX> [confirmed]\n", cgi->Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 4) {
+		cgi->Com_Printf("Usage: %s <baseIDX> <column> <row> [confirmed]\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
@@ -294,14 +294,14 @@ static void B_BuildingDestroy_f (void)
 		return;
 	}
 
-	const int buildingIdx = atoi(cgi->Cmd_Argv(2));
-	if (buildingIdx >= ccs.numBuildings[base->idx]) {
-		cgi->Com_Printf("B_BuildingDestroy_f: Invalid building IDX: %s\n", cgi->Cmd_Argv(2));
+	building_t* building = B_GetBuildingAt(base, atoi(cgi->Cmd_Argv(2)), atoi(cgi->Cmd_Argv(3)));
+	if (building == nullptr) {
+		cgi->Com_Printf("B_BuildingDestroy_f: No valid building at base %i, position (%s, %s)\n",
+			base->idx, cgi->Cmd_Argv(2), cgi->Cmd_Argv(3));
 		return;
 	}
-	building_t* building = &ccs.buildings[base->idx][buildingIdx];
 
-	if (cgi->Cmd_Argc() == 4 && Q_streq(cgi->Cmd_Argv(3), "confirmed")) {
+	if (cgi->Cmd_Argc() == 5 && Q_streq(cgi->Cmd_Argv(4), "confirmed")) {
 		B_BuildingDestroy(building);
 		B_ResetBuildingCurrent(base);
 		return;
@@ -335,7 +335,7 @@ static void B_BuildingDestroy_f (void)
 			if (CAP_GetFreeCapacity(base, cap) < building->capacity) {
 				cgi->UI_PopupButton(_("Destroy Alien Containment"), _("If you destroy this building, you will also kill the aliens inside.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push aliencont;", _("Containment"), _("Go to the Alien Containment without destroying building"),
-					va("ui_pop;building_destroy %i %i confirmed;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					va("ui_pop;building_destroy %i %i %i confirmed;", base->idx, int(building->pos[0]), int(building->pos[1])), _("Destroy"), _("Destroy the building"),
 					hasMoreBases ? "ui_pop;ui_push transfer;" : nullptr, hasMoreBases ? _("Transfer") : nullptr,
 					_("Go to transfer menu without destroying the building"));
 				return;
@@ -346,7 +346,7 @@ static void B_BuildingDestroy_f (void)
 			if (CAP_GetFreeCapacity(base, cap) <= 0) {
 				cgi->UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push aircraft_equip;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
-					va("ui_pop;building_destroy %i %i confirmed;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					va("ui_pop;building_destroy %i %i %i confirmed;", base->idx, int(building->pos[0]), int(building->pos[1])), _("Destroy"), _("Destroy the building"),
 					hasMoreBases ? "ui_pop;ui_push transfer;" : nullptr, hasMoreBases ? _("Transfer") : nullptr,
 					_("Go to transfer menu without destroying the building"));
 				return;
@@ -356,7 +356,7 @@ static void B_BuildingDestroy_f (void)
 			if (CAP_GetFreeCapacity(base, cap) < building->capacity) {
 				cgi->UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
-					va("ui_pop;building_destroy %i %i confirmed;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					va("ui_pop;building_destroy %i %i %i confirmed;", base->idx, int(building->pos[0]), int(building->pos[1])), _("Destroy"), _("Destroy the building"),
 					hasMoreBases ? "ui_pop;ui_push transfer;" : nullptr, hasMoreBases ? _("Transfer") : nullptr,
 					_("Go to transfer menu without destroying the building"));
 				return;
@@ -366,7 +366,7 @@ static void B_BuildingDestroy_f (void)
 			if (CAP_GetFreeCapacity(base, cap) < building->capacity) {
 				cgi->UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
-					va("ui_pop;building_destroy %i %i confirmed;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+					va("ui_pop;building_destroy %i %i %i confirmed;", base->idx, int(building->pos[0]), int(building->pos[1])), _("Destroy"), _("Destroy the building"),
 					hasMoreBases ? "ui_pop;ui_push transfer;" : nullptr, hasMoreBases ? _("Transfer") : nullptr,
 					_("Go to transfer menu without destroying the building"));
 				return;
@@ -379,7 +379,7 @@ static void B_BuildingDestroy_f (void)
 
 	cgi->UI_PopupButton(_("Destroy building"), _("Are you sure you want to destroy this building?"),
 		nullptr, nullptr, nullptr,
-		va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
+		va("ui_pop;building_destroy %i %i %i confirmed;", base->idx, int(building->pos[0]), int(building->pos[1])), _("Destroy"), _("Destroy the building"),
 		nullptr, nullptr, nullptr);
 }
 

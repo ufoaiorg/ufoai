@@ -531,10 +531,9 @@ void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 		base = B_GetCurrentSelectedBase();
 	if (base == nullptr)
 		return;
-	const building_t* entry = base->map[row][col].building;
 	if (key == K_MOUSE2) {
-		if (entry) {
-			cgi->Cmd_ExecuteString("building_destroy %i %i", base->idx, entry->idx);
+		if (B_GetBuildingAt(base, col, row) != nullptr) {
+			cgi->Cmd_ExecuteString("building_destroy %i %i %i", base->idx, col, row);
 		}
 	} else if (key == K_MOUSE1) {
 		if (ccs.baseAction == BA_NEWBUILDING) {
