@@ -31,6 +31,7 @@ extern "C" {
 	#include "../libs/lua/lauxlib.h"
 }
 
+#include "list.h"
 
 /**
  * @brief callback signatures for functions defined in Lua
@@ -77,3 +78,5 @@ enum nodeCreateFlags_t {
 	DYNAMIC_CONTROL = 0x0001
 };
 
+int Com_LuaIsNilOrTable (lua_State* L, int index);
+linkedList_t* Com_LuaTableToStringList (lua_State* L, int index);

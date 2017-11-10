@@ -1569,6 +1569,13 @@ uiZoneNode_t* UI_CreateZone (uiNode_t* parent, const char* name, const char* sup
 %rename (create_component) UI_CreateComponent;
 uiNode_t* UI_CreateComponent (const char* type, const char* name, const char* super);
 
+/* typemaps for UI_PushWindow's params argument  */
+%typemap (in, checkfn="Com_LuaIsNilOrTable") linkedList_t* params {
+	$1 = Com_LuaTableToStringList(L, $input);
+}
+%typemap (freearg) linkedList_t* params {
+	LIST_Delete(&$1);
+}
 /* expose window functions */
 %rename (pop_window) UI_PopWindow;
 void UI_PopWindow (bool all);
@@ -1576,6 +1583,9 @@ void UI_PopWindow (bool all);
 uiNode_t* UI_PushWindow (const char* name, const char* parentName, linkedList_t* params);
 %rename (get_window) UI_GetWindow;
 uiNode_t* UI_GetWindow(const char* name);
+/* Clear UI_PushWindow's params argument typemaps */
+%typemap (in) linkedList_t* params;
+%typemap (freearg) linkedList_t* params;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //	expose generic node functions

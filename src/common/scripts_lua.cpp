@@ -25,3 +25,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "scripts_lua.h"
 
+int Com_LuaIsNilOrTable (lua_State* L, int index) {
+	return (lua_isnil(L, index) || lua_istable(L, index));
+}
+
+/**
+ * @brief Convert a lua table to a linkedList of character strings.
+ */
+linkedList_t* Com_LuaTableToStringList (lua_State* L, int index) {
+	if (lua_isnil(L, index))
+		return nullptr;
+
+	linkedList_t* result = nullptr;
+	/* table is in the stack at 'index' */
+	lua_pushnil(L);  /* first key */
+	while (lua_next(L, index) != 0) {
+		/* 'key' at index -2 and 'value' at index -1 */
+		const char* v = lua_tostring(L, -1);
+		if (v)
+			LIST_AddString(&result, v);
+		/* removes 'value', keeps 'key' for next iteration */
+		lua_pop(L, 1);
+	}
+	return result;
+}
