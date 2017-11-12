@@ -850,7 +850,7 @@ bool B_BuildingDestroy (building_t* building)
 
 	CAP_CheckOverflow();
 
-	cgi->Cmd_ExecuteString("base_init");
+	cgi->Cmd_ExecuteString("base_init %d", base->idx);
 
 	return true;
 }
@@ -1341,7 +1341,7 @@ building_t* B_BuildBuilding (base_t* base, const building_t* buildingTemplate, i
 	CP_UpdateCredits(ccs.credits - buildingNew->fixCosts);
 	ccs.numBuildings[base->idx]++;
 
-	cgi->Cmd_ExecuteString("base_init");
+	cgi->Cmd_ExecuteString("base_init %d", base->idx);
 	B_FireEvent(buildingNew, base, B_ONCONSTRUCT);
 
 	return buildingNew;

@@ -208,10 +208,19 @@ static void B_ChangeBaseName_f (void)
  */
 static void B_BaseInit_f (void)
 {
-	base_t* base = B_GetCurrentSelectedBase();
-
-	if (!base)
+	if (cgi->Cmd_Argc() < 2) {
+#if 0
+		cgi->Com_Printf("Usage: %s <baseIDX>\n", cgi->Cmd_Argv(0));
 		return;
+#endif
+	}
+	base_t* base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (!base)
+		base = B_GetCurrentSelectedBase();
+	if (!base) {
+		cgi->Com_Printf("Invalid base idx: %s\n", cgi->Cmd_Argv(1));
+		return;
+	}
 
 	/* make sure the credits cvar is up-to-date */
 	CP_UpdateCredits(ccs.credits);

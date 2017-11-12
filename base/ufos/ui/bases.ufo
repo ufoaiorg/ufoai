@@ -169,7 +169,7 @@ do
 					base[section].register(sender, tonumber(base_idx))
 				end
 				-- Get the parameters needed for this window
-				ufo.cmd("base_init;")
+				ufo.cmd(string.format("base_init %d;", tonumber(base_idx)))
 			end,
 		},
 

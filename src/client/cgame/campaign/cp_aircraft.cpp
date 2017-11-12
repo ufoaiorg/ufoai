@@ -676,7 +676,7 @@ aircraft_t* AIR_NewAircraft (base_t* base, const aircraft_t* aircraftTemplate)
 		base->aircraftCurrent = aircraft;
 
 	/* also update the base menu buttons */
-	cgi->Cmd_ExecuteString("base_init");
+	cgi->Cmd_ExecuteString("base_init %d", base->idx);
 	return aircraft;
 }
 
@@ -870,7 +870,7 @@ void AIR_DeleteAircraft (aircraft_t* aircraft)
 	}
 
 	/* also update the base menu buttons */
-	cgi->Cmd_ExecuteString("base_init");
+	cgi->Cmd_ExecuteString("base_init %d", base->idx);
 
 	/* Update Radar overlay */
 	if (aircraftIsOnGeoscape)
