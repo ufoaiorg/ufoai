@@ -388,11 +388,13 @@ static void B_AssembleMap_f (void)
 	const base_t* base;
 
 	if (cgi->Cmd_Argc() < 2) {
-		cgi->Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID>\n", cgi->Cmd_Argv(0));
-		base = B_GetCurrentSelectedBase();
-	} else {
-		const int baseID = atoi(cgi->Cmd_Argv(1));
-		base = B_GetBaseByIDX(baseID);
+		cgi->Com_Printf("Usage: %s <baseIDX>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+	base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (base == nullptr) {
+		cgi->Com_Printf("B_AssembleMap_f: Invalid base IDX: %s\n", cgi->Cmd_Argv(1));
+		return;
 	}
 
 	char maps[2048];
