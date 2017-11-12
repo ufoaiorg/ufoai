@@ -569,25 +569,21 @@ bool B_AssembleMap (char* maps, size_t mapsLength, char* coords, size_t coordsLe
 	maps[0] = '\0';
 	coords[0] = '\0';
 
-	for (int row = 0, rowStep = 1; row < BASE_SIZE; row += rowStep) {
-		for (int col = 0, colStep = 1; col < BASE_SIZE; col += colStep) {
+	for (int row = 0; row < BASE_SIZE; row++) {
+		for (int col = 0; col < BASE_SIZE; col++) {
 			const building_t* building = B_GetBuildingAt(base, col, row);
 			if (!building) {
 				B_AddMap(maps, mapsLength, coords, coordsLength, "b/empty ", col, row);
-				colStep = 1;
-				rowStep = 1;
 				continue;
 			}
-			colStep = building->size[0];
-			rowStep = building->size[1];
+			if (building->pos[0] == col || building->pos[1] == row)
+				continue;
 			if (!B_IsBuildingBuiltUp(building)) {
 				B_AddMap(maps, mapsLength, coords, coordsLength, "b/construction ", col, row);
 				continue;
 			}
-
 			if (!building->mapPart)
 				cgi->Com_Error(ERR_DROP, "MapPart for building '%s' is missing'", building->id);
-
 			B_AddMap(maps, mapsLength, coords, coordsLength, va("b/%s ", building->mapPart), col, row);
 		}
 	}
