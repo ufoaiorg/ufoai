@@ -1400,7 +1400,7 @@ bool G_ClientShoot (const Player& player, Actor* actor, const pos3_t at, shoot_t
 			} else if (stunGas) {
 				const int damage = std::max(0.0f, fd->damage[0] + fd->damage[1] * crand());
 				const int rounds = std::max(2, fd->rounds);
-				G_SpawnStunSmokeField(impact, "green_smoke", rounds, damage, fd->splrad);
+				G_SpawnStunSmokeField(impact, "gasfield", rounds, damage, fd->splrad);
 			}
 		}
 

@@ -790,7 +790,7 @@ entity misc_smokestun {
 
 	default {
 		count	"2"
-		particle	"green_smoke"
+		particle	"gasfield"
 		dmg	"5"
 		spawnflags	"255"
 	}

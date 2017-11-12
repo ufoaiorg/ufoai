@@ -96,6 +96,52 @@ particle smokefield_smoke
 }
 
 // =======================
+// GAS FIELD
+// ======================
+
+particle gasfield
+{
+	init
+	{
+		v		"0 0 0"
+		tps		6.0
+	}
+	think
+	{
+		spawn	gasfield_gas
+	}
+}
+
+particle gasfield_gas
+{
+	init
+	{
+		image "+sfx/gas_"
+		blend  blend
+		style  facing
+		thinkfade  out
+		rand   float 0.2		// 1/lifetime
+		add    float 0.2
+		pop    *tps
+		crand  vector "14 14 0"	// variance position
+		add    *s
+		pop    *s
+		rand  vector "0 0 16"	// variance velocity
+		add    *v
+		pop    *v
+		physics false
+	}
+	run
+	{
+		push		pos "12 12"
+		mul			*t
+		add			pos "1 1"
+		pop			*size
+	}
+	think { kill }
+}
+
+// =======================
 // MISCELLANEOUS EFFECTS
 // ======================
 
