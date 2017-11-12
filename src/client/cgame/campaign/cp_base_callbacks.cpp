@@ -501,6 +501,8 @@ static void B_ListBuildings_f (void)
 
 		cgi->UI_ExecuteConfunc("show_building \"%s\" \"%s\" %i %i %i %i %i", _(building->name),
 			building->id, building->tpl->capacity, cap.cur, cap.max, count, building->tpl->maxCount);
+	}
+}
 
 /**
  * @brief Opens menu on clicking a building in Baseview
@@ -596,6 +598,50 @@ static void B_BuildingOpenAfterClick_f (void)
 	}
 }
 
+/**
+ * @brief Build a base building
+ */
+static void B_BuildBuilding_f (void)
+{
+	if (cgi->Cmd_Argc() < 5) {
+		cgi->Com_Printf("Usage: %s <baseIDX> <buildingID> <column> <row>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	base_t* base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (!base) {
+		cgi->Com_Printf("Invalid base idx\n");
+		return;
+	}
+
+	building_t* building = B_GetBuildingTemplateSilent(cgi->Cmd_Argv(2));
+	if (!building) {
+		cgi->Com_Printf("Invalid building id\n");
+		return;
+	}
+
+	const int column = atoi(cgi->Cmd_Argv(3));
+	const int row = atoi(cgi->Cmd_Argv(4));
+	if (column < 0 || row < 0 || column >= BASE_SIZE || row >= BASE_SIZE) {
+		cgi->Com_Printf("Invalid building position (%s, %s)\n", cgi->Cmd_Argv(3), cgi->Cmd_Argv(4));
+		return;
+	}
+
+	if (column + int(building->size[0]) >= BASE_SIZE || row + int(building->size[1]) >= BASE_SIZE) {
+		cgi->Com_Printf("Building doesn't fit position (%s, %s), size (%d, %d)\n",
+			cgi->Cmd_Argv(3), cgi->Cmd_Argv(4), int(building->size[0]), int(building->size[1]));
+		return;
+	}
+
+	if (!CP_CheckCredits(building->fixCosts)) {
+		CP_Popup(_("Notice"), _("Not enough credits to build this\n"));
+		return;
+	}
+
+	if (B_BuildBuilding(base, building, column, row) != nullptr)
+		cgi->Cmd_ExecuteString("ui_push bases %d", base->idx);
+}
+
 /** Init/Shutdown functions */
 static const cmdList_t baseCallbacks[] = {
 	{"basemapshot", B_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles"},
@@ -611,6 +657,7 @@ static const cmdList_t baseCallbacks[] = {
 	{"base_selectbuilding", B_BuildingOpenAfterClick_f, nullptr},
 	{"ui_list_buildings", B_ListBuildings_f, "Lists buildings built or can be built on a base and their capacities"},
 	{"ui_show_buildinginfo", B_FillBuildingInfo_f, "Opens the building information window in construction mode"},
+	{"ui_build_building", B_BuildBuilding_f, nullptr},
 	{nullptr, nullptr, nullptr}
 };
 

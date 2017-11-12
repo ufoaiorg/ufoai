@@ -1035,8 +1035,7 @@ static void B_AddBuildingToBasePos (base_t* base, const building_t* buildingTemp
 	/* new building in base (not a template) */
 	building_t* buildingNew;
 
-	/* fake a click to basemap */
-	buildingNew = B_SetBuildingByClick(base, buildingTemplate, (int)pos[1], (int)pos[0]);
+	buildingNew = B_BuildBuilding(base, buildingTemplate, (int)pos[0], (int)pos[1]);
 	if (!buildingNew)
 		return;
 	buildingNew->timeStart.day = 0;
@@ -1292,101 +1291,80 @@ bool B_MapIsCellFree (const base_t* base, int col, int row)
 }
 
 /**
- * @brief Set the currently selected building.
+ * @brief Build a new building to the base
  * @param[in,out] base The base to place the building in
  * @param[in] buildingTemplate The template of the building to place at the given location
  * @param[in] row Set building to row
  * @param[in] col Set building to col
  * @return building created in base (this is not a building template)
  */
-building_t* B_SetBuildingByClick (base_t* base, const building_t* buildingTemplate, int row, int col)
+building_t* B_BuildBuilding (base_t* base, const building_t* buildingTemplate, int col, int row)
 {
-#ifdef DEBUG
 	if (!base)
 		cgi->Com_Error(ERR_DROP, "no current base\n");
 	if (!buildingTemplate)
 		cgi->Com_Error(ERR_DROP, "no current building\n");
-#endif
-	if (!CP_CheckCredits(buildingTemplate->fixCosts)) {
-		CP_Popup(_("Notice"), _("Not enough credits to build this\n"));
+
+	if (row < 0 || row >= BASE_SIZE || col < 0 || col >= BASE_SIZE)
 		return nullptr;
-	}
+	if (col + buildingTemplate->size[0] > BASE_SIZE)
+		return nullptr;
+	if (row + buildingTemplate->size[1] > BASE_SIZE)
+		return nullptr;
+	if (!CP_CheckCredits(buildingTemplate->fixCosts))
+		return nullptr;
 
-	/* template should really be a template */
-	/*assert(template == template->tpl);*/
-
-	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
-		/* new building in base (not a template) */
-		building_t* buildingNew = B_GetBuildingByIDX(base->idx, ccs.numBuildings[base->idx]);
-
-		/* copy building from template list to base-buildings-list */
-		*buildingNew = *buildingTemplate;
-		/* self-link to building-list in base */
-		buildingNew->idx = B_GetBuildingIDX(base, buildingNew);
-		/* Link to the base. */
-		buildingNew->base = base;
-
-		if (!B_IsTileBlocked(base, col, row) && B_GetBuildingAt(base, col, row) == nullptr) {
-			int y, x;
-
-			if (col + buildingNew->size[0] > BASE_SIZE)
+	for (int y = row; y < row + buildingTemplate->size[1]; y++)
+		for (int x = col; x < col + buildingTemplate->size[0]; x++)
+			if (B_GetBuildingAt(base, x, y) != nullptr || B_IsTileBlocked(base, x, y))
 				return nullptr;
-			if (row + buildingNew->size[1] > BASE_SIZE)
-				return nullptr;
-			for (y = row; y < row + buildingNew->size[1]; y++)
-				for (x = col; x < col + buildingNew->size[0]; x++)
-					if (B_GetBuildingAt(base, x, y) != nullptr || B_IsTileBlocked(base, x, y))
-						return nullptr;
-			/* No building in this place */
 
-			/* set building position */
-			buildingNew->pos[0] = col;
-			buildingNew->pos[1] = row;
+	/* new building in base (not a template) */
+	building_t* buildingNew = B_GetBuildingByIDX(base->idx, ccs.numBuildings[base->idx]);
+	/* copy building from template list to base-buildings-list */
+	*buildingNew = *buildingTemplate;
+	/* self-link to building-list in base */
+	buildingNew->idx = B_GetBuildingIDX(base, buildingNew);
+	buildingNew->base = base;
+	buildingNew->pos[0] = col;
+	buildingNew->pos[1] = row;
 
-			/* Refuse adding if it hurts coherency */
-			if (base->baseStatus == BASE_WORKING) {
-				linkedList_t* neighbours;
-				bool coherent = false;
+	/* Refuse adding if it hurts coherency */
+	if (base->baseStatus == BASE_WORKING) {
+		linkedList_t* neighbours;
+		bool coherent = false;
 
-				neighbours = B_GetNeighbours(buildingNew);
-				LIST_Foreach(neighbours, building_t, bldg) {
-					if (B_IsBuildingBuiltUp(bldg)) {
-						coherent = true;
-						break;
-					}
-				}
-				cgi->LIST_Delete(&neighbours);
-
-				if (!coherent) {
-					CP_Popup(_("Notice"), _("You must build next to existing buildings."));
-					return nullptr;
-				}
+		neighbours = B_GetNeighbours(buildingNew);
+		LIST_Foreach(neighbours, building_t, bldg) {
+			if (B_IsBuildingBuiltUp(bldg)) {
+				coherent = true;
+				break;
 			}
-
-			/* set building position */
-			for (y = row; y < row + buildingNew->size[1]; y++)
-				for (x = col; x < col + buildingNew->size[0]; x++) {
-					assert(!B_IsTileBlocked(base, x, y));
-					base->map[y][x].building = buildingNew;
-				}
-
-			/* status and build (start) time */
-			buildingNew->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-			buildingNew->timeStart = ccs.date;
-
-			/* pay */
-			CP_UpdateCredits(ccs.credits - buildingNew->fixCosts);
-			/* Update number of buildings on the base. */
-			ccs.numBuildings[base->idx]++;
-
-			B_ResetBuildingCurrent(base);
-			cgi->Cmd_ExecuteString("base_init");
-			B_FireEvent(buildingNew, base, B_ONCONSTRUCT);
-
-			return buildingNew;
 		}
+		cgi->LIST_Delete(&neighbours);
+
+		if (!coherent)
+			return nullptr;
 	}
-	return nullptr;
+
+	/* set building position */
+	for (int y = row; y < row + buildingNew->size[1]; y++)
+		for (int x = col; x < col + buildingNew->size[0]; x++)
+			base->map[y][x].building = buildingNew;
+
+
+	/* status and build (start) time */
+	buildingNew->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
+	buildingNew->timeStart = ccs.date;
+
+	CP_UpdateCredits(ccs.credits - buildingNew->fixCosts);
+	ccs.numBuildings[base->idx]++;
+
+	B_ResetBuildingCurrent(base);
+	cgi->Cmd_ExecuteString("base_init");
+	B_FireEvent(buildingNew, base, B_ONCONSTRUCT);
+
+	return buildingNew;
 }
 
 /**

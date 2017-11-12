@@ -1086,13 +1086,13 @@ TEST_F(CampaignTest, testBuildingConstruction)
 	/* reset blocked status if set */
 	base->map[y][x].blocked = false;
 	/* try to build (should fail) */
-	building1 = B_SetBuildingByClick(base, buildingTemplate, y, x);
+	building1 = B_BuildBuilding(base, buildingTemplate, x, y);
 	ASSERT_TRUE(nullptr == building1);
 
 	/* next to the entrance it should succeed */
 	x = (x + entrance->pos[0]) /2;
 	base->map[y][x].blocked = false;
-	building1 = B_SetBuildingByClick(base, buildingTemplate, y, x);
+	building1 = B_BuildBuilding(base, buildingTemplate, x, y);
 	ASSERT_TRUE(nullptr != building1);
 
 	/* try to build to first pos again (still fail, conecting building not ready) */
@@ -1100,7 +1100,7 @@ TEST_F(CampaignTest, testBuildingConstruction)
 		x--;
 	else
 		x++;
-	building2 = B_SetBuildingByClick(base, buildingTemplate, y, x);
+	building2 = B_BuildBuilding(base, buildingTemplate, x, y);
 	ASSERT_TRUE(nullptr == building2);
 	/* roll time one day before building finishes */
 	ccs.date.day += building1->buildTime - 1;
@@ -1114,13 +1114,13 @@ TEST_F(CampaignTest, testBuildingConstruction)
 	ASSERT_EQ(building1->buildingStatus, B_STATUS_WORKING);
 
 	/* try build other building (now it should succeed) */
-	building2 = B_SetBuildingByClick(base, buildingTemplate, y, x);
+	building2 = B_BuildBuilding(base, buildingTemplate, x, y);
 	ASSERT_TRUE(nullptr != building2);
 
 	/* try to destroy the second (should success) */
 	ASSERT_TRUE(B_BuildingDestroy(building2));
 	/* rebuild */
-	building2 = B_SetBuildingByClick(base, buildingTemplate, y, x);
+	building2 = B_BuildBuilding(base, buildingTemplate, x, y);
 	ASSERT_TRUE(nullptr != building2);
 
 	/* try to destroy the first (should fail) */

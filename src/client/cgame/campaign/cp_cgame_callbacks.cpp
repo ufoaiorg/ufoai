@@ -538,18 +538,9 @@ void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 	} else if (key == K_MOUSE1) {
 		if (ccs.baseAction == BA_NEWBUILDING) {
 			const building_t* building = base->buildingCurrent;
-
-			assert(building);
-
-			if (col + building->size[0] > BASE_SIZE)
-				return;
-			if (row + building->size[1] > BASE_SIZE)
-				return;
-			for (int y = row; y < row + building->size[1]; y++)
-				for (int x = col; x < col + building->size[0]; x++)
-					if (B_GetBuildingAt(base, x, y) != nullptr || B_IsTileBlocked(base, x, y))
-						return;
-			B_SetBuildingByClick(base, building, row, col);
+			if (building == nullptr)
+				return
+			cgi->Cmd_ExecuteString("ui_build_building %i %s %i %i", base->idx, building->id, col, row);
 			cgi->S_StartLocalSample("geoscape/build-place", 1.0f);
 			return;
 		}

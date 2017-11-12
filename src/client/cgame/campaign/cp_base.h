@@ -180,7 +180,7 @@ bool B_GetBuildingStatus(const base_t* const base, const buildingType_t type);
 void B_SetBuildingStatus(base_t* const base, const buildingType_t type, bool newStatus);
 
 bool B_MapIsCellFree(const base_t* base, int col, int row);
-building_t* B_SetBuildingByClick(base_t* base, const building_t* buildingTemplate, int row, int col);
+building_t* B_BuildBuilding(base_t* base, const building_t* buildingTemplate, int col, int row);
 bool B_IsBuildingDestroyable(const building_t* building);
 bool B_BuildingDestroy(building_t* building);
 
