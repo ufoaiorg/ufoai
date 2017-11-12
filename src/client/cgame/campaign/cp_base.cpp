@@ -576,7 +576,7 @@ bool B_AssembleMap (char* maps, size_t mapsLength, char* coords, size_t coordsLe
 				B_AddMap(maps, mapsLength, coords, coordsLength, "b/empty ", col, row);
 				continue;
 			}
-			if (building->pos[0] == col || building->pos[1] == row)
+			if (building->pos[0] != col || building->pos[1] != row)
 				continue;
 			if (!B_IsBuildingBuiltUp(building)) {
 				B_AddMap(maps, mapsLength, coords, coordsLength, "b/construction ", col, row);
