@@ -50,8 +50,15 @@ base.build_header = function (root_node, base_idx)
 			contentalign = ufo.ALIGN_CL,
 
 			on_change = function (sender)
-				-- @todo change callback to work on a baseid and text from parameters
-				ufo.cmd("base_changename;")
+				local base_idx = sender:root():child("base_idx")
+				if (base_idx == nil) then
+					return
+				end
+				local base_name = ufo.getvar("mn_base_title")
+				if (base_name == nil) then
+					return
+				end
+				ufo.cmd(string.format("base_changename %s %q;", base_idx:as_string(), base_name:as_string()))
 			end,
 		},
 

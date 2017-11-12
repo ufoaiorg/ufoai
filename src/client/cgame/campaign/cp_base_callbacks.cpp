@@ -177,24 +177,27 @@ static void B_BuildBase_f (void)
 
 /**
  * @brief Creates console command to change the name of a base.
- * Copies the value of the cvar mn_base_title over as the name of the
- * current selected base
  */
 static void B_ChangeBaseName_f (void)
 {
-	base_t* base = B_GetCurrentSelectedBase();
-
-	/* maybe called without base initialized or active */
-	if (!base)
+	if (cgi->Cmd_Argc() < 3) {
+		cgi->Com_Printf("Usage: %s <baseIDX> \"<new base name>\"\n", cgi->Cmd_Argv(0));
 		return;
+	}
+	base_t* base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (!base) {
+		cgi->Com_Printf("Invalid base idx: %s\n", cgi->Cmd_Argv(1));
+		return;
+	}
 
-	/* basename should not contain " */
-	if (!Com_IsValidName(cgi->Cvar_GetString("mn_base_title"))) {
+	/* basename should not contain double-quote character */
+	if (!Com_IsValidName(cgi->Cmd_Argv(2))) {
+		/* Cancel update, set the cvar to the original name */
 		cgi->Cvar_Set("mn_base_title", "%s", base->name);
 		return;
 	}
 
-	Q_strncpyz(base->name, cgi->Cvar_GetString("mn_base_title"), sizeof(base->name));
+	B_SetName(base, cgi->Cmd_Argv(2));
 }
 
 /**

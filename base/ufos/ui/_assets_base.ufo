@@ -587,10 +587,7 @@ do
 			font = "f_small_bold",
 			color = {0.56, 0.81, 0.76, 1},
 			contentalign = ufo.ALIGN_CL,
-
-			on_change = function (sender)
-				ufo.cmd("base_changename;")
-			end,
+			ghost = true,
 		},
 
 		-- Base selector

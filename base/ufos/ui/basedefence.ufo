@@ -321,6 +321,7 @@ window basedefence extends ipopup
 			font		"f_verysmall"
 			onChange	{ }
 			clickoutabort	true
+			ghost		true
 		}
 
 		string target_title
@@ -416,7 +417,6 @@ window basedefence extends ipopup
 			}
 		} else {
 			*node:root.infopanel.name@string = *cvar:mn_base_title
-			*node:root.infopanel.name@onChange = { cmd "base_changename;" }
 			*node:root.infopanel.buildtime_label@invis = true
 			*node:root.infopanel.buildtime@invis = true
 			*node:root.infopanel.destroy@invis = true
