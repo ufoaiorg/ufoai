@@ -501,6 +501,98 @@ static void B_ListBuildings_f (void)
 
 		cgi->UI_ExecuteConfunc("show_building \"%s\" \"%s\" %i %i %i %i %i", _(building->name),
 			building->id, building->tpl->capacity, cap.cur, cap.max, count, building->tpl->maxCount);
+
+/**
+ * @brief Opens menu on clicking a building in Baseview
+ * @todo Move it to Lua
+ */
+static void B_BuildingOpenAfterClick_f (void)
+{
+	if (cgi->Cmd_Argc() < 4) {
+		cgi->Com_Printf("Usage: %s <baseIDX> <column> <row>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	base_t* base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (base == nullptr) {
+		cgi->Com_Printf("B_BuildingOpenAfterClick_f: Invalid base IDX: %s\n", cgi->Cmd_Argv(1));
+		return;
+	}
+
+	building_t* building = B_GetBuildingAt(base, atoi(cgi->Cmd_Argv(2)), atoi(cgi->Cmd_Argv(3)));
+	if (building == nullptr) {
+		cgi->Com_Printf("B_BuildingOpenAfterClick_f: No valid building at base %i, position (%s, %s)\n",
+			base->idx, cgi->Cmd_Argv(2), cgi->Cmd_Argv(3));
+		return;
+	}
+
+	if (!B_GetBuildingStatus(base, building->buildingType)) {
+		UP_OpenWith(building->pedia);
+		return;
+	}
+
+	switch (building->buildingType) {
+	case B_LAB:
+		if (RS_ResearchAllowed(base))
+			cgi->UI_PushWindow("research");
+		else
+			UP_OpenWith(building->pedia);
+		break;
+	case B_HOSPITAL:
+		if (HOS_HospitalAllowed(base))
+			cgi->UI_PushWindow("hospital");
+		else
+			UP_OpenWith(building->pedia);
+		break;
+	case B_ALIEN_CONTAINMENT:
+		if (AC_ContainmentAllowed(base))
+			cgi->UI_PushWindow("aliencont");
+		else
+			UP_OpenWith(building->pedia);
+		break;
+	case B_QUARTERS:
+		if (E_HireAllowed(base))
+			cgi->UI_PushWindow("employees");
+		else
+			UP_OpenWith(building->pedia);
+		break;
+	case B_WORKSHOP:
+		if (PR_ProductionAllowed(base))
+			cgi->UI_PushWindow("production");
+		else
+			UP_OpenWith(building->pedia);
+		break;
+	case B_DEFENCE_LASER:
+	case B_DEFENCE_MISSILE:
+		cgi->UI_PushWindow("basedefence");
+		break;
+	case B_HANGAR:
+	case B_SMALL_HANGAR:
+		if (!AIR_AircraftAllowed(base)) {
+			UP_OpenWith(building->pedia);
+		} else if (AIR_BaseHasAircraft(base)) {
+			cgi->UI_PushWindow("aircraft_equip");
+		} else {
+			cgi->UI_PushWindow("buyaircraft");
+			/* transfer is only possible when there are at least two bases */
+			if (B_GetCount() > 1)
+				CP_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
+			else
+				CP_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
+		}
+		break;
+	case B_STORAGE:
+		if (BS_BuySellAllowed(base))
+			cgi->UI_PushWindow("market");
+		else
+			UP_OpenWith(building->pedia);
+		break;
+	case B_ANTIMATTER:
+		CP_Popup(_("Information"), "%s %d/%d", _("Antimatter (current/max):"), CAP_GetCurrent(base, CAP_ANTIMATTER), CAP_GetMax(base, CAP_ANTIMATTER));
+		break;
+	default:
+		UP_OpenWith(building->pedia);
+		break;
 	}
 }
 
@@ -516,6 +608,7 @@ static const cmdList_t baseCallbacks[] = {
 	{"building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)"},
 	{"building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed"},
 	{"reset_building_current", B_ResetBuildingCurrent_f, nullptr},
+	{"base_selectbuilding", B_BuildingOpenAfterClick_f, nullptr},
 	{"ui_list_buildings", B_ListBuildings_f, "Lists buildings built or can be built on a base and their capacities"},
 	{"ui_show_buildinginfo", B_FillBuildingInfo_f, "Opens the building information window in construction mode"},
 	{nullptr, nullptr, nullptr}

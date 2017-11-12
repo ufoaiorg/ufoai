@@ -556,10 +556,7 @@ void GAME_CP_HandleBaseClick (int baseIdx, int key, int col, int row)
 
 		const building_t* entry = B_GetBuildingAt(base, col, row);
 		if (entry != nullptr) {
-			if (B_IsTileBlocked(base, col, row))
-				cgi->Com_Error(ERR_DROP, "tile with building is not blocked");
-
-			B_BuildingOpenAfterClick(entry);
+			cgi->Cmd_ExecuteString("base_selectbuilding %i %i %i", base->idx, col, row);
 			ccs.baseAction = BA_NONE;
 			return;
 		}

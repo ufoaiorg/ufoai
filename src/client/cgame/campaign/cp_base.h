@@ -188,7 +188,6 @@ building_t* B_GetFreeBuildingType(buildingType_t type);
 int B_GetNumberOfBuildingsInBaseByTemplate(const base_t* base, const building_t* type);
 int B_GetNumberOfBuildingsInBaseByBuildingType(const base_t* base, const buildingType_t type);
 
-void B_BuildingOpenAfterClick(const building_t* building);
 void B_ResetBuildingCurrent(base_t* base);
 
 /* storage functions */
