@@ -44,17 +44,10 @@ do
 		},
 
 		{
-			name = "base_map_container",
+			name = "basemap",
 			class = "panel",
 			pos = {9, 35},
 			size = {715, 670},
-
-			{
-				name = "thebasemap",
-				class = "basemap",
-				pos = {1, 1},
-				size = {715, 667},
-			},
 		},
 
 		-- Employee panel
@@ -230,21 +223,14 @@ do
 			class = "fuzzyScreen"
 		},
 
-		on_windowactivate = function (sender)
-			sender:root():child("sections"):generate(sender:root():child("base_idx"):as_string())
-		end,
-
-		on_windowopened = function (sender, base_idx)
-			-- Validate and store base_idx
-			if (base_idx == nil or base_idx == "") then
-				ufo.print(string.format("UI bases: Missing base_idx parameter!\n"))
-				ufo.pop_window(false)
-			end
-			sender:root():child("base_idx"):set_text(base_idx)
-			-- Build window
+		build = function (sender)
+			local baseidx = tonumber(sender:root():child("base_idx"):as_string())
 			-- / header
 			require("base.header.lua")
-			base.build_header(sender, sender:root():child("base_idx"):as_string())
+			base.build_header(sender, baseidx)
+			-- / Map
+			require("base.map.lua")
+			base.buildmap(sender, sender:child("basemap"), baseidx)
 			-- / Employee bar
 			sender:root():child("cur_employees"):clear()
 			sender:root():child("cur_employees"):add("scientists", "icons/head_scientist", "_Scientists", "ui_push employees 1;")
@@ -257,7 +243,19 @@ do
 			sender:root():child("buttons"):add("ufopaedia", "icons/info",     "_UFOpedia", "ufopedia")
 			sender:root():child("buttons"):add("transfers", "icons/transfer", "_Transfer", "transfer")
 			-- / sections
-			sender:root():child("sections"):generate(sender:root():child("base_idx"):as_string())
+			sender:root():child("sections"):generate(baseidx)
+		end,
+		on_windowactivate = function (sender)
+			sender:build()
+		end,
+		on_windowopened = function (sender, base_idx)
+			-- Validate and store base_idx
+			if (base_idx == nil or base_idx == "") then
+				ufo.print(string.format("UI bases: Missing base_idx parameter!\n"))
+				ufo.pop_window(false)
+			end
+			sender:root():child("base_idx"):set_text(base_idx)
+			sender:build()
 		end,
 
 		on_windowclosed = function (sender)

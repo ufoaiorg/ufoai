@@ -99,7 +99,6 @@ static const registerFunction_t registerFunctions[] = {
 	UI_RegisterBarNode,
 	UI_RegisterBaseInventoryNode,
 	UI_RegisterBaseLayoutNode,
-	UI_RegisterBaseMapNode,
 	UI_RegisterBattlescapeNode,
 	UI_RegisterButtonNode,
 	UI_RegisterCheckBoxNode,
@@ -729,4 +728,3 @@ void uiBox_t::alignBox (uiBox_t& inner, align_t direction)
 		Com_Error(ERR_FATAL, "UI_ImageAlignBoxInBox: Align %d not supported\n", direction);
 	}
 }
-

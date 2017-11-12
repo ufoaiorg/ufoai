@@ -509,7 +509,7 @@ void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType,
 }
 
 /**
- * @brief Resets the buildingCurrent variable and baseAction
+ * @brief Resets the buildingCurrent variable
  * @param[in,out] base Pointer to the base needs buildingCurrent to be reseted
  * @note Make sure you are not doing anything with the buildingCurrent pointer
  * in this function, the pointer might already be invalid
@@ -518,7 +518,6 @@ void B_ResetBuildingCurrent (base_t* base)
 {
 	if (base)
 		base->buildingCurrent = nullptr;
-	ccs.baseAction = BA_NONE;
 }
 
 /**

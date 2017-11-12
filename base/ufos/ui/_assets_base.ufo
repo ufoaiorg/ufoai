@@ -55,6 +55,13 @@ do
 			end
 			require("base.buildinginfo.lua")
 			base.build_buildinginfo(sender:parent(), baseIdx:as_string(), sender:child("id"):as_string())
+
+			local build = sender:root():child("basemap"):child("map"):child("build")
+			if (build == nil) then
+				return
+			end
+			build:set_text(sender:child("id"):as_string())
+			build:set_size(tonumber(sender:child("width"):as_string()), tonumber(sender:child("height"):as_string()))
 		end,
 
 		{

@@ -91,11 +91,8 @@ const cgame_export_t* GetCGameCampaignAPI (const cgame_import_t* import)
 	e.InitializeBattlescape = GAME_CP_InitializeBattlescape;
 	e.InitMissionBriefing = GAME_CP_InitMissionBriefing;
 	e.RunFrame = GAME_CP_Frame;
-	e.HandleBaseClick = GAME_CP_HandleBaseClick;
-	e.DrawBase = GAME_CP_DrawBase;
 	e.DrawBaseLayout = GAME_CP_DrawBaseLayout;
 	e.DrawBaseLayoutTooltip = GAME_CP_DrawBaseLayoutTooltip;
-	e.DrawBaseTooltip = GAME_CP_DrawBaseTooltip;
 	e.GetTeamDef = GAME_CP_GetTeamDef;
 	e.MapDraw = GEO_Draw;
 	e.MapDrawMarkers = GEO_DrawMarkers;

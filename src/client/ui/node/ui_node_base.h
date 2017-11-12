@@ -30,24 +30,12 @@ public:
 	void onLoading(uiNode_t* node) override;
 };
 
-class uiBaseMapNode : public uiAbstractBaseNode {
-public:
-	void draw(uiNode_t* node) override;
-	void onLeftClick(uiNode_t* node, int x, int y) override;
-	void onRightClick(uiNode_t* node, int x, int y) override;
-	void onMiddleClick(uiNode_t* node, int x, int y) override;
-	void drawTooltip(const uiNode_t* node, int x, int y) const override;
-protected:
-	void getCellAtPos(const uiNode_t* node, int x, int y, int* col, int* row) const;
-};
-
 class uiBaseLayoutNode : public uiAbstractBaseNode {
 public:
 	void draw(uiNode_t* node) override;
 	void drawTooltip(const uiNode_t* node, int x, int y) const override;
 	void onLoading(uiNode_t* node) override;
 };
-
 
 typedef struct baseExtraData_s {
 	int baseid;		/**< the baseid */
@@ -56,5 +44,4 @@ typedef struct baseExtraData_s {
 struct uiBehaviour_t;
 
 void UI_RegisterAbstractBaseNode(uiBehaviour_t* behaviour);
-void UI_RegisterBaseMapNode(uiBehaviour_t* behaviour);
 void UI_RegisterBaseLayoutNode(uiBehaviour_t* behaviour);

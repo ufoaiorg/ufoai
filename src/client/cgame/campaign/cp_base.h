@@ -65,14 +65,6 @@ typedef enum {
 	BASE_DESTROYED		/**< the base is being destroyed (prevent double destroy attempt) */
 } baseStatus_t;
 
-/** @brief All possible base actions */
-typedef enum {
-	BA_NONE,
-	BA_NEWBUILDING,		/**< hovering the needed base tiles for this building */
-
-	BA_MAX
-} baseAction_t;
-
 typedef struct baseBuildingTile_s {
 	building_t* building;	/**< nullptr if free spot */
 	bool blocked;		/**< true if the tile is usable for buildings otherwise it's false (blocked somehow). */

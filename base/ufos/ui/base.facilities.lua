@@ -73,8 +73,10 @@ base.facilities = {
 			 - @param cap_max actual max capacity
 			 - @param build_current number of buildings built of this type
 			 - @param build_max max number of buildings can be built from this type
+			 - @param width Horizontal size of the building in tiles
+			 - @param height Vertical size of the building in tiles
 			--]]
-			on_click = function (sender, building_name, building_id, cap_one, cap_current, cap_max, building_current, building_max)
+			on_click = function (sender, building_name, building_id, cap_one, cap_current, cap_max, building_current, building_max, width, height)
 				local content_node = sender:parent():child("content")
 				local hide = "false"
 
@@ -101,6 +103,8 @@ base.facilities = {
 					{ name = "label",    class = "string", text = building_name, },
 					{ name = "data",     class = "string", text = capacity_string, },
 					{ name = "data_bar", class = "bar",    max = tonumber(cap_max), value = tonumber(cap_current), },
+					{ name = "width",    class = "data",   text = width, },
+					{ name = "height",   class = "data",   text = height, },
 					{ name = "hide",     class = "data",   value = hide, },
 					-- Show/Hide "add" building button
 					{ name = "alert",    class = "button", invisible = (building_current == building_max), },

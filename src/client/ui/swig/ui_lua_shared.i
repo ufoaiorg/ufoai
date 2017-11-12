@@ -130,7 +130,6 @@ typedef uiNode_t uiAbstractScrollbarNode_t;
 typedef uiNode_t uiAbstractValueNode_t;
 
 typedef uiNode_t uiBarNode_t;
-typedef uiNode_t uiBaseMapNode_t;
 typedef uiNode_t uiBaseLayoutNode_t;
 typedef uiNode_t uiBaseInventoryNode_t;
 typedef uiNode_t uiButtonNode_t;
@@ -758,12 +757,6 @@ struct uiAbstractBaseNode_t: uiNode_t {
 	void set_baseid(int value) { UI_EXTRADATA($self, baseExtraData_t).baseid = value; };
 };
 
-%rename (uiBaseMap) uiBaseMapNode_t;
-struct uiBaseMapNode_t: uiAbstractBaseNode_t {
-};
-%extend uiBaseMapNode_t {
-};
-
 %rename (uiBaseLayout) uiBaseLayoutNode_t;
 struct uiBaseLayoutNode_t: uiAbstractBaseNode_t {
 };
@@ -1365,9 +1358,6 @@ uiNode_t* UI_CreateControl (uiNode_t* parent, const char* type, const char* name
 static uiBarNode_t* UI_CreateBar (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "bar", name, super);
 }
-static uiBaseMapNode_t* UI_CreateBaseMap (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "basemap", name, super);
-}
 static uiBaseLayoutNode_t* UI_CreateBaseLayout (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "baselayout", name, super);
 }
@@ -1489,8 +1479,6 @@ static uiZoneNode_t* UI_CreateZone (uiNode_t* parent, const char* name, const ch
 uiBarNode_t* UI_CreateBar (uiNode_t* parent, const char* name, const char* super);
 %rename (create_button) UI_CreateButton;
 uiButtonNode_t* UI_CreateButton (uiNode_t* parent, const char* name, const char* super);
-%rename (create_basemap) UI_CreateBaseMap;
-uiBaseMapNode_t* UI_CreateBaseMap (uiNode_t* parent, const char* name, const char* super);
 %rename (create_baselayout) UI_CreateBaseLayout;
 uiBaseLayoutNode_t* UI_CreateBaseLayout (uiNode_t* parent, const char* name, const char* super);
 %rename (create_baseinventory) UI_CreateBaseInventory;

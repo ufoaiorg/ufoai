@@ -1696,19 +1696,6 @@ void GAME_Frame (void)
 		list->RunFrame(cls.frametime);
 }
 
-void GAME_DrawBase (int baseIdx, int x, int y, int w, int h, int col, int row, bool hover, int overlap)
-{
-	const cgame_export_t* list = GAME_GetCurrentType();
-	if (list && list->DrawBase != nullptr)
-		list->DrawBase(baseIdx, x, y, w, h, col, row, hover, overlap);
-}
-
-void GAME_DrawBaseTooltip (int baseIdx, int x, int y, int col, int row)
-{
-	const cgame_export_t* list = GAME_GetCurrentType();
-	if (list && list->DrawBaseTooltip != nullptr)
-		list->DrawBaseTooltip(baseIdx, x, y, col, row);
-}
 
 void GAME_DrawBaseLayout (int baseIdx, int x, int y, int totalMarge, int w, int h, int padding, const vec4_t bgcolor, const vec4_t color)
 {
@@ -1728,13 +1715,6 @@ void GAME_DrawBaseLayoutTooltip (int baseIdx, int x, int y)
 	const cgame_export_t* list = GAME_GetCurrentType();
 	if (list && list->DrawBaseLayoutTooltip != nullptr)
 		list->DrawBaseLayoutTooltip(baseIdx, x, y);
-}
-
-void GAME_HandleBaseClick (int baseIdx, int key, int col, int row)
-{
-	const cgame_export_t* list = GAME_GetCurrentType();
-	if (list && list->HandleBaseClick != nullptr)
-		list->HandleBaseClick(baseIdx, key, col, row);
 }
 
 /**

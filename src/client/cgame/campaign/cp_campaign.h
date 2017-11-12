@@ -265,7 +265,6 @@ typedef struct ccs_s {
 	/* == misc == */
 	/** @todo eliminate or move into Lua UI scripts */
 	mapAction_t mapAction;					/**< New installation and base building status */
-	baseAction_t baseAction;				/**< Base facility building status */
 	vec2_t newBasePos;					/**< Coordinates to place the new base at (long, lat) */
 
 	/* how fast the game is running */

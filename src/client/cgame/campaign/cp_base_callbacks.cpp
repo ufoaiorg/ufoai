@@ -462,8 +462,6 @@ static void B_FillBuildingInfo_f (void)
 	/* Prevent building more if we reached the limit */
 	if (building->maxCount >= 0 && B_GetNumberOfBuildingsInBaseByTemplate(base, building) >= building->maxCount)
 		return;
-
-	ccs.baseAction = BA_NEWBUILDING;
 }
 
 /**
@@ -499,8 +497,48 @@ static void B_ListBuildings_f (void)
 		assert(building->tpl);
 		const int count = B_GetNumberOfBuildingsInBaseByTemplate(base, building->tpl);
 
-		cgi->UI_ExecuteConfunc("show_building \"%s\" \"%s\" %i %i %i %i %i", _(building->name),
-			building->id, building->tpl->capacity, cap.cur, cap.max, count, building->tpl->maxCount);
+		cgi->UI_ExecuteConfunc("show_building \"%s\" \"%s\" %i %i %i %i %i %i %i", _(building->name),
+			building->id, building->tpl->capacity, cap.cur, cap.max, count,
+			building->tpl->maxCount, int(building->size[0]), int(building->size[1]));
+	}
+}
+
+/**
+ * @brief Lists building tiles for the Basescape UI
+ */
+static void B_FillMap_f (void)
+{
+	if (cgi->Cmd_Argc() < 2) {
+		return;
+	}
+
+	const int baseIdx = atoi(cgi->Cmd_Argv(1));
+
+	const base_t* const base = B_GetFoundedBaseByIDX(baseIdx);
+	if (base == nullptr)
+		return;
+
+	for (int baseRow = 0; baseRow < BASE_SIZE; baseRow++) {
+		for (int baseCol = 0; baseCol < BASE_SIZE; baseCol++) {
+			const building_t* const building = B_GetBuildingAt(base, baseCol, baseRow);
+			if (B_IsTileBlocked(base, baseCol, baseRow)) {
+				cgi->UI_ExecuteConfunc("base_building_add %d %d %d %d \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
+					baseCol, baseRow, 1, 1, "", "", "base/invalid", _("Blocked tile"), "");
+				continue;
+			}
+			if (building == nullptr) {
+				cgi->UI_ExecuteConfunc("base_building_add %d %d %d %d \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
+					baseCol, baseRow, 1, 1, "", "", "base/grid", _("Free tile"), "");
+				continue;
+			}
+			if (building->pos[0] != baseCol or building->pos[1] != baseRow)
+				continue;
+			cgi->UI_ExecuteConfunc("base_building_add %d %d %d %d \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
+				baseCol, baseRow, int(building->size[0]), int(building->size[1]),
+				building->id, building->name, building->image, "",
+				!B_IsBuildingBuiltUp(building) ? va(ngettext("%d day", "%d days", int(B_GetConstructionTimeRemain(building))),
+					int(B_GetConstructionTimeRemain(building))) : "");
+		}
 	}
 }
 
@@ -627,7 +665,7 @@ static void B_BuildBuilding_f (void)
 		return;
 	}
 
-	if (column + int(building->size[0]) >= BASE_SIZE || row + int(building->size[1]) >= BASE_SIZE) {
+	if (column + int(building->size[0]) > BASE_SIZE || row + int(building->size[1]) > BASE_SIZE) {
 		cgi->Com_Printf("Building doesn't fit position (%s, %s), size (%d, %d)\n",
 			cgi->Cmd_Argv(3), cgi->Cmd_Argv(4), int(building->size[0]), int(building->size[1]));
 		return;
@@ -638,8 +676,10 @@ static void B_BuildBuilding_f (void)
 		return;
 	}
 
-	if (B_BuildBuilding(base, building, column, row) != nullptr)
+	if (B_BuildBuilding(base, building, column, row) != nullptr) {
+		cgi->S_StartLocalSample("geoscape/build-place", 1.0f);
 		cgi->Cmd_ExecuteString("ui_push bases %d", base->idx);
+	}
 }
 
 /** Init/Shutdown functions */
@@ -657,6 +697,7 @@ static const cmdList_t baseCallbacks[] = {
 	{"base_selectbuilding", B_BuildingOpenAfterClick_f, nullptr},
 	{"ui_list_buildings", B_ListBuildings_f, "Lists buildings built or can be built on a base and their capacities"},
 	{"ui_show_buildinginfo", B_FillBuildingInfo_f, "Opens the building information window in construction mode"},
+	{"ui_base_fillmap", B_FillMap_f, nullptr},
 	{"ui_build_building", B_BuildBuilding_f, nullptr},
 	{nullptr, nullptr, nullptr}
 };
