@@ -124,7 +124,6 @@ typedef struct base_s {
 	production_queue_t productions;
 
 	bool selected;		/**< the current selected base */
-	building_t* buildingCurrent; /**< needn't be saved */
 } base_t;
 
 /** @brief template for creating a base */
@@ -179,8 +178,6 @@ bool B_BuildingDestroy(building_t* building);
 building_t* B_GetFreeBuildingType(buildingType_t type);
 int B_GetNumberOfBuildingsInBaseByTemplate(const base_t* base, const building_t* type);
 int B_GetNumberOfBuildingsInBaseByBuildingType(const base_t* base, const buildingType_t type);
-
-void B_ResetBuildingCurrent(base_t* base);
 
 /* storage functions */
 bool B_ItemIsStoredInBaseStorage(const objDef_t* obj);

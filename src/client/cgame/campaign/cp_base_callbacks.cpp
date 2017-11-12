@@ -198,18 +198,6 @@ static void B_ChangeBaseName_f (void)
 }
 
 /**
- * @brief Resets the currently selected building.
- *
- * Is called e.g. when leaving the build-menu
- */
-static void B_ResetBuildingCurrent_f (void)
-{
-	base_t* base = B_GetCurrentSelectedBase();
-
-	B_ResetBuildingCurrent(base);
-}
-
-/**
  * @brief Initialises base.
  * @note This command is executed in the init node of the base menu.
  * It is called everytime the base menu pops up and sets the cvars.
@@ -303,7 +291,6 @@ static void B_BuildingDestroy_f (void)
 
 	if (cgi->Cmd_Argc() == 5 && Q_streq(cgi->Cmd_Argv(4), "confirmed")) {
 		B_BuildingDestroy(building);
-		B_ResetBuildingCurrent(base);
 		return;
 	}
 
@@ -314,9 +301,6 @@ static void B_BuildingDestroy_f (void)
 	}
 
 	baseCapacities_t cap = B_GetCapacityFromBuildingType(building->buildingType);
-	/* store the pointer to the building you wanna destroy */
-	base->buildingCurrent = building;
-
 	/** @todo: make base destroyable by destroying entrance */
 	if (building->buildingType == B_ENTRANCE) {
 		CP_Popup(_("Destroy Entrance"), _("You can't destroy the entrance of the base!"));
@@ -445,8 +429,6 @@ static void B_FillBuildingInfo_f (void)
 		cgi->Com_Printf("Invalid building id\n");
 		return;
 	}
-	/** @todo remove this */
-	base->buildingCurrent = building;
 
 	cgi->UI_ExecuteConfunc("show_buildinginfo %s \"%s\" \"%s\" %i %i %i \"%s\" \"%s\"",
 		building->id,
@@ -693,7 +675,6 @@ static const cmdList_t baseCallbacks[] = {
 	{"base_assemble", B_AssembleMap_f, "Called to assemble the current selected base"},
 	{"building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)"},
 	{"building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed"},
-	{"reset_building_current", B_ResetBuildingCurrent_f, nullptr},
 	{"base_selectbuilding", B_BuildingOpenAfterClick_f, nullptr},
 	{"ui_list_buildings", B_ListBuildings_f, "Lists buildings built or can be built on a base and their capacities"},
 	{"ui_show_buildinginfo", B_FillBuildingInfo_f, "Opens the building information window in construction mode"},

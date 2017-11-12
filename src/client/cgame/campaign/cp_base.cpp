@@ -509,18 +509,6 @@ void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType,
 }
 
 /**
- * @brief Resets the buildingCurrent variable
- * @param[in,out] base Pointer to the base needs buildingCurrent to be reseted
- * @note Make sure you are not doing anything with the buildingCurrent pointer
- * in this function, the pointer might already be invalid
- */
-void B_ResetBuildingCurrent (base_t* base)
-{
-	if (base)
-		base->buildingCurrent = nullptr;
-}
-
-/**
  * @brief Get the maximum level of a building type in a base.
  * @param[in] base Pointer to base.
  * @param[in] type Building type to get the maximum level for.
@@ -808,12 +796,6 @@ bool B_BuildingDestroy (building_t* building)
 	const building_t* buildingTemplate = building->tpl;
 	const bool runDisableCommand = building->buildingStatus == B_STATUS_WORKING;
 	building->buildingStatus = B_STATUS_NOT_SET;
-
-	/* Update buildingCurrent */
-	if (base->buildingCurrent > building)
-		base->buildingCurrent--;
-	else if (base->buildingCurrent == building)
-		base->buildingCurrent = nullptr;
 
 	int const baseIDX = base->idx;
 	building_t* const buildings = ccs.buildings[baseIDX];
@@ -1359,7 +1341,6 @@ building_t* B_BuildBuilding (base_t* base, const building_t* buildingTemplate, i
 	CP_UpdateCredits(ccs.credits - buildingNew->fixCosts);
 	ccs.numBuildings[base->idx]++;
 
-	B_ResetBuildingCurrent(base);
 	cgi->Cmd_ExecuteString("base_init");
 	B_FireEvent(buildingNew, base, B_ONCONSTRUCT);
 
@@ -1942,7 +1923,6 @@ static void B_BuildingConstructionFinished_f (void)
 		B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
 		building->timeStart.day = 0;
 		building->timeStart.sec = 0;
-		base->buildingCurrent = building;
 		B_FireEvent(building, base, B_ONENABLE);
 	}
 	/* update menu */
@@ -2019,7 +1999,6 @@ static bool B_CheckBuildingConstruction (building_t* building)
 		return false;
 
 	base_t* base = building->base;
-	base->buildingCurrent = building;
 
 	B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
 	if (B_FireEvent(building, base, B_ONENABLE))
