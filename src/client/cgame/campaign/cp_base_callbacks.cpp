@@ -576,7 +576,7 @@ static void B_BuildingOpenAfterClick_f (void)
 		break;
 	case B_HOSPITAL:
 		if (HOS_HospitalAllowed(base))
-			cgi->UI_PushWindow("hospital");
+			cgi->Cmd_ExecuteString("ui_push hospital %d", base->idx);
 		else
 			UP_OpenWith(building->pedia);
 		break;

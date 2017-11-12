@@ -39,7 +39,7 @@ base.hospital = {
 	register = function (root_node, base_idx)
 		local section = base.build_section(root_node, "hospital", "_Hospital", "icons/hos_bed")
 		section:child("header").on_click = function (sender)
-			ufo.push_window("hospital", nil, nil)
+			ufo.push_window("hospital", nil, {sender:root():child("base_idx"):as_string(),})
 		end
 	end,
 }

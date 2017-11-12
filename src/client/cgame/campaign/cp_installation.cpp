@@ -217,7 +217,6 @@ void INS_SetCurrentSelectedInstallation (const installation_t* installation)
 		ins->selected = (ins == installation);
 
 	if (installation) {
-		B_SetCurrentSelectedBase(nullptr);
 		cgi->Cvar_Set("mn_installation_title", "%s", installation->name);
 		cgi->Cvar_Set("mn_installation_type", "%s", installation->installationTemplate->id);
 	} else {

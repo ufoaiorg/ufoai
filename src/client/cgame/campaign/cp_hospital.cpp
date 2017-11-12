@@ -118,10 +118,15 @@ bool HOS_NeedsHealing (const character_t& chr)
  */
 static void HOS_HealAll_f (void)
 {
-	const base_t* base = B_GetCurrentSelectedBase();
-
-	if (!base)
+	if (cgi->Cmd_Argc() < 2) {
+		cgi->Com_Printf("Usage: %s <baseIDX>\n", cgi->Cmd_Argv(0));
 		return;
+	}
+	base_t* base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (!base) {
+		cgi->Com_Printf("Invalid base idx\n");
+		return;
+	}
 
 	for (int type = 0; type < MAX_EMPL; type++) {
 		E_Foreach(type, employee) {
@@ -137,13 +142,18 @@ static void HOS_HealAll_f (void)
  */
 static void HOS_HurtAll_f (void)
 {
-	const base_t* base = B_GetCurrentSelectedBase();
-
-	if (!base)
+	if (cgi->Cmd_Argc() < 2) {
+		cgi->Com_Printf("Usage: %s <baseIDX> [amount]\n", cgi->Cmd_Argv(0));
 		return;
+	}
+	base_t* base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (!base) {
+		cgi->Com_Printf("Invalid base idx\n");
+		return;
+	}
 
 	int amount;
-	if (cgi->Cmd_Argc() >= 2)
+	if (cgi->Cmd_Argc() >= 3)
 		amount = atoi(cgi->Cmd_Argv(1));
 	else
 		amount = 1;

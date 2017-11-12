@@ -143,27 +143,26 @@ int AL_CountAll (void)
  */
 static void AC_AddOne_f (void)
 {
-	base_t* base = B_GetCurrentSelectedBase();
-
+	if (cgi->Cmd_Argc() < 3) {
+		cgi->Com_Printf("Usage: %s <baseIDX> <alientype> [dead:true|false]\n", cgi->Cmd_Argv(0));
+		return;
+	}
+	base_t* base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
 	if (!base) {
-		cgi->Com_Printf("%s: No base selected\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("%s: Invalid base idx: %s\n", cgi->Cmd_Argv(0), cgi->Cmd_Argv(1));
 		return;
 	}
 	if (!base->alienContainment) {
-		cgi->Com_Printf("%s: Current base has no alien containment\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("%s: B base %d has no alien containment\n", cgi->Cmd_Argv(0), base->idx);
 		return;
 	}
-	if (cgi->Cmd_Argc() < 2) {
-		cgi->Com_Printf("Usage: %s <alientype> [dead:true|false]\n", cgi->Cmd_Argv(0));
-		return;
-	}
-	const char* alienName = cgi->Cmd_Argv(1);
+	const char* alienName = cgi->Cmd_Argv(2);
 	if (!alienName)
 		return;
 
 	bool updateAlive = true;
-	if (cgi->Cmd_Argc() == 3)
-		updateAlive = cgi->Com_ParseBoolean(cgi->Cmd_Argv(2));
+	if (cgi->Cmd_Argc() == 4)
+		updateAlive = cgi->Com_ParseBoolean(cgi->Cmd_Argv(3));
 
 	if (updateAlive)
 		base->alienContainment->add(alienName, 1, 0);

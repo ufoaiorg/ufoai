@@ -393,14 +393,9 @@ void GAME_CP_Frame (float secondsSinceLastFrame)
  */
 void GAME_CP_DrawBaseLayoutTooltip (int baseIdx, int x, int y)
 {
-	const base_t* base = B_GetBaseByIDX(baseIdx);
-
-	if (baseIdx < 0 || baseIdx > MAX_BASES)
-		base = B_GetCurrentSelectedBase();
-
-	if (!base->founded)
+	const base_t* base = B_GetFoundedBaseByIDX(baseIdx);
+	if (base == nullptr)
 		return;
-
 	cgi->UI_DrawTooltip(base->name, x, y, 250);
 }
 
@@ -408,7 +403,7 @@ void GAME_CP_DrawBaseLayout (int baseIdx, int x1, int y1, int totalMarge, int w,
 {
 	const base_t* base = B_GetBaseByIDX(baseIdx);
 	if (base == nullptr)
-		base = B_GetCurrentSelectedBase();
+		return;
 	int y = y1 + padding;
 	for (int row = 0; row < BASE_SIZE; row++) {
 		int x = x1 + padding;

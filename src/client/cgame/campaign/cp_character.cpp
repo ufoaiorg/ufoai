@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_character.h"
 #include "cp_campaign.h"
 
-
 typedef struct {
 	int ucn;
 	int HP;
@@ -255,10 +254,15 @@ void CHAR_UpdateStats (const base_t* base, const aircraft_t* aircraft)
  */
 static void CHAR_DebugChangeStats_f (void)
 {
-	base_t* base = B_GetCurrentSelectedBase();
-
-	if (!base)
+	if (cgi->Cmd_Argc() < 2) {
+		cgi->Com_Printf("Usage: %s <baseIDX>\n", cgi->Cmd_Argv(0));
 		return;
+	}
+	base_t* base = B_GetBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (!base) {
+		cgi->Com_Printf("Invalid base idx\n");
+		return;
+	}
 
 	E_Foreach(EMPL_SOLDIER, employee) {
 		if (!employee->isHiredInBase(base))
@@ -273,7 +277,6 @@ static void CHAR_DebugChangeStats_f (void)
 	if (base->aircraftCurrent)
 		CHAR_UpdateStats(base, base->aircraftCurrent);
 }
-
 #endif /* DEBUG */
 
 /**

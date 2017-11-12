@@ -107,9 +107,15 @@ static void HOS_ImplantDetails_f (void)
  */
 static void HOS_Init_f (void)
 {
-	const base_t* base = B_GetCurrentSelectedBase();
-	if (!base)
+	if (cgi->Cmd_Argc() < 2) {
+		cgi->Com_Printf("Usage: %s <baseIDX>\n", cgi->Cmd_Argv(0));
 		return;
+	}
+	base_t* base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (base == nullptr) {
+		cgi->Com_Printf("%s: Invalid base IDX: %s\n", cgi->Cmd_Argv(0), cgi->Cmd_Argv(1));
+		return;
+	}
 
 	if (!B_GetBuildingStatus(base, B_HOSPITAL)) {
 		cgi->UI_PopWindow(false);

@@ -161,6 +161,6 @@ window hospital
 	func onWindowOpened
 	{
 		call *node:root.base_container.mainBody.patients@removeAllchild
-		cmd "hosp_init;"
+		cmd "hosp_init <1>;"
 	}
 }
