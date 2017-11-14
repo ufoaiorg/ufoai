@@ -527,7 +527,7 @@ static void B_FillMap_f (void)
 					baseCol, baseRow, 1, 1, "", "", "base/grid", _("Free tile"), "");
 				continue;
 			}
-			if (building->pos[0] != baseCol or building->pos[1] != baseRow)
+			if (building->pos[0] != baseCol || building->pos[1] != baseRow)
 				continue;
 			cgi->UI_ExecuteConfunc("base_building_add %d %d %d %d \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
 				baseCol, baseRow, int(building->size[0]), int(building->size[1]),
