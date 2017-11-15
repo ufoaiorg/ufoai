@@ -82,7 +82,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../node/ui_node_container.h"
 #include "../node/ui_node_controls.h"
 #include "../node/ui_node_data.h"
-#include "../node/ui_node_ekg.h"
 #include "../node/ui_node_geoscape.h"
 #include "../node/ui_node_image.h"
 #include "../node/ui_node_item.h"
@@ -137,7 +136,6 @@ typedef uiNode_t uiCheckBoxNode_t;
 typedef uiNode_t uiConFuncNode_t;
 typedef uiNode_t uiContainerNode_t;
 typedef uiNode_t uiDataNode_t;
-typedef uiNode_t uiEkgNode_t;
 typedef uiNode_t uiGeoscapeNode_t;
 typedef uiNode_t uiImageNode_t;
 typedef uiNode_t uiItemNode_t;
@@ -903,17 +901,6 @@ struct uiImageNode_t: uiNode_t {
 	void set_texl (float v1, float v2) { Vector2Set(UI_EXTRADATA($self, imageExtraData_t).texl, v1, v2); };
 };
 
-%rename (uiEkg) uiEkgNode_t;
-struct uiEkgNode_t: uiImageNode_t {
-};
-%extend uiEkgNode_t {
-	float scrollspeed () { return UI_EXTRADATA($self, ekgExtraData_t).scrollSpeed; };
-	float cvarscale () { return UI_EXTRADATA($self, ekgExtraData_t).scaleCvarValue; };
-
-	void set_scrollspeed (float value) { UI_EXTRADATA($self, ekgExtraData_t).scrollSpeed = value; };
-	void set_cvarscale (float value) { UI_EXTRADATA($self, ekgExtraData_t).scaleCvarValue = value; };
-};
-
 %rename (uiLineChart) uiLineChartNode_t;
 struct uiLineChartNode_t: uiNode_t {
 };
@@ -1379,9 +1366,6 @@ static uiContainerNode_t* UI_CreateContainer (uiNode_t* parent, const char* name
 static uiDataNode_t* UI_CreateData (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "data", name, super);
 }
-static uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "ekg", name, super);
-}
 static uiGeoscapeNode_t* UI_CreateGeoscape (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "geoscape", name, super);
 }
@@ -1491,8 +1475,6 @@ uiConFuncNode_t* UI_CreateConFunc (uiNode_t* parent, const char* name, const cha
 uiContainerNode_t* UI_CreateContainer (uiNode_t* parent, const char* name, const char* super);
 %rename (create_data) UI_CreateData;
 uiDataNode_t* UI_CreateData (uiNode_t* parent, const char* name, const char* super);
-%rename (create_ekg) UI_CreateEkg;
-uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super);
 %rename (create_geoscape) UI_CreateGeoscape;
 uiGeoscapeNode_t* UI_CreateGeoscape (uiNode_t* parent, const char* name, const char* super);
 %rename (create_image) UI_CreateImage;

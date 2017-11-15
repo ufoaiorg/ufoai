@@ -2648,42 +2648,41 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_uiConFuncNode_t swig_types[21]
 #define SWIGTYPE_p_uiContainerNode_t swig_types[22]
 #define SWIGTYPE_p_uiDataNode_t swig_types[23]
-#define SWIGTYPE_p_uiEkgNode_t swig_types[24]
-#define SWIGTYPE_p_uiGeoscapeNode_t swig_types[25]
-#define SWIGTYPE_p_uiImageNode_t swig_types[26]
-#define SWIGTYPE_p_uiItemNode_t swig_types[27]
-#define SWIGTYPE_p_uiLineChartNode_t swig_types[28]
-#define SWIGTYPE_p_uiMessageListNode_t swig_types[29]
-#define SWIGTYPE_p_uiModelNode_t swig_types[30]
-#define SWIGTYPE_p_uiNode_t swig_types[31]
-#define SWIGTYPE_p_uiOptionListNode_t swig_types[32]
-#define SWIGTYPE_p_uiOptionNode_t swig_types[33]
-#define SWIGTYPE_p_uiOptionTreeNode_t swig_types[34]
-#define SWIGTYPE_p_uiPanelNode_t swig_types[35]
-#define SWIGTYPE_p_uiRadarNode_t swig_types[36]
-#define SWIGTYPE_p_uiRadioButtonNode_t swig_types[37]
-#define SWIGTYPE_p_uiRowsNode_t swig_types[38]
-#define SWIGTYPE_p_uiSelectBoxNode_t swig_types[39]
-#define SWIGTYPE_p_uiSequenceNode_t swig_types[40]
-#define SWIGTYPE_p_uiSpinnerNode_t swig_types[41]
-#define SWIGTYPE_p_uiStringNode_t swig_types[42]
-#define SWIGTYPE_p_uiTBarNode_t swig_types[43]
-#define SWIGTYPE_p_uiTabNode_t swig_types[44]
-#define SWIGTYPE_p_uiText2Node_t swig_types[45]
-#define SWIGTYPE_p_uiTextEntryNode_t swig_types[46]
-#define SWIGTYPE_p_uiTextListNode_t swig_types[47]
-#define SWIGTYPE_p_uiTextNode_t swig_types[48]
-#define SWIGTYPE_p_uiTextureNode_t swig_types[49]
-#define SWIGTYPE_p_uiTimerNode_t swig_types[50]
-#define SWIGTYPE_p_uiVScrollBarNode_t swig_types[51]
-#define SWIGTYPE_p_uiVideoNode_t swig_types[52]
-#define SWIGTYPE_p_uiWidgetNode_t swig_types[53]
-#define SWIGTYPE_p_uiWindowNode_t swig_types[54]
-#define SWIGTYPE_p_uiZoneNode_t swig_types[55]
-#define SWIGTYPE_p_vec2_struct_t swig_types[56]
-#define SWIGTYPE_p_vec3_struct_t swig_types[57]
-static swig_type_info *swig_types[59];
-static swig_module_info swig_module = {swig_types, 58, 0, 0, 0, 0};
+#define SWIGTYPE_p_uiGeoscapeNode_t swig_types[24]
+#define SWIGTYPE_p_uiImageNode_t swig_types[25]
+#define SWIGTYPE_p_uiItemNode_t swig_types[26]
+#define SWIGTYPE_p_uiLineChartNode_t swig_types[27]
+#define SWIGTYPE_p_uiMessageListNode_t swig_types[28]
+#define SWIGTYPE_p_uiModelNode_t swig_types[29]
+#define SWIGTYPE_p_uiNode_t swig_types[30]
+#define SWIGTYPE_p_uiOptionListNode_t swig_types[31]
+#define SWIGTYPE_p_uiOptionNode_t swig_types[32]
+#define SWIGTYPE_p_uiOptionTreeNode_t swig_types[33]
+#define SWIGTYPE_p_uiPanelNode_t swig_types[34]
+#define SWIGTYPE_p_uiRadarNode_t swig_types[35]
+#define SWIGTYPE_p_uiRadioButtonNode_t swig_types[36]
+#define SWIGTYPE_p_uiRowsNode_t swig_types[37]
+#define SWIGTYPE_p_uiSelectBoxNode_t swig_types[38]
+#define SWIGTYPE_p_uiSequenceNode_t swig_types[39]
+#define SWIGTYPE_p_uiSpinnerNode_t swig_types[40]
+#define SWIGTYPE_p_uiStringNode_t swig_types[41]
+#define SWIGTYPE_p_uiTBarNode_t swig_types[42]
+#define SWIGTYPE_p_uiTabNode_t swig_types[43]
+#define SWIGTYPE_p_uiText2Node_t swig_types[44]
+#define SWIGTYPE_p_uiTextEntryNode_t swig_types[45]
+#define SWIGTYPE_p_uiTextListNode_t swig_types[46]
+#define SWIGTYPE_p_uiTextNode_t swig_types[47]
+#define SWIGTYPE_p_uiTextureNode_t swig_types[48]
+#define SWIGTYPE_p_uiTimerNode_t swig_types[49]
+#define SWIGTYPE_p_uiVScrollBarNode_t swig_types[50]
+#define SWIGTYPE_p_uiVideoNode_t swig_types[51]
+#define SWIGTYPE_p_uiWidgetNode_t swig_types[52]
+#define SWIGTYPE_p_uiWindowNode_t swig_types[53]
+#define SWIGTYPE_p_uiZoneNode_t swig_types[54]
+#define SWIGTYPE_p_vec2_struct_t swig_types[55]
+#define SWIGTYPE_p_vec3_struct_t swig_types[56]
+static swig_type_info *swig_types[58];
+static swig_module_info swig_module = {swig_types, 57, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2738,7 +2737,6 @@ typedef struct{} LANGUAGE_OBJ;
 #include "../node/ui_node_container.h"
 #include "../node/ui_node_controls.h"
 #include "../node/ui_node_data.h"
-#include "../node/ui_node_ekg.h"
 #include "../node/ui_node_geoscape.h"
 #include "../node/ui_node_image.h"
 #include "../node/ui_node_item.h"
@@ -2793,7 +2791,6 @@ typedef uiNode_t uiCheckBoxNode_t;
 typedef uiNode_t uiConFuncNode_t;
 typedef uiNode_t uiContainerNode_t;
 typedef uiNode_t uiDataNode_t;
-typedef uiNode_t uiEkgNode_t;
 typedef uiNode_t uiGeoscapeNode_t;
 typedef uiNode_t uiImageNode_t;
 typedef uiNode_t uiItemNode_t;
@@ -3075,10 +3072,6 @@ SWIGINTERN void uiImageNode_t_set_mousefx(uiImageNode_t *self,bool value){ UI_EX
 SWIGINTERN void uiImageNode_t_set_source(uiImageNode_t *self,char const *name){ UI_Node_SetImage(self, name); }
 SWIGINTERN void uiImageNode_t_set_texh(uiImageNode_t *self,float v1,float v2){ Vector2Set(UI_EXTRADATA(self, imageExtraData_t).texh, v1, v2); }
 SWIGINTERN void uiImageNode_t_set_texl(uiImageNode_t *self,float v1,float v2){ Vector2Set(UI_EXTRADATA(self, imageExtraData_t).texl, v1, v2); }
-SWIGINTERN float uiEkgNode_t_scrollspeed(uiEkgNode_t *self){ return UI_EXTRADATA(self, ekgExtraData_t).scrollSpeed; }
-SWIGINTERN float uiEkgNode_t_cvarscale(uiEkgNode_t *self){ return UI_EXTRADATA(self, ekgExtraData_t).scaleCvarValue; }
-SWIGINTERN void uiEkgNode_t_set_scrollspeed(uiEkgNode_t *self,float value){ UI_EXTRADATA(self, ekgExtraData_t).scrollSpeed = value; }
-SWIGINTERN void uiEkgNode_t_set_cvarscale(uiEkgNode_t *self,float value){ UI_EXTRADATA(self, ekgExtraData_t).scaleCvarValue = value; }
 SWIGINTERN bool uiLineChartNode_t_is_showaxes(uiLineChartNode_t *self){ return UI_EXTRADATA(self, lineChartExtraData_t).displayAxes; }
 SWIGINTERN int uiLineChartNode_t_dataid(uiLineChartNode_t *self){ return UI_EXTRADATA(self, lineChartExtraData_t).dataId; }
 SWIGINTERN void uiLineChartNode_t_set_dataid(uiLineChartNode_t *self,int id){ UI_EXTRADATA(self, lineChartExtraData_t).dataId = id; }
@@ -3290,9 +3283,6 @@ static uiContainerNode_t* UI_CreateContainer (uiNode_t* parent, const char* name
 }
 static uiDataNode_t* UI_CreateData (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "data", name, super);
-}
-static uiEkgNode_t* UI_CreateEkg (uiNode_t* parent, const char* name, const char* super) {
-	return UI_CreateControl (parent, "ekg", name, super);
 }
 static uiGeoscapeNode_t* UI_CreateGeoscape (uiNode_t* parent, const char* name, const char* super) {
 	return UI_CreateControl (parent, "geoscape", name, super);
@@ -11078,174 +11068,6 @@ static swig_lua_class *swig_uiImage_bases[] = {0,0};
 static const char *swig_uiImage_base_names[] = {"uiNode_t *",0};
 static swig_lua_class _wrap_class_uiImage = { "uiImage", "uiImage", &SWIGTYPE_p_uiImageNode_t,_proxy__wrap_new_uiImage, swig_delete_uiImage, swig_uiImage_methods, swig_uiImage_attributes, &swig_uiImage_Sf_SwigStatic, swig_uiImage_meta, swig_uiImage_bases, swig_uiImage_base_names };
 
-static int _wrap_uiEkg_scrollspeed(lua_State* L) {
-  int SWIG_arg = 0;
-  uiEkgNode_t *arg1 = (uiEkgNode_t *) 0 ;
-  float result;
-
-  SWIG_check_num_args("uiEkgNode_t::scrollspeed",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiEkgNode_t::scrollspeed",1,"uiEkgNode_t *");
-
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiEkgNode_t,0))){
-    SWIG_fail_ptr("uiEkg_scrollspeed",1,SWIGTYPE_p_uiEkgNode_t);
-  }
-
-  result = (float)uiEkgNode_t_scrollspeed(arg1);
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-
-  if(0) SWIG_fail;
-
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_uiEkg_cvarscale(lua_State* L) {
-  int SWIG_arg = 0;
-  uiEkgNode_t *arg1 = (uiEkgNode_t *) 0 ;
-  float result;
-
-  SWIG_check_num_args("uiEkgNode_t::cvarscale",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiEkgNode_t::cvarscale",1,"uiEkgNode_t *");
-
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiEkgNode_t,0))){
-    SWIG_fail_ptr("uiEkg_cvarscale",1,SWIGTYPE_p_uiEkgNode_t);
-  }
-
-  result = (float)uiEkgNode_t_cvarscale(arg1);
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-
-  if(0) SWIG_fail;
-
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_uiEkg_set_scrollspeed(lua_State* L) {
-  int SWIG_arg = 0;
-  uiEkgNode_t *arg1 = (uiEkgNode_t *) 0 ;
-  float arg2 ;
-
-  SWIG_check_num_args("uiEkgNode_t::set_scrollspeed",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiEkgNode_t::set_scrollspeed",1,"uiEkgNode_t *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiEkgNode_t::set_scrollspeed",2,"float");
-
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiEkgNode_t,0))){
-    SWIG_fail_ptr("uiEkg_set_scrollspeed",1,SWIGTYPE_p_uiEkgNode_t);
-  }
-
-  arg2 = (float)lua_tonumber(L, 2);
-  uiEkgNode_t_set_scrollspeed(arg1,arg2);
-
-  return SWIG_arg;
-
-  if(0) SWIG_fail;
-
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_uiEkg_set_cvarscale(lua_State* L) {
-  int SWIG_arg = 0;
-  uiEkgNode_t *arg1 = (uiEkgNode_t *) 0 ;
-  float arg2 ;
-
-  SWIG_check_num_args("uiEkgNode_t::set_cvarscale",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiEkgNode_t::set_cvarscale",1,"uiEkgNode_t *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiEkgNode_t::set_cvarscale",2,"float");
-
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiEkgNode_t,0))){
-    SWIG_fail_ptr("uiEkg_set_cvarscale",1,SWIGTYPE_p_uiEkgNode_t);
-  }
-
-  arg2 = (float)lua_tonumber(L, 2);
-  uiEkgNode_t_set_cvarscale(arg1,arg2);
-
-  return SWIG_arg;
-
-  if(0) SWIG_fail;
-
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_new_uiEkg(lua_State* L) {
-  int SWIG_arg = 0;
-  uiEkgNode_t *result = 0 ;
-
-  SWIG_check_num_args("uiEkgNode_t::uiEkgNode_t",0,0)
-  result = (uiEkgNode_t *)new uiEkgNode_t();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiEkgNode_t,1); SWIG_arg++;
-  return SWIG_arg;
-
-  if(0) SWIG_fail;
-
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static void swig_delete_uiEkg(void *obj) {
-uiEkgNode_t *arg1 = (uiEkgNode_t *) obj;
-delete arg1;
-}
-static int _proxy__wrap_new_uiEkg(lua_State *L) {
-    assert(lua_istable(L,1));
-    lua_pushcfunction(L,_wrap_new_uiEkg);
-    assert(!lua_isnil(L,-1));
-    lua_replace(L,1); /* replace our table with real constructor */
-    lua_call(L,lua_gettop(L)-1,1);
-    return 1;
-}
-static swig_lua_attribute swig_uiEkg_attributes[] = {
-    {0,0,0}
-};
-static swig_lua_method swig_uiEkg_methods[]= {
-    { "scrollspeed", _wrap_uiEkg_scrollspeed},
-    { "cvarscale", _wrap_uiEkg_cvarscale},
-    { "set_scrollspeed", _wrap_uiEkg_set_scrollspeed},
-    { "set_cvarscale", _wrap_uiEkg_set_cvarscale},
-    {0,0}
-};
-static swig_lua_method swig_uiEkg_meta[] = {
-    {0,0}
-};
-
-static swig_lua_attribute swig_uiEkg_Sf_SwigStatic_attributes[] = {
-    {0,0,0}
-};
-static swig_lua_const_info swig_uiEkg_Sf_SwigStatic_constants[]= {
-    {0,0,0,0,0,0}
-};
-static swig_lua_method swig_uiEkg_Sf_SwigStatic_methods[]= {
-    {0,0}
-};
-static swig_lua_class* swig_uiEkg_Sf_SwigStatic_classes[]= {
-    0
-};
-
-static swig_lua_namespace swig_uiEkg_Sf_SwigStatic = {
-    "uiEkg",
-    swig_uiEkg_Sf_SwigStatic_methods,
-    swig_uiEkg_Sf_SwigStatic_attributes,
-    swig_uiEkg_Sf_SwigStatic_constants,
-    swig_uiEkg_Sf_SwigStatic_classes,
-    0
-};
-static swig_lua_class *swig_uiEkg_bases[] = {0,0};
-static const char *swig_uiEkg_base_names[] = {"uiImageNode_t *",0};
-static swig_lua_class _wrap_class_uiEkg = { "uiEkg", "uiEkg", &SWIGTYPE_p_uiEkgNode_t,_proxy__wrap_new_uiEkg, swig_delete_uiEkg, swig_uiEkg_methods, swig_uiEkg_attributes, &swig_uiEkg_Sf_SwigStatic, swig_uiEkg_meta, swig_uiEkg_bases, swig_uiEkg_base_names };
-
 static int _wrap_uiLineChart_is_showaxes(lua_State* L) {
   int SWIG_arg = 0;
   uiLineChartNode_t *arg1 = (uiLineChartNode_t *) 0 ;
@@ -17005,36 +16827,6 @@ fail:
 }
 
 
-static int _wrap_UI_CreateEkg(lua_State* L) {
-  int SWIG_arg = 0;
-  uiNode_t *arg1 = (uiNode_t *) 0 ;
-  char *arg2 = (char *) 0 ;
-  char *arg3 = (char *) 0 ;
-  uiEkgNode_t *result = 0 ;
-
-  SWIG_check_num_args("UI_CreateEkg",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UI_CreateEkg",1,"uiNode_t *");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("UI_CreateEkg",2,"char const *");
-  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("UI_CreateEkg",3,"char const *");
-
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
-    SWIG_fail_ptr("UI_CreateEkg",1,SWIGTYPE_p_uiNode_t);
-  }
-
-  arg2 = (char *)lua_tostring(L, 2);
-  arg3 = (char *)lua_tostring(L, 3);
-  result = (uiEkgNode_t *)UI_CreateEkg(arg1,(char const *)arg2,(char const *)arg3);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiEkgNode_t,0); SWIG_arg++;
-  return SWIG_arg;
-
-  if(0) SWIG_fail;
-
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_UI_CreateGeoscape(lua_State* L) {
   int SWIG_arg = 0;
   uiNode_t *arg1 = (uiNode_t *) 0 ;
@@ -18158,36 +17950,6 @@ static int _wrap_create_data(lua_State* L) {
   arg3 = (char *)lua_tostring(L, 3);
   result = (uiDataNode_t *)UI_CreateData(arg1,(char const *)arg2,(char const *)arg3);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiDataNode_t,0); SWIG_arg++;
-  return SWIG_arg;
-
-  if(0) SWIG_fail;
-
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_create_ekg(lua_State* L) {
-  int SWIG_arg = 0;
-  uiNode_t *arg1 = (uiNode_t *) 0 ;
-  char *arg2 = (char *) 0 ;
-  char *arg3 = (char *) 0 ;
-  uiEkgNode_t *result = 0 ;
-
-  SWIG_check_num_args("UI_CreateEkg",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UI_CreateEkg",1,"uiNode_t *");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("UI_CreateEkg",2,"char const *");
-  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("UI_CreateEkg",3,"char const *");
-
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiNode_t,0))){
-    SWIG_fail_ptr("create_ekg",1,SWIGTYPE_p_uiNode_t);
-  }
-
-  arg2 = (char *)lua_tostring(L, 2);
-  arg3 = (char *)lua_tostring(L, 3);
-  result = (uiEkgNode_t *)UI_CreateEkg(arg1,(char const *)arg2,(char const *)arg3);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_uiEkgNode_t,0); SWIG_arg++;
   return SWIG_arg;
 
   if(0) SWIG_fail;
@@ -19538,7 +19300,6 @@ static swig_lua_method swig_SwigModule_methods[]= {
     { "UI_CreateConFunc", _wrap_UI_CreateConFunc},
     { "UI_CreateContainer", _wrap_UI_CreateContainer},
     { "UI_CreateData", _wrap_UI_CreateData},
-    { "UI_CreateEkg", _wrap_UI_CreateEkg},
     { "UI_CreateGeoscape", _wrap_UI_CreateGeoscape},
     { "UI_CreateImage", _wrap_UI_CreateImage},
     { "UI_CreateItem", _wrap_UI_CreateItem},
@@ -19577,7 +19338,6 @@ static swig_lua_method swig_SwigModule_methods[]= {
     { "create_confunc", _wrap_create_confunc},
     { "create_container", _wrap_create_container},
     { "create_data", _wrap_create_data},
-    { "create_ekg", _wrap_create_ekg},
     { "create_geoscape", _wrap_create_geoscape},
     { "create_image", _wrap_create_image},
     { "create_item", _wrap_create_item},
@@ -19641,7 +19401,6 @@ static swig_lua_class* swig_SwigModule_classes[]= {
 &_wrap_class_uiData,
 &_wrap_class_uiGeoscape,
 &_wrap_class_uiImage,
-&_wrap_class_uiEkg,
 &_wrap_class_uiLineChart,
 &_wrap_class_uiMessageList,
 &_wrap_class_uiModel,
@@ -19717,6 +19476,9 @@ static void *_p_uiTextListNode_tTo_p_uiTextNode_t(void *x, int *SWIGUNUSEDPARM(n
 static void *_p_uiVScrollBarNode_tTo_p_uiAbstractScrollbarNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiAbstractScrollbarNode_t *)  ((uiVScrollBarNode_t *) x));
 }
+static void *_p_uiText2Node_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((uiNode_t *) (uiAbstractScrollableNode_t *)(uiTextNode_t *) ((uiText2Node_t *) x));
+}
 static void *_p_uiTextNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *) (uiAbstractScrollableNode_t *) ((uiTextNode_t *) x));
 }
@@ -19777,9 +19539,6 @@ static void *_p_uiCheckBoxNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newme
 static void *_p_uiContainerNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *)  ((uiContainerNode_t *) x));
 }
-static void *_p_uiText2Node_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((uiNode_t *) (uiAbstractScrollableNode_t *)(uiTextNode_t *) ((uiText2Node_t *) x));
-}
 static void *_p_uiTextListNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *) (uiAbstractScrollableNode_t *)(uiTextNode_t *) ((uiTextListNode_t *) x));
 }
@@ -19806,9 +19565,6 @@ static void *_p_uiOptionTreeNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(new
 }
 static void *_p_uiItemNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *) (uiModelNode_t *) ((uiItemNode_t *) x));
-}
-static void *_p_uiEkgNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((uiNode_t *) (uiImageNode_t *) ((uiEkgNode_t *) x));
 }
 static void *_p_uiImageNode_tTo_p_uiNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiNode_t *)  ((uiImageNode_t *) x));
@@ -19864,12 +19620,6 @@ static void *_p_uiTBarNode_tTo_p_uiAbstractValueNode_t(void *x, int *SWIGUNUSEDP
 static void *_p_uiBaseLayoutNode_tTo_p_uiAbstractBaseNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiAbstractBaseNode_t *)  ((uiBaseLayoutNode_t *) x));
 }
-static void *_p_uiWidgetNode_tTo_p_uiImageNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((uiImageNode_t *)  ((uiWidgetNode_t *) x));
-}
-static void *_p_uiEkgNode_tTo_p_uiImageNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((uiImageNode_t *)  ((uiEkgNode_t *) x));
-}
 static void *_p_uiMessageListNode_tTo_p_uiAbstractScrollableNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiAbstractScrollableNode_t *)  ((uiMessageListNode_t *) x));
 }
@@ -19884,6 +19634,9 @@ static void *_p_uiText2Node_tTo_p_uiAbstractScrollableNode_t(void *x, int *SWIGU
 }
 static void *_p_uiTextListNode_tTo_p_uiAbstractScrollableNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((uiAbstractScrollableNode_t *) (uiTextNode_t *) ((uiTextListNode_t *) x));
+}
+static void *_p_uiWidgetNode_tTo_p_uiImageNode_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((uiImageNode_t *)  ((uiWidgetNode_t *) x));
 }
 static swig_type_info _swigt__p_LUA_EVENT = {"_p_LUA_EVENT", "LUA_EVENT *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LUA_FUNCTION = {"_p_LUA_FUNCTION", "LUA_FUNCTION *", 0, 0, (void*)0, 0};
@@ -19909,7 +19662,6 @@ static swig_type_info _swigt__p_uiCheckBoxNode_t = {"_p_uiCheckBoxNode_t", "uiCh
 static swig_type_info _swigt__p_uiConFuncNode_t = {"_p_uiConFuncNode_t", "uiConFuncNode_t *", 0, 0, (void*)&_wrap_class_uiConFunc, 0};
 static swig_type_info _swigt__p_uiContainerNode_t = {"_p_uiContainerNode_t", "uiContainerNode_t *", 0, 0, (void*)&_wrap_class_uiContainer, 0};
 static swig_type_info _swigt__p_uiDataNode_t = {"_p_uiDataNode_t", "uiDataNode_t *", 0, 0, (void*)&_wrap_class_uiData, 0};
-static swig_type_info _swigt__p_uiEkgNode_t = {"_p_uiEkgNode_t", "uiEkgNode_t *", 0, 0, (void*)&_wrap_class_uiEkg, 0};
 static swig_type_info _swigt__p_uiGeoscapeNode_t = {"_p_uiGeoscapeNode_t", "uiGeoscapeNode_t *", 0, 0, (void*)&_wrap_class_uiGeoscape, 0};
 static swig_type_info _swigt__p_uiImageNode_t = {"_p_uiImageNode_t", "uiImageNode_t *", 0, 0, (void*)&_wrap_class_uiImage, 0};
 static swig_type_info _swigt__p_uiItemNode_t = {"_p_uiItemNode_t", "uiItemNode_t *", 0, 0, (void*)&_wrap_class_uiItem, 0};
@@ -19969,7 +19721,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_uiConFuncNode_t,
   &_swigt__p_uiContainerNode_t,
   &_swigt__p_uiDataNode_t,
-  &_swigt__p_uiEkgNode_t,
   &_swigt__p_uiGeoscapeNode_t,
   &_swigt__p_uiImageNode_t,
   &_swigt__p_uiItemNode_t,
@@ -20029,14 +19780,13 @@ static swig_cast_info _swigc__p_uiCheckBoxNode_t[] = {  {&_swigt__p_uiCheckBoxNo
 static swig_cast_info _swigc__p_uiConFuncNode_t[] = {  {&_swigt__p_uiConFuncNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiContainerNode_t[] = {  {&_swigt__p_uiContainerNode_t, 0, 0, 0},  {&_swigt__p_uiBaseInventoryNode_t, _p_uiBaseInventoryNode_tTo_p_uiContainerNode_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiDataNode_t[] = {  {&_swigt__p_uiDataNode_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_uiEkgNode_t[] = {  {&_swigt__p_uiEkgNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiGeoscapeNode_t[] = {  {&_swigt__p_uiGeoscapeNode_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_uiImageNode_t[] = {  {&_swigt__p_uiWidgetNode_t, _p_uiWidgetNode_tTo_p_uiImageNode_t, 0, 0},  {&_swigt__p_uiImageNode_t, 0, 0, 0},  {&_swigt__p_uiEkgNode_t, _p_uiEkgNode_tTo_p_uiImageNode_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uiImageNode_t[] = {  {&_swigt__p_uiWidgetNode_t, _p_uiWidgetNode_tTo_p_uiImageNode_t, 0, 0},  {&_swigt__p_uiImageNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiItemNode_t[] = {  {&_swigt__p_uiItemNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiLineChartNode_t[] = {  {&_swigt__p_uiLineChartNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiMessageListNode_t[] = {  {&_swigt__p_uiMessageListNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiModelNode_t[] = {  {&_swigt__p_uiModelNode_t, 0, 0, 0},  {&_swigt__p_uiItemNode_t, _p_uiItemNode_tTo_p_uiModelNode_t, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_uiNode_t[] = {  {&_swigt__p_uiLineChartNode_t, _p_uiLineChartNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiMessageListNode_t, _p_uiMessageListNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiModelNode_t, _p_uiModelNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiOptionNode_t, _p_uiOptionNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiPanelNode_t, _p_uiPanelNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiRadarNode_t, _p_uiRadarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiRadioButtonNode_t, _p_uiRadioButtonNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSpinnerNode_t, _p_uiSpinnerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTBarNode_t, _p_uiTBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextNode_t, _p_uiTextNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTabNode_t, _p_uiTabNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSelectBoxNode_t, _p_uiSelectBoxNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiOptionListNode_t, _p_uiOptionListNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiWidgetNode_t, _p_uiWidgetNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiVScrollBarNode_t, _p_uiVScrollBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTimerNode_t, _p_uiTimerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextListNode_t, _p_uiTextListNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiText2Node_t, _p_uiText2Node_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiContainerNode_t, _p_uiContainerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiCheckBoxNode_t, _p_uiCheckBoxNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiButtonNode_t, _p_uiButtonNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiBaseLayoutNode_t, _p_uiBaseLayoutNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiBarNode_t, _p_uiBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollbarNode_t, _p_uiAbstractScrollbarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractOptionNode_t, _p_uiAbstractOptionNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSequenceNode_t, _p_uiSequenceNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiRowsNode_t, _p_uiRowsNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiEkgNode_t, _p_uiEkgNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiImageNode_t, _p_uiImageNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollableNode_t, _p_uiAbstractScrollableNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiItemNode_t, _p_uiItemNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiOptionTreeNode_t, _p_uiOptionTreeNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiNode_t, 0, 0, 0},  {&_swigt__p_uiBaseInventoryNode_t, _p_uiBaseInventoryNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiStringNode_t, _p_uiStringNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractValueNode_t, _p_uiAbstractValueNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractBaseNode_t, _p_uiAbstractBaseNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiConFuncNode_t, _p_uiConFuncNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiDataNode_t, _p_uiDataNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiGeoscapeNode_t, _p_uiGeoscapeNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextEntryNode_t, _p_uiTextEntryNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextureNode_t, _p_uiTextureNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiVideoNode_t, _p_uiVideoNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiWindowNode_t, _p_uiWindowNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiZoneNode_t, _p_uiZoneNode_tTo_p_uiNode_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_uiNode_t[] = {  {&_swigt__p_uiMessageListNode_t, _p_uiMessageListNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiModelNode_t, _p_uiModelNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiOptionNode_t, _p_uiOptionNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiPanelNode_t, _p_uiPanelNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiRadarNode_t, _p_uiRadarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiRadioButtonNode_t, _p_uiRadioButtonNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSpinnerNode_t, _p_uiSpinnerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTBarNode_t, _p_uiTBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextNode_t, _p_uiTextNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiText2Node_t, _p_uiText2Node_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiLineChartNode_t, _p_uiLineChartNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTabNode_t, _p_uiTabNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSelectBoxNode_t, _p_uiSelectBoxNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiWidgetNode_t, _p_uiWidgetNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiVScrollBarNode_t, _p_uiVScrollBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTimerNode_t, _p_uiTimerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextListNode_t, _p_uiTextListNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiContainerNode_t, _p_uiContainerNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiCheckBoxNode_t, _p_uiCheckBoxNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiButtonNode_t, _p_uiButtonNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiBaseLayoutNode_t, _p_uiBaseLayoutNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiBarNode_t, _p_uiBarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollbarNode_t, _p_uiAbstractScrollbarNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractOptionNode_t, _p_uiAbstractOptionNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiOptionListNode_t, _p_uiOptionListNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiSequenceNode_t, _p_uiSequenceNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiRowsNode_t, _p_uiRowsNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiImageNode_t, _p_uiImageNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractScrollableNode_t, _p_uiAbstractScrollableNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractValueNode_t, _p_uiAbstractValueNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiItemNode_t, _p_uiItemNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiOptionTreeNode_t, _p_uiOptionTreeNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiNode_t, 0, 0, 0},  {&_swigt__p_uiBaseInventoryNode_t, _p_uiBaseInventoryNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiStringNode_t, _p_uiStringNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiAbstractBaseNode_t, _p_uiAbstractBaseNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiConFuncNode_t, _p_uiConFuncNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiDataNode_t, _p_uiDataNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiGeoscapeNode_t, _p_uiGeoscapeNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextEntryNode_t, _p_uiTextEntryNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiTextureNode_t, _p_uiTextureNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiVideoNode_t, _p_uiVideoNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiWindowNode_t, _p_uiWindowNode_tTo_p_uiNode_t, 0, 0},  {&_swigt__p_uiZoneNode_t, _p_uiZoneNode_tTo_p_uiNode_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiOptionListNode_t[] = {  {&_swigt__p_uiOptionListNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiOptionNode_t[] = {  {&_swigt__p_uiOptionNode_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uiOptionTreeNode_t[] = {  {&_swigt__p_uiOptionTreeNode_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -20089,7 +19839,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_uiConFuncNode_t,
   _swigc__p_uiContainerNode_t,
   _swigc__p_uiDataNode_t,
-  _swigc__p_uiEkgNode_t,
   _swigc__p_uiGeoscapeNode_t,
   _swigc__p_uiImageNode_t,
   _swigc__p_uiItemNode_t,

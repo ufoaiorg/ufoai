@@ -677,8 +677,6 @@
 		<Unit filename="../../src/client/ui/node/ui_node_data.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_editor.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_editor.h" />
-		<Unit filename="../../src/client/ui/node/ui_node_ekg.cpp" />
-		<Unit filename="../../src/client/ui/node/ui_node_ekg.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_geoscape.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_geoscape.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_image.cpp" />

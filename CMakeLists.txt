@@ -775,7 +775,6 @@ if(UFOAI_BUILD_UFO)
       ${UFOAI_SRC}/client/ui/node/ui_node_controls.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_data.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_editor.cpp
-      ${UFOAI_SRC}/client/ui/node/ui_node_ekg.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_geoscape.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_image.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_item.cpp
@@ -1867,7 +1866,6 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${UFOAI_SRC}/client/ui/node/ui_node_controls.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_data.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_editor.cpp
-      ${UFOAI_SRC}/client/ui/node/ui_node_ekg.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_geoscape.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_image.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_item.cpp

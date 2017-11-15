@@ -158,7 +158,6 @@ void uiImageNode::draw (uiNode_t* node)
 	if (nodesize[1] < 0)
 		nodesize[1] = 0;
 
-	/** @todo code is duplicated in the ekg node code */
 	if (node->box.size[0] && !node->box.size[1]) {
 		const float scale = image->width / node->box.size[0];
 		Vector2Set(size, node->box.size[0], image->height / scale);

@@ -342,7 +342,6 @@
 		<Unit filename="../../src/client/ui/node/ui_node_controls.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_data.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_editor.cpp" />
-		<Unit filename="../../src/client/ui/node/ui_node_ekg.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_geoscape.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_image.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_item.cpp" />

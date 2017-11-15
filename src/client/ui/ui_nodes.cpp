@@ -47,7 +47,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_container.h"
 #include "node/ui_node_data.h"
 #include "node/ui_node_editor.h"
-#include "node/ui_node_ekg.h"
 #include "node/ui_node_geoscape.h"
 #include "node/ui_node_image.h"
 #include "node/ui_node_item.h"
@@ -108,7 +107,6 @@ static const registerFunction_t registerFunctions[] = {
 	UI_RegisterCvarFuncNode,
 	UI_RegisterDataNode,
 	UI_RegisterEditorNode,
-	UI_RegisterEKGNode,
 	UI_RegisterFuncNode,
 	UI_RegisterGeoscapeNode,
 	UI_RegisterImageNode,
