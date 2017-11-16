@@ -802,7 +802,6 @@ if(UFOAI_BUILD_UFO)
       ${UFOAI_SRC}/client/ui/node/ui_node_textlist.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_texture.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_timer.cpp
-      ${UFOAI_SRC}/client/ui/node/ui_node_todo.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_video.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_vscrollbar.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_window.cpp
@@ -1893,7 +1892,6 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${UFOAI_SRC}/client/ui/node/ui_node_textlist.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_texture.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_timer.cpp
-      ${UFOAI_SRC}/client/ui/node/ui_node_todo.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_video.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_vscrollbar.cpp
       ${UFOAI_SRC}/client/ui/node/ui_node_window.cpp

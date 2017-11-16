@@ -731,8 +731,6 @@
 		<Unit filename="../../src/client/ui/node/ui_node_texture.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_timer.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_timer.h" />
-		<Unit filename="../../src/client/ui/node/ui_node_todo.cpp" />
-		<Unit filename="../../src/client/ui/node/ui_node_todo.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_video.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_video.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_vscrollbar.cpp" />

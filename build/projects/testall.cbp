@@ -369,7 +369,6 @@
 		<Unit filename="../../src/client/ui/node/ui_node_textlist.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_texture.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_timer.cpp" />
-		<Unit filename="../../src/client/ui/node/ui_node_todo.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_video.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_vscrollbar.cpp" />
 		<Unit filename="../../src/client/ui/node/ui_node_window.cpp" />

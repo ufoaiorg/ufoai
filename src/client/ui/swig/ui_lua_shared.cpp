@@ -2822,7 +2822,7 @@ typedef uiNode_t uiWidgetNode_t; /* note: ufo class = "controls" */
 typedef uiNode_t uiWindowNode_t;
 typedef uiNode_t uiZoneNode_t;
 
-// skipped: uiFuncNode, uiNullNode, uiTodoNode
+// skipped: uiFuncNode, uiNullNode
 
 /**
  * @brief This function queries the SWIG type table for a type information structure. It is used in combination
