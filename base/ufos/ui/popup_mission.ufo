@@ -1,0 +1,110 @@
+--!usr/bin/lua
+
+--[[
+-- @file
+-- @brief Popup window to show when clicking on a mission
+--]]
+
+--[[
+Copyright (C) 2002-2017 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+
+do
+	local window = ufox.build_window({
+		name = "popup_mission",
+		class = "window",
+		super = "ipopup",
+		pos = {124, 192},
+		size = {746, 368},
+
+		{
+			name = "title",
+			class = "string",
+			text = "_Select aircraft",
+			width = 746,
+		},
+
+		{
+			name = "name_label",
+			class = "string",
+			text = "_Name:",
+			pos = {26, 48},
+			size = {180, 25},
+		},
+
+		{
+			name = "status_label",
+			class = "string",
+			text = "_Status:",
+			pos = {216, 48},
+			size = {180, 25},
+		},
+
+		{
+			name = "base_label",
+			class = "string",
+			text = "_Base:",
+			pos = {406, 48},
+			size = {180, 25},
+		},
+
+		{
+			name = "eta_label",
+			class = "string",
+			text = "_ETA:",
+			pos = {596, 48},
+			size = {150, 25},
+		},
+
+		{
+			name = "ships",
+			class = "text",
+			dataid = ufo.TEXT_AIRCRAFT_LIST,
+			pos = {26, 74},
+			size = {640, 260},
+			lineheight = 20,
+			tabwidth = 190,
+
+			on_click = function (sender)
+				ufo.cmd(string.format("ships_click %d;", sender:lineselected()))
+			end,
+
+			on_rightclick = function (sender)
+				ufo.cmd(string.format("ships_rclick %d;", sender:lineselected()))
+			end,
+		},
+
+		{
+			name = "bt_cancel",
+			class = "MainMenuCancelBtn",
+			pos = {566, 338},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.cmd("ui_pop; mn_mapaction_reset;")
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+	})
+end
