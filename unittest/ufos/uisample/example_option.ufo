@@ -14,16 +14,6 @@ window unittest_option
 		bgcolor		"0 0 0 1"
 	}
 
-	todo addSelectbox {
-		pos "20 200"
-		string "Add test with selectbox"
-	}
-
-	todo addSharedData {
-		pos "20 220"
-		string "Add test with shared data (should not be supported)"
-	}
-
 	tab tabReferenciel {
 		{
 			pos		"10 60"
