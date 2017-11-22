@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_uforecovery_callbacks.h"
 #include "cp_aircraft.h"
 #include "save/save_uforecovery.h"
+#include "cp_component.h"
 
 /*==================================
 Backend functions
@@ -116,7 +117,7 @@ storedUFO_t* US_StoreUFO (const aircraft_t* ufoTemplate, installation_t* install
 	storedUFO_t ufo;
 	ufo.idx = ccs.campaignStats.ufosStored++;
 	Q_strncpyz(ufo.id, ufoTemplate->id, sizeof(ufo.id));
-	ufo.comp = CP_GetComponentsByID(ufo.id);
+	ufo.comp = COMP_GetComponentsByID(ufo.id);
 	assert(ufo.comp);
 
 	ufo.installation = installation;
@@ -370,7 +371,7 @@ bool US_LoadXML (xmlNode_t* p)
 			cgi->Com_Printf("UFO has no/invalid aircraftTemplare assigned\n");
 			continue;
 		}
-		ufo.comp = CP_GetComponentsByID(ufo.id);
+		ufo.comp = COMP_GetComponentsByID(ufo.id);
 		if (!ufo.comp) {
 			cgi->Com_Printf("UFO has no/invalid components set\n");
 			continue;

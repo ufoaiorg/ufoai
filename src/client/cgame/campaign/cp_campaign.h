@@ -52,8 +52,7 @@ class Employee;
 #include "cp_alienbase.h"
 #include "cp_market.h"
 #include "cp_statistics.h"
-
-#define MAX_ASSEMBLIES	16
+#include "cp_component.h"
 
 /* Maximum alien groups per alien team category */
 #define MAX_ALIEN_GROUP_PER_CATEGORY	8

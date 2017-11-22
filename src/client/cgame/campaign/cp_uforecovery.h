@@ -44,7 +44,7 @@ typedef enum {
 typedef struct storedUFO_s {
 	int idx;
 	char id[MAX_VAR];
-	components_t* comp;
+	struct components_s* comp;
 	const aircraft_t* ufoTemplate;
 
 	storedUFOStatus_t status;
