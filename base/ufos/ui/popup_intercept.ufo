@@ -1,0 +1,262 @@
+--!usr/bin/lua
+
+--[[
+-- @file
+-- @brief UFO intercept popup
+--]]
+
+--[[
+Copyright (C) 2002-2017 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+
+do
+	local window = ufox.build_window({
+		name = "popup_intercept",
+		class = "window",
+		super = "ipopup",
+		pos = {124, 192},
+		size = {526, 432},
+
+		{
+			name = "title",
+			class = "string",
+			width = 526,
+			test = "_Anti-UFO defence",
+		},
+
+		-- @TODO use maintabset to make tabs consistent
+		{
+			name = "defence_navigation",
+			class = "tab",
+			pos = {0, 55},
+			size = {548, 40},
+			cvar = "*cvar:mn_defencetab",
+
+			on_change = function (sender)
+				ufo.cmd("popup_intercept_update;")
+			end,
+
+			{
+				name = "aircraft",
+				class = "option",
+				label = "_Aircraft interception",
+				value = 0,
+			},
+
+			{
+				name = "sam",
+				class = "option",
+				label = "_SAM defence",
+				value = 1,
+			},
+		},
+
+		{
+			name = "aircraft",
+			class = "panel",
+			pos = {30, 100},
+			size = {490, 290},
+
+			{
+				name = "name_label",
+				class = "string",
+				text = "_Aircraft:",
+				pos = {6, 3},
+				size = {140, 20},
+			},
+
+			{
+				name = "status_label",
+				class = "string",
+				text = "_Status:",
+				pos = {156, 3},
+				size = {140, 20},
+			},
+
+			{
+				name = "craft_base_label",
+				class = "string",
+				text = "_Base:",
+				pos = {306, 3},
+				size = {150, 20},
+			},
+
+			-- tabbed and bolded textlist
+			{
+				name = "ships",
+				class = "text",
+				dataid = ufo.TEXT_AIRCRAFT_LIST,
+				pos = {6, 29},
+				size = {460, 260},
+				lineheight = 20,
+				tabwidth = 150,
+				mousefx	= true,
+				longlines = ufo.LONGLINES_PRETTYCHOP,
+
+				on_viewchange = function (sender)
+					local scrollbar = sender:parent():child("ships_scroll")
+					if (scrollbar == nil) then
+						return
+					end
+					scrollbar:set_fullsize(sender:fullsize())
+					scrollbar:set_current(sender:viewpos())
+					scrollbar:set_viewsize(sender:viewsize())
+				end,
+
+				on_click = function (sender)
+					ufo.cmd(string.format("ships_click %d;", sender:lineselected()))
+				end,
+
+				on_rightclick = function (sender)
+					ufo.cmd(string.format("ships_click %d;", sender:lineselected()))
+				end,
+			},
+
+			{
+				name = "ships_scroll",
+				class = "vscrollbar",
+				image = "ui/scrollbar_v",
+				pos = {470, 29},
+				height = 260,
+				current = 0,
+				viewsize = 13,
+				fullsize = 19,
+				autoshowscroll = true,
+
+				on_change = function (sender)
+					local list = sender:parent():child("ships")
+					if (list == nil) then
+						return
+					end
+					list:set_viewpos(sender:current())
+				end,
+			},
+		},
+
+		{
+			name = "sam",
+			class = "panel",
+			pos = {30, 100},
+			size = {490, 290},
+
+			{
+				name = "base_label",
+				class = "string",
+				text = "_Surface-to-air missile site:",
+				pos = {6, 3},
+				size = {250, 20},
+			},
+
+			{
+				name = "bases",
+				class = "text",
+				dataid = ufo.TEXT_BASE_LIST,
+				pos = {6, 29},
+				size = {460, 260},
+				lineheight = 20,
+				tabwidth = 175,
+				mousefx	= true,
+				longlines = ufo.LONGLINES_PRETTYCHOP,
+
+				on_viewchange = function (sender)
+					local scrollbar = sender:parent():child("bases_scroll")
+					if (scrollbar == nil) then
+						return
+					end
+					scrollbar:set_fullsize(sender:fullsize())
+					scrollbar:set_current(sender:viewpos())
+					scrollbar:set_viewsize(sender:viewsize())
+				end,
+
+				on_click = function (sender)
+					ufo.cmd(string.format("bases_click %d;", sender:lineselected()))
+				end,
+
+				on_rightclick = function (sender)
+					ufo.cmd(string.format("bases_click %d;", sender:lineselected()))
+				end,
+			},
+
+			{
+				name = "bases_scroll",
+				class = "vscrollbar",
+				image = "ui/scrollbar_v",
+				pos = {470, 29},
+				height = 260,
+				current = 0,
+				viewsize = 13,
+				fullsize = 19,
+				autoshowscroll = true,
+
+				on_change = function (sender)
+					local list = sender:parent():child("bases")
+					if (list == nil) then
+						return
+					end
+					list:set_viewpos(sender:current())
+				end,
+			},
+		},
+
+		{
+			name = "bt_cancel",
+			class = "MainMenuCancelBtn",
+			pos = {346, 402},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.cmd("ui_pop;mn_mapaction_reset;");
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+		{
+			name = "popup_intercept_update",
+			class = "confunc",
+
+			on_click = function (sender)
+				local tab = ufo.getvar("mn_defencetab")
+				if (tab == nil) then
+					return
+				end
+				if (tab:as_string() == "0") then
+					sender:root():child("aircraft"):set_invisible(false)
+					sender:root():child("sam"):set_invisible(true)
+				elseif (tab:as_string() == "1") then
+					sender:root():child("aircraft"):set_invisible(true)
+					sender:root():child("sam"):set_invisible(false)
+				end
+			end,
+		},
+
+		on_windowopened = function (sender)
+			local tab = ufo.getvar("mn_defencetab", 0):set_value(0)
+			ufo.cmd("popup_intercept_update;")
+		end,
+
+		on_windowclosed = function (sender)
+			ufo.delvar("mn_defencetab")
+		end,
+	})
+end
