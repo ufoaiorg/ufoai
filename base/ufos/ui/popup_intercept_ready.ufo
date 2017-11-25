@@ -1,0 +1,165 @@
+--!usr/bin/lua
+
+--[[
+-- @file
+-- @brief Intercept ready popup window
+--]]
+
+--[[
+Copyright (C) 2002-2017 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+
+do
+	local window = ufox.build_window({
+		name = "popup_intercept_ready",
+		class = "window",
+		super = "ipopup",
+		pos = {264, 262},
+		size = {496, 218},
+		modal = true,
+
+		{
+			name = "title",
+			class = "string",
+			width = 496,
+			text = "_Ready",
+		},
+
+		{
+			name = "craftname_label",
+			class = "string",
+			text = "_Aircraft:",
+			pos = {26, 58},
+			size = {75, 20},
+			font = "f_small_bold",
+		},
+
+		{
+			name = "craftname",
+			class = "string",
+			pos = {101, 58},
+			size = {350, 20},
+		},
+
+		{
+			name = "missionname_label",
+			class = "string",
+			text = "_Mission:",
+			pos = {26, 78},
+			size = {75, 20},
+			font = "f_small_bold",
+		},
+
+		{
+			name = "missionname",
+			class = "string",
+			pos = {101, 78},
+			size = {350, 20},
+		},
+
+		{
+			name = "message",
+			class = "string",
+			text = "_Aircraft reached desired location - what to do?",
+			pos = {26, 110},
+			size = {450, 20},
+			longlines = ufo.LONGLINES_WRAP,
+		},
+
+		{
+			name = "bt_cancel",
+			class = "MainMenuCancelBtn",
+			pos = {124, 188},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+				ufo.cmd("mn_mapaction_reset;")
+			end
+		},
+
+		{
+			name = "bt_go",
+			class = "MainMenuBtn",
+			text = "_Enter",
+			tooltip = "_Enter the battlefield",
+			pos = {316, 188},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.cmd("game_go;")
+			end,
+		},
+
+		{
+			name = "bt_auto_go",
+			class = "MainMenuBtn",
+			text = "_Auto mission",
+			tooltip = "_Automatically finish mission",
+			pos = {316, 153},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.cmd("cp_mission_autogo;")
+			end,
+		},
+
+		{
+			name = "pop_intready_aircraft",
+			class = "confunc",
+
+			--[[
+			 - @brief Set Aircraft and mission name
+			 - @param aircraft_name Name of the landing aircraft
+			 - @param mission_name Mission title
+			--]]
+			on_click = function (sender, aircraft_name, mission_name)
+				sender:parent():child("craftname"):set_text(aircraft_name)
+				sender:parent():child("missionname"):set_text(mission_name)
+			end,
+		},
+
+		{
+			name = "popup_intercept_ready_update",
+			class = "confunc",
+
+			on_click = function (sender)
+				local automission = ufo.getvar("cp_mission_autogo_available", "")
+				if (automission ~= nil and automission:as_integer() == 1) then
+					sender:root():child("bt_auto_go"):set_disabled(false)
+					sender:root():child("bt_auto_go"):set_tooltip("_Automatically finish mission")
+				else
+					sender:root():child("bt_auto_go"):set_disabled(true)
+					sender:root():child("bt_auto_go"):set_tooltip("_This kind of mission cannot be done automatically")
+				end
+			end,
+		},
+
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+		on_windowopened = function (sender)
+			ufo.cmd("cp_missionauto_check;popup_intercept_ready_update;")
+		end,
+	})
+end
