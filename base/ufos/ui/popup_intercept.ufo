@@ -38,7 +38,7 @@ do
 			name = "title",
 			class = "string",
 			width = 526,
-			test = "_Anti-UFO defence",
+			text = "_Anti-UFO defence",
 		},
 
 		-- @TODO use maintabset to make tabs consistent
@@ -107,7 +107,6 @@ do
 				size = {460, 260},
 				lineheight = 20,
 				tabwidth = 150,
-				mousefx	= true,
 				longlines = ufo.LONGLINES_PRETTYCHOP,
 
 				on_viewchange = function (sender)
@@ -172,7 +171,6 @@ do
 				size = {460, 260},
 				lineheight = 20,
 				tabwidth = 175,
-				mousefx	= true,
 				longlines = ufo.LONGLINES_PRETTYCHOP,
 
 				on_viewchange = function (sender)

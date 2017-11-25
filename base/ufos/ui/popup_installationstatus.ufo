@@ -1,0 +1,150 @@
+--!usr/bin/lua
+
+--[[
+-- @file
+-- @brief Installation status popup window
+--]]
+
+--[[
+Copyright (C) 2002-2017 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+
+do
+	local window = ufox.build_window({
+		name = "popup_installationstatus",
+		class = "window",
+		super = "ipopup",
+		pos = {264, 262},
+		size = {496, 180},
+
+		{
+			name = "title",
+			class = "string",
+			width = 496,
+			text = "_Installation Status",
+		},
+
+		{
+			name = "name_label",
+			class = "string",
+			text = "_Name:",
+			pos = {25, 60},
+			size = {120, 25},
+			contentalign = ufo.ALIGN_CL,
+		},
+
+		{
+			name = "name",
+			class = "TextEntry",
+			text = "*cvar:mn_installation_title",
+			pos = {150, 60},
+			size = {310, 25},
+			bordersize = 3,
+			font = "f_normal",
+
+			on_change = function (sender)
+				ufo.cmd("mn_installation_changename;")
+			end,
+		},
+
+		{
+			name = "buildtime_label",
+			class = "string",
+			text = "_Time to completion:",
+			pos = {25, 110},
+			size = {120, 20},
+		},
+
+		{
+			name = "buildtime",
+			class = "string",
+			text = "*cvar:mn_installation_timetobuild",
+			pos = {150, 110},
+			size = {150, 20},
+		},
+
+		{
+			name = "bt_back",
+			class = "MainMenu2Btn",
+			text = "_Close",
+			pos = {316, 150},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.cmd("ui_pop;mn_mapaction_reset;")
+			end,
+		},
+
+		{
+			name = "bt_enter",
+			class = "MainMenuBtn",
+			text = "_Manage",
+			tooltip = "_Manage installation",
+			pos = {316, 115},
+			width = 180,
+			invisible = true,
+
+			on_click = function (sender)
+				local installation_type = ufo.getvar("mn_installation_type", "")
+				ufo.cmd(string.format("ui_pop; ui_push %q;", installation_type:as_string()))
+			end
+		},
+
+		{
+			name = "bt_destroy",
+			class = "MainMenuExitBtn",
+			text = "_Destroy",
+			tooltip = "_Destroy installation",
+			pos = {124, 150},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.cmd("ui_pop; mn_installation_destroy;")
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+		on_windowopened = function (sender)
+			ufo.cmd("game_timestop;")
+
+			local buildtime = ufo.getvar("mn_installation_timetobuild", "-")
+			if (buildtime:as_string() == "-") then
+				sender:root():child("buildtime_label"):set_invisible(true)
+				sender:root():child("buildtime"):set_invisible(true)
+				sender:root():child("bt_enter"):set_invisible(true)
+			else
+				sender:root():child("buildtime_label"):set_invisible(false)
+				sender:root():child("buildtime"):set_invisible(false)
+				sender:root():child("bt_enter"):set_invisible(false)
+			end
+
+			local installation_type = ufo.getvar("mn_installation_type", "")
+			if (installation_type:as_string() == "orbit") then
+				sender:root():child("bt_destroy"):set_invisible(true)
+			else
+				sender:root():child("bt_destroy"):set_invisible(false)
+			end
+		end,
+	})
+end
