@@ -1,0 +1,172 @@
+--!usr/bin/lua
+
+--[[
+-- @file
+-- @brief New installation popup window
+--]]
+
+--[[
+Copyright (C) 2002-2017 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+
+do
+	local window = ufox.build_window({
+		name = "popup_newinstallation",
+		class = "window",
+		super = "ipopup",
+		pos = {256, 284},
+		size = {512, 300},
+		closebutton = true,
+		modal = true,
+
+		{
+			name = "title",
+			class = "string",
+			width = 512,
+			text = "_Build new installation",
+		},
+
+		{
+			name = "name_label",
+			class = "string",
+			pos = {25, 60},
+			size = {120, 25},
+			text = "_Name:",
+			contentalign = ufo.ALIGN_CL,
+		},
+
+		{
+			name = "name",
+			class = "TextEntry",
+			text = "*cvar:mn_installation_title",
+			pos = {150, 60},
+			size = {330, 25},
+			bordersize = 3,
+			font = "f_normal",
+		},
+
+		{
+			name = "cost_label",
+			class = "string",
+			text = "_Cost:",
+			pos = {25, 90},
+			size = {120, 20},
+		},
+
+		{
+			name = "cost",
+			class = "string",
+			text = "*cvar:mn_installation_cost",
+			pos = {150, 90},
+			size = {150, 20},
+		},
+
+		{
+			name = "buildtime_label",
+			class = "string",
+			text = "_Time to build:",
+			pos = {25, 110},
+			size = {120, 20},
+		},
+
+		{
+			name = "buildtime",
+			class = "string",
+			text = "*cvar:mn_installation_timetobuild",
+			pos = {150, 110},
+			size = {150, 20},
+		},
+
+		{
+			name = "description",
+			class = "text",
+			dataid = ufo.TEXT_BUILDING_INFO,
+			pos = {100, 140},
+			size = {350, 118},
+			lineheight = 20,
+
+			on_viewchange = function (sender)
+				local scrollbar = sender:parent():child("description_scroll")
+				if (scrollbar == nil) then
+					return
+				end
+				scrollbar:set_fullsize(sender:fullsize())
+				scrollbar:set_current(sender:viewpos())
+				scrollbar:set_viewsize(sender:viewsize())
+			end,
+		},
+		{
+			name = "description_scroll",
+			class = "vscrollbar",
+			image = "ui/scrollbar_v",
+			pos = {470, 140},
+			height = 110,
+			current = 0,
+			viewsize = 4,
+			fullsize = 4,
+			autoshowscroll = true,
+
+			on_change = function (sender)
+				local list = sender:parent():child("description")
+				if (list == nil) then
+					return
+				end
+				list:set_viewpos(sender:current())
+			end,
+		},
+
+		{
+			name = "bt_cancel",
+			class = "MainMenuCancelBtn",
+			pos = {140, 270},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+			end,
+		},
+
+		{
+			name = "bt_build",
+			class = "MainMenuBtn",
+			text = "_Build",
+			pos = {332, 270},
+			width = 180,
+
+			on_click = function (sender)
+				local installation_type = ufo.getvar("mn_installation_type", "")
+				ufo.pop_window(false)
+				ufo.cmd(string.format("mn_installation_build %q;", installation_type:as_string()))
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+		on_windowopened = function (sender)
+		end,
+
+		on_windowclosed = function (sender)
+			ufo.cmd("mn_mapaction_reset;")
+		end,
+	})
+end
