@@ -3061,6 +3061,8 @@ SWIGINTERN float uiDataNode_t_as_float(uiDataNode_t *self){ return UI_EXTRADATA(
 SWIGINTERN void uiDataNode_t_set_value__SWIG_0(uiDataNode_t *self,char const *value){ UI_Node_SetText(self, value); }
 SWIGINTERN void uiDataNode_t_set_value__SWIG_1(uiDataNode_t *self,int value){ UI_EXTRADATA(self, dataExtraData_t).integer = value; }
 SWIGINTERN void uiDataNode_t_set_valuef(uiDataNode_t *self,float value){ UI_EXTRADATA(self, dataExtraData_t).number = value; }
+SWIGINTERN int uiGeoscapeNode_t_paddingright(uiGeoscapeNode_t *self){ return UI_EXTRADATA(self, mapExtraData_t).paddingRight; }
+SWIGINTERN void uiGeoscapeNode_t_set_paddingright(uiGeoscapeNode_t *self,int value){ UI_EXTRADATA(self, mapExtraData_t).paddingRight = value; }
 SWIGINTERN void uiGeoscapeNode_t_zoomin(uiGeoscapeNode_t *self){ dynamic_cast<uiGeoscapeNode*>(self->behaviour->manager.get())->zoom(self, false); }
 SWIGINTERN void uiGeoscapeNode_t_zoomout(uiGeoscapeNode_t *self){ dynamic_cast<uiGeoscapeNode*>(self->behaviour->manager.get())->zoom(self, true); }
 SWIGINTERN bool uiImageNode_t_is_keepratio(uiImageNode_t *self){ return UI_EXTRADATA(self, imageExtraData_t).preventRatio; }
@@ -10651,6 +10653,56 @@ static swig_lua_class *swig_uiData_bases[] = {0,0};
 static const char *swig_uiData_base_names[] = {"uiNode_t *",0};
 static swig_lua_class _wrap_class_uiData = { "uiData", "uiData", &SWIGTYPE_p_uiDataNode_t,_proxy__wrap_new_uiData, swig_delete_uiData, swig_uiData_methods, swig_uiData_attributes, &swig_uiData_Sf_SwigStatic, swig_uiData_meta, swig_uiData_bases, swig_uiData_base_names };
 
+static int _wrap_uiGeoscape_paddingright(lua_State* L) {
+  int SWIG_arg = 0;
+  uiGeoscapeNode_t *arg1 = (uiGeoscapeNode_t *) 0 ;
+  int result;
+
+  SWIG_check_num_args("uiGeoscapeNode_t::paddingright",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiGeoscapeNode_t::paddingright",1,"uiGeoscapeNode_t *");
+
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiGeoscapeNode_t,0))){
+    SWIG_fail_ptr("uiGeoscape_paddingright",1,SWIGTYPE_p_uiGeoscapeNode_t);
+  }
+
+  result = (int)uiGeoscapeNode_t_paddingright(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+
+  if(0) SWIG_fail;
+
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiGeoscape_set_paddingright(lua_State* L) {
+  int SWIG_arg = 0;
+  uiGeoscapeNode_t *arg1 = (uiGeoscapeNode_t *) 0 ;
+  int arg2 ;
+
+  SWIG_check_num_args("uiGeoscapeNode_t::set_paddingright",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiGeoscapeNode_t::set_paddingright",1,"uiGeoscapeNode_t *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiGeoscapeNode_t::set_paddingright",2,"int");
+
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiGeoscapeNode_t,0))){
+    SWIG_fail_ptr("uiGeoscape_set_paddingright",1,SWIGTYPE_p_uiGeoscapeNode_t);
+  }
+
+  arg2 = (int)lua_tonumber(L, 2);
+  uiGeoscapeNode_t_set_paddingright(arg1,arg2);
+
+  return SWIG_arg;
+
+  if(0) SWIG_fail;
+
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uiGeoscape_zoomin(lua_State* L) {
   int SWIG_arg = 0;
   uiGeoscapeNode_t *arg1 = (uiGeoscapeNode_t *) 0 ;
@@ -10730,6 +10782,8 @@ static swig_lua_attribute swig_uiGeoscape_attributes[] = {
     {0,0,0}
 };
 static swig_lua_method swig_uiGeoscape_methods[]= {
+    { "paddingright", _wrap_uiGeoscape_paddingright},
+    { "set_paddingright", _wrap_uiGeoscape_set_paddingright},
     { "zoomin", _wrap_uiGeoscape_zoomin},
     { "zoomout", _wrap_uiGeoscape_zoomout},
     {0,0}

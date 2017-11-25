@@ -880,6 +880,10 @@ struct uiDataNode_t: uiNode_t {
 struct uiGeoscapeNode_t: uiNode_t {
 };
 %extend uiGeoscapeNode_t {
+	int paddingright () { return UI_EXTRADATA($self, mapExtraData_t).paddingRight; };
+
+	void set_paddingright (int value) { UI_EXTRADATA($self, mapExtraData_t).paddingRight = value; };
+
 	void zoomin () { dynamic_cast<uiGeoscapeNode*>($self->behaviour->manager.get())->zoom($self, false); }
 	void zoomout () { dynamic_cast<uiGeoscapeNode*>($self->behaviour->manager.get())->zoom($self, true); }
 };
