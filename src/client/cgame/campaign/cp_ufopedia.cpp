@@ -366,7 +366,8 @@ void UP_AircraftDescription (const technology_t* tech)
 		const baseCapacities_t cap = AIR_GetHangarCapacityType(aircraft);
 		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(cap);
 		const building_t* building = B_GetBuildingTemplateByType(buildingType);
-		Q_strcat(upBuffer, sizeof(upBuffer), _("Required Hangar:\t%s\n"), _(building->name));
+		if (building != nullptr)
+			Q_strcat(upBuffer, sizeof(upBuffer), _("Required Hangar:\t%s\n"), _(building->name));
 
 		/* @note: while MAX_ACTIVETEAM limits the number of soldiers on a craft
 		 * there is no use to show this in case of an UFO (would be misleading): */
