@@ -55,6 +55,7 @@ static void INS_SetInstallationTitle (installationType_t type)
  */
 void INS_SelectInstallation (installation_t* installation)
 {
+	B_SetCurrentSelectedBase(nullptr);
 	const int timetobuild = std::max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
 
 	cgi->Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: select installation with id %i\n", installation->idx);
