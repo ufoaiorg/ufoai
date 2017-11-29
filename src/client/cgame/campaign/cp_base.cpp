@@ -1906,10 +1906,15 @@ static void B_PrintCapacities_f (void)
  */
 static void B_BuildingConstructionFinished_f (void)
 {
-	base_t* base = B_GetCurrentSelectedBase();
-
-	if (!base)
+	if (cgi->Cmd_Argc() < 2) {
+		cgi->Com_Printf("Usage: %s <baseIDX>\n", cgi->Cmd_Argv(0));
 		return;
+	}
+	base_t* base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (!base) {
+		cgi->Com_Printf("Invalid base idx: %s\n", cgi->Cmd_Argv(1));
+		return;
+	}
 
 	for (int i = 0; i < ccs.numBuildings[base->idx]; i++) {
 		building_t* building = B_GetBuildingByIDX(base->idx, i);
@@ -1945,24 +1950,17 @@ static void B_ResetAllStatusAndCapacities_f (void)
  */
 static void B_CheckCoherency_f (void)
 {
-	base_t* base;
-
-	if (cgi->Cmd_Argc() >= 2) {
-		const int i = atoi(cgi->Cmd_Argv(1));
-
-		if (i < 0 || i >= B_GetCount()) {
-			cgi->Com_Printf("Usage: %s [baseIdx]\nWithout baseIdx the current base is selected.\n", cgi->Cmd_Argv(0));
-			return;
-		}
-		base = B_GetFoundedBaseByIDX(i);
-	} else {
-		base = B_GetCurrentSelectedBase();
+	if (cgi->Cmd_Argc() < 2) {
+		cgi->Com_Printf("Usage: %s <baseIDX>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+	base_t* base = B_GetFoundedBaseByIDX(atoi(cgi->Cmd_Argv(1)));
+	if (!base) {
+		cgi->Com_Printf("Invalid base idx: %s\n", cgi->Cmd_Argv(1));
+		return;
 	}
 
-	if (base)
-		cgi->Com_Printf("Base '%s' (idx:%i) is %scoherent.\n", base->name, base->idx, (B_IsCoherent(base)) ? "" : "not ");
-	else
-		cgi->Com_Printf("No base selected.\n");
+	cgi->Com_Printf("Base '%s' (idx:%i) is %scoherent.\n", base->name, base->idx, (B_IsCoherent(base)) ? "" : "not ");
 }
 #endif
 
