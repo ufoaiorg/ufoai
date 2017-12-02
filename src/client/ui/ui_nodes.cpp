@@ -88,7 +88,6 @@ typedef void (*registerFunction_t)(uiBehaviour_t* node);
  */
 static const registerFunction_t registerFunctions[] = {
 	UI_RegisterNullNode,
-	UI_RegisterAbstractBaseNode,
 	UI_RegisterAbstractNode,
 	UI_RegisterAbstractOptionNode,
 	UI_RegisterAbstractScrollableNode,

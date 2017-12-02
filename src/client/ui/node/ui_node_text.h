@@ -58,11 +58,11 @@ void UI_RegisterTextNode(uiBehaviour_t* behaviour);
 typedef struct {
 	abstractScrollableExtraData_t super;
 
-	int dataID;					/**< ID of a shared data @sa src/client/ui/ui_data.h */
+	int dataID;				/**< ID of a shared data @sa src/client/ui/ui_data.h */
 	int versionId;				/**< Cached version of the shared data, to check update */
 
-	int textLineSelected;		/**< Which line is currently selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
-	const char* textSelected;	/**< Text of the current selected line */
+	int textLineSelected;			/**< Which line is currently selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
+	const char* textSelected;		/**< Text of the current selected line */
 	int lineUnderMouse;			/**< UI_TEXT: The line under the mouse, when the mouse is over the node */
 	int lineHeight;				/**< size between two lines */
 	int tabWidth;				/**< max size of a tabulation */

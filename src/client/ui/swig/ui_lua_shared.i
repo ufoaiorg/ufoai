@@ -122,7 +122,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * typedefs only visible for SWIG, used for subclassing uiNode_t (see below for more details). Note
  * that uiAbstractNode_t is missing from the list, since this is the uiNode_t type.
  */
-typedef uiNode_t uiAbstractBaseNode_t;
 typedef uiNode_t uiAbstractOptionNode_t;
 typedef uiNode_t uiAbstractScrollableNode_t;
 typedef uiNode_t uiAbstractScrollbarNode_t;
@@ -747,18 +746,12 @@ struct uiBarNode_t: uiAbstractValueNode_t {
 	void set_nohover (bool value) { UI_EXTRADATA($self, barExtraData_t).noHover = value; };
 };
 
-%rename (uiAbstractBase) uiAbstractBaseNode_t;
-struct uiAbstractBaseNode_t: uiNode_t {
-};
-%extend uiAbstractBaseNode_t {
-	int baseid() { return UI_EXTRADATA($self, baseExtraData_t).baseid; };
-	void set_baseid(int value) { UI_EXTRADATA($self, baseExtraData_t).baseid = value; };
-};
-
 %rename (uiBaseLayout) uiBaseLayoutNode_t;
-struct uiBaseLayoutNode_t: uiAbstractBaseNode_t {
+struct uiBaseLayoutNode_t: uiNode_t {
 };
 %extend uiBaseLayoutNode_t {
+	int baseid() { return UI_EXTRADATA($self, baseExtraData_t).baseid; };
+	void set_baseid(int value) { UI_EXTRADATA($self, baseExtraData_t).baseid = value; };
 };
 
 %rename (uiButton) uiButtonNode_t;

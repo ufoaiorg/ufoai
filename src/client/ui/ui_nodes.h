@@ -144,29 +144,29 @@ struct uiNode_t {
 
 	/* common events lua based */
 	/* note: if new events are added here, make sure the value is initialized to LUA_NOREF
-	   @sa: UI_AllocNodeWithoutNew */
-    LUA_EVENT lua_onClick; /**< references the event in lua: on_click (node, x, y) */
-    LUA_EVENT lua_onRightClick; /**< references the event in lua: on_rightclick (node, x, y) */
-    LUA_EVENT lua_onMiddleClick; /**< references the event in lua: on_middleclick (node, x, y) */
-    LUA_EVENT lua_onWheelUp; /**< references the event in lua: on_wheelup (node, dx, dy) */
-    LUA_EVENT lua_onWheelDown; /**< references the event in lua: on_wheeldown (node, dx, dy) */
-    LUA_EVENT lua_onWheel; /**< references the event in lua: on_wheel (node, dx, dy) */
-    LUA_EVENT lua_onFocusGained; /**< references the event in lua: on_focusgained (node) */
-    LUA_EVENT lua_onFocusLost; /**< references the event in lua: on_focuslost (node) */
-    LUA_EVENT lua_onKeyPressed; /**< references the event in lua: on_keypressed (node, key, unicode) */
-    LUA_EVENT lua_onKeyReleased; /**< references the event in lua: on_keyreleased (node, key, unicode) */
-    LUA_EVENT lua_onLoaded; /**< references the event in lua: on_loaded (node) */
-    LUA_EVENT lua_onActivate; /**< references the event in lua: on_activate (node) */
-    LUA_EVENT lua_onMouseEnter; /**< references the event in lua: on_mouseenter (node) */
-    LUA_EVENT lua_onMouseLeave; /**< references the event in lua: on_mouseleave (node) */
-    LUA_EVENT lua_onChange; /**< references the event in lua: on_change (node) */
-    LUA_EVENT lua_onVisibleWhen; /**< references the event in lua: on_visible (node) */
+	@sa: UI_AllocNodeWithoutNew */
+	LUA_EVENT lua_onClick; /**< references the event in lua: on_click (node, x, y) */
+	LUA_EVENT lua_onRightClick; /**< references the event in lua: on_rightclick (node, x, y) */
+	LUA_EVENT lua_onMiddleClick; /**< references the event in lua: on_middleclick (node, x, y) */
+	LUA_EVENT lua_onWheelUp; /**< references the event in lua: on_wheelup (node, dx, dy) */
+	LUA_EVENT lua_onWheelDown; /**< references the event in lua: on_wheeldown (node, dx, dy) */
+	LUA_EVENT lua_onWheel; /**< references the event in lua: on_wheel (node, dx, dy) */
+	LUA_EVENT lua_onFocusGained; /**< references the event in lua: on_focusgained (node) */
+	LUA_EVENT lua_onFocusLost; /**< references the event in lua: on_focuslost (node) */
+	LUA_EVENT lua_onKeyPressed; /**< references the event in lua: on_keypressed (node, key, unicode) */
+	LUA_EVENT lua_onKeyReleased; /**< references the event in lua: on_keyreleased (node, key, unicode) */
+	LUA_EVENT lua_onLoaded; /**< references the event in lua: on_loaded (node) */
+	LUA_EVENT lua_onActivate; /**< references the event in lua: on_activate (node) */
+	LUA_EVENT lua_onMouseEnter; /**< references the event in lua: on_mouseenter (node) */
+	LUA_EVENT lua_onMouseLeave; /**< references the event in lua: on_mouseleave (node) */
+	LUA_EVENT lua_onChange; /**< references the event in lua: on_change (node) */
+	LUA_EVENT lua_onVisibleWhen; /**< references the event in lua: on_visible (node) */
 
 	bool dragdrop; /**< set to true to enable dragdrop on this node */
 	/** Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
-    LUA_EVENT lua_onDragDropEnter; /**< references the event in lua: on_dragdropenter (node) */
+	LUA_EVENT lua_onDragDropEnter; /**< references the event in lua: on_dragdropenter (node) */
 	/** Send to the target when the DND is canceled */
-    LUA_EVENT lua_onDragDropLeave; /**< references the event in lua: on_dragdropleave (node) */
+	LUA_EVENT lua_onDragDropLeave; /**< references the event in lua: on_dragdropleave (node) */
 	/** Send to the target when we enter first, return true if we can drop the DND here */
 	LUA_EVENT lua_onDragDropMove; /**< references the event in lua: on_dragdropmove (node, x, y) */
 	/** Send to the target to finalize the drop */
@@ -205,4 +205,3 @@ void UI_DeleteNode(uiNode_t* node);
 uiBehaviour_t* UI_GetNodeBehaviour(const char* name) __attribute__ ((warn_unused_result));
 uiBehaviour_t* UI_GetNodeBehaviourByIndex(int index) __attribute__ ((warn_unused_result));
 int UI_GetNodeBehaviourCount(void) __attribute__ ((warn_unused_result));
-

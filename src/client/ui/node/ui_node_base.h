@@ -24,13 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-class uiAbstractBaseNode : public uiLocatedNode {
-public:
-	void onLoaded(uiNode_t* node) override;
-	void onLoading(uiNode_t* node) override;
-};
-
-class uiBaseLayoutNode : public uiAbstractBaseNode {
+class uiBaseLayoutNode : public uiLocatedNode {
 public:
 	void draw(uiNode_t* node) override;
 	void drawTooltip(const uiNode_t* node, int x, int y) const override;
@@ -43,5 +37,4 @@ typedef struct baseExtraData_s {
 
 struct uiBehaviour_t;
 
-void UI_RegisterAbstractBaseNode(uiBehaviour_t* behaviour);
 void UI_RegisterBaseLayoutNode(uiBehaviour_t* behaviour);

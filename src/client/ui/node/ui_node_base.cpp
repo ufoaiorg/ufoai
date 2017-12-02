@@ -42,19 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 // TODO: remove me - duplicated in cp_base.h
-#define BASE_SIZE		5
-
-void uiAbstractBaseNode::onLoading (uiNode_t* node)
-{
-	EXTRADATA(node).baseid = -1;
-}
-
-/**
- * @brief Called after the node is completely loaded from the ufo-script (all data and/or children are set)
- */
-void uiAbstractBaseNode::onLoaded (uiNode_t* node)
-{
-}
+#define BASE_SIZE	5
 
 /**
  * @brief Custom tooltip for baseayout
@@ -86,28 +74,19 @@ void uiBaseLayoutNode::draw (uiNode_t* node)
  */
 void uiBaseLayoutNode::onLoading (uiNode_t* node)
 {
-	uiAbstractBaseNode::onLoading(node);
+	EXTRADATA(node).baseid = -1;
 	node->padding = 3;
 	Vector4Set(node->color, 1, 1, 1, 1);
 	Vector4Set(node->bgcolor, 0.5, 0.5, 0.5, 1);
 }
 
-void UI_RegisterAbstractBaseNode (uiBehaviour_t* behaviour)
-{
-	behaviour->name = "abstractbase";
-	behaviour->isAbstract = true;
-	behaviour->manager = UINodePtr(new uiAbstractBaseNode());
-	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiAbstractBaseNode_t *");
-
-	/* Identify the base, from a base ID, the node use. */
-	UI_RegisterExtradataNodeProperty(behaviour, "baseid", V_INT, baseExtraData_t, baseid);
-}
-
 void UI_RegisterBaseLayoutNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "baselayout";
-	behaviour->extends = "abstractbase";
 	behaviour->manager = UINodePtr(new uiBaseLayoutNode());
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->lua_SWIG_typeinfo = UI_SWIG_TypeQuery("uiBaseLayoutNode_t *");
+
+	/* Identify the base, from a base ID, the node use. */
+	UI_RegisterExtradataNodeProperty(behaviour, "baseid", V_INT, baseExtraData_t, baseid);
 }
