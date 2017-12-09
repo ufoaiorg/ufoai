@@ -1068,10 +1068,11 @@ static int RT_MicroTrace (RoutingData* rtd, const place_t* from, const int ax, c
 		} else if (stairwaySituation == 2) {/* stepping down */
 			if (bases[5] <= middle &&		/* same for the 2nd part of the passage */
 				bases[6] <= middle &&
-				bases[7] <= middle )
+				bases[7] <= middle ) {
 				if (debugTrace)
 					Com_Printf("Addition granted by ugly stair hack-stepping down.\n");
 				return opening->base - middle;
+			}
 		}
 	}
 
