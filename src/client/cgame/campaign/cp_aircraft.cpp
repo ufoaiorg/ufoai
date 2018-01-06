@@ -316,6 +316,7 @@ void AII_CollectingItems (aircraft_t* aircraft, int won)
 		aircraft->itemCargo->add(item->objDef, item->amount, item->looseAmount);
 	}
 	cgi->LIST_Delete(&items);
+	delete previousCargo;
 }
 
 /**
