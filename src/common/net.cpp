@@ -1039,8 +1039,6 @@ void SV_Stop (void)
  */
 static struct datagram_socket* NET_DatagramSocketDoNew (const struct addrinfo* addr)
 {
-	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
-	int t = 1;
 	const int index = NET_DatagramFindFreeSocket();
 
 	if (index == -1) {
@@ -1048,6 +1046,7 @@ static struct datagram_socket* NET_DatagramSocketDoNew (const struct addrinfo* a
 		return nullptr;
 	}
 
+	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	if (sock == INVALID_SOCKET) {
 		Com_Printf("Failed to create socket: %s\n", netStringError(netError));
 		return nullptr;
@@ -1058,13 +1057,14 @@ static struct datagram_socket* NET_DatagramSocketDoNew (const struct addrinfo* a
 		return nullptr;
 	}
 
-	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char*) &t, sizeof(t)) != 0) {
+	int socketOptTrue = 1;
+	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char*) &socketOptTrue, sizeof(socketOptTrue)) != 0) {
 		Com_Printf("Failed to set SO_REUSEADDR on socket: %s\n", netStringError(netError));
 		netCloseSocket(sock);
 		return nullptr;
 	}
 
-	if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, (char*) &t, sizeof(t)) != 0) {
+	if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, (char*) &socketOptTrue, sizeof(socketOptTrue)) != 0) {
 		Com_Printf("Failed to set SO_BROADCAST on socket: %s\n", netStringError(netError));
 		netCloseSocket(sock);
 		return nullptr;
