@@ -66,6 +66,7 @@ static transferType_t currentTransferType;
  */
 static void TR_ClearTempCargo (void)
 {
+	tr.antimatter = 0;
 	if (tr.itemCargo != nullptr) {
 		delete tr.itemCargo;
 		tr.itemCargo = nullptr;
