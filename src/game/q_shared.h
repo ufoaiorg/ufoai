@@ -465,6 +465,7 @@ typedef struct mapDef_s {
 	linkedList_t* params;	/**< in case of ump file, the assembly to use */
 	char* description;		/**< the description to show in the menus */
 	char* victoryCondition;	/**< the mission briefing victory condition */
+	float victoryBonusPerAlien;	/**< for missions other than "kill all aliens", the bonus value to use for each alien killed and stunned */
 	char* missionBriefing;	/**< the mission briefing description */
 	char* size;				/**< small, medium, big */
 	char* civTeam;			/**< the civilian team to use for this map - this can also be nullptr */

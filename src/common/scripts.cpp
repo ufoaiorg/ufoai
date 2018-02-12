@@ -3465,6 +3465,7 @@ static void Com_AddObjectLinks (void)
 static const value_t mapdef_vals[] = {
 	{"description", V_TRANSLATION_STRING, offsetof(mapDef_t, description), 0},
 	{"victorycondition", V_TRANSLATION_STRING, offsetof(mapDef_t, victoryCondition), 0},
+	{"victorybonusperalien", V_FLOAT, offsetof(mapDef_t, victoryBonusPerAlien), MEMBER_SIZEOF(mapDef_t, victoryBonusPerAlien)},
 	{"missionbriefing", V_TRANSLATION_STRING, offsetof(mapDef_t, missionBriefing), 0},
 	{"map", V_HUNK_STRING, offsetof(mapDef_t, mapTheme), 0},
 	{"size", V_HUNK_STRING, offsetof(mapDef_t, size), 0},

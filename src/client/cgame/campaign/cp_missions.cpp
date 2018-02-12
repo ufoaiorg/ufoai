@@ -1266,7 +1266,7 @@ void CP_MissionEnd (const campaign_t* campaign, mission_t* mission, const battle
 
 	won ? ccs.campaignStats.missionsWon++ : ccs.campaignStats.missionsLost++;
 
-	CP_HandleNationData(campaign->minhappiness, mission, battleParameters->nation, &(mission->missionResults));
+	CP_HandleNationData(campaign->minhappiness, mission, battleParameters->nation, &(mission->missionResults), won);
 	CP_CheckLostCondition(campaign);
 
 	/* update the character stats */

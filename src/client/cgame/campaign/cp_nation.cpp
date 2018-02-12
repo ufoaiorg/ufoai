@@ -243,12 +243,14 @@ bool NAT_SaveXML (xmlNode_t* p)
  * surrounding nations will be less affected.
  * @todo Scoring should eventually be expanded to include such elements as
  * infected humans and mission objectives other than xenocide.
+ * @param[in] won if PHALANX won
  */
-void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* affectedNation, const missionResults_t* results)
+void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* affectedNation, const missionResults_t* results, bool won)
 {
 	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);
 	const float alienSum = (float) (results->aliensSurvived + results->aliensKilled + results->aliensStunned);
 	float performance;
+	float performanceAlien;
 	float deltaHappiness = 0.0f;
 	float happinessDivisor = 5.0f;
 
@@ -265,7 +267,11 @@ void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* af
 		 * should be dependent on the mission objective.
 		 * In a mission that has a special objective, the amount of killed aliens should
 		 * only serve to increase the score, not reduce the penalty. */
-		float performanceAlien = results->aliensKilled + results->aliensStunned - alienSum;
+		if (won && mis->mapDef->victoryBonusPerAlien > 0) {
+			performanceAlien = (results->aliensKilled + results->aliensStunned) * mis->mapDef->victoryBonusPerAlien;
+		} else {
+			performanceAlien = results->aliensKilled + results->aliensStunned - alienSum;
+		}
 		performance = performanceCivilian + performanceAlien;
 	}
 

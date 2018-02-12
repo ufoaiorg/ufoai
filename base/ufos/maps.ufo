@@ -2495,6 +2495,7 @@ mapdef mansion_huge
 
 	missionbriefing		"*msgid:mission_briefing_mansion"
 	victorycondition	"*msgid:victory_condition_mansion"
+	victorybonusperalien	0.05
 
 	multiplayer		true
 	teams			4
@@ -2551,6 +2552,7 @@ mapdef mansion_medium
 
 	missionbriefing		"*msgid:mission_briefing_mansion"
 	victorycondition	"*msgid:victory_condition_mansion"
+	victorybonusperalien	0.05
 
 	multiplayer		true
 	teams			2
@@ -2601,6 +2603,7 @@ mapdef mansion_small
 
 	missionbriefing		"*msgid:mission_briefing_mansion"
 	victorycondition	"*msgid:victory_condition_mansion"
+	victorybonusperalien	0.05
 
 	multiplayer		true
 	teams			2
