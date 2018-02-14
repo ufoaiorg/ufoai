@@ -26,7 +26,7 @@
 nation latin
 {
 	name "_The Revolutionary Countries"
-	color "1 0.5 1 1"
+	color "0 1 0.5 1"
 	funding	140000
 	happiness 0.5
 	soldiers 5
@@ -39,7 +39,7 @@ nation latin
 nation states
 {
 	name "_United America"
-	color "0.5 0.5 0.25 1"
+	color "0 0.5 0 1"
 	funding	160000
 	happiness 0.5
 	soldiers 5
@@ -52,7 +52,7 @@ nation states
 nation europe
 {
 	name "_The Greater European Union"
-	color "0.25 1 1 1"
+	color "0 0.5 1 1"
 	pos "-7 49"
 	funding	125000
 	happiness 0.5
@@ -65,7 +65,7 @@ nation europe
 nation asia
 {
 	name "_The Asian Republic"
-	color "0.25 1 0.25 1"
+	color "0.5 0.5 0 1"
 	funding	125000
 	happiness 0.5
 	soldiers 5
@@ -78,7 +78,7 @@ nation asia
 nation middle
 {
 	name "_The Middle-Eastern Alliance"
-	color "1 1 0.25 1"
+	color "1 1 0 1"
 	funding 80000
 	happiness 0.5
 	soldiers 1
@@ -91,7 +91,7 @@ nation middle
 nation africa
 {
 	name "_New Africa"
-	color "1 0.75 0.5 1"
+	color "1 0.5 0.25 1"
 	funding	105000
 	happiness 0.5
 	soldiers 5
@@ -104,7 +104,7 @@ nation africa
 nation russia
 {
 	name "_Russia"
-	color "1 0.25 0.25 1"
+	color "0.5 0 0 1"
 	funding	100000
 	happiness 0.5
 	soldiers 3
@@ -117,7 +117,7 @@ nation russia
 nation oceania
 {
 	name "_The Commonwealth of Oceania"
-	color "0.75 0.25 0.75 1"
+	color "0.5 0 0.5 1"
 	funding	120000
 	happiness 0.5
 	soldiers 5
