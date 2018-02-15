@@ -251,29 +251,35 @@ void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* af
 	const float alienSum = (float) (results->aliensSurvived + results->aliensKilled + results->aliensStunned);
 	float performance;
 	float performanceAlien;
+	float performanceCivilian;
 	float deltaHappiness = 0.0f;
 	float happinessDivisor = 5.0f;
+	float victoryBonusPerAlien = 0.1f;
+
+	if (mis->mapDef->victoryBonusPerAlien) {
+		victoryBonusPerAlien = mis->mapDef->victoryBonusPerAlien;
+	}
 
 	/** @todo HACK: This should be handled properly, i.e. civilians should only factor into the scoring
 	 * if the mission objective is actually to save civilians. */
 	if (civilianSum == 0) {
-		cgi->Com_DPrintf(DEBUG_CLIENT, "CP_HandleNationData: Warning, civilianSum == 0, score for this mission will default to 0.\n");
-		performance = 0.0f;
+		performanceCivilian = 0.0f;
 	} else {
-		/* Calculate how well the mission went. */
-		float performanceCivilian = (2 * civilianSum - results->civiliansKilled - 2
+		assert((2 * civilianSum) - 2 != 0);
+		performanceCivilian = (2 * civilianSum - results->civiliansKilled - 2
 				* results->civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
-		/** @todo The score for aliens is always negative or zero currently, but this
-		 * should be dependent on the mission objective.
-		 * In a mission that has a special objective, the amount of killed aliens should
-		 * only serve to increase the score, not reduce the penalty. */
-		if (won && mis->mapDef->victoryBonusPerAlien > 0) {
-			performanceAlien = (results->aliensKilled + results->aliensStunned) * mis->mapDef->victoryBonusPerAlien;
-		} else {
-			performanceAlien = results->aliensKilled + results->aliensStunned - alienSum;
-		}
-		performance = performanceCivilian + performanceAlien;
 	}
+
+	/* Calculate how well the mission went. */
+	/** @todo The score for aliens should be dependent on the mission objective.
+	 * In a mission that has a special objective, the amount of killed aliens should
+	 * only serve to increase the score, not reduce the penalty. */
+	if (won) {
+		performanceAlien = (results->aliensKilled + results->aliensStunned) * victoryBonusPerAlien;
+	} else {
+		performanceAlien = results->aliensKilled + results->aliensStunned - alienSum;
+	}
+	performance = performanceCivilian + performanceAlien;
 
 	/* Calculate the actual happiness delta. The bigger the mission, the more potential influence. */
 	deltaHappiness = 0.004 * civilianSum + 0.004 * alienSum;
