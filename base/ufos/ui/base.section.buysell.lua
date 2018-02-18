@@ -24,20 +24,18 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --]]
 
---header guard
-if (base.buysell == nil) then
+do
+	require("ufox.lua")
+	require("base.section.lua")
 
-require("ufox.lua")
-require("base.section.lua")
+	local sectionBuysell = {
+		register = function (root_node, base_idx)
+			local section = base.build_section(root_node, "buysell", "_Market", "icons/market")
+			section:child("header").on_click = function (sender)
+				ufo.push_window("market", nil, nil)
+			end
+		end,
+	}
 
-base.buysell = {
-	register = function (root_node, base_idx)
-		local section = base.build_section(root_node, "buysell", "_Market", "icons/market")
-		section:child("header").on_click = function (sender)
-			ufo.push_window("market", nil, nil)
-		end
-	end,
-}
-
---header guard
+	return sectionBuysell
 end

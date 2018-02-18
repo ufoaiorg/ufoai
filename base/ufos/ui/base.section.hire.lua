@@ -2,7 +2,7 @@
 
 --[[
 -- @file
--- @brief Hospital base menu section
+-- @brief Soldiers base menu section
 --]]
 
 --[[
@@ -24,25 +24,19 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --]]
 
---[[
- - @todo Add injured employee to the section content (face, healthbar, tooltip)
- - @todo Change hospital screen to change the "map area" only
---]]
+do
+	require("ufox.lua")
+	require("base.section.lua")
 
---header guard
-if (base.hospital == nil) then
+	local sectionHire = {
+		register = function (root_node, base_idx)
+			local section = base.build_section(root_node, "hire", "_Soldiers", "icons/crouch")
+			section:child("header").on_click = function (sender)
+				-- @TODO ufo.push_window() doesn't support parameters
+				ufo.cmd("ui_push equipment -1;")
+			end
+		end,
+	}
 
-require("ufox.lua")
-require("base.section.lua")
-
-base.hospital = {
-	register = function (root_node, base_idx)
-		local section = base.build_section(root_node, "hospital", "_Hospital", "icons/hos_bed")
-		section:child("header").on_click = function (sender)
-			ufo.push_window("hospital", nil, {sender:root():child("base_idx"):as_string(),})
-		end
-	end,
-}
-
---header guard
+	return sectionHire
 end

@@ -29,20 +29,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  - @todo Change aliencont screen to change the "map area" only
 --]]
 
---header guard
-if (base.containment == nil) then
+do
+	require("ufox.lua")
+	require("base.section.lua")
 
-require("ufox.lua")
-require("base.section.lua")
+	local sectionContainment = {
+		register = function (root_node, base_idx)
+			local section = base.build_section(root_node, "containment", "_Alien Containment", "icons/aliens")
+			section:child("header").on_click = function (sender)
+				ufo.push_window("aliencont", nil, nil)
+			end
+		end,
+	}
 
-base.containment = {
-	register = function (root_node, base_idx)
-		local section = base.build_section(root_node, "containment", "_Alien Containment", "icons/aliens")
-		section:child("header").on_click = function (sender)
-			ufo.push_window("aliencont", nil, nil)
-		end
-	end,
-}
-
---header guard
+	return sectionContainment
 end

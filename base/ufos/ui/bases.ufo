@@ -164,9 +164,12 @@ do
 
 			generate = function (sender, base_idx)
 				local sections = {"facilities", "aircraft", "hire", "buysell", "research", "production", "containment", "hospital"}
-				for i, section in ipairs(sections) do
-					require(string.format("base.%s.lua", section))
-					base[section].register(sender, tonumber(base_idx))
+				if (base.section == nil) then
+					base.section = {}
+				end
+				for i, section_name in ipairs(sections) do
+					base.section[section_name] = require(string.format("base.section.%s.lua", section_name))
+					base.section[section_name].register(sender, tonumber(base_idx))
 				end
 				-- Get the parameters needed for this window
 				ufo.cmd(string.format("base_init %d;", tonumber(base_idx)))
