@@ -356,9 +356,6 @@ bool INV_ItemMatchesFilter (const objDef_t* obj, const itemFilterTypes_t filterT
  */
 Item* INV_SearchInInventoryWithFilter (const Inventory* const inv, const invDef_t* container, const objDef_t* itemType,  const itemFilterTypes_t filterType)
 {
-	if (inv == nullptr)
-		return nullptr;
-
 	if (itemType == nullptr)
 		return nullptr;
 

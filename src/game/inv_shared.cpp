@@ -538,7 +538,7 @@ bool Item::isSameAs (const Item* const other) const
 	if (this == other)
 		return true;
 
-	if (this == nullptr || other == nullptr)
+	if (other == nullptr)
 		return false;
 
 	if (this->def() == other->def() && this->ammoDef() == other->ammoDef() && this->getAmmoLeft() == other->getAmmoLeft())
