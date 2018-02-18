@@ -615,27 +615,27 @@ static bool GAME_LoadItem (xmlNode_t* n, Item* item, containerIndex_t* container
 {
 	const char* itemID = XML_GetString(n, SAVE_INVENTORY_WEAPONID);
 	const char* contID = XML_GetString(n, SAVE_INVENTORY_CONTAINER);
-	int i;
+
+	*x = XML_GetInt(n, SAVE_INVENTORY_X, 0);
+	*y = XML_GetInt(n, SAVE_INVENTORY_Y, 0);
 
 	/* reset */
 	OBJZERO(*item);
-
+	int i;
 	for (i = 0; i < CID_MAX; i++) {
 		if (Q_streq(csi.ids[i].name, contID))
 			break;
 	}
+	*container = i;
 	if (i >= CID_MAX) {
 		Com_Printf("Invalid container id '%s'\n", contID);
 		return false;
 	}
-	*container = i;
 
 	item->setDef(INVSH_GetItemByID(itemID));
 	if (item->def() == nullptr) {
 		return false;
 	}
-	*x = XML_GetInt(n, SAVE_INVENTORY_X, 0);
-	*y = XML_GetInt(n, SAVE_INVENTORY_Y, 0);
 	item->rotated = XML_GetInt(n, SAVE_INVENTORY_ROTATED, 0);
 	item->setAmount(XML_GetInt(n, SAVE_INVENTORY_AMOUNT, 1));
 	item->setAmmoLeft(XML_GetInt(n, SAVE_INVENTORY_AMMO, NONE_AMMO));
@@ -668,7 +668,8 @@ static void GAME_LoadInventory (xmlNode_t* p, Inventory* inv, int maxLoad)
 	for (xmlNode_t* s = XML_GetNode(p, SAVE_INVENTORY_ITEM); s; s = XML_GetNextNode(s, p, SAVE_INVENTORY_ITEM)) {
 		Item item;
 		containerIndex_t container;
-		int x, y;
+		int x;
+		int y;
 
 		GAME_LoadItem(s, &item, &container, &x, &y);
 		if (item.def() == nullptr)

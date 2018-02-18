@@ -125,7 +125,6 @@ void uiImageNode::draw (uiNode_t* node)
 	vec2_t size;
 	vec2_t nodepos;
 	const image_t* image;
-	vec2_t imagepos;
 	vec2_t nodesize;
 
 	const char* imageName = UI_GetReferenceString(node, node->image);
@@ -178,6 +177,8 @@ void uiImageNode::draw (uiNode_t* node)
 		}
 	}
 
+	vec2_t imagepos;
+	OBJZERO(imagepos);
 	UI_ImageAlignBoxInBox(nodepos, nodesize, size, (align_t) node->contentAlign, imagepos);
 	UI_DrawNormImage(false, imagepos[0] + node->padding, imagepos[1] + node->padding, size[0], size[1],
 			EXTRADATA(node).texh[0], EXTRADATA(node).texh[1],
