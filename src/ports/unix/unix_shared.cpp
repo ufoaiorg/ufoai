@@ -201,5 +201,5 @@ void Sys_OpenURL (const char* url)
 #else
 	Com_sprintf(buf, sizeof(buf), "xdg-open \"%s\"", url);
 #endif
-	system(buf);
+	system(buf) || 0;
 }

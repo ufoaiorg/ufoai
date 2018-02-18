@@ -74,11 +74,11 @@ static void CON_FlushIn (void)
 static void Sys_TTYDeleteCharacter (void)
 {
 	char key = '\b';
-	write(STDOUT_FILENO, &key, 1);
+	write(STDOUT_FILENO, &key, 1) || 0;
 	key = ' ';
-	write(STDOUT_FILENO, &key, 1);
+	write(STDOUT_FILENO, &key, 1) || 0;
 	key = '\b';
-	write(STDOUT_FILENO, &key, 1);
+	write(STDOUT_FILENO, &key, 1) || 0;
 }
 
 /**
@@ -100,10 +100,10 @@ static void Sys_TTYConsoleHide (void)
  */
 static void Sys_TTYConsoleShow (void)
 {
-	write(STDOUT_FILENO, "]", 1);
+	write(STDOUT_FILENO, "]", 1) || 0;
 	if (ttyConsoleHistory.cursor) {
 		for (unsigned int i = 0; i < ttyConsoleHistory.cursor; i++) {
-			write(STDOUT_FILENO, ttyConsoleHistory.buffer + i, 1);
+			write(STDOUT_FILENO, ttyConsoleHistory.buffer + i, 1) || 0;
 		}
 	}
 }
@@ -288,8 +288,8 @@ const char* Sys_ConsoleInput (void)
 					Q_strncpyz(text, ttyConsoleHistory.buffer, sizeof(text));
 					Sys_TTYConsoleHistoryClear(&ttyConsoleHistory);
 					key = '\n';
-					write(1, &key, 1);
-					write(1, "]", 1);
+					write(1, &key, 1) || 0;
+					write(1, "]", 1) || 0;
 					return text;
 				}
 				if (key == '\t') {
@@ -348,7 +348,7 @@ const char* Sys_ConsoleInput (void)
 			ttyConsoleHistory.buffer[ttyConsoleHistory.cursor] = key;
 			ttyConsoleHistory.cursor++;
 			/* print the current line (this is differential) */
-			write(STDOUT_FILENO, &key, 1);
+			write(STDOUT_FILENO, &key, 1) || 0;
 		}
 
 		return nullptr;
