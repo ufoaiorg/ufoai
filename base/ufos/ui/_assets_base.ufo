@@ -153,6 +153,7 @@ do
 		end,
 
 		on_click = function (sender)
+			sender:root():close()
 			ufo.cmd(string.format("mn_base_select %d;", tonumber(sender:baseid())))
 		end,
 	})
