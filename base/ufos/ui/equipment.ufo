@@ -227,7 +227,7 @@ window equipment extends objectinfo
 				{
 					pos		"10 59"
 					size	"351 349"
-					src		"/ui/inv_bg_nofloor"
+					src		"ui/inv_bg_nofloor"
 				}
 
 				/**
