@@ -246,8 +246,8 @@ static gpointer exec_run_remainder (gpointer data)
 
 static void exec_cmd_delete (ExecCmd *e)
 {
-	//g_mutex_clear(&e->state_mutex);
-	g_mutex_free(e->state_mutex);
+	g_mutex_clear(e->state_mutex);
+	g_free(e->state_mutex);
 	g_ptr_array_free(e->args, TRUE);
 	g_free(e->working_dir);
 }
@@ -257,8 +257,8 @@ ExecCmd* exec_cmd_new (Exec **exec)
 	ExecCmd *e = g_new0(ExecCmd, 1);
 	e->args = g_ptr_array_new();
 	e->state = RUNNING;
-	//g_mutex_init(&e->state_mutex);
-	e->state_mutex = g_mutex_new();
+	e->state_mutex = g_new0(GMutex, 1),
+	g_mutex_init(e->state_mutex);
 	e->exec = *exec;
 	e->parse_progress = FALSE;
 	(*exec)->cmds = g_list_append((*exec)->cmds, e);
@@ -386,8 +386,7 @@ void exec_run (Exec *ex)
 			e->lib_proc(e, NULL);
 		else if (piped != NULL) {
 			pipe(child_child_pipe);
-			//thread = g_thread_new(ex->process_title, exec_run_remainder, (gpointer) piped);
-			thread = g_thread_create(exec_run_remainder, e, false, NULL);
+			thread = g_thread_new(ex->process_title, exec_run_remainder, e);
 			exec_spawn_process(e, exec_stdin_setup_func);
 			close(child_child_pipe[0]);
 			close(child_child_pipe[1]);
