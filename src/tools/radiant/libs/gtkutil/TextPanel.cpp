@@ -1,6 +1,6 @@
 #include "TextPanel.h"
 
-#include <gtk/gtkentry.h>
+#include <gtk/gtk.h>
 
 namespace gtkutil
 {

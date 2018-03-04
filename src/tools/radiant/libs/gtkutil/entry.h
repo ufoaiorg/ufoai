@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <gtk/gtkentry.h>
+#include <gtk/gtk.h>
 #include <string>
 
 inline void entry_set_string (GtkEntry* entry, const std::string& string)

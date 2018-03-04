@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include <string>
 #include "radiant_i18n.h"
 #include "gtkutil/TextPanel.h"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gtk/gtkmain.h>
+#include <gtk/gtk.h>
 
 /* greebo: This is an encapsulation of the gtk_timeout_ methods that
  * periodically call a certain function in the given intervals (resolution: 1 ms).

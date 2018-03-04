@@ -1,7 +1,6 @@
 #include "PanedPosition.h"
 
-#include <gtk/gtkvpaned.h>
-#include <gtk/gtkhpaned.h>
+#include <gtk/gtk.h>
 #include "string/string.h"
 
 namespace {

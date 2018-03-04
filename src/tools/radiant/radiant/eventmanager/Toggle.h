@@ -3,9 +3,7 @@
 #include "ieventmanager.h"
 #include "generic/callback.h"
 
-#include <gtk/gtktoggletoolbutton.h>
-#include <gtk/gtkcheckmenuitem.h>
-#include <gtk/gtktogglebutton.h>
+#include <gtk/gtk.h>
 
 #include "Event.h"
 

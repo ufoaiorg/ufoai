@@ -2,8 +2,7 @@
 
 #include <string>
 
-#include <gtk/gtkwidget.h>
-#include <gtk/gtkliststore.h>
+#include <gtk/gtk.h>
 
 #include "gtkutil/glwidget.h"
 

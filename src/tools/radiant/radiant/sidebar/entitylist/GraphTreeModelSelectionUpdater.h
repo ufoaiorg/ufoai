@@ -2,7 +2,7 @@
 #define GRAPHTREEMODELSELECTIONUPDATER_H_
 
 #include "scenelib.h"
-#include <gtk/gtktreeselection.h>
+#include <gtk/gtk.h>
 #include "GraphTreeModel.h"
 
 namespace ui {

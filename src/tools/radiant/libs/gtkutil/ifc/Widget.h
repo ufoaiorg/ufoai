@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 namespace gtkutil
 {

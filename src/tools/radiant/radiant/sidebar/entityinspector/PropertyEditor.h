@@ -3,7 +3,7 @@
 
 #include "iundo.h"
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include <string>
 
 /* FORWARD DECLS */

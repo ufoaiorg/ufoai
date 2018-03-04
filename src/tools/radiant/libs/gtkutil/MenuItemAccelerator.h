@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 namespace gtkutil
 {

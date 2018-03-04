@@ -1,7 +1,6 @@
 #pragma once
 
-#include <gtk/gtktreeviewcolumn.h>
-#include <gtk/gtkcellrenderertext.h>
+#include <gtk/gtk.h>
 
 namespace gtkutil
 {

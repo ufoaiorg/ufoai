@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gtkutil/window/BlockingTransientWindow.h"
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include <string>
 
 namespace gtkutil {

@@ -6,12 +6,8 @@
 
 #include <iostream>
 
-#include <gdk/gdkevents.h>
-#include <gdk/gdkkeysyms.h>
-#include <gtk/gtkwindow.h>
-#include <gtk/gtkaccelgroup.h>
-#include <gtk/gtkeditable.h>
-#include <gtk/gtktextview.h>
+#include <gdk/gdk.h>
+#include <gtk/gtk.h>
 
 #include "xmlutil/Node.h"
 

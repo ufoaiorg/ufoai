@@ -1,7 +1,6 @@
 #pragma once
 
-#include <gtk/gtkframe.h>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include <string>
 
 #include "LeftAlignedLabel.h"

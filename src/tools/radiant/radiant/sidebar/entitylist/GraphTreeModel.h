@@ -1,8 +1,7 @@
 #ifndef GRAPHTREEMODEL_H_
 #define GRAPHTREEMODEL_H_
 
-#include <gtk/gtktreestore.h>
-#include <gtk/gtktreeselection.h>
+#include <gtk/gtk.h>
 #include <map>
 #include "iscenegraph.h"
 #include "GraphTreeNode.h"

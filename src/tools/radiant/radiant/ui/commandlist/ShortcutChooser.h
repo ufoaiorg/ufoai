@@ -3,7 +3,7 @@
 #include <string>
 #include "ieventmanager.h"
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 typedef struct _GdkEventKey GdkEventKey;
 

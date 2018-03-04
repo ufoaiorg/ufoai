@@ -9,11 +9,7 @@
 #include "gtkutil/event/SingleIdleCallback.h"
 #include "gtkutil/menu/PopupMenu.h"
 
-#include <gtk/gtkliststore.h>
-#include <gtk/gtkwidget.h>
-#include <gtk/gtkmenuitem.h>
-#include <gtk/gtktogglebutton.h>
-#include <gtk/gtktreeviewcolumn.h>
+#include <gtk/gtk.h>
 
 #include <map>
 

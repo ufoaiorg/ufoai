@@ -2,7 +2,7 @@
 #define ABOUTDIALOG_H_
 
 #include <string>
-#include "gtk/gtkwidget.h"
+#include "gtk/gtk.h"
 #include "gtkutil/window/BlockingTransientWindow.h"
 
 /** greebo: The AboutDialog displays information about DarkRadiant and

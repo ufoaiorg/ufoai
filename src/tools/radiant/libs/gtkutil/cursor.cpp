@@ -24,8 +24,7 @@
 #include "../../../../shared/shared.h"
 #include "stream/textstream.h"
 
-#include <gdk/gdkcursor.h>
-#include <gdk/gdkpixmap.h>
+#include <gdk/gdk.h>
 
 GdkCursor* create_blank_cursor ()
 {

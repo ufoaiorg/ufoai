@@ -1,6 +1,6 @@
 #include "FiltersMenu.h"
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 #include "radiant_i18n.h"
 #include "ifilter.h"

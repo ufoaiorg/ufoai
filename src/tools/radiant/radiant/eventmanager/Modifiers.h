@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <gdk/gdkkeysyms.h>
-#include <gdk/gdkevents.h>
+#include <gdk/gdk.h>
 
 /* greebo: This class handles the Modifier definitions and translations between
  * GDK modifier flags and the internally used modifierflags.

@@ -3,7 +3,7 @@
 
 #include "PropertyEditor.h"
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 namespace ui {
 

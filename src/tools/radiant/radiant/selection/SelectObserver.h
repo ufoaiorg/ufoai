@@ -4,7 +4,7 @@
 #include "Device.h"
 #include "windowobserver.h"
 #include "SelectionBox.h"
-#include <gdk/gdkevents.h>
+#include <gdk/gdk.h>
 #include "ieventmanager.h"
 
 /* greebo: This is the class that handles the selection-related mouse operations, like Alt-Shift-Click,

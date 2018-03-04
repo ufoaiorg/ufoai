@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gtk/gtktreestore.h>
+#include <gtk/gtk.h>
 
 #include <map>
 #include <string>

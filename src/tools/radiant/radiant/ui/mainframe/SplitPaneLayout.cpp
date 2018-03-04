@@ -21,8 +21,7 @@
 
 #include "SplitPaneLayout.h"
 
-#include <gtk/gtkhpaned.h>
-#include <gtk/gtkvpaned.h>
+#include <gtk/gtk.h>
 
 #include "gtkutil/frame.h"
 

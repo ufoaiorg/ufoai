@@ -6,7 +6,7 @@
 #include <string>
 #include <map>
 #include "xmlutil/Node.h"
-#include <gdk/gdkevents.h>
+#include <gdk/gdk.h>
 
 #include "Modifiers.h"
 

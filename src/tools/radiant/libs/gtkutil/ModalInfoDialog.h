@@ -1,8 +1,6 @@
 #pragma once
 
-#include <gtk/gtkwindow.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtkvbox.h>
+#include <gtk/gtk.h>
 
 #include <string>
 

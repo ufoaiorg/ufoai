@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gtk/gtkwindow.h>
+#include <gtk/gtk.h>
 #include "math/Vector2.h"
 #include <string>
 

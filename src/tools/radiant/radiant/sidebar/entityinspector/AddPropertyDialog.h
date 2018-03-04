@@ -1,10 +1,7 @@
 #ifndef ADDPROPERTYDIALOG_H_
 #define ADDPROPERTYDIALOG_H_
 
-#include <gtk/gtkwidget.h>
-#include <gtk/gtktreeview.h>
-#include <gtk/gtktreestore.h>
-#include <gtk/gtktreeselection.h>
+#include <gtk/gtk.h>
 
 #include "eclasslib.h"
 

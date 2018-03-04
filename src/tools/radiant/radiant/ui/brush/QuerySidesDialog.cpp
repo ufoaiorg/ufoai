@@ -2,11 +2,7 @@
 
 #include "radiant_i18n.h"
 #include "iradiant.h"
-#include <gtk/gtkvbox.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkspinbutton.h>
-#include <gtk/gtkbutton.h>
-#include <gtk/gtkstock.h>
+#include <gtk/gtk.h>
 
 #include "gtkutil/LeftAlignedLabel.h"
 

@@ -23,7 +23,7 @@
 #define INCLUDED_GTKUTIL_WIDGET_H
 
 #include <list>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include "generic/callback.h"
 #include "debugging/debugging.h"
 

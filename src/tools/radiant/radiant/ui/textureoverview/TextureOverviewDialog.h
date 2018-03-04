@@ -22,9 +22,7 @@
 #ifndef TEXTUREOVERVIEWDIALOG_H_
 #define TEXTUREOVERVIEWDIALOG_H_
 
-#include <gtk/gtkwidget.h>
-#include <gtk/gtkliststore.h>
-#include <gtk/gtktreeselection.h>
+#include <gtk/gtk.h>
 #include "gtkutil/window/PersistentTransientWindow.h"
 
 namespace ui

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <gtk/gtkwidget.h>
-#include <gtk/gtkmenuitem.h>
+#include <gtk/gtk.h>
 #include <list>
 
 namespace gtkutil

@@ -3,9 +3,7 @@
 
 #include "../../ui/common/ModelPreview.h"
 
-#include <gtk/gtkwidget.h>
-#include <gtk/gtktreestore.h>
-#include <gtk/gtktreeselection.h>
+#include <gtk/gtk.h>
 
 #include <string>
 

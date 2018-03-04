@@ -1,9 +1,6 @@
 #include "ModalProgressDialog.h"
 
-#include <gtk/gtklabel.h>
-#include <gtk/gtkvbox.h>
-#include <gtk/gtkprogressbar.h>
-#include <gtk/gtkmain.h>
+#include <gtk/gtk.h>
 
 namespace gtkutil {
 

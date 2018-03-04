@@ -2,9 +2,8 @@
 
 #include "imap.h"
 #include "itextstream.h"
-#include <gtk/gtkvbox.h>
+#include <gtk/gtk.h>
 #include "scenelib.h"
-#include <gtk/gtktextview.h>
 #include "gtkutil/ScrolledFrame.h"
 
 namespace map

@@ -1,8 +1,7 @@
 #ifndef PANEDPOSITION_H_
 #define PANEDPOSITION_H_
 
-#include <gtk/gtkwidget.h>
-#include <gtk/gtkpaned.h>
+#include <gtk/gtk.h>
 #include "xmlutil/Node.h"
 
 /* greebo: A PanedPosition object keeps track of the divider position.

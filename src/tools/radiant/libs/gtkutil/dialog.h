@@ -25,7 +25,7 @@
 #include "generic/callback.h"
 #include "generic/arrayrange.h"
 #include "iradiant.h"
-#include <gtk/gtkenums.h>
+#include <gtk/gtk.h>
 #include <string>
 
 typedef int gint;

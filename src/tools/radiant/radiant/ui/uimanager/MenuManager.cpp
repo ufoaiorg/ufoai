@@ -2,9 +2,7 @@
 
 #include "iregistry.h"
 
-#include <gtk/gtkwidget.h>
-#include <gtk/gtkmenushell.h>
-#include <gtk/gtkmenuitem.h>
+#include <gtk/gtk.h>
 
 namespace ui {
 

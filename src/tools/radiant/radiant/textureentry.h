@@ -22,8 +22,7 @@
 #if !defined(INCLUDED_TEXTUREENTRY_H)
 #define INCLUDED_TEXTUREENTRY_H
 
-#include <gtk/gtkentry.h>
-#include <gtk/gtkliststore.h>
+#include <gtk/gtk.h>
 #include "gtkutil/idledraw.h"
 
 #include "generic/static.h"

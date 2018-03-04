@@ -2,8 +2,7 @@
 
 #include "ieventmanager.h"
 #include "iuimanager.h"
-#include <gtk/gtkmenu.h>
-#include <gtk/gtkcontainer.h>
+#include <gtk/gtk.h>
 #include "string/string.h"
 #include "generic/callback.h"
 #include "os/file.h"

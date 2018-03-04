@@ -2,9 +2,7 @@
 #define FINDSHADER_H_
 
 #include <string>
-#include <gtk/gtkwidget.h>
-#include <gtk/gtkeditable.h>
-#include <gtk/gtkliststore.h>
+#include <gtk/gtk.h>
 #include "gtkutil/window/PersistentTransientWindow.h"
 
 /* greebo: The dialog providing the Find & Replace shader functionality.

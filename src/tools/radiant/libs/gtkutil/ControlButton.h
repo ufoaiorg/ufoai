@@ -3,8 +3,7 @@
 #include "image.h"
 #include "Timer.h"
 
-#include <gtk/gtkbutton.h>
-#include <gtk/gtkvbox.h>
+#include <gtk/gtk.h>
 
 /** greebo: A ControlButton is a button containing a single icon
  * that keeps periodically calling the "clicked" event as long as the user

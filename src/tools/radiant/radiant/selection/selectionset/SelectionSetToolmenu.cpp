@@ -4,13 +4,7 @@
 #include "ieventmanager.h"
 #include "iuimanager.h"
 
-#include <gtk/gtktoolitem.h>
-#include <gtk/gtktoolbutton.h>
-#include <gtk/gtkimage.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkcomboboxentry.h>
-#include <gtk/gtkliststore.h>
-#include <gtk/gtkstock.h>
+#include <gtk/gtk.h>
 
 #include "gtkutil/image.h"
 #include "gtkutil/dialog.h"

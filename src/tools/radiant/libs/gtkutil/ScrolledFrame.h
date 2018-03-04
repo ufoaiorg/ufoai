@@ -1,7 +1,6 @@
 #pragma once
 
-#include <gtk/gtkscrolledwindow.h>
-#include <gtk/gtkframe.h>
+#include <gtk/gtk.h>
 
 namespace gtkutil
 {

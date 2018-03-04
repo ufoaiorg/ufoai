@@ -2,7 +2,7 @@
 
 #include "TextMenuItem.h"
 
-#include <gtk/gtkcheckmenuitem.h>
+#include <gtk/gtk.h>
 
 namespace gtkutil
 {

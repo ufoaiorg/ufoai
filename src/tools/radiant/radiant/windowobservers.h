@@ -24,7 +24,7 @@
 
 #include "windowobserver.h"
 
-#include <gdk/gdktypes.h>
+#include <gdk/gdk.h>
 
 class WindowObserver;
 void GlobalWindowObservers_add (WindowObserver* observer);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gtk/gtkwindow.h>
+#include <gtk/gtk.h>
 #include "gtkutil/pointer.h"
 
 #include <string>

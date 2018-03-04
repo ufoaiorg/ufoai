@@ -22,7 +22,7 @@
 #if !defined (INCLUDED_XORRECTANGLE_H)
 #define INCLUDED_XORRECTANGLE_H
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include "math/FloatTools.h"
 
 class rectangle_t

@@ -1,8 +1,7 @@
 #pragma once
 
-#include <gtk/gtkwindow.h>
-#include <gdk/gdkscreen.h>
-#include <gdk/gdkdisplay.h>
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include "itextstream.h"
 
 namespace gtkutil {

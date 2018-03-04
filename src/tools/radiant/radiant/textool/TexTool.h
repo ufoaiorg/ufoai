@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include "gtkutil/WindowPosition.h"
 #include "gtkutil/window/PersistentTransientWindow.h"
 #include "gtkutil/glwidget.h"

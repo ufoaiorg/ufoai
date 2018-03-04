@@ -1,9 +1,6 @@
 #pragma once
 
-#include <gtk/gtklabel.h>
-#include <gtk/gtkmenuitem.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkimage.h>
+#include <gtk/gtk.h>
 #include <string>
 
 namespace gtkutil

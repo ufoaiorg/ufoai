@@ -4,7 +4,7 @@
 #include "gtkutil/WindowPosition.h"
 #include "gtkutil/window/BlockingTransientWindow.h"
 #include <string>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 // Forward decls
 class Material;

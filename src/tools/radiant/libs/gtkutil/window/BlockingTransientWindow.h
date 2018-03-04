@@ -2,7 +2,7 @@
 
 #include "TransientWindow.h"
 
-#include <gtk/gtkmain.h>
+#include <gtk/gtk.h>
 
 namespace gtkutil {
 

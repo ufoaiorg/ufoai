@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gtk/gtklabel.h>
+#include <gtk/gtk.h>
 #include "RightAlignment.h"
 
 namespace gtkutil

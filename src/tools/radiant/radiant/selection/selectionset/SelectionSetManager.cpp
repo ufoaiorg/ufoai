@@ -5,8 +5,7 @@
 #include "iselection.h"
 #include "ieventmanager.h"
 
-#include <gtk/gtktoolbar.h>
-#include <gtk/gtkseparatortoolitem.h>
+#include <gtk/gtk.h>
 
 namespace selection
 {

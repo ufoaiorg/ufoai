@@ -1,7 +1,6 @@
 #pragma once
 
-#include <gtk/gtkwidget.h>
-#include <gtk/gtkwindow.h>
+#include <gtk/gtk.h>
 
 #include <string>
 

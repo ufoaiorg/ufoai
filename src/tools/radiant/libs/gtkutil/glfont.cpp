@@ -22,7 +22,8 @@
 #include "glfont.h"
 #include <GL/gl.h>
 #include "debugging/debugging.h"
-#include <gtk/gtkglwidget.h>
+#include <gtk/gtk.h>
+#include <gtk/gtkgl.h>
 
 GLFont glfont_create (const std::string& font_string)
 {

@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include <gtk/gtktreemodel.h>
-#include <gtk/gtktreeselection.h>
+#include <gtk/gtk.h>
+#include <gtk/gtk.h>
 
 namespace gtkutil
 {

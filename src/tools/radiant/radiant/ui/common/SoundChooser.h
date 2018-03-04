@@ -1,8 +1,6 @@
 #pragma once
 
-#include <gtk/gtkwidget.h>
-#include <gtk/gtktreestore.h>
-#include <gtk/gtktreeselection.h>
+#include <gtk/gtk.h>
 
 #include "SoundPreview.h"
 #include <string>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gtk/gtkseparatormenuitem.h>
+#include <gtk/gtk.h>
 #include <string>
 
 namespace gtkutil

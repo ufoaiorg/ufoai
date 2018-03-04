@@ -2,8 +2,7 @@
 
 #include <string>
 #include <iostream>
-#include <gtk/gtkwidget.h>
-#include <gtk/gtkliststore.h>
+#include <gtk/gtk.h>
 #include "gtkutil/window/BlockingTransientWindow.h"
 
 namespace ui {

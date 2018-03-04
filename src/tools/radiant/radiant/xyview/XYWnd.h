@@ -2,8 +2,8 @@
 
 #include "../clipper/Clipper.h"
 
-#include <gdk/gdkevents.h>
-#include <gtk/gtkwidget.h>
+#include <gdk/gdk.h>
+#include <gtk/gtk.h>
 
 #include "math/Vector3.h"
 #include "math/matrix.h"

@@ -5,12 +5,7 @@
 #include "../mru/MRU.h"
 
 #include "gtkutil/MenuItemAccelerator.h"
-#include <gtk/gtkmenushell.h>
-#include <gtk/gtkmenuitem.h>
-#include <gtk/gtkmenubar.h>
-#include <gtk/gtkmenu.h>
-#include <gtk/gtkseparatormenuitem.h>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 #include <iostream>
 

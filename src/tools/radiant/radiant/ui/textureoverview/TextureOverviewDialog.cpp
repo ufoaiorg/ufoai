@@ -11,13 +11,7 @@
 
 #include <map>
 #include <string>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkframe.h>
-#include <gtk/gtkcontainer.h>
-#include <gtk/gtkliststore.h>
-#include <gtk/gtktreeview.h>
-#include <gtk/gtkcellrenderertext.h>
-#include <gtk/gtkscrolledwindow.h>
+#include <gtk/gtk.h>
 
 namespace ui
 {

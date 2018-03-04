@@ -1,7 +1,7 @@
 #pragma once
 
 #include "math/matrix.h"
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include "igl.h"
 #include "irender.h"
 #include "scenelib.h"

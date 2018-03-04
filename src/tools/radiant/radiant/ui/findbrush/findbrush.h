@@ -22,7 +22,7 @@
 #ifndef FINDBRUSH_H
 #define FINDBRUSH_H
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include "gtkutil/window/PersistentTransientWindow.h"
 
 namespace ui {

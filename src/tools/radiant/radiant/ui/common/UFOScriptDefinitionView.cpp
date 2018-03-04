@@ -1,7 +1,6 @@
 #include "UFOScriptDefinitionView.h"
 
-#include <gtk/gtkvbox.h>
-#include <gtk/gtktable.h>
+#include <gtk/gtk.h>
 #include "../../../../../shared/autoptr.h"
 #include "gtkutil/LeftAlignedLabel.h"
 #include "gtkutil/dialog.h"
