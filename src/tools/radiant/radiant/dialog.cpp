@@ -346,12 +346,12 @@ void Dialog::addCombo (GtkWidget* vbox, const std::string& name, const std::stri
 
 	{
 		// Create a new combo box
-		GtkWidget* combo = gtk_combo_box_new_text();
+		GtkWidget* combo = gtk_combo_box_text_new();
 
 		// Add all the string values to the combo box
 		for (ComboBoxValueList::const_iterator i = valueList.begin(); i != valueList.end(); ++i) {
 			// Add the current string value to the combo box
-			gtk_combo_box_append_text(GTK_COMBO_BOX(combo), i->c_str());
+			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combo), i->c_str());
 		}
 
 		// Connect the registry key to the newly created combo box
