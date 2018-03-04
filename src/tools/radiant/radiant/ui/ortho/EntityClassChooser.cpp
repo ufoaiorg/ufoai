@@ -236,7 +236,7 @@ namespace ui
 
 	gint EntityClassChooser::callbackKeyPress (GtkWidget* widget, GdkEventKey* event, EntityClassChooser* self)
 	{
-		if (event->keyval == GDK_Return) {
+		if (event->keyval == GDK_KEY_Return) {
 			addEntity(self);
 			return TRUE;
 		}
