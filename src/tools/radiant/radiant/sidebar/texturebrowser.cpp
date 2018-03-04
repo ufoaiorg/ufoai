@@ -954,8 +954,7 @@ GtkWidget* TextureBrowser::createToolBar ()
 		GdkPixbuf* pixBuf = gtkutil::getLocalPixbuf("texwindow_uniformsize.png");
 		GtkWidget* toggle_image = GTK_WIDGET(gtk_image_new_from_pixbuf(pixBuf));
 
-		GtkTooltips* barTips = gtk_tooltips_new();
-		gtk_tool_item_set_tooltip(sizeToggle, barTips, _("Clamp texture thumbnails to constant size"), "");
+		gtk_tool_item_set_tooltip_text(sizeToggle, _("Clamp texture thumbnails to constant size"));
 
 		gtk_tool_button_set_label(GTK_TOOL_BUTTON(sizeToggle), _("Constant size"));
 		gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(sizeToggle), toggle_image);

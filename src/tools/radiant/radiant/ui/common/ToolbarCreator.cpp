@@ -91,8 +91,7 @@ namespace ui {
 
 			// Set the tooltip, if not empty
 			if (!tooltip.empty()) {
-				gtk_tooltips_set_tip(_tooltips, GTK_WIDGET(toolItem), tooltip.c_str(), "");
-				//gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(toolItem), _tooltips, tooltip.c_str(), "");
+				gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(toolItem), tooltip.c_str());
 			}
 
 			// Load and assign the icon, if specified
@@ -153,9 +152,6 @@ namespace ui {
 		xml::NodeList toolbarList = GlobalRegistry().findXPath("//ui//toolbar");
 
 		if (toolbarList.size() > 0) {
-			_tooltips = gtk_tooltips_new();
-			gtk_tooltips_enable(_tooltips);
-
 			for (unsigned int i = 0; i < toolbarList.size(); i++) {
 				std::string toolbarName = toolbarList[i].getAttributeValue("name");
 

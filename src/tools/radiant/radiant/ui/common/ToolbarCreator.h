@@ -27,7 +27,6 @@ namespace ui {
 			bool toolbarExists(const std::string& toolbarName);
 
 			ToolbarMap _toolbars;
-			GtkTooltips* _tooltips;
 		public:
 			// Constructor
 			ToolbarCreator();
