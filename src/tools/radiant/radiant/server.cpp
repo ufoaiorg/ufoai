@@ -76,7 +76,6 @@ class RadiantModuleServer: public ModuleServer
 
 		void registerModule (const std::string& type, int version, const std::string& name, Module& module)
 		{
-			ASSERT_NOTNULL(&module);
 			if (!m_modules.insert(Modules_::value_type(ModuleKey(ModuleType(type, version), name), &module)).second) {
 				g_warning("Module already registered: type='%s' name='%s'\n", type.c_str(), name.c_str());
 			} else {
