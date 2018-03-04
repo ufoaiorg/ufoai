@@ -23,14 +23,14 @@ bool ShortcutChooser::shortcutDialog(const std::string& title, const std::string
 
 	labelWidget = gtk_label_new(NULL);
 	gtk_label_set_markup(GTK_LABEL(labelWidget), label.c_str());
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), labelWidget);
+	gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dialog))), labelWidget);
 
 	entryWidget = gtk_entry_new();
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), entryWidget);
+	gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dialog))), entryWidget);
 
 	// The widget to display the status text
 	_statusWidget = gtk_label_new(NULL);
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), _statusWidget);
+	gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dialog))), _statusWidget);
 	gtk_label_set_justify(GTK_LABEL(_statusWidget), GTK_JUSTIFY_LEFT);
 
 	// Connect the key events to the custom callback to override the default handler

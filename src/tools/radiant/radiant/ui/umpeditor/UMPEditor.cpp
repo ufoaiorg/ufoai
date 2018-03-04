@@ -17,7 +17,7 @@ namespace ui
 
 		gtk_container_set_border_width(GTK_CONTAINER(_dialog), 12);
 
-		gtk_container_add(GTK_CONTAINER(GTK_DIALOG(_dialog)->vbox), _view.getWidget());
+		gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(_dialog))), _view.getWidget());
 
 		GdkRectangle rect = gtkutil::MultiMonitor::getMonitorForWindow(GlobalRadiant().getMainWindow());
 		gtk_window_set_default_size(GTK_WINDOW(_dialog), gint(rect.width / 2), gint(2 * rect.height / 3));

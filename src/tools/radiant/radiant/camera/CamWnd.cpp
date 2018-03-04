@@ -59,7 +59,9 @@ class ObjectFinder: public scene::Graph::Walker
 
 
 inline WindowVector windowvector_for_widget_centre(GtkWidget* widget) {
-	return WindowVector(static_cast<float>(widget->allocation.width / 2), static_cast<float>(widget->allocation.height / 2));
+	GtkAllocation allocation;
+	gtk_widget_get_allocation(widget, &allocation);
+	return WindowVector(static_cast<float>(allocation.width / 2), static_cast<float>(allocation.height / 2));
 }
 
 class FloorHeightWalker : public scene::Graph::Walker
@@ -106,7 +108,7 @@ static void selection_motion(gdouble x, gdouble y, guint state, void* data) {
 namespace {
 
 void camwnd_update_xor_rectangle(CamWnd& self, SelectionRectangle area) {
-	if (GTK_WIDGET_VISIBLE(self.m_gl_widget)) {
+	if (gtk_widget_get_visible(self.m_gl_widget)) {
 		self.m_XORRectangle.set(rectangle_from_area(area.min, area.max, self.getCamera().width, self.getCamera().height));
 	}
 }
@@ -253,7 +255,7 @@ CamWnd::CamWnd() :
 	gtk_widget_ref(m_gl_widget);
 
 	gtk_widget_set_events(m_gl_widget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
-	GTK_WIDGET_SET_FLAGS (m_gl_widget, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus(m_gl_widget, true);
 	gtk_widget_set_size_request(m_gl_widget, CAMWND_MINSIZE_X, CAMWND_MINSIZE_Y);
 	g_object_set(m_gl_widget, "can-focus", TRUE, NULL);
 

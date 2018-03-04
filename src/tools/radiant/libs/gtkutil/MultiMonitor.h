@@ -50,7 +50,7 @@ class MultiMonitor
 			GdkScreen* scr = gtk_window_get_screen(GTK_WINDOW(window));
 
 			// Get the monitor which the GtkWindow is displayed on
-			gint monitorNum = gdk_screen_get_monitor_at_window(scr, GTK_WIDGET(window)->window);
+			gint monitorNum = gdk_screen_get_monitor_at_window(scr, gtk_widget_get_window(GTK_WIDGET(window)));
 
 			return getMonitor(monitorNum);
 		}

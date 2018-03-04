@@ -188,7 +188,7 @@ void Radiant_Shutdown (void)
 
 static gint window_realize_remove_decoration (GtkWidget* widget, gpointer data)
 {
-	gdk_window_set_decorations(widget->window, (GdkWMDecoration) (GDK_DECOR_ALL | GDK_DECOR_MENU | GDK_DECOR_MINIMIZE
+	gdk_window_set_decorations(gtk_widget_get_window(widget), (GdkWMDecoration) (GDK_DECOR_ALL | GDK_DECOR_MENU | GDK_DECOR_MINIMIZE
 			| GDK_DECOR_MAXIMIZE));
 	return FALSE;
 }
@@ -260,7 +260,7 @@ bool ScreenUpdates_Enabled (void)
 
 void ScreenUpdates_process (void)
 {
-	if (redrawRequired() && GTK_WIDGET_VISIBLE(g_wait.m_window)) {
+	if (redrawRequired() && gtk_widget_get_visible(GTK_WIDGET(g_wait.m_window))) {
 		while (gtk_events_pending()) {
 			gtk_main_iteration();
 		}
@@ -281,11 +281,11 @@ void ScreenUpdates_Disable (const std::string& message, const std::string& title
 		g_wait = create_wait_dialog(title, message);
 
 		if (isActiveApp) {
-			gtk_widget_show(GTK_WIDGET(g_wait.m_window));
+			gtk_widget_show(GTK_WIDGET(GTK_WIDGET(g_wait.m_window)));
 			gtk_grab_add(GTK_WIDGET(g_wait.m_window));
 			ScreenUpdates_process();
 		}
-	} else if (GTK_WIDGET_VISIBLE(g_wait.m_window)) {
+	} else if (gtk_widget_get_visible(GTK_WIDGET(g_wait.m_window))) {
 		gtk_label_set_text(g_wait.m_label, message.c_str());
 		ScreenUpdates_process();
 	}
@@ -301,7 +301,7 @@ void ScreenUpdates_Enable (void)
 		gtk_grab_remove(GTK_WIDGET(g_wait.m_window));
 		destroy_floating_window(g_wait.m_window);
 		g_wait.m_window = 0;
-	} else if (GTK_WIDGET_VISIBLE(g_wait.m_window)) {
+	} else if (gtk_widget_get_visible(GTK_WIDGET(g_wait.m_window))) {
 		gtk_label_set_text(g_wait.m_label, g_wait_stack.back().c_str());
 		ScreenUpdates_process();
 	}
@@ -369,7 +369,7 @@ class MainWindowActive
 {
 		static gboolean notify (GtkWindow* window, gpointer dummy, MainWindowActive* self)
 		{
-			if (g_wait.m_window != 0 && gtk_window_is_active(window) && !GTK_WIDGET_VISIBLE(g_wait.m_window)) {
+			if (g_wait.m_window != 0 && gtk_window_is_active(window) && !gtk_widget_get_visible(GTK_WIDGET(g_wait.m_window))) {
 				gtk_widget_show(GTK_WIDGET(g_wait.m_window));
 			}
 
@@ -608,7 +608,7 @@ void MainFrame::SaveWindowInfo (void)
 	// Tell the position tracker to save the information
 	_windowPosition.saveToPath(RKEY_WINDOW_STATE);
 
-	GdkWindow* window = GTK_WIDGET(m_window)->window;
+	GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(m_window));
 	if (window != NULL)
 		GlobalRegistry().setAttribute(RKEY_WINDOW_STATE, "state", string::toString(gdk_window_get_state(window)));
 }

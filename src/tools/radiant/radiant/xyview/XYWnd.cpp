@@ -116,7 +116,7 @@ XYWnd::XYWnd () :
 
 	gtk_widget_set_events(m_gl_widget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
 			| GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
-	GTK_WIDGET_SET_FLAGS(m_gl_widget, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus(m_gl_widget, true);
 	gtk_widget_set_size_request(m_gl_widget, XYWND_MINSIZE_X, XYWND_MINSIZE_Y);
 	g_object_set(m_gl_widget, "can-focus", TRUE, NULL);
 
@@ -291,10 +291,10 @@ void XYWnd::Clipper_Crosshair_OnMouseMoved (int x, int y)
 	convertXYToWorld(x, y, mousePosition);
 	if (GlobalClipper().clipMode() && GlobalClipper().find(mousePosition, m_viewType, m_fScale) != 0) {
 		GdkCursor *cursor = gdk_cursor_new(GDK_CROSSHAIR);
-		gdk_window_set_cursor(m_gl_widget->window, cursor);
+		gdk_window_set_cursor(gtk_widget_get_window(m_gl_widget), cursor);
 		gdk_cursor_unref(cursor);
 	} else {
-		gdk_window_set_cursor(m_gl_widget->window, 0);
+		gdk_window_set_cursor(gtk_widget_get_window(m_gl_widget), 0);
 	}
 }
 
@@ -1697,7 +1697,7 @@ void XYWnd::draw ()
 
 void XYWnd::updateXORRectangle (SelectionRectangle area)
 {
-	if (GTK_WIDGET_VISIBLE(getWidget())) {
+	if (gtk_widget_get_visible(getWidget())) {
 		m_XORRectangle.set(rectangle_from_area(area.min, area.max, getWidth(), getHeight()));
 	}
 }

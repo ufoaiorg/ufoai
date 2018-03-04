@@ -42,7 +42,7 @@ inline void CHECK_RESTORE (GtkWidget* w)
 // order to allow it to be restored correctly.
 inline void CHECK_MINIMIZE (GtkWidget* w)
 {
-	if (GTK_WIDGET_VISIBLE(w)) {
+	if (gtk_widget_get_visible(w)) {
 		g_object_set_data(G_OBJECT(w), "was_mapped", gint_to_pointer(1));
 		gint x, y;
 		gtk_window_get_position(GTK_WINDOW(w), &x, &y);
@@ -143,7 +143,7 @@ GtkWindow* create_persistent_floating_window (const std::string& title, GtkWindo
 
 static gint window_realize_remove_minmax (GtkWidget* widget, gpointer data)
 {
-	gdk_window_set_decorations(widget->window, (GdkWMDecoration) (GDK_DECOR_ALL | GDK_DECOR_MINIMIZE
+	gdk_window_set_decorations(gtk_widget_get_window(widget), (GdkWMDecoration) (GDK_DECOR_ALL | GDK_DECOR_MINIMIZE
 			| GDK_DECOR_MAXIMIZE));
 	return FALSE;
 }

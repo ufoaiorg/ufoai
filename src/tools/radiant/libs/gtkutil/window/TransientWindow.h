@@ -62,7 +62,7 @@ class TransientWindow {
 		 */
 		static gboolean _onExpose(GtkWidget* self, GdkEventExpose* event, GtkWindow* parent) {
 			// Make sure the parent window is shown as well
-			if (parent != NULL && !GTK_WIDGET_VISIBLE(parent)) {
+			if (parent != NULL && !gtk_widget_get_visible(GTK_WIDGET(parent))) {
 				gtk_window_present(parent);
 
 				// Refocus on the self window
@@ -149,7 +149,7 @@ class TransientWindow {
 		 * Test for visibility.
 		 */
 		bool isVisible() {
-			if (GTK_WIDGET_VISIBLE(_window))
+			if (gtk_widget_get_visible(_window))
 				return true;
 			else
 				return false;

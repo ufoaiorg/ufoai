@@ -117,7 +117,7 @@ void TexTool::populateWindow() {
 
 	if (textoolbar != NULL) {
 		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(textoolbar), false, false, 0);
-		GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(textoolbar), GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus(GTK_WIDGET(textoolbar), false);
 	}
 
 	gtk_box_pack_start(GTK_BOX(vbox), frame, true, true, 0);

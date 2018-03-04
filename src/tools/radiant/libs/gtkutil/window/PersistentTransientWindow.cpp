@@ -89,7 +89,7 @@ void PersistentTransientWindow::restore(GtkWidget* window) {
 
 void PersistentTransientWindow::minimise(GtkWidget* window) {
 	if (GTK_IS_WINDOW(window)) {
-		if (GTK_WIDGET_VISIBLE(window)) {
+		if (gtk_widget_get_visible(window)) {
 			// Set the "mapped" flag to mark this window as "to be restored again"
 			g_object_set_data(G_OBJECT(window), "was_mapped", gint_to_pointer(1));
 

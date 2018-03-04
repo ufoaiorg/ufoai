@@ -123,7 +123,7 @@ void TextureBrowser::createWidget() {
 
 		gtk_widget_set_events(glWidget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
 				| GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
-		GTK_WIDGET_SET_FLAGS(glWidget, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus(glWidget, true);
 		gtk_widget_show(glWidget);
 
 		g_signal_connect(G_OBJECT(glWidget), "size_allocate",
@@ -800,7 +800,7 @@ void TextureBrowser_scrollChanged (void* data, gdouble value)
 
 void TextureBrowser::onVerticalScroll (GtkAdjustment *adjustment, TextureBrowser* textureBrowser)
 {
-	textureBrowser->m_scrollAdjustment.value_changed(adjustment->value);
+	textureBrowser->m_scrollAdjustment.value_changed(gtk_adjustment_get_value(adjustment));
 }
 
 void TextureBrowser::updateScroll ()
@@ -814,12 +814,12 @@ void TextureBrowser::updateScroll ()
 	GtkAdjustment *vadjustment = gtk_range_get_adjustment(GTK_RANGE(m_texture_scroll));
 	if (!vadjustment)
 		return;
-	vadjustment->value = -getOriginY();
-	vadjustment->page_size = height;
-	vadjustment->page_increment = height / 2;
-	vadjustment->step_increment = 20;
-	vadjustment->lower = 0;
-	vadjustment->upper = totalHeight;
+	gtk_adjustment_set_value(vadjustment, -getOriginY());
+	gtk_adjustment_set_page_size(vadjustment, height);
+	gtk_adjustment_set_page_increment(vadjustment, height / 2);
+	gtk_adjustment_set_step_increment(vadjustment, 20);
+	gtk_adjustment_set_lower(vadjustment, 0);
+	gtk_adjustment_set_upper(vadjustment, totalHeight);
 
 	g_signal_emit_by_name(G_OBJECT (vadjustment), "changed");
 }
