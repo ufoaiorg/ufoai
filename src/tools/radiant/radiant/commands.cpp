@@ -197,7 +197,7 @@ void OpenHelpURL ()
 
 void OpenBugReportURL ()
 {
-	OpenURL("http://sourceforge.net/tracker/?func=add&group_id=157793&atid=805242");
+	OpenURL("https://ufoai.org/bugs");
 }
 
 }
