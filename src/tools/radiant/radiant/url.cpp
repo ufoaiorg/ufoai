@@ -28,7 +28,7 @@
 #include <gdk/gdkwin32.h>
 #include <shellapi.h>
 static inline bool open_url(const char* url) {
-	return ShellExecute((HWND)GDK_WINDOW_HWND (GTK_WIDGET(GlobalRadiant().getMainWindow())->window), "open", url, 0, 0, SW_SHOW) > (HINSTANCE)32;
+	return ShellExecute((HWND)GDK_WINDOW_HWND (gtk_widget_get_window(GTK_WIDGET(GlobalRadiant().getMainWindow()))), "open", url, 0, 0, SW_SHOW) > (HINSTANCE)32;
 }
 #elif defined(__linux__) || defined(__FreeBSD__) || defined (__OpenBSD__)
 #include <stdlib.h>
