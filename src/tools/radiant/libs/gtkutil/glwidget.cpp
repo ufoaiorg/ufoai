@@ -170,7 +170,7 @@ gboolean GLWidget::onHierarchyChanged(GtkWidget* widget,
 gint GLWidget::onRealise(GtkWidget* widget, GLWidget* self) {
 	if (++g_context_count == 1) {
 		g_shared = widget;
-		gtk_widget_ref(g_shared);
+		g_object_ref(g_shared);
 
 		makeCurrent(g_shared);
 		GlobalOpenGL().contextValid = true;
@@ -187,7 +187,7 @@ gint GLWidget::onUnRealise(GtkWidget* widget, GLWidget* self) {
 
 		GLWidget_sharedContextDestroyed();
 
-		gtk_widget_unref(g_shared);
+		g_object_unref(g_shared);
 		g_shared = NULL;
 	}
 

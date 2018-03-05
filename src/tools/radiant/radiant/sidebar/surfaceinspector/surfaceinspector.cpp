@@ -691,8 +691,8 @@ void SurfaceInspector::saveToRegistry ()
 
 void SurfaceInspector::fitTexture ()
 {
-	float repeatX = gtk_spin_button_get_value_as_float(GTK_SPIN_BUTTON(_fitTexture.width));
-	float repeatY = gtk_spin_button_get_value_as_float(GTK_SPIN_BUTTON(_fitTexture.height));
+	float repeatX = gtk_spin_button_get_value(GTK_SPIN_BUTTON(_fitTexture.width));
+	float repeatY = gtk_spin_button_get_value(GTK_SPIN_BUTTON(_fitTexture.height));
 
 	if (repeatX > 0.0 && repeatY > 0.0) {
 		selection::algorithm::fitTexture(repeatX, repeatY);

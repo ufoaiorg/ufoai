@@ -228,7 +228,7 @@ namespace sidebar
 			gtk_box_pack_start(GTK_BOX(hboxFooter), vboxOptions, FALSE, TRUE, 0);
 			GtkRadioButton* radioExtendSelection =
 					GTK_RADIO_BUTTON(gtk_radio_button_new_with_label(NULL, _("Extend current selection")));
-			gtk_widget_ref(GTK_WIDGET(radioExtendSelection));
+			g_object_ref(GTK_WIDGET(radioExtendSelection));
 			gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(radioExtendSelection), TRUE, TRUE, 0);
 			g_object_set_data(G_OBJECT(radioExtendSelection), "handler", gint_to_pointer(
 					g_signal_connect(radioExtendSelection,
@@ -237,7 +237,7 @@ namespace sidebar
 			GtkRadioButton
 					* radioUnselect =
 							GTK_RADIO_BUTTON(gtk_radio_button_new_with_label_from_widget(radioExtendSelection, _("Deselect before insert")));
-			gtk_widget_ref(GTK_WIDGET(radioUnselect));
+			g_object_ref(GTK_WIDGET(radioUnselect));
 			gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(radioUnselect), TRUE, TRUE, 0);
 			g_object_set_data(G_OBJECT(radioUnselect), "handler", gint_to_pointer(
 					g_signal_connect(G_OBJECT(radioUnselect),
@@ -246,7 +246,7 @@ namespace sidebar
 			GtkRadioButton
 					* radioReplace =
 							GTK_RADIO_BUTTON(gtk_radio_button_new_with_label_from_widget(radioUnselect, _("Replace current selection")));
-			gtk_widget_ref(GTK_WIDGET(radioReplace));
+			g_object_ref(GTK_WIDGET(radioReplace));
 			gtk_box_pack_start(GTK_BOX(vboxOptions), GTK_WIDGET(radioReplace), TRUE, TRUE, 0);
 			g_object_set_data(G_OBJECT(radioReplace), "handler", gint_to_pointer(
 					g_signal_connect(G_OBJECT(radioReplace),

@@ -108,7 +108,7 @@ void FindAndReplaceShader::populateWindow() {
 	gtk_box_pack_start(GTK_BOX(replaceHBox), _replaceSelectButton, FALSE, FALSE, 0);
 
 	GtkWidget* spacer = gtk_alignment_new(0,0,0,0);
-	gtk_widget_set_usize(spacer, 10, 2);
+	gtk_widget_set_size_request(spacer, 10, 2);
 	gtk_box_pack_start(GTK_BOX(dialogVBox), spacer, FALSE, FALSE, 0);
 
 	// The checkbox for "search selected only"

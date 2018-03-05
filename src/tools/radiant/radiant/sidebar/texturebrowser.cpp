@@ -936,7 +936,7 @@ GtkWidget* TextureBrowser::createMenuBar ()
 	GtkWidget* menu_directories = gtk_menu_new();
 	GtkWidget* directories_item = (GtkWidget*) constructDirectoriesMenu(GTK_MENU(menu_directories));
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(directories_item), menu_directories);
-	gtk_menu_bar_append(GTK_MENU_BAR(menu_bar), directories_item);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu_bar), directories_item);
 
 	return menu_bar;
 }

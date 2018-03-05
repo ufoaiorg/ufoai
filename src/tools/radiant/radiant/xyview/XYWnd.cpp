@@ -112,7 +112,7 @@ XYWnd::XYWnd () :
 	m_window_observer->setRectangleDrawCallback(MemberCaller1<XYWnd, SelectionRectangle, &XYWnd::updateXORRectangle> (*this));
 	m_window_observer->setView(m_view);
 
-	gtk_widget_ref(m_gl_widget);
+	g_object_ref(m_gl_widget);
 
 	gtk_widget_set_events(m_gl_widget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
 			| GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);

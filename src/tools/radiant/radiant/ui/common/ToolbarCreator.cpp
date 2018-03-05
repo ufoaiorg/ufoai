@@ -126,7 +126,7 @@ namespace ui {
 			// Try to set the alignment, if the attribute is properly set
 			std::string align = node.getAttributeValue("align");
 
-			gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), align == "vertical" ? GTK_ORIENTATION_VERTICAL : GTK_ORIENTATION_HORIZONTAL);
+			gtk_orientable_set_orientation(GTK_ORIENTABLE(toolbar), align == "vertical" ? GTK_ORIENTATION_VERTICAL : GTK_ORIENTATION_HORIZONTAL);
 
 			for (unsigned int i = 0; i < toolItemList.size(); i++) {
 				// Create and get the toolItem with the parsing
