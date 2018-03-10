@@ -1706,7 +1706,7 @@ void GAME_DrawBaseLayout (int baseIdx, int x, int y, int totalMarge, int w, int 
 
 /**
  * @brief Cgame callback to draw tooltip for baselayout UI node
- * @param[in] BaseIdx Numeric index of the base
+ * @param[in] baseIdx Numeric index of the base
  * @param[in] x Horizontal screen position
  * @param[in] y Vertical screen position
  */

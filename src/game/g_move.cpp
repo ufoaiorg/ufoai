@@ -209,8 +209,7 @@ static void G_SendFootstepSound (Edict* ent, const int contentFlags)
 
 /**
  * @brief Writes a step of the move event to the net
- * @param[in] ent Edict to move
- * @param[in] stepAmount Pointer to the amount of steps in this move-event
+ * @param[in] ent Actor (entity) to move
  * @param[in] dvec The direction vector for the step to be added
  * @param[in] contentFlags The material we are walking over
  */

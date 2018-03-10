@@ -660,7 +660,7 @@ base_t* PR_ProductionBase (const production_t* production)
 }
 /**
  * @brief Used in production costs (to allow reducing prices below 1x).
- * @param[in] production cost being modified
+ * @param[in] productionCost production cost being modified
  * @return price modified by the component rate in campaign.ufo
  */
 int PR_GetPrice (const int productionCost)

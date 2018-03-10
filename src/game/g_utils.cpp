@@ -541,6 +541,7 @@ static int G_GetTouchingEdicts (const AABB& aabb, Edict** list, int maxCount, Ed
 /**
  * @brief Check the world against triggers for the current entity
  * @param[in,out] ent The entity that maybe touches others
+ * @param[in] type Type of the entity
  * @return Returns the number of associated client actions
  */
 int G_TouchTriggers (Edict* ent, const entity_type_t type)

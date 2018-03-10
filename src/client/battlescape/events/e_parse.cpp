@@ -151,6 +151,7 @@ static void CL_NotifyBattlescapeEventDelay (int now, void* data, int delay)
 /**
  * @brief Checks if a given battlescape event should get delayed.
  * @param now The current time.
+ * @param data Event structure pointer
  */
 static bool CL_DelayBattlescapeEvent (int now, void* data)
 {

@@ -174,7 +174,7 @@ void uiWindowNode::initNode(uiNode_t* node) {
 
 /**
  * @brief Actions to do on deleting the node
- * @param[in, out] Pointer to the node to destroy
+ * @param[in, out] node Pointer to the node to destroy
  */
 void uiWindowNode::deleteNode (uiNode_t* node)
 {

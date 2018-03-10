@@ -109,7 +109,7 @@ bool UI_ExecuteLuaEventScript_ParamList (uiNode_t* node, LUA_EVENT event, linked
  * @brief Executes a lua event handler and returns the result as a boolean.
  * @param[in] node The node the event handler is associated with.
  * @param[in] event The event to execute.
- * @param[in/out] result The boolean value returned by the lua script.
+ * @param[in,out] result The boolean value returned by the lua script.
  * @return True if the operation succeeds, false otherwise.
  * @note The signature of the event handler in lua is: onevent(sender) and must return a boolean value
  */
@@ -339,9 +339,11 @@ bool UI_ExecuteLuaConFunc (uiNode_t* node, LUA_FUNCTION fcn)
 }
 
 /**
- * @brief Executes a lua based method defined on the behaviour class of a node.
- * @param[in] node The node the method is defined on.
- * @param[in] name The name of the node.
+ * @brief Executes a lua based method defined on the behaviour class of a node
+ * @param[in] node The node the method is defined on
+ * @param[in] name The name of the node
+ * @param[in] params List of Lua method parameters
+ * @param[in] nparams Number of parameters on the list
  * @return True if the operation succeeds, false otherwise.
  * @note The signature of the method in lua is: function(sender)
 */

@@ -105,7 +105,7 @@ void AiAreaSearch::LQueue::enqueue(const pos3_t data) {
 
 /**
  * @brief Retrieve an entry form the queue.
- * @param[out] The data retrieved.
+ * @param[out] data The data retrieved.
  * @return @c true if the data was retrieved @c false otherwise.
  */
 bool AiAreaSearch::LQueue::dequeue(pos3_t data) {
@@ -1416,6 +1416,8 @@ static float AI_PanicCalcActionScore (Actor* actor, const pos3_t to, AiAction* a
  * @brief Try to go close to a mission edict
  * @param[in,out] actor The actor edict.
  * @param[in] to The target position.
+ * @param[in] tus Available Time Units
+ * @param[in] radius Radius of the area to search
  * @return @c true if found a suitable position, @c false otherwise
  */
 bool AI_FindMissionLocation (Actor* actor, const pos3_t to, int tus, int radius)

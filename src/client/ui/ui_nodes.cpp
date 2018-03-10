@@ -210,10 +210,10 @@ const char* UI_GetPath (const uiNode_t* node)
  * @param[in] iterationNode relative node referencing child in 'forchildin' iteration, mapped to '*node:child', can be nullptr
  * @param[out] resultNode Node found. Else nullptr.
  * @param[out] resultProperty Property found. Else nullptr.
- * @param[in/out] luaMethod A pointer to a value_t structure that is filled with a lua based method identification, can be nullptr
+ * @param[in,out] luaMethod A pointer to a value_t structure that is filled with a lua based method identification, can be nullptr
  * @note If luaMethod is set, the method will scan the known lua methods defined on the behaviour. If luaMethod is not set, only
  * registered local properties are scanned.
- * TODO Speed up, evilly used function, use strncmp instead of using buffer copy (name[MAX_VAR])
+ * @todo Speed up, evilly used function, use strncmp instead of using buffer copy (name[MAX_VAR])
  * @note If luaMethod is set, make sure to release the allocated .name string.
  */
 void UI_ReadNodePath (const char* path, const uiNode_t* relativeNode, const uiNode_t* iterationNode, uiNode_t** resultNode, const value_t** resultProperty, value_t *luaMethod) {

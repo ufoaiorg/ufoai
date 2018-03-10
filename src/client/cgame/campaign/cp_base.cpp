@@ -892,7 +892,7 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t* base)
 /**
  * @brief Resets a base structure
  * @param[in,out] base Pointer to base to be deleted.
- * @TODO A lot more could be extracted here from B_Destroy
+ * @todo A lot more could be extracted here from B_Destroy
  */
 void B_Delete (base_t* base)
 {
@@ -1180,6 +1180,7 @@ void B_SetName (base_t* base, const char* name)
  * @param[in] campaign The campaign data structure
  * @param[in] pos Position (on Geoscape) the base built at
  * @param[in] name The name of the new base, this string might already be in utf-8
+ * @param[in] fillBase Whether we should build default buildings at the base
  */
 base_t* B_Build (const campaign_t* campaign, const vec2_t pos, const char* name, bool fillBase)
 {

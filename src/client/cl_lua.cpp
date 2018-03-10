@@ -183,7 +183,7 @@ void CL_RegisterCallback (const char* key, LUA_FUNCTION fnc) {
 /**
  * @brief Calls the registered lua onload callback function.
  * @param[in] L The lua state for calling lua.
- * @param[in] script The name of the .ufo file holding the lua script.
+ * @param[in] key script The name of the .ufo file holding the lua script.
  * @note The signature of the lua function is without any paramters: function ().
  * @note If the signature changes, this function should change too.
  */

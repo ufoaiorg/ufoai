@@ -225,6 +225,9 @@ void G_EventEndShoot (const Edict &ent, teammask_t teamMask)
  * @param teamMask the vis mask to determine the clients from this event is send to
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
+ * @param impact Impact position
+ * @param flags Impact (sound) flags
+ * @param targetEdict Target of the shot
  */
 void G_EventShootHidden (teammask_t teamMask, const fireDef_t* fd, bool firstShoot, const vec3_t impact, int flags, const Edict* targetEdict)
 {

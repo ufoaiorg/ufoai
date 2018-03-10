@@ -110,6 +110,7 @@ static const char* AIL_toTeamString (const int team)
 /**
  * @brief Converts team string into int representation
  * @param team The team to convert (alien, phalanx, civilian, ...)
+ * @param param parameter index for the Lua error message
  * @return The integer representation of the given team string
  * @sa AIL_Init
  */
@@ -2196,10 +2197,8 @@ static lua_State* AIL_InitLua () {
 }
 /**
  * @brief Initializes the lua AI for an actor.
- * @param[in] ent Pointer to actor to initialize AI for.
- * @param[in] type Type of AI (Lua file name without .lua).
- * @param[in] subtype Subtype of the AI.
- * @return 0 on success.
+ * @param[in] actor Pointer to actor to initialize AI for.
+ * @return @c 0 on success.
  */
 int AIL_InitActor (Actor* actor)
 {

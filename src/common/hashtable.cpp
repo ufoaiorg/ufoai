@@ -223,6 +223,7 @@ static void _release_bucket (hashBucket_s** b, bool ownsKeys, bool ownsValues) {
 
 /**
  * @brief Internal function, releases entire table.
+ * @param[out] t table pointer to release
  * @param[in] full If true, the tabel node is also freed.
  */
 static void _release_table (hashTable_s** t, bool full) {
@@ -345,7 +346,7 @@ hashTable_s* HASH_CloneTable (hashTable_s* source) {
 
 /**
  * @brief Deletes a hash table and sets the pointer to NULL.
- * @param[in/out] t A reference to a hashTable_s pointer.
+ * @param[in,out] t A reference to a hashTable_s pointer.
  */
 void HASH_DeleteTable (hashTable_s** t) {
 	_release_table (t, true);

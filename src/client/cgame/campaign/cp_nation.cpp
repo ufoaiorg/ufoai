@@ -241,9 +241,13 @@ bool NAT_SaveXML (xmlNode_t* p)
  * Should be called at the completion or expiration of every mission.
  * The nation where the mission took place will be most affected,
  * surrounding nations will be less affected.
+ * @param[in] minHappiness Minimum value of mean happiness before the game is lost
+ * @param[in] mis Mission to evaluate
+ * @param[in] affectedNation Nation that's happiness is changing
+ * @param[in] results Mission result structure
+ * @param[in] won if PHALANX won
  * @todo Scoring should eventually be expanded to include such elements as
  * infected humans and mission objectives other than xenocide.
- * @param[in] won if PHALANX won
  */
 void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* affectedNation, const missionResults_t* results, bool won)
 {

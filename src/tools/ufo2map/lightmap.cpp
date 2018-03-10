@@ -538,9 +538,10 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float* 
 
 
 /**
- * @param[out] sample The sample color
- * @param[in] normal The light direction (normal vector)
  * @param[in] pos The point in the world that receives the light
+ * @param[in] normal The light direction (normal vector)
+ * @param[out] sample The sample color
+ * @param[out] direction
  * @param[in] scale is the normalizer for multisampling
  * @param[in,out] headhints An array of theads for each light to optimize the tracing
  */

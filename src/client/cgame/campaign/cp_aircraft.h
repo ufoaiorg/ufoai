@@ -187,7 +187,7 @@ typedef struct aircraft_s {
 
 /**
  * @brief iterates trough all aircraft
- * @param[out] variable to point to the aircraft structure
+ * @param[out] var variable to point to the aircraft structure
  */
 #define AIR_Foreach(var) LIST_Foreach(ccs.aircraft, aircraft_t, var)
 
@@ -195,8 +195,8 @@ typedef struct aircraft_s {
 
 /**
  * @brief iterates trough all aircraft from a specific homebase
- * @param[out] variable to point to the aircraft structure
- * @param[in] pointer to the homebase structure
+ * @param[out] var variable to point to the aircraft structure
+ * @param[in] base pointer to the homebase structure
  */
 #define AIR_ForeachFromBase(var, base) \
 	AIR_Foreach(var) \
