@@ -34,6 +34,7 @@ CFLAGS += -Wreturn-type
 CFLAGS += -Wwrite-strings
 CFLAGS += -Wno-variadic-macros
 CFLAGS += -Wno-format-zero-length
+CFLAGS += -Wno-expansion-to-defined
 
 # clang stuff
 ifneq (,$(findstring clang,$(CXX)))
