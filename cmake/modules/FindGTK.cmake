@@ -196,6 +196,15 @@ find_library(GTK_LIBRARY_GLIB
    /opt/gnome/lib
 )
 
+find_library(GTK_LIBRARY_CAIRO
+   NAMES  cairo cairo-2
+   PATHS
+   /lib
+   /usr/lib
+   /usr/openwin/lib
+   /opt/gnome/lib
+)
+
 find_library(GTK_LIBRARY_PANGO
    NAMES  pango pango-1.0
    PATHS
@@ -264,6 +273,7 @@ if(GTK_INCLUDE_DIR_GTK
       ${GTK_LIBRARY_GDK}
       ${GTK_LIBRARY_GOBJECT}
       ${GTK_LIBRARY_GLIB}
+      ${GTK_LIBRARY_CAIRO}
       ${GTK_LIBRARY_PANGO}
       ${GTK_LIBRARY_XML2}
    )
