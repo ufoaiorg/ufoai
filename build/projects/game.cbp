@@ -16,7 +16,7 @@
 					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
-					<Add option="--export-all-symbols" />
+					<Add option="-Wl,--export-all-symbols" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
@@ -35,7 +35,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
-					<Add option="--export-all-symbols" />
+					<Add option="-Wl,--export-all-symbols" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
