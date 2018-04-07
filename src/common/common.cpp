@@ -687,7 +687,7 @@ void Com_UploadCrashDump (const char* crashDumpFile)
 	upparam_t paramUser;
 	upparam_t paramVersion;
 	upparam_t paramOS;
-	const char* crashDumpURL = "http://ufoai.org/CrashDump.php";
+	const char* crashDumpURL = "https://ufoai.org/CrashDump.php";
 
 	paramUser.name = "user";
 	paramUser.value = Sys_GetCurrentUser();
