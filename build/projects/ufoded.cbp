@@ -24,6 +24,7 @@
 					<Add library="iberty" />
 					<Add library="imagehlp" />
 					<Add library="intl" />
+					<Add library="z" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
@@ -81,7 +82,6 @@
 		</Compiler>
 		<Linker>
 			<Add library="curl" />
-			<Add library="z" />
 			<Add library="SDL2" />
 		</Linker>
 		<Unit filename="../../src/common/bsp.cpp" />

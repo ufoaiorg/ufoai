@@ -30,6 +30,7 @@
 					<Add library="iberty" />
 					<Add library="imagehlp" />
 					<Add library="intl" />
+					<Add library="z" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
@@ -100,7 +101,6 @@
 			<Add library="SDL2_ttf" />
 			<Add library="SDL2_mixer" />
 			<Add library="png" />
-			<Add library="z" />
 			<Add library="jpeg" />
 			<Add library="curl" />
 			<Add library="vorbis" />
