@@ -4,7 +4,7 @@
 	<Project>
 		<Option title="ufo2map" />
 		<Option pch_mode="2" />
-		<Option compiler="gcc" />
+		<Option compiler="mingw-w64-i686" />
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
@@ -12,7 +12,7 @@
 				<Option working_dir="../../" />
 				<Option object_output=".objs/ufo2map" />
 				<Option type="1" />
-				<Option compiler="gcc" />
+				<Option compiler="mingw-w64-i686" />
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-ffloat-store" />
@@ -31,7 +31,7 @@
 				<Option working_dir="../../" />
 				<Option object_output=".objs/ufo2map" />
 				<Option type="1" />
-				<Option compiler="gcc" />
+				<Option compiler="mingw-w64-i686" />
 				<Option parameters="maps/mine" />
 				<Option host_application="../../ufo2map" />
 				<Option run_host_application_in_terminal="0" />

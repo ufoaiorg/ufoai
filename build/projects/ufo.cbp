@@ -4,7 +4,7 @@
 	<Project>
 		<Option title="ufo" />
 		<Option pch_mode="2" />
-		<Option compiler="gcc" />
+		<Option compiler="mingw-w64-i686" />
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
@@ -12,7 +12,7 @@
 				<Option working_dir="../../" />
 				<Option object_output=".objs/client" />
 				<Option type="0" />
-				<Option compiler="gcc" />
+				<Option compiler="mingw-w64-i686" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add option="-O2" />
@@ -42,7 +42,7 @@
 				<Option working_dir="../../" />
 				<Option object_output=".objs/client" />
 				<Option type="0" />
-				<Option compiler="gcc" />
+				<Option compiler="mingw-w64-i686" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add option="-pg" />

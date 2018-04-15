@@ -4,7 +4,7 @@
 	<Project>
 		<Option title="ufoded" />
 		<Option pch_mode="2" />
-		<Option compiler="gcc" />
+		<Option compiler="mingw-w64-i686" />
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
@@ -12,7 +12,7 @@
 				<Option working_dir="../../" />
 				<Option object_output=".objs/ufoded" />
 				<Option type="0" />
-				<Option compiler="gcc" />
+				<Option compiler="mingw-w64-i686" />
 				<Compiler>
 					<Add option="-DNDEBUG" />
 					<Add option="-DHAVE_BFD_H" />
@@ -35,7 +35,7 @@
 				<Option working_dir="../../" />
 				<Option object_output=".objs/ufoded" />
 				<Option type="0" />
-				<Option compiler="gcc" />
+				<Option compiler="mingw-w64-i686" />
 				<Compiler>
 					<Add option="-pg" />
 					<Add option="-DDEBUG" />

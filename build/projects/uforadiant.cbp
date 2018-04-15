@@ -4,7 +4,7 @@
 	<Project>
 		<Option title="uforadiant" />
 		<Option pch_mode="2" />
-		<Option compiler="gcc" />
+		<Option compiler="mingw-w64-i686" />
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
@@ -12,7 +12,7 @@
 				<Option working_dir="../../radiant" />
 				<Option object_output=".objs/radiant" />
 				<Option type="0" />
-				<Option compiler="gcc" />
+				<Option compiler="mingw-w64-i686" />
 				<Compiler>
 					<Add option="-Wno-non-virtual-dtor" />
 					<Add option="-mms-bitfields" />
@@ -56,7 +56,7 @@
 				<Option working_dir="../../radiant" />
 				<Option object_output=".objs/radiant" />
 				<Option type="0" />
-				<Option compiler="gcc" />
+				<Option compiler="mingw-w64-i686" />
 				<Option host_application="../../radiant/uforadiant.exe" />
 				<Option run_host_application_in_terminal="0" />
 				<Compiler>
