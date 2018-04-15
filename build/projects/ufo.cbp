@@ -96,9 +96,9 @@
 			<Add directory="../../src/libs/lua" />
 		</Compiler>
 		<Linker>
-			<Add library="SDL" />
-			<Add library="SDL_ttf" />
-			<Add library="SDL_mixer" />
+			<Add library="SDL2" />
+			<Add library="SDL2_ttf" />
+			<Add library="SDL2_mixer" />
 			<Add library="png" />
 			<Add library="z" />
 			<Add library="jpeg" />

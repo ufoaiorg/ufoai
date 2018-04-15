@@ -71,12 +71,11 @@
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_MAP" />
 			<Add directory="../../src/libs" />
-			<Add directory="../../src/libs/SDL" />
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
-			<Add library="SDLmain" />
-			<Add library="SDL" />
+			<Add library="SDL2main" />
+			<Add library="SDL2" />
 			<Add library="jpeg" />
 			<Add library="png" />
 			<Add library="z" />

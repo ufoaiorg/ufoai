@@ -61,7 +61,6 @@
 			<Add option="-DCOMPILE_UFO" />
 			<Add directory="../../src/libs" />
 			<Add directory="../../src/libs/lua" />
-			<Add directory="../../src/libs/SDL/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--export-all-symbols" />

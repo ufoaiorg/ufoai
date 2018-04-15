@@ -22,7 +22,7 @@
 					<Add option="-mwindows" />
 					<Add library="winmm" />
 					<Add library="mingw32" />
-					<Add library="SDLmain" />
+					<Add library="SDL2main" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
@@ -49,7 +49,7 @@
 					<Add option="-mwindows" />
 					<Add library="winmm" />
 					<Add library="mingw32" />
-					<Add library="SDLmain" />
+					<Add library="SDL2main" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
@@ -80,7 +80,7 @@
 			<Add option="-DCOMPILE_MAP" />
 		</Compiler>
 		<Linker>
-			<Add library="SDL" />
+			<Add library="SDL2" />
 			<Add library="jpeg" />
 			<Add library="png" />
 			<Add library="z" />

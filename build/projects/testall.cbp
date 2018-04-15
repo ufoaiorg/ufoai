@@ -108,10 +108,10 @@
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
-			<Add library="SDLmain" />
-			<Add library="SDL" />
-			<Add library="SDL_ttf" />
-			<Add library="SDL_mixer" />
+			<Add library="SDL2main" />
+			<Add library="SDL2" />
+			<Add library="SDL2_ttf" />
+			<Add library="SDL2_mixer" />
 			<Add library="z" />
 			<Add library="jpeg" />
 			<Add library="png" />

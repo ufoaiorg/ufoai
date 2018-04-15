@@ -82,7 +82,7 @@
 		<Linker>
 			<Add library="curl" />
 			<Add library="z" />
-			<Add library="SDL" />
+			<Add library="SDL2" />
 		</Linker>
 		<Unit filename="../../src/common/bsp.cpp" />
 		<Unit filename="../../src/common/cmd.cpp" />
