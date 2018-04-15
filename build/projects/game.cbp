@@ -15,9 +15,6 @@
 				<Compiler>
 					<Add option="-DNDEBUG" />
 				</Compiler>
-				<Linker>
-					<Add option="-Wl,--export-all-symbols" />
-				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
 				</ExtraCommands>
@@ -35,7 +32,6 @@
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
-					<Add option="-Wl,--export-all-symbols" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
@@ -49,6 +45,7 @@
 			<Add option="-pedantic" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
+			<Add option="-Wno-expansion-to-defined" />
 			<Add option="-ggdb" />
 			<Add option="-Wcast-qual" />
 			<Add option="-Wpointer-arith" />
@@ -66,6 +63,9 @@
 			<Add directory="../../src/libs/lua" />
 			<Add directory="../../src/libs/SDL/include" />
 		</Compiler>
+		<Linker>
+			<Add option="-Wl,--export-all-symbols" />
+		</Linker>
 		<Unit filename="../../base/ai/alien.lua" />
 		<Unit filename="../../base/ai/civilian.lua" />
 		<Unit filename="../../src/common/grid.h" />

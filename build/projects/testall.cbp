@@ -83,6 +83,7 @@
 			<Add option="-pedantic" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
+			<Add option="-Wno-expansion-to-defined" />
 			<Add option="-ggdb" />
 			<Add option="-I../../src/libs/lua" />
 			<Add option="-Wcast-qual" />
