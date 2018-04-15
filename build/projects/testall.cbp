@@ -183,7 +183,6 @@
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_particlespawn.cpp" />
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_sound.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/aliencargo.cpp" />
-		<Unit filename="../../src/client/cgame/campaign/itemcargo.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/aliencontainment.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cl_game_campaign.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_aircraft.cpp" />
@@ -248,6 +247,7 @@
 		<Unit filename="../../src/client/cgame/campaign/cp_uforecovery.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_uforecovery_callbacks.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/cp_xvi.cpp" />
+		<Unit filename="../../src/client/cgame/campaign/itemcargo.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/missions/cp_mission_baseattack.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/missions/cp_mission_buildbase.cpp" />
 		<Unit filename="../../src/client/cgame/campaign/missions/cp_mission_harvest.cpp" />
