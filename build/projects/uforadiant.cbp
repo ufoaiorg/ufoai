@@ -44,6 +44,7 @@
 					<Add library="vorbis" />
 					<Add library="ogg" />
 					<Add library="z" />
+					<Add library="cairo" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
@@ -91,6 +92,7 @@
 					<Add library="vorbis" />
 					<Add library="ogg" />
 					<Add library="z" />
+					<Add library="cairo" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
