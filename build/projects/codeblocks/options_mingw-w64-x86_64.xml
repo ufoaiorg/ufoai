@@ -1,0 +1,13 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE CodeBlocks_compiler_options>
+<CodeBlocks_compiler_options extends="gcc">
+    <Program name="C"         value="x86_64-w64-mingw32-gcc.exe"/>
+    <Program name="CPP"       value="x86_64-w64-mingw32-g++.exe"/>
+    <Program name="LD"        value="x86_64-w64-mingw32-g++.exe"/>
+    <Program name="DBGconfig" value="gdb_debugger:Default"/>
+    <Program name="LIB"       value="ar.exe"/>
+    <Program name="WINDRES"   value="windres.exe"/>
+    <Program name="MAKE"      value="mingw32-make.exe"/>
+
+    <Switch name="forceFwdSlashes" value="true"/>
+</CodeBlocks_compiler_options>

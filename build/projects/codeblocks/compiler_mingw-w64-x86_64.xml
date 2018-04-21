@@ -1,0 +1,32 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE CodeBlocks_compiler>
+<CodeBlocks_compiler name="MinGW-W64 X84_64"
+                     id="mingw-w64-x86_64"
+                     weight="1">
+    <Path type="master">
+        <Search envVar="PATH"
+                for="C"/>
+    </Path>
+    <Path type="include">
+        <Add><master/>/include</Add>
+        <Add><master/>/include/SDL2</Add>
+        <Add><master/>/include/atk-1.0</Add>
+        <Add><master/>/include/binutils</Add>
+        <Add><master/>/include/cairo</Add>
+        <Add><master/>/include/gdk-pixbuf-2.0</Add>
+        <Add><master/>/include/gio-win32-2.0</Add>
+        <Add><master/>/include/glib-2.0</Add>
+        <Add><master/>/include/gtk-2.0</Add>
+        <Add><master/>/include/gtkglext-1.0</Add>
+        <Add><master/>/include/gtksourceview-2.0</Add>
+        <Add><master/>/include/libxml2</Add>
+        <Add><master/>/include/pango-1.0</Add>
+        <Add><master/>/lib/glib-2.0/include</Add>
+        <Add><master/>/lib/gtk-2.0/include</Add>
+        <Add><master/>/lib/gtkglext-1.0/include</Add>
+    </Path>
+    <Path type="lib">
+        <Add><master/>/lib</Add>
+        <Add><master/>/lib/binutils</Add>
+    </Path>
+</CodeBlocks_compiler>
