@@ -32,7 +32,6 @@ typedef struct _GdkCursor GdkCursor;
 typedef struct _GtkWidget GtkWidget;
 typedef struct _GtkWindow GtkWindow;
 
-GdkCursor* create_blank_cursor ();
 void Sys_GetCursorPos (GtkWindow* window, int* x, int* y);
 void Sys_SetCursorPos (GtkWindow* window, int x, int y);
 
@@ -154,7 +153,7 @@ class FreezePointer
 					| GDK_BUTTON3_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
 					| GDK_VISIBILITY_NOTIFY_MASK);
 
-			GdkCursor* cursor = create_blank_cursor();
+			GdkCursor* cursor = gdk_cursor_new(GDK_BLANK_CURSOR);
 			//GdkGrabStatus status =
 			gdk_pointer_grab(gtk_widget_get_window(GTK_WIDGET(window)), TRUE, mask, 0, cursor, GDK_CURRENT_TIME);
 			gdk_cursor_unref(cursor);

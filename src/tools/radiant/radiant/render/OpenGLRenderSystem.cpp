@@ -126,7 +126,7 @@ static int QGL_Init (OpenGLBinding& table)
 {
 #if defined __linux__ || defined __FreeBSD__ || defined __APPLE__ || defined __OpenBSD__
 	qglXGetProcAddressARB = reinterpret_cast<glXGetProcAddressARBProc*>(reinterpret_cast<uintptr_t>(dlsym(RTLD_DEFAULT, "glXGetProcAddressARB")));
-	if (!glXQueryExtension(GDK_DISPLAY(), 0, 0))
+	if (!glXQueryExtension(gdk_x11_display_get_xdisplay(gdk_display_get_default()), 0, 0))
 		return 0;
 #elif !defined _WIN32
 #error "unsupported platform"

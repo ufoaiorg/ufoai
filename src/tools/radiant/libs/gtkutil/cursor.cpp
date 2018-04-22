@@ -26,23 +26,6 @@
 
 #include <gdk/gdk.h>
 
-GdkCursor* create_blank_cursor ()
-{
-	GdkPixmap *pixmap;
-	GdkBitmap *mask;
-	char buffer[(32 * 32) / 8];
-	OBJZERO(buffer);
-	GdkColor white = { 0, 0xffff, 0xffff, 0xffff };
-	GdkColor black = { 0, 0x0000, 0x0000, 0x0000 };
-	pixmap = gdk_bitmap_create_from_data(0, buffer, 32, 32);
-	mask = gdk_bitmap_create_from_data(0, buffer, 32, 32);
-	GdkCursor *cursor = gdk_cursor_new_from_pixmap(pixmap, mask, &white, &black, 1, 1);
-	gdk_drawable_unref(pixmap);
-	gdk_drawable_unref(mask);
-
-	return cursor;
-}
-
 #ifdef _WIN32
 
 #include <gdk/gdkwin32.h>
@@ -74,7 +57,7 @@ void Sys_GetCursorPos (GtkWindow* window, int* x, int* y)
 
 void Sys_SetCursorPos (GtkWindow* window, int x, int y)
 {
-	XWarpPointer(GDK_DISPLAY(), None, GDK_ROOT_WINDOW(), 0, 0, 0, 0, x, y);
+	XWarpPointer(gdk_x11_display_get_xdisplay(gdk_display_get_default()), None, GDK_ROOT_WINDOW(), 0, 0, 0, 0, x, y);
 }
 
 #endif
