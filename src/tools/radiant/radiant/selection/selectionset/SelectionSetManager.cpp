@@ -50,26 +50,22 @@ void SelectionSetManager::removeObserver(Observer& observer)
 
 void SelectionSetManager::notifyObservers()
 {
-	for (Observers::iterator i = _observers.begin(); i != _observers.end(); )
-	{
+	for (Observers::iterator i = _observers.begin(); i != _observers.end(); ) {
 		(*i++)->onSelectionSetsChanged();
 	}
 }
 
 void SelectionSetManager::foreachSelectionSet(Visitor& visitor)
 {
-	for (SelectionSets::const_iterator i = _selectionSets.begin(); i != _selectionSets.end(); )
-	{
+	for (SelectionSets::const_iterator i = _selectionSets.begin(); i != _selectionSets.end(); ) {
 		visitor.visit((i++)->second);
 	}
 }
 
-ISelectionSetPtr SelectionSetManager::createSelectionSet(const std::string& name)
-{
+ISelectionSetPtr SelectionSetManager::createSelectionSet(const std::string& name) {
 	SelectionSets::iterator i = _selectionSets.find(name);
 
-	if (i == _selectionSets.end())
-	{
+	if (i == _selectionSets.end()) {
 		// Create new set
 		std::pair<SelectionSets::iterator, bool> result = _selectionSets.insert(
 			SelectionSets::value_type(name, new SelectionSet(name)));
@@ -86,8 +82,7 @@ void SelectionSetManager::deleteSelectionSet(const std::string& name)
 {
 	SelectionSets::iterator i = _selectionSets.find(name);
 
-	if (i != _selectionSets.end())
-	{
+	if (i != _selectionSets.end()) {
 		_selectionSets.erase(i);
 
 		notifyObservers();

@@ -24,7 +24,7 @@ EntityPropertyEditor::EntityPropertyEditor (Entity* entity, const std::string& n
 	gtk_container_set_border_width(GTK_CONTAINER(editBox), 3);
 
 	// Set up the combobox TreeModel
-	_comboBox = gtk_combo_box_entry_new_with_model(GTK_TREE_MODEL(gtk_list_store_new(1, G_TYPE_STRING)), 0); // number of the "text" column
+	_comboBox = gtk_combo_box_new_with_model_and_entry(GTK_TREE_MODEL(gtk_list_store_new(1, G_TYPE_STRING))); // number of the "text" column
 	populateComboBox();
 
 	// Add completion functionality to the combobox entry

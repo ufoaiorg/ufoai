@@ -9,7 +9,6 @@
 #include "gtkutil/image.h"
 #include "gtkutil/dialog.h"
 #include "gtkutil/messagebox.h"
-#include "gtkutil/ComboBox.h"
 #include "gtkutil/LeftAlignedLabel.h"
 
 namespace selection
@@ -26,7 +25,7 @@ SelectionSetToolmenu::SelectionSetToolmenu() :
 	_toolItem(gtk_tool_item_new()),
 	_listStore(gtk_list_store_new(1, G_TYPE_STRING)),
 	_clearSetsButton(NULL),
-	_entry(gtk_combo_box_entry_new_with_model(GTK_TREE_MODEL(_listStore), 0))
+	_entry(gtk_combo_box_new_with_model_and_entry(GTK_TREE_MODEL(_listStore)))
 {
 	// Hbox containing all our items
 	GtkWidget* hbox = gtk_hbox_new(FALSE, 3);
@@ -112,19 +111,21 @@ void SelectionSetToolmenu::update()
 
 			GtkTreeIter iter;
 			gtk_list_store_append(_store, &iter);
-			gtk_list_store_set(_store, &iter,
-							   0, set->getName().c_str(),
-							   -1);
+			gtk_list_store_set(
+				_store, &iter,
+				0, set->getName().c_str(),
+				-1
+			);
 		}
 
-		bool foundItems() const
-		{
+		bool foundItems() const	{
 			return _hasItems;
 		}
 
 	} visitor(_listStore);
 
 	GlobalSelectionSetManager().foreachSelectionSet(visitor);
+	gtk_combo_box_set_entry_text_column((GtkComboBox *)_entry, 0);
 
 	// Tool button is sensitive if we have items in the list
 	gtk_widget_set_sensitive(GTK_WIDGET(_clearSetsButton), visitor.foundItems() ? TRUE : FALSE);
@@ -140,8 +141,7 @@ void SelectionSetToolmenu::onEntryActivated(GtkEntry* entry,
 		return;
 
 	// don't create empty sets
-	if (GlobalSelectionSystem().countSelected() == 0)
-	{
+	if (GlobalSelectionSystem().countSelected() == 0) {
 		gtkutil::errorDialog(_("Cannot create selection set, there is nothing selected in the current scene."));
 		return;
 	}
@@ -154,46 +154,45 @@ void SelectionSetToolmenu::onEntryActivated(GtkEntry* entry,
 	gtk_entry_set_text(GTK_ENTRY(entry), "");
 }
 
-void SelectionSetToolmenu::onSelectionChanged(GtkComboBox* comboBox,
-											  SelectionSetToolmenu* self)
+void SelectionSetToolmenu::onSelectionChanged(GtkComboBox* comboBox, SelectionSetToolmenu* self)
 {
 	GtkTreeIter iter;
 
-	if (gtk_combo_box_get_active_iter(comboBox, &iter))
-	{
-		std::string name = gtkutil::ComboBox::getActiveText(comboBox);
+	if (!gtk_combo_box_get_active_iter(comboBox, &iter))
+		return;
 
-		if (name.empty())
-			return;
 
-		ISelectionSetPtr set = GlobalSelectionSetManager().findSelectionSet(name);
+	GtkTreeModel *model = gtk_combo_box_get_model(comboBox);
+	GValue value = G_VALUE_INIT;
+	gtk_tree_model_get_value(model, &iter, 0, &value);
+	std::string name(g_value_get_string(&value));
+	g_value_unset(&value);
 
-		if (set == NULL)
-			return;
+	if (name.empty())
+		return;
 
-		// The user can choose to DESELECT the set nodes when holding down shift
-		if ((GlobalEventManager().getModifierState() & GDK_SHIFT_MASK) != 0)
-		{
-			set->deselect();
-		}
-		else
-		{
-			set->select();
-		}
+	ISelectionSetPtr set = GlobalSelectionSetManager().findSelectionSet(name);
+	if (set == NULL)
+		return;
 
-		GtkWidget* childEntry = gtk_bin_get_child(GTK_BIN(self->_entry));
-		gtk_entry_set_text(GTK_ENTRY(childEntry), "");
+	// The user can choose to DESELECT the set nodes when holding down shift
+	if ((GlobalEventManager().getModifierState() & GDK_SHIFT_MASK) != 0) {
+		set->deselect();
+	} else {
+		set->select();
 	}
+
+	GtkWidget* childEntry = gtk_bin_get_child(GTK_BIN(self->_entry));
+	gtk_entry_set_text(GTK_ENTRY(childEntry), "");
 }
 
-void SelectionSetToolmenu::onDeleteAllSetsClicked(GtkToolButton* toolbutton,
-												  SelectionSetToolmenu* self)
+void SelectionSetToolmenu::onDeleteAllSetsClicked(GtkToolButton* toolbutton, SelectionSetToolmenu* self)
 {
-	EMessageBoxReturn result = gtk_MessageBox(NULL, _("This will delete all set definitions. The actual map objects will not be affected by this step.\n\nContinue with that operation?"),
-			_("Delete all selection sets?"), eMB_YESNO);
+	EMessageBoxReturn result = gtk_MessageBox(NULL,
+		_("This will delete all set definitions. The actual map objects will not be affected by this step.\n\nContinue with that operation?"),
+		_("Delete all selection sets?"), eMB_YESNO);
 
-	if (result == eIDYES)
-	{
+	if (result == eIDYES) {
 		GlobalSelectionSetManager().deleteAllSelectionSets();
 	}
 }
