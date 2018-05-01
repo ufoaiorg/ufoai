@@ -34,13 +34,13 @@ CFLAGS += -Wreturn-type
 CFLAGS += -Wwrite-strings
 CFLAGS += -Wno-variadic-macros
 CFLAGS += -Wno-format-zero-length
-CFLAGS += -Wno-expansion-to-defined
 
 # clang stuff
 ifneq (,$(findstring clang,$(CXX)))
   CFLAGS += -Wno-extended-offsetof
   CFLAGS += -Wno-c++11-extensions
   CFLAGS += -Wno-cast-align
+  CFLAGS += -Wno-expansion-to-defined
 endif
 
 ifeq ($(PROFILING),1)
