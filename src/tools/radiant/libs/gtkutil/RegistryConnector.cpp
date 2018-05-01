@@ -6,17 +6,17 @@
 
 namespace gtkutil {
 
-// Connects the given GtkObject to the passed registryKey
-void RegistryConnector::connectGtkObject (GtkObject* object, const std::string& registryKey)
+// Connects the given GObject to the passed registryKey
+void RegistryConnector::connectGObject (GObject* object, const std::string& registryKey)
 {
-	// Add the GtkObject to the internal list
+	// Add the GObject to the internal list
 	_objectKeyMap[object] = registryKey;
 
-	// Initialise the value of the GtkObject by importing it from the registry
+	// Initialise the value of the GObject by importing it from the registry
 	importKey(object, registryKey);
 }
 
-void RegistryConnector::importKey (GtkObject* obj, const std::string& registryKey)
+void RegistryConnector::importKey (GObject* obj, const std::string& registryKey)
 {
 	if (GTK_IS_TOGGLE_BUTTON(obj)) {
 		// Set the "active" state of the toggle button according to the registry value
@@ -37,12 +37,12 @@ void RegistryConnector::importKey (GtkObject* obj, const std::string& registryKe
 		// Set the content of the input field to the registryKey
 		gtk_range_set_value(GTK_RANGE(obj), GlobalRegistry().getFloat(registryKey));
 	} else {
-		std::cout << "RegistryConnector::importKey failed to identify GTKObject for key " << registryKey << "\n";
+		std::cout << "RegistryConnector::importKey failed to identify GObject for key " << registryKey << "\n";
 	}
 }
 
-// Retrieve the value from the GtkObject and save it into the registry
-void RegistryConnector::exportKey (GtkObject* obj, const std::string& registryKey)
+// Retrieve the value from the GObject and save it into the registry
+void RegistryConnector::exportKey (GObject* obj, const std::string& registryKey)
 {
 	if (GTK_IS_TOGGLE_BUTTON(obj)) {
 		// Set the registry key to "1" or "0", according on the toggle button state
@@ -63,14 +63,14 @@ void RegistryConnector::exportKey (GtkObject* obj, const std::string& registryKe
 		// Set the content of the input field to the registryKey
 		GlobalRegistry().setFloat(registryKey, gtk_range_get_value(GTK_RANGE(obj)));
 	} else {
-		std::cout << "RegistryConnector::exportKey failed to identify GTKObject for key " << registryKey << "\n";
+		std::cout << "RegistryConnector::exportKey failed to identify GObject for key " << registryKey << "\n";
 	}
 }
 
 void RegistryConnector::importValues ()
 {
 	for (ObjectKeyMap::iterator i = _objectKeyMap.begin(); i != _objectKeyMap.end(); ++i) {
-		// Call the importer method with the GtkObject and the registryKey
+		// Call the importer method with the GObject and the registryKey
 		importKey(i->first, i->second);
 	}
 }
@@ -78,7 +78,7 @@ void RegistryConnector::importValues ()
 void RegistryConnector::exportValues ()
 {
 	for (ObjectKeyMap::iterator i = _objectKeyMap.begin(); i != _objectKeyMap.end(); ++i) {
-		// Call the export method that takes care of the specific GtkObject type
+		// Call the export method that takes care of the specific GObject type
 		exportKey(i->first, i->second);
 	}
 }

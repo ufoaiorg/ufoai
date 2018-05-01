@@ -492,7 +492,7 @@ void MainFrame::Create (void)
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 	gtk_widget_show(vbox);
 
-	GlobalEventManager().connect(GTK_OBJECT(window));
+	GlobalEventManager().connect(G_OBJECT(window));
 	GlobalEventManager().connectAccelGroup(GTK_WINDOW(window));
 
 	m_nCurrentStyle = eSplit;

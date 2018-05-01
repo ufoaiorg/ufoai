@@ -275,7 +275,7 @@ CamWnd::CamWnd() :
 
 	GlobalSceneGraph().addSceneObserver(this);
 
-	GlobalEventManager().connect(GTK_OBJECT(m_gl_widget));
+	GlobalEventManager().connect(G_OBJECT(m_gl_widget));
 }
 
 void CamWnd::onSceneGraphChange ()
@@ -534,8 +534,8 @@ CamWnd::~CamWnd() {
 	g_object_unref(m_gl_widget);
 
 	// Disconnect self from EventManager\r
-	GlobalEventManager().disconnect(GTK_OBJECT(m_gl_widget));
-	GlobalEventManager().disconnect(GTK_OBJECT(m_parent));
+	GlobalEventManager().disconnect(G_OBJECT(m_gl_widget));
+	GlobalEventManager().disconnect(G_OBJECT(m_parent));
 
 	delete m_window_observer;
 }
@@ -683,7 +683,7 @@ GtkWidget* CamWnd::getWidget()
 
 void CamWnd::setParent(GtkWindow* parent) {
 	m_parent = parent;
-	GlobalEventManager().connect(GTK_OBJECT(m_parent));
+	GlobalEventManager().connect(G_OBJECT(m_parent));
 }
 
 GtkWindow* CamWnd::getParent() {

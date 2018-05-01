@@ -10,7 +10,7 @@
 #include "generic/callbackfwd.h"
 
 // GTK forward declaration
-typedef struct _GtkObject GtkObject;
+typedef struct _GObject GObject;
 typedef struct _GtkWindow GtkWindow;
 typedef struct _GtkWidget GtkWidget;
 typedef struct _GdkEventButton GdkEventButton;
@@ -198,8 +198,8 @@ public:
 	virtual void disconnectAccelerator(const std::string& command) = 0;
 
 	// Connects/disconnects the keyboard handlers of the keyeventmanager to the specified window, so that key events are catched
-	virtual void connect(GtkObject* object) = 0;
-	virtual void disconnect(GtkObject* object) = 0;
+	virtual void connect(GObject* object) = 0;
+	virtual void disconnect(GObject* object) = 0;
 
 	// Connects/Disconnects a Dialog Window to the eventmanager. Dialog windows get the chance
 	// to process an incoming keypress event, BEFORE the global shortcuts are searched and launched.

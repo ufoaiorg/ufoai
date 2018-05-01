@@ -65,7 +65,7 @@ TexTool::TexTool() :
 	g_signal_connect(G_OBJECT(getWindow()), "key_press_event", G_CALLBACK(onKeyPress), this);
 
 	// Register this dialog to the EventManager, so that shortcuts can propagate to the main window
-	GlobalEventManager().connect(GTK_OBJECT(getWindow()));
+	GlobalEventManager().connect(G_OBJECT(getWindow()));
 
 	populateWindow();
 
@@ -110,7 +110,7 @@ void TexTool::populateWindow() {
 	g_signal_connect(G_OBJECT(_glWidget), "size-allocate", G_CALLBACK(onSizeAllocate), this);
 
 	// Make the GL widget accept the global shortcuts
-	GlobalEventManager().connect(GTK_OBJECT(_glWidget));
+	GlobalEventManager().connect(G_OBJECT(_glWidget));
 
 	// Create a top-level vbox, pack it and add it to the window
 	GtkWidget* vbox = gtk_vbox_new(false, 0);
@@ -175,8 +175,8 @@ void TexTool::shutdown() {
 	// Tell the position tracker to save the information
 	_windowPosition.saveToPath(RKEY_WINDOW_STATE);
 
-	GlobalEventManager().disconnect(GTK_OBJECT(_glWidget));
-	GlobalEventManager().disconnect(GTK_OBJECT(getWindow()));
+	GlobalEventManager().disconnect(G_OBJECT(_glWidget));
+	GlobalEventManager().disconnect(G_OBJECT(getWindow()));
 
 	destroy();
 }

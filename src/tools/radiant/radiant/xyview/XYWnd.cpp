@@ -137,7 +137,7 @@ XYWnd::XYWnd () :
 	GlobalSceneGraph().addSceneObserver(this);
 	GlobalCamera().addCameraObserver(this);
 
-	GlobalEventManager().connect(GTK_OBJECT(m_gl_widget));
+	GlobalEventManager().connect(G_OBJECT(m_gl_widget));
 }
 
 void XYWnd::onSceneGraphChange ()
@@ -153,7 +153,7 @@ XYWnd::~XYWnd (void)
 	// greebo: Remove <self> as CameraObserver to the CamWindow.
 	GlobalCamera().removeCameraObserver(this);
 
-	GlobalEventManager().disconnect(GTK_OBJECT(m_gl_widget));
+	GlobalEventManager().disconnect(G_OBJECT(m_gl_widget));
 
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_sizeHandler);
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_exposeHandler);

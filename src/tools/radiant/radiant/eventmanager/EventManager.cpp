@@ -27,7 +27,7 @@ class EventManager :
 	public IEventManager
 {
 	// The handler ID of the connected keyboard handler
-	typedef std::map<gulong, GtkObject*> HandlerMap;
+	typedef std::map<gulong, GObject*> HandlerMap;
 
 	// Needed for string::split
 	typedef std::vector<std::string> StringParts;
@@ -378,17 +378,17 @@ public:
 		}
 	}
 
-	// Catches the key/mouse press/release events from the given GtkObject
-	void connect(GtkObject* object)	{
+	// Catches the key/mouse press/release events from the given GObject
+	void connect(GObject* object)	{
 		// Create and store the handler into the map
-		gulong handlerId = g_signal_connect(G_OBJECT(object), "key_press_event", G_CALLBACK(onKeyPress), this);
+		gulong handlerId = g_signal_connect(object, "key_press_event", G_CALLBACK(onKeyPress), this);
 		_handlers[handlerId] = object;
 
-		handlerId = g_signal_connect(G_OBJECT(object), "key_release_event", G_CALLBACK(onKeyRelease), this);
+		handlerId = g_signal_connect(object, "key_release_event", G_CALLBACK(onKeyRelease), this);
 		_handlers[handlerId] = object;
 	}
 
-	void disconnect(GtkObject* object) {
+	void disconnect(GObject* object) {
 		for (HandlerMap::iterator i = _handlers.begin(); i != _handlers.end();) {
 			if (i->second == object) {
 				g_signal_handler_disconnect(G_OBJECT(i->second), i->first);
@@ -416,21 +416,21 @@ public:
 		gulong handlerId = g_signal_connect(G_OBJECT(window), "key-press-event",
 											G_CALLBACK(onDialogKeyPress), this);
 
-		_dialogWindows[handlerId] = GTK_OBJECT(window);
+		_dialogWindows[handlerId] = G_OBJECT(window);
 
 		handlerId = g_signal_connect(G_OBJECT(window), "key-release-event",
 									 G_CALLBACK(onDialogKeyRelease), this);
 
-		_dialogWindows[handlerId] = GTK_OBJECT(window);
+		_dialogWindows[handlerId] = G_OBJECT(window);
 	}
 
 	void disconnectDialogWindow(GtkWindow* window) {
-		GtkObject* object = GTK_OBJECT(window);
+		GObject* object = G_OBJECT(window);
 
 		for (HandlerMap::iterator i = _dialogWindows.begin(); i != _dialogWindows.end(); ) {
 			// If the object pointer matches the one stored in the list, remove the handler id
 			if (i->second == object) {
-				g_signal_handler_disconnect(G_OBJECT(i->second), i->first);
+				g_signal_handler_disconnect(i->second, i->first);
 				// Be sure to increment the iterator with a postfix ++, so that the "old" iterator is passed
 				_dialogWindows.erase(i++);
 			}

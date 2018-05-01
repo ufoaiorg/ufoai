@@ -60,8 +60,8 @@ class SurfaceInspector: public RegistryKeyObserver,
 		struct FitTextureWidgets
 		{
 				GtkWidget* hbox;
-				GtkObject* widthAdj;
-				GtkObject* heightAdj;
+				GObject* widthAdj;
+				GObject* heightAdj;
 				GtkWidget* width;
 				GtkWidget* height;
 				GtkWidget* button;

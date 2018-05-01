@@ -195,7 +195,7 @@ GtkWidget* Dialog::addCheckBox(GtkWidget* vbox, const std::string& name, const s
 	gtk_widget_show(check);
 
 	// Connect the registry key to this toggle button
-	_registryConnector.connectGtkObject(GTK_OBJECT(check), registryKey);
+	_registryConnector.connectGObject(G_OBJECT(check), registryKey);
 
 	DialogVBox_packRow(GTK_VBOX(vbox), GTK_WIDGET(DialogRow_new(name, check)));
 	return check;
@@ -208,10 +208,10 @@ void Dialog::addSlider (GtkWidget* vbox, const std::string& name, const std::str
 		double step_increment, double page_increment, double page_size)
 {
 	// Create a new adjustment with the boundaries <lower> and <upper> and all the increments
-	GtkObject* adj = gtk_adjustment_new(value, lower, upper, step_increment, page_increment, page_size);
+	GObject* adj = G_OBJECT(gtk_adjustment_new(value, lower, upper, step_increment, page_increment, page_size));
 
 	// Connect the registry key to this adjustment
-	_registryConnector.connectGtkObject(adj, registryKey);
+	_registryConnector.connectGObject(adj, registryKey);
 
 	// scale
 	GtkWidget* alignment = gtk_alignment_new(0.0, 0.5, 1.0, 0.0);
@@ -281,7 +281,7 @@ GtkWidget* Dialog::addSpinner (GtkWidget* vbox, const std::string& name, const s
 	DialogSpinnerRow row(DialogSpinnerRow_new(name.c_str(), value, lower, upper, fraction));
 
 	// Connect the registry key to the newly created input field
-	_registryConnector.connectGtkObject(GTK_OBJECT(row.m_spin), registryKey);
+	_registryConnector.connectGObject(G_OBJECT(row.m_spin), registryKey);
 
 	DialogVBox_packRow(GTK_VBOX(vbox), row.m_row);
 	return row.m_row;
@@ -296,7 +296,7 @@ GtkWidget* Dialog::addTextureEntry (GtkWidget* vbox, const std::string& name, co
 
 	GtkEntry* entry = DialogEntry_new();
 	// Connect the registry key to the newly created input field
-	_registryConnector.connectGtkObject(GTK_OBJECT(entry), registryKey);
+	_registryConnector.connectGObject(G_OBJECT(entry), registryKey);
 	GlobalTextureEntryCompletion::instance().connect(entry);
 
 	// Create the icon button to open the ShaderChooser
@@ -330,7 +330,7 @@ GtkWidget* Dialog::addPathEntry (GtkWidget* vbox, const std::string& name, const
 	g_signal_connect(G_OBJECT(pathEntry.m_button), "clicked", G_CALLBACK(browseDirectories ? button_clicked_entry_browse_directory : button_clicked_entry_browse_file), pathEntry.m_entry);
 
 	// Connect the registry key to the newly created input field
-	_registryConnector.connectGtkObject(GTK_OBJECT(pathEntry.m_entry), registryKey);
+	_registryConnector.connectGObject(G_OBJECT(pathEntry.m_entry), registryKey);
 
 	GtkTable* row = DialogRow_new(name, GTK_WIDGET(pathEntry.m_frame));
 	DialogVBox_packRow(GTK_VBOX(vbox), GTK_WIDGET(row));
@@ -355,7 +355,7 @@ void Dialog::addCombo (GtkWidget* vbox, const std::string& name, const std::stri
 		}
 
 		// Connect the registry key to the newly created combo box
-		_registryConnector.connectGtkObject(GTK_OBJECT(combo), registryKey);
+		_registryConnector.connectGObject(G_OBJECT(combo), registryKey);
 
 		// Add it to the container and make it visible
 		gtk_widget_show(combo);
@@ -374,7 +374,7 @@ GtkWidget* Dialog::addEntry (GtkWidget* vbox, const std::string& name, const std
 	DialogEntryRow row(DialogEntryRow_new(name));
 
 	// Connect the registry key to the newly created input field
-	_registryConnector.connectGtkObject(GTK_OBJECT(row.m_entry), registryKey);
+	_registryConnector.connectGObject(G_OBJECT(row.m_entry), registryKey);
 
 	DialogVBox_packRow(GTK_VBOX(vbox), row.m_row);
 	return row.m_row;
