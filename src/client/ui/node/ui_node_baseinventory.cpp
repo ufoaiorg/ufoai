@@ -81,6 +81,10 @@ static const Item* dragInfoIC;
  */
 static Item* UI_ContainerNodeGetExistingItem (const uiNode_t* node, const objDef_t* item, const itemFilterTypes_t filterType)
 {
+	if (ui_inventory == nullptr) {
+		Com_Printf("ERROR: UI Inventory is not initialized in UI_ContainerNodeGetExistingItem!\n");
+		return nullptr;
+	}
 	return INV_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).super.container, item, filterType);
 }
 
