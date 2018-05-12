@@ -137,7 +137,7 @@ static void TR_CargoList (void)
 		linkedList_t* cargo = tr.itemCargo->list();
 		LIST_Foreach(cargo, itemCargo_t, item) {
 			if (item->amount > 0)
-				cgi->UI_ExecuteConfunc("ui_cargolist_add \"dead_%s\" \"%s\" %d", item->objDef->id, _(item->objDef->name), item->amount);
+				cgi->UI_ExecuteConfunc("ui_cargolist_add \"%s\" \"%s\" %d", item->objDef->id, _(item->objDef->name), item->amount);
 		}
 		cgi->LIST_Delete(&cargo);
 	}
@@ -566,7 +566,7 @@ static void TR_Add_f (void)
 			const int store = base->alienContainment->getAlive(teamDef);
 
 			if (amount >= 0)
-				amount = std::min(amount, store);
+				amount = std::min(amount, store - cargo);
 			else
 				amount = std::max(amount, -cargo);
 
@@ -585,7 +585,7 @@ static void TR_Add_f (void)
 			const int store = base->alienContainment->getDead(teamDef);
 
 			if (amount >= 0)
-				amount = std::min(amount, store);
+				amount = std::min(amount, store - cargo);
 			else
 				amount = std::max(amount, -cargo);
 
@@ -598,7 +598,7 @@ static void TR_Add_f (void)
 		const int store = B_AntimatterInBase(base);
 
 		if (amount >= 0)
-			amount = std::min(amount, store);
+			amount = std::min(amount, store - cargo);
 		else
 			amount = std::max(amount, -cargo);
 		if (amount != 0)
@@ -616,7 +616,7 @@ static void TR_Add_f (void)
 		const int cargo = tr.itemCargo->getAmount(od);
 		const int store = B_ItemInBase(od, base);
 		if (amount >= 0)
-			amount = std::min(amount, store);
+			amount = std::min(amount, store - cargo);
 		else
 			amount = std::max(amount, -cargo);
 		if (amount != 0)

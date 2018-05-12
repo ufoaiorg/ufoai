@@ -10,7 +10,6 @@ do
 		backgroundcolor = {0.56, 0.81, 0.76, 0.1},
 
 		on_click = function (sender)
-		ufo.print(string.format("click\n"))
 			ufo.cmd(string.format("ui_trans_add %q %d;", sender:child("id"):as_string(), 1))
 		end,
 
@@ -69,7 +68,7 @@ do
 		size = {368, 20},
 
 		on_click = function (sender)
-			ufo.cmd(string.format("ui_trans_add %s %d;", sender:child("id"):as_string(), -1))
+			ufo.cmd(string.format("ui_trans_add %q %d;", sender:child("id"):as_string(), -1))
 		end,
 
 		{
