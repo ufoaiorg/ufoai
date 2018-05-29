@@ -1,0 +1,25 @@
+From f39a61148ce34b478e3432624aa3237f5d9c10e3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Tam=C3=A1s=20Feh=C3=A9rv=C3=A1ri?=
+ <geever@users.sourceforge.net>
+Date: Thu, 7 Aug 2014 23:36:36 +0200
+Subject: [PATCH 04/40] * Init XVI overlay on game start
+
+---
+ src/client/cgame/campaign/cp_campaign.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/client/cgame/campaign/cp_campaign.cpp b/src/client/cgame/campaign/cp_campaign.cpp
+index 4e9a7f2bba..019ba040cb 100644
+--- a/src/client/cgame/campaign/cp_campaign.cpp
++++ b/src/client/cgame/campaign/cp_campaign.cpp
+@@ -1507,6 +1507,7 @@ void CP_InitStartup (void)
+ 
+ 	/* init subsystems */
+ 	MS_MessageInit();
++	CP_InitializeXVIOverlay();
+ 
+ 	MIS_InitStartup();
+ 	UP_InitStartup();
+-- 
+2.16.1
+

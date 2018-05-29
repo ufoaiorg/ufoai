@@ -1,0 +1,27 @@
+From d6e59ee201d0416f58258149ff8444b01551456c Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Sat, 12 Jul 2014 10:21:13 -0500
+Subject: [PATCH 10/40] * If a hurt trigger didn't actually hurt the actor
+ don't count it as triggered.
+
+* Special thanks to freakyd (See patch #5355)
+---
+ src/game/g_trigger.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/game/g_trigger.cpp b/src/game/g_trigger.cpp
+index 95ce34421d..e58580f491 100644
+--- a/src/game/g_trigger.cpp
++++ b/src/game/g_trigger.cpp
+@@ -232,7 +232,7 @@ bool Touch_HurtTrigger (Edict* self, Edict* activator)
+ 		G_TakeDamage(activator, damage);
+ 	}
+ 
+-	return true;
++	return damage != 0;
+ }
+ 
+ /**
+-- 
+2.16.1
+

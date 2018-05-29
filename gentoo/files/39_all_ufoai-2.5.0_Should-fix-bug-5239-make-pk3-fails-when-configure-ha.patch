@@ -1,0 +1,86 @@
+From 36e3ccf7565aed15d443180c6d0c7865f7bbc959 Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Mon, 23 Oct 2017 11:52:11 -0500
+Subject: [PATCH 39/40] * Should fix bug #5239 ('make pk3' fails when configure
+ hasn't been run yet)
+
+---
+ Makefile         | 5 +++--
+ build/data.mk    | 2 +-
+ build/maps.mk    | 4 ++--
+ build/various.mk | 4 ++--
+ 4 files changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index c558830f30..60b575aae6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -94,10 +94,11 @@ install: install-pre $(addprefix install-,$(TARGETS))
+ .PHONY: strip
+ strip: $(addprefix strip-,$(TARGETS))
+ 
+-$(TARGET_OS)-config.h: configure
++$(TARGET_OS)-config.h Makefile.local: configure
+ 	@echo "restarting configure for $(TARGET_OS)"
+ 	$(Q)$(CONFIGURE_PREFIX) ./configure $(CONFIGURE_OPTIONS)
+-	$(Q)$(MAKE)
++#	Makefile remaking should take care of this
++#	$(Q)$(MAKE) $(MAKECMDGOALS)
+ 
+ define BUILD_RULE
+ ifndef $(1)_DISABLE
+diff --git a/build/data.mk b/build/data.mk
+index 8896d68ea2..d959fa22be 100644
+--- a/build/data.mk
++++ b/build/data.mk
+@@ -3,7 +3,7 @@ include build/pk3_def.mk
+ BASE_DIR = base
+ PAK_FILES_OUT = $(addprefix $(BASE_DIR)/,$(PAK_FILES))
+ 
+-pk3: $(PAK_FILES_OUT)
++pk3: $(PAK_FILES_OUT) Makefile.local
+ 
+ clean-pk3:
+ 	$(Q)rm -f $(PAK_FILES_OUT)
+diff --git a/build/maps.mk b/build/maps.mk
+index 2f11cfea13..89572cd7d3 100644
+--- a/build/maps.mk
++++ b/build/maps.mk
+@@ -29,10 +29,10 @@ maps-ents:
+ 	$(MAKE) maps UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
+ 
+ # TODO only sync if there were updates on the map files
+-maps-sync:
++maps-sync: Makefile.local
+ 	$(PYTHONBIN) contrib/map-get/update.py
+ 
+-force-maps-sync:
++force-maps-sync: Makefile.local
+ 	$(PYTHONBIN) contrib/map-get/update.py --reply=yes
+ 
+ clean-maps:
+diff --git a/build/various.mk b/build/various.mk
+index 9f1411868c..5d6e036071 100644
+--- a/build/various.mk
++++ b/build/various.mk
+@@ -6,7 +6,7 @@ ifeq ($(wildcard .git),.git)
+ endif
+ 
+ # auto generate icon packs
+-resources:
++resources: Makefile.local
+ 	$(Q)$(PROGRAM_PYTHON) ./src/resources/sprite_pack.py
+ 
+ clean-resources:
+@@ -34,7 +34,7 @@ manual-clean:
+ deb:
+ 	$(Q)debuild binary
+ 
+-license-generate:
++license-generate: Makefile.local
+ 	$(Q)$(PROGRAM_PYTHON) contrib/licenses/generate.py
+ 
+ doxygen:
+-- 
+2.16.1
+

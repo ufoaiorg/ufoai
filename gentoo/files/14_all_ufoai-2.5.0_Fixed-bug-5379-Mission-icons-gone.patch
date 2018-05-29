@@ -1,0 +1,25 @@
+From 9abd5eaa2957b4f934c2a8bd4fcc115b35583e39 Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Thu, 28 Aug 2014 23:05:55 -0500
+Subject: [PATCH 14/40] * Fixed bug #5379 (Mission icons gone)
+
+---
+ src/client/cgame/campaign/cp_geoscape.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/client/cgame/campaign/cp_geoscape.cpp b/src/client/cgame/campaign/cp_geoscape.cpp
+index ef689ce064..fa4397feeb 100644
+--- a/src/client/cgame/campaign/cp_geoscape.cpp
++++ b/src/client/cgame/campaign/cp_geoscape.cpp
+@@ -1213,7 +1213,7 @@ static void GEO_DrawMapOneMission (const uiNode_t* node, const mission_t* missio
+ 	}
+ 
+ 	/* Draw mission model (this must be called after drawing the selection circle so that the model is rendered on top of it)*/
+-	if (!data.flatgeoscape) {
++	if (data.flatgeoscape) {
+ 		GEO_RenderImage(x, y, "pics/geoscape/mission");
+ 	} else {
+ 		GEO_Draw3DMarkerIfVisible(node, mission->pos, defaultBaseAngle, MIS_GetModel(mission), 0);
+-- 
+2.16.1
+

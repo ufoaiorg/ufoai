@@ -1,0 +1,25 @@
+From 373c8a9457c754d13dc90b54366ce2eec4dcabf0 Mon Sep 17 00:00:00 2001
+From: Martin Gerhardy <martin.gerhardy@gmail.com>
+Date: Wed, 25 Jun 2014 11:01:28 +0200
+Subject: [PATCH 01/40] * this will hopefully fix bug #5335
+
+* Compile error on Mac OS 10.9: src/game/g_ai.cpp:469:9: error: call to 'abs' is ambiguous
+---
+ src/shared/mathlib.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/shared/mathlib.h b/src/shared/mathlib.h
+index ccf43def0c..fbe76d5cc7 100644
+--- a/src/shared/mathlib.h
++++ b/src/shared/mathlib.h
+@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ #include "ufotypes.h"
+ #include "defines.h"
+ #include <algorithm>
++#include <cstdlib>
+ #include <cmath>
+ 
+ #ifndef M_PI
+-- 
+2.16.1
+

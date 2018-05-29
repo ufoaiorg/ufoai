@@ -1,0 +1,91 @@
+From 1e44861467ef05c87e8fd33377ed069635f4986b Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Wed, 25 Oct 2017 22:08:01 -0500
+Subject: [PATCH 40/40] * Implement make uninstall target, see bug #5172.
+
+---
+ Makefile         | 10 ++++++++++
+ build/data.mk    |  2 +-
+ build/install.mk | 21 +++++++++++++++++++++
+ 3 files changed, 32 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 60b575aae6..77ed07e7b8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -38,6 +38,8 @@ INSTALL_SCRIPT  ?= $(INSTALL) -m 755
+ INSTALL_DIR     ?= $(INSTALL) -d
+ INSTALL_MAN     ?= $(INSTALL) -m 444
+ INSTALL_DATA    ?= $(INSTALL) -m 444
++UNINSTALL_FILE  ?= rm --interactive=never
++UNINSTALL_DIR   ?= rmdir -p --ignore-fail-on-non-empty
+ 
+ ifeq ($(USE_CCACHE),1)
+ CCACHE := ccache
+@@ -91,6 +93,9 @@ distclean: clean
+ .PHONY: install
+ install: install-pre $(addprefix install-,$(TARGETS))
+ 
++.PHONY: uninstall
++uninstall:  uninstall-pre $(addprefix uninstall-,$(TARGETS))
++
+ .PHONY: strip
+ strip: $(addprefix strip-,$(TARGETS))
+ 
+@@ -160,6 +165,11 @@ install-$(1): $($(1)_FILE)
+ 	$(Q)$(INSTALL_DIR) $(DESTDIR)$(PKGDATADIR)/$(dir $($(1)_FILE))
+ 	$(Q)$(INSTALL_PROGRAM) $$< $(DESTDIR)$(PKGDATADIR)/$$<
+ 
++uninstall-$(1):
++	@echo 'Uninstall $($(1)_FILE)'
++	$(Q)$(UNINSTALL_FILE) $(DESTDIR)$(PKGDATADIR)/$($(1)_FILE)
++	$(Q)$(UNINSTALL_DIR) $(dir $(DESTDIR)$(PKGDATADIR)/$($(1)_FILE))
++
+ else
+ # if this target is ignored, just do nothing
+ $(1):
+diff --git a/build/data.mk b/build/data.mk
+index d959fa22be..6b0e788e8c 100644
+--- a/build/data.mk
++++ b/build/data.mk
+@@ -48,7 +48,7 @@ define $(BASE_DIR)/0videos.pk3
+ endef
+ 
+ define $(BASE_DIR)/0media.pk3
+-	media/*.ttf
++	media/*.ttf media/*.otf
+ endef
+ 
+ define $(BASE_DIR)/0shaders.pk3
+diff --git a/build/install.mk b/build/install.mk
+index 9b8adfc088..2251c8188b 100644
+--- a/build/install.mk
++++ b/build/install.mk
+@@ -84,3 +84,24 @@ install-pre: pk3 lang
+ 	$(Q)rm ufoded.sh ufo.sh uforadiant.sh
+ 	@echo "Install pk3s"
+ 	$(Q)$(INSTALL_DATA) base/*.pk3 $(DESTDIR)$(PKGDATADIR)/base
++
++.PHONY: uninstall-pre
++uninstall-pre:
++	@echo "Uninstall locales"
++	$(Q)LCDIR=$(LOCALEDIR); \
++	LCDIR=$${LCDIR:-$(PKGDATADIR)/base/i18n}; \
++	if [ -d $(DESTDIR)$$LCDIR/ ]; then \
++		cd $(DESTDIR)$$LCDIR/; for dir in *; do \
++			$(UNINSTALL_FILE) $(DESTDIR)$$LCDIR/$$dir/LC_MESSAGES/ufoai.mo && \
++			$(UNINSTALL_DIR) $(DESTDIR)$$LCDIR/$$dir/LC_MESSAGES; \
++		done; \
++	fi
++	$(Q)$(UNINSTALL_FILE) $(DESTDIR)$(PKGBINDIR)/ufo
++	$(Q)$(UNINSTALL_FILE) $(DESTDIR)$(PKGBINDIR)/ufoded
++	$(Q)if [ -z "$(uforadiant_DISABLE)" ]; then \
++		$(UNINSTALL_FILE) $(DESTDIR)$(PKGBINDIR)/uforadiant; \
++	fi
++	$(Q)$(UNINSTALL_DIR) $(DESTDIR)$(PKGBINDIR)
++	@echo "Uninstall pk3s"
++	$(Q)$(UNINSTALL_FILE) $(DESTDIR)$(PKGDATADIR)/base/*.pk3
++	$(Q)$(UNINSTALL_DIR) $(DESTDIR)$(PKGDATADIR)/base
+-- 
+2.16.1
+

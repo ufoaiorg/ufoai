@@ -1,0 +1,40 @@
+From 9cad041f0931b1f49e0c70f32e351a7227f0d2ff Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Tam=C3=A1s=20Feh=C3=A9rv=C3=A1ri?=
+ <geever@users.sourceforge.net>
+Date: Sun, 7 May 2017 18:18:16 +0200
+Subject: [PATCH 35/40] * Fix segfault on determining reactionfire mode when
+ soldier has no weapon (Debian Bug#861979)
+
+---
+ src/game/inv_shared.cpp | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/src/game/inv_shared.cpp b/src/game/inv_shared.cpp
+index 708e708934..e5a73a5d56 100644
+--- a/src/game/inv_shared.cpp
++++ b/src/game/inv_shared.cpp
+@@ -633,9 +633,6 @@ const fireDef_t* Item::getSlowestFireDef () const
+  */
+ const objDef_t* Item::getReactionFireWeaponType () const
+ {
+-	if (!this)
+-		return nullptr;
+-
+ 	if (def()) {
+ 		const fireDef_t* fd = getFiredefs();
+ 		if (fd && fd->reaction)
+@@ -999,9 +996,9 @@ Item* Inventory::findInContainer (const containerIndex_t contId, const Item* con
+  */
+ bool Inventory::holdsReactionFireWeapon () const
+ {
+-	if (getRightHandContainer()->getReactionFireWeaponType())
++	if (getRightHandContainer() != nullptr && getRightHandContainer()->getReactionFireWeaponType())
+ 		return true;
+-	if (getLeftHandContainer()->getReactionFireWeaponType())
++	if (getLeftHandContainer() != nullptr && getLeftHandContainer()->getReactionFireWeaponType())
+ 		return true;
+ 	return false;
+ }
+-- 
+2.16.1
+

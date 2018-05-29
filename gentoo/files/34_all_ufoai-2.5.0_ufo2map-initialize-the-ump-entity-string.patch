@@ -1,0 +1,26 @@
+From 3af118b021cd4c778121057706bbe848342a840f Mon Sep 17 00:00:00 2001
+From: Martin Gerhardy <martin.gerhardy@gmail.com>
+Date: Fri, 27 Jun 2014 14:15:25 +0200
+Subject: [PATCH 34/40] * [ufo2map] initialize the ump entity string
+
+* Backported bae827b from master to fix Debian Bug#860680
+---
+ src/tools/ufo2map/map.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/tools/ufo2map/map.cpp b/src/tools/ufo2map/map.cpp
+index 47c49f3a0e..f56c55e75f 100644
+--- a/src/tools/ufo2map/map.cpp
++++ b/src/tools/ufo2map/map.cpp
+@@ -1227,7 +1227,7 @@ void LoadMapFile (const char* filename)
+ 	/* Set the number of tiles to 1. This is fix for ufo2map right now. */
+ 	mapTiles.numTiles = 1;
+ 
+-	char entityString[MAX_TOKEN_CHARS];
++	char entityString[MAX_TOKEN_CHARS] = "";
+ 	const char* ump = GetUMPName(filename);
+ 	if (ump != nullptr)
+ 		ParseUMP(ump, entityString, false);
+-- 
+2.16.1
+

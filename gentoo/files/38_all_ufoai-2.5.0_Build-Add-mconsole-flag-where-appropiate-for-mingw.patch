@@ -1,0 +1,46 @@
+From 5aca1bca59072408a0a25c252490e0f0ef6703d9 Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Sun, 22 Oct 2017 15:57:50 -0500
+Subject: [PATCH 38/40] * [Build] Add -mconsole flag where appropiate for
+ mingw.
+
+* Since -mwindows may be included in the flags from some library relying on not adding it ourselves is not enough.
+---
+ build/platforms/mingw32.mk    | 10 +++++-----
+ build/platforms/mingw64_64.mk |  1 -
+ 2 files changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/build/platforms/mingw32.mk b/build/platforms/mingw32.mk
+index d6739b135c..a6ac58284f 100644
+--- a/build/platforms/mingw32.mk
++++ b/build/platforms/mingw32.mk
+@@ -28,12 +28,12 @@ INTL_LIBS                ?= -lintl
+ 
+ ufo_LDFLAGS              += -lws2_32 -lwinmm -lgdi32 -lfreetype -mwindows
+ ufoded_LDFLAGS           += -lws2_32 -lwinmm -lgdi32 -mwindows
+-testall_LDFLAGS          += -lws2_32 -lwinmm -lgdi32 -lfreetype
++testall_LDFLAGS          += -lws2_32 -lwinmm -lgdi32 -lfreetype -mconsole
+ ifdef HAVE_BFD_H
+     BFD_LIBS             := -lbfd -liberty -limagehlp
+ endif
+-ufo2map_LDFLAGS          += -lwinmm
+-ufomodel_LDFLAGS         += -lwinmm
++ufo2map_LDFLAGS          += -lwinmm -mconsole
++ufomodel_LDFLAGS         += -lwinmm -mconsole
+ uforadiant_LDFLAGS       += -lglib-2.0 -lgtk-win32-2.0 -lgobject-2.0 -mwindows -static-libgcc -static-libstdc++
+-ufoslicer_LDFLAGS        += -lwinmm
+-memory_LDFLAGS           += $(INTL_LIBS)
++ufoslicer_LDFLAGS        += -lwinmm -mconsole
++memory_LDFLAGS           += -mconsole $(INTL_LIBS)
+diff --git a/build/platforms/mingw64_64.mk b/build/platforms/mingw64_64.mk
+index 03daa35462..6983e55454 100644
+--- a/build/platforms/mingw64_64.mk
++++ b/build/platforms/mingw64_64.mk
+@@ -8,4 +8,3 @@ CFLAGS                   += -DWINVER=0x501
+ LDFLAGS                  +=
+ 
+ OPENGL_LIBS              ?= -lopengl64
+-caveexpress_LDFLAGS      += -lws2_64 -lwinmm -lgdi64 -liphlpapi -static-libgcc -static-libstdc++
+-- 
+2.16.1
+

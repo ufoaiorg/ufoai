@@ -1,0 +1,26 @@
+From 5a4ee2d79b029a94bffb83d2fd00ef744ebeab76 Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Sat, 30 Aug 2014 20:56:30 -0500
+Subject: [PATCH 15/40] * Should fix bug #5328 (Snipers aborting RF get wrong
+ TU cost on subsequent RF)
+
+---
+ src/game/g_reaction.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/game/g_reaction.cpp b/src/game/g_reaction.cpp
+index 3a8f674479..94e61c2cc4 100644
+--- a/src/game/g_reaction.cpp
++++ b/src/game/g_reaction.cpp
+@@ -205,7 +205,7 @@ void ReactionFireTargets::notifyClientMove (const Edict* target, int step, bool
+ 			if (rfts->targets[j].target != target)
+ 				continue;
+ 			if (startMove) {
+-				const int tus = target->TU - rfts->targets[j].triggerTUs;
++				const int tus = std::max(0, target->TU - rfts->targets[j].triggerTUs);
+ 				G_EventReactionFireAddTarget(*shooter, *target, tus, step);
+ 			} else {
+ 				G_EventReactionFireRemoveTarget(*shooter, *target, step);
+-- 
+2.16.1
+

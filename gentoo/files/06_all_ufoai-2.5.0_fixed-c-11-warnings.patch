@@ -1,0 +1,25 @@
+From ebcf1fed873f1a75487acedf106f03b299bf8b7e Mon Sep 17 00:00:00 2001
+From: Martin Gerhardy <martin.gerhardy@gmail.com>
+Date: Sun, 20 Oct 2013 20:02:48 +0200
+Subject: [PATCH 06/40] * fixed c++11 warnings
+
+---
+ src/client/battlescape/cl_particle.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/client/battlescape/cl_particle.cpp b/src/client/battlescape/cl_particle.cpp
+index 58d9211631..2e092cce21 100644
+--- a/src/client/battlescape/cl_particle.cpp
++++ b/src/client/battlescape/cl_particle.cpp
+@@ -138,7 +138,7 @@ static char const* const pc_strings[] = {
+ CASSERT(lengthof(pc_strings) == PC_NUM_PTLCMDS);
+ 
+ /** @brief particle commands parameter and types */
+-static const int pc_types[PC_NUM_PTLCMDS] = {
++static const unsigned int pc_types[PC_NUM_PTLCMDS] = {
+ 	0,
+ 
+ 	V_UNTYPED, V_UNTYPED, V_UNTYPED,
+-- 
+2.16.1
+

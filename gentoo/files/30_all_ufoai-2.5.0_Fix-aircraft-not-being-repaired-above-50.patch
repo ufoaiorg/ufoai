@@ -1,0 +1,28 @@
+From b471df43d2d2a0b3a906d8fcdf81a686ff6d5d12 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Tam=C3=A1s=20Feh=C3=A9rv=C3=A1ri?=
+ <geever@users.sourceforge.net>
+Date: Wed, 24 Aug 2016 00:12:39 +0200
+Subject: [PATCH 30/40] * Fix aircraft not being repaired above 50%
+
+* http://ufoai.org/forum/index.php/topic,8690.0.html
+---
+ src/client/cgame/campaign/cp_mapfightequip.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/client/cgame/campaign/cp_mapfightequip.cpp b/src/client/cgame/campaign/cp_mapfightequip.cpp
+index 25b2e883e1..b52c03cd57 100644
+--- a/src/client/cgame/campaign/cp_mapfightequip.cpp
++++ b/src/client/cgame/campaign/cp_mapfightequip.cpp
+@@ -1053,7 +1053,8 @@ void AII_RepairAircraft (void)
+ 		AIR_ForeachFromBase(aircraft, base) {
+ 			if (!AIR_IsAircraftInBase(aircraft))
+ 				continue;
+-			const int REPAIR_PER_HOUR = round(aircraft->stats[AIR_STATS_DAMAGE] / 100); /**< Number of damage points repaired per hour: 1% of aircraft max damage value */
++			const int REPAIR_PER_HOUR = std::max(1, int(round(aircraft->stats[AIR_STATS_DAMAGE] / 100))); /**< Number of damage points repaired per hour: 1% of aircraft max damage value */
++			cgi->Com_Printf("Repair per hour: %s %d, %d / %d\n", aircraft->name, REPAIR_PER_HOUR, aircraft->damage, aircraft->stats[AIR_STATS_DAMAGE]);
+ 			aircraft->damage = std::min(aircraft->damage + REPAIR_PER_HOUR, aircraft->stats[AIR_STATS_DAMAGE]);
+ 		}
+ 	}
+-- 
+2.16.1
+

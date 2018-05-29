@@ -1,0 +1,59 @@
+From 3c02f80e60df51e07f8b0ad4754f73a0d5874255 Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Wed, 28 Jan 2015 20:07:52 -0600
+Subject: [PATCH 25/40] * Fix bug #5412 (Crash in battlescape when using Plasma
+ Blade for reaction fire)
+
+---
+ src/client/battlescape/events/event/actor/e_event_actorendshot.cpp | 7 +++++--
+ .../battlescape/events/event/actor/e_event_actorstartshoot.cpp     | 1 +
+ src/client/battlescape/events/event/inventory/e_event_invdel.cpp   | 2 +-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/src/client/battlescape/events/event/actor/e_event_actorendshot.cpp b/src/client/battlescape/events/event/actor/e_event_actorendshot.cpp
+index 639f95158f..209f273d13 100644
+--- a/src/client/battlescape/events/event/actor/e_event_actorendshot.cpp
++++ b/src/client/battlescape/events/event/actor/e_event_actorendshot.cpp
+@@ -32,9 +32,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ int CL_ActorEndShootTime (const eventRegister_t* self, dbuffer* msg, eventTiming_t* eventTiming)
+ {
+ 	eventTiming->parsedShot = false;
++	eventTiming->parsedDeath = false;
+ 
+-	if (eventTiming->impactTime > cl.time)
+-		return eventTiming->impactTime;
++	const int eventTime = eventTiming->impactTime;
++	eventTiming->impactTime = cl.time;
++	if (eventTime > cl.time)
++		return eventTime;
+ 
+ 	return  eventTiming->nextTime;
+ }
+diff --git a/src/client/battlescape/events/event/actor/e_event_actorstartshoot.cpp b/src/client/battlescape/events/event/actor/e_event_actorstartshoot.cpp
+index a6fc614417..8c7c1112dc 100644
+--- a/src/client/battlescape/events/event/actor/e_event_actorstartshoot.cpp
++++ b/src/client/battlescape/events/event/actor/e_event_actorstartshoot.cpp
+@@ -35,6 +35,7 @@ int CL_ActorStartShootTime (const eventRegister_t* self, dbuffer* msg, eventTimi
+ 	const int eventTime = eventTiming->nextTime;
+ 
+ 	eventTiming->parsedShot = true;
++	eventTiming->parsedDeath = false;
+ 	eventTiming->nextTime += 300;
+ 	eventTiming->shootTime = eventTiming->nextTime;
+ 
+diff --git a/src/client/battlescape/events/event/inventory/e_event_invdel.cpp b/src/client/battlescape/events/event/inventory/e_event_invdel.cpp
+index 26cad3d38c..9c0e0b1b43 100644
+--- a/src/client/battlescape/events/event/inventory/e_event_invdel.cpp
++++ b/src/client/battlescape/events/event/inventory/e_event_invdel.cpp
+@@ -36,7 +36,7 @@ int CL_InvDelTime (const struct eventRegister_s* self, dbuffer* msg, eventTiming
+ 		if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
+ 			return eventTiming->impactTime + 400;
+ 		} else if (eventTiming->impactTime > cl.time) { /* item thrown on the ground */
+-			return eventTiming->impactTime + 75;
++			return eventTiming->shootTime + 75;
+ 		}
+ 	}
+ 	return eventTiming->nextTime;
+-- 
+2.16.1
+

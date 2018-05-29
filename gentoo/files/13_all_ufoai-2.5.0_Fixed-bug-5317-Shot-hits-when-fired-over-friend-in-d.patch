@@ -1,0 +1,44 @@
+From f5e5b2aea2e7113df7d5545b7e8bddcf50c729b5 Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Wed, 6 Aug 2014 18:54:05 -0500
+Subject: [PATCH 13/40] * Fixed bug #5317 (Shot hits when fired over friend in
+ diagonal square)
+
+Conflicts:
+	src/game/g_combat.cpp
+---
+ src/game/g_combat.cpp | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/src/game/g_combat.cpp b/src/game/g_combat.cpp
+index f7341f8f72..24a5e48bfb 100644
+--- a/src/game/g_combat.cpp
++++ b/src/game/g_combat.cpp
+@@ -911,10 +911,13 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
+ 		damage = std::max(0.0f, fd->damage[0] + (fd->damage[1] * crand()));
+ 
+ 	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
+-	trace_t tr = G_Trace(cur_loc, impact, ent, MASK_SHOT);
++	const Edict* passEnt = ent;
++	trace_t tr = G_Trace(cur_loc, impact, passEnt, MASK_SHOT);
+ 	Edict* trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
+-	if (trEnt && (trEnt->team == ent->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt) && !FIRESH_IsMedikit(fd))
++	if (trEnt && (trEnt->team == ent->team || G_IsCivilian(trEnt)) && G_IsCrouched(trEnt) && !FIRESH_IsMedikit(fd)) {
+ 		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
++		passEnt = trEnt;
++	}
+ 
+ 	vec3_t tracefrom;	/* sum */
+ 	VectorCopy(cur_loc, tracefrom);
+@@ -928,7 +931,7 @@ static void G_ShootSingle (Edict* ent, const fireDef_t* fd, const vec3_t from, c
+ 
+ 		/* Do the trace from current position of the projectile
+ 		 * to the end_of_range location.*/
+-		tr = G_Trace(tracefrom, impact, ent, MASK_SHOT);
++		tr = G_Trace(tracefrom, impact, passEnt, MASK_SHOT);
+ 		trEnt = G_EdictsGetByNum(tr.entNum);	/* the ent possibly hit by the trace */
+ 
+ #ifdef DEBUG
+-- 
+2.16.1
+

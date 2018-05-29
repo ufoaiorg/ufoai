@@ -1,0 +1,28 @@
+From 6542fbc8519e228f61f0240ebacaaabc95d1ef7b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Tam=C3=A1s=20Feh=C3=A9rv=C3=A1ri?=
+ <geever@users.sourceforge.net>
+Date: Sat, 6 May 2017 21:18:10 +0200
+Subject: [PATCH 36/40] * Aircraft repair console messages should be visible in
+ debug mode only
+
+---
+ src/client/cgame/campaign/cp_mapfightequip.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/client/cgame/campaign/cp_mapfightequip.cpp b/src/client/cgame/campaign/cp_mapfightequip.cpp
+index b52c03cd57..b56b99f3a2 100644
+--- a/src/client/cgame/campaign/cp_mapfightequip.cpp
++++ b/src/client/cgame/campaign/cp_mapfightequip.cpp
+@@ -1054,7 +1054,8 @@ void AII_RepairAircraft (void)
+ 			if (!AIR_IsAircraftInBase(aircraft))
+ 				continue;
+ 			const int REPAIR_PER_HOUR = std::max(1, int(round(aircraft->stats[AIR_STATS_DAMAGE] / 100))); /**< Number of damage points repaired per hour: 1% of aircraft max damage value */
+-			cgi->Com_Printf("Repair per hour: %s %d, %d / %d\n", aircraft->name, REPAIR_PER_HOUR, aircraft->damage, aircraft->stats[AIR_STATS_DAMAGE]);
++			cgi->Com_DPrintf(DEBUG_CLIENT, "Repair per hour: %s %d, %d / %d\n",
++				aircraft->name, REPAIR_PER_HOUR, aircraft->damage, aircraft->stats[AIR_STATS_DAMAGE]);
+ 			aircraft->damage = std::min(aircraft->damage + REPAIR_PER_HOUR, aircraft->stats[AIR_STATS_DAMAGE]);
+ 		}
+ 	}
+-- 
+2.16.1
+

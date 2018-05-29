@@ -1,0 +1,26 @@
+From d5193c2621a39ee0da08f7e5795f81e4181339bc Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Wed, 26 Nov 2014 17:50:31 -0600
+Subject: [PATCH 20/40] * Don't truncate inventory weight when calculating max
+ TUs.
+
+---
+ src/game/g_actor.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/game/g_actor.cpp b/src/game/g_actor.cpp
+index 644dccd9f5..50b2873b2d 100644
+--- a/src/game/g_actor.cpp
++++ b/src/game/g_actor.cpp
+@@ -275,7 +275,7 @@ void G_ActorSetMaxs (Edict* ent)
+ 
+ int G_ActorCalculateMaxTU (const Edict* ent)
+ {
+-	const int invWeight = ent->chr.inv.getWeight();
++	const float invWeight = ent->chr.inv.getWeight();
+ 	const int currentMaxTU = GET_TU(ent->chr.score.skills[ABILITY_SPEED], GET_ENCUMBRANCE_PENALTY(invWeight,
+ 			ent->chr.score.skills[ABILITY_POWER])) * G_ActorGetInjuryPenalty(ent, MODIFIER_TU);
+ 
+-- 
+2.16.1
+

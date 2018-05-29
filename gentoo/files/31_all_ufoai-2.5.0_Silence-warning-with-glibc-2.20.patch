@@ -1,0 +1,25 @@
+From 4f79ced17ed233d40a816b8e481527c7b59b2e7e Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Wed, 28 Sep 2016 11:40:02 -0500
+Subject: [PATCH 31/40] * Silence warning with glibc >= 2.20.
+
+---
+ build/platforms/linux.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/build/platforms/linux.mk b/build/platforms/linux.mk
+index d6862d680d..26d712613c 100644
+--- a/build/platforms/linux.mk
++++ b/build/platforms/linux.mk
+@@ -4,7 +4,7 @@ SO_CFLAGS                 = -fpic
+ SO_LIBS                  := -ldl
+ 
+ CFLAGS                   += -DSHARED_EXT=\"$(SO_EXT)\"
+-CFLAGS                   += -D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE
++CFLAGS                   += -D_GNU_SOURCE -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_XOPEN_SOURCE
+ 
+ LDFLAGS                  +=
+ 
+-- 
+2.16.1
+

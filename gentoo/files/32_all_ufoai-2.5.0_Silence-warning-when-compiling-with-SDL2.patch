@@ -1,0 +1,26 @@
+From b5ceb789cccfa1753be7ec1122a5279ed930ca1c Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Wed, 28 Sep 2016 12:20:52 -0500
+Subject: [PATCH 32/40] * Silence warning when compiling with SDL2.
+
+---
+ src/client/renderer/r_program.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/client/renderer/r_program.h b/src/client/renderer/r_program.h
+index c76190db67..afe21ba9e3 100644
+--- a/src/client/renderer/r_program.h
++++ b/src/client/renderer/r_program.h
+@@ -30,7 +30,9 @@ typedef struct r_shader_s {
+ 	char name[MAX_QPATH];
+ } r_shader_t;
+ 
++#ifndef GL_UNIFORM
+ #define GL_UNIFORM 1
++#endif
+ #define GL_ATTRIBUTE 2
+ /* program variables */
+ typedef struct r_progvar_s {
+-- 
+2.16.1
+

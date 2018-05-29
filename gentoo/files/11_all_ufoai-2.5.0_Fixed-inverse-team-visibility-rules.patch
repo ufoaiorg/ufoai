@@ -1,0 +1,29 @@
+From 0cb88a5633d4d8cc0e5f5dd0736d1df97f671ca9 Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Wed, 6 Aug 2014 15:33:15 -0500
+Subject: [PATCH 11/40] * Fixed inverse team visibility rules.
+
+* Now the AI might start hiding again...
+
+Conflicts:
+	src/game/g_vis.cpp
+---
+ src/game/g_vis.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/game/g_vis.cpp b/src/game/g_vis.cpp
+index 5bfaf64842..d4e241a9e1 100644
+--- a/src/game/g_vis.cpp
++++ b/src/game/g_vis.cpp
+@@ -192,7 +192,7 @@ bool G_Vis (const int team, const Edict* from, const Edict* check, const vischec
+ 		return false;
+ 
+ 	/* inverse team rules */
+-	if (team < 0 && check->team == -team)
++	if (team < 0 && from->team == -team)
+ 		return false;
+ 
+ 	/* check for same pos */
+-- 
+2.16.1
+

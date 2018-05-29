@@ -1,0 +1,53 @@
+From e10f5640937ea42d8b9644cd7f8d735403f2a98f Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Fri, 6 Feb 2015 12:32:43 -0600
+Subject: [PATCH 26/40] * Don't nuke the music arrays on sound restart (See bug
+ #5370)
+
+Conflicts:
+	src/client/sound/s_music.cpp
+---
+ src/client/sound/s_music.cpp | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
+
+diff --git a/src/client/sound/s_music.cpp b/src/client/sound/s_music.cpp
+index ff5b539e6c..7eb84d4b46 100644
+--- a/src/client/sound/s_music.cpp
++++ b/src/client/sound/s_music.cpp
+@@ -58,9 +58,9 @@ typedef struct music_s {
+ } music_t;
+ 
+ #define MUSIC_MAX_ENTRIES 64
+-static char* musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
+-static int musicArrayLength[MUSIC_MAX];
+-static music_t music;
++static char* musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES] = {{}, {}};
++static int musicArrayLength[MUSIC_MAX] = {};
++static music_t music = {{}, {}, nullptr, 0, nullptr, false, false};
+ static cvar_t* snd_music;
+ static cvar_t* snd_music_volume;
+ 
+@@ -354,20 +354,12 @@ void M_Init (void)
+ 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
+ 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128.");
+ 	snd_music_volume->modified = true;
+-
+-	OBJZERO(musicArrays);
+-	OBJZERO(musicArrayLength);
+-	OBJZERO(music);
+ }
+ 
+ void M_Shutdown (void)
+ {
+ 	M_Stop();
+ 
+-	OBJZERO(musicArrays);
+-	OBJZERO(musicArrayLength);
+-	OBJZERO(music);
+-
+ 	Cmd_RemoveCommand("music_play");
+ 	Cmd_RemoveCommand("music_change");
+ 	Cmd_RemoveCommand("music_stop");
+-- 
+2.16.1
+

@@ -1,0 +1,62 @@
+From 554e5a584fd274ad9c194dab9675bcf2c2dd4c37 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Tam=C3=A1s=20Feh=C3=A9rv=C3=A1ri?=
+ <geever@users.sourceforge.net>
+Date: Tue, 23 Aug 2016 23:52:24 +0200
+Subject: [PATCH 29/40] * Fix crash on loading certain incompatible (modded)
+ savegames
+
+* Savegame with modded ammo definitions: http://ufoai.org/forum/index.php/topic,8690.msg65268.html#msg65268
+---
+ src/client/cgame/cl_game_team.cpp | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/src/client/cgame/cl_game_team.cpp b/src/client/cgame/cl_game_team.cpp
+index 3e03fc3611..94274e74b4 100644
+--- a/src/client/cgame/cl_game_team.cpp
++++ b/src/client/cgame/cl_game_team.cpp
+@@ -620,7 +620,7 @@ static void GAME_SaveInventory (xmlNode_t* p, const Inventory* inv)
+  * @param[out] y Vertical coordinate of the item in the container
+  * @sa GAME_SaveItem
+  */
+-static void GAME_LoadItem (xmlNode_t* n, Item* item, containerIndex_t* container, int* x, int* y)
++static bool GAME_LoadItem (xmlNode_t* n, Item* item, containerIndex_t* container, int* x, int* y)
+ {
+ 	const char* itemID = XML_GetString(n, SAVE_INVENTORY_WEAPONID);
+ 	const char* contID = XML_GetString(n, SAVE_INVENTORY_CONTAINER);
+@@ -635,10 +635,14 @@ static void GAME_LoadItem (xmlNode_t* n, Item* item, containerIndex_t* container
+ 	}
+ 	if (i >= CID_MAX) {
+ 		Com_Printf("Invalid container id '%s'\n", contID);
++		return false;
+ 	}
+ 	*container = i;
+ 
+ 	item->setDef(INVSH_GetItemByID(itemID));
++	if (item->def() == nullptr) {
++		return false;
++	}
+ 	*x = XML_GetInt(n, SAVE_INVENTORY_X, 0);
+ 	*y = XML_GetInt(n, SAVE_INVENTORY_Y, 0);
+ 	item->rotated = XML_GetInt(n, SAVE_INVENTORY_ROTATED, 0);
+@@ -655,6 +659,8 @@ static void GAME_LoadItem (xmlNode_t* n, Item* item, containerIndex_t* container
+ 	} else if (!item->isReloadable()) {
+ 		item->setAmmoDef(item->def());
+ 	}
++
++	return true;
+ }
+ 
+ /**
+@@ -676,6 +682,9 @@ static void GAME_LoadInventory (xmlNode_t* p, Inventory* inv, int maxLoad)
+ 		int x, y;
+ 
+ 		GAME_LoadItem(s, &item, &container, &x, &y);
++		if (item.def() == nullptr)
++			continue;
++
+ 		if (INVDEF(container)->temp)
+ 			Com_Error(ERR_DROP, "GAME_LoadInventory failed, tried to add '%s' to a temp container %i", item.def()->id, container);
+ 		/* ignore the overload for now */
+-- 
+2.16.1
+

@@ -1,0 +1,25 @@
+From 1f4775cedb0937b78bf824c5c1d79efe68818ea9 Mon Sep 17 00:00:00 2001
+From: DarkRain <darkrainx@users.sourceforge.net>
+Date: Sat, 14 Feb 2015 13:26:09 -0600
+Subject: [PATCH 27/40] * Fix text alpha blending for SDL2 - really improves
+ text rendering here.
+
+---
+ src/client/renderer/r_font.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/client/renderer/r_font.cpp b/src/client/renderer/r_font.cpp
+index a5a182ee1a..abbe67e68e 100644
+--- a/src/client/renderer/r_font.cpp
++++ b/src/client/renderer/r_font.cpp
+@@ -631,6 +631,7 @@ static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCa
+ 
+ 	/* ignore alpha when blitting - just copy it over */
+ #if SDL_VERSION_ATLEAST(2,0,0)
++	SDL_SetSurfaceBlendMode(textSurface, SDL_BLENDMODE_NONE);
+ 	SDL_SetSurfaceAlphaMod(textSurface, 255);
+ #else
+ 	SDL_SetAlpha(textSurface, 0, 255);
+-- 
+2.16.1
+

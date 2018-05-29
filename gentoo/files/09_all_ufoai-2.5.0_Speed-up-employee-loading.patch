@@ -1,0 +1,44 @@
+From 1aa305a4405dc28f1cd92f8cb5df98a808451177 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Tam=C3=A1s=20Feh=C3=A9rv=C3=A1ri?=
+ <geever@users.sourceforge.net>
+Date: Mon, 1 Sep 2014 23:14:11 +0200
+Subject: [PATCH 09/40] * Speed up employee loading
+
+---
+ src/client/cgame/campaign/cp_employee.cpp | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/src/client/cgame/campaign/cp_employee.cpp b/src/client/cgame/campaign/cp_employee.cpp
+index b6873b6022..e335f4592b 100644
+--- a/src/client/cgame/campaign/cp_employee.cpp
++++ b/src/client/cgame/campaign/cp_employee.cpp
+@@ -978,7 +978,9 @@ bool E_LoadXML (xmlNode_t* p)
+ {
+ 	xmlNode_t* snode;
+ 	bool success = true;
++	linkedList_t* lastEmployee[MAX_EMPL];
+ 
++	OBJZERO(lastEmployee);
+ 	cgi->Com_RegisterConstList(saveEmployeeConstants);
+ 	for (snode = cgi->XML_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES); snode;
+ 			snode = cgi->XML_GetNextNode(snode, p, SAVE_EMPLOYEE_EMPLOYEES)) {
+@@ -1026,7 +1028,15 @@ bool E_LoadXML (xmlNode_t* p)
+ 				success = false;
+ 				break;
+ 			}
+-			LIST_Add(&ccs.employees[emplType], e);
++			if (lastEmployee[emplType] == nullptr)
++				lastEmployee[emplType] = LIST_Add(&ccs.employees[emplType], (void*) &e, sizeof(e));
++			else
++				lastEmployee[emplType] = LIST_Add(&lastEmployee[emplType], (void*) &e, sizeof(e));
++			if (lastEmployee[emplType] == nullptr) {
++				Com_Printf("Could not add employee to the game\n");
++				success = false;
++				break;
++			}
+ 		}
+ 		if (!success)
+ 			break;
+-- 
+2.16.1
+
