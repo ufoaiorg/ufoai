@@ -24,10 +24,10 @@ $(TARGET)_CFLAGS   += \
 	 $(PICOMODEL_CFLAGS) \
 	 $(SDL_CFLAGS) \
 	 -DGTK_DISABLE_SINGLE_INCLUDES \
-	 -DGTK_DISABLE_DEPRECATED \
-	 -DGDK_DISABLE_DEPRECATED \
-	 -DGSEAL_ENABLE
-$(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GLIB_LIBS) $(GTK_SOURCEVIEW_LIBS) $(GTK_GLEXT_LIBS) $(OPENAL_LIBS) $(OPENGL_LIBS) $(XML2_LIBS) $(GDK_PIXBUF_LIBS) $(PICOMODEL_LIBS) $(SO_LIBS) -lm -lz
+	 -DGDK_DISABLE_DEPRECATED
+# UFORadiant is ready for these flags but gtksourceview2 isn't
+# @todo Re-enable these once switched to gtk3: -DGTK_DISABLE_DEPRECATED -DGSEAL_ENABLE
+$(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GLIB_LIBS) $(GTK_SOURCEVIEW_LIBS) $(GDK_PIXBUF_LIBS) $(GTK_GLEXT_LIBS) $(OPENAL_LIBS) $(OPENGL_LIBS) $(XML2_LIBS) $(PICOMODEL_LIBS) $(SO_LIBS) -lm -lz
 
 $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/commands.cpp \
@@ -395,6 +395,8 @@ $(TARGET)_SRCS      = \
 	\
 	shared/parse.cpp \
 	shared/entitiesdef.cpp \
+	\
+	$(GTK_SOURCEVIEW_SRCS) \
 	\
 	$(PICOMODEL_SRCS)
 

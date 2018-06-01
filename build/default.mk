@@ -277,8 +277,45 @@ GDK_PIXBUF_CFLAGS        ?= $(call PKG_CFLAGS,gdk-pixbuf-2.0)
 GDK_PIXBUF_LIBS          ?= $(call PKG_LIBS,gdk-pixbuf-2.0)
 GTK_CFLAGS               ?= $(call PKG_CFLAGS,gtk+-2.0)
 GTK_LIBS                 ?= $(call PKG_LIBS,gtk+-2.0)
+ifdef HAVE_GTKSOURCEVIEW_2_0_GTKSOURCEVIEW_H
 GTK_SOURCEVIEW_CFLAGS    ?= $(call PKG_CFLAGS,gtksourceview-2.0)
 GTK_SOURCEVIEW_LIBS      ?= $(call PKG_LIBS,gtksourceview-2.0)
+GTK_SOURCEVIEW_SRCS      =
+else
+GTK_SOURCEVIEW_CFLAGS    ?= -Isrc/libs -Isrc/libs/gtksourceview -DDATADIR="\"dummy\""
+GTK_SOURCEVIEW_LIBS      =
+GTK_SOURCEVIEW_SRCS      ?= \
+	libs/gtksourceview/gtksourcebuffer.c \
+	libs/gtksourceview/gtksourcecompletion.c \
+	libs/gtksourceview/gtksourcecompletioncontext.c \
+	libs/gtksourceview/gtksourcecompletioninfo.c \
+	libs/gtksourceview/gtksourcecompletionitem.c \
+	libs/gtksourceview/gtksourcecompletionmodel.c \
+	libs/gtksourceview/gtksourcecompletionproposal.c \
+	libs/gtksourceview/gtksourcecompletionprovider.c \
+	libs/gtksourceview/gtksourcecompletionutils.c \
+	libs/gtksourceview/gtksourcecontextengine.c \
+	libs/gtksourceview/gtksourceengine.c \
+	libs/gtksourceview/gtksourcegutter.c \
+	libs/gtksourceview/gtksourceiter.c \
+	libs/gtksourceview/gtksourcelanguage.c \
+	libs/gtksourceview/gtksourcelanguagemanager.c \
+	libs/gtksourceview/gtksourcelanguage-parser-1.c \
+	libs/gtksourceview/gtksourcelanguage-parser-2.c \
+	libs/gtksourceview/gtksourcemark.c \
+	libs/gtksourceview/gtksourceprintcompositor.c \
+	libs/gtksourceview/gtksourcestyle.c \
+	libs/gtksourceview/gtksourcestylescheme.c \
+	libs/gtksourceview/gtksourcestyleschememanager.c \
+	libs/gtksourceview/gtksourceundomanager.c \
+	libs/gtksourceview/gtksourceundomanagerdefault.c \
+	libs/gtksourceview/gtksourceview.c \
+	libs/gtksourceview/gtksourceview-marshal.c \
+	libs/gtksourceview/gtksourceview-typebuiltins.c \
+	libs/gtksourceview/gtksourceview-utils.c \
+	libs/gtksourceview/gtktextregion.c \
+	libs/gtksourceview/gtksourceview-i18n.c
+endif
 GTK_GLEXT_CFLAGS         ?= $(call PKG_CFLAGS,gtkglext-1.0)
 GTK_GLEXT_LIBS           ?= $(call PKG_LIBS,gtkglext-1.0)
 XML2_CFLAGS              ?= $(call PKG_CFLAGS,libxml-2.0)

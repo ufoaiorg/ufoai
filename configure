@@ -264,7 +264,7 @@ check_headers() {
 	check_header "libxml/parser.h" "libxml-2.0"
 	check_header "AL/al.h" "openal"
 	check_header "gtk/gtkglwidget.h" "gtkglext-1.0"
-	if [ "$HAVE_GTK_GTK_H" != "1" ] || [ "$HAVE_GTKSOURCEVIEW_2_0_GTKSOURCEVIEW_H" != "1" ] || [ "$HAVE_GTKGLEXT_1_0_GTKGLWIDGET_H" != "1" ]; then
+	if [ "$HAVE_GTK_GTK_H" != "1" ] || [ "$HAVE_GTKGLEXT_1_0_GTKGLWIDGET_H" != "1" ]; then
 		set_var "uforadiant_DISABLE" "yes"
 	fi
 
