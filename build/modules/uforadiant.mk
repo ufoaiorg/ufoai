@@ -380,6 +380,8 @@ $(TARGET)_SRCS      = \
 	shared/parse.cpp \
 	shared/entitiesdef.cpp \
 	\
+	$(GTK_SOURCEVIEW_SRCS) \
+	\
 	$(PICOMODEL_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
