@@ -559,34 +559,6 @@ window options
 				}
 			}
 
-			// Show FPS
-			panel intro_video
-			{
-				{
-					pos		"512 230"
-					size	"512 30"
-					onMouseEnter	{ *node:this.intro_video_label@color = "1 1 1 0.9" }
-					onMouseLeave	{ *node:this.intro_video_label@color = "1 1 1 0.5" }
-				}
-
-				string intro_video_label
-				{
-					string		"_Skip Intro Video"
-					tooltip		"_Don't play the video when loading the game."
-					pos		"5 5"
-					size		"450 20"
-					color		"1 1 1 0.5"
-				}
-
-				CheckBox intro_video_opt
-				{
-					current		*cvar:cl_introshown
-					pos		"472 6"
-					size		"20 18"
-				}
-			}
-		}
-
 		// ==================
 		// VIDEO OPTIONS MENU
 		// ==================

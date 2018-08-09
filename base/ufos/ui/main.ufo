@@ -171,11 +171,6 @@ do
 			else
 				ufo.cmd("ui_close tipoftheday;")
 			end
-
-			if (ufo.getvar("cl_introshown"):as_integer() ~= 1) then
-				ufo.cmd("ui_push intro;")
-				ufo.getvar("cl_introshown"):set_value(1)
-			end
 		end
 	})
 end

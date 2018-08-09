@@ -74,8 +74,6 @@ cvar_t* cl_selected;
 
 static cvar_t* cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 
-static cvar_t* cl_introshown;
-
 /* userinfo */
 static cvar_t* cl_name;
 static cvar_t* cl_msg;
@@ -860,7 +858,6 @@ static void CL_InitLocal (void)
 	cls.realtime = Sys_Milliseconds();
 
 	/* register our variables */
-	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_log_battlescape_events = Cvar_Get("cl_log_battlescape_events", "1", 0, "Log all battlescape events to events.log");
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
