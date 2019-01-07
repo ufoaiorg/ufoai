@@ -118,7 +118,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t* expression, const uiCallContext_
 		default:
 			break;
 		}
-
+		break;
 	case EA_OPERATOR_UNARY:
 		switch (expression->type) {
 		case EA_OPERATOR_PATHPROPERTYFROM:
@@ -143,7 +143,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t* expression, const uiCallContext_
 		default:
 			break;
 		}
-
+		break;
 	default:
 		break;
 	}
@@ -490,10 +490,12 @@ bool UI_GetBooleanFromExpression (uiAction_t* expression, const uiCallContext_t*
 				switch (e->type) {
 				case EA_VALUE_CVARNAME_WITHINJECTION:
 					name = UI_GenInjectedString(name, false, context);
+					/* resolved the cvar name, continue processing, fall through */
 				case EA_VALUE_CVARNAME:
 					return Cvar_FindVar(name) != nullptr;
 				case EA_VALUE_PATHNODE_WITHINJECTION:
 					name = UI_GenInjectedString(name, false, context);
+					/* resolved the path node name, continue processing, fall through */
 				case EA_VALUE_PATHNODE: {
 					uiNode_t* node = nullptr;
 					const value_t* property;

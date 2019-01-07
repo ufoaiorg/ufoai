@@ -146,6 +146,7 @@ bool E_MoveIntoNewBase (Employee* employee, base_t* newBase)
 		case EMPL_WORKER:
 			if (oldBase != nullptr)
 				PR_UpdateProductionCap(oldBase, 0);
+			/* fall through */
 		case EMPL_PILOT:
 		case EMPL_SCIENTIST:
 		case EMPL_SOLDIER:
@@ -478,6 +479,7 @@ bool Employee::unhire ()
 	switch (_type) {
 	case EMPL_WORKER:
 		PR_UpdateProductionCap(baseHired, -1);
+		/* fall through */
 	case EMPL_PILOT:
 	case EMPL_SCIENTIST:
 	case EMPL_SOLDIER:

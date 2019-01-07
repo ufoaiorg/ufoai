@@ -226,8 +226,9 @@ TEST_F(ScriptTest, MapDef)
 
 	int i = 0;
 	MapDef_Foreach(md) {
-		if (md->civTeam != nullptr)
+		if (md->civTeam != nullptr) {
 			ASSERT_TRUE(nullptr != Com_GetTeamDefinitionByID(md->civTeam));
+		}
 
 		ASSERT_FALSE(md->maxAliens <= 0);
 		ASSERT_TRUE(nullptr != md->mapTheme);

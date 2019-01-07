@@ -397,7 +397,7 @@ static void BS_FillMarket_f (void)
 
 			cgi->UI_ExecuteConfunc("ui_market_add %s \"%s\" 0 %d %d %d - -", ugv->id, _(tech->name), buyable, ugv->price, ugv->price);
 		}
-		/* show (UGV) items */
+		/* show (UGV) items, fall through */
 	case FILTER_S_PRIMARY:
 	case FILTER_S_SECONDARY:
 	case FILTER_S_HEAVY:

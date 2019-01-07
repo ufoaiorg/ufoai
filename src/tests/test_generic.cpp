@@ -313,8 +313,9 @@ TEST_F(GenericTest, FileSystemBuildLists)
 
 	prev = nullptr;
 	while ((filename = FS_NextFileFromFileList(wildcard)) != nullptr) {
-		if (prev != nullptr)
+		if (prev != nullptr) {
 			ASSERT_EQ(Q_StringSort(prev, filename), -1);
+		}
 		prev = filename;
 	}
 

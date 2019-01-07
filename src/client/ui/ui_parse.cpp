@@ -511,14 +511,13 @@ static uiAction_t* UI_ParseActionList (uiNode_t* node, const char** text, const 
 				action->d.nonTerminal.left = expression;
 				break;
 			}
-
 		case EA_ELIF:
 			/* check previous action */
 			if (!lastAction || (lastAction->type != EA_IF && lastAction->type != EA_ELIF)) {
 				Com_Printf("UI_ParseActionList: 'elif' must be set after an 'if' or an 'elif' (node: %s)\n", UI_GetPath(node));
 				return nullptr;
 			}
-			/* then it execute EA_IF, no break */
+			/* then it execute EA_IF, fall through */
 		case EA_WHILE:
 		case EA_IF:
 			{

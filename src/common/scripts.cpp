@@ -1348,11 +1348,10 @@ bool Com_ParseBlockToken (const char* name, const char** text, void* base, const
 					if (Com_EParseValue(base, token, v->type, v->ofs, v->size) == -1)
 						Com_Printf("Com_ParseBlockToken: Wrong size for value %s\n", v->string);
 					break;
-				} else {
-					if (*token == '_')
-						token++;
-					/* fall through */
 				}
+				if (*token == '_')
+					token++;
+				/* fall through */
 			case V_HUNK_STRING:
 				Mem_PoolStrDupTo(token, &Com_GetValue<char*>(base, v), mempool, 0);
 				break;

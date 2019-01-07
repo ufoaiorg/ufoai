@@ -116,7 +116,9 @@ bool UI_ParseFont (const char* name, const char** text)
 
 				switch (v->type) {
 				case V_TRANSLATION_STRING:
+					/* Translation strings begin with _, skip that and process like regular strings */
 					token++;
+					/* fall through */
 				case V_HUNK_STRING:
 					Mem_PoolStrDupTo(token, &Com_GetValue<char*>(font, v), ui_sysPool, 0);
 					break;

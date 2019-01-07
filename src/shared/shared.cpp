@@ -458,10 +458,6 @@ void Q_strncpyz (char* dest, const char* src, size_t destsize)
 #endif
 {
 #ifdef DEBUG
-	if (!dest)
-		Sys_Error("Q_strncpyz: nullptr dest (%s, %i)", file, line);
-	if (!src)
-		Sys_Error("Q_strncpyz: nullptr src (%s, %i)", file, line);
 	if (destsize < 1)
 		Sys_Error("Q_strncpyz: destsize < 1 (%s, %i)", file, line);
 #endif

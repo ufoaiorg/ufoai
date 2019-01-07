@@ -543,6 +543,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t* target)
 		/** @todo enable Shift-rotate for battlescape too when issues are solved */
 		if (!Key_IsDown(K_SHIFT) || CL_BattlescapeRunning())
 			break;
+		/* else fits rotated, fall through */
 	case INV_FITS_ONLY_ROTATED:
 		previewItem.rotated = true;
 	}

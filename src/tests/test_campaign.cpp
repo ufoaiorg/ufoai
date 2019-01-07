@@ -877,8 +877,9 @@ TEST_F(CampaignTest, testSaveMassEmployees)
 	const int employees = 10000;
 	for (int i = 0; i < employees; i++) {
 		Employee* e = E_CreateEmployee(EMPL_SOLDIER, nation);
-		if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) > 0)
+		if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) > 0) {
 			ASSERT_TRUE(E_HireEmployee(base, e));
+		}
 	}
 
 	Cmd_ExecuteString("game_quicksave");

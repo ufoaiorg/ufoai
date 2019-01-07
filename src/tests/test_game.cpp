@@ -371,10 +371,11 @@ void GameTest::testCountSpawnpointsForMapInSingleplayerMode(bool verbose, const 
 		<< " ufo: " << ufo << "): Only " << spawnHuman2x2 << " human 2x2 spawnpoints but " << minHuman2x2
 		<< " expected.";
 	/* Make gtest report back if the number of aliens allowed on the map is smaller than the crew number of the used UFO, if any. */
-	if (ufo)
+	if (ufo) {
 		EXPECT_GE(md->maxAliens, numteamUFO) << "Error: Assembly " << asmName << " in mapdef " << md->id
 			<< " from map " << md->mapTheme << " in singleplayer mode (aircraft: " << aircraft
 			<< " ufo: " << ufo << "): The number of aliens allowed on the map is smaller than expected.";
+	}
 
 	/* Print report to log. */
 	Com_Printf("CountSpawnpoints - map: mode singleplayer\n");

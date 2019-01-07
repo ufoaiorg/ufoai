@@ -40,7 +40,11 @@ ifneq (,$(findstring clang,$(CXX)))
   CFLAGS += -Wno-extended-offsetof
   CFLAGS += -Wno-c++11-extensions
   CFLAGS += -Wno-cast-align
+endif
+
+ifeq ($(shell $(CXX) -dumpversion | cut -d'.' -f 1 - 2> /dev/null | xargs -i^ expr '^' '>=' '7'), 1)
   CFLAGS += -Wno-expansion-to-defined
+  CFLAGS += -Wimplicit-fallthrough=2
 endif
 
 ifeq ($(PROFILING),1)

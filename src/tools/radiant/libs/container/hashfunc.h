@@ -196,28 +196,38 @@ inline ub4 hash(
 
 	/*------------------------------------- handle the last 11 bytes */
 	c += length;
-	switch (len) {           /* all the case statements fall through */
+	switch (len) {
 	case 11:
 		c += ((ub4)UB1Traits::as_ub1(k[10]) << 24);
+		/* all the case statements fall through */
 	case 10:
 		c += ((ub4)UB1Traits::as_ub1(k[9]) << 16);
+		/* all the case statements fall through */
 	case 9 :
 		c += ((ub4)UB1Traits::as_ub1(k[8]) << 8);
 		/* the first byte of c is reserved for the length */
+		/* all the case statements fall through */
 	case 8 :
 		b += ((ub4)UB1Traits::as_ub1(k[7]) << 24);
+		/* all the case statements fall through */
 	case 7 :
 		b += ((ub4)UB1Traits::as_ub1(k[6]) << 16);
+		/* all the case statements fall through */
 	case 6 :
 		b += ((ub4)UB1Traits::as_ub1(k[5]) << 8);
+		/* all the case statements fall through */
 	case 5 :
 		b += UB1Traits::as_ub1(k[4]);
+		/* all the case statements fall through */
 	case 4 :
 		a += ((ub4)UB1Traits::as_ub1(k[3]) << 24);
+		/* all the case statements fall through */
 	case 3 :
 		a += ((ub4)UB1Traits::as_ub1(k[2]) << 16);
+		/* all the case statements fall through */
 	case 2 :
 		a += ((ub4)UB1Traits::as_ub1(k[1]) << 8);
+		/* all the case statements fall through */
 	case 1 :
 		a += UB1Traits::as_ub1(k[0]);
 		/* case 0: nothing left to add */

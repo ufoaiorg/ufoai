@@ -1104,6 +1104,7 @@ void XYWnd::drawGrid (void)
 				break;
 			case GRIDLOOK_MOREDOTLINES:
 				density = 8;
+				/* fall through */
 			case GRIDLOOK_DOTLINES:
 				glBegin(GL_POINTS);
 				for (x = xb; x < xe; x += cur_step) {

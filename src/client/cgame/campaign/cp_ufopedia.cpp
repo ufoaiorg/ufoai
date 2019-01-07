@@ -116,7 +116,7 @@ static void UP_ChangeDisplay (int newDisplay)
 		cgi->Cvar_Set("mn_upmodel_top", "");
 		cgi->Cvar_Set("mn_upmodel_bottom", "");
 		cgi->Cvar_Set("mn_upimage_top", "base/empty");
-		/* no break here */
+		/* fall through */
 	case UFOPEDIA_ARTICLE:
 		cgi->UI_ExecuteConfunc("mn_up_article");
 		break;

@@ -50,7 +50,7 @@ namespace map
 				/**
 				 * @throw UMPException if tile could not get parsed
 				 */
-				void parseTile (Tokeniser &tokeniser) throw(UMPException);
+				void parseTile (Tokeniser &tokeniser);
 				void parse (Tokeniser &tokenizer);
 
 			public:
@@ -60,7 +60,7 @@ namespace map
 				 * @param fileName The ump file to create or read
 				 * @param base The prefix for all ump tiles
 				 */
-				UMPFile (const std::string& fileName, const std::string& base = "") throw (UMPException);
+				UMPFile (const std::string& fileName, const std::string& base = "");
 
 				virtual ~UMPFile ();
 

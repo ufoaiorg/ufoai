@@ -15,7 +15,7 @@ namespace map
 {
 	namespace ump
 	{
-		UMPFile::UMPFile (const std::string& fileName, const std::string& base) throw (UMPException) :
+		UMPFile::UMPFile (const std::string& fileName, const std::string& base) :
 			_fileName(fileName), _base(base)
 		{
 			if (_fileName.empty())
@@ -79,7 +79,7 @@ namespace map
 			return false;
 		}
 
-		void UMPFile::parseTile (Tokeniser &tokeniser) throw (UMPException)
+		void UMPFile::parseTile (Tokeniser &tokeniser)
 		{
 			std::string name = tokeniser.getToken();
 			if (name.empty())
