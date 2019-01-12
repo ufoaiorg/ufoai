@@ -1,4 +1,4 @@
-CFLAGS += -ffast-math -funroll-loops -DNDEBUG
+CFLAGS += -ffast-math -funroll-loops -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -DNDEBUG
 
 ifeq ($(filter -O0 -O1 -O2 -O3 -O4 -Os -Ofast,$(CFLAGS)),) # If you use multiple -O options, with or without level numbers, the last such option is the one that is effective
   CFLAGS += -O2
