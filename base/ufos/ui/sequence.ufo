@@ -1,43 +1,61 @@
-// ==================
-// SEQUENCE MENU
-// ==================
+--!usr/bin/lua
 
-/**
- * @note We should not use that window, but a specific window for each kind of sequence
- */
-window sequence
-{
-	{
-		starlayout	true
-		fill		true
-	}
+require "ufox.lua"
 
-	sequence seq
-	{
-		align		LAYOUTALIGN_FILL
-		onClick		{ call *node:root.next }
-		onEnd {
-			cmd "ui_close sequence"
-		}
-	}
+-- @TODO Use specific window for each sequences
+-- @TODO Merge sequence functionality into UI Engine
 
-	confunc seq_start {
-		*node:root.seq@src = <1>
-		cmd "ui_push sequence"
-	}
+do
+	local sequence_window = ufox.build_window({
+		name = "sequence",
+		class = "window",
+		starlayout = true,
+		fill = true,
 
-	confunc seq_end {
-		cmd "ui_close sequence"
-	}
+		{
+			name = "seq",
+			class = "sequence",
+			layoutalign = ufo.LAYOUTALIGN_FILL,
 
-	func onWindowOpened {
-		*cvar:sequence_old_scr_showcursor = *cvar:scr_showcursor
-		*cvar:scr_showcursor = 0
-	}
+			on_click = function (sender)
+				sender:next()
+			end,
 
-	func onWindowClosed {
-		*cvar:scr_showcursor = *cvar:sequence_old_scr_showcursor
-		delete *cvar:sequence_old_scr_showcursor
-	}
+			on_end = function (sender)
+				ufo.cmd("ui_close sequence")
+			end,
+		},
 
-}
+		{
+			name = "seq_start",
+			class = "confunc",
+
+			on_click = function (sender, source)
+				sender:root():child("seq"):set_source(source)
+				ufo.push_window("sequence", nil, nil)
+			end,
+
+			{
+				name = "seq_end",
+				type = "confunc",
+
+				on_click = function (sender)
+					ufo.cmd("ui_close sequence")
+				end,
+			},
+		},
+
+		on_windowopened = function (sender)
+			local showcursor = ufo.findvar("scr_showcursor")
+			ufo.getvar("sequence_old_scr_showcursor", showcursor:as_string()):set_value(showcursor:as_string())
+			showcursor:set_value(0)
+		end,
+
+		on_windowclosed = function (sender)
+			local showcursor = ufo.findvar("scr_showcursor")
+			local oldcursor = ufo.findvar("sequence_old_scr_showcursor")
+			showcursor:set_value(oldcursor:as_string())
+			ufo.delvar(oldcursor:name())
+		end,
+	})
+end
