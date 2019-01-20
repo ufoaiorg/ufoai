@@ -45,6 +45,8 @@ class uiWindowNode : public uiLocatedNode {
 	void onWindowActivate(uiNode_t* node) override;
 	void onSizeChanged(uiNode_t* node) override;
 	void clone(uiNode_t const* source, uiNode_t* clone) override;
+public:
+	void setFill(uiNode_t* node, bool value);
 };
 
 #define INDEXEDCHILD_HASH_SIZE 32
@@ -103,7 +105,9 @@ uiNode_t* UI_WindowNodeGetIndexedChild(uiNode_t* node, const char* childName);
 bool UI_WindowNodeAddIndexedNode(uiNode_t* node, uiNode_t* child);
 bool UI_WindowNodeRemoveIndexedNode(uiNode_t* node, uiNode_t* child);
 
-void UI_Window_SetBackgroundByName (uiNode_t* node, const char* name);
-void UI_Window_SetCloseButton (uiNode_t* node, bool value);
-void UI_Window_SetDragButton (uiNode_t* node, bool value);
-void UI_Window_FlagFullscreen (uiNode_t* node);
+void UI_Window_SetBackgroundByName(uiNode_t* node, const char* name);
+void UI_Window_SetCloseButton(uiNode_t* node, bool value);
+void UI_Window_SetDragButton(uiNode_t* node, bool value);
+void UI_Window_FlagFullscreen(uiNode_t* node);
+
+void UI_WindowNode_SetFill(uiNode_t* node, bool value);

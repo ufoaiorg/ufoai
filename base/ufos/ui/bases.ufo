@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --]]
 
 --[[
- - @todo A some things here could be simplified
+ - @todo Some things here could be simplified
 --]]
 
 require("ufox.lua")
@@ -114,7 +114,7 @@ do
 			name = "buttons",
 			class = "panel",
 			pos = {556, 710},
-			size = {224, 48},
+			size = {167, 48},
 			layout = ufo.LAYOUT_LEFT_RIGHT_FLOW,
 
 			--[[
@@ -252,6 +252,9 @@ do
 			sender:build()
 		end,
 		on_windowopened = function (sender, base_idx)
+			local sections = sender:root():child("sections")
+			sections:set_width(sender:root():width() - sections:left())
+
 			-- Validate and store base_idx
 			if (base_idx == nil or base_idx == "") then
 				ufo.print(string.format("UI bases: Missing base_idx parameter!\n"))

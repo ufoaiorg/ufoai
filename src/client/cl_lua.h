@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../common/scripts_lua.h"
 
-
 /* lua initialization functions */
 void CL_InitLua (void);
 void CL_ShutdownLua (void);
@@ -35,4 +34,3 @@ lua_State* CL_GetLuaState (void);
 
 void CL_RegisterCallback (const char* key, LUA_FUNCTION fnc);
 void CL_ExecuteCallback (lua_State *L, const char* key);
-

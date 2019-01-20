@@ -939,6 +939,7 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t* property, const char* va
 			{
 				uiSprite_t* sprite = UI_GetSpriteByName(value);
 				Com_GetValue<uiSprite_t const*>(node, property) = sprite;
+				UI_Node_PropertyChanged(node, property);
 				return true;
 			}
 		}
@@ -1143,4 +1144,3 @@ LUA_METHOD UI_Node_GetItem (uiNode_t* node, const char* name) {
 	}
 	return LUA_NOREF;
 }
-

@@ -198,4 +198,3 @@ void CL_ExecuteCallback (lua_State *L, const char* key) {
 		};
 	}
 }
-

@@ -1267,7 +1267,7 @@ struct uiWindowNode_t: uiNode_t {
 	void set_background (const char* name) { UI_Window_SetBackgroundByName($self, name); };
 	void set_fullscreen (bool value) { UI_EXTRADATA($self, windowExtraData_t).isFullScreen = value; };
 	void set_modal (bool value) { UI_EXTRADATA($self, windowExtraData_t).modal = value; };
-	void set_fill (bool value) { UI_EXTRADATA($self, windowExtraData_t).fill = value; };
+	void set_fill (bool value) { dynamic_cast<uiWindowNode*>($self->behaviour->manager.get())->setFill($self, value); };
 	void set_dragbutton (bool value) { UI_Window_SetDragButton($self, value); };
 	void set_closebutton (bool value) { UI_Window_SetCloseButton($self, value); };
 	void set_starlayout (bool value) { UI_EXTRADATA($self, windowExtraData_t).starLayout = value; };

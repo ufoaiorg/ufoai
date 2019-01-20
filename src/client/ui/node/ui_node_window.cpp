@@ -278,6 +278,10 @@ void uiWindowNode::onSizeChanged(uiNode_t* node) {
 	uiLocatedNode::onWindowActivate(node);
 
 	/* check for fullscreen window */
+	if (EXTRADATA(node).fill) {
+		node->box.size[0] = viddef.virtualWidth;
+		node->box.size[1] = viddef.virtualHeight;
+	}
 	UI_Window_FlagFullscreen(node);
 }
 
@@ -286,8 +290,13 @@ void uiWindowNode::onSizeChanged(uiNode_t* node) {
  */
 void uiWindowNode::onLoading (uiNode_t* node)
 {
-	node->box.size[0] = VID_NORM_WIDTH;
-	node->box.size[1] = VID_NORM_HEIGHT;
+	if (EXTRADATA(node).fill) {
+		node->box.size[0] = viddef.virtualWidth;
+		node->box.size[1] = viddef.virtualHeight;
+	} else {
+		node->box.size[0] = VID_NORM_WIDTH;
+		node->box.size[1] = VID_NORM_HEIGHT;
+	}
 	node->font = const_cast<char*>(WINDOW_FONT_BIG);
 	node->padding = 5;
 }
@@ -380,7 +389,7 @@ void uiWindowNode::onLoaded (uiNode_t* node)
  * is displayed properly.
  */
 void UI_Window_FlagFullscreen(uiNode_t* node) {
-	EXTRADATA(node).isFullScreen = (node->box.size[0] == VID_NORM_WIDTH) && (node->box.size[1] == VID_NORM_HEIGHT);
+	EXTRADATA(node).isFullScreen = (node->box.size[0] >= VID_NORM_WIDTH) && (node->box.size[1] >= VID_NORM_HEIGHT);
 }
 
 void uiWindowNode::clone (const uiNode_t* source, uiNode_t* clone)
@@ -455,6 +464,11 @@ uiKeyBinding_t* UI_WindowNodeGetKeyBinding (uiNode_t const* const node, unsigned
 		binding = binding->next;
 	}
 	return binding;
+}
+
+void uiWindowNode::setFill (uiNode_t* node, bool value) {
+	UI_EXTRADATA(node, windowExtraData_t).fill = value;
+	onSizeChanged(node);
 }
 
 void UI_RegisterWindowNode (uiBehaviour_t* behaviour)
