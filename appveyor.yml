@@ -15,14 +15,11 @@ install:
 # download dependencies
   - ps: |
       $file = "C:\deps.zip"
-      $urlDeps = "http://sourceforge.net/projects/ufoai/files/UFO_AI%202.x/2.5/ufoai-deps.zip"
+      $urlDeps = "http://sourceforge.net/projects/ufoai/files/UFOAI%20Dependencies/Dev/ufoai-deps.zip"
       Write-Host "Downloading deps"
       appveyor DownloadFile $urlDeps -FileName $file
       Write-Host "Unzip deps"
       7z x -oC:\ $file > $null
-      Write-Host "Uninstalling previous CMake ..." -ForegroundColor Cyan
-      "`"${env:ProgramFiles(x86)}\CMake\Uninstall.exe`" /S" | out-file ".\uninstall-cmake.cmd" -Encoding ASCII
-      & .\uninstall-cmake.cmd
       Write-Host "Installing CMake..." -ForegroundColor Cyan
       $exePath = "$($env:USERPROFILE)\cmake-3.3.2-win32-x86.exe"
       Write-Host "Downloading..."
