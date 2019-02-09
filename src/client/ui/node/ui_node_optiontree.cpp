@@ -281,7 +281,7 @@ bool uiOptionTreeNode::onScroll (uiNode_t* node, int deltaX, int deltaY)
 	bool updated;
 	if (deltaY == 0)
 		return false;
-	updated = EXTRADATA(node).scrollY.move(down ? 1 : -1);
+	updated = EXTRADATA(node).scrollY.move(EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1));
 	if (updated) {
 		if (EXTRADATA(node).onViewChange) {
 			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
