@@ -793,16 +793,16 @@ base/media/JuraBook.ttf | Open Font License v1.1 | Daniel Johnson | Parts covere
 base/media/JuraDemiBold.ttf | Open Font License v1.1 | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
 base/media/JuraLight.ttf | Open Font License v1.1 | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
 base/media/JuraMedium.ttf | Open Font License v1.1 | Daniel Johnson | Parts covered by GNU General Public License 3.0 See README Jura.txt
-base/media/languages.ttf | GNU General Public License 2.0 | UFOAI team | Derivative work from Norasi and wqy-zenhei
 base/media/Loma.ttf | GNU General Public License 2.0 or later with font embedding exception | NECTEC, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
 base/media/Norasi.ttf | GNU General Public License 2.0 or later with font embedding exception | National Font Project, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
+base/media/UnDinaruBold.ttf | GNU General Public License 2.0 | Koaunghi Un, Won-kyu Park, Jungshik Shin | http://kldp.net/projects/unfonts/
+base/media/UnGraphicBold.ttf | GNU General Public License 2.0 | Koaunghi Un, Won-kyu Park, Jungshik Shin | http://kldp.net/projects/unfonts/
+base/media/languages.ttf | GNU General Public License 2.0 | UFOAI team | Derivative work from Norasi and wqy-zenhei
 base/media/ufofan-black.otf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
 base/media/ufofan-bold.otf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
 base/media/ufofan-light.otf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
 base/media/ufofan-medium.otf | Open Font License v1.1  | UFO: Alien Invasion | Based on Orbitron by Matt McInerney at http://www.theleagueofmoveabletype.com/orbitron, additional Glyphs by Menst
 base/media/ume-pgo4.ttf | Free (See umefont-readme_license.html) | Wada Laboratory, the University of Tokyo; Electronic Font Open Laboratory | http://ume-font.sourceforge.jp
-base/media/UnDinaruBold.ttf | GNU General Public License 2.0 | Koaunghi Un, Won-kyu Park, Jungshik Shin | http://kldp.net/projects/unfonts/
-base/media/UnGraphicBold.ttf | GNU General Public License 2.0 | Koaunghi Un, Won-kyu Park, Jungshik Shin | http://kldp.net/projects/unfonts/
 base/media/wqy-zenhei.ttf | GNU General Public License 2.0 with font embedding exception | Qianqian Fang and The WenQuanYi Project Contributors | http://sourceforge.net/projects/wqy/
 base/models/aircraft/craft_arm_plate/plating.md2 | GNU General Public License 2.0 or later | Pawel Michalkiewicz
 base/models/aircraft/craft_arm_plate/plating.png | GNU General Public License 2.0 or later | Pawel Michalkiewicz
@@ -2835,9 +2835,9 @@ base/pics/banks/button_green_big.png | GNU General Public License 2.0 or later |
 base/pics/banks/button_green_small.png | GNU General Public License 2.0 or later | bayo
 base/pics/banks/button_green_verysmall.png | GNU General Public License 2.0 or later | bayo
 base/pics/banks/checkbox.png | Public Domain | Nate Wright | mods/ui2/pics/banks/checkbox.png by Nate Wright
-base/pics/banks/checkbox_sml.png | Public Domain | UFO: Alien Invasion | based on base/pics/banks/checkbox.png by Nate Wright
 base/pics/banks/checkbox_blue.png | GNU General Public License 2.0 or later | MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/checkbox_green.png | GNU General Public License 2.0 or later | bayo;MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
+base/pics/banks/checkbox_sml.png | Public Domain | UFO: Alien Invasion | based on base/pics/banks/checkbox.png by Nate Wright
 base/pics/banks/pack1.png | GNU General Public License 2.0 or later | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack2.png | GNU General Public License 2.0 or later | cooler_sk | based on images from MCR based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack3.png | GNU General Public License 2.0 or later | Nate Wright | based on pack2.png images from http://sourceforge.net/projects/openiconlibrary
