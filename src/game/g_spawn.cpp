@@ -579,7 +579,12 @@ static void G_ActorSpawn (Edict* ent)
 	/* Fall to ground */
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		ent->pos[2] = PATHFINDING_HEIGHT - 1;
-
+	vec3_t vec;
+	PosToVec(ent->pos, vec);
+	while (ent->pos[2] > 0 && !gi.isOnMap(vec)) {
+		--ent->pos[2];
+		PosToVec(ent->pos, vec);
+	}
 	ent->pos[2] = gi.GridFall(ent->fieldSize, ent->pos);
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		gi.DPrintf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
