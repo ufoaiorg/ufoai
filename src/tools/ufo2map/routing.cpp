@@ -144,7 +144,7 @@ void DoRouting (void)
 	wpMaxs[0]--;
 	wpMaxs[1]--;
 	/* Note that VecToPos already caps the z value to PATHFINDING_HEIGHT - 1 */
-	if (tileBox.maxs[2] < UNIT_HEIGHT * (PATHFINDING_HEIGHT - 1))
+	if (tileBox.maxs[2] - 1 < UNIT_HEIGHT * (PATHFINDING_HEIGHT - 1))
 		wpMaxs[2]--;
 
 	/* Verify the world extents are not lopsided. */
