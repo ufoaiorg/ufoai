@@ -114,9 +114,6 @@ void CL_ActorDoMove (const eventRegister_t* self, dbuffer* msg)
 		Com_Error(ERR_DROP, "Can't move, LE doesn't exist or is not an actor (entnum: %i, type: %i)\n",
 			number, le->type);
 
-	if (LE_IsDead(le))
-		Com_Error(ERR_DROP, "Can't move, actor on team %i dead (entnum: %i)", le->team, number);
-
 	/* lock this le for other events, the corresponding unlock is in LE_DoEndPathMove() */
 	LE_Lock(le);
 	if (le->isMoving()) {
@@ -133,6 +130,8 @@ void CL_ActorDoMove (const eventRegister_t* self, dbuffer* msg)
 	while (NET_PeekLong(msg) != 0) {
 		NET_ReadByte(msg);
 		le->dvtab[i] = NET_ReadShort(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
+		if (getDVdir(le->dvtab[i]) != DIRECTION_FALL && LE_IsDead(le))
+			Com_Error(ERR_DROP, "Can't move, actor on team %i dead (entnum: %i)", le->team, number);
 		le->speed[i] = NET_ReadShort(msg);
 		le->pathContents[i] = NET_ReadShort(msg);
 		i++;
