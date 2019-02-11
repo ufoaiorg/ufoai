@@ -102,10 +102,13 @@ do
 			--]]
 			on_click = function (sender, soldiers, pilots, scientists, engineers)
 				local employee_container = sender:parent():child("cur_employees")
-				employee_container:child("soldiers"):child("data"):set_text(soldiers)
-				employee_container:child("pilots"):child("data"):set_text(pilots)
-				employee_container:child("scientists"):child("data"):set_text(scientists)
-				employee_container:child("engineers"):child("data"):set_text(engineers)
+				-- Update only if base screen is active and employee info is shown
+				if (employee_container:first() ~= nil) then
+					employee_container:child("soldiers"):child("data"):set_text(soldiers)
+					employee_container:child("pilots"):child("data"):set_text(pilots)
+					employee_container:child("scientists"):child("data"):set_text(scientists)
+					employee_container:child("engineers"):child("data"):set_text(engineers)
+				end
 			end,
 		},
 
