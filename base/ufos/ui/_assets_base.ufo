@@ -43,9 +43,15 @@ do
 		end,
 
 		on_mouseleave = function (sender)
-			sender:child("label"):set_color(0.56, 0.81, 0.76, 0.5)
-			sender:child("data"):set_color(0.56, 0.81, 0.76, 0.5)
-			sender:child("alert"):set_icon("icons/windowplusb")
+			if (sender:child("label") ~= nil) then
+				sender:child("label"):set_color(0.56, 0.81, 0.76, 0.5)
+			end
+			if (sender:child("data") ~= nil) then
+				sender:child("data"):set_color(0.56, 0.81, 0.76, 0.5)
+			end
+			if (sender:child("alert") ~= nil) then
+				sender:child("alert"):set_icon("icons/windowplusb")
+			end
 		end,
 
 		on_click = function (sender)
