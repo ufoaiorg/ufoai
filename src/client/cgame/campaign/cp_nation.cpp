@@ -266,12 +266,11 @@ void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* af
 
 	/** @todo HACK: This should be handled properly, i.e. civilians should only factor into the scoring
 	 * if the mission objective is actually to save civilians. */
-	if (civilianSum == 0) {
+	if (civilianSum <= 1) {
 		performanceCivilian = 0.0f;
 	} else {
-		assert((2 * civilianSum) - 2 != 0);
 		performanceCivilian = (2 * civilianSum - results->civiliansKilled - 2
-				* results->civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
+			* results->civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
 	}
 
 	/* Calculate how well the mission went. */
