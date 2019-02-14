@@ -40,7 +40,7 @@ find_path(SDL_MIXER_INCLUDE_DIR SDL_mixer.h
   HINTS
     ENV SDLMIXERDIR
     ENV SDLDIR
-  PATH_SUFFIXES include/SDL include/SDL12 include/SDL11 include include/SDL2
+  PATH_SUFFIXES include/SDL2 include/SDL include/SDL12 include/SDL11 include
 )
 
 if(NOT SDL_MIXER_LIBRARY AND SDLMIXER_LIBRARY)
@@ -48,7 +48,7 @@ if(NOT SDL_MIXER_LIBRARY AND SDLMIXER_LIBRARY)
 initialized from old variable name")
 endif()
 find_library(SDL_MIXER_LIBRARY
-  NAMES SDL_mixer SDL2_mixer
+  NAMES SDL2_mixer SDL_mixer
   HINTS
     ENV SDLMIXERDIR
     ENV SDLDIR

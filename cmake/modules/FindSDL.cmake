@@ -70,13 +70,13 @@
 find_path(SDL_INCLUDE_DIR SDL.h
   HINTS
     ENV SDLDIR
-  PATH_SUFFIXES include/SDL include/SDL12 include/SDL11 include include/SDL2
+  PATH_SUFFIXES include/SDL2 include/SDL include/SDL12 include/SDL11 include
 )
 
 # SDL-1.1 is the name used by FreeBSD ports...
 # don't confuse it for the version number.
 find_library(SDL_LIBRARY_TEMP
-  NAMES SDL SDL-1.1 SDL2
+  NAMES SDL2 SDL-1.1 SDL
   HINTS
     ENV SDLDIR
   PATH_SUFFIXES lib
@@ -89,7 +89,7 @@ if(NOT SDL_BUILDING_LIBRARY)
     # seem to provide SDLmain for compatibility even though they don't
     # necessarily need it.
     find_library(SDL_LIBRARY_MAIN
-      NAMES SDLmain SDLmain-1.1 SDL2main
+      NAMES SDL2main SDLmain-1.1 SDLmain
       HINTS
         ENV SDLDIR
       PATH_SUFFIXES lib

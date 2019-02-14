@@ -40,7 +40,7 @@ find_path(SDL_TTF_INCLUDE_DIR SDL_ttf.h
   HINTS
     ENV SDLTTFDIR
     ENV SDLDIR
-  PATH_SUFFIXES include/SDL include/SDL12 include/SDL11 include include/SDL2
+  PATH_SUFFIXES include/SDL2 include/SDL include/SDL12 include/SDL11 include
 )
 
 if(NOT SDL_TTF_LIBRARY AND SDLTTF_LIBRARY)
@@ -48,7 +48,7 @@ if(NOT SDL_TTF_LIBRARY AND SDLTTF_LIBRARY)
 initialized from old variable name")
 endif()
 find_library(SDL_TTF_LIBRARY
-  NAMES SDL_ttf SDL2_ttf
+  NAMES SDL2_ttf SDL_ttf
   HINTS
     ENV SDLTTFDIR
     ENV SDLDIR
