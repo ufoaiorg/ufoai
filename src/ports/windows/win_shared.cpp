@@ -166,7 +166,7 @@ static char findbase[MAX_OSPATH];
 static char findpath[MAX_OSPATH];
 static char findname[MAX_OSPATH];
 static WCHAR wfindpath[MAX_OSPATH];
-static int findhandle;
+static intptr_t findhandle;
 
 static bool CompareAttributes (unsigned found, unsigned musthave, unsigned canthave)
 {
