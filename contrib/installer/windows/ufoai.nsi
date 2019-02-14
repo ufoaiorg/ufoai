@@ -1,14 +1,14 @@
-!define PRODUCT_NAME "UFO:Alien Invasion"
-!define SHORT_PRODUCT_NAME "UFO:AI"
+!define PRODUCT_NAME "UFO Alien Invasion"
+!define SHORT_PRODUCT_NAME "UFO: AI"
 !define SHORT_PRODUCT_PATH "UFOAI"
-!define PRODUCT_NAME_DEDICATED "UFO:Alien Invasion Dedicated Server"
+!define PRODUCT_NAME_DEDICATED "UFO Alien Invasion Dedicated Server"
 !ifndef PRODUCT_VERSION
 !define PRODUCT_VERSION "2.6-dev"
 !endif
-!define PRODUCT_PUBLISHER "UFO:AI Team"
+!define PRODUCT_PUBLISHER "UFO: AI Team"
 !define PRODUCT_WEB_SITE "http://ufoai.sf.net"
-!define PRODUCT_DIR_REGKEY "Software\UFOAI\ufo.exe"
-!define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
+!define PRODUCT_DIR_REGKEY "Software\${SHORT_PRODUCT_PATH}"
+!define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}-${PRODUCT_VERSION}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
 ;SetCompressor /SOLID bzip2
@@ -70,8 +70,8 @@ Var MAPICONFLAGS
 
 Name "${SHORT_PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "ufoai-${PRODUCT_VERSION}-win32.exe"
-InstallDir "$PROGRAMFILES\UFOAI-${PRODUCT_VERSION}"
-InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
+InstallDir "$PROGRAMFILES\${SHORT_PRODUCT_PATH}-${PRODUCT_VERSION}"
+InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}\${PRODUCT_VERSION}" ""
 ShowInstDetails show
 ShowUnInstDetails show
 
@@ -112,7 +112,7 @@ SectionGroup /e "Game" SECGROUP01
 		CreateShortCut "$DESKTOP\${PRODUCT_NAME}-${PRODUCT_VERSION}.lnk" "$INSTDIR\ufo.exe"
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\Uninstall.lnk" "$INSTDIR\uninst.exe"
-		CreateShortcut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\User data.lnk" "$APPDATA\${SHORT_PRODUCT_PATH}\${PRODUCT_VERSION}"
+		CreateShortcut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\User data.lnk" "$APPDATA\${SHORT_PRODUCT_NAME}\${PRODUCT_VERSION}"
 	SectionEnd
 SectionGroupEnd
 
@@ -121,7 +121,7 @@ SectionGroup /e "Mapping" SECGROUP02
 		SetOutPath "$INSTDIR\base\maps"
 			File "..\..\..\base\maps\compile.p*"
 			File /r /x .gitignore "..\..\..\base\maps\*.map"
-			File /r /x .gitignore "..\..\..\base\maps\*.ump"
+;			File /r /x .gitignore "..\..\..\base\maps\*.ump"
 		SetOutPath "$INSTDIR\tools"
 			File "..\..\..\src\tools\*.ms"
 			File "..\..\..\src\tools\*.pl"
@@ -140,8 +140,8 @@ SectionGroup /e "Mapping" SECGROUP02
 	Section "Mapping Tools Shortcuts" SEC02B
 		SetOutPath "$INSTDIR\radiant"
 
-		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\radiant\uforadiant.exe" "" "$INSTDIR\radiant\uforadiant.exe" 0
+		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\"
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\MAP-Editor.lnk" "$INSTDIR\radiant\uforadiant.exe" "" "$INSTDIR\radiant\uforadiant.exe" 0
 	SectionEnd
 SectionGroupEnd
 
@@ -152,9 +152,7 @@ Section "Source Code" SEC03
 		File /nonfatal "..\..\..\Makefile"
 		File /nonfatal "..\..\..\COPYING"
 		File /nonfatal "..\..\..\LICENSES"
-		File /nonfatal "..\..\..\README"
-		File /nonfatal "..\..\..\.project"
-		File /nonfatal "..\..\..\.cproject"
+		File /nonfatal "..\..\..\README.md"
 	SetOutPath "$INSTDIR\build"
 		File /r /x .gitignore "..\..\..\build\*.mk"
 	SetOutPath "$INSTDIR\build\projects"
@@ -184,7 +182,7 @@ SectionEnd
 
 Section -Post
   WriteUninstaller "$INSTDIR\uninst.exe"
-  WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\ufo.exe"
+  WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}\${PRODUCT_VERSION}" "" "$INSTDIR"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninst.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\ufo.exe"
@@ -305,12 +303,14 @@ FunctionEnd
 
 ; This uninstaller is unsafe - if a user installs this in the root of a partition, for example, the uninstall will wipe that entire partition.
 Section Uninstall
+  ReadRegStr $INSTDIR HKLM "${PRODUCT_DIR_REGKEY}\${PRODUCT_VERSION}" ""
   RMDIR /r $INSTDIR
   RMDIR $INSTDIR
   RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}"
   Delete "$DESKTOP\${PRODUCT_NAME}-${PRODUCT_VERSION}.lnk"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
-  DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
+  DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}\${PRODUCT_VERSION}"
+  DeleteRegKey /ifempty HKLM "${PRODUCT_DIR_REGKEY}"
   SetAutoClose true
 SectionEnd
