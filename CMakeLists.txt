@@ -26,6 +26,10 @@ endif()
 
 set(UFOAI_SRC "${CMAKE_SOURCE_DIR}/src")
 
+if(MSCV)
+   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+endif()
+
 # For some reason, when building against win xp, WINVER and _WIN32_WINNT needs to be defined
 if(WIN32 AND CMAKE_SYSTEM_VERSION)
    set(win_ver ${CMAKE_SYSTEM_VERSION})
