@@ -26,7 +26,7 @@ endif()
 
 set(UFOAI_SRC "${CMAKE_SOURCE_DIR}/src")
 
-if(MSCV)
+if(MSVC)
    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif()
 
