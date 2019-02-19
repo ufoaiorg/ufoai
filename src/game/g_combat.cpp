@@ -131,11 +131,11 @@ static void G_Morale (morale_modifiers type, const Edict* victim, const Edict* a
 			mod *= -1;
 		if (attacker != nullptr) {
 			/* if you stand near to the attacker or the victim, the morale change is higher. */
-			mod *= mor_default->value + pow(0.5, VectorDist(actor->origin, victim->origin) / mor_distance->value)
-				* mor_victim->value + pow(0.5, VectorDist(actor->origin, attacker->origin) / mor_distance->value)
+			mod *= mor_default->value + pow(0.5f, VectorDist(actor->origin, victim->origin) / mor_distance->value)
+				* mor_victim->value + pow(0.5f, VectorDist(actor->origin, attacker->origin) / mor_distance->value)
 				* mor_attacker->value;
 		} else {
-			mod *= mor_default->value + pow(0.5, VectorDist(actor->origin, victim->origin) / mor_distance->value)
+			mod *= mor_default->value + pow(0.5f, VectorDist(actor->origin, victim->origin) / mor_distance->value)
 				* mor_victim->value;
 		}
 		/* morale damage depends on the number of living allies */
@@ -441,9 +441,9 @@ static bool G_Damage (Edict* target, const fireDef_t* fd, int damage, Actor* att
 	/* Apply difficulty settings. */
 	if (G_IsSinglePlayer()) {
 		if (G_IsAlien(attacker) && !G_IsAlien(victim))
-			damage *= pow(1.18, g_difficulty->value);
+			damage *= pow(1.18f, g_difficulty->value);
 		else if (!G_IsAlien(attacker) && G_IsAlien(victim))
-			damage *= pow(1.18, -g_difficulty->value);
+			damage *= pow(1.18f, -g_difficulty->value);
 	}
 
 	assert(attacker->getTeam() >= 0 && attacker->getTeam() < MAX_TEAMS);
@@ -1057,7 +1057,7 @@ static void G_ShootSingle (Actor* ent, const fireDef_t* fd, const vec3_t from, c
 				/* reduce damage */
 				/** @todo reduce even more if the wall was hit far away and
 				 * not close by the shooting actor */
-				damage /= sqrt(fd->throughWall - throughWall + 1);
+				damage /= sqrt(fd->throughWall - throughWall + 1.0f);
 				VectorMA(tr.endpos, MAX_WALL_THICKNESS_FOR_SHOOTING_THROUGH, dir, tracefrom);
 				continue;
 			}

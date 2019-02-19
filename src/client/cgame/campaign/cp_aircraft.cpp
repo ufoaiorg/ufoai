@@ -1667,7 +1667,7 @@ void AIR_AircraftsUFODisappear (const aircraft_t* const ufo)
  */
 static inline float AIR_GetDestinationFunction (const float c, const float B, const float speedRatio, float a)
 {
-	return pow(cos(a) - cos(speedRatio * a) * cos(c), 2.)
+	return pow(cos(a) - cos(speedRatio * a) * cos(c), 2.0f)
 		- sin(c) * sin(c) * (sin(speedRatio * a) * sin(speedRatio * a) - sin(a) * sin(a) * sin(B) * sin(B));
 }
 
@@ -1699,17 +1699,17 @@ static inline float AIR_GetDestinationDerivativeFunction (const float c, const f
  */
 static float AIR_GetDestinationFindRoot (const float c, const float B, const float speedRatio, float start)
 {
-	const float BIG_STEP = .05;				/**< step for rough calculation. this value must be short enough so
+	const float BIG_STEP = 0.05f;				/**< step for rough calculation. this value must be short enough so
 											 * that we're sure there's only 1 root in this range. */
-	const float PRECISION_ROOT = 0.000001;		/**< precision of the calculation */
-	const float MAXIMUM_VALUE_ROOT = 2. * M_PI;	/**< maximum value of the root to search */
+	const float PRECISION_ROOT = 0.000001f;		/**< precision of the calculation */
+	const float MAXIMUM_VALUE_ROOT = 2.0f * M_PI;	/**< maximum value of the root to search */
 	float epsilon;							/**< precision of current point */
 	float begin, end, middle;				/**< abscissa of the point */
 	float fBegin, fEnd, fMiddle;			/**< ordinate of the point */
 	float fdBegin, fdEnd, fdMiddle;			/**< derivative of the point */
 
 	/* there may be several solution, first try to find roughly the smallest one */
-	end = start + PRECISION_ROOT / 10.;		/* don't start at 0: derivative is 0 */
+	end = start + PRECISION_ROOT / 10.0f;		/* don't start at 0: derivative is 0 */
 	fEnd = AIR_GetDestinationFunction(c, B, speedRatio, end);
 	fdEnd = AIR_GetDestinationDerivativeFunction(c, B, speedRatio, end);
 

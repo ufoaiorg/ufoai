@@ -1859,7 +1859,7 @@ static int AIL_positionwander (lua_State* L)
 			if (!(method == AILPW_CW && dir == dvright[cDir]) && !(method == AILPW_CCW && dir == dvleft[cDir]))
 				for (int n = 1; n < 8; ++n) {
 					dir = method == 1 ? dvleft[dir] : dvright[dir];
-					score /= pow(n * 2, 2);
+					score /= pow(n * 2.0f, 2);
 					if ((method == 1 && dir == dvright[cDir]) || (method == 2 && dir == dvleft[cDir]))
 						break;
 				}

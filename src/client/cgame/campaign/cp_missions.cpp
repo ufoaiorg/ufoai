@@ -1514,7 +1514,7 @@ static bool MIS_IsSpawnedFromGround (const mission_t* mission)
 	}
 
 	/* Roll the random number */
-	const int XVI_PARAM = 10;		/**< Typical XVI average value for spreading mission from earth */
+	const float XVI_PARAM = 10.0f;		/**< Typical XVI average value for spreading mission from earth */
 	float groundProbability;
 	float randNumber = frand();
 
@@ -1752,7 +1752,7 @@ void CP_SpawnNewMissions (void)
 		 * However, once the campaign passes a certain point, this effect rapidly diminishes. This means that by the
 		 * end of the game, ALL missions will spawn, quickly overrunning the player. */
 		if (ccs.overallInterest > FINAL_OVERALL_INTEREST)
-			nonOccurrence = ccs.curCampaign->ufoReductionRate / pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST / 30) + 1), 2);
+			nonOccurrence = ccs.curCampaign->ufoReductionRate / pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST / 30) + 1.0f), 2);
 		else
 			nonOccurrence = ccs.curCampaign->ufoReductionRate;
 
@@ -1764,7 +1764,7 @@ void CP_SpawnNewMissions (void)
 		 * Note: This is a function over css.overallInterest. It looks like this:
 		 * http://www.wolframalpha.com/input/?i=Plot%5B40%2B%285-40%29%2A%28%28x-1000%29%2F%2820-1000%29%29%5E2%2C+%7Bx%2C+0%2C+1100%7D%5D
 		 */
-		int newMissionNum = (int) (ccs.curCampaign->maxMissions + (ccs.curCampaign->minMissions - ccs.curCampaign->maxMissions) * pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST) / (ccs.curCampaign->initialInterest - FINAL_OVERALL_INTEREST)), 2));
+		int newMissionNum = (int) (ccs.curCampaign->maxMissions + (ccs.curCampaign->minMissions - ccs.curCampaign->maxMissions) * pow(float((ccs.overallInterest - FINAL_OVERALL_INTEREST) / (ccs.curCampaign->initialInterest - FINAL_OVERALL_INTEREST)), 2));
 		cgi->Com_DPrintf(DEBUG_CLIENT, "interest = %d, new missions = %d\n", ccs.overallInterest, newMissionNum);
 		for (int i = 0; i < newMissionNum; i++) {
 			if (frand() > nonOccurrence) {
