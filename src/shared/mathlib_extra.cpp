@@ -40,8 +40,8 @@ double FpCurveUp (double fpVal, double mEffect)
 		return fpVal;
 
 	/* Safe values only please, to avoid breaking things */
-	fpVal = fmin(DENORM_INV, fmax(DENORM, fpVal));
-	mEffect = fmin(DENORM_INV, fmax(DENORM, mEffect));
+	fpVal = std::min(DENORM_INV, std::max(DENORM, fpVal));
+	mEffect = std::min(DENORM_INV, std::max(DENORM, mEffect));
 
 	fpVal = ((2.0 - mEffect) * fpVal) / ((1.0 - mEffect) + fpVal);
 
@@ -63,8 +63,8 @@ double FpCurveDn (double fpVal, double mEffect)
 		return fpVal;
 
 	/* Safe values only please, to avoid breaking things */
-	fpVal = fmin(DENORM_INV, fmax(DENORM, fpVal));
-	mEffect = fmin(DENORM_INV, fmax(DENORM, mEffect));
+	fpVal = std::min(DENORM_INV, std::max(DENORM, fpVal));
+	mEffect = std::min(DENORM_INV, std::max(DENORM, mEffect));
 
 	fpVal = 1.0 - fpVal;
 	fpVal = ((2.0 - mEffect) * fpVal) / ((1.0 - mEffect) + fpVal);
@@ -89,8 +89,8 @@ double FpCurveUpRs (double fpVal, double mEffect)
 		return fpVal;
 
 	/* Safe values only please, to avoid breaking things */
-	fpVal = fmin(DENORM_INV, fmax(DENORM, fpVal));
-	mEffect = fmin(DENORM_INV, fmax(DENORM, mEffect));
+	fpVal = std::min(DENORM_INV, std::max(DENORM, fpVal));
+	mEffect = std::min(DENORM_INV, std::max(DENORM, mEffect));
 
 	fpVal = (((2.0 - mEffect) * fpVal) / ((1.0 - mEffect) + fpVal)) + fpVal;
 	fpVal *= 0.50;
@@ -114,8 +114,8 @@ double FpCurveDnRs (double fpVal, double mEffect)
 		return fpVal;
 
 	/* Safe values only please, to avoid breaking things */
-	fpVal = fmin(DENORM_INV, fmax(DENORM, fpVal));
-	mEffect = fmin(DENORM_INV, fmax(DENORM, mEffect));
+	fpVal = std::min(DENORM_INV, std::max(DENORM, fpVal));
+	mEffect = std::min(DENORM_INV, std::max(DENORM, mEffect));
 
 	fpVal = 1.0 - fpVal;
 	fpVal = (((2.0 - mEffect) * fpVal) / ((1.0 - mEffect) + fpVal)) + fpVal;
@@ -141,9 +141,9 @@ double FpCurve1D_u_in (double fpVal, double mEffect, double cntPnt)
 		return fpVal;
 
 	/* Safe values only please, to avoid breaking things */
-	fpVal = fmin(DENORM_INV, fmax(DENORM, fpVal));
-	mEffect = fmin(DENORM_INV, fmax(DENORM, mEffect));
-	cntPnt = fmin(DENORM_INV, fmax(DENORM, cntPnt));
+	fpVal = std::min(DENORM_INV, std::max(DENORM, fpVal));
+	mEffect = std::min(DENORM_INV, std::max(DENORM, mEffect));
+	cntPnt = std::min(DENORM_INV, std::max(DENORM, cntPnt));
 
 	if (fpVal > cntPnt) {
 		double fpVal_mod = (fpVal - cntPnt) / (1.0 - cntPnt);
@@ -182,9 +182,9 @@ double FpCurve1D_u_out (double fpVal, double mEffect, double cntPnt)
 		return fpVal;
 
 	/* Safe values only please, to avoid breaking things */
-	fpVal = fmin(DENORM_INV, fmax(DENORM, fpVal));
-	mEffect = fmin(DENORM_INV, fmax(DENORM, mEffect));
-	cntPnt = fmin(DENORM_INV, fmax(DENORM, cntPnt));
+	fpVal = std::min(DENORM_INV, std::max(DENORM, fpVal));
+	mEffect = std::min(DENORM_INV, std::max(DENORM, mEffect));
+	cntPnt = std::min(DENORM_INV, std::max(DENORM, cntPnt));
 
 	if (fpVal > cntPnt) {
 		double fpVal_mod = (fpVal - cntPnt) / (1.0 - cntPnt);
@@ -222,8 +222,8 @@ double FpCurve1D_s_out (double fpVal, double mEffect)
 		return fpVal;
 
 	/* Safe values only please, to avoid breaking things */
-	fpVal = fmin(DENORM_INV, fmax(DENORM, fpVal));
-	mEffect = fmin(DENORM_INV, fmax(DENORM, mEffect));
+	fpVal = std::min(DENORM_INV, std::max(DENORM, fpVal));
+	mEffect = std::min(DENORM_INV, std::max(DENORM, mEffect));
 
 	fpVal = ((2.0 - mEffect) * fpVal) / ((1.0 - mEffect) + fabs(fpVal));
 
