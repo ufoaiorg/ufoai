@@ -24,6 +24,12 @@ if(NOT CMAKE_BUILD_TYPE)
    set(CMAKE_BUILD_TYPE "RelWithDebInfo")
 endif()
 
+if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
+   message(STATUS "Target is 64 bits")
+elseif("${CMAKE_SIZEOF_VOID_P}" EQUAL "4")
+   message(STATUS "Target is 32 bits")
+endif()
+
 set(UFOAI_SRC "${CMAKE_SOURCE_DIR}/src")
 
 if(MSVC)
@@ -33,8 +39,10 @@ endif()
 # For some reason, when building against win xp, WINVER and _WIN32_WINNT needs to be defined
 if(WIN32 AND CMAKE_SYSTEM_VERSION)
    set(win_ver ${CMAKE_SYSTEM_VERSION})
+   string(REPLACE "10" "A" win_ver ${win_ver})
    string(REPLACE "." "" win_ver ${win_ver})
-   string(REGEX REPLACE "([0-9])" "0\\1" win_ver ${win_ver})
+   string(REGEX REPLACE "([A-F0-9])" "0\\1" win_ver ${win_ver})
+   string(SUBSTRING ${win_ver} 0 4 win_ver)
    set(win_ver "0x${win_ver}")
 
    message(STATUS "Windows version: ${win_ver}")
@@ -186,9 +194,9 @@ endif()
 
 # -std=c++11 is bugged on cygwin/mingw
 if(WIN32 AND MINGW)
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
-else()
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
+elseif(!MSVC)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 endif()
 
 ###############################################################################

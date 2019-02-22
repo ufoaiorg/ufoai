@@ -29,7 +29,7 @@
 #	define DELETED
 #endif
 
-#if not CXX11(4, 7, 1400, cxx_override_control)
+#if !CXX11(4, 7, 1400, cxx_override_control)
 #	define override
 #endif
 
@@ -38,9 +38,14 @@
 #endif
 
 #ifdef _MSC_VER
-# define snprintf _snprintf
 # define __func__   __FUNCTION__
 # define __PRETTY_FUNCTION__   __FUNCSIG__
+# if _MSC_VER < 1900
+#  define snprintf _snprintf
+# endif
+# if _MSC_VER < 1800
+#  define round(x) ((x) < 0 ? -std::floor(0.5 - (x)) : std::floor(0.5 + (x)))
+# endif
 #else
 # if __cplusplus < 201103L
 #  ifndef nullptr
