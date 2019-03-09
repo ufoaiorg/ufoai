@@ -17,6 +17,12 @@
 #include <imagehlp.h>
 #include <psapi.h>
 
+#if defined _M_AMD64
+	#define ARCH_SW(x86, amd64) amd64
+#elif defined _M_IX86
+	#define ARCH_SW(x86, amd64) x86
+#endif
+
 static void _backtrace (struct output_buffer* ob, struct bfd_set* set, int depth, LPCONTEXT context)
 {
 	char procname[MAX_PATH];
@@ -31,14 +37,14 @@ static void _backtrace (struct output_buffer* ob, struct bfd_set* set, int depth
 
 	OBJZERO(frame);
 
-	frame.AddrPC.Offset = context->Eip;
+	frame.AddrPC.Offset = context->ARCH_SW(Eip, Rip);
 	frame.AddrPC.Mode = AddrModeFlat;
-	frame.AddrStack.Offset = context->Esp;
+	frame.AddrStack.Offset = context->ARCH_SW(Esp, Rsp);
 	frame.AddrStack.Mode = AddrModeFlat;
-	frame.AddrFrame.Offset = context->Ebp;
+	frame.AddrFrame.Offset = context->ARCH_SW(Ebp, Rbp);
 	frame.AddrFrame.Mode = AddrModeFlat;
 
-	while (StackWalk(IMAGE_FILE_MACHINE_I386, process, thread, &frame, context,
+	while (StackWalk(ARCH_SW(IMAGE_FILE_MACHINE_I386, IMAGE_FILE_MACHINE_AMD64), process, thread, &frame, context,
 			0, SymFunctionTableAccess, SymGetModuleBase, 0)) {
 		const char*  file = nullptr;
 		const char*  func = nullptr;
@@ -64,7 +70,7 @@ static void _backtrace (struct output_buffer* ob, struct bfd_set* set, int depth
 		}
 
 		if (file == nullptr) {
-			DWORD dummy = 0;
+			ARCH_SW(DWORD, DWORD64) dummy = 0;
 			if (SymGetSymFromAddr(process, frame.AddrPC.Offset, &dummy, symbol)) {
 				file = symbol->Name;
 			} else {

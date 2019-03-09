@@ -226,7 +226,7 @@ void Sys_ShowConsole (bool show)
 	SendMessage(sys_console.hWndOutput, EM_SCROLLCARET, 0, 0);
 }
 
-static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+static LRESULT CALLBACK Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg) {
 	case WM_ACTIVATE:
@@ -264,12 +264,12 @@ static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			SetBkColor((HDC)wParam, RGB(255, 255, 255));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			return (LONG)sys_console.hBrushOutput;
+			return (LRESULT)sys_console.hBrushOutput;
 		} else if ((HWND)lParam == sys_console.hWndInput) {
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			SetBkColor((HDC)wParam, RGB(255, 255, 255));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			return (LONG)sys_console.hBrushInput;
+			return (LRESULT)sys_console.hBrushInput;
 		}
 		break;
 
@@ -283,7 +283,7 @@ static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 			else
 				SetTextColor((HDC)wParam, RGB(0, 0, 0));
 
-			return (LONG)sys_console.hBrushMsg;
+			return (LRESULT)sys_console.hBrushMsg;
 		}
 		break;
 
