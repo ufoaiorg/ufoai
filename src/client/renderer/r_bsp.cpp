@@ -107,22 +107,18 @@ bool R_CullSphere (const vec3_t centre, const float radius, const unsigned int c
  */
 bool R_CullBspModel (const entity_t* e)
 {
-	vec3_t mins, maxs;
-
 	/* no surfaces */
 	if (!e->model->bsp.nummodelsurfaces)
 		return true;
 
+	AABB modBox = e->model->modBox;
 	if (e->isOriginBrushModel) {
-		for (int i = 0; i < 3; i++) {
-			mins[i] = e->origin[i] - e->model->radius;
-			maxs[i] = e->origin[i] + e->model->radius;
-		}
+		modBox.expand(e->model->radius);
 	} else {
-		e->model->modBox.shift(e->origin);
+		modBox.shift(e->origin);
 	}
 
-	return R_CullBox(mins, maxs) == PSIDE_BACK;
+	return R_CullBox(modBox.getMins(), modBox.getMaxs()) == PSIDE_BACK;
 }
 
 /*
