@@ -67,7 +67,7 @@ void CP_StatsUpdate_f (void)
 	cgi->UI_RegisterText(TEXT_STATS_NATIONS, pos);
 	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t* nation = NAT_GetNationByIDX(i);
-		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("%s\t%s\n"), _(nation->name), NAT_GetHappinessString(nation));
+		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("%s\t%s\n"), _(nation->name), NAT_GetCurrentHappinessString(nation));
 		totalfunds += NAT_GetFunding(nation, 0);
 	}
 	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("\nFunding this month:\t%d"), totalfunds);

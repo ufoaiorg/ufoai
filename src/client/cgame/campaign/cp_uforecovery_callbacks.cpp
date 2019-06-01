@@ -216,7 +216,7 @@ static void UR_DialogFillNations (void)
 			continue;
 		char row[512];
 		Com_sprintf(row, lengthof(row), "%s\t\t\t%i\t\t%s", _(nation->name),
-			ufoRecovery.ufoNations[i].price, NAT_GetHappinessString(nation));
+			ufoRecovery.ufoNations[i].price, NAT_GetCurrentHappinessString(nation));
 		cgi->LIST_AddString(&nationList, row);
 	}
 

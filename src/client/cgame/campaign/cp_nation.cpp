@@ -132,35 +132,47 @@ const nationInfo_t* NAT_GetCurrentMonthInfo (const nation_t* const nation)
 
 /**
  * @brief Translates the nation happiness float value to a string
+ * @param[in] happiness value
+ * @return Translated happiness string
+ * @note happiness is between 0 and 1.0
+*/
+static const char* NAT_GetHappinessString (const float happiness)
+{
+	if (happiness < 0.015)
+		return _("Giving up");
+	else if (happiness < 0.025)
+		return _("Furious");
+	else if (happiness < 0.04)
+		return _("Angry");
+	else if (happiness < 0.06)
+		return _("Mad");
+	else if (happiness < 0.10)
+		return _("Upset");
+	else if (happiness < 0.20)
+		return _("Tolerant");
+	else if (happiness < 0.30)
+		return _("Neutral");
+	else if (happiness < 0.50)
+		return _("Content");
+	else if (happiness < 0.70)
+		return _("Pleased");
+	else if (happiness < 0.95)
+		return _("Happy");
+	else
+		return _("Exuberant");
+
+}
+
+/**
+ * @brief Translates the current nation happiness float value to a string
  * @param[in] nation
  * @return Translated happiness string
  * @note happiness is between 0 and 1.0
  */
-const char* NAT_GetHappinessString (const nation_t* nation)
+const char* NAT_GetCurrentHappinessString (const nation_t* nation)
 {
 	const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
-	if (stats->happiness < 0.015)
-		return _("Giving up");
-	else if (stats->happiness < 0.025)
-		return _("Furious");
-	else if (stats->happiness < 0.04)
-		return _("Angry");
-	else if (stats->happiness < 0.06)
-		return _("Mad");
-	else if (stats->happiness < 0.10)
-		return _("Upset");
-	else if (stats->happiness < 0.20)
-		return _("Tolerant");
-	else if (stats->happiness < 0.30)
-		return _("Neutral");
-	else if (stats->happiness < 0.50)
-		return _("Content");
-	else if (stats->happiness < 0.70)
-		return _("Pleased");
-	else if (stats->happiness < 0.95)
-		return _("Happy");
-	else
-		return _("Exuberant");
+	return NAT_GetHappinessString(stats->happiness);
 }
 
 /**
@@ -171,7 +183,7 @@ const char* NAT_GetHappinessString (const nation_t* nation)
  */
 void NAT_SetHappiness (const float minhappiness, nation_t* nation, const float happiness)
 {
-	const char* oldString = NAT_GetHappinessString(nation);
+	const char* oldString = NAT_GetCurrentHappinessString(nation);
 	const char* newString;
 	nationInfo_t* stats = &nation->stats[0];
 	const float oldHappiness = stats->happiness;
@@ -184,7 +196,7 @@ void NAT_SetHappiness (const float minhappiness, nation_t* nation, const float h
 	else if (stats->happiness > 1.0f)
 		stats->happiness = 1.0f;
 
-	newString = NAT_GetHappinessString(nation);
+	newString = NAT_GetCurrentHappinessString(nation);
 
 	if (oldString != newString) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer),
@@ -867,7 +879,7 @@ void NAT_HandleBudget (const campaign_t* campaign)
 			newSoldiers, ngettext("soldier", "soldiers", newSoldiers),
 			newPilots, ngettext("pilot", "pilots", newPilots),
 			newWorkers, ngettext("worker", "workers", newWorkers),
-			_(nation->name), NAT_GetHappinessString(nation));
+			_(nation->name), NAT_GetCurrentHappinessString(nation));
 		MS_AddNewMessage(_("Notice"), message);
 	}
 

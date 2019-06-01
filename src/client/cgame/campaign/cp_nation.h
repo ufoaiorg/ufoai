@@ -79,7 +79,7 @@ void NAT_UpdateHappinessForAllNations(const float minhappiness);
 void NAT_SetHappiness(const float minhappiness, nation_t* nation, const float happiness);
 int NAT_GetFunding(const nation_t* const nation, int month);
 const nationInfo_t* NAT_GetCurrentMonthInfo(const nation_t* const nation);
-const char* NAT_GetHappinessString(const nation_t* nation);
+const char* NAT_GetCurrentHappinessString(const nation_t* nation);
 void CP_HandleNationData(float minHappiness, struct mission_s* mis, const nation_t* nation, const struct missionResults_s* results, bool won);
 
 void CL_ParseNations(const char* name, const char** text);
