@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../../shared/parse.h"
+#include "../../../shared/shared.h"
 #include "cp_campaign.h"
 #include "cp_geoscape.h"
 #include "cp_ufo.h"
@@ -547,6 +548,47 @@ bool NAT_ScriptSanityCheck (void)
 Menu functions
 =====================================*/
 
+/**
+ * @brief Console command for UI to gather nation statistics
+ */
+static void NAT_ListStats_f (void)
+{
+	const int argCount = cgi->Cmd_Argc();
+	if (argCount < 2) {
+		cgi->Com_Printf("Usage: %s <confunc> [nationID] [monthIDX]\n", cgi->Cmd_Argv(0));
+		return;
+	}
+	char callback[MAX_VAR];
+	Q_strncpyz(callback, cgi->Cmd_Argv(1), sizeof(callback));
+
+	for (int nationIDX = 0; nationIDX < ccs.numNations; nationIDX++) {
+		const nation_t *nation = NAT_GetNationByIDX(nationIDX);
+		if (nation == nullptr)
+			continue;
+
+		if (argCount >= 3 && !Q_streq(nation->id, cgi->Cmd_Argv(1)))
+			continue;
+
+		for (int monthIDX = 0; monthIDX < MONTHS_PER_YEAR; monthIDX++) {
+			if (!nation->stats[monthIDX].inuse)
+				break;
+
+			if (argCount >= 4 && monthIDX != -1 * atoi(cgi->Cmd_Argv(3)))
+				continue;
+
+			cgi->UI_ExecuteConfunc("%s %d %s \"%s\" %d %.4f \"%s\" %d",
+				callback,
+				nationIDX,
+				nation->id,
+				_(nation->name),
+				monthIDX,
+				nation->stats[monthIDX].happiness,
+				NAT_GetHappinessString(nation->stats[monthIDX].happiness),
+				NAT_GetFunding(nation, monthIDX)
+			);
+		}
+	}
+}
 
 static void CP_NationStatsClick_f (void)
 {
@@ -967,6 +1009,7 @@ static const cmdList_t nationCmds[] = {
 	{"nation_stats_click", CP_NationStatsClick_f, nullptr},
 	{"nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics."},
 	{"nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it."},
+	{"nation_getstats", NAT_ListStats_f, "Returns nation happiness and funding stats through a UI callback."},
 #ifdef DEBUG
 	{"debug_listcities", NAT_ListCities_f, "Debug function to list all cities in game."},
 	{"debug_listnations", NAT_NationList_f, "List all nations on the game console"},
