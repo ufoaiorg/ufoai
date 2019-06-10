@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 
-#define MAX_LINESTRIPS 16
-
 class uiLineChartNode : public uiLocatedNode {
 	void draw(uiNode_t* node) override;
 };
