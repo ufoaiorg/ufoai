@@ -685,7 +685,6 @@ static void CP_DebugFullCredits_f (void)
 static const cmdList_t game_commands[] = {
 	{"update_base_radar_coverage", RADAR_UpdateBaseRadarCoverage_f, "Update base radar coverage"},
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
-	{"stats_update", CP_StatsUpdate_f, nullptr},
 	{"game_go", CP_StartSelectedMission, nullptr},
 	{"game_timestop", CP_GameTimeStop, nullptr},
 	{"game_timeslow", CP_GameTimeSlow, nullptr},
@@ -832,6 +831,7 @@ void CP_Shutdown (void)
 		NAT_Shutdown();
 		MIS_Shutdown();
 		TR_Shutdown();
+		STATS_ShutDown();
 		UR_Shutdown();
 		AM_Shutdown();
 		E_Shutdown();

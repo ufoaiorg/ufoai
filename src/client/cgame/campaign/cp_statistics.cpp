@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Campaign statistics.
+ * @brief Campaign statistics
  */
 
 /*
@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Shows the current stats from stats_t stats
  * @todo This is very redundant with NAT_HandleBudget Investigate and clean up.
  */
-void CP_StatsUpdate_f (void)
+static void STATS_Update_f (void)
 {
 	static char statsBuffer[MAX_STATS_BUFFER];
 	const campaign_t* campaign = ccs.curCampaign;
@@ -268,9 +268,21 @@ static void CP_CampaignStats_f (void)
 }
 #endif /* DEBUG */
 
+static const cmdList_t statisticsCallbacks[] = {
+	{"stats_update", STATS_Update_f, "Update capaign statistics UI"},
+#ifdef DEBUG
+	{"debug_listcampaign", CP_CampaignStats_f, "Print campaign stats to game console"},
+#endif
+	{nullptr, nullptr, nullptr}
+};
+
+
 void STATS_InitStartup (void)
 {
-#ifdef DEBUG
-	cgi->Cmd_AddCommand("debug_listcampaign", CP_CampaignStats_f, "Print campaign stats to game console");
-#endif
+	cgi->Cmd_TableAddList(statisticsCallbacks);
+}
+
+void STATS_ShutDown (void)
+{
+	cgi->Cmd_TableRemoveList(statisticsCallbacks);
 }

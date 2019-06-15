@@ -868,7 +868,7 @@ static void NAT_NationList_f (void)
  * @note Called from CP_CampaignRun
  * @sa CP_CampaignRun
  * @sa B_CreateEmployee
- * @todo This is very redundant with CP_StatsUpdate_f. Investigate and clean up.
+ * @todo This is very redundant with STATS_Update_f. Investigate and clean up.
  */
 void NAT_HandleBudget (const campaign_t* campaign)
 {
