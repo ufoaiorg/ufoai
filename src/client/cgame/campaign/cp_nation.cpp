@@ -112,7 +112,6 @@ void NAT_UpdateHappinessForAllNations (const float minhappiness)
  * @param[in] nation Pointer to the nation
  * @param[in] month idx of the month -- 0 for current month
  * @return actual funding of a nation
- * @sa CL_NationsMaxFunding
  */
 int NAT_GetFunding (const nation_t* const nation, int month)
 {
@@ -608,15 +607,6 @@ static void CP_NationStatsClick_f (void)
 	cgi->Cbuf_AddText("nation_select %i\n", num);
 }
 
-/** Space for month-lines with 12 points for each nation. */
-static screenPoint_t fundingPts[MAX_NATIONS][MONTHS_PER_YEAR];
-static int usedFundPtslist = 0;
-/** Space for 1 line (2 points) for each nation. */
-static screenPoint_t colorLinePts[MAX_NATIONS][2];
-static int usedColPtslists = 0;
-
-static const vec4_t graphColorSelected = {1, 1, 1, 1};
-
 /**
  * @brief Search the maximum (current) funding from all the nations (in all logged months).
  * @note nation->maxFunding is _not_ the real funding value.
@@ -624,7 +614,7 @@ static const vec4_t graphColorSelected = {1, 1, 1, 1};
  * @todo Extend to other values?
  * @sa NAT_GetFunding
  */
-static int CL_NationsMaxFunding (void)
+static int NAT_CalculateMaxFunding (void)
 {
 	int max = 0;
 
@@ -644,9 +634,13 @@ static int CL_NationsMaxFunding (void)
 	return max;
 }
 
-static int selectedNation = 0;
-
+/** Space for month-lines with 12 points for each nation. */
+static screenPoint_t fundingPts[MAX_NATIONS][MONTHS_PER_YEAR];
+static int usedFundPtslist = 0;
 static lineStrip_t fundingLineStrip[MAX_NATIONS];
+
+static const vec4_t graphColorSelected = {1, 1, 1, 1};
+static int selectedNation = 0;
 
 /**
  * @brief Draws a graph for the funding values over time.
@@ -711,6 +705,9 @@ static void CL_NationDrawStats (const nation_t* nation, uiNode_t* node, lineStri
 	usedFundPtslist++;
 }
 
+/** Space for 1 line (2 points) for each nation. */
+static screenPoint_t colorLinePts[MAX_NATIONS][2];
+static int usedColPtslists = 0;
 static lineStrip_t colorLineStrip[MAX_NATIONS];
 
 /**
@@ -778,7 +775,7 @@ static void CL_NationStatsUpdate_f (void)
 	/* Display graph of nations-values so far. */
 	uiNode_t* graphNode = cgi->UI_GetNodeByPath("nations.nation_graph_funding");
 	if (graphNode) {
-		const int maxFunding = CL_NationsMaxFunding();
+		const int maxFunding = NAT_CalculateMaxFunding();
 		usedFundPtslist = 0;
 		for (i = 0; i < ccs.numNations; i++) {
 			const nation_t* nation = NAT_GetNationByIDX(i);
