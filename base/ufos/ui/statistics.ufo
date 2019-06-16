@@ -1,0 +1,228 @@
+--!usr/bin/lua
+
+--[[
+-- @file
+-- @brief Statistics overview screen
+--]]
+
+--[[
+Copyright (C) 2002-2019 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+
+do
+	local statsWindow = ufox.build_window({
+		name = "stats",
+		class = "window",
+		backgroundcolor = {0, 0, 0, 1},
+		bordersize = 3,
+		bordercolor = {0.56, 0.81, 0.76, 1},
+
+		{
+			name = "title",
+			class = "string",
+			text = "_Statistics",
+			pos = {5, 5},
+			size = {1014, 30},
+			contentalign = ufo.ALIGN_CC,
+			font = "f_big",
+		},
+
+		{
+			name = "costs_string",
+			class = "string",
+			text = "_Costs",
+			pos = {15, 75},
+			size = {470, 20},
+			contentalign = ufo.ALIGN_UC,
+			font = "f_small",
+		},
+
+		{
+			name = "costs_stats",
+			class = "text",
+			dataid = ufo.TEXT_STATS_COSTS,
+			pos = {15, 98},
+			size = {470, 396},
+			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
+			lineheight = 22,
+			tabwidth = 340,
+			rows =18,
+		},
+
+		{
+			name = "nations_string",
+			class = "string",
+			text = "_Nations",
+			pos = {15, 502},
+			size = {470, 20},
+			contentalign = ufo.ALIGN_UC,
+			font = "f_small",
+		},
+
+		{
+			name = "nation_stats",
+			class = "text",
+			tooltip = "_Click on a nation for its funding graph",
+			dataid = ufo.TEXT_STATS_NATIONS,
+			pos = {15, 525},
+			size = {470, 220},
+			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
+			lineheight = 22,
+			tabwidth = 360,
+			rows = 10,
+			mousefx = true,
+
+			on_click = function (sender)
+				ufo.cmd(string.format("nation_stats_click %s;", sender:lineselected()))
+			end,
+		},
+
+		{
+			name = "campaign_string",
+			class = "string",
+			text = "_Campaign",
+			pos = {505, 502},
+			size = {413, 20},
+			contentalign = ufo.ALIGN_UC,
+			font = "f_small",
+		},
+
+		{
+			name = "campaign_stats",
+			class = "text",
+			dataid = ufo.TEXT_GENERIC,
+			pos = {505, 525},
+			size = {413, 110},
+			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
+			lineheight = 22,
+			tabwidth = 360,
+			rows = 5,
+		},
+
+		{
+			name = "mission_string",
+			class = "string",
+			text = "_Missions",
+			pos = {505, 75},
+			size = {200, 20},
+			contentalign = ufo.ALIGN_UC,
+			font = "f_small",
+		},
+
+		{
+			name = "mission_stats",
+			class = "text",
+			dataid = ufo.TEXT_STATS_MISSION,
+			pos = {505, 98},
+			size = {200, 140},
+			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
+			lineheight = 22,
+			tabwidth = 160,
+			rows = 6,
+		},
+
+		{
+			name = "base_string",
+			class = "string",
+			text = "_Bases",
+			pos = {505, 251},
+			size = {200, 20},
+			contentalign = ufo.ALIGN_UC,
+			font = "f_small",
+		},
+
+		{
+			name = "base_stats",
+			class = "text",
+			dataid = ufo.TEXT_STATS_BASES,
+			pos = {505, 279},
+			size = {200, 140},
+			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
+			lineheight = 22,
+			tabwidth = 170,
+			rows = 6,
+		},
+
+		{
+			name = "ins_string",
+			class = "string",
+			text = "_Installations",
+			pos = {718, 251},
+			size = {200, 20},
+			contentalign = ufo.ALIGN_UC,
+			font = "f_small",
+		},
+
+		{
+			name = "ins_stats",
+			class = "text",
+			dataid = ufo.TEXT_STATS_INSTALLATIONS,
+			pos = {718, 279},
+			size = {200, 140},
+			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
+			lineheight = 22,
+			tabwidth = 170,
+			rows = 6,
+		},
+
+		{
+			name = "empl_string",
+			class = "string",
+			text = "_Employees",
+			pos = {715, 75},
+			size = {200, 20},
+			contentalign = ufo.ALIGN_UC,
+			font = "f_small",
+		},
+
+		{
+			name = "empl_stats",
+			class = "text",
+			dataid = ufo.TEXT_STATS_EMPLOYEES,
+			pos = {718, 98},
+			size = {200, 140},
+			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
+			lineheight = 22,
+			tabwidth = 170,
+			rows =6,
+		},
+
+
+		-- Back to geoscape
+		{
+			name = "geoscape_button",
+			class = "Geoscape",
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+
+		on_windowopened = function (sender)
+			ufo.cmd("stats_update;");
+		end,
+	})
+end
