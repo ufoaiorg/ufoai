@@ -575,249 +575,148 @@ static void NAT_ListStats_f (void)
 			if (argCount >= 4 && monthIDX != -1 * atoi(cgi->Cmd_Argv(3)))
 				continue;
 
-			cgi->UI_ExecuteConfunc("%s %d %s \"%s\" %d %.4f \"%s\" %d",
+			cgi->UI_ExecuteConfunc("%s %s \"%s\" %d %.4f \"%s\" %d \"%f, %f, %f, %f\"",
 				callback,
-				nationIDX,
 				nation->id,
 				_(nation->name),
 				monthIDX,
 				nation->stats[monthIDX].happiness,
 				NAT_GetHappinessString(nation->stats[monthIDX].happiness),
-				NAT_GetFunding(nation, monthIDX)
+				NAT_GetFunding(nation, monthIDX),
+				nation->color[0],
+				nation->color[1],
+				nation->color[2],
+				nation->color[3]
 			);
 		}
 	}
 }
 
-static void CP_NationStatsClick_f (void)
-{
-	int num;
-
-	if (cgi->Cmd_Argc() < 2) {
-		cgi->Com_Printf("Usage: %s <num>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	/* Which entry in the list? */
-	num = atoi(cgi->Cmd_Argv(1));
-	if (num < 0 || num >= ccs.numNations)
-		return;
-
-	cgi->UI_PushWindow("nations");
-	cgi->Cbuf_AddText("nation_select %i\n", num);
-}
-
-/**
- * @brief Search the maximum (current) funding from all the nations (in all logged months).
- * @note nation->maxFunding is _not_ the real funding value.
- * @return The maximum funding value.
- * @todo Extend to other values?
- * @sa NAT_GetFunding
- */
-static int NAT_CalculateMaxFunding (void)
-{
-	int max = 0;
-
-	for (int n = 0; n < ccs.numNations; n++) {
-		const nation_t* nation = NAT_GetNationByIDX(n);
-		for (int m = 0; m < MONTHS_PER_YEAR; m++) {
-			if (nation->stats[m].inuse) {
-				const int funding = NAT_GetFunding(nation, m);
-				if (max < funding)
-					max = funding;
-			} else {
-				/* Abort this months-loops */
-				break;
-			}
-		}
-	}
-	return max;
-}
-
-/** Space for month-lines with 12 points for each nation. */
+/* Funding Chart */
 static screenPoint_t fundingPts[MAX_NATIONS][MONTHS_PER_YEAR];
-static int usedFundPtslist = 0;
 static lineStrip_t fundingLineStrip[MAX_NATIONS];
-
-static const vec4_t graphColorSelected = {1, 1, 1, 1};
-static int selectedNation = 0;
+/* Happiness Chart */
+static screenPoint_t happinessPts[MAX_NATIONS][MONTHS_PER_YEAR];
+static lineStrip_t happinessLineStrip[MAX_NATIONS];
+/* XVI Chart */
+static screenPoint_t xviPts[MAX_NATIONS][MONTHS_PER_YEAR];
+static lineStrip_t xviLineStrip[MAX_NATIONS];
 
 /**
- * @brief Draws a graph for the funding values over time.
- * @param[in] nation The nation to draw the graph for.
- * @param[in] node A pointer to a "linestrip" node that we want to draw in.
- * @param[out] funding Funding graph data in a lineStrip_t
- * @param[in] maxFunding The upper limit of the graph - all values will be scaled to this one.
- * @param[in] color If this is -1 draw the line for the current selected nation
- * @todo Somehow the display of the months isn't really correct right now (straight line :-/)
+ * @brief Console command for UI to draw charts
  */
-static void CL_NationDrawStats (const nation_t* nation, uiNode_t* node, lineStrip_t* funding, int maxFunding, int color)
+static void NAT_DrawCharts_f (void)
 {
-	int minFunding = 0;
-	int ptsNumber = 0;
-	float dy;
+	const int argCount = cgi->Cmd_Argc();
+	if (argCount < 3) {
+		cgi->Com_Printf("Usage: %s <width> <height>\n", cgi->Cmd_Argv(0));
+		return;
+	}
 
-	if (!nation || !node)
+	const int width = atoi(cgi->Cmd_Argv(1));
+	const int height = atoi(cgi->Cmd_Argv(2));
+	if (width <= 0 || height <= 0)
 		return;
 
-	/** @todo should be into the chart node code */
-	int width	= (int)node->box.size[0];
-	int height	= (int)node->box.size[1];
-	int dx = (int)(width / MONTHS_PER_YEAR);
+	const int dx = (int)(width / MONTHS_PER_YEAR);
 
-	if (minFunding != maxFunding)
-		dy = (float) height / (maxFunding - minFunding);
-	else
-		dy = 0;
-
-	/* Generate pointlist. */
-	/** @todo Sort this in reverse? -> Having current month on the right side? */
-	for (int m = 0; m < MONTHS_PER_YEAR; m++) {
-		if (nation->stats[m].inuse) {
-			const int fund = NAT_GetFunding(nation, m);
-			fundingPts[usedFundPtslist][m].x = (m * dx);
-			fundingPts[usedFundPtslist][m].y = height - dy * (fund - minFunding);
-			ptsNumber++;
-		} else {
-			break;
-		}
-	}
-
-	/* Guarantee displayable data even for only one month */
-	if (ptsNumber == 1) {
-		/* Set the second point half the distance to the next month to the right - small horizontal line. */
-		fundingPts[usedFundPtslist][1].x = fundingPts[usedFundPtslist][0].x + (int)(0.5 * width / MONTHS_PER_YEAR);
-		fundingPts[usedFundPtslist][1].y = fundingPts[usedFundPtslist][0].y;
-		ptsNumber++;
-	}
-
-	/* Link graph to node */
-	funding->pointList = (int*)fundingPts[usedFundPtslist];
-	funding->numPoints = ptsNumber;
-	if (color < 0) {
-		const nation_t* nation = NAT_GetNationByIDX(selectedNation);
-		cgi->Cvar_Set("mn_nat_symbol", "nations/%s", nation->id);
-		Vector4Copy(graphColorSelected, funding->color);
-	} else {
-		Vector4Copy(nation->color, funding->color);
-	}
-
-	usedFundPtslist++;
-}
-
-/** Space for 1 line (2 points) for each nation. */
-static screenPoint_t colorLinePts[MAX_NATIONS][2];
-static int usedColPtslists = 0;
-static lineStrip_t colorLineStrip[MAX_NATIONS];
-
-/**
- * @brief Shows the current nation list + statistics.
- * @note See menu_stats.ufo
- */
-static void CL_NationStatsUpdate_f (void)
-{
-	int i;
-	int dy = 10;
-
-	usedColPtslists = 0;
-
-	uiNode_t* colorNode = cgi->UI_GetNodeByPath("nations.nation_graph_colors");
-	if (colorNode) {
-		dy = (int)(colorNode->box.size[1] / MAX_NATIONS);
-	}
-
-	for (i = 0; i < ccs.numNations; i++) {
+	/* Calculate chart bounds (maximums) */
+	int maxFunding;
+	float maxXVI;
+	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t* nation = NAT_GetNationByIDX(i);
-		lineStrip_t* color = &colorLineStrip[i];
-		const int funding = NAT_GetFunding(nation, 0);
+		if (nation == nullptr)
+			continue;
+		for (int monthIdx = 0; monthIdx < MONTHS_PER_YEAR; monthIdx++) {
+			if (!nation->stats[monthIdx].inuse)
+				break;
 
-		OBJZERO(*color);
-
-		if (i > 0)
-			colorLineStrip[i - 1].next = color;
-
-		if (selectedNation == i) {
-			cgi->UI_ExecuteConfunc("nation_marksel %i", i);
-		} else {
-			cgi->UI_ExecuteConfunc("nation_markdesel %i", i);
-		}
-		cgi->Cvar_Set(va("mn_nat_name%i",i), "%s", _(nation->name));
-		cgi->Cvar_Set(va("mn_nat_fund%i",i), _("%i c"), funding);
-
-		if (colorNode) {
-			colorLinePts[usedColPtslists][0].x = 0;
-			colorLinePts[usedColPtslists][0].y = (int)colorNode->box.size[1] - (int)colorNode->box.size[1] + dy * i;
-			colorLinePts[usedColPtslists][1].x = (int)colorNode->box.size[0];
-			colorLinePts[usedColPtslists][1].y = colorLinePts[usedColPtslists][0].y;
-
-			color->pointList = (int*)colorLinePts[usedColPtslists];
-			color->numPoints = 2;
-
-			if (i == selectedNation) {
-				Vector4Copy(graphColorSelected, color->color);
+			if (i == 0 && monthIdx == 0) {
+				maxFunding = NAT_GetFunding(nation, monthIdx);
+				maxXVI = nation->stats[monthIdx].xviInfection;
 			} else {
-				Vector4Copy(nation->color, color->color);
-			}
-
-			usedColPtslists++;
-		}
-	}
-
-	cgi->UI_RegisterLineStrip(LINESTRIP_COLOR, &colorLineStrip[0]);
-
-	/* Hide unused nation-entries. */
-	for (i = ccs.numNations; i < MAX_NATIONS; i++) {
-		cgi->UI_ExecuteConfunc("nation_hide %i", i);
-	}
-
-	/** @todo Display summary of nation info */
-
-	/* Display graph of nations-values so far. */
-	uiNode_t* graphNode = cgi->UI_GetNodeByPath("nations.nation_graph_funding");
-	if (graphNode) {
-		const int maxFunding = NAT_CalculateMaxFunding();
-		usedFundPtslist = 0;
-		for (i = 0; i < ccs.numNations; i++) {
-			const nation_t* nation = NAT_GetNationByIDX(i);
-			lineStrip_t* funding = &fundingLineStrip[i];
-
-			/* init the structure */
-			OBJZERO(*funding);
-
-			if (i > 0)
-				fundingLineStrip[i - 1].next = funding;
-
-			if (i == selectedNation) {
-				CL_NationDrawStats(nation, graphNode, funding, maxFunding, -1);
-			} else {
-				CL_NationDrawStats(nation, graphNode, funding, maxFunding, i);
+				if (maxFunding < NAT_GetFunding(nation, monthIdx))
+					maxFunding = NAT_GetFunding(nation, monthIdx);
+				if (maxXVI < nation->stats[monthIdx].xviInfection)
+					maxXVI = nation->stats[monthIdx].xviInfection;
 			}
 		}
-
-		cgi->UI_RegisterLineStrip(LINESTRIP_FUNDING, &fundingLineStrip[0]);
-	}
-}
-
-/**
- * @brief Select nation and display all relevant information for it.
- */
-static void CL_NationSelect_f (void)
-{
-	int nat;
-
-	if (cgi->Cmd_Argc() < 2) {
-		cgi->Com_Printf("Usage: %s <nat_idx>\n", cgi->Cmd_Argv(0));
-		return;
 	}
 
-	nat = atoi(cgi->Cmd_Argv(1));
-	if (nat < 0 || nat >= ccs.numNations) {
-		cgi->Com_Printf("Invalid nation index: %is\n",nat);
-		return;
+	const float dyFunding = (0 != maxFunding) ? (float) height / maxFunding : 1;
+	const float dyXvi = (0 != maxXVI) ? (float) height / maxXVI : 1;
+
+	/* Fill the points */
+	for (int i = 0; i < ccs.numNations; i++) {
+		const nation_t* nation = NAT_GetNationByIDX(i);
+		if (nation == nullptr)
+			continue;
+
+		lineStrip_t* funding = &fundingLineStrip[i];
+		lineStrip_t* happiness = &happinessLineStrip[i];
+		lineStrip_t* xvi = &xviLineStrip[i];
+
+		OBJZERO(*funding);
+		OBJZERO(*happiness);
+		OBJZERO(*xvi);
+
+		Vector4Copy(nation->color, funding->color);
+		Vector4Copy(nation->color, happiness->color);
+		Vector4Copy(nation->color, xvi->color);
+
+		funding->pointList = (int*)fundingPts[i];
+		happiness->pointList = (int*)happinessPts[i];
+		xvi->pointList = (int*)xviPts[i];
+
+		if (i > 0) {
+			fundingLineStrip[i - 1].next = funding;
+			happinessLineStrip[i - 1].next = happiness;
+			xviLineStrip[i - 1].next = xvi;
+		}
+
+		int monthIdx;
+		for (monthIdx = 0; monthIdx < MONTHS_PER_YEAR; monthIdx++) {
+			if (!nation->stats[monthIdx].inuse)
+				break;
+
+			const int funding = NAT_GetFunding(nation, monthIdx);
+			fundingPts[i][monthIdx].x = (monthIdx * dx);
+			fundingPts[i][monthIdx].y = height - dyFunding * funding;
+
+			happinessPts[i][monthIdx].x = (monthIdx * dx);
+			happinessPts[i][monthIdx].y = height - (height * nation->stats[monthIdx].happiness);
+
+			const int xviInfection= nation->stats[monthIdx].xviInfection;
+			xviPts[i][monthIdx].x = (monthIdx * dx);
+			xviPts[i][monthIdx].y = height - dyXvi * xviInfection;
+		}
+
+		if (monthIdx == 0)
+			continue;
+
+		funding->numPoints = monthIdx;
+		happiness->numPoints = monthIdx;
+		xvi->numPoints = monthIdx;
+
+		/* There only 1 data point, create a fake one to make the chart visible */
+		if (monthIdx == 1 && !nation->stats[monthIdx].inuse) {
+			fundingPts[i][1].x = fundingPts[i][0].x + (int)(0.5 * width / MONTHS_PER_YEAR);
+			fundingPts[i][1].y = fundingPts[i][0].y;
+			funding->numPoints++;
+
+			happinessPts[i][1].x = happinessPts[i][0].x + (int)(0.5 * width / MONTHS_PER_YEAR);
+			happinessPts[i][1].y = happinessPts[i][0].y;
+			happiness->numPoints++;
+
+			xviPts[i][1].x = xviPts[i][0].x + (int)(0.5 * width / MONTHS_PER_YEAR);
+			xviPts[i][1].y = xviPts[i][0].y;
+			xvi->numPoints++;
+		}
 	}
 
-	selectedNation = nat;
-	CL_NationStatsUpdate_f();
+	cgi->UI_RegisterLineStrip(LINESTRIP_FUNDING, &fundingLineStrip[0]);
+	cgi->UI_RegisterLineStrip(LINESTRIP_HAPPINESS, &happinessLineStrip[0]);
+	cgi->UI_RegisterLineStrip(LINESTRIP_XVI, &xviLineStrip[0]);
 }
 
 #ifdef DEBUG
@@ -928,9 +827,7 @@ void NAT_HandleBudget (const campaign_t* campaign)
 		E_Foreach(i, employee) {
 			if (!employee->isHired())
 				continue;
-			const rank_t* rank = CL_GetRankByIdx(employee->chr.score.rank);
-			cost += CP_GetSalaryBaseEmployee(salary, employee->getType())
-					+ rank->level * CP_GetSalaryRankBonusEmployee(salary, employee->getType());
+			cost += employee->salary();
 			count++;
 		}
 		totalExpenditure += cost;
@@ -1003,10 +900,8 @@ void NAT_BackupMonthlyData (void)
 }
 
 static const cmdList_t nationCmds[] = {
-	{"nation_stats_click", CP_NationStatsClick_f, nullptr},
-	{"nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics."},
-	{"nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it."},
 	{"nation_getstats", NAT_ListStats_f, "Returns nation happiness and funding stats through a UI callback."},
+	{"nation_drawcharts", NAT_DrawCharts_f, "Draws nation happiness and funding charts."},
 #ifdef DEBUG
 	{"debug_listcities", NAT_ListCities_f, "Debug function to list all cities in game."},
 	{"debug_listnations", NAT_NationList_f, "List all nations on the game console"},

@@ -35,104 +35,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void STATS_Update_f (void)
 {
-	static char statsBuffer[MAX_STATS_BUFFER];
 	const campaign_t* campaign = ccs.curCampaign;
-
-	/* delete buffer */
+	static char statsBuffer[MAX_STATS_BUFFER];
 	OBJZERO(statsBuffer);
-
 	char* pos = statsBuffer;
-
-	/* missions */
-	cgi->UI_RegisterText(TEXT_STATS_MISSION, pos);
-	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), ccs.campaignStats.missionsWon, ccs.campaignStats.missionsLost);
-
-	/* bases */
-	pos += (strlen(pos) + 1);
-	cgi->UI_RegisterText(TEXT_STATS_BASES, pos);
-	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
-			ccs.campaignStats.basesBuilt, B_GetCount(), ccs.campaignStats.basesAttacked),
-
-	/* installations */
-	pos += (strlen(pos) + 1);
-	cgi->UI_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
-
-	INS_Foreach(inst) {
-		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), "%s\n", inst->name);
-	}
-
-	/* nations */
-	pos += (strlen(pos) + 1);
-	int totalfunds = 0;
-	cgi->UI_RegisterText(TEXT_STATS_NATIONS, pos);
-	for (int i = 0; i < ccs.numNations; i++) {
-		const nation_t* nation = NAT_GetNationByIDX(i);
-		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("%s\t%s\n"), _(nation->name), NAT_GetCurrentHappinessString(nation));
-		totalfunds += NAT_GetFunding(nation, 0);
-	}
-	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("\nFunding this month:\t%d"), totalfunds);
-
-	/* costs */
-	int costs = 0;
-	const salary_t* salary = &campaign->salaries;
-	int hired[MAX_EMPL];
-	OBJZERO(hired);
-	for (int i = 0; i < MAX_EMPL; i++) {
-		E_Foreach(i, employee) {
-			const employeeType_t type = (employeeType_t)i;
-			if (!employee->isHired())
-				continue;
-			const rank_t* rank = CL_GetRankByIdx(employee->chr.score.rank);
-			costs += CP_GetSalaryBaseEmployee(salary, type) + rank->level * CP_GetSalaryRankBonusEmployee(salary, type);
-			hired[employee->getType()]++;
-		}
-	}
-
-	/* employees - this is between the two costs parts to count the hired employees */
-	pos += (strlen(pos) + 1);
-	cgi->UI_RegisterText(TEXT_STATS_EMPLOYEES, pos);
-	for (int i = 0; i < MAX_EMPL; i++) {
-		const employeeType_t type = (employeeType_t)i;
-		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("%s\t%i\n"), E_GetEmployeeString(type, hired[i]), hired[i]);
-	}
-
-	/* costs - second part */
-	pos += (strlen(pos) + 1);
-	cgi->UI_RegisterText(TEXT_STATS_COSTS, pos);
-	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Employees:\t%i c\n"), costs);
-	int sum = costs;
-
-	costs = 0;
-	AIR_Foreach(aircraft) {
-		if (aircraft->status == AIR_CRASHED)
-			continue;
-		costs += aircraft->price * salary->aircraftFactor / salary->aircraftDivisor;
-	}
-	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Aircraft:\t%i c\n"), costs);
-	sum += costs;
-
-	base_t* base = nullptr;
-	while ((base = B_GetNext(base)) != nullptr) {
-		costs = CP_GetSalaryUpKeepBase(salary, base);
-		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Base (%s):\t%i c\n"), base->name, costs);
-		sum += costs;
-	}
-
-	costs = CP_GetSalaryAdministrative(salary);
-	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Administrative costs:\t%i c\n"), costs);
-	sum += costs;
-
-	if (ccs.credits < 0) {
-		const float interest = ccs.credits * campaign->salaries.debtInterest;
-
-		costs = (int)ceil(interest);
-		Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Debt:\t%i c\n"), costs);
-		sum += costs;
-	}
-	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("\n\t-------\nSum:\t%i c\n"), sum);
-
 	/* campaign */
-	pos += (strlen(pos) + 1);
 	cgi->UI_RegisterText(TEXT_GENERIC, pos);
 	Q_strcat(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Max. allowed debts: %ic\n"), campaign->negativeCreditsUntilLost);
 
@@ -145,6 +52,87 @@ static void STATS_Update_f (void)
 			CP_GetAverageXVIRate());
 	}
 }
+
+/**
+ * @brief Console command for UI to gather expenses
+ */
+static void STAT_GetExpenses_f (void)
+{
+	const int argCount = cgi->Cmd_Argc();
+	if (argCount < 2) {
+		cgi->Com_Printf("Usage: %s <confunc>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+	char callback[MAX_VAR];
+	Q_strncpyz(callback, cgi->Cmd_Argv(1), sizeof(callback));
+
+	/** @todo should have something like CP_GetCurrentCampaign */
+	const campaign_t* campaign = ccs.curCampaign;
+	const salary_t* salary = &campaign->salaries;
+
+	int count = 0;
+	int cost = 0;
+	for (int i = 0; i < MAX_EMPL; i++) {
+		E_Foreach(i, employee) {
+			if (!employee->isHired())
+				continue;
+			cost += employee->salary();
+			count++;
+		}
+
+	}
+	cgi->UI_ExecuteConfunc("%s %s \"%s\" %d",
+		callback,
+		"employee",
+		ngettext("Salary", "Salaries", count),
+		cost
+	);
+
+	count = 0;
+	cost = 0;
+	AIR_Foreach(aircraft) {
+		if (aircraft->status == AIR_CRASHED)
+			continue;
+		cost += aircraft->price * salary->aircraftFactor / salary->aircraftDivisor;
+		count++;
+	}
+	cgi->UI_ExecuteConfunc("%s %s \"%s\" %d",
+		callback,
+		"aircraft",
+		ngettext("Aircraft", "Aircraft", count),
+		cost
+	);
+
+	base_t* base = nullptr;
+	while ((base = B_GetNext(base)) != nullptr) {
+		cost = CP_GetSalaryUpKeepBase(salary, base);
+		cgi->UI_ExecuteConfunc("%s base_%d \"%s: %s\" %d",
+			callback,
+			base->idx,
+			_("Base"),
+			base->name,
+			cost
+		);
+	}
+
+	cgi->UI_ExecuteConfunc("%s %s \"%s\" %d",
+		callback,
+		"administrative",
+		_("Administrative costs:"),
+		CP_GetSalaryAdministrative(salary)
+	);
+
+	if (ccs.credits < 0) {
+		const float interest = ccs.credits * campaign->salaries.debtInterest;
+		cgi->UI_ExecuteConfunc("%s %s \"%s\" %d",
+			callback,
+			"interest",
+			_("Debt interest:"),
+			(int)ceil(interest)
+		);
+	}
+}
+
 
 /**
  * @brief Save callback for savegames in XML Format

@@ -915,27 +915,7 @@ void CP_ResetCampaignData (void)
 
 int CP_GetSalaryAdministrative (const salary_t* salary)
 {
-	int costs = salary->adminInitial;
-	for (int i = 0; i < MAX_EMPL; i++) {
-		const employeeType_t type = (employeeType_t)i;
-		costs += E_CountByType(type) * CP_GetSalaryAdminEmployee(salary, type);
-	}
-	return costs;
-}
-
-int CP_GetSalaryBaseEmployee (const salary_t* salary, employeeType_t type)
-{
-	return salary->base[type];
-}
-
-int CP_GetSalaryAdminEmployee (const salary_t* salary, employeeType_t type)
-{
-	return salary->admin[type];
-}
-
-int CP_GetSalaryRankBonusEmployee (const salary_t* salary, employeeType_t type)
-{
-	return salary->rankBonus[type];
+	return salary->adminInitial;
 }
 
 int CP_GetSalaryUpKeepBase (const salary_t* salary, const base_t* base)

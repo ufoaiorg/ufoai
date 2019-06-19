@@ -211,9 +211,6 @@ typedef struct campaign_s {
 	linkedList_t* initialCraft;		/**< List of aircraft the player starts the campaign with */
 } campaign_t;
 
-int CP_GetSalaryBaseEmployee(const salary_t* salary, employeeType_t type);
-int CP_GetSalaryAdminEmployee(const salary_t* salary, employeeType_t type);
-int CP_GetSalaryRankBonusEmployee(const salary_t* salary, employeeType_t type);
 int CP_GetSalaryAdministrative(const salary_t* salary);
 int CP_GetSalaryUpKeepBase(const salary_t* salary, const base_t* base);
 

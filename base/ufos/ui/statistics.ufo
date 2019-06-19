@@ -25,6 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --]]
 
 require("ufox.lua")
+require("statistics.nations.lua")
+require("statistics.nationcharts.lua")
+require("statistics.campaignstat.lua")
+require("statistics.budget.lua")
 
 do
 	local statsWindow = ufox.build_window({
@@ -45,165 +49,32 @@ do
 		},
 
 		{
-			name = "costs_string",
-			class = "string",
-			text = "_Costs",
+			name = "budgetreport",
+			class = "panel",
 			pos = {15, 75},
-			size = {470, 20},
-			contentalign = ufo.ALIGN_UC,
-			font = "f_small",
+			size = {440, 396},
 		},
 
 		{
-			name = "costs_stats",
-			class = "text",
-			dataid = ufo.TEXT_STATS_COSTS,
-			pos = {15, 98},
-			size = {470, 396},
-			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
-			lineheight = 22,
-			tabwidth = 340,
-			rows =18,
+			name = "nationslist",
+			class = "panel",
+			pos = {465, 75},
+			size = {545, 235},
 		},
 
 		{
-			name = "nations_string",
-			class = "string",
-			text = "_Nations",
-			pos = {15, 502},
-			size = {470, 20},
-			contentalign = ufo.ALIGN_UC,
-			font = "f_small",
+			name = "nationschart",
+			class = "panel",
+			pos = {465, 320},
+			size = {545, 275},
 		},
 
 		{
-			name = "nation_stats",
-			class = "text",
-			tooltip = "_Click on a nation for its funding graph",
-			dataid = ufo.TEXT_STATS_NATIONS,
-			pos = {15, 525},
-			size = {470, 220},
-			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
-			lineheight = 22,
-			tabwidth = 360,
-			rows = 10,
-			mousefx = true,
-
-			on_click = function (sender)
-				ufo.cmd(string.format("nation_stats_click %s;", sender:lineselected()))
-			end,
+			name = "campaignstats",
+			class = "panel",
+			pos = {465, 600},
+			size = {545, 160},
 		},
-
-		{
-			name = "campaign_string",
-			class = "string",
-			text = "_Campaign",
-			pos = {505, 502},
-			size = {413, 20},
-			contentalign = ufo.ALIGN_UC,
-			font = "f_small",
-		},
-
-		{
-			name = "campaign_stats",
-			class = "text",
-			dataid = ufo.TEXT_GENERIC,
-			pos = {505, 525},
-			size = {413, 110},
-			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
-			lineheight = 22,
-			tabwidth = 360,
-			rows = 5,
-		},
-
-		{
-			name = "mission_string",
-			class = "string",
-			text = "_Missions",
-			pos = {505, 75},
-			size = {200, 20},
-			contentalign = ufo.ALIGN_UC,
-			font = "f_small",
-		},
-
-		{
-			name = "mission_stats",
-			class = "text",
-			dataid = ufo.TEXT_STATS_MISSION,
-			pos = {505, 98},
-			size = {200, 140},
-			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
-			lineheight = 22,
-			tabwidth = 160,
-			rows = 6,
-		},
-
-		{
-			name = "base_string",
-			class = "string",
-			text = "_Bases",
-			pos = {505, 251},
-			size = {200, 20},
-			contentalign = ufo.ALIGN_UC,
-			font = "f_small",
-		},
-
-		{
-			name = "base_stats",
-			class = "text",
-			dataid = ufo.TEXT_STATS_BASES,
-			pos = {505, 279},
-			size = {200, 140},
-			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
-			lineheight = 22,
-			tabwidth = 170,
-			rows = 6,
-		},
-
-		{
-			name = "ins_string",
-			class = "string",
-			text = "_Installations",
-			pos = {718, 251},
-			size = {200, 20},
-			contentalign = ufo.ALIGN_UC,
-			font = "f_small",
-		},
-
-		{
-			name = "ins_stats",
-			class = "text",
-			dataid = ufo.TEXT_STATS_INSTALLATIONS,
-			pos = {718, 279},
-			size = {200, 140},
-			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
-			lineheight = 22,
-			tabwidth = 170,
-			rows = 6,
-		},
-
-		{
-			name = "empl_string",
-			class = "string",
-			text = "_Employees",
-			pos = {715, 75},
-			size = {200, 20},
-			contentalign = ufo.ALIGN_UC,
-			font = "f_small",
-		},
-
-		{
-			name = "empl_stats",
-			class = "text",
-			dataid = ufo.TEXT_STATS_EMPLOYEES,
-			pos = {718, 98},
-			size = {200, 140},
-			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
-			lineheight = 22,
-			tabwidth = 170,
-			rows =6,
-		},
-
 
 		-- Back to geoscape
 		{
@@ -220,8 +91,17 @@ do
 			class = "fuzzyScreen"
 		},
 
-
 		on_windowopened = function (sender)
+			build_budgetreport(sender:root():child("budgetreport"))
+			ufo.cmd("ui_expenses_clear; stats_getexpenses ui_expenses_fill; ui_expenses_summarize;")
+
+			build_nationstats(sender:root():child("nationslist"))
+			ufo.cmd("ui_nations_clear; nation_getstats ui_nations_fill;")
+
+			build_nationcharts(sender:root():child("nationschart"))
+			ufo.cmd("nation_drawcharts 492 200;");
+
+			build_campaignstats(sender:root():child("campaignstats"))
 			ufo.cmd("stats_update;");
 		end,
 	})
