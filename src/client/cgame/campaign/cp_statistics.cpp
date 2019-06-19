@@ -222,57 +222,9 @@ bool STATS_LoadXML (xmlNode_t* parent)
 	return success;
 }
 
-
-#ifdef DEBUG
-/**
- * @brief Show campaign stats in console
- */
-static void CP_CampaignStats_f (void)
-{
-	campaign_t* campaign = ccs.curCampaign;
-	const salary_t* salary;
-
-	if (!CP_IsRunning()) {
-		cgi->Com_Printf("No campaign active\n");
-		return;
-	}
-
-	salary = &campaign->salaries;
-
-	cgi->Com_Printf("Campaign id: %s\n", campaign->id);
-	cgi->Com_Printf("..research list: %s\n", campaign->researched);
-	cgi->Com_Printf("..equipment: %s\n", campaign->equipment);
-	cgi->Com_Printf("..team: %i\n", campaign->team);
-
-	cgi->Com_Printf("..salaries:\n");
-	cgi->Com_Printf("...soldier_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_SOLDIER));
-	cgi->Com_Printf("...soldier_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_SOLDIER));
-	cgi->Com_Printf("...worker_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_WORKER));
-	cgi->Com_Printf("...worker_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_WORKER));
-	cgi->Com_Printf("...scientist_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_SCIENTIST));
-	cgi->Com_Printf("...scientist_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_SCIENTIST));
-	cgi->Com_Printf("...pilot_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_PILOT));
-	cgi->Com_Printf("...pilot_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_PILOT));
-	cgi->Com_Printf("...robot_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_ROBOT));
-	cgi->Com_Printf("...robot_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_ROBOT));
-	cgi->Com_Printf("...aircraft_factor: %i\n", salary->aircraftFactor);
-	cgi->Com_Printf("...aircraft_divisor: %i\n", salary->aircraftDivisor);
-	cgi->Com_Printf("...base_upkeep: %i\n", salary->baseUpkeep);
-	cgi->Com_Printf("...admin_initial: %i\n", salary->adminInitial);
-	cgi->Com_Printf("...admin_soldier: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_SOLDIER));
-	cgi->Com_Printf("...admin_worker: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_WORKER));
-	cgi->Com_Printf("...admin_scientist: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_SCIENTIST));
-	cgi->Com_Printf("...admin_pilot: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_PILOT));
-	cgi->Com_Printf("...admin_robot: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_ROBOT));
-	cgi->Com_Printf("...debt_interest: %.5f\n", salary->debtInterest);
-}
-#endif /* DEBUG */
-
 static const cmdList_t statisticsCallbacks[] = {
 	{"stats_update", STATS_Update_f, "Update capaign statistics UI"},
-#ifdef DEBUG
-	{"debug_listcampaign", CP_CampaignStats_f, "Print campaign stats to game console"},
-#endif
+	{"stats_getexpenses", STAT_GetExpenses_f, "Gather expenses for the statistics UI"},
 	{nullptr, nullptr, nullptr}
 };
 
