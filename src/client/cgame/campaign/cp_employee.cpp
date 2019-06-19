@@ -57,6 +57,18 @@ Employee* E_GetUnhired (employeeType_t type)
 }
 
 /**
+ * @brief Calculates the employee's actual salary
+ * @returns Monthly salary of the employee
+ */
+int Employee::salary() const
+{
+	const campaign_t* campaign = ccs.curCampaign;
+	const salary_t* salary = &campaign->salaries;
+	const rank_t* rank = CL_GetRankByIdx(this->chr.score.rank);
+	return salary->base[getType()] + salary->admin[getType()] + rank->level * salary->rankBonus[getType()];
+}
+
+/**
  * @brief Tells you if a employee is away from his home base (gone in mission).
  * @return bool true if the employee is away in mission, false if he is not or he is unhired.
  */

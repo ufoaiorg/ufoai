@@ -108,6 +108,7 @@ public:
 		return _ugv;
 	}
 
+	int salary() const;
 	bool isAwayFromBase() const;
 	bool unassign();
 	bool unhire();
