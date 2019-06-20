@@ -913,11 +913,6 @@ void CP_ResetCampaignData (void)
 	}
 }
 
-int CP_GetSalaryAdministrative (const salary_t* salary)
-{
-	return salary->adminInitial;
-}
-
 int CP_GetSalaryUpKeepBase (const salary_t* salary, const base_t* base)
 {
 	int cost = salary->baseUpkeep;	/* base cost */

@@ -65,7 +65,7 @@ int Employee::salary() const
 	const campaign_t* campaign = ccs.curCampaign;
 	const salary_t* salary = &campaign->salaries;
 	const rank_t* rank = CL_GetRankByIdx(this->chr.score.rank);
-	return salary->base[getType()] + salary->admin[getType()] + rank->level * salary->rankBonus[getType()];
+	return salary->base[getType()] + rank->level * salary->rankBonus[getType()];
 }
 
 /**

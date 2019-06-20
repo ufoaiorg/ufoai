@@ -861,11 +861,6 @@ void NAT_HandleBudget (const campaign_t* campaign)
 		MS_AddNewMessage(_("Notice"), message);
 	}
 
-	cost = CP_GetSalaryAdministrative(salary);
-	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
-	totalExpenditure += cost;
-	MS_AddNewMessage(_("Notice"), message);
-
 	if (initialCredits < 0) {
 		const float interest = initialCredits * campaign->salaries.debtInterest;
 

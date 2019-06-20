@@ -153,11 +153,9 @@ typedef struct battleParam_s {
 typedef struct salary_s {
 	int base[MAX_EMPL];
 	int rankBonus[MAX_EMPL];
-	int admin[MAX_EMPL];
 	int aircraftFactor;
 	int aircraftDivisor;
 	int baseUpkeep;
-	int adminInitial;
 	float debtInterest;
 } salary_t;
 
@@ -211,7 +209,6 @@ typedef struct campaign_s {
 	linkedList_t* initialCraft;		/**< List of aircraft the player starts the campaign with */
 } campaign_t;
 
-int CP_GetSalaryAdministrative(const salary_t* salary);
 int CP_GetSalaryUpKeepBase(const salary_t* salary, const base_t* base);
 
 /** possible geoscape actions */

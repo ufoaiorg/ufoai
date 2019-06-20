@@ -312,12 +312,6 @@ static const value_t salary_vals[] = {
 	{"aircraft_factor", V_INT, offsetof(salary_t, aircraftFactor), MEMBER_SIZEOF(salary_t, aircraftFactor)},
 	{"aircraft_divisor", V_INT, offsetof(salary_t, aircraftDivisor), MEMBER_SIZEOF(salary_t, aircraftDivisor)},
 	{"base_upkeep", V_INT, offsetof(salary_t, baseUpkeep), MEMBER_SIZEOF(salary_t, baseUpkeep)},
-	{"admin_initial", V_INT, offsetof(salary_t, adminInitial), MEMBER_SIZEOF(salary_t, adminInitial)},
-	{"admin_soldier", V_INT, offsetof(salary_t, admin[EMPL_SOLDIER]), MEMBER_SIZEOF(salary_t, admin[EMPL_SOLDIER])},
-	{"admin_worker", V_INT, offsetof(salary_t, admin[EMPL_WORKER]), MEMBER_SIZEOF(salary_t, admin[EMPL_WORKER])},
-	{"admin_scientist", V_INT, offsetof(salary_t, admin[EMPL_SCIENTIST]), MEMBER_SIZEOF(salary_t, admin[EMPL_SCIENTIST])},
-	{"admin_pilot", V_INT, offsetof(salary_t, admin[EMPL_PILOT]), MEMBER_SIZEOF(salary_t, admin[EMPL_PILOT])},
-	{"admin_robot", V_INT, offsetof(salary_t, admin[EMPL_ROBOT]), MEMBER_SIZEOF(salary_t, admin[EMPL_ROBOT])},
 	{"debt_interest", V_FLOAT, offsetof(salary_t, debtInterest), MEMBER_SIZEOF(salary_t, debtInterest)},
 	{nullptr, V_NULL, 0, 0}
 };
@@ -434,12 +428,10 @@ static void CP_ParseCampaign (const char* name, const char** text)
 	for (i = 0; i < MAX_EMPL; i++) {
 		s->base[i] = -1;
 		s->rankBonus[i] = -1;
-		s->admin[i] = -1;
 	}
 	s->aircraftFactor = -1;
 	s->aircraftDivisor = -1;
 	s->baseUpkeep = -1;
-	s->adminInitial = -1;
 	s->debtInterest = -1;
 
 	do {
@@ -474,13 +466,13 @@ static void CP_ParseCampaign (const char* name, const char** text)
 
 	/* checking for undefined values */
 	for (i = 0; i < MAX_EMPL; i++) {
-		if (s->base[i] == -1 || s->rankBonus[i] == -1 || s->admin[i] == -1) {
+		if (s->base[i] == -1 || s->rankBonus[i] == -1) {
 			drop = true;
 			break;
 		}
 	}
 	if (drop || s->aircraftFactor == -1 || s->aircraftDivisor == -1 || s->baseUpkeep == -1
-	 || s->adminInitial == -1 || s->debtInterest == -1) {
+	 || s->debtInterest == -1) {
 		cgi->Com_Printf("CP_ParseCampaign: check salary definition. Campaign def \"%s\" ignored\n", name);
 		ccs.numCampaigns--;
 		return;

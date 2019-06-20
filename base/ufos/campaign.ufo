@@ -53,12 +53,6 @@
 //		aircraft_factor - part of the equation used to calculate the monthly maintenance costs for aircraft.
 //		aircraft_divisor - part of the equation used to calculate the monthly maintenance costs for aircraft
 //		base_upkeep - monthly maintenance cost per each individual base beyond the actual buildings of the base.
-//		admin_initial - monthly fee to allow for the administration of the employees of Phalanx.
-//		admin_soldier - monthly fee per soldier in Phalanx.
-//		admin_worker - monthly fee per worker in Phalanx.
-//		admin_scientist - monthly fee per scientist in Phalanx.
-//		admin_pilot - monthly fee per pilot in Phalanx.
-//		admin_robot - monthly fee per robot in Phalanx.
 //		debt_interest - the interest rate for all debts that Phalanx has acquired.
 //	---------------------------------------------------------------------
 //	aircraft - initial aircraft for a given campaign.
@@ -99,25 +93,19 @@ campaign veryhard
 	basecost	100000
 
 	salary {
-		soldier_base 2500
+		soldier_base 2575
 		soldier_rankbonus 500
-		worker_base 500
+		worker_base 575
 		worker_rankbonus 0
-		scientist_base 1000
+		scientist_base 1075
 		scientist_rankbonus 0
-		pilot_base 1500
+		pilot_base 1575
 		pilot_rankbonus 0
-		robot_base 7500
+		robot_base 7650
 		robot_rankbonus 0
 		aircraft_factor 1
 		aircraft_divisor 25
 		base_upkeep 20000
-		admin_initial 1000
-		admin_soldier 75
-		admin_worker 75
-		admin_scientist 75
-		admin_pilot 75
-		admin_robot 150
 		debt_interest 0.01
 	}
 
@@ -158,25 +146,19 @@ campaign hard
 	basecost	100000
 
 	salary {
-		soldier_base 2000
+		soldier_base 2075
 		soldier_rankbonus 250
-		worker_base 500
+		worker_base 575
 		worker_rankbonus 0
-		scientist_base 1000
+		scientist_base 1075
 		scientist_rankbonus 0
-		pilot_base 1500
+		pilot_base 1575
 		pilot_rankbonus 0
-		robot_base 7500
+		robot_base 7650
 		robot_rankbonus 0
 		aircraft_factor 1
 		aircraft_divisor 25
 		base_upkeep 20000
-		admin_initial 1000
-		admin_soldier 75
-		admin_worker 75
-		admin_scientist 75
-		admin_pilot 75
-		admin_robot 150
 		debt_interest 0.0075
 	}
 
@@ -218,25 +200,19 @@ campaign main
 	basecost	100000
 
 	salary {
-		soldier_base 1500
+		soldier_base 1575
 		soldier_rankbonus 150
-		worker_base 500
+		worker_base 575
 		worker_rankbonus 0
-		scientist_base 1000
+		scientist_base 1075
 		scientist_rankbonus 0
-		pilot_base 1500
+		pilot_base 1575
 		pilot_rankbonus 0
-		robot_base 7500
+		robot_base 7650
 		robot_rankbonus 0
 		aircraft_factor 1
 		aircraft_divisor 25
 		base_upkeep 20000
-		admin_initial 1000
-		admin_soldier 75
-		admin_worker 75
-		admin_scientist 75
-		admin_pilot 75
-		admin_robot 150
 		debt_interest 0.005
 	}
 
@@ -276,25 +252,19 @@ campaign easy
 	basecost	100000
 
 	salary {
-		soldier_base 1500
+		soldier_base 1575
 		soldier_rankbonus 100
-		worker_base 500
+		worker_base 575
 		worker_rankbonus 0
-		scientist_base 1000
+		scientist_base 1075
 		scientist_rankbonus 0
-		pilot_base 1500
+		pilot_base 1575
 		pilot_rankbonus 0
-		robot_base 7500
+		robot_base 7650
 		robot_rankbonus 0
 		aircraft_factor 1
 		aircraft_divisor 25
 		base_upkeep 20000
-		admin_initial 1000
-		admin_soldier 75
-		admin_worker 75
-		admin_scientist 75
-		admin_pilot 75
-		admin_robot 150
 		debt_interest 0.005
 	}
 
@@ -334,25 +304,19 @@ campaign veryeasy
 	basecost	100000
 
 	salary {
-		soldier_base 1500
+		soldier_base 1575
 		soldier_rankbonus 100
-		worker_base 500
+		worker_base 575
 		worker_rankbonus 0
-		scientist_base 1000
+		scientist_base 1075
 		scientist_rankbonus 0
-		pilot_base 1500
+		pilot_base 1575
 		pilot_rankbonus 0
-		robot_base 7500
+		robot_base 7650
 		robot_rankbonus 0
 		aircraft_factor 1
 		aircraft_divisor 25
 		base_upkeep 20000
-		admin_initial 1000
-		admin_soldier 75
-		admin_worker 75
-		admin_scientist 75
-		admin_pilot 75
-		admin_robot 150
 		debt_interest 0.005
 	}
 

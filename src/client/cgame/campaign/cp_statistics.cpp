@@ -115,13 +115,6 @@ static void STAT_GetExpenses_f (void)
 		);
 	}
 
-	cgi->UI_ExecuteConfunc("%s %s \"%s\" %d",
-		callback,
-		"administrative",
-		_("Administrative costs:"),
-		CP_GetSalaryAdministrative(salary)
-	);
-
 	if (ccs.credits < 0) {
 		const float interest = ccs.credits * campaign->salaries.debtInterest;
 		cgi->UI_ExecuteConfunc("%s %s \"%s\" %d",
