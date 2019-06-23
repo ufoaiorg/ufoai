@@ -56,13 +56,6 @@ do
 		},
 
 		{
-			name = "nationslist",
-			class = "panel",
-			pos = {465, 75},
-			size = {545, 235},
-		},
-
-		{
 			name = "nationschart",
 			class = "panel",
 			pos = {465, 320},
@@ -95,8 +88,8 @@ do
 			build_budgetreport(sender:root():child("budgetreport"))
 			ufo.cmd("ui_expenses_clear; stats_getexpenses ui_expenses_fill; ui_expenses_summarize;")
 
-			build_nationstats(sender:root():child("nationslist"))
-			ufo.cmd("ui_nations_clear; nation_getstats ui_nations_fill;")
+			build_nationstats(sender)
+			ufo.cmd("nation_getstats ui_nations_fill;")
 
 			build_nationcharts(sender:root():child("nationschart"))
 			ufo.cmd("nation_drawcharts 492 200;");
