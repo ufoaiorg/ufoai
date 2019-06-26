@@ -819,6 +819,25 @@ uiNode_t* UI_RemoveNode (uiNode_t* const node, uiNode_t* child)
 	return child;
 }
 
+/**
+ * @brief Moves a node in the tree
+ * @param[in] parent Node where the moved node is inserted in
+ * @param[in] prevNode Previous node to move this one after
+ * @param[in] node Node to move
+ */
+void UI_MoveNode (uiNode_t* const parent, uiNode_t* prevNode, uiNode_t* node)
+{
+	/* parent and newNode should be valid, or else insertion doesn't make sense */
+	assert(parent);
+	assert(node);
+
+	if (!UI_RemoveNode(parent, node))
+		return;
+	UI_InsertNode(parent, prevNode, node);
+
+	UI_Invalidate(parent);
+}
+
 void UI_UpdateRoot (uiNode_t* node, uiNode_t* newRoot)
 {
 	node->root = newRoot;

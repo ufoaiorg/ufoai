@@ -30,6 +30,76 @@ if (ufox.datatable == nil) then
 require("ufox.lua")
 
 ufox.datatable = {
+	sortfunction = {
+		ascending = function (a, b)
+			if (tonumber(a[2]) ~= nil and tonumber(b[2]) ~= nil) then
+				return tonumber(a[2]) < tonumber(b[2])
+			else
+				return a[2] < b[2]
+			end
+		end,
+		descending = function (a, b)
+			if (tonumber(a[2]) ~= nil and tonumber(b[2]) ~= nil) then
+				return tonumber(b[2]) < tonumber(a[2])
+			else
+				return b[2] < a[2]
+			end
+		end,
+	},
+	sort = function (sender, field, direction)
+		local currentSortField = sender:child("sortField")
+		local currentSortDirection = sender:child("sortDirection")
+
+		-- Figure out the parameters
+		if (field == nil) then
+			return
+		end
+
+		-- toggle direction unless specified, default to ascending on new fields
+		if (direction == nil) then
+			if (currentSortField:text() == field:name()) then
+				if (currentSortDirection:text() == "ascending") then
+					direction = "descending"
+				else
+					direction = "ascending"
+				end
+			else
+				direction = "ascending"
+			end
+		end
+
+		local dataSpace = sender:child("data")
+		-- copy data to a temp table
+		local sortTable = {}
+		local row = dataSpace:first()
+		while (row ~= nil) do
+			local cell = row:child(field:name())
+			local value
+			if (cell == nil) then
+				value = ""
+			elseif (cell:child("value") ~= nil) then
+				value = cell:child("value"):text()
+			else
+				value = cell:text()
+			end
+			table.insert(sortTable, {row:name(), value})
+			row = row:next()
+		end
+		-- sort
+		if (direction == "descending") then
+			table.sort(sortTable, ufox.datatable.sortfunction.descending)
+		else
+			table.sort(sortTable, ufox.datatable.sortfunction.ascending)
+		end
+		-- move the nodes around
+		local previous = nil
+		for idx, record in ipairs(sortTable) do
+			dataSpace:move_node(dataSpace:child(record[1]), previous)
+			previous = dataSpace:child(record[1])
+		end
+		currentSortField:set_text(field:name())
+		currentSortDirection:set_text(direction)
+	end,
 	--[[
 	-- @brief Add header fields to the table
 	-- @param sender Reference to the dataTable node
@@ -60,6 +130,10 @@ ufox.datatable = {
 			class = "string",
 			height = 20,
 			contentalign = ufo.ALIGN_CC,
+
+			on_click = function (sender)
+				sender:parent():parent():sort(sender)
+			end,
 		}
 		for i, field in pairs(fields) do
 			-- fill missing data
@@ -203,6 +277,20 @@ ufox.datatable = {
 			pos = {0, 0},
 			size = {rootNode:width(), rootNode:height()},
 			backgroundcolor = {0.5, 0.5, 0.5, 0.2},
+
+			{
+				name = "sortField",
+				class = "string",
+				text = "",
+				invisible = true,
+			},
+
+			{
+				name = "sortDirection",
+				class = "string",
+				text = "",
+				invisible = true,
+			}
 		}
 		for key, value in pairs(tableDefaults) do
 			if (tableData[key] == nil) then
@@ -273,6 +361,7 @@ ufox.datatable = {
 			clear = ufox.datatable.clear,
 			clear_data = ufox.datatable.clear_data,
 			add_dataRow = ufox.datatable.add_dataRow,
+			sort = ufox.datatable.sort,
 		}, rootnode, dataTable)
 
 		ufox.build_properties({

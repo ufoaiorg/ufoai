@@ -43,12 +43,15 @@ function build_nationstats (rootNode)
 	})
 
 	nationStat:add_headerFields({
-		{ name = "flag",        width =  20, },
+		{ name = "flag",        width =  20, ghost = true, },
 		{ name = "nation_name", width = 270, text = "_Nation", },
 		{ name = "funding",     width = 100, text = "_Funding",   contentalign = ufo.ALIGN_CR, },
 		{ name = "happiness",   width = 135, text = "_Happiness", contentalign = ufo.ALIGN_CR, },
 	})
 
+	if (rootNode:child("ui_nations_fill") ~= nil) then
+		rootNode:child("ui_nations_fill"):delete_node()
+	end
 	local nations_add = ufox.build({
 		name = "ui_nations_fill",
 		class = "confunc",
@@ -62,8 +65,12 @@ function build_nationstats (rootNode)
 			local row = sender:parent():child("nationslist"):add_dataRow({name = nationID}, {
 				{ name = "flag",        source = "nations/" .. nationID, class = "image", keepratio = true, ghost = true, },
 				{ name = "nation_name", text = nationName, },
-				{ name = "funding",     text = nationFunding,            contentalign = ufo.ALIGN_CR, },
-				{ name = "happiness",   text = nationHappinessString,    contentalign = ufo.ALIGN_CR, },
+				{ name = "funding",     text = string.format("_%d c", nationFunding), contentalign = ufo.ALIGN_CR,
+					{ name = "value", class = "string", text = nationFunding, invisible = true, },
+				},
+				{ name = "happiness",   text = nationHappinessString, contentalign = ufo.ALIGN_CR,
+					{ name = "value", class = "string", text = nationHappiness, invisible = true, },
+				},
 			})
 		end,
 	}, rootNode);

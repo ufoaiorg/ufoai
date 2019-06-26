@@ -560,6 +560,7 @@ struct uiNode_t {
 
 	void append_node (uiNode_t* node) { UI_AppendNode($self, node); };
 	void insert_node (uiNode_t* node, uiNode_t* prev) { UI_InsertNode($self, prev, node); };
+	void move_node (uiNode_t* node, uiNode_t* prev) { UI_MoveNode($self, prev, node); };
 	void delete_node () { UI_DeleteNode ($self); };
 	void remove_children () { UI_DeleteAllChild ($self); };
 
