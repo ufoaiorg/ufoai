@@ -91,6 +91,8 @@ function ufox.build_maintabset (rootnode, properties, ...)
 			tabs:select(sender:name())
 		end
 	end
+
+	return tabs
 end
 
 -- ufox.build_maintabset Header Guard

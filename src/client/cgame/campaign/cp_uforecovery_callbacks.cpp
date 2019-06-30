@@ -37,128 +37,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define HAPPINESS_UFO_SALE_LOSS				0.005
 
 /**
- * @brief Entries on Sell UFO dialog
- */
-typedef struct ufoRecoveryNation_s {
-	const nation_t* nation;
-	int price;										/**< price proposed by nation. */
-} ufoRecoveryNation_t;
-
-/**
- * @brief Pointer to compare function
- * @note This function is used by sorting algorithm.
- */
-typedef int (*COMP_FUNCTION)(ufoRecoveryNation_t* a, ufoRecoveryNation_t* b);
-
-/**
- * @brief Constants for Sell UFO menu order
- */
-typedef enum {
-	ORDER_NATION,
-	ORDER_PRICE,
-	ORDER_HAPPINESS,
-
-	MAX_ORDER
-} ufoRecoveryNationOrder_t;
-
-/** @sa ufoRecoveries_t */
-typedef struct ufoRecovery_s {
-	const aircraft_t* ufoTemplate;					/**< the ufo type of the current ufo recovery */
-	const nation_t* nation;							/**< selected nation to sell to for current ufo recovery */
-	bool recoveryDone;							/**< recoveryDone? Then the buttons are disabled */
-	float condition;								/**< How much the UFO is damaged - used for disassembies */
-	ufoRecoveryNation_t ufoNations[MAX_NATIONS];	/**< Sorted array of nations. */
-	ufoRecoveryNationOrder_t sortedColumn;			/**< Column sell sorted by */
-	bool sortDescending;						/**< ascending (false) / descending (true) */
-} ufoRecovery_t;
-
-static ufoRecovery_t ufoRecovery;
-
-/**
- * @brief Updates UFO recovery process.
- */
-static void UR_DialogRecoveryDone (void)
-{
-	ufoRecovery.recoveryDone = true;
-}
-
-/**
- * @brief Function to trigger UFO Recovered event.
- * @note This function prepares related cvars for the recovery dialog.
- * @note Command to call this: cp_uforecovery_init.
- */
-static void UR_DialogInit_f (void)
-{
-	char ufoID[MAX_VAR];
-	const aircraft_t* ufoCraft;
-	float cond = 1.0f;
-
-	if (cgi->Cmd_Argc() < 2) {
-		cgi->Com_Printf("Usage: %s <ufoID> [UFO-Condition]\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	Q_strncpyz(ufoID, cgi->Cmd_Argv(1), sizeof(ufoID));
-
-	if (cgi->Cmd_Argc() >= 3)
-		cond = atof(cgi->Cmd_Argv(2));
-
-	ufoCraft = AIR_GetAircraft(ufoID);
-
-	/* Fill ufoRecovery structure */
-	OBJZERO(ufoRecovery);
-	ufoRecovery.ufoTemplate = ufoCraft;
-	ufoRecovery.condition = cond;
-	ufoRecovery.sortedColumn = ORDER_NATION;
-
-	if (ufoCraft) {
-		if (cond < 1.0)
-			cgi->Cvar_Set("mn_uforecovery_actualufo", _("\nSecured crashed %s (%.0f%%)\n"), UFO_GetName(ufoCraft), cond * 100);
-		else
-			cgi->Cvar_Set("mn_uforecovery_actualufo", _("\nSecured landed %s\n"), UFO_GetName(ufoCraft));
-
-		cgi->UI_PushWindow("uforecovery");
-	}
-}
-
-/**
  * @brief Function to initialize list of storage locations for recovered UFO.
  * @note Command to call this: cp_uforecovery_store_init.
  * @sa UR_ConditionsForStoring
  */
 static void UR_DialogInitStore_f (void)
 {
-	int count = 0;
-	linkedList_t* recoveryYardName = nullptr;
-	linkedList_t* recoveryYardCapacity = nullptr;
-	static char cap[MAX_VAR];
-
-	/* Do nothing if recovery process is finished. */
-	if (ufoRecovery.recoveryDone)
-		return;
-
 	/* Check how many bases can store this UFO. */
 	INS_Foreach(installation) {
 		const capacities_t* capacity = &installation->ufoCapacity;
 		if (capacity->max > 0 && capacity->max > capacity->cur) {
-			Com_sprintf(cap, lengthof(cap), "%i/%i", (capacity->max - capacity->cur), capacity->max);
-			cgi->LIST_AddString(&recoveryYardName, installation->name);
-			cgi->LIST_AddString(&recoveryYardCapacity, cap);
-			count++;
+			cgi->UI_ExecuteConfunc("ui_uforecovery_ufoyards %d \"%s\" %d %d",
+				installation->idx,
+				installation->name,
+				std::max(capacity->max - capacity->cur, 0),
+				capacity->max
+			);
 		}
 	}
-
-	if (count == 0) {
-		/* No UFO base with proper conditions, show a hint and disable list. */
-		cgi->LIST_AddString(&recoveryYardName, _("No free UFO yard available."));
-		cgi->UI_ExecuteConfunc("uforecovery_tabselect sell");
-		cgi->UI_ExecuteConfunc("btbasesel disable");
-	} else {
-		cgi->UI_ExecuteConfunc("cp_basesel_select 0");
-		cgi->UI_ExecuteConfunc("btbasesel enable");
-	}
-	cgi->UI_RegisterLinkedListText(TEXT_UFORECOVERY_UFOYARDS, recoveryYardName);
-	cgi->UI_RegisterLinkedListText(TEXT_UFORECOVERY_CAPACITIES, recoveryYardCapacity);
 }
 
 /**
@@ -167,161 +63,42 @@ static void UR_DialogInitStore_f (void)
  */
 static void UR_DialogStartStore_f (void)
 {
-	installation_t* installation = nullptr;
-	int idx;
-	int count = 0;
-	date_t date;
 
-	if (cgi->Cmd_Argc() < 2) {
-		cgi->Com_Printf("Usage: %s <installationIDX>\n", cgi->Cmd_Argv(0));
+	if (cgi->Cmd_Argc() < 4) {
+		cgi->Com_Printf("Usage: %s <ufoType> <damage> <installationIDX>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	idx = atoi(cgi->Cmd_Argv(1));
-
-	INS_Foreach(i) {
-		if (i->ufoCapacity.max <= 0 || i->ufoCapacity.max <= i->ufoCapacity.cur)
-			continue;
-
-		if (count == idx) {
-			installation = i;
-			break;
-		}
-		count++;
+	const aircraft_t* ufo = AIR_GetAircraftSilent(cgi->Cmd_Argv(1));
+	if (ufo == nullptr || !AIR_IsUFO(ufo)) {
+		cgi->Com_Printf("%s Invalid UFO type\n", cgi->Cmd_Argv(0));
+		return;
 	}
 
-	if (!installation)
+	float condition = atof(cgi->Cmd_Argv(2));
+	if (condition < 0.0f || condition > 100.0f) {
+		cgi->Com_Printf("%s Invalid UFO damage value\n", cgi->Cmd_Argv(0));
 		return;
+	}
+
+	installation_t* installation = INS_GetByIDX(atoi(cgi->Cmd_Argv(3)));
+	if (installation == nullptr || installation->ufoCapacity.max <= 0) {
+		cgi->Com_Printf("%s Invalid Installation IDX\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	if (installation->ufoCapacity.max <= installation->ufoCapacity.cur) {
+		cgi->Com_Printf("%s The selected installation has no spare capacity\n", cgi->Cmd_Argv(0));
+		return;
+	}
 
 	Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO is being transported to %s."),
-		UFO_GetName(ufoRecovery.ufoTemplate), installation->name);
+		UFO_GetName(ufo), installation->name);
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer);
-	date = ccs.date;
+	date_t date = ccs.date;
 	date.day += (int) RECOVERY_DELAY;
 
-	US_StoreUFO(ufoRecovery.ufoTemplate, installation, date, ufoRecovery.condition);
-	UR_DialogRecoveryDone();
-}
-
-/**
- * @brief Build the Sell UFO dialog's nationlist
- */
-static void UR_DialogFillNations (void)
-{
-	linkedList_t* nationList = nullptr;
-
-	for (int i = 0; i < ccs.numNations; i++) {
-		const nation_t* nation = ufoRecovery.ufoNations[i].nation;
-		if (!nation)
-			continue;
-		char row[512];
-		Com_sprintf(row, lengthof(row), "%s\t\t\t%i\t\t%s", _(nation->name),
-			ufoRecovery.ufoNations[i].price, NAT_GetCurrentHappinessString(nation));
-		cgi->LIST_AddString(&nationList, row);
-	}
-
-	cgi->UI_RegisterLinkedListText(TEXT_UFORECOVERY_NATIONS, nationList);
-}
-
-/**
- * @brief Compare nations by nation name.
- * @param[in] a First item to compare
- * @param[in] b Second item to compare
- * @sa UR_SortNations
- */
-static int UR_CompareByName (ufoRecoveryNation_t* a, ufoRecoveryNation_t* b)
-{
-	return strcmp(_(a->nation->name), _(b->nation->name));
-}
-
-/**
- * @brief Compare nations by price.
- * @param[in] a First item to compare
- * @param[in] b Second item to compare
- * @return 1 if a > b
- * @return -1 if b > a
- * @return 0 if a == b
- * @sa UR_SortNations
- */
-static int UR_CompareByPrice (ufoRecoveryNation_t* a, ufoRecoveryNation_t* b)
-{
-	if (a->price > b->price)
-		return 1;
-	if (a->price < b->price)
-		return -1;
-	return 0;
-}
-
-/**
- * @brief Compare nations by happiness.
- * @param[in] a First item to compare
- * @param[in] b Second item to compare
- * @return 1 if a > b
- * @return -1 if b > a
- * @return 0 if a == b
- * @sa UR_SortNations
- */
-static int UR_CompareByHappiness (ufoRecoveryNation_t* a, ufoRecoveryNation_t* b)
-{
-	const nationInfo_t* statsA = NAT_GetCurrentMonthInfo(a->nation);
-	const nationInfo_t* statsB = NAT_GetCurrentMonthInfo(b->nation);
-
-	if (statsA->happiness > statsB->happiness)
-		return 1;
-	if (statsA->happiness < statsB->happiness)
-		return -1;
-	return 0;
-}
-
-/**
- * @brief Sort nations
- * @note uses Bubble sort algorithm
- * @param[in] comp Compare function
- * @param[in] order Ascending/Descending order
- * @sa UR_CompareByName
- * @sa UR_CompareByPrice
- * @sa UR_CompareByHappiness
- */
-static void UR_SortNations (COMP_FUNCTION comp, bool order)
-{
-	for (int i = 0; i < ccs.numNations; i++) {
-		bool swapped = false;
-		for (int j = 0; j < ccs.numNations - 1; j++) {
-			int value = (*comp)(&ufoRecovery.ufoNations[j], &ufoRecovery.ufoNations[j + 1]);
-			ufoRecoveryNation_t tmp;
-
-			if (order)
-				value *= -1;
-			if (value > 0) {
-				/* swap nations */
-				tmp = ufoRecovery.ufoNations[j];
-				ufoRecovery.ufoNations[j] = ufoRecovery.ufoNations[j + 1];
-				ufoRecovery.ufoNations[j + 1] = tmp;
-				swapped = true;
-			}
-		}
-		if (!swapped)
-			break;
-	}
-}
-
-/**
- * @brief Returns the sort function for a column
- * @param[in] column Column ordertype.
- */
-static COMP_FUNCTION UR_GetSortFunctionByColumn (ufoRecoveryNationOrder_t column)
-{
-	switch (column) {
-	case ORDER_NATION:
-		return UR_CompareByName;
-	case ORDER_PRICE:
-		return UR_CompareByPrice;
-	case ORDER_HAPPINESS:
-		return UR_CompareByHappiness;
-	default:
-		cgi->Com_Printf("UR_DialogSortByColumn_f: Invalid sort option!\n");
-		return nullptr;
-	}
+	US_StoreUFO(ufo, installation, date, condition);
 }
 
 /**
@@ -330,120 +107,34 @@ static COMP_FUNCTION UR_GetSortFunctionByColumn (ufoRecoveryNationOrder_t column
  */
 static void UR_DialogInitSell_f (void)
 {
-	/* Do nothing if recovery process is finished. */
-	if (ufoRecovery.recoveryDone)
+	if (cgi->Cmd_Argc() < 2) {
+		cgi->Com_Printf("Usage: %s <ufoType>\n", cgi->Cmd_Argv(0));
 		return;
-	/* Do nothing without a ufoTemplate set */
-	if (!ufoRecovery.ufoTemplate)
+	}
+
+	const aircraft_t* ufo = AIR_GetAircraft(cgi->Cmd_Argv(1));
+	if (ufo == nullptr) {
+		cgi->Com_Printf("%s Invalid ufo Type\n", cgi->Cmd_Argv(0));
 		return;
+	}
 
 	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t* nation = NAT_GetNationByIDX(i);
 		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		int price;
 
-		price = (int) (ufoRecovery.ufoTemplate->price * (.85f + frand() * .3f));
+		price = (int) (ufo->price * (.85f + frand() * .3f));
 		/* Nation will pay less if corrupted */
 		price = (int) (price * exp(-stats->xviInfection / 20.0f));
 
-		ufoRecovery.ufoNations[i].nation = nation;
-		ufoRecovery.ufoNations[i].price = price;
+		cgi->UI_ExecuteConfunc("ui_uforecovery_nations %s \"%s\" %d %s %.2f",
+			nation->id,
+			_(nation->name),
+			price,
+			NAT_GetHappinessString(stats->happiness),
+			stats->happiness
+		);
 	}
-	UR_SortNations(UR_GetSortFunctionByColumn(ufoRecovery.sortedColumn), ufoRecovery.sortDescending);
-	UR_DialogFillNations();
-	cgi->UI_ExecuteConfunc("btnatsel disable");
-}
-
-/**
- * @brief Returns the index of the selected nation in SellUFO list
- */
-static int UR_DialogGetCurrentNationIndex (void)
-{
-	for (int i = 0; i < ccs.numNations; i++)
-		if (ufoRecovery.ufoNations[i].nation == ufoRecovery.nation)
-			return i;
-	return -1;
-}
-
-/**
- * @brief Converts script id string to ordercolumn constant
- * @param[in] id Script id for order column
- * @sa ufoRecoveryNationOrder_t
- */
-static ufoRecoveryNationOrder_t UR_GetOrderTypeByID (const char* id)
-{
-	if (!id)
-		return MAX_ORDER;
-	if (Q_streq(id, "nation"))
-		return ORDER_NATION;
-	if (Q_streq(id, "price"))
-		return ORDER_PRICE;
-	if (Q_streq(id, "happiness"))
-		return ORDER_HAPPINESS;
-	return MAX_ORDER;
-}
-
-/**
- * @brief Sort Sell UFO dialog
- */
-static void UR_DialogSortByColumn_f (void)
-{
-	if (cgi->Cmd_Argc() < 2) {
-		cgi->Com_Printf("Usage: %s <nation|price|happiness>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	const ufoRecoveryNationOrder_t column = UR_GetOrderTypeByID(cgi->Cmd_Argv(1));
-	if (ufoRecovery.sortedColumn != column) {
-		ufoRecovery.sortDescending = false;
-		ufoRecovery.sortedColumn = column;
-	} else {
-		ufoRecovery.sortDescending = !ufoRecovery.sortDescending;
-	}
-
-	COMP_FUNCTION comp = UR_GetSortFunctionByColumn(column);
-	if (!comp)
-		return;
-
-	UR_SortNations(comp, ufoRecovery.sortDescending);
-	UR_DialogFillNations();
-
-	/* changed line selection corresponding to current nation */
-	const int index = UR_DialogGetCurrentNationIndex();
-	if (index == -1)
-		return;
-
-	cgi->UI_ExecuteConfunc("cp_nationsel_select %d", index);
-}
-
-/**
- * @brief Finds the nation to which recovered UFO will be sold.
- * @note The nation selection is being done here.
- * @note Callback command: cp_uforecovery_nationlist_click.
- */
-static void UR_DialogSelectSellNation_f (void)
-{
-	int num;
-	const nation_t* nation;
-
-	if (cgi->Cmd_Argc() < 2) {
-		cgi->Com_Printf("Usage: %s <nationid>\n", cgi->Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(cgi->Cmd_Argv(1));
-
-	/* don't do anything if index is higher than visible nations */
-	if (0 > num || num >= ccs.numNations)
-		return;
-
-	nation = ufoRecovery.ufoNations[num].nation;
-
-	ufoRecovery.nation = nation;
-	cgi->Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
-
-	cgi->Cvar_Set("mission_recoverynation", "%s", _(nation->name));
-	cgi->UI_ExecuteConfunc("btnatsel enable");
 }
 
 /**
@@ -452,28 +143,30 @@ static void UR_DialogSelectSellNation_f (void)
  */
 static void UR_DialogStartSell_f (void)
 {
-	if (!ufoRecovery.nation)
+	if (cgi->Cmd_Argc() < 4) {
+		cgi->Com_Printf("Usage: %s <ufoID> <nationId> <price>\n", cgi->Cmd_Argv(0));
 		return;
-
-	const nation_t* nation = ufoRecovery.nation;
-	int i = UR_DialogGetCurrentNationIndex();
-	int price = ufoRecovery.ufoNations[i].price;
-
-	assert(price >= 0);
-#if 0
-	if (ufoRecovery.selectedStorage) {
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Sold previously recovered %s from %s to nation %s, gained %i credits."), UFO_TypeToName(
-			ufoRecovery.selectedStorage->ufoTemplate->ufotype), ufoRecovery.selectedStorage->base->name, _(nation->name), price);
-	} else
-#endif
-	{
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."), UFO_GetName(ufoRecovery.ufoTemplate), _(nation->name), price);
 	}
+
+	const nation_t* nation = NAT_GetNationByID(cgi->Cmd_Argv(2));
+	if (nation == nullptr) {
+		cgi->Com_Printf("%s: Nation not found\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	int price = atoi(cgi->Cmd_Argv(3));
+	if (price <= 0) {
+		cgi->Com_Printf("%s: Invalid price\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."),
+		cgi->Cmd_Argv(1), _(nation->name), price);
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer);
 	CP_UpdateCredits(ccs.credits + price);
 
 	/* update nation happiness */
-	for (i = 0; i < ccs.numNations; i++) {
+	for (int i = 0; i < ccs.numNations; i++) {
 		nation_t* nat = NAT_GetNationByIDX(i);
 		float ufoHappiness;
 
@@ -487,10 +180,11 @@ static void UR_DialogStartSell_f (void)
 
 		NAT_SetHappiness(ccs.curCampaign->minhappiness, nat, nat->stats[0].happiness + ufoHappiness);
 	}
-
-	/* UFO recovery process is done, disable buttons. */
-	UR_DialogRecoveryDone();
 }
+
+
+/* --- UFO storage management --- */
+
 
 /**
  * @brief Returns string representation of the stored UFO's status
@@ -546,7 +240,7 @@ static void US_SelectStoredUfo_f (void)
  * @brief Destroys a stored UFO
  * @note it's called by 'ui_destroystoredufo' command with a parameter of the stored UFO IDX and a confirmation value
  */
-static void US_DestroySoredUFO_f (void)
+static void US_DestroyStoredUFO_f (void)
 {
 	if (cgi->Cmd_Argc() < 2) {
 		cgi->Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx> [0|1]\nWhere the second, optional parameter is the confirmation.\n", cgi->Cmd_Argv(0));
@@ -633,7 +327,7 @@ static void US_TransferUFO_f (void)
 	installation_t* ins = nullptr;
 
 	if (cgi->Cmd_Argc() < 3) {
-		cgi->Com_Printf("Usage: %s <stored-ufo-idx>  <ufoyard-idx>\n", cgi->Cmd_Argv(0));
+		cgi->Com_Printf("Usage: %s <stored-ufo-idx> <ufoyard-idx>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 	ufo = US_GetStoredUFOByIDX(atoi(cgi->Cmd_Argv(1)));
@@ -650,20 +344,18 @@ static void US_TransferUFO_f (void)
 }
 
 static const cmdList_t ufoRecoveryCallbacks[] = {
-	{"cp_uforecovery_init", UR_DialogInit_f, "Function to trigger UFO Recovered event"},
 	{"cp_uforecovery_sell_init", UR_DialogInitSell_f, "Function to initialize sell recovered UFO to desired nation."},
 	{"cp_uforecovery_store_init", UR_DialogInitStore_f, "Function to initialize store recovered UFO in desired base."},
-	{"cp_uforecovery_nationlist_click", UR_DialogSelectSellNation_f, "Callback for recovery sell to nation list."},
 	{"cp_uforecovery_store_start", UR_DialogStartStore_f, "Function to start UFO recovery processing."},
 	{"cp_uforecovery_sell_start", UR_DialogStartSell_f, "Function to start UFO selling processing."},
-	{"cp_uforecovery_sort", UR_DialogSortByColumn_f, "Sorts nations and update ui state."},
 	{"ui_selectstoredufo", US_SelectStoredUfo_f, "Send Stored UFO data to the UI"},
-	{"ui_destroystoredufo", US_DestroySoredUFO_f, "Destroy stored UFO"},
+	{"ui_destroystoredufo", US_DestroyStoredUFO_f, "Destroy stored UFO"},
 	{"ui_fill_ufotransfer", US_FillUFOTransfer_f, "Fills UFO Yard UI with transfer destinations"},
 	{"ui_selecttransferyard", US_FillUFOTransferUFOs_f, "Send Stored UFOs of the destination UFO Yard"},
 	{"ui_transferufo", US_TransferUFO_f, "Transfer stored UFO to another UFO Yard"},
 	{nullptr, nullptr, nullptr}
 };
+
 void UR_InitCallbacks (void)
 {
 	cgi->Cmd_TableAddList(ufoRecoveryCallbacks);

@@ -290,7 +290,14 @@ ufox.datatable = {
 				class = "string",
 				text = "",
 				invisible = true,
-			}
+			},
+
+			{
+				name = "selected",
+				class = "string",
+				text = "",
+				invisible = true,
+			},
 		}
 		for key, value in pairs(tableDefaults) do
 			if (tableData[key] == nil) then

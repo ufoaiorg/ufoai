@@ -381,7 +381,8 @@ void CP_CreateBattleParameters (mission_t* mission, battleParam_t* param, const 
 			ufoCondition = 1.0f;
 		}
 
-		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery_init %s %f", ufo->id, ufoCondition);
+		Com_sprintf(mission->onwin, sizeof(mission->onwin), "ui_push popup_uforecovery \"%s\" \"%s\" \"%s\" \"%s\" %3.2f",
+			UFO_GetName(ufo), ufo->id, ufo->model, (mission->crashed ? _("landed") : _("crashed")), ufoCondition);
 		/* Set random map UFO if this is a random map */
 		if (mission->mapDef->mapTheme[0] == '+' && !cgi->LIST_IsEmpty(mission->mapDef->ufos)) {
 			/* set rm_ufo to the ufo type used */

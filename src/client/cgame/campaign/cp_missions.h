@@ -106,8 +106,8 @@ typedef struct mission_s {
 	bool onGeoscape;			/**< Should the mission be displayed on geoscape */
 	bool crashed;				/**< is UFO crashed ? (only used if mission is spawned from a UFO */
 
-	char onwin[MAX_VAR];			/**< trigger command after you've won a battle, @sa CP_ExecuteMissionTrigger */
-	char onlose[MAX_VAR];			/**< trigger command after you've lost a battle, @sa CP_ExecuteMissionTrigger */
+	char onwin[256];			/**< trigger command after you've won a battle, @sa CP_ExecuteMissionTrigger */
+	char onlose[256];			/**< trigger command after you've lost a battle, @sa CP_ExecuteMissionTrigger */
 	bool posAssigned;			/**< is the position of this mission already set? */
 	missionResults_t missionResults;
 } mission_t;

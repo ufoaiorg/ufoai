@@ -1,0 +1,110 @@
+--!usr/bin/lua
+
+--[[
+-- @file
+-- @brief UFO recovery popup window
+--]]
+
+--[[
+Copyright (C) 2002-2019 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+require("ufox.maintabset.lua")
+
+uforecovery = {}
+require("uforecovery.info.lua")
+require("uforecovery.store.lua")
+require("uforecovery.sell.lua")
+
+do
+	local uforecoveryWindow = ufox.build_window({
+		name = "popup_uforecovery",
+		class = "window",
+		pos = {100, 350},
+		size = {880, 360},
+		backgroundcolor = {0, 0, 0, 0.8},
+		bordercolor = {0.56, 0.81, 0.76, 1},
+		bordersize = 2,
+		dragbutton = true,
+		modal = true,
+		preventtypingescape = true,
+
+		{
+			name = "title",
+			class = "string",
+			text = "_UFO recovery",
+			pos = {0, 0},
+			size = {880, 30},
+			contentalign = ufo.ALIGN_CC,
+			font = "f_small_bold",
+			backgroundcolor = {0.4, 0.515, 0.5, 0.25},
+			color = {0.56, 0.81, 0.76, 1},
+		},
+
+		{
+			name = "message",
+			class = "string",
+			text = "_You've successfully secured an alien vessel. What shall we do with it?",
+			pos = {5, 35},
+			size = {670, 20},
+		},
+
+		{
+			name = "ufoInfo",
+			class = "panel",
+			pos = {10, 60},
+			size = {250, 250},
+		},
+
+		{
+			name = "actions",
+			class = "panel",
+			pos = {265, 60},
+			size = {610, 300},
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+		{ name = "ufoId",     class = "string", text = "", invisible = true,},
+		{ name = "ufoType",   class = "string", text = "", invisible = true,},
+		{ name = "ufoDamage", class = "string", text = "", invisible = true,},
+		{ name = "ufoStatus", class = "string", text = "", invisible = true,},
+
+		on_windowopened = function (sender, ufoId, ufoType, ufoModel, ufoStatus, ufoDamage)
+			sender:child("ufoId"):set_text(ufoId)
+			sender:child("ufoType"):set_text(ufoType)
+			sender:child("ufoDamage"):set_text(ufoDamage)
+			sender:child("ufoStatus"):set_text(ufoStatus)
+
+			uforecovery.info.build(sender:child("ufoInfo"), ufoId, ufoModel, ufoDamage)
+
+			sender:child("actions"):remove_children()
+			local actionSet = ufox.build_maintabset(
+				sender:child("actions"),
+				nil,
+				uforecovery.sell,
+				uforecovery.store
+			)
+			actionSet:select("sell")
+		end,
+	})
+end

@@ -136,7 +136,7 @@ const nationInfo_t* NAT_GetCurrentMonthInfo (const nation_t* const nation)
  * @return Translated happiness string
  * @note happiness is between 0 and 1.0
 */
-static const char* NAT_GetHappinessString (const float happiness)
+const char* NAT_GetHappinessString (const float happiness)
 {
 	if (happiness < 0.015)
 		return _("Giving up");
