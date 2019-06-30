@@ -47,7 +47,7 @@ extern "C" int luaopen_ufo (lua_State *L);
 static int CL_UfoModuleLoader (lua_State* L) {
 	/* this function is called by lua with the module name on the stack */
 	char module[256];
-	char errmsg[256];
+	char errmsg[512];
 	const char* name = lua_tostring (L, -1);
 	byte* buffer;
 
