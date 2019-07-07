@@ -205,10 +205,9 @@ TEST_F(ScriptTest, Items)
 
 TEST_F(ScriptTest, Nations)
 {
-	for (int i = 0; i < ccs.numNations; i++) {
-		const nation_t* nat = NAT_GetNationByIDX(i);
-		ASSERT_TRUE(TEST_CheckImage(va("nations/%s", nat->id))) << "nation " << nat->id << " has no image";
-		ASSERT_TRUE(nullptr != Com_GetTeamDefinitionByID(nat->id));
+	NAT_Foreach(nation) {
+		ASSERT_TRUE(TEST_CheckImage(va("nations/%s", nation->id))) << "nation " << nation->id << " has no image";
+		ASSERT_TRUE(nullptr != Com_GetTeamDefinitionByID(nation->id));
 	}
 }
 

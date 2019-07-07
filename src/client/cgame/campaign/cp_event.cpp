@@ -193,10 +193,8 @@ static int CP_CheckTriggerEvent (const char* expression, const void* userdata)
 		int xvi;
 		if (sscanf(type, "[%i]", &xvi) != 1)
 			return -1;
-		int i;
 		/* check for XVI infection rate */
-		for (i = 0; i < ccs.numNations; i++) {
-			const nation_t* nation = NAT_GetNationByIDX(i);
+		NAT_Foreach(nation) {
 			const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 			if (stats->xviInfection >= xvi)
 				return 1;
@@ -229,8 +227,7 @@ static int CP_CheckTriggerEvent (const char* expression, const void* userdata)
 			return -1;
 
 		int nationBelowLimit = 0;
-		for (int j = 0; j < ccs.numNations; j++) {
-			const nation_t* nation = NAT_GetNationByIDX(j);
+		NAT_Foreach(nation) {
 			const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 			if (stats->happiness < ccs.curCampaign->minhappiness) {
 				nationBelowLimit++;

@@ -108,18 +108,17 @@ void CP_UpdateNationXVIInfection (void)
 	const float normalizingArea = width * height / AREA_FACTOR;
 
 	/* temporary array to store the XVI levels */
-	float xviInfection[MAX_NATIONS];
-	/* Initialize array */
-	OBJZERO(xviInfection);
+	float* xviInfection = Mem_PoolAllocTypeN(float, ccs.numNations, cp_campaignPool);
+	OBJZERO(*xviInfection);
 
 	for (int y = 0; y < height; y++) {
-		int sum[MAX_NATIONS];
 		const byte* previousNationColor;
 		const nation_t* nation;
 		/* current position (in latitude / longitude) */
 		vec2_t currentPos;
 
-		OBJZERO(sum);
+		int* sum = Mem_PoolAllocTypeN(int, ccs.numNations, cp_campaignPool);
+		OBJZERO(*sum);
 
 		Vector2Set(currentPos, 180.0f, 90.0f - y / heightPerDegree);
 		previousNationColor = GEO_GetColor(currentPos, MAPTYPE_NATIONS, nullptr);
@@ -143,13 +142,16 @@ void CP_UpdateNationXVIInfection (void)
 		 * because pixel are smaller as you go closer from the pole */
 		for (int nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
 			xviInfection[nationIdx] += ((float) sum[nationIdx]) / (cos(torad * currentPos[1]) * normalizingArea);
+		cgi->Free(sum);
 	}
 
 	/* copy the new values of XVI infection level into nation array */
-	for (int nationIdx = 0; nationIdx < ccs.numNations; nationIdx++) {
-		nation_t* nation = NAT_GetNationByIDX(nationIdx);
-		nation->stats[0].xviInfection = ceil(xviInfection[nation->idx]);
+	int nationIdx = 0;
+	NAT_Foreach(nation) {
+		nation->stats[0].xviInfection = ceil(xviInfection[nationIdx]);
+		nationIdx++;
 	}
+	cgi->Free(xviInfection);
 
 	xviNationInfectionNeedsUpdate = false;
 }
@@ -164,8 +166,7 @@ int CP_GetAverageXVIRate (void)
 
 	/* check for XVI infection rate */
 	int xviRate = 0;
-	for (int i = 0; i < ccs.numNations; i++) {
-		const nation_t* nation = NAT_GetNationByIDX(i);
+	NAT_Foreach(nation) {
 		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		xviRate += stats->xviInfection;
 	}

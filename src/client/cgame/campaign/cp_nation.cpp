@@ -40,37 +40,42 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define HAPPINESS_ALIEN_MISSION_LOSS		-0.02
 #define HAPPINESS_MAX_MISSION_IMPACT		0.07
 
-nation_t* NAT_GetNationByIDX (const int index)
+/**
+ * @brief Return a pointer to a random nation
+ * @return nation_t pointer
+ */
+nation_t* NAT_GetRandom (void)
 {
-	assert(index >= 0);
-	assert(index < ccs.numNations);
+	const int nationIndex = rand() % ccs.numNations;
+	int i = 0;
+	NAT_Foreach(nation) {
+		if (i == nationIndex)
+			return nation;
+		i++;
+	}
 
-	return &ccs.nations[index];
+	return nullptr;
 }
 
 /**
- * @brief Return a nation-pointer by the nations id (nation_t->id) text.
- * @param[in] nationID nation id as defined in (nation_t->id)
- * @return nation_t pointer or nullptr if nothing found (=error).
+ * @brief Return a nation-pointer by the nations id.
+ * @param[in] nationID nation id as defined in scripts
+ * @return nation_t pointer or nullptr if nothing found
  */
 nation_t* NAT_GetNationByID (const char* nationID)
 {
-	if (!nationID) {
+	if (nationID == nullptr) {
 		cgi->Com_Printf("NAT_GetNationByID: nullptr nationID\n");
 		return nullptr;
 	}
-	for (int i = 0; i < ccs.numNations; i++) {
-		nation_t* nation = NAT_GetNationByIDX(i);
+	NAT_Foreach(nation) {
 		if (Q_streq(nation->id, nationID))
 			return nation;
 	}
 
 	cgi->Com_Printf("NAT_GetNationByID: Could not find nation '%s'\n", nationID);
-
-	/* No matching nation found - ERROR */
 	return nullptr;
 }
-
 
 /**
  * @brief Lower happiness of nations depending on alien activity.
@@ -109,7 +114,7 @@ void NAT_UpdateHappinessForAllNations (const float minhappiness)
 }
 
 /**
- * @brief Get the actual funding of a nation
+ * @brief Get the funding of a nation at a certain month
  * @param[in] nation Pointer to the nation
  * @param[in] month idx of the month -- 0 for current month
  * @return actual funding of a nation
@@ -226,12 +231,7 @@ bool NAT_SaveXML (xmlNode_t* p)
 {
 	xmlNode_t* n = cgi->XML_AddNode(p, SAVE_NATION_NATIONS);
 
-	for (int i = 0; i < ccs.numNations; i++) {
-		nation_t* nation = NAT_GetNationByIDX(i);
-
-		if (!nation)
-			continue;
-
+	NAT_Foreach(nation) {
 		xmlNode_t* s = cgi->XML_AddNode(n, SAVE_NATION_NATION);
 		cgi->XML_AddString(s, SAVE_NATION_ID, nation->id);
 		for (int j = 0; j < MONTHS_PER_YEAR; j++) {
@@ -304,8 +304,7 @@ void CP_HandleNationData (float minHappiness, mission_t* mis, const nation_t* af
 	if (deltaHappiness > HAPPINESS_MAX_MISSION_IMPACT)
 		deltaHappiness = HAPPINESS_MAX_MISSION_IMPACT;
 
-	for (int i = 0; i < ccs.numNations; i++) {
-		nation_t* nation = NAT_GetNationByIDX(i);
+	NAT_Foreach(nation) {
 		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		float happinessFactor;
 
@@ -384,34 +383,26 @@ static const value_t nation_vals[] = {
  */
 void CL_ParseNations (const char* name, const char** text)
 {
-	if (ccs.numNations >= MAX_NATIONS) {
-		cgi->Com_Printf("CL_ParseNations: nation number exceeding maximum number of nations: %i\n", MAX_NATIONS);
-		return;
-	}
-
 	/* search for nations with same name */
-	int i;
-	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t* n = NAT_GetNationByIDX(i);
-		if (Q_streq(name, n->id))
-			break;
-	}
-	if (i < ccs.numNations) {
-		cgi->Com_Printf("CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name);
-		return;
+	NAT_Foreach(n) {
+		if (Q_streq(name, n->id)) {
+			cgi->Com_Printf("CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name);
+			return;
+		}
 	}
 
 	/* initialize the nation */
-	nation_t* nation = &ccs.nations[ccs.numNations];
-	OBJZERO(*nation);
-	nation->idx = ccs.numNations;
-	nation->stats[0].inuse = true;
+	nation_t nation;
+	OBJZERO(nation);
+	nation.idx = ccs.numNations;
+	nation.stats[0].inuse = true;
 
-	if (cgi->Com_ParseBlock(name, text, nation, nation_vals, cp_campaignPool)) {
+	if (cgi->Com_ParseBlock(name, text, &nation, nation_vals, cp_campaignPool)) {
 		ccs.numNations++;
 
 		cgi->Com_DPrintf(DEBUG_CLIENT, "...found nation %s\n", name);
-		nation->id = cgi->PoolStrDup(name, cp_campaignPool, 0);
+		nation.id = cgi->PoolStrDup(name, cp_campaignPool, 0);
+		LIST_Add(&ccs.nations, nation);
 	}
 }
 
@@ -561,11 +552,7 @@ static void NAT_ListStats_f (void)
 	char callback[MAX_VAR];
 	Q_strncpyz(callback, cgi->Cmd_Argv(1), sizeof(callback));
 
-	for (int nationIDX = 0; nationIDX < ccs.numNations; nationIDX++) {
-		const nation_t *nation = NAT_GetNationByIDX(nationIDX);
-		if (nation == nullptr)
-			continue;
-
+	NAT_Foreach(nation) {
 		if (argCount >= 3 && !Q_streq(nation->id, cgi->Cmd_Argv(1)))
 			continue;
 
@@ -618,15 +605,13 @@ static void NAT_DrawCharts_f (void)
 	/* Calculate chart bounds (maximums) */
 	int maxFunding;
 	float maxXVI;
-	for (int i = 0; i < ccs.numNations; i++) {
-		const nation_t* nation = NAT_GetNationByIDX(i);
-		if (nation == nullptr)
-			continue;
+	int nationIdx = 0;
+	NAT_Foreach(nation) {
 		for (int monthIdx = 0; monthIdx < MONTHS_PER_YEAR; monthIdx++) {
 			if (!nation->stats[monthIdx].inuse)
 				break;
 
-			if (i == 0 && monthIdx == 0) {
+			if (nationIdx == 0 && monthIdx == 0) {
 				maxFunding = NAT_GetFunding(nation, monthIdx);
 				maxXVI = nation->stats[monthIdx].xviInfection;
 			} else {
@@ -636,6 +621,7 @@ static void NAT_DrawCharts_f (void)
 					maxXVI = nation->stats[monthIdx].xviInfection;
 			}
 		}
+		nationIdx++;
 	}
 
 	const float dyFunding = (0 != maxFunding) ? (float) height / maxFunding : 1;
@@ -648,10 +634,7 @@ static void NAT_DrawCharts_f (void)
 	}
 	UI_ClearLineChart(chart);
 	/* Fill the points */
-	for (int i = 0; i < ccs.numNations; i++) {
-		const nation_t* nation = NAT_GetNationByIDX(i);
-		if (nation == nullptr)
-			continue;
+	NAT_Foreach(nation) {
 
 		UI_AddLineChartLine(chart, nation->id, true, nation->color, true, 12);
 
@@ -670,6 +653,7 @@ static void NAT_DrawCharts_f (void)
 				UI_AddLineChartCoord(chart, nation->id, (monthIdx * dx), height - dyXvi * xviInfection);
 			}
 		}
+		nationIdx++;
 	}
 }
 
@@ -692,8 +676,7 @@ static void NAT_ListCities_f (void)
  */
 static void NAT_NationList_f (void)
 {
-	for (int i = 0; i < ccs.numNations; i++) {
-		const nation_t* nation = &ccs.nations[i];
+	NAT_Foreach(nation) {
 		cgi->Com_Printf("Nation ID: %s\n", nation->id);
 		cgi->Com_Printf("...max-funding %i c\n", nation->maxFunding);
 		cgi->Com_Printf("...happiness %0.2f\n", nation->stats[0].happiness);
@@ -729,8 +712,7 @@ void NAT_HandleBudget (const campaign_t* campaign)
 	int initialCredits = ccs.credits;
 	const salary_t* salary = &campaign->salaries;
 
-	for (int i = 0; i < ccs.numNations; i++) {
-		const nation_t* nation = NAT_GetNationByIDX(i);
+	NAT_Foreach(nation) {
 		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		const int funding = NAT_GetFunding(nation, 0);
 		int newScientists = 0, newSoldiers = 0, newPilots = 0, newWorkers = 0;
@@ -839,9 +821,7 @@ void NAT_BackupMonthlyData (void)
 	 * Back up nation relationship .
 	 * "inuse" is copied as well so we do not need to set it anywhere.
 	 */
-	for (int nat = 0; nat < ccs.numNations; nat++) {
-		nation_t* nation = NAT_GetNationByIDX(nat);
-
+	NAT_Foreach(nation) {
 		for (int i = MONTHS_PER_YEAR - 1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
 			nation->stats[i] = nation->stats[i - 1];
 		}
@@ -871,6 +851,7 @@ void NAT_InitStartup (void)
 void NAT_Shutdown (void)
 {
 	cgi->LIST_Delete(&ccs.cities);
+	cgi->LIST_Delete(&ccs.nations);
 
 	cgi->Cmd_TableRemoveList(nationCmds);
 }

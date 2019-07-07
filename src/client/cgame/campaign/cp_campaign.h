@@ -292,7 +292,7 @@ typedef struct ccs_s {
 	linkedList_t* alienBases;
 
 	/* == Nations == */
-	nation_t nations[MAX_NATIONS];
+	linkedList_t* nations;
 	int numNations;
 
 	/* == Cities == */

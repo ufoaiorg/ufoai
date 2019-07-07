@@ -1430,7 +1430,6 @@ void GEO_UpdateGeoscapeDock (void)
  */
 void GEO_DrawMarkers (const uiNode_t* node)
 {
-	int i;
 	const char* font;
 	aircraft_t* ufo;
 	base_t* base;
@@ -1515,7 +1514,7 @@ void GEO_DrawMarkers (const uiNode_t* node)
 		maxInterpolationPoints = 0;
 
 	/* draws projectiles */
-	for (i = 0; i < ccs.numProjectiles; i++) {
+	for (int i = 0; i < ccs.numProjectiles; i++) {
 		aircraftProjectile_t* projectile = &ccs.projectiles[i];
 		vec3_t drawPos = {0, 0, 0};
 
@@ -1564,8 +1563,7 @@ void GEO_DrawMarkers (const uiNode_t* node)
 
 	/* Draw nation names */
 	buffer[0] = 0;
-	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t* nation = NAT_GetNationByIDX(i);
+	NAT_Foreach(nation) {
 		int x, y;
 		if (GEO_AllMapToScreen(node, nation->pos, &x, &y, nullptr))
 			cgi->UI_DrawString("f_verysmall", ALIGN_UC, x , y, _(nation->name));
@@ -1750,8 +1748,7 @@ nation_t* GEO_GetNation (const vec2_t pos)
 #ifdef PARANOID
 	cgi->Com_DPrintf(DEBUG_CLIENT, "GEO_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif
-	for (int i = 0; i < ccs.numNations; i++) {
-		nation_t* nation = NAT_GetNationByIDX(i);
+	NAT_Foreach(nation) {
 		/* compare the first three color values with color value at pos */
 		/* 0.02 x 255 = 5.1, which allow a variation of +-5 for each color components */
 		if (VectorEqualEpsilon(nation->color, fcolor, 0.02))

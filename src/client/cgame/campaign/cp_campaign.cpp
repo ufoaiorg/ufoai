@@ -129,8 +129,7 @@ void CP_CheckLostCondition (const campaign_t* campaign)
 		} else {
 			/* check for nation happiness */
 			int nationBelowLimit = 0;
-			for (int j = 0; j < ccs.numNations; j++) {
-				const nation_t* nation = NAT_GetNationByIDX(j);
+			NAT_Foreach(nation) {
 				const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 				if (stats->happiness < campaign->minhappiness) {
 					nationBelowLimit++;

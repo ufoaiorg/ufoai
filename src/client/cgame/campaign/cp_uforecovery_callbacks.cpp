@@ -118,8 +118,7 @@ static void UR_DialogInitSell_f (void)
 		return;
 	}
 
-	for (int i = 0; i < ccs.numNations; i++) {
-		const nation_t* nation = NAT_GetNationByIDX(i);
+	NAT_Foreach(nation) {
 		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		int price;
 
@@ -166,8 +165,7 @@ static void UR_DialogStartSell_f (void)
 	CP_UpdateCredits(ccs.credits + price);
 
 	/* update nation happiness */
-	for (int i = 0; i < ccs.numNations; i++) {
-		nation_t* nat = NAT_GetNationByIDX(i);
+	NAT_Foreach(nat) {
 		float ufoHappiness;
 
 		assert(nat);

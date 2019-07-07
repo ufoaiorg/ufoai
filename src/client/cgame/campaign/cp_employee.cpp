@@ -754,15 +754,6 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 }
 
 /**
- * @brief Hack to get a random nation for the initial
- */
-static inline const nation_t* E_RandomNation (void)
-{
-	const int nationIndex = rand() % ccs.numNations;
-	return NAT_GetNationByIDX(nationIndex);
-}
-
-/**
  * @brief Create initial hireable employees
  */
 void E_InitialEmployees (const campaign_t* campaign)
@@ -771,19 +762,19 @@ void E_InitialEmployees (const campaign_t* campaign)
 
 	/* setup initial employee count */
 	for (i = 0; i < campaign->soldiers; i++)
-		E_CreateEmployee(EMPL_SOLDIER, E_RandomNation(), nullptr);
+		E_CreateEmployee(EMPL_SOLDIER, NAT_GetRandom(), nullptr);
 	for (i = 0; i < campaign->scientists; i++)
-		E_CreateEmployee(EMPL_SCIENTIST, E_RandomNation(), nullptr);
+		E_CreateEmployee(EMPL_SCIENTIST, NAT_GetRandom(), nullptr);
 	for (i = 0; i < campaign->workers; i++)
-		E_CreateEmployee(EMPL_WORKER, E_RandomNation(), nullptr);
+		E_CreateEmployee(EMPL_WORKER, NAT_GetRandom(), nullptr);
 	for (i = 0; i < campaign->pilots; i++)
-		E_CreateEmployee(EMPL_PILOT, E_RandomNation(), nullptr);
+		E_CreateEmployee(EMPL_PILOT, NAT_GetRandom(), nullptr);
 	for (i = 0; i < campaign->ugvs; i++) {
 		/** @todo don't use hardcoded UGV ids */
 		if (frand() > 0.5)
-			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), cgi->Com_GetUGVByID("ugv_ares_w"));
+			E_CreateEmployee(EMPL_ROBOT, NAT_GetRandom(), cgi->Com_GetUGVByID("ugv_ares_w"));
 		else
-			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), cgi->Com_GetUGVByID("ugv_phoenix"));
+			E_CreateEmployee(EMPL_ROBOT, NAT_GetRandom(), cgi->Com_GetUGVByID("ugv_phoenix"));
 	}
 }
 
@@ -812,9 +803,9 @@ static void E_ListHired_f (void)
  */
 static void CL_DebugNewEmployees_f (void)
 {
-	int j;
-	nation_t* nation = &ccs.nations[0];	/**< This is just a debugging function, nation does not matter */
+	nation_t* nation = NAT_GetRandom();
 
+	int j;
 	for (j = 0; j < 5; j++)
 		/* Create a scientist */
 		E_CreateEmployee(EMPL_SCIENTIST, nation, nullptr);

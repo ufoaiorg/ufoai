@@ -73,8 +73,15 @@ typedef struct city_s {
 	vec2_t pos;				/**< City position on geoscape. */
 } city_t;
 
-nation_t* NAT_GetNationByIDX(const int index);
+/**
+ * @brief iterates trough nations
+ * @param[out] var variable to point to the nation structure
+ */
+#define NAT_Foreach(var) LIST_Foreach(ccs.nations, nation_t, var)
+
 nation_t* NAT_GetNationByID(const char* nationID);
+nation_t* NAT_GetRandom(void);
+
 void NAT_UpdateHappinessForAllNations(const float minhappiness);
 void NAT_SetHappiness(const float minhappiness, nation_t* nation, const float happiness);
 int NAT_GetFunding(const nation_t* const nation, int month);
@@ -96,5 +103,3 @@ void NAT_BackupMonthlyData(void);
 
 void NAT_InitStartup(void);
 void NAT_Shutdown(void);
-
-#define MAX_NATIONS 8

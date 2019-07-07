@@ -99,14 +99,12 @@ static bool CP_ChooseNation (const mission_t* mission, linkedList_t** nationList
 	/* Increase this factor to make probability to select non-infected nation higher
 	 * Used to make sure that non-infected nation can still be attacked */
 	const int OFFSET = 1;
-	int i;
 
 	if (mission->ufo)
 		return false;
 
 	/* favour mission with higher XVI level */
-	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t* nation = NAT_GetNationByIDX(i);
+	NAT_Foreach(nation) {
 		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		max += OFFSET + stats->xviInfection;
 	}
@@ -114,8 +112,7 @@ static bool CP_ChooseNation (const mission_t* mission, linkedList_t** nationList
 	randomNumber = (int) (frand() * (float) max);
 
 	/* Select the corresponding nation */
-	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t* nation = NAT_GetNationByIDX(i);
+	NAT_Foreach(nation) {
 		const nationInfo_t* stats = NAT_GetCurrentMonthInfo(nation);
 		randomNumber -= OFFSET + stats->xviInfection;
 		if (randomNumber < 0) {
