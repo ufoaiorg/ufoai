@@ -3125,8 +3125,6 @@ SWIGINTERN void uiImageNode_t_set_source(uiImageNode_t *self,char const *name){ 
 SWIGINTERN void uiImageNode_t_set_texh(uiImageNode_t *self,float v1,float v2){ Vector2Set(UI_EXTRADATA(self, imageExtraData_t).texh, v1, v2); }
 SWIGINTERN void uiImageNode_t_set_texl(uiImageNode_t *self,float v1,float v2){ Vector2Set(UI_EXTRADATA(self, imageExtraData_t).texl, v1, v2); }
 SWIGINTERN bool uiLineChartNode_t_is_showaxes(uiLineChartNode_t *self){ return UI_EXTRADATA(self, lineChartExtraData_t).displayAxes; }
-SWIGINTERN int uiLineChartNode_t_dataid(uiLineChartNode_t *self){ return UI_EXTRADATA(self, lineChartExtraData_t).dataId; }
-SWIGINTERN void uiLineChartNode_t_set_dataid(uiLineChartNode_t *self,int id){ UI_EXTRADATA(self, lineChartExtraData_t).dataId = id; }
 SWIGINTERN void uiLineChartNode_t_set_showaxes(uiLineChartNode_t *self,bool value){ UI_EXTRADATA(self, lineChartExtraData_t).displayAxes = value; }
 SWIGINTERN void uiLineChartNode_t_set_axescolor(uiLineChartNode_t *self,float r,float g,float b,float a){ Vector4Set(UI_EXTRADATA(self, lineChartExtraData_s).axesColor, r, g, b, a); }
 SWIGINTERN bool uiModelNode_t_is_autoscale(uiModelNode_t *self){ return UI_EXTRADATA(self, modelExtraData_t).autoscale; }
@@ -11170,56 +11168,6 @@ fail:
 }
 
 
-static int _wrap_uiLineChart_dataid(lua_State* L) {
-  int SWIG_arg = 0;
-  uiLineChartNode_t *arg1 = (uiLineChartNode_t *) 0 ;
-  int result;
-
-  SWIG_check_num_args("uiLineChartNode_t::dataid",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiLineChartNode_t::dataid",1,"uiLineChartNode_t *");
-
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiLineChartNode_t,0))){
-    SWIG_fail_ptr("uiLineChart_dataid",1,SWIGTYPE_p_uiLineChartNode_t);
-  }
-
-  result = (int)uiLineChartNode_t_dataid(arg1);
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-
-  if(0) SWIG_fail;
-
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_uiLineChart_set_dataid(lua_State* L) {
-  int SWIG_arg = 0;
-  uiLineChartNode_t *arg1 = (uiLineChartNode_t *) 0 ;
-  int arg2 ;
-
-  SWIG_check_num_args("uiLineChartNode_t::set_dataid",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiLineChartNode_t::set_dataid",1,"uiLineChartNode_t *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("uiLineChartNode_t::set_dataid",2,"int");
-
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiLineChartNode_t,0))){
-    SWIG_fail_ptr("uiLineChart_set_dataid",1,SWIGTYPE_p_uiLineChartNode_t);
-  }
-
-  arg2 = (int)lua_tonumber(L, 2);
-  uiLineChartNode_t_set_dataid(arg1,arg2);
-
-  return SWIG_arg;
-
-  if(0) SWIG_fail;
-
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_uiLineChart_set_showaxes(lua_State* L) {
   int SWIG_arg = 0;
   uiLineChartNode_t *arg1 = (uiLineChartNode_t *) 0 ;
@@ -11315,8 +11263,6 @@ static swig_lua_attribute swig_uiLineChart_attributes[] = {
 };
 static swig_lua_method swig_uiLineChart_methods[]= {
     { "is_showaxes", _wrap_uiLineChart_is_showaxes},
-    { "dataid", _wrap_uiLineChart_dataid},
-    { "set_dataid", _wrap_uiLineChart_set_dataid},
     { "set_showaxes", _wrap_uiLineChart_set_showaxes},
     { "set_axescolor", _wrap_uiLineChart_set_axescolor},
     {0,0}
@@ -19283,9 +19229,6 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {SWIG_LUA_CONSTTAB_INT("OPTION_BASELIST", OPTION_BASELIST)},
     {SWIG_LUA_CONSTTAB_INT("OPTION_TEAMDEFS", OPTION_TEAMDEFS)},
     {SWIG_LUA_CONSTTAB_INT("OPTION_PRODUCTION_REQUIREMENTS", OPTION_PRODUCTION_REQUIREMENTS)},
-    {SWIG_LUA_CONSTTAB_INT("LINESTRIP_FUNDING", LINESTRIP_FUNDING)},
-    {SWIG_LUA_CONSTTAB_INT("LINESTRIP_HAPPINESS", LINESTRIP_HAPPINESS)},
-    {SWIG_LUA_CONSTTAB_INT("LINESTRIP_XVI", LINESTRIP_XVI)},
     {SWIG_LUA_CONSTTAB_INT("UI_MAX_DATAID", UI_MAX_DATAID)},
     {SWIG_LUA_CONSTTAB_INT("LONGLINES_WRAP", LONGLINES_WRAP)},
     {SWIG_LUA_CONSTTAB_INT("LONGLINES_CHOP", LONGLINES_CHOP)},

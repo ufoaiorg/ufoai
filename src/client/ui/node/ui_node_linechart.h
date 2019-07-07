@@ -28,26 +28,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiLineChartNode : public uiLocatedNode {
 	void draw(uiNode_t* node) override;
+	void deleteNode(uiNode_t* node) override;
 };
-
-/**
- * @brief an element of the line chart
- */
-typedef struct lineStrip_s {
-	int* pointList;				/**< list of value */
-	int numPoints;				/**< number of values */
-	vec4_t color;				/**< color of the line strip */
-	struct lineStrip_s* next;	/**< next line strip */
-} lineStrip_t;
 
 /**
  * @brief extradata for the linechart node
  * @todo add info about axes min-max...
  */
 typedef struct lineChartExtraData_s {
-	int dataId;					/**< ID of the line strips */
+	linkedList_t* lines;		/**< list of lines to draw */
 	bool displayAxes;			/**< If true the node display axes */
 	vec4_t axesColor;			/**< color of the axes */
 } lineChartExtraData_t;
 
 void UI_RegisterLineChartNode(uiBehaviour_t* behaviour);
+bool UI_ClearLineChart(uiNode_t* node);
+bool UI_AddLineChartLine(uiNode_t* node, const char* id, bool visible, const vec4_t color, bool dots, int numPoints);
+bool UI_AddLineChartCoord(uiNode_t* node, const char* id, int x, int y);
+bool UI_ShowChartLine(uiNode_t* node, const char* id, bool visible);
+bool UI_ShowChartDots(uiNode_t* node, const char* id, bool visible);

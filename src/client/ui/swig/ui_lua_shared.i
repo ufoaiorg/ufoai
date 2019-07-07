@@ -287,10 +287,6 @@ enum uiDataIDs_t {
 	OPTION_TEAMDEFS,
 	OPTION_PRODUCTION_REQUIREMENTS,
 
-	LINESTRIP_FUNDING,
-	LINESTRIP_HAPPINESS,
-	LINESTRIP_XVI,
-
 	UI_MAX_DATAID
 };
 
@@ -900,9 +896,6 @@ struct uiLineChartNode_t: uiNode_t {
 %extend uiLineChartNode_t {
 	bool is_showaxes () { return UI_EXTRADATA($self, lineChartExtraData_t).displayAxes; };
 
-	int dataid () { return UI_EXTRADATA($self, lineChartExtraData_t).dataId; };
-
-	void set_dataid (int id) { UI_EXTRADATA($self, lineChartExtraData_t).dataId = id; };
 	void set_showaxes(bool value) { UI_EXTRADATA($self, lineChartExtraData_t).displayAxes = value; };
 	void set_axescolor(float r, float g, float b, float a) { Vector4Set(UI_EXTRADATA($self, lineChartExtraData_s).axesColor, r, g, b, a); };
 };

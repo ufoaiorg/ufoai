@@ -39,7 +39,6 @@ typedef enum {
 	UI_SHARED_TEXT,
 	UI_SHARED_LINKEDLISTTEXT,
 	UI_SHARED_OPTION,
-	UI_SHARED_LINESTRIP
 } uiSharedType_t;
 
 typedef struct uiSharedData_s {
@@ -51,8 +50,6 @@ typedef struct uiSharedData_s {
 		linkedList_t* linkedListText;
 		/** @brief Holds a linked list for option (label, action, icon...) */
 		uiNode_t* option;
-		/** @brief Holds a line strip, a list of point */
-		struct lineStrip_s	*lineStrip;
 	} data;						/**< The data */
 	int versionId;				/**< Id identify the value, to check changes */
 } uiSharedData_t;
@@ -92,6 +89,3 @@ void UI_UpdateInvisOptions(uiNode_t* option, const linkedList_t* stringList);
 uiNode_t* UI_FindOptionByValue(uiOptionIterator_t* iterator, const char* value);
 int UI_FindOptionPosition(uiOptionIterator_t* iterator, uiNode_t const* option);
 uiNode_t* UI_AddOption(uiNode_t** tree, const char* name, const char* label, const char* value);
-
-/* line strip */
-void UI_RegisterLineStrip(int dataId, struct lineStrip_s* text);

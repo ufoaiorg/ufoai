@@ -92,7 +92,6 @@ do
 			ufo.cmd("nation_getstats ui_nations_fill;")
 
 			build_nationcharts(sender:root():child("nationschart"))
-			ufo.cmd("nation_drawcharts 492 200;");
 
 			build_campaignstats(sender:root():child("campaignstats"))
 			ufo.cmd("stats_update;");

@@ -684,7 +684,6 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t* t)
 		cgi->UI_PopupButton = UI_PopupButton;
 		cgi->UI_GetSpriteByName = UI_GetSpriteByName;
 		cgi->UI_ContainerNodeUpdateEquipment = UI_ContainerNodeUpdateEquipment;
-		cgi->UI_RegisterLineStrip = UI_RegisterLineStrip;
 		cgi->UI_GetNodeByPath = UI_GetNodeByPath;
 		cgi->UI_DisplayNotice = UI_DisplayNotice;
 		cgi->UI_GetActiveWindowName = UI_GetActiveWindowName;

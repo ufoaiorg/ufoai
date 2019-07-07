@@ -46,7 +46,7 @@ nations.funding = {
 				local rootNode = sender:parent():parent()
 				local graph = rootNode:child("nation_graph")
 				if (graph ~= nil) then
-					graph:set_dataid(ufo.LINESTRIP_FUNDING)
+					ufo.cmd(string.format("nation_drawcharts funding %s 492 200;", ufo.nodepath(graph)));
 				end
 			end,
 
@@ -77,7 +77,7 @@ nations.happiness = {
 				local rootNode = sender:parent():parent()
 				local graph = rootNode:child("nation_graph")
 				if (graph ~= nil) then
-					graph:set_dataid(ufo.LINESTRIP_HAPPINESS)
+					ufo.cmd(string.format("nation_drawcharts happiness %s 492 200;", ufo.nodepath(graph)));
 				end
 			end,
 
@@ -108,7 +108,7 @@ nations.xvi = {
 				local rootNode = sender:parent():parent()
 				local graph = rootNode:child("nation_graph")
 				if (graph ~= nil) then
-					graph:set_dataid(ufo.LINESTRIP_XVI)
+					ufo.cmd(string.format("nation_drawcharts xvi %s 492 200;", ufo.nodepath(graph)));
 				end
 			end,
 
@@ -141,7 +141,6 @@ function build_nationcharts (rootNode)
 			class = "linechart",
 			pos = {50, 35},
 			size = {492, 200},
-			dataid = ufo.LINESTRIP_FUNDING,
 			showaxes = true,
 			axescolor = {1, 1, 1, 0.5},
 		},
@@ -184,12 +183,12 @@ function build_nationcharts (rootNode)
 			nations.xvi
 		)
 	else
-	ufox.build_maintabset(
-		nationChart,
-		nil,
-		nations.funding,
-		nations.happiness
-	)
+		ufox.build_maintabset(
+			nationChart,
+			nil,
+			nations.funding,
+			nations.happiness
+		)
 	end
 	nationChart:child("tabset"):select("funding")
 	return nationStat

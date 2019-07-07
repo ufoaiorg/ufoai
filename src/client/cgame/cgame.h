@@ -136,7 +136,6 @@ typedef struct cgame_import_s {
 		const char* clickAction2, const char* clickText2, const char* tooltip2, const char* clickAction3, const char* clickText3, const char* tooltip3);
 	uiSprite_t* (IMPORT* UI_GetSpriteByName) (const char* name);
 	void (IMPORT* UI_ContainerNodeUpdateEquipment) (Inventory* inv, const equipDef_t* ed);
-	void (IMPORT* UI_RegisterLineStrip) (int dataId, struct lineStrip_s* lineStrip);
 	uiNode_t* (IMPORT* UI_GetNodeByPath) (const char* path);
 	void (IMPORT* UI_DisplayNotice) (const char* text, int time, const char* windowName);
 	const char* (IMPORT* UI_GetActiveWindowName) (void);

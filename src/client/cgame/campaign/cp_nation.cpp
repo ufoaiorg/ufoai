@@ -31,7 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_ufo.h"
 #include "cp_time.h"
 #include "save/save_nation.h"
-#include "../../ui/ui_main.h" /* ui_node_linechart.h */
+#include "../../ui/ui_main.h"
+#include "../../ui/ui_nodes.h" /* UI_GetNodeByPath */
 #include "../../ui/node/ui_node_linechart.h" /* lineStrip_t */
 #include "cp_missions.h"
 
@@ -592,29 +593,23 @@ static void NAT_ListStats_f (void)
 	}
 }
 
-/* Funding Chart */
-static screenPoint_t fundingPts[MAX_NATIONS][MONTHS_PER_YEAR];
-static lineStrip_t fundingLineStrip[MAX_NATIONS];
-/* Happiness Chart */
-static screenPoint_t happinessPts[MAX_NATIONS][MONTHS_PER_YEAR];
-static lineStrip_t happinessLineStrip[MAX_NATIONS];
-/* XVI Chart */
-static screenPoint_t xviPts[MAX_NATIONS][MONTHS_PER_YEAR];
-static lineStrip_t xviLineStrip[MAX_NATIONS];
-
 /**
  * @brief Console command for UI to draw charts
  */
 static void NAT_DrawCharts_f (void)
 {
 	const int argCount = cgi->Cmd_Argc();
-	if (argCount < 3) {
-		cgi->Com_Printf("Usage: %s <width> <height>\n", cgi->Cmd_Argv(0));
+	if (argCount < 5) {
+		cgi->Com_Printf("Usage: %s <stat_type> <chartnode> <width> <height>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	const int width = atoi(cgi->Cmd_Argv(1));
-	const int height = atoi(cgi->Cmd_Argv(2));
+	char type[MAX_VAR];
+	Q_strncpyz(type, cgi->Cmd_Argv(1), MAX_VAR);
+	char nodePath[255];
+	Q_strncpyz(nodePath, cgi->Cmd_Argv(2), 255);
+	const int width = atoi(cgi->Cmd_Argv(3));
+	const int height = atoi(cgi->Cmd_Argv(4));
 	if (width <= 0 || height <= 0)
 		return;
 
@@ -646,77 +641,36 @@ static void NAT_DrawCharts_f (void)
 	const float dyFunding = (0 != maxFunding) ? (float) height / maxFunding : 1;
 	const float dyXvi = (0 != maxXVI) ? (float) height / maxXVI : 1;
 
+	uiNode_t* chart = UI_GetNodeByPath(nodePath);
+	if (chart == nullptr) {
+		cgi->Com_Printf("chart node not found\n");
+		return;
+	}
+	UI_ClearLineChart(chart);
 	/* Fill the points */
 	for (int i = 0; i < ccs.numNations; i++) {
 		const nation_t* nation = NAT_GetNationByIDX(i);
 		if (nation == nullptr)
 			continue;
 
-		lineStrip_t* funding = &fundingLineStrip[i];
-		lineStrip_t* happiness = &happinessLineStrip[i];
-		lineStrip_t* xvi = &xviLineStrip[i];
-
-		OBJZERO(*funding);
-		OBJZERO(*happiness);
-		OBJZERO(*xvi);
-
-		Vector4Copy(nation->color, funding->color);
-		Vector4Copy(nation->color, happiness->color);
-		Vector4Copy(nation->color, xvi->color);
-
-		funding->pointList = (int*)fundingPts[i];
-		happiness->pointList = (int*)happinessPts[i];
-		xvi->pointList = (int*)xviPts[i];
-
-		if (i > 0) {
-			fundingLineStrip[i - 1].next = funding;
-			happinessLineStrip[i - 1].next = happiness;
-			xviLineStrip[i - 1].next = xvi;
-		}
+		UI_AddLineChartLine(chart, nation->id, true, nation->color, true, 12);
 
 		int monthIdx;
 		for (monthIdx = 0; monthIdx < MONTHS_PER_YEAR; monthIdx++) {
 			if (!nation->stats[monthIdx].inuse)
 				break;
 
-			const int funding = NAT_GetFunding(nation, monthIdx);
-			fundingPts[i][monthIdx].x = (monthIdx * dx);
-			fundingPts[i][monthIdx].y = height - dyFunding * funding;
-
-			happinessPts[i][monthIdx].x = (monthIdx * dx);
-			happinessPts[i][monthIdx].y = height - (height * nation->stats[monthIdx].happiness);
-
-			const int xviInfection= nation->stats[monthIdx].xviInfection;
-			xviPts[i][monthIdx].x = (monthIdx * dx);
-			xviPts[i][monthIdx].y = height - dyXvi * xviInfection;
-		}
-
-		if (monthIdx == 0)
-			continue;
-
-		funding->numPoints = monthIdx;
-		happiness->numPoints = monthIdx;
-		xvi->numPoints = monthIdx;
-
-		/* There only 1 data point, create a fake one to make the chart visible */
-		if (monthIdx == 1 && !nation->stats[monthIdx].inuse) {
-			fundingPts[i][1].x = fundingPts[i][0].x + (int)(0.5 * width / MONTHS_PER_YEAR);
-			fundingPts[i][1].y = fundingPts[i][0].y;
-			funding->numPoints++;
-
-			happinessPts[i][1].x = happinessPts[i][0].x + (int)(0.5 * width / MONTHS_PER_YEAR);
-			happinessPts[i][1].y = happinessPts[i][0].y;
-			happiness->numPoints++;
-
-			xviPts[i][1].x = xviPts[i][0].x + (int)(0.5 * width / MONTHS_PER_YEAR);
-			xviPts[i][1].y = xviPts[i][0].y;
-			xvi->numPoints++;
+			if (Q_streq("funding", type)) {
+				const int funding = NAT_GetFunding(nation, monthIdx);
+				UI_AddLineChartCoord(chart, nation->id, (monthIdx * dx), height - dyFunding * funding);
+			} else if (Q_streq("happiness", type)) {
+				UI_AddLineChartCoord(chart, nation->id, (monthIdx * dx), height - (height * nation->stats[monthIdx].happiness));
+			} else if (Q_streq("xvi", type)) {
+				const int xviInfection= nation->stats[monthIdx].xviInfection;
+				UI_AddLineChartCoord(chart, nation->id, (monthIdx * dx), height - dyXvi * xviInfection);
+			}
 		}
 	}
-
-	cgi->UI_RegisterLineStrip(LINESTRIP_FUNDING, &fundingLineStrip[0]);
-	cgi->UI_RegisterLineStrip(LINESTRIP_HAPPINESS, &happinessLineStrip[0]);
-	cgi->UI_RegisterLineStrip(LINESTRIP_XVI, &xviLineStrip[0]);
 }
 
 #ifdef DEBUG

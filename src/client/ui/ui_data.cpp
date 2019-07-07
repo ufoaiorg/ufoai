@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_main.h"
 #include "ui_internal.h"
 #include "ui_nodes.h"
-#include "node/ui_node_linechart.h"
 #include "node/ui_node_option.h"
 
 #include "../cl_language.h"
@@ -93,10 +92,6 @@ static const char* const ui_sharedDataIDNames[] = {
 	STRINGIFY(OPTION_BASELIST),
 	STRINGIFY(OPTION_TEAMDEFS),
 	STRINGIFY(OPTION_PRODUCTION_REQUIREMENTS),
-
-	STRINGIFY(LINESTRIP_FUNDING),
-	STRINGIFY(LINESTRIP_HAPPINESS),
-	STRINGIFY(LINESTRIP_XVI)
 };
 CASSERT(lengthof(ui_sharedDataIDNames) == UI_MAX_DATAID);
 
@@ -323,14 +318,6 @@ void UI_RegisterOption (int dataId, uiNode_t* option)
 	UI_ResetData(dataId);
 	ui_global.sharedData[dataId].type = UI_SHARED_OPTION;
 	ui_global.sharedData[dataId].data.option = option;
-	ui_global.sharedData[dataId].versionId++;
-}
-
-void UI_RegisterLineStrip (int dataId, lineStrip_t* lineStrip)
-{
-	UI_ResetData(dataId);
-	ui_global.sharedData[dataId].type = UI_SHARED_LINESTRIP;
-	ui_global.sharedData[dataId].data.lineStrip = lineStrip;
 	ui_global.sharedData[dataId].versionId++;
 }
 
