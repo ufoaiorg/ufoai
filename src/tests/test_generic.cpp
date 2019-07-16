@@ -572,40 +572,73 @@ TEST_F(GenericTest, StringFunctions)
 
 TEST_F(GenericTest, HttpHelperFunctions)
 {
+	char scheme[6];
 	char server[512];
 	char uriPath[512];
 	int port;
 	const char* url;
 
 	url = "http://www.test.domain.com:123/someScript.cgi?parameter";
-	ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_TRUE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_STREQ("http", scheme);
+	ASSERT_STREQ("www.test.domain.com", server);
+	ASSERT_EQ(port, 123);
+	ASSERT_STREQ("/someScript.cgi?parameter", uriPath);
+
+	url = "hTTpS://Www.TeST.domain.coM:123/someScript.cgi?parameter";
+	ASSERT_TRUE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_STREQ("https", scheme);
 	ASSERT_STREQ("www.test.domain.com", server);
 	ASSERT_EQ(port, 123);
 	ASSERT_STREQ("/someScript.cgi?parameter", uriPath);
 
 	url = "http://www.test.domain.com/someScript.cgi?parameter";
-	ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_TRUE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_STREQ("http", scheme);
 	ASSERT_STREQ("www.test.domain.com", server);
 	ASSERT_EQ(80, port);
 	ASSERT_STREQ("/someScript.cgi?parameter", uriPath);
 
 	url = "http://www.test.domain.com";
-	ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_TRUE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_STREQ("http", scheme);
 	ASSERT_STREQ("www.test.domain.com", server);
 	ASSERT_EQ(80, port);
 	ASSERT_STREQ("", uriPath);
 
 	url = "http://www.test.domain.com/";
-	ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_TRUE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_STREQ("http", scheme);
 	ASSERT_STREQ("www.test.domain.com", server);
 	ASSERT_EQ(80, port);
 	ASSERT_STREQ("/", uriPath);
 
 	url = "http://ufoai.org/ufo/masterserver.php?query";
-	ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_TRUE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_STREQ("http", scheme);
 	ASSERT_STREQ("ufoai.org", server);
 	ASSERT_EQ(80, port);
 	ASSERT_STREQ("/ufo/masterserver.php?query", uriPath);
+
+	url = "https://ufoai.org/ufo/masterserver.php?query";
+	ASSERT_TRUE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	ASSERT_STREQ("https", scheme);
+	ASSERT_STREQ("ufoai.org", server);
+	ASSERT_EQ(443, port);
+	ASSERT_STREQ("/ufo/masterserver.php?query", uriPath);
+
+	url = "https://ufoai.org:0/ufo/masterserver.php?query";
+	ASSERT_FALSE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	url = "https://ufoai.org:65536/ufo/masterserver.php?query";
+	ASSERT_FALSE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	url = "https://ufoai.org:80sas/ufo/masterserver.php?query";
+	ASSERT_FALSE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	url = "https://ufoai.org:000000080/ufo/masterserver.php?query";
+	ASSERT_FALSE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	url = "ftp://ufoai.org:0/ufo/masterserver.php?query";
+	ASSERT_FALSE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
+	url = "https:///ufo/masterserver.php?query";
+	ASSERT_FALSE(HTTP_ExtractComponents(url, scheme, sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port));
 }
 
 TEST_F(GenericTest, NetResolv)

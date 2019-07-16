@@ -25,46 +25,94 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Extract the servername, the port and the path part of the given url
- * @param url The url to extract the data from
- * @param server The server target buffer
- * @param serverLength The length of the buffer
- * @param path The path target buffer
- * @param pathLength The length of the buffer
- * @param port The port
+ * @param[in] url The url to extract the data from
+ * @param[out] scheme The URL scheme string @c http or @c https
+ * @param[in] schemeLength Length of the scheme buffer
+ * @param[out] host The server target buffer
+ * @param[in] hostLength The length of the buffer
+ * @param[out] path The path target buffer
+ * @param[in] pathLength The length of the buffer
+ * @param[out] port The port
  * @return @c true if the extracting went well, @c false if an error occurred
  */
-bool HTTP_ExtractComponents (const char* url, char* server, size_t serverLength, char* path, size_t pathLength, int* port)
+bool HTTP_ExtractComponents (const char* url, char* scheme, size_t schemeLength, char* host, size_t hostLength, char* path, size_t pathLength, int* port)
 {
-	const char* proto = "http://";
-	const size_t protoLength = strlen(proto);
-	char buffer[1024];
-
-	if (Q_strncasecmp(proto, url, protoLength))
-		return false;
+	char buffer[4096];
+	int i;
+	char* c;
+	char* buf;
 
 	Q_strncpyz(buffer, url, sizeof(buffer));
-	char* buf = buffer;
 
-	buf += protoLength;
-	int i = 0;
-	char* s;
-	for (s = server; *buf != '\0' && *buf != ':' && *buf != '/';) {
-		if (i >= serverLength - 1)
+	/* Parse the scheme */
+	for (buf = buffer, c = scheme, i = 0; *buf != '\0' && *buf != ':';) {
+		if (i >= schemeLength - 1) {
+			Com_Printf("HTTP_ExtractComponents: Scheme is too long\n");
 			return false;
+		}
 		i++;
-		*s++ = *buf++;
+		*c = tolower(*buf);
+		c++;
+		buf++;
 	}
-	*s = '\0';
+	*c = '\0';
 
+	int defaultPort;
+	if (Q_streq("http", scheme)) {
+		defaultPort = 80;
+	} else if (Q_streq("https", scheme)) {
+		defaultPort = 443;
+	} else {
+		Com_Printf("HTTP_ExtractComponents: Not supported scheme: %s\n", scheme);
+		return false;
+	}
+	if (!Q_strneq("://", buf, 3)) {
+		Com_Printf("HTTP_ExtractComponents: Not supported scheme\n");
+		return false;
+	}
+	buf += 3;
+
+	/* parse the host */
+	for (c = host, i = 0; *buf != '\0' && *buf != ':' && *buf != '/';) {
+		if (i >= hostLength - 1) {
+			Com_Printf("HTTP_ExtractComponents: Host name is too long\n");
+			return false;
+		}
+		i++;
+		*c = tolower(*buf);
+		c++;
+		buf++;
+	}
+	*c = '\0';
+	if (Q_strnull(host)) {
+		Com_Printf("HTTP_ExtractComponents: Host name is missing\n");
+		return false;
+	}
+
+	/* parse port */
 	if (*buf == ':') {
 		buf++;
-		if (sscanf(buf, "%d", port) != 1)
+		char portString[6];
+		for (c = portString, i = 0; *buf != '\0' && *buf != '/';) {
+			if (i >= sizeof(portString) - 1) {
+				Com_Printf("HTTP_ExtractComponents: Port specification is too long\n");
+				return false;
+			}
+			i++;
+			if (*buf < 0x30 || *buf > 0x39) {
+				Com_Printf("HTTP_ExtractComponents: Invalid characters in port specification\n");
+				return false;
+			}
+			*c++ = *buf++;
+		}
+		*c = '\0';
+		*port = atoi(portString);
+		if (*port <= 0 || *port >= 65536) {
+			Com_Printf("HTTP_ExtractComponents: Port out of bounds\n");
 			return false;
-
-		for (buf++; *buf != '\0' && *buf != '/'; buf++) {
 		}
 	} else {
-		*port = 80;
+		*port = defaultPort;
 	}
 
 	Q_strncpyz(path, buf, pathLength);
@@ -135,6 +183,7 @@ size_t HTTP_Recv (void* ptr, size_t size, size_t nmemb, void* stream)
  */
 static void HTTP_ResolvURL (const char* url, char* buf, size_t size)
 {
+	char scheme[6];
 	char server[512];
 	char ipServer[MAX_VAR];
 	int port;
@@ -142,12 +191,12 @@ static void HTTP_ResolvURL (const char* url, char* buf, size_t size)
 
 	buf[0] = '\0';
 
-	if (!HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port))
+	if (!HTTP_ExtractComponents(url, scheme,  sizeof(scheme), server, sizeof(server), uriPath, sizeof(uriPath), &port))
 		Com_Error(ERR_DROP, "invalid url given: %s", url);
 
 	NET_ResolvNode(server, ipServer, sizeof(ipServer));
 	if (ipServer[0] != '\0')
-		Com_sprintf(buf, size, "http://%s:%i%s", ipServer, port, uriPath);
+		Com_sprintf(buf, size, "%s://%s:%i%s", scheme, ipServer, port, uriPath);
 }
 
 /**
@@ -354,5 +403,5 @@ void HTTP_PutFile(const char* formName, const char* fileName, const char* url, c
 size_t HTTP_Recv(void* ptr, size_t size, size_t nmemb, void* stream) {return 0L;}
 size_t HTTP_Header(void* ptr, size_t size, size_t nmemb, void* stream) {return 0L;}
 void HTTP_Cleanup(void) {}
-bool HTTP_ExtractComponents(const char* url, char* server, size_t serverLength, char* path, size_t pathLength, int* port) {return false;}
+bool bool HTTP_ExtractComponents(const char* url, char* scheme, size_t schemeLength, char* host, size_t hostLength, char* path, size_t pathLength, int* port) {return false;}
 #endif

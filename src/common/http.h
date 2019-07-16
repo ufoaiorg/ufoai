@@ -71,4 +71,4 @@ bool HTTP_PutFile(const char* formName, const char* fileName, const char* url, c
 size_t HTTP_Recv(void* ptr, size_t size, size_t nmemb, void* stream);
 size_t HTTP_Header(void* ptr, size_t size, size_t nmemb, void* stream);
 void HTTP_Cleanup(void);
-bool HTTP_ExtractComponents(const char* url, char* server, size_t serverLength, char* path, size_t pathLength, int* port);
+bool HTTP_ExtractComponents(const char* url, char* scheme, size_t schemeLength, char* host, size_t hostLength, char* path, size_t pathLength, int* port);
