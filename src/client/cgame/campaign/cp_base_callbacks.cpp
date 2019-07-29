@@ -269,12 +269,6 @@ static void B_BaseInit_f (void)
 		cgi->UI_ExecuteConfunc("update_basebutton hospital false \"%s\"", _("Treat wounded soldiers and perform implant surgery"));
 	else
 		cgi->UI_ExecuteConfunc("update_basebutton hospital true \"%s\"", _("No Hospital operating at this in base."));
-
-	/*
-	 * Get the number of different employees in the base
-	 * @todo: Get the number of injured soldiers if hospital exists
-	 */
-	cgi->UI_ExecuteConfunc("current_employees %i %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_PILOT), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER));
 }
 
 /**

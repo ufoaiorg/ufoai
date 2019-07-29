@@ -41,6 +41,7 @@ static int employeesInCurrentList;
 
 /**
  * @brief Update GUI with the current number of employee per category
+ * @sa hire.ufo
  */
 static void E_UpdateGUICount_f (void)
 {
@@ -293,6 +294,62 @@ static void E_EmployeeSelect_f (void)
 	E_EmployeeSelect(E_GetEmployeeByMenuIndex(num));
 }
 
+/**
+ * @brief Convert employeeType_t to string id
+ * @param type employeeType_t value
+ * @return Employee type as string id
+ */
+static const char* E_GetEmployeeTypeString (employeeType_t type)
+{
+	switch (type) {
+	case EMPL_SOLDIER:
+		return "soldier";
+	case EMPL_SCIENTIST:
+		return "scientist";
+	case EMPL_WORKER:
+		return "worker";
+	case EMPL_PILOT:
+		return "pilot";
+	case EMPL_ROBOT:
+		return "ugv";
+	default:
+		cgi->Com_Error(ERR_DROP, "Unknown employee type '%i'\n", type);
+	}
+}
+
+/**
+ * @brief Returns the number of employees hired on a base for the UI
+ */
+static void E_GetCounts_f (void)
+{
+	if (cgi->Cmd_Argc() < 3) {
+		cgi->Com_Printf("Usage: %s <callback> <base-IDX>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+
+	char callback[MAX_VAR];
+	Q_strncpyz(callback, cgi->Cmd_Argv(1), sizeof(callback));
+	const int baseIdx = atoi(cgi->Cmd_Argv(2));
+	const base_t* base = B_GetFoundedBaseByIDX(baseIdx);
+	if (base == nullptr) {
+		cgi->Com_Printf("E_GetCounts_f: Invalid base Idx given\n");
+		return;
+	}
+
+	for (int type = EMPL_SOLDIER; type < EMPL_ROBOT; type++) {
+		const int count = E_CountHired(base, (employeeType_t)type);
+		cgi->UI_ExecuteConfunc("%s %s %d %s",
+			callback,
+			E_GetEmployeeTypeString((employeeType_t) type),
+			count,
+			E_GetEmployeeString((employeeType_t) type, count)
+		);
+	}
+}
+
+/**
+ * @brief List of UI command callbacks
+ */
 static const cmdList_t employeeCmds[] = {
 	{"employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI"},
 	{"employee_init", E_EmployeeList_f, "Init function for employee hire menu"},
@@ -300,14 +357,22 @@ static const cmdList_t employeeCmds[] = {
 	{"employee_hire", E_EmployeeHire_f, nullptr},
 	{"employee_select", E_EmployeeSelect_f, nullptr},
 	{"employee_changename", E_ChangeName_f, "Change the name of an employee"},
+
+	{"ui_get_employee_counts", E_GetCounts_f, "Callback return the number of each employee types hired on a base"},
 	{nullptr, nullptr, nullptr}
 };
 
+/**
+ * @brief Register UI callbacks
+ */
 void E_InitCallbacks (void)
 {
 	cgi->Cmd_TableAddList(employeeCmds);
 }
 
+/**
+ * @brief Unregister UI callbacks
+ */
 void E_ShutdownCallbacks (void)
 {
 	cgi->Cmd_TableRemoveList(employeeCmds);

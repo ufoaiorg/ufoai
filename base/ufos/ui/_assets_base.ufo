@@ -206,43 +206,6 @@ do
 	})
 end
 
--- Employee count
-do
-	local EmployeeCount = ufox.build_component({
-		name = "EmployeeCount",
-		class = "panel",
-		size = {122, 48},
-
-		{
-			name = "icon",
-			class = "button",
-			pos = {0, 0},
-			size = {48, 48},
-			ghost = true,
-		},
-
-		{
-			name = "data",
-			class = "string",
-			pos = {36, 0},
-			size = {86, 48},
-			color = {0.56, 0.81, 0.76, 1},
-			ghost = true,
-		},
-
-		{
-			name = "label",
-			class = "string",
-			pos = {30, 27},
-			size = {86, 17},
-			color = {0.56, 0.81, 0.76, 1},
-			font = "f_verysmall",
-			contentalign = ufo.ALIGN_UL,
-			ghost = true,
-		},
-	})
-end
-
 -- Hospital item (per employee)
 do
 	local HospitalItem = ufox.build_component({

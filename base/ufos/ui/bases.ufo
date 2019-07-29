@@ -50,68 +50,6 @@ do
 			size = {715, 670},
 		},
 
-		-- Employee panel
-		-- @TODO: add support for injured soldiers
-		{
-			name = "cur_employees",
-			class = "panel",
-			pos = {5, 710},
-			size = {495, 48},
-			layout = ufo.LAYOUT_LEFT_RIGHT_FLOW,
-
-			--[[
-			 - @brief Clears the Employee bar
-			--]]
-			clear = function (sender)
-				sender:remove_children()
-			end,
-
-			--[[
-			 - @brief Adds a link to the Employee bar
-			 - @param id Unique identifier for the UI
-			 - @param image Relative path to the image to show
-			 - @param title Translated name of the button (shown as tooltip)
-			 - @param command Command to run on click
-			--]]
-			add = function (sender, id, image, title, command)
-				local link = ufox.build({
-					name = id,
-					class = "EmployeeCount",
-					tooltip = title,
-
-					{ name = "label", class = "string", text = title, },
-					{ name = "icon",  class = "button", icon = image, },
-
-					on_click = function (sender)
-						ufo.cmd(command)
-					end,
-				}, sender)
-			end,
-		},
-
-		{
-			name = "current_employees",
-			class = "confunc",
-
-			--[[
-			 - @brief Current employees of a particular base
-			 - @param soldiers Number of soldiers
-			 - @param pilots Number of pilots
-			 - @param scientists Number of scientists
-			 - @param engineers Number of engineers
-			--]]
-			on_click = function (sender, soldiers, pilots, scientists, engineers)
-				local employee_container = sender:parent():child("cur_employees")
-				-- Update only if base screen is active and employee info is shown
-				if (employee_container:first() ~= nil) then
-					employee_container:child("soldiers"):child("data"):set_text(soldiers)
-					employee_container:child("pilots"):child("data"):set_text(pilots)
-					employee_container:child("scientists"):child("data"):set_text(scientists)
-					employee_container:child("engineers"):child("data"):set_text(engineers)
-				end
-			end,
-		},
-
 		-- Transfers, options, UFOpaedia
 		{
 			name = "buttons",
@@ -166,7 +104,7 @@ do
 			layoutmargin = 2,
 
 			generate = function (sender, base_idx)
-				local sections = {"facilities", "aircraft", "hire", "buysell", "research", "production", "containment", "hospital"}
+				local sections = {"facilities", "aircraft", "employees", "buysell", "research", "production", "containment", "hospital"}
 				if (base.section == nil) then
 					base.section = {}
 				end
@@ -205,7 +143,7 @@ do
 			on_click = function (sender, button, state, tooltip)
 				local section = ""
 				-- new-style sections
-				local sections = {"facilities", "aircraft", "hire", "buysell", "research", "production", "containment", "hospital"}
+				local sections = {"facilities", "aircraft", "employees", "buysell", "research", "production", "containment", "hospital"}
 				for i, section in ipairs(sections) do
 					if (button == section) then
 						local node = sender:root():child("sections"):child(section)
@@ -237,12 +175,6 @@ do
 			-- / Map
 			require("base.map.lua")
 			base.buildmap(sender, sender:child("basemap"), baseidx)
-			-- / Employee bar
-			sender:root():child("cur_employees"):clear()
-			sender:root():child("cur_employees"):add("scientists", "icons/head_scientist", "_Scientists", "ui_push employees 1;")
-			sender:root():child("cur_employees"):add("engineers",  "icons/head_worker",    "_Engineers",  "ui_push employees 2;")
-			sender:root():child("cur_employees"):add("soldiers",   "icons/head_soldier",   "_Soldiers",   "ui_push employees 0;")
-			sender:root():child("cur_employees"):add("pilots",     "icons/head_pilot",     "_Pilots",     "ui_push employees 3;")
 			-- / "quicklink" buttons
 			sender:root():child("buttons"):clear()
 			sender:root():child("buttons"):add("options",   "icons/options",  "_Options",  "options")
