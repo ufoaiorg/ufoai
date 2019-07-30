@@ -58,7 +58,6 @@ do
 					content_node:set_layout(ufo.LAYOUT_LEFT_RIGHT_FLOW)
 					local entry = ufox.build({
 						name = "aircraft_" .. aircraft_idx,
-						-- @todo build a progressbar widget eliminate the component
 						class = "panel",
 						size = {48, 48},
 
