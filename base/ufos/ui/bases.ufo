@@ -50,50 +50,6 @@ do
 			size = {715, 670},
 		},
 
-		-- Transfers, options, UFOpaedia
-		{
-			name = "buttons",
-			class = "panel",
-			pos = {556, 710},
-			size = {167, 48},
-			layout = ufo.LAYOUT_LEFT_RIGHT_FLOW,
-
-			--[[
-			 - @brief Clears the "quicklink" bar
-			--]]
-			clear = function (sender)
-				sender:remove_children()
-			end,
-
-			--[[
-			 - @brief Adds a link to the "quicklink" bar
-			 - @param id Unique identifier for the UI
-			 - @param image Relative path to the image to show
-			 - @param title Translated name of the button (shown as tooltip)
-			 - @param window Name of the window left mouse click should open
-			--]]
-			add = function (sender, id, image, title, window)
-				local link = ufox.build({
-					name = id,
-					class = "button",
-					size = {56, 48},
-					icon = image,
-					tooltip = title,
-					background = "icons/circle0",
-
-					on_mouseenter = function (sender)
-						sender:set_background("icons/circle")
-					end,
-					on_mouseleave = function (sender)
-						sender:set_background("icons/circle0")
-					end,
-					on_click = function (sender)
-						ufo.push_window(window, nil, nil)
-					end,
-				}, sender)
-			end,
-		},
-
 		-- (right) main base sections
 		{
 			name = "sections",
@@ -104,7 +60,7 @@ do
 			layoutmargin = 2,
 
 			generate = function (sender, base_idx)
-				local sections = {"facilities", "aircraft", "employees", "buysell", "research", "production", "containment", "hospital"}
+				local sections = {"facilities", "aircraft", "employees", "buysell", "research", "production", "containment", "hospital", "transfer"}
 				if (base.section == nil) then
 					base.section = {}
 				end
@@ -143,7 +99,7 @@ do
 			on_click = function (sender, button, state, tooltip)
 				local section = ""
 				-- new-style sections
-				local sections = {"facilities", "aircraft", "employees", "buysell", "research", "production", "containment", "hospital"}
+				local sections = {"facilities", "aircraft", "employees", "buysell", "research", "production", "containment", "hospital", "transfer"}
 				for i, section in ipairs(sections) do
 					if (button == section) then
 						local node = sender:root():child("sections"):child(section)
@@ -175,11 +131,6 @@ do
 			-- / Map
 			require("base.map.lua")
 			base.buildmap(sender, sender:child("basemap"), baseidx)
-			-- / "quicklink" buttons
-			sender:root():child("buttons"):clear()
-			sender:root():child("buttons"):add("options",   "icons/options",  "_Options",  "options")
-			sender:root():child("buttons"):add("ufopaedia", "icons/info",     "_UFOpedia", "ufopedia")
-			sender:root():child("buttons"):add("transfers", "icons/transfer", "_Transfer", "transfer")
 			-- / sections
 			sender:root():child("sections"):generate(baseidx)
 		end,
