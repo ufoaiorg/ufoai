@@ -509,8 +509,13 @@ static mxml_type_t mxml_ufo_type_cb (xmlNode_t* node)
 	/* You can lookup attributes and/or use the
 	 * element name, hierarchy, etc... */
 	const char* type = mxmlElementGetAttr(node, "type");
-	if (type == nullptr)
+	if (type == nullptr) {
+#ifdef MXML_MAJOR_VERSION
+		type = mxmlGetElement(node);
+#else
 		type = node->value.element.name;
+#endif
+	}
 
 	if (Q_streq(type, "int"))
 		return MXML_INTEGER;
