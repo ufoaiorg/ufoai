@@ -38,7 +38,7 @@ typedef enum {
 	UI_SHARED_NONE = 0,
 	UI_SHARED_TEXT,
 	UI_SHARED_LINKEDLISTTEXT,
-	UI_SHARED_OPTION,
+	UI_SHARED_OPTION
 } uiSharedType_t;
 
 typedef struct uiSharedData_s {
