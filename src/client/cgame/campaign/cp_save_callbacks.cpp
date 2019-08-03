@@ -35,7 +35,7 @@ static cvar_t* cl_lastsave;
 /**
  * @brief Console command to list savegames
  */
-static void SAV_ListSafeGames_f (void)
+static void SAV_ListSaveGames_f (void)
 {
 	if (cgi->Cmd_Argc() < 1) {
 		cgi->Com_Printf("usage: %s\n", cgi->Cmd_Argv(0));
@@ -231,7 +231,7 @@ static void SAV_GameQuickLoad_f (void)
 
 
 static const cmdList_t saveCallbacks[] = {
-	{"game_listsaves", SAV_ListSafeGames_f, "Lists available savegames"},
+	{"game_listsaves", SAV_ListSaveGames_f, "Lists available savegames"},
 	{"game_load", SAV_GameLoad_f, "Loads a given filename"},
 	{"game_save", SAV_GameSave_f, "Saves to a given filename"},
 	{"game_delete", SAV_GameDelete_f, "Deletes a given filename"},
