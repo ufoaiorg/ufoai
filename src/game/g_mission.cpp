@@ -79,7 +79,7 @@ bool G_MissionTouch (Edict* self, Edict* activator)
 		if (!self->item) {
 			linkedList_t* touched = self->touchedList;
 			while (touched) {
-				const Edict* const ent = static_cast<const Edict* const>(touched->data);
+				const Edict* const ent = static_cast<Edict*>(touched->data);
 				if (!self->isSameTeamAs(ent) && !G_IsCivilian(ent) && !G_IsDead(ent)) {
 					return false;
 				}
@@ -128,7 +128,7 @@ void G_MissionReset (Edict* self, Edict* activator)
 		return;
 	linkedList_t* touched = self->touchedList;
 	while (touched) {
-		const Edict* const ent = static_cast<const Edict* const>(touched->data);
+		const Edict* const ent = static_cast<Edict*>(touched->data);
 		if (self->isSameTeamAs(ent) && !(G_IsDead(ent) || ent == activator)) {
 			return;
 		}
@@ -173,7 +173,7 @@ bool G_MissionUse (Edict* self, Edict* activator)
 static bool G_MissionIsTouched (Edict* self) {
 	linkedList_t* touched = self->touchedList;
 	while (touched) {
-		const Edict* const ent = static_cast<const Edict* const>(touched->data);
+		const Edict* const ent = static_cast<Edict*>(touched->data);
 		if (self->isSameTeamAs(ent) && !G_IsDead(ent))
 			return true;
 		touched = touched->next;
