@@ -34,7 +34,7 @@ require("ufox.lua")
  - @param root_node Panel node to build the map into
  - @param base_idx Numeric index of the base to show
 --]]
-base.buildmap = function (sender, root_node, base_idx)
+base.buildmap = function (root_node, base_idx)
 	local map = root_node:child("map")
 	if (map ~= nil) then
 		map:delete_node()
@@ -320,7 +320,11 @@ base.buildmap = function (sender, root_node, base_idx)
 		end,
 	}, root_node)
 
-	local base_building_add = ufox.build({
+	local base_building_add = map:child("base_building_add")
+	if (base_building_add ~= nil) then
+		base_building_add:delete_node()
+	end
+	base_building_add = ufox.build({
 		name = "base_building_add",
 		class = "confunc",
 

@@ -62,7 +62,7 @@ do
 			require("base.buildinginfo.lua")
 			base.build_buildinginfo(sender:parent(), baseIdx:as_string(), sender:child("id"):as_string())
 
-			local build = sender:root():child("basemap"):child("map"):child("build")
+			local build = sender:root():child("content"):child("map"):child("build")
 			if (build == nil) then
 				return
 			end

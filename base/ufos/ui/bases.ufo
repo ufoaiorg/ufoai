@@ -44,10 +44,17 @@ do
 		},
 
 		{
-			name = "basemap",
+			name = "active_section",
+			class = "string",
+			text = "",
+			invisible = true,
+		},
+
+		{
+			name = "content",
 			class = "panel",
 			pos = {9, 35},
-			size = {715, 670},
+			size = {715, 715},
 		},
 
 		-- (right) main base sections
@@ -60,7 +67,18 @@ do
 			layoutmargin = 2,
 
 			generate = function (sender, base_idx)
-				local sections = {"facilities", "aircraft", "employees", "buysell", "research", "production", "containment", "hospital", "transfer"}
+				local sections = {
+					"facilities",
+					"aircraft",
+					"employees",
+					"buysell",
+					"research",
+					"production",
+					"containment",
+					"hospital",
+					"transfer"
+				}
+
 				if (base.section == nil) then
 					base.section = {}
 				end
@@ -68,6 +86,23 @@ do
 					base.section[section_name] = require(string.format("base.section.%s.lua", section_name))
 					base.section[section_name].register(sender, tonumber(base_idx))
 				end
+				-- Activate the first section if none was selected or activate selected
+				local base_idx = tonumber(sender:root():child("base_idx"):as_string())
+				local content_node = sender:root():child("content")
+				local active_section_node = sender:root():child("active_section")
+				if (active_section_node:text() == "") then
+					local first_section = base.section[sections[1]]
+					if (first_section.activate ~= nil) then
+						first_section.activate(content_node, base_idx)
+						active_section_node:set_text(sections[1])
+					end
+				else
+					local active_section = base.section[active_section_node:text()]
+					if (active_section.activate ~= nil) then
+						active_section.activate(content_node, base_idx)
+					end
+				end
+
 				-- Get the parameters needed for this window
 				ufo.cmd(string.format("base_init %d;", tonumber(base_idx)))
 			end,
@@ -128,15 +163,14 @@ do
 			-- / header
 			require("base.header.lua")
 			base.build_header(sender, baseidx)
-			-- / Map
-			require("base.map.lua")
-			base.buildmap(sender, sender:child("basemap"), baseidx)
 			-- / sections
 			sender:root():child("sections"):generate(baseidx)
 		end,
+
 		on_windowactivate = function (sender)
 			sender:build()
 		end,
+
 		on_windowopened = function (sender, base_idx)
 			local sections = sender:root():child("sections")
 			sections:set_width(sender:root():width() - sections:left())

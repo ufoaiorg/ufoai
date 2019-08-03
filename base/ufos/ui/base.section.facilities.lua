@@ -115,6 +115,16 @@ do
 			}, section)
 			ufo.cmd(string.format("ui_list_buildings %d;", tonumber(base_idx)))
 		end,
+
+		activate = function (content_node, base_idx)
+			if (content_node == nil) then
+				return
+			end
+
+			content_node:remove_children()
+			require("base.map.lua")
+			base.buildmap(content_node, base_idx)
+		end,
 	}
 
 	return sectionFacilities
