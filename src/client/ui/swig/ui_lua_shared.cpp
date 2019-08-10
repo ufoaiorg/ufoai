@@ -3127,6 +3127,12 @@ SWIGINTERN void uiImageNode_t_set_texl(uiImageNode_t *self,float v1,float v2){ V
 SWIGINTERN bool uiLineChartNode_t_is_showaxes(uiLineChartNode_t *self){ return UI_EXTRADATA(self, lineChartExtraData_t).displayAxes; }
 SWIGINTERN void uiLineChartNode_t_set_showaxes(uiLineChartNode_t *self,bool value){ UI_EXTRADATA(self, lineChartExtraData_t).displayAxes = value; }
 SWIGINTERN void uiLineChartNode_t_set_axescolor(uiLineChartNode_t *self,float r,float g,float b,float a){ Vector4Set(UI_EXTRADATA(self, lineChartExtraData_s).axesColor, r, g, b, a); }
+SWIGINTERN void uiLineChartNode_t_clear(uiLineChartNode_t *self){ UI_ClearLineChart(self); }
+SWIGINTERN void uiLineChartNode_t_add_line(uiLineChartNode_t *self,char const *id,bool visible,float r,float g,float b,float a,bool dots,int num_points){
+		float color[] = {r, g, b, a};
+		UI_AddLineChartLine(self, id, visible, color, dots, num_points);
+	}
+SWIGINTERN void uiLineChartNode_t_add_point(uiLineChartNode_t *self,char const *id,int x,int y){ UI_AddLineChartCoord(self, id, x, y); }
 SWIGINTERN bool uiModelNode_t_is_autoscale(uiModelNode_t *self){ return UI_EXTRADATA(self, modelExtraData_t).autoscale; }
 SWIGINTERN bool uiModelNode_t_is_mouserotate(uiModelNode_t *self){ return UI_EXTRADATA(self, modelExtraData_t).rotateWithMouse; }
 SWIGINTERN vec3_struct_t *uiModelNode_t_angles(uiModelNode_t *self){ return (vec3_struct_t*)(UI_EXTRADATA(self, modelExtraData_t).angles); }
@@ -11229,6 +11235,108 @@ fail:
 }
 
 
+static int _wrap_uiLineChart_clear(lua_State* L) {
+  int SWIG_arg = 0;
+  uiLineChartNode_t *arg1 = (uiLineChartNode_t *) 0 ;
+
+  SWIG_check_num_args("uiLineChartNode_t::clear",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiLineChartNode_t::clear",1,"uiLineChartNode_t *");
+
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiLineChartNode_t,0))){
+    SWIG_fail_ptr("uiLineChart_clear",1,SWIGTYPE_p_uiLineChartNode_t);
+  }
+
+  uiLineChartNode_t_clear(arg1);
+
+  return SWIG_arg;
+
+  if(0) SWIG_fail;
+
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiLineChart_add_line(lua_State* L) {
+  int SWIG_arg = 0;
+  uiLineChartNode_t *arg1 = (uiLineChartNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  bool arg3 ;
+  float arg4 ;
+  float arg5 ;
+  float arg6 ;
+  float arg7 ;
+  bool arg8 ;
+  int arg9 ;
+
+  SWIG_check_num_args("uiLineChartNode_t::add_line",9,9)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiLineChartNode_t::add_line",1,"uiLineChartNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiLineChartNode_t::add_line",2,"char const *");
+  if(!lua_isboolean(L,3)) SWIG_fail_arg("uiLineChartNode_t::add_line",3,"bool");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("uiLineChartNode_t::add_line",4,"float");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("uiLineChartNode_t::add_line",5,"float");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("uiLineChartNode_t::add_line",6,"float");
+  if(!lua_isnumber(L,7)) SWIG_fail_arg("uiLineChartNode_t::add_line",7,"float");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("uiLineChartNode_t::add_line",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("uiLineChartNode_t::add_line",9,"int");
+
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiLineChartNode_t,0))){
+    SWIG_fail_ptr("uiLineChart_add_line",1,SWIGTYPE_p_uiLineChartNode_t);
+  }
+
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (lua_toboolean(L, 3)!=0);
+  arg4 = (float)lua_tonumber(L, 4);
+  arg5 = (float)lua_tonumber(L, 5);
+  arg6 = (float)lua_tonumber(L, 6);
+  arg7 = (float)lua_tonumber(L, 7);
+  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (int)lua_tonumber(L, 9);
+  uiLineChartNode_t_add_line(arg1,(char const *)arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
+
+  return SWIG_arg;
+
+  if(0) SWIG_fail;
+
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_uiLineChart_add_point(lua_State* L) {
+  int SWIG_arg = 0;
+  uiLineChartNode_t *arg1 = (uiLineChartNode_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int arg3 ;
+  int arg4 ;
+
+  SWIG_check_num_args("uiLineChartNode_t::add_point",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("uiLineChartNode_t::add_point",1,"uiLineChartNode_t *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("uiLineChartNode_t::add_point",2,"char const *");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("uiLineChartNode_t::add_point",3,"int");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("uiLineChartNode_t::add_point",4,"int");
+
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_uiLineChartNode_t,0))){
+    SWIG_fail_ptr("uiLineChart_add_point",1,SWIGTYPE_p_uiLineChartNode_t);
+  }
+
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (int)lua_tonumber(L, 3);
+  arg4 = (int)lua_tonumber(L, 4);
+  uiLineChartNode_t_add_point(arg1,(char const *)arg2,arg3,arg4);
+
+  return SWIG_arg;
+
+  if(0) SWIG_fail;
+
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_new_uiLineChart(lua_State* L) {
   int SWIG_arg = 0;
   uiLineChartNode_t *result = 0 ;
@@ -11265,6 +11373,9 @@ static swig_lua_method swig_uiLineChart_methods[]= {
     { "is_showaxes", _wrap_uiLineChart_is_showaxes},
     { "set_showaxes", _wrap_uiLineChart_set_showaxes},
     { "set_axescolor", _wrap_uiLineChart_set_axescolor},
+    { "clear", _wrap_uiLineChart_clear},
+    { "add_line", _wrap_uiLineChart_add_line},
+    { "add_point", _wrap_uiLineChart_add_point},
     {0,0}
 };
 static swig_lua_method swig_uiLineChart_meta[] = {

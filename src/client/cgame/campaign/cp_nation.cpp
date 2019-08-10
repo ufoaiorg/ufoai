@@ -31,8 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_ufo.h"
 #include "cp_time.h"
 #include "save/save_nation.h"
-#include "../../ui/ui_main.h"
-#include "../../ui/ui_nodes.h" /* UI_GetNodeByPath */
 #include "../../ui/node/ui_node_linechart.h" /* lineStrip_t */
 #include "cp_missions.h"
 
@@ -627,16 +625,23 @@ static void NAT_DrawCharts_f (void)
 	const float dyFunding = (0 != maxFunding) ? (float) height / maxFunding : 1;
 	const float dyXvi = (0 != maxXVI) ? (float) height / maxXVI : 1;
 
-	uiNode_t* chart = UI_GetNodeByPath(nodePath);
+	uiNode_t* chart = cgi->UI_GetNodeByPath(nodePath);
 	if (chart == nullptr) {
 		cgi->Com_Printf("chart node not found\n");
 		return;
 	}
-	UI_ClearLineChart(chart);
 	/* Fill the points */
 	NAT_Foreach(nation) {
-
-		UI_AddLineChartLine(chart, nation->id, true, nation->color, true, 12);
+		cgi->UI_ExecuteConfunc("ui_nation_graph_add_line %s %s %f %f %f %f %s %d",
+			nation->id,
+			"true",
+			nation->color[0],
+			nation->color[1],
+			nation->color[2],
+			nation->color[3],
+			"true",
+			12
+		);
 
 		int monthIdx;
 		for (monthIdx = 0; monthIdx < MONTHS_PER_YEAR; monthIdx++) {
@@ -645,12 +650,15 @@ static void NAT_DrawCharts_f (void)
 
 			if (Q_streq("funding", type)) {
 				const int funding = NAT_GetFunding(nation, monthIdx);
-				UI_AddLineChartCoord(chart, nation->id, (monthIdx * dx), height - dyFunding * funding);
+				cgi->UI_ExecuteConfunc("ui_nation_graph_add_point %s %d %f",
+					nation->id, (monthIdx * dx), height - dyFunding * funding);
 			} else if (Q_streq("happiness", type)) {
-				UI_AddLineChartCoord(chart, nation->id, (monthIdx * dx), height - (height * nation->stats[monthIdx].happiness));
+				cgi->UI_ExecuteConfunc("ui_nation_graph_add_point %s %d %f",
+					nation->id, (monthIdx * dx), height - (height * nation->stats[monthIdx].happiness));
 			} else if (Q_streq("xvi", type)) {
 				const int xviInfection= nation->stats[monthIdx].xviInfection;
-				UI_AddLineChartCoord(chart, nation->id, (monthIdx * dx), height - dyXvi * xviInfection);
+				cgi->UI_ExecuteConfunc("ui_nation_graph_add_point %s %d %f",
+					nation->id, (monthIdx * dx), height - dyXvi * xviInfection);
 			}
 		}
 		nationIdx++;
@@ -837,6 +845,7 @@ static const cmdList_t nationCmds[] = {
 #endif
 	{nullptr, nullptr, nullptr}
 };
+
 /**
  * @brief Init actions for nation-subsystem
  */

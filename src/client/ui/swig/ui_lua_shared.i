@@ -898,6 +898,13 @@ struct uiLineChartNode_t: uiNode_t {
 
 	void set_showaxes(bool value) { UI_EXTRADATA($self, lineChartExtraData_t).displayAxes = value; };
 	void set_axescolor(float r, float g, float b, float a) { Vector4Set(UI_EXTRADATA($self, lineChartExtraData_s).axesColor, r, g, b, a); };
+
+	void clear () { UI_ClearLineChart($self); };
+	void add_line (const char* id, bool visible, float r, float g, float b, float a, bool dots, int num_points) {
+		float color[] = {r, g, b, a};
+		UI_AddLineChartLine($self, id, visible, color, dots, num_points);
+	};
+	void add_point (const char* id, int x, int y) { UI_AddLineChartCoord($self, id, x, y); };
 };
 
 %rename (uiMessageList) uiMessageListNode_t;

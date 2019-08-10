@@ -46,6 +46,7 @@ nations.funding = {
 				local rootNode = sender:parent():parent()
 				local graph = rootNode:child("nation_graph")
 				if (graph ~= nil) then
+					graph:clear()
 					ufo.cmd(string.format("nation_drawcharts funding %s 492 200;", ufo.nodepath(graph)));
 				end
 			end,
@@ -77,6 +78,7 @@ nations.happiness = {
 				local rootNode = sender:parent():parent()
 				local graph = rootNode:child("nation_graph")
 				if (graph ~= nil) then
+					graph:clear()
 					ufo.cmd(string.format("nation_drawcharts happiness %s 492 200;", ufo.nodepath(graph)));
 				end
 			end,
@@ -108,6 +110,7 @@ nations.xvi = {
 				local rootNode = sender:parent():parent()
 				local graph = rootNode:child("nation_graph")
 				if (graph ~= nil) then
+					graph:clear()
 					ufo.cmd(string.format("nation_drawcharts xvi %s 492 200;", ufo.nodepath(graph)));
 				end
 			end,
@@ -160,6 +163,34 @@ function build_nationcharts (rootNode)
 			pos = {50, 255},
 			size = {492, 20},
 			contentalign = ufo.ALIGN_CC,
+		},
+
+		{
+			name = "ui_nation_graph_add_line",
+			class = "confunc",
+
+			on_click = function (sender, id, visible_str, r, g, b, a, dots_str, num_points)
+				local graph = sender:parent():child("nation_graph")
+				local visible = false
+				if (visible_str == "true") then
+					visible = true
+				end
+				local dots = false
+				if (dots_str == "true") then
+					dots = true
+				end
+				graph:add_line(id, visible, r, g, b, a, dots, num_points)
+			end,
+		},
+
+		{
+			name = "ui_nation_graph_add_point",
+			class = "confunc",
+
+			on_click = function (sender, id, x, y)
+				local graph = sender:parent():child("nation_graph")
+				graph:add_point(id, x, y)
+			end,
 		},
 	}, rootNode)
 
