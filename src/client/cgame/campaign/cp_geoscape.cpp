@@ -2262,7 +2262,9 @@ void GEO_SetOverlay (const char* overlayID, int status)
 	}
 	if (Q_streq(overlayID, "radar")) {
 		cgi->Cvar_SetValue("geo_overlay_radar", status);
-		if (GEO_IsRadarOverlayActivated())
+		/* save last decision player took on radar display, in order to be able to restore it later */
+		radarOverlayWasSet = GEO_IsRadarOverlayActivated();
+		if (radarOverlayWasSet)
 			RADAR_UpdateWholeRadarOverlay();
 	}
 }
@@ -2283,10 +2285,6 @@ static void GEO_SetOverlay_f (void)
 	overlay = cgi->Cmd_Argv(1);
 	status = atoi(cgi->Cmd_Argv(2));
 	GEO_SetOverlay(overlay, status);
-
-	/* save last decision player took on radar display, in order to be able to restore it later */
-	if (Q_streq(overlay, "radar"))
-		radarOverlayWasSet = GEO_IsRadarOverlayActivated();
 }
 
 /**
