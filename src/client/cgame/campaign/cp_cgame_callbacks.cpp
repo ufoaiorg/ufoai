@@ -171,6 +171,10 @@ static void GAME_CP_Start_f (void)
 		return;
 	}
 
+	if (CP_IsRunning()) {
+		cgi->Cmd_ExecuteString("game_exit");
+		cgi->Cmd_ExecuteString("game_setmode campaign");
+	}
 	CP_CampaignInit(campaign, false);
 
 	/* Intro sentences */
