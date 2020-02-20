@@ -67,11 +67,6 @@ void G_DamageActor (Edict* target, const int damage, const vec3_t impact)
 			for (int bodyPart = 0; bodyPart < teamDef->bodyTemplate->numBodyParts(); ++bodyPart)
 				target->chr.wounds.woundLevel[bodyPart] += teamDef->bodyTemplate->getArea(bodyPart) * damage;
 		}
-#if 0
-		if (!CHRSH_IsTeamDefRobot(target->chr.teamDef))
-			/* Knockback -- currently disabled, not planned in the specs, also there's no way to tell stunned and dead actors apart */
-			target->STUN = std::min(255.0f, target->STUN + std::max(0.0f, damage * crand() * 0.25f));
-#endif
 		G_SendWoundStats(target);
 	}
 }
