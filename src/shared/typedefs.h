@@ -37,8 +37,6 @@ typedef struct cBspModel_s {
 typedef struct cBspSurface_s {
 	char name[MAX_QPATH];			/**< the texture name */
 	uint32_t surfaceFlags;			/**< surface flags SURF_* */
-	uint32_t value;					/**< currently not used except in loading CMod_LoadSurfaces */
-	byte* lightmap;					/**< lightmap samples for server side visibility lookup */
 } cBspSurface_t;
 
 typedef struct cBspNode_s {

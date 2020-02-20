@@ -108,7 +108,6 @@ static void CMod_LoadSurfaces (MapTile& tile, const byte* base, const lump_t* lu
 	for (int i = 0; i < count; i++, in++, out++) {
 		Q_strncpyz(out->name, in->texture, sizeof(out->name));
 		out->surfaceFlags = LittleLong(in->surfaceFlags);
-		out->value = LittleLong(in->value);
 	}
 }
 
