@@ -15,7 +15,7 @@
  */
 
 /*
-Copyright (C) 2002-2019 UFO: Alien Invasion.
+Copyright (C) 2002-2020 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

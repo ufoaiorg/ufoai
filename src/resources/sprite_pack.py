@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
 
-# Copyright (C) 2011 - UFO: Alien Invasion
+# Copyright (C) 202020 UFO: Alien Invasion
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
