@@ -124,13 +124,15 @@ window equipment extends objectinfo
 							*node:parent.soldierlist.member<node:root.selected@integer>.name@color = "1 0.81 0.76 1"
 						}
 					}
+					if ( *node:root.selected@integer != <1> ) {
+						*node:root.load_warnings@integer = 0
+					}
 					*node:root.selected@integer = <1>
 					*cvar:mn_ucn = <1>
 					if ( *node:root.selected@integer >= 0 ) {
 						*node:parent.soldierlist.member<1>.name@color = "1 1 1 1"
-						*node:root.load_warnings@integer = 0
 						cmd "ui_team_select_ucn <node:root.selected@integer>;"
-						cmd "mn_updateactorload equip_actorload;"
+						cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"
 					}
 				}
 			} // end soldiers
