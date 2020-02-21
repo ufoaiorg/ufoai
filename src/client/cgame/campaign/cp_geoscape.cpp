@@ -2283,7 +2283,8 @@ static void GEO_SetOverlay_f (void)
 	GEO_SetOverlay(overlay, status);
 
 	/* save last decision player took on radar display, in order to be able to restore it later */
-	radarOverlayWasSet = setRadar && GEO_IsRadarOverlayActivated();
+	if (setRadar)
+		radarOverlayWasSet = GEO_IsRadarOverlayActivated();
 }
 
 /**
