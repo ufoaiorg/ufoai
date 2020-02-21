@@ -1,88 +1,117 @@
 --!usr/bin/lua
+--[[
+Copyright (C) 2002-2020 UFO: Alien Invasion.
 
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require ("ufox.lua")
 --[[
  - ===========================================
  - MISSION BRIEFING DIALOG
  - ===========================================
 --]]
 
-do
-	local mission_briefing = ufo.create_window("mission_briefing", nil)
-	mission_briefing:set_fill(true)
-	mission_briefing:set_starlayout(true)
-	mission_briefing:set_modal(true)
-	mission_briefing:set_preventtypingescape(true)
-	do
-		local mission_briefing_background = ufo.create_control(mission_briefing, "image", "background", nil)
-		mission_briefing_background:set_source("background/maploading")
-		mission_briefing_background:set_pos(0, 0)
-		mission_briefing_background:set_size(1024, 768)
-		mission_briefing_background:set_layoutalign(ufo.LAYOUTALIGN_MIDDLE)
-		mission_briefing_background.on_visiblewhen = function (sender)
-				return (ufo.getvar("cl_onbattlescape"):as_integer() ~= 1)
+ufox.build_window({
+	name = "mission_briefing",
+	class = "window",
+	fill = true,
+	starlayout = true,
+	modal = true,
+	preventtypingescape = true,
+	{
+		class = "image",
+		name = "background",
+		source = "background/maploading",
+		pos = {0, 0},
+		size = {1024, 768},
+		layoutalign = ufo.LAYOUTALIGN_MIDDLE,
+		on_visiblewhen = function (sender)
+			return (ufo.getvar("cl_onbattlescape"):as_integer() ~= 1)
+		end
+	},
+	{
+		class = "battlescape",
+		name = "render",
+		pos = {0, 0},
+		size = {1024, 768},
+		contentalign = ufo.LAYOUTALIGN_FILL
+	},
+	{
+		class = "panel",
+		name = "mission_description",
+		pos = {212, 134},
+		size = {600, 500},
+		backgroundcolor = {0, 0, 0, 0.6},
+		bordersize = 2,
+		bordercolor = {0.56, 0.81, 0.76, 1.0},
+		layoutalign = ufo.LAYOUTALIGN_MIDDLE,
+		{
+			class = "text",
+			name =  "name",
+			pos = {10, 10},
+			size = {580, 20},
+			longlines = ufo.LONGLINES_PRETTYCHOP,
+			lineheight = 20,
+			dataid = ufo.TEXT_MISSIONBRIEFING_TITLE,
+			font = "f_menu"
+		},
+		{
+			class = "text",
+			bane = "briefing",
+			pos = {10, 40},
+			size = {580, 240},
+			lineheight = 20,
+			dataid = ufo.TEXT_MISSIONBRIEFING
+		},
+		{
+			class = "string",
+			name = "victory_conditions",
+			pos = {10, 300},
+			font = "f_menu",
+			text = "_Victory conditions:"
+		},
+		{
+			class = "text",
+			name = "briefing_conditions",
+			pos = {10, 330},
+			size = {360, 160},
+			lineheight = 20,
+			dataid = ufo.TEXT_MISSIONBRIEFING_VICTORY_CONDITIONS
+		},
+		{
+			class = "MainMenuBtn",
+			name = "button_ready",
+			pos = {400,470},
+			size = {200,30},
+			text = "_Start",
+			tooltip = "_Start the match",
+			on_visiblewhen = function (sender)
+				return (ufo.getvar("cl_onbattlescape"):as_integer() == 1)
+			end,
+			on_click = function(sender)
+				ufo.cmd("cl_ready 1; ui_pop;")
 			end
-	end
-	do
-		local mission_briefing_render = ufo.create_control(mission_briefing, "battlescape", "render", nil)
-		mission_briefing_render:set_pos(0,0)
-		mission_briefing_render:set_size(1024,768)
-		mission_briefing_render:set_contentalign(ufo.LAYOUTALIGN_FILL)
-	end
-	do
-		local mission_briefing_description = ufo.create_control(mission_briefing, "panel", "mission_description", nil)
-		mission_briefing_description:set_pos(212, 134)
-		mission_briefing_description:set_size(600, 500)
-		mission_briefing_description:set_backgroundcolor(0, 0, 0, 0.6)
-		mission_briefing_description:set_bordersize(2)
-		mission_briefing_description:set_bordercolor(0.56, 0.81, 0.76, 1.0)
-		mission_briefing_description:set_layoutalign(ufo.LAYOUTALIGN_MIDDLE)
-		do
-			local mission_briefing_description_name = ufo.create_control(mission_briefing_description, "text", "name", nil)
-			mission_briefing_description_name:set_pos(10, 10)
-			mission_briefing_description_name:set_size(580, 20)
-			mission_briefing_description_name:set_longlines(ufo.LONGLINES_PRETTYCHOP)
-			mission_briefing_description_name:set_lineheight(20)
-			mission_briefing_description_name:set_dataid(ufo.TEXT_MISSIONBRIEFING_TITLE)
-			mission_briefing_description_name:set_font("f_menu")
-		end
-		do
-			local mission_briefing_description_briefing = ufo.create_control(mission_briefing_description, "text", "briefing", nil)
-			mission_briefing_description_briefing:set_pos(10, 40)
-			mission_briefing_description_briefing:set_size(580, 240)
-			mission_briefing_description_briefing:set_lineheight(20)
-			mission_briefing_description_briefing:set_dataid(ufo.TEXT_MISSIONBRIEFING)
-		end
-		do
-			local mission_briefing_description_victory_conditions = ufo.create_control(mission_briefing_description, "string", "victory_conditions", nil)
-			mission_briefing_description_victory_conditions:set_pos(10, 300)
-			mission_briefing_description_victory_conditions:set_font("f_menu")
-			mission_briefing_description_victory_conditions:set_text("_Victory conditions:")
-		end
-		do
-			local mission_briefing_description_briefing_conditions = ufo.create_control(mission_briefing_description, "text", "briefing_conditions", nil)
-			mission_briefing_description_briefing_conditions:set_pos(10, 330)
-			mission_briefing_description_briefing_conditions:set_size(360, 160)
-			mission_briefing_description_briefing_conditions:set_lineheight(20)
-			mission_briefing_description_briefing_conditions:set_dataid(ufo.TEXT_MISSIONBRIEFING_VICTORY_CONDITIONS)
-		end
-		do
-			local mission_briefing_description_button_ready = ufo.create_control(mission_briefing_description, "MainMenuBtn","button_ready", nil)
-			mission_briefing_description_button_ready:set_pos(400,470)
-			mission_briefing_description_button_ready:set_size(200,30)
-			mission_briefing_description_button_ready:set_text("_Start")
-			mission_briefing_description_button_ready:set_tooltip("_Start the match")
-			mission_briefing_description_button_ready.on_visiblewhen = function (sender)
-					return (ufo.getvar("cl_onbattlescape"):as_integer() == 1)
-				end
-			mission_briefing_description_button_ready.on_click = function(sender)
-					ufo.cmd("cl_ready 1; ui_pop;")
-				end
-		end
-	end
-	mission_briefing.on_windowopened = function (sender)
-			ufo.getvar("cl_ready"):set_value(0)
-		end
-	do
-		local overlay = ufo.create_control(mission_briefing, "fuzzyScreen", "overlay", nil)
-	end
-end
+		}
+	},
+	on_windowopened = function (sender)
+		ufo.getvar("cl_ready"):set_value(0)
+	end,
+	{
+		class = "fuzzyScreen",
+		name = "overlay"
+	}
+})
