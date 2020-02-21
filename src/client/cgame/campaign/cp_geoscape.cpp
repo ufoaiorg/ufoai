@@ -2272,21 +2272,18 @@ void GEO_SetOverlay (const char* overlayID, int status)
  */
 static void GEO_SetOverlay_f (void)
 {
-	const char* overlay;
-	int status;
-
 	if (cgi->Cmd_Argc() != 3) {
 		cgi->Com_Printf("Usage: %s <nation|xvi|radar> <1|0>\n", cgi->Cmd_Argv(0));
 		return;
 	}
 
-	overlay = cgi->Cmd_Argv(1);
-	status = atoi(cgi->Cmd_Argv(2));
+	const char* overlay = cgi->Cmd_Argv(1);
+	const int status = atoi(cgi->Cmd_Argv(2));
+	const bool setRadar = Q_streq(overlay, "radar");
 	GEO_SetOverlay(overlay, status);
 
 	/* save last decision player took on radar display, in order to be able to restore it later */
-	if (Q_streq(overlay, "radar"))
-		radarOverlayWasSet = GEO_IsRadarOverlayActivated();
+	radarOverlayWasSet = setRadar && GEO_IsRadarOverlayActivated();
 }
 
 /**
