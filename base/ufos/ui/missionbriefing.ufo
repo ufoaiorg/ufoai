@@ -71,7 +71,7 @@ ufox.build_window({
 		},
 		{
 			class = "text",
-			bane = "briefing",
+			name = "briefing",
 			pos = {10, 40},
 			size = {580, 240},
 			lineheight = 20,
@@ -95,8 +95,8 @@ ufox.build_window({
 		{
 			class = "MainMenuBtn",
 			name = "button_ready",
-			pos = {400,470},
-			size = {200,30},
+			pos = {400, 470},
+			size = {200, 30},
 			text = "_Start",
 			tooltip = "_Start the match",
 			on_visiblewhen = function (sender)
