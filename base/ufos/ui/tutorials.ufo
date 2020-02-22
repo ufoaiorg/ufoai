@@ -1,82 +1,112 @@
 --!usr/bin/lua
 --[[
+Copyright (C) 2002-2020 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+--[[
  - ==================
  - TUTORIALS MENU
  - ==================
 --]]
-do
-	local tutorials = ufo.create_window("tutorials", nil)
-	tutorials:set_background("ui/main_bg")
-	do
-		local headline = ufo.create_control(tutorials, "string", "headline", nil)
-		headline:set_text("_TUTORIALS")
-		headline:set_size(500, 50)
-		headline:set_pos(262, 50)
-		headline:set_font("f_title")
-		headline:set_color(0.59, 0.78, 0.56, 1)
-		headline:set_contentalign(ufo.ALIGN_CC)
-	end
-	do
-		local buttons = ufo.create_control(tutorials, "panel", "buttons", nil)
-		buttons:set_pos(312, 250)
-		buttons:set_size(420, 400)
-		do
-			local dynbuttons = ufo.create_control(buttons, "panel", "dynbuttons", nil)
-			dynbuttons:set_pos(0, 0)
-			dynbuttons:set_size(400, 300)
-			dynbuttons:set_layout(ufo.LAYOUT_TOP_DOWN_FLOW)
-			dynbuttons:set_layoutmargin(15)
-			dynbuttons:set_wheelscrollable(true)
-			dynbuttons.on_viewchange = function(sender)
-					sender:parent():child("tutorials_scroll"):set_fullsize(sender:fullsize())
-					sender:parent():child("tutorials_scroll"):set_current(sender:viewpos())
-					sender:parent():child("tutorials_scroll"):set_viewsize(sender:viewsize())
-				end
-			do
-				local tutorialsListAdd = ufo.create_control(tutorials, "confunc", "tutorialsListAdd", nil)
-				tutorialsListAdd.on_click = function(sender, index, text)
-						local tutorial = ufo.create_control(dynbuttons, "MainMenuBtn", "tutorial"..index, nil)
-						tutorial:set_text(text)
-						local tutorial_index = ufo.create_control(tutorial, "data", "index", nil)
-						tutorial_index:set_value(index)
-						tutorial.on_click = function(sender)
-								ufo.cmd(string.format("tutoriallist_click %s;", index ))
-							end
-					end
+ufox.build_window({
+	class = "window",
+	name = "tutorials",
+	background = "ui/main_bg",
+	{
+		class = "string",
+		name = "headline",
+		text = "_TUTORIALS",
+		size = {500, 50},
+		pos =  {262, 50},
+		font = "f_title",
+		color = {0.59, 0.78, 0.56, 1},
+		contentalign = ufo.ALIGN_CC
+	},
+	{
+		class = "panel",
+		name = "buttons",
+		pos = {312, 250},
+		size = {420, 400},
+		{
+			class = "panel",
+			name = "dynbuttons",
+			pos = {0, 0},
+			size = {400, 300},
+			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+			layoutmargin = 15,
+			wheelscrollable = true,
+			on_viewchange = function(sender)
+				sender:parent():child("tutorials_scroll"):set_fullsize(sender:fullsize())
+				sender:parent():child("tutorials_scroll"):set_current(sender:viewpos())
+				sender:parent():child("tutorials_scroll"):set_viewsize(sender:viewsize())
+			end,
+		},
+		{
+			class = "vscrollbar",
+			name = "tutorials_scroll",
+			image = "ui/scrollbar_v",
+			pos = {402, 0},
+			height = 300,
+			current = 0,
+			fullsize = 16,
+			viewsize = 6,
+			autoshowscroll = true,
+			on_change = function(sender)
+				sender:parent():child("dynbuttons"):set_viewpos(sender:current())
 			end
-			do
-				local tutorialsListClear = ufo.create_control(tutorials, "confunc", "tutorialsListClear", nil)
-				tutorialsListClear.on_click = function(sender)
-						sender:root():child("buttons"):child("dynbuttons"):remove_children()
-					end
+		},
+		{
+			class = "MainMenuExitBtn",
+			name = "button_back",
+			pos = {0, 300},
+			text = "_BACK",
+			on_click = function(sender)
+				ufo.cmd("ui_pop;")
 			end
-		end
-		do
-			local tutorials_scroll = ufo.create_control(buttons, "vscrollbar", "tutorials_scroll", nil)
-			tutorials_scroll:set_image("ui/scrollbar_v")
-			tutorials_scroll:set_pos(402, 0)
-			tutorials_scroll:set_height(300)
-			tutorials_scroll:set_current(0)
-			tutorials_scroll:set_fullsize(16)
-			tutorials_scroll:set_viewsize(6)
-			tutorials_scroll:set_autoshowscroll(true)
-			tutorials_scroll.on_change = function(sender)
-					sender:parent():child("dynbuttons"):set_viewpos(sender:current())
+		}
+	},
+	{
+		class = "fuzzyScreen",
+		name = "overlay"
+	},
+	{
+		class = "confunc",
+		name = "tutorialsListAdd",
+		on_click = function(sender, index, text)
+			ufox.build({
+				class = "MainMenuBtn",
+				name = "tutorial"..index,
+				text = text,
+				on_click = function(sender)
+					ufo.cmd(string.format("tutoriallist_click %s;", index ))
 				end
+			}, sender:root():child("buttons"):child("dynbuttons"))
 		end
-		do
-			local button_back = ufo.create_control(buttons, "MainMenuExitBtn", "button_back", nil)
-			button_back:set_pos(0, 300)
-			button_back:set_text("_BACK")
-			button_back.on_click = function(sender)
-					ufo.cmd("ui_pop;")
-				end
+	},
+	{
+		class = "confunc",
+		name = "tutorialsListClear",
+		on_click = function(sender)
+			sender:root():child("buttons"):child("dynbuttons"):remove_children()
 		end
+	},
+	on_windowopened = function(sender)
+		ufo.cmd("gettutorials;")
 	end
-	do
-		local overlay = ufo.create_control(tutorials, "fuzzyScreen", "overlay", nil)
-	end
-	tutorials.on_windowopened = function(sender)
-			ufo.cmd("gettutorials;")
-		end
-end
+})
