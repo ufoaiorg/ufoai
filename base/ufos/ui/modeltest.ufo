@@ -1,5 +1,28 @@
 --!usr/bin/lua
 --[[
+-- @file
+-- @brief LUA extensions to the UI API
+-- @note Only generic functions should be here any specific implementation (like new nodes) should be separated
+--]]
+
+--[[
+Copyright (C) 2002-2020 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
  - ==================
  - MODEL DISPLAY TEST-MENU (DEBUG)
  - ==================
@@ -12,31 +35,34 @@
  -	./ufo +ui_push model_test +set mn_model <model_name>
  - ==================
 --]]
-do
-	local model_test = ufo.create_window("model_test", nil)
-	do
-		local mdl = ufo.create_control(model_test, "model", "mdl", nil)
-		local scales = 1
-		mdl:set_model("*cvar:mn_model")
-		mdl:set_origin(0, 0, 0)
-		mdl:set_scale(scales, scales, scales)
-		mdl:set_angles(0,0,0)
-		mdl:set_pos(0,0)
-		mdl:set_size(1024,768)
-		mdl:set_mouserotate(true)
-		mdl.on_wheelup = function(sender)
-				scales = scales*1.1
-				sender:set_scale(scales, scales, scales)
-			end
-		mdl.on_wheeldown = function(sender)
-				scales = scales/1.1
-				sender:set_scale(scales, scales, scales)
-			end
-	end
-	model_test.on_windowopened = function(sender)
-			local model = ufo.getvar("mn_model"):as_string()
-			if (model == nil or model == "") then
-				ufo.getvar("mn_model"):set_value("drop_firebird")
-			end
+require("ufox.lua")
+local scale = 1
+ufox.build_window({
+	class = "window",
+	name = "model_test",
+	{
+		class = "model",
+		name = "mdl",
+		model = "*cvar:mn_model",
+		origin = {0, 0, 0},
+		scale = {1, 1, 1},
+		angles  = {0, 0, 0},
+		pos = {0, 0},
+		size = {1024, 768},
+		mouserotate = true,
+		on_wheelup = function(sender)
+			scale = scale * 1.1
+			sender:set_scale(scale, scale, scale)
+		end,
+		on_wheeldown = function(sender)
+			scale = scale / 1.1
+			sender:set_scale(scale, scale, scale)
 		end
-end
+	},
+	on_windowopened = function(sender)
+		local model = ufo.getvar("mn_model"):as_string()
+		if (model == nil or model == "") then
+			ufo.getvar("mn_model"):set_value("drop_firebird")
+		end
+	end
+})
