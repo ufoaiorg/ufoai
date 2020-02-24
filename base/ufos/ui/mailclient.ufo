@@ -1,257 +1,299 @@
 --!usr/bin/lua
+--[[
+Copyright (C) 2002-2020 UFO: Alien Invasion.
 
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+require("ufox.lua")
 --[[
  - ==================
  - MAILCLIENT MENU
  - ==================
 --]]
-do
-	local mail = ufo.create_window("mail", "ipopup")
-	mail:set_pos(10, 20)
-	mail:set_size(1000, 700)
-	mail:set_backgroundcolor(0, 0, 0, 0.95)
-	mail:child("title"):set_text("*cvar:mn_mail_subject")
-	mail:child("title"):set_size(1000, 32)
-	mail:set_closebutton(true)
-	do
-		local mail_text = ufo.create_control(mail, "text", "mail_text", nil)
-		mail_text:set_dataid(ufo.TEXT_UFOPEDIA)
-		mail_text:set_pos(50, 200)
-		mail_text:set_size(904, 480)
-		mail_text:set_lineheight(24)
-		mail_text:set_tabwidth(100)
-		mail_text.on_viewchange = function (sender)
-				sender:parent():child("mail_scroll"):set_fullsize(sender:fullsize())
-				sender:parent():child("mail_scroll"):set_current(sender:viewpos())
-				sender:parent():child("mail_scroll"):set_viewsize(sender:viewsize())
-			end
-	end
-	do
-		local mail_scroll = ufo.create_control(mail, "vscrollbar", "mail_scroll", nil)
-		mail_scroll:set_image("ui/scrollbar_v")
-		mail_scroll:set_pos(960, 208)
-		mail_scroll:set_size(32, 470)
-		mail_scroll:set_autoshowscroll(true)
-		mail_scroll.on_change = function (sender)
-				sender:root():child("mail_text"):set_viewpos(sender:current())
-			end
-	end
+ufox.build_window({
+	class = "window",
+	name = "mail",
+	super = "ipopup",
+	pos = {10, 20},
+	size = {1000, 700},
+	backgroundcolor = {0, 0, 0, 0.95},
+	closebutton = true,
+	{
+		name = "title",
+		text ="*cvar:mn_mail_subject",
+		size = {1000, 32}
+	},
+	{
+		class = "text",
+		name = "mail_text",
+		dataid = ufo.TEXT_UFOPEDIA,
+		pos = {50, 200},
+		size = {904, 480},
+		lineheight = 24,
+		tabwidth = 100,
+		on_viewchange = function (sender)
+			sender:parent():child("mail_scroll"):set_fullsize(sender:fullsize())
+			sender:parent():child("mail_scroll"):set_current(sender:viewpos())
+			sender:parent():child("mail_scroll"):set_viewsize(sender:viewsize())
+		end
+	},
+	{
+		class = "vscrollbar",
+		name = "mail_scroll",
+		image = "ui/scrollbar_v",
+		pos = {960, 208},
+		size = {32, 470},
+		autoshowscroll = true,
+		on_change = function (sender)
+			sender:root():child("mail_text"):set_viewpos(sender:current())
+		end
+	},
+	{
+		class = "model",
+		name = "sender_body",
+		on_visiblewhen = function (sender)
+			local head = ufo.getvar("mn_mail_sender_head"):as_string()
+			return not ( head == '' or head == nil )
+		end,
+		model = "civilians/male/body01",
+		animation = "stand_still",
+		angles = {0, 85, 90},
+		scale = {7.5, 7.5, 7.5},
+		pos = {63, 83},
+		size = {62, 62},
+		origin = {5, 125, 0},
+		bordersize = 2,
+		bordercolor = {0.56, 0.81, 0.76, 1},
+		{
+			class = "model",
+			name = "sender_head",
+			model = "*cvar:mn_mail_sender_head",
+			tag = "tag_head"
+		}
+	},
+	{
+		class = "text",
+		name = "mail_header",
+		dataid = ufo.TEXT_UFOPEDIA_MAILHEADER,
+		pos = {150, 70},
+		size = {824, 120},
+		lineheight = 24,
+		viewsize = 5,
+		font = "f_small_bold",
+		on_windowopen = function (sender)
+			sender:child("mail_text"):set_viewpos(0)
+			sender:child("mail_scroll"):set_current(0)
+		end
+	},
+	{
+		class = "fuzzyScreen",
+		name = "overlay"
+	}
+})
 
-	do
-		local sender_body = ufo.create_control(mail, "model", "sender_body", nil)
-		sender_body.on_visiblewhen = function (sender)
-				local head = ufo.getvar("mn_mail_sender_head"):as_string()
-				return not ( head == '' or head == nil )
-			end
-		sender_body:set_model("civilians/male/body01")
-		sender_body:set_animation("stand_still")
-		sender_body:set_angles(0, 85, 90)
-		sender_body:set_scale(7.5, 7.5, 7.5)
-		sender_body:set_pos(63, 83)
-		sender_body:set_size(62, 62)
-		sender_body:set_origin(5, 125, 0)
-		sender_body:set_bordersize(2)
-		sender_body:set_bordercolor(0.56, 0.81, 0.76, 1)
+ufox.build_component({
+	class = "panel",
+	name = "mailheader",
+	size = {670, 28},
+	backgroundcolor = {0.56, 0.81, 0.76, 0.1},
+	layout = ufo.LAYOUT_LEFT_RIGHT_FLOW,
+	layoutmargin = 2,
+	on_mouseenter = function(sender)
+		sender:set_backgroundcolor(0.56, 0.81, 0.76, 0.15)
+	end,
+	on_mouseleave = function(sender)
+		sender:set_backgroundcolor(0.56, 0.81, 0.76, 0.1)
+	end,
+	{
+		class = "image",
+		name = "icon",
+		size = {28, 28},
+		ghost = true
+	},
+	{
+		class = "panel",
+		name = "spacing",
+		size = {6, 28}
+	},
+	{
+		class = "panel",
+		name = "header",
+		size = {642, 28},
+		ghost = true,
+		{
+			class = "string",
+			name = "headline",
+			color = {0.56, 0.81, 0.76, 1},
+			text = "",
+			contentalign = ufo.ALIGN_CL,
+			size = {510, 21},
+			font = "f_small",
+			ghost = true
+		},
+		{
+			class = "string",
+			name = "date",
+			text = "",
+			size = {122, 21},
+			pos = {520, 5},
+			font = "f_small",
+			ghost = true
+		}
+	}
+})
 
-		do
-			local sender_head = ufo.create_control(sender_body, "model", "sender_head", nil)
-			sender_head:set_model("*cvar:mn_mail_sender_head")
-			sender_head:set_tag("tag_head")
-		end
-	end
-
-	do
-		local mail_header = ufo.create_control(mail, "text", "mail_header", nil)
-		mail_header:set_dataid(ufo.TEXT_UFOPEDIA_MAILHEADER)
-		mail_header:set_pos(150, 70)
-		mail_header:set_size(824, 120)
-		mail_header:set_lineheight(24)
-		mail_header:set_viewsize(5)
-		mail_header:set_font("f_small_bold")
-		mail.on_windowopen = function (sender)
-				sender:child("mail_text"):set_viewpos(0)
-				sender:child("mail_scroll"):set_current(0)
-			end
-	end
-	do
-		local overlay = ufo.create_control(mail, "fuzzyScreen", "overlay", nil)
-	end
-end
-
-do
-	local mailheader = ufo.create_component("panel", "mailheader", nil)
-	mailheader:set_size(670, 28)
-	mailheader:set_backgroundcolor(0.56, 0.81, 0.76, 0.1)
-	mailheader:set_layout(ufo.LAYOUT_LEFT_RIGHT_FLOW)
-	mailheader:set_layoutmargin(2)
-	mailheader.on_mouseenter = function(sender)
-			sender:set_backgroundcolor(0.56, 0.81, 0.76, 0.15)
-		end
-	mailheader.on_mouseleave = function(sender)
-			sender:set_backgroundcolor(0.56, 0.81, 0.76, 0.1)
-		end
-	mailheader.on_click = function(sender)
-			sender:child("header"):set_backgroundcolor(0, 0, 0, 0)
-			ufo.cmd(string.format("mailclient_click %d;", sender:child("header"):child("index"):as_integer()))
-		end
-	do
-		local icon = ufo.create_image(mailheader, "icon", nil)
-		icon:set_size(28, 28)
-		icon:set_ghost(true)
-	end
-	do
-		local spacing = ufo.create_panel(mailheader, "spacing", nil)
-		spacing:set_size(6, 28)
-	end
-	do
-		local header = ufo.create_panel(mailheader, "header", nil)
-		header:set_size(642, 28)
-		header:set_ghost(true)
-		do
-			local index = ufo.create_data(header, "index", nil)
-			index:set_value(-1)
-		end
-		do
-			local headline = ufo.create_control(header, "string", "headline", nil)
-			headline:set_color(0.56, 0.81, 0.76, 1)
-			headline:set_text("")
-			headline:set_contentalign(ufo.ALIGN_CL)
-			headline:set_size(510, 21)
-			headline:set_font("f_small")
-			headline:set_ghost(true)
-		end
-		do
-			local date = ufo.create_control(header, "string", "date", nil)
-			date:set_text("")
-			date:set_size(122, 21)
-			date:set_pos(520, 5)
-			date:set_font("f_small")
-			date:set_ghost(true)
-		end
-	end
-end
-
-do
-	local mailclient = ufo.create_window("mailclient", nil)
-	do
-		local maillist = ufo.create_control(mailclient, "panel", "maillist", nil)
-		maillist:set_pos(5, 5)
-		maillist:set_size(723, 758)
-		maillist:set_bordersize(2)
-		maillist:set_bordercolor(0.56, 0.81, 0.76, 1)
-		do
-			local mailclienthead = ufo.create_control(maillist, "string", "mailclienthead", nil)
-			mailclienthead:set_text("_Mailclient")
-			mailclienthead:set_pos(5, 5)
-			mailclienthead:set_size(723, 30)
-			mailclienthead:set_contentalign(ufo.ALIGN_CC)
-			mailclienthead:set_font("f_big")
-		end
-		do
-			local mainBody = ufo.create_control(maillist, "panel", "mainBody", nil)
-			mainBody:set_pos(4, 30)
-			mainBody:set_size(715, 724)
-			mainBody:set_bordersize(2)
-			mainBody:set_bordercolor(0.527, 0.6, 0.21, 1)
-			do
-				local header = ufo.create_control(mainBody, "panel", "header", nil)
-				header:set_pos(1, 1)
-				header:set_size(713, 32)
-				header:set_backgroundcolor(0.527, 0.6, 0.21, 0.2)
-				do
-					local date = ufo.create_control(header, "string", "date", nil)
-					date:set_text("*cvar:mn_mapdate")
-					date:set_pos(1, 1)
-					date:set_size(220, 32)
-					date:set_font("f_normal")
-					date:set_contentalign(ufo.ALIGN_CR)
-					date:set_color(0.56, 0.81, 0.76, 1)
-				end
-				do
-					local time = ufo.create_control(header, "string", "time", nil)
-					time:set_text("*cvar:mn_maptime")
-					time:set_pos(230, 1)
-					time:set_size(200, 32)
-					time:set_font("f_normal")
-					time:set_contentalign(ufo.ALIGN_CL)
-					time:set_color(0.56, 0.81, 0.76, 1)
-				end
-				do
-					local mail_allread = ufo.create_control(header, "button", "mail_allread", nil)
-					mail_allread:set_icon("icons/mail_read")
-					mail_allread:set_tooltip("_Mark all messages read")
-					mail_allread:set_pos(654, 1)
-					mail_allread:set_size(32, 32)
-					mail_allread:set_padding(0)
-					mail_allread.on_click = function(sender)
+ufox.build_window({
+	class = "window",
+	name = "mailclient",
+	{
+		class = "panel",
+		name = "maillist",
+		pos = {5, 5},
+		size = {723, 758},
+		bordersize = 2,
+		bordercolor = {0.56, 0.81, 0.76, 1},
+		{
+			class = "string",
+			name = "mailclienthead",
+			text = "_Mailclient",
+			pos = {5, 5},
+			size = {723, 30},
+			contentalign = ufo.ALIGN_CC,
+			font = "f_big"
+		},
+		{
+			class = "panel",
+			name = "mainBody",
+			pos = {4, 30},
+			size = {715, 724},
+			bordersize = 2,
+			bordercolor = {0.527, 0.6, 0.21, 1},
+			{
+				class = "panel",
+				name = "header",
+				pos = {1, 1},
+				size = {713, 32},
+				backgroundcolor = {0.527, 0.6, 0.21, 0.2},
+				{
+					class = "string",
+					name = "date",
+					text = "*cvar:mn_mapdate",
+					pos = {1, 1},
+					size = {220, 32},
+					font = "f_normal",
+					contentalign = ufo.ALIGN_CR,
+					color = {0.56, 0.81, 0.76, 1}
+				},
+				{
+					class = "string",
+					name = "time",
+					text = "*cvar:mn_maptime",
+					pos = {230, 1},
+					size = {200, 32},
+					font = "f_normal",
+					contentalign = ufo.ALIGN_CL,
+					color = {0.56, 0.81, 0.76, 1}
+				},
+				{
+					class = "button",
+					name = "mail_allread",
+					icon = "icons/mail_read",
+					tooltip = "_Mark all messages read",
+					pos = {654, 1},
+					size = {32, 32},
+					padding = 0,
+					on_click = function(sender)
 						ufo.cmd("mn_mail_readall 0;")
 					end
-				end
-			end
-			do
-				local mails = ufo.create_control(mainBody, "panel", "mails", nil)
-				mails:set_pos(6, 50)
-				mails:set_size(680, 660)
-				mails:set_layout(ufo.LAYOUT_TOP_DOWN_FLOW)
-				mails:set_layoutmargin(2)
-				mails:set_ghost(true)
-				mails:set_wheelscrollable(true)
-				mails.on_viewchange = function(sender)
+				}
+			},
+			{
+				class = "panel",
+				name = "mails",
+				pos = {6, 50},
+				size = {680, 660},
+				layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+				layoutmargin = 2,
+				ghost = true,
+				wheelscrollable = true,
+				on_viewchange = function(sender)
 					sender:root():child("maillist"):child("mainBody"):child("mail_scroll"):set_fullsize(sender:fullsize())
 					sender:root():child("maillist"):child("mainBody"):child("mail_scroll"):set_current(sender:viewpos())
 					sender:root():child("maillist"):child("mainBody"):child("mail_scroll"):set_viewsize(sender:viewsize())
+				end,
+			},
+			{
+				class = "vscrollbar",
+				name = "mail_scroll",
+				image = "ui/scrollbar_v",
+				pos = {697, 50},
+				autoshowscroll = true,
+				size = {32, 660},
+				current = 0,
+				viewsize = 22,
+				fullsize = 32,
+				on_change = function (sender)
+					sender:parent():set_viewpos(sender:current())
 				end
-				do
-					local mail_scroll = ufo.create_control(mainBody, "vscrollbar", "mail_scroll", nil)
-					mail_scroll:set_image("ui/scrollbar_v")
-					mail_scroll:set_pos(697, 50)
-					mail_scroll:set_autoshowscroll(true)
-					mail_scroll:set_size(32, 660)
-					mail_scroll:set_current(0)
-					mail_scroll:set_viewsize(22)
-					mail_scroll:set_fullsize(32)
-					mail_scroll.on_change = function (sender)
-						mails:set_viewpos(sender:current())
-					end
-				end
-
-				do
-					local add_mail = ufo.create_confunc(mailclient, "add_mail", nil)
-					add_mail.on_click = function(sender, index, headline, icon, isRead, date)
-							local mail = ufo.create_control(mails, "mailheader", "mail" .. index, nil)
-							mail:child("icon"):set_source(icon)
-							mail:child("header"):child("index"):set_value(index)
-							mail:child("header"):child("headline"):set_text(headline)
-							mail:child("header"):child("date"):set_text(date)
-							if (isRead == 0) then
-								mail:child("header"):set_backgroundcolor(0.56, 0.81, 0.76, 0.6)
-							end
+			},
+			{
+				class = "confunc",
+				name = "add_mail",
+				on_click = function(sender, index, headline, icon, isRead, date)
+					ufox.build({
+						class = "mailheader",
+						name = "mail"..index,
+						{ name = "icon", source = icon },
+						{
+							name = "header",
+							backgroundcolor = isRead == "0" and {0.56, 0.81, 0.76, 0.6} or {0, 0, 0, 0},
+							{ name = "headline", text = headline },
+							{ name = "date", text = date }
+						},
+						on_click = function(sender)
+							sender:child("header"):set_backgroundcolor(0, 0, 0, 0)
+							ufo.cmd(string.format("mailclient_click %d;", index))
 						end
+					}, sender:parent():child("mails"))
 				end
-				do
-					local clear_mails = ufo.create_confunc(mailclient, "clear_mails", nil)
-					clear_mails.on_click = function(sender)
-							mails:remove_children()
-						end
+			},
+			{
+				class = "confunc",
+				name = "clear_mails",
+				on_click = function(sender)
+					sender:parent():child("mails"):remove_children()
 				end
-			end
+			}
+		}
+	},
+	{
+		class = "Geoscape",
+		name = "geoscape_button",
+		on_click = function(sender)
+			ufo.cmd("ui_pop;")
 		end
-	end
-
-	do
-		local geoscape_button = ufo.create_control(mailclient, "Geoscape", "geoscape_button", nil)
-		geoscape_button.on_click = function(sender)
-		ufo.cmd("ui_pop;")
-		end
-	end
-
-	mailclient.on_windowopened = function(sender)
-			ufo.cmd("ufopedia_openmail;")
-		end
-	mailclient.on_windowactivate = function(sender)
-			ufo.cmd("ufopedia_openmail;")
-		end
-	do
-		local overlay = ufo.create_control(mailclient, "fuzzyScreen", "overlay", nil)
-	end
-end
+	},
+	on_windowopened = function(sender)
+		ufo.cmd("ufopedia_openmail;")
+	end,
+	on_windowactivate = function(sender)
+		ufo.cmd("ufopedia_openmail;")
+	end,
+	{
+		class = "fuzzyScreen",
+		name = "overlay"
+	}
+})
