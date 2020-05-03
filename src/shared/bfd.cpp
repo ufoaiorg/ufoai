@@ -30,6 +30,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef HAVE_BFD_H
 #include "bfd.h"
 
+/* binutils-libs 2.34 compatibility */
+#ifndef bfd_get_section_flags
+#	define bfd_get_section_flags(bfd, section) (bfd_section_flags(section))
+#endif
+
+#ifndef bfd_get_section_vma
+#	define bfd_get_section_vma(bfd, section) (bfd_section_vma(section))
+#endif
+
+#ifndef bfd_get_section_size
+#	define bfd_get_section_size(section) (bfd_section_size(section))
+#endif
+
 void output_init (struct output_buffer *ob, char*  buf, size_t sz)
 {
 	ob->buf = buf;
