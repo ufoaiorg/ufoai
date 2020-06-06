@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_character.h"
 #include "cp_campaign.h"
 
-typedef struct {
+typedef struct updateCharacter_s {
 	int ucn;
 	int HP;
 	int STUN;
@@ -34,6 +34,10 @@ typedef struct {
 	woundInfo_t wounds;
 
 	chrScoreGlobal_t chrscore;
+
+	inline updateCharacter_s () : ucn(0), HP(0), STUN(0), morale(0), wounds(woundInfo_t()), chrscore(chrScoreGlobal_t())
+	{
+	}
 } updateCharacter_t;
 
 /**
@@ -152,8 +156,7 @@ void CHAR_ParseData (dbuffer* msg, linkedList_t** updateCharacters)
 		cgi->Com_Error(ERR_DROP, "CP_ParseCharacterData: invalid character number found in stream (%i)\n", num);
 
 	for (int i = 0; i < num; i++) {
-		updateCharacter_t c;
-		OBJZERO(c);
+		updateCharacter_t c = updateCharacter_t();
 		c.ucn = cgi->NET_ReadShort(msg);
 		c.HP = cgi->NET_ReadShort(msg);
 		c.STUN = cgi->NET_ReadByte(msg);

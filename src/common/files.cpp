@@ -731,7 +731,9 @@ void FS_ExecAutoexec (void)
 	/* search through all the paths for an autoexec.cfg file */
 	for (searchpath_t* s = fs_searchpaths; s != nullptr; s = s->next) {
 		char name[MAX_QPATH];
-		snprintf(name, sizeof(name), "%s/autoexec.cfg", s->filename);
+		if (snprintf(name, sizeof(name), "%s/autoexec.cfg", s->filename)) {
+			continue;
+		}
 
 		if (Sys_FindFirst(name, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM)) {
 			Cbuf_AddText("exec autoexec.cfg\n");

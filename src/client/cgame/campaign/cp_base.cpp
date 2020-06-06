@@ -1611,7 +1611,7 @@ void B_SelectBase (const base_t* base)
 	} else {
 		cgi->Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
 		ccs.mapAction = MA_NONE;
-		cgi->Cmd_ExecuteString(va("ui_push bases %d", base->idx));
+		cgi->Cmd_ExecuteString("ui_push bases %d", base->idx);
 		B_SetCurrentSelectedBase(base);
 	}
 }

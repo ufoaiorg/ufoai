@@ -276,6 +276,8 @@ typedef enum {
 /** @brief actor movement */
 typedef struct moveinfo_s {
 	byte		steps;
+
+	inline moveinfo_s () : steps(0) {}
 } moveinfo_t;
 
 /**
@@ -303,11 +305,19 @@ typedef struct moveinfo_s {
 typedef struct AI_s {
 	char type[MAX_QPATH];	/**< Lua file used by the AI. */
 	char subtype[MAX_VAR];	/**< Subtype to be used by AI. */
+
+	inline AI_s ()
+	{
+		OBJZERO(type);
+		OBJZERO(subtype);
+	}
 } AI_t;
 
 typedef struct camera_edict_data_s {
 	camera_type_t cameraType;
 	bool rotate;
+
+	inline camera_edict_data_s () : cameraType(CAMERA_MOBILE), rotate(false) {}
 } camera_edict_data_t;
 
 #include "g_edict.h"

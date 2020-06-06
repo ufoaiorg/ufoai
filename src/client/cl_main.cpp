@@ -236,8 +236,7 @@ static void CL_ClearState (void)
 {
 	LE_Cleanup();
 
-	/* wipe the entire cl structure */
-	OBJZERO(cl);
+	cl = clientBattleScape_t();
 	cl.cam.zoom = 1.0;
 	CL_ViewCalcFieldOfViewX();
 

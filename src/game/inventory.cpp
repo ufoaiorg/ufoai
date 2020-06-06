@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "inventory.h"
 
 InventoryInterface::InventoryInterface () :
-		import(nullptr), _invList(nullptr), csi(nullptr), invName(nullptr)
+	import(nullptr), _invList(nullptr), csi(nullptr), invName(nullptr)
 {
 }
 
@@ -987,8 +987,6 @@ void InventoryInterface::initInventory (const char* name, const csi_t* csi, cons
 {
 	const Item item;
 
-	OBJZERO(*this);
-
 	this->import = import;
 	this->invName = name;
 	this->cacheItem = item;
@@ -1001,5 +999,5 @@ void InventoryInterface::destroyInventoryInterface (void)
 	if (this->import == nullptr)
 		return;
 	this->import->FreeAll();
-	OBJZERO(*this);
+	initInventory(nullptr, nullptr, nullptr);
 }

@@ -40,10 +40,11 @@ void character_s::init ()
 	teamDef = nullptr;
 	inv.init();
 	RFmode.set(ACTOR_HAND_NOT_SET, 0, nullptr);
-	OBJZERO(wounds);
-	OBJZERO(score);
-	OBJZERO(reservedTus);
-	OBJZERO(implants);
+	wounds = woundInfo_t();
+	score = chrScoreGlobal_t();
+	reservedTus = chrReservations_t();
+	for (int i = 0; i < MAX_CHARACTER_IMPLANTS; i++)
+		implants[i] = implant_t();
 }
 
 /**
@@ -197,7 +198,7 @@ const implant_t* CHRSH_ApplyImplant (character_t& chr, const implantDef_t& def)
 		if (implant.def != nullptr)
 			continue;
 
-		OBJZERO(implant);
+		implant = implant_t();
 		implant.def = &def;
 		if (e != nullptr && !e->isPermanent)
 			implant.trigger = e->period;

@@ -63,15 +63,34 @@ typedef struct animState_s {
 	byte lcur;					/**< the current position in the animation list */
 	byte ladd;
 	byte change;
+
+	animState_s() :
+		frame(0),
+		oldframe(0),
+		backlerp(0.0f),
+		time(0),
+		dt(0),
+		mesh(0),
+		lcur(0),
+		ladd(0),
+		change(0)
+	{
+		OBJZERO(list);
+	}
 } animState_t;
 
 /**
  * @brief entity transform matrix
  */
-typedef struct {
+typedef struct transform_s {
 	bool done;					/**< already calculated */
 	bool processing;			/**< currently doing the calculation */
 	float matrix[16];			/**< the matrix that holds the result */
+
+	transform_s() : done(false), processing(false)
+	{
+		OBJZERO(matrix);
+	}
 } transform_t;
 
 typedef struct entity_s {
@@ -107,14 +126,38 @@ typedef struct entity_s {
 
 	struct entity_s* next;		/**< for chaining */
 
-	inline entity_s (int flag = RF_NONE) {
-		OBJZERO(*this);
-		flags = flag;
+
+	inline entity_s (int flag = RF_NONE) :
+		model(nullptr),
+		eBox(AABB()),
+		tagent(nullptr),
+		tagname(nullptr),
+		skinnum(0),
+		alpha(0.0f),
+		flags(flag),
+		distanceFromViewOrigin(0.0f),
+		isOriginBrushModel(false),
+		as(animState_s()),
+		transform(transform_s()),
+		texture(nullptr),
+		lighting(nullptr),
+		next(nullptr)
+	{
+		VectorClear(angles);
+		VectorClear(scale);
+		VectorClear(color);
+		VectorClear(origin);
+		VectorClear(oldorigin);
+		Vector4Clear(shell);
 	}
-	inline void setScale(const vec3_t scale_) {
+
+	inline void setScale(const vec3_t scale_)
+	{
 		VectorCopy(scale_, scale);
 	}
-	inline vec_t getScaleX() const {
+
+	inline vec_t getScaleX() const
+	{
 		return scale[0];
 	}
 } entity_t;

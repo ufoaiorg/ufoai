@@ -318,7 +318,8 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 					break;
 				path[j] = '\0';
 			}
-			snprintf(skinname, MD2_MAX_SKINNAME, "%s%s", path, &skinnameRelative[1]);
+			if (snprintf(skinname, MD2_MAX_SKINNAME, "%s%s", path, &skinnameRelative[1]))
+				_pico_printf(PICO_WARNING, "Skin name is too long, it has got truncated.");
 		}
 		_pico_setfext(skinname, "");
 

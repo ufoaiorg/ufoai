@@ -84,6 +84,45 @@ typedef struct clientBattleScape_s {
 	mapTiles_t* mapTiles;
 
 	linkedList_t* chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
+
+	inline clientBattleScape_s () :
+		time(0),
+		cam(camera_t()),
+		numTeamList(0),
+		numEnemiesSpotted(0),
+		eventsBlocked(false),
+		pnum(0),
+		actTeam(0),
+		radarInitialized(false),
+		mapMaxLevel(0),
+		numMapParticles(0),
+		numLMs(0),
+		numLEs(0),
+		spawned(false),
+		started(false),
+		mapData(nullptr),
+		mapTiles(nullptr),
+		chrList(nullptr)
+	{
+		for (int i = 0; i < MAX_ACTIVETEAM; i++)
+			teamList[i] = nullptr;
+		for (int i = 0; i < MAX_CONFIGSTRINGS; i++)
+			configstrings[i][0] = '\0';
+		for (int i = 0; i < MAX_MODELS; i++) {
+			model_draw[i] = nullptr;
+			model_clip[i] = nullptr;
+		}
+		for (int i = 0; i < MAX_EDICTS + 1; i++) {
+			leInlineModelList[i] = nullptr;
+			if (i < MAX_EDICTS)
+				LEs[i] = le_t();
+		}
+		for (int i = 0; i < MAX_CLIENTS; i++)
+			clientinfo[i] = clientinfo_t();
+		for (int i = 0; i < MAX_LOCALMODELS; i++)
+			LMs[i] = localModel_t();
+		pathMap = pathing_t();
+	}
 } clientBattleScape_t;
 
 extern clientBattleScape_t cl;

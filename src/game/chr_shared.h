@@ -130,8 +130,15 @@ typedef struct chrScoreGlobal_s {
 
 	int rank;						/**< Index of rank (in ccs.ranks). */
 
-	inline chrScoreGlobal_s () {
-		OBJZERO(*this);
+	inline chrScoreGlobal_s () :
+		assignedMissions(0),
+		rank(0)
+	{
+		OBJZERO(experience);
+		OBJZERO(skills);
+		OBJZERO(initialSkills);
+		OBJZERO(kills);
+		OBJZERO(stuns);
 	}
 } chrScoreGlobal_t;
 
@@ -189,8 +196,12 @@ typedef struct chrReservations_s {
 	FiremodeSettings shotSettings;	/**< Stores what type of firemode & weapon
 									 * (and hand) was used for "shot" reservation. */
 
-	inline chrReservations_s () {
-		reaction = crouch = shot = 0;
+	inline chrReservations_s () :
+		reaction(0),
+		crouch(0),
+		shot(0),
+		shotSettings(FiremodeSettings())
+	{
 	}
 } chrReservations_t;
 
@@ -363,6 +374,14 @@ typedef struct implant_s {
 	int installedTime;			/**< the remaining days until the implant is ready */
 	int removedTime;			/**< the remaining days until the removal is ready */
 	int trigger;
+
+	inline implant_s () :
+		def(nullptr),
+		installedTime(0),
+		removedTime(0),
+		trigger(0)
+	{
+	}
 } implant_t;
 
 /** @brief Describes a character with all its attributes */
