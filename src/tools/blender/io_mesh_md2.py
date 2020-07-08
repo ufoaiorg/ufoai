@@ -566,42 +566,46 @@ class MD2:
 			inFile.close()
 		print("Done")
 
-	def calcSharedBBox(self):
+	def getMesh(self):
 		mesh = self.object.to_mesh(bpy.context.scene, True, 'PREVIEW')
-
 		mesh.transform(self.object.matrix_world)
 		mesh.transform(Matrix.Rotation(pi / 2, 4, 'Z'))
+		return mesh
 
-		min = [mesh.vertices[0].co[0],
+	def getMinMax(self, mesh):
+		mins = [mesh.vertices[0].co[0],
 			   mesh.vertices[0].co[1],
 			   mesh.vertices[0].co[2]]
-		max = [mesh.vertices[0].co[0],
+		maxs = [mesh.vertices[0].co[0],
 			   mesh.vertices[0].co[1],
 			   mesh.vertices[0].co[2]]
 		for vert in mesh.vertices:
 			for i in range(3):
-				if vert.co[i] < min[i]:
-					min[i] = vert.co[i]
-				if vert.co[i] > max[i]:
-					max[i] = vert.co[i]
+				if vert.co[i] < mins[i]:
+					mins[i] = vert.co[i]
+				if vert.co[i] > maxs[i]:
+					maxs[i] = vert.co[i]
+		return mins, maxs
+
+
+	def calcSharedBBox(self):
+		mesh = self.getMesh()
+
+		mins, maxs = self.getMinMax(mesh)
 
 		if self.bbox_min == None:
-			self.bbox_min = [min[0], min[1], min[2]]
-			self.bbox_max = [max[0], max[1], max[2]]
+			self.bbox_min = [mins[0], mins[1], mins[2]]
+			self.bbox_max = [maxs[0], maxs[1], maxs[2]]
 		else:
 			for i in range(3):
-				if self.bbox_min[i] > min[i]:
-					self.bbox_min[i] = min[i]
-				if self.bbox_max[i] < max[i]:
-					self.bbox_max[i] = max[i]
+				if self.bbox_min[i] > mins[i]:
+					self.bbox_min[i] = mins[i]
+				if self.bbox_max[i] < maxs[i]:
+					self.bbox_max[i] = maxs[i]
 
 	def outFrame(self, file, frameName = "frame"):
-		mesh = self.object.to_mesh(bpy.context.scene, True, 'PREVIEW')
+		mesh = self.getMesh()
 
-		mesh.transform(self.object.matrix_world)
-		mesh.transform(Matrix.Rotation(pi / 2, 4, 'Z'))
-
-		if not self.options.fUseSharedBoundingBox:
 		# As MD2 stores quantized vertices, we need to perform quantization.
 		# The quantization is that triples of floats (the position coordinates)
 		# of the vertices need to be quantized to triples of bytes.
@@ -610,23 +614,11 @@ class MD2:
 		# a) normalize the x,y,z values to a range between -1,+1.
 		# We can achieve that by computing the bounding box of the model
 		# in terms of its maximum "max" and its minimum "min"
-			min = [mesh.vertices[0].co[0],
-				   mesh.vertices[0].co[1],
-				   mesh.vertices[0].co[2]]
-			max = [mesh.vertices[0].co[0],
-				   mesh.vertices[0].co[1],
-				   mesh.vertices[0].co[2]]
-
-			for vert in mesh.vertices:
-				for i in range(3):
-					if vert.co[i] < min[i]:
-						min[i] = vert.co[i]
-					if vert.co[i] > max[i]:
-						max[i] = vert.co[i]
-			########################################
+		if not self.options.fUseSharedBoundingBox:
+			mins, maxs = self.getMinMax(mesh)
 		else:
-			min = self.bbox_min
-			max = self.bbox_max
+			mins = self.bbox_min
+			maxs = self.bbox_max
 
 		# and compute the diameter of the bounding box "dia = max - min"
 		# and its midpoint "mid = min + (max - min)*0.5". Given some vertex
@@ -662,9 +654,9 @@ class MD2:
 		# v.k = v'.k * (dia.k / 255) + min.k
 		# and call dia.k / 255 = s.k in the folowing code.
 
-		dia_x = max[0] - min[0]
-		dia_y = max[1] - min[1]
-		dia_z = max[2] - min[2]
+		dia_x = maxs[0] - mins[0]
+		dia_y = maxs[1] - mins[1]
+		dia_z = maxs[2] - mins[2]
 		if dia_x == 0.0 :
 			dia_x = 1.0
 		if dia_y == 0.0 :
@@ -674,9 +666,9 @@ class MD2:
 		s_x = dia_x / 255.0
 		s_y = dia_y / 255.0
 		s_z = dia_z / 255.0
-		t_x = min[0]
-		t_y = min[1]
-		t_z = min[2]
+		t_x = mins[0]
+		t_y = mins[1]
+		t_z = mins[2]
 
 		# note about the scale: self.object.scale is already applied via matrix_world
 		data = struct.pack("<6f16s",
