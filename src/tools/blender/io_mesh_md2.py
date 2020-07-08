@@ -32,9 +32,9 @@ Thanks to David Henry for the documentation about the MD2 file format.
 bl_info = {
 	"name": "Quake2 MD2 format",
 	"description": "Importer and exporter for Quake2 file format (.md2)",
-	"author": "DarkRain, based on the work of Bob Holcomb/Sebastian Lieberknecht/Dao Nguyen/Bernd Meyer/Damien Thebault/Erwan Mathieu/Takehiko Nawata",
-	"version": (1, 1),
-	"blender": (2, 63, 0),
+	"author": "DarkRain, based on the work of Michael Heilmann/Kostas Michalopoulos/Bob Holcomb/Sebastian Lieberknecht/Dao Nguyen/Bernd Meyer/Damien Thebault/Erwan Mathieu/Takehiko Nawata",
+	"version": (1, 2),
+	"blender": (2, 68, 0),
 	"location": "File > Import/Export > Quake2 MD2",
 	"warning": "", # used for warning icon and text in addons panel
 	"support": 'COMMUNITY',
@@ -222,6 +222,14 @@ MD2_NORMALS = ((-0.525731, 0.000000, 0.850651),
 				(-0.587785,-0.425325,-0.688191),
 				(-0.688191,-0.587785,-0.425325))
 
+# An MD2 frame given by its name and its (pre-transformed) vertices.
+class MD2Frame:
+	# @param name the name of the frame (a string)
+	# @param verts the vertices of the frame (a list)
+	def __init__(self, name, verts):
+		self.verts = verts
+		self.name =  name
+
 class MD2:
 	def __init__(self, options):
 		self.options = options
@@ -245,7 +253,7 @@ class MD2:
 		print('.', end='')
 
 		# Verts
-		mesh.vertices.foreach_set("co", unpack_list(self.frames[0]))
+		mesh.vertices.foreach_set("co", unpack_list(self.frames[0].verts))
 		mesh.transform(Matrix.Rotation(-pi / 2, 4, 'Z'))
 		print('.', end='')
 
@@ -296,17 +304,17 @@ class MD2:
 			for i, frame in enumerate(self.frames):
 				progressStatus = i / self.numFrames * 100
 				#bpy.context.scene.frame_set(i + 1)
-				obj.shape_key_add(from_mix=False)
-				mesh.vertices.foreach_set("co", unpack_list(frame))
+				obj.shape_key_add(name=frame.name, from_mix=False)
+				mesh.vertices.foreach_set("co", unpack_list(frame.verts))
 				mesh.transform(Matrix.Rotation(-pi / 2, 4, 'Z'))
 				mesh.shape_keys.key_blocks[i].value = 1.0
-				mesh.shape_keys.key_blocks[i].keyframe_insert("value", frame=i + 1)
+				mesh.shape_keys.key_blocks[i].keyframe_insert("value", frame = i + 1)
 				if i < len(self.frames) - 1:
 					mesh.shape_keys.key_blocks[i].value = 0.0
-					mesh.shape_keys.key_blocks[i].keyframe_insert("value", frame=i + 2)
+					mesh.shape_keys.key_blocks[i].keyframe_insert("value", frame = i + 2)
 				if i > 0:
 					mesh.shape_keys.key_blocks[i].value = 0.0
-					mesh.shape_keys.key_blocks[i].keyframe_insert("value", frame=i)
+					mesh.shape_keys.key_blocks[i].keyframe_insert("value", frame = i)
 				print("Animating - progress: %3i%%\r" % int(progressStatus), end='')
 			print("Animating - progress: 100%.")
 
@@ -546,12 +554,13 @@ class MD2:
 			for i in range(self.numFrames):
 				buff = inFile.read(struct.calcsize("<6f16s"))
 				data = struct.unpack("<6f16s", buff)
+				name = Util.asciiz(data[6].decode("utf-8", "replace"))
 				verts = []
 				for j in range(self.numVerts):
 					buff = inFile.read(struct.calcsize("<4B"))
 					vert = struct.unpack("<4B", buff)
 					verts.append((data[0] * vert[0] + data[3], data[1] * vert[1] + data[4], data[2] * vert[2] + data[5]))
-				self.frames.append(verts)
+				self.frames.append(MD2Frame(name,verts))
 			print('.', end='')
 		finally:
 			inFile.close()
@@ -569,7 +578,6 @@ class MD2:
 		max = [mesh.vertices[0].co[0],
 			   mesh.vertices[0].co[1],
 			   mesh.vertices[0].co[2]]
-
 		for vert in mesh.vertices:
 			for i in range(3):
 				if vert.co[i] < min[i]:
@@ -594,7 +602,14 @@ class MD2:
 		mesh.transform(Matrix.Rotation(pi / 2, 4, 'Z'))
 
 		if not self.options.fUseSharedBoundingBox:
-			###### compute the bounding box ###############
+		# As MD2 stores quantized vertices, we need to perform quantization.
+		# The quantization is that triples of floats (the position coordinates)
+		# of the vertices need to be quantized to triples of bytes.
+		#
+		# To achieve that, we proceed in two steps:
+		# a) normalize the x,y,z values to a range between -1,+1.
+		# We can achieve that by computing the bounding box of the model
+		# in terms of its maximum "max" and its minimum "min"
 			min = [mesh.vertices[0].co[0],
 				   mesh.vertices[0].co[1],
 				   mesh.vertices[0].co[2]]
@@ -613,50 +628,91 @@ class MD2:
 			min = self.bbox_min
 			max = self.bbox_max
 
-		# BL: some caching to speed it up:
-		# -> sd_ gets the vertices between [0 and 255]
-		#    which is our important quantization.
-		dx = max[0] - min[0] if max[0] - min[0] != 0.0 else 1.0
-		dy = max[1] - min[1] if max[1] - min[1] != 0.0 else 1.0
-		dz = max[2] - min[2] if max[2] - min[2] != 0.0 else 1.0
-		sdx = dx / 255.0
-		sdy = dy / 255.0
-		sdz = dz / 255.0
-		isdx = 255.0 / dx
-		isdy = 255.0 / dy
-		isdz = 255.0 / dz
+		# and compute the diameter of the bounding box "dia = max - min"
+		# and its midpoint "mid = min + (max - min)*0.5". Given some vertex
+		# v we can now translate the model to have its bounding box minimum
+		# at (0,0,0)  and scale it by along each axis by the inverse of its
+		# diameter. Given a vertex v = (v.x,v.y,v.z) we transform each
+		# component v.k, k in {x,y,z}
+		#	v'.k = (v.k - min.k)/dia.k
+		# Note that "dia.k" might be equal "0" in that case,
+		# we fix set "dia.k=1". We have just bounded the
+		# values into the range of [0,1]: To see that simply note that
+		#    min.k <= v.k <= max.k
+		# => 0 <= v.k - min.k <= max.k - min.k
+		# As max.k - min.k = dia.k
+		# => 0 <= (v.k - min.k)/dia.k <= 1.0.
+		#
+		# However, we want to "spread" our values not in the range of [0,1],
+		# but rather in the range [0,255] which can be easily realized by
+		# a slight adjustment to the computation of v'.k
+		#	  v'.k = (v.k - min.k)/(dia.k/255)
+		# <=> v'.k = (v.k - min.k)*(255/dia.k)
+		# An advantage is, that 255/dia.k can be precomputed!
+		# We can show now that the values are actually within the range of [0,255].
+		# From the previous "proof" we have.
+		#  0 <= (v.k - min.k)/dia.k <= 1.0
+		# and multiplying by 255 gives
+		# => 0*255 <= (v.k - min.k)*255/dia.k <= 1.0 * 255
+		# => 0 <= (v.k - min.k)*/(255/dia.k) <= 255
+		# as desired. We call 255/dia.k in the following code is.k = 255/dia.k.
+		# Note that we can reverse this transformation
+		# (v.k - min.k)*255/dia.k = v'.k
+		# v.k - min.k = v'.k * (dia.k / 255)
+		# v.k = v'.k * (dia.k / 255) + min.k
+		# and call dia.k / 255 = s.k in the folowing code.
+
+		dia_x = max[0] - min[0]
+		dia_y = max[1] - min[1]
+		dia_z = max[2] - min[2]
+		if dia_x == 0.0 :
+			dia_x = 1.0
+		if dia_y == 0.0 :
+			dia_y = 1.0
+		if dia_z == 0.0 :
+			dia_z = 1.0
+		s_x = dia_x / 255.0
+		s_y = dia_y / 255.0
+		s_z = dia_z / 255.0
+		t_x = min[0]
+		t_y = min[1]
+		t_z = min[2]
 
 		# note about the scale: self.object.scale is already applied via matrix_world
 		data = struct.pack("<6f16s",
 							# writing the scale of the model
-							sdx,
-							sdy,
-							sdz,
-							## now the initial offset (= min of bounding box)
-							min[0],
-							min[1],
-							min[2],
+							s_x,
+							s_y,
+							s_z,
+							# write the translation of the model
+							t_x,
+							t_y,
+							t_z,
 							# and finally the name.
 							bytes(frameName, encoding="utf8"))
 
 		file.write(data) # frame header
 
+		is_x = 255.0 / dia_x
+		is_y = 255.0 / dia_y
+		is_z = 255.0 / dia_z
+
 		for vert in mesh.vertices:
 			# find the closest normal for every vertex
 			for iN in range(162):
 				dot = vert.normal[1] * MD2_NORMALS[iN][0] + \
-					-vert.normal[0] * MD2_NORMALS[iN][1] + \
-					vert.normal[2] * MD2_NORMALS[iN][2]
+					- vert.normal[0] * MD2_NORMALS[iN][1] + \
+					  vert.normal[2] * MD2_NORMALS[iN][2]
 
 				if iN == 0 or dot > maxDot:
 					maxDot = dot
 					bestNormalIndex = iN
 
-			# and now write the normal.
+			# and now write the vertex and the normal.
 			data = struct.pack("<4B",
-								int((vert.co[0] - min[0]) * isdx),
-								int((vert.co[1] - min[1]) * isdy),
-								int((vert.co[2] - min[2]) * isdz),
+								int((vert.co[0] - t_x) * is_x),
+								int((vert.co[1] - t_y) * is_y),
+								int((vert.co[2] - t_z) * is_z),
 								bestNormalIndex)
 
 			file.write(data) # write vertex and normal
@@ -1091,11 +1147,13 @@ def menu_func_export(self, context):
 def menu_func_import(self, context):
 	self.layout.operator(Import_MD2.bl_idname, text="Quake II's MD2 (.md2)")
 
+# One of the two functions Blender calls.
 def register():
 	bpy.utils.register_module(__name__)
 	bpy.types.INFO_MT_file_export.append(menu_func_export)
 	bpy.types.INFO_MT_file_import.append(menu_func_import)
 
+# One of the two functions Blender calls.
 def unregister():
 	bpy.utils.unregister_module(__name__)
 	bpy.types.INFO_MT_file_export.remove(menu_func_export)
