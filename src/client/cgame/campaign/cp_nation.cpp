@@ -453,7 +453,6 @@ void CITY_Parse (const char* name, const char** text)
 	}
 
 	OBJZERO(newCity);
-	newCity.idx = ccs.numCities;
 
 	if (cgi->Com_ParseBlock(name, text, &newCity, city_vals, cp_campaignPool)) {
 		ccs.numCities++;

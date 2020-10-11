@@ -68,8 +68,6 @@ typedef struct nation_s {
 typedef struct city_s {
 	const char* id;			/**< Unique ID of this city. */
 	const char* name;		/**< Full name of the city. */
-	int idx;				/**< position in the cities array */
-
 	vec2_t pos;				/**< City position on geoscape. */
 } city_t;
 
