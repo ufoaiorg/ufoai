@@ -104,9 +104,7 @@ set(UFOAI_DEP_SEARCH_PATH
       ${UFOAI_DEPENDENCIES_DIR}/SDL2/lib${UFOAI_ARCH_SUFIX}
       ${UFOAI_DEPENDENCIES_DIR}/vorbis/include
       ${UFOAI_DEPENDENCIES_DIR}/vorbis/lib${UFOAI_ARCH_SUFIX}
-      ${UFOAI_DEPENDENCIES_DIR}/zlib/include
-      ${UFOAI_DEPENDENCIES_DIR}/zlib/lib${UFOAI_ARCH_SUFIX}
-   )
+)
 
 message(STATUS "Search path dependencies: ${UFOAI_DEP_SEARCH_PATH}")
 
