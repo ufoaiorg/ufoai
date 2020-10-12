@@ -133,6 +133,7 @@ if(UFOAI_BUILD_UFO2MAP OR
       UFOAI_BUILD_UFOTESTALL)
    find_package(JPEG)
    find_package(X11)
+   set(OpenGL_GL_PREFERENCE "LEGACY")
    find_package(OpenGL)
 endif()
 
