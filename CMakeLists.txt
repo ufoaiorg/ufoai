@@ -92,8 +92,6 @@ set(UFOAI_DEP_SEARCH_PATH
       ${UFOAI_DEPENDENCIES_DIR}/gtk/lib${UFOAI_ARCH_SUFIX}
       ${UFOAI_DEPENDENCIES_DIR}/jpeg/include
       ${UFOAI_DEPENDENCIES_DIR}/jpeg/lib${UFOAI_ARCH_SUFIX}
-      ${UFOAI_DEPENDENCIES_DIR}/intl/include
-      ${UFOAI_DEPENDENCIES_DIR}/intl/lib${UFOAI_ARCH_SUFIX}
       ${UFOAI_DEPENDENCIES_DIR}/ogg/include
       ${UFOAI_DEPENDENCIES_DIR}/ogg/lib${UFOAI_ARCH_SUFIX}
       ${UFOAI_DEPENDENCIES_DIR}/openal/include
@@ -136,7 +134,7 @@ endif()
 if(UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFORADIANT OR
       UFOAI_BUILD_UFOTESTALL)
-   find_package(LibIntl)
+   find_package(Intl)
    find_package(OGG)
 endif()
 
@@ -961,7 +959,7 @@ if(UFOAI_BUILD_UFO)
       PRIVATE ${OGG_INCLUDE_DIR}
       PRIVATE ${JPEG_INCLUDE_DIR}
       PRIVATE ${PNG_INCLUDE_DIRS}
-      PRIVATE ${LIBINTL_INCLUDE_DIR}
+      PRIVATE ${Intl_INCLUDE_DIRS}
       PRIVATE ${ZLIB_INCLUDE_DIRS}
       PRIVATE ${OPENGL_INCLUDE_DIR}
    )
@@ -990,7 +988,7 @@ if(UFOAI_BUILD_UFO)
    if(WIN32 AND MSVC)
       target_link_libraries(${UFOAI_PROJECT_UFO}
          opengl32
-         ${LIBINTL_LIBRARIES}
+         ${Intl_LIBRARIES}
          winmm
          Ws2_32
       )
@@ -998,14 +996,14 @@ if(UFOAI_BUILD_UFO)
       target_link_libraries(${UFOAI_PROJECT_UFO}
          opengl32
          imm32
-         ${LIBINTL_LIBRARIES}
+         ${Intl_LIBRARIES}
          version
          winmm
          Ws2_32
       )
    elseif(APPLE)
       target_link_libraries(${UFOAI_PROJECT_UFO}
-         ${LIBINTL_LIBRARIES}
+         ${Intl_LIBRARIES}
       )
    elseif(UNIX)
       target_link_libraries(${UFOAI_PROJECT_UFO}
@@ -1018,7 +1016,7 @@ if(UFOAI_BUILD_UFO)
       endif()
       if(CMAKE_SYSTEM_NAME MATCHES "BSD")
          target_link_libraries(${UFOAI_PROJECT_UFO}
-            ${LIBINTL_LIBRARIES}
+            ${Intl_LIBRARIES}
          )
       endif()
    endif()
@@ -1566,7 +1564,7 @@ if(UFOAI_BUILD_UFORADIANT)
       PRIVATE ${OPENAL_INCLUDE_DIR}
       PRIVATE ${VORBIS_INCLUDE_DIR}
       PRIVATE ${OGG_INCLUDE_DIR}
-      PRIVATE ${LIBINTL_INCLUDE_DIR}
+      PRIVATE ${Intl_INCLUDE_DIRS}
       PRIVATE ${ZLIB_INCLUDE_DIRS}
    )
 
@@ -1586,13 +1584,13 @@ if(UFOAI_BUILD_UFORADIANT)
       target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
          opengl32
          imm32
-         ${LIBINTL_LIBRARIES}
+         ${Intl_LIBRARIES}
          version
          winmm
       )
    elseif(APPLE)
       target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
-         ${LIBINTL_LIBRARIES}
+         ${Intl_LIBRARIES}
       )
    elseif(UNIX)
       target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
@@ -2058,7 +2056,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       PRIVATE ${OGG_INCLUDE_DIR}
       PRIVATE ${JPEG_INCLUDE_DIR}
       PRIVATE ${PNG_INCLUDE_DIRS}
-      PRIVATE ${LIBINTL_INCLUDE_DIR}
+      PRIVATE ${Intl_INCLUDE_DIRS}
       PRIVATE ${ZLIB_INCLUDE_DIRS}
       PRIVATE ${X11_INCLUDE_DIR}
    )
@@ -2088,14 +2086,14 @@ if(UFOAI_BUILD_UFOTESTALL)
       target_link_libraries(${UFOAI_PROJECT_UFOTESTALL}
          opengl32
          imm32
-         ${LIBINTL_LIBRARIES}
+         ${Intl_LIBRARIES}
          version
          winmm
          Ws2_32
       )
    elseif(APPLE)
       target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
-         ${LIBINTL_LIBRARIES}
+         ${Intl_LIBRARIES}
       )
    elseif(UNIX)
       target_link_libraries(${UFOAI_PROJECT_UFOTESTALL}
