@@ -166,6 +166,12 @@ if(UFOAI_BUILD_GAME OR
    find_package(SDL)
 endif()
 
+if (UFOAI_BUILD_GAME OR
+      UFOAI_BUILD_UFO OR
+      UFOAI_BUILD_UFOTESTALL)
+   find_package(Lua51)
+endif()
+
 if(UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFOTESTALL)
    find_package(SDL_mixer)
@@ -241,37 +247,6 @@ if(UFOAI_BUILD_GAME)
       ${UFOAI_SRC}/game/inv_shared.cpp
       ${UFOAI_SRC}/game/inventory.cpp
       ${UFOAI_SRC}/game/q_shared.cpp
-
-      ${UFOAI_SRC}/libs/lua/lapi.c
-      ${UFOAI_SRC}/libs/lua/lauxlib.c
-      ${UFOAI_SRC}/libs/lua/lbaselib.c
-      ${UFOAI_SRC}/libs/lua/lcode.c
-      ${UFOAI_SRC}/libs/lua/ldblib.c
-      ${UFOAI_SRC}/libs/lua/ldebug.c
-      ${UFOAI_SRC}/libs/lua/ldo.c
-      ${UFOAI_SRC}/libs/lua/ldump.c
-      ${UFOAI_SRC}/libs/lua/lfunc.c
-      ${UFOAI_SRC}/libs/lua/lgc.c
-      ${UFOAI_SRC}/libs/lua/linit.c
-      ${UFOAI_SRC}/libs/lua/liolib.c
-      ${UFOAI_SRC}/libs/lua/llex.c
-      ${UFOAI_SRC}/libs/lua/lmathlib.c
-      ${UFOAI_SRC}/libs/lua/lmem.c
-      ${UFOAI_SRC}/libs/lua/loadlib.c
-      ${UFOAI_SRC}/libs/lua/lobject.c
-      ${UFOAI_SRC}/libs/lua/lopcodes.c
-      ${UFOAI_SRC}/libs/lua/loslib.c
-      ${UFOAI_SRC}/libs/lua/lparser.c
-      ${UFOAI_SRC}/libs/lua/lstate.c
-      ${UFOAI_SRC}/libs/lua/lstring.c
-      ${UFOAI_SRC}/libs/lua/lstrlib.c
-      ${UFOAI_SRC}/libs/lua/ltable.c
-      ${UFOAI_SRC}/libs/lua/ltablib.c
-      ${UFOAI_SRC}/libs/lua/ltm.c
-      ${UFOAI_SRC}/libs/lua/lundump.c
-      ${UFOAI_SRC}/libs/lua/lvm.c
-      ${UFOAI_SRC}/libs/lua/lzio.c
-      ${UFOAI_SRC}/libs/lua/print.c
    )
 
    # game is a shared library
@@ -296,8 +271,12 @@ if(UFOAI_BUILD_GAME)
    target_compile_definitions(${UFOAI_PROJECT_GAME} PRIVATE -DCOMPILE_UFO)
 
    target_include_directories(${UFOAI_PROJECT_GAME}
-      PRIVATE ${UFOAI_SRC}/libs/lua
+      PRIVATE ${LUA_INCLUDE_DIR}
       PRIVATE ${SDL_INCLUDE_DIR}
+   )
+
+   target_link_libraries(${UFOAI_PROJECT_GAME}
+      ${LUA_LIBRARY}
    )
 endif()
 
@@ -902,37 +881,6 @@ if(UFOAI_BUILD_UFO)
       ${UFOAI_SRC}/shared/stringhunk.cpp
       ${UFOAI_SRC}/shared/utf8.cpp
 
-      ${UFOAI_SRC}/libs/lua/lapi.c
-      ${UFOAI_SRC}/libs/lua/lauxlib.c
-      ${UFOAI_SRC}/libs/lua/lbaselib.c
-      ${UFOAI_SRC}/libs/lua/lcode.c
-      ${UFOAI_SRC}/libs/lua/ldblib.c
-      ${UFOAI_SRC}/libs/lua/ldebug.c
-      ${UFOAI_SRC}/libs/lua/ldo.c
-      ${UFOAI_SRC}/libs/lua/ldump.c
-      ${UFOAI_SRC}/libs/lua/lfunc.c
-      ${UFOAI_SRC}/libs/lua/lgc.c
-      ${UFOAI_SRC}/libs/lua/linit.c
-      ${UFOAI_SRC}/libs/lua/liolib.c
-      ${UFOAI_SRC}/libs/lua/llex.c
-      ${UFOAI_SRC}/libs/lua/lmathlib.c
-      ${UFOAI_SRC}/libs/lua/lmem.c
-      ${UFOAI_SRC}/libs/lua/loadlib.c
-      ${UFOAI_SRC}/libs/lua/lobject.c
-      ${UFOAI_SRC}/libs/lua/lopcodes.c
-      ${UFOAI_SRC}/libs/lua/loslib.c
-      ${UFOAI_SRC}/libs/lua/lparser.c
-      ${UFOAI_SRC}/libs/lua/lstate.c
-      ${UFOAI_SRC}/libs/lua/lstring.c
-      ${UFOAI_SRC}/libs/lua/lstrlib.c
-      ${UFOAI_SRC}/libs/lua/ltable.c
-      ${UFOAI_SRC}/libs/lua/ltablib.c
-      ${UFOAI_SRC}/libs/lua/ltm.c
-      ${UFOAI_SRC}/libs/lua/lundump.c
-      ${UFOAI_SRC}/libs/lua/lvm.c
-      ${UFOAI_SRC}/libs/lua/lzio.c
-      ${UFOAI_SRC}/libs/lua/print.c
-
       ${UFOAI_SRC}/libs/mumble/libmumblelink.c
 
       ${UFOAI_SRC}/libs/mxml/mxml-attr.c
@@ -1005,9 +953,9 @@ if(UFOAI_BUILD_UFO)
    target_compile_definitions(${UFOAI_PROJECT_UFO} PRIVATE -DPATH_UFODEDICON_FILE="${CMAKE_SOURCE_DIR}/build/projects/ufoded.ico")
 
    target_include_directories(${UFOAI_PROJECT_UFO}
-      PRIVATE ${UFOAI_SRC}/libs/lua
       PRIVATE ${UFOAI_SRC}/libs/mumble
       PRIVATE ${UFOAI_SRC}/libs/mxml
+      PRIVATE ${LUA_INCLUDE_DIR}
       PRIVATE ${SDL_INCLUDE_DIR}
       PRIVATE ${SDLMIXER_INCLUDE_DIR}
       PRIVATE ${SDLTTF_INCLUDE_DIR}
@@ -1028,6 +976,7 @@ if(UFOAI_BUILD_UFO)
    endif()
 
    target_link_libraries(${UFOAI_PROJECT_UFO}
+      ${LUA_LIBRARY}
       ${SDL_LIBRARY_MAIN}
       ${SDL_LIBRARY}
       ${SDL_MIXER_LIBRARIES}
@@ -2040,36 +1989,6 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${UFOAI_SRC}/tests/test_webapi.cpp
 
       ${UFOAI_SRC}/libs/gtest/src/gtest-all.cc
-      ${UFOAI_SRC}/libs/lua/lapi.c
-      ${UFOAI_SRC}/libs/lua/lauxlib.c
-      ${UFOAI_SRC}/libs/lua/lbaselib.c
-      ${UFOAI_SRC}/libs/lua/lcode.c
-      ${UFOAI_SRC}/libs/lua/ldblib.c
-      ${UFOAI_SRC}/libs/lua/ldebug.c
-      ${UFOAI_SRC}/libs/lua/ldo.c
-      ${UFOAI_SRC}/libs/lua/ldump.c
-      ${UFOAI_SRC}/libs/lua/lfunc.c
-      ${UFOAI_SRC}/libs/lua/lgc.c
-      ${UFOAI_SRC}/libs/lua/linit.c
-      ${UFOAI_SRC}/libs/lua/liolib.c
-      ${UFOAI_SRC}/libs/lua/llex.c
-      ${UFOAI_SRC}/libs/lua/lmathlib.c
-      ${UFOAI_SRC}/libs/lua/lmem.c
-      ${UFOAI_SRC}/libs/lua/loadlib.c
-      ${UFOAI_SRC}/libs/lua/lobject.c
-      ${UFOAI_SRC}/libs/lua/lopcodes.c
-      ${UFOAI_SRC}/libs/lua/loslib.c
-      ${UFOAI_SRC}/libs/lua/lparser.c
-      ${UFOAI_SRC}/libs/lua/lstate.c
-      ${UFOAI_SRC}/libs/lua/lstring.c
-      ${UFOAI_SRC}/libs/lua/lstrlib.c
-      ${UFOAI_SRC}/libs/lua/ltable.c
-      ${UFOAI_SRC}/libs/lua/ltablib.c
-      ${UFOAI_SRC}/libs/lua/ltm.c
-      ${UFOAI_SRC}/libs/lua/lundump.c
-      ${UFOAI_SRC}/libs/lua/lvm.c
-      ${UFOAI_SRC}/libs/lua/lzio.c
-      ${UFOAI_SRC}/libs/lua/print.c
       ${UFOAI_SRC}/libs/mumble/libmumblelink.c
       ${UFOAI_SRC}/libs/mxml/mxml-attr.c
       ${UFOAI_SRC}/libs/mxml/mxml-entity.c
@@ -2131,9 +2050,9 @@ if(UFOAI_BUILD_UFOTESTALL)
    target_include_directories(${UFOAI_PROJECT_UFOTESTALL}
       PRIVATE ${UFOAI_SRC}/libs/gtest
       PRIVATE ${UFOAI_SRC}/libs/gtest/include
-      PRIVATE ${UFOAI_SRC}/libs/lua
       PRIVATE ${UFOAI_SRC}/libs/mumble
       PRIVATE ${UFOAI_SRC}/libs/mxml
+      PRIVATE ${LUA_INCLUDE_DIR}
       PRIVATE ${SDL_INCLUDE_DIR}
       PRIVATE ${SDLMIXER_INCLUDE_DIR}
       PRIVATE ${SDLTTF_INCLUDE_DIR}
@@ -2154,6 +2073,7 @@ if(UFOAI_BUILD_UFOTESTALL)
    endif()
 
    target_link_libraries(${UFOAI_PROJECT_UFOTESTALL}
+      ${LUA_LIBRARY}
       ${SDL_LIBRARY_MAIN}
       ${SDL_LIBRARY}
       ${SDL_MIXER_LIBRARIES}
