@@ -88,8 +88,6 @@ elseif()
    set(UFOAI_ARCH_SUFIX "")
 endif()
 set(UFOAI_DEP_SEARCH_PATH
-      ${UFOAI_DEPENDENCIES_DIR}/gtk/include
-      ${UFOAI_DEPENDENCIES_DIR}/gtk/lib${UFOAI_ARCH_SUFIX}
       ${UFOAI_DEPENDENCIES_DIR}/jpeg/include
       ${UFOAI_DEPENDENCIES_DIR}/jpeg/lib${UFOAI_ARCH_SUFIX}
       ${UFOAI_DEPENDENCIES_DIR}/ogg/include
@@ -117,7 +115,10 @@ if(UFOAI_BUILD_UFODED OR
 endif()
 
 if(UFOAI_BUILD_UFORADIANT)
-   find_package(GTK)
+   find_package(GTK2)
+   find_package(GTKSourceView2)
+   find_package(GTKGL)
+   find_package(LibXml2)
 endif()
 
 if(UFOAI_BUILD_UFO2MAP OR
@@ -1560,7 +1561,10 @@ if(UFOAI_BUILD_UFORADIANT)
       PRIVATE ${UFOAI_SRC}/tools/radiant/libs
       PRIVATE ${UFOAI_SRC}/libs/picomodel
       PRIVATE ${SDL_INCLUDE_DIR}
-      PRIVATE ${GTK_INCLUDE_DIRS}
+      PRIVATE ${GTK2_INCLUDE_DIRS}
+      PRIVATE ${GTKSourceView2_INCLUDE_DIR}
+      PRIVATE ${GTKGL_INCLUDE_DIRS}
+      PRIVATE ${LIBXML2_INCLUDE_DIR}
       PRIVATE ${OPENAL_INCLUDE_DIR}
       PRIVATE ${VORBIS_INCLUDE_DIR}
       PRIVATE ${OGG_INCLUDE_DIR}
@@ -1569,7 +1573,10 @@ if(UFOAI_BUILD_UFORADIANT)
    )
 
    target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
-      ${GTK_LIBRARIES}
+      ${GTK2_LIBRARIES}
+      ${GTKSourceView2_LIBRARY}
+      ${GTKGL_LIBRARIES}
+      ${LIBXML2_LIBRARY}
       ${VORBIS_LIBRARY_FILE}
       ${VORBIS_LIBRARY}
       ${OGG_LIBRARIES}
