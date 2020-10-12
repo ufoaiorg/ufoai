@@ -293,7 +293,7 @@ bool SAV_GameSaveAllowed (char** error = nullptr)
 bool SAV_GameSave (const char* filename, const char* comment, char** error)
 {
 	if (!SAV_GameSaveAllowed(error)) {
-		cgi->Com_Printf(*error);
+		cgi->Com_Printf("%s", *error);
 		return false;
 	}
 
