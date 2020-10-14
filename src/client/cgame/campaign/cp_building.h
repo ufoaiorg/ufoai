@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "../../../shared/shared.h"
-#include "../../../common/common.h"
+#include "../../cl_time.h"
 
 /** @brief All possible building status. */
 typedef enum {

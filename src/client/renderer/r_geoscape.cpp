@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_mesh.h"
 #include "r_draw.h"
 
+#include "../cl_time.h"
+
 #define MARKER_SIZE 60.0
 
 /**

@@ -280,30 +280,6 @@ extern cvar_t* sys_affinity;
 extern cvar_t* sys_os;
 extern cvar_t* hwclass;
 
-/* Time information. */
-/**
- * @brief Engine-side time information in the game.
- * @note Use this in your custom structs that need to get saved or sent over the network.
- * @sa dateLong_t	For runtime use (human readable).
- * @sa CP_DateConvertLong
- */
-typedef struct date_s {
-	int day;	/**< Number of elapsed days since 1st january of year 0 */
-	int sec;	/**< Number of elapsed seconds since the beginning of current day */
-} date_t;
-
-/* Time Constants */
-#define DAYS_PER_YEAR		365
-#define DAYS_PER_YEAR_AVG	365.25
-/** DAYS_PER_MONTH -> @sa monthLength[] array in campaign.c */
-#define MONTHS_PER_YEAR		12
-#define SEASONS_PER_YEAR	4
-#define SECONDS_PER_DAY		86400	/**< (24 * 60 * 60) */
-#define SECONDS_PER_HOUR	3600	/**< (60 * 60) */
-#define SECONDS_PER_MINUTE	60		/**< (60) */
-#define MINUTES_PER_HOUR	60		/**< (60) */
-#define HOURS_PER_DAY		24
-
 #define MAXCMDLINE 256
 
 typedef void (*vPrintfPtr_t)(const char* fmt, va_list ap);

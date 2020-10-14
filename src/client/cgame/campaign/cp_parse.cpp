@@ -355,7 +355,6 @@ static const value_t campaign_vals[] = {
 	{"visible", V_BOOL, offsetof(campaign_t, visible), MEMBER_SIZEOF(campaign_t, visible)},
 	{"text", V_TRANSLATION_STRING, offsetof(campaign_t, text), 0}, /* just a gettext placeholder */
 	{"name", V_TRANSLATION_STRING, offsetof(campaign_t, name), 0},
-	{"date", V_DATE, offsetof(campaign_t, date), 0},
 	{"basecost", V_INT, offsetof(campaign_t, basecost), MEMBER_SIZEOF(campaign_t, basecost)},
 	{"firstbase", V_STRING, offsetof(campaign_t, firstBaseTemplate), 0},
 	{"researchrate", V_FLOAT, offsetof(campaign_t, researchRate), MEMBER_SIZEOF(campaign_t, researchRate)},
@@ -453,6 +452,18 @@ static void CP_ParseCampaign (const char* name, const char** text)
 			cp->events = CP_GetEventsByID(token);
 		} else if (Q_streq(token, "aircraft")) {
 			cgi->Com_ParseList(text, &cp->initialCraft);
+		} else if (Q_streq(token, "date")) {
+			token = cgi->Com_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			int year;
+			int day;
+			int hour;
+			if (sscanf(token, "%i %i %i", &year, &day, &hour) != 3) {
+				Com_Error(ERR_DROP, "Illegal campaign start date for campaign %s", cp->id);
+			}
+			cp->date.day = DAYS_PER_YEAR * year + day;
+			cp->date.sec = SECONDS_PER_HOUR * hour;
 		} else {
 			cgi->Com_Printf("CP_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
 			cgi->Com_EParse(text, errhead, name);

@@ -327,7 +327,6 @@ const char* const vt_names[] = {
 	"shapes",
 	"shapeb",
 	"damage",
-	"date",
 	"relabs",
 	"hunk_string",
 	"team",
@@ -379,7 +378,6 @@ static const size_t vt_sizes[] = {
 	sizeof(int),		/* V_SHAPE_SMALL */
 	0,					/* V_SHAPE_BIG */
 	sizeof(byte),		/* V_DAMAGE */
-	0,					/* V_DATE */
 	sizeof(float),		/* V_RELABS */
 	0,					/* V_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
@@ -411,7 +409,6 @@ static const size_t vt_aligns[] = {
 	sizeof(int),		/* V_SHAPE_SMALL */
 	sizeof(uint32_t),	/* V_SHAPE_BIG */
 	sizeof(byte),		/* V_DAMAGE */
-	sizeof(date_t),		/* V_DATE */
 	sizeof(float),		/* V_RELABS */
 	sizeof(char),		/* V_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
@@ -929,17 +926,6 @@ resultStatus_t Com_ParseValue (void* base, const char* token, valueTypes_t type,
 		*writtenBytes = sizeof(byte);
 		break;
 
-	case V_DATE:
-		if (sscanf(token, "%i %i %i", &x, &y, &w) != 3) {
-			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal if statement '%s'", token);
-			return RESULT_ERROR;
-		}
-
-		((date_t*) b)->day = DAYS_PER_YEAR * x + y;
-		((date_t*) b)->sec = SECONDS_PER_HOUR * w;
-		*writtenBytes = sizeof(date_t);
-		break;
-
 	case V_RELABS:
 		if (token[0] == '-' || token[0] == '+') {
 			if (fabs(atof(token + 1)) <= 2.0f) {
@@ -1170,10 +1156,6 @@ int Com_SetValue (void* base, const void* set, valueTypes_t type, int ofs, size_
 		*b = *(const byte*) set;
 		return 1;
 
-	case V_DATE:
-		memcpy(b, set, sizeof(date_t));
-		return sizeof(date_t);
-
 	default:
 		Sys_Error("Com_SetValue: unknown value type\n");
 	}
@@ -1308,10 +1290,6 @@ const char* Com_ValueToStr (const void* base, const valueTypes_t type, const int
 	case V_DAMAGE:
 		assert(*(const byte*)b < MAX_DAMAGETYPES);
 		return csi.dts[*(const byte*)b].id;
-
-	case V_DATE:
-		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((const date_t*) b)->day / DAYS_PER_YEAR, ((const date_t*) b)->day % DAYS_PER_YEAR, ((const date_t*) b)->sec);
-		return valuestr;
 
 	case V_RELABS:
 		/* absolute value */
