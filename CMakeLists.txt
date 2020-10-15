@@ -23,6 +23,12 @@ if(NOT CMAKE_BUILD_TYPE)
    message(STATUS "CMake build type is not set, defaulting to 'RelWithDebInfo'")
    set(CMAKE_BUILD_TYPE "RelWithDebInfo")
 endif()
+message(STATUS "CMake build type is set to ${CMAKE_BUILD_TYPE}")
+
+if("${CMAKE_BUILD_TYPE}" MATCHES "Debug" OR "${CMAKE_BUILD_TYPE}" MATCHES "RelWithDebInfo")
+   message(STATUS "Adding #define DEBUG")
+   add_definitions(-DDEBUG)
+endif()
 
 if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
    message(STATUS "Target is 64 bits")
