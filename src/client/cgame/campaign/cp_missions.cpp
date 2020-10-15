@@ -2130,15 +2130,8 @@ bool MIS_LoadXML (xmlNode_t* parent)
 			}
 			break;
 		case INTERESTCATEGORY_INTERCEPT:
-			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_INTERCEPT) {
-				installation_t* installation = INS_GetByIDX(cgi->XML_GetInt(node, SAVE_MISSIONS_INSTALLATIONINDEX, -1));
-				if (installation)
-					mission.data.installation = installation;
-				else {
-					cgi->Com_Printf("Mission on non-existent installation\n");
-					continue;
-				}
-			}
+			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_INTERCEPT)
+				mission.data.installation = INS_GetByIDX(cgi->XML_GetInt(node, SAVE_MISSIONS_INSTALLATIONINDEX, -1));
 			break;
 		case INTERESTCATEGORY_RESCUE:
 			{

@@ -207,7 +207,9 @@ static void CP_InterceptMissionSet (mission_t* mission)
 				CP_InterceptGoToInstallation(mission);
 		}
 
-	CP_InterceptAircraftMissionSet(mission);
+	/* if not attacking an installation */
+	if (mission->stage != STAGE_MISSION_GOTO)
+		CP_InterceptAircraftMissionSet(mission);
 }
 
 /**
