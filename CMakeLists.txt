@@ -76,13 +76,13 @@ endif()
 
 ## Projects we want to build
 option(UFOAI_BUILD_GAME "Build the library handling the battlescape" ON)
-option(UFOAI_BUILD_UFO2MAP "Build the tool to compile maps" OFF)
-option(UFOAI_BUILD_UFODED "Build the dedicated server" OFF)
+option(UFOAI_BUILD_UFO2MAP "Build the tool to compile maps" ON)
+option(UFOAI_BUILD_UFODED "Build the dedicated server" ON)
 option(UFOAI_BUILD_UFO "Build the main game" ON)
-option(UFOAI_BUILD_UFOMODEL "Build the tool for pre-compiling lightmaps for models" OFF)
-option(UFOAI_BUILD_UFOSLICER "Build the tool for creating fancy map overviews" OFF)
-option(UFOAI_BUILD_UFORADIANT "Build the map editor (needs GTK)" OFF)
-option(UFOAI_BUILD_UFOTESTALL "Build unitary tests" OFF)
+option(UFOAI_BUILD_UFOMODEL "Build the tool for pre-compiling lightmaps for models" ON)
+option(UFOAI_BUILD_UFOSLICER "Build the tool for creating fancy map overviews" ON)
+option(UFOAI_BUILD_UFORADIANT "Build the map editor (needs GTK)" ON)
+option(UFOAI_BUILD_UFOTESTALL "Build unitary tests" ON)
 
 ## We check for dependencies
 set(UFOAI_DEPENDENCIES_DIR "$ENV{UFOAI_DEPS}" CACHE PATH "Path to prebuilt UFOAI dependencies")
