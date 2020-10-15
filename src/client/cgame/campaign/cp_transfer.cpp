@@ -433,7 +433,10 @@ bool TR_SaveXML (xmlNode_t* p)
 			cgi->XML_AddInt(s, SAVE_TRANSFER_SRCBASE, transfer->srcBase->idx);
 		/* save antimatter */
 		if (transfer->antimatter > 0) {
-
+			xmlNode_t* antimatterNode = cgi->XML_AddNode(s, SAVE_TRANSFER_ANTIMATTER);
+			if (!antimatterNode)
+				return false;
+			cgi->XML_AddInt(antimatterNode, SAVE_TRANSFER_ANTIMATTER_AMOUNT, transfer->antimatter);
 		}
 		/* save items */
 		if (transfer->itemCargo != nullptr) {
@@ -502,6 +505,12 @@ bool TR_LoadXML (xmlNode_t* p)
 		/* Initializing some variables */
 		transfer.hasEmployees = false;
 
+		/* load antimatter */
+		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ANTIMATTER);
+		if (ss) {
+			const int amount = cgi->XML_GetInt(ss, SAVE_TRANSFER_ANTIMATTER_AMOUNT, 0);
+			transfer.antimatter = amount;
+		}
 		/* load items */
 		ss = cgi->XML_GetNode(s, SAVE_TRANSFER_ITEMCARGO);
 		if (ss) {
