@@ -270,6 +270,7 @@
 		<Unit filename="../../src/client/cinematic/cl_cinematic_ogm.cpp" />
 		<Unit filename="../../src/client/cinematic/cl_cinematic_roq.cpp" />
 		<Unit filename="../../src/client/cinematic/cl_sequence.cpp" />
+		<Unit filename="../../src/client/DateTime.cpp" />
 		<Unit filename="../../src/client/cl_console.cpp" />
 		<Unit filename="../../src/client/cl_http.cpp" />
 		<Unit filename="../../src/client/cl_inventory.cpp" />

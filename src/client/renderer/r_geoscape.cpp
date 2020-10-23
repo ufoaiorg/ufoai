@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_mesh.h"
 #include "r_draw.h"
 
-#include "../cl_time.h"
+#include "../DateTime.h"
 
 #define MARKER_SIZE 60.0
 
@@ -468,20 +468,20 @@ void R_Draw3DGlobe (const vec2_t pos, const vec2_t size, int day, int second, co
 	/* estimate the progress through the current season so we can do
 	 * smooth transitions between textures.  Currently there are 12
 	 * "seasons", because we have one image per Earth-month. */
-	const float season = (float) (day % DAYS_PER_YEAR) / ((float) (DAYS_PER_YEAR) / (float) (SEASONS_PER_YEAR));
-	const int currSeason = (int) floorf(season) % SEASONS_PER_YEAR;
-	const int nextSeason = (int) ceilf(season) % SEASONS_PER_YEAR;
+	const float season = (float) (day % DateTime::DAYS_PER_YEAR) / ((float) (DateTime::DAYS_PER_YEAR) / (float) (DateTime::SEASONS_PER_YEAR));
+	const int currSeason = (int) floorf(season) % DateTime::SEASONS_PER_YEAR;
+	const int nextSeason = (int) ceilf(season) % DateTime::SEASONS_PER_YEAR;
 	const float seasonProgress = season - (float) currSeason;
 
 	/* Compute sun position in absolute frame */
-	const float q = (day % DAYS_PER_YEAR * SECONDS_PER_DAY + second) * (2.0f * M_PI / (SECONDS_PER_DAY * DAYS_PER_YEAR));	/* sun rotation (year) */
+	const float q = (day % DateTime::DAYS_PER_YEAR * DateTime::SECONDS_PER_DAY + second) * (2.0f * M_PI / (DateTime::SECONDS_PER_DAY * DateTime::DAYS_PER_YEAR));	/* sun rotation (year) */
 	const float a = cos(q) * SIN_ALPHA;	/* due to earth obliquity */
 	const float sqrta = sqrt(0.5f * (1 - a * a));
 
 	/* earth rotation (day) */
-	const float p = (second - SECONDS_PER_DAY / 4) * (2.0f * M_PI / SECONDS_PER_DAY);
+	const float p = (second - DateTime::SECONDS_PER_DAY / 4) * (2.0f * M_PI / DateTime::SECONDS_PER_DAY);
 	/* lunar orbit */
-	const float m = p + (((double)((10 * day % 249) / 10.0f) + ((double)second / (double)SECONDS_PER_DAY)) / 24.9f) * (2.0f * M_PI);
+	const float m = p + (((double)((10 * day % 249) / 10.0f) + ((double)second / (double)DateTime::SECONDS_PER_DAY)) / 24.9f) * (2.0f * M_PI);
 
 	glPushMatrix();
 	glMatrixMode(GL_TEXTURE);

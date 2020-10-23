@@ -24,6 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#include "../../DateTime.h"
+
 /** @brief Default transfer time for cases with no source/dest base */
 #define DEFAULT_TRANSFER_TIME 2.0f
 
@@ -31,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct transfer_s {
 	base_t* destBase;				/**< Pointer to destination base. May not be nullptr if active is true. */
 	base_t* srcBase;				/**< Pointer to source base. May be nullptr if transfer comes from a mission (alien body recovery). */
-	date_t event;					/**< When the transfer finish process should start. */
+	class DateTime event;				/**< When the transfer finish process should start. */
 
 	int antimatter;
 	class ItemCargo* itemCargo;

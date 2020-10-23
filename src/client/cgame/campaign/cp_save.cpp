@@ -312,7 +312,7 @@ bool SAV_GameSave (const char* filename, const char* comment, char** error)
 	cgi->XML_AddString(node, SAVE_COMMENT, comment);
 	cgi->XML_AddString(node, SAVE_UFOVERSION, UFO_VERSION);
 	cgi->XML_AddString(node, SAVE_REALDATE, timeStampBuffer);
-	CP_DateConvertLong(&ccs.date, &date);
+	CP_DateConvertLong(ccs.date, &date);
 	Com_sprintf(message, sizeof(message), _("%i %s %02i"),
 		date.year, Date_GetMonthName(date.month - 1), date.day);
 	cgi->XML_AddString(node, SAVE_GAMEDATE, message);
@@ -335,7 +335,7 @@ bool SAV_GameSave (const char* filename, const char* comment, char** error)
 	header.subsystems = LittleLong(saveSubsystemsAmount);
 	Q_strncpyz(header.name, comment, sizeof(header.name));
 	Q_strncpyz(header.gameVersion, UFO_VERSION, sizeof(header.gameVersion));
-	CP_DateConvertLong(&ccs.date, &date);
+	CP_DateConvertLong(ccs.date, &date);
 	Com_sprintf(header.gameDate, sizeof(header.gameDate), _("%i %s %02i"),
 		date.year, Date_GetMonthName(date.month - 1), date.day);
 	Q_strncpyz(header.realDate, timeStampBuffer, sizeof(header.realDate));

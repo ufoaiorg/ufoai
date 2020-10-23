@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#include "../../DateTime.h"
+
 #define MAX_RESEARCHLIST 32
 #define MAX_TECHNOLOGIES 256	/**< Maximum number of technologies overall. */
 #define MAX_TECHLINKS 16	/**< Maximum number of requirements in a technology (i.e in requireAND and requireOR). */
@@ -181,8 +183,8 @@ typedef struct technology_s {
 									* All requirements need to be fulfilled in order for _one_ item to be produced.
 									* This check is done for each item.*/
 
-	date_t preResearchedDate;		/**< Date for UFOpaedia. Research proposal. */
-	date_t researchedDate;			/**< Date for UFOpaedia. Finished research. */
+	class DateTime preResearchedDate;	/**< Date for UFOpaedia. Research proposal. */
+	class DateTime researchedDate;		/**< Date for UFOpaedia. Finished research. */
 
 	markResearched_t markResearched;	/**< Mark as researched at parsing state - but i only know the date if we already started a campaign. */
 

@@ -22,6 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../ui/ui_main.h"
 #include "../cgame.h"
@@ -71,7 +72,7 @@ cvar_t* cp_missiontest;
  * @sa UFO_UpdateAlienInterestForAllBasesAndInstallations
  * @sa AB_UpdateStealthForAllBase
  */
-const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
+const int DETECTION_INTERVAL = (DateTime::SECONDS_PER_HOUR / 2);
 
 /**
  * @brief Checks whether a campaign mode game is running
@@ -159,7 +160,7 @@ void CP_CheckLostCondition (const campaign_t* campaign)
 static void CP_CheckMissionEnd (const campaign_t* campaign)
 {
 	MIS_Foreach(mission) {
-		if (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(&ccs.date, &mission->finalDate))
+		if (CP_CheckMissionLimitedInTime(mission) && ccs.date > mission->finalDate)
 			CP_MissionStageEnd(campaign, mission);
 	}
 }
@@ -207,11 +208,7 @@ bool CP_OnGeoscape (void)
  */
 static inline void CP_AdvanceTimeBySeconds (int seconds)
 {
-	ccs.date.sec += seconds;
-	while (ccs.date.sec >= SECONDS_PER_DAY) {
-		ccs.date.sec -= SECONDS_PER_DAY;
-		ccs.date.day++;
-	}
+	ccs.date += DateTime(0, seconds);
 }
 
 /**
@@ -243,18 +240,18 @@ void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
 		return;
 
 	/* calculate new date */
-	int currentsecond = ccs.date.sec;
-	int currentday = ccs.date.day;
+	int currentsecond = ccs.date.getTimeAsSeconds();
+	int currentday = ccs.date.getDateAsDays();
 	const int currentinterval = currentsecond % DETECTION_INTERVAL;
 	int dt = DETECTION_INTERVAL - currentinterval;
 	dateLong_t date, oldDate;
 	const int timer = (int)floor(ccs.timer);
 	const int checks = (currentinterval + timer) / DETECTION_INTERVAL;
 
-	CP_DateConvertLong(&ccs.date, &oldDate);
+	CP_DateConvertLong(ccs.date, &oldDate);
 
-	int currenthour = currentsecond / SECONDS_PER_HOUR;
-	int currentmin = currentsecond / SECONDS_PER_MINUTE;
+	int currenthour = currentsecond / DateTime::SECONDS_PER_HOUR;
+	int currentmin = currentsecond / DateTime::SECONDS_PER_MINUTE;
 
 	/* Execute every actions that needs to be independent of time speed : every DETECTION_INTERVAL
 	 *	- Run UFOs and craft at least every DETECTION_INTERVAL. If detection occurred, break.
@@ -282,7 +279,7 @@ void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
 
 	/* compute minutely events  */
 	/* (this may run multiple times if the time stepping is > 1 minute at a time) */
-	const int newmin = currentsecond / SECONDS_PER_MINUTE;
+	const int newmin = currentsecond / DateTime::SECONDS_PER_MINUTE;
 	while (currentmin < newmin) {
 		currentmin++;
 		PR_ProductionRun();
@@ -291,7 +288,7 @@ void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
 
 	/* compute hourly events  */
 	/* (this may run multiple times if the time stepping is > 1 hour at a time) */
-	const int newhour = currentsecond / SECONDS_PER_HOUR;
+	const int newhour = currentsecond / DateTime::SECONDS_PER_HOUR;
 	while (currenthour < newhour) {
 		currenthour++;
 		RS_ResearchRun();
@@ -303,7 +300,7 @@ void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
 	}
 
 	/* daily events */
-	for (int i = currentday; i < ccs.date.day; i++) {
+	for (int i = currentday; i < ccs.date.getDateAsDays(); i++) {
 		/* every day */
 		INS_UpdateInstallationData();
 		HOS_HospitalRun();
@@ -335,7 +332,7 @@ void CP_CampaignRun (campaign_t* campaign, float secondsSinceLastFrame)
 	CAP_CheckOverflow();
 	BDEF_AutoSelectTarget();
 
-	CP_DateConvertLong(&ccs.date, &date);
+	CP_DateConvertLong(ccs.date, &date);
 	/* every new month we have to handle the budget */
 	if (CP_IsBudgetDue(&oldDate, &date) && ccs.paid && B_AtLeastOneExists()) {
 		NAT_BackupMonthlyData();
@@ -439,7 +436,10 @@ bool CP_LoadXML (xmlNode_t* parent)
 
 	cgi->SetNextUniqueCharacterNumber(cgi->XML_GetInt(campaignNode, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, 0));
 
-	cgi->XML_GetDate(campaignNode, SAVE_CAMPAIGN_DATE, &ccs.date.day, &ccs.date.sec);
+	int date;
+	int time;
+	cgi->XML_GetDate(campaignNode, SAVE_CAMPAIGN_DATE, &date, &time);
+	ccs.date = DateTime(date, time);
 
 	/* read other campaign data */
 	ccs.civiliansKilled = cgi->XML_GetInt(campaignNode, SAVE_CAMPAIGN_CIVILIANSKILLED, 0);
@@ -508,7 +508,7 @@ bool CP_SaveXML (xmlNode_t* parent)
 	campaign = cgi->XML_AddNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 
 	cgi->XML_AddString(campaign, SAVE_CAMPAIGN_ID, ccs.curCampaign->id);
-	cgi->XML_AddDate(campaign, SAVE_CAMPAIGN_DATE, ccs.date.day, ccs.date.sec);
+	cgi->XML_AddDate(campaign, SAVE_CAMPAIGN_DATE, ccs.date.getDateAsDays(), ccs.date.getTimeAsSeconds());
 	cgi->XML_AddLong(campaign, SAVE_CAMPAIGN_CREDITS, ccs.credits);
 	cgi->XML_AddShort(campaign, SAVE_CAMPAIGN_PAID, ccs.paid);
 	cgi->XML_AddShortValue(campaign, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, cgi->GetNextUniqueCharacterNumber());

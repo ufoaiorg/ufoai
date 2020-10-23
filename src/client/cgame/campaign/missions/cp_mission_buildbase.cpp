@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../../DateTime.h"
 #include "../../../cl_shared.h"
 #include "../cp_campaign.h"
 #include "../cp_alienbase.h"
@@ -136,14 +137,14 @@ static void CP_BuildBaseMissionLeave (mission_t* mission)
 static void CP_BuildBaseSetUpBase (mission_t* mission)
 {
 	alienBase_t* base;
-	const date_t minBuildingTime = {5, 0};	/**< Minimum time needed to start a new base construction */
-	const date_t buildingTime = {10, 0};	/**< Maximum time needed to start a new base construction */
+	const DateTime minBuildingTime(5, 0);	/**< Minimum time needed to start a new base construction */
+	const DateTime maxBuildingTime(10, 0);	/**< Maximum time needed to start a new base construction */
 
 	assert(mission->ufo);
 
 	mission->stage = STAGE_BUILD_BASE;
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minBuildingTime, buildingTime));
+	mission->finalDate = ccs.date + Date_Random(minBuildingTime, maxBuildingTime);
 
 	base = AB_BuildBase(mission->pos);
 	if (!base) {
@@ -207,8 +208,8 @@ static void CP_BuildBaseGovernmentLeave (const campaign_t* campaign, mission_t* 
  */
 static void CP_BuildBaseSubvertGovernment (mission_t* mission)
 {
-	const date_t minMissionDelay = {3, 0};
-	const date_t missionDelay = {5, 0};
+	const DateTime minMissionDelay(3, 0);
+	const DateTime maxMissionDelay(5, 0);
 
 	assert(mission->ufo);
 
@@ -217,7 +218,7 @@ static void CP_BuildBaseSubvertGovernment (mission_t* mission)
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission, false);
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
+	mission->finalDate = ccs.date + Date_Random(minMissionDelay, maxMissionDelay);
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	CP_UFORemoveFromGeoscape(mission, false);
 }

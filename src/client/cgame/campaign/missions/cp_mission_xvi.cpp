@@ -23,6 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "cp_mission_xvi.h"
+#include "../../../DateTime.h"
 #include "../../../cl_shared.h"
 #include "../cp_campaign.h"
 #include "../cp_missions.h"
@@ -31,7 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cp_ufo.h"
 #include "cp_mission_recon.h"
 #include "cp_mission_harvest.h"
-#include "cp_mission_xvi.h"
 
 /**
  * @brief XVI Spreading mission is over and is a success: change interest values.
@@ -65,13 +66,12 @@ void CP_XVIMissionIsFailure (mission_t* mission)
  */
 static void CP_XVIMissionStart (mission_t* mission)
 {
-	const date_t minMissionDelay = {2, 0};
-	const date_t missionDelay = {3, 0};
-
 	mission->stage = STAGE_SPREAD_XVI;
 
 	if (mission->ufo) {
-		mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
+		const DateTime minMissionDelay(2, 0);
+		const DateTime maxMissionDelay(3, 0);
+		mission->finalDate = ccs.date + Date_Random(minMissionDelay, maxMissionDelay);
 		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 		CP_UFORemoveFromGeoscape(mission, false);
 	} else {

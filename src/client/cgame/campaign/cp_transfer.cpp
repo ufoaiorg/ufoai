@@ -24,6 +24,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_capacity.h"
@@ -174,14 +175,7 @@ transfer_t* TR_TransferStart (base_t* srcBase, transfer_t& transData)
 	} else {
 		time = DEFAULT_TRANSFER_TIME;
 	}
-	transfer.event.day = ccs.date.day + floor(time);	/* add day */
-	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
-	transfer.event.sec = ccs.date.sec + round(time);
-	/* check if event is not the following day */
-	if (transfer.event.sec > SECONDS_PER_DAY) {
-		transfer.event.sec -= SECONDS_PER_DAY;
-		transfer.event.day++;
-	}
+	transfer.event = DateTime(ccs.date.getDateAsDays() + floor(time), ccs.date.getTimeAsSeconds() + round(time - floor(time)) * DateTime::SECONDS_PER_DAY);
 	transfer.destBase = transData.destBase;	/* Destination base. */
 	transfer.srcBase = srcBase;	/* Source base. */
 
@@ -306,7 +300,7 @@ void TR_NotifyAircraftRemoved (const aircraft_t* aircraft)
 void TR_TransferRun (void)
 {
 	TR_Foreach(transfer) {
-		if (Date_IsDue(&transfer->event)) {
+		if (transfer->event <= ccs.date) {
 			assert(transfer->destBase);
 			TR_TransferEnd(transfer);
 			return;
@@ -339,7 +333,7 @@ static void TR_ListTransfers_f (void)
 			continue;
 
 		/* @todo: we need a strftime feature to make this easier */
-		CP_DateConvertLong(&transfer->event, &date);
+		CP_DateConvertLong(transfer->event, &date);
 
 		cgi->Com_Printf("Transfer #%d\n", i);
 		cgi->Com_Printf("...From %d (%s) To %d (%s) Arrival: %04i-%02i-%02i %02i:%02i:%02i\n",
@@ -420,8 +414,8 @@ bool TR_SaveXML (xmlNode_t* p)
 		xmlNode_t* s;
 
 		s = cgi->XML_AddNode(n, SAVE_TRANSFER_TRANSFER);
-		cgi->XML_AddInt(s, SAVE_TRANSFER_DAY, transfer->event.day);
-		cgi->XML_AddInt(s, SAVE_TRANSFER_SEC, transfer->event.sec);
+		cgi->XML_AddInt(s, SAVE_TRANSFER_DAY, transfer->event.getDateAsDays());
+		cgi->XML_AddInt(s, SAVE_TRANSFER_SEC, transfer->event.getTimeAsSeconds());
 		if (!transfer->destBase) {
 			cgi->Com_Printf("Could not save transfer, no destBase is set\n");
 			return false;
@@ -499,8 +493,7 @@ bool TR_LoadXML (xmlNode_t* p)
 		}
 		transfer.srcBase = B_GetBaseByIDX(cgi->XML_GetInt(s, SAVE_TRANSFER_SRCBASE, -1));
 
-		transfer.event.day = cgi->XML_GetInt(s, SAVE_TRANSFER_DAY, 0);
-		transfer.event.sec = cgi->XML_GetInt(s, SAVE_TRANSFER_SEC, 0);
+		transfer.event = DateTime(cgi->XML_GetInt(s, SAVE_TRANSFER_DAY, 0), cgi->XML_GetInt(s, SAVE_TRANSFER_SEC, 0));
 
 		/* Initializing some variables */
 		transfer.hasEmployees = false;

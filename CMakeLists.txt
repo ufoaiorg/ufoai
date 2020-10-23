@@ -819,6 +819,7 @@ if(UFOAI_BUILD_UFO)
       ${UFOAI_SRC}/client/web/web_cgame.cpp
       ${UFOAI_SRC}/client/web/web_main.cpp
       ${UFOAI_SRC}/client/cl_lua.cpp
+      ${UFOAI_SRC}/client/DateTime.cpp
 
       ${UFOAI_SRC}/common/binaryexpressionparser.cpp
       ${UFOAI_SRC}/common/bsp.cpp
@@ -1886,6 +1887,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${UFOAI_SRC}/client/web/web_cgame.cpp
       ${UFOAI_SRC}/client/web/web_main.cpp
       ${UFOAI_SRC}/client/cl_lua.cpp
+      ${UFOAI_SRC}/client/DateTime.cpp
 
       ${UFOAI_SRC}/common/binaryexpressionparser.cpp
       ${UFOAI_SRC}/common/bsp.cpp

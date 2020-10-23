@@ -24,6 +24,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -564,7 +565,7 @@ static bool AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t* projec
 	assert(projectile->aircraftItem);
 
 	/* check if the projectile went farther than it's range */
-	distance = (float) projectile->time * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
+	distance = (float) projectile->time * projectile->aircraftItem->craftitem.weaponSpeed / (float)DateTime::SECONDS_PER_HOUR;
 	if (distance > projectile->aircraftItem->craftitem.stats[AIR_STATS_WRANGE])
 		return true;
 
@@ -679,7 +680,7 @@ void AIRFIGHT_CampaignRunProjectiles (const campaign_t* campaign, int dt)
 	/* ccs.numProjectiles is changed in AIRFIGHT_RemoveProjectile */
 	for (idx = ccs.numProjectiles - 1; idx >= 0; idx--) {
 		aircraftProjectile_t* projectile = &ccs.projectiles[idx];
-		const float movement = (float) dt * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
+		const float movement = (float) dt * projectile->aircraftItem->craftitem.weaponSpeed / (float)DateTime::SECONDS_PER_HOUR;
 		projectile->time += dt;
 		projectile->hasMoved = true;
 		projectile->numInterpolationPoints = 0;

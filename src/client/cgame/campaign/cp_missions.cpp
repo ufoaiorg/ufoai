@@ -22,6 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../cl_team.h"
 #include "../cl_game.h"
@@ -892,7 +893,7 @@ void CP_MissionRemove (mission_t* mission)
  */
 void CP_MissionDisableTimeLimit (mission_t* mission)
 {
-	mission->finalDate.day = 0;
+	mission->finalDate = DateTime(0, 0);
 }
 
 /**
@@ -903,7 +904,7 @@ void CP_MissionDisableTimeLimit (mission_t* mission)
  */
 bool CP_CheckMissionLimitedInTime (const mission_t* mission)
 {
-	return mission->finalDate.day != 0;
+	return mission->finalDate.getDateAsDays() != 0;
 }
 
 
@@ -1083,7 +1084,7 @@ bool CP_ChooseMap (mission_t* mission, const vec2_t pos)
 void CP_MissionStageEnd (const campaign_t* campaign, mission_t* mission)
 {
 	cgi->Com_DPrintf(DEBUG_CLIENT, "Ending mission category %i, stage %i (time: %i day, %i sec)\n",
-		mission->category, mission->stage, ccs.date.day, ccs.date.sec);
+		mission->category, mission->stage, ccs.date.getDateAsDays(), ccs.date.getTimeAsSeconds());
 
 	/* Crash mission is on the map for too long: aliens die or go away. End mission */
 	if (mission->crashed) {
@@ -1352,9 +1353,9 @@ void CP_UFOProceedMission (const campaign_t* campaign, aircraft_t* ufo)
  */
 void CP_SpawnCrashSiteMission (aircraft_t* ufo)
 {
-	const date_t minCrashDelay = {7, 0};
 	/* How long the crash mission will stay before aliens leave / die */
-	const date_t crashDelay = {14, 0};
+	const DateTime minCrashDelay(7, 0);
+	const DateTime maxCrashDelay(14, 0);
 	mission_t* mission;
 
 	mission = ufo->mission;
@@ -1374,7 +1375,7 @@ void CP_SpawnCrashSiteMission (aircraft_t* ufo)
 	Vector2Copy(ufo->pos, mission->pos);
 	mission->posAssigned = true;
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minCrashDelay, crashDelay));
+	mission->finalDate = ccs.date + Date_Random(minCrashDelay, maxCrashDelay);
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array
 	 * (may be used to know what items are collected from battlefield)*/
 	CP_UFORemoveFromGeoscape(mission, false);
@@ -1673,8 +1674,8 @@ static inline void CP_SetMissionName (mission_t* mission)
 mission_t* CP_CreateNewMission (interestCategory_t category, bool beginNow)
 {
 	mission_t mission;
-	const date_t minNextSpawningDate = {0, 0};
-	const date_t nextSpawningDate = {3, 0};	/* Delay between 2 mission spawning */
+	const DateTime minNextSpawningDate(0, 0);
+	const DateTime maxNextSpawningDate(3, 0);	/* Delay between 2 mission spawning */
 
 	/* Some event are non-occurrence */
 	if (category <= INTERESTCATEGORY_NONE || category >= INTERESTCATEGORY_MAX)
@@ -1688,11 +1689,10 @@ mission_t* CP_CreateNewMission (interestCategory_t category, bool beginNow)
 	mission.initialIndividualInterest = ccs.interest[category];
 	mission.stage = STAGE_NOT_ACTIVE;
 	mission.ufo = nullptr;
-	if (beginNow) {
-		mission.startDate.day = ccs.date.day;
-		mission.startDate.sec = ccs.date.sec;
-	} else
-		mission.startDate = Date_Add(ccs.date, Date_Random(minNextSpawningDate, nextSpawningDate));
+	if (beginNow)
+		mission.startDate = ccs.date;
+	else
+		mission.startDate = ccs.date + Date_Random(minNextSpawningDate, maxNextSpawningDate);
 	mission.finalDate = mission.startDate;
 	mission.idx = ++ccs.campaignStats.missions;
 
@@ -1935,7 +1935,7 @@ static void MIS_MissionList_f (void)
 			INT_InterestCategoryToName(mission->category), mission->stage, CP_MissionStageToName(mission->stage));
 		cgi->Com_Printf("...mapDef: '%s'\n", mission->mapDef ? mission->mapDef->id : "No mapDef defined");
 		cgi->Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
-			mission->startDate.day, mission->startDate.sec, mission->finalDate.day, mission->finalDate.sec);
+			mission->startDate.getDateAsDays(), mission->startDate.getTimeAsSeconds(), mission->finalDate.getDateAsDays(), mission->finalDate.getTimeAsSeconds());
 		cgi->Com_Printf("...pos (%.02f, %.02f)%s -- mission %son Geoscape\n", mission->pos[0], mission->pos[1], mission->posAssigned ? "(assigned Pos)" : "", mission->onGeoscape ? "" : "not ");
 		if (mission->ufo)
 			cgi->Com_Printf("...UFO: %s (%i/%i)\n", mission->ufo->id, (int) (mission->ufo - ccs.ufos), ccs.numUFOs - 1);
@@ -2046,8 +2046,8 @@ bool MIS_SaveXML (xmlNode_t* parent)
 		}
 		cgi->XML_AddShort(missionNode, SAVE_MISSIONS_INITIALOVERALLINTEREST, mission->initialOverallInterest);
 		cgi->XML_AddShort(missionNode, SAVE_MISSIONS_INITIALINDIVIDUALINTEREST, mission->initialIndividualInterest);
-		cgi->XML_AddDate(missionNode, SAVE_MISSIONS_STARTDATE, mission->startDate.day, mission->startDate.sec);
-		cgi->XML_AddDate(missionNode, SAVE_MISSIONS_FINALDATE, mission->finalDate.day, mission->finalDate.sec);
+		cgi->XML_AddDate(missionNode, SAVE_MISSIONS_STARTDATE, mission->startDate.getDateAsDays(), mission->startDate.getTimeAsSeconds());
+		cgi->XML_AddDate(missionNode, SAVE_MISSIONS_FINALDATE, mission->finalDate.getDateAsDays(), mission->finalDate.getTimeAsSeconds());
 		cgi->XML_AddPos2(missionNode, SAVE_MISSIONS_POS, mission->pos);
 		cgi->XML_AddBoolValue(missionNode, SAVE_MISSIONS_ONGEOSCAPE, mission->onGeoscape);
 	}
@@ -2167,8 +2167,12 @@ bool MIS_LoadXML (xmlNode_t* parent)
 			break;
 		}
 
-		cgi->XML_GetDate(node, SAVE_MISSIONS_STARTDATE, &mission.startDate.day, &mission.startDate.sec);
-		cgi->XML_GetDate(node, SAVE_MISSIONS_FINALDATE, &mission.finalDate.day, &mission.finalDate.sec);
+		int date;
+		int time;
+		cgi->XML_GetDate(node, SAVE_MISSIONS_STARTDATE, &date , &time);
+		mission.startDate = DateTime(date, time);
+		cgi->XML_GetDate(node, SAVE_MISSIONS_FINALDATE, &date, &time);
+		mission.finalDate = DateTime(date, time);
 		cgi->XML_GetPos2(node, SAVE_MISSIONS_POS, mission.pos);
 
 		mission.crashed = cgi->XML_GetBool(node, SAVE_MISSIONS_CRASHED, false);

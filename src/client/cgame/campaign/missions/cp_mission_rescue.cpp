@@ -22,6 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../../DateTime.h"
 #include "../../../cl_shared.h"
 #include "../cp_campaign.h"
 #include "../cp_missions.h"
@@ -36,8 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void CP_BeginRescueMission (mission_t* mission)
 {
 	/* How long the rescue mission will stay before aliens leave / die */
-	const date_t minCrashDelay = {7, 0};
-	const date_t crashDelay = {14, 0};
+	const DateTime minCrashDelay(7, 0);
+	const DateTime maxCrashDelay(14, 0);
 
 	assert(mission->ufo);
 	mission->posAssigned = true;
@@ -51,7 +52,7 @@ static void CP_BeginRescueMission (mission_t* mission)
 
 	mission->ufo->landed = true;
 	mission->stage = STAGE_RECON_GROUND;
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minCrashDelay, crashDelay));
+	mission->finalDate = ccs.date + Date_Random(minCrashDelay, maxCrashDelay);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission, false);
 }
@@ -83,7 +84,7 @@ void CP_EndRescueMission (mission_t* mission, aircraft_t* aircraft, bool won)
 		B_DumpAircraftToHomeBase(crashedAircraft);
 	}
 
-	if (won || (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(&ccs.date, &mission->finalDate)))
+	if (won || (CP_CheckMissionLimitedInTime(mission) && ccs.date > mission->finalDate))
 		AIR_DestroyAircraft(crashedAircraft);
 }
 

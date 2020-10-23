@@ -23,6 +23,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_market.h"
@@ -591,7 +592,7 @@ void CP_CampaignRunMarket (campaign_t* campaign)
 		const technology_t* tech = RS_GetTechForItem(od);
 		int asymptoticNumber;
 
-		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numItems[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
+		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numItems[i] != 0 || ccs.date.getDateAsDays() > tech->researchedDate.getDateAsDays() + RESEARCH_LIMIT_DELAY)) {
 			/* if items are researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,
 			 * there number tend to the value defined in equipment.ufo.
 			 * This value is the asymptotic value if it is not 0, or initial value else */
@@ -623,7 +624,7 @@ void CP_CampaignRunMarket (campaign_t* campaign)
 		const technology_t* tech = aircraft->tech;
 		int asymptoticNumber;
 
-		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numAircraft[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
+		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numAircraft[i] != 0 || ccs.date.getDateAsDays() > tech->researchedDate.getDateAsDays() + RESEARCH_LIMIT_DELAY)) {
 			/* if aircraft is researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,
 			 * there number tend to the value defined in equipment.ufo.
 			 * This value is the asymptotic value if it is not 0, or initial value else */

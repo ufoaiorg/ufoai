@@ -22,6 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
@@ -462,8 +463,7 @@ static void CP_ParseCampaign (const char* name, const char** text)
 			if (sscanf(token, "%i %i %i", &year, &day, &hour) != 3) {
 				Com_Error(ERR_DROP, "Illegal campaign start date for campaign %s", cp->id);
 			}
-			cp->date.day = DAYS_PER_YEAR * year + day;
-			cp->date.sec = SECONDS_PER_HOUR * hour;
+			cp->date = DateTime(DateTime::DAYS_PER_YEAR * year + day, DateTime::SECONDS_PER_HOUR * hour);
 		} else {
 			cgi->Com_Printf("CP_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
 			cgi->Com_EParse(text, errhead, name);
@@ -701,11 +701,5 @@ void CP_ReadCampaignData (const campaign_t* campaign)
 	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != nullptr)
 		CP_ParseScriptCampaignRelated(campaign, type, name, &text);
 
-	/* initialise date */
 	ccs.date = campaign->date;
-	/* get day */
-	while (ccs.date.sec > SECONDS_PER_DAY) {
-		ccs.date.sec -= SECONDS_PER_DAY;
-		ccs.date.day++;
-	}
 }

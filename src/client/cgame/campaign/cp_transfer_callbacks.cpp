@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "cp_transfer_callbacks.h"
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_capacity.h"
@@ -770,9 +771,8 @@ static void TR_List_f (void)
 	cgi->UI_ExecuteConfunc("tr_listclear");
 	TR_Foreach(transfer) {
 		const char* source = transfer->srcBase ? transfer->srcBase->name : "mission";
-		date_t time = Date_Substract(transfer->event, ccs.date);
-
-		cgi->UI_ExecuteConfunc("tr_listaddtransfer %d \"%s\" \"%s\" \"%s\"", ++i, source, transfer->destBase->name, CP_SecondConvert(Date_DateToSeconds(&time)));
+		const DateTime remainingTime = transfer->event - ccs.date;
+		cgi->UI_ExecuteConfunc("tr_listaddtransfer %d \"%s\" \"%s\" \"%s\"", ++i, source, transfer->destBase->name, CP_SecondConvert(Date_DateToSeconds(remainingTime)));
 
 		/* Antimatter */
 		if (transfer->antimatter) {

@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#include "../../DateTime.h"
 #include "cp_capacity.h"
 #include "cp_radar.h"
 
@@ -171,7 +172,7 @@ typedef struct aircraft_s {
 	int ufoInterestOnGeoscape;			/**< interest level at which this ufo should be available on geoscape first */
 	linkedList_t* missionTypes;			/**< missiontype strings this aircraft is useable for */
 	int detectionIdx;				/**< detected UFO number (for descriptions "UFO #4")*/
-	date_t lastSpotted;				/**< date the UFO was detected last time */
+	class DateTime lastSpotted;				/**< date the UFO was detected last time */
 
 	class AlienCargo* alienCargo;			/**< Cargo of aliens. */
 	class ItemCargo* itemCargo;			/**< Cargo of items. */

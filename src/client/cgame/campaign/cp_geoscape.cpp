@@ -22,6 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../ui/ui_dataids.h"
 #include "../../ui/node/ui_node_geoscape.h"
@@ -1359,7 +1360,7 @@ static const char* GEO_GetAircraftText (char* buffer, size_t size, const aircraf
 		Q_strcat(buffer, size, _("Speed:\t%i km/h\n"), AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED));
 		Q_strcat(buffer, size, _("Fuel:\t%i/%i\n"), AIR_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
 			AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE));
-		Q_strcat(buffer, size, _("ETA:\t%sh\n"), CP_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]));
+		Q_strcat(buffer, size, _("ETA:\t%sh\n"), CP_SecondConvert((float)DateTime::SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]));
 	} else {
 		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, AIR_GetTeamSize(aircraft), aircraft->maxTeamSize);
 		Q_strcat(buffer, size, _("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft));
@@ -1371,7 +1372,7 @@ static const char* GEO_GetAircraftText (char* buffer, size_t size, const aircraf
 		if (aircraft->status != AIR_IDLE) {
 			const float distance = GetDistanceOnGlobe(aircraft->pos,
 					aircraft->route.point[aircraft->route.numPoints - 1]);
-			Q_strcat(buffer, size, _("ETA:\t%sh\n"), CP_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]));
+			Q_strcat(buffer, size, _("ETA:\t%sh\n"), CP_SecondConvert((float)DateTime::SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]));
 		}
 	}
 	return buffer;
@@ -1909,9 +1910,9 @@ bool GEO_IsNight (const vec2_t pos)
 	float p, q, a, root, x;
 
 	/* set p to hours (we don't use ccs.day here because we need a float value) */
-	p = (float) ccs.date.sec / SECONDS_PER_DAY;
+	p = (float) ccs.date.getTimeAsSeconds() / DateTime::SECONDS_PER_DAY;
 	/* convert current day to angle (-pi on 1st january, pi on 31 december) */
-	q = (ccs.date.day + p) * (2 * M_PI / DAYS_PER_YEAR_AVG) - M_PI;
+	q = (ccs.date.getDateAsDays() + p) * (2 * M_PI / DateTime::DAYS_PER_YEAR_AVG) - M_PI;
 	p = (0.5 + pos[0] / 360 - p) * (2 * M_PI) - q;
 	a = -sin(pos[1] * torad);
 	root = sqrt(1.0 - a * a);

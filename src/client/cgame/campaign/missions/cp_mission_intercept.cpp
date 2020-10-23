@@ -22,6 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../../DateTime.h"
 #include "../../../cl_shared.h"
 #include "../cp_campaign.h"
 #include "../cp_ufo.h"
@@ -100,8 +101,8 @@ void CP_InterceptMissionLeave (mission_t* mission, bool destroyed)
  */
 static void CP_InterceptAttackInstallation (mission_t* mission)
 {
-	const date_t minAttackDelay = {0, 3600};
-	const date_t attackDelay = {0, 21600};		/* How long the UFO should stay on earth */
+	const DateTime minAttackDelay(0, 3600);
+	const DateTime maxAttackDelay(0, 21600);		/* How long the UFO should stay on earth */
 	installation_t* installation;
 	vec3_t missionPos;
 
@@ -116,7 +117,7 @@ static void CP_InterceptAttackInstallation (mission_t* mission)
 
 	/* Make round around the position of the mission */
 	UFO_SetRandomDestAround(mission->ufo, mission->pos);
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minAttackDelay, attackDelay));
+	mission->finalDate = ccs.date + Date_Random(minAttackDelay, maxAttackDelay);
 }
 
 /**
@@ -125,11 +126,11 @@ static void CP_InterceptAttackInstallation (mission_t* mission)
  */
 void CP_InterceptAircraftMissionSet (mission_t* mission)
 {
-	const date_t minReconDelay = {3, 0};
-	const date_t reconDelay = {6, 0};		/* How long the UFO should stay on earth */
+	const DateTime minReconDelay(3, 0);
+	const DateTime maxReconDelay(6, 0);		/* How long the UFO should stay on earth */
 
 	mission->stage = STAGE_INTERCEPT;
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minReconDelay, reconDelay));
+	mission->finalDate = ccs.date + Date_Random(minReconDelay, maxReconDelay);
 }
 
 /**
@@ -236,8 +237,8 @@ void CP_InterceptNextStage (mission_t* mission)
 		if (AIRFIGHT_ChooseWeapon(mission->ufo->weapons, mission->ufo->maxWeapons, mission->ufo->pos, mission->ufo->pos) !=
 			AIRFIGHT_WEAPON_CAN_NEVER_SHOOT && mission->ufo->status == AIR_UFO && !mission->data.installation) {
 			/* UFO is fighting and has still ammo, wait a little bit before leaving (UFO is not attacking an installation) */
-			const date_t AdditionalDelay = {0, 3600};	/* check every hour if there is still ammos */
-			mission->finalDate = Date_Add(ccs.date, AdditionalDelay);
+			const DateTime additionalDelay(0, 3600);	/* check every hour if there is still ammos */
+			mission->finalDate = ccs.date + additionalDelay;
 		} else
 			CP_InterceptMissionLeave(mission, true);
 		break;

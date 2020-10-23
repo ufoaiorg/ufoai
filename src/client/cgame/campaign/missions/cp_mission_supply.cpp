@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../../DateTime.h"
 #include "../../../cl_shared.h"
 #include "../cp_campaign.h"
 #include "../cp_alienbase.h"
@@ -88,8 +89,8 @@ static void CP_SupplyMissionLeave (mission_t* mission)
  */
 static void CP_SupplySetStayAtBase (mission_t* mission)
 {
-	const date_t minSupplyTime = {3, 0};
-	const date_t supplyTime = {10, 0};	/**< Max time needed to supply base */
+	const DateTime minSupplyTime(3, 0);
+	const DateTime maxSupplyTime(10, 0);	/**< Max time needed to supply base */
 
 	assert(mission->ufo);
 	/* there must be an alien base set */
@@ -104,7 +105,7 @@ static void CP_SupplySetStayAtBase (mission_t* mission)
 		return;
 	}
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minSupplyTime, supplyTime));
+	mission->finalDate = ccs.date + Date_Random(minSupplyTime, maxSupplyTime);
 
 	AB_SupplyBase(mission->data.alienBase, mission->ufo->detected);
 

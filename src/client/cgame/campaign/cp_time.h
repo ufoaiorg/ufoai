@@ -25,10 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#include "../../DateTime.h"
+#include "../../cl_shared.h"
+
 /**
  * @brief Human readable time information in the game.
  * @note Use this on runtime - please avoid for structs that get saved.
- * @sa date_t For storage & network transmitting (engine only).
  * @sa CP_DateConvertLong
  */
 typedef struct dateLong_s {
@@ -40,7 +42,7 @@ typedef struct dateLong_s {
 	byte sec;	/**< Second of the minute. */
 } dateLong_t;
 
-void CP_DateConvertLong(const date_t* date, dateLong_t* dateLong);
+void CP_DateConvertLong(const DateTime& date, dateLong_t* dateLong);
 const char* CP_SecondConvert(int second);
 
 void CP_UpdateTime(void);
@@ -50,10 +52,6 @@ void CP_GameTimeFast(void);
 void CP_GameTimeSlow(void);
 void CP_SetGameTime_f(void);
 
-int Date_DateToSeconds(const date_t* date);
-bool Date_LaterThan(const date_t* now, const date_t* compare);
-bool Date_IsDue(const date_t* date);
-date_t Date_Add(date_t a, const date_t& b);
-date_t Date_Substract(date_t a, const date_t& b);
-date_t Date_Random(date_t minFrame, date_t maxFrame);
+int Date_DateToSeconds(const DateTime& date);
+DateTime Date_Random(const DateTime& minFrame, const DateTime& maxFrame);
 const char* Date_GetMonthName(int month);

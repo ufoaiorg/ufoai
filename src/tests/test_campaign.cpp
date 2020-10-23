@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "test_shared.h"
+#include "../client/DateTime.h"
 #include "../client/client.h"
 #include "../client/cl_lua.h"
 #include "../client/cgame/cl_game.h"
@@ -133,7 +134,7 @@ static installation_t* CreateInstallation (const char* name, const vec2_t pos)
 	installation_t* installation = INS_Build(installationTemplate, pos, name);
 
 	/* fake the build time */
-	installation->buildStart = ccs.date.day - installation->installationTemplate->buildTime;
+	installation->buildStart = ccs.date.getDateAsDays() - installation->installationTemplate->buildTime;
 	INS_UpdateInstallationData();
 
 	return installation;
@@ -381,21 +382,19 @@ TEST_F(CampaignTest, testTransferItem)
 
 	ASSERT_EQ(LIST_Count(ccs.transfers), 1);
 
-	transfer->event = ccs.date;
-	transfer->event.day++;
+	transfer->event = ccs.date + DateTime(1, 0);
 
 	/* check if it's arrived immediately */
 	TR_TransferRun();
 	ASSERT_FALSE(LIST_IsEmpty(ccs.transfers));
 
 	/* check if it arrives (even a second) before it should */
-	ccs.date.day++;
-	ccs.date.sec--;
+	ccs.date += DateTime(1, -1);
 	TR_TransferRun();
 	ASSERT_FALSE(LIST_IsEmpty(ccs.transfers));
 
 	/* check if it arrived right when it should */
-	ccs.date.sec++;
+	ccs.date += DateTime(0, 1);
 	TR_TransferRun();
 	ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
 
@@ -404,11 +403,10 @@ TEST_F(CampaignTest, testTransferItem)
 	ASSERT_TRUE(nullptr != transfer);
 	ASSERT_EQ(LIST_Count(ccs.transfers), 1);
 
-	transfer->event = ccs.date;
-	transfer->event.day++;
+	transfer->event = ccs.date + DateTime(1, 0);
 
 	/* check if it arrived when time passed the deadline by days already */
-	ccs.date.day += 2;
+	ccs.date += DateTime(2, 0);
 	TR_TransferRun();
 	ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
 
@@ -417,12 +415,10 @@ TEST_F(CampaignTest, testTransferItem)
 	ASSERT_TRUE(nullptr != transfer);
 	ASSERT_EQ(LIST_Count(ccs.transfers), 1);
 
-	transfer->event = ccs.date;
-	transfer->event.day++;
+	transfer->event = ccs.date + DateTime(1, 0);
 
 	/* check if it arrived when time passed the deadline by days already */
-	ccs.date.day++;
-	ccs.date.sec++;
+	ccs.date += DateTime(1, 1);
 	TR_TransferRun();
 	ASSERT_TRUE(LIST_IsEmpty(ccs.transfers));
 
@@ -441,7 +437,7 @@ TEST_F(CampaignTest, testUFORecovery)
 	const aircraft_t* ufo;
 	storedUFO_t* storedUFO;
 	installation_t* installation;
-	date_t date = ccs.date;
+	DateTime date(ccs.date);
 
 	ufo = AIR_GetAircraft("craft_ufo_fighter");
 	ASSERT_TRUE(nullptr != ufo);
@@ -450,7 +446,7 @@ TEST_F(CampaignTest, testUFORecovery)
 
 	installation = CreateInstallation("unittestuforecovery", pos);
 
-	date.day++;
+	date += DateTime(1, 0);
 	storedUFO = US_StoreUFO(ufo, installation, date, 1.0);
 	ASSERT_TRUE(nullptr != storedUFO);
 	ASSERT_EQ(storedUFO->status, SUFO_RECOVERED);
@@ -459,7 +455,7 @@ TEST_F(CampaignTest, testUFORecovery)
 
 	ASSERT_EQ(storedUFO->status, SUFO_RECOVERED);
 
-	ccs.date.day++;
+	ccs.date += DateTime(1, 0);
 
 	UR_ProcessActive();
 
@@ -902,7 +898,7 @@ TEST_F(CampaignTest, testCampaignRun)
 {
 	const vec2_t destination = { 10, 10 };
 	const int days = 10;
-	const int seconds = days * SECONDS_PER_DAY;
+	const int seconds = days * DateTime::SECONDS_PER_DAY;
 
 	base_t* base = CreateBase("unittestcampaignrun", destination);
 
@@ -912,12 +908,12 @@ TEST_F(CampaignTest, testCampaignRun)
 
 	BS_InitMarket(campaign);
 
-	int startDay = ccs.date.day;
+	int startDay = ccs.date.getDateAsDays();
 	for (int i = 0; i < seconds; i++) {
 		ccs.gameTimeScale = 1;
 		CP_CampaignRun(campaign, 1);
 	}
-	ASSERT_EQ(ccs.date.day - startDay, days);
+	ASSERT_EQ(ccs.date.getDateAsDays() - startDay, days);
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(nullptr);
@@ -946,38 +942,32 @@ TEST_F(CampaignTest, testLoad)
 
 TEST_F(CampaignTest, testDateHandling)
 {
-	date_t date;
-	date.day = 300;
-	date.sec = 300;
+	DateTime date = DateTime(300, 300);
 
 	ccs.date = date;
 
-	ASSERT_TRUE(Date_IsDue(&date));
-	ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
+	ASSERT_TRUE(date <= ccs.date);
+	ASSERT_FALSE(ccs.date > date);
 
-	date.day = 299;
-	date.sec = 310;
+	date = DateTime(299, 310);
 
-	ASSERT_TRUE(Date_IsDue(&date));
-	ASSERT_TRUE(Date_LaterThan(&ccs.date, &date));
+	ASSERT_TRUE(date <= ccs.date);
+	ASSERT_TRUE(ccs.date > date);
 
-	date.day = 301;
-	date.sec = 0;
+	date = DateTime(301, 0);
 
-	ASSERT_FALSE(Date_IsDue(&date));
-	ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
+	ASSERT_FALSE(date <= ccs.date);
+	ASSERT_FALSE(ccs.date > date);
 
-	date.day = 300;
-	date.sec = 299;
+	date = DateTime(300, 299);
 
-	ASSERT_TRUE(Date_IsDue(&date));
-	ASSERT_TRUE(Date_LaterThan(&ccs.date, &date));
+	ASSERT_TRUE(date <= ccs.date);
+	ASSERT_TRUE(ccs.date > date);
 
-	date.day = 300;
-	date.sec = 301;
+	date = DateTime(300, 301);
 
-	ASSERT_FALSE(Date_IsDue(&date));
-	ASSERT_FALSE(Date_LaterThan(&ccs.date, &date));
+	ASSERT_FALSE(date <= ccs.date);
+	ASSERT_FALSE(ccs.date > date);
 }
 
 /**
@@ -998,8 +988,7 @@ TEST_F(CampaignTest, testCampaignDateHandling)
 	BS_InitMarket(campaign);
 
 	/* one hour till month change */
-	ccs.date.day = 30;
-	ccs.date.sec = 23 * 60 * 60;
+	ccs.date = DateTime(30, 23 * 60 * 60);
 	/** @todo fix magic number */
 	ccs.gameLapse = 7;
 	ccs.paid = true;
@@ -1062,7 +1051,7 @@ TEST_F(CampaignTest, testBuildingConstruction)
 
 	/* day 0 has special meaning! */
 	/* if building->startTime is 0 no buildTime checks done! */
-	ccs.date.day++;
+	ccs.date += DateTime(1, 0);
 	base = CreateBase("unittestbuildingconstruction1", pos);
 	ASSERT_TRUE(nullptr != base);
 	base = CreateBase("unittestbuildingconstruction2", pos);
@@ -1104,12 +1093,12 @@ TEST_F(CampaignTest, testBuildingConstruction)
 	building2 = B_BuildBuilding(base, buildingTemplate, x, y);
 	ASSERT_TRUE(nullptr == building2);
 	/* roll time one day before building finishes */
-	ccs.date.day += building1->buildTime - 1;
+	ccs.date += DateTime(building1->buildTime - 1, 0);
 	B_UpdateBuildingConstructions();
 	/* building should be under construction */
 	ASSERT_EQ(building1->buildingStatus, B_STATUS_UNDER_CONSTRUCTION);
 	/* step a day */
-	ccs.date.day++;
+	ccs.date += DateTime(1, 0);
 	B_UpdateBuildingConstructions();
 	/* building should be ready */
 	ASSERT_EQ(building1->buildingStatus, B_STATUS_WORKING);
@@ -1127,7 +1116,7 @@ TEST_F(CampaignTest, testBuildingConstruction)
 	/* try to destroy the first (should fail) */
 	ASSERT_FALSE(B_BuildingDestroy(building1));
 	/* build up the second */
-	ccs.date.day += building2->buildTime;
+	ccs.date += DateTime(building2->buildTime, 0);
 	B_UpdateBuildingConstructions();
 	/* try to destroy the first (should fail) */
 	ASSERT_FALSE(B_BuildingDestroy(building1));
@@ -1264,7 +1253,7 @@ TEST_F(CampaignTest, testEventTrigger)
 	testEventTriggerCalled = false;
 	for (int i = 0; i < 60; i++) {
 		CP_TriggerEvent(NEW_DAY);
-		ccs.date.day++;
+		ccs.date += DateTime(1, 0);
 	}
 	Cmd_AddCommand("test_eventtrigger", testEventTrigger_f);
 	campaignTriggerEvent_t* event = &ccs.campaignTriggerEvents[ccs.numCampaignTriggerEvents++];

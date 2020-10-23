@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#include "DateTime.h"
 #include "../common/common.h"
-#include "cl_time.h"
 
 #ifdef NO_I18N
 #define bindtextdomain(IGNORE1, IGNORE2)
@@ -58,7 +58,7 @@ typedef struct geoscapeData_s {
 	bool xviOverlay;
 	bool radarOverlay;
 	const char* map;
-	date_t date;
+	class DateTime date;
 
 	/** this is the data that is used with r_xviTexture */
 	byte r_xviAlpha[XVI_WIDTH * XVI_HEIGHT];

@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../cl_inventory.h"
 #include "../../ui/ui_dataids.h"
@@ -519,12 +520,12 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		} else {
 			switch (type) {
 			case TECHMAIL_PRE:
-				CP_DateConvertLong(&tech->preResearchedDate, &date);
+				CP_DateConvertLong(tech->preResearchedDate, &date);
 				Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 				break;
 			case TECHMAIL_RESEARCHED:
-				CP_DateConvertLong(&tech->researchedDate, &date);
+				CP_DateConvertLong(tech->researchedDate, &date);
 				Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 				break;
@@ -1049,7 +1050,7 @@ static void UP_OpenMail_f (void)
 			const techMail_t& mail = m->pedia->mail[TECHMAIL_PRE];
 			if (!mail.from)
 				continue;
-			CP_DateConvertLong(&m->pedia->preResearchedDate, &date);
+			CP_DateConvertLong(m->pedia->preResearchedDate, &date);
 			Com_sprintf(headline, sizeof(headline), _("Proposal: %s"), _(m->pedia->mail[TECHMAIL_PRE].subject));
 			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"), date.year, Date_GetMonthName(date.month - 1), date.day);
 			icon = mail.icon;
@@ -1060,7 +1061,7 @@ static void UP_OpenMail_f (void)
 			const techMail_t& mail = m->pedia->mail[TECHMAIL_RESEARCHED];
 			if (!mail.from)
 				continue;
-			CP_DateConvertLong(&m->pedia->researchedDate, &date);
+			CP_DateConvertLong(m->pedia->researchedDate, &date);
 			Com_sprintf(headline, sizeof(headline), _("Re: %s"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject));
 			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"), date.year, Date_GetMonthName(date.month - 1), date.day);
 			icon = mail.icon;
@@ -1070,9 +1071,9 @@ static void UP_OpenMail_f (void)
 		case MSG_NEWS: {
 			const techMail_t* mail = &m->pedia->mail[TECHMAIL_PRE];
 			if (mail->from) {
-				CP_DateConvertLong(&m->pedia->preResearchedDate, &date);
+				CP_DateConvertLong(m->pedia->preResearchedDate, &date);
 			} else {
-				CP_DateConvertLong(&m->pedia->researchedDate, &date);
+				CP_DateConvertLong(m->pedia->researchedDate, &date);
 				mail = &m->pedia->mail[TECHMAIL_RESEARCHED];
 			}
 			if (!mail->from)

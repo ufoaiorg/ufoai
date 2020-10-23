@@ -23,6 +23,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../../shared/parse.h"
 #include "../../../shared/shared.h"
@@ -120,7 +121,7 @@ void NAT_UpdateHappinessForAllNations (const float minhappiness)
 int NAT_GetFunding (const nation_t* const nation, int month)
 {
 	assert(month >= 0);
-	assert(month < MONTHS_PER_YEAR);
+	assert(month < DateTime::MONTHS_PER_YEAR);
 	return nation->maxFunding * nation->stats[month].happiness;
 }
 
@@ -232,7 +233,7 @@ bool NAT_SaveXML (xmlNode_t* p)
 	NAT_Foreach(nation) {
 		xmlNode_t* s = cgi->XML_AddNode(n, SAVE_NATION_NATION);
 		cgi->XML_AddString(s, SAVE_NATION_ID, nation->id);
-		for (int j = 0; j < MONTHS_PER_YEAR; j++) {
+		for (int j = 0; j < DateTime::MONTHS_PER_YEAR; j++) {
 			const nationInfo_t* stats = &nation->stats[j];
 
 			if (!stats->inuse)
@@ -339,10 +340,10 @@ bool NAT_LoadXML (xmlNode_t* p)
 
 		/* month loop */
 		for (ss = cgi->XML_GetNode(s, SAVE_NATION_MONTH); ss; ss = cgi->XML_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
-			int monthIDX = cgi->XML_GetInt(ss, SAVE_NATION_MONTH_IDX, MONTHS_PER_YEAR);
+			int monthIDX = cgi->XML_GetInt(ss, SAVE_NATION_MONTH_IDX, DateTime::MONTHS_PER_YEAR);
 			nationInfo_t* stats = &nation->stats[monthIDX];
 
-			if (monthIDX < 0 || monthIDX >= MONTHS_PER_YEAR)
+			if (monthIDX < 0 || monthIDX >= DateTime::MONTHS_PER_YEAR)
 				return false;
 
 			stats->inuse = true;
@@ -553,7 +554,7 @@ static void NAT_ListStats_f (void)
 		if (argCount >= 3 && !Q_streq(nation->id, cgi->Cmd_Argv(1)))
 			continue;
 
-		for (int monthIDX = 0; monthIDX < MONTHS_PER_YEAR; monthIDX++) {
+		for (int monthIDX = 0; monthIDX < DateTime::MONTHS_PER_YEAR; monthIDX++) {
 			if (!nation->stats[monthIDX].inuse)
 				break;
 
@@ -597,14 +598,14 @@ static void NAT_DrawCharts_f (void)
 	if (width <= 0 || height <= 0)
 		return;
 
-	const int dx = (int)(width / MONTHS_PER_YEAR);
+	const int dx = (int)(width / DateTime::MONTHS_PER_YEAR);
 
 	/* Calculate chart bounds (maximums) */
 	int maxFunding;
 	float maxXVI;
 	int nationIdx = 0;
 	NAT_Foreach(nation) {
-		for (int monthIdx = 0; monthIdx < MONTHS_PER_YEAR; monthIdx++) {
+		for (int monthIdx = 0; monthIdx < DateTime::MONTHS_PER_YEAR; monthIdx++) {
 			if (!nation->stats[monthIdx].inuse)
 				break;
 
@@ -643,7 +644,7 @@ static void NAT_DrawCharts_f (void)
 		);
 
 		int monthIdx;
-		for (monthIdx = 0; monthIdx < MONTHS_PER_YEAR; monthIdx++) {
+		for (monthIdx = 0; monthIdx < DateTime::MONTHS_PER_YEAR; monthIdx++) {
 			if (!nation->stats[monthIdx].inuse)
 				break;
 
@@ -829,7 +830,7 @@ void NAT_BackupMonthlyData (void)
 	 * "inuse" is copied as well so we do not need to set it anywhere.
 	 */
 	NAT_Foreach(nation) {
-		for (int i = MONTHS_PER_YEAR - 1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
+		for (int i = DateTime::MONTHS_PER_YEAR - 1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
 			nation->stats[i] = nation->stats[i - 1];
 		}
 	}

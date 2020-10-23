@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../../DateTime.h"
 #include "../../../cl_shared.h"
 #include "../cp_campaign.h"
 #include "../cp_geoscape.h"
@@ -68,13 +69,13 @@ void CP_HarvestMissionIsFailure (mission_t* mission)
  */
 static void CP_HarvestMissionStart (mission_t* mission)
 {
-	const date_t minMissionDelay = {2, 0};
-	const date_t missionDelay = {3, 0};
+	const DateTime minMissionDelay(2, 0);
+	const DateTime maxMissionDelay(3, 0);
 
 	mission->stage = STAGE_HARVEST;
 
 	if (mission->ufo) {
-		mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
+		mission->finalDate = ccs.date + Date_Random(minMissionDelay, maxMissionDelay);
 		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 		CP_UFORemoveFromGeoscape(mission, false);
 	} else {

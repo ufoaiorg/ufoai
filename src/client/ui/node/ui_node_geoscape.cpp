@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../DateTime.h"
 #include "../ui_nodes.h"
 #include "../ui_input.h"
 #include "../ui_parse.h"
@@ -248,7 +249,6 @@ void uiGeoscapeNode::draw (uiNode_t* node)
 		return;
 
 	const char* map = data.map;
-	date_t& date = data.date;
 
 	/* Draw the map and markers */
 	if (UI_MAPEXTRADATACONST(node).flatgeoscape) {
@@ -256,12 +256,12 @@ void uiGeoscapeNode::draw (uiNode_t* node)
 		static float lastQ = 0.0f;
 
 		/* the sun is not always in the plane of the equator on earth - calculate the angle the sun is at */
-		const float q = (date.day % DAYS_PER_YEAR + (float)(date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
+		const float q = (data.date.getDateAsDays() % DateTime::DAYS_PER_YEAR + (float)(data.date.getTimeAsSeconds() / (DateTime::SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DateTime::DAYS_PER_YEAR - M_PI;
 		if (lastQ != q) {
 			calcAndUploadDayAndNightTexture(node, q);
 			lastQ = q;
 		}
-		R_DrawFlatGeoscape(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, (float) date.sec / SECONDS_PER_DAY,
+		R_DrawFlatGeoscape(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, (float) data.date.getTimeAsSeconds() / DateTime::SECONDS_PER_DAY,
 				UI_MAPEXTRADATACONST(node).center[0], UI_MAPEXTRADATACONST(node).center[1], 0.5 / UI_MAPEXTRADATACONST(node).zoom, map,
 				data.nationOverlay, data.xviOverlay, data.radarOverlay, r_dayandnightTexture, r_xviTexture, r_radarTexture);
 
@@ -273,7 +273,7 @@ void uiGeoscapeNode::draw (uiNode_t* node)
 
 		R_EnableRenderbuffer(true);
 
-		R_Draw3DGlobe(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, date.day, date.sec,
+		R_Draw3DGlobe(UI_MAPEXTRADATACONST(node).mapPos, UI_MAPEXTRADATACONST(node).mapSize, data.date.getDateAsDays(), data.date.getTimeAsSeconds(),
 				UI_MAPEXTRADATACONST(node).angles, UI_MAPEXTRADATACONST(node).zoom, map, disableSolarRender,
 				UI_MAPEXTRADATACONST(node).ambientLightFactor, UI_MAPEXTRADATA(node).nationOverlay,
 				UI_MAPEXTRADATA(node).xviOverlay, UI_MAPEXTRADATA(node).radarOverlay, r_xviTexture, r_radarTexture,

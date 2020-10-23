@@ -21,6 +21,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_popup.h"
@@ -39,7 +41,7 @@ char cp_messageBuffer[MAX_MESSAGE_TEXT];
 static void MS_TimestampedText (char* text, uiMessageListNodeMessage_t* message, size_t textsize)
 {
 	dateLong_t date;
-	CP_DateConvertLong(&message->date, &date);
+	CP_DateConvertLong(message->date, &date);
 	Com_sprintf(text, textsize, _("%i %s %02i, %02i:%02i: "), date.year,
 		Date_GetMonthName(date.month - 1), date.day, date.hour, date.min);
 }
@@ -224,7 +226,7 @@ static void MS_MessageSaveXML (xmlNode_t* p, uiMessageListNodeMessage_t* message
 	}
 	if (message->pedia)
 		cgi->XML_AddString(n, SAVE_MESSAGES_PEDIAID, message->pedia->id);
-	cgi->XML_AddDate(n, SAVE_MESSAGES_DATE, message->date.day, message->date.sec);
+	cgi->XML_AddDate(n, SAVE_MESSAGES_DATE, message->date.getDateAsDays(), message->date.getTimeAsSeconds());
 	cgi->Com_UnregisterConstList(saveMessageConstants);
 }
 
@@ -304,7 +306,10 @@ bool MS_LoadXML (xmlNode_t* p)
 		}
 		mess = MS_AddNewMessage(title, text, (messageType_t)mtype, tech, false, false);
 		mess->eventMail = mail;
-		cgi->XML_GetDate(sn, SAVE_MESSAGES_DATE, &mess->date.day, &mess->date.sec);
+		int date;
+		int time;
+		cgi->XML_GetDate(sn, SAVE_MESSAGES_DATE, &date, &time);
+		mess->date = DateTime(date, time);
 		/* redo timestamp text after setting date */
 		MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
 
@@ -312,7 +317,7 @@ bool MS_LoadXML (xmlNode_t* p)
 			dateLong_t date;
 			char dateBuf[MAX_VAR] = "";
 
-			CP_DateConvertLong(&mess->date, &date);
+			CP_DateConvertLong(mess->date, &date);
 			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 				date.year, Date_GetMonthName(date.month - 1), date.day);
 			mail->date = cgi->PoolStrDup(dateBuf, cp_campaignPool, 0);

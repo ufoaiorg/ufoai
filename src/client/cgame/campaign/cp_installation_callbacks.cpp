@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../ui/ui_dataids.h"
 #include "cp_campaign.h"
@@ -56,7 +57,7 @@ static void INS_SetInstallationTitle (installationType_t type)
 void INS_SelectInstallation (installation_t* installation)
 {
 	B_SetCurrentSelectedBase(nullptr);
-	const int timetobuild = std::max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
+	const int timetobuild = std::max(0, installation->installationTemplate->buildTime - (ccs.date.getDateAsDays() - installation->buildStart));
 
 	cgi->Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: select installation with id %i\n", installation->idx);
 	ccs.mapAction = MA_NONE;
@@ -227,7 +228,7 @@ static void INS_FillUFOYardData_f (void)
 
 	if (ins) {
 		const nation_t* nat = GEO_GetNation(ins->pos);
-		const int timeToBuild = std::max(0, ins->installationTemplate->buildTime - (ccs.date.day - ins->buildStart));
+		const int timeToBuild = std::max(0, ins->installationTemplate->buildTime - (ccs.date.getDateAsDays() - ins->buildStart));
 		const char* buildTime = (timeToBuild > 0 && ins->installationStatus == INSTALLATION_UNDER_CONSTRUCTION) ? va(ngettext("%d day", "%d days", timeToBuild), timeToBuild) : "-";
 		const int freeCap = std::max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
 		const char* nationName = nat ? _(nat->name) : "";

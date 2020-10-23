@@ -237,7 +237,7 @@ void AB_BaseSearchedByNations (void)
 											 * find alien base by 2*/
 
 	/* Stealth is updated only once a week */
-	if (ccs.date.day % daysPerWeek)
+	if (ccs.date.getDateAsDays() % daysPerWeek)
 		return;
 
 	AB_Foreach(base) {

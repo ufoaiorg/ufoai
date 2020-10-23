@@ -57,8 +57,8 @@ static void CP_UFOCarrierMissionStart (mission_t* mission)
 static void CP_UFOCarrierMissionUpdate (mission_t* mission)
 {
 	/* delay the next update for some time */
-	const date_t delay = {2, 0};
-	mission->finalDate = Date_Add(ccs.date, delay);
+	const DateTime delay(2, 0);
+	mission->finalDate = ccs.date + delay;
 
 	if (INS_HasType(INSTALLATION_ORBIT)) {
 		cgi->UI_PopupButton(_("UFO-Carrier"), _("The Carrier UFO is in range. Should we launch the payload?"),

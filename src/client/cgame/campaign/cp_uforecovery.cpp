@@ -24,6 +24,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_ufo.h"
@@ -51,7 +52,7 @@ void UR_ProcessActive (void)
 
 		if (ufo->status == SUFO_STORED)
 			continue;
-		if (Date_LaterThan(&ufo->arrive, &ccs.date))
+		if (ufo->arrive > ccs.date)
 			continue;
 
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s was transferred to %s."), UFO_GetName(ufo->ufoTemplate), ufo->installation->name);
@@ -96,7 +97,7 @@ storedUFO_t* US_GetStoredUFOByIDX (const int idx)
  * @param[in] condition Condition of the UFO to store (How much the UFO is damaged)
  * @return storedUFO_t pointer to the newly stored UFO (or nullptr if failed)
  */
-storedUFO_t* US_StoreUFO (const aircraft_t* ufoTemplate, installation_t* installation, date_t date, float condition)
+storedUFO_t* US_StoreUFO (const aircraft_t* ufoTemplate, installation_t* installation, DateTime& date, float condition)
 {
 	if (!ufoTemplate) {
 		cgi->Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Invalid aircraft (UFO) Template.\n");
@@ -128,8 +129,8 @@ storedUFO_t* US_StoreUFO (const aircraft_t* ufoTemplate, installation_t* install
 	ufo.ufoTemplate = ufoTemplate;
 	ufo.disassembly = nullptr;
 
-	ufo.arrive = date;
-	if (Date_LaterThan(&ccs.date, &ufo.arrive)) {
+	ufo.arrive = DateTime(date);
+	if (ccs.date > ufo.arrive) {
 		ufo.status = SUFO_STORED;
 		RS_MarkCollected(ufo.ufoTemplate->tech);
 	} else {
@@ -223,8 +224,6 @@ void US_RemoveUFOsExceedingCapacity (installation_t* installation)
  */
 bool US_TransferUFO (storedUFO_t* ufo, installation_t* ufoyard)
 {
-	date_t date;
-
 	if (!ufo)
 		cgi->Com_Error(ERR_DROP, "No UFO cannot be transferred!");
 	if (!ufoyard)
@@ -241,12 +240,9 @@ bool US_TransferUFO (storedUFO_t* ufo, installation_t* ufoyard)
 	if (ufoyard->ufoCapacity.cur >= ufoyard->ufoCapacity.max)
 		return false;
 
-	date = ccs.date;
-	date.day += (int) RECOVERY_DELAY;
-
 	ufo->installation->ufoCapacity.cur--;
 	ufo->status = SUFO_TRANSFERED;
-	ufo->arrive = date;
+	ufo->arrive = ccs.date + DateTime((int)RECOVERY_DELAY, 0);
 	ufo->installation = ufoyard;
 	ufoyard->ufoCapacity.cur++;
 
@@ -310,7 +306,7 @@ bool US_SaveXML (xmlNode_t* p)
 
 		cgi->XML_AddInt(snode, SAVE_UFORECOVERY_UFOIDX, ufo->idx);
 		cgi->XML_AddString(snode, SAVE_UFORECOVERY_UFOID, ufo->id);
-		cgi->XML_AddDate(snode, SAVE_UFORECOVERY_DATE, ufo->arrive.day, ufo->arrive.sec);
+		cgi->XML_AddDate(snode, SAVE_UFORECOVERY_DATE, ufo->arrive.getDateAsDays(), ufo->arrive.getTimeAsSeconds());
 		cgi->XML_AddString(snode, SAVE_UFORECOVERY_STATUS, cgi->Com_GetConstVariable(SAVE_STOREDUFOSTATUS_NAMESPACE, ufo->status));
 		cgi->XML_AddFloat(snode, SAVE_UFORECOVERY_CONDITION, ufo->condition);
 
@@ -376,7 +372,10 @@ bool US_LoadXML (xmlNode_t* p)
 			cgi->Com_Printf("UFO has no/invalid components set\n");
 			continue;
 		}
-		cgi->XML_GetDate(snode, SAVE_UFORECOVERY_DATE, &ufo.arrive.day, &ufo.arrive.sec);
+		int date;
+		int time;
+		cgi->XML_GetDate(snode, SAVE_UFORECOVERY_DATE, &date, &time);
+		ufo.arrive = DateTime(date, time);
 		ufo.condition = cgi->XML_GetFloat(snode, SAVE_UFORECOVERY_CONDITION, 1.0f);
 		/* disassembly is set by production savesystem later but only for UFOs that are being disassembled */
 		ufo.disassembly = nullptr;
@@ -400,7 +399,7 @@ static void US_ListStoredUFOs_f (void)
 		cgi->Com_Printf("id: %s\n", ufo->id);
 		cgi->Com_Printf("stored at %s\n", (ufo->installation) ? ufo->installation->name : "NOWHERE");
 
-		CP_DateConvertLong(&(ufo->arrive), &date);
+		CP_DateConvertLong(ufo->arrive, &date);
 		cgi->Com_Printf("arrived at: %i %s %02i, %02i:%02i\n", date.year,
 		Date_GetMonthName(date.month - 1), date.day, date.hour, date.min);
 
@@ -451,7 +450,8 @@ static void US_StoreUFO_f (void)
 		return;
 	}
 
-	US_StoreUFO(ufoType, installation, ccs.date, 1.0f);
+	DateTime date = DateTime(ccs.date);
+	US_StoreUFO(ufoType, installation, date, 1.0f);
 }
 
 /**

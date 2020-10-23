@@ -22,6 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "cp_building.h"
 #include "../../cl_shared.h"
 #include "../../../shared/parse.h"
@@ -37,11 +38,9 @@ bool B_IsBuildingBuiltUp (const building_t* building)
 {
 	if (!building)
 		return false;
-	if (building->timeStart.day == 0 && building->timeStart.sec == 0)
+	if (building->timeStart == DateTime(0, 0))
 		return true;
-	date_t due = building->timeStart;
-	due.day += building->buildTime;
-	return Date_IsDue(&due);
+	return (building->timeStart + DateTime(building->buildTime, 0)) <= ccs.date;
 }
 
 /**
@@ -50,9 +49,8 @@ bool B_IsBuildingBuiltUp (const building_t* building)
  */
 float B_GetConstructionTimeRemain (const building_t* building)
 {
-	date_t diff = Date_Substract(building->timeStart, ccs.date);
-	diff.day += building->buildTime;
-	return diff.day + (float)diff.sec / SECONDS_PER_DAY;
+	DateTime diff = building->timeStart + DateTime(building->buildTime, 0) - ccs.date;
+	return diff.getDateAsDays() + (float)diff.getTimeAsSeconds() / DateTime::SECONDS_PER_DAY;
 }
 
 static const struct buildingTypeMapping_s {

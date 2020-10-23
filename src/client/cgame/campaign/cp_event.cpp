@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../../shared/parse.h"
 #include "../../../common/binaryexpressionparser.h"
@@ -266,9 +267,7 @@ static int CP_CheckTriggerEvent (const char* expression, const void* userdata)
 		int days;
 		if (sscanf(type, "[%i]", &days) != 1)
 			return -1;
-		date_t d = ccs.curCampaign->date;
-		d.day += days;
-		if (Date_IsDue(&d))
+		if ((ccs.curCampaign->date + DateTime(days, 0)) <= ccs.date)
 			return 1;
 		return 0;
 	}
@@ -526,7 +525,7 @@ void CL_EventAddMail (const char* eventMailId)
 		dateLong_t date;
 		char dateBuf[MAX_VAR] = "";
 
-		CP_DateConvertLong(&ccs.date, &date);
+		CP_DateConvertLong(ccs.date, &date);
 		Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 			date.year, Date_GetMonthName(date.month - 1), date.day);
 		eventMail->date = cgi->PoolStrDup(dateBuf, cp_campaignPool, 0);

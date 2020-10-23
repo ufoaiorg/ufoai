@@ -30,6 +30,7 @@ extern memPool_t* cp_campaignPool;
 class Employee;
 #define MAX_CAMPAIGNS	16
 
+#include "../../DateTime.h"
 #include "cp_cgame_callbacks.h"
 #include "cp_alien_interest.h"
 #include "cp_rank.h"
@@ -187,7 +188,7 @@ typedef struct campaign_s {
 	int negativeCreditsUntilLost;		/**< bankrupt - negative credits until you've lost the game */
 	int maxAllowedXVIRateUntilLost;		/**< 0 - 100 - the average rate of XVI over all nations before you've lost the game */
 	bool visible;				/**< visible in campaign menu? */
-	date_t date;				/**< starting date for this campaign */
+	class DateTime date;			/**< starting date for this campaign */
 	int basecost;				/**< base building cost for empty base */
 	char firstBaseTemplate[MAX_VAR];	/**< template to use for setting up the first base */
 	bool finished;
@@ -242,7 +243,7 @@ typedef struct ccs_s {
 	int credits;						/**< actual credits amount */
 	int civiliansKilled;					/**< how many civilians were killed already */
 	int aliensKilled;					/**< how many aliens were killed already */
-	date_t date;						/**< current date */
+	class DateTime date;					/**< current date */
 	bool startXVI;						/**< the aliens are starting to spread XVI */
 	float timer;
 	float frametime;

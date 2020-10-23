@@ -24,6 +24,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
 #include "../../ui/ui_dataids.h"
@@ -1015,8 +1016,7 @@ static void B_AddBuildingToBasePos (base_t* base, const building_t* buildingTemp
 	buildingNew = B_BuildBuilding(base, buildingTemplate, (int)pos[0], (int)pos[1]);
 	if (!buildingNew)
 		return;
-	buildingNew->timeStart.day = 0;
-	buildingNew->timeStart.sec = 0;
+	buildingNew->timeStart = DateTime(0, 0);
 	B_UpdateAllBaseBuildingStatus(buildingNew, B_STATUS_WORKING);
 	cgi->Com_DPrintf(DEBUG_CLIENT, "Base %i new building: %s at (%.0f:%.0f)\n",
 		base->idx, buildingNew->id, buildingNew->pos[0], buildingNew->pos[1]);
@@ -1333,7 +1333,7 @@ building_t* B_BuildBuilding (base_t* base, const building_t* buildingTemplate, i
 
 	/* status and build (start) time */
 	buildingNew->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-	buildingNew->timeStart = ccs.date;
+	buildingNew->timeStart = DateTime(ccs.date);
 
 	CP_UpdateCredits(ccs.credits - buildingNew->fixCosts);
 	ccs.numBuildings[base->idx]++;
@@ -1923,8 +1923,7 @@ static void B_BuildingConstructionFinished_f (void)
 			continue;
 
 		B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
-		building->timeStart.day = 0;
-		building->timeStart.sec = 0;
+		building->timeStart = DateTime(0, 0);
 		B_FireEvent(building, base, B_ONENABLE);
 	}
 	/* update menu */
@@ -2310,7 +2309,7 @@ bool B_SaveXML (xmlNode_t* parent)
 			cgi->XML_AddString(snode, SAVE_BASES_BUILDINGTYPE, building->tpl->id);
 			cgi->XML_AddInt(snode, SAVE_BASES_BUILDING_PLACE, building->idx);
 			cgi->XML_AddString(snode, SAVE_BASES_BUILDINGSTATUS, cgi->Com_GetConstVariable(SAVE_BUILDINGSTATUS_NAMESPACE, building->buildingStatus));
-			cgi->XML_AddDate(snode, SAVE_BASES_BUILDINGTIMESTART, building->timeStart.day, building->timeStart.sec);
+			cgi->XML_AddDate(snode, SAVE_BASES_BUILDINGTIMESTART, building->timeStart.getDateAsDays(), building->timeStart.getTimeAsSeconds());
 			cgi->XML_AddInt(snode, SAVE_BASES_BUILDINGBUILDTIME, building->buildTime);
 			cgi->XML_AddFloatValue(snode, SAVE_BASES_BUILDINGLEVEL, building->level);
 			cgi->XML_AddPos2(snode, SAVE_BASES_POS, building->pos);
@@ -2512,7 +2511,10 @@ bool B_LoadXML (xmlNode_t* parent)
 				return false;
 			}
 
-			cgi->XML_GetDate(snode, SAVE_BASES_BUILDINGTIMESTART, &building->timeStart.day, &building->timeStart.sec);
+			int date;
+			int time;
+			cgi->XML_GetDate(snode, SAVE_BASES_BUILDINGTIMESTART, &date, &time);
+			building->timeStart = DateTime(date, time);
 
 			building->buildTime = cgi->XML_GetInt(snode, SAVE_BASES_BUILDINGBUILDTIME, 0);
 			building->level = cgi->XML_GetFloat(snode, SAVE_BASES_BUILDINGLEVEL, 0);

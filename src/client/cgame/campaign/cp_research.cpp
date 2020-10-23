@@ -28,6 +28,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
@@ -68,10 +69,10 @@ void RS_ResearchFinish (technology_t* tech)
 		cgi->Cmd_ExecuteString("%s", tech->finishedResearchEvent);
 
 	tech->statusResearch = RS_FINISH;
-	tech->researchedDate = ccs.date;
+	tech->researchedDate = DateTime(ccs.date);
 	if (!tech->statusResearchable) {
 		tech->statusResearchable = true;
-		tech->preResearchedDate = ccs.date;
+		tech->preResearchedDate = DateTime(ccs.date);
 	}
 
 	/* send a new message and add it to the mailclient */
@@ -134,8 +135,8 @@ void RS_MarkOneResearchable (technology_t* tech)
 	tech->statusResearchable = true;
 
 	/* only change the date if it wasn't set before */
-	if (tech->preResearchedDate.day == 0) {
-		tech->preResearchedDate = ccs.date;
+	if (tech->preResearchedDate.getDateAsDays() == 0) {
+		tech->preResearchedDate = DateTime(ccs.date);
 	}
 }
 
@@ -317,8 +318,8 @@ void RS_MarkCollected (technology_t* tech)
 	}
 
 	/* only change the date if it wasn't set before */
-	if (tech->preResearchedDate.day == 0) {
-		tech->preResearchedDate = ccs.date;
+	if (tech->preResearchedDate.getDateAsDays() == 0) {
+		tech->preResearchedDate = DateTime(ccs.date);
 	}
 
 	tech->statusCollected = true;
@@ -963,7 +964,7 @@ static void RS_TechnologyList_f (void)
 		cgi->Com_Printf("... researchable -> %i\n", tech->statusResearchable);
 
 		if (tech->statusResearchable) {
-			CP_DateConvertLong(&tech->preResearchedDate, &date);
+			CP_DateConvertLong(tech->preResearchedDate, &date);
 			cgi->Com_Printf("... researchable date: %02i %02i %i\n", date.day, date.month, date.year);
 		}
 
@@ -980,7 +981,7 @@ static void RS_TechnologyList_f (void)
 			break;
 		case RS_FINISH:
 			cgi->Com_Printf("done\n");
-			CP_DateConvertLong(&tech->researchedDate, &date);
+			CP_DateConvertLong(tech->researchedDate, &date);
 			cgi->Com_Printf("... research date: %02i %02i %i\n", date.day, date.month, date.year);
 			break;
 		default:
@@ -1737,8 +1738,8 @@ bool RS_SaveXML (xmlNode_t* parent)
 			cgi->XML_AddInt(snode, SAVE_RESEARCH_BASE, t->base->idx);
 		cgi->XML_AddIntValue(snode, SAVE_RESEARCH_SCIENTISTS, t->scientists);
 		cgi->XML_AddBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, t->statusResearchable);
-		cgi->XML_AddDate(snode, SAVE_RESEARCH_PREDATE, t->preResearchedDate.day, t->preResearchedDate.sec);
-		cgi->XML_AddDate(snode, SAVE_RESEARCH_DATE, t->researchedDate.day, t->researchedDate.sec);
+		cgi->XML_AddDate(snode, SAVE_RESEARCH_PREDATE, t->preResearchedDate.getDateAsDays(), t->preResearchedDate.getTimeAsSeconds());
+		cgi->XML_AddDate(snode, SAVE_RESEARCH_DATE, t->researchedDate.getDateAsDays(), t->researchedDate.getTimeAsSeconds());
 		cgi->XML_AddInt(snode, SAVE_RESEARCH_MAILSENT, t->mailSent);
 
 		/* save which techMails were read */
@@ -1798,8 +1799,12 @@ bool RS_LoadXML (xmlNode_t* parent)
 			t->base = B_GetBaseByIDX(baseIdx);
 		t->scientists = cgi->XML_GetInt(snode, SAVE_RESEARCH_SCIENTISTS, 0);
 		t->statusResearchable = cgi->XML_GetBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, false);
-		cgi->XML_GetDate(snode, SAVE_RESEARCH_PREDATE, &t->preResearchedDate.day, &t->preResearchedDate.sec);
-		cgi->XML_GetDate(snode, SAVE_RESEARCH_DATE, &t->researchedDate.day, &t->researchedDate.sec);
+		int date;
+		int time;
+		cgi->XML_GetDate(snode, SAVE_RESEARCH_PREDATE, &date, &time);
+		t->preResearchedDate = DateTime(date, time);
+		cgi->XML_GetDate(snode, SAVE_RESEARCH_DATE, &date, &time);
+		t->researchedDate = DateTime(date, time);
 		t->mailSent = (mailSentType_t)cgi->XML_GetInt(snode, SAVE_RESEARCH_MAILSENT, 0);
 
 		/* load which techMails were read */

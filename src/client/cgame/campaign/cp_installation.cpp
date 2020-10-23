@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
@@ -154,7 +155,7 @@ installation_t* INS_Build (const installationTemplate_t* installationTemplate, c
 	installation.idx = ccs.campaignStats.installationsBuilt;
 	installation.installationStatus = INSTALLATION_UNDER_CONSTRUCTION;
 	installation.installationTemplate = installationTemplate;
-	installation.buildStart = ccs.date.day;
+	installation.buildStart = ccs.date.getDateAsDays();
 
 	/* a new installation is not discovered (yet) */
 	installation.alienInterest = newInstallationAlienInterest;
@@ -355,7 +356,7 @@ void INS_UpdateInstallationData (void)
 	INS_Foreach(installation) {
 		if (installation->installationStatus == INSTALLATION_UNDER_CONSTRUCTION
 		 && installation->buildStart
-		 && installation->buildStart + installation->installationTemplate->buildTime <= ccs.date.day) {
+		 && installation->buildStart + installation->installationTemplate->buildTime <= ccs.date.getDateAsDays()) {
 			INS_FinishInstallation(installation);
 
 			Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Construction of installation %s finished."), installation->name);

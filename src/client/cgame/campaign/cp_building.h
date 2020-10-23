@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 #include "../../../shared/shared.h"
-#include "../../cl_time.h"
+#include "../../DateTime.h"
 
 /** @brief All possible building status. */
 typedef enum {
@@ -88,7 +88,7 @@ typedef struct building_s {
 	 * might e.g. be a factor */
 	float level;
 
-	date_t timeStart;
+	class DateTime timeStart;
 	int buildTime;
 
 	buildingStatus_t buildingStatus;

@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+ #include "../../DateTime.h"
+
 /**
  * @brief Detailed information about the nation relationship (currently per month, but could be used elsewhere).
  * @todo Maybe we should also move the "funding" stuff (see nation_t) in here? It is static right now though so i see no reason to do that yet.
@@ -49,7 +51,7 @@ typedef struct nation_s {
 	vec4_t color;		/**< The color this nation uses in the color-coded earth-map */
 	vec2_t pos;			/**< Nation position on geoscape. */
 
-	nationInfo_t stats[MONTHS_PER_YEAR];	/**< Detailed information about the history of this nations relationship toward PHALANX and the aliens.
+	nationInfo_t stats[DateTime::MONTHS_PER_YEAR];	/**< Detailed information about the history of this nations relationship toward PHALANX and the aliens.
 									 * The first entry [0] is the current month - all following entries are stored older months.
 									 * Combined with the funding info below we can generate an overview over time.
 									 */

@@ -26,6 +26,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../ui/ui_dataids.h"
 #include "../../../shared/parse.h"
@@ -448,7 +449,7 @@ int AIR_GetOperationRange (const aircraft_t* aircraft)
 {
 	const int range = aircraft->stats[AIR_STATS_SPEED] * aircraft->stats[AIR_STATS_FUELSIZE];
 	/* the 2.0f factor is for going to destination and then come back */
-	return 100 * (int) (KILOMETER_PER_DEGREE * range / (2.0f * (float)SECONDS_PER_HOUR * 100.0f));
+	return 100 * (int) (KILOMETER_PER_DEGREE * range / (2.0f * (float)DateTime::SECONDS_PER_HOUR * 100.0f));
 }
 
 /**
@@ -484,7 +485,7 @@ bool AIR_AircraftHasEnoughFuel (const aircraft_t* aircraft, const vec2_t destina
 	distance += GetDistanceOnGlobe(destination, base->pos);
 
 	/* Check if the aircraft has enough fuel to go to destination and then go back home */
-	return (distance <= AIR_GetRemainingRange(aircraft) / (float)SECONDS_PER_HOUR);
+	return (distance <= AIR_GetRemainingRange(aircraft) / (float)DateTime::SECONDS_PER_HOUR);
 }
 
 /**
@@ -504,7 +505,7 @@ bool AIR_AircraftHasEnoughFuelOneWay (const aircraft_t* aircraft, const vec2_t d
 	distance = GetDistanceOnGlobe(aircraft->pos, destination);
 
 	/* Check if the aircraft has enough fuel to go to destination */
-	return (distance <= AIR_GetRemainingRange(aircraft) / (float)SECONDS_PER_HOUR);
+	return (distance <= AIR_GetRemainingRange(aircraft) / (float)DateTime::SECONDS_PER_HOUR);
 }
 
 /**
@@ -930,7 +931,7 @@ bool AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	aircraft->time += dt;
 	aircraft->fuel -= dt;
 
-	dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / (float)SECONDS_PER_HOUR;
+	dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / (float)DateTime::SECONDS_PER_HOUR;
 
 	/* Check if destination reached */
 	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1)) {
@@ -947,7 +948,7 @@ bool AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 		GEO_CheckPositionBoundaries(aircraft->pos);
 	}
 
-	dist = (float) aircraft->stats[AIR_STATS_SPEED] * (aircraft->time + dt) / (float)SECONDS_PER_HOUR;
+	dist = (float) aircraft->stats[AIR_STATS_SPEED] * (aircraft->time + dt) / (float)DateTime::SECONDS_PER_HOUR;
 
 	/* Now calculate the projected position. This is the position that the aircraft should get on
 	 * next frame if its route didn't change in meantime. */
@@ -1525,7 +1526,7 @@ void AIR_ParseAircraft (const char* name, const char** text, bool assignAircraft
 						cgi->Com_EParseValue(aircraftTemplate, token, V_INT, offsetof(aircraft_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraft_t, stats[0]));
 						if (aircraftTemplate->stats[AIR_STATS_SPEED] == 0)
 							cgi->Com_Error(ERR_DROP, "AIR_ParseAircraft: speed value must be entered before range value");
-						aircraftTemplate->stats[AIR_STATS_FUELSIZE] = (int) (2.0f * (float)SECONDS_PER_HOUR * aircraftTemplate->stats[AIR_STATS_FUELSIZE]) /
+						aircraftTemplate->stats[AIR_STATS_FUELSIZE] = (int) (2.0f * (float)DateTime::SECONDS_PER_HOUR * aircraftTemplate->stats[AIR_STATS_FUELSIZE]) /
 							((float) aircraftTemplate->stats[AIR_STATS_SPEED]);
 					} else {
 						if (!cgi->Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_param_vals, cp_campaignPool, token))
@@ -2195,7 +2196,7 @@ static bool AIR_SaveAircraftXML (xmlNode_t* p, const aircraft_t* const aircraft,
 		cgi->XML_AddString(node, SAVE_AIRCRAFT_MISSIONID, aircraft->mission->id);
 		/** detection id and time */
 		cgi->XML_AddInt(node, SAVE_AIRCRAFT_DETECTIONIDX, aircraft->detectionIdx);
-		cgi->XML_AddDate(node, SAVE_AIRCRAFT_LASTSPOTTED_DATE, aircraft->lastSpotted.day, aircraft->lastSpotted.sec);
+		cgi->XML_AddDate(node, SAVE_AIRCRAFT_LASTSPOTTED_DATE, aircraft->lastSpotted.getDateAsDays(), aircraft->lastSpotted.getTimeAsSeconds());
 	} else {
 		if (aircraft->status == AIR_MISSION || aircraft->status == AIR_DROP) {
 			assert(aircraft->mission);
@@ -2408,7 +2409,10 @@ static bool AIR_LoadAircraftXML (xmlNode_t* p, aircraft_t* craft)
 	if (!craft->homebase) {
 		/* detection id and time */
 		craft->detectionIdx = cgi->XML_GetInt(p, SAVE_AIRCRAFT_DETECTIONIDX, 0);
-		cgi->XML_GetDate(p, SAVE_AIRCRAFT_LASTSPOTTED_DATE, &craft->lastSpotted.day, &craft->lastSpotted.sec);
+		int date;
+		int time;
+		cgi->XML_GetDate(p, SAVE_AIRCRAFT_LASTSPOTTED_DATE, &date, &time);
+		craft->lastSpotted = DateTime(date, time);
 	}
 
 	snode = cgi->XML_GetNode(p, SAVE_AIRCRAFT_AIRSTATS);

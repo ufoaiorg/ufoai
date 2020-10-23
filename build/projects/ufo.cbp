@@ -516,6 +516,8 @@
 		<Unit filename="../../src/client/cgame/campaign/save/save_uforecovery.h" />
 		<Unit filename="../../src/client/cgame/campaign/save/save_xvi.h" />
 		<Unit filename="../../src/client/cgame/cgame.h" />
+		<Unit filename="../../src/client/DateTime.cpp" />
+		<Unit filename="../../src/client/DateTime.h" />
 		<Unit filename="../../src/client/cgame/cl_game.cpp" />
 		<Unit filename="../../src/client/cgame/cl_game.h" />
 		<Unit filename="../../src/client/cgame/cl_game_team.cpp" />

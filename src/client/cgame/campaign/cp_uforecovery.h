@@ -20,10 +20,11 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #pragma once
+
+#include "../../DateTime.h"
 
 /* time the recovery takes in days */
 #define RECOVERY_DELAY 2.0f
@@ -48,8 +49,7 @@ typedef struct storedUFO_s {
 	const aircraft_t* ufoTemplate;
 
 	storedUFOStatus_t status;
-	/* arrival date (recovery/transfer) */
-	date_t arrive;
+	DateTime arrive;
 
 	float condition;
 
@@ -64,7 +64,7 @@ void UR_ProcessActive(void);
 
 #define US_Foreach(var) LIST_Foreach(ccs.storedUFOs, storedUFO_t, var)
 
-storedUFO_t* US_StoreUFO(const aircraft_t* ufoTemplate, installation_t* installation, date_t date, float condition);
+storedUFO_t* US_StoreUFO(const aircraft_t* ufoTemplate, installation_t* installation, DateTime& date, float condition);
 storedUFO_t* US_GetStoredUFOByIDX(const int idx);
 storedUFO_t* US_GetClosestStoredUFO(const aircraft_t* ufoTemplate, const base_t* base);
 void US_RemoveStoredUFO(storedUFO_t* ufo);

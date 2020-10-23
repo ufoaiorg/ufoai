@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
+#include "../../DateTime.h"
 #include "cp_campaign.h"
 
 extern const int MAX_POS_LOOP;
@@ -98,8 +99,8 @@ typedef struct mission_s {
 	missionStage_t stage;			/**< in which stage is this event? */
 	int initialOverallInterest;		/**< The overall interest value when this event has been created */
 	int initialIndividualInterest;		/**< The individual interest value (of type type) when this event has been created */
-	date_t startDate;			/**< Date when the event should start */
-	date_t finalDate;			/**< Date when the event should finish (e.g. for aerial recon)
+	class DateTime startDate;			/**< Date when the event should start */
+	class DateTime finalDate;			/**< Date when the event should finish (e.g. for aerial recon)
 						 * if finaleDate.day == 0, then delay is not a limitating factor for next stage */
 	vec2_t pos;				/**< Position of the mission */
 	aircraft_t* ufo;			/**< UFO on geoscape fulfilling the mission (may be nullptr) */

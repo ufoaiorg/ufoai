@@ -22,6 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -205,7 +206,7 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 			char aircraftListText[256] = "";
 			const float distance = GetDistanceOnGlobe(aircraft->pos, mission->pos);
 			const char* statusName = AIR_AircraftStatusToName(aircraft);
-			const char* time = CP_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]);
+			const char* time = CP_SecondConvert((float)DateTime::SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]);
 			Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s (%i/%i)\t%s\t%s\t%s"), aircraft->name,
 					teamSize, aircraft->maxTeamSize, statusName, aircraft->homebase->name, time);
 			cgi->LIST_AddString(&aircraftList, aircraftListText);

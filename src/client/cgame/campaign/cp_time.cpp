@@ -22,11 +22,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "cp_time.h"
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "cp_campaign.h"
-#include "cp_time.h"
-
-static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 typedef struct gameLapse_s {
 	const char* name;
@@ -35,16 +34,18 @@ typedef struct gameLapse_s {
 
 #define NUM_TIMELAPSE 8
 
+const int DAYS_PER_MONTH[DateTime::MONTHS_PER_YEAR] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
 /** @brief The possible geoscape time intervalls */
 static const gameLapse_t lapse[NUM_TIMELAPSE] = {
 	{N_("stopped"), 0},
 	{N_("5 sec"), 5},
-	{N_("5 mins"), 5 * 60},
-	{N_("20 mins"), SECONDS_PER_HOUR / 3},
-	{N_("1 hour"), SECONDS_PER_HOUR},
-	{N_("12 hours"), 12 * SECONDS_PER_HOUR},
-	{N_("1 day"), 24 * SECONDS_PER_HOUR},
-	{N_("5 days"), 5 * SECONDS_PER_DAY}
+	{N_("5 mins"), 5 * DateTime::SECONDS_PER_MINUTE},
+	{N_("20 mins"), 20 * DateTime::SECONDS_PER_MINUTE},
+	{N_("1 hour"), DateTime::SECONDS_PER_HOUR},
+	{N_("12 hours"), 12 * DateTime::SECONDS_PER_HOUR},
+	{N_("1 day"), DateTime::SECONDS_PER_DAY},
+	{N_("5 days"), 5 * DateTime::SECONDS_PER_DAY}
 };
 CASSERT(lengthof(lapse) == NUM_TIMELAPSE);
 
@@ -56,8 +57,8 @@ CASSERT(lengthof(lapse) == NUM_TIMELAPSE);
 const char* CP_SecondConvert (int second)
 {
 	static char buffer[6];
-	const int hour = second / SECONDS_PER_HOUR;
-	const int min = (second - hour * SECONDS_PER_HOUR) / 60;
+	const int hour = second / DateTime::SECONDS_PER_HOUR;
+	const int min = (second - hour * DateTime::SECONDS_PER_HOUR) / 60;
 	Com_sprintf(buffer, sizeof(buffer), "%2i:%02i", hour, min);
 	return buffer;
 }
@@ -69,31 +70,30 @@ const char* CP_SecondConvert (int second)
  * @param[in] date Contains the date to be converted.
  * @param[out] dateLong The converted date.
   */
-void CP_DateConvertLong (const date_t* date, dateLong_t* dateLong)
+void CP_DateConvertLong (const DateTime& date, dateLong_t* dateLong)
 {
 	/* Get the year */
-	dateLong->year = date->day / DAYS_PER_YEAR;
+	dateLong->year = date.getDateAsDays() / DateTime::DAYS_PER_YEAR;
 
 	/* Get the days in the year. */
-	int d = date->day % DAYS_PER_YEAR;
+	int d = date.getDateAsDays() % DateTime::DAYS_PER_YEAR;
 
 	/* Subtract days until no full month is left. */
 	byte i;
-	size_t length = lengthof(monthLength);
-	for (i = 0; i < length; i++) {
-		if (d < monthLength[i])
+	for (i = 0; i < DateTime::MONTHS_PER_YEAR; i++) {
+		if (d < DAYS_PER_MONTH[i])
 			break;
-		d -= monthLength[i];
+		d -= DAYS_PER_MONTH[i];
 	}
 
 	dateLong->day = d + 1;
 	dateLong->month = i + 1;
-	dateLong->hour = date->sec / SECONDS_PER_HOUR;
-	dateLong->min = (date->sec - dateLong->hour * SECONDS_PER_HOUR) / 60;
-	dateLong->sec = date->sec - dateLong->hour * SECONDS_PER_HOUR - dateLong->min * 60;
+	dateLong->hour = date.getTimeAsSeconds() / DateTime::SECONDS_PER_HOUR;
+	dateLong->min = (date.getTimeAsSeconds() - dateLong->hour * DateTime::SECONDS_PER_HOUR) / 60;
+	dateLong->sec = date.getTimeAsSeconds() - dateLong->hour * DateTime::SECONDS_PER_HOUR - dateLong->min * 60;
 
-	assert(dateLong->month >= 1 && dateLong->month <= MONTHS_PER_YEAR);
-	assert(dateLong->day >= 1 && dateLong->day <= monthLength[i]);
+	assert(dateLong->month >= 1 && dateLong->month <= DateTime::MONTHS_PER_YEAR);
+	assert(dateLong->day >= 1 && dateLong->day <= DAYS_PER_MONTH[i]);
 }
 
 /**
@@ -104,7 +104,7 @@ void CP_DateConvertLong (const date_t* date, dateLong_t* dateLong)
 void CP_UpdateTime (void)
 {
 	dateLong_t date;
-	CP_DateConvertLong(&ccs.date, &date);
+	CP_DateConvertLong(ccs.date, &date);
 
 	/* Update the timelapse text */
 	if (ccs.gameLapse >= 0 && ccs.gameLapse < NUM_TIMELAPSE) {
@@ -221,76 +221,13 @@ void CP_SetGameTime_f (void)
 }
 
 /**
- * @brief Convert a date_t date to seconds
- * @param[in] date The date in date_t format
+ * @brief Convert a date to seconds
+ * @param[in] date The date in DateTime format
  * @return the date in seconds
  */
-int Date_DateToSeconds (const date_t* date)
+int Date_DateToSeconds (const DateTime& date)
 {
-	return date->day * 86400 + date->sec;
-}
-
-/**
- * @brief Check whether the given date and time is later than current date.
- * @param[in] now Current date.
- * @param[in] compare Date to compare.
- * @return True if current date is later than given one.
- */
-bool Date_LaterThan (const date_t* now, const date_t* compare)
-{
-	if (now->day > compare->day)
-		return true;
-	if (now->day < compare->day)
-		return false;
-	if (now->sec > compare->sec)
-		return true;
-	return false;
-}
-
-/**
- * @brief Checks whether a given date is equal or earlier than the current campaign date
- * @param date The date to check
- * @return @c true if the given date is equal or earlier than the current campaign date, @c false otherwise
- */
-bool Date_IsDue (const date_t* date)
-{
-	if (date->day < ccs.date.day)
-		return true;
-
-	else if (date->day == ccs.date.day && date->sec <= ccs.date.sec)
-		return true;
-
-	return false;
-}
-
-/**
- * @brief Add two dates and return the result.
- * @param[in] a First date.
- * @param[in] b Second date.
- * @return The result of adding date_ b to date_t a.
- */
-date_t Date_Add (date_t a, const date_t& b)
-{
-	a.sec += b.sec;
-	a.day += (a.sec / SECONDS_PER_DAY) + b.day;
-	a.sec %= SECONDS_PER_DAY;
-	return a;
-}
-
-/**
- * @brief Substract the second date from the first and return the result.
- * @param[in] a First date.
- * @param[in] b Second date.
- */
-date_t Date_Substract (date_t a, const date_t& b)
-{
-	a.day -= b.day;
-	a.sec -= b.sec;
-	if (a.sec < 0) {
-		a.day--;
-		a.sec += SECONDS_PER_DAY;
-	}
-	return a;
+	return date.getDateAsDays() * DateTime::SECONDS_PER_DAY + date.getTimeAsSeconds();
 }
 
 /**
@@ -299,14 +236,10 @@ date_t Date_Substract (date_t a, const date_t& b)
  * @param[in] maxFrame Maximal date.
  * @return A date value between minFrame and maxFrame.
  */
-date_t Date_Random (date_t minFrame, date_t maxFrame)
+DateTime Date_Random (const DateTime& minFrame, const DateTime& maxFrame)
 {
-	const int random = (maxFrame.day * SECONDS_PER_DAY + maxFrame.sec) * frand();
-	maxFrame.sec = std::max(minFrame.day * SECONDS_PER_DAY + minFrame.sec, random);
-
-	maxFrame.day = maxFrame.sec / SECONDS_PER_DAY;
-	maxFrame.sec = maxFrame.sec % SECONDS_PER_DAY;
-	return maxFrame;
+	const int random = (maxFrame.getDateAsDays() * DateTime::SECONDS_PER_DAY + maxFrame.getTimeAsSeconds()) * frand();
+	return DateTime(0, std::max(minFrame.getDateAsDays() * DateTime::SECONDS_PER_DAY + minFrame.getTimeAsSeconds(), random));
 }
 
 /**

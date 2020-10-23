@@ -23,6 +23,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_capacity.h"
@@ -50,7 +51,7 @@ static int PR_CalculateTotalFrames (const base_t* base, const productionData_t* 
 		time *= std::max(1.0, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0);
 	}
 	/* Calculate the time needed for production of the item for our amount of workers. */
-	time *= MINUTES_PER_HOUR * ccs.curCampaign->produceRate;
+	time *= DateTime::MINUTES_PER_HOUR * ccs.curCampaign->produceRate;
 
 	/* Don't allow to return a time of less than 1 (you still need at least 1 minute to produce an item). */
 	return std::max(1.0, time) + 1;
@@ -88,7 +89,7 @@ int PR_GetRemainingMinutes (const production_t* prod)
  */
 int PR_GetRemainingHours (const production_t* prod)
 {
-	return round(PR_GetRemainingMinutes(prod) / (double)MINUTES_PER_HOUR);
+	return round(PR_GetRemainingMinutes(prod) / (double)DateTime::MINUTES_PER_HOUR);
 }
 
 /**
@@ -98,7 +99,7 @@ int PR_GetRemainingHours (const production_t* prod)
  */
 int PR_GetProductionHours (const base_t* base, const productionData_t* prodData)
 {
-	return round(PR_CalculateTotalFrames(base, prodData) / std::max(1, PR_WorkersAvailable(base)) / (double)MINUTES_PER_HOUR);
+	return round(PR_CalculateTotalFrames(base, prodData) / std::max(1, PR_WorkersAvailable(base)) / (double)DateTime::MINUTES_PER_HOUR);
 }
 
 /**

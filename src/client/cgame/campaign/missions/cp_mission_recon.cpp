@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../../DateTime.h"
 #include "../../../cl_shared.h"
 #include "../cp_campaign.h"
 #include "../cp_alienbase.h"
@@ -105,14 +106,14 @@ static bool CP_ReconMissionChoose (mission_t* mission)
  */
 void CP_ReconMissionAerial (mission_t* mission)
 {
-	const date_t minReconDelay = {1, 0};
-	const date_t reconDelay = {2, 0};		/* How long the UFO will fly on earth */
+	const DateTime minReconDelay(1, 0);
+	const DateTime maxReconDelay(2, 0);		/* How long the UFO will fly on earth */
 
 	assert(mission->ufo);
 
 	mission->stage = STAGE_RECON_AIR;
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minReconDelay, reconDelay));
+	mission->finalDate = ccs.date + Date_Random(minReconDelay, maxReconDelay);
 }
 
 /**
@@ -169,13 +170,12 @@ void CP_ReconMissionGroundGo (mission_t* mission)
  */
 static void CP_ReconMissionGround (mission_t* mission)
 {
-	const date_t minMissionDelay = {2, 0};
-	const date_t missionDelay = {3, 0};
-
 	mission->stage = STAGE_RECON_GROUND;
 	mission->posAssigned = true;
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
+	const DateTime minMissionDelay(2, 0);
+	const DateTime maxMissionDelay(3, 0);
+	mission->finalDate = ccs.date + Date_Random(minMissionDelay, maxMissionDelay);
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	if (mission->ufo)
 		CP_UFORemoveFromGeoscape(mission, false);

@@ -73,7 +73,7 @@ void CP_ReduceXVIEverywhere (void)
 		return;
 
 	/* Only decrease XVI if given days has passed */
-	if (ccs.date.day % XVI_DECREASE_DAYS)
+	if (ccs.date.getDateAsDays() % XVI_DECREASE_DAYS)
 		return;
 
 	CP_DecreaseXVILevelEverywhere();

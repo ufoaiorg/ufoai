@@ -14,7 +14,7 @@ $(TARGET)_FILE     := base/$(TARGET).$(SO_EXT)
 $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
 	$(wildcard $(SRCDIR)/client/cgame/campaign/*.cpp) \
 	\
-	$(wildcard $(SRCDIR)/client/cgame/campaign/missions/*.cpp) )
+	$(wildcard $(SRCDIR)/client/cgame/campaign/missions/*.cpp))
 
 ifneq ($(HARD_LINKED_CGAME),1)
 	$(TARGET)_SRCS += shared/mathlib.cpp \
@@ -28,7 +28,9 @@ ifneq ($(HARD_LINKED_CGAME),1)
 		game/q_shared.cpp \
 		game/chr_shared.cpp \
 		game/inv_shared.cpp \
-		game/inventory.cpp
+		game/inventory.cpp \
+		\
+		client/DateTime.cpp
 else
 	$(TARGET)_IGNORE := yes
 endif

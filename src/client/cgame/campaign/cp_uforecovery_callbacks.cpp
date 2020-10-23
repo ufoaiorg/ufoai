@@ -24,6 +24,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "../../DateTime.h"
 #include "../../cl_shared.h"
 #include "../../ui/ui_dataids.h"
 #include "cp_campaign.h"
@@ -95,9 +96,8 @@ static void UR_DialogStartStore_f (void)
 	Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO is being transported to %s."),
 		UFO_GetName(ufo), installation->name);
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer);
-	date_t date = ccs.date;
-	date.day += (int) RECOVERY_DELAY;
 
+	DateTime date = DateTime(ccs.date) + DateTime((int) RECOVERY_DELAY, 0);
 	US_StoreUFO(ufo, installation, date, condition);
 }
 
@@ -224,8 +224,7 @@ static void US_SelectStoredUfo_f (void)
 	const char* eta;
 
 	if (Q_streq(status, "transferring")) {
-		date_t time = Date_Substract(ufo->arrive, ccs.date);
-		eta = CP_SecondConvert(Date_DateToSeconds(&time));
+		eta = CP_SecondConvert(Date_DateToSeconds(ufo->arrive - ccs.date));
 	} else {
 		eta = "-";
 	}

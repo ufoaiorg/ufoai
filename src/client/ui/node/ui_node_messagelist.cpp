@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../DateTime.h"
 #include "../ui_main.h"
 #include "../ui_internal.h"
 #include "../ui_font.h"
@@ -57,7 +58,7 @@ typedef struct uiMessageListNodeMessage_s {
 	char title[MAX_VAR];
 	char timestamp[TIMESTAMP_TEXT];
 	char* text;
-	date_t date;
+	class DateTime date;
 	const char* iconName;
 	int lineUsed;		/**< used by the node to cache the number of lines need (often =1) */
 	struct uiMessageListNodeMessage_s* next;
