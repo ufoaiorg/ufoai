@@ -798,7 +798,7 @@ void RS_CheckRequirements (void)
 		if (RS_RequirementsMet(tech, tech->base))
 			continue;
 
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Research prerequisites of %s do not met at %s. Research halted!"), _(tech->name), tech->base->name);
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Research prerequisites of %s are not met at %s. Research halted!"), _(tech->name), tech->base->name);
 		MSO_CheckAddNewMessage(NT_RESEARCH_HALTED, _("Research halted"), cp_messageBuffer, MSG_RESEARCH_HALTED);
 
 		RS_StopResearch(tech);
@@ -822,7 +822,7 @@ int RS_ResearchRun (void)
 			continue;
 
 		if (!RS_RequirementsMet(tech, tech->base)) {
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Research prerequisites of %s do not met at %s. Research halted!"), _(tech->name), tech->base->name);
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Research prerequisites of %s are not met at %s. Research halted!"), _(tech->name), tech->base->name);
 			MSO_CheckAddNewMessage(NT_RESEARCH_HALTED, _("Research halted"), cp_messageBuffer, MSG_RESEARCH_HALTED);
 
 			RS_StopResearch(tech);
