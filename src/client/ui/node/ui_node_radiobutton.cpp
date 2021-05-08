@@ -120,7 +120,6 @@ void uiRadioButtonNode::onActivate (uiNode_t* node)
 {
 	/* no cvar given? */
 	if (!EXTRADATA(node).cvar || !*(char*)(EXTRADATA(node).cvar)) {
-		Com_Printf("UI_RadioButtonNodeClick: node '%s' doesn't have a valid cvar assigned\n", UI_GetPath(node));
 		return;
 	}
 
@@ -161,6 +160,16 @@ void uiRadioButtonNode::onLeftClick (uiNode_t* node, int x, int y)
 	}
 
 	onActivate(node);
+}
+
+
+const char* UI_RadioButton_GetCvar (uiNode_t* node) {
+	return EXTRADATA(node).cvar;
+}
+
+void UI_RadioButton_SetCvar (uiNode_t* node, const char* name) {
+	cvar_t* var = Cvar_Get(name);
+	EXTRADATA(node).cvar = var->name;
 }
 
 void UI_RadioButton_SetValue (uiNode_t* node, const char* value) {

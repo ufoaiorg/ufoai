@@ -1018,6 +1018,9 @@ struct uiRadioButtonNode_t: uiNode_t {
 	char* as_string () { return UI_EXTRADATA($self, radioButtonExtraData_t).string; };
 	float as_float () { return UI_EXTRADATA($self, radioButtonExtraData_t).value; };
 
+	const char* cvar () { return UI_RadioButton_GetCvar($self); };
+	void set_cvar (const char* name) { UI_RadioButton_SetCvar ($self, name); };
+
 	void set_value (const char* value) { UI_RadioButton_SetValue($self, value); };
 	void set_value (float value) { UI_RadioButton_SetValue($self, value); };
 

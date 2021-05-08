@@ -42,6 +42,8 @@ typedef struct radioButtonExtraData_s {
 	bool flipIcon;			/**< Flip the icon rendering (horizontal) */
 } radioButtonExtraData_t;
 
+const char* UI_RadioButton_GetCvar (uiNode_t* node);
+void UI_RadioButton_SetCvar (uiNode_t* node, const char* name);
 void UI_RadioButton_SetBackgroundByName (uiNode_t* node, const char* name);
 void UI_RadioButton_SetIconByName (uiNode_t* node, const char* name);
 void UI_RadioButton_SetValue (uiNode_t* node, const char* value);
