@@ -12301,7 +12301,7 @@ msgid ""
 "If you want to host a game, make sure, that TCP port 27910 is opened in your "
 "firewall.\n"
 "If you want to join the channel with a regular IRC client, connect to irc."
-"freenode.net and join #ufoai-gamer\n"
+"libera.chat and join #ufoai-gamer\n"
 "\n"
 "For help with setting up multiplayer games, see http://ufoai.org/wiki/index."
 "php/Multiplayer"
@@ -24800,10 +24800,10 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Visit us at ufoai.org or drop by our community channel, #ufoai on irc."
-"freenode.net."
+"libera.chat."
 msgstr ""
 "อย่าลืมไปเยี่ยมชมเว็บไซด์ของเราที่, http://ufoai.sourceforge.net/, "
-"แล้วเข้าร่วมฟอร์รั่มของเราได้ที่, #ufoai on irc.freenode.net."
+"แล้วเข้าร่วมฟอร์รั่มของเราได้ที่, #ufoai on irc.libera.chat."
 
 #: ../base/ufos/tips.ufo:21
 #, fuzzy
@@ -39111,8 +39111,8 @@ msgstr "จับภาพหน้าจอ"
 #~ msgid "Visit http://ufoai.sf.net"
 #~ msgstr "http://ufoai.sf.net"
 
-#~ msgid "and join irc.freenode.org #ufo:ai"
-#~ msgstr "และเข้าร่วม  irc.freenode.org #ufo:ai"
+#~ msgid "and join irc.libera.chat #ufo:ai"
+#~ msgstr "และเข้าร่วม  irc.libera.chat #ufo:ai"
 
 #, fuzzy
 #~ msgid "Pilot %s %s\n"

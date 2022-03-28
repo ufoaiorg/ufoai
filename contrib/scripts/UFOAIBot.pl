@@ -8,7 +8,7 @@ use base qw/Bot::BasicBot/;
 
 # default connection options
 my %options = (
-	server 		=> shift || 'irc.freenode.org',
+	server 		=> shift || 'irc.libera.chat',
 	port		=> shift || '6667',
 	nick		=> 'UFOAIBot',
 	name		=> 'UFOAIBot',

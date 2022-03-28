@@ -1983,7 +1983,7 @@ void Irc_Init (void)
 	Cmd_AddCommand("irc_deactivate", Irc_Input_Deactivate_f, "IRC deactivate when leaving the irc menu");
 
 	/* cvars */
-	irc_server = Cvar_Get("irc_server", "irc.freenode.org", CVAR_ARCHIVE, "IRC server to connect to");
+	irc_server = Cvar_Get("irc_server", "irc.libera.chat", CVAR_ARCHIVE, "IRC server to connect to");
 	irc_channel = Cvar_Get("irc_channel", "#ufoai-gamer", CVAR_ARCHIVE, "IRC channel to join into");
 	irc_channel->modified = false;
 	irc_port = Cvar_Get("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");

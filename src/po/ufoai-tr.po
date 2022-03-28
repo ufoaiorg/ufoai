@@ -12349,7 +12349,7 @@ msgid ""
 "If you want to host a game, make sure, that TCP port 27910 is opened in your "
 "firewall.\n"
 "If you want to join the channel with a regular IRC client, connect to irc."
-"freenode.net and join #ufoai-gamer\n"
+"libera.chat and join #ufoai-gamer\n"
 "\n"
 "For help with setting up multiplayer games, see http://ufoai.org/wiki/index."
 "php/Multiplayer"
@@ -24337,7 +24337,7 @@ msgstr ""
 #: ../base/ufos/tips.ufo:20
 msgid ""
 "Visit us at ufoai.org or drop by our community channel, #ufoai on irc."
-"freenode.net."
+"libera.chat."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:21

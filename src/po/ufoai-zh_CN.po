@@ -11263,7 +11263,7 @@ msgid ""
 "If you want to host a game, make sure, that TCP port 27910 is opened in your "
 "firewall.\n"
 "If you want to join the channel with a regular IRC client, connect to irc."
-"freenode.net and join #ufoai-gamer\n"
+"libera.chat and join #ufoai-gamer\n"
 "\n"
 "For help with setting up multiplayer games, see http://ufoai.org/wiki/index."
 "php/Multiplayer"
@@ -22397,9 +22397,9 @@ msgstr "工人也是不可缺少的。人多力量大产量足，武器装备用
 #, fuzzy
 msgid ""
 "Visit us at ufoai.org or drop by our community channel, #ufoai on irc."
-"freenode.net."
+"libera.chat."
 msgstr ""
-"请访问http://ufoai.sourceforge.net以及在irc.freenode.net的聊天频道#ufoai并协"
+"请访问http://ufoai.sourceforge.net以及在irc.libera.chat的聊天频道#ufoai并协"
 "助翻译。"
 
 #: ../base/ufos/tips.ufo:21
@@ -35950,8 +35950,8 @@ msgstr "屏幕截图"
 #~ msgid "Visit http://ufoai.sf.net"
 #~ msgstr "访问http://ufoai.sf.net"
 
-#~ msgid "and join irc.freenode.org #ufo:ai"
-#~ msgstr "并且加入irc.freenode.org #ufo:ai聊天"
+#~ msgid "and join irc.libera.chat #ufo:ai"
+#~ msgstr "并且加入irc.libera.chat #ufo:ai聊天"
 
 #~ msgid "Pilot %s %s\n"
 #~ msgstr "飞行员 %s %s\n"
