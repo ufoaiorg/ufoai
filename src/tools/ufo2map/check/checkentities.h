@@ -3,7 +3,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2020 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2022 UFO: Alien Invasion.
 
 Copyright (C) 1997-2001 Id Software, Inc.
 

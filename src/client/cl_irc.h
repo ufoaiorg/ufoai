@@ -4,7 +4,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2020 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2022 UFO: Alien Invasion.
 
 Most of this stuff comes from Warsow
 
