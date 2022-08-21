@@ -1,20 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
 
-import sys, os, re
-try:
-	from hashlib import md5
-except ImportError:
-	from md5 import md5
+from hashlib import md5
+import os
+import re
 import subprocess
-import urllib2
+import sys
 
-__version__ = '0.0.5.0'
+__version__ = '0.0.6'
 
 UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../..')
 
 UFO2MAP_DIRSRC = UFOAI_ROOT + '/src/tools/ufo2map'
-UFO2MAP_MAINSRC = UFOAI_ROOT + '/src/tools/ufo2map/ufo2map.c'
+UFO2MAP_MAINSRC = UFOAI_ROOT + '/src/tools/ufo2map/ufo2map.cpp'
 UFO2MAP = UFOAI_ROOT + '/ufo2map'
 
 if os.name == 'nt':
@@ -24,7 +22,7 @@ def md5sum(path, binary = False):
     # to be used carefully with big files
     if binary:
         return md5(open(path, "rb").read()).hexdigest()
-    return md5(open(path).read()).hexdigest()
+    return md5(bytes(open(path).read(), 'utf-8')).hexdigest()
 
 def execute(cmd):
     """
@@ -61,7 +59,7 @@ class Ufo2mapMetadata:
         self.version = None
 
     def set_content(self, data):
-        lines = data.split("\n")
+        lines = data.decode('utf-8').split("\n")
         for line in lines:
             elements = line.split(":", 2)
             if elements[0].strip() == "version":
@@ -96,7 +94,7 @@ class Ufo2mapMetadata:
                 files+= [os.path.join(i[0], j) for j in i[2]]
             files.sort()
             for fname in files:
-                src.update(open(fname, 'rt').read())
+                src.update(bytes(open(fname, 'rt').read(), 'utf-8'))
             self.hash_from_source = src.hexdigest()
 
         # take the version from the more up-to-date
@@ -104,11 +102,12 @@ class Ufo2mapMetadata:
         if os.path.exists(UFO2MAP):
             version = execute("\"%s\" --version" % UFO2MAP)
             # format is ATM "version:1.2.5 revision:1"
-            version = version.replace("version", "")
-            version = version.replace("revision", "rev")
-            version = version.replace(" ", "")
-            version = version.replace(":", "")
-            version = version.strip()
+            version = re.sub(
+                r'.*version:(\S+)\s+(rev)ision:(\d+).*',
+                r'\1\2\3',
+                version.decode('utf-8')
+            ).strip()
+
             # format converted to "1.2.5rev1"
             self.version = version
             self.version_from_binary = version

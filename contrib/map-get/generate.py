@@ -1,35 +1,33 @@
 #!/usr/bin/env python
 # -*- coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
 
-import sys, os, re
-try:
-	from hashlib import md5
-except ImportError:
-	from md5 import md5
-import subprocess
-import urllib2
 from gzip import GzipFile
+from hashlib import md5
 import optparse
-import mapsync
+import os
+from random import choice
+import re
+import subprocess
+import sys
 import time
+
+import mapsync
 
 UFO2MAPFLAGS = ' -v 4 -nice 19 -quant 4 -soft'
 JOBS = 1
 
 def run(cmd, mandatory=True):
-    print cmd
+    print(cmd)
     if os.system(cmd) and mandatory:
         sys.stderr.write('Faild to run: %s' % cmd)
         sys.exit(2)
 
 def gen(dst, changed_maps):
-    from random import choice
-
     if not os.path.exists(dst):
-        os.makedirs(dst, 0755)
+        os.makedirs(dst, 0o755)
 
     if not os.access(dst, os.R_OK | os.W_OK):
-        print 'Permission denied. "%s"' % argsdst
+        print('Permission denied. "%s"' % argsdst)
 
     # read old md5 list
     old = {}
@@ -61,13 +59,13 @@ def gen(dst, changed_maps):
 
         # taken from build/maps.mk
         run('./ufo2map %s %s' % (UFO2MAPFLAGS, test_map[5:-3] + 'map'))
-        if mapsync.md5sum(test_map) != old_md5:
+        if mapsync.md5sum(test_map, binary = True) != old_md5:
             sys.stderr.write('Compiler must have changed significant! Compiling all maps again.\n')
             for i in old_maps:
                 os.unlink(i)
 
     run('make maps -j %d UFO2MAPFLAGS="%s"' % (JOBS, UFO2MAPFLAGS))
-    print
+    print()
 
     ufo2mapMeta = mapsync.Ufo2mapMetadata()
     ufo2mapMeta.extract()
@@ -92,14 +90,14 @@ def gen(dst, changed_maps):
             mapfile = os.path.join(dirname, i)
             bspfile = mapfile[:-4] + '.bsp'
             if not os.path.exists(bspfile):
-                print "Warning: Cant find .bsp for %s" % mapfile
+                print("Warning: Cant find .bsp for %s" % mapfile)
                 continue
 
             maphash = mapsync.md5sum(mapfile)
             bsphash = mapsync.md5sum(bspfile, True)
 
             if not bspfile in old or bsphash != old[bspfile]:
-                print '%s - updating' % bspfile
+                print("%s - updating" % bspfile)
                 maps_compiled+= 1
                 if os.path.exists(os.path.join(dst, bspfile)):
                     os.unlink(os.path.join(dst, bspfile))
@@ -107,23 +105,23 @@ def gen(dst, changed_maps):
                 # make sure destination directory exists
                 dst_dir = os.path.split(os.path.join(dst, bspfile))[0]
                 if not os.path.exists(dst_dir):
-                    os.makedirs(dst_dir, 0755)
+                    os.makedirs(dst_dir, 0o755)
 
-                data = open(bspfile).read()
+                data = open(bspfile, 'rb').read()
                 gzipPath = os.path.join(dst, bspfile) + '.gz'
                 GzipFile(gzipPath, 'w').write(data)
-                os.chmod(gzipPath, 0644)
+                os.chmod(gzipPath, 0o644)
             else:
-                print '%s - already up to date' % bspfile
+                print("%s - already up to date" % bspfile)
 
             maps.write(' '.join((bspfile, bsphash, maphash)) + '\n')
-    print ' %s maps compiled' % maps_compiled
+    print(" %s maps compiled" % maps_compiled)
     return maps_compiled
 
 def main(argv=None):
     global UFO2MAPFLAGS, JOBS
 
-    print "map-get version " + mapsync.__version__
+    print("map-get version " + mapsync.__version__)
 
     parser = optparse.OptionParser(argv)
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose')
@@ -135,7 +133,7 @@ def main(argv=None):
     options, args = parser.parse_args()
 
     if not (options.reply in ['yes', 'no', 'query']):
-        print 'Wrong param --reply={yes,no,query}'
+        print('Wrong param --reply={yes,no,query}')
         sys.exit(1)
 
     UFO2MAPFLAGS = options.flags
@@ -152,12 +150,12 @@ def main(argv=None):
         os.chdir('..')
 
     if not os.path.exists('base/maps/'):
-        print 'Can\'t find base/maps dir.'
-        print 'You should execute map-get within the root of ufo directory tree.'
+        print('Can\'t find base/maps dir.')
+        print('You should execute map-get within the root of ufo directory tree.')
         sys.exit(3)
 
     if len(args) < 1:
-        print "You must specify a directory."
+        print("You must specify a directory.")
         sys.exit(2)
 
     destination = args[0]
@@ -166,9 +164,9 @@ def main(argv=None):
     branch = mapsync.get_branch()
     destination = os.path.join(destination, branch)
 
-    print 'Destination: %s' % os.path.realpath(destination)
-    print '-----------'
-    print 'Process will start in 5 seconds'
+    print('Destination: %s' % os.path.realpath(destination))
+    print('-----------')
+    print('Process will start in 5 seconds')
     time.sleep(5)
 
     gen(destination, changed_maps)
