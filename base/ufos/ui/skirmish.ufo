@@ -70,9 +70,6 @@ window skirmish extends cgame_download
 		background	"ui/main_bg"
 	}
 
-	// Toolbar across the top of the screen
-	MainMenuToolbar mmtoolbar { }
-
 	// ===================
 	// MAP SELECTION PANEL
 	// ===================

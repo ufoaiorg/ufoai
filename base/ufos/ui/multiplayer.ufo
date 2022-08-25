@@ -219,8 +219,6 @@ window multiplayer extends cgame_download
 		}
 	}
 
-	// Toolbar across the top of the screen
-	MainMenuToolbar mmtoolbar { }
 
 	panel leftpan
 	{

@@ -30,22 +30,6 @@ do
 	})
 end
 
---[[
- - Toolbar for main menus
- - @TODO: Currently, the player can jump from battlescape to
- -	options, then use this to jump to the main menu
- -	and launch another mission. Before implementing
- -	this idea, need to prevent this from happening.
---]]
-do
-	local MainMenuToolbar = ufox.build_component({
-		name = "MainMenuToolbar",
-		class = "panel",
-		pos = {0, 0},
-		size = {1024, 20},
-	})
-end
-
 do
 	local UFOpediaBtn = ufox.build_component({
 		name = "UFOpediaBtn",
