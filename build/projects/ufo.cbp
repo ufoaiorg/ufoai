@@ -522,6 +522,8 @@
 		<Unit filename="../../src/client/cgame/cl_game.h" />
 		<Unit filename="../../src/client/cgame/cl_game_team.cpp" />
 		<Unit filename="../../src/client/cgame/cl_game_team.h" />
+		<Unit filename="../../src/client/cgame/cl_map_callbacks.cpp" />
+		<Unit filename="../../src/client/cgame/cl_map_callbacks.h" />
 		<Unit filename="../../src/client/cgame/multiplayer/cl_game_multiplayer.cpp" />
 		<Unit filename="../../src/client/cgame/multiplayer/cl_game_multiplayer.h" />
 		<Unit filename="../../src/client/cgame/multiplayer/mp_callbacks.cpp" />

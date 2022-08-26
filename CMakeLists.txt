@@ -686,6 +686,7 @@ if(UFOAI_BUILD_UFO)
       ${UFOAI_SRC}/client/cgame/campaign/missions/cp_mission_xvi.cpp
       ${UFOAI_SRC}/client/cgame/cl_game.cpp
       ${UFOAI_SRC}/client/cgame/cl_game_team.cpp
+      ${UFOAI_SRC}/client/cgame/cl_map_callbacks.cpp
       ${UFOAI_SRC}/client/cgame/multiplayer/cl_game_multiplayer.cpp
       ${UFOAI_SRC}/client/cgame/multiplayer/mp_callbacks.cpp
       ${UFOAI_SRC}/client/cgame/multiplayer/mp_serverlist.cpp
@@ -1754,6 +1755,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${UFOAI_SRC}/client/cgame/campaign/missions/cp_mission_xvi.cpp
       ${UFOAI_SRC}/client/cgame/cl_game.cpp
       ${UFOAI_SRC}/client/cgame/cl_game_team.cpp
+      ${UFOAI_SRC}/client/cgame/cl_map_callbacks.cpp
       ${UFOAI_SRC}/client/cgame/multiplayer/cl_game_multiplayer.cpp
       ${UFOAI_SRC}/client/cgame/multiplayer/mp_callbacks.cpp
       ${UFOAI_SRC}/client/cgame/multiplayer/mp_serverlist.cpp

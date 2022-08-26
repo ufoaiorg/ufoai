@@ -262,6 +262,7 @@
 		<Unit filename="../../src/client/cgame/campaign/missions/cp_mission_xvi.cpp" />
 		<Unit filename="../../src/client/cgame/cl_game.cpp" />
 		<Unit filename="../../src/client/cgame/cl_game_team.cpp" />
+		<Unit filename="../../src/client/cgame/cl_map_callbacks.cpp" />
 		<Unit filename="../../src/client/cgame/multiplayer/cl_game_multiplayer.cpp" />
 		<Unit filename="../../src/client/cgame/multiplayer/mp_callbacks.cpp" />
 		<Unit filename="../../src/client/cgame/multiplayer/mp_serverlist.cpp" />
