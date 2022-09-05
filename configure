@@ -441,6 +441,7 @@ check_program() {
 check_programs() {
 	check_program zip
 	check_program python
+	check_program python3
 	check_program doxygen
 }
 

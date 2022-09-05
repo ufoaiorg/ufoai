@@ -6,19 +6,10 @@ NICE              ?= 19
 UFO2MAPFLAGS      ?= -v 4 -nice $(NICE) -quant 4 -soft
 FAST_UFO2MAPFLAGS ?= -v 2 -quant 6 -nice $(NICE)
 ENTS_UFO2MAPFLAGS ?= -v 2 -nice $(NICE) -onlyents
-PYTHONBIN         := $(shell $(PROGRAM_PYTHON) -m urllib2 2>/dev/null && echo $(PROGRAM_PYTHON))
-ifeq ($(PYTHONBIN),)
-        PYTHONBIN         := $(shell python2.6 -m urllib2 2>/dev/null && echo python2.6)
-endif
-ifeq ($(PYTHONBIN),)
-        PYTHONBIN         := $(shell python2.7 -m urllib2 2>/dev/null && echo python2.7)
-endif
-ifeq ($(PYTHONBIN),)
-        PYTHONBIN         := $(shell python2 -m urllib2 2>/dev/null && echo python2)
-endif
-ifeq ($(PYTHONBIN),)
-        PYTHONBIN         := python
-endif
+
+# Check if Python3 and urllib3 module installed
+urllib3:
+	@$(PROGRAM_PYTHON3) -c 'import pkgutil; import sys; sys.exit(0) if pkgutil.find_loader("urllib3") else sys.exit(1)' || { echo Python3 or urllib3 module is not installed; exit 1; }
 
 maps: ufo2map $(BSPS)
 
@@ -29,11 +20,11 @@ maps-ents:
 	$(MAKE) maps UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
 
 # TODO only sync if there were updates on the map files
-maps-sync: Makefile.local
-	$(PYTHONBIN) contrib/map-get/update.py
+maps-sync: Makefile.local urllib3
+	$(PROGRAM_PYTHON3) contrib/map-get/update.py
 
-force-maps-sync: Makefile.local
-	$(PYTHONBIN) contrib/map-get/update.py --reply=yes
+force-maps-sync: Makefile.local urllib3
+	$(PROGRAM_PYTHON3) contrib/map-get/update.py --reply=yes
 
 clean-maps:
 	@echo "Deleting maps..."
