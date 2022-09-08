@@ -149,7 +149,7 @@ $(TARGET)_SRCS = $(sort $($(TARGET)_SRCS_TMP))
 TESTMAPSRC := $(wildcard unittest/maps/*.map)
 TESTBSPS := $(TESTMAPSRC:.map=.bsp)
 $(TESTBSPS): %.bsp: %.map
-	$(UFO2MAP) -gamedir unittest $(UFO2MAPFLAGS) $(<:unittest/%=%)
+	./$(UFO2MAP)$(EXE_EXT) -gamedir unittest $(UFO2MAPFLAGS) $(<:unittest/%=%)
 
 $(TARGET)_OBJS     := $(call ASSEMBLE_OBJECTS,$(TARGET))
 $(TARGET)_CXXFLAGS := $($(TARGET)_CFLAGS)
