@@ -32,8 +32,8 @@ W2K=
 SSE=
 DISABLE_DEPENDENCY_TRACKING=
 WITH_EMBEDDED_LUA=
-DEFAULT_COMPILER_CC=cc
-DEFAULT_COMPILER_CXX=c++
+DEFAULT_COMPILER_CC=gcc
+DEFAULT_COMPILER_CXX=g++
 
 HOST_OS=`uname | sed -e s/_.*// | tr '[:upper:]' '[:lower:]'`
 TARGET_OS=${HOST_OS}
@@ -56,16 +56,17 @@ error() {
 
 add_to_makefile_local_quote() {
 	VALUE=`get_var $1`
-	if [ -n "$VALUE" ]; then
+	if [ "$1" = "CC" ] || [ "$1" = "CXX" ]; then
 		# these are internal make variables and are already set, so don't use ?= here
-		if [ "$1" = "CC" ] || [ "$1" = "CXX" ]; then
-			add_line_to_makefile_local "$1 := \"$VALUE\""
-		else
-			add_line_to_makefile_local "$1 ?= \"$VALUE\""
-		fi
+		ASSIGN_OP=":="
+	else
+		ASSIGN_OP="?="
+	fi
+	if [ -n "$VALUE" ]; then
+		add_line_to_makefile_local "$1 $ASSIGN_OP \"$VALUE\""
 		[ -n "$2" ] && echo $2
 	else
-		add_line_to_makefile_local "# $1 ?= \"$VALUE\""
+		add_line_to_makefile_local "# $1 $ASSIGN_OP \"$VALUE\""
 		[ -n "$3" ] && echo $3
 		[ "$4" = "yes" ] && exit 1
 	fi
@@ -73,16 +74,16 @@ add_to_makefile_local_quote() {
 
 add_to_makefile_local() {
 	VALUE=`get_var $1`
+	if [ "$1" = "CC_VER" ] || [ "$1" = "CXX_VER" ]; then
+		ASSIGN_OP=":="
+	else
+		ASSIGN_OP="?="
+	fi
 	if [ -n "$VALUE" ]; then
-		# these are internal make variables and are already set, so don't use ?= here
-		if [ "$1" = "CC" ] || [ "$1" = "CXX" ]; then
-			add_line_to_makefile_local "$1 := $VALUE"
-		else
-			add_line_to_makefile_local "$1 ?= $VALUE"
-		fi
+		add_line_to_makefile_local "$1 $ASSIGN_OP $VALUE"
 		[ -n "$2" ] && echo $2
 	else
-		add_line_to_makefile_local "# $1 ?= $VALUE"
+		add_line_to_makefile_local "# $1 $ASSIGN_OP $VALUE"
 		[ -n "$3" ] && echo $3
 		[ "$4" = "yes" ] && exit 1
 	fi
@@ -143,8 +144,6 @@ makefile_local() {
 	add_to_makefile_local USE_CCACHE "Use ccache" "Disable ccache"
 	add_to_makefile_local CFLAGS "Added CFLAGS ${CFLAGS}" "Using default CFLAGS"
 	add_to_makefile_local LDFLAGS "Added LDFLAGS ${LDFLAGS}" "Using default LDFLAGS"
-	add_to_makefile_local_quote CC "Found cc ${CC}"
-	add_to_makefile_local_quote CXX "Found cxx ${CXX}"
 	add_to_makefile_local_quote CROSS "Using tools prefix ${CROSS}"
 	add_to_makefile_local_quote PKGBINDIR "Using bindir ${PKGBINDIR}"
 	add_to_makefile_local_quote PKGDATADIR "Using datadir ${PKGDATADIR}"
@@ -323,17 +322,27 @@ check_compiler() {
 		fi
 	fi
 
-	echo "use c compiler: ${CROSS}${CC}"
-	echo "use c++ compiler: ${CROSS}${CXX}"
+	echo "Check C compiler as '${CROSS}${CC}'..."
+	CC_VER=`${CROSS}${CC} -dumpfullversion 2>> config.log`
+	if [ $? -ne 0 ]; then
+		CC_VER=`${CROSS}${CC} -dumpversion 2>> config.log`
+		if [ $? -ne 0 ]; then
+			set_var "CC" "";
+		 fi;
+	fi;
+	add_to_makefile_local_quote CC "C compiler version ${CC_VER} was found" "Could not use the c compiler, see config.log for details"
+	add_to_makefile_local CC_VER
 
-	${CROSS}${CC} --help 2>> config.log >> config.log
+	echo "Check C++ compiler as '${CROSS}${CXX}'..."
+	CXX_VER=`${CROSS}${CXX} -dumpfullversion 2>> config.log`
 	if [ $? -ne 0 ]; then
-		error "Could not find the c compiler: ${CROSS}${CC} in your path: ${PATH}"
-	fi
-	${CROSS}${CXX} --help 2>> config.log >> config.log
-	if [ $? -ne 0 ]; then
-		error "Could not find the c++ compiler: ${CROSS}${CXX} in your path: ${PATH}"
-	fi
+		CXX_VER=`${CROSS}${CXX} -dumpversion 2>> config.log`
+		if [ $? -ne 0 ]; then
+			set_var "CXX" "";
+		fi;
+	fi;
+	add_to_makefile_local_quote CXX "C++ compiler version ${CXX_VER} was found" "Could not use the c++ compiler, see config.log for details"
+	add_to_makefile_local CXX_VER
 }
 
 usage() {
