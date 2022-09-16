@@ -16,8 +16,6 @@ endif
 MODE        ?= debug
 PREFIX      ?= /usr/local
 WINDRES     ?= windres
-CC          ?= gcc
-CXX         ?= g++
 Q           ?= @
 BUILDDIR    ?= $(MODE)-$(TARGET_OS)-$(TARGET_ARCH)
 PROJECTSDIR ?= build/projects
