@@ -15,7 +15,7 @@ define PKG_CFLAGS
 $(shell set -- $(shell echo $(1) | cut -d' ' -f 1-); for i in "$${@}"; do $(PKG_CONFIG) --cflags $${i} 2> /dev/null && break; done)
 endef
 
-CXX_VER ?= 0
+
 CFLAGS += -DHAVE_CONFIG_H
 CFLAGS += -g
 #CFLAGS += -pipe
@@ -42,9 +42,9 @@ ifneq (,$(findstring clang,$(CXX)))
   CFLAGS += -Wno-cast-align
 endif
 
-ifeq ($(shell test $(basename $(basename $(CXX_VER))) -ge 7; echo $$?),0)
-  CFLAGS += -Wno-expansion-to-defined)
-  CFLAGS += -Wimplicit-fallthrough=2)
+ifeq ($(shell $(CXX) -dumpversion | cut -d'.' -f 1 - 2> /dev/null | xargs -i^ expr '^' '>=' '7'), 1)
+  CFLAGS += -Wno-expansion-to-defined
+  CFLAGS += -Wimplicit-fallthrough=2
 endif
 
 ifeq ($(PROFILING),1)
