@@ -26,6 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "cl_game.h"
 
+typedef enum ui_gamemode_s {
+	GAMEMODE_NONE,
+	GAMEMODE_SKIRMISH,
+	GAMEMODE_MULTIPLAYER,
+	GAMEMODE_CAMPAIGN,
+	MAX_GAMEMODE
+} ui_gamemode_t;
+
 static void UI_MapInfoGetNext (int step)
 {
 	int ref = cls.currentSelectedMap;
@@ -154,44 +162,78 @@ static void UI_SelectMap_f (void)
 	Com_Printf("Could not find map %s\n", mapname);
 }
 
-static void UI_RequestMapList_f (void)
+/**
+ * @brief Helper function to apply gameMode filter on map definitions
+ * @param[in] gameMode game mode constant
+ * @param[in] mapDef Map definition pointer
+ * @return @c true if the definition is enabled in the specified game mode @c false otherwise
+ * @sa UI_ListMaps_f
+ */
+static inline bool UI_MapGameModeCondition (ui_gamemode_t gameMode, const mapDef_t *mapDef)
 {
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <callback>\n", Cmd_Argv(0));
+	if (mapDef == nullptr)
+		return false;
+	if (gameMode == GAMEMODE_SKIRMISH)
+		return mapDef->singleplayer;
+	else if (gameMode == GAMEMODE_MULTIPLAYER)
+		return mapDef->multiplayer;
+	else if (gameMode == GAMEMODE_CAMPAIGN)
+		return mapDef->campaign;
+	return false;
+}
+
+/**
+ * @brief List available maps
+ */
+static void UI_ListMaps_f (void)
+{
+	if (!csi.numMDs) {
+		Com_Printf("%s No mapDefinitions found\n", Cmd_Argv(0));
 		return;
 	}
 
-	if (!csi.numMDs)
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <gamemode> <callback>\n", Cmd_Argv(0));
 		return;
+	}
 
-	const char* callbackCmd = Cmd_Argv(1);
+	const char* gameMode = Cmd_Argv(1);
+	ui_gamemode_t mode = GAMEMODE_NONE;
+	if (Q_streq("skirmish", gameMode))
+		mode = GAMEMODE_SKIRMISH;
+	else if (Q_streq("multiplayer", gameMode))
+		mode = GAMEMODE_MULTIPLAYER;
+	else if (Q_streq("campaign", gameMode))
+		mode = GAMEMODE_CAMPAIGN;
 
-	Cbuf_AddText("%s begin\n", callbackCmd);
+	char callback[MAX_VAR];
+	Q_strncpyz(callback, Cmd_Argv(2), sizeof(callback));
 
 	const mapDef_t* md;
-	const bool multiplayer = GAME_IsMultiplayer();
-	MapDef_ForeachCondition(md, multiplayer ? md->multiplayer : md->singleplayer) {
-		const char* preview;
-
+	MapDef_ForeachCondition(md, UI_MapGameModeCondition(mode, md)) {
 		/* special purpose maps are not startable without the specific context */
 		if (md->mapTheme[0] == '.')
 			continue;
-
 		/* do we have the map file? */
 		if (md->mapTheme[0] != '+' && FS_CheckFile("maps/%s.bsp", md->mapTheme) == -1)
 			continue;
 		if (md->mapTheme[0] == '+' && FS_CheckFile("maps/%s.ump", md->mapTheme + 1) == -1)
 			continue;
 
-		preview = md->mapTheme;
-		if (preview[0] == '+')
-			preview++;
-		if (!R_ImageExists("pics/maps/shots/%s", preview))
-			preview = "default";
+		const char* image = md->mapTheme;
+		if (image[0] == '+')
+			image++;
+		if (!R_ImageExists("pics/maps/shots/%s", image))
+			image = "default";
 
-		Cbuf_AddText("%s add \"%s\" \"%s\"\n", callbackCmd, md->id, preview);
+		UI_ExecuteConfunc("%s %s %s \"%s\" %s",
+			callback,
+			md->id,
+			md->mapTheme,
+			md->description,
+			image
+		);
 	}
-	Cbuf_AddText("%s end\n", callbackCmd);
 }
 
 /**
@@ -200,10 +242,12 @@ static void UI_RequestMapList_f (void)
 static const cmdList_t mapCallbacks[] = {
 //	{"ui_aircraft_changename", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft."},
 	{"mn_getmaps", UI_GetMaps_f, "The initial map to show"},
+
 	{"mn_nextmap", UI_NextMap_f, "Switch to the next valid map for the selected gametype"},
 	{"mn_prevmap", UI_PreviousMap_f, "Switch to the previous valid map for the selected gametype"},
 	{"mn_selectmap", UI_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype"},
-	{"mn_requestmaplist", UI_RequestMapList_f, "Request to send the list of available maps for the current gametype to a command."},
+
+	{"ui_listmaps", UI_ListMaps_f, "List available maps with some basic information for the UI"},
 
 	{nullptr, nullptr, nullptr}
 };
