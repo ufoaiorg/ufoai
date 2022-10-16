@@ -66,7 +66,7 @@ endif()
 # that if one do not use the source directory to build, he doesn't want to have the generated files in his source either.
 if(NOT CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
    message(STATUS "You are not building in the source dir. Needed files will be copied if not already present")
-   foreach(RES base contrib radiant)
+   foreach(RES base radiant)
       if(NOT EXISTS ${CMAKE_BINARY_DIR}/${RES})
          message(STATUS "Copying ${CMAKE_BINARY_DIR}/${RES}. This may take some time")
          file(COPY ${CMAKE_SOURCE_DIR}/${RES} DESTINATION ${CMAKE_BINARY_DIR})
