@@ -209,7 +209,8 @@ void _Mem_Free (void* ptr, const char* fileName, const int fileLine)
 	memBlock_t* const mem = Mem_PtrToBlock(ptr);
 	_Mem_CheckSentinels(mem, fileName, fileLine);
 
-	SDL_LockMutex(z_lock);
+	if (z_lock != nullptr)
+		SDL_LockMutex(z_lock);
 
 	/* Decrement counters */
 	mem->pool->blockCount--;
@@ -229,7 +230,8 @@ void _Mem_Free (void* ptr, const char* fileName, const int fileLine)
 		prev = &search->next;
 	}
 
-	SDL_UnlockMutex(z_lock);
+	if (z_lock != nullptr)
+		SDL_UnlockMutex(z_lock);
 
 	/* Free it */
 	free(mem);
@@ -311,7 +313,8 @@ void* _Mem_Alloc (size_t size, bool zeroFill, memPool_t* pool, const int tagNum,
 	/* Fill in the footer */
 	Mem_BlockToFooter(mem)->sentinel = MEM_FOOT_SENTINEL;
 
-	SDL_LockMutex(z_lock);
+	if (z_lock != nullptr)
+		SDL_LockMutex(z_lock);
 
 	/* For integrity checking and stats */
 	pool->blockCount++;
@@ -321,7 +324,8 @@ void* _Mem_Alloc (size_t size, bool zeroFill, memPool_t* pool, const int tagNum,
 	mem->next = pool->blocks[(uintptr_t)mem % MEM_HASH];
 	pool->blocks[(uintptr_t)mem % MEM_HASH] = mem;
 
-	SDL_UnlockMutex(z_lock);
+	if (z_lock != nullptr)
+		SDL_UnlockMutex(z_lock);
 
 	return Mem_BlockToPtr(mem);
 }
@@ -495,6 +499,40 @@ bool _Mem_AllocatedInPool (memPool_t* pool, const void* pointer)
 	return false;
 }
 
+/**
+ * @sa Qcommon_Init
+ * @sa Mem_Shutdown
+ */
+void Mem_Init (void)
+{
+	z_lock = SDL_CreateMutex();
+	if (z_lock == nullptr)
+		Sys_Error("Mem_Init: Cannot create mutex for memory management: %s", SDL_GetError());
+}
+
+/**
+ * @sa Mem_Init
+ * @sa Mem_CreatePool
+ * @sa Qcommon_Shutdown
+ */
+void Mem_Shutdown (void)
+{
+	memPool_t* pool;
+	int i;
+
+	/* don't use cvars, debug print or anything else inside of this loop
+	 * the mem you are trying to use here might already be wiped away */
+	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
+		if (!pool->inUse)
+			continue;
+		Mem_DeletePool(pool);
+	}
+
+	if (z_lock != nullptr)
+		SDL_DestroyMutex(z_lock);
+	z_lock = nullptr;
+}
+
 #ifdef COMPILE_UFO
 /*==============================================================================
 CONSOLE COMMANDS
@@ -579,40 +617,29 @@ static void Mem_Stats_f (void)
 	Com_Printf("----------------------------------------\n");
 	Com_Printf("Total: %i pools, %i blocks, %i bytes (%6.3fMB)\n", i, totalBlocks, totalBytes, totalBytes/1048576.0f);
 }
-#endif
 
 /**
- * @sa Qcommon_Init
- * @sa Mem_Shutdown
+ * @brief List of Callback commands for memory management
  */
-void Mem_Init (void)
-{
-#ifdef COMPILE_UFO
-	Cmd_AddCommand("mem_stats", Mem_Stats_f, "Prints out current internal memory statistics");
-	Cmd_AddCommand("mem_check", Mem_Check_f, "Checks global memory integrity");
-#endif
+static const cmdList_t memCallbacks[] = {
+	{"mem_stats", Mem_Stats_f, "Prints out current internal memory statistics"},
+	{"mem_check", Mem_Check_f, "Checks global memory integrity"},
+	{nullptr, nullptr, nullptr}
+};
 
-	z_lock = SDL_CreateMutex();
+/**
+ * @brief Registers Callback commands for memory management
+ */
+void Mem_InitCallbacks (void)
+{
+	Cmd_TableAddList(memCallbacks);
 }
 
 /**
- * @sa Mem_Init
- * @sa Mem_CreatePool
- * @sa Qcommon_Shutdown
+ * @brief Unregisters Callback commands for memory management
  */
-void Mem_Shutdown (void)
+void Mem_ShutdownCallbacks (void)
 {
-	memPool_t* pool;
-	int i;
-
-	/* don't use cvars, debug print or anything else inside of this loop
-	 * the mem you are trying to use here might already be wiped away */
-	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
-		if (!pool->inUse)
-			continue;
-		Mem_DeletePool(pool);
-	}
-
-	SDL_DestroyMutex(z_lock);
-	z_lock = nullptr;
+	Cmd_TableRemoveList(memCallbacks);
 }
+#endif

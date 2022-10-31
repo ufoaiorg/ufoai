@@ -1085,6 +1085,7 @@ void Qcommon_Init (int argc, char** argv)
 	/* random seed */
 	Com_SetRandomSeed(time(nullptr));
 
+	Mem_Init();
 	com_aliasSysPool = Mem_CreatePool("Common: Alias system for commands and enums");
 	com_cmdSysPool = Mem_CreatePool("Common: Command system");
 	com_cmodelSysPool = Mem_CreatePool("Common: Collision model");
@@ -1186,7 +1187,9 @@ void Qcommon_Init (int argc, char** argv)
 		if (sv_dedicated->integer)
 			Cmd_AddCommand("quit", Com_Quit, "Quits the game");
 
-		Mem_Init();
+#ifdef COMPILE_UFO
+		Mem_InitCallbacks();
+#endif
 		Sys_Init();
 
 		NET_Init();
@@ -1536,6 +1539,9 @@ void Qcommon_Frame (void)
  */
 void Qcommon_Shutdown (void)
 {
+#ifdef COMPILE_UFO
+	Mem_ShutdownCallbacks();
+#endif
 	HTTP_Cleanup();
 
 	FS_Shutdown();

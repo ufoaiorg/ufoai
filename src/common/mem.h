@@ -75,3 +75,8 @@ bool _Mem_AllocatedInPool(memPool_t* pool, const void* pointer);
 
 void Mem_Init(void);
 void Mem_Shutdown(void);
+
+#ifdef COMPILE_UFO
+void Mem_InitCallbacks(void);
+void Mem_ShutdownCallbacks(void);
+#endif
