@@ -28,13 +28,6 @@ component LoadSlot extends panel
                 }
         }
 
-        button upload
-        {
-                background      "icons/upload"
-                tooltip         "_Upload"
-                size            "34 34"
-        }
-
         button delete
         {
                 size            "34 34"
@@ -191,10 +184,8 @@ component cmpLoadSlots extends team_loadslots
 		}
 
 		*node:parent.slots.slot<1>.button@width = "410"
-		*node:parent.slots.slot<1>.upload@onClick = { cmd "web_uploadcgame 0 <node:this.parent.filename@string>;" }
 		*node:parent.slots.slot<1>.delete@onClick = { cmd "game_teamdelete <node:this.parent.filename@string>;game_teamcomments;" }
 		if (<5> == 0) {
-			*node:parent.slots.slot<1>.upload@invis = true
 			*node:parent.slots.slot<1>.delete@invis = true
 		}
 	}
@@ -205,7 +196,7 @@ component cmpLoadSlots extends team_loadslots
 	}
 }
 
-window multiplayer extends cgame_download
+window multiplayer
 {
 	{
 		background "ui/main_bg"
@@ -730,19 +721,6 @@ window multiplayer extends cgame_download
 				pos		"1 30"
 			}
 
-			MainMenuBtn button_download
-			{
-				pos	"260 362"
-				size "250 30"
-				tooltip	"_Download new teams"
-				onClick	{
-					cmd "web_listcgame 0;"
-					*node:root.rightpan.mp_team_slots@invis = true
-					*node:root.rightpan.mp_remote_teams@invis = false
-			 	}
-				string	"_DOWNLOAD"
-			}
-
 			MainMenuBtn button_new
 			{
 				pos	"260 405"
@@ -755,59 +733,6 @@ window multiplayer extends cgame_download
 				string	"_GENERATE"
 			}
 		}
-
-		panel mp_remote_teams
-		{
-			{
-				invis	true
-				pos		"0 0"
-				size	"510 435"
-			}
-
-			// ================
-			// save team slots
-			// ================
-			panel slots
-			{
-				{
-					pos		"1 30"
-					size	"500 324"
-					layout			LAYOUT_TOP_DOWN_FLOW
-					layoutMargin	2
-					wheelscrollable	true
-
-					onViewChange {
-						*node:parent.slots_scroll@fullsize = <fullsize>
-						*node:parent.slots_scroll@current = <viewpos>
-						*node:parent.slots_scroll@viewsize = <viewsize>
-					}
-				}
-			}
-
-			vscrollbar slots_scroll {
-				image		"ui/scrollbar_v"
-				pos			"485 30"
-				height		"324"
-				hidewhenunused	true
-				onChange {
-					*node:parent.slots@viewpos = <current>
-				}
-			}
-
-			MainMenuBtn button_close
-			{
-				pos	"260 405"
-				size "250 30"
-				onClick	{
-					*node:root.rightpan.mp_remote_teams@invis	=	true
-					*node:root.rightpan.mp_team_slots@invis		=	false
-					cmd "game_teamcomments;"
-				}
-				tooltip	"_Close web panel"
-				string	"_CLOSE"
-			}
-		}
-
 
 		panel mp_servers
 		{
@@ -978,8 +903,6 @@ window multiplayer extends cgame_download
 		*node:root.rightpan.mp_team_slots@invis	=	true
 		*node:root.rightpan.mp_servers@invis	=	true
 
-		*node:root.rightpan.mp_remote_teams@invis =	true
-
 		cmd "killserver;set sv_maxplayersperteam 8;set sv_roundtimelimit 0;set mn_serverday 1;"
 		cmd "mp_init_ui;mn_getmaps;"
 	//	cmd "ui_resetdata TEXT_STANDARD;"
@@ -1005,8 +928,6 @@ window multiplayer extends cgame_download
 		*node:root.rightpan.mp_team_slots@invis	=	false
 		*node:root.rightpan.mp_servers@invis	=	true
 
-		*node:root.rightpan.mp_remote_teams@invis =	true
-
 		cmd "game_teamcomments;"
 	}
 
@@ -1028,8 +949,6 @@ window multiplayer extends cgame_download
 		*node:root.rightpan.mp_game_opts@invis	=	true
 		*node:root.rightpan.mp_team_slots@invis	=	true
 		*node:root.rightpan.mp_servers@invis	=	false
-
-		*node:root.rightpan.mp_remote_teams@invis =	true
 
 		cmd "check_bookmarks;"
 		*cvar:cl_serverlist = 0
@@ -1076,75 +995,6 @@ window multiplayer extends cgame_download
 		cmd	"game_teamcomments;define cl_teamdef phalanx;"
 		call *node:root.mp_join_toggle
 	}
-
-	/**
-	 * @brief Add a server stored file to the list of downloadable files
-	 * @param <1> The file id (string)
-	 * @param <2> The category
-	 * @param <3> The user id of the owner
-	 * @param <4> The file name
-	 * @param <5> The title
-	 * @param <6> Own file = 1, other users file = 0
-	 */
-	confunc cgamefiles_add
-	{
-		call *node:root.rightpan.mp_remote_teams.slots@createChild("download<1>-<2>-<3>", "downloadentry")
-		*node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>.category@integer = <2>
-		*node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>.userid@integer = <3>
-		*node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>.filename@string = <4>
-		*node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>.download@string = <5>
-		if ( <6> == 1 ) {
-			*node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>.delete@invis = false
-		} else {
-			*node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>.delete@invis = true
-		}
-	}
-
-	confunc cgamefiles_nofilesfound
-	{
-		call *node:root.rightpan.mp_remote_teams.slots@createChild("nofiles", "string")
-		*node:root.rightpan.mp_remote_teams.slots.nofiles@string = "_No files uploaded yet"
-	}
-
-	/**
-	 * @brief Called when a file download was successful
-	 * @param <1> the filename of the newly available file
-	 */
-	confunc cgame_downloadsuccessful
-	{
-	}
-
-	confunc cgame_downloadduplicate
-	{
-	}
-
-	confunc cgame_uploadsuccessful
-	{
-	}
-
-	confunc cgame_uploadfailed
-	{
-	}
-
-	/**
-	 * @param <1> The file id (string)
-	 * @param <2> The category
-	 * @param <3> The user id of the owner
-	 */
-	confunc cgame_deletesuccessful
-	{
-		call *node:root.rightpan.mp_remote_teams.slots.download<1>-<2>-<3>@delete
-	}
-
-	confunc cgame_deletefailed
-	{
-	}
-
-	confunc cgamefiles_clear
-	{
-		call *node:root.rightpan.mp_remote_teams.slots@removeAllChild
-	}
-
 
 }
 

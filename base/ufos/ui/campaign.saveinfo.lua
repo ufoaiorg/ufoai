@@ -207,39 +207,6 @@ campaign.saveinfo = {
 			},
 
 			{
-				name = "upload",
-				class = "MainMenu3Btn",
-				text = "_UPLOAD",
-				pos = {284, 250},
-				size = {250, 30},
-				backgroundcolor = {0.38, 0.48, 0.36, 1},
-				--tooltip = "_Upload the savegame to the UFO:AI Server",
-				tooltip = "WebUpload functionality is disabled temporarily",
-				disabled = true,
-
-				on_mouseenter = function (sender)
-					if (sender:is_disabled()) then
-						return
-					end
-					sender:set_backgroundcolor(0.59, 0.78, 0.56, 1)
-				end,
-				on_mouseleave = function (sender)
-					if (sender:is_disabled()) then
-						return
-					end
-					sender:set_backgroundcolor(0.38, 0.48, 0.36, 1)
-				end,
-
-				on_click = function (sender)
-					local filename = ufo.getvar("savegame_filename")
-					if (filename == nil) then
-						return
-					end
-					ufo.cmd(string.format("web_uploadcgame 0 \"%s\";", filename:as_string()))
-				end
-			},
-
-			{
 				name = "delete",
 				class = "MainMenu3Btn",
 				text = "_DELETE",

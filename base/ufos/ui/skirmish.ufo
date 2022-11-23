@@ -64,7 +64,7 @@ component cmpMapPreviewButton extends radiobutton
 	}
 }
 
-window skirmish extends cgame_download
+window skirmish
 {
 	{
 		background	"ui/main_bg"
@@ -155,17 +155,6 @@ window skirmish extends cgame_download
 			onClick		{ call *node:root.toggle_sk_squad }
 		}
 
-		button btn_download
-		{
-			size 		"125 30"
-			pos 		"270 0"
-			string		"_DOWNLOAD"
-			font		"f_small_bold"
-			bgcolor		"0.4 0.515 0.5 1"
-			color		"0 0 0 0.9"
-			onClick		{ call *node:root.toggle_sk_download }
-		}
-
 		MainMenu3Btn btn_begin
 		{
 			size 			"250 30"
@@ -254,27 +243,6 @@ window skirmish extends cgame_download
 				}
 			}
 		}
-		// List of available downloads
-		panel sk_download_opts
-		{
-			{
-				pos				"0 50"
-				size			"510 350"
-				layout			LAYOUT_TOP_DOWN_FLOW
-				layoutMargin	5
-				invis			true
-			}
-
-			panel downloadable
-			{
-				{
-					pos		"35 70"
-					size	"440 270"
-					layout			LAYOUT_TOP_DOWN_FLOW
-					layoutMargin	2
-				}
-			}
-		}
 	}
 
 	// Switch display when user chooses Map/Squad options
@@ -283,34 +251,16 @@ window skirmish extends cgame_download
 		*node:root.sk_options.btn_map@color = "0 0 0 0.9"
 		*node:root.sk_options.btn_squad@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.sk_options.btn_squad@color = "1 1 1 0.5"
-		*node:root.sk_options.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
-		*node:root.sk_options.btn_download@color = "1 1 1 0.5"
 		*node:root.sk_options.sk_map_opts@invis = false
 		*node:root.sk_options.sk_squad_opts@invis = true
-		*node:root.sk_options.sk_download_opts@invis = true
 	}
 	func toggle_sk_squad {
 		*node:root.sk_options.btn_squad@bgcolor = "0.4 0.515 0.5 1"
 		*node:root.sk_options.btn_squad@color = "0 0 0 0.9"
 		*node:root.sk_options.btn_map@bgcolor = "0.4 0.515 0.5 0.25"
 		*node:root.sk_options.btn_map@color = "1 1 1 0.5"
-		*node:root.sk_options.btn_download@bgcolor = "0.4 0.515 0.5 0.25"
-		*node:root.sk_options.btn_download@color = "1 1 1 0.5"
 		*node:root.sk_options.sk_map_opts@invis = true
 		*node:root.sk_options.sk_squad_opts@invis = false
-		*node:root.sk_options.sk_download_opts@invis = true
-	}
-	func toggle_sk_download {
-		*node:root.sk_options.btn_download@bgcolor = "0.4 0.515 0.5 1"
-		*node:root.sk_options.btn_download@color = "1 1 1 0.9"
-		*node:root.sk_options.btn_squad@bgcolor = "0.4 0.515 0.5 0.25"
-		*node:root.sk_options.btn_squad@color = "0 0 0 0.5"
-		*node:root.sk_options.btn_map@bgcolor = "0.4 0.515 0.5 0.25"
-		*node:root.sk_options.btn_map@color = "1 1 1 0.5"
-		*node:root.sk_options.sk_map_opts@invis = true
-		*node:root.sk_options.sk_squad_opts@invis = true
-		*node:root.sk_options.sk_download_opts@invis = false
-		cmd	"web_listcgame 0;"
 	}
 	/**
 	 * @param<1> boolean to hide or show
@@ -325,50 +275,6 @@ window skirmish extends cgame_download
 	confunc skirmish_hide_ufos
 	{
 		*node:root.sk_options.sk_map_opts.panel_map.map_sel_ufo@invis = <1>
-	}
-
-	/**
-	 * @brief Add a server stored file to the list of downloadable files
-	 * @param <1> The file id (string)
-	 * @param <2> The category
-	 * @param <3> The user id of the owner
-	 * @param <4> The file name
-	 * @param <5> The title
-	 * @param <6> Own file = 1, other users file = 0
-	 */
-	confunc cgamefiles_add
-	{
-		call *node:root.root.sk_options.sk_download_opts.downloadable@createChild("download<1>-<2>-<3>", "downloadentry")
-		*node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>.category@integer = <2>
-		*node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>.userid@integer = <3>
-		*node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>.filename@string = <4>
-		*node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>.download@string = <5>
-		if ( <6> == 1 ) {
-			*node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>.delete@invis = false
-		} else {
-			*node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>.delete@invis = true
-		}
-	}
-
-	confunc cgamefiles_nofilesfound
-	{
-		call *node:root.root.sk_options.sk_download_opts.downloadable@createChild("nofiles", "string")
-		*node:root.root.sk_options.sk_download_opts.downloadable.nofiles@string = "_No files uploaded yet"
-	}
-
-	/**
-	 * @param <1> The file id (string)
-	 * @param <2> The category
-	 * @param <3> The user id of the owner
-	 */
-	confunc cgame_deletesuccessful
-	{
-		call *node:root.root.sk_options.sk_download_opts.downloadable.download<1>-<2>-<3>@delete
-	}
-
-	confunc cgamefiles_clear
-	{
-		call *node:root.root.sk_options.sk_download_opts.downloadable@removeAllChild
 	}
 
 	// =====
