@@ -208,7 +208,7 @@ static void GAME_LoadTeamInfo (xmlNode_t* p)
 	for (xmlNode_t* n = XML_GetNode(p, SAVE_TEAM_CHARACTER); n && i < size; i++, n = XML_GetNextNode(n, p, SAVE_TEAM_CHARACTER)) {
 		character_t* chr = GAME_GetCharacter(i);
 		GAME_LoadCharacter(n, chr);
-		UI_ExecuteConfunc("team_memberadd %i \"%s\" \"%s\" %i", i, chr->name, chr->head, chr->headSkin);
+		UI_ExecuteConfunc("team_memberadd %i \"%s\" \"%s\" \"%s\" %i", i, chr->name, chr->path, chr->head, chr->headSkin);
 		LIST_AddPointer(&chrDisplayList, (void*)chr);
 	}
 

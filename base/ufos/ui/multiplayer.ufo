@@ -53,28 +53,28 @@ component cmpAdr extends panel {
 component currentTeamMember extends panel
 {
 	{
-		size		"260 25"
+		size		"486 35"
+		ghost		true
 	}
 
-	panel head_placeholder
+	model head
 	{
-		{
-			size		"25 25"
-			border		2
-			bordercolor	"0.56 0.81 0.76 1"
-			pos			"0 0"
-		}
+		pos		"0 1"
+		size		"37 33"
+		angles		"0 60 90"
+		origin		"0 0 0"
+		autoscale	true
+		ghost		true
 	}
 
 	string name
 	{
-		pos			"51 0"
+		pos		"40 5"
 		color		"1 1 1 1"
-		size		"209 25"
+		size		"431 25"
 		contentalign	ALIGN_CL
+		ghost		true
 	}
-
-	// TODO: head and skin
 }
 
 component cmpCurrentLoadedTeamPanel extends team_loadedcurrent
@@ -85,13 +85,13 @@ component cmpCurrentLoadedTeamPanel extends team_loadedcurrent
 
 	string title
 	{
-		pos				"0 0"
-		color			"0.56 0.81 0.76 1"
-		bgcolor			"0.527 0.6 0.21 0.2"
-		size			"504 32"
+		pos		"0 0"
+		color		"0.56 0.81 0.76 1"
+		bgcolor		"0.527 0.6 0.21 0.2"
+		size		"504 32"
 		contentalign	ALIGN_CC
-		string			"_Currently loaded"
-		font	"f_menubig"
+		string		"_Currently loaded"
+		font		"f_menubig"
 	}
 
 	panel soldierlist
@@ -113,7 +113,7 @@ component cmpCurrentLoadedTeamPanel extends team_loadedcurrent
 	vscrollbar soldierlist_scroll
 	{
 		image			"ui/scrollbar_v"
-		pos				"486 26"
+		pos				"486 44"
 		height			"331"
 		current			0
 		viewsize		4
@@ -129,7 +129,8 @@ component cmpCurrentLoadedTeamPanel extends team_loadedcurrent
 	{
 		call *node:parent.soldierlist@createChild("member<1>", "currentTeamMember")
 		*node:parent.soldierlist.member<1>.name@string = <2>
-		// TODO: head and skin
+		*node:parent.soldierlist.member<1>.head@src = "<3>/<4>"
+		*node:parent.soldierlist.member<1>.head@skin = <5>
 	}
 
 	/**

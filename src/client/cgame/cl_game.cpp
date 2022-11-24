@@ -270,8 +270,7 @@ void GAME_AppendTeamMember (int memberIndex, const char* teamDefID, const equipD
 	cls.i.EquipActor(chr, ed, weapon, GAME_GetChrMaxLoad(chr));
 
 	LIST_AddPointer(&chrDisplayList, (void*)chr);
-
-	UI_ExecuteConfunc("team_memberadd %i \"%s\" \"%s\" %i", memberIndex, chr->name, chr->head, chr->headSkin);
+	UI_ExecuteConfunc("team_memberadd %i \"%s\" \"%s\" \"%s\" %i", memberIndex, chr->name, chr->path, chr->head, chr->headSkin);
 }
 
 void GAME_GenerateTeam (const char* teamDefID, const equipDef_t* ed, int teamMembers)
