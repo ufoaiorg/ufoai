@@ -275,66 +275,11 @@ component SetUGVCount extends panel
 	}
 }
 
-
-// Custom squad: selected squad bar
-// Name of team, save and edit buttons
-component SelectedSquad extends panel
-{
-	{
-		size	"505 35"
-		bgcolor	"1 1 1 0.02"
-		onMouseEnter 	{
-			*node:this@bgcolor = "1 1 1 0.04"
-		}
-		onMouseLeave 	{
-			*node:this@color = "1 1 1 0.02"
-		}
-	}
-
-	string selected_squad_name
-	{
-//		string		*cvar:mn_teamname
-		string		"_Selected squad name here"
-		pos			"10 10"
-		size		"280 10"
-		color		"1 1 1 0.5"
-		onMouseEnter 	{
-			*node:this@color = "1 1 1 0.9"
-		}
-		onMouseLeave 	{
-			*node:this@color = "1 1 1 0.5"
-		}
-	}
-
-	MainMenu3Btn selected_squad_save
-	{
-		string		"_SAVE"
-		pos			"295 5"
-		size		"100 25"
-		font		"f_verysmall_bold"
-		onClick		{
-			cmd		"team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_save_popup;"
-		}
-	}
-
-	MainMenu2Btn selected_squad_edit
-	{
-		string		"_EQUIP"
-		pos			"395 5"
-		size		"100 25"
-		font		"f_verysmall_bold"
-		onClick		{
-			cmd		"team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_edit;"
-		}
-	}
-}
-
-
 // Player squad type panel (Default or Custom)
 component PlayerSquad extends panel
 {
 	{
-		size 		"515 250"
+		size 		"505 250"
 		onMouseEnter 	{
 			*node:this.player_squad_str@color = "1 1 1 0.9"
 		}
@@ -418,47 +363,54 @@ component PlayerSquad extends panel
 			invis			true
 		}
 
-		SelectedSquad squad_custom_selected
+		MainMenu3Btn custom_squad_new
 		{
-			pos				"0 10"
-		}
-
-		string squad_custom_new
-		{
-			pos			"10 50"
-			size		"75 20"
 			string		"_NEW"
+			pos			"10 15"
+			size		"75 25"
 			font		"f_verysmall_bold"
-			color		"1 1 1 0.5"
-			onMouseEnter 	{
-				*node:this@color = "1 1 1 0.9"
+			onClick		{
+				cmd "toggle_custom_team_opts new;"
 			}
-			onMouseLeave 	{
-				*node:this@color = "1 1 1 0.5"
-			}
-			onClick		{ cmd "toggle_custom_team_opts new;" }
 		}
 
-		string squad_custom_load
+		MainMenu2Btn custom_squad_load
 		{
-			pos			"85 50"
-			size		"75 20"
 			string		"_LOAD"
+			pos			"85 15"
+			size		"75 25"
 			font		"f_verysmall_bold"
-			color		"1 1 1 0.5"
-			onMouseEnter 	{
-				*node:this@color = "1 1 1 0.9"
+			onClick		{
+				cmd "toggle_custom_team_opts load;"
 			}
-			onMouseLeave 	{
-				*node:this@color = "1 1 1 0.5"
+		}
+
+		MainMenu3Btn custom_squad_save
+		{
+			string		"_SAVE"
+			pos			"295 15"
+			size		"100 25"
+			font		"f_verysmall_bold"
+			onClick		{
+				cmd		"team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_save_popup;"
 			}
-			onClick		{ cmd "toggle_custom_team_opts load;" }
+		}
+
+		MainMenu2Btn custom_squad_edit
+		{
+			string		"_EQUIP"
+			pos			"395 15"
+			size		"100 25"
+			font		"f_verysmall_bold"
+			onClick		{
+				cmd		"team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_edit;"
+			}
 		}
 
 		panel squad_custom_new_opts
 		{
 			{
-				pos		"10 80"
+				pos		"10 60"
 				size	"495 150"
 				invis	true
 			}
@@ -541,7 +493,7 @@ component PlayerSquad extends panel
 		panel squad_custom_load_opts
 		{
 			{
-				pos		"10 80"
+				pos		"10 60"
 				size	"495 150"
 				invis	true
 			}
@@ -611,23 +563,15 @@ component PlayerSquad extends panel
 		panel squad_custom_loaded_opts
 		{
 			{
-				pos		"10 80"
-				size	"495 150"
+				pos		"10 60"
+				size	"490 140"
 				invis	true
-			}
-
-			string title
-			{
-				size			"495 20"
-				contentalign	ALIGN_CC
-				string			"_Currently loaded"
-				font	"f_small_bold"
 			}
 
 			panel soldierlist
 			{
-				pos				"0 25"
-				size			"495 125"
+				pos				"0 0"
+				size			"465 125"
 				padding			6
 				layout			LAYOUT_TOP_DOWN_FLOW
 				wheelscrollable	true
@@ -643,7 +587,7 @@ component PlayerSquad extends panel
 			vscrollbar soldierlist_scroll
 			{
 				image			"ui/scrollbar_v"
-				pos				"465 25"
+				pos				"469 0"
 				height			"125"
 				current			0
 				viewsize		4
