@@ -1061,7 +1061,7 @@ window multiplayer_wait
 		string title
 		{
 			string		"_Players connected"
-			width		"400 50"
+			width		"400"
 			contentalign	ALIGN_CC
 		}
 
@@ -1071,7 +1071,7 @@ window multiplayer_wait
 				layoutMargin 2
 				padding		0
 				pos			"50 50"
-				size		"16 300"
+				size		"16 200"
 			}
 
 			image p0 { size "16 16" }
@@ -1090,20 +1090,21 @@ window multiplayer_wait
 		{
 			dataid		TEXT_MULTIPLAYER_USERLIST
 			pos			"80 50"
-			size		"150 300"
+			size		"150 200"
 		}
 
 		text teamlist
 		{
 			dataid		TEXT_MULTIPLAYER_USERTEAM
-			pos			"200 50"
-			size		"150 300"
+			pos			"240 50"
+			size		"120 200"
 		}
 	}
 
 	cmpWaitPanel teamselection {
 		{
 			pos			"520 320"
+			size		"400 150"
 			padding		10
 		}
 
@@ -1116,25 +1117,23 @@ window multiplayer_wait
 		text teamnum_status
 		{
 			dataid		TEXT_STANDARD
-			pos			"10 50"
-			size		"380 32"
-			lineheight	16
+			pos			"10 40"
+			size		"380 40"
 			tabwidth	60
-			rows		2
 			contentalign	ALIGN_CC
 		}
 
 		string teamnum_str
 		{
 			string		"_Team preference:"
-			pos			"25 80"
+			pos			"25 85"
 			size		"195 20"
 		}
 
 		string teamnum_value
 		{
 			string		*cvar:cl_teamnum
-			pos			"248 80"
+			pos			"248 85"
 			size		"40 20"
 			contentalign	ALIGN_UR
 		}
@@ -1146,7 +1145,7 @@ window multiplayer_wait
 			icon	"icons/arrow_right"
 			onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
 			onMouseLeave { *node:this@icon = "icons/arrow_right" }
-			pos			"298 82"
+			pos			"298 87"
 			size		"16 16"
 			padding		0
 			onClick		{ cmd "teamnum_inc;" }
@@ -1159,7 +1158,7 @@ window multiplayer_wait
 			icon		"icons/arrow_left"
 			onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
 			onMouseLeave { *node:this@icon = "icons/arrow_left" }
-			pos			"222 82"
+			pos			"222 87"
 			size		"16 16"
 			padding		0
 			onClick		{ cmd "teamnum_dec;" }
@@ -1168,7 +1167,7 @@ window multiplayer_wait
 		CheckBox cb_ready
 		{
 			tooltip		"_Finish the teamselection and start the game"
-			pos			"200 130"
+			pos			"200 112"
 			size		"20 20"
 			current		*cvar:cl_ready
 		}
@@ -1177,8 +1176,8 @@ window multiplayer_wait
 		{
 			string		"_Are you ready?"
 			tooltip		"_Finish the teamselection and start the game"
-			pos			"230 130"
-			size		"180 20"
+			pos			"230 110"
+			size		"165 20"
 			onClick		{ call *node:parent.cb_ready@toggle }
 		}
 	}
@@ -1187,6 +1186,7 @@ window multiplayer_wait
 	{
 		{
 			pos		"50 60"
+			size	"400 200"
 			padding	10
 		}
 
@@ -1275,7 +1275,7 @@ window multiplayer_wait
 		{
 			string		"_Force start"
 			tooltip		"_Launch the game before all teams are ready"
-			pos			"25 145"
+			pos			"125 145"
 			size		"150 30"
 			color		"0.8 0.8 0.8 1"
 			selectcolor "1 1 1 1"
@@ -1286,7 +1286,8 @@ window multiplayer_wait
 	cmpWaitPanel rcon
 	{
 		{
-			pos		"50 320"
+			pos		"50 280"
+			size	"400 110"
 			padding	10
 		}
 
@@ -1299,19 +1300,21 @@ window multiplayer_wait
 		string current_rcon_pwd
 		{
 			string		"_RCON-Password:"
-			pos			"25 80"
-			size		"256 20"
+			pos			"25 30"
+			size		"256 30"
 		}
 
 		TextEntry slot_rcon_pwd
 		{
 			string		*cvar:rcon_password
 			font		"f_verysmall"
-			pos			"25 110"
+			pos			"25 65"
 			size		"250 30"
 			ispassword	true
 		}
 	}
+
+	fuzzyScreen overlay { }
 
 	confunc multiplayer_admin_panel {
 		if (<1> == 0) {
