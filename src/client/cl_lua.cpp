@@ -57,6 +57,7 @@ static int CL_UfoModuleLoader (lua_State* L) {
 	memset(errmsg, 0, sizeof(errmsg));
 
 	/* find the module using ufo's filesystem */
+	Com_Printf("Lua custom-loading module: %s\n", name);
 	int len = FS_LoadFile(module, &buffer);
 	if (len != -1) {
 		/* found, the contents of the file is now present in buffer */
@@ -65,12 +66,14 @@ static int CL_UfoModuleLoader (lua_State* L) {
 			return 1;
 		} else {
 			/* push error string onto the stack */
-			sprintf(errmsg, "custom loader error - cannot load module named [%s]\n", module);
+			sprintf(errmsg, "Lua custom-loader error: cannot load module named [%s]:\n\t%s\n", module, lua_tostring(L, -1));
+			Com_Printf(errmsg);
 			lua_pushstring(L, errmsg);
 		}
 	} else {
 		/* push error string onto the stack */
-		sprintf(errmsg, "custom loader error - cannot find module named [%s]\n", module);
+		sprintf(errmsg, "Lua custom-loader error: cannot find module named [%s]\n", module);
+		Com_Printf(errmsg);
 		lua_pushstring(L, errmsg);
 	}
 	/* an error occured, return 0*/
