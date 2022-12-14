@@ -67,13 +67,13 @@ static int CL_UfoModuleLoader (lua_State* L) {
 		} else {
 			/* push error string onto the stack */
 			sprintf(errmsg, "Lua custom-loader error: cannot load module named [%s]:\n\t%s\n", module, lua_tostring(L, -1));
-			Com_Printf(errmsg);
+			Com_Printf("%s", errmsg);
 			lua_pushstring(L, errmsg);
 		}
 	} else {
 		/* push error string onto the stack */
 		sprintf(errmsg, "Lua custom-loader error: cannot find module named [%s]\n", module);
-		Com_Printf(errmsg);
+		Com_Printf("%s", errmsg);
 		lua_pushstring(L, errmsg);
 	}
 	/* an error occured, return 0*/

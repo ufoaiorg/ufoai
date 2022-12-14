@@ -8,7 +8,7 @@
  * interface file instead.
  * ----------------------------------------------------------------------------- */
 
-
+#pragma GCC diagnostic ignored "-Wformat-security"
 #ifndef SWIGLUA
 #define SWIGLUA
 #endif

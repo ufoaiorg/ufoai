@@ -120,7 +120,7 @@ TEST_F(RandomMapAssemblyTest, MassAssemblyTimeout)
 	const char *self = "RandomMapAssemblyTest.MassAssemblyTimeout";
 	unsigned const int numRuns = 10;
 	sv_threads->integer = 1;
-	SCOPED_TRACE(va(self));
+	SCOPED_TRACE(self);
 	testAssembly(self, numRuns, TEST_THEME, TEST_ASSEMBLY);
 }
 
@@ -129,7 +129,7 @@ TEST_F(RandomMapAssemblyTest, MassAssemblyParallel)
 	const char *self = "RandomMapAssemblyTest.MassAssemblyParallel";
 	unsigned const int numRuns = 10;
 	sv_threads->integer = 2;
-	SCOPED_TRACE(va(self));
+	SCOPED_TRACE(self);
 	testAssembly(self, numRuns, TEST_THEME, TEST_ASSEMBLY);
 }
 
@@ -139,7 +139,7 @@ TEST_F(RandomMapAssemblyTest, MassAssemblySequential)
 	const char *self = "RandomMapAssemblyTest.MassAssemblySequential";
 	unsigned const int numRuns = 10;
 	sv_threads->integer = 0;
-	SCOPED_TRACE(va(self));
+	SCOPED_TRACE(self);
 	testAssembly(self, numRuns, TEST_THEME, TEST_ASSEMBLY);
 }
 
@@ -162,7 +162,7 @@ TEST_F(RandomMapAssemblyTest, Seedlists)
 	sv_threads->integer = 0;
 	long timeSum = 0;
 
-	SCOPED_TRACE(va(self));
+	SCOPED_TRACE(self);
 	for (int n = 0; n < length; n++) {
 		timeSum += testAssembly(self, numRuns, assNames[n][0], assNames[n][1]);
 	}
