@@ -8,7 +8,7 @@
  * interface file instead.
  * ----------------------------------------------------------------------------- */
 
-#pragma GCC diagnostic ignored "-Wformat-security"
+
 #ifndef SWIGLUA
 #define SWIGLUA
 #endif
@@ -2771,8 +2771,9 @@ typedef struct{} LANGUAGE_OBJ;
 }
 
 
-/* disable all casting warnings (enabled at the bottom line of this file) */
+/* Control GCC warnings (this is generated  code) */
 #pragma GCC diagnostic ignored "-Wcast-qual"
+#pragma GCC diagnostic ignored "-Wformat-security"
 
 /* common client stuff */
 #include "../../../shared/shared.h"
@@ -20397,3 +20398,4 @@ void SWIG_init_user(lua_State* L)
   /* exec Lua code if applicable */
   SWIG_Lua_dostring(L,SWIG_LUACODE);
 }
+

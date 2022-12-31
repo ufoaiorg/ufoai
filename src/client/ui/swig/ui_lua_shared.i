@@ -44,8 +44,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 %module ufo
 
 %{
-/* disable all casting warnings (enabled at the bottom line of this file) */
+/* Control GCC warnings (this is generated  code) */
 #pragma GCC diagnostic ignored "-Wcast-qual"
+#pragma GCC diagnostic ignored "-Wformat-security"
 
 /* common client stuff */
 #include "../../../shared/shared.h"
