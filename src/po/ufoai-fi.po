@@ -34525,7 +34525,7 @@ msgstr "Ota kuvakaappaus"
 #~ msgstr "http://ufoai.sf.net"
 
 #, fuzzy
-#~ msgid "Copyright 2004-2011 by UFO: AI Team"
+#~ msgid "Copyright 2004-2023 by UFO: AI Team"
 #~ msgstr "© 2004–2010 UFO: Alien Invasionin Tiimi"
 
 #~ msgid ""

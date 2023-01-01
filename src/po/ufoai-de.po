@@ -36472,8 +36472,8 @@ msgstr "Screenshot speichern"
 #~ msgid "The Community"
 #~ msgstr "Die Community"
 
-#~ msgid "Copyright 2004-2011 by UFO: AI Team"
-#~ msgstr "Copyright 2004-2011 by UFO: AI Team"
+#~ msgid "Copyright 2004-2023 by UFO: AI Team"
+#~ msgstr "Copyright 2004-2023 by UFO: AI Team"
 
 #~ msgid ""
 #~ "Use the [Shift] key to align your targeting height - useful to shoot a "

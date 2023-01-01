@@ -33891,8 +33891,8 @@ msgstr "Tee kuvapilt"
 #~ msgstr "http://www.ufoai.net"
 
 #, fuzzy
-#~ msgid "Copyright 2004-2011 by UFO: AI Team"
-#~ msgstr "Copyright 2004-2006 by UFO: AI Team"
+#~ msgid "Copyright 2004-2023 by UFO: AI Team"
+#~ msgstr "Copyright 2004-2023 by UFO: AI Team"
 
 #, fuzzy
 #~ msgid "amount on this base (all)"

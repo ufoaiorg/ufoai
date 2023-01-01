@@ -35737,8 +35737,8 @@ msgstr "Copie d'écran"
 #~ msgstr "http://ufoai.sf.net"
 
 #, fuzzy
-#~ msgid "Copyright 2004-2011 by UFO: AI Team"
-#~ msgstr "Copyright 2004-2009 de l'équipe de UFO: AI "
+#~ msgid "Copyright 2004-2023 by UFO: AI Team"
+#~ msgstr "Copyright 2004-2023 de l'équipe de UFO: AI "
 
 #~ msgid ""
 #~ "Use the [Shift] key to align your targeting height - useful to shoot a "

@@ -34577,8 +34577,8 @@ msgstr "Maak een schermafdruk"
 #~ msgid "The Community"
 #~ msgstr "De Gemeenschap"
 
-#~ msgid "Copyright 2004-2011 by UFO: AI Team"
-#~ msgstr "Auteursrecht 2004-2011 van UFO: AI Team"
+#~ msgid "Copyright 2004-2023 by UFO: AI Team"
+#~ msgstr "Auteursrecht 2004-2023 van UFO: AI Team"
 
 #~ msgid ""
 #~ "Use the [Shift] key to align your targeting height - useful to shoot a "

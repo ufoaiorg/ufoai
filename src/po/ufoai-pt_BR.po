@@ -35236,8 +35236,8 @@ msgstr "Tirar uma foto"
 #~ msgstr "A Comunidade"
 
 #, fuzzy
-#~ msgid "Copyright 2004-2011 by UFO: AI Team"
-#~ msgstr "Direitos autorais reservados 2004-2007 Equipe de UFO: AI"
+#~ msgid "Copyright 2004-2023 by UFO: AI Team"
+#~ msgstr "Direitos autorais reservados 2004-2023 Equipe de UFO: AI"
 
 #~ msgid ""
 #~ "Use the [Shift] key to align your targeting height - useful to shoot a "
