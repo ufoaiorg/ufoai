@@ -1,2 +1,3 @@
+find ../base/ufos -name '*.lua' -print
 find ../base/ufos -name '*.ufo' -print
 find ../base/maps -name '*.ump' -print

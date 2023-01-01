@@ -27,8 +27,7 @@ msgstr ""
 #: src/tools/radiant/radiant/referencecache.cpp:600
 #: src/tools/radiant/radiant/referencecache.cpp:621
 #: src/tools/radiant/radiant/texwindow.cpp:1257
-#: src/tools/radiant/radiant/map.cpp:777
-#: src/tools/radiant/radiant/map.cpp:1040
+#: src/tools/radiant/radiant/map.cpp:777 src/tools/radiant/radiant/map.cpp:1040
 #: src/tools/radiant/radiant/map.cpp:1281
 #: src/tools/radiant/radiant/map.cpp:1306
 #: src/tools/radiant/radiant/map.cpp:1700
@@ -41,15 +40,13 @@ msgstr ""
 #: src/tools/radiant/radiant/map.cpp:1302
 #: src/tools/radiant/radiant/map.cpp:1696
 #: src/tools/radiant/radiant/texwindow.cpp:1353
-#: src/tools/radiant/radiant/map.cpp:781
-#: src/tools/radiant/radiant/map.cpp:1047
+#: src/tools/radiant/radiant/map.cpp:781 src/tools/radiant/radiant/map.cpp:1047
 #: src/tools/radiant/radiant/map.cpp:1290
 #: src/tools/radiant/radiant/map.cpp:1315
 #: src/tools/radiant/radiant/map.cpp:1709
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1243
 #: src/tools/radiant/radiant/mainframe.cpp:279
-#: src/tools/radiant/radiant/map.cpp:795
-#: src/tools/radiant/radiant/map.cpp:1061
+#: src/tools/radiant/radiant/map.cpp:795 src/tools/radiant/radiant/map.cpp:1061
 #: src/tools/radiant/radiant/map.cpp:1304
 #: src/tools/radiant/radiant/map.cpp:1329
 #: src/tools/radiant/radiant/map.cpp:1783
@@ -69,6 +66,9 @@ msgstr ""
 #: src/tools/radiant/radiant/referencecache/referencecache.cpp:661
 #: src/tools/radiant/radiant/referencecache/referencecache.cpp:684
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:993
+#: src/tools/radiant/radiant/referencecache/referencecache.cpp:667
+#: src/tools/radiant/radiant/referencecache/referencecache.cpp:690
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:994
 msgid "Processing..."
 msgstr ""
 
@@ -79,19 +79,15 @@ msgstr ""
 msgid "Changing Engine Path"
 msgstr ""
 
-#: src/tools/radiant/radiant/map.cpp:695
-#: src/tools/radiant/radiant/map.cpp:1164
+#: src/tools/radiant/radiant/map.cpp:695 src/tools/radiant/radiant/map.cpp:1164
 #: src/tools/radiant/radiant/map.cpp:1575
 #: src/tools/radiant/radiant/referencecache.cpp:79
-#: src/tools/radiant/radiant/map.cpp:777
-#: src/tools/radiant/radiant/map.cpp:1281
+#: src/tools/radiant/radiant/map.cpp:777 src/tools/radiant/radiant/map.cpp:1281
 #: src/tools/radiant/radiant/map.cpp:1700
 #: src/tools/radiant/radiant/map.cpp:1277
-#: src/tools/radiant/radiant/map.cpp:1696
-#: src/tools/radiant/radiant/map.cpp:781
+#: src/tools/radiant/radiant/map.cpp:1696 src/tools/radiant/radiant/map.cpp:781
 #: src/tools/radiant/radiant/map.cpp:1290
-#: src/tools/radiant/radiant/map.cpp:1709
-#: src/tools/radiant/radiant/map.cpp:795
+#: src/tools/radiant/radiant/map.cpp:1709 src/tools/radiant/radiant/map.cpp:795
 #: src/tools/radiant/radiant/map.cpp:1304
 #: src/tools/radiant/radiant/map.cpp:1783
 #: src/tools/radiant/radiant/map/map.cpp:658
@@ -101,8 +97,7 @@ msgstr ""
 msgid "Loading Map"
 msgstr ""
 
-#: src/tools/radiant/radiant/map.cpp:926
-#: src/tools/radiant/radiant/map.cpp:1189
+#: src/tools/radiant/radiant/map.cpp:926 src/tools/radiant/radiant/map.cpp:1189
 #: src/tools/radiant/radiant/referencecache.cpp:113
 #: src/tools/radiant/radiant/referencecache.cpp:600
 #: src/tools/radiant/radiant/map.cpp:1040
@@ -124,6 +119,8 @@ msgstr ""
 #: src/tools/radiant/radiant/map/map.cpp:745
 #: src/tools/radiant/radiant/referencecache/referencecache.cpp:109
 #: src/tools/radiant/radiant/referencecache/referencecache.cpp:661
+#: src/tools/radiant/radiant/referencecache/referencecache.cpp:113
+#: src/tools/radiant/radiant/referencecache/referencecache.cpp:667
 msgid "Saving Map"
 msgstr ""
 
@@ -139,6 +136,7 @@ msgstr ""
 #: src/tools/radiant/radiant/referencecache.cpp:700
 #: src/tools/radiant/radiant/referencecache.cpp:683
 #: src/tools/radiant/radiant/referencecache/referencecache.cpp:684
+#: src/tools/radiant/radiant/referencecache/referencecache.cpp:690
 msgid "Refreshing Models"
 msgstr ""
 
@@ -157,6 +155,7 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1243
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1220
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:993
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:994
 msgid "Loading Shaders"
 msgstr ""
 
@@ -165,12 +164,14 @@ msgstr ""
 #: src/tools/radiant/radiant/map/autosave.cpp:162
 #: src/tools/radiant/radiant/map/autosave.cpp:170
 #: src/tools/radiant/radiant/map/AutoSaver.cpp:223
+#: src/tools/radiant/radiant/map/AutoSaver.cpp:222
 msgid "Autosave"
 msgstr ""
 
 #: src/tools/radiant/radiant/autosave.cpp:169
 #: src/tools/radiant/radiant/map/autosave.cpp:162
 #: src/tools/radiant/radiant/map/AutoSaver.cpp:226
+#: src/tools/radiant/radiant/map/AutoSaver.cpp:225
 msgid "Enable Autosave"
 msgstr ""
 
@@ -182,12 +183,14 @@ msgstr ""
 #: src/tools/radiant/radiant/autosave.cpp:172
 #: src/tools/radiant/radiant/map/autosave.cpp:166
 #: src/tools/radiant/radiant/map/AutoSaver.cpp:229
+#: src/tools/radiant/radiant/map/AutoSaver.cpp:228
 msgid "Save Snapshots"
 msgstr ""
 
 #: src/tools/radiant/radiant/autosave.cpp:176
 #: src/tools/radiant/radiant/map/autosave.cpp:170
 #: src/tools/radiant/radiant/map/AutoSaver.cpp:223
+#: src/tools/radiant/radiant/map/AutoSaver.cpp:222
 msgid "Autosave Preferences"
 msgstr ""
 
@@ -627,6 +630,7 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1326
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1304
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1001
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1002
 msgid "Texture Browser"
 msgstr ""
 
@@ -637,6 +641,7 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1326
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1304
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1001
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1002
 msgid "Texture Browser Preferences"
 msgstr ""
 
@@ -1466,6 +1471,7 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/sidebar.cpp:24
 #: src/tools/radiant/radiant/sidebar/sidebar.cpp:46
 #: src/tools/radiant/radiant/sidebar/sidebar.cpp:115
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:47
 msgid "_Entities"
 msgstr ""
 
@@ -1636,6 +1642,7 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1800
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:756
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:104
+#: src/tools/radiant/radiant/sidebar/MapInfo.cpp:102
 msgid "Value"
 msgstr ""
 
@@ -1826,6 +1833,7 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:68
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:220
 #: src/tools/radiant/radiant/commands.cpp:628
+#: src/tools/radiant/radiant/commands.cpp:660
 msgid "Check Map"
 msgstr ""
 
@@ -1917,18 +1925,21 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/mapinfo.cpp:128
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:178
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:163
+#: src/tools/radiant/radiant/sidebar/MapInfo.cpp:161
 msgid "Total Brushes"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/mapinfo.cpp:135
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:181
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:166
+#: src/tools/radiant/radiant/sidebar/MapInfo.cpp:164
 msgid "Total Entities"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/mapinfo.cpp:144
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:121
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:113
+#: src/tools/radiant/radiant/sidebar/MapInfo.cpp:111
 msgid "Entity breakdown"
 msgstr ""
 
@@ -1939,12 +1950,14 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:170
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:128
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:120
+#: src/tools/radiant/radiant/sidebar/MapInfo.cpp:118
 msgid "Entity"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/mapinfo.cpp:167
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:134
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:126
+#: src/tools/radiant/radiant/sidebar/MapInfo.cpp:124
 msgid "Count"
 msgstr ""
 
@@ -2110,6 +2123,7 @@ msgstr ""
 #: src/tools/radiant/radiant/main.cpp:362
 #: src/tools/radiant/radiant/main.cpp:380
 #: src/tools/radiant/radiant/main.cpp:323
+#: src/tools/radiant/radiant/main.cpp:327
 msgid ""
 "UFORadiant failed to start properly the last time it was run.\n"
 "The failure may be caused by current preferences.\n"
@@ -2121,6 +2135,7 @@ msgstr ""
 #: src/tools/radiant/radiant/main.cpp:366
 #: src/tools/radiant/radiant/main.cpp:384
 #: src/tools/radiant/radiant/main.cpp:327
+#: src/tools/radiant/radiant/main.cpp:331
 msgid "UFORadiant - Startup Failure"
 msgstr ""
 
@@ -2241,6 +2256,7 @@ msgstr ""
 #: src/tools/radiant/radiant/brush/brushmanip.cpp:1021
 #: src/tools/radiant/radiant/xyview/xywindow.cpp:2538
 #: src/tools/radiant/radiant/clipper/Clipper.cpp:43
+#: src/tools/radiant/radiant/clipper/Clipper.cpp:45
 msgid "Clipper"
 msgstr ""
 
@@ -2251,6 +2267,7 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:2748
 #: src/tools/radiant/radiant/xyview/xywindow.cpp:2538
 #: src/tools/radiant/radiant/clipper/Clipper.cpp:43
+#: src/tools/radiant/radiant/clipper/Clipper.cpp:45
 msgid "Clipper Tool Settings"
 msgstr ""
 
@@ -2290,6 +2307,7 @@ msgstr ""
 #: src/tools/radiant/radiant/preferences.cpp:55
 #: src/tools/radiant/radiant/preferences.cpp:52
 #: src/tools/radiant/radiant/settings/preferences.cpp:49
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:53
 msgid "Console"
 msgstr ""
 
@@ -2472,6 +2490,7 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:389
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:415
 #: src/tools/radiant/radiant/commands.cpp:642
+#: src/tools/radiant/radiant/commands.cpp:674
 msgid "Generate Materials"
 msgstr ""
 
@@ -2517,18 +2536,21 @@ msgstr ""
 #: src/tools/radiant/radiant/textures.cpp:635
 #: src/tools/radiant/radiant/textures.cpp:157
 #: src/tools/radiant/radiant/textures/TextureManipulator.cpp:578
+#: src/tools/radiant/radiant/textures/TextureManipulator.cpp:576
 msgid "Texture Quality"
 msgstr ""
 
 #: src/tools/radiant/radiant/textures.cpp:642
 #: src/tools/radiant/radiant/textures.cpp:638
 #: src/tools/radiant/radiant/textures/TextureManipulator.cpp:581
+#: src/tools/radiant/radiant/textures/TextureManipulator.cpp:579
 msgid "Texture Gamma"
 msgstr ""
 
 #: src/tools/radiant/radiant/textures.cpp:652
 #: src/tools/radiant/radiant/textures.cpp:643
 #: src/tools/radiant/radiant/textures/TextureManipulator.cpp:593
+#: src/tools/radiant/radiant/textures/TextureManipulator.cpp:591
 msgid "Texture Render Mode"
 msgstr ""
 
@@ -2543,12 +2565,15 @@ msgstr ""
 #: src/tools/radiant/radiant/textures.cpp:665
 #: src/tools/radiant/radiant/sidebar/sidebar.cpp:140
 #: src/tools/radiant/radiant/textures/TextureManipulator.cpp:568
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:983
+#: src/tools/radiant/radiant/textures/TextureManipulator.cpp:566
 msgid "Textures"
 msgstr ""
 
 #: src/tools/radiant/radiant/textures.cpp:682
 #: src/tools/radiant/radiant/textures.cpp:665
 #: src/tools/radiant/radiant/textures/TextureManipulator.cpp:568
+#: src/tools/radiant/radiant/textures/TextureManipulator.cpp:566
 msgid "Texture Settings"
 msgstr ""
 
@@ -2611,6 +2636,7 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:76
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:73
 #: src/tools/radiant/radiant/commands.cpp:633
+#: src/tools/radiant/radiant/commands.cpp:665
 msgid "Nothing to fix in this map\n"
 msgstr ""
 
@@ -2649,6 +2675,7 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1268
 #: src/tools/radiant/radiant/xywindow.cpp:1075
 #: src/tools/radiant/radiant/sidebar/sidebar.cpp:134
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:49
 msgid "Info"
 msgstr ""
 
@@ -2684,6 +2711,7 @@ msgstr ""
 #: src/tools/radiant/radiant/main.cpp:276
 #: src/tools/radiant/radiant/main.cpp:281
 #: src/tools/radiant/radiant/main.cpp:283
+#: src/tools/radiant/radiant/main.cpp:287
 msgid "Radiant - Runtime Error"
 msgstr ""
 
@@ -2716,6 +2744,7 @@ msgstr ""
 #: src/tools/radiant/radiant/main.cpp:359
 #: src/tools/radiant/radiant/main.cpp:374
 #: src/tools/radiant/radiant/main.cpp:317
+#: src/tools/radiant/radiant/main.cpp:321
 msgid "WARNING: Could not delete game pid at "
 msgstr ""
 
@@ -2727,6 +2756,7 @@ msgid "You have to save your map before material generation can work"
 msgstr ""
 
 #: src/tools/radiant/radiant/url.cpp:54 src/tools/radiant/radiant/url.cpp:55
+#: src/tools/radiant/radiant/url.cpp:57
 msgid "Failed to launch browser!"
 msgstr ""
 
@@ -2781,6 +2811,7 @@ msgstr ""
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:150
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:292
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:137
+#: src/tools/radiant/libs/gtkutil/filechooser.cpp:112
 msgid "Open File"
 msgstr ""
 
@@ -2788,6 +2819,7 @@ msgstr ""
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:150
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:292
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:137
+#: src/tools/radiant/libs/gtkutil/filechooser.cpp:112
 msgid "Save File"
 msgstr ""
 
@@ -2795,6 +2827,7 @@ msgstr ""
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:188
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:331
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:178
+#: src/tools/radiant/libs/gtkutil/filechooser.cpp:153
 msgid "All Files (*.*)"
 msgstr ""
 
@@ -2841,6 +2874,7 @@ msgstr ""
 #: src/tools/radiant/radiant/gtkmisc.cpp:157
 #: src/tools/radiant/radiant/gtkmisc.cpp:151
 #: src/tools/radiant/radiant/dialog.cpp:234
+#: src/tools/radiant/radiant/dialog.cpp:237
 msgid "Choose File"
 msgstr ""
 
@@ -3460,6 +3494,7 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:347
 #: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:203
 #: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:205
+#: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:204
 msgid "Prefab"
 msgstr ""
 
@@ -3471,6 +3506,7 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:377
 #: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:237
 #: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:239
+#: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:238
 msgid "Deselect before insert"
 msgstr ""
 
@@ -3478,12 +3514,14 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:383
 #: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:246
 #: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:248
+#: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:247
 msgid "Replace current selection"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/sidebar.cpp:28
 #: src/tools/radiant/radiant/sidebar/sidebar.cpp:29
 #: src/tools/radiant/radiant/sidebar/sidebar.cpp:102
+#: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:359
 msgid "Prefabs"
 msgstr ""
 
@@ -3561,6 +3599,7 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/ParticleSelector.cpp:226
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:102
 #: src/tools/radiant/radiant/sidebar/MapInfo.cpp:99
+#: src/tools/radiant/radiant/sidebar/MapInfo.cpp:97
 msgid "Attribute"
 msgstr ""
 
@@ -3602,6 +3641,7 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:371
 #: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:228
 #: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:230
+#: src/tools/radiant/radiant/sidebar/PrefabSelector.cpp:229
 msgid "Extend current selection"
 msgstr ""
 
@@ -3645,6 +3685,7 @@ msgstr ""
 #: src/tools/radiant/libs/gtkutil/filechooser.h:39
 #: src/tools/radiant/radiant/gtkmisc.cpp:166
 #: src/tools/radiant/radiant/dialog.cpp:253
+#: src/tools/radiant/radiant/dialog.cpp:256
 msgid "Choose Directory"
 msgstr ""
 
@@ -3656,6 +3697,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1660
 #: src/tools/radiant/radiant/mainframe.cpp:1650
 #: src/tools/radiant/radiant/commands.cpp:309
+#: src/tools/radiant/radiant/commands.cpp:324
 msgid "No Brushes Selected!"
 msgstr ""
 
@@ -3671,11 +3713,13 @@ msgstr ""
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:187
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:330
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:177
+#: src/tools/radiant/libs/gtkutil/filechooser.cpp:152
 msgid "*.*"
 msgstr ""
 
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:418
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:262
+#: src/tools/radiant/libs/gtkutil/filechooser.cpp:237
 msgid ""
 "The specified file already exists.\n"
 "Do you want to replace it?"
@@ -3761,6 +3805,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/pathfinding/RoutingLumpLoader.cpp:278
 #: src/tools/radiant/radiant/pathfinding/RoutingLumpLoader.cpp:272
+#: src/tools/radiant/radiant/pathfinding/RoutingLumpLoader.cpp:267
 msgid "No compiled version of the map found"
 msgstr ""
 
@@ -3965,6 +4010,7 @@ msgid "Textured"
 msgstr ""
 
 #: src/tools/radiant/radiant/clipper/Clipper.cpp:45
+#: src/tools/radiant/radiant/clipper/Clipper.cpp:47
 msgid "Clipper tool uses caulk"
 msgstr ""
 
@@ -4052,14 +4098,17 @@ msgid "<b>Jump to Object</b>"
 msgstr ""
 
 #: src/tools/radiant/radiant/map/AutoSaver.cpp:227
+#: src/tools/radiant/radiant/map/AutoSaver.cpp:226
 msgid "Autosave Interval (in minutes)"
 msgstr ""
 
 #: src/tools/radiant/radiant/map/AutoSaver.cpp:230
+#: src/tools/radiant/radiant/map/AutoSaver.cpp:229
 msgid "Snapshot folder (relative to map folder)"
 msgstr ""
 
 #: src/tools/radiant/radiant/map/AutoSaver.cpp:231
+#: src/tools/radiant/radiant/map/AutoSaver.cpp:230
 msgid "Max Snapshot Folder size (MB)"
 msgstr ""
 
@@ -4101,6 +4150,8 @@ msgstr ""
 
 #: src/tools/radiant/radiant/map/map.cpp:1024
 #: src/tools/radiant/radiant/map/map.cpp:1035
+#: src/tools/radiant/radiant/map/map.cpp:1023
+#: src/tools/radiant/radiant/map/map.cpp:1034
 msgid "You have to select the objects that you want to change"
 msgstr ""
 
@@ -4122,34 +4173,42 @@ msgid "Didn't find attribute '%s' in game node\n"
 msgstr ""
 
 #: src/tools/radiant/radiant/settings/GameManager.cpp:39
+#: src/tools/radiant/radiant/settings/GameManager.cpp:52
 msgid "<b>Warning:</b>\n"
 msgstr ""
 
 #: src/tools/radiant/radiant/settings/GameManager.cpp:42
+#: src/tools/radiant/radiant/settings/GameManager.cpp:55
 msgid "Engine path does not exist."
 msgstr ""
 
 #: src/tools/radiant/radiant/settings/GameManager.cpp:46
+#: src/tools/radiant/radiant/settings/GameManager.cpp:59
 msgid "Do you want to correct these settings?"
 msgstr ""
 
 #: src/tools/radiant/radiant/settings/GameManager.cpp:48
+#: src/tools/radiant/radiant/settings/GameManager.cpp:61
 msgid "Invalid Settings"
 msgstr ""
 
 #: src/tools/radiant/radiant/settings/GameManager.cpp:90
+#: src/tools/radiant/radiant/settings/GameManager.cpp:102
 msgid "XML parser failed to parse game.xml"
 msgstr ""
 
 #: src/tools/radiant/radiant/settings/GameManager.cpp:118
+#: src/tools/radiant/radiant/settings/GameManager.cpp:130
 msgid "Path"
 msgstr ""
 
 #: src/tools/radiant/radiant/settings/GameManager.cpp:118
+#: src/tools/radiant/radiant/settings/GameManager.cpp:130
 msgid "Path Preferences"
 msgstr ""
 
 #: src/tools/radiant/radiant/settings/GameManager.cpp:121
+#: src/tools/radiant/radiant/settings/GameManager.cpp:133
 msgid "Installation Path"
 msgstr ""
 
@@ -4162,22 +4221,27 @@ msgid "_Directories"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:959
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:957
 msgid "Clamp texture thumbnails to constant size"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:961
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:959
 msgid "Constant size"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1011
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1012
 msgid "Texture thumbnail scale"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1012
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1013
 msgid "Uniform texture thumbnail size (pixels)"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1013
+#: src/tools/radiant/radiant/sidebar/texturebrowser.cpp:1014
 msgid "License Path"
 msgstr ""
 
@@ -4186,26 +4250,32 @@ msgid "Texture Tool"
 msgstr ""
 
 #: src/tools/radiant/radiant/textures/TextureManipulator.cpp:586
+#: src/tools/radiant/radiant/textures/TextureManipulator.cpp:584
 msgid "Nearest"
 msgstr ""
 
 #: src/tools/radiant/radiant/textures/TextureManipulator.cpp:587
+#: src/tools/radiant/radiant/textures/TextureManipulator.cpp:585
 msgid "Nearest Mipmap"
 msgstr ""
 
 #: src/tools/radiant/radiant/textures/TextureManipulator.cpp:588
+#: src/tools/radiant/radiant/textures/TextureManipulator.cpp:586
 msgid "Linear"
 msgstr ""
 
 #: src/tools/radiant/radiant/textures/TextureManipulator.cpp:589
+#: src/tools/radiant/radiant/textures/TextureManipulator.cpp:587
 msgid "Bilinear"
 msgstr ""
 
 #: src/tools/radiant/radiant/textures/TextureManipulator.cpp:590
+#: src/tools/radiant/radiant/textures/TextureManipulator.cpp:588
 msgid "Bilinear Mipmap"
 msgstr ""
 
 #: src/tools/radiant/radiant/textures/TextureManipulator.cpp:591
+#: src/tools/radiant/radiant/textures/TextureManipulator.cpp:589
 msgid "Trilinear"
 msgstr ""
 
@@ -4247,31 +4317,43 @@ msgstr ""
 
 #: src/tools/radiant/radiant/xyview/XYWnd.cpp:63
 #: src/tools/radiant/radiant/xyview/XYWnd.cpp:194
+#: src/tools/radiant/radiant/xyview/XYWnd.cpp:202
 msgid "XY Top"
 msgstr ""
 
 #: src/tools/radiant/radiant/xyview/XYWnd.cpp:66
 #: src/tools/radiant/radiant/xyview/XYWnd.cpp:197
+#: src/tools/radiant/radiant/xyview/XYWnd.cpp:205
 msgid "XZ Front"
 msgstr ""
 
 #: src/tools/radiant/radiant/xyview/XYWnd.cpp:69
 #: src/tools/radiant/radiant/xyview/XYWnd.cpp:200
+#: src/tools/radiant/radiant/xyview/XYWnd.cpp:208
 msgid "YZ Side"
 msgstr ""
 
 #: src/tools/radiant/radiant/commands.cpp:105
+#: src/tools/radiant/radiant/commands.cpp:106
 msgid "Exit Radiant"
 msgstr ""
 
 #: src/tools/radiant/radiant/commands.cpp:609
+#: src/tools/radiant/radiant/commands.cpp:641
 msgid "Compile Map"
 msgstr ""
 
 #: src/tools/radiant/radiant/commands.cpp:614
+#: src/tools/radiant/radiant/commands.cpp:646
 msgid "Nothing that could get compiled\n"
 msgstr ""
 
 #: src/tools/radiant/radiant/commands.cpp:647
+#: src/tools/radiant/radiant/commands.cpp:679
 msgid "Nothing to generate materials for\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/clipper/Clipper.cpp:48
+#: src/tools/radiant/radiant/xyview/GlobalXYWnd.cpp:110
+msgid "Caulk texture name"
 msgstr ""
