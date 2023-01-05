@@ -1,3 +1,19 @@
+# Copyright (C) 2002-2023 UFO: Alien Invasion.
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+# See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cmake_minimum_required(VERSION 3.13)
 
@@ -9,15 +25,11 @@ set(UFOAI_PROJECT_UFODED "ufoded")
 set(UFOAI_PROJECT_UFO "ufo")
 set(UFOAI_PROJECT_UFOMODEL "ufomodel")
 set(UFOAI_PROJECT_UFOSLICER "ufoslicer")
-set(UFOAI_PROJECT_UFORADIANT "uforadiant")
 set(UFOAI_PROJECT_UFOTESTALL "ufotestall")
 
 # cmake paths
 set(CMAKE_CONFIG_DIR "${CMAKE_SOURCE_DIR}/cmake/config")
-set(CMAKE_MODULE_PATH
-   ${CMAKE_MODULE_PATH}
-   ${CMAKE_SOURCE_DIR}/cmake/modules
-)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 if(NOT CMAKE_BUILD_TYPE)
    message(STATUS "CMake build type is not set, defaulting to 'RelWithDebInfo'")
@@ -28,12 +40,6 @@ message(STATUS "CMake build type is set to ${CMAKE_BUILD_TYPE}")
 if("${CMAKE_BUILD_TYPE}" MATCHES "Debug" OR "${CMAKE_BUILD_TYPE}" MATCHES "RelWithDebInfo")
    message(STATUS "Adding #define DEBUG")
    add_definitions(-DDEBUG)
-endif()
-
-if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
-   message(STATUS "Target is 64 bits")
-elseif("${CMAKE_SIZEOF_VOID_P}" EQUAL "4")
-   message(STATUS "Target is 32 bits")
 endif()
 
 set(UFOAI_SRC "${CMAKE_SOURCE_DIR}/src")
@@ -81,7 +87,6 @@ option(UFOAI_BUILD_UFODED "Build the dedicated server" ON)
 option(UFOAI_BUILD_UFO "Build the main game" ON)
 option(UFOAI_BUILD_UFOMODEL "Build the tool for pre-compiling lightmaps for models" ON)
 option(UFOAI_BUILD_UFOSLICER "Build the tool for creating fancy map overviews" ON)
-option(UFOAI_BUILD_UFORADIANT "Build the map editor (needs GTK)" ON)
 option(UFOAI_BUILD_UFOTESTALL "Build unitary tests" ON)
 
 ## We check for dependencies
@@ -114,13 +119,6 @@ if(UFOAI_BUILD_UFODED OR
    find_package(CURL)
 endif()
 
-if(UFOAI_BUILD_UFORADIANT)
-   find_package(GTK2)
-   find_package(GTKSourceView2)
-   find_package(GTKGL)
-   find_package(LibXml2)
-endif()
-
 if(UFOAI_BUILD_UFO2MAP OR
       UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFOMODEL OR
@@ -133,14 +131,9 @@ if(UFOAI_BUILD_UFO2MAP OR
 endif()
 
 if(UFOAI_BUILD_UFO OR
-      UFOAI_BUILD_UFORADIANT OR
       UFOAI_BUILD_UFOTESTALL)
    find_package(Intl)
    find_package(OGG)
-endif()
-
-if(UFOAI_BUILD_UFORADIANT)
-   find_package(OpenAL)
 endif()
 
 if(UFOAI_BUILD_UFO2MAP OR
@@ -157,7 +150,6 @@ if(UFOAI_BUILD_GAME OR
       UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFOMODEL OR
       UFOAI_BUILD_UFOSLICER OR
-      UFOAI_BUILD_UFORADIANT OR
       UFOAI_BUILD_UFOTESTALL)
    find_package(SDL)
 endif()
@@ -179,7 +171,6 @@ if(UFOAI_BUILD_UFO OR
 endif()
 
 if(UFOAI_BUILD_UFO OR
-      UFOAI_BUILD_UFORADIANT OR
       UFOAI_BUILD_UFOTESTALL)
    find_package(VORBIS)
 endif()
@@ -189,7 +180,6 @@ if(UFOAI_BUILD_UFO2MAP OR
       UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFOMODEL OR
       UFOAI_BUILD_UFOSLICER OR
-      UFOAI_BUILD_UFORADIANT OR
       UFOAI_BUILD_UFOTESTALL)
    find_package(ZLIB)
 endif()
@@ -327,7 +317,7 @@ if(UFOAI_BUILD_UFO2MAP)
       ${UFOAI_SRC}/tools/ufo2map/writebsp.cpp
    )
 
-   # plateform specific sources
+   # platform specific sources
    if(WIN32)
       SET(UFOAI_SOURCEFILES_UFO2MAP ${UFOAI_SOURCEFILES_UFO2MAP}
          ${UFOAI_SRC}/ports/windows/win_shared.cpp
@@ -458,7 +448,7 @@ if(UFOAI_BUILD_UFODED)
       ${UFOAI_SRC}/shared/utf8.cpp
    )
 
-   # plateform specific sources
+   # platform specific sources
    if(WIN32)
        SET(UFOAI_SOURCEFILES_UFODED ${UFOAI_SOURCEFILES_UFODED}
          ${UFOAI_SRC}/ports/windows/win_backtrace.cpp
@@ -892,7 +882,7 @@ if(UFOAI_BUILD_UFO)
       ${UFOAI_SRC}/libs/mxml/mxml-string.c
    )
 
-   # plateform specific sources
+   # platform specific sources
    if(WIN32)
       SET(UFOAI_SOURCEFILES_UFO ${UFOAI_SOURCEFILES_UFO}
          ${UFOAI_SRC}/ports/windows/win_backtrace.cpp
@@ -1056,7 +1046,7 @@ if(UFOAI_BUILD_UFOMODEL)
       ${UFOAI_SRC}/tools/ufomodel/ufomodel.cpp
    )
 
-   # plateform specific sources
+   # platform specific sources
    if(WIN32)
       SET(UFOAI_SOURCEFILES_UFOMODEL ${UFOAI_SOURCEFILES_UFOMODEL}
          ${UFOAI_SRC}/ports/windows/win_shared.cpp
@@ -1155,7 +1145,7 @@ if(UFOAI_BUILD_UFOSLICER)
       ${UFOAI_SRC}/tools/ufoslicer.cpp
    )
 
-   # plateform specific sources
+   # platform specific sources
    if(WIN32)
       SET(UFOAI_SOURCEFILES_UFOSLICER ${UFOAI_SOURCEFILES_UFOSLICER}
          ${UFOAI_SRC}/ports/windows/win_shared.cpp
@@ -1225,392 +1215,6 @@ if(UFOAI_BUILD_UFOSLICER)
       target_link_libraries(${UFOAI_PROJECT_UFOSLICER}
         execinfo
       )
-   endif()
-endif()
-
-###############################################################################
-# uforadiant
-###############################################################################
-
-if(UFOAI_BUILD_UFORADIANT)
-   set(UFOAI_SOURCEFILES_UFORADIANT
-      ${UFOAI_SRC}/shared/entitiesdef.cpp
-      ${UFOAI_SRC}/shared/parse.cpp
-
-      ${UFOAI_SRC}/tools/radiant/libs/Instance.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/MenuItemAccelerator.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/ModalProgressDialog.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/PanedPosition.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/RegistryConnector.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/SourceView.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/TextEntryDialog.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/TextPanel.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/Timer.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/TreeModel.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/VFSTreePopulator.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/WindowPosition.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/button.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/clipboard.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/cursor.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/dialog.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/filechooser.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/frame.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/glfont.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/glwidget.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/image.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/menu.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/menu/PopupMenu.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/messagebox.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/window.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/gtkutil/window/PersistentTransientWindow.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/picomodel/RenderablePicoModel.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/picomodel/RenderablePicoSurface.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/picomodel/model.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/xmlutil/Document.cpp
-      ${UFOAI_SRC}/tools/radiant/libs/xmlutil/Node.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/Brush.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/BrushClipPlane.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/BrushInstance.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/BrushModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/BrushTokens.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/ContentsFlagsValue.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/Face.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/FaceInstance.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/FaceShader.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/FaceTexDef.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/TexDef.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/TextureProjection.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/brushmanip.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/construct/Cone.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/construct/Cuboid.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/construct/Prism.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/construct/Rock.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/construct/Sphere.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/construct/Terrain.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/csg/csg.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brush/winding.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/brushexport/BrushExportOBJ.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/camera/CamWnd.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/camera/Camera.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/camera/CameraSettings.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/camera/GlobalCamera.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/camera/view.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/clipper/ClipPoint.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/clipper/Clipper.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/commands.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/dialog.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/EntityCreator.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/EntitySettings.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/eclassmodel/EClassModel.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/eclassmodel/EClassModelInstance.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/eclassmodel/EClassModelNode.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/entity.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/entitydef/EntityClassManager.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/entitydef/EntityClassMgrModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/entitydef/EntityClassScanner.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/entitydef/EntityDefinitionModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/entitymodule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/generic/GenericEntity.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/generic/GenericEntityInstance.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/generic/GenericEntityNode.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/group/Group.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/group/GroupInstance.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/group/GroupNode.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/light/Light.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/light/LightInstance.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/light/LightNode.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/model/MiscModel.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/model/MiscModelInstance.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/model/MiscModelNode.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/particle/MiscParticle.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/particle/MiscParticleInstance.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/particle/MiscParticleNode.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/sound/MiscSound.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/sound/MiscSoundInstance.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/sound/MiscSoundNode.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/entity/targetable.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/environment.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/eventmanager/Accelerator.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/eventmanager/Command.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/eventmanager/EventManager.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/eventmanager/Modifiers.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/eventmanager/MouseEvents.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/eventmanager/Toggle.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/eventmanager/WidgetToggle.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/exec.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/filesystem/FileSystem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/filesystem/FileSystemModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/filesystem/directory/DirectoryArchive.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/filesystem/pk3/ZipArchive.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/filetypes.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/filters/BasicFilterSystem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/filters/LevelFilter.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/filters/XMLFilter.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/filters/filters.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/image.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/imagemodules.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/log/console.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/main.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/map/AutoSaver.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/map/MapCompiler.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/map/MapFileChooserPreview.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/map/RootNode.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/map/algorithm/Traverse.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/map/map.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/map/mapmodule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/map/parse.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/map/write.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/material/LicenseParser.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/material/MaterialModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/material/MaterialShader.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/material/MaterialShaderModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/material/MaterialShaderSystem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/material/MaterialSystem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/model.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/namespace/NameObserver.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/namespace/Namespace.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/namespace/NamespaceModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/particles/ParticleParser.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/particles/ParticleSystem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/pathfinding/Pathfinding.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/pathfinding/PathfindingModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/pathfinding/Routing.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/pathfinding/RoutingLump.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/pathfinding/RoutingLumpLoader.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/pathfinding/RoutingRenderable.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/plugin.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/referencecache/nullmodel.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/referencecache/referencecache.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/render/OpenGLModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/render/OpenGLRenderSystem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/render/backend/OpenGLShader.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/render/backend/OpenGLShaderPass.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/render/frontend/SphereRenderable.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/scenegraph/CompiledGraph.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/scenegraph/SceneGraphModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/scenegraph/treemodel.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/script/ScriptLibrary.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/script/ScriptLibraryModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/script/ScriptTokenWriter.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/script/ScriptTokeniser.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/select.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/BestPoint.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/Intersection.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/Manipulatables.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/Manipulators.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/Planes.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/RadiantSelectionSystem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/RadiantWindowObserver.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/SelectionSystemModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/SelectionTest.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/TransformationVisitors.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/algorithm/Entity.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/algorithm/General.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/algorithm/Group.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/algorithm/Primitives.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/algorithm/Shader.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/algorithm/Transformation.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/selectionset/SelectionSet.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/selectionset/SelectionSetManager.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/selectionset/SelectionSetToolmenu.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/shaderclipboard/ShaderClipboard.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/selection/shaderclipboard/Texturable.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/server.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/settings/GameDescription.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/settings/GameManager.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/settings/GameManagerModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/settings/PreferenceDialog.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/settings/Win32Registry.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/JobInfo.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/MapInfo.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/PrefabSelector.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/AddPropertyDialog.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/BooleanPropertyEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/ColourPropertyEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/EntityInspector.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/EntityPropertyEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/FloatPropertyEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/ModelPropertyEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/ParticlePropertyEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/PropertyEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/PropertyEditorFactory.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/SkinChooser.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/SkinPropertyEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/SoundPropertyEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/SpawnflagsPropertyEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entityinspector/Vector3PropertyEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entitylist/EntityList.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/entitylist/GraphTreeModel.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/sidebar.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/surfaceinspector/surfaceinspector.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sidebar/texturebrowser.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sound/SoundManager.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sound/SoundManagerModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/sound/SoundPlayer.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/stacktrace.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/textool/TexTool.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/textool/TexToolItem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/textool/item/BrushItem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/textool/item/FaceItem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/textool/item/FaceVertexItem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/textures/Texture.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/textures/TextureManipulator.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/textures/TexturesMap.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/textures/TexturesModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/timer.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ufoscript/UFOScript.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ufoscript/common/DataBlock.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ufoscript/common/Parser.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ufoscript/common/ScriptValues.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ufoscript/mapdef/MapDef.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ufoscript/terrain/Terrain.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/about/AboutDialog.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/brush/QuerySidesDialog.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/colourscheme/ColourScheme.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/colourscheme/ColourSchemeEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/colourscheme/ColourSchemeManager.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/commandlist/CommandList.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/commandlist/ShortcutChooser.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/common/MapPreview.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/common/MaterialDefinitionView.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/common/ModelPreview.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/common/RenderableAABB.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/common/ShaderChooser.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/common/ShaderSelector.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/common/SoundChooser.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/common/SoundPreview.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/common/TexturePreviewCombo.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/common/ToolbarCreator.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/common/UFOScriptDefinitionView.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/common/UMPDefinitionView.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/filterdialog/FilterDialog.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/filterdialog/FilterEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/findbrush/findbrush.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/findshader/FindShader.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/lightdialog/LightDialog.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/mainframe/SplitPaneLayout.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/mainframe/mainframe.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/maptools/ErrorCheckDialog.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/materialeditor/MaterialEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/menu/FiltersMenu.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/menu/UMPMenu.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/modelselector/ModelSelector.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/mru/MRU.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/mru/MRUMenuItem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/ortho/EntityClassChooser.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/ortho/OrthoContextMenu.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/overlay/Overlay.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/particles/ParticleEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/particles/ParticlePreview.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/particles/ParticleSelector.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/scripteditor/UFOScriptEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/splash/Splash.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/textureoverview/TextureOverviewDialog.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/transform/TransformDialog.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/uimanager/MenuItem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/uimanager/MenuManager.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/uimanager/UIManager.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ui/umpeditor/UMPEditor.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ump/UMPAssembly.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ump/UMPFile.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ump/UMPModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ump/UMPSystem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/ump/UMPTile.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/undo/RadiantUndoSystem.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/undo/RadiantUndoSystemModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/undo/UndoStateTracker.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/url.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/windowobservers.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/xmlregistry/RegistryTree.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/xmlregistry/XMLRegistry.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/xmlregistry/XMLRegistryModule.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/xyview/GlobalXYWnd.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/xyview/XYWnd.cpp
-      ${UFOAI_SRC}/tools/radiant/radiant/xyview/grid/Grid.cpp
-
-      ${UFOAI_SRC}/libs/picomodel/picointernal.c
-      ${UFOAI_SRC}/libs/picomodel/picomodel.c
-      ${UFOAI_SRC}/libs/picomodel/picomodules.c
-      ${UFOAI_SRC}/libs/picomodel/pm_ase.c
-      ${UFOAI_SRC}/libs/picomodel/pm_md2.c
-      ${UFOAI_SRC}/libs/picomodel/pm_md3.c
-      ${UFOAI_SRC}/libs/picomodel/pm_obj.c
-   )
-
-   # plateform specific sources
-   if(WIN32)
-      SET(UFOAI_SOURCEFILES_UFORADIANT ${UFOAI_SOURCEFILES_UFORADIANT}
-         ${UFOAI_SRC}/tools/radiant/radiant/radiant.rc
-      )
-   endif()
-
-   # uforadiant is executable
-   add_executable(${UFOAI_PROJECT_UFORADIANT} ${UFOAI_SOURCEFILES_UFORADIANT})
-
-   # For generic no-config case (e.g. with mingw, gcc, ...)
-   set_target_properties(${UFOAI_PROJECT_UFORADIANT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/radiant)
-   # For multi-config builds like msvc
-   foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
-      string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
-      set_target_properties(${UFOAI_PROJECT_UFORADIANT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG}  ${CMAKE_BINARY_DIR}/radiant)
-   endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
-
-   target_compile_definitions(${UFOAI_PROJECT_UFORADIANT} PRIVATE -DCOMPILE_MAP)
-   target_compile_definitions(${UFOAI_PROJECT_UFORADIANT} PRIVATE -DPATH_UFORADIANTICON_FILE="${CMAKE_SOURCE_DIR}/build/projects/radiant.ico")
-
-   target_include_directories(${UFOAI_PROJECT_UFORADIANT}
-      PRIVATE ${UFOAI_SRC}/tools/radiant/include
-      PRIVATE ${UFOAI_SRC}/tools/radiant/libs
-      PRIVATE ${UFOAI_SRC}/libs/picomodel
-      PRIVATE ${SDL_INCLUDE_DIR}
-      PRIVATE ${GTK2_INCLUDE_DIRS}
-      PRIVATE ${GTKSourceView2_INCLUDE_DIR}
-      PRIVATE ${GTKGL_INCLUDE_DIRS}
-      PRIVATE ${LIBXML2_INCLUDE_DIR}
-      PRIVATE ${OPENAL_INCLUDE_DIR}
-      PRIVATE ${VORBIS_INCLUDE_DIR}
-      PRIVATE ${OGG_INCLUDE_DIR}
-      PRIVATE ${Intl_INCLUDE_DIRS}
-      PRIVATE ${ZLIB_INCLUDE_DIRS}
-   )
-
-   target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
-      ${GTK2_LIBRARIES}
-      ${GTKSourceView2_LIBRARY}
-      ${GTKGL_LIBRARIES}
-      ${LIBXML2_LIBRARY}
-      ${VORBIS_LIBRARY_FILE}
-      ${VORBIS_LIBRARY}
-      ${OGG_LIBRARIES}
-      ${OPENAL_LIBRARY}
-      ${JPEG_LIBRARIES}
-      ${PNG_LIBRARIES}
-      ${ZLIB_LIBRARIES}
-      ${CMAKE_DL_LIBS}
-   )
-
-   if(WIN32)
-      target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
-         opengl32
-         imm32
-         ${Intl_LIBRARIES}
-         version
-         winmm
-      )
-   elseif(APPLE)
-      target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
-         ${Intl_LIBRARIES}
-      )
-   elseif(UNIX)
-      target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
-         GL
-         X11
-      )
-      if(NOT CMAKE_SYSTEM_NAME MATCHES "OpenBSD")
-          target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
-             rt
-          )
-      endif()
    endif()
 endif()
 
@@ -2007,7 +1611,7 @@ if(UFOAI_BUILD_UFOTESTALL)
       ${UFOAI_SRC}/libs/mxml/mxml-string.c
    )
 
-   # plateform specific sources
+   # platform specific sources
    if(WIN32)
       SET(UFOAI_SOURCEFILES_UFOTESTALL ${UFOAI_SOURCEFILES_UFOTESTALL}
          ${UFOAI_SRC}/ports/windows/win_backtrace.cpp
@@ -2103,7 +1707,7 @@ if(UFOAI_BUILD_UFOTESTALL)
          Ws2_32
       )
    elseif(APPLE)
-      target_link_libraries(${UFOAI_PROJECT_UFORADIANT}
+      target_link_libraries(${UFOAI_PROJECT_UFOTESTALL}
          ${Intl_LIBRARIES}
       )
    elseif(UNIX)
@@ -2117,3 +1721,5 @@ if(UFOAI_BUILD_UFOTESTALL)
       endif()
    endif()
 endif()
+
+add_subdirectory("src/tools/radiant/")

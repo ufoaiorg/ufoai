@@ -14,8 +14,7 @@ find_library(VORBIS_LIBRARY_FILE NAMES vorbisfile)
 
 # handle the QUIETLY and REQUIRED arguments and set VORBIS_FOUND to TRUE if
 # all listed variables are TRUE
-include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(VORBIS DEFAULT_MSG VORBIS_LIBRARY VORBIS_LIBRARY_FILE)
+find_package_handle_standard_args(VORBIS DEFAULT_MSG VORBIS_LIBRARY VORBIS_LIBRARY_FILE)
 
 if(VORBIS_FOUND)
    set(VORBIS_LIBRARIES

@@ -12,8 +12,7 @@ find_library(OGG_LIBRARY NAMES ogg)
 
 # handle the QUIETLY and REQUIRED arguments and set OGG_FOUND to TRUE if
 # all listed variables are TRUE
-include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(OGG DEFAULT_MSG OGG_LIBRARY OGG_INCLUDE_DIR)
+find_package_handle_standard_args(OGG DEFAULT_MSG OGG_LIBRARY OGG_INCLUDE_DIR)
 
 if(OGG_FOUND)
   set(OGG_LIBRARIES ${OGG_LIBRARY})

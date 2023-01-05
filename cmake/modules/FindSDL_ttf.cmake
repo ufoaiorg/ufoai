@@ -74,7 +74,7 @@ endif()
 set(SDL_TTF_LIBRARIES ${SDL_TTF_LIBRARY})
 set(SDL_TTF_INCLUDE_DIRS ${SDL_TTF_INCLUDE_DIR})
 
-include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
+#include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
 
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(SDL_ttf
                                   REQUIRED_VARS SDL_TTF_LIBRARIES SDL_TTF_INCLUDE_DIRS
