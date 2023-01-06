@@ -15,11 +15,6 @@ clean-resources:
 
 clean-docs: manual-clean doxygen-clean
 
-# sync sourceforget.net git into a local dir
-LOCAL_GIT_DIR ?= ~/ufoai-git.sf
-rsync:
-	$(Q)rsync -av ufoai.git.sourceforge.net::gitroot/ufoai/* $(LOCAL_GIT_DIR)
-
 # generate doxygen docs
 doxygen-docs:
 	$(Q)doxygen src/docs/doxyall
@@ -60,7 +55,6 @@ help:
 	@echo " * maps         - Compiles the maps"
 	@echo " * models       - Compiles the model mdx files (faster model loading)"
 	@echo " * pk3          - Generate the pk3 archives for the installers"
-	@echo " * rsync        - Creates a local copy of the whole repository (no checkout)"
 	@echo " * update-po    - Updates the po files with latest source and script files"
 	@echo " * pngcrush     - Optimize all png files incrementally since the last crush"
 	@echo " -----"
