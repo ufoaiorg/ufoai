@@ -19,7 +19,6 @@ cmake_minimum_required(VERSION 3.13)
 
 # Project settings
 project(ufoai)
-set(UFOAI_PROJECT_GAME "game")
 set(UFOAI_PROJECT_UFO2MAP "ufo2map")
 set(UFOAI_PROJECT_UFODED "ufoded")
 set(UFOAI_PROJECT_UFO "ufo")
@@ -81,7 +80,6 @@ if(NOT CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif()
 
 ## Projects we want to build
-option(UFOAI_BUILD_GAME "Build the library handling the battlescape" ON)
 option(UFOAI_BUILD_UFO2MAP "Build the tool to compile maps" ON)
 option(UFOAI_BUILD_UFODED "Build the dedicated server" ON)
 option(UFOAI_BUILD_UFO "Build the main game" ON)
@@ -128,60 +126,27 @@ if(UFOAI_BUILD_UFO2MAP OR
    find_package(X11)
    set(OpenGL_GL_PREFERENCE "LEGACY")
    find_package(OpenGL)
-endif()
-
-if(UFOAI_BUILD_UFO OR
-      UFOAI_BUILD_UFOTESTALL)
-   find_package(Intl)
-   find_package(OGG)
-endif()
-
-if(UFOAI_BUILD_UFO2MAP OR
-      UFOAI_BUILD_UFO OR
-      UFOAI_BUILD_UFOMODEL OR
-      UFOAI_BUILD_UFOSLICER OR
-      UFOAI_BUILD_UFOTESTALL)
    find_package(PNG)
 endif()
 
-if(UFOAI_BUILD_GAME OR
-      UFOAI_BUILD_UFO2MAP OR
+if(UFOAI_BUILD_UFO2MAP OR
       UFOAI_BUILD_UFODED OR
       UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFOMODEL OR
       UFOAI_BUILD_UFOSLICER OR
       UFOAI_BUILD_UFOTESTALL)
    find_package(SDL)
-endif()
-
-if (UFOAI_BUILD_GAME OR
-      UFOAI_BUILD_UFO OR
-      UFOAI_BUILD_UFOTESTALL)
-   find_package(Lua51)
-endif()
-
-if(UFOAI_BUILD_UFO OR
-      UFOAI_BUILD_UFOTESTALL)
-   find_package(SDL_mixer)
-endif()
-
-if(UFOAI_BUILD_UFO OR
-      UFOAI_BUILD_UFOTESTALL)
-   find_package(SDL_ttf)
-endif()
-
-if(UFOAI_BUILD_UFO OR
-      UFOAI_BUILD_UFOTESTALL)
-   find_package(VORBIS)
-endif()
-
-if(UFOAI_BUILD_UFO2MAP OR
-      UFOAI_BUILD_UFODED OR
-      UFOAI_BUILD_UFO OR
-      UFOAI_BUILD_UFOMODEL OR
-      UFOAI_BUILD_UFOSLICER OR
-      UFOAI_BUILD_UFOTESTALL)
    find_package(ZLIB)
+endif()
+
+if (UFOAI_BUILD_UFO OR
+      UFOAI_BUILD_UFOTESTALL)
+      find_package(Intl)
+      find_package(OGG)
+      find_package(Lua51)
+   find_package(SDL_mixer)
+   find_package(SDL_ttf)
+   find_package(VORBIS)
 endif()
 
 # -std=c++11 is bugged on cygwin/mingw
@@ -195,76 +160,7 @@ endif()
 # game
 ###############################################################################
 
-if(UFOAI_BUILD_GAME)
-   set(UFOAI_SOURCEFILES_GAME
-      ${UFOAI_SRC}/shared/aabb.cpp
-      ${UFOAI_SRC}/shared/infostring.cpp
-      ${UFOAI_SRC}/shared/mathlib.cpp
-      ${UFOAI_SRC}/shared/parse.cpp
-      ${UFOAI_SRC}/shared/shared.cpp
-      ${UFOAI_SRC}/shared/utf8.cpp
-
-      ${UFOAI_SRC}/game/chr_shared.cpp
-      ${UFOAI_SRC}/game/g_actor.cpp
-      ${UFOAI_SRC}/game/g_ai.cpp
-      ${UFOAI_SRC}/game/g_ai_lua.cpp
-      ${UFOAI_SRC}/game/g_camera.cpp
-      ${UFOAI_SRC}/game/g_client.cpp
-      ${UFOAI_SRC}/game/g_cmds.cpp
-      ${UFOAI_SRC}/game/g_combat.cpp
-      ${UFOAI_SRC}/game/g_edicts.cpp
-      ${UFOAI_SRC}/game/g_events.cpp
-      ${UFOAI_SRC}/game/g_func.cpp
-      ${UFOAI_SRC}/game/g_health.cpp
-      ${UFOAI_SRC}/game/g_inventory.cpp
-      ${UFOAI_SRC}/game/g_main.cpp
-      ${UFOAI_SRC}/game/g_match.cpp
-      ${UFOAI_SRC}/game/g_mission.cpp
-      ${UFOAI_SRC}/game/g_morale.cpp
-      ${UFOAI_SRC}/game/g_move.cpp
-      ${UFOAI_SRC}/game/g_reaction.cpp
-      ${UFOAI_SRC}/game/g_round.cpp
-      ${UFOAI_SRC}/game/g_spawn.cpp
-      ${UFOAI_SRC}/game/g_stats.cpp
-      ${UFOAI_SRC}/game/g_svcmds.cpp
-      ${UFOAI_SRC}/game/g_trigger.cpp
-      ${UFOAI_SRC}/game/g_utils.cpp
-      ${UFOAI_SRC}/game/g_vis.cpp
-      ${UFOAI_SRC}/game/inv_shared.cpp
-      ${UFOAI_SRC}/game/inventory.cpp
-      ${UFOAI_SRC}/game/q_shared.cpp
-   )
-
-   # game is a shared library
-   add_library(${UFOAI_PROJECT_GAME} SHARED ${UFOAI_SOURCEFILES_GAME})
-
-   # we want the target library to be game.xxx and not libgame.xxx
-   set_target_properties(${UFOAI_PROJECT_GAME} PROPERTIES PREFIX "")
-   if(UNIX)
-      set(UFOAI_OUTPUT_TYPE_GAME "LIBRARY_OUTPUT_DIRECTORY")
-   else()
-      set(UFOAI_OUTPUT_TYPE_GAME "RUNTIME_OUTPUT_DIRECTORY")
-   endif()
-   # For generic no-config case (e.g. with mingw, gcc, ...)
-   set_target_properties(${UFOAI_PROJECT_GAME} PROPERTIES ${UFOAI_OUTPUT_TYPE_GAME} ${CMAKE_BINARY_DIR}/base)
-   # For multi-config builds like msvc
-   set(UFOAI_OUTPUT_TYPE_GAME ${UFOAI_OUTPUT_TYPE_GAME}_)
-   foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
-      string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
-      set_target_properties(${UFOAI_PROJECT_GAME} PROPERTIES ${UFOAI_OUTPUT_TYPE_GAME}${OUTPUTCONFIG}  ${CMAKE_BINARY_DIR}/base)
-   endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
-
-   target_compile_definitions(${UFOAI_PROJECT_GAME} PRIVATE -DCOMPILE_UFO)
-
-   target_include_directories(${UFOAI_PROJECT_GAME}
-      PRIVATE ${LUA_INCLUDE_DIR}
-      PRIVATE ${SDL_INCLUDE_DIR}
-   )
-
-   target_link_libraries(${UFOAI_PROJECT_GAME}
-      ${LUA_LIBRARY}
-   )
-endif()
+add_subdirectory("src/game")
 
 ###############################################################################
 # ufo2map
@@ -486,6 +382,7 @@ if(UFOAI_BUILD_UFODED)
 
    # ufoded is executable
    add_executable(${UFOAI_PROJECT_UFODED} ${UFOAI_SOURCEFILES_UFODED})
+   add_dependencies(${UFOAI_PROJECT_UFODED} "game")
 
    # For generic no-config case (e.g. with mingw, gcc, ...)
    set_target_properties(${UFOAI_PROJECT_UFODED} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
@@ -920,6 +817,7 @@ if(UFOAI_BUILD_UFO)
 
    # ufo is executable
    add_executable(${UFOAI_PROJECT_UFO} ${UFOAI_SOURCEFILES_UFO})
+   add_dependencies(${UFOAI_PROJECT_UFO} "game")
 
    # For generic no-config case (e.g. with mingw, gcc, ...)
    set_target_properties(${UFOAI_PROJECT_UFO} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
@@ -1643,6 +1541,7 @@ if(UFOAI_BUILD_UFOTESTALL)
 
    # ufotestall is executable
    add_executable(${UFOAI_PROJECT_UFOTESTALL} ${UFOAI_SOURCEFILES_UFOTESTALL})
+   add_dependencies(${UFOAI_PROJECT_UFOTESTALL} "game")
 
    # For generic no-config case (e.g. with mingw, gcc, ...)
    set_target_properties(${UFOAI_PROJECT_UFOTESTALL} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
