@@ -19,7 +19,6 @@ cmake_minimum_required(VERSION 3.13)
 
 # Project settings
 project(ufoai)
-set(UFOAI_PROJECT_UFO2MAP "ufo2map")
 set(UFOAI_PROJECT_UFODED "ufoded")
 set(UFOAI_PROJECT_UFO "ufo")
 set(UFOAI_PROJECT_UFOMODEL "ufomodel")
@@ -80,7 +79,6 @@ if(NOT CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif()
 
 ## Projects we want to build
-option(UFOAI_BUILD_UFO2MAP "Build the tool to compile maps" ON)
 option(UFOAI_BUILD_UFODED "Build the dedicated server" ON)
 option(UFOAI_BUILD_UFO "Build the main game" ON)
 option(UFOAI_BUILD_UFOMODEL "Build the tool for pre-compiling lightmaps for models" ON)
@@ -117,8 +115,7 @@ if(UFOAI_BUILD_UFODED OR
    find_package(CURL)
 endif()
 
-if(UFOAI_BUILD_UFO2MAP OR
-      UFOAI_BUILD_UFO OR
+if(UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFOMODEL OR
       UFOAI_BUILD_UFOSLICER OR
       UFOAI_BUILD_UFOTESTALL)
@@ -129,8 +126,7 @@ if(UFOAI_BUILD_UFO2MAP OR
    find_package(PNG)
 endif()
 
-if(UFOAI_BUILD_UFO2MAP OR
-      UFOAI_BUILD_UFODED OR
+if(UFOAI_BUILD_UFODED OR
       UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFOMODEL OR
       UFOAI_BUILD_UFOSLICER OR
@@ -166,125 +162,7 @@ add_subdirectory("src/game")
 # ufo2map
 ###############################################################################
 
-if(UFOAI_BUILD_UFO2MAP)
-   set(UFOAI_SOURCEFILES_UFO2MAP
-      ${UFOAI_SRC}/common/files.cpp
-      ${UFOAI_SRC}/common/ioapi.cpp
-      ${UFOAI_SRC}/common/list.cpp
-      ${UFOAI_SRC}/common/mem.cpp
-      ${UFOAI_SRC}/common/routing.cpp
-      ${UFOAI_SRC}/common/tracing.cpp
-      ${UFOAI_SRC}/common/unzip.cpp
-
-      ${UFOAI_SRC}/shared/aabb.cpp
-      ${UFOAI_SRC}/shared/byte.cpp
-      ${UFOAI_SRC}/shared/entitiesdef.cpp
-      ${UFOAI_SRC}/shared/images.cpp
-      ${UFOAI_SRC}/shared/mathlib.cpp
-      ${UFOAI_SRC}/shared/parse.cpp
-      ${UFOAI_SRC}/shared/shared.cpp
-      ${UFOAI_SRC}/shared/utf8.cpp
-
-      ${UFOAI_SRC}/tools/ufo2map/check/check.cpp
-      ${UFOAI_SRC}/tools/ufo2map/check/checkentities.cpp
-      ${UFOAI_SRC}/tools/ufo2map/check/checklib.cpp
-
-      ${UFOAI_SRC}/tools/ufo2map/common/aselib.cpp
-      ${UFOAI_SRC}/tools/ufo2map/common/bspfile.cpp
-      ${UFOAI_SRC}/tools/ufo2map/common/polylib.cpp
-      ${UFOAI_SRC}/tools/ufo2map/common/scriplib.cpp
-      ${UFOAI_SRC}/tools/ufo2map/common/trace.cpp
-
-      ${UFOAI_SRC}/tools/ufo2map/bsp.cpp
-      ${UFOAI_SRC}/tools/ufo2map/bspbrush.cpp
-      ${UFOAI_SRC}/tools/ufo2map/csg.cpp
-      ${UFOAI_SRC}/tools/ufo2map/faces.cpp
-      ${UFOAI_SRC}/tools/ufo2map/levels.cpp
-      ${UFOAI_SRC}/tools/ufo2map/lighting.cpp
-      ${UFOAI_SRC}/tools/ufo2map/lightmap.cpp
-      ${UFOAI_SRC}/tools/ufo2map/map.cpp
-      ${UFOAI_SRC}/tools/ufo2map/patches.cpp
-      ${UFOAI_SRC}/tools/ufo2map/portals.cpp
-      ${UFOAI_SRC}/tools/ufo2map/routing.cpp
-      ${UFOAI_SRC}/tools/ufo2map/textures.cpp
-      ${UFOAI_SRC}/tools/ufo2map/threads.cpp
-      ${UFOAI_SRC}/tools/ufo2map/tree.cpp
-      ${UFOAI_SRC}/tools/ufo2map/ufo2map.cpp
-      ${UFOAI_SRC}/tools/ufo2map/writebsp.cpp
-   )
-
-   # platform specific sources
-   if(WIN32)
-      SET(UFOAI_SOURCEFILES_UFO2MAP ${UFOAI_SOURCEFILES_UFO2MAP}
-         ${UFOAI_SRC}/ports/windows/win_shared.cpp
-      )
-   elseif(UNIX)
-      SET(UFOAI_SOURCEFILES_UFO2MAP ${UFOAI_SOURCEFILES_UFO2MAP}
-         ${UFOAI_SRC}/ports/unix/unix_files.cpp
-         ${UFOAI_SRC}/ports/unix/unix_shared.cpp
-         ${UFOAI_SRC}/ports/unix/unix_main.cpp
-      )
-   elseif(SOLARIS)
-      SET(UFOAI_SOURCEFILES_UFO2MAP ${UFOAI_SOURCEFILES_UFO2MAP}
-         ${UFOAI_SRC}/ports/unix/unix_files.cpp
-         ${UFOAI_SRC}/ports/unix/unix_shared.cpp
-         ${UFOAI_SRC}/ports/unix/unix_main.cpp
-      )
-   elseif(APPLE)
-      SET(UFOAI_SOURCEFILES_UFO2MAP ${UFOAI_SOURCEFILES_UFO2MAP}
-         ${UFOAI_SRC}/ports/unix/unix_files.cpp
-         ${UFOAI_SRC}/ports/unix/unix_shared.cpp
-         ${UFOAI_SRC}/ports/unix/unix_main.cpp
-      )
-   endif()
-
-   # ufo2map is executable
-   add_executable(${UFOAI_PROJECT_UFO2MAP} ${UFOAI_SOURCEFILES_UFO2MAP})
-
-   # For generic no-config case (e.g. with mingw, gcc, ...)
-   set_target_properties(${UFOAI_PROJECT_UFO2MAP} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-   # For multi-config builds like msvc
-   foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
-      string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
-      set_target_properties(${UFOAI_PROJECT_UFO2MAP} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG}  ${CMAKE_BINARY_DIR})
-   endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
-
-   target_compile_definitions(${UFOAI_PROJECT_UFO2MAP} PRIVATE -DCOMPILE_MAP)
-
-   target_include_directories(${UFOAI_PROJECT_UFO2MAP}
-      PRIVATE ${SDL_INCLUDE_DIR}
-      PRIVATE ${JPEG_INCLUDE_DIRS}
-      PRIVATE ${PNG_INCLUDE_DIRS}
-      PRIVATE ${ZLIB_INCLUDE_DIRS}
-   )
-
-   if(MINGW)
-      target_link_libraries(${UFOAI_PROJECT_UFO2MAP}
-         mingw32
-      )
-   endif()
-
-   target_link_libraries(${UFOAI_PROJECT_UFO2MAP}
-      ${SDL_LIBRARY_MAIN}
-      ${SDL_LIBRARY}
-      ${JPEG_LIBRARIES}
-      ${PNG_LIBRARIES}
-      ${ZLIB_LIBRARIES}
-   )
-
-   if(WIN32)
-      target_link_libraries(${UFOAI_PROJECT_UFO2MAP}
-         imm32
-         version
-         winmm
-      )
-   endif()
-   if(CMAKE_SYSTEM_NAME MATCHES "BSD")
-     target_link_libraries(${UFOAI_PROJECT_UFO2MAP}
-        execinfo
-   )
-   endif()
-endif()
+add_subdirectory("src/tools/ufo2map")
 
 ###############################################################################
 # ufoded
