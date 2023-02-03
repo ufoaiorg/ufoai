@@ -19,7 +19,6 @@ cmake_minimum_required(VERSION 3.13)
 
 # Project settings
 project(ufoai)
-set(UFOAI_PROJECT_UFODED "ufoded")
 set(UFOAI_PROJECT_UFO "ufo")
 set(UFOAI_PROJECT_UFOSLICER "ufoslicer")
 set(UFOAI_PROJECT_UFOTESTALL "ufotestall")
@@ -78,7 +77,6 @@ if(NOT CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif()
 
 ## Projects we want to build
-option(UFOAI_BUILD_UFODED "Build the dedicated server" ON)
 option(UFOAI_BUILD_UFO "Build the main game" ON)
 option(UFOAI_BUILD_UFOSLICER "Build the tool for creating fancy map overviews" ON)
 option(UFOAI_BUILD_UFOTESTALL "Build unitary tests" ON)
@@ -107,8 +105,7 @@ message(STATUS "Search path dependencies: ${UFOAI_DEP_SEARCH_PATH}")
 set(CMAKE_PREFIX_PATH ${UFOAI_DEP_SEARCH_PATH} ${CMAKE_PREFIX_PATH})
 
 ## Packages
-if(UFOAI_BUILD_UFODED OR
-      UFOAI_BUILD_UFO OR
+if(UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFOTESTALL)
    find_package(CURL)
 endif()
@@ -123,8 +120,7 @@ if(UFOAI_BUILD_UFO OR
    find_package(PNG)
 endif()
 
-if(UFOAI_BUILD_UFODED OR
-      UFOAI_BUILD_UFO OR
+if(UFOAI_BUILD_UFO OR
       UFOAI_BUILD_UFOSLICER OR
       UFOAI_BUILD_UFOTESTALL)
    find_package(SDL)
@@ -164,147 +160,7 @@ add_subdirectory("src/tools/ufo2map")
 # ufoded
 ###############################################################################
 
-if(UFOAI_BUILD_UFODED)
-   set(UFOAI_SOURCEFILES_UFODED
-      ${UFOAI_SRC}/common/bsp.cpp
-      ${UFOAI_SRC}/common/cmd.cpp
-      ${UFOAI_SRC}/common/cmodel.cpp
-      ${UFOAI_SRC}/common/common.cpp
-      ${UFOAI_SRC}/common/cvar.cpp
-      ${UFOAI_SRC}/common/dbuffer.cpp
-      ${UFOAI_SRC}/common/files.cpp
-      ${UFOAI_SRC}/common/grid.cpp
-      ${UFOAI_SRC}/common/http.cpp
-      ${UFOAI_SRC}/common/ioapi.cpp
-      ${UFOAI_SRC}/common/list.cpp
-      ${UFOAI_SRC}/common/md4.cpp
-      ${UFOAI_SRC}/common/md5.cpp
-      ${UFOAI_SRC}/common/mem.cpp
-      ${UFOAI_SRC}/common/msg.cpp
-      ${UFOAI_SRC}/common/net.cpp
-      ${UFOAI_SRC}/common/netpack.cpp
-      ${UFOAI_SRC}/common/pqueue.cpp
-      ${UFOAI_SRC}/common/routing.cpp
-      ${UFOAI_SRC}/common/scripts.cpp
-      ${UFOAI_SRC}/common/sha1.cpp
-      ${UFOAI_SRC}/common/sha2.cpp
-      ${UFOAI_SRC}/common/tracing.cpp
-      ${UFOAI_SRC}/common/unzip.cpp
-
-      ${UFOAI_SRC}/game/chr_shared.cpp
-      ${UFOAI_SRC}/game/inv_shared.cpp
-      ${UFOAI_SRC}/game/q_shared.cpp
-
-      ${UFOAI_SRC}/server/sv_ccmds.cpp
-      ${UFOAI_SRC}/server/sv_clientstub.cpp
-      ${UFOAI_SRC}/server/sv_game.cpp
-      ${UFOAI_SRC}/server/sv_init.cpp
-      ${UFOAI_SRC}/server/sv_log.cpp
-      ${UFOAI_SRC}/server/sv_main.cpp
-      ${UFOAI_SRC}/server/sv_mapcycle.cpp
-      ${UFOAI_SRC}/server/sv_rma.cpp
-      ${UFOAI_SRC}/server/sv_send.cpp
-      ${UFOAI_SRC}/server/sv_user.cpp
-      ${UFOAI_SRC}/server/sv_world.cpp
-
-      ${UFOAI_SRC}/shared/aabb.cpp
-      ${UFOAI_SRC}/shared/bfd.cpp
-      ${UFOAI_SRC}/shared/byte.cpp
-      ${UFOAI_SRC}/shared/infostring.cpp
-      ${UFOAI_SRC}/shared/mathlib.cpp
-      ${UFOAI_SRC}/shared/parse.cpp
-      ${UFOAI_SRC}/shared/shared.cpp
-      ${UFOAI_SRC}/shared/stringhunk.cpp
-      ${UFOAI_SRC}/shared/utf8.cpp
-   )
-
-   # platform specific sources
-   if(WIN32)
-       SET(UFOAI_SOURCEFILES_UFODED ${UFOAI_SOURCEFILES_UFODED}
-         ${UFOAI_SRC}/ports/windows/win_backtrace.cpp
-         ${UFOAI_SRC}/ports/windows/win_console.cpp
-         ${UFOAI_SRC}/ports/windows/win_main.cpp
-         ${UFOAI_SRC}/ports/windows/win_shared.cpp
-         ${UFOAI_SRC}/ports/windows/ufoded.rc
-         )
-   elseif(UNIX)
-       SET(UFOAI_SOURCEFILES_UFODED ${UFOAI_SOURCEFILES_UFODED}
-         ${UFOAI_SRC}/ports/linux/linux_main.cpp
-         ${UFOAI_SRC}/ports/unix/unix_console.cpp
-         ${UFOAI_SRC}/ports/unix/unix_files.cpp
-         ${UFOAI_SRC}/ports/unix/unix_shared.cpp
-         ${UFOAI_SRC}/ports/unix/unix_main.cpp
-         )
-   elseif(SOLARIS)
-       SET(UFOAI_SOURCEFILES_UFODED ${UFOAI_SOURCEFILES_UFODED}
-         ${UFOAI_SRC}/ports/solaris/solaris_main.cpp
-         ${UFOAI_SRC}/ports/unix/unix_console.cpp
-         ${UFOAI_SRC}/ports/unix/unix_files.cpp
-         ${UFOAI_SRC}/ports/unix/unix_shared.cpp
-         ${UFOAI_SRC}/ports/unix/unix_main.cpp
-         )
-   elseif(APPLE)
-       SET(UFOAI_SOURCEFILES_UFODED ${UFOAI_SOURCEFILES_UFODED}
-         ${UFOAI_SRC}/ports/macosx/osx_main.cpp
-         ${UFOAI_SRC}/ports/macosx/osx_shared.cpp
-         ${UFOAI_SRC}/ports/unix/unix_console.cpp
-         ${UFOAI_SRC}/ports/unix/unix_files.cpp
-         ${UFOAI_SRC}/ports/unix/unix_shared.cpp
-         ${UFOAI_SRC}/ports/unix/unix_main.cpp
-         )
-   endif()
-
-   # ufoded is executable
-   add_executable(${UFOAI_PROJECT_UFODED} ${UFOAI_SOURCEFILES_UFODED})
-   add_dependencies(${UFOAI_PROJECT_UFODED} "game")
-
-   # For generic no-config case (e.g. with mingw, gcc, ...)
-   set_target_properties(${UFOAI_PROJECT_UFODED} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-   # For multi-config builds like msvc
-   foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
-      string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
-      set_target_properties(${UFOAI_PROJECT_UFODED} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG}  ${CMAKE_BINARY_DIR})
-   endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
-
-   # since we embed our manifest, we should not generate a default one
-   if(WIN32 AND MSVC)
-      set_target_properties(${UFOAI_PROJECT_UFODED} PROPERTIES LINK_FLAGS "/MANIFEST:NO")
-   endif()
-
-   target_compile_definitions(${UFOAI_PROJECT_UFODED} PRIVATE -DCOMPILE_UFO)
-   target_compile_definitions(${UFOAI_PROJECT_UFODED} PRIVATE -DDEDICATED_ONLY)
-   target_compile_definitions(${UFOAI_PROJECT_UFODED} PRIVATE -DPATH_MANIFEST_FILE="${CMAKE_SOURCE_DIR}/build/projects/ufo.exe.manifest")
-   target_compile_definitions(${UFOAI_PROJECT_UFODED} PRIVATE -DPATH_UFOICON_FILE="${CMAKE_SOURCE_DIR}/build/projects/ufo.ico")
-   target_compile_definitions(${UFOAI_PROJECT_UFODED} PRIVATE -DPATH_UFODEDICON_FILE="${CMAKE_SOURCE_DIR}/build/projects/ufoded.ico")
-
-   target_include_directories(${UFOAI_PROJECT_UFODED}
-      PRIVATE ${SDL_INCLUDE_DIR}
-      PRIVATE ${CURL_INCLUDE_DIRS}
-      PRIVATE ${ZLIB_INCLUDE_DIRS}
-   )
-
-   target_link_libraries(${UFOAI_PROJECT_UFODED}
-      ${SDL_LIBRARY}
-      ${CURL_LIBRARIES}
-      ${ZLIB_LIBRARIES}
-   )
-
-   if(WIN32)
-      target_link_libraries(${UFOAI_PROJECT_UFODED}
-         imm32
-         version
-         winmm
-         Ws2_32
-         wldap32
-         rtm
-      )
-   endif()
-   if(CMAKE_SYSTEM_NAME MATCHES "BSD")
-      target_link_libraries(${UFOAI_PROJECT_UFODED}
-        execinfo
-      )
-   endif()
-endif()
+add_subdirectory("src/server")
 
 ###############################################################################
 # ufo
