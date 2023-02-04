@@ -19,7 +19,6 @@ cmake_minimum_required(VERSION 3.13)
 
 # Project settings
 project(ufoai)
-set(UFOAI_PROJECT_UFOSLICER "ufoslicer")
 
 # cmake paths
 set(CMAKE_CONFIG_DIR "${CMAKE_SOURCE_DIR}/cmake/config")
@@ -74,9 +73,6 @@ if(NOT CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
    endforeach(RES)
 endif()
 
-## Projects we want to build
-option(UFOAI_BUILD_UFOSLICER "Build the tool for creating fancy map overviews" ON)
-
 ## We check for dependencies
 set(UFOAI_DEPENDENCIES_DIR "$ENV{UFOAI_DEPS}" CACHE PATH "Path to prebuilt UFOAI dependencies")
 if(WIN32 AND MINGW)
@@ -99,20 +95,6 @@ message(STATUS "Search path dependencies: ${UFOAI_DEP_SEARCH_PATH}")
 
 # hints to the find_package calls
 set(CMAKE_PREFIX_PATH ${UFOAI_DEP_SEARCH_PATH} ${CMAKE_PREFIX_PATH})
-
-## Packages
-if(UFOAI_BUILD_UFOSLICER)
-   find_package(JPEG)
-   find_package(X11)
-   set(OpenGL_GL_PREFERENCE "LEGACY")
-   find_package(OpenGL)
-   find_package(PNG)
-endif()
-
-if(UFOAI_BUILD_UFOSLICER)
-   find_package(SDL)
-   find_package(ZLIB)
-endif()
 
 # -std=c++11 is bugged on cygwin/mingw
 if(WIN32 AND MINGW)
@@ -155,100 +137,7 @@ add_subdirectory("src/tools/ufomodel")
 # ufoslicer
 ###############################################################################
 
-if(UFOAI_BUILD_UFOSLICER)
-   set(UFOAI_SOURCEFILES_UFOSLICER
-      ${UFOAI_SRC}/common/bspslicer.cpp
-      ${UFOAI_SRC}/common/files.cpp
-      ${UFOAI_SRC}/common/ioapi.cpp
-      ${UFOAI_SRC}/common/list.cpp
-      ${UFOAI_SRC}/common/mem.cpp
-      ${UFOAI_SRC}/common/unzip.cpp
-
-      ${UFOAI_SRC}/shared/aabb.cpp
-      ${UFOAI_SRC}/shared/byte.cpp
-      ${UFOAI_SRC}/shared/images.cpp
-      ${UFOAI_SRC}/shared/mathlib.cpp
-      ${UFOAI_SRC}/shared/parse.cpp
-      ${UFOAI_SRC}/shared/shared.cpp
-      ${UFOAI_SRC}/shared/utf8.cpp
-
-      ${UFOAI_SRC}/tools/ufo2map/common/bspfile.cpp
-      ${UFOAI_SRC}/tools/ufo2map/common/scriplib.cpp
-      ${UFOAI_SRC}/tools/ufoslicer.cpp
-   )
-
-   # platform specific sources
-   if(WIN32)
-      SET(UFOAI_SOURCEFILES_UFOSLICER ${UFOAI_SOURCEFILES_UFOSLICER}
-         ${UFOAI_SRC}/ports/windows/win_shared.cpp
-      )
-   elseif(UNIX)
-      SET(UFOAI_SOURCEFILES_UFOSLICER ${UFOAI_SOURCEFILES_UFOSLICER}
-         ${UFOAI_SRC}/ports/unix/unix_files.cpp
-         ${UFOAI_SRC}/ports/unix/unix_shared.cpp
-         ${UFOAI_SRC}/ports/unix/unix_main.cpp
-      )
-   elseif(SOLARIS)
-      SET(UFOAI_SOURCEFILES_UFOSLICER ${UFOAI_SOURCEFILES_UFOSLICER}
-         ${UFOAI_SRC}/ports/unix/unix_files.cpp
-         ${UFOAI_SRC}/ports/unix/unix_shared.cpp
-         ${UFOAI_SRC}/ports/unix/unix_main.cpp
-      )
-   elseif(APPLE)
-      SET(UFOAI_SOURCEFILES_UFOSLICER ${UFOAI_SOURCEFILES_UFOSLICER}
-         ${UFOAI_SRC}/ports/unix/unix_files.cpp
-         ${UFOAI_SRC}/ports/unix/unix_shared.cpp
-         ${UFOAI_SRC}/ports/unix/unix_main.cpp
-      )
-   endif()
-
-   # ufoslicer is executable
-   add_executable(${UFOAI_PROJECT_UFOSLICER} ${UFOAI_SOURCEFILES_UFOSLICER})
-
-   # For generic no-config case (e.g. with mingw, gcc, ...)
-   set_target_properties(${UFOAI_PROJECT_UFOSLICER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-   # For multi-config builds like msvc
-   foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
-      string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
-      set_target_properties(${UFOAI_PROJECT_UFOSLICER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG}  ${CMAKE_BINARY_DIR})
-   endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
-
-   target_compile_definitions(${UFOAI_PROJECT_UFOSLICER} PRIVATE -DCOMPILE_MAP)
-
-   target_include_directories(${UFOAI_PROJECT_UFOSLICER}
-      PRIVATE ${SDL_INCLUDE_DIR}
-      PRIVATE ${JPEG_INCLUDE_DIRS}
-      PRIVATE ${PNG_INCLUDE_DIRS}
-      PRIVATE ${ZLIB_INCLUDE_DIRS}
-   )
-
-   if(MINGW)
-      target_link_libraries(${UFOAI_PROJECT_UFOSLICER}
-         mingw32
-      )
-   endif()
-
-   target_link_libraries(${UFOAI_PROJECT_UFOSLICER}
-      ${SDL_LIBRARY_MAIN}
-      ${SDL_LIBRARY}
-      ${JPEG_LIBRARIES}
-      ${PNG_LIBRARIES}
-      ${ZLIB_LIBRARIES}
-   )
-
-   if(WIN32)
-      target_link_libraries(${UFOAI_PROJECT_UFOSLICER}
-         imm32
-         version
-         winmm
-      )
-   endif()
-   if(CMAKE_SYSTEM_NAME MATCHES "BSD")
-      target_link_libraries(${UFOAI_PROJECT_UFOSLICER}
-        execinfo
-      )
-   endif()
-endif()
+add_subdirectory("src/tools/ufoslicer")
 
 ###############################################################################
 # ufotestall

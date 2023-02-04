@@ -5,11 +5,11 @@
  */
 
 #include <SDL_main.h>
-#include "../common/bspslicer.h"
-#include "../common/mem.h"
-#include "../shared/byte.h"
-#include "../common/tracing.h"
-#include "../tools/ufo2map/common/bspfile.h"
+#include "../../common/bspslicer.h"
+#include "../../common/mem.h"
+#include "../../shared/byte.h"
+#include "../../common/tracing.h"
+#include "../../tools/ufo2map/common/bspfile.h"
 
 memPool_t* com_fileSysPool;
 memPool_t* com_genericPool;

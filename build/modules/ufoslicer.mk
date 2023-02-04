@@ -16,7 +16,7 @@ ifneq ($(findstring $(TARGET_OS), openbsd netbsd freebsd),)
 endif
 
 $(TARGET)_SRCS      = \
-	tools/ufoslicer.cpp \
+	tools/ufoslicer/ufoslicer.cpp \
 	\
 	common/bspslicer.cpp \
 	common/files.cpp \
