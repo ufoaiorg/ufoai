@@ -78,7 +78,7 @@ static inline bool isvalidchar (int c)
  * @brief libcurl callback to update progress info. Mainly just used as
  * a way to cancel the transfer if required.
  */
-static int CL_HTTP_Progress (void* clientp, double dltotal, double dlnow, double ultotal, double ulnow)
+static int CL_HTTP_Progress (void* clientp, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
 {
 	dlhandle_t* dl = (dlhandle_t*)clientp;
 
@@ -200,7 +200,7 @@ static void CL_StartHTTPDownload (dlqueue_t* entry, dlhandle_t* dl)
 	curl_easy_setopt(dl->curl, CURLOPT_MAXREDIRS, 5);
 	curl_easy_setopt(dl->curl, CURLOPT_WRITEHEADER, dl);
 	curl_easy_setopt(dl->curl, CURLOPT_HEADERFUNCTION, HTTP_Header);
-	curl_easy_setopt(dl->curl, CURLOPT_PROGRESSFUNCTION, CL_HTTP_Progress);
+	curl_easy_setopt(dl->curl, CURLOPT_XFERINFOFUNCTION, CL_HTTP_Progress);
 	curl_easy_setopt(dl->curl, CURLOPT_PROGRESSDATA, dl);
 	curl_easy_setopt(dl->curl, CURLOPT_USERAGENT, GAME_TITLE " " UFO_VERSION);
 	curl_easy_setopt(dl->curl, CURLOPT_REFERER, cls.downloadReferer);
@@ -619,7 +619,8 @@ static void CL_FinishHTTPDownload (void)
 		CURLcode result = msg->data.result;
 
 		long responseCode;
-		double timeTaken, fileSize;
+		double timeTaken;
+		curl_off_t fileSize;
 		char tempName[MAX_OSPATH];
 		switch (result) {
 		/* for some reason curl returns CURLE_OK for a 404... */
@@ -634,7 +635,7 @@ static void CL_FinishHTTPDownload (void)
 				if (isFile)
 					FS_RemoveFile(dl->filePath);
 				Com_Printf("HTTP(%s): 404 File Not Found [%d remaining files]\n", dl->queueEntry->ufoPath, pendingCount);
-				curl_easy_getinfo(curl, CURLINFO_SIZE_DOWNLOAD, &fileSize);
+				curl_easy_getinfo(curl, CURLINFO_SIZE_DOWNLOAD_T, &fileSize);
 				if (fileSize > 512) {
 					/* ick */
 					isFile = false;
@@ -693,7 +694,7 @@ static void CL_FinishHTTPDownload (void)
 
 		/* show some stats */
 		curl_easy_getinfo(curl, CURLINFO_TOTAL_TIME, &timeTaken);
-		curl_easy_getinfo(curl, CURLINFO_SIZE_DOWNLOAD, &fileSize);
+		curl_easy_getinfo(curl, CURLINFO_SIZE_DOWNLOAD_T, &fileSize);
 
 		/** @todo
 		 * technically i shouldn't need to do this as curl will auto reuse the
@@ -702,7 +703,7 @@ static void CL_FinishHTTPDownload (void)
 		 * out why, please let me know. */
 		curl_multi_remove_handle(multi, dl->curl);
 
-		Com_Printf("HTTP(%s): %.f bytes, %.2fkB/sec [%d remaining files]\n",
+		Com_Printf("HTTP(%s): %ld bytes, %.2fkB/sec [%d remaining files]\n",
 			dl->queueEntry->ufoPath, fileSize, (fileSize / 1024.0) / timeTaken, pendingCount);
 	} while (messagesInQueue > 0);
 

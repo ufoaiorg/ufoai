@@ -292,18 +292,28 @@ bool HTTP_PutFile (const char* formName, const char* fileName, const char* url, 
 		return false;
 	}
 
-	struct curl_httppost* post = nullptr;
-	struct curl_httppost* last = nullptr;
+	curl_mime *mime = curl_mime_init(curl);
+	if (mime == nullptr) {
+		Com_Printf("could not init MIME for curl\n");
+		return false;
+	}
+
 	while (params) {
-		curl_formadd(&post, &last, CURLFORM_PTRNAME, params->name, CURLFORM_PTRCONTENTS, params->value, CURLFORM_END);
+		curl_mimepart *part;
+		part = curl_mime_addpart(mime);
+		curl_mime_data(part, params->value, CURL_ZERO_TERMINATED);
+		curl_mime_name(part, params->name);
 		params = params->next;
 	}
 
-	curl_formadd(&post, &last, CURLFORM_PTRNAME, formName, CURLFORM_FILE, fileName, CURLFORM_END);
+	curl_mimepart *filePart;
+	filePart = curl_mime_addpart(mime);
+	curl_mime_filedata(filePart, fileName);
+	curl_mime_name(filePart, formName);
 
 	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, http_timeout->integer);
 	curl_easy_setopt(curl, CURLOPT_TIMEOUT, http_timeout->integer);
-	curl_easy_setopt(curl, CURLOPT_HTTPPOST, post);
+	curl_easy_setopt(curl, CURLOPT_MIMEPOST, mime);
 	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1);
 	curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1);
 	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
