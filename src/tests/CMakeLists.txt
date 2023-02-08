@@ -33,6 +33,7 @@ find_package(Lua51)
 find_package(SDL_mixer)
 find_package(SDL_ttf)
 find_package(VORBIS)
+find_package(MXML)
 
 set(UFOTESTALL_SOURCES
 	../client/battlescape/cl_actor.cpp
@@ -411,15 +412,6 @@ set(UFOTESTALL_SOURCES
 
 	../libs/gtest/src/gtest-all.cc
 	../libs/mumble/libmumblelink.c
-	../libs/mxml/mxml-attr.c
-	../libs/mxml/mxml-entity.c
-	../libs/mxml/mxml-file.c
-	../libs/mxml/mxml-index.c
-	../libs/mxml/mxml-node.c
-	../libs/mxml/mxml-private.c
-	../libs/mxml/mxml-search.c
-	../libs/mxml/mxml-set.c
-	../libs/mxml/mxml-string.c
 )
 
 # platform specific sources
@@ -473,7 +465,6 @@ target_include_directories(${PROJECT_NAME}
 	PRIVATE ../libs/gtest
 	PRIVATE ../libs/gtest/include
 	PRIVATE ../libs/mumble
-	PRIVATE ../libs/mxml
 	PRIVATE ${LUA_INCLUDE_DIR}
 	PRIVATE ${SDL_INCLUDE_DIR}
 	PRIVATE ${SDLMIXER_INCLUDE_DIR}
@@ -486,6 +477,7 @@ target_include_directories(${PROJECT_NAME}
 	PRIVATE ${Intl_INCLUDE_DIRS}
 	PRIVATE ${ZLIB_INCLUDE_DIRS}
 	PRIVATE ${X11_INCLUDE_DIR}
+	PRIVATE ${MXML_INCLUDE_DIR}
 )
 
 if(MINGW)
@@ -507,6 +499,7 @@ target_link_libraries(${PROJECT_NAME}
 	${PNG_LIBRARIES}
 	${ZLIB_LIBRARIES}
 	${X11_LIBRARIES}
+	${MXML_LIBRARY}
 )
 
 if(WIN32)
