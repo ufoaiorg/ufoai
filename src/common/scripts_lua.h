@@ -26,9 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 extern "C" {
-	#include "../libs/lua/lua.h"
-	#include "../libs/lua/lualib.h"
-	#include "../libs/lua/lauxlib.h"
+	#include "lua.h"
+	#include "lualib.h"
+	#include "lauxlib.h"
 }
 
 #include "list.h"
