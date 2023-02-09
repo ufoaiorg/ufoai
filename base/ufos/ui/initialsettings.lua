@@ -72,7 +72,7 @@ initialsettings.build = function ()
 
 			local language = ufo.getvar("s_language")
 			local language_field = sender:child("language_select")
-			if (language == nil or string.match(language:as_string(), "^\s*$")) then
+			if (language == nil or string.match(language:as_string(), "^[ \t\r\n]*$")) then
 				language_field:set_bordersize(2)
 				language_field:set_tooltip("_Please select your preferred language")
 				valid = false

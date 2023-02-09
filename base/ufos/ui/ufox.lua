@@ -74,7 +74,7 @@ function ufox.build_properties (data, parent, ui_node)
 				else
 					if (type(v) == "table") then
 						-- multiple value argument: should be a table of values
-						ui_node[fn_set](ui_node, unpack(v))
+						ui_node[fn_set](ui_node, table.unpack(v))
 					else
 						-- single value argument: should be a single value
 						ui_node[fn_set](ui_node, v)

@@ -45,6 +45,7 @@ require("ufox.lua")
 --	The on_click() event of the button will be overridden by the tabset. Don't define any actions there!
 --]]
 function ufox.build_maintabset (rootnode, properties, ...)
+	local arg = {...}
 	local tabs = ufox.build({
 		name = "tabset",
 		class = "panel",

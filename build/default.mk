@@ -17,45 +17,13 @@ endif
 include src/libs/curl/lib/Makefile.inc
 CURL_SRCS                 = $(addprefix libs/curl/lib/,$(CSOURCES))
 endif
-ifdef HAVE_LUA5_1_LUA_H
-LUA_LIBS                 ?= $(call PKG_LIBS,"lua5.1 lua-5.1 lua51 lua")
-LUA_CFLAGS               ?= $(call PKG_CFLAGS,"lua5.1 lua-5.1 lua51 lua")
+
+ifdef HAVE_LUA5_4_LUA_H
+LUA_LIBS                 ?= $(call PKG_LIBS,"lua5.4 lua-5.4 lua54 lua")
+LUA_CFLAGS               ?= $(call PKG_CFLAGS,"lua5.4 lua-5.4 lua54 lua")
 LUA_SRCS                  =
-else
-LUA_CFLAGS               ?= -Isrc/libs/lua
-LUA_LIBS                  =
-LUA_SRCS                  = \
-	libs/lua/lapi.c \
-	libs/lua/lauxlib.c \
-	libs/lua/lbaselib.c \
-	libs/lua/lcode.c \
-	libs/lua/ldblib.c \
-	libs/lua/ldebug.c \
-	libs/lua/ldo.c \
-	libs/lua/ldump.c \
-	libs/lua/lfunc.c \
-	libs/lua/lgc.c \
-	libs/lua/linit.c \
-	libs/lua/liolib.c \
-	libs/lua/llex.c \
-	libs/lua/lmathlib.c \
-	libs/lua/lmem.c \
-	libs/lua/loadlib.c \
-	libs/lua/lobject.c \
-	libs/lua/lopcodes.c \
-	libs/lua/loslib.c \
-	libs/lua/lparser.c \
-	libs/lua/lstate.c \
-	libs/lua/lstring.c \
-	libs/lua/lstrlib.c \
-	libs/lua/ltable.c \
-	libs/lua/ltablib.c \
-	libs/lua/ltm.c \
-	libs/lua/lundump.c \
-	libs/lua/lvm.c \
-	libs/lua/lzio.c \
-	libs/lua/print.c
 endif
+
 ifdef HAVE_LIBPNG_PNG_H
 PNG_LIBS                 ?= -lpng
 PNG_CFLAGS               ?=

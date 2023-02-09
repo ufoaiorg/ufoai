@@ -3,7 +3,7 @@
  * @brief Artificial Intelligence.
  *
  * @par
- * You can find the reference lua manual at http://www.lua.org/manual/5.1/
+ * You can find the reference lua manual at http://www.lua.org/manual/
  *
  * @par -1 and -2 are pseudo indexes, they count backwards:
  * @li -1 is top
@@ -47,6 +47,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern "C" {
 #include <lauxlib.h>
 }
+
+#if defined(LUA_VERSION_NUM) && LUA_VERSION_NUM < 504
+LUALIB_API int luaL_typeerror (lua_State *L, int narg, const char *tname) {
+	const char *msg = lua_pushfstring(L, "%s expected, got %s",
+		tname, luaL_typename(L, narg));
+	return luaL_argerror(L, narg, msg);
+}
+#endif
 
 #define POS3_METATABLE	"pos3" /**< Pos3 Lua Metatable name. */
 #define ACTOR_METATABLE	"actor" /**< Actor Lua Metable name. */
@@ -288,11 +296,13 @@ static float AIL_GetBestShot(const Actor& shooter, const Actor& target, const in
 /*
  * Actor metatable.
  */
+
 /* Internal functions. */
 static int actorL_register(lua_State* L);
 static int lua_isactor(lua_State* L, int index);
 static aiActor_t* lua_toactor(lua_State* L, int index);
 static aiActor_t* lua_pushactor(lua_State* L, aiActor_t* actor);
+
 /* Metatable functions. */
 static int actorL_tostring(lua_State* L);
 static int actorL_pos(lua_State* L);
@@ -306,10 +316,9 @@ static int actorL_isinjured(lua_State* L);
 static int actorL_isarmed(lua_State* L);
 static int actorL_isdead(lua_State* L);
 static int actorL_isvalidtarget(lua_State* L);
-/** Lua Actor metatable methods.
- * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
- */
-static const luaL_reg actorL_methods[] = {
+
+/** Lua Actor metatable methods. */
+static const luaL_Reg actorL_methods[] = {
 	{"__tostring", actorL_tostring},
 	{"pos", actorL_pos},
 	{"shoot", actorL_shoot},
@@ -328,20 +337,21 @@ static const luaL_reg actorL_methods[] = {
 /**
  * pos3 metatable.
  */
+
 /* Internal functions. */
 static int pos3L_register(lua_State* L);
 static int lua_ispos3(lua_State* L, int index);
 static pos3_t* lua_topos3(lua_State* L, int index);
 static pos3_t* lua_pushpos3(lua_State* L, pos3_t* pos);
+
 /* Metatable functions. */
 static int pos3L_tostring(lua_State* L);
 static int pos3L_goto(lua_State* L);
 static int pos3L_face(lua_State* L);
 static int pos3L_distance(lua_State* L);
-/** Lua Pos3 metatable methods.
- * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
- */
-static const luaL_reg pos3L_methods[] = {
+
+/** Lua Pos3 metatable methods. */
+static const luaL_Reg pos3L_methods[] = {
 	{"__tostring", pos3L_tostring},
 	{"goto", pos3L_goto},
 	{"face", pos3L_face},
@@ -385,7 +395,7 @@ static int AIL_hideneeded(lua_State* L);
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
-static const luaL_reg AIL_methods[] = {
+static const luaL_Reg AIL_methods[] = {
 	{"print", AIL_print},
 	{"squad", AIL_squad},
 	{"select", AIL_select},
@@ -437,7 +447,7 @@ static int actorL_register (lua_State* L)
 	lua_setfield(L, -2, "__index");
 
 	/* Register the values */
-	luaL_register(L, nullptr, actorL_methods);
+	luaL_setfuncs(L, actorL_methods, 0);
 
 	/* Clean up stack. */
 	lua_pop(L, 1);
@@ -473,7 +483,7 @@ static aiActor_t* lua_toactor (lua_State* L, int index)
 	if (lua_isactor(L, index)) {
 		return (aiActor_t*) lua_touserdata(L, index);
 	}
-	luaL_typerror(L, index, ACTOR_METATABLE);
+	luaL_typeerror(L, index, ACTOR_METATABLE);
 	return nullptr;
 }
 
@@ -844,7 +854,7 @@ static int pos3L_register (lua_State* L)
 	lua_setfield(L, -2, "__index");
 
 	/* Register the values */
-	luaL_register(L, nullptr, pos3L_methods);
+	luaL_setfuncs(L, pos3L_methods, 0);
 
 	/* Clean up the stack. */
 	lua_pop(L, 1);
@@ -880,7 +890,7 @@ static pos3_t* lua_topos3 (lua_State* L, int index)
 	if (lua_ispos3(L, index)) {
 		return (pos3_t*) lua_touserdata(L, index);
 	}
-	luaL_typerror(L, index, POS3_METATABLE);
+	luaL_typeerror(L, index, POS3_METATABLE);
 	return nullptr;
 }
 
@@ -2191,7 +2201,10 @@ static lua_State* AIL_InitLua () {
 	pos3L_register(newState);
 
 	/* Register libraries. */
-	luaL_register(newState, AI_METATABLE, AIL_methods);
+	lua_newtable(newState);
+	lua_pushvalue(newState, -1);
+	lua_setglobal(newState, AI_METATABLE);
+	luaL_setfuncs(newState, AIL_methods, 0);
 
 	return newState;
 }

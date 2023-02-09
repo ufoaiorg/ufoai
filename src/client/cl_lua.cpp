@@ -89,10 +89,13 @@ static void CL_InsertModuleLoader (lua_State* L) {
 	/* save stack position */
 	int pos = lua_gettop(L);
 
-	/* push the global table 'package' on the stack */
-	lua_getfield(L, LUA_GLOBALSINDEX, "package");
-	/* using the table 'package', push the 'loaders' field on the stack */
-	lua_getfield(L, -1, "loaders");
+	lua_getglobal(L, "package");
+	if (lua_isnil(L, -1))
+		luaL_error(L, "Can't register searcher: package table does not exist.");
+	lua_getfield(L, -1, "searchers");
+	if (lua_isnil(L, -1))
+		luaL_error(L, "Can't register searcher: package.searchers table does not exist.");
+
 	/* remote the 'package' entry from the stack */
 	lua_remove(L, -2);
 
@@ -111,7 +114,7 @@ static void CL_InsertModuleLoader (lua_State* L) {
 		nloaders++;
 	}
 
-	/* now that we have the number of entries in the 'loaders' table, we can add or own loader */
+	/* now that we have the number of entries in the 'loaders' table, we can add our own loader */
 	lua_pushinteger(L, nloaders + 1);
 	lua_pushcfunction(L, CL_UfoModuleLoader);
 	lua_rawset(L, -3);
