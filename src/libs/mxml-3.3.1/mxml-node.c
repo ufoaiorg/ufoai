@@ -1,37 +1,12 @@
 /*
- * "$Id: mxml-node.c 363 2008-10-26 18:28:05Z mike $"
+ * Node support code for Mini-XML, a small XML file parsing library.
  *
- * Node support code for Mini-XML, a small XML-like file parsing library.
+ * https://www.msweet.org/mxml
  *
- * Copyright 2003-2007 by Michael Sweet.
+ * Copyright © 2003-2021 by Michael R Sweet.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * Contents:
- *
- *   mxmlAdd()        - Add a node to a tree.
- *   mxmlDelete()     - Delete a node and all of its children.
- *   mxmlNewCDATA()   - Create a new CDATA node.
- *   mxmlNewCustom()  - Create a new custom data node.
- *   mxmlNewElement() - Create a new element node.
- *   mxmlNewInteger() - Create a new integer node.
- *   mxmlNewOpaque()  - Create a new opaque string.
- *   mxmlNewReal()    - Create a new real number node.
- *   mxmlNewText()    - Create a new text fragment node.
- *   mxmlNewTextf()   - Create a new formatted text fragment node.
- *   mxmlNewXML()     - Create a new XML document tree.
- *   mxmlRelease()    - Release a node.
- *   mxmlRemove()     - Remove a node from its parent.
- *   mxmlRetain()     - Retain a node.
- *   mxml_new()       - Create a new node.
+ * Licensed under Apache License v2.0.  See the file "LICENSE" for more
+ * information.
  */
 
 /*
@@ -39,34 +14,32 @@
  */
 
 #include "config.h"
-#include "mxml.h"
+#include "mxml-private.h"
 
-#ifdef _MSC_VER
-# define snprintf _snprintf
-#endif
 
 /*
  * Local functions...
  */
 
+static void		mxml_free(mxml_node_t *node);
 static mxml_node_t	*mxml_new(mxml_node_t *parent, mxml_type_t type);
 
 
 /*
  * 'mxmlAdd()' - Add a node to a tree.
  *
- * Adds the specified node to the parent. If the child argument is not
- * NULL, puts the new node before or after the specified child depending
- * on the value of the where argument. If the child argument is NULL,
- * puts the new node at the beginning of the child list (MXML_ADD_BEFORE)
- * or at the end of the child list (MXML_ADD_AFTER). The constant
- * MXML_ADD_TO_PARENT can be used to specify a NULL child pointer.
+ * Adds the specified node to the parent.  If the child argument is not
+ * @code NULL@, puts the new node before or after the specified child depending
+ * on the value of the where argument.  If the child argument is @code NULL@,
+ * puts the new node at the beginning of the child list (@code MXML_ADD_BEFORE@)
+ * or at the end of the child list (@code MXML_ADD_AFTER@).  The constant
+ * @code MXML_ADD_TO_PARENT@ can be used to specify a @code NULL@ child pointer.
  */
 
 void
 mxmlAdd(mxml_node_t *parent,		/* I - Parent node */
-        int         where,		/* I - Where to add, MXML_ADD_BEFORE or MXML_ADD_AFTER */
-        mxml_node_t *child,		/* I - Child node for where or MXML_ADD_TO_PARENT */
+        int         where,		/* I - Where to add, @code MXML_ADD_BEFORE@ or @code MXML_ADD_AFTER@ */
+        mxml_node_t *child,		/* I - Child node for where or @code MXML_ADD_TO_PARENT@ */
 	mxml_node_t *node)		/* I - Node to add */
 {
 #ifdef DEBUG
@@ -194,12 +167,16 @@ mxmlAdd(mxml_node_t *parent,		/* I - Parent node */
  * 'mxmlDelete()' - Delete a node and all of its children.
  *
  * If the specified node has a parent, this function first removes the
- * node from its parent using the mxmlRemove() function.
+ * node from its parent using the @link mxmlRemove@ function.
  */
 
 void
 mxmlDelete(mxml_node_t *node)		/* I - Node to delete */
 {
+  mxml_node_t	*current,		/* Current node */
+		*next;			/* Next node */
+
+
 #ifdef DEBUG
   fprintf(stderr, "mxmlDelete(node=%p)\n", node);
 #endif /* DEBUG */
@@ -221,61 +198,72 @@ mxmlDelete(mxml_node_t *node)		/* I - Node to delete */
   * Delete children...
   */
 
-  while (node->child)
-    mxmlDelete(node->child);
-
- /*
-  * Now delete any node data...
-  */
-
-  switch (node->type)
+  for (current = node->child; current; current = next)
   {
-    case MXML_ELEMENT :
-        if (node->value.element.name)
-	  free(node->value.element.name);
+   /*
+    * Get the next node...
+    */
 
-	if (node->value.element.num_attrs)
-	{
-	  int	i;				/* Looping var */
-	  for (i = 0; i < node->value.element.num_attrs; i ++)
-	  {
-	    if (node->value.element.attrs[i].name)
-	      free(node->value.element.attrs[i].name);
-	    if (node->value.element.attrs[i].value)
-	      free(node->value.element.attrs[i].value);
-	  }
+    if ((next = current->child) != NULL)
+    {
+     /*
+      * Free parent nodes after child nodes have been freed...
+      */
 
-          free(node->value.element.attrs);
-	}
-        break;
-    case MXML_INTEGER :
-       /* Nothing to do */
-        break;
-    case MXML_OPAQUE :
-        if (node->value.opaque)
-	  free(node->value.opaque);
-        break;
-    case MXML_REAL :
-       /* Nothing to do */
-        break;
-    case MXML_TEXT :
-        if (node->value.text.string)
-	  free(node->value.text.string);
-        break;
-    case MXML_CUSTOM :
-        if (node->value.custom.data &&
-	    node->value.custom.destroy)
-	  (*(node->value.custom.destroy))(node->value.custom.data);
-	break;
-    default :
-        break;
+      current->child = NULL;
+      continue;
+    }
+
+    if ((next = current->next) == NULL)
+    {
+     /*
+      * Next node is the parent, which we'll free as needed...
+      */
+
+      if ((next = current->parent) == node)
+        next = NULL;
+    }
+
+   /*
+    * Free child...
+    */
+
+    mxml_free(current);
   }
 
  /*
-  * Free this node...
+  * Then free the memory used by the parent node...
   */
 
-  free(node);
+  mxml_free(node);
+}
+
+
+/*
+ * 'mxmlGetRefCount()' - Get the current reference (use) count for a node.
+ *
+ * The initial reference count of new nodes is 1. Use the @link mxmlRetain@
+ * and @link mxmlRelease@ functions to increment and decrement a node's
+ * reference count.
+ *
+ * @since Mini-XML 2.7@.
+ */
+
+int					/* O - Reference count */
+mxmlGetRefCount(mxml_node_t *node)	/* I - Node */
+{
+ /*
+  * Range check input...
+  */
+
+  if (!node)
+    return (0);
+
+ /*
+  * Return the reference count...
+  */
+
+  return (node->ref_count);
 }
 
 
@@ -283,15 +271,16 @@ mxmlDelete(mxml_node_t *node)		/* I - Node to delete */
  * 'mxmlNewCDATA()' - Create a new CDATA node.
  *
  * The new CDATA node is added to the end of the specified parent's child
- * list. The constant MXML_NO_PARENT can be used to specify that the new
- * CDATA node has no parent. The data string must be nul-terminated and
- * is copied into the new node. CDATA nodes use the MXML_ELEMENT type.
+ * list.  The constant @code MXML_NO_PARENT@ can be used to specify that the new
+ * CDATA node has no parent.  The data string must be nul-terminated and
+ * is copied into the new node.  CDATA nodes currently use the
+ * @code MXML_ELEMENT@ type.
  *
  * @since Mini-XML 2.3@
  */
 
 mxml_node_t *				/* O - New node */
-mxmlNewCDATA(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
+mxmlNewCDATA(mxml_node_t *parent,	/* I - Parent node or @code MXML_NO_PARENT@ */
 	     const char  *data)		/* I - Data string */
 {
   mxml_node_t	*node;			/* New node */
@@ -314,7 +303,7 @@ mxmlNewCDATA(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
   */
 
   if ((node = mxml_new(parent, MXML_ELEMENT)) != NULL)
-    node->value.element.name = _mxml_strdupf("![CDATA[%s]]", data);
+    node->value.element.name = _mxml_strdupf("![CDATA[%s", data);
 
   return (node);
 }
@@ -324,8 +313,8 @@ mxmlNewCDATA(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
  * 'mxmlNewCustom()' - Create a new custom data node.
  *
  * The new custom node is added to the end of the specified parent's child
- * list. The constant MXML_NO_PARENT can be used to specify that the new
- * element node has no parent. NULL can be passed when the data in the
+ * list. The constant @code MXML_NO_PARENT@ can be used to specify that the new
+ * element node has no parent. @code NULL@ can be passed when the data in the
  * node is not dynamically allocated or is separately managed.
  *
  * @since Mini-XML 2.1@
@@ -333,7 +322,7 @@ mxmlNewCDATA(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
 
 mxml_node_t *				/* O - New node */
 mxmlNewCustom(
-    mxml_node_t              *parent,	/* I - Parent node or MXML_NO_PARENT */
+    mxml_node_t              *parent,	/* I - Parent node or @code MXML_NO_PARENT@ */
     void                     *data,	/* I - Pointer to data */
     mxml_custom_destroy_cb_t destroy)	/* I - Function to destroy data */
 {
@@ -363,12 +352,12 @@ mxmlNewCustom(
  * 'mxmlNewElement()' - Create a new element node.
  *
  * The new element node is added to the end of the specified parent's child
- * list. The constant MXML_NO_PARENT can be used to specify that the new
+ * list. The constant @code MXML_NO_PARENT@ can be used to specify that the new
  * element node has no parent.
  */
 
 mxml_node_t *				/* O - New node */
-mxmlNewElement(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
+mxmlNewElement(mxml_node_t *parent,	/* I - Parent node or @code MXML_NO_PARENT@ */
                const char  *name)	/* I - Name of element */
 {
   mxml_node_t	*node;			/* New node */
@@ -401,12 +390,12 @@ mxmlNewElement(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
  * 'mxmlNewInteger()' - Create a new integer node.
  *
  * The new integer node is added to the end of the specified parent's child
- * list. The constant MXML_NO_PARENT can be used to specify that the new
+ * list. The constant @code MXML_NO_PARENT@ can be used to specify that the new
  * integer node has no parent.
  */
 
 mxml_node_t *				/* O - New node */
-mxmlNewInteger(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
+mxmlNewInteger(mxml_node_t *parent,	/* I - Parent node or @code MXML_NO_PARENT@ */
                int         integer)	/* I - Integer value */
 {
   mxml_node_t	*node;			/* New node */
@@ -430,14 +419,14 @@ mxmlNewInteger(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
 /*
  * 'mxmlNewOpaque()' - Create a new opaque string.
  *
- * The new opaque node is added to the end of the specified parent's child
- * list. The constant MXML_NO_PARENT can be used to specify that the new
- * opaque node has no parent. The opaque string must be nul-terminated and
- * is copied into the new node.
+ * The new opaque string node is added to the end of the specified parent's
+ * child list.  The constant @code MXML_NO_PARENT@ can be used to specify that
+ * the new opaque string node has no parent.  The opaque string must be nul-
+ * terminated and is copied into the new node.
  */
 
 mxml_node_t *				/* O - New node */
-mxmlNewOpaque(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
+mxmlNewOpaque(mxml_node_t *parent,	/* I - Parent node or @code MXML_NO_PARENT@ */
               const char  *opaque)	/* I - Opaque string */
 {
   mxml_node_t	*node;			/* New node */
@@ -467,15 +456,61 @@ mxmlNewOpaque(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
 
 
 /*
+ * 'mxmlNewOpaquef()' - Create a new formatted opaque string node.
+ *
+ * The new opaque string node is added to the end of the specified parent's
+ * child list.  The constant @code MXML_NO_PARENT@ can be used to specify that
+ * the new opaque string node has no parent.  The format string must be
+ * nul-terminated and is formatted into the new node.
+ */
+
+mxml_node_t *				/* O - New node */
+mxmlNewOpaquef(mxml_node_t *parent,	/* I - Parent node or @code MXML_NO_PARENT@ */
+               const char  *format,	/* I - Printf-style format string */
+	       ...)			/* I - Additional args as needed */
+{
+  mxml_node_t	*node;			/* New node */
+  va_list	ap;			/* Pointer to arguments */
+
+
+#ifdef DEBUG
+  fprintf(stderr, "mxmlNewOpaquef(parent=%p, format=\"%s\", ...)\n", parent, format ? format : "(null)");
+#endif /* DEBUG */
+
+ /*
+  * Range check input...
+  */
+
+  if (!format)
+    return (NULL);
+
+ /*
+  * Create the node and set the text value...
+  */
+
+  if ((node = mxml_new(parent, MXML_OPAQUE)) != NULL)
+  {
+    va_start(ap, format);
+
+    node->value.opaque = _mxml_vstrdupf(format, ap);
+
+    va_end(ap);
+  }
+
+  return (node);
+}
+
+
+/*
  * 'mxmlNewReal()' - Create a new real number node.
  *
  * The new real number node is added to the end of the specified parent's
- * child list. The constant MXML_NO_PARENT can be used to specify that
+ * child list.  The constant @code MXML_NO_PARENT@ can be used to specify that
  * the new real number node has no parent.
  */
 
 mxml_node_t *				/* O - New node */
-mxmlNewReal(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
+mxmlNewReal(mxml_node_t *parent,	/* I - Parent node or @code MXML_NO_PARENT@ */
             double      real)		/* I - Real number value */
 {
   mxml_node_t	*node;			/* New node */
@@ -500,14 +535,14 @@ mxmlNewReal(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
  * 'mxmlNewText()' - Create a new text fragment node.
  *
  * The new text node is added to the end of the specified parent's child
- * list. The constant MXML_NO_PARENT can be used to specify that the new
- * text node has no parent. The whitespace parameter is used to specify
- * whether leading whitespace is present before the node. The text
+ * list.  The constant @code MXML_NO_PARENT@ can be used to specify that the new
+ * text node has no parent.  The whitespace parameter is used to specify
+ * whether leading whitespace is present before the node.  The text
  * string must be nul-terminated and is copied into the new node.
  */
 
 mxml_node_t *				/* O - New node */
-mxmlNewText(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
+mxmlNewText(mxml_node_t *parent,	/* I - Parent node or @code MXML_NO_PARENT@ */
             int         whitespace,	/* I - 1 = leading whitespace, 0 = no whitespace */
 	    const char  *string)	/* I - String */
 {
@@ -544,16 +579,16 @@ mxmlNewText(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
  * 'mxmlNewTextf()' - Create a new formatted text fragment node.
  *
  * The new text node is added to the end of the specified parent's child
- * list. The constant MXML_NO_PARENT can be used to specify that the new
- * text node has no parent. The whitespace parameter is used to specify
- * whether leading whitespace is present before the node. The format
+ * list.  The constant @code MXML_NO_PARENT@ can be used to specify that the new
+ * text node has no parent.  The whitespace parameter is used to specify
+ * whether leading whitespace is present before the node.  The format
  * string must be nul-terminated and is formatted into the new node.
  */
 
 mxml_node_t *				/* O - New node */
-mxmlNewTextf(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
+mxmlNewTextf(mxml_node_t *parent,	/* I - Parent node or @code MXML_NO_PARENT@ */
              int         whitespace,	/* I - 1 = leading whitespace, 0 = no whitespace */
-	     const char  *format,	/* I - Printf-style frmat string */
+	     const char  *format,	/* I - Printf-style format string */
 	     ...)			/* I - Additional args as needed */
 {
   mxml_node_t	*node;			/* New node */
@@ -593,8 +628,8 @@ mxmlNewTextf(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
 /*
  * 'mxmlRemove()' - Remove a node from its parent.
  *
- * Does not free memory used by the node - use mxmlDelete() for that.
- * This function does nothing if the node has no parent.
+ * This function does not free memory used by the node - use @link mxmlDelete@
+ * for that.  This function does nothing if the node has no parent.
  */
 
 void
@@ -661,7 +696,7 @@ mxmlRemove(mxml_node_t *node)		/* I - Node to remove */
  * 'mxmlNewXML()' - Create a new XML document tree.
  *
  * The "version" argument specifies the version number to put in the
- * ?xml element node. If NULL, version 1.0 is assumed.
+ * ?xml element node. If @code NULL@, version "1.0" is assumed.
  *
  * @since Mini-XML 2.3@
  */
@@ -683,7 +718,7 @@ mxmlNewXML(const char *version)		/* I - Version number to use */
  * 'mxmlRelease()' - Release a node.
  *
  * When the reference count reaches zero, the node (and any children)
- * is deleted via mxmlDelete().
+ * is deleted via @link mxmlDelete@.
  *
  * @since Mini-XML 2.3@
  */
@@ -723,6 +758,63 @@ mxmlRetain(mxml_node_t *node)		/* I - Node */
 
 
 /*
+ * 'mxml_free()' - Free the memory used by a node.
+ *
+ * Note: Does not free child nodes, does not remove from parent.
+ */
+
+static void
+mxml_free(mxml_node_t *node)		/* I - Node */
+{
+  int	i;				/* Looping var */
+
+
+  switch (node->type)
+  {
+    case MXML_ELEMENT :
+	free(node->value.element.name);
+
+	if (node->value.element.num_attrs)
+	{
+	  for (i = 0; i < node->value.element.num_attrs; i ++)
+	  {
+	    free(node->value.element.attrs[i].name);
+	    free(node->value.element.attrs[i].value);
+	  }
+
+          free(node->value.element.attrs);
+	}
+        break;
+    case MXML_INTEGER :
+       /* Nothing to do */
+        break;
+    case MXML_OPAQUE :
+	free(node->value.opaque);
+        break;
+    case MXML_REAL :
+       /* Nothing to do */
+        break;
+    case MXML_TEXT :
+	free(node->value.text.string);
+        break;
+    case MXML_CUSTOM :
+        if (node->value.custom.data &&
+	    node->value.custom.destroy)
+	  (*(node->value.custom.destroy))(node->value.custom.data);
+	break;
+    default :
+        break;
+  }
+
+ /*
+  * Free this node...
+  */
+
+  free(node);
+}
+
+
+/*
  * 'mxml_new()' - Create a new node.
  */
 
@@ -741,7 +833,7 @@ mxml_new(mxml_node_t *parent,		/* I - Parent node */
   * Allocate memory for the node...
   */
 
-  if ((node = (mxml_node_t *)calloc(1, sizeof(mxml_node_t))) == NULL)
+  if ((node = calloc(1, sizeof(mxml_node_t))) == NULL)
   {
 #if DEBUG > 1
     fputs("    returning NULL\n", stderr);

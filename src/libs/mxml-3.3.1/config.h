@@ -1,20 +1,13 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /*
- * "$Id: config.h.in 310 2007-09-22 21:00:56Z mike $"
+ * Configuration file for Mini-XML, a small XML file parsing library.
  *
- * Configuration file for Mini-XML, a small XML-like file parsing library.
+ * https://www.msweet.org/mxml
  *
- * Copyright 2003-2007 by Michael Sweet.
+ * Copyright © 2003-2020 by Michael R Sweet.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * Licensed under Apache License v2.0.  See the file "LICENSE" for more
+ * information.
  */
 
 /*
@@ -32,13 +25,8 @@
  * Version number...
  */
 
-#define MXML_VERSION "Mini-XML v2.6"
+#define MXML_VERSION "Mini-XML v3.3.1"
 
-#ifdef DEBUG
-#ifndef MXML_DEBUG
-#undef DEBUG
-#endif
-#endif
 
 /*
  * Inline function support...
@@ -48,10 +36,18 @@
 
 
 /*
- * Do we have the snprintf() and vsnprintf() functions?
+ * Long long support...
+ */
+
+#define HAVE_LONG_LONG_INT 1
+
+
+/*
+ * Do we have the *printf() functions?
  */
 
 #define HAVE_SNPRINTF 1
+#define HAVE_VASPRINTF 1
 #define HAVE_VSNPRINTF 1
 
 
@@ -59,19 +55,17 @@
  * Do we have the strXXX() functions?
  */
 
-#if defined(WIN32) || defined(_WIN32)
-#else
 #define HAVE_STRDUP 1
-#endif
+/* #undef HAVE_STRLCAT */
+/* #undef HAVE_STRLCPY */
+
 
 /*
  * Do we have threading support?
  */
 
-#if defined(WIN32) || defined(_WIN32)
-#else
-#  define HAVE_PTHREAD_H 1
-#endif /* WIN32 */
+#define HAVE_PTHREAD_H Have <pthread.h>?
+
 
 /*
  * Define prototypes for string functions as needed...
@@ -81,6 +75,16 @@
 extern char	*_mxml_strdup(const char *);
 #    define strdup _mxml_strdup
 #  endif /* !HAVE_STRDUP */
+
+#  ifndef HAVE_STRLCAT
+extern size_t	_mxml_strlcat(char *, const char *, size_t);
+#    define strlcat _mxml_strlcat
+#  endif /* !HAVE_STRLCAT */
+
+#  ifndef HAVE_STRLCPY
+extern size_t	_mxml_strlcpy(char *, const char *, size_t);
+#    define strlcpy _mxml_strlcpy
+#  endif /* !HAVE_STRLCPY */
 
 extern char	*_mxml_strdupf(const char *, ...);
 extern char	*_mxml_vstrdupf(const char *, va_list);

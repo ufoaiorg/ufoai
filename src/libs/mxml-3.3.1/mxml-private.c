@@ -1,27 +1,12 @@
 /*
- * "$Id: mxml-private.c 315 2007-11-22 18:01:52Z mike $"
+ * Private functions for Mini-XML, a small XML file parsing library.
  *
- * Private functions for Mini-XML, a small XML-like file parsing library.
+ * https://www.msweet.org/mxml
  *
- * Copyright 2003-2007 by Michael Sweet.
+ * Copyright © 2003-2022 by Michael R Sweet.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * Contents:
- *
- *   mxml_error()      - Display an error message.
- *   mxml_integer_cb() - Default callback for integer values.
- *   mxml_opaque_cb()  - Default callback for opaque values.
- *   mxml_real_cb()    - Default callback for real number values.
- *   _mxml_global()    - Get global data.
+ * Licensed under Apache License v2.0.  See the file "LICENSE" for more
+ * information.
  */
 
 /*
@@ -29,6 +14,33 @@
  */
 
 #include "mxml-private.h"
+
+
+/*
+ * Some crazy people think that unloading a shared object is a good or safe
+ * thing to do.  Unfortunately, most objects are simply *not* safe to unload
+ * and bad things *will* happen.
+ *
+ * The following mess of conditional code allows us to provide a destructor
+ * function in Mini-XML for our thread-global storage so that it can possibly
+ * be unloaded safely, although since there is no standard way to do so I
+ * can't even provide any guarantees that you can do it safely on all platforms.
+ *
+ * This code currently supports AIX, HP-UX, Linux, macOS, Solaris, and
+ * Windows.  It might work on the BSDs and IRIX, but I haven't tested that.
+ */
+
+#if defined(__sun) || defined(_AIX)
+#  pragma fini(_mxml_fini)
+#  define _MXML_FINI _mxml_fini
+#elif defined(__hpux)
+#  pragma FINI _mxml_fini
+#  define _MXML_FINI _mxml_fini
+#elif defined(__GNUC__) /* Linux and macOS */
+#  define _MXML_FINI __attribute((destructor)) _mxml_fini
+#else
+#  define _MXML_FINI _fini
+#endif /* __sun */
 
 
 /*
@@ -128,11 +140,36 @@ mxml_real_cb(mxml_node_t *node)		/* I - Current node */
 #ifdef HAVE_PTHREAD_H			/**** POSIX threading ****/
 #  include <pthread.h>
 
-static pthread_key_t	_mxml_key = -1;	/* Thread local storage key */
+static int		_mxml_initialized = 0;
+					/* Have we been initialized? */
+static pthread_key_t	_mxml_key;	/* Thread local storage key */
 static pthread_once_t	_mxml_key_once = PTHREAD_ONCE_INIT;
 					/* One-time initialization object */
 static void		_mxml_init(void);
 static void		_mxml_destructor(void *g);
+
+
+/*
+ * '_mxml_destructor()' - Free memory used for globals...
+ */
+
+static void
+_mxml_destructor(void *g)		/* I - Global data */
+{
+  free(g);
+}
+
+
+/*
+ * '_mxml_fini()' - Clean up when unloaded.
+ */
+
+static void
+_MXML_FINI(void)
+{
+  if (_mxml_initialized)
+    pthread_key_delete(_mxml_key);
+}
 
 
 /*
@@ -168,22 +205,12 @@ _mxml_global(void)
 static void
 _mxml_init(void)
 {
+  _mxml_initialized = 1;
   pthread_key_create(&_mxml_key, _mxml_destructor);
 }
 
 
-/*
- * '_mxml_destructor()' - Free memory used for globals...
- */
-
-static void
-_mxml_destructor(void *g)		/* I - Global data */
-{
-  free(g);
-}
-
-
-#elif defined(WIN32)			/**** WIN32 threading ****/
+#elif defined(_WIN32) && defined(MXML1_EXPORTS) /**** WIN32 threading ****/
 #  include <windows.h>
 
 static DWORD _mxml_tls_index;		/* Index for global storage */

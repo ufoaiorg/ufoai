@@ -1,31 +1,12 @@
 /*
- * "$Id: mxml-entity.c 385 2009-03-19 05:38:52Z mike $"
+ * Character entity support code for Mini-XML, a small XML file parsing library.
  *
- * Character entity support code for Mini-XML, a small XML-like
- * file parsing library.
+ * https://www.msweet.org/mxml
  *
- * Copyright 2003-2009 by Michael Sweet.
+ * Copyright © 2003-2019 by Michael R Sweet.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * Contents:
- *
- *   mxmlEntityAddCallback()    - Add a callback to convert entities to
- *                                Unicode.
- *   mxmlEntityGetName()        - Get the name that corresponds to the
- *                                character value.
- *   mxmlEntityGetValue()       - Get the character corresponding to a named
- *                                entity.
- *   mxmlEntityRemoveCallback() - Remove a callback.
- *   _mxml_entity_cb()          - Lookup standard (X)HTML entities.
+ * Licensed under Apache License v2.0.  See the file "LICENSE" for more
+ * information.
  */
 
 /*
@@ -66,10 +47,10 @@ mxmlEntityAddCallback(
 /*
  * 'mxmlEntityGetName()' - Get the name that corresponds to the character value.
  *
- * If val does not need to be represented by a named entity, NULL is returned.
+ * If val does not need to be represented by a named entity, @code NULL@ is returned.
  */
 
-const char *				/* O - Entity name or NULL */
+const char *				/* O - Entity name or @code NULL@ */
 mxmlEntityGetName(int val)		/* I - Character value */
 {
   switch (val)
@@ -102,15 +83,15 @@ mxmlEntityGetName(int val)		/* I - Character value */
 int					/* O - Character value or -1 on error */
 mxmlEntityGetValue(const char *name)	/* I - Entity name */
 {
+  int		i;			/* Looping var */
+  int		ch;			/* Character value */
   _mxml_global_t *global = _mxml_global();
 					/* Global data */
 
-  int i;
-  for (i = 0; i < global->num_entity_cbs; i ++) {
-	int ch;			/* Character value */
+
+  for (i = 0; i < global->num_entity_cbs; i ++)
     if ((ch = (global->entity_cbs[i])(name)) >= 0)
       return (ch);
-  }
 
   return (-1);
 }
@@ -154,6 +135,10 @@ mxmlEntityRemoveCallback(
 int					/* O - Unicode value or -1 */
 _mxml_entity_cb(const char *name)	/* I - Entity name */
 {
+  int	diff,				/* Difference between names */
+	current,			/* Current entity in search */
+	first,				/* First entity in search */
+	last;				/* Last entity in search */
   static const struct
   {
     const char	*name;			/* Entity name */
@@ -424,13 +409,12 @@ _mxml_entity_cb(const char *name)	/* I - Entity name */
   * Do a binary search for the named entity...
   */
 
-  int first = 0;	/* First entity in search */
-  int last  = (int)(sizeof(entities) / sizeof(entities[0]) - 1);	/* Last entity in search */
+  first = 0;
+  last  = (int)(sizeof(entities) / sizeof(entities[0]) - 1);
 
   while ((last - first) > 1)
   {
-    int current = (first + last) / 2;	/* Current entity in search */
-    int diff;							/* Difference between names */
+    current = (first + last) / 2;
 
     if ((diff = strcmp(name, entities[current].name)) == 0)
       return (entities[current].val);

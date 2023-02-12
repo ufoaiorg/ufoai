@@ -1,27 +1,12 @@
 /*
- * "$Id: mxml-string.c 387 2009-04-18 17:05:52Z mike $"
+ * String functions for Mini-XML, a small XML file parsing library.
  *
- * String functions for Mini-XML, a small XML-like file parsing library.
+ * https://www.msweet.org/mxml
  *
- * Copyright 2003-2009 by Michael Sweet.
+ * Copyright © 2003-2019 by Michael R Sweet.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * Contents:
- *
- *   _mxml_snprintf()  - Format a string.
- *   _mxml_strdup()    - Duplicate a string.
- *   _mxml_strdupf()   - Format and duplicate a string.
- *   _mxml_vsnprintf() - Format a string into a fixed size buffer.
- *   _mxml_vstrdupf()  - Format and duplicate a string.
+ * Licensed under Apache License v2.0.  See the file "LICENSE" for more
+ * information.
  */
 
 /*
@@ -29,6 +14,20 @@
  */
 
 #include "config.h"
+
+
+/*
+ * The va_copy macro is part of C99, but many compilers don't implement it.
+ * Provide a "direct assignment" implmentation when va_copy isn't defined...
+ */
+
+#ifndef va_copy
+#  ifdef __va_copy
+#    define va_copy(dst,src) __va_copy(dst,src)
+#  else
+#    define va_copy(dst,src) memcpy(&dst, &src, sizeof(va_list))
+#  endif /* __va_copy */
+#endif /* va_copy */
 
 
 #ifndef HAVE_SNPRINTF
@@ -60,7 +59,7 @@ _mxml_snprintf(char       *buffer,	/* I - Output buffer */
  */
 
 #ifndef HAVE_STRDUP
-char 	*				/* O - New string pointer */
+char *					/* O - New string pointer */
 _mxml_strdup(const char *s)		/* I - String to duplicate */
 {
   char	*t;				/* New string pointer */
@@ -95,11 +94,98 @@ _mxml_strdupf(const char *format,	/* I - Printf-style format string */
   */
 
   va_start(ap, format);
+#ifdef HAVE_VASPRINTF
+  if (vasprintf(&s, format, ap) < 0)
+    s = NULL;
+#else
   s = _mxml_vstrdupf(format, ap);
+#endif /* HAVE_VASPRINTF */
   va_end(ap);
 
   return (s);
 }
+
+
+#ifndef HAVE_STRLCAT
+/*
+ * '_mxml_strlcat()' - Safely concatenate a string.
+ */
+
+size_t					/* O - Number of bytes copied */
+_mxml_strlcat(char       *dst,		/* I - Destination buffer */
+              const char *src,		/* I - Source string */
+              size_t     dstsize)	/* I - Size of destination buffer */
+{
+  size_t	srclen;			/* Length of source string */
+  size_t	dstlen;			/* Length of destination string */
+
+
+ /*
+  * Figure out how much room is left...
+  */
+
+  dstlen = strlen(dst);
+
+  if (dstsize <= (dstlen + 1))
+    return (dstlen);		        /* No room, return immediately... */
+
+  dstsize -= dstlen + 1;
+
+ /*
+  * Figure out how much room is needed...
+  */
+
+  srclen = strlen(src);
+
+ /*
+  * Copy the appropriate amount...
+  */
+
+  if (srclen > dstsize)
+    srclen = dstsize;
+
+  memmove(dst + dstlen, src, srclen);
+  dst[dstlen + srclen] = '\0';
+
+  return (dstlen + srclen);
+}
+#endif /* !HAVE_STRLCAT */
+
+
+#ifndef HAVE_STRLCPY
+/*
+ * '_mxml_strlcpy()' - Safely copy a string.
+ */
+
+size_t					/* O - Number of bytes copied */
+_mxml_strlcpy(char       *dst,		/* I - Destination buffer */
+              const char *src,		/* I - Source string */
+              size_t     dstsize)	/* I - Size of destination buffer */
+{
+  size_t        srclen;                 /* Length of source string */
+
+
+ /*
+  * Figure out how much room is needed...
+  */
+
+  dstsize --;
+
+  srclen = strlen(src);
+
+ /*
+  * Copy the appropriate amount...
+  */
+
+  if (srclen > dstsize)
+    srclen = dstsize;
+
+  memmove(dst, src, srclen);
+  dst[srclen] = '\0';
+
+  return (srclen);
+}
+#endif /* !HAVE_STRLCPY */
 
 
 #ifndef HAVE_VSNPRINTF
@@ -111,7 +197,7 @@ int					/* O - Number of bytes formatted */
 _mxml_vsnprintf(char       *buffer,	/* O - Output buffer */
                 size_t     bufsize,	/* O - Size of output buffer */
 		const char *format,	/* I - Printf-style format string */
-		va_list    ap)		/* I - Pointer to additional arguments */
+ 		va_list    ap)		/* I - Pointer to additional arguments */
 {
   char		*bufptr,		/* Pointer to position in buffer */
 		*bufend,		/* Pointer to end of buffer */
@@ -145,7 +231,8 @@ _mxml_vsnprintf(char       *buffer,	/* O - Output buffer */
 
       if (*format == '%')
       {
-        if (bufptr && bufptr < bufend) *bufptr++ = *format;
+        if (bufptr && bufptr < bufend)
+          *bufptr++ = *format;
         bytes ++;
         format ++;
 	continue;
@@ -287,11 +374,11 @@ _mxml_vsnprintf(char       *buffer,	/* O - Output buffer */
 	    if ((width + 2) > sizeof(temp))
 	      break;
 
-#ifdef HAVE_LONG_LONG
+#ifdef HAVE_LONG_LONG_INT
 	    if (size == 'L')
 	      sprintf(temp, tformat, va_arg(ap, long long));
 	    else
-#endif /* HAVE_LONG_LONG */
+#endif /* HAVE_LONG_LONG_INT */
 	    sprintf(temp, tformat, va_arg(ap, int));
 
             bytes += strlen(temp);
@@ -386,7 +473,7 @@ _mxml_vsnprintf(char       *buffer,	/* O - Output buffer */
 	    break;
 
 	case 'n' : /* Output number of chars so far */
-	    *(va_arg(ap, int* )) = bytes;
+	    *(va_arg(ap, int *)) = bytes;
 	    break;
       }
     }
@@ -420,9 +507,20 @@ char *					/* O - New string pointer */
 _mxml_vstrdupf(const char *format,	/* I - Printf-style format string */
                va_list    ap)		/* I - Pointer to additional arguments */
 {
-  int	bytes;				/* Number of bytes required */
-  char	*buffer,			/* String buffer */
-	temp[256];			/* Small buffer for first vsnprintf */
+#ifdef HAVE_VASPRINTF
+  char		*s;			/* String */
+
+  if (vasprintf(&s, format, ap) < 0)
+    s = NULL;
+
+  return (s);
+
+#else
+  int		bytes;			/* Number of bytes required */
+  char		*buffer;		/* String buffer */
+#  ifndef _WIN32
+  char		temp[256];		/* Small buffer for first vsnprintf */
+#  endif /* !_WIN32 */
 
 
  /*
@@ -430,9 +528,14 @@ _mxml_vstrdupf(const char *format,	/* I - Printf-style format string */
   * needed...
   */
 
-  bytes = vsnprintf(temp, sizeof(temp), format, ap);
+#  ifdef _WIN32
+  bytes = _vscprintf(format, ap);
 
-  if (bytes < sizeof(temp))
+#  else
+  va_list	apcopy;			/* Copy of argument list */
+
+  va_copy(apcopy, ap);
+  if ((bytes = vsnprintf(temp, sizeof(temp), format, apcopy)) < sizeof(temp))
   {
    /*
     * Hey, the formatted string fits in the tiny buffer, so just dup that...
@@ -440,13 +543,13 @@ _mxml_vstrdupf(const char *format,	/* I - Printf-style format string */
 
     return (strdup(temp));
   }
+#  endif /* _WIN32 */
 
  /*
-  * Allocate memory for the whole thing and reformat to the new, larger
-  * buffer...
+  * Allocate memory for the whole thing and reformat to the new buffer...
   */
 
-  if ((buffer = (char *)calloc(1, bytes + 1)) != NULL)
+  if ((buffer = calloc(1, bytes + 1)) != NULL)
     vsnprintf(buffer, bytes + 1, format, ap);
 
  /*
@@ -454,4 +557,5 @@ _mxml_vstrdupf(const char *format,	/* I - Printf-style format string */
   */
 
   return (buffer);
+#endif /* HAVE_VASPRINTF */
 }

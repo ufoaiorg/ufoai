@@ -309,16 +309,17 @@ MUMBLE_LIBS              ?=
 MUMBLE_SRCS               = libs/mumble/libmumblelink.c
 MUMBLE_CFLAGS             = -Isrc/libs/mumble
 ifndef HAVE_MXML_MXML_H
-MXML_SRCS                 = libs/mxml/mxml-attr.c \
-                            libs/mxml/mxml-entity.c \
-                            libs/mxml/mxml-file.c \
-                            libs/mxml/mxml-index.c \
-                            libs/mxml/mxml-node.c \
-                            libs/mxml/mxml-private.c \
-                            libs/mxml/mxml-search.c \
-                            libs/mxml/mxml-set.c \
-                            libs/mxml/mxml-string.c
-MXML_CFLAGS               = -Isrc/libs/mxml
+MXML_SRCS                 = libs/mxml-3.3.1/mxml-attr.c \
+                            libs/mxml-3.3.1/mxml-entity.c \
+                            libs/mxml-3.3.1/mxml-file.c \
+                            libs/mxml-3.3.1/mxml-get.c \
+                            libs/mxml-3.3.1/mxml-index.c \
+                            libs/mxml-3.3.1/mxml-node.c \
+                            libs/mxml-3.3.1/mxml-private.c \
+                            libs/mxml-3.3.1/mxml-search.c \
+                            libs/mxml-3.3.1/mxml-set.c \
+                            libs/mxml-3.3.1/mxml-string.c
+MXML_CFLAGS               = -Isrc/libs/mxml-3.3.1
 MXML_LIBS                 =
 ifeq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 MXML_LIBS                 = -lpthread
