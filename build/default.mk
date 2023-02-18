@@ -1,21 +1,8 @@
 PKG_CONFIG               ?= PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) $(CROSS)pkg-config
+
 ifdef HAVE_LIBCURL_CURL_H
 CURL_LIBS                ?= $(call PKG_LIBS,libcurl)
 CURL_CFLAGS              ?= $(call PKG_CFLAGS,libcurl)
-CURL_SRCS                 =
-else
-CURL_LIBS                ?=
-CURL_CFLAGS              ?= -Isrc/libs/curl/include -Isrc/libs/curl/lib
-ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux),)
-CURL_CFLAGS              += -DHAVE_ERRNO_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_STAT_H -DHAVE_SYS_TIME_H -DHAVE_UNISTD_H \
-	-DHAVE_SYS_SOCKET_H -DHAVE_STDBOOL_H -DHAVE_BOOL_T -DHAVE_NETDB_H -DHAVE_ARPA_INET_H \
-	-DHAVE_STRUCT_TIMEVAL -DHTTP_ONLY -DHAVE_GETADDRINFO -DHAVE_FREEADDRINFO -DHAVE_NETINET_IN_H \
-	-DHAVE_RECV -DRECV_TYPE_ARG1=int -DRECV_TYPE_ARG2=void* -DRECV_TYPE_ARG3=size_t -DRECV_TYPE_ARG4=int -DRECV_TYPE_RETV=ssize_t \
-	-DHAVE_SEND -DSEND_TYPE_ARG1=int -DSEND_QUAL_ARG2=const -DSEND_TYPE_ARG2=void* -DSEND_TYPE_ARG3=size_t -DSEND_TYPE_ARG4=int -DSEND_TYPE_RETV=size_t -DSEND_4TH_ARG=0 \
-	-DHAVE_IOCTL_FIONBIO -DHAVE_SYS_IOCTL_H -DHAVE_SELECT -DHAVE_SOCKET -DOS="\"$(TARGET_OS)\"" -DSIZEOF_SHORT=2 -DSIZEOF_INT=4 -DSIZEOF_LONG=8 -DSIZEOF_SIZE_T=4
-endif
-include src/libs/curl/lib/Makefile.inc
-CURL_SRCS                 = $(addprefix libs/curl/lib/,$(CSOURCES))
 endif
 
 ifdef HAVE_LUA5_4_LUA_H

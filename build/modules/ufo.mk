@@ -111,8 +111,6 @@ $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
 	\
 	$(PNG_SRCS) \
 	\
-	$(CURL_SRCS) \
-	\
 	$(JPEG_SRCS) \
 	\
 	$(LUA_SRCS)
