@@ -47,8 +47,6 @@ $(TARGET)_SRCS      = \
 	client/renderer/r_model_obj.cpp \
 	\
 	$(PNG_SRCS) \
-	\
-	$(JPEG_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS+=\

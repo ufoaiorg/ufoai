@@ -112,8 +112,6 @@ $(TARGET)_SRCS_TMP      = $(subst $(SRCDIR)/,, \
 	\
 	$(PNG_SRCS) \
 	\
-	$(JPEG_SRCS) \
-	\
 	$(GTEST_SRCS) \
 	\
 	$(LUA_SRCS)

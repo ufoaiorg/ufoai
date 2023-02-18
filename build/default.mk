@@ -33,66 +33,10 @@ PNG_SRCS                  = \
 	libs/png/pngwtran.c \
 	libs/png/pngwutil.c
 endif
+
 ifdef HAVE_JPEGLIB_H
 JPEG_LIBS                ?= -ljpeg
 JPEG_CFLAGS              ?=
-else
-JPEG_CFLAGS              ?= -Isrc/libs/jpeg -DAVOID_TABLES
-JPEG_SRCS                 = \
-	libs/jpeg/jaricom.c \
-	libs/jpeg/jcapimin.c \
-	libs/jpeg/jcapistd.c \
-	libs/jpeg/jcarith.c \
-	libs/jpeg/jccoefct.c \
-	libs/jpeg/jccolor.c \
-	libs/jpeg/jcdctmgr.c \
-	libs/jpeg/jchuff.c \
-	libs/jpeg/jcinit.c \
-	libs/jpeg/jcmainct.c \
-	libs/jpeg/jcmarker.c \
-	libs/jpeg/jcmaster.c \
-	libs/jpeg/jcomapi.c \
-	libs/jpeg/jcparam.c \
-	libs/jpeg/jcprepct.c \
-	libs/jpeg/jcsample.c \
-	libs/jpeg/jctrans.c \
-	libs/jpeg/jdapimin.c \
-	libs/jpeg/jdapistd.c \
-	libs/jpeg/jdarith.c \
-	libs/jpeg/jdatadst.c \
-	libs/jpeg/jdatasrc.c \
-	libs/jpeg/jdcoefct.c \
-	libs/jpeg/jdcolor.c \
-	libs/jpeg/jddctmgr.c \
-	libs/jpeg/jdhuff.c \
-	libs/jpeg/jdinput.c \
-	libs/jpeg/jdmainct.c \
-	libs/jpeg/jdmarker.c \
-	libs/jpeg/jdmaster.c \
-	libs/jpeg/jdmerge.c \
-	libs/jpeg/jdpostct.c \
-	libs/jpeg/jdsample.c \
-	libs/jpeg/jdtrans.c \
-	libs/jpeg/jerror.c \
-	libs/jpeg/jfdctflt.c \
-	libs/jpeg/jfdctfst.c \
-	libs/jpeg/jfdctint.c \
-	libs/jpeg/jidctflt.c \
-	libs/jpeg/jidctint.c \
-	libs/jpeg/jquant1.c \
-	libs/jpeg/jquant2.c \
-	libs/jpeg/jutils.c \
-	libs/jpeg/jmemmgr.c
-
-ifeq ($(TARGET_OS),android)
-JPEG_SRCS += \
-	libs/jpeg/jmem-android.c \
-	libs/jpeg/jidctfst.S
-else
-JPEG_SRCS += \
-	libs/jpeg/jmemansi.c \
-	libs/jpeg/jidctfst.c
-endif
 endif
 
 ifdef HAVE_SDL2_SDL_H
