@@ -155,8 +155,8 @@ check_header_cc() {
 #include <stdlib.h>
 #include <stdio.h>
 #include <${1}>
-#if defined(LUA_VERSION_NUM) && LUA_VERSION_NUM < 503
-#error Lua version must be at least 5.3
+#if defined(LUA_VERSION_NUM) && LUA_VERSION_NUM < 504
+#error Lua version must be at least 5.4
 #endif
 EOF`
 	if [ -n "${2}" ]; then

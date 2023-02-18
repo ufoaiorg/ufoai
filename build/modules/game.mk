@@ -30,8 +30,6 @@ ifneq ($(HARD_LINKED_GAME),1)
 		game/chr_shared.cpp \
 		game/inv_shared.cpp \
 		game/inventory.cpp  \
-		\
-		$(LUA_SRCS)
 else
 	$(TARGET)_IGNORE := yes
 endif

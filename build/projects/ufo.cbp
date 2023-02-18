@@ -94,7 +94,6 @@
 			<Add option="-DHARD_LINKED_CGAME" />
 			<Add directory="../../src/libs/mxml/" />
 			<Add directory="../../src/libs/mumble/" />
-			<Add directory="../../src/libs/lua" />
 		</Compiler>
 		<Linker>
 			<Add library="SDL2" />
@@ -862,119 +861,6 @@
 		<Unit filename="../../src/game/inventory.cpp" />
 		<Unit filename="../../src/game/q_shared.cpp" />
 		<Unit filename="../../src/game/q_shared.h" />
-		<Unit filename="../../src/libs/lua/lapi.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lapi.h" />
-		<Unit filename="../../src/libs/lua/lauxlib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lauxlib.h" />
-		<Unit filename="../../src/libs/lua/lbaselib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lcode.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lcode.h" />
-		<Unit filename="../../src/libs/lua/ldblib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/ldebug.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/ldebug.h" />
-		<Unit filename="../../src/libs/lua/ldo.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/ldo.h" />
-		<Unit filename="../../src/libs/lua/ldump.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lfunc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lfunc.h" />
-		<Unit filename="../../src/libs/lua/lgc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lgc.h" />
-		<Unit filename="../../src/libs/lua/linit.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/liolib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/llex.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/llex.h" />
-		<Unit filename="../../src/libs/lua/llimits.h" />
-		<Unit filename="../../src/libs/lua/lmathlib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lmem.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lmem.h" />
-		<Unit filename="../../src/libs/lua/loadlib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lobject.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lobject.h" />
-		<Unit filename="../../src/libs/lua/lopcodes.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lopcodes.h" />
-		<Unit filename="../../src/libs/lua/loslib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lparser.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lparser.h" />
-		<Unit filename="../../src/libs/lua/lstate.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lstate.h" />
-		<Unit filename="../../src/libs/lua/lstring.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lstring.h" />
-		<Unit filename="../../src/libs/lua/lstrlib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/ltable.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/ltable.h" />
-		<Unit filename="../../src/libs/lua/ltablib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/ltm.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/ltm.h" />
-		<Unit filename="../../src/libs/lua/lua.h" />
-		<Unit filename="../../src/libs/lua/luaconf.h" />
-		<Unit filename="../../src/libs/lua/lualib.h" />
-		<Unit filename="../../src/libs/lua/lundump.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lundump.h" />
-		<Unit filename="../../src/libs/lua/lvm.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lvm.h" />
-		<Unit filename="../../src/libs/lua/lzio.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/libs/lua/lzio.h" />
-		<Unit filename="../../src/libs/lua/print.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/libs/mumble/libmumblelink.c">
 			<Option compilerVar="CC" />
 		</Unit>

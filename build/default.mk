@@ -8,7 +8,6 @@ endif
 ifdef HAVE_LUA5_4_LUA_H
 LUA_LIBS                 ?= $(call PKG_LIBS,"lua5.4 lua-5.4 lua54 lua")
 LUA_CFLAGS               ?= $(call PKG_CFLAGS,"lua5.4 lua-5.4 lua54 lua")
-LUA_SRCS                  =
 endif
 
 ifdef HAVE_LIBPNG_PNG_H

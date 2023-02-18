@@ -106,8 +106,6 @@ $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
 	$(MUMBLE_SRCS) \
 	\
 	$(PNG_SRCS) \
-	\
-	$(LUA_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), openbsd netbsd freebsd linux openpandora),)
 	$(TARGET)_SRCS += \
