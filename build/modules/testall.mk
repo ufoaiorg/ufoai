@@ -110,10 +110,6 @@ $(TARGET)_SRCS_TMP      = $(subst $(SRCDIR)/,, \
 	\
 	$(MUMBLE_SRCS) \
 	\
-	$(SDL_MIXER_SRCS) \
-	\
-	$(SDL_TTF_SRCS) \
-	\
 	$(PNG_SRCS) \
 	\
 	$(JPEG_SRCS) \

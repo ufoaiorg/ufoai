@@ -27,7 +27,6 @@ MODE=
 CROSS=
 USE_CCACHE=
 STATIC=
-DISABLE_SDL2=
 W2K=
 SSE=
 DISABLE_DEPENDENCY_TRACKING=
@@ -248,14 +247,9 @@ check_headers() {
 	check_header "curl/curl.h" "libcurl"
 	check_header "lua.h" "lua5.4"
 	check_header_bundled "mxml.h" "mxml"
-	check_header "SDL.h" "sdl"
-	check_header "SDL_mixer.h" "SDL_mixer"
-	check_header "SDL_ttf.h" "SDL_ttf"
-	if [ "$DISABLE_SDL2" != "1" ]; then
-		check_header_bundled "SDL.h" "sdl2"
-		check_header_bundled "SDL_mixer.h" "SDL2_mixer"
-		check_header_bundled "SDL_ttf.h" "SDL2_ttf"
-	fi
+	check_header "SDL.h" "sdl2"
+	check_header "SDL_mixer.h" "SDL2_mixer"
+	check_header "SDL_ttf.h" "SDL2_ttf"
 	check_header "picomodel.h" "picomodel"
 	check_header "gtk/gtk.h" "gtk+-2.0"
 	check_header "gtksourceview/gtksourceview.h" "gtksourceview-2.0"
@@ -266,7 +260,7 @@ check_headers() {
 		set_var "uforadiant_DISABLE" "yes"
 	fi
 
-	if ([ "${HAVE_SDL_SDL_H}" != "1" ] && [ "${HAVE_SDL2_SDL_H}" != "1" ]); then
+	if [ "${HAVE_SDL2_SDL_H}" != "1" ]; then
 		for i in `get_modules`; do
 			if [ "$i" != "uforadiant" ]; then
 				set_var "${i}_DISABLE" "yes"
@@ -274,15 +268,15 @@ check_headers() {
 		done
 	fi
 
-#	if ([ "${HAVE_SDL_MIXER_SDL_MIXER_H}" != "1" ] && [ "${HAVE_SDL2_MIXER_SDL_MIXER_H}" != "1" ]); then
-#		set_var "ufo_DISABLE" "yes"
-#		set_var "testall_DISABLE" "yes"
-#	fi
+	if [ "${HAVE_SDL2_MIXER_SDL_MIXER_H}" != "1" ]; then
+		set_var "ufo_DISABLE" "yes"
+		set_var "testall_DISABLE" "yes"
+	fi
 
-#	if ([ "${HAVE_SDL_TTF_SDL_TTF_H}" != "1" ] && [ "${HAVE_SDL2_TTF_SDL_TTF_H}" != "1" ]); then
-#		set_var "ufo_DISABLE" "yes"
-#		set_var "testall_DISABLE" "yes"
-#	fi
+	if [ "${HAVE_SDL2_TTF_SDL_TTF_H}" != "1" ]; then
+		set_var "ufo_DISABLE" "yes"
+		set_var "testall_DISABLE" "yes"
+	fi
 }
 
 check_compiler() {
@@ -361,10 +355,7 @@ usage() {
 	fi
 	echo " --disable-execinfo         disable backtraces for crashes"
 	echo " --disable-signals          disable the use of a signal handler"
-	echo " --disable-sdl2             disable the use of SDL2.x and prefer to use SDL1.x"
 	echo " --with-embedded-mxml       use the copy of mxml bundled with the source"
-	echo " --with-embedded-SDL2_mixer use the copy of SDL_mixer bundled with the source"
-	echo " --with-embedded-SDL2_ttf   use the copy of SDL_ttf bundled with the source"
 	echo
 	echo " --target-os=               specify the target os"
 	(cd build/platforms; for i in *.mk; do echo "  * ${i%.mk}"; done)
@@ -574,9 +565,6 @@ while [ $# -gt 0 ]; do
 		;;
 	--enable-signals)
 		USE_SIGNALS=1
-		;;
-	--disable-sdl2)
-		DISABLE_SDL2=1
 		;;
 	--with-embedded-*)
 		set_var "WITH_EMBEDDED_${1#--with-embedded-}" "1"
