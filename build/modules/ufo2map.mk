@@ -64,8 +64,6 @@ $(TARGET)_SRCS      = \
 	common/tracing.cpp \
 	common/routing.cpp \
 	common/ioapi.cpp \
-	\
-	$(PNG_SRCS) \
 
 ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS+=\

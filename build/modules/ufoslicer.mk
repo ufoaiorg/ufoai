@@ -35,8 +35,6 @@ $(TARGET)_SRCS      = \
 	shared/parse.cpp \
 	shared/shared.cpp \
 	shared/utf8.cpp \
-	\
-	$(PNG_SRCS) \
 
 ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS+=\
