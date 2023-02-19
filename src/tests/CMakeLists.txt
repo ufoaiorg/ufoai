@@ -34,6 +34,7 @@ find_package(SDL_mixer)
 find_package(SDL_ttf)
 find_package(VORBIS)
 find_package(MXML)
+find_package(GTest)
 
 set(UFOTESTALL_SOURCES
 	../client/battlescape/cl_actor.cpp
@@ -410,7 +411,6 @@ set(UFOTESTALL_SOURCES
 	test_ui_level2.cpp
 	test_webapi.cpp
 
-	../libs/gtest/src/gtest-all.cc
 	../libs/mumble/libmumblelink.c
 )
 
@@ -462,8 +462,6 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE -DHARD_LINKED_GAME)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DHARD_LINKED_CGAME)
 
 target_include_directories(${PROJECT_NAME}
-	PRIVATE ../libs/gtest
-	PRIVATE ../libs/gtest/include
 	PRIVATE ../libs/mumble
 	PRIVATE ${LUA_INCLUDE_DIR}
 	PRIVATE ${SDL_INCLUDE_DIR}
@@ -478,6 +476,7 @@ target_include_directories(${PROJECT_NAME}
 	PRIVATE ${ZLIB_INCLUDE_DIRS}
 	PRIVATE ${X11_INCLUDE_DIR}
 	PRIVATE ${MXML_INCLUDE_DIR}
+	PRIVATE ${GTEST_INCLUDE_DIRS}
 )
 
 if(MINGW)
@@ -500,6 +499,7 @@ target_link_libraries(${PROJECT_NAME}
 	${ZLIB_LIBRARIES}
 	${X11_LIBRARIES}
 	${MXML_LIBRARY}
+	${GTEST_LIBRARIES}
 )
 
 if(WIN32)

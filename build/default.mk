@@ -43,9 +43,8 @@ OPENAL_LIBS              ?= $(call PKG_LIBS,openal)
 ifdef HAVE_THEORA_THEORA_H
 THEORA_CFLAGS            ?= $(call PKG_CFLAGS,theora)
 THEORA_LIBS              ?= $(call PKG_LIBS,theora)
-else
-
 endif
+
 GLIB_CFLAGS              ?= $(call PKG_CFLAGS,glib-2.0)
 GLIB_LIBS                ?= $(call PKG_LIBS,glib-2.0)
 GDK_PIXBUF_CFLAGS        ?= $(call PKG_CFLAGS,gdk-pixbuf-2.0)
@@ -159,6 +158,7 @@ else
 PICOMODEL_SRCS            =
 endif
 
-GTEST_CFLAGS             ?= -Isrc/libs/gtest/include -Isrc/libs/gtest
-GTEST_LIBS               += -lpthread
-GTEST_SRCS                = libs/gtest/src/gtest-all.cc
+ifdef HAVE_GTEST_GTEST_H
+GTEST_LIBS           ?= $(call PKG_LIBS,gtest)
+GTEST_CFLAGS         ?= $(call PKG_CFLAGS,gtest)
+endif

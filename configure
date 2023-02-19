@@ -250,6 +250,7 @@ check_headers() {
 	check_header "SDL.h" "sdl2"
 	check_header "SDL_mixer.h" "SDL2_mixer"
 	check_header "SDL_ttf.h" "SDL2_ttf"
+	check_header "gtest/gtest.h"
 	check_header "picomodel.h" "picomodel"
 	check_header "gtk/gtk.h" "gtk+-2.0"
 	check_header "gtksourceview/gtksourceview.h" "gtksourceview-2.0"
