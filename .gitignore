@@ -54,3 +54,5 @@ Thumbs.db
 /CMakeFiles
 /CMakeCache.txt
 /.vscode/
+/.pc/
+/patches/
