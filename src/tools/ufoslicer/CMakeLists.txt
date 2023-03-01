@@ -26,6 +26,7 @@ find_package(OpenGL)
 find_package(PNG)
 find_package(SDL)
 find_package(ZLIB)
+find_package(Lua 5.3)
 
 set(UFOSLICER_SOURCES
 	../../common/bspslicer.cpp
@@ -91,6 +92,7 @@ target_include_directories(${PROJECT_NAME}
 	PRIVATE ${JPEG_INCLUDE_DIRS}
 	PRIVATE ${PNG_INCLUDE_DIRS}
 	PRIVATE ${ZLIB_INCLUDE_DIRS}
+        PRIVATE ${LUA_INCLUDE_DIR}
 )
 
 if(MINGW)
@@ -105,6 +107,7 @@ target_link_libraries(${PROJECT_NAME}
 	${JPEG_LIBRARIES}
 	${PNG_LIBRARIES}
 	${ZLIB_LIBRARIES}
+	${LUA_LIBRARY}
 )
 
 if(WIN32)

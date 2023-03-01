@@ -22,6 +22,7 @@ project(ufoded DESCRIPTION "UFO:AI Dedicated server.")
 find_package(CURL)
 find_package(SDL)
 find_package(ZLIB)
+find_package(Lua 5.3)
 
 set(UFODED_SOURCES
 	../common/bsp.cpp
@@ -139,12 +140,14 @@ target_include_directories(${PROJECT_NAME}
 	PRIVATE ${SDL_INCLUDE_DIR}
 	PRIVATE ${CURL_INCLUDE_DIRS}
 	PRIVATE ${ZLIB_INCLUDE_DIRS}
+	PRIVATE ${LUA_INCLUDE_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME}
 	${SDL_LIBRARY}
 	${CURL_LIBRARIES}
 	${ZLIB_LIBRARIES}
+	${LUA_LIBRARY}
 )
 
 if(WIN32)
