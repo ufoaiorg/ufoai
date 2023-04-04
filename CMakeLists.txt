@@ -69,6 +69,12 @@ if(NOT CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
          file(COPY ${CMAKE_SOURCE_DIR}/${RES} DESTINATION ${CMAKE_BINARY_DIR})
       endif()
    endforeach(RES)
+   file(GLOB CHAPTERS RELATIVE ${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/src/docs/tex/chapters_*)
+   foreach(CHAP ${CHAPTERS})
+      if(NOT EXISTS ${CMAKE_BINARY_DIR}/${CHAP})
+         file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/${CHAP})
+      endif()
+   endforeach(CHAP)
 endif()
 
 # -std=c++11 is bugged on cygwin/mingw
