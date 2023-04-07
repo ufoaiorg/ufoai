@@ -63,7 +63,7 @@ $(TARGET)_SRCS      = \
 	common/unzip.cpp \
 	common/tracing.cpp \
 	common/routing.cpp \
-	common/ioapi.cpp \
+	common/ioapi.cpp
 
 ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS+=\

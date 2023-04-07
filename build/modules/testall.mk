@@ -108,8 +108,7 @@ $(TARGET)_SRCS_TMP      = $(subst $(SRCDIR)/,, \
 	\
 	$(MXML_SRCS) \
 	\
-	$(MUMBLE_SRCS) \
-
+	$(MUMBLE_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS_TMP += \

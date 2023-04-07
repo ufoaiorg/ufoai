@@ -8,8 +8,8 @@ endif
 
 $(TARGET)_LINKER   := $(CXX)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -DCOMPILE_MAP $(SDL_CFLAGS) $(PNG_CFLAGS) $(JPEG_CFLAGS)
-$(TARGET)_LDFLAGS  += $(PNG_LIBS) $(JPEG_LIBS) -lm -lz $(SDL_LIBS)
+$(TARGET)_CFLAGS   += -DCOMPILE_MAP $(SDL_CFLAGS) $(PNG_CFLAGS) $(JPEG_CFLAGS) $(LUA_CFLAGS)
+$(TARGET)_LDFLAGS  += $(PNG_LIBS) $(JPEG_LIBS) -lm -lz $(SDL_LIBS) $(LUA_LIBS)
 
 ifneq ($(findstring $(TARGET_OS), openbsd netbsd freebsd),)
 	$(TARGET)_LDFLAGS += -lexecinfo
@@ -34,7 +34,7 @@ $(TARGET)_SRCS      = \
 	shared/images.cpp \
 	shared/parse.cpp \
 	shared/shared.cpp \
-	shared/utf8.cpp \
+	shared/utf8.cpp
 
 ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
 	$(TARGET)_SRCS+=\

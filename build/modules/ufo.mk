@@ -103,7 +103,7 @@ $(TARGET)_SRCS      = $(subst $(SRCDIR)/,, \
 	\
 	$(MXML_SRCS)\
 	\
-	$(MUMBLE_SRCS) \
+	$(MUMBLE_SRCS)
 
 ifneq ($(findstring $(TARGET_OS), openbsd netbsd freebsd linux openpandora),)
 	$(TARGET)_SRCS += \
