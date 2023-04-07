@@ -29,7 +29,7 @@ ifneq ($(HARD_LINKED_GAME),1)
 		game/q_shared.cpp \
 		game/chr_shared.cpp \
 		game/inv_shared.cpp \
-		game/inventory.cpp  \
+		game/inventory.cpp
 else
 	$(TARGET)_IGNORE := yes
 endif
