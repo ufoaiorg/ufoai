@@ -1336,3 +1336,46 @@ TEST_F(CampaignTest, testGeoscapeMaps)
 		}
 	}
 }
+
+TEST_F(CampaignTest, testAlienBaseAtStart)
+{
+	bool exists = AB_Exists();
+	int count = AB_GetAlienBaseNumber();
+	ASSERT_FALSE(exists);
+	ASSERT_EQ(0, count);
+}
+
+TEST_F(CampaignTest, testAlienBaseBuild)
+{
+	const vec2_t pos = {1, -89};
+
+	alienBase_t* alienBase = AB_BuildBase(pos);
+
+	ASSERT_NE(nullptr, alienBase);
+	ASSERT_TRUE(AB_Exists());
+	ASSERT_EQ(1, AB_GetAlienBaseNumber());
+	ASSERT_EQ(50.f, alienBase->stealth);
+	ASSERT_EQ(0, alienBase->supply);
+	ASSERT_EQ(1, alienBase->pos[0]);
+	ASSERT_EQ(-89, alienBase->pos[1]);
+}
+
+TEST_F(CampaignTest, testAlienBaseSearchedByNationsFindBase)
+{
+	const vec2_t phalanxPos = {0, 0};
+	base_t* base= CreateBase("PHALANX", phalanxPos, true);
+	/* @TODO: We need a function to return a position within a particular nation that can
+	be nullptr nation. For now this position should be around Antartica with no nation */
+	const vec2_t alienPos = {0, -89};
+	alienBase_t* alienBase = AB_BuildBase(alienPos);
+	alienBase->stealth = 1.0f;
+	alienBase->supply = 2;
+
+	AB_BaseSearchedByNations();
+
+	ASSERT_NE(nullptr, alienBase);
+	ASSERT_GT(0.0f, alienBase->stealth);
+	mission_t* mission = MIS_GetByIdx(1);
+	ASSERT_NE(nullptr, mission);
+	ASSERT_EQ(alienBase, mission->data.alienBase);
+}
