@@ -254,6 +254,10 @@ void AB_BaseSearchedByNations (void)
 		probability *= base->supply;
 
 		base->stealth -= probability;
+		if (base->stealth < 0) {
+			base->stealth = -10.0f;		/* just to avoid rounding errors */
+			CP_SpawnAlienBaseMission(base);
+		}
 	}
 }
 
