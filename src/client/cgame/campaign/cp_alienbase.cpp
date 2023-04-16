@@ -231,10 +231,10 @@ void AB_UpdateStealthForAllBase (void)
  */
 void AB_BaseSearchedByNations (void)
 {
-	const int daysPerWeek = 7;				/**< delay (in days) between base stealth update */
-	float probability = 1.0f;				/**< base probability, will be modified below */
+	const int daysPerWeek = 7;			/**< delay (in days) between base stealth update */
+	float probability = 1.0f;			/**< base probability, will be modified below */
 	const float xviLevel = 20.0f;			/**< xviInfection value of nation that will divide probability to
-											 * find alien base by 2*/
+							  *  find alien base by 2 */
 
 	/* Stealth is updated only once a week */
 	if (ccs.date.getDateAsDays() % daysPerWeek)
