@@ -445,7 +445,7 @@ elseif(APPLE)
 endif()
 
 # ufotestall is executable
-add_executable(${PROJECT_NAME} ${UFOTESTALL_SOURCES})
+add_executable(${PROJECT_NAME} EXCLUDE_FROM_ALL ${UFOTESTALL_SOURCES})
 add_dependencies(${PROJECT_NAME} "game")
 
 # For generic no-config case (e.g. with mingw, gcc, ...)

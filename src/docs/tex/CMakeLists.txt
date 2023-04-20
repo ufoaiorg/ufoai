@@ -20,7 +20,7 @@ project(manual DESCRIPTION "The user manual(s)" LANGUAGES NONE)
 
 find_package(LATEX COMPONENTS PDFLATEX REQUIRED) 
 
-add_custom_target(manual ALL) # Entry point of execution.
+add_custom_target(manual) # Entry point of execution.
 
 file(GLOB TEX_MANUALS ufo-manual_*.tex)
 

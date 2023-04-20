@@ -18,7 +18,7 @@
 cmake_minimum_required(VERSION 3.15)
 
 # Project settings
-project(ufoai)
+project(ufoai LANGUAGES NONE)
 
 # cmake paths
 set(CMAKE_CONFIG_DIR "${CMAKE_SOURCE_DIR}/cmake/config")
@@ -84,10 +84,13 @@ elseif(!MSVC)
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 endif()
 
+add_custom_target(tools) # Complex target for console developer tools
+
 option(DISABLE_GAME "Disable tactical battle library building")
 option(DISABLE_UFO "Disable standalone client building")
 option(DISABLE_UFODED "Disable dedicated server building")
 option(DISABLE_TESTS "Disable Google tests building")
+option(DISABLE_TOOLS "Disable console developer tools building")
 option(DISABLE_UFO2MAP "Disable ufo2map map compiler building")
 option(DISABLE_UFOMODEL "Disable ufomodel lightmap pre-compiler building")
 option(DISABLE_UFOSLICER "Disable ufoslicer 2D map overlays creator building")
@@ -108,13 +111,13 @@ endif()
 if(NOT DISABLE_UFODED AND NOT DISABLE_GAME) 
    add_subdirectory("src/server")
 endif()
-if(NOT DISABLE_UFO2MAP)
+if(NOT DISABLE_UFO2MAP AND NOT DISABLE_TOOLS)
    add_subdirectory("src/tools/ufo2map")
 endif()
-if(NOT DISABLE_UFOMODEL)
+if(NOT DISABLE_UFOMODEL AND NOT DISABLE_TOOLS) 
    add_subdirectory("src/tools/ufomodel")
 endif()
-if(NOT DISABLE_UFOSLICER)
+if(NOT DISABLE_UFOSLICER AND NOT DISABLE_TOOLS)
    add_subdirectory("src/tools/ufoslicer")
 endif()
 if(NOT DISABLE_TESTS AND NOT DISABLE_GAME) 

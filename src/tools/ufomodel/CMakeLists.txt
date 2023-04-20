@@ -79,7 +79,8 @@ elseif(APPLE)
 endif()
 
 # ufomodel is executable
-add_executable(${PROJECT_NAME} ${UFOMODEL_SOURCES})
+add_executable(${PROJECT_NAME} EXCLUDE_FROM_ALL ${UFOMODEL_SOURCES})
+add_dependencies(tools ${PROJECT_NAME})
 
 # For generic no-config case (e.g. with mingw, gcc, ...)
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})

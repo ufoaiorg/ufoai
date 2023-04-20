@@ -16,7 +16,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 # Project settings
-project(doxygen-docs LANGUAGES NONE)
+project(doxygen-docs DESCRIPTION "Doxygen documentation generating" LANGUAGES NONE)
 
 find_package(Doxygen REQUIRED OPTIONAL_COMPONENTS dot) 
 
@@ -44,6 +44,6 @@ set(DOXYGEN_FILE_PATTERNS *.c *.cpp *.h *.m *.mm *.glsl)
 set(DOXYGEN_EXCLUDE ${CMAKE_SOURCE_DIR}/src/libs
                     ${CMAKE_SOURCE_DIR}/src/tools/radiant)
 
-doxygen_add_docs(${PROJECT_NAME} ${SRC} COMMENT "Generating doxygen docs")
+doxygen_add_docs(${PROJECT_NAME} ${SRC} COMMENT "Compile the developer code documentation")
 
 set_target_properties(${PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "doxygen.warnings;ufosource.tag")
