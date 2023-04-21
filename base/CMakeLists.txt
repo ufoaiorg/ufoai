@@ -20,39 +20,72 @@ project(base DESCRIPTION "Generate the pk3 archives for the installers" LANGUAGE
 
 set(PACKS base materials ufos shaders media videos music snd models textures pics)
 
-file(GLOB_RECURSE base RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
-        *.cfg mapcycle*.txt ai/*.lua save/*/*)
-file(GLOB_RECURSE materials RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
-        materials/*.mat)
-file(GLOB_RECURSE ufos RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
-        ufos/*.ufo ufos/ui/*.lua)
-file(GLOB_RECURSE shaders RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
-        shaders/*.glsl)
-file(GLOB_RECURSE media RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
-        media/*.ttf media/*.otf)
-file(GLOB_RECURSE videos RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
-        videos/*.roq videos/*.ogm)
-file(GLOB_RECURSE music RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
-        music/*.ogg)
-file(GLOB_RECURSE snd RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
-        sound/*.ogg sound/*.wav)
-file(GLOB_RECURSE pics RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
-        pics/*.jpg pics/*.tga pics/*.png)
-file(GLOB_RECURSE textures RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
-        textures/*.jpg textures/*.tga textures/*.png)
-file(GLOB_RECURSE models RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
-        models/*.mdx models/*.md2 models/*.md3 models/*.dpm models/*.obj
-        models/*.jpg models/*.png models/*.tga models/*.anm)
+file(GLOB_RECURSE base
+	RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+	CONFIGURE_DEPENDS
+	*.cfg mapcycle*.txt ai/*.lua save/*/*
+)
+
+file(GLOB_RECURSE materials
+	RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+	CONFIGURE_DEPENDS materials/*.mat
+)
+
+file(GLOB_RECURSE ufos
+	RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+	CONFIGURE_DEPENDS ufos/*.ufo ufos/ui/*.lua
+)
+
+file(GLOB_RECURSE shaders
+	RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+	CONFIGURE_DEPENDS shaders/*.glsl
+)
+
+file(GLOB_RECURSE media
+	RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+	CONFIGURE_DEPENDS media/*.ttf media/*.otf
+)
+
+file(GLOB_RECURSE videos
+	RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+	CONFIGURE_DEPENDS videos/*.roq videos/*.ogm
+)
+
+file(GLOB_RECURSE music
+	RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+	CONFIGURE_DEPENDS music/*.ogg
+)
+
+file(GLOB_RECURSE snd
+	RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+	CONFIGURE_DEPENDS sound/*.ogg sound/*.wav
+)
+
+file(GLOB_RECURSE pics
+	RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+	CONFIGURE_DEPENDS pics/*.jpg pics/*.tga pics/*.png
+)
+
+file(GLOB_RECURSE textures
+	RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+	CONFIGURE_DEPENDS textures/*.jpg textures/*.tga textures/*.png
+)
+
+file(GLOB_RECURSE models
+	RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+	CONFIGURE_DEPENDS models/*.mdx models/*.md2 models/*.md3 models/*.dpm models/*.obj
+	models/*.jpg models/*.png models/*.tga models/*.anm
+)
 
 add_custom_target(pk3)
 
-foreach(PK3 IN ITEMS ${PACKS})
-   add_custom_command(OUTPUT 0${PK3}.pk3
-      COMMAND ${CMAKE_COMMAND} -E tar cf ${CMAKE_CURRENT_BINARY_DIR}/0${PK3}.pk3 --format=zip ${${PK3}}
-      DEPENDS "${${PK3}}"
-      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-      COMMENT "Creating ${PK3} pack..."
-   )
-   add_custom_target(0${PK3} DEPENDS 0${PK3}.pk3)
-   add_dependencies(pk3 0${PK3})
+foreach (PK3 IN ITEMS ${PACKS})
+	add_custom_command(OUTPUT 0${PK3}.pk3
+		COMMAND ${CMAKE_COMMAND} -E tar cf ${CMAKE_CURRENT_BINARY_DIR}/0${PK3}.pk3 --format=zip ${${PK3}}
+		DEPENDS "${${PK3}}"
+		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+		COMMENT "Creating ${PK3} pack..."
+	)
+	add_custom_target(0${PK3} DEPENDS 0${PK3}.pk3)
+	add_dependencies(pk3 0${PK3})
 endforeach(PK3)

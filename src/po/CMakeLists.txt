@@ -26,55 +26,54 @@ project(lang DESCRIPTION "Translations for UFO:AI." LANGUAGES NONE)
 find_package(Gettext REQUIRED)
 
 add_custom_target(lang)
-        
+
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
-    "${CMAKE_CURRENT_SOURCE_DIR}/LINGUAS"
+	"${CMAKE_CURRENT_SOURCE_DIR}/LINGUAS"
 )
 
 message(DEBUG " msgmerge: ${GETTEXT_MSGFMT_EXECUTABLE}")
 message(DEBUG " i18n domains: ${TEXTDOMAINS}")
 
-foreach(TEXTDOMAIN IN ITEMS ${TEXTDOMAINS})
-    file(GLOB ${TEXTDOMAIN}_POFILES ${CMAKE_CURRENT_SOURCE_DIR}/${TEXTDOMAIN}-*.po)
-    if("${TEXTDOMAIN}" STREQUAL "ufoai")
-        set(OUTDIR base)
-    elseif("${TEXTDOMAIN}" STREQUAL "uforadiant")
-        set(OUTDIR radiant)
-    endif()
-    foreach(POFILE IN ITEMS ${${TEXTDOMAIN}_POFILES})
-        string(REGEX REPLACE ".*${TEXTDOMAIN}-([A-Za-z_]+)\.po" "\\1" LANG "${POFILE}")
-        set(MO_DIRECTORY ${CMAKE_BINARY_DIR}/${OUTDIR}/i18n/${LANG}/LC_MESSAGES)
-        set(MOFILE ${MO_DIRECTORY}/${TEXTDOMAIN}.mo)
-	string(APPEND ${TEXTDOMAIN}_LINGUAS "${LANG};")
-	string(APPEND ${TEXTDOMAIN}_MO_DIRECTORIES "${MO_DIRECTORY};")
-	string(APPEND ${TEXTDOMAIN}_MOFILES "${MOFILE};")
-    endforeach(POFILE)
+foreach (TEXTDOMAIN IN ITEMS ${TEXTDOMAINS})
+	file(GLOB ${TEXTDOMAIN}_POFILES ${CMAKE_CURRENT_SOURCE_DIR}/${TEXTDOMAIN}-*.po)
+	if ("${TEXTDOMAIN}" STREQUAL "ufoai")
+		set(OUTDIR base)
+	elseif ("${TEXTDOMAIN}" STREQUAL "uforadiant")
+		set(OUTDIR radiant)
+	endif()
+	foreach (POFILE IN ITEMS ${${TEXTDOMAIN}_POFILES})
+		string(REGEX REPLACE ".*${TEXTDOMAIN}-([A-Za-z_]+)\.po" "\\1" LANG "${POFILE}")
+		set(MO_DIRECTORY ${CMAKE_BINARY_DIR}/${OUTDIR}/i18n/${LANG}/LC_MESSAGES)
+		set(MOFILE ${MO_DIRECTORY}/${TEXTDOMAIN}.mo)
+		string(APPEND ${TEXTDOMAIN}_LINGUAS "${LANG};")
+		string(APPEND ${TEXTDOMAIN}_MO_DIRECTORIES "${MO_DIRECTORY};")
+		string(APPEND ${TEXTDOMAIN}_MOFILES "${MOFILE};")
+	endforeach(POFILE)
 
-    message(DEBUG " ${TEXTDOMAIN} linguas: ${${TEXTDOMAIN}_LINGUAS}")
+	message(DEBUG " ${TEXTDOMAIN} linguas: ${${TEXTDOMAIN}_LINGUAS}")
 
-    file(MAKE_DIRECTORY ${${TEXTDOMAIN}_MO_DIRECTORIES})
+	file(MAKE_DIRECTORY ${${TEXTDOMAIN}_MO_DIRECTORIES})
 
-    add_custom_target(
-        ${TEXTDOMAIN}_mofiles
-        DEPENDS ${${TEXTDOMAIN}_MOFILES}
-    )
+	add_custom_target(
+		${TEXTDOMAIN}_mofiles
+		DEPENDS ${${TEXTDOMAIN}_MOFILES}
+	)
 
-    add_dependencies(lang ${TEXTDOMAIN}_mofiles)
+	add_dependencies(lang ${TEXTDOMAIN}_mofiles)
 
-    foreach(LANG IN ITEMS ${${TEXTDOMAIN}_LINGUAS})
-        set(POFILE ${TEXTDOMAIN}-${LANG}.po)
-	set(MO_DIRECTORY ${CMAKE_BINARY_DIR}/${OUTDIR}/i18n/${LANG}/LC_MESSAGES)
-	set(MOFILE ${MO_DIRECTORY}/${TEXTDOMAIN}.mo)
-        add_custom_command(OUTPUT ${MOFILE}
-	    COMMAND
-                ${GETTEXT_MSGFMT_EXECUTABLE}
-	            --output-file=${MOFILE}
-                    ${POFILE}
-  	    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-	    DEPENDS ${POFILE}
-            COMMENT "${TEXTDOMAIN} po-compile: ${LANG}"
-	    VERBATIM
-        )
-    endforeach(LANG)
-
+	foreach(LANG IN ITEMS ${${TEXTDOMAIN}_LINGUAS})
+		set(POFILE ${TEXTDOMAIN}-${LANG}.po)
+		set(MO_DIRECTORY ${CMAKE_BINARY_DIR}/${OUTDIR}/i18n/${LANG}/LC_MESSAGES)
+		set(MOFILE ${MO_DIRECTORY}/${TEXTDOMAIN}.mo)
+		add_custom_command(OUTPUT ${MOFILE}
+			COMMAND
+				${GETTEXT_MSGFMT_EXECUTABLE}
+				--output-file=${MOFILE}
+				${POFILE}
+			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+			DEPENDS ${POFILE}
+				COMMENT "${TEXTDOMAIN} po-compile: ${LANG}"
+			VERBATIM
+		)
+	endforeach(LANG)
 endforeach(TEXTDOMAIN)

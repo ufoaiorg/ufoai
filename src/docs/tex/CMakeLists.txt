@@ -24,34 +24,31 @@ add_custom_target(manual) # Entry point of execution.
 
 file(GLOB TEX_MANUALS ufo-manual_*.tex)
 
-foreach(TEX_MANUAL IN ITEMS ${TEX_MANUALS})
-   string(REGEX REPLACE ".*ufo-manual_([A-Za-z_]+)\.tex" "\\1" LANG "${TEX_MANUAL}")
-   set(PDF_MANUAL ufo-manual_${LANG}.pdf)
-   set(HEADER header_${LANG}.tex)
-   file(GLOB CHAPTERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} chapters_${LANG}/*.tex)
-   string(REPLACE ".tex" ".aux" BYPRODUCTS "${CHAPTERS}")
-   list(APPEND BYPRODUCTS
-      header_${LANG}.aux
-      ufo-manual_${LANG}.aux
-      ufo-manual_${LANG}.log
-      ufo-manual_${LANG}.out
-      ufo-manual_${LANG}.toc
-      ufo-manual_${LANG}.pdfsync
-   )
+foreach (TEX_MANUAL IN ITEMS ${TEX_MANUALS})
+	string(REGEX REPLACE ".*ufo-manual_([A-Za-z_]+)\.tex" "\\1" LANG "${TEX_MANUAL}")
+	set(PDF_MANUAL ufo-manual_${LANG}.pdf)
+	set(HEADER header_${LANG}.tex)
+	file(GLOB CHAPTERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} chapters_${LANG}/*.tex)
+	string(REPLACE ".tex" ".aux" BYPRODUCTS "${CHAPTERS}")
+	list(APPEND BYPRODUCTS
+		header_${LANG}.aux
+		ufo-manual_${LANG}.aux
+		ufo-manual_${LANG}.log
+		ufo-manual_${LANG}.out
+		ufo-manual_${LANG}.toc
+		ufo-manual_${LANG}.pdfsync
+	)
 
-   add_custom_command(OUTPUT ${PDF_MANUAL}
-      COMMAND ${PDFLATEX_COMPILER} -output-directory=${CMAKE_BINARY_DIR}/src/docs/tex
-        ${TEX_MANUAL}
-      COMMAND ${PDFLATEX_COMPILER} -output-directory=${CMAKE_BINARY_DIR}/src/docs/tex
-        ${TEX_MANUAL}
-      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-      COMMENT "Assembling the pdf manual for lang ${LANG}."
-      DEPENDS ${TEX_MANUAL} ${HEADER} ${CHAPTERS}
-      BYPRODUCTS ${BYPRODUCTS}
-   )
+	add_custom_command(OUTPUT ${PDF_MANUAL}
+		COMMAND ${PDFLATEX_COMPILER} -output-directory=${CMAKE_BINARY_DIR}/src/docs/tex ${TEX_MANUAL}
+		COMMAND ${PDFLATEX_COMPILER} -output-directory=${CMAKE_BINARY_DIR}/src/docs/tex ${TEX_MANUAL}
+		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+		COMMENT "Assembling the pdf manual for lang ${LANG}."
+		DEPENDS ${TEX_MANUAL} ${HEADER} ${CHAPTERS}
+		BYPRODUCTS ${BYPRODUCTS}
+	)
 
-   add_custom_target(manual-${LANG} DEPENDS ${PDF_MANUAL})
+	add_custom_target(manual-${LANG} DEPENDS ${PDF_MANUAL})
 
-   add_dependencies(manual manual-${LANG})
-   
+	add_dependencies(manual manual-${LANG})
 endforeach(TEX_MANUAL)

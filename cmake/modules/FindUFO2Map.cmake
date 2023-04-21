@@ -27,10 +27,10 @@ find_program(UFO2Map_EXECUTABLE NAMES ufo2map)
 find_package_handle_standard_args(UFO2Map REQUIRED_VARS UFO2Map_EXECUTABLE)
 
 if (UFO2Map_FOUND)
-   mark_as_advanced(UFO2Map_EXECUTABLE)
+	mark_as_advanced(UFO2Map_EXECUTABLE)
 endif()
 
 if (UFO2Map_FOUND AND NOT TARGET ufo2map)
-   add_executable(ufo2map IMPORTED)
-   set_property(TARGET ufo2map PROPERTY IMPORTED_LOCATION ${UFO2Map_EXECUTABLE})
+	add_executable(ufo2map IMPORTED)
+	set_property(TARGET ufo2map PROPERTY IMPORTED_LOCATION ${UFO2Map_EXECUTABLE})
 endif()

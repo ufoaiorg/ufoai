@@ -18,7 +18,7 @@
 # Project settings
 project(doxygen-docs DESCRIPTION "Doxygen documentation generating" LANGUAGES NONE)
 
-find_package(Doxygen REQUIRED OPTIONAL_COMPONENTS dot) 
+find_package(Doxygen REQUIRED OPTIONAL_COMPONENTS dot)
 
 set(SRC ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/base/shaders)
 set(DOXYGEN_PROJECT_NAME "UFO: Alien Invasion")
@@ -41,8 +41,10 @@ set(DOXYGEN_GENERATE_TREEVIEW YES)
 set(DOXYGEN_GENERATE_TAGFILE ${CMAKE_CURRENT_BINARY_DIR}/ufosource.tag)
 set(DOXYGEN_UML_LOOK YES)
 set(DOXYGEN_FILE_PATTERNS *.c *.cpp *.h *.m *.mm *.glsl)
-set(DOXYGEN_EXCLUDE ${CMAKE_SOURCE_DIR}/src/libs
-                    ${CMAKE_SOURCE_DIR}/src/tools/radiant)
+set(DOXYGEN_EXCLUDE
+	${CMAKE_SOURCE_DIR}/src/libs
+	${CMAKE_SOURCE_DIR}/src/tools/radiant
+)
 
 doxygen_add_docs(${PROJECT_NAME} ${SRC} COMMENT "Compile the developer code documentation")
 
