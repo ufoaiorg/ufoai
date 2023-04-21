@@ -342,7 +342,7 @@ if(WIN32)
 endif()
 
 # uforadiant is executable
-add_executable(${PROJECT_NAME} ${UFORADIANT_SOURCES})
+add_executable(${PROJECT_NAME} EXCLUDE_FROM_ALL ${UFORADIANT_SOURCES})
 
 # For generic no-config case (e.g. with mingw, gcc, ...)
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/radiant)

@@ -2,4 +2,4 @@
 /*.dll
 /*.dylib
 /*.so
-/i18n
+/i18n/*
