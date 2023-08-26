@@ -103,19 +103,19 @@ do
 
 						if (object_type == "mission") then
 							ufo.pop_window(false)
-							ufo.cmd(string.format("geo_mission_select %q", object_id))
+							ufo.cmd(string.format("geo_mission_select %q", '' .. object_id))
 						elseif (object_type == "base") then
 							ufo.pop_window(false)
-							ufo.cmd(string.format("mn_base_select %q", object_id))
+							ufo.cmd(string.format("mn_base_select %q", '' .. object_id))
 						elseif (object_type == "installation") then
 							ufo.pop_window(false)
-							ufo.cmd(string.format("mn_installation_select %q", object_id))
+							ufo.cmd(string.format("mn_installation_select %q", '' .. object_id))
 						elseif (object_type == "aircraft") then
 							ufo.pop_window(false)
-							ufo.cmd(string.format("geo_aircraft_select %q", object_id))
+							ufo.cmd(string.format("geo_aircraft_select %q", '' .. object_id))
 						elseif (object_type == "ufo") then
 							ufo.pop_window(false)
-							ufo.cmd(string.format("geo_ufo_select %q", object_id))
+							ufo.cmd(string.format("geo_ufo_select %q", '' .. object_id))
 						end
 					end,
 
