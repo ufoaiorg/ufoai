@@ -5,6 +5,11 @@ CURL_LIBS                ?= $(call PKG_LIBS,libcurl)
 CURL_CFLAGS              ?= $(call PKG_CFLAGS,libcurl)
 endif
 
+ifdef HAVE_LUA5_3_LUA_H
+LUA_LIBS                 ?= $(call PKG_LIBS,"lua5.3 lua-5.3 lua53 lua")
+LUA_CFLAGS               ?= $(call PKG_CFLAGS,"lua5.3 lua-5.3 lua53 lua")
+endif
+
 ifdef HAVE_LUA5_4_LUA_H
 LUA_LIBS                 ?= $(call PKG_LIBS,"lua5.4 lua-5.4 lua54 lua")
 LUA_CFLAGS               ?= $(call PKG_CFLAGS,"lua5.4 lua-5.4 lua54 lua")

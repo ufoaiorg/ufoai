@@ -155,8 +155,8 @@ check_header_cc() {
 #include <stdlib.h>
 #include <stdio.h>
 #include <${1}>
-#if defined(LUA_VERSION_NUM) && LUA_VERSION_NUM < 504
-#error Lua version must be at least 5.4
+#if defined(LUA_VERSION_NUM) && LUA_VERSION_NUM < 503
+#error Lua version must be at least 5.3
 #endif
 EOF`
 	if [ -n "${2}" ]; then
@@ -194,7 +194,8 @@ check_header() {
 	if [ "$VALUE" != "no" ]; then
 		if [ "$VALUE" != "internal" ]; then
 			set_var $HAVE `check_header_cc $@`
-			add_to_config_h $HAVE "Found $1" "Could not find $1" $2
+			PACKAGE_VARIANT="`if [ -n \"$2\" ]; then echo \"($2)\";else echo ""; fi`"
+			add_to_config_h $HAVE "Found $1 $PACKAGE_VARIANT" "Could not find $1 $PACKAGE_VARIANT" $2
 			add_to_makefile_local $HAVE
 		else
 			set_var $HAVE ""
@@ -246,6 +247,9 @@ check_headers() {
 	check_header "png.h" "libpng"
 	check_header "curl/curl.h" "libcurl"
 	check_header "lua.h" "lua5.4"
+	if [ "${HAVE_LUA5_4_LUA_H}" != "1" ]; then
+		check_header "lua.h" "lua5.3"
+	fi
 	check_header_bundled "mxml.h" "mxml"
 	check_header "SDL.h" "sdl2"
 	check_header "SDL_mixer.h" "SDL2_mixer"
