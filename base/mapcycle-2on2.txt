@@ -5,6 +5,5 @@
  * [mapname] [day|night] [gametype]
  */
 
-farm day fight2on2
 +italy day fight2on2
-+mart day fight2on2
+

@@ -6,14 +6,10 @@
  */
 
 "+village2 mp2p_01" day fight1on1
-training_a day fight1on1
+"+japan default" day fight1on1
 training_b day fight1on1
 "+oriental medium" day fight1on1
 "+bridge mp" day fight1on1
 "+africa small" day fight1on1
 "+frozen small" day fight1on1
 "+italy default" day fight1on1
-farm day fight1on1
-estate day fight1on1
-"+japan default" day fight1on1
-tower day fight1on1
