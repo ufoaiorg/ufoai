@@ -282,6 +282,10 @@ check_headers() {
 		set_var "ufo_DISABLE" "yes"
 		set_var "testall_DISABLE" "yes"
 	fi
+
+	if [ "${HAVE_GTEST_GTEST_H}" != "1" ]; then
+		set_var "testall_DISABLE" "yes"
+	fi
 }
 
 check_compiler() {
