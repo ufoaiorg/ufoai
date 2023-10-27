@@ -26,7 +26,7 @@ end
 function ailc.flee()
 	local flee_pos = ai.positionflee(ailc.tustouse())
 	if flee_pos then
-		return flee_pos:goto()
+		return flee_pos:go()
 	end
 	return false
 end
@@ -34,7 +34,7 @@ end
 function ailc.hide (team)
 	local hide_pos = ai.positionhide(team, ailc.tustouse())
 	if hide_pos then
-		return hide_pos:goto()
+		return hide_pos:go()
 	end
 	return false
 end
@@ -44,7 +44,7 @@ function ailc.herd (targets)
 		for i = 1, #targets do
 			local herd_pos = ai.positionherd(targets[i], ailc.tustouse())
 			if herd_pos then
-				return herd_pos:goto()
+				return herd_pos:go()
 			end
 		end
 	end
@@ -56,7 +56,7 @@ function ailc.approach (targets)
 		for j = 1, 2 do
 			local near_pos = ai.positionapproach(targets[i], ailc.tustouse(), j == 1)
 			if near_pos then
-				return near_pos:goto()
+				return near_pos:go()
 			end
 		end
 	end
@@ -68,7 +68,7 @@ function ailc.route (waypoints)
 		for i = 1, #waypoints do
 			local target_pos = ai.positionmission(waypoints[i], ailc.tustouse())
 			if target_pos then
-				if target_pos:goto() then
+				if target_pos:go() then
 					ai.setwaypoint(waypoints[i])
 					return true
 				end
@@ -82,7 +82,7 @@ end
 function ailc.wander ()
 	local next_pos = ai.positionwander("rand", (ai.actor():TU() + 1) / 6, ai.actor():pos(), ailc.tustouse())
 	if next_pos then
-		next_pos:goto()
+		next_pos:go()
 	end
 end
 

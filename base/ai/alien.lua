@@ -159,7 +159,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		isarmed (actor) -- Check if AI actor has weapons, returns two booleans one for each hand.
 
 	Position (aka pos3 -- userdata) metatable methods (Parameters required unless a default is noted)
-		goto (position) -- Makes the current AI actor move to the given position, returns true if the actor reached the target positon.
+		go (position) -- Makes the current AI actor move to the given position, returns true if the actor reached the target positon.
 
 		face (position) -- Makes the current AI actor try to turn to the direction of the given postion.
 
@@ -197,7 +197,7 @@ end
 function aila.flee ()
 	local flee_pos = ai.positionflee(ai.actor():TU() - 3)
 	if flee_pos then
-		return flee_pos:goto()
+		return flee_pos:go()
 	end
 	return false
 end
@@ -205,7 +205,7 @@ end
 function aila.hide ()
 	local hide_pos = ai.positionhide("~alien", aila.tustouse())
 	if hide_pos then
-		return hide_pos:goto()
+		return hide_pos:go()
 	end
 	return false
 end
@@ -216,7 +216,7 @@ function aila.herd ()
 		for i = 1, #aliens do
 			local herd_pos = ai.positionherd(aliens[i], aila.tustouse())
 			if herd_pos then
-				return herd_pos:goto()
+				return herd_pos:go()
 			end
 		end
 	end
@@ -237,7 +237,7 @@ function aila.approach (targets)
 			end
 		end
 		if near_pos then
-			near_pos:goto()
+			near_pos:go()
 			return targets[i]
 		end
 	end
@@ -252,7 +252,7 @@ function aila.wander ()
 	local next_move = aila.param.move ~= "hide" and aila.param.move ~= "herd" and aila.param.move or "rand"
 	local next_pos = ai.positionwander(next_move, search_rad, ai.actor():pos(), aila.tustouse())
 	if next_pos then
-		next_pos:goto()
+		next_pos:go()
 	end
 end
 
@@ -274,7 +274,7 @@ function aila.search ()
 		for i = 1, #targets do
 			local target_pos = ai.positionmission(targets[i], aila.tustouse())
 			if target_pos then
-				return target_pos:goto()
+				return target_pos:go()
 			end
 		end
 		-- Can't get to any mission target, try to approach the nearest one
@@ -302,7 +302,7 @@ function aila.searchweapon ()
 
 	local weapons = ai.findweapons()
 	if #weapons > 0 then
-		weapons[1]:goto()
+		weapons[1]:go()
 		return ai.grabweapon()
 	end
 	return false
@@ -359,7 +359,7 @@ function aila.attack (targets)
 		local shoot_pos = ai.positionshoot(targets[i], aila.param.pos, aila.tustouse())
 		if shoot_pos then
 			-- Move until target in sight
-			shoot_pos:goto()
+			shoot_pos:go()
 
 			local target = aila.shoot{targets[i]}
 			if target then

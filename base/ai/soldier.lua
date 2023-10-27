@@ -38,7 +38,7 @@ end
 function ails.flee ()
 	local flee_pos = ai.positionflee(ai.actor():TU() - 3)
 	if flee_pos then
-		return flee_pos:goto()
+		return flee_pos:go()
 	end
 	return false
 end
@@ -46,7 +46,7 @@ end
 function ails.hide ()
 	local hide_pos = ai.positionhide("~phalanx", ails.tustouse())
 	if hide_pos then
-		return hide_pos:goto()
+		return hide_pos:go()
 	end
 	return false
 end
@@ -57,7 +57,7 @@ function ails.herd ()
 		for i = 1, #team do
 			local herd_pos = ai.positionherd(team[i], ails.tustouse())
 			if herd_pos then
-				return herd_pos:goto()
+				return herd_pos:go()
 			end
 		end
 	end
@@ -70,7 +70,7 @@ function ails.shield ()
 		for i = 1, #civs do
 			local herd_pos = ai.positionherd(civs[i], ails.tustouse(), true)
 			if herd_pos then
-				return herd_pos:goto()
+				return herd_pos:go()
 			end
 		end
 	end
@@ -91,7 +91,7 @@ function ails.approach (targets)
 			end
 		end
 		if near_pos then
-			near_pos:goto()
+			near_pos:go()
 			return targets[i]
 		end
 	end
@@ -116,7 +116,7 @@ function ails.search ()
 		for i = 1, #targets do
 			local target_pos = ai.positionmission(targets[i], ails.tustouse())
 			if target_pos then
-				return target_pos:goto()
+				return target_pos:go()
 			end
 		end
 		-- Can't get to any mission target, try to approach the nearest one
@@ -141,7 +141,7 @@ function ails.search ()
 			end
 			local next_pos = ai.positionwander(ails.param.move, search_rad, ai.actor():pos(), ails.tustouse())
 			if next_pos then
-				next_pos:goto()
+				next_pos:go()
 			end
 		end
 	end
@@ -154,7 +154,7 @@ function ails.searchweapon ()
 
 	local weapons = ai.findweapons()
 	if #weapons > 0 then
-		weapons[1]:goto()
+		weapons[1]:go()
 		return ai.grabweapon()
 	end
 	return false
@@ -211,7 +211,7 @@ function ails.attack (targets)
 		local shoot_pos = ai.positionshoot(targets[i], ails.param.pos, ails.tustouse())
 		if shoot_pos then
 			-- Move until target in sight
-			shoot_pos:goto()
+			shoot_pos:go()
 
 			local target = ails.shoot{targets[i]}
 			if target then

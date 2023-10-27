@@ -353,7 +353,7 @@ static int pos3L_distance(lua_State* L);
 /** Lua Pos3 metatable methods. */
 static const luaL_Reg pos3L_methods[] = {
 	{"__tostring", pos3L_tostring},
-	{"goto", pos3L_goto},
+	{"go", pos3L_goto},
 	{"face", pos3L_face},
 	{"distance", pos3L_distance},
 	{nullptr, nullptr}
