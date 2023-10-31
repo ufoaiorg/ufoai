@@ -86,6 +86,10 @@ do
 				on_click = function (sender)
 					ufo.cmd("game_setmode multiplayer; ui_push multiplayer;")
 				end,
+
+				on_rightclick = function (sender)
+					ufo.cmd("game_setmode multiplayer; ui_push multiplayer_new;")
+				end,
 			},
 
 			{

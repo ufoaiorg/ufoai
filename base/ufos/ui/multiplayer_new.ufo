@@ -1,0 +1,105 @@
+--!usr/bin/lua
+
+--[[
+-- @file
+-- @brief Multiplayer window
+--]]
+
+--[[
+Copyright (C) 2002-2023 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+require("ufox.maintabset.lua")
+
+multiplayer = {}
+require("multiplayer.join.lua")
+require("multiplayer.host.lua")
+require("multiplayer.team.lua")
+
+do
+	local window = ufox.build_window({
+		name = "multiplayer_new",
+		class = "window",
+		background = "ui/main_bg",
+
+		{
+			name = "todo",
+			class = "string",
+			text = "This is a Work in Progress UI screen. It may not be fully functional.",
+			pos = {0, 35},
+			size = {1024, 20},
+			contentalign = ufo.ALIGN_CC,
+			color = {1, 0, 0, 1},
+		},
+
+		{
+			name = "content",
+			class = "panel",
+			pos = {0, 90},
+			size = {1024, 435},
+			backgroundcolor = {0.4, 0.52, 0.5, 0.2},
+
+			{
+				name = "tabview",
+				class = "panel",
+				pos = {0, 0},
+				size = {1024, 435},
+			},
+
+			{
+				name = "back",
+				class = "MainMenuExitBtn",
+				text = "_BACK",
+				pos = {774, 0},
+				size = {250, 30},
+
+				on_click = function (sender)
+					ufo.pop_window(false)
+				end
+			},
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+		on_windowopened = function (sender, tab)
+			ufox.build_maintabset(
+				sender:child("content"):child("tabview"),
+				{
+					width = 770,
+				},
+				multiplayer.join,
+				multiplayer.host,
+				multiplayer.team
+			)
+
+			if (tab == nil) then
+				tab = "new"
+			end
+			sender:child("content"):child("tabview"):child("tabset"):select(tab)
+		end,
+
+		on_windowclosed = function (sender)
+			sender:child("content"):child("tabview"):remove_children()
+		end
+
+	})
+end
