@@ -100,7 +100,7 @@ static void CL_ParseMessageID (const char* name, const char** text)
 					msgid->text = token;
 				if (msgid->text == token) {
 					msgid->text = Mem_PoolStrDup(token, cl_msgidPool, 0);
-					Com_Printf("no translation for %s\n", msgid->id);
+					Com_DPrintf(DEBUG_CLIENT, "no translation for %s\n", msgid->id);
 				}
 			}
 		} while (*text);
