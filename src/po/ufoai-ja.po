@@ -33661,8 +33661,8 @@ msgstr "スクリーンショット撮影"
 #~ msgstr "コミュニティの人々"
 
 #, fuzzy
-#~ msgid "Copyright 2004-2023 by UFO: AI Team"
-#~ msgstr "Copyright 2004-2023 by UFO: AI Team"
+#~ msgid "Copyright 2004-2024 by UFO: AI Team"
+#~ msgstr "Copyright 2004-2024 by UFO: AI Team"
 
 #~ msgid ""
 #~ "Use the [Shift] key to align your targeting height - useful to shoot a "

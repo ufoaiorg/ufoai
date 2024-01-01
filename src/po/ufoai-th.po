@@ -34757,7 +34757,7 @@ msgstr "จับภาพหน้าจอ"
 #~ msgstr "http://ufoai.sf.net"
 
 #, fuzzy
-#~ msgid "Copyright 2004-2023 by UFO: AI Team"
+#~ msgid "Copyright 2004-2024 by UFO: AI Team"
 #~ msgstr "สงวนลิขสิทธิ 2004-2023 โดย UFO: AI Team"
 
 #~ msgid ""

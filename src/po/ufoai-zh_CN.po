@@ -32180,7 +32180,7 @@ msgstr "屏幕截图"
 #~ msgstr "http://ufoai.sf.net"
 
 #, fuzzy
-#~ msgid "Copyright 2004-2023 by UFO: AI Team"
+#~ msgid "Copyright 2004-2024 by UFO: AI Team"
 #~ msgstr "版权所有 2004-2023年 UFO: AI 团队"
 
 #~ msgid ""

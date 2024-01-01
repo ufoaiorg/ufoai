@@ -27633,8 +27633,8 @@ msgstr "Ta et skjermdump"
 #~ msgid "The Community"
 #~ msgstr "Fellesskapet"
 
-#~ msgid "Copyright 2004-2023 by UFO: AI Team"
-#~ msgstr "Copyright 2004-2023 av UFO: AI-Teamet"
+#~ msgid "Copyright 2004-2024 by UFO: AI Team"
+#~ msgstr "Copyright 2004-2024 av UFO: AI-Teamet"
 
 #~ msgid ""
 #~ "Use the [Shift] key to align your targeting height - useful to shoot a "

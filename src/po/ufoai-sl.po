@@ -33765,7 +33765,7 @@ msgstr "Zajemi sliko zaslona"
 #~ msgid "http://ufoai.sf.net"
 #~ msgstr "http://ufoai.sf.net"
 
-#~ msgid "Copyright 2004-2023 by UFO: AI Team"
+#~ msgid "Copyright 2004-2024 by UFO: AI Team"
 #~ msgstr "Avtorske pravice 2004-2023 - UFO: AI Team"
 
 #~ msgid "Use [Backspace] key to open doors."

@@ -36978,8 +36978,8 @@ msgstr "Tomar una captura de pantalla"
 #~ msgid "http://ufoai.sf.net"
 #~ msgstr "http://ufoai.sf.net"
 
-#~ msgid "Copyright 2004-2023 by UFO: AI Team"
-#~ msgstr "Copyright 2004-2023 por UFO: AI Team"
+#~ msgid "Copyright 2004-2024 by UFO: AI Team"
+#~ msgstr "Copyright 2004-2024 por UFO: AI Team"
 
 #~ msgid ""
 #~ "Use the [Shift] key to align your targeting height - useful to shoot a "

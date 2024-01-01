@@ -35193,7 +35193,7 @@ msgstr "Направи снимка"
 #~ msgstr "http://ufoai.sf.net"
 
 #, fuzzy
-#~ msgid "Copyright 2004-2023 by UFO: AI Team"
+#~ msgid "Copyright 2004-2024 by UFO: AI Team"
 #~ msgstr "Всички права запазени 2004-2023 от екипа на UFO: AI"
 
 #~ msgid ""

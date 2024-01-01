@@ -34696,7 +34696,7 @@ msgstr "Maak een schermafdruk"
 #~ msgid "The Community"
 #~ msgstr "De Gemeenschap"
 
-#~ msgid "Copyright 2004-2023 by UFO: AI Team"
+#~ msgid "Copyright 2004-2024 by UFO: AI Team"
 #~ msgstr "Auteursrecht 2004-2023 van UFO: AI Team"
 
 #~ msgid ""

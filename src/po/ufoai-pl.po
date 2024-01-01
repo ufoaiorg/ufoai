@@ -35169,8 +35169,8 @@ msgstr "Zrzut ekranu [Screenshot]"
 #~ msgid "http://ufoai.sf.net"
 #~ msgstr "http://ufoai.sf.net"
 
-#~ msgid "Copyright 2004-2023 by UFO: AI Team"
-#~ msgstr "Copyright 2004-2023 by UFO: AI Team"
+#~ msgid "Copyright 2004-2024 by UFO: AI Team"
+#~ msgstr "Copyright 2004-2024 by UFO: AI Team"
 
 #~ msgid ""
 #~ "Use the [Shift] key to align your targeting height - useful to shoot a "

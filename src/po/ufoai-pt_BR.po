@@ -35317,7 +35317,7 @@ msgstr "Tirar uma foto"
 #~ msgstr "A Comunidade"
 
 #, fuzzy
-#~ msgid "Copyright 2004-2023 by UFO: AI Team"
+#~ msgid "Copyright 2004-2024 by UFO: AI Team"
 #~ msgstr "Direitos autorais reservados 2004-2023 Equipe de UFO: AI"
 
 #~ msgid ""
