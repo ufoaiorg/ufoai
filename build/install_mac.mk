@@ -50,18 +50,18 @@ copybinaries-uforadiant: bundle-dirs-uforadiant
 	$(Q)cp -L $(LIB_BASE_DIR)/lib/pango*/lib/pango/*/modules/pango-basic-*.so $(MAC_INST_DIR)/UFORadiant.app/Contents/Libraries
 	$(Q)cp -L $(LIB_BASE_DIR)/lib/gtk-2.0/*/loaders/libpixbufloader-*.so $(MAC_INST_DIR)/UFORadiant.app/Contents/Libraries
 	$(Q)mkdir -p $(MAC_INST_DIR)/UFORadiant.app/Contents/Resources/share/mime
-	$(Q)cp -r $(LIB_BASE_DIR)/share/mime $(MAC_INST_DIR)/UFORadiant.app/Contents/Resources/mime
+	$(Q)cp -R $(LIB_BASE_DIR)/share/mime $(MAC_INST_DIR)/UFORadiant.app/Contents/Resources/mime
 
 # =======================
 
 copydata-ufoai: bundle-dirs-ufoai
 	$(Q)mkdir -p $(MAC_INST_DIR)/UFOAI.app/base/i18n
-	$(Q)cp -r base/i18n/[^.]* $(MAC_INST_DIR)/UFOAI.app/base/i18n
+	$(Q)cp -R base/i18n/[^.]* $(MAC_INST_DIR)/UFOAI.app/base/i18n
 	$(Q)cp base/*.pk3 $(MAC_INST_DIR)/UFOAI.app/base
 
 copydata-uforadiant:
 	$(Q)git archive HEAD:radiant/ | tar -x -C $(MAC_INST_DIR)/UFORadiant.app
-	$(Q)cp -r radiant/i18n/[^.]* $(MAC_INST_DIR)/UFORadiant.app/i18n
+	$(Q)cp -R radiant/i18n/[^.]* $(MAC_INST_DIR)/UFORadiant.app/i18n
 
 # =======================
 
@@ -85,10 +85,10 @@ copylibs-uforadiant:
 # =======================
 
 copy-package-bundle-ufoai: package-dir-ufoai bundle-ufoai
-	$(Q)cp -r $(MAC_INST_DIR)/UFOAI.app $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)
+	$(Q)cp -R $(MAC_INST_DIR)/UFOAI.app $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)
 
 copy-package-bundle-uforadiant: package-dir-uforadiant bundle-uforadiant
-	$(Q)cp -r $(MAC_INST_DIR)/UFORadiant.app $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME)
+	$(Q)cp -R $(MAC_INST_DIR)/UFORadiant.app $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME)
 
 # =======================
 
