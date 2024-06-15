@@ -267,8 +267,4 @@ void Sys_Backtrace (void)
 
 	if (file != nullptr)
 		fclose(file);
-
-#ifdef COMPILE_UFO
-	Com_UploadCrashDump(dumpFile);
-#endif
 }
