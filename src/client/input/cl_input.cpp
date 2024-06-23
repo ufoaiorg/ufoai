@@ -1127,14 +1127,20 @@ void IN_Frame (void)
 #if SDL_VERSION_ATLEAST(2,0,0)
 		/** @todo implement missing events for sdl2 */
 		case SDL_WINDOWEVENT:
-			switch (event.window.type) {
-			case SDL_WINDOWEVENT_FOCUS_LOST:
-				UI_ReleaseInput();
+			switch (event.window.event) {
+			case SDL_WINDOWEVENT_MOVED:
+				viddef.context.left = event.window.data1;
+				viddef.context.top = event.window.data2;
+				Cvar_SetValue("vid_left", event.window.data1);
+				Cvar_SetValue("vid_top", event.window.data2);
 				break;
 			case SDL_WINDOWEVENT_RESIZED:
 				/* make sure that SDL_SetVideoMode is called again after we changed the size
 				 * otherwise the mouse will make problems */
 				vid_mode->modified = true;
+				break;
+			case SDL_WINDOWEVENT_FOCUS_LOST:
+				UI_ReleaseInput();
 				break;
 			default:
 				break;

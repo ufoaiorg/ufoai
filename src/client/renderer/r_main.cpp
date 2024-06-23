@@ -653,6 +653,8 @@ static void R_UpdateVidDef (const viddefContext_t* context)
 	viddef.context = *context;
 
 	/* update cvars */
+	Cvar_SetValue("vid_left", viddef.context.left);
+	Cvar_SetValue("vid_top", viddef.context.top);
 	Cvar_SetValue("vid_width", viddef.context.width);
 	Cvar_SetValue("vid_height", viddef.context.height);
 	Cvar_SetValue("vid_mode", viddef.context.mode);
@@ -711,6 +713,8 @@ bool R_SetMode (void)
 	newCtx = viddef.context;
 	newCtx.mode = vid_mode->integer;
 	newCtx.fullscreen = vid_fullscreen->integer;
+	newCtx.left = Cvar_GetInteger("vid_left");
+	newCtx.top = Cvar_GetInteger("vid_top");
 	newCtx.multisample = r_multisample->integer;
 	newCtx.swapinterval = r_swapinterval->integer;
 	if (!VID_GetModeInfo(newCtx.mode, &vidmode)) {

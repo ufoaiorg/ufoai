@@ -246,7 +246,14 @@ bool R_InitGraphics (const viddefContext_t* context)
 	if (context->fullscreen)
 		flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
-	cls.window = SDL_CreateWindow(GAME_TITLE_LONG, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, context->width, context->height, flags);
+	cls.window = SDL_CreateWindow(
+		GAME_TITLE_LONG,
+		(context->left == VID_POS_UNSET) ? SDL_WINDOWPOS_CENTERED : context->left,
+		(context->top == VID_POS_UNSET) ? SDL_WINDOWPOS_CENTERED : context->top,
+		context->width,
+		context->height,
+		flags
+	);
 	if (!cls.window) {
 		const char* error = SDL_GetError();
 		Com_Printf("E: SDL_CreateWindow failed: %s\n", error);

@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
+#define VID_POS_UNSET		-99999
 
 /**
  * @brief Contains the game screen context, everything that is needed to create
@@ -41,9 +42,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * the old context.
  */
 typedef struct {
+	long left;			/**< game screen/window left position */
+	long top;			/**< game screen/window top position */
 	unsigned width;			/**< game screen/window width */
 	unsigned height;		/**< game screen/window height */
-	int mode;				/**< resolution mode - see vidmode_t */
+	int mode;			/**< resolution mode - see vidmode_t */
 	bool fullscreen;		/**< currently in fullscreen mode? */
 	int multisample;		/**< number of multisample used by the context */
 	int swapinterval;		/**< number of swapinterval used by the context */

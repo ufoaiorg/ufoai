@@ -39,8 +39,11 @@ cvar_t* vid_mode;
 cvar_t* vid_grabmouse;
 cvar_t* vid_gamma;
 cvar_t* vid_ignoregamma;
-static cvar_t* vid_height;
+
+static cvar_t* vid_left;
+static cvar_t* vid_top;
 static cvar_t* vid_width;
+static cvar_t* vid_height;
 
 /**
  * @brief All possible video modes
@@ -166,8 +169,10 @@ void VID_Init (void)
 	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, "Controls the gamma settings");
 	vid_ignoregamma = Cvar_Get("vid_ignoregamma", "0", CVAR_ARCHIVE, "Don't control the gamma settings if set to 1");
 	Cvar_SetCheckFunction("vid_gamma", CL_CvarCheckVidGamma);
-	vid_height = Cvar_Get("vid_height", "-1", CVAR_ARCHIVE, "Custom video height - set vid_mode to -1 to use this");
+	vid_left = Cvar_Get("vid_left", va("%d", VID_POS_UNSET), CVAR_ARCHIVE, "Screen position for windowed mode, left coordinate");
+	vid_top = Cvar_Get("vid_top", va("%d", VID_POS_UNSET), CVAR_ARCHIVE, "Screen position for windowed mode, top coordinate");
 	vid_width = Cvar_Get("vid_width", "-1", CVAR_ARCHIVE, "Custom video width - set vid_mode to -1 to use this");
+	vid_height = Cvar_Get("vid_height", "-1", CVAR_ARCHIVE, "Custom video height - set vid_mode to -1 to use this");
 
 	Cmd_AddCommand("vid_restart", VID_Restart_f, "Restart the renderer - or change the resolution");
 	Cmd_AddCommand("vid_minimize", VID_Minimize, "Minimize the game window");
