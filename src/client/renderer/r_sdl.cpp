@@ -98,38 +98,59 @@ bool Rimp_Init (void)
 	r_sdl_config.desktopHeight = 768;
 
 #if SDL_VERSION_ATLEAST(2,0,0)
-	int screen = 0;
-	const int modes = SDL_GetNumDisplayModes(screen);
+	int selectedDisplay = 0; /* @todo Make selectedDisplay configurable */
+
+	const int displays = SDL_GetNumVideoDisplays();
+	Com_Printf("I: found %i display(s)\n", displays);
+
+	long posLeft = Cvar_GetValue("vid_left");
+	long posTop = Cvar_GetValue("vid_top");
+
+	for (int display = 0; display < displays; display++) {
+		if (SDL_GetDisplayName(display))
+			Com_Printf("I: display %i name: %s\n", display, SDL_GetDisplayName(display));
+
+		SDL_Rect displayBounds;
+		if (SDL_GetDisplayBounds(display, &displayBounds) == 0) {
+			Com_Printf("I: display %i bounds: x: %i, y: %i, w: %i, h: %i\n", display,
+				displayBounds.x, displayBounds.y, displayBounds.w, displayBounds.h);
+			if (posLeft >= displayBounds.x && posLeft < displayBounds.x + displayBounds.w
+			 && posTop >= displayBounds.y && posTop < displayBounds.y + displayBounds.h)
+				selectedDisplay = display;
+		} else {
+			Com_Printf("W: failed to determine display %i bounds: %s\n", display, SDL_GetError());
+		}
+
+		SDL_DisplayMode displayMode;
+		if (SDL_GetDesktopDisplayMode(display, &displayMode) != -1) {
+			const char* name = SDL_GetPixelFormatName(displayMode.format);
+			Com_Printf("I: display %i current desktop mode: %dx%d@%dHz (%s)\n",
+					display, displayMode.w, displayMode.h, displayMode.refresh_rate, name);
+			if (display == selectedDisplay) {
+				r_sdl_config.desktopWidth = displayMode.w;
+				r_sdl_config.desktopHeight = displayMode.h;
+			}
+		} else {
+			Com_Printf("E: failed to get the desktop mode\n");
+		}
+	}
+
+	const int modes = SDL_GetNumDisplayModes(selectedDisplay);
 	if (modes > 0) {
 		r_sdl_config.modes = Mem_AllocTypeN(rect_t, modes);
 		for (int i = 0; i < modes; i++) {
 			SDL_DisplayMode displayMode;
-			SDL_GetDisplayMode(screen, i, &displayMode);
+			SDL_GetDisplayMode(selectedDisplay, i, &displayMode);
 			r_sdl_config.modes[i][0] = displayMode.w;
 			r_sdl_config.modes[i][1] = displayMode.h;
 		}
 	}
 
-	const int displays = SDL_GetNumVideoDisplays();
-	Com_Printf("I: found %i display(s)\n", displays);
-
-	SDL_DisplayMode displayMode;
-	if (SDL_GetDesktopDisplayMode(0, &displayMode) != -1) {
-		const char* name = SDL_GetPixelFormatName(displayMode.format);
-		Com_Printf("I: current desktop mode: %dx%d@%dHz (%s)\n",
-				displayMode.w, displayMode.h, displayMode.refresh_rate, name);
-		Com_Printf("I: video driver: %s\n", SDL_GetCurrentVideoDriver());
-		r_sdl_config.desktopWidth = displayMode.w;
-		r_sdl_config.desktopHeight = displayMode.h;
-	} else {
-		Com_Printf("E: failed to get the desktop mode\n");
-	}
-
 	const int videoDrivers = SDL_GetNumVideoDrivers();
 	for (int i = 0; i < videoDrivers; ++i) {
-		Com_Printf("I: available driver: %s\n", SDL_GetVideoDriver(i));
+		Com_Printf("I: available video driver: %s\n", SDL_GetVideoDriver(i));
 	}
-	Com_Printf("I: driver: %s\n", SDL_GetCurrentVideoDriver());
+	Com_Printf("I: current video driver: %s\n", SDL_GetCurrentVideoDriver());
 
 	SDL_SetModState(KMOD_NONE);
 	SDL_StopTextInput();
