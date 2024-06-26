@@ -56,3 +56,4 @@ Thumbs.db
 /.vscode/
 /.pc/
 /patches/
+.build/
