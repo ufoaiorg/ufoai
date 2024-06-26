@@ -20,7 +20,7 @@ cmake_minimum_required(VERSION 3.13)
 project(ufoded DESCRIPTION "UFO:AI Dedicated server.")
 
 find_package(CURL)
-find_package(SDL)
+find_package(SDL "2" EXACT)
 find_package(ZLIB)
 find_package(Lua 5.3)
 

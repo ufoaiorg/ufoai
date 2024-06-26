@@ -48,13 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../common/scripts_lua.h"
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 #include <SDL.h>
-#else
-#ifdef ANDROID
-#include <SDL/SDL_screenkeyboard.h>
-#endif
-#endif
 
 #define EXTRADATA_TYPE textEntryExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -180,22 +174,11 @@ void uiTextEntryNode::onFocusGained (uiNode_t* node)
 	isAborted = false;
 	EXTRADATA(node).cursorPosition = UTF8_strlen(editedCvar->string);
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_StartTextInput();
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
 	SDL_Rect r = {static_cast<int>(pos[0]), static_cast<int>(pos[1]), static_cast<int>(node->box.size[0]), static_cast<int>(node->box.size[1])};
 	SDL_SetTextInputRect(&r);
-#else
-#ifdef ANDROID
-	char buf[MAX_CVAR_EDITING_LENGTH];
-	Q_strncpyz(buf, editedCvar->string, sizeof(buf));
-	SDL_ANDROID_GetScreenKeyboardTextInput(buf, sizeof(buf));
-	Cvar_ForceSet(editedCvar->name, buf);
-	UI_TextEntryNodeValidateEdition(node);
-	UI_RemoveFocus();
-#endif
-#endif
 }
 
 /**
@@ -213,9 +196,7 @@ void uiTextEntryNode::onFocusLost (uiNode_t* node)
 	} else {
 		UI_TextEntryNodeValidateEdition(node);
 	}
-#if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_StopTextInput();
-#endif
 }
 
 /**

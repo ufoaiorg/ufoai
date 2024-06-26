@@ -19,7 +19,7 @@ cmake_minimum_required(VERSION 3.13)
 
 project(game DESCRIPTION "Tactical battle library of UFO:AI.")
 
-find_package(SDL)
+find_package(SDL "2" EXACT)
 find_package(Lua 5.3)
 
 set(UFOAI_GAMELIB_SOURCES

@@ -187,9 +187,7 @@ static font_t* R_FontAnalyze (const char* name, const char* path, int renderStyl
 	if (!f->font)
 		Com_Error(ERR_FATAL, "...could not load ttf font data %s (%s)", path, TTF_GetError());
 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
 	TTF_SetFontHinting(f->font, TTF_HINTING_NONE);
-#endif
 
 	/* font style */
 	f->style = renderStyle;
@@ -610,12 +608,8 @@ static void R_FontGenerateTexture (const font_t* font, const char* text, chunkCa
 		rect.w = chunk->width;
 
 	/* ignore alpha when blitting - just copy it over */
-#if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_SetSurfaceBlendMode(textSurface, SDL_BLENDMODE_NONE);
 	SDL_SetSurfaceAlphaMod(textSurface, 255);
-#else
-	SDL_SetAlpha(textSurface, 0, 255);
-#endif
 
 	SDL_LowerBlit(textSurface, &rect, openGLSurface, &rect);
 	SDL_FreeSurface(textSurface);

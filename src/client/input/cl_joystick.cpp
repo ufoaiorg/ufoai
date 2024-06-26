@@ -36,10 +36,6 @@ static cvar_t* in_joystickNo;
 static cvar_t* in_joystickThreshold;
 static cvar_t* in_joystickSpeed;
 
-#if SDL_VERSION_ATLEAST(2,0,0)
-#define SDL_JoystickName SDL_JoystickNameForIndex
-#endif
-
 static struct {
 	bool buttons[16];
 	unsigned int oldaxes;
@@ -280,7 +276,7 @@ void IN_JoystickInitMenu (void)
 		UI_AddOption(&joystickOptions, "", _("None"), "0");
 	} else {
 		for (int i = 0; i < total; i++)
-			UI_AddOption(&joystickOptions, "", SDL_JoystickName(i), va("%i", i));
+			UI_AddOption(&joystickOptions, "", SDL_JoystickNameForIndex(i), va("%i", i));
 	}
 	UI_RegisterOption(OPTION_JOYSTICKS, joystickOptions);
 }
@@ -315,7 +311,7 @@ void IN_StartupJoystick (void)
 	int total = SDL_NumJoysticks();
 	Com_Printf("%d possible joysticks\n", total);
 	for (int i = 0; i < total; i++)
-		Com_DPrintf(DEBUG_CLIENT, "[%d] %s\n", i, SDL_JoystickName(i));
+		Com_DPrintf(DEBUG_CLIENT, "[%d] %s\n", i, SDL_JoystickNameForIndex(i));
 
 	if (in_joystickNo->integer < 0 || in_joystickNo->integer >= total)
 		Cvar_Set("in_joystickNo", "0");
@@ -329,7 +325,7 @@ void IN_StartupJoystick (void)
 	}
 
 	Com_Printf("joystick %d opened - set cvar in_joystickNo to change this\n", in_joystickNo->integer);
-	Com_Printf("... name: %s\n", SDL_JoystickName(in_joystickNo->integer));
+	Com_Printf("... name: %s\n", SDL_JoystickNameForIndex(in_joystickNo->integer));
 	Com_Printf("... axes: %d\n", SDL_JoystickNumAxes(stick));
 	Com_Printf("... hats: %d\n", SDL_JoystickNumHats(stick));
 	Com_Printf("... buttons: %d\n", SDL_JoystickNumButtons(stick));

@@ -469,7 +469,6 @@ void Com_Drop (void)
 void Com_BreakIntoDebugger (void)
 {
 #ifdef DEBUG
-#if SDL_VERSION_ATLEAST(2, 0, 0)
 	SDL_MessageBoxData data;
 	SDL_MessageBoxButtonData okButton;
 	SDL_MessageBoxButtonData cancelButton;
@@ -499,7 +498,6 @@ void Com_BreakIntoDebugger (void)
 	if (buttonid == 1) {
 		Sys_Breakpoint();
 	}
-#endif
 #endif
 }
 

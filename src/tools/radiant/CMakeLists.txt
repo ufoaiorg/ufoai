@@ -26,7 +26,7 @@ find_package(GTKSourceView2)
 find_package(LibXml2)
 find_package(OGG)
 find_package(OpenAL)
-find_package(SDL)
+find_package(SDL "2" EXACT)
 find_package(VORBIS)
 find_package(ZLIB)
 

@@ -38,19 +38,7 @@ static void R_SetSDLIcon (void)
 	SDL_Surface* icon = SDL_CreateRGBSurface(SDL_SWSURFACE, ufoicon_width, ufoicon_height, 8, 0, 0, 0, 0);
 	if (icon == nullptr)
 		return;
-#if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_SetColorKey(icon, SDL_TRUE, 0);
-#else
-	SDL_SetColorKey(icon, SDL_SRCCOLORKEY, 0);
-
-	SDL_Color color;
-	color.r = color.g = color.b = 255;
-	SDL_SetColors(icon, &color, 0, 1); /* just in case */
-
-	color.r = color.b = 0;
-	color.g = 16;
-	SDL_SetColors(icon, &color, 1, 1);
-#endif
 
 	Uint8 *ptr = (Uint8 *)icon->pixels;
 	for (unsigned int i = 0; i < sizeof(ufoicon_bits); i++) {
@@ -60,11 +48,7 @@ static void R_SetSDLIcon (void)
 		}
 	}
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_SetWindowIcon(cls.window, icon);
-#else
-	SDL_WM_SetIcon(icon, nullptr);
-#endif
 	SDL_FreeSurface(icon);
 #endif
 }
@@ -97,7 +81,6 @@ bool Rimp_Init (void)
 	r_sdl_config.desktopWidth = 1024;
 	r_sdl_config.desktopHeight = 768;
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 	int selectedDisplay = 0; /* @todo Make selectedDisplay configurable */
 
 	const int displays = SDL_GetNumVideoDisplays();
@@ -154,40 +137,6 @@ bool Rimp_Init (void)
 
 	SDL_SetModState(KMOD_NONE);
 	SDL_StopTextInput();
-#else
-	const SDL_VideoInfo* info = SDL_GetVideoInfo();
-	if (info != nullptr) {
-		SDL_VideoInfo videoInfo;
-		SDL_PixelFormat pixelFormat;
-		SDL_Rect** modes;
-		Com_Printf("I: desktop depth: %ibpp\n", info->vfmt->BitsPerPixel);
-		r_config.videoMemory = info->video_mem;
-		Com_Printf("I: video memory: %i\n", r_config.videoMemory);
-		memcpy(&pixelFormat, info->vfmt, sizeof(pixelFormat));
-		memcpy(&videoInfo, info, sizeof(videoInfo));
-		videoInfo.vfmt = &pixelFormat;
-		modes = SDL_ListModes(videoInfo.vfmt, SDL_OPENGL | SDL_FULLSCREEN);
-		if (modes) {
-			if (modes == (SDL_Rect**)-1) {
-				Com_Printf("I: Available resolutions: any resolution is supported\n");
-				r_sdl_config.modes = nullptr;
-			} else {
-				for (r_sdl_config.numModes = 0; modes[r_sdl_config.numModes]; r_sdl_config.numModes++) {}
-
-				r_sdl_config.modes = Mem_AllocTypeN(rect_t, r_sdl_config.numModes);
-				for (int i = 0; i < r_sdl_config.numModes; i++) {
-					r_sdl_config.modes[i][0] = modes[i]->w;
-					r_sdl_config.modes[i][1] = modes[i]->h;
-				}
-			}
-		} else {
-			Com_Printf("I: Could not get list of available resolutions\n");
-		}
-	}
-	char videoDriverName[MAX_VAR] = "";
-	SDL_VideoDriverName(videoDriverName, sizeof(videoDriverName));
-	Com_Printf("I: video driver: %s\n", videoDriverName);
-#endif
 	if (r_sdl_config.numModes > 0) {
 		char buf[4096] = "";
 		Q_strcat(buf, sizeof(buf), "I: Available resolutions:");
@@ -199,15 +148,6 @@ bool Rimp_Init (void)
 
 	if (!R_SetMode())
 		Com_Error(ERR_FATAL, "Video subsystem failed to initialize");
-
-#if !SDL_VERSION_ATLEAST(2,0,0)
-	SDL_WM_SetCaption(GAME_TITLE, GAME_TITLE_LONG);
-
-	/* we need this in the renderer because if we issue an vid_restart we have
-	 * to set these values again, too */
-	SDL_EnableUNICODE(SDL_ENABLE);
-	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-#endif
 
 	R_SetSDLIcon();
 
@@ -252,7 +192,6 @@ bool R_InitGraphics (const viddefContext_t* context)
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
 	}
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 #ifdef GL_VERSION_ES_CM_1_0
 	/* Be sure to request GLES1 as we use GLES2 incompatible calls */
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
@@ -281,26 +220,7 @@ bool R_InitGraphics (const viddefContext_t* context)
 		SDL_ClearError();
 		return false;
 	}
-
 	cls.context = SDL_GL_CreateContext(cls.window);
-#else
-	/* valid values are between 0 and 2 */
-	const int i = std::min(2, std::max(0, context->swapinterval));
-	Com_Printf("I: set swap control to %i\n", i);
-	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, i);
-	uint32_t flags = SDL_OPENGL;
-	if (context->fullscreen)
-		flags |= SDL_FULLSCREEN;
-	/*flags |= SDL_NOFRAME;*/
-
-	SDL_Surface* screen = SDL_SetVideoMode(context->width, context->height, 0, flags);
-	if (!screen) {
-		const char* error = SDL_GetError();
-		Com_Printf("SDL SetVideoMode failed: %s\n", error);
-		SDL_ClearError();
-		return false;
-	}
-#endif
 
 	SDL_ShowCursor(SDL_DISABLE);
 
@@ -309,10 +229,9 @@ bool R_InitGraphics (const viddefContext_t* context)
 
 void Rimp_Shutdown (void)
 {
-#if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_DestroyWindow(cls.window);
 	SDL_GL_DeleteContext(cls.context);
-#endif
+
 	/* SDL on Android does not support multiple video init/deinit yet, however calling SDL_SetVideoMode() multiple times works */
 #ifndef ANDROID
 	SDL_ShowCursor(SDL_ENABLE);

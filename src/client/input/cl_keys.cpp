@@ -818,13 +818,9 @@ void Key_SetDest (keydest_t keyDest)
 	if (cls.keyDest == key_console) {
 		/* make sure the menu no more capture inputs */
 		UI_ReleaseInput();
-#if SDL_VERSION_ATLEAST(2,0,0)
 		SDL_StartTextInput();
-#endif
 	} else {
-#if SDL_VERSION_ATLEAST(2,0,0)
 		SDL_StopTextInput();
-#endif
 	}
 }
 

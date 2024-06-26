@@ -24,7 +24,7 @@ find_package(X11)
 set(OpenGL_GL_PREFERENCE "LEGACY")
 find_package(OpenGL)
 find_package(PNG)
-find_package(SDL)
+find_package(SDL "2" EXACT)
 find_package(ZLIB)
 find_package(Lua)
 

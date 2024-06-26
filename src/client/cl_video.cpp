@@ -149,11 +149,7 @@ static bool CL_CvarCheckVidMode (cvar_t* cvar)
 
 void VID_Minimize (void)
 {
-#if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_MinimizeWindow(cls.window);
-#else
-	SDL_WM_IconifyWindow();
-#endif
 }
 
 /**

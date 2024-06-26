@@ -60,10 +60,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* power of two please */
 #define MAX_KEYQ 64
 
-#if SDL_VERSION_ATLEAST(2,0,0)
-#define SDL_keysym SDL_Keysym
-#endif
-
 static struct {
 	unsigned int key;
 	unsigned short unicode;
@@ -610,11 +606,7 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
 {
 	if (in_debug->integer) {
 		Com_Printf("key name: %s (down: %i)", SDL_GetKeyName(event->key.keysym.sym), down);
-#if SDL_VERSION_ATLEAST(2,0,0)
 		const int unicode = event->key.keysym.sym;
-#else
-		const int unicode = event->key.keysym.unicode;
-#endif
 		if (unicode) {
 			Com_Printf(" unicode: %x", unicode);
 			if (unicode >= '0' && unicode <= '~')  /* printable? */
@@ -634,7 +626,6 @@ static bool IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 	case SDLK_PAGEUP:
 		*ascii = K_PGUP;
 		break;
-#if SDL_VERSION_ATLEAST(2,0,0)
 	case SDLK_KP_0:
 		*ascii = K_KP_INS;
 		translated = !Key_IsNumlock();
@@ -681,70 +672,6 @@ static bool IN_TranslateKey (const unsigned int keycode, unsigned int* ascii)
 	case SDLK_SCROLLLOCK:
 		*ascii = K_SCROLLOCK;
 		break;
-#else
-	case SDLK_KP0:
-		*ascii = K_KP_INS;
-		translated = !Key_IsNumlock();
-		break;
-	case SDLK_KP1:
-		*ascii = K_KP_END;
-		translated = !Key_IsNumlock();
-		break;
-	case SDLK_KP2:
-		*ascii = K_KP_DOWNARROW;
-		translated = !Key_IsNumlock();
-		break;
-	case SDLK_KP3:
-		*ascii = K_KP_PGDN;
-		translated = !Key_IsNumlock();
-		break;
-	case SDLK_KP4:
-		*ascii = K_KP_LEFTARROW;
-		translated = !Key_IsNumlock();
-		break;
-	case SDLK_KP5:
-		*ascii = K_KP_5;
-		translated = !Key_IsNumlock();
-		break;
-	case SDLK_KP6:
-		*ascii = K_KP_RIGHTARROW;
-		translated = !Key_IsNumlock();
-		break;
-	case SDLK_KP7:
-		*ascii = K_KP_HOME;
-		translated = !Key_IsNumlock();
-		break;
-	case SDLK_KP8:
-		*ascii = K_KP_UPARROW;
-		translated = !Key_IsNumlock();
-		break;
-	case SDLK_KP9:
-		*ascii = K_KP_PGUP;
-		translated = !Key_IsNumlock();
-		break;
-	case SDLK_LSUPER:
-	case SDLK_RSUPER:
-		*ascii = K_SUPER;
-		break;
-	case SDLK_COMPOSE:
-		*ascii = K_COMPOSE;
-		break;
-	case SDLK_PRINT:
-		*ascii = K_PRINT;
-		break;
-	case SDLK_BREAK:
-		*ascii = K_BREAK;
-		break;
-	case SDLK_EURO:
-		*ascii = K_EURO;
-		break;
-	case SDLK_SCROLLOCK:
-		*ascii = K_SCROLLOCK;
-		break;
-	case SDLK_NUMLOCK:
-		*ascii = K_KP_NUMLOCK;
-		break;
-#endif
 	case SDLK_PAGEDOWN:
 		*ascii = K_PGDN;
 		break;
@@ -916,24 +843,10 @@ void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, bool keyDo
 
 static bool IN_ToggleFullscreen (const bool full)
 {
-#if SDL_VERSION_ATLEAST(2,0,0)
 	const int mask = full ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
 	const bool isFullScreen = SDL_GetWindowFlags(cls.window) & mask;
 	SDL_SetWindowFullscreen(cls.window, isFullScreen ? 0 : mask);
 	return SDL_GetWindowFlags(cls.window) & mask;
-#else
-#ifdef _WIN32
-	return false;
-#else
-	SDL_Surface* surface = SDL_GetVideoSurface();
-	if (!SDL_WM_ToggleFullScreen(surface)) {
-		const int flags = surface->flags ^= SDL_FULLSCREEN;
-		SDL_SetVideoMode(surface->w, surface->h, 0, flags);
-	}
-
-	return surface->flags & SDL_FULLSCREEN;
-#endif
-#endif
 }
 
 /**
@@ -962,19 +875,11 @@ void IN_Frame (void)
 		if (!vid_grabmouse->integer) {
 			/* ungrab the pointer */
 			Com_Printf("Switch grab input off\n");
-#if SDL_VERSION_ATLEAST(2,0,0)
 			SDL_SetWindowGrab(cls.window, SDL_FALSE);
-#else
-			SDL_WM_GrabInput(SDL_GRAB_OFF);
-#endif
 		} else  {
 			/* grab the pointer */
 			Com_Printf("Switch grab input on\n");
-#if SDL_VERSION_ATLEAST(2,0,0)
 			SDL_SetWindowGrab(cls.window, SDL_TRUE);
-#else
-			SDL_WM_GrabInput(SDL_GRAB_ON);
-#endif
 		}
 	}
 
@@ -983,7 +888,6 @@ void IN_Frame (void)
 
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
-#if SDL_VERSION_ATLEAST(2,0,0)
 		case SDL_MOUSEWHEEL:
 			mouse_buttonstate = event.wheel.y < 0 ? K_MWHEELDOWN : K_MWHEELUP;
 			IN_EventEnqueue(mouse_buttonstate, 0, true);
@@ -1009,7 +913,6 @@ void IN_Frame (void)
 			}
 			break;
 		}
-#endif
 		case SDL_MOUSEBUTTONDOWN:
 		case SDL_MOUSEBUTTONUP:
 			switch (event.button.button) {
@@ -1022,27 +925,12 @@ void IN_Frame (void)
 			case SDL_BUTTON_RIGHT:
 				mouse_buttonstate = K_MOUSE2;
 				break;
-#if SDL_VERSION_ATLEAST(2,0,0)
 			case SDL_BUTTON_X1:
 				mouse_buttonstate = K_MOUSE4;
 				break;
 			case SDL_BUTTON_X2:
 				mouse_buttonstate = K_MOUSE5;
 				break;
-#else
-			case SDL_BUTTON_WHEELUP:
-				mouse_buttonstate = K_MWHEELUP;
-				break;
-			case SDL_BUTTON_WHEELDOWN:
-				mouse_buttonstate = K_MWHEELDOWN;
-				break;
-			case 6:
-				mouse_buttonstate = K_MOUSE4;
-				break;
-			case 7:
-				mouse_buttonstate = K_MOUSE5;
-				break;
-#endif
 			default:
 				mouse_buttonstate = K_AUX1 + (event.button.button - 8) % 16;
 				break;
@@ -1083,13 +971,8 @@ void IN_Frame (void)
 			}
 
 			if ((event.key.keysym.mod & KMOD_CTRL) && event.key.keysym.sym == SDLK_g) {
-#if SDL_VERSION_ATLEAST(2,0,0)
 				const bool grab = SDL_GetWindowGrab(cls.window);
 				Cvar_SetValue("vid_grabmouse", grab ? 0 : 1);
-#else
-				SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
-				Cvar_SetValue("vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1);
-#endif
 				Com_Printf("toggled mouse grab (%s)\n", vid_grabmouse->integer == 1 ? "true" : "false");
 				break; /* ignore this key */
 			}
@@ -1100,31 +983,18 @@ void IN_Frame (void)
 				break;
 			}
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 			/* SDL_TEXTINPUT above will handle normal text for sdl2 */
 			if (IN_TranslateKey(event.key.keysym.sym, &key) || !SDL_IsTextInputActive())
 				IN_EventEnqueue(key, 0, true);
-#else
-			unicode = event.key.keysym.unicode;
-			IN_TranslateKey(event.key.keysym.sym, &key);
-			IN_EventEnqueue(key, unicode, true);
-#endif
 			break;
 
 		case SDL_KEYUP:
 			IN_PrintKey(&event, 0);
-#if SDL_VERSION_ATLEAST(2,0,0)
 			/* SDL_TEXTINPUT above will handle normal text for sdl2 */
 			if (IN_TranslateKey(event.key.keysym.sym, &key) || !SDL_IsTextInputActive())
-					IN_EventEnqueue(key, 0, false);
-#else
-			unicode = event.key.keysym.unicode;
-			IN_TranslateKey(event.key.keysym.sym, &key);
-			IN_EventEnqueue(key, unicode, false);
-#endif
+				IN_EventEnqueue(key, 0, false);
 			break;
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 		/** @todo implement missing events for sdl2 */
 		case SDL_WINDOWEVENT:
 			switch (event.window.event) {
@@ -1146,27 +1016,6 @@ void IN_Frame (void)
 				break;
 			}
 			break;
-#else
-		case SDL_VIDEOEXPOSE:
-			break;
-
-		case SDL_ACTIVEEVENT:
-			/* make sure the menu no more captures the input when the game window loses focus */
-			if (event.active.state == SDL_APPINPUTFOCUS && event.active.gain == 0)
-				UI_ReleaseInput();
-			break;
-
-		case SDL_VIDEORESIZE:
-			/* make sure that SDL_SetVideoMode is called again after we changed the size
-			 * otherwise the mouse will make problems */
-			vid_mode->modified = true;
-#ifdef ANDROID
-			/* On Android the OpenGL context is destroyed after we've received a resize event,
-			 * so wee need to re-init OpenGL state machine and re-upload all textures */
-			R_ReinitOpenglContext();
-#endif
-			break;
-#endif
 
 		case SDL_QUIT:
 			Cmd_ExecuteString("quit");
