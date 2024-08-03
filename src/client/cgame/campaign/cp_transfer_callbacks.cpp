@@ -772,7 +772,7 @@ static void TR_List_f (void)
 	TR_Foreach(transfer) {
 		const char* source = transfer->srcBase ? transfer->srcBase->name : "mission";
 		const DateTime remainingTime = transfer->event - ccs.date;
-		cgi->UI_ExecuteConfunc("tr_listaddtransfer %d \"%s\" \"%s\" \"%s\"", ++i, source, transfer->destBase->name, CP_SecondConvert(Date_DateToSeconds(remainingTime)));
+		cgi->UI_ExecuteConfunc("tr_listaddtransfer %d \"%s\" \"%s\" \"%s\"", ++i, source, transfer->destBase->name, CP_SecondConvert(std::max(0, Date_DateToSeconds(remainingTime))));
 
 		/* Antimatter */
 		if (transfer->antimatter) {
