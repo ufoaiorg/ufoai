@@ -240,51 +240,114 @@ check_headers() {
 	if [ "$HAVE_LIBIBERTY_H" = "1" -o "$HAVE_LIBIBERTY_LIBIBERTY_H" = "1" ]; then
 		check_header "bfd.h"
 	fi
+	check_header "libintl.h"
+	if [ "$HAVE_LIBINTL_H" != "1" ]; then
+		for i in testall ufo; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- LibIntl missing\n" >/dev/null
+		done
+	fi
 	check_header "sys/utsname.h"
 	check_header "link.h"
 	check_header "jpeglib.h"
+	if [ "${HAVE_JPEGLIB_H}" != "1" ]; then
+		for i in ufo2map ufomodel ufoslicer; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- LibJpeg missing\n" >/dev/null
+		done
+	fi
 	check_header "zlib.h" "zlib"
+	if [ "${HAVE_ZLIB_ZLIB_H}" != "1" ]; then
+		for i in ufo2map; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- ZLib missing\n" >/dev/null
+		done
+	fi
 	check_header "png.h" "libpng"
+	if [ "${HAVE_LIBPNG_PNG_H}" != "1" ]; then
+		for i in ufo2map ufomodel ufoslicer; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- LibPNG missing\n" >/dev/null
+		done
+	fi
 	check_header "curl/curl.h" "libcurl"
+	if [ "${HAVE_LIBCURL_CURL_H}" != "1" ]; then
+		for i in ufoded; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- LibCURL missing\n" >/dev/null
+		done
+	fi
 	check_header "lua.h" "lua5.4"
 	if [ "${HAVE_LUA5_4_LUA_H}" != "1" ]; then
 		check_header "lua.h" "lua5.3"
+		if [ "${HAVE_LUA5_3_LUA_H}" != "1" ]; then
+			for i in game ufo ufo2map ufoded ufomodel ufoslicer; do
+				set_var "${i}_DISABLE" "yes" >/dev/null
+				set_var "${i}_REASON" "`get_var ${i}_REASON`\t- Lua missing\n" >/dev/null
+			done
+		fi
 	fi
 	check_header_bundled "mxml.h" "mxml"
 	check_header "SDL.h" "sdl2"
+	if [ "${HAVE_SDL2_SDL_H}" != "1" ]; then
+		for i in game ufo ufo2map ufoded ufomodel ufoslicer; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- SDL2 missing\n" >/dev/null
+		done
+	fi
 	check_header "SDL_mixer.h" "SDL2_mixer"
+	if [ "${HAVE_SDL2_MIXER_SDL_MIXER_H}" != "1" ]; then
+		for i in testall ufo; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- SDL2-Mixer missing\n" >/dev/null
+		done
+	fi
 	check_header "SDL_ttf.h" "SDL2_ttf"
+	if [ "${HAVE_SDL2_TTF_SDL_TTF_H}" != "1" ]; then
+		for i in testall ufo; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- SDL2-TTF missing\n" >/dev/null
+		done
+	fi
 	check_header "gtest/gtest.h"
+	if [ "${HAVE_GTEST_GTEST_H}" != "1" ]; then
+		for i in testall; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- GoogleTest missing\n" >/dev/null
+		done
+	fi
+	check_header "ogg/ogg.h"
+	if [ "$HAVE_OGG_OGG_H" != "1" ]; then
+		for i in ufo; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- LibOGG missing\n" >/dev/null
+		done
+	fi
+	check_header "vorbis/codec.h"
+	if [ "$HAVE_VORBIS_CODEC_H" != "1" ]; then
+		for i in ufo; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- LibVorbis missing\n" >/dev/null
+		done
+	fi
+
 	check_header "picomodel.h" "picomodel"
 	check_header "gtk/gtk.h" "gtk+-2.0"
+	if [ "$HAVE_GTK_GTK_H" != "1" ]; then
+		for i in uforadiant; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- Gtk2 missing\n" >/dev/null
+		done
+	fi
 	check_header "gtksourceview/gtksourceview.h" "gtksourceview-2.0"
 	check_header "libxml/parser.h" "libxml-2.0"
 	check_header "AL/al.h" "openal"
 	check_header "gtk/gtkglwidget.h" "gtkglext-1.0"
-	if [ "$HAVE_GTK_GTK_H" != "1" ] || [ "$HAVE_GTKGLEXT_1_0_GTKGLWIDGET_H" != "1" ]; then
-		set_var "uforadiant_DISABLE" "yes"
-	fi
-
-	if [ "${HAVE_SDL2_SDL_H}" != "1" ]; then
-		for i in `get_modules`; do
-			if [ "$i" != "uforadiant" ]; then
-				set_var "${i}_DISABLE" "yes"
-			fi
+	if [ "$HAVE_GTKGLEXT_1_0_GTKGLWIDGET_H" != "1" ]; then
+		for i in uforadiant; do
+			set_var "${i}_DISABLE" "yes" >/dev/null
+			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- GtkGL missing\n" >/dev/null
 		done
-	fi
-
-	if [ "${HAVE_SDL2_MIXER_SDL_MIXER_H}" != "1" ]; then
-		set_var "ufo_DISABLE" "yes"
-		set_var "testall_DISABLE" "yes"
-	fi
-
-	if [ "${HAVE_SDL2_TTF_SDL_TTF_H}" != "1" ]; then
-		set_var "ufo_DISABLE" "yes"
-		set_var "testall_DISABLE" "yes"
-	fi
-
-	if [ "${HAVE_GTEST_GTEST_H}" != "1" ]; then
-		set_var "testall_DISABLE" "yes"
 	fi
 }
 
@@ -685,11 +748,13 @@ config_h
 check_programs
 check_headers
 
+echo
 echo "Build modules:"
 for i in `get_modules`; do
 	add_to_makefile_local ${i}_DISABLE
 	if [ "`get_var ${i}_DISABLE`" = "yes" ]; then
 		echo "Disable $i"
+		echo "`get_var ${i}_REASON`"
 	else
 		echo "Build $i"
 	fi
