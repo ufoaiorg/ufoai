@@ -65,7 +65,7 @@ $(TARGET)_SRCS      = \
 	common/routing.cpp \
 	common/ioapi.cpp
 
-ifneq ($(findstring $(TARGET_OS), mingw32 mingw64),)
+ifneq ($(findstring $(TARGET_OS), mingw32 mingw64 mingw64_64),)
 	$(TARGET)_SRCS+=\
 		ports/windows/win_shared.cpp
 else

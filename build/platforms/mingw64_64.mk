@@ -7,4 +7,11 @@ EXE_EXT                  := .exe
 CFLAGS                   += -DWINVER=0x501
 LDFLAGS                  +=
 
-OPENGL_LIBS              ?= -lopengl64
+INTL_LIBS                ?= -lintl
+OPENGL_LIBS              ?= -lopengl32
+
+ufo_LDFLAGS              += -lws2_32 -lwinmm
+ufo2map_LDFLAGS          += -lwinmm
+ufoded_LDFLAGS           += -lws2_32 -lwinmm
+ufomodel_LDFLAGS         += -lwinmm
+ufoslicer_LDFLAGS        += -lwinmm
