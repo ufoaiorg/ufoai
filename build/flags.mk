@@ -42,7 +42,7 @@ ifneq (,$(findstring clang,$(CXX)))
   CFLAGS += -Wno-cast-align
 endif
 
-ifeq ($(shell test $(basename $(basename $(CXX_VER))) -ge 7; echo $$?),0)
+ifeq ($(shell test $(shell echo $(basename $(basename $(CXX_VER))) | sed -e 's/[-.].*//g;') -ge 7; echo $$?),0)
   CFLAGS += -Wno-expansion-to-defined
   CFLAGS += -Wimplicit-fallthrough=2
 endif
