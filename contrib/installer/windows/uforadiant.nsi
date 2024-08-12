@@ -5,7 +5,7 @@
 !define PRODUCT_VERSION "1.6.0"
 !endif
 !define PRODUCT_PUBLISHER "UFO:AI Team"
-!define PRODUCT_WEB_SITE "http://ufoai.sf.net"
+!define PRODUCT_WEB_SITE "https://ufoai.org"
 !define PRODUCT_DIR_REGKEY "Software\UFORadiant\uforadiant.exe"
 
 ;SetCompressor /SOLID bzip2

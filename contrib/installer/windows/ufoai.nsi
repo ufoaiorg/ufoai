@@ -6,7 +6,7 @@
 !define PRODUCT_VERSION "2.6-dev"
 !endif
 !define PRODUCT_PUBLISHER "UFO: AI Team"
-!define PRODUCT_WEB_SITE "http://ufoai.sf.net"
+!define PRODUCT_WEB_SITE "http://ufoai.org"
 !define PRODUCT_DIR_REGKEY "Software\${SHORT_PRODUCT_PATH}"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}-${PRODUCT_VERSION}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"

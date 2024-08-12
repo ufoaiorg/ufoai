@@ -22,7 +22,7 @@
 101 ICON DISCARDABLE STR_PATH_UFODEDICON_FILE
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION 2,5,0,0
+FILEVERSION 2,6,0,0
 FILEFLAGSMASK 0x17L
 #ifdef DEBUG
 # define VER_SPECIAL_STR "Debug"
@@ -39,15 +39,15 @@ BEGIN
 	BEGIN
 		BLOCK "040004b0"
 		BEGIN
-			VALUE "Comments", "http://ufoai.sf.net"
+			VALUE "Comments", "http://ufoai.org"
 			VALUE "CompanyName", "UFO:Alien Invasion Team"
 			VALUE "FileDescription", "UFO:Alien Invasion"
 			VALUE "FileVersion", VER_FILEVERSION_STR
 			VALUE "InternalName", "ufoai"
-			VALUE "LegalCopyright", "Copyright (C) 2002-2014"
+			VALUE "LegalCopyright", "Copyright (C) 2002-2024"
 			VALUE "OriginalFilename", "ufo.exe"
 			VALUE "ProductName", "UFO:AI"
-			VALUE "ProductVersion", "2.5.0.0"
+			VALUE "ProductVersion", "2.6.0.0"
 			VALUE "SpecialBuild", VER_SPECIAL_STR
 		END
 	END
