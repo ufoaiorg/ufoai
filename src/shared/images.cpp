@@ -32,6 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <jpeglib.h>
 #include <png.h>
+#ifdef HAVE_LIBWEBP_DECODE_H
+#	include <webp/decode.h>
+#endif
 #include <zlib.h>
 
 #if JPEG_LIB_VERSION < 80
@@ -39,7 +42,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 /** image formats, tried in this order */
-static char const* const IMAGE_TYPES[] = { "png", "jpg", nullptr };
+static char const* const IMAGE_TYPES[] = {
+#ifdef HAVE_LIBWEBP_DECODE_H
+	"webp",
+#endif
+	"png",
+	"jpg",
+	nullptr
+};
 
 #define TGA_UNMAP_COMP			10
 
@@ -295,6 +305,11 @@ static void readMem(png_struct* const png, png_byte* const dst, png_size_t const
 	}
 }
 
+/**
+ * @brief Loads a PNG image into an SDL_Surface
+ * @param[in] name Path to the imagefile, relative from gameDir and without extension
+ * @returns Pointer to the SDL_Surface created, or @c nullptr on failure
+ */
 static SDL_Surface* Img_LoadPNG(char const* const name)
 {
 	SDL_Surface* res = 0;
@@ -367,6 +382,11 @@ static void djpeg_skip_input_data(jpeg_decompress_struct* const cinfo, long cons
 }
 #endif
 
+/**
+ * @brief Loads a Jpeg image into an SDL_Surface
+ * @param[in] name Path to the imagefile, relative from gameDir and without extension
+ * @returns Pointer to the SDL_Surface created, or @c nullptr on failure
+ */
 static SDL_Surface* Img_LoadJPG(char const* const name)
 {
 	SDL_Surface* res = 0;
@@ -425,15 +445,52 @@ static SDL_Surface* Img_LoadJPG(char const* const name)
 	return res;
 }
 
+
+#ifdef HAVE_LIBWEBP_DECODE_H
 /**
- * @brief Loads the specified image from the game filesystem and populates
- * the provided SDL_Surface.
+ * @brief Loads a static, 32bit, RGBA WebP image into an SDL_Surface
+ * @param[in] name Path to the imagefile, relative from gameDir and without extension
+ * @returns Pointer to the SDL_Surface created, or @c nullptr on failure
+ */
+static SDL_Surface* Img_LoadWebP(char const* const name)
+{
+	SDL_Surface* res = 0;
+	size_t       len;
+
+	if (byte* const buf = readFile(name, "webp", len)) {
+		int height = 0;
+		int width = 0;
+		if (!WebPGetInfo(buf, len, &width, &height)) {
+			FS_FreeFile(buf);
+			return nullptr;
+		}
+
+		if (SDL_Surface* const s = createSurface(height, width)) {
+			size_t imageSize = width * height * s->format->BytesPerPixel;
+			void* pixels = WebPDecodeRGBAInto(buf, len, (uint8_t*)s->pixels, imageSize,
+				width * s->format->BytesPerPixel);
+			res = pixels ? s : nullptr;
+		}
+
+		FS_FreeFile(buf);
+	}
+
+	return res;
+}
+# endif
+
+/**
+ * @brief Loads the specified image from the game filesystem into an SDL_Surface.
  *
  * Image formats are tried in the order they appear in TYPES.
  * @note Make sure to free the given @c SDL_Surface after you are done with it.
  */
 SDL_Surface* Img_LoadImage (char const* name)
 {
+#ifdef HAVE_LIBWEBP_DECODE_H
+	if (SDL_Surface* const s = Img_LoadWebP(name))
+		return s;
+#endif
 	if (SDL_Surface* const s = Img_LoadPNG(name))
 		return s;
 	if (SDL_Surface* const s = Img_LoadJPG(name))

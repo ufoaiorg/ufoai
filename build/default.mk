@@ -25,6 +25,11 @@ JPEG_LIBS                ?= -ljpeg
 JPEG_CFLAGS              ?=
 endif
 
+ifdef HAVE_LIBWEBP_DECODE_H
+WEBP_LIBS                ?= -lwebp
+WEBP_CFLAGS              ?=
+endif
+
 ifdef HAVE_SDL2_SDL_H
 SDL_LIBS                 ?= $(call PKG_LIBS,sdl2)
 SDL_CFLAGS               ?= $(call PKG_CFLAGS,sdl2)

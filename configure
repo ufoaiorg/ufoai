@@ -270,6 +270,7 @@ check_headers() {
 			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- LibPNG missing\n" >/dev/null
 		done
 	fi
+	check_header "webp/decode.h" "libwebp"
 	check_header "curl/curl.h" "libcurl"
 	if [ "${HAVE_LIBCURL_CURL_H}" != "1" ]; then
 		for i in ufoded; do

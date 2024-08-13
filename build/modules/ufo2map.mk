@@ -8,11 +8,11 @@ endif
 
 $(TARGET)_LINKER   := $(CXX)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -DCOMPILE_MAP $(SDL_CFLAGS) $(PNG_CFLAGS) $(JPEG_CFLAGS) $(LUA_CFLAGS)
+$(TARGET)_CFLAGS   += -DCOMPILE_MAP $(SDL_CFLAGS) $(PNG_CFLAGS) $(JPEG_CFLAGS) $(WEBP_CFLAGS) $(LUA_CFLAGS)
 ifeq (,$(findstring clang,$(CXX)))
 	$(TARGET)_CFLAGS   += -ffloat-store
 endif
-$(TARGET)_LDFLAGS  += -lm $(PNG_LIBS) $(JPEG_LIBS) -lz $(SDL_LIBS) $(LUA_LIBS)
+$(TARGET)_LDFLAGS  += -lm $(PNG_LIBS) $(JPEG_LIBS) $(WEBP_LIBS) -lz $(SDL_LIBS) $(LUA_LIBS)
 
 ifneq ($(findstring $(TARGET_OS), openbsd netbsd freebsd),)
     $(TARGET)_LDFLAGS += -lexecinfo
