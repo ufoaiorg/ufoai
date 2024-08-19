@@ -11,6 +11,7 @@ INTL_LIBS                ?= -lintl
 OPENGL_LIBS              ?= -lopengl32
 
 game_LDFLAGS             += $(SRCDIR)/game/game.def
+testall_LDFLAGS          += -lws2_32 -lwinmm
 ufo_LDFLAGS              += -lws2_32 -lwinmm
 ufo2map_LDFLAGS          += -lwinmm -mconsole
 ufoded_LDFLAGS           += -lws2_32 -lwinmm
