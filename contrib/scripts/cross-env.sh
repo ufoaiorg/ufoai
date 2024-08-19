@@ -19,6 +19,7 @@ DEPENDENCIES=(
 	https://ftp.gnu.org/pub/gnu/gettext/gettext-0.22.5.tar.gz,gettext-0.22.5,automake
 	https://downloads.xiph.org/releases/ogg/libogg-1.3.5.tar.gz,libogg-1.3.5,cmake
 	https://downloads.xiph.org/releases/vorbis/libvorbis-1.3.7.tar.gz,libvorbis-1.3.7,cmake
+	https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.4.0.tar.gz,libwebp-1.4.0,cmake
 	https://github.com/google/googletest/releases/download/v1.15.2/googletest-1.15.2.tar.gz,googletest-1.15.2,cmake
 )
 
