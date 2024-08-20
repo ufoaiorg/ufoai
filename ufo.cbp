@@ -171,19 +171,6 @@
 					<SilentBuild command="" />
 				</MakeCommands>
 			</Target>
-			<Target title="ufoslicer">
-				<Option output="ufoslicer" prefix_auto="1" extension_auto="1" />
-				<Option type="0" />
-				<Option compiler="gcc" />
-				<MakeCommands>
-					<Build command="" />
-					<CompileFile command="" />
-					<Clean command="" />
-					<DistClean command="" />
-					<AskRebuildNeeded command="" />
-					<SilentBuild command="" />
-				</MakeCommands>
-			</Target>
 		</Build>
 		<Extensions>
 			<code_completion />

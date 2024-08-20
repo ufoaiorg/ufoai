@@ -16,4 +16,3 @@ ufo_LDFLAGS              += -lws2_32 -lwinmm
 ufo2map_LDFLAGS          += -lwinmm -mconsole
 ufoded_LDFLAGS           += -lws2_32 -lwinmm
 ufomodel_LDFLAGS         += -lwinmm -mconsole
-ufoslicer_LDFLAGS        += -lwinmm -mconsole

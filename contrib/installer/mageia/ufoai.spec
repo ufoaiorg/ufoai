@@ -75,8 +75,7 @@ This package contains the map editor UFORadiant.
 		--enable-ufoded \
 		--enable-ufo \
 		--enable-ufomodel \
-		--enable-uforadiant \
-		--enable-ufoslicer
+		--enable-uforadiant
 ## Mageia doesn't use "make %{?_smp_mflags}".
 ## They use "%make" to achieve the same effect.
 %make LDFLAGS="%ldflags" uforadiant_LINKER="g++ %ldflags"

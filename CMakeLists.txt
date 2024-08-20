@@ -94,7 +94,6 @@ option(DISABLE_TESTS "Disable Google tests building")
 option(DISABLE_TOOLS "Disable console developer tools building")
 option(DISABLE_UFO2MAP "Disable ufo2map map compiler building")
 option(DISABLE_UFOMODEL "Disable ufomodel lightmap pre-compiler building")
-option(DISABLE_UFOSLICER "Disable ufoslicer 2D map overlays creator building")
 option(DISABLE_UFORADIANT "Disable UFORadiant map editor building")
 option(DISABLE_I18N "Disable game translations building")
 option(DISABLE_MANUAL "Disable the user manual(s) building" ON)
@@ -121,10 +120,6 @@ endif()
 
 if (NOT DISABLE_UFOMODEL AND NOT DISABLE_TOOLS)
 	add_subdirectory("src/tools/ufomodel")
-endif()
-
-if (NOT DISABLE_UFOSLICER AND NOT DISABLE_TOOLS)
-	add_subdirectory("src/tools/ufoslicer")
 endif()
 
 if (NOT DISABLE_TESTS AND NOT DISABLE_GAME) 

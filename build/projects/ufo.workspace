@@ -10,7 +10,6 @@
 			<Depends filename="ufo2map.cbp" />
 		</Project>
 		<Project filename="ufomodel.cbp" />
-		<Project filename="ufoslicer.cbp" />
 		<Project filename="ufo.cbp">
 			<Depends filename="game.cbp" />
 			<Depends filename="ufo2map.cbp" />

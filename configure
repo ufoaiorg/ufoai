@@ -251,7 +251,7 @@ check_headers() {
 	check_header "link.h"
 	check_header "jpeglib.h"
 	if [ "${HAVE_JPEGLIB_H}" != "1" ]; then
-		for i in ufo2map ufomodel ufoslicer; do
+		for i in ufo2map ufomodel; do
 			set_var "${i}_DISABLE" "yes" >/dev/null
 			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- LibJpeg missing\n" >/dev/null
 		done
@@ -265,7 +265,7 @@ check_headers() {
 	fi
 	check_header "png.h" "libpng"
 	if [ "${HAVE_LIBPNG_PNG_H}" != "1" ]; then
-		for i in ufo2map ufomodel ufoslicer; do
+		for i in ufo2map ufomodel; do
 			set_var "${i}_DISABLE" "yes" >/dev/null
 			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- LibPNG missing\n" >/dev/null
 		done
@@ -282,7 +282,7 @@ check_headers() {
 	if [ "${HAVE_LUA5_4_LUA_H}" != "1" ]; then
 		check_header "lua.h" "lua5.3"
 		if [ "${HAVE_LUA5_3_LUA_H}" != "1" ]; then
-			for i in game ufo ufo2map ufoded ufomodel ufoslicer; do
+			for i in game ufo ufo2map ufoded ufomodel; do
 				set_var "${i}_DISABLE" "yes" >/dev/null
 				set_var "${i}_REASON" "`get_var ${i}_REASON`\t- Lua missing\n" >/dev/null
 			done
@@ -291,7 +291,7 @@ check_headers() {
 	check_header_bundled "mxml.h" "mxml"
 	check_header "SDL.h" "sdl2"
 	if [ "${HAVE_SDL2_SDL_H}" != "1" ]; then
-		for i in game ufo ufo2map ufoded ufomodel ufoslicer; do
+		for i in game ufo ufo2map ufoded ufomodel; do
 			set_var "${i}_DISABLE" "yes" >/dev/null
 			set_var "${i}_REASON" "`get_var ${i}_REASON`\t- SDL2 missing\n" >/dev/null
 		done

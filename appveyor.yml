@@ -36,8 +36,8 @@ install:
 build_script:
   - cmake --version
 # UFORADIANT cannot be built with MSVC because we don't have the required GTK libraries. We turn off UFOAI_BUILD_UFORADIANT
-  - if [%generator%]==[msvc12] cmake -G "Visual Studio 12" -DUFOAI_BUILD_GAME=ON -DUFOAI_BUILD_UFO2MAP=ON -DUFOAI_BUILD_UFODED=ON -DUFOAI_BUILD_UFO=ON -DUFOAI_BUILD_UFOMODEL=ON -DUFOAI_BUILD_UFOSLICER=ON -DUFOAI_BUILD_UFORADIANT=OFF -DUFOAI_BUILD_UFOTESTALL=ON && msbuild ALL_BUILD.vcxproj /verbosity:normal
-  - if [%generator%]==[mingw] cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DUFOAI_BUILD_GAME=ON -DUFOAI_BUILD_UFO2MAP=ON -DUFOAI_BUILD_UFODED=ON -DUFOAI_BUILD_UFO=ON -DUFOAI_BUILD_UFOMODEL=ON -DUFOAI_BUILD_UFOSLICER=ON -DUFOAI_BUILD_UFORADIANT=ON -DUFOAI_BUILD_UFOTESTALL=ON && mingw32-make
+  - if [%generator%]==[msvc12] cmake -G "Visual Studio 12" -DUFOAI_BUILD_GAME=ON -DUFOAI_BUILD_UFO2MAP=ON -DUFOAI_BUILD_UFODED=ON -DUFOAI_BUILD_UFO=ON -DUFOAI_BUILD_UFOMODEL=ON -DUFOAI_BUILD_UFORADIANT=OFF -DUFOAI_BUILD_UFOTESTALL=ON && msbuild ALL_BUILD.vcxproj /verbosity:normal
+  - if [%generator%]==[mingw] cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DUFOAI_BUILD_GAME=ON -DUFOAI_BUILD_UFO2MAP=ON -DUFOAI_BUILD_UFODED=ON -DUFOAI_BUILD_UFO=ON -DUFOAI_BUILD_UFOMODEL=ON -DUFOAI_BUILD_UFORADIANT=ON -DUFOAI_BUILD_UFOTESTALL=ON && mingw32-make
 #  verbosity: detailed
 test_script:
 #  - ufotestall.exe
@@ -51,8 +51,6 @@ artifacts:
     name: ufoded
   - path: ufomodel.exe
     name: ufomodel
-  - path: ufoslicer.exe
-    name: ufoslicer
   - path: ufotestall.exe
     name: testexe
 #  - path: contrib/installer/windows/*.exe

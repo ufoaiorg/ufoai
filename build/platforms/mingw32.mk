@@ -35,4 +35,3 @@ endif
 ufo2map_LDFLAGS          += -lwinmm -mconsole
 ufomodel_LDFLAGS         += -lwinmm -mconsole
 uforadiant_LDFLAGS       += -lglib-2.0 -lgtk-win32-2.0 -lgobject-2.0 -mwindows -static-libgcc -static-libstdc++
-ufoslicer_LDFLAGS        += -lwinmm -mconsole
