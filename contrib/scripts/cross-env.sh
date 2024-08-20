@@ -23,6 +23,7 @@ DEPENDENCIES=(
 	https://github.com/google/googletest/releases/download/v1.15.2/googletest-1.15.2.tar.gz,googletest-1.15.2,cmake
 )
 
+mkdir -p $DEVEL_DIR
 
 echo; echo
 echo "Installing dependencies from the repository"
@@ -43,8 +44,6 @@ apt-get install -y \
 
 update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix >> "${DEVEL_DIR}/apt-get.log" 2>&1
 update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix >> "${DEVEL_DIR}/apt-get.log" 2>&1
-
-mkdir -p $DEVEL_DIR
 
 shopt -s extglob
 echo; echo
