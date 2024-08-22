@@ -2,7 +2,7 @@
 
 --[[
 -- @file
--- @brief Alien Containment base menu section
+-- @brief Transfer base menu section
 --]]
 
 --[[
@@ -24,16 +24,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --]]
 
---[[
- - @todo Add stored aliens to the content section
- - @todo Change aliencont screen to change the "map area" only
---]]
-
 do
 	require("ufox.lua")
 	require("base.section.lua")
 
-	local sectionContainment = {
+	local sectionTransfer = {
 		register = function (root_node, base_idx)
 			local section = base.build_section(root_node, "transfer", "_Transfer", "icons/transfer")
 			section:child("header").on_click = function (sender)
@@ -42,5 +37,5 @@ do
 		end,
 	}
 
-	return sectionContainment
+	return sectionTransfer
 end
