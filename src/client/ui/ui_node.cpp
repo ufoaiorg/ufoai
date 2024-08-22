@@ -381,17 +381,26 @@ const char* UI_Node_GetText (uiNode_t* node) {
 
 void UI_Node_SetText (uiNode_t* node, const char* text) {
 	UI_FreeStringProperty(node->text);
-	node->text = Mem_PoolStrDup(text, ui_dynStringPool, 0);
+	if (text != nullptr)
+		node->text = Mem_PoolStrDup(text, ui_dynStringPool, 0);
+	else
+		node->text = nullptr;
 }
 
 void UI_Node_SetFont (uiNode_t* node, const char* name) {
 	UI_FreeStringProperty(node->font);
-	node->font = Mem_PoolStrDup(name, ui_dynStringPool, 0);
+	if (name != nullptr)
+		node->font = Mem_PoolStrDup(name, ui_dynStringPool, 0);
+	else
+		node->font = nullptr;
 }
 
 void UI_Node_SetImage (uiNode_t* node, const char* name) {
 	UI_FreeStringProperty(node->image);
-	node->image = Mem_PoolStrDup(name, ui_dynStringPool, 0);
+	if (name != nullptr)
+		node->image = Mem_PoolStrDup(name, ui_dynStringPool, 0);
+	else
+		node->image = nullptr;
 }
 
 const char* UI_Node_GetTooltip (uiNode_t* node) {
@@ -400,7 +409,10 @@ const char* UI_Node_GetTooltip (uiNode_t* node) {
 
 void UI_Node_SetTooltip (uiNode_t* node, const char* tooltip) {
 	UI_FreeStringProperty((void*)node->tooltip);
-	node->tooltip = Mem_PoolStrDup(tooltip, ui_dynStringPool, 0);
+	if (tooltip != nullptr)
+		node->tooltip = Mem_PoolStrDup(tooltip, ui_dynStringPool, 0);
+	else
+		node->tooltip = nullptr;
 }
 
 bool UI_Node_IsDisabled (uiNode_t const* node) {
