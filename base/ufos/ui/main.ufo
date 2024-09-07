@@ -22,32 +22,6 @@ do
 		},
 
 		{
-			name = "facebook",
-			class = "MainMenuBtn",
-			text = "_Facebook",
-			tooltip = "_Like us on facebook",
-			pos = {10, 690},
-			size = {160, 20},
-
-			on_click = function (sender)
-				ufo.cmd("cl_openurl http://www.facebook.com/ufoai/;")
-			end,
-		},
-
-		{
-			name = "twitter",
-			class = "MainMenuBtn",
-			text = "_Twitter",
-			tooltip = "_Follow us on twitter",
-			pos = {10, 720},
-			size = {160, 20},
-
-			on_click = function (sender)
-				ufo.cmd("cl_openurl http://www.twitter.com/ufoai/;")
-			end,
-		},
-
-		{
 			name = "buttons",
 			class = "panel",
 			pos = { 312, 250 },
