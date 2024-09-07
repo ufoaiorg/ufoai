@@ -69,12 +69,12 @@ campaign.new = {
 								name = id,
 								class = "string",
 								size = {340, 20},
-								text = name,
+								text = '_' .. name,
 								color = {1, 1, 1, 0.5},
 
 								select = function (sender)
 									local selected = sender:parent():parent():child("selected_campaign")
-									if (selected:text() ~=  "" and selected:text() ~= sender:name()) then
+									if (selected:text() ~= "" and selected:text() ~= sender:name()) then
 										local selected_campaign = sender:parent():child(selected:text())
 										if (selected_campaign ~= nil) then
 											selected_campaign:set_color(1, 1, 1, 0.5)
