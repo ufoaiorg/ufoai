@@ -36,6 +36,7 @@ campaign.save = {
 			name = "save",
 			class = "MainMenuTab",
 			text = "_SAVE",
+			invisible = true,
 
 			select = function (sender)
 				sender:set_backgroundcolor(0.4, 0.515, 0.5, 1)

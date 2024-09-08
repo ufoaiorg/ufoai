@@ -71,6 +71,45 @@ do
 			class = "fuzzyScreen"
 		},
 
+		campaign_save_check = function (sender)
+			if (sender:root():child("content"):child("tabview"):child("tabset"):child("save") == nil) then
+				return
+			end
+
+			local save_allowed = sender:root():child("ui_campaign_saveallowed")
+			if (save_allowed ~= nil) then
+				save_allowed:delete_node()
+			end
+
+			save_allowed = ufox.build({
+				name = "ui_campaign_saveallowed",
+				class = "confunc",
+
+				--[[
+				-- @brief Show / hide Save game menu
+				-- @param[in] allowed Whether saving the campaign is allowed @c true or @c false
+				-- @param[in] error_message The reason if saving is not possible
+				--]]
+				on_click = function (sender, allowed, error_message)
+					local save_button = sender:root():child("content"):child("tabview"):child("tabset"):child("save")
+					if (save_button == nil) then
+						ufo.print("Save tab was not found by the confunc\n")
+						return
+					end
+
+					if (allowed == "true") then
+						save_button:set_invisible(false)
+					else
+						save_button:set_invisible(true)
+					end
+
+					sender:delete_node()
+				end,
+			}, sender)
+
+			ufo.cmd(string.format("game_saveallowed %s;", save_allowed:name()))
+		end,
+
 		on_windowopened = function (sender, tab)
 			ufox.build_maintabset(
 				sender:child("content"):child("tabview"),
@@ -86,6 +125,7 @@ do
 				tab = "new"
 			end
 			sender:child("content"):child("tabview"):child("tabset"):select(tab)
+			sender:campaign_save_check()
 		end,
 
 		on_windowclosed = function (sender)

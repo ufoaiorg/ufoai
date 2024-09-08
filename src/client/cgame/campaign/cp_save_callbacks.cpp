@@ -229,10 +229,27 @@ static void SAV_GameQuickLoad_f (void)
 	}
 }
 
+/**
+ * @brief Returns whether saving game is allowed
+*/
+static void SAV_GameSaveAllowed_f (void)
+{
+	if (cgi->Cmd_Argc() < 2) {
+		cgi->Com_Printf("Usage: %s <confunc_callback>\n", cgi->Cmd_Argv(0));
+		return;
+	}
+	const char* callback = cgi->Cmd_Argv(1);
+
+	char* error = nullptr;
+	bool allowed = SAV_GameSaveAllowed(&error);
+
+	cgi->UI_ExecuteConfunc("%s %s \"%s\"", callback, allowed ? "true" : "false", error ? error : "");
+}
 
 static const cmdList_t saveCallbacks[] = {
 	{"game_listsaves", SAV_ListSaveGames_f, "Lists available savegames"},
 	{"game_load", SAV_GameLoad_f, "Loads a given filename"},
+	{"game_saveallowed", SAV_GameSaveAllowed_f, "Checks if saving the game is allowed"},
 	{"game_save", SAV_GameSave_f, "Saves to a given filename"},
 	{"game_delete", SAV_GameDelete_f, "Deletes a given filename"},
 	{"game_continue", SAV_GameContinue_f, "Continue with the last saved game"},
