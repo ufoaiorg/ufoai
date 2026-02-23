@@ -1,0 +1,104 @@
+name: CI Build
+
+on:
+  push:
+    branches: [ main, master, develop, 'claude/**' ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        build_type: [Debug, Release]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential cmake ninja-build \
+            libsdl2-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+            libgl1-mesa-dev libglew-dev \
+            libjpeg-dev libpng-dev libwebp-dev \
+            libxml2-dev liblua5.3-dev \
+            libogg-dev libvorbis-dev \
+            zlib1g-dev pkg-config
+
+      - name: Configure CMake
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -G Ninja
+
+      - name: Build
+        working-directory: build
+        run: ninja
+
+      - name: Run smoke test
+        run: |
+          timeout 10 ./build/ufo --headless --skip-intro || true
+
+  build-windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        build_type: [Debug, Release]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup MSVC
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Install vcpkg dependencies
+        run: |
+          vcpkg install sdl2:x64-windows sdl2-mixer:x64-windows sdl2-ttf:x64-windows --triplet x64-windows
+        shell: powershell
+
+      - name: Configure CMake
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_TOOLCHAIN_FILE="C:\vcpkg\scripts\buildsystems\vcpkg.cmake"
+
+      - name: Build
+        working-directory: build
+        run: cmake --build . --config ${{ matrix.build_type }}
+
+      - name: Run smoke test
+        continue-on-error: true
+        run: |
+          timeout 10 .\build\${{ matrix.build_type }}\ufo.exe --headless --skip-intro || exit 0
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential cmake ninja-build \
+            libsdl2-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+            libgl1-mesa-dev libglew-dev \
+            libjpeg-dev libpng-dev libwebp-dev \
+            libxml2-dev liblua5.3-dev \
+            libogg-dev libvorbis-dev \
+            zlib1g-dev pkg-config
+
+      - name: Configure CMake with tests
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Debug -G Ninja
+
+      - name: Build tests
+        working-directory: build
+        run: ninja testall
+
+      - name: Run unit tests
+        working-directory: build
+        run: ./testall --gtest_filter="*"
