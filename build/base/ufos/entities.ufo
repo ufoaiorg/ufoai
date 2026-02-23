@@ -1,0 +1,829 @@
+/* this file contains definitions of what map entities should contain.
+ * it is used in radiant and ufo2map check/fix mode.
+ * keys directly in entity definitions are for radiant (they are called
+ * abstract in entitiesdef.c).
+ *
+ * mandatory blocks contain keys that must be present in an entity.
+ *
+ * optional blocks contain keys that may be present in an entity.
+ *
+ * keys in mandatory or optional blocks may be in a map file and are
+ * called concrete keys (as opposed to abstract) in entitiesdef.c.
+ * concrete keys may have defaults defined in default blocks and
+ * types declared in type blocks.
+ *
+ * if no type is given, V_STRING is
+ * assumed. V_FLOAT and V_INT types may be made into vectors,
+ * "V_FLOAT 3". To insist that values are positive, you may use
+ * stuff like "UNSIGNED V_INT". if a type is given, then the
+ * default will be tested for consistency when entities.ufo
+ * is parsed.
+ *
+ * note that 255 for spawnflags means levelflags 1-8 are all set.
+ *
+ * range block entries can be a list of discrete options, "0 45 90 135" or continuous "0.0 - 1.0"
+ * a key may have different numbers of range entries: zero, one or a number equal to the number of elements in the vector.
+ * only numeric types may have a range defined.
+ */
+
+
+entity info_player_start {
+	description	"Starting point for a player. Only for multiplayer teams."
+	color		"1 0 0"
+	size		"-16 -16 -24 16 16 32"
+	spawnflags	"dead dead2 crouched"
+
+	mandatory {
+		team	"The number of the team for this player starting point. 0 is reserved for civilians and critters (use info_civilian_start instead)"
+		origin	"position"
+	}
+
+	optional {
+		angle	"The direction that the actor faces at the start"
+	}
+
+	type {
+		team	"UNSIGNED V_INT"
+		origin	"V_FLOAT 3"
+		angle	"V_INT"
+	}
+
+	range {
+		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+		team	"1 2 3 4 5 6 7"
+	}
+}
+
+entity info_human_start {
+	description	"Starting point for a single player human."
+	color		"0 1 0"
+	size		"-16 -16 -24 16 16 32"
+	spawnflags	"dead dead2 crouched"
+
+	mandatory {
+		origin	"position"
+	}
+
+	optional {
+		angle	"The direction that the actor faces at the start 0, 90, 180 or 270"
+	}
+
+	type {
+		origin	"V_FLOAT 3"
+		angle	"V_INT"
+	}
+
+	range {
+		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+	}
+}
+
+entity info_alien_start {
+	description	"Starting point for a single player alien."
+	color		"0 0 1"
+	size		"-16 -16 -24 16 16 32"
+	spawnflags	"dead dead2 crouched"
+
+	mandatory {
+		origin	"position"
+	}
+
+	optional {
+		angle	"The direction that the actor faces at the start 0, 90, 180 or 270"
+	}
+
+	type {
+		origin	"V_FLOAT 3"
+		angle	"V_INT"
+	}
+
+	range {
+		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+	}
+}
+
+entity info_2x2_start {
+	description	"Starting point for a single 2x2 unit."
+	color		"0 0 1"
+	size		"-32 -32 -24 32 32 32"
+	spawnflags	"dead dead2"
+
+	mandatory {
+		origin	"position"
+		team	"The number of the team for this player starting point."
+	}
+
+	optional {
+		angle	"The direction that the actor faces at the start"
+	}
+
+	type {
+		team	"UNSIGNED V_INT"
+		origin	"V_FLOAT 3"
+		angle	"V_INT"
+	}
+
+	range {
+		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+		team	"0 1 2 3 4 5 6 7"
+	}
+
+	default {
+		team	"1"
+	}
+}
+
+entity info_civilian_start {
+	description	"Starting point for a civilian."
+	color		"0 1 1"
+	size		"-16 -16 -24 16 16 32"
+	spawnflags	"dead dead2 crouched"
+
+	mandatory {
+		origin	"position"
+	}
+
+	optional {
+		angle	"The direction that the actor faces at the start"
+	}
+
+	type {
+		origin	"V_FLOAT 3"
+		angle	"V_INT"
+	}
+
+	range {
+		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+	}
+
+}
+
+entity info_null {
+	description	"Used as a positional target for spotlights, etc."
+	color		"0 0.5 0"
+	size		"-4 -4 -4 4 4 4"
+
+	mandatory {
+		origin		"position"
+		targetname	"Name of the target entity - e.g. used in light_spot to determine the direction the light should shine into"
+	}
+
+	type {
+		origin	"V_FLOAT 3"
+	}
+}
+
+entity info_civilian_target {
+	description	"Used as a target where civilians try to get in a mission."
+	color		"0.5 0.8 0.1"
+	size		"-16 -16 -24 16 16 32"
+
+	mandatory {
+		count	"The priority of this waypoint - the lower the number, the nearer the end-target"
+		origin	"position"
+	}
+
+	type {
+		origin	"V_FLOAT 3"
+	}
+}
+
+entity misc_model {
+	description	"Displays a model. Set the level flags correctly! Use angles [pitch yaw roll] to rotate the model. pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360]) and roll (fall over)"
+	color		"1 1 0"
+	size		"-16 -16 -16 16 16 16"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 server_solid pulse"
+
+	mandatory {
+		model		"Arbitrary model file to display"
+		origin		"Position"
+		spawnflags	"Level flags etc"
+	}
+
+	optional {
+		angles			"Direction of the model [pitch yaw roll]"
+		modelscale_vec	"Scale of the model (vector of 3 values)"
+		skin			"Skin number"
+		frame			"Frame number - use frame or anim - but not both"
+		anim			"If this is this an animated model you can set the animation name from the *.anm file here"
+		tag				"The tag to place the model to (a target of a misc_model must be given, too)"
+		targetname		"The id of this misc_model in case you want to place a tag"
+		target			"The target must match the given targetname of the parent misc_model entity"
+	}
+
+	type {
+		angles		"V_FLOAT 3"
+		origin		"V_FLOAT 3"
+		spawnflags	"V_INT"
+		skin		"UNSIGNED V_INT"
+	}
+
+	default {
+		angles			"0.0 0.0 0.0"
+		skin			"0"
+		frame			"0"
+		modelscale_vec	"1.0 1.0 1.0"
+		spawnflags		"255"
+	}
+}
+
+entity misc_particle {
+	description	"Creates a particle. Particle properties can be set here with a preceding '-' or '+'. '-' property is set before calling the particle init function '+' does it afterwards. The 'noday' means that the particle is not shown at the day version of the map. E.g. useful for flare particles around streetlights."
+	color		"0 0 1"
+	size		"-16 -16 -16 16 16 16"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 noday"
+
+	mandatory {
+		particle	"Name of the particle definition."
+		origin		"position"
+		spawnflags	"Levelflags and noday"
+	}
+
+	optional {
+		targetname	"The id of this entity"
+		wait	"Wait times are of the format 'a b'. It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start."
+	}
+
+	type {
+		origin	"V_FLOAT 3"
+	}
+
+	default {
+		spawnflags	"255"
+	}
+}
+
+entity light {
+	description	"All lights are for the night version. If you want them to show up in the day version, too - mark the day flag."
+	color		"0 1 0"
+	size		"-8 -8 -8 8 8 8"
+	spawnflags	"day"
+
+	mandatory {
+		_color	"Colour for the light RGB"
+		light	"Intensity (e.g. 300) - the entity_scale is applied to these values"
+		origin	"position"
+	}
+
+	optional {
+		target		"Entity target name (e.g. info_null) - target entity must have targetname set"
+		_cone		"Defines the light cone in degrees"
+		spawnflags	"Whether the light is in the day version"
+		angle		"Special values: UP -1; DOWN -2"
+	}
+
+	default {
+		_cone	"10"
+		light	"300"
+		_color	"1 1 1"
+	}
+
+	type {
+		origin	"V_FLOAT 3"
+		light	"UNSIGNED V_INT"
+		_cone	"UNSIGNED V_INT"
+		angle	"SIGNED V_INT"
+		_color	"V_FLOAT 3"
+	}
+
+	range {
+		angle "-1 -2"
+	}
+}
+
+entity light_spot {
+	description	"All lights are for the night version. If you want them to show up in the day version, too - mark the day flag."
+	color		"0 1 0"
+	size		"-8 -8 -8 8 8 8"
+	spawnflags	"day"
+
+	mandatory {
+		_color	"Colour for the light RGB"
+		light	"Intensity (e.g. 300) - the entity_scale is applied to these values"
+		origin	"position"
+	}
+
+	optional {
+		angle	"Special values: UP -1 and DOWN -2"
+		target	"Entity target name (e.g. info_null) - target entity must have targetname set"
+		_cone	"Defines the light cone in degrees"
+	}
+
+	default {
+		_cone	"10"
+		light	"300"
+		_color	"1 1 1"
+	}
+
+	type {
+		origin	"V_FLOAT 3"
+		_color	"V_FLOAT 3"
+	}
+}
+
+entity worldspawn {
+	description	"Only used for the world. Must be the first entity in a map. Pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360])"
+	optional {
+		maxteams		"Max. teams for multiplayer"
+		maxlevel		"Highest selectable level [1-8]"
+		noequipment		"Don't spawn the actors with equipment assigned, it must be collected in the map"
+		norandomspawn	"Don't use random spawn positions for the actors to spawn them - deactivate random spawn by setting this to 1"
+		light_night		"Controls sunlight intensity. All positive values are valid, values from 80 to 300 typically produce good results."
+		angles_night	"Controls sunlight direction, specified as pitch and yaw in degrees, e.g. -80 220."
+		color_night		"Controls sunlight colour, specified as rgb floating point values, e.g. 1.0 0.9 0.8."
+		ambient_night	"Specifies ambient light, or the minimum global lighting value for all light samples, as an rgb colour, e.g. 0.07 0.06 0.06. A small ambient factor is recommended for most levels."
+		light_day		"Controls sunlight intensity. All positive values are valid, values from 80 to 300 typically produce good results."
+		angles_day		"Controls sunlight direction, specified as pitch and yaw in degrees, e.g. -80 220."
+		color_day		"Controls sunlight colour, specified as rgb floating point values, e.g. 1.0 0.9 0.8."
+		ambient_day		"Specifies ambient light, or the minimum global lighting value for all light samples, as an rgb colour, e.g. 0.07 0.06 0.06. A small ambient factor is recommended for most levels."
+		brightness		"Controls light intensity. This is used to uniformly brighten or darken your level. 1.0 is default, all positive floating point values are valid."
+		saturation		"Controls light saturation, or colour influence. This can be used to make a level look more colourful, or more pale. The default value is 1.0. Values from 0.5 to 3.0 are most useful."
+		contrast		"Controls light contrast. This can be used to create darker dark areas and lighter light areas. The default value is 1.0. Values significantly higher than 1.0 are not recommended."
+		quant			"Controls lightmap resolution, which is relative to texture size. Default is 4 (1 << 4). A value of 3 will produce sharper lightmaps, but will dramatically lengthen your radiosity compile times. In fact, setting this to 5 during development is a nice trick for speeding up your level design process."
+		subdivide		"Controls maximum surface size for the bsp stage of the compile. Generally, the default value 1024 is recommended. Lower values may reduce artefacts, while higher values may reduce r_speeds."
+	}
+
+	type {
+		maxteams		"UNSIGNED V_INT"
+		maxlevel		"UNSIGNED V_INT"
+		quant			"UNSIGNED V_INT"
+		subdivide		"UNSIGNED V_INT"
+		saturation		"UNSIGNED V_FLOAT"
+		contrast		"UNSIGNED V_FLOAT"
+		brightness		"UNSIGNED V_FLOAT"
+		angles_night	"V_FLOAT 2"
+		angles_day		"V_FLOAT 2"
+		ambient_night	"V_FLOAT 3"
+		ambient_day		"V_FLOAT 3"
+		color_night		"V_FLOAT 3"
+		color_day		"V_FLOAT 3"
+		light_night		"V_INT"
+		light_day		"V_INT"
+		norandomspawn	"V_INT"
+		noequipment		"V_INT"
+	}
+
+	default {
+		maxteams		"2"
+		angles_night	"-80 220"
+		angles_day		"-75 100"
+		ambient_night	"0.07 0.07 0.08"
+		ambient_day		"0.26 0.26 0.26"
+		color_night		"0.65 0.75 0.95"
+		color_day		"0.90 0.75 0.65"
+		light_night		"70"
+		light_day		"280"
+		subdivide		"1024"
+		quant			"4"
+		saturation		"1.0"
+		contrast		"1.0"
+		brightness		"1.0"
+		maxlevel		"5"
+		norandomspawn	"1"
+	}
+
+	range {
+		angles_day		"-90 - 360"
+		angles_night	"-90 - 360"
+		ambient_day		"0.0 - 1.0"
+		ambient_night	"0.0 - 1.0"
+		norandomspawn	"0 - 1"
+		noequipment		"0 - 1"
+		maxlevel		"1 2 3 4 5 6 7 8"
+	}
+}
+
+entity misc_sound {
+	description	"Used to play ambient sounds (looped sounds)"
+	color		"0.5 1 0.5"
+	size		"-8 -8 -8 8 8 8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 noday"
+
+	mandatory {
+		origin	"position"
+		noise	"Sound file name relative to sound/"
+		volume	"Relative volume - value between 0.0 and 1.0"
+		attenuation	"3.0 is only audible when the sound source is very close to the camera, 0.0 is audible everywhere."
+	}
+
+	optional {
+		targetname	"The id of this entity"
+		group		"The trigger group"
+	}
+
+	range {
+		attenuation	"0.0 - 3.0"
+		volume	"0.0 - 1.0"
+	}
+
+	type {
+		origin	"V_FLOAT 3"
+		volume	"V_FLOAT"
+		attenuation	"V_FLOAT"
+	}
+
+	default {
+		spawnflags	"255"
+		volume		"0.7"
+		attenuation	"2.5"
+	}
+}
+
+entity misc_mission {
+	description	"Defines a mission target"
+	color		"0.1 0.6 0.3"
+	size		"-16 -16 -16 16 16 16"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	optional {
+		particle	"The particle to display"
+		item		"Item that must be placed here to trigger the target (e.g. a bomb that will blast the target entity, valid bombs are e.g. bomb1 and bomb2)"
+		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match."
+		target		"The target that is triggered once the round time was hit - target trigger must have targetname set."
+		message		"A message that is shown when the mission is completed."
+		targetname	"The name of this mission target."
+		desc		"The description of this mission target."
+	}
+
+	mandatory {
+		origin		"position"
+		spawnflags	"Level flags"
+		radius		"If the entity has to be occupied this defines the radius that is needed. The value is given in world units. This means that one grid tile is 32 units."
+		team		"The id of the team this mission is for (1 = Phalanx, 7 = Aliens, 1-6 multiplayer teams)"
+		time		"If set the entity has to be occupied x rounds to win the mission"
+	}
+
+	type {
+		origin	"V_FLOAT 3"
+		radius	"UNSIGNED V_INT"
+		team	"UNSIGNED V_INT"
+		time	"UNSIGNED V_INT"
+	}
+
+	default {
+		spawnflags	"255"
+		radius		"3"
+		team		"1"
+		time		"1"
+	}
+}
+
+entity func_door {
+	color		"0 .5 .8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 opened reverse"
+	optional {
+		health		"Define the needed damage to destroy the door"
+		group		"Multipart doors can be grouped to open together"
+		noise		"Soundfile to play when door opens"
+		material	"Material id MAT_GLASS = 0 (default), MAT_METAL = 1, MAT_ELECTRICAL = 2, MAT_WOOD = 3"
+		particle	"Particle id to be spawned after object is destroyed"
+		targetname	"The id of this entity"
+		speed		"The speed of this door"
+	}
+
+	type {
+		speed		"UNSIGNED V_INT"
+		material	"UNSIGNED V_INT"
+	}
+
+	mandatory {
+		spawnflags	"level flags"
+	}
+
+	default {
+		spawnflags	"255"
+		speed		"50"
+		material	"1"
+	}
+}
+
+entity func_door_sliding {
+	color		"0 .5 .8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 unused reverse"
+	optional {
+		group		"Multipart doors can be grouped to open together"
+		health		"Define the needed damage to destroy the door"
+		noise		"Soundfile to play when door opens"
+		particle	"Particle id to be spawned after object is destroyed"
+		targetname	"The id of this entity"
+		speed		"The speed of this door"
+	}
+
+	mandatory {
+		dir			"0 (pitch), 1 (yaw), 2 (roll)"
+		spawnflags	"level flags"
+	}
+
+	type {
+		speed	"UNSIGNED V_INT"
+	}
+
+	default {
+		spawnflags	"255"
+		speed		"10"
+	}
+}
+
+entity func_group {
+	description	"Only for editor and terrain convenience."
+
+	optional {
+		terrain			""
+		gensurf			""
+		phongshading	""
+	}
+}
+
+entity func_breakable {
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	optional {
+		health		"Damage until destroyed"
+		particle	"Particle id to be spawned after object is destroyed"
+		material	"Material id MAT_GLASS = 0 (default), MAT_METAL = 1, MAT_ELECTRICAL = 2, MAT_WOOD = 3"
+		targetname	"The name that is used when this should be e.g. destroyed by a trigger - see e.g. trigger_hurt target"
+		group		"The trigger group"
+	}
+
+	mandatory {
+		spawnflags	"level flags"
+	}
+
+	default {
+		spawnflags	"255"
+		material	"0"
+	}
+}
+
+entity func_rotating {
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	optional {
+		health		"Damage until destroyed"
+		particle	"Particle id to be spawned after object is destroyed"
+		speed		"Rotation speed"
+		angle		"Rotate around this angle - pitch = 0, yaw = 1, roll = 2"
+		targetname	"The id of this entity"
+		group		"The trigger group"
+	}
+
+	mandatory {
+		spawnflags	"level flags"
+	}
+
+	default {
+		spawnflags	"255"
+	}
+}
+
+entity trigger_hurt {
+	description	"Any entity that touches this will be hurt. It does dmg points of damage each step inside of such a trigger area"
+	spawnflags	"KILL STUN DAZE"
+
+	optional {
+		targetname	"The id of this entity"
+		group		"The trigger group"
+	}
+
+	mandatory {
+		dmg	"Damage per step (whole numbers only)"
+	}
+
+	default {
+		dmg	"5"
+	}
+}
+
+entity trigger_touch {
+	description	"Any entity that touches this will trigger the use function of the target entity."
+	spawnflags	"once"
+
+	optional {
+		targetname	"The id of this entity"
+		spawnflags	"If once is set, this trigger is only activated once if someone is standing inside it (useful for e.g. doors)"
+		group		"The trigger group"
+	}
+
+	mandatory {
+		target		"Target entity - target entity must have targetname set (to the value given here)"
+	}
+}
+
+entity trigger_nextmap {
+	description	"Any entity on the given team that touches this (once active) will trigger the map change to the nextmap. The spawnflags define the levels the spawned particle is visible on. Only used in singleplayer games."
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+
+	optional {
+		targetname	"The id of this entity"
+		group		"The trigger group"
+	}
+
+	mandatory {
+		nextmap		"The map to start once this trigger is touched"
+		particle	"The particle that indicates the activity of this trigger"
+		team		"The team number that this trigger serves as a next map trigger"
+	}
+
+	type {
+		team	"UNSIGNED V_INT"
+	}
+
+	default {
+		team	"1"
+		spawnflags	"255"
+	}
+}
+
+entity trigger_rescue {
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	description	"Any entity that touches this will get rescued when the mission is aborted."
+
+	optional {
+		particle	"Display a particle"
+		targetname	"The id of this entity"
+		group		"The trigger group"
+	}
+
+	mandatory {
+		team	"The team number that this trigger serves as a rescue zone"
+	}
+
+	type {
+		team	"UNSIGNED V_INT"
+	}
+
+	default {
+		spawnflags	"255"
+		team	"1"
+	}
+
+	range {
+		team	"0 1 2 3 4 5 6 7"
+	}
+}
+
+entity misc_message {
+	description	"A message that is sent to the client when the edict gets executed (e.g. by trigger_touch)."
+	color		".3 .3 1"
+	size		"-16 -16 -16 16 16 16"
+	spawnflags	"once"
+
+	optional {
+		targetname	"The id of this entity"
+		group		"The trigger group"
+	}
+
+	mandatory {
+		message	"The message that is sent to the client - should contain an underscore as first character to be translatable"
+	}
+}
+
+entity misc_item {
+	description	"-------- MODEL FOR RADIANT ONLY - DO NOT SET THIS AS A KEY --------"
+	color		".3 .3 1"
+	size		"-16 -16 -16 16 16 16"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	model		"models/weapons/assault/assault.md2"
+
+	mandatory {
+		item		"The item to spawn - item id from ufo script definition"
+		spawnflags	"level flags"
+		origin		"Position"
+	}
+
+	optional {
+		targetname	"The id of this entity"
+		group		"The trigger group"
+	}
+
+	type {
+		origin	"V_FLOAT 3"
+	}
+
+	default {
+		spawnflags	"255"
+	}
+}
+
+entity misc_smoke {
+	description	"A smoke field that blocks visiblity until it is gone."
+	color		".8 .8 .8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	size		"-16 -16 -32 16 16 32"
+
+	optional {
+		targetname	"The id of this entity"
+		group		"The trigger group"
+	}
+
+	mandatory {
+		origin	"Position"
+		count	"The amount of rounds the smoke field will stay on battlefield"
+		spawnflags	"level flags"
+		particle	"The particle for the smoke field"
+	}
+
+	type {
+		count	"UNSIGNED V_INT"
+		origin	"V_FLOAT 3"
+	}
+
+	default {
+		count	"2"
+		particle	"smokefield"
+		spawnflags	"255"
+	}
+}
+
+entity misc_fire {
+	description	"A fire field that hurts touching actors."
+	color		"1.0 .5 .0"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	size		"-16 -16 -32 16 16 32"
+
+	optional {
+		targetname	"The id of this entity"
+		group		"The trigger group"
+	}
+
+	mandatory {
+		origin		"Position"
+		count		"The amount of rounds the fire field will stay on battlefield"
+		spawnflags	"level flags"
+		particle	"The particle for the fire field"
+		dmg			"Damage per step (whole numbers only)"
+	}
+
+	type {
+		count	"UNSIGNED V_INT"
+		origin	"V_FLOAT 3"
+	}
+
+	default {
+		count	"2"
+		particle	"fire"
+		dmg	"5"
+		spawnflags	"255"
+	}
+}
+
+entity misc_smokestun {
+	description	"A smoke field that stuns touching actors."
+	color		"1.0 .5 .0"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+	size		"-16 -16 -32 16 16 32"
+
+	optional {
+		targetname	"The id of this entity"
+		group		"The trigger group"
+	}
+
+	mandatory {
+		origin		"Position"
+		count		"The amount of rounds the field will stay on the battlefield"
+		spawnflags	"level flags"
+		particle	"The particle for the stun field"
+		dmg			"Damage per step (whole numbers only)"
+	}
+
+	type {
+		count	"UNSIGNED V_INT"
+		origin	"V_FLOAT 3"
+	}
+
+	default {
+		count	"2"
+		particle	"gasfield"
+		dmg	"5"
+		spawnflags	"255"
+	}
+}
+
+entity misc_camera {
+	description	"A camera that makes opponents visible."
+	color		"1.0 .5 .0"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 rotate"
+	size		"-16 -16 -16 16 16 16"
+	model		"models/objects/cameras/camera1.md2"
+
+	optional {
+		targetname	"The id of this entity"
+		group		"The trigger group"
+	}
+
+	mandatory {
+		origin		"Position"
+		spawnflags	"level flags"
+		team		"The team this camera belongs to"
+		active		"Is the camera active"
+	}
+
+	type {
+		team	"UNSIGNED V_INT"
+		origin	"V_FLOAT 3"
+		active	"V_BOOL"
+	}
+
+	default {
+		team	"1"
+		spawnflags	"255"
+		active		"1"
+	}
+}

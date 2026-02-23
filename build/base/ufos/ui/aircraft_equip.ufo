@@ -1,0 +1,654 @@
+// ===================
+// AIRCRAFT EQUIP MENU
+// ===================
+window aircraft_equip extends iaircraft
+{
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+
+	// ==================
+	// functions
+	// ==================
+
+	/**
+	 * @brief Call when the user select a UI zone
+	 * @param[in] <1> zone we want to select (zone1, zone2, slot, item)
+	 * slot: aircraft slot
+	 * item: An item into the item list
+	 */
+	confunc airequip_select {
+		if ( <1> eq "zone1" ) {
+			*node:root.airequip1.airequip_zone_select1@src = "ui/airequip_selected_element"
+			*node:root.airequip2.airequip_zone_select2@src = ""
+			*cvar:mn_aircraft_item_selected = -1
+			cmd "airequip_zone_select 1;"
+		} elif ( <1> eq "zone2" ) {
+			*node:root.airequip1.airequip_zone_select1@src = ""
+			*node:root.airequip2.airequip_zone_select2@src = "ui/airequip_selected_element"
+			*cvar:mn_aircraft_item_selected = -1
+			cmd "airequip_zone_select 2;"
+		} elif ( <1> eq "slot" ) {
+			*cvar:tmp = ""
+			if ( *cvar:mn_aircraft_item_selected != -1 ) {
+				*cvar:tmp = "item"
+			} elif ( *node:root.airequip2.airequip_zone_select2@src eq "" ) {
+				*cvar:tmp = "zone1"
+			} else {
+				*cvar:tmp = "zone2"
+			}
+			cmd "airequip_slot_select <2> <cvar:tmp>;"
+			delete *cvar:tmp
+		} elif ( <1> eq "item" ) {
+			*node:root.airequip1.airequip_zone_select1@src = ""
+			*node:root.airequip2.airequip_zone_select2@src = ""
+			*cvar:mn_aircraft_item_selected = <2>
+			cmd "airequip_list_click <2>;"
+		}
+	}
+
+	BaseContainerPanel base_container
+	{
+		panel mainBody
+		{
+			{}
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Equipment"
+				}
+			}
+
+			UFOpediaBtn pedia
+			{
+				pos			"15 235"
+			}
+
+			// ==================
+			// slots
+			// ==================
+			panel airequipslot {
+				{
+				pos		"50 230"
+				size	"664 308"
+				}
+
+				model aircraftequip
+				{
+					src		"*cvar:mn_aircraft_model_display"
+					pos		"23 16"
+					size	"529 261"
+					angles	"0 0 180"
+					autoscale	true
+				}
+
+				image airequip_slot0
+				{
+					tooltip		"_Select this slot"
+					src		"ui/button_square"
+					mousefx		true
+					pos			"458 31"
+					texl		"0 0"
+					texh		"64 64"
+					onClick		{ cmd "airequip_select slot 0;" }
+				}
+				model airequip_model_slot0
+				{
+					src		"*cvar:mn_aircraft_item_model_slot0"
+					pos			"460 33"
+					size		"60 60"
+					autoscale	true
+					excluderect { pos	"0 0"	size	"60 60" }
+				}
+
+				image airequip_slot1
+				{
+					tooltip	"_Select this slot"
+					src		"ui/button_square"
+					mousefx	true
+					pos		"458 115"
+					texl	"0 0"
+					texh	"64 64"
+					onClick	{ cmd "airequip_select slot 1;" }
+				}
+				model airequip_model_slot1
+				{
+					src	"*cvar:mn_aircraft_item_model_slot1"
+					pos		"460 117"
+					size	"60 60"
+					autoscale	true
+					excluderect { pos	"0 0"	size	"60 60" }
+				}
+
+				image airequip_slot2
+				{
+					tooltip	"_Select this slot"
+					src		"ui/button_square"
+					mousefx	true
+					pos		"458 191"
+					texl	"0 0"
+					texh	"64 64"
+					onClick	{ cmd "airequip_select slot 2;" }
+				}
+				model airequip_model_slot2
+				{
+					src	"*cvar:mn_aircraft_item_model_slot2"
+					pos		"460 193"
+					size	"60 60"
+					autoscale	true
+					excluderect { pos	"0 0"	size	"60 60" }
+				}
+
+				image airequip_slot3
+				{
+					tooltip	"_Select this slot"
+					src		"ui/button_square"
+					mousefx	true
+					pos		"258 31"
+					texl	"0 0"
+					texh	"64 64"
+					onClick	{ cmd "airequip_select slot 3;" }
+				}
+				model airequip_model_slot3
+				{
+					src	"*cvar:mn_aircraft_item_model_slot3"
+					pos		"260 33"
+					size	"60 60"
+					autoscale	true
+					excluderect { pos	"0 0"	size	"60 60" }
+				}
+
+				image airequip_slot4
+				{
+					tooltip	"_Select this slot"
+					src		"ui/button_square"
+					mousefx	true
+					pos		"258 197"
+					texl	"0 0"
+					texh	"64 64"
+					onClick	{ cmd "airequip_select slot 4;" }
+				}
+				model airequip_model_slot4
+				{
+					src	"*cvar:mn_aircraft_item_model_slot4"
+					pos		"258 197"
+					size	"60 60"
+					autoscale	true
+					excluderect { pos	"0 0"	size	"60 60" }
+				}
+
+				image airequip_slot5
+				{
+					tooltip	"_Select this slot"
+					src		"ui/button_square"
+					mousefx	true
+					pos		"58 31"
+					texl	"0 0"
+					texh	"64 64"
+					onClick	{ cmd "airequip_select slot 5;" }
+				}
+				model airequip_model_slot5
+				{
+					src	"*cvar:mn_aircraft_item_model_slot5"
+					pos		"60 33"
+					size	"60 60"
+					autoscale	true
+					excluderect { pos	"0 0"	size	"60 60" }
+				}
+
+				image airequip_slot6
+				{
+					tooltip	"_Select this slot"
+					src		"ui/button_square"
+					mousefx	true
+					pos		"58 111"
+					texl	"0 0"
+					texh	"64 64"
+					onClick	{ cmd "airequip_select slot 6;" }
+				}
+				model airequip_model_slot6
+				{
+					src	"*cvar:mn_aircraft_item_model_slot6"
+					pos		"60 113"
+					size	"60 60"
+					autoscale	true
+					excluderect { pos	"0 0"	size	"60 60" }
+				}
+
+				image airequip_slot7
+				{
+					tooltip	"_Select this slot"
+					src		"ui/button_square"
+					mousefx	true
+					pos		"58 191"
+					texl	"0 0"
+					texh	"64 64"
+					onClick	{ cmd "airequip_select slot 7;" }
+				}
+				model airequip_model_slot7
+				{
+					src	"*cvar:mn_aircraft_item_model_slot7"
+					pos		"60 193"
+					size	"60 60"
+					autoscale	true
+					excluderect { pos	"0 0"	size	"60 60" }
+				}
+			}
+		}
+		// Object description panel
+		ObjectInfo details
+		{
+			{
+				pos				"4 574"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+		}
+	}
+
+	panel aircraft_info
+	{
+		{
+			pos		"730 105"
+			size	"292 150"
+			border		"2"
+			bordercolor	"0.527 0.6 0.21 1"
+		}
+
+		text aircraftinfo
+		{
+			pos			"7 10"
+			size		"285 140"
+			lineheight	20
+			tabwidth	190
+			font		"f_verysmall"
+			dataid		TEXT_AIRCRAFT_INFO
+			rows		7
+		}
+	}
+
+	// ==================
+	// Available items box
+	// ==================
+	panel itemlist {
+		{
+			pos			"730 255"
+			size		"292 219"
+			border		"2"
+			bordercolor	"0.527 0.6 0.21 1"
+		}
+
+		string airequip_available
+		{
+			string		"_Available equipment:"
+			pos			"14 20"
+			size		"264 25"
+			font 		"f_normal_bold"
+			contentalign	ALIGN_CC
+		}
+
+		selectbox craftitemtypeselector
+		{
+			{
+				cvar		*cvar:mn_equip_itemtype
+				pos			"29 56"
+				size		"235 20"
+				onChange {
+					cmd "airequip_selectcategory <cvar:mn_equip_itemtype>;"
+					if ( *cvar:mn_equip_itemtype eq "ammo" ) {
+						cmd "airequip_select zone2;"
+					} else {
+						cmd "airequip_select zone1;"
+					}
+					cmd "airequip_select item -1;"
+				}
+			}
+
+			option weapons {
+				label	"_Weapons"
+				value	"weapon"
+			}
+			option ammo {
+				label	"_Ammo"
+				value	"ammo"
+			}
+			option armour {
+				label	"_Armour"
+				value	"armour"
+			}
+			option items {
+				label	"_Items"
+				value	"item"
+			}
+		}
+
+		optionlist airequip_list
+		{
+			dataid		TEXT_LIST
+			cvar		*cvar:mn_aircraft_item_selected
+			pos			"15 87"
+			size		"225 115"
+			lineheight	"20"
+			color		"0.56 0.81 0.76 1"
+			selectcolor	"1 1 1 1"
+			onChange		{
+				cmd "airequip_select item <cvar:mn_aircraft_item_selected>;"
+			}
+			onViewChange {
+				*node:parent.airequip_list_scroll@fullsize = <fullsize>
+				*node:parent.airequip_list_scroll@viewsize = <viewsize>
+				*node:parent.airequip_list_scroll@current = <viewpos>
+				*node:parent.airequip_list_amount@viewpos = <viewpos>
+			}
+		}
+
+		textlist airequip_list_amount
+		{
+			dataid		TEXT_LIST2
+			ghost		true
+			pos			"234 87"
+			size		"25 115"
+			contentalign	ALIGN_CR
+			lineheight	"20"
+			color		"0.56 0.81 0.76 1"
+			selectcolor	"1 1 1 1"
+			onViewChange {
+				*node:parent.airequip_list_scroll@fullsize = <fullsize>
+				*node:parent.airequip_list_scroll@viewsize = <viewsize>
+				*node:parent.airequip_list_scroll@current = <viewpos>
+				*node:parent.airequip_list@viewpos = <viewpos>
+			}
+		}
+
+		vscrollbar airequip_list_scroll {
+			image		"ui/scrollbar_v"
+			pos			"259 87"
+			height		"115"
+			hidewhenunused	true
+			onChange {
+				*node:parent.airequip_list@viewpos = <current>
+				*node:parent.airequip_list_amount@viewpos = <current>
+			}
+		}
+	}
+	string warning
+	{
+		string		*cvar:mn_aircraft_item_warning
+		pos			"738 489"
+		size		"255 32"
+		padding		0
+		contentalign	ALIGN_UC
+		font		"f_small"
+		color		"1 0 0 1"
+		onClick		{ cmd "ui_close popup;" }
+		longlines	LONGLINES_WRAP
+	}
+
+	MainMenu3Btn button_add
+	{
+		string		"_Equip this item"
+		pos			"740 491"
+		size		"270 25"
+		font 		"f_small_bold"
+		color		"0 0 0 0.9"
+		onClick		{
+			cmd "airequip_add_item 1;"
+			if ( *cvar:mn_equip_itemtype eq "ammo" ) {
+				cmd "airequip_select zone2;"
+			} else {
+				cmd "airequip_select zone1;"
+			}
+		}
+	}
+
+	MainMenu3Btn button_remove
+	{
+		string		"_Remove this item"
+		pos			"740 489"
+		size		"270 25"
+		font 		"f_small_bold"
+		onClick		{
+			cmd "airequip_remove_item 1;"
+			cmd "airequip_select item -1;"
+		}
+		color		"0 0 0 0.9"
+	}
+
+	// ==================
+	// Zones
+	// ==================
+
+	panel airequip1 {
+		{
+			pos			"730 530"
+			size		"292 115"
+			bgcolor		"0 0 0 1"
+			border		"2"
+			bordercolor	"0.527 0.6 0.21 1"
+		}
+		image airequip_zone_select1
+		{
+			tooltip		"_Select this zone"
+			pos			"-5 5"
+			src			"ui/airequip_selected_element"
+			texl		"0 83"
+			texh		"294 190"
+			onClick		{ cmd "airequip_select zone1;" }
+		}
+		string airequip_header1
+		{
+			string			"_Current item in slot"
+			pos				"-5 15"
+			size			"275 20"
+			font			"f_small"
+			color		  	"1 1 1 1"
+			contentalign	ALIGN_CC
+			ghost			true
+		}
+		text airequip_text_zone1
+		{
+			pos			"7 50"
+			size		"292 70"
+			color		"0.56 0.81 0.76 1"
+			lineheight	"16"
+			dataid		TEXT_AIREQUIP_1
+			rows		"4"
+			ghost		true
+		}
+	}
+
+	panel airequip2 {
+		{
+			pos			"730 650"
+			size		"292 85"
+			bgcolor		"0 0 0 1"
+			border		"2"
+			bordercolor	"0.527 0.6 0.21 1"
+		}
+		image airequip_zone_select2
+		{
+			tooltip		"_Select this zone"
+			src			"ui/airequip_selected_element"
+			pos			"-5 5"
+			texl		"0 0"
+			texh		"294 82"
+			onClick	{ cmd "airequip_select zone2;" }
+		}
+
+		text airequip_text_zone2
+		{
+			dataid		TEXT_AIREQUIP_2
+			pos			"7 50"
+			size		"292 35"
+			color		"0.56 0.81 0.76 1"
+			lineheight	"16"
+			rows		"2"
+			ghost		true
+		}
+
+		string airequip_header2
+		{
+			string			"_Ammo fitting this weapon"
+			pos				"5 15"
+			size			"275 20"
+			font			"f_small"
+			color		  	"1 1 1 1"
+			contentalign	ALIGN_CL
+			ghost			true
+		}
+	}
+
+	confunc aircraft_equip_unselectlist {
+		*cvar:mn_aircraft_item_selected = -1
+		*node:itemlist.airequip_list_amount@lineselected = -1
+	}
+
+	// ==================
+	// functions
+	// ==================
+
+	/**
+	 * @param <1> color
+	 */
+	confunc airequip_zone2_color
+	{
+		*node:root.airequip2.airequip_text_zone2@color = "<1>"
+	}
+
+	confunc airequip_zone2_off
+	{
+		*node:root.airequip2@invis = true
+	}
+
+	confunc airequip_zone2_on
+	{
+		*node:root.airequip2@invis = false
+	}
+
+	confunc airequip_installable_item
+	{
+		if ( *cvar:mn_aircraftinbase == 0 ) {	// not at home ?
+			call *node:root.airequip_no_item
+		}
+		else {
+			// display the "add" button
+			*node:root.warning@invis = true
+			*node:root.button_add@invis = false
+			*node:root.button_remove@invis = true
+		}
+	}
+
+	confunc airequip_installed_item
+	{
+		if ( *cvar:mn_aircraftinbase == 0 ) {	// not at home ?
+			call *node:root.airequip_no_item
+		}
+		else {
+			// display the "remove" button
+			*node:root.warning@invis = true
+			*node:root.button_add@invis = true
+			*node:root.button_remove@invis = false
+		}
+	}
+
+	confunc airequip_noinstallable_item
+	{
+		if ( *cvar:mn_aircraftinbase == 0 ) {	// not at home ?
+			call *node:root.airequip_no_item
+		}
+		else {
+			// display warning
+			*node:root.warning@invis = false
+			*node:root.button_add@invis = true
+			*node:root.button_remove@invis = true
+		}
+	}
+
+	confunc airequip_no_item
+	{
+		*node:root.warning@invis = true
+		*node:root.button_add@invis = true
+		*node:root.button_remove@invis = true
+	}
+
+	/**
+	 * @param <1> slot index
+	 * @param <2> status
+	 */
+	confunc airequip_display_slot
+	{
+		*cvar:status = <2>
+		if ( *cvar:status == 2 ) {
+			*node:root.base_container.mainBody.airequipslot.airequip_slot<1>@invis = false
+			*node:root.base_container.mainBody.airequipslot.airequip_slot<1>@texl = "64 0"
+			*node:root.base_container.mainBody.airequipslot.airequip_slot<1>@texh = "128 64"
+		} elif ( *cvar:status == 1 ) {
+			*node:root.base_container.mainBody.airequipslot.airequip_slot<1>@invis = false
+			*node:root.base_container.mainBody.airequipslot.airequip_slot<1>@texl = "0 0"
+			*node:root.base_container.mainBody.airequipslot.airequip_slot<1>@texh = "64 64"
+		} else {
+			*node:root.base_container.mainBody.airequipslot.airequip_slot<1>@invis = true
+		}
+		delete *cvar:status
+	}
+
+	// ==================
+	// init function
+	// ==================
+
+	/**
+	 * @note iaircraft interface
+	 */
+	confunc aircraft_change
+	{
+		call *node:root.aircraft_checkbuttons
+		cmd "airequip_updatemenu;"
+		cmd "airequip_select zone1;"
+	}
+
+	func onWindowOpened
+	{
+		// default is weapons @sa aircraftItemType_t (inv_shared.h)
+		*cvar:mn_aircrafttab = "aircraft_equip"
+		cmd "ui_aircraft_fill;"
+		if (<cvar:mn_aircraft_id> eq "")
+		{
+			cmd "ui_aircraft_select <1>;"
+		} else
+		{
+			cmd "ui_aircraft_select <cvar:mn_aircraft_id>;"
+		}
+		cmd "airequip_updatemenu 2;"
+		cmd "airequip_select zone1;"
+		*cvar:mn_itemname = ""
+		*cvar:mn_upmodel_top = ""
+		*cvar:mn_aircraft_item_selected = -1
+		*node:root.base_container.mainBody.pedia@onClick = {cmd "ui_push ufopedia rs_craft_<cvar:mn_aircraft_model>;"}
+	}
+
+	func onWindowActivate
+	{
+		cmd "airequip_select item <cvar:mn_aircraft_item_selected>;"
+	}
+
+	func onWindowClosed
+	{
+		delete *cvar:mn_aircraft_item_model_slot0
+		delete *cvar:mn_aircraft_item_model_slot1
+		delete *cvar:mn_aircraft_item_model_slot2
+		delete *cvar:mn_aircraft_item_model_slot3
+		delete *cvar:mn_aircraft_item_model_slot4
+		delete *cvar:mn_aircraft_item_model_slot5
+		delete *cvar:mn_aircraft_item_model_slot6
+		delete *cvar:mn_aircraft_item_model_slot7
+		delete *cvar:mn_aircraft_item_selected
+		delete *cvar:mn_aircraft_id
+
+		// call base init function because the amount of workers, scientists and
+		// so on can also change the button state in the base view
+		cmd "base_init;"
+	}
+}

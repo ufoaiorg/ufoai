@@ -1,0 +1,218 @@
+// =======================
+// NEEDLERGUN
+// =======================
+item needlergun
+{
+	name			"_Needler Gun"
+	model			"weapons/needlergun/needler"
+	weapon			true
+	type			"biggun"
+	animationindex	1
+	holdtwohanded	false
+	firetwohanded	true
+	shape			"1 0 4 1"
+	shape			"0 1 4 1"
+	center			"4 -0.5 0.2"
+	scale			1.2
+	ammo			240
+	reload			14
+	reloadsound		"weapons/reload-nail"
+	price			5000
+	size			45
+	is_primary		true
+	weight			6000
+}
+
+item needlerheavy
+{
+	name			"_Heavy Needler Gun"
+	model			"weapons/needlerheavy/needlerheavy"
+	weapon			true
+	type			"biggun"
+	animationindex	1
+	holdtwohanded   false
+	firetwohanded	true
+	shape			"1 0 4 1"
+	shape			"0 1 4 1"
+	center			"10 -0.5 0.2"
+	scale			0.8
+	ammo			240
+	reload			18
+	reloadsound		"weapons/reload-nail"
+	price			5000
+	size			45
+	is_primary		true
+	weight			9000
+}
+
+item needlergun_ammo
+{
+	name			"_Needler Gun Magazine"
+	model			"weapons/needlergun/needler_ammo"
+	type			"ammo"
+	animationindex	0
+	shape			"0 0 1 1"
+	center			"0 0 0"
+	scale			1.2
+	price			400
+	size			9
+	is_primary		true
+	dmgtype			"normal"
+	weight			1000
+
+	weapon_mod
+	{
+		weapon needlergun
+		firedef
+		{
+			name		"_Short Burst"
+			skill		"assault"
+			projtl		needler-small
+			impact		bulletImpact
+			hitbody		null
+			firesnd		"weapons/bullet-needler-30x"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
+			sndonce		true
+			speed		2000
+			spread		"1.6 1.6"
+			crouch		0.85
+			range		250
+			shots		30
+			delaybetweenshots	25
+			ammo		30
+			time		12
+			damage		"8 2"
+			dmgweight	"normal_needle"
+			reaction	true
+			shotorg		"4 4"
+		}
+
+		firedef
+		{
+			name		"_Cannonade"
+			skill		"assault"
+			projtl		needler-small
+			impact		bulletImpact
+			hitbody		null
+			firesnd		"weapons/bullet-needler-90x"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
+			sndonce		true
+			speed		2000
+			spread		"2 2"
+			crouch		0.85
+			range		250
+			shots		60
+			delaybetweenshots	25
+			ammo		60
+			time		16
+			damage		"8 2"
+			dmgweight	"normal_needle"
+			reaction	true
+			shotorg		"4 4"
+		}
+		firedef
+		{
+			name		"_Needle Stream"
+			skill		"assault"
+			projtl		needler-small
+			impact		bulletImpact
+			hitbody		null
+			firesnd		"weapons/bullet-needler-120x"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
+			sndonce		true
+			speed		2000
+			spread		"2.5 2.5"
+			crouch		0.85
+			range		250
+			shots		90
+			delaybetweenshots	25
+			ammo		90
+			time		20
+			damage		"8 2"
+			dmgweight	"normal_needle"
+			reaction	true
+			shotorg		"4 4"
+		}
+	}
+
+	weapon_mod
+	{
+		weapon needlerheavy
+		firedef
+		{
+			name		"_Short Burst"
+			skill		"assault"
+			projtl		needler-heavy
+			impact		bulletImpact
+			hitbody		null
+			firesnd		"weapons/bullet-heavyneedler-30x"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
+			sndonce		true
+			speed		2000
+			spread		"1.9 1.9"
+			crouch		0.85
+			range		250
+			shots		40
+			delaybetweenshots	25
+			ammo		40
+			time		14
+			damage		"8 2"
+			dmgweight	"normal_needle"
+			reaction	true
+			shotorg		"2 4.5"
+		}
+
+		firedef
+		{
+			name		"_Cannonade"
+			skill		"assault"
+			projtl		needler-heavy
+			impact		bulletImpact
+			hitbody		null
+			firesnd		"weapons/bullet-heavyneedler-105x"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
+			sndonce		true
+			speed		2000
+			spread		"2.5 2.5"
+			crouch		0.85
+			range		250
+			shots		80
+			delaybetweenshots	25
+			ammo		80
+			time		20
+			damage		"8 2"
+			dmgweight	"normal_needle"
+			reaction	true
+			shotorg		"2 4.5"
+		}
+		firedef
+		{
+			name		"_Needle Stream"
+			skill		"assault"
+			projtl		needler-heavy
+			impact		bulletImpact
+			hitbody		null
+			firesnd		"weapons/bullet-heavyneedler-150x"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
+			sndonce		true
+			speed		2000
+			spread		"3 3"
+			crouch		0.85
+			range		250
+			shots		120
+			delaybetweenshots	25
+			ammo		150
+			time		26
+			damage		"8 2"
+			dmgweight	"normal_needle"
+			reaction	true
+			shotorg		"2 4.5"
+		}
+	}
+}

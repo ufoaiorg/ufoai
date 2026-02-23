@@ -1,0 +1,22 @@
+Some of the textures are non-free - a list is here http://ufoai.org/licenses/
+We are working on replacing them with free versions.
+
+Textures from http://www.mayang.com/textures/
+* "License: These textures are Copyright \xa9 Mayang Murni Adnin, 2001-2006.
+  They have all been taken by our own cameras or created by ourselves"
+* "Use: They are free to use for all uses, whether commercial or non-commercial
+  (you may incorporate them into your work with no requirement to pay us any
+  licensing fee etc). It would be nice if you could credit us."
+* "Sell: You may not sell any of these textures."
+* "Redistribute: You may redistribute (give/send to somebody else/display on
+  a web site) up to 30 of these textures together, but no more. You must credit
+  this website as the original source (tell them about us)."
+
+Textures from http://www.cgtextures.com
+* "License: You may not sell or distribute any of these textures, use of these
+  textures is only allowed under the following conditions:
+  * Private or commercial use in 2D or 3D computer graphics and printed media.
+  * Incorporation in computer games, 3D models.
+  * Selling 3D models bundled with modified versions of the textures is allowed.
+  * It is not allowed to sell or distribute any of these textures (either separate
+    or in the form of texture packs.)"

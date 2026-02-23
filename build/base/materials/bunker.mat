@@ -1,0 +1,75 @@
+{
+	material tex_mattn/brick03g
+	hardness 0.01
+	specular 2.0
+	bump 2.0
+}
+{
+	material tex_mattn/brick03
+	hardness 0.01
+	specular 2.0
+	bump 2.0
+}
+{
+	material tex_mattn/brick03a
+	hardness 0.01
+	specular 2.0
+	bump 2.0
+}
+{
+	material tex_material/wood002
+	specular 0.2
+}
+{
+	material tex_misc/wood_palet
+	specular 0.2
+}
+{
+	material tex_buildings/wall007
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_mattn/window005
+	specular 2.0
+	{
+		envmap 0
+	}
+}
+{
+	material tex_buildings/wall006
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/wall002
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/window001
+	specular 2.0
+	{
+		envmap 0
+	}
+}
+{
+	material tex_buildings/wall003
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_nature/rock005
+	hardness 0.01
+	specular 2.0
+	bump 2.0
+}
+
+/* land_li_yellow: small orange rotating light, additional flare effect (used around the landing pad)*/
+{
+	material tex_lights/land_li_yellow
+	{
+		flare 2
+		color 0.9 0.8 0.4
+	}
+}

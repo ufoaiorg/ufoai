@@ -1,0 +1,278 @@
+// ==================
+// TEAM MENU
+// ==================
+
+/**
+ * @todo rename the menu according to the file
+ */
+window team extends iaircraft
+{
+	data selected {
+		string ""
+	}
+
+	BaseContainerPanel base_container
+	{
+		panel mainBody
+		{
+			{}
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Soldiers"
+				}
+			}
+
+			// ==================
+			// names list
+			// ==================
+			panel actors_background {
+				{
+				pos			"5 225"
+				size		"354 310"
+				border		"2"
+				bordercolor	"0.527 0.6 0.21 1"
+				}
+				image icon_soldier {
+					src		"icons/head_soldier"
+					pos		"5 15"
+					size	"42 42"
+				}
+				string hiredSoldiers {
+					pos		"15 60"
+					size	"55 20"
+					color	"0.56 0.81 0.76 1"
+					string	*cvar:mn_hired_count
+				}
+				panel soldierlist {
+					pos				"55 08"
+					size			"270 298"
+					padding			6
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					wheelscrollable	true
+
+					onViewChange {
+						*node:parent.soldierlist_scroll@fullsize = <fullsize>
+						*node:parent.soldierlist_scroll@current = <viewpos>
+						*node:parent.soldierlist_scroll@viewsize = <viewsize>
+					}
+				}
+				vscrollbar soldierlist_scroll {
+					image			"ui/scrollbar_v"
+					pos				"325 5"
+					height			"298"
+					hidewhenunused	true
+					current			0
+					viewsize		8
+					fullsize		50
+
+					onChange {
+						*node:parent.soldierlist@viewpos = <current>
+					}
+				}
+			}
+			panel pilots_background {
+				{
+				pos			"365 225"
+				size		"354 310"
+				border		"2"
+				bordercolor	"0.527 0.6 0.21 1"
+				}
+				image icon_soldier {
+					src		"icons/head_pilot"
+					pos		"5 15"
+					size	"42 42"
+				}
+				string hiredPilot {
+					pos		"15 60"
+					size	"55 20"
+					color	"0.56 0.81 0.76 1"
+					string	*cvar:mn_pilotassigned
+				}
+				panel soldierlist {
+					pos				"55 08"
+					size			"270 298"
+					padding			6
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					wheelscrollable	true
+
+					onViewChange {
+						*node:parent.soldierlist_scroll@fullsize = <fullsize>
+						*node:parent.soldierlist_scroll@current = <viewpos>
+						*node:parent.soldierlist_scroll@viewsize = <viewsize>
+					}
+				}
+				vscrollbar soldierlist_scroll {
+					image			"ui/scrollbar_v"
+					pos				"325 5"
+					height			"298"
+					hidewhenunused	true
+					current			0
+					viewsize		8
+					fullsize		50
+
+					onChange {
+						*node:parent.soldierlist@viewpos = <current>
+					}
+				}
+			}
+		}
+
+		// ==================
+		// aircraft
+		// ==================
+
+		model aircraft {
+			src			*cvar:mn_aircraft_model_display
+			pos			"276 568"
+			size		"395 191"
+			origin		"0 -10 10"
+			angles		"180 10 -120"
+			autoscale	true
+		}
+	}
+
+
+	func listen_close_equipment {
+		cmd "aircraft_soldierlist_select <node:root.selected@integer>;"
+		cmd "ui_removelistener equipment@onWindowClosed <path:this>;"
+	}
+
+	/** @todo Activate this again - used for UGVs */
+	// ==================
+	// additional stuff
+	// ==================
+	confunc toggle_show_heavybutton {
+		//*node:root.bt_switch_list@tooltip	= "_Assign tanks"
+		//*node:root.bt_switch_list@icon	= "icons/uvc"
+	}
+	confunc toggle_show_soldiersbutton {
+		//*node:root.bt_switch_list@tooltip	= "_Assign soldiers"
+		//*node:root.bt_switch_list@icon	= "icons/soldier"
+	}
+
+	/**
+	 * @note call when the aircraft status change
+	 */
+	confunc aircraft_status_change
+	{
+		if ( *cvar:mn_hired_count > 0 ) {
+			*node:root.team_info.bt_equipsoldiers@disabled = false
+			*node:root.team_info.bt_equipsoldiers@tooltip = "_Equip soldiers"
+		} else {
+			*node:root.team_info.bt_equipsoldiers@disabled = true
+			*node:root.team_info.bt_equipsoldiers@tooltip = "_No soldiers assigned"
+		}
+	}
+
+	/**
+	 * @note iaircraft interface
+	 */
+	confunc aircraft_change {
+		cmd "set_listpanel_name \"soldier\""
+		cmd "ui_team_fill soldier;"
+		cmd "set_listpanel_name \"pilot\""
+		cmd "ui_team_fill pilot;"
+
+		call *node:root.aircraft_checkbuttons
+		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<cvar:mn_aircraft_id>.aircraft_healthbar.setValues(<cvar:mn_aircraft_health>)
+		if ( *node:root.selected@integer >= 0 ) {
+			cmd "aircraft_soldierlist_select <node:root.selected@integer>;"
+		}
+		// absent from base, go back to the main GUI
+		if ( *cvar:mn_aircraftinbase == 0 ) {
+			cmd "ui_pop;ui_push aircraft_equip <cvar:mn_aircraft_id>;"
+		}
+		cmd "aircraft_status_change;"
+	}
+
+	func onWindowOpened
+	{
+		*node:root.selected@integer = -1
+		call *node:root.reset_character_cvars
+		cmd "ui_aircraft_fill;"
+		cmd "ui_aircraft_select <cvar:mn_aircraft_id>;"
+	}
+
+	panel team_info {
+		{
+			pos			"730 100"
+			size		"285 665"
+		}
+		abilities airsoldiers_abilities
+		{
+			pos			"10 0"
+		}
+
+		skillbars airsoldiers_skills
+		{
+			pos			"10 120"
+		}
+		healthbar localhealth
+		{
+			pos			"10 240"
+		}
+		MainMenu3Btn bt_equipsoldiers {
+			string "_Equip soldiers"
+			pos		"40 280"
+			size	"198 30"
+			font		"f_small_bold"
+			color		"0 0 0 0.9"
+			selectcolor	"0 0 0 1"
+
+			onClick	{
+				*cvar:cl_selected2 = <cvar:cl_selected>
+				cmd "ui_addlistener equipment@onWindowClosed <path:root>.listen_close_equipment;"
+				cmd "ui_push equipment;"
+			}
+		}
+		actor_info local
+		{
+			{
+				pos		"10 320"
+			}
+			text name
+			{
+				string		*cvar:mn_name
+				pos			"10 5"
+				size		"290 20"
+				color		"0.56 0.81 0.76 1"
+				ghost	   true
+			}
+		}
+	}
+	panel pilot_info {
+		{
+			pos			"730 100"
+			size		"285 665"
+		}
+		skillspilot pilotskills
+		{
+			pos			"10 120"
+		}
+
+		healthbar actorhealth
+		{
+			pos			"10 240"
+		}
+		actor_info local
+		{
+			{
+				pos		"10 320"
+			}
+			text name
+			{
+				string		*cvar:mn_name
+				pos			"10 5"
+				size		"290 20"
+				color		"0.56 0.81 0.76 1"
+				ghost	   true
+			}
+		}
+	}
+}

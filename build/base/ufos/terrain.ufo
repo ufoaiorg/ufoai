@@ -1,0 +1,2494 @@
+terrain tex_alienb/ab_crate_c {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_alienb/ab_crate_d {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_alienb/ab_crate_h {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_alienb/ab_crate_i {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_alienb/ab_crate_j {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_alienb/ab_floor01 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_alienb/ab_floor02 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_alienb/ab_grill01 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_alienb/ab_grill02 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_alienb/ab_metal01 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_alienb/ab_obj_a {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_alienb/ab_obj_b {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_alienb/ab_obj_c {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_alienb/ab_wall04 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_alienb/ab_wall05 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_alienb/ab_wall07 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_base/d_drkmtl_dpanelb {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_base/grid_alpha {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_base/helipad {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_base/lab_floor001 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_base/lab_floor002 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_base/lab_floor003 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_base/lab_wall001 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_base/lasertable {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_base/tank001 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_base/tank002 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_base/trim001 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_base/vent002 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_base/vent003 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_base/vent004 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_base/vent_round2 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_base/wall001 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/9basetrim01 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/9floorbasic01b {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_buildings/9gratefloor01b {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_buildings/9gratefloor02 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_buildings/9techwall01 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/carpet001 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet002 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet003 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet005 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet006 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet007 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet008 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet009 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet011 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet012 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet013 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet014 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet015 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet016 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet018 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet019 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet021 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet024 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet026 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet027 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet028 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/carpet031 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/ceiling {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_buildings/ceiling_slate {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/cemdrk {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/cementwall {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/clangdark {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/concrete001 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/concrete002 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/concrete003 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/concrete004 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/concrete005 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/concrete006 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/concrete007 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/concrete008 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/concrete014 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/concrete01dark {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/concrete022 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/d_tech_dw2 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/e8_base1b {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/e8crete03d {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/e8crete03e {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor001 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor002 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/floor003 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor004 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor005 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/floor006 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor008 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor009 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor010 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor011 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor012 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor013 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor015 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor016 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor017 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor018 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor019 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor020 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor021 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor022 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/floor024 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor025 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/floor027 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/floor030 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor032 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/floor033 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/floor034 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/floor036 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/floor037 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/floor038 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/floor039 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/floor_se01 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/floor_se02 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/ind05a {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/japwall003 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/met_panel01 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_buildings/met_panel02 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_buildings/metal_duct {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/metal_duct_rust {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/metal_window {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/mtl_fnce {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.3"
+}
+
+terrain tex_buildings/mtl_gray {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/paving001 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/plat {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/roof004 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/roof006 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/roof007 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/roof008 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/roof10 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/sidewalk01 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/step {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/stripes {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/tile_teracotablue {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/wall002 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_buildings/wall011 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/wall013 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/wall019 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/wall020 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/wall027 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/wall034 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/wall036 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/wall_ind01_flat {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/wall_ind04_cons {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings/wall_se07 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/wall_se08 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/wall_se12 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/wall_se13 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/wall_se14 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/wall_se15 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_buildings/window001 {
+	footstepsound "misc/breakglass2"
+	bouncefraction "0.5"
+}
+
+terrain tex_buildings/wizwood1_2 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings/woodceiling1bdark {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_buildings_snow/concrete001 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_buildings_snow/wall005 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_ctp1/asphalt_b_1 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/bark_b_1 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_ctp1/bricks_c_1 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_ctp1/bricks_r_6 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_ctp1/bricks_w_1 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_ctp1/concrete_b_1 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/concrete_b_2 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/concrete_g_11 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/concrete_g_4 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/concrete_g_5 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/concrete_g_8 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/dirt_b_3 {
+	footstepsound "footsteps/dirt1"
+	bouncefraction "0.6"
+}
+
+terrain tex_ctp1/hedge02 {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.2"
+}
+
+terrain tex_ctp1/marble_m_1 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_ctp1/metal_r_2 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_ctp1/roof_t_2 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/tiles_b_1 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/tiles_b_3 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/tiles_g_1 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/tiles_g_2 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/tiles_g_4 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/tiles_w_1 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_ctp1/volcano_b_1 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_ctp1/wood_b_1 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_ctp1/wood_b_10 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_dirt/dirt001 {
+	footstepsound "footsteps/dirt2"
+	bouncefraction "0.4"
+}
+
+terrain tex_doors/door001 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_doors/door008 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_doors/door013 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_furniture/basket {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/bed001 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/bed001_b {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/bed002 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/chest004_2 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_furniture/chest006_2 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_furniture/chest006_3 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_furniture/clothes {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/couch_d {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/couch_e {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/jap_carpet001 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/kitchen003 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_furniture/seat001 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/seat002 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/seat003 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/seat004 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/seat005 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/seat006 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/table001 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_furniture/table002 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_furniture/table003 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_furniture/table004 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_furniture/table007 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_furniture/table008 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_furniture/textil001 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/textil002 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/textil003 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/textil006 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_furniture/wardrobe {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_furniture/wash_b {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_lights/land_li_yellow {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_lights/light001 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_lights/light003_shell {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_lights/mtl_l1_fx1 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/conc02 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metal001 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metal002 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metal012 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metal013 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metall001 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metall002 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metall003 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metall005 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metall006 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metall007 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metall008 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metall009 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metall010 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/metall011 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/metall013 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_material/s_wood001 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/s_wood002 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/s_wood003 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/shell001 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/window_grey {
+	footstepsound "misc/breakglass02"
+	bouncefraction "0.5"
+}
+
+terrain tex_material/wood001 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood002 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood005 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood006 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood007 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood008 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood009 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood011 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood012 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood013 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood014 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood015 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood016 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood017 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_material/wood018 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/brick03g {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_mattn/concrete002 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/concrete003 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/crate001 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/dirt001 {
+	footstepsound "footsteps/dirt2"
+	bouncefraction "0.4"
+}
+
+terrain tex_mattn/dirt002 {
+	footstepsound "footsteps/dirt2"
+	bouncefraction "0.4"
+}
+
+terrain tex_mattn/dirt003 {
+	footstepsound "footsteps/dirt1"
+	bouncefraction "0.6"
+}
+
+terrain tex_mattn/door036 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/door063 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_mattn/floor002 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/floor003 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/floor004 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/floor009 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_mattn/floor010 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_mattn/floor011 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_mattn/floor014 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/floor024 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/floor025 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/floor026 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_mattn/floor027 {
+	footstepsound "footsteps/gravel3"
+	bouncefraction "0.4"
+}
+
+terrain tex_mattn/ground_dirt2 {
+	footstepsound "footsteps/dirt1"
+	bouncefraction "0.6"
+}
+
+terrain tex_mattn/gully {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/marmor {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_mattn/metal {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/metal_rust {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/phone2 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/plate {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/roof001 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/roof002 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/roof003 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/street010 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/street011 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/wall020 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/wall029 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/wall045 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wall046 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wall049 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_mattn/wall059 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wall068 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_mattn/wall069 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_mattn/wall079 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_mattn/wall088 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_mattn/warning {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood001 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood005 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood008 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood009 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood012 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood015 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood016 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood017 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood018 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood019 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood022 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood024 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_mattn/wood025 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/barrel1 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/barrel2 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/barrel_side {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/barrel_top {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/barrel_top1 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/books005 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/books006 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/books007 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/bookshelf {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box001 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box002 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box003 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box004 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box004a {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box005 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box006 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box007 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box008 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_misc/box008b {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_misc/box009 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box010 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box011 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box012 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box013 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box014 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box015 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box016a {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box016b {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/box023d {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/bungalow {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.5"
+}
+
+terrain tex_misc/bungalow2 {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.5"
+}
+
+terrain tex_misc/container001 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/container001b {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/container002 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/container002b {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/container006 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/container008 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/crate001 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/drkmtl_grlpltmech {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/dvd_side {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/grate_rusty {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_misc/laminate001 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/microwave001_side {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/phone001 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/phone002_m {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/pingpong {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/pipes002 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_misc/soft_drinks1 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/stainless001 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/straw {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.5"
+}
+
+terrain tex_misc/trashbin001 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_misc/wood_palet {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_nature/desert001 {
+	footstepsound "footsteps/dirt2"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/desert002 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_nature/desert004 {
+	footstepsound "footsteps/dirt2"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/desert006 {
+	footstepsound "footsteps/sand2"
+	bouncefraction "0.1"
+}
+
+terrain tex_nature/desert007 {
+	footstepsound "footsteps/sand2"
+	bouncefraction "0.1"
+}
+
+terrain tex_nature/desert008 {
+	footstepsound "footsteps/sand2"
+	bouncefraction "0.1"
+}
+
+terrain tex_nature/dirt {
+	footstepsound "footsteps/dirt1"
+	bouncefraction "0.6"
+}
+
+terrain tex_nature/dirt001 {
+	footstepsound "footsteps/dirt2"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/dirt002 {
+	footstepsound "footsteps/dirt2"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/dirt003 {
+	footstepsound "footsteps/dirt2"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/dirt_se01 {
+	footstepsound "footsteps/dirt1"
+	bouncefraction "0.6"
+}
+
+terrain tex_nature/dirt_se04 {
+	footstepsound "footsteps/dirt1"
+	bouncefraction "0.6"
+}
+
+terrain tex_nature/dirt_se05 {
+	footstepsound "footsteps/dirt1"
+	bouncefraction "0.6"
+}
+
+terrain tex_nature/drymud {
+	footstepsound "footsteps/dirt1"
+	bouncefraction "0.6"
+}
+
+terrain tex_nature/grass {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/grass001 {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/grass004 {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/grass_mowed_dry_a_k1 {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/grass_mowed_dry_c {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/grass_mowed_green_c {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/grass_tall_green_a {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.3"
+}
+
+terrain tex_nature/grass_tall_green_b {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.3"
+}
+
+terrain tex_nature/hedge001 {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.2"
+}
+
+terrain tex_nature/ice001 {
+	footstepsound "footsteps/snow3"
+	bouncefraction "0.3"
+}
+
+terrain tex_nature/ice002 {
+	footstepsound "footsteps/snow3"
+	bouncefraction "0.3"
+}
+
+terrain tex_nature/jungle002 {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.3"
+}
+
+terrain tex_nature/pjrock1 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_nature/pjrock16 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_nature/pjrock17 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_nature/pjrock21 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_nature/pjrock6 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_nature/potatoes {
+	footstepsound "footsteps/dirt2"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/railway {
+	footstepsound "footsteps/gravel3"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/rock002 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_nature/rock004 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_nature/rock005 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_nature/rock006 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_nature/rock007 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_nature/rock008 {
+	footstepsound "footsteps/gravel2"
+	bouncefraction "0.8"
+}
+
+terrain tex_nature/sand {
+	footstepsound "footsteps/sand2"
+	bouncefraction "0.1"
+}
+
+terrain tex_nature/snow002 {
+	footstepsound "footsteps/snow1"
+	bouncefraction "0.1"
+}
+
+terrain tex_nature/snow003 {
+	footstepsound "footsteps/snow1"
+	bouncefraction "0.1"
+}
+
+terrain tex_nature/soil001 {
+	footstepsound "footsteps/dirt2"
+	bouncefraction "0.4"
+}
+
+terrain tex_nature/sp_ground {
+	footstepsound "footsteps/dirt1"
+	bouncefraction "0.6"
+}
+
+terrain tex_nature/tree001 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_nature/tree002 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_nature/tree003 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_nature/tree_bark_001 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_nature/tree_bark_002 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_nature/tree_chopped2 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_nature/water {
+	footstepsound "footsteps/water_in"
+	bouncefraction "0.0"
+}
+
+terrain tex_nature/water2 {
+	footstepsound "footsteps/water_in"
+	bouncefraction "0.0"
+}
+
+terrain tex_nature/water_dark {
+	footstepsound "footsteps/water_in"
+	bouncefraction "0.0"
+}
+
+terrain tex_shop/cashreg_a {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_shop/cashreg_c {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_shop/fruits001 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_shop/fruits002 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_shop/fruits003 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_shop/fruits004 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_shop/fruits005 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_shop/fruits006 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_shop/fruits007 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_shop/fruits008 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_shop/fruits009 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_shop/fruits010 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_shop/tetra003 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_shop/tetra004 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_shop/tetra006 {
+	footstepsound "footsteps/wood1"
+	bouncefraction "0.7"
+}
+
+terrain tex_shop/tin007 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_streets/2ln {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/2ln_crn_ne {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/2ln_crn_nw {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/2ln_crn_se {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/2ln_crn_sw {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/2ln_crnw_nw {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/2ln_crnw_sw {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/2ln_cw {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/2lnh {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/2lnh_cw {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/2lnh_cwrgt {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/base {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/park1h {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/park1v {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/pavement001 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/street001 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/street002 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/street003 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/street005 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/street006 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/street008 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/street009 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_streets/street010 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_tech/comptex001 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_tech/comptex003 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_tech/comptex005 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_tech/copier_a {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_tech/cover002 {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_tech/pc_b {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_terrain/dummy {
+	footstepsound "footsteps/grass3"
+	bouncefraction "0.4"
+}
+
+terrain tex_trak/grate1a {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_trak/trak4_concrete1a {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_trak/trak4_concrete2a {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_trak/trak4_concrete4b {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_trak/trak4_concrete5a {
+	footstepsound "footsteps/stone1"
+	bouncefraction "1.0"
+}
+
+terrain tex_trak/trak4_grate1 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_trak/trak4_grate2a {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_trak/vertpanel1e {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_trak/vertpanel2d {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo1_04 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo1_05 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo2_01 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo2_02 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo2_03 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo2_05 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo2_06 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo2_08 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo2_09 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo2_10 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo2_11 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo2_12 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo2_16 {
+	footstepsound "misc/breakglass02"
+	bouncefraction "0.5"
+}
+
+terrain tex_ufo/ufo2_17 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_ufo/ufo2_18 {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_vehicles/car_a {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_vehicles/car_d {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_vehicles/car_e {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_vehicles/car_f {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_vehicles/gabstap_a {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_vehicles/gabstap_b {
+	footstepsound "footsteps/metal3"
+	bouncefraction "1.0"
+}
+
+terrain tex_vehicles/gabstap_c {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.6"
+}
+
+terrain tex_vehicles/spocar003 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_vehicles/spocar004 {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}
+
+terrain tex_vehicles/tire001_mq {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_vehicles/tire002_mq {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_vehicles/tire005_mq {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_vehicles/tire_002 {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_vehicles/truck_c {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_vehicles/truck_c_mq {
+	footstepsound "footsteps/carpet2"
+	bouncefraction "0.3"
+}
+
+terrain tex_vehicles/truck_d {
+	footstepsound "footsteps/metal1"
+	bouncefraction "0.7"
+}

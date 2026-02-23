@@ -1,0 +1,42 @@
+
+mapdef <yourname>
+{
+	map		+<yourmap>
+	param		<rma-assembly-name>
+	description	"_<your description>."
+	size		"small"
+	teams		<teams>
+	multiplayer	<false|true>
+	maxaliens	<maxaliens>
+
+	aircraft
+	{
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	}
+
+	ufos
+	{
+		craft_ufo_scout
+		craft_ufo_fighter
+	}
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}

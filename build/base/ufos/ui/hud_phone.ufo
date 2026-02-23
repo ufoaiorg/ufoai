@@ -1,0 +1,802 @@
+// ==================
+// HUD MAIN
+// ==================
+
+component hud_phone_firemodeentry extends panel {
+	{
+		pos	"0 0"
+		size	"500 150"
+		align	LAYOUTALIGN_TOP
+	}
+
+	image bg
+	{
+		src	"hudphone/firemode_bg"
+		pos	"0 0"
+		texl	"0 0"
+		texh	"150 150"
+		size	"500 150"
+//		onMouseEnter { *node:this@src = "hudphone/firemode_bg_hovered" }
+//		onMouseLeave { *node:this@src = "hudphone/firemode_bg" }
+		onClick	{
+			if (*node:parent.actionid@string eq "cancel") {
+			} elif (*node:parent.actionid@string ne "") {
+				cmd "hud_executeaction <node:parent.actionid@string>"
+				*cvar:mn_controlaction_mode = ""
+				call *node:root.update_control_mode
+			}
+			if (*node:parent.directaction@string eq "1") {
+				*cvar:mn_control_mode = ""
+				call *node:root.update_control_mode
+			}
+		}
+	}
+
+	image cb
+	{
+		src	"hud/checkbox"
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"0 32"
+		texl	"0 0"
+		texh	"31 31"
+		invis	true
+		onClick	{
+			cmd "hud_selectreactionfiremode <node:parent.hand@string> <node:parent.id@string>"
+		}
+	}
+
+	/** store the actionid */
+	string actionid { size "0 0" invis true }
+
+	/** store the hand */
+	string hand { size "0 0" invis true }
+
+	/** store the index of the firemode */
+	string index { size "0 0" invis true }
+
+	/** store behaviour */
+	string directaction { size "0 0" invis true string "" }
+
+	string name
+	{
+		pos "5 5"
+		size "490 60"
+		contentalign ALIGN_CL
+		ghost true
+		font "f_verybig"
+		color	"0 0 0 1"
+	}
+
+	item weapon
+	{
+		pos		"5 60"
+		size 		"150 80"
+		scale		"3.5 3.5 3.5"
+		src		""
+		containerLike	true
+		ghost		true
+	}
+
+	button time_indicator {
+		pos	"180 70"
+		size	"30 70"
+		icon	"hudphone/sprites/indicator_time"
+		ghost	true
+	}
+
+	string tu
+	{
+		pos "210 70"
+		size "80 70"
+		contentalign ALIGN_CC
+		ghost true
+		font "f_verybig"
+		color	"0 0 0 1"
+	}
+	string shot_label
+	{
+		pos "250 70"
+		size "150 70"
+		string "_Shots:"
+		contentalign ALIGN_CR
+		ghost true
+		font "f_verybig"
+		color	"0 0 0 1"
+	}
+	string shot
+	{
+		pos "400 70"
+		size "100 70"
+		contentalign ALIGN_CL
+		ghost true
+		font "f_verybig"
+		color	"0 0 0 1"
+	}
+
+	/**
+	 * @param<1> id
+	 * @param<2> hand (char) (l or r for left or right)
+	 * @param<3> firedef index (int)
+	 * @param<4> firedef reaction fire (int) (1= true, 0= false)
+	 * @param<5> status (1 available, 0 need more TU)
+	 * @param<6> name (string)
+	 * @param<7> TUs (string)
+	 * @param<8> shots (string)
+	 * @param<9> tooltip
+	 */
+	func init {
+		*node:parent.actionid@string = "<1>"
+		*node:parent.hand@string = "<2>"
+		*node:parent.index@string = "<3>"
+
+		*node:parent.name@string = "<6>"
+		*node:parent.tu@string = "<7>"
+		*node:parent.shot@string = "<8>"
+		*node:parent.tu@tooltip = "<9>"
+
+		if (<2> eq "r") {
+			*node:parent.weapon@src = "*cvar:mn_rweapon_item"
+		} elif (<2> eq "l") {
+			*node:parent.weapon@src = "*cvar:mn_lweapon_item"
+		}
+
+		if ( <5> eq "1" ) {
+			*node:parent.bg@src = "hudphone/firemode_bg"
+		} else {
+			*node:parent.bg@src = "hudphone/firemode_bg_disabled"
+			*node:parent.actionid@string = ""
+		}
+
+		if ( <4> eq "0" ) {
+			*node:parent.cb@invis = true
+		}
+	}
+
+	func init_cancel {
+		*node:parent.actionid@string = "cancel"
+		*node:parent.name@string = "_Cancel"
+		*node:parent.time_indicator@invis = true
+	}
+
+	/**
+	 * @param<1> actionid
+	 * @param<2> hand (char) (l or r for left or right)
+	 * @param<3> TU
+	 * @param<4> Is soldier have ammo?
+	 * @param<5> Is soldier have requested TU?
+	 */
+	func init_reload {
+		*node:parent.actionid@string = "<1>"
+		*node:parent.hand@string = "<2>"
+		*node:parent.index@string = ""
+		*node:parent.directaction@string = "1"
+
+		if (<2> eq "r") {
+			*node:parent.weapon@src = "*cvar:mn_rweapon_item"
+		} elif (<2> eq "l") {
+			*node:parent.weapon@src = "*cvar:mn_lweapon_item"
+		}
+
+		*node:parent.name@string = "_Reload"
+		*node:parent.tu@string = "<3>"
+		*node:parent.shot@string = ""
+
+		if (<4> eq "0") {
+			*node:parent.shot@string = "_No ammo"
+			*node:parent.bg@texl = "hudphone/firemode_bg_disabled"
+			*node:parent.actionid@string = ""
+		}
+		if (<4> eq "0") {
+			*node:parent.shot@string = "_No more ammo"
+			*node:parent.bg@texl = "hudphone/firemode_bg_disabled"
+			*node:parent.actionid@string = ""
+		}
+	}
+
+	/**
+	 * @param<1> activate (1=activate, 0=deactivate)
+	 */
+	func init_reaction {
+		if ( <1> eq "1" ) {
+			*node:parent.cb@texl = "0 32"
+			*node:parent.cb@texh = "31 63"
+			//*node:parent.cb@invis = false
+		} else {
+			*node:parent.cb@texl = "0 0"
+			*node:parent.cb@texh = "31 31"
+			//*node:parent.cb@invis = false
+		}
+	}
+}
+
+window hud_phone extends hud
+{
+	{
+		fill		true
+		starlayout	true
+		noticepos	"512 50"
+	}
+
+	// ==================
+	// render rectangle
+	// ==================
+	battlescape battlescape
+	{
+		pos		"0 0"
+		size		"1024 768"
+		align		LAYOUTALIGN_FILL
+	}
+
+	// ==================
+	// soldier pan
+	// ==================
+
+	panel soldier {
+		{
+			size "394 768"
+			align	LAYOUTALIGN_RIGHT
+		}
+
+		image bg {
+			src "hudphone/background"
+			size "394 768"
+		}
+
+		model body
+		{
+			{
+				src	*cvar:mn_body
+				skin	*cvar:mn_body_skin
+				anim	"stand2"
+				angles	"0 100 90"
+				scale	"8 8 8"
+				pos	"0 0"
+				size	"392 460"
+				origin	"100 -35 0"
+			}
+
+			model head
+			{
+				src	*cvar:mn_head
+				skin	*cvar:mn_head_skin
+				tag	"tag_head"
+				scale	"1.0 1.0 1.0"
+			}
+
+			model right_rweapon
+			{
+				src	*cvar:mn_rweapon
+				tag	"tag_rweapon"
+			}
+
+			model right_lweapon
+			{
+				src	*cvar:mn_lweapon
+				tag	"tag_lweapon"
+			}
+		}
+
+		image name_bg {
+			src	"hudphone/sprites/name_bg"
+			pos	"11 386"
+			size	"373 66"
+		}
+
+		string name {
+			string	*cvar:mn_name
+			color	"0 0 0 1"
+			font "f_verybig"
+			pos "11 386"
+			size "373 66"
+			padding	"10"
+		}
+
+		image health_bg {
+			{
+				src	"hudphone/sprites/indicator_bg"
+				pos	"31 208"
+				size	"193 42"
+			}
+
+			bar health
+			{
+				pos	"10 10"
+				size	"173 22"
+				color	"1 0 0 0.7"
+				current	*cvar:mn_hp
+				max		*cvar:mn_hpmax
+				readonly	true
+				ghost	true
+			}
+
+			bar stun
+			{
+				pos	"10 10"
+				size	"173 22"
+				color	".3 .3 .3 .7"
+				current	*cvar:mn_stun
+				max		*cvar:mn_hpmax
+				readonly	true
+				ghost	true
+			}
+
+			string value
+			{
+				string	*cvar:mn_hp
+				color	"0 0 0 1"
+				pos	"10 10"
+				size	"173 22"
+				contentalign	ALIGN_CC
+				font	"f_normal_bold"
+				ghost	true
+			}
+		}
+
+		button health_indicator {
+			pos	"11 208"
+			size	"42 42"
+			icon	"hudphone/sprites/indicator_health"
+			ghost	true
+		}
+
+		image moral_bg {
+			{
+				src	"hudphone/sprites/indicator_bg"
+				pos	"31 262"
+				size	"193 42"
+			}
+
+			bar morale
+			{
+				pos	"10 10"
+				size	"173 22"
+				color	"1 1 0.5 0.7"
+				current	*cvar:mn_morale
+				max		*cvar:mn_moralemax
+				readonly	true
+				ghost	true
+			}
+
+			string value
+			{
+				string	*cvar:mn_morale
+				color	"0 0 0 1"
+				pos	"10 10"
+				size	"173 22"
+				contentalign	ALIGN_CC
+				font	"f_normal_bold"
+				ghost	true
+			}
+		}
+
+		button moral_indicator {
+			pos	"11 262"
+			size	"42 42"
+			icon	"hudphone/sprites/indicator_moral"
+			ghost	true
+		}
+
+		image time_bg {
+			{
+				src	"hudphone/sprites/indicator_bg"
+				pos	"31 318"
+				size	"193 42"
+				tooltip	*cvar:mn_tu_tooltips
+			}
+
+			bar timeall
+			{
+				pos	"10 10"
+				size	"173 22"
+				color	".1 .1 .7 0.7"
+				current	*cvar:mn_tu
+				max		*cvar:mn_tumax
+				readonly	true
+				ghost	true
+			}
+			bar timeremain
+			{
+				pos	"10 10"
+				size	"173 22"
+				color	".2 .2 1 0.7"
+				current	*cvar:mn_turemain
+				max		*cvar:mn_tumax
+				readonly	true
+				ghost	true
+			}
+
+			bar timereserved
+			{
+				pos	"10 10"
+				size	"173 11"
+				color	"0 .5 0 0.7"
+				current	*cvar:mn_tureserved
+				max		*cvar:mn_tumax
+				readonly	true
+				ghost	true
+			}
+
+			string value
+			{
+				string	*cvar:mn_tu
+				color	"0 0 0 1"
+				pos	"10 10"
+				size	"173 22"
+				contentalign	ALIGN_CC
+				font	"f_normal_bold"
+				ghost	true
+			}
+		}
+
+		button time_indicator {
+			pos	"11 318"
+			size	"42 42"
+			icon	"hudphone/sprites/indicator_time"
+			ghost	true
+		}
+
+		panel controls {
+			{
+				pos "0 452"
+				size "393 316"
+				layout		LAYOUT_COLUMN
+				layoutColumns	3
+				layoutMargin	5
+				padding		10
+			}
+
+			// managment
+
+			radiobutton time {
+				size		"122 148"
+				stringValue	"time"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/time"
+				cvar		"*cvar:mn_control_mode"
+				onChange { call *node:root.update_control_mode }
+			}
+
+			radiobutton item {
+				size		"122 148"
+				stringValue	"item"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/item"
+				cvar		"*cvar:mn_control_mode"
+				onChange { call *node:root.update_control_mode }
+			}
+
+			radiobutton team {
+				size		"122 148"
+				stringValue	"team"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/team"
+				cvar		"*cvar:mn_control_mode"
+				onChange { call *node:root.update_control_mode }
+			}
+
+			// action
+
+			radiobutton action {
+				size		"122 148"
+				stringValue	"action"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/shoot"
+				cvar		"*cvar:mn_control_mode"
+				onChange {
+					*cvar:mn_controlaction_mode = "selection"
+					call *node:root.update_control_mode
+				}
+			}
+
+			radiobutton move {
+				size		"122 148"
+				stringValue	"move"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/move"
+				cvar		"*cvar:mn_control_mode"
+				onChange { call *node:root.update_control_mode }
+			}
+
+			radiobutton lookat {
+				size		"122 148"
+				stringValue	"lookat"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/lookat"
+				cvar		"*cvar:mn_control_mode"
+				onChange { call *node:root.update_control_mode }
+			}
+		}
+	}
+
+	/** @todo convert this panel to window to allow to use ESC to close it */
+
+	panel move_controls {
+		{
+			pos "0 0"
+			size "122 460"
+			ghost	true
+			layout	LAYOUT_TOP_DOWN_FLOW
+		}
+		button standup {
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/standup"
+			onClick {
+				// TODO very bad... this command toggle the status. We need a set
+				cmd "actor_standcrouch;"
+			}
+		}
+		button crouch {
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/crouch"
+			onClick {
+				// TODO very bad... this command toggle the status. We need a set
+				cmd "actor_standcrouch;"
+			}
+		}
+		button cancel {
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/cancel"
+			onClick {
+				*cvar:mn_control_mode = ""
+				call *node:root.update_control_mode
+			}
+		}
+	}
+
+	panel team_controls {
+		{
+			pos "0 0"
+			size "122 460"
+			ghost	true
+			layout	LAYOUT_TOP_DOWN_FLOW
+		}
+		button prev {
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/soldier_prev"
+			disabled	true
+			onClick {
+			}
+		}
+		button next {
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/soldier_next"
+			onClick {
+				cmd "actor_next;"
+			}
+		}
+		button cancel {
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/cancel"
+			onClick {
+				*cvar:mn_control_mode = ""
+				call *node:root.update_control_mode
+			}
+		}
+	}
+
+	panel action_controls {
+		{
+			pos "0 0"
+			size "122 460"
+			ghost	true
+			layout	LAYOUT_TOP_DOWN_FLOW
+		}
+		button action {
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/list"
+			onClick {
+				*cvar:mn_controlaction_mode = "selection"
+				*cvar:mn_control_mode = "action"
+				call *node:root.update_control_mode
+			}
+		}
+		button cancel {
+			size		"122 148"
+			background	"hudphone/sprites/button"
+			icon		"hudphone/sprites/cancel"
+			onClick {
+				*cvar:mn_controlaction_mode = ""
+				*cvar:mn_control_mode = ""
+				call *node:root.update_control_mode
+				// cancel the firemode aiming
+				cmd "hud_movemode"
+			}
+		}
+	}
+
+	panel actionselection_controls {
+		{
+			pos "0 0"
+			size "622 768"
+			ghost	true
+		}
+
+		panel buttons {
+			{
+				pos 	"0 0"
+				size 	"122 768"
+				ghost	true
+				layout	LAYOUT_TOP_DOWN_FLOW
+			}
+			button up {
+				size		"122 148"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/arrowup"
+				onClick {
+					*node:parent.parent.elements@viewpos = ( *node:parent.parent.elements@viewpos - 150 )
+				}
+			}
+			button down {
+				size		"122 148"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/arrowdown"
+				onClick {
+					*node:parent.parent.elements@viewpos = ( *node:parent.parent.elements@viewpos + 150 )
+				}
+			}
+			button cancel {
+				size		"122 148"
+				background	"hudphone/sprites/button"
+				icon		"hudphone/sprites/cancel"
+				onClick {
+					*cvar:mn_controlaction_mode = ""
+					*cvar:mn_control_mode = ""
+					call *node:root.update_control_mode
+					// cancel the firemode aiming
+					cmd "hud_movemode"
+				}
+			}
+		}
+
+		panel elements {
+			{
+				pos 	"122 0"
+				size 	"500 768"
+				ghost	true
+				layout	LAYOUT_TOP_DOWN_FLOW
+			}
+
+			confunc hud_phone_actionlistener {
+				if (<1> eq "begin") {
+					call *node:parent@removeAllChild
+					// call *node:parent@createChild("cancel", "hud_phone_firemodeentry")
+					// call *node:parent.cancel.init_cancel
+				} elif (<1> eq "firemode") {
+					call *node:parent@createChild("<2>", "hud_phone_firemodeentry")
+					call *node:parent.<2>.init(<2>, <3>, <4>, <5>, <6>, <7>, <8>, <9>, <10>)
+				} elif (<1> eq "reaction") {
+					call *node:parent.<2>.init_reaction(<3>)
+				} elif (<1> eq "reload") {
+					call *node:parent@createChild("<2>", "hud_phone_firemodeentry")
+					call *node:parent.<2>.init_reload(<2>, <3>, <4>, <5>, <6>)
+				} elif (<1> eq "end") {
+				} else {
+					cmd "echo firemode_listener: unknown \"<1>\" command"
+				}
+			}
+
+		}
+	}
+
+	func update_control_mode {
+		*node:root.move_controls@invis = true
+		*node:root.team_controls@invis = true
+		*node:root.action_controls@invis = true
+		*node:root.actionselection_controls@invis = true
+		*cvar:cl_map_displayavailablecells = false
+
+		if (*cvar:mn_control_mode eq "move") {
+			*node:root.move_controls@invis = false
+			*cvar:cl_map_displayavailablecells = true
+		} elif (*cvar:mn_control_mode eq "team") {
+			*node:root.team_controls@invis = false
+		} elif (*cvar:mn_control_mode eq "action") {
+			if (*cvar:mn_controlaction_mode eq "selection") {
+				*node:root.actionselection_controls@invis = false
+				cmd "hud_listactions hud_phone_actionlistener rlRL"
+			} else {
+				*node:root.action_controls@invis = false
+			}
+		}
+	}
+
+	/**
+	 * @brief Updates the level status
+	 * @param <1> Level id (0-7)
+	 * @param <2> State
+	 *   0 = disabled (map doesn't have this level),
+	 *   1 = available (user can switch to this level)
+	 *   2 = active (the current selected level)
+	 */
+	confunc updateLevelStatus {
+	}
+
+	// ==================
+	// override "hud" confunc
+	// ==================
+
+	confunc crouch_checkbox_disable { }
+	confunc crouch_checkbox_clear	{ }
+	confunc crouch_checkbox_check	{ }
+
+	confunc hudselect { }
+	confunc hudenable { }
+	confunc huddisable { }
+
+	// CROUCH/STAND UP BUTTON
+	confunc deselect_stand {
+		*node:root.move_controls.standup@disabled = true
+		*node:root.move_controls.crouch@disabled = false
+	}
+	confunc deselect_crouch {
+		*node:root.move_controls.standup@disabled = false
+		*node:root.move_controls.crouch@disabled = true
+	}
+	confunc disable_stand {
+		// TODO not sure if it is right or not
+		*node:root.move_controls.standup@disabled = true
+		*node:root.move_controls.crouch@disabled = false
+	}
+	confunc disable_crouch {
+		// TODO not sure if it is right or not
+		*node:root.move_controls.standup@disabled = false
+		*node:root.move_controls.crouch@disabled = true
+	}
+
+	confunc deselect_primaryleft { }
+	confunc deselect_primaryright { }
+	confunc deselect_reloadleft { }
+	confunc deselect_reloadright { }
+
+	confunc disable_primaryleft { }
+	confunc disable_primaryright { }
+	confunc disable_reloadleft { }
+	confunc disable_reloadright { }
+
+	confunc deselect_headgear { }
+	confunc disable_headgear { }
+
+	// ==================
+	// round events
+	// ==================
+
+	confunc startround { }
+	confunc endround {
+		cmd "hud_movemode;"
+	}
+
+	// "RESERVATION FOR SHOT" BUTTON
+	confunc reserve_shot_clear { }
+	confunc reserve_shot_check { }
+	confunc reserve_shot_disable { }
+
+	// REACTION MODE BUTTON
+	confunc startreaction { }
+	confunc startreaction_impos { }
+	confunc deselect_reaction { }
+	confunc disable_reaction { }
+
+	// ==================
+	// init function
+	// ==================
+
+	func onWindowOpened
+	{
+		*cvar:mn_control_mode = ""
+		call *node:root.update_control_mode
+		cmd "music_change battlescape;"
+	}
+
+	func onScriptLoaded {
+		// Register the window to the HUD list
+		cmd "add_hud_name <path:root> \"_Phone HUD\""
+	}
+
+}

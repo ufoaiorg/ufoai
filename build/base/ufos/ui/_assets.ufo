@@ -1,0 +1,910 @@
+--!usr/bin/lua
+
+require("ufox.lua")
+
+--[[
+ - ==============================
+ - Reusable components for the UI
+ - ==============================
+--]]
+do
+	local smallstring = ufox.build_component({
+		name = "smallstring",
+		class = "string",
+		font = "f_verysmall",
+		color = {0.56, 0.81, 0.76, 1.0},
+	})
+end
+
+--[[
+ - Fuzzy screen effect
+--]]
+do
+	local fuzzyScreen = ufox.build_component({
+		name = "fuzzyScreen",
+		class = "texture",
+		pos = {0, 0},
+		size = {2048, 1536},
+		source = "ui/screen",
+		ghost = true,
+	})
+end
+
+do
+	local UFOpediaBtn = ufox.build_component({
+		name = "UFOpediaBtn",
+		class = "button",
+		size = {16, 16},
+		icon = "icons/windowinfo",
+		tooltip = "_View UFOPaedia entry",
+		padding = 0,
+
+		on_click = function (sender)
+			ufo.cmd("ui_push ufopedia;")
+		end,
+	})
+end
+
+--[[
+ - Main button templates. Can be resized as needed
+--]]
+do
+	local MainMenuBtn = ufox.build_component({
+		name = "MainMenuBtn",
+		class = "button",
+		pos = {0, 0},
+		size = {400, 30},
+		font = "f_normal_bold",
+		color = {0.065, 0.065, 0.065, 1},
+		backgroundcolor = {0.4, 0.52, 0.5, 1},
+		disabledcolor = {0.23, 0.23, 0.23, 1},
+		layoutalign = ufo.LAYOUTALIGN_MIDDLE,		-- @TODO Confirm that this make nothing and can be removed
+		contentalign = ufo.ALIGN_CC,
+
+		on_mouseenter = function (sender)
+			sender:set_backgroundcolor(0.58, 0.81, 0.76, 1)
+		end,
+		on_mouseleave = function (sender)
+			sender:set_backgroundcolor(0.4, 0.52, 0.5, 1)
+		end,
+	})
+end
+
+do
+	local MainMenu2Btn = ufox.build_component({
+		name = "MainMenu2Btn",
+		class = "button",
+		super = "MainMenuBtn",
+		backgroundcolor = {0.53, 0.61, 0.21, 1},
+		disabledcolor = {0.23, 0.23, 0.23, 1},
+
+		on_mouseenter = function (sender)
+			sender:set_backgroundcolor(0.82, 0.92, 0.44, 1)
+		end,
+		on_mouseleave = function (sender)
+			sender:set_backgroundcolor(0.53, 0.61, 0.21, 1)
+		end,
+	})
+end
+
+do
+	local MainMenu3Btn = ufox.build_component({
+		name = "MainMenu3Btn",
+		class = "button",
+		super = "MainMenuBtn",
+		color = {1, 1, 1, 0.9},
+		selectcolor = {0, 0, 0, 0.9},
+		backgroundcolor = {0.38, 0.48, 0.36, 0.9},
+		disabledcolor = {0.23, 0.23, 0.23, 1},
+
+		on_mouseenter = function (sender)
+			sender:set_backgroundcolor(0.88, 0.20, 0.075, 1)
+		end,
+		on_mouseleave = function (sender)
+			sender:set_backgroundcolor(0.38, 0.48, 0.36, 0.9)
+		end,
+	})
+end
+
+do
+	local MainMenuExitBtn = ufox.build_component({
+		name = "MainMenuExitBtn",
+		class = "button",
+		super = "MainMenuBtn",
+		color = {1, 0.68, 0.61, 1},
+		selectcolor = {1, 0.68, 0.61, 1},
+		backgroundcolor = {0.65, 0.13, 0, 1},
+
+		on_mouseenter = function (sender)
+			sender:set_backgroundcolor(0.88, 0.20, 0.075, 1)
+		end,
+		on_mouseleave = function (sender)
+			sender:set_backgroundcolor(0.65, 0.13, 0, 1)
+		end,
+	})
+end
+
+do
+	local MainMenuCancelBtn = ufox.build_component({
+		name = "MainMenuCancelBtn",
+		class = "button",
+		super = "MainMenu2Btn",
+		text = "_Cancel",
+		tooltip = "_Close this dialogue",
+	})
+end
+
+do
+	local MainMenuTab = ufox.build_component({
+		name = "MainMenuTab",
+		class = "button",
+		size = {125, 30},
+		font = "f_small_bold",
+		backgroundcolor = {0.4, 0.515, 0.5, 0.25},
+		color = {1, 1, 1, 0.5},
+
+		enable = function (sender)
+			local parent = sender:parent()
+			parent:set_backgroundcolor(0.4, 0.515, 0.5, 1)
+			parent:set_color(0, 0, 0, 0.9)
+		end,
+		disable = function (sender)
+			local parent = sender:parent()
+			parent:set_backgroundcolor(0.4, 0.515, 0.5, 0.25)
+			parent:set_color(1, 1, 1, 0.5)
+		end,
+	})
+end
+
+--[[
+ - Simple text button, left aligned. Light color.
+--]]
+do
+	local TextBtn = ufox.build_component({
+		name = "TextBtn",
+		class = "button",
+		size = {250, 20},
+		color = {1, 1, 1, 0.5},
+		contentalign = ufo.ALIGN_CL,
+	})
+end
+
+do
+	local TextEntry = ufox.build_component({
+		name = "TextEntry",
+		class = "textentry",
+		background = "ui/textentry",
+		color = {1, 1, 1, 0.5},
+		selectcolor = {1, 1, 1, 0.9},
+		contentalign = ufo.ALIGN_CL,
+		padding = 8,
+	})
+end
+
+--[[
+ - Stats bar
+ - @TODO: should change color (red/yellow/green) depending
+ -        on how good the value is.
+--]]
+do
+	local StatBar = ufox.build_component({
+		name = "StatBar",
+		class = "panel",
+		size = {180, 25},
+
+		{
+			name = "label",
+			class = "smallstring",
+			pos = {-3, 0},
+			size = {80, 15},
+			longlines = ufo.LONGLINES_CHOP,
+			contentalign = ufo.ALIGN_UL,
+		},
+
+		{
+			name = "bg",
+			class = "texture",
+			pos = {0, 14},
+			size = {180, 10},
+			source = "ui/bar_bg",
+		},
+
+		{
+			name = "valuebar",
+			class = "bar",
+			pos = {0, 14},
+			size = {180, 10},
+			color = {0.1875, 0.65625, 0.164, 0.8},
+			range = {0, 100},
+			disabled = true,
+			nohover = true,
+		},
+
+		-- shows initial values
+		{
+			name = "initbar",
+			class = "bar",
+			pos = {0, 14},
+			size = {180, 10},
+			color = {0.1875, 0.65625, 0.164, 1},
+			range = {0, 100},
+			disabled = true,
+			nohover = true,
+		},
+
+		{
+			name = "valuenum",
+			class = "smallstring",
+			pos = {90, 0},
+			size = {90, 0},
+			longlines = ufo.LONGLINES_CHOP,
+			contentalign = ufo.ALIGN_UR,
+		},
+	})
+end
+
+do
+	local CheckBox = ufox.build_component({
+		name = "CheckBox",
+		class = "checkbox",
+		size = {20, 20},
+		iconchecked = "icons/checkbox_checked",
+		iconunchecked = "icons/checkbox_unchecked",
+		iconunknown = "icons/checkbox_indeterminate",
+	})
+end
+
+--[[
+ - Shared window to display item details.
+ - Used in market, soldier equipping, etc.
+--]]
+do
+	local ObjectInfo = ufox.build_component({
+		name = "ObjectInfo",
+		class = "panel",
+		size = {715, 180},
+		bordersize = 2,
+		bordercolor = {0.527, 0.6, 0.21, 1},
+
+		{
+			name = "header",
+			class = "panel",
+			pos = {1, 1},
+			size = {713, 32},
+			backgroundcolor = {0.527, 0.6, 0.21, 0.2},
+
+			{
+				name = "ufopedia",
+				class = "UFOpediaBtn",
+				pos = {10, 9},
+
+				on_click = function (sender)
+					ufo.cmd("ui_market_openpedia;")
+				end
+			},
+
+			{
+				name = "title",
+				class = "string",
+				pos = {30, 1},
+				size = {670, 32},
+				text = "*cvar:mn_itemname",
+				contentalign = ufo.ALIGN_CL,
+				color = {0.56, 0.81, 0.76, 1}
+			},
+		},
+
+		-- Model and weapon/firemode panel
+		{
+			name = "display",
+			class = "panel",
+			pos = {450, 33},
+			size = {265, 147},
+
+			{
+				name = "object_model",
+				class = "item",
+				model = "*cvar:mn_item",
+				pos = {0, 0},
+				size = {265, 147},
+				angles = {0, 180, 90},
+				autoscale = true,
+			},
+
+			{
+				name = "object_weapon",
+				class = "string",
+				text = "*cvar:mn_linkname",
+				pos = {0, 114},
+				size = {130, 32},
+				color = {0.56, 0.81, 0.76, 0.7},
+				backgroundcolor = {0, 0, 0, 0.5},
+				font = "f_small",
+				contentalign = ufo.ALIGN_CC,
+
+				on_click = function (sender)
+					ufo.cmd("mn_increaseitem;")
+				end
+			},
+
+			{
+				name = "object_firemode",
+				class = "string",
+				text = "*cvar:mn_firemodename",
+				pos = {134, 114},
+				size = {130, 32},
+				color = {0.56, 0.81, 0.76, 0.7},
+				backgroundcolor = {0, 0, 0, 0.5},
+				font = "f_small",
+				contentalign = ufo.ALIGN_CC,
+
+				on_click = function (sender)
+					ufo.cmd("mn_increasefiremode;")
+				end
+			},
+		},
+
+		-- Object info and stats
+		{
+			name = "info",
+			class = "panel",
+			pos = {0, 33},
+			size = {450, 147},
+
+			{
+				name = "description",
+				class = "text",
+				dataid = ufo.TEXT_ITEMDESCRIPTION,
+				pos = {30, 10},
+				size = {420, 135},
+				viewsize = 9,
+				lineheight = 15,
+				tabwidth = 168,
+				color = {0.56, 0.81, 0.76, 1},
+				font = "f_verysmall",
+
+				on_viewchange = function (sender)
+					local scrollbar = sender:parent():child("description_scroll")
+					if (scrollbar == nil) then
+						return
+					end
+					scrollbar:set_fullsize(sender:fullsize())
+					scrollbar:set_current(sender:viewpos())
+				end,
+				on_wheel = function (sender)
+					local scrollbar = sender:parent():child("description_scroll")
+					if (scrollbar == nil) then
+						return
+					end
+					scrollbar:set_current(sender:viewpos())
+				end
+			},
+
+			{
+				name = "description_scroll",
+				class = "vscrollbar",
+				image = "ui/scrollbar_v",
+				pos = {430, 10},
+				height = 135,
+				current = 0,
+				viewsize = 9,
+				fullsize = 9,
+				autoshowscroll = true,
+
+				on_change = function (sender)
+					local text = sender:parent():child("description")
+					if (text == nil) then
+						return
+					end
+					text:set_viewpos(sender:current())
+				end,
+			},
+		},
+	})
+end
+
+do
+	local Spinner = ufox.build_component({
+		name = "Spinner",
+		class = "spinner",
+		size = {15, 19},
+		topicon = "ui/spinner_up",
+		bottomicon = "ui/spinner_down",
+	})
+end
+
+-- Common style for all popups
+do
+	local ipopup = ufox.build_window({
+		name = "ipopup",
+		class = "window",
+		backgroundcolor = {0, 0, 0, 0.6},
+		bordercolor = {0.56, 0.81, 0.76, 1},
+		bordersize = 2,
+		dragbutton = true,
+
+		{
+			name = "title",
+			class = "string",
+			pos = {0, 0},
+			size = {512, 30},
+			text = "",
+			contentalign = ufo.ALIGN_CL,
+			font = "f_small_bold",
+			backgroundcolor = {0.4, 0.515, 0.5, 0.25},
+			color = {0.56, 0.81, 0.76, 1},
+		},
+	})
+end
+
+-- StatBar was designed for hud, in equipment we need a wider bar
+do
+	local StatBarWide = ufox.build_component({
+		name = "StatBarWide",
+		class = "StatBar",
+		size = {250, 25},
+
+		{
+			name = "label",
+			size = {100, 10},
+		},
+		{
+			name = "bg",
+			size = {250, 10},
+		},
+		{
+			name = "valuebar",
+			size = {250, 10},
+		},
+		{
+			name = "initbar",
+			size = {250, 10},
+		},
+		{
+			name = "valuenum",
+			size = {160, 10},
+		},
+	})
+end
+
+--[[
+ - Abilities panel
+ - @TODO: Remove "mediocre" dsc text. Look at CL_ActorGetSkillString, cl_team.c
+--]]
+do
+	local abilities = ufox.build_component({
+		name = "abilities",
+		class = "panel",
+		pos = {740, 100},
+		size = {250, 120},
+		ghost = true,
+
+		{
+			name = "strength",
+			class = "StatBarWide",
+			pos = {0, 0},
+
+			{
+				name = "label",
+				text = "_Strength",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vpwr",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vpwri",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tpwr",
+			},
+		},
+
+		{
+			name = "speed",
+			class = "StatBarWide",
+			pos = {0, 30},
+
+			{
+				name = "label",
+				text = "_Speed",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vspd",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vspdi",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tspd",
+			},
+		},
+
+		{
+			name = "accuracy",
+			class = "StatBarWide",
+			pos = {0, 60},
+
+			{
+				name = "label",
+				text = "_Accuracy",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vacc",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vacci",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tacc",
+			},
+		},
+
+		{
+			name = "mind",
+			class = "StatBarWide",
+			pos = {0, 90},
+
+			{
+				name = "label",
+				text = "_Mind",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vmnd",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vmndi",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tmnd",
+			},
+		},
+	})
+end
+
+-- Skillbars panel
+do
+	local abilities = ufox.build_component({
+		name = "skillbars",
+		class = "panel",
+		pos = {740, 220},
+		size = {250, 120},
+		ghost = true,
+
+		{
+			name = "cls",
+			class = "StatBarWide",
+			pos = {0, 0},
+
+			{
+				name = "label",
+				text = "_CQB",
+				tooltip = "_Close Quarters Battle",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vcls",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vclsi",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tcls",
+			},
+		},
+
+		{
+			name = "ass",
+			class = "StatBarWide",
+			pos = {0, 30},
+
+			{
+				name = "label",
+				text = "_Assault",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vass",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vassi",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tass",
+			},
+		},
+
+		{
+			name = "snp",
+			class = "StatBarWide",
+			pos = {0, 60},
+
+			{
+				name = "label",
+				text = "_Sniper",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vsnp",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vsnpi",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tsnp",
+			},
+		},
+
+		{
+			name = "exp",
+			class = "StatBarWide",
+			pos = {0, 90},
+
+			{
+				name = "label",
+				text = "_Explosives",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vexp",
+			},
+			{
+				name = "initbar",
+				value = "*cvar:mn_vexpi",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_texp",
+			},
+		},
+	})
+end
+
+-- Health panel
+do
+	local abilities = ufox.build_component({
+		name = "healthbar",
+		class = "panel",
+		pos = {740, 340},
+		size = {250, 30},
+		ghost = true,
+		on_visiblewhen = function (sender)
+			return (ufo.getvar("mn_show_employee"):as_integer() <= 2)
+		end,
+
+		{
+			name = "hp",
+			class = "StatBarWide",
+			pos = {0, 0},
+
+			update_healthcolor = function (sender)
+				local current = sender:child("valuebar"):value()
+				local max = sender:child("valuebar"):max()
+				local ratio = (current / max)
+				if (ratio <= 0.33) then
+					sender:child("valuebar"):set_color(1, 0, 0, 1)
+				elseif (ratio <= 0.75) then
+					sender:child("valuebar"):set_color(1, 0.874, 0, 1)
+				else
+					sender:child("valuebar"):set_color(0.1875, 0.65625, 0.164, 1)
+				end
+			end,
+
+			{
+				name = "label",
+				text = "_Health",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vhp",
+				max = "*cvar:mn_vhpmax",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_thp",
+			},
+		},
+	})
+end
+
+do
+	local SoldierInfo = ufox.build_component({
+		name = "SoldierInfo",
+		class = "panel",
+		pos = {10, 253},
+		size = {240, 40},
+
+		{
+			name =  "missions_lbl",
+			class = "smallstring",
+			pos = {0, 0},
+			size = {180, 20},
+			text = "_Missions Performed:",
+		},
+
+		{
+			name =  "missions_val",
+			class = "smallstring",
+			pos = {160, 0},
+			size = {80, 20},
+			text = "*cvar:mn_chrmis",
+			contentalign = ufo.ALIGN_UR,
+		},
+
+		{
+			name =  "kills_lbl",
+			class = "smallstring",
+			pos = {0, 20},
+			size = {180, 20},
+			text = "_Enemies Killed:",
+		},
+
+		{
+			name =  "kills_val",
+			class = "smallstring",
+			pos = {160, 20},
+			size = {80, 20},
+			text = "*cvar:mn_chrkillalien",
+			contentalign = ufo.ALIGN_UR,
+		},
+	})
+end
+
+--[[
+ - ==================
+ - actor info
+ - ==================
+--]]
+do
+	local actor_info = ufox.build_component({
+		name = "actor_info",
+		class = "panel",
+		pos = {731, 420},
+		size = {290, 349},
+
+		{
+			name = "rank_img",
+			class = "image",
+			pos = {10, 25},
+			size = {110, 110},
+			image = "*cvar:mn_chrrank_img",
+		},
+
+		{
+			name = "body",
+			class = "model",
+			pos = {60, 18},
+			size = {200, 290},
+			model = "*cvar:mn_body",
+			skin = "*cvar:mn_body_skin",
+			animation = "stand2",
+			origin = {0, -40, 0},
+			angles = {0, 70, 90},
+			scale = {5.1, 5.1, 5.1},
+
+			{
+				name = "head",
+				class = "model",
+				model = "*cvar:mn_head",
+				skin = "*cvar:mn_head_skin",
+				tag = "tag_head",
+				scale = {1, 1, 1}
+			},
+
+
+			{
+				name = "right_weapon",
+				class = "model",
+				model = "*cvar:mn_rweapon",
+				tag = "tag_rweapon",
+			},
+
+			{
+				name = "left_weapon",
+				class = "model",
+				model = "*cvar:mn_lweapon",
+				tag = "tag_lweapon",
+			},
+		},
+
+		{
+			name = "rank_lbl",
+			class = "string",
+			pos = {10, 283},
+			size = {200, 20},
+			text = "*cvar:mn_chrrank",
+		},
+
+		{
+			name = "soldier_info",
+			class = "SoldierInfo",
+			pos = {10, 253},
+			size = {285, 40},
+		},
+	})
+end
+
+-- Pilot Skills panel
+do
+	local abilities = ufox.build_component({
+		name = "skillspilot",
+		class = "panel",
+		pos = {740, 250},
+		size = {250, 155},
+		ghost = true,
+
+		{
+			name = "pil",
+			class = "StatBarWide",
+			pos = {0, 0},
+
+			{
+				name = "label",
+				text = "_Piloting",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vpil",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tpil",
+			},
+		},
+
+		{
+			name = "tar",
+			class = "StatBarWide",
+			pos = {0, 30},
+
+			{
+				name = "label",
+				text = "_Targeting",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vtar",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_ttar",
+			},
+		},
+
+		{
+			name = "evad",
+			class = "StatBarWide",
+			pos = {0, 60},
+
+			{
+				name = "label",
+				text = "_Evading",
+			},
+			{
+				name = "valuebar",
+				value = "*cvar:mn_vevad",
+			},
+			{
+				name = "valuenum",
+				text = "*cvar:mn_tevad",
+			},
+		},
+	})
+end

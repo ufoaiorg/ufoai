@@ -1,0 +1,178 @@
+// ==============================
+// MULTIPLAYER TEAM CREATION MENU
+// ==============================
+
+component teamSoldier extends equipSoldier {
+
+	CheckBox selected {
+		pos			"0 2"
+		size		"20 20"
+		onChange {
+			cmd "game_toggleactor <node:parent.id@integer> <current>;"
+			cmd "team_soldierlist_select <node:parent.id@integer>;"
+		}
+	}
+
+	string name {
+		pos			"20 0"
+	}
+}
+
+window game_team_edit extends equipment
+{
+	confunc team_soldierlist_clear {
+		call *node:root.base_container.mainBody.soldiers.soldierlist@removeAllChild
+	}
+	confunc team_soldierlist_add {
+		call *node:root.base_container.mainBody.soldiers.soldierlist@createChild("member<1>", "teamSoldier")
+		*node:root.base_container.mainBody.soldiers.soldierlist.member<1>.id@integer = <1>
+		*node:root.base_container.mainBody.soldiers.soldierlist.member<1>.selected@current = <2>
+		*node:root.base_container.mainBody.soldiers.soldierlist.member<1>.name@string = <3>
+		*node:root.base_container.mainBody.soldiers.soldierlist.member<1>.name@onClick = {
+			cmd "team_soldierlist_select <node:parent.id@integer>;"
+		}
+
+		if ( *node:root.selected@integer < 0 ) {
+			cmd "team_soldierlist_select <1>;"
+			*node:root.selected@integer = <1>
+		}
+	}
+
+	confunc team_soldierlist_select {
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:root.base_container.mainBody.soldiers.soldierlist.member<node:root.selected@integer>.name@color = "0.56 0.81 0.76 1"
+		}
+		if ( *node:root.selected@integer != <1> ) {
+			*node:root.load_warnings@integer = 0
+		}
+		*node:root.selected@integer = <1>
+		*cvar:mn_ucn = <1>
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:root.base_container.mainBody.soldiers.soldierlist.member<1>.name@color = "1 1 1 1"
+			cmd "game_actorselect <node:root.selected@integer>;"
+			cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"
+		}
+	}
+
+	func onWindowOpened {
+
+		/* Preparation */
+		*node:root.geoscape_button@onClick = { cmd "ui_pop;" }
+		*node:root.equip@onChange = {
+			cmd "mn_updateactorload equip_actorload <node:root.load_warnings@integer>;"
+			cmd "team_soldierlist_select <node:root.selected@integer>;"
+		}
+		*node:root.base_container.mainBody.paperdoll.armour@onChange	=	{ cmd "team_soldierlist_select <node:root.selected@integer>;" }
+		*node:root.base_container.mainBody.paperdoll.name@onChange	=	{
+			//cmd "employee_changename;"
+			//cmd "ui_team_fillequip;"
+			cmd "update_item_list;"
+			cmd "team_soldierlist_select <node:root.selected@integer>;"
+ 		}
+
+		*node:root.base_container.details.header.ufopedia@invis		=	true
+		*node:root.base_container.mainBody.bt_deequipsoldier@invis	=	true
+		*node:root.base_container.mainBody.header.back@invis		=	true
+		*node:root.base_container.mainBody.header.title@invis		=	true
+		*node:root.base_container.prev@invis				=	true
+		*node:root.base_container.next@invis				=	true
+		*node:root.base_container.name@invis				=	true
+		*node:root.base_container.base_selector@invis		=	true
+		*node:root.base_container.credits@invis			=	true
+
+		*cvar:mn_infotype = 0
+		*cvar:mn_equiptype = 0
+		*cvar:mn_linkname = ""
+		*cvar:mn_itemname = ""
+		*node:root.selected@integer = -1
+		cmd "team_initskin;update_item_list;game_teamupdate;"
+	}
+
+	Geoscape geoscape_button
+	{
+		tooltip	"_Done"
+	}
+
+	func onWindowClosed
+	{
+		cmd "game_saveteamstate;"
+	}
+}
+
+// ==========================
+// SAVE POPUP
+// ==========================
+
+/**
+ * @todo The ui_pop into the change event doesn't work - the workaround is the func onWindowClosed game_teamcomments call
+ */
+window game_team_save_popup extends ipopup
+{
+	{
+		pos		"264 262"
+		size		"360 120"
+		closebutton	true
+		modal		true
+	}
+	string title
+	{
+		string		"_Save your team"
+		width		"360"
+	}
+
+	TextEntry name
+	{
+		string		*cvar:mn_teamname
+		pos		"50 53"
+		size		"256 34"
+		font		"f_verysmall"
+	}
+
+	MainMenuBtn save
+	{
+		string		"_Save"
+		pos			"0 90"
+		size		"360 30"
+		font		"f_menusmall"
+		onClick { cmd "game_saveteam \"<node:root.name@string>\";ui_pop;game_teamcomments;" }
+	}
+
+	fuzzyScreen overlay { }
+}
+
+// ==========================
+// GENERATE TEAM POPUP
+// ==========================
+
+window game_team_new_popup extends ipopup
+{
+	{
+		pos		"256 256"
+		size		"320 120"
+		closebutton	true
+		modal		true
+	}
+
+	string title {
+		string		"_Generate a team"
+		width		"360"
+	}
+
+	selectbox team_box {
+		cvar		*cvar:cl_teamdef
+		dataid		OPTION_TEAMDEFS
+		pos		"13 53"
+		size		"294 34"
+		color		"0.6 0.6 0.6 0.3"
+	}
+
+	MainMenuBtn button_new {
+		string		"_Generate Team"
+		tooltip		"_Generate a new team with the selected race"
+		pos		"0 90"
+		size		"320 30"
+		onClick		{ cmd "game_autoteam *cvar:cl_equip;ui_pop; ui_push game_team_edit;" }
+	}
+
+	fuzzyScreen overlay { }
+}

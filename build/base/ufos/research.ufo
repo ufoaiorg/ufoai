@@ -1,0 +1,6046 @@
+//===============
+// RESEARCH TREE (and other discovered things)
+//===============
+
+//=== Description ==============================
+//
+//	tech rs_xxx
+//		The _unique_ name of the research item in the tree is xxx.
+//		This is commonly named "id" in the C-code.
+//	type
+//		Just says where to look for more information (this is internal information and will not be displayed anywhere, but is needed to check/find information)
+//		tech
+//			Items have all the information in here. Especially the name and the model/image.
+//		logic
+//			"logic" defines that this entry is only used for complex requirements as defined in "require_*". This is not displayed anywhere. logic technologies are moved to research_logic.ufo
+//		weapon
+//			This is an entry for an item that is defined in "weapon*.ufo".
+//		everything else (craft, building, alien, etc...)
+//			See the correct .ufo file.
+//	name
+//		Self-explaining I hope :) Only needed when type=tech
+//	up_chapter
+//		Defines in which chapter of the ufopedia this item will show up.
+//	redirect <techid>
+//		Display the given tech instead of the current one when opening up the ufopedia.
+//		No "description", "pre_description", "mail" or "mail_pre" entry will ever be needed for an entry with this option.
+//	description {}
+//		A list of all full descriptions that can be be displayed after research (depending on logic blocks).
+//		The first entry must always exist and it is used as default/fallback text.
+//		Example:
+//		description {
+//			default	"*msgid:gettext_text"
+//			extra (rs_tech_id "_gettext_text2")
+//		}
+//
+//		rs_tech_id:
+//			This string links to a tech that is used to check if this text should be displayed.
+//			If all requirements of the tech are met the text will be displayed.
+//			First match in the list (after the default) will be used, so order is important.
+//			The first entry (default/fallback) does not need an existing tech, you can use any string, but "default" is recommended.
+//			The check for this is made before the tech is marked researchable (pre_description) and before it is marked as researched (description).
+//		_gettext_text and _gettext_text2:
+//			A short string that is used by gettext to be translatable (e.g. "default _itemname_txt").
+//			This needs to be a unique string in all descriptions.
+//			See the po files in the source directory (src/po/*.po)
+//	pre_description {}
+//		Usage is the same as "description".
+//		The difference is that these entries are displayed e.g.:
+//			* A new technology is proposed by out scientists (even with no obvious "prequesites")
+//			* When an item has been collected, but it's not yet researched.
+// ===============
+//	require_AND { type id [amount] }
+//		A list of requirements that ALL need to be met in order to be able to research it.
+//		"tech" type	    - e.g "tech rs_xxx"
+//		                  Another technology that has to be researched.
+//		"tech_not" type	-	e.g "tech rs_xxx"
+//			                Another technology that must not be researched.
+//		"item" type	    - e.g "item (inv_coolweapon 10)"
+//			                You need to collect at least 10 items of this thing so it can be researched.
+//		"alien"         - e.g "		alien (evil_alien 1)"
+//                      You need to collect at least 1 live alien of this race.
+//		"alien_dead"    - e.g "		alien_dead (evil_alien 1)"
+//                      You need to collect at least 1 dead alien of this race.
+//		"alienglobal"   - e.g "		alienglobal 3"
+//                      You need to have least 3 live aliens in your containments (in all bases).
+//		"event"
+//	require_OR { type id [amount] }
+//		Works the same as require_AND with the difference that ANY of the entries will enable the tech to be researchable.
+//
+//	NOTE: require_AND and require_OR are logically connected like (require_AND || require_OR).
+//	This means that if the the requirements in require_AND and/or in require_OR are met the tech can be researched (i.e. it is researchable).
+//=================
+//	require_for_production { item id amount }
+//		A list of requirements that ALL need to be met in order that one item (of 'provides') can be produced.
+//		"item" type -	the only type supported here.
+//				e.g "item inv_weaponpart 2"
+//				You need to collect at least 2 items of inv_weaponpart so one item can be produced.
+//=================
+//	delay [WIP - not yet implemented]
+//		The number of days until a 'successor' technology-item will be available for research.
+//		i.e. Every requirement from above is met, but this number of days hasn't passed yet => tech not yet available for research.
+//	provides yyy
+//		The item (only one allowed) name (yyy) in the correct ufo file or data-structure (e.g. inventory).
+//		The given name is _not_ a "tech", it is an identifier for the item/craft/etc...
+//		This item can be produced once the "tech" item has been finished.
+//	time
+//		Time the research needs to be finished. The values are given in "hours", but....
+//		Consider that this value doesn't reflect _real_ time, but it will depend on the number of scientists working on the item.
+//		If time is set to 0 the tech will be marked as researched as soon as all requirements are fulfilled (or there are none to begin with).
+//		If time is set to -1 the tech is not researchable at all. Only use this for multiplayer stuff (research status is forced there).
+//		[Default] 0
+//	producetime
+//		Time the production of one item takes. This value is similar to time, including the "it is not 'real time'" argument (see there for more!)
+//		0 [Default] The items are produced in (nearly) no time.
+//		-1 Will prevent the item to be produced. (Only needed if the thing 'provides' something and this thing is not meant for production.)
+//	image
+//		Path to the image that should be displayed on the top (big) in the ufopedia.
+//	model
+//		Same as the image but for 3d-models.
+//		It overrides the image-definitions if it is provided.
+//==========================================
+
+
+//========================
+// Ufopedia categories
+//========================
+
+up_chapter concepts_campaign { name "_Basic Concepts (Campaign)" }
+up_chapter concepts_combat { name "_Basic Concepts (Ground Combat)" }
+up_chapter skill { name "_Skills and Abilities" }
+up_chapter news	{ name "_Background" }
+up_chapter crafts { name "_Aircraft" }
+up_chapter buildings { name "_Base Facilities" }
+up_chapter installations { name "_Global Installations" }
+up_chapter tech { name "_Research Reports" }
+up_chapter equipment { name "_Equipment" }
+up_chapter artifacts { name "_Alien Artifacts" }
+up_chapter aliens { name "_Autopsies & Observation" }
+up_chapter threat { name "_The Alien Threat" }
+
+// chapter without name are not displayed into ufopedia
+up_chapter damage {}
+
+//====================
+// Basic Game Concepts
+//====================
+tech rs_concept_research
+{
+	name			"_Research"
+	type			"news"
+	up_chapter		concepts_campaign
+	description {	default "*msgid:concept_research_txt"	}
+	time		0
+}
+tech rs_concept_production
+{
+	name			"_Production"
+	type			"news"
+	up_chapter		concepts_campaign
+	description {	default "*msgid:concept_production_txt"	}
+	time		0
+}
+tech rs_concept_interception
+{
+	name			"_UFO Interception"
+	type			"news"
+	up_chapter		concepts_campaign
+	description {	default "*msgid:concept_interception_txt"	}
+	time		0
+}
+tech rs_concept_disassembly
+{
+	name			"_UFO Disassembly"
+	type			"news"
+	up_chapter		concepts_campaign
+	description {	default "*msgid:concept_disassembly_txt"	}
+	time		0
+}
+tech rs_concept_nation_happiness
+{
+	name			"_Nation Happiness"
+	type			"news"
+	up_chapter		concepts_campaign
+	description {	default "*msgid:concept_nation_happiness_txt"	}
+	time		0
+}
+tech rs_concept_time_units
+{
+	name			"_Time Units"
+	type			"news"
+	up_chapter		concepts_combat
+	description {	default "*msgid:concept_time_units_txt"	}
+	time		0
+}
+tech rs_concept_reaction_fire
+{
+	name			"_Reaction Fire"
+	type			"news"
+	up_chapter		concepts_combat
+	description {	default "*msgid:concept_reaction_fire_txt"	}
+	time		0
+}
+tech rs_concept_weight
+{
+	name			"_Soldier Weight and Encumbrance"
+	type			"news"
+	up_chapter		concepts_combat
+	description {	default "*msgid:concept_weight_txt"	}
+	time		0
+}
+tech rs_concept_wounds
+{
+	name			"_Wounds and Healing"
+	type			"news"
+	up_chapter		concepts_combat
+	description {	default "*msgid:concept_wounds_txt"	}
+	time		0
+}
+tech rs_concept_equipment
+{
+	name			"_Auxiliary Equipment"
+	type			"news"
+	up_chapter		concepts_combat
+	description {	default "*msgid:concept_equipment_txt"	}
+	time		0
+}
+
+//============================
+// Main Research Technologies
+//============================
+
+tech rs_laser
+{
+	name "_Continuous Wave Laser Operation"
+	type	"tech"
+	up_chapter	tech
+
+	description {
+		default "*msgid:laser_txt"
+	}
+
+	pre_description {
+		default "*msgid:laser_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	time	3000
+	image	"techs/continuous_wave_laser_operation"
+}
+
+tech rs_baselaser
+{
+	name "_Base-Defence Laser Turret"
+	type	"craftitem"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:b_baselaser_txt"
+	}
+	pre_description {
+		default "*msgid:b_baselaser_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_laser
+	}
+	time	1000
+	provides baselaser
+	model		"objects/laserturret/laserturret"
+	producetime	1500
+}
+
+tech rs_baselaser_ammo
+{
+	type		"tech"
+	/* this ammo is virtual, shouldn't be shown anywhere */
+	name		"D-F Tank"
+	provides	baselaser_ammo
+	time		0
+	producetime	-1
+}
+
+tech rs_antimatter
+{
+	name		"_Antimatter"
+	type		"tech"
+	up_chapter	tech
+
+	description {
+		default "*msgid:antimatter_txt"
+	}
+	pre_description {
+		default "*msgid:antimatter_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+	}
+
+	time 3000
+	image	"techs/antimatter"
+}
+
+tech rs_item_antimatter
+{
+	type		"weapon"
+	name		"_Antimatter"
+	description {
+		default "*msgid:antimatter_txt"
+	}
+
+	require_AND
+	{
+		tech rs_antimatter
+	}
+
+	provides	antimatter
+	time		0
+	producetime	-1
+	image		"techs/antimatter"
+}
+
+tech rs_alien_live
+{
+	name	"_Live Alien"
+	type	"tech"
+	up_chapter	aliens
+
+	description {
+		default "*msgid:alien_live_txt"
+	}
+	pre_description {
+		default "*msgid:alien_live_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		tech rs_contained_organic_alien	// LOGIC tech - see there for more
+	}
+
+	time	1000
+	image	"techs/taman"
+}
+
+tech rs_alien_breathing
+{
+	name		"_Alien Breathing Apparatus"
+	type		"tech"
+	up_chapter	aliens
+
+	description {
+		default "*msgid:alien_breathing_txt"
+	}
+	pre_description {
+		default "*msgid:alien_breathing_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_OR
+	{
+		tech rs_alien_ortnok_autopsy
+		tech rs_alien_taman_autopsy
+		tech rs_alien_shevaar_autopsy
+	}
+
+	time		750
+	image		"techs/alien_breathing"
+}
+
+tech rs_alien_mind
+{
+	name	"_The Alien Mind"
+	type	"tech"
+	up_chapter	threat
+
+	description {
+		default "*msgid:alien_mind_txt"
+	}
+	pre_description {
+		default "*msgid:alien_mind_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		tech rs_alien_live
+		alienglobal 3
+	}
+	time	1200
+	image		"techs/alien_mind"
+}
+
+tech rs_alien_oddbehaviour
+{
+	name		"_Odd Behaviour"
+	type		"tech"
+	up_chapter	threat
+
+	description {
+		default "*msgid:alien_odd_behaviour_txt"
+	}
+	pre_description {
+		default "*msgid:alien_odd_behaviour_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		tech rs_alien_mind
+		alienglobal 10
+	}
+	time		1400
+	image		"techs/alien_oddbehaviour"
+}
+
+tech rs_alien_communication
+{
+	name		"_Alien Communication"
+	type		"tech"
+	up_chapter	threat
+
+	description {
+		default "*msgid:alien_communication_txt"
+	}
+	pre_description {
+		default "*msgid:alien_communication_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		tech rs_alien_oddbehaviour
+	}
+	time	1600
+	image		"techs/alien_communication"
+}
+
+tech rs_alien_base
+{
+	type		"tech"
+	up_chapter	threat
+	name		"_Alien base"
+	description {
+		default "*msgid:alien_base_txt"
+	}
+
+	require_AND
+	{
+		// marked researchable from event trigger
+		tech rs_alien_base
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	announce	true
+	time 0
+	image	"techs/alien_base"
+}
+
+tech rs_universal_serum
+{
+	name		"_The Universal Serum"
+	type		"tech"
+	up_chapter	threat
+
+	description {
+		default "*msgid:universal_serum_txt"
+	}
+	pre_description {
+		default "*msgid:universal_serum_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		tech rs_alien_communication
+	}
+	time	1800
+	image		"techs/universal_serum"
+}
+
+tech rs_alien_origins
+{
+	name		"_Alien Origins"
+	type		"tech"
+	up_chapter	threat
+
+	description {
+		default "*msgid:alien_origins_txt"
+	}
+	pre_description {
+		default "*msgid:alien_origins_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+
+	time		1500
+	image		"techs/alien_origins"
+}
+
+tech rs_alien_ufo_theory
+{
+	name		"_UFO Theory"
+	type		"tech"
+	up_chapter	crafts
+
+	description {
+		default "*msgid:alien_theory_txt"
+	}
+	pre_description {
+		default "*msgid:alien_theory_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_OR
+	{
+		ufo (craft_ufo_ripper 1)
+		ufo (craft_ufo_gunboat 1)
+		ufo (craft_ufo_scout 1)
+		ufo (craft_ufo_fighter 1)
+		ufo (craft_ufo_supply 1)
+		ufo (craft_ufo_carrier 1)
+		ufo (craft_ufo_bomber 1)
+		ufo (craft_ufo_corrupter 1)
+		ufo (craft_ufo_harvester 1)
+	}
+
+	time		4000
+	image		"techs/ufo_theory"
+}
+
+//=================================
+// weapons and items
+//=================================
+
+tech rs_weapon_pistol
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:pistol_txt"
+	}
+	// pre_description	"*msgid:pistol_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_close
+	}
+
+	provides	pistol
+	time	0
+	producetime	400
+}
+
+tech rs_weapon_pistol_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:pistol_mag_txt"
+	}
+	// pre_description	"*msgid:pistol_mag_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_pistol
+	}
+
+	provides	pistol_ammo
+	time	0
+	producetime	120
+}
+
+// Machine Pistol
+tech rs_weapon_pistol2
+{
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:pistol2_txt"
+	}
+	// pre_description	"*msgid:pistol2_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_close
+	}
+
+	provides	pistol2
+	time	0
+	producetime	600
+}
+
+tech rs_weapon_pistol2_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:pistol2_mag_txt"
+	}
+	// pre_description	"*msgid:pistol2_mag_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_pistol2
+	}
+
+	provides	pistol2_ammo
+	time	0
+	producetime	120
+}
+
+tech rs_weapon_vhs
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:vhs_assault_txt"
+	}
+
+	require_AND
+	{
+		tech rs_skill_assault
+	}
+	provides	vhs
+	time	-1
+	producetime	-1
+}
+
+tech rs_weapon_assault
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:assault_txt"
+	}
+	// pre_description	"*msgid:assault_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_assault
+	}
+	provides	assault
+	time	0
+	producetime	900
+}
+
+tech rs_weapon_assault_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:assault_mag_txt"
+	}
+	// pre_description	"*msgid:assault_mag_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_assault
+	}
+	provides	assault_ammo
+	time	0
+	producetime	120
+}
+
+tech rs_weapon_machinegun
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:machinegun_txt"
+	}
+	// pre_description	"*msgid:machinegun_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_assault
+	}
+	provides	machinegun
+	time	0
+	producetime	900
+}
+
+tech rs_weapon_machinegun_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:machinegun_mag_txt"
+	}
+	// pre_description	"*msgid:machinegun_mag_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_machinegun
+	}
+	provides	machinegun_ammo
+	time	0
+	producetime	120
+}
+
+tech rs_weapon_rpg
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:rpg_txt"
+	}
+	// pre_description	"*msgid:rpg_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_explosive
+	}
+
+	provides	rpg
+	time	0
+	producetime	1200
+}
+
+tech rs_weapon_rpg_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:rpg_ammo_txt"
+	}
+	// pre_description	"*msgid:rpg_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_blast
+		tech rs_weapon_rpg
+	}
+
+	provides	rpg_ammo
+	time	0
+	producetime	240
+}
+
+tech rs_weapon_rpg_incendiary_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:rpg_incendiary_ammo_txt"
+	}
+	// pre_description	"*msgid:rpg_incendiary_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_fire
+		tech rs_weapon_rpg
+	}
+
+	provides	rpg_incendiary_ammo
+	time	0
+	producetime	300
+}
+
+tech rs_weapon_rpg_hybrid_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:rpg_hybrid_ammo_txt"
+	}
+	pre_description {
+		default "*msgid:rpg_hybrid_ammo_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_craft_ammo_hybrid_missile
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 15)
+	}
+
+	provides	rpg_hybrid_ammo
+	time	3000
+	producetime	300
+}
+
+tech rs_weapon_xaw95
+{
+	// Note: Multiplayer only
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:xaw95_txt"
+	}
+	pre_description {
+		default "*msgid:xaw95_pre_txt"
+	}
+
+	provides	xaw95
+	time	-1
+	producetime	-1
+}
+
+tech rs_weapon_xaw95_ammo
+{
+	// Note: Multiplayer only
+	type	"weapon"
+	up_chapter	equipment
+
+	redirect	rs_weapon_xaw95
+
+	provides	xaw95_ammo
+	time	-1
+	producetime	-1
+}
+
+// only for in-mission spawning, not produceable or buyable
+tech rs_weapon_bombkit1
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:bombkit1_txt"
+	}
+	pre_description {
+		default "*msgid:bombkit1_pre_txt"
+	}
+
+	provides	bomb1
+	time	0
+	producetime	-1
+}
+
+tech rs_weapon_chaingun
+{
+	// Note: Multiplayer only
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:chaingun_txt"
+	}
+	pre_description {
+		default "*msgid:chaingun_pre_txt"
+	}
+
+	provides	chaingun
+	time	-1
+	producetime	-1
+}
+
+tech rs_weapon_chaingun_ammo
+{
+	// Note: Multiplayer only
+	type	"weapon"
+	up_chapter	equipment
+
+	redirect	rs_weapon_chaingun
+
+	provides	chaingun_ammo
+	time	-1
+	producetime	-1
+}
+
+tech rs_weapon_shotgun
+{
+	// Note: Multiplayer only
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:shotgun_txt"
+	}
+	// pre_description	"*msgid:shotgun_pre_txt"
+
+// multiplayer only thus not needed at production menu
+//	require_AND
+//	{
+//		tech rs_skill_close
+//	}
+
+	provides	shotgun
+	time	-1
+	producetime	-1
+}
+
+tech rs_weapon_shotgun_ammo
+{
+	// Note: Multiplayer only
+	type	"weapon"
+	up_chapter	equipment
+
+	redirect	rs_weapon_shotgun
+
+	require_AND
+	{
+		tech rs_damage_blast
+		tech rs_weapon_shotgun
+	}
+
+	provides	shotgun_ammo
+	time	-1
+	producetime	-1
+}
+
+tech rs_weapon_bolterrifle
+{
+	name	"_Electromagnetic Rifle"
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:bolterrifle_txt"
+	}
+	pre_description {
+		default "*msgid:bolterrifle_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_skill_sniper
+		tech rs_alien_body_armour
+	}
+	provides	bolterrifle
+	time	6000
+	producetime	500
+}
+
+tech rs_weapon_bolterrifle_ammo
+{
+	name	"_Electromagnetic Rifle Magazine"
+	type	"weapon"
+	up_chapter	equipment
+
+	redirect	rs_weapon_bolterrifle
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_bolterrifle
+	}
+	provides	bolterrifle_ammo
+	time	0
+	producetime	150
+}
+
+tech rs_weapon_bolterrifle_am_ammo
+{
+	name	"_Electromagnetic Rifle Antimatter Magazine"
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:bolterrifle_am_txt"
+	}
+	pre_description {
+		default "*msgid:bolterrifle_am_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_bolterrifle
+		tech rs_craft_ammo_am_missile
+	}
+
+	require_for_production
+	{
+		item (alienmaterials 10)
+		antimatter 1
+	}
+
+	provides	bolterrifle_am_ammo
+	time	5000
+	producetime	300
+}
+
+tech rs_weapon_combatknife
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:combatknife_txt"
+	}
+	// pre_description	"*msgid:combatknife_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_close
+		tech rs_damage_normal
+	}
+	provides	knife
+	time	0
+	producetime	120
+}
+
+tech rs_weapon_monoknife
+{
+	name	"_Monomolecular Blades"
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:monoknife_txt"
+	}
+	pre_description {
+		default "*msgid:monoknife_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_weapon_kerrblade
+		tech rs_alien_bloodspider_autopsy
+		tech rs_skill_close
+		tech rs_damage_normal
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 25)
+	}
+
+	provides	knifemono
+	time	750
+	producetime	500
+}
+
+tech rs_weapon_flamer
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:flamer_txt"
+	}
+	// pre_description	"*msgid:flamer_pre_txt"
+
+
+	require_AND
+	{
+		tech rs_skill_close
+	}
+	provides	flamer
+	time	0
+	producetime	1200
+}
+
+tech rs_weapon_flamer_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:flamer_mag_txt"
+	}
+	// pre_description	"*msgid:flamer_mag_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_fire
+		tech rs_weapon_flamer
+	}
+	provides	flamer_ammo
+	time	0
+	producetime	240
+}
+
+tech rs_weapon_flashbang
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:flashbang_txt"
+	}
+	// pre_description	"*msgid:flashbang_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_explosive
+		tech rs_damage_shock
+	}
+	provides	flashbang
+	time	0
+	producetime	120
+}
+
+tech rs_weapon_fraggren
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:fraggren_txt"
+	}
+	// pre_description	"*msgid:fraggren_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_explosive
+		tech rs_damage_blast
+	}
+	provides	fraggrenade
+	time	0
+	producetime	120
+}
+
+tech rs_weapon_incgren
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:incgren_txt"
+	}
+	// pre_description	"*msgid:incgren_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_explosive
+		tech rs_damage_fire
+	}
+	provides	incgrenade
+	time	0
+	producetime	200
+}
+
+tech rs_weapon_grenl
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:grenl_txt"
+	}
+	// pre_description	"*msgid:grenl_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_explosive
+	}
+	provides	grenl
+	time	0
+	producetime	1200
+}
+
+tech rs_weapon_grenl_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:grenl_ammo_txt"
+	}
+	// pre_description	"*msgid:grenl_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_blast
+		tech rs_weapon_grenl
+	}
+	provides	grenl_ammo
+	time	0
+	producetime	200
+}
+
+tech rs_weapon_grenl_fle_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:grenl_fle_ammo_txt"
+	}
+	// pre_description	"*msgid:grenl_fle_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_grenl
+	}
+	provides	grenl_fle_ammo
+	time	0
+	producetime	140
+}
+
+tech rs_weapon_grenl_incendiary_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:grenl_incendiary_ammo_txt"
+	}
+	// pre_description	"*msgid:grenl_incendiary_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_fire
+		tech rs_weapon_grenl
+	}
+	provides	grenl_incendiary_ammo
+	time	0
+	producetime	300
+}
+
+tech rs_weapon_grenl_plasma_ammo
+{
+	name	"_Plasma And The Grenade Launcher"
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:grenl_plasma_ammo_txt"
+	}
+	pre_description {
+		default "*msgid:grenl_plasma_ammo_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 5)
+	}
+
+	require_AND
+	{
+		tech rs_damage_plasma
+		tech rs_weapon_grenl
+		tech rs_weapon_plasmagren
+	}
+	provides	grenl_plasma_ammo
+	time	2000
+	producetime	150
+}
+
+tech rs_irgoggles
+{
+	type	"weapon"
+
+	up_chapter	equipment
+	description {
+		default "*msgid:irgoggles_txt"
+	}
+	// pre_description	"*msgid:irgoggles_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_mind
+	}
+	provides	irgoggles
+	time	0
+	producetime	800
+}
+
+tech rs_weapon_kerrblade
+{
+	name	"_Alien Artifact - Kerrblade"
+	type	"weapon"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:kerrblade_txt"
+	}
+	pre_description {
+		default "*msgid:kerrblade_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	require_AND
+	{
+		item (kerrblade 1)
+		tech rs_skill_close
+		tech rs_damage_normal
+	}
+
+	provides	kerrblade
+	time	1000
+	producetime	-1
+}
+
+tech rs_weapon_laserpistol
+{
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:laserpistol_txt"
+	}
+	pre_description {
+		default "*msgid:laserpistol_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_laser
+		tech rs_skill_close
+		tech rs_alien_body_armour
+	}
+	provides	laserpistol
+	time	1000
+	producetime	400
+}
+
+tech rs_weapon_laserrifle
+{
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:laserrifle_txt"
+	}
+	pre_description {
+		default "*msgid:laserrifle_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_laser
+		tech rs_skill_assault
+		tech rs_alien_body_armour
+	}
+	provides	laserrifle
+	time	2000
+	producetime	500
+}
+
+tech rs_weapon_heavylaser
+{
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:heavylaser_txt"
+	}
+	pre_description {
+		default "*msgid:heavylaser_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_laser
+		tech rs_skill_assault
+		tech rs_alien_body_armour
+	}
+	provides	heavylaser
+	time	2000
+	producetime	800
+}
+
+tech rs_weapon_electrolaser
+{
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:electrolaser_txt"
+	}
+	pre_description {
+		default "*msgid:electrolaser_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_weapon_stunrod
+		tech rs_laser
+		tech rs_weapon_laserammo
+		tech rs_skill_assault
+		tech rs_alien_live
+	}
+	provides	electrolaser
+	time	1000
+	producetime	600
+}
+
+// Generic laser ammo
+// See http://ufoai.org/wiki/index.php/Equipment/Ammunition/D-F_Cartridge for more.
+// TODO fix the "provides" info. Which model should we use? I currently set it to use the laserrifle ammo.
+tech rs_weapon_laserammo
+{
+	type		"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:laser_ammo_txt"
+	}
+	pre_description {
+		default "*msgid:laser_ammo_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	require_AND
+	{
+		tech rs_laser
+		tech rs_damage_laser
+		tech rs_alien_body_armour
+	}
+	provides	laser_ammo
+	time		750
+	producetime	150
+}
+
+tech rs_weapon_laserammo_stun
+{
+	type		"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:laser_ammo_txt"
+	}
+	pre_description {
+		default "*msgid:laser_ammo_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	require_AND
+	{
+		tech rs_weapon_laserammo
+		tech rs_weapon_electrolaser
+	}
+	provides	laser_ammo_stun
+	time		0
+	producetime	150
+}
+
+tech rs_medikit
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:medikit_txt"
+	}
+	// pre_description	"*msgid:medikit_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_mind
+	}
+	provides	medikit
+	time	0
+	producetime	600
+}
+
+tech rs_weapon_plasatomizer
+{
+	name	"_Alien Artifact - Plasma Pistol"
+	type	"weapon"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:plasatomizer_txt"
+	}
+	pre_description {
+		default "*msgid:plasatomizer_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	require_AND
+	{
+		tech rs_skill_close
+		item (plaspistol 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 15)
+	}
+
+	provides	plaspistol
+	time	1500
+	producetime	350
+}
+
+tech rs_weapon_plasatomizer_ammo
+{
+	name	"_Alien Artifact - Plasma Pistol"
+	type	"weapon"
+	up_chapter	artifacts
+
+	redirect	rs_weapon_plasatomizer
+
+	require_AND
+	{
+		tech rs_damage_plasma
+		tech rs_weapon_plasatomizer
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 5)
+	}
+
+	provides	plaspistol_ammo
+	time	0
+	producetime	150
+}
+
+tech rs_weapon_plasblaster
+{
+	name	"_Alien Artifact - Plasma Blaster"
+	type	"weapon"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:plasblaster_txt"
+	}
+	pre_description {
+		default "*msgid:plasblaster_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	require_AND
+	{
+		tech rs_skill_close
+		item (plasblaster 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 40)
+	}
+
+	provides	plasblaster
+	time	3000
+	producetime	600
+}
+
+tech rs_weapon_plasblaster_ammo
+{
+	name	"_Alien Artifact - Plasma Blaster"
+	type	"weapon"
+	up_chapter	artifacts
+
+	redirect	rs_weapon_plasblaster
+
+	require_AND
+	{
+		tech rs_damage_plasma
+		tech rs_weapon_plasblaster
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 10)
+	}
+
+	provides	plasblaster_ammo
+	time	0
+	producetime	150
+}
+
+tech rs_weapon_plasblade
+{
+	name	"_Alien Artifact - Plasma Blade"
+	type	"weapon"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:plasblade_txt"
+	}
+	pre_description {
+		default "*msgid:plasblade_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	require_AND
+	{
+		tech rs_skill_close
+		tech rs_damage_plasma
+		item (plasblade 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 10)
+	}
+
+	provides	plasblade
+	time	4000
+	producetime	1000
+}
+
+tech rs_weapon_plasmagren
+{
+	name	"_Alien Artifact - Plasma Grenade"
+	type	"weapon"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:plasmagren_txt"
+	}
+	pre_description {
+		default "*msgid:plasmagren_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	require_AND
+	{
+		tech rs_skill_explosive
+		item (plasmagrenade 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 10)
+	}
+
+	provides	plasmagrenade
+	time	1000
+	producetime	500
+}
+
+tech rs_weapon_plasrifle
+{
+	name	"_Alien Artifact - Plasma Rifle"
+	type	"weapon"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:plasrifle_txt"
+	}
+	pre_description {
+		default "*msgid:plasrifle_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	require_AND
+	{
+		tech rs_skill_assault
+		item (plasrifle 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 30)
+	}
+
+	provides	plasrifle
+	time	3000
+	producetime	450
+}
+
+tech rs_weapon_plasrifle_ammo
+{
+	name	"_Alien Artifact - Plasma Rifle"
+	type	"weapon"
+	up_chapter	artifacts
+
+	redirect	rs_weapon_plasrifle
+
+	require_AND
+	{
+		tech rs_damage_plasma
+		tech rs_weapon_plasrifle
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 5)
+	}
+
+	provides	plasrifle_ammo
+	time	0
+	producetime	150
+}
+
+tech rs_weapon_encased_plasma
+{
+	name	"_Encased Plasma Rounds"
+	type	"tech"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:encased_plasma_txt"
+	}
+	pre_description {
+		default "*msgid:encased_plasma_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_weapon_plasblade
+	}
+
+	time	6000
+	producetime -1
+}
+
+tech rs_weapon_encased_plasma_assault_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:encased_plasma_txt"
+	}
+	pre_description {
+		default "*msgid:encased_plasma_pre_txt"
+	}
+
+	require_AND
+	{
+		tech rs_weapon_encased_plasma
+	}
+
+	require_for_production
+	{
+		item (alienmaterials 5)
+	}
+
+	provides	encased_plasma_assault_ammo
+	time	0
+	producetime	300
+}
+
+tech rs_weapon_encased_plasma_mg_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:encased_plasma_txt"
+	}
+	pre_description {
+		default "*msgid:encased_plasma_pre_txt"
+	}
+
+	require_AND
+	{
+		tech rs_weapon_encased_plasma
+	}
+
+	require_for_production
+	{
+		item (alienmaterials 5)
+	}
+
+	provides	encased_plasma_mg_ammo
+	time	0
+	producetime	300
+}
+
+tech rs_weapon_encased_plasma_sniper_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:encased_plasma_txt"
+	}
+	pre_description {
+		default "*msgid:encased_plasma_pre_txt"
+	}
+
+	require_AND
+	{
+		tech rs_weapon_encased_plasma
+	}
+
+	require_for_production
+	{
+		item (alienmaterials 5)
+	}
+
+	provides	encased_plasma_sniper_ammo
+	time	0
+	producetime	300
+}
+
+tech rs_weapon_encased_plasma_shotgun_ammo
+{
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:encased_plasma_txt"
+	}
+	pre_description {
+		default "*msgid:encased_plasma_pre_txt"
+	}
+
+	require_AND
+	{
+		tech rs_weapon_encased_plasma
+	}
+
+	require_for_production
+	{
+		item (alienmaterials 5)
+	}
+
+	provides	encased_plasma_shotgun_ammo
+	time	0
+	producetime	300
+}
+
+tech rs_weapon_needlergun
+{
+	name	"_Needler Gun"
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:needlergun_txt"
+	}
+	pre_description {
+		default "*msgid:needlergun_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_skill_assault
+		item (needlergun 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 50)
+	}
+
+	provides	needlergun
+	time		10000
+	producetime	1000
+}
+
+tech rs_weapon_needlerheavy
+{
+	name	"_Heavy Needler Gun"
+	type	"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:needlerheavy_txt"
+	}
+	pre_description {
+		default "*msgid:needlerheavy_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_skill_assault
+		item (needlerheavy 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 70)
+	}
+
+	provides	needlerheavy
+	time	5000
+	producetime	1500
+}
+
+tech rs_weapon_needlergun_ammo
+{
+	name		"_Needler Gun"
+	type		"weapon"
+	up_chapter	equipment
+
+	redirect	rs_weapon_needlergun
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_needlergun
+		item (needlergun_ammo 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 20)
+	}
+
+	provides	needlergun_ammo
+	time		0
+	producetime	300
+}
+
+tech rs_weapon_coilgun
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:coilgun_txt"
+	}
+	pre_description {
+		default "*msgid:coilgun_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		subject	"_Coilgun"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		subject	"_Coilgun"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_skill_sniper
+		tech rs_weapon_bolterrifle
+		tech rs_any_needler
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 50)
+	}
+
+	provides	coilgun
+	time		4000
+	producetime	1000
+}
+
+tech rs_weapon_coilgun_ammo
+{
+	type		"weapon"
+	up_chapter	equipment
+
+	redirect	rs_weapon_coilgun
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_coilgun
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 5)
+	}
+
+	provides	coilgun_ammo
+	time		0
+	producetime	200
+}
+
+tech rs_weapon_shotgun2
+{
+	// Riot Shotgun
+	type		"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:shotgun2_txt"
+	}
+	// pre_description	"*msgid:shotgun2_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_close
+	}
+
+	provides	shotgun2
+	time		0
+	producetime	1400
+}
+
+tech rs_weapon_shotgun2_slug_ammo
+{
+	type		"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:shotgun2_slug_ammo_txt"
+	}
+	// pre_description	"*msgid:shotgun2_slug_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_blast
+		tech rs_weapon_shotgun2
+	}
+
+	provides	shotgun2_slug_ammo
+	time		0
+	producetime	180
+}
+
+tech rs_weapon_shotgun_micro
+{
+	type	"weapon"
+
+	up_chapter	equipment
+	description {
+		default "*msgid:shotgun_micro_txt"
+	}
+	// pre_description	"*msgid:shotgun_micro_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_close
+	}
+
+	provides	shotgun_micro
+	time		0
+	producetime	800
+}
+
+tech rs_weapon_shotgun_micro_ammo
+{
+	type		"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:shotgun_micro_ammo_txt"
+	}
+	// pre_description	"*msgid:shotgun_micro_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_blast
+		tech rs_weapon_shotgun_micro
+	}
+
+	provides	shotgun_micro_ammo
+	time		0
+	producetime	120
+}
+
+tech rs_weapon_smg
+{
+	type	"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:smg_txt"
+	}
+	// pre_description	"*msgid:smg_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_close
+	}
+
+	provides	smg
+	time		0
+	producetime	1200
+}
+
+tech rs_weapon_smg_ammo
+{
+	type		"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:smg_mag_txt"
+	}
+	// pre_description	"*msgid:smg_mag_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_smg
+	}
+
+	provides	smg_ammo
+	time		0
+	producetime	120
+}
+
+tech rs_weapon_smokegren
+{
+	type		"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:smokegren_txt"
+	}
+	// pre_description	"*msgid:smokegren_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_explosive
+	}
+
+	provides	smokegrenade
+	time		0
+	producetime	200
+}
+
+tech rs_weapon_sniper
+{
+	type		"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:sniper_txt"
+	}
+	// pre_description	"*msgid:sniper_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_sniper
+	}
+
+	provides	sniper
+	time		0
+	producetime	1200
+}
+
+tech rs_weapon_sniper_ammo
+{
+	type		"weapon"
+	up_chapter	equipment
+	description {
+		default "*msgid:sniper_mag_txt"
+	}
+	// pre_description	"*msgid:sniper_mag_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_sniper
+	}
+
+	provides	sniper_ammo
+	time		0
+	producetime	120
+}
+
+// Just for searching: uses "anti alien gas"
+tech rs_weapon_stungren
+{
+	name		"_Anti-Alien Gas"
+	type		"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:stungren_txt"
+	}
+	pre_description {
+		default "*msgid:stungren_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_alien_live
+		tech rs_alien_ortnok_autopsy
+		tech rs_alien_taman_autopsy
+		tech rs_contained_organic_alien	// LOGIC tech - see there for more
+		tech rs_alien_shevaar_autopsy
+
+		tech rs_skill_explosive
+		tech rs_damage_stun
+	}
+
+	provides	stungrenade
+	time		750
+	producetime	300
+//	image		"techs/anti_alien_gas"
+}
+
+tech rs_weapon_stungren_alien
+{
+	name		"_Alien Anti-Human Gas"
+	type		"weapon"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:stungren_alien_txt"
+	}
+	pre_description {
+		default "*msgid:stungren_alien_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		item (stungrenade_alien 1)
+
+		tech rs_skill_explosive
+		tech rs_damage_stun
+	}
+
+	provides	stungrenade_alien
+	time		0
+	// not producible
+	producetime	-1
+}
+
+tech rs_weapon_stunrod
+{
+	type		"weapon"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:stunrod_txt"
+	}
+	pre_description {
+		default "*msgid:stunrod_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
+		model	"characters/connor"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_skill_close
+		tech rs_damage_stun
+		tech rs_alien_breathing
+	}
+
+	provides	stunrod
+	time		1500
+	producetime	500
+}
+
+tech rs_weapon_pbeampistol
+{
+	name		"_Alien Artifact - Particle Beam Pistol"
+	type		"weapon"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:pbeampistol_txt"
+	}
+	pre_description {
+		default "*msgid:pbeampistol_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	require_AND
+	{
+		tech rs_skill_close
+		item (pbeampistol 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 60)
+	}
+
+	provides	pbeampistol
+	time		5000
+	producetime	1400
+}
+
+tech rs_weapon_pbeampistol_ammo
+{
+	name		"_Alien Artifact - Particle Beam Pistol"
+	type		"weapon"
+	up_chapter	artifacts
+
+	redirect	rs_weapon_pbeam_ammo
+
+	require_AND
+	{
+		tech rs_damage_pbeam
+		tech rs_weapon_pbeam_ammo
+	}
+
+	provides	pbeampistol_ammo
+	time		0
+	producetime	-1
+}
+
+tech rs_weapon_pbeamcannon
+{
+	name		"_Alien Artifact - Particle Beam Cannon"
+	type		"weapon"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:pbeamcannon_txt"
+	}
+	pre_description {
+		default "*msgid:pbeamcannon_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	require_AND
+	{
+		tech rs_skill_assault
+		item (pbeamcannon 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 100)
+	}
+
+	provides	pbeamcannon
+	time		6000
+	producetime	2000
+}
+
+tech rs_weapon_pbeamcannon_ammo
+{
+	name		"_Alien Artifact - Particle Beam Cannon"
+	type		"weapon"
+	up_chapter	artifacts
+
+	redirect	rs_weapon_pbeam_ammo
+
+	require_AND
+	{
+		tech rs_damage_pbeam
+		tech rs_weapon_pbeam_ammo
+	}
+
+	provides	pbeamcannon_ammo
+	time		0
+	producetime	-1
+}
+
+tech rs_weapon_pbeamrifle
+{
+	name		"_Alien Artifact - Particle Beam Rifle"
+	type		"weapon"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:pbeamrifle_txt"
+	}
+	pre_description {
+		default "*msgid:pbeamrifle_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_artifact"
+	}
+
+	require_AND
+	{
+		tech rs_skill_assault
+		item (pbeamrifle 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 80)
+	}
+
+	provides	pbeamrifle
+	time		6000
+	producetime	1800
+}
+
+tech rs_weapon_pbeamrifle_ammo
+{
+	name		"_Alien Artifact - Particle Beam Rifle"
+	type		"weapon"
+	up_chapter	artifacts
+
+	redirect	rs_weapon_pbeam_ammo
+
+	require_AND
+	{
+		tech rs_damage_pbeam
+		tech rs_weapon_pbeam_ammo
+	}
+
+	provides	pbeamrifle_ammo
+	time		0
+	producetime	-1
+}
+
+tech rs_weapon_pbeam_ammo
+{
+	//Note: this is type: tech because it provides three other technologies for ammo, not ammo itself
+	name		"_Man-Portable Particle Beams"
+	type		"tech"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:pbeamammo_txt"
+	}
+	pre_description {
+		default "*msgid:pbeamammo_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_OR
+	{
+		tech rs_weapon_pbeampistol
+		tech rs_weapon_pbeamcannon
+		tech rs_weapon_pbeamrifle
+	}
+
+	time		1000
+	producetime	-1
+	image		"techs/particle_beam_weapon"
+}
+
+//========================
+// Armour
+//========================
+
+tech rs_combat_armour
+{
+	type		"armour"
+	up_chapter	equipment
+	description {
+		default "*msgid:combat_armour_txt"
+	}
+	// pre_description	"*msgid:combat_armour_pre_txt"
+
+	provides	armour_light
+	time		0
+	producetime	720
+}
+
+tech rs_nano_armour
+{
+	type		"armour"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:nano_armour_txt"
+	}
+	pre_description {
+		default "*msgid:nano_armour_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_alien_body_armour
+	}
+
+	provides	armour_medium
+	time		6000
+	producetime	1500
+}
+
+tech rs_power_armour
+{
+	type	"armour"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:power_armour_txt"
+	}
+	pre_description {
+		default "*msgid:power_armour_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_alien_medium_armour
+	}
+
+	provides	armour_power
+
+	time		6000
+	producetime	3000
+}
+
+tech rs_alien_body_armour
+{
+	type		"armour"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:alien_body_armour_txt"
+	}
+	pre_description {
+		default "*msgid:alien_body_armour_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		item (armour_light_alien 1)
+	}
+	provides	armour_light_alien
+	time		4000
+	producetime	-1
+}
+
+tech rs_alien_medium_armour
+{
+	type		"armour"
+	up_chapter	artifacts
+
+	description {
+		default "*msgid:alien_medium_armour_txt"
+	}
+	pre_description {
+		default "*msgid:alien_medium_armour_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		item (armour_medium_alien 1)
+	}
+	provides	armour_medium_alien
+	time		6000
+	producetime	-1
+}
+
+//========================
+// Damage Types
+//========================
+
+tech rs_damage_blast
+{
+	type	"tech"
+	name	"_Blast Damage Type"
+	up_chapter damage
+	description {
+		default "*msgid:none"
+	}
+
+	time	0
+//	image	"techs/blast_damage"
+}
+
+tech rs_damage_fire
+{
+	type	"tech"
+	name	"_Fire Damage Type"
+	up_chapter	damage
+	description {
+		default "*msgid:none"
+	}
+
+	time	0
+//	image	"techs/fire_damage"
+}
+
+tech rs_damage_laser
+{
+	type	"tech"
+	name	"_Laser Damage Type"
+	up_chapter	damage
+	description {
+		default "*msgid:none"
+	}
+
+	require_AND
+	{
+		tech rs_laser
+	}
+
+	time	0
+//	image	"techs/laser_damage"
+}
+
+tech rs_damage_normal
+{
+	type	"tech"
+	name	"_Impact Damage Type"
+	up_chapter	damage
+	description {
+		default "*msgid:none"
+	}
+
+	time	0
+//	image	"techs/normal_damage"
+}
+
+tech rs_damage_shock
+{
+	type	"tech"
+	name "_Shock Damage Type"
+	up_chapter	damage
+	description {
+		default "*msgid:none"
+	}
+
+	time	0
+//	image	"techs/shock_damage"
+}
+
+tech rs_damage_plasma
+{
+	type		"tech"
+	name		"_Plasma Damage Type"
+	up_chapter	damage
+	description {
+		default "*msgid:none"
+	}
+
+	require_OR
+	{
+		tech rs_weapon_plasatomizer
+		tech rs_weapon_plasblaster
+		tech rs_weapon_plasrifle
+		tech rs_weapon_plasmagren
+	}
+
+	time	0
+//	image	"techs/plasma_damage"
+}
+
+tech rs_damage_stun
+{
+	type		"tech"
+	name		"_Stun Damage Type"
+	up_chapter	damage
+	description {
+		default "*msgid:none"
+	}
+
+	time	0
+//	image	"techs/stun_damage"
+}
+
+tech rs_damage_pbeam
+{
+	type		"tech"
+	name		"_Particle Beam Damage Type"
+	up_chapter	damage
+	description {
+		default "*msgid:none"
+	}
+
+
+	time	0
+//	image	"techs/pbeam_damage"
+}
+
+//========================
+// Soldier Skills
+//========================
+
+tech rs_skill_accuracy
+{
+	type		"tech"
+	name		"_Accuracy Attribute"
+	up_chapter	skill
+	description {
+		default "*msgid:skill_accuracy_txt"
+	}
+
+	time	0
+//	image	"techs/accuracy_skill"
+}
+
+tech rs_skill_assault
+{
+	type		"tech"
+	name		"_Assault Guns Proficiency"
+	up_chapter	skill
+	description {
+		default "*msgid:skill_assault_txt"
+	}
+
+	time	0
+//	image	"techs/assault_skill"
+}
+
+tech rs_skill_close
+{
+	type		"tech"
+	name		"_Close Combat Proficiency"
+	up_chapter	skill
+	description {
+		default "*msgid:skill_close_txt"
+	}
+
+	time	0
+//	image	"techs/close_skill"
+}
+
+tech rs_skill_explosive
+{
+	type		"tech"
+	name		"_High-Explosives Proficiency"
+	up_chapter	skill
+	description {
+		default "*msgid:skill_explosive_txt"
+	}
+
+	time	0
+//	image	"techs/explosive_skill"
+}
+
+tech rs_skill_mind
+{
+	type		"tech"
+	name		"_Mind Attribute"
+	up_chapter	skill
+	description {
+		default "*msgid:skill_mind_txt"
+	}
+
+	time	0
+//	image	"techs/mind_skill"
+}
+
+tech rs_skill_power
+{
+	type		"tech"
+	name		"_Power Attribute"
+	up_chapter	skill
+	description {
+		default "*msgid:skill_power_txt"
+	}
+
+	time	0
+//	image	"techs/power_skill"
+}
+
+tech rs_skill_sniper
+{
+	type		"tech"
+	name		"_Sniper Rifles Proficiency"
+	up_chapter	skill
+	description {
+		default "*msgid:skill_sniper_txt"
+	}
+
+	time	0
+//	image	"techs/sniper_skill"
+}
+
+tech rs_skill_speed
+{
+	type		"tech"
+	name		"_Speed Attribute"
+	up_chapter	skill
+	description {
+		default "*msgid:skill_speed_txt"
+	}
+
+	time	0
+//	image	"techs/speed_skill"
+}
+
+//========================
+// Buildings
+//========================
+
+tech rs_building_aliencontainment
+{
+	type	"building"
+	description {
+		default "*msgid:b_aliencontainment_txt"
+	}
+	// pre_description	"*msgid:b_aliencontainment_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_powerplant
+	}
+
+	provides	building_aliencontainment
+	time		0
+}
+
+tech rs_building_command
+{
+	type	"building"
+	description {
+		default "*msgid:b_command_txt"
+	}
+	// pre_description	"*msgid:b_command_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_powerplant
+	}
+
+	provides	building_command
+	time		0
+}
+
+tech rs_building_entrance
+{
+	type	"building"
+	description {
+		default "*msgid:b_entrance_txt"
+	}
+	// pre_description	"*msgid:b_entrance_pre_txt"
+	up_chapter	buildings
+
+	provides	building_entrance
+	time	0
+}
+
+tech rs_building_missile
+{
+	type	"building"
+	description {
+		default "*msgid:b_missile_txt"
+	}
+	// pre_description	"*msgid:b_missile_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_command
+	}
+
+	provides	building_missile
+	time	0
+}
+
+tech rs_building_laser
+{
+	type	"building"
+	description {
+		default "*msgid:b_baselaser_txt"
+	}
+	// pre_description	"*msgid:b_baselaser_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_command
+		tech rs_laser
+		tech rs_damage_laser
+		tech rs_baselaser
+	}
+
+	provides	building_laser
+	time	0
+}
+
+tech rs_building_large_hangar
+{
+	type	"building"
+	description {
+		default "*msgid:b_large_hangar_txt"
+	}
+	// pre_description	"*msgid:b_large_hangar_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_powerplant
+	}
+
+	provides	building_hangar
+	time	0
+}
+
+tech rs_building_hospital
+{
+	type	"building"
+	description {
+		default "*msgid:b_hospital_txt"
+	}
+	// pre_description	"*msgid:b_hospital_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_powerplant
+	}
+
+	provides	building_hospital
+	time	0
+}
+
+tech rs_building_small_hangar
+{
+	type	"building"
+	description {
+		default "*msgid:b_small_hangar_txt"
+	}
+	// pre_description	"*msgid:b_small_hangar_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_powerplant
+	}
+
+	provides	building_intercept
+	time	0
+}
+
+tech rs_building_lab
+{
+	type	"building"
+	description {
+		default "*msgid:b_lab_txt"
+	}
+	// pre_description	"*msgid:b_lab_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_command
+	}
+
+	provides	building_lab
+	time	0
+}
+
+tech rs_building_powerplant
+{
+	type	"building"
+	description {
+		default "*msgid:b_powerplant_txt"
+	}
+	// pre_description	"*msgid:b_powerplant_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_entrance
+	}
+
+	provides	building_powerplant
+	time	0
+}
+
+tech rs_building_quarters
+{
+	type	"building"
+	description {
+		default "*msgid:b_quarters_txt"
+	}
+	// pre_description	"*msgid:b_quarters_pre_txt"
+	up_chapter	buildings
+
+	provides	building_quarters
+	time	0
+}
+
+tech rs_building_radar
+{
+	type	"building"
+	description {
+		default "*msgid:b_radar_txt"
+	}
+	// pre_description	"*msgid:b_radar_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_command
+	}
+
+	provides	building_radar
+	time	0
+}
+
+tech rs_building_radar_adv
+{
+	type	"building"
+	description {
+		default "*msgid:b_radar_adv_txt"
+	}
+	// pre_description	"*msgid:b_radar_adv_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_command
+		tech rs_craft_alien_detection
+	}
+
+	provides	building_radar_adv
+	time	0
+}
+
+tech rs_building_storage
+{
+	type	"building"
+	description {
+		default "*msgid:b_storage_txt"
+	}
+	// pre_description	"*msgid:b_storage_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_entrance
+	}
+
+	provides	building_storage
+	time	0
+}
+
+tech rs_building_workshop
+{
+	type	"building"
+	description {
+		default "*msgid:b_workshop_txt"
+	}
+	// pre_description	"*msgid:b_workshop_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_command
+	}
+
+	provides	building_workshop
+	time	0
+}
+
+tech rs_building_antimatter
+{
+	name	"_Antimatter Storage"
+	type		"building"
+	up_chapter	buildings
+
+	description {
+		default "*msgid:b_antimatter_txt"
+	}
+
+	require_AND
+	{
+		tech rs_antimatter
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_alien"
+	}
+
+	provides	building_amstorage
+	time		0
+}
+
+//========================
+// Installations
+//========================
+tech rs_installation_radar
+{
+	name	"_Radar Tower"
+	type	"tech"
+	description {
+		default "*msgid:installation_radar_txt"
+	}
+	up_chapter	installations
+
+	provides	radar_tower
+	time	0
+	model		"geoscape/radar"
+}
+tech rs_installation_ufo_yard
+{
+	name	"_UFO Yard"
+	type	"tech"
+	description {
+		default "*msgid:installation_ufo_yard_txt"
+	}
+	up_chapter	installations
+
+	provides	ufoyard
+	time	0
+	model		"geoscape/ufoyard"
+}
+tech rs_installation_sam_site
+{
+	name	"_SAM Site"
+	type	"tech"
+	description {
+		default "*msgid:installation_sam_site_txt"
+	}
+	up_chapter	installations
+
+	provides	samsite
+	time	0
+	model		"geoscape/samlauncher"
+}
+tech rs_installation_orbital_launcher
+{
+	name	"_Orbital Rocket Launcher"
+	type	"tech"
+	description {
+		default "*msgid:orbital_ufo_activity_txt"
+	}
+	pre_description {
+		default "*msgid:orbital_ufo_activity_pre_txt"
+	}
+	up_chapter	installations
+
+	require_AND
+	{
+		tech	rs_orbital_ufo_activity
+	}
+
+	time	0
+}
+
+//========================
+// Craft - Human
+//========================
+tech rs_craft_drop_firebird
+{
+	type	"craft"
+	description {
+		default "*msgid:drop_firebird_txt"
+	}
+	// pre_description	"*msgid:drop_firebird_pre_txt"
+	up_chapter	crafts
+
+	provides	craft_drop_firebird
+	time	0
+	producetime	3000
+
+	model		drop_firebird
+}
+
+tech rs_craft_drop_herakles
+{
+	type	"craft"
+	description {
+		default "*msgid:drop_herakles_txt"
+	}
+	pre_description	{
+		default "*msgid:drop_herakles_pre_txt"
+	}
+	up_chapter	crafts
+
+	mail_pre	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	// FIXME
+	require_AND {
+		tech rs_craft_ufo_supply
+	}
+
+	provides	craft_drop_herakles
+	time	14000
+	producetime	3500
+
+	model		drop_herakles_flying
+}
+
+tech rs_craft_drop_raptor
+{
+	type	"craft"
+	description {
+		default "*msgid:drop_raptor_txt"
+	}
+	pre_description	{
+		default "*msgid:drop_raptor_pre_txt"
+	}
+	up_chapter	crafts
+
+	mail_pre	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND {
+		tech rs_item_alienmaterials
+		tech rs_craft_alien_propulsion
+		tech rs_craft_alien_astrogation
+		tech rs_craft_alien_detection
+		tech rs_craft_drop_herakles
+		tech rs_craft_inter_stingray
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 1400)
+		item	(craft_alien_propulsion	4)
+		item	(craft_alien_astrogation	1)
+		item	(craft_alien_detection	1)
+	}
+
+	provides	craft_drop_raptor
+	time	14000
+	producetime	5000
+
+	model		drop_raptor
+}
+
+tech rs_craft_inter_stiletto
+{
+	type	"craft"
+	description {
+		default "*msgid:inter_stiletto_txt"
+	}
+	// pre_description	"*msgid:inter_stiletto_pre_txt"
+	up_chapter	crafts
+
+	provides	craft_inter_stiletto
+	time	0
+	producetime	3000
+
+	model		inter_stiletto
+}
+
+tech rs_craft_inter_saracen
+{
+	type	"craft"
+	description {
+		default "*msgid:inter_saracen_txt"
+	}
+	// pre_description	"*msgid:inter_saracen_pre_txt"
+	up_chapter	crafts
+
+	provides	craft_inter_saracen
+	time	0
+	producetime	3000
+
+	model		inter_saracen
+}
+
+tech rs_craft_inter_dragon
+{
+	type	"craft"
+	description {
+		default "*msgid:inter_dragon_txt"
+	}
+	pre_description	{
+		default "*msgid:inter_dragon_pre_txt"
+	}
+	up_chapter	crafts
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	provides	craft_inter_dragon
+	require_AND {
+		tech rs_item_alienmaterials
+		tech rs_craft_alien_propulsion
+		tech rs_craft_alien_astrogation
+		tech rs_craft_alien_detection
+	}
+	time	14000
+	producetime	4000
+
+	require_for_production
+	{
+	    item (alienmaterials 700)
+		item	(craft_alien_propulsion	2)
+		item	(craft_alien_astrogation	1)
+		item	(craft_alien_detection	1)
+	}
+
+	model		inter_dragon
+}
+
+tech rs_craft_inter_starchaser
+{
+	type	"craft"
+	description {
+		default "*msgid:inter_starchaser_txt"
+	}
+	pre_description	{
+		default "*msgid:inter_starchaser_pre_txt"
+	}
+	up_chapter	crafts
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	provides	craft_inter_starchaser
+	require_AND {
+		tech rs_item_alienmaterials
+		tech rs_craft_alien_astrogation
+		tech rs_craft_alien_detection
+		tech rs_craft_inter_dragon
+		tech rs_craft_alien_propulsion_adv
+	}
+	time	14000
+	producetime	5000
+
+	require_for_production
+	{
+	    item (alienmaterials 800)
+		item	(craft_alien_propulsion_adv	2)
+		item	(craft_alien_astrogation	1)
+		item	(craft_alien_detection	2)
+	}
+
+	model		inter_starchaser
+}
+
+tech rs_craft_inter_stingray
+{
+	type	"craft"
+	description {
+		default "*msgid:inter_stingray_txt"
+	}
+	pre_description {
+		default "*msgid:inter_stingray_pre_txt"
+	}
+	up_chapter	crafts
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	provides	craft_inter_stingray
+	require_AND {
+		tech rs_item_alienmaterials
+		tech rs_craft_alien_propulsion_adv
+		tech rs_craft_alien_astrogation
+		tech rs_craft_alien_detection
+		tech rs_craft_inter_starchaser
+		tech rs_craft_ufo_gunboat
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 1000)
+		item	(craft_alien_propulsion_adv	3)
+		item	(craft_alien_astrogation	1)
+		item	(craft_alien_detection	2)
+	}
+
+
+	time	14000
+	producetime	6000
+
+	model		inter_stingray
+}
+
+//========================
+// Crafts - UFOs
+//========================
+
+tech rs_craft_ufo_scout
+{
+	name	"_UFO - Scout"
+	type	"craft"
+	up_chapter	crafts
+
+	description {
+		default "*msgid:ufo_scout_txt"
+	}
+	pre_description {
+		default "*msgid:ufo_scout_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		ufo (craft_ufo_scout 1)
+		tech rs_alien_ufo_theory
+	}
+
+	provides	craft_ufo_scout
+	time	3000
+	producetime -1
+
+	model		ufo_scout
+}
+
+tech rs_craft_ufo_fighter
+{
+	name	"_UFO - Fighter"
+	type	"craft"
+	up_chapter	crafts
+
+	description {
+		default "*msgid:ufo_fighter_txt"
+	}
+	pre_description {
+		default "*msgid:ufo_fighter_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	// FIXME
+	require_AND
+	{
+		ufo (craft_ufo_fighter 1)
+		tech rs_alien_ufo_theory
+	}
+
+	provides	craft_ufo_fighter
+	time	3000
+	producetime -1
+
+	model		ufo_fighter
+}
+
+tech rs_craft_ufo_supply
+{
+	name	"_UFO - Supply Ship"
+	type	"craft"
+	up_chapter	crafts
+
+	description {
+		default "*msgid:ufo_supply_txt"
+	}
+	pre_description {
+		default "*msgid:ufo_supply_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+		ufo (craft_ufo_supply 1)
+	}
+
+	provides	craft_ufo_supply
+	time	8000
+	producetime -1
+
+	model		ufo_supply
+}
+
+tech rs_craft_ufo_carrier
+{
+	name	"_UFO - Carrier"
+	type	"craft"
+	up_chapter	crafts
+
+	description {
+		default "*msgid:ufo_carrier_txt"
+	}
+	pre_description {
+		default "*msgid:ufo_carrier_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+		ufo (craft_ufo_carrier 1)
+	}
+
+	provides	craft_ufo_carrier
+	time	30000
+	producetime -1
+
+	model		ufo_carrier
+}
+
+tech rs_craft_ufo_bomber
+{
+	name	"_UFO - Bomber"
+	type	"craft"
+	up_chapter	crafts
+
+	description {
+		default "*msgid:ufo_bomber_txt"
+	}
+	pre_description {
+		default "*msgid:ufo_bomber_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+		ufo (craft_ufo_bomber 1)
+	}
+
+	provides	craft_ufo_bomber
+	time	14000
+	producetime -1
+
+	model		ufo_bomber
+}
+
+tech rs_craft_ufo_corrupter
+{
+	name	"_UFO - Corrupter"
+	type	"craft"
+	up_chapter	crafts
+
+	description {
+		default "*msgid:ufo_corrupter_txt"
+	}
+	pre_description {
+		default "*msgid:ufo_corrupter_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+		ufo (craft_ufo_corrupter 1)
+	}
+
+	provides	craft_ufo_corrupter
+	time	8000
+	producetime -1
+
+	model		ufo_corrupter
+}
+
+tech rs_craft_ufo_gunboat
+{
+	name	"_UFO - Gunboat"
+	type	"craft"
+	up_chapter	crafts
+
+	description {
+		default "*msgid:ufo_gunboat_txt"
+	}
+	pre_description {
+		default "*msgid:ufo_gunboat_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+		ufo (craft_ufo_gunboat 1)
+	}
+
+	provides	craft_ufo_gunboat
+	time	14000
+	producetime -1
+
+	model		ufo_gunboat
+}
+
+tech rs_craft_ufo_ripper
+{
+	name	"_UFO - Ripper"
+	type	"craft"
+	up_chapter	crafts
+
+	description {
+		default "*msgid:ufo_ripper_txt"
+	}
+	pre_description {
+		default "*msgid:ufo_ripper_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+		ufo (craft_ufo_ripper 1)
+	}
+
+	provides	craft_ufo_ripper
+	time	14000
+	producetime -1
+
+	model		ufo_ripper
+}
+
+tech rs_craft_ufo_harvester
+{
+	name	"_UFO - Harvester"
+	type	"craft"
+	up_chapter	crafts
+
+	description {
+		default "*msgid:ufo_harvester_txt"
+	}
+	pre_description {
+		default "*msgid:ufo_harvester_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+		ufo (craft_ufo_harvester 1)
+	}
+
+	provides	craft_ufo_harvester
+	time	4000
+	producetime -1
+
+	model		ufo_harvester
+}
+
+tech rs_craft_ufo_mothership
+{
+	name	"_UFO - Mothership"
+	type	"craft"
+	up_chapter	crafts
+
+	description {
+		default "*msgid:ufo_mothership_txt"
+	}
+	pre_description {
+		default "*msgid:ufo_mothership_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+		ufo (craft_ufo_mothership 1)
+	}
+
+	provides	craft_ufo_mothership
+	time	50000
+	producetime -1
+
+	model		ufo_mothership
+}
+
+//========================
+// Aliens
+//========================
+
+// BLOODSPIDER
+tech rs_alien_bloodspider_autopsy
+{
+	name	"_Alien Autopsy - Bloodspider"
+	type	"alien"
+	up_chapter	aliens
+
+	description {
+		default "*msgid:bloodspider_autopsy_txt"
+	}
+	pre_description {
+		default "*msgid:bloodspider_autopsy_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		alien_dead (bloodspider 1)
+	}
+	time	1500
+
+	image "techs/bloodspider_dead"
+}
+
+tech rs_weapon_bloodspider
+{
+	type		"weapon"
+	up_chapter	equipment
+
+	require_AND
+	{
+		tech rs_alien_bloodspider_autopsy
+	}
+	provides	bloodspider_weapon
+	time		0
+	producetime	-1
+}
+
+tech rs_alien_bloodspider_adv_autopsy
+{
+	name	"_Alien Autopsy - Combat Bloodspider"
+	type	"alien"
+	up_chapter	aliens
+
+	description {
+		default "*msgid:bloodspider_adv_autopsy_txt"
+	}
+	pre_description {
+		default "*msgid:bloodspider_adv_autopsy_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		alien_dead (bloodspider_adv 1)
+	}
+	time	1500
+
+	image "techs/bloodspider_adv_dead"
+}
+
+tech rs_weapon_bloodspider_adv
+{
+	type		"weapon"
+	up_chapter	equipment
+
+	require_AND
+	{
+		tech rs_weapon_bloodspider_adv
+	}
+	provides	bloodspider_adv_weapon
+	time		0
+	producetime	-1
+}
+
+// ORTNOK
+
+tech rs_alien_ortnok_autopsy
+{
+	name	"_Alien Autopsy - Ortnok"
+	type	"alien"
+	up_chapter	aliens
+
+	description {
+		default "*msgid:ortnok_autopsy_txt"
+		extra (rs_ortnok_extra "*msgid:ortnok_autopsy_extra_txt")
+	}
+	pre_description {
+		default "*msgid:ortnok_autopsy_pre_txt"
+		extra (rs_ortnok_extra "*msgid:ortnok_autopsy_extra_pre_txt")
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		alien_dead (ortnok 1)
+	}
+	time	1500
+
+	image	"techs/ortnok_dead"
+}
+
+// TAMAN
+
+tech rs_alien_taman_autopsy
+{
+	name	"_Alien Autopsy - Taman"
+	type	"alien"
+	up_chapter	aliens
+
+	description {
+		default "*msgid:taman_autopsy_txt"
+		extra (rs_taman_extra "*msgid:taman_autopsy_extra_txt")
+	}
+	pre_description {
+		default "*msgid:taman_autopsy_pre_txt"
+		extra (rs_taman_extra "*msgid:taman_autopsy_extra_pre_txt")
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_OR
+	{
+		alien_dead (taman 1)
+	}
+	time	1500
+
+	image	"techs/taman_dead"
+}
+
+// SHEVAAR
+
+tech rs_alien_shevaar_autopsy
+{
+	name	"_Alien Autopsy - Shevaar"
+	type	"alien"
+	up_chapter	aliens
+
+	description {
+		default "*msgid:shevaar_autopsy_txt"
+		extra (rs_shevaar_extra "*msgid:shevaar_autopsy_extra_txt")
+	}
+	pre_description {
+		default "*msgid:shevaar_autopsy_pre_txt"
+		extra (rs_shevaar_extra "*msgid:shevaar_autopsy_extra_pre_txt")
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		alien_dead (shevaar 1)
+	}
+	time	1500
+
+	image	"techs/shevaar_dead"
+}
+
+// HOVERNET
+
+tech rs_alien_hovernet_autopsy
+{
+	name	"_Alien Autopsy - Hovernet"
+	type	"alien"
+	up_chapter	aliens
+
+	description {
+		default "*msgid:hovernet_autopsy_txt"
+	}
+	pre_description {
+		default "*msgid:hovernet_autopsy_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		alien_dead (hovernet 1)
+	}
+	time	1500
+
+	image	"techs/hovernet_dead"
+}
+
+tech rs_weapon_hovernet_plasma
+{
+	type		"weapon"
+	up_chapter	artifacts
+
+	require_AND
+	{
+		tech rs_weapon_hovernet_plasma
+	}
+	provides	hovernet_plasma
+	time		0
+	producetime	-1
+}
+
+// COMBAT HOVERNET
+
+tech rs_alien_hovernet_adv_autopsy
+{
+	name	"_Alien Autopsy - Combat Hovernet"
+	type	"alien"
+	up_chapter	aliens
+
+	description {
+		default "*msgid:hovernet_adv_autopsy_txt"
+	}
+	pre_description {
+		default "*msgid:hovernet_adv_autopsy_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		alien_dead (hovernet_adv 1)
+	}
+	time	1500
+
+	image	"techs/hovernet_adv_dead"
+}
+
+tech rs_weapon_hovernet_adv_plasma
+{
+	type		"weapon"
+	up_chapter	artifacts
+
+	require_AND
+	{
+		tech rs_weapon_hovernet_adv_plasma
+	}
+	provides	hovernet_adv_plasma
+	time		0
+	producetime	-1
+}
+
+//========================
+// UGVs
+//========================
+
+tech rs_ugv_phoenix
+{
+	type	"ugv"
+	model	ugv_phoenix
+
+	up_chapter	equipment
+	name	"_Phoenix UGV"
+	description {
+		default "*msgid:ugv_phoenix_txt"
+	}
+	pre_description {
+		default "*msgid:ugv_phoenix_pre_txt"
+	}
+
+	provides	ugv_phoenix
+	time	0
+	producetime	4000
+}
+
+// UGV with wheels
+tech rs_ugv_ares_w
+{
+	type	"ugv"
+	model	ugv_ares_w
+
+	up_chapter	equipment
+	name	"_Ares W (UGV)"
+	description {
+		default "*msgid:ugv_ares_w_txt"
+	}
+	pre_description {
+		default "*msgid:ugv_ares_w_pre_txt"
+	}
+
+	provides	ugv_ares_w
+	time	0
+	producetime	2000
+}
+
+tech rs_ugv_chaingun
+{
+	type	"weapon"
+//	model			ares_w_turret // we do not need this here, but this is the correct model
+
+	up_chapter	equipment
+/* @todo use-me
+	description {
+		default "*msgid:ugv_chaingun_txt"
+	}
+	pre_description {
+		default "*msgid:ugv_chaingun_pre_txt"
+	}
+*/
+	provides	ugv_chaingun
+	time	0
+	producetime	500	// Not really needed since this should (at least in the beginning) be produced with the tank itself.
+}
+
+tech rs_ugv_chaingun_belt
+{
+	type	"weapon"
+//	model	ugv_phoenix // we do not need this here
+
+	up_chapter	equipment
+/* @todo use-me
+	description {
+		default "*msgid:ugv_chaingun_belt_txt"
+	}
+	pre_description {
+		default "*msgid:ugv_chaingun_belt_pre_txt"
+	}
+*/
+	provides	ugv_chaingun_belt
+	time	0
+	producetime	100	// @todo fixme
+}
+
+tech rs_ugv_weapon_autocannon
+{
+	type	"weapon"
+	model	ugv_phoenix	// @todo fixme
+
+	up_chapter	equipment
+	description {
+		default "*msgid:ugv_weapon_autocannon_txt"
+	}
+	pre_description {
+		default "*msgid:ugv_weapon_autocannon_pre_txt"
+	}
+
+	provides	ugv_weapon_autocannon
+	time	0
+	producetime	500
+}
+
+//========================
+// Base Weapons
+//========================
+
+tech rs_base_AA51_launcher
+{
+	type		"craftitem"
+	up_chapter	equipment
+	name		"_AA51 missile launcher"
+	// pre_description	"*msgid:b_missile_pre_txt"
+	description {
+		default "*msgid:b_missile_txt"
+	}
+
+	provides	base_AA51_launcher
+	time		0
+	producetime	1500
+
+	model			"objects/samlauncher/samlauncher"
+}
+
+tech rs_base_ammo_AA51
+{
+	type		"tech"
+	/* this ammo is virtual shouldn't be shown anywhere */
+	name		"AA51 Cicada SAM"
+	provides	base_ammo_AA51
+	time		0
+	producetime	-1
+}
+
+//========================
+// Craft Stuff
+//========================
+
+tech rs_craft_el_raven
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_'Raven' ECM Unit"
+	// pre_description	"*msgid:craft_electronics_raven_pre_txt"
+	description {
+		default "*msgid:craft_electronics_raven_txt"
+	}
+
+	provides	craft_el_raven
+	time		0
+	producetime	1000
+
+	model	"aircraft/craft_item_raven_ecm/ecm"
+}
+
+tech rs_craft_shield_polymer
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_Polymer Aircraft Armour"
+	// pre_description	"*msgid:craft_shield_light_pre_txt"
+	description {
+		default "*msgid:craft_shield_light_txt"
+	}
+
+	provides	craft_shield_polymer
+	time		0
+	producetime	1400
+
+	model	"aircraft/craft_arm_poly/polymer"
+}
+
+tech rs_craft_shield_plating
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_Alien Aircraft Plating"
+	pre_description {
+		default	"*msgid:craft_shield_plating_pre_txt"
+	}
+	description {
+		default "*msgid:craft_shield_plating_txt"
+	}
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	provides	craft_shield_plating
+	require_AND {
+		tech	rs_alien_materials
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 150)
+	}
+
+	time		3000
+	producetime	2000
+
+	model	"aircraft/craft_arm_plate/plating"
+}
+
+tech rs_craft_shield_polymer_alien
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_Alien Polymer Armour"
+	pre_description {
+		default	"*msgid:craft_shield_polymer_alien_pre_txt"
+	}
+	description {
+		default "*msgid:craft_shield_polymer_alien_txt"
+	}
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	provides	craft_shield_polymer_alien
+
+	require_AND {
+		tech	rs_alien_materials
+		tech	rs_craft_ufo_gunboat
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 250)
+	}
+
+	time		8000
+	producetime	4000
+
+	model	"aircraft/craft_arm_poly_alien/polymer_alien"
+}
+
+tech rs_craft_alien_astrogation
+{
+	name		"_Alien Astrogation"
+	type		"craftitem"
+	up_chapter	crafts
+
+	pre_description {
+		default	"*msgid:craft_alien_astrogation_pre_txt"
+	}
+	description {
+		default	"*msgid:craft_alien_astrogation_txt"
+	}
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	provides	craft_alien_astrogation
+	require_AND {
+		tech	rs_alien_origins
+		item	(craft_alien_astrogation 1)
+	}
+	time		750
+	producetime	-1
+
+	image		"techs/alien_astrogation"
+}
+
+tech rs_craft_alien_propulsion
+{
+	name		"_Alien Propulsion"
+	type		"craftitem"
+	up_chapter	crafts
+
+	pre_description {
+		default "*msgid:craft_alien_propulsion_pre_txt"
+	}
+	description {
+		default "*msgid:craft_alien_propulsion_txt"
+	}
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	provides	craft_alien_propulsion
+	require_AND {
+		tech	rs_alien_materials
+		tech 	rs_antimatter
+		item	(craft_alien_propulsion 1)
+	}
+	time		3000
+	producetime	-1
+
+	model		"aircraft/craft_item_prop/propulsion"
+}
+
+tech rs_craft_alien_propulsion_adv
+{
+	name		"_Advanced Alien Propulsion"
+	type		"craftitem"
+	up_chapter	crafts
+
+	pre_description {
+		default "*msgid:craft_alien_propulsion_adv_pre_txt"
+	}
+	description {
+		default "*msgid:craft_alien_propulsion_adv_txt"
+	}
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	provides	craft_alien_propulsion_adv
+	require_AND {
+		tech	rs_alien_materials
+		tech 	rs_antimatter
+		tech	rs_craft_alien_propulsion
+		item	(craft_alien_propulsion_adv 1)
+	}
+	time		10000
+	producetime	-1
+
+	image		"techs/alien_propulsion"
+}
+
+tech rs_craft_alien_detection
+{
+	name		"_Alien Detection"
+	type		"craftitem"
+	up_chapter	crafts
+
+	pre_description	{
+		default	"*msgid:craft_alien_detection_pre_txt"
+	}
+	description {
+		default	"*msgid:craft_alien_detection_txt"
+	}
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+	provides	craft_alien_detection
+	require_AND {
+		item	(craft_alien_detection 1)
+	}
+	time		2000
+	producetime	-1
+
+	model		"aircraft/craft_item_det/detection"
+}
+
+tech rs_craft_weapon_alc
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_Aerial Laser Cannon"
+	pre_description	{
+		default "*msgid:craft_weapon_alc_pre_txt"
+	}
+	description {
+		default "*msgid:craft_weapon_alc_txt"
+	}
+
+	require_AND {
+		tech rs_laser
+		tech rs_damage_laser
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	provides	craft_weapon_alc
+	time		1000
+	producetime	900
+
+	model		"aircraft/craft_weapon_alc/alc"
+}
+
+tech rs_craft_ammo_alc
+{
+	type		"tech"
+	/* this ammo is virtual, shouldn't be shown anywhere */
+	name		"D-F Tank"
+	provides	craft_ammo_alc
+	time		0
+	producetime	-1
+}
+
+tech rs_craft_weapon_shiva
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_SHIVA Rotary Cannon"
+	// pre_description	"*msgid:craft_weapon_shiva_pre_txt"
+	description {
+		default "*msgid:craft_weapon_shiva_txt"
+	}
+
+	provides	craft_weapon_shiva
+	time		0
+	producetime	1000
+
+	model		"aircraft/craft_weapon_shiva/shiva"
+}
+
+tech rs_craft_ammo_shiva_1
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_SHIVA 20mm API Rounds"
+	// pre_description	"*msgid:craft_ammo_shiva_1_pre_txt"
+	description {
+		default "*msgid:craft_ammo_shiva_1_txt"
+	}
+
+	provides	craft_ammo_shiva_API
+	require_AND
+	{
+		tech rs_craft_weapon_shiva
+	}
+	time		0
+	producetime	100 //Assuming a full magazine.
+
+	model				"aircraft/craft_weapon_shiva/ammo_api"
+}
+
+tech rs_craft_ammo_shiva_2
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_SHIVA 20mm HEI Rounds"
+	// pre_description	"*msgid:craft_ammo_shiva_2_pre_txt"
+	description {
+		default "*msgid:craft_ammo_shiva_2_txt"
+	}
+
+	provides	craft_ammo_shiva_HEI
+	require_AND
+	{
+		tech rs_craft_weapon_shiva
+	}
+	time		0
+	producetime	100 //Assuming a full magazine.
+
+	model				"aircraft/craft_weapon_shiva/ammo_hei"
+}
+
+tech rs_craft_weapon_sparrowhawk
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_'Sparrowhawk' AA Missile Rack"
+	// pre_description	"*msgid:craft_weapon_sparrowhawk_pre_txt"
+	description {
+		default "*msgid:craft_weapon_sparrowhawk_txt"
+	}
+
+	provides	craft_weapon_sparrowhawk
+	time		0
+	producetime	1000
+
+	model		"aircraft/craft_weapon_sparrow/sparrowhawk_rack"
+}
+
+tech rs_craft_ammo_sparrowhawk
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_'Sparrowhawk' Missile"
+	// pre_description	"*msgid:craft_ammo_sparrowhawk_pre_txt"
+	description {
+		default "*msgid:craft_ammo_sparrowhawk_txt"
+	}
+
+	provides	craft_ammo_sparrowhawk
+	require_AND
+	{
+		tech rs_craft_weapon_sparrowhawk
+	}
+	time		0
+	producetime	400 //10 per missile.
+
+	model		"aircraft/craft_weapon_sparrow/sparrowhawk"
+}
+
+tech rs_craft_weapon_tr20
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_TR-20 Rocket Pod"
+	// pre_description	"*msgid:craft_weapon_tr20_pre_txt"
+	description {
+		default "*msgid:craft_weapon_tr20_txt"
+	}
+
+	provides	craft_weapon_tr20
+	time		0
+	producetime	1000
+
+	model		"aircraft/craft_weapon_tr20/tr20"
+}
+
+tech rs_craft_ammo_tr20
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_TR-20 Rocket"
+	// pre_description	"*msgid:craft_ammo_tr20_pre_txt"
+	description {
+		default "*msgid:craft_ammo_tr20_txt"
+	}
+
+	provides	craft_ammo_tr20
+	require_AND
+	{
+		tech rs_craft_weapon_tr20
+	}
+	time		0
+	producetime	240 //Assuming a full 128-rocket batch! // TODO: 152 pcs?
+
+	model		"aircraft/craft_weapon_tr20/tr20_rocket"
+}
+
+tech rs_craft_weapon_particle
+{
+	name		"_Particle Beam Weapon"
+	type		"craftitem"
+	up_chapter	crafts
+
+	pre_description {
+		default "*msgid:craft_weapon_particle_beam_pre_txt"
+	}
+	description {
+		default "*msgid:craft_weapon_particle_beam_txt"
+	}
+
+	provides	craft_weapon_particle_beam
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		item (craft_weapon_particle_beam 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 100)
+	}
+
+	time		4000
+	producetime	800
+
+	model		"aircraft/craft_weapon_particle/pbw"
+}
+
+tech rs_craft_ammo_particle
+{
+	type		"tech"
+	/* this ammo is virtual, shouldn't be shown anywhere */
+	name		"Particle Beam Accelerator"
+	provides	craft_ammo_particle_beam
+	time		0
+	producetime	-1
+}
+
+tech rs_craft_weapon_alien_launcher
+{
+	name		"_Alien Launcher"
+	type		"craftitem"
+	up_chapter	crafts
+
+	pre_description {
+		default "*msgid:craft_weapon_alien_launcher_pre_txt"
+	}
+	description {
+		default "*msgid:craft_weapon_alien_launcher_txt"
+	}
+
+	provides	craft_weapon_alien_launcher
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		item (craft_weapon_alien_launcher 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 150)
+	}
+
+	time		12000
+	producetime	1000
+
+	model		"aircraft/craft_weapon_launcher/alien_launcher"
+}
+
+tech rs_craft_ammo_am_missile
+{
+	name		"_Antimatter Missile"
+	type		"craftitem"
+	up_chapter	crafts
+
+	pre_description {
+		default "*msgid:alien_antimatter_missile_pre_txt"
+	}
+	description {
+		default "*msgid:alien_antimatter_missile_txt"
+	}
+
+	provides	craft_ammo_am_missile
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_antimatter
+		item (craft_ammo_am_missile 1)
+	}
+
+	require_for_production
+	{
+	    item (alienmaterials 20)
+	    antimatter 3
+	}
+
+	time		5000
+	producetime	600
+
+	model		"aircraft/craft_weapon_antim/antimatter"
+}
+
+tech rs_craft_ammo_hybrid_missile
+{
+	name		"_Hybrid Missile"
+	type		"craftitem"
+	up_chapter	crafts
+
+	pre_description {
+		default "*msgid:craft_ammo_hybrid_missile_pre_txt"
+	}
+	description {
+		default "*msgid:craft_ammo_hybrid_missile_txt"
+	}
+
+	provides	craft_ammo_hybrid_missile
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_craft_weapon_alien_launcher
+		tech rs_craft_ammo_am_missile
+	}
+
+	require_for_production
+	{
+		item (alienmaterials 20)
+	}
+
+	time		5000
+	producetime	400
+
+	model		"aircraft/craft_weapon_hybrid/hybrid"
+}
+
+tech rs_craft_el_targeting
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_Targeting Computer"
+	description {
+		default "*msgid:craft_electronics_targeting_txt"
+	}
+
+	provides	craft_el_targeting
+	time		0
+	producetime	1800
+
+	model		"aircraft/craft_item_target/craft_item_target"
+}
+
+tech rs_craft_el_fuelpod
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_Fuel Pod"
+	description {
+		default "*msgid:craft_electronics_fuelpod_txt"
+	}
+
+	provides	craft_el_fuelpod
+	time		0
+	producetime	800
+
+	model		"aircraft/craft_item_fuel/fuel"
+}
+
+tech rs_craft_el_alien_ew
+{
+	type		"craftitem"
+	up_chapter	crafts
+	name		"_Alien Electronic Warfare Suite"
+	pre_description {
+		default	"*msgid:craft_electronics_ew_alien_pre_txt"
+	}
+	description {
+		default "*msgid:craft_electronics_ew_alien_txt"
+	}
+
+	mail_pre {
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		icon	"icons/mail_tech"
+	}
+
+	mail {
+		from	"*msgid:mail_from_paul_navarre"
+		to		"*msgid:mail_to_base_commander"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		item (craft_el_alien_ew 1)
+	}
+
+	provides	craft_el_alien_ew
+	time		3000
+	producetime	2000
+
+	model	"aircraft/craft_item_ew_alien/ew_alien"
+}
+
+//========================
+// Alien Technologies retrieved from craft
+//========================
+
+tech rs_alien_materials
+{
+	name		"_Alien Materials"
+	type		"tech"
+	up_chapter	equipment
+
+	description {
+		default "*msgid:alien_materials_txt"
+	}
+	pre_description {
+		default "*msgid:alien_materials_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_paul_navarre"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+	}
+
+	time		3000
+	image	"techs/alien_materials"
+}
+
+tech rs_item_alienmaterials
+{
+	type	"weapon"
+	name	"_Alien Materials"
+	description {
+		default "*msgid:alien_materials_txt"
+	}
+
+	require_AND
+	{
+		tech rs_alien_materials
+	}
+	provides	alienmaterials
+	time		0
+	producetime	-1
+}
+
+//========================
+// News
+//========================
+
+tech news_init_political_situation
+{
+	type	"news"
+	name	"_Political Situation Before The Invasion"
+	description {
+		default "*msgid:news_initial_political_situation_txt"
+	}
+	up_chapter	news
+
+	time	0
+}
+
+tech news_after_the_war
+{
+	type	"news"
+	name	"_After The War"
+	description {
+		default "*msgid:news_after_the_war_txt"
+	}
+	up_chapter	news
+
+	time	0
+}
+
+tech news_phalanx_mumbai_aftermath
+{
+	type	"news"
+	name	"_PHALANX And The Mumbai Aftermath"
+	description {
+		default "*msgid:news_phalanx_and_mumbai_aftermath_txt"
+	}
+	up_chapter	news
+
+	time	0
+}
+
+tech news_new_twist
+{
+	name		"_A New Twist"
+	type		"news"
+	up_chapter	news
+
+	description {
+		default "*msgid:news_new_twist_txt"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to		"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_intelligence"
+	}
+
+	require_AND
+	{
+		tech rs_alien_xvi_event
+	}
+
+	time		0
+	image		"techs/news_new_twist"
+}
+
+tech rs_enemy_on_earth
+{
+	name		"_The Enemy On Earth"
+	type		"tech"
+	up_chapter	news
+
+	description {
+		default "*msgid:enemy_on_earth_txt"
+	}
+	pre_description {
+		default "*msgid:enemy_on_earth_pre_txt"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_intelligence"
+	}
+	mail_pre
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_intelligence"
+	}
+	require_AND
+	{
+		tech rs_craft_ufo_corrupter
+	}
+
+	time		2000
+	image		"techs/enemy_on_earth"
+}
+
+tech rs_xvi_census
+{
+	name		"_XVI Census"
+	type		"tech"
+	up_chapter	news
+
+	description {
+		default "*msgid:xvi_census_txt"
+	}
+	pre_description {
+		default "*msgid:xvi_census_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+
+	require_AND
+	{
+		tech rs_enemy_on_earth
+	}
+
+	time		6000
+	image		"techs/xvi"
+}
+
+tech rs_alien_strategy
+{
+	name		"_The Alien Strategy"
+	type		"tech"
+	up_chapter	news
+	description {
+		default "*msgid:alien_strategy_txt"
+	}
+	pre_description {
+		default "*msgid:alien_strategy_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+	require_OR
+	{
+		tech	rs_craft_ufo_harvester
+	}
+
+	time		1000
+	image		"techs/alien_strategy"
+}
+
+tech rs_orbital_ufo_activity
+{
+	name		"_Orbital UFO Activity"
+	type		"tech"
+	up_chapter	news
+
+	description {
+		default "*msgid:orbital_ufo_activity_txt"
+	}
+	pre_description {
+		default "*msgid:orbital_ufo_activity_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+
+	require_AND
+	{
+		tech	rs_craft_ufo_bomber
+	}
+
+	provides	orbit
+	time		20000
+	image		"techs/orbital_ufo_activity"
+	event		"cp_spawn_ufocarrier 105 40"
+}
+
+tech rs_alien_psi_device
+{
+	name		"_Alien Psi Device"
+	type		"tech"
+	up_chapter	news
+
+	description {
+		default "*msgid:alien_psi_device_txt"
+	}
+	pre_description {
+		default "*msgid:alien_psi_device_pre_txt"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_col_falkland"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+	require_AND
+	{
+		// this is activated manually
+		tech	rs_alien_psi_device
+	}
+
+	time		2000
+	model			wormhole_device
+}
+
+tech rs_human_vaccine
+{
+	name		"_Human Vaccine"
+	type		"tech"
+	up_chapter	news
+
+	description {
+		default "*msgid:human_vaccine_txt"
+	}
+	pre_description {
+		default "*msgid:human_vaccine_pre_txt"
+	}
+
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_intelligence"
+	}
+	require_AND
+	{
+		// Make the tech not researchable yet because vaccine has no effect.
+		tech	rs_human_vaccine
+	}
+
+	time		2000
+	image		"techs/human_vaccine"
+}
+
+tech rs_implant_amphetamine
+{
+	name		"_Amphetamine Implant"
+	type		"tech"
+	up_chapter	"skill"
+	provides	implant_amphetamine
+	image		"techs/implant_amphetamine"
+	description {
+		default "*msgid:implant_amphetamine_txt"
+	}
+	pre_description {
+		default "*msgid:implant_amphetamine_pre_txt"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_intelligence"
+	}
+	time		1
+}
+
+tech rs_implant_muscular
+{
+	name		"_Muscle Stimulant"
+	type		"tech"
+	up_chapter	"skill"
+	provides	implant_muscular
+	image		"techs/implant_muscular"
+	description {
+		default "*msgid:implant_muscular_txt"
+	}
+	pre_description {
+		default "*msgid:implant_muscular_pre_txt"
+	}
+	mail
+	{
+		from	"*msgid:mail_from_dr_connor"
+		to	"*msgid:mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_intelligence"
+	}
+	time		1
+}

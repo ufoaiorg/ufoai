@@ -1,0 +1,171 @@
+// Contains tiles sprites usually used to display node background
+
+sprite ui/button_blue {
+	image "banks/button_blue"
+	tiled_17_1_3	true
+	size "64 64"
+	texl "0 0"
+	hoveredtexl "64 0"
+	disabledtexl "64 64"
+	clickedtexl "0 64"
+}
+
+sprite ui/button_geoscape {
+	image "banks/button_geoscape"
+	tiled_17_1_3	true
+	size "64 64"
+	texl "0 0"
+	hoveredtexl "64 0"
+	disabledtexl "64 64"
+	clickedtexl "0 64"
+}
+
+sprite ui/button_green_big {
+	image "banks/button_green_big"
+	tiled_17_1_3	true
+	size "64 64"
+	texl "0 0"
+	hoveredtexl "64 0"
+	disabledtexl "64 64"
+	clickedtexl "0 64"
+}
+
+sprite ui/button_green_small {
+	image "banks/button_green_small"
+	tiled_17_1_3	true
+	size "64 64"
+	texl "0 0"
+	hoveredtexl "64 0"
+	disabledtexl "64 64"
+	clickedtexl "0 64"
+}
+
+sprite ui/button_green_verysmall {
+	image "banks/button_green_verysmall"
+	tiled_17_1_3	true
+	size "64 64"
+	texl "0 0"
+	hoveredtexl "64 0"
+	disabledtexl "64 64"
+	clickedtexl "0 64"
+}
+
+//
+// tiled sprite for popup
+//
+
+sprite ui/popup_tile {
+	image "tiled/popup"
+	tiled_popup	true
+	size "64 128"
+	texl "0 0"
+}
+
+sprite ui/popup_alpha_tile {
+	image "tiled/popup_alpha"
+	tiled_popup	true
+	size "64 128"
+	texl "0 0"
+}
+
+//
+// tiled sprite (corner 25, margin 3, middle 1)
+//
+
+sprite ui/panel_green {
+	image "tiled/panel_green"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_green_slim {
+	image "tiled/panel_green_slim"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_green_slim_trans {
+	image "tiled/panel_green_slim_trans"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_green_tab {
+	image "tiled/panel_green_tab"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_grey {
+	image "tiled/panel_grey"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_grey_black {
+	image "tiled/panel_grey_black"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_grey_green {
+	image "tiled/panel_grey_green"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_grey_green_large {
+	image "tiled/panel_grey_green_large"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_grey_green_large2 {
+	image "tiled/panel_grey_green_large2"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_grey_white {
+	image "tiled/panel_grey_white"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_rounded_black {
+	image "tiled/panel_rounded_black"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_rounded_green {
+	image "tiled/panel_rounded_green"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_tab {
+	image "tiled/panel_tab"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
+
+sprite ui/panel_window {
+	image "tiled/panel_window"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}

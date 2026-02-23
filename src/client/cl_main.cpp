@@ -71,6 +71,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 cvar_t* cl_fps;
 cvar_t* cl_leshowinvis;
 cvar_t* cl_selected;
+cvar_t* r_fps;			/* render frame rate cap */
+cvar_t* cl_simRate;		/* simulation tick rate */
 
 static cvar_t* cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 
@@ -875,6 +877,15 @@ static void CL_InitLocal (void)
 	cl_trace_debug = Cvar_Get("debug_trace", "0", 0, "Activates some client side trace debug rendering");
 	cl_leshowinvis = Cvar_Get("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entities as null models");
 
+	/* 120fps readiness: frame rate control */
+	r_fps = Cvar_Get("r_fps", "60", CVAR_ARCHIVE, "Render frame rate cap (60, 75, 100, 120, 144, 240, 0=unlimited)");
+	cl_simRate = Cvar_Get("cl_simRate", "60", CVAR_ARCHIVE, "Simulation/server tick rate in Hz (affects game logic update frequency)");
+
+	/* Initialize frame timing for fixed timestep simulation */
+	cls.simDeltaTime = 1.0f / cl_simRate->integer;  /* fixed simulation delta time */
+	cls.simAccumulator = 0.0f;
+	cls.lastSimTime = cls.realtime;
+
 	/* register our commands */
 	Cmd_AddCommand("targetalign", CL_ActorTargetAlign_f, N_("Target your shot to the ground"));
 
@@ -1042,29 +1053,13 @@ void CL_SetClientState (connstate_t state)
 }
 
 /**
- * @sa Qcommon_Frame
+ * @brief Run one step of simulation with fixed delta time
+ * @note This is called multiple times per render frame if needed (Milestone 1: 120fps readiness)
  */
-void CL_Frame (int now, void* data)
+static void CL_RunSimulation (void)
 {
-	static int lastFrame = 0;
-	int delta;
-
-	if (sys_priority->modified || sys_affinity->modified)
-		Sys_SetAffinityAndPriority();
-
-	/* decide the simulation time */
-	delta = now - lastFrame;
-	if (lastFrame)
-		cls.frametime = delta / 1000.0;
-	else
-		cls.frametime = 0;
-	cls.realtime = Sys_Milliseconds();
-	cl.time = now;
-	lastFrame = now;
-
-	/* frame rate calculation */
-	if (delta)
-		cls.framerate = 1000.0 / delta;
+	/* Set frametime to fixed timestep for game logic */
+	cls.frametime = cls.simDeltaTime;
 
 	if (cls.state == ca_connected) {
 		/* we run full speed when connecting */
@@ -1086,9 +1081,6 @@ void CL_Frame (int now, void* data)
 	if (cls.state == ca_active)
 		CL_ParticleRun();
 
-	/* update the screen */
-	SCR_UpdateScreen();
-
 	/* advance local effects for next frame */
 	SCR_RunConsole();
 
@@ -1100,6 +1092,82 @@ void CL_Frame (int now, void* data)
 
 	/* send a new command message to the server */
 	CL_SendCommand();
+}
+
+/**
+ * @brief Run one render frame with variable delta time
+ * @note Called once per display frame, regardless of simulation steps
+ */
+static void CL_RunRendering (void)
+{
+	/* Rendering uses the actual variable frametime for smooth visuals */
+	/* update the screen */
+	SCR_UpdateScreen();
+}
+
+/**
+ * @brief Main game frame - decouples simulation from rendering (Milestone 1: 120fps readiness)
+ * @sa Qcommon_Frame
+ * @sa CL_RunSimulation
+ * @sa CL_RunRendering
+ */
+void CL_Frame (int now, void* data)
+{
+	static int lastFrame = 0;
+	int delta;
+	int simRate;
+	float targetSimDelta;
+
+	if (sys_priority->modified || sys_affinity->modified)
+		Sys_SetAffinityAndPriority();
+
+	/* decide the render time (variable) */
+	delta = now - lastFrame;
+	if (lastFrame)
+		cls.frametime = delta / 1000.0f;
+	else
+		cls.frametime = 0;
+	cls.realtime = Sys_Milliseconds();
+	cl.time = now;
+	lastFrame = now;
+
+	/* frame rate calculation for rendering */
+	if (delta)
+		cls.framerate = 1000.0f / delta;
+
+	/* Update simulation delta time based on cl_simRate cvar (Milestone 1) */
+	simRate = cl_simRate->integer;
+	if (simRate < 10) simRate = 10;  /* minimum 10 Hz */
+	if (simRate > 1000) simRate = 1000;  /* maximum 1000 Hz */
+	targetSimDelta = 1.0f / simRate;
+
+	if (cls.simDeltaTime != targetSimDelta) {
+		cls.simDeltaTime = targetSimDelta;
+	}
+
+	/* Accumulate time for fixed timestep simulation (Milestone 1) */
+	if (cls.lastSimTime == 0)
+		cls.lastSimTime = cls.realtime;
+
+	int simDelta = cls.realtime - cls.lastSimTime;
+	cls.lastSimTime = cls.realtime;
+	cls.simAccumulator += simDelta / 1000.0f;
+
+	/* Run fixed-timestep simulation steps */
+	int simSteps = 0;
+	const int MAX_SIM_STEPS = 10;  /* prevent spiral of death: max catch-up steps */
+	while (cls.simAccumulator >= cls.simDeltaTime && simSteps < MAX_SIM_STEPS) {
+		CL_RunSimulation();
+		cls.simAccumulator -= cls.simDeltaTime;
+		simSteps++;
+	}
+
+	/* Cap accumulator to prevent huge jumps (e.g., if game was paused) */
+	if (cls.simAccumulator > cls.simDeltaTime * 2)
+		cls.simAccumulator = cls.simDeltaTime;
+
+	/* Always render once per frame, regardless of simulation steps */
+	CL_RunRendering();
 }
 
 /**

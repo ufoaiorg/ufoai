@@ -1,0 +1,599 @@
+msgid b_baselaser_txt {
+text "_Commander, my team and I are happy to report our test weapons are living up to all our expectations, and I'm submitting a new set of blueprints to your system for a laser-based defensive facility. You will now be able greenlight a new laser-based weapons facility for construction and produce the laser battery to install in that facility.
+
+Here are the highlights.
+
+What we've done is we've stripped down our pre-existing SAM turret design and modified it to fit an upscaled deuterium-fluoride reaction chamber. We've beefed up the electrical systems to help amplify beam output, adding several megawatts to power and several dozen kilometres to effective range. The turret servos have been completely replaced with a computer-controlled mag-lev system to improve accuracy.
+
+The result is that our new Base Defence Laser Turret is capable of tracking targets at any conceivable speed within Earth's atmosphere. It can lock on to targets almost instantly, and is powerful enough even at long range to damage UFO armour after only a few seconds of fire. Accuracy is good; the laser suffers much less from alien EW (Electronic Warfare) activity than missiles and can even predict basic evasive manoeuvres.
+
+Of course, as with any laser, range remains a problem. Atmospheric blooming limits effective range to only a few hundred kilometres. Weather effects and cloud cover can provide even more serious challenges and, in some conditions, could slash effective range by more than 50%. Lastly, the laser can only fire continuously for about 120 seconds before overheating comes into play, and it requires up to 60 seconds to cool down and recharge capacitors before it's ready to fire again.
+
+Despite these limitations, the Base Defence Laser Turret should provide an effective deterrent for most UFOs straying near our bases, and can provide assistance in shooting down alien craft at short range. It's going to be a good facility to have when one of our bases is in a pinch.
+
+Cdr. Navarre"
+}
+
+msgid b_baselaser_pre_txt {
+text "_Our CW laser program has been successful in miniaturising and lightening the necessary components for a powerful deuterium-fluoride reaction. We want to prototype some of our upgrades in existing surface-to-air laser arrays, allowing us to track and fire continuous high-powered beams at a power level that our plants can comfortably handle.
+
+Given the various shortcomings of our SAMs (Surface-to-Air Missiles) against alien technology, I don't need to tell you all the advantages of having a direct-fire laser defence system. It won't be a full replacement for our missile installations, but it's definitely an avenue worth exploring in order to help defend our bases from alien incursions.
+
+Please approve this program at your discretion, Commander.
+
+Cdr. Navarre"
+}
+
+msgid b_aliencontainment_txt {
+text "_Blueprints -- Alien Containment Facility
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Research Document, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 16 February 1958
+
+By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations Command
+
+
+
+Overview
+
+The first priority of the Extraterrestrial Response Unit is to prepare for a time when it may be needed. The PHALANX Containment Facility is an important part of any invasion response plan. It contains atmospheric habitation chambers, interrogation machinery, nutrition distribution units, and all the other apparatus required to sustain any extraterrestrial life that we could comprehend.
+
+Firstly, the airtight habitation chambers provide a place to store and keep extraterrestrials (EXT) for a significant period of time. Their atmosphere generators are capable of pumping any individual chamber full of any desired mix of gases. This can provide an EXT with breathable air for at least several weeks, well beyond the expected lifespan for a specimen in our research programs. Trace elements that do not occur naturally on Earth may be difficult to come by, but the likelihood of this becoming an impediment to our research is infinitessimal. In a worst-case scenario, the atmosphere generators are designed to allow links to recovered life support equipment.
+
+Secondly, waldo-operated medical and interrogation apparatus is present in each habitation chamber, able to apply sedation, medication or other chemical injections via a pneumatic dart launcher, or to administer electroshocks for interrogation purposes. There is also a so-called \"panic button\" installed on each chamber individually and in the control room for every block of chambers. The panic button can immediately incinerate the contents of its chamber during an emergency.
+
+The chambers and corridors of the Containment Facility are specially designed to allow EXTs of any shape and size to be transported and held. The facility also has a fully-equipped cryo-morgue to store corpses and samples for later review.
+
+
+Recommended Doctrine
+
+In the case of an invasion, the Containment Unit should be used to its full extent, storing both live and dead EXTs for research and allowing us to examine them in their living state. There is no greater priority than the discovery of the thought processes of the extraterrestrial mind, to learn their motivations and perhaps find a compromise, an opportunity for communication, or a suitable counterstrategy to neutralise the enemy once and for all.
+
+If a PHALANX base were to be attacked, immediate consideration should be given to hit the panic button on the entire Containment Facility. Unless there are irreplaceable specimens in storage, we cannot risk the attacking EXTs freeing their captured comrades. Immediate and complete sedation is another, more risky strategy -- however, I stress that we will not win a war with half measures.
+
+
+Addenda
+
+To whatever future Commanders might be reviewing this file: Keep in mind that the machinery in the Containment Facility, like a fair portion of PHALANX equipment, has yet to undergo its true acid test against an extraterrestrial force. Upgrades or adjustments may be required for it to perform up to its design spec."
+}
+
+msgid b_command_txt {
+text "_Blueprints -- Command Centre
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 30 July 2027
+
+By: Dr. Richard Strohm, Base Commander, PHALANX, Pacific Operations Command
+
+
+
+Overview
+
+To any noble personages reading this report -- yeah, right -- I should warn you that I'm somewhat drunk and am dictating the last of my paperwork before they close the base down forever. And I'll probably be long-dead before anyone digs up any info about this old project, so I can't get in trouble for whatever I say here. Just for the record, the bastarding SecDef can get buggered with a chainsaw. 'Budget cuts' my ass.
+
+Anyway, we've made some upgrades to the CC lately, so I've got to submit a new report.
+
+The Command Centre is the nerve centre of any PHALANX base. It coordinates all base activity from research to engineering, it gathers and interprets data from our radar installations, it serves as a war room for mission planning, and it is the C3 (Command/Control/Communications) hub that launches and directs our air-to-air interceptions. A base can still operate without a functional Command Centre, but it would be blind, deaf and dumb; our interceptors couldn't even launch for lack of traffic control.
+
+The CC is packed floor to ceiling with a brand new H-9000 mainframe and state-of-the-art communications gear, all of which is being ripped out by a gang of jackhammer-equipped thugs even as we speak. This equipment can't function without a power plant to supply it with enough electricity.
+
+In my experience, most of the command staff actually lives in the CC, but I'm told that lower-ranking individuals do get to see their bunks once every few days. Speaking for myself, though, that's anecdotal evidence at best.
+
+
+Recommended Doctrine
+
+In the unlikely event that this type of installation is ever built again, keep it supplied with enough power to run it properly, and place it in a well-protected spot some distance from the entrance and hangars. If a base does get attacked, defending the CC should be a top priority, because without it we will be unable to put up any kind of effective fight until it can be repaired.
+
+
+Addenda
+
+Addendum, Executive Officer Abel S. Howard, 18 March 2084:
+
+The old CC blueprints have been updated by our engineers to replace the ancient H-9000 mainframe and terminals with up-to-date holo-workstations and a fresh supercomputer installation. All other components are still viable and effective."
+}
+
+msgid b_entrance_txt {
+text "_Blueprints -- Entrance
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 26 January 1958
+
+By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations Command
+
+
+
+Overview
+
+The Base Entrance is the first structure built at any new PHALANX location. It is the primary -- and sometimes only -- way for equipment and personnel to enter the base. It consists of a vehicle ramp and a stairway that allow easy movement between base and surface. A small, camouflaged gatehouse is built on top for security and will also hide the entrance from flyovers. Like all our surface installations, it is coated with radar- and infrared-absorbing paints to reduce the chance of detection.
+
+
+Recommended Doctrine
+
+By its very nature, the Entrance is one of the most vulnerable facilities in any base. Hostile extraterrestrials will almost certainly attempt to gain access here. It is one of the focal points for the defence of a base, and should be placed at a considered distance to the Command Centre so that on-duty soldiers can respond to an attack with utmost alacrity without putting the CC at risk.
+
+On its own the Entrance facility has little tactical value. It can be assumed that any EXTs will merely try to hold the Entrance and choose more tempting targets to actually assault, since the Entrance usually contains nothing volatile and it has no areas that are particularly sensitive to destruction. Having no advanced equipment or components, it is also quick and cheap to repair. If damaged, other structures can temporarily take over the Entrance's functions without significantly impeding base operation.
+
+
+Addenda
+
+None."
+}
+
+msgid b_missile_txt {
+text "_Blueprints -- Missile Battery
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 18 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+Missiles have gotten more and more dangerous since World War 2, while countermeasure technologies have only been becoming effective since the start of the 21st century. In a contest between attack and defence, the attacker has always had the advantage. However, this has not deterred the aliens from developing defences to blow our minds.
+
+As an example, GEU forces have engaged alien craft with SAMs (Surface-to-Air Missiles) in the skies above Bonn. Forty missiles were launched from batteries across Europe while they had radar lock on two of the alien craft. Later, nearby infantry units fired between twelve and fifteen shoulder-mounted anti-air weapons.
+
+The number of hits scored? One. Just one. The UFO suffered a minor drop in acceleration during its landing at Bonn and later took off again without a hitch.
+
+The conclusions are obvious: alien EW (Electronic Warfare) capability is miles in advance of our own. However, we at PHALANX have made a thorough study of the sole hit scored, and it was not a matter of luck. What happened is that the UFO exposed itself at a less stealthy angle while dodging other incoming munitions, allowing the missile to hold lock all the way to its target.
+
+This proves that the aliens are not invulnerable to our missiles. We simply need the best ones for the job. These realisations have led us to adapt some old missile battery plans and reequip them with brand-new launchers. Our results are promising.
+
+The battery consists of 4 launchers that 'pop up' to the surface when engaging a target. Each launcher carries 20 of the AA51 \"Cicada\" SAM. This is the most advanced missile on Earth, packing more electronics than an airliner, designed to knock enemy aircraft right out of the sky regardless of how fast they're going. There is no better emergency defence weapon on the planet at the time of this writing.
+
+Against alien craft, the \"Cicada\"'s chances to hit will still be low, but in sufficient numbers it will hurt them. The missile and its electronics suite are of course highly expensive, well outside our budget range in the numbers required to succesfully engage incoming UFOs. Fortunately the UN has agreed to supply us all standard SAMs from its own strategic reserves at no cost to us.
+
+
+Recommended Doctrine
+
+If built at one of our bases, the missile battery can be ordered to engage any UFO in range or wait until a UFO is identified as preparing to attack the base in question. This decision is up to the Base Commander. Assisting our interceptors by 'softening up' a UFO with SAMs would help take some of the pressure off our pilots and aircraft, but there is simply no way to completely hide our missile launches despite our best attempts to camouflage them. Repeated large-scale launches will give away our position sooner or later.
+
+The missile battery will be at moderate risk during a base attack. It is designed to prevent base attacks; if one has gotten through, it should no longer matter to the current attackers unless they're paving the way for a follow-up. It may be a tempting target of opportunity, however, because while our missiles are well-protected they will detonate if subjected to enough abuse. An explosion in the missile battery could have disastrous effects on the facility and the base at large.
+
+
+Addenda
+
+None."
+}
+
+msgid b_large_hangar_txt {
+text "_Blueprints -- Large Hangar
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 11 August 2008
+
+By: Gen. E. Baxter, Base Commander, PHALANX, Pacific Operations Command
+
+
+
+Overview
+
+Due to the recent restructuring of our airfleet, we've had to make a complete reassessment and redesign of our hangar facilities. The VTOL (Vertical Take-Off and Landing) requirement for all new PHALANX aircraft has eliminated our need for runways. This has allowed us to move all hangar facilities into the actual base to improve security and response times.
+
+The Large Hangar provides underground space to store and maintain 1 large VTOL aircraft. Repairs, rearmament and refuelling can be carried out in complete obscurity. The aircraft never even sees the light of day until it's time for launch. During a launch, the hangar roof folds open and the large hydraulic lift raises the aircraft to a position above the roof where it can safely take off.
+
+For landing procedures, the lift features several tall catchhooks that -- once engaged by the undercarrige of a hovering pilot -- gently pull the aircraft down into a landing position. The catchhooks can intelligently adjust their own grip and even pass the grip from hook to hook to properly line up the undercarriage for landing. Once the catchhooks have snared the undercarriage and pulled it down to the landing surface, all the pilot needs to do is power down his engines. The system is simple and easy to use once a pilot gets the hang of it.
+
+A nearly-identical system has been implemented for the Small Hangar.
+
+The Large Hangar cannot house small craft due to incompatible support equipment such as fuel lines.
+
+
+Recommended Doctrine
+
+The primary function of the Large Hangar is to house dropships for rapid deployment of troops to sites of alien activity. Alternately it can house and support larger combat craft. Please refer to specific aircraft files to review their capabilities and deployment strategy.
+
+Every PHALANX aircraft requires 1 hangar of appropriate size for storage, maintenance and deployment.
+
+Hangars are a particularly vulnerable installation due to their direct connection to the surface. They will be a primary point of entrance for any extraterrestrial attackers. They are an extreme damage risk, filled with volatiles such as jet fuel and possibly high-explosive aircraft munitions. Worse, any aircraft left behind at the base will be a highly tempting target; severe damage to our interceptors -- or even more frightening, the dropship -- might put us out of action for weeks.
+
+If possible, all aircraft should be scrambled before an impending base attack and moved out of the area until the attack is over. They may be engaged in the air by an approaching UFO, but at least they will have the advantage of being able to manoeuvre. Still, this may not always be a viable tactic. Scrambling our craft within range of a heavily-armed attack ship could have more disastrous results than leaving them in their hangars, as tempting a target as that would make them.
+
+
+Addenda
+
+None."
+}
+
+msgid b_hospital_txt {
+text "_Blueprints -- Hospital
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 19 March 2084
+
+By: Surgeon-Captain Helen Floydd, Medical Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This conflict is going to be ugly, Commander. In order to treat the heavily-injured battlefield casualties we're going to see, we need advanced facilities with equipment no standard civilian or military hospital has available. This much is obvious; hundreds died needlessly in Mumbai hospitals because no proper machinery was available to treat the horrific bone-deep plasma burns inflicted by the alien weapons. We must be better prepared than that.
+
+The old PHALANX hospital designs are woefully inadequate to deal with the coming storm. They have never been updated since their creation in 1960 and contained little to no purpose-designed equipment. In the end we've had to completely replace them with new plans created by myself, with the help of Cdr. Navarre and our building experts. How the previous management expected to deal with battle wounds from unknown alien weaponry I will never know.
+
+As it stands, our hospital facilities are now the finest in the world. We are the leading experts in treating burn trauma, especially the removal and regeneration of charred tissue. We encourage injured flesh to regrow itself through intensive therapy which includes a heavy course of drugs, electrical nerve and muscle stimulation, and nanobot infusions directly into the wound. Theoretically, we should be able to restore any living human being to full health in six weeks. This includes psychological evaluation and injury counselling. Lighter injuries will of course take less time to heal.
+
+We also have facilities to carry out amputation and major bionic surgery. Powerful cybernetic limbs have been made available to us by our military sources around the world, as well as armoured torso cages, electronic eyes and other internal machinery. These can be installed into our soldiers at the Hospital facility to upgrade their combat efficiency if we can afford the high cost and convalescence time.
+
+The Hospital requires a Power Plant to fuel its high and continuous electricity demand.
+
+
+Recommended Doctrine
+
+Every base with armed-response troops should contain a Hospital for treatment. If there is no PHALANX Hospital available, soldiers will have to be sent out to standard hospitals where suboptimal treatment could result in a permanent loss of ability or even death.
+
+The advantages of upgrading our soldiers with mechanical parts should be obvious. These procedures can only be performed on a healthy body; convalescing troops who have sustained recent physical hardships or surgery must complete their convalescence before they can become eligible for bionic upgrades. Keep in mind also that bionic limb or eye replacement may have a negative impact on the patient's morale.
+
+Tactically, the Hospital is a moderate threat area. The aliens may try to kill our wounded and deprive us of proper medical facilities, but it is relatively unlikely that any attackers would select the Hospital as their primary target. Still, if we are attacked, a guard should be posted at the Hospital immediately.
+
+
+Addenda
+
+None."
+}
+
+msgid b_small_hangar_txt {
+text "_Blueprints -- Small Hangar
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 11 August 2008
+
+By: Gen. E. Baxter, Base Commander, PHALANX, Pacific Operations Command
+
+
+
+Overview
+
+Due to the recent restructuring of our airfleet, we've had to make a complete reassessment and redesign of our hangar facilities. The VTOL (Vertical Take-Off and Landing) requirement for all new PHALANX aircraft has eliminated our need for runways. This has allowed us to move all hangar facilities into the actual base to improve security and response times.
+
+The Small Hangar provides underground space to store and maintain 1 small VTOL aircraft. Repairs, rearmament and refuelling can be carried out in complete obscurity. The aircraft never even sees the light of day until it's time for launch. During a launch, the hangar roof folds open and the large hydraulic lift raises the aircraft to a position above the roof where it can safely take off.
+
+For landing procedures, the lift features several tall catchhooks that -- once engaged by the undercarrige of a hovering pilot -- gently pull the aircraft down into a landing position. The catchhooks can intelligently adjust their own grip and even pass the grip from hook to hook to properly line up the undercarriage for landing. Once the catchhooks have snared the undercarriage and pulled it down to the landing surface, all the pilot needs to do is power down his engines. The system is simple and easy to use once a pilot gets the hang of it.
+
+A nearly-identical system has been implemented for the Large Hangar.
+
+Obviously the Small Hangar cannot house large craft due to size considerations.
+
+
+Recommended Doctrine
+
+The primary function of the Small Hangar is to house interceptors for the interception of airborne UFOs. Please refer to specific aircraft files to review their capabilities and deployment strategy.
+
+Every PHALANX aircraft requires 1 hangar of appropriate size for storage, maintenance and deployment.
+
+Hangars are a particularly vulnerable installation due to their direct connection to the surface. They will be a primary point of entrance for any extraterrestrial attackers. They are an extreme damage risk, filled with volatiles such as jet fuel and possibly high-explosive aircraft munitions. Worse, any aircraft left behind at the base will be a highly tempting target; severe damage to our interceptors -- or even more frightening, the dropship -- might put us out of action for weeks.
+
+If possible, all aircraft should be scrambled before an impending base attack and moved out of the area until the attack is over. They may be engaged in the air by an approaching UFO, but at least they will have the advantage of being able to manoeuvre. Still, this may not always be a viable tactic. Scrambling our craft within range of a heavily-armed attack ship could have more disastrous results than leaving them in their hangars, as tempting a target as that would make them.
+
+
+Addenda
+
+None."
+}
+
+msgid b_lab_txt {
+text "_Blueprints -- Laboratory
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 02 October 2021
+
+By: Dr. Richard Strohm, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+There is a reason why PHALANX labs have been considered the best in the US for the past 50 years. We invented aircraft Stealth technology in the 1960s with the XD4 stealth interceptor and have remained at the forefront with the first production of artificial spider silk four years ago. These are the results of combining the brightest people with the finest equipment available. By keeping ourselves at the forefront, we ensure readiness against a possible extraterrestrial threat.
+
+Our new laboratories are equipped for any kind of research; biotechnology, nanotechnology, high-energy lasers, particle physics and more. There is nothing that can fit inside the laboratory's walls that cannot be properly studied, dissected or disassembled. It comes standard with growing vats that can create any organic matter we might need, hologram projectors for testing and 3D simulation, laser and maser installations, a miniature tokamak fusion chamber for plasma research, and a powerful particle accelerator.
+
+Any one of these installations would cost a fortune for a civilian operation or military contractor, but due to our experience and efficiency, we can build and maintain all of them at a fraction of the cost. Project times are also greatly reduced by having many types of equipment available at a moment's notice. Our high-level research makes full and continuous use of all of it.
+
+As long as we keep receiving the funding we need, the laboratory will remain one of the most essential parts of our defence strategy. In order to defeat any enemy, we must first come to know him, perhaps even understand him. To do that we'll need the best research facilities humanity can build, and ours are it.
+
+The Laboratory requires a working Power Plant and Command Centre to function.
+
+
+Recommended Doctrine
+
+Our scientists don't need a lab to live in a base, but they can't do their work without one. We should construct and operate as many labs as may be needed and/or affordable. All extraterrestrial technology must be analysed and reverse-engineered (if possible) as soon as we can.
+
+As laboratories go, ours are quite cost-effective to build and provide work space for up to 10 scientists each, working full-time.
+
+During a possible base attack, they are a moderate-priority target. If extraterrestrial attackers are aware enough of our existence to attack our bases directly, they will most certainly want to shut down our research programs. There are easier targets that can threaten the survival entire base -- especially the power plant -- but if presented as a target of opportunity, the EXTs may very well take the time to set off explosives inside the lab, which tends to be full of volatile substances. Severe damage to the base could result if our labs are not adequately protected.
+
+
+Addenda
+
+Addendum, Dr. Dolan Connor, 16 March 2084:
+
+Reviewing the files on PHALANX laboratory facilities, I have concluded that these blueprints were well ahead of their time. The design is still viable and can be adapted to our use with only minor equipment upgrades."
+}
+
+msgid b_powerplant_txt {
+text "_Blueprints -- Power Plant
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 16 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+PHALANX has had trouble generating enough power to meet its needs ever since the organisation was first conceived in 1955. The old bases were forced to constantly pump in electricity from large, non-emitting sources (like hydroelectric dams) via many kilometres of wiring. They were completely dependent on outside power and were paralysed whenever the grid went down. It has taken the Russian nuclear revolution to enable full electrical autonomy for our underground bases, even when factoring high-energy research.
+
+Our plant of choice is the German HEFR (High-Energy Fission Reactor), a very efficient energy amplifier design. It is a subcritical reactor, a reactor that produces fission without achieving a sustained chain reaction. Instead it uses an external source of neutrons -- in this case a particle accelerator -- to stimulate the reaction. This method releases enough power to keep the particle accelerator running, as well as a power surplus that is redirected to feed the rest of the base.
+
+The HEFR runs on thorium rather than uranium, and most of its waste output will decay naturally to the radioactive level of coal ash in only 500 years. By comparison, the half-lives of the isotopes most frequently used in nuclear weapons and old reactors are 24,110 years for plutonium (Pu-239) and 700 million years for uranium (U-235). The short-lived waste output is particularly easy to handle for the depleted element postprocessor integrated into the design. After a full trip through the postprocessor, the HEFR's reactor waste will take only weeks to decay to human-safe levels of radioactivity.
+
+In our design, the reactor core and operational machinery are built into a special shell located far deeper than the rest of the base. Only the coolant tanks and control/service entrances poke up to the base level. This protects against the possible but minuscule risk of a meltdown in case we completely lose refrigeration of the core.
+
+I admit, I copied half of the specifics verbatim from the various briefs I've read -- nuclear physics are a touch above my head -- but I understand the stats well enough. The power output of one plant is enough to fully meet the needs of a standard base. If a base is equipped with many high-energy buildings such as laboratories, a second plant may be required, but a subsequent increase in base defences and security will be required to properly protect it. We can easily and safely store enough fuel on-site for a decade of continued operation. A protected container is installed with every reactor, and it can be refuelled if necessary.
+
+
+Recommended Doctrine
+
+Every base needs at least one power plant. Without a power plant, many facilities -- including the Command Centre -- can't function. Bases with exceptional power use may need two or more to keep all our facilities working at top performance.
+
+Our base defence strategy should pay particular attention to defending the power plant. Damage to the coolant tanks could be disastrous; if we lose too much coolant a meltdown will be hard to avoid. We may consider stepping down the reactor in anticipation of an attack, but it would take a long time to get it started up again, during which we wouldn't be able to operate any energy-intensive equipment. Things like radar, laboratory equipment, even hangar lifts.
+
+
+Addenda
+
+None."
+}
+
+msgid b_quarters_txt {
+text "_Blueprints -- Living Quarters
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 22 January 1958
+
+By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations Command
+
+
+
+Overview
+
+The Living Quarters facility is the standard habitation unit for PHALANX personnel. It provides living space and sanitation for up to 20 people and several necessary ancillary personnel.
+
+The facility's lower floor contains a soldiers' barracks, communal showers, bathrooms, and a common area where troops can spend their off-duty time. Each soldier receives 1 bunk and 1 locker partition to store their personel effects such as civilian clothes. It is also intended for storage of uniforms and other on-duty equipment.
+
+The upper floor contains officers' quarters, generally used for any ranking/important personnel. Each private quarters has its own bed, desk, storage space and sanitary unit, and the level as a whole sports shared but separate shower cabins. This level is located above-ground and receives natural sunlight.
+
+In the case of an emergency, the Living Quarters has a special partition designed to function as a disaster shelter where non-combat personnel can take refuge until the all clear is given. The shelter provides oxygen and supplies for up to 12 people for 1 week. The access hatch is made of tungsten-reinforced titanium and will open for little short of a nuclear blast.
+
+The Living Quarters does not depend upon any other structures to operate.
+
+
+Recommended Doctrine
+
+The Living Quarters are an important part of evacuation procedures in the event of a base attack. All non-combat personnel are to drop their current tasks immediately and retreat to the nearest shelter or strongpoint, be it the Command Centre, Living Quarters or other appropriate facility. Seven minutes after the attack alarm sounds, all disaster shelter doors will close -- regardless of how many personnel are accounted for -- and afterwards they will refuse to open except from the inside. Everyone who is not going to participate in the fight should be inside by that time.
+
+The facility is almost worthless from a tactical standpoint, and will most likely be ignored by any extraterrestrials. It is thoroughly unimportant during an attack, as well as cheap to build and easy to repair. There is very little a hostile force could do short of total destruction that can really inconvenience a Living Quarters.
+
+
+Addenda
+
+None."
+}
+
+msgid b_radar_txt {
+text "_Blueprints -- Radar
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 18 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+Commander, we've had to make extensive changes to our old Radar facility designs to bring them up to date. The old report is no longer applicable, so I've decided to replace it with this one.
+
+Our Radar facility is not a large radar array in itself. It's actually a control centre for a series of camouflaged dishes placed on high ground around the base. There are between 8 and 12 dishes set up for each installation, depending on the available space and the dishes' individual coverage. Each dish is equipped with several means of detection rather than simply radar, as radar has trouble maintaining a lock on alien contacts. Supplemental systems include, but are not limited to, infrared and laser rangefinding.
+
+The facility is manned round-the-clock in 6-hour shifts, reviewing the processed data after our computers have gathered all discernible information from a contact. Human operators are absolutely necessary and should be present to supervise at all times; what the computers might dismiss as a radar ghost can turn out to be a stealthed alien harvester ready to hit a mass of civilians. Instinct and experience count just as much as software intelligence.
+
+Building more than one Radar installation at a base will not increase the extent of our radar coverage. A single facility will cover its full range as effectively as possible, and the only way to increase performance and range is to upgrade our systems with future technology or to build further installations outside the base.
+
+Our radar is patched directly into the UN aircraft registry and can cross-reference the transponder data of any civilian aircraft with its flight plan and cargo manifest. Non-PHALANX military aircraft are also required to log their routes into our database, but we can't know for certain if the various militaries will be very conscientious in following that directive.
+
+The Radar facility cannot function without a working Power Plant or a Command Centre to coordinate our radar into our tactical efforts.
+
+
+Recommended Doctrine
+
+Since our radar-emitting dishes are not located at the base site, there is no direct threat of discovery to a base from using active radar. Considering the number of other military radar sources around, it's unlikely that alien craft will be able to learn anything from a dedicated backtrace. At most they'll be able to find the general area of a base.
+
+However, any UFOs spotted patrolling the area may be trying to zero in on our installation, and should not be allowed to complete their mission under any circumstances.
+
+During an attack, the Radar facility will be at high risk. It is our eyes and ears. Without working radar coverage, we wouldn't be able to see the UFOs we're supposed to respond to. If any attacking aliens approach the facility they will almost certainly attempt to damage or destroy it with explosives. We must not let that happen.
+
+
+Addenda
+
+Addendum, Executive Officer Abel S. Howard, 18 March 2084:
+
+We should not consider the Radar facility to be an end-all solution to UFO detection. Even with supplemental systems our coverage is not fully reliable, and we should research ways to improve our detection technology if we're to have any chance of stopping the bastards."
+}
+
+msgid b_radar_adv_txt {
+text "_Commander, thanks to our recent capture and research into alien sensor equipment, I am now confident that we can drastically upgrade our radar capabilities using these new technologies. I'd like to submit a research proposal for a new detection facility, incorporating all the advances we've made so far.
+
+The Advanced Radar Facility will use exclusively PHALANX-manufactured equipment rather than off-the-shelf components. Much of the technology is already in place. We just need additional time and funding to complete some of the designs and adapt our software into a coherent package.
+
+We'll be waiting for your go-ahead, Commander.
+
+Cdr. Navarre"
+}
+
+msgid b_storage_txt {
+text "_Blueprints -- Storage
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 26 January 1958
+
+By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations Command
+
+
+
+Overview
+
+The Storage facility is the base's repository for ammunition, weapons, and other equipment not currently in use. All small-arms, vehicle and aircraft ammunition that is not earmarked for emergency response resides in the Storage facility. It also serves as a garage for our battlefield vehicles. These remain in their bays until mission time, with fully-loaded magazines in case of a base attack.
+
+Cameras and alarms maintain round-the-clock vigilance to ensure no unauthorised removals are made. All removals must be approved by the officer on duty before the alarm is deactivated. Live ammunition and other sensitive equipment such as alien artifacts are kept in locked containers in the quartermaster's office behind rigorous security; checking anything out of locked storage requires the presence of the base quartermaster and written authorisation from the Command Centre.
+
+All item requisitions necessary for research, production and aircraft maintenance are handled by the appropriate officers; no input from the Base Commander is required. Only mission equipment and battlefield vehicles require the Commander's direct supervision.
+
+The Storage facility can fit a maximum of 50 standard-sized pallets of equipment. The amount of items in a pallet is relatively unimportant, size is the main restricting factor with regards to Storage facility space. The contents of each individual pallet are scrupulously tracked by magnetic labels and detailed punch-card logs.
+
+It does not depend upon any other base facilities to function.
+
+
+Recommended Doctrine
+
+In the case of an invasion, we will need all the storage space we can get. Large stores of ammunition may need to be squared away for long periods of time. Recovered artifacts will need to be adequately contained and protected, as anything with nebulous alien capabilities should be kept in our explosion-proof lockers or be destroyed. If all the lockers are full, we may have no choice in the matter.
+
+During a base attack, the Storage facility would not be more than a target of opportunity. Any sensitive equipment in the facility will most likely be protected and require significant effort to destroy. Even the facility itself is cheap and easy to repair. The only threat comes from stored explosives and ammunition, which may present a risk due to the possibility of sympathetic detonation.
+
+Still, any extraterrestrials are unlikely to spend the time and effort getting into our explosion-proof lockers when there are easier targets nearby.
+
+
+Addenda
+
+None."
+}
+
+msgid b_workshop_txt {
+text "_Blueprints -- Workshop
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 28 January 1958
+
+By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations Command
+
+
+
+Overview
+
+The PHALANX Workshop is a small-scale production line equipped with the most high-tech military manufacturing processes available. It is designed for the production of classified materials and parts for which no other facility on Earth is equipped; even the replication of extraterrestrial technology.
+
+All parts produced by the Workshop are machined by hand with as much robotic assistance as possible. It requires the most highly-skilled engineers in the world to operate its advanced machinery, and to install new machines whenever our researchers devise a new or improved production process. The Workshop provides working space for up to 10 engineers at once.
+
+A Power Plant is required to keep the production line going. Without an operational plant, all production must be halted until power is restored. The Workshop also depends upon a Command Centre to coordinate construction efforts.
+
+
+Recommended Doctrine
+
+During a possible EXT war, we will be depending heavily on Workshop facilities to manufacture the weapons we need. H.G. Wells's War of the Worlds comes to mind for its frightening depiction of how our present technology might fare against an invasion force. Even the A-bomb may not be a sufficient deterrent. In a worst-case scenario we may be forced to resort to nuclear missiles if we have no other hope of staving off the assault.
+
+The Workshop is a high-security area due to its sensitive, often classified projects. The various hazardous or volatile substances used in production make it a dangerous place to be, and it will certainly be at risk during any base attack as a target of opportunity or even a moderate-risk mission objective. Shutting down our production for any length of time would be a victory for any extraterrestrial hostiles, especially if they manage to destroy a large project in progress such as the construction of a new aircraft.
+
+Reproducing interplanetary spacecraft technology will be one of the absolute necessities if we are ever to take the initiative against an extraterrestrial force. We cannot sit on Earth maintaining a defensive posture if we wish to put a definitive end to a military conflict. Our faithful Workshops and Laboratories are what will arm us against these nightmare scenarios.
+
+
+Addenda
+
+None."
+}
+
+msgid b_antimatter_txt {
+text "_Overview
+
+The Antimatter Storage facility is designed to safely store antimatter for later use, at least as safely as antimatter can possibly be stored. It is based around an advanced magnetic containment system we've derived from alien antimatter technology, which we call the 'inner shell'. The 'outer shell' consists of several radiation airlocks over the main passages, a heavily-armoured control room, and a host of other security and containment measures -- all designed to keep any radiation inside the outer shell.
+
+The outer shell's design borrows heavily from that of UN nuclear ammo dumps. In case of problems in the inner shell, there's an automatic security system which will lock down the instant containment drops below safe levels. The facility will first close its blast doors, then secure every airlock with tungsten locking rods, fill the outer shell atmosphere with radiation-retardant gas and inject anti-shock foam behind the walls, and then try to contain the inevitable blast.
+
+This procedure will not give any personnel caught inside time to escape, but that's the price we'll have to pay if we want to have a chance of saving the entire base.
+
+To understand how dangerous this facility really is, building an Antimatter Storage at one of our bases will require us to list that base with the UN nuclear site register. At full capacity just one storage facility will be containing the equivalent of nearly half a megaton of TNT. While this isn't much compared to modern thermonuclear weapons, it's enough to turn the entire base and everything inside to cinders in less than a second. It's difficult to 'blow up' antimatter, but under the wrong circumstances, it can happen.
+
+Even if no explosion occurs, a loss of containment would result in the annihilation of the stored antimatter with the normal matter of the containment system. If there were any fault or damage in the outer shell at this point, then the ensuing blast of gamma radiation and high-speed particles would escape and strip the area clean of life. The base would be poisoned and rendered uninhabitable for centuries to come.
+
+
+Recommended Doctrine
+
+I believe I've already stressed that this facility must be the most heavily-defended building in any PHALANX base, taking priority even over the Command Centre. Losing the CC would be a blow, but it can be rebuilt. The cost would be a trifle compared to the kind of armageddon that can result from a mishap at the Antimatter Storage.
+
+Although this facility will be essential to our continued success in this war, it's going to be very expensive to build and operate due to the advanced tech and materials required. It may be necessary to hold off on building one until we're sure our budget can stretch that far.
+
+Having said that, until we manage to build one of these facilities, we'll be completely unable to store or use any recovered antimatter. We can't just build up a pile of unstable, alien, possibly-damaged tanks of nuclear-level explosive. Everything we find will have to be destroyed for safety.
+
+Considering that we can't duplicate the stuff, we're going to need every microgramme we can get our hands on.
+
+
+Addenda
+
+None."
+}

@@ -1,0 +1,166 @@
+// ==================
+// HOSPITAL MENU
+// ==================
+
+window hospital
+{
+	{
+		fill		true
+	}
+
+	// Base name and container panel
+	BaseContainerPanel base_container {
+		// Hospital panel
+		panel mainBody {
+			//{ size "715 534" }
+			// Title bar
+			panel header {
+				{}
+				string title
+				{
+					string			"_Hospital"
+				}
+			}
+
+			// ==================
+			// employee list
+			// ==================
+
+			/**
+			 * @param <1> ucn
+			 * @param <2> light, medium, serious, healthy
+			 * @param <3> HP
+			 * @param <4> MaxHP
+			 * @param <5> Name
+			 * @param <6> Rank
+			 * @param <7> Assigned to aircraft?
+			 */
+			confunc hospitaladd	{
+				call *node:parent.patients@createChild("hos<1>", "HospitalItem")
+				if ( <2> eq "light" ) {
+					*node:parent.patients.hos<1>.icon@src		= "icons/health_normal"
+					*node:parent.patients.hos<1>.icon@tooltip	= "_Slightly wounded"
+				} elif ( <2> eq "medium" ) {
+					*node:parent.patients.hos<1>.icon@src		= "icons/health_medium"
+					*node:parent.patients.hos<1>.icon@tooltip	= "_Medium wounds"
+				} elif ( <2> eq "serious" ) {
+					*node:parent.patients.hos<1>.icon@src		= "icons/health_critical"
+					*node:parent.patients.hos<1>.icon@tooltip	= "_Heavily wounded"
+				} else {
+					*node:parent.patients.hos<1>.icon@src		= "icons/health_unused"
+					*node:parent.patients.hos<1>.icon@tooltip	= "_Healthy"
+				}
+				*node:parent.patients.hos<1>.health@current = <3>
+				*node:parent.patients.hos<1>.health@max = <4>
+				*node:parent.patients.hos<1>.name@string = "<5>"
+				*node:parent.patients.hos<1>.type@string = "<6>"
+				*node:parent.patients.hos<1>.id@integer = <1>
+
+				if ( <7> ne "" ) {
+					*node:parent.patients.hos<1>.assigned@invis = false
+					*node:parent.patients.hos<1>.assigned@tooltip = <7>
+				}
+			}
+
+			/**
+			 * @param <1> Entry index
+			 * @param <2> Body part type (id)
+			 * @param <3> Severity of wounds
+			 * @param <4> Tooltip
+			 */
+			confunc hospital_wounds {
+				if (<3> >= 0.3) {
+					*node:parent.patients.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound"
+				} else {
+					*node:parent.patients.hos<1>.wounds.wound_<2>@icon = "icons/<2>_wound_treated"
+				}
+				*node:parent.patients.hos<1>.wounds.wound_<2>@tooltip = "<4>"
+				*node:parent.patients.hos<1>.wounds.wound_<2>@invis = false
+			}
+
+			panel patients {
+				pos			"0 40"
+				size		"690 492"
+				layout		LAYOUT_TOP_DOWN_FLOW
+				layoutMargin	5
+				padding			20
+				wheelscrollable	true
+
+				onViewChange	{
+					*node:parent.hos_scroll@fullsize = <fullsize>
+					*node:parent.hos_scroll@current = <viewpos>
+					*node:parent.hos_scroll@viewsize = <viewsize>
+				}
+			}
+			vscrollbar hos_scroll {
+				image		"ui/scrollbar_v"
+				pos			"680 50"
+				height		"480"
+				current		0
+				viewsize	21
+				fullsize	21
+				hidewhenunused true
+				onChange {
+					*node:parent.patients@viewpos = <current>
+				}
+			}
+		}
+		ObjectInfo details
+		{
+			{
+				pos				"4 574"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+		}
+	}
+
+	panel implants {
+		{
+			pos		"739 5"
+			size	"280 758"
+			border	"2"
+			bordercolor	"0.56 0.81 0.76 1"
+			bgcolor			"0.56 0.81 0.76 0.3"
+		}
+
+		baseinventory equip {
+			pos						"20 20"
+			size					"240 714"
+			displayimplant			true
+			displayunavailableitem	true
+			columns					1
+			filter					"FILTER_S_IMPLANT"
+			onViewChange {
+				*node:root.implants.equip_scroll@current = <viewpos>
+				*node:root.implants.equip_scroll@viewsize = <viewsize>
+				*node:root.implants.equip_scroll@fullsize = <fullsize>
+			}
+			onSelect { cmd "object_update <lastselectedid> update_item_list 0;" }
+		}
+		vscrollbar equip_scroll {
+			image	"ui/scrollbar_v"
+			pos 	"242 20"
+			height	"200"
+			hidewhenunused true
+			onChange {
+				*node:root.implants.equip@viewpos = <current>
+			}
+		}
+	}
+
+	// Back to geoscape
+	Geoscape geoscape_button
+	{
+		onClick			{ cmd "ui_pop; ui_pop;" }
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
+
+	func onWindowOpened
+	{
+		call *node:root.base_container.mainBody.patients@removeAllchild
+		cmd "hosp_init <1>;"
+	}
+}

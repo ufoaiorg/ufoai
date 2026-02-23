@@ -1,0 +1,33 @@
+{
+	material tex_tech/tv
+	hardness 1.0
+	specular 1.0
+	{
+		texture tex_tech/tv0
+		blend GL_SRC_ALPHA GL_ONE
+		anim 2 10.0
+	}
+}
+{
+	material tex_nature/grass001
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+{
+	material tex_nature/dirt
+	{
+		texture tex_nature/dirt001
+		dirtmap 1.0
+		lightmap
+	}
+}
+{
+	material tex_lights/neon003
+	{
+		flare 4
+		color 1.0 0.3 0.1
+	}
+}

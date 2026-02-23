@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Author: Martin Gerhardy
+ Based on darkradiant shader description by greebo (greebo a/t angua.at)
+ Copyright (C) 2009 greebo
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the
+ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ Boston, MA 02111-1307, USA.
+
+-->
+<language id="ump" _name="UFO:AI Random Map Assembly File" version="2.0" _section="Others">
+  <metadata>
+    <property name="globs">*.ump</property>
+    <property name="line-comment-start">//</property>
+    <property name="block-comment-start">/*</property>
+    <property name="block-comment-end">*/</property>
+  </metadata>
+
+  <styles>
+    <style id="keyword"           _name="Keyword"               map-to="def:keyword"/>
+    <style id="string"            _name="String"                map-to="def:string"/>
+    <style id="floating-point"    _name="Floating point number" map-to="def:floating-point"/>
+    <style id="builtin-object"    _name="Builtin Object"        map-to="def:type"/>
+    <style id="comment"           _name="Comment"               map-to="def:comment"/>
+  </styles>
+
+  <default-regex-options case-sensitive="false" />
+
+  <definitions>
+    <define-regex id="identifier">[_a-zA-Z][_a-zA-Z0-9]*</define-regex>
+    <define-regex id="number">[1-9][0-9]*</define-regex>
+
+    <define-regex id="string-prefix">(u|U)?</define-regex>
+    <define-regex id="raw-string-prefix">(r|ur|R|UR|Ur|uR)</define-regex>
+
+    <context id="double-quoted-string" style-ref="string" end-at-line-end="true">
+      <start>\%{string-prefix}"</start>
+      <end>"</end>
+      <include>
+	<context ref="def:line-continue"/>
+      </include>
+    </context>
+
+    <context id="double-quoted-raw-string" style-ref="string" end-at-line-end="true">
+      <start>\%{raw-string-prefix}"</start>
+      <end>"</end>
+      <include>
+	<context ref="def:line-continue"/>
+      </include>
+    </context>
+
+    <context id="ump">
+      <include>
+	<context ref="def:shebang"/>
+	<context ref="def:shell-like-comment"/>
+
+	<context ref="double-quoted-string"/>
+	<context ref="double-quoted-raw-string"/>
+
+	<!-- Comments -->
+	<context id="comment" style-ref="comment" end-at-line-end="true">
+		<start>//</start>
+		<include>
+			<context ref="def:in-line-comment"/>
+		</include>
+	</context>
+
+	<context id="comment-multiline" style-ref="comment">
+		<start>/\*</start>
+		<end>\*/</end>
+		<include>
+			<context ref="def:in-comment"/>
+		</include>
+	</context>
+
+	<define-regex id="float" extended="true">
+	  ( (\d+)?\.\d+ | \d+\. ) |
+	  ( (\d+|(\d+)?\.\d+|\d+\.)[eE][+-]?\d+ )
+	</define-regex>
+
+	<context id="float" style-ref="floating-point">
+	  <match>(?&lt;![\w\.])\%{float}(?![\w\.])</match>
+	</context>
+
+	<context id="keyword" style-ref="keyword">
+	  <keyword>multiplayer</keyword>
+	  <keyword>base</keyword>
+	  <keyword>grid</keyword>
+	  <keyword>tile</keyword>
+	  <keyword>size</keyword>
+	  <keyword>fix</keyword>
+	</context>
+      </include>
+    </context>
+  </definitions>
+</language>

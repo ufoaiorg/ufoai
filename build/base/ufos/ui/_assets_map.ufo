@@ -1,0 +1,383 @@
+// ==============================
+// Reusable game setup components
+// (map options and selection)
+// ==============================
+
+
+
+// ============
+// Map settings
+// ============
+
+// Day/night selection (for skirmish and multiplayer map selection)
+component SelTimeDay extends panel
+{
+	{
+		size	"495 40"
+		onMouseEnter 	{
+			*node:this.txt_time_of_day@color = "1 1 1 0.9"
+		}
+		onMouseLeave 	{
+			*node:this.txt_time_of_day@color = "1 1 1 0.5"
+		}
+		onClick	{
+			cmd "sel_map_time;"
+		}
+		onWheelUp		{
+			cmd "sel_map_time;"
+		}
+		onWheelDown		{
+			cmd "sel_map_time;"
+		}
+	}
+
+	string txt_time_of_day
+	{
+		string		"_Time of day"
+		pos			"0 10"
+		size		"200 10"
+		color		"1 1 1 0.5"
+		ghost		true
+	}
+
+	button sel_time
+	{
+		pos 		"435 5"
+		size		"30 30"
+		icon 		"icons/day"
+		ghost		true
+	}
+
+	button sel_time_arrow
+	{
+		pos 		"475 10"
+		size		"10 18"
+		icon		"icons/arrow_rgt_off"
+		onMouseEnter 	{ *node:this@icon = "icons/arrow_rgt" }
+		onMouseLeave 	{ *node:this@icon = "icons/arrow_rgt_off" }
+		onClick	{
+			cmd "sel_map_time;"
+		}
+	}
+
+	confunc sel_map_time
+	{
+		if (*cvar:mn_serverday == 0) {
+			*node:parent.sel_time@icon = "icons/day"
+			*cvar:mn_serverday = 1
+		}
+		else {
+			*node:parent.sel_time@icon = "icons/night"
+			*cvar:mn_serverday = 0
+		}
+	}
+}
+
+// Enemy actor count
+component SetEnemyCount extends panel
+{
+	{
+		size	"495 40"
+		onMouseEnter 	{
+			*node:this.enemy_count_str@color = "1 1 1 0.9"
+			*node:this.enemy_count_val@color = "1 1 1 0.9"
+		}
+		onMouseLeave 	{
+			*node:this.enemy_count_str@color = "1 1 1 0.5"
+			*node:this.enemy_count_val@color = "1 1 1 0.5"
+		}
+		onWheelUp		{
+			call *node:this.increase_enemy_count
+		}
+		onWheelDown		{
+			call *node:this.decrease_enemy_count
+		}
+	}
+
+	string enemy_count_str
+	{
+		string		"_Enemies"
+		pos			"0 10"
+		size		"200 10"
+		color		"1 1 1 0.5"
+		tooltip		"_The maximum number of enemies you could face"
+		ghost		true
+	}
+
+	string enemy_count_val
+	{
+		string			*cvar:ai_singleplayeraliens
+		pos				"420 5"
+		size			"40 30"
+		font			"f_big"
+		color			"1 1 1 0.5"
+		contentalign	ALIGN_CC
+		ghost			true
+	}
+
+	button increase_enemy_arrow
+	{
+		pos 		"467 4"
+		size		"18 10"
+		icon		"icons/arrow_up_off"
+		onMouseEnter 	{ *node:this@icon = "icons/arrow_up" }
+		onMouseLeave 	{ *node:this@icon = "icons/arrow_up_off" }
+		onClick		{
+			call *node:parent.increase_enemy_count
+		}
+	}
+
+	button decrease_enemy_arrow
+	{
+		pos 		"467 18"
+		size		"18 10"
+		icon		"icons/arrow_down_off"
+		onMouseEnter 	{ *node:this@icon = "icons/arrow_down" }
+		onMouseLeave 	{ *node:this@icon = "icons/arrow_down_off" }
+		onClick		{
+			call *node:parent.decrease_enemy_count
+		}
+	}
+
+	func increase_enemy_count
+	{
+		if (*cvar:ai_singleplayeraliens < 60) {
+			*cvar:ai_singleplayeraliens = (*cvar:ai_singleplayeraliens + 1)
+		}
+	}
+
+	func decrease_enemy_count
+	{
+		if (*cvar:ai_singleplayeraliens > 1) {
+			*cvar:ai_singleplayeraliens = (*cvar:ai_singleplayeraliens - 1)
+		}
+	}
+}
+
+component SetEnemyRush extends panel
+{
+	{
+		size	"495 30"
+		onMouseEnter 	{ *node:this.enemy_rush_str@color = "1 1 1 0.9" }
+		onMouseLeave 	{ *node:this.enemy_rush_str@color = "1 1 1 0.5" }
+	}
+
+	string enemy_rush_str
+	{
+		string		"_Alien rush"
+		pos			"0 10"
+		size		"200 20"
+		color		"1 1 1 0.5"
+	}
+
+	CheckBox enemy_rush_toggle
+	{
+		current		*cvar:g_endlessaliens
+		pos			"465 10"
+		size		"20 20"
+	}
+}
+
+// Dropship selection panel
+component SelDropship extends panel
+{
+	{
+		size		"495 30"
+		onMouseEnter 	{ *node:this.dropships_str@color = "1 1 1 0.9" }
+		onMouseLeave 	{ *node:this.dropships_str@color = "1 1 1 0.5" }
+	}
+
+	string dropships_str
+	{
+		string		"_Dropship"
+		pos		"0 10"
+		size		"200 20"
+		color 		"1 1 1 0.5"
+	}
+	selectbox dropships_box
+	{
+		cvar		*cvar:rm_drop
+		dataid		OPTION_DROPSHIPS
+		pos		"220 10"
+		size		"265 20"
+		color		"1 1 1 0.5"
+	}
+
+	/**
+	 * Hide dropship selection if map does not support it.
+	 * This is called from within the game. confunc name must not be changed.
+	 * @param<1> boolean to hide or show
+	 */
+	/*
+	confunc skirmish_hide_dropships
+	{
+		*node:parent@invis = <1>
+		*node:parent@ghost = <1>
+	}
+	*/
+}
+
+// UFO selection panel
+component SelUFO extends panel
+{
+	{
+		size 		"495 30"
+		onMouseEnter 	{
+			*node:this.ufos_str@color = "1 1 1 0.9"
+			*node:this.ufos_box@color = "1 1 1 0.9"
+		}
+		onMouseLeave 	{
+			*node:this.ufos_str@color = "1 1 1 0.5"
+			*node:this.ufos_box@color = "1 1 1 0.5"
+		}
+	}
+	string ufos_str
+	{
+		string		"_UFO"
+		pos		"0 10"
+		size		"215 20"
+		color		"1 1 1 0.5"
+	}
+	selectbox ufos_box
+	{
+		cvar		*cvar:rm_ufo
+		dataid		OPTION_UFOS
+		pos		"220 10"
+		size		"265 20"
+		color		"1 1 1 0.5"
+	}
+	/**
+	 * Hide ufo selection if map does not support it.
+	 * This is called from within the game. confunc name must not be changed.
+	 * @param<1> boolean to hide or show
+	 */
+	/*
+	confunc skirmish_hide_ufos
+	{
+		*node:parent@invis = <1>
+		*node:parent@ghost = <1>
+	}
+	*/
+}
+
+// ========================
+// Map selection components
+// ========================
+
+// Individual image
+component MapImage extends image
+{
+	texl			"0 0"
+	texh			"128 96"
+	onWheelUp		{ cmd "mn_prevmap;" }
+	onWheelDown		{ cmd "mn_nextmap;" }
+	onClick			{ cmd "mn_nextmap;" }
+	onRClick		{ cmd "mn_prevmap;" }
+}
+
+// Selection box to choose next/prev map
+component cmpMapSlot extends panel
+{
+	{
+		size "315 35"
+	}
+
+	TextEntry slot_map
+	{
+		string		*cvar:mn_svmapname
+		contentalign	ALIGN_CC
+		font		"f_small"
+		pos			"32 0"
+		size		"256 34"
+		disabled	true
+		onWheelUp	{ cmd "mn_prevmap;" }
+		onWheelDown	{ cmd "mn_nextmap;" }
+	}
+
+	button prev_map
+	{
+		pos			"0 0"
+		size		"35 35"
+		icon		"icons/arrow_left"
+		onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+		onMouseLeave { *node:this@icon = "icons/arrow_left" }
+		onWheelUp	{ cmd "mn_prevmap;" }
+		onWheelDown	{ cmd "mn_nextmap;" }
+		onClick		{ cmd "mn_prevmap;" }
+	}
+	button next_map
+	{
+		pos			"285 0"
+		size		"35 35"
+		icon	"icons/arrow_right"
+		onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
+		onMouseLeave { *node:this@icon = "icons/arrow_right" }
+		onWheelUp	{ cmd "mn_prevmap;" }
+		onWheelDown	{ cmd "mn_nextmap;" }
+		onClick		{ cmd "mn_nextmap;" }
+	}
+}
+
+// ========================
+// PANEL: Map settings
+// (time of day, enemy count, dropship and UFO options)
+// ========================
+
+// Panel with time of day, dropship, enemy team and UFO options
+component MapOptions extends panel
+{
+	{
+		pos			"0 0"
+		size		"490 320"
+	}
+
+	// Preview images
+	MapImage mappic
+	{
+		src		*cvar:mn_mappic
+		pos		"20 0"
+	}
+	image frameOverlay1 {
+		pos		"20 0"
+		size	"128 96"
+		src		"maps/shots/map_ico_overlay"
+		ghost	true
+	}
+	MapImage mappic2
+	{
+		src		*cvar:mn_mappic2
+		pos		"175 0"
+	}
+	image frameOverlay2 {
+		pos		"175 0"
+		size	"128 96"
+		src		"maps/shots/map_ico_overlay"
+		ghost	true
+	}
+	MapImage mappic3
+	{
+		src		*cvar:mn_mappic3
+		pos		"330 0"
+	}
+	image frameOverlay3 {
+		pos		"330 0"
+		size	"128 96"
+		src		"maps/shots/map_ico_overlay"
+		ghost	true
+	}
+
+	// Map selection (next/prev)
+	cmpMapSlot mapSlot
+	{
+		{
+			pos "70 106"
+		}
+	}
+
+	SelTimeDay map_sel_time
+	{
+		{
+			pos		"0 170"
+		}
+	}
+}

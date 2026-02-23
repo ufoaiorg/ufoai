@@ -1,0 +1,130 @@
+// ==================
+// EDITOR MENU
+// ==================
+
+window editor {
+	{
+		pos "50 50"
+		size "200 300"
+		dragbutton	true
+		closebutton true
+		background		"ui/popup_alpha_tile"
+		string		"_Node editor"
+		font		"f_menusmall"
+	}
+
+	editor editor {
+		pos "0 0"
+		size "1 1"
+	}
+
+	panel toolbar {
+		{
+			pos				"25 55"
+			size			"150 35"
+			layout			LAYOUT_PACK
+			layoutMargin	3
+		}
+
+		button start_capture_mode {
+			tooltip		"_Capture a node"
+			icon		"icons/system_capture"
+			align		LAYOUTALIGN_LEFT
+			size		"35 35"
+			background		"ui/button_green_small"
+			font		"f_verysmall"
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick	{ call *node:root.editor@start }
+		}
+
+		button select_parent {
+			tooltip		"_Select parent node"
+			icon		"icons/system_parent"
+			align		LAYOUTALIGN_LEFT
+			size		"35 35"
+			background		"ui/button_green_small"
+			font		"f_verysmall"
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick	{ call *node:root.editor@selectparent }
+		}
+
+		button select_firstchild {
+			tooltip		"_Select first child node"
+			icon		"icons/system_child"
+			align		LAYOUTALIGN_LEFT
+			size		"35 35"
+			background		"ui/button_green_small"
+			font		"f_verysmall"
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick	{ call *node:root.editor@selectfirstchild }
+		}
+
+		button select_next {
+			tooltip		"_Select next node"
+			icon		"icons/system_next"
+			align		LAYOUTALIGN_LEFT
+			size		"35 35"
+			background		"ui/button_green_small"
+			font		"f_verysmall"
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			onClick	{ call *node:root.editor@selectnext }
+		}
+	}
+
+	button extract_window {
+		string		"_Extract window"
+		tooltip		"_Extract the window of the last/current selected node"
+		pos			"25 95"
+		size		"150 35"
+		background		"ui/button_green_small"
+		font		"f_verysmall"
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		onClick	{ cmd "ui_extract <cvar:ui_sys_editor_window>;" }
+	}
+
+	string current_window_title {
+		pos	"25 140"
+		size "150 20"
+		string "_Current window:"
+		font		"f_verysmall"
+	}
+
+	string current_window {
+		pos	"30 160"
+		size "150 20"
+		string *cvar:ui_sys_editor_window
+		font		"f_verysmall"
+	}
+
+	string current_node_title {
+		pos	"25 180"
+		size "150 20"
+		string "_Current node:"
+		font		"f_verysmall"
+	}
+
+	string current_node {
+		pos	"30 200"
+		size "150 20"
+		string *cvar:ui_sys_editor_node
+		font		"f_verysmall"
+	}
+
+	func onWindowOpened {
+		*cvar:scr_showcursor = 1
+		*cvar:ui_sys_editor_node = ""
+		*cvar:ui_sys_editor_window = ""
+		cmd "echo \"Use ui_extract to write your changes to a file\";"
+	}
+
+	func onWindowClosed {
+		delete *cvar:ui_sys_editor_node
+		delete *cvar:ui_sys_editor_window
+		call *node:root.editor@stop
+	}
+}

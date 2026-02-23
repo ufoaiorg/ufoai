@@ -1,0 +1,656 @@
+// ====================================
+// Squad selection screen
+// ====================================
+
+// Team loading
+component team_loadslots extends panel
+{
+	/**
+	 * @brief adds a new entry to the team load list
+	 * @param <1> the id
+	 * @param <2> the file name
+	 * @param <3> the slot name
+	 * @param <4> the team members
+	 * @param <5> true if user created, false if the save was delievered with the original game data
+	 */
+	confunc teamsaveslotadd { }
+	confunc teamsaveslotsclear { }
+}
+
+component team_loadedcurrent extends panel
+{
+	/**
+	 * @brief Adds a member to the current loaded team list
+	 * @param <1> id
+	 * @param <2> Name
+	 * @param <3> Head model
+	 * @param <4> Head skin
+	 */
+	confunc team_memberadd { }
+	confunc team_membersclear { }
+}
+
+// Enemy team equipment
+component EnemyEquip extends panel
+{
+	{
+		size 		"490 60"
+		onMouseEnter 	{
+			*node:this.equip_alien@color = "1 1 1 0.9"
+		}
+		onMouseLeave 	{
+			*node:this.equip_alien@color = "1 1 1 0.5"
+		}
+	}
+	string equip_alien
+	{
+		pos			"0 5"
+		size		"485 20"
+		string		"_Enemy weapons"
+		color		"1 1 1 0.5"
+	}
+	button prev_alien_equipment
+	{
+		pos		"165 30"
+		size		"35 35"
+		icon		"icons/arrow_left"
+		onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+		onMouseLeave { *node:this@icon = "icons/arrow_left" }
+		onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
+		onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
+		onClick		{ cmd "sk_prevequip ai_equipment;" }
+	}
+	textentry slot_alien_equipment
+	{
+		pos			"200 30"
+		size		"260 30"
+		string		*cvar:ai_equipmentname
+		background		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		disabled	true
+		onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
+		onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
+	}
+	button next_alien_equipment
+	{
+		pos			"460 30"
+		size		"35 35"
+		icon		"icons/arrow_right"
+		onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
+		onMouseLeave { *node:this@icon = "icons/arrow_right" }
+		onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
+		onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
+		onClick		{ cmd "sk_nextequip ai_equipment;" }
+	}
+}
+
+// Squad type selection
+component SquadType extends panel
+{
+	{
+		size	"485 28"
+	}
+
+	string squad_default_type_str {
+		string		"_Squad"
+		pos		"0 0"
+		size		"200 25"
+		color		"1 1 1 0.5"
+	}
+
+	selectbox squad_default_sel {
+		cvar		*cvar:cl_teamdef
+		dataid		OPTION_TEAMDEFS
+		pos		"205 0"
+		size		"280 40"
+		color		"1 1 1 0.5"
+	}
+}
+
+
+// Player squad maximum soldiers count
+component SetSquadCount extends panel
+{
+	{
+		size	"495 40"
+		onMouseEnter {
+			*node:this.squad_count_str@color = "1 1 1 0.9"
+			*node:this.squad_count_val@color = "1 1 1 0.9"
+		}
+		onMouseLeave {
+			*node:this.squad_count_str@color = "1 1 1 0.5"
+			*node:this.squad_count_val@color = "1 1 1 0.5"
+		}
+		onWheelUp {
+			cmd "squad_count up;"
+		}
+		onWheelDown {
+			cmd "squad_count down;"
+		}
+	}
+
+	string squad_count_str
+	{
+		string		"_Max Soldiers"
+		pos			"0 10"
+		size		"200 10"
+		color		"1 1 1 0.5"
+		ghost		true
+	}
+
+	string squad_count_val
+	{
+		string			*cvar:sv_maxsoldiersperplayer
+		pos				"420 5"
+		size			"40 30"
+		font			"f_big"
+		color			"1 1 1 0.5"
+		contentalign	ALIGN_CC
+		ghost			true
+	}
+
+	button increase_squad_arrow
+	{
+		pos 		"467 4"
+		size		"18 10"
+		icon		"icons/arrow_up_off"
+		onMouseEnter 	{ *node:this@icon = "icons/arrow_up" }
+		onMouseLeave 	{ *node:this@icon = "icons/arrow_up_off" }
+		onClick {
+			cmd "squad_count up;"
+		}
+	}
+
+	button decrease_squad_arrow
+	{
+		pos 		"467 18"
+		size		"18 10"
+		icon		"icons/arrow_down_off"
+		onMouseEnter 	{ *node:this@icon = "icons/arrow_down" }
+		onMouseLeave 	{ *node:this@icon = "icons/arrow_down_off" }
+		onClick {
+			cmd "squad_count down;"
+		}
+	}
+
+	// Raise or lower the maximum number of soldiers allowed
+	// Param <0> = up/down
+	confunc squad_count
+	{
+		if (param1 eq "up") {
+			if (*cvar:sv_maxsoldiersperplayer < 12) {
+				*cvar:sv_maxsoldiersperplayer = (*cvar:sv_maxsoldiersperplayer + 1)
+			}
+		} else {
+			if (*cvar:sv_maxsoldiersperplayer > 1) {
+				*cvar:sv_maxsoldiersperplayer = (*cvar:sv_maxsoldiersperplayer - 1)
+			}
+		}
+	}
+}
+
+
+// Player squad maximum UGVs count
+component SetUGVCount extends panel
+{
+	{
+		size	"485 40"
+		onMouseEnter {
+			*node:this.ugv_count_str@color = "1 1 1 0.9"
+			*node:this.ugv_count_val@color = "1 1 1 0.9"
+		}
+		onMouseLeave {
+			*node:this.ugv_count_str@color = "1 1 1 0.5"
+			*node:this.ugv_count_val@color = "1 1 1 0.5"
+		}
+		onWheelUp {
+			cmd "ugv_count up;"
+		}
+		onWheelDown {
+			cmd "ugv_count down;"
+		}
+	}
+
+	string ugv_count_str
+	{
+		string		"_Max UGVs"
+		pos			"0 10"
+		size		"200 10"
+		color		"1 1 1 0.5"
+		ghost		true
+	}
+
+	string ugv_count_val
+	{
+		string			*cvar:cl_ugvs
+		pos				"420 5"
+		size			"40 30"
+		font			"f_big"
+		color			"1 1 1 0.5"
+		contentalign	ALIGN_CC
+		ghost			true
+	}
+
+	button increase_ugv_arrow
+	{
+		pos 		"467 4"
+		size		"18 10"
+		icon		"icons/arrow_up_off"
+		onMouseEnter 	{ *node:this@icon = "icons/arrow_up" }
+		onMouseLeave 	{ *node:this@icon = "icons/arrow_up_off" }
+		onClick		{
+			cmd "ugv_count up;"
+		}
+	}
+
+	button decrease_ugv_arrow
+	{
+		pos 		"467 18"
+		size		"18 10"
+		icon		"icons/arrow_down_off"
+		onMouseEnter 	{ *node:this@icon = "icons/arrow_down" }
+		onMouseLeave 	{ *node:this@icon = "icons/arrow_down_off" }
+		onClick		{
+			cmd "ugv_count down;"
+		}
+	}
+
+	// Raise or lower the maximum number of ugvs allowed
+	// Param <0> = up/down
+	confunc ugv_count
+	{
+		if (param1 eq "up") {
+			if (*cvar:cl_ugvs < 2) {
+				*cvar:cl_ugvs = (*cvar:cl_ugvs + 1)
+			}
+		} else {
+			if (*cvar:cl_ugvs > 0) {
+				*cvar:cl_ugvs = (*cvar:cl_ugvs - 1)
+			}
+		}
+	}
+}
+
+// Player squad type panel (Default or Custom)
+component PlayerSquad extends panel
+{
+	{
+		size 		"505 250"
+		onMouseEnter 	{
+			*node:this.player_squad_str@color = "1 1 1 0.9"
+		}
+		onMouseLeave 	{
+			*node:this.player_squad_str@color = "1 1 1 0.5"
+		}
+	}
+
+	string player_squad_str
+	{
+		pos		"10 10"
+		size		"220 20"
+		string		"_Squad settings"
+		color		"1 1 1 0.5"
+	}
+
+	button player_squad_default {
+		pos		"245 0"
+		size		"130 40"
+		string		"_DEFAULT"
+		font		"f_verysmall_bold"
+		color		"1 1 1 0.9"
+		bgcolor		"0 0 0 1"
+		contentalign	ALIGN_CC
+		onClick		{ cmd "toggle_player_squad 0;" }
+	}
+
+	button player_squad_custom {
+		pos			"375 0"
+		size		"130 40"
+		string		"_CUSTOM"
+		font		"f_verysmall_bold"
+		color		"1 1 1 0.5"
+		contentalign	ALIGN_CC
+		onClick		{ cmd "toggle_player_squad 1;" }
+	}
+
+	// Default squad options
+	panel squad_default_options {
+		{
+			pos		"0 40"
+			size		"500 230"
+			bgcolor		"0 0 0 1"
+			onMouseEnter {
+				*node:this.squad_default_type.squad_default_type_str@color = "1 1 1 0.9"
+			}
+			onMouseLeave {
+				*node:this.squad_default_type.squad_default_type_str@color = "1 1 1 0.5"
+			}
+		}
+
+		SquadType squad_default_type
+		{
+			{
+				pos		"10 10"
+			}
+		}
+
+		SetSquadCount squad_default_count
+		{
+			{
+				pos		"10 60"
+			}
+		}
+
+		SetUGVCount squad_default_ugvs
+		{
+			{
+				pos		"10 90"
+			}
+		}
+	}
+
+	// Custom squad options
+	panel squad_custom_options
+	{
+		{
+			pos				"0 40"
+			size			"505 230"
+			bgcolor			"0 0 0 1"
+			invis			true
+		}
+
+		MainMenu3Btn custom_squad_new
+		{
+			string		"_NEW"
+			pos			"10 15"
+			size		"75 25"
+			font		"f_verysmall_bold"
+			onClick		{
+				cmd "toggle_custom_team_opts new;"
+			}
+		}
+
+		MainMenu2Btn custom_squad_load
+		{
+			string		"_LOAD"
+			pos			"85 15"
+			size		"75 25"
+			font		"f_verysmall_bold"
+			onClick		{
+				cmd "toggle_custom_team_opts load;"
+			}
+		}
+
+		MainMenu3Btn custom_squad_save
+		{
+			string		"_SAVE"
+			pos			"295 15"
+			size		"100 25"
+			font		"f_verysmall_bold"
+			onClick		{
+				cmd		"team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_save_popup;"
+			}
+		}
+
+		MainMenu2Btn custom_squad_edit
+		{
+			string		"_EQUIP"
+			pos			"395 15"
+			size		"100 25"
+			font		"f_verysmall_bold"
+			onClick		{
+				cmd		"team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_edit;"
+			}
+		}
+
+		panel squad_custom_new_opts
+		{
+			{
+				pos		"10 60"
+				size	"495 150"
+				invis	true
+			}
+
+			// Squad type selection
+			panel squad_new_type {
+				{
+					pos	"0 0"
+					size	"485 130"
+				}
+
+				string squad_default_type_str {
+					string		"_Squad"
+					pos		"0 5"
+					size		"195 25"
+					color		"1 1 1 0.5"
+				}
+				selectbox squad_default_sel {
+					cvar		*cvar:cl_teamdef
+					dataid		OPTION_TEAMDEFS
+					pos		"200 5"
+					size		"285 5"
+					color		"1 1 1 0.5"
+				}
+
+				string squad_equip {
+					pos		"0 30"
+					size		"195 25"
+					string		"_Equipment"
+					color		"1 1 1 0.5"
+				}
+				button prev_squad_equipment {
+					pos		"165 55"
+					size		"35 35"
+					icon		"icons/arrow_left"
+					onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+					onMouseLeave { *node:this@icon = "icons/arrow_left" }
+					onWheelUp	{ cmd "sk_prevequip cl_equip;" }
+					onWheelDown	{ cmd "sk_nextequip cl_equip;" }
+					onClick		{ cmd "sk_prevequip cl_equip;" }
+				}
+				textentry squad_slot_equipment {
+					pos		"200 55"
+					size		"260 30"
+					string		*cvar:cl_equipname
+					background		"ui/button_green_verysmall"
+					color		"0 .78 0 1"
+					selectcolor	"1 1 1 1"
+					contentalign	ALIGN_CC
+					padding		8
+					font		"f_verysmall"
+					disabled	true
+					onWheelUp	{ cmd "sk_prevequip cl_equip;" }
+					onWheelDown	{ cmd "sk_nextequip cl_equip;" }
+				}
+				button next_squad_equipment {
+					pos		"460 55"
+					size		"35 35"
+					icon		"icons/arrow_right"
+					onMouseEnter	{ *node:this@icon = "icons/arrow_right_on" }
+					onMouseLeave	{ *node:this@icon = "icons/arrow_right" }
+					onWheelUp	{ cmd "sk_prevequip cl_equip;" }
+					onWheelDown	{ cmd "sk_nextequip cl_equip;" }
+					onClick		{ cmd "sk_nextequip cl_equip;" }
+				}
+
+				MainMenu2Btn selected_squad_edit
+				{
+					string		"_CREATE"
+					pos		"325 105"
+					size		"160 25"
+					font		"f_verysmall_bold"
+					onClick {
+						cmd "game_autoteam *cvar:cl_equip;team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;ui_push game_team_edit;toggle_custom_team_opts loaded;"
+					}
+				}
+			}
+		}
+
+		panel squad_custom_load_opts
+		{
+			{
+				pos		"10 60"
+				size	"495 150"
+				invis	true
+			}
+
+			// Load slots
+			panel slots
+			{
+				size	"495 145"
+				layout			LAYOUT_TOP_DOWN_FLOW
+				layoutMargin	2
+				wheelscrollable	true
+
+				onViewChange {
+					*node:parent.slots_scroll@fullsize = <fullsize>
+					*node:parent.slots_scroll@current = <viewpos>
+					*node:parent.slots_scroll@viewsize = <viewsize>
+				}
+			}
+
+			vscrollbar slots_scroll {
+				image		"ui/scrollbar_v"
+				pos			"465 0"
+				height		"145"
+				hidewhenunused	true
+				onChange {
+					*node:parent.slots@viewpos = <current>
+				}
+			}
+
+			confunc teamsaveslotadd
+			{
+				call *node:parent.slots@createChild("slot<1>", "LoadSlot")
+				*node:parent.slots.slot<1>.filename@string = "<2>"
+				*node:parent.slots.slot<1>.index@integer = <1>
+				*node:parent.slots.slot<1>.button@string = "<3> (<4>)"
+				*node:parent.slots.slot<1>.button@tooltip = "<3> (<4>)"
+				*node:parent.slots.slot<1>.button@onClick = {
+					cmd "set_team_load <node:parent.index@integer>;ui_push game_team_edit;toggle_custom_team_opts loaded;"
+				}
+
+				*node:parent.slots.slot<1>.button@width = "390"
+				*node:parent.slots.slot<1>.delete@onClick = { cmd "game_teamdelete <node:this.parent.filename@string>;game_teamcomments;" }
+				if (<5> == 0) {
+					*node:parent.slots.slot<1>.delete@invis = true
+				}
+			}
+
+			confunc teamsaveslotsclear
+			{
+				call *node:parent.slots@removeAllChild
+			}
+
+			// Set the team to load
+			// * param <1> (team slot to load)
+			confunc set_team_load {
+				cmd "game_loadteam <1>;team_initskin;game_actorselect 0;game_teamupdate;game_saveteamstate;"
+
+				// Remove white color from any button that might be saved
+				// Then add it back to the selected button
+				forchildin ( *node:parent.slots ) {
+					*node:child@color = "1 1 1 0.5"
+				}
+				*node:parent.slots.slot<1>@color = "1 1 1 0.9"
+			}
+		}
+
+		panel squad_custom_loaded_opts
+		{
+			{
+				pos		"10 60"
+				size	"490 140"
+				invis	true
+			}
+
+			panel soldierlist
+			{
+				pos				"0 0"
+				size			"465 125"
+				padding			6
+				layout			LAYOUT_TOP_DOWN_FLOW
+				wheelscrollable	true
+				contentalign	ALIGN_CC
+				onViewChange
+				{
+					*node:parent.soldierlist_scroll@fullsize = <fullsize>
+					*node:parent.soldierlist_scroll@current = <viewpos>
+					*node:parent.soldierlist_scroll@viewsize = <viewsize>
+				}
+			}
+
+			vscrollbar soldierlist_scroll
+			{
+				image			"ui/scrollbar_v"
+				pos				"469 0"
+				height			"125"
+				current			0
+				viewsize		4
+				hidewhenunused	true
+				onChange
+				{
+					*node:parent.soldierlist@viewpos = <current>
+				}
+			}
+
+			confunc team_memberadd
+			{
+				call *node:parent.soldierlist@createChild("member<1>", "string")
+				*node:parent.soldierlist.member<1>@string = <2>
+				*node:parent.soldierlist.member<1>@contentalign = ALIGN_CL
+				*node:parent.soldierlist.member<1>@size = "490 20"
+			}
+
+			/**
+			 * @brief Removes all entries from the current team list.
+			 */
+			confunc team_membersclear
+			{
+				call *node:parent.soldierlist@removeAllChild
+			}
+		}
+
+		// Toggle the team options for New or Load
+		// * param <1> (new or load)
+		confunc toggle_custom_team_opts {
+			if (param1 eq "new") {
+				*node:parent.squad_custom_new_opts@invis = false
+				*node:parent.squad_custom_load_opts@invis = true
+				*node:parent.squad_custom_loaded_opts@invis = true
+			} elif (param1 eq "load") {
+				*node:parent.squad_custom_new_opts@invis = true
+				*node:parent.squad_custom_load_opts@invis = false
+				*node:parent.squad_custom_loaded_opts@invis = true
+			} elif (param1 eq "loaded") {
+				*node:parent.squad_custom_new_opts@invis = true
+				*node:parent.squad_custom_load_opts@invis = true
+				*node:parent.squad_custom_loaded_opts@invis = false
+			}
+		}
+	}
+
+	// Switch player squad selection from default to custom
+	// * param <0>	(0 = default, 1 = custom)
+	confunc toggle_player_squad {
+		if (param1 eq "0") {
+			*node:parent.player_squad_default@bgcolor = "0 0 0 1"
+			*node:parent.player_squad_default@color = "1 1 1 0.9"
+			*node:parent.player_squad_custom@bgcolor = "0 0 0 0"
+			*node:parent.player_squad_custom@color = "1 1 1 0.5"
+			*node:parent.squad_default_options@invis = false
+			*node:parent.squad_custom_options@invis = true
+		} else {
+			*node:parent.player_squad_default@bgcolor = "0 0 0 0"
+			*node:parent.player_squad_default@color = "1 1 1 0.5"
+			*node:parent.player_squad_custom@bgcolor = "0 0 0 1"
+			*node:parent.player_squad_custom@color = "1 1 1 0.9"
+			*node:parent.squad_default_options@invis = true
+			*node:parent.squad_custom_options@invis = false
+		}
+	}
+}

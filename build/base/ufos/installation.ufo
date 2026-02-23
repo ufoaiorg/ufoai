@@ -1,0 +1,63 @@
+// ==============
+// INSTALLATION
+// ==============
+
+installation radartower
+{
+	name		"_Radar Tower"
+	model		"geoscape/radar"
+	image		"pics/geoscape/radar"
+	cost		10000
+	radar_range	8
+	radar_tracking_range	19
+	max_damage		1
+	buildtime	7
+	type		"radartower"
+
+	description	"_The radar tower is an unmanned installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
+}
+
+installation ufoyard
+{
+	name		"_UFO Yard"
+	model		"geoscape/ufoyard"
+	image		"pics/geoscape/ufoyard"
+	cost		30000
+	radar_range	0
+	max_ufo_stored	6
+	max_damage		100
+	buildtime	11
+	type		"ufoyard"
+
+	description	"_The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
+}
+
+installation samsite
+{
+	name		"_SAM Site"
+	model		"geoscape/samlauncher"
+	image		"pics/geoscape/defence"
+	cost		20000
+	radar_range	0
+	max_batteries	2
+	max_damage		1
+	buildtime	3
+	type		"samsite"
+
+	description "_The SAM site is an unmanned installation that can be placed anywhere in the world to automatically engage detected UFOs with surface-to-air missiles. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the missile launches and attempt to destroy the site once they find it. The SAM site is sturdy but will succumb to repeated bombing. Missile reloads are delivered free to our sites by UN forces."
+}
+
+installation orbit
+{
+	name			"_Orbital Rocket Launcher"
+	model			"geoscape/orbit"
+	image			"pics/geoscape/orbit"
+	cost			200000
+	radar_range		0
+	max_damage		0
+	buildtime		0
+	type			"orbit"
+	once			true
+
+	description 	"_The Orbital Rocket Launcher is a large installation built into the ground which is capable of launching a heavy payload beyond earth's atmosphere to knock down an orbiting UFO."
+}

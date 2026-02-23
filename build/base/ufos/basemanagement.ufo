@@ -1,0 +1,295 @@
+// ==============
+// BASEMANAGEMENT
+// ==============
+
+// name:				The name of the facility
+// image:				The picture for this facility, as seen on the base screen
+// fixcosts:			The construction cost for this facility
+// depends:				Facilities need the things listed here to function.
+// type:				The type this facility belongs to. Used for upgrades.
+// build_time:			The time (in days) this facility takes to construct
+// varcosts:			The monthely maintenance cost for this facility
+// map_name:			The name of the map tile for this facility (for base defence maps)
+//							buildings without mapname are not buildable
+// tech:				The tech ID that has the UFOpaedia entry for this facility
+// size					Size of the building (columns, rows)
+// capacity:			The capacity of this facility. The meaning of the value depends on the building type.
+// mandatory:			Automatically construct this building when a base is set up.
+// max_count:			No base may have more than this amount of this facility
+// starting_employees:	The amount of employees that come with this building
+// level:				building level
+//
+// Events:				Every event is called with <baseidx> <buildingtype> parameters, so do not put a semicolon (;) at the end.
+// onconstruct:			The name of the script to run when the facility is built (placed on basemap)
+// ondestroy:			The name of the script to run when this facility is destroyed. If the building was operational when destroyed,
+//							the ondisable event will be triggered as well.
+// onenable:			The name of the script to run when this facility get operational.
+// ondisable:			The name of the script to run when this facility get disabled.
+
+// ====================
+// Buildings
+// ====================
+
+building building_aliencontainment
+{
+	name			"_Alien Containment"
+	image			"base/aliencont"
+	fixcosts		92000
+	depends			building_powerplant
+	type			"aliencont"
+	build_time		10
+	varcosts		7500
+	map_name		"aliencont"
+	tech			rs_building_aliencontainment
+	size			"2 1"
+	capacity		10
+	ondestroy		"aliencont_killexceeding"
+}
+
+building building_entrance
+{
+	name		"_Entrance"
+	image		"base/entrance"
+	fixcosts	0
+	type		"entrance"
+	build_time	1
+	varcosts	0
+	map_name	"entrance"
+	tech		rs_building_entrance
+	mandatory	true
+	max_count	1
+}
+
+building building_storage
+{
+	name			"_Storage"
+	image			"base/storage"
+	fixcosts		36000
+	depends			building_entrance // storage base needs just entrance
+	type			"storage"
+	build_time		4
+	varcosts		3000
+	map_name		"storage"
+	tech			rs_building_storage
+	capacity		10000
+}
+
+building building_powerplant
+{
+	name			"_Power Plant"
+	image			"base/powerplant"
+	fixcosts		35000
+	depends			building_entrance
+	type			"power"
+	build_time		12
+	varcosts		5000
+	map_name		"powerplant"
+	tech			rs_building_powerplant
+	max_count		1
+}
+
+
+building building_command
+{
+	name		"_Command Centre"
+	image		"base/commando"
+	fixcosts	58000
+	depends		building_powerplant
+	type		"command"
+	build_time	12
+	varcosts	3000
+	map_name	"commando"
+	tech		rs_building_command
+	max_count	1
+	onenable	"mn_installation_update_max_count"
+	ondisable	"mn_installation_update_max_count"
+}
+
+building building_quarters
+{
+	name			"_Living Quarters"
+	image			"base/quarters"
+	fixcosts		40000
+	build_time		5
+	varcosts		1000
+	map_name		"quarters"
+	tech			rs_building_quarters
+	type			"quarters"
+	capacity		20
+}
+
+building building_hangar
+{
+	name				"_Dropship Hangar"
+	image				"base/drop"
+	fixcosts			68000
+	depends				building_powerplant // slow dropship operations can be coordinated from another base, so no Command Center needed
+	build_time			8
+	varcosts			5500
+	map_name			"drop"
+	tech				rs_building_large_hangar
+	type				"hangar"
+	size				"2 1"
+	starting_employees	8 //Number of soldiers in dropship when first base is built
+	capacity			1
+}
+
+building building_intercept
+{
+	name			"_Interceptor Hangar"
+	image			"base/intercept"
+	fixcosts		60000
+	depends			building_command
+	build_time		5
+	varcosts		5200
+	map_name		"intercept"
+	tech			rs_building_small_hangar
+	capacity		1
+	type			"smallhangar"
+}
+
+building building_workshop
+{
+	name				"_Workshop"
+	image				"base/workshop"
+	fixcosts			100000
+	depends				building_command
+	build_time			12
+	varcosts			3200
+	map_name			"workshop"
+	tech				rs_building_workshop
+	type				"workshop"
+	starting_employees	10
+	size				"2 1"
+	capacity			10
+}
+
+building building_radar
+{
+	name			"_Radar"
+	image			"base/radar"
+	fixcosts		55000
+	depends			building_command
+	build_time		7
+	varcosts		4000
+	map_name		"radar"
+	tech			rs_building_radar
+	type			"radar"
+	onenable		"update_base_radar_coverage"
+	ondisable		"update_base_radar_coverage"
+	level			1.0
+}
+
+building building_radar_adv
+{
+	name			"_Advanced Radar"
+	image			"base/radar_adv"
+	fixcosts		85000
+	depends			building_command
+	build_time		7
+	varcosts		7100
+	map_name		"radar_adv"
+	tech			rs_building_radar_adv
+	type			"radar"
+	onenable		"update_base_radar_coverage"
+	ondisable		"update_base_radar_coverage"
+	level			2.0
+}
+
+building building_lab
+{
+	name				"_Laboratory"
+	image				"base/lab"
+	fixcosts			100000
+	depends				building_command // scientists need supervision, or...
+	build_time			12
+	varcosts			4300
+	map_name			"lab"
+	tech				rs_building_lab
+	type				"lab"
+	starting_employees	10
+	capacity			10
+}
+
+building building_hospital
+{
+	name				"_Hospital"
+	image				"base/hospital"
+	fixcosts			62000
+	depends				building_powerplant
+	build_time			8
+	varcosts			5200
+	map_name			"hospital"
+	tech				rs_building_hospital
+	max_count			1
+	type				"hospital"
+	starting_employees	10
+}
+
+building building_amstorage
+{
+	name		"_Antimatter Storage"
+	image		"base/antimatter"
+	fixcosts	70000
+	build_time	20
+	varcosts	22000
+	type		"amstorage"
+	map_name	"antimatter"
+	tech		rs_building_antimatter
+	capacity	1000
+	ondestroy	"building_amdestroy 0.1"
+}
+
+// Note: for base weapon values see aircaftmanagement.ufo
+building building_laser
+{
+	name			"_Laser Battery"
+	image			"base/laser"
+	fixcosts		10000
+	depends			building_command // need to know where to shoot
+	type			"laser"
+	build_time		3
+	varcosts		5000
+	map_name		"laser"
+	tech			rs_building_laser
+	max_count		4
+	onconstruct		"add_battery laser"
+	onenable		"basedef_updatebatteries laser"
+	ondisable		"basedef_updatebatteries laser"
+	ondestroy		"remove_battery laser"
+}
+
+// Note: for base weapon values see aircaftmanagement.ufo
+building building_missile
+{
+	name			"_Missile Battery"
+	image			"base/missile"
+	fixcosts		10000
+	depends			building_command // need to know where to shoot
+	type			"missile"
+	build_time		3
+	varcosts		5000
+	map_name		"missile"
+	tech			rs_building_missile
+	max_count		4
+	onconstruct		"add_battery missile"
+	onenable		"basedef_updatebatteries missile"
+	ondisable		"basedef_updatebatteries missile"
+	ondestroy		"remove_battery missile"
+}
+
+basetemplate balanced {
+	building (building_entrance			"4 2")
+	building (building_quarters			"3 4")
+	building (building_quarters			"3 3")
+	building (building_aliencontainment	"1 0")
+	building (building_storage				"4 3")
+	building (building_powerplant			"4 4")
+	building (building_command				"2 4")
+	building (building_hangar				"3 0")
+	building (building_intercept			"3 1")
+	building (building_workshop			"0 4")
+	building (building_radar				"4 1")
+	building (building_lab					"1 3")
+	building (building_hospital			"2 3")
+}

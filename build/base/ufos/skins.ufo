@@ -1,0 +1,22 @@
+//=======================
+// Custom skin
+//
+// name string
+//	Name of the skin displayed in the user interface
+// singleplayer boolean
+//	Is the skin is available for singleplayer mode
+// multiplayer boolean
+//	Is the skin is available for multiplayer mode
+//
+//=======================
+
+/**
+ * Special skin, cause it doesn't use a suffix. Must be read as first
+ * It also must be the first skin defined in .md2 files, other skins from
+ * md2 files are not used.
+ */
+actorskin default {
+	name			"_Urban"
+	singleplayer	true
+	multiplayer		true
+}

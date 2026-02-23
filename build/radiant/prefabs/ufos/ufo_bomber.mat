@@ -1,0 +1,130 @@
+/* Bomber UFO */
+
+// hull main textures
+{
+	material tex_ufo/ufo2_01
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_02
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_03
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_04
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_05
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_06
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+{
+	material tex_ufo/ufo2_07
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_08
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+{
+	material tex_ufo/ufo2_09
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+{
+	material tex_ufo/ufo2_10
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+// engines
+{
+	material tex_ufo/ufo2_12
+	{
+		texture tex_ufo/ufo2_12_glow
+		blend GL_SRC_COLOR GL_SRC_ALPHA
+		pulse 0.5
+	}
+}
+
+{
+	material tex_ufo/ufo2_17
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}

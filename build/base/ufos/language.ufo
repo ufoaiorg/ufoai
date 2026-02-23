@@ -1,0 +1,377 @@
+language en {
+	name	"_English"
+	native	"English"
+	code (
+		"en.UTF-8"
+		"en_AU.UTF-8"
+		"en_BW.UTF-8"
+		"en_CA.UTF-8"
+		"en_DK.UTF-8"
+		"en_GB.UTF-8"
+		"en_HK.UTF-8"
+		"en_IE.UTF-8"
+		"en_NZ.UTF-8"
+		"en_PH.UTF-8"
+		"en_SG.UTF-8"
+		"en_US.UTF-8"
+		"en_ZA.UTF-8"
+		"en_ZW.UTF-8"
+		"en.utf8"
+		"en_AU.utf8"
+		"en_BW.utf8"
+		"en_CA.utf8"
+		"en_DK.utf8"
+		"en_GB.utf8"
+		"en_HK.utf8"
+		"en_IE.utf8"
+		"en_NZ.utf8"
+		"en_PH.utf8"
+		"en_SG.utf8"
+		"en_US.utf8"
+		"en_ZA.utf8"
+		"en_ZW.utf8"
+	)
+}
+
+language de {
+	name	"_German"
+	native	"Deutsch"
+	code (
+		"de.UTF-8"
+		"de_DE.UTF-8"
+		"de_AT.UTF-8"
+		"de_CH.UTF-8"
+		"de_BE.UTF-8"
+		"de_LU.UTF-8"
+		"de.utf8"
+		"de_DE.utf8"
+		"de_AT.utf8"
+		"de_CH.utf8"
+		"de_BE.utf8"
+		"de_LU.utf8"
+	)
+}
+
+language pl {
+	name	"_Polish"
+	native	"polski"
+	code (
+		"pl.UTF-8"
+		"pl_PL.UTF-8"
+		"pl.utf8"
+		"pl_PL.utf8"
+	)
+}
+
+language es {
+	name	"_Spanish"
+	native	"Español"
+	code (
+		"es.UTF-8"
+		"es_AR.UTF-8"
+		"es_BO.UTF-8"
+		"es_CL.UTF-8"
+		"es_CO.UTF-8"
+		"es_CR.UTF-8"
+		"es_DO.UTF-8"
+		"es_EC.UTF-8"
+		"es_GT.UTF-8"
+		"es_HN.UTF-8"
+		"es_MX.UTF-8"
+		"es_NI.UTF-8"
+		"es_PR.UTF-8"
+		"es_PY.UTF-8"
+		"es_SV.UTF-8"
+		"es_US.UTF-8"
+		"es_UY.UTF-8"
+		"es_VE.UTF-8"
+		"es.utf8"
+		"es_AR.utf8"
+		"es_BO.utf8"
+		"es_CL.utf8"
+		"es_CO.utf8"
+		"es_CR.utf8"
+		"es_DO.utf8"
+		"es_EC.utf8"
+		"es_GT.utf8"
+		"es_HN.utf8"
+		"es_MX.utf8"
+		"es_NI.utf8"
+		"es_PR.utf8"
+		"es_PY.utf8"
+		"es_SV.utf8"
+		"es_US.utf8"
+		"es_UY.utf8"
+		"es_VE.utf8"
+	)
+}
+
+language es_ES {
+	name	"_Spanish (Spain)"
+	native	"Español (España)"
+	code (
+		"es_ES.UTF-8"
+		"es_ES.utf8"
+	)
+}
+
+language cs {
+	name	"_Czech"
+	native	"česky"
+	code (
+		"cs.UTF-8"
+		"cs_CZ.UTF-8"
+		"cs.utf8"
+		"cs_CZ.utf8"
+	)
+}
+
+language da {
+	name	"_Danish"
+	native	"dansk"
+	code (
+		"da.UTF-8"
+		"da_DK.UTF-8"
+		"da.utf8"
+		"da_DK.utf8"
+	)
+}
+
+language et {
+	name	"_Estonian"
+	native	"eesti"
+	code (
+		"et.UTF-8"
+		"et_EE.UTF-8"
+		"et.utf8"
+		"et_EE.utf8"
+	)
+}
+
+language fi {
+	name	"_Finnish"
+	native	"suomi"
+	code (
+		"fi.UTF-8"
+		"fi_FI.UTF-8"
+		"fi.utf8"
+		"fi_FI.utf8"
+	)
+}
+
+language fr {
+	name	"_French"
+	native	"Français"
+	code (
+		"fr.UTF-8"
+		"fr_BE.UTF-8"
+		"fr_CA.UTF-8"
+		"fr_CH.UTF-8"
+		"fr_FR.UTF-8"
+		"fr_LU.UTF-8"
+		"fr.utf8"
+		"fr_BE.utf8"
+		"fr_CA.utf8"
+		"fr_CH.utf8"
+		"fr_FR.utf8"
+		"fr_LU.utf8"
+	)
+}
+
+language el {
+	name	"_Greek"
+	native	"Ελληνικά"
+	code (
+		"el.UTF-8"
+		"el_GR.UTF-8"
+		"el.utf8"
+		"el_GR.utf8"
+	)
+}
+
+language hu {
+	name	"_Hungarian"
+	native	"Magyar"
+	code (
+		"hu.UTF-8"
+		"hu_HU.UTF-8"
+		"hu.utf8"
+		"hu_HU.utf8"
+	)
+}
+
+language it {
+	name	"_Italien"
+	native	"Italiano"
+	code (
+		"it.UTF-8"
+		"it_CH.UTF-8"
+		"it_IT.UTF-8"
+		"it.utf8"
+		"it_CH.utf8"
+		"it_IT.utf8"
+	)
+}
+
+language ko {
+	name	"_Korean"
+	native	"한국어"
+	code (
+		"ko.UTF-8"
+		"ko_KO.UTF-8"
+		"ko.utf8"
+		"ko_KO.utf8"
+	)
+}
+
+language nl_NL {
+	name	"_Dutch"
+	native	"Nederlands"
+	code (
+		"nl.UTF-8"
+		"nl_NL.UTF-8"
+		"nl.utf8"
+		"nl_NL.utf8"
+	)
+}
+
+language pt_BR {
+	name	"_Brazilian Portuguese"
+	native	"Português (Brasil)"
+	code (
+		"pt_BR.UTF-8"
+		"pt_BR.utf8"
+	)
+}
+
+language pt {
+	name	"_Portuguese"
+	native	"Português"
+	code (
+		"pt.UTF-8"
+		"pt_PT.UTF-8"
+		"pt.utf8"
+		"pt_PT.utf8"
+	)
+}
+
+language ru {
+	name	"_Russian"
+	native	"Русский"
+	code (
+		"ru.UTF-8"
+		"ru_RU.UTF8"
+		"ru_UA.UTF8"
+		"ru.utf8"
+		"ru_RU.utf8"
+		"ru_UA.utf8"
+	)
+}
+
+language sl {
+	name	"_Slovenian"
+	native	"slovenščina"
+	code (
+		"sl.UTF-8"
+		"sl_SI.UTF-8"
+		"sl.utf8"
+		"sl_SI.utf8"
+	)
+}
+
+language sv {
+	name	"_Swedish"
+	native	"svenska"
+	code (
+		"sv.UTF-8"
+		"sv_SE.UTF-8"
+		"sv_FI.UTF-8"
+		"sv.utf8"
+		"sv_SE.utf8"
+		"sv_FI.utf8"
+	)
+}
+
+language th {
+	name	"_Thai"
+	native	"ไทย"
+	code (
+		"th.UTF-8"
+		"th.uft8"
+		"th_TH.UTF-8"
+		"th_TH.uft8"
+	)
+}
+
+language uk {
+	name	"_Ukrainian"
+	native	"Українська"
+	code (
+		"uk.UTF-8"
+		"uk.utf8"
+		"uk_UA.utf8"
+		"uk_UA.UTF-8"
+	)
+}
+
+language ja {
+	name	"_Japanese"
+	native	"日本語"
+	code (
+		"ja_JP.UTF-8"
+		"ja_JP.utf8"
+	)
+}
+
+language zh_cn {
+	name	"_Chinese"
+	native	"中文"
+	code (
+		"zh_CN.UTF-8"
+		"zh_CN.utf8"
+	)
+}
+
+language zh_tw {
+	name	"_Traditional Chinese"
+	native	"中文"		// TODO dup native name: need a fix here
+	code (
+		"zh_TW.UTF-8"
+		"zh_TW.utf8"
+	)
+}
+
+language bg {
+	name	"_Bulgarian"
+	native	"Български"
+	code (
+		"bg_BG.UTF-8"
+		"bg_BG.utf8"
+	)
+}
+
+language no {
+	name	"_Norwegian"
+	native	"Norsk (bokmål)"
+	code (
+		"no.UTF-8"
+		"no.utf8"
+	)
+}
+
+language tr {
+	name	"_Turkish"
+	native	"Türkçe"
+	code (
+		"tr.UTF-8"
+		"tr.utf8"
+	)
+}
+
+language none {
+	name	"_No language"
+	native	"No language"
+	code (
+		"C"
+	)
+}

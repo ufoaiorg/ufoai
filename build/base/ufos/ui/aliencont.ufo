@@ -1,0 +1,386 @@
+// ============================
+// BASE ALIEN CONTAINMENU MENU
+// ============================
+
+// @todo Don't show progress bar in alien containment if alien is already researched (saved from bases.ufo)
+
+// ===========================
+// Aliencontainment Component
+// ===========================
+component cmpAlienContainment extends panel {
+	{
+		size 			"705 63"
+		border			"2"
+		bordercolor		"0.56 0.81 0.76 1"
+		bgcolor			"0.56 0.81 0.76 0.1"
+		onClick {
+			cmd "ui_aliencont_select <node:this.team_id@string>;"
+		}
+		onRClick {
+			cmd "ui_aliencont_select <node:this.team_id@string>;"
+			cmd "ui_push ufopedia <node:this.tech_id@string>;"
+		}
+		onMouseEnter {
+			if ( exists *node:this ) {
+				*node:this@bgcolor = "0.56 0.81 0.76 0.15"
+			}
+		}
+		onMouseLeave {
+			if ( exists *node:this ) {
+				*node:this@bgcolor = "0.56 0.81 0.76 0.1"
+			}
+		}
+	}
+	data team_id {
+		string	""
+	}
+	data tech_id {
+		string	""
+	}
+	data tech_image {
+		string	""
+	}
+	data alive {
+		integer	0
+	}
+	data dead {
+		integer	0
+	}
+
+	button icon {
+		pos		"317 11"
+		size	"40 40"
+		padding	0
+	}
+	zone kill_zone		{
+		pos			"317 11"
+		size		"40 40"
+		tooltip		"_Kill one alien"
+		invis		true
+		onClick {
+			cmd "ui_aliencont_killone <node:parent.tech_id@string>;"
+		}
+		onMouseEnter {
+			if ( exists *node:parent.icon ) {
+				*node:parent.icon@icon = "icons/alien_kill_hovered"
+			}
+		}
+		onMouseLeave {
+			if ( exists *node:parent.icon ) {
+				*node:parent.icon@icon = "icons/alien_kill"
+			}
+		}
+	}
+	zone autopsy_zone {
+		pos			"317  11"
+		size		"40 40"
+		tooltip		"_Start autopsy"
+		invis		true
+		onClick {
+			if ( exists *node:parent.tech_progress ) {
+				if ( *node:parent.tech_progress@current < 100 ) {
+					cmd "ui_push research;"
+				} else {
+					cmd "ui_push ufopedia <node:parent.tech_id@string>;"
+				}
+			}
+		}
+		onMouseEnter {
+			if ( exists *node:parent.icon ) {
+				*node:parent.icon@icon = "icons/alien_surgery_hovered"
+			}
+		}
+		onMouseLeave {
+			if ( exists *node:parent.icon ) {
+				*node:parent.icon@icon = "icons/alien_surgery"
+			}
+		}
+	}
+	string name {
+		pos			"15 10"
+		color		"1 1 1 1"
+		size		"220 16"
+		font		"f_small_bold"
+		ghost		true
+	}
+	string status {
+		pos			"15 35"
+		color		"1 1 1 1"
+		size		"220 16"
+		ghost		true
+	}
+	texture data_bg
+	{
+		pos			"15 35"
+		size		"257 16"
+		src			"ui/bar_bg"
+		ghost		true
+	}
+	bar tech_progress {
+		pos			"15 35"
+		size		"257 16"
+		color		"0.56 0.81 0.76 0.5"
+		max			"100"
+		disabled	true
+	}
+	string alive2 {
+		string		"0"
+		pos			"395 10"
+		size		"125 20"
+		font		"f_small"
+		contentalign	ALIGN_UR
+	}
+	string dead2	{
+		string		"0"
+		pos			"525 10"
+		size		"125 20"
+		font		"f_small"
+		contentalign	ALIGN_UR
+	}
+
+}
+
+window aliencont
+{
+	{
+		fill		true
+	}
+	BaseContainerPanel base_container
+	{
+		// Alien Containment panel
+		panel mainBody
+		{
+			{ size "715 727" }
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Alien Containment"
+				}
+			}
+
+			// AlienContainment headings
+			panel list_header
+			{
+				{
+					pos			"10 35"
+					size		"713 32"
+				}
+				string race
+				{
+					string			"_Race"
+					pos				"15 5"
+					size			"80 32"
+					color			"1 1 1 1"
+					contentalign	ALIGN_CL
+				}
+				string condition1
+				{
+					string			"_Alive"
+					pos				"486 5"
+					size			"100 32"
+					color			"1 1 1 1"
+					contentalign	ALIGN_CL
+				}
+				string condition2
+				{
+					string			"_Dead"
+					pos				"606 5"
+					size			"100 32"
+					color			"1 1 1 1"
+					contentalign	ALIGN_CL
+				}
+			}
+			// kill living aliens button
+			button bt_alc_killaliens {
+				tooltip		"_Kill all aliens in this base"
+				pos			"320 25"
+				size		"64 64"
+				icon		"icons/killalien"
+				disabled	true
+				onClick {
+					cmd "ui_aliencont_killall;"
+				}
+			}
+
+			// Alien Containment Slots Panel
+			data selected {
+				string	""
+			}
+
+			panel ac {
+				{
+					pos 			"5 90"
+					size 			"705 625"
+				}
+
+				panel species {
+					pos 			"5 0"
+					size			"670 620"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	10
+					padding			2
+					wheelscrollable	true
+
+					onViewChange	{
+						*node:parent.species_scroll@fullsize = <fullsize>
+						*node:parent.species_scroll@current = <viewpos>
+						*node:parent.species_scroll@viewsize = <viewsize>
+					}
+				}
+				vscrollbar species_scroll {
+					image			"ui/scrollbar_v"
+					pos				"680 2"
+					hidewhenunused	true
+					height			"620"
+					onChange		{
+						*node:parent.species@viewpos = <current>
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @brief Clear UI
+	 */
+	confunc ui_aliencont_clear {
+		*node:root.base_container.mainBody.bt_alc_killaliens@disabled = true
+		call *node:root.base_container.mainBody.ac.species@removeAllChild
+	}
+
+	/**
+	 * @brief Select an alien team on the UI (updates alive/dead counts and image)
+	 * @param[in] <1> technology ID
+	 */
+	confunc ui_aliencont_select {
+		*node:root.base_container.mainBody.selected@string = "<1>"
+		if ( *node:root.base_container.mainBody.selected@string ne "" ) {
+			// Update alive and dead counters
+			/** @todo temp-cvar magic was required for a simple assignment as "<foo<bar>>" isn't supported */
+			// Alien name
+			*cvar:ui_aliencont_select_temp = *node:root.base_container.mainBody.ac.species.alien_<1>.name@string
+			// Alive / dead counts
+			*cvar:ui_aliencont_select_temp = *node:root.base_container.mainBody.ac.species.alien_<1>.alive@integer
+			*node:root.base_container.mainBody.ac.species.alien_<1>.alive2@string = "<cvar:ui_aliencont_select_temp>"
+			*cvar:ui_aliencont_select_temp = *node:root.base_container.mainBody.ac.species.alien_<1>.dead@integer
+			*node:root.base_container.mainBody.ac.species.alien_<1>.dead2@string = "<cvar:ui_aliencont_select_temp>"
+			// Update alien image
+			*cvar:ui_aliencont_select_temp = *node:root.base_container.mainBody.ac.species.alien_<1>.tech_image@string
+			*node:root.alc_alien_panel.ai@src = "<cvar:ui_aliencont_select_temp>"
+			delete *cvar:ui_aliencont_select_temp
+		} else {
+			*node:root.alc_alien_panel.ai@src = ""
+		}
+	}
+
+	/**
+	 * @brief Adds alien data to UI
+	 * @param[in] <1> teamDef ID
+	 * @param[in] <2> Translated teamDef name
+	 * @param[in] <3> technology ID for the team
+	 * @param[in] <4> Image (technology)
+	 * @param[in] <5> Translated Containment status for the alien
+	 * @param[in] <6> Research progress (percent, float)
+	 * @param[in] <7> Number of alive aliens
+	 * @param[in] <8> Number of dead bodies
+	 * @note The function does a bit black magic due to the hack of multiple team definitions per race (taman_light, taman, etc)
+	 */
+	confunc ui_aliencont_add {
+		/* if type is in the list adjust values, otherwise add new entry */
+		call *node:root.base_container.mainBody.ac.species@createChild("alien_<1>", "cmpAlienContainment")
+		*node:root.base_container.mainBody.ac.species.alien_<1>.team_id@string = "<1>"
+		*node:root.base_container.mainBody.ac.species.alien_<1>.name@string = "<2>"
+		*node:root.base_container.mainBody.ac.species.alien_<1>.tech_id@string = "<3>"
+		*node:root.base_container.mainBody.ac.species.alien_<1>.tech_image@string = "<4>"
+		*node:root.base_container.mainBody.ac.species.alien_<1>.status@string = "<5>"
+		*node:root.base_container.mainBody.ac.species.alien_<1>.tech_progress@current = <6>
+		*node:root.base_container.mainBody.ac.species.alien_<1>.alive@integer = <7>
+		*node:root.base_container.mainBody.ac.species.alien_<1>.dead@integer = <8>
+		*node:root.base_container.mainBody.ac.species.alien_<1>.alive2@string = <7>
+		*node:root.base_container.mainBody.ac.species.alien_<1>.dead2@string = <8>
+		/* if there is any alive aliens, enable killing them */
+		if ( *node:root.base_container.mainBody.ac.species.alien_<1>.alive@integer > 0 ) {
+			*node:root.base_container.mainBody.bt_alc_killaliens@disabled = false
+
+			*node:root.base_container.mainBody.ac.species.alien_<1>.icon@icon = "icons/alien_kill"
+			*node:root.base_container.mainBody.ac.species.alien_<1>.icon@tooltip = "_Kill one alien"
+			*node:root.base_container.mainBody.ac.species.alien_<1>.kill_zone@invis = false
+			*node:root.base_container.mainBody.ac.species.alien_<1>.autopsy_zone@invis = true
+		} else {
+			*node:root.base_container.mainBody.ac.species.alien_<1>.icon@icon = "icons/alien_surgery"
+			*node:root.base_container.mainBody.ac.species.alien_<1>.icon@tooltip = "_Autopsy"
+			*node:root.base_container.mainBody.ac.species.alien_<1>.kill_zone@invis = true
+			*node:root.base_container.mainBody.ac.species.alien_<1>.autopsy_zone@invis = false
+		}
+		/* if none selected, select this */
+		if ( ( *node:root.base_container.mainBody.selected@string eq "" ) || ( *node:root.base_container.mainBody.selected@string eq "<1>" ) ) {
+			call *node:root.ui_aliencont_select ( <1> )
+		}
+	}
+
+	/**
+	 * @brief Updates Alien Containment capacities on UI
+	 * @param[in] <1> Current used capacity
+	 * @param[in] <2> Maximal capacity
+	 */
+	confunc ui_aliencont_cap {
+		*node:root.Aliencontainment.data@string = "<1> / <2>"
+		*node:root.Aliencontainment.data_bar@max = <2>
+		if ( <1> <= <2>) {
+			*node:root.Aliencontainment.data_bar@current = <1>
+			*node:root.Aliencontainment.data_bar@color = "0.56 0.81 0.76 1"
+		} else {
+			*node:root.Aliencontainment.data_bar@current = <2>
+			*node:root.Aliencontainment.data_bar@color = "1 0 0 1"
+		}
+	}
+
+	// Aliencontainment count
+	BuildingSpace Aliencontainment
+	{
+		{ pos "739 25" }
+
+		button smlicon { icon	"icons/building_aliencontainment" }
+		string label { string	"_Alien Containment" }
+		button alert { invis true }
+	}
+
+	// ==========================
+	// Right Panel (Alien image)
+	// ==========================
+	panel alc_alien_panel
+	{
+		{
+			pos		"730 93"
+			size	"285 665"
+		}
+
+		image ai {
+			pos				"5 19"
+			size			"279 626"
+			preventratio	true
+			contentalign	ALIGN_CC
+		}
+	}
+
+	// ================================================================================
+	// init
+	// ================================================================================
+	func onWindowOpened
+	{
+		*node:root.base_container.mainBody.selected@string = ""
+		cmd "ui_aliencont_init;"
+	}
+
+	// Back to geoscape
+	Geoscape geoscape_button
+	{
+		onClick			{ cmd "ui_pop; ui_pop;" }
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
+}

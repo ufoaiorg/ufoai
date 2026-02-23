@@ -1,0 +1,100 @@
+--!usr/bin/lua
+
+--[[
+-- @file
+-- @brief Statistics overview screen
+--]]
+
+--[[
+Copyright (C) 2002-2025 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+require("statistics.nations.lua")
+require("statistics.nationcharts.lua")
+require("statistics.campaignstat.lua")
+require("statistics.budget.lua")
+
+do
+	local statsWindow = ufox.build_window({
+		name = "stats",
+		class = "window",
+		backgroundcolor = {0, 0, 0, 1},
+		bordersize = 3,
+		bordercolor = {0.56, 0.81, 0.76, 1},
+
+		{
+			name = "title",
+			class = "string",
+			text = "_Statistics",
+			pos = {5, 5},
+			size = {1014, 30},
+			contentalign = ufo.ALIGN_CC,
+			font = "f_big",
+		},
+
+		{
+			name = "budgetreport",
+			class = "panel",
+			pos = {15, 75},
+			size = {440, 396},
+		},
+
+		{
+			name = "nationschart",
+			class = "panel",
+			pos = {465, 320},
+			size = {545, 275},
+		},
+
+		{
+			name = "campaignstats",
+			class = "panel",
+			pos = {465, 600},
+			size = {545, 160},
+		},
+
+		-- Back to geoscape
+		{
+			name = "geoscape_button",
+			class = "Geoscape",
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+		on_windowopened = function (sender)
+			build_budgetreport(sender:root():child("budgetreport"))
+			ufo.cmd("ui_expenses_clear; stats_getexpenses ui_expenses_fill; ui_expenses_summarize;")
+
+			build_nationstats(sender)
+			ufo.cmd("nation_getstats ui_nations_fill;")
+
+			build_nationcharts(sender:root():child("nationschart"))
+
+			build_campaignstats(sender:root():child("campaignstats"))
+			ufo.cmd("stats_update;");
+		end,
+	})
+end

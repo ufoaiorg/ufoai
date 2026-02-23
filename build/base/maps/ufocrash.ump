@@ -1,0 +1,144 @@
+// *********************************
+// UFO Crash THEME
+// *********************************
+
+base ufocrash/uc_
+extends shared
+
+// Map Assemblies --------------------------------------------------*
+
+assembly craft_crash_scout
+{
+title "_Crashed UFO"
+size "7 5"
+shared/sh_h01 "0 3"
+shared/sh_h02 "0 3"
+shared/sh_h03 "0 3"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 1"
+shared/sh_h09 "0 1"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_ufo shared/sh_craft_crash_scout "1 1"
+*rm_drop shared/sh_craft_drop_firebird "1 1"
+}
+
+assembly craft_crash_fighter
+{
+title "_Crashed UFO"
+size "7 6"
+shared/sh_h01 "0 3"
+shared/sh_h02 "0 3"
+shared/sh_h03 "0 3"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 1"
+shared/sh_h09 "0 1"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_ufo shared/sh_craft_crash_fighter "1 1"
+*rm_drop shared/sh_craft_drop_firebird "1 1"
+}
+
+assembly craft_crash_supply
+{
+title "_Crashed UFO"
+size "7 5"
+shared/sh_h01 "0 3"
+shared/sh_h02 "0 3"
+shared/sh_h03 "0 3"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 1"
+shared/sh_h09 "0 1"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_ufo shared/sh_craft_crash_supply "1 1"
+*rm_drop shared/sh_craft_drop_firebird "1 1"
+}
+
+assembly craft_crash_corrupter
+{
+title "_Crashed UFO"
+size "8 8"
+shared/sh_h01 "0 3"
+shared/sh_h02 "0 3"
+shared/sh_h03 "0 3"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 1"
+shared/sh_h09 "0 1"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+*rm_ufo shared/sh_craft_crash_corrupter "1 1"
+*rm_drop shared/sh_craft_drop_firebird "1 1"
+}
+
+assembly craft_crash_harvester
+{
+title "_Crashed UFO"
+size "7 7"
+shared/sh_h01 "0 3"
+shared/sh_h02 "0 3"
+shared/sh_h03 "0 3"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 1"
+shared/sh_h09 "0 1"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+shared/sh_d02_harvester "1 1"
+*rm_ufo shared/sh_craft_crash_harvester "1 1"
+*rm_drop shared/sh_craft_drop_firebird "1 1"
+}
+
+assembly craft_crash_bomber
+{
+title "_Crashed UFO"
+size "8 8"
+shared/sh_h01 "0 3"
+shared/sh_h02 "0 3"
+shared/sh_h03 "0 3"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 1"
+shared/sh_h09 "0 1"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+shared/sh_e01 "0 9"
+*rm_ufo shared/sh_craft_crash_bomber "1 1"
+*rm_drop shared/sh_craft_drop_firebird "1 1"
+}
+
+assembly craft_crash_gunboat
+{
+title "_Crashed UFO"
+size "7 8"
+shared/sh_h01 "0 3"
+shared/sh_h02 "0 3"
+shared/sh_h03 "0 3"
+shared/sh_h04 "0 1"
+shared/sh_h05 "0 2"
+shared/sh_h06 "0 2"
+shared/sh_h07 "0 2"
+shared/sh_h08 "0 1"
+shared/sh_h09 "0 1"
+shared/sh_d01 "0 2"
+shared/sh_d03 "0 2"
+shared/sh_e01 "0 9"
+*rm_ufo shared/sh_craft_crash_gunboat "1 1"
+*rm_drop shared/sh_craft_drop_raptor "1 1"
+}

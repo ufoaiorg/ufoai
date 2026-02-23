@@ -1,0 +1,5 @@
+autosave.map
+*.autosave.map
+*.bak
+*.bsp
+*.footsteps

@@ -1,0 +1,141 @@
+--!usr/bin/lua
+
+require("ufox.lua")
+
+
+--[[
+ - @brief Constructs EndGame screen (player won the campaign)
+--]]
+do
+	local endgame = ufox.build_window({
+		name = "endgame",
+		class = "window",
+
+		{
+			name = "content",
+			class = "panel",
+			pos = {0, 0},
+			size = {1024, 768},
+			ghost = true,
+
+			{
+				name = "title",
+				class = "string",
+				pos = {12, 20},
+				size = {1000, 35},
+				font = "f_menubig",
+				contentalign = ufo.ALIGN_UC,
+				color = {0.59, 0.78, 0.56, 1},
+				ghost = true,
+			},
+
+			{
+				name = "click_text",
+				class = "string",
+				pos = {814, 750},
+				size = {200, 20},
+				font = "f_verysmall",
+				contentalign = ufo.ALIGN_UR,
+				color = {1, 1, 1, 0.5},
+				ghost = true,
+				text = "_Click to continue",
+			},
+
+			{
+				name = "reason",
+				class = "text",
+				pos = {30, 500},
+				size = {960, 240},
+				font = "f_normal",
+				contentalign = ufo.ALIGN_UC,
+				color = {1, 1, 1, 1},
+				selectcolor = {1, 1, 1, 1},
+				backgroundcolor = {0.2, 0.2, 0.2, 0.4},
+				lineheight = 20,
+				dataid = ufo.TEXT_STANDARD,
+
+				on_click = function (sender)
+					sender:root():finished()
+				end,
+
+				on_viewchange = function (sender)
+					local scrollbar = sender:parent():child(string.format("%s_scrollbar", sender:name()))
+						scrollbar:set_fullsize(sender:fullsize())
+						scrollbar:set_current(sender:viewpos())
+						scrollbar:set_viewsize(sender:viewsize())
+				end,
+			},
+
+			{
+				name = "reason_scrollbar",
+				class = "vscrollbar",
+				pos = {992, 500},
+				height = 240,
+				image = "ui/scrollbar_v",
+				current = 0,
+				viewsize = 12,
+				fullsize = 12,
+				autoshowscroll = true,
+
+				on_click = function (sender)
+					sender:root():finished()
+				end,
+
+				on_change = function (sender)
+					local nodename = sender:name():gsub("(_scrollbar)", "")
+					local node = sender:parent():child(nodename)
+					node:set_viewpos(sender:current())
+				end,
+			},
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+		{
+			name = "outcome",
+			class = "data",
+			text = "",
+		},
+
+		{
+			name = "ui_set_endgame",
+			class = "confunc",
+
+			on_click = function (sender, outcome)
+				if (outcome == "won") then
+					sender:root():set_background("background/wingame_bg")
+					sender:parent():child("outcome"):set_text("won")
+					sender:parent():child("content"):child("title"):set_text("_Thank you for playing UFO:Alien Invasion")
+				else
+					sender:root():set_background("background/losegame_bg")
+					sender:parent():child("outcome"):set_text("lose")
+					sender:parent():child("content"):child("title"):set_text("_You've lost the game")
+				end
+			end
+		},
+
+		finished = function (sender)
+			ufo.cmd("game_exit;")
+			if (sender:child("outcome"):text() == "won") then
+				ufo.cmd("initmainui; seq_start developers;")
+			else
+				ufo.cmd("initmainui;")
+			end
+		end,
+
+		on_click = function (sender)
+			sender:finished()
+		end,
+
+		on_windowopened = function (sender)
+			if (sender:child("outcome"):text() == "won") then
+				ufo.cmd("music_stop; snd_music Crystan-WinGame;")
+			else
+				ufo.cmd("music_stop; snd_music Crystan-LooseGame;")
+			end
+		end,
+	})
+end

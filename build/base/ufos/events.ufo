@@ -1,0 +1,147 @@
+// ==============================================
+// EVENT DEFINITIONS - for the 'news' and storyline events.
+// these mails can get send with 'addeventmail' console command
+// ==============================================
+
+events main
+{
+	rs_alien_xvi_event	200
+	rs_enemy_on_earth_event	450
+}
+
+// ==============================================
+// MAIL DEFINITIONS - for notification emails about various events.
+// ==============================================
+// Description
+//	from
+//		mail sender
+//	to
+//		receiver
+//	date
+//		date when mail is sent, optional - will be filled with current game date if not provided
+//	subject
+//		subject header
+//	body
+//		mail body text
+//	icon
+//		icon to use in mailbox
+// ==============================================
+
+mail prolog
+{
+	from "*msgid:mail_from_un"
+	to "*msgid:mail_to_base_commander"
+	subject "_Good Luck"
+	body "*msgid:mail_prolog"
+	icon "icons/mail_un"
+}
+
+mail tip_buildufoyard
+{
+	from "*msgid:mail_from_paul_navarre"
+	to "*msgid:mail_to_base_commander"
+	subject "_Memo: UFO Yard"
+	body "*msgid:tip_build_ufo_yard_txt"
+	model "characters/navarre"
+	icon "icons/mail_tech"
+}
+
+mail tip_capturelivealien
+{
+	from "*msgid:mail_from_dr_connor"
+	to "*msgid:mail_to_base_commander"
+	subject "_Memo: Live Aliens"
+	body "*msgid:tip_capture_live_alien_txt"
+	model "characters/connor"
+	icon "icons/mail_alien"
+}
+
+mail tip_samsitearm
+{
+	from "*msgid:mail_from_paul_navarre"
+	to "*msgid:mail_to_base_commander"
+	subject "_Memo: Sam Sites"
+	body "*msgid:tip_samsitearm_txt"
+	model "characters/navarre"
+	icon "icons/mail_tech"
+}
+
+// sent if a humanoid alien was captured alive and it died
+mail alienbreathing
+{
+	from "*msgid:mail_from_paul_navarre"
+	to "*msgid:mail_to_base_commander"
+	subject "_Alien died"
+	body "*msgid:mail_stunned_alien_died"
+	model "characters/navarre"
+	icon "icons/mail_tech"
+}
+
+mail alien_base_discovered
+{
+	from "*msgid:mail_from_xo"
+	to "*msgid:mail_to_base_commander"
+	subject "_Alien Base Discovered"
+	body "*msgid:mail_alien_base_discovered"
+	model "characters/howard"
+	icon "icons/mail_event"
+}
+
+mail ufocarrier
+{
+	from "*msgid:mail_from_col_falkland"
+	to "*msgid:mail_to_base_commander"
+	subject "_UFO-Carrier"
+	body "*msgid:orbital_ufo_activity_txt"
+	model "characters/falkland"
+	icon "icons/mail_tech"
+}
+
+event buildufoyard
+{
+	type	"new_day"
+	// after 30 days and if no installation ufoyard was built yet
+	require "days[25] & !installation[ufoyard]"
+	once	true // remove this event after it triggers
+	command	"addeventmail tip_buildufoyard"
+}
+
+event capturelivealien
+{
+	type	"new_day"
+	// after 30 days and if no alive aliens were captured yet
+	require "days[45] & !alienscaptured"
+	once	true // remove this event after it triggers
+	command	"addeventmail tip_capturelivealien"
+}
+
+event samsitearm
+{
+	type	"new_day"
+	// if there is a samsite that is not yet armed
+	require "!samsitearmed"
+	once	true // remove this event after it triggers
+	command	"addeventmail tip_samsitearm"
+}
+
+event alienbreathingmissing
+{
+	type	"captured_aliens_died"
+	once	true // remove this event after it triggers
+	command	"addeventmail alienbreathing"
+}
+
+event alienbasediscovered
+{
+	type	"alienbase_discovered"
+	once	true // remove this event after it triggers
+	command	"cp_add_researchable rs_alien_base;addeventmail alien_base_discovered"
+}
+
+event detect_harvester
+{
+	type	"ufo_detection"
+	require	"ufo[craft_ufo_harvester] & !installation[ufoyard]"
+	once	true // remove this event after it triggers
+	command	"addeventmail tip_buildufoyard"
+}

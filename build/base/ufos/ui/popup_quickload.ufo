@@ -1,0 +1,52 @@
+--!usr/bin/lua
+
+require("ufox.lua")
+
+
+--[[
+ - @brief Constructs the quickload popup
+--]]
+do
+	local quickload = ufox.build_window({
+		name = "quickload",
+		class = "window",
+		super = "ipopup",
+		pos = {264, 262},
+		size = {496, 247},
+		closebutton = true,
+
+		{
+			name = "title",
+			class = "string",
+			width = 496,
+			text = "_Reload campaign",
+		},
+
+		{
+			name = "label",
+			class = "string",
+			pos = {26, 58},
+			size = {440, 104},
+			longlines = ufo.LONGLINES_WRAP,
+			text = "_Are you sure that you really want to reload the last automatically saved campaign state?",
+		},
+
+		{
+			name = "load",
+			class = "MainMenuBtn",
+			pos = {266, 188},
+			width = 180,
+			text = "_Load",
+
+			on_click = function (sender)
+				ufo.getvar("mn_fastexit"):set_value(1)
+				ufo.cmd("ui_pop; game_quickload;")
+			end
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+	})
+end

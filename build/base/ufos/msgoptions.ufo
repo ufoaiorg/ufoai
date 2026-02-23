@@ -1,0 +1,162 @@
+//========================================
+// Settings for message options
+//========================================
+// Description:
+// a list of enabled message options settings by categories
+// each categories contains options, which contains one nt_type and a status PAUSE|NOTIFY|SOUND
+// * PAUSE: stop the game time when the message occure
+// * NOTIFY: display the message into the messages log
+// * SOUND: play a sound when the message occure
+msgoptions default
+{
+	category {
+		name "_install_equipment"
+		option {
+			type "installation_installed"
+			status (PAUSE NOTIFY SOUND)
+		}
+		option {
+			type "installation_removed"
+			status (PAUSE NOTIFY SOUND)
+		}
+		option {
+			type "installation_replaced"
+			status (NOTIFY SOUND)
+		}
+		option {
+			type "aircraft_refueled"
+			status (NOTIFY SOUND)
+		}
+		option {
+			type "aircraft_cannotrefuel"
+			status (PAUSE NOTIFY SOUND)
+		}
+		option {
+			type "aircraft_arrivedhome"
+			status (NOTIFY SOUND)
+		}
+	}
+
+	category {
+		name "_installation_construction"
+		option {
+			type "installation_build_started"
+			status (NOTIFY SOUND)
+		}
+		option {
+			type "installation_build_finished"
+			status (NOTIFY SOUND PAUSE)
+		}
+		option {
+			type "installation_destroyed"
+			status (NOTIFY SOUND PAUSE)
+		}
+	}
+
+	category {
+		name "_research"
+		option {
+			type "research_new_proposed"
+			status (NOTIFY PAUSE SOUND)
+		}
+		option {
+			type "research_halted"
+			status (NOTIFY PAUSE SOUND)
+		}
+		option {
+			type "research_completed"
+			status (NOTIFY PAUSE SOUND)
+		}
+	}
+
+	category {
+		name "_production"
+		option {
+			type "production_started"
+			status (NOTIFY)
+		}
+		option {
+			type "production_finished"
+			status (NOTIFY PAUSE SOUND)
+		}
+		option {
+			type "production_failed"
+			status (NOTIFY)
+		}
+		option {
+			type "production_queue_empty"
+			status (NOTIFY SOUND PAUSE)
+		}
+	}
+	category {
+		name "_nations_happiness"
+		option {
+			type "nation_happiness_changed"
+			status (NOTIFY)
+		}
+		option {
+			type "nation_unhappy"
+			status (NOTIFY PAUSE SOUND)
+		}
+		option {
+			type "nation_pleased"
+			status (NOTIFY)
+		}
+	}
+
+	category {
+		name "_transfer"
+		option {
+			type "transfer_started"
+			status (NOTIFY SOUND)
+		}
+		option {
+			type "transfer_completed_success"
+			status (NOTIFY SOUND)
+		}
+		option {
+			type "transfer_lost"
+			status (NOTIFY SOUND PAUSE)
+		}
+		option {
+			type "transfer_aliens_defered"
+			status (NOTIFY SOUND)
+		}
+		option {
+			type "transfer_uforecovery_finished"
+			status (NOTIFY SOUND)
+		}
+	}
+
+	category {
+		name "_ufo_activity"
+		option {
+			type "ufo_spotted"
+			status (NOTIFY SOUND PAUSE)
+		}
+		option {
+			type "ufo_signal_lost"
+			status (NOTIFY SOUND)
+		}
+		option {
+			type "ufo_attacking"
+			status (NOTIFY SOUND PAUSE)
+		}
+	}
+
+	category {
+		name "_missions"
+		option {
+			type "base_attack"
+			status (NOTIFY SOUND PAUSE)
+		}
+	}
+
+	category {
+		name "_buildings"
+		option {
+			type "building_finished"
+			status (NOTIFY SOUND PAUSE)
+		}
+	}
+}

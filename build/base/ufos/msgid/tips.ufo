@@ -1,0 +1,31 @@
+msgid tip_build_ufo_yard_txt {
+text "_Commander, our last mission killed the UFO's crew but we have nowhere to store the craft. The UFO is too large to house within our own base's engineering and research facilities. You should build a UFO Yard as soon as possible so that we can store the alien vehicles at an off-base installation. We won't be able to conduct any research on the crafts until we can safely store them.
+
+Once we have a UFO in storage, our scientists can get to work conducting their research. Once their done, our engineers will be able to disassemble the UFO to collect materials and parts.
+
+Work on the UFOs will force our scientists and engineers to move back and forth between the base and the UFO yard, so build the site as close as possible to the base where the work is being conducted.
+
+Cdr. Navarre"
+}
+
+msgid tip_capture_live_alien_txt {
+text "_Commander,
+
+We need to capture some aliens alive if we're ever going to understand our enemy. Performing more autopsies will help us understand their biology and develop less-than-lethal tools to incapacitate them. We'll need some live specimens to learn how these things really tick.
+
+If you can stun or disable aliens on the battlefield and bring them in alive to a base with an alien containment facility, there's no telling what we could accomplish. We can see better how their biological organisms function and probe them for weaknesses. In time we might even be able to develop a way to communicate with them.
+
+I know it's a great risk to your soldiers to capture them alive, sir, but it's a risk we'll have to take if we're ever going to win this war.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid tip_samsitearm_txt {
+text "_Commander,
+
+The SAM site is up and running but you haven't allocated any ammunition for it. Equip a missile launcher as soon as possible so that we can shoot these aliens out of the sky.
+
+Cdr. Navarre"
+}

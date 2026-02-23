@@ -1,0 +1,705 @@
+msgid craft_electronics_raven_txt {
+text "_Technical Specifications: \"Raven\" ECM Unit
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 19 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+Under the continuing efforts of the Excalibur Program, we have scoured the globe for the best components on Earth in order to fit our aircraft with the equipment they need to survive against the alien threat. As always, only the very best equipment has been selected for the defence of our planet.
+
+Electronic warfare has been a part of military operations ever since radar first appeared on the battlefield in World War 2. Ways of defeating radar were constantly under development since it appeared on the shores of Britain, methods such as flying below the height of the transmitter, throwing radar-scrambling 'chaff', and in later years the advent of stealth technology. It has always been better to have the enemy detect your presence later rather than sooner -- or not at all. Even better, your enemy can't shoot what he can't see.
+
+Just like the Mk. 1 Eyeball, electronic detection and targeting can be fooled, and the devices which fool electronic detection and targeting can be fooled in turn. It's a never-ending struggle for superiority which falls under the term 'Electronic Warfare'. ECM (Electronic Counter-Measures) serve to protect the craft with which they are equipped by jamming, deception, decoys and other such stratagems. ECCM (Electronic Counter-Counter-Measures) on the opposing side try to counteract the effect of ECM. And one thing is clear; the aliens are very good at both.
+
+For this reason, we have adopted the \"Raven\" Electronic Warfare Suite, the most advanced ECM package available in the world, for PHALANX service. It is the best humanity has to offer in the field of disrupting enemy detection, tracking and homing mechanisms. Any aircraft equipped with this piece of kit will have a significantly higher survivability rate against missiles and other independent munitions. It's less effective against aircraft guns, as their targeting equipment is contained on-board and therefore can't be as easily fooled or jammed, but even against these the \"Raven\" unit provides a noteworthy benefit.
+
+It is very expensive thanks to its advanced electronics and takes up a complete modular slot on one of our aircraft, but one thing is certain; its price tag isn't half as high as the cost of losing one of our aircraft.
+
+
+Recommended Doctrine
+
+We recommend that every aircraft expected to go up against armed UFOs carry either one of these ECM units or an additional skin of Polymer Aircraft Armour. Even against superior alien systems the additional protection of the \"Raven\" will help our pilots achieve our goals in the skies of Earth. The expense may seem prohibitive, but the survival of our craft and pilots will certainly justify these costs in the long run.
+
+
+Addenda
+
+None."
+}
+
+msgid craft_electronics_ew_alien_pre_txt {
+text "_Commander, we've recovered an interesting set of electronics from one of our disassembled UFOs. From our preliminary testing, it appears to be an alien EW (Electronic Warfare) suite.
+
+This is an extremely important find, Commander. If we can decipher how these alien electronics work, we could improve our targeting and detection systems dramatically. This means a vast increase in our aircraft's survivability against UFOs if we can adapt the suite for our own purposes.
+
+Please, Commander, approve this project as soon as you possibly can.
+
+Cdr. Navarre"
+}
+
+msgid craft_electronics_ew_alien_txt {
+text "_Commander, I'm happy to report that we've cracked the code. We now have a list of primary EW (Electronic Warfare) frequencies used by the aliens, and a good understanding of how this powerful piece of electronics does what it does.
+
+Of course, before you get too excited, let me stress that we have not found a magic path through the aliens' defences. Regardless of what we take away from this research, it's not going to end the war or make UFOs any less dangerous. This is because of the EW suite's most important function -- it has an independent onboard intelligence that adapts to its combat environment.
+
+This intelligence is continually experimenting, trying to keep enemy systems off-balance, changing its methods and deviating from its preferred frequencies to try ones that might be more difficult to work with but could bypass enemy jamming. We even believe that, when patched into a UFO's main computer, this suite will hook into other onboard systems to make efficiency-increasing adjustments based on enemy EW activity. Particularly to the targeting computers.
+
+Besides the intelligent computer at its heart, the suite has projectors of every kind, capable of saturating virtually any frequency in the electromagnetic spectrum, even several frequencies at a time. It is also capable of 'throwing' heat several metres away from the craft, causing thermal spikes on infrared sensors that can fool missiles and draw them away from the real target. Lastly the suite comes with a set of decoys that can emulate practically any sensor signature, deployed as and when the computer thinks it's necessary.
+
+With some modifications, we've been able to make the suite work with our current aircraft electronics. Our main success has been in developing a set of software upgrades which patch the alien EW suite into the onboard intelligence systems of our aircraft. It's a hack if there ever was one, but it will do for now.
+
+Cdr. Navarre"
+}
+
+msgid craft_shield_light_txt {
+text "_Technical Specifications: Polymer Aircraft Armour
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 19 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+Under the continuing efforts of the Excalibur Program, we have scoured the globe for the best components on Earth in order to fit our aircraft with the equipment they need to survive against the alien threat. As always, only the very best equipment has been selected for the defence of our planet.
+
+One of the fundamental truths in aircraft design is that it's easier to dish out damage than it is to take it and keep coming. Heavy objects don't really belong in the sky; it takes a constant input of power to keep things like aircraft, birds and balloons from coming back down, and if the source of this power is damaged in mid-flight, a crash is unavoidable. PHALANX uses exclusively multi-engine aircraft, but even though it's possible for our interceptors to land on only one engine, the loss of an engine during combat will immediately render the aircraft combat-ineffective. With such a drastic loss of speed and manoeuvring power, continuing the engagement would be suicide.
+
+Adding extra armour to our aircraft is a weighty but effective solution to keeping them in the sky, protecting critical systems from damage and allowing the aircraft to stay in the fight longer than would otherwise be possible. It will reduce the severity of hits to the fuel tank and other vital systems that might otherwise result in the craft's instant destruction.
+
+The expensive polymer used in our standard add-on armour is one of the toughest materials on the planet. It deforms wildly under heat and pressure, such as when impacted by kinetic or explosive energy, cushioning the blow across the entire armour surface. Once the energy has dissipated, the deformed plate amazingly resumes all or most of its previous shape, depending on the amount of damage received. We even have facilities in our Workshops to repair permanently-deformed polymer plates once the aircraft returns to base.
+
+On the downside, the added weight will slow the aircraft down and decrease its effective range. This is less of an issue for quick short-range interceptions, but can cause problems if UFOs are spotted in areas far distant from any of our bases.
+
+Installing this armour add-on will completely take up the modular armour slot on one of our aircraft.
+
+
+Recommended Doctrine
+
+It is recommended to carefully weigh the decision to install armour on a craft. The trade-offs in speed and range could make it difficult for some aircraft to chase down fast-moving UFOs.
+
+
+Addenda
+
+None."
+}
+
+msgid craft_shield_plating_pre_txt {
+text "_Commander, now that we have the ability to produce and work the alien materials, a whole new range of options has opened up to us. These materials are so strong and flexible that they can be used for almost anything. Their most promising uses, however, have been in aircraft design -- specifically armour.
+
+We've had an extremely difficult time shooting down UFOs thanks to the resilient outer skin of alien materials. Unfortunately we can't simply slap this same kind of skin onto our own craft because the alien materials are far too heavy. Our craft would struggle to even get off the ground. That needn't be the end of it, though.
+
+Commander, if you let us do some research on it, I believe we can come up with an armouring scheme that should give our aircraft a far better survival chance against the alien weapons during interceptions.
+
+It's a very promising possibility, Commander, one that definitely deserves investigation.
+
+Cdr. Navarre"
+}
+
+msgid craft_shield_plating_txt {
+text "_Commander, I've got some good news. My team and I have finished prototyping the alien aircraft plating project. Our new armour is now ready for full PHALANX production.
+
+This has been a difficult project from the start. We've faced several major challenges in designing equipment capable of bending the alien materials into the shapes we want, and 'programming' the materials to change when we want and how we want them to do so. Ultimately we overcame these problems, but then we had to deal with the natural limitations of the material.
+
+The main drawback of these alien materials is their weight. They are significantly heftier than modern human aircraft materials, and anything we make from them will suffer from the extra weight. The only way the aliens manage to keep their wingless UFOs in the sky is through overwhelming engine power. Airspeed and maximum operational range will be negatively affected by putting alien materials onto our aircraft.
+
+Even a very thin skin of alien materials offers a substantial protective benefit. The new aircraft plating we've designed takes full advantage of these capabilities and shows the supreme toughness of the alien materials.
+
+The new plating will be essential in keeping our current airfleet effective against the mounting alien threat. You and I both know the price tag of new aircraft, Commander -- we cannot afford to let any of our planes become obsolete.
+
+Cdr. Navarre"
+}
+
+msgid craft_shield_polymer_alien_pre_txt {
+text "_Commander, the skin of armour wrapped around that Gunboat UFO that we investigated suggested several innovations we might be able to deploy in our own aircraft. It wasn't just thicker, as most alien armour improvements have been. It was lighter and more durable than anything we've seen.
+
+Give us some time in the lab, sir, and maybe we can come up with new armour fabricration techniques derived from this UFO to outfit our own aircraft.
+
+Cdr. Navarre"
+}
+
+msgid craft_shield_polymer_alien_txt {
+text "_Commander, we've finished our examination of the new alien armour and come up with several improvements we can apply to our own manufacturing techniques for a more durable aircraft armour.
+
+The key innovations lay in the way the materials are layered and woven together, making remarkably thin applications very durable. This will improve the main drawback of our current armour, which is so heavy that we're forced to sacrifice protection for airspeed.
+
+Start fabricating this new armour in the workshop as soon as possible, sir. It will provide a dramatic step up in our aircrafts' defense over our existing armour solutions without adding any more drag to the aircraft.
+
+Cdr. Navarre"
+}
+
+msgid craft_alien_astrogation_pre_txt {
+text "_Commander, the recovery of an intact alien astrogation unit is an important milestone. Although this unit doesn't seem to contain a star chart, it will allow us to decipher alien astronomical notations and upgrade the power of our own astrogation systems by several orders of magnitude. Eventually the work we do here may help us backtrack the aliens to their home planet.
+
+Along with Alien Propulsion and Alien Detection, Alien Astrogation is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.
+
+Cdr. Navarre"
+}
+
+msgid craft_alien_astrogation_txt {
+text "_Commander, we've finished work on the captured alien astrogation unit. Here is a summary of my report.
+
+We concluded early on in our survey that this astrogation unit is, at its core, a purpose-built computer of extraordinary power loaded with specialised software -- all intended solely for the purpose of plotting a course from one point in space to another. It uses a new, alien system of astronomical notation which we've decided to adopt in order to make use of this alien hardware.
+
+Now that we've figured out its notation system, we can see that the astrogation unit is very good at what it does. Given correct input, the system can plot a course from anywhere to anywhere in seconds, and it can intelligently recompute that course with filters like 'least travel time', 'shortest distance', 'fewest navigational hazards', and so on. These filters can be layered on endlessly until the system spits out the exact course you want. It is even able to take into account faster-than-light capability when plotting a course, which all but verifies the theory that the aliens do indeed have access to some type of FTL technology.
+
+The only problem with the unit's plotting method is that it requires a star chart to give accurate courses beyond the UFO's sensor range. We have never found a star chart loaded onto any UFO we've recovered. Perhaps only UFOs with an FTL drive have a chart loaded; they would surely need it for navigation.
+
+Instead of the elusive star chart, the astrogation units we've recovered so far contain enormous detail on Earth and the solar system. Surface maps of the outer planets and all their moons (even a previously-undiscovered moon of Pluto), spectrum analyses of every body in the asteroid belt as well as the distant Kuiper belt, and the orbits of every body in the solar system plotted out hundreds of years in advance. We're not sure if this information will be of any use to us, but it will greatly enhance humanity's body of knowledge about our home system -- whenever we're allowed to release it into the public.
+
+It's possible to program our own star charts into the astrogation unit, but I can only imagine how primitive and incomplete our charts might be compared to what the aliens have. I wouldn't condone any interstellar travel with these units until we can capture an alien chart. However, in the meantime we could certainly use these units to navigate around the solar system if we could design a PHALANX craft capable of launching into space. They will greatly simplify the whole process of interplanetary travel to the point where we'd be able to launch missions to Saturn or even Pluto at the click of a button.
+
+And that is something we should do as soon as humanly possible.
+
+Cdr. Navarre"
+}
+
+msgid craft_alien_propulsion_pre_txt {
+text "_Commander, the alien antimatter engines we recovered have been fascinating my team ever since they arrived. With our new understanding of the alien materials, I think we can work out the details and duplication of this technology. Excitingly, it now seems to be within our capabilities to replicate these engines, if we can just figure out the function and creation of the different parts.
+
+Along with Alien Astrogation and Alien Detection, Alien Propulsion is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.
+
+Cdr. Navarre"
+}
+
+msgid craft_alien_propulsion_txt {
+text "_Commander, I'm happy to report the success of our alien propulsion program. We've cracked the mysteries of the alien engine set-up and we finally understand the path of the antimatter from fuel tank to reaction chamber.
+
+Quoting from my previous report:
+
+(UFO Theory) \"The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, and then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and reduce the infrared signature. Engine heat is also used to supply the craft's electricity.\"
+
+With this project we've learned a lot about how these engines are constructed, how to control them, and how we might be able to use them in new aircraft designs. I have to warn you, though; they will be extremely expensive to produce. Between the complex use of alien materials, the sensitive electromagnetics and the liquid nitrogen cooling system, this really stretches the limits of our production capacity.
+
+Some more research may be required to figure out antimatter storage and control, but the engine upgrades are self-contained units -- basically just an alien engine with adapters on it for human tech.
+
+I've mentioned before, the power disparity between our liquid fuel and these matter-antimatter engines is nothing short of astonishing. When we start using these engines on our planes, our pilots are going to need some serious re-education about the capabilities of their craft. Let me explain.
+
+In a regular military jet, giving her a little too much throttle around a tight corner can result in impaired judgment and unconsciousness from the force of acceleration. Pilots have died from over-acceleration.
+
+In an antimatter jet, however, these problems are amplified hundred-fold. The engines are so powerful that over-acceleration can easily turn a human body to bloody pulp in its flight chair. Even the craft itself may have trouble coping with the acceleration, and our flight engineers will have to be extremely careful in checking for metal fatigue, hairline fractures and other wear and tear on the airframe. A tiny crack in the structure may result in one of our planes breaking up in mid-flight. Mechanical thrust limiters can only do so much -- most of the G-stresses are incurred during turns.
+
+Still, it shouldn't become a problem as long as everyone -- pilots and mechanics alike -- is extremely careful in their assigned tasks. We've done some serious tightening-up of our safety and inspection protocol just for antimatter planes. The retraining of our pilots is the only remaining obstacle to our use of these alien engines.
+
+Cdr. Navarre"
+}
+
+msgid craft_alien_propulsion_adv_pre_txt {
+text "_Commander, when our engineers were performing the latest UFO disassembly, they noticed what appeared to be some modifications to the propulsion mechanisms. If the aliens are upgrading their antimatter engines, we need to learn as much as we can from them.
+
+I'm submitting this request to take a closer look. It could be key to winning the battle for supremacy in our skies.
+
+Cdr. Navarre"
+}
+
+msgid craft_alien_propulsion_adv_txt {
+text "_Commander, we've finished taking a look at the advanced alien propulsion systems and I've prepared a report for you.
+
+As we suspected, these engines have been modified. In essence, they've upgraded the internals but left the outer casing intact. Most of the modifications have gone into expanding the capacity of the reaction chamber, allowing them to channel even more force through the back of the engine. But they've also cleverly redesigned the feeder mechanism to achieve faster rates of matter-antimatter anihilation.
+
+The ad-hoc nature of the changes suggest the aliens are adapting technology as they go. The extra propulsion was likely designed to enable heavy UFOs to stay airborne in earth's atmosphere.
+
+I think we can adapt these insights to design a more powerful propulsion mechanism, but the threat to an interceptor's structural integrity is so great that we'll have to design a new aircraft capable of handling it. I've put a research proposal in your queue for a new advanced interceptor that will take advantage of everything we've learned from these advanced engines and our Dragon interceptor project. Please take a look as soon as possible.
+
+Cdr. Navarre"
+}
+
+msgid craft_alien_detection_pre_txt {
+text "_Commander, the alien sensor suite appears to be a very powerful set of passive and active scanning systems, including radar, lidar, magnetic and UV/infrared reception, and -- most interestingly -- a kind of detection unknown to us, but which seems to have far more success at detecting UFOs than anything we have.
+
+If you'll let us take the suite apart, I believe we can find out what everything does and how to operate it, and how to replicate most if not all of the alien detection equipment. It would be an immense boost to our defence efforts on Earth if we can get this technology working for us, and its long-term potential for spacecraft development is vital. There's no way we could build a viable space-capable fighter with human sensors.
+
+Along with Alien Propulsion and Alien Astrogation, Alien Detection is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.
+
+Cdr. Navarre"
+}
+
+msgid craft_alien_detection_txt {
+text "_The project on alien detection is complete, Commander. We now have a full understanding of the machinery, its controls, and the modifications needed for human use.
+
+Our initial assessment looks to have been correct. The detection suite makes use mostly of standard, reliable detection methods that humanity either uses or knows about. The equipment is more advanced than ours and will be useful, but by and large the aliens apply the same concepts and use the same physics as we do. As I mentioned in my proposal, radar, lidar and other such old reliables are all well-represented in the suite.
+
+And then there's the mystery sensor.
+
+It had us confounded for a long time, because now that it's here on the Earth's surface, it spits out mostly overpowering background noise. Up in the air, however, the picture is quite different. We think we've now identified the detector and have figured out how it works.
+
+In the simplest terms, it's a gravity sensor, scanning for minute changes in a background gravitational field. Everything travelling through a gravity field disturbs the field to some degree based on its size, mass and composition. The sensor can identify these changes as natural or artificial objects based on course, speed and acceleration with 95% accuracy. If there is any doubt about a contact, the system will report it anyway. It seems to be more effective in stronger fields like the one around Earth, but we surmise that it will work to some extent anywhere within the gravity range of a star.
+
+All of this detection power is linked into an advanced computer system which automatically puts all results through a series of filters, which can be adjusted at any time to suit the needs of the pilot and crew. This helps alternately sifting out targets from a mess of background noise or increasing sensitivity to search for something stealthy.
+
+Interestingly, the detection computer seems to have a direct link to fire control, assisting in anticipating target manoeuvres and point defence control if the craft has that capability.
+
+Parts of this technology can be adapted to our existing ground-based installations and aircraft radar. It should extend their detection range and increase resolution across the board, making it a good deal harder for UFOs to hide. However, the biggest practical gains will come from using this tech in creating new aircraft instrumentation to increase the combat survivability of our interceptors.
+
+Cdr. Navarre"
+}
+
+msgid craft_weapon_alc_pre_txt {
+text "_The Aerial Laser Cannon may well be our most challenging laser to create. The sorts of power levels we need have been achieved before with massive arrays mounted on jumbo jets, but never in a package small enough to make a jet fighter cannon.
+
+The finished product should be able to engage UFOs with bullseye accuracy to provide a more effective direct-fire aircraft weapon. We expect that the ability to keep continuous fire and pressure on enemy craft will be valuable in the days to come.
+
+Please approve lab time and funding for this program when you're ready, Commander.
+
+Cdr. Navarre"
+}
+
+msgid craft_weapon_alc_txt {
+text "_Commander, I've just finished my report on our latest laser program. We've successfully prototyped the new Aerial Laser Cannon and are ready to put it into production.
+
+We achieved what we set out to do: create a continuous wave, deuterium-fluoride-powered laser with megawatt-range output. Accuracy is excellent, hampered only by enemy ECM (Electronic Countermeasures). The laser proceeds in a straight line and crosses the distance between gun and target almost instantly. It's hard to miss with it.
+
+Unfortunately atmospheric blooming is still a problem, and the laser rapidly loses power the further it has to travel to the target. The Aerial Laser Cannon is ideal for driving and pinning down the enemy behind a wall of laser fire if the pilot can close within a devastating range.
+
+The cannon carries an integrated magazine of deuterium-fluoride allowing up to thirty minutes of continuous fire. Since deuterium and fluoride are both too potentially hazardous to store on-base, and we have access to large off-base stockpiles of all the necessary compounds, we will not need to keep laser cannon ammunition in inventory.
+
+Deployment of the weapon is at your discretion, Commander, but I'd like to recommend we use the new cannons to replace SHIVA guns across our airfleet.
+
+Cdr. Navarre"
+}
+
+msgid craft_weapon_shiva_txt {
+text "_Technical Specifications: SHIVA Rotary Cannon
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 19 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+Now that we have aircraft capable of intercepting the attacking UFOs, we need to equip them with armaments that can actually shoot down these alien craft. We have evaluated every available weapon on Earth as part of the Excalibur Program, and we have selected the very best for the defence of our planet.
+
+The SHIVA is a four-barreled rotary cannon, firing the 20mm HMG (Heavy Machine Gun) round. It is an externally-powered gun -- rather than being dependent upon recoil to actuate the system, it uses an external motor to produce power. The electric motor which drives the SHIVA is a high-efficiency 20 horse power beast, achieving a rate of fire up to 6,000 rounds a minute with the accurate, hard-hitting 20mm HMG shells.
+
+Designed and built in Bangladesh, the SHIVA was first prototyped in 2048, failing every one of its trials during that year. The project was nearly discontinued until, in July 2050, an undercover investigation revealed a long-running sabotage plot by a rival arms company. A new prototype was constructed which showed enough promise justify further development. Eventually all the major bugs were ironed out, at which point the power of this weapon became apparent.
+
+The SHIVA is very light for an aircraft weapon of its size and effectiveness, weighing only 250 kilos unloaded, 400 kilos loaded. The rate of fire exceeds that of any other four-barreled cannon in existence. Its sophisticated tracking systems can hold a bead on an enemy for as long as there is a radar, lidar or optical target solution available. The unlinked ammo feeds are highly reliable and no jam has ever been recorded throughout the gun's service history.
+
+The SHIVA can fire two varieties of the HMG round; API (Armour-Piercing Incendiary) or HEI (High-Explosive Incendiary). The former achieves better penetration while the latter can do more damage if penetration is achieved. Both these rounds are proven to be capable of penetrating UFO armour to some degree.
+
+The largest issue with the SHIVA cannon is that it does only limited damage to a UFO, requiring a fairly long engagement time in order to bring a target down on its own. This also allows the enemy plenty of opportunity to escape or peg our craft with return fire. On the other hand, its large magazine gives it more staying power than most other weapons, and it is not to be underestimated.
+
+
+Recommended Doctrine
+
+The SHIVA is designed for close-range dogfighting. For this reason, we recommend it should be part of a larger armaments pack that includes longer-range weapons where possible. When closing on an enemy it is extremely deadly, but if it is the only weapon available to a pilot he will be vulnerable during the long approach.
+
+We currently have too little experience to recommend a most-effective way to engage alien craft with or without this weapon, but until we manage to capture some UFO weapon mounts, the SHIVA will remain the best dogfighting gun Earth has to offer.
+
+
+Addenda
+
+None."
+}
+
+msgid craft_ammo_shiva_1_txt {
+text "_Technical Specifications: SHIVA 20mm API Rounds
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 19 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This is a pallet of 20mm API (Armour-Piercing Incendiary) ammunition for the SHIVA Rotary Cannon. It can contain up to 10,000 rounds.
+
+This high-powered anti-aircraft munition consists of a hard titanium-steel shell, tipped with depleted uranium, and filled with a core of explosive incendiary compound. Once the shell penetrates the outer skin of an aircraft, the core detonates, blowing the shell apart like a fragmentation grenade and spreading incendiary compound over the target area. Critical systems may be damaged before the incendiary compound can be quenched or compartmentalised.
+
+The advantage of the API round over the HEI (High-Explosive Incendiary) is its improved penetration, giving each round a better chance of causing some damage if a hit is scored. Penetrating API hits do not cause nearly as much damage as penetrating HEI hits, however.
+
+Each SHIVA cannon is loaded standard with a full pallet of 10,000 rounds, unless there are not enough rounds available in base storage.
+
+
+Recommended Doctrine
+
+It's a tough choice between API and HEI ammo in most situations. We can switch out a gun's ammunition in a matter of minutes, but we can't load both types into the same gun. The variable pressure of firing different ammunition can cause misfires and may result in extreme damage to the gun and the aircraft. Both UN safety procedures and the manufacturer's manual absolutely forbid it, and I can't help but agree.
+
+
+Addenda
+
+None."
+}
+
+msgid craft_ammo_shiva_2_txt {
+text "_Technical Specifications: SHIVA 20mm HEI Rounds
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 19 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This is a pallet of 20mm HEI (High-Explosive Incendiary) ammunition for the SHIVA Rotary Cannon. It can contain up to 10,000 rounds.
+
+This high-powered anti-aircraft munition consists of a hard titanium-steel shell, tipped with depleted uranium, and filled with a core of explosive incendiary compound. Once the shell penetrates the outer skin of an aircraft, the core detonates, blowing the shell apart like a fragmentation grenade and spreading incendiary compound over the target area. Critical systems may be damaged before the incendiary compound can be quenched or compartmentalised. HEI rounds are especially good at this as they pack more incendiary compound and blast it over a far larger area.
+
+The advantage of the HEI round over the API (Armour-Piercing Incendiary) is its improved damage potential, giving each round a better chance of disabling or destroying the target if a hit is scored. HEI hits do not penetrate the target's armour as often as API hits, however. If the angle is unfavourable, HEI hits tend to bounce off without causing damage.
+
+Each SHIVA cannon is loaded standard with a full pallet of 10,000 rounds, unless there are not enough rounds available in base storage.
+
+
+Recommended Doctrine
+
+It's a tough choice between API and HEI ammo in most situations. We can switch out a gun's ammunition in a matter of minutes, but we can't load both types into the same gun. The variable pressure of firing different ammunition can cause misfires and may result in extreme damage to the gun and the aircraft. Both UN safety procedures and the manufacturer's manual absolutely forbid it, and I can't help but agree.
+
+
+Addenda
+
+None."
+}
+
+msgid craft_weapon_sparrowhawk_txt {
+text "_Technical Specifications: \"Sparrowhawk\" AA Missile Rack
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 19 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+Now that we have aircraft capable of intercepting the attacking UFOs, we need to equip them with armaments that can actually shoot down these alien craft. We have evaluated every available weapon on Earth as part of the Excalibur Program, and we have selected the very best for the defence of our planet.
+
+Missiles have been humanity's primary anti-air weapon since the Vietnam war. The development of advanced Beyond-Visual-Range detection systems and the advent of guided missiles have moved combat engagements further and further away from the actual aircraft. Cannons, while not replaced, have taken a back seat to missiles due to the longer engagement ranges. However, there is one major problem with using missiles against our alien enemies. They can't hit the bastards.
+
+The amount and density of alien EW systems is enough to defeat the guidance systems of practically any Earth-built missile. Our electronics are simply not up to the job. The aliens make short work of radar and infrared homing, and manually-guided missiles have no chance of hitting. Even laser-riding missiles can't maintain a lock on the alien hull materials. This leaves us without a lot of options in the field of guided ordnance.
+
+It's only thanks to the extensive knowledge and experience of my staff that we've found one.
+
+The \"Sparrowhawk\" missile is an antique that never quite got out of the prototype stage. It was first tested in 2019, using then-revolutionary digital imaging technology to improve the old guidance technology of 'contrast seeking'. This technique uses an array of optical cameras mounted in the transparent fibreglass nose of the missile. The onboard computer looks for a spot in the image where the contrast changes the fastest, and then attempts to keep that spot dead centre in front of it. This system has been employed mostly in air-to-ground missiles due to the greater effectiveness of other guidance systems against Earth-built aircraft.
+
+The Sparrowhawk program was cancelled only months before the design would've been put into service. It was ready to be put into service then, it's ready now, and right now it's the only choice we've got.
+
+We've revived the Sparrowhawk AA program and the UN has agreed to put it into mass production. This will give us access to 7-missile racks capable of being mounted on all our interceptors, allowing them to engage UFOs at ranges that would otherwise be closed off to us.
+
+The missile's maximum effective range is twelve kilometres. A fully-loaded \"Sparrowhawk\" rack weighs approximately 600 kilos.
+
+
+Recommended Doctrine
+
+The Sparrowhawk should be an essential part of our aerial defence plan. Any interceptor capable of carrying a full rack should do so. The ability to soften up an enemy while we close in is something not to be ignored lightly. Overall accuracy will be poor but the range difference is one of miles. Compared to the TR-20 rocket pod, the Sparrowhawk's effective range is considerably greater.
+
+
+Addenda
+
+None."
+}
+
+msgid craft_ammo_sparrowhawk_txt {
+text "_Technical Specifications: \"Sparrowhawk\" Missile
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 19 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This is a \"Sparrowhawk\" guided anti-aircraft missile. It is designed to be loaded into the \"Sparrowhawk\" AA Missile Rack.
+
+The \"Sparrowhawk\" missile is an antique that never quite got out of the prototype stage. It was first tested in 2019, using then-revolutionary digital imaging technology to improve the old guidance technology of 'contrast seeking'. This technique uses an array of optical cameras mounted in the transparent fibreglass nose of the missile. The onboard computer looks for a spot in the image where the contrast changes the fastest, and then attempts to keep that spot dead centre in front of it. This system has been employed mostly in air-to-ground missiles due to the greater effectiveness of other guidance systems against Earth-built aircraft.
+
+The Sparrowhawk program was cancelled only months before the design would've been put into service. It was ready to be put into service then, and it's ready now. We've revived the Sparrowhawk AA program and the UN has agreed to put it into mass production.
+
+The \"Sparrowhawk\" is mounted in 7-missile racks, which can then be mounted to the appropriate weapons hardpoints on our aircraft. The missile's range is far superior to any of the other weapons we have available at this time; it's effective out to twelve kilometres from the aircraft thanks to its unique guidance technology. It's also hardened against EMP to prevent it from being disabled electronically.
+
+The individual missiles weigh approximately 65 kilos. A fully-loaded rack is approximately 600 kilos.
+
+
+Recommended Doctrine
+
+The Sparrowhawk should be an essential part of our aerial defence plan. Any interceptor capable of carrying a full rack should do so. The ability to soften up an enemy while we close in is something not to be ignored lightly. Overall accuracy will be poor but the range difference is one of miles. Compared to the TR-20 rocket pod, the Sparrowhawk's effective range is considerably greater.
+
+
+Addenda
+
+None."
+}
+
+msgid craft_weapon_tr20_txt {
+text "_Technical Specifications: TR-20 Rocket Pod
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 19 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+Now that we have aircraft capable of intercepting the attacking UFOs, we need to equip them with armaments that can actually shoot down these alien craft. We have evaluated every available weapon on Earth as part of the Excalibur Program, and we have selected the very best for the defence of our planet.
+
+The TR-20 rocket pod is an interesting departure from conventional air-to-air weapons, in that it was originally designed for air-to-ground operations. The pod contains a total of 152 very small, very fast rockets with depleted uranium tips and powerful pulse detonation engines. No one considered using the TR-20 for anything other than chewing up ground targets until an attack helicopter pilot in Africa discovered their potential.
+
+At the time, the pilot -- the last surviving member of his flight -- had been cornered against a mountain by three MiG jets which were closing in for the kill. With nearly all his weapons expended, the only thing the pilot had left to fight with was one pod of TR-20 rockets. He made a suicide run with full afterburners, and managed to swat all three MiGs out of the sky with rapid fire before he ran out of fuel and had to crash-land. He returned to his airbase two days later without a scratch on him.
+
+Though unguided, TR-20 pods contain such a large number of rockets that they can be used almost like a rocket machine gun. This is because the rockets are stacked nose to tail inside their launch tubes, eight to each tube, and fired electronically in a timed sequence. This system is so fast that all eight rockets in a tube can be ignited and underway before the first rocket actually leaves the tube. At its maximum possible rate of fire, the pod can fire all 152 rockets in 0.2 seconds. However, this is usually throttled back to approx. 300 rounds per minute due to the low accuracy of any single volley.
+
+The advantages of the TR-20 over the SHIVA cannon are increased range and greater hitting power. However, the pod's ammo capacity is limited compared to the SHIVA's large portable magazines, and a single TR-20 pod is unlikely to last through a full UFO engagement.
+
+
+Recommended Doctrine
+
+We anticipate the TR-20 will perform nicely against light UFOs. Because it only requires a medium-weight hardpoint, it should be installed on lighter aircraft. In these situations, TR-20 rockets perform with flying colours, tearing mercilessly into a target. However, its limited range and accuracy lead me to recommend that the Sparrowhawk Missile Rack be preferred in any weapon hardpoint capable of mounting heavy weapons.
+
+
+Addenda
+
+None."
+}
+
+msgid craft_ammo_tr20_txt {
+text "_Technical Specifications: TR-20 Rocket
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 19 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This is a TR-20 unguided rocket. It is designed to be loaded into the TR-20 Rocket Pod.
+
+The TR-20 rocket is essentially a very small, very fast plastic dart moulded around a rod of depleted uranium. It is fin-stabilised and powered by a cheap solid-fuel rocket engine, a civilian model which is also popular in amateur rocketry. One of these engines is capable of propelling an amateur rocket eight kilometres into the sky. It's also capable of propelling a heavy DU penetrator into a fighter jet and out the other side.
+
+Though unguided, TR-20 pods contain such a large number of rockets that they can be used almost like a rocket machine gun. This is because the rockets are stacked nose to tail inside their launch tubes, eight to each tube, and fired electronically in a timed sequence. This system is so fast that all eight rockets in a tube can be ignited and underway before the first rocket actually leaves the tube. At its maximum possible rate of fire, the pod can fire all 152 rockets in 0.2 seconds. However, this is usually throttled back to approx. 300 rounds per minute due to the low accuracy of any single volley.
+
+Due to its weight, the TR-20 rocket has a maximum effective range of 4 kilometres, after which the fuel runs out and the rocket rapidly loses power.
+
+The individual rockets weigh approximately 4 kilos. A fully-loaded pod is approximately 540 kilos.
+
+
+Recommended Doctrine
+
+We anticipate the TR-20 will perform nicely against light UFOs. Because it only requires a medium-weight hardpoint, it should be installed on lighter aircraft. In these situations, TR-20 rockets perform with flying colours, tearing mercilessly into a target. However, its limited range and accuracy lead me to recommend that the Sparrowhawk Missile Rack be preferred in any weapon hardpoint capable of mounting heavy weapons.
+
+
+Addenda
+
+None."
+}
+
+msgid craft_weapon_particle_beam_pre_txt {
+text "_Commander, the UFO we recovered was equipped with a very interesting type of weapon that we'd like to research right away. It seems to fire some kind of high-velocity particle beam; if we can master this technology, or at least adapt it for use on our own aircraft, we could make air engagements with armed alien craft significantly more survivable for our craft and pilots.
+
+Cdr. Navarre"
+}
+
+msgid craft_weapon_particle_beam_txt {
+text "_Our report on the alien PBW (Particle Beam Weapon) is ready for your review, Commander.
+
+The general idea of particle-beam weaponry is to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. The alien weapon is an elegantly simple application of this concept. It is essentially nothing more than a big particle accelerator and a set of focusing equipment, consisting of a high-powered magnetic containment and pinch system.
+
+My team could've built a particle accelerator to nearly the same standards, but the focusing array shows us just how far ahead the aliens really are. The accelerator is little more than a high-energy synchrotron, speeding particles round and round in a circle until they've achieved sufficient velocity. The particles are then diverted via a magnetic field into the focusing array, where they are magnetically constricted -- 'pinched' -- into a coherent beam. The level of magnetic control the aliens achieve here is far greater than anything we've managed before. The pinch system is intelligently controlled by the UFO's targeting computer, directing the beam to its target with dead-on accuracy.
+
+When active, the weapon is powered directly from the UFO's electrical system, constantly tracking one target of choice. Once the target has been destroyed, the computer will immediately lock on to the next hostile contact in the chain, if any.
+
+Defending against this weapon is going to be a challenge, Commander. There is very little that can be done against a particle beam travelling at near the speed of light, carrying enough energy to knock anything we can field right out of the sky. Additional armour for our aircraft will protect against glancing blows, but in the case of a direct hit, it may as well not be there. It seems the only realistic defence against this weapon is to cause it to miss. We should recover and investigate an intact alien ECM unit as soon as we can.
+
+On a brighter note, we've confirmed that all the weapon's components are within our ability to replicate, and their specs have been loaded into our Workshop machinery. We should be able to begin production straight away.
+
+Cdr. Navarre"
+}
+
+msgid craft_weapon_alien_launcher_pre_txt {
+text "_Commander, we made an extremely interesting find on the UFO we disassembled. It carried an advanced and highly dangerous onboard missile launcher, using powerful magnetic rails to accelerate its missiles to hypersonic speeds before they even leave the launch tube.
+
+We want to investigate this launcher and determine whether or not it can be adapted to fit on PHALANX aircraft, or even if it can be applied to other purposes. This launcher system would be far more effective in bringing down UFOs than our Sparrowhawks, possibly even more effective than our current SAM systems. If we can adapt it we stand to gain a substantial boost to the firepower of our whole airfleet as well as ground-based missile systems.
+
+Please approve this program whenever you can, Commander.
+
+Cdr. Navarre"
+}
+
+msgid craft_weapon_alien_launcher_txt {
+text "_Commander, we've finished work on the alien missile launcher. It's a fairly simple affair. Firing is computer-driven, fed directly from the UFO's targeting computer. Powerful electromagnetic coils around the launch tube accelerate the missile to extreme speeds, reaching up to Mach 4 at the point where the missile leaves the tube. Only once the missile is fully free of the tube do its onboard rockets kick in.
+
+The good news is that we've managed to succesfully adapt fittings, controls and power feeds to allow the Alien Launcher to be safely mounted to our aircraft. The bad news is that we've had to drastically reduce its magazine size in order to meet weight and size restrictions on our aircraft.
+
+Our aircraft are too small and light to be able to carry so many, and most of our craft aren't laid out with internal missile magazines. We've had to custom-build a magazine mounted with the launcher, the capacity of which falls behind the stores found on UFOs.
+
+It's not all doom and gloom, though. We believe that we can modify the launch tube to be able to fire human missiles as well as the alien type. We'd have to develop the missile ourselves, of course -- no current human missile is capable of withstanding the stress of being fired from this launcher. However, we're confident we can design a missile that will survive launch and incorporates new UFO-tracking technologies to improve homing and ECM capability.
+
+I'll send you a design proposal as soon as I can, Commander.
+
+Cdr. Navarre"
+}
+
+msgid alien_antimatter_missile_pre_txt {
+text "_Commander, we've recovered an interesting type of alien missile from the disassembled UFO. It seems to be powered by antimatter, with advanced guidance systems, extensive EW (Electronic Warfare) capabilities and top speeds far in excess of anything we've ever seen.
+
+These missiles may be the greatest threat to our aircraft yet, even worse than the alien beam weaponry.
+
+It's extremely important we research these missiles and figure out how they work in order to develop some defence against them.
+
+Cdr. Navarre"
+}
+
+msgid alien_antimatter_missile_txt {
+text "_Commander, my team and I have just wrapped up our work with the antimatter missile recovered by our field team. As usual, there's good news and bad news. I'll get right to the point.
+
+The missile's main structure consists of a rigid outer casing of alien materials, the same stuff used to plate UFO hulls, and is designed to fragment on impact into hundreds of shards of hot fast-moving shrapnel. This shell contains individual compartments for targeting, avionics, EW equipment and other electronics, and -- taking up most of the rear half of the missile -- a proton-antiproton annihilation rocket.
+
+The rocket is by far the most powerful missile engine ever seen on Earth, capable of attaining speeds that are flatly impossible through ordinary chemical reactions. It propels the missile to speeds where it no longer needs an onboard warhead. The kinetic energy generated by the impact is enough to tear an unarmoured human airliner to shreds, and even a proximity detonation of the missile's antimatter fuel is usually enough to knock down a fighter jet. Our interceptors are not built to withstand this kind of violence.
+
+We can duplicate the missiles well enough, but they still require antimatter for fuel, probably the most valuable substance in the universe right now. We'll get to work figuring out how we can utilize these ideas in a more affordable weapon system, Commander.
+
+Cdr. Navarre"
+}
+
+msgid craft_ammo_hybrid_missile_pre_txt {
+text "_Commander, our research on the alien launcher and the antimatter missile has exposed just how weak our current missile systems are. As we face ever stronger and better equipped UFOs, we're falling behind in the battle to keep them out of our skies.
+
+The new alien launcher we're encountering is capable of projecting its missiles at such a high velocity that our pilots have very little time to take evasive action. But the antimatter in the alien missiles is precious and we can't afford to equip every interceptor with them. I urge you to greenlight research into a new missile system designed to work in the alien launcher. I'm confident we can achieve greater speeds and kinetic impact than any missile system currently in use.
+
+Cdr. Navarre"
+}
+
+msgid craft_ammo_hybrid_missile_txt {
+text "_Commander, we've completed the designs for a new hybrid missile.
+
+Like the aliens' antimatter missile, we've made the shell out of a sturdy hybrid of alien materials nearly as strong as the outer casing we've seen on UFO hulls. When the shell fragments on impact the shards of shrapnel moving at high speed will tear through the armour plating of every UFO we've seen. Even a glancing blow will set off an explosion with high potential of tearing a hole in the UFO's hull.
+
+We've lost a bit of speed and sheer kinetic force by foregoing the antimatter propulsion used in the aliens' missile. This projectile will not be quite as powerful but we should be able to produce them in larger quantities. And make no mistake, this is the most powerful air-to-air combat weapon we have in our arsenal next to the antimatter missiles.
+
+Let's get these missiles into production, sir, and take back the initiative.
+
+Cdr. Navarre"
+}
+
+msgid craft_electronics_targeting_txt {
+text "_Technical Specifications: Targeting Computer
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 19 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+Under the continuing efforts of the Excalibur Program, we have scoured the globe for the best components on Earth in order to fit our aircraft with the equipment they need to survive against the alien threat. As always, only the very best equipment has been selected for the defence of our planet.
+
+All our aircraft come standard with high-tech targeting systems, but they still have an extremely difficult time tracking alien craft and holding missile lock. Alien electronics are too far in advance of ours for us to be able to realistically counter their defences. Our systems lose lock, get suckered by flares or decoys, or simply get shot to hell by the aliens' beam weapons.
+
+These are all problems that we have no clear solution for at the moment. However, what we can do is mount additional targeting equipment with purpose-built filtering software that our standard systems can't load. This package was specially built by my team using the latest, most accurate data on alien craft signatures and detection methods. It knows much more about the patterns and weaknesses of alien signals, helping to penetrate the wall of Electronic Warfare activity around an alien craft. This will significantly upgrade the accuracy of all weapons mounted on the carrying interceptor.
+
+The powerful hardware installation involved in this upgrade will take up one complete modular equipment slot on one of our aircraft.
+
+
+Recommended Doctrine
+
+This upgrade will improve the effectiveness of our pilot's targeting. We recommend it is installed in all aircraft with a free electronics bay.
+
+
+Addenda
+
+None."
+}
+
+msgid craft_electronics_fuelpod_txt {
+text "_Technical Specifications: Fuel Pod
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 19 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+We've determined that the modular equipment bays on our aircraft can be used to accept extra fuel reserves. By installing these special but very simple fuel pods, we can greatly increase the range of an aircraft by loading more fuel on board.
+
+Take note, however, that installing a fuel pod will add a significant amount of weight to the craft, slowing it down.
+
+
+Recommended Doctrine
+
+We should make use of these pods in any situation where our aircraft are unable to reach their destinations or where a large section of ground is left uncovered by our network of bases. They will help to extend our reach and provide more protection to Earth and our people.
+
+
+Addenda
+
+Addendum, Executive Officer Abel S. Howard, 20 March 2084:
+
+Having read Cdr. Navarre's report, Commander, I have to stress that our charter stipulates we must stop any and all alien activity on Earth. We can't afford to let some of it continue because it's just out of our planes' reach. If civilians were to die because the dropship couldn't quite make it, our image would be shattered and our funding may suffer the consequences. We should keep some fuel pod-equipped planes on standby to deal with distant incidents."
+}

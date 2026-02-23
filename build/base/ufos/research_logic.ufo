@@ -1,0 +1,224 @@
+// Logic relations (dependencies) that can not be defined in their original "tech" description.
+//
+// None of these will ever be visible to the player.
+// Some of these are triggered by the (code in the) game on certain occasions.
+// Use "time 0" to auto-research logic techs as soon as their dependencies are met (mainly of use for "description" techs)
+
+
+//========================================================
+// Should contain _every_ enemy possible.
+//tech rs_contained_alien
+//{
+//      type    "logic"
+//      name    "LOGIC:One Live Alien"
+//      require_OR
+//      {
+//TODO: live alien support (i.e. containment)
+//              alien alien_taman 1
+//              alien alien_ortnok 1
+//              alien alien_shevaar 1
+//              alien alien_bloodspider 1
+//      }
+//}
+
+//========================================================
+// Should contain _every_ organic enemy possible.
+tech rs_contained_organic_alien
+{
+	type	"logic"
+	name	"LOGIC:One Live Organic Alien"
+	require_OR
+	{
+		alien (taman 1)
+		alien (ortnok 1)
+		alien (shevaar 1)
+	}
+}
+
+//========================================================
+
+tech rs_fighter_OR_harvester
+{
+	type "logic"
+	name	"LOGIC:fighter OR harvester"
+	require_OR
+	{
+		tech rs_craft_ufo_fighter
+		tech rs_craft_ufo_harvester
+	}
+}
+
+//========================================================
+
+tech rs_any_needler
+{
+	type "logic"
+	name	"LOGIC:needler OR heavy needler"
+	require_OR
+	{
+		tech rs_weapon_needlergun
+		tech rs_weapon_needlerheavy
+	}
+}
+
+//========================================================
+
+tech rs_taman_extra
+{
+	type	"logic"
+	name	"LOGIC:Taman autopsy"
+	require_OR
+	{
+		tech rs_alien_shevaar_autopsy
+		tech rs_alien_ortnok_autopsy
+	}
+	time 0
+}
+
+tech rs_shevaar_extra
+{
+	type	"logic"
+	name	"LOGIC:Shevaar autopsy"
+	require_OR
+	{
+		tech rs_alien_taman_autopsy
+		tech rs_alien_ortnok_autopsy
+	}
+	time 0
+}
+
+tech rs_ortnok_extra
+{
+	type	"logic"
+	name	"LOGIC:Ortnok autopsy"
+	require_OR
+	{
+		tech rs_alien_taman_autopsy
+		tech rs_alien_shevaar_autopsy
+	}
+	time 0
+}
+
+//========================================================
+// Used for the "A New Twist" and "The Enemy On Earth" research.
+
+// "XVI infection begins"
+tech rs_alien_xvi_event
+{
+	type	"logic"
+	name	"LOGIC:XVI event"
+	require_AND
+	{
+		// Not marked "researchable" in a normal way
+		// We self-link here to not make this researchable at all.
+		tech rs_alien_xvi_event
+	}
+
+	event "cp_start_xvi_spreading"
+}
+
+// "Humans start attacking player"
+tech rs_enemy_on_earth_event
+{
+	type	"logic"
+	name	"LOGIC:Enemy On Earth event"
+	require_AND
+	{
+		// Not marked "researchable" in a normal way
+		// We self-link here to not make this researchable at all.
+		tech rs_enemy_on_earth_event
+	}
+}
+
+// Logic techs for "Any 2 autopsies"
+tech rs_autopsy_O_T
+{
+	type	"logic"
+	name	"LOGIC: Ortnok AND Taman Autopsy"
+	require_AND
+	{
+		tech rs_alien_ortnok_autopsy
+		tech rs_alien_taman_autopsy
+	}
+	time 0
+}
+
+tech rs_autopsy_O_S
+{
+	type	"logic"
+	name	"LOGIC: Ortnok AND Sheevar Autopsy"
+	require_AND
+	{
+		tech rs_alien_ortnok_autopsy
+		tech rs_alien_shevaar_autopsy
+	}
+	time 0
+}
+
+/*
+tech rs_autopsy_O_Br
+{
+	type	"logic"
+	name	"LOGIC: Ortnok AND Breeder Autopsy"
+	require_AND
+	{
+		tech rs_alien_ortnok_autopsy
+		tech rs_alien_breeder_autopsy
+	}
+	time 0
+}
+*/
+
+tech rs_autopsy_T_S
+{
+	type	"logic"
+	name	"LOGIC: Taman AND Shevaar Autopsy"
+	require_AND
+	{
+		tech rs_alien_taman_autopsy
+		tech rs_alien_shevaar_autopsy
+	}
+	time 0
+}
+
+/*
+tech rs_autopsy_T_Br
+{
+	type	"logic"
+	name	"LOGIC: Taman AND Breeder Autopsy"
+	require_AND
+	{
+		tech rs_alien_taman_autopsy
+		tech rs_alien_breeder_autopsy
+	}
+	time 0
+}
+
+tech rs_autopsy_S_Br
+{
+	type	"logic"
+	name	"LOGIC: Shevaar AND Breeder Autopsy"
+	require_AND
+	{
+		tech rs_alien_shevaar_autopsy
+		tech rs_alien_breeder_autopsy
+	}
+	time 0
+}
+*/
+
+tech rs_any_2_autopsies
+{
+	type	"logic"
+	name	"LOGIC: Any 2 autopsies (organic aliens)"
+	require_OR
+	{
+		tech rs_autopsy_O_T
+		tech rs_autopsy_O_S
+		//tech rs_autopsy_O_Br
+		tech rs_autopsy_T_S
+		//tech rs_autopsy_T_Br
+		//tech rs_autopsy_S_Br
+	}
+	time 0
+}

@@ -1,0 +1,382 @@
+/*	Description of the armour items:
+
+	useable
+		Parameter that defines which team can use it:
+		phalanx, alien, civilian
+
+	protection ("dmgweight" values)
+		See "damagetypes" below (the ones without the "_").
+
+	rating	("dmgtype" values)
+		See "damagetypes" below (the ones with the "_").
+		See also scripts.c:Com_ParseDamageTypes
+*/
+
+// TODO/FIXME: Is the model parameter needed in the armour definitions?
+
+// if the damage type starts with _ it is marked as translatable and thus shown
+// in the menus, if there is no such character the damagetype will not be shown.
+
+damagetypes standard
+{
+	"_normal" // Most often for phalanx weapons
+	"normal_light" // Pistols and other light firearms
+	"normal_spray" // SMG, flechette shells and other weapons that spray several bullets
+	"normal_medium"
+	"normal_heavy"
+	"normal_steelblade" // Combat knife
+	"normal_monomolecularblade" // Kerrblade and similar blades to ensure superior tech better against armour
+	"normal_needle" // Needler and heavy Needler (very small damage, but large number of shots and high pierce).
+	"_blast"
+	"_fire"
+	"fire_light" // Currently unused
+	"fire_medium" // Currently unused
+	"fire_heavy" // Currently unused
+	"fire_flamer" // Flamethrower only for now
+	"_shock" // Flashbang grenade only for now
+	"_laser"
+	"laser_light"
+	"laser_medium"
+	"laser_heavy"
+	"_plasma"
+	"plasma_light"
+	"plasma_medium"
+	"plasma_heavy"
+	"plasma_pierce"
+	"_particlebeam"
+	"particlebeam_light"
+	"particlebeam_medium"
+	"particlebeam_heavy"
+	"_stun_electro"
+	"_stun_gas"
+	"smoke"
+	"incendiary"
+}
+
+// =======================
+// PHALANX ARMOURS
+// =======================
+
+item armour_light
+{
+	name		"_Combat Armour"
+	image		"armour/light"
+	type		"armour"
+	shape		"0 0 3 4"
+	center		"0 0 -5"
+	scale		0.7
+	price		1400
+	size		60
+	weight		7000
+	armourpath	"light"
+	useable		"phalanx"
+
+	protection {
+		normal_light		20
+		normal_medium		15
+		normal_heavy		10
+		normal_spray		8
+
+		normal_steelblade			10
+		normal_monomolecularblade	5
+		normal_needle		0
+
+		blast				25
+
+		fire_medium			15
+		fire_heavy			5
+		fire_flamer         1
+
+		incendiary			0
+
+		shock				0
+
+		plasma_light		15
+		plasma_medium		15
+		plasma_heavy		10
+		plasma_pierce		0
+
+		laser_light			5
+		laser_medium		5
+		laser_heavy			5
+
+		particlebeam_light	0
+		particlebeam_medium	0
+		particlebeam_heavy	0
+
+		stun_electro		0
+		stun_gas			0
+	}
+
+	rating {
+		normal				20
+		blast				20
+		fire				10
+		shock				0
+		plasma				15
+		laser				5
+		particlebeam		0
+		stun_electro		0
+		stun_gas			0
+	}
+}
+
+item armour_medium
+{
+	name		"_Nanocomposite Armour"
+	image		"armour/medium"
+	type		"armour"
+	shape		"0 0 3 4"
+	center		"0 0 -5"
+	scale		0.7
+	price		7500
+	size		120
+	weight		9000
+	useable		"phalanx"
+	armourpath	"medium"
+
+	protection {
+		normal_light		40
+		normal_medium		30
+		normal_heavy		30
+		normal_spray        12
+
+		normal_steelblade		30
+		normal_monomolecularblade	20
+		normal_needle		3
+
+		blast				50
+
+		fire_medium			30
+		fire_heavy			15
+		fire_flamer         3
+
+		incendiary			0
+
+		shock				0
+
+		plasma_light		25
+		plasma_medium		30
+		plasma_heavy		40
+		plasma_pierce		0
+
+		laser_light			10
+		laser_medium		10
+		laser_heavy			10
+
+		particlebeam_light	10
+		particlebeam_medium	20
+		particlebeam_heavy	20
+
+		stun_electro		15
+		stun_gas			30
+	}
+
+	rating {
+		normal				40
+		blast				50
+		fire				25
+		shock				0
+		plasma				40
+		laser				10
+		particlebeam		20
+		stun_electro		15
+		stun_gas			30
+	}
+}
+
+item armour_power
+{
+	name		"_Power Armour"
+	image		"armour/power"
+	type		"armour"
+	shape		"0 0 3 4"
+	center		"0 0 -5"
+	scale		0.7
+	price		32000
+	size		150
+	weight		14000
+	useable		"phalanx"
+	armourpath	"power"
+
+	protection {
+		normal_light		50
+		normal_medium		50
+		normal_heavy		50
+		normal_spray        20
+
+		normal_steelblade			50
+		normal_monomolecularblade	50
+		normal_needle		5
+
+		blast				70
+
+		fire_medium			50
+		fire_heavy			50
+		fire_flamer         5
+
+		incendiary			30
+
+		shock				999
+
+		plasma_light		35
+		plasma_medium		50
+		plasma_heavy		60
+		plasma_pierce		0
+
+		laser_light			15
+		laser_medium		15
+		laser_heavy			15
+
+		particlebeam_light	30
+		particlebeam_medium	40
+		particlebeam_heavy	50
+
+		stun_electro		30
+		stun_gas			999
+	}
+
+	rating {
+		normal				50
+		blast				70
+		fire				50
+		shock				100
+		plasma				50
+		laser				15
+		particlebeam		50
+		stun_electro		30
+		stun_gas			100
+	}
+}
+
+// =======================
+// ALIEN ARMOURS
+// =======================
+
+item armour_light_alien
+{
+	name		"_Alien Body Armour"
+	image		"armour/taman_light"
+	type		"armour"
+	shape		"0 0 3 4"
+	center		"0 0 -5"
+	scale		0.7
+	price		1400
+	weight		7000
+	size		50
+	useable		"alien"
+	armourpath	"light"
+
+	protection {
+		normal_spray	8
+		normal_light	15
+		normal_medium	20
+		normal_heavy	5
+
+		normal_steelblade			30
+		normal_monomolecularblade	0
+		normal_needle		1
+
+		blast			20
+
+		fire_medium		25
+		fire_heavy		10
+		fire_flamer		1
+
+		incendiary		0
+
+		shock			0
+
+		laser_light		5
+		laser_medium	5
+		laser_heavy		5
+
+		plasma_light	30
+		plasma_medium	30
+		plasma_heavy	20
+		plasma_pierce		0
+
+		particlebeam_light	10
+		particlebeam_medium	20
+		particlebeam_heavy	20
+
+		stun_electro	0
+		stun_gas		0
+	}
+
+	rating {
+		normal			20
+		blast			20
+		fire			20
+		shock			0
+		plasma			30
+		laser			5
+		particlebeam	20
+		stun_electro	0
+		stun_gas		0
+	}
+}
+
+item armour_medium_alien
+{
+	name		"_Medium Alien Armour"
+	image		"armour/taman_medium"
+	type		"armour"
+	shape		"0 0 3 4"
+	center		"0 0 -5"
+	scale		0.7
+	price		7500
+	weight		12000
+	size		75
+	useable		"alien"
+	armourpath	"medium"
+
+	protection {
+		normal_spray	25
+		normal_light	60
+		normal_medium	50
+		normal_heavy	25
+
+		normal_steelblade			60
+		normal_monomolecularblade	15
+		normal_needle		3
+
+		blast			50
+
+		fire_medium		35
+		fire_heavy		10
+		fire_flamer		2
+
+		incendiary		45
+
+		shock			0
+
+		laser_light		30
+		laser_medium	30
+		laser_heavy		30
+
+		plasma_light	50
+		plasma_medium	40
+		plasma_heavy	25
+		plasma_pierce		0
+
+		particlebeam_light	30
+		particlebeam_medium	40
+		particlebeam_heavy	50
+
+		stun_electro	15
+		stun_gas		30
+	}
+
+	rating {
+		normal			40
+		blast			50
+		fire			35
+		shock			30
+		plasma			50
+		laser			30
+		particlebeam	50
+		stun_electro	15
+		stun_gas		30
+	}
+}

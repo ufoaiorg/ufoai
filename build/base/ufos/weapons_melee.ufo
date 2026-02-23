@@ -1,0 +1,333 @@
+// =======================
+// COMBAT KNIFE
+// =======================
+item knife
+{
+	name			"_Combat Knife"
+	model			"weapons/knife/knife"
+	weapon			true
+	type			"melee"
+	animationindex	2
+	shape			"0 0 1 2"
+	center			"-1 0 3"
+	scale			1.0
+	price			50
+	size			6
+	is_secondary	true
+	thrown			true
+	dmgtype			"normal"
+	weight			500
+
+	weapon_mod
+	{
+		weapon knife
+		firedef
+		{
+			name		"_Stab"
+			skill		"close"
+			projtl		null
+			impact		null
+			hitbody		null
+			firesnd		"weapons/melee-swoosh"
+			impsnd		"impact/knife-impact"
+			bodysnd 	"impact/knife-bodyimpact"
+			speed		0
+			range		1.5
+			shots		1
+			time		4
+			damage		"50 5"
+			dmgweight	"normal_steelblade"
+			reaction	true
+			shotorg		"-9 11"
+		}
+		firedef
+		{
+			name		"_Throw"
+			skill		"close"
+			projtl		knife_ptl
+			impact		null
+			hitbody		null
+			firesnd		"weapons/melee-throw"
+			impsnd		"impact/knife-impact"
+			bodysnd 	"impact/knife-bodyimpact"
+			speed		320
+			range		7
+			spread		"1.5 1.5"
+			shots		1
+			ammo		1
+			time		8
+			damage		"20 5"
+			dmgweight	"normal_steelblade"
+			reaction	true
+			shotorg		"-9 11"
+		}
+	}
+}
+
+// =======================
+// MONOMOLECULAR KNIFE
+// =======================
+item knifemono
+{
+	name			"_Monomolecular Knife"
+	model			"weapons/knifemono/knifemono"
+	weapon			true
+	type			"melee"
+	animationindex	2
+	shape			"0 0 1 3"
+	center			"-1 0 5"
+	scale			1.0
+	price			1600
+	size			12
+	is_secondary	true
+	thrown			true
+	dmgtype			"normal"
+	weight			300
+
+	weapon_mod
+	{
+		weapon knifemono
+		firedef
+		{
+			name		"_Stab"
+			skill		"close"
+			projtl		null
+			impact		null
+			hitbody		null
+			firesnd		"weapons/melee-swoosh"
+			impsnd		"impact/knife-impact"
+			bodysnd 	"impact/knife-bodyimpact"
+			speed		0
+			range		1.5
+			shots		1
+			time		4
+			damage		"80 5"
+			dmgweight	"normal_monomolecularblade"
+			reaction	true
+			shotorg		"-9 11"
+		}
+		firedef
+		{
+			name		"_Throw"
+			skill		"close"
+			projtl		knife_ptl
+			impact		null
+			hitbody		null
+			firesnd		"weapons/melee-throw"
+			impsnd		"impact/knife-impact"
+			bodysnd 	"impact/knife-bodyimpact"
+			speed		320
+			range		7
+			spread		"1.5 1.5"
+			shots		1
+			ammo		1
+			time		8
+			damage		"40 5"
+			dmgweight	"normal_monomolecularblade"
+			reaction	true
+			shotorg		"-9 11"
+		}
+	}
+}
+
+// =======================
+// STUN ROD
+// =======================
+item stunrod
+{
+	name			"_Stun Rod"
+	model			"weapons/stunrod/stunrod"
+	weapon			true
+	type			"melee"
+	holdtwohanded	false
+	firetwohanded	true
+	animationindex	2
+	shape			"1 0 4 1"
+	shape			"0 1 3 1"
+	center			"3.2 0.5 -2.6"
+	scale			1.05
+	price			800
+	size			25
+	is_secondary	true
+	thrown			false
+	oneshot			true
+	ammo			4
+	dmgtype			"stun_electro"
+	weight			1800
+
+	weapon_mod
+	{
+		weapon stunrod
+		firedef
+		{
+			name		"_Stun Charge"
+			skill		"close"
+			projtl		null
+			impact		null
+			hitbody		null
+			firesnd		"weapons/electro-taser"
+			speed		0
+			range		2
+			shots		1
+			ammo		1
+			time		7
+			damage		"60 20"
+			dmgweight	"stun_electro"
+			reaction	true
+			shotorg		"-9 11"
+		}
+
+		firedef
+		{
+			name				"_Double Charge"
+			skill				"close"
+			projtl				null
+			impact				null
+			hitbody				null
+			firesnd				"weapons/electro-taserdouble"
+			speed				0
+			range				2
+			shots				2
+			ammo				2
+			delaybetweenshots	5
+			time				11
+			damage				"60 20"
+			dmgweight			"stun_electro"
+			reaction			true
+			shotorg				"-9 11"
+		}
+		firedef
+		{
+			name		"_Bludgeon"
+			skill		"close"
+			projtl		null
+			impact		null
+			hitbody		null
+			firesnd		"weapons/electro-taser"
+			speed		0
+			range		1.5
+			shots		1
+			time		7
+			damage		"30 4"
+			dmgweight	"normal_light"
+			reaction	true
+			shotorg		"-9 11"
+		}
+	}
+}
+
+
+// =======================
+// KERRBLADE
+// =======================
+item kerrblade
+{
+	name			"_Kerrblade"
+	model			"weapons/kerrblade/kerrblade"
+	weapon			true
+	type			"melee"
+	holdtwohanded	false
+	firetwohanded	true
+	animationindex	2
+	shape			"2 0 3 1"
+	shape			"0 1 5 1"
+	center			"6.3 0 3"
+	scale			1.0
+	price			1200
+	size			40
+	is_primary		true
+	thrown			true
+	dmgtype			"normal"
+	weight			3000
+
+	weapon_mod
+	{
+		weapon kerrblade
+		firedef
+		{
+			name		"_Stab"
+			skill		"close"
+			projtl		null
+			impact		null
+			hitbody		null
+			firesnd		"weapons/melee-swoosh"
+			impsnd		"impact/knife-impact"
+			bodysnd 	"impact/knife-bodyimpact"
+			speed		0
+			range		1.5
+			shots		1
+			time		8
+			damage		"100 10"
+			dmgweight	"normal_monomolecularblade"
+			reaction	true
+			shotorg		"-9 11"
+		}
+		firedef
+		{
+			name		"_Slash"
+			skill		"close"
+			projtl		null
+			impact		null
+			hitbody		null
+			firesnd		"weapons/melee-swoosh"
+			impsnd		"impact/knife-impact"
+			bodysnd 	"impact/knife-bodyimpact"
+			speed		0
+			range		1.5
+			shots		1
+			time		14
+			damage		"200 20"
+			dmgweight	"normal_monomolecularblade"
+			reaction	true
+			shotorg		"-9 11"
+		}
+	}
+}
+
+
+// =======================
+// PLASMA BLADE
+// =======================
+item plasblade
+{
+	name			"_Plasma Blade"
+	model			"weapons/plasblade/plasblade"
+	weapon			true
+	type			"melee"
+	animationindex	2
+	shape			"0 0 1 2"
+	center			"1 4.5 1"
+	scale  			1.5
+	price			3000
+	size			5
+	is_secondary	true
+	thrown			true
+	oneshot			true
+	deplete			true
+	weight			1000
+
+	weapon_mod
+	{
+		weapon plasblade
+		firedef
+		{
+			name		"_Lock"
+			skill		"close"
+			projtl		null
+			impact		plasmaImpactCharged
+			hitbody		plasmaImpactCharged
+			firesnd		"weapons/plasma-blade"
+			impsnd		"impact/plasma-impact"
+			bodysnd 	"impact/plasma-bodyimpact"
+			speed		0
+			range		1.5
+			spread		"1 1"
+			shots		1
+			time		6
+			damage		"350 20"
+			dmgweight	"plasma_heavy"
+			reaction	true
+			shotorg		"-9 11"
+		}
+	}
+}

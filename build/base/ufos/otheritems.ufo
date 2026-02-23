@@ -1,0 +1,189 @@
+// ===========
+// Dummy items
+// ===========
+item antimatter
+{
+	// Note that antimatter does not have size on purpose.
+	name		"_Antimatter"
+	is_dummy	true
+	weapon		false
+	notonmarket	true
+}
+
+item alienmaterials
+{
+	name		"_Alien Materials"
+	is_dummy	true
+	model		"objects/alien/box/box"
+	price		7
+	size		1
+	weapon		false
+}
+
+// ================================
+// weapons for single-weapon actors
+// ================================
+
+item bloodspider_weapon
+{
+	name			"Bloodspider weapon" // TODO Will this ever be displayed? If so we would need gettext support.
+	model			"weapons/knife/knife" //FIXME
+	weapon			true
+	type			"melee"
+	animationindex	2 //FIXME
+	scale			1.0
+	size			6
+	firetwohanded	true
+	dmgtype			"normal"
+	virtual			true
+	weight		15000
+
+	weapon_mod
+	{
+		weapon bloodspider_weapon
+		firedef
+		{
+			name		"_Stab"
+			skill		"close"
+			projtl		null
+			impact		null
+			hitbody		null
+			firesnd		"aliens/bloodspider/attack"
+			speed		0
+			range		1.5
+			shots		1 //FIXME
+			time		12 //FIXME
+			damage		"55 10" //FIXME
+			reaction	true
+			dmgweight	"normal_monomolecularblade"
+		}
+	}
+}
+
+item bloodspider_adv_weapon
+{
+	name			"Combat Bloodspider weapon" // TODO Will this ever be displayed? If so we would need gettext support.
+	model			"weapons/knife/knife" //FIXME
+	weapon			true
+	type			"melee"
+	animationindex	2 //FIXME
+	scale			1.0
+	size			6
+	firetwohanded	true
+	dmgtype			"normal"
+	virtual			true
+	weight		15000
+
+	weapon_mod
+	{
+		weapon bloodspider_adv_weapon
+		firedef
+		{
+			name		"_Stab"
+			skill		"close"
+			projtl		null
+			impact		null
+			hitbody		null
+			firesnd		"aliens/bloodspider/attack"
+			speed		0
+			range		1.5
+			shots		1 //FIXME
+			time		10 //FIXME
+			damage		"150 10" //FIXME
+			reaction	true
+			dmgweight	"normal_monomolecularblade"
+		}
+	}
+}
+
+item hovernet_plasma
+{
+	name			"_Hovernet Plasma Weapon"
+	model			"weapons/plasrifle/plasrifle"
+	weapon			true
+	type			"rifle"
+	animationindex	1
+	holdtwohanded	false
+	firetwohanded	true
+	scale			1.25
+	size			40
+	dmgtype			"plasma"
+	ammo			200
+	reload			12
+	reloadsound		"weapons/reload-rifle"
+	virtual			true
+	weight		15000
+
+	weapon_mod
+	{
+		weapon hovernet_plasma
+		firedef
+		{
+			name				"_Single Shot"
+			skill				"assault"
+			projtl				plasmaPulse
+			impact				plasmaImpactCharged
+			hitbody				plasmaImpactCharged
+			firesnd				"weapons/plasma-hoverheavy"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
+			speed				1300
+			spread				"1.2 1.2"
+			crouch				1
+			range				70
+			shots				1
+			ammo				1
+			delaybetweenshots	8
+			time				16
+			damage				"80 10"
+			dmgweight			"plasma_medium"
+			reaction			true
+		}
+	}
+}
+
+item hovernet_adv_plasma
+{
+	name			"_Combat Hovernet Plasma Weapon"
+	model			"weapons/plasrifle/plasrifle"
+	weapon			true
+	type			"rifle"
+	animationindex	1
+	holdtwohanded	false
+	firetwohanded	true
+	scale			1.25
+	size			40
+	dmgtype			"normal"
+	ammo			200
+	reload			12
+	reloadsound		"weapons/reload-rifle"
+	virtual			true
+	weight		15000
+
+	weapon_mod
+	{
+		weapon hovernet_adv_plasma
+		firedef
+		{
+			name				"_Burst"
+			skill				"assault"
+			projtl				plasmaPulse
+			impact				plasmaImpactCharged
+			hitbody				plasmaImpactCharged
+			firesnd				"weapons/plasma-hoverheavy"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
+			speed				1300
+			spread				"1.2 1.2"
+			crouch				1
+			range				70
+			shots				3
+			ammo				3
+			delaybetweenshots	8
+			time				16
+			damage				"80 10"
+			dmgweight			"plasma_medium"
+			reaction			true
+		}
+	}
+}

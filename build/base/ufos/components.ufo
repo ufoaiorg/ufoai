@@ -1,0 +1,362 @@
+// Components for recovered UFOs and similar stuff.
+//
+// usage:
+// components <component_name> {
+//  aircraft <ufo_name> {
+//	time xxx
+//	item { id <id> amount <amount> numbercrash <number-crash> }
+//	<type ...
+//	...
+// }
+//
+// <ufo_name>
+//	The id of the aircraft in which the components definition must be used
+// 	See also aircraftmanagement.ufo and research.ufo for more uses of these names.
+// <time>
+//	The time until the disassembly is finished. The values are given in "hours", buuut....
+//	Consider that this value doesn't reflect _real_ time, but it will depend on the number of workers working on it.
+//	The time is also increased by the distance between the UFO Yard and the base.
+//	[Default] 0
+// <type>
+//	Only "item" supported right now.
+// <id>
+//	id of the item in the item definitions.
+//	See also otheritems.ufo and research.ufo
+// <amount>
+//	The amount of the defined item to be found in the ufo.
+// <number-crash>
+//	The number of the defined item to be found in the crashed ufo.
+//	If it's a '%' sign then fraction of <number> will be used depending on disassembled item/ufo's condition
+//
+// See also the struct "components_t"
+
+// TODO: type="craftitem" might be worth thinking about, see entries below.
+// TODO: add dummy-items and research topics for commented out items below
+//
+
+// UFO -- Scout
+components craft_ufo_scout_cmp {
+	aircraft craft_ufo_scout
+	time	3000
+	item {
+		id alienmaterials
+		amount 300
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 100
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 1
+		numbercrash %
+	}
+}
+
+// UFO -- Fighter
+components craft_ufo_fighter_cmp {
+	aircraft craft_ufo_fighter
+	time	4000
+	item {
+		id alienmaterials
+		amount 430
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 250
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_weapon_particle_beam
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_el_alien_ew
+		amount 1
+		numbercrash %
+	}
+}
+
+// UFO -- Harvester
+components craft_ufo_harvester_cmp {
+	aircraft craft_ufo_harvester
+	time	6000
+	item {
+		id alienmaterials
+		amount 750
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 450
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion
+		amount 4
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_weapon_particle_beam
+		amount 3
+		numbercrash %
+	}
+	item {
+		id craft_el_alien_ew
+		amount 1
+		numbercrash %
+	}
+}
+
+// UFO -- Supply Transport
+components craft_ufo_supply_cmp {
+	aircraft craft_ufo_supply
+	time	4500
+	item {
+		id alienmaterials
+		amount 480
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 310
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion_adv
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 1
+		numbercrash %
+	}
+}
+
+// UFO -- Gunboat
+components craft_ufo_gunboat_cmp {
+	aircraft craft_ufo_gunboat
+	time	5000
+	item {
+		id alienmaterials
+		amount 700
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 400
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion_adv
+		amount 4
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_weapon_particle_beam
+		amount 3
+		numbercrash %
+	}
+	item {
+		id craft_weapon_alien_launcher
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_ammo_am_missile
+		amount 24
+		numbercrash %
+	}
+	item {
+		id craft_el_alien_ew
+		amount 1
+		numbercrash %
+	}
+}
+
+// UFO -- Corrupter
+components craft_ufo_corrupter_cmp {
+	aircraft craft_ufo_corrupter
+	time	8000
+	item {
+		id alienmaterials
+		amount 1100
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 650
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion_adv
+		amount 3
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 3
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_weapon_alien_launcher
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_ammo_am_missile
+		amount 12
+		numbercrash %
+	}
+	item {
+		id craft_el_alien_ew
+		amount 1
+		numbercrash %
+	}
+}
+
+// UFO -- Bomber
+components craft_ufo_bomber_cmp {
+	aircraft craft_ufo_bomber
+	time	10000
+	item {
+		id alienmaterials
+		amount 1400
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 810
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion_adv
+		amount 4
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 3
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_weapon_alien_launcher
+		amount 6
+		numbercrash %
+	}
+	item {
+		id craft_ammo_am_missile
+		amount 36
+		numbercrash %
+	}
+	item {
+		id craft_el_alien_ew
+		amount 1
+		numbercrash %
+	}
+}
+
+// UFO -- Lander
+// Note that no such UFO in the game YET.
+//components craft_ufo_lander_cmp {
+//	aircraft craft_ufo_lander
+//	time	4800
+//	item {
+//		id alienmaterials
+//		amount 500
+//		numbercrash %
+//	}
+//	item {
+//		id antimatter
+//		amount 600
+//		numbercrash 0
+//	}
+//	item {
+//		id craft_alien_propulsion
+//		amount 2
+//		numbercrash %
+//	}
+//}
+
+// UFO -- Carrier
+// The Carrier missions are special storyline-driven missions
+components craft_ufo_carrier_cmp {
+	aircraft craft_ufo_carrier
+	time	50000
+	item {
+		id alienmaterials
+		amount 5000
+		numbercrash %
+	}
+	//item {
+	//	id craft_alien_propulsion
+	//	amount 8
+	//	numbercrash %
+	//}
+	//item { id FTLdrive amount 1 numbercrash 1 }
+}

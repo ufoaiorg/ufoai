@@ -1,0 +1,24 @@
+msgid skill_accuracy_txt {
+text "_Determines a soldier's accuracy with any weapon. Soldiers will increase their accuracy when they use weapons effectively in battle."
+}
+msgid skill_assault_txt {
+text "_Determines a soldier's accuracy with assault weapons. Soldiers will increase their assault proficiency when they use assault weapons effectively in battle."
+}
+msgid skill_close_txt {
+text "_Determines a soldier's accuracy with close-quarters weapons. Soldiers will increase their close proficiency when they use close-quarters weapons effectively in battle."
+}
+msgid skill_explosive_txt {
+text "_Determines a soldier's accuracy with explosive weapons. Soldiers will increase their explosive proficiency when they use explosive weapons effectively in battle."
+}
+msgid skill_mind_txt {
+text "_Determines a soldier's mental endurance and performance. Soldiers will increase their mental strength when they engage in effective combat operations."
+}
+msgid skill_power_txt {
+text "_Determines the weight a soldier can carry before becoming encumbered on the battlefield. Soldiers will increase their strength on the battlefield and will do so more quickly if they carry more weight in battle."
+}
+msgid skill_sniper_txt {
+text "_Determines a soldier's accuracy with sniper weapons. Soldiers will increase their sniper proficiency when they use sniper weapons effectively in battle."
+}
+msgid skill_speed_txt {
+text "_Determines the amount of Time Units a soldier has each turn. Soldiers will increase their speed engaging in standard fire and movement procedures on the battlefield."
+}

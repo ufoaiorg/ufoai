@@ -1,0 +1,74 @@
+// character animations
+// name				start	end		fps
+
+death1				826		856		30
+dead1				856		856		30
+death2				858		888		30
+dead2				888		888		30
+death3				890		920		30
+dead3				920		920		30
+
+stand0				207		237		30
+walk0				174		204		30
+cstand0				315		347		30
+cwalk0				282		312		30
+
+stand1				33		63		30
+walk1				0		30		30
+cstand1				121		151		30
+cwalk1				88		118		30
+
+move_rifle			77		77		4
+shoot_rifle			77		81		10
+cmove_rifle			166		166		4
+cshoot_rifle		167		171		10
+
+move_biggun			77		77		4
+shoot_biggun		77		81		10
+cmove_biggun		166		166		4
+cshoot_biggun		167		171		10
+
+move_melee			534		534		30
+shoot_melee			535		581		30
+cmove_melee			406		406		30
+cshoot_melee		407		453		30
+
+stand2				207		237		30
+walk2				174		204		30
+cstand2				315		347		30
+cwalk2				282		312		30
+
+move_pistol			252		252		4
+shoot_pistol		252		256		10
+cmove_pistol		362		362		4
+cshoot_pistol		363		367		10
+
+move_pistol_d		272		272		4
+shoot_pistol_d		273		277		10
+cmove_pistol_d		384		384		4
+cshoot_pistol_d		385		389		10
+
+move_grenade		707		707		4
+shoot_grenade		708		724		10
+cmove_grenade		806		806		4
+cshoot_grenade		807		823		10
+
+move_item			648		648		4
+shoot_item			648		668		10
+cmove_item			315		315		4
+cshoot_item			315		347		20
+
+stand3				33		63		30
+walk3				0		30		30
+cstand3				121		151		30
+cwalk3				88		118		30
+
+move_rpg			77		77		4
+shoot_rpg			77		81		10
+cmove_rpg			166		166		4
+cshoot_rpg			167		171		10
+
+stand_menu			1005	1005	1
+panic0				996		996		15
+
+stand_still			1005	1005	1

@@ -1,0 +1,397 @@
+msgid bloodspider_notes_txt {
+text "_Commander,
+
+We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid bloodspider_notes_pre_txt {
+text "_No pre research info available"
+}
+
+msgid bloodspider_autopsy_txt {
+text "_Commander,
+
+My team has analysed the remains of the arachnid machine our operatives brought back, and we have prepared a summary for your review.
+
+Autopsy reveals that the creature is a complex robot without any organic components. Its body is reminiscent of the terrestrial spider; a central body housing the artificial brain and power cells, and eight legs driven by powerful servomotors that allow it to move across the battlefield at frightening speeds. It is equipped with razor-sharp mandibles which can dissect human victims on the spot and store tissue or whole organs in a large cavity located in front of the power cells. These machines have been recorded cutting apart live humans during a terror mission and storing their biomass for retrieval. The process is gruesome and very, very short.
+
+Our soldiers have dubbed the creature 'Bloodspider', and the name has stuck.
+
+Ballistics testing on samples of the Bloodspider's armour plating reveal that it is very tough and has excellent insulating properties, making it effective against a wide variety of weapons.
+
+-- The armour is highly resistant to electricity, but it can be penetrated by high-velocity armour-piercing rounds.
+
+-- High explosives also achieve good results, as they tend to damage the vulnerable leg joints. This may be the most effective way to take these creatures out.
+
+The existence of this creature raises some frightening questions. It suggests that the aliens are taking a very personal interest in us, and they're not asking questions. Commander, these machines pose a dire threat to any human that comes close. If encountered, they should be destroyed immediately and at all costs.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid bloodspider_autopsy_pre_txt {
+text "_Commander,
+
+We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid bloodspider_adv_autopsy_txt {
+text "_Commander,
+
+My team has analysed the remains of the arachnid machine our operatives brought back, and we have prepared a summary for your review.
+
+This robotic creature has razor-sharp blades and has been observed dissecting its victims before storing organic material in internal cavities. For this reason, we believe the alien serves some kind of scientific role by harvesting biomass, but it is truly brutal in pursuit of its target.
+
+These creatures are terrifying on the battlefield if they get close and thick, heavy armour plating increases the chances it will  survive a few rounds from our soldiers and keep coming. We will need to hunt the Combat Bloodspider in packs.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid bloodspider_adv_autopsy_pre_txt {
+text "_Commander,
+
+We've recovered a new alien corpse from the battlefield. Dissection and assessment could give us insights into the new alien's capabilities.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid ortnok_autopsy_txt {
+text "_Commander,
+
+The autopsy and evaluation of the green alien specimen is complete. I'm hereby submitting my summary for your review.
+
+The first thing we noticed about this species, which has been named the 'Ortnok', is its size. Its appearence is like a brutish, hulking caricature of a man, something that can be quite disturbing to our agents in the field, but we've confirmed that the Ortnok is in no way genetically related to humanity.
+
+In proportion to its body weight, the Ortnok has more muscle than a professional body builder. At first we concluded this was solely the product of an extreme-heavy-gravity homeworld, but subsequent hormone and toxicology work on our specimen have revealed something interesting. The subject seems to have been raised from birth on a heavy diet of genetic tampering and anabolic steroids. This, combined with the incredible density of the muscle tissue, makes the Ortnok physically stronger than any biological entity on Earth.
+
+During our first incisions, we were surprised to find the Ortnok to be without blood. It has lungs, viscera and something akin to digestive organs, but no liver or heart that we can identify. Instead of veins there is a very well-developed system of nerve tubes, filled with a kind of electrically conductive gel, that seems to power and control the muscles by direct electrical stimulation. The needed electricity is generated through digestion of organic matter and stored in a set of large eel-like organs underneath the lungs. The nervous system itself is nourished by the leftover products of the digestion process by way of veins filled with pressurised air. The whole chest cavity has been richly furnished with armour plating inserted just underneath the leathery green skin.
+
+The eyes are covered with surgically-implanted lenses that improve the Ortnok's already excellent vision, stretching it into the infrared spectrum. The ears consist of a series of small cavities, three on either side of the head, which are surprisingly large and well-developed. Given the evidence we must conclude that Ortnoks have acute hearing, though the nose and olfactory organs are quite small, atrophied almost to the point of being vestigial.
+
+From the autopsy and our analysis of battlefield footage, we can conclude the following:
+
+- The brain is fairly small for a hominid of such size, no larger than that of Homo erectus, but it is perhaps sufficient for the role of foot soldier. Ortnoks certainly don't display any tactical sluggishness on the battlefield.
+
+- The three-fingered hand is able to carry and use a wide variety of equipment. However, Ortnoks are most often equipped with heavy weapons to match their size.
+
+- Ortnoks are strong, tough and dangerous. Their internal armour enhances their natural endurance even further, making them difficult to take down. Armour-piercing rounds or incendiary weapons are recommended. Lasers, explosives and cutting weapons will not be very effective due to the extensive armouring.
+
+- All Ortnok specimens we've seen so far were not equipped with reproductive organs. From surgical scarring around the groin area, we believe they may have been neutered for some reason.
+
+In combat, specimens seem to be used most often in the role of heavy infantry and fire support. They are not particularly accurate with their somewhat cumbersome weapons, but when working in numbers they usually lay down enough fire to suppress and then annihilate a PHALANX squad. Ortnoks do not seem to serve in many specialist capacities; they are never used as technicians according to our camera observations, and usually busy themselves handling perimeter security for the Tamans when not engaged in combat.
+
+There is a complex set of implants in the subject's throat that will require further research to be fully understood. I will send you a more detailed analysis along with a research proposal.
+
+We have no idea quite where the name 'Ortnok' came from. The troops don't seem to know, and neither do we. Still, it's as good a name as any, and it seems to have stuck.
+
+That's all I have for you right now, Commander. I'll contact you again as soon as something new develops.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid ortnok_autopsy_extra_txt {
+text "_Commander,
+
+The autopsy and evaluation of the green alien specimen is complete. I'm hereby submitting my summary for your review.
+
+The first thing we noticed about this species, which has been named the 'Ortnok', is its size. Its appearance is like a brutish, hulking caricature of a man, something that can be quite disturbing to our agents in the field, but we've confirmed that the Ortnok is in no way genetically related to humanity.
+
+In proportion to its body weight, the Ortnok has more muscle than a professional body builder. At first we concluded this was solely the product of an extreme-heavy-gravity homeworld, but subsequent hormone and toxicology work on our specimen have revealed something interesting. The subject seems to have been raised from birth on a heavy diet of genetic tampering and anabolic steroids. This, combined with the incredible density of the muscle tissue, makes the Ortnok physically stronger than any biological entity on Earth.
+
+During our first incisions, we were surprised to find the Ortnok to be without blood. It has lungs, viscera and something akin to digestive organs, but no liver or heart that we can identify. Instead of veins there is a very well-developed system of nerve tubes, filled with a kind of electrically conductive gel, that seems to power and control the muscles by direct electrical stimulation. The needed electricity is generated through digestion of organic matter and stored in a set of large eel-like organs underneath the lungs. The nervous system itself is nourished by the leftover products of the digestion process by way of veins filled with pressurised air. The whole chest cavity has been richly furnished with armour plating inserted just underneath the leathery green skin.
+
+The eyes are covered with surgically-implanted lenses that improve the Ortnok's already excellent vision, stretching it into the infrared spectrum. The ears consist of a series of small cavities, three on either side of the head, which are surprisingly large and well-developed. Given the evidence we must conclude that Ortnoks have acute hearing, though the nose and olfactory organs are quite small, atrophied almost to the point of being vestigial.
+
+From the autopsy and our analysis of battlefield footage, we can conclude the following:
+
+- The brain is fairly small for a hominid of such size, no larger than that of Homo erectus, but it is perhaps sufficient for the role of foot soldier. Ortnoks certainly don't display any tactical sluggishness on the battlefield.
+
+- The three-fingered hand is able to carry and use a wide variety of equipment. However, Ortnoks are most often equipped with heavy weapons to match their size.
+
+- Ortnoks are strong, tough and dangerous. Their internal armour enhances their natural endurance even further, making them difficult to take down. Armour-piercing rounds or incendiary weapons are recommended. Lasers, explosives and cutting weapons will not be very effective due to the extensive armouring.
+
+- All Ortnok specimens we've seen so far were not equipped with reproductive organs. From surgical scarring around the groin area, we believe they may have been neutered for some reason.
+
+In combat, specimens seem to be used most often in the role of heavy infantry and fire support. They are not particularly accurate with their somewhat cumbersome weapons, but when working in numbers they usually lay down enough fire to suppress and then annihilate a PHALANX squad. Ortnoks do not seem to serve in many specialist capacities; they are never used as technicians according to our camera observations, and usually busy themselves handling perimeter security for the Tamans when not engaged in combat.
+
+We have no idea quite where the name 'Ortnok' came from. The troops don't seem to know, and neither do we. Still, it's as good a name as any, and it seems to have stuck.
+
+That's all I have for you right now, Commander. I'll contact you again as soon as something new develops.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid ortnok_autopsy_pre_txt {
+text "_Commander,
+
+We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid ortnok_autopsy_extra_pre_txt {
+text "_Commander,
+
+We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid taman_autopsy_txt {
+text "_Commander,
+
+My team and I have completed our autopsy of the 'grey' body we recovered. Here is my summary of our findings.
+
+When Commonwealth troops first arrived in Mumbai, confused and apprehensive, they were swarmed by crowds of screaming locals, terrified out of their minds and desperate for protection. Most of the soldiers didn't even speak the language, unable to understand what was said. When they asked what was wrong, the civilians simply cried, \"xuRta AwmA\" -- the Hindi term for 'evil spirit' or 'demon'.
+
+Under fire, the term quickly shortened to \"Taama\", and by the time the shooting was over it had further mutated. Everyone had settled on \"Taman\" (pronounced 'tah-man') as the word that described the grey nightmares that had slaughtered them. The name still remains, but we can now say with confidence that these aliens are made of flesh and blood rather than fire and darkness.
+
+First and probably most interesting is the fact that this creature looks almost human. Two arms, two legs, a torso and a head; bipedal locomotion; visual, olfactory and auditory organs all in the same general location. The subject's hands and feet have three long digits, one of which (the 'thumb') is opposable. This species is on average shorter than humans and possesses a thin, almost delicate frame which belies their toughness.
+
+The subject has a very simple set of vital organs; heart, lungs, liver, and so on. It lacks most of the redundant or obsolete organs that humans have carried through our evolutionary history. Biologically, the most interesting part of the subject's internals is the digestive tract. The creature has a total of three stomachs meant for the digestion of very tough plant matter. It is incapable of digesting meat of any kind. This implies that, wherever they come from, the Tamans are herbivores feeding on some kind of plant life. This finding has comforted some of our more excitable staff. At least we know the aliens aren't harvesting us for our meat.
+
+There is a complex set of implants in the subject's throat that will require further research to be fully understood. I will send you a more detailed analysis along with a research proposal.
+
+The large, overdeveloped eyes equip the Taman with natural night-vision. It has special irises that protect the retinas from bright light such as sunlight, but if a sudden blast of highly intense illumination were to hit the retina before the iris can adjust, it could cause prolonged or even permanent blindness. Our flashbang may be highly effective here.
+
+The greyness of the skin is a particularly curious feature. It is actually caused by the secretion of trace amounts of silicon, which hardens over the supple inner skin to provide a kind of natural armour. This makes a Taman fairly resistant to impact and heat.
+
+From our analysis, we can conclude the following:
+
+-- The Tamans have a natural resistance to bullets and blunt trauma, but not enough to render such weapons combat ineffective.
+
+-- Their skin easily disperses small to medium amounts of heat, but prolonged exposure to a flamethrower or incendiary compound will still do the trick. Lasers will do slightly less damage than normal.
+
+-- Though the body is limber and elastic, the Taman's internal organs are badly protected against concussion, which makes them particularly vulnerable to the shockwaves of explosive ordnance.
+
+Further study has ruled out other wild-eyed theories. Though the Tamans' appearance is very similar to that of humans, almost enough to imply a kind of relationship, they seem to be more a case of convergent evolution (two different paths to a similar end result) than a blood relation. There are very few similarities between the Taman gene sequences and that of humans, and the structure of chromatin in their DNA is several orders of magnitude more complex than ours. This seems to preclude a hypothetical common origin.
+
+In combat, Tamans present a significant threat. They are highly agile and can wield a variety of weapons with great accuracy. Besides serving as soldiers, they fill many specialist roles in the alien war machine, positions in which Tamans seem to be the most numerous. Complex weapons and advanced armour are more often wielded by Tamans than any other species. This is most likely due to their large brains, sensory organs and delicate manipulators.
+
+Whether or not the Tamans are the 'greys' of old UFO abduction stories, I couldn't say, but it seems extremely unlikely. PHALANX has never been able to verify a single report of alien activity since the 1950s. The UFOs we're seeing now are certainly not flying saucers. If they could've invaded Earth a century ago, why wait until now to do it? It doesn't really add up -- but then, who can know the motivations of an alien mind?
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid taman_autopsy_extra_txt {
+text "_Commander,
+
+My team and I have completed our autopsy of the 'grey' body we recovered. Here is my summary of our findings.
+
+When Commonwealth troops first arrived in Mumbai, confused and apprehensive, they were swarmed by crowds of screaming locals, terrified out of their minds and desperate for protection. Most of the soldiers didn't even speak the language, unable to understand what was said. When they asked what was wrong, the civilians simply cried, \"xuRta AwmA\" -- the Hindi term for 'evil spirit' or 'demon'.
+
+Under fire, the term quickly shortened to \"Taama\", and by the time the shooting was over it had further mutated. Everyone had settled on \"Taman\" (pronounced 'tah-man') as the word that described the grey nightmares that had slaughtered them. The name still remains, but we can now say with confidence that these aliens are made of flesh and blood rather than fire and darkness.
+
+First and probably most interesting is the fact that this creature looks almost human. Two arms, two legs, a torso and a head; bipedal locomotion; visual, olfactory and auditory organs all in the same general location. The subject's hands and feet have three long digits, one of which (the 'thumb') is opposable. This species is on average shorter than humans and possesses a thin, almost delicate frame which belies their toughness.
+
+The subject has a very simple set of vital organs; heart, lungs, liver, and so on. It lacks most of the redundant or obsolete organs that humans have carried through our evolutionary history. Biologically, the most interesting part of the subject's internals is the digestive tract. The creature has a total of three stomachs meant for the digestion of very tough plant matter. It is incapable of digesting meat of any kind. This implies that, wherever they come from, the Tamans are herbivores feeding on some kind of plant life. This finding has comforted some of our more excitable staff. At least we know the aliens aren't harvesting us for our meat.
+
+The large, overdeveloped eyes equip the Taman with natural night-vision. It has special irises that protect the retinas from bright light such as sunlight, but if a sudden blast of highly intense illumination were to hit the retina before the iris can adjust, it could cause prolonged or even permanent blindness. Our flashbang may be highly effective here.
+
+The greyness of the skin is a particularly curious feature. It is actually caused by the secretion of trace amounts of silicon, which hardens over the supple inner skin to provide a kind of natural armour. This makes a Taman fairly resistant to impact and heat.
+
+From our analysis, we can conclude the following:
+
+-- The Tamans have a natural resistance to bullets and blunt trauma, but not enough to render such weapons combat ineffective.
+
+-- Their skin easily disperses small to medium amounts of heat, but prolonged exposure to a flamethrower or incendiary compound will still do the trick. Lasers will do slightly less damage than normal.
+
+-- Though the body is limber and elastic, the Taman's internal organs are badly protected against concussion, which makes them particularly vulnerable to the shockwaves of explosive ordnance.
+
+Further study has ruled out other wild-eyed theories. Though the Tamans' appearance is very similar to that of humans, almost enough to imply a kind of relationship, they seem to be more a case of convergent evolution (two different paths to a similar end result) than a blood relation. There are very few similarities between the Taman gene sequences and that of humans, and the structure of chromatin in their DNA is several orders of magnitude more complex than ours. This seems to preclude a hypothetical common origin.
+
+In combat, Tamans present a significant threat. They are highly agile and can wield a variety of weapons with great accuracy. Besides serving as soldiers, they fill many specialist roles in the alien war machine, positions in which Tamans seem to be the most numerous. Complex weapons and advanced armour are more often wielded by Tamans than any other species. This is most likely due to their large brains, sensory organs and delicate manipulators.
+
+Whether or not the Tamans are the 'greys' of old UFO abduction stories, I couldn't say, but it seems extremely unlikely. PHALANX has never been able to verify a single report of alien activity since the 1950s. The UFOs we're seeing now are certainly not flying saucers. If they could've invaded Earth a century ago, why wait until now to do it? It doesn't really add up -- but then, who can know the motivations of an alien mind?
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid taman_autopsy_pre_txt {
+text "_Commander,
+
+We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid taman_autopsy_extra_pre_txt {
+text "_Commander,
+
+We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid shevaar_autopsy_txt {
+text "_Commander,
+
+Our autopsy of this new alien -- the Shevaar -- has been very interesting. It's a significant departure from the more humanoid Tamans, possessing digitigrade legs and a small tail that seems to be a remnant of this species's continuing evolution. The creature also appears to be completely blind. It lacks eyes and any other kind of organ that could be used to process visual light. However, it seems to have other interesting organs to make up for this deficiency.
+
+First off, the Shevaar looks like the unholy merger of a man and a lizard. Unlike most Earth lizards, however, the alien is warm-blooded and its brain is similar in size to our own -- probably slightly larger. Its massive feet are surprisingly springy, and it can cover large amounts of ground in a long, leaping gait. The large hands seem to have no problem wielding the many varieties of alien weaponry.
+
+The results of the autopsy are no less interesting. Upon cutting upon the chest, we find that the rib cage is a solid shield of bone down the front, reinforced with stiff cartilege. The makeup of the bones is different from ours as well, made up mostly of carbon rather than calcium, with traces of metal that make them extremely hard and tough. Knives and bullets will have a great deal of trouble penetrating it, and it will be even harder to find vital organs to damage. Any body mass that isn't shielded by bone seems to be made up only of lean, wiry muscle.
+
+The brain is particularly heavily-defended. Several layers of horn wrap around it like an impenetrable suit of armour. From the marks of wear and tear around this area, we surmise that these aliens regularly engage in vigorous head-butting, probably as part of their mating rituals. A small, omnivorous mouth protrudes from the mass of bone and leads down to a simple but functional digestive tract.
+
+There are more organs in the head than just the brain and the mouth, however. Behind the curls of bone there is a set of three organs that seem to detect infrared radiation. This is apparently what the Shevaar uses in lieu of eyes. We conclude that the sensitivity of these organs is roughly comparable to that of a human wearing PHALANX-standard IR Goggles.
+
+From the autopsy and our analysis of battlefield footage, we can conclude the following:
+
+- The Shevaar see in infrared. This will make it difficult to hide from them or approach them undetected.
+
+- They seem to wear no armour to preserve their natural mobility. This allows them to employ effective hit-and-run tactics.
+
+- Shevaar bodies are highly resistant to impact and cutting damage, and their compact internals are not easily damaged by concussion or explosives. However, their scaly hides provide little protection from fire, lasers or electricity.
+
+Shevaar are most often used as fast, armoured scouts. They're extremely effective in this role, combining high mobility with extended vision capabilities, and the aliens seem to have no shortage of these creatures. They sometimes fill specialist or command roles, unlike Ortnoks, but these tasks are still usually taken by Tamans whenever the two races are deployed together.
+
+When not engaged in combat, Shevaar spend most of their time as scouts or skirmishers, or as herders for captured humans.
+
+There is a complex set of implants in the subject's throat that will require further research to be fully understood. I will send you a more detailed analysis along with a research proposal.
+
+We should be careful whenever we encounter these aliens in the field. They are fast and dangerous skirmishers who prefer to fight from cover, and should be pursued and kept under fire at all times when discovered, as long as this does not overextend our position. Exposing our team's flanks or rear to a squad of Shevaar could have disastrous results. Although grenades are unlikely to kill any Shevaar outright, they will be very useful for flushing them out into our troops' sights.
+
+Also, although blind, Shevaar possess balance organs that are affected by the sound of our flashbang. It will achieve similar results on them as it does on humans.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid shevaar_autopsy_extra_txt {
+text "_Commander,
+
+Our autopsy of this new alien -- the Shevaar -- has been very interesting. It's a significant departure from the more humanoid Tamans, possessing digitigrade legs and a small tail that seems to be a remnant of this species's continuing evolution. The creature also appears to be completely blind. It lacks eyes and any other kind of organ that could be used to process visual light. However, it seems to have other interesting organs to make up for this deficiency.
+
+First off, the Shevaar looks like the unholy merger of a man and a lizard. Unlike most Earth lizards, however, the alien is warm-blooded and its brain is similar in size to our own -- probably slightly larger. Its massive feet are surprisingly springy, and it can cover large amounts of ground in a long, leaping gait. The large hands seem to have no problem wielding the many varieties of alien weaponry.
+
+The results of the autopsy are no less interesting. Upon cutting upon the chest, we find that the rib cage is a solid shield of bone down the front, reinforced with stiff cartilege. The makeup of the bones is different from ours as well, made up mostly of carbon rather than calcium, with traces of metal that make them extremely hard and tough. Knives and bullets will have a great deal of trouble penetrating it, and it will be even harder to find vital organs to damage. Any body mass that isn't shielded by bone seems to be made up only of lean, wiry muscle.
+
+The brain is particularly heavily-defended. Several layers of horn wrap around it like an impenetrable suit of armour. From the marks of wear and tear around this area, we surmise that these aliens regularly engage in vigorous head-butting, probably as part of their mating rituals. A small, omnivorous mouth protrudes from the mass of bone and leads down to a simple but functional digestive tract.
+
+There are more organs in the head than just the brain and the mouth, however. Behind the curls of bone there is a set of three organs that seem to detect infrared radiation. This is apparently what the Shevaar uses in lieu of eyes. We conclude that the sensitivity of these organs is roughly comparable to that of a human wearing PHALANX-standard IR Goggles.
+
+From the autopsy and our analysis of battlefield footage, we can conclude the following:
+
+- The Shevaar see in infrared. This will make it difficult to hide from them or approach them undetected.
+
+- They seem to wear no armour to preserve their natural mobility. This allows them to employ effective hit-and-run tactics.
+
+- Shevaar bodies are highly resistant to impact and cutting damage, and their compact internals are not easily damaged by concussion or explosives. However, their scaly hides provide little protection from fire, lasers or electricity.
+
+Shevaar are most often used as fast scouts. They're extremely effective in this role, combining high mobility with extended vision capabilities, and the aliens seem to have no shortage of these creatures. They sometimes fill specialist or command roles, but these tasks are still usually taken by Tamans whenever the two races are deployed together.
+
+When not engaged in combat, Shevaar spend most of their time as scouts or skirmishers, or as herders for captured humans.
+
+We should be careful whenever we encounter these aliens in the field. They are fast and dangerous skirmishers who prefer to fight from cover, and should be pursued and kept under fire at all times when discovered, as long as this does not overextend our position. Exposing our team's flanks or rear to a squad of Shevaar could have disastrous results. Although grenades are unlikely to kill any Shevaar outright, they will be very useful for flushing them out into our troops' sights.
+
+Also, although blind, Shevaar possess balance organs that are affected by the sound of our flashbang. It will achieve similar results on them as it does on humans.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid shevaar_autopsy_pre_txt {
+text "_Commander,
+
+We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid shevaar_autopsy_extra_pre_txt {
+text "_Commander,
+
+We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid hovernet_autopsy_txt {
+text "_Commander,
+
+My team and I have completed the disassembly and autopsy of the alien creature we discovered. Here is my summary of our findings.
+
+We first assumed the object was a robot, but upon investigation we found a small biomass at its core. This biological alien core is encased in a shell of sensors which we believe interpret its signals to operate the electrical machinery. For all intents and purposes, this alien is little more than a \"brain\" in charge of a complex device. Calling it a brain may be too generous. We don't believe it is large enough to undertake mental processes more complex than basic motor skills, but troops report seeing it coordinate closely with other aliens on the battlefield.
+
+The device itself is a small, but heavy, mobile disk, able to hover above the ground. Because of its aerial movement, it is able to cross the battlefield rapidly. Our soldiers will need to take it down before it gets in range, which is no small feat considering its size and movement capabilities.
+
+The models we discovered are equipped with a mounted plasma weapon which is able to fire single rounds. Anyone caught within range will be very sorry. Given its brain size and limited functionality, we believe this alien is engineered for light combat missions -- perhaps it plays a reconnaissance role.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid hovernet_autopsy_pre_txt {
+text "_Commander,
+
+We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid hovernet_adv_autopsy_txt {
+text "_Commander,
+
+My team has completed its analysis of the alien creature we recovered.
+
+We're calling this alien the Combat Hovernet, an acknowledgment of its clear combat-oriented mechanical augmentations. But a small biomass, including a \"brain\" of sorts, lies at its core and appears to control the machine.
+
+The entire creature has been wrapped in advanced armour plating and the stabilisers which keep it afloat and on-target are more powerful than we would expect necessary in a non-combat role. The plasma weaponry installed on the alien is capable of firing three-round bursts with an accuracy we're not accustomed to from the erratic ammunition. These guys won't be easy to knock down and, until they're destroyed, they'll prove to be a serious threat to our troops.
+
+Because they're wrapped in the alien armour worn by other units they're resistant to normal and plasma weaponry. But they also share the alien armour's vulnerabilities to laser and strong fire-based weapons.
+
+You'll want to take these guys down as soon as you see them. If you wait until they close range, it may be too late.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid hovernet_adv_autopsy_pre_txt {
+text "_Commander,
+
+We've recovered a new alien corpse from the battlefield. Dissection and assessment could give us insights into the new alien's capabilities.
+
+Sincerely,
+
+Dr. Connor"
+}

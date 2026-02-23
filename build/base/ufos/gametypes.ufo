@@ -1,0 +1,146 @@
+// sv_maxsoldiersperplayer => How many soldiers one player is able to control in a given team
+// sv_maxsoldiersperteam   => How many soldiers may one team have
+
+gametype fight1on1
+{
+	name "_1on1"
+	cvarlist {
+		sv_teamplay 0
+		sv_maxclients 2
+		sv_maxsoldiersperplayer 12
+		sv_maxsoldiersperteam 12
+		ai_multiplayeraliens 0
+		sv_ai 0
+//		sv_maxplayersperteam 1
+	}
+}
+gametype fight1on1on1
+{
+	name "_1on1on1"
+	cvarlist {
+		sv_teamplay 0
+		sv_maxclients 3
+		sv_maxsoldiersperplayer 12
+		sv_maxsoldiersperteam 12
+		ai_multiplayeraliens 0
+		sv_ai 0
+//		sv_maxplayersperteam 1
+	}
+}
+gametype fight2on2
+{
+	name "_2on2"
+	cvarlist {
+		sv_teamplay 1
+		sv_maxclients 4
+		sv_maxsoldiersperplayer 6
+		sv_maxsoldiersperteam 12
+		ai_multiplayeraliens 0
+		sv_ai 0
+//		sv_maxplayersperteam 2
+	}
+}
+gametype fight2on2on2
+{
+	name "_2on2on2"
+	cvarlist {
+		sv_teamplay 1
+		sv_maxclients 6
+		sv_maxsoldiersperplayer 6
+		sv_maxsoldiersperteam 12
+		ai_multiplayeraliens 0
+		sv_ai 0
+//		sv_maxplayersperteam 2
+	}
+}
+gametype fight3on3
+{
+	name "_3on3"
+	cvarlist {
+		sv_teamplay 1
+		sv_maxclients 6
+		sv_maxsoldiersperplayer 4
+		sv_maxsoldiersperteam 12
+		ai_multiplayeraliens 0
+		sv_ai 0
+//		sv_maxplayersperteam 3
+	}
+}
+gametype fight3on3on3
+{
+	name "_3on3on3"
+	cvarlist {
+		sv_teamplay 1
+		sv_maxclients 9
+		sv_maxsoldiersperplayer 4
+		sv_maxsoldiersperteam 12
+		ai_multiplayeraliens 0
+		sv_ai 0
+//		sv_maxplayersperteam 3
+	}
+}
+gametype fight4on4
+{
+	name "_4on4"
+	cvarlist {
+		sv_teamplay 1
+		sv_maxclients 8
+		sv_maxsoldiersperplayer 3
+		sv_maxsoldiersperteam 12
+		ai_multiplayeraliens 0
+		sv_ai 0
+//		sv_maxplayersperteam 4
+	}
+}
+gametype fight4on4on4
+{
+	name "_4on4on4"
+	cvarlist {
+		sv_teamplay 1
+		sv_maxclients 12
+		sv_maxsoldiersperplayer 3
+		sv_maxsoldiersperteam 12
+		ai_multiplayeraliens 0
+		sv_ai 0
+//		sv_maxplayersperteam 4
+	}
+}
+gametype coop2
+{
+	name "_Coop 2 players"
+	cvarlist {
+		sv_teamplay 1
+		sv_maxclients 2
+		sv_maxsoldiersperplayer 6
+		sv_maxsoldiersperteam 12
+		ai_multiplayeraliens 8
+		sv_ai 1
+//		sv_maxplayersperteam 2
+	}
+}
+gametype coop3
+{
+	name "_Coop 3 players"
+	cvarlist {
+		sv_teamplay 1
+		sv_maxclients 3
+		sv_maxsoldiersperplayer 4
+		sv_maxsoldiersperteam 12
+		ai_multiplayeraliens 8
+		sv_ai 1
+//		sv_maxplayersperteam 3
+	}
+}
+gametype coop4
+{
+	name "_Coop 4 players"
+	cvarlist {
+		sv_teamplay 1
+		sv_maxclients 4
+		sv_maxsoldiersperplayer 3
+		sv_maxsoldiersperteam 12
+		ai_multiplayeraliens 8
+		sv_ai 1
+//		sv_maxplayersperteam 4
+	}
+}

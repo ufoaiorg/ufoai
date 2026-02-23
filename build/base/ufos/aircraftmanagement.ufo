@@ -1,0 +1,1322 @@
+//=========================================================================
+// Aircraft and Aircraft-item definitions
+//=========================================================================
+// aircraft
+//
+//	model - Model that is displayed on geoscape. For menu models see the research.ufo file.
+//	numteam - Maximum number of employees aboard.
+//	slot {}	- Any number of entries. Parameters can be the following :
+//		type		- The type of item this slot can contain (See "type "in "craftitem" below)
+//		position	- Slot's position on the aircraft. See cl_aircraft.c for available values.
+//		size		- the Maximum size of an item fitting this slot (light, medium, heavy) (only for weapon slots).
+//		contains	- technology of the item in the slot at the beginning of the game.
+//		ammo		- Technology of the ammo loading the weapon (only for weapon slots).
+//
+//	radar {} - Properties of the aircraft's radar system:
+//		range					- Detection range (integer)
+//		trackingrange			- Tracking range (integer), must be greater than Detection range!
+//		detectionprobability	- (optional) Detection probability (float), defaults to 1.0 (100%)
+//
+//	--vv-- Parameters which can get influenced by craft equipment ("craftitem"). --vv--
+//	speed - The speed of the aircraft, which tells how fast the aircraft is.
+//		to convert in km/h, multiply speed by 111 (= pi / 180 * radius_of_earth)
+//	shield - The parameter of aircraft shield, which tells aircraft's protection. This value is subtracted from the damage of any weapon hit.
+//	ecm - The parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy. Chance to hit equals Accuracy/ECM.
+//	damage - The parameter of aircraft hit points, which tells how much damage aircraft can suffer.
+//	accuracy - The parameter of accuracy, the bigger, the bigger possibility to hit an enemy. Chance to hit equals Accuracy/ECM.
+//	range - operational range of the aircraft (in degree). 180 degrees is the range between one point and the opposite
+//			point on earth. Used to defined fuelsize. This value must be AFTER speed value.
+//	wrange - Not defined here for aircraft (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard.
+//  antimatter - amount of antimatter needed for a full refuel
+//
+//  interestlevel - the campaign interest level ufos appear on the geoscape. This is used to controll the 'time' on which ufos appear during a campaign.
+//	---------------------------------------------------------------------
+//
+// craftitem
+//
+//	NOTE: Whenever a parameter modifies any of the aircraft's stats (accuracy, ecm, etc), the value will be considered a multiplier
+//	when it's lower than 2, and an absolute modifier when it's higher than 2. This does NOT go for modifiers that are not V_RELABS!
+//
+//	crafttype - The type of the item. Possible values:
+//		weapon
+//		ammo
+//		shield
+//		electronics
+//		base_missile
+//		base_laser
+//		base_ammo_missile
+//		base_ammo_laser
+//	size - Needed only for "crafttype weapon". Possible values are:
+//		< 50 => light			- For light weapons.
+//		> 50 && < 100 => medium	- For medium weapons.
+//		> 100 heavy				- For heavy weapons.
+//
+//	price		- Cost of buying one item.
+//	craftweapon	- Only for crafttype: ammo, defines which weapon uses this ammo.
+//	size		- The size of the item used to see if it fits the slot (only for weapons).
+//	ecm			- Modifier for craft ECM rating.
+//	installationTime -
+//		The time needed to install/remove the item from the aircraft
+//		any param of aircraft param{}. These values are V_RELABS, and will modify
+//		the values of the aircraft. Understanding the values:
+//		shield 1.50	means: the shield of the aircraft is 50% stronger
+//		shield +10	means: the shield of the aircraft is stronger by 10 points
+//		speed 0.75	means: the aircraft is 25% slower
+//	virtual		- the item is virtual it should not show in menus, no item needed for reload (in case of ammo)
+//
+//	--vv-- Parameters for craftitem specific to "crafttype ammo". --vv--
+//	craftweapon		- The weapon that can use this ammo.
+//	ammo			- The total number of ammo that can be fired with one unit of ammunition.
+//	wspeed			- The speed of the ammo on geoscape once it's been shot.
+//	wrange			- The range of the weapon, which tells the minimum distance of opening fire. (this one is not V_RELABS).
+//	delay			- The delay between 2 shots of this ammunition.
+//	wdamage			- The amount of damage a weapon with this ammo can do (this one is not V_RELABS).
+//  accuracy		- Modifier to craft accuracy when firing this weapon
+//	---------------------------------------------------------------------
+//
+//=========================================================================
+// Don't forget to add mini-models to base/models/geoscape, too.
+// Also read the notes about ufos.
+//=========================================================================
+
+// If you want to add a new craft, everythings starts here.
+// This list of ufo suffixes is used all over the place.
+aircraftnames ufoids
+{
+	"scout"
+	"fighter"
+	"harvester"
+	"corrupter"
+	"bomber"
+	"carrier"
+	"supply"
+	"gunboat"
+	"ripper"
+	"mothership"
+}
+
+aircraftnames dropids
+{
+	"firebird"
+	"herakles"
+	"raptor"
+}
+
+aircraftnames interids
+{
+	"stiletto"
+	"saracen"
+	"dragon"
+	"starchaser"
+	"stingray"
+}
+
+//
+// AIRCRAFT
+//
+
+// *********************************
+// Dropships
+// *********************************
+
+aircraft craft_drop_firebird
+{
+	param {
+		speed		7
+		maxspeed	10
+		shield		0
+		ecm			70
+		damage		200
+		accuracy	100
+		range		240
+	}
+	name		"_Firebird-class Dropship"
+	defaultname	"_Firebird D"
+	model		"geoscape/drop_firebird"
+	price		20000
+	building	building_hangar
+	numteam		8
+	image		"geoscape/air_dropship"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		position	"nose_center"
+		size		"light"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_left"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_right"
+	}
+}
+
+aircraft craft_drop_herakles
+{
+	param {
+		speed		9
+		maxspeed	13
+		shield		0
+		ecm			80
+		damage		400
+		accuracy	100
+		range		240
+	}
+	name		"_Herakles-class Heavy Lifter"
+	defaultname	"_Herakles D"
+	model		"geoscape/drop_herakles"
+	price		30000
+	building	building_hangar
+	numteam		12
+	image		"geoscape/air_dropship"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		position	"nose_center"
+		size		"light"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_left"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_right"
+	}
+}
+
+aircraft craft_drop_raptor
+{
+	param {
+		speed		13
+		maxspeed	16
+		shield		0
+		ecm			80
+		damage		250
+		accuracy	100
+		range		220
+		antimatter	40
+	}
+	name		"_Raptor-class Combat Transport"
+	defaultname	"_Raptor"
+	model		"geoscape/drop_raptor"
+	price		30000
+	building	building_hangar
+	numteam		10
+	image		"geoscape/air_dropship"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		position	"nose_center"
+		size		"light"
+	}
+	slot {
+		type		"weapon"
+		position	"wing_left"
+		size		"medium"
+	}
+	slot {
+		type		"weapon"
+		position	"wing_right"
+		size		"medium"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_left"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_right"
+	}
+}
+
+// *********************************
+// Interceptors
+// *********************************
+
+aircraft craft_inter_stiletto
+{
+	param {
+		speed		9
+		maxspeed	14
+		shield		0
+		ecm			100
+		damage		150
+		accuracy	100
+		range		80
+	}
+	name		"_Stiletto-class Interceptor"
+	defaultname	"_Stiletto I"
+	model		"geoscape/inter_stiletto"
+	numteam		0
+	price		20000
+	building	building_intercept
+	image		"geoscape/air_interceptor"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		position	"nose_center"
+		size		"light"
+	}
+	slot {
+		type		"weapon"
+		position	"wing_left"
+		size		"heavy"
+	}
+	slot {
+		type		"weapon"
+		position	"wing_right"
+		size		"heavy"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_left"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_right"
+	}
+}
+
+aircraft craft_inter_saracen
+{
+	param {
+		speed		12
+		maxspeed	18
+		shield		0
+		ecm			80
+		damage		125
+		accuracy	100
+		range		150
+	}
+	name		"_Saracen-class Interceptor"
+	defaultname	"_Saracen I"
+	model		"geoscape/inter_saracen"
+	numteam		0
+	price		30000
+	building	building_intercept
+	image		"geoscape/air_interceptor"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		position	"wing_left"
+		size		"medium"
+	}
+	slot {
+		type		"weapon"
+		position	"wing_right"
+		size		"medium"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_left"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_right"
+	}
+}
+
+aircraft craft_inter_dragon
+{
+	param {
+		speed		17
+		maxspeed	23
+		shield		0
+		ecm			100
+		damage		500
+		accuracy	100
+		range		146
+		antimatter	15
+	}
+	name		"_Dragon Interceptor"
+	defaultname	"_Dragon"
+	model		"geoscape/inter_dragon"
+	numteam		0
+	price		40000
+	building	building_intercept
+	image		"geoscape/air_interceptor"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		position	"wing_left"
+		size		"heavy"
+	}
+	slot {
+		type		"weapon"
+		position	"wing_right"
+		size		"heavy"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_left"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_right"
+	}
+}
+
+aircraft craft_inter_starchaser
+{
+	param {
+		speed		22
+		maxspeed	33
+		shield		0
+		ecm			100
+		damage		800
+		accuracy	100
+		range		150
+		antimatter	20
+	}
+	name		"_Starchaser-class Interceptor"
+	defaultname	"_Starchaser"
+	model		"geoscape/inter_starchaser"
+	numteam		0
+	price		40000
+	building	building_intercept
+	image		"geoscape/air_interceptor"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		position	"nose_center"
+		size		"light"
+	}
+	slot {
+		type		"weapon"
+		position	"wing_left"
+		size		"heavy"
+	}
+	slot {
+		type		"weapon"
+		position	"wing_right"
+		size		"heavy"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_left"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_right"
+	}
+}
+
+aircraft craft_inter_stingray
+{
+	param {
+		speed		25
+		maxspeed	37
+		shield		0
+		ecm			100
+		damage		900
+		accuracy	100
+		range		156
+		antimatter	25
+	}
+	name		"_Stingray Interceptor"
+	defaultname	"_Stingray"
+	model		"geoscape/inter_stingray"
+	numteam		0
+	price		55000
+	building	building_intercept
+	image		"geoscape/air_interceptor"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		position	"nose_left"
+		size		"medium"
+	}
+	slot {
+		type		"weapon"
+		position	"nose_right"
+		size		"medium"
+	}
+	slot {
+		type		"weapon"
+		position	"wing_left"
+		size		"heavy"
+	}
+	slot {
+		type		"weapon"
+		position	"wing_right"
+		size		"heavy"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_left"
+	}
+	slot {
+		type		"electronics"
+		position	"wing_right"
+	}
+}
+
+// *********************************
+// UFOS
+// Notes
+// UFOs are listed in order of appearance. See also: http://ufoai.org/wiki/index.php/Aircraft
+// adding or renaming ufos: change the assembly name or add the assembly to corresponding ump files
+// *********************************
+
+aircraft craft_ufo_scout
+{
+	param {
+		speed		7
+		maxspeed	13
+		shield		0
+		ecm			100
+		damage		100
+		accuracy	100
+		range		208
+	}
+	name		"_UFO - Scout"
+	defaultname	"_Scout U"
+	model		"geoscape/ufo_scout"
+	numteam		4
+	price		8000
+	image		"geoscape/air_ufo"
+	interestlevel 0
+	missiontypes (
+		"recon"
+		"subvert"
+	)
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+}
+
+aircraft craft_ufo_fighter
+{
+	param {
+		speed		8
+		maxspeed	14
+		shield		2
+		ecm			90
+		damage		150
+		accuracy	100
+		range		236
+	}
+	name		"_UFO - Fighter"
+	defaultname	"_Fighter U"
+	model		"geoscape/ufo_fighter"
+	numteam		6
+	price		12000
+	image		"geoscape/air_ufo"
+	interestlevel 50
+	missiontypes (
+		"recon"
+		"intercept"
+	)
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+}
+
+aircraft craft_ufo_harvester
+{
+	param {
+		speed		10
+		maxspeed	18
+		shield		2
+		ecm			100
+		damage		350
+		accuracy	100
+		range		278
+	}
+	name		"_UFO - Harvester"
+	defaultname	"_Harvester U"
+	model		"geoscape/ufo_harvester"
+	numteam		8
+	price		18000
+	image		"geoscape/air_ufo"
+	interestlevel 80
+	missiontypes (
+		"harvest"
+		"baseattack"
+		"terror"
+		"intercept"
+		"interceptbombing"
+		"subvert"
+	)
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+}
+
+aircraft craft_ufo_corrupter
+{
+	param {
+		speed		13
+		maxspeed	17
+		shield		0
+		ecm			100
+		damage		500
+		accuracy	100
+		range		347
+	}
+	name		"_UFO - Corrupter"
+	defaultname	"_Corrupter U"
+	model		"geoscape/ufo_corrupter"
+	numteam		10
+	price		27000
+	image		"geoscape/air_ufo"
+	interestlevel	200
+	missiontypes (
+		"baseattack"
+		"xvi"
+		"terror"
+		"intercept"
+		"interceptbombing"
+		"subvert"
+	)
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+}
+
+aircraft craft_ufo_supply
+{
+	param {
+		speed		5
+		maxspeed	8
+		shield		0
+		ecm			100
+		damage		120
+		accuracy	100
+		range		208
+	}
+	name		"_UFO - Supply Ship"
+	defaultname	"_Supply U"
+	model		"geoscape/ufo_supply"
+	numteam		12
+	price		20000
+	image		"geoscape/air_ufo"
+	interestlevel	200
+	missiontypes (
+		"supply"
+		"building"
+	)
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+}
+
+aircraft craft_ufo_gunboat
+{
+	param {
+		speed		18
+		maxspeed	25
+		shield		0
+		ecm			120
+		damage		500
+		accuracy	100
+		range		347
+	}
+	name		"_UFO - Gunboat"
+	defaultname	"_Gunboat U"
+	model		"geoscape/ufo_gunboat"
+	numteam		12
+	price		23000
+	image		"geoscape/air_ufo"
+	interestlevel 310
+	missiontypes (
+		"baseattack"
+		"terror"
+		"intercept"
+	)
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+}
+
+aircraft craft_ufo_bomber
+{
+	param {
+		speed		13
+		maxspeed	17
+		shield		5
+		ecm			100
+		damage		1200
+		accuracy	100
+		range		347
+	}
+	name		"_UFO - Bomber"
+	defaultname	"_Bomber U"
+	model		"geoscape/ufo_bomber"
+	numteam		18
+	leader		true
+	price		45000
+	image		"geoscape/air_ufo"
+	interestlevel	310
+	missiontypes (
+		"baseattack"
+		"terror"
+	)
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+}
+
+aircraft craft_ufo_ripper
+{
+	param {
+		speed		10
+		maxspeed	14
+		shield		0
+		ecm			100
+		damage		600
+		accuracy	100
+		range		500
+	}
+	name		"_UFO - Ripper"
+	defaultname	"_Ripper U"
+	model		"geoscape/ufo_ripper"
+	numteam		14
+	price		30000
+	image		"geoscape/air_ufo"
+
+	radar {
+		range	10
+		trackingrange	14
+	}
+
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		"weapon"
+		size		"heavy"
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+}
+
+// TODO: Battleship goes here
+
+// The carrier UFO does not normally appear on the geoscape. It's used to carry
+// other UFOs to and from the mothership.
+// The only times it shows up on the geoscape is when PHALANX shoots one down
+// from orbit as per a story-driven mission.
+aircraft craft_ufo_carrier
+{
+	param {
+		speed		13
+		maxspeed	20
+		shield		0
+		ecm			100
+		damage		60
+		accuracy	100
+		range		347
+	}
+	name		"_UFO - Carrier"
+	defaultname	"_Carrier U"
+	model		"geoscape/ufo_carrier"
+	price		0 //NOTE: This UFO must never be sellable!
+	image		"geoscape/air_ufo"
+	nogeoscape	true
+}
+
+// The mothership UFO does not appear on the geoscape.
+aircraft craft_ufo_mothership
+{
+	param {
+		speed		13
+		maxspeed	20
+		shield		0
+		ecm			100
+		damage		60
+		accuracy	100
+		range		347
+	}
+	name		"_UFO - Mothership"
+	defaultname	"_Mothership U"
+	model		"geoscape/ufo_mothership"
+	price		0 //This UFO is not recoverable in the first place. It's the final mission!
+	image		"geoscape/air_ufo"
+	nogeoscape	true
+}
+
+// *********************************
+// EQUIPMENT
+// *********************************
+
+craftitem craft_weapon_alc
+{
+	name				"_Aerial Laser Cannon"
+	crafttype			"weapon"
+	size				40 // "light"
+	installationTime	2
+	price				7000
+	model				"aircraft/craft_weapon_alc/alc"
+
+	bullets				false
+	beam				true
+}
+
+craftitem craft_ammo_alc
+{
+	/* this ammo is virtual shouldn't be shown anywhere */
+	name				"D-F Tank"
+	crafttype			"ammo"
+	craftweapon			craft_weapon_alc
+	virtual				true
+
+	beamcolor			"1 .874 .294 1"
+	ammo				40
+	wdamage				5
+	accuracy			0.6
+	wrange				1
+	wspeed				900
+	delay				12
+	size				10 // "light"
+}
+
+craftitem craft_weapon_shiva
+{
+	name				"_Shiva Rotary Cannon"
+	crafttype			"weapon"
+	size				40 // "light"
+	installationTime	2
+	price				5000
+	bullets				true
+	model				"aircraft/craft_weapon_shiva/shiva"
+}
+
+craftitem craft_ammo_shiva_API
+{
+	name		"_SHIVA 20mm API Rounds"
+	crafttype	"ammo"
+	craftweapon	craft_weapon_shiva
+	price		600
+
+	ammo		100
+	wdamage		5
+	accuracy	0.2
+	wrange		1
+	wspeed		62
+	delay		10
+	size		10 // "light"
+}
+
+craftitem craft_ammo_shiva_HEI
+{
+	name			"_SHIVA 20mm HEI Rounds"
+	crafttype		"ammo"
+	craftweapon		craft_weapon_shiva
+	price			600
+
+	ammo		100
+	wdamage		5
+	accuracy	0.2
+	wrange		1
+	wspeed		62
+	delay		10
+	size		10 // "light"
+}
+
+craftitem craft_el_raven
+{
+	name				"_Raven ECM Unit"
+	crafttype			"electronics"
+	size				20 // "light"
+	installationTime	1
+	price				8000
+	model				"aircraft/craft_item_raven_ecm/ecm"
+
+	ecm		1.25
+}
+
+craftitem craft_weapon_sparrowhawk
+{
+	name				"_Sparrowhawk AA Missile Rack"
+	crafttype			"weapon"
+	size				110 // "medium"
+	installationTime	3
+	price				7000
+	model				"aircraft/craft_weapon_sparrow/sparrowhawk_rack"
+}
+
+craftitem craft_ammo_sparrowhawk
+{
+	name		"_Sparrowhawk Missile"
+	crafttype	"ammo"
+	craftweapon	craft_weapon_sparrowhawk
+	price		1000
+	model		"geoscape/missile_sparrow"
+
+	size		40 // light
+	ammo		7
+	wdamage		30
+	accuracy	0.6
+	wrange		3
+	wspeed		25
+	delay		250
+}
+
+craftitem craft_weapon_tr20
+{
+	name				"_TR-20 Rocket Pod"
+	crafttype			"weapon"
+	size				90 // "medium"
+	installationTime	2
+	price				6000
+	model				"aircraft/craft_weapon_tr20/tr20"
+
+	speed		.9
+	maxspeed	.9
+}
+
+craftitem craft_ammo_tr20
+{
+	name			"_TR-20 Rocket"
+	crafttype		"ammo"
+	craftweapon		craft_weapon_tr20
+	price			840
+	model			"geoscape/missile_tr20"
+
+//	ammo		152
+// The value (12) below is a workaround until we can display (or fake) high numbers of projectiles in interception
+	size		10 // "light"
+	ammo		12
+	wdamage		20
+	accuracy	0.4
+	wrange		2
+	wspeed		19
+	delay		150
+}
+
+craftitem craft_weapon_particle_beam
+{
+	name				"_Particle Beam Weapon"
+	crafttype			"weapon"
+	size				90 // "medium"
+	installationTime	4
+	price				11000
+	model				"aircraft/craft_weapon_particle/pbw"
+
+	beam				true
+}
+
+craftitem craft_ammo_particle_beam
+{
+	/* this ammo is virtual shouldn't be shown anywhere */
+	name				"Particle Beam Accelerator"
+	crafttype			"ammo"
+	craftweapon			craft_weapon_particle_beam
+	virtual				true
+
+	beamcolor			".590 .762 .738 1"
+	ammo				10
+	wdamage				40
+	accuracy			0.6
+	wrange				2
+	wspeed				900
+	delay				200
+	size				10 // "light"
+}
+
+craftitem craft_weapon_alien_launcher
+{
+	name "_Alien Launcher"
+	crafttype "weapon"
+	size 110
+	installationTime 5
+	price 12000
+	model "aircraft/craft_weapon_antim/launcher_a"
+}
+
+craftitem craft_ammo_am_missile
+{
+	name		"_Antimatter Missile"
+	crafttype	"ammo"
+	craftweapon	craft_weapon_alien_launcher
+	price		3000
+	size		60 // "medium"
+	model		"geoscape/missile_antimatter"
+
+	ammo		6
+	wdamage		150
+	accuracy	0.6
+	wrange		3
+	wspeed		35
+	delay		200
+}
+
+craftitem craft_ammo_hybrid_missile
+{
+	name		"_Hybrid Missile"
+	crafttype	"ammo"
+	craftweapon	craft_weapon_alien_launcher
+	price		2700
+	size		50 // "light"
+	model		"aircraft/craft_weapon_hybrid/hybrid"
+	ammo		6
+	wdamage		130
+	accuracy	0.7
+	wrange		3
+	wspeed		35
+	delay		200
+}
+
+
+craftitem craft_el_targeting
+{
+	name				"_Targeting Computer"
+	crafttype			"electronics"
+	installationTime	1
+	price				10000
+	size				20 // "light"
+	model				"aircraft/craft_item_target/craft_item_target"
+
+	accuracy	1.25
+}
+
+craftitem craft_el_fuelpod
+{
+	name				"_Fuel Pod"
+	crafttype			"electronics"
+	installationTime	2
+	price				3000
+	size				20 // "light"
+	model				"aircraft/craft_item_fuel/fuel"
+
+	fuelsize	+7000
+	speed		0.9
+	maxspeed	0.9
+}
+
+craftitem craft_shield_polymer
+{
+	name				"_Polymer Aircraft Armour"
+	crafttype			"shield"
+	installationTime	24
+	price				1200
+	size				40 // "light"
+	model				"aircraft/craft_arm_poly/polymer"
+
+	shield		+4
+	speed		0.9
+	maxspeed	0.9
+}
+
+craftitem craft_shield_plating
+{
+	name				"_Alien Aircraft Plating"
+	crafttype			"shield"
+	installationTime	36
+	price				3000
+	size				50 // "light"
+	model				"aircraft/craft_arm_plate/plating"
+
+	shield		+8
+	speed		0.9
+	maxspeed	0.9
+}
+
+craftitem craft_shield_polymer_alien
+{
+	name				"_Alien Polymer Armour"
+	crafttype			"shield"
+	installationTime	36
+	price				3000
+	size				50 // "light"
+	model				"aircraft/craft_arm_poly_alien/polymer_alien"
+
+	shield		+16
+	speed		0.9
+	maxspeed	0.9
+}
+
+craftitem craft_el_alien_ew
+{
+	name				"_Alien Electronic Warfare Suite"
+	crafttype			"electronics"
+	size				20 // "light"
+	installationTime	1
+	price				8000
+	model				"aircraft/craft_item_ew_alien/ew_alien"
+	ecm		1.5
+}
+
+craftitem craft_alien_astrogation
+{
+	name				"_Alien Astrogation"
+	crafttype			"electronics"
+	model				"aircraft/craft_item_astro/astrogation"
+	installationTime	-1
+	price				5000
+	size				20 // "light"
+}
+
+craftitem craft_alien_propulsion
+{
+	name				"_Alien Propulsion"
+	crafttype			"electronics"
+	installationTime	-1
+	price				6000
+	size				50 // "light"
+}
+
+craftitem craft_alien_propulsion_adv
+{
+	name				"_Advanced Alien Propulsion"
+	crafttype			"electronics"
+	installationTime	-1
+	price				6000
+	size				50 // "light"
+}
+
+craftitem craft_alien_detection
+{
+	name				"_Alien Detection"
+	crafttype			"electronics"
+	installationTime	-1
+	price				5000
+	size				20 // "light"
+}
+
+// *********************************
+// BASE WEAPONS
+// *********************************
+
+craftitem base_AA51_launcher
+{
+	name				"_AA51 missile launcher"
+	crafttype			"base_missile"
+	size				90 // "medium"
+	installationTime	12
+	price				5000
+	is_dummy			true
+	model				"objects/samlauncher/samlauncher"
+}
+
+craftitem base_ammo_AA51
+{
+	/* this ammo is virtual shouldn't be shown anywhere */
+	name			"AA51 Cicada SAM"
+	crafttype		"base_ammo_missile"
+	craftweapon		base_AA51_launcher
+	is_dummy		true
+	model			"geoscape/missile"
+	virtual			true
+
+	ammo			8
+	wdamage			20
+	accuracy		0.3
+	wrange			7
+	wspeed			200
+	delay			500
+	size			10 // "light"
+}
+
+craftitem baselaser
+{
+	name				"_Base-Defence Laser Turret"
+	crafttype			"base_laser"
+	size				90 // "medium"
+	installationTime	12
+	price				10000
+	is_dummy			true
+
+	bullets				false
+	beam				true
+	model				"objects/laserturret/laserturret"
+}
+
+craftitem baselaser_ammo
+{
+	/* this ammo is virtual shouldn't be shown anywhere */
+	name				"D-F Tank"
+	crafttype			"base_ammo_laser"
+	craftweapon			baselaser
+	is_dummy			true
+	virtual				true
+
+	beamcolor			"1 .874 .294 1"
+	ammo				10
+	wdamage				8
+	accuracy			0.7
+	wrange				5
+	wspeed				900
+	delay				200
+	size				10 // "light"
+}

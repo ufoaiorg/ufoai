@@ -1,0 +1,594 @@
+// **********************
+// VILLAGE DESERT
+// **********************
+
+base oriental/or_
+
+// dropship tiles --------------------------------------------------*
+
+tile +craft_drop_firebird
+{
+5 4
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
+
+tile +craft_drop_herakles
+{
+5 4
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
+
+tile +craft_drop_raptor
+{
+5 5
+0		0		0		0		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		+c		+c		+c		0
+0		0		0		0		0
+}
+
+// landed UFOs -----------------------------------------------------*
+
+tile +craft_ufo_bomber
+{
+6 10
+0		0		a		a		0		0
+0		a		+c		+c		a		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+0		a		a		a		a		0
+}
+
+tile +craft_ufo_corrupter
+{
+8 10
+0		0		0		a		a		0		0		0
+0		0		a		+c		+c		a		0		0
+0		0		a		+c		+c		a		0		0
+a		a		a		+c		+c		a		a		0
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		+c		a
+0		a		a		a		a		a		a		0
+}
+
+tile +craft_ufo_fighter
+{
+4 5
+0		a		a		0
+a		+c		+c		a
+a		+c		+c		a
+a		+c		+c		a
+0		a		a		0
+}
+
+tile +craft_ufo_gunboat
+{
+7 6
+0		0		a		a		a		0		0
+0		a		+c		+c		+c		a		0
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+0		a		+c		+c		+c		a		0
+0		0		a		a		a		0		0
+}
+
+tile +craft_ufo_harvester
+{
+7 6
+0		a		a		a		a		0		0
+a		+c		+c		+c		+c		a		0
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a		0
+0		a		a		a		a		0		0
+}
+
+tile +craft_ufo_scout
+{
+4 5
+0		a		a		0
+a		+c		+c		a
+a		+c		+c		a
+a		+c		+c		a
+0		a		a		0
+}
+
+// crashed UFOs ----------------------------------------------------*
+
+tile +craft_crash_fighter
+{
+5 5
+0		a		a		a		0
+a		+c		+c		+c		a
+a		+c		+c		+c		a
+a		+c		+c		+c		a
+0		a		a		a		0
+}
+
+tile +craft_crash_scout
+{
+4 4
+0		a		a		0
+a		+c		+c		a
+a		+c		+c		a
+0		a		a		0
+}
+
+// houses ----------------------------------------------------------*
+
+// or_shed_a - Two small storage buildings
+tile +shed_a
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// or_shed_b - Two small storage buildings and barrels
+tile +shed_b
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// or_shed_c - three small storage buildings and woodpallets
+tile +shed_c
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// or_house_a - Small house: 2 rooms, outside stairs to roof
+tile +house_a
+{
+4 3
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// or_house_b - T-shaped house with shop, stairs to first floor, carpet on roof
+tile +house_b
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		0		0
+0		0		0		0
+}
+
+// or_house_c - L-shaped house, with first floor
+tile +house_c
+{
+4 4
+0		0		0		0
+0		0		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// or_house_d - Small square house, 2 rooms, outside stairs to roof
+tile +house_d
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// or_house_e - Big house with fence
+tile +house_e
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+
+// or_house_f - Big house with fence, car in yard
+tile +house_f
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// or_house_g - Small square house, 1 room
+tile +house_g
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// L-shaped, two level house
+tile +house_h
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		0		0
+0		0		0		0
+}
+
+// one level house, 5 rooms
+tile +house_i
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// two level house, 5 + 3 rooms
+tile +house_k
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// or_house_l - 2 small houses: 2 rooms each
+tile +house_l
+{
+4 3
+0		0		0		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// or_house_m - L-shaped house, 3 parts, 2 rooms each
+tile +house_m
+{
+4 4
+0		0		0		0
+0		+a		0		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// or_house_n - L-shaped house, 2 levels, 3 + 3 parts
+tile +house_n
+{
+4 4
+0		0		0		0
+0		+a		0		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// or_house_o - Small square house, 2 rooms, wash machines
+tile +house_o
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// market stands ---------------------------------------------------*
+
+// or_stand_a - Fruitstand
+tile +stand_a
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// or_stand_b - Fruitstand
+tile +stand_b
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// or_stand_c - Fruitstand with tables
+tile +stand_c
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// or_stand_d - Newspaperstand
+tile +stand_d
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// or_stand_e - used car parts stand
+tile +stand_e
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// filler tiles ----------------------------------------------------*
+
+// or_well - Small well
+tile +well
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// or_trees_a - 4 palm-trees
+tile +trees_a
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// 4 palm-trees
+tile +trees_b
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// minarets --------------------------------------------------------*
+
+tile +mosque
+{
+4 4
+0		0		0		0
+0		+a		+a		0
+0		+a		+a		0
+0		0		0		0
+}
+
+// minaretts
+tile +minaret01
+{
+3 5
+0		0		0
+0		+a		0
+0		+a		0
+0		+a		0
+0		0		0
+}
+
+
+tile +minaret02
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +minaret03
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +minaret04
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+// tilesets --------------------------------------------------------*
+
+tileset minaret_11 {
+	+minaret02
+	+minaret03
+	+minaret04
+}
+
+
+tileset stand {
+	+stand_a
+	+stand_b
+	+stand_c
+	+stand_d
+	+stand_e
+}
+
+tileset shed {
+	+shed_a
+	+shed_b
+	+shed_c
+}
+
+// map assemblies for campaign / skirmish --------------------------*
+
+assembly large
+{
+size "10 8"
+title "_Oriental large"
++house_a "0 3"
++house_b "0 3"
++house_c "0 3"
++house_d "0 5"
++house_e "0 3"
++house_f "1 3"
++house_g "0 3"
++house_h "0 3"
++house_i "0 1"
++house_k "0 1"
++house_l "0 1"
++house_m "0 1"
++house_n "0 1"
++house_o "0 1"
++mosque "0 1"
+tileset shed "0 3"
+tileset stand "0 21"
++minaret01    "0 1"
++well "0 3"
++trees_a "0 10"
++trees_b "0 2"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_bomber "1 1"
+}
+
+assembly medium
+{
+size "8 8"
+title "_Oriental large"
++house_a "1 3"
++house_b "1 3"
++house_c "0 3"
++house_d "0 5"
++house_e "0 3"
++house_f "1 3"
++house_g "0 3"
++house_h "0 3"
++house_i "0 1"
++house_k "0 1"
++house_l "0 1"
++house_m "0 1"
++house_n "0 1"
++house_o "0 1"
++mosque "1 1"
+tileset shed "1 3"
+tileset stand "0 21"
++minaret01    "0 1"
++well "1 3"
++trees_a "0 10"
++trees_b "0 2"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_harvester "1 1"
+}
+
+assembly small
+{
+size "6 6"
+title "_Oriental medium"
++house_a "0 2"
++house_b "1 2"
++house_c "1 2"
++house_d "0 3"
++house_e "1 2"
++house_f "1 3"
++house_g "0 3"
++house_h "0 3"
++house_i "0 1"
++house_l "0 1"
++house_k "0 1"
++house_m "0 1"
++house_n "0 1"
++house_o "0 1"
+tileset shed "0 1"
+tileset stand "0 21"
++mosque "0 1"
++well "0 2"
++trees_a "0 5"
++trees_b "0 2"
+tileset minaret_11 "0 1"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
+}
+
+assembly mosque
+{
+size "7 6"
+title "_Oriental mosque"
+fix +house_a		"1 5"
+fix +house_b		"2 3"
+fix +house_d		"1 3"
+fix +house_h		"4 4"
+fix +mosque			"3 2"
+fix +shed_a			"5 2"
+fix +stand_a		"3 5"
++house_h			"0 1"
++house_i			"0 1"
++house_k			"0 1"
++house_l			"0 1"
++house_m			"0 1"
++house_o			"0 1"
++minaret01			"0 1"
++stand_b			"0 1"
++stand_c			"0 1"
++stand_d			"0 1"
++stand_e			"0 1"
++trees_a			"0 3"
++trees_b			"0 3"
++well				"0 1"
+tileset minaret_11	"0 1"
+tileset stand		"0 5"
+fix *rm_drop +craft_drop_firebird	"0 0"
+}
+
+assembly oriental
+{
+size "8 6"
+title "_Oriental housing"
+fix +house_a		"4 1"
+fix +house_b		"3 4"
+fix +house_c		"5 0"
+fix +house_d		"0 5"
+fix +house_d		"7 3"
+fix +house_e		"6 4"
+fix +house_f		"2 0"
+fix +house_g		"2 5"
+fix +house_o		"0 0"
+fix +shed_a			"4 3"
+fix +stand_a		"4 0"
+fix +stand_b		"1 1"
+fix +stand_b		"3 2"
+fix +stand_b		"7 0"
+fix +well			"5 5"
++house_l			"0 1"
++house_m			"0 1"
++house_n			"0 1"
++stand_c			"0 1"
++stand_d			"0 1"
++stand_e			"0 1"
++trees_a			"0 5"
++trees_b			"0 5"
+tileset minaret_11	"0 2"
+*rm_drop +craft_drop_firebird	"1 1"
+}

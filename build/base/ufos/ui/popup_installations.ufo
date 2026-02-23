@@ -1,0 +1,309 @@
+--!usr/bin/lua
+
+require("ufox.lua")
+
+do
+	--Create Installation: Select Type
+	local installationtype = ufox.build_component({
+		name = "cmp_installation_type",
+		class = "panel",
+		size = {410, 20},
+		bordersize = 0,
+		bordercolor = {1, 1, 1, 1},
+		padding = 4,
+
+		on_mouseenter = function (sender)
+			sender:set_bordersize(2)
+		end,
+		on_mouseleave = function (sender)
+			sender:set_bordersize(0)
+		end,
+
+		on_click = function (sender)
+			if (sender:child("id"):as_string() == "base") then
+				ufo.pop_window(false)
+				ufo.cmd(string.format("mn_base_select %q;", -1))
+			else
+				ufo.pop_window(false)
+				ufo.cmd(string.format("ui_build_installationtype %q;", sender:child("id"):as_string()))
+			end
+		end,
+
+		{
+			name = "id",
+			class = "data",
+			value = "",
+		},
+
+		{
+			name = "name",
+			class = "string",
+			pos = {0, 0},
+			size = {210, 20},
+			font = "f_small",
+			contentalign = ufo.ALIGN_CL,
+			ghost = true,
+		},
+
+		{
+			name = "buildtime",
+			class = "string",
+			pos = {210, 2},
+			size = {100, 15},
+			font = "f_small",
+			contentalign = ufo.ALIGN_CR,
+			ghost = true,
+		},
+
+		{
+			name = "cost",
+			class = "string",
+			pos = {310, 2},
+			size = {100, 15},
+			font = "f_small",
+			contentalign = ufo.ALIGN_CR,
+			ghost = true,
+		},
+	})
+
+	local newinstallationtype = ufox.build_window({
+		name = "popup_newinstallation_type",
+		class = "window",
+		super = "ipopup",
+		pos = {264, 262},
+		size = {485, 247},
+		closebutton = true,
+
+		{
+			name = "title",
+			class = "string",
+			text = "_New installation",
+			width = 485,
+		},
+
+		{
+			name = "type_label",
+			class = "string",
+			text = "_Type",
+			pos = {30, 55},
+			size = {210, 20},
+			font = "f_small_bold",
+		},
+
+		{
+			name = "buildtime_label",
+			class = "string",
+			text = "_Build Time",
+			pos = {245, 55},
+			size = {100, 20},
+			contentalign = ufo.ALIGN_CC,
+			font = "f_small_bold",
+		},
+
+		{
+			name = "cost_label",
+			class = "string",
+			text = "_Cost",
+			pos = {347, 55},
+			size = {100, 20},
+			contentalign = ufo.ALIGN_CC,
+			font = "f_small_bold",
+		},
+
+		{
+			name = "list",
+			class = "panel",
+			pos = {30, 75},
+			size = {410, 100},
+			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+			wheelscrollable = true,
+
+			on_viewchange = function (sender)
+				local scrollbar = sender:parent():child("list_scroll")
+				if (scrollbar == nil) then
+					return
+				end
+				scrollbar:set_fullsize(sender:fullsize())
+				scrollbar:set_current(sender:viewpos())
+				scrollbar:set_viewsize(sender:viewsize())
+			end,
+		},
+
+		{
+			name = "list_scroll",
+			class = "vscrollbar",
+			image = "ui/scrollbar_v",
+			pos = {445, 75},
+			height = 100,
+			current	 = 0,
+			viewsize = 5,
+			fullsize = 5,
+			autoshowscroll = true,
+
+			on_change = function (sender)
+				local list = sender:parent():child("list")
+				if (list == nil) then
+					return
+				end
+				list:set_viewpos(sender:current())
+			end,
+		},
+
+		{
+			name = "installationtype_clear",
+			class = "confunc",
+
+			--[[
+			-- @brief Empty the Installation type list
+			--]]
+			on_click = function (sender)
+				sender:parent():child("list"):remove_children()
+			end,
+		},
+
+		--[[
+		-- @brief Add an installation type to the list
+		-- @param inst_id Scripted installation identifier
+		-- @param inst_name Translateable installation name
+		-- @param build_time Number of days to build the installation
+		-- @param cost Money needed to build the installation
+		--]]
+		{
+			name = "installationtype_add",
+			class = "confunc",
+
+			on_click = function (sender, inst_id, inst_name, build_time, cost)
+				local installation = ufox.build({
+					name = "inst" .. inst_id,
+					class = "cmp_installation_type",
+
+					{ name = "id",        text = inst_id },
+					{ name = "name",      text = inst_name },
+					{ name = "buildtime", text = build_time, invisible = (build_time == "-") },
+					{ name = "cost",      text = cost },
+				}, sender:parent():child("list"))
+			end,
+		},
+
+		{
+			name = "bt_close",
+			class = "MainMenu2Btn",
+			text = "_Close",
+			pos = {305, 217},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen",
+		},
+
+		on_windowopened = function (sender)
+			ufo.cmd("ui_fill_installationtypes;")
+		end,
+	})
+end
+
+
+do
+	-- Build new base popup
+	local newbase = ufox.build_window({
+		name = "popup_newbase",
+		class = "window",
+		super = "ipopup",
+		pos = {264, 262},
+		size = {400, 180},
+		modal = true,
+
+		{
+			name = "title",
+			class = "string",
+			text = "_New base",
+			width = 400,
+		},
+
+		{
+			name = "name_label",
+			class = "string",
+			text = "_Name:",
+			pos = {25, 50},
+			size = {75, 20},
+			font = "f_small_bold",
+		},
+
+		{
+			name = "name",
+			class = "TextEntry",
+			text = "*cvar:mn_base_title",
+			pos = {25, 75},
+			size = {330, 25},
+			font = "f_big",
+		},
+
+		{
+			name = "bt_nameedit",
+			class = "button",
+			tooltip = "_Rename your base",
+			icon = "icons/pen",
+			pos = {360, 75},
+			size = {25, 25},
+			padding = 0,
+
+			on_click = function (sender)
+				sender:parent():child("name"):focus()
+			end,
+		},
+
+		{
+			name = "cost_label",
+			class = "string",
+			text = "_Cost:",
+			pos = {25, 110},
+			size = {75, 20},
+			font = "f_small_bold",
+		},
+
+		{
+			name = "cost",
+			class = "string",
+			text = "*cvar:mn_base_cost",
+			pos = {100, 110},
+			size = {100, 25},
+		},
+
+		{
+			name = "bt_build",
+			class = "MainMenuBtn",
+			text = "_Build",
+			tooltip = "_Build the base",
+			pos = {28, 150},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+				ufo.cmd("mn_base_build;")
+			end,
+		},
+
+		{
+			name = "bt_cancel",
+			class = "MainMenuCancelBtn",
+			pos = {220, 150},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+				ufo.cmd("mn_mapaction_reset;")
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen",
+		},
+	})
+end

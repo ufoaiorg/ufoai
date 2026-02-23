@@ -1,0 +1,248 @@
+// ==================
+// SERVER INFO
+// ==================
+
+window serverinfo
+{
+	{
+		bgcolor 	"0 0 0 0.9"
+	}
+
+	panel server_info
+	{
+		{
+			pos				"5 5"
+			size			"723 758"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
+
+		string title
+		{
+			string		"_Server Info"
+			pos				"0 0"
+			size			"723 30"
+			contentalign	ALIGN_CC
+			font			"f_big"
+		}
+
+		panel mainBody
+		{
+			{
+				pos				"4 30"
+				size			"715 534"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+
+			// Title bar
+			panel header
+			{
+				{
+					pos			"1 1"
+					size		"713 32"
+					bgcolor		"0.527 0.6 0.21 0.2"
+				}
+
+				string mapstring
+				{
+					string		*cvar:mn_svmapname
+					pos			"0 0"
+					size		"713 32"
+					contentalign	ALIGN_CC
+					font		"f_normal"
+					color		"0.56 0.81 0.76 1"
+				}
+
+			}
+
+			text server_info
+			{
+				dataid		TEXT_STANDARD
+				pos			"13 54"
+				size		"700 480"
+				lineheight	20
+				tabwidth	350
+				rows		"24"
+			}
+		}
+
+		panel mapshots
+		{
+			{
+				pos		"4 574"
+				size	"715 180"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+
+			panel header
+			{
+				{
+					pos			"1 1"
+					size		"713 32"
+					bgcolor		"0.527 0.6 0.21 0.2"
+				}
+
+				string title
+				{
+					string			"_Map screenshots"
+					pos				"14 1"
+					size			"670 32"
+					contentalign	ALIGN_CL
+					color			"0.56 0.81 0.76 1"
+				}
+			}
+
+			panel shots
+			{
+				{
+					pos		"1 33"
+					size	"713 147"
+				}
+
+				image mappic1
+				{
+					src			*cvar:mn_mappic
+					pos			"82 25"
+					texl		"0 0"
+					texh		"128 96"
+				}
+
+				image frameOverlay1 {
+					pos		"2 2"
+					size	"128 96"
+					src		"maps/shots/map_ico_overlay"
+					ghost	true
+				}
+
+				image mappic2
+				{
+					src			*cvar:mn_mappic2
+					pos			"292 25"
+					texl		"0 0"
+					texh		"128 96"
+				}
+
+				image frameOverlay2 {
+					pos		"2 2"
+					size	"128 96"
+					src		"maps/shots/map_ico_overlay"
+					ghost	true
+				}
+
+				image mappic3
+				{
+					src			*cvar:mn_mappic3
+					pos			"502 25"
+					texl		"0 0"
+					texh		"128 96"
+				}
+
+				image frameOverlay3 {
+					pos		"2 2"
+					size	"128 96"
+					src		"maps/shots/map_ico_overlay"
+					ghost	true
+				}
+			}
+		}
+	}
+
+	panel userlist
+	{
+		{
+			pos			"739 35"
+			size		"285 728"
+			border		"2"
+			bordercolor	"0.56 0.81 0.76 1"
+		}
+
+		string users_list_str
+		{
+			string		"_Userlist"
+			pos			"0 0"
+			size		"285 40"
+			bgcolor		"0.527 0.6 0.21 0.2"
+			contentalign	ALIGN_CC
+			font		"f_small"
+		}
+
+		panel user_list_header
+		{
+			{
+				bgcolor	"0.527 0.6 0.21 0.2"
+				pos		"0 53"
+				size	"285 20"
+			}
+
+			string user_list_head1
+			{
+				string		"_Name"
+				pos			"7 0"
+				size		"133 20"
+				color		"1 1 1 1"
+				font		"f_verysmall"
+				contentalign	ALIGN_UL
+			}
+
+			string user_list_head2
+			{
+				string		"_Team"
+				pos			"147 0"
+				size		"138 20"
+				color		"1 1 1 1"
+				font		"f_verysmall"
+				contentalign	ALIGN_UL
+			}
+		}
+
+		text user_list
+		{
+			dataid	TEXT_LIST
+			pos			"0 75"
+			size		"285 380"
+			lineheight	20
+			tabwidth	140
+			font		"f_verysmall"
+			mousefx		true
+			border		2
+			bordercolor	"0.56 0.81 0.76 1"
+			padding		10
+			bgcolor		"0.3 0.3 0.3 0.4"
+			rows		"19"
+		}
+		MainMenuBtn button_connect
+		{
+			string		"_Connect"
+			pos			"0 698"
+			width		"285"
+			onClick		{ cmd "connect *cvar:mn_server_ip;" }
+		}
+
+		MainMenuBtn button_favorite
+		{
+			string		"_Bookmark"
+			tooltip		"_Add server to bookmarks"
+			pos			"0 455"
+			width		"285"
+			onClick		{ cmd "bookmark_add;" }
+		}
+	}
+
+
+	Geoscape geoscape_button
+	{
+		tooltip		"_Leave Serverbrowser"
+		onClick		{ cmd "ui_pop; pingservers;" }
+	}
+
+	fuzzyScreen overlay { }
+
+	func onWindowOpened { }
+
+	func onWindowClosed
+	{
+		cmd	"pingservers; check_bookmarks;"
+	}
+}

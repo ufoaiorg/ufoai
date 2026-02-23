@@ -1,0 +1,106 @@
+/*
+{
+	material tex_nature/grass_mowed_dry_c
+	{
+		texture tex_nature/grass
+		terrain 5 50
+		lightmap
+	}
+}
+
+{
+	material tex_mattn/wood006
+	{
+		texture tex_nature/grass_mowed_dry_c
+		dirtmap 1.0
+		lightmap
+	}
+}*/
+
+// materials from gate.mat
+{
+	material tex_nature/dirt_se05
+	{
+		texture tex_nature/grass
+		terrain 0 3
+		lightmap
+	}
+}
+
+/* flare for light003 light */
+{
+	material tex_lights/light003
+	{
+		flare 3
+		color 1.0 1.0 0.7
+	}
+}
+
+/* flare for light004 light */
+{
+	material tex_lights/light004
+	{
+		flare 2
+		color 0.8 0.2 0.3
+	}
+}
+
+/* ufo2: (Harvester, Corrupter, Bomber) */
+
+/* ufo2_01: Outside Hull clean */
+{
+	material tex_ufo/ufo2_01
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 1.0
+	{
+		lightmap
+	}
+}
+
+/* ufo2_02: Inside Wall like ufo2_03 without reliefs */
+{
+	material tex_ufo/ufo2_02
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+/* ufo2_03: Inside Wall & Outside Hull (Harvester only) with reliefs */
+{
+	material tex_ufo/ufo2_03
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+/* ufo2_04: Small Panel with 2 big & 1 small button */
+{
+	material tex_ufo/ufo2_04
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+/* ufo2_12: Engines */
+{
+	material tex_ufo/ufo2_12
+	{
+		texture tex_ufo/ufo2_12_glow
+		blend GL_SRC_COLOR GL_SRC_ALPHA
+		pulse 0.5
+	}
+}

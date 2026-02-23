@@ -1,0 +1,192 @@
+--!usr/bin/lua
+
+--[[
+-- @file
+-- @brief base view screen
+--]]
+
+--[[
+Copyright (C) 2002-2025 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+--[[
+ - @todo Some things here could be simplified
+--]]
+
+require("ufox.lua")
+base = {}
+
+do
+	local baseWindow = ufox.build_window({
+		name = "bases",
+		class = "window",
+		fill = true,
+
+		{
+			name = "base_idx",
+			class = "data",
+			text = "",
+		},
+
+		{
+			name = "active_section",
+			class = "string",
+			text = "",
+			invisible = true,
+		},
+
+		{
+			name = "content",
+			class = "panel",
+			pos = {9, 35},
+			size = {715, 715},
+		},
+
+		-- (right) main base sections
+		{
+			name = "sections",
+			class = "panel",
+			pos = {726, 5},
+			size = {298, 758},
+			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+			layoutmargin = 2,
+
+			generate = function (sender, base_idx)
+				local sections = {
+					"facilities",
+					"aircraft",
+					"employees",
+					"buysell",
+					"research",
+					"production",
+					"containment",
+					"hospital",
+					"transfer"
+				}
+
+				if (base.section == nil) then
+					base.section = {}
+				end
+				for i, section_name in ipairs(sections) do
+					base.section[section_name] = require(string.format("base.section.%s.lua", section_name))
+					base.section[section_name].register(sender, tonumber(base_idx))
+				end
+				-- Activate the first section if none was selected or activate selected
+				local base_idx = tonumber(sender:root():child("base_idx"):as_string())
+				local content_node = sender:root():child("content")
+				local active_section_node = sender:root():child("active_section")
+				if (active_section_node:text() == "") then
+					local first_section = base.section[sections[1]]
+					if (first_section.activate ~= nil) then
+						first_section.activate(content_node, base_idx)
+						active_section_node:set_text(sections[1])
+					end
+				else
+					local active_section = base.section[active_section_node:text()]
+					if (active_section.activate ~= nil) then
+						active_section.activate(content_node, base_idx)
+					end
+				end
+
+				-- Get the parameters needed for this window
+				ufo.cmd(string.format("base_init %d;", tonumber(base_idx)))
+			end,
+		},
+
+		-- Back to geoscape
+		{
+			name = "geoscape_button",
+			class = "Geoscape",
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+			end,
+		},
+
+		{
+			name = "update_basebutton",
+			class = "confunc",
+
+			--[[
+			 - @brief Used to enable/disable the overall base buttons
+			 - @param button
+			 - @param state
+			 - @param tooltip
+			 - @TODO: handle hospital/transfer
+			 - @TODO: some buttons don't have windows
+			 - @TODO: Check tooltips only show when disabled
+			--]]
+			on_click = function (sender, button, state, tooltip)
+				local section = ""
+				-- new-style sections
+				local sections = {"facilities", "aircraft", "employees", "buysell", "research", "production", "containment", "hospital", "transfer"}
+				for i, section in ipairs(sections) do
+					if (button == section) then
+						local node = sender:root():child("sections"):child(section)
+						if (node == nil) then
+							-- ufo.print(string.format("update_basebutton section %q not found", section))
+							return
+						end
+						if (state == "true") then
+							node:disable(tooltip)
+						else
+							node:enable(tooltip)
+						end
+						return
+					end
+				end
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+		build = function (sender)
+			local baseidx = tonumber(sender:root():child("base_idx"):as_string())
+			-- / header
+			require("base.header.lua")
+			base.build_header(sender, baseidx)
+			-- / sections
+			sender:root():child("sections"):generate(baseidx)
+		end,
+
+		on_windowactivate = function (sender)
+			sender:build()
+		end,
+
+		on_windowopened = function (sender, base_idx)
+			local sections = sender:root():child("sections")
+			sections:set_width(sender:root():width() - sections:left())
+
+			-- Validate and store base_idx
+			if (base_idx == nil or base_idx == "") then
+				ufo.print(string.format("UI bases: Missing base_idx parameter!\n"))
+				ufo.pop_window(false)
+			end
+			sender:root():child("base_idx"):set_text(base_idx)
+			sender:build()
+		end,
+
+		on_windowclosed = function (sender)
+			ufo.cmd("trans_emptyairstorage;")
+			sender:root():child("sections"):remove_children()
+		end,
+	})
+end

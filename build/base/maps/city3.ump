@@ -1,0 +1,356 @@
+// *********************************
+// CITY RMA THEME
+// *********************************
+
+// by Holger 'ShipIt' Gellrich
+
+// Tiletypes:
+// ----------
+// + : tile contains something
+// 0 : always means no restrictions
+// a : common tile
+// h : street horizontally
+// v : street vertically
+
+base city3/c3_
+
+worldspawn {
+"saturation" "0.1"
+"contrast" "0.7"
+"ambient_night" "0.05 0.0025 0.0025"
+"color_day" "1.0 0.55 0.55"
+"light_day" "100"
+"light_night" "40"
+"angles_day" "-90 100"
+"angles_night" "-90 220"
+"ambient_day" "0.1 0.055 0.055"
+"color_night" "1.0 0.3 0.3"
+"brightness" "1.1"
+}
+
+/* street tiles ---------------------------------------------------*/
+
+tile +street_v_1
+	// street vertically, standard
+{
+3 3
+0		v		0
+0		+v		0
+0		v		0
+}
+
+tile +street_v_9_a
+	// a tunnel crosses the street
+{
+5 3
+0		0		v		0		0
+0		+a		+v		+a		0
+0		0		v		0		0
+}
+
+tile +street_h_1
+{
+3 3
+0		0		0
+h		+h		h
+0		0		0
+}
+
+tile +street_h_9_a
+	// a tunnel crosses the street
+{
+3 5
+0		0		0
+0		+a		0
+h		+h		h
+0		+a		0
+0		0		0
+}
+
+tile +junction_e
+	// |-
+{
+4 4
+0		v		0		0
+a1234	+vh		+h		h
+0		+v		+a		0
+0		v		0		0
+}
+
+tile +junction_n
+	// _|_
+{
+4 4
+0		0		v		0
+0		+a		+v		0
+h		+h		+hv		h
+0		0		a1234	0
+}
+
+tile +junction_s
+	// ¯|¯
+{
+4 4
+0		a1234	0		0
+h		+hv		+h		h
+0		+v		+a		0
+0		v		0		0
+}
+
+tile +junction_w
+	// -|
+{
+4 4
+0		0		v		0
+0		+a		+v		0
+h		+h		+vh		a1234
+0		0		v		0
+}
+
+tile +subwaycam_v
+{
+4 3
+0		v		0		0
+a1234	+v		+a		0
+0		v		0		0
+}
+
+tile +subwaycam_h
+{
+3 4
+0		a1234	0
+h		+h		h
+0		+a		0
+0		0		0
+}
+
+/* common tiles ---------------------------------------------------*/
+
+tile +common
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +common_a
+// adverts
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+tile +common_b
+// a bench
+{
+3 3
+0		0		0
+0		+a		0
+0		0		0
+}
+
+/* buildings ------------------------------------------------------*/
+
+tile +bld_a
+{
+6 7
+0		0		0		0		0		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		+a		+a		+a		+a		0
+0		0		0		h		+h		h
+0		0		0		0		0		0
+}
+
+tile +bld_abandoned
+	// an abandoned building, inhabited by homeless people
+{
+5 6
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		0		0
+0		0		0		0		0
+}
+
+tile +bld_parking
+{
+8 6
+0		0		0		0		0		0		0		0
+0		v		0		+a		+a		+a		+a		0
+a1234	+v		+a		+a		+a		+a		+a		0
+a1234	+v		+a		+a		+a		+a		+a		0
+a1234	+v		+a		+a		+a		+a		+a		0
+0		v		0		0		0		0		0		0
+}
+
+/* dropship tiles -------------------------------------------------*/
+
+tile +craft_drop_firebird
+{
+5 5
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
+tile +craft_drop_herakles
+{
+5 5
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
+tile +craft_drop_raptor
+{
+5 5
+0		0		0		0		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		+a		+a		+a		0
+0		0		0		0		0
+}
+
+/* ufo tiles ------------------------------------------------------*/
+
+/* dummy tiles ----------------------------------------------------*/
+
+tile +dummy_ne
+{
+4 4
+0		ach		ach		0
+1		+a2		+a		acv
+1		+2		+a2		acv
+0		3		3		0
+}
+
+tile +dummy_nw
+{
+4 4
+0		ach		ach		0
+acv		+a		+a1		2
+acv		+a1		+1		2
+0		4		4		0
+}
+
+tile +dummy_se
+{
+4 4
+0		2		2		0
+4		+3		+a3		acv
+4		+a3		+a3		acv
+0		ach		ach		0
+}
+
+tile +dummy_sw
+{
+4 4
+0		1		1		0
+acv		+a4		+4		3
+acv		+a4		+a4		3
+0		ach		ach		0
+}
+
+tile +dummy_centre
+{
+3 3
+0		12		0
+14		+x		23
+0		34		0
+}
+
+tile +dummy_e
+{
+4 3
+0		2		2		0
+x		+23		+a23	acv
+0		3		3		0
+}
+
+tile +dummy_n
+{
+3 4
+0		ach		0
+1		+a12	2
+1		+12		2
+0		x		0
+}
+
+tile +dummy_s
+{
+3 4
+0		x		0
+4		+34		3
+4		+a34	3
+0		ach		0
+}
+
+tile +dummy_w
+{
+4 3
+0		1		1		0
+acv		+a14	+14		x
+0		4		4		0
+}
+
+/* tilesets -------------------------------------------------------*/
+
+tileset buildings
+	{
+//		+bld_a
+		+bld_abandoned
+		+bld_parking
+	}
+
+tileset tunnels
+	{
+		+street_h_9_a
+		+street_v_9_a
+	}
+
+tileset subwaycam
+	{
+		+subwaycam_v
+		+subwaycam_h
+	}
+
+
+/* map assemblies -------------------------------------------------*/
+
+assembly small_noufo
+{
+title		"_The outskirt of a big city."
+size "7 7"
+tileset buildings	"1 1"
+tileset subwaycam	"0 1"
+tileset tunnels		"0 1"
++common				"0 10"
++common_a			"0 1"
++common_b			"0 1"
++junction_e			"0 1"
++junction_n			"0 1"
++junction_s			"0 1"
++junction_w			"0 1"
++street_h_1			"0 5"
++street_v_1			"0 5"
++dummy_centre		"0 1"
++dummy_ne			"0 1"
++dummy_nw			"0 1"
++dummy_se			"0 1"
++dummy_sw			"0 1"
++dummy_e			"0 1"
++dummy_n			"0 1"
++dummy_s			"0 1"
++dummy_w			"0 1"
+*rm_drop +craft_drop_raptor "1 1"
+}

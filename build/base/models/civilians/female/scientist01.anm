@@ -1,0 +1,20 @@
+// civilian animations
+// name				start	end		fps
+
+death1				0		29		18
+dead1				29		29		18
+death2				30		47		18
+dead2				47		47		18
+death3				48		68		18
+dead3				68		68		18
+
+stand0				69		70		1
+walk0				72		88		22
+run0				91		100		18
+panic0				102		103		1
+
+stand1				69		70		1
+stand2				69		70		1
+
+stand_menu				69		70		1
+stand_still			78		78		4

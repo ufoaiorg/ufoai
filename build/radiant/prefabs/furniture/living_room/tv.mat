@@ -1,0 +1,11 @@
+{
+	material tex_tech/tv
+	hardness 2.0
+	specular 2.0
+	{
+		texture tex_tech/tv0
+		blend GL_SRC_ALPHA GL_ONE
+		anim 2 10.0
+		//lightmap
+	}
+}

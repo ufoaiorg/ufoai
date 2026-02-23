@@ -1,0 +1,145 @@
+msgid combat_armour_txt {
+text "_Technical Specifications: Combat Armour
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created not only to find the right weapons to combat the alien threat, but also to find armour and other items of battlefield utility to help our soldiers complete their missions and return to base alive. These items are designed to increase a soldier's combat effectiveness or general survivability.
+
+The use of armour on the battlefield never quite died out completely, though it was rendered ineffective in most forms between the early 18th century and the late 20th. It began to find its way back to common use in World War 1 in the form of steel helmets. This practice continued through WW2, and was later superceded by the invention of kevlar. Today, however, kevlar is thoroughly obsolete in nearly all its forms; it's now used only by civilians and police forces with budget problems. Even more advanced types of 20th-century body armour have been rendered useless by modern weapons. New materials were needed, materials to make armour stronger and its wearers tougher than ever before.
+
+Surprisingly, several ancient files we've unearthed seem to confirm that PHALANX was responsible for some amazing technological breakthroughs in the past, technologies that were later adopted across the world. Every attempt at producing artificial spider silk had failed, but researchers at the PHALANX Pacific Operations Command base finally managed it in 2017. Their technique is still in use today, centred around a device called the 'organic loom'; a large feeding armature supporting hundreds of individual silk glands and spinnerets, designed solely for the mass-production of spider silk.
+
+The first widespread use of military combat armour made from spider silk came as a joint effort by NATO in 2023, after ballistic tests proved that Chinese rounds tore right through their aging standard-issue kevlar vests. The armour itself is a layercake of spider silk and treated ultra high molecular weight polyethylene, giving it astonishing strength and flexibility. The resulting fabric is about 18 times stronger than steel and provides a performance increase over kevlar that is estimated between 300 and 400%. Suits made primarily from polyethylene became obsolete after artificial spider silk was released into the wider market, and the new composite armour soon replaced it in military use throughout the world. The armour has been upgraded to move with the times, being so effective that it is still in common use today.
+
+The Combat Armour's only disadvantage is its relatively high weight compared to older suits, but this is mainly due to the number of layers required to properly protect against modern weapons. The weight is evenly distributed, making it quite comfortable to wear and much less bulky than experimental nanocomposite armours. This armour will save lives while preserving the soldier's all-important mobility.
+
+
+Recommended Doctrine
+
+Where possible, PHALANX troops should always wear armour whenever they are sent into a combat situation. The Combat Armour should be considered the basic protection no soldier can afford to go without. For some soldiers, the Combat Armour will remain a viable choice compared to heavier, more advanced armours due to the freedom of movement it provides. Snipers and anyone else not expected to be at the front line will be able to make good use of the extra mobility.
+
+
+Addenda
+
+None."
+}
+
+msgid nano_armour_txt {
+text "_Commander, I would like to report the success of our nanocomposite production research!
+
+I won't bore you with the intricacies of CNT production; suffice it to say that, by close study of the telltale traces left by alien production lines, we've been able to identify some of their processes. Apparently they use some kind of plasma furnace in order to spin, shape and press the nanotubes into a latticework pattern. We've been able to create a prototype furnace of our own, and have made various modifications to our nanotube production methods based on the alien examples. The result is a significant increase in power efficiency and production volume.
+
+From here on I'll restrict my summary to the capabilities and tactical applications of the new armour, which I trust you will find both fascinating and encouraging.
+
+We've managed to duplicate almost all the functionality of the alien armour, from the nanocomposite plates to the servo-assisted movement. It is incredibly light for its bulk, though still considerably heavier than our Combat Armour. It is almost as protective as the alien model, and bestows similar quickness of movement and comfortable aiming.
+
+However, there are some limitations that we just can't get around. The fact is that the aliens have a good deal more experience with these materials and can work them a lot more elegantly than we can. Our armour is bulkier and heavier, more stiffly-constructed, and its electronics do not perform as well. Our version of the polymer isn't quite as good as theirs, it tends to crack more easily. Our servomotors in particular are large and unwieldy compared to the compact alien designs. There's no way to reduce their size any further than we already have.
+
+The new armour's tactical applications are extensive. It's light enough to be worn by forward elements of our tac teams, yet protective enough to resist heavy weapons fire. It will serve exceptionally well for troops that need both speed and armour to perform their best.
+
+Cdr. Navarre"
+}
+
+msgid nano_armour_pre_txt {
+text "_Our examination of the alien body armour has led us to many interesting realisations. Obviously, the key to creating more effective mobile armour based on the alien suits lies in the direction of nanocomposites. This will require large amounts of carbon nanotubes.
+
+In the past, carbon nanotubes have been difficult and expensive to produce, and trying to work them into a proper shape was even worse. Because of this nanocomposite armour has never been used except in high-cost vehicles such as aircraft and tanks, and then only in plating that requires minimal shaping or other work. The alien armour, however, uses carbon nanotube composites in abundance. It's our manufacturing processes that are holding us back.
+
+With the alien armour in hand and enough resources at our disposal, I believe that we can devise new production methods and shaping processes that will allow us to mass-produce shaped nanocomposite plates, finally bringing this technology into our reach.
+
+This project will require a fair amount of lab time and funding. We'll start work as soon as we receive your authorisation, Commander.
+
+Cdr. Navarre"
+}
+
+msgid power_armour_txt {
+text "_Commander, we've successfully prototyped our new powered armour. The prototype is waiting in R&D if you'd like to have a go in it yourself.
+
+Our production design is geared towards maximum protection. It is, in a nutshell, an airtight suit of armour with servo-assisted joints and an on-board control system. The outer skin is a flexible three-layer composite, with outer layers consisting of nanotube-fullerene fabric, and an inner layer of special polymer gel, mixed with Wolfram-Molybdene powder. When the outer layer of the composite is burned, the gel evaporates instantly, dissipating the heat, and the metal powder will create a cloud around the damaged area, thus creating a local bloom effect that will consume much of the energy.
+
+The inside consists of a thick layer of memory gel covered by an electrically sensitive lining. The gel allows the suit to be fitted to a range of heights and body shapes, so hopefully we shouldn't have to custom-build every suit to fit one specific soldier. The inner lining is an important part of the control system; it detects nerve impulses through the wearer's skin, interprets these signals, and uses them to predict the wearer's movements before they're made. This allows the suit to move simultaneously with the body rather than resisting the user's movements.
+
+A useful side effect of the memory gel is that it can absorb explosive force, providing better shelter to explosive effects than any of our previous models. Because the suit is entirely sealed, it provides much better protection against environmental hazards such as gas and is effective at dissipating heat, although a wearer can still be roasted inside the suit if he sits in flames long enough. The helmet has built-in sensors to detect flashbangs and cushion the wearer against momentary spikes of light and noise intended to disorient the enemy.
+
+I recommend we get this power armour onto the battlefield as soon as possible. Some of the soldiers may have difficulties adjusting to the bulky suit, but they'll be happy for the protection.
+
+Cdr. Navarre"
+}
+
+msgid power_armour_pre_txt {
+text "_Commander, the weaponry the aliens are fielding in battle is growing more devastating by the week. We need a soldier-support system that can level the playing field and give our men a fighting chance. Our workshops are unable to produce the dense nanotube weaves we discovered in the latest samples of alien armour. But this doesn't mean we won't find a solution.
+
+With your permission, I'd like to task our team to investigate a powered armour that would allow us to support heavier nanocomposite plates by building weight support into the suit. Powered armour has seen use in recent conflicts, but current-generation military variants have more in common with tanks than infantry and can't possibly meet our mobility and space requirements. We believe the insights we've gained from studying the servos of the latest alien armour can be used to develop a power suit that is leaner and tougher than anything we've seen.
+
+Cdr. Navarre"
+}
+
+msgid alien_body_armour_txt {
+text "_Commander, we've got a full report on the alien armour for you.
+
+It was something of a surprise to learn that the alien armour is made of a composite of plastics and carbon containing no metal whatsoever. In fact, the most important element is something with which humanity is already well-acquainted: carbon nanotubes. Carbon nanotubes (also known as CNTs or 'buckytubes') are cylindrical carbon molecules that are incredibly strong, one of the strongest materials known to humankind. They have been relatively little-used on Earth because of their extreme cost. No economical means of mass-production has been found to date, restricting their use to the most expensive programs on Earth, such as aeronautics and space exploration.
+
+The alien armour uses CNTs as its penetration layer, i.e. the layer that stops bullets and other incoming ordnance from penetrating into the body. The nanotubes are woven into long latticework patterns and recessed into a bed of hard polymer, backed by a layer of semi-liquid gel that very effectively dampens the energy of a blow and spreads the remaining force across a very large area. The final layer -- woven from flexible aramid fibre -- serves to contain the gel and doubles as a spall liner, catching any fragments that may be blown loose from the inside of the armour.
+
+Thanks to the conductive properties of carbon nanotubes, the armour performs very well against plasma. This makes sense. It is their weapon of choice and we would expect them to know how to protect against it. Because plasma weaponry appears to have limited penetration capabilities, the armour is able to disperse the heat before it can melt through the protective layers.
+
+The armour also performs pretty well against ordinary bullets and explosives, although it's not very effective against incendiary devices or flamethrowers. These weapons raise the atmospheric temperature around the wearer so that there is no place to dump the heat, effectively roasting the wearer inside his suit.
+
+Other features of the armour include servo-assisted movement in the boots, allowing the wearer to move more quickly, and a curious system built into the bracers that automatically assists the wearer's aim by selectively applying pressure to parts of the forearm. We are looking into many new uses for this technology.
+
+Adapting this armour to a human body would be impossible due to the differences in physique and the difficulty of working with the materials involved. However, I've written up a separate research proposal to investigate the possibility of designing and mass-producing our own armour using the alien suit as a template. It will be in your inbox presently.
+
+If you'll permit me, I'd like to raise a final issue with you, Commander. One of my researchers has toyed with a personal laser project over the last couple of months. While we were testing the alien armour, we allowed him to experiment with it in his downtime and we were astonished by the results. The relatively weak laser beam was hardly reduced as it passed through the armor.
+
+I know that we've long believed that effective man-portable laser weaponry is just a myth, but these suprise findings have reinvigorated my team. I'm hearing all sorts of interesting proposals. This armour will seriously dent our ability to use the aliens' plasma weaponry against them on the battlefield. If we could use lasers to pack a reasonable punch into a hand-held rifle, it could be the best response to their armor.
+
+Please give some thought to the laser weaponry ideas in your queue.
+
+Cdr. Navarre"
+}
+
+msgid alien_body_armour_pre_txt {
+text "_Commander, we've recovered a suit of alien body armour from the battlefield. This armour has been a plague to our soldiers; aliens wearing it have shrugged off shots that would have torn their unarmoured friends apart. It's not surprising that we still haven't managed to cut it open to perform an initial survey of its composition. We should investigate the armour's weaknesses as soon as we can, and perhaps ascertain a way to adapt it for our own uses.
+
+This project will require a moderate amount of lab time and funding. Work will start as soon as we have your authorisation, Commander.
+
+Cdr. Navarre"
+}
+
+msgid alien_medium_armour_txt {
+text "_Where armour is concerned, the aliens' design philosophy seems to be, \"If it works, let's use more of it.\" This new armour is similar in design to the alien body armour, but it does away with the compromises and delicate balances of light armour. Instead of just protecting the torso and head, the medium armour attempts to cover all vital areas with much more dense nanopolymer plates, including major arteries and sensitive nerve clusters. In comparison with the alien body armour, the medium suit has double the number of nanotube strands per square centimetre. As a result these plates are nearly impenetrable to standard human firearms and even the softer mesh covering the joints can stop bullets with disturbing ease.
+
+As I mentioned before, the suit strongly emphasises protection over mobility. The large trauma plates get in the wearer's way no matter what race or size he might be, and the dense nanotube polymers used are so heavy that the overall weight will slow down even an Ortnok. There are numerous mini-servos and other mechanical parts that help deal with some of the weight, but their effect is limited overall. Other devices are integrated into the armour to assist aiming and vision. These are quite interesting and we may be able to replicate them on a larger scale as weapon enhancements.
+
+The aliens seem to have designed this armour with the war against humanity in mind. Besides being virtually bulletproof, its performance against lasers, incendiary and plasma weapons is much improved over the Alien Body Armour. Aliens wearing this armour will suffer minimal damage from crossing open flame or brief shots from our flamethrower, but prolonged exposure will still overheat the suit and cook the alien inside.
+
+In better news, the armour does not fully enclose the alien, leaving some skin or breathing passages exposed to air. That means blister gas will remain effective, though it will take longer for the gas to reach its full effect.
+
+The alien suits won't fit our troops without modifications that would critically weaken them. We've taken a few stabs at replicating the dense nanopolymers, but our Workshop machinery is currently unable to weave so many nanotubes at once. I have a few ideas about how to upgrade it, though, as well as some designs for a new armour to take advantage of those upgrades. The proposal should be in your queue now, Commander.
+
+Now please excuse me, sir -- I was due in my rack twelve hours ago and I think my eyes are starting to bleed. Goodnight!
+
+Cdr. Navarre"
+}
+
+msgid alien_medium_armour_pre_txt {
+text "_Commander, we've salvaged a new suit of alien armour from the field. It's much heavier than the alien armour we've encountered previously, and it seems to stop ordinary firearms without taking so much as a scratch. Its trauma plates are made of the densest CNT (Carbon Nanotube) weave I've ever seen. We need to research this armour right away to determine which weapons will remain effective against aliens wearing it, and to try and find a method to replicate it for our own troops. As long as we can't match this technology, we are at a severe disadvantage.
+
+This project will require a significant amount of lab time and funding. Work will start as soon as we have your authorisation, Commander.
+
+Cdr. Navarre"
+}

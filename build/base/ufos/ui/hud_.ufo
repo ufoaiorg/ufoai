@@ -1,0 +1,550 @@
+--!usr/bin/lua
+
+require("ufox.lua")
+
+
+-- ==================
+-- HUD INTERFACE
+-- ==================
+
+--[[
+ - @TODO:
+ - * Most of this is built for the old UI, but there are some things that have to
+ -   stay. It's not yet clear to me what, but cmpFiremodeEntry has been changed to
+ -   new UI.
+--]]
+
+-- Firemode entry
+ufox.build_component {
+	name = "cmpFiremodeEntry",
+	class = "panel",
+	pos = {0, 0},
+	size = {206, 45},
+	backgroundcolor = {0, 0.15, 0.1, 0.7},
+	bordercolor = {0.58, 0.81, 0.758, 0.7},
+	bordersize = 2,
+	layoutalign = ufo.LAYOUTALIGN_BOTTOM,
+	on_mouseenter = function (sender)
+		sender:set_backgroundcolor(0, 0.21, 0.158, 0.7)
+	end,
+	on_mouseleave = function (sender)
+		sender:set_backgroundcolor(0, 0.15, 0.1, 0.7)
+	end,
+	on_rightclick = function (sender)
+		ufo.cmd(string.format("ui_close %s;", ufo.nodepath(sender:root())))
+	end,
+	on_click = function (sender)
+		ufo.cmd(string.format("ui_close %s;", ufo.nodepath(sender:root())))
+		ufo.cmd(string.format("hud_executeaction %s;", sender:child("actionid"):as_string()))
+	end,
+	{
+		class = "string",
+		name = "name",
+		pos = {5, 0},
+		size = {196, 25},
+		color = {0.58, 0.81, 0.758, 0.7},
+		contentalign = ufo.ALIGN_CL,
+		ghost = true
+	},
+	{
+		class = "button",
+		name = "fm_res",
+		pos = {5, 25},
+		size = {15, 15},
+		icon = "icons/firemodesml0",
+		tooltip = "_Use this firemode for reaction fire",
+		on_click = function (sender)
+			ufo.cmd(string.format("hud_selectreactionfiremode %s %i;", sender:parent():child("hand"):as_string(), sender:parent():child("index"):as_integer()))
+		end
+	},
+	{
+		class = "button",
+		name = "tu_icon",
+		pos = {110, 23},
+		size = {18, 19},
+		icon = "icons/tusml",
+		ghost = true
+	},
+	{
+		class = "string",
+		name = "tu",
+		pos = {130, 27},
+		size = {35, 15},
+		color = {0.58, 0.81, 0.758, 0.7},
+		contentalign = ufo.ALIGN_CL,
+		ghost = true,
+		font = "f_verysmall"
+	},
+	{
+		class = "button",
+		name = "ammo_icon",
+		pos = {165, 25},
+		size = {12, 15},
+		icon = "icons/ammosml",
+		ghost = true
+	},
+	{
+		class = "string",
+		name = "shot",
+		pos = {180, 27},
+		size = {25, 15},
+		color = {0.58, 0.81, 0.758, 0.7},
+		contentalign = ufo.ALIGN_CL,
+		ghost = true,
+		font = "f_verysmall",
+	},
+	-- store the actionid
+	{
+		class = "data",
+		name = "actionid"
+	},
+	-- store the hand
+	{
+		class = "data",
+		name = "hand"
+	},
+	-- store the index of the firemode
+	{
+		class = "data",
+		name = "index"
+	},
+
+	--[[
+	 - @param<1> id
+	 - @param<2> hand (char) (l or r for left or right)
+	 - @param<3> firedef index (int)
+	 - @param<4> firedef reaction fire (int) (1= true, 0= false)
+	 - @param<5> status (1 available, 0 need more TU)
+	 - @param<6> name (string)
+	 - @param<7> TUs (string)
+	 - @param<8> shots (string)
+	 - @param<9> tooltip
+	--]]
+	init = function (sender, id, hand, index, reaction, status, name, tus, shots, tooltip)
+		sender:child("actionid"):set_value(id)
+		sender:child("hand"):set_value(hand)
+		sender:child("index"):set_value(tonumber(index))
+
+		sender:child("name"):set_text(name)
+		sender:child("tu"):set_text(tus)
+		sender:child("shot"):set_text(shots)
+		sender:child("tu"):set_tooltip(tooltip)
+
+		if tonumber(status) == 1 then
+			sender:child("name"):set_color(0.58, 0.81, 0.758, 0.7)
+		else
+			sender:child("name"):set_color(0.58, 0.81, 0.758, 0.3)
+		end
+
+		if tonumber(reaction) == 0 then
+			sender:child("fm_res"):set_invisible(true)
+		end
+	end,
+
+	--[[
+	 - @param<1> activate (1=activate, 0=deactivate)
+	--]]
+	init_reaction = function (sender, activate)
+		if tonumber(activate) == 1 then
+			sender:child("fm_res"):set_icon("icons/firemodesml")
+		else
+			sender:child("fm_res"):set_icon("icons/firemodesml0")
+		end
+	end
+}
+
+local dummy = function () end
+
+ufox.build_window {
+	class = "window",
+	name = "levelbuttons",
+	--[[
+	 - @brief Updates the level status
+	 - @param <1> Level id (0-7)
+	 - @param <2> State
+	 -   0 = disabled (map doesn't have this level),
+	 -   1 = available (user can switch to this level)
+	 -   2 = active (the current selected level)
+	--]]
+	{ class = "confunc", name = "updateLevelStatus", on_click = dummy }
+}
+
+ufox.build_window {
+	class = "window",
+	name = "reactionfire_listener",
+	--[[
+	 - @brief The reaction fire mode was changed
+	 - @note no parameters
+	--]]
+	{ class = "confunc", name = "reactionfire_updated", on_click = dummy }
+}
+
+--[[
+ - @brief Define interface shared by all huds.
+ - @note called "ahud" to be loaded before another huds
+ - @todo rename the interface confuncs
+--]]
+ufox.build_window {
+	class = "window",
+	name = "hud",
+	super = "levelbuttons",
+	--[[
+	 - This is called when the hud is initially pushed onto the stack - only called once per battlescape match
+	--]]
+	{ class = "confunc", name = "hudinit", on_click = dummy },
+	--[[
+	 - This is called when you select one of your actors
+	 - @param <1> the actor index
+	--]]
+	{ class = "confunc", name = "hudselect", on_click = dummy },
+	--[[
+	 - This is called for each actor in your team to enable the actor selection buttons
+	 - @param <1> the actor index
+	--]]
+	{ class = "confunc", name = "hudenable", on_click = dummy },
+	--[[
+	 - This is called for each actor slot that is not used, or when an actor died
+	 - @param <1> the actor index
+	--]]
+	{
+		class = "confunc",
+		name = "huddisable",
+		on_click = function (sender, number) ufo.cmd('updateactorvalues ' .. number .. ' "" "0" "0" "1" "0" "1" "0" "1" "0" "0" "";') end
+	},
+
+	{ class = "confunc", name = "deselect_primaryleft", on_click = dummy },
+	{ class = "confunc", name = "deselect_primaryright", on_click = dummy },
+	{ class = "confunc", name = "deselect_reloadleft", on_click = dummy },
+	{ class = "confunc", name = "deselect_reloadright", on_click = dummy },
+	--[[
+	 - This is called on a repeating loop when the selected soldier's stance
+	 - is crouched.
+	--]]
+	{ class = "confunc", name = "deselect_stand", on_click = dummy },
+	--[[
+	 - This is called on a repeating loop when the selected soldier's stance
+	 - is standing.
+	--]]
+	{ class = "confunc", name = "deselect_crouch", on_click = dummy },
+	{ class = "confunc", name = "deselect_reaction", on_click = dummy },
+	{ class = "confunc", name = "deselect_headgear", on_click = dummy },
+
+	--[[
+	 - This is called when the selected actor enters/leaves an area that allows him to interact
+	 - with the world (e.g. opening a door
+	--]]
+	{ class = "confunc", name = "enable_clientaction", on_click = dummy },
+	{ class = "confunc", name = "disable_clientaction", on_click = dummy },
+
+	--[[
+	 - This is called when a rescuezone is available in the given map
+	--]]
+	{ class = "confunc", name = "enable_rescuezone", on_click = dummy },
+	--[[
+	 - This is called when no rescuezone is available in the given map
+	--]]
+	{ class = "confunc", name = "disable_rescuezone", on_click = dummy },
+
+	{ class = "confunc", name = "disable_primaryleft", on_click = dummy },
+	{ class = "confunc", name = "disable_primaryright", on_click = dummy },
+	{ class = "confunc", name = "disable_reloadleft", on_click = dummy },
+	{ class = "confunc", name = "disable_reloadright", on_click = dummy },
+	--[[
+	 - These confuncs are called when the selected soldier no longer
+	 - has enough TUs to change stance. disable_stand is called if this
+	 - this condition is reached while the soldier was standing.
+	 - disable_crouch is called if this condition is reached while the
+	 - soldier was crouching.
+	--]]
+	{ class = "confunc", name = "disable_stand", on_click = dummy },
+	{ class = "confunc", name = "disable_crouch", on_click = dummy },
+	{ class = "confunc", name = "disable_reaction", on_click = dummy },
+	{ class = "confunc", name = "disable_headgear", on_click = dummy },
+
+	-- Prevent time for crouch
+	{ class = "confunc", name = "crouch_checkbox_disable", on_click = dummy },
+	{ class = "confunc", name = "crouch_checkbox_clear", on_click = dummy },
+	{ class = "confunc", name = "crouch_checkbox_check", on_click = dummy },
+
+	{ class = "confunc", name = "reserve_shot_clear", on_click = dummy },
+
+	{ class = "confunc", name = "reserve_shot_check", on_click = dummy },
+
+	{ class = "confunc", name = "reserve_shot_disable", on_click = dummy },
+
+	{ class = "confunc", name = "startreaction", on_click = dummy },
+	{ class = "confunc", name = "startreaction_impos", on_click = dummy },
+
+	{ class = "confunc", name = "startround", on_click = dummy },
+	{ class = "confunc", name = "endround", on_click = dummy },
+
+	-- confuncs to show/hide inventory, physdat and radar windows
+	{
+		class = "confunc",
+		name = "show_hide_inventory",
+		action = function (sender)
+			ufo.cmd("show_inventory;")
+		end,
+		on_activate = function (sender) sender:action() end,
+		on_click = function (sender) sender:action() end
+	},
+	{
+		class = "confunc",
+		name = "show_hide_physdat",
+		action = function (sender)
+			ufo.cmd("show_physdat;")
+		end,
+		on_activate = function (sender) sender:action() end,
+		on_click = function (sender) sender:action() end
+	},
+
+	{ class = "confunc", name = "show_inventory", on_click = dummy },
+	{ class = "confunc", name = "show_physdat", on_click = dummy },
+
+	--[[
+	 * @param id the index of the soldier (starting at 0)
+	 * @param model the model path of the head model
+	 * @param skin the skin for the head model
+	 * @param hp the hp of the actor
+	 * @param hpmax the max hp of the actor
+	 * @param tu the tus of the actor
+	 * @param tumax the max tus of the actor
+	 * @param morale the morale of the actor
+	 * @param mormax the max morale of the actor
+	 * @param stun the stun value of the actor
+	 * @param reserved the reserved tus of the actor
+	 * @param tooltip the tooltip
+	--]]
+	{
+		class = "confunc",
+		name = "updateactorvalues",
+		on_click = function (sender, id, model, skin, hp, hpmax, tu, tumax, morale, mormax, stun, reserved, tooltip)
+			ufo.getvar("mn_head" .. id):set_value(model)
+			ufo.getvar("mn_head_skin" .. id):set_value(skin)
+			ufo.getvar("mn_hp" .. id):set_value(hp)
+			ufo.getvar("mn_hpmax" .. id):set_value(hpmax)
+			ufo.getvar("mn_tu" .. id):set_value(tu)
+			ufo.getvar("mn_tumax" .. id):set_value(tumax)
+			ufo.getvar("mn_morale" .. id):set_value(morale)
+			ufo.getvar("mn_moralemax" .. id):set_value(mormax)
+			ufo.getvar("mn_stun" .. id):set_value(stun)
+			ufo.getvar("mn_reserved" .. id):set_value(reserved)
+			ufo.getvar(string.format("mn_soldier%i_tt", id)):set_value(tooltip)
+		end
+	},
+
+	--[[
+	 - @param <1> The id of the soldier (starting at 0)
+	 - @param <2> The status type
+	 - @param <3> The value of the status
+	--]]
+	{ class = "confunc", name = "updateactorstatus", on_click = dummy },
+
+	{
+		class = "confunc",
+		name = "clean_firemode_entries",
+		on_click = function (sender)
+			sender:root():child("firemodes"):child("dock"):remove_children()
+		end
+	},
+
+	--[[
+	 - @param<1> hand [l|r]
+	 - @param<2> firedef id (int)
+	 - @param<3> name (string)
+	 - @param<4> TUs (string)
+	 - @param<5> shots (int)
+	 - @param<6> reaction [0|1]
+	 - @param<7> status [0|1]
+	 - @param<6> firedef selected [0|1]
+	--]]
+	{
+		class = "confunc",
+		name = "add_firemode_entry",
+		on_click = function (sender, hand, firedef, name, tu, shots, reaction, status, selected)
+			ufox.build({
+				name = hand .. firedef,
+				class = "cmpFiremodeEntry",
+				{ name = "hand", value = hand },
+				{ name = "actionid", value = firedef },
+				{ name = "name", text = name },
+				{ name = "tu", text = tu },
+				{ name = "shot", text = shots }
+			}, sender:root():child("firemodes"):child("dock"))
+		end
+	},
+
+	{
+		class = "panel",
+		name = "firemodes",
+		layout = ufo.LAYOUT_PACK,
+		size = {1024, 768},
+
+		{
+			class = "panel",
+			name = "dock",
+			pos = {0, 0},
+			size = {300, 768},
+			layout = ufo.LAYOUT_PACK,
+			padding = 0,
+			layoutmargin = 2,
+
+			{
+				class = "panel",
+				name = "bottomMargin",
+				layoutalign = ufo.LAYOUTALIGN_TOP,
+				size = {280, 30}
+			}
+		}
+	}
+}
+
+-- ==================
+--  FIREMODES (seperate lists for each weaponhand)
+-- ==================
+--[[
+	fm ... firemode
+	left/right/l/r  ... The hand/side of the firemode list
+	name ... The name of the firemode.
+	tu ... timeunits
+	shots ... The number of shots one firemode will use.
+	tt ... tooltip
+	cb ... checkboxes
+	a ... active
+	ina ... inactive
+	vis ... visible
+	inv ... invisible
+--]]
+local firemode_left = ufox.build_window {
+	class = "window",
+	name = "firemode_left",
+	super = "reactionfire_listener",
+	pos = {622, 0},
+	size = {255, 700},
+	dropdown = true,
+	ghost = true,
+
+	{
+		class = "zone",
+		name = "anchor",
+		pos = {23, 700},
+		size = {192, 0},
+	},
+
+	{
+		class = "panel",
+		name = "elements",
+		pos = {0, 0},
+		size = {245, 682},
+		layout = ufo.LAYOUT_PACK,
+		layoutmargin = 18
+	},
+
+	--[[
+	 - @brief The reaction fire mode was changed
+	 - @note no parameters
+	--]]
+	{
+		class = "confunc",
+		name = "reactionfire_updated",
+		on_click = function (sender)
+			ufo.cmd("hud_listfiremodes firemode_listener l;")
+		end
+	},
+	on_windowopened = function (sender)
+		ufo.cmd("hud_listfiremodes firemode_listener l;")
+		ufo.cmd("ui_addcvarlistener cl_selected reactionfire_updated;")
+	end,
+	on_windowclosed = function (sender) ufo.cmd("ui_removecvarlistener cl_selected reactionfire_updated;") end
+}
+
+local firemode_right = ufox.build_window {
+	class = "window",
+	name = "firemode_right",
+	super = "reactionfire_listener",
+	pos = {164, 0},
+	size = {255, 700},
+	dropdown = true,
+	ghost = true,
+
+	{
+		class = "zone",
+		name = "anchor",
+		pos = {23, 700},
+		size = {192, 0}
+	},
+
+	{
+		class = "panel",
+		name = "elements",
+		pos = {0, 0},
+		size = {245, 682},
+		layout = ufo.LAYOUT_PACK,
+		layoutmargin = 18
+	},
+
+	--[[
+	 - @brief The reaction fire mode was changed
+	 - @note no parameters
+	--]]
+	{
+		class = "confunc",
+		name = "reactionfire_updated",
+		on_click = function (sender)
+			ufo.cmd( "hud_listfiremodes firemode_listener r;")
+		end
+	},
+
+	on_windowopened = function (sender)
+		ufo.cmd("hud_listfiremodes firemode_listener r;")
+		ufo.cmd("ui_addcvarlistener cl_selected reactionfire_updated;")
+	end,
+	on_windowclosed = function (sender) ufo.cmd("ui_removecvarlistener cl_selected reactionfire_updated;") end
+}
+
+local i
+ufox.build_window {
+	class = "window",
+	name = "hud_general",
+	hide_firemodes = function (sender)
+		firemode_left:child("elements"):remove_children()
+		firemode_right:child("elements"):remove_children()
+	end,
+
+	{
+		class = "confunc",
+		name = "firemode_listener",
+		on_click = function (sender, command, id, side, index, reaction, status, name, tu, ammo, tooltip)
+			if command == "begin" then
+				sender:parent():hide_firemodes()
+			elseif command == "firemode" then
+				if side == "l" then
+					local node = firemode_left:child("elements")
+					ufox.build({
+						name = id,
+						class = "cmpFiremodeEntry",
+					}, node)
+					node:child(id):init(id, side, index, reaction, status, name, tu, ammo, tooltip)
+				else
+					local node = firemode_right:child("elements")
+					ufox.build({
+						name = id,
+						class = "cmpFiremodeEntry",
+					}, node)
+					node:child(id):init(id, side, index, reaction, status, name, tu, ammo, tooltip)
+				end
+			elseif command == "reaction" then
+				-- node: "firemode" command for action <2> already called
+				if side == "l" then
+					firemode_left:child("elements"):child(id):init_reaction(index)
+				else
+					firemode_right:child("elements"):child(id):init_reaction(index)
+				end
+			elseif command == "reload" then
+			elseif command == "end" then
+			else
+				ufo.print('firemode_listener: unknown "' .. command .. '" command;')
+			end
+		end
+	}
+}

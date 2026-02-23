@@ -1,0 +1,107 @@
+// Weather particles like snow and rain.
+// These particles are deactivateable via the cvar cl_particleweather
+
+// ====================================
+// snow
+// ====================================
+
+particle weather_snow
+{
+	init
+	{
+		v      "0 0 0"
+		tps    7.0
+		weather true
+	}
+	think
+	{
+		spawn weather_snow_flakes
+	}
+}
+
+particle weather_snow_flakes
+{
+	init
+	{
+		stayalive true
+		autohide true
+		physics true
+		image  "sfx/snow"
+		blend  add
+		style  facing
+		thinkfade  out
+		size   "3 3"
+		a      "40 40 -100"
+
+		push   *v
+		rand   vector "20 20 -20"
+		add    vector "3 3 3"
+		mul    #
+		crand  vector "15 15 -5"
+		add    #
+		pop    *v
+
+		crand  vector "160 160 0"
+		add    *s
+		pop    *s
+
+		rand   float 0.5
+		add    float 0.1
+		pop    *tps
+	}
+	think { kill }
+}
+
+// ====================================
+// rain
+// ====================================
+
+particle weather_rain
+{
+	init
+	{
+		v      "0 0 0"
+		tps    25.0
+		weather true
+	}
+	think
+	{
+		spawn weather_rain_drop
+	}
+}
+
+particle weather_rain_drop
+{
+	init
+	{
+		autohide true
+		physics true
+		image  "sfx/rain"
+		blend  add
+		style  facing
+		thinkfade  out
+		size   "3 3"
+		a      "4 4 -600"
+
+		push   *v
+		rand   vector "30 30 -40"
+		add    vector "3 3 3"
+		mul    #
+		crand  vector "15 15 -25"
+		add    #
+		pop    *v
+
+		crand  vector "80 80 0"
+		add    *s
+		pop    *s
+
+		rand   float 0.1
+		add    float 0.2
+		pop    *tps
+	}
+	physics
+	{
+		// TODO splash rain drops
+	}
+	think { kill }
+}

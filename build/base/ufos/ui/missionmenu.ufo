@@ -1,0 +1,155 @@
+--!usr/bin/lua
+
+require("ufox.lua")
+require("ufox.confirmpopup.lua")
+
+do
+	local missionoptions = ufox.build_window({
+		name = "missionoptions",
+		class = "window",
+		fill = true,
+		starlayout = true,
+		background = "ui/main_bg",
+		backgroundcolor = {0, 0, 0, 0.5},
+
+		on_windowopened = function (sender)
+			-- @TODO it is very bad practice to use 1 button to two completely different feature
+			local gamemode = ufo.getvar("gamemode"):as_string()
+			if (gamemode == "multiplayer") then
+				sender:child("buttons"):child("restartorirc"):set_text("_LOBBY")
+				sender:child("buttons"):child("restartorirc").on_click = function (sender)
+					ufo.push_window("irc", nil)
+				end
+				sender:child("buttons"):child("abort"):set_text("_ABORT GAME")
+				sender:child("buttons"):child("abort").on_click = function (sender)
+					local popup = ufox.build_confirmpopup("popup_abortmpgame", {
+						{
+							name = "title",
+							text = "_Abort game",
+						},
+						{
+							name = "description",
+							text = "_Do you really want to abort this game?",
+						},
+						{
+							name = "confirm",
+							text = "_Abort",
+
+							on_click = function (sender)
+								ufo.cmd("game_exit;")
+								ufo.pop_window(false)
+							end,
+						},
+					})
+					ufo.push_window(popup:name(), nil, nil)
+				end
+			else
+				sender:child("buttons"):child("restartorirc"):set_text("_RESTART MISSION")
+				sender:child("buttons"):child("restartorirc").on_click = function(sender)
+					local popup = ufox.build_confirmpopup("popup_restartspmission", {
+						{
+							name = "title",
+							text = "_Restart mission",
+						},
+						{
+							name = "description",
+							text = "_Do you really want to restart this mission? You will lose all progress.",
+						},
+						{
+							name = "confirm",
+							text = "_Restart",
+
+							on_click = function (sender)
+								ufo.cmd("game_go;")
+								ufo.pop_window(false)
+							end,
+						},
+					})
+					ufo.push_window(popup:name(), nil, nil)
+				end
+				sender:child("buttons"):child("abort"):set_text("_ABORT MISSION")
+				sender:child("buttons"):child("abort").on_click = function(sender)
+					local popup = ufox.build_confirmpopup("popup_abortspmission", {
+						{
+							name = "title",
+							text = "_Abort mission",
+						},
+						{
+							name = "description",
+							text = "_Do you really want to abort this mission?",
+						},
+						{
+							name = "confirm",
+							text = "_Abort",
+
+							on_click = function (sender)
+								ufo.cmd("game_abort;")
+								ufo.pop_window(false)
+							end,
+						},
+					})
+					ufo.push_window(popup:name(), nil, nil)
+				end
+			end
+		end,
+
+		{
+			name = "version",
+			class = "string",
+			text = "*cvar:version",
+			pos = {10, 744},
+		},
+
+		{
+			name = "buttons",
+			class = "panel",
+			size = {400, 700},
+			layoutalign = ufo.LAYOUTALIGN_TOP,
+			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+			layoutmargin = 15,
+			contentalign = ufo.LAYOUTALIGN_MIDDLE,
+
+			{
+				name = "spacer",
+				class = "panel",
+				size = {0, 235},
+			},
+
+			{
+				name = "continue",
+				class = "MainMenuBtn",
+				text = "_CONTINUE",
+				tooltip = "_Leave this menu and continue playing.",
+
+				on_click = function (sender)
+					ufo.pop_window(false)
+				end,
+			},
+
+			{
+				name = "restartorirc",
+				class = "MainMenu2Btn",
+			},
+
+			{
+				name = "options",
+				class = "MainMenu2Btn",
+				text = "_OPTIONS",
+
+				on_click = function (sender)
+					ufo.push_window("options", nil, nil)
+				end
+			},
+
+			{
+				name = "abort",
+				class = "MainMenuExitBtn",
+			},
+		},
+
+		{
+			name =  "overlay",
+			class = "fuzzyScreen",
+		},
+	})
+end

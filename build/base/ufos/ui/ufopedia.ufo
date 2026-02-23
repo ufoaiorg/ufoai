@@ -1,0 +1,651 @@
+// ==============
+// UFOPEDIA MENU
+// ==============
+
+window ufopedia extends objectinfo
+{
+	{
+		pos			"0 0"
+		size		"1024 768"
+		dragbutton	true
+		closebutton	true
+		background	"ui/main_bg"
+		color		"1.0 0.75 0 1"
+		string		*cvar:mn_uptitle
+		modal		true				// we can't click out
+	}
+
+	panel dimbackground
+	{
+		{
+		pos			"0 0"
+		size		"1024 768"
+		bgcolor	 "0 0 0 0.3"
+		}
+	// ==================
+		// summary
+		// ==================
+
+		panel summary
+		{
+			{
+				pos		"22 88"
+				size	"314 593"
+				layout	LAYOUT_BORDER
+				padding	10
+			}
+
+			optiontree list
+			{
+				cvar		*cvar:up_summary_selection
+				dataid		OPTION_UFOPEDIA
+				align		LAYOUTALIGN_MIDDLE
+				font		"f_small"
+				color		"0.56 0.81 0.76 1"
+				selectcolor		"1 1 1 1"
+				onChange
+				{
+					cmd "ufopedia_click <cvar:up_summary_selection>;"
+					*node:parent.parent.content.ufopedia_scroll@current = 0
+					*node:parent.parent.content.ufopedia@viewpos = 0
+					cmd "update_ufopedia_layout;"
+				}
+				onViewChange
+				{
+					*node:parent.list_scroll@current = <viewpos>
+					*node:parent.list_scroll@fullsize = <fullsize>
+					*node:parent.list_scroll@viewsize = <viewsize>
+				}
+			}
+
+			vscrollbar list_scroll
+			{
+				image		"ui/scrollbar_v"
+				align		LAYOUTALIGN_RIGHT
+				current		0
+				viewsize	16
+				fullsize	50
+				onChange	{ *node:parent.list@viewpos = <current> }
+			}
+		}
+
+		panel content
+		{
+			{
+				pos		"343 55"
+				size	"668 626"
+			}
+
+			panel navigation_panel
+			{
+				pos		"0 34"
+				size	"668 592"
+			}
+
+			tab navigation
+			{
+				{
+					cvar	*cvar:ufopedia_content
+					pos		"0 2"
+					size	"668 36"
+					onChange { cmd "update_ufopedia_layout;" }
+				}
+				option preresearch
+				{
+					label	"_Pre-Research Report"
+					value	"preresearch"
+	//				icon	"icons/tab_preresearch"
+				}
+				option description
+				{
+					label	"_Description"
+					value	"description"
+	//				icon	"icons/tab_description"
+				}
+				option stats
+				{
+					label	"_Statistics"
+					value	"stats"
+	//				icon	"icons/tab_statistics"
+				}
+				option bigpicture
+				{
+					label	"_The Big Picture"
+					value	"bigpicture"
+	//				icon	"icons/tab_bigpicture"
+				}
+			}
+
+			// ==================
+			// deco
+			// ==================
+
+			image image_top
+			{
+				src		*cvar:mn_upimage_top
+				pos			"420 42"
+				size		"185 422"
+				preventratio true
+			}
+			image image_top2
+			{
+				src		*cvar:mn_upimage_top2
+				pos			"420 42"
+				size		"185 422"
+				preventratio	true
+			}
+			panel decoration_panel
+			{
+				pos		"420 42"
+				size	"185 187"
+			}
+			model mdl_top
+			{
+				src			*cvar:mn_upmodel_top
+				angles		"0 0 90"
+				pos			"422 44"
+				size		"182 182"
+				autoscale	true
+				omega		"0 10 0"
+				rotatewithmouse	true
+			}
+			panel decoration_panel2
+			{
+				pos		"420 230"
+				size	"185 135"
+			}
+			// ammo models
+			model mdl_bottom
+			{
+				src			*cvar:mn_upmodel_bottom
+				angles		"0 0 90"
+				pos			"422 290"
+				size		"60 60"
+				autoscale	true
+				omega		"0 -10 0"
+				rotatewithmouse	true
+			}
+			model mdl_bottom2
+			{
+				src			*cvar:mn_upmodel_bottom
+				angles		"0 0 90"
+				pos			"483 240"
+				size		"60 60"
+				autoscale	true
+				omega		"0 0 10"
+				rotatewithmouse	true
+			}
+			model mdl_bottom3
+			{
+				src			*cvar:mn_upmodel_bottom
+				angles		"0 0 90"
+				pos			"544 290"
+				size		"60 60"
+				autoscale	true
+				omega		"0 10 0"
+				rotatewithmouse	true
+			}
+			panel main_panel_small
+			{
+				pos		"8 42"
+				size	"410 575"
+			}
+			panel main_panel_large
+			{
+				pos		"8 42"
+				size	"597 575"
+			}
+			// The Big Picture picture and model
+			image image_bigpicture
+			{
+				src		*cvar:mn_upimage_top
+				pos			"10 43"
+				size		"594 573"
+				preventratio	true
+				contentalign 	ALIGN_CC
+			}
+			model mdl_bigpicture
+			{
+				src			*cvar:mn_upmodel_top
+				angles		"0 25 90"
+				pos			"10 43"
+				size		"594 573"
+				autoscale	true
+				omega		"0 -9 0"
+				rotatewithmouse	true
+			}
+	/*	// for future purposes
+			panel decoration_panel3
+			{
+				pos		"420 366"
+				size	"185 99"
+				background	"ui/panel_green_slim"
+			}
+	*/
+			// ==================
+			// text and info
+			// ==================
+
+			text2 ufopedia
+			{
+				dataid		TEXT_UFOPEDIA
+				pos			"15 47"
+				size		"410 568"
+				font		"f_small"
+				lineheight	20
+				tabwidth	100
+				onViewChange
+				{
+					*node:parent.ufopedia_scroll@fullsize = <fullsize>
+					*node:parent.ufopedia_scroll@current = <viewpos>
+					*node:parent.ufopedia_scroll@viewsize = <viewsize>
+				}
+			}
+
+			vscrollbar ufopedia_scroll
+			{
+				image		"ui/scrollbar_v"
+				pos			"639 42"
+				height		"575"
+				current		0
+				viewsize	26
+				fullsize	50
+				onChange	{ *node:parent.ufopedia@viewpos = <current> }
+			}
+
+			text description
+			{
+				dataid		TEXT_ITEMDESCRIPTION
+				pos			"15 47"
+				size		"405 570"
+				lineheight	20
+				tabwidth	260
+				rows		28
+				onViewChange	{
+					*node:parent.description_scroll@fullsize = <fullsize>
+					*node:parent.description_scroll@current = <viewpos>
+					*node:parent.description_scroll@viewsize = <viewsize>
+				}
+			}
+
+			vscrollbar description_scroll
+			{
+				image		"ui/scrollbar_v"
+				pos			"406 42"
+				height		"575"
+				current		0
+				viewsize	20
+				fullsize	20
+				hidewhenunused true
+				onChange	{ *node:parent.description@viewpos = <current> }
+			}
+			panel requirement
+			{
+				{
+					pos		"450 446"
+					size	"185 150"
+				}
+				string label
+				{
+					pos "8 6"
+					size "140 20"
+					color		"1.0 0.75 0 1"
+					font	"f_small"
+					string "_Requirement(s):"
+				}
+				textlist techtree
+				{
+					dataid		TEXT_UFOPEDIA_REQUIREMENT
+					pos			"15 40"
+					size		"156 92"
+					font		"f_verysmall"
+					color		"0.56 0.81 0.76 1"
+					selectcolor	"1 1 1 1"
+					onChange		{ cmd "techtree_click <lineselected>;" }
+					onViewChange
+					{
+						*node:parent.techtree_scroll@fullsize = <fullsize>
+						*node:parent.techtree_scroll@current = <viewpos>
+						*node:parent.techtree_scroll@viewsize = <viewsize>
+					}
+				}
+
+				vscrollbar techtree_scroll {
+					image		"ui/scrollbar_v"
+					invis		true
+					pos			"142 7"
+					height		"117"
+					current		0
+					hidewhenunused true
+					onChange	{ *node:parent.techtree@viewpos = <current> }
+				}
+			}
+		}
+
+		// ==================
+		// item description
+		// ==================
+
+		panel itemdescription
+		{
+			{
+				pos		"360 530"
+				size	"350 60"
+			}
+
+			// ======================
+			// useable weapon or ammo
+			// ======================
+
+			string header_item
+			{
+				string	"_With:"
+				pos		"10 0"
+				size	"100 30"
+				font	"f_small"
+			}
+
+			button action_dec
+			{
+				pos		"120 4"
+				icon	"icons/arrow_left"
+				onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+				onMouseLeave { *node:this@icon = "icons/arrow_left" }
+				size	"24 24"
+				onClick	{ cmd "mn_decreaseitem;" }
+			}
+
+			string item_name
+			{
+				string	*cvar:mn_linkname
+				pos		"140 0"
+				size	"180 30"
+				contentalign	ALIGN_CC
+				font	"f_small"
+			}
+
+			button action_inc
+			{
+				pos		"326 4"
+				icon	"icons/arrow_right"
+				onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
+				onMouseLeave { *node:this@icon = "icons/arrow_right" }
+				size	"24 24"
+				onClick	{ cmd "mn_increaseitem;" }
+			}
+
+			// ==================
+			// firemode
+			// ==================
+
+			string header_firemode
+			{
+				string	"_Firemode:"
+				pos		"10 30"
+				size	"100 30"
+				font	"f_small"
+			}
+
+			button firemode_dec
+			{
+				tooltip "_Previous firemode"
+				pos		"120 32"
+				icon	"icons/arrow_left"
+				onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+				onMouseLeave { *node:this@icon = "icons/arrow_left" }
+				size	"24 24"
+				onClick	{ cmd "mn_decreasefiremode;" }
+			}
+
+			string firemode_name
+			{
+				string	*cvar:mn_firemodename
+				pos		"140 30"
+				size	"180 30"
+				contentalign	ALIGN_CC
+				font	"f_small"
+			}
+
+			button firemode_inc
+			{
+				tooltip "_Next firemode"
+				pos		"326 32"
+				icon	"icons/arrow_right"
+				onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
+				onMouseLeave { *node:this@icon = "icons/arrow_right" }
+				size	"24 24"
+				onClick	{ cmd "mn_increasefiremode;" }
+			}
+		}
+		confunc update_ufopedia_layout
+		{
+			// is right column not empty?
+			*cvar:mn_rightpanel = 0
+			if ( *cvar:mn_upimage_top ne "" ) {
+				*cvar:mn_rightpanel = 1
+			}
+			if ( *cvar:mn_upimage_top2 ne "" ) {
+				*cvar:mn_rightpanel = 1
+			}
+			if ( *cvar:mn_upmodel_top ne "" ) {
+				*cvar:mn_rightpanel = 1
+				delete *cvar:mn_upimage_top2
+				*node:parent.content.decoration_panel@invis = false
+			}
+			if ( *cvar:mn_upmodel_bottom ne "" ) {
+				*cvar:mn_rightpanel = 1
+				*node:parent.content.decoration_panel2@invis = false
+			}
+
+			if ( *cvar:mn_uprequirement ne "" ) {
+				*cvar:mn_rightpanel = 1
+			}
+
+			// invalidate techtree selection
+			*node:parent.content.requirement.techtree@lineselected = -1
+
+			// update tabs
+			if ( *cvar:mn_uppreavailable == 1 ) {
+				*node:parent.content.navigation.preresearch@invis = false
+			} else {
+				*node:parent.content.navigation.preresearch@invis = true
+				// update the tab if the hidden one is selected
+				if ( *cvar:ufopedia_content eq "preresearch" ) {
+					*cvar:ufopedia_content = "description"
+				}
+			}
+
+			// we do show the bigpicture tab for models and pictures
+			if ( *cvar:mn_upmodel_top ne "" ) {
+				*node:parent.content.navigation.bigpicture@invis = false
+			}
+			if ( *cvar:mn_upimage_top ne "" ) {
+				*node:parent.content.navigation.bigpicture@invis = false
+			}
+			// reset mn_upimage_top2
+			if ( exists *cvar:mn_upimage_top2 ) {
+				 delete *cvar:mn_upimage_top2
+			}
+			// special pre-research cases
+			if ( *cvar:mn_upimage_top eq "techs/bloodspider_dead" ) {
+				*cvar:mn_upimage_top2 = "techs/bloodspider_autopsy"
+			}
+			if ( *cvar:mn_upimage_top eq "techs/shevaar_dead" ) {
+				*cvar:mn_upimage_top2 = "techs/shevaar_autopsy"
+			}
+			if ( *cvar:mn_upimage_top eq "techs/taman_dead" ) {
+				*cvar:mn_upimage_top2 = "techs/taman_autopsy"
+			}
+			if ( *cvar:mn_upimage_top eq "techs/ortnok_dead" ) {
+				*cvar:mn_upimage_top2 = "techs/ortnok_autopsy"
+			}
+			if ( *cvar:mn_upimage_top2 eq "" ) {
+				*cvar:mn_upimage_top2 = *cvar:mn_upimage_top
+			}
+
+	/* TODO: make this work:
+		// we do not want to show the bigpicture tab for ammo models,
+		// but here we are just not showing it if the tech displayed has an ammo model
+			if ( *cvar:mn_upmodel_bottom ne "" ) {
+				if ( *cvar:mn_upmodel_top ne "" ) {
+					*node:parent.content.navigation.bigpicture@invis = true
+				}
+			}
+	*/
+
+			if ( *cvar:mn_upmetadata == 1 ) {
+				*node:parent.content.navigation.stats@invis = false
+			} else {
+				*node:parent.content.navigation.stats@invis = true
+				// update the tab if the hidden one is selected
+				if ( *cvar:ufopedia_content eq "stats" ) {
+					*cvar:ufopedia_content = "description"
+				}
+			}
+
+			if ( *cvar:ufopedia_content eq "description" ) {
+				*node:parent.content.ufopedia@invis = false
+				*node:parent.content.mdl_top@invis = false
+				*node:parent.content.ufopedia_scroll@invis = false
+				*node:parent.content.description@invis = true
+				*node:parent.content.description_scroll@invis = true
+				*node:parent.content.requirement@invis = false
+				*node:parent.itemdescription@invis = true
+				// autopsy is finished
+				if ( *node:parent.content.navigation.preresearch@invis == true ) {
+					*node:parent.content.image_top@invis = false
+					*node:parent.content.image_top2@invis = true
+				} else {
+					*node:parent.content.image_top@invis = true
+					*node:parent.content.image_top2@invis = false
+				}
+				*node:parent.content.image_bigpicture@invis = true
+				*node:parent.content.mdl_bigpicture@invis = true
+				if ( *cvar:mn_rightpanel == 1 ) {
+					*node:parent.content.ufopedia@width = 400
+					*node:parent.content.main_panel_small@invis = false
+					*node:parent.content.main_panel_large@invis = true
+				} else {
+					*node:parent.content.ufopedia@width = 583
+					*node:parent.content.main_panel_small@invis = true
+					*node:parent.content.main_panel_large@invis = false
+					*node:parent.content.navigation.bigpicture@invis = true
+				}
+				*cvar:mn_uppretext = 0
+				cmd "mn_upupdate;"
+			} elif ( *cvar:ufopedia_content eq "preresearch" ) {
+				*node:parent.content.ufopedia@invis = false
+				*node:parent.content.ufopedia_scroll@invis = false
+				*node:parent.content.description@invis = true
+				*node:parent.content.description_scroll@invis = true
+				*node:parent.content.requirement@invis = false
+				*node:parent.itemdescription@invis = true
+				*node:parent.content.image_top@invis = false
+				*node:parent.content.image_top2@invis = true
+				*node:parent.content.image_bigpicture@invis = true
+				*node:parent.content.mdl_top@invis = false
+				*node:parent.content.mdl_bigpicture@invis = true
+				if ( *cvar:mn_rightpanel == 1 ) {
+					*node:parent.content.ufopedia@width = 400
+					*node:parent.content.main_panel_small@invis = false
+					*node:parent.content.main_panel_large@invis = true
+				} else {
+					*node:parent.content.ufopedia@width = 583
+					*node:parent.content.main_panel_small@invis = true
+					*node:parent.content.main_panel_large@invis = false
+					*node:parent.content.navigation.bigpicture@invis = true
+				}
+				*cvar:mn_uppretext = 1
+				cmd "mn_upupdate;"
+			} elif ( *cvar:ufopedia_content eq "stats" ) {
+				*node:parent.content.ufopedia@invis = true
+				*node:parent.content.ufopedia_scroll@invis = true
+				*node:parent.content.description@invis = false
+				*node:parent.content.description_scroll@invis = true
+				*node:parent.content.requirement@invis = false
+				*node:parent.itemdescription@invis = false
+				*node:parent.content.main_panel_small@invis = false
+				*node:parent.content.main_panel_large@invis = true
+				*node:parent.content.image_top@invis = false
+				*node:parent.content.image_top2@invis = true
+				*node:parent.content.mdl_top@invis = false
+				*node:parent.content.image_bigpicture@invis = true
+				*node:parent.content.mdl_bigpicture@invis = true
+			} elif ( *cvar:ufopedia_content eq "bigpicture" ) {
+				*node:parent.content.ufopedia@invis = true
+				*node:parent.content.ufopedia_scroll@invis = true
+				*node:parent.content.description@invis = true
+				*node:parent.content.description_scroll@invis = true
+				*node:parent.content.requirement@invis = true
+				*node:parent.itemdescription@invis = true
+				*node:parent.content.mdl_top@invis = true
+				*node:parent.content.main_panel_small@invis = true
+				*node:parent.content.main_panel_large@invis = false
+				*node:parent.content.decoration_panel@invis = true
+				*node:parent.content.decoration_panel2@invis = true
+				// autopsy is finished
+				if ( *node:parent.content.navigation.preresearch@invis == false ) {
+					*node:parent.content.image_bigpicture@src = *cvar:mn_upimage_top2
+				} else {
+					*node:parent.content.image_bigpicture@src = *cvar:mn_upimage_top
+				}
+				*node:parent.content.image_top@invis = true
+				*node:parent.content.image_top2@invis = true
+				*node:parent.content.image_bigpicture@invis = false
+				*node:parent.content.mdl_bigpicture@invis = false
+			}
+
+			// we only show requirements if they are needed
+			if ( *cvar:mn_uprequirement eq "" ) {
+				*node:parent.content.requirement@invis = true
+			}
+			// we only show deco panels if they are needed
+			if ( *cvar:mn_upmodel_top eq "" ) {
+				*node:parent.content.decoration_panel@invis = true
+			}
+			if ( *cvar:mn_upmodel_bottom eq "" ) {
+				*node:parent.content.decoration_panel2@invis = true
+			}
+			// we only show the image if it is needed
+			if ( *cvar:mn_upimage_top eq "" ) {
+				*node:parent.content.image_top@invis = true
+			}
+			if ( *cvar:mn_upimage_top2 eq "" ) {
+				*node:parent.content.image_top2@invis = true
+			}
+			delete *cvar:mn_rightpanel
+		}
+
+		confunc mn_up_empty
+		{
+			*node:parent.content@invis = true
+		}
+
+		confunc mn_up_article
+		{
+			*node:parent.content@invis = false
+		}
+
+		func init_summary {
+			cmd "mn_upcontent;"
+			*cvar:ufopedia_content = "description"
+			*node:parent.summary.list@viewpos = 0
+			*node:parent.summary.list_scroll@current = 0
+			*cvar:up_summary_selection = ""
+		}
+	}
+
+	func onWindowOpened
+	{
+		call *node:root.dimbackground.init_summary
+		if ( paramCount > 0 ) {
+			cmd "ufopedia <1>;"
+		}
+		cmd "update_ufopedia_layout;"
+	}
+
+	func onWindowClosed
+	{
+		delete *cvar:up_summary_selection
+	}
+}

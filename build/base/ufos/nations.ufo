@@ -1,0 +1,128 @@
+//=================================================
+// NATIONS	- A list of nations funding the Phalanx project.
+//=================================================
+// Description
+//
+// funding	(credits)
+//	Initial funding per month of this faction.
+// color
+//	Defines the color used to seperate the nations in the geoscape (internally)
+// soldiers, scientists (number of people)
+//	The number of people (the best of the best ;)) you can hire (additionally) from this nation each month.
+//=================================================
+// TODO: Logging this data in a seperate list so a statistic can be calculated.
+//=================================================
+
+
+// TODO: tweak all parameters realistically, according to the wiki descriptions
+
+// and soldiers/scientists/etc. from 1 to 5
+// addition of pilots
+
+// NOTE: If you rename a nation, also rename the symbol in base/pics/nations
+
+// Current max total funding: 600K credits/month
+
+nation latin
+{
+	name "_The Revolutionary Countries"
+	color "0 1 0.5 1"
+	funding	140000
+	happiness 0.5
+	soldiers 5
+	scientists 2
+	workers 5
+	pilots	1
+	pos "60 -13"
+}
+
+nation states
+{
+	name "_United America"
+	color "0 0.5 0 1"
+	funding	160000
+	happiness 0.5
+	soldiers 5
+	scientists 3
+	workers 3
+	pilots	2
+	pos "103 48"
+}
+
+nation europe
+{
+	name "_The Greater European Union"
+	color "0 0.5 1 1"
+	pos "-7 49"
+	funding	125000
+	happiness 0.5
+	soldiers 3
+	scientists 3
+	workers 2
+	pilots	2
+}
+
+nation asia
+{
+	name "_The Asian Republic"
+	color "0.5 0.5 0 1"
+	funding	125000
+	happiness 0.5
+	soldiers 5
+	scientists 1
+	workers 3
+	pilots	1
+	pos "-100 33"
+}
+
+nation middle
+{
+	name "_The Middle-Eastern Alliance"
+	color "1 1 0 1"
+	funding 80000
+	happiness 0.5
+	soldiers 1
+	scientists 3
+	workers 1
+	pilots	1
+	pos "-46 26"
+}
+
+nation africa
+{
+	name "_New Africa"
+	color "1 0.5 0.25 1"
+	funding	105000
+	happiness 0.5
+	soldiers 5
+	scientists 1
+	workers 3
+	pilots	1
+	pos "-20 5"
+}
+
+nation russia
+{
+	name "_Russia"
+	color "0.5 0 0 1"
+	funding	100000
+	happiness 0.5
+	soldiers 3
+	scientists 3
+	workers 2
+	pilots	2
+	pos "-80 63"
+}
+
+nation oceania
+{
+	name "_The Commonwealth of Oceania"
+	color "0.5 0 0.5 1"
+	funding	120000
+	happiness 0.5
+	soldiers 5
+	scientists 3
+	workers 2
+	pilots	1
+	pos "-130 -25"
+}

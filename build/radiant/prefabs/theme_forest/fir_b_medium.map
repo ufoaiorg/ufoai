@@ -1,0 +1,117 @@
+// entity 0
+{
+"classname" "misc_model"
+"spawnflags" "248"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
+"origin" "64 64 133"
+"skin" "5"
+"modelscale_vec" "1.25 1.25 2"
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/pino/pino1.md2"
+"spawnflags" "254"
+"origin" "64 64 64"
+"skin" "0"
+}
+// entity 2
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/pino/pino3.md2"
+"origin" "64.125 64 -6.5"
+"spawnflags" "248"
+"skin" "0"
+"modelscale_vec" "1.13 1.13 1"
+}
+// entity 3
+{
+"classname" "misc_model"
+"spawnflags" "248"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
+"origin" "64 64 149"
+"skin" "5"
+"modelscale_vec" "1.25 1.25 2"
+"angles" "0 22.5 0"
+}
+// entity 4
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/pino/pino2.md2"
+"origin" "64 64.25 64.5"
+"spawnflags" "4"
+"skin" "0"
+}
+// entity 5
+{
+"classname" "func_group"
+// brush 0
+{
+( 64.5 63.5 276 ) ( 63.5 63.5 276 ) ( 63.5 64.5 276 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 69 69 128 ) ( 64.5 64.5 276 ) ( 63.5 64.5 276 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 69 59 128 ) ( 64.5 63.5 276 ) ( 64.5 64.5 276 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 61 16 128 ) ( 71 16 128 ) ( 61 110 128 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 69 59 128 ) ( 63.5 63.5 276 ) ( 64.5 63.5 276 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 59 69 128 ) ( 63.5 64.5 276 ) ( 63.5 63.5 276 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+}
+// brush 1
+{
+( 68 77 128 ) ( 68 69 128 ) ( 60 77 128 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
+( 68 68 65 ) ( 60 68 65 ) ( 68 68 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
+( 68 69 65 ) ( 68 69 64 ) ( 68 61 65 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
+( 60 60 64 ) ( 68 60 64 ) ( 60 68 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
+( 60 60 64 ) ( 60 60 65 ) ( 68 60 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
+( 60 60 64 ) ( 60 68 64 ) ( 60 60 65 ) tex_common/actorclip 0 0 0 0.25 0.25 130560 0 0
+}
+// brush 2
+{
+( 68 77 192 ) ( 68 69 192 ) ( 60 77 192 ) tex_common/actorclip 0 0 0 0.25 0.25 130048 0 0
+( 68 68 129 ) ( 60 68 129 ) ( 68 68 128 ) tex_common/actorclip 0 0 0 0.25 0.25 130048 0 0
+( 68 69 129 ) ( 68 69 128 ) ( 68 61 129 ) tex_common/actorclip 0 0 0 0.25 0.25 130048 0 0
+( 60 60 128 ) ( 68 60 128 ) ( 60 68 128 ) tex_common/actorclip 0 0 0 0.25 0.25 130048 0 0
+( 60 60 128 ) ( 60 60 129 ) ( 68 60 128 ) tex_common/actorclip 0 0 0 0.25 0.25 130048 0 0
+( 60 60 128 ) ( 60 68 128 ) ( 60 60 129 ) tex_common/actorclip 0 0 0 0.25 0.25 130048 0 0
+}
+// brush 3
+{
+( 69 110 128 ) ( 69 16 128 ) ( 59 110 128 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 69 69 128 ) ( 59 69 128 ) ( 69 69 125 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 69 110 128 ) ( 69 110 125 ) ( 69 16 128 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 61 16 64 ) ( 71 16 64 ) ( 61 110 64 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 62 59 64 ) ( 62 59 67 ) ( 72 59 64 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 59 16 125 ) ( 59 110 125 ) ( 59 16 128 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+}
+// brush 4
+{
+( 68 77 256 ) ( 68 69 256 ) ( 60 77 256 ) tex_common/actorclip 0 0 0 0.25 0.25 129024 0 0
+( 68 68 193 ) ( 60 68 193 ) ( 68 68 192 ) tex_common/actorclip 0 0 0 0.25 0.25 129024 0 0
+( 68 69 193 ) ( 68 69 192 ) ( 68 61 193 ) tex_common/actorclip 0 0 0 0.25 0.25 129024 0 0
+( 60 60 192 ) ( 68 60 192 ) ( 60 68 192 ) tex_common/actorclip 0 0 0 0.25 0.25 129024 0 0
+( 60 60 192 ) ( 60 60 193 ) ( 68 60 192 ) tex_common/actorclip 0 0 0 0.25 0.25 129024 0 0
+( 60 60 192 ) ( 60 68 192 ) ( 60 60 193 ) tex_common/actorclip 0 0 0 0.25 0.25 129024 0 0
+}
+// brush 5
+{
+( 111 63 139 ) ( 21 77 139 ) ( 109 49 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 92 25 139 ) ( 64 63 276 ) ( 103 36 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 103 36 139 ) ( 64 63 276 ) ( 109 49 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 109 49 139 ) ( 64 63 276 ) ( 111 63 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 111 63 139 ) ( 64 63 276 ) ( 109 77 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 109 77 139 ) ( 64 63 276 ) ( 103 90 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 103 90 139 ) ( 64 63 276 ) ( 92 101 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 92 101 139 ) ( 64 63 276 ) ( 79 108 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 79 108 139 ) ( 64 63 276 ) ( 65 110 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 65 110 139 ) ( 64 63 276 ) ( 51 108 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 51 108 139 ) ( 64 63 276 ) ( 38 101 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 38 101 139 ) ( 64 63 276 ) ( 27 90 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 27 90 139 ) ( 64 63 276 ) ( 21 77 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 21 77 139 ) ( 64 63 276 ) ( 19 63 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 19 63 139 ) ( 64 63 276 ) ( 21 49 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 21 49 139 ) ( 64 63 276 ) ( 27 36 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 27 36 139 ) ( 64 63 276 ) ( 38 25 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 38 25 139 ) ( 64 63 276 ) ( 51 18 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 51 18 139 ) ( 64 63 276 ) ( 65 16 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 65 16 139 ) ( 64 63 276 ) ( 79 18 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+( 79 18 139 ) ( 64 63 276 ) ( 92 25 139 ) tex_common/lightclip 0 0 0 0.25 0.25 588800 0 0
+}
+}

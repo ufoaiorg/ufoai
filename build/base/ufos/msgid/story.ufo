@@ -1,0 +1,603 @@
+msgid antimatter_txt {
+text "_Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.
+
+There are a lot of things the aliens know that we don't. Nowhere is this more clear in their widespread use of antimatter. It seems to be plentiful for them, at least plentiful enough to send out UFO after UFO to Earth, burning tanks full of antiprotons. Human experiments into antimatter, on the other hand . . .
+
+The first artificially produced antimatter on Earth consisted of 9 atoms of anti-hydrogen created at the CERN particle physics laboratory, situated near Geneva on the border between France and Switzerland. Not long after, another lab produced approximately 100 atoms. We've come slowly forward over the years in tiny, tiny steps, but even though we can now produce antiprotons by the millions, it's easy to forget just how little that really is.
+
+In fact, the biggest obstacle to our adaptation of the alien fuel is the availability of antiprotons. We've come a long way since 1995, but even with every particle physics laboratory in the world churning out as many antiprotons as possible, it would take eighty million years to produce 1 gramme's worth of antiprotons. By comparison, the amount contained in a UFO's tank exceeds that of all the antimatter produced on Earth over the past hundred years.
+
+Humanity is a long, long way off from being able to create antiprotons in the amounts necessary to fuel these matter-antimatter rockets. The bottom line is, we cannot duplicate this alien technology. We don't know how they create their antimatter or how they manage to generate enough electricity to do so. Unless and until we can get our hands on this equipment, our efforts will be fruitless.
+
+Our only major successes have come from studying how the aliens store their antimatter. We're confident we can employ the same magnetic storage techniques, creating special facilities for safely storing antimatter. I've sent you a set of blueprints in a separate message to peruse at your convenience. We've also designed antimatter fuel tanks that should fit in our interceptors given some major overhaul. Of course we'll need a full understanding of the alien engines before we can begin designing a new aircraft propulsion system.
+
+For all intents and purposes, we are unable to replicate the alien fuel. If we use antimatter in our own technology we will be dependent upon recovering it from alien sources. This seems a dangerous course of action, but we may have no choice; we need to adapt this technology as soon as possible if we are to have any chance of truly stopping the invasion.
+
+Cdr. Navarre"
+}
+
+msgid antimatter_pre_txt {
+text "_Commander, based on the extremely interesting findings we've made during our examination of the UFO we dismantled, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.
+
+Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best energy density of any material in the known universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!
+
+Cdr. Navarre"
+}
+
+msgid alien_live_txt {
+text "_Commander,
+
+We have finished our first survey of a live alien specimen. The project has produced mixed results.
+
+The subject is certainly alive, and we have put it through an extensive array of toxicology experiments which have provided vital data about its vulnerabilities to various chemicals and bio-agents. However, we have been completely unable to produce a behavioural analysis of the alien mind. This is because the specimen has showed virtually no signs of intelligence since its capture. It has done little more than eat, sleep, and stare at the walls of its containment unit. It responds to physical stimuli with reflex actions, aggression and/or submission, but we could not coax any information out of it. Even simple hand signals seem to be beyond the creature's comprehension. EEG monitoring reveals that the seemingly highly-developed brain registers virtually no brainwave activity at all.
+
+It is hard to believe this same specimen could have fired advanced alien weaponry at our troops during a tactical mission. There is no physical trauma that might explain the regression. Perhaps its capture has activated some manner of alien counter-interrogation mechanism; we don't know. None of my team have managed to produce a viable hypothesis as to the reason why. Certainly more research is required. We will keep monitoring the specimen, and will notify you immediately if the situation changes.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid alien_live_pre_txt {
+text "_Commander,
+
+We have captured a live alien in the field! The creature has been recovered from our last tactical mission and is being held in our new Containment unit, which I'm pleased to report seems to be working up to spec.
+
+I don't need to explain why we should start research on this specimen right away. The information that could be gleaned from it supercedes all other considerations. Up until now we've had no chance to study the alien mind, their thoughts and motivations, except through their continued attacks upon our world. This is our first chance to discover the aliens' purpose for humanity, perhaps even an explanation. Who are they? Why are they here? What can we do against them? We can know nothing without interrogating this specimen.
+
+Please send your approval for this program at your earliest convenience.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid alien_breathing_txt {
+text "_Commander,
+
+I have made a thorough examination of the devices found during the alien autopsies we've performed. I believe we're now ready to present our conclusions.
+
+From our investigation of tissue growth and scarring around the alien larynx, we conclude that these artifacts are surgically implanted in an alien's throat at a very early age. Somewhere during adolescence, the child-sized device is removed and an adult version is implanted.
+
+We've examined several different possibilities for the device's function, from food preprocessors to suicide equipment, but the obvious answer turned out to be the correct one. It is some kind of respirator, allowing the aliens to survive in our atmosphere, and possibly other atmospheres as well. Every organic specimen we've autopsied has carried one of these devices, all with the same basic functionality, implying that their constant operation is either required for survival on the alien homeworld or that we are seeing only specimens which are intended for frequent planetary operations. Certainly external breathing apparatus would be easier and more economical to use if these specimens were only intended to take short trips into hostile atmospheres.
+
+The device itself consists of a sophisticated filter stretched across the subject's windpipe, and two small spherical tanks positioned on either side of the brainstem, connected to the windpipe by a small metal tube. These tanks are filled with a gas mixture compressed into a liquid state, functioning much like a scuba diver's oxygen bottles. The filter mechanism is semi-intelligent; it scrupulously removes all elements that are harmful to the subject, but allows beneficial elements to pass through. The tanks are refilled by way of a small mechanical navel at the back of the alien's neck.
+
+An examination of the tanks' contents has given us our first accurate data on the alien atmosphere. We now have several mixtures on record that we believe will be able to support various alien lifeforms in our Containment unit. A few of the mixtures in the device are nitrogen-oxygen compounds, very similar to our own, but others don't contain any oxygen at all. If all of these mixtures are actively used by one or more alien species, some of our enemies seem to breathe an atmosphere of almost pure methane.
+
+The vastly different mixtures are actually giving us a bit of a puzzle. Surely it would be more economical to use segregated crews than to force these species to coexist in the same place?
+
+Future questions aside, I'm well pleased with our present results. We can now store aliens in our Containment unit for prolonged periods of time -- they will no longer suffocate when their atmosphere tanks run out. This usually happens after 24 hours without replenishment, so no delays should be afforded when we manage to capture a specimen.
+
+My team and I are all looking forward to finally getting our hands on a live one, Commander.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid alien_breathing_pre_txt {
+text "_Commander,
+
+During autopsy of the alien corpses we've recovered, my team and I uncovered some peculiar machinery implanted into the throat of the alien specimen. It consists of two metal spheres located on either side of the brainstem, connected directly to the windpipe by way of a small tube. The windpipe itself is protected by some manner of valve or filter. We believe this interconnected apparatus may be some kind of breathing equipment or rebreather, or even something else entirely; we're not sure how it works yet.
+
+I would like your permission and funding to examine these items more closely than our autopsy would allow. At this point in the war, anything that enhances our knowledge base about the alien threat is useful, and we may discover critical clues about alien technology and biology. Certainly we need to find out what the aliens breathe before we can accomodate them in our Containment unit for any period of time.
+
+Cdr. Navarre and his team will be assisting us on the technical side. He has committed his full support to the proposal.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid alien_mind_txt {
+text "_Commander,
+
+My team has finished conducting a number of tests on our captives that have shed some light on the aliens' behaviour.
+
+In one experiment, an alien specimen was given a box of food, sealed by a two-digit number lock. The subject took six hours to find the right combination by trial and error. This places the alien's IQ well below most large terrestrial mammals; however, when other subjects in the Containment were given the same task, with exactly the same lock, they all immediately input the right combination on their first attempt without having been exposed to the first specimen's attempts. We know how this looks, Commander, but I assure you my team and I have been thoroughly conscientious about security and separation. The aliens have not been allowed to communicate in any way. We're not yet willing to commit to any definite hypothesis about these events, though we're working on it.
+
+Unfortunately, results of our other experiments have been inconclusive at best. Various ways of communication have been attempted without success. Despite having fully functional vocal cords and/or working hands, they do not seem to speak or sign in any sense that we understand. Pheromone communication has had no effect beyond simple physical reactions. The large biological disparity between alien species also creates its own share of problems with containment and communication -- please refer to the alien autopsy reports for more details on individual alien physiology.
+
+Nevertheless, I believe we're making progress, however slowly. Communication with the aliens is certainly within the realm of possibility. Our studies confirm that all alien specimens react to external stimuli. This means that we can make them respond, one way or another. Dr. Yamamura is currently working on teaching an isolated group how to express desire, acknowledgement and denial. Their intelligence is too limited to attempt anything more sophisticated at the moment. Once the subjects have mastered these basic concepts, we will have some data on the rate at which the aliens can learn, and a solid foundation upon which to build. Yamamura hopes we can gradually raise their communication skills until they can make themselves intelligible to us, thereby spreading this knowledge to others of their kind who may possess superior intellect and talents.
+
+As always, I will keep you informed, Commander.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid alien_mind_pre_txt {
+text "_Commander,
+
+Though we've achieved limited results so far, research must continue on our alien captives. There's a number of experiments we'd like to run that require your authorisation for lab time and funding. I assure you this is not blue-sky research; with enough tests and behavioural data, we may be able to figure out a way to communicate with these aliens, perhaps even reawaken their intelligence somehow. We don't know what the results of the program will be -- we simply know too little about these aliens, our body of data is far too small to make any predictions at this point. What we do know is that every tidbit we learn about alien psychology is a valuable piece of the puzzle.
+
+On a personal note, I'm convinced they must know something, Commander. The trick is in getting it out of them, and we're by God going to do it.
+
+My team and I are all eagerly awaiting your approval for the program.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid alien_odd_behaviour_txt {
+text "_Commander,
+
+We have spent the past few weeks investigating these strange occurrences in our Containment unit, and we believe we've formulated a theory that may begin to explain the aliens' newfound intelligence.
+
+It seems that we were off in our preliminary appraisal of how the alien intellect works. We first believed them to be autonomously operating individuals, in the same way humans are, though with superior communications and team tactics. However, our lab experiments and an intense review of battlefield footage now seem to contradict that hypothesis.
+
+In our video records, we have often seen the aliens seeking cover, coordinating their fire, working as a team even though they carry no obvious communications equipment. However, when we captured a few live specimens in our Containment unit, they never displayed anything above the level of animal instinct. This seems incongruous with the evidence we have; large, well-developed brain structures and a proven knowledge of combat tactics.
+
+We sought to reconcile these ideas in a new hypothesis, and our experiments have begun to produce tangible results. The new specimens certainly are responsible for the strange behaviour we've observed, but we originally assumed that they were officers of some type under colour of authority. We now believe that theory to also be wrong. Our experiments prove that when the aliens are allowed to congregate, with or without the suspected 'officers', they become significantly more active and sophisticated. When they are separated from each other for a large enough distance, they revert back to their basic states. The conclusion is obvious. There is some kind of communal force binding these creatures together.
+
+A string of new theories has emerged. The most likely explanation is in the alien brain. There are several species of alien, all of which meet the physiological requirements for a sentient species, but they show little to no brainwave activity of their own. This implies the presence of some kind of shared or distributed thought between them, a hive mind that grows more intelligent as it grows in numbers. We're not sure how it's possible for this hive mind to cross species boundaries; it's obvious that the different alien races originated on different worlds, with vastly divergent evolutionary paths, and some species appear to have been around far longer than others. However, given the aliens' advanced technology, the 'how' is less of an enigma than the 'why'.
+
+These new findings also seem to suggest that specimens down on Earth are cut off from the source of their intelligence. While this may be an important advantage for PHALANX forces, it also brings up threats we had not yet considered. Our research into alien physiology has established that isolated specimens cannot survive very long in our environment, and behave with little enough intelligence while they're on the surface; but if a large enough number is allowed to escape and coordinate with each other -- or with alien sympathisers on Earth -- we could be looking at a serious infiltration risk.
+
+With several specimens on hand, their intelligence now seems to be approaching the human level. If we can create a suitable translation device or common language, we believe we may finally be able to establish communications with aliens in PHALANX captivity. Perhaps some of our linguists or psychology experts could form a dialogue. This is an avenue of inquiry that we cannot afford to ignore.
+
+Of course, if such experiments were to be approved by the Base Commander, I assure you that my team would take full precautions. Nothing is more important to us than the lives of our men and the security of our facilities.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid alien_odd_behaviour_pre_txt {
+text "_Commander,
+
+The live aliens in our Containment unit have begun to display erratic behaviour since the last tactical mission.
+
+Before, the specimens were barely intelligent, operating solely on instinct despite their significantly-developed brain structures. Yet they now seem to be exercising some sort of intelligent control, clearly communicating through the soundproof cells and operating as a team, even going so far as to engineer coordinated escape attempts. Sedative darts were required to subdue the more active specimens.
+
+We believe the new specimens recently added to Containment are having some sort of effect on the group. They may be higher-ranking members of the alien hierarchy. If we have captured an alien officer, or if there is some entirely different cause for the new behaviour, we need to investigate the how and why of this right away. On behalf of DivBio, I would like your permission to start a new research project to look into the matter.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid alien_communication_txt {
+text "_Commander,
+
+I'm happy to report that we've received the first good results in our ongoing efforts to question captive aliens in our Containment unit. Dr. Yamamura's approach has gradually begun to bear fruit. The aliens have learned to convey messages in both binary code and human-readable sign language, and they appear to comprehend a wide range of questions and instructions. Yamamura and his staff are still working to refine the sign language we've been using, while the rest of my team has concentrated on trying to extract useful information from the hive mind. This hasn't been easy. The aliens are very reticent and require a great deal of chemical encouragement in order to put them into a more helpful frame of mind. The casualty rate has been high.
+
+However, what we have is significant. For instance, the hive mind seems to have no identity. It seems unable to grasp concepts like \"I\" or \"We\", or even \"You\" and \"Them\". It only accepts these words as numerical differentiations -- one specimen or several, one human or a group. This indicates a severe disconnect between human and alien thinking. The shared consciousness doesn't even think of itself as a single enclosed entity; it merely is. This, along with various other answers we've pieced together from our continued sessions, leads us to believe that all aliens do indeed share one single mind. And I mean all of them, Commander. It's not simply a means of increasing team efficiency or encouraging esprit de corps; it's an indispensible component of alien society. Every alien that lives and breathes is an equal and identical part of the greater hive mind, even specimens of completely different species. The only diversity the aliens will acknowledge is in the different substances required to keep the various species alive.
+
+Also, the hive mind has expressed puzzlement at our attempts to communicate with individual aliens, let alone through something as crude as sign language. A human-understandable analogy might be trying to have a deep conversation with someone's toenail, or talking to a single cell in your own body. Of course, that raises the question of where the alien ears and brain really are.
+
+Certainly the handful of aliens currently in our Containment unit are not part of the greater hive mind that we hypothesize exists on the alien homeworld. They seem to be cut off from it for the duration of their mission to Earth, only to rejoin it when they return later. Whether this is due to distance or some kind of atmospheric effect, we've not yet been able to tell. The aliens' answers are hazy on this subject.
+
+That is all I have to report, Commander. However, as a final note, I would like to request your permission to look into methods we could use to more effectively persuade our captives. I must also stress that we require a healthy influx of new alien specimens in order to replace losses. We have to maintain the isolated hive mind we have in Containment. Losing it now would be a significant setback to our research.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid alien_communication_pre_txt {
+text "_Commander,
+
+The increasing intellect of the captive aliens in our Containment unit leads me to conclude that we can finally begin to get a real handle on alien communication and, more importantly, getting some useable information out of them. Quoting from my report:
+
+(Odd Behaviour)\"There are several species of alien, all of which meet the physiological requirements for a sentient species, but they show little to no brainwave activity of their own. This implies the presence of some kind of shared or distributed thought between them, a hive mind that grows more intelligent as it grows in numbers.\"
+
+\"With several specimens on hand, their intelligence now seems to be approaching the human level. If we can create a suitable translation device or common language, we believe we may finally be able to establish communications with aliens in PHALANX captivity. Perhaps some of our linguists or psychology experts could form a dialogue. This is an avenue of inquiry that we cannot afford to ignore.\"
+
+Dr. Yamamura is beginning to make real progress on this front, teaching the aliens several new words of sign language every day, but we require lab time and funding for a proper study of what these aliens know and how it can help us. The ability to interrogate aliens about their own technology could be of incomparable value to our soldiers and engineers. Cdr. Navarre was so excited at the prospect, he almost argued in favour of DivBio on this one.
+
+Thank you for your time, Commander. Please approve this program as soon as feasible.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid alien_base_txt {
+text "_Good morning, Sir.
+
+As you're aware, we are facing an increasingly worsening threat from the XVI virus. Over the past few weeks, DivIntel has been making a push into the areas in which the infection is most concentrated, in order to try and find some piece of intel that could help us understand how and why this infection spreads so fast from these focal points. I have been personally supervising the effort.
+
+It paid off this morning.
+
+Our reconnaisance teams have located what appears to be a camouflaged alien installation. The size and purpose of this installation is unknown, but we've established that it is located at the exact heart of an infection hot-spot. I harbour grave suspicions that this facility is directly connected with the lightning spread of XVI in the region. At this point it also seems likely there are more of these planetside installations, built right under our noses, serving as command centres and bases of operation for the alien threat.
+
+Dealing with these bases has to be one of our top priorities. I recommend we send a heavily-armed team to pay them a visit, a bit of reconnaissance-in-force. We need more information about the layout and purpose of the base, and the best way to do that is to capture it. We should eliminate all aliens at the location and, once we've secured the area and salvaged what we need, destroy the entire installation. This should constitute a significant blow to alien operations and restrict -- if not halt -- the spread of XVI in the area.
+
+Of course this mission will be highly dangerous. The base is right in the middle of an infection hot-spot, so the entire area is hostile territory.
+
+That's all the intel I've got for you on this one, Sir. Good luck and good hunting.
+
+With kind regards,
+
+Col. Falkland"
+}
+
+msgid universal_serum_txt {
+text "_Commander,
+
+Our development cycle on the new truth drug is complete. The new set of chemical mixtures we've tested are effective, and they seem to be the solution we've hoped for.
+
+The work we've done on alien biology since the start of the invasion, along with some help from our captives, has put us on the track of certain psychotropic substances -- notably LSD-derivatives -- that have very interesting effects on alien psychology. The divergence of species has been a problem, as some compounds will work on one type of alien but not on another, but with this new data it will be an easy task to whip up drugs specifically tailored to the individual alien species.
+
+Subjects under the influence of this drug have proven to be more pliable and loose-lipped, as long as we keep injecting all the specimens in our containment unit. Unfortunately the hive mind's natural resistance to interrogation is still throwing a spanner in the works. Even with all our specimens fully injected, we've not managed to break that resistance, and the accuracy of our test information has still not been 100% reliable. All data we receive still requires some degree of time-consuming verification work.
+
+On the positive side, the act of getting the information out of our subjects has become quicker and more painless, which should speed up some of our research. The danger of allergenic reaction is much lower and the number of subjects succumbing during interrogation has dropped significantly. The deeper effect of the new drugs may even give us access to more sensitive information that we would not have been able to extract from the hive mind with our old serum.
+
+We should keep up our interrogation efforts to get maximum benefit out of the new drugs.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid universal_serum_pre_txt {
+text "_Commander,
+
+As you may know, our efforts at communication with the live aliens in our Containment unit are progressing only very slowly. We're having a great deal of trouble applying our standard interrogation methods. The truth serum we have available has several distinct limitations; it tends to produce a lethal allergic reaction in most alien bodies unless we restrict it to smaller, insufficient doses, which worsens the serum's already incomplete effect on alien physiology. We've encountered numerous small lies and half-truths in the sessions we've taken so far. Torture has been attempted to influence this behaviour, but to no avail. Pain seems to have no corrective effect on the hive mind.
+
+There's also the larger hurdle of having to inject every single specimen of the hive mind in order to properly submerge any subject's sense of judgment. If one member of the hive mind dies, the remaining specimens' adrenaline-equivalent levels rise to the point where we have to start over.
+
+To this end, armed with our expanded knowledge of the alien mind and body, I propose a new research program to look into a universal set of sera that we can use to extract more reliable information, faster and more easily. There is obviously a great deal of information inside these specimens waiting to be seized, Commander; we just need the tools to properly crack the shell.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid alien_origins_txt {
+text "_Good morning, Sir.
+
+I've got the results of our Alien Origins project here and I believe you'll find them encouraging. Here is my summary of the data.
+
+The project overall has been a resounding success in integration and cooperation. For several short periods over the past few days, we had direct control over every civilian and military detection asset in the solar system, including several installations in the asteroid belt so secret that we have been sworn to silence by the UN. Our deep-space probes have scanned every inch of buildable surface to detect any sign of an alien base. With these resources at our disposal, we have achieved continuous detection coverage of approximately 90% of the solar system over the past two weeks. The remaining 10% has been uncovered no longer than forty minutes at a time.
+
+Unfortunately -- depending on your understanding of the word 'unfortunately' -- we could find no evidence of alien fleets hiding in our solar system. We have been so thorough that these results are all but conclusive. There is no way to be absolutely sure that our conclusions are correct, but I make the following statement with high confidence:
+
+We do not believe there are alien ships or bases in our solar system at this time.
+
+This answers one of our questions, but brings us no closer to understanding where the aliens come from or how they get here. In fact, the question of how they get here becomes an even greater conundrum than it was before. If the aliens are not based in our solar system, how can they be delivering UFOs to Earth?
+
+I have spoken at length with Cdr. Navarre and members of his team about this issue, trying to figure it out, and most of our theories still seem like crackpot speculations even to ourselves. However, fate gave us the proof we needed.
+
+We were having little luck with the issues of 'how' and 'where' until we got our hands on last week's video records from the MIMIR space telescope. Upon watching the footage, we realised that the MIMIR array had accidentally managed to catch a UFO arrival on film. We have full records in the visible and infrared spectra of a large, unfamiliar class of UFO 'popping' into existence approximately 10,000 kilometres from Earth, from where it ignited its engines and set a course for the planet.
+
+It is possible the aliens could have some manner of 'cloaking' technology that has prevented us from detecting the UFO beyond that range, but we have strong doubts about this; the appearance was highly sudden, accompanied by a burst of gamma rays and a momentary gravitic anomaly. There was not even the slightest evidence of this UFO's existence prior to its appearance 10,000 klicks from Earth.
+
+The most likely conclusion is also the most frightening: the aliens do not need to be located in our solar system, because they have a means of travel that is faster than light. Apparently this FTL (Faster-Than-Light) drive allows them to 'jump' into the Sol system from a distance well beyond our detection range. We don't know how this could be possible, as it clearly violates one or more concepts of general relativity (e.g. causality and/or special relativity), which remains the most accurate model of physics we have. The aliens clearly know something we don't.
+
+Our next priority must be the capture of an FTL-equipped UFO so that we may study and adapt this drive for our own spacecraft. Obviously, this will not be an easy task, but developing the ability to strike back is paramount -- just in case we need to end this invasion the hard way.
+
+Of course, the final decision on how to balance our short-term defence needs and long-term retaliation rests with you, Commander.
+
+With kind regards,
+
+Col. Falkland"
+}
+
+msgid alien_origins_pre_txt {
+text "_Good morning, Sir.
+
+Though we are still struggling to get operational, one of our first orders of business must be to find out where the aliens are coming from. The only thing we know right now is that they enter the atmosphere from space, do what they came to do, and then race into orbit again before disappearing from our screens. We need to find out what happens before and after these points. Where do they come from, how do they get here, and where do they go?
+
+We've seen no evidence of ships holding in Earth orbit or basing facilities anywhere in the solar system, but that doesn't mean they aren't there. The region of the asteroid belt and the outer planets -- the space between Mars and Neptune -- has been poorly monitored in a military sense and, given the stealth capabilities demonstrated by attacking UFOs, an alien fleet may have been misidentified or simply failed to register on civilian equipment. There has been no comprehensive effort at all to scan the surface of the various base-viable celestial objects in our solar system.
+
+Therefore, I propose a new research program aimed at scouring the solar system with probes and powerful optical- and radiotelescopes to detect alien activity anywhere in our space. Our scientists will also review the data we have of past incursions to try and form some kind of picture of alien movements to and from Earth orbit. Even if there's a fleet hiding behind Mars or one of the outer planets, they must eventually reveal themselves if they continue sending UFOs down to the surface of Earth. If we put enough eyes on the problem, even these aliens can't hide for long.
+
+This project will take a significant amount of funding and lab-time, Commander, so it requires your authorisation before work can begin.
+
+With kind regards,
+
+Col. Falkland"
+}
+
+msgid alien_theory_txt {
+text "_Commander, my team and I have finished our analysis of the UFO we captured. It's a real miracle of engineering, and we're all looking forward to getting a chance to sink our own hooks into all this lovely technology.
+
+The craft's strange construction has raised a lot of questions for us to answer. Much of the design seems to make little sense when viewed from the ground. However, now that we've managed to look at it up close and personal -- and test the alien hull materials under laboratory conditions -- we have gained a far clearer picture of UFO capabilities. I've made a list of our most important discoveries.
+
+-- The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and to reduce the infrared signature. Engine heat is also used to supply the craft's electrical needs.
+
+-- The fuel tank is very, very small, measured in fractions of a gramme, but even so I nearly had a heart attack when we found out what was in there. If a containment loss occurred on one of these tanks, even three tenths of a gramme of this antimatter would outstrip the explosive force of the Hiroshima atomic bomb. Naturally the tank is armoured and buried as deep as possible within the fuselage, and there are mechanical systems present to jettison the tank in an emergency, but they aren't perfect. A direct hit on the tank or the containment system could still cause an explosion. Much of the blast would be contained by the UFO's tough structure, but any explosion represents an extreme hazard to our interceptors. The only saving grace is that proton-antiproton explosions create little radioactive fallout.
+
+-- The craft is extremely difficult to see with human detection equipment, regardless of any electronic warfare capability on the aliens' part. This is largely due to the hull materials which very effectively absorb all kinds of radiation. We've had the most luck with passive infrared and gamma radiation detection, as the antimatter-based engines produce quite a lot of both.
+
+-- The slim design, generating poor lift and being difficult to handle in air, is partly due to the heavy weight of the hull materials. It would be impossible to create effective wings from the alien hull materials. Instead, every gramme of excess matter has been stripped off, and the craft moves at high speeds so as to need very little lift surface. The material itself is quite astonishing, part metal and part plastic polymer. It functions as a memory alloy, 'remembering' at least two assigned shapes, shrinking into a more compact form when cold but automatically stretching out and assuming a more comfortable flying shape once it heats up. It's stronger and tougher than any known material on Earth (barring pure carbon nanotubes) and far more versatile in aircraft design. More research is definitely required.
+
+Armed with these facts, we can now begin to analyse the different components and roles of the UFO. I recommend that our engineers begin dismantling this craft for parts right away. Who knows what we'll discover with the individual bits and pieces in front of us?
+
+More research on the UFO itself is also warranted. I think we can delve deeper into its intended function and perhaps gain some insight in how to counter its activities. I'll send you another proposal about it as soon as I can.
+
+Whatever we end up learning from these craft, Commander, it can only help us in the fight for Earth.
+
+Cdr. Navarre"
+}
+
+msgid alien_theory_pre_txt {
+text "_Commander, we've captured our first UFO of the war. I don't have to tell you that this is a unique research opportunity. However, before we can begin to think about studying it in-depth and dismantling it for parts, we need to do a broader overview of UFO construction as a whole. Are any of its systems still active or boobytrapped? What kind of materials is it made of? What dangers might it pose during storage or disassembly? All these questions and more need to be answered before we do anything further.
+
+We're ready to start work whenever you say, but we will need some lab time and funding to make a proper assessment of this amazing technology.
+
+Cdr. Navarre"
+}
+
+msgid alien_materials_txt {
+text "_Commander, I think we've uncovered the secret to the alien materials. After some modifications to our Workshop equipment, we should now be able to use the stuff and 'program' it into advanced new shapes.
+
+As I've mentioned before, the alien materials form a 'memory alloy', remembering several shapes that it can change into if the materials are given the right stimulus. Amazingly, the alien alloy can be stimulated by two different things: heat and electricity. Heat is an obvious choice to make the UFO fuselage splay out during atmospheric flight, to provide better lift. Electricity, though, is a new one.
+
+When applying electricity, the alloy responds only to a constant, low-voltage current at a very specific amperage. The material's shape will deform and stay deformed for as long as that current is maintained. Once the current is switched off, the alloy will revert to its normal 'at rest' shape or a heat-induced shape if enough heat is present. The electricity-induced shape takes precedence over the heat-induced shape.
+
+This means that the shape of a UFO fuselage (and anything else made with these materials) can be changed at will, either by a command from the operator or by automated electronics.
+
+This has given us a lot of amazing new ideas. We'll only be able to develop a few of these ideas in time for use in the war, as some of them would take years of research time, but they should nevertheless allow us to build things we could never have attempted before.
+
+Alien Materials should now be available for use in production. Unfortunately, they require a lot of rare and expensive components, some of which can only be found on Earth in trace quantities. There's no way we could obtain the materials needed in quantities that would make non-trivial production possible. We'll have to salvage what we need off the aliens, because we won't be able to produce any of it for the forseeable future.
+
+Cdr. Navarre"
+}
+
+msgid alien_materials_pre_txt {
+text "_Commander, as I mentioned in my previous report, the UFO we recovered was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.
+
+I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilities.
+
+Cdr. Navarre"
+}
+
+msgid enemy_on_earth_txt {
+text "_Commander,
+
+You need to read this right away. With your authorisation, we've performed several autopsies and done our best to examine the live prisoners among the alien sympathisers. The results are alarming.
+
+Do you remember the report I sent you about the first live alien specimen we captured? As you may remember, it lost all its intellect and became largely unresponsive without fellows to empower the hive mind. Prepare yourself, Commander: The human prisoners in our Containment unit exhibit the very same symptoms. They do not think for themselves. Their thought processes are firmly suppressed and supplanted by the alien hive mind through a process we currently fail to understand.
+
+We've run and re-run examinations and blood tests on these people ad nauseum, and there can be no mistake. The blood samples are full of foreign DNA. All these people are carrying something in their bloodstream -- a kind of single-cellular organism present in huge numbers, which appears to replicate like a virus when placed in an uninfected human body and rapidly takes over, enslaving the victim to the alien hive mind.
+
+These subjects run the gamut of the human race; there seems to be no preference for IQ or physical potential. We don't yet know how the infection takes root, but even a few of these organisms entering the bloodstream may be enough to infect and enslave an individual entirely. Not even our own employees are immune, as we discovered to our horror when we screened our base personnel.
+
+Our field agents remain clean, thank God -- just think if we'd gone into a combat zone with soldiers capable of turning on their teammates at any moment! -- but I fear we have found one conclusive result. It's Dr. Eisenhower, our Director of Administration. He's been away on business to the UN since last week, but we ran an older sample which has come up positive. We don't know when or how he was subverted or if he even joined PHALANX with honourable intentions, but it's clear he has acted as an alien spy for some weeks. Unfortunately we can't seem to find him at any of the locations he was scheduled to visit. Internal Security has taken charge of his workstation and is in the process of information control.
+
+Things are a bit hectic right now. Dr. Eisenhower's infection implies that other members of a hive mind -- human or alien -- were in close enough proximity to allow him to function at human intelligence. He could have linked up with our subjects in Containment, or a nearby alien cell, or even other infiltrators inside our base. Right now, we don't know. Quarantine procedures have been tightened to the absolute maximum, and we're rushing another full batch of tests on all our personnel. We're all frightened down here in DivBio. My assistant has been jumping at shadows all day.
+
+Interestingly, our attempts to infect other terrestrial life -- even intelligent vertebrates such as bottlenose dolphins and elephants -- have failed completely. This organism must have been engineered wholly or in part to specifically infect the human species.
+
+We've named the organism the XVI-H. Really, what we're looking at here is a bio-weapon of unprecedented proportions. Instead of killing its victims it takes control of them with no option of resistance and -- at the moment -- no available cure or defence. The most humble and harmless civilian can be infected and, with the instant shared expertise of the larger hive mind, become an effective warrior for the aliens while reducing our numbers. When the aliens also supply them with weapons, we can see the true face of horror.
+
+I couldn't imagine a more nightmarish scenario for us. We may even find people crewing UFOs for the aliens. It's madness.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid enemy_on_earth_pre_txt {
+text "_Commander,
+
+My team and I are deeply troubled by the recent reports of human support for the aliens, as I'm sure you are. The worrying questions seem to mount up. First, however, we need to review the facts we have.
+
+Do the aliens have active sympathisers on Earth? Yes.
+
+Are the aliens supplying these human servants? Possibly.
+
+Do the servants present a threat? Absolutely. Perhaps a greater one than the alien menace itself.
+
+We need to delve deeper into what makes these people tick.  We'd like to examine at least one live human prisoner collected by the national security sweeps which have been taking place as panic over the human threat mounts. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid xvi_census_txt {
+text "_Good morning, Sir.
+
+The XVI census program has just gone into effect. Weekly rolling tests have commenced this morning, and I've got a full report on our estimated performance levels and operational details.
+
+Our strategy is based around local medical centres, where the XVI tests are performed by existing nursing staff under the supervision of a small police or military guard. If a test turns out positive, this guard will perform the arrest and turn the infected prisoners over to the UN for containment and study. Once the aliens figure out this scheme -- I don't think it'll take them long -- the infected people will start avoiding the census, thereby giving us the data we need simply by their absence.
+
+As always there's good news and bad news. I'll start with the bad news.
+
+Despite our best efforts, the census data will have some limitations. 99.9% of the planet's population is registered with one national authority or another, but out of ten billion people that still leaves several million unaccounted for. We will be able to extrapolate figures that are accurate to within several thousand heads, but the statistics we generate won't ever be exact. This means the program is less useful for identifying those who have been infected, but still a godsend for keeping track of XVI spread and alien activity on a global basis. After all, we need to know what kind of progress we're making against this new threat.
+
+The good news is that the UN and the member nations have agreed to shoulder the entire cost of the census program. They are handling all the equipment and manpower locally, with strenuous checks as to the reliability of personnel and the validity of the results. The information will be piped directly to our command centre at no charge to us.
+
+The best thing about this program is that we can now keep track of infection levels and how much threat each region is under from XVI. This will work in conjunction with our normal detection methods to warn us where alien activity is worst and allow us to intervene before the situation becomes critical.
+
+Any area where XVI seems to be gaining ground should be posted with additional air patrols, and we should be on the lookout for any attempts by the aliens to solidify their hold on the ground. Alien activity reports in this area should be investigated and responded to with extreme prejudice.
+
+With kind regards,
+
+Col. Falkland"
+}
+
+msgid xvi_census_pre_txt {
+text "_Good morning, Sir.
+
+With these new developments regarding the infection of Earth's civilian population by this alien organism, the need arises for a way to determine the number of infected people in various regions and the rate of spread. Easier said than done, I know, but it may be every bit as important as finding a cure. We can't help anyone if we don't know they're sick.
+
+What I propose to do is to create a long-term rolling census that checks all registered individuals on the entire planet for XVI infection by way of a small blood test. Everyone will be required to submit to this test once a week to make sure they're clean -- more frequently if they fall under suspicion of infection. Samples will only need to be as large as a single drop of blood, taken from a random vein to prevent tampering. Fortunately the XVI organism is large and prevalent enough that we can test these samples on the spot with near-100%-confidence results.
+
+This is going to be a major undertaking that requires careful liaising with the intelligence services of Earth's eight big nations. I've already prepared plans and simulations to demonstrate the operation and effectiveness of this program. With some time and funding, we can convince them of the project's importance and have everything operational in a matter of weeks.
+
+All we need is your signature on the dotted line, Sir.
+
+With kind regards,
+
+Col. Falkland"
+}
+
+msgid alien_strategy_txt {
+text "_Good morning, Sir.
+
+I've got an extensive report for you regarding our work on deciphering the patterns of alien activity and their overall strategy for Earth. You can find the full document in our archives, but I will give you a quick summation here.
+
+The most striking characteristic we've seen of the invasion is that the aliens have been harvesting human biomass, sometimes even whole people, for their own nebulous purposes. They do this in a rather gruesome manner that shows no respect for life; they cut up human beings as if butchering cattle, and their Bloodspiders will simply dissect someone on the spot for a particularly interesting organ or a pint of blood. It is utterly, amorally practical.
+
+We can only assume that they use the samples they're gathering in some kind of research program, studies into our physiology and perhaps our psychology and culture as well. We don't know the reasons behind this, but it's an interesting point. They are trying to learn something about us, and they don't care how we feel about it. To them, we're merely objects to be studied.
+
+Of further interest are their main targets. Until recently alien activity reports came almost exclusively from high-density population centres with easy landing access for UFOs, which ties in with the general objective of capturing human research material. However, as of late the focus of the campaign seems to have shifted or narrowed. Activity around hospitals, blood banks and bio-research laboratories has been noticed more and more frequently in addition to the usual raids on population centres. The activity has ranged from low-key infiltration for unknown purposes up to full-scale assaults on high-security labs. We're not sure yet what this shift could mean, but we are making recommendations to the UN to sharpen security in these facilities and arm local forces to stand up to alien attack. We've marked up a list of high-risk targets for rapid police response and are distributing handbooks on anti-alien tactics. More investigation into the change of targets is underway.
+
+As always, there is a lot more alien activity going on outside of our detection range which goes unreported by civilian authorities. DivIntel is currently experimenting with new ways of reporting and responding to alien activity as well as better networking between UN nations to get valid information to PHALANX faster, all of which are direct results of our research into the aliens' strategy. We expect that these techniques will allow us to catch an estimated 10% of alien activity (out of total estimated activity on Earth) that would have previously gone unreported.
+
+We've also looked into how UFOs are getting to and from Earth, despite our problems finding and tracking the elusive larger craft we've observed. After reviewing radar, lidar and video recordings made from observatories on the planet surface, we now believe the larger UFOs to be some manner of aircraft carrier; a simple FTL-equipped base ship ferrying smaller UFOs to and from Earth.
+
+This craft is of extreme importance and we must find some way to shoot it down from orbit if we can. We should keep a close guard, Commander.
+
+With kind regards,
+
+Col. Falkland"
+}
+
+msgid alien_strategy_pre_txt {
+text "_Good morning, Sir.
+
+I'm afraid this isn't a social message; I'm writing you because of our pressing need for more information. We at DivIntel have been doing our part with tracking, logging and double-checking all reported alien activity on Earth, but we're increasingly being faced with our lack of data about the overarching goals of the alien invasion. We have no means of anticipating the aliens' next move because we have no clue as to what game plan they're following. That's why I am submitting a new project for your authorisation.
+
+I intend to analyse more closely the patterns of alien activity on Earth, the intended missions and targets of UFO incursions into our airspace, and some of the finer details of our own research documents regarding the alien creatures and their technology. The bits and pieces of intelligence we've gathered so far are just pieces of a puzzle, but right now we have no clue how they fit together. The continual low-key incursions, the mysteries of the alien hive mind, the harvesting of human material . . . Somewhere in there lie the answers we need to unravel the aliens' overall goals and strategy for Earth and for humanity. If we can just put all the pieces together, we'll finally be able to see the bigger picture, as frightening as it may be.
+
+Naturally this project will require a certain amount of lab time and funding to build up a complete picture. It shouldn't set back our other research too much, and it will be an important part of formatulating new, more effective counterstrategies to the alien invasion.
+
+The proposal is in your queue, Sir. Please write back when you'd like us to start work.
+
+With kind regards,
+
+Col. Falkland"
+}
+
+msgid orbital_ufo_activity_txt {
+text "_We've done it sir!
+
+We've completed the schematics for a guided payload capable of taking down an orbiting UFO. To launch this thing, the UN has requisitioned a massive facility built into the Rocky Mountains that was used to send supplies to the Tranquility Base colony on the moon.
+
+The payload can guide itself to the target but the Carrier UFO still needs to enter within range. If the Carrier holds its current position -- and so far we haven't detected much movement -- we anticipate we'll have a clear shot at this thing once every 24 hours.
+
+I'll let you know when the Carrier is in range, sir, and you can give the order to bring this thing down.
+
+With kind regards,
+
+Col. Falkland"
+}
+
+msgid orbital_ufo_activity_pre_txt {
+text "_Good morning, Sir.
+
+Let me begin by stating a few ugly realities.
+
+1) All of humanity's space-based assets have been evacuated after the initial attack on Earth. Only a few stations and outposts are still running, and they have been remanded to military control, with only skeleton crews of volunteer military and civilian personnel.
+
+2) We have just a handful of space-based weapons platforms, none of which are equipped to harm alien craft. The aliens have the ability to instantly exterminate any human endeavours in the solar system.
+
+3) Our satellite grid is wide open and could be wiped off the map in an instant. Emergency landlines exist, but only for military use. If the grid does come under attack, comms between PHALANX Command Centres and assets in the field -- aircraft and ground teams -- will be hamstrung.
+
+4) There is no doubt that there are alien craft moving in orbit, ferrying items and UFOs between Earth and the alien homeworld, and right now there is nothing we can do to stop them.
+
+This leads us to only one conclusion: The space around Earth is no longer under our control. The only reason humanity retains any space capability at all is because the aliens have chosen not to destroy it yet.
+
+Our shocking vulnerability from space is demonstrated in the fact that we've fought this war exclusively on the ground and in the air. We have no space-planes that can be adapted for combat, and designs for building them are years from completion. Not even PHALANX could create a workable combat plane in time to affect the outcome of the war with the technologies currently at our disposal.
+
+What little orbital weaponry we have is severely inadequate. There are nuclear missiles which the UN won't let us use, and which would be far too destructive to help our research efforts if one of the colossal things ever managed to score a hit. If the aliens decide they want to bomb us into extinction, they can just walk right up and knock. This is a situation that has to be remedied.
+
+The only question we can ask about this orbital UFO activity is how we're going to counter it. Until now we've not been able to affect the situation, but with budget increases and our growing reputation in the UN, pieces are starting to fall into place for a new step to our strategy.
+
+By far the most promising idea for a short-term orbital response weapon is to adapt one of the 'space guns' used by NASA and the European Space Agency to launch satellites and -- before the invasion forced us to evacuate our extraplanetary installations -- fire resupply packages at Tranquility Base colony on the moon. These space guns are essentially giant railguns with enough power to send a satellite-sized payload into orbit. With our library of UN research on electromagnetic weaponry, we can upgrade one of these guns into an anti-orbital weapon capable of knocking alien ships out of the sky. We're confident we can convince at least one of Earth's space agencies to lend us a suitable gun for the job.
+
+There are problems, however. Obviously these guns can't move, being built into the side of a mountain, so the target would have to pass directly in front of the gun for us to have a chance to hit it. Since we can't count on the aliens to give us a point-blank shot, this has been a big stumbling block, but we believe there may be a solution: If the gun can't move in order to hit something, the bullets will have to move instead.
+
+The plan calls for development of a special shell that is able to adjust its own trajectory with a suite of onboard rockets. We're currently pushing the UN to let us use a miniature nuclear warhead -- no more than 3 kilotons -- to make sure that any hit will kill. This orbital shell will be large, heavy, and a hell of a challenge to load into the gun, but it's absolutely necessary to give the project a realistic chance of success.
+
+As you see, Sir, these problems can all be overcome, but we need to do some serious R&D and commit a good deal of funding to get it all working. Please lend your authorisation as soon as is feasible.
+
+With kind regards,
+
+Col. Falkland"
+}
+
+msgid alien_psi_device_txt {
+text "_Good morning, Sir. I've got a report for you on the alien psi device wreckage, but you're not going to like it.
+
+To be honest we're stumped. We don't yet have a reliable theory about what this object is actually doing. Our sample may have been damaged in the assault on the alien base but that seems unlikely. It is definitely doing something. We just can't figure out what.
+
+The theories we've floated range from the ordinary to the ridiculous, but I think there is only one worth considering seriously at this stage. The most simple explanation is that the machine is some kind of communication device. Given that we have been unsuccessful at identifying how aliens communicate with each other in our lab tests, it seems plausible that we would be unable to detect the communication methods used by this device.
+
+However, we have no data to back up this claim and other, more ridiculous theories, are still bouncing around the lab. They include everything from mind-control to instantaneous travel.
+
+I said these theories were ridiculous, sir, but given our lack of solid information we're not discounting anything. Hopefully further research will allow us to learn more.
+
+With kind regards, Col. Falkland"
+}
+
+msgid alien_psi_device_pre_txt {
+text "_Sir, our troops just got back from our raid on the alien base. They brought back the wreckage of that strange device we encountered. I need this wreckage turned over to DivIntel immediately, as well as some funding and lab time, so that we can find out its purpose and try to unravel the mystery of the powerful psionic attacks which emanated from it during the attack.
+
+The device has to be of extreme importance for the entire base to be built around it. But is it a weapon, a computer, a communication device, or something more mysterious? If more alien bases are found, we may have to defend ourselves from other such devices, although I sincerely hope that's not the case.
+
+Cdr. Navarre and Dr. Connor have already committed their support for the project, and both have agreed to assist us with the technical side of research. All we need now is your approval, Commander.
+
+With kind regards, Col. Falkland"
+}
+
+msgid human_vaccine_txt {
+text "_Technical Specifications: MG12 Machine Gun
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+The British SA-3000 GPG (General-Purpose Gun), colloquially known as the Great British Gun, is a versatile drum-fed machine gun that has seen service throughout the world in its 16-year operational life. First deployed in 2068, it quickly found its niche as a light machine gun for infantry and ground-support helicopters, able to be fired from the hip as easily as from a bipod or pintle mount.
+
+The infantry version of the GPG is a highly versatile and reliable gun. Unlike most machine guns the GPG takes caseless ammunition from a large drum magazine instead of a belt. This limits fire rate and magazine endurance, but it's also the reason for the weapon's versatility. The reloading process for the GPG is almost as quick and easy as an assault rifle, and the drums contain 100 rounds each. This allows the GPG to be used almost as a heavy assault rifle. The magazines are on the bulky side, but still small and light enough for an average soldier to carry several of them into battle.
+
+The gun contains surprisingly few computerised components, only a powerful recoil compensator and shock absorbing system. This helps to improve accuracy above that of older machine guns, although it's never going to be a sniper rifle. The solid design and sheer simplicity of its internals combine to make the GPG a very reliable weapon. It has seen action in Mumbai and performed admirably there, providing effective and highly mobile suppressive fire, sometimes capable of pinning down whole alien squads depending on the terrain.
+
+The GPG fires the popular 4.7mm caseless round, also used in our AR-80 Assault Rifle. Unfortunately the magazines are not interchangeable between Assault Rifle and GPG, as the Assault Rifle uses a different feed system.
+
+We feel that the GPG is the best candidate for our arsenal in the machine gun category. Our troops can depend on this gun to deliver heaps of fire when and where they need it most.
+
+For PHALANX use, we have given this machine gun the classification MG12.
+
+
+Recommended Doctrine
+
+The MG12 will be an extremely valuable tool in controlling the battlefield. It can set up mobile strongpoints from which to stage attacks on alien positions, it can provide effective suppressive or diversionary fire from all ranges, or it can be used simply as a powerful medium-range assault weapon.
+
+It should be a prime candidate for any soldier with assault weapons training.
+
+
+Addenda
+
+None."
+}
+
+msgid human_vaccine_pre_txt {
+text "_Good morning, Sir.
+
+With these new developments regarding the infection of Earth's civilian population by this alien organism, the need arises for a way to determine the number of infected people in various regions and the rate of spread. Easier said than done, I know, but it may be every bit as important as finding a cure. We can't help anyone if we don't know they're sick.
+
+What I propose to do is to create a long-term rolling census that checks all registered individuals on the entire planet for XVI infection by way of a small blood test. Everyone will be required to submit to this test once a week to make sure they're clean -- more frequently if they fall under suspicion of infection. Samples will only need to be as large as a single drop of blood, taken from a random vein to prevent tampering. Fortunately the XVI organism is large and prevalent enough that we can test these samples on the spot with near-100%-confidence results.
+
+This is going to be a major undertaking that requires careful liaising with the intelligence services of Earth's eight big nations. I've already prepared plans and simulations to demonstrate the operation and effectiveness of this program. With some time and funding, we can convince them of the project's importance and have everything operational in a matter of weeks.
+
+All we need is your signature on the dotted line, Sir.
+
+With kind regards,
+
+Col. Falkland"
+}

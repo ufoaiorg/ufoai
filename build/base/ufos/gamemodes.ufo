@@ -1,0 +1,30 @@
+cgame multiplayer {
+	window	"multiplayer"
+	name "_Multiplayer"
+	equipments (
+		multiplayer_initial
+		multiplayer_alien
+		multiplayer_phalanx
+		campaign_player
+		campaign_initial_market
+		stun
+	)
+}
+
+cgame campaign {
+	window	"campaign"
+	name "_Campaign"
+}
+
+cgame skirmish {
+	window	"skirmish"
+	name "_Skirmish"
+	equipments (
+		multiplayer_initial
+		multiplayer_alien
+		multiplayer_phalanx
+		campaign_player
+		campaign_initial_market
+		stun
+	)
+}

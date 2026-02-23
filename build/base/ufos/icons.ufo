@@ -1,0 +1,458 @@
+// sprite icons/definitions for GUI
+
+//
+// icons scripted into ui scrips
+//
+
+sprite icons/geoscape {
+	image "banks/pack1"
+	texl "0 0"
+	size "42 42"
+	pack64 true
+}
+
+sprite icons/check {
+	image "banks/pack1"
+	texl "48 0"
+	size "42 42"
+	pack64 true
+}
+
+sprite icons/return {
+	image "banks/pack1"
+	texl "101 36"
+	size "25 24"
+	pack64 true
+}
+
+sprite icons/research_stop {
+	image "banks/pack1"
+	texl "112 0"
+	size "43 34"
+	pack64 true
+}
+
+sprite icons/research_start {
+	image "banks/pack1"
+	texl "160 0"
+	size "49 34"
+	pack64 true
+}
+
+sprite icons/mail {
+	image "banks/pack1"
+	texl "225 5"
+	size "30 23"
+	pack64 true
+}
+
+sprite icons/garbage {
+	image "banks/pack1"
+	texl "229 35"
+	size "22 25"
+	pack64 true
+}
+
+sprite icons/next {
+	image "banks/pack1"
+	texl	"130 38"
+	size	"13 20"
+	pack64 true
+}
+
+sprite icons/prev {
+	image "banks/pack1"
+	texl	"145 38"
+	size	"13 20"
+	pack64 true
+}
+
+sprite icons/list {
+	image "banks/pack1"
+	texl	"162 35"
+	size	"23 26"
+	pack64 true
+}
+
+sprite icons/autopsyalien {
+	image "banks/pack2"
+	texl	"1 1"
+	size	"44 48"
+	pack64 true
+}
+
+sprite icons/killalien {
+	image "banks/pack2"
+	texl	"75 0"
+	size	"38 32"
+	pack64 true
+}
+
+sprite icons/question {
+	image "banks/pack2"
+	texl	"80 0"
+	size	"27 46"
+	pack64 true
+}
+
+sprite icons/change_height {
+	image "banks/pack2"
+	texl	"92 33"
+	size	"19 19"
+	pack64 true
+}
+
+// small employee
+
+sprite icons/smallhead_soldier {
+	image "banks/pack2"
+	texl	"116 0"
+	size	"28 28"
+	pack64 true
+}
+
+sprite icons/smallhead_pilot {
+	image "banks/pack2"
+	texl	"144 0"
+	size	"28 28"
+	pack64	true
+}
+
+sprite icons/smallhead_worker {
+	image "banks/pack2"
+	texl	"172 0"
+	size	"28 28"
+	pack64	true
+}
+
+sprite icons/smallhead_scientist {
+	image "banks/pack2"
+	texl	"200 0"
+	size	"28 28"
+	pack64	true
+}
+
+sprite icons/smallhead_medic {
+	image "banks/pack2"
+	texl	"228 0"
+	size	"28 28"
+	pack64	true
+}
+
+// vertical arrows
+
+sprite icons/varrow_top_bottom {
+	image "banks/pack2"
+	texl	"202 32"
+	size	"11 15"
+	pack64	true
+}
+
+sprite icons/varrow_swap {
+	image "banks/pack2"
+	texl	"218 32"
+	size	"19 15"
+	pack64	true
+}
+
+sprite icons/varrow_bottom_top {
+	image "banks/pack2"
+	texl	"242 32"
+	size	"11 15"
+	pack64	true
+}
+
+// plus and minus icons (styled like time icons below)
+sprite icons/plus {
+	image "banks/pack3"
+	texl	"0 0"
+	size	"19 19"
+	pack64	true
+}
+
+sprite icons/minus {
+	image "banks/pack3"
+	texl	"19 0"
+	size	"19 19"
+	pack64	true
+}
+
+// delay time
+
+sprite icons/speed_stop {
+	image "banks/pack2"
+	texl	"112 28"
+	size	"15 25"
+	pack64	true
+}
+
+sprite icons/speed_play1 {
+	image "banks/pack2"
+	texl	"127 28"
+	size	"14 25"
+	pack64	true
+}
+
+sprite icons/speed_play2 {
+	image "banks/pack2"
+	texl	"140 28"
+	size	"21 25"
+	pack64	true
+}
+
+sprite icons/speed_play3 {
+	image "banks/pack2"
+	texl	"159 28"
+	size	"27 25"
+	pack64	true
+}
+
+sprite icons/speed_dot {
+	image "banks/pack2"
+	texl	"185 32"
+	size	"12 17"
+	pack64	true
+}
+
+sprite icons/bordered_magnifying_glass {
+	image "banks/pack1"
+	texl	"1 46"
+	size	"16 16"
+	pack64	true
+}
+
+sprite icons/bordered_sleep {
+	image "banks/pack1"
+	texl	"19 46"
+	size	"16 16"
+	pack64	true
+}
+
+sprite icons/bordered_question {
+	image "banks/pack1"
+	texl	"37 46"
+	size	"16 16"
+	pack64	true
+}
+
+sprite icons/bordered_cross {
+	image "banks/pack1"
+	texl	"55 46"
+	size	"16 16"
+	pack64	true
+}
+
+//
+// messagelist icons
+//
+
+sprite icons/message_debug {
+	image "banks/pack_message"
+	texl	"0 16"
+	size	"15 15"
+	single	true
+}
+
+sprite icons/message_info {
+	image "banks/pack_message"
+	texl	"16 16"
+	size	"15 15"
+	single	true
+}
+
+sprite icons/message_research {
+	image "banks/pack_message"
+	texl	"16 0"
+	size	"15 15"
+	single	true
+}
+
+sprite icons/message_construction {
+	image "banks/pack_message"
+	texl	"0 0"
+	size	"15 15"
+	single	true
+}
+
+sprite icons/message_transfer {
+	image "banks/pack_message"
+	texl	"48 0"
+	size	"15 15"
+	single	true
+}
+
+sprite icons/message_promotion {
+	image "banks/pack_message"
+	texl	"48 16"
+	size	"15 15"
+	single	true
+}
+
+sprite icons/message_production {
+	image "banks/pack_message"
+	texl	"32 0"
+	size	"15 15"
+	single	true
+}
+
+sprite icons/message_death {
+	image "banks/pack_message"
+	texl	"32 16"
+	size	"15 15"
+	single	true
+}
+
+sprite icons/message_ufo {
+	image "banks/pack_message"
+	texl	"32 16"
+	size	"15 15"
+	single	true
+}
+
+//
+// hud icons
+//
+
+sprite icons/number_1 {
+	image "banks/pack_hud"
+	texl	"0 0"
+	size	"17 26"
+	pack64	true
+}
+
+sprite icons/number_2 {
+	image "banks/pack_hud"
+	texl	"17 0"
+	size	"17 26"
+	pack64	true
+}
+
+sprite icons/number_3 {
+	image "banks/pack_hud"
+	texl	"36 0"
+	size	"17 26"
+	pack64	true
+}
+
+sprite icons/number_4 {
+	image "banks/pack_hud"
+	texl	"53 0"
+	size	"17 26"
+	pack64	true
+}
+
+sprite icons/number_5 {
+	image "banks/pack_hud"
+	texl	"72 0"
+	size	"17 26"
+	pack64	true
+}
+
+sprite icons/number_6 {
+	image "banks/pack_hud"
+	texl	"92 0"
+	size	"17 26"
+	pack64	true
+}
+
+sprite icons/number_7 {
+	image "banks/pack_hud"
+	texl	"110 0"
+	size	"17 26"
+	pack64	true
+}
+
+sprite icons/number_8 {
+	image "banks/pack_hud"
+	texl	"129 0"
+	size	"17 26"
+	pack64	true
+}
+
+sprite icons/number_9 {
+	image "banks/pack_hud"
+	texl	"147 0"
+	size	"17 26"
+	pack64	true
+}
+
+sprite icons/number_10 {
+	image "banks/pack_hud"
+	texl	"165 0"
+	size	"23 26"
+	pack64	true
+}
+
+sprite icons/number_11 {
+	image "banks/pack_hud"
+	texl	"188 0"
+	size	"23 26"
+	pack64	true
+}
+
+sprite icons/number_12 {
+	image "banks/pack_hud"
+	texl	"212 0"
+	size	"23 26"
+	pack64	true
+}
+
+sprite icons/humanoid_arms_wound {
+	image	"banks/pack_wounds"
+	texl	"0 0"
+	size	"16 16"
+}
+
+sprite icons/humanoid_arms_wound_treated {
+	image	"banks/pack_wounds"
+	texl	"0 16"
+	size	"16 16"
+}
+
+sprite icons/humanoid_head_wound {
+	image	"banks/pack_wounds"
+	texl	"16 0"
+	size	"16 16"
+}
+
+sprite icons/humanoid_head_wound_treated {
+	image	"banks/pack_wounds"
+	texl	"16 16"
+	size	"16 16"
+}
+
+sprite icons/humanoid_legs_wound {
+	image	"banks/pack_wounds"
+	texl	"32 0"
+	size	"16 16"
+}
+
+sprite icons/humanoid_legs_wound_treated {
+	image	"banks/pack_wounds"
+	texl	"32 16"
+	size	"16 16"
+}
+
+sprite icons/humanoid_torso_wound {
+	image	"banks/pack_wounds"
+	texl	"48 0"
+	size	"16 16"
+}
+
+sprite icons/humanoid_torso_wound_treated {
+	image	"banks/pack_wounds"
+	texl	"48 16"
+	size	"16 16"
+}
+
+sprite icons/default_body_wound {
+	image	"banks/pack_wounds"
+	texl	"64 0"
+	size	"16 16"
+}
+
+sprite icons/default_body_wound_treated {
+	image	"banks/pack_wounds"
+	texl	"64 16"
+	size	"16 16"
+}

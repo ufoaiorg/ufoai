@@ -1,0 +1,101 @@
+msgid installation_radar_txt {
+text "_Blueprints -- Radar Tower
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 18 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+In addition to the base radar facility blueprints I submitted earlier today, I'd like to submit these blueprints for a smaller off-base installation. Our in-base facilities will never be able to cover the whole globe, so we'll need to build some of these Radar Towers to fill any gaps in our coverage.
+
+The blueprints provide details to construct a small facility. This means that each tower will cover only a small range, but they can be erected quickly and cheaply to rapidly improve our operational capabilities.
+
+
+Recommended Doctrine
+
+The radar tower has a limited range compared to the facilities we've designed inside the PHALANX bases, so they'll need to be produced quickly and in large numbers to expand our radar coverage around the world.
+
+We should strive to cover as much of the earth as possible, but detecting a UFO is meaningless if we can't shoot it down. We should concentrate our construction on areas within range of our interceptors at first.
+
+The tower's camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it.
+
+
+Addenda
+
+None."
+}
+
+msgid installation_ufo_yard_txt {
+text "_Blueprints -- UFO Yard
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 17 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+If we're to survive this war, we'll need to do more than just detect and knock down UFOs. We'll need to recover these crafts and initiate an active research program that will investigate the alien technology to apply to our own aircraft.
+
+To do this, we'll need a dedicated storage facility -- one that is far too large to house on our bases. Please consider the attached blueprints, which outline plans for how to securely store and camouflage any alien craft we might recover. We'll be able to transport recovered craft to these facilities and conduct the necessary research.
+
+
+Recommended Doctrine
+
+UFOs stored in a UFO Yard can be researched and dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base. UFO Yards should be built nearby bases which will need access.
+
+UFOs can be transferred between different yards.
+
+
+Addenda
+
+None."
+}
+
+msgid installation_sam_site_txt {
+text "_Blueprints -- SAM Site
+
+CLASSIFIED LEVEL BLACK
+
+PHALANX Extraterrestrial Response Unit
+
+Construction Precis, Sigma Clearance -- Commander's Eyes Only
+
+Filed: 18 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+I hope you've had a chance to read the blueprints I submitted earlier today for a surface-to-air missile defense facility we can build at PHALANX bases. We've hastily adapted those blueprints to design an off-base installation that can run on its own grid.
+
+This facility can provide additional defensive hardpoints around key strategic points. Although they remain vulnerable to detection and destruction from alien craft, they at least provide additional assurances that missile launchers won't expose the location of our bases.
+
+
+Recommended Doctrine
+
+Once built you'll need to equip the SAM site with missile batteries before it will be able to engage alien craft.
+
+
+Addenda
+
+None."
+}

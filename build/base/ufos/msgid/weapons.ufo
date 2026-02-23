@@ -1,0 +1,2028 @@
+msgid laser_txt {
+text "_Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output at a smaller scale than has ever been achieved before.
+
+The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.
+
+Now, however, we at PHALANX have built a conventional laser cannon in miniature. Despite its small size it is fully capable of handling the deuterium-fluoride reaction and containing the toxic waste products without danger of contamination. Let me give you a brief description of the inner workings.
+
+Inside the combustion chamber, ethylene is burned in nitrogen trifluoride. This reaction produces excited fluorine radicals, which are then brought into contact with a mixture of helium and deuterium gas. The deuterium reacts with the fluorine, producing excited molecules of deuterium fluoride. These undergo stimulated emission in the weapon's optical resonator, generating the beam. A series of intelligent lenses then focuses and directs the beam to the aiming point and even corrects for minor movement by the shooter or the target. The deuterium waste gas is rammed through our custom-designed high-pressure filtering system, which catches all toxic molecules before expelling the remaining harmless vapour back into the atmosphere.
+
+The filter needs to be replaced regularly, but we've designed the system to make this easy and painless. If the filter system is somehow damaged during the course of an operation, the weapon will immediately stop functioning in order to prevent contamination.
+
+The prototype we built is unfortunately not yet ready for full-scale production, since more refining and balancing is required for real-world combat. I've submitted new proposals to your inbox for the principal ideas we've drawn up.
+
+Let me know when you want us to start working on them, Commander.
+
+Cdr. Navarre"
+}
+
+msgid laser_pre_txt {
+text "_Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.
+
+Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research. I believe that we can make an effective laser weapon at sizes previously unheard-of for a DEW.
+
+This will be a preliminary research report. I can't promise we'll return immediately with a powerful man-portable laser weapon. The only mobile laser weaponry we've been able to get close to in the past has been mounted on heavy vehicles. But I am optimistic we can miniaturize it enough to mount on light interceptor craft and may even be able to leverage the inherit accuracy and speed of laser weaponry to deliver a powerful ground-to-air threat that could help us knock these things out of the sky.
+
+As far as I'm concerned, we at PHALANX are going to do the impossible, and we can start doing it as soon as you approve this proposal.
+
+Cdr. Navarre"
+}
+
+msgid pistol_txt {
+text "_Technical Specifications: P-12 Pistol
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+With the return of armour to the battlefield, starting with steel helmets in World War 1 and fragmentation vests in Vietnam, pistols have had a harder and harder time keeping up. Due to their far lower muzzle velocity compared to longer-barreled and/or fully automatic weapons, they've had increasing trouble penetrating the new, ever-higher standards of human armour -- much less advanced alien composites. The very concept of the pistol in military use came under fire at one point in the 21st century, and was saved only by the advent of super-high-velocity powder.
+
+Chief among the new generation of super-pistols is the Dolvich DV762 from Russia. It follows the design philosophy of its home country; rugged, reliable power without frills. Its design is extremely basic, and though the materials used in its construction are far stronger to cope with the new powder, the DV762's internals are no more advanced than any pistol of the late 20th century.
+
+The DV762 does not compromise. It isn't a multi-function firearm. It's designed for only one thing: to punch through armour and kill the person inside. In order to do this, the DV fires the ancient 7.62mm Tokarev pistol round, either on semi-automatic or three-round burst mode, from a 12-round detachable box magazine. The Tokarev round is known for its excellent penetration, and it has been significantly upgraded on its return to military service. This pistol can shoot clean through the side of a modern ballistic helmet at ranges of up to 10 metres -- and then out the other side.
+
+Unfortunately, in order to achieve penetration, the DV sacrifices stopping power. The 7.62mm round makes a very clean hole in the enemy, which is the problem; it's very reluctant to fragment or tumble, requiring a direct hit on a vital organ or major artery to incapacitate or kill an enemy.
+
+For the purposes of the Excalibur program, we concluded that a guaranteed minor hit is better than one that may simply bounce off an alien's armour, especially as we have yet to gain a clear picture of how nasty alien armour can get. We need sidearms that we know will be effective in the crunch, and the DV762 is the best of them.
+
+For PHALANX use, we have given this pistol the classification P-12.
+
+
+Recommended Doctrine
+
+The P-12 is primarily a backup weapon. It is a significant step up from the combat knife as a weapon of last resort, and it lets a soldier respond to new close-range threats if the primary weapon is rendered ineffective at such ranges or has run out of ammo.
+
+Ambidextrous soldiers may even consider using two pistols at the same time, though this will negatively impact accuracy and reduce the soldier's already minimal effective range.
+
+A single P-12 should rarely be considered as a primary weapon, as it is outclassed in this role by nearly every other weapon in our arsenal. Its advantages are the advantages of a sidearm -- small size and weight. Still, it may find a use as a primary weapon with field medics and technicians who do not have room for larger weapons.
+
+
+Addenda
+
+Despite good penetration against organics, this weapon performs very poorly against robotic targets."
+}
+
+msgid pistol_mag_txt {
+text "_Technical Specifications: 7.62mm Pistol Magazine
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This magazine contains 12 rounds of 7.62x25mm TT (Tokarev) pistol ammunition. It is a conventional staggered-stack box design. Though the original TT bullet design is ancient, the rounds in this magazine are brand-new and ready for service, reinforced with steel and tungsten to withstand the tremendous force of the powder explosion. This round is an excellent penetrator, able to punch through heavy armour at close range. However, it's also reluctant to fragment or tumble, requiring a direct hit on a vital organ or major artery to incapacitate or kill an enemy. Combined with super-high-velocity powder, these rounds also have a kick like a mule. A two-handed firing stance is recommended for most users to avoid the chance of breaking a wrist.
+
+The magazine is meant to be loaded into a P-12 Pistol.
+
+
+Recommended Doctrine
+
+All soldiers equipped with pistols should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.
+
+
+Addenda
+
+None."
+}
+
+msgid pistol2_txt {
+text "_Technical Specifications: MP-699 Machine Pistol
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+With the return of armour to the battlefield, starting with steel helmets in World War 1 and fragmentation vests in Vietnam, pistols have had a harder and harder time keeping up. Due to their far lower muzzle velocity compared to longer-barreled and/or fully automatic weapons, they've had increasing trouble penetrating the new, ever-higher standards of human armour -- much less advanced alien composites. The very concept of the pistol in military use came under fire at one point in the 21st century, and was saved only by the advent of super-high-velocity powder.
+
+The major drawback of super-high-velocity powder is that it cannot be used in fully-automatic weapons, since no firearms action on this Earth can survive that much violence for long without breaking. The British APMP pistol ignores these concerns by using more ordinary smokeless powder and a longer, almost SMG-length barrel to achieve higher velocities and greater kinetic power. It is a true machine pistol, fully automatic and capable of firing 600 rounds per minute from its surprisingly slim-lined 30-round detachable box magazine. It has three firing modes: semi-automatic, 3-round burst, and full-automatic.
+
+The APMP fires the specially-developed 4.2x24mm round that goes through kevlar like it wasn't there. Once inside a human body this tiny round tumbles like a madman and creates huge wound cavities. It has a deal of trouble penetrating modern body armour, but this is offset by the APMP's ability to deliver repeated hits from its large magazine, all in a pistol-sized package. Unfortunately, the APMP can be a little unwieldy due to its size. Accuracy during burst and fully-automatic fire suffers as a result.
+
+Whenever we need an automatic weapon no larger than our own P-12, this is the weapon that fills the gap.
+
+For PHALANX use, we have given this machine pistol the classification MP-699.
+
+
+Recommended Doctrine
+
+The MP-699 is primarily a backup weapon. It is a significant step up from the combat knife as a weapon of last resort, and it lets a soldier respond to new close-range threats if the primary weapon is rendered ineffective at such ranges or has run out of ammo. It is a good alternative for soldiers who have trouble hitting anything with the P-12, but the MP-699 is low-powered in comparison with the P-12. Furthermore, its magazines are large enough to preclude hanging them from a soldier's belt and far fewer of them can be carried conveniently.
+
+Ambidextrous soldiers may consider using two pistols at the same time, though this will negatively impact accuracy and reduce the soldier's already minimal effective range.
+
+A single MP-699 should rarely be considered as a primary weapon, as it is outclassed in this role by nearly every other weapon in our arsenal. Its advantages are the advantages of a sidearm -- small size and weight. Still, it may find a use as a primary weapon with field medics and technicians who do not have room for larger weapons.
+
+
+Addenda
+
+None."
+}
+
+msgid pistol2_mag_txt {
+text "_Technical Specifications: 4.2mm MP Magazine
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This magazine contains 30 rounds of 4.2x24mm pistol ammunition. It is a double-column box design. The rounds are very small and have decent penetration, especially when causing several impacts close to each other, and they cause a great deal of tissue damage once they've penetrated skin. They're designed to have very little recoil, but this doesn't help the MP-699's accuracy very much.
+
+The magazine is meant to be loaded into an MP-699 Machine Pistol.
+
+
+Recommended Doctrine
+
+All soldiers equipped with machine pistols should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.
+
+
+Addenda
+
+None."
+}
+
+msgid vhs_assault_txt {
+text "_"
+}
+
+msgid assault_txt {
+text "_Technical Specifications: AR-80 Assault Rifle
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+The French Leblanc FAA-191 (Fusil Assaut Automatique) provides the most advantageous mix of range, penetration against alien armour, and magazine size in the assault rifle class. It is a bullpup design, meaning the magazine and action of the weapon are located behind the grip to reduce overall weapon length. The 191 fires a 30-round box magazine of 4.7mm caseless ammunition, tungsten-cored steel penetrators with impressive armour-piercing capability over short and medium ranges. The round does not perform well at long range, but then assault rifles aren't meant for long-range firefights.
+
+Though the design is far from new, first prototyped in 2057, no other rifle has fully surpassed the 191. It is accurate and quick to reload. Its rugged construction makes it dependable in combat and unlikely to break or jam. It is resistant to heat, cold, dust and humidity all at once. Ammunition and replacement parts are widely available due to the design's maturity and relative popularity among Earth's armed forces. This is a rifle you can entrust your life to.
+
+For PHALANX use, we have given this rifle the classification AR-80.
+
+
+Recommended Doctrine
+
+This should be our go-to weapon for medium-range engagements. It can lay down an impressive amount of fire and is deadly out to far longer ranges than any pistol or SMG.
+
+However, no one should entertain the illusion that the assault rifle is the end-all be-all of our arsenal. A balance of weapons is required for us to be able to deal with different situations; while the assault rifle remains a good weapon at close range, it can be slow to manoeuvre in tight spaces and is eclipsed by both submachine guns and shotguns at these ranges, weapons which provide a far greater point-blank punch. Any sweep of an urban building should be led by close-range weapons, while rifle-equipped soldiers either secure the perimeter or form a second assault wave to support the others.
+
+If our rifle-equipped troops are caught beyond effective weapon range, they should make an advance from cover to cover in order to effectively bring their weapons to bear. Snipers should provide covering fire for the advancing teams or attempt to take out the enemy at range.
+
+
+Addenda
+
+While the AR-80 is a fine rifle in all respects, it was not designed to fight an alien invasion force. We should develop our own purpose-built weapons as soon as it becomes feasible to do so."
+}
+
+msgid assault_mag_txt {
+text "_Technical Specifications: Assault Rifle Magazine
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This magazine contains 30 rounds of 4.7x33mm caseless ammunition, armour-piercing mod. It is of a classic curved box design with the rounds stacked in a dual-column arrangement. The rounds themselves are tungsten-cored steel penetrators, encased in their own propellant rather than heavy brass casings. They perform well against a variety of enemies at short and medium ranges.
+
+The magazine is meant to be loaded into an AR-80 Assault Rifle.
+
+
+Recommended Doctrine
+
+All soldiers equipped with assault rifles should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.
+
+
+Addenda
+
+None."
+}
+
+msgid machinegun_txt {
+text "_Technical Specifications: MG12 Machine Gun
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+The British SA-3000 GPG (General-Purpose Gun), colloquially known as the Great British Gun, is a versatile drum-fed machine gun that has seen service throughout the world in its 16-year operational life. First deployed in 2068, it quickly found its niche as a light machine gun for infantry and ground-support helicopters, able to be fired from the hip as easily as from a bipod or pintle mount.
+
+The infantry version of the GPG is a highly versatile and reliable gun. Unlike most machine guns the GPG takes caseless ammunition from a large drum magazine instead of a belt. This limits fire rate and magazine endurance, but it's also the reason for the weapon's versatility. The reloading process for the GPG is almost as quick and easy as an assault rifle, and the drums contain 100 rounds each.
+
+The gun contains surprisingly few computerised components, only a powerful recoil compensator and shock absorbing system. This helps to improve accuracy above that of older machine guns, although it's never going to be a sniper rifle. The solid design and sheer simplicity of its internals combine to make the GPG a very reliable weapon. It has seen action in Mumbai and performed admirably there, providing effective and highly mobile suppressive fire, sometimes capable of pinning down whole alien squads depending on the terrain.
+
+The GPG fires the popular 4.7mm caseless round, also used in our AR-80 Assault Rifle. Unfortunately the magazines are not interchangeable between Assault Rifle and GPG, as the Assault Rifle uses a different feed system.
+
+We feel that the GPG is the best candidate for our arsenal in the machine gun category. Our troops can depend on this gun to deliver heaps of fire when and where they need it most.
+
+For PHALANX use, we have given this machine gun the classification MG12.
+
+
+Recommended Doctrine
+
+The MG12 will be an extremely valuable tool in controlling the battlefield. It can spit out a high volume of rounds to take down a powerful enemy or score a hit on a target at distance through sustained fire.
+
+
+Addenda
+
+None."
+}
+
+msgid machinegun_mag_txt {
+text "_Technical Specifications: Machine Gun Drum
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This drum contains 100 rounds of 4.7x33mm caseless ammunition, armour-piercing mod. Unlike rifle magazines, the rounds in this drum are linked together into a long belt rather than stacked onto a spring. The belt links are made of a special plastic that disintegrates upon exposure to open air.
+
+The rounds themselves are tungsten-cored steel penetrators, encased in their own propellant rather than heavy brass casings. They perform well against a variety of enemies at short and medium ranges.
+
+The magazine is meant to be loaded into an MG12 Machine Gun.
+
+
+Recommended Doctrine
+
+All soldiers equipped with machine guns should carry at least one reload whenever they go out in the field. Where this is not possible a secondary soldier can carry spare ammunition.
+
+
+Addenda
+
+None."
+}
+
+msgid rpg_txt {
+text "_Technical Specifications: HPML Rocket Launcher
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+The South-African MPMDS (Multi-Purpose Missile Delivery System) has a classic, almost surgically clean name that completely belies its purpose. It is the heaviest infantry missile launcher on the market, able to fire high-explosive rockets that turn infantry into hamburger. Originally intended as light field artillery, this weapon is fairly new; its only combat experience has been in Mumbai in the hands of Commonwealth troops. It was one of the handful of weapons that eventually turned the tide in the fighting -- and there is a good reason why.
+
+Alien craft on the ground emit fantastic amounts of jamming and other EW (Electronic Warfare) activity. In fact, they emit so much of it that ordinary 'smart' missiles are rendered completely ineffective. If one type of alien EW doesn't fool the missile's relatively stupid electronic brain, another will. No amount of tinkering by Earth's military engineers has been able to fix the situation. The MPMDS, however, will remain effective against the alien invaders -- one of the few human missile launchers that can -- because its rockets carry no onboard guidance.
+
+The rockets are 120mm monsters the size of artillery shells. They are fired out of a smoothbore barrel and are fin-stabilised in flight. Surprisingly they are made up of only three parts: a rocket booster, a warhead and an impact trigger. This simplicity allows them to remain effective and reliable in the most hazardous situations. Though the rockets are not very accurate, they will devastate anything in their path, even aliens. It takes only one good hit from an MPMDS rocket to send the enemy flying.
+
+Standard ammunition for this launcher includes: HE (High-Explosive) rockets and IC (Incendiary) rockets.
+
+Along with the HPGL Grenade Launcher, this weapon will provide our troops with the artillery support they need to survive and win.
+
+For PHALANX use, we have given this rocket launcher the classification HPML.
+
+
+Recommended Doctrine
+
+The HPML is best used in a support role, providing covering fire for our assault troops with high-explosive and/or incendiary rockets. However, care should be taken that friendly fire incidents do not occur, as this could have disastrous effects in a combat mission.
+
+The HPML should not be fired at targets closer than 8 metres from the shooter. Violating this safety guideline could result in serious injury or death to the shooter and other members of the team. If a target is closer than 8 metres, any shooter should immediately resort to his sidearm or a combat knife. Anything else would be suicide.
+
+
+Addenda
+
+Along with sniper rifles and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
+}
+
+msgid rpg_ammo_txt {
+text "_Technical Specifications: HE Rocket
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This is a 120mm solid-fuel rocket fitted with a High-Explosive warhead. It is fired electronically by a spark igniter inside the launcher's barrel. The fuel is highly stable and resists concussion and heat, though it can cook off if exposed to high temperatures for a significant period of time. The warhead itself is completely inert unless armed by the impact trigger. Fire cannot set it off unless and until it's armed. Like C4 explosive, the unarmed compound inside the warhead will burn rather than explode when exposed to heat or open flame.
+
+Because it carries no onboard electronics, the rocket is impervious to EMP and electronic jamming. All high-tech aiming is done at the launcher. Therefore a properly-aimed rocket will arrive at its target regardless of anything that might happen during flight.
+
+The rocket is meant to be loaded into an HPML Rocket Launcher.
+
+
+Recommended Doctrine
+
+All soldiers equipped with rocket launchers should carry at least one reload whenever they go out in the field. Two or more are strongly recommended. It is not advisable to send our troops into combat without sufficient ammunition.
+
+
+Addenda
+
+None."
+}
+
+msgid rpg_incendiary_ammo_txt {
+text "_Technical Specifications: IC Rocket
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This is a 120mm solid-fuel rocket fitted with an incendiary warhead. It is fired electronically by a spark igniter inside the launcher's barrel. The fuel is highly stable and resists concussion and heat, though it can cook off if exposed to high temperatures for a significant period of time. The warhead itself can spill its contents if damaged, but the thermite mix will not ignite unless exposed to a very high-temperature flame.
+
+Incendiary rockets are area-denial weapons, covering a patch of ground with very hot flames that are almost impossible to extinguish. The compound itself is a modification of a mixture that has been in use since World War II; thermite, barium nitrate, sulphur and binding agent.
+
+Because it carries no onboard electronics, the rocket is impervious to EMP and electronic jamming. All high-tech aiming is done at the launcher. Therefore a properly-aimed rocket will arrive at its target regardless of anything that might happen during flight.
+
+The rocket is meant to be loaded into an HPML Rocket Launcher.
+
+
+Recommended Doctrine
+
+All soldiers equipped with rocket launchers should carry at least one reload whenever they go out in the field. Two or more are strongly recommended. It is not advisable to send our troops into combat without sufficient ammunition.
+
+
+Addenda
+
+None."
+}
+
+msgid rpg_hybrid_ammo_txt {
+text "_Commander, we've finished drawing up the design for a scaled-down Hybrid Rocket.
+
+The new design takes several lessons from our aircraft missile, but of course we had to drastically reduce the payload so that a soldier can carry this around the battlefield. The result is the most powerful rocket our explosives experts have ever been able to wield.
+
+The shell is built of alien materials which splinter into thick fragments upon detonation. The explosive force of the detonation sends these durable chunks hurtling through the air at such speeds that no protective suit any man or alien could wear could possibly block them.
+
+I know the battlefield is getting bloodier by the day, sir, but you'll want to remind soldiers of the importance of keeping civilians out of the blast radius. Anyone unlucky enough to be standing near a detonation of one of these things is certain to be dead or horribly maimed.
+
+Cdr. Navarre"
+}
+msgid rpg_hybrid_ammo_pre_txt {
+text "_Commander, I'd like to recommend research into a new projectile for our rocket launcher.
+
+We had great success in developing the Hybrid Missile for our aircraft. The alien materials shatter into incredibly powerful shrapnel which can punch through heavy armour. I'd like to take a stab at retrofitting this technology for our man-portable rocket launcher.
+
+All the pieces are in place for a scaled-down version of the rocket which will help our ground assault squads as they face bigger and more heavily armoured alien forces.
+
+Cdr. Navarre"
+}
+
+msgid xaw95_txt {
+text "_"
+}
+
+msgid xaw95_pre_txt {
+text "_No pre research info available"
+}
+
+msgid bombkit1_txt {
+text "_"
+}
+
+msgid bombkit1_pre_txt {
+text "_No pre research info available"
+}
+
+msgid chaingun_txt {
+text "_"
+}
+
+msgid chaingun_pre_txt {
+text "_No pre research info available"
+}
+
+msgid shotgun_txt {
+text "_Technical Specifications: CRC-212 Riot Shotgun
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+From our experiences in Mumbai and other stricken cities, we've concluded that the aliens seem to concentrate their efforts on population centres, especially dense urban areas. A majority of engagements have taken place at knife-fighting range. For the purposes of the Excalibur Program, we've chosen several high-performance weapons for our Close Range Combat package.
+
+Many great shotguns have come out of Italy over the past two centuries; the latest is the Rossi AAA, a semi-automatic combat shotgun developed for use by SWAT and anti-terrorist units. It features several ground-breaking technologies, but its most impressive feature is without a doubt the specially-developed 'Twist' barrel. The Twist is a new type of shotgun barrel that, with a sharp twist of the front handguard, can protrude or flatten the rifling inside the barrel. With this mechanism, the AAA can change its barrel from smoothbore to rifled and back in a tenth of a second. The barrel even adjusts its own diameter and choke to fit whatever type of shell is in the chamber. These two innovations allow the AAA to fire any kind of shotgun ammo at a moment's notice.
+
+The most commonly used military and SWAT ammunition is the 12mm centerfire flechette shell. Each shell contains 8 tiny flechettes -- solid steel needles with fins to stabilise their flight. This ammunition has superior accuracy compared to buckshot and performs excellently against armour. The flechettes are also prone to tumble after penetration, resulting in impressive wounding capability for such a small projectile. Their drawbacks are vulnerability to wind conditions and other deflecting factors. Other types of ammo are available to deal with these situations, however -- and the AAA can fire them all.
+
+In conclusion, the Rossi AAA is a highly versatile shotgun that is among the most effective close-range weapons available. It has a longer range than the CRC-FL Flamethrower and causes more damage than the CRC-8 SMG, providing a good compromise between speed, range and stopping power.
+
+For PHALANX use, we have given this shotgun the classification CRC-212.
+
+
+Recommended Doctrine
+
+The CRC-212 performs very well at close quarters but quickly loses power as the range increases. Flechette shot tends to spread too far to be effective at range (though less so than ordinary buckshot), while rifled slugs suffer a pronounced projectile drop and are highly susceptible to wind conditions. Though the shotgun can shoot out to medium range, don't expect it to be very effective.
+
+Where this weapon will truly shine is in urban situations where the enemy has little cover to hide behind and can be engaged at close range. However, it can be too long to manoeuvre properly in tight spaces. The CRC-M9 Micro Shotgun may be preferable in these situations.
+
+
+Addenda
+
+None."
+}
+
+msgid bolterrifle_txt {
+text "_The EM rifle project has been a resounding success! For the first time in human history, we've created a viable man-portable electromagnetic weapon. We have named our weapon the Bolter Rifle to avoid ambiguity with other existing MAG (Magnetic Accelerator Gun) implementations. I'll do my best to explain its operation in this short summary.
+
+The Bolter Rifle is equipped with a railgun configuration, as opposed to a coilgun/Gauss gun configuration, due to the high inefficiency and generally poor operation of coilguns. Railguns work by utilising electromagnetic force to propel an electrically conductive projectile along two conducting rails. The electric current flowing through the rails sets up a magnetic field between them and through the projectile. The direction of the magnetic field is perpendicular to the current flowing through the rails and the projectile; this results in the rails and projectile pushing each other, thereby accelerating the projectile along the rails.
+
+The world's first large-scale railgun, built in the 1970s, used 500 MJ of stored energy from the largest homopolar generator ever built. The electrical equipment needed to power these guns has become much more compact in the past century or so, but it is still not small or light enough to create man-portable weapons capable of replacing chemical-propellant firearms. Another major failing of railguns is their extreme susceptibility to rail erosion. The rails suffer heavy damage from every shot fired along them, and when the contact points are badly damaged, the electric current cannot properly pass from the rails through the projectile. This causes successive shots to lose more and more of their power. Each round needs at least a short length of undamaged rail in order to build up velocity.
+
+Fortunately, we've managed to find a way around this problem -- by loading new rails into the gun after every series of shots.
+
+The concept of pre-loading all of a weapon's ammunition into the barrel has been around for a long time. Until now it has only been applied to conventional firearms, but we have come up with a new concept; a small, individually-powered and insulated length of rail loaded with every round. This gives each round a viable contact point and will allow the weapon to sustain power through all its shots. When all rounds in the current barrel have been depleted -- and therefore the rails thoroughly destroyed -- the soldier can simply unlock the old barrel, let it drop to the ground, and slot in a fresh spare. Then he can replace the battery pack for a new series of shots.
+
+The projectiles are specially-developed 3.2x40mm finned flechettes, stamped from large sheets of tungsten alloy. They are razor-sharp, with excellent armour-piercing qualities, and they tumble like demons inside the target. The holes that these flechettes cause are many times larger than their actual size.
+
+This choice of loading system makes the Bolter slow and clumsy to reload, with expensive, oversized magazines (a new barrel and battery pack for each reload) and a small ammo capacity. On the other hand, the Bolter's stopping power is far greater than any chemical firearm in our arsenal. It is one of the heaviest and most cumbersome rifles one might legitimately call a rifle, but in the hands of a trained specialist it is extraordinarily accurate.
+
+Cdr. Navarre"
+}
+
+msgid bolterrifle_pre_txt {
+text "_Commander, please read this proposal for a new long-range weapon that we believe will be a crucial counter to the new alien armour we're encountering.
+
+We've received a number of research files from several UN nations concerning research and development for man-portable electromagnetic weaponry; various designs have been proposed and even prototyped for railguns, coilguns and quench guns. Of course, all these experiments have failed, since electromagnetic weapons require huge amounts of power -- and therefore banks of capacitors so heavy that no human soldier could possibly carry them. Even atomic batteries have not given us the power output we need to make man-portable electromagnetic guns a reality. It is impossible.
+
+At least, that's what we thought. Ever since we were able to understand the incredible strength of the alien armour, we've been brainstorming ideas for weaponry that can reach out and touch the alien menace on the battlefield, whether or not they're clad in this armour. We took a very close look through our collected UN research data on electromagnetic weaponry. It's nothing short of a gold mine in disguise. By combining the best of these individual cluttered pieces, we believe we may be able to devise a new long-range sniper weapon for our tactical teams that will be both man-portable and combat-effective.
+
+This idea holds a lot of promise, Commander. We would like your authorisation for lab time and funding in order finally make electromagnetic weaponry a reality.
+
+Cdr. Navarre"
+}
+
+msgid bolterrifle_am_txt {
+text "_Commander, we've completed the designs for an Antimatter Flechette round for the Electromagnetic Rifle.
+
+The flechettes contain a tiny amount of antimatter inside the tip. The heat and force of the kinetic impact should always be enough to cause the antimatter to detonate, resulting in a significant explosion in spite of the smaller size of the round.
+
+The sheer expense involved in creating these rounds mean we should probably save them for decisive battles. They are difficult and time-consuming to produce, and they use up precious antimatter that may be needed elsewhere. But when we need victory at all costs, this weapon will transform any sniper into a killing machine.
+
+Cdr. Navarre"
+}
+
+msgid bolterrifle_am_pre_txt {
+text "_Commander, our research into antimatter weaponry has given us a lot of new ideas for creating new weapons and modifying our old ones. Unfortunately it has also highlighted the crippling limitations of most of those ideas.
+
+Using antimatter in our conventional firearms -- in any capacity -- is out of the question. There are too many shocks and vibrations involved in the firing of conventional weapons for us to shield against. All attempts we've made have suffered containment failures and other explosive mishaps. However, it's occurred to us that our own Bolter Rifle may be just unconventional enough for our needs.
+
+What we propose to do is to create a new type of ammunition for the Bolter using antimatter as a primary component. If we can place a tiny quantity of antimatter at the heart of the round, we can engineer this antimatter to break free of its containment and explode on impact. This should create an impressive little blast that will make any alien think twice about sticking its head out of cover again.
+
+Please let me know when you'd like us to start work, Commander.
+
+Cdr. Navarre"
+}
+
+msgid combatknife_txt {
+text "_Technical Specifications: Combat Knife
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+The combat knife is a solid, twenty-six centimetre bar of sharp steel that can be used for a number of everyday purposes. As a weapon, the combat knife's edge is reinforced with hard ceramics to give it extra armour-piercing power, and it is balanced for throwing should the need arise. It also has a bayonet ring for affixing the knife to the barrel of an old-style battle rifle.
+
+The inclusion of the combat knife in our arsenal was a subject of hot debate. Mumbai has taught us that even in the most favourable conditions, a knife is no match for the aliens' weaponry. If a knife-equipped soldier isn't shot down before he even reaches his target, he will almost certainly be gutted by one of the wicked alien blades that slice right through armour. Only in a handful of occasions have experienced knife-fighters been able to win out against alien opponents.
+
+Still, the combat knife has saved many a life over the years when firearms became inoperable or ran out of ammo. It has never been rendered obsolete by centuries of progressing technology; even the aliens use bladed weapons. When the chips are down, a knife in hand is still vastly better than a man's own fists.
+
+If a soldier makes it all the way to melee range, this weapon will serve him well.
+
+
+Recommended Doctrine
+
+In combat, the knife is a weapon of last resort. If all other weapons are exhausted and the enemy is at the gates, then a good knife can save the day. However, even in such desperate situations it is risky business; using a knife on an enemy that hasn't been previously wounded or weakened is a fast way to end up in the morgue.
+
+
+Addenda
+
+None."
+}
+
+msgid monoknife_txt {
+text "_Commander, I'm hereby reporting our success in the creation of alien blade materials. We've loaded the production specs into our Workshop machinery and have constructed a small forge for shaping our new monomolecular knives.
+
+The reproduction process has been very interesting on this one. After we'd figured out how to 'cook' the alien plastics to the right temperatures, we ended up with bars of incredibly hard material which we then tried to shape into knives. On our first attempts we tried to create a straight-edged blade with a powerful point, like most modern combat knives, so that it could be used for both cutting and stabbing. All of these models snapped in half during the cooling process. We had a devil of a time figuring out why until we placed a small camera inside the furnace.
+
+It turns out that the curve of the Kerrblade isn't a design choice -- it's a function of the material itself. The plastic radically curves and expands during heat-moulding in our furnace, and contracts again during cooling, which ended up cracking all of our straight-edged blades. It demands a particular curved shape to retain its durability as a blade. We had to completely redesign the knife to account for this effect, which brought it to its current shape.
+
+In length, it's either a long knife or a short sword, depending on who you ask. The design of the handle and crossguard are based on Middle-Eastern and Asian swordmaking traditions mixed in with modern-day science and know-how. The handle is made from semi-solid rubber, which automatically moulds itself to the wielder's hand to maximise comfort and gripping power. Both the triangular crossguard and pommel are unbreakable carbon-nanotube-reinforced plastic, a material that even Kerrblades have trouble with.
+
+This knife goes a long way towards evening the odds for our soldiers when they get caught in hand-to-hand. Though it's larger than our old combat knife, doesn't thrust as well, and doesn't have the power of the Kerrblade's sword-length swing, it strikes an ideal middle ground between these two weapons. The monomolecular knife is almost the equal of the Kerrblade in lethality but still small enough to be worn in our standard holster or in a sheath hung from the belt. It amounts to a significant upgrade of our melee combat capabilities, and I'm thoroughly pleased with the result.
+
+Cdr. Navarre"
+}
+
+msgid monoknife_pre_txt {
+text "_Commander, now that we've had a good look at the alien blade technology from several sources -- the Bloodspider's 'fangs' and the Kerrblade -- we're starting to form a picture of how to recreate the unknown or ill-understood materials used in their construction.
+
+Some of this stuff is completely new to us. The plastics from which the alien blades are forged are harder than damascus steel, sharper than a razor, and yet shock-resistant and flexible enough to survive the stresses of melee combat. Once forged they are nearly impossible to break, nick or bend. Applying a hammer and chisel directly to the blade just means you end up with two neatly-sliced halves of a chisel.
+
+Obviously it would be of great interest to us if we could create our own knives made from these materials, with edges tapering to the width of a single molecule. My team and I believe it may now be possible.
+
+If you give us the funding and lab time we need, we can design and create a new monomolecular combat knife that will even the playing field for our soldiers when forced into hand-to-hand combat. This knife will be far more compact than the Kerrblade and much easier for humans to wield, and it'll be small enough to be used one-handed.
+
+Equipping our troops with such weapons could give them a major advantage, as they'll be able to properly defend themselves in melee for the first time whilst using other weapons or equipment -- such as pistols, grenades, medikits, or other useful items of tactical or life-saving importance.
+
+Cdr. Navarre"
+}
+
+msgid flamer_txt {
+text "_Technical Specifications: CRC-FL Flamethrower
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+From our experiences in Mumbai and other stricken cities, we've concluded that the aliens seem to concentrate their efforts on population centres, especially dense urban areas. A majority of engagements have taken place at knife-fighting range. For the purposes of the Excalibur Program, we've chosen several high-performance weapons for our Close Range Combat package.
+
+The Iranian ADA 22 flamethrower (nicknamed 'The Torch of God' by Alliance troops) is a marvel of modern engineering. Unlike the old flamethrowers of the 20th century, it requires no heavy pressure tanks to be carried on a soldier's back -- the ADA is one unit carried in the hands without any hoses or tubes. It simply slots a relatively small 200mm gas canister into the feed, fires its deadly ammunition, and then ejects the empty canister to make room for a reload. The system is ingenious and surprisingly reliable.
+
+The muzzle of the weapon is a powerful pump that squirts gas into the air, then sets off the gas-air mixture by way of four parallel spark igniters, one main unit and three backups. These igniters each emit as many as ten sparks per second in order to ignite the fuel before it disperses. The backups are very important in preventing an explosion due to the special fuel the ADA uses, a substance called Compound 90.
+
+Compound 90 is a new flamethrower fuel that, when injected into the air, creates a slow thermobaric reaction -- a fuel-air ignition rather than a fuel-air explosion -- that can roast living tissue in seconds. C90 inflicts horrific damage on organic targets; the heat generated exceeds 1700 degrees celsius, enough to melt titanium. However, due to its gaseous nature it leaves no burning residue (like napalm) on the target or in the surrounding area and disperses its heat much more quickly. This makes it significantly safer for urban use than napalm-derivative substances.
+
+The ADA 22's main drawbacks are its short range and its complex internals, which are difficult to repair. However, our experienced technicians should have no problem doing maintenance on this model.
+
+For PHALANX use, we have given this flamethrower the classification CRC-FL.
+
+
+Recommended Doctrine
+
+The CRC-FL is a close-range weapon; the operator needs to be fast in order to get into weapons range and unleash as much hell as possible. It is also a rather weighty weapon despite its relatively slim design. Strength as well as speed is required to wield it effectively.
+
+Flamethrowers also make great ambush weapons -- just make sure that none of our soldiers are in the line of fire.
+
+
+Addenda
+
+This weapon should not be fired if there are civilians in or near the target zone."
+}
+
+msgid flamer_mag_txt {
+text "_Technical Specifications: C90 Canister
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This is a 200mm canister of high-pressure flammable gas, locked and secured via three different systems to prevent accidents. Compound 90 is a new flamethrower fuel that, when injected into the air, creates a slow thermobaric reaction -- a fuel-air ignition rather than a fuel-air explosion -- that can roast living tissue in seconds. Its range is limited, as the C90 must be quickly ignited before it disperses, but it inflicts horrific damage on organic targets that few weapons can hope to match. The heat generated by C90 exceeds 1700 degrees celsius, enough to melt titanium, but due to its gaseous nature it leaves no burning residue (like napalm) and disperses heat much more quickly. This makes it significantly safer for urban use than napalm-derivative substances.
+
+The canister is meant to be loaded into a CRC-FL Flamethrower.
+
+
+Recommended Doctrine
+
+All soldiers equipped with flamethrowers should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare canisters.
+
+
+Addenda
+
+None."
+}
+
+msgid flashbang_txt {
+text "_Technical Specifications: Flashbang
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+The flashbang is a non-lethal grenade that produces a blinding flash and a deafening blast to temporarily confuse or disorient targets in the area of effect. The grenade body does not explode or fragment upon detonation. In fact, if the body remains undamaged, it can be easily refilled and used again.
+
+Humans affected by a flashbang suffer temporary deafness and impaired balance, as well as complete loss of eyesight for up to five seconds before the effect fades and vision returns to normal. This makes the flashbang an excellent weapon for distracting and temporarily disabling the enemy, especially when assaulting heavily-defended positions. From combat reports, we've concluded that flashbangs have much the same effect on aliens as they do on humans; alien targets are effectively blind and deaf for a short time after the flashbang is deployed, rendering them helpless. We can't say exactly how long this period is, and it will undoubtedly vary from alien to alien, but it's still long enough to make the difference in a firefight.
+
+Aside from being a useful tactical tool, the flashbang will allow our soldiers to get in close and personal without being cut to shreds by the alien weapons. It allows the commander to choose exactly which weapons are applied in a given situation whilst avoiding the collateral damage potential of a frag grenade. A very quick enemy can take precautions to negate flashbang effects simply by closing his eyes and plugging his ears, but he will have very little warning and in most cases will require special training to respond in time. From what we can tell the aliens have had no prior experience with this type of weapon and have no defensive doctrine against it. Even a prepared enemy will still be distracted by a flashbang and could be engaged by fast-action troops before being able to reclaim his weapon and take aim.
+
+The flashbang's strengths far outweigh its weaknesses. It has served with distinction in many wars before this one, and it will continue to do so until all its functions can be replaced somehow by a new system.
+
+
+Recommended Doctrine
+
+The flashbang does no physical damage to anyone caught in its area of effect, and for that reason alone this weapon should be used over frag grenades and other explosive ordnance during any mission where civilians are placed at risk.
+
+It is an indispensible weapon in any terrain that features large amounts of available cover. If aliens are lying in wait and charging around a corner might be suicide, the mere act of popping a flashbang down the corridor can significantly change the outcome of the ensuing firefight in favour of our troops. Its utility is not to be underestimated.
+
+
+Addenda
+
+Naturally the flashbang is only effective against organic aliens with eyes and ears."
+}
+
+msgid fraggren_txt {
+text "_Technical Specifications: Fragmentation Grenade
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+The concept of the fragmentation grenade has changed little since it was first conceived, when Chinese soldiers packed gunpowder into ceramic or metal containers. It only solidified further after the end of the 20th century. Improvements in explosive technology and casing materials have made them a little faster and a little deadlier, but the mechanics are the same: An explosive substance at the heart of the grenade causes the casing (and possibly additional payload such as a layer of wire or white phosphorus coiled around the explosive) to fragment into shrapnel and fly in all directions at high speed, killing or wounding targets in the area of effect. The delayed fuse is ignited by first pulling the pin and then releasing the handle, usually released as the grenade is thrown. It will detonate after a period of several seconds.
+
+For PHALANX purposes, we have selected the Australian HG15 as the best of the lot. This grenade is loaded with an extremely conventional charge of C8 solid chemical explosive, an inner layer of coiled wire, and an outer layer of thin plated steel. It's designed to maximise coverage by putting out more shrapnel than any other grenade on the market. The HG15's outer layer is smooth and unbroken, unlike the old 'pineapple' grenades of World War 2, to make it easier to roll across various surfaces. The C8 explosive at its core may be old in design, but it's both highly powerful and can be counted on to work right under harsh conditions. Reliability is an especially important attribute in any kind of hand-held bomb.
+
+
+Recommended Doctrine
+
+Though quite effective against enemy infantry, frag grenades are weapons of opportunity, not a replacement for firearms or portable artillery. Their range is highly limited and their casualty radius is small. However, if the situation calls for close-range indirect fire or something deadly thrown around a corner, the frag grenade is just the thing.
+
+Care should be taken that no friendlies (especially civilians) are caught in the area of effect. In such situations the use of lethal grenades is strongly discouraged; flashbangs should be given preference.
+
+It's recommended that all soldiers carrying non-heavy weapons should be equipped with at least one grenade of some variety -- be it a frag grenade, flashbang, incendiary grenade or other -- in case the need should arise. Two or more are strongly recommended.
+
+
+Addenda
+
+None."
+}
+
+msgid incgren_txt {
+text "_Technical Specifications: Incendiary Grenade
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+Incendiary grenades are area-denial weapons, covering a large stretch of ground with very hot flames that are almost impossible to extinguish. Once thrown, the body of the grenade explodes, spreading the incendiary compound over the surrounding area -- and anyone unlucky enough to be inside the area of effect. The compound itself is a modification of a mixture that has been in use since World War II; thermite, barium nitrate, sulphur and binding agent. The grenade's delayed fuse is ignited by first pulling the pin and then releasing the handle, usually released as the grenade is thrown. It will detonate after a period of several seconds.
+
+The standard American M71 grenade consists of a core of C8 explosive, an inner layer of incendiary agent, and an outer plastic casing that provides no fragmentation but more importantly doesn't slow down or otherwise impede the delivery of the payload over a large area. The M71's casing is a smooth cylinder shape, unlike the old 'pineapple' grenades of World War 2, to make it easier to roll across various surfaces.
+
+Like all hand grenades, their range is limited, but they can be an essential tool for achieving control of the battlefield.
+
+
+Recommended Doctrine
+
+Incendiary grenades are tactical weapons that should be used to contain or herd the enemy into disadvantageous ground. They cannot be thrown very far, but they can serve to block off escape routes, to flush out rooms, or simply to catch the enemy in a blazing inferno.
+
+Care should be taken that no friendlies (especially civilians) are caught in the area of effect, as the effect of the thermate cocktail on human tissue is a particular public relations nightmare. In such situations the use of lethal grenades is strongly discouraged; flashbangs should be given preference.
+
+It's recommended that all soldiers carrying non-heavy weapons should be equipped with at least one grenade of some variety -- be it an incendiary grenade, frag grenade, flashbang or other -- in case the need should arise. Two or more are strongly recommended.
+
+
+Addenda
+
+None."
+}
+
+msgid grenl_txt {
+text "_Technical Specifications: HPGL Grenade Launcher
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+First released on the open market in 2047, the Brazilian RA6 has received numerous upgrades over the years that have kept it at the top of its field. It is the most widely-used infantry grenade launcher in use today because of its excellent reliability and low weight. It has an impressive selection of compatible cartridges in the popular 25mm calibre.
+
+The RA6 carries up to 6 grenades individually loaded into a simple rotary cylinder. The cylinder is hinged at the front and breaks open to accept reloads. Reloading individual grenades can be a slow and agonising process, but this is often the best way of going about it; while 25mm speedloaders do exist and will work on the RA6, they are bulky and hard to carry around.
+
+The weapon has two fire modes. When fired in Impact mode, the grenades will explode as soon as they hit something -- a wall or the target. They'll also explode the moment they reach their target destination, a nice way to ensure the grenade will explode near to where the soldier is aiming it.
+
+But it also has a Timer mode. When fired this way, the grenades will detonate several seconds after leaving the barrel regardless of what happens in those seconds. This is great for bouncing a grenade around a corner or firing a long shot, but it is harder to be precise.
+
+This is one of the most versatile and effective weapons on our roster. While not as powerful as the rocket launcher, it is a reliable support weapon and infantry artillery piece.
+
+For PHALANX use, we have given this grenade launcher the classification HPGL.
+
+
+Recommended Doctrine
+
+The HPGL is a tactician's dream come true. It has excellent damage and range, can hit several clustered targets with one blast, and can be used for special tasks such as area denial with incendiary grenades. It can be as effective in close situations as it is in large open spaces; however, different tactics are required.
+
+For close-range emergency work -- for example if the operator has no sidearm -- the launcher can also be loaded with special 25mm flechette shells similar to our shotgun shells.
+
+
+Addenda
+
+Along with sniper rifles and rocket launchers, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
+}
+
+msgid grenl_ammo_txt {
+text "_Technical Specifications: 25mm HIT Grenades
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This is a box of 6 25mm HIT (High Impulse Thermobaric) grenades. They are fired electronically by a spark igniter inside the launcher's barrel. These grenades are 'fuel-air munitions' that use atmospheric oxygen to generate an explosion instead of carrying along an oxidising agent. Thermobaric weapons produce a far more powerful explosive force than would be possible with conventional explosives of the same size.
+
+These grenades are meant to be loaded into an HPGL Grenade Launcher.
+
+
+Recommended Doctrine
+
+All soldiers equipped with grenade launchers should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare grenades.
+
+
+Addenda
+
+None."
+}
+
+msgid grenl_fle_ammo_txt {
+text "_Technical Specifications: 25mm Flechette Grenades
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This is a box of 6 25mm flechette grenades. They are fired electronically by a spark igniter inside the launcher's barrel. While still classified as grenades due to their calibre and delivery system, they have more in common with shotgun shells.
+
+These grenades are meant to be loaded into an HPGL Grenade Launcher.
+
+
+Recommended Doctrine
+
+All soldiers equipped with grenade launchers should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare grenades.
+
+
+Addenda
+
+None."
+}
+
+msgid grenl_incendiary_ammo_txt {
+text "_Technical Specifications: 25mm IC Grenades
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This is a box of 6 25mm incendiary grenades. They are fired electronically by a spark igniter inside the launcher's barrel. These grenades are area-denial weapons, covering a patch of ground with very hot flames that are almost impossible to extinguish. The compound itself is a modification of a mixture that has been in use since World War II; thermite, barium nitrate, sulphur and binding agent. And thanks to modern miniaturisation technology, it will all fit into a handy, lightweight 25mm shell.
+
+These grenades are meant to be loaded into an HPGL Grenade Launcher.
+
+
+Recommended Doctrine
+
+All soldiers equipped with grenade launchers should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare grenades.
+
+
+Addenda
+
+None."
+}
+
+msgid grenl_plasma_ammo_txt {
+text "_Commander, we've finished the testing and prototype phase of our new 25mm plasma grenades. We're ready to move it to mass-production and full field deployment.
+
+For this project, we already had ready access to all the required technology. We've made very few changes to the general design of the grenade. The only real challenge was to shrink the complex machinery enough to fit inside a standard 25mm shell. We've had to scale back the power of the plasma grenade somewhat in order to do that -- the hydrogen core of our new 25mm shell is a fair bit smaller, emitting less plasma than the alien hand grenade. However, this is offset by the fact that it can be fired en masse from our HPGL Grenade Launcher over relatively long distances.
+
+We've dubbed our creation the 25mm PB ('Plasma Burst') Grenade. We can manufacture them, but they will be extremely expensive to produce. One full load of 25mm PB is essentially an entire magazine of miniature plasma grenades, miniatures which are even more difficult to create than the original.
+
+The amount of firepower we've added to our grenadiers is frightening to behold. Launch a cylinder of these grenades into a crowded street and nothing will be left. They'll become a highly valuable addition to our arsenal.
+
+Cdr. Navarre"
+}
+
+msgid grenl_plasma_ammo_pre_txt {
+text "_Commander, my team and I have drawn up a research proposal for a new tac weapon based on our plasma grenade research.
+
+Now that we're able to reproduce these alien plasma grenades, we've been looking into the possibility of adapting the technology to be fired from a grenade launcher. This would be a challenge, as the plasma hand grenades are significantly larger than 25mm, but we may be able to produce a scaled-back version that -- while not as powerful -- will have all the advantages of being fired from our standard HPGL Grenade Launcher.
+
+If we can manage to design and produce magazines of this type, they'd lend the HPGL increased firepower and even more tactical applications, well worth the monetary cost.
+
+The project is waiting for your authorisation, Commander.
+
+Cdr. Navarre"
+}
+
+msgid irgoggles_txt {
+text "_Technical Specifications: IR Goggles
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created not only to find the right weapons to combat the alien threat, but also to find armour and other items of battlefield utility to help our soldiers complete their missions and return to base alive. These items are designed to increase a soldier's combat effectiveness or general survivability.
+
+Infrared night-vision imaging has been used on battlefields for generations, and miniaturisation technology has allowed it to become part of a soldier's standard issue for nighttime operations. Advances in electronics over the last 30 years have allowed IR imaging equipment to shrink to the size of swimming goggles with no loss of efficiency.
+
+These goggles pick up all infrared emissions in the area and display them on the inside of the lenses. They can be easily worn for the duration of a nighttime engagement, greatly extending a soldier's visual range in the darkness and allowing him to see targets through thin walls. Thick walls present a greater obstacle and may obscure targets inside entirely. Of course, there is no way to distinguish between the IR signatures of civilians and those of aliens whenever we do not have direct line of sight. Any readings taken through walls or other obstacles will not be conclusive.
+
+Our IR goggles will work even during the day, though their effectiveness will be greatly reduced in daylight.
+
+Unfortunately, this technology does have its drawbacks. Wearing goggles limits the soldier's peripheral vision and reduces hand-eye coordination, causing a slight drop in accuracy. They will hamper a soldier's eyesight as long as they are worn. Worse, our records from Mumbai confirm that some aliens with low heat emissions don't show up on infrared at all. Detection range for these aliens will actually be reduced, allowing them to sneak up on us if no other members of the team are in range to spot the approaching threat.
+
+In conclusion, these goggles will increase our nighttime performance exponentially, making night engagements much more survivable for our troops. However, they are not and will never be a foolproof substitute for the Mk. 1 Eyeball.
+
+
+Recommended Doctrine
+
+We should use these items sparingly and tactically to avoid costly mistakes. It is recommended that no more than half the team wear goggles during an engagement in order to avoid surprises. Two-man fireteams -- one man equipped with goggles, one man with normal eyesight -- are recommended for maximum battlefield effectiveness.
+
+Using goggles during daytime is generally contraindicated, as they lose most of their utility in daylight conditions. The only reason to continue wearing them under such conditions is their limited ability to see through walls.
+
+Close-range combat troops will suffer least from the accuracy penalty inflicted by IR goggles. However, longer-range shooters cannot afford this penalty, as a missed shot with one of these weapons may have dire consequences. Snipers in particular will have infrared laser targeting available via their scopes anyway.
+
+
+Addenda
+
+None."
+}
+
+msgid kerrblade_txt {
+text "_Our analysis of the Kerrblade is complete, Commander. Here is my summary for your review.
+
+The Kerrblade seems at first glance like the alien equivalent of our combat knife. Reality would be a better place if that were true. We've concluded it is much more than that, and the truth is far from comforting.
+
+Crafted from carbon alloy and alien plastics, it is surprisingly light and contains no metal whatsoever. The material itself is highly interesting for our weapons production. No matter how much we abuse it during testing, the blade will not chip, nick or bend. We think we might be able to duplicate the stuff with some more research.
+
+Its shape vaguely resembles the old curved swords from human history, though perhaps it has more relation to something out of fantasy fiction. It's too large, unwieldy and poorly balanced for the human hand. The blade, however, tapers to an incredible edge; we have measured it to be only one molecule wide. This gives the Kerrblade its fantastic cutting power.
+
+In our battlefield footage, we've seen the Kerrblade used with a curious, long-fingered grip -- one which the human hand is unable to duplicate -- that seems to indicate the Kerrblade is used as something other than a purpose-designed weapon. The closest analogies we've been able to find on Earth are those of a surgeon's scalpel and certain ancient disemboweling tools. This comparison was one of our first clues as to the true purpose of the Kerrblade. We put this together with some gruesome camera footage from Mumbai, which was so grainy that we could only guess what the aliens were doing, until now.
+
+The Kerrblade is, in fact, an autopsy tool. It's used by the aliens to cut up live or dead humans and extract whatever tissue or organ they like. The large, sharp spike at the bottom of the blade is inserted into the solar plexus, then moved upwards like a pair of scissors, or a can opener. It goes through the sternum with disturbing ease. At this point the alien will fold open the ribcage and rip or cut out whatever he needs.
+
+I wish we could just burn the things, but unfortunately they're too damned valuable. Though not primarily designed as weapons these Kerrblades are far more effective than any human combat knife. They cut up aliens almost as well as humans. The grip is highly uncomfortable for human hands, but we can adapt human grips easily enough. However, the blades are too big to ever fit into the standard-issue PHALANX holster. They can only be kept in a soldier's hands or in the backpack. This somewhat defeats the purpose of a knife -- but obviously we have no other melee weapon that even comes close in terms of power.
+
+Given the unusual grip, we haven't drawn up specs for producing these things in-house. You'll only be able to use what you can collect on the battlefield for now, but we'll continue to brainstorm ideas for how to incorporate this technology into our own weaponry.
+
+Cdr. Navarre"
+}
+
+msgid kerrblade_pre_txt {
+text "_Commander, we've recovered an interesting alien weapon from the battlefield. It looks to be some kind of knife or sword with an edge sharper than anything on Earth. It can slice steel like tissue paper and goes through our soldiers' body armour as if it wasn't even there. The troops have named it the 'Kerrblade' after the distinctive sound it makes when shredding our armour.
+
+We should examine the blade to determine its function and see how it was made. There may be a way to duplicate this technology in a form that's compatible for human use, which would make melee engagements with alien combatants far more survivable than going at them with a combat knife.
+
+Of course, this program will need your approval for lab time and funding.
+
+Cdr. Navarre"
+}
+
+msgid laserpistol_txt {
+text "_Commander, I apologise in advance if my typing isn't up to standard in this message. We've had a lot of sleepless nights down here in DivEngine working on the laser pistol project. It's been a gruelling amount of work, but I'm very proud to say that we've pulled it off. We have prototyped a working laser pistol that won't be rendered completely ineffective by alien armour.
+
+The system is essentially the same as the one I've outlined for you in my report on Continuous Wave Laser Operation. Excited molecules of deuterium fluoride are lased and focused through a series of intelligent lenses. Waste gases are put through our custom filtering system, which we've scaled down even further. However, the reduced capacity of the filtering system and the smaller optical resonator have demanded some tradeoffs.
+
+The laser pistol can only lase deuterium-fluoride at about half the rate as our old Continuous Wave Laser prototype. Naturally this produces only a half-strength beam, doing half the damage of a larger weapon. It requires a period of continuous exposure -- several seconds at least -- for the beam to inflict enough damage to kill an unarmoured target. Still, the laser will burn through anything given enough time.
+
+All the usual advantages of laser weaponry are present in the pistol. It's very quick to fire, and if the soldier misses his target at first, he can adjust his aim without letting go of the trigger.
+
+We've designed the pistol to use the standard deuterium-fluoride cartridges which we've drawn up to power all of our laser weaponry. This means it uses the same amount of D-F as the larger designs, but uses it up at a much lower rate, effectively giving the laser pistol more ammunition than any of our other laser weapons.
+
+As with all handguns, the laser pistol is strictly a backup weapon. It isn't powerful enough to compete with rifles of any kind. On the other hand, its range is quite impressive indeed for a handgun and it can fire continuously for minutes without reloading.
+
+We will need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a laser pistol.  The blueprints for the pistol and the ammo are sitting with the engineers in the workshop, so you can begin production immediately.
+
+Cdr. Navarre"
+}
+
+msgid laserpistol_pre_txt {
+text "_Our notes have produced a lot of designs, and this is possibly the most difficult one to bring into reality: a deuterium-fluoride laser weapon the size of an ordinary pistol.
+
+The difficulty in making this a reality will be to get the parts small enough and light enough so that they will fit into a pistol-sized package that is light enough to aim and fire one-handed.
+
+As always, it's going to be a tradeoff between size and power, but with enough work I believe we can indeed build a functioning laser pistol. We're just waiting for your authorisation, Commander.
+
+Cdr. Navarre"
+}
+
+msgid laserrifle_txt {
+text "_It's done, Commander. We are now the proud owners of a working laser rifle, with full production plans loaded into our computers. We've eliminated several moving parts and refined the electronics to bring production and maintenance costs down into our budget range. We've finally got an assault rifle that can punch through alien armour.
+
+This rifle is possibly the most accurate weapon ever designed. It's light, rests easily in the shooter's hands, and the focusing lenses are surprisingly effective at correcting the user's aim to help bring the beam on target -- and keep it there. Eight troops with conventional assault rifles firing away at full-auto can easily miss a moving target. With laser rifles, that becomes a near-impossibility, although we expect the accuracy in battle to be lower than those achievable in a lab.
+
+It is quick to fire, has a good magazine capacity, no recoil, a respectable range and does away with many other issues that plague conventional firearms. It will never misfire or suffer a jammed mechanism. It will never blow up due to a fouled or bent barrel. It will never have problems with incompatible or faulty ammunition. It can suffer cracked lenses if subjected to severe mistreatment, but those are thoroughly shielded, set into shock-resistant foam and protected from the outside by a metal iris that only opens when the weapon is ready to fire.
+
+We've designed the rifle to use the standard deuterium-fluoride cartridges which we've drawn up to power all of our laser weaponry. This gives it approximately two minutes of continuous wave fire before a new cartridge must be inserted. The cartridges can be popped out and left on the ground without risk of contaminating the area, but they will require special hazard disposal once the mission is completed.
+
+We'll need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a laser rifle. The blueprints for the rifle and the ammo are sitting with the engineers in the workshop, so you can begin production immediately.
+
+Cdr. Navarre"
+}
+
+msgid laserrifle_pre_txt {
+text "_The laser rifle is the flagship design of our proposed deuterium-fluoride laser family, our best theory for punching through alien armour effective against conventional and plasma weaponry. It will be a perfect marriage of power, accuracy, range, manoeuvrability and ammo capacity. If our theories hold, the laser rifle's damage potential against an armoured alien will outstrip that of any conventional assault rifle and its accuracy will far exceed them. The only problem will be actually building it.
+
+The components we've been using in our Continuous Wave Laser prototypes have been cumbersome, fragile and very expensive. Our soldiers need ruggedness in a rifle, something that will last through the bumps and bashes of combat, and we badly need to bring down production costs to make the program worthwhile. As it is, the price of a squad of working laser rifles would be on par with your average main battle tank. We need funding and lab time to bring costs down, fix or replace the most sensitive components to make the weapon more reliable, and reduce its form factor to something that can be comfortably fired by a human soldier.
+
+As always, Commander, we'll begin work as soon as you give us your authorisation.
+
+Cdr. Navarre"
+}
+
+msgid heavylaser_txt {
+text "_Commander, our heavy laser program has been a success. We've got it prototyped and ready to go into production at your say-so. As promised, the heavy laser is a powerful addition to our arsenal and we expect it to be a key asset against armoured units who can withstand conventional and plasma weaponry.
+
+This is not to say the heavy laser doesn't have its downsides. For one, it's very bulky and very heavy, requiring a strong troop to shoot it effectively. It doesn't sacrifice accuracy despite its size, but it's less quick to fire or respond than we would like, and its ammo consumption is staggering. It can chew through a full deuterium-fluoride cartridge in only 30 seconds of continuous fire. This requires a large number of magazines to be kept on hand, and the heavy laser is not particularly quick to reload.
+
+Great care will also have to be taken that no bystanders or PHALANX troops get into the path of the invisible beam. Even momentary exposure to an unobstructed beam will char bone and liquefy flesh. A hit to the eyes will result in permanent, irreparable blindness. We've talked to our training and field officers about this and have underlined safety in our field manual at every turn, but it won't hurt the troops to hear it again from you, Commander.
+
+We'll need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a heavy laser.  The blueprints for the gun and the ammo are sitting with the engineers in the workshop, so you can begin production immediately.
+
+Cdr. Navarre"
+}
+
+msgid heavylaser_pre_txt {
+text "_Laser weaponry is always a trade-off between size and power. For that reason, I'm submitting this proposal for a heavy laser infantry weapon. It would not be as mobile and flexible as we have expected from our assault specialists, but it could pack a powerful punch for those soldiers strong enough to use it effectively in combat.
+
+Given the weakness of alien armour against laser weaponry, it's certainly worth looking into, Commander.
+
+Cdr. Navarre"
+}
+
+msgid electrolaser_txt {
+text "_Commander, I'd like to report that we've successfully prototyped the new electrolaser design and have approved final plans for a production model. We can now begin to utilise it in combat. As per usual, I've written up the specs and deployment advice here for you.
+
+From a technical standpoint, the electrolaser works on almost the same principles as natural lightning. It pumps electricity through a channel of ionised air -- what we refer to as a 'plasma channel' -- that is more conductive than the air around it, allowing the electricity to arc all the way to the target and then earth itself, causing severe shock damage. This plasma channel is created by a short, high-powered laser pulse which causes the air to begin ionising
+
+Electrolasers are a tried and true concept on Earth. They have a history of use going back several decades as less-than-lethal weapons. At their most basic, they are a 'taser without the wires', but until now they've suffered serious limitations due to battery capacity and the power levels required to knock out a soldier in insulated body armour. For this reason they've only ever been developed practically as single-shot disposables and close-range civilian weapons. Thanks to the output of our deuterium-fluoride lasers and energy systems, though, we've been able to go a lot further than that.
+
+Our electrolaser can project a stable plasma channel at short to medium ranges, depending on atmospheric conditions, and deliver previously unheard-of voltages to the target. It is effective against organic enemies but robotic enemies are likely to be designed to disperse the charge.
+
+Now for the cons.
+
+The more powerful electrical systems and laser equipment have increased size and weight considerably compared to the stun rod. Another, more practical issue is the power unit. We couldn't quite achieve the desired power output profile using our standard deuterium-fluoride cartridges, so we've had to make adjustments to the ammunition package itself. I'm afraid this means that ammunition for the electrolaser is NOT interchangeable with ammunition for our regular laser weaponry.
+
+Of course, no matter what the drawbacks might be, performance is light-years ahead of Dr. Connor's stun rod. I highly recommend we start taking electrolasers on missions as soon as humanly possible. For the sake of our troops, if nothing else.
+
+Cdr. Navarre"
+}
+
+msgid electrolaser_pre_txt {
+text "_Commander, I have a new research proposal for you, something you might find interesting. Please hear me out.
+
+You know the drawbacks of Connor's stun rod have been a serious concern of mine from the very first proposal onward. Putting our soldiers in extreme danger to capture some biological specimens can't possibly be worth the risk. That's why we at DivEngine have been investigating possible alternatives, and we've now arrived at a proposal that's going to be both technologically feasible and combat-effective.
+
+I'd like to combine the stun rod research with our work on the new generation of lasers to create a beefed-up electrolaser -- a lightning gun -- of unprecedented power. Imagine all the power of a stun rod deployed at range without ever having to approach the target!
+
+With funding and lab time we can really make this work, Commander. It'll give our troops a much better fighting chance when we need to capture instead of kill.
+
+Cdr. Navarre"
+}
+
+msgid laser_ammo_txt {
+text "_Commander, we've finalised the design of the Deuterium-Fluoride Cartridges and they're now ready for mass production. They'll be expensive to make and use, but we've done everything we can to keep the costs down.
+
+The cartridge is essentially a hard plastic shell containing five separate chambers. These are four pressurised storage reservoirs for ethylene, nitrogen trifluoride, helium and deuterium, plus a small battery to power the laser's electronics.
+
+The shell itself is made of the toughest polymer we can produce, reinforced in vulnerable spots with carbon nanotubes, to prevent mixing in case the cartridge receives any shocks or impacts. We can't provide perfect protection against direct hits on the cartridge, but we've done our best. The chance of combat spillage happening during any engagement has been reduced to only a fraction of a percent.
+
+Any materials remaining in a used cartridge will be pumped back into base storage upon the dropship's return. However, once they've been used, these cartridges have to be disposed of by a chemohazard team, and we'll have to manufacture replacements. They cannot be reused due to deuterium contamination.
+
+Cdr. Navarre"
+}
+
+msgid laser_ammo_pre_txt {
+text "_This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.
+
+In order to power our deuterium-fluoride laser weaponry, we need to design a magazine that can safely store a lot of different hazardous materials. Ethylene, nitrogen trifluoride, helium and deuterium -- three of which are toxic compounds -- have to be kept in separate pressurised compartments, under complete control at all times. If these materials were allowed to mix, it would be what we engineers call a 'Bad Thing'.
+
+We already have a basic design that should overcome these problems, but we need lab facilities and funding in order to test it, prototype it and build it to UN safety spec. It's drudge work, but it has to be done in order to make our lasers safe to use on the battlefield. I'm not prepared to risk poisoning our own troops with deuterium gas by cutting corners. We need proper magazines if we're going to use our new laser weapons.
+
+Please approve this program as soon as you can, Commander.
+
+Cdr. Navarre"
+}
+
+msgid medikit_txt {
+text "_Technical Specifications: Medikit
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 19 March 2084
+
+By: Surgeon-Captain Helen Floydd, Medical Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+In the past, the application of first aid and field surgery in hostile situations required specially-trained combat medics and surgeons who could handle the stresses of saving lives under fire. Troops who saw their friends being hit usually had no choice but to keep fighting and hope the medics would arrive in time -- that is, if they didn't freeze or panic or make some futile attempt at a field dressing without ability or materials. If the wounded survived at all, they'd still be out of action for weeks or months at a time.
+
+This may have been a workable strategy in the trenches of World War 2, but it isn't any longer. Waiting for a medic to arrive on the scene can contribute to the death of a soldier who might have been saved by immediate aid. The prompt application of trauma medicine needs to be made as quick and easy as possible so that any soldier can provide life-saving effort with minimal training. This is where the modern medikit comes in.
+
+Every medikit contains an onboard computer that can diagnose injuries via directed X-ray and ultrasound. It can run ECGs and EEGs at the same time, measure blood pressure and heart rate, and even calculate the soldier's combat effectiveness based on his or her individual record (stored in a small subdermal chip for medical, locational and identification purposes). All this information can be shown in a small hologram or displayed directly to a soldier's helmet information system. At the same time the medikit can deploy a number of drugs and sterile surgical tools for emergency operations, cauterise wounds via a special heating iron, and -- most importantly -- apply its store of nanorobots to a wound.
+
+The old idea of medical nanobots was first put into practice by Vietnamese researchers thirty years ago. Today, medicine without them is almost unthinkable. Nanobots are tiny robots several micrometres in diameter which can be programmed to perform specific tasks on the fly. They will quickly sterilise a wound and seal ruptured arteries, alert the medikit operator about any internal bleeding, request suction at appropriate places, patch up bowel or stomach punctures, revive or remove necrotic tissue, and repair nerve damage. They dissolve harmlessly in the victim's bloodstream once their battery runs out, which lasts no longer than 10 to 15 seconds, often not long enough to stabilise heavily-wounded troops. Two or more doses of nanobots may be required. Any number of doses can be applied and metabolised with no ill effects.
+
+This technology is the most important breakthrough in trauma surgery ever made. It can do everything except regenerate tissue. If more attention is required -- for example when a vital organ is hit, or a bullet is lodged in a critical place -- the medikit provides equipment and detailed instructions for the soldier to follow. It can never replace the operating room, but it's as close to a portable hospital as we'll ever get.
+
+
+Recommended Doctrine
+
+All our soldiers have been trained in the use of the medikit. In fact, in an ideal situation, every soldier would carry one for immediate use -- but I recognise that our troops have a limited carrying capacity. All major wounds should be treated without delay to prevent complications and further risk to the injured soldier. If the victim can still walk, she should retreat from the firefight and seek cover in order to safely receive treatment by a comrade.
+
+The medikit's onboard pharmacy can also be used to revive unconscious soldiers. If this is done, please take care to remove the revived troop from the line of fire as soon as possible and proceed with further treatment from a safe position. The medic herself may be forced to engage approaching targets to enable the patient's escape; this is acceptable practice, but please supply the medic with adequate covering fire. Trading one soldier's life for another does not make for good battlefield mathematics.
+
+Once a wounded soldier makes it back to base alive, our medical team will take over treatment. The risk of anyone succumbing to battlefield trauma while in a PHALANX ward is less than one percent, and as near to zero as we can make it.
+
+
+Addenda
+
+Medikits come with three prepared treatment capabilities. Apply First Aid will treat a soldier's wounds, stemming the blood loss of a wound in an effort to keep them alive. It will restore a small amount of health, but soldiers will need to recover back at base.
+
+Stimulants can be used to revive a soldier who has fallen unconcious as a result of being stunned or gassed.
+
+Antipsychotics will provide an injection of endorphins. Many desperate commanders have found it useful to boost morale during highly stressful engagements."
+}
+
+msgid plasatomizer_txt {
+text "_When the aliens need a sidearm, they don't screw around.
+
+This plasma pistol is a nasty piece of work, Commander. Its operation is extremely complex and inventive, requiring a great deal of technical skill to create. The power pack alone is hundreds of years ahead of our technology. It stores enough power to heat several charges of hydrogen to a plasmatic state inside the miniature fusion chamber, which are expelled as plasma using the ionised particles' own velocity.
+
+Unlike human firearms, the projectiles themselves are not stored in a magazine or reservoir. They are generated inside the pistol from hydrogen contained in the magazine, powered by the magazine's power-pack. Once the plasma is heated, a thin film of liquid plastic is created between the two 'spinnerets' located vertically opposite each other in front of the grip. The plasma particles are then rapidly fired into the film so that the plastic deforms into an orb or 'bolt'. The plastic contains and protects the plasma, keeping it from dispersing until it reaches the target. By the time a bolt reaches the target, the inside of the plastic will be so eaten away that it will burst upon impact like a soap bubble, splashing its payload across the target. The maximum range of a pistol bolt -- the point it can reach before the plasma eats into open air and disperses -- is approximately 20 metres.
+
+A bolt fired from the plasma pistol is so hot that even a near-miss can be lethal. The effects on a victim are truly horrific; I will try to list them all here.
+
+Any unarmoured human sprayed with this plasma will suffer extreme pain and injuries all across the splash zone. Adipose (fatty) tissue will melt like water. Blood and other bodily fluids boil in place. The plasma will actually eat its way into a human body, causing bone-deep charring in a large region around the splash zone. A large chunk of the body will be literally burnt to a crisp.
+
+Any kind of tough fabric will provide some protection against a plasma hit. High-tech armour in particular will disperse the heat as best it can, and will resist the burning plasma for a time. Hopefully this will be enough time to allow air-cooling to take place, bringing the plasma down to non-lethal temperatures.
+
+I won't pretend to know how the aliens managed to squeeze all this stuff into a pistol, but it does look as though they've made the same tradeoffs between power and size that we have done with our handguns. It's almost certain that larger, more powerful versions of these weapons exist and will appear against us in this war. However, my team and I have figured out the control scheme of the pistols, and we've written an appropriate field manual for human use. Our soldiers will now be able to employ the plasma pistol in a combat scenario as they would any other weapon.
+
+Cdr. Navarre"
+}
+
+msgid plasatomizer_pre_txt {
+text "_Commander, we've recovered the first alien plasma weapon of the war. I don't need to tell you how important this is. The alien armaments are highly-advanced, powerful and extremely lethal; we must figure out how they work in order to arm and armour ourselves against them.
+
+The alien plasma weapons represent a curious application of the plasma-thrower concept, which was previously believed to be unfeasible as a battlefield weapon. I would very much like to figure out how it works. My team and I are confident that -- with enough time and proper safety procedures -- we can hammer out the plasma pistol's function and controls and write a small operational manual; our soldiers could actually use the aliens' weapons against them!
+
+Of course, this program will need your approval for lab time and funding.
+
+Cdr. Navarre"
+}
+
+msgid plasblaster_txt {
+text "_Commander, here's my report on our alien plasma blaster research.
+
+This is the heaviest member we've observed out of the plasma weapon family, and it seems unlikely that they will get any larger. The plasma blaster is made up of a thick containment plastic housing a heavy duty plasma chamber capable of spitting out extremely thick bolts.
+
+It's capable of firing plasma bolts in single and burst modes but it seems especially designed to fire what we're calling around the office the Ball of Pain. A thick container of plasma that sprays especially widely on impact, this special firing mode will be incredibly deadly in close quarters, where accuracy can be sacrificed for sheer killing power.
+
+Lastly, we've mapped out the weapon's full control scheme for you, which is documented in the attached field manual. This could be a significant upgrade in power for our close weapons specialists, but it is probably not accurate enough to be effective in mid-range engagements. I recommend you deploy it immediately.
+
+Cdr. Navarre"
+}
+
+msgid plasblaster_pre_txt {
+text "_Commander, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research.
+
+Please authorise this research program at your earliest convenience.
+
+Cdr. Navarre"
+}
+
+msgid plasblade_txt {
+text "_Commander, we've figured out the secrets of the alien weapon. I'm afraid the news is not good.
+
+We were wrong to think of the plasma blade as a knife. In essence, it is a one-shot anti-armour weapon, like the Panzerfaust of WW2, except designed to kill armoured infantry and small vehicles rather than tanks.
+
+It's shaped like a knife handle with no blade. In place of the blade it has a small black nozzle with a large plastic ring around it. There is no visible trigger or activation button. Instead, it's armed by twisting the handle, and subsequently fired by bringing the nozzle within several centimetres of a reasonably flat surface. Only then does the plasma blade go to work.
+
+The plastic ring around the nozzle ejects a charge of sticky foam which hardens almost instantly to the strength of concrete. At this point the weapon is locked firmly to the target and an airtight seal is created. There is only vacuum between the nozzle and the target. All the while, a jet of plasma has been heating up inside the handle, which is now let loose and shot into the target at a fraction of the speed of light. Plasma and hot shrapnel begin bouncing around inside the armour, tearing up circuits or flesh.
+
+There is no armour that can withstand this weapon. If a proper seal is achieved, the target has no hope of survival. The plasma blade's only saving grace is that it's not very accurate. It can't be thrown effectively because its chances of achieving a seal are very low. Planting one by hand has a much higher chance of success. If an alien manages to rush our troops while wielding a plasma blade, anything in the immediate area will be in danger. All available fire should be brought to bear to neutralise the target before it has the chance to hit anyone.
+
+This weapon frightens me, Commander. Its very existence implies a lot of things. Combined with the aliens' usual pragmatism with regards to their own lives, it says to me that they may be prepared to employ kamikaze tactics, sacrificing their own lives just to kill one of us. 1 human for 1 alien is a ratio that neither PHALANX nor humanity can possibly afford. Even if it was closer to 10: 1 I still wouldn't fancy our chances. After all, how many of them are there?
+
+I wish we'd never found the damned thing. I don't like where this war is going.
+
+Cdr. Navarre"
+}
+
+msgid plasblade_pre_txt {
+text "_Commander, our last tactical mission brought back a strange alien weapon in the form of a plasma chamber with a handle. At least, we assume it's a weapon; the shape seems to suggest some kind of plasma-based knife, though I have no idea how this would work. We can't quite figure out how to turn it on or what purpose it serves in the alien arsenal.
+
+More research is definitely required, Commander. Whenever we have a bit of free lab time, I'd like a go at it.
+
+Cdr. Navarre"
+}
+
+msgid plasmagren_txt {
+text "_Commander, our assessment of the alien plasma grenade is complete. Like all the alien weapons, it's very nasty and very dangerous.
+
+The device is essentially made up of seven components: a casing, a trigger, a battery, a timer, an explosive charge, a plasma chamber and a solid hydrogen core. The casing is specially shaped to create a toroidal blast zone around the grenade, concentrating power into a smaller area. The battery is highly powerful and barely within our power to duplicate. The trigger is of particular interest, because it contains a tiny thumbprint scanner which verifies that the grenade is not being accidentally activated. A legitimate (i.e. non-accidental) activation starts the timer countdown.
+
+Once the timer reaches zero, the battery unleashes its power, heating a core of hydrogen to plasma in milliseconds. The explosive charge sends the grenade tumbling into the air, and once the grenade achieves vertical orientation and ideal height, the plasma chamber containment is switched off. Rapid expansion of the plasma causes the casing to burst, spraying high-velocity fragments and plasma particles all over the area of effect. Due to the unstable nature of uncontained plasma, the grenade has a limited blast radius, beyond which the plasma particles cool and slow down too much to be dangerous. This radius is slightly larger than that of a standard human frag grenade.
+
+Anything caught within the area of effect will be either severely injured or dead.
+
+We've drawn up a set of blueprints that will allow our engineers to begin immediate construction, and a manual to train our soldiers in its use. They will now be able to use the plasma grenade as any other grenade in our arsenal.
+
+Cdr. Navarre"
+}
+
+msgid plasmagren_pre_txt {
+text "_Commander, our last tac mission has brought back an alien plasma grenade. This is a highly powerful grenade-type weapon that, once thrown, explodes in a shower of superheated plasma. It's somewhat larger and appears to be a good deal more dangerous than our standard frag grenades.
+
+We should examine this weapon to see how it works, what it's made of, and how it's put together. Once we have those points figured out, we should be able to replicate it for our own use.
+
+The project is ready for research, just waiting on your authorisation, Commander.
+
+Cdr. Navarre"
+}
+
+msgid plasrifle_txt {
+text "_Commander, here's my report on our alien plasma rifle research.
+
+At its most basic level, the plasma rifle is little more than an upscaled version of the plasma pistol. However, as any firearms fanatic will tell you, pistols are pistols and rifles are rifles. Handguns are small, personal defence weapons. Rifles are weapons of war. The disparity in power is remarkable.
+
+Rifle plasma is over 20% hotter than pistol plasma and capable of burning through even heavy armour. The plastic globes containing the rifle's plasma shots are much thicker than the pistol's, only beginning to disintegrate at distances between 80-100m. This is a short maximum range for a general-purpose assault rifle, but ideal for urban infantry engagements and other close-quarters work. The bolts do not suffer from projectile drop and they're far too massive to be affected by wind conditions. This makes the plasma rifle highly accurate at all ranges.
+
+The scariest new feature of this weapon is the fact that it is capable of automatic fire. Its rate of fire on full-auto may not be very high -- approx. 180 rounds per minute -- and the recoil is difficult to handle, but it more than makes up for these failings with sheer power. Two or three solid plasma rifle hits are usually all it takes to kill a human in light or medium-grade armour. An unarmoured soldier has no hope at all.
+
+We've figured out the controls on the rifle and written up a manual for field use. Our troops should be able to make good use of it.
+
+There can be no doubt that this weapon was designed and manufactured for war, and not in any defensive capacity. The aliens clearly know armed conflict very well. The rifle's power and lethality do not imply that they invaded us because of some mistake or misunderstanding. They came to Earth with a plan, Commander, and that really scares me.
+
+Cdr. Navarre"
+}
+
+msgid plasrifle_pre_txt {
+text "_Commander, my department is ready to begin studying the recovered alien plasma rifle. This is a highly dangerous and versatile weapon, vastly outstripping the plasma pistol in range and power; something we should try to put into the hands of our own soldiers ASAP. Please approve lab time and funding as soon as our schedule permits.
+
+Cdr. Navarre"
+}
+
+msgid encased_plasma_txt {
+text "_Commander, we've finished drawing up the specs for the Encased Plasma Ammo. We've got design documents in place for your engineers to build new ammo cartridges for the Assault Rifle, Machine Gun, Riot Shotgun and SR-1 Sniper Rifle.
+
+The Encased Plasma Ammo is essentially a shape charge miniaturized to fit inside of a traditional rifle. It consists of a small plasma core, a tip that fragments on impact and a soft outer casing. When the bullet hits its target, the tip fragments and the small plasma core slams into the armour. The speed of the blow causes the soft outer casing to deform, creating a sealed shell around the plasma core and trapping the heat so that it burns through the armour.
+
+The amount of plasma in the tip is, of course, much smaller than that delivered by the aliens' plasma weaponry. But because the heat of the plasma is able to penetrate its target, much more of its heat is transferred, causing horrific wounding.
+
+Get this ammo into the field as soon as possible, sir. You won't regret it.
+
+Cdr. Navarre"
+}
+
+msgid encased_plasma_pre_txt {
+text "_Commander, our research on the plasma blade has given us an idea for a suite of advanced ammo that could restore the stopping power of our traditional weaponry.
+
+As you know, the alien armour we're facing in the field is especially well adapted to protect against plasma weaponry. Because the plasma bursts inflict their damage by melting a target, the alien materials are designed to deflect the heat long enough for the plasma bursts to burn out. But the enormous power of the plasma blade lies in its ability to trap the heat of the plasma and redirect it at the target. It can't be diffused.
+
+We want to do the same thing -- on a much smaller scale -- for ammo cartridges that would fit into our assault rifles, machine guns and sniper rifles. Give us some time to work out the details, sir, and I'm confident we can return with an attractive upgrade to our capabilities on the battlefield.
+
+Cdr. Navarre"
+}
+
+msgid needlergun_txt {
+text "_Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.
+
+As I mentioned in my research proposal, the needler is indeed a type of rifle, but an unusual one. Like a machine gun, it is designed to saturate a target with projectiles, but it takes this concept much further. It vomits out hundreds and hundreds of ultra-fast silicon steel needles which can easily tear apart a target.
+
+The needles are fired by a fast-changing magnetic field inside the barrel, hooked up to a feed mechanism that injects thousands of needles a minute into the barrel. This creates a near-constant stream of fire which lasts for as long as you hold down the trigger and the magazine holds out. Unlike bullets, these needles have a practically flat trajectory from muzzle to target. They punch through most armour like it doesn't exist. They're so low in mass that there's little appreciable recoil when firing. They are easily knocked off course for the same reason, but so many needles are put down range that even distant shots are likely to make some contact with the enemy.
+
+One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research. I've put a new research proposal in your queue along these lines.
+
+The Needler's electromagnet array makes it much heavier than the average rifle, which could reduce the effectiveness of some of our troops. But given its deadly power, I'm sure more than a few of our boys will gladly shed some other equipment to carry the Needler into battle.
+
+Equipped with a bipod for prone firing and a very large magazine, the needler is a serious threat to our troops. Snipers can inflict serious casualties on exposed troops and we cannot afford the losses. If a needler is spotted, our soldiers will have to make optimal use of cover and try to flank whilst staying out of sight. A direct assault on an entrenched needler gun will likely prove suicidal and I don't recommend anyone to try it, Commander.
+
+Cdr. Navarre"
+}
+
+msgid needlergun_pre_txt {
+text "_Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.
+
+Please authorise this program at your convenience, Commander.
+
+Cdr. Navarre"
+}
+
+msgid needlerheavy_txt {
+text "_Commander, here's my report on the new Heavy Needler we're encountering.
+
+As we suspected, there are few technological advancements in this weapon. It is larger, heavier, and capable of putting out more needles at a faster rate. But don't let its simplicity fool you. This is an extraordinarily deadly weapon, made all the worse by the spray of needles so often knocked off course. It will rip apart its target and probably anyone unlucky enough to be caught in the crossfire.
+
+This weapon is so heavy only our strongest soldiers may be able to use it effectively. It's weight exceeds that of any other weapon we've seen, a real problem for us in turning this thing back on the enemy. But if you can find a soldier capable of lugging it into combat, you'll probably be happy for the extra power.
+
+Finally, I'd like to bring up one more thing. We believe this rifle may have been rapidly developed very recently, maybe even in the last few months. Parts of the Heavy Needlers' design look rushed. It's clear this weapon was developed and thrust upon their fighters as quickly as possible. This leads us to suspect that they are actively prototyping and deploying new weaponry, not just calling up more deadlier forces. In short, we are in an arms race with the alien horde and we are not winning.
+
+Cdr. Navarre"
+}
+
+msgid needlerheavy_pre_txt {
+text "_Commander, we've recovered a new alien weapon that appears to be a larger version of the Needler. Please let my men take a look as soon as possible.
+
+Cdr. Navarre"
+}
+
+msgid coilgun_txt {
+text "_Commander, I'd like to present you with the finished plans and prototype for our Coilgun.
+
+Combining an alien-inspired power pack and coil arrangement with some of our Bolter technology has solved many of the coilgun design's inherent problems. A hundred years ago, the energy efficiency of coilguns measured less than 2%; meaning, the energy of the projectile at the time of impact was less than 2% of the energy used to fire it. Even with today's technology coilgun efficiency is limited to single digits, but the alien Needler manages efficiency ratings as high as 70%. It may take us years to get to that level, but with the Coilgun we've developed something that is both practical and effective for the war effort.
+
+In order to get better acceleration out of the coils, we've created a new kind of ammunition, based on the aliens' needle alloy. In shape it's a fairly standard fin-stabilised penetrator inside a discarding sabot, but it's made from materials never before seen on Earth. Discarding sabot rounds are normally used for much larger calibres -- we've effectively scaled down an anti-tank round -- but the armour-piercing potential is phenomenal, higher than any other weapon we have. In fact, the Coilgun is now the highest-calibre infantry weapon on the planet.
+
+Of course we've had to make some sacrifices -- high weight due to the coils and electrical equipment contained in the barrel, low ammunition capacity due to the high calibre, large and heavy magazines/power packs. Despite this, I believe the Coilgun should replace most of our sniper rifles, as it's proving difficult for our conventional weapons to compete with new enemy armour designs.
+
+Move the Coilgun forward as our main long-range threat. The aliens will come to fear it.
+
+Cdr. Navarre"
+}
+
+msgid coilgun_pre_txt {
+text "_Commander, our brainstorms down at DivEngine have come up with an interesting idea based on the alien Needler technology. When combining the alien fast-changing magnetic generators -- and, even more importantly, their power source -- with human-engineered EM rifle technology, some amazing man-portable weaponry becomes possible. I'd hereby like to propose a new design for a coilgun in the role of a sniper rifle.
+
+The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.
+
+To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be a significant upgrade from the Bolter.
+
+Please let me know when you want us to start, Commander.
+
+Cdr. Navarre"
+}
+
+msgid shotgun2_txt {
+text "_Technical Specifications: CRC-212 Riot Shotgun
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+From our experiences in Mumbai and other stricken cities, we've concluded that the aliens seem to concentrate their efforts on population centres, especially dense urban areas. A majority of engagements have taken place at knife-fighting range. For the purposes of the Excalibur Program, we've chosen several high-performance weapons for our Close Range Combat package.
+
+Many great shotguns have come out of Italy over the past two centuries; the latest is the Rossi AAA, a semi-automatic combat shotgun developed for use by SWAT and anti-terrorist units. It features several ground-breaking technologies, but its most impressive feature is without a doubt the specially-developed 'Twist' barrel. The Twist is a new type of shotgun barrel that, with a sharp twist of the front handguard, can protrude or flatten the rifling inside the barrel. With this mechanism, the AAA can change its barrel from smoothbore to rifled and back in a tenth of a second. The barrel even adjusts its own diameter and choke to fit whatever type of shell is in the chamber. These two innovations allow the AAA to fire any kind of shotgun ammo at a moment's notice.
+
+The most commonly used military and SWAT ammunition is the 12mm centerfire flechette shell. Each shell contains 8 tiny flechettes -- solid steel needles with fins to stabilise their flight. This ammunition has superior accuracy compared to buckshot and performs excellently against armour. The flechettes are also prone to tumble after penetration, resulting in impressive wounding capability for such a small projectile. Their drawbacks are vulnerability to wind conditions and other deflecting factors. Other types of ammo are available to deal with these situations, however -- and the AAA can fire them all.
+
+In conclusion, the Rossi AAA is a highly versatile shotgun that is among the most effective close-range weapons available. It has a longer range than the CRC-FL Flamethrower and causes more damage than the CRC-8 SMG, providing a good compromise between speed, range and stopping power.
+
+For PHALANX use, we have given this shotgun the classification CRC-212.
+
+
+Recommended Doctrine
+
+The CRC-212 performs very well at close quarters but quickly loses power as the range increases. Flechette shot tends to spread too far to be effective at range (though less so than ordinary buckshot), while rifled slugs suffer a pronounced projectile drop and are highly susceptible to wind conditions. Though the shotgun can shoot out to medium range, don't expect it to be very effective.
+
+Where this weapon will truly shine is in urban situations where the enemy has little cover to hide behind and can be engaged at close range. However, it can be too long to manoeuvre properly in tight spaces. The CRC-M9 Micro Shotgun may be preferable in these situations.
+
+
+Addenda
+
+None."
+}
+
+msgid shotgun2_slug_ammo_txt {
+text "_Technical Specifications: Saboted Slugs
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This is a magazine filled with 7 saboted shotgun slugs. These slugs are encased in hard plastic shells, 'sabots', which break away shortly after leaving the barrel. The sabots are fired from a rifled barrel and can travel at far higher velocities than ordinary slugs or shotshells. The slugs themselves are made of aluminium-cored steel; their power is not to be underestimated. When fired from a high-powered shotgun, these slugs can damage even armoured vehicles.
+
+The magazine is meant to be loaded into a CRC-212 Riot Shotgun. It will not fit into the CRC-M9 Micro Shotgun.
+
+
+Recommended Doctrine
+
+All soldiers equipped with shotguns should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.
+
+
+Addenda
+
+None."
+}
+
+msgid shotgun_micro_txt {
+text "_Technical Specifications: CRC-M9 Micro Shotgun
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+From our experiences in Mumbai and other stricken cities, we've concluded that the aliens seem to concentrate their efforts on population centres, especially dense urban areas. A majority of engagements have taken place at knife-fighting range. For the purposes of the Excalibur Program, we've chosen several high-performance weapons for our Close Range Combat package.
+
+The 425 Blesk is a miniature shotgun hailing from the Czech Republic, a favourite of anti-terrorist and military reconnaissance units around the world. It is highly prized for its small frame, manoeuvrability, lightweight construction and reliable operation in combat. It is a significant competitor with the CRC-212 Riot Shotgun for the hearts and minds of shotgun-wielding soldiers.
+
+The Blesk sacrifices versatility and range for raw speed. It is a 12mm semi-automatic, able to shoot as fast as the operator can pull the trigger; there is no other shotgun in existence that responds as fast or as easily to new threats as the Blesk. In its standard configuration, the weapon features a folding foregrip in lieu of a buttstock in order to help the operator deal with the recoil of repeated firings.
+
+Unfortunately, the short barrel cuts badly into effective range, making it accurate only out to 10-20 metres, but this is usually enough for the tight urban situations in which PHALANX will be operating most often. It is also more than enough for a sidearm; the Blesk will fit into a sidearm holster with minor modifications and can be set to deploy the foregrip as the weapon is drawn, allowing immediate accurate fire as needed.
+
+The weapon chambered for the common 12mm shotgun calibre. It can fit 7 slugs in a handy pistol-style magazine contained in the grip, which makes it much faster to reload than the CRC-212 Riot Shotgun. However, it requires short shells that can fit into the grip magazine, such as our flechette shells. It cannot fit the full-length saboted slugs.
+
+There are only a handful of weapons that can compete with the Blesk for sheer short-range devastation. Its speed combined with flechette ammo makes for a deadly mix that can be relied upon to quickly dispatch any enemy stupid enough to get into range.
+
+For PHALANX use, we have given this shotgun the classification CRC-M9.
+
+
+Recommended Doctrine
+
+All the restrictions that plague shotguns are magnified in the M9: short range, low ammo capacity, high recoil. This makes its function very clear. It is meant only for close-range firefights, where shotguns and sidearms shine. However, M9 operators should keep a close eye on their ammo level so that they don't run out in a tight spot.
+
+While not technically designed as a sidearm, the M9 performs well as one despite its relative bulk. It does more damage than the P-12 Pistol and is more accurate than the CRC-8 SMG. It is a good choice for snipers in particular.
+
+
+Addenda
+
+None."
+}
+
+msgid shotgun_micro_ammo_txt {
+text "_Technical Specifications: Flechette Shells
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This magazine contains 7 shells of flechette shot. Each 12mm shell contains 8 tiny flechettes -- solid steel needles with fins to stabilise their flight. This ammunition is military-only, banned for all civilian use due to the flechettes' excellent performance against armour. The flechettes are prone to tumble after penetration, resulting in nasty wounds that will either kill the target or send it running for cover.
+
+This short shell -- only 90mm long -- was designed for pistol-configuration shotguns like the CRC-M9 Micro Shotgun. However, the CRC-212 Riot Shotgun can fire it just as easily, with all the performance increases of a full-sized weapon.
+
+The magazine is meant to be loaded into a CRC-212 Riot Shotgun or CRC-M9 Micro Shotgun.
+
+
+Recommended Doctrine
+
+All soldiers equipped with shotguns should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.
+
+
+Addenda
+
+None."
+}
+
+msgid smg_txt {
+text "_Technical Specifications: CRC-8 SMG
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+From our experiences in Mumbai and other stricken cities, we've concluded that the aliens seem to concentrate their efforts on population centres, especially dense urban areas. A majority of engagements have taken place at knife-fighting range. For the purposes of the Excalibur Program, we've chosen several high-performance weapons for our Close Range Combat package.
+
+Designed and manufactured in mainland China, the Ohm 55 SMG is one of the most frightening weapons to come out of the Second Cold War. It was first prototyped in 2035 by scientists working for the Communist Chinese government. Production models were only trickling into government units by the end of the war, but the rebel and Commonwealth troops quickly learned to respect the Ohm's ferocity.
+
+Its rate of fire at full auto exceeds 1200 rounds per minute. It can chew through a 50-round magazine in three seconds. It fires an upgraded version of the Belgian 5.7mm armour-piercing round, a steel penetrator with aluminium core, which can tear kevlar like paper and tumbles brutally through flesh and bone. Even modern ballistic fibre cannot stop this round at anything closer than 12 metres. The Ohm 55 has dominated the field of SMGs for the past 50 years and will continue to do so for at least the next decade.
+
+The Ohm is highly manoeuvrable with a short barrel and sleek lines, but can suffer from excessive muzzle climb on full auto due to the sheer weight of lead the weapon puts out. Autofire also tends to empty the magazine before the shooter even realises he's holding down the trigger. Still, after nearly 50 years in service around the world, this remains the Ohm 55's only known design flaw.
+
+For PHALANX use, we have given this submachine gun the classification CRC-8.
+
+
+Recommended Doctrine
+
+The CRC-8 is intended for point-blank urban firefights. It will perform very well in this role, but don't expect it to hit the broad side of a barn out to medium range. It can also function as a high-powered sidearm, but may be too bulky for most soldiers to use in this manner.
+
+While the CRC-8 does suffer excessive muzzle climb on full auto, throwing off the aim of even experienced users, it is much more docile in its standard burst mode. Full auto should rarely be considered outside of panic situations.
+
+
+Addenda
+
+Despite good penetration against organics, this weapon performs very poorly against robotic targets."
+}
+
+msgid smg_mag_txt {
+text "_Technical Specifications: SMG Magazine
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This large magazine contains 50 rounds of 5.7x28mm ammunition. It features a complicated triple-column arrangement, its rounds packed into the magazine in three large stacks. The round itself shreds armour at close range and produces horrific wounds. It typically generates low recoil, but the round's gentle characteristics are overwhelmed by the CRC-8's incredible rate of fire on full auto.
+
+The magazine is meant to be loaded into a CRC-8 SMG.
+
+
+Recommended Doctrine
+
+All soldiers equipped with SMGs should carry at least one reload whenever they go out in the field. Two or more are strongly recommended if the SMG is used as a primary weapon, since it can consume vast amounts of ammunition. It is not advisable to send our troops into combat without spare magazines.
+
+
+Addenda
+
+None."
+}
+
+msgid smokegren_txt {
+text "_Technical Specifications: Smoke Grenade
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+The 'Artificial Fog' smoke grenade was developed by the African league of nations during the war on the diamond cartels. It is an ingenious design which proves that, even in the age of electronic perception, the smoke grenade hasn't outlived its usefulness. There is no vision system that cannot be defeated somehow, and upgraded smoke grenades like the Artificial Fog grenade can block infrared sighting equipment as easily as they block the Mk. 1 Eyeball.
+
+The Artificial Fog grenade is what is called a 'bursting' smoke grenade. Instead of pouring smoke out of holes in the top, it bursts apart much like an incendiary grenade and covers a large area of ground with titanium tetrachloride, which quickly produces vast clouds of corrosive white smoke. It also fills the air with minuscule 'chaff', flakes of iron that refract radar waves and generally muck up the electronic picture of the battlefield. Other trace additives to the smoke help refract most of the non-visible EM spectrum. Even alien technology has trouble sifting through the thick soup.
+
+Titanium tetrachloride smoke by itself is slightly harmful to human beings due to its acidity. The additives make it more dangerous, especially breathing iron flakes, but it's nothing our medics can't deal with.
+
+
+Recommended Doctrine
+
+Smoke grenades are an important tool to hide our approaches, cover tactical withdrawals, and to temporarily lock unwanted participants out of a firefight. It is recommended that every soldier carry one for these purposes. Not every mission may require concealment, but we can never know when the opportune moment will present itself.
+
+Gas masks are recommended if several smokescreens pile up on each other.
+
+
+Addenda
+
+None."
+}
+
+msgid sniper_txt {
+text "_Technical Specifications: S-1 Sniper Rifle
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.
+
+The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.
+
+Originally an anti-materiel rifle, the Canada-built Forrester LRWS (Long Range Weapon System) has since been adopted by many countries as their principal sniper rifle. It is one of the bare handful of sniper rifles developed after 2040 that do not feature a bullpup configuration ('bullpup' meaning the magazine and action of the weapon are located behind the grip to reduce overall weapon length). It fires the massive 20mm HMG (Heavy Machine Gun) cartridge, fed by 8-round magazines which can weigh as much as one kilogramme apiece. The piston-retarded floating breech is equipped with an intricate gas dispersal system which decreases felt recoil to the level of an ordinary hunting rifle. This allows repeated shots without losing control.
+
+The greatest advantages of the LRWS over other modern sniper rifles are its incredibly short barrel and light weight, the only rifle in its size class that can fire the 20mm HMG round. This is made possible by a uniquely-reinforced breech and barrel made almost entirely of tungsten and titanium alloys, able to withstand the force of the round's super-high-velocity powder. Due to its short barrel, designed for tactical urban situations, the LRWS is not as effective at very great distance, but for a PHALANX squad's typical short-range skirmishing, this should not become a problem.
+
+The buttstock and grip automatically mould themselves to fit any shooter. Most importantly, this rifle has racked up more alien kills in Mumbai than any other weapon deployed in the fighting.
+
+At half the weight of other sniper rifles and twice the manoeuvrability, the LRWS offers the power and flexibility that our agents require.
+
+For PHALANX use, we have given this rifle the classification S-1.
+
+
+Recommended Doctrine
+
+Soldiers equipped with the S-1 should keep their distance, fire from cover, and try to use aimed shots whenever possible. This is not an automatic weapon; it is too unwieldy to fire off quick snap shots with any accuracy. Marksmen should assume a crouched firing position for extra stability whenever possible.
+
+All our snipers should carry at least one backup sidearm such as the P-12 or the CRC-8 SMG, or a combat knife at the very least. Should aliens threaten a sniper at close range, he should immediately draw his sidearm. Under no circumstances should he try to use an S-1 to fend off attackers at close range. The S-1 is too slow-firing to stop an advancing alien and will quickly deplete its magazine if this is attempted. If the soldier tries to shoot his magazine dry before drawing his sidearm, it will be too late.
+
+
+Addenda
+
+Along with high-explosive rockets and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
+}
+
+msgid sniper_mag_txt {
+text "_Technical Specifications: Sniper Rifle Magazine
+
+CLASSIFIED LEVEL YELLOW
+
+PHALANX Extraterrestrial Response Unit
+
+Technical Document, Delta Clearance
+
+Filed: 20 March 2084
+
+By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command
+
+
+
+Overview
+
+This magazine contains 8 rounds of 20x140mm HMG (Heavy Machine Gun) ammunition. It is a conventional single-column box design, and can be extremely heavy due to the weight of the rounds inside. The rounds in this magazine are high-quality match grade ammunition meant for heavy sniper rifles; they are more accurate and expensive than ordinary HMG rounds.
+
+The magazine is meant to be loaded into an S-1 Sniper Rifle.
+
+
+Recommended Doctrine
+
+All soldiers equipped with sniper rifles should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.
+
+
+Addenda
+
+None."
+}
+
+msgid stungren_txt {
+text "_Commander,
+
+We've achieved results in our effort to create anti-alien chemicals that can be effectively used on the battlefield. One agent in particular has been classified as fully combat-capable and is ready to be deployed at your say-so.
+
+The agent in question is a cocktail of bleach, mustard gas, titanium tetrachloride and several other nasty compounds, combining to form a substance we like to call \"CHOKE\". It is a highly powerful blistering agent that reacts with organic skin in seconds rather than hours. It reacts violently with air to provide several minutes of gas coverage over a small, concentrated area.
+
+The effects on organic tissue are harsh. Even minor contact with the skin or mucous membranes will cause severe irritation, resulting in restricted breathing and excruciating pain. Contact with the eyes can cause prolonged, even permanent blindness if left untreated. The agony caused by CHOKE is so acute and disabling that it will knock the fight out of almost anything with which it comes into contact. Our organic alien captives have all demonstrated very satisfying responses; most targets go into shock and exhibit little to no motor control until dosed up with painkillers and anti-CHOKE medication. Their breathing apparatus offers no defence whatsoever against an agent which doesn't need to enter the lungs.
+
+CHOKE is equally effective against humans. Volunteer testing has left battle-hardened soldiers hunched on the floor in a foetal position, frozen in place and barely able to breathe. Two subjects had to be rushed to hospital due to blistering of the lungs and fluid buildup, but I'm happy to report both will survive. It is however recommended that our troops be kept away from any deployed CHOKE at all times. If one of our troops does manage to come into contact with it, we've loaded our medikits with the appropriate drugs to treat and revive.
+
+The only defence against CHOKE is full body coverage. Any exposed skin or breathing passage is a vulnerability, and so far the aliens have deployed no armour that would protect their troops against this kind of attack. As far as PHALANX agents are concerned, a full head-enclosing gas mask should protect them adequately, since our standard uniforms and armours provide airtight coverage of the soldier's body.
+
+We've created a delivery system in the form of a standard throwable canister. Our troops should experience no problems using this item in the field.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid stungren_pre_txt {
+text "_Commander,
+
+Ever since the start of the invasion, we have been left scratching our heads about the aliens' biology. We knew almost nothing about them, their biology, their genetics or their potential vulnerabilities. This left us helpless in the fields of biological and chemical warfare.
+
+Our study of the various live and dead alien specimens we've recovered has been enlightening. Thanks to the discoveries we've made over the past few months, my team and I have come to believe that we're ready to start a bio/chemical warfare program against the alien threat. We have tissue samples, autopsy data, live specimens for testing; all the raw materials we require to investigate methods of properly incapacitating battlefield specimens without being forced to send PHALANX troops into melee combat.
+
+This will be a challenge given the constant protection and filtration offered by the alien breathing apparatus, which prevents any harmful materials entering the lungs, but if you authorise sufficient lab time and funding we can almost certainly develop an aerosol compound that will disable exposed aliens by chemical or biological means.
+
+This will be a project of greatest importance and priority, Commander. The sooner you lend it your authorisation, the better.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid stungren_alien_txt {
+text "_stungren_alien_txt"
+}
+
+msgid stungren_alien_pre_txt {
+text "_No pre research info available"
+}
+
+msgid stunrod_txt {
+text "_Commander,
+
+We've finished prototyping our experimental electrical weapon, and it's now ready to begin full production.
+
+The concept of the stun rod, as we call it, requires no in-depth explanation. It's an electrical prod that delivers a stunning shock to anything that comes into contact with the prongs at the front of the weapon. The intensity of the shock can be easily set by the user. The stun rod is more than capable of stunning or electrocuting any humans who get too close. Caution is recommended.
+
+The combat applications are simple. The soldier wielding it would enter into melee with an alien, bring the prongs into contact with the enemy's skin or armour, and pull the trigger. The ensuing electrical discharge would stun or disable the subject for some time, even through armour or protective skin. The period of unconsciousness will vary from species to species and between individuals, depending on their exposure, metabolism, mental state, and more. I'm afraid I cannot provide you with any hard numbers yet. However, we estimate the stun rod to give us more than enough time to secure the prisoner and render it harmless.
+
+We fully realise the difficulty of bringing the aliens to melee and then besting them. This is why we've armoured the stun rod's body to stand up against the Kerrblade without being sliced in two. It's designed to use as a staff or club in melee during an emergency, and it will not break, crack or become unreliable.
+
+Unfortunately, with these heavy-duty batteries and electrical systems and additional armour, the stun rod has become a rather hefty weapon. It will require two hands to use effectively in combat as a prod or a blunt instrument, though it will not restrict grenade throwing or pistol use in the off hand.
+
+The outputs that the stun rod can deliver -- repeatedly -- make it the most powerful electrical weapon on Earth at this time. However, despite efforts to push our designs further, we don't yet have the technology to create ranged weapons that can match the stun rod's capabilities. Electrolasers are still too weak for their power consumption and wire-tasers can only be used once at limited ranges. We are however looking into adapting alien power cells for use in PHALANX-built electrolasers. This is a possibility that holds great promise for the future of our bio research.
+
+Thank you for your indulgence in this program, Commander. I firmly believe this will be a great help to our capture efforts. Still, I will try to leave further technical matters with Cdr. Navarre, where they belong.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid stunrod_pre_txt {
+text "_Commander,
+
+I hope I'm not overstepping my bounds, but I have an important technical research proposal to make, a proposal to create a new piece of PHALANX equipment for use by our field agents. I realise this falls outside the responsibilities of my division. However, I've already discussed things with Cdr. Navarre, and he doesn't quite see eye-to-eye with me on the necessity of the item in question. I had no choice but to go to straight to you with the proposal.
+
+Now that we know how to keep captured aliens alive in containment, our lack of specimens is becoming a serious impediment to our biological and chemical research. We need living tissue to study, performing its natural functions inside a living body, and we don't have the ability to simply clone up some aliens to research. We need prisoners. The sooner the better.
+
+That's why I would like to propose a simple but high-powered electrical shock weapon, not unlike a military stun gun, designed to disable our enemies without killing them. It would be a two-handed man-portable unit with a large battery and several charge settings, the highest of which should be sufficient to disable the hardiest alien races we may encounter. We in DivBio believe that any alien subjected to this weapon would be disabled long enough for our soldiers to take control of the situation and secure prisoners. The electrical shock could still be countered by sophisticated armour and may not be effective on robotic alien devices.
+
+Cdr. Navarre, however, feels that such a weapon would be hazardous to our soldiers and \"a throwback to the 20th century\", and refuses to endorse it. He doesn't seem to understand. We have no alternative method of disabling enemies at the voltages required. Commander, we need this weapon as badly as we need live aliens from the field. We can't merely shoot them and hope to patch one or two up again upon return to base. Even if we succeeded in that mindset, my division's needs will be far, far higher than that for proper research and interrogation.
+
+I hope you understand. Please authorise lab time and funding for this project as soon as you can, and I'll get some people from DivEngine together to develop this project properly. I would of course be delighted if you could explain things to Cdr. Navarre. I'm sure he'll be happy to receive a message from you.
+
+Sincerely,
+
+Dr. Connor"
+}
+
+msgid pbeampistol_txt {
+text "_Commander, I've got the specs of the new alien pistol for you, and they're not good.
+
+We've always suspected that a real alien army would field more powerful weaponry. Now they've gone and proved us right. This particle beam weaponry is extremely advanced, a quantum leap above the arsenal we've seen, miniaturised far beyond our ability to duplicate.
+
+Particle-beam weaponry is designed to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. Until now we've only seen the aliens use this technology in large UFO weapons. Now, however, they're using it on the ground in the worst way.
+
+The pistol itself is quite simple in build, just a shell covering a set of magnets and electrostatic lenses for focusing and constricting the particle beam.
+
+Certainly this pistol is the nastiest handgun I've ever seen in my career, with impressive armour-piercing capabilities and extreme damage potential. It's not as accurate as the laser pistol, but it packs an extraordinary punch for a sidearm.
+
+Cdr. Navarre"
+}
+
+msgid pbeampistol_pre_txt {
+text "_Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.
+
+Please authorise this program at your earliest convenience.
+
+Cdr. Navarre"
+}
+
+msgid pbeamcannon_txt {
+text "_Commander, we've finished work on this big damned cannon we brought back.
+
+This particle beam weaponry is extremely advanced, a quantum leap above the alien's existing arsenal, miniaturised far beyond our ability to duplicate.
+
+Particle-beam weaponry is designed to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. Until now we've only seen the aliens use this technology in large UFO weapons. Now, however, they're using it on the ground in the worst way.
+
+This cannon has got to be the most powerful infantry particle beam the aliens can field, because I can't imagine them getting much bigger. The Particle Beam cannon's recoil is out of this world. It can blast a full grown man clean off his feet in one shot.
+
+As bad as the recoil is, the target will have it worse. A single fleeting hit -- a heartbeat of exposure -- will buckle three inches of homogenous steel. This is usually all that's necessary. A second hit will turn the buckle into a fist-sized hole, clean through. Our infantry armour will perform only slightly better, but deflection will help somewhat.
+
+That's all I've got for you right now, Commander.
+
+Cdr. Navarre"
+}
+
+msgid pbeamcannon_pre_txt {
+text "_Commander, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.
+
+Please authorise this program at your earliest convenience.
+
+Cdr. Navarre"
+}
+
+msgid pbeamrifle_txt {
+text "_Commander, we've gotten all the info we can from this new alien rifle. It's more bad news, I'm afraid.
+
+We've always suspected that a real alien army would field more deadly weaponry. Now they've gone and proved us right. This particle beam weaponry is extremely advanced, a quantum leap above the arsenal we've seen, miniaturised far beyond our ability to duplicate.
+
+Particle-beam weaponry is designed to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. Until now we've only seen the aliens use this technology in large UFO weapons. Now, however, they're using it on the ground in the worst way.
+
+The rifle seems to follow a very basic, modular design, quite unlike the plasma weapons we've already observed. All the parts can be slotted in or out of the weapon just by pressing an appropriately-located release catch.
+
+What first alarmed me about this weapon is its performance against our infantry armour. The high-energy particles in a particle beam travel so fast that the beam can easily punch a hole through our standard vehicle armour. When fired at a suit of Combat Armour, the results are gruesome. It penetrates the front of the armour without even slowing down, and still has enough power to punch out the back and continue for several metres before dispersing.
+
+Our troops will need the heaviest protection we can muster to be able to stand up to this kind of fire. We may suffer significant troop losses to alien Particle Beam weapons if we don't.
+
+Cdr. Navarre"
+}
+
+msgid pbeamrifle_pre_txt {
+text "_Commander, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than anything we've seen -- an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.
+
+Please authorise this program at your earliest convenience.
+
+Cdr. Navarre"
+}
+
+msgid pbeamammo_txt {
+text "_Commander, my method worked. I think we've managed to crack the secrets of the mysterious particle beam weaponry. Here are my conclusions.
+
+The appearance of man-portable particle beam weaponry suggests a serious escalation in this war. Prior to being shot at with it, we had no idea that the aliens possessed such advanced technology, and we have no idea why it was not deployed before now. The aliens' motivations and strategy remain a complete mystery to us. Still, I don't believe I'm overstating the issue that these weapons change everything.
+
+When I try to describe this, you have to understand that I'm not talking about the actual weapons. As I've mentioned in my reports, the weapons themselves are basically nothing more than a metal shell around a set of magnets and electrostatic lenses, all used for focusing and constricting the particle beam. The real magic happens in a space about the size of my fist. I'm talking about what we have previously thought of as the 'magazine', until now. What it actually is is unbelievable.
+
+Each individual magazine is actually a synchrotron particle accelerator of mind-blowingly tiny proportions, wrapped around a battery pack so small that we can't even begin to imagine how they built it. The synchrotron speeds particles round and round in a very small circle -- less than the diameter of the magazine -- until they've achieved sufficient velocity. The particles are then diverted via a magnetic field into the focusing array, where they are magnetically constricted -- 'pinched' -- into a coherent beam.
+
+Commander, there is no chance in hell that we can build accelerators this complex this small. Not in our lifetimes. Neither we at PHALANX nor the rest of the world have the precision machinery or the knowledge necessary to duplicate the alien technology. We've documented how the weapons works, and they're simple enough to produce, but if we actually want to use them we're going to have to scrounge magazines off the aliens. Worse, these little accelerators are put under tremendous amounts of strain in their lifetimes, and they'll start to malfunction after being used only a few times. Our ammo supply will be spotty at best, limited to whatever we can recover in the field.
+
+If the aliens have widespread access to this sort of technology, and they obviously do, I couldn't tell you why they haven't just waltzed in and mashed humanity into paste. Their war machine is several orders of magnitude greater than ours. Their technology is more advanced, they have more numbers and better aircraft, and yet they're still coming at us in fits and starts. It's baffling. However, any good soldier will tell you that 'why' doesn't matter right now. They're the ones making the mistake and it's up to us to take advantage of it.
+
+We need to upgrade, upgun, and uptrain everything we have, Commander. Everything. We have to be ready before they start getting really serious about this war.
+
+Cdr. Navarre"
+}
+
+msgid pbeamammo_pre_txt {
+text "_Commander, we've decided that more research is badly needed on the particle beam weaponry, especially their mysterious power source, the magazines which we've been utterly unable to examine. No amount of finesse or ingenuity has been able to open them. That's why I'm hereby proposing extreme measures.
+
+I want to use our lab's radiation chamber to bombard one of the magazines with electromagnetic pulses, destroying most of the internal electronics, and hopefully causing it to shut down. Once it's safely deactivated, we can use brute force to open it up.
+
+Destroying a magazine to find out how it works may seem crude and backwards, but we have no other choice at the moment. Even blasted to hell by EMP, it should help us answer a lot of questions about the aliens' particle beam technology. It may also give us clues as to how we can get inside an undamaged magazine.
+
+Once we know how the magazine works, we can reassess the weapons and we'll hopefully be able to tell you how it all fits together, Commander.
+
+Cdr. Navarre"
+}

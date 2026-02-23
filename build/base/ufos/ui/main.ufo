@@ -1,0 +1,154 @@
+--!usr/bin/lua
+
+require "ufox.lua"
+require "initialsettings.lua"
+require "tipoftheday.lua"
+
+do
+	local window = ufox.build_window({
+		name = "main",
+		class = "window",
+		background = "ui/main_bg",
+
+		{
+			name = "title",
+			class = "string",
+			text = "_UFO: ALIEN INVASION",
+			pos = { 0, 50 },
+			size = { 1024, 50 },
+			font = "f_title",
+			color = { 0.59, 0.78, 0.56, 1.0 },
+			contentalign = ufo.ALIGN_CC,
+		},
+
+		{
+			name = "buttons",
+			class = "panel",
+			pos = { 312, 250 },
+			size = { 400, 400 },
+			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+			layoutmargin = 15,
+
+			{
+				name = "campaign",
+				class = "button",
+				super = "MainMenuBtn",
+				text = "_CAMPAIGN",
+
+				on_click = function (sender)
+					ufo.cmd("game_setmode campaign; ui_push campaign;")
+				end,
+			},
+
+			{
+				name = "skirmish",
+				class = "button",
+				super = "MainMenuBtn",
+				text = "_SKIRMISH",
+
+				on_click = function (sender)
+					ufo.cmd("game_setmode skirmish; ui_push skirmish;")
+				end,
+			},
+
+			{
+				name = "multiplayer",
+				class = "button",
+				super = "MainMenuBtn",
+				text = "_MULTIPLAYER",
+
+				on_click = function (sender)
+					ufo.cmd("game_setmode multiplayer; ui_push multiplayer;")
+				end,
+
+				on_rightclick = function (sender)
+					ufo.cmd("game_setmode multiplayer; ui_push multiplayer_new;")
+				end,
+			},
+
+			{
+				name = "options",
+				class = "button",
+				super = "MainMenu2Btn",
+				text = "_OPTIONS",
+
+				on_click = function (sender)
+					ufo.cmd("ui_push options;")
+				end,
+			},
+
+			{
+				name = "tutorials",
+				class = "button",
+				super = "MainMenu2Btn",
+				text = "_TUTORIALS",
+
+				on_click = function (sender)
+					ufo.cmd("ui_push tutorials;")
+				end,
+			},
+
+			{
+				name = "credits",
+				class = "button",
+				super = "MainMenu2Btn",
+				text = "_DEVELOPERS",
+
+				on_click = function (sender)
+					ufo.cmd ("seq_start developers;")
+				end,
+			},
+
+			{
+				name = "exit",
+				class = "button",
+				super = "MainMenuExitBtn",
+				text = "_EXIT",
+
+				on_click = function (sender)
+					ufo.cmd("quit;")
+				end,
+			},
+		},
+
+		{
+			name = "version",
+			class = "string",
+			text = "*cvar:version",
+			pos = { 10, 744 },
+			size = { 1004, 20 }
+		},
+
+		{
+			class = "fuzzyScreen",
+			name = "overlay"
+		},
+
+		game_addmode_singleplayer = {
+			class = "confunc",
+			name = "game_addmode_singleplayer",
+
+			on_click = function (sender)
+			end,
+		},
+
+		on_windowopened = function (sender)
+			ufo.cmd("music_change main;")
+
+			-- "initial settings" popup
+			if (not initialsettings.check()) then
+				local settings = initialsettings.build()
+				ufo.push_window(settings:name(), nil, nil)
+			end
+
+			-- "tip of the day" popup
+			if (ufo.getvar("cl_showTipOfTheDay"):as_integer() == 1) then
+				ufo.cmd("tipoftheday random; do_nexttip;")
+				local tips = tipoftheday.build()
+				ufo.push_window(tips:name(), sender:name(), nil)
+			else
+				ufo.cmd("ui_close tipoftheday;")
+			end
+		end
+	})
+end

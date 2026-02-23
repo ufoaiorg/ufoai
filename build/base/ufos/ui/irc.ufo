@@ -1,0 +1,569 @@
+// ==================
+// IRC MENU
+// ==================
+
+// don't change this name!
+window irc
+{
+	{
+		bgcolor "0 0 0 0.6"
+	}
+
+	panel chat
+	{
+		{
+			pos				"5 5"
+			size			"723 758"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
+
+		string title
+		{
+			string		"_Lobby"
+			pos				"0 0"
+			size			"723 30"
+			contentalign	ALIGN_CC
+			font			"f_big"
+		}
+
+		panel mainBody
+		{
+			{
+				pos				"4 30"
+				size			"715 724"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+
+			// Title bar
+			panel header
+			{
+				{
+					pos			"1 1"
+					size		"713 32"
+					bgcolor		"0.527 0.6 0.21 0.2"
+				}
+
+				string irc_server_channel
+				{
+					string		*cvar:irc_channel
+					pos			"1 1"
+					size		"240 32"
+					contentalign	ALIGN_CR
+					font		"f_normal"
+					color		"0.56 0.81 0.76 1"
+				}
+
+				string irc_server_string
+				{
+					string		*cvar:irc_server
+					pos			"250 1"
+					size		"200 32"
+					contentalign	ALIGN_CL
+					font		"f_normal"
+					color		"0.56 0.81 0.76 1"
+				}
+
+			}
+
+			string irc_server_topic
+			{
+				string		*cvar:irc_topic
+				pos			"0 33"
+				size		"715 32"
+				contentalign	ALIGN_CC
+				font		"f_normal"
+				color		"0.56 0.81 0.76 1"
+			}
+
+			text irc_data
+			{
+				pos			"2 67"
+				size		"679 616"
+				rows		"28"
+				lineheight  "22"
+				dataid		TEXT_IRCCONTENT
+				onViewChange {
+					*node:parent.irc_data_scroll@fullsize = <fullsize>
+					*node:parent.irc_data_scroll@current = <viewpos>
+					*node:parent.irc_data_scroll@viewsize = <viewsize>
+				}
+			}
+
+			vscrollbar irc_data_scroll {
+				image		"ui/scrollbar_v"
+				pos			"697 75"
+				height		"610"
+				current		0
+				viewsize	22
+				fullsize	22
+				onChange	{ *node:parent.irc_data@viewpos = <current> }
+			}
+
+
+
+
+			TextEntry slot_irc_send_buffer
+			{
+				string		*cvar:irc_send_buffer
+				font		"f_verysmall"
+				pos			"2 690"
+				size		"712 32"
+				bgcolor		"0.5 0.5 0.5 0.2"
+				clickoutabort	true
+				onChange	{
+					cmd "irc_chanmsg; activate_irc_textentry;"
+				}
+			}
+
+
+		}
+	}
+	panel userlist
+	{
+		{
+			pos		"739 35"
+			size	"285 728"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
+
+		MainMenu2Btn button_disconnect
+		{
+			string		"_Disconnect"
+			tooltip		"_Close menu and disconnect"
+			pos			"1 698"
+			size		"284 30"
+			font		"f_normal"
+			onClick		{ cmd "irc_disconnect; ui_pop;" }
+		}
+
+		string users_string
+		{
+			string		"_Users"
+			pos			"0 0"
+			size		"285 40"
+			bgcolor		"0.527 0.6 0.21 0.2"
+			contentalign	ALIGN_CC
+			font		"f_small"
+		}
+
+		textlist irc_userlist
+		{
+			pos			"11 40"
+			size		"240 616"
+			lineheight	22
+			dataid		TEXT_IRCUSERS
+			rows		"28"
+			onClick		{ cmd "irc_userlist_click <lineselected>;" }
+			onRClick	{ cmd "irc_userlist_rclick <lineselected>;" }
+			onViewChange {
+				*node:parent.irc_userlist_scroll@fullsize = <fullsize>
+				*node:parent.irc_userlist_scroll@current = <viewpos>
+				*node:parent.irc_userlist_scroll@viewsize = <viewsize>
+			}
+		}
+
+		vscrollbar irc_userlist_scroll {
+			image		"ui/scrollbar_v"
+			pos			"241 40"
+			height		"619"
+			current		0
+			viewsize	22
+			fullsize	22
+			hidewhenunused	true
+			onChange		{ *node:parent.irc_userlist@viewpos = <current> }
+		}
+
+	}
+
+	// Back to anywhere
+	Geoscape geoscape_button {
+		tooltip		"_Close menu but stay connected"
+		onClick { cmd "ui_pop"}
+	}
+
+	confunc activate_irc_textentry {
+		call *node:root.chat.mainBody.slot_irc_send_buffer@edit
+	}
+
+	// ==================
+	// init
+	// ==================
+	func onWindowOpened
+	{
+		cmd "irc_activate; activate_irc_textentry;"
+	}
+
+	// ==================
+	// close
+	// ==================
+	func onWindowClosed
+	{
+		cmd "irc_deactivate;"
+	}
+
+	fuzzyScreen overlay { }
+}
+
+// when your nick name is already in use you get this popup
+window irc_changename extends ipopup
+{
+	{
+		pos			"256 256"
+		size		"512 256"
+		closebutton	true
+	}
+	string title
+	{
+		width		"512"
+		string		"_Name is already in use"
+	}
+
+	string popup_text
+	{
+		string		"_Your name is already in use or is invalid."
+		pos			"26 58"
+		size		"450 64"
+		longlines	LONGLINES_WRAP
+	}
+
+	// ===================
+	// NAME
+	// ===================
+	string current_name
+	{
+		string		"_Name:"
+		pos			"26 128"
+		size		"300 20"
+		color		"1 1 1 1"
+	}
+	TextEntry slot_name
+	{
+		string		*cvar:cl_name
+		font		"f_verysmall"
+		pos			"170 122"
+		size		"185 34"
+	}
+
+	MainMenuBtn bt_ok
+	{
+		string		"_Retry"
+		tooltip		"_Retry with your changed name"
+		onClick		{ cmd "ui_pop;irc_disconnect;irc_connect;" }
+		size 	"180 30"
+		pos 	"332 226"
+}
+
+	MainMenuCancelBtn bt_cancel
+	{
+		onClick		{ cmd "ui_pop;irc_disconnect;ui_pop;" }
+		size 	"180 30"
+		pos		"140 226"
+}
+
+	fuzzyScreen overlay { }
+}
+
+// when you aren't connected you get this popup
+// don't change this name or change it in the code, too
+window irc_popup extends ipopup
+{
+	{
+		bgcolor		"0.0784 0.1019 0.1019 1.0"
+		pos			"256 256"
+		size		"512 256"
+		closebutton	true
+	}
+	string title
+	{
+		width		"512"
+		string		"_Not connected"
+	}
+
+	string popup_text
+	{
+		string		"_You are not connected to the lobby. Do you want to connect?"
+		pos			"26 58"
+		size		"450 128"
+		longlines	LONGLINES_WRAP
+	}
+
+	MainMenuBtn bt_ok
+	{
+		string		"_Connect"
+		tooltip		"_Connect to the lobby"
+		size 	"180 30"
+		pos 	"332 226"
+		onClick		{ cmd "irc_connect; ui_pop; ui_push irc;" }
+	}
+
+	MainMenuCancelBtn bt_cancel
+	{
+		size 	"180 30"
+		pos		"140 226"
+		onClick		{ cmd "ui_pop;" }
+	}
+
+	fuzzyScreen overlay { }
+}
+
+
+window hud_chat extends ipopup
+{
+	{
+		pos			"112 518"
+		size		"800 250"
+		closebutton	true
+		ghost		true
+	}
+
+	string title
+	{
+		string		"_Chat"
+		size 		"800 30"
+	}
+
+	panel allchats {
+		{
+			pos				"0 30"
+			size			"800 220"
+			layout			LAYOUT_BORDER
+			padding	18
+		}
+
+		panel tabs {
+			{
+				pos				"0 0"
+				size			"800 40"
+				layoutMargin	5
+				layout			LAYOUT_LEFT_RIGHT_FLOW
+				align			LAYOUTALIGN_TOP
+			}
+
+			MainMenuTab chat {
+				string	"_Party chat"
+				width	"180"
+				onClick {
+					*node:parent.parent.ircscreen@invis = true
+					*node:parent.invite@invis = true
+					*node:parent.parent.chatscreen@invis = false
+
+					*node:this@bgcolor			=	"0.4 0.515 0.5 1"
+					*node:this@color			=	"0 0 0 0.9"
+
+					*node:parent.irc@bgcolor	=	"0.4 0.515 0.5 0.25"
+					*node:parent.irc@color		=	"1 1 1 0.5"
+
+					call *node:root.hud_activate_chat_textentry
+				}
+			}
+
+			MainMenuTab irc {
+				string	"_Global lobby (IRC)"
+				width	"180"
+				onClick {
+					*node:parent.parent.ircscreen@invis = false
+					*node:parent.invite@invis = false
+
+					*node:parent.parent.chatscreen@invis = true
+
+					*node:this@bgcolor			=	"0.4 0.515 0.5 1"
+					*node:this@color			=	"0 0 0 0.9"
+
+					*node:parent.chat@bgcolor	=	"0.4 0.515 0.5 0.25"
+					*node:parent.chat@color		=	"1 1 1 0.5"
+					cmd "irc_connect;"
+					call *node:root.hud_activate_chat_textentry
+				}
+			}
+			MainMenuTab invite {
+				invis			true
+				string			"_Invite others"
+				tooltip			"_Invite players that are online in the lobby"
+				size			"180 40"
+				onClick {
+					cmd "irc_invite;"
+				}
+			}
+		}
+
+		panel ircscreen {
+			{
+				layout			LAYOUT_BORDER
+				align			LAYOUTALIGN_MIDDLE
+				layoutMargin	5
+				padding			5
+				invis			true
+			}
+
+			panel users {
+				{
+					width			"200"
+					layout			LAYOUT_BORDER
+					align			LAYOUTALIGN_RIGHT
+					layoutMargin	5
+					padding			0
+				}
+
+				textlist list
+				{
+					lineheight	22
+					dataid		TEXT_IRCUSERS
+					rows		"27"
+					onClick		{ cmd "irc_userlist_click <lineselected>;" }
+					onRClick	{ cmd "irc_userlist_rclick <lineselected>;" }
+					onViewChange {
+						*node:parent.scroll@fullsize = <fullsize>
+						*node:parent.scroll@current = <viewpos>
+						*node:parent.scroll@viewsize = <viewsize>
+					}
+				}
+
+				vscrollbar scroll {
+					image		"ui/scrollbar_v"
+					align		LAYOUTALIGN_RIGHT
+					onChange 	{
+						*node:parent.list@viewpos = <current>
+					}
+				}
+			}
+
+			text irc
+			{
+				dataid		TEXT_IRCCONTENT
+				align		LAYOUTALIGN_MIDDLE
+				font		"f_verysmall"
+				rows		"10"
+				lineheight	"16"
+				padding		5
+				onViewChange {
+					*node:parent.irc_scroll@fullsize = <fullsize>
+					*node:parent.irc_scroll@viewsize = <viewsize>
+					*node:parent.irc_scroll@current = <viewpos>
+				}
+			}
+
+			vscrollbar irc_scroll {
+				image		"ui/scrollbar_v"
+				align		LAYOUTALIGN_RIGHT
+				onChange 	{
+					*node:parent.irc@viewpos = <current>
+				}
+			}
+
+			panel input {
+				{
+					layout			LAYOUT_PACK
+					layoutMargin	5
+					align			LAYOUTALIGN_BOTTOM
+					height			25
+				}
+
+				string say_label {
+					align		LAYOUTALIGN_LEFT
+					width		"100"
+					contentalign	ALIGN_CL
+					string		"_Say:"
+				}
+
+				TextEntry say {
+					align		LAYOUTALIGN_FILL
+					string		*cvar:irc_send_buffer
+					clickoutabort	true
+					onChange	{
+						cmd "irc_chanmsg;"
+						call *node:root.hud_activate_chat_textentry
+					}
+				}
+			}
+		}
+
+		panel chatscreen {
+			{
+				layout			LAYOUT_BORDER
+				align			LAYOUTALIGN_MIDDLE
+				layoutMargin	5
+				padding			5
+			}
+
+			text chat
+			{
+				dataid		TEXT_CHAT_WINDOW
+				align		LAYOUTALIGN_MIDDLE
+				font		"f_verysmall"
+				rows		"10"
+				lineheight	"16"
+				padding		5
+				onViewChange {
+					*node:parent.chat_scroll@fullsize = <fullsize>
+					*node:parent.chat_scroll@viewsize = <viewsize>
+					*node:parent.chat_scroll@current = <viewpos>
+				}
+			}
+
+			vscrollbar chat_scroll {
+				image		"ui/scrollbar_v"
+				align		LAYOUTALIGN_RIGHT
+				onChange 	{
+					*node:parent.chat@viewpos = <current>
+				}
+			}
+
+			panel input {
+				{
+					layout			LAYOUT_PACK
+					layoutMargin	5
+					align			LAYOUTALIGN_BOTTOM
+					height			25
+				}
+
+				string say_label {
+					align		LAYOUTALIGN_LEFT
+					width		"100"
+					contentalign	ALIGN_CL
+					string		"_Say:"
+				}
+				CheckBox chat_team
+				{
+					width		"20"
+					pos			"0 4"
+					current		*cvar:mn_chat_team
+					align		LAYOUTALIGN_LEFT
+					tooltip		"_Team chat"
+				}
+
+				TextEntry say {
+					align		LAYOUTALIGN_FILL
+					string		*cvar:mn_entry
+					clickoutabort	true
+					onChange	{
+						if ( *cvar:mn_chat_team eq "1" ) {
+							cmd "say_team \"<node:this@string>\";"
+						} else {
+							cmd "say \"<node:this@string>\";"
+						}
+						*cvar:mn_entry = ""
+						call *node:root.hud_activate_chat_textentry
+					}
+				}
+			}
+		}
+	}
+
+	fuzzyScreen overlay { }
+
+	func hud_activate_chat_textentry {
+		call *node:root.allchats.chatscreen.input.say@edit
+	}
+
+	func hud_activate_irc_textentry {
+		call *node:root.allchats.ircscreen.input.say@edit
+	}
+
+	func onWindowOpened {
+		*cvar:mn_chatselect = "chat"
+		call *node:root.allchats.tabs.chat@onClick
+	}
+}

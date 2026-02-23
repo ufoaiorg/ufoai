@@ -1,0 +1,80 @@
+// sequence definition:
+// ========================================
+//
+// with this type of ufo-file you can make your own sequences
+// have a look at the seq_credits.ufo for more indepth information
+//
+// precache [models|pics]
+// .. for models as parameter:	pathnames relative from base-folder
+// .. for pics as parameter:	pathnames relative from base/pics-folder
+// .. (string)	filenames for models/pics
+//
+// camera NAME
+// .. omega:	(vec3_t)	moving
+// .. zoom:	(float)		value for zooming
+// .. dist:	(int)
+// .. origin:	(vec3_t)	where does it start?
+// .. angles:	(vec3_t)	rotation
+
+// obj2d NAME
+// .. text	(string)
+// .. pos	(vec2_t)	x, y
+// .. align	(align_t)	ur, ul, uc, ...
+// .. color	(vec4_t)	RGBA
+// .. fade	(vec4_t)	RGBA
+// .. speed	(vec2_t)	speed in two directions (x, y)
+
+// model NAME
+// .. tag:	(string)
+// .. anim:	(string)	see anm-file for model
+// .. skin:	(int)		skinnumber
+// .. parent:	(string)	parent model (e.g. head and body) (at head: name of the body-model)
+// .. speed	(vec3_t)	speed in all three directions (x, y, z)
+// .. omega:	(vec3_t)	moving
+// .. origin:	(vec3_t)	where does it start?
+// .. angles:	(vec3_t)	rotation
+
+// General
+// .. wait:	(float)		value of seconds to wait
+// .. cmd:	(string)	command to execute
+// .. rem:	(string)	remove a ressource - string is the NAME of the ressource to remove
+//				only precached?
+
+sequence view
+{
+	animspeed 1000
+
+	precache models
+	{
+	}
+
+	camera cam1
+	{
+		zoom	6.0
+		angles	"15 180 0"
+		dist	100
+	}
+
+	model starchaser
+	{
+		model	"aircraft/inter_starchaser/starchaser_folded"
+		origin	"-350 -25 -45"
+		omega "0 -30 0"
+	}
+
+	click 1
+
+	model bloodspider
+	{
+		model	"aliens/bloodspider/bloodspider"
+		anim	"walk0"
+		origin	"0 -15 0"
+		omega "0 -30 0"
+	}
+
+	click 1
+
+	wait 100
+	rem bloodspider
+	rem starchaser
+}

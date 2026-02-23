@@ -1,0 +1,77 @@
+// Contains sprites from banks we should split
+// then this script will become useless
+
+sprite icons/checkbox_unchecked {
+	image "banks/checkbox"
+	size "22 22"
+	texl "0 0"
+	hoveredtexl "0 32"
+	clickedtexl "0 64"
+	disabledtexl "0 96"
+}
+
+sprite icons/checkbox_checked {
+	image "banks/checkbox"
+	size "22 22"
+	texl "32 0"
+	hoveredtexl "32 32"
+	clickedtexl "32 64"
+	disabledtexl "32 96"
+}
+
+sprite icons/checkbox_indeterminate {
+	image "banks/checkbox"
+	size "22 22"
+	texl "64 0"
+	hoveredtexl "64 32"
+	clickedtexl "64 64"
+	disabledtexl "64 96"
+}
+
+// spinner green
+
+sprite ui/spinner_up {
+	image "banks/spinner"
+	size "15 19"
+	texl "0 0"
+	hoveredtexl "32 0"
+	clickedtexl "0 32"
+	disabledtexl "32 32"
+}
+
+sprite ui/spinner_down {
+	image "banks/spinner"
+	size "15 19"
+	texl "16 0"
+	hoveredtexl "48 0"
+	clickedtexl "16 32"
+	disabledtexl "48 32"
+}
+
+// small checkbox
+sprite icons/checkbox_unchecked_sml {
+	image "banks/checkbox_sml"
+	size "11 11"
+	texl "0 0"
+	hoveredtexl "0 16"
+	clickedtexl "0 32"
+	disabledtexl "0 48"
+}
+
+sprite icons/checkbox_checked_sml {
+	image "banks/checkbox_sml"
+	size "11 11"
+	texl "16 0"
+	hoveredtexl "16 16"
+	clickedtexl "16 32"
+	disabledtexl "16 48"
+}
+
+sprite icons/checkbox_indeterminate_sml {
+	image "banks/checkbox_sml"
+	size "11 11"
+	texl "32 0"
+	hoveredtexl "32 16"
+	clickedtexl "32 32"
+	disabledtexl "32 48"
+}

@@ -1,0 +1,104 @@
+// Basic Concepts (Campaign)
+msgid concept_research_txt {
+text "_PHALANX will need to conduct a broad research program to combat the superiority of alien technology. Our scientists will examine any artifacts recovered from a successful combat mission and deliver new research proposals via the mail client.
+
+To develop the research program, build new laboratory facilities, hire more scientists and set them to work on a specific research project. With luck, we will be able to leverage what we learn to deploy more effectively on the battlefield and maybe one day take the fight to the enemy.
+
+Addendum
+
+Artifacts must be stored in the same base where they are researched. If a research project is listed as unable to be researched at a particular base, it may be stored at a different base or you may need to research another project before it can be adequately studied."
+}
+
+msgid concept_production_txt {
+text "_We may be able to repurpose captured alien technology for use in the war, but PHALANX will also need to produce its own advanced Terran technology and aircraft.
+
+Our initial base has workshop space for a few engineers, but to improve the pace of production we'll need to build additional workshops, hire more engineers and set them to work on something."
+}
+
+msgid concept_interception_txt {
+text "_We can't just wait around for the aliens to come knocking at our door. We need to detect alien craft and shoot them down whenever possible. The initial PHALANX base includes a powerful radar facility, but we'll need to build off-site radar towers to cover more of the sky.
+
+Once a UFO has been detected, we'll need to dispatch our nearest interceptors to try to shoot it down. But we're heavily outgunned in the air, so we should send multiple aircraft whenever possible.
+
+Addenda
+
+Off-site radar towers have a smaller detection range than our in-base installations.
+
+Previously unseen types of UFOs should be approached with extreme caution until our scientists and engineers can establish their combat capabilities.
+
+Alien activity will often go undetected in areas where our radar coverage doesn't reach and the funding nations will be angry when PHALANX fails to respond to these attacks."
+}
+
+msgid concept_disassembly_txt {
+text "_Disassembling captured UFOs will be vital in the battle to uncover secrets about the alien technology. PHALANX will need to build a UFO Yard -- an off-base installation to house the recovered crafts -- as soon as possible.
+
+Our engineers will need to travel to the storage site and transport the components back to their workshop, so UFO Yards should be built close to the base where work will occur.
+
+Addendum
+
+Before our engineers can disassemble a UFO in a way that will yield usable materials, they'll need the complete technical readout from the research teams."
+}
+
+msgid concept_nation_happiness_txt {
+text "_PHALANX is a UN organisation that is permitted and funded by the unanimous support of its member nations. If we neglect the defense and security of one of our sponsors, they'll soon lose faith in our capabilities and withdraw their funding. Let the relationship deteriorate too far and they may shut the whole operation down.
+
+To keep up satisfaction in the performance of PHALANX, make sure the organisation can cover as much of the globe as possible and confront alien attacks all around the world."
+}
+
+msgid concept_time_units_txt {
+text "_A soldier can only do so much in a single turn. Each soldier has a limited number of Time Units (TUs) they can spend each turn on moving, crouching, looking around and firing their weapon. They move faster when standing and spend more TUs walking in a crouched position.
+
+Monitor a soldier's TU carefully. Some firemodes -- like aimed shots and automatic fire -- take more TUs than others. Running low on time in the wrong spot can be a deadly mistake.
+
+Addendum
+
+TUs are refreshed each turn, but if an enemy flashbang goes off in front of a soldier they will lose all of their TUs for the next turn."
+}
+
+msgid concept_reaction_fire_txt {
+text "_Units can fire on enemy units when they wander into their field of view during the enemy's turn. Soldiers will execute a reaction shot when an enemy unit spends more Time Units (TU) in their field of view than the cost of their reaction fire.
+
+This means that a unit which has been set to execute a reaction shot that costs 8 TU will take the shot after the enemy spends 9 or more TU within their field of view. But be careful -- aliens can take reaction shots just like PHALANX soldiers.
+
+Soldiers firing weapons with low TU costs will execute more reaction shots -- and receive less reaction fire from the enemy -- than soldiers who fire weapons which cost more TUs.
+
+Addenda
+
+A soldier will not perform reaction fire unless it has been enabled in the soldier's control panel. When enabled, a soldier will be unable to spend the Time Units required to fire once during the enemy's turn. Commanders can choose the firemode the soldier should use with reaction fire in the firemode selection window.
+
+If an enemy unit wanders out of a unit's view -- even for a moment -- the reaction fire counter will be reset. A unit must spend enough TUs consecutively in view of a unit to receive reaction fire."
+}
+
+msgid concept_weight_txt {
+text "_Soldiers must be able to fight quickly and effectively. Load them up with too much equipment and they will slow down, reducing the number of Time Units (TUs) they have to use each turn. Soldiers will get a speed boost if they're carrying a light load.
+
+Addendum
+
+Monitor a soldier's load carefully in the equipment screen. If he is carrying more than 50 per cent of his maximum capacity, he'll lose TUs and may not be able to use all of his fire modes. If he is carrying less than 20 per cent of his maximum capacity, he'll gain extra TUs."
+}
+
+msgid concept_wounds_txt {
+text "_Our soldiers can receive wounds if they are injured by enemy fire. These wounds can effect their firing accuracy, firing speed and movement speed. Injuries will degrade a soldier's health each turn and may lead to death if they are not treated by a medikit. A PHALANX squad should bring along plenty of medikits to perform combat stabilisation of wounds.
+
+Addenda
+
+Wounds can be tracked in the character stats window. A medikit can heal wounds to prevent a soldier from dying from their wounds on the battlefield, but it will only restore a small amount of health. Soldiers will need time to recover once they've returned to the base. Build a hospital facility to greatly increase their recovery times."
+}
+
+msgid concept_equipment_txt {
+text "_The aliens deploy powerful weaponry to deadly effect on the battlefield. Engaging them in a shootout on open terrain is a sure way to get killed quickly, so PHALANX soldiers must be adept at using auxiliary equipment to overcome the extraterrestrial forces on the battlefield.
+
+PHALANX soldiers should equip themselves with smoke grenades to hide their positions when in the line of sight of alien forces. Incendiary grenades and rockets can produce fields of fire that damage alien forces before they come within range of our soldiers. And flashbangs can be used to temporarily disable an alien unit.
+
+If a soldier comes face to face with an alien and is not capable of taking it down without suffering deadly reaction fire, indirect weaponry such as grenades -- launched by hand or through a grenade launcher -- should be used to take out the enemy from a safe position.
+
+We'll always need conventional firearms on the battlefield, but auxiliary weaponry deployed defensively will be key if we're to overcome the aliens' technological dominance on the battlefield.
+
+Addenda
+
+Smoke clouds will block line of sight on the battlefield.
+
+Flashbangs will remove Time Units when deployed effectively. A unit that has been effected by a flashbang will lose any Time Units it had when the flashbang exploded and will not receive more Time Units during its next turn. Flashbangs are only effective when they explode close to the target and within its field of view.
+
+Incendiary fields cause a small amount of damage to units which pass through them."
+}

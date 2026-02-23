@@ -1,0 +1,468 @@
+// ==================
+// EMPLOYEES MENU
+// ==================
+
+component cmpEmployee extends panel
+{
+	{
+		size "360 38"
+	}
+
+	string name
+	{
+		size		"280 38"
+		pos			"30 0"
+		color		"0.56 0.81 0.76 1"
+		contentalign ALIGN_CL
+		onClick		{
+			cmd "employee_select <node:parent@num>; hire_select <node:parent@num>"
+			cmd "set_healthbar_color;"
+		}
+	}
+	CheckBox select
+	{
+		current		0
+		size		"20 20"
+		pos			"325 9"
+		onChange	{ cmd "employee_hire <node:parent@num>; employee_equipcheck;" }
+		onRClick	{ cmd "employee_delete <node:parent@num>; employee_equipcheck;" }
+	}
+	data status { integer 0 }
+	image assigned {
+		pos 	"0 7"
+		size	"24 24"
+		src		"icons/icon_aircraftsml"
+		invis	true
+	}
+}
+
+window employees
+{
+	{
+		fill		true
+	}
+
+	// Base name and container panel
+	BaseContainerPanel base_container
+	{
+		// hireand fire panel
+		panel mainBody
+		{
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Hire and Fire"
+				}
+			}
+
+
+			// ==================
+			// tabs
+			// ==================
+
+			tab empl_switch {
+				{
+					cvar		*cvar:mn_hiretype
+					pos			"1 36"
+					size		"713 39"
+					onChange {
+						cmd "employee_init <cvar:mn_hiretype>;"
+						*node:parent.employees.employee_list@viewpos = 0
+						*node:parent.employees.scroll@current = 0
+						cmd "employee_select 0; hire_select 0"
+					}
+				}
+				option soldier {
+					label	"_Soldiers"
+					value	"0"
+					icon	"icons/smallhead_soldier"
+				}
+				option pilot {
+					label	"_Pilots"
+					value	"3"
+					icon	"icons/smallhead_pilot"
+				}
+				option worker {
+					label	"_Workers"
+					value	"2"
+					icon	"icons/smallhead_worker"
+				}
+				option scientist {
+					label	"_Scientists"
+					value	"1"
+					icon	"icons/smallhead_scientist"
+				}
+			}
+
+			panel employees
+			{
+				{
+					pos			"5 75"
+					size		"520 460"
+				}
+
+
+				// ==================
+				// names list
+				// ==================
+
+				rows list_background {
+					pos			"5 5"
+					size		"380 440"
+					lineheight	38
+				}
+
+				panel scroll_background {
+					pos			"333 10"
+					size		"40 440"
+					bgcolor		"0 0 0 0.5"
+				}
+
+				panel list_border {
+					pos				"5 5"
+					size			"393 455"
+					padding			6
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+				}
+
+				/**
+				 * @brief Disable checkbox (employee is away from base)
+				 * @param[in] <1> row of the employee in the view
+				 */
+				confunc employeedisable
+				{
+					*node:parent.employee_list.bt_employee<1>.select@current = 1
+					*node:parent.employee_list.bt_employee<1>.select@invis = false
+					*node:parent.employee_list.bt_employee<1>.select@disabled = true
+					*node:parent.employee_list.bt_employee<1>.select@tooltip = "_Employee is away"
+				}
+
+				/**
+				 * @brief Enable checked checkox (Employee can be fired)
+				 * @param[in] <1> row of the employee in the view
+				 */
+				confunc employeefire
+				{
+					*node:parent.employee_list.bt_employee<1>.select@current = 1
+					*node:parent.employee_list.bt_employee<1>.select@invis = false
+					*node:parent.employee_list.bt_employee<1>.select@disabled = false
+					*node:parent.employee_list.bt_employee<1>.select@tooltip = "_Unhire - Right click to remove"
+				}
+
+				/**
+				 * @brief Enable unchecked checkox (Employee can be hired)
+				 * @param[in] <1> row of the employee in the view
+				 */
+				confunc employeehire
+				{
+					*node:parent.employee_list.bt_employee<1>.select@current = 0
+					*node:parent.employee_list.bt_employee<1>.select@invis = false
+					*node:parent.employee_list.bt_employee<1>.select@disabled = false
+					*node:parent.employee_list.bt_employee<1>.select@tooltip = "_Hire - Right click to remove"
+				}
+
+				/**
+				 * @brief Hide checkox (Empty slot)
+				 * @param[in] <1> row of the employee in the view
+				 */
+				confunc employeehide
+				{
+					*node:parent.employee_list.bt_employee<1>.select@invis = true
+				}
+
+				confunc employee_equipcheck {
+					if ( *cvar:mn_hiresoldiers > 0 ) {
+						*node:employees.bt_equipsoldiers@disabled = false
+					} else {
+						*node:employees.bt_equipsoldiers@disabled = true
+					}
+				}
+
+				confunc hire_select {
+					forchildin ( *node:parent.employee_list ) {
+						if ( *node:child.status@integer == 0 ) {
+							*node:child.name@color = "0.56 0.81 0.76 1"
+						} else {
+							*node:child.name@color = "1 0.81 0.76 1"
+						}
+					}
+					*node:parent.employee_list.bt_employee<1>.name@color = "1 1 1 1"
+					call *node:root.local.name@exit
+					if ( *cvar:mn_employee_hired == 0 ) {
+						*node:root.local.rename@disabled = true
+						*node:root.local.rename@tooltip = ""
+					} else {
+						*node:root.local.rename@disabled = false
+						*node:root.local.rename@tooltip = "_Rename your unit"
+					}
+				}
+
+				confunc hire_clear {
+					call *node:parent.employee_list@removeAllchild
+				}
+
+				// <1> Employee position in menu
+				// <2> Employee name
+				// <3> Employee is wounded?
+				// <4> Employee aircraft
+				confunc hire_addemployee {
+					call *node:parent.employee_list@createChild("bt_employee<1>", "cmpEmployee")
+					*node:parent.employee_list.bt_employee<1>@num = <1>
+					*node:parent.employee_list.bt_employee<1>.name@string = <2>
+					*node:parent.employee_list.bt_employee<1>.status@integer = <3>
+					if ( <3> == 1) {
+						*node:parent.employee_list.bt_employee<1>.name@color = "1 0.81 0.76 1"
+					}
+					if ( <4> ne "" ) {
+						*node:parent.employee_list.bt_employee<1>.assigned@invis = false
+						*node:parent.employee_list.bt_employee<1>.assigned@tooltip = <4>
+					}
+				}
+
+				// Ugly, but this is needed to prevent the call from being executed before employee_select is
+				confunc set_healthbar_color {
+					call *node:root.actorhealth.hp.update_healthcolor
+				}
+
+				panel employee_list
+				{
+					size			"360 450"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					wheelscrollable	true
+
+					onViewChange {
+						*node:parent.scroll@fullsize = <fullsize>
+						*node:parent.scroll@current = <viewpos>
+						*node:parent.scroll@viewsize = <viewsize>
+					}
+				}
+
+				vscrollbar scroll
+				{
+					image		"ui/scrollbar_v"
+					pos			"368 5"
+					height		"448"
+					current		0
+					viewsize	15
+					fullsize	50
+					onChange	{
+						*node:parent.employee_list@viewpos = <current>
+					}
+				}
+			}
+
+			panel placeholder
+			{
+				{
+					pos			"530 75"
+					size		"183 460"
+					contentalign	ALIGN_CC
+				}
+
+				string pltext
+				{
+					string		"Placeholder"
+					align		LAYOUTALIGN_MIDDLE
+				}
+			}
+		}
+	}
+
+	actor_info local
+	{
+		textentry name
+		{
+			visiblewhen "*cvar:mn_show_employee >= 1"
+			string		*cvar:mn_name
+			pos			"3 0"
+			size		"290 20"
+			color		"0.56 0.81 0.76 1"
+			onChange	{ cmd "employee_changename;" }
+		}
+
+		button rename
+		{
+			tooltip		"_Rename your unit"
+			pos			"3 0"
+			size		"290 20"
+			onClick		{ call *node:parent.name@edit }
+		}
+
+		image	rank_img
+		{
+			visiblewhen "*cvar:mn_show_employee >= 1"
+		}
+
+		model body
+		{
+			{
+				visiblewhen "*cvar:mn_show_employee >= 1"
+			}
+
+			model head
+			{
+				visiblewhen "*cvar:mn_show_employee >= 1"
+			}
+		}
+
+		string rank_lbl
+		{
+			visiblewhen "*cvar:mn_show_employee >= 1"
+		}
+
+
+		panel soldier_info {
+			{
+				visiblewhen "*cvar:mn_show_employee == 1"
+			}
+		}
+	}
+
+	MainMenu3Btn bt_equipsoldiers
+	{
+		visiblewhen "*cvar:mn_show_employee == 1"
+		string	  "_Equip soldiers"
+		pos			"760 380"
+		size		"198 30"
+		font		"f_small_bold"
+		color		"0 0 0 0.9"
+		selectcolor	"0 0 0 1"
+		onClick	{
+			cmd "ui_push equipment -1;"
+		}
+	}
+
+/*	BuildingSpace quarters
+	{
+		{ pos "739 0" }
+
+		button smlicon { icon	"icons/building_quarters" }
+		string label { string	"_Living Quarters" }
+		button alert { invis true }
+	}
+*/
+	string label_people {
+		string	"_Occupation"
+		font	"f_normal_bold"
+		pos		"740 08"
+		size	"140 20"
+		contentalign	ALIGN_UC
+	}
+	string number_people {
+		string	*cvar:mn_hirepeople
+		font	"f_normal_bold"
+		pos		"880 08"
+		size	"100 20"
+		contentalign	ALIGN_UC
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	panel global_info {
+		{
+			pos		"740 30"
+			size	"250 70"
+		}
+
+		button icon_soldier {
+			icon	"icons/head_soldier"
+			pos		"10 8"
+			size	"42 42"
+		}
+		string number_soldier {
+			string	*cvar:mn_hiresoldiers
+			pos		"12 48"
+			size	"42 20"
+			contentalign	ALIGN_UR
+		}
+
+		button icon_pilot {
+			icon	"icons/head_pilot"
+			pos		"70 8"
+			size	"42 42"
+		}
+		string number_pilot {
+			string	*cvar:mn_hirepilots
+			pos		"72 48"
+			size	"42 20"
+			contentalign	ALIGN_UR
+		}
+
+		button icon_worker {
+			icon	"icons/head_worker"
+			pos		"130 8"
+			size	"42 42"
+		}
+		string number_worker {
+			string	*cvar:mn_hireworkers
+			pos		"132 48"
+			size	"42 20"
+			contentalign	ALIGN_UR
+		}
+
+		button icon_scientist {
+			icon	"icons/head_scientist"
+			pos		"190 8"
+			size	"42 42"
+		}
+		string number_scientist {
+			string	*cvar:mn_hirescientists
+			pos		"192 48"
+			size	"42 20"
+			contentalign	ALIGN_UR
+		}
+	}
+
+	abilities hire_abilities
+	{
+		visiblewhen "*cvar:mn_show_employee == 1"
+	}
+
+	skillbars hire_skills
+	{
+		visiblewhen "*cvar:mn_show_employee == 1"
+	}
+
+	skillspilot pilotskills
+	{
+		visiblewhen "*cvar:mn_show_employee == 2"
+	}
+
+	healthbar actorhealth
+	{
+		{
+			visiblewhen "*cvar:mn_show_employee <= 2"
+		}
+	}
+
+
+	// ==================
+	// init function
+	// ==================
+
+	func onWindowOpened
+	{
+		*node:root.base_container.mainBody.employees.employee_list@viewpos = 0
+		*node:root.base_container.mainBody.employees.scroll@current = 0
+		cmd "employee_init <1>;"
+		*cvar:mn_hiretype = <1>
+		cmd "employee_update_count; employee_equipcheck; employee_select 0; hire_select 0"
+	}
+
+	func onWindowClosed
+	{
+		// call base init function because the amount of workers, scientists and
+		// so on can also change the button state in the base view
+		cmd "base_init;"
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
+}

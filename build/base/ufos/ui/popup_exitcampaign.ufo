@@ -1,0 +1,65 @@
+--!usr/bin/lua
+
+require("ufox.lua")
+
+
+--[[
+ - @brief Constructs Exit campaign confirmation popup
+--]]
+do
+	local popup_exit_campaign = ufox.build_window({
+		name = "popup_exit_campaign",
+		class = "window",
+		super = "ipopup",
+		backgroundcolor = {0.0784, 0.1019, 0.1019, 1.0},
+		pos = {256, 256},
+		size = {512, 256},
+		dragbutton = true,
+		closebutton = true,
+
+		{
+			name = "title",
+			class = "string",
+			width = 512,
+			text = "_EXIT CAMPAIGN CONFIRMATION"
+		},
+
+		{
+			name = "message",
+			class = "string",
+			pos = {26, 58},
+			size = {450, 60},
+			text = "_You will lose all your campaign progress."
+		},
+
+		{
+			name = "cancel",
+			class = "MainMenu2Btn",
+			pos = {140, 226},
+			size = {180, 30},
+			text = "_BACK",
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+			end
+		},
+
+		{
+			name = "quit",
+			class = "MainMenuExitBtn",
+			pos = {332, 226},
+			size = {180, 30},
+			text = "_QUIT",
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+				ufo.cmd("game_exit;")
+			end
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+	})
+end

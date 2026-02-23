@@ -1,0 +1,760 @@
+// ==================
+// MAP MENU
+// ==================
+
+component cmpGeoscapeDocklet extends panel {
+	{
+		pos		"0 0"
+		size	"280 60"
+		align	LAYOUTALIGN_TOP
+	}
+
+	image bg {
+		src				"geoscape/docklet_bg"
+		pos				"0 1"
+		size			"280 60"
+		onMouseEnter	{ *node:this@src = "geoscape/docklet_bg_hovered" }
+		onMouseLeave	{ *node:this@src = "geoscape/docklet_bg" }
+		onClick			{ cmd "map_selectobject <node:parent.type@string> <node:parent.id@string>;" }
+	}
+
+	model siteModel {
+		pos		"5 2"
+		size	"50 56"
+		autoscale	true
+		ghost	true
+		angles	"0 0 160"
+	}
+
+	string	message {
+		pos		"65 5"
+		size	"210 50"
+		ghost	true
+	}
+
+	/** store the id to find the object */
+	data type { }
+
+	/** store the id to find the object */
+	data id { }
+}
+
+// ================
+// GEOSCAPE WINDOW
+// ================
+
+window geoscape
+{
+	{
+		fill		true
+		starlayout	true
+	}
+
+	geoscape themap
+	{
+		pos				"0 0"
+		size			"1024 768"
+		onRClick		{ cmd "mn_mapaction_reset;" }
+		align			LAYOUTALIGN_FILL
+		padding-right	256
+	}
+
+	confunc clean_geoscape_object {
+		call *node:root.messages.dock@removeAllChild
+	}
+
+	/**
+	 * @param<1> type [mission|ufo]
+	 * @param<2> id (internal, to identify the docklet object)
+	 * @param<3> model
+	 * @param<4> text
+	 */
+	confunc add_geoscape_object
+	{
+		call *node:root.messages.dock@createChild ( "<1><2>" , "cmpGeoscapeDocklet" )
+		*node:root.messages.dock.<1><2>.type@string = <1>
+		*node:root.messages.dock.<1><2>.id@string = <2>
+		*node:root.messages.dock.<1><2>.siteModel@src = <3>
+		*node:root.messages.dock.<1><2>.message@string = <4>
+	}
+
+	confunc messagesystem_changemode
+	{
+		/* one line */
+		if ( *cvar:mn_messagesystem == 0 ) {
+			*node:root.messages.messagesystem@width = ( *cvar:ui_sys_screenwidth - 256 )
+			*node:root.messages.messagesystem@height	= 20
+			*node:root.messages.messagesystem.scroll@invis = true
+		}
+		/* 6 lines */
+		if ( *cvar:mn_messagesystem == 1 ) {
+			*node:root.messages.messagesystem@width = ( *cvar:ui_sys_screenwidth - 256 )
+			*node:root.messages.messagesystem@height	= 120
+			*node:root.messages.messagesystem.scroll@invis = true
+		}
+		/* 12 lines */
+		if ( *cvar:mn_messagesystem == 2 ) {
+			*node:root.messages.messagesystem@width = ( *cvar:ui_sys_screenwidth - 256 )
+			*node:root.messages.messagesystem@height	= 240
+			*node:root.messages.messagesystem.scroll@invis = true
+		}
+		/* full screen */
+		if ( *cvar:mn_messagesystem == 3 ) {
+			*node:root.messages.messagesystem@width = ( *cvar:ui_sys_screenwidth - 256 )
+			*cvar:foo = ( *cvar:ui_sys_screenwidth - 256 )
+			*node:root.messages.messagesystem@height = 768
+			*node:root.messages.messagesystem.scroll@invis = false
+			cmd "game_timestop;"
+		}
+
+	}
+
+	// ===================
+	// RIGHT (MAIN) PANEL
+	// ===================
+
+	panel control {
+		{
+			size		"216 728"
+			align		LAYOUTALIGN_RIGHT
+			border		"2"
+			bordercolor	"0.56 0.81 0.76 1"
+			bgcolor		"0 0 0 0.6"
+		}
+		panel border {
+			{
+				pos			"0 70"
+				size		"216 465"
+				border		"2"
+				bordercolor	"0.56 0.81 0.76 1"
+			}
+		}
+
+		string date {
+			string		"*cvar:mn_mapdate *cvar:mn_maptime"
+			pos		"18 12"
+			size		"181 20"
+			contentalign	ALIGN_UC
+			color		"1 1 1 1"
+			font		"f_small"
+		}
+
+		button bt_messagesystem
+		{
+			// @todo: better -more verbose- tooltip
+			tooltip		"_Open up messages"
+			padding		0
+			icon		"icons/change_height"
+			pos			"5 5"
+			size		"23 23"
+			onClick	{
+				cmd "add mn_messagesystem 1;"
+				cmd "mod mn_messagesystem 4;"
+				cmd "messagesystem_changemode"
+			}
+			onRClick	{
+				*cvar:mn_messagesystem = 3
+				cmd "messagesystem_changemode"
+			}
+		}
+
+		// ==================
+		// credits strings
+		// ==================
+
+		string txt_credits_caption
+		{
+			string		"_CREDITS"
+			pos			"11 38"
+			size		"97 25"
+			font		"f_small"
+			contentalign	ALIGN_CC
+		}
+
+		string txt_credits
+		{
+			string		*cvar:mn_credits
+			tooltip		"_Organisation capital"
+			pos			"109 38"
+			size		"97 25"
+			font		"f_small"
+			contentalign	ALIGN_CC
+		}
+
+		// ==================
+		// timecontrol panel
+		// ==================
+
+		panel time_panel {
+			{
+				pos		"0 70"
+				size	"214 55"
+			}
+
+			func faster {
+				*cvar:mn_fastexit = 0;
+				cmd "game_timefast;"
+			}
+			func slower {
+				*cvar:mn_fastexit = 0;
+				cmd "game_timeslow;"
+			}
+
+			radiobutton bt_timestop0
+			{
+				tooltip		"_Pause"
+				cvar		*cvar:mn_timelapse_id	value "0"
+				icon		"icons/speed_stop"
+				pos			"28 10"
+				size		"20 20"
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
+				onWheelUp	{ *cvar:mn_fastexit = 0; cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
+			}
+
+			radiobutton bt_timeplay1
+			{
+				tooltip		"_Time lapse: 5 seconds"
+				cvar		*cvar:mn_timelapse_id	value "1"
+				icon		"icons/speed_dot"
+				pos			"48 10"
+				size		"20 20"
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
+			}
+
+			radiobutton bt_timeplay2
+			{
+				tooltip		"_Time lapse: 5 minutes"
+				cvar		*cvar:mn_timelapse_id	value "2"
+				icon		"icons/speed_play1"
+				pos			"68 10"
+				size		"20 20"
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
+			}
+
+			radiobutton bt_timeplay3
+			{
+				tooltip		"_Time lapse: 20 minutes"
+				cvar		*cvar:mn_timelapse_id	value "3"
+				icon		"icons/speed_dot"
+				pos			"88 10"
+				size		"20 20"
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
+			}
+
+			radiobutton bt_timeplay4
+			{
+				tooltip		"_Time lapse: 1 hour"
+				cvar		*cvar:mn_timelapse_id	value "4"
+				icon		"icons/speed_play2"
+				pos			"108 10"
+				size		"20 20"
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
+			}
+
+			radiobutton bt_timeplay5
+			{
+				tooltip		"_Time lapse: 12 hours"
+				cvar		*cvar:mn_timelapse_id	value "5"
+				icon		"icons/speed_dot"
+				pos			"128 10"
+				size		"20 20"
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
+			}
+
+			radiobutton bt_timeplay6
+			{
+				tooltip		"_Time lapse: 1 day"
+				cvar		*cvar:mn_timelapse_id	value "6"
+				icon		"icons/speed_dot"
+				pos			"148 10"
+				size		"20 20"
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
+			}
+
+			radiobutton bt_timeplay7
+			{
+				tooltip		"_Time lapse: 5 days"
+				cvar		*cvar:mn_timelapse_id	value "7"
+				icon		"icons/speed_play3"
+				pos			"168 10"
+				size		"20 20"
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
+			}
+
+			string timelapse
+			{
+				string			*cvar:mn_timelapse
+				pos				"1 32"
+				size			"205 20"
+				contentalign	ALIGN_UC
+				color			"0.56 0.81 0.76 1"
+			}
+		}
+
+		// ====================
+		// mission description
+		// ====================
+
+		text description
+		{
+			dataid		TEXT_STANDARD
+			pos			"22 134"
+			size		"172 144"
+			lineheight	18
+			tabwidth	70
+			rows		8
+			onViewChange {
+				*node:parent.description_scroll@fullsize = <fullsize>
+				*node:parent.description_scroll@current = <viewpos>
+				*node:parent.description_scroll@viewsize = <viewsize>
+			}
+		}
+
+		vscrollbar description_scroll {
+			image		"ui/scrollbar_v"
+			pos			"185 131"
+			height		"144"
+			current		0
+			viewsize	8
+			fullsize	8
+			hidewhenunused	true
+			onChange {
+				*node:parent.description@viewpos	 = <current>
+			}
+		}
+
+		// =====================
+		// day/nighttime string
+		// =====================
+
+		string daytime
+		{
+			string		*cvar:mn_mapdaytime
+			pos			"11 286"
+			size		"195 20"
+			contentalign	ALIGN_UC
+		}
+
+		// ========================
+		// geoscape camera control
+		// ========================
+
+		panel geoscape_control {
+			{
+				pos		"23 322"
+				size	"170 170"
+			}
+
+			image background {
+				pos		"0 0"
+				size	"170 170"
+				texh	"170 170"
+				src	"ui/geo_miniglobe"
+			}
+
+			image globe_effect {
+				pos		"0 0"
+				size	"168 168"
+				texh	"168 168"
+			}
+
+			zone panel_scroll_up
+			{
+				pos			"55 2"
+				size		"70 50"
+				repeat		true
+				clickdelay	100
+				onClick		{ cmd "map_scroll up;" }
+				onMouseEnter { *node:parent.globe_effect@src = "ui/geo_miniglobe_n" }
+				onMouseLeave { *node:parent.globe_effect@src = "" }
+			}
+
+			zone panel_scroll_down
+			{
+				pos			"47 115"
+				size		"70 50"
+				repeat		true
+				clickdelay	100
+				onClick		{ cmd "map_scroll down;" }
+				onMouseEnter { *node:parent.globe_effect@src = "ui/geo_miniglobe_s" }
+				onMouseLeave { *node:parent.globe_effect@src = "" }
+			}
+
+			zone panel_scroll_left
+			{
+				pos			"2 45"
+				size		"50 70"
+				repeat		true
+				clickdelay	100
+				onClick		{ cmd "map_scroll left;" }
+				onMouseEnter { *node:parent.globe_effect@src = "ui/geo_miniglobe_w" }
+				onMouseLeave { *node:parent.globe_effect@src = "" }
+			}
+
+			zone panel_scroll_right
+			{
+				pos			"115 55"
+				size		"50 70"
+				repeat		true
+				clickdelay		100
+				onClick		{ cmd "map_scroll right;" }
+				onMouseEnter { *node:parent.globe_effect@src = "ui/geo_miniglobe_e" }
+				onMouseLeave { *node:parent.globe_effect@src = "" }
+			}
+
+			zone panel_zoom_in
+			{
+				pos			"54 50"
+				size		"25 62"
+				repeat		true
+				clickdelay	100
+				onClick		{ cmd "map_zoom in" }
+				onMouseEnter { *node:parent.globe_effect@src = "ui/geo_miniglobe_in" }
+				onMouseLeave { *node:parent.globe_effect@src = "" }
+			}
+
+			zone panel_zoom_out
+			{
+				pos			"82 50"
+				size		"25 62"
+				repeat		true
+				clickdelay	100
+				onClick		{ cmd "map_zoom out" }
+				onMouseEnter { *node:parent.globe_effect@src = "ui/geo_miniglobe_out" }
+				onMouseLeave { *node:parent.globe_effect@src = "" }
+			}
+
+			// geoscape camera functions
+			func cam_up {
+				cmd "map_scroll up;"
+				*node:parent.globe_effect@src = "ui/geo_miniglobe_n"
+			}
+			func cam_left {
+				cmd "map_scroll left;"
+				*node:parent.globe_effect@src = "ui/geo_miniglobe_w"
+			}
+			func cam_right {
+				cmd "map_scroll right;"
+				*node:parent.globe_effect@src = "ui/geo_miniglobe_e"
+			}
+			func cam_down {
+				cmd "map_scroll down;"
+				*node:parent.globe_effect@src = "ui/geo_miniglobe_s"
+			}
+			func zoom_in {
+				cmd "map_zoom in;"
+				*node:parent.globe_effect@src = "ui/geo_miniglobe_in"
+			}
+			func zoom_out {
+				cmd "map_zoom out;"
+				*node:parent.globe_effect@src = "ui/geo_miniglobe_out"
+			}
+		}
+
+		// ==================
+		// buttons
+		// ==================
+
+		button bt_messagesettings
+		{
+			string		"_Message settings"
+			tooltip		"_Change message and pause settings"
+			color		"0.56 0.81 0.76 1"
+			font		"f_small"
+			pos			"21 540"
+			size		"175 34"
+			selectcolor	"1 1 1 1"
+			background		"ui/button_geoscape"
+
+			onClick		{ cmd "ui_push messageoptions;" }
+		}
+
+		button bt_mailclient
+		{
+			visiblewhen "*cvar:mn_upunreadmail != 0"
+
+			string		"_Mailclient"
+			tooltip		"_INBOX (with unread mails)"
+			color		"0.56 0.81 0.76 1"
+			font		"f_small"
+			pos			"21 575"
+			flash		true
+			size		"175 34"
+			selectcolor	"1 1 1 1"
+			background		"ui/button_geoscape"
+
+			onClick		{ cmd "ui_push mailclient;" }
+		}
+
+		button bt_mailclient_nomail
+		{
+			visiblewhen "*cvar:mn_upunreadmail == 0"
+
+			string		"_Mailclient"
+			tooltip		"_INBOX"
+			color		"0.56 0.81 0.76 1"
+			font		"f_small"
+			pos			"21 575"
+			size		"175 34"
+			selectcolor	"1 1 1 1"
+			background	"ui/button_geoscape"
+
+			onClick		{ cmd "ui_push mailclient;" }
+		}
+
+		button bt_stats
+		{
+			string		"_Statistics"
+			tooltip		"_Organisation statistics"
+			pos			"21 610"
+			size		"175 34"
+			color		"0.56 0.81 0.76 1"
+			font		"f_small"
+			selectcolor	"1 1 1 1"
+			background	"ui/button_geoscape"
+
+			onClick		{ cmd "ui_push stats;" }
+		}
+
+		button bt_ufopedia
+		{
+			string		"_UFOpaedia"
+			pos			"21 645"
+			size		"175 34"
+			color		"0.56 0.81 0.76 1"
+			font		"f_small"
+			selectcolor	"1 1 1 1"
+			background	"ui/button_geoscape"
+
+			onClick		{ cmd "ui_push ufopedia;" }
+		}
+
+		button bt_installation
+		{
+			string		"_Create installation"
+			color		"0.56 0.81 0.76 1"
+			pos			"21 680"
+			size		"175 34"
+			font		"f_small"
+			selectcolor	"1 1 1 1"
+			background	"ui/button_geoscape"
+
+			onClick		{ cmd "ui_push popup_newinstallation_type;" }
+		}
+
+		// ==================
+		// small buttons
+		// ==================
+
+		button bt_show_overlay {
+			tooltip		"_Highlight nation borders"
+			icon		"icons/geo_nations"
+			pos		"20 495"
+			size		"32 32"
+			background	"icons/geo_button"
+			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
+			onMouseLeave { *node:this@background = "icons/geo_button" }
+			onClick {
+				if ( *cvar:geo_overlay_nation > 0 ) {
+					cmd "geo_setoverlay nation 0;"
+				} else {
+					cmd "geo_setoverlay nation 1;"
+				}
+			}
+		}
+
+		button bt_show_radar
+		{
+			tooltip		"_Show radar range"
+			icon		"icons/geo_radar"
+			pos			"50 495"
+			size		"32 32"
+			background	"icons/geo_button"
+			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
+			onMouseLeave { *node:this@background = "icons/geo_button" }
+			onClick	{
+				if ( *cvar:geo_overlay_radar > 0 ) {
+					cmd "geo_setoverlay radar 0;"
+				} else {
+					cmd "geo_setoverlay radar 1;"
+				}
+			}
+		}
+
+		button bt_show_xvi
+		{
+			visiblewhen	"*cvar:mn_xvimap == 1"
+			tooltip		"_Show XVI map"
+			icon		"icons/geo_xvi"
+			pos			"80 495"
+			size		"32 32"
+			background	"icons/geo_button"
+			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
+			onMouseLeave { *node:this@background = "icons/geo_button" }
+			onClick		{
+				if ( *cvar:geo_overlay_xvi > 0 ) {
+					cmd "geo_setoverlay xvi 0;"
+				} else {
+					cmd "geo_setoverlay xvi 1;"
+				}
+			}
+		}
+
+		confunc ui_update_overlay_buttons {
+			if ( *cvar:geo_overlay_radar > 0 ) {
+				*node:parent.bt_show_radar@icon = "icons/geo_radar_on"
+			} else {
+				*node:parent.bt_show_radar@icon = "icons/geo_radar"
+			}
+			if ( *cvar:geo_overlay_nation > 0 ) {
+				*node:parent.bt_show_overlay@icon = "icons/geo_nations_on"
+			} else {
+				*node:parent.bt_show_overlay@icon = "icons/geo_nations"
+			}
+			if ( *cvar:geo_overlay_xvi > 0 ) {
+				*node:parent.bt_show_xvi@icon = "icons/geo_xvi_on"
+			} else {
+				*node:parent.bt_show_xvi@icon = "icons/geo_xvi"
+			}
+		}
+
+		button bt_mapcenter
+		{
+			tooltip		"_Center objects on the map"
+			icon		"icons/geo_center"
+			pos			"125 500"
+			size		"28 25"
+			background	"icons/geo_button"
+			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
+			onMouseLeave { *node:this@background = "icons/geo_button" }
+			onClick		{ cmd "map_center;" }
+		}
+
+		button bt_menu
+		{
+			tooltip		"_Go to Options"
+			icon		"icons/geo_options"
+			pos			"170 500"
+			size		"28 25"
+			background	"icons/geo_button"
+			onMouseEnter { *node:this@background = "icons/geo_button_hvrd" }
+			onMouseLeave { *node:this@background = "icons/geo_button" }
+			onClick		{ cmd "ui_pop;" }
+		}
+
+	}
+
+	// ==================
+	// Messages
+	// ==================
+
+	panel messages {
+		{
+			align	LAYOUTALIGN_FILL
+			layout	LAYOUT_PACK
+			ghost	true
+			size	"1024 768"
+		}
+
+		panel rightMargin {
+			align	LAYOUTALIGN_RIGHT
+			size	"256 30"
+			ghost	true
+		}
+
+		panel messagesystem {
+			{
+				pos		"0 0"
+				size	"768 20"
+				layout	LAYOUT_BORDER
+				align	LAYOUTALIGN_TOP
+			}
+
+			vscrollbar scroll {
+				align		LAYOUTALIGN_RIGHT
+				invis		true
+				image		"ui/scrollbar_v"
+				bgcolor		"0 0 0 .5"
+				pos			"749 0"
+				height		"768"
+				current		0
+				viewsize	38
+				fullsize	50
+				hidewhenunused true
+				onChange	{
+					*node:parent.message@viewpos	 = <current>
+				}
+			}
+
+			messagelist message
+			{
+				pos			"0 0"
+				size		"768 20"
+				bgcolor		"0 0 0 .5"
+				align		LAYOUTALIGN_MIDDLE
+				onMouseEnter {
+					if ( *cvar:mn_messagesystem < 2 ) {
+						*node:parent@height = 240
+					}
+				}
+				onMouseLeave {
+					if ( *cvar:mn_messagesystem < 2 ) {
+						cmd "messagesystem_changemode"
+					}
+				}
+				onViewChange {
+					*node:parent.scroll@fullsize = <fullsize>
+					*node:parent.scroll@current = <viewpos>
+					*node:parent.scroll@viewsize = <viewsize>
+				}
+			}
+		}
+
+		panel dock {
+			{
+				pos				"0 0"
+				size			"301 768"
+				align			LAYOUTALIGN_LEFT
+				layout			LAYOUT_PACK
+				ghost			true
+				padding			10
+				layoutmargin	10
+			}
+		}
+	}
+
+	func onWindowOpened {
+		cmd "music_change geoscape;"
+
+		if ( not exists *cvar:mn_messagesystem ) {
+			*cvar:mn_messagesystem = 0
+			cmd "messagesystem_changemode;"
+		}
+
+		cmd "ui_update_overlay_buttons;"
+		cmd "ui_addcvarlistener geo_overlay_radar ui_update_overlay_buttons;"
+		cmd "ui_addcvarlistener geo_overlay_nation ui_update_overlay_buttons;"
+		cmd "ui_addcvarlistener geo_overlay_xvi ui_update_overlay_buttons;"
+	}
+
+	func onWindowClosed {
+		cmd "ui_removecvarlistener geo_overlay_radar ui_update_overlay_buttons;"
+		cmd "ui_removecvarlistener geo_overlay_nation ui_update_overlay_buttons;"
+		cmd "ui_removecvarlistener geo_overlay_xvi ui_update_overlay_buttons;"
+	}
+}

@@ -1,0 +1,446 @@
+sequence developers
+{
+	music "Crystan-Credits"
+	animspeed 1000
+
+	camera cam1
+	{
+		zoom	6.0
+		angles	"15 180 0"
+		dist	100
+	}
+
+	// ========================
+	// BACKGROUND
+	// ========================
+	obj2d background_logo
+	{
+		pos		"0 0"
+		size	"1024 90"
+		bgcolor	"0 0 0 1"
+	}
+	obj2d background_line
+	{
+		pos		"0 91"
+		size	"1024 2"
+		bgcolor	"1 1 1 1"
+	}
+	obj2d ufoai_logo
+	{
+		text	"_UFO: ALIEN INVASION"
+		font	"f_title"
+		color	"0.59 0.78 0.56 1"
+		align	"uc"
+		pos		"512 7"
+		speed	"0 0"
+	}
+	obj2d background_world
+	{
+		pos		"768 0"
+		image	"pics/background/dev_bg"
+		inbackground	true
+	}
+	obj2d ufoai_url
+	{
+		text	"_http://www.ufoai.org"
+		pos		"512 64"
+		align	"uc"
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+	}
+
+	// ========================
+	// TEAM
+	// ========================
+	obj2d lead_title
+	{
+		text	"_Project lead"
+		pos		"512 768"
+		align	"uc"
+		color	"0.56 0.81 0.76 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d lead_text
+	{
+		text	"_Martin Gerhardy (mattn)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+
+	wait 1.0
+	obj2d team_members_title
+	{
+		text	"_Team members"
+		pos		"512 768"
+		align	"uc"
+		color	"0.56 0.81 0.76 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d aduke_text
+	{
+		text	"_aDuke"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d alextishin_text
+	{
+		text	"_Alexander Tishin (Sandro)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d bayo_text
+	{
+		text	"_bayo"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d crystan_text
+	{
+		text	"_Christian Hoffmann (crystan)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d darkrain_text
+	{
+		text	"_DarkRain"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d geever_text
+	{
+		text	"_Tamas Fehervari (geever)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d hhour_text
+	{
+		text	"_Nate Wright (H-Hour)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d pawel_text
+	{
+		text	"_Pawel Michalkiewicz"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d shipit_text
+	{
+		text	"_Holger Gellrich (ShipIt)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d internecivus_text
+	{
+		text	"_Igor Gritsenko (Internecivus)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d cooler_sk_text
+	{
+		text	"_cooler_sk"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+
+	// ========================
+	// CONTRIBUTORS
+	// ========================
+	wait 1.0
+	obj2d contributors_title
+	{
+		text	"_Other contributors"
+		pos		"512 768"
+		align	"uc"
+		color	"0.56 0.81 0.76 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d btaxis_text
+	{
+		text	"_Bas Fournier (BTAxis)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d hoehrer_text
+	{
+		text	"_Werner Hohrer (Hoehrer)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d kildor_text
+	{
+		text	"_Kostia Romanov (Kildor)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d kracken_text
+	{
+		text	"_Olivier Alloschery (Kracken)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d lordhavoc_text
+	{
+		text	"_Forest Hale (LordHavoc)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d tron_text
+	{
+		text	"_Christoph Mallon (Tron)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d winter_text
+	{
+		text	"_Ryan A. Span. (Winter)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d zenerka_text
+	{
+		text	"_Maciej Wierzbicki (Zenerka)"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+
+	// ========================
+	// ORIGINAL TEAM
+	// ========================
+	wait 1.0
+	obj2d original_team_title
+	{
+		text	"_Original team"
+		pos		"512 768"
+		align	"uc"
+		color	"0.56 0.81 0.76 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d herby_text
+	{
+		text	"_Herby"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d sparxx_text
+	{
+		text	"_SparXX"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d rastaman_text
+	{
+		text	"_Rastaman"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d sacrusha_text
+	{
+		text	"_Sacrusha"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d vanethian_text
+	{
+		text	"_Vanethian"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+
+	// ========================
+	// SPECIAL THANKS
+	// ========================
+	wait 1.0
+	obj2d special_thanks_title
+	{
+		text	"_Special thanks to"
+		pos		"512 768"
+		align	"uc"
+		color	"0.56 0.81 0.76 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d id_text
+	{
+		text	"_id Software for the Quake 2 engine"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d ninex_text
+	{
+		text	"_NineX for hosting us"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 0.7
+	obj2d additional_thanks_text
+	{
+		text	"_To the community and everyone who supported us"
+		pos		"512 768"
+		align	"uc"
+		color	"1 1 1 1"
+		speed	"0 -60"
+		inbackground	true
+	}
+	wait 10.0
+
+	// ========================
+	// CLEANUP
+	// ========================
+
+	rem background_logo
+	rem background_line
+	rem ufoai_logo
+	rem background_world
+	rem ufoai_url
+
+	rem lead_title
+	rem lead_text
+
+	rem team_members_title
+	rem aduke_text
+	rem alextishin_text
+	rem bayo_text
+	rem crystan_text
+	rem darkrain_text
+	rem geever_text
+	rem hhour_text
+	rem pawel_text
+	rem shipit_text
+
+	rem contributors_title
+	rem btaxis_text
+	rem hoehrer_text
+	rem kildor_text
+	rem kracken_text
+	rem lordhavoc_text
+	rem tron_text
+	rem winter_text
+	rem zenerka_text
+
+	rem original_team_title
+	rem herby_text
+	rem sparxx_text
+	rem rastaman_text
+	rem sacrusha_text
+	rem vanethian_text
+
+	rem special_thanks_title
+	rem id_text
+	rem ninex_text
+	rem additional_thanks_text
+
+	music "van_theme"
+}

@@ -1,0 +1,326 @@
+//
+
+component cmp_soldierentry extends panel {
+	{
+		size		"310 25"
+	}
+
+	data id {}
+
+	string name {
+		pos			"0 0"
+		color		"0 .78 0 1"
+		size		"270 25"
+		onClick {
+			cmd "soldierlist_select <node:parent.id@integer>;"
+		}
+	}
+
+	CheckBox selected {
+		tooltip		"_Add/remove soldier to the team"
+		pos			"275 0"
+		size		"25 25"
+
+		onChange {
+			cmd "ui_team_assign_ucn <node:parent.id@integer>; ui_team_fillbdef; soldierlist_select <node:parent.id@integer>;"
+		}
+	}
+}
+
+window popup_assembleteam extends ipopup
+{
+	{
+		pos				"100 256"
+		size			"844 445"
+		closebutton		true
+		modal			true				// we can't click out
+	}
+
+	string title {
+		width			"844"
+		string			"_Assemble Team"
+	}
+
+	data selected {
+	}
+
+	rows soldierlist_lines {
+		pos				"35 58"
+		size			"310 325"
+		color1			"0.56 0.81 0.76 0.15"
+		color2			"0.56 0.81 0.76 0.1"
+		lineheight		25
+	}
+	panel soldierlist {
+		{
+			pos			"35 60"
+			size		"310 325"
+			layout		LAYOUT_TOP_DOWN_FLOW
+			padding		0
+			wheelscrollable	true
+
+			onViewChange	{
+				*node:parent.soldierlist_scroll@fullsize = <fullsize>
+				*node:parent.soldierlist_scroll@current = <viewpos>
+				*node:parent.soldierlist_scroll@viewsize = <viewsize>
+			}
+		}
+	}
+	vscrollbar soldierlist_scroll {
+		image		"ui/scrollbar_v"
+		pos			"350 60"
+		height		"325"
+		hidewhenunused	true
+		onChange	{
+			*node:parent.soldierlist@viewpos = <current>
+		}
+	}
+
+	panel soldiermodel {
+		{
+			pos		"375 60"
+			size	"179 325"
+			border	2
+			bordercolor	"0.56 0.81 0.76 1"
+		}
+
+		image	rank_img {
+			pos "8 8"
+			size "50 50"
+			src *cvar:mn_chrrank_img
+		}
+
+		model body {
+			{
+				src		*cvar:mn_body
+				skin	*cvar:mn_body_skin
+				anim	"stand2"
+				angles	"0 70 90"
+				scale	"5.5 5.5 5.5"
+				pos		"6 6"
+				size	"168 283"
+				origin	"0 -35 0"
+			}
+			model head {
+				src		*cvar:mn_head
+				skin	*cvar:mn_head_skin
+				tag		"tag_head"
+				scale	"1.0 1.0 1.0"
+			}
+			model right_rweapon {
+				src		*cvar:mn_rweapon
+				tag		"tag_rweapon"
+			}
+			model right_lweapon {
+				src		*cvar:mn_lweapon
+				tag		"tag_lweapon"
+			}
+		}
+
+		string	name {
+			string		*cvar:mn_name
+			pos			"8 272"
+			size		"165 20"
+		}
+		string	rank_lbl {
+			string		*cvar:mn_chrrank
+			pos			"8 292"
+			size		"165 20"
+		}
+	}
+
+	panel soldierstat {
+		{
+			pos		"554 60"
+			size	"250 325"
+			border	2
+			bordercolor	"0.56 0.81 0.76 1"
+			layout	LAYOUT_TOP_DOWN_FLOW
+			layoutMargin 0
+		}
+		healthbar stats_health {}
+		abilities stats_abilities {}
+		skillbars stats_skills {}
+		SoldierInfo stats_missions {}
+	}
+
+	MainMenuBtn equip {
+		string		"_Equip"
+		pos			"480 415"
+		disabled	true
+
+		onClick {
+			cmd "ui_push equipment;"
+		}
+		width "180"
+	}
+
+	MainMenu2Btn close {
+		string		"_Close"
+		pos			"664 415"
+
+		onClick {
+			cmd "ui_pop;"
+		}
+		width 		"180"
+	}
+
+	confunc soldierlist_clear {
+		call *node:parent.soldierlist@removeAllChild
+	}
+	confunc soldierlist_add {
+		call *node:parent.soldierlist@createChild("soldier<1>", "cmp_soldierentry")
+		*node:parent.soldierlist.soldier<1>.id@integer = <1>
+		*node:parent.soldierlist.soldier<1>.name@string = <2>
+		*node:parent.soldierlist.soldier<1>.selected@current = <3>
+
+		 if ( *cvar:cpteam_size > 0 ) {
+			*node:parent.equip@disabled = false
+		} else {
+			*node:parent.equip@disabled = true
+		}
+
+		if ( "<4>" ne "" ) {
+			*node:parent.soldierlist.soldier<1>.selected@tooltip = <4>
+			*node:parent.soldierlist.soldier<1>.selected@disabled = true
+		}
+
+		if ( *node:root.selected@integer < 1 ) {
+			cmd "soldierlist_select <1>;"
+			*node:root.selected@integer = <1>
+		}
+	}
+	confunc soldierlist_select {
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:parent.soldierlist.soldier<node:root.selected@integer>.name@color = "0 .78 0 1"
+		}
+		*node:root.selected@integer = <1>
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:parent.soldierlist.soldier<1>.name@color = "1 1 1 1"
+			cmd "ui_team_select_ucn <node:root.selected@integer>;"
+		}
+	}
+
+	func onWindowOpened {
+		*node:root.selected@integer = -1
+		cmd	"cp_missionauto_check; ui_team_fillbdef"
+	}
+	func onWindowClosed {
+		cmd "popbaseattack_upd;"
+	}
+	fuzzyScreen overlay { }
+}
+
+
+window popup_baseattack extends ipopup
+{
+	{
+		pos			"264 256"
+		size		"496 230"
+		modal		true				// we can't click out
+		preventtypingescape true		// we can't use ESC
+	}
+	string title {
+		string		"_Base is under attack"
+		width		"496"
+	}
+	text description {
+		pos			"26 65"
+		dataid		TEXT_POPUP
+		size		"450 48"
+		lineheight	16
+	}
+
+	CheckBox killaliens {
+		current		0
+		pos			"26 120"
+		size		"20 18"
+	}
+	string killaliens_str {
+		string		"_Kill aliens in container"
+		pos			"55 120"
+		size		"220 20"
+	}
+	CheckBox liftcrafts {
+		current		0
+		disabled	true
+		tooltip		"_Not implemented"
+		pos			"26 145"
+		size		"20 18"
+	}
+	string liftcrafts_str {
+		string		"_Lift aircraft"
+		disabled	true
+		tooltip		"_Not implemented"
+		pos			"55 145"
+		size		"220 20"
+	}
+	CheckBox powerdown {
+		current		0
+		disabled	true
+		tooltip		"_Not implemented"
+		pos			"26 170"
+		size		"20 18"
+	}
+	string powerdown_str {
+		string		"_Disable Power Plant"
+		disabled	true
+		tooltip		"_Not implemented"
+		pos			"55 170"
+		size		"220 20"
+	}
+
+	func listen_mission {
+		cmd "game_go;"
+		cmd "ui_removelistener equipment@onWindowClosed <path:this>;"
+	}
+
+	MainMenuBtn bt_assign {
+		string		"_Team"
+		tooltip		"_Assemble defend team"
+		pos			"290 120"
+
+		onClick {
+			cmd "ui_push popup_assembleteam;"
+		}
+		width		"180"
+	}
+
+	MainMenuBtn bt_go {
+		string		"_Enter"
+		tooltip		"_Enter the battlefield"
+		pos			"290 160"
+		disabled	true
+
+		onClick		{
+			if ( *node:root.liftcrafts@current > 0 ) {
+				cmd "cp_aircraft_liftall <baseid>;"
+			}
+			if ( *node:root.killaliens@current > 0 ) {
+				cmd "cp_aliencont_killall <baseid>;"
+			}
+			if ( *node:root.powerdown@current > 0 ) {
+				cmd "cp_powerdown <baseid>;"
+			}
+			cmd "game_go;"
+		}
+		width		"180"
+	}
+
+	confunc popbaseattack_upd {
+		if ( *cvar:cpteam_size > 0 ) {
+			*node:parent.bt_go@disabled = false
+			*node:parent.bt_go@tooltip = "_Enter the battlefield"
+		} else {
+			*node:parent.bt_go@disabled = true
+			*node:parent.bt_go@tooltip = "_Assemble a team first"
+		}
+	}
+
+	func onWindowOpened	{
+		*cvar:cpteam_size = 0
+		cmd	"cp_missionauto_check;"
+		cmd "popbaseattack_upd;"
+	}
+	fuzzyScreen overlay { }
+}

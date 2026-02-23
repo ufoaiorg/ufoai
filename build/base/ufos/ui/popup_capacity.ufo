@@ -1,0 +1,165 @@
+--!usr/bin/lua
+
+require("ufox.lua")
+
+do
+	local overloadpopup = ufox.build_window({
+		name = "popup_cap_overload",
+		class = "window",
+		super = "ipopup",
+		pos = {305, 270},
+		size = {420, 240},
+		closebutton = true,
+		modal = true,
+
+		{
+			name = "title",
+			class = "string",
+			text = "_Capacity Exceeded",
+			width = 420,
+		},
+
+		{
+			name = "warning",
+			class = "string",
+			text = "_There is no more room for goods/personel at this base. Free up some space.",
+			pos = {10, 60},
+			size = {400, 60},
+			longlines = ufo.LONGLINES_WRAP,
+		},
+
+		{
+			name = "baseid",
+			class = "data",
+			value = "-1",
+		},
+
+		{
+			name = "base_title",
+			class = "string",
+			text = "_Base:",
+			pos = {20, 120},
+			size = {90, 20},
+			font = "f_small_bold",
+		},
+
+		{
+			name = "base",
+			class = "string",
+			pos = {100, 120},
+			size = {290, 20},
+		},
+
+		{
+			name = "header_capacity",
+			class = "string",
+			text = "_Capacity",
+			pos = {20, 150},
+			size = {230, 20},
+			font = "f_small_bold",
+			contentalign = ufo.ALIGN_CL,
+		},
+
+		{
+			name = "header_free",
+			class = "string",
+			text = "_free",
+			pos = {245, 150},
+			size = {75, 20},
+			font = "f_small_bold",
+			contentalign = ufo.ALIGN_CR,
+		},
+
+		{
+			name = "header_all",
+			class = "string",
+			text = "_all",
+			pos = {320, 150},
+			size = {75, 20},
+			font = "f_small_bold",
+			contentalign = ufo.ALIGN_CR,
+		},
+
+		{
+			name = "storage",
+			class = "string",
+			pos = {20, 170},
+			size = {230, 20},
+			font = "f_small",
+		},
+
+		{
+			name = "free",
+			class = "string",
+			pos = {245, 170},
+			size = {75, 20},
+			font = "f_small",
+			contentalign = ufo.ALIGN_CR,
+		},
+
+		{
+			name = "all",
+			class = "string",
+			pos = {320, 170},
+			size = {75, 20},
+			font = "f_small",
+			contentalign = ufo.ALIGN_CR,
+		},
+
+		{
+			name = "close",
+			class = "MainMenu2Btn",
+			text = "_Close",
+			pos = {0, 210},
+			width = 180,
+
+			on_click = function (sender)
+				ufo.pop_window(false)
+			end,
+		},
+
+		{
+			name = "go_to_base",
+			class = "MainMenuBtn",
+			text = "_Go to base",
+			pos = {240, 210},
+			width = 180,
+
+			on_click = function (sender)
+				local baseid = sender:root():child("baseid")
+				if (baseid == nil or baseid:as_integer() < 0) then
+					return
+				end
+				ufo.pop_window(false)
+				ufo.cmd(string.format("mn_base_select %i;", baseid:as_integer()))
+			end,
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen",
+		},
+
+		--[[
+		-- @brief Initializin capacity overload popup
+		-- @param baseidx Numeric base index
+		-- @param basename The name of the base
+		-- @param storagename The name of the building with overloaded capacity
+		-- @param freespace Number of free storage units in the building
+		-- @param maxspace Number of all storage capacity units of the building
+		--]]
+		on_windowopened = function (sender, baseidx, basename, storagename, freespace, maxspace)
+			sender:child("baseid"):set_value(baseidx + 0)
+			sender:child("base"):set_text(basename)
+			sender:child("storage"):set_text(storagename)
+			sender:child("free"):set_text(freespace)
+			sender:child("all"):set_text(maxspace)
+
+			if (freespace + 0 < 0) then
+				sender:child("free"):set_color(1, 0, 0, 1)
+			else
+				sender:child("free"):set_color(1, 1, 1, 1)
+			end
+		end,
+	})
+end

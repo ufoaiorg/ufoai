@@ -1,0 +1,171 @@
+/* cooling system powerplant, antimatter, laser, quarters  */
+{
+	material tex_base/vent_round2
+	bump 1.0
+	parallax 1.0
+	specular 1.0
+	hardness 1.0
+	{
+		texture tex_base/vent_round2_a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		anim 6 48
+	}
+}
+
+{
+	material tex_tech/tv
+	hardness 2.0
+	specular 2.0
+	{
+		texture tex_tech/tv0
+		blend GL_SRC_ALPHA GL_ONE
+		anim 2 10.0
+	}
+}
+
+{
+	material tex_terrain/dummy
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/arctic
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/cold
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/desert
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/grass
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/mountain
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/tropical
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/wasted
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+/* Screens for camera control center */
+
+{
+	material tex_anim/anim_back_0
+			{
+				texture tex_base/screen_base
+				blend GL_SRC_ALPHA GL_ONE
+			}
+			{
+				texture tex_anim/basecam0
+				blend GL_SRC_ALPHA GL_ONE
+				animr 4 0.42
+			}
+			{
+				lightmap
+			}
+}
+
+{
+	material tex_anim/anim_back_1
+			{
+				texture tex_base/screen_base
+				blend GL_SRC_ALPHA GL_ONE
+			}
+			{
+				texture tex_anim/basecam0
+				blend GL_SRC_ALPHA GL_ONE
+				anima 4 0.55
+			}
+			{
+				lightmap
+			}
+}
+
+{
+	material tex_anim/anim_back_2
+			{
+				texture tex_base/screen_base
+				blend GL_SRC_ALPHA GL_ONE
+			}
+			{
+				texture tex_anim/basecam0
+				blend GL_SRC_ALPHA GL_ONE
+				animf 4 0.37
+			}
+			{
+				lightmap
+			}
+}
+
+{
+	material tex_anim/anim_back_3
+			{
+				texture tex_base/screen_base
+				blend GL_SRC_ALPHA GL_ONE
+			}
+			{
+				texture tex_anim/basecam0
+				blend GL_SRC_ALPHA GL_ONE
+				animr 4 0.29
+			}
+			{
+				lightmap
+			}
+}
+
+{
+	material tex_base/screenp001
+		{
+			texture tex_base/screenp001
+			scroll.t 0.1
+			lightmap
+		}
+}

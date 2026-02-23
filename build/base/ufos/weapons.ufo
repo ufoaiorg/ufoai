@@ -1,0 +1,754 @@
+// =======================
+// MEDIKIT
+// =======================
+item medikit
+{
+	name		"_Medikit"
+	model		"weapons/medikit/medikit"
+	weapon		false
+	type		"melee"
+	animationindex	2
+	shape		"0 0 2 2"
+	center		"1 0 2"
+	scale		1.1
+	price		80
+	size		15
+	is_misc	true
+	thrown		false
+	oneshot		true
+	ammo			5
+	dmgtype 	"normal"
+	weight		2000
+
+	weapon_mod
+	{
+		weapon medikit
+		firedef
+		{
+			name	"_First Aid"
+			projtl	null
+			impact	null
+			hitbody heal
+			firesnd	"weapons/medikit"
+			speed	0
+			range	1.5
+			shots	1
+			ammo		1
+			time	20
+			damage	"-4 1"
+			reaction	false
+			dmgweight "normal"
+		}
+		firedef
+		{
+			name	"_Stimulants"
+			projtl	null
+			impact	null
+			hitbody heal
+			firesnd	"weapons/medikit"
+			speed	0
+			range	1.5
+			shots	1
+			ammo		1
+			time	20
+			damage	"-20 5"
+			reaction	false
+			dmgweight "stun_electro"
+		}
+		firedef
+		{
+			name	"_Antipsychotics"
+			projtl	null
+			impact	null
+			hitbody heal
+			firesnd	"weapons/medikit"
+			speed	0
+			range	1.5
+			shots	1
+			ammo		1
+			time	20
+			damage	"-13 2"
+			reaction	false
+			dmgweight "shock"
+		}
+	}
+}
+
+// =======================
+// IR-GOGGLES
+// =======================
+item irgoggles
+{
+	name		"_IR Goggles"
+	model		"weapons/irgoggles/irgoggles"
+	weapon		false
+	type		"melee"
+	animationindex	2
+	shape		"0 0 2 1"
+	center		"0 0 0"
+	scale		1.5
+	price		100
+	size		15
+	is_misc	true
+	thrown		true
+	headgear		true
+	dmgtype "normal"
+	weight		200
+
+	weapon_mod
+	{
+		weapon irgoggles
+		firedef
+		{
+			name	"_Scan"
+			firesnd	"weapons/irgoggles"
+			splrad	10
+			range	9.5
+			time	12
+			shots	1
+			irgoggles	true
+		}
+		firedef
+		{
+			name	"_Throw"
+			skill	"close"
+			projtl	irgoggles_ptl
+			impsnd	"weapons/grenade-bounce"
+			bodysnd "weapons/grenade-bounce"
+			gravity	true
+			speed	220
+			range	10
+			spread	"4 7"
+			shots	1
+			ammo	1
+			time	12
+			damage	"1 2"
+			dmgweight "normal_medium"
+		}
+	}
+}
+
+
+// =======================
+// FRAGMENTATION GRENADE
+// =======================
+item fraggrenade
+{
+	name		"_Frag Grenade"
+	model		"weapons/fraggren/fraggren"
+	weapon		true
+	type		"grenade"
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.3
+	price		35
+	size		5
+	is_misc	true
+	thrown		true
+	dmgtype "blast"
+	weight		400
+
+	weapon_mod
+	{
+		weapon fraggrenade
+		firedef
+		{
+			name	"_Lob"
+			skill	"explosive"
+			projtl	fraggren
+			impact	explosionGrenade
+			hitbody explosionGrenade
+			firesnd	"weapons/grenade-pin"
+			impsnd	"weapons/explosion-grenade"
+			bodysnd	"weapons/explosion-grenade"
+			bncsnd	"weapons/grenade-bounce"
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"3 3"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"110 30"
+			splrad	4
+			dmgweight "blast"
+			shotorg	"7.5 6.5"
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	"explosive"
+			projtl	fraggren
+			impact	explosionGrenade
+			hitbody explosionGrenade
+			firesnd	"weapons/grenade-pin"
+			impsnd	"weapons/explosion-grenade"
+			bodysnd	"weapons/explosion-grenade"
+			bncsnd	"weapons/grenade-bounce"
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 2"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"110 30"
+			splrad	4
+			dmgweight "blast"
+			shotorg	"5.5 2"
+		}
+	}
+}
+
+// =======================
+// FLASHBANG GRENADE
+// TODO: fix spldmg value
+// =======================
+item flashbang
+{
+	name		"_Flashbang"
+	model		"weapons/flashbang/flashbang"
+	weapon		true
+	type		"grenade"
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 1.5 0.6"
+	scale		2.4
+	price		70
+	size		4
+	is_misc	true
+	thrown		true
+	dmgtype "shock"
+	weight		200
+
+	weapon_mod
+	{
+		weapon flashbang
+		firedef
+		{
+			name	"_Lob"
+			skill	"close"
+			projtl	flashgren
+			impact	flash_explosion
+			hitbody flash_explosion
+			firesnd	"weapons/grenade-pin"
+			impsnd	"weapons/explosion-flashbang"
+			bodysnd	"weapons/explosion-flashbang"
+			bncsnd	"weapons/grenade-bounce"
+			impactattenuation 0.07
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"3 3"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	6
+			spldmg	"999 0"	// TODO: needed at all?
+			splrad	5
+			dmgweight "shock"
+			shotorg	"7.5 6.5"
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	"close"
+			projtl	flashgren
+			impact	flash_explosion
+			hitbody flash_explosion
+			firesnd	"weapons/grenade-pin"
+			impsnd	"weapons/explosion-flashbang"
+			bodysnd	"weapons/explosion-flashbang"
+			bncsnd	"weapons/grenade-bounce"
+			impactattenuation 0.07
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 2"
+			range	8
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	6
+			spldmg	"999 0"	// TODO: needed at all?
+			splrad	5
+			dmgweight "shock"
+			shotorg	"5.5 2"
+		}
+	}
+}
+
+// =======================
+// SMOKE GRENADE
+// =======================
+item smokegrenade
+{
+	name		"_Smoke Grenade"
+	model		"weapons/smokegren/smokegren"
+	weapon		true
+	type		"grenade"
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 -0.25"
+	scale		1.5
+	price		25
+	size		5
+	is_misc	true
+	thrown		true
+	dmgtype "smoke"
+	weight		200
+
+	weapon_mod
+	{
+		weapon smokegrenade
+		firedef
+		{
+			name	"_Lob"
+			skill	"explosive"
+			projtl	smokegren
+			impsnd	"weapons/explosion-smoke"
+			bodysnd	"weapons/explosion-smoke"
+			bncsnd	"weapons/grenade-bounce"
+			firesnd	"weapons/grenade-pin"
+			impactattenuation 0.07
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"3 3"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			damage	"5 1"	//Smoke field damage
+			spldmg	"1 1"
+			splrad	3
+			dmgweight "normal_light"
+			rounds	4
+			shotorg	"7.5 6.5"
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	"explosive"
+			projtl	smokegren
+			impsnd	"weapons/explosion-smoke"
+			bodysnd	"weapons/explosion-smoke"
+			firesnd	"weapons/grenade-pin"
+			bncsnd	"weapons/grenade-bounce"
+			impactattenuation 0.07
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			damage	"5 1"	//Smoke field damage
+			spldmg	"1 1"
+			splrad	3
+			dmgweight "normal_light"
+			rounds	4
+			shotorg	"5.5 2"
+		}
+	}
+}
+
+// =======================
+// STUNGAS GRENADE
+// =======================
+item stungrenade
+{
+	name		"_Gas Grenade"
+	model		"weapons/stungren/stungren"
+	weapon		true
+	type		"grenade"
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.4
+	price		190
+	size		7
+	is_misc	true
+	thrown		true
+	dmgtype "stun_gas"
+	weight		200
+
+	weapon_mod
+	{
+		weapon stungrenade
+		firedef
+		{
+			name	"_Lob"
+			skill	"explosive"
+			projtl	stungren
+			impact	coronaImpact
+			hitbody	coronaImpact
+			impsnd	"weapons/explosion-smoke"
+			bodysnd	"weapons/explosion-smoke"
+			bncsnd	"weapons/grenade-bounce"
+			firesnd	"weapons/grenade-pin"
+			impactattenuation 0.07
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"3 3"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			damage	"45 5"	//Gas field damage
+			spldmg	"140 10"
+			splrad	3
+			dmgweight "stun_gas"
+			rounds	4
+			shotorg	"7.5 6.5"
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	"explosive"
+			projtl	stungren
+			impact	coronaImpact
+			hitbody	coronaImpact
+			impsnd	"weapons/explosion-smoke"
+			bodysnd	"weapons/explosion-smoke"
+			bncsnd	"weapons/grenade-bounce"
+			firesnd	"weapons/grenade-pin"
+			impactattenuation 0.07
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 2"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			damage	"45 5"	//Gas field damage
+			spldmg	"140 10"
+			splrad	3
+			dmgweight "stun_gas"
+			rounds	4
+			shotorg	"5.5 2"
+		}
+	}
+}
+
+// =======================
+// STUNGAS ALIEN GRENADE
+// TODO fix the various values
+// =======================
+item stungrenade_alien
+{
+	name		"_Alien Gas Grenade"
+	model		"weapons/stungren_alien/stungren"
+	weapon		true
+	type		"grenade"
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.4
+	price		190
+	size		7
+	is_misc	true
+	thrown		true
+	dmgtype "stun_gas"
+	weight		200
+
+	weapon_mod
+	{
+		weapon stungrenade_alien
+		firedef
+		{
+			name	"_Lob"
+			skill	"explosive"
+			projtl	stungren_alien
+			impact	coronaImpact
+			hitbody	coronaImpact
+			impsnd	"weapons/explosion-smoke"
+			firesnd	"weapons/grenade-pin"
+			bodysnd	"weapons/explosion-smoke"
+			bncsnd	"weapons/grenade-bounce"
+			impactattenuation 0.07
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"3 3"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			damage	"36 10"	//Gas field damage
+			spldmg	"180 20"
+			splrad	4
+			dmgweight "stun_gas"
+			rounds	4
+			shotorg	"7.5 6.5"
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	"explosive"
+			projtl	stungren_alien
+			impact	coronaImpact
+			hitbody	coronaImpact
+			impsnd	"weapons/explosion-smoke"
+			firesnd	"weapons/grenade-pin"
+			bodysnd	"weapons/explosion-smoke"
+			bncsnd	"weapons/grenade-bounce"
+			impactattenuation 0.07
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 2"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			damage	"36 10"	//Gas field damage
+			spldmg	"180 20"
+			splrad	4
+			dmgweight "stun_gas"
+			rounds	4
+			shotorg	"5.5 2"
+		}
+	}
+}
+
+// ====================
+// INCENDIARY GRENADE
+// ====================
+item incgrenade
+{
+	name		"_Incendiary grenade"
+	model		"weapons/incgren/incgren"
+	weapon		true
+	type		"grenade"
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 -0.3"
+	scale		1.4
+	price		150
+	size		5
+	is_misc	true
+	thrown		true
+	dmgtype 	"incendiary"
+	weight		200
+
+	weapon_mod
+	{
+		weapon incgrenade
+		firedef
+		{
+			name	"_Lob"
+			skill	"explosive"
+			projtl	incgren
+			impact	fire_explosion
+			hitbody fire_explosion
+			impsnd	"weapons/explosion-fire"
+			firesnd	"weapons/grenade-pin"
+			bodysnd	"weapons/explosion-fire"
+			bncsnd	"weapons/grenade-bounce"
+			impactattenuation 0.07
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"3 3"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			damage	"14 5"	//Fire field damage
+			spldmg	"70 10"
+			splrad	3
+			dmgweight "incendiary"
+			rounds	4
+			shotorg	"7.5 6.5"
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	"explosive"
+			projtl	incgren
+			impact	fire_explosion
+			hitbody fire_explosion
+			impsnd	"weapons/explosion-fire"
+			firesnd	"weapons/grenade-pin"
+			bodysnd	"weapons/explosion-fire"
+			bncsnd	"weapons/grenade-bounce"
+			impactattenuation 0.07
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 2"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			damage	"14 5"	//Fire field damage
+			spldmg	"70 10"
+			splrad	3
+			dmgweight "incendiary"
+			rounds	4
+			shotorg	"5.5 2"
+		}
+	}
+}
+
+// ================
+// PLASMA GRENADE
+// ================
+item plasmagrenade
+{
+	name		"_Plasma Grenade"
+	model		"weapons/plasmagren/plasmagren"
+	weapon		true
+	type		"grenade"
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 -0.25"
+	scale		1.5
+	price		950
+	size		10
+	is_misc	true
+	thrown		true
+	dmgtype "plasma"
+	weight		600
+
+	weapon_mod
+	{
+		weapon plasmagrenade
+		firedef
+		{
+			name	"_Lob"
+			skill	"explosive"
+			projtl	plasmagren
+			impact	plasmaBigExplosion
+			hitbody	plasmaBigExplosion
+			firesnd	"weapons/grenade-pin"
+			impsnd	"weapons/explosion-plasma"
+			bodysnd	"weapons/explosion-plasma"
+			bncsnd	"weapons/grenade-bounce"
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"3 3"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"160 20"
+			splrad	5
+			dmgweight "plasma_heavy"
+			shotorg	"7.5 6.5"
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	"explosive"
+			projtl	plasmagren
+			impact	plasmaBigExplosion
+			hitbody	plasmaBigExplosion
+			impsnd	"weapons/explosion-plasma"
+			firesnd	"weapons/grenade-pin"
+			bodysnd	"weapons/explosion-plasma"
+			bncsnd	"weapons/grenade-bounce"
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 2"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"160 20"
+			splrad	5
+			dmgweight "plasma_heavy"
+			shotorg	"5.5 2"
+		}
+	}
+}
+
+
+// =================================
+// BOMB KIT - only for trigger usage
+// only for in-mission spawning, not produceable or buyable
+// =================================
+item bomb1
+{
+	name		"_Bomb"
+	model		"weapons/bombs/bomb1"
+	weapon		false
+	type		"melee"
+	animationindex	2
+	shape		"0 0 2 2"
+	center		"0 0 0"
+	scale		1.5
+	size		15
+	notonmarket	true
+	thrown		true
+	is_misc		true
+	virtual		true
+	weight		4000
+}
+
+/*
+// =================================
+// BOMB KIT - only for trigger usage
+// only for in-mission spawning, not produceable or buyable
+// =================================
+item bomb2
+{
+	name		"_Bomb"
+	model		"weapons/bombs/bomb2"
+	weapon		false
+	type		"melee"
+	animationindex	2
+	shape		"0 0 2 2"
+	center		"0 0 0"
+	scale		1.5
+	notonmarket	true
+	size		15
+	thrown		true
+	is_misc		true
+	virtual		true
+	weight		4000
+}
+*/

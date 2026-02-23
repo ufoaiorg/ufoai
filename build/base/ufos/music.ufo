@@ -1,0 +1,72 @@
+music main
+(
+	"van_theme"
+)
+
+music geoscape
+(
+//	"azrael1"
+	"Crystan-Geosphere02"
+	"Crystan-Geosphere03"
+	"Crystan-Geosphere04"
+	"dbsea"
+	"karlmacklin_geoscape"
+	"van_geoscape"
+)
+
+music battlescape
+(
+	"AlexFightmare"
+	"Crystan-Battlescape01"
+	"Crystan-Battlescape02"
+	"Crystan-Battlescape03"
+	"Crystan-Battlescape04"
+	"Crystan-Battlescape05"
+	"Crystan-Battlescape06"
+	"greecei"
+	"PsymongN1"
+	"PsymongN2"
+	"PsymongN3"
+	"PsymongN4"
+	"PsymongN5"
+	"PsymongR1"
+	"PsymongR2"
+	"PsymongR3"
+	"PsymongR4"
+	"PsymongR5"
+	"PsymongO1"
+	"PsymongO2"
+	"PsymongO3"
+	"PsymongO4"
+	"PsymongO5"
+	"PsymongO6"
+	"returnjourney"
+	"space"
+	"TheThings-Slippycurb"
+	"ufo1"
+	"van_mission"
+	"van_mission2"
+	"van_mission3"
+	"van_mission4"
+)
+
+music aircombat
+(
+//	"alBasrahM"
+	"David01"
+	"David02"
+	"David03"
+	"David04"
+	"David05"
+//	"dawn"
+//	"Marine01"
+//	"Marine02"
+//	"MarineAlienRaid"
+//	"MarineBacktheAttack"
+//	"MarineFireFight"
+//	"MarineIndustrial"
+//	"MarineStrikingIntoTheUnknown"
+//	"MarineUrbanWarfare"
+//	"turinItalyM"
+//	"ufo2"
+)

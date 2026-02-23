@@ -1,0 +1,699 @@
+// ****************
+// SUBURBAN VILLAGE
+// ****************
+//
+// Tile naming scheme
+// ------------------
+// example: vil_b2x2_house01.map
+//
+// vil_ = theme prefix
+// b, p, s(h,v,t,x,c) = building, park or street (horizontal, vertical,
+//						t-crossing, 4-way crossing, corner)
+// 2x2 = size of the tile
+// house = description of tile contents
+// 01 = iteration or variation of the contents
+//
+// Note: tiles will be used in tilesets with fixed assemblies, so no RMA
+// placement rules must be defined.
+
+base village2/vil_
+
+// dropship tiles --------------------------------------------------*
+
+tile +craft_drop_firebird
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +craft_drop_herakles
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +craft_drop_raptor
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+// UFOs ------------------------------------------------------------*
+
+tile +craft_ufo_scout
+{
+	4 6
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +craft_ufo_fighter
+{
+	4 6
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+// Houses ----------------------------------------------------------*
+
+tile +b2x2_house01
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x2_house02
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x2_house03
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x4_house04
+{
+	4 6
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x2_house05
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x4_house06
+{
+	4 6
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x4_house07
+{
+	4 6
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x2_house08
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x2_house09
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+// Commercial Buildings --------------------------------------------*
+
+tile +b2x4_station01
+{
+	4 6
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x4_mart01
+{
+	4 6
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x2_diner01
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +b2x2_dentist01
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+// Parks -----------------------------------------------------------*
+
+tile +p4x4_fountain01
+{
+	6 6
+	0		0		0		0		0		0
+	0		+0		+0		+0		+0		0
+	0		+0		+0		+0		+0		0
+	0		+0		+0		+0		+0		0
+	0		+0		+0		+0		+0		0
+	0		0		0		0		0		0
+}
+
+tile +p2x2_garden01
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +p2x2_playground01
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +p2x2_playground02
+{
+	4 4
+	0		0		0		0
+	0		+0		+0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+// Streets ---------------------------------------------------------*
+
+tile +sc_ne01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sc_nw01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sc_sw01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sh1x1_01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sh_01
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +sh_02
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +sh_03
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +st_east01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +st_north01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +st_north02
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +st_south01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +st_west01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sv_01
+{
+	3 4
+	0		0		0
+	0		+0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sv_02
+{
+	3 4
+	0		0		0
+	0		+0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sv_03
+{
+	3 4
+	0		0		0
+	0		+0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sv_04
+{
+	3 4
+	0		0		0
+	0		+0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sv1x1_01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+tile +sx_01
+{
+	3 3
+	0		0		0
+	0		+0		0
+	0		0		0
+}
+
+// Multiplayer Start Positions--------------------------------------*
+
+tile +mp1
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +mp2
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +mp3
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+tile +mp4
+{
+	4 3
+	0		0		0		0
+	0		+0		+0		0
+	0		0		0		0
+}
+
+// Tilesets --------------------------------------------------------*
+
+tileset 2x2
+{
+	+b2x2_dentist01
+	+b2x2_diner01
+	+b2x2_house01
+	+b2x2_house02
+	+b2x2_house03
+	+b2x2_house05
+	+b2x2_house08
+	+b2x2_house09
+	+p2x2_garden01
+	+p2x2_playground01
+	+p2x2_playground02
+}
+
+tileset 2x4
+{
+	+b2x4_house04
+	+b2x4_house06
+	+b2x4_house07
+	+b2x4_mart01
+	+b2x4_station01
+}
+
+tileset 4x4
+{
+	+p4x4_fountain01
+}
+
+tileset sh
+{
+	+sh_01
+	+sh_02
+	+sh_03
+}
+
+tileset st_north
+{
+	+st_north01
+	+st_north02
+}
+
+tileset sv
+{
+	+sv_01
+	+sv_02
+	+sv_03
+	+sv_04
+}
+
+// Assemblies ------------------------------------------------------*
+
+assembly sp_sml_01
+{
+	size "8 8"
+
+	// Street grid, starting from 0,0 and working up in rows
+	fix +sc_ne01						"2 0"
+	fix tileset sh						"3 0"
+	fix +sc_nw01						"5 0"
+	fix +sv1x1_01						"2 1"
+	fix +sv1x1_01						"5 1"
+	fix tileset sh						"0 2"
+	fix +st_west01						"2 2"
+	fix +st_east01						"5 2"
+	fix *rm_drop +craft_drop_firebird	"6 2"
+	fix tileset sv						"2 3"
+	fix tileset sv						"5 3"
+	fix tileset sh						"0 5"
+	fix +sx_01							"2 5"
+	fix tileset sh						"3 5"
+	fix +sx_01							"5 5"
+	fix tileset sh						"6 5"
+	fix tileset sv						"2 6"
+	fix tileset sv						"5 6"
+
+	// Buildings and UFOs
+	fix tileset 2x2						"0 0"
+	fix tileset 2x2						"6 0"
+	fix *rm_ufo +craft_ufo_scout		"3 1"
+	fix tileset 2x2						"0 3"
+	fix tileset 2x2						"6 3"
+	fix tileset 2x2						"0 6"
+	fix tileset 2x2						"3 6"
+	fix tileset 2x2						"6 6"
+}
+
+assembly sp_sml_02
+{
+	size "9 8"
+
+	// Street grid, starting from 0,0 and working up in rows
+	fix +st_east01						"0 0"
+	fix tileset sh						"1 0"
+	fix tileset st_north				"3 0"
+	fix tileset sh						"4 0"
+	fix *rm_drop +craft_drop_firebird	"6 0"
+	fix +st_west01						"8 0"
+	fix tileset sv						"0 1"
+	fix tileset sv						"3 1"
+	fix tileset sv						"8 1"
+	fix tileset sv						"0 3"
+	fix +st_east01						"3 3"
+	fix tileset sh						"4 3"
+	fix tileset sh						"6 3"
+	fix +st_west01						"8 3"
+	fix +sv1x1_01						"3 4"
+	fix tileset sv						"8 4"
+	fix +st_east01						"0 5"
+	fix tileset sh						"1 5"
+	fix +st_west01						"3 5"
+	fix tileset sv						"0 6"
+	fix tileset sv						"3 6"
+	fix tileset sv						"8 6"
+
+	// Buildings and UFOs
+	fix *rm_ufo +craft_ufo_scout		"1 1"
+	fix tileset 2x2						"4 1"
+	fix tileset 2x2						"6 1"
+	fix tileset 4x4						"4 4"
+	fix tileset 2x2						"1 6"
+}
+
+assembly medium_noufo_01
+{
+	size "8 8"
+
+	// Street grid, starting from 0,0 and working up in rows
+	fix +sc_ne01						"2 0"
+	fix tileset sh						"3 0"
+	fix +sc_nw01						"5 0"
+	fix +sv1x1_01						"2 1"
+	fix +sv1x1_01						"5 1"
+	fix tileset sh						"0 2"
+	fix +st_west01						"2 2"
+	fix +st_east01						"5 2"
+	fix *rm_drop +craft_drop_firebird	"6 2"
+	fix tileset sv						"2 3"
+	fix tileset sv						"5 3"
+	fix tileset sh						"0 5"
+	fix +sx_01							"2 5"
+	fix tileset sh						"3 5"
+	fix +sx_01							"5 5"
+	fix tileset sh						"6 5"
+	fix tileset sv						"2 6"
+	fix tileset sv						"5 6"
+
+	// Buildings and UFOs
+	fix tileset 2x2						"0 0"
+	fix tileset 2x2						"6 0"
+	fix tileset 2x4						"3 1"
+	fix tileset 2x2						"0 3"
+	fix tileset 2x2						"6 3"
+	fix tileset 2x2						"0 6"
+	fix tileset 2x2						"3 6"
+	fix tileset 2x2						"6 6"
+}
+
+assembly medium_noufo_02
+{
+	size "9 8"
+
+	// Street grid, starting from 0,0 and working up in rows
+	fix +st_east01						"0 0"
+	fix tileset sh						"1 0"
+	fix tileset st_north				"3 0"
+	fix tileset sh						"4 0"
+	fix *rm_drop +craft_drop_firebird	"6 0"
+	fix +st_west01						"8 0"
+	fix tileset sv						"0 1"
+	fix tileset sv						"3 1"
+	fix tileset sv						"8 1"
+	fix tileset sv						"0 3"
+	fix +st_east01						"3 3"
+	fix tileset sh						"4 3"
+	fix tileset sh						"6 3"
+	fix +st_west01						"8 3"
+	fix +sv1x1_01						"3 4"
+	fix tileset sv						"8 4"
+	fix +st_east01						"0 5"
+	fix tileset sh						"1 5"
+	fix +st_west01						"3 5"
+	fix tileset sv						"0 6"
+	fix tileset sv						"3 6"
+	fix tileset sv						"8 6"
+
+	// Buildings and UFOs
+	fix tileset 2x4						"1 1"
+	fix tileset 2x2						"4 1"
+	fix tileset 2x2						"6 1"
+	fix tileset 4x4						"4 4"
+	fix tileset 2x2						"1 6"
+}
+
+assembly mp2p_01
+{
+	size "9 8"
+
+	// Street grid, starting from 0,0 and working up in rows
+	fix tileset sv						"4 0"
+	fix +st_east01						"7 0"
+	fix +mp1							"8 0"
+	fix +sv1x1_01						"7 1"
+	fix +sc_ne01						"2 2"
+	fix +sh1x1_01						"3 2"
+	fix +sc_sw01						"4 2"
+	fix tileset sv						"7 2"
+	fix +sv1x1_01						"2 3"
+	fix tileset sv						"2 4"
+	fix +sc_ne01						"5 4"
+	fix +sh1x1_01						"6 4"
+	fix +sc_sw01						"7 4"
+	fix tileset sv						"5 5"
+	fix +mp2							"0 6"
+	fix +sc_sw01						"2 6"
+
+	// Building tilesets
+	fix tileset 2x2						"0 0"
+	fix tileset 2x2						"2 0"
+	fix tileset 2x4						"5 0"
+	fix tileset 2x2						"8 1"
+	fix tileset 2x2						"0 2"
+	fix tileset 2x2						"8 3"
+	fix tileset 2x4						"3 3"
+	fix tileset 2x2						"0 4"
+	fix tileset 2x2						"6 5"
+	fix tileset 2x2						"8 5"
+}
+
+
+assembly mp3p_01
+{
+	size "10 10"
+
+	// Street grid, starting from 0,0 and working up in rows
+	fix +mp1							"0 0"
+	fix +st_west01						"2 0"
+	fix tileset sv						"5 0"
+	fix +sv1x1_01						"2 1"
+	fix +st_east01						"2 2"
+	fix tileset sh						"3 2"
+	fix +st_south01						"5 2"
+	fix +sh1x1_01						"6 2"
+	fix +st_north01						"7 2"
+	fix +mp3							"8 2"
+	fix tileset sv						"2 3"
+	fix tileset sv						"7 3"
+	fix tileset sv						"2 5"
+	fix tileset sv						"7 5"
+	fix +mp4							"0 7"
+	fix +st_south01						"2 7"
+	fix +sh1x1_01						"3 7"
+	fix +st_north01						"4 7"
+	fix tileset sh						"5 7"
+	fix +st_west01						"7 7"
+	fix tileset sv						"4 8"
+	fix +sv1x1_01						"7 8"
+	fix +st_east01						"7 9"
+	fix +mp2							"8 9"
+
+	// Building tilesets
+	fix tileset 2x2						"3 0"
+	fix tileset 2x2						"6 0"
+	fix tileset 2x2						"8 0"
+	fix tileset 2x4						"0 1"
+	fix tileset 4x4						"3 3"
+	fix tileset 2x2						"8 3"
+	fix tileset 2x2						"0 5"
+	fix tileset 2x4						"8 5"
+	fix tileset 2x2						"0 8"
+	fix tileset 2x2						"2 8"
+	fix tileset 2x2						"5 8"
+}

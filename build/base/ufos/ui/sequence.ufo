@@ -1,0 +1,61 @@
+--!usr/bin/lua
+
+require "ufox.lua"
+
+-- @TODO Use specific window for each sequences
+-- @TODO Merge sequence functionality into UI Engine
+
+do
+	local sequence_window = ufox.build_window({
+		name = "sequence",
+		class = "window",
+		starlayout = true,
+		fill = true,
+
+		{
+			name = "seq",
+			class = "sequence",
+			layoutalign = ufo.LAYOUTALIGN_FILL,
+
+			on_click = function (sender)
+				sender:next()
+			end,
+
+			on_end = function (sender)
+				ufo.cmd("ui_close sequence")
+			end,
+		},
+
+		{
+			name = "seq_start",
+			class = "confunc",
+
+			on_click = function (sender, source)
+				sender:root():child("seq"):set_source(source)
+				ufo.push_window("sequence", nil, nil)
+			end,
+
+			{
+				name = "seq_end",
+				type = "confunc",
+
+				on_click = function (sender)
+					ufo.cmd("ui_close sequence")
+				end,
+			},
+		},
+
+		on_windowopened = function (sender)
+			local showcursor = ufo.findvar("scr_showcursor")
+			ufo.getvar("sequence_old_scr_showcursor", showcursor:as_string()):set_value(showcursor:as_string())
+			showcursor:set_value(0)
+		end,
+
+		on_windowclosed = function (sender)
+			local showcursor = ufo.findvar("scr_showcursor")
+			local oldcursor = ufo.findvar("sequence_old_scr_showcursor")
+			showcursor:set_value(oldcursor:as_string())
+			ufo.delvar(oldcursor:name())
+		end,
+	})
+end

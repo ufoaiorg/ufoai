@@ -1,0 +1,112 @@
+--!usr/bin/lua
+--[[
+Copyright (C) 2002-2025 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+--[[
+ - ==================
+ - TUTORIALS MENU
+ - ==================
+--]]
+ufox.build_window({
+	class = "window",
+	name = "tutorials",
+	background = "ui/main_bg",
+	{
+		class = "string",
+		name = "headline",
+		text = "_TUTORIALS",
+		size = {500, 50},
+		pos =  {262, 50},
+		font = "f_title",
+		color = {0.59, 0.78, 0.56, 1},
+		contentalign = ufo.ALIGN_CC
+	},
+	{
+		class = "panel",
+		name = "buttons",
+		pos = {312, 250},
+		size = {420, 400},
+		{
+			class = "panel",
+			name = "dynbuttons",
+			pos = {0, 0},
+			size = {400, 300},
+			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+			layoutmargin = 15,
+			wheelscrollable = true,
+			on_viewchange = function(sender)
+				sender:parent():child("tutorials_scroll"):set_fullsize(sender:fullsize())
+				sender:parent():child("tutorials_scroll"):set_current(sender:viewpos())
+				sender:parent():child("tutorials_scroll"):set_viewsize(sender:viewsize())
+			end,
+		},
+		{
+			class = "vscrollbar",
+			name = "tutorials_scroll",
+			image = "ui/scrollbar_v",
+			pos = {402, 0},
+			height = 300,
+			current = 0,
+			fullsize = 16,
+			viewsize = 6,
+			autoshowscroll = true,
+			on_change = function(sender)
+				sender:parent():child("dynbuttons"):set_viewpos(sender:current())
+			end
+		},
+		{
+			class = "MainMenuExitBtn",
+			name = "button_back",
+			pos = {0, 300},
+			text = "_BACK",
+			on_click = function(sender)
+				ufo.cmd("ui_pop;")
+			end
+		}
+	},
+	{
+		class = "fuzzyScreen",
+		name = "overlay"
+	},
+	{
+		class = "confunc",
+		name = "tutorialsListAdd",
+		on_click = function(sender, index, text)
+			ufox.build({
+				class = "MainMenuBtn",
+				name = "tutorial"..index,
+				text = text,
+				on_click = function(sender)
+					ufo.cmd(string.format("tutoriallist_click %s;", index ))
+				end
+			}, sender:root():child("buttons"):child("dynbuttons"))
+		end
+	},
+	{
+		class = "confunc",
+		name = "tutorialsListClear",
+		on_click = function(sender)
+			sender:root():child("buttons"):child("dynbuttons"):remove_children()
+		end
+	},
+	on_windowopened = function(sender)
+		ufo.cmd("gettutorials;")
+	end
+})

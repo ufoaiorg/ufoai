@@ -1,0 +1,72 @@
+{
+	material tex_tech/tv
+	hardness 2.0
+	specular 2.0
+	{
+		texture tex_tech/tv0
+		blend GL_SRC_ALPHA GL_ONE
+		anim 2 10.0
+	}
+}
+{
+	material tex_nature/rock005
+	hardness 0.2
+	specular 0.2
+	bump 2.0
+	{
+		texture tex_nature/rock004
+		terrain 0 24
+		lightmap
+	}
+	{
+		texture tex_nature/rock005
+		terrain 48 64
+		lightmap
+	}
+}
+{
+	material tex_nature/rock005
+	hardness 0.2
+	specular 0.2
+	{
+		texture tex_nature/rockyground01
+		dirtmap 0.8
+		lightmap
+	}
+}
+{
+	material tex_nature/rock006
+	hardness 0.2
+	specular 0.2
+	{
+		texture tex_nature/rockyground01
+		dirtmap 1.0
+		lightmap
+	}
+}
+{
+	material tex_nature/rock007
+	hardness 0.2
+	specular 0.2
+	{
+		texture tex_nature/rockyground01
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_nature/water_dark
+	{
+		envmap 0
+	}
+}
+
+/* flares for neon003 truck lights */
+{
+	material tex_lights/neon003
+	{
+		flare 4
+		color 1.0 0.3 0.1
+	}
+}

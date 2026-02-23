@@ -1,0 +1,428 @@
+window basedefence extends ipopup
+{
+	{
+		pos			"100 150"
+		size		"824 435"
+		closebutton	true
+		modal		true
+	}
+
+	string title {
+		string		"_Equip Defence Weapons"
+		width		"824"
+	}
+
+	tab defencetype {
+		{
+			pos		"0 75"
+			size	"824 38"
+			cvar	*cvar:mn_bdef_type
+			onChange {
+				if ( *cvar:mn_bdef_type ne "info" ) {
+					*node:root.infopanel@invis = true
+					*node:root.equippanel@invis = false
+				} else {
+					*node:root.infopanel@invis = false
+					*node:root.equippanel@invis = true
+				}
+				cmd "basedef_updatemenu <cvar:mn_bdef_type>;"
+			}
+		}
+		option info {
+			label	"_Information"
+			value	"info"
+			icon	"icons/tab_information"
+		}
+		option missile {
+			label	"_Missile Defences"
+			value	"missile"
+			icon	"icons/tab_missiledefences"
+		}
+		option laser {
+			label	"_Laser Defences"
+			value	"laser"
+			invis	true
+			icon	"icons/tab_laserdefences"
+		}
+	}
+
+	/**
+	 * @brief sets available defencetypes
+	 */
+	confunc set_defencetypes {
+		*cvar:mn_cvartmp = "<1>"
+		if ( *cvar:mn_cvartmp eq "enable" ) {
+			*node:root.defencetype.missile@disabled = false
+			*node:root.defencetype.missile@invis = false
+		} elif ( *cvar:mn_cvartmp eq "disable" ) {
+			*node:root.defencetype.missile@disabled = true
+			*node:root.defencetype.missile@invis = false
+		} elif ( *cvar:mn_cvartmp eq "na" ) {
+			*node:root.defencetype.missile@invis = true
+		}
+		*cvar:mn_cvartmp = "<2>"
+		if ( *cvar:mn_cvartmp eq "enable" ) {
+			*node:root.defencetype.laser@disabled = false
+			*node:root.defencetype.laser@invis = false
+		} elif ( *cvar:mn_cvartmp eq "disable" ) {
+			*node:root.defencetype.laser@disabled = true
+			*node:root.defencetype.laser@invis = false
+		} elif ( *cvar:mn_cvartmp eq "na" ) {
+			*node:root.defencetype.laser@invis = true
+		}
+		cmd "del mn_cvartmp;"
+	}
+
+	panel equippanel {
+		{
+			pos			"15 115"
+			size		"794 305"
+			invis		true
+		}
+
+		/* @todo: We should check if the slot is empty but can't do from here */
+		confunc update_buttons {
+			if ( *node:parent.slots.slotlist@lineselected < 0 ) {
+				*node:parent.bt_add@disabled = true
+				*node:parent.bt_remove@disabled = true
+			} elif ( *node:parent.slots.slotlist@lineselected >= *node:parent.slots.slotlist@lines ) {
+				*node:parent.bt_add@disabled = true
+				*node:parent.bt_remove@disabled = true
+			} elif ( *node:parent.store.storelist@lineselected < 0 ) {
+				*node:parent.bt_add@disabled = true
+				*node:parent.bt_remove@disabled = false
+			} elif ( *node:parent.store.storelist@lineselected >= *node:parent.store.storelist@lines ) {
+				*node:parent.bt_add@disabled = true
+				*node:parent.bt_remove@disabled = false
+			} else {
+				*node:parent.bt_add@disabled = false
+				*node:parent.bt_remove@disabled = false
+			}
+		}
+
+		panel slots {
+			{
+				pos		"5 5"
+				size	"435 115"
+			}
+
+			string slotlist_title
+			{
+				string		"_Weapon slots"
+				pos			"5 5"
+				size		"400 25"
+				font		"f_small_bold"
+			}
+			rows slotback {
+				pos			"5 30"
+				size		"400 80"
+				color1		"0.56 0.81 0.76 0.15"
+				color2		"0.56 0.81 0.76 0.1"
+				lineheight	20
+			}
+
+			/* textlist using tabbed text */
+			text slotlist
+			{
+				dataid		TEXT_BASEDEFENCE_LIST
+				pos			"5 30"
+				size		"400 80"
+				lineheight	20
+				color		"0.60 0.60 0.60 1"
+				selectcolor	"1 1 1 1"
+				rows		"4"
+				mousefx		true
+				longlines	LONGLINES_PRETTYCHOP
+				onClick		{
+					call *node:root.equippanel.update_buttons
+					cmd "basedef_selectitem <cvar:mn_bdef_type> <lineselected> -1;"
+				}
+				onViewChange {
+					*node:parent.slotlist_scroll@fullsize = <fullsize>
+					*node:parent.slotlist_scroll@current = <viewpos>
+					*node:parent.slotlist_scroll@viewsize = <viewsize>
+				}
+			}
+			vscrollbar slotlist_scroll
+			{
+				image		"ui/scrollbar_v"
+				pos			"410 30"
+				height		"80"
+				current		0
+				viewsize	4
+				fullsize	4
+				hidewhenunused	true
+				onChange	{ *node:parent.slotlist@viewpos = <current> }
+			}
+		}
+
+		MainMenu2Btn bt_add
+		{
+			icon		"icons/varrow_swap"
+			string		"_Add"
+			tooltip		"_Equip the selected slot with this weapon"
+			pos			"10 130"
+			size		"200 32"
+			onClick		{
+				cmd "basedef_additem <cvar:mn_bdef_type> <node:parent.slots.slotlist@lineselected>;"
+			}
+		}
+		MainMenuBtn bt_remove
+		{
+			icon		"icons/varrow_top_bottom"
+			string		"_Remove"
+			tooltip		"_Remove weapon from the selected slot"
+			pos			"230 130"
+			size		"200 32"
+			onClick		{
+				cmd "basedef_removeitem <cvar:mn_bdef_type> <node:parent.slots.slotlist@lineselected>;"
+			}
+		}
+
+		panel store {
+			{
+				pos		"5 175"
+				size	"435 115"
+			}
+
+			string storelist_title
+			{
+				string		"_Stores"
+				pos			"5 5"
+				size		"400 25"
+				font		"f_small_bold"
+			}
+			rows storeback {
+				pos			"5 30"
+				size		"400 80"
+				color1		"0.56 0.81 0.76 0.15"
+				color2		"0.56 0.81 0.76 0.1"
+				lineheight	20
+			}
+			textlist storelist
+			{
+				dataid		TEXT_LIST
+				pos			"5 30"
+				size		"400 80"
+				lineheight	20
+				color		"0.60 0.60 0.60 1"
+				selectcolor	"1 1 1 1"
+				rows		"4"
+				onClick		{
+					call *node:root.equippanel.update_buttons
+					cmd "basedef_selectitem <cvar:mn_bdef_type> -1 <lineselected>;"
+				}
+				onViewChange {
+					*node:parent.storelist_scroll@fullsize = <fullsize>
+					*node:parent.storelist_scroll@current = <viewpos>
+					*node:parent.storelist_scroll@viewsize = <viewsize>
+				}
+			}
+			vscrollbar storelist_scroll
+			{
+				image		"ui/scrollbar_v"
+				pos			"410 30"
+				height		"80"
+				current		0
+				viewsize	4
+				fullsize	4
+				hidewhenunused	true
+				onChange	{ *node:parent.storelist@viewpos = <current> }
+			}
+		}
+
+		panel descpanel {
+			{
+				pos		"455 5"
+				size	"334 285"
+				border	3
+				bordercolor	"0.56 0.81 0.76 1"
+			}
+
+			string description_title
+			{
+				string		"_Selected Item"
+				pos			"10 5"
+				size		"314 25"
+				contentalign	ALIGN_UC
+				font		"f_small_bold"
+			}
+			string item_name
+			{
+				string		*cvar:mn_itemname
+				pos			"10 25"
+				size		"314 25"
+				contentalign	ALIGN_UC
+			}
+
+			model item_model
+			{
+				src			*cvar:mn_upmodel_top
+				angles		"-10 160 70"
+				pos			"10 50"
+				size		"314 140"
+			}
+
+			text description
+			{
+				dataid		TEXT_ITEMDESCRIPTION
+				pos			"10 195"
+				size		"284 80"
+				lineheight	20
+				tabwidth	200
+				color		"0.60 0.60 0.60 1"
+				selectcolor	"1 1 1 1"
+				onViewChange {
+					*node:parent.description_scroll@fullsize = <fullsize>
+					*node:parent.description_scroll@current = <viewpos>
+					*node:parent.description_scroll@viewsize = <viewsize>
+				}
+			}
+			vscrollbar description_scroll
+			{
+				image		"ui/scrollbar_v"
+				pos			"304 195"
+				height		"80"
+				current		0
+				viewsize	4
+				fullsize	4
+				hidewhenunused	true
+				onChange	{ *node:parent.description@viewpos = <current> }
+			}
+		}
+	}
+
+	panel infopanel {
+		{
+			pos			"15 115"
+			size		"809 320"
+		}
+
+		string infopanel_title
+		{
+			string		"_Surface to Air defences"
+			pos			"50 30"
+			size		"570 35"
+			font		"f_normal_bold"
+		}
+
+		string name_title
+		{
+			string		"_Name:"
+			pos			"50 95"
+			size		"250 25"
+			font		"f_small_bold"
+		}
+		TextEntry name
+		{
+			string		*cvar:mn_installation_title
+			pos			"310 90"
+			size		"256 34"
+			font		"f_verysmall"
+			onChange	{ }
+			clickoutabort	true
+			ghost		true
+		}
+
+		string target_title
+		{
+			string		"_Targetted UFO:"
+			pos			"50 150"
+			size		"250 25"
+		}
+		string target_value
+		{
+			string		*cvar:mn_target
+			pos			"310 150"
+			size		"150 25"
+		}
+
+		string buildtime_label
+		{
+			string		"_Time to completion:"
+			pos			"50 175"
+			size		"250 20"
+		}
+		string buildtime
+		{
+			string		*cvar:mn_installation_timetobuild
+			pos			"310 175"
+			size		"100 20"
+		}
+
+		string autofire_title
+		{
+			string		"_Autofire"
+			pos			"50 200"
+			size		"250 25"
+		}
+		CheckBox autofire
+		{
+			pos			"310 200"
+			size		"20 20"
+			current		0
+			disabled	true
+			onChange	{ cmd "basedef_autofire <current>;" }
+		}
+
+		MainMenuExitBtn destroy
+		{
+			string		"_Destroy"
+			tooltip		"_Destroy installation"
+			font		"f_menu"
+			pos			"437 290"
+			size		"180 30"
+			onClick		{ cmd "ui_pop; mn_installation_destroy;" }
+		}
+		MainMenu2Btn close
+		{
+			string		"_Close"
+			font		"f_menu"
+			pos			"629 290"
+			size		"180 30"
+			onClick		{ cmd "ui_pop;" }
+		}
+
+	}
+
+	confunc setautofire	{
+		*cvar:tmp = "<1>"
+		if ( *cvar:tmp eq "disable" ) {
+			*node:root.infopanel.autofire@current = 0
+			*node:root.infopanel.autofire@disabled = true
+		} else {
+			*node:root.infopanel.autofire@current = <cvar:tmp>
+			*node:root.infopanel.autofire@disabled = false
+		}
+		delete *cvar:tmp
+	}
+
+	func onWindowOpened {
+		*cvar:mn_itemname = ""
+		*cvar:mn_upmodel_top = ""
+		*cvar:mn_bdef_type = "info"
+		*node:root.infopanel@invis = false
+		*node:root.equippanel@invis = true
+		if ( *cvar:mn_installation_type ne "" ) {
+			*node:root.infopanel.name@string = *cvar:mn_installation_title
+			*node:root.infopanel.name@onChange = { cmd "mn_installation_changename;" }
+			*node:root.infopanel.destroy@invis = false
+			/** Show building time */
+			if ( *cvar:mn_installation_timetobuild ne "-" ) {
+				*node:root.infopanel.buildtime_label@invis = false
+				*node:root.infopanel.buildtime@invis = false
+			} else {
+				*node:root.infopanel.buildtime_label@invis = true
+				*node:root.infopanel.buildtime@invis = true
+			}
+		} else {
+			*node:root.infopanel.name@string = *cvar:mn_base_title
+			*node:root.infopanel.buildtime_label@invis = true
+			*node:root.infopanel.buildtime@invis = true
+			*node:root.infopanel.destroy@invis = true
+		}
+		cmd "basedef_updatemenu info;"
+		call *node:root.equippanel.update_buttons
+	}
+	fuzzyScreen overlay { }
+}

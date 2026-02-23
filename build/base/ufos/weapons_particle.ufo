@@ -1,0 +1,317 @@
+// =======================
+//  PARTICLE BEAM PISTOL
+// =======================
+item pbeampistol
+{
+	name			"_Particle Beam Pistol"
+	model			"weapons/pbeampistol/pbeampistol"
+	weapon			true
+	type			"pistol"
+	animationindex	2
+	holdtwohanded	false
+	firetwohanded	false
+	shape			"0 0 2 2"
+	center			"1.2 0 1.5"
+	scale			1.18
+	ammo			16
+	reload			14
+	reloadsound		"weapons/reload-pistol"
+	price			3000
+	size			20
+	is_secondary	true
+	weight			1300
+}
+
+item pbeampistol_ammo
+{
+	name			"_Pistol Particle Accelerator"
+	model			"weapons/pbeampistol/pbeampistol_clip"
+	type			"ammo"
+	animationindex	0
+	shape			"0 0 1 1"
+	center			"0 0 0"
+	scale			0.97
+	price			1000
+	size			3
+	is_secondary	true
+	dmgtype			"particlebeam"
+	weight			300
+
+	weapon_mod
+	{
+		weapon pbeampistol
+		firedef
+		{
+			name		"_Snap Shot"
+			skill		"close"
+			projtl		pbeamBeam
+			impact		pbeamImpact
+			hitbody		pbeamImpact
+			firesnd		"weapons/ptl-small"
+			impsnd		"impact/laser-impact"
+			bodysnd 	"impact/laser-bodyimpact"
+			speed		0
+			spread		"2.5 2.5"
+			crouch		0.9
+			range		30
+			shots		1
+			ammo		1
+			time		6
+			damage		"70 10"
+			dmgweight	"particlebeam_light"
+			reaction	true
+			shotorg		"1 11.5"
+		}
+		firedef
+		{
+			name				"_Aimed Shot"
+			skill				"close"
+			projtl				pbeamMiniBeam
+			impact				pbeamImpact
+			hitbody				pbeamImpact
+			firesnd				"weapons/ptl-small"
+			impsnd				"impact/laser-impact"
+			bodysnd 			"impact/laser-bodyimpact"
+			speed				0
+			spread				"2 2"
+			crouch				0.9
+			range				30
+			shots				1
+			ammo				1
+			delaybetweenshots	5
+			time				10
+			damage				"70 10"
+			dmgweight			"particlebeam_light"
+			shotorg				"1 11.5"
+		}
+	}
+}
+
+
+// =======================
+// PARTICLE BEAM RIFLE
+// =======================
+item pbeamrifle
+{
+	name			"_Particle Beam Rifle"
+	model			"weapons/pbeamrifle/pbeamrifle"
+	weapon			true
+	type			"rifle"
+	animationindex	1
+	holdtwohanded	false
+	firetwohanded	true
+	shape			"2 0 3 1"
+	shape			"0 1 5 1"
+	center			"9 -0.5 1.8"
+	scale			1.1
+	ammo			12
+	reload			14
+	reloadsound		"weapons/reload-rifle"
+	price			4000
+	size			40
+	is_primary		true
+	weight			3400
+}
+
+item pbeamrifle_ammo
+{
+	name			"_Rifle Particle Accelerator"
+	model			"weapons/pbeamrifle/pbeamrifle_clip"
+	type			"ammo"
+	animationindex	0
+	shape			"0 0 1 1"
+	center			"0 0 -0.3"
+	scale			1.1
+	price			1300
+	size			5
+	is_primary		true
+	dmgtype			"particlebeam"
+	weight			500
+
+	weapon_mod
+	{
+		weapon pbeamrifle
+		firedef
+		{
+			name		"_Snap Shot"
+			skill		"assault"
+			projtl		pbeamBeam
+			impact		pbeamImpact
+			hitbody		pbeamImpact
+			firesnd		"weapons/ptl-medium"
+			impsnd		"impact/laser-impact"
+			bodysnd 	"impact/laser-bodyimpact"
+			speed		0
+			spread		"1.2 1.2"
+			crouch		0.85
+			range		200
+			shots		1
+			ammo		1
+			time		9
+			damage		"110 10"
+			dmgweight	"particlebeam_medium"
+			reaction	true
+			shotorg		"2 6"
+		}
+		firedef
+		{
+			name				"_3-Round Burst"
+			skill				"assault"
+			projtl				pbeamMiniBeam
+			impact				pbeamImpact
+			hitbody				pbeamImpact
+			firesnd				"weapons/ptl-medium"
+			impsnd				"impact/laser-impact"
+			bodysnd 			"impact/laser-bodyimpact"
+			speed				0
+			spread				"1.5 1.5"
+			crouch				0.85
+			range				200
+			shots				3
+			ammo				3
+			delaybetweenshots	5
+			time				15
+			damage				"110 10"
+			dmgweight			"particlebeam_medium"
+			reaction			true
+			shotorg				"2 6"
+		}
+		firedef
+		{
+			name		"_Aimed Shot"
+			skill		"assault"
+			projtl		pbeamBeam
+			impact		pbeamImpact
+			hitbody		pbeamImpact
+			firesnd		"weapons/ptl-medium"
+			impsnd		"impact/laser-impact"
+			bodysnd 	"impact/laser-bodyimpact"
+			speed		0
+			spread		"1 1"
+			crouch		0.85
+			range		200
+			shots		1
+			ammo		1
+			time		18
+			damage		"110 10"
+			dmgweight	"particlebeam_medium"
+			shotorg		"2 6"
+		}
+	}
+}
+
+
+// =======================
+// PARTICLE BEAM CANNON
+// =======================
+item pbeamcannon
+{
+	name			"_Particle Beam Cannon"
+	model			"weapons/pbeamcannon/pbeamcannon"
+	weapon			true
+	type			"rifle"
+	animationindex	1
+	holdtwohanded	false
+	firetwohanded	true
+	shape			"0 0 5 2"
+	center			"11 0 0.3"
+	scale			1.07
+	ammo			8
+	reload			18
+	reloadsound		"weapons/reload-rifle"
+	price			5000
+	size			70
+	is_primary		true
+	is_heavy		true
+	weight			6000
+}
+
+item pbeamcannon_ammo
+{
+	name			"_Cannon Particle Accelerator"
+	model			"weapons/pbeamcannon/pbeamcannon_clip"
+	type			"ammo"
+	animationindex	0
+	shape			"0 0 2 1"
+	center			"0 0 -0.2"
+	scale			1.0
+	price			1400
+	size			8
+	is_primary		true
+	is_heavy		true
+	dmgtype			"particlebeam"
+	weight			800
+
+	weapon_mod
+	{
+		weapon pbeamcannon
+		firedef
+		{
+			name				"_Snap Shot"
+			skill				"assault"
+			projtl				pbeamMiniBeam
+			impact				pbeamImpact
+			hitbody				pbeamImpact
+			firesnd				"weapons/ptl-large"
+			impsnd				"impact/laser-impact"
+			bodysnd 			"impact/laser-bodyimpact"
+			speed				0
+			spread				"1.5 1.5"
+			crouch				0.85
+			range				200
+			shots				1
+			ammo				1
+			time				13
+			damage				"150 30"
+			dmgweight			"particlebeam_heavy"
+			reaction			true
+			shotorg				"3.5 4"
+		}
+		firedef
+		{
+			name				"_4-Round Burst"
+			skill				"assault"
+			projtl				pbeamMiniBeam
+			impact				pbeamImpact
+			hitbody				pbeamImpact
+			firesnd				"weapons/ptl-large"
+			impsnd				"impact/laser-impact"
+			bodysnd 			"impact/laser-bodyimpact"
+			speed				0
+			spread				"2.5 2.5"
+			crouch				0.85
+			range				200
+			shots				4
+			ammo				4
+			delaybetweenshots	5
+			time				18
+			damage				"150 30"
+			dmgweight			"particlebeam_heavy"
+			reaction			true
+			shotorg				"3.5 4"
+		}
+		firedef
+		{
+			name		"_Unrestricted Blast"
+			skill		"assault"
+			projtl		pbeamBigBeam
+			impact		pbeamBigImpact
+			hitbody		pbeamBigImpact
+			firesnd		"weapons/ptl-blast"
+			impsnd		"impact/laser-impact"
+			bodysnd 	"impact/laser-bodyimpact"
+			speed		0
+			spread		"1.8 1.8"
+			crouch		0.85
+			range		200
+			shots		1
+			ammo		8
+			time		20
+			damage		"0 0"
+			spldmg		"250 50"
+			splrad		3
+			dmgweight	"particlebeam_heavy"
+			shotorg		"3.5 4"
+		}
+	}
+}

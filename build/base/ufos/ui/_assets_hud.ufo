@@ -1,0 +1,271 @@
+--!usr/bin/lua
+
+require("ufox.lua")
+
+
+-- ====================================
+-- Battlescape Hud Assets
+-- ====================================
+
+-- Circular button background
+ufox.build_component({
+	class = "panel",
+	name = "CircleBtn",
+	size = {48, 48},
+
+	on_mouseenter = function (this)
+		this:child("CircleBtn_halo"):set_invisible(false)
+	end,
+	on_mouseleave = function (this)
+		this:child("CircleBtn_halo"):set_invisible(true)
+	end,
+
+	-- Mouseover effect
+	{
+		class = "button",
+		name = "CircleBtn_halo",
+		icon = "icons/circle_halo",
+		pos = {0, 0},
+		size = {48, 48},
+		invisible = true,
+		ghost = true
+	}
+})
+
+-- Disabled icon
+ufox.build_component({
+	class = "button",
+	name = "CircleBtnDisabled",
+	size = {48, 48},
+	icon= " icons/circle_disabled0",
+	invisible = true
+})
+
+-- Soldier head for soldier selection
+ufox.build_component({
+	class = "panel",
+	name = "SoldierSelect",
+	size = {40, 40},
+	backgroundcolor = {0, 0.1, 0, 0.7},
+	bordersize = 2,
+	bordercolor = {0.527, 0.6, 0.21, 1},
+	invisible = true,
+
+	on_mouseenter = function (this)
+		this:set_backgroundcolor(0, 0, 0, 1)
+		this:on_mouseover()
+	end,
+	on_mouseleave = function (this)
+		this:set_backgroundcolor(0, 0.1, 0, 0.7)
+		this:on_mouseout()
+	end,
+	on_click = function (this)
+		ufo.cmd(string.format("actor_select %i;", this:child("number"):as_integer()))
+	end,
+
+	on_mouseover = function (this)
+		this:root():child("soldier"):child("popup_soldier_hovered"):select(this:child("number"):as_integer())
+	end,
+	on_mouseout = function (this)
+		this:root():child("soldier"):child("popup_soldier_hovered"):set_invisible(true)
+	end,
+
+	{
+		class = "data",
+		name = "number",
+	},
+	{
+		class = "model",
+		name = "head",
+		angles = {15, 60, 100},
+		autoscale = true,
+		pos = {1, 1},
+		size = {38, 34},
+		ghost = true
+	},
+	{
+		class = "texture",
+		name = "bar_bg",
+		pos = {1, 34},
+		size = {38, 4},
+		source = "ui/bar_bg",
+		backgroundcolor = {0, 0, 0, 0.5},
+		ghost = true
+	},
+	{
+		class = "bar",
+		name = "health",
+		pos = {1, 34},
+		size = {38, 4},
+		color = {0.1875, 0.65625, 0.164, 1},
+		direction = ufo.ALIGN_CR,
+		disabled = true,
+		ghost = true,
+		nohover = true
+	},
+	{
+		class = "bar",
+		name = "tu",
+		pos = {1, 34},
+		size = {38, 4},
+		color = {0.582, 0.808, 0.758, 1},
+		direction = ufo.ALIGN_CR,
+		disabled = true,
+		invisible = true,
+		ghost = true,
+		nohover = true
+	},
+	{
+		class = "bar",
+		name =  "morale",
+		pos = {1, 34},
+		size = {38, 4},
+		color = {0.825, 0.92, 0.437, 1},
+		direction = ufo.ALIGN_CR,
+		disabled = true,
+		invisible = true,
+		ghost = true,
+		nohover = true
+	}
+})
+
+ufox.build_component({
+	class = "panel",
+	name = "WorldLevel",
+	size = {100, 40},
+	ghost = true,
+
+	{
+		class = "button",
+		name =  "icon",
+		pos = {4, 3},
+		size = {19, 19},
+		icon = "icons/levels",
+		tooltip = "_current level"
+	},
+	{
+		class = "string",
+		name = "levelnum",
+		text = "1",
+		pos = {27, 3},
+		size = {30, 25},
+		font = "f_normal_bold",
+		color = {0.56, 0.81, 0.76, 1},
+		longlines = ufo.LONGLINES_CHOP,
+		contentalign = ufo.ALIGN_CL,
+		ghost = true
+	},
+
+	{
+		class = "button",
+		name = "up",
+		pos = {57, 2},
+		size= {18, 10},
+		icon = "icons/arrow_up",
+		tooltip = "_raise the level",
+		on_click = function (this)
+			ufo.cmd("lvlchange 1;")
+		end
+	},
+
+	{
+		class = "button",
+		name = "down",
+		pos = {57, 16},
+		size = {18, 10},
+		icon = "icons/arrow_down",
+		tooltip = "_lower the level",
+		on_click = function (this)
+			ufo.cmd("lvlchange -1;")
+		end
+	},
+
+	-- raise/lower the level
+	-- param direction: (-1 = down, 1 = up)
+	{
+		class = "confunc",
+		name = "lvlchange",
+		on_click = function (node, direction)
+			local maxlevel = ufo.findvar("cl_maxworldlevel"):as_integer()
+			local newlevel = math.max(0, math.min(maxlevel, ufo.findvar("cl_worldlevel"):as_integer() + direction))
+
+			ufo.findvar("cl_worldlevel"):set_value(newlevel)
+			node:parent():child("levelnum"):set_text(tostring(newlevel + 1))
+			-- change icon if we're at top or bottom level
+			if newlevel == 0 then
+				node:parent():child("down"):set_icon("icons/arrow_down_off")
+				node:parent():child("up"):set_icon("icons/arrow_up")
+			elseif newlevel == maxlevel then
+				node:parent():child("up"):set_icon("icons/arrow_up_off")
+				node:parent():child("down"):set_icon("icons/arrow_down")
+			else
+				node:parent():child("down"):set_icon("icons/arrow_down")
+				node:parent():child("up"):set_icon("icons/arrow_up")
+			end
+		end
+	}
+})
+
+ufox.build_component({
+	class = "panel",
+	name = "cmpWound",
+	size = {180, 16},
+
+	{
+		class = "button",
+		name = "wound_icon",
+		color = {1, 0, 0, 1},
+		size = {16, 16}
+	},
+
+	{
+		class = "smallstring",
+		name = "wound_string",
+		pos = {20, 0},
+		longlines = ufo.LONGLINES_CHOP,
+		contentalign = ufo.ALIGN_UL
+	}
+})
+
+ufox.build_component({
+	class = "panel",
+	name = "ReactionFireShooter",
+	size = {210, 35},
+	backgroundcolor = {0, 0, 0, 0.7},
+	bordersize = 1,
+	bordercolor = {1, 1, 1, 0.2},
+
+	{
+		class = "model",
+		name = "head_shooter",
+		model = "",
+		skin = "",
+		angles = {0, 60, 90},
+		autoscale = true,
+		pos = {5, 5},
+		size = {25, 25},
+		origin = {0, 0, 0},
+		ghost = true
+	},
+	{
+		class = "bar",
+		name = "timeremaining",
+		pos = {35, 22},
+		size = {170, 8},
+		value = 0,
+		max = 0,
+		disabled = true,
+		bordersize = 1,
+		bordercolor = {1, 1, 1, 0.2},
+		ghost = true
+	},
+	{
+		class = "string",
+		name = "rfnotice",
+		text = "",
+		size = {170, 17},
+		pos = {35, 5},
+		ghost = true,
+		font = "f_verysmall"
+	}
+})

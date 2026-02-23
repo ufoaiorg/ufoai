@@ -1,0 +1,33 @@
+msgid veryhard_campaign_txt {
+text "_This is an extremely difficult version of the Standard Campaign. In this scenario, all the odds will be stacked against you, you will receive few recruits, and the nations will be extremely demanding. The aliens will show you no mercy.
+
+This option represents the Very Hard difficulty level, and is recommended for those who have managed to beat the Hard campaign and still feel the need to further punish themselves."
+}
+
+msgid hard_campaign_txt {
+text "_This is a more difficult version of the Standard Campaign. You will receive fewer soldiers, engineers and scientists, nations will be more difficult to please, research will be slower and more demanding, and the aliens will be tougher.
+
+This option represents the Hard difficulty level, and is recommended for expert players."
+}
+
+msgid standard_campaign_txt {
+text "_This is a single-player, military-themed invasion scenario. The player assumes command of Project PHALANX, Earth's response to the alien threat, and can play through a dynamic game with both significant random elements and a strong overarching storyline.
+
+This campaign is available at several difficulty levels. This option represents the Standard difficulty level, and is recommended for first-time players who like a challenge."
+}
+
+msgid easy_campaign_txt {
+text "_This is a more forgiving version of the Standard Campaign. The aliens will be less tough, UFO incursions will be less frequent, and you will receive more new recruits to make up for combat losses.
+
+This campaign represents the Easy difficulty level, and is an option for first-time players who prefer smoother sailing than the Standard Campaign might offer."
+}
+
+msgid veryeasy_campaign_txt {
+text "_This is a very forgiving version of the Standard Campaign. Your forces will be more powerful, the aliens less dangerous, and you will experience few losses throughout the campaign.
+
+This campaign represents the Very Easy difficulty level, and is an option for first-time players who are only just testing the waters of UFO: AI."
+}
+
+msgid alien_campaign_txt {
+text "_This campaign lets you play the game from the other side - play the aliens and invade the earth. "
+}

@@ -1,0 +1,9 @@
+/*
+ * mapcycle for UFO:AI server
+ * format:
+ * ---------------
+ * [mapname] [day|night] [gametype]
+ */
+
++italy day fight2on2
+

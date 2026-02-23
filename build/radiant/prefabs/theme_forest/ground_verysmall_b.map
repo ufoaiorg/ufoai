@@ -1,0 +1,30 @@
+// entity 0
+{
+"classname" "worldspawn"
+"noequipment" "1"
+}
+// entity 1
+{
+"classname" "func_group"
+// brush 0
+{
+( 53 -6 68 ) ( 1 1 68 ) ( -8 -57 68 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+( 53 -6 68 ) ( -8 -57 68 ) ( 1 1 82 ) tex_nature/grass_mowed_dry_c 0 0 0 0.25 0.25 65024 0 0
+( 1 1 68 ) ( 1 1 82 ) ( -8 -57 68 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+( 1 1 82 ) ( 1 1 68 ) ( 53 -6 68 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+}
+// brush 1
+{
+( 1 1 68 ) ( -29 53 68 ) ( -8 -57 68 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+( -29 53 68 ) ( 1 1 82 ) ( -8 -57 68 ) tex_nature/grass_mowed_dry_c 0 0 0 0.25 0.25 65024 0 0
+( 1 1 82 ) ( 1 1 68 ) ( -8 -57 68 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+( 1 1 68 ) ( 1 1 82 ) ( -29 53 68 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+}
+// brush 2
+{
+( 53 -6 68 ) ( -29 53 68 ) ( 1 1 68 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+( 53 -6 68 ) ( 1 1 82 ) ( -29 53 68 ) tex_nature/grass_mowed_dry_c 0 0 0 0.25 0.25 65024 0 0
+( 1 1 82 ) ( 1 1 68 ) ( -29 53 68 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+( 1 1 68 ) ( 1 1 82 ) ( 53 -6 68 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
+}
+}

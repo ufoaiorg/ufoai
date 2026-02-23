@@ -1,0 +1,103 @@
+// in - TUs that are needed to move an item into this container
+// out - TUs that are needed to move an item out of this container
+// single - only a single item
+// shape - the container 'form' defined by x1,y1 and x2,y2
+//         a container can have several shapes that are added to the final container form
+// temp - a temporary container - such a container is not cleared - it's just a pointer to another one
+// armour - only armours can be placed here
+// all - everything can be placed here - even armours
+// headgear - headgear slot - only usable for headgear
+
+// Headgear slot
+inventory headgear
+{
+	shape		"0 0 2 1"
+	single		true
+	headgear	true
+	in			1
+	out			0
+}
+
+// Right hand
+inventory right
+{
+	shape	"0 0 5 2"
+	single	true
+	in		1
+	out		0
+}
+
+// Left hand
+inventory left
+{
+	shape	"0 0 5 2"
+	single	true
+	in		1
+	out		0
+}
+
+// Backpack
+inventory backpack
+{
+	shape	"1 0 3 1"
+	shape	"0 1 5 2"
+	in		5
+	out		5
+}
+
+// Belt (L shape)
+inventory belt
+{
+	shape	"0 0 3 1"
+	shape	"0 1 1 1"
+	in		2
+	out		1
+}
+
+// Holster
+inventory holster
+{
+	shape	"0 0 3 2"
+	in		2
+	out		1
+}
+
+// Armour (Region=Soldier)
+inventory armour
+{
+	shape	"0 0 5 6"
+	single	true
+	armour	true
+	in		200
+	out		200
+}
+
+inventory implant
+{
+	shape	"0 0 4 1"
+	in		200
+	out		200
+	implant	true
+	unique	true
+}
+
+// Make sure that the temp containers are the last ones
+
+// Battlescape floor
+inventory floor
+{
+	shape	"0 0 14 5"
+	temp	true
+	in		1
+	out		2
+}
+
+// Base equipment place
+inventory equip
+{
+	shape	"0 0 24 13"
+	shape	"0 13 20 2"
+	temp	true
+	all		true
+	scroll	true
+}

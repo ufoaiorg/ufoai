@@ -1,0 +1,27 @@
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 16 7 78 ) ( 2 12 78 ) ( 14 2 78 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 2 12 80 ) ( 14 2 80 ) ( 0 7 80 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 10 14 92 ) ( 6 14 78 ) ( 10 14 78 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 14 12 92 ) ( 10 14 78 ) ( 14 12 78 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 14 12 92 ) ( 16 7 78 ) ( 16 7 92 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 16 7 78 ) ( 14 2 92 ) ( 16 7 92 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 10 0 78 ) ( 14 2 92 ) ( 14 2 78 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 6 0 92 ) ( 10 0 78 ) ( 6 0 78 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 6 0 92 ) ( 2 2 78 ) ( 2 2 92 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 2 2 78 ) ( 0 7 92 ) ( 2 2 92 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 2 12 78 ) ( 0 7 92 ) ( 0 7 78 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+( 6 14 92 ) ( 2 12 78 ) ( 6 14 78 ) tex_common/lightclip 0 0 0 0.25 0.25 589312 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "8 8 69"
+"skin" "0"
+"spawnflags" "254"
+"model" "models/objects/vegi/ficus/ficus.md2"
+}

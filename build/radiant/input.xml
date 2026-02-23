@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<input>
+	<buttons>
+		<!-- Define the button IDs -->
+		<button name="MOUSE_LEFT" id="1" />
+		<button name="MOUSE_RIGHT" id="3" />
+		<button name="MOUSE_MIDDLE" id="2" />
+		<button name="MOUSE_THUMB" id="4" />
+		<button name="MOUSE_FIVE" id="5" />
+	</buttons>
+	<modifiers>
+		<!-- Modifier definitions (referring to a bitfield, you better don't change these) -->
+		<modifier name="SHIFT" bitIndex="0" />
+		<modifier name="CONTROL" bitIndex="1" />
+		<modifier name="ALT" bitIndex="2" />
+	</modifiers>
+	<xyview>
+		<event name="MoveView" button="MOUSE_RIGHT" modifiers="" />
+		<event name="NewBrushDrag" button="MOUSE_LEFT" modifiers="" />
+		<!-- The event Select can be interpreted as "Select" or "Clip", depending on the situation
+			 This event is also passed to the WindowObserver by default.	-->
+		<event name="Select" button="MOUSE_LEFT" modifiers="" />
+		<event name="Zoom" button="MOUSE_RIGHT" modifiers="SHIFT" />
+		<event name="CameraMove" button="MOUSE_MIDDLE" modifiers="CONTROL" />
+		<event name="CameraAngle" button="MOUSE_MIDDLE" modifiers="" />
+	</xyview>
+	<observer>
+		<event name="Manipulate" button="MOUSE_LEFT" modifiers="" minSelectionCount="0" />
+		<!--<event name="Select" button="MOUSE_FIVE" modifiers="" />-->
+		<event name="ToggleSelection" button="MOUSE_LEFT" modifiers="SHIFT" />
+		<event name="ToggleFaceSelection" button="MOUSE_LEFT" modifiers="SHIFT+CONTROL" />
+		<event name="CycleSelection" button="MOUSE_LEFT" modifiers="ALT+SHIFT" />
+		<event name="CycleFaceSelection" button="MOUSE_LEFT" modifiers="SHIFT+CONTROL+ALT" />
+		<event name="CopyTexture" button="MOUSE_MIDDLE" modifiers="" />
+		<event name="PasteTexture" button="MOUSE_MIDDLE" modifiers="CONTROL" />
+		<event name="PasteTextureToBrush" button="MOUSE_MIDDLE" modifiers="ALT+CONTROL" />
+		<event name="JumpToObject" button="MOUSE_RIGHT" modifiers="CONTROL" />
+	</observer>
+	<cameraview>
+		<event name="EnableFreeLookMode" button="MOUSE_RIGHT" modifiers="" />
+		<event name="DisableFreeLookMode" button="MOUSE_RIGHT" modifiers="" />
+		<strafemode toggle="CONTROL" forward="SHIFT" speed="0.65" forwardFactor="-1" />
+	</cameraview>
+	<shortcuts name="default">
+		<shortcut command="OpenMap" key="O" modifiers="CONTROL" />
+		<shortcut command="SaveMap" key="S" modifiers="CONTROL" />
+		<shortcut command="Undo" key="Z" modifiers="CONTROL" />
+		<shortcut command="Redo" key="Y" modifiers="CONTROL" />
+		<shortcut command="Cut" key="X" modifiers="CONTROL" />
+		<shortcut command="Copy" key="C" modifiers="CONTROL" />
+		<shortcut command="Paste" key="V" modifiers="CONTROL" />
+		<shortcut command="PasteToCamera" key="V" modifiers="ALT" />
+		<shortcut command="CloneSelection" key="space" />
+		<shortcut command="DeleteSelection" key="BackSpace" />
+		<shortcut command="UnSelectSelection" key="Escape" />
+		<shortcut command="InvertSelection" key="I" />
+		<shortcut command="ExpandSelectionToEntities" key="E" modifiers="CONTROL+ALT" />
+		<shortcut command="Preferences" key="P" />
+		<shortcut command="ToggleEntityInspector" key="N" />
+		<shortcut command="ShowHidden" key="H" modifiers="SHIFT" />
+		<shortcut command="HideSelected" key="H" />
+		<shortcut command="MapInfo" key="M" />
+		<shortcut command="RotateSelectionX" key="V" modifiers="ALT" />
+		<shortcut command="MirrorSelectionY" key="V" modifiers="ALT" />
+		<shortcut command="CSGSubtract" key="U" modifiers="SHIFT" />
+		<shortcut command="CSGMerge" key="U" modifiers="CONTROL" />
+		<shortcut command="SnapToGrid" key="G" modifiers="CONTROL" />
+		<shortcut command="SelectAllOfType" key="A" modifiers="SHIFT" />
+		<shortcut command="TexRotateClock" key="Next" modifiers="SHIFT" />
+		<shortcut command="TexRotateCounter" key="Prior" modifiers="ALT" />
+		<shortcut command="TexScaleUp" key="Up" modifiers="CONTROL" />
+		<shortcut command="TexScaleDown" key="Down" modifiers="CONTROL" />
+		<shortcut command="TexScaleLeft" key="Left" modifiers="CONTROL" />
+		<shortcut command="TexScaleRight" key="Right" modifiers="CONTROL" />
+		<shortcut command="TexShiftUp" key="Up" modifiers="SHIFT" />
+		<shortcut command="TexShiftDown" key="Down" modifiers="SHIFT" />
+		<shortcut command="TexShiftLeft" key="Left" modifiers="SHIFT" />
+		<shortcut command="TexShiftRight" key="Right" modifiers="SHIFT" />
+		<shortcut command="MoveSelectionDOWN" key="KP_Subtract" modifiers="SHIFT" />
+		<shortcut command="MoveSelectionUP" key="KP_Add" modifiers="SHIFT" />
+		<shortcut command="SelectNudgeLeft" key="Left" modifiers="ALT" />
+		<shortcut command="SelectNudgeRight" key="Right" modifiers="ALT" />
+		<shortcut command="SelectNudgeUp" key="Up" modifiers="ALT" />
+		<shortcut command="SelectNudgeDown" key="Down" modifiers="ALT" />
+		<shortcut command="CenterView" key="End" />
+		<shortcut command="CubicClipZoomIn" key="plus" modifiers="CONTROL" />
+		<shortcut command="CubicClipZoomOut" key="minus" modifiers="CONTROL" />
+		<shortcut command="UpFloor" key="Prior" />
+		<shortcut command="DownFloor" key="Next" />
+		<shortcut command="CameraForward" key="Up" />
+		<shortcut command="CameraBack" key="Down" />
+		<shortcut command="CameraLeft" key="Left" />
+		<shortcut command="CameraRight" key="Right" />
+		<shortcut command="CameraStrafeRight" key="period" />
+		<shortcut command="CameraStrafeLeft" key="comma" />
+		<shortcut command="CameraUp" key="D" />
+		<shortcut command="CameraDown" key="C" />
+		<shortcut command="CameraAngleUp" key="A" />
+		<shortcut command="CameraAngleDown" key="Z" />
+		<shortcut command="CameraFreeMoveForward" key="Up" />
+		<shortcut command="CameraFreeMoveBack" key="Down" />
+		<shortcut command="CameraFreeMoveLeft" key="Left" />
+		<shortcut command="CameraFreeMoveRight" key="Right" />
+		<shortcut command="Brush3Sided" key="3" modifiers="CONTROL" />
+		<shortcut command="Brush4Sided" key="4" modifiers="CONTROL" />
+		<shortcut command="Brush5Sided" key="5" modifiers="CONTROL" />
+		<shortcut command="Brush6Sided" key="6" modifiers="CONTROL" />
+		<shortcut command="Brush7Sided" key="7" modifiers="CONTROL" />
+		<shortcut command="Brush8Sided" key="8" modifiers="CONTROL" />
+		<shortcut command="Brush9Sided" key="9" modifiers="CONTROL" />
+		<shortcut command="ClipSelected" key="Return" />
+		<shortcut command="SplitSelected" key="Return" modifiers="SHIFT" />
+		<shortcut command="FlipClip" key="Return" modifiers="CONTROL" />
+		<shortcut command="MakeDetail" key="M" modifiers="CONTROL" />
+		<shortcut command="MakeStructural" key="S" modifiers="SHIFT+CONTROL" />
+		<shortcut command="ConnectSelection" key="K" modifiers="CONTROL" />
+		<shortcut command="GridUp" key="plus" />
+		<shortcut command="GridDown" key="minus" />
+		<shortcut command="ViewEntityInfo" key="N" />
+		<shortcut command="RegionSetSelection" key="R" modifiers="SHIFT+CONTROL" />
+		<shortcut command="FitTexture" key="B" modifiers="SHIFT" />
+		<shortcut command="SurfaceInspector" key="S" />
+		<shortcut command="ShowAllTextures" key="A" modifiers="CONTROL" />
+		<shortcut command="ViewTextures" key="T" />
+		<shortcut command="ToggleCrosshairs" key="X" modifiers="SHIFT" />
+		<shortcut command="ToggleGrid" key="0" />
+		<shortcut command="ToggleSidebar" key="B" />
+		<shortcut command="ToggleView" key="V" modifiers="SHIFT+CONTROL" />
+		<shortcut command="NextView" key="Tab" modifiers="CONTROL" />
+		<shortcut command="ZoomIn" key="Delete" />
+		<shortcut command="ZoomOut" key="Insert" />
+		<shortcut command="CenterXYViews" key="Tab" modifiers="CONTROL+SHIFT" />
+		<shortcut command="CenterXYView" key="Tab" modifiers="CONTROL+ALT" />
+		<shortcut command="ToggleCubicClip" key="F" modifiers="SHIFT" />
+		<shortcut command="ToggleCamera" key="C" modifiers="SHIFT+CONTROL" />
+		<shortcut command="TogTexLock" key="T" modifiers="SHIFT" />
+		<shortcut command="DragVertices" key="V" />
+		<shortcut command="DragEdges" key="E" />
+		<shortcut command="DragFaces" key="F" />
+		<shortcut command="ToggleClipper" key="X" />
+		<shortcut command="MouseTranslate" key="W" />
+		<shortcut command="MouseRotate" key="R" />
+		<shortcut command="MouseDrag" key="Q" />
+		<shortcut command="NewOrthoView" key="N" modifiers="CONTROL+ALT" />
+		<shortcut command="SetGrid0.125" key="" modifiers=""/>
+		<shortcut command="SetGrid0.25" key="" modifiers=""/>
+		<shortcut command="SetGrid0.5" key="" modifiers=""/>
+		<shortcut command="SetGrid1" key="1" modifiers=""/>
+		<shortcut command="SetGrid2" key="2" modifiers=""/>
+		<shortcut command="SetGrid4" key="3" modifiers=""/>
+		<shortcut command="SetGrid8" key="4" modifiers=""/>
+		<shortcut command="SetGrid16" key="5" modifiers=""/>
+		<shortcut command="SetGrid32" key="6" modifiers=""/>
+		<shortcut command="SetGrid64" key="7" modifiers=""/>
+		<shortcut command="SetGrid128" key="8" modifiers=""/>
+		<shortcut command="SetGrid256" key="9" modifiers=""/>
+		<shortcut command="TextureTool" key="T" modifiers="CONTROL+ALT"/>
+		<shortcut command="TexToolGridUp" key="plus" modifiers="SHIFT" />
+		<shortcut command="TexToolGridDown" key="minus" modifiers="SHIFT" />
+		<shortcut command="TexToolSnapToGrid" key="G" modifiers="CONTROL+SHIFT" />
+		<shortcut command="TexToolMergeItems" key="M" modifiers="ALT" />
+		<shortcut command="CopyShader" key="C" modifiers="SHIFT+CONTROL" />
+		<shortcut command="PasteShader" key="V" modifiers="SHIFT+CONTROL" />
+	</shortcuts>
+</input>

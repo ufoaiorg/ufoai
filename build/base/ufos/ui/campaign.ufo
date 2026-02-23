@@ -1,0 +1,135 @@
+--!usr/bin/lua
+
+--[[
+-- @file
+-- @brief New/Load/Save campaign window
+--]]
+
+--[[
+Copyright (C) 2002-2025 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--]]
+
+require("ufox.lua")
+require("ufox.maintabset.lua")
+
+campaign = {}
+require("campaign.new.lua")
+require("campaign.load.lua")
+require("campaign.save.lua")
+
+
+do
+	local window = ufox.build_window({
+		name = "campaign",
+		class = "window",
+		background = "ui/main_bg",
+
+		{
+			name = "content",
+			class = "panel",
+			pos = {0, 90},
+			size = {1024, 435},
+			backgroundcolor = {0.4, 0.52, 0.5, 0.2},
+
+			{
+				name = "tabview",
+				class = "panel",
+				pos = {0, 0},
+				size = {1024, 435},
+			},
+
+			{
+				name = "back",
+				class = "MainMenuExitBtn",
+				text = "_BACK",
+				pos = {774, 0},
+				size = {250, 30},
+
+				on_click = function (sender)
+					ufo.pop_window(false)
+				end
+			},
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+
+		campaign_save_check = function (sender)
+			if (sender:root():child("content"):child("tabview"):child("tabset"):child("save") == nil) then
+				return
+			end
+
+			local save_allowed = sender:root():child("ui_campaign_saveallowed")
+			if (save_allowed ~= nil) then
+				save_allowed:delete_node()
+			end
+
+			save_allowed = ufox.build({
+				name = "ui_campaign_saveallowed",
+				class = "confunc",
+
+				--[[
+				-- @brief Show / hide Save game menu
+				-- @param[in] allowed Whether saving the campaign is allowed @c true or @c false
+				-- @param[in] error_message The reason if saving is not possible
+				--]]
+				on_click = function (sender, allowed, error_message)
+					local save_button = sender:root():child("content"):child("tabview"):child("tabset"):child("save")
+					if (save_button == nil) then
+						ufo.print("Save tab was not found by the confunc\n")
+						return
+					end
+
+					if (allowed == "true") then
+						save_button:set_invisible(false)
+					else
+						save_button:set_invisible(true)
+					end
+
+					sender:delete_node()
+				end,
+			}, sender)
+
+			ufo.cmd(string.format("game_saveallowed %s;", save_allowed:name()))
+		end,
+
+		on_windowopened = function (sender, tab)
+			ufox.build_maintabset(
+				sender:child("content"):child("tabview"),
+				{
+					width = 770,
+				},
+				campaign.new,
+				campaign.load,
+				campaign.save
+			)
+
+			if (tab == nil) then
+				tab = "new"
+			end
+			sender:child("content"):child("tabview"):child("tabset"):select(tab)
+			sender:campaign_save_check()
+		end,
+
+		on_windowclosed = function (sender)
+			sender:child("content"):child("tabview"):remove_children()
+		end
+	})
+end

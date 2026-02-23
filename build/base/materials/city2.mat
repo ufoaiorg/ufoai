@@ -1,0 +1,58 @@
+{
+	material tex_lights/light004
+	{
+		texture tex_lights/light004off
+		pulse 2
+	}
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_misc/advertaa0
+	specular 1.0
+	hardness 1.0
+	{
+		texture tex_misc/advertaa0
+		anim 5 8.0
+	}
+	{
+		lightmap
+	}
+}
+
+{
+	material tex_misc/advertab0
+	specular 1.0
+	hardness 1.0
+	{
+		texture tex_misc/advertab0
+		anim 7 1.0
+	}
+}
+
+{
+	material tex_misc/advertbb
+	specular 1.0
+	hardness 1.0
+	{
+		texture tex_misc/advertbb0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		anim 8 3.0
+	}
+}
+
+{
+	material tex_base/screen_base
+	specular 1.0
+	hardness 1.0
+	{
+		texture tex_tech/tv0
+		blend GL_SRC_ALPHA GL_ONE
+		anim 2 10.0
+	}
+	{
+		lightmap
+	}
+}

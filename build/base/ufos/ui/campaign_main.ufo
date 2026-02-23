@@ -1,0 +1,86 @@
+--!usr/bin/lua
+
+require("ufox.lua")
+
+--[[
+ - CAMPAIGN MAIN MENU
+--]]
+do
+	local campaignMainWindow = ufox.build_window({
+		name = "campaign_main",
+		class = "window",
+		background = "ui/main_bg",
+
+		{
+			name = "buttons",
+			class = "panel",
+			pos = {312, 270},
+			size = {400, 400},
+			layout = ufo.LAYOUT_TOP_DOWN_FLOW,
+			layoutmargin = 15,
+
+			{
+				name = "continue",
+				class = "MainMenuBtn",
+				text = "_CONTINUE",
+				tooltip = "_Leave this menu and continue playing.",
+
+				on_click = function (sender)
+					ufo.pop_window(false)
+				end,
+			},
+
+			{
+				name = "load",
+				class = "MainMenu2Btn",
+				text = "_LOAD",
+
+				on_click = function (sender)
+					-- @TODO ufo.push_window() doesn't support parameters :(
+					ufo.cmd("ui_push campaign load;")
+				end,
+			},
+
+			{
+				name = "save",
+				class = "MainMenu2Btn",
+				text = "_SAVE",
+
+				on_click = function (sender)
+					-- @TODO ufo.push_window() doesn't support parameters :(
+					ufo.cmd("ui_push campaign save;")
+				end,
+			},
+
+			{
+				name = "options",
+				class = "MainMenu2Btn",
+				text = "_OPTIONS",
+
+				on_click = function (sender)
+					ufo.push_window("options", sender:root():name(), nil)
+				end,
+			},
+
+			{
+				name = "exit",
+				class = "MainMenuExitBtn",
+				text = "_EXIT",
+
+				on_click = function (sender)
+					local fastexit = ufo.getvar("mn_fastexit")
+					if (fastexit:as_integer() == 1) then
+						ufo.cmd("game_exit;")
+					else
+						ufo.push_window("popup_exit_campaign", sender:root():name(), nil)
+					end
+				end
+			},
+		},
+
+		{
+			name = "overlay",
+			class = "fuzzyScreen"
+		},
+	})
+end

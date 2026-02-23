@@ -1,0 +1,60 @@
+// Amphetamine Injection
+item implant_amphetamine
+{
+	name		"_Amphetamine Implant"
+	price		8000
+	size		1
+	implant		true
+	image		"implants/implant_amphetamine"
+	shape		"0 0 1 1"
+
+	// A single firemode for those implants which are used on battlescape
+	weapon_mod
+	{
+		weapon implant_amphetamine
+		firedef
+		{
+			shots	1
+			ammo	5
+
+			effect active
+			{
+				duration	3
+				accuracy	0.1
+				tu		0.1
+				morale		0.1
+			}
+			effect inactive
+			{
+				duration	3
+				accuracy	-0.1
+				tu		-0.1
+				morale		-0.1
+			}
+			effect overdose
+			{
+				permanent	true
+				accuracy	-0.2
+				tu		-0.1
+			}
+		}
+	}
+}
+
+// Muscle Stimulant
+item implant_muscular
+{
+	name		"_Muscle Stimulant"
+	price		8000
+	size		1
+	implant		true
+	image		"implants/implant_muscular"
+	shape		"0 0 1 1"
+
+	effect strengthen
+	{
+		period		7	// Frequency to add attribute
+		power		0.3	// Percent of attribute to add to attribute
+		mind		-0.03
+	}
+}

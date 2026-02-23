@@ -1,0 +1,33 @@
+{
+	material tex_mattn/railway
+	hardness 0.2
+}
+
+{
+	material tex_nature/rock005
+	hardness 0.2
+	specular 0.2
+	bump 2.0
+	{
+		texture tex_nature/rock006
+		terrain 120 192
+		lightmap
+	}
+}
+
+{
+	material tex_nature/rock006
+	hardness 0.2
+	specular 0.2
+}
+
+{
+	material tex_tech/tv
+	hardness 2.0
+	specular 2.0
+	{
+		texture tex_tech/tv0
+		blend GL_SRC_ALPHA GL_ONE
+		anim 2 10.0
+	}
+}

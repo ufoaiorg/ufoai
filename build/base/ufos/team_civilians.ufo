@@ -1,0 +1,607 @@
+//========================================================================
+// CIVILIANS - List of NAMES, MODELS and SOUNDS
+//========================================================================
+// Description:
+//	Please see team_humans.ufo
+//========================================================================
+// The civilian teams must match the nation ids
+//========================================================================
+
+team africa
+{
+	size			1
+	hit_particle	blood
+	weapons			false
+	armour			false
+	team			"civilian"
+	bodytype		humanoid_standard
+	names			dummy_names
+
+	models {
+		female("civilians/female" "body03" "head04a" 0 0) //body:blue dress, head: African, black hair, ponytail
+		female("civilians/female" "body03" "head04a" 1 1) //body:green dress, head: African, black hair, ponytail
+		female("civilians/female" "body03" "head04b" 0 0) //body:blue dress, head: African, red disguise, black hair, ponytail
+		female("civilians/female" "body03" "head04b" 1 1) //body:green dress, head: African, red disguise, black hair, ponytail
+		female("civilians/female" "body03" "head04c" 0 0) //body:blue dress, head: African, blue disguise, black hair
+		female("civilians/female" "body03" "head04c" 1 1) //body:green dress, head: African, blue disguise, black hair
+		male("civilians/male" "body02" "head02" 0 0) //body:arabic looking, head: beard, white hat
+		male("civilians/male" "sheik01" "head04" 0 0) //body:same as scientist's, just in white, head: afro, short black hair
+	}
+
+	actorsounds {
+		female {
+			hurtsound	"civilians/civfemscream01a"
+			hurtsound	"civilians/civfemscream02a"
+			deathsound	"civilians/civfemdeath01a"
+			deathsound	"civilians/civfemdeath02a"
+		}
+		male {
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt03"
+			hurtsound	"civilians/malehurt04"
+			hurtsound	"civilians/civmalehurt01a"
+			deathsound	"civilians/maledeath01"
+			deathsound	"civilians/maledeath02"
+			deathsound	"civilians/maledeath03"
+			deathsound	"civilians/civmaledeath01a"
+			deathsound	"civilians/civmaledeath02a"
+		}
+	}
+	templates (
+		civilian
+	)
+}
+
+team asia
+{
+	size			1
+	hit_particle	blood
+	weapons			false
+	armour			false
+	team			"civilian"
+	bodytype		humanoid_standard
+	names			dummy_names
+
+	models {
+		female("civilians/female" "body03" "head03a" 0 0) //body:green skirt, blue top, head: Asian
+		female("civilians/female" "body03" "head03a" 1 1) //body:black skirt, white top, head: Asian
+		male("civilians/male" "sheik01" "sci_head01" 0 0) //body:same as scientist's, just in white, head: Asian, disguised
+	}
+
+	actorsounds {
+		female {
+			hurtsound	"civilians/civfemscream01a"
+			hurtsound	"civilians/civfemscream02a"
+			deathsound	"civilians/civfemdeath01a"
+			deathsound	"civilians/civfemdeath02a"
+		}
+		male {
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt03"
+			hurtsound	"civilians/malehurt04"
+			hurtsound	"civilians/civmalehurt01a"
+			deathsound	"civilians/maledeath01"
+			deathsound	"civilians/maledeath02"
+			deathsound	"civilians/maledeath03"
+			deathsound	"civilians/civmaledeath01a"
+			deathsound	"civilians/civmaledeath02a"
+		}
+	}
+	templates (
+		civilian
+	)
+}
+
+team europe
+{
+	size			1
+	hit_particle	blood
+	weapons			false
+	armour			false
+	team			"civilian"
+	bodytype		humanoid_standard
+	names			dummy_names
+
+	models {
+		female("civilians/female" "body01" "head01a" 0 0) //body:green skirt, blue top, head: brown hair, ponytail
+		female("civilians/female" "body01" "head01a" 1 1) //body::black skirt, white top, head: brown hair, ponytail
+		female("civilians/female" "body01" "head01a" 2 2) //body:green skirt, green top, head: brown hair, ponytail
+		female("civilians/female" "body01" "head01a" 3 3) //body::green skirt, flower top, Hawaii-Look head: brown hair, ponytail
+		female("civilians/female" "body02" "head01a" 0 0) //body:grey trousers, blue top, head: brown hair, ponytail
+		female("civilians/female" "body02" "head01a" 1 1) //body::blue trousers, green top, head: brown hair, ponytail
+		female("civilians/female" "body01" "head01b" 0 0) //body:green skirt, blue top, head: blond hair, ponytail
+		female("civilians/female" "body01" "head01b" 1 1) //body::black skirt, white top, head: blond hair, ponytail
+		female("civilians/female" "body01" "head01b" 2 2) //body:green skirt, green top, head: blond hair, ponytail
+		female("civilians/female" "body01" "head01b" 3 3) //body::green skirt, flower top, Hawaii-Look head: blond hair, ponytail
+		female("civilians/female" "body02" "head01b" 0 0) //body:grey trousers, blue top, head: blond hair, ponytail
+		female("civilians/female" "body02" "head01b" 1 1) //body::blue trousers, green top, head: blond hair, ponytail
+		female("civilians/female" "body01" "head02a" 0 0) //body:green skirt, blue top, head: long blond hair
+		female("civilians/female" "body01" "head02a" 1 1) //body::black skirt, white top, head: long blond hair
+		female("civilians/female" "body01" "head02a" 2 2) //body:green skirt, green top, head: long blond hair
+		female("civilians/female" "body01" "head02a" 3 3) //body::green skirt, flower top, Hawaii-Look head: long blond hair
+		female("civilians/female" "body02" "head02a" 0 0) //body:grey trousers, blue top, head: long blond hair
+		female("civilians/female" "body02" "head02a" 1 1) //body::blue trousers, green top, head: long blond hair
+		female("civilians/female" "body01" "head02b" 0 0) //body:green skirt, blue top, head: long brown hair
+		female("civilians/female" "body01" "head02b" 1 1) //body::black skirt, white top, head: long brown hair
+		female("civilians/female" "body01" "head02b" 2 2) //body:green skirt, green top, head: long brown hair
+		female("civilians/female" "body01" "head02b" 3 3) //body::green skirt, flower top, Hawaii-Look head: long brown hair
+		female("civilians/female" "body02" "head02b" 0 0) //body:grey trousers, blue top, head: long brown hair
+		female("civilians/female" "body02" "head02b" 1 1) //body::blue trousers, green top, head: long brown hair
+		female("civilians/female" "body03" "head03a" 0 0) //body:blue dress, head: Asian
+		female("civilians/female" "body03" "head03a" 1 1) //body::green dress, head: Asian
+		female("civilians/female" "body03" "head04a" 0 0) //body:blue dress, head: African, black hair, ponytail
+		female("civilians/female" "body03" "head04a" 1 1) //body::green dress, head: African, black hair, ponytail
+		female("civilians/female" "body03" "head04b" 0 0) //body:blue dress, head: African, red disguise, black hair, ponytail
+		female("civilians/female" "body03" "head04b" 1 1) //body::green dress, head: African, red disguise, black hair, ponytail
+		female("civilians/female" "body03" "head04c" 0 0) //body:blue dress, head: African, blue disguise, black hair
+		female("civilians/female" "body03" "head04c" 1 1) //body::green dress, head: African, blue disguise, black hair
+		female("civilians/female" "body05" "head05a" 0 0) //body:blue jeans, red top, head: brown hair, simple cut
+		male("civilians/male" "body01" "head01" 0 0) //body:short blue trousers, red top, fat, head: brown hair, beard, blue hat
+		male("civilians/male" "body01" "head01" 1 1) //body::short cyan trousers, blue top, fat, head: brown hair, beard, blue hat
+		male("civilians/male" "body01" "head01" 2 2) //body:short grey trousers, white shirt, fat, head: brown hair, beard, blue hat
+		male("civilians/male" "body02" "head02" 0 0) //body:arabic looking, head: beard, white hat
+		male("civilians/male" "sheik01" "sci_head01" 0 0) //body:same as scientist's, just in white, head: Asian, disguised
+		male("civilians/male" "sheik01" "sci_head02a" 0 0) //body:same as scientist's, just in white, head: skinhead, beard
+		male("civilians/male" "sheik01" "sci_head02b" 0 0) //body:same as scientist's, just in white, head: skinhead, beard, glasses
+		male("civilians/male" "sheik01" "sci_head03a" 0 0) //body:same as scientist's, just in white, head: white hat
+		male("civilians/male" "sheik01" "sci_head03b" 0 0) //body:same as scientist's, just in white, head: white hat, glasses
+		male("civilians/male" "sheik01" "head03" 0 0) //body:same as scientist's, just in white, head: black hat
+		male("civilians/male" "sheik01" "head04" 0 0) //body:same as scientist's, just in white, head: afro, short black hair
+		// "civilians/male" "boy01" "boy_head01" 0 0
+	}
+
+	actorsounds {
+		female {
+			hurtsound	"civilians/civfemscream01a"
+			hurtsound	"civilians/civfemscream02a"
+			deathsound	"civilians/civfemdeath01a"
+			deathsound	"civilians/civfemdeath02a"
+		}
+		male {
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt03"
+			hurtsound	"civilians/malehurt04"
+			hurtsound	"civilians/civmalehurt01a"
+			deathsound	"civilians/maledeath01"
+			deathsound	"civilians/maledeath02"
+			deathsound	"civilians/maledeath03"
+			deathsound	"civilians/civmaledeath01a"
+			deathsound	"civilians/civmaledeath02a"
+		}
+	}
+	templates (
+		civilian
+	)
+}
+
+team latin
+{
+	size			1
+	hit_particle	blood
+	weapons			false
+	armour			false
+	team			"civilian"
+	bodytype		humanoid_standard
+	names			dummy_names
+
+	models {
+		female("civilians/female" "body03" "head04a" 0 0)
+		female("civilians/female" "body03" "head04a" 1 1)
+		female("civilians/female" "body03" "head04b" 0 0)
+		female("civilians/female" "body03" "head04c" 1 1)
+		male("civilians/male" "body02" "head02" 0 0)
+		male("civilians/male" "sheik01" "head04" 0 0) //body:same as scientist's, just in white, head: afro, short black hair
+	}
+
+	actorsounds {
+		female {
+			hurtsound	"civilians/civfemscream01a"
+			hurtsound	"civilians/civfemscream02a"
+			deathsound	"civilians/civfemdeath01a"
+			deathsound	"civilians/civfemdeath02a"
+		}
+		male {
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt03"
+			hurtsound	"civilians/malehurt04"
+			hurtsound	"civilians/civmalehurt01a"
+			deathsound	"civilians/maledeath01"
+			deathsound	"civilians/maledeath02"
+			deathsound	"civilians/maledeath03"
+			deathsound	"civilians/civmaledeath01a"
+			deathsound	"civilians/civmaledeath02a"
+		}
+	}
+	templates (
+		civilian
+	)
+}
+
+team middle
+{
+	size			1
+	hit_particle	blood
+	weapons			false
+	armour			false
+	team			"civilian"
+	bodytype		humanoid_standard
+	names			dummy_names
+
+	models {
+		female("civilians/female" "body03" "head04b" 0 0) //body:blue dress, head: African, red disguise, black hair, ponytail
+		female("civilians/female" "body03" "head04b" 1 1) //body::green dress, head: African, red disguise, black hair, ponytail
+		female("civilians/female" "body03" "head04c" 0 0) //body:blue dress, head: African, blue disguise, black hair
+		female("civilians/female" "body03" "head04c" 1 1) //body::green dress, head: African, blue disguise, black hair
+		male("civilians/male" "body02" "head02" 0 0) //body:arabic looking, head: beard, white hat
+		male("civilians/male" "sheik01" "head04" 0 0) //body:same as scientist's, just in white, head: afro, short black hair
+	}
+
+	actorsounds {
+		female {
+			hurtsound	"civilians/civfemscream01a"
+			hurtsound	"civilians/civfemscream02a"
+			deathsound	"civilians/civfemdeath01a"
+			deathsound	"civilians/civfemdeath02a"
+		}
+		male {
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt03"
+			hurtsound	"civilians/malehurt04"
+			hurtsound	"civilians/civmalehurt01a"
+			deathsound	"civilians/maledeath01"
+			deathsound	"civilians/maledeath02"
+			deathsound	"civilians/maledeath03"
+			deathsound	"civilians/civmaledeath01a"
+			deathsound	"civilians/civmaledeath02a"
+		}
+	}
+	templates (
+		civilian
+	)
+}
+
+team states
+{
+	size			1
+	hit_particle	blood
+	weapons			false
+	armour			false
+	team			"civilian"
+	bodytype		humanoid_standard
+	names			dummy_names
+
+	models {
+		female("civilians/female" "body01" "head01a" 0 0) //body:green skirt, blue top, head: brown hair, ponytail
+		female("civilians/female" "body01" "head01a" 1 1) //body::black skirt, white top, head: brown hair, ponytail
+		female("civilians/female" "body01" "head01a" 2 2) //body:green skirt, green top, head: brown hair, ponytail
+		female("civilians/female" "body01" "head01a" 3 3) //body::green skirt, flower top, Hawaii-Look head: brown hair, ponytail
+		female("civilians/female" "body02" "head01a" 0 0) //body:grey trousers, blue top, head: brown hair, ponytail
+		female("civilians/female" "body02" "head01a" 1 1) //body::blue trousers, green top, head: brown hair, ponytail
+		female("civilians/female" "body01" "head01b" 0 0) //body:green skirt, blue top, head: blond hair, ponytail
+		female("civilians/female" "body01" "head01b" 1 1) //body::black skirt, white top, head: blond hair, ponytail
+		female("civilians/female" "body01" "head01b" 2 2) //body:green skirt, green top, head: blond hair, ponytail
+		female("civilians/female" "body01" "head01b" 3 3) //body::green skirt, flower top, Hawaii-Look head: blond hair, ponytail
+		female("civilians/female" "body02" "head01b" 0 0) //body:grey trousers, blue top, head: blond hair, ponytail
+		female("civilians/female" "body02" "head01b" 1 1) //body::blue trousers, green top, head: blond hair, ponytail
+		female("civilians/female" "body01" "head02a" 0 0) //body:green skirt, blue top, head: long blond hair
+		female("civilians/female" "body01" "head02a" 1 1) //body::black skirt, white top, head: long blond hair
+		female("civilians/female" "body01" "head02a" 2 2) //body:green skirt, green top, head: long blond hair
+		female("civilians/female" "body01" "head02a" 3 3) //body:green skirt, flower top, Hawaii-Look head: long blond hair
+		female("civilians/female" "body02" "head02a" 0 0) //body:grey trousers, blue top, head: long blond hair
+		female("civilians/female" "body02" "head02a" 1 1) //body::blue trousers, green top, head: long blond hair
+		female("civilians/female" "body01" "head02b" 0 0) //body:green skirt, blue top, head: long brown hair
+		female("civilians/female" "body01" "head02b" 1 1) //body::black skirt, white top, head: long brown hair
+		female("civilians/female" "body01" "head02b" 2 2) //body:green skirt, green top, head: long brown hair
+		female("civilians/female" "body01" "head02b" 3 3) //body:green skirt, flower top, Hawaii-Look head: long brown hair
+		female("civilians/female" "body02" "head02b" 0 0) //body:grey trousers, blue top, head: long brown hair
+		female("civilians/female" "body02" "head02b" 1 1) //body::blue trousers, green top, head: long brown hair
+		female("civilians/female" "body03" "head03a" 0 0) //body:blue dress, head: Asian
+		female("civilians/female" "body03" "head03a" 1 1) //body::green dress, head: Asian
+		female("civilians/female" "body03" "head04a" 0 0) //body:blue dress, head: African, black hair, ponytail
+		female("civilians/female" "body03" "head04a" 1 1) //body::green dress, head: African, black hair, ponytail
+		female("civilians/female" "body03" "head04b" 0 0) //body:blue dress, head: African, red disguise, black hair, ponytail
+		female("civilians/female" "body03" "head04b" 1 1) //body::green dress, head: African, red disguise, black hair, ponytail
+		female("civilians/female" "body03" "head04c" 0 0) //body:blue dress, head: African, blue disguise, black hair
+		female("civilians/female" "body03" "head04c" 1 1) //body::green dress, head: African, blue disguise, black hair
+		female("civilians/female" "body05" "head05a" 0 0) //body:blue jeans, red top, head: brown hair, simple cut
+		male("civilians/male" "body01" "head01" 0 0) //body:short blue trousers, red top, fat, head: brown hair, beard, blue hat
+		male("civilians/male" "body01" "head01" 1 1) //body::short cyan trousers, blue top, fat, head: brown hair, beard, blue hat
+		male("civilians/male" "body01" "head01" 2 2) //body:short grey trousers, white shirt, fat, head: brown hair, beard, blue hat
+		male("civilians/male" "body02" "head02" 0 0) //body:arabic looking, head: beard, white hat
+		male("civilians/male" "sheik01" "sci_head01" 0 0) //body:same as scientist's, just in white, head: Asian, disguised
+		male("civilians/male" "sheik01" "sci_head02a" 0 0) //body:same as scientist's, just in white, head: skinhead, beard
+		male("civilians/male" "sheik01" "sci_head02b" 0 0) //body:same as scientist's, just in white, head: skinhead, beard, glasses
+		male("civilians/male" "sheik01" "sci_head03a" 0 0) //body:same as scientist's, just in white, head: white hat
+		male("civilians/male" "sheik01" "sci_head03b" 0 0) //body:same as scientist's, just in white, head: white hat, glasses
+		male("civilians/male" "sheik01" "head03" 0 0) //body:same as scientist's, just in white, head: black hat
+		male("civilians/male" "sheik01" "head04" 0 0) //body:same as scientist's, just in white, head: afro, short black hair
+		// "civilians/male" "boy01" "boy_head01" 0 0
+	}
+
+	actorsounds {
+		female {
+			hurtsound	"civilians/civfemscream01a"
+			hurtsound	"civilians/civfemscream02a"
+			deathsound	"civilians/civfemdeath01a"
+			deathsound	"civilians/civfemdeath02a"
+		}
+		male {
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt03"
+			hurtsound	"civilians/malehurt04"
+			hurtsound	"civilians/civmalehurt01a"
+			deathsound	"civilians/maledeath01"
+			deathsound	"civilians/maledeath02"
+			deathsound	"civilians/maledeath03"
+			deathsound	"civilians/civmaledeath01a"
+			deathsound	"civilians/civmaledeath02a"
+		}
+	}
+	templates (
+		civilian
+	)
+}
+
+team oceania
+{
+	size			1
+	hit_particle	blood
+	weapons			false
+	armour			false
+	team			"civilian"
+	bodytype		humanoid_standard
+	names			dummy_names
+
+	models {
+		female("civilians/female" "body03" "head04a" 0 0)
+		female("civilians/female" "body03" "head04a" 1 1)
+		female("civilians/female" "body03" "head04b" 0 0)
+		female("civilians/female" "body03" "head04c" 1 1)
+		male("civilians/male" "body02" "head02" 0 0)
+	}
+
+	actorsounds {
+		female {
+			hurtsound	"civilians/civfemscream01a"
+			hurtsound	"civilians/civfemscream02a"
+			deathsound	"civilians/civfemdeath01a"
+			deathsound	"civilians/civfemdeath02a"
+		}
+		male {
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt03"
+			hurtsound	"civilians/malehurt04"
+			hurtsound	"civilians/civmalehurt01a"
+			deathsound	"civilians/maledeath01"
+			deathsound	"civilians/maledeath02"
+			deathsound	"civilians/maledeath03"
+			deathsound	"civilians/civmaledeath01a"
+			deathsound	"civilians/civmaledeath02a"
+		}
+	}
+	templates (
+		civilian
+	)
+}
+
+team russia
+{
+	size			1
+	hit_particle	blood
+	weapons			false
+	armour			false
+	team			"civilian"
+	bodytype		humanoid_standard
+	names			dummy_names
+
+	models {
+		female("civilians/female" "body01" "head01a" 0 0) //body:green skirt, blue top, head: brown hair, ponytail
+		female("civilians/female" "body01" "head01a" 1 1) //body::black skirt, white top, head: brown hair, ponytail
+		female("civilians/female" "body01" "head01a" 2 2) //body:green skirt, green top, head: brown hair, ponytail
+		female("civilians/female" "body02" "head01a" 0 0) //body:grey trousers, blue top, head: brown hair, ponytail
+		female("civilians/female" "body02" "head01a" 1 1) //body::blue trousers, green top, head: brown hair, ponytail
+		female("civilians/female" "body01" "head01b" 0 0) //body:green skirt, blue top, head: blond hair, ponytail
+		female("civilians/female" "body01" "head01b" 1 1) //body::black skirt, white top, head: blond hair, ponytail
+		female("civilians/female" "body01" "head01b" 2 2) //body:green skirt, green top, head: blond hair, ponytail
+		female("civilians/female" "body02" "head01b" 0 0) //body:grey trousers, blue top, head: blond hair, ponytail
+		female("civilians/female" "body02" "head01b" 1 1) //body::blue trousers, green top, head: blond hair, ponytail
+		female("civilians/female" "body01" "head02a" 0 0) //body:green skirt, blue top, head: long blond hair
+		female("civilians/female" "body01" "head02a" 1 1) //body::black skirt, white top, head: long blond hair
+		female("civilians/female" "body01" "head02a" 2 2) //body:green skirt, green top, head: long blond hair
+		female("civilians/female" "body02" "head02a" 0 0) //body:grey trousers, blue top, head: long blond hair
+		female("civilians/female" "body02" "head02a" 1 1) //body::blue trousers, green top, head: long blond hair
+		female("civilians/female" "body01" "head02b" 0 0) //body:green skirt, blue top, head: long brown hair
+		female("civilians/female" "body01" "head02b" 1 1) //body::black skirt, white top, head: long brown hair
+		female("civilians/female" "body01" "head02b" 2 2) //body:green skirt, green top, head: long brown hair
+		female("civilians/female" "body02" "head02b" 0 0) //body:grey trousers, blue top, head: long brown hair
+		female("civilians/female" "body02" "head02b" 1 1) //body::blue trousers, green top, head: long brown hair
+		female("civilians/female" "body05" "head05a" 0 0) //body:blue jeans, red top, head: brown hair, simple cut
+		male("civilians/male" "body01" "head01" 0 0) //body:short blue trousers, red top, fat, head: brown hair, beard, blue hat
+		male("civilians/male" "body01" "head01" 1 1) //body::short cyan trousers, blue top, fat, head: brown hair, beard, blue hat
+		male("civilians/male" "body01" "head01" 2 2) //body:short grey trousers, white shirt, fat, head: brown hair, beard, blue hat
+		male("civilians/male" "body02" "head02" 0 0) //body:arabic looking, head: beard, white hat
+		male("civilians/male" "sheik01" "sci_head02a" 0 0) //body:same as scientist's, just in white, head: skinhead, beard
+		male("civilians/male" "sheik01" "sci_head02b" 0 0) //body:same as scientist's, just in white, head: skinhead, beard, glasses
+		male("civilians/male" "sheik01" "sci_head03a" 0 0) //body:same as scientist's, just in white, head: white hat
+		male("civilians/male" "sheik01" "sci_head03b" 0 0) //body:same as scientist's, just in white, head: white hat, glasses
+		male("civilians/male" "sheik01" "head03" 0 0) //body:same as scientist's, just in white, head: black hat
+		// "civilians/male" "boy01" "boy_head01" 0 0
+	}
+
+	actorsounds {
+		female {
+			hurtsound	"civilians/civfemscream01a"
+			hurtsound	"civilians/civfemscream02a"
+			deathsound	"civilians/civfemdeath01a"
+			deathsound	"civilians/civfemdeath02a"
+		}
+		male {
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt03"
+			hurtsound	"civilians/malehurt04"
+			hurtsound	"civilians/civmalehurt01a"
+			deathsound	"civilians/maledeath01"
+			deathsound	"civilians/maledeath02"
+			deathsound	"civilians/maledeath03"
+			deathsound	"civilians/civmaledeath01a"
+			deathsound	"civilians/civmaledeath02a"
+		}
+	}
+	templates (
+		civilian
+	)
+}
+
+//========================================================================
+// OTHER NONE-NATION CIVILIANS
+//========================================================================
+
+team armysoldier
+{
+	size			1
+	hit_particle	blood
+	weapons			false
+	armour			false
+	team			"civilian"
+	bodytype		humanoid_standard
+	names			dummy_names
+
+	models {
+		male("civilians/male" "soldier01" "soldier01_head" 0 0)
+		male("civilians/male" "soldier01" "soldier01_head02" 0 0)
+	}
+
+	actorsounds {
+		male {
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt03"
+			hurtsound	"civilians/malehurt04"
+			deathsound	"civilians/maledeath01"
+			deathsound	"civilians/maledeath02"
+			deathsound	"civilians/maledeath03"
+		}
+	}
+	templates (
+		soldier
+	)
+}
+
+team miner
+{
+	size			1
+	hit_particle	blood
+	weapons			false
+	armour			false
+	team			"civilian"
+	bodytype		humanoid_standard
+	names			dummy_names
+
+	models {
+		male("civilians/male" "worker01" "worker01_head" 0 0)
+		male("civilians/male" "worker01" "worker01_head" 1 1)
+		male("civilians/male" "worker01" "worker02_head" 0 0)
+		male("civilians/male" "worker01" "worker02_head" 1 1)
+	}
+
+	actorsounds {
+		male {
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt03"
+			hurtsound	"civilians/malehurt04"
+			deathsound	"civilians/maledeath01"
+			deathsound	"civilians/maledeath02"
+			deathsound	"civilians/maledeath03"
+		}
+	}
+	templates (
+		civilian
+	)
+}
+
+team scientist
+{
+	size			1
+	hit_particle	blood
+	weapons			false
+	armour			false
+	team			"civilian"
+	bodytype		humanoid_standard
+	names			dummy_names
+
+	models {
+		female("civilians/female" "scientist01" "head05a" 0 0)
+		female("civilians/female" "scientist01" "head04a2" 0 0)
+		male("civilians/male" "scientist01" "sci_head01" 0 0)
+		male("civilians/male" "scientist01" "sci_head02a" 0 0)
+		male("civilians/male" "scientist01" "sci_head02b" 0 0)
+		male("civilians/male" "scientist01" "sci_head03a" 0 0)
+		male("civilians/male" "scientist01" "sci_head03b" 0 0)
+	}
+
+	actorsounds {
+		female {
+			hurtsound	"civilians/civfemscream01a"
+			hurtsound	"civilians/civfemscream02a"
+			deathsound	"civilians/civfemdeath01a"
+			deathsound	"civilians/civfemdeath02a"
+		}
+		male {
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt03"
+			hurtsound	"civilians/malehurt04"
+			hurtsound	"civilians/civmalehurt01a"
+			deathsound	"civilians/maledeath01"
+			deathsound	"civilians/maledeath02"
+			deathsound	"civilians/maledeath03"
+			deathsound	"civilians/civmaledeath01a"
+			deathsound	"civilians/civmaledeath02a"
+		}
+	}
+	templates (
+		civilian
+	)
+}
+
+team worker
+{
+	size			1
+	hit_particle	blood
+	weapons			false
+	armour			false
+	team			"civilian"
+	bodytype		humanoid_standard
+	names			dummy_names
+
+	models {
+		male("civilians/male" "worker01" "worker01_head" 0 0)
+		male("civilians/male" "worker01" "worker01_head" 1 1)
+		male("civilians/male" "worker01" "worker02_head" 0 0)
+		male("civilians/male" "worker01" "worker02_head" 1 1)
+	}
+
+	actorsounds {
+		male {
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt02"
+			hurtsound	"civilians/malehurt03"
+			hurtsound	"civilians/malehurt04"
+			deathsound	"civilians/maledeath01"
+			deathsound	"civilians/maledeath02"
+			deathsound	"civilians/maledeath03"
+		}
+	}
+	templates (
+		civilian
+	)
+}

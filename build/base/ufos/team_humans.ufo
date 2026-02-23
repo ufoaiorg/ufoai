@@ -1,0 +1,453 @@
+//========================================================================
+// HUMANS - List of MODELS and SOUNDS
+//========================================================================
+// Description:
+//
+// team <team-id> {}
+//	Defines a team.
+//	size
+//		The field size on battlefield
+//	hit_particle
+//		The particle that is shown if an actor from the given team was hit
+//	name
+//		The name of the team (translatable)
+//	team
+//		team type (alien, civilian, phalanx)
+//  robot
+//		Boolean - whether the teamdef is for a robot or not (e.g. ugv or bloodspider)
+//	armour
+//		Boolean - team can carry armour
+//	weapons
+//		Boolean - team can carry weapons
+//	footstepsound
+//		in case of using a certain sound when moving
+//		<path/to/soundfile/soundfile/relative/to/base/sounds>
+//	models {}
+//			A List of model-paths with the following syntax:
+//			<path/to/model/relative/to/base/models> <model_file_name> <model_head_filename> <skinnumber>
+//		Uses sub-lists as follows:
+//			neutral {}
+//			female {}
+//			male {}
+//	actorsounds {}
+//		A list of soundfiles for the various sound-events. Syntax
+//		<sound-event> <path/to/soundfile/soundfile/relative/to/base/sounds>
+//		Uses sub-lists as follows:
+//			neutral {}
+//			female {}
+//			male {}
+//		Possible sound-events are:
+//			hurtsound
+//			deathsound
+//	resistance {}
+//			Defines the dmgtypes from the weapon definitions and the resistance against such a damage
+//	templates {}
+//			List of character templates for this team (see templates.ufo)
+//========================================================================
+
+//========================================================================
+// HUMANS
+//========================================================================
+
+team phalanx
+{
+	name	"_Phalanx"
+	size 1
+	hit_particle blood
+	team	"phalanx"
+	bodytype		humanoid_standard
+	names	human_names
+
+	models {
+		female("soldiers/female" "body" "head01" 0 0)
+		female("soldiers/female" "body" "head02" 0 0)
+		female("soldiers/female" "body" "head02" 0 1)
+		female("soldiers/female" "body" "head03" 0 0)
+		female("soldiers/female" "body" "head04" 0 0)
+		female("soldiers/female" "body" "head05" 0 0)
+		female("soldiers/female" "body" "head06" 0 0)
+		female("soldiers/female" "body" "head07" 0 0)
+		female("soldiers/female" "body" "head08" 0 0)
+		female("soldiers/female" "body" "head09" 0 0)
+		female("soldiers/female" "body" "head10" 0 0)
+		female("soldiers/female" "body" "head11" 0 0)
+		female("soldiers/female" "body" "head12" 0 0)
+		female("soldiers/female" "body" "head13" 0 0)
+		female("soldiers/female" "body" "head14" 0 0)
+		female("soldiers/female" "body" "head15" 0 0)
+		female("soldiers/female" "body" "head16" 0 0)
+		female("soldiers/female" "body" "head17" 0 0)
+		male("soldiers/male" "body" "head01" 0 0)
+		male("soldiers/male" "body" "head01" 0 1)
+		male("soldiers/male" "body" "head01" 0 2)
+		male("soldiers/male" "body" "head01" 0 3)
+		male("soldiers/male" "body" "head02" 0 0)
+		male("soldiers/male" "body" "head03" 0 0)
+		male("soldiers/male" "body" "head04" 0 0)
+		male("soldiers/male" "body" "head05" 0 0)
+		male("soldiers/male" "body" "head06" 0 0)
+		male("soldiers/male" "body" "head06" 0 1)
+		male("soldiers/male" "body" "head07" 0 0)
+		male("soldiers/male" "body" "head07" 0 1)
+		male("soldiers/male" "body" "head08" 0 0)
+		male("soldiers/male" "body" "head08" 0 1)
+		male("soldiers/male" "body" "head09" 0 0)
+		male("soldiers/male" "body" "head09" 0 1)
+		male("soldiers/male" "body" "head10" 0 0)
+		male("soldiers/male" "body" "head10" 0 1)
+		male("soldiers/male" "body" "head11" 0 0)
+		male("soldiers/male" "body" "head11" 0 1)
+		male("soldiers/male" "body" "head12" 0 0)
+		male("soldiers/male" "body" "head12" 0 1)
+		male("soldiers/male" "body" "head13" 0 0)
+		male("soldiers/male" "body" "head13" 0 1)
+		male("soldiers/male" "body" "head14" 0 0)
+		male("soldiers/male" "body" "head14" 0 1)
+		male("soldiers/male" "body" "head15" 0 0)
+		male("soldiers/male" "body" "head15" 0 1)
+		male("soldiers/male" "body" "head16" 0 0)
+		male("soldiers/male" "body" "head16" 0 1)
+		male("soldiers/male" "body" "head17" 0 0)
+		male("soldiers/male" "body" "head17" 0 1)
+		male("soldiers/male" "body" "head18" 0 0)
+		male("soldiers/male" "body" "head18" 0 1)
+		male("soldiers/male" "body" "head19" 0 0)
+		male("soldiers/male" "body" "head19" 0 1)
+		male("soldiers/male" "body" "head20" 0 0)
+		male("soldiers/male" "body" "head20" 0 1)
+	}
+
+	actorsounds {
+		female {
+			hurtsound	"soldiers/femalehurt01"
+			hurtsound	"soldiers/femalehurt02"
+			hurtsound	"soldiers/femalehurt03"
+			hurtsound	"soldiers/femalehurt04"
+			deathsound	"soldiers/femaledeath01"
+			deathsound	"soldiers/femaledeath02"
+			deathsound	"soldiers/femaledeath03"
+			deathsound	"soldiers/femaledeath04"
+			deathsound	"soldiers/femaledeath05"
+			deathsound	"soldiers/femaledeath06"
+		}
+		male {
+			hurtsound 	"soldiers/malehurt01"
+			hurtsound 	"soldiers/malehurt02"
+			hurtsound 	"soldiers/malehurt03"
+			hurtsound 	"soldiers/malehurt04"
+			hurtsound 	"soldiers/malehurt05"
+			hurtsound 	"soldiers/malehurt06"
+			hurtsound 	"soldiers/malehurt07"
+			hurtsound 	"soldiers/malehurt08"
+			hurtsound 	"soldiers/malehurt09"
+			hurtsound 	"soldiers/malehurt10"
+			hurtsound 	"soldiers/malehurt11"
+			hurtsound 	"soldiers/malehurt12"
+			hurtsound 	"soldiers/malehurt13"
+			deathsound	"soldiers/maledeath01"
+			deathsound	"soldiers/maledeath02"
+			deathsound	"soldiers/maledeath03"
+			deathsound	"soldiers/maledeath04"
+			deathsound	"soldiers/maledeath05"
+			deathsound	"soldiers/maledeath06"
+			deathsound	"soldiers/maledeath07"
+		}
+	}
+	templates (
+		soldier
+		soldier_mp // For multiplayer characters ONLY!
+	)
+}
+
+// ======================
+// SCIENTISTS
+// ======================
+
+team phalanx_scientist
+{
+	name	"_Scientist"
+	size 1
+	hit_particle blood
+	weapons	false
+	armour	false
+	team	"civilian"
+	bodytype		humanoid_standard
+	names	human_names
+
+	models {
+		female("civilians/female" "scientist01" "head05a" 0 0)
+		female("civilians/female" "scientist01" "head04a2" 0 0)
+		male("civilians/male" "scientist01" "sci_head01" 0 0)
+		male("civilians/male" "scientist01" "sci_head02a" 0 0)
+		male("civilians/male" "scientist01" "sci_head02b" 0 0)
+		male("civilians/male" "scientist01" "sci_head03a" 0 0)
+		male("civilians/male" "scientist01" "sci_head03b" 0 0)
+	}
+
+	actorsounds {
+		female {
+			hurtsound	"soldiers/femalehurt01"
+			hurtsound	"soldiers/femalehurt02"
+			hurtsound	"soldiers/femalehurt03"
+			hurtsound	"soldiers/femalehurt04"
+			deathsound	"soldiers/femaledeath01"
+			deathsound	"soldiers/femaledeath02"
+			deathsound	"soldiers/femaledeath03"
+			deathsound	"soldiers/femaledeath04"
+			deathsound	"soldiers/femaledeath05"
+			deathsound	"soldiers/femaledeath06"
+		}
+		male {
+			hurtsound 	"soldiers/malehurt01"
+			hurtsound 	"soldiers/malehurt02"
+			hurtsound 	"soldiers/malehurt03"
+			hurtsound 	"soldiers/malehurt04"
+			hurtsound 	"soldiers/malehurt05"
+			hurtsound 	"soldiers/malehurt06"
+			hurtsound 	"soldiers/malehurt07"
+			hurtsound 	"soldiers/malehurt08"
+			hurtsound 	"soldiers/malehurt09"
+			hurtsound 	"soldiers/malehurt10"
+			hurtsound 	"soldiers/malehurt11"
+			hurtsound 	"soldiers/malehurt12"
+			hurtsound 	"soldiers/malehurt13"
+			deathsound	"soldiers/maledeath01"
+			deathsound	"soldiers/maledeath02"
+			deathsound	"soldiers/maledeath03"
+			deathsound	"soldiers/maledeath04"
+			deathsound	"soldiers/maledeath05"
+			deathsound	"soldiers/maledeath06"
+			deathsound	"soldiers/maledeath07"
+		}
+	}
+	templates (
+		civilian
+	)
+}
+
+// ======================
+// PILOTS
+// ======================
+
+team phalanx_pilot
+{
+	size 1
+	hit_particle blood
+	name	"_Pilot"
+	armour	false
+	bodytype		humanoid_standard
+	names	human_names
+
+	models {
+		male("pilots/male" "body" "head01" 0 0)
+		//female("pilots/female" "body" "head01" 0 0) //TODO: Animate the female pilot model)
+	}
+
+	actorsounds {
+		female {
+			hurtsound	"soldiers/femalehurt01"
+			hurtsound	"soldiers/femalehurt02"
+			hurtsound	"soldiers/femalehurt03"
+			hurtsound	"soldiers/femalehurt04"
+			deathsound	"soldiers/femaledeath01"
+			deathsound	"soldiers/femaledeath02"
+			deathsound	"soldiers/femaledeath03"
+			deathsound	"soldiers/femaledeath04"
+			deathsound	"soldiers/femaledeath05"
+			deathsound	"soldiers/femaledeath06"
+		}
+		male {
+			hurtsound 	"soldiers/malehurt01"
+			hurtsound 	"soldiers/malehurt02"
+			hurtsound 	"soldiers/malehurt03"
+			hurtsound 	"soldiers/malehurt04"
+			hurtsound 	"soldiers/malehurt05"
+			hurtsound 	"soldiers/malehurt06"
+			hurtsound 	"soldiers/malehurt07"
+			hurtsound 	"soldiers/malehurt08"
+			hurtsound 	"soldiers/malehurt09"
+			hurtsound 	"soldiers/malehurt10"
+			hurtsound 	"soldiers/malehurt11"
+			hurtsound 	"soldiers/malehurt12"
+			hurtsound 	"soldiers/malehurt13"
+			deathsound	"soldiers/maledeath01"
+			deathsound	"soldiers/maledeath02"
+			deathsound	"soldiers/maledeath03"
+			deathsound	"soldiers/maledeath04"
+			deathsound	"soldiers/maledeath05"
+			deathsound	"soldiers/maledeath06"
+			deathsound	"soldiers/maledeath07"
+		}
+	}
+	templates (
+		pilot
+	)
+}
+
+// ======================
+// WORKERS
+// ======================
+
+team phalanx_worker
+{
+	size 1
+	hit_particle blood
+	name	"_Worker"
+	weapons	false
+	armour	false
+	team	"civilian"
+	bodytype		humanoid_standard
+	names	human_names
+
+	models {
+		male("civilians/male" "worker01" "worker01_head" 0 0)
+		male("civilians/male" "worker01" "worker01_head" 1 1)
+		male("civilians/male" "worker01" "worker02_head" 0 0)
+		male("civilians/male" "worker01" "worker02_head" 1 1)
+	}
+
+	actorsounds {
+		male {
+			hurtsound 	"soldiers/malehurt01"
+			hurtsound 	"soldiers/malehurt02"
+			hurtsound 	"soldiers/malehurt03"
+			hurtsound 	"soldiers/malehurt04"
+			hurtsound 	"soldiers/malehurt05"
+			hurtsound 	"soldiers/malehurt06"
+			hurtsound 	"soldiers/malehurt07"
+			hurtsound 	"soldiers/malehurt08"
+			hurtsound 	"soldiers/malehurt09"
+			hurtsound 	"soldiers/malehurt10"
+			hurtsound 	"soldiers/malehurt11"
+			hurtsound 	"soldiers/malehurt12"
+			hurtsound 	"soldiers/malehurt13"
+			deathsound	"soldiers/maledeath01"
+			deathsound	"soldiers/maledeath02"
+			deathsound	"soldiers/maledeath03"
+			deathsound	"soldiers/maledeath04"
+			deathsound	"soldiers/maledeath05"
+			deathsound	"soldiers/maledeath06"
+			deathsound	"soldiers/maledeath07"
+		}
+	}
+	templates (
+		civilian
+	)
+}
+
+// ======================
+// UGVs
+// ======================
+
+team phalanx_ugv_phoenix
+{
+	name	"_Phoenix UGV"
+	size	2
+	team	"phalanx"
+	robot	true
+	//hit_particle none
+	// we can't assign any extra armour
+	armour	false
+	bodytype		default_unipart
+	names	ugv_phoenix_names
+
+	models {
+		neutral("soldiers/ugv_phoenix" "phoenix" "phoenix_turret" 0 0)
+	}
+
+	//TODO: Balance values they are the same than bloodspider
+	resistance {
+		normal_light 12
+		normal_spray 6
+		normal_medium 7
+		normal_heavy 6
+
+		normal_steelblade 10
+		normal_monomolecularblade 5
+		normal_needle 5
+
+		blast -16
+
+		fire_light 10
+		fire_medium 8
+		fire_heavy 6
+		fire_flamer 2
+
+		shock 999
+
+		laser_light 14
+		laser_medium 12
+		laser_heavy 10
+
+		plasma_light 12
+		plasma_medium 9
+		plasma_heavy 7
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 6
+		stun_gas 999
+	}
+	templates (
+		robot
+	)
+}
+
+// wheeled ares ugv
+team phalanx_ugv_ares_w
+{
+	name	"_Ares W (UGV)"
+	size	2
+	team	"phalanx"
+	robot	true
+	//hit_particle none
+	// we can't assign any extra armour
+	armour	false
+	bodytype		default_unipart
+	names	ugv_ares_w_names
+
+	models {
+		neutral("soldiers/ugv_ares" "ares_w" "ares_w_turret" 0 0)
+	}
+
+	//TODO: Balance values they are the same than bloodspider
+	resistance {
+		normal_light 12
+		normal_spray 6
+		normal_medium 7
+		normal_heavy 6
+
+		normal_steelblade 10
+		normal_monomolecularblade 5
+		normal_needle 5
+
+		blast -16
+
+		fire_light 10
+		fire_medium 8
+		fire_heavy 6
+		fire_flamer 2
+
+		shock 999
+
+		laser_light 14
+		laser_medium 12
+		laser_heavy 10
+
+		plasma_light 12
+		plasma_medium 9
+		plasma_heavy 7
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 6
+		stun_gas 999
+	}
+	templates (
+		robot
+	)
+}

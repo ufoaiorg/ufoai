@@ -56,8 +56,13 @@ typedef struct client_static_s {
 	keydest_t keyDest;
 
 	int realtime;				/**< always increasing, no clamping, etc */
-	float frametime;			/**< seconds since last frame */
+	float frametime;			/**< seconds since last frame (variable) */
 	float framerate;
+
+	/* 120fps readiness: decoupled simulation and rendering */
+	float simDeltaTime;			/**< fixed simulation delta time (e.g., 1/60 second) */
+	float simAccumulator;		/**< accumulated time for fixed timestep simulation */
+	int lastSimTime;			/**< last time simulation was run (ms) */
 
 	/** showing loading plaque between levels if time gets > 30 seconds ahead, break it */
 	int disableScreen;
@@ -124,6 +129,8 @@ extern client_static_t cls;
 extern cvar_t* cl_fps;
 extern cvar_t* cl_selected;
 extern cvar_t* cl_teamnum;
+extern cvar_t* r_fps;			/**< render frame rate cap (60, 120, 240, unlimited) */
+extern cvar_t* cl_simRate;		/**< simulation/server tick rate (default 60 Hz) */
 
 extern cvar_t* s_language;
 

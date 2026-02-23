@@ -1,0 +1,59 @@
+// ==========================
+// GAME INVITATION
+// ==========================
+window multiplayer_invite extends ipopup
+{
+	{
+		pos			"256 256"
+		size		"512 256"
+		closebutton	true
+	}
+
+	string title
+	{
+		string		"_Game invitation"
+		width		"512"
+	}
+
+	/* store popup data */
+	string ip { invis true }
+	string port { invis true }
+
+	confunc	multiplayer_invite_server_info {
+		*node:root.ip@string = <1>
+		*node:root.port@string = <2>
+	}
+
+	MainMenuBtn server_info
+	{
+		string		"_Server info"
+		tooltip		"_Show server information"
+		pos			"332 226"
+		size		"180 30"
+		font		"f_menu"
+		onClick		{
+			cmd "ui_pop;"
+			cmd "server_info <node:root.ip@string> <node:root.port@string>;"
+		}
+	}
+
+	MainMenuBtn enter_lobby
+	{
+		string		"_Lobby"
+		tooltip		"_Go into the lobby"
+		pos			"140 226"
+		size		"180 30"
+		font		"f_menu"
+		onClick		{ cmd "ui_pop;ui_push irc;" }
+	}
+
+	string invite_msg
+	{
+		string		"_You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
+		pos			"26 58"
+		longlines	LONGLINES_WRAP
+		size		"450 64"
+	}
+
+	fuzzyScreen overlay { }
+}

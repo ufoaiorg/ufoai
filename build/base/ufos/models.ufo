@@ -1,0 +1,482 @@
+// =================================================
+// model	(string)	Path to 3D model.
+// tag		(string)	The tag where the model should be placed in the main-model - never in main model.
+// parent	(string)	The "menu_model" parent with the tag specified - never in main model.
+// need		(string)	"menu_model" name of e.g. head. (i.e. children menu-models)
+// anim		(string)	The animation from *.anm files.
+// skin	(int)			The index of the skin (texture) to use in the file. Default 0.
+// color	(color)
+// =================================================
+// NOTE: The entries have to be ordered (top-down) to start with children and end with parents (e.g. head, then body)
+// =================================================
+
+// ============== Aliens ===========================
+menu_model alien_ortnok_head
+{
+	model	"aliens/ortnok/head01"
+	tag		"tag_head"
+	parent	alien_ortnok
+}
+menu_model alien_ortnok
+{
+	model	"aliens/ortnok/body01"
+	need	alien_ortnok_head
+	anim	"stand_still"
+}
+
+menu_model alien_ortnok_medium_head
+{
+	model	"aliens/ortnokmedium/head01"
+	tag		"tag_head"
+	parent	alien_ortnok_medium
+}
+menu_model alien_ortnok_medium
+{
+	model	"aliens/ortnokmedium/body01"
+	need	alien_ortnok_medium_head
+	anim	"stand_still"
+}
+
+menu_model alien_ortnok_light_head
+{
+	model	"aliens/ortnoklight/head01"
+	tag		"tag_head"
+	parent	alien_ortnok_light
+}
+menu_model alien_ortnok_light
+{
+	model	"aliens/ortnoklight/body01"
+	need	alien_ortnok_light_head
+	anim	"stand_still"
+}
+
+menu_model alien_taman_head
+{
+	model	"aliens/taman/head01"
+	tag		"tag_head"
+	parent	alien_taman
+}
+menu_model alien_taman
+{
+	model	"aliens/taman/body01"
+	need	alien_taman_head
+	anim	"stand2"
+}
+
+menu_model alien_taman_light_head
+{
+	model	"aliens/tamanlight/head01"
+	tag		"tag_head"
+	parent	alien_taman_light
+}
+menu_model alien_taman_light
+{
+	model	"aliens/tamanlight/body01"
+	need	alien_taman_light_head
+	anim	"stand_menu"
+}
+
+menu_model alien_taman_medium_head
+{
+	model	"aliens/tamanmedium/head01"
+	tag		"tag_head"
+	parent	alien_taman_medium
+}
+menu_model alien_taman_medium
+{
+	model	"aliens/tamanmedium/body01"
+	need	alien_taman_medium_head
+	anim	"stand_still"
+}
+
+menu_model alien_shevaar_head
+{
+	model	"aliens/shevaar/head01"
+	tag		"tag_head"
+	parent	alien_shevaar
+}
+menu_model alien_shevaar
+{
+	model	"aliens/shevaar/body01"
+	need	alien_shevaar_head
+	anim	"stand_still"
+}
+
+// ============== Civilian female ==================
+menu_model civ_female_head
+{
+	model	"civilians/female/head04c"
+	tag		"tag_head"
+	parent	civ_female
+}
+menu_model civ_female
+{
+	model	"civilians/female/body03"
+	need	civ_female_head
+}
+// ================== Tanks ======================
+// ARES
+menu_model ugv_ares_w_turret
+{
+	model	"soldiers/ugv_ares/ares_w_turret"
+	tag		"tag_head"
+	parent	ugv_ares_w
+}
+menu_model ugv_ares_w
+{
+	model	"soldiers/ugv_ares/ares_w"
+	need	ugv_ares_w_turret
+}
+
+// PHOENIX
+menu_model ugv_phoenix_turret
+{
+	model	"soldiers/ugv_phoenix/phoenix_turret"
+	tag		"tag_head"
+	parent	ugv_phoenix
+}
+menu_model ugv_phoenix
+{
+	model	"soldiers/ugv_phoenix/phoenix"
+	need	ugv_phoenix_turret
+}
+
+
+///////////////
+// DROPSHIPS //
+///////////////
+
+// ============== Firebird Dropship =========================
+
+menu_model drop_firebird_top
+{
+	model	"aircraft/drop_firebird/firebird_top"
+}
+menu_model drop_firebird_top_closed
+{
+	model	"aircraft/drop_firebird/firebird_top_closed"
+}
+menu_model drop_firebird
+{
+	model	"aircraft/drop_firebird/firebird"
+	need	drop_firebird_top
+}
+menu_model drop_firebird_flying
+{
+	model	"aircraft/drop_firebird/firebird_flying"
+	need	drop_firebird_top_closed
+}
+
+// ============== Herakles Dropship =========================
+
+menu_model drop_herakles_ammobox
+{
+	model	"aircraft/drop_herakles/ammobox"
+}
+menu_model drop_herakles_extinguiser
+{
+	model	"aircraft/drop_herakles/extinguiser"
+}
+menu_model drop_herakles_pod_int
+{
+	model	"aircraft/drop_herakles/herakles_int"
+}
+menu_model drop_herakles_pod_top
+{
+	model	"aircraft/drop_herakles/herakles_int_top"
+}
+menu_model drop_herakles_pod_back
+{
+	model	"aircraft/drop_herakles/herakles_pod_back"
+}
+menu_model drop_herakles_pod
+{
+	model	"aircraft/drop_herakles/herakles_int"
+	need	drop_herakles_pod_top
+}
+menu_model drop_herakles_pod2
+{
+	model	"aircraft/drop_herakles/herakles_pod_back"
+	need	drop_herakles_pod
+}
+menu_model drop_herakles
+{
+	model	"aircraft/drop_herakles/herakles_menu"
+}
+menu_model drop_herakles_solo_flying
+{
+	model	"aircraft/drop_herakles/herakles_carryall"
+}
+menu_model drop_herakles_pod_flying
+{
+	model	"aircraft/drop_herakles/herakles_pod"
+}
+menu_model drop_herakles_flying
+{
+	model	"aircraft/drop_herakles/herakles_menu"
+}
+
+// ============== Raptor Dropship =========================
+
+menu_model drop_raptor_gear
+{
+	model	"aircraft/drop_raptor/drop_raptor_gear"
+}
+menu_model drop_raptor
+{
+	model	"aircraft/drop_raptor/drop_raptor"
+// Landed model and landing gear are facing the wrong way, fix it some day (with new model maybe?)
+//	model	"aircraft/drop_raptor/drop_raptor_landed"
+//	need	drop_raptor_gear
+}
+menu_model drop_raptor_flying_lq
+{
+	model	"aircraft/drop_raptor/drop_raptor_low"
+}
+menu_model drop_raptor_flying
+{
+	model	"aircraft/drop_raptor/drop_raptor"
+}
+
+
+//////////////////
+// INTERCEPTORS //
+//////////////////
+
+// ============== Dragon Interceptor ======================
+
+menu_model inter_dragon_gear
+{
+	model	"aircraft/inter_dragon/inter_dragon_gear"
+}
+menu_model inter_dragon
+{
+	model	"aircraft/inter_dragon/inter_dragon"
+	need	inter_dragon_gear
+}
+menu_model inter_dragon_flying
+{
+	model	"aircraft/inter_dragon/inter_dragon"
+}
+
+// ============== Saracen Interceptor ======================
+
+menu_model inter_saracen
+{
+	model	"aircraft/inter_saracen/saracen"
+}
+menu_model inter_saracen_flying
+{
+	model	"aircraft/inter_saracen/saracen_flying"
+}
+
+// ============== Starchaser Interceptor ======================
+
+menu_model inter_starchaser_gear
+{
+	model	"aircraft/inter_starchaser/starchaser_gear"
+}
+menu_model inter_starchaser
+{
+	model	"aircraft/inter_starchaser/starchaser_folded"
+	need	inter_starchaser_gear
+}
+menu_model inter_starchaser_flying
+{
+	model	"aircraft/inter_starchaser/starchaser"
+}
+
+// ============== Stiletto Interceptor =====================
+
+menu_model inter_stiletto_gear
+{
+	model	"aircraft/inter_stiletto/stiletto_gear"
+}
+menu_model inter_stiletto
+{
+	model	"aircraft/inter_stiletto/stiletto"
+	need	inter_stiletto_gear
+}
+menu_model inter_stiletto_flying
+{
+	model	"aircraft/inter_stiletto/stiletto"
+}
+
+// ============== Stingray Interceptor ======================
+
+menu_model inter_stingray
+{
+	model	"aircraft/inter_stingray/stingray_landed"
+}
+menu_model inter_stingray_flying
+{
+	model	"aircraft/inter_stingray/stingray_flying"
+}
+
+
+//////////
+// UFOS //
+//////////
+
+// ============== UFO Carrier ======================
+menu_model ufo_carrier
+{
+	model	"aircraft/ufo_carrier/ufo_carrier"
+}
+
+// ============== UFO Ripper ======================
+menu_model ufo_ripper
+{
+	model	"aircraft/ufo_ripper/ufo_ripper"
+}
+
+// ============== UFO Gunboat ======================
+menu_model ufo_gunboat
+{
+	model	"aircraft/ufo_gunboat/ufo_gunboat"
+}
+
+// ============== UFO Mothership ======================
+menu_model ufo_mothership
+{
+	model	"aircraft/ufo_mothership/ufo_mothership"
+}
+
+// ============== UFO Harvester ======================
+menu_model ufo_harvester
+{
+	model	"aircraft/ufo_harvester/ufo_harvester"
+}
+
+// ============== UFO Bomber ======================
+menu_model ufo_bomber
+{
+	model	"aircraft/ufo_bomber/ufo_bomber"
+}
+
+// ============== UFO Corruptor ======================
+menu_model ufo_corrupter
+{
+	model	"aircraft/ufo_corrupter/ufo_corrupter"
+}
+
+// ============== UFO FIGHTER ============================
+menu_model ufo_fighter_upper
+{
+	model	"aircraft/ufo_fighter/ufo_fighter_upper"
+}
+menu_model ufo_fighter_engines_2
+{
+	model	"aircraft/ufo_fighter/ufo_fighter_engines_2"
+	need	ufo_fighter_upper
+}
+menu_model ufo_fighter_engines_1
+{
+	model	"aircraft/ufo_fighter/ufo_fighter_engines_1"
+	need	ufo_fighter_engines_2
+}
+menu_model ufo_fighter_wings
+{
+	model	"aircraft/ufo_fighter/ufo_fighter_wings"
+	need	ufo_fighter_engines_1
+}
+menu_model ufo_fighter
+{
+	model	"aircraft/ufo_fighter/ufo_fighter_hull"
+	need	ufo_fighter_wings
+}
+
+// ============== UFO SCOUT ==============================
+menu_model ufo_scout_upper
+{
+	model	"aircraft/ufo_scout/ufo_scout_upper"
+}
+menu_model ufo_scout_engines
+{
+	model	"aircraft/ufo_scout/ufo_scout_engines_1"
+	need	ufo_scout_upper
+}
+menu_model ufo_scout
+{
+	model	"aircraft/ufo_scout/ufo_scout_hull"
+	need	ufo_scout_engines
+}
+
+// ============== UFO SUPPLY ==========================
+
+menu_model ufo_supply_engine_left
+{
+	model	"aircraft/ufo_supply/ufo_supply_engine_left"
+}
+menu_model ufo_supply_engine_right
+{
+	model	"aircraft/ufo_supply/ufo_supply_engine_right"
+	need	ufo_supply_engine_left
+}
+menu_model ufo_supply_wing_left
+{
+	model	"aircraft/ufo_supply/ufo_supply_wing_left"
+	need	ufo_supply_engine_right
+}
+menu_model ufo_supply_wing_right
+{
+	model	"aircraft/ufo_supply/ufo_supply_wing_right"
+	need	ufo_supply_wing_left
+}
+menu_model ufo_supply
+{
+	model	"aircraft/ufo_supply/ufo_supply_body_closed"
+	need	ufo_supply_wing_right
+}
+
+// ============== UFO CRASH ========================
+menu_model ufo_crash_wing_2
+{
+	model	"objects/alien/ufo_crashed/acrash_wing_2"
+}
+menu_model ufo_crash_wing_1
+{
+	model	"objects/alien/ufo_crashed/acrash_wing_1"
+	need	ufo_crash_wing_2
+}
+menu_model ufo_crash_hull_engine
+{
+	model	"objects/alien/ufo_crashed/acrash_hull_engine"
+	need	ufo_crash_wing_1
+}
+menu_model ufo_crash_engine
+{
+	model	"objects/alien/ufo_crashed/acrash_engine"
+	need	ufo_crash_hull_engine
+}
+menu_model ufo_crash
+{
+	model	"objects/alien/ufo_crashed/acrash_hull"
+	need	ufo_crash_engine
+}
+
+// ============== WORMHOLE ========================
+menu_model wormhole_cable_hi
+{
+	model	"objects/alien/wormhole/cable_hi"
+}
+menu_model wormhole_cable_low
+{
+	model	"objects/alien/wormhole/cable_low"
+	need	wormhole_cable_hi
+}
+menu_model wormhole_mid
+{
+	model	"objects/alien/wormhole/wormhole_mid"
+	need	wormhole_cable_low
+}
+menu_model wormhole_low
+{
+	model	"objects/alien/wormhole/wormhole_low"
+	need	wormhole_mid
+}
+menu_model wormhole_device
+{
+	model	"objects/alien/wormhole/wormhole_hi"
+	need	wormhole_low
+}

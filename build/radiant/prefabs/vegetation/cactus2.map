@@ -1,0 +1,46 @@
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 18 7 68 ) ( 18 11 68 ) ( 18 7 130 ) tex_common/nodraw 45 4 0 1 1 65281 128 0
+( 25 7 130 ) ( 25 7 68 ) ( 25 3 130 ) tex_common/nodraw 33 4 0 1 1 65281 128 0
+( 23 2 68 ) ( 23 2 130 ) ( 29 2 68 ) tex_common/nodraw 43 4 0 1 1 65281 128 0
+( 22 9 130 ) ( 16 9 130 ) ( 22 9 68 ) tex_common/nodraw 34 4 0 1 1 65281 128 0
+( 16 14 33 ) ( 22 14 33 ) ( 16 18 33 ) tex_common/nodraw 34 42 0 1 1 65281 128 0
+( 22 15 80 ) ( 22 11 80 ) ( 16 15 80 ) tex_common/nodraw 34 39 0 1 1 65281 128 0
+( 23 9 -64 ) ( 27 7 -64 ) ( 23 9 64 ) tex_common/nodraw 34 15 0 1 1 65281 128 0
+( 26 4 -64 ) ( 24 1 -64 ) ( 26 4 64 ) tex_common/nodraw 34 15 0 1 1 65281 128 0
+( 20 3 -64 ) ( 17 5 -64 ) ( 20 3 64 ) tex_common/nodraw 35 15 0 1 1 65281 128 0
+( 18 7 -64 ) ( 21 9 -64 ) ( 18 7 64 ) tex_common/nodraw 34 15 0 1 1 65281 128 0
+}
+// brush 1
+{
+( 9 12 68 ) ( 9 16 68 ) ( 9 12 130 ) tex_common/nodraw 40 4 0 1 1 65281 128 0
+( 18 12 130 ) ( 18 12 68 ) ( 18 8 130 ) tex_common/nodraw 44 4 0 1 1 65281 128 0
+( 14 6 68 ) ( 14 6 130 ) ( 20 6 68 ) tex_common/nodraw 36 4 0 1 1 65281 128 0
+( 13 16 130 ) ( 7 16 130 ) ( 13 16 68 ) tex_common/nodraw 43 4 0 1 1 65281 128 0
+( 7 18 4 ) ( 13 18 4 ) ( 7 22 4 ) tex_common/nodraw 43 46 0 1 1 65281 128 0
+( 976 172 90 ) ( 976 180 90 ) ( 988 180 90 ) tex_common/nodraw 43 40 0 1 1 65281 128 0
+( 14 16 -64 ) ( 18 14 -64 ) ( 14 16 64 ) tex_common/nodraw 43 15 0 1 1 65281 128 0
+( 19 9 -64 ) ( 17 6 -64 ) ( 19 9 64 ) tex_common/nodraw 45 15 0 1 1 65281 128 0
+( 11 7 -64 ) ( 8 9 -64 ) ( 11 7 64 ) tex_common/nodraw 44 15 0 1 1 65281 128 0
+( 9 14 -64 ) ( 12 16 -64 ) ( 9 14 64 ) tex_common/nodraw 43 15 0 1 1 65281 128 0
+}
+// brush 2
+{
+( 0 40 128 ) ( 0 0 128 ) ( 0 0 0 ) tex_common/actorclip 52 8 0 0.5 0.5 65536 0 0
+( 32 0 128 ) ( 32 40 128 ) ( 32 40 0 ) tex_common/actorclip 52 8 0 0.5 0.5 65536 0 0
+( 0 0 128 ) ( 36 0 128 ) ( 36 0 0 ) tex_common/actorclip 0 8 0 0.5 0.5 65536 0 0
+( 36 32 128 ) ( 0 32 128 ) ( 0 32 0 ) tex_common/actorclip 0 8 0 0.5 0.5 65536 0 0
+( 928 480 0 ) ( 960 480 0 ) ( 928 512 0 ) tex_common/actorclip 0 12 0 0.5 0.5 65536 0 0
+( 0 0 60 ) ( 0 40 60 ) ( 36 40 60 ) tex_common/actorclip 0 12 0 0.5 0.5 65536 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "14 12 26"
+"model" "models/objects/vegi/cactus/cactus2.md2"
+"spawnflags" "255"
+}

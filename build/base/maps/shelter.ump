@@ -1,0 +1,222 @@
+// *********************************
+// NUCLEAR SHELTER
+// *********************************
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: common / generic tiles
+// c: entrance
+// n: main hall north
+// s: main hall south
+// x: outside
+
+base shelter/shelter_
+
+worldspawn {
+	"maxlevel"		"6"
+	"maxteams"		"4"
+}
+
+// Map Tiles -------------------------------------------------------*
+
+tile +entrance
+{
+6 4
+0		s		s		s		s		0
+a		+c		+c		+c		+c		a
+a		+c		+c		+c		+c		a
+0		x		x		x		x		0
+}
+
+tile +hallsouth_a
+{
+6 4
+0		n		n		n		n		0
+a		+s		+s		+s		+s		a
+a		+s		+s		+s		+s		a
+0		c		c		c		c		0
+}
+
+tile +hallsouth_b
+{
+6 4
+0		n		n		n		n		0
+a		+s		+s		+s		+s		a
+a		+s		+s		+s		+s		a
+0		c		c		c		c		0
+}
+
+tile +hallnorth_a
+{
+6 4
+0		a		a		a		a		0
+a		+n		+n		+n		+n		a
+a		+n		+n		+n		+n		a
+0		s		s		s		s		0
+}
+
+tile +hallnorth_b
+{
+6 4
+0		a		a		a		a		0
+a		+n		+n		+n		+n		a
+a		+n		+n		+n		+n		a
+0		s		s		s		s		0
+}
+
+tile +room_w_a
+{
+4 4
+0		a		a		0
+x		+a		+a		ns
+x		+a		+a		ns
+0		a		a		0
+}
+
+tile +room_w_b
+{
+4 4
+0		a		a		0
+x		+a		+a		ns
+x		+a		+a		ns
+0		a		a		0
+}
+
+tile +room_n_a
+{
+4 4
+0		x		x		0
+a		+a		+a		a
+a		+a		+a		a
+0		n		n		0
+}
+
+tile +room_n_b
+{
+4 4
+0		x		x		0
+a		+a		+a		a
+a		+a		+a		a
+0		n		n		0
+}
+
+tile +room_e_a
+{
+4 4
+0		a		a		0
+ns		+a		+a		x
+ns		+a		+a		x
+0		a		a		0
+}
+
+tile +room_e_b
+{
+4 4
+0		a		a		0
+ns		+a		+a		x
+ns		+a		+a		x
+0		a		a		0
+}
+
+tile +corridor_nw
+{
+4 4
+0		x		x		0
+x		+a		+a		a
+x		+a		+a		a
+0		a		a		0
+}
+
+tile +corridor_ne
+{
+4 4
+0		x		x		0
+a		+a		+a		x
+a		+a		+a		x
+0		a		a		0
+}
+
+tile +solid
+{
+4 4
+0		a		a		0
+ac		+a		+a		ac
+ac		+a		+a		ac
+0		x		x		0
+}
+
+// Tilesets --------------------------------------------------------*
+
+tileset hall_north
+{
++hallnorth_a
++hallnorth_b
+}
+
+tileset hall_south
+{
++hallsouth_a
++hallsouth_b
+}
+
+tileset room_west
+{
++room_w_a
++room_w_b
+}
+
+tileset room_north
+{
++room_n_a
++room_n_b
+}
+
+tileset room_east
+{
++room_e_a
++room_e_b
+}
+
+// Map assemblies single player ------------------------------------*
+
+assembly standard
+{
+size "8 8"
+grid "2 2"
+fix +solid				"0 0"
+fix tileset room_west	"0 2"
+fix tileset room_west	"0 4"
+fix +corridor_nw		"0 6"
+fix +entrance			"2 0"
+fix tileset hall_south	"2 2"
+fix tileset hall_north	"2 4"
+fix tileset room_north	"2 6"
+fix tileset room_north	"4 6"
+fix +solid				"6 0"
+fix tileset room_east	"6 2"
+fix tileset room_east	"6 4"
+fix +corridor_ne		"6 6"
+}
+
+/*
+assembly test_random
+{
+size "8 8"
+grid "2 2"
++hallsouth_a	"0 1"
++hallsouth_b	"0 1"
++hallnorth_a	"0 1"
++hallnorth_b	"0 1"
++solid			"0 2"
++corridor_ne	"0 1"
++corridor_nw	"0 1"
++room_w_a		"0 2"
++room_w_b		"0 2"
++room_n_a		"0 2"
++room_n_b		"0 2"
++room_e_a		"0 2"
++room_e_b		"0 2"
++entrance		"1 1"
+}
+*/

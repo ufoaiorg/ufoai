@@ -1,0 +1,354 @@
+--!usr/bin/lua
+
+require("ufox.lua")
+
+
+--[[
+ - Inventory and stats window
+--]]
+local inv_stats_hud = ufox.build_window({
+	name = "inv_stats_hud",
+	class = "window",
+	pos = {236, 60},
+	size = {560, 418},
+	backgroundcolor = {0, 0.15, 0.1, 0.7},
+	bordercolor = {0.58, 0.81, 0.758, 0.7},
+	bordersize = 2,
+
+	-- Top bar
+	{
+		name = "drag",
+		class = "controls",
+		pos = {0, 0},
+		size = {560, 40}
+	},
+	{
+		name = "name",
+		class = "string",
+		text = "*cvar:mn_name",
+		pos = {8, 0},
+		size = {300, 25},
+		font = "f_small_bold",
+		color = {0.56, 0.81, 0.76, 1},
+		longlines = ufo.LONGLINES_CHOP,
+		contentalign = ufo.ALIGN_LL,
+		ghost = true
+	},
+	{
+		name = "rank",
+		class = "string",
+		text = "*cvar:mn_chrrank",
+		pos = {8, 25},
+		size = {300, 15},
+		font = "f_verysmall",
+		color = {0.56, 0.81, 0.76, 1},
+		longlines = ufo.LONGLINES_CHOP,
+		contentalign = ufo.ALIGN_UL,
+		ghost = true
+	},
+
+	-- Inventory area
+	{
+		name = "rank_img",
+		class = "image",
+		pos = {10, 46},
+		size = {64, 64},
+		source = "*cvar:mn_chrrank_img"
+	},
+	{
+		name = "actor",
+		class = "model",
+		model = "*cvar:mn_body",
+		skin = "*cvar:mn_body_skin",
+		animation = "stand_menu",
+		origin = {0, -25, 0},
+		angles = {0, 82, 90},
+		scale = {5, 5, 5},
+		pos = {86, 81},
+		size = {191, 262},
+		{
+			name = "head",
+			class = "model",
+			model = "*cvar:mn_head",
+			skin = "*cvar:mn_head_skin",
+			tag = "tag_head",
+			scale = {1.0, 1.0, 1.0}
+		}
+	},
+	{
+		name = "bt_load",
+		class = "button",
+		pos = {255, 35},
+		contentalign = ufo.ALIGN_CL,
+		text = "_0/0 Kg",
+		color = {0.56, 0.81, 0.76, 1},
+		flashcolor = {1, 0, 0, 1},
+		size = {106, 25},
+		on_click = function (sender) ufo.cmd("hud_updateactorload;") end
+	},
+	{
+		name = "inv_bg",
+		class = "image",
+		pos = {10, 59},
+		size = {351, 349},
+		source = "/ui/inv_bg"
+	},
+
+	-- Abilities panel
+	-- @TODO: Remove "mediocre" dsc text. Look at CL_ActorGetSkillString, cl_team.c
+	{
+		name = "abilities",
+		class = "panel",
+		pos = {370, 50},
+		size = {180, 120},
+		ghost = true,
+		strength = {
+			name = "strength",
+			class = "StatBar",
+			pos = {0, 0},
+			label = { name = "label", class = "string", text = "_Strength" },
+			valuebar = { name = "valuebar", class = "bar", value = "*cvar:mn_vpwr" },
+			valuenum = { name = "valuenum", class = "string", text = "*cvar:mn_tpwr" }
+		},
+		{
+			name = "speed",
+			class = "StatBar",
+			pos = {0, 30},
+			label = { name = "label", class = "string", text = "_Speed" },
+			valuebar = { name = "valuebar", class = "bar", value = "*cvar:mn_vspd" },
+			valuenum = { name = "valuenum", class = "string", text = "*cvar:mn_tspd" }
+		},
+		{
+			name = "accuracy",
+			class = "StatBar",
+			pos = {0, 60},
+			label = { name = "label", class = "string", text = "_Accuracy" },
+			valuebar = { name = "valuebar", class = "bar", value = "*cvar:mn_vacc" },
+			valuenum = { name = "valuenum", class = "string", text = "*cvar:mn_tacc" }
+		},
+		{
+			name = "mind",
+			class = "StatBar",
+			pos = {0, 90},
+			label = { name = "label", class = "string", text = "_Mind" },
+			valuebar = { name = "valuebar", class = "bar", value = "*cvar:mn_vmnd" },
+			valuenum = { name = "valuenum", class = "string", text = "*cvar:mn_tmnd" }
+		}
+	},
+	-- Skills panel
+	{
+		name = "skills",
+		class = "panel",
+		pos = {370, 180},
+		size = {180, 120},
+		ghost = true,
+		{
+			name = "cls",
+			class = "StatBar",
+			pos = {0, 0},
+			label = { name = "label", class = "string", text = "_CQB", tooltip = "_Close Quarters Battle" },
+			valuebar = { name = "valuebar", class = "bar", value = "*cvar:mn_vcls" },
+			valuenum = { name = "valuenum", class = "string", text = "*cvar:mn_tcls" }
+		},
+		{
+			name = "ass",
+			class = "StatBar",
+			pos = {0, 30},
+			label = { name = "label", class = "string", text = "_Assault" },
+			valuebar = { name = "valuebar", class = "bar", value = "*cvar:mn_vass" },
+			valuenum = { name = "valuenum", class = "string", text = "*cvar:mn_tass" }
+		},
+		{
+			name = "snp",
+			class = "StatBar",
+			pos = {0, 60},
+			label = { name = "label", class = "string", text = "_Sniper" },
+			valuebar = { name = "valuebar", class = "bar", value = "*cvar:mn_vsnp" },
+			valuenum = { name = "valuenum", class = "string", text = "*cvar:mn_tsnp" }
+		},
+		{
+			name = "exp",
+			class = "StatBar",
+			pos = {0, 90},
+			label = { name = "label", class = "string", text = "_Explosives" },
+			valuebar = { name = "valuebar", class = "bar", value = "*cvar:mn_vexp" },
+			valuenum = { name = "valuenum", class = "string", text = "*cvar:mn_texp" }
+		}
+	},
+
+	-- ======
+	-- wounds
+	-- ======
+	{
+		name = "wounds",
+		class = "panel",
+		pos = {370, 310},
+		size = {180, 64},
+		layout = ufo.LAYOUT_TOP_DOWN_FLOW
+	},
+
+	--[[
+	 - Mission info
+	--]]
+	{
+		name = "info",
+		class = "panel",
+		pos = {370, 384},
+		size = {180, 30},
+		{
+			name = "lbl_misions",
+			class = "smallstring",
+			pos = {0, 0},
+			size = {160, 15},
+			longlines = ufo.LONGLINES_CHOP,
+			contentalign = ufo.ALIGN_UL,
+			text = "_Missions"
+		},
+		{
+			name = "lbl_kills",
+			class = "smallstring",
+			pos = {0, 15},
+			size = {160, 15},
+			longlines = ufo.LONGLINES_CHOP,
+			contentalign = ufo.ALIGN_UL,
+			text = "_Aliens killed"
+		},
+		{
+			name = "missions",
+			class = "smallstring",
+			pos = {160, 0},
+			size = {20, 15},
+			longlines = ufo.LONGLINES_CHOP,
+			contentalign = ufo.ALIGN_UR,
+			text = "*cvar:mn_chrmis"
+		},
+		{
+			name = "kills",
+			class = "smallstring",
+			pos = {160, 15},
+			size = {20, 15},
+			longlines = ufo.LONGLINES_CHOP,
+			contentalign = ufo.ALIGN_UR,
+			text = "*cvar:mn_chrkillalien"
+		}
+	},
+
+	{
+		name = "inv_actorload",
+		class = "confunc",
+		on_click = function (sender, text, tooltip, penalty, warnings)
+			sender:root():child("bt_load"):set_text(text)
+			sender:root():child("bt_load"):set_tooltip(tooltip)
+			if (tonumber(penalty) > 0) then
+				sender:root():child("bt_load"):set_color(0, 1, 0, 1)
+			elseif (tonumber(penalty) < 0) then
+				sender:root():child("bt_load"):set_color(1, 1, 0, 1)
+			else
+				sender:root():child("bt_load"):set_color(0.56, 0.81, 0.76, 1)
+			end
+			if (tonumber(warnings) > 0) then
+				sender:root():child("bt_load"):set_flashing(true)
+			else
+				sender:root():child("bt_load"):set_flashing(false)
+			end
+		end
+	},
+
+	-- id Body part type
+	-- severity Severity of bleeding, if 0 all wounds are treated
+	-- (Note: Robots don't bleed, this just means they have serious damage in this part)
+	-- tooltip Tooltip
+	{
+		name = "actor_wounds",
+		class = "confunc",
+		on_click = function (sender, id, severity, text, tooltip)
+			local node = ufo.create_control(sender:root():child("wounds"), "cmpWound", string.format("wound_%s", id), nil)
+			if (tonumber(severity) > 0) then
+				node:child("wound_icon"):set_icon(string.format("icons/%s_wound", id))
+			else
+				node:child("wound_icon"):set_icon(string.format("icons/%s_wound_treated", id))
+			end
+			node:child("wound_string"):set_text(text)
+			node:set_tooltip(tooltip)
+		end
+	},
+
+	{
+		name = "update_actor_state",
+		class = "confunc",
+		on_click = function (sender)
+			sender:root():child("wounds"):remove_children()
+			ufo.cmd("hud_updateactorwounds;")
+			ufo.cmd("hud_updateactorload;")
+		end
+	},
+
+	{
+		name = "show_hide_inv_stats",
+		class = "confunc",
+		on_click = function (sender)
+			if (ufo.getvar("inv_stats_window_open"):as_integer() == 1) then
+				ufo.cmd("ui_close inv_stats_hud;")
+			else
+				ufo.cmd("ui_push inv_stats_hud;")
+			end
+		end
+	},
+
+	on_mouseenter = function (sender)
+		sender:set_backgroundcolor(0, 0.21, 0.158, 0.7)
+	end,
+	on_mouseleave = function (sender)
+		sender:set_backgroundcolor(0, 0.15, 0.1, 0.7)
+	end,
+
+	on_windowopened = function (sender)
+		ufo.getvar("inv_stats_window_open"):set_value(1)
+		ufo.cmd("ui_addcvarlistener cl_selected update_actor_state;")
+		ufo.cmd("update_actor_state;")
+		if (ufo.getvar("mn_base_count"):as_integer() < 1) then
+			sender:root():child("info"):set_invisible(true)
+		end
+	end,
+
+	on_windowclosed = function (sender)
+		ufo.cmd("ui_removecvarlistener cl_selected update_actor_state;")
+		ufo.delvar("inv_stats_window_open")
+	end
+})
+
+ufox.build({
+		name = "close",
+		class = "button",
+		icon = "icons/windowclose",
+		tooltip = "_Close",
+		pos = {530, 10},
+		size = {18, 18},
+		on_click = function (sender) ufo.cmd("ui_pop;") end
+	}, inv_stats_hud)
+ufox.build({
+		name = "next",
+		class = "button",
+		icon = "icons/windownext",
+		tooltip = "_Next soldier",
+		pos = {506, 10},
+		size = {18, 18},
+		on_click = function (sender) ufo.cmd("actor_next;") end
+	}, inv_stats_hud)
+ufox.build({
+		name = "prev",
+		class = "button",
+		icon = "icons/windowprev",
+		tooltip = "_Previous soldier",
+		pos = {482, 10},
+		size = {18, 18},
+		on_click = function (sender) ufo.cmd("actor_prev;") end
+	}, inv_stats_hud)
+ufox.build({ name = "headgear", class = "container", pos = {88, 85} }, inv_stats_hud)
+ufox.build({ name = "backpack", class = "container", pos = {236, 59} }, inv_stats_hud)
+ufox.build({ name = "right", class = "container", pos = {13, 146} }, inv_stats_hud)
+-- Armour is not switchable in combat - thus no display of armour container needed.
+ufox.build({ name = "left", class = "container", pos = {236, 146} }, inv_stats_hud)
+ufox.build({ name = "belt", class = "container", pos = {13, 204} }, inv_stats_hud)
+ufox.build({ name = "holster", class = "container", pos = {285, 204} }, inv_stats_hud)
+ufox.build({ name = "floor", class = "container", pos = {10, 282} }, inv_stats_hud)

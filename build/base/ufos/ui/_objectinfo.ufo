@@ -1,0 +1,79 @@
+// ==================
+// HUD INTERFACE
+// ==================
+
+/**
+ * @brief Define interface shared by all windows that are using weapon and ammo details
+ * @note filename prefixed with "_" to be loaded before any other menu
+ */
+window objectinfo
+{
+	{ }
+
+	/* HACK these are needed for node order :( */
+	image  background { }
+	panel content { }
+
+	/*
+	 * dummy nodes
+	 */
+	panel itemdescription {
+		{ }
+		string header_item { }
+		button action_dec { }
+		string item_name { }
+		button action_inc { }
+
+		string header_firemode { }
+		button firemode_dec { }
+		string firemode_name { }
+		button firemode_inc { }
+	}
+
+	/**
+	 * @brief shows/hides weapons/ammos/firemodes and switches in itemdescriptions
+	 * @param[in] <1> number of weapons/ammos for this equipment
+	 * @param[in] <2> number of firemodes for this equipment
+	 */
+	confunc itemdesc_view {
+		*cvar:mn_numweapons = <1>
+		*cvar:mn_numfiremodes = <2>
+
+		if ( *cvar:mn_numweapons > 0 ) {
+			*node:this.parent.itemdescription.header_item@invis = false
+			*node:this.parent.itemdescription.item_name@invis = false
+			if ( *cvar:mn_numweapons > 1 ) {
+				*node:this.parent.itemdescription.action_dec@invis = false
+				*node:this.parent.itemdescription.action_inc@invis = false
+			} else {
+				*node:this.parent.itemdescription.action_dec@invis = true
+				*node:this.parent.itemdescription.action_inc@invis = true
+			}
+		} else {
+			*node:this.parent.itemdescription.header_item@invis = true
+			*node:this.parent.itemdescription.item_name@invis = true
+			*node:this.parent.itemdescription.action_dec@invis = true
+			*node:this.parent.itemdescription.action_inc@invis = true
+		}
+
+		if ( *cvar:mn_numfiremodes > 0 ) {
+			*node:this.parent.itemdescription.header_firemode@invis = false
+			*node:this.parent.itemdescription.firemode_name@invis = false
+			if ( *cvar:mn_numfiremodes > 1 ) {
+				*node:this.parent.itemdescription.firemode_dec@invis = false
+				*node:this.parent.itemdescription.firemode_inc@invis = false
+			} else {
+				*node:this.parent.itemdescription.firemode_dec@invis = true
+				*node:this.parent.itemdescription.firemode_inc@invis = true
+			}
+		} else {
+			*node:this.parent.itemdescription.header_firemode@invis = true
+			*node:this.parent.itemdescription.firemode_name@invis = true
+			*node:this.parent.itemdescription.firemode_dec@invis = true
+			*node:this.parent.itemdescription.firemode_inc@invis = true
+		}
+
+		delete *cvar:mn_numweapons
+		delete *cvar:mn_numfiremodes
+	}
+}

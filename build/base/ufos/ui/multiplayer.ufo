@@ -1,0 +1,1000 @@
+// ==================
+// MULTIPLAYER MENU
+// ==================
+
+component LoadSlot extends panel
+{
+        {
+                size            "320 34"
+                layout                  LAYOUT_LEFT_RIGHT_FLOW
+                layoutMargin    1
+        }
+
+        data filename
+        {
+                string          ""
+        }
+
+        data index
+        {
+                integer         -1
+        }
+
+        TextBtn button
+        {
+                onClick {
+                        call *node:root.set_sel_load_slot(<node:parent.index@integer>)
+                        *node:this@color = "1 1 1 0.9"
+                }
+        }
+
+        button delete
+        {
+                size            "34 34"
+                background      "icons/delete"
+                tooltip         "_Delete this savegame"
+        }
+}
+
+component cmpAdr extends panel {
+{
+	size "350 25"
+}
+	string adr { pos "30 1" size "300 20" tooltip "_Connect to this server"
+		onClick { cmd "server_info *cvar:adr<node:parent@num>;" }
+		onRClick { cmd "set adr<node:parent@num> \"\"; check_bookmarks;" }
+	}
+	button resetadr { pos "0 1" size "22 22" icon "icons/garbage" tooltip "_Delete this bookmark"
+		onClick { cmd "set adr<node:parent@num> \"\"; check_bookmarks;" }
+		onRClick { cmd "set adr<node:parent@num> \"\"; check_bookmarks;" }
+	}
+}
+
+component currentTeamMember extends panel
+{
+	{
+		size		"486 35"
+		ghost		true
+	}
+
+	model head
+	{
+		pos		"0 1"
+		size		"37 33"
+		angles		"0 60 90"
+		origin		"0 0 0"
+		autoscale	true
+		ghost		true
+	}
+
+	string name
+	{
+		pos		"40 5"
+		color		"1 1 1 1"
+		size		"431 25"
+		contentalign	ALIGN_CL
+		ghost		true
+	}
+}
+
+component cmpCurrentLoadedTeamPanel extends team_loadedcurrent
+{
+	{
+		size	"504 375"
+	}
+
+	string title
+	{
+		pos		"0 0"
+		color		"0.56 0.81 0.76 1"
+		bgcolor		"0.527 0.6 0.21 0.2"
+		size		"504 32"
+		contentalign	ALIGN_CC
+		string		"_Currently loaded"
+		font		"f_menubig"
+	}
+
+	panel soldierlist
+	{
+		pos				"0 44"
+		size			"486 331"
+		padding			6
+		layout			LAYOUT_TOP_DOWN_FLOW
+		wheelscrollable	true
+		contentalign	ALIGN_CC
+		onViewChange
+		{
+			*node:parent.soldierlist_scroll@fullsize = <fullsize>
+			*node:parent.soldierlist_scroll@current = <viewpos>
+			*node:parent.soldierlist_scroll@viewsize = <viewsize>
+		}
+	}
+
+	vscrollbar soldierlist_scroll
+	{
+		image			"ui/scrollbar_v"
+		pos				"486 44"
+		height			"331"
+		current			0
+		viewsize		4
+		fullsize		25
+		hidewhenunused	true
+		onChange
+		{
+			*node:parent.soldierlist@viewpos = <current>
+		}
+	}
+
+	confunc team_memberadd
+	{
+		call *node:parent.soldierlist@createChild("member<1>", "currentTeamMember")
+		*node:parent.soldierlist.member<1>.name@string = <2>
+		*node:parent.soldierlist.member<1>.head@src = "<3>/<4>"
+		*node:parent.soldierlist.member<1>.head@skin = <5>
+	}
+
+	/**
+	 * @brief Removes all entries from the current team list.
+	 */
+	confunc team_membersclear
+	{
+		call *node:parent.soldierlist@removeAllChild
+	}
+}
+
+component cmpLoadSlots extends team_loadslots
+{
+	{
+		size	"500 324"
+	}
+	panel slots
+	{
+		pos		"1 30"
+		size	"500 324"
+		layout			LAYOUT_TOP_DOWN_FLOW
+		layoutMargin	2
+		wheelscrollable	true
+
+		onViewChange {
+			*node:parent.slots_scroll@fullsize = <fullsize>
+			*node:parent.slots_scroll@current = <viewpos>
+			*node:parent.slots_scroll@viewsize = <viewsize>
+		}
+	}
+
+	vscrollbar slots_scroll {
+		image		"ui/scrollbar_v"
+		pos			"485 30"
+		height		"324"
+		hidewhenunused	true
+		onChange {
+			*node:parent.slots@viewpos = <current>
+		}
+	}
+
+	confunc teamsaveslotadd
+	{
+		call *node:parent.slots@createChild("slot<1>", "LoadSlot")
+		*node:parent.slots.slot<1>.filename@string = "<2>"
+		*node:parent.slots.slot<1>.index@integer = <1>
+		*node:parent.slots.slot<1>.button@string = "<3> (<4>)"
+		*node:parent.slots.slot<1>.button@tooltip = "<3> (<4>)"
+		*node:parent.slots.slot<1>.button@onClick = {
+			cmd "game_loadteam <node:parent.index@integer>;ui_push game_team_edit;"
+//					*node:root.leftpan.mp_team_list.button_save@disabled = false
+		}
+
+		*node:parent.slots.slot<1>.button@width = "410"
+		*node:parent.slots.slot<1>.delete@onClick = { cmd "game_teamdelete <node:this.parent.filename@string>;game_teamcomments;" }
+		if (<5> == 0) {
+			*node:parent.slots.slot<1>.delete@invis = true
+		}
+	}
+
+	confunc teamsaveslotsclear
+	{
+		call *node:parent.slots@removeAllChild
+	}
+}
+
+window multiplayer
+{
+	{
+		background "ui/main_bg"
+	}
+
+	timer event
+	{
+		timeout	60000
+		onEvent {
+			cmd "pingservers refresh;"
+		}
+	}
+
+
+	panel leftpan
+	{
+		{
+			size		"504 435"
+			pos			"0 90"
+			bgcolor		"0.4 0.52 0.5 0.2"
+		}
+
+		MainMenuTab btn_join
+		{
+			pos 		"0 0"
+			string		"_JOIN"
+			onClick	{
+				call *node:root.mp_join_toggle
+			}
+		}
+
+		MainMenuTab btn_create
+		{
+				pos 		"135 0"
+				string		"_CREATE"
+				onClick	{
+					call *node:root.mp_create_toggle
+				}
+		}
+
+		MainMenuTab btn_team
+		{
+			pos 		"270 0"
+			string		"_TEAM"
+			onClick	{
+					call *node:root.mp_team_toggle
+			}
+		}
+
+		panel map_opts
+		{
+			{
+				invis	true
+				pos		"0 30"
+				size	"504 375"
+			}
+
+			string gametype_str
+			{
+				string		"_Gametype:"
+				pos			"0 10"
+				size		"200 20"
+			}
+
+			selectbox gametype_selector
+			{
+				dataid		TEXT_LIST
+				cvar		*cvar:sv_gametype
+				pos			"202 10"
+				size		"256 215"
+				lineheight	"20"
+				contentalign	ALIGN_UC
+				onChange {
+					cmd "mp_updategametype;mn_getmaps;"
+				}
+			}
+
+			string server_teamplay_str
+			{
+				string		"_Teamplay:"
+				pos			"0 40"
+				size		"200 20"
+			}
+
+			CheckBox server_teamplay_value
+			{
+				current		*cvar:sv_teamplay
+				pos			"204 40"
+				size		"20 18"
+				disabled	true
+			}
+
+			MapOptions mp_maps
+			{
+				{
+					pos "0 70"
+				}
+			}
+			string allowedtype_label
+			{
+				string		"_Allowed gametype:"
+				pos			"0 280"
+				size		"256 20"
+			}
+
+			textlist list_gametypes_text
+			{
+				dataid		TEXT_LIST2
+				pos			"202 280"
+				size		"230 90"
+				font		"f_verysmall"
+				longlines	LONGLINES_WRAP
+				onViewChange {
+					*node:parent.list_gametypes_scroll@fullsize = <fullsize>
+					*node:parent.list_gametypes_scroll@viewsize = <viewsize>
+					*node:parent.list_gametypes_scroll@current = <viewpos>
+				}
+				onClick {
+				}
+			}
+
+			vscrollbar list_gametypes_scroll {
+				image		"ui/scrollbar_v"
+				pos			"472 280"
+				height		"90"
+				hidewhenunused	true
+				onChange {
+					*node:parent.list_gametypes_text@viewpos = <current>
+				}
+			}
+		}
+
+		panel mp_team_list
+		{
+			{
+				invis	true
+				pos		"0 30"
+				size	"504 405"
+			}
+
+			cmpCurrentLoadedTeamPanel currentLoaded
+			{
+				{
+					pos		"0 0"
+				}
+			}
+
+			MainMenuBtn button_save
+			{
+				pos			"254 375"
+				size 		"250 30"
+				disabled	true
+				tooltip		"_Save the current team"
+				onClick		{
+					cmd "ui_push game_team_save_popup;"
+					*node:this@disabled = true
+				}
+				string		"_SAVE TEAM"
+			}
+		}
+
+		panel mp_bookmarks
+		{
+			{
+				invis	true
+				pos		"0 30"
+				size	"504 435"
+			}
+
+			string header
+			{
+				pos		"0 13"
+				size	"504 32"
+				bgcolor	"0.527 0.6 0.21 0.2"
+				color	"0.56 0.81 0.76 1"
+				font	"f_menubig"
+				contentalign	ALIGN_UC
+				string	"_Bookmarks"
+			}
+
+			rows lines {
+				pos			"5 58"
+				size		"494 240"
+				color1			"0.56 0.81 0.76 0.15"
+				color2			"0.56 0.81 0.76 0.1"
+				lineheight	30
+			}
+
+			cmpAdr adr0  { pos "5 63" num 0 }
+			cmpAdr adr1  { pos "255 63" num 1 }
+			cmpAdr adr2  { pos "5 93" num 2 }
+			cmpAdr adr3  { pos "255 93" num 3 }
+			cmpAdr adr4  { pos "5 123" num 4 }
+			cmpAdr adr5  { pos "255 123" num 5 }
+			cmpAdr adr6  { pos "5 153" num 6 }
+			cmpAdr adr7  { pos "255 153" num 7 }
+			cmpAdr adr8  { pos "5 183" num 8 }
+			cmpAdr adr9  { pos "255 183" num 9 }
+			cmpAdr adr10 { pos "5 213" num 10 }
+			cmpAdr adr11 { pos "255 213" num 11 }
+			cmpAdr adr12 { pos "5 243" num 12 }
+			cmpAdr adr13 { pos "255 243" num 13 }
+			cmpAdr adr14 { pos "5 273" num 14 }
+			cmpAdr adr15 { pos "255 273" num 15 }
+		}
+
+		MainMenuBtn btn_lobby
+		{
+			{
+				size	"250 30"
+				pos		"0 405"
+				string		"_LOBBY"
+				onClick		{ cmd "irc_connect; ui_push irc;" }
+			}
+		}
+	}
+
+	panel rightpan
+	{
+		{
+			size		"510 435"
+			pos			"517 90"
+			bgcolor		"0.4 0.52 0.5 0.2"
+		}
+
+		panel mp_game_opts
+		{
+			{
+				invis	true
+				pos		"0 30"
+				size	"510 435"
+			}
+
+			string current_hostname
+			{
+				string		"_Hostname:"
+				pos			"0 5"
+				size		"202 20"
+			}
+
+			TextEntry slot_hostname
+			{
+				string		*cvar:sv_hostname
+				font		"f_verysmall"
+				pos			"245 0"
+				size		"256 34"
+			}
+
+			string public_str
+			{
+				string		"_Make this server public:"
+				pos			"0 45"
+				size		"480 20"
+			}
+
+			CheckBox public_value
+			{
+				current		*cvar:sv_public
+				pos			"481 47"
+				size		"20 18"
+			}
+
+			// ===================
+			// SERVER_PASSWORD
+			// ===================
+			string current_server_pwd
+			{
+				string		"_Server-Password:"
+				pos			"0 85"
+				size		"256 20"
+			}
+			TextEntry slot_server_pwd
+			{
+				string		*cvar:password
+				font		"f_verysmall"
+				pos			"245 80"
+				size		"256 34"
+				ispassword	true
+			}
+
+			// ===================
+			// RCON_PASSWORD
+			// ===================
+			string current_rcon_pwd
+			{
+				string		"_RCON-Password:"
+				pos			"0 125"
+				size		"256 20"
+			}
+			TextEntry slot_rcon_pwd
+			{
+				string		*cvar:rcon_password
+				font		"f_verysmall"
+				pos			"245 120"
+				size		"256 34"
+				ispassword	true
+			}
+
+			// ===================
+			// MORALE
+			// ===================
+			string morale_str
+			{
+				string		"_Enable morale states:"
+				pos			"0 180"
+				size		"245 20"
+			}
+			CheckBox morale_value
+			{
+				current		*cvar:sv_enablemorale
+				pos			"481 181"
+				size		"20 18"
+			}
+			// =======================
+			// ALIEN RUSH
+			// =======================
+			string alienrush_str
+			{
+				string		"_Alien rush:"
+				pos			"0 205"
+				size		"245 20"
+				tooltip		"_Enemies respawn when killed."
+				visiblewhen "*cvar:ai_multiplayeraliens >= 1"
+			}
+			CheckBox alienrush_value
+			{
+				current		*cvar:g_endlessaliens
+				pos			"481 206"
+				size		"20 18"
+				visiblewhen "*cvar:ai_multiplayeraliens >= 1"
+			}
+
+			// ===================
+			// MAXCLIENTS
+			// ===================
+			string maxclients_str
+			{
+				string		"_Max. clients:"
+				tooltip		"_Sets the max allowed clients to connect"
+				pos			"0 230"
+				size		"300 20"
+			}
+			string maxclients_value
+			{
+				string		*cvar:sv_maxclients
+				pos			"431 230"
+				size		"50 20"
+				contentalign	ALIGN_UC
+			}
+			Spinner maxclients_change
+			{
+				current		*cvar:sv_maxclients
+				pos			"486 230"
+				min			2
+				max			16
+				delta		1
+			}
+
+			// ===================
+			// MAXSOLDIER PER TEAM
+			// ===================
+			string maxperplayer_str
+			{
+				string		"_Max. soldiers per team:"
+				tooltip		"_Sets the max allowed soldiers per team"
+				pos			"0 250"
+				size		"300 20"
+			}
+			string maxperplayer_value
+			{
+				string		*cvar:sv_maxsoldiersperteam
+				pos			"431 250"
+				size		"50 20"
+				contentalign	ALIGN_UC
+			}
+			Spinner maxperplayer_change
+			{
+				current		*cvar:sv_maxsoldiersperteam
+				pos			"486 250"
+				min			1
+				max			12
+				delta		1
+			}
+
+			// =====================
+			// MAXSOLDIER PER PLAYER
+			// =====================
+			string maxsoldierperplayer_str
+			{
+				string		"_Max. soldiers per player:"
+				tooltip		"_Sets the max allowed soldiers per player when in teamplay"
+				pos			"0 270"
+				size		"300 20"
+			}
+			string maxsoldierperplayer_value
+			{
+				string		*cvar:sv_maxsoldiersperplayer
+				pos			"431 270"
+				size		"50 20"
+				contentalign	ALIGN_UC
+			}
+			Spinner maxsoldierperplayer_change
+			{
+				current		*cvar:sv_maxsoldiersperplayer
+				pos			"486 270"
+				min			1
+				max			12
+				delta		1
+			}
+
+			// ===================
+			// MAX PLAYER PER TEAM
+			// max is half of sv_maxclients
+			// ===================
+			string server_maxplayerperteam_str
+			{
+				string		"_Max. human players per team:"
+				pos			"0 290"
+				size		"300 20"
+			}
+			string server_maxplayerperteam_value
+			{
+				string		*cvar:sv_maxplayersperteam
+				pos			"431 290"
+				size		"50 20"
+				contentalign	ALIGN_UC
+			}
+			Spinner maxplayersperteam_change
+			{
+				current		*cvar:sv_maxplayersperteam
+				pos			"486 290"
+				min			1
+				max			8
+				delta		1
+			}
+
+			// ===================
+			// AI_NUMACTORS
+			// ===================
+			string ai_multiplayeraliens_str
+			{
+				string		"_Max. AI actors:"
+				tooltip		"_Max AI actors for teamplay mode"
+				pos			"0 310"
+				size		"300 20"
+			}
+			string ai_multiplayeraliens_value
+			{
+				string		*cvar:ai_multiplayeraliens
+				pos			"431 310"
+				size		"50 20"
+				contentalign	ALIGN_UC
+			}
+			Spinner ai_multiplayeraliens_change
+			{
+				current		*cvar:ai_multiplayeraliens
+				pos			"486 310"
+				min			0
+				max			8
+				delta		1
+			}
+
+			// TODO: Allow to set this to 0 to deactivate the round time limit
+			// ===================
+			// ROUND TIMELIMIT
+			// ===================
+			string timelimit_str
+			{
+				string		"_Round time limit in seconds:"
+				pos			"0 330"
+				size		"250 20"
+			}
+			string timelimit_value
+			{
+				string		*cvar:sv_roundtimelimit
+				pos			"431 330"
+				size		"50 20"
+				contentalign	ALIGN_UC
+			}
+			Spinner timelimit_change
+			{
+				current		*cvar:sv_roundtimelimit
+				pos			"486 330"
+				min			30
+				max			500
+				delta		5
+			}
+
+			MainMenuBtn btn_server
+			{
+				string		"_START SERVER"
+				size		"250 30"
+				pos			"260 375"
+				onClick		{ cmd "mp_startserver;" }
+			}
+		}
+
+		panel mp_team_slots
+		{
+			{
+				invis	true
+				pos		"0 0"
+				size	"510 435"
+			}
+
+			string header
+			{
+				pos		"0 0"
+				size	"510 30"
+				bgcolor	"0.527 0.6 0.21 0.2"
+				color	"0.56 0.81 0.75 1"
+				string	"_Teams"
+				font	"f_menubig"
+				contentalign	ALIGN_CC
+			}
+
+			// ================
+			// save team slots
+			// ================
+			cmpLoadSlots slots
+			{
+				pos		"1 30"
+			}
+
+			MainMenuBtn button_new
+			{
+				pos	"260 405"
+				size "250 30"
+				onClick	{
+					cmd "ui_push game_team_new_popup;"
+					*node:root.leftpan.mp_team_list.button_save@disabled = false
+				}
+				tooltip	"_Generate New Team"
+				string	"_GENERATE"
+			}
+		}
+
+		panel mp_servers
+		{
+			{
+				invis	true
+				pos		"0 0"
+				size	"510 435"
+			}
+
+			MainMenuTab button_serverbrowser_refresh
+			{
+				string		"_REFRESH"
+				pos			"13 0"
+				onClick		{ cmd "pingservers refresh;" }
+			}
+
+			string status_str
+			{
+				string		"_Serverfilter:"
+				pos			"150 7"
+				size		"150 20"
+			}
+
+			string status_value
+			{
+				string		*cvar:mn_serverliststr
+				pos			"300 7"
+				size		"150 20"
+				contentalign	ALIGN_CR
+			}
+
+			button status_dec
+			{
+				pos			"455 7"
+				size		"16 16"
+				icon		"icons/arrow_left"
+				onMouseEnter { *node:this@icon = "icons/arrow_left_on" }
+				onMouseLeave { *node:this@icon = "icons/arrow_left" }
+				onClick		{
+					*cvar:cl_serverlist = ((*cvar:cl_serverlist - 1) % 3)
+					if ( *cvar:cl_serverlist < 0 ) {
+						*cvar:cl_serverlist = 2
+					}
+					call *node:root.set_mn_serverliststr_from_id( *cvar:cl_serverlist )
+					cmd "pingservers refresh;"
+				}
+			}
+
+			button status_inc
+			{
+				pos			"470 7"
+				size		"16 16"
+				icon	"icons/arrow_right"
+				onMouseEnter { *node:this@icon = "icons/arrow_right_on" }
+				onMouseLeave { *node:this@icon = "icons/arrow_right" }
+				onClick		{
+					*cvar:cl_serverlist = ((*cvar:cl_serverlist + 1) % 3)
+					call *node:root.set_mn_serverliststr_from_id( *cvar:cl_serverlist )
+					cmd "pingservers refresh;"
+				}
+			}
+
+			// servers_click is CL_ServerListClick_f in cl_main.c
+			/* textlist using tabbed text */
+			text servers
+			{
+				pos			"13 32"
+				width		"469"
+				lineheight	20
+				tabwidth	48
+				font		"f_verysmall"
+				mousefx		true
+				border		2
+				bordercolor	"0.56 0.81 0.76 1"
+				padding		10
+				bgcolor		"0.3 0.3 0.3 0.4"
+				rows		"16"
+				dataid		TEXT_LIST
+				onClick		{ cmd "servers_click <lineselected>;" }
+				onRClick	{ cmd "pingservers;" }
+				onViewChange {
+					*node:parent.servers_scroll@fullsize = <fullsize>
+					*node:parent.servers_scroll@current = <viewpos>
+					*node:parent.servers_scroll@viewsize = <viewsize>
+				}
+			}
+
+			vscrollbar servers_scroll {
+				image		"ui/scrollbar_v"
+				pos			"485 32"
+				height		"320"
+				current		0
+				hidewhenunused	true
+				viewsize	18
+				fullsize	18
+				onChange	{ *node:parent.servers@viewpos = <current> }
+			}
+
+			MainMenuBtn button_inet_connect_to_ip
+			{
+				string		"_CONNECT"
+				pos			"260 405"
+				size		"250 30"
+				onClick		{ cmd "server_info *cvar:mn_server_ip;" }
+			}
+
+			// ===================
+			// connect_to_ip
+			// ===================
+			string current_inet_connect_to_ip
+			{
+				string		"_Connect to IP"
+				pos			"13 372"
+				size		"256 20"
+			}
+
+			TextEntry slot_ip
+			{
+				string		*cvar:mn_server_ip
+				font		"f_verysmall"
+				pos			"260 365"
+				size		"222 34"
+			}
+
+		}
+
+		MainMenuExitBtn btn_back
+		{
+			{
+				size	"250 30"
+				pos		"0 405"
+				string		"_BACK"
+				onClick		{ cmd "ui_pop;" }
+			}
+
+		}
+	}
+
+	string firewall_str
+	{
+		string		"_Make sure that you've opened the TCP port 27910 in your firewall settings"
+		pos			"112 30"
+		size		"800 60"
+		color		"1 0 0 1"
+		longlines	LONGLINES_WRAP
+		contentalign	ALIGN_UC
+		font		"f_small"
+	}
+
+	fuzzyScreen overlay { }
+
+	func mp_create_toggle
+	{
+		*node:root.leftpan.btn_create@bgcolor	=	"0.4 0.515 0.5 1"
+		*node:root.leftpan.btn_create@color		=	"0 0 0 0.9"
+
+		*node:root.leftpan.btn_team@bgcolor		=	"0.4 0.515 0.5 0.25"
+		*node:root.leftpan.btn_team@color		=	"1 1 1 0.5"
+
+		*node:root.leftpan.btn_join@bgcolor		=	"0.4 0.515 0.5 0.25"
+		*node:root.leftpan.btn_join@color		=	"1 1 1 0.5"
+
+		*node:root.leftpan.map_opts@invis		=	false
+		*node:root.leftpan.mp_team_list@invis	=	true
+		*node:root.leftpan.mp_bookmarks@invis	=	true
+
+		*node:root.rightpan.mp_game_opts@invis	=	false
+		*node:root.rightpan.mp_team_slots@invis	=	true
+		*node:root.rightpan.mp_servers@invis	=	true
+
+		cmd "killserver;set sv_maxplayersperteam 8;set sv_roundtimelimit 0;set mn_serverday 1;"
+		cmd "mp_init_ui;mn_getmaps;"
+	//	cmd "ui_resetdata TEXT_STANDARD;"
+		cmd "define g_endlessaliens 0;"
+	}
+
+	func mp_team_toggle
+	{
+		*node:root.leftpan.btn_create@bgcolor	=	"0.4 0.515 0.5 0.25"
+		*node:root.leftpan.btn_create@color		=	"1 1 1 0.5"
+
+		*node:root.leftpan.btn_team@bgcolor		=	"0.4 0.515 0.5 1"
+		*node:root.leftpan.btn_team@color		=	"0 0 0 0.9"
+
+		*node:root.leftpan.btn_join@bgcolor		=	"0.4 0.515 0.5 0.25"
+		*node:root.leftpan.btn_join@color		=	"1 1 1 0.5"
+
+		*node:root.leftpan.map_opts@invis		=	true
+		*node:root.leftpan.mp_team_list@invis	=	false
+		*node:root.leftpan.mp_bookmarks@invis	=	true
+
+		*node:root.rightpan.mp_game_opts@invis	=	true
+		*node:root.rightpan.mp_team_slots@invis	=	false
+		*node:root.rightpan.mp_servers@invis	=	true
+
+		cmd "game_teamcomments;"
+	}
+
+	func mp_join_toggle
+	{
+		*node:root.leftpan.btn_create@bgcolor	=	"0.4 0.515 0.5 0.25"
+		*node:root.leftpan.btn_create@color		=	"1 1 1 0.5"
+
+		*node:root.leftpan.btn_team@bgcolor		= 	"0.4 0.515 0.5 0.25"
+		*node:root.leftpan.btn_team@color		=	"1 1 1 0.5"
+
+		*node:root.leftpan.btn_join@bgcolor		=	"0.4 0.515 0.5 1"
+		*node:root.leftpan.btn_join@color		=	"0 0 0 0.9"
+
+		*node:root.leftpan.map_opts@invis		=	true
+		*node:root.leftpan.mp_team_list@invis	=	true
+		*node:root.leftpan.mp_bookmarks@invis	=	false
+
+		*node:root.rightpan.mp_game_opts@invis	=	true
+		*node:root.rightpan.mp_team_slots@invis	=	true
+		*node:root.rightpan.mp_servers@invis	=	false
+
+		cmd "check_bookmarks;"
+		*cvar:cl_serverlist = 0
+		cmd "pingservers refresh;"
+		call *node:root.set_mn_serverliststr_from_id( *cvar:cl_serverlist )
+	}
+
+	func set_mn_serverliststr_from_id {
+		if (<1> == 0) {
+			*cvar:mn_serverliststr = "_All"
+		} elif (<1> == 1) {
+			*cvar:mn_serverliststr = "_Free"
+		} elif (<1> == 2) {
+			*cvar:mn_serverliststr = "_Playing"
+		} else {
+			*cvar:mn_serverliststr = "_Invalid"
+		}
+	}
+
+	confunc check_bookmarks {
+		*cvar:i = 0
+		while ( *cvar:i <= 15 ) {
+			if ( *cvar:adr<cvar:i> ne "" ) {
+				*node:root.leftpan.mp_bookmarks.adr<cvar:i>.resetadr@invis = false
+				*node:root.leftpan.mp_bookmarks.adr<cvar:i>.adr@invis = false
+				*node:root.leftpan.mp_bookmarks.adr<cvar:i>.adr@string = *cvar:adr<cvar:i>
+			} else {
+				*node:root.leftpan.mp_bookmarks.adr<cvar:i>.resetadr@invis = true
+				*node:root.leftpan.mp_bookmarks.adr<cvar:i>.adr@invis = true
+			}
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
+	}
+
+	confunc game_addmode_multiplayer
+	{
+		// TODO: use this to support several multiplayer game types
+	}
+
+	func onWindowOpened
+	{
+		cmd "game_setmode multiplayer;"
+		cmd	"game_teamcomments;define cl_teamdef phalanx;"
+		call *node:root.mp_join_toggle
+	}
+
+}

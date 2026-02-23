@@ -1,0 +1,62 @@
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 26 26 4 ) ( 6 26 4 ) ( 6 6 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 6 6 34 ) ( 6 26 34 ) ( 26 26 34 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 16 26 24 ) ( 16 26 4 ) ( 26 26 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 20 25 24 ) ( 20 25 4 ) ( 29 21 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 23 23 24 ) ( 23 23 4 ) ( 30 16 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 25 20 24 ) ( 25 20 4 ) ( 29 11 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 26 16 24 ) ( 26 16 4 ) ( 26 6 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 25 12 24 ) ( 25 12 4 ) ( 21 3 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 23 9 24 ) ( 23 9 4 ) ( 16 2 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 20 7 24 ) ( 20 7 4 ) ( 11 3 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 16 6 24 ) ( 16 6 4 ) ( 6 6 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 12 7 24 ) ( 12 7 4 ) ( 3 11 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 9 9 24 ) ( 9 9 4 ) ( 2 16 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 7 12 24 ) ( 7 12 4 ) ( 3 21 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 6 16 24 ) ( 6 16 4 ) ( 6 26 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 7 20 24 ) ( 7 20 4 ) ( 11 29 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 9 23 24 ) ( 9 23 4 ) ( 16 30 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 12 25 24 ) ( 12 25 4 ) ( 21 29 4 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+}
+// brush 1
+{
+( 26 26 4 ) ( 6 26 4 ) ( 6 6 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 6 6 34 ) ( 6 26 34 ) ( 26 26 34 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 16 26 24 ) ( 16 26 4 ) ( 26 26 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 20 25 24 ) ( 20 25 4 ) ( 29 21 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 23 23 24 ) ( 23 23 4 ) ( 30 16 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 25 20 24 ) ( 25 20 4 ) ( 29 11 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 26 16 24 ) ( 26 16 4 ) ( 26 6 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 25 12 24 ) ( 25 12 4 ) ( 21 3 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 23 9 24 ) ( 23 9 4 ) ( 16 2 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 20 7 24 ) ( 20 7 4 ) ( 11 3 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 16 6 24 ) ( 16 6 4 ) ( 6 6 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 12 7 24 ) ( 12 7 4 ) ( 3 11 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 9 9 24 ) ( 9 9 4 ) ( 2 16 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 7 12 24 ) ( 7 12 4 ) ( 3 21 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 6 16 24 ) ( 6 16 4 ) ( 6 26 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 7 20 24 ) ( 7 20 4 ) ( 11 29 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 9 23 24 ) ( 9 23 4 ) ( 16 30 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+( 12 25 24 ) ( 12 25 4 ) ( 21 29 4 ) tex_common/lightclip 0 0 0 0.25 0.25 589568 0 0
+}
+// brush 2
+{
+( 20 20 64 ) ( 20 12 64 ) ( 12 20 64 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 20 20 32 ) ( 12 20 32 ) ( 20 20 4 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 20 20 32 ) ( 20 20 4 ) ( 20 12 32 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 12 12 0 ) ( 20 12 0 ) ( 12 20 0 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 12 12 32 ) ( 12 12 60 ) ( 20 12 32 ) tex_common/actorclip 0 48 0 0.25 0.25 130816 0 0
+( 12 12 4 ) ( 12 20 4 ) ( 12 12 32 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/barrel/barrel2.md2"
+"origin" "16 16 4.25"
+"spawnflags" "255"
+}

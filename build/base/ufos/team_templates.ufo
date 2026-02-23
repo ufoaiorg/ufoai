@@ -1,0 +1,270 @@
+//========================================================================
+// List of templates for character generation.
+//========================================================================
+//Description:
+//
+// chrtemplate <template-id> {}
+//	defines a template
+//	rate
+//		only for phalanx soldiers - chance of selecting this template relative to sum of all rates
+//	strength, speed, accuracy, mind, close, assault, sniper, explosive, health
+//		min and max values for the attributes
+//
+//========================================================================
+
+chrtemplate soldier {
+	rate	100
+	strength	"30 40"
+	speed	"15 25"
+	accuracy	"20 30"
+	mind	"20 35"
+	close	"15 25"
+	assault	"15 25"
+	sniper	"15 25"
+	explosive	"15 25"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"90 110"
+}
+
+chrtemplate pilot {
+	strength	"0 0"
+	speed		"0 0"
+	accuracy	"0 0"
+	mind		"0 0"
+	close		"0 0"
+	assault	"0 0"
+	sniper	"0 0"
+	explosive	"0 0"
+	piloting	"10 16"
+	targeting	"10 16"
+	evading		"10 16"
+	health		"40 50"
+}
+
+chrtemplate civilian {
+	strength	"15 20"
+	speed	"5 10"
+	accuracy	"10 15"
+	mind	"10 15"
+	close	"5 10"
+	assault	"5 10"
+	sniper	"5 10"
+	explosive	"5 10"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"20 30"
+}
+
+chrtemplate alien_taman_light {
+	strength	"20 20"
+	speed	"25 35"
+	accuracy	"30 40"
+	mind	"50 85"
+	close	"35 50"
+	assault	"35 50"
+	sniper	"35 50"
+	explosive	"35 50"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"100 130"
+}
+
+chrtemplate alien_taman {
+	strength	"38 38"
+	speed	"25 35"
+	accuracy	"30 40"
+	mind	"50 85"
+	close	"35 50"
+	assault	"35 50"
+	sniper	"35 50"
+	explosive	"35 50"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"100 130"
+}
+
+chrtemplate alien_taman_heavy {
+	strength	"60 60"
+	speed	"25 35"
+	accuracy	"30 40"
+	mind	"50 85"
+	close	"35 50"
+	assault	"35 50"
+	sniper	"35 50"
+	explosive	"35 50"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"100 130"
+}
+
+chrtemplate alien_ortnok {
+	strength	"60 80"
+	speed	"20 30"
+	accuracy	"30 45"
+	mind	"20 40"
+	close	"35 50"
+	assault	"35 50"
+	sniper	"35 50"
+	explosive	"35 50"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"150 190"
+}
+
+chrtemplate alien_shevaar {
+	strength	"45 55"
+	speed	"30 40"
+	accuracy	"30 50"
+	mind	"30 60"
+	close	"35 50"
+	assault	"35 50"
+	sniper	"35 50"
+	explosive	"35 50"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"120 160"
+}
+
+chrtemplate alien_blood {
+	strength	"55 55"
+	speed	"50 50"
+	accuracy	"50 50"
+	mind	"50 50"
+	close	"50 50"
+	assault	"50 50"
+	sniper	"50 50"
+	explosive	"50 50"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"150 150"
+}
+
+chrtemplate alien_hovernet {
+	strength	"55 55"
+	speed	"70 70"
+	accuracy	"30 30"
+	mind	"50 50"
+	close	"35 35"
+	assault	"35 35"
+	sniper	"35 35"
+	explosive	"35 35"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"100 100"
+}
+
+chrtemplate robot {
+	strength	"90 90"
+	speed	"70 70"
+	accuracy	"30 30"
+	mind	"0 0"
+	close	"35 35"
+	assault	"35 35"
+	sniper	"35 35"
+	explosive	"35 35"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"200 200"
+}
+
+// For multiplayer characters ONLY! Keep rate set to 0!
+chrtemplate soldier_mp {
+	rate 0
+	strength	"30 55"
+	speed	"25 55"
+	accuracy	"20 60"
+	mind	"30 75"
+	close	"20 60"
+	assault	"20 60"
+	sniper	"20 60"
+	explosive	"20 60"
+	piloting	"0 0"
+	targeting	"0 0"
+	evading	"0 0"
+	health	"80 130"
+}
+
+//========================================================================
+// List of body definitions.
+//========================================================================
+//Description:
+//
+// bodydef <id> {}
+//	defines a body type
+//	bodypart <id> {}
+//	 defines a part of the body
+//		name
+//			Translatable name for the body part
+//		hit_area
+//			Defines the chances to hit this part of the body
+//			First number is the chance this part will be hit from the front or back (as long as the impact is at the correct height -- see the last two numbers)
+//			Second number same as above, but for the sides
+//			Third number is the heigth of this body part, given as a fraction of the character's bounding box
+//			Fourth number is the vertical offset at which this part 'starts', again given as a fraction of the bounding box
+//		wound_threshold
+//			Damage needed before this part is considered wounded (% of max HP)
+//		penalty
+//			Penalties received when this part is wounded, number is the median penalty
+//			(a wound worth 50% of character's max HP would have the penalty listed -- adjusted linearly according with the actual damage recieved)
+//			Valid penalties:
+//				accuracy: reduced accuracy (%)
+//				detection: reduced detection range (%)
+//				shooting_tu: increased shooting TU cost (%)
+//				reaction_time: increased TUs needed to trigger reaction fire (%)
+//				movement_tu: increased movement TU cost (absolute number per tile moved)
+//				max_tu: reduced max TU (%)
+//
+//========================================================================
+
+bodydef default_unipart {
+	bodypart default_body {
+		name "_Body"
+		hit_area "1 1 1 0"
+		wound_threshold 10
+		penalty (max_tu 10)
+	}
+}
+
+bodydef humanoid_standard {
+	bodypart humanoid_torso {
+		name "_Torso"
+		hit_area "1 0.3 0.4 0.47"
+		bleeding_rate 10
+		wound_threshold 10
+		penalty (shooting_tu 25)
+	}
+	bodypart humanoid_legs {
+		name "_Legs"
+		hit_area "1 1 0.47 0"
+		bleeding_rate 10
+		wound_threshold 10
+		penalty (movement_tu 1)
+	}
+	bodypart humanoid_arms {
+		name "_Arms"
+		hit_area "0 0.7 0.4 0.47"
+		bleeding_rate 10
+		wound_threshold 10
+		penalty (accuracy 50)
+		penalty (shooting_tu 25)
+	}
+	bodypart humanoid_head {
+		name "_Head"
+		hit_area "1 1 0.13 0.87"
+		bleeding_rate 10
+		wound_threshold 10
+		penalty (accuracy 50)
+		penalty (detection 50)
+	}
+}

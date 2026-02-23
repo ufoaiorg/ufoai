@@ -1,0 +1,339 @@
+sequence intro // Last change 25-07-2009 by Vio
+{
+	animspeed 100
+
+	precache pics (
+		"phalanx_badge"
+		"phalanx_earth"
+		"phalanx_lance_left"
+		"phalanx_lance_right"
+		"geoscape/map_earth_night"
+		"geoscape/mission"
+	)
+
+	//fitting music, deactivate for geoscape track
+	music "PsymongN5"
+
+	obj2d i_background
+	{
+		image	"pics/geoscape/map_earth_night"
+		pos	"-900 -50"
+		//speed	"0 0"
+		color "1 1 1 0"
+		fade "0 0 0 0.2"
+	}
+	wait 5.5
+
+	camera cam1
+	{
+		zoom	2.0
+		angles	"20 240 0"
+		dist	500
+	}
+
+	obj2d i_sentence1
+	{
+		text	"*msgid:intro_sentence1"
+		pos		"512 100"
+		align	"uc"
+		color	"1 1 1 0"
+		fade	"0 0 0 0.5"
+		speed	"0 0"
+		relative	false
+	}
+	wait 20 //4 lines
+
+	obj2d i_sentence2
+	{
+		text	"*msgid:intro_sentence2"
+		pos		"512 120"
+		align	"uc"
+		color	"1 1 1 0"
+		fade	"0 0 0 0.5"
+		speed	"0 0"
+		relative	true
+	}
+	wait 52 //11 lines, abbreviated
+
+	obj2d i_sentence3
+	{
+		text	"*msgid:intro_sentence3"
+		pos		"512 140"
+		align	"uc"
+		color	"1 1 1 0"
+		fade	"0 0 0 0.5"
+		relative	true
+	}
+	wait 5 //1 line
+
+	wait 5.4 //16 lines total -1
+
+
+	obj2d i_sentence1
+	{
+		fade "0 0 0 -2"
+	}
+	obj2d i_sentence2
+	{
+		fade "0 0 0 -2"
+	}
+	obj2d i_sentence3
+	{
+		fade "0 0 0 -2"
+	}
+	wait 1
+	rem i_sentence1
+	rem i_sentence2
+	rem i_sentence3
+
+
+	music "Crystan-IntroSad"
+	wait 2
+
+	obj2d i_xmumbai
+	{
+		image	"pics/geoscape/mission"
+		pos	"532 346"
+		color "1 1 1 0"
+		fade "0 0 0 5"
+	}
+
+	wait 1
+
+	obj2d i_sentence4
+	{
+		text	"*msgid:intro_sentence4"
+		pos		"512 100"		align	"uc"
+		color	"1 1 1 0"
+		fade "0 0 0 0.5"
+		speed	"0 0"
+		relative	true
+	}
+	wait 21 //7 lines
+
+	obj2d i_xmumbai
+	{
+		fade "0 0 0 -0.1"
+	}
+
+	wait 14 // now 35
+
+	obj2d i_sentence5
+	{
+		text	"*msgid:intro_sentence5"
+		pos		"512 120"		align	"uc"
+		color	"1 1 1 0"
+		fade "0 0 0 0.5"
+		speed	"0 0"
+		relative	true
+	}
+
+	wait 8 // 7 lines
+
+	obj2d i_xbonn // timed with Sullencity sirens
+	{
+		image	"pics/geoscape/mission"
+		pos	"163 169"
+		fade "0 0 0 -0.05"
+	}
+
+	wait 4.5
+
+	obj2d i_xjohannes
+	{
+		image	"pics/geoscape/mission"
+		pos	"276 603"
+		fade "0 0 0 -0.05"
+	}
+
+	wait 9
+
+	obj2d i_xbangkok
+	{
+		image	"pics/geoscape/mission"
+		pos	"688 376"
+		fade "0 0 0 -0.05"
+	}
+
+	wait 13.5 // now 35
+	wait 5.6 //14 lines total -1
+
+	obj2d i_sentence4
+	{
+		fade "0 0 0 -2"
+	}
+	obj2d i_sentence5
+	{
+		fade "0 0 0 -2"
+	}
+	wait 1
+
+	rem i_sentence4
+	rem i_sentence5
+	rem i_xmumbai
+	rem i_xbonn
+	rem i_xjohannes
+	rem i_xbangkok
+
+	wait 0 //music cutoff adjust
+
+
+	music "space"
+	wait 3
+
+	obj2d i_sentence6
+	{
+		text	"*msgid:intro_sentence6"
+		pos		"512 100"		align	"uc"
+		color	"1 1 1 0"
+		fade "0 0 0 0.5"
+		speed	"0 0"
+		relative	true
+	}
+	wait 13 // 2.5 lines
+
+	obj2d i_sentence7
+	{
+		text	"*msgid:intro_sentence7"
+		pos		"512 120"		align	"uc"
+		color	"1 1 1 0"
+		fade "0 0 0 0.5"
+		speed	"0 0"
+		relative	true
+	}
+	wait 17 // 3.5 lines
+
+	obj2d i_sentence8
+	{
+		text	"*msgid:intro_sentence8"
+		pos	"512 140"		align	"uc"
+		color	"1 1 1 0"
+		fade "0 0 0 0.5"
+		speed	"0 0"
+		relative	true
+	}
+
+	wait 14 // 3 lines
+
+	obj2d i_phalanx-lance-r
+	{
+		image	"pics/phalanx_lance_right"
+		pos	"1050 1039"
+		color "1 1 1 0"
+		relative false
+	}
+
+	obj2d i_phalanx-lance-l
+	{
+		image	"pics/phalanx_lance_left"
+		pos	"-225 1039"
+		color "1 1 1 0"
+		relative false
+	}
+
+	obj2d i_phalanxlogo
+	{
+		image	"pics/phalanx_earth"
+		pos	"384 500"
+		speed "0 -16"
+		color "1 1 1 0"
+		fade "0 0 0 0.05"
+		relative false
+	}
+
+	wait 1 // now 15
+	wait 3 // 10 lines total -1
+
+	obj2d i_sentence6
+	{
+		fade "0 0 0 -2"
+	}
+	obj2d i_sentence7
+	{
+		fade "0 0 0 -2"
+	}
+	obj2d i_sentence8
+	{
+		fade "0 0 0 -2"
+	}
+	wait 2
+
+	rem i_sentence6
+	rem i_sentence7
+	rem i_sentence8
+
+	obj2d i_background
+	{
+		fade "0 0 0 -0.1"
+	}
+
+	wait 10
+
+	obj2d i_phalanxlogo
+	{
+		speed "0 0"
+	}
+	wait 1
+
+	obj2d i_phalanx-lance-r
+	{
+		image	"pics/phalanx_lance_right"
+		pos	"1020 1039"
+		speed "-400 -500"
+		color "1 1 1 0"
+		fade "0 0 0 1"
+		relative false
+	}
+
+	obj2d i_phalanx-lance-l
+	{
+		image	"pics/phalanx_lance_left"
+		pos	"-250 1039"
+		speed "400 -500"
+		color "1 1 1 0"
+		fade "0 0 0 1"
+		relative false
+	}
+
+	rem i_background
+
+	wait 0.4
+
+	sound "seq/sword-fly"
+
+	wait 1.2
+
+	obj2d i_phalanx-lance-r
+	{
+		speed "0 0"
+	}
+
+	obj2d i_phalanx-lance-l
+	{
+		speed "0 0"
+	}
+
+	sound "seq/sword-hit"
+
+	wait 2.4
+
+	obj2d i_phalanxlogo
+	{
+		fade "0 0 0 -1"
+	}
+
+	obj2d i_phalanx-lance-l
+	{
+		fade "0 0 0 -1"
+	}
+
+	obj2d i_phalanx-lance-r
+	{
+		fade "0 0 0 -1"
+	}
+
+	music "van_geoscape"
+	wait 4
+
+	rem i_phalanxlogo
+}

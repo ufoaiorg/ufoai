@@ -1,0 +1,463 @@
+// =================================
+// INTERFACE FOR ALL AIRCRAFT MENUS
+// =================================
+
+component aircraftListItem extends panel
+{
+	{
+		size		"250 25"
+	}
+	data idx
+	{
+		string		""
+	}
+	string name
+	{
+		pos			"0 0"
+		color		"0.56 0.81 0.76 1"
+		size		"150 25"
+		onClick {
+			cmd "ui_aircraft_select <node:parent.idx@string>;"
+		}
+	}
+	image aircraft_healthbarborder {
+		pos 	"160 5"
+		size	"106 7"
+		src 	"ui/bar_border"
+	}
+	bar aircraft_healthbar {
+		{
+			pos			"161 6"
+			size		"104 5"
+			min			0
+			max			196
+			readonly	true
+		}
+		// <1> aircraft health (from cvar)
+		func setValues {
+			*node:parent@tooltip = "<1>%"
+			*node:parent@current = ( ( <1> / 100 ) * <node:parent@max> )
+			if ( <1> <= 33 ) {
+				*node:parent@color = "1 .0 .0 1"
+			} elif ( <1> <= 75 ) {
+				*node:parent@color = "1 .874 .0 1"
+			} else {
+				*node:parent@color = ".0 1 .0 1"
+			}
+		}
+	}
+
+	string aircraft_status
+	{
+		pos			"277 0"
+		size		"250 20"
+		contentalign	ALIGN_UL
+	}
+
+	button aircraft_return
+	{
+		{
+			pos			"540 0"
+			size		"16 16"
+			icon		"icons/aircraft_return"
+		}
+		func setToStart {
+			*node:parent@tooltip = "_Start Aircraft"
+			*node:parent@onClick = { cmd "ui_aircraft_select <node:parent.idx@string>; aircraft_start;" }
+			*node:parent@icon = "icons/aircraft_send"
+		}
+		func setToReturn {
+			*node:parent@tooltip = "_Call back"
+			*node:parent@onClick = { cmd "ui_aircraft_select <node:parent.idx@string>; aircraft_return;" }
+			*node:parent@icon = "icons/aircraft_return"
+		}
+	}
+	string team_hired
+	{
+		pos			"570 0"
+		size		"90 20"
+		contentalign	ALIGN_CL
+		padding		0
+	}
+}
+
+component aircraft_teammember extends panel {
+	{
+		size		"260 25"
+	}
+
+	data id {
+		string		""
+	}
+
+	data status {
+		integer		"0"
+	}
+
+	string name {
+		pos			"0 0"
+		color		"0.56 0.81 0.76 1"
+		size		"230 25"
+		onClick {
+			cmd "aircraft_soldierlist_select <node:parent.id@integer> <node:parent.id@string>;"
+		}
+	}
+
+	CheckBox selected {
+		tooltip		"_Add/remove soldier to the team"
+		pos			"230 0"
+		size		"25 25"
+
+		onChange {
+			cmd "ui_team_assign_ucn <node:parent.id@integer>;"
+			cmd "set_listpanel_name <node:parent.id@string>"	// so ui_team_fill knows where to place them
+			cmd "ui_team_fill \"<node:parent.id@string>\";"
+			cmd "aircraft_soldierlist_select <node:parent.id@integer> <node:parent.id@string>;"
+//			*node:root.base_container.mainBody.actors_background.hiredSoldiers@string = "<cvar:mn_hired_count>/<cvar:mn_hirable_count>"
+		}
+	}
+}
+
+/**
+ * @brief Define interface shared by all aircraft menus.
+ */
+window iaircraft
+{
+	{
+		fill		true
+	}
+
+	BaseContainerPanel base_container
+	{
+		// Aircraft panel
+		panel mainBody
+		{
+			{ size "715 540" }
+			// Title bar
+			panel header
+			{
+				{}
+				string title
+				{
+					string			"_Aircraft"
+				}
+			}
+
+			tab aircraft_navigation {
+				{
+					pos		"5 30"
+					size	"698 39"
+					cvar	*cvar:mn_aircrafttab
+					onChange {
+						cmd "ui_pop; ui_push <cvar:mn_aircrafttab>;"
+					}
+				}
+				option equip {
+					label	"_Equipment"
+					value	"aircraft_equip"
+					icon	"icons/tab_air_equipment"
+				}
+				option soldier {
+					label	"_Soldiers & Pilots"
+					value	"team"
+					icon	"icons/smallhead_soldier"
+				}
+			}
+
+			// ==================
+			// aircraft list
+			// ==================
+
+			panel aircraftlist {
+				{
+					pos			"4 70"
+					size		"707 150"
+					border		"2"
+					bordercolor	"0.527 0.6 0.21 1"
+				}
+
+				data selected
+				{
+					string		""
+				}
+
+				textentry aircraft_selected
+				{
+					string		*cvar:mn_aircraftname
+					tooltip		"_Rename aircraft"
+					pos			"05 14"
+					size		"317 21"
+					font		"f_normal_bold"
+					onChange	{ cmd "ui_aircraft_changename; ui_pop; ui_push <cvar:mn_aircrafttab>;" }
+				}
+				panel aircraftlistNew
+				{
+					pos				"11 53"
+					size			"670 95"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+					onViewChange {
+						*node:parent.aircraftlistNew_scroll@fullsize = <fullsize>
+						*node:parent.aircraftlistNew_scroll@viewsize = <viewsize>
+						*node:parent.aircraftlistNew_scroll@current = <viewpos>
+					}
+				}
+				vscrollbar aircraftlistNew_scroll {
+					image			"ui/scrollbar_v"
+					pos				"681 51"
+					height			"95"
+					current			0
+					viewsize		11
+					fullsize		19
+					hidewhenunused	true
+					onChange {
+						*node:parent.aircraftlistNew@viewpos = <current>
+					}
+				}
+				confunc ui_aircraft_clear {
+					call *node:parent.aircraftlistNew@removeAllchild
+				}
+				confunc ui_aircraft_selected {
+					if ( *node:parent.selected@string ne "" ) {
+						*node:parent.aircraftlistNew.<node:parent.selected@string>.name@color = "0.56 0.81 0.76 1"
+					}
+					*node:parent.selected@string = <1>
+					*node:parent.aircraftlistNew.<node:parent.selected@string>.name@color = "1 1 1 1"
+				}
+
+				string aircraft_health_label
+				{
+					string		"_Health:"
+					pos			"170 35"
+					size		"106 21"
+					contentalign	ALIGN_UL
+					padding		0
+				}
+
+				string aircraft_status_label
+				{
+					string		"_Status:"
+					pos			"290 35"
+					size		"210 21"
+					contentalign	ALIGN_UL
+					padding		0
+				}
+
+				string team_members
+				{
+					string		"_Team:"
+					pos			"580 35"
+					size		"90 20"
+					contentalign	ALIGN_UL
+					padding		0
+				}
+			}
+		}
+	}
+
+	BuildingSpace dropship
+	{
+		{ pos "739 25" }
+
+		button smlicon { icon	"icons/building_hangar" }
+		string label { string	"_Dropship Hangar" }
+		button alert { invis true }
+	}
+	BuildingSpace intercept
+	{
+		{ pos "739 50" }
+
+		button smlicon { icon	"icons/building_intercept" }
+		string label { string	"_Interceptor Hangar" }
+		button alert { invis true }
+	}
+
+	// ==================
+	// aircraft list callback
+	// ==================
+
+	// <1> the aircraft index in the base
+	// <2> the aircraft name
+	// <3> the aircraft health in percent
+	// <4> the aircraft ia in the base = 1, else 0
+	// <5> the aircraft status string
+	// <6> the aircraft team string
+	confunc ui_aircraft_add {
+//		cmd "echo <1> <2> <3> <4> <5> <6>"
+		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew@createChild("<1>", "aircraftListItem")
+		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.idx@string = "<1>"
+		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.name@string = "<2>"
+		call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_healthbar.setValues(<3>)
+		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_status@string = "<5>"
+		if ( <4> > 0 ) {
+			call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_return.setToStart
+		} else {
+			call *node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.aircraft_return.setToReturn
+		}
+		*node:root.base_container.mainBody.aircraftlist.aircraftlistNew.<1>.team_hired@string = "<6>"
+	}
+	/**
+	 * @brief Callback to update the GUI after an aircraft change
+	 */
+	confunc aircraft_change { }
+
+	/**
+	 * @brief Callback to update the GUI when the aircraft status change
+	 */
+	confunc aircraft_status_change { }
+
+	data panelLoc {string ""}
+	// <1> "soldier" or "pilot"
+	confunc set_listpanel_name {
+		if (<1> eq "pilot" ) {
+			*node:root.panelLoc@string = "pilots_background"
+		}
+		else {
+			*node:root.panelLoc@string = "actors_background"
+		}
+	}
+	confunc aircraft_soldierlist_clear {
+		call *node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist@removeAllChild
+		*node:root.pilot_info@invis = true
+		*node:root.team_info@invis = true
+	}
+
+	confunc aircraft_soldierlist_add {
+		call *node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist@createChild("member<1>", "aircraft_teammember")
+		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.id@integer = <1>
+		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.id@string = <2>
+		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@string = <3>
+		*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.selected@current = <4>
+
+		if ( <5> == 1 ) {
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.status@integer = "1"
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@color = "1 0.81 0.76 1"
+		}
+		if ( "<6>" ne "" ) {
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.selected@disabled = true
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@tooltip = "<6>"
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.selected@tooltip = "<6>"
+		}
+		if ( *node:root.selected@integer < 0 ) {
+		//	cmd "aircraft_soldierlist_select <1>;"
+		//	*node:root.selected@integer = <1>
+		}
+	}
+	confunc aircraft_soldierlist_select {
+		// reset the old selection
+//		cmd "echo old type: <node:root.selected@string> nr: <node:root.selected@integer>;"
+		if ( (*node:root.selected@integer >= 0) && (*node:root.selected@string ne "") ) {
+			*node:root.panelLoc@string = "actors_background"
+			if (<node:root.selected@string> eq "pilot" ) {
+				*node:root.panelLoc@string = "pilots_background"
+			}
+			if (*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<node:root.selected@integer>.status@integer == 0) {
+				*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<node:root.selected@integer>.name@color = "0.56 0.81 0.76 1"
+			} else {
+				*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<node:root.selected@integer>.name@color = "1 0.81 0.76 1"
+			}
+//			cmd "echo unhighlighted;"
+		}
+//		cmd "echo old done;"
+
+		// store the new selection
+		*node:root.selected@integer = <1>
+		if (<2> ne "") {
+			*node:root.selected@string = <2>
+		}
+
+		// highlight the new selection
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:root.panelLoc@string = "actors_background"
+			*node:root.pilot_info@invis = true
+			*node:root.team_info@invis = false
+			if (<2> eq "pilot" ) {
+				*node:root.panelLoc@string = "pilots_background"
+				*node:root.team_info@invis = true
+				*node:root.pilot_info@invis = false
+			}
+			*node:root.base_container.mainBody.<node:root.panelLoc@string>.soldierlist.member<1>.name@color = "1 1 1 1"
+			cmd "ui_team_select_ucn <node:root.selected@integer>;"
+		}
+	}
+
+	confunc aircraft_checkbuttons
+	{
+		if ( *cvar:mn_aircraftinbase > 0 ) {
+			*node:root.base_container.mainBody.aircraft_navigation@disabled = false
+
+			*cvar:mn_aircraft_model_display = *cvar:mn_aircraft_model
+		} else {
+			*node:root.base_container.mainBody.aircraft_navigation@disabled = true
+
+			*cvar:mn_aircraft_model_display = "<cvar:mn_aircraft_model>_flying"
+		}
+	}
+
+
+	/**
+	 * @brief Reset the cvars for a character.
+	 */
+	confunc reset_character_cvars {
+		/** @todo gui should not manage it -> it should not be here */
+		*cvar:mn_name = ""
+		*cvar:mn_body = ""
+		*cvar:mn_head = ""
+		*cvar:mn_body_skin = ""
+		*cvar:mn_head_skin = ""
+		*cvar:mn_rweapon = ""
+		*cvar:mn_lweapon = ""
+		*cvar:mn_chrmis = ""
+		*cvar:mn_chrkillalien = ""
+		*cvar:mn_chrkillcivilian = ""
+		*cvar:mn_chrkillteam = ""
+		*cvar:mn_chrrank = ""
+		*cvar:mn_chrrank_img = ""
+		*cvar:mn_vpwr = ""
+		*cvar:mn_vpwri = ""
+		*cvar:mn_vspd = ""
+		*cvar:mn_vspdi = ""
+		*cvar:mn_vacc = ""
+		*cvar:mn_vacci = ""
+		*cvar:mn_vmnd = ""
+		*cvar:mn_vmndi = ""
+		*cvar:mn_vcls = ""
+		*cvar:mn_vclsi = ""
+		*cvar:mn_vass = ""
+		*cvar:mn_vassi = ""
+		*cvar:mn_vsnp = ""
+		*cvar:mn_vsnpi = ""
+		*cvar:mn_vexp = ""
+		*cvar:mn_vexpi = ""
+		*cvar:mn_vhp = ""
+		*cvar:mn_vhpi = ""
+		*cvar:mn_vhpmax = 100 /**< must be greater than mn_vhp */
+		*cvar:mn_tpwr = ""
+		*cvar:mn_tspd = ""
+		*cvar:mn_tacc = ""
+		*cvar:mn_tmnd = ""
+		*cvar:mn_tcls = ""
+		*cvar:mn_tass = ""
+		*cvar:mn_tsnp = ""
+		*cvar:mn_texp = ""
+		*cvar:mn_thp = ""
+		*cvar:mn_vpil = ""
+		*cvar:mn_vpili = ""
+		*cvar:mn_tpil = ""
+		*cvar:mn_vtar = ""
+		*cvar:mn_vtari = ""
+		*cvar:mn_ttar = ""
+		*cvar:mn_vevad = ""
+		*cvar:mn_vevadi = ""
+		*cvar:mn_tevad = ""
+	}
+
+	// Back to geoscape
+	Geoscape geoscape_button
+	{
+		onClick			{ cmd "ui_pop; ui_pop;" }
+	}
+
+	// Fuzzy screen effect (see assets.ufo)
+	fuzzyScreen overlay { }
+}

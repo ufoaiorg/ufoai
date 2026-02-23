@@ -1,0 +1,427 @@
+// *********************************
+// Japan
+// *********************************
+
+base japan/ja_
+
+worldspawn {
+	"maxlevel"		"4"
+}
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+
+// a: main
+// b: dropship
+// v: vertical path            (grid32:   -- -- -+ -- ) (leftright)
+// h: horizontal path          (grid32:   -- -+ -- -- ) (updown)
+// 1: tr path
+// 2: rb path
+// 3: bl path
+// 4: lt path
+// g: big horizontal path      (grid32:   ++ -- -- -- ) (updown)
+// f: vertical fence           (grid32:   -- -- -- +- ) (leftright)
+// w: vertical water: top (z0) (grid32:   -+ ++ ++ +- ) (leftright)
+//               bottom (z-40) (grid32:   -- -+ ++ -- )
+
+// aliens	// arc:2, bridge:2, buddha:2, harvester:14, scout:4, f1:2, f2:2, f3:2, f4:2, fill1:2, h1:6, h2:4, h3:6, h4:7, h5:0, p_bl:2, p_br:2, p_btl:2, p_h:2, p_tl:2, p_tr:0, p_v:0, sw:2, w1:0
+
+line vh1234gf
+
+tile +main
+{
+10 6
+
+0      0      0      0      0      0      0      0      0      0
+0      +a     +a     +a     +a     +a     +a     +a     +a     0
+0      b      b      +a     +a     +a     +a     +a     +a     0
+0      b      g      +g     +a     +a     +a     +a     +a     0
+0      b      b      +a     +a     +a     +a     +a     +a     0
+0      0      0      0      0      0      0      0      0      0
+}
+
+
+///** Craft tiles
+///*** PHALANX tiles
+tile +craft_drop_firebird
+{
+4 5
+0      ah14   ah14   0
+af      +b     +b    af
+g      +bg    +bg    g
+af      +b     +b    af
+0      ah23   ah23   0
+}
+
+tile +craft_drop_herakles
+{
+4 5
+0      ah14   ah14   0
+af      +b     +b    af
+g      +bg    +bg    g
+af      +b     +b    af
+0      ah23   ah23   0
+}
+
+tile +craft_drop_raptor
+{
+4 5
+0      ah14   ah14   0
+af      +b     +b    af
+g      +bg    +bg    g
+af      +b     +b    af
+0      ah23   ah23   0
+}
+
+///*** UFOs tiles
+
+tile +craft_ufo_scout
+{
+4 4
+0     ah14      ah14        0
+afv34    +a      +a       afv12
+afv34    +a      +a       afv12
+0     ah23      ah23        0
+}
+
+
+tile +craft_ufo_harvester
+{
+7 6
+0      0      ah14   ah14   ah14   ah14   0
+0      v23     +a     +a     +a     +a     afv12
+af     +v     +a     +a     +a     +a     afv12
+af     +v     +a     +a     +a     +a     afv12
+0      v34     +a     +a     +a     +a     afv12
+0      0      ah23   ah23   ah23   ah23   0
+
+}
+
+
+///** Houses
+tile +h1
+{
+4 5
+0      abh14  abh14  0
+fbav3   +a     +a     abv23
+fba     +a     +f     abv2
+bg     +ag    +hf    h34
+0      bah23  f  0
+}
+
+tile +h2
+{
+5 4
+0      abh14   abh14   abh14   0
+abfv34   +a     +a     +a     abfv12
+abf      +av    +a     +a     abfv12
+0      v14    abh23   abh23   0
+}
+
+tile +h3
+{
+4 4
+0      a      v23    0
+h12    +h    +av    abf12
+af      +a     +a     abfv12
+0      abh23   abh23   0
+}
+
+tile +h4
+{
+4 4
+0      a      v23    0
+h12    +ah    +av    abf12
+abf      +a     +a     abfv12
+0      abh23   abh23   0
+}
+
+tile +h5
+{
+3 3
+0       abh14    0
+abvf34   +ahv    abvf12
+0       abv    0
+}
+
+tile +h6
+{
+4 4
+0          abh14    abh14    0
+abvf1234   +a       +a       abvf1234
+abvf1234   +a       +a       abvf1234
+0          abv14    abv14    0
+}
+
+///** fillers:
+
+tile +fill1
+{
+3 3
+0      abgh14      0
+abfv34     +a      abfv12
+0      abh23      0
+}
+
+tile +fill2
+{
+3 3
+0      abgh14  0
+abfv34 +a     abfv12
+0      abh23   0
+}
+
+tile +fill3
+{
+3 3
+0      abgh14      0
+abfv34  +a      abfv12
+0      abh23      0
+}
+
+tile +fill4
+{
+3 3
+0      abgh14      0
+abfv34     +a      abfv12
+0      abh23      0
+}
+
+///** fences:
+
+// vertical fence with horizontal path and rocks
+tile +f1
+{
+3 3
+0        f      0
+h12      +hf     abv12
+0        f      0
+}
+
+tile +f2
+{
+3 3
+0      f      0
+ba34   +f    abv12
+0      f      0
+}
+
+tile +f3
+{
+3 3
+0      f      0
+abv34  +fa    abv12
+0      abh23  0
+}
+
+tile +f4
+{
+3 3
+0      f      0
+ba34   +f    abv12
+0      f      0
+}
+
+///*** gate
+tile +arc
+{
+3 4
+0      f      0
+ba     +f     abv12
+bg     +gf    abh34
+0      f      0
+}
+
+
+///** paths:
+
+// top-right
+tile +p_tr
+{
+3 3
+0      v      0
+abf     +1      h
+0      ab      0
+}
+
+// bottom-right
+tile +p_br
+{
+3 3
+0      ab      0
+abf     +2      h
+0      v      0
+}
+
+// bottom-left
+tile +p_bl
+{
+3 3
+0      ab      0
+h     +3      abf
+0      v      0
+}
+
+// top-left
+tile +p_tl
+{
+3 3
+0      v      0
+h     +4      abf
+0      ab      0
+}
+
+// t-connector
+
+tile +p_btl
+{
+3 3
+0      v2      0
+h      +34    abf
+0      v1      0
+}
+
+// horizontal
+tile +p_h
+{
+3 3
+0      ab      0
+h12   +h     h34
+0      ab      0
+}
+
+//vertical
+tile +p_v
+{
+3 3
+0      v23      0
+abf     +v       abf
+0      v34      0
+}
+
+
+/// test!
+tile +p_c
+{
+3 3
+0      v23      0
+h12     +1234      h34
+0      v34      0
+}
+
+
+///** waters:
+
+// bridge with horizontal path
+tile +bridge
+{
+3 3
+0      w     0
+h12    +wah    h34
+0      ba     0
+}
+
+
+tile +w1
+{
+3 3
+0       abh14       0
+abfv34    +wa       abfv12
+0         w       0
+}
+
+///** misc tiles
+tile +buddha
+{
+3 4
+0      abh34      0
+ba     +f     abv12
+bg     +gf    abv12
+0      abh23      0
+}
+
+///** tilesets
+tileset fillers {
++fill2
++fill3
++fill4
+}
+
+tileset fences {
++f2
++f4
+}
+
+// ########################################
+// ########### Maps for the game ##########
+
+assembly default
+{
+size "8 4"
+title "_Japan"
++main "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly small
+{
+size "7 5"
+title "_Small eastern park."
++arc      "0 1"
+//+buddha   "0 1"
++h1       "0 1"
++h2       "0 1"
++h3       "0 1"
++h4       "0 1"
++h5       "0 1"
++h6       "0 1"
++f1       "0 2"
++f2       "0 2"
++f3       "0 2"
++bridge   "1 1"
++w1       "1 1"
++p_tr     "0 5"
++p_tl     "0 5"
++p_br     "0 5"
++p_bl     "0 5"
++p_h      "0 10"
++p_v      "0 10"
+tileset fillers "0 10"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
+}
+
+/* the game engine sometime fail to create this assembly
+http://ufoai.org:8010/builders/unittests/builds/244/steps/test%20MapDefTests/logs/stdio
+*/
+assembly large
+{
+size "10 5"
+title         "_Harvester"
++arc          "0 1"
++h1           "0 1"
++h2           "0 1"
++h3           "0 1"
++h4           "0 1"
++h5           "0 1"
++h6           "0 1"
++f1           "0 2"
++f2           "0 2"
++f3           "0 2"
++f4           "0 2"
++bridge       "0 1"
++w1           "0 1"
++p_tr         "0 5"
++p_tl         "0 5"
++p_br         "0 5"
++p_bl         "0 5"
++p_btl        "1 1"
++p_h          "0 10"
++p_v          "0 10"
++fill1        "0 1"
+tileset fillers      "0 12"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_harvester "1 1"
+}
+//*/

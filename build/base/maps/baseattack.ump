@@ -1,0 +1,255 @@
+/// tets assembly for phalanx base.
+
+base b/
+
+tile +aliencont
+{
+6 4
+0  a  a  a  a  0
+a +a +a +a +a  a
+a +a +a +a +a  a
+0  a  a  a  a  0
+}
+
+tile +antimatter
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +base_empty
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +commando
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +drop
+{
+6 4
+0  a  a  a  a  0
+a +a +a +a +a  a
+a +a +a +a +a  a
+0  a  a  a  a  0
+}
+
+tile +empty
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +entrance
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +hospital
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +intercept
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +lab
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +laser
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +missile
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +powerplant
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +quarters
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +radar
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +radar_adv
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +storage
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +workshop
+{
+6 4
+0  a  a  a  a  0
+a +a +a +a +a  a
+a +a +a +a +a  a
+0  a  a  a  a  0
+}
+
+assembly default
+{
+	size "10 10"
+	title "_Home"
+	grid			"2 2"
+	fix +entrance			"8 4"
+	fix +quarters			"6 0"
+	fix +quarters			"6 2"
+	fix +aliencont		"2 8"
+	fix +storage			"8 2"
+	fix +powerplant		"8 0"
+	fix +commando			"4 0"
+	fix +drop					"6 8"
+	fix +intercept		"6 6"
+	fix +workshop			"0 0"
+	fix +radar				"8 6"
+	fix +lab					"2 2"
+	fix +hospital			"4 2"
+
+	+antimatter				"1 1"
+	+base_empty				"0 20"
+	+empty						"0 1"
+	+laser						"1 1"
+	+missile					"1 1"
+	+radar_adv				"1 1"
+}
+
+assembly initial
+{
+	size "10 10"
+	title	"_Home"
+	fix +entrance		"9 5"
+	fix +quarters		"7 1"
+	fix +quarters		"7 3"
+	fix +aliencont		"3 9"
+	fix +storage		"9 3"
+	fix +powerplant		"9 1"
+	fix +commando		"5 1"
+	fix +drop			"7 9"
+	fix +intercept		"7 7"
+	fix +workshop		"1 1"
+	fix +radar			"9 7"
+	fix +lab			"3 3"
+	fix +hospital		"5 3"
+	fix +empty			"1 3"
+	fix +empty			"1 5"
+	fix +empty			"3 5"
+	fix +empty			"5 5"
+	fix +empty			"7 5"
+	fix +empty			"1 7"
+	fix +empty			"3 7"
+	fix +empty			"5 7"
+	fix +empty			"1 9"
+}
+
+assembly random
+{
+	size "10 10"
+	title "_Home"
+	grid	"2 2"
+	+entrance			"1 1"
+	+commando			"1 1"
+	+powerplant			"1 1"
+	+quarters			"1 5"
+	+storage			"1 3"
+	+hospital			"1 1"
+	+radar				"0 1"
+	+radar_adv			"0 1"
+	+intercept			"0 4"
+	+lab				"0 5"
+	+laser				"0 1"
+	+missile			"0 1"
+	+antimatter			"0 1"
+	+aliencont			"0 2"
+	+drop				"0 2"
+	+workshop			"0 5"
+	+base_empty			"0 20"
+	+empty				"0 2"
+}
+
+assembly test
+{
+	size "2 6"
+	title "_Home"
+	grid	"2 2"
+	+commando			"1 1"
+	+powerplant			"1 1"
+	+antimatter			"1 1"
+}
