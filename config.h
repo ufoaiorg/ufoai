@@ -1,67 +1,36 @@
 #pragma once
 #include <SDL_platform.h>
-#include <stdlib.h>
+#include <cstdlib>
 
-#ifndef __LINUX__
-#ifndef __MACOSX__
-#ifndef __WIN64__
-#ifndef __WIN32__
-#ifndef __ANDROID__
-#ifndef EMSCRIPTEN
-#ifndef __IPHONEOS__
-#ifndef __FREEBSD__
-#ifndef __OPENBSD__
-#ifndef PANDORA
+#if !defined(__LINUX__) && !defined(__MACOSX__) && !defined(__WIN64__) \
+	&& !defined(__WIN32__) && !defined(__ANDROID__) && !defined(EMSCRIPTEN) \
+	&& !defined(__IPHONEOS__) && !defined(__FREEBSD__) && !defined(__OPENBSD__) \
+	&& !defined(PANDORA)
 #error The target platform was not found.  Please add to config.h.
 #endif
-#endif
-#endif
-#endif
-#endif
-#endif
-#endif
-#endif
-#endif
-#endif
 
-#ifdef __LINUX__
-#include "linux-config.h"
-#endif
-
-#ifdef __MACOSX__
-#include "darwin-config.h"
-#endif
-
-#ifdef __WIN64__
-#include "mingw64_64-config.h"
-#elif defined __WIN32__
-#ifdef __MINGW64_VERSION_MAJOR
-#include "mingw64-config.h"
-#else
-#include "mingw32-config.h"
-#endif
-#endif
-
-#ifdef EMSCRIPTEN
-#include "html5-config.h"
-#endif
-
-#ifdef __ANDROID__
-#include "android-config.h"
-#endif
-
-#ifdef __IPHONEOS__
-#include "ios-config.h"
-#endif
-
-#ifdef __FREEBSD__
-#include "freebsd-config.h"
-#endif
-
-#ifdef __OPENBSD__
-#include "openbsd-config.h"
-#endif
-
-#ifdef PANDORA
-#include "openpandora-config.h"
+#if defined(__LINUX__)
+#  include "linux-config.h"
+#elif defined(__MACOSX__)
+#  include "darwin-config.h"
+#elif defined(__WIN64__)
+#  include "mingw64_64-config.h"
+#elif defined(__WIN32__)
+#  ifdef __MINGW64_VERSION_MAJOR
+#    include "mingw64-config.h"
+#  else
+#    include "mingw32-config.h"
+#  endif
+#elif defined(EMSCRIPTEN)
+#  include "html5-config.h"
+#elif defined(__ANDROID__)
+#  include "android-config.h"
+#elif defined(__IPHONEOS__)
+#  include "ios-config.h"
+#elif defined(__FREEBSD__)
+#  include "freebsd-config.h"
+#elif defined(__OPENBSD__)
+#  include "openbsd-config.h"
+#elif defined(PANDORA)
+#  include "openpandora-config.h"
 #endif

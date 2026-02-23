@@ -1,41 +1,38 @@
 #pragma once
 
+#include <memory>
+
 template<typename T> class AutoPtr
 {
 	public:
-		explicit AutoPtr (T* const p = 0) :
+		explicit AutoPtr (T* p = nullptr) :
 			p_(p)
 		{
 		}
 
-		~AutoPtr ()
-		{
-			if (p_)
-				delete p_;
-		}
+		~AutoPtr () = default;
+
+		AutoPtr (const AutoPtr&) = delete;
+		AutoPtr& operator = (const AutoPtr&) = delete;
 
 		void deallocate ()
 		{
-			*this = 0;
+			p_.reset();
 		}
 
 		T* release ()
 		{
-			T* const p = p_;
-			p_ = 0;
-			return p;
+			return p_.release();
 		}
 
-		void operator = (T* const p)
+		void operator = (T* p)
 		{
-			if (p_)
-				delete p_;
-			p_ = p;
+			p_.reset(p);
 		}
 
 		T* operator -> () const
 		{
-			return p_;
+			return p_.get();
 		}
 
 		T& operator * () const
@@ -43,19 +40,16 @@ template<typename T> class AutoPtr
 			return *p_;
 		}
 
-		operator bool () const
+		explicit operator bool () const
 		{
-			return p_;
+			return p_ != nullptr;
 		}
 
 		operator T* () const
 		{
-			return p_;
+			return p_.get();
 		}
 
 	private:
-		T* p_;
-
-		AutoPtr (const AutoPtr&); /* no copy */
-		void operator = (AutoPtr&); /* no assignment */
+		std::unique_ptr<T> p_;
 };

@@ -1,9 +1,6 @@
 /**
  * @file
  * @brief Cross-platform type definitions.
- *
- * For compilers that provide it, includes C99 inttypes.h for defining integer types.
- * For those that do not (e.g. MS Visual C), defines integer types with equivalent syntax.
  */
 
 /*
@@ -27,8 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma once
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 #ifndef byte
 typedef uint8_t byte;
@@ -76,16 +73,4 @@ typedef struct ipos3_struct_s {
 
 typedef int32_t actorSizeEnum_t;
 
-#if defined _WIN32
-#	define UFO_SIZE_T "%Iu"
-#else
-#ifdef __cplusplus
-#if __WORDSIZE == 64
-# define UFO_SIZE_T "%lu"
-#else
-# define UFO_SIZE_T "%u"
-#endif
-#else
-# define UFO_SIZE_T "%zu"
-#endif
-#endif
+#define UFO_SIZE_T "%zu"

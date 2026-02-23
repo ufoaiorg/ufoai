@@ -79,10 +79,10 @@ static void MD5Init (struct MD5Context *ctx)
 static void MD5Transform (uint32_t buf[4], uint32_t const in[16])
 {
 
-	register uint32_t a = buf[0];
-	register uint32_t b = buf[1];
-	register uint32_t c = buf[2];
-	register uint32_t d = buf[3];
+	uint32_t a = buf[0];
+	uint32_t b = buf[1];
+	uint32_t c = buf[2];
+	uint32_t d = buf[3];
 
 	MD5STEP(F1, a, b, c, d, in[0] + 0xd76aa478, 7);
 	MD5STEP(F1, d, a, b, c, in[1] + 0xe8c7b756, 12);

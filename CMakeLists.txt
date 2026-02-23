@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.16)
 
 # Project settings
 project(ufoai LANGUAGES NONE)
@@ -54,7 +54,7 @@ if (WIN32 AND CMAKE_SYSTEM_VERSION)
 	add_definitions(-D_WIN32_WINNT=${win_ver})
 endif()
 
-# MSVC2013 conflicts std::min/std::max by including minwindef.h. To avoid that, we can define NOMINMAX
+# MSVC conflicts std::min/std::max by including minwindef.h. To avoid that, we can define NOMINMAX
 if (WIN32 AND MSVC)
 	add_definitions(-DNOMINMAX)
 endif()
@@ -78,12 +78,10 @@ if (NOT CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
 	endforeach(CHAP)
 endif()
 
-# -std=c++11 is bugged on cygwin/mingw
-if (WIN32 AND MINGW)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
-elseif (!MSVC)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-endif()
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_custom_target(tools) # Complex target for console developer tools
 

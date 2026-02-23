@@ -6,10 +6,8 @@
  * Ensures that a mutex is released once the scope is left
  */
 class ScopedMutex {
-private:
-	SDL_mutex* _mutex;
 public:
-	ScopedMutex (SDL_mutex *mutex) :
+	explicit ScopedMutex (SDL_mutex *mutex) :
 			_mutex(mutex)
 	{
 		SDL_LockMutex(_mutex);
@@ -19,4 +17,10 @@ public:
 	{
 		SDL_UnlockMutex(_mutex);
 	}
+
+	ScopedMutex (const ScopedMutex&) = delete;
+	ScopedMutex& operator= (const ScopedMutex&) = delete;
+
+private:
+	SDL_mutex* _mutex;
 };

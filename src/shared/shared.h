@@ -35,17 +35,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_VAR     64
 
-#include <errno.h>
-#include <assert.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <string.h>
-#include <stdlib.h>
-#include <time.h>
-#include <ctype.h>
-#include <limits.h>
-#include <stddef.h>
+#include <cerrno>
+#include <cassert>
+#include <cmath>
+#include <cstdio>
+#include <cstdarg>
+#include <cstring>
+#include <cstdlib>
+#include <ctime>
+#include <cctype>
+#include <climits>
+#include <cstddef>
 #include "ufotypes.h"	/* needed for Com_sprintf */
 #include <algorithm>
 
@@ -53,37 +53,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "autoptr.h"
 #include "cxx.h"
 
-/* to support the gnuc __attribute__ command */
-#if defined __ICC || !defined __GNUC__
-#  define __attribute__(x)  /*NOTHING*/
-#endif
-
-#if defined(__GNUC__)
+#if defined(__GNUC__) || defined(__clang__)
 #define UFO_DEPRECATED __attribute__ ((deprecated))
+#elif defined(_MSC_VER)
+#define UFO_DEPRECATED __declspec(deprecated)
 #else
 #define UFO_DEPRECATED
 #endif
 
 #ifdef _WIN32
-# ifndef snprintf
-#  define snprintf _snprintf
-# endif
 # define EXPORT
 # define IMPORT
 #else
 # define EXPORT
 # define IMPORT
-#endif
-
-#if !defined __cplusplus && (!defined __STDC_VERSION__ || __STDC_VERSION__ < 199901L)
-/* if we are using ansi - the compiler doesn't know about inline */
-#  if defined __GNUC__
-#    define inline __inline__
-#  elif defined _MSVC
-#    define inline __inline
-#  else
-#    define inline
-#  endif
 #endif
 
 #define STRINGIFY(x) #x
@@ -104,7 +87,7 @@ bool Com_IsValidName(const char* input);
 /** returns the amount of elements - not the amount of bytes */
 #define lengthof(x) (sizeof(x) / sizeof(*(x)))
 #define endof(x)    ((x) + lengthof((x)))
-#define CASSERT(x) extern int ASSERT_COMPILE[((x) != 0) * 2 - 1]
+#define CASSERT(x) static_assert((x), #x)
 
 const char* va(const char* format, ...) __attribute__((format(__printf__, 1, 2)));
 int Q_FloatSort(const void* float1, const void* float2);
@@ -114,16 +97,7 @@ unsigned int Com_HashKey(const char* name, int hashsize);
 void Com_MakeTimestamp(char* ts, const size_t tslen);
 bool Com_sprintf(char* dest, size_t size, const char* fmt, ...) __attribute__((format(__printf__, 3, 4)));
 
-/** @todo is this still the case in most recent mingw versions? */
-#if defined(__MINGW32_VERSION) && defined(__STRICT_ANSI__)
-/* function exists but are not defined */
-_CRTIMP char* __cdecl	strdup (const char*) __MINGW_ATTRIB_MALLOC;
-_CRTIMP int __cdecl	_stricmp (const char*, const char*);
-_CRTIMP int __cdecl	_strnicmp (const char*, const char*, size_t);
-#define strncasecmp _strnicmp
-#endif
-
-/* portable case sensitive compare */
+/* portable case insensitive compare */
 #if defined(_WIN32)
 #	define Q_strcasecmp(a, b) _stricmp((a), (b))
 #	define Q_strncasecmp(s1, s2, n) _strnicmp((s1), (s2), (n))
