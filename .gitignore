@@ -55,3 +55,9 @@ Thumbs.db
 /.pc/
 /patches/
 .build/
+
+# CMake build artifacts (anywhere in tree, e.g. build/)
+**/CMakeCache.txt
+**/CMakeFiles/
+cmake_install.cmake
+**/cmake_install.cmake
