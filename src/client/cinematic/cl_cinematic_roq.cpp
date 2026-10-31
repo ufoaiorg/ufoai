@@ -36,7 +36,7 @@ typedef struct {
 	int	ug[256];
 	int	vg[256];
 	int	ub[256];
-} yuvTable_t;
+} roqYuvTable_t;
 
 #define ROQ_IDENT					0x1084
 
@@ -94,7 +94,7 @@ typedef struct {
 } roqCinematic_t;
 
 static short		roqCin_sqrTable[256];
-static yuvTable_t	roqCin_yuvTable;
+static roqYuvTable_t	roqCin_yuvTable;
 
 static int			roqCin_quadOffsets2[2][4];
 static int			roqCin_quadOffsets4[2][4];
