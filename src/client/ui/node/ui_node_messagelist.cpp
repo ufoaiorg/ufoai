@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_text.h"
 #include "ui_node_messagelist.h"
 #include "ui_node_abstractnode.h"
+#include "../../cgame/campaign/cp_messages.h"
 
 #include "../../client.h"
 #include "../../../shared/parse.h"
@@ -51,18 +52,6 @@ static const int DATETIME_COLUUI_SIZE = 200;
 /* Used for drag&drop-like scrolling */
 static int mouseScrollX;
 static int mouseScrollY;
-
-/* Russian timestamp (with UTF-8) is 23 bytes long */
-#define TIMESTAMP_TEXT 24
-typedef struct uiMessageListNodeMessage_s {
-	char title[MAX_VAR];
-	char timestamp[TIMESTAMP_TEXT];
-	char* text;
-	class DateTime date;
-	const char* iconName;
-	int lineUsed;		/**< used by the node to cache the number of lines need (often =1) */
-	struct uiMessageListNodeMessage_s* next;
-} uiMessageListNodeMessage_t;
 
 /** @todo implement this on a per-node basis */
 static uiMessageListNodeMessage_t* messageStack;

@@ -32,7 +32,7 @@ typedef struct {
 	long vg[256];
 	long ub[256];
 	long yy[256];
-} yuvTable_t;
+} ogmYuvTable_t;
 
 #define OGG_BUFFER_SIZE	(8 * 1024)
 
@@ -76,7 +76,7 @@ typedef struct
 	musicStream_t musicStream;
 } ogmCinematic_t;
 
-static yuvTable_t ogmCin_yuvTable;
+static ogmYuvTable_t ogmCin_yuvTable;
 
 #define OGMCIN (*((ogmCinematic_t*)cin->codecData))
 
